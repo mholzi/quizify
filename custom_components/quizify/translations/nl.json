@@ -1,0 +1,16 @@
+{
+    "config": {
+        "step": {
+            "user": {
+                "title": "Quizify instellen",
+                "description": "Quizify is een multiplayer-quizspel met nutteloze kennis voor Home Assistant."
+            }
+        },
+        "error": {
+            "unknown": "Er is een onbekende fout opgetreden."
+        },
+        "abort": {
+            "already_configured": "Quizify is al geconfigureerd."
+        }
+    }
+}

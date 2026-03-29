@@ -1,0 +1,43 @@
+{
+  "name": "Geographie",
+  "language": "de",
+  "version": "1.0",
+  "questions": [
+    {
+      "id": "geo-001",
+      "question": "Welches Land hat die meisten Zeitzonen?",
+      "answers": [
+        {"text": "Frankreich", "correct": true},
+        {"text": "Russland", "correct": false},
+        {"text": "USA", "correct": false}
+      ],
+      "difficulty": "hard",
+      "fun_fact": "Frankreich hat dank seiner Überseegebiete 12 Zeitzonen — mehr als jedes andere Land der Welt.",
+      "category": "Geographie"
+    },
+    {
+      "id": "geo-002",
+      "question": "Was ist die Hauptstadt von Australien?",
+      "answers": [
+        {"text": "Sydney", "correct": false},
+        {"text": "Canberra", "correct": true},
+        {"text": "Melbourne", "correct": false}
+      ],
+      "difficulty": "easy",
+      "fun_fact": "Canberra wurde als Kompromiss gewählt, weil sich Sydney und Melbourne nicht einigen konnten, welche Stadt Hauptstadt werden sollte.",
+      "category": "Geographie"
+    },
+    {
+      "id": "geo-003",
+      "question": "Durch wie viele Länder fließt die Donau?",
+      "answers": [
+        {"text": "7", "correct": false},
+        {"text": "10", "correct": true},
+        {"text": "13", "correct": false}
+      ],
+      "difficulty": "medium",
+      "fun_fact": "Die Donau fließt durch 10 Länder und ist damit der internationalste Fluss der Welt.",
+      "category": "Geographie"
+    }
+  ]
+}

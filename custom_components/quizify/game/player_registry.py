@@ -1,0 +1,161 @@
+"""Player registry for Quizify — manages player lifecycle and lookups."""
+
+from __future__ import annotations
+
+import logging
+from typing import TYPE_CHECKING, Any
+
+from ..const import (
+    ERR_GAME_ENDED,
+    ERR_GAME_FULL,
+    ERR_NAME_INVALID,
+    ERR_NAME_TAKEN,
+    MAX_NAME_LENGTH,
+    MAX_PLAYERS,
+    MIN_NAME_LENGTH,
+)
+
+if TYPE_CHECKING:
+    from aiohttp import web
+
+from .player import PlayerSession
+
+_LOGGER = logging.getLogger(__name__)
+
+
+class PlayerRegistry:
+    """Manages player add/remove, lookups, and sessions."""
+
+    def __init__(self) -> None:
+        """Initialize empty registry."""
+        self.players: dict[str, PlayerSession] = {}
+        self._sessions: dict[str, str] = {}  # session_id → player_name
+
+    def reset(self) -> None:
+        """Clear all players and sessions."""
+        self.players.clear()
+        self._sessions.clear()
+
+    def add_player(
+        self,
+        name: str,
+        ws: web.WebSocketResponse,
+        phase_value: str,
+        average_score_fn: callable,
+    ) -> tuple[bool, str | None]:
+        """Add a player to the game.
+
+        Returns:
+            (success, error_code) - error_code is None on success
+        """
+        # Validate name
+        name = name.strip()
+        if not name or len(name) < MIN_NAME_LENGTH:
+            return False, ERR_NAME_INVALID
+        if len(name) > MAX_NAME_LENGTH:
+            return False, ERR_NAME_INVALID
+
+        # Reject END state
+        if phase_value == "END":
+            return False, ERR_GAME_ENDED
+
+        # Check for reconnection - case-insensitive match
+        for existing_name, existing_player in self.players.items():
+            if existing_name.lower() == name.lower():
+                if not existing_player.connected:
+                    existing_player.ws = ws
+                    existing_player.connected = True
+                    _LOGGER.info("Player reconnected: %s", existing_name)
+                    return True, None
+                return False, ERR_NAME_TAKEN
+
+        # Check player limit
+        if len(self.players) >= MAX_PLAYERS:
+            return False, ERR_GAME_FULL
+
+        # Determine if late joiner
+        joined_late = phase_value != "LOBBY"
+        initial_score = average_score_fn() if joined_late else 0
+
+        # Add new player
+        player = PlayerSession(
+            name=name, ws=ws, score=initial_score, streak=0, joined_late=joined_late
+        )
+        self.players[name] = player
+        self._sessions[player.session_id] = name
+
+        _LOGGER.info(
+            "Player joined: %s (total: %d, late: %s)",
+            name,
+            len(self.players),
+            joined_late,
+        )
+        return True, None
+
+    def get_player(self, name: str) -> PlayerSession | None:
+        """Get player by name (case-insensitive)."""
+        player = self.players.get(name)
+        if player is not None:
+            return player
+        name_lower = name.lower()
+        for existing_name, existing_player in self.players.items():
+            if existing_name.lower() == name_lower:
+                return existing_player
+        return None
+
+    def get_player_by_session_id(self, session_id: str) -> PlayerSession | None:
+        """Get player by session ID."""
+        name = self._sessions.get(session_id)
+        return self.players.get(name) if name else None
+
+    def get_player_by_ws(self, ws: web.WebSocketResponse) -> PlayerSession | None:
+        """Get player by WebSocket connection."""
+        for player in self.players.values():
+            if player.ws == ws:
+                return player
+        return None
+
+    def remove_player(self, name: str) -> None:
+        """Remove player from game."""
+        if name in self.players:
+            player = self.players[name]
+            self._sessions.pop(player.session_id, None)
+            del self.players[name]
+            _LOGGER.info("Player removed: %s", name)
+
+    def get_players_state(self) -> list[dict[str, Any]]:
+        """Get player list for state broadcast."""
+        return [
+            {
+                "name": p.name,
+                "score": p.score,
+                "connected": p.connected,
+                "streak": p.streak,
+                "is_admin": p.is_admin,
+                "submitted": p.submitted,
+            }
+            for p in self.players.values()
+        ]
+
+    def all_submitted(self) -> bool:
+        """Check if all connected players have submitted their answer."""
+        connected_players = [p for p in self.players.values() if p.connected]
+        if not connected_players:
+            return False
+        return all(p.submitted for p in connected_players)
+
+    def get_average_score(self) -> int:
+        """Calculate average score of all current players."""
+        if not self.players:
+            return 0
+        total = sum(p.score for p in self.players.values())
+        return round(total / len(self.players))
+
+    def set_admin(self, name: str) -> bool:
+        """Set a player as admin."""
+        player = self.players.get(name)
+        if player:
+            player.is_admin = True
+            _LOGGER.info("Admin set: %s", name)
+            return True
+        return False

@@ -1,0 +1,57 @@
+# ===========================================
+# Quizify — HACS-ready repo
+# ===========================================
+
+# ---- Dev / build frameworks ----
+.claude/
+scripts/
+docs/
+.playwright-mcp/
+
+# ---- Config & tooling ----
+pyproject.toml
+package.json
+package-lock.json
+requirements.txt
+.ruff.toml
+
+# ---- Tests ----
+.pytest_cache/
+.coverage
+coverage.xml
+htmlcov/
+.tox/
+.nox/
+
+# ---- Node ----
+node_modules/
+
+# ---- Python artifacts ----
+__pycache__/
+*.py[cod]
+*$py.class
+*.so
+*.egg
+*.egg-info/
+dist/
+build/
+eggs/
+.eggs/
+
+# ---- Linting ----
+.ruff_cache/
+.mypy_cache/
+
+# ---- IDE ----
+.vscode/
+.idea/
+*.swp
+*.swo
+*~
+
+# ---- OS ----
+.DS_Store
+Thumbs.db
+
+# ---- Misc ----
+*.bak

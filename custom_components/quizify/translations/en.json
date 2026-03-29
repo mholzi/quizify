@@ -1,0 +1,16 @@
+{
+    "config": {
+        "step": {
+            "user": {
+                "title": "Set up Quizify",
+                "description": "Quizify is a multiplayer useless knowledge quiz game for Home Assistant."
+            }
+        },
+        "error": {
+            "unknown": "An unknown error occurred."
+        },
+        "abort": {
+            "already_configured": "Quizify is already configured."
+        }
+    }
+}
