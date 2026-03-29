@@ -222,8 +222,23 @@ custom_components/quizify/questions/<category>.json
 
 ---
 
-## 9. Open Questions
-- [ ] Should fun facts be part of the question JSON or a separate field?
-- [ ] Power-ups: reuse Beatify's (freeze, steal) or design quiz-specific ones?
-- [ ] Should there be a "I don't know" option or forced 3-choice only?
-- [ ] Minimum question count per category before shipping?
+## 9. Decisions
+
+| # | Topic | Decision |
+|---|---|---|
+| 1 | Fun Facts | Included as `fun_fact` field directly in question JSON ✅ |
+| 2 | Power-Ups | Quiz-specific power-ups (see below) ✅ |
+| 3 | Min. questions per category | **50 questions** before a category ships ✅ |
+| 4 | Answer format | Forced 3-choice only, no "I don't know" option ✅ |
+
+### Power-Ups (Quiz-specific)
+
+| Power-Up | Effect | Inspired by |
+|---|---|---|
+| **Joker** | Eliminates one wrong answer (2 choices remain) | Who Wants to Be a Millionaire |
+| **Double Points** | This round counts double | Beatify streak bonus |
+| **Freeze** | Opponent's timer freezes for 5 seconds | Beatify (reused) |
+| **50/50** | Same as Joker — removes one wrong answer | Classic quiz |
+| **Time Boost** | Add 5 seconds to your timer | New |
+
+Each player starts with 1 power-up per game (type randomly assigned). Power-ups are single-use.
