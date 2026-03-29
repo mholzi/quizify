@@ -2,11 +2,97 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
     <title>Quizify — Player</title>
+    <link rel="stylesheet" href="/quizify/static/css/styles.css">
 </head>
 <body>
-    <h1>Quizify</h1>
-    <p>Player view — coming soon.</p>
+    <!-- Timer bar (fixed top) -->
+    <div id="timer-bar" class="timer-bar-container hidden">
+        <div class="timer-bar-fill"></div>
+    </div>
+
+    <div class="app-container">
+        <header class="header">
+            <h1 class="wordmark">
+                <span class="wordmark-quiz">Quiz</span><span class="wordmark-ify">ify</span>
+            </h1>
+        </header>
+
+        <!-- ========== LOBBY VIEW ========== -->
+        <div id="lobby-view" class="view active">
+            <div class="lobby-content">
+                <div id="join-section" class="join-form">
+                    <p class="text-muted">Gib deinen Namen ein</p>
+                    <input type="text" id="name-input" class="input" placeholder="Dein Name" maxlength="20"
+                           autocomplete="off" autocapitalize="words">
+                    <button id="join-btn" class="btn btn-primary btn-block btn-lg" disabled>Beitreten</button>
+                </div>
+
+                <div id="waiting-section" class="hidden">
+                    <p class="waiting-message">Warte auf den Host...</p>
+                    <div class="player-list mt-lg">
+                        <div class="player-list-header">
+                            <span class="card-header">Spieler</span>
+                            <span id="player-count" class="player-count">0</span>
+                        </div>
+                        <div id="player-chips" class="player-chips"></div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- ========== QUESTION VIEW ========== -->
+        <div id="question-view" class="view">
+            <div id="timer-bar-text" class="timer-text"></div>
+            <div class="question-area">
+                <div id="round-indicator" class="round-indicator"></div>
+                <div id="question-text" class="question-text"></div>
+                <div id="question-category" class="question-category"></div>
+            </div>
+            <div id="powerup-bar" class="powerup-bar hidden">
+                <button id="powerup-btn" class="powerup-btn">
+                    <span id="powerup-icon"></span>
+                    <span id="powerup-label"></span>
+                </button>
+            </div>
+            <div id="answers-container" class="answers-container"></div>
+        </div>
+
+        <!-- ========== REVEAL VIEW ========== -->
+        <div id="reveal-view" class="view">
+            <div class="question-area">
+                <div id="reveal-question" class="question-text" style="font-size:1.1rem;"></div>
+            </div>
+            <div id="reveal-answers" class="answers-container"></div>
+            <div class="score-display">
+                <div id="points-earned" class="points-earned"></div>
+                <div id="score-detail" class="score-detail"></div>
+                <div id="streak-badge" class="streak-badge hidden"></div>
+                <div id="rank-display" class="rank-display"></div>
+            </div>
+            <div id="fun-fact" class="fun-fact-card hidden">
+                <div class="fun-fact-label">Wusstest du?</div>
+                <div class="fun-fact-text"></div>
+            </div>
+        </div>
+
+        <!-- ========== FINALE VIEW ========== -->
+        <div id="finale-view" class="view">
+            <div class="podium-section">
+                <div class="podium-title">Ergebnis</div>
+                <div id="podium" class="podium"></div>
+            </div>
+            <div class="card">
+                <div class="card-header">Rangliste</div>
+                <div id="finale-leaderboard" class="leaderboard"></div>
+            </div>
+        </div>
+    </div>
+
+    <script src="/quizify/static/js/timer.js"></script>
+    <script src="/quizify/static/js/answers.js"></script>
+    <script src="/quizify/static/js/fun-fact.js"></script>
+    <script src="/quizify/static/js/player.js"></script>
 </body>
 </html>

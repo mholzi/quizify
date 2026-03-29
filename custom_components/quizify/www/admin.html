@@ -2,11 +2,147 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
     <title>Quizify — Admin</title>
+    <link rel="stylesheet" href="/quizify/static/css/styles.css">
 </head>
 <body>
-    <h1>Quizify Admin</h1>
-    <p>Admin dashboard — coming soon.</p>
+    <div class="app-container admin-container">
+        <header class="header">
+            <h1 class="wordmark">
+                <span class="wordmark-quiz">Quiz</span><span class="wordmark-ify">ify</span>
+            </h1>
+            <p class="subtitle">Admin-Panel</p>
+        </header>
+
+        <!-- ========== SETUP VIEW (LOBBY) ========== -->
+        <div id="setup-view" class="view active">
+            <!-- Category -->
+            <div class="setup-section">
+                <div class="setup-label">Kategorie</div>
+                <div class="chip-group" id="category-chips">
+                    <button class="chip active" data-value="mixed">Gemischt</button>
+                    <button class="chip" data-value="geographie">Geographie</button>
+                    <button class="chip" data-value="tiere-natur">Tiere & Natur</button>
+                    <button class="chip" data-value="popkultur">Popkultur</button>
+                </div>
+            </div>
+
+            <!-- Difficulty -->
+            <div class="setup-section">
+                <div class="setup-label">Schwierigkeit</div>
+                <div class="chip-group" id="difficulty-chips">
+                    <button class="chip" data-value="easy">Einfach</button>
+                    <button class="chip active" data-value="medium">Mittel</button>
+                    <button class="chip" data-value="hard">Schwer</button>
+                    <button class="chip" data-value="mixed">Gemischt</button>
+                </div>
+            </div>
+
+            <!-- Rounds -->
+            <div class="setup-section">
+                <div class="setup-label">Runden</div>
+                <div class="chip-group" id="rounds-chips">
+                    <button class="chip" data-value="5">5</button>
+                    <button class="chip active" data-value="10">10</button>
+                    <button class="chip" data-value="15">15</button>
+                    <button class="chip" data-value="20">20</button>
+                </div>
+            </div>
+
+            <!-- QR Code -->
+            <div class="setup-section qr-section">
+                <div class="setup-label">Spieler einladen</div>
+                <div id="qr-container" class="qr-code">
+                    <canvas id="qr-canvas"></canvas>
+                </div>
+                <div id="join-url" class="qr-url"></div>
+            </div>
+
+            <!-- Player List -->
+            <div class="setup-section">
+                <div class="player-list">
+                    <div class="player-list-header">
+                        <span class="card-header">Spieler</span>
+                        <span id="setup-player-count" class="player-count">0</span>
+                    </div>
+                    <div id="setup-player-chips" class="player-chips"></div>
+                </div>
+            </div>
+
+            <!-- Start button -->
+            <button id="start-game-btn" class="btn btn-primary btn-block btn-lg" disabled>
+                Spiel starten
+            </button>
+        </div>
+
+        <!-- ========== IN-GAME VIEW ========== -->
+        <div id="game-view" class="view">
+            <!-- Admin question preview -->
+            <div class="admin-question-preview">
+                <div id="admin-round" class="round-indicator"></div>
+                <div id="admin-question" class="question-text" style="font-size:1.1rem;"></div>
+                <div id="admin-correct" class="admin-correct-answer"></div>
+            </div>
+
+            <!-- Timer -->
+            <div id="admin-timer-bar" class="timer-bar-container" style="position:relative;">
+                <div class="timer-bar-fill"></div>
+            </div>
+            <div id="admin-timer-bar-text" class="timer-text mt-md"></div>
+
+            <!-- Live leaderboard -->
+            <div class="card mt-md">
+                <div class="card-header">Rangliste</div>
+                <div id="game-leaderboard" class="leaderboard"></div>
+            </div>
+
+            <!-- Actions -->
+            <div class="admin-actions mt-lg">
+                <button id="next-question-btn" class="btn btn-primary">Nächste Frage</button>
+                <button id="end-game-btn" class="btn btn-danger">Spiel beenden</button>
+            </div>
+        </div>
+
+        <!-- ========== REVEAL VIEW ========== -->
+        <div id="admin-reveal-view" class="view">
+            <div class="admin-question-preview">
+                <div id="reveal-round" class="round-indicator"></div>
+                <div id="reveal-question" class="question-text" style="font-size:1.1rem;"></div>
+                <div id="reveal-correct" class="admin-correct-answer"></div>
+                <div id="reveal-fun-fact" class="fun-fact-card mt-md">
+                    <div class="fun-fact-label">Wusstest du?</div>
+                    <div class="fun-fact-text"></div>
+                </div>
+            </div>
+
+            <div class="card mt-md">
+                <div class="card-header">Rangliste</div>
+                <div id="reveal-leaderboard" class="leaderboard"></div>
+            </div>
+
+            <div class="admin-actions mt-lg">
+                <button id="continue-btn" class="btn btn-primary btn-block">Weiter</button>
+            </div>
+        </div>
+
+        <!-- ========== FINALE VIEW ========== -->
+        <div id="admin-finale-view" class="view">
+            <div class="podium-section">
+                <div class="podium-title">Ergebnis</div>
+                <div id="admin-podium" class="podium"></div>
+            </div>
+            <div class="card">
+                <div class="card-header">Rangliste</div>
+                <div id="admin-finale-leaderboard" class="leaderboard"></div>
+            </div>
+            <div class="admin-actions mt-lg">
+                <button id="new-game-btn" class="btn btn-primary btn-block">Neues Spiel</button>
+            </div>
+        </div>
+    </div>
+
+    <script src="/quizify/static/js/timer.js"></script>
+    <script src="/quizify/static/js/admin.js"></script>
 </body>
 </html>
