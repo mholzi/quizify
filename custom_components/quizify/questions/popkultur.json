@@ -1,0 +1,607 @@
+{
+  "name": "Popkultur",
+  "language": "de",
+  "version": "1.0",
+  "questions": [
+    {
+      "id": "pop_001",
+      "question": "Welcher Film hat weltweit am meisten Geld eingespielt (Stand 2024)?",
+      "answers": [
+        {"text": "Avengers: Endgame", "correct": false},
+        {"text": "Avatar", "correct": true},
+        {"text": "Titanic", "correct": false}
+      ],
+      "difficulty": "easy",
+      "fun_fact": "James Camerons Avatar spielte über 2,9 Milliarden Dollar ein und ist damit der erfolgreichste Film aller Zeiten — Cameron hält auch Platz 3 mit Titanic.",
+      "category": "Popkultur"
+    },
+    {
+      "id": "pop_002",
+      "question": "Welches Videospiel ist das meistverkaufte aller Zeiten?",
+      "answers": [
+        {"text": "Tetris", "correct": false},
+        {"text": "GTA V", "correct": false},
+        {"text": "Minecraft", "correct": true}
+      ],
+      "difficulty": "easy",
+      "fun_fact": "Minecraft wurde über 300 Millionen Mal verkauft. Das Spiel wurde ursprünglich von einer einzigen Person entwickelt — dem Schweden Markus 'Notch' Persson.",
+      "category": "Popkultur"
+    },
+    {
+      "id": "pop_003",
+      "question": "Welcher Song wurde als erstes YouTube-Video eine Milliarde Mal aufgerufen?",
+      "answers": [
+        {"text": "Baby — Justin Bieber", "correct": false},
+        {"text": "Gangnam Style — PSY", "correct": true},
+        {"text": "Despacito — Luis Fonsi", "correct": false}
+      ],
+      "difficulty": "easy",
+      "fun_fact": "Gangnam Style knackte 2012 die Milliarden-Marke und überlastete sogar YouTubes Zähler, der damals nur bis 2,1 Milliarden zählen konnte.",
+      "category": "Popkultur"
+    },
+    {
+      "id": "pop_004",
+      "question": "Wie heißt der erste vollständig computeranimierte Spielfilm der Geschichte?",
+      "answers": [
+        {"text": "Shrek", "correct": false},
+        {"text": "Toy Story", "correct": true},
+        {"text": "Findet Nemo", "correct": false}
+      ],
+      "difficulty": "easy",
+      "fun_fact": "Toy Story erschien 1995 und wurde von Pixar produziert. Steve Jobs finanzierte das Studio und rettete es mehrfach vor dem Bankrott, bevor der Film ein riesiger Erfolg wurde.",
+      "category": "Popkultur"
+    },
+    {
+      "id": "pop_005",
+      "question": "Welche Band hat weltweit die meisten Alben verkauft?",
+      "answers": [
+        {"text": "The Rolling Stones", "correct": false},
+        {"text": "Led Zeppelin", "correct": false},
+        {"text": "The Beatles", "correct": true}
+      ],
+      "difficulty": "easy",
+      "fun_fact": "Die Beatles haben geschätzt über 600 Millionen Tonträger verkauft. Ihre aktive Karriere dauerte dabei nur etwa acht Jahre — von 1962 bis 1970.",
+      "category": "Popkultur"
+    },
+    {
+      "id": "pop_006",
+      "question": "Welche TV-Serie hält den Rekord für die meisten Emmy-Auszeichnungen einer Dramaserie?",
+      "answers": [
+        {"text": "Breaking Bad", "correct": false},
+        {"text": "Game of Thrones", "correct": true},
+        {"text": "The Sopranos", "correct": false}
+      ],
+      "difficulty": "medium",
+      "fun_fact": "Game of Thrones gewann insgesamt 59 Emmys. Trotz der kontroversen letzten Staffel bleibt die Serie die meistausgezeichnete Dramaserie der Emmy-Geschichte.",
+      "category": "Popkultur"
+    },
+    {
+      "id": "pop_007",
+      "question": "Welcher Schauspieler wurde für seine Rolle als Joker posthum mit einem Oscar ausgezeichnet?",
+      "answers": [
+        {"text": "Jack Nicholson", "correct": false},
+        {"text": "Joaquin Phoenix", "correct": false},
+        {"text": "Heath Ledger", "correct": true}
+      ],
+      "difficulty": "easy",
+      "fun_fact": "Heath Ledger starb im Januar 2008, sechs Monate vor der Premiere von The Dark Knight. Er sperrte sich wochenlang in ein Hotelzimmer ein, um die Rolle vorzubereiten.",
+      "category": "Popkultur"
+    },
+    {
+      "id": "pop_008",
+      "question": "Welches Unternehmen entwickelte die erste kommerziell erfolgreiche Spielkonsole, das Nintendo Entertainment System (NES)?",
+      "answers": [
+        {"text": "Nintendo war ursprünglich ein Spielkartenhersteller", "correct": true},
+        {"text": "Nintendo war ursprünglich ein Elektronikkonzern", "correct": false},
+        {"text": "Nintendo war ursprünglich ein Spielzeughersteller", "correct": false}
+      ],
+      "difficulty": "medium",
+      "fun_fact": "Nintendo wurde 1889 gegründet und stellte traditionelle japanische Hanafuda-Spielkarten her. Erst fast 100 Jahre später wurde das Unternehmen zum Videospiel-Giganten.",
+      "category": "Popkultur"
+    },
+    {
+      "id": "pop_009",
+      "question": "Wie lange dauerte die Produktion des Pixar-Films 'Toy Story 2' beinahe-Katastrophe, als jemand versehentlich fast den gesamten Film löschte?",
+      "answers": [
+        {"text": "Der Film wurde durch ein Backup auf dem Heimcomputer einer Mitarbeiterin gerettet", "correct": true},
+        {"text": "Der Film musste komplett neu animiert werden", "correct": false},
+        {"text": "Ein IT-Spezialist konnte die Daten wiederherstellen", "correct": false}
+      ],
+      "difficulty": "hard",
+      "fun_fact": "Ein falsch eingegebener Löschbefehl entfernte 90% der Filmdaten. Die technische Leiterin Galyn Susman hatte zufällig eine Kopie auf ihrem Heimrechner, weil sie nach der Geburt ihres Kindes von zu Hause arbeitete.",
+      "category": "Popkultur"
+    },
+    {
+      "id": "pop_010",
+      "question": "Welcher Streamingdienst produzierte die erste Serie, die einen Emmy für 'Beste Dramaserie' gewann?",
+      "answers": [
+        {"text": "Amazon Prime Video", "correct": false},
+        {"text": "Netflix", "correct": true},
+        {"text": "Hulu", "correct": false}
+      ],
+      "difficulty": "medium",
+      "fun_fact": "Netflix gewann 2018 mit 'The Crown' zwar viele Emmys, aber der erste Streaming-Emmy für Beste Dramaserie ging 2017 an 'The Handmaid's Tale' von Hulu — Netflix holte sich den Preis erst später.",
+      "category": "Popkultur"
+    },
+    {
+      "id": "pop_011",
+      "question": "Welcher Künstler hat die meisten Nummer-1-Hits in den US-Billboard-Charts?",
+      "answers": [
+        {"text": "Elvis Presley", "correct": false},
+        {"text": "The Beatles", "correct": true},
+        {"text": "Michael Jackson", "correct": false}
+      ],
+      "difficulty": "medium",
+      "fun_fact": "Die Beatles halten mit 20 Nummer-1-Hits den Rekord in den USA. An einem einzigen Tag im April 1964 belegten sie die Top 5 der Billboard Hot 100 gleichzeitig.",
+      "category": "Popkultur"
+    },
+    {
+      "id": "pop_012",
+      "question": "Welcher Film gewann den allerersten Oscar für den besten Film?",
+      "answers": [
+        {"text": "Sunrise", "correct": false},
+        {"text": "Wings", "correct": true},
+        {"text": "The Jazz Singer", "correct": false}
+      ],
+      "difficulty": "hard",
+      "fun_fact": "Wings gewann 1929 bei der ersten Oscar-Verleihung. Die gesamte Zeremonie dauerte nur 15 Minuten, und die Gewinner wurden bereits drei Monate vorher bekannt gegeben.",
+      "category": "Popkultur"
+    },
+    {
+      "id": "pop_013",
+      "question": "In welchem Land wurde das Videospiel 'Tetris' erfunden?",
+      "answers": [
+        {"text": "Japan", "correct": false},
+        {"text": "USA", "correct": false},
+        {"text": "Sowjetunion", "correct": true}
+      ],
+      "difficulty": "easy",
+      "fun_fact": "Tetris wurde 1985 vom russischen Programmierer Alexei Paschitnow in Moskau entwickelt. Wegen der Sowjetgesetze erhielt er jahrelang keinerlei Einnahmen aus seinem Spiel.",
+      "category": "Popkultur"
+    },
+    {
+      "id": "pop_014",
+      "question": "Welche Zeichentrickserie läuft seit 1989 ununterbrochen im US-Fernsehen?",
+      "answers": [
+        {"text": "South Park", "correct": false},
+        {"text": "Die Simpsons", "correct": true},
+        {"text": "Family Guy", "correct": false}
+      ],
+      "difficulty": "easy",
+      "fun_fact": "Die Simpsons sind die am längsten laufende US-amerikanische Zeichentrickserie zur Primetime. Matt Groening zeichnete die Figuren in nur 15 Minuten im Warteraum eines Produzentenbüros.",
+      "category": "Popkultur"
+    },
+    {
+      "id": "pop_015",
+      "question": "Welches Buch ist nach der Bibel das meistverkaufte Buch der Welt?",
+      "answers": [
+        {"text": "Harry Potter und der Stein der Weisen", "correct": false},
+        {"text": "Der Herr der Ringe", "correct": false},
+        {"text": "Don Quijote", "correct": true}
+      ],
+      "difficulty": "hard",
+      "fun_fact": "Don Quijote von Miguel de Cervantes wurde 1605 veröffentlicht und hat schätzungsweise über 500 Millionen Exemplare verkauft. Es gilt als der erste moderne Roman der Weltliteratur.",
+      "category": "Popkultur"
+    },
+    {
+      "id": "pop_016",
+      "question": "Welche berühmte Schauspielerin war die erste Frau, die eine Milliarde Dollar an den Kinokassen einspielte?",
+      "answers": [
+        {"text": "Angelina Jolie", "correct": false},
+        {"text": "Emma Watson", "correct": true},
+        {"text": "Scarlett Johansson", "correct": false}
+      ],
+      "difficulty": "medium",
+      "fun_fact": "Emma Watson erreichte diesen Meilenstein hauptsächlich durch die Harry-Potter-Filme. Sie war erst 11 Jahre alt, als der erste Film in die Kinos kam.",
+      "category": "Popkultur"
+    },
+    {
+      "id": "pop_017",
+      "question": "Wie hieß das erste Video, das jemals auf YouTube hochgeladen wurde?",
+      "answers": [
+        {"text": "Me at the zoo", "correct": true},
+        {"text": "Lazy Sunday", "correct": false},
+        {"text": "Evolution of Dance", "correct": false}
+      ],
+      "difficulty": "medium",
+      "fun_fact": "Das 18-sekündige Video 'Me at the zoo' zeigt YouTube-Mitgründer Jawed Karim vor Elefanten im San Diego Zoo. Es wurde am 23. April 2005 hochgeladen.",
+      "category": "Popkultur"
+    },
+    {
+      "id": "pop_018",
+      "question": "Welcher Schauspieler lehnte die Rolle des Gandalf in 'Der Herr der Ringe' ab?",
+      "answers": [
+        {"text": "Anthony Hopkins", "correct": false},
+        {"text": "Sean Connery", "correct": true},
+        {"text": "Christopher Lee", "correct": false}
+      ],
+      "difficulty": "medium",
+      "fun_fact": "Sean Connery lehnte ab, weil er das Drehbuch nicht verstand. Er soll auch 15% der Filmeinnahmen angeboten bekommen haben — das wären über 400 Millionen Dollar gewesen.",
+      "category": "Popkultur"
+    },
+    {
+      "id": "pop_019",
+      "question": "Welches Instrument spielt die Filmmusik-Melodie von 'Der weiße Hai'?",
+      "answers": [
+        {"text": "Cello", "correct": true},
+        {"text": "Kontrabass", "correct": false},
+        {"text": "Tuba", "correct": false}
+      ],
+      "difficulty": "hard",
+      "fun_fact": "John Williams' ikonisches Zwei-Noten-Motiv wird von Celli gespielt. Regisseur Steven Spielberg dachte zunächst, Williams mache einen Witz, als er das simple Thema zum ersten Mal hörte.",
+      "category": "Popkultur"
+    },
+    {
+      "id": "pop_020",
+      "question": "Welche Farbe hatte das erste iPhone, das 2007 auf den Markt kam?",
+      "answers": [
+        {"text": "Schwarz und Silber", "correct": true},
+        {"text": "Weiß und Silber", "correct": false},
+        {"text": "Komplett Schwarz", "correct": false}
+      ],
+      "difficulty": "medium",
+      "fun_fact": "Steve Jobs stellte das erste iPhone im Januar 2007 vor. Der Prototyp auf der Bühne stürzte ständig ab, und das Team hatte die Präsentationsreihenfolge so geplant, dass jede Funktion nur einmal gezeigt wurde.",
+      "category": "Popkultur"
+    },
+    {
+      "id": "pop_021",
+      "question": "Welcher Disney-Film war der erste, der über 1 Milliarde Dollar einspielte?",
+      "answers": [
+        {"text": "Der König der Löwen (1994)", "correct": false},
+        {"text": "Toy Story 3", "correct": true},
+        {"text": "Die Eiskönigin", "correct": false}
+      ],
+      "difficulty": "hard",
+      "fun_fact": "Toy Story 3 knackte 2010 als erster reiner Disney/Pixar-Film die Milliarden-Grenze. Der Film handelt passenderweise vom Erwachsenwerden — genau wie sein Publikum, das mit den Filmen aufgewachsen war.",
+      "category": "Popkultur"
+    },
+    {
+      "id": "pop_022",
+      "question": "Wie heißt der berühmte Konami-Code, der in vielen Videospielen versteckt ist?",
+      "answers": [
+        {"text": "Hoch, Hoch, Runter, Runter, Links, Rechts, Links, Rechts, B, A", "correct": true},
+        {"text": "Links, Rechts, Links, Rechts, Hoch, Runter, Hoch, Runter, A, B", "correct": false},
+        {"text": "Hoch, Runter, Hoch, Runter, Links, Rechts, B, A, Start", "correct": false}
+      ],
+      "difficulty": "medium",
+      "fun_fact": "Der Konami-Code wurde 1986 vom Entwickler Kazuhisa Hashimoto für das Spiel 'Gradius' erfunden, weil ihm das Spiel zu schwer war. Der Code ist heute in Hunderten von Spielen und sogar Websites versteckt.",
+      "category": "Popkultur"
+    },
+    {
+      "id": "pop_023",
+      "question": "Welcher Rapper war vor seiner Musikkarriere Balletttänzer?",
+      "answers": [
+        {"text": "Tupac Shakur", "correct": true},
+        {"text": "Eminem", "correct": false},
+        {"text": "Jay-Z", "correct": false}
+      ],
+      "difficulty": "hard",
+      "fun_fact": "Tupac besuchte die Baltimore School for the Arts und studierte dort Ballett, Schauspiel und Lyrik. Er spielte sogar die Rolle der Maus in einer Aufführung von 'Der Nussknacker'.",
+      "category": "Popkultur"
+    },
+    {
+      "id": "pop_024",
+      "question": "Welches Tier inspirierte die Pokémon-Figur Pikachu?",
+      "answers": [
+        {"text": "Maus", "correct": false},
+        {"text": "Eichhörnchen", "correct": false},
+        {"text": "Pika (ein Pfeifhase)", "correct": true}
+      ],
+      "difficulty": "medium",
+      "fun_fact": "Pikachus Designer Atsuko Nishida ließ sich vom Pika inspirieren, einem kleinen Nagetier aus den Bergen Asiens. Der Name kombiniert 'Pika' mit 'chu', dem japanischen Lautmalerei-Wort für elektrisches Knistern.",
+      "category": "Popkultur"
+    },
+    {
+      "id": "pop_025",
+      "question": "Welche berühmte TV-Serie wurde zuerst als 'The Untitled Lindelof Project' entwickelt?",
+      "answers": [
+        {"text": "Breaking Bad", "correct": false},
+        {"text": "Lost", "correct": true},
+        {"text": "The Walking Dead", "correct": false}
+      ],
+      "difficulty": "hard",
+      "fun_fact": "Lost wurde in Rekordzeit entwickelt: Vom ersten Konzept bis zum fertigen Pilotfilm vergingen nur 12 Wochen. Der Pilot kostete 13 Millionen Dollar — damals der teuerste Serienpilot aller Zeiten.",
+      "category": "Popkultur"
+    },
+    {
+      "id": "pop_026",
+      "question": "Welcher Musiker hat mit über 14 Milliarden Streams den meistgestreamten Song auf Spotify (Stand 2024)?",
+      "answers": [
+        {"text": "Ed Sheeran mit 'Shape of You'", "correct": false},
+        {"text": "The Weeknd mit 'Blinding Lights'", "correct": true},
+        {"text": "Drake mit 'One Dance'", "correct": false}
+      ],
+      "difficulty": "medium",
+      "fun_fact": "Blinding Lights verbrachte über 90 Wochen in den Billboard Hot 100 — ein absoluter Rekord. The Weeknd ließ sich für den Sound von 80er-Jahre-Synthie-Pop inspirieren.",
+      "category": "Popkultur"
+    },
+    {
+      "id": "pop_027",
+      "question": "In welchem Land spielt die Netflix-Serie 'Squid Game'?",
+      "answers": [
+        {"text": "Japan", "correct": false},
+        {"text": "Südkorea", "correct": true},
+        {"text": "Thailand", "correct": false}
+      ],
+      "difficulty": "easy",
+      "fun_fact": "Squid Game wurde die meistgesehene Netflix-Serie aller Zeiten. Regisseur Hwang Dong-hyuk hatte das Drehbuch bereits 2009 geschrieben, fand aber über ein Jahrzehnt lang kein Studio, das es produzieren wollte.",
+      "category": "Popkultur"
+    },
+    {
+      "id": "pop_028",
+      "question": "Welcher Superheld wurde ursprünglich als Schurke konzipiert?",
+      "answers": [
+        {"text": "Wolverine", "correct": true},
+        {"text": "Deadpool", "correct": false},
+        {"text": "Venom", "correct": false}
+      ],
+      "difficulty": "medium",
+      "fun_fact": "Wolverine trat 1974 erstmals als Gegner des Hulk auf. Er sollte nur ein einmaliger Antagonist sein, wurde aber so beliebt, dass er zum Helden und schließlich zum bekanntesten X-Men-Mitglied wurde.",
+      "category": "Popkultur"
+    },
+    {
+      "id": "pop_029",
+      "question": "Welcher berühmte Regisseur inszenierte den Musikvideo-Klassiker 'Thriller' von Michael Jackson?",
+      "answers": [
+        {"text": "Steven Spielberg", "correct": false},
+        {"text": "John Landis", "correct": true},
+        {"text": "Martin Scorsese", "correct": false}
+      ],
+      "difficulty": "hard",
+      "fun_fact": "Das Musikvideo zu Thriller kostete 500.000 Dollar — damals das teuerste Musikvideo aller Zeiten. Es war 14 Minuten lang und wurde als erstes Musikvideo in die Library of Congress aufgenommen.",
+      "category": "Popkultur"
+    },
+    {
+      "id": "pop_030",
+      "question": "Welches war das erste Videospiel, das im Weltraum gespielt wurde?",
+      "answers": [
+        {"text": "Tetris", "correct": false},
+        {"text": "Game Boy Tetris", "correct": true},
+        {"text": "Pong", "correct": false}
+      ],
+      "difficulty": "medium",
+      "fun_fact": "Der russische Kosmonaut Alexander Serebrow spielte 1993 Tetris auf einem Game Boy auf der Raumstation Mir. Dieser Game Boy wurde später für 1.220 Dollar versteigert.",
+      "category": "Popkultur"
+    },
+    {
+      "id": "pop_031",
+      "question": "Welche Schauspielerin spielte in den meisten Folgen einer einzigen TV-Serie mit?",
+      "answers": [
+        {"text": "Mariska Hargitay (Law & Order: SVU)", "correct": true},
+        {"text": "Ellen Pompeo (Grey's Anatomy)", "correct": false},
+        {"text": "Jennifer Aniston (Friends)", "correct": false}
+      ],
+      "difficulty": "hard",
+      "fun_fact": "Mariska Hargitay spielt seit 1999 die Rolle der Olivia Benson in Law & Order: SVU — über 500 Folgen. Ihre Mutter war die Schauspielerin Jayne Mansfield.",
+      "category": "Popkultur"
+    },
+    {
+      "id": "pop_032",
+      "question": "Welches war das erste Wort, das jemals über das Internet gesendet wurde?",
+      "answers": [
+        {"text": "Hello", "correct": false},
+        {"text": "Lo", "correct": true},
+        {"text": "Test", "correct": false}
+      ],
+      "difficulty": "hard",
+      "fun_fact": "1969 sollte 'Login' gesendet werden, aber der Computer stürzte nach den Buchstaben 'L' und 'O' ab. Das erste Wort des Internets war also unbeabsichtigt 'Lo' — wie 'Lo and behold' (Siehe da).",
+      "category": "Popkultur"
+    },
+    {
+      "id": "pop_033",
+      "question": "Welcher Streamingdienst hat die meisten Abonnenten weltweit (Stand 2024)?",
+      "answers": [
+        {"text": "Disney+", "correct": false},
+        {"text": "Netflix", "correct": true},
+        {"text": "Amazon Prime Video", "correct": false}
+      ],
+      "difficulty": "easy",
+      "fun_fact": "Netflix startete 1997 als DVD-Verleih per Post. Gründer Reed Hastings soll die Idee gehabt haben, nachdem er 40 Dollar Mahngebühr für eine verspätete Apollo-13-Videokassette zahlen musste.",
+      "category": "Popkultur"
+    },
+    {
+      "id": "pop_034",
+      "question": "Welche Figur aus 'Der Herr der Ringe' sollte ursprünglich im Kampf vor dem Schwarzen Tor sterben?",
+      "answers": [
+        {"text": "Legolas", "correct": false},
+        {"text": "Aragorn", "correct": true},
+        {"text": "Gimli", "correct": false}
+      ],
+      "difficulty": "hard",
+      "fun_fact": "Peter Jackson drehte sogar Szenen, in denen Aragorn gegen Sauron kämpft und stirbt. Die Szene wurde gestrichen, weil sie Tolkiens Geschichte zu sehr verändert hätte.",
+      "category": "Popkultur"
+    },
+    {
+      "id": "pop_035",
+      "question": "Welcher Musiker hat die meisten Grammy Awards gewonnen?",
+      "answers": [
+        {"text": "Quincy Jones", "correct": false},
+        {"text": "Beyoncé", "correct": true},
+        {"text": "Georg Solti", "correct": false}
+      ],
+      "difficulty": "medium",
+      "fun_fact": "Beyoncé hat über 30 Grammys gewonnen und ist damit die meistausgezeichnete Künstlerin in der Grammy-Geschichte. Bei ihrem ersten Vorsingen war sie gerade mal neun Jahre alt.",
+      "category": "Popkultur"
+    },
+    {
+      "id": "pop_036",
+      "question": "Welches Social-Media-Netzwerk erreichte als erstes eine Milliarde Nutzer?",
+      "answers": [
+        {"text": "YouTube", "correct": false},
+        {"text": "Facebook", "correct": true},
+        {"text": "WhatsApp", "correct": false}
+      ],
+      "difficulty": "easy",
+      "fun_fact": "Facebook erreichte 2012 eine Milliarde monatliche Nutzer. Mark Zuckerberg programmierte die erste Version in nur zwei Wochen in seinem Harvard-Studentenwohnheim.",
+      "category": "Popkultur"
+    },
+    {
+      "id": "pop_037",
+      "question": "Wie heißt die fiktive Sprache, die für die TV-Serie 'Game of Thrones' erschaffen wurde?",
+      "answers": [
+        {"text": "Elbisch", "correct": false},
+        {"text": "Klingonisch", "correct": false},
+        {"text": "Dothraki", "correct": true}
+      ],
+      "difficulty": "easy",
+      "fun_fact": "Linguist David J. Peterson erschuf Dothraki mit über 4.000 Wörtern und eigener Grammatik. Er setzte sich gegen 30 andere Bewerber durch, die ebenfalls die Sprache entwickeln wollten.",
+      "category": "Popkultur"
+    },
+    {
+      "id": "pop_038",
+      "question": "Welcher berühmte Filmcharakter wurde in den Büchern als blond beschrieben, aber im Film brünett dargestellt?",
+      "answers": [
+        {"text": "Katniss Everdeen", "correct": false},
+        {"text": "James Bond", "correct": true},
+        {"text": "Hermine Granger", "correct": false}
+      ],
+      "difficulty": "medium",
+      "fun_fact": "In Ian Flemings Romanen wird James Bond als dunkelhaarig mit einer Narbe beschrieben. Erst mit Daniel Craig (2006) wurde Bond zum blonden Agenten — und Fleming hätte es gehasst.",
+      "category": "Popkultur"
+    },
+    {
+      "id": "pop_039",
+      "question": "Welches berühmte Meme entstand aus einem Foto eines mürrisch dreinblickenden Katers?",
+      "answers": [
+        {"text": "Keyboard Cat", "correct": false},
+        {"text": "Grumpy Cat", "correct": true},
+        {"text": "Nyan Cat", "correct": false}
+      ],
+      "difficulty": "easy",
+      "fun_fact": "Grumpy Cat (bürgerlich Tardar Sauce) hatte felinen Zwergwuchs, der ihren grimmigen Gesichtsausdruck verursachte. Ihre Besitzerin verdiente mit der Katze schätzungsweise über 100 Millionen Dollar.",
+      "category": "Popkultur"
+    },
+    {
+      "id": "pop_040",
+      "question": "Wie viele Bücher hat die Harry-Potter-Reihe?",
+      "answers": [
+        {"text": "6", "correct": false},
+        {"text": "7", "correct": true},
+        {"text": "8", "correct": false}
+      ],
+      "difficulty": "easy",
+      "fun_fact": "J.K. Rowling wurde von 12 Verlagen abgelehnt, bevor Bloomsbury Harry Potter veröffentlichte. Der Verleger stimmte nur zu, weil seine achtjährige Tochter das erste Kapitel liebte.",
+      "category": "Popkultur"
+    },
+    {
+      "id": "pop_041",
+      "question": "Welcher Schauspieler hat in den meisten Marvel-Cinematic-Universe-Filmen mitgespielt?",
+      "answers": [
+        {"text": "Chris Evans", "correct": false},
+        {"text": "Robert Downey Jr.", "correct": false},
+        {"text": "Samuel L. Jackson", "correct": true}
+      ],
+      "difficulty": "medium",
+      "fun_fact": "Samuel L. Jackson erschien als Nick Fury in über 11 MCU-Filmen. Er unterschrieb einen beispiellosen Neun-Filme-Vertrag mit Marvel — der längste Schauspielervertrag in Hollywood-Geschichte.",
+      "category": "Popkultur"
+    },
+    {
+      "id": "pop_042",
+      "question": "Welches war das erste Emoji, das jemals erstellt wurde?",
+      "answers": [
+        {"text": "Das Herz-Emoji", "correct": false},
+        {"text": "Das Smiley-Emoji", "correct": false},
+        {"text": "Es war Teil eines Sets von 176 Emojis", "correct": true}
+      ],
+      "difficulty": "medium",
+      "fun_fact": "Die ersten 176 Emojis wurden 1999 vom Japaner Shigetaka Kurita für den Mobilfunkanbieter NTT DoCoMo entworfen. Jedes Emoji war nur 12x12 Pixel groß. Die Originale sind heute im MoMA in New York ausgestellt.",
+      "category": "Popkultur"
+    },
+    {
+      "id": "pop_043",
+      "question": "Welche legendäre Videospiel-Figur wurde nach dem Vermieter eines Nintendo-Lagers benannt?",
+      "answers": [
+        {"text": "Luigi", "correct": false},
+        {"text": "Mario", "correct": true},
+        {"text": "Donkey Kong", "correct": false}
+      ],
+      "difficulty": "medium",
+      "fun_fact": "Mario wurde nach Mario Segale benannt, dem Vermieter von Nintendos US-Lagerhaus. Segale stürmte einmal wütend herein, um die überfällige Miete einzufordern — und inspirierte damit die berühmteste Spielfigur der Welt.",
+      "category": "Popkultur"
+    },
+    {
+      "id": "pop_044",
+      "question": "Welcher Film wurde als erster mit dem Dolby-Atmos-Soundsystem veröffentlicht?",
+      "answers": [
+        {"text": "Gravity", "correct": false},
+        {"text": "Merida — Legende der Highlands", "correct": true},
+        {"text": "The Dark Knight Rises", "correct": false}
+      ],
+      "difficulty": "hard",
+      "fun_fact": "Der Pixar-Film 'Brave' (Merida) war 2012 der erste Kinofilm mit Dolby Atmos. Das System nutzt bis zu 128 separate Audiokanäle und kann Klänge dreidimensional im Raum positionieren.",
+      "category": "Popkultur"
+    },
+    {
+      "id": "pop_045",
+      "question": "Welcher berühmte Musiker arbeitete als Teilzeit-Postbote, bevor er berühmt wurde?",
+      "answers": [
+        {"text": "Ozzy Osbourne", "correct": false},
+        {"text": "John Lennon", "correct": false},
+        {"text": "Freddie Mercury", "correct": true}
+      ],
+      "difficulty": "medium",
+      "fun_fact": "Freddie Mercury arbeitete am Londoner Flughafen Heathrow als Gepäckträger und verkaufte gebrauchte Kleidung auf dem Kensington Market, bevor Queen durchstartete.",
+      "category": "Popkultur"
+    },
+    {
+      "id": "pop_046",
+      "question": "Welches Wort war 2013 das Oxford Dictionary 'Wort des Jahres'?",
+      "answers": [
+        {"text": "YOLO", "correct": false},
+        {"text": "Selfie", "correct": true},
+        {"text": "Hashtag", "correct": false}
+      ],
+      "difficulty": "medium",
+      "fun_fact": "Die Nutzung des Wortes 'Selfie' stieg 2013 um 17.000 Prozent. Das älteste bekannte Selfie stammt allerdings bereits aus dem Jahr 1839 — ein Foto des Chemikers Robert Cornelius.",
+      "category": "Popkultur"
+    },
+    {
+      "id": "pop_047",
+      "question": "Wie viele Staffeln hatte die Originalserie 'Star Trek' (Raumschiff Enterprise)?",
+      "answers": [
+        {"text": "3", "correct": true},
+        {"text": "5", "correct": false},
+        {"text": "7", "correct": false}
+      ],
+      "difficulty": "medium",
+      "fun_fact": "Die Originalserie lief nur drei Staffeln (1966-1969) und wurde wegen schlechter Quoten abgesetzt. Erst in den Wiederholungen wurde sie zum Kult und startete ein Milliarden-Dollar-Franchise.",
+      "category": "Popkultur"
+    },
+    {
+      "id": "pop_048",
+      "question": "Welches Tier war das erste GIF, das jemals im Internet geteilt wurde?",
+      "answers": [
+        {"text": "Eine Katze", "correct": false},
+        {"text": "Ein Flugzeug", "correct": true},
+        {"text": "Ein Hund", "correct": false}
+      ],
+      "difficulty": "medium",
+      "fun_fact": "Das GIF-Format wurde 1987 von CompuServe entwickelt. Eines der ersten weit verbreiteten GIFs zeigte ein sich drehendes Flugzeug. Die Aussprache ('GIF' vs. 'JIF') sorgt bis heute für erbitterte Internet-Debatten.",
+      "category": "Popkultur"
+    },
+    {
+      "id": "pop_049",
+      "question": "Welcher berühmte Hollywoodstar war vor seiner Schauspielkarriere Bodybuilder und gewann den Mr.-Universum-Titel?",
+      "answers": [
+        {"text": "Sylvester Stallone", "correct": false},
+        {"text": "Arnold Schwarzenegger", "correct": true},
+        {"text": "Dwayne 'The Rock' Johnson", "correct": false}
+      ],
+      "difficulty": "easy",
+      "fun_fact": "Arnold Schwarzenegger gewann seinen ersten Mr.-Universum-Titel mit nur 20 Jahren. Er trainierte manchmal so hart, dass er im Fitnessstudio ohnmächtig wurde.",
+      "category": "Popkultur"
+    },
+    {
+      "id": "pop_050",
+      "question": "Welche Farbe hatte das Kleid, das 2015 das Internet spaltete (#TheDress)?",
+      "answers": [
+        {"text": "Es war tatsächlich blau und schwarz", "correct": true},
+        {"text": "Es war tatsächlich weiß und gold", "correct": false},
+        {"text": "Es war tatsächlich blau und braun", "correct": false}
+      ],
+      "difficulty": "easy",
+      "fun_fact": "Das virale Kleid-Phänomen von 2015 wurde von Wissenschaftlern untersucht und in Fachzeitschriften veröffentlicht. Die unterschiedliche Wahrnehmung entsteht durch die Art, wie unser Gehirn Beleuchtung kompensiert.",
+      "category": "Popkultur"
+    }
+  ]
+}

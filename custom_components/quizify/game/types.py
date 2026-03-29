@@ -3,7 +3,29 @@
 from __future__ import annotations
 
 from dataclasses import dataclass, field
+from enum import Enum
 from typing import Any
+
+
+class Difficulty(str, Enum):
+    """Question difficulty levels."""
+
+    EASY = "easy"
+    MEDIUM = "medium"
+    HARD = "hard"
+
+
+TIME_LIMITS: dict[Difficulty, int] = {
+    Difficulty.EASY: 20,
+    Difficulty.MEDIUM: 15,
+    Difficulty.HARD: 10,
+}
+
+DIFFICULTY_MULTIPLIERS: dict[Difficulty, float] = {
+    Difficulty.EASY: 1.0,
+    Difficulty.MEDIUM: 1.5,
+    Difficulty.HARD: 2.0,
+}
 
 
 @dataclass

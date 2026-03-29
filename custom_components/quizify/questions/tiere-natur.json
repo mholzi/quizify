@@ -1,0 +1,607 @@
+{
+  "name": "Tiere & Natur",
+  "language": "de",
+  "version": "1.0",
+  "questions": [
+    {
+      "id": "nat_001",
+      "question": "Wie viele Herzen hat ein Oktopus?",
+      "answers": [
+        {"text": "2", "correct": false},
+        {"text": "3", "correct": true},
+        {"text": "5", "correct": false}
+      ],
+      "difficulty": "easy",
+      "fun_fact": "Ein Oktopus hat drei Herzen: Zwei pumpen Blut zu den Kiemen, das dritte versorgt den restlichen Körper. Beim Schwimmen hört das Hauptherz auf zu schlagen — deshalb kriechen Oktopusse lieber.",
+      "category": "Tiere & Natur"
+    },
+    {
+      "id": "nat_002",
+      "question": "Welches Säugetier kann nicht springen?",
+      "answers": [
+        {"text": "Nilpferd", "correct": false},
+        {"text": "Elefant", "correct": true},
+        {"text": "Nashorn", "correct": false}
+      ],
+      "difficulty": "easy",
+      "fun_fact": "Elefanten sind die einzigen Säugetiere, die nicht springen können. Ihre Knochenstruktur erlaubt es schlicht nicht — alle vier Beine bleiben immer am Boden.",
+      "category": "Tiere & Natur"
+    },
+    {
+      "id": "nat_003",
+      "question": "Wie lange kann ein Grönlandhai leben?",
+      "answers": [
+        {"text": "Bis zu 150 Jahre", "correct": false},
+        {"text": "Bis zu 300 Jahre", "correct": false},
+        {"text": "Bis zu 500 Jahre", "correct": true}
+      ],
+      "difficulty": "hard",
+      "fun_fact": "Der Grönlandhai ist das langlebigste bekannte Wirbeltier. Er wird erst mit etwa 150 Jahren geschlechtsreif — ein Exemplar wurde auf rund 500 Jahre geschätzt.",
+      "category": "Tiere & Natur"
+    },
+    {
+      "id": "nat_004",
+      "question": "Welches Tier schläft nur etwa 2 Stunden pro Tag?",
+      "answers": [
+        {"text": "Giraffe", "correct": true},
+        {"text": "Pferd", "correct": false},
+        {"text": "Delfin", "correct": false}
+      ],
+      "difficulty": "medium",
+      "fun_fact": "Giraffen schlafen im Schnitt nur 1,9 Stunden am Tag, oft in kurzen 5-Minuten-Nickerchen. Im Liegen schlafen sie fast nie, weil das Aufstehen zu lange dauert und sie angreifbar macht.",
+      "category": "Tiere & Natur"
+    },
+    {
+      "id": "nat_005",
+      "question": "Welches Insekt kann das 850-fache seines eigenen Körpergewichts ziehen?",
+      "answers": [
+        {"text": "Ameise", "correct": false},
+        {"text": "Mistkäfer", "correct": true},
+        {"text": "Hirschkäfer", "correct": false}
+      ],
+      "difficulty": "medium",
+      "fun_fact": "Der Mistkäfer (Onthophagus taurus) ist das stärkste Tier der Welt relativ zu seinem Gewicht. Das entspricht einem Menschen, der sechs vollbeladene Doppeldeckerbusse ziehen würde.",
+      "category": "Tiere & Natur"
+    },
+    {
+      "id": "nat_006",
+      "question": "Welches Tier hat den höchsten Blutdruck aller Lebewesen?",
+      "answers": [
+        {"text": "Blauwal", "correct": false},
+        {"text": "Giraffe", "correct": true},
+        {"text": "Elefant", "correct": false}
+      ],
+      "difficulty": "medium",
+      "fun_fact": "Giraffen haben einen Blutdruck von etwa 280/180 mmHg — doppelt so hoch wie beim Menschen. Ihr Herz wiegt bis zu 12 kg und muss das Blut fast 2 Meter nach oben zum Gehirn pumpen.",
+      "category": "Tiere & Natur"
+    },
+    {
+      "id": "nat_007",
+      "question": "Wie kommunizieren Elefanten über weite Entfernungen?",
+      "answers": [
+        {"text": "Durch Ultraschall", "correct": false},
+        {"text": "Durch Infraschall über den Boden", "correct": true},
+        {"text": "Durch chemische Signale in der Luft", "correct": false}
+      ],
+      "difficulty": "medium",
+      "fun_fact": "Elefanten erzeugen Infraschallwellen, die durch den Boden wandern und von anderen Elefanten über die Füße wahrgenommen werden. So kommunizieren sie über Entfernungen von bis zu 32 Kilometern.",
+      "category": "Tiere & Natur"
+    },
+    {
+      "id": "nat_008",
+      "question": "Welcher Vogel kann rückwärts fliegen?",
+      "answers": [
+        {"text": "Eisvogel", "correct": false},
+        {"text": "Kolibri", "correct": true},
+        {"text": "Mauersegler", "correct": false}
+      ],
+      "difficulty": "easy",
+      "fun_fact": "Kolibris sind die einzigen Vögel, die dauerhaft rückwärts fliegen können. Ihre Flügel schlagen bis zu 80 Mal pro Sekunde, und ihr Herz schlägt über 1.200 Mal pro Minute.",
+      "category": "Tiere & Natur"
+    },
+    {
+      "id": "nat_009",
+      "question": "Welches Tier kann sein Geschlecht im Laufe des Lebens wechseln?",
+      "answers": [
+        {"text": "Clownfisch", "correct": true},
+        {"text": "Goldfisch", "correct": false},
+        {"text": "Kugelfisch", "correct": false}
+      ],
+      "difficulty": "medium",
+      "fun_fact": "Alle Clownfische werden als Männchen geboren. Das dominante Weibchen führt die Gruppe — stirbt es, verwandelt sich das ranghöchste Männchen in ein Weibchen. Nemo hätte also Nemos neue Mama werden müssen.",
+      "category": "Tiere & Natur"
+    },
+    {
+      "id": "nat_010",
+      "question": "Wie viel Prozent der DNA teilen Menschen mit Bananen?",
+      "answers": [
+        {"text": "Etwa 25 %", "correct": false},
+        {"text": "Etwa 44 %", "correct": false},
+        {"text": "Etwa 60 %", "correct": true}
+      ],
+      "difficulty": "hard",
+      "fun_fact": "Menschen und Bananen teilen rund 60 % ihrer DNA. Viele Gene für grundlegende Zellfunktionen sind bei fast allen Lebewesen ähnlich, weil sie von gemeinsamen Vorfahren stammen.",
+      "category": "Tiere & Natur"
+    },
+    {
+      "id": "nat_011",
+      "question": "Welches Tier hat die längste Schwangerschaft?",
+      "answers": [
+        {"text": "Blauwal (12 Monate)", "correct": false},
+        {"text": "Elefant (22 Monate)", "correct": true},
+        {"text": "Nashorn (18 Monate)", "correct": false}
+      ],
+      "difficulty": "easy",
+      "fun_fact": "Afrikanische Elefanten sind fast zwei Jahre schwanger — die längste Tragzeit aller Landsäugetiere. Das Kalb wiegt bei der Geburt bereits rund 100 Kilogramm.",
+      "category": "Tiere & Natur"
+    },
+    {
+      "id": "nat_012",
+      "question": "Welche Pflanze gilt als die schnellstwachsende der Welt?",
+      "answers": [
+        {"text": "Bambus", "correct": true},
+        {"text": "Eukalyptus", "correct": false},
+        {"text": "Riesenseerose", "correct": false}
+      ],
+      "difficulty": "easy",
+      "fun_fact": "Bestimmte Bambusarten können bis zu 91 cm pro Tag wachsen — das ist fast 1 cm pro Stunde. Man kann dem Bambus buchstäblich beim Wachsen zusehen.",
+      "category": "Tiere & Natur"
+    },
+    {
+      "id": "nat_013",
+      "question": "Welches Tier nutzt Werkzeuge, um Muscheln zu öffnen?",
+      "answers": [
+        {"text": "Delfin", "correct": false},
+        {"text": "Seeotter", "correct": true},
+        {"text": "Seehund", "correct": false}
+      ],
+      "difficulty": "easy",
+      "fun_fact": "Seeotter legen sich auf den Rücken, balancieren einen Stein auf dem Bauch und schlagen damit Muscheln auf. Jeder Otter hat einen Lieblingsstein, den er in einer Hauttasche unter dem Arm aufbewahrt.",
+      "category": "Tiere & Natur"
+    },
+    {
+      "id": "nat_014",
+      "question": "Wie viele Augen hat eine Biene?",
+      "answers": [
+        {"text": "2", "correct": false},
+        {"text": "5", "correct": true},
+        {"text": "8", "correct": false}
+      ],
+      "difficulty": "medium",
+      "fun_fact": "Bienen haben fünf Augen: zwei große Facettenaugen an den Seiten und drei kleine Punktaugen (Ocellen) auf dem Kopf, die Lichtintensität und Polarisation messen.",
+      "category": "Tiere & Natur"
+    },
+    {
+      "id": "nat_015",
+      "question": "Welches Tier kann über Wasser laufen?",
+      "answers": [
+        {"text": "Helmbasilisk", "correct": true},
+        {"text": "Flugfrosch", "correct": false},
+        {"text": "Wasseragame", "correct": false}
+      ],
+      "difficulty": "medium",
+      "fun_fact": "Der Helmbasilisk, auch 'Jesus-Christus-Echse' genannt, kann mit bis zu 1,5 Metern pro Sekunde über Wasser laufen. Spezielle Hautlappen an den Hinterfüßen erzeugen dabei Lufttaschen unter Wasser.",
+      "category": "Tiere & Natur"
+    },
+    {
+      "id": "nat_016",
+      "question": "Welches ist das lauteste Tier der Welt?",
+      "answers": [
+        {"text": "Blauwal", "correct": false},
+        {"text": "Pistolenkrebs", "correct": true},
+        {"text": "Brüllaffe", "correct": false}
+      ],
+      "difficulty": "hard",
+      "fun_fact": "Der Pistolenkrebs erzeugt mit seiner Schere einen Knall von über 200 Dezibel — lauter als ein Gewehrschuss. Die dabei entstehende Blase erreicht kurzzeitig fast die Temperatur der Sonnenoberfläche.",
+      "category": "Tiere & Natur"
+    },
+    {
+      "id": "nat_017",
+      "question": "Wie orientieren sich Brieftauben?",
+      "answers": [
+        {"text": "Am Magnetfeld der Erde", "correct": true},
+        {"text": "Am Sternenhimmel", "correct": false},
+        {"text": "An Gerüchen von Gewässern", "correct": false}
+      ],
+      "difficulty": "medium",
+      "fun_fact": "Brieftauben haben winzige Eisenoxid-Kristalle im Schnabel, die wie ein eingebauter Kompass funktionieren. Sie können das Magnetfeld der Erde wahrnehmen und sich so über Hunderte Kilometer orientieren.",
+      "category": "Tiere & Natur"
+    },
+    {
+      "id": "nat_018",
+      "question": "Welches Tier hat proportional das größte Gehirn?",
+      "answers": [
+        {"text": "Delfin", "correct": false},
+        {"text": "Ameise", "correct": true},
+        {"text": "Kolibri", "correct": false}
+      ],
+      "difficulty": "hard",
+      "fun_fact": "Das Gehirn einer Ameise macht etwa 15 % ihrer gesamten Körpermasse aus. Beim Menschen sind es nur rund 2 %. Ameisenkolonien zeigen kollektive Intelligenz, die einzelne Gehirne weit übersteigt.",
+      "category": "Tiere & Natur"
+    },
+    {
+      "id": "nat_019",
+      "question": "Wie viele Zähne kann ein Hai in seinem Leben produzieren?",
+      "answers": [
+        {"text": "Etwa 5.000", "correct": false},
+        {"text": "Etwa 15.000", "correct": false},
+        {"text": "Über 30.000", "correct": true}
+      ],
+      "difficulty": "medium",
+      "fun_fact": "Haie haben ein Zahnförderband: Hinter jeder Zahnreihe wachsen ständig neue nach. Ein einzelner Hai kann im Laufe seines Lebens über 30.000 Zähne produzieren.",
+      "category": "Tiere & Natur"
+    },
+    {
+      "id": "nat_020",
+      "question": "Welcher Baum ist der älteste bekannte lebende Organismus?",
+      "answers": [
+        {"text": "Mammutbaum", "correct": false},
+        {"text": "Langlebige Kiefer (Bristlecone Pine)", "correct": true},
+        {"text": "Olivenbaum", "correct": false}
+      ],
+      "difficulty": "hard",
+      "fun_fact": "Die älteste bekannte Langlebige Kiefer namens 'Methuselah' in Kalifornien ist über 4.850 Jahre alt. Ihr genauer Standort wird geheim gehalten, um sie vor Vandalismus zu schützen.",
+      "category": "Tiere & Natur"
+    },
+    {
+      "id": "nat_021",
+      "question": "Welches Tier kann monatelang ohne Kopf überleben?",
+      "answers": [
+        {"text": "Regenwurm", "correct": false},
+        {"text": "Kakerlake", "correct": true},
+        {"text": "Tausendfüßler", "correct": false}
+      ],
+      "difficulty": "medium",
+      "fun_fact": "Eine Kakerlake kann wochenlang ohne Kopf leben, weil sie durch Öffnungen am Körper atmet und ein dezentrales Nervensystem hat. Sie stirbt schließlich an Dehydrierung, weil sie nichts trinken kann.",
+      "category": "Tiere & Natur"
+    },
+    {
+      "id": "nat_022",
+      "question": "Wie schlafen Delfine?",
+      "answers": [
+        {"text": "Sie schlafen gar nicht", "correct": false},
+        {"text": "Mit nur einer Gehirnhälfte", "correct": true},
+        {"text": "Nur wenige Sekunden am Stück", "correct": false}
+      ],
+      "difficulty": "easy",
+      "fun_fact": "Delfine praktizieren 'unihemisphärischen Schlaf': Eine Gehirnhälfte schläft, die andere bleibt wach. So können sie weiter atmen und nach Raubtieren Ausschau halten. Sie schlafen mit einem Auge offen — buchstäblich.",
+      "category": "Tiere & Natur"
+    },
+    {
+      "id": "nat_023",
+      "question": "Welches Tier hat blaues Blut?",
+      "answers": [
+        {"text": "Pfeilschwanzkrebs", "correct": true},
+        {"text": "Tintenfisch", "correct": false},
+        {"text": "Seestern", "correct": false}
+      ],
+      "difficulty": "medium",
+      "fun_fact": "Das Blut des Pfeilschwanzkrebses ist kupferbasiert statt eisenbasiert und daher blau. Es wird in der Medizin eingesetzt, um Bakteriengifte in Impfstoffen nachzuweisen — ein Liter kostet über 13.000 Euro.",
+      "category": "Tiere & Natur"
+    },
+    {
+      "id": "nat_024",
+      "question": "Wie weit kann ein Floh springen — relativ zu seiner Körpergröße?",
+      "answers": [
+        {"text": "Das 50-fache seiner Körperlänge", "correct": false},
+        {"text": "Das 150-fache seiner Körperlänge", "correct": true},
+        {"text": "Das 300-fache seiner Körperlänge", "correct": false}
+      ],
+      "difficulty": "medium",
+      "fun_fact": "Ein Floh kann das 150-fache seiner Körperlänge weit springen. Übertragen auf einen Menschen wäre das ein Sprung über fast 300 Meter — die Länge von drei Fußballfeldern.",
+      "category": "Tiere & Natur"
+    },
+    {
+      "id": "nat_025",
+      "question": "Welches Tier produziert die stärkste natürliche Faser?",
+      "answers": [
+        {"text": "Seidenraupe", "correct": false},
+        {"text": "Darwins Rindenspinne", "correct": true},
+        {"text": "Muschel", "correct": false}
+      ],
+      "difficulty": "hard",
+      "fun_fact": "Die Seide von Darwins Rindenspinne ist zehnmal stärker als Kevlar und das zäheste bekannte biologische Material. Ihre Netze können Flüsse überspannen und sind bis zu 25 Meter lang.",
+      "category": "Tiere & Natur"
+    },
+    {
+      "id": "nat_026",
+      "question": "Welches Tier hat keinen Magen?",
+      "answers": [
+        {"text": "Seepferdchen", "correct": true},
+        {"text": "Seestern", "correct": false},
+        {"text": "Qualle", "correct": false}
+      ],
+      "difficulty": "medium",
+      "fun_fact": "Seepferdchen haben keinen Magen — die Nahrung wandert direkt durch den Darm. Deshalb müssen sie fast pausenlos fressen und vertilgen täglich bis zu 3.000 Kleinkrebse.",
+      "category": "Tiere & Natur"
+    },
+    {
+      "id": "nat_027",
+      "question": "Welches Tier kann ultraviolettes Licht sehen?",
+      "answers": [
+        {"text": "Katze", "correct": false},
+        {"text": "Rentier", "correct": true},
+        {"text": "Hund", "correct": false}
+      ],
+      "difficulty": "hard",
+      "fun_fact": "Rentiere können UV-Licht sehen, was ihnen im arktischen Winter hilft. Urin von Raubtieren und Flechten (ihre Nahrung) heben sich im UV-Licht deutlich vom Schnee ab.",
+      "category": "Tiere & Natur"
+    },
+    {
+      "id": "nat_028",
+      "question": "Wie viele Beine hat eine Assel?",
+      "answers": [
+        {"text": "10", "correct": false},
+        {"text": "14", "correct": true},
+        {"text": "18", "correct": false}
+      ],
+      "difficulty": "medium",
+      "fun_fact": "Asseln haben 14 Beine und sind keine Insekten, sondern Krebstiere. Sie sind die einzigen Krebstiere, die vollständig an Land leben, und atmen über kiemenähnliche Organe an den Hinterbeinen.",
+      "category": "Tiere & Natur"
+    },
+    {
+      "id": "nat_029",
+      "question": "Welches Tier kann seine Körpertemperatur auf fast 0 °C senken, um den Winter zu überstehen?",
+      "answers": [
+        {"text": "Braunbär", "correct": false},
+        {"text": "Arktisches Ziesel", "correct": true},
+        {"text": "Murmeltier", "correct": false}
+      ],
+      "difficulty": "hard",
+      "fun_fact": "Das Arktische Ziesel senkt seine Körpertemperatur während des Winterschlafs auf bis zu −2,9 °C — unter den Gefrierpunkt. Es ist das einzige Säugetier, das eine Körpertemperatur unter Null überlebt.",
+      "category": "Tiere & Natur"
+    },
+    {
+      "id": "nat_030",
+      "question": "Welcher Pilz ist der größte bekannte Organismus der Erde?",
+      "answers": [
+        {"text": "Riesenbovist", "correct": false},
+        {"text": "Hallimasch", "correct": true},
+        {"text": "Fliegenpilz", "correct": false}
+      ],
+      "difficulty": "hard",
+      "fun_fact": "Ein Hallimasch-Pilz (Armillaria ostoyae) in Oregon erstreckt sich über 9 Quadratkilometer unter der Erde und ist geschätzt 2.400 Jahre alt. Sein Myzel-Netzwerk ist größer als 1.200 Fußballfelder.",
+      "category": "Tiere & Natur"
+    },
+    {
+      "id": "nat_031",
+      "question": "Welches Tier hat Fingerabdrücke, die denen von Menschen fast identisch sind?",
+      "answers": [
+        {"text": "Schimpanse", "correct": false},
+        {"text": "Koala", "correct": true},
+        {"text": "Gorilla", "correct": false}
+      ],
+      "difficulty": "medium",
+      "fun_fact": "Koala-Fingerabdrücke sind den menschlichen so ähnlich, dass sie selbst unter dem Mikroskop kaum zu unterscheiden sind. Koalas sind nicht mit Primaten verwandt — die Fingerabdrücke entwickelten sich unabhängig.",
+      "category": "Tiere & Natur"
+    },
+    {
+      "id": "nat_032",
+      "question": "Welches Tier kann sich selbst klonen?",
+      "answers": [
+        {"text": "Marmorkrebs", "correct": true},
+        {"text": "Axolotl", "correct": false},
+        {"text": "Seestern", "correct": false}
+      ],
+      "difficulty": "medium",
+      "fun_fact": "Der Marmorkrebs vermehrt sich ausschließlich durch Jungfernzeugung — jedes Tier ist ein genetischer Klon seiner Mutter. Die gesamte Art stammt vermutlich von einem einzigen Tier aus einem deutschen Aquarium der 1990er Jahre.",
+      "category": "Tiere & Natur"
+    },
+    {
+      "id": "nat_033",
+      "question": "Wie viele Gerüche kann ein Hund unterscheiden?",
+      "answers": [
+        {"text": "Etwa 10.000", "correct": false},
+        {"text": "Etwa 1 Million", "correct": false},
+        {"text": "Über 1 Billion", "correct": true}
+      ],
+      "difficulty": "medium",
+      "fun_fact": "Die Nase eines Hundes hat bis zu 300 Millionen Riechrezeptoren (der Mensch hat 6 Millionen). Hunde können einzelne Moleküle erkennen — das entspricht einem Teelöffel Zucker in zwei olympischen Schwimmbecken.",
+      "category": "Tiere & Natur"
+    },
+    {
+      "id": "nat_034",
+      "question": "Welches Tier hat die meisten Beine?",
+      "answers": [
+        {"text": "Tausendfüßler mit 750 Beinen", "correct": false},
+        {"text": "Eumillipes persephone mit über 1.300 Beinen", "correct": true},
+        {"text": "Riesenschnurfüßer mit 400 Beinen", "correct": false}
+      ],
+      "difficulty": "hard",
+      "fun_fact": "Eumillipes persephone wurde 2021 in Australien entdeckt und hat bis zu 1.306 Beine — das erste Tier, das den Namen 'Tausendfüßler' tatsächlich verdient hat.",
+      "category": "Tiere & Natur"
+    },
+    {
+      "id": "nat_035",
+      "question": "Welches Tier kann seinen eigenen Schwanz nachwachsen lassen?",
+      "answers": [
+        {"text": "Gecko", "correct": false},
+        {"text": "Axolotl", "correct": true},
+        {"text": "Leguan", "correct": false}
+      ],
+      "difficulty": "easy",
+      "fun_fact": "Der Axolotl kann nicht nur seinen Schwanz, sondern auch Gliedmaßen, Organe und sogar Teile seines Gehirns vollständig regenerieren — ohne Narbenbildung. Forscher untersuchen ihn intensiv für die Regenerationsmedizin.",
+      "category": "Tiere & Natur"
+    },
+    {
+      "id": "nat_036",
+      "question": "Was ist das schnellste Tier der Welt im Sturzflug?",
+      "answers": [
+        {"text": "Steinadler", "correct": false},
+        {"text": "Wanderfalke", "correct": true},
+        {"text": "Mauersegler", "correct": false}
+      ],
+      "difficulty": "easy",
+      "fun_fact": "Der Wanderfalke erreicht im Sturzflug Geschwindigkeiten von über 380 km/h — schneller als ein ICE. Spezielle Nasenlöcher mit Kegeln lenken den Luftstrom um, damit er bei diesen Geschwindigkeiten atmen kann.",
+      "category": "Tiere & Natur"
+    },
+    {
+      "id": "nat_037",
+      "question": "Welche Qualle ist theoretisch unsterblich?",
+      "answers": [
+        {"text": "Leuchtqualle", "correct": false},
+        {"text": "Turritopsis dohrnii", "correct": true},
+        {"text": "Portugiesische Galeere", "correct": false}
+      ],
+      "difficulty": "medium",
+      "fun_fact": "Turritopsis dohrnii kann ihren Lebenszyklus umkehren und sich von einem ausgewachsenen Tier zurück in einen Polypen verwandeln — wieder und wieder. Sie ist das einzige bekannte biologisch unsterbliche Tier.",
+      "category": "Tiere & Natur"
+    },
+    {
+      "id": "nat_038",
+      "question": "Wie viele Arten von Käfern gibt es schätzungsweise auf der Erde?",
+      "answers": [
+        {"text": "Etwa 50.000", "correct": false},
+        {"text": "Etwa 150.000", "correct": false},
+        {"text": "Etwa 400.000", "correct": true}
+      ],
+      "difficulty": "medium",
+      "fun_fact": "Mit rund 400.000 bekannten Arten sind Käfer die artenreichste Ordnung im Tierreich. Der Biologe J.B.S. Haldane soll gesagt haben, der Schöpfer habe 'eine übermäßige Vorliebe für Käfer' gehabt.",
+      "category": "Tiere & Natur"
+    },
+    {
+      "id": "nat_039",
+      "question": "Welches Tier hat drei Augenlider pro Auge?",
+      "answers": [
+        {"text": "Eule", "correct": false},
+        {"text": "Kamel", "correct": true},
+        {"text": "Krokodil", "correct": false}
+      ],
+      "difficulty": "medium",
+      "fun_fact": "Kamele haben drei Augenlider pro Auge: zwei mit Wimpern und ein durchsichtiges drittes, das wie eine Schutzbrille gegen Sandstürme wirkt. Sie können mit geschlossenem dritten Lid noch sehen.",
+      "category": "Tiere & Natur"
+    },
+    {
+      "id": "nat_040",
+      "question": "Welches Tier frisst sein eigenes Gehirn?",
+      "answers": [
+        {"text": "Seescheide", "correct": true},
+        {"text": "Seegurke", "correct": false},
+        {"text": "Schwamm", "correct": false}
+      ],
+      "difficulty": "hard",
+      "fun_fact": "Die Seescheide schwimmt als Larve umher und hat ein einfaches Gehirn. Sobald sie sich festsetzt, verdaut sie ihr eigenes Gehirn und Nervensystem, weil sie es nicht mehr braucht.",
+      "category": "Tiere & Natur"
+    },
+    {
+      "id": "nat_041",
+      "question": "Welches Tier kann am längsten ohne Wasser überleben?",
+      "answers": [
+        {"text": "Kamel", "correct": false},
+        {"text": "Kängururatte", "correct": true},
+        {"text": "Wüstenschildkröte", "correct": false}
+      ],
+      "difficulty": "medium",
+      "fun_fact": "Die Kängururatte kann ihr gesamtes Leben ohne einen Tropfen Wasser verbringen. Sie gewinnt alle Flüssigkeit aus der Verstoffwechselung trockener Samen und hat extrem effiziente Nieren.",
+      "category": "Tiere & Natur"
+    },
+    {
+      "id": "nat_042",
+      "question": "Welche Pflanze kann ihre Blätter bei Berührung einklappen?",
+      "answers": [
+        {"text": "Venusfliegenfalle", "correct": false},
+        {"text": "Mimose (Mimosa pudica)", "correct": true},
+        {"text": "Sonnentau", "correct": false}
+      ],
+      "difficulty": "easy",
+      "fun_fact": "Die Mimose klappt ihre Blätter innerhalb von Sekunden bei Berührung zusammen. Erstaunlicherweise kann sie lernen: Nach wiederholtem harmlosen Reiz reagiert sie nicht mehr — eine Form von Gedächtnis ohne Gehirn.",
+      "category": "Tiere & Natur"
+    },
+    {
+      "id": "nat_043",
+      "question": "Wie viele Gehirne hat ein Blutegel?",
+      "answers": [
+        {"text": "1", "correct": false},
+        {"text": "16", "correct": false},
+        {"text": "32", "correct": true}
+      ],
+      "difficulty": "hard",
+      "fun_fact": "Ein Blutegel hat 32 Gehirne — technisch gesehen 32 Ganglien, die jeweils als eigenständiges Mini-Gehirn fungieren. Dazu kommen 10 Mägen, 3 Kiefer und 300 Zähne.",
+      "category": "Tiere & Natur"
+    },
+    {
+      "id": "nat_044",
+      "question": "Welches Tier schläft bis zu 22 Stunden am Tag?",
+      "answers": [
+        {"text": "Faultier", "correct": false},
+        {"text": "Koala", "correct": true},
+        {"text": "Katzenmaki", "correct": false}
+      ],
+      "difficulty": "easy",
+      "fun_fact": "Koalas schlafen bis zu 22 Stunden am Tag, weil Eukalyptusblätter extrem nährstoffarm sind und viel Energie zur Verdauung benötigen. Ihr Blinddarm ist mit 2 Metern der längste im Verhältnis zur Körpergröße.",
+      "category": "Tiere & Natur"
+    },
+    {
+      "id": "nat_045",
+      "question": "Welcher Fisch kann an Land klettern und Bäume erklimmen?",
+      "answers": [
+        {"text": "Schlammspringer", "correct": false},
+        {"text": "Kletterbarsch", "correct": true},
+        {"text": "Lungenfisch", "correct": false}
+      ],
+      "difficulty": "medium",
+      "fun_fact": "Der Kletterbarsch (Anabas testudineus) kann mit seinen Kiemendeckeln und Flossen an Land kriechen und sogar Bäume erklimmen. Er atmet dabei über ein spezielles Labyrinthorgan atmosphärische Luft.",
+      "category": "Tiere & Natur"
+    },
+    {
+      "id": "nat_046",
+      "question": "Wie lange dauert es, bis eine Plastikflasche in der Natur zersetzt ist?",
+      "answers": [
+        {"text": "Etwa 100 Jahre", "correct": false},
+        {"text": "Etwa 450 Jahre", "correct": true},
+        {"text": "Etwa 1.000 Jahre", "correct": false}
+      ],
+      "difficulty": "easy",
+      "fun_fact": "Eine PET-Flasche braucht rund 450 Jahre zum Zersetzen. Dabei zerfällt sie in immer kleineres Mikroplastik, verschwindet aber nie vollständig. Bisher wurden erst 9 % allen jemals produzierten Plastiks recycelt.",
+      "category": "Tiere & Natur"
+    },
+    {
+      "id": "nat_047",
+      "question": "Welches Tier kann elektrische Felder erzeugen und damit jagen?",
+      "answers": [
+        {"text": "Zitteraal", "correct": true},
+        {"text": "Hammerhai", "correct": false},
+        {"text": "Rochen", "correct": false}
+      ],
+      "difficulty": "easy",
+      "fun_fact": "Der Zitteraal kann Stromstöße von bis zu 860 Volt erzeugen — genug, um ein Pferd zu betäuben. Er ist übrigens kein Aal, sondern ein Neuwelt-Messerfisch und näher mit dem Wels verwandt.",
+      "category": "Tiere & Natur"
+    },
+    {
+      "id": "nat_048",
+      "question": "Welches Tier hat das größte Auge im Tierreich?",
+      "answers": [
+        {"text": "Blauwal", "correct": false},
+        {"text": "Koloss-Kalmar", "correct": true},
+        {"text": "Schwertfisch", "correct": false}
+      ],
+      "difficulty": "medium",
+      "fun_fact": "Die Augen des Koloss-Kalmars haben einen Durchmesser von bis zu 27 cm — so groß wie ein Fußball. Damit kann er in der Tiefsee noch schwache Biolumineszenz von Pottwalen erkennen.",
+      "category": "Tiere & Natur"
+    },
+    {
+      "id": "nat_049",
+      "question": "Welches Insekt kann das 1.000-fache seines Eigengewichts heben?",
+      "answers": [
+        {"text": "Blattschneiderameise", "correct": false},
+        {"text": "Nashornkäfer", "correct": true},
+        {"text": "Herkulesbiene", "correct": false}
+      ],
+      "difficulty": "medium",
+      "fun_fact": "Der Nashornkäfer kann das 850- bis 1.141-fache seines Eigengewichts tragen. Übertragen auf einen Menschen wäre das, als würde man 65 Tonnen heben — das Gewicht eines Kampfpanzers.",
+      "category": "Tiere & Natur"
+    },
+    {
+      "id": "nat_050",
+      "question": "Welches Lebewesen hat mehr Nervenzellen in seinen Armen als in seinem Gehirn?",
+      "answers": [
+        {"text": "Seestern", "correct": false},
+        {"text": "Oktopus", "correct": true},
+        {"text": "Qualle", "correct": false}
+      ],
+      "difficulty": "easy",
+      "fun_fact": "Zwei Drittel der 500 Millionen Neuronen eines Oktopus sitzen in seinen Armen, nicht im Gehirn. Jeder Arm kann unabhängig schmecken, fühlen und Entscheidungen treffen — selbst abgetrennte Arme reagieren noch minutenlang.",
+      "category": "Tiere & Natur"
+    }
+  ]
+}

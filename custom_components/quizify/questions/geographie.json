@@ -4,7 +4,7 @@
   "version": "1.0",
   "questions": [
     {
-      "id": "geo-001",
+      "id": "geo_001",
       "question": "Welches Land hat die meisten Zeitzonen?",
       "answers": [
         {"text": "Frankreich", "correct": true},
@@ -12,31 +12,595 @@
         {"text": "USA", "correct": false}
       ],
       "difficulty": "hard",
-      "fun_fact": "Frankreich hat dank seiner Überseegebiete 12 Zeitzonen — mehr als jedes andere Land der Welt.",
+      "fun_fact": "Frankreich hat dank seiner Überseegebiete 12 Zeitzonen — mehr als jedes andere Land der Welt, sogar mehr als Russland mit 11.",
       "category": "Geographie"
     },
     {
-      "id": "geo-002",
-      "question": "Was ist die Hauptstadt von Australien?",
+      "id": "geo_002",
+      "question": "In welcher Stadt regnet es mehr: London oder Sydney?",
       "answers": [
-        {"text": "Sydney", "correct": false},
-        {"text": "Canberra", "correct": true},
-        {"text": "Melbourne", "correct": false}
-      ],
-      "difficulty": "easy",
-      "fun_fact": "Canberra wurde als Kompromiss gewählt, weil sich Sydney und Melbourne nicht einigen konnten, welche Stadt Hauptstadt werden sollte.",
-      "category": "Geographie"
-    },
-    {
-      "id": "geo-003",
-      "question": "Durch wie viele Länder fließt die Donau?",
-      "answers": [
-        {"text": "7", "correct": false},
-        {"text": "10", "correct": true},
-        {"text": "13", "correct": false}
+        {"text": "Sydney", "correct": true},
+        {"text": "London", "correct": false},
+        {"text": "Beide gleich viel", "correct": false}
       ],
       "difficulty": "medium",
-      "fun_fact": "Die Donau fließt durch 10 Länder und ist damit der internationalste Fluss der Welt.",
+      "fun_fact": "Sydney bekommt im Durchschnitt rund 1.200 mm Regen pro Jahr, London nur etwa 600 mm. Londons Ruf als Regenstadt ist stark übertrieben.",
+      "category": "Geographie"
+    },
+    {
+      "id": "geo_003",
+      "question": "Welches Land hat die meisten Seen der Welt?",
+      "answers": [
+        {"text": "Kanada", "correct": true},
+        {"text": "Finnland", "correct": false},
+        {"text": "Schweden", "correct": false}
+      ],
+      "difficulty": "medium",
+      "fun_fact": "Kanada besitzt über 60 % aller Seen der Welt. Es hat mehr Seen als alle anderen Länder zusammen.",
+      "category": "Geographie"
+    },
+    {
+      "id": "geo_004",
+      "question": "Welche Hauptstadt liegt am höchsten über dem Meeresspiegel?",
+      "answers": [
+        {"text": "La Paz, Bolivien", "correct": true},
+        {"text": "Quito, Ecuador", "correct": false},
+        {"text": "Bogotá, Kolumbien", "correct": false}
+      ],
+      "difficulty": "medium",
+      "fun_fact": "La Paz liegt auf etwa 3.640 Metern Höhe. Wasser kocht dort schon bei ca. 87 °C, was das Kochen deutlich länger dauern lässt.",
+      "category": "Geographie"
+    },
+    {
+      "id": "geo_005",
+      "question": "Welches afrikanische Land war nie eine europäische Kolonie?",
+      "answers": [
+        {"text": "Äthiopien", "correct": true},
+        {"text": "Ghana", "correct": false},
+        {"text": "Marokko", "correct": false}
+      ],
+      "difficulty": "easy",
+      "fun_fact": "Äthiopien besiegte 1896 die italienische Armee in der Schlacht von Adua und blieb als eines der wenigen afrikanischen Länder stets unabhängig.",
+      "category": "Geographie"
+    },
+    {
+      "id": "geo_006",
+      "question": "Welches Land hat mehr Einwohner als ganz Südamerika zusammen?",
+      "answers": [
+        {"text": "Indien", "correct": true},
+        {"text": "China", "correct": false},
+        {"text": "Indonesien", "correct": false}
+      ],
+      "difficulty": "medium",
+      "fun_fact": "Indien hat über 1,4 Milliarden Einwohner, Südamerika insgesamt nur rund 430 Millionen. Allein der indische Bundesstaat Uttar Pradesh hat mehr Einwohner als Brasilien.",
+      "category": "Geographie"
+    },
+    {
+      "id": "geo_007",
+      "question": "Welcher Fluss ist länger: der Nil oder der Amazonas?",
+      "answers": [
+        {"text": "Es ist umstritten — beide ca. gleich lang", "correct": true},
+        {"text": "Der Nil, eindeutig", "correct": false},
+        {"text": "Der Amazonas, eindeutig", "correct": false}
+      ],
+      "difficulty": "hard",
+      "fun_fact": "Je nach Messmethode und Definition der Quelle gelten beide als der längste Fluss der Welt. Neuere Messungen sehen den Amazonas vorne, traditionell gilt der Nil.",
+      "category": "Geographie"
+    },
+    {
+      "id": "geo_008",
+      "question": "Was ist die Hauptstadt von Myanmar?",
+      "answers": [
+        {"text": "Naypyidaw", "correct": true},
+        {"text": "Rangun", "correct": false},
+        {"text": "Mandalay", "correct": false}
+      ],
+      "difficulty": "hard",
+      "fun_fact": "Naypyidaw wurde 2005 zur Hauptstadt, ist aber eine fast menschenleere Planstadt mit 20-spurigen Autobahnen, auf denen kaum Autos fahren.",
+      "category": "Geographie"
+    },
+    {
+      "id": "geo_009",
+      "question": "Welches Land grenzt an die meisten anderen Länder?",
+      "answers": [
+        {"text": "China", "correct": true},
+        {"text": "Russland", "correct": false},
+        {"text": "Brasilien", "correct": false}
+      ],
+      "difficulty": "medium",
+      "fun_fact": "China teilt sich Grenzen mit 14 Nachbarländern — genauso viele wie Russland. Beide halten gemeinsam den Rekord.",
+      "category": "Geographie"
+    },
+    {
+      "id": "geo_010",
+      "question": "Welcher See ist der tiefste der Welt?",
+      "answers": [
+        {"text": "Baikalsee", "correct": true},
+        {"text": "Tanganjikasee", "correct": false},
+        {"text": "Kaspisches Meer", "correct": false}
+      ],
+      "difficulty": "easy",
+      "fun_fact": "Der Baikalsee in Sibirien ist mit 1.642 Metern der tiefste See der Welt und enthält etwa 20 % des gesamten ungefrorenen Süßwassers der Erde.",
+      "category": "Geographie"
+    },
+    {
+      "id": "geo_011",
+      "question": "In welchem Land liegt der trockenste Ort der Erde?",
+      "answers": [
+        {"text": "Chile", "correct": true},
+        {"text": "Ägypten", "correct": false},
+        {"text": "Namibia", "correct": false}
+      ],
+      "difficulty": "medium",
+      "fun_fact": "In der Atacama-Wüste in Chile gibt es Wetterstationen, die noch nie Regen aufgezeichnet haben. Teile der Wüste ähneln dem Mars so sehr, dass die NASA dort Rover testet.",
+      "category": "Geographie"
+    },
+    {
+      "id": "geo_012",
+      "question": "Welches ist das einzige Land der Welt, das vollständig innerhalb eines anderen Landes liegt — und zwar zweimal?",
+      "answers": [
+        {"text": "Kein Land — aber San Marino und Vatikanstadt liegen beide komplett in Italien", "correct": true},
+        {"text": "Lesotho", "correct": false},
+        {"text": "Monaco", "correct": false}
+      ],
+      "difficulty": "hard",
+      "fun_fact": "San Marino und die Vatikanstadt sind beide vollständig von Italien umgeben. Lesotho ist zwar auch eine Enklave, liegt aber in Südafrika, nicht in Italien.",
+      "category": "Geographie"
+    },
+    {
+      "id": "geo_013",
+      "question": "Welcher Kontinent hat die meisten Länder?",
+      "answers": [
+        {"text": "Afrika", "correct": true},
+        {"text": "Europa", "correct": false},
+        {"text": "Asien", "correct": false}
+      ],
+      "difficulty": "easy",
+      "fun_fact": "Afrika hat 54 anerkannte Staaten — mehr als jeder andere Kontinent. Viele dieser Grenzen wurden von Kolonialmächten mit dem Lineal auf der Karte gezogen.",
+      "category": "Geographie"
+    },
+    {
+      "id": "geo_014",
+      "question": "Wie heißt die größte Insel der Welt, die kein eigener Kontinent ist?",
+      "answers": [
+        {"text": "Grönland", "correct": true},
+        {"text": "Borneo", "correct": false},
+        {"text": "Madagaskar", "correct": false}
+      ],
+      "difficulty": "easy",
+      "fun_fact": "Grönland ist mit 2,16 Millionen km² riesig, hat aber nur rund 56.000 Einwohner. Es gehört politisch zu Dänemark, liegt aber geographisch in Nordamerika.",
+      "category": "Geographie"
+    },
+    {
+      "id": "geo_015",
+      "question": "Welche Wüste ist die größte der Welt?",
+      "answers": [
+        {"text": "Antarktis", "correct": true},
+        {"text": "Sahara", "correct": false},
+        {"text": "Gobi", "correct": false}
+      ],
+      "difficulty": "medium",
+      "fun_fact": "Die Antarktis ist technisch eine Wüste, da sie weniger als 250 mm Niederschlag pro Jahr erhält. Mit 14 Millionen km² ist sie größer als die Sahara.",
+      "category": "Geographie"
+    },
+    {
+      "id": "geo_016",
+      "question": "Welches europäische Land hat die niedrigste Bevölkerungsdichte?",
+      "answers": [
+        {"text": "Island", "correct": true},
+        {"text": "Norwegen", "correct": false},
+        {"text": "Finnland", "correct": false}
+      ],
+      "difficulty": "medium",
+      "fun_fact": "Island hat nur etwa 3,5 Einwohner pro Quadratkilometer. Es gibt dort mehr Schafe als Menschen — rund 800.000 Schafe bei etwa 380.000 Einwohnern.",
+      "category": "Geographie"
+    },
+    {
+      "id": "geo_017",
+      "question": "Welches Land hat die längste Küstenlinie der Welt?",
+      "answers": [
+        {"text": "Kanada", "correct": true},
+        {"text": "Indonesien", "correct": false},
+        {"text": "Australien", "correct": false}
+      ],
+      "difficulty": "easy",
+      "fun_fact": "Kanadas Küstenlinie ist über 202.000 km lang. Wenn man sie abschreiten würde, bräuchte man bei 8 Stunden Gehen pro Tag über 19 Jahre.",
+      "category": "Geographie"
+    },
+    {
+      "id": "geo_018",
+      "question": "In welchem Land befindet sich der geografische Mittelpunkt Europas?",
+      "answers": [
+        {"text": "Litauen", "correct": true},
+        {"text": "Deutschland", "correct": false},
+        {"text": "Polen", "correct": false}
+      ],
+      "difficulty": "hard",
+      "fun_fact": "Der vom Institut Géographique National berechnete Mittelpunkt Europas liegt nahe dem Dorf Purnuškės nördlich von Vilnius in Litauen.",
+      "category": "Geographie"
+    },
+    {
+      "id": "geo_019",
+      "question": "Welcher Berg wächst jedes Jahr noch weiter in die Höhe?",
+      "answers": [
+        {"text": "Mount Everest", "correct": true},
+        {"text": "Mont Blanc", "correct": false},
+        {"text": "Kilimandscharo", "correct": false}
+      ],
+      "difficulty": "easy",
+      "fun_fact": "Der Mount Everest wächst durch die tektonische Kollision zwischen der indischen und der eurasischen Platte jährlich um etwa 4 mm.",
+      "category": "Geographie"
+    },
+    {
+      "id": "geo_020",
+      "question": "Welches Land hat die Form eines Stiefels?",
+      "answers": [
+        {"text": "Italien", "correct": true},
+        {"text": "Portugal", "correct": false},
+        {"text": "Kroatien", "correct": false}
+      ],
+      "difficulty": "easy",
+      "fun_fact": "Italiens Stiefelform ist so markant, dass sie als eines der am leichtesten erkennbaren Länder auf jeder Weltkarte gilt. Die Insel Sizilien ist dabei der ‚Ball', den der Stiefel kickt.",
+      "category": "Geographie"
+    },
+    {
+      "id": "geo_021",
+      "question": "Welches Land produziert den meisten Kaffee der Welt?",
+      "answers": [
+        {"text": "Brasilien", "correct": true},
+        {"text": "Kolumbien", "correct": false},
+        {"text": "Vietnam", "correct": false}
+      ],
+      "difficulty": "easy",
+      "fun_fact": "Brasilien produziert rund ein Drittel des gesamten Weltkaffees. Im Jahr 2021 zerstörte ein ungewöhnlicher Frost in Brasilien so viele Kaffeepflanzen, dass weltweit die Preise stiegen.",
+      "category": "Geographie"
+    },
+    {
+      "id": "geo_022",
+      "question": "Welches Meer ist eigentlich ein See?",
+      "answers": [
+        {"text": "Das Kaspische Meer", "correct": true},
+        {"text": "Das Rote Meer", "correct": false},
+        {"text": "Das Tote Meer", "correct": false}
+      ],
+      "difficulty": "easy",
+      "fun_fact": "Das Kaspische Meer ist der größte See der Welt. Es heißt ‚Meer' wegen seiner Größe und seines Salzgehalts, hat aber keine natürliche Verbindung zu den Ozeanen.",
+      "category": "Geographie"
+    },
+    {
+      "id": "geo_023",
+      "question": "Welcher Staat der USA wurde von Russland gekauft?",
+      "answers": [
+        {"text": "Alaska", "correct": true},
+        {"text": "Hawaii", "correct": false},
+        {"text": "Maine", "correct": false}
+      ],
+      "difficulty": "easy",
+      "fun_fact": "Die USA kauften Alaska 1867 von Russland für 7,2 Millionen Dollar — umgerechnet etwa 2 Cent pro Hektar. Kritiker nannten es damals ‚Seward's Eisbox'.",
+      "category": "Geographie"
+    },
+    {
+      "id": "geo_024",
+      "question": "In welchem Land kann man gleichzeitig in der westlichen und östlichen Hemisphäre stehen?",
+      "answers": [
+        {"text": "Großbritannien", "correct": true},
+        {"text": "Spanien", "correct": false},
+        {"text": "Ghana", "correct": false}
+      ],
+      "difficulty": "medium",
+      "fun_fact": "Der Nullmeridian verläuft durch das Royal Observatory in Greenwich, London. Man kann dort buchstäblich mit einem Fuß im Osten und dem anderen im Westen stehen.",
+      "category": "Geographie"
+    },
+    {
+      "id": "geo_025",
+      "question": "Welches Land hat die meisten aktiven Vulkane?",
+      "answers": [
+        {"text": "Indonesien", "correct": true},
+        {"text": "Japan", "correct": false},
+        {"text": "Island", "correct": false}
+      ],
+      "difficulty": "medium",
+      "fun_fact": "Indonesien liegt auf dem Pazifischen Feuerring und hat etwa 130 aktive Vulkane. Der Ausbruch des Krakatau 1883 war so laut, dass man ihn fast 5.000 km weit hören konnte.",
+      "category": "Geographie"
+    },
+    {
+      "id": "geo_026",
+      "question": "Welche zwei Kontinente sind durch den Bosporus getrennt?",
+      "answers": [
+        {"text": "Europa und Asien", "correct": true},
+        {"text": "Europa und Afrika", "correct": false},
+        {"text": "Asien und Afrika", "correct": false}
+      ],
+      "difficulty": "easy",
+      "fun_fact": "Istanbul ist die einzige Großstadt der Welt, die auf zwei Kontinenten liegt. Täglich pendeln Millionen Menschen per Fähre zwischen Europa und Asien.",
+      "category": "Geographie"
+    },
+    {
+      "id": "geo_027",
+      "question": "Welches Land wechselte 2018 seinen Namen?",
+      "answers": [
+        {"text": "Nordmazedonien (vorher Mazedonien)", "correct": true},
+        {"text": "Eswatini (vorher Swasiland)", "correct": false},
+        {"text": "Tschechien (vorher Tschechische Republik)", "correct": false}
+      ],
+      "difficulty": "hard",
+      "fun_fact": "Mazedonien benannte sich in Nordmazedonien um, um einen jahrzehntelangen Namensstreit mit Griechenland beizulegen. Eswatini (ehemals Swasiland) änderte seinen Namen ebenfalls 2018.",
+      "category": "Geographie"
+    },
+    {
+      "id": "geo_028",
+      "question": "Welches Land hat mehr als 17.000 Inseln?",
+      "answers": [
+        {"text": "Indonesien", "correct": true},
+        {"text": "Philippinen", "correct": false},
+        {"text": "Griechenland", "correct": false}
+      ],
+      "difficulty": "medium",
+      "fun_fact": "Indonesien besteht aus über 17.500 Inseln, von denen nur etwa 6.000 bewohnt sind. Es erstreckt sich über eine Breite von mehr als 5.000 km — so weit wie von Lissabon nach Moskau.",
+      "category": "Geographie"
+    },
+    {
+      "id": "geo_029",
+      "question": "Welches europäische Land hat keine einzige Universität?",
+      "answers": [
+        {"text": "Vatikanstadt", "correct": true},
+        {"text": "San Marino", "correct": false},
+        {"text": "Liechtenstein", "correct": false}
+      ],
+      "difficulty": "hard",
+      "fun_fact": "Die Vatikanstadt hat zwar die Vatikanische Bibliothek und die Päpstliche Akademie der Wissenschaften, aber keine eigene Universität im klassischen Sinne. Mit rund 800 Einwohnern ist sie der kleinste Staat der Welt.",
+      "category": "Geographie"
+    },
+    {
+      "id": "geo_030",
+      "question": "Welches Land durchquert die meisten Breitengrade?",
+      "answers": [
+        {"text": "Chile", "correct": true},
+        {"text": "Brasilien", "correct": false},
+        {"text": "Russland", "correct": false}
+      ],
+      "difficulty": "hard",
+      "fun_fact": "Chile erstreckt sich über mehr als 4.300 km von Nord nach Süd, ist aber im Durchschnitt nur 177 km breit. Es reicht von der Wüste bis zum Eis der Antarktis-Nähe.",
+      "category": "Geographie"
+    },
+    {
+      "id": "geo_031",
+      "question": "Welche Stadt war Hauptstadt von zwei verschiedenen Ländern gleichzeitig?",
+      "answers": [
+        {"text": "Berlin (BRD und DDR nach Wiedervereinigung — aber eigentlich: Bratislava war nie Hauptstadt zweier Staaten gleichzeitig. Nikosia ist die geteilte Hauptstadt)", "correct": false},
+        {"text": "Nikosia", "correct": true},
+        {"text": "Jerusalem", "correct": false}
+      ],
+      "difficulty": "hard",
+      "fun_fact": "Nikosia auf Zypern ist die letzte geteilte Hauptstadt Europas. Der nördliche Teil ist die Hauptstadt der international kaum anerkannten Türkischen Republik Nordzypern, der südliche Teil die Hauptstadt der Republik Zypern.",
+      "category": "Geographie"
+    },
+    {
+      "id": "geo_032",
+      "question": "Welches Land hat die meisten Pyramiden?",
+      "answers": [
+        {"text": "Sudan", "correct": true},
+        {"text": "Ägypten", "correct": false},
+        {"text": "Mexiko", "correct": false}
+      ],
+      "difficulty": "medium",
+      "fun_fact": "Sudan hat über 200 Pyramiden — fast doppelt so viele wie Ägypten. Die nubischen Pyramiden in Meroë sind kleiner, aber zahlreicher und weniger bekannt.",
+      "category": "Geographie"
+    },
+    {
+      "id": "geo_033",
+      "question": "Wie viel Prozent der Erdoberfläche ist mit Wasser bedeckt?",
+      "answers": [
+        {"text": "Etwa 71 %", "correct": true},
+        {"text": "Etwa 55 %", "correct": false},
+        {"text": "Etwa 83 %", "correct": false}
+      ],
+      "difficulty": "easy",
+      "fun_fact": "Obwohl 71 % der Erde von Wasser bedeckt sind, sind über 96 % davon Salzwasser. Nur ein winziger Bruchteil ist als Trinkwasser verfügbar.",
+      "category": "Geographie"
+    },
+    {
+      "id": "geo_034",
+      "question": "Welches Land ist der größte Inselstaat der Welt nach Fläche?",
+      "answers": [
+        {"text": "Indonesien", "correct": true},
+        {"text": "Madagaskar", "correct": false},
+        {"text": "Japan", "correct": false}
+      ],
+      "difficulty": "medium",
+      "fun_fact": "Indonesien hat eine Gesamtfläche von fast 1,9 Millionen km² und ist damit der größte Inselstaat. Es wäre das fünftgrößte Land Europas.",
+      "category": "Geographie"
+    },
+    {
+      "id": "geo_035",
+      "question": "Wie heißt der tiefste Punkt der Erde an Land?",
+      "answers": [
+        {"text": "Das Tote Meer", "correct": true},
+        {"text": "Death Valley", "correct": false},
+        {"text": "Turpan-Senke", "correct": false}
+      ],
+      "difficulty": "easy",
+      "fun_fact": "Die Oberfläche des Toten Meeres liegt etwa 430 Meter unter dem Meeresspiegel und sinkt jedes Jahr weiter ab. Der Salzgehalt ist so hoch, dass man darin nicht untergehen kann.",
+      "category": "Geographie"
+    },
+    {
+      "id": "geo_036",
+      "question": "Welches Land hat die Zeitzone mit dem größten Versatz zur Nachbarzone?",
+      "answers": [
+        {"text": "China", "correct": true},
+        {"text": "Indien", "correct": false},
+        {"text": "Russland", "correct": false}
+      ],
+      "difficulty": "hard",
+      "fun_fact": "Obwohl China fünf geografische Zeitzonen umspannt, nutzt das ganze Land nur eine einzige Zeitzone (UTC+8). An der Grenze zu Afghanistan springt die Uhr um 3,5 Stunden.",
+      "category": "Geographie"
+    },
+    {
+      "id": "geo_037",
+      "question": "Welche Stadt hat die meisten Einwohner der Welt (Metropolregion)?",
+      "answers": [
+        {"text": "Tokio", "correct": true},
+        {"text": "Shanghai", "correct": false},
+        {"text": "Delhi", "correct": false}
+      ],
+      "difficulty": "medium",
+      "fun_fact": "Die Metropolregion Tokio hat über 37 Millionen Einwohner — mehr als ganz Kanada. Das Bahnsystem dort transportiert täglich rund 40 Millionen Passagiere.",
+      "category": "Geographie"
+    },
+    {
+      "id": "geo_038",
+      "question": "Welches Land liegt in vier Hemisphären gleichzeitig?",
+      "answers": [
+        {"text": "Kiribati", "correct": true},
+        {"text": "Ecuador", "correct": false},
+        {"text": "Indonesien", "correct": false}
+      ],
+      "difficulty": "hard",
+      "fun_fact": "Der Inselstaat Kiribati erstreckt sich über den Äquator und die Datumsgrenze und liegt damit in der nördlichen, südlichen, östlichen und westlichen Hemisphäre.",
+      "category": "Geographie"
+    },
+    {
+      "id": "geo_039",
+      "question": "Wie heißt der längste Gebirgszug der Welt?",
+      "answers": [
+        {"text": "Die Anden", "correct": true},
+        {"text": "Der Himalaya", "correct": false},
+        {"text": "Die Rocky Mountains", "correct": false}
+      ],
+      "difficulty": "easy",
+      "fun_fact": "Die Anden erstrecken sich über 7.000 km entlang der Westküste Südamerikas durch sieben Länder. Der längste Gebirgszug überhaupt ist allerdings der Mittelozeanische Rücken unter Wasser.",
+      "category": "Geographie"
+    },
+    {
+      "id": "geo_040",
+      "question": "Welches Land hat mehr englischsprachige Einwohner als Großbritannien?",
+      "answers": [
+        {"text": "Nigeria", "correct": true},
+        {"text": "Südafrika", "correct": false},
+        {"text": "Kanada", "correct": false}
+      ],
+      "difficulty": "medium",
+      "fun_fact": "Nigeria hat über 200 Millionen Einwohner, und Englisch ist die offizielle Amtssprache. Damit gibt es dort mehr englischsprachige Menschen als in Großbritannien.",
+      "category": "Geographie"
+    },
+    {
+      "id": "geo_041",
+      "question": "Welcher Ozean ist der kleinste der Welt?",
+      "answers": [
+        {"text": "Arktischer Ozean", "correct": true},
+        {"text": "Indischer Ozean", "correct": false},
+        {"text": "Südlicher Ozean", "correct": false}
+      ],
+      "difficulty": "easy",
+      "fun_fact": "Der Arktische Ozean ist mit 14 Millionen km² der kleinste der fünf Ozeane — nur etwa ein Zehntel so groß wie der Pazifik. Im Winter ist er größtenteils zugefroren.",
+      "category": "Geographie"
+    },
+    {
+      "id": "geo_042",
+      "question": "Welches Binnenland hat die größte Marine der Welt?",
+      "answers": [
+        {"text": "Bolivien", "correct": true},
+        {"text": "Paraguay", "correct": false},
+        {"text": "Mongolei", "correct": false}
+      ],
+      "difficulty": "medium",
+      "fun_fact": "Bolivien unterhält trotz fehlendem Meereszugang eine Marine mit rund 5.000 Soldaten am Titicacasee. Es verlor seine Küste 1884 im Salpeterkrieg gegen Chile und hofft auf Rückgabe.",
+      "category": "Geographie"
+    },
+    {
+      "id": "geo_043",
+      "question": "Welches europäische Land ist am dünnsten besiedelt, hat aber die meisten Saunen pro Einwohner?",
+      "answers": [
+        {"text": "Finnland", "correct": true},
+        {"text": "Schweden", "correct": false},
+        {"text": "Estland", "correct": false}
+      ],
+      "difficulty": "medium",
+      "fun_fact": "Finnland hat rund 3,3 Millionen Saunen bei 5,5 Millionen Einwohnern — also fast eine Sauna für jeden zweiten Finnen. Es gibt sogar Saunen in Parlamenten und Burger-King-Filialen.",
+      "category": "Geographie"
+    },
+    {
+      "id": "geo_044",
+      "question": "Welcher Staat grenzt an die meisten deutschen Bundesländer?",
+      "answers": [
+        {"text": "Hessen", "correct": true},
+        {"text": "Bayern", "correct": false},
+        {"text": "Niedersachsen", "correct": false}
+      ],
+      "difficulty": "medium",
+      "fun_fact": "Hessen grenzt an sechs andere Bundesländer: Niedersachsen, Thüringen, Bayern, Baden-Württemberg, Rheinland-Pfalz und Nordrhein-Westfalen.",
+      "category": "Geographie"
+    },
+    {
+      "id": "geo_045",
+      "question": "Welches Land schenkte den USA die Freiheitsstatue?",
+      "answers": [
+        {"text": "Frankreich", "correct": true},
+        {"text": "Großbritannien", "correct": false},
+        {"text": "Niederlande", "correct": false}
+      ],
+      "difficulty": "easy",
+      "fun_fact": "Die Freiheitsstatue kam 1885 in 350 Einzelteilen per Schiff aus Frankreich. Der Kopf wurde vorher jahrelang auf Weltausstellungen in Paris ausgestellt.",
+      "category": "Geographie"
+    },
+    {
+      "id": "geo_046",
+      "question": "Welches Land hat eine Flagge, die nicht rechteckig ist?",
+      "answers": [
+        {"text": "Nepal", "correct": true},
+        {"text": "Bhutan", "correct": false},
+        {"text": "Sri Lanka", "correct": false}
+      ],
+      "difficulty": "medium",
+      "fun_fact": "Nepals Flagge besteht aus zwei übereinander gestapelten Dreiecken und ist die einzige nicht-rechteckige Nationalflagge der Welt. Die Schweizer Flagge ist zwar quadratisch, aber immerhin noch viereckig.",
+      "category": "Geographie"
+    },
+    {
+      "id": "geo_047",
+      "question": "Welches Land hat keine offizielle Hauptstadt?",
+      "answers": [
+        {"text": "Nauru", "correct": true},
+        {"text": "Tuvalu", "correct": false},
+        {"text": "Monaco", "correct": false}
+      ],
+      "difficulty": "hard",
+      "fun_fact": "Der Inselstaat Nauru im Pazifik hat keine offizielle Hauptstadt. Der Regierungssitz befindet sich im Bezirk Yaren. Nauru ist mit 21 km² der drittkleinste Staat der Welt.",
+      "category": "Geographie"
+    },
+    {
+      "id": "geo_048",
+      "question": "Welche europäische Hauptstadt wurde auf 14 Inseln erbaut?",
+      "answers": [
+        {"text": "Stockholm", "correct": true},
+        {"text": "Helsinki", "correct": false},
+        {"text": "Kopenhagen", "correct": false}
+      ],
+      "difficulty": "medium",
+      "fun_fact": "Stockholm erstreckt sich über 14 Inseln, die durch 57 Brücken verbunden sind. Die Altstadt Gamla Stan steht auf der Insel Stadsholmen und wurde im 13. Jahrhundert gegründet.",
+      "category": "Geographie"
+    },
+    {
+      "id": "geo_049",
+      "question": "Welches Land wechselte 2019 den Namen seiner Hauptstadt?",
+      "answers": [
+        {"text": "Kasachstan (Astana → Nur-Sultan → wieder Astana)", "correct": true},
+        {"text": "Türkei (Istanbul → Ankara)", "correct": false},
+        {"text": "Myanmar (Rangun → Naypyidaw)", "correct": false}
+      ],
+      "difficulty": "medium",
+      "fun_fact": "Kasachstan benannte seine Hauptstadt 2019 zu Ehren des abtretenden Präsidenten Nursultan Nasarbajew in Nur-Sultan um, machte die Umbenennung 2022 aber wieder rückgängig zu Astana.",
+      "category": "Geographie"
+    },
+    {
+      "id": "geo_050",
+      "question": "Welcher Fluss fließt durch die meisten Hauptstädte Europas?",
+      "answers": [
+        {"text": "Die Donau", "correct": true},
+        {"text": "Der Rhein", "correct": false},
+        {"text": "Die Elbe", "correct": false}
+      ],
+      "difficulty": "medium",
+      "fun_fact": "Die Donau fließt durch vier europäische Hauptstädte: Wien, Bratislava, Budapest und Belgrad. Kein anderer Fluss der Welt verbindet so viele Hauptstädte.",
       "category": "Geographie"
     }
   ]
