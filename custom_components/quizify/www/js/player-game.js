@@ -112,18 +112,29 @@
 
             for (var i = 0; i < buttons.length; i++) {
                 var btn = buttons[i];
-                btn.disabled = false;
-                btn.classList.remove('is-selected', 'is-correct', 'is-wrong', 'is-eliminated', 'hidden');
                 btn.dataset.index = String(i);
 
                 var textEl = btn.querySelector('.answer-text');
                 if (textEl) textEl.textContent = answers[i] || '';
+
+                // Re-apply selected state if player already submitted
+                if (hasSubmitted && lastSubmittedIndex === i) {
+                    btn.disabled = true;
+                    btn.classList.add('is-selected');
+                    btn.classList.remove('is-correct', 'is-wrong', 'is-eliminated', 'hidden');
+                } else if (hasSubmitted) {
+                    btn.disabled = true;
+                    btn.classList.remove('is-selected', 'is-correct', 'is-wrong', 'is-eliminated', 'hidden');
+                } else {
+                    btn.disabled = false;
+                    btn.classList.remove('is-selected', 'is-correct', 'is-wrong', 'is-eliminated', 'hidden');
+                }
             }
         }
 
-        // Hide submitted confirmation
+        // Show/hide submitted confirmation
         var confirmation = document.getElementById('submitted-confirmation');
-        if (confirmation) confirmation.classList.add('hidden');
+        if (confirmation) confirmation.classList.toggle('hidden', !hasSubmitted);
     }
 
     // ============================================
@@ -304,12 +315,38 @@
 
         var displayList = compressLeaderboard(leaderboard, state.playerName);
 
+        // FLIP animation: record old positions before DOM update
+        var oldPositions = {};
+        listEl.querySelectorAll('.leaderboard-entry[data-name]').forEach(function(el) {
+            oldPositions[el.dataset.name] = el.getBoundingClientRect().top;
+        });
+
         var html = '';
         displayList.forEach(function (entry) {
             html += renderLeaderboardEntry(entry);
         });
 
         listEl.innerHTML = html;
+
+        // FLIP: animate from old positions to new
+        var prefersReduced = window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+        if (!prefersReduced && Object.keys(oldPositions).length > 0) {
+            listEl.querySelectorAll('.leaderboard-entry[data-name]').forEach(function(el) {
+                var name = el.dataset.name;
+                if (oldPositions[name] !== undefined) {
+                    var newTop = el.getBoundingClientRect().top;
+                    var delta = oldPositions[name] - newTop;
+                    if (Math.abs(delta) > 2) {
+                        el.style.transform = 'translateY(' + delta + 'px)';
+                        el.style.transition = 'none';
+                        requestAnimationFrame(function() {
+                            el.style.transition = 'transform 0.4s cubic-bezier(0.25, 0.46, 0.45, 0.94)';
+                            el.style.transform = '';
+                        });
+                    }
+                }
+            });
+        }
 
         // Store current ranks for next update
         leaderboard.forEach(function(entry) {
@@ -420,12 +457,22 @@
      * Handle power-up button visibility
      * @param {string|null} powerupType - Power-up type or null
      */
+    var POWERUP_LABELS = {
+        joker: '🃏 Joker',
+        double_points: '✨ Double',
+        freeze: '🧊 Freeze',
+        time_boost: '⏰ +5s',
+        steal: '🥷 Steal',
+    };
+
     function renderPowerUp(powerupType) {
         var powerupBtn = document.getElementById('powerup-btn');
         if (!powerupBtn) return;
 
         if (powerupType) {
             powerupBtn.classList.remove('hidden', 'used');
+            var label = powerupBtn.querySelector('.powerup-label') || powerupBtn;
+            label.textContent = POWERUP_LABELS[powerupType] || powerupType;
         } else {
             powerupBtn.classList.add('hidden');
         }

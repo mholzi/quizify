@@ -565,6 +565,18 @@ class QuizifyGameState:
             if own_timer:
                 own_timer.add_time(TIME_BOOST_DURATION)
 
+        elif effect.type == PowerUpType.STEAL and target_id:
+            # Steal half of target's current round score (applied at reveal)
+            target_player = self._player_registry.get_player(target_id)
+            source_player = self._player_registry.get_player(player_id)
+            if target_player and source_player:
+                stolen = target_player.round_score // 2
+                target_player.round_score = max(0, target_player.round_score - stolen)
+                target_player.score = max(0, target_player.score - stolen)
+                source_player.round_score += stolen
+                source_player.score += stolen
+                effect.stolen_points = stolen
+
         _LOGGER.info(
             "Power-up %s used by %s (target: %s)",
             effect.type.value,

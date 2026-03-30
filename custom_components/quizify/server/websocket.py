@@ -435,6 +435,9 @@ class QuizifyWebSocketHandler:
                     "source_player": result.source_player,
                     "joker_remove_index": shuffled_remove_idx,
                 })
+            elif result.type == PowerUpType.STEAL:
+                effect_data["stolen_points"] = result.stolen_points
+                await self._broadcast(effect_data)
             else:
                 await self._broadcast(effect_data)
         elif isinstance(result, str):

@@ -17,6 +17,7 @@ class PowerUpType(str, Enum):
     DOUBLE_POINTS = "double_points"  # this round counts double
     FREEZE = "freeze"  # opponent timer pauses 5s
     TIME_BOOST = "time_boost"  # own timer +5s
+    STEAL = "steal"  # steal half of target's round points
 
 
 @dataclass
@@ -27,6 +28,7 @@ class PowerUpEffect:
     source_player: str
     target_player: str | None = None
     joker_remove_index: int | None = None
+    stolen_points: int = 0
 
 
 class PowerUpManager:
@@ -98,5 +100,8 @@ class PowerUpManager:
 
         elif powerup == PowerUpType.TIME_BOOST:
             pass  # Timer extension handled by caller
+
+        elif powerup == PowerUpType.STEAL:
+            effect.target_player = target_id
 
         return effect

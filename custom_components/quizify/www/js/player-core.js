@@ -337,6 +337,15 @@
     function handlePowerUpApplied(msg) {
         if (msg.powerup_type === 'joker' && msg.joker_remove_index != null) {
             game.applyJoker(msg.joker_remove_index);
+        } else if (msg.powerup_type === 'steal') {
+            var pts = msg.stolen_points || 0;
+            if (msg.source_player === state.playerName) {
+                pu.showToast('🥷 Stolen +' + pts + ' pts from ' + (msg.target_player || 'opponent') + '!', 2500);
+            } else if (msg.target_player === state.playerName) {
+                pu.showToast('🥷 ' + (msg.source_player || 'Someone') + ' stole ' + pts + ' pts from you!', 2500);
+            }
+        } else if (msg.powerup_type === 'freeze' && msg.target_player === state.playerName) {
+            pu.showToast('🧊 You were frozen for 5s!', 2000);
         }
         myPowerUp = null;
         var powerupBtn = document.getElementById('powerup-btn');

@@ -251,6 +251,12 @@
             };
         }
 
+        // PNG share card
+        var saveBtn = document.getElementById('share-save-btn');
+        if (saveBtn) {
+            saveBtn.onclick = function () { generateShareCard(myGrid, shareData); };
+        }
+
         container.classList.remove('hidden');
     }
 
@@ -298,6 +304,73 @@
             '</div>';
         }).join('');
         container.classList.remove('hidden');
+    }
+
+    // ============================================
+    // PNG Share Card
+    // ============================================
+
+    function generateShareCard(emojiGrid, shareData) {
+        var canvas = document.createElement('canvas');
+        canvas.width = 600;
+        canvas.height = 400;
+        var ctx = canvas.getContext('2d');
+
+        // Background
+        ctx.fillStyle = '#0d0e1a';
+        ctx.fillRect(0, 0, 600, 400);
+
+        // Gradient accent bar top
+        var grad = ctx.createLinearGradient(0, 0, 600, 0);
+        grad.addColorStop(0, '#a855f7');
+        grad.addColorStop(0.5, '#ec4899');
+        grad.addColorStop(1, '#22d3ee');
+        ctx.fillStyle = grad;
+        ctx.fillRect(0, 0, 600, 6);
+
+        // Logo
+        ctx.font = 'bold 32px system-ui, sans-serif';
+        ctx.fillStyle = '#ffffff';
+        ctx.fillText('🧠 Quizify', 30, 55);
+
+        // Category
+        ctx.font = '16px system-ui, sans-serif';
+        ctx.fillStyle = '#a4a4b8';
+        ctx.fillText((shareData && shareData.category ? shareData.category : ''), 30, 80);
+
+        // Emoji grid
+        ctx.font = '28px system-ui, sans-serif';
+        ctx.fillStyle = '#ffffff';
+        var lines = emojiGrid.split('\n');
+        var y = 120;
+        lines.forEach(function(line) {
+            if (line.trim()) {
+                ctx.fillText(line, 30, y);
+                y += 42;
+            }
+        });
+
+        // Footer
+        ctx.font = '14px system-ui, sans-serif';
+        ctx.fillStyle = '#a855f7';
+        ctx.fillText('quizify.fun', 30, 370);
+
+        // Download or share
+        canvas.toBlob(function(blob) {
+            var url = URL.createObjectURL(blob);
+            if (navigator.share && navigator.canShare && navigator.canShare({ files: [new File([blob], 'quizify.png', { type: 'image/png' })] })) {
+                navigator.share({
+                    title: 'Quizify Result',
+                    files: [new File([blob], 'quizify.png', { type: 'image/png' })]
+                }).catch(function() {});
+            } else {
+                var a = document.createElement('a');
+                a.href = url;
+                a.download = 'quizify-result.png';
+                a.click();
+                setTimeout(function() { URL.revokeObjectURL(url); }, 1000);
+            }
+        }, 'image/png');
     }
 
     // ============================================
