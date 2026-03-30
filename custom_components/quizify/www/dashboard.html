@@ -4,70 +4,242 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
     <title>Quizify — Dashboard</title>
+
+    <!-- Google Fonts: Inter + Outfit -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Outfit:wght@600;700;800;900&display=swap" rel="stylesheet">
+
     <link rel="stylesheet" href="/quizify/static/css/styles.css">
     <link rel="icon" href="/quizify/static/img/icon-256.png" type="image/png">
     <link rel="manifest" href="/quizify/static/site.webmanifest">
-    <style>
-        /* Dashboard-specific: landscape TV/tablet layout */
-        body { overflow: hidden; }
 
+    <!-- Confetti library for celebrations -->
+    <script src="https://cdn.jsdelivr.net/npm/canvas-confetti@1.9.3/dist/confetti.browser.min.js"></script>
+
+    <style>
+        /* ==========================================
+           Dashboard-specific: landscape TV/tablet
+           Beatify design language
+           ========================================== */
+
+        :root {
+            --dash-bg-primary: #0a0a12;
+            --dash-accent-primary: #ff2d6a;
+            --dash-accent-secondary: #00f5ff;
+            --dash-surface-dark: #1a1a2e;
+            --dash-border-neon: rgba(255, 255, 255, 0.1);
+            --dash-text-neon-muted: #b3b3c2;
+            --dash-text-white: #ffffff;
+            --dash-success: #10b981;
+            --dash-success-glow: rgba(16, 185, 129, 0.4);
+            --dash-error: #ef4444;
+            --dash-warning: #f59e0b;
+            --dash-gold: #ffd700;
+            --dash-silver: #c0c0c0;
+            --dash-bronze: #cd7f32;
+        }
+
+        * { box-sizing: border-box; margin: 0; padding: 0; }
+
+        body.theme-dark.dashboard-body {
+            background: var(--dash-bg-primary);
+            color: var(--dash-text-white);
+            font-family: 'Inter', system-ui, sans-serif;
+            overflow: hidden;
+            min-height: 100dvh;
+        }
+
+        /* ---- Main Container ---- */
         .dashboard-container {
             max-width: 100%;
             width: 100%;
             height: 100dvh;
-            padding: var(--space-lg) var(--space-xl);
+            padding: 24px 32px;
             display: flex;
             flex-direction: column;
         }
 
+        /* ---- Dashboard Views ---- */
+        .dashboard-view { display: none; flex-direction: column; flex: 1; min-height: 0; }
+        .dashboard-view.active { display: flex; }
+
+        /* ---- Wordmark ---- */
+        .wordmark {
+            font-family: 'Outfit', system-ui, sans-serif;
+            font-size: 1.8rem;
+            font-weight: 800;
+            letter-spacing: -0.02em;
+            line-height: 1;
+        }
+
+        .wordmark-quiz { color: var(--dash-text-white); }
+        .wordmark-ify  { color: var(--dash-accent-primary); }
+
+        /* ---- Dashboard Header ---- */
         .dashboard-header {
             display: flex;
             align-items: center;
             justify-content: space-between;
-            padding-bottom: var(--space-md);
+            padding-bottom: 16px;
             flex-shrink: 0;
         }
-
-        .dashboard-header .wordmark { font-size: 1.5rem; }
 
         .dashboard-round {
+            font-family: 'Outfit', system-ui, sans-serif;
             font-size: 1rem;
-            color: var(--color-accent-bright);
-            font-weight: 600;
+            color: var(--dash-accent-secondary);
+            font-weight: 700;
+            letter-spacing: 0.05em;
+            text-transform: uppercase;
         }
 
-        /* Timer bar at top */
+        /* ---- Timer Bar ---- */
         .dashboard-timer {
             position: relative;
-            height: 8px;
-            background: rgba(255,255,255,0.1);
-            border-radius: 4px;
+            height: 6px;
+            background: var(--dash-border-neon);
+            border-radius: 3px;
             flex-shrink: 0;
-            margin-bottom: var(--space-lg);
+            margin-bottom: 24px;
+            overflow: hidden;
         }
 
         .dashboard-timer-fill {
             height: 100%;
-            background: linear-gradient(90deg, var(--color-electric), var(--color-accent));
-            border-radius: 4px;
+            background: linear-gradient(90deg, var(--dash-accent-secondary), var(--dash-accent-primary));
+            border-radius: 3px;
             transition: width 0.8s linear;
             width: 100%;
         }
 
         .dashboard-timer-fill.warning {
-            background: linear-gradient(90deg, var(--color-warning), var(--color-error));
+            background: linear-gradient(90deg, var(--dash-warning), var(--dash-error));
         }
 
         .dashboard-timer-fill.critical {
-            background: var(--color-error);
+            background: var(--dash-error);
             animation: pulse-bar 0.5s ease-in-out infinite alternate;
         }
 
-        /* Main content: two-column layout */
-        .dashboard-body {
+        @keyframes pulse-bar {
+            from { opacity: 1; }
+            to   { opacity: 0.5; }
+        }
+
+        /* ===================
+           LOADING STATE
+           =================== */
+        .dashboard-loading {
+            flex: 1;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            gap: 24px;
+        }
+
+        .dashboard-loading .wordmark { font-size: 3rem; }
+
+        .dashboard-loading-text {
+            font-size: 1.1rem;
+            color: var(--dash-text-neon-muted);
+            animation: fade-pulse 2s ease-in-out infinite;
+        }
+
+        @keyframes fade-pulse {
+            0%, 100% { opacity: 0.4; }
+            50%      { opacity: 1; }
+        }
+
+        /* ===================
+           NO-GAME STATE
+           =================== */
+        .dashboard-no-game {
+            flex: 1;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            gap: 16px;
+        }
+
+        .dashboard-no-game .wordmark { font-size: 3rem; }
+
+        .dashboard-no-game-title {
+            font-family: 'Outfit', system-ui, sans-serif;
+            font-size: 1.5rem;
+            font-weight: 700;
+            color: var(--dash-text-white);
+        }
+
+        .dashboard-no-game-subtitle {
+            font-size: 1rem;
+            color: var(--dash-text-neon-muted);
+        }
+
+        /* ===================
+           WAITING / LOBBY
+           =================== */
+        .dashboard-waiting {
+            flex: 1;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            gap: 32px;
+        }
+
+        .dashboard-waiting .wordmark { font-size: 3rem; }
+
+        .dashboard-waiting-text {
+            font-size: 1.3rem;
+            color: var(--dash-text-neon-muted);
+            animation: fade-pulse 2s ease-in-out infinite;
+        }
+
+        .dashboard-qr-section {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 16px;
+        }
+
+        .dashboard-qr-section canvas,
+        .dashboard-qr-section img {
+            border-radius: 12px;
+            border: 2px solid var(--dash-border-neon);
+        }
+
+        .dashboard-player-list {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 12px;
+            justify-content: center;
+            max-width: 800px;
+        }
+
+        .dashboard-player-chip {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            padding: 8px 16px;
+            background: var(--dash-surface-dark);
+            border: 1px solid var(--dash-border-neon);
+            border-radius: 999px;
+            font-size: 0.95rem;
+            color: var(--dash-text-white);
+            font-weight: 500;
+        }
+
+        /* ===================
+           TWO-COLUMN LAYOUT
+           (question / reveal)
+           =================== */
+        .dashboard-columns {
             display: flex;
             flex: 1;
-            gap: var(--space-xl);
+            gap: 32px;
             min-height: 0;
         }
 
@@ -80,74 +252,88 @@
             min-width: 0;
         }
 
-        .dashboard-question {
-            font-size: 2.5rem;
-            font-weight: 800;
-            line-height: 1.3;
-            color: var(--color-text);
-            margin-bottom: var(--space-xl);
+        .dashboard-category {
+            font-family: 'Inter', system-ui, sans-serif;
+            font-size: 0.85rem;
+            color: var(--dash-accent-secondary);
+            text-transform: uppercase;
+            letter-spacing: 0.12em;
+            font-weight: 600;
+            margin-bottom: 12px;
         }
 
-        .dashboard-category {
-            font-size: 0.9rem;
-            color: var(--color-text-muted);
-            text-transform: uppercase;
-            letter-spacing: 0.1em;
-            margin-bottom: var(--space-md);
+        .dashboard-question {
+            font-family: 'Outfit', system-ui, sans-serif;
+            font-size: 2.5rem;
+            font-weight: 800;
+            line-height: 1.25;
+            color: var(--dash-text-white);
+            margin-bottom: 32px;
         }
 
         .dashboard-answers {
             display: grid;
             grid-template-columns: 1fr 1fr;
-            gap: var(--space-md);
+            gap: 16px;
         }
 
         .dashboard-answer {
             display: flex;
             align-items: center;
-            gap: var(--space-md);
-            padding: var(--space-lg) var(--space-xl);
-            background: var(--color-bg-card);
-            border: 2px solid var(--color-border);
-            border-radius: var(--radius-lg);
-            font-size: 1.3rem;
+            gap: 16px;
+            padding: 20px 24px;
+            background: var(--dash-surface-dark);
+            border: 2px solid var(--dash-border-neon);
+            border-radius: 16px;
+            font-size: 1.2rem;
             font-weight: 500;
-            transition: all var(--transition-normal);
+            color: var(--dash-text-white);
+            transition: all 0.3s ease;
         }
 
         .dashboard-answer .answer-label {
+            display: flex;
+            align-items: center;
+            justify-content: center;
             width: 40px;
             height: 40px;
+            border-radius: 12px;
+            background: rgba(255, 255, 255, 0.08);
+            font-family: 'Outfit', system-ui, sans-serif;
             font-size: 1rem;
+            font-weight: 700;
+            color: var(--dash-text-neon-muted);
+            flex-shrink: 0;
         }
 
         .dashboard-answer.correct {
-            border-color: var(--color-success);
-            background: rgba(0, 184, 148, 0.15);
-            box-shadow: 0 0 30px var(--color-success-glow);
+            border-color: var(--dash-success);
+            background: rgba(16, 185, 129, 0.12);
+            box-shadow: 0 0 30px var(--dash-success-glow);
         }
 
         .dashboard-answer.correct .answer-label {
-            background: var(--color-success);
+            background: var(--dash-success);
             color: white;
         }
 
         .dashboard-answer.wrong {
-            opacity: 0.3;
+            opacity: 0.25;
         }
 
         /* Fun fact on reveal */
         .dashboard-funfact {
-            margin-top: var(--space-xl);
-            padding: var(--space-lg);
-            background: linear-gradient(135deg, rgba(108, 92, 231, 0.1), rgba(0, 206, 201, 0.1));
-            border: 1px solid rgba(108, 92, 231, 0.3);
-            border-radius: var(--radius-lg);
-            font-size: 1.1rem;
+            margin-top: 32px;
+            padding: 20px 24px;
+            background: linear-gradient(135deg, rgba(255, 45, 106, 0.08), rgba(0, 245, 255, 0.08));
+            border: 1px solid rgba(0, 245, 255, 0.2);
+            border-radius: 16px;
+            font-size: 1.05rem;
             line-height: 1.6;
+            color: var(--dash-text-neon-muted);
             transform: translateY(20px);
             opacity: 0;
-            transition: all var(--transition-slow);
+            transition: all 0.5s ease;
         }
 
         .dashboard-funfact.visible {
@@ -156,8 +342,16 @@
         }
 
         .dashboard-funfact .fun-fact-label {
-            font-size: 0.8rem;
-            margin-bottom: var(--space-sm);
+            font-size: 0.75rem;
+            font-weight: 700;
+            text-transform: uppercase;
+            letter-spacing: 0.1em;
+            color: var(--dash-accent-secondary);
+            margin-bottom: 8px;
+        }
+
+        .dashboard-funfact .fun-fact-text {
+            color: var(--dash-text-white);
         }
 
         /* Right: leaderboard */
@@ -169,91 +363,284 @@
         }
 
         .dashboard-leaderboard-title {
+            font-family: 'Outfit', system-ui, sans-serif;
             font-size: 0.85rem;
-            font-weight: 600;
+            font-weight: 700;
             text-transform: uppercase;
-            letter-spacing: 0.08em;
-            color: var(--color-text-muted);
-            margin-bottom: var(--space-md);
+            letter-spacing: 0.1em;
+            color: var(--dash-text-neon-muted);
+            margin-bottom: 16px;
         }
 
         .dashboard-leaderboard {
             flex: 1;
             overflow-y: auto;
+            display: flex;
+            flex-direction: column;
+            gap: 4px;
         }
 
         .dashboard-leaderboard .leaderboard-row {
-            padding: var(--space-md) var(--space-lg);
-            font-size: 1.1rem;
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            padding: 12px 16px;
+            border-radius: 12px;
+            background: var(--dash-surface-dark);
+            border: 1px solid var(--dash-border-neon);
+            font-size: 1.05rem;
+            color: var(--dash-text-white);
+            transition: all 0.3s ease;
         }
 
         .dashboard-leaderboard .leaderboard-rank {
-            width: 36px;
-            height: 36px;
-            font-size: 1rem;
-        }
-
-        .dashboard-leaderboard .leaderboard-score {
-            font-size: 1.2rem;
-        }
-
-        /* Waiting state */
-        .dashboard-waiting {
-            flex: 1;
             display: flex;
             align-items: center;
             justify-content: center;
-            text-align: center;
+            width: 36px;
+            height: 36px;
+            border-radius: 10px;
+            font-family: 'Outfit', system-ui, sans-serif;
+            font-size: 0.95rem;
+            font-weight: 700;
+            background: rgba(255, 255, 255, 0.06);
+            color: var(--dash-text-neon-muted);
+            flex-shrink: 0;
         }
 
-        .dashboard-waiting-text {
-            font-size: 1.5rem;
-            color: var(--color-text-muted);
-            animation: fade-pulse 2s ease-in-out infinite;
+        .dashboard-leaderboard .leaderboard-rank.rank-1 { background: rgba(255, 215, 0, 0.2); color: var(--dash-gold); }
+        .dashboard-leaderboard .leaderboard-rank.rank-2 { background: rgba(192, 192, 192, 0.15); color: var(--dash-silver); }
+        .dashboard-leaderboard .leaderboard-rank.rank-3 { background: rgba(205, 127, 50, 0.15); color: var(--dash-bronze); }
+
+        .dashboard-leaderboard .leaderboard-name {
+            flex: 1;
+            min-width: 0;
+            overflow: hidden;
+            text-overflow: ellipsis;
+            white-space: nowrap;
+            font-weight: 500;
         }
 
-        /* Finale / podium */
+        .dashboard-leaderboard .leaderboard-score {
+            font-family: 'Outfit', system-ui, sans-serif;
+            font-size: 1.15rem;
+            font-weight: 700;
+            color: var(--dash-accent-secondary);
+        }
+
+        .dashboard-leaderboard .leaderboard-streak {
+            font-size: 0.8rem;
+            font-weight: 600;
+            color: var(--dash-accent-primary);
+            padding: 2px 8px;
+            background: rgba(255, 45, 106, 0.12);
+            border-radius: 999px;
+        }
+
+        /* ===================
+           FINALE / PODIUM
+           =================== */
         .dashboard-finale {
             flex: 1;
             display: flex;
             flex-direction: column;
             align-items: center;
+            overflow-y: auto;
+            padding-bottom: 32px;
+            gap: 40px;
+        }
+
+        .podium-section {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 32px;
+        }
+
+        .podium-title {
+            font-family: 'Outfit', system-ui, sans-serif;
+            font-size: 2.5rem;
+            font-weight: 900;
+            background: linear-gradient(135deg, var(--dash-accent-primary), var(--dash-accent-secondary));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+
+        .podium {
+            display: flex;
+            align-items: flex-end;
+            justify-content: center;
+            min-height: 280px;
+            gap: 32px;
+        }
+
+        .podium-place {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .podium-avatar { font-size: 2.2rem; }
+
+        .podium-name {
+            font-family: 'Outfit', system-ui, sans-serif;
+            font-size: 1.2rem;
+            font-weight: 700;
+            color: var(--dash-text-white);
+            max-width: 140px;
+            overflow: hidden;
+            text-overflow: ellipsis;
+            white-space: nowrap;
+            text-align: center;
+        }
+
+        .podium-score {
+            font-size: 0.95rem;
+            font-weight: 600;
+            color: var(--dash-text-neon-muted);
+        }
+
+        .podium-bar {
+            width: 130px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-family: 'Outfit', system-ui, sans-serif;
+            font-size: 2rem;
+            font-weight: 900;
+            border-radius: 16px 16px 0 0;
+            color: rgba(255, 255, 255, 0.3);
+        }
+
+        .podium-bar.first  {
+            height: 200px;
+            background: linear-gradient(180deg, rgba(255, 215, 0, 0.3), rgba(255, 215, 0, 0.08));
+            border: 2px solid rgba(255, 215, 0, 0.4);
+            border-bottom: none;
+        }
+
+        .podium-bar.second {
+            height: 140px;
+            background: linear-gradient(180deg, rgba(192, 192, 192, 0.25), rgba(192, 192, 192, 0.06));
+            border: 2px solid rgba(192, 192, 192, 0.3);
+            border-bottom: none;
+        }
+
+        .podium-bar.third  {
+            height: 100px;
+            background: linear-gradient(180deg, rgba(205, 127, 50, 0.25), rgba(205, 127, 50, 0.06));
+            border: 2px solid rgba(205, 127, 50, 0.3);
+            border-bottom: none;
+        }
+
+        /* Awards / Superlatives */
+        .awards-section {
+            width: 100%;
+            max-width: 900px;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 20px;
+        }
+
+        .awards-section.hidden { display: none; }
+
+        .awards-title {
+            font-family: 'Outfit', system-ui, sans-serif;
+            font-size: 1.5rem;
+            font-weight: 800;
+            color: var(--dash-accent-primary);
+            text-transform: uppercase;
+            letter-spacing: 0.05em;
+        }
+
+        .awards-grid {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 16px;
             justify-content: center;
         }
 
-        .dashboard-finale .podium-title {
-            font-size: 2.5rem;
-            margin-bottom: var(--space-2xl);
+        .award-card {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 8px;
+            padding: 20px 24px;
+            background: var(--dash-surface-dark);
+            border: 1px solid var(--dash-border-neon);
+            border-radius: 16px;
+            min-width: 180px;
+            text-align: center;
+            opacity: 0;
+            transform: translateY(20px);
+            animation: award-appear 0.5s ease forwards;
         }
 
-        .dashboard-finale .podium {
-            min-height: 280px;
-            gap: var(--space-xl);
+        @keyframes award-appear {
+            to { opacity: 1; transform: translateY(0); }
         }
 
-        .dashboard-finale .podium-bar { width: 130px; }
-        .dashboard-finale .podium-bar.first { height: 200px; }
-        .dashboard-finale .podium-bar.second { height: 140px; }
-        .dashboard-finale .podium-bar.third { height: 100px; }
+        .award-icon { font-size: 2rem; }
 
-        .dashboard-finale .podium-name { font-size: 1.2rem; max-width: 140px; }
-        .dashboard-finale .podium-score { font-size: 1rem; }
-        .dashboard-finale .podium-avatar { font-size: 2rem; }
+        .award-name {
+            font-family: 'Outfit', system-ui, sans-serif;
+            font-size: 0.85rem;
+            font-weight: 700;
+            text-transform: uppercase;
+            letter-spacing: 0.06em;
+            color: var(--dash-accent-secondary);
+        }
 
-        /* Hide views by default */
-        .dash-view { display: none; flex-direction: column; flex: 1; min-height: 0; }
-        .dash-view.active { display: flex; }
+        .award-winner {
+            font-size: 1.1rem;
+            font-weight: 600;
+            color: var(--dash-text-white);
+        }
 
+        .award-detail {
+            font-size: 0.8rem;
+            color: var(--dash-text-neon-muted);
+        }
+
+        /* Finale leaderboard card */
+        .finale-leaderboard-card {
+            width: 100%;
+            max-width: 600px;
+            background: var(--dash-surface-dark);
+            border: 1px solid var(--dash-border-neon);
+            border-radius: 20px;
+            overflow: hidden;
+        }
+
+        .finale-leaderboard-card .card-header {
+            font-family: 'Outfit', system-ui, sans-serif;
+            font-size: 0.85rem;
+            font-weight: 700;
+            text-transform: uppercase;
+            letter-spacing: 0.1em;
+            color: var(--dash-text-neon-muted);
+            padding: 16px 20px 8px;
+        }
+
+        .finale-leaderboard-card .dashboard-leaderboard {
+            padding: 4px 8px 12px;
+        }
+
+        /* ---- Responsive ---- */
         @media (max-width: 768px) {
-            .dashboard-body { flex-direction: column; }
+            .dashboard-columns { flex-direction: column; }
             .dashboard-question { font-size: 1.5rem; }
             .dashboard-answers { grid-template-columns: 1fr; }
-            .dashboard-answer { font-size: 1rem; padding: var(--space-md); }
+            .dashboard-answer { font-size: 1rem; padding: 14px 16px; }
         }
     </style>
 </head>
-<body>
-    <div class="dashboard-container">
+<body class="theme-dark dashboard-body">
+
+    <main class="dashboard-container">
         <div class="dashboard-header">
             <h1 class="wordmark">
                 <span class="wordmark-quiz">Quiz</span><span class="wordmark-ify">ify</span>
@@ -266,15 +653,18 @@
         </div>
 
         <!-- WAITING VIEW -->
-        <div id="waiting-view" class="dash-view active">
+        <div id="waiting-view" class="dashboard-view active">
             <div class="dashboard-waiting">
+                <h1 class="wordmark" style="font-size:3rem;">
+                    <span class="wordmark-quiz">Quiz</span><span class="wordmark-ify">ify</span>
+                </h1>
                 <p class="dashboard-waiting-text">Warte auf Spielstart...</p>
             </div>
         </div>
 
         <!-- QUESTION VIEW -->
-        <div id="question-view" class="dash-view">
-            <div class="dashboard-body">
+        <div id="question-view" class="dashboard-view">
+            <div class="dashboard-columns">
                 <div class="dashboard-left">
                     <div id="question-category" class="dashboard-category"></div>
                     <div id="question-text" class="dashboard-question"></div>
@@ -286,26 +676,26 @@
                 </div>
                 <div class="dashboard-right">
                     <div class="dashboard-leaderboard-title">Rangliste</div>
-                    <div id="leaderboard" class="dashboard-leaderboard leaderboard"></div>
+                    <div id="leaderboard" class="dashboard-leaderboard"></div>
                 </div>
             </div>
         </div>
 
         <!-- FINALE VIEW -->
-        <div id="finale-view" class="dash-view">
+        <div id="finale-view" class="dashboard-view">
             <div class="dashboard-finale">
                 <div class="podium-section">
                     <div class="podium-title">Ergebnis</div>
                     <div id="podium" class="podium"></div>
                 </div>
                 <div id="awards-section" class="awards-section hidden"></div>
-                <div class="card mt-lg" style="width:100%;max-width:600px;">
+                <div class="finale-leaderboard-card">
                     <div class="card-header">Rangliste</div>
-                    <div id="finale-leaderboard" class="dashboard-leaderboard leaderboard"></div>
+                    <div id="finale-leaderboard" class="dashboard-leaderboard"></div>
                 </div>
             </div>
         </div>
-    </div>
+    </main>
 
     <script src="/quizify/static/js/i18n.js"></script>
     <script src="/quizify/static/js/utils.js"></script>
@@ -507,6 +897,17 @@
             renderLeaderboard(els.finaleLeaderboard, lb);
 
             renderAwards(msg.superlatives || []);
+
+            // Fire confetti for celebration
+            if (typeof confetti === 'function') {
+                setTimeout(function() {
+                    confetti({ particleCount: 120, spread: 80, origin: { y: 0.6 } });
+                }, 400);
+                setTimeout(function() {
+                    confetti({ particleCount: 80, spread: 100, origin: { x: 0.2, y: 0.5 } });
+                    confetti({ particleCount: 80, spread: 100, origin: { x: 0.8, y: 0.5 } });
+                }, 900);
+            }
         }
 
         // ---- Renderers ----

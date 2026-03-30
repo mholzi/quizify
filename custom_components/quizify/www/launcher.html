@@ -2,62 +2,175 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
-    <title>Quizify</title>
-    <link rel="stylesheet" href="/quizify/static/css/styles.css">
-    <link rel="icon" href="/quizify/static/img/icon-256.png" type="image/png">
-    <link rel="manifest" href="/quizify/static/site.webmanifest">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title data-i18n="launcher.title">Quizify</title>
+    <style>
+        :root {
+            --color-bg-primary: #0a0a12;
+            --color-accent-primary: #ff2d6a;
+            --color-accent-secondary: #00f5ff;
+            --color-text-primary: #ffffff;
+            --color-text-muted: #8b8b9e;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Inter', system-ui, -apple-system, sans-serif;
+            background: var(--color-bg-primary);
+            color: var(--color-text-primary);
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            text-align: center;
+            padding: 24px;
+        }
+
+        .logo {
+            font-size: 48px;
+            font-weight: 700;
+            margin-bottom: 16px;
+        }
+
+        .logo .quiz {
+            color: var(--color-text-primary);
+        }
+
+        .logo .ify {
+            background: linear-gradient(135deg, var(--color-accent-primary), var(--color-accent-secondary));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+
+        .message {
+            font-size: 18px;
+            color: var(--color-text-muted);
+            margin-bottom: 32px;
+            line-height: 1.5;
+        }
+
+        .btn {
+            display: inline-flex;
+            align-items: center;
+            gap: 10px;
+            padding: 18px 40px;
+            background: linear-gradient(135deg, var(--color-accent-primary), #ff6b9d);
+            color: white;
+            text-decoration: none;
+            border-radius: 14px;
+            font-size: 18px;
+            font-weight: 600;
+            transition: transform 0.15s ease, box-shadow 0.15s ease;
+            cursor: pointer;
+            border: none;
+            letter-spacing: 0.02em;
+        }
+
+        .btn:hover {
+            transform: scale(1.03);
+            box-shadow: 0 0 30px rgba(255, 45, 106, 0.4);
+        }
+
+        .btn:active {
+            transform: scale(0.97);
+        }
+
+        .btn-icon {
+            font-size: 22px;
+        }
+
+        .hint {
+            margin-top: 24px;
+            font-size: 14px;
+            color: var(--color-text-muted);
+            min-height: 20px;
+        }
+
+        .status {
+            margin-top: 12px;
+            font-size: 13px;
+            color: var(--color-text-muted);
+            opacity: 0.6;
+        }
+
+        @keyframes pulse {
+            0%, 100% { opacity: 1; }
+            50% { opacity: 0.5; }
+        }
+
+        .opening {
+            animation: pulse 1.5s ease-in-out infinite;
+        }
+    </style>
 </head>
 <body>
-    <div class="app-container">
-        <div class="launcher-content">
-            <div>
-                <h1 class="launcher-title">
-                    <span class="wordmark-quiz">Quiz</span><span class="wordmark-ify">ify</span>
-                </h1>
-                <p class="subtitle">Das unnütze Wissen Quiz</p>
-            </div>
-
-            <div id="game-status" class="hidden">
-                <span class="game-status-badge">
-                    <span class="dot"></span>
-                    <span id="status-text">Spiel läuft</span>
-                </span>
-            </div>
-
-            <div class="launcher-buttons">
-                <a href="/quizify/player" class="btn btn-primary btn-block btn-lg">Spiel beitreten</a>
-                <a href="/quizify/admin" class="btn btn-secondary btn-block btn-lg">Admin</a>
-            </div>
-        </div>
+    <div class="logo">
+        <span class="quiz">Quiz</span><span class="ify">ify</span>
     </div>
+    <p class="message" id="message" data-i18n="launcher.clickToLaunch">Launch the quiz in fullscreen — no distractions.</p>
+    <button class="btn" id="openBtn" onclick="openQuizify()">
+        <span class="btn-icon">🧠</span>
+        <span data-i18n="launcher.openQuizify">Open Quizify</span>
+    </button>
+    <p class="hint" id="hint"></p>
+    <p class="status" id="status"></p>
 
     <script src="/quizify/static/js/i18n.js"></script>
-    <script src="/quizify/static/js/utils.js"></script>
     <script>
-        (function () {
-            // Check if a game is currently running
-            fetch('/api/quizify/game-status')
-                .then(r => r.json())
-                .then(data => {
-                    if (data && data.phase && data.phase !== 'LOBBY') {
-                        document.getElementById('game-status').classList.remove('hidden');
-                        const phases = {
-                            QUESTION_ACTIVE: 'Spiel läuft — Frage aktiv',
-                            ANSWER_REVEAL: 'Spiel läuft — Auflösung',
-                            FINALE: 'Spiel beendet',
-                        };
-                        document.getElementById('status-text').textContent =
-                            phases[data.phase] || 'Spiel läuft';
-                    }
-                })
-                .catch(() => {});
-        })();
-    </script>
-    <script>
-        if ("serviceWorker" in navigator) {
-            navigator.serviceWorker.register("/quizify/static/sw.js");
+        var quizifyWindow = null;
+
+        function openQuizify() {
+            var adminUrl = window.location.origin + '/quizify/admin';
+
+            // If we already have an open window, focus it
+            if (quizifyWindow && !quizifyWindow.closed) {
+                quizifyWindow.focus();
+                updateUI('focused');
+                return;
+            }
+
+            var messageEl = document.getElementById('message');
+            messageEl.classList.add('opening');
+
+            quizifyWindow = window.open(adminUrl, 'quizify_game', 'noopener');
+
+            if (quizifyWindow) {
+                updateUI('opened');
+            } else {
+                updateUI('blocked');
+            }
         }
+
+        function updateUI(state) {
+            var messageEl = document.getElementById('message');
+            var hintEl = document.getElementById('hint');
+            var btnEl = document.getElementById('openBtn');
+            messageEl.classList.remove('opening');
+
+            if (state === 'opened') {
+                messageEl.textContent = QuizifyI18n.t('launcher.openedInNewTab') || 'Quizify is running in a new tab! 🧠';
+                hintEl.textContent = QuizifyI18n.t('launcher.clickToFocus') || 'Click again to focus the game tab';
+                btnEl.querySelector('[data-i18n]').textContent = QuizifyI18n.t('launcher.focusQuizify') || 'Focus Quizify';
+            } else if (state === 'focused') {
+                messageEl.textContent = QuizifyI18n.t('launcher.focusedTab') || 'Switched to Quizify tab! 🎯';
+            } else if (state === 'blocked') {
+                messageEl.textContent = QuizifyI18n.t('launcher.popupBlocked') || 'Pop-up was blocked by your browser.';
+                hintEl.innerHTML = QuizifyI18n.t('launcher.allowPopups') || 'Allow pop-ups for this site, or <a href="' + window.location.origin + '/quizify/admin" target="_blank" style="color: var(--color-accent-secondary);">click here</a> to open directly.';
+            }
+        }
+
+        // Initialize i18n
+        window.addEventListener('load', async function() {
+            await QuizifyI18n.init();
+            QuizifyI18n.initPageTranslations();
+        });
     </script>
 </body>
 </html>

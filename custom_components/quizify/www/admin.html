@@ -3,97 +3,150 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
-    <title>Quizify — Admin</title>
-    <link rel="stylesheet" href="/quizify/static/css/styles.css">
-    <link rel="icon" href="/quizify/static/img/icon-256.png" type="image/png">
+    <title data-i18n="admin.title">Quizify Admin</title>
     <link rel="manifest" href="/quizify/static/site.webmanifest">
+    <meta name="theme-color" content="#1a1a2e">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+    <meta name="apple-mobile-web-app-title" content="Quizify">
+    <link rel="apple-touch-icon" href="/quizify/static/img/icon-256.png">
+    <meta name="mobile-web-app-capable" content="yes">
+    <link rel="icon" href="/quizify/static/img/icon-256.png" type="image/png">
+    <!-- Preconnect for faster font loading -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@700;900&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="/quizify/static/css/styles.css">
 </head>
-<body>
-    <div class="app-container admin-container">
-        <header class="header">
-            <h1 class="wordmark">
-                <span class="wordmark-quiz">Quiz</span><span class="wordmark-ify">ify</span>
-            </h1>
-            <p class="subtitle" data-i18n="admin.title">Admin-Panel</p>
-        </header>
+<body class="theme-dark">
+    <header class="admin-header">
+        <h1 class="wordmark"><span class="wordmark-quiz">Quiz</span><span class="wordmark-ify">ify</span></h1>
+        <div class="admin-header-actions">
+            <span id="conn-status" class="connection-indicator">
+                <span class="connection-dot"></span>
+            </span>
+        </div>
+    </header>
+
+    <main class="admin-content">
 
         <!-- ========== SETUP VIEW (LOBBY) ========== -->
         <div id="setup-view" class="view active">
-            <!-- Category -->
-            <div class="setup-section">
-                <div class="setup-label" data-i18n="admin.category">Kategorie</div>
-                <div class="chip-group" id="category-chips">
-                    <button class="chip active" data-value="mixed">Gemischt</button>
-                    <button class="chip" data-value="geographie">Geographie</button>
-                    <button class="chip" data-value="tiere-natur">Tiere & Natur</button>
-                    <button class="chip" data-value="popkultur">Popkultur</button>
-                </div>
-            </div>
 
-            <!-- Difficulty -->
-            <div class="setup-section">
-                <div class="setup-label" data-i18n="admin.difficulty">Schwierigkeit</div>
-                <div class="chip-group" id="difficulty-chips">
-                    <button class="chip" data-value="easy">Einfach</button>
-                    <button class="chip active" data-value="medium">Mittel</button>
-                    <button class="chip" data-value="hard">Schwer</button>
-                    <button class="chip" data-value="mixed">Gemischt</button>
-                </div>
-            </div>
-
-            <!-- Rounds -->
-            <div class="setup-section">
-                <div class="setup-label" data-i18n="admin.rounds">Runden</div>
-                <div class="chip-group" id="rounds-chips">
-                    <button class="chip" data-value="5">5</button>
-                    <button class="chip active" data-value="10">10</button>
-                    <button class="chip" data-value="15">15</button>
-                    <button class="chip" data-value="20">20</button>
-                </div>
-            </div>
-
-            <!-- QR Code -->
-            <div class="setup-section qr-section">
-                <div class="setup-label" data-i18n="admin.invitePlayers">Spieler einladen</div>
-                <div id="qr-container" class="qr-code">
-                </div>
-                <div id="join-url" class="qr-url"></div>
-            </div>
-
-            <!-- Self-join -->
-            <div class="setup-section">
-                <div class="setup-label" data-i18n="admin.selfJoin">Selbst mitspielen</div>
-                <div class="self-join-row">
-                    <input type="text" id="self-join-name" placeholder="Dein Name" maxlength="20" />
-                    <button id="self-join-btn" class="btn btn-secondary">Beitreten</button>
-                </div>
-            </div>
-
-            <!-- Player List -->
-            <div class="setup-section">
-                <div class="player-list">
-                    <div class="player-list-header">
-                        <span class="card-header">Spieler</span>
-                        <span id="setup-player-count" class="player-count">0</span>
+            <!-- Category Section — Collapsible -->
+            <section class="section-collapsible" id="category-section">
+                <button type="button" class="section-header-collapsible" aria-expanded="true" aria-controls="category-content">
+                    <span class="section-icon" aria-hidden="true">📂</span>
+                    <span data-i18n="admin.category">Kategorie</span>
+                    <span class="section-summary" id="category-summary">Gemischt</span>
+                    <span class="section-toggle" aria-hidden="true">&#x25BC;</span>
+                </button>
+                <div class="section-content" id="category-content">
+                    <div class="chip-group" id="category-chips" role="group" aria-label="Category">
+                        <button type="button" class="chip active" data-value="mixed">Gemischt</button>
+                        <button type="button" class="chip" data-value="geographie">Geographie</button>
+                        <button type="button" class="chip" data-value="tiere-natur">Tiere &amp; Natur</button>
+                        <button type="button" class="chip" data-value="popkultur">Popkultur</button>
                     </div>
-                    <div id="setup-player-chips" class="player-chips"></div>
                 </div>
-            </div>
+            </section>
 
-            <!-- Start button -->
-            <button id="start-game-btn" class="btn btn-primary btn-block btn-lg" disabled data-i18n="admin.startGame">
-                Spiel starten
-            </button>
+            <!-- Game Settings Section — Collapsible -->
+            <section class="section-collapsible collapsed" id="game-settings-section">
+                <button type="button" class="section-header-collapsible" aria-expanded="false" aria-controls="game-settings-content">
+                    <span class="section-icon" aria-hidden="true">&#x2699;&#xFE0F;</span>
+                    <span data-i18n="admin.gameSettings">Spieleinstellungen</span>
+                    <span class="section-summary" id="game-settings-summary">Mittel &bull; 10 Runden</span>
+                    <span class="section-toggle" aria-hidden="true">&#x25BC;</span>
+                </button>
+                <div class="section-content" id="game-settings-content">
+                    <!-- Difficulty -->
+                    <div class="setting-row">
+                        <span class="setting-label">
+                            <span class="setting-icon" aria-hidden="true">&#x1F3AF;</span>
+                            <span data-i18n="admin.difficulty">Schwierigkeit</span>
+                        </span>
+                        <div class="chip-group" id="difficulty-chips" role="group" aria-label="Difficulty">
+                            <button type="button" class="chip" data-value="easy">Einfach</button>
+                            <button type="button" class="chip active" data-value="medium">Mittel</button>
+                            <button type="button" class="chip" data-value="hard">Schwer</button>
+                            <button type="button" class="chip" data-value="mixed">Gemischt</button>
+                        </div>
+                    </div>
+
+                    <!-- Rounds -->
+                    <div class="setting-row">
+                        <span class="setting-label">
+                            <span class="setting-icon" aria-hidden="true">&#x1F504;</span>
+                            <span data-i18n="admin.rounds">Runden</span>
+                        </span>
+                        <div class="chip-group" id="rounds-chips" role="group" aria-label="Rounds">
+                            <button type="button" class="chip" data-value="5">5</button>
+                            <button type="button" class="chip active" data-value="10">10</button>
+                            <button type="button" class="chip" data-value="15">15</button>
+                            <button type="button" class="chip" data-value="20">20</button>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            <!-- QR / Invite Section — Collapsible -->
+            <section class="section-collapsible" id="qr-section">
+                <button type="button" class="section-header-collapsible" aria-expanded="true" aria-controls="qr-content">
+                    <span class="section-icon" aria-hidden="true">&#x1F4F2;</span>
+                    <span data-i18n="admin.invitePlayers">Spieler einladen</span>
+                    <span class="section-toggle" aria-hidden="true">&#x25BC;</span>
+                </button>
+                <div class="section-content" id="qr-content">
+                    <div class="qr-section qr-section--compact">
+                        <div class="qr-container" id="qr-container" role="img" aria-label="QR Code"></div>
+                        <p id="join-url" class="qr-url-display qr-url-display--compact"></p>
+                    </div>
+
+                    <!-- Self-join -->
+                    <div class="self-join-row">
+                        <input type="text" id="self-join-name" placeholder="Dein Name" maxlength="20"
+                               autocomplete="off" autocapitalize="words"
+                               data-i18n-placeholder="admin.selfJoinPlaceholder">
+                        <button type="button" id="self-join-btn" class="btn btn-secondary" data-i18n="admin.selfJoin">Beitreten</button>
+                    </div>
+                </div>
+            </section>
+
+            <!-- Players Section — Collapsible -->
+            <section class="section-collapsible" id="players-section">
+                <button type="button" class="section-header-collapsible" aria-expanded="true" aria-controls="players-content">
+                    <span class="section-icon" aria-hidden="true">&#x1F465;</span>
+                    <span data-i18n="admin.players">Spieler</span>
+                    <span class="section-summary" id="setup-player-count">0</span>
+                    <span class="section-toggle" aria-hidden="true">&#x25BC;</span>
+                </button>
+                <div class="section-content" id="players-content">
+                    <div id="setup-player-chips" class="player-cards-grid" aria-live="polite" aria-label="Player list">
+                        <!-- Rendered dynamically -->
+                    </div>
+                </div>
+            </section>
+
+            <!-- Sticky Start Actions -->
+            <div class="lobby-actions lobby-actions--sticky">
+                <button type="button" id="start-game-btn" class="btn btn-primary btn-lg btn-block" disabled data-i18n="admin.startGame">
+                    Spiel starten
+                </button>
+            </div>
         </div>
 
         <!-- ========== IN-GAME VIEW ========== -->
         <div id="game-view" class="view">
             <!-- Admin question preview -->
-            <div class="admin-question-preview">
-                <div id="admin-round" class="round-indicator"></div>
+            <section class="card-section">
+                <h2 class="section-header">
+                    <span class="section-icon" aria-hidden="true">&#x2753;</span>
+                    <span id="admin-round" class="round-indicator"></span>
+                </h2>
                 <div id="admin-question" class="question-text" style="font-size:1.1rem;"></div>
                 <div id="admin-correct" class="admin-correct-answer"></div>
-            </div>
+            </section>
 
             <!-- Timer -->
             <div id="admin-timer-bar" class="timer-bar-container" style="position:relative;">
@@ -102,55 +155,89 @@
             <div id="admin-timer-bar-text" class="timer-text mt-md"></div>
 
             <!-- Live leaderboard -->
-            <div class="card mt-md">
-                <div class="card-header">Rangliste</div>
+            <section class="card-section mt-md">
+                <h2 class="section-header">
+                    <span class="section-icon" aria-hidden="true">&#x1F3C6;</span>
+                    <span>Rangliste</span>
+                </h2>
                 <div id="game-leaderboard" class="leaderboard"></div>
-            </div>
+            </section>
 
-            <!-- Actions -->
-            <div class="admin-actions mt-lg">
-                <button id="next-question-btn" class="btn btn-primary" data-i18n="admin.nextQuestion">Nächste Frage</button>
-                <button id="end-game-btn" class="btn btn-danger" data-i18n="admin.endGame">Spiel beenden</button>
+            <!-- Admin Actions — Sticky -->
+            <div class="admin-actions lobby-actions--sticky mt-lg">
+                <button type="button" id="next-question-btn" class="btn btn-primary" data-i18n="admin.nextQuestion">N&auml;chste Frage</button>
+                <button type="button" id="end-game-btn" class="btn btn-danger" data-i18n="admin.endGame">Spiel beenden</button>
             </div>
         </div>
 
         <!-- ========== REVEAL VIEW ========== -->
         <div id="admin-reveal-view" class="view">
-            <div class="admin-question-preview">
-                <div id="reveal-round" class="round-indicator"></div>
+            <section class="card-section">
+                <h2 class="section-header">
+                    <span class="section-icon" aria-hidden="true">&#x2705;</span>
+                    <span id="reveal-round" class="round-indicator"></span>
+                </h2>
                 <div id="reveal-question" class="question-text" style="font-size:1.1rem;"></div>
                 <div id="reveal-correct" class="admin-correct-answer"></div>
                 <div id="reveal-fun-fact" class="fun-fact-card mt-md">
                     <div class="fun-fact-label">Wusstest du?</div>
                     <div class="fun-fact-text"></div>
                 </div>
-            </div>
+            </section>
 
-            <div class="card mt-md">
-                <div class="card-header">Rangliste</div>
+            <section class="card-section mt-md">
+                <h2 class="section-header">
+                    <span class="section-icon" aria-hidden="true">&#x1F3C6;</span>
+                    <span>Rangliste</span>
+                </h2>
                 <div id="reveal-leaderboard" class="leaderboard"></div>
-            </div>
+            </section>
 
-            <div class="admin-actions mt-lg">
-                <button id="continue-btn" class="btn btn-primary btn-block" data-i18n="admin.continueBtn">Weiter</button>
+            <div class="admin-actions lobby-actions--sticky mt-lg">
+                <button type="button" id="continue-btn" class="btn btn-primary btn-lg btn-block" data-i18n="admin.continueBtn">Weiter</button>
             </div>
         </div>
 
         <!-- ========== FINALE VIEW ========== -->
         <div id="admin-finale-view" class="view">
-            <div class="podium-section">
-                <div class="podium-title">Ergebnis</div>
+            <section class="card-section">
+                <h2 class="section-header">
+                    <span class="section-icon" aria-hidden="true">&#x1F389;</span>
+                    <span>Ergebnis</span>
+                </h2>
                 <div id="admin-podium" class="podium"></div>
-            </div>
-            <div class="card">
-                <div class="card-header">Rangliste</div>
+            </section>
+
+            <section class="card-section mt-md">
+                <h2 class="section-header">
+                    <span class="section-icon" aria-hidden="true">&#x1F3C6;</span>
+                    <span>Rangliste</span>
+                </h2>
                 <div id="admin-finale-leaderboard" class="leaderboard"></div>
+            </section>
+
+            <div class="admin-actions lobby-actions--sticky mt-lg">
+                <button type="button" id="new-game-btn" class="btn btn-primary btn-lg btn-block" data-i18n="finale.playAgain">Neues Spiel</button>
             </div>
-            <div class="admin-actions mt-lg">
-                <button id="new-game-btn" class="btn btn-primary btn-block" data-i18n="finale.playAgain">Neues Spiel</button>
+        </div>
+
+    </main>
+
+    <!-- End Game confirmation modal -->
+    <div id="end-game-modal" class="modal hidden" role="dialog" aria-modal="true" aria-labelledby="end-game-modal-title">
+        <div class="modal-backdrop"></div>
+        <div class="modal-content">
+            <h2 id="end-game-modal-title" data-i18n="admin.endGameConfirm">Spiel beenden?</h2>
+            <p data-i18n="admin.endGameWarning">Alle Spieler werden getrennt.</p>
+            <div class="modal-actions">
+                <button type="button" id="end-game-confirm-btn" class="btn btn-primary" data-i18n="admin.endGame">Spiel beenden</button>
+                <button type="button" id="end-game-cancel-btn" class="btn btn-secondary" data-i18n="common.cancel">Abbrechen</button>
             </div>
         </div>
     </div>
+
+    <!-- Error toast -->
+    <div id="error-toast" class="toast hidden" role="alert" aria-live="assertive"></div>
 
     <script src="/quizify/static/js/vendor/qrcode.min.js"></script>
     <script src="/quizify/static/js/i18n.js"></script>
