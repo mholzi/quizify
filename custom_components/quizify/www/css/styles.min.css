@@ -1056,3 +1056,99 @@ body {
         width: 110px;
     }
 }
+
+/* ==========================================
+   Awards / Superlatives
+   ========================================== */
+
+.awards-section {
+    width: 100%;
+    max-width: 600px;
+    margin: var(--space-xl) auto;
+}
+
+.awards-title {
+    font-size: 1.3rem;
+    font-weight: 700;
+    text-align: center;
+    margin-bottom: var(--space-lg);
+    color: var(--color-accent-bright);
+    letter-spacing: 0.05em;
+}
+
+.awards-grid {
+    display: flex;
+    flex-direction: column;
+    gap: var(--space-md);
+}
+
+.award-card {
+    display: flex;
+    align-items: center;
+    gap: var(--space-md);
+    padding: var(--space-lg);
+    background: var(--color-bg-card);
+    border: 1px solid var(--color-border);
+    border-radius: var(--radius-lg);
+    opacity: 0;
+    transform: translateY(16px);
+    animation: award-enter 0.5s ease-out forwards;
+}
+
+@keyframes award-enter {
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+.award-icon {
+    font-size: 2rem;
+    flex-shrink: 0;
+    width: 48px;
+    text-align: center;
+}
+
+.award-name {
+    font-size: 0.85rem;
+    font-weight: 600;
+    color: var(--color-accent-bright);
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+}
+
+.award-winner {
+    font-size: 1.05rem;
+    font-weight: 700;
+    color: var(--color-text);
+}
+
+.award-detail {
+    font-size: 0.8rem;
+    color: var(--color-text-muted);
+}
+
+.award-card > div:nth-child(2) ~ div {
+    /* Stack name/winner/detail vertically */
+}
+
+/* Wrap the text info in a column layout */
+.award-card {
+    display: grid;
+    grid-template-columns: 48px 1fr;
+    grid-template-rows: auto auto auto;
+    column-gap: var(--space-md);
+    row-gap: 2px;
+}
+
+.award-icon {
+    grid-row: 1 / 4;
+    grid-column: 1;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.award-name { grid-column: 2; }
+.award-winner { grid-column: 2; }
+.award-detail { grid-column: 2; }

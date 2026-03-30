@@ -23,6 +23,7 @@ from custom_components.quizify.const import (
     ERR_ROUND_EXPIRED,
     LOBBY_DISCONNECT_GRACE_PERIOD,
 )
+from custom_components.quizify.game.highlights import compute_superlatives
 from custom_components.quizify.game.powerups import PowerUpEffect, PowerUpType
 from custom_components.quizify.game.state import AnswerResult, GamePhase, QuizifyGameState
 from custom_components.quizify.server.serializers import (
@@ -478,7 +479,8 @@ class QuizifyWebSocketHandler:
         podium = calculate_podium(game_state.get_players())
         all_players = game_state.get_players()
         share_texts = finale_data.get("share_texts")
-        finale_msg = serialize_finale(podium, all_players, share_texts=share_texts)
+        awards = [s.to_dict() for s in compute_superlatives(all_players)]
+        finale_msg = serialize_finale(podium, all_players, share_texts=share_texts, superlatives=awards)
         await self._broadcast(finale_msg)
 
     # ------------------------------------------------------------------
@@ -516,7 +518,8 @@ class QuizifyWebSocketHandler:
                 podium = calculate_podium(game_state.get_players())
                 all_players = game_state.get_players()
                 share_data = build_share_data(game_state)
-                finale_msg = serialize_finale(podium, all_players, share_texts=share_data.get("share_texts"))
+                awards = [s.to_dict() for s in compute_superlatives(all_players)]
+                finale_msg = serialize_finale(podium, all_players, share_texts=share_data.get("share_texts"), superlatives=awards)
                 await self._broadcast(finale_msg)
             return
 
@@ -781,7 +784,8 @@ class QuizifyWebSocketHandler:
                     podium = calculate_podium(game_state.get_players())
                     all_players = game_state.get_players()
                     share_data = build_share_data(game_state)
-                    finale_msg = serialize_finale(podium, all_players, share_texts=share_data.get("share_texts"))
+                    awards = [s.to_dict() for s in compute_superlatives(all_players)]
+                    finale_msg = serialize_finale(podium, all_players, share_texts=share_data.get("share_texts"), superlatives=awards)
                     await self._broadcast(finale_msg)
                 return
 

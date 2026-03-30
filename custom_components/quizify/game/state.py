@@ -27,6 +27,7 @@ from .player import PlayerSession
 from .player_registry import PlayerRegistry
 from .powerups import FREEZE_DURATION, TIME_BOOST_DURATION, PowerUpEffect, PowerUpManager, PowerUpType
 from .questions import Answer, Question, QuestionBank
+from .highlights import compute_superlatives
 from .scoring import calculate_podium, calculate_round_score
 from .share import build_share_data
 from .timer import QuestionTimer
@@ -324,8 +325,12 @@ class QuizifyGameState:
 
         if correct:
             player.streak += 1
+            player.answer_times.append(elapsed)
         else:
             player.streak = 0
+
+        if player.streak > player.max_streak:
+            player.max_streak = player.streak
 
         points = calculate_round_score(
             correct=correct,
@@ -338,6 +343,10 @@ class QuizifyGameState:
 
         player.round_score = points
         player.score += points
+
+        # Track hard question score
+        if correct and diff_enum == Difficulty.HARD:
+            player.hard_score += points
 
         result = AnswerResult(
             player_id=player_id,
@@ -368,16 +377,18 @@ class QuizifyGameState:
         correct_answer = self._question_bank.get_correct_answer(question)
 
         # Score any players who didn't submit (they get 0, streak resets)
-        # Also record round results for share cards
+        # Also record round results and per-round scores for share cards / superlatives
         for player in self._player_registry.players.values():
             if not player.submitted:
                 player.streak = 0
                 player.record_round_result("timeout")
+                player.round_scores.append(0)
             else:
                 is_correct = self._question_bank.validate_answer(
                     question, player.current_answer or -1
                 )
                 player.record_round_result("correct" if is_correct else "wrong")
+                player.round_scores.append(player.round_score)
 
         # Build per-player results
         results: list[AnswerResult] = []
@@ -516,6 +527,9 @@ class QuizifyGameState:
 
         # Apply side-effects
         if effect.type == PowerUpType.FREEZE and target_id:
+            player = self._player_registry.get_player(player_id)
+            if player:
+                player.freezes_used += 1
             target_timer = self._timers.get(target_id)
             if target_timer:
                 target_timer.pause_for_player(FREEZE_DURATION)
@@ -615,6 +629,9 @@ class QuizifyGameState:
                 {"name": p.name, "score": p.score, "rank": i + 1}
                 for i, p in enumerate(podium)
             ]
+            awards = compute_superlatives(self.get_players())
+            if awards:
+                snapshot["superlatives"] = [s.to_dict() for s in awards]
 
         return snapshot
 

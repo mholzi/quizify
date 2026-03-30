@@ -30,6 +30,13 @@ class PlayerSession:
     round_score: int = 0
     round_history: list[str] = field(default_factory=list)
 
+    # Superlative tracking
+    answer_times: list[float] = field(default_factory=list)  # elapsed per correct answer
+    round_scores: list[int] = field(default_factory=list)  # score per round
+    max_streak: int = 0
+    freezes_used: int = 0
+    hard_score: int = 0
+
     def submit_answer(self, answer_index: int, timestamp: float) -> None:
         """Record an answer submission."""
         self.submitted = True
@@ -53,4 +60,9 @@ class PlayerSession:
         self.score = 0
         self.streak = 0
         self.round_history = []
+        self.answer_times = []
+        self.round_scores = []
+        self.max_streak = 0
+        self.freezes_used = 0
+        self.hard_score = 0
         self.reset_round()

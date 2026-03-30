@@ -301,6 +301,9 @@
         const lb = msg.leaderboard || msg.all_players || [];
         renderLeaderboard(els.finaleLeaderboard, lb);
 
+        // Superlatives / Awards
+        renderAwards(msg.superlatives || []);
+
         // Share card — show copy button if share_texts available
         const shareTexts = msg.share_texts || {};
         const myShareText = shareTexts[playerName];
@@ -429,6 +432,29 @@
                 `;
             })
             .join('');
+    }
+
+    function renderAwards(superlatives) {
+        var section = document.getElementById('awards-section');
+        if (!section || !superlatives || !superlatives.length) {
+            if (section) section.classList.add('hidden');
+            return;
+        }
+        section.classList.remove('hidden');
+        section.innerHTML = '<div class="awards-title">Awards</div><div class="awards-grid"></div>';
+        var grid = section.querySelector('.awards-grid');
+
+        superlatives.forEach(function(s, i) {
+            var card = document.createElement('div');
+            card.className = 'award-card';
+            card.style.animationDelay = (i * 0.5) + 's';
+            card.innerHTML =
+                '<div class="award-icon">' + s.icon + '</div>' +
+                '<div class="award-name">' + escapeHtml(s.award) + '</div>' +
+                '<div class="award-winner">' + escapeHtml(s.winner) + '</div>' +
+                '<div class="award-detail">' + escapeHtml(s.detail) + '</div>';
+            grid.appendChild(card);
+        });
     }
 
     function escapeHtml(text) {
