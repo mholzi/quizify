@@ -41,6 +41,8 @@
         setupPlayerCount: document.getElementById('setup-player-count'),
         setupPlayerChips: document.getElementById('setup-player-chips'),
         startGameBtn: document.getElementById('start-game-btn'),
+        selfJoinName: document.getElementById('self-join-name'),
+        selfJoinBtn: document.getElementById('self-join-btn'),
         // In-game
         adminRound: document.getElementById('admin-round'),
         adminQuestion: document.getElementById('admin-question'),
@@ -387,6 +389,21 @@
     // ---- Event listeners ----
 
     // Start game
+    // Self-join as player
+    els.selfJoinBtn.addEventListener('click', () => {
+        const name = els.selfJoinName.value.trim();
+        if (!name) { els.selfJoinName.focus(); return; }
+        // Open player page in new tab with name pre-filled
+        const playerUrl = new URL('/quizify/player', location.href);
+        playerUrl.searchParams.set('name', name);
+        window.open(playerUrl.toString(), '_blank');
+        els.selfJoinName.value = '';
+    });
+
+    els.selfJoinName.addEventListener('keydown', (e) => {
+        if (e.key === 'Enter') els.selfJoinBtn.click();
+    });
+
     els.startGameBtn.addEventListener('click', () => {
         const categoryPayload = selectedCategory === 'mixed'
             ? null

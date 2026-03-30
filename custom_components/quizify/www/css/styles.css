@@ -917,6 +917,29 @@ body {
     font-size: 0.75rem;
 }
 
+/* Self-join row */
+.self-join-row {
+    display: flex;
+    gap: var(--space-sm);
+    align-items: center;
+}
+
+.self-join-row input {
+    flex: 1;
+    padding: 10px 14px;
+    background: var(--color-bg-surface);
+    border: 1px solid var(--color-border);
+    border-radius: var(--radius-md);
+    color: var(--color-text);
+    font-size: 0.95rem;
+    font-family: var(--font-main);
+}
+
+.self-join-row input:focus {
+    outline: none;
+    border-color: var(--color-accent);
+}
+
 .admin-question-preview {
     background: var(--color-bg-card);
     border: 1px solid var(--color-border);

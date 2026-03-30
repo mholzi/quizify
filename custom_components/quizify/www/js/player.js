@@ -411,5 +411,25 @@
     });
 
     // ---- Init ----
+    // Auto-fill name from URL param ?name=... (used by admin self-join)
+    const urlParams = new URLSearchParams(location.search);
+    const prefilledName = urlParams.get('name');
+    if (prefilledName) {
+        els.nameInput.value = prefilledName;
+        els.joinBtn.disabled = false;
+    }
+
     connect();
+
+    // Auto-join if name was pre-filled (wait for WS connection)
+    if (prefilledName) {
+        const autoJoinInterval = setInterval(() => {
+            if (ws && ws.readyState === WebSocket.OPEN && !joined) {
+                clearInterval(autoJoinInterval);
+                els.joinBtn.click();
+            }
+        }, 200);
+        // Give up after 5s
+        setTimeout(() => clearInterval(autoJoinInterval), 5000);
+    }
 })();
