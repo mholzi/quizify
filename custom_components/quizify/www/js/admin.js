@@ -22,8 +22,23 @@
     let currentPhase = 'LOBBY';
     let playerCount = 0;
 
-    // ---- Components ----
-    const adminTimer = new TimerBar('admin-timer-bar', 15);
+    // ---- Simple inline timer (no TimerBar dependency) ----
+    var adminTimerEl = null;
+    var adminTimerInterval = null;
+    var adminTimer = {
+        start: function(duration) {
+            adminTimerEl = document.getElementById('admin-timer-bar');
+            clearInterval(adminTimerInterval);
+        },
+        update: function(remaining) {
+            if (!adminTimerEl) adminTimerEl = document.getElementById('admin-timer-bar');
+            if (adminTimerEl) adminTimerEl.textContent = Math.ceil(remaining) + 's';
+        },
+        stop: function() {
+            clearInterval(adminTimerInterval);
+            if (adminTimerEl) adminTimerEl.textContent = '';
+        }
+    };
 
     // ---- DOM refs ----
     const views = {
