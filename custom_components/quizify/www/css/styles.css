@@ -2180,3 +2180,63 @@ footer {
   color: #a855f7;
   margin-top: 2px;
 }
+
+/* ── Reveal emotion (Beatify-style) ── */
+.reveal-emotion-inline {
+  font-size: 1.35rem;
+  font-weight: 800;
+  margin-bottom: var(--space-xs, 4px);
+  animation: reveal-emotion-entrance 0.5s ease-out;
+  text-align: center;
+}
+
+.reveal-emotion--exact {
+  color: #22d3ee;
+  text-shadow: 0 0 20px #22d3ee, 0 0 40px #22d3ee;
+}
+
+.reveal-emotion--wrong {
+  color: #a4a4b8;
+}
+
+.reveal-emotion--missed {
+  color: #a4a4b8;
+  opacity: 0.65;
+}
+
+.reveal-emotion-subtitle {
+  font-size: 0.85rem;
+  font-weight: 500;
+  margin-top: 2px;
+  opacity: 0.8;
+}
+
+/* Correct answer hero — large glowing display */
+.reveal-year-section {
+  text-align: center;
+  padding: var(--space-md, 12px) 0;
+}
+
+.correct-year-label {
+  font-size: 0.7rem;
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+  color: #a4a4b8;
+  margin-bottom: 4px;
+}
+
+.correct-year {
+  font-size: 2.25rem;
+  font-weight: 900;
+  color: #22d3ee;
+  text-shadow: 0 0 20px #22d3ee, 0 0 40px rgba(34,211,238,0.4);
+  letter-spacing: -0.02em;
+  word-break: break-word;
+  line-height: 1.15;
+}
+
+@keyframes reveal-emotion-entrance {
+  0%   { opacity: 0; transform: scale(0.8); }
+  50%  { transform: scale(1.08); }
+  100% { opacity: 1; transform: scale(1); }
+}

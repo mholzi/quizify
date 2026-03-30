@@ -89,15 +89,25 @@ def serialize_question_for_admin(
 def serialize_leaderboard(players: list[PlayerSession]) -> list[dict[str, Any]]:
     """Build sorted leaderboard from player list."""
     sorted_players = sorted(players, key=lambda p: p.score, reverse=True)
-    return [
-        {
+    result = []
+    for i, p in enumerate(sorted_players):
+        breakdown = p.round_score_breakdown if hasattr(p, "round_score_breakdown") else {}
+        # Determine if this player answered correctly this round
+        last_result = p.round_history[-1] if p.round_history else None
+        result.append({
             "rank": i + 1,
             "name": p.name,
             "score": p.score,
             "streak": p.streak,
-        }
-        for i, p in enumerate(sorted_players)
-    ]
+            "round_score": p.round_score,
+            "correct": last_result == "correct",
+            "missed_round": last_result == "timeout",
+            "speed_bonus": breakdown.get("speed_bonus", 0),
+            "streak_bonus": breakdown.get("streak_bonus", 0),
+            "difficulty_multiplier": breakdown.get("difficulty_multiplier", 1.0),
+            "double_points": breakdown.get("double_points", False),
+        })
+    return result
 
 
 def serialize_player_list(players: list[PlayerSession]) -> list[dict[str, Any]]:
@@ -144,6 +154,7 @@ def serialize_round_summary(
     round_num: int,
     total_rounds: int,
     all_answers: list[dict[str, Any]] | None = None,
+    question_text: str = "",
 ) -> dict[str, Any]:
     """Build round summary broadcast payload."""
     return {
@@ -155,4 +166,5 @@ def serialize_round_summary(
         "round": round_num,
         "total_rounds": total_rounds,
         "all_answers": all_answers or [],
+        "question_text": question_text,
     }

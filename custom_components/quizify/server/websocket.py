@@ -683,6 +683,7 @@ class QuizifyWebSocketHandler:
             round_num=game_state.round,
             total_rounds=game_state.total_rounds,
             all_answers=all_answers,
+            question_text=summary.question.question,
         )
         await self._broadcast(summary_msg)
 

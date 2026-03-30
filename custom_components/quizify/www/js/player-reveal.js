@@ -62,8 +62,8 @@
             }
         }
 
-        // Emotion display
-        renderRevealEmotion(currentPlayer);
+        // Emotion display — prefer all_answers entry (has speed_bonus, correct, etc.)
+        renderRevealEmotion(myAnswerEntry || currentPlayer);
 
         // Personal result — prefer all_answers entry (has breakdown), fall back to leaderboard player
         renderPersonalResult(myAnswerEntry || currentPlayer);
@@ -96,14 +96,7 @@
             adminControls.classList.add('hidden');
         }
 
-        // Confetti on correct answer
-        if (currentPlayer && currentPlayer.correct && typeof confetti === 'function') {
-            confetti({
-                particleCount: 80,
-                spread: 60,
-                origin: { y: 0.7 }
-            });
-        }
+        // (Confetti handled inside renderRevealEmotion)
     }
 
     // ============================================
@@ -146,20 +139,40 @@
 
         if (!player) return;
 
+        var correct = player.correct === true;
+        var missed = player.missed_round === true || player.no_answer === true || player.answer_index === null;
+        var streak = player.streak || player.new_streak || 0;
+        var speedBonus = player.speed_bonus || 0;
+
+        var exactTexts   = ['CORRECT! 🎯', 'NAILED IT! 🎯', 'SPOT ON! ✨', 'BULLSEYE! 🎯'];
+        var closeTexts   = ['So close! 😅', 'Nearly there! 🙌', 'Good try! 👍'];
+        var wrongTexts   = ['Wrong! ❌', 'Nope! 😬', 'Not quite! 😅', 'Oops! 💨'];
+        var missedTexts  = ['Too slow! ⏱️', 'Time\'s up! ⏰', 'Missed it! 😬'];
+
+        var exactSubs    = ['Perfect answer!', 'You knew it!', 'Impressive!'];
+        var fastSubs     = ['Lightning fast ⚡', 'Speed bonus earned!'];
+        var streakSubs   = ['🔥 ' + streak + '-streak!', 'On a roll! 🔥'];
+        var wrongSubs    = ['Better luck next time', 'Keep going!', 'You\'ll get the next one'];
+        var missedSubs   = ['No answer submitted', 'You missed this one'];
+
+        function pick(arr) { return arr[Math.floor(Math.random() * arr.length)]; }
+
         var emotionType, emotionText, subtitle;
 
-        if (player.missed_round) {
+        if (missed) {
             emotionType = 'missed';
-            emotionText = 'Missed!';
-            subtitle = 'No answer submitted';
-        } else if (player.correct) {
+            emotionText = pick(missedTexts);
+            subtitle = pick(missedSubs);
+        } else if (correct) {
             emotionType = 'exact';
-            emotionText = 'CORRECT! \uD83C\uDFAF';
-            subtitle = 'Well done!';
+            emotionText = pick(exactTexts);
+            if (streak >= 3) subtitle = pick(streakSubs);
+            else if (speedBonus > 200) subtitle = pick(fastSubs);
+            else subtitle = pick(exactSubs);
         } else {
             emotionType = 'wrong';
-            emotionText = 'Wrong! \u274C';
-            subtitle = 'Better luck next time';
+            emotionText = pick(wrongTexts);
+            subtitle = pick(wrongSubs);
         }
 
         var emotionHtml = '<span class="reveal-emotion-text">' + emotionText + '</span>';
@@ -167,9 +180,13 @@
             emotionHtml += '<div class="reveal-emotion-subtitle">' + subtitle + '</div>';
         }
         emotionEl.innerHTML = emotionHtml;
-
         emotionEl.classList.add('reveal-emotion--' + emotionType);
         emotionEl.classList.remove('hidden');
+
+        // Confetti on correct
+        if (correct && typeof confetti === 'function') {
+            confetti({ particleCount: 80, spread: 60, origin: { y: 0.7 } });
+        }
     }
 
     // ============================================
