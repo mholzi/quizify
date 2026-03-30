@@ -83,6 +83,8 @@
                     pu.saveSession(msg.session_token, state.playerName);
                 }
                 if (msg.is_admin) state.isAdmin = true;
+                // Request full state so we switch to the correct view immediately
+                send('get_state', {});
                 break;
 
             case 'reconnect_failed':
@@ -166,6 +168,10 @@
                         total_rounds: msg.total_rounds,
                         category: msg.question.category
                     });
+                } else {
+                    // Game is active but no question in snapshot (mid-round join)
+                    // Show game view anyway so player sees they're connected
+                    pu.showView('game-view');
                 }
                 break;
 
@@ -391,7 +397,9 @@
         els.joinBtn.textContent = 'Joining...';
 
         if (state.ws && state.ws.readyState === WebSocket.OPEN) {
-            send('join', { name: result.name });
+            var joinMsg = { name: result.name };
+            if (state.isAdmin) joinMsg.is_admin = true;
+            send('join', joinMsg);
         }
     }
 
