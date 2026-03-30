@@ -1,0 +1,431 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+    <title>Quizify — Analytics</title>
+    <link rel="stylesheet" href="/quizify/static/css/styles.css">
+    <link rel="icon" href="/quizify/static/img/icon-256.png" type="image/png">
+    <style>
+        .analytics-container {
+            max-width: 800px;
+            margin: 0 auto;
+            padding: var(--space-md);
+            min-height: 100dvh;
+        }
+
+        .period-selector {
+            display: flex;
+            gap: var(--space-sm);
+            margin-bottom: var(--space-xl);
+            justify-content: center;
+        }
+
+        .period-btn {
+            padding: 8px 16px;
+            background: var(--color-bg-surface);
+            border: 1px solid var(--color-border);
+            border-radius: var(--radius-full);
+            font-family: var(--font-main);
+            font-size: 0.85rem;
+            color: var(--color-text);
+            cursor: pointer;
+            transition: all var(--transition-fast);
+        }
+
+        .period-btn.active {
+            background: rgba(108, 92, 231, 0.2);
+            border-color: var(--color-accent);
+            color: var(--color-accent-bright);
+        }
+
+        .stats-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(140px, 1fr));
+            gap: var(--space-md);
+            margin-bottom: var(--space-xl);
+        }
+
+        .stat-card {
+            background: var(--color-bg-card);
+            border: 1px solid var(--color-border);
+            border-radius: var(--radius-lg);
+            padding: var(--space-lg);
+            text-align: center;
+        }
+
+        .stat-value {
+            font-size: 1.8rem;
+            font-weight: 800;
+            color: var(--color-accent-bright);
+            font-variant-numeric: tabular-nums;
+        }
+
+        .stat-label {
+            font-size: 0.75rem;
+            text-transform: uppercase;
+            letter-spacing: 0.08em;
+            color: var(--color-text-muted);
+            margin-top: var(--space-xs);
+        }
+
+        .section-title {
+            font-size: 0.85rem;
+            font-weight: 600;
+            text-transform: uppercase;
+            letter-spacing: 0.08em;
+            color: var(--color-text-muted);
+            margin-bottom: var(--space-md);
+        }
+
+        .analytics-section {
+            margin-bottom: var(--space-xl);
+        }
+
+        .games-table {
+            width: 100%;
+            border-collapse: collapse;
+        }
+
+        .games-table th,
+        .games-table td {
+            padding: var(--space-sm) var(--space-md);
+            text-align: left;
+            border-bottom: 1px solid var(--color-border);
+            font-size: 0.85rem;
+        }
+
+        .games-table th {
+            color: var(--color-text-muted);
+            font-weight: 600;
+            text-transform: uppercase;
+            letter-spacing: 0.05em;
+            font-size: 0.7rem;
+        }
+
+        .games-table td {
+            color: var(--color-text);
+        }
+
+        .chart-container {
+            background: var(--color-bg-card);
+            border: 1px solid var(--color-border);
+            border-radius: var(--radius-lg);
+            padding: var(--space-lg);
+            height: 200px;
+            display: flex;
+            align-items: flex-end;
+            gap: 4px;
+        }
+
+        .chart-bar-wrapper {
+            flex: 1;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            height: 100%;
+            justify-content: flex-end;
+        }
+
+        .chart-bar {
+            width: 100%;
+            max-width: 40px;
+            background: linear-gradient(180deg, var(--color-accent), var(--color-electric));
+            border-radius: 4px 4px 0 0;
+            min-height: 2px;
+            transition: height var(--transition-normal);
+        }
+
+        .chart-label {
+            font-size: 0.65rem;
+            color: var(--color-text-dim);
+            margin-top: var(--space-xs);
+        }
+
+        .chart-value {
+            font-size: 0.7rem;
+            color: var(--color-text-muted);
+            margin-bottom: var(--space-xs);
+        }
+
+        .top-player-row {
+            display: flex;
+            align-items: center;
+            gap: var(--space-md);
+            padding: var(--space-md);
+            border-bottom: 1px solid var(--color-border);
+        }
+
+        .top-player-row:last-child {
+            border-bottom: none;
+        }
+
+        .top-player-rank {
+            width: 28px;
+            height: 28px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: 700;
+            font-size: 0.85rem;
+            border-radius: var(--radius-full);
+            background: var(--color-bg-surface);
+            color: var(--color-text-muted);
+            flex-shrink: 0;
+        }
+
+        .top-player-rank.rank-1 { background: var(--color-gold); color: #1a1a1a; }
+        .top-player-rank.rank-2 { background: var(--color-silver); color: #1a1a1a; }
+        .top-player-rank.rank-3 { background: var(--color-bronze); color: white; }
+
+        .top-player-name { flex: 1; font-weight: 500; }
+        .top-player-score { font-weight: 700; color: var(--color-accent-bright); font-variant-numeric: tabular-nums; }
+
+        .empty-state {
+            text-align: center;
+            padding: var(--space-2xl);
+            color: var(--color-text-muted);
+        }
+
+        .loading-state {
+            text-align: center;
+            padding: var(--space-2xl);
+            color: var(--color-text-dim);
+        }
+
+        .back-link {
+            display: inline-flex;
+            align-items: center;
+            gap: var(--space-sm);
+            color: var(--color-accent-bright);
+            text-decoration: none;
+            font-size: 0.85rem;
+            margin-bottom: var(--space-lg);
+        }
+    </style>
+</head>
+<body>
+    <div class="analytics-container">
+        <a href="/quizify/launcher" class="back-link">&larr; Back</a>
+
+        <header class="header">
+            <h1 class="wordmark">
+                <span class="wordmark-quiz">Quiz</span><span class="wordmark-ify">ify</span>
+            </h1>
+            <p class="subtitle">Analytics</p>
+        </header>
+
+        <div class="period-selector">
+            <button class="period-btn" data-period="7d">7d</button>
+            <button class="period-btn active" data-period="30d">30d</button>
+            <button class="period-btn" data-period="90d">90d</button>
+            <button class="period-btn" data-period="all">All</button>
+        </div>
+
+        <div id="loading" class="loading-state">Loading analytics...</div>
+
+        <div id="content" style="display:none;">
+            <!-- Stats Grid -->
+            <div class="stats-grid">
+                <div class="stat-card">
+                    <div class="stat-value" id="total-games">0</div>
+                    <div class="stat-label">Games</div>
+                </div>
+                <div class="stat-card">
+                    <div class="stat-value" id="avg-players">0</div>
+                    <div class="stat-label">Avg. Players</div>
+                </div>
+                <div class="stat-card">
+                    <div class="stat-value" id="total-rounds">0</div>
+                    <div class="stat-label">Rounds</div>
+                </div>
+            </div>
+
+            <!-- Games Over Time -->
+            <div class="analytics-section">
+                <div class="section-title">Games Over Time</div>
+                <div id="chart" class="chart-container"></div>
+            </div>
+
+            <!-- Top Players -->
+            <div class="analytics-section">
+                <div class="section-title">Top Players</div>
+                <div class="card">
+                    <div id="top-players"></div>
+                </div>
+            </div>
+
+            <!-- Category Stats -->
+            <div class="analytics-section">
+                <div class="section-title">Categories</div>
+                <div class="card">
+                    <table class="games-table">
+                        <thead>
+                            <tr>
+                                <th>Category</th>
+                                <th>Games</th>
+                                <th>Avg. Score</th>
+                            </tr>
+                        </thead>
+                        <tbody id="category-stats"></tbody>
+                    </table>
+                </div>
+            </div>
+
+            <!-- Recent Games -->
+            <div class="analytics-section">
+                <div class="section-title">Recent Games</div>
+                <div class="card" style="overflow-x:auto;">
+                    <table class="games-table">
+                        <thead>
+                            <tr>
+                                <th>Date</th>
+                                <th>Category</th>
+                                <th>Players</th>
+                                <th>Winner</th>
+                            </tr>
+                        </thead>
+                        <tbody id="recent-games"></tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+
+        <div id="empty" class="empty-state" style="display:none;">
+            No games played yet. Start a quiz to see analytics!
+        </div>
+    </div>
+
+    <script>
+    (function() {
+        'use strict';
+
+        var currentPeriod = '30d';
+
+        function escapeHtml(text) {
+            var el = document.createElement('span');
+            el.textContent = text || '';
+            return el.innerHTML;
+        }
+
+        // Period selector
+        document.querySelectorAll('.period-btn').forEach(function(btn) {
+            btn.addEventListener('click', function() {
+                document.querySelectorAll('.period-btn').forEach(function(b) { b.classList.remove('active'); });
+                btn.classList.add('active');
+                currentPeriod = btn.dataset.period;
+                loadData();
+            });
+        });
+
+        function loadData() {
+            fetch('/api/quizify/analytics/data?period=' + currentPeriod)
+                .then(function(r) { return r.json(); })
+                .then(function(data) {
+                    document.getElementById('loading').style.display = 'none';
+
+                    if (data.total_games === 0) {
+                        document.getElementById('content').style.display = 'none';
+                        document.getElementById('empty').style.display = 'block';
+                        return;
+                    }
+
+                    document.getElementById('content').style.display = 'block';
+                    document.getElementById('empty').style.display = 'none';
+
+                    // Stats
+                    document.getElementById('total-games').textContent = data.total_games;
+                    document.getElementById('avg-players').textContent = data.avg_players_per_game;
+                    document.getElementById('total-rounds').textContent = data.total_rounds;
+
+                    // Chart
+                    renderChart(data.chart_data);
+
+                    // Top players
+                    renderTopPlayers(data.top_players || []);
+
+                    // Category stats
+                    renderCategoryStats(data.category_stats || []);
+
+                    // Recent games
+                    renderRecentGames(data.recent_games || []);
+                })
+                .catch(function(err) {
+                    console.error('Failed to load analytics:', err);
+                    document.getElementById('loading').textContent = 'Failed to load analytics.';
+                });
+        }
+
+        function renderChart(chartData) {
+            var container = document.getElementById('chart');
+            if (!chartData || !chartData.labels || chartData.labels.length === 0) {
+                container.innerHTML = '<div class="empty-state" style="width:100%;padding:20px;">No data</div>';
+                return;
+            }
+
+            var max = Math.max.apply(null, chartData.values) || 1;
+
+            container.innerHTML = chartData.labels.map(function(label, i) {
+                var val = chartData.values[i] || 0;
+                var pct = (val / max) * 100;
+                return '<div class="chart-bar-wrapper">' +
+                    '<div class="chart-value">' + val + '</div>' +
+                    '<div class="chart-bar" style="height:' + Math.max(pct, 2) + '%"></div>' +
+                    '<div class="chart-label">' + escapeHtml(label) + '</div>' +
+                    '</div>';
+            }).join('');
+        }
+
+        function renderTopPlayers(players) {
+            var container = document.getElementById('top-players');
+            if (!players.length) {
+                container.innerHTML = '<div class="empty-state">No players yet</div>';
+                return;
+            }
+            container.innerHTML = players.map(function(p, i) {
+                var rank = i + 1;
+                var rankClass = rank <= 3 ? ' rank-' + rank : '';
+                return '<div class="top-player-row">' +
+                    '<span class="top-player-rank' + rankClass + '">' + rank + '</span>' +
+                    '<span class="top-player-name">' + escapeHtml(p.name) + '</span>' +
+                    '<span class="top-player-score">' + p.total_score + '</span>' +
+                    '</div>';
+            }).join('');
+        }
+
+        function renderCategoryStats(stats) {
+            var tbody = document.getElementById('category-stats');
+            if (!stats.length) {
+                tbody.innerHTML = '<tr><td colspan="3" class="empty-state">No data</td></tr>';
+                return;
+            }
+            tbody.innerHTML = stats.map(function(s) {
+                return '<tr>' +
+                    '<td>' + escapeHtml(s.category) + '</td>' +
+                    '<td>' + s.games_played + '</td>' +
+                    '<td>' + s.avg_score + '</td>' +
+                    '</tr>';
+            }).join('');
+        }
+
+        function renderRecentGames(games) {
+            var tbody = document.getElementById('recent-games');
+            if (!games.length) {
+                tbody.innerHTML = '<tr><td colspan="4" class="empty-state">No games yet</td></tr>';
+                return;
+            }
+            tbody.innerHTML = games.map(function(g) {
+                return '<tr>' +
+                    '<td>' + escapeHtml(g.date) + '</td>' +
+                    '<td>' + escapeHtml(g.category) + '</td>' +
+                    '<td>' + g.player_count + '</td>' +
+                    '<td>' + escapeHtml(g.winner) + '</td>' +
+                    '</tr>';
+            }).join('');
+        }
+
+        loadData();
+    })();
+    </script>
+</body>
+</html>

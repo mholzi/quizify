@@ -1,0 +1,108 @@
+{
+  "lobby": {
+    "enterName": "Gib deinen Namen ein",
+    "namePlaceholder": "Dein Name",
+    "joinBtn": "Beitreten",
+    "waitingForHost": "Warte auf den Host...",
+    "players": "Spieler"
+  },
+  "admin": {
+    "title": "Admin-Panel",
+    "category": "Kategorie",
+    "difficulty": "Schwierigkeit",
+    "rounds": "Runden",
+    "invitePlayers": "Spieler einladen",
+    "selfJoin": "Selbst mitspielen",
+    "selfJoinPlaceholder": "Dein Name",
+    "selfJoinBtn": "Beitreten",
+    "startGame": "Spiel starten",
+    "nextQuestion": "N\u00e4chste Frage",
+    "endGame": "Spiel beenden",
+    "continueBtn": "Weiter",
+    "newGame": "Neues Spiel",
+    "confirmEnd": "Spiel wirklich beenden?",
+    "correct": "Richtig"
+  },
+  "categories": {
+    "mixed": "Gemischt",
+    "geographie": "Geographie",
+    "tiere-natur": "Tiere & Natur",
+    "popkultur": "Popkultur"
+  },
+  "difficulties": {
+    "easy": "Einfach",
+    "medium": "Mittel",
+    "hard": "Schwer",
+    "mixed": "Gemischt"
+  },
+  "game": {
+    "question": "Frage",
+    "of": "von",
+    "questionCounter": "Frage {current} / {total}",
+    "timerLabel": "Zeit",
+    "answerA": "A",
+    "answerB": "B",
+    "answerC": "C",
+    "correctFeedback": "Richtig!",
+    "wrongFeedback": "Falsch \u2014 die Antwort war: {answer}",
+    "points": "Punkte",
+    "streak": "Serie",
+    "streakBadge": "{count}x Serie",
+    "rank": "Platz {rank} \u2014 {score} Punkte"
+  },
+  "powerups": {
+    "joker": "Joker",
+    "double_points": "Doppelt",
+    "freeze": "Einfrieren",
+    "time_boost": "+5 Sek."
+  },
+  "funFact": {
+    "label": "Wusstest du?"
+  },
+  "leaderboard": {
+    "title": "Rangliste",
+    "pointsShort": "Pkt."
+  },
+  "podium": {
+    "title": "Ergebnis",
+    "first": "1. Platz",
+    "second": "2. Platz",
+    "third": "3. Platz"
+  },
+  "finale": {
+    "playAgain": "Neues Spiel",
+    "copyResult": "Ergebnis kopieren",
+    "copied": "Kopiert!"
+  },
+  "launcher": {
+    "subtitle": "Das unn\u00fctze Wissen Quiz",
+    "joinGame": "Spiel beitreten",
+    "admin": "Admin",
+    "gameRunning": "Spiel l\u00e4uft",
+    "questionActive": "Spiel l\u00e4uft \u2014 Frage aktiv",
+    "answerReveal": "Spiel l\u00e4uft \u2014 Aufl\u00f6sung",
+    "gameEnded": "Spiel beendet"
+  },
+  "dashboard": {
+    "waitingForStart": "Warte auf Spielstart...",
+    "leaderboard": "Rangliste"
+  },
+  "connection": {
+    "connected": "Verbunden",
+    "reconnecting": "Verbindung wird wiederhergestellt...",
+    "disconnected": "Verbindung getrennt"
+  },
+  "errors": {
+    "NAME_TAKEN": "Name bereits vergeben",
+    "NAME_INVALID": "Bitte gib einen Namen ein",
+    "GAME_FULL": "Spiel ist voll",
+    "GAME_NOT_STARTED": "Kein aktives Spiel",
+    "GAME_ALREADY_STARTED": "Spiel l\u00e4uft bereits",
+    "ALREADY_SUBMITTED": "Bereits geantwortet",
+    "ROUND_EXPIRED": "Zeit abgelaufen",
+    "NOT_IN_GAME": "Nicht im Spiel",
+    "INVALID_ACTION": "Ung\u00fcltige Aktion",
+    "UNKNOWN": "Ein Fehler ist aufgetreten",
+    "unknownMessageType": "Unbekannter Nachrichtentyp"
+  }
+}

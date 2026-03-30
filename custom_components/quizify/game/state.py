@@ -28,6 +28,7 @@ from .player_registry import PlayerRegistry
 from .powerups import FREEZE_DURATION, TIME_BOOST_DURATION, PowerUpEffect, PowerUpManager, PowerUpType
 from .questions import Answer, Question, QuestionBank
 from .scoring import calculate_podium, calculate_round_score
+from .share import build_share_data
 from .timer import QuestionTimer
 from .types import DIFFICULTY_MULTIPLIERS, TIME_LIMITS, Difficulty, RoundResult
 
@@ -107,6 +108,10 @@ class QuizifyGameState:
         # Background task tracking to prevent GC
         self._bg_tasks: set[asyncio.Task] = set()
 
+        # Analytics / stats service (injected from __init__.py)
+        self._stats_service = None
+        self._game_start_time: float | None = None
+
     # ------------------------------------------------------------------
     # Player registry delegation
     # ------------------------------------------------------------------
@@ -175,12 +180,18 @@ class QuizifyGameState:
         self._question_bank.load_all_categories()
         self._question_bank.reset(category=category, difficulty=difficulty)
 
+        # Verify questions are available
+        if not self._question_bank._queue:
+            raise ValueError("No questions available for the selected category/difficulty")
+
         # Reset player scores
         for player in self._player_registry.players.values():
             player.reset_for_new_game()
 
         # Reset power-ups
         self._powerup_manager.reset()
+
+        self._game_start_time = time.time()
 
         _LOGGER.info(
             "Game started: id=%s, category=%s, difficulty=%s, rounds=%d",
@@ -357,9 +368,16 @@ class QuizifyGameState:
         correct_answer = self._question_bank.get_correct_answer(question)
 
         # Score any players who didn't submit (they get 0, streak resets)
+        # Also record round results for share cards
         for player in self._player_registry.players.values():
             if not player.submitted:
                 player.streak = 0
+                player.record_round_result("timeout")
+            else:
+                is_correct = self._question_bank.validate_answer(
+                    question, player.current_answer or -1
+                )
+                player.record_round_result("correct" if is_correct else "wrong")
 
         # Build per-player results
         results: list[AnswerResult] = []
@@ -403,6 +421,10 @@ class QuizifyGameState:
         self._current_question = None
 
         podium = calculate_podium(self.get_players())
+
+        # Build share cards
+        share_data = build_share_data(self)
+
         finale_data = {
             "phase": GamePhase.FINALE.value,
             "leaderboard": self.get_leaderboard(),
@@ -411,12 +433,42 @@ class QuizifyGameState:
                 for i, p in enumerate(podium)
             ],
             "total_rounds": self.round,
+            "share_texts": share_data.get("share_texts", {}),
         }
+
+        # Record to analytics
+        self._record_analytics()
 
         _LOGGER.info("Game ended after %d rounds", self.round)
         self._fire_broadcast("game_ended")
 
         return finale_data
+
+    def _record_analytics(self) -> None:
+        """Record game to analytics service if available."""
+        if not self._stats_service or not self.game_id:
+            return
+
+        duration = int(time.time() - (self._game_start_time or time.time()))
+        players = {p.name: p.score for p in self.get_players()}
+
+        async def _do_record() -> None:
+            try:
+                await self._stats_service.record_game(
+                    game_id=self.game_id,
+                    category=self.category,
+                    difficulty=self.difficulty,
+                    num_rounds=self.round,
+                    players=players,
+                    duration_seconds=duration,
+                    started_at=int(self._game_start_time) if self._game_start_time else None,
+                )
+            except Exception as err:  # noqa: BLE001
+                _LOGGER.warning("Failed to record analytics: %s", err)
+
+        task = asyncio.ensure_future(_do_record())
+        self._bg_tasks.add(task)
+        task.add_done_callback(self._bg_tasks.discard)
 
     def reset_to_lobby(self) -> None:
         """Reset the game back to lobby state for a new game."""

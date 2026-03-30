@@ -6,18 +6,22 @@
  */
 'use strict';
 
-var CACHE_VERSION = 'quizify-v0.1.0';
-var MAX_CACHE_ITEMS = 50;
+var CACHE_VERSION = 'quizify-v0.2.0';
+var MAX_CACHE_ITEMS = 60;
 
 // Critical assets to precache on install
 var PRECACHE_ASSETS = [
     '/quizify/static/css/styles.css',
+    '/quizify/static/js/i18n.js',
+    '/quizify/static/js/utils.js',
     '/quizify/static/js/player.js',
     '/quizify/static/js/admin.js',
     '/quizify/static/js/timer.js',
     '/quizify/static/js/answers.js',
     '/quizify/static/js/fun-fact.js',
     '/quizify/static/js/vendor/qrcode.min.js',
+    '/quizify/static/i18n/de.json',
+    '/quizify/static/i18n/en.json',
     '/quizify/static/site.webmanifest',
     '/quizify/static/img/icon-256.png',
     '/quizify/static/img/icon-512.png'

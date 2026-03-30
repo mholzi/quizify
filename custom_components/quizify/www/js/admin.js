@@ -136,6 +136,7 @@
 
         ws.onopen = () => {
             reconnectAttempts = 0;
+            updateConnectionStatus('connected');
             send('admin_connect', {});
         };
 
@@ -152,7 +153,10 @@
             ws = null;
             if (reconnectAttempts < MAX_RECONNECT) {
                 reconnectAttempts++;
+                updateConnectionStatus('reconnecting');
                 setTimeout(connect, 1000 * reconnectAttempts);
+            } else {
+                updateConnectionStatus('disconnected');
             }
         };
 
@@ -194,6 +198,7 @@
                 break;
             case 'error':
                 console.warn('[Quizify Admin] Error:', msg.code, msg.message);
+                showErrorToast(msg.message || msg.code);
                 break;
         }
     }
@@ -364,9 +369,7 @@
     }
 
     function escapeHtml(text) {
-        const el = document.createElement('span');
-        el.textContent = text || '';
-        return el.innerHTML;
+        return QuizifyUtils.escapeHtml(text);
     }
 
     // ---- QR Code (qrcodejs library) ----
@@ -451,7 +454,43 @@
         renderJoinUrl(joinUrl);
     }
 
+    // ---- Error toast ----
+    function showErrorToast(message) {
+        let toast = document.getElementById('error-toast');
+        if (!toast) {
+            toast = document.createElement('div');
+            toast.id = 'error-toast';
+            toast.style.cssText = 'position:fixed;top:16px;left:50%;transform:translateX(-50%);background:#ff4757;color:white;padding:10px 20px;border-radius:10px;font-size:0.85rem;z-index:9999;opacity:0;transition:opacity 0.3s;pointer-events:none;';
+            document.body.appendChild(toast);
+        }
+        toast.textContent = message;
+        toast.style.opacity = '1';
+        setTimeout(() => { toast.style.opacity = '0'; }, 3000);
+    }
+
+    // ---- Connection status indicator ----
+    function updateConnectionStatus(status) {
+        let indicator = document.getElementById('conn-status');
+        if (!indicator) {
+            indicator = document.createElement('div');
+            indicator.id = 'conn-status';
+            indicator.style.cssText = 'position:fixed;bottom:12px;right:12px;display:flex;align-items:center;gap:6px;font-size:0.75rem;color:#a4a4b8;z-index:100;';
+            document.body.appendChild(indicator);
+        }
+        const colors = { connected: '#00b894', reconnecting: '#ffa502', disconnected: '#ff4757' };
+        indicator.innerHTML = '<span style="width:8px;height:8px;border-radius:50%;background:' + (colors[status] || '#636e8a') + ';"></span>' + status;
+    }
+
     // ---- Init ----
     initJoinUrl();
+
+    // i18n init
+    if (window.QuizifyI18n) {
+        QuizifyI18n.init().then(function() {
+            QuizifyI18n.initPageTranslations();
+        });
+    }
+
     connect();
+    updateConnectionStatus('reconnecting');
 })();

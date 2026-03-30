@@ -1,0 +1,108 @@
+{
+  "lobby": {
+    "enterName": "Enter your name",
+    "namePlaceholder": "Your name",
+    "joinBtn": "Join",
+    "waitingForHost": "Waiting for the host...",
+    "players": "Players"
+  },
+  "admin": {
+    "title": "Admin Panel",
+    "category": "Category",
+    "difficulty": "Difficulty",
+    "rounds": "Rounds",
+    "invitePlayers": "Invite Players",
+    "selfJoin": "Join as Player",
+    "selfJoinPlaceholder": "Your name",
+    "selfJoinBtn": "Join",
+    "startGame": "Start Game",
+    "nextQuestion": "Next Question",
+    "endGame": "End Game",
+    "continueBtn": "Continue",
+    "newGame": "New Game",
+    "confirmEnd": "Really end the game?",
+    "correct": "Correct"
+  },
+  "categories": {
+    "mixed": "Mixed",
+    "geographie": "Geography",
+    "tiere-natur": "Animals & Nature",
+    "popkultur": "Pop Culture"
+  },
+  "difficulties": {
+    "easy": "Easy",
+    "medium": "Medium",
+    "hard": "Hard",
+    "mixed": "Mixed"
+  },
+  "game": {
+    "question": "Question",
+    "of": "of",
+    "questionCounter": "Question {current} / {total}",
+    "timerLabel": "Time",
+    "answerA": "A",
+    "answerB": "B",
+    "answerC": "C",
+    "correctFeedback": "Correct!",
+    "wrongFeedback": "Wrong \u2014 the answer was: {answer}",
+    "points": "Points",
+    "streak": "Streak",
+    "streakBadge": "{count}x Streak",
+    "rank": "Rank {rank} \u2014 {score} Points"
+  },
+  "powerups": {
+    "joker": "Joker",
+    "double_points": "Double",
+    "freeze": "Freeze",
+    "time_boost": "+5 Sec."
+  },
+  "funFact": {
+    "label": "Did you know?"
+  },
+  "leaderboard": {
+    "title": "Leaderboard",
+    "pointsShort": "Pts."
+  },
+  "podium": {
+    "title": "Results",
+    "first": "1st Place",
+    "second": "2nd Place",
+    "third": "3rd Place"
+  },
+  "finale": {
+    "playAgain": "New Game",
+    "copyResult": "Copy Result",
+    "copied": "Copied!"
+  },
+  "launcher": {
+    "subtitle": "The Useless Knowledge Quiz",
+    "joinGame": "Join Game",
+    "admin": "Admin",
+    "gameRunning": "Game running",
+    "questionActive": "Game running \u2014 Question active",
+    "answerReveal": "Game running \u2014 Answer reveal",
+    "gameEnded": "Game ended"
+  },
+  "dashboard": {
+    "waitingForStart": "Waiting for game to start...",
+    "leaderboard": "Leaderboard"
+  },
+  "connection": {
+    "connected": "Connected",
+    "reconnecting": "Reconnecting...",
+    "disconnected": "Disconnected"
+  },
+  "errors": {
+    "NAME_TAKEN": "Name already taken",
+    "NAME_INVALID": "Please enter a name",
+    "GAME_FULL": "Game is full",
+    "GAME_NOT_STARTED": "No active game",
+    "GAME_ALREADY_STARTED": "Game already running",
+    "ALREADY_SUBMITTED": "Already answered",
+    "ROUND_EXPIRED": "Time expired",
+    "NOT_IN_GAME": "Not in game",
+    "INVALID_ACTION": "Invalid action",
+    "UNKNOWN": "An error occurred",
+    "unknownMessageType": "Unknown message type"
+  }
+}

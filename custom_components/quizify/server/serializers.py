@@ -114,10 +114,12 @@ def serialize_player_list(players: list[PlayerSession]) -> list[dict[str, Any]]:
 
 
 def serialize_finale(
-    podium: list[PlayerSession], all_players: list[PlayerSession]
+    podium: list[PlayerSession],
+    all_players: list[PlayerSession],
+    share_texts: dict[str, str] | None = None,
 ) -> dict[str, Any]:
     """Build finale payload with podium and full leaderboard."""
-    return {
+    result = {
         "type": "finale",
         "podium": [
             {"rank": i + 1, "name": p.name, "score": p.score}
@@ -126,6 +128,9 @@ def serialize_finale(
         "leaderboard": serialize_leaderboard(all_players),
         "all_players": serialize_leaderboard(all_players),
     }
+    if share_texts:
+        result["share_texts"] = share_texts
+    return result
 
 
 def serialize_round_summary(

@@ -153,3 +153,48 @@ class StatusView(HomeAssistantView):
     async def get(self, request: web.Request) -> web.Response:  # noqa: ARG002
         """Return integration status."""
         return web.json_response({"version": _VERSION, "status": "ok"})
+
+
+class AnalyticsView(HomeAssistantView):
+    """Serve the analytics page."""
+
+    url = "/quizify/analytics"
+    name = "quizify:analytics"
+    requires_auth = False
+
+    def __init__(self, hass: HomeAssistant) -> None:
+        """Initialize the analytics view."""
+        self.hass = hass
+
+    async def get(self, request: web.Request) -> web.Response:  # noqa: ARG002
+        """Serve the analytics HTML page."""
+        html_path = Path(__file__).parent.parent / "www" / "analytics.html"
+
+        if not html_path.exists():
+            _LOGGER.error("Analytics page not found: %s", html_path)
+            return web.Response(text="Analytics page not found", status=500)
+
+        html_content = await self.hass.async_add_executor_job(_read_file, html_path)
+        return web.Response(text=html_content, content_type="text/html")
+
+
+class AnalyticsDataView(HomeAssistantView):
+    """API endpoint for analytics data."""
+
+    url = "/api/quizify/analytics/data"
+    name = "api:quizify:analytics:data"
+    requires_auth = False
+
+    def __init__(self, hass: HomeAssistant) -> None:
+        """Initialize the analytics data view."""
+        self.hass = hass
+
+    async def get(self, request: web.Request) -> web.Response:
+        """Return analytics data as JSON."""
+        analytics = self.hass.data.get(DOMAIN, {}).get("analytics")
+        if not analytics:
+            return web.json_response({"total_games": 0})
+
+        period = request.query.get("period", "30d")
+        metrics = analytics.compute_metrics(period)
+        return web.json_response(metrics)

@@ -171,6 +171,7 @@ class QuizifyWebSocketHandler:
 
         else:
             _LOGGER.warning("Unknown message type: %s", msg_type)
+            await self._send_error(ws, ERR_INVALID_ACTION, "Unknown message type")
 
     # ------------------------------------------------------------------
     # Admin connect
@@ -205,6 +206,17 @@ class QuizifyWebSocketHandler:
     ) -> None:
         """Handle player join."""
         name = data.get("name", "").strip()
+
+        if not name:
+            await self._send_error(ws, ERR_NAME_INVALID, "Name is required")
+            return
+
+        # Auto-append number if name is taken
+        original_name = name
+        counter = 2
+        while game_state.get_player(name) and game_state.get_player(name).connected:
+            name = f"{original_name} {counter}"
+            counter += 1
 
         success, error_code = game_state.add_player(name, ws)
 
@@ -318,7 +330,7 @@ class QuizifyWebSocketHandler:
             return
 
         if game_state.phase != GamePhase.QUESTION_ACTIVE:
-            await self._send_error(ws, ERR_GAME_NOT_STARTED, "No active question")
+            # Silently ignore submit_answer when not in question phase
             return
 
         shuffled_index = data.get("answer_index")
@@ -415,6 +427,10 @@ class QuizifyWebSocketHandler:
         self, ws: web.WebSocketResponse, data: dict, game_state: QuizifyGameState
     ) -> None:
         """Handle admin start_game command."""
+        if game_state.phase != GamePhase.LOBBY:
+            await self._send_error(ws, ERR_GAME_ALREADY_STARTED, "Game already running")
+            return
+
         category = data.get("category")
         difficulty = data.get("difficulty")
         num_rounds = data.get("num_rounds", 10)
@@ -461,7 +477,8 @@ class QuizifyWebSocketHandler:
 
         podium = calculate_podium(game_state.get_players())
         all_players = game_state.get_players()
-        finale_msg = serialize_finale(podium, all_players)
+        share_texts = finale_data.get("share_texts")
+        finale_msg = serialize_finale(podium, all_players, share_texts=share_texts)
         await self._broadcast(finale_msg)
 
     # ------------------------------------------------------------------
@@ -494,10 +511,12 @@ class QuizifyWebSocketHandler:
             # Game ended (no more questions or round limit reached)
             if game_state.phase == GamePhase.FINALE:
                 from custom_components.quizify.game.scoring import calculate_podium  # noqa: PLC0415
+                from custom_components.quizify.game.share import build_share_data  # noqa: PLC0415
 
                 podium = calculate_podium(game_state.get_players())
                 all_players = game_state.get_players()
-                finale_msg = serialize_finale(podium, all_players)
+                share_data = build_share_data(game_state)
+                finale_msg = serialize_finale(podium, all_players, share_texts=share_data.get("share_texts"))
                 await self._broadcast(finale_msg)
             return
 
@@ -757,10 +776,12 @@ class QuizifyWebSocketHandler:
                 game_state = get_game_state(self.hass)
                 if game_state:
                     from custom_components.quizify.game.scoring import calculate_podium  # noqa: PLC0415
+                    from custom_components.quizify.game.share import build_share_data  # noqa: PLC0415
 
                     podium = calculate_podium(game_state.get_players())
                     all_players = game_state.get_players()
-                    finale_msg = serialize_finale(podium, all_players)
+                    share_data = build_share_data(game_state)
+                    finale_msg = serialize_finale(podium, all_players, share_texts=share_data.get("share_texts"))
                     await self._broadcast(finale_msg)
                 return
 

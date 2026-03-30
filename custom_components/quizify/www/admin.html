@@ -14,14 +14,14 @@
             <h1 class="wordmark">
                 <span class="wordmark-quiz">Quiz</span><span class="wordmark-ify">ify</span>
             </h1>
-            <p class="subtitle">Admin-Panel</p>
+            <p class="subtitle" data-i18n="admin.title">Admin-Panel</p>
         </header>
 
         <!-- ========== SETUP VIEW (LOBBY) ========== -->
         <div id="setup-view" class="view active">
             <!-- Category -->
             <div class="setup-section">
-                <div class="setup-label">Kategorie</div>
+                <div class="setup-label" data-i18n="admin.category">Kategorie</div>
                 <div class="chip-group" id="category-chips">
                     <button class="chip active" data-value="mixed">Gemischt</button>
                     <button class="chip" data-value="geographie">Geographie</button>
@@ -32,7 +32,7 @@
 
             <!-- Difficulty -->
             <div class="setup-section">
-                <div class="setup-label">Schwierigkeit</div>
+                <div class="setup-label" data-i18n="admin.difficulty">Schwierigkeit</div>
                 <div class="chip-group" id="difficulty-chips">
                     <button class="chip" data-value="easy">Einfach</button>
                     <button class="chip active" data-value="medium">Mittel</button>
@@ -43,7 +43,7 @@
 
             <!-- Rounds -->
             <div class="setup-section">
-                <div class="setup-label">Runden</div>
+                <div class="setup-label" data-i18n="admin.rounds">Runden</div>
                 <div class="chip-group" id="rounds-chips">
                     <button class="chip" data-value="5">5</button>
                     <button class="chip active" data-value="10">10</button>
@@ -54,7 +54,7 @@
 
             <!-- QR Code -->
             <div class="setup-section qr-section">
-                <div class="setup-label">Spieler einladen</div>
+                <div class="setup-label" data-i18n="admin.invitePlayers">Spieler einladen</div>
                 <div id="qr-container" class="qr-code">
                 </div>
                 <div id="join-url" class="qr-url"></div>
@@ -62,7 +62,7 @@
 
             <!-- Self-join -->
             <div class="setup-section">
-                <div class="setup-label">Selbst mitspielen</div>
+                <div class="setup-label" data-i18n="admin.selfJoin">Selbst mitspielen</div>
                 <div class="self-join-row">
                     <input type="text" id="self-join-name" placeholder="Dein Name" maxlength="20" />
                     <button id="self-join-btn" class="btn btn-secondary">Beitreten</button>
@@ -81,7 +81,7 @@
             </div>
 
             <!-- Start button -->
-            <button id="start-game-btn" class="btn btn-primary btn-block btn-lg" disabled>
+            <button id="start-game-btn" class="btn btn-primary btn-block btn-lg" disabled data-i18n="admin.startGame">
                 Spiel starten
             </button>
         </div>
@@ -109,8 +109,8 @@
 
             <!-- Actions -->
             <div class="admin-actions mt-lg">
-                <button id="next-question-btn" class="btn btn-primary">Nächste Frage</button>
-                <button id="end-game-btn" class="btn btn-danger">Spiel beenden</button>
+                <button id="next-question-btn" class="btn btn-primary" data-i18n="admin.nextQuestion">Nächste Frage</button>
+                <button id="end-game-btn" class="btn btn-danger" data-i18n="admin.endGame">Spiel beenden</button>
             </div>
         </div>
 
@@ -132,7 +132,7 @@
             </div>
 
             <div class="admin-actions mt-lg">
-                <button id="continue-btn" class="btn btn-primary btn-block">Weiter</button>
+                <button id="continue-btn" class="btn btn-primary btn-block" data-i18n="admin.continueBtn">Weiter</button>
             </div>
         </div>
 
@@ -147,12 +147,14 @@
                 <div id="admin-finale-leaderboard" class="leaderboard"></div>
             </div>
             <div class="admin-actions mt-lg">
-                <button id="new-game-btn" class="btn btn-primary btn-block">Neues Spiel</button>
+                <button id="new-game-btn" class="btn btn-primary btn-block" data-i18n="finale.playAgain">Neues Spiel</button>
             </div>
         </div>
     </div>
 
     <script src="/quizify/static/js/vendor/qrcode.min.js"></script>
+    <script src="/quizify/static/js/i18n.js"></script>
+    <script src="/quizify/static/js/utils.js"></script>
     <script src="/quizify/static/js/timer.js"></script>
     <script src="/quizify/static/js/admin.js"></script>
     <script>

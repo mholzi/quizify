@@ -28,6 +28,7 @@ class PlayerSession:
     current_answer: int | None = None
     submission_time: float | None = None
     round_score: int = 0
+    round_history: list[str] = field(default_factory=list)
 
     def submit_answer(self, answer_index: int, timestamp: float) -> None:
         """Record an answer submission."""
@@ -42,9 +43,14 @@ class PlayerSession:
         self.submission_time = None
         self.round_score = 0
 
+    def record_round_result(self, result: str) -> None:
+        """Record the result of a round ('correct', 'wrong', or 'timeout')."""
+        self.round_history.append(result)
+
     def reset_for_new_game(self) -> None:
         """Reset all game-level stats for a new game."""
         self.joined_late = False
         self.score = 0
         self.streak = 0
+        self.round_history = []
         self.reset_round()

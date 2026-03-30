@@ -14,11 +14,14 @@ from homeassistant.components.frontend import (
     async_remove_panel,
 )
 
+from .analytics import QuizifyAnalytics
 from .const import DOMAIN
 from .game.state import QuizifyGameState
 from .server import async_register_static_paths
 from .server.views import (
     AdminView,
+    AnalyticsDataView,
+    AnalyticsView,
     DashboardView,
     GameStatusView,
     LauncherView,
@@ -26,6 +29,7 @@ from .server.views import (
     StatusView,
 )
 from .server.websocket import QuizifyWebSocketHandler
+from .services.stats import StatsService
 
 if TYPE_CHECKING:
     from homeassistant.config_entries import ConfigEntry
@@ -41,8 +45,16 @@ async def async_setup_entry(hass: HomeAssistant, entry: ConfigEntry) -> bool:
     # Initialize domain data storage
     hass.data.setdefault(DOMAIN, {})
 
+    # Initialize analytics
+    analytics = QuizifyAnalytics(hass)
+    await analytics.load()
+
+    # Initialize stats service
+    stats_service = StatsService(analytics)
+
     # Initialize game state
     game_state = QuizifyGameState(hass=hass, entry_id=entry.entry_id)
+    game_state._stats_service = stats_service
 
     # Initialize WebSocket handler
     ws_handler = QuizifyWebSocketHandler(hass)
@@ -55,6 +67,8 @@ async def async_setup_entry(hass: HomeAssistant, entry: ConfigEntry) -> bool:
         "entry_id": entry.entry_id,
         "game": game_state,
         "ws_handler": ws_handler,
+        "analytics": analytics,
+        "stats_service": stats_service,
     }
 
     # Register HTTP views
@@ -64,6 +78,8 @@ async def async_setup_entry(hass: HomeAssistant, entry: ConfigEntry) -> bool:
     hass.http.register_view(PlayerView(hass))
     hass.http.register_view(GameStatusView(hass))
     hass.http.register_view(StatusView(hass))
+    hass.http.register_view(AnalyticsView(hass))
+    hass.http.register_view(AnalyticsDataView(hass))
 
     # Register WebSocket endpoint
     hass.http.app.router.add_get("/api/quizify/ws", ws_handler.handle)

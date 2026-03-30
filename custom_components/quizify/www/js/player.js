@@ -68,6 +68,7 @@
 
         ws.onopen = () => {
             reconnectAttempts = 0;
+            updateConnectionStatus('connected');
             // Try session-based reconnect first
             const savedToken = sessionStorage.getItem('quizify_session_token');
             const savedName = sessionStorage.getItem('quizify_player_name');
@@ -91,7 +92,10 @@
             ws = null;
             if (reconnectAttempts < MAX_RECONNECT) {
                 reconnectAttempts++;
+                updateConnectionStatus('reconnecting');
                 setTimeout(connect, 1000 * reconnectAttempts);
+            } else {
+                updateConnectionStatus('disconnected');
             }
         };
 
@@ -296,10 +300,52 @@
         // Full leaderboard
         const lb = msg.leaderboard || msg.all_players || [];
         renderLeaderboard(els.finaleLeaderboard, lb);
+
+        // Share card — show copy button if share_texts available
+        const shareTexts = msg.share_texts || {};
+        const myShareText = shareTexts[playerName];
+        const copyBtn = document.getElementById('copy-result-btn');
+        if (copyBtn && myShareText) {
+            copyBtn.style.display = 'inline-flex';
+            copyBtn.onclick = () => {
+                navigator.clipboard.writeText(myShareText).then(() => {
+                    copyBtn.textContent = window.t ? t('finale.copied') : 'Kopiert!';
+                    setTimeout(() => {
+                        copyBtn.textContent = window.t ? t('finale.copyResult') : 'Ergebnis kopieren';
+                    }, 2000);
+                }).catch(() => {});
+            };
+        }
     }
 
     function handleError(msg) {
         console.warn('[Quizify] Error:', msg.code, msg.message);
+        showErrorToast(msg.message || msg.code);
+    }
+
+    function showErrorToast(message) {
+        let toast = document.getElementById('error-toast');
+        if (!toast) {
+            toast = document.createElement('div');
+            toast.id = 'error-toast';
+            toast.style.cssText = 'position:fixed;top:16px;left:50%;transform:translateX(-50%);background:#ff4757;color:white;padding:10px 20px;border-radius:10px;font-size:0.85rem;z-index:9999;opacity:0;transition:opacity 0.3s;pointer-events:none;';
+            document.body.appendChild(toast);
+        }
+        toast.textContent = message;
+        toast.style.opacity = '1';
+        setTimeout(() => { toast.style.opacity = '0'; }, 3000);
+    }
+
+    function updateConnectionStatus(status) {
+        let indicator = document.getElementById('conn-status');
+        if (!indicator) {
+            indicator = document.createElement('div');
+            indicator.id = 'conn-status';
+            indicator.style.cssText = 'position:fixed;bottom:12px;right:12px;display:flex;align-items:center;gap:6px;font-size:0.75rem;color:#a4a4b8;z-index:100;';
+            document.body.appendChild(indicator);
+        }
+        const colors = { connected: '#00b894', reconnecting: '#ffa502', disconnected: '#ff4757' };
+        indicator.innerHTML = '<span style="width:8px;height:8px;border-radius:50%;background:' + (colors[status] || '#636e8a') + ';"></span>' + status;
     }
 
     // ---- Power-ups ----
@@ -386,9 +432,7 @@
     }
 
     function escapeHtml(text) {
-        const el = document.createElement('span');
-        el.textContent = text || '';
-        return el.innerHTML;
+        return QuizifyUtils.escapeHtml(text);
     }
 
     // ---- Event listeners ----
@@ -443,6 +487,14 @@
         els.joinBtn.disabled = false;
     }
 
+    // i18n init
+    if (window.QuizifyI18n) {
+        QuizifyI18n.init().then(function() {
+            QuizifyI18n.initPageTranslations();
+        });
+    }
+
+    updateConnectionStatus('reconnecting');
     connect();
 
     // Auto-join if name was pre-filled (wait for WS connection)
