@@ -360,14 +360,13 @@ class QuizifyWebSocketHandler:
         result = game_state.submit_answer(player.name, original_index)
 
         if isinstance(result, AnswerResult):
-            # Calculate speed/streak bonus breakdown
-            base_points = result.points_earned
             await self._safe_send(ws, {
                 "type": "answer_result",
                 "correct": result.correct,
                 "points_earned": result.points_earned,
-                "speed_bonus": 0,
-                "streak_bonus": 0,
+                "speed_bonus": result.speed_bonus,
+                "streak_bonus": result.streak_bonus,
+                "difficulty_multiplier": result.difficulty_multiplier,
                 "new_streak": result.new_streak,
                 "new_total": result.new_total,
             })

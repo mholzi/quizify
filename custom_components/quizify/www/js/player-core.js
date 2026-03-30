@@ -242,6 +242,23 @@
             msg.question = { text: currentQuestion.question_text };
         }
 
+        // Enrich all_answers with last answer result (speed/streak breakdown) for current player
+        var lastResult = game.getLastAnswerResult ? game.getLastAnswerResult() : null;
+        if (lastResult && msg.all_answers) {
+            msg.all_answers = msg.all_answers.map(function(a) {
+                if (a.player_name === state.playerName) {
+                    return Object.assign({}, a, {
+                        speed_bonus: lastResult.speed_bonus || 0,
+                        streak_bonus: lastResult.streak_bonus || 0,
+                        difficulty_multiplier: lastResult.difficulty_multiplier || 1.0,
+                        round_score: lastResult.points_earned || 0,
+                        streak: lastResult.new_streak || 0,
+                    });
+                }
+                return a;
+            });
+        }
+
         reveal.updateRevealView(msg);
 
         game.clearLastAnswerResult();

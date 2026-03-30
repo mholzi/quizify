@@ -58,6 +58,9 @@ class AnswerResult:
     points_earned: int
     new_streak: int
     new_total: int
+    speed_bonus: int = 0
+    streak_bonus: int = 0
+    difficulty_multiplier: float = 1.0
 
 
 @dataclass
@@ -332,6 +335,10 @@ class QuizifyGameState:
         if player.streak > player.max_streak:
             player.max_streak = player.streak
 
+        from custom_components.quizify.game.scoring import (
+            BASE_POINTS, MAX_SPEED_BONUS, DIFFICULTY_MULTIPLIERS, get_streak_multiplier
+        )
+
         points = calculate_round_score(
             correct=correct,
             elapsed=elapsed,
@@ -340,6 +347,16 @@ class QuizifyGameState:
             streak=player.streak,
             double_points_active=double_active,
         )
+
+        # Calculate breakdown for client display
+        speed_bonus = 0
+        streak_bonus = 0
+        diff_mult = DIFFICULTY_MULTIPLIERS.get(diff_enum, 1.0)
+        if correct:
+            time_fraction = max(0.0, 1.0 - elapsed / self._round_duration) if self._round_duration > 0 else 0.0
+            speed_bonus = int(MAX_SPEED_BONUS * time_fraction)
+            streak_mult = get_streak_multiplier(player.streak)
+            streak_bonus = int((BASE_POINTS + speed_bonus) * diff_mult * (streak_mult - 1.0))
 
         player.round_score = points
         player.score += points
@@ -354,6 +371,9 @@ class QuizifyGameState:
             points_earned=points,
             new_streak=player.streak,
             new_total=player.score,
+            speed_bonus=speed_bonus,
+            streak_bonus=streak_bonus,
+            difficulty_multiplier=diff_mult,
         )
 
         # Check if all players have submitted → auto-evaluate

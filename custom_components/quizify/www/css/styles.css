@@ -1928,3 +1928,78 @@ footer {
     margin-left: 4px;
     vertical-align: middle;
 }
+
+/* ==========================================
+   Reveal: Personal Result Breakdown (Beatify style)
+   ========================================== */
+
+#result-content {
+    padding: var(--space-sm) 0;
+}
+
+.result-row {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 6px 0;
+    border-bottom: 1px solid rgba(255,255,255,0.06);
+    font-size: 0.875rem;
+}
+
+.result-row:last-of-type {
+    border-bottom: none;
+}
+
+.result-label {
+    color: var(--color-text-muted, #a4a4b8);
+}
+
+.result-value {
+    font-weight: 600;
+    color: var(--color-text-white);
+}
+
+.result-value.is-correct { color: #00b894; }
+.result-value.is-wrong   { color: #ff4757; }
+.result-value.is-bonus   { color: #00f5ff; }
+.result-value.is-streak  { color: #ffa502; }
+
+.streak-bonus-row .result-label {
+    color: #ffa502;
+    font-weight: 600;
+}
+
+.result-score {
+    margin-top: var(--space-sm);
+    font-size: 1.5rem;
+    font-weight: 900;
+    font-family: 'Outfit', sans-serif;
+    color: var(--color-accent-secondary);
+    text-align: center;
+    text-shadow: var(--glow-secondary);
+}
+
+.result-score.is-zero {
+    color: var(--color-text-muted, #a4a4b8);
+    text-shadow: none;
+    font-size: 1.2rem;
+}
+
+.result-score.is-score-high {
+    color: var(--color-accent-secondary);
+}
+
+.result-missed-container {
+    text-align: center;
+    padding: var(--space-md) 0;
+}
+
+.result-missed-icon {
+    font-size: 2rem;
+    margin-bottom: 8px;
+}
+
+.result-missed-text {
+    color: var(--color-text-muted, #a4a4b8);
+    font-size: 0.875rem;
+}

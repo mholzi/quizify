@@ -23,6 +23,15 @@
         var players = data.players || [];
         var allAnswers = data.all_answers || [];
 
+        // Find current player's entry in all_answers for personal result
+        var myAnswerEntry = null;
+        for (var i = 0; i < allAnswers.length; i++) {
+            if (allAnswers[i].player_name === state.playerName) {
+                myAnswerEntry = allAnswers[i];
+                break;
+            }
+        }
+
         // Round indicator
         var roundEl = document.getElementById('reveal-round');
         var totalEl = document.getElementById('reveal-total');
@@ -56,8 +65,8 @@
         // Emotion display
         renderRevealEmotion(currentPlayer);
 
-        // Personal result
-        renderPersonalResult(currentPlayer);
+        // Personal result — prefer all_answers entry (has breakdown), fall back to leaderboard player
+        renderPersonalResult(myAnswerEntry || currentPlayer);
 
         // All answers grid — use all_answers if available, fall back to players
         renderAllAnswers(allAnswers.length > 0 ? allAnswers : players);
@@ -180,39 +189,85 @@
             return;
         }
 
-        if (player.missed_round) {
+        // Missed round (no answer)
+        if (player.missed_round || player.no_answer || player.answer_index === null) {
+            var prevStreak = player.streak || 0;
+            var streakLostHtml = prevStreak > 1
+                ? '<div class="result-row"><span class="result-label">💔 Lost ' + prevStreak + '-streak!</span></div>'
+                : '';
             resultContent.innerHTML =
                 '<div class="result-missed-container">' +
-                    '<div class="result-missed-icon">\u23F0</div>' +
-                    '<div class="result-missed-text">No answer submitted</div>' +
+                    '<div class="result-missed-icon">⏱️</div>' +
+                    '<div class="result-missed-text">Time ran out — no answer</div>' +
                 '</div>' +
+                streakLostHtml +
                 '<div class="result-score is-zero">0 pts</div>';
             return;
         }
 
-        var roundScore = player.round_score || 0;
-        var resultIcon = player.correct ? '\u2705' : '\u274C';
-        var resultClass = player.correct ? 'is-correct' : 'is-wrong';
+        var isCorrect = player.correct === true;
+        var baseScore = player.base_score || (isCorrect ? (player.round_score || player.points_earned || 0) : 0);
+        var speedBonus = player.speed_bonus || 0;
+        var streakBonus = player.streak_bonus || 0;
+        var difficultyMult = player.difficulty_multiplier || 1.0;
+        var roundScore = player.round_score || player.points_earned || 0;
+        var streak = player.streak || 0;
+        var answerText = player.answer_text || player.answer || '?';
+
+        // Score breakdown rows (like Beatify)
+        var breakdownHtml = '';
+        if (isCorrect) {
+            breakdownHtml +=
+                '<div class="result-row">' +
+                    '<span class="result-label">Base score</span>' +
+                    '<span class="result-value">1000 pts</span>' +
+                '</div>';
+
+            if (speedBonus > 0) {
+                breakdownHtml +=
+                    '<div class="result-row">' +
+                        '<span class="result-label">⚡ Speed bonus</span>' +
+                        '<span class="result-value is-bonus">+' + speedBonus + ' pts</span>' +
+                    '</div>';
+            }
+
+            if (difficultyMult > 1.0) {
+                breakdownHtml +=
+                    '<div class="result-row">' +
+                        '<span class="result-label">🎯 Difficulty</span>' +
+                        '<span class="result-value is-bonus">' + difficultyMult.toFixed(1) + 'x</span>' +
+                    '</div>';
+            }
+        }
 
         var streakHtml = '';
-        if (player.streak && player.streak > 1) {
+        if (streakBonus > 0) {
             streakHtml =
                 '<div class="result-row streak-bonus-row">' +
-                    '<span class="result-label">\uD83D\uDD25 ' + player.streak + '-streak!</span>' +
+                    '<span class="result-label">🔥 ' + streak + '-streak bonus!</span>' +
+                    '<span class="result-value is-streak">+' + streakBonus + ' pts</span>' +
+                '</div>';
+        } else if (streak > 1 && isCorrect) {
+            streakHtml =
+                '<div class="result-row streak-bonus-row">' +
+                    '<span class="result-label">🔥 ' + streak + '-streak!</span>' +
                 '</div>';
         }
 
         resultContent.innerHTML =
             '<div class="result-row">' +
-                '<span class="result-label">Your Answer</span>' +
-                '<span class="result-value">' + pu.escapeHtml(player.answer || 'n/a') + '</span>' +
+                '<span class="result-label">Your answer</span>' +
+                '<span class="result-value">' + pu.escapeHtml(answerText) + '</span>' +
             '</div>' +
             '<div class="result-row">' +
                 '<span class="result-label">Result</span>' +
-                '<span class="result-value ' + resultClass + '">' + resultIcon + ' ' + (player.correct ? 'Correct' : 'Wrong') + '</span>' +
+                '<span class="result-value ' + (isCorrect ? 'is-correct' : 'is-wrong') + '">' +
+                    (isCorrect ? '✅ Correct' : '❌ Wrong') +
+                '</span>' +
             '</div>' +
-            streakHtml +
-            '<div class="result-score ' + (roundScore > 0 ? '' : 'is-zero') + '">+' + roundScore + ' pts</div>';
+            breakdownHtml +
+            '<div class="result-score ' + (roundScore > 0 ? 'is-score-high' : 'is-zero') + '">+' + roundScore + ' pts</div>' +
+            streakHtml;
     }
 
     // ============================================
