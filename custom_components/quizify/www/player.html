@@ -16,9 +16,8 @@
 <body class="theme-dark">
     <header class="player-header">
         <h1 class="wordmark"><span class="wordmark-quiz">Quiz</span><span class="wordmark-ify">ify</span></h1>
-        <div id="connection-indicator" class="connection-indicator connection-indicator--connected" aria-label="Connected" title="Connected">
-            <span class="connection-dot"></span>
-        </div>
+        <!-- Connection status dot — JS updates via conn-status div -->
+        <div id="connection-indicator" class="connection-indicator" aria-hidden="true"></div>
     </header>
 
     <main class="player-container">
