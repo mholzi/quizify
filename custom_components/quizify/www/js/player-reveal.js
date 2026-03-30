@@ -291,8 +291,26 @@
                 '</span>' +
             '</div>' +
             breakdownHtml +
-            '<div class="result-score ' + (roundScore > 0 ? 'is-score-high' : 'is-zero') + '">+' + roundScore + ' pts</div>' +
+            '<div class="result-score ' + (roundScore > 0 ? 'is-score-high' : 'is-zero') + '">+<span id="result-score-value">0</span> pts</div>' +
             streakHtml;
+
+        // Animate score counting up
+        if (roundScore > 0) {
+            var scoreEl = document.getElementById('result-score-value');
+            if (scoreEl && pu.animateValue) {
+                pu.animateValue(scoreEl, 0, roundScore, 600);
+                // Floating popup
+                setTimeout(function() {
+                    if (pu.showPointsPopup) pu.showPointsPopup(scoreEl, roundScore);
+                }, 100);
+                // Streak popup after
+                if (streakBonus > 0) {
+                    setTimeout(function() {
+                        if (pu.showPointsPopup) pu.showPointsPopup(scoreEl, streakBonus, { isStreak: true });
+                    }, 500);
+                }
+            }
+        }
     }
 
     // ============================================

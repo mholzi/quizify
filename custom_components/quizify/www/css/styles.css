@@ -2253,3 +2253,44 @@ footer {
   z-index: 9999;
   user-select: none;
 }
+
+/* ── Score animation & points popup ── */
+.points-popup {
+  position: fixed;
+  font-size: 1.1rem;
+  font-weight: 800;
+  color: #22d3ee;
+  text-shadow: 0 0 10px rgba(34,211,238,0.5);
+  pointer-events: none;
+  animation: points-float 1.2s ease-out forwards;
+  z-index: 9999;
+}
+
+.points-popup--streak {
+  color: #a855f7;
+  text-shadow: 0 0 10px rgba(168,85,247,0.5);
+}
+
+@keyframes points-float {
+  0%   { opacity: 1; transform: translateX(-50%) translateY(0); }
+  100% { opacity: 0; transform: translateX(-50%) translateY(-60px); }
+}
+
+/* ── Rank delta badges ── */
+.rank-delta {
+  font-size: 0.7rem;
+  font-weight: 700;
+  padding: 1px 4px;
+  border-radius: 4px;
+  margin: 0 4px;
+}
+
+.rank-delta--up {
+  color: #22d3ee;
+  background: rgba(34,211,238,0.12);
+}
+
+.rank-delta--down {
+  color: #f87171;
+  background: rgba(248,113,113,0.12);
+}

@@ -284,6 +284,8 @@
      * @param {Object} data - State data containing leaderboard
      * @param {string} targetListId - ID of list container
      */
+    var _prevLeaderboardRanks = {}; // name -> rank
+
     function updateLeaderboard(data, targetListId) {
         var leaderboard = data.leaderboard || [];
         var listEl = document.getElementById(targetListId || 'leaderboard-list');
@@ -291,6 +293,13 @@
 
         leaderboard.forEach(function (entry) {
             entry.is_current = (entry.name === state.playerName);
+            // Calculate rank delta vs previous
+            var prevRank = _prevLeaderboardRanks[entry.name];
+            if (prevRank !== undefined && prevRank !== entry.rank) {
+                entry.rank_delta = prevRank - entry.rank; // positive = moved up
+            } else {
+                entry.rank_delta = 0;
+            }
         });
 
         var displayList = compressLeaderboard(leaderboard, state.playerName);
@@ -301,6 +310,11 @@
         });
 
         listEl.innerHTML = html;
+
+        // Store current ranks for next update
+        leaderboard.forEach(function(entry) {
+            _prevLeaderboardRanks[entry.name] = entry.rank;
+        });
 
         if (leaderboard.length > 8) {
             scrollToCurrentPlayer(listEl);
@@ -355,10 +369,17 @@
         var streakBadge = entry.streak > 1
             ? '<span class="leaderboard-streak">' + entry.streak + 'x</span>'
             : '';
+        var deltaBadge = '';
+        if (entry.rank_delta > 0) {
+            deltaBadge = '<span class="rank-delta rank-delta--up">▲' + entry.rank_delta + '</span>';
+        } else if (entry.rank_delta < 0) {
+            deltaBadge = '<span class="rank-delta rank-delta--down">▼' + Math.abs(entry.rank_delta) + '</span>';
+        }
 
         return '<div class="leaderboard-entry' + currentClass + disconnectedClass + '" data-name="' + pu.escapeHtml(entry.name) + '">' +
             '<span class="entry-rank' + rankClass + '">' + rank + '</span>' +
             '<span class="entry-name">' + pu.escapeHtml(entry.name) + youBadge + '</span>' +
+            deltaBadge +
             '<span class="entry-score">' + entry.score + '</span>' +
             streakBadge +
         '</div>';
