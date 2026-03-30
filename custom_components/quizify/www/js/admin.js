@@ -616,7 +616,9 @@
             document.body.appendChild(indicator);
         }
         var colors = { connected: '#00b894', reconnecting: '#ffa502', disconnected: '#ff4757' };
-        indicator.innerHTML = '<span style="width:8px;height:8px;border-radius:50%;background:' + (colors[status] || '#636e8a') + ';"></span>' + status;
+        // Dot only — no text label
+        indicator.innerHTML = '<span style="width:10px;height:10px;border-radius:50%;display:inline-block;background:' +
+            (colors[status] || '#636e8a') + ';box-shadow:0 0 6px ' + (colors[status] || '#636e8a') + ';"></span>';
     }
 
     // ---- Init ----

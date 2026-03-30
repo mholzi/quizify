@@ -605,6 +605,29 @@ button, .btn {
     border-bottom: none;
 }
 
+/* setting-block: label on top, chips below (full width) */
+.setting-block {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+    padding: var(--space-sm) 0;
+    border-bottom: 1px solid rgba(255, 255, 255, 0.05);
+}
+
+.setting-block:last-child {
+    border-bottom: none;
+}
+
+.setting-block .setting-label {
+    font-size: 0.875rem;
+    font-weight: 600;
+    color: var(--color-text-muted, #a4a4b8);
+}
+
+.setting-block .chip-group {
+    flex-wrap: wrap;
+}
+
 .setting-label {
     display: flex;
     align-items: center;
