@@ -281,12 +281,15 @@
         if (msg.players) renderLobbyPlayers(msg.players);
 
         // If game is running and we have a stored name, redirect to player.html
-        if (msg.phase !== 'LOBBY') {
+        if (msg.phase !== 'LOBBY' && msg.phase !== 'FINALE') {
             var savedName = sessionStorage.getItem('quizify_admin_name');
             if (savedName && !_redirecting) {
                 redirectToPlayer(savedName);
                 return;
             }
+        } else {
+            // Game is in lobby or over — clear any stale name so we don't get stuck
+            sessionStorage.removeItem('quizify_admin_name');
         }
 
         switch (msg.phase) {
