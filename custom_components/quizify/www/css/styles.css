@@ -2240,3 +2240,16 @@ footer {
   50%  { transform: scale(1.08); }
   100% { opacity: 1; transform: scale(1); }
 }
+
+/* ── Version badge ── */
+.version-badge {
+  position: fixed;
+  bottom: 8px;
+  right: 10px;
+  font-size: 0.65rem;
+  color: rgba(255, 255, 255, 0.25);
+  font-family: monospace;
+  pointer-events: none;
+  z-index: 9999;
+  user-select: none;
+}
