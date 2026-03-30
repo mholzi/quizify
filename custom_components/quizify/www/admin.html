@@ -5,6 +5,8 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
     <title>Quizify — Admin</title>
     <link rel="stylesheet" href="/quizify/static/css/styles.css">
+    <link rel="icon" href="/quizify/static/img/icon-256.png" type="image/png">
+    <link rel="manifest" href="/quizify/static/site.webmanifest">
 </head>
 <body>
     <div class="app-container admin-container">
@@ -150,8 +152,13 @@
         </div>
     </div>
 
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/qrcodejs/1.0.0/qrcode.min.js"></script>
+    <script src="/quizify/static/js/vendor/qrcode.min.js"></script>
     <script src="/quizify/static/js/timer.js"></script>
     <script src="/quizify/static/js/admin.js"></script>
+    <script>
+        if ("serviceWorker" in navigator) {
+            navigator.serviceWorker.register("/quizify/static/sw.js");
+        }
+    </script>
 </body>
 </html>

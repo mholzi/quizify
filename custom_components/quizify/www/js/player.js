@@ -68,8 +68,12 @@
 
         ws.onopen = () => {
             reconnectAttempts = 0;
-            // Re-join if we had a name
-            if (playerName && !joined) {
+            // Try session-based reconnect first
+            const savedToken = sessionStorage.getItem('quizify_session_token');
+            const savedName = sessionStorage.getItem('quizify_player_name');
+            if (savedToken && savedName) {
+                send('reconnect', { session_token: savedToken, name: savedName });
+            } else if (playerName && !joined) {
                 send('join', { name: playerName });
             }
         };
@@ -108,8 +112,28 @@
                 break;
             case 'joined':
                 joined = true;
+                playerName = msg.player_id || playerName;
+                if (msg.session_token) {
+                    sessionStorage.setItem('quizify_session_token', msg.session_token);
+                    sessionStorage.setItem('quizify_player_name', playerName);
+                }
                 els.joinSection.classList.add('hidden');
                 els.waitingSection.classList.remove('hidden');
+                break;
+            case 'reconnected':
+                joined = true;
+                playerName = msg.player_id || playerName;
+                if (msg.session_token) {
+                    sessionStorage.setItem('quizify_session_token', msg.session_token);
+                    sessionStorage.setItem('quizify_player_name', playerName);
+                }
+                els.joinSection.classList.add('hidden');
+                els.waitingSection.classList.remove('hidden');
+                break;
+            case 'reconnect_failed':
+                // Token was stale, clear it and show join form
+                sessionStorage.removeItem('quizify_session_token');
+                sessionStorage.removeItem('quizify_player_name');
                 break;
             case 'question_started':
                 handleQuestionStarted(msg);

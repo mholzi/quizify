@@ -1,0 +1,31 @@
+{
+  "name": "Quizify",
+  "short_name": "Quizify",
+  "description": "Multiplayer Quiz Game for Home Assistant",
+  "start_url": "/quizify/admin",
+  "scope": "/quizify/",
+  "display": "standalone",
+  "orientation": "any",
+  "theme_color": "#0b0e1a",
+  "background_color": "#0b0e1a",
+  "lang": "en",
+  "categories": ["entertainment", "games"],
+  "icons": [
+    {
+      "src": "/quizify/static/img/icon-256.png",
+      "sizes": "256x256",
+      "type": "image/png"
+    },
+    {
+      "src": "/quizify/static/img/icon-512.png",
+      "sizes": "512x512",
+      "type": "image/png"
+    },
+    {
+      "src": "/quizify/static/img/icon-512.png",
+      "sizes": "512x512",
+      "type": "image/png",
+      "purpose": "maskable"
+    }
+  ]
+}

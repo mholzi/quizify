@@ -1,0 +1,559 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+    <title>Quizify — Dashboard</title>
+    <link rel="stylesheet" href="/quizify/static/css/styles.css">
+    <link rel="icon" href="/quizify/static/img/icon-256.png" type="image/png">
+    <link rel="manifest" href="/quizify/static/site.webmanifest">
+    <style>
+        /* Dashboard-specific: landscape TV/tablet layout */
+        body { overflow: hidden; }
+
+        .dashboard-container {
+            max-width: 100%;
+            width: 100%;
+            height: 100dvh;
+            padding: var(--space-lg) var(--space-xl);
+            display: flex;
+            flex-direction: column;
+        }
+
+        .dashboard-header {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            padding-bottom: var(--space-md);
+            flex-shrink: 0;
+        }
+
+        .dashboard-header .wordmark { font-size: 1.5rem; }
+
+        .dashboard-round {
+            font-size: 1rem;
+            color: var(--color-accent-bright);
+            font-weight: 600;
+        }
+
+        /* Timer bar at top */
+        .dashboard-timer {
+            position: relative;
+            height: 8px;
+            background: rgba(255,255,255,0.1);
+            border-radius: 4px;
+            flex-shrink: 0;
+            margin-bottom: var(--space-lg);
+        }
+
+        .dashboard-timer-fill {
+            height: 100%;
+            background: linear-gradient(90deg, var(--color-electric), var(--color-accent));
+            border-radius: 4px;
+            transition: width 0.8s linear;
+            width: 100%;
+        }
+
+        .dashboard-timer-fill.warning {
+            background: linear-gradient(90deg, var(--color-warning), var(--color-error));
+        }
+
+        .dashboard-timer-fill.critical {
+            background: var(--color-error);
+            animation: pulse-bar 0.5s ease-in-out infinite alternate;
+        }
+
+        /* Main content: two-column layout */
+        .dashboard-body {
+            display: flex;
+            flex: 1;
+            gap: var(--space-xl);
+            min-height: 0;
+        }
+
+        /* Left: question + answers */
+        .dashboard-left {
+            flex: 6;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            min-width: 0;
+        }
+
+        .dashboard-question {
+            font-size: 2.5rem;
+            font-weight: 800;
+            line-height: 1.3;
+            color: var(--color-text);
+            margin-bottom: var(--space-xl);
+        }
+
+        .dashboard-category {
+            font-size: 0.9rem;
+            color: var(--color-text-muted);
+            text-transform: uppercase;
+            letter-spacing: 0.1em;
+            margin-bottom: var(--space-md);
+        }
+
+        .dashboard-answers {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: var(--space-md);
+        }
+
+        .dashboard-answer {
+            display: flex;
+            align-items: center;
+            gap: var(--space-md);
+            padding: var(--space-lg) var(--space-xl);
+            background: var(--color-bg-card);
+            border: 2px solid var(--color-border);
+            border-radius: var(--radius-lg);
+            font-size: 1.3rem;
+            font-weight: 500;
+            transition: all var(--transition-normal);
+        }
+
+        .dashboard-answer .answer-label {
+            width: 40px;
+            height: 40px;
+            font-size: 1rem;
+        }
+
+        .dashboard-answer.correct {
+            border-color: var(--color-success);
+            background: rgba(0, 184, 148, 0.15);
+            box-shadow: 0 0 30px var(--color-success-glow);
+        }
+
+        .dashboard-answer.correct .answer-label {
+            background: var(--color-success);
+            color: white;
+        }
+
+        .dashboard-answer.wrong {
+            opacity: 0.3;
+        }
+
+        /* Fun fact on reveal */
+        .dashboard-funfact {
+            margin-top: var(--space-xl);
+            padding: var(--space-lg);
+            background: linear-gradient(135deg, rgba(108, 92, 231, 0.1), rgba(0, 206, 201, 0.1));
+            border: 1px solid rgba(108, 92, 231, 0.3);
+            border-radius: var(--radius-lg);
+            font-size: 1.1rem;
+            line-height: 1.6;
+            transform: translateY(20px);
+            opacity: 0;
+            transition: all var(--transition-slow);
+        }
+
+        .dashboard-funfact.visible {
+            transform: translateY(0);
+            opacity: 1;
+        }
+
+        .dashboard-funfact .fun-fact-label {
+            font-size: 0.8rem;
+            margin-bottom: var(--space-sm);
+        }
+
+        /* Right: leaderboard */
+        .dashboard-right {
+            flex: 4;
+            display: flex;
+            flex-direction: column;
+            min-width: 0;
+        }
+
+        .dashboard-leaderboard-title {
+            font-size: 0.85rem;
+            font-weight: 600;
+            text-transform: uppercase;
+            letter-spacing: 0.08em;
+            color: var(--color-text-muted);
+            margin-bottom: var(--space-md);
+        }
+
+        .dashboard-leaderboard {
+            flex: 1;
+            overflow-y: auto;
+        }
+
+        .dashboard-leaderboard .leaderboard-row {
+            padding: var(--space-md) var(--space-lg);
+            font-size: 1.1rem;
+        }
+
+        .dashboard-leaderboard .leaderboard-rank {
+            width: 36px;
+            height: 36px;
+            font-size: 1rem;
+        }
+
+        .dashboard-leaderboard .leaderboard-score {
+            font-size: 1.2rem;
+        }
+
+        /* Waiting state */
+        .dashboard-waiting {
+            flex: 1;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            text-align: center;
+        }
+
+        .dashboard-waiting-text {
+            font-size: 1.5rem;
+            color: var(--color-text-muted);
+            animation: fade-pulse 2s ease-in-out infinite;
+        }
+
+        /* Finale / podium */
+        .dashboard-finale {
+            flex: 1;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .dashboard-finale .podium-title {
+            font-size: 2.5rem;
+            margin-bottom: var(--space-2xl);
+        }
+
+        .dashboard-finale .podium {
+            min-height: 280px;
+            gap: var(--space-xl);
+        }
+
+        .dashboard-finale .podium-bar { width: 130px; }
+        .dashboard-finale .podium-bar.first { height: 200px; }
+        .dashboard-finale .podium-bar.second { height: 140px; }
+        .dashboard-finale .podium-bar.third { height: 100px; }
+
+        .dashboard-finale .podium-name { font-size: 1.2rem; max-width: 140px; }
+        .dashboard-finale .podium-score { font-size: 1rem; }
+        .dashboard-finale .podium-avatar { font-size: 2rem; }
+
+        /* Hide views by default */
+        .dash-view { display: none; flex-direction: column; flex: 1; min-height: 0; }
+        .dash-view.active { display: flex; }
+
+        @media (max-width: 768px) {
+            .dashboard-body { flex-direction: column; }
+            .dashboard-question { font-size: 1.5rem; }
+            .dashboard-answers { grid-template-columns: 1fr; }
+            .dashboard-answer { font-size: 1rem; padding: var(--space-md); }
+        }
+    </style>
+</head>
+<body>
+    <div class="dashboard-container">
+        <div class="dashboard-header">
+            <h1 class="wordmark">
+                <span class="wordmark-quiz">Quiz</span><span class="wordmark-ify">ify</span>
+            </h1>
+            <div id="round-indicator" class="dashboard-round"></div>
+        </div>
+
+        <div id="timer-bar" class="dashboard-timer">
+            <div id="timer-fill" class="dashboard-timer-fill" style="width:0%"></div>
+        </div>
+
+        <!-- WAITING VIEW -->
+        <div id="waiting-view" class="dash-view active">
+            <div class="dashboard-waiting">
+                <p class="dashboard-waiting-text">Warte auf Spielstart...</p>
+            </div>
+        </div>
+
+        <!-- QUESTION VIEW -->
+        <div id="question-view" class="dash-view">
+            <div class="dashboard-body">
+                <div class="dashboard-left">
+                    <div id="question-category" class="dashboard-category"></div>
+                    <div id="question-text" class="dashboard-question"></div>
+                    <div id="answers-grid" class="dashboard-answers"></div>
+                    <div id="fun-fact" class="dashboard-funfact">
+                        <div class="fun-fact-label">Wusstest du?</div>
+                        <div id="fun-fact-text" class="fun-fact-text"></div>
+                    </div>
+                </div>
+                <div class="dashboard-right">
+                    <div class="dashboard-leaderboard-title">Rangliste</div>
+                    <div id="leaderboard" class="dashboard-leaderboard leaderboard"></div>
+                </div>
+            </div>
+        </div>
+
+        <!-- FINALE VIEW -->
+        <div id="finale-view" class="dash-view">
+            <div class="dashboard-finale">
+                <div class="podium-section">
+                    <div class="podium-title">Ergebnis</div>
+                    <div id="podium" class="podium"></div>
+                </div>
+                <div class="card mt-lg" style="width:100%;max-width:600px;">
+                    <div class="card-header">Rangliste</div>
+                    <div id="finale-leaderboard" class="dashboard-leaderboard leaderboard"></div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+    (function() {
+        'use strict';
+
+        // ---- State ----
+        var ws = null;
+        var timerDuration = 30;
+        var timerRemaining = 0;
+        var currentAnswers = [];
+
+        // ---- DOM ----
+        var views = {
+            waiting: document.getElementById('waiting-view'),
+            question: document.getElementById('question-view'),
+            finale: document.getElementById('finale-view'),
+        };
+        var els = {
+            roundIndicator: document.getElementById('round-indicator'),
+            timerFill: document.getElementById('timer-fill'),
+            questionCategory: document.getElementById('question-category'),
+            questionText: document.getElementById('question-text'),
+            answersGrid: document.getElementById('answers-grid'),
+            leaderboard: document.getElementById('leaderboard'),
+            funFact: document.getElementById('fun-fact'),
+            funFactText: document.getElementById('fun-fact-text'),
+            podium: document.getElementById('podium'),
+            finaleLeaderboard: document.getElementById('finale-leaderboard'),
+        };
+
+        function showView(name) {
+            Object.values(views).forEach(function(v) { v.classList.remove('active'); });
+            if (views[name]) views[name].classList.add('active');
+        }
+
+        // ---- WebSocket ----
+        function connect() {
+            var proto = location.protocol === 'https:' ? 'wss:' : 'ws:';
+            var url = proto + '//' + location.host + '/api/quizify/ws?role=dashboard';
+            ws = new WebSocket(url);
+
+            ws.onopen = function() {
+                ws.send(JSON.stringify({ type: 'get_state' }));
+            };
+
+            ws.onmessage = function(evt) {
+                try {
+                    handleMessage(JSON.parse(evt.data));
+                } catch(e) {
+                    console.error('[Dashboard] Bad message:', e);
+                }
+            };
+
+            ws.onclose = function() {
+                ws = null;
+                setTimeout(connect, 2000);
+            };
+
+            ws.onerror = function() { if (ws) ws.close(); };
+        }
+
+        // ---- Message handler ----
+        function handleMessage(msg) {
+            switch (msg.type || msg.event) {
+                case 'game_state':
+                    handleGameState(msg);
+                    break;
+                case 'question_started':
+                    handleQuestionStarted(msg);
+                    break;
+                case 'timer_tick':
+                    handleTimerTick(msg);
+                    break;
+                case 'round_summary':
+                case 'round_evaluated':
+                    handleRoundSummary(msg);
+                    break;
+                case 'leaderboard_update':
+                    if (msg.leaderboard) renderLeaderboard(els.leaderboard, msg.leaderboard);
+                    break;
+                case 'finale':
+                case 'game_ended':
+                    handleFinale(msg);
+                    break;
+                case 'game_reset':
+                    showView('waiting');
+                    els.roundIndicator.textContent = '';
+                    els.timerFill.style.width = '0%';
+                    break;
+                case 'player_joined':
+                case 'player_left':
+                    break;
+            }
+        }
+
+        function handleGameState(msg) {
+            if (msg.leaderboard) renderLeaderboard(els.leaderboard, msg.leaderboard);
+
+            switch (msg.phase) {
+                case 'LOBBY':
+                    showView('waiting');
+                    break;
+                case 'QUESTION_ACTIVE':
+                    if (msg.question) {
+                        handleQuestionStarted({
+                            question_text: msg.question.text,
+                            answers: msg.question.answers,
+                            timer_duration: msg.question.time_limit,
+                            round_num: msg.round,
+                            total_rounds: msg.total_rounds,
+                            category: msg.question.category,
+                        });
+                    } else {
+                        showView('question');
+                    }
+                    break;
+                case 'ANSWER_REVEAL':
+                    showView('question');
+                    break;
+                case 'FINALE':
+                    handleFinale(msg);
+                    break;
+            }
+        }
+
+        function handleQuestionStarted(msg) {
+            showView('question');
+            els.funFact.classList.remove('visible');
+
+            els.roundIndicator.textContent = 'Frage ' + msg.round_num + ' / ' + msg.total_rounds;
+            els.questionCategory.textContent = msg.category || '';
+            els.questionText.textContent = msg.question_text;
+
+            timerDuration = msg.timer_duration || 30;
+            timerRemaining = timerDuration;
+            els.timerFill.style.width = '100%';
+            els.timerFill.className = 'dashboard-timer-fill';
+
+            // Render answers
+            var labels = ['A', 'B', 'C', 'D'];
+            currentAnswers = msg.answers || [];
+            els.answersGrid.innerHTML = currentAnswers.map(function(text, i) {
+                return '<div class="dashboard-answer" data-index="' + i + '">' +
+                    '<span class="answer-label">' + (labels[i] || '') + '</span>' +
+                    '<span class="answer-text">' + escapeHtml(text) + '</span>' +
+                    '</div>';
+            }).join('');
+        }
+
+        function handleTimerTick(msg) {
+            timerRemaining = msg.remaining;
+            var pct = timerDuration > 0 ? (timerRemaining / timerDuration) * 100 : 0;
+            els.timerFill.style.width = pct + '%';
+
+            els.timerFill.className = 'dashboard-timer-fill';
+            if (timerRemaining <= 5) {
+                els.timerFill.classList.add('critical');
+            } else if (timerRemaining <= 10) {
+                els.timerFill.classList.add('warning');
+            }
+        }
+
+        function handleRoundSummary(msg) {
+            var summary = msg.round_summary || msg;
+
+            // Highlight correct answer
+            var correctIdx = summary.correct_answer_index != null ? summary.correct_answer_index : -1;
+            var answerEls = els.answersGrid.querySelectorAll('.dashboard-answer');
+            answerEls.forEach(function(el) {
+                var idx = parseInt(el.dataset.index, 10);
+                if (idx === correctIdx) {
+                    el.classList.add('correct');
+                } else {
+                    el.classList.add('wrong');
+                }
+            });
+
+            // Fun fact
+            var fact = summary.fun_fact || '';
+            if (fact) {
+                els.funFactText.textContent = fact;
+                setTimeout(function() { els.funFact.classList.add('visible'); }, 300);
+            }
+
+            // Leaderboard
+            var lb = summary.leaderboard || msg.leaderboard || [];
+            if (lb.length) renderLeaderboard(els.leaderboard, lb);
+        }
+
+        function handleFinale(msg) {
+            showView('finale');
+
+            var podium = msg.podium || [];
+            renderPodium(podium);
+
+            var lb = msg.leaderboard || msg.all_players || [];
+            renderLeaderboard(els.finaleLeaderboard, lb);
+        }
+
+        // ---- Renderers ----
+        function renderLeaderboard(container, players) {
+            if (!container || !players) return;
+            // Show top 5 in game view, all in finale
+            var list = container === els.leaderboard ? players.slice(0, 5) : players;
+            container.innerHTML = list.map(function(p, i) {
+                var rank = p.rank || i + 1;
+                var rankClass = rank <= 3 ? ' rank-' + rank : '';
+                return '<div class="leaderboard-row">' +
+                    '<span class="leaderboard-rank' + rankClass + '">' + rank + '</span>' +
+                    '<span class="leaderboard-name">' + escapeHtml(p.name) + '</span>' +
+                    '<span class="leaderboard-score">' + p.score + '</span>' +
+                    (p.streak > 1 ? '<span class="leaderboard-streak">' + p.streak + 'x</span>' : '') +
+                    '</div>';
+            }).join('');
+        }
+
+        function renderPodium(podium) {
+            var ordered = [];
+            if (podium[1]) ordered.push({ name: podium[1].name, score: podium[1].score, place: 2 });
+            if (podium[0]) ordered.push({ name: podium[0].name, score: podium[0].score, place: 1 });
+            if (podium[2]) ordered.push({ name: podium[2].name, score: podium[2].score, place: 3 });
+
+            var medals = { 1: '\uD83E\uDD47', 2: '\uD83E\uDD48', 3: '\uD83E\uDD49' };
+            var barClass = { 1: 'first', 2: 'second', 3: 'third' };
+
+            els.podium.innerHTML = ordered.map(function(p) {
+                return '<div class="podium-place">' +
+                    '<div class="podium-avatar">' + (medals[p.place] || '') + '</div>' +
+                    '<div class="podium-name">' + escapeHtml(p.name) + '</div>' +
+                    '<div class="podium-score">' + p.score + ' Pkt.</div>' +
+                    '<div class="podium-bar ' + (barClass[p.place] || '') + '">' + p.place + '</div>' +
+                    '</div>';
+            }).join('');
+        }
+
+        function escapeHtml(text) {
+            var el = document.createElement('span');
+            el.textContent = text || '';
+            return el.innerHTML;
+        }
+
+        // ---- Init ----
+        connect();
+    })();
+    </script>
+    <script>
+        if ("serviceWorker" in navigator) {
+            navigator.serviceWorker.register("/quizify/static/sw.js");
+        }
+    </script>
+</body>
+</html>

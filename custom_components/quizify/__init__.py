@@ -19,6 +19,7 @@ from .game.state import QuizifyGameState
 from .server import async_register_static_paths
 from .server.views import (
     AdminView,
+    DashboardView,
     GameStatusView,
     LauncherView,
     PlayerView,
@@ -58,6 +59,7 @@ async def async_setup_entry(hass: HomeAssistant, entry: ConfigEntry) -> bool:
 
     # Register HTTP views
     hass.http.register_view(AdminView(hass))
+    hass.http.register_view(DashboardView(hass))
     hass.http.register_view(LauncherView(hass))
     hass.http.register_view(PlayerView(hass))
     hass.http.register_view(GameStatusView(hass))

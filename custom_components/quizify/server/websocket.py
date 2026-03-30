@@ -5,6 +5,7 @@ from __future__ import annotations
 import asyncio
 import logging
 import random
+import uuid
 from typing import TYPE_CHECKING, Any
 
 from aiohttp import WSMsgType, web
@@ -50,22 +51,40 @@ class QuizifyWebSocketHandler:
         self.hass = hass
         self.connections: set[web.WebSocketResponse] = set()
         self._admin_connections: set[web.WebSocketResponse] = set()
+        self._dashboard_connections: set[web.WebSocketResponse] = set()
         self._pending_removals: dict[str, asyncio.Task] = {}
         self._timer_tick_task: asyncio.Task | None = None
         # Answer shuffle mapping: original_index -> shuffled_index per round
         self._shuffle_map: list[int] = []  # shuffled_index -> original_index
         self._shuffled_answers: list[str] = []
+        # Session tokens for player reconnect
+        self._session_tokens: dict[str, str] = {}  # token → player_name
+        # Player disconnect grace period (keep session alive)
+        self._PLAYER_SESSION_GRACE = 60  # seconds
+        # Admin session
+        self._admin_session_token: str | None = None
+        self._admin_disconnect_task: asyncio.Task | None = None
+        self._ADMIN_SESSION_GRACE = 120  # seconds
 
     async def handle(self, request: web.Request) -> web.WebSocketResponse:
         """Handle WebSocket connection."""
         ws = web.WebSocketResponse(heartbeat=self.HEARTBEAT_INTERVAL)
         await ws.prepare(request)
 
-        is_admin = request.query.get("role") == "admin"
+        role = request.query.get("role")
+        is_admin = role == "admin"
+        is_dashboard = role == "dashboard"
+        admin_token = request.query.get("token")
+
+        # Validate admin token for reconnection
+        if is_admin and admin_token and admin_token == self._admin_session_token:
+            _LOGGER.info("Admin reconnected with valid session token")
 
         self.connections.add(ws)
         if is_admin:
             self._admin_connections.add(ws)
+        if is_dashboard:
+            self._dashboard_connections.add(ws)
 
         _LOGGER.debug(
             "WebSocket connected (admin=%s), total: %d",
@@ -85,6 +104,7 @@ class QuizifyWebSocketHandler:
         finally:
             self.connections.discard(ws)
             self._admin_connections.discard(ws)
+            self._dashboard_connections.discard(ws)
             await self._handle_disconnect(ws)
             _LOGGER.debug("WebSocket disconnected, total: %d", len(self.connections))
 
@@ -141,6 +161,9 @@ class QuizifyWebSocketHandler:
                 return
             await self._handle_reset_game(ws, game_state)
 
+        elif msg_type == "reconnect":
+            await self._handle_reconnect(ws, data, game_state)
+
         elif msg_type == "get_state":
             state_msg = game_state.get_state_snapshot()
             state_msg["type"] = "game_state"
@@ -157,10 +180,20 @@ class QuizifyWebSocketHandler:
         self, ws: web.WebSocketResponse, game_state: QuizifyGameState
     ) -> None:
         """Send full state to admin on connect."""
+        # Cancel admin disconnect task if reconnecting
+        if self._admin_disconnect_task and not self._admin_disconnect_task.done():
+            self._admin_disconnect_task.cancel()
+            self._admin_disconnect_task = None
+            _LOGGER.info("Admin reconnected, cancelled disconnect timeout")
+
+        # Generate or reuse admin session token
+        if not self._admin_session_token:
+            self._admin_session_token = str(uuid.uuid4())
+
         state = game_state.get_state_snapshot()
         state["type"] = "game_state"
-        # Add join URL for admin
-        state["join_url"] = f"/quizify/player"
+        state["join_url"] = "/quizify/player"
+        state["admin_session_token"] = self._admin_session_token
         await self._safe_send(ws, state)
 
     # ------------------------------------------------------------------
@@ -180,12 +213,17 @@ class QuizifyWebSocketHandler:
             # Cancel pending removal on reconnect
             self._cancel_pending_removal(name)
 
-            # Send join confirmation
+            # Generate session token for reconnect
+            session_token = str(uuid.uuid4())
+            self._session_tokens[session_token] = name
+
+            # Send join confirmation with session token
             powerup = game_state._powerup_manager.get_powerup(name)
             await self._safe_send(ws, {
                 "type": "joined",
                 "player_id": name,
                 "powerup": powerup.value if powerup else None,
+                "session_token": session_token,
             })
 
             # Send current state to the joining player
@@ -209,6 +247,62 @@ class QuizifyWebSocketHandler:
                 ws, error_code or ERR_INVALID_ACTION,
                 error_messages.get(error_code or "", "Beitritt fehlgeschlagen"),
             )
+
+    # ------------------------------------------------------------------
+    # Player reconnect (session-based)
+    # ------------------------------------------------------------------
+
+    async def _handle_reconnect(
+        self, ws: web.WebSocketResponse, data: dict, game_state: QuizifyGameState
+    ) -> None:
+        """Handle player reconnect with session token."""
+        token = data.get("session_token", "")
+        name = self._session_tokens.get(token)
+
+        if not name:
+            # Token not found — treat as unknown, client should show join form
+            await self._safe_send(ws, {"type": "reconnect_failed"})
+            return
+
+        player = game_state.get_player(name)
+        if not player:
+            # Player was fully removed — token stale
+            self._session_tokens.pop(token, None)
+            await self._safe_send(ws, {"type": "reconnect_failed"})
+            return
+
+        # Restore player connection
+        player.ws = ws
+        player.connected = True
+        self._cancel_pending_removal(name)
+
+        _LOGGER.info("Player session-reconnected: %s", name)
+
+        # Generate a fresh token and revoke old one
+        new_token = str(uuid.uuid4())
+        self._session_tokens.pop(token, None)
+        self._session_tokens[new_token] = name
+
+        # Send reconnect success with new token
+        powerup = game_state._powerup_manager.get_powerup(name)
+        await self._safe_send(ws, {
+            "type": "reconnected",
+            "player_id": name,
+            "session_token": new_token,
+            "powerup": powerup.value if powerup else None,
+        })
+
+        # Send full game state
+        state = game_state.get_state_snapshot()
+        state["type"] = "game_state"
+        await self._safe_send(ws, state)
+
+        # Broadcast updated player list
+        players = game_state.get_players()
+        await self._broadcast({
+            "type": "player_joined",
+            "players": serialize_player_list(players),
+        })
 
     # ------------------------------------------------------------------
     # Submit answer
@@ -531,6 +625,20 @@ class QuizifyWebSocketHandler:
         if not game_state:
             return
 
+        # Handle admin disconnect — keep game alive for grace period
+        if ws in self._admin_connections or (
+            not game_state.get_player_by_ws(ws) and self._admin_session_token
+        ):
+            if not self._admin_connections:
+                _LOGGER.info("Admin disconnected, keeping game alive for %ds", self._ADMIN_SESSION_GRACE)
+
+                async def admin_timeout() -> None:
+                    await asyncio.sleep(self._ADMIN_SESSION_GRACE)
+                    _LOGGER.info("Admin session grace period expired, clearing token")
+                    self._admin_session_token = None
+
+                self._admin_disconnect_task = asyncio.ensure_future(admin_timeout())
+
         player = game_state.get_player_by_ws(ws)
         if not player:
             return
@@ -545,24 +653,29 @@ class QuizifyWebSocketHandler:
             "players": serialize_player_list(players),
         })
 
-        # In lobby, schedule removal after grace period
-        if game_state.phase == GamePhase.LOBBY:
-            async def remove_after_timeout(name: str) -> None:
-                await asyncio.sleep(LOBBY_DISCONNECT_GRACE_PERIOD)
-                gs = get_game_state(self.hass)
-                if gs:
-                    p = gs.get_player(name)
-                    if p and not p.connected:
-                        gs.remove_player(name)
-                        remaining = gs.get_players()
-                        await self._broadcast({
-                            "type": "player_left",
-                            "players": serialize_player_list(remaining),
-                        })
-                        _LOGGER.info("Removed disconnected player after grace period: %s", name)
+        # Schedule removal after grace period
+        grace = LOBBY_DISCONNECT_GRACE_PERIOD if game_state.phase == GamePhase.LOBBY else self._PLAYER_SESSION_GRACE
 
-            task = asyncio.ensure_future(remove_after_timeout(player.name))
-            self._pending_removals[player.name] = task
+        async def remove_after_timeout(name: str, timeout: float) -> None:
+            await asyncio.sleep(timeout)
+            gs = get_game_state(self.hass)
+            if gs:
+                p = gs.get_player(name)
+                if p and not p.connected:
+                    gs.remove_player(name)
+                    # Clean up session tokens for this player
+                    stale_tokens = [t for t, n in self._session_tokens.items() if n == name]
+                    for t in stale_tokens:
+                        self._session_tokens.pop(t, None)
+                    remaining = gs.get_players()
+                    await self._broadcast({
+                        "type": "player_left",
+                        "players": serialize_player_list(remaining),
+                    })
+                    _LOGGER.info("Removed disconnected player after grace period: %s", name)
+
+        task = asyncio.ensure_future(remove_after_timeout(player.name, grace))
+        self._pending_removals[player.name] = task
 
     def _cancel_pending_removal(self, name: str) -> None:
         """Cancel a pending player removal on reconnect."""

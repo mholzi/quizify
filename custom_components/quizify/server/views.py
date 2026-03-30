@@ -97,6 +97,29 @@ class PlayerView(HomeAssistantView):
         return web.Response(text=html_content, content_type="text/html")
 
 
+class DashboardView(HomeAssistantView):
+    """Serve the dashboard page."""
+
+    url = "/quizify/dashboard"
+    name = "quizify:dashboard"
+    requires_auth = False
+
+    def __init__(self, hass: HomeAssistant) -> None:
+        """Initialize the dashboard view."""
+        self.hass = hass
+
+    async def get(self, request: web.Request) -> web.Response:  # noqa: ARG002
+        """Serve the dashboard HTML page."""
+        html_path = Path(__file__).parent.parent / "www" / "dashboard.html"
+
+        if not html_path.exists():
+            _LOGGER.error("Dashboard page not found: %s", html_path)
+            return web.Response(text="Dashboard page not found", status=500)
+
+        html_content = await self.hass.async_add_executor_job(_read_file, html_path)
+        return web.Response(text=html_content, content_type="text/html")
+
+
 class GameStatusView(HomeAssistantView):
     """API endpoint for game status."""
 

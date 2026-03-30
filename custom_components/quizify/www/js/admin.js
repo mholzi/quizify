@@ -127,7 +127,11 @@
     // ---- WebSocket ----
     function connect() {
         const proto = location.protocol === 'https:' ? 'wss:' : 'ws:';
-        const url = `${proto}//${location.host}/api/quizify/ws?role=admin`;
+        const savedToken = sessionStorage.getItem('quizify_admin_session_token');
+        let url = `${proto}//${location.host}/api/quizify/ws?role=admin`;
+        if (savedToken) {
+            url += `&token=${encodeURIComponent(savedToken)}`;
+        }
         ws = new WebSocket(url);
 
         ws.onopen = () => {
@@ -198,6 +202,9 @@
 
     function handleGameState(msg) {
         currentPhase = msg.phase;
+        if (msg.admin_session_token) {
+            sessionStorage.setItem('quizify_admin_session_token', msg.admin_session_token);
+        }
         if (msg.players) renderSetupPlayers(msg.players);
         if (msg.join_url) renderJoinUrl(msg.join_url);
 

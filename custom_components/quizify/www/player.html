@@ -5,6 +5,8 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
     <title>Quizify — Player</title>
     <link rel="stylesheet" href="/quizify/static/css/styles.css">
+    <link rel="icon" href="/quizify/static/img/icon-256.png" type="image/png">
+    <link rel="manifest" href="/quizify/static/site.webmanifest">
 </head>
 <body>
     <!-- Timer bar (fixed top) -->
@@ -94,5 +96,10 @@
     <script src="/quizify/static/js/answers.js"></script>
     <script src="/quizify/static/js/fun-fact.js"></script>
     <script src="/quizify/static/js/player.js"></script>
+    <script>
+        if ("serviceWorker" in navigator) {
+            navigator.serviceWorker.register("/quizify/static/sw.js");
+        }
+    </script>
 </body>
 </html>
