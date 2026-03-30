@@ -58,6 +58,7 @@ class QuizifyWebSocketHandler:
         # Answer shuffle mapping: original_index -> shuffled_index per round
         self._shuffle_map: list[int] = []  # shuffled_index -> original_index
         self._shuffled_answers: list[str] = []
+        self._game_state_ref: object | None = None  # set on first game_state access
         # Session tokens for player reconnect
         self._session_tokens: dict[str, str] = {}  # token → player_name
         # Player disconnect grace period (keep session alive)
@@ -86,6 +87,10 @@ class QuizifyWebSocketHandler:
             self._admin_connections.add(ws)
         if is_dashboard:
             self._dashboard_connections.add(ws)
+        # Keep game state reference for broadcast logic
+        gs = get_game_state(self.hass)
+        if gs:
+            self._game_state_ref = gs
 
         _LOGGER.debug(
             "WebSocket connected (admin=%s), total: %d",
@@ -563,13 +568,15 @@ class QuizifyWebSocketHandler:
                     "powerup_type": powerup.value,
                 })
 
-        # Broadcast game state
+        # Broadcast game state with leaderboard so player sees rankings during game
         await self._broadcast({
             "type": "game_state",
             "phase": game_state.phase.value,
             "round": game_state.round,
             "total_rounds": game_state.total_rounds,
             "player_count": len(game_state.get_players()),
+            "players": serialize_leaderboard(game_state.get_players()),
+            "leaderboard": serialize_leaderboard(game_state.get_players()),
         })
 
         # Start timer tick task
@@ -729,26 +736,42 @@ class QuizifyWebSocketHandler:
             await asyncio.gather(*tasks)
 
     async def _broadcast_to_players(self, message: dict) -> None:
-        """Broadcast to non-admin connections only."""
-        player_conns = self.connections - self._admin_connections
-        if not player_conns:
-            return
-        tasks = [
-            self._safe_send(ws, message)
-            for ws in list(player_conns)
-            if not ws.closed
-        ]
+        """Broadcast to all player connections.
+
+        Admin-as-player connections (in both self.connections and _admin_connections)
+        also receive player messages so they see questions/answers without the correct flag.
+        """
+        # All connections that have joined as players (have a PlayerSession)
+        player_names = {p.name for p in self._game_state_ref.get_players()} if self._game_state_ref else set()
+
+        tasks = []
+        for ws in list(self.connections):
+            if ws.closed:
+                continue
+            # Include if: not admin, OR admin who also joined as player
+            is_pure_admin = ws in self._admin_connections and not any(
+                p.ws is ws for p in (self._game_state_ref.get_players() if self._game_state_ref else [])
+            )
+            if not is_pure_admin:
+                tasks.append(self._safe_send(ws, message))
         if tasks:
             await asyncio.gather(*tasks)
 
     async def _broadcast_to_admins(self, message: dict) -> None:
-        """Broadcast to admin connections only."""
+        """Broadcast admin-only messages (with correct answer) to pure admin connections.
+
+        Admin-as-player connections do NOT receive these — they get player messages instead
+        so they don't see the correct answer before submitting.
+        """
         if not self._admin_connections:
             return
+        player_ws_set = {
+            p.ws for p in (self._game_state_ref.get_players() if self._game_state_ref else [])
+        }
         tasks = [
             self._safe_send(ws, message)
             for ws in list(self._admin_connections)
-            if not ws.closed
+            if not ws.closed and ws not in player_ws_set  # skip admin-as-player
         ]
         if tasks:
             await asyncio.gather(*tasks)
