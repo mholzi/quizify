@@ -8,16 +8,10 @@
 
     var pu = window.QuizifyPlayerUtils;
     var lobby = window.QuizifyPlayerLobby;
+    var game = window.QuizifyPlayerGame;
+    var reveal = window.QuizifyPlayerReveal;
+    var end = window.QuizifyPlayerEnd;
     var state = pu.state;
-
-    // ============================================
-    // Components (from global scripts)
-    // ============================================
-
-    var timerBar = new TimerBar('timer-bar', 15);
-    var answerBtns = new AnswerButtons('answers-container');
-    var revealBtns = new AnswerButtons('reveal-answers');
-    var funFact = new FunFactReveal('fun-fact');
 
     // ============================================
     // DOM Refs
@@ -25,24 +19,7 @@
 
     var els = {
         nameInput: document.getElementById('name-input'),
-        joinBtn: document.getElementById('join-btn'),
-        joinSection: document.getElementById('join-section'),
-        waitingSection: document.getElementById('waiting-section'),
-        timerBarContainer: document.getElementById('timer-bar'),
-        roundIndicator: document.getElementById('round-indicator'),
-        questionText: document.getElementById('question-text'),
-        questionCategory: document.getElementById('question-category'),
-        powerupBar: document.getElementById('powerup-bar'),
-        powerupBtn: document.getElementById('powerup-btn'),
-        powerupIcon: document.getElementById('powerup-icon'),
-        powerupLabel: document.getElementById('powerup-label'),
-        revealQuestion: document.getElementById('reveal-question'),
-        pointsEarned: document.getElementById('points-earned'),
-        scoreDetail: document.getElementById('score-detail'),
-        streakBadge: document.getElementById('streak-badge'),
-        rankDisplay: document.getElementById('rank-display'),
-        podium: document.getElementById('podium'),
-        finaleLeaderboard: document.getElementById('finale-leaderboard')
+        joinBtn: document.getElementById('join-btn')
     };
 
     // ============================================
@@ -98,16 +75,6 @@
                 break;
 
             case 'joined':
-                state.playerName = msg.player_id || state.playerName;
-                state.playerId = msg.player_id;
-                if (msg.session_token) {
-                    state.sessionToken = msg.session_token;
-                    pu.saveSession(msg.session_token, state.playerName);
-                }
-                if (els.joinSection) els.joinSection.classList.add('hidden');
-                if (els.waitingSection) els.waitingSection.classList.remove('hidden');
-                break;
-
             case 'reconnected':
                 state.playerName = msg.player_id || state.playerName;
                 state.playerId = msg.player_id;
@@ -115,8 +82,7 @@
                     state.sessionToken = msg.session_token;
                     pu.saveSession(msg.session_token, state.playerName);
                 }
-                if (els.joinSection) els.joinSection.classList.add('hidden');
-                if (els.waitingSection) els.waitingSection.classList.remove('hidden');
+                if (msg.is_admin) state.isAdmin = true;
                 break;
 
             case 'reconnect_failed':
@@ -137,11 +103,11 @@
                 break;
 
             case 'timer_tick':
-                timerBar.update(msg.remaining);
+                game.updateTimer(msg.remaining);
                 break;
 
             case 'answer_result':
-                handleAnswerResult(msg);
+                game.handleAnswerResult(msg);
                 break;
 
             case 'round_summary':
@@ -158,6 +124,15 @@
 
             case 'powerup_applied':
                 handlePowerUpApplied(msg);
+                break;
+
+            case 'rematch_started':
+                state.reconnectAttempts = 0;
+                connect();
+                break;
+
+            case 'reaction':
+                showFloatingReaction(msg.emoji, msg.player_name);
                 break;
 
             case 'error':
@@ -181,6 +156,7 @@
                 break;
 
             case 'QUESTION_ACTIVE':
+            case 'PLAYING':
                 if (msg.question) {
                     handleQuestionStarted({
                         question_text: msg.question.text,
@@ -194,13 +170,19 @@
                 break;
 
             case 'ANSWER_REVEAL':
-                if (msg.round_summary) {
-                    pu.showView('reveal-view');
-                }
+            case 'REVEAL':
+                pu.showView('reveal-view');
+                reveal.updateRevealView(msg);
                 break;
 
             case 'FINALE':
+            case 'END':
                 handleFinale(msg);
+                break;
+
+            case 'PAUSED':
+                pu.showView('paused-view');
+                updatePausedView(msg);
                 break;
         }
     }
@@ -214,37 +196,35 @@
         currentQuestion = msg;
 
         pu.showView('game-view');
-        if (els.timerBarContainer) els.timerBarContainer.classList.remove('hidden');
+
+        // Render question and answers
+        game.renderQuestion(msg);
+        game.resetSubmissionState();
 
         // Round indicator
-        if (els.roundIndicator) {
-            els.roundIndicator.textContent = 'Frage ' + msg.round_num + ' / ' + msg.total_rounds;
-        }
-        if (els.questionText) els.questionText.textContent = msg.question_text;
-        if (els.questionCategory) els.questionCategory.textContent = msg.category || '';
+        var currentRound = document.getElementById('current-round');
+        var totalRounds = document.getElementById('total-rounds');
+        if (currentRound) currentRound.textContent = msg.round_num || 1;
+        if (totalRounds) totalRounds.textContent = msg.total_rounds || 10;
 
         // Timer
-        timerBar.start(msg.timer_duration);
-
-        // Answers
-        var answers = msg.answers.map(function (text, i) { return { text: text, index: i }; });
-        answerBtns.setAnswers(answers);
+        if (msg.timer_duration) {
+            var deadline = Date.now() + (msg.timer_duration * 1000);
+            game.startCountdown(deadline);
+        }
 
         // Power-up
-        if (myPowerUp) {
-            if (els.powerupBar) els.powerupBar.classList.remove('hidden');
-            renderPowerUp(myPowerUp);
-        } else {
-            if (els.powerupBar) els.powerupBar.classList.add('hidden');
+        game.renderPowerUp(myPowerUp);
+
+        // Show admin control bar if admin
+        var adminBar = document.getElementById('admin-control-bar');
+        if (adminBar) {
+            adminBar.classList.toggle('hidden', !state.isAdmin);
         }
-    }
 
-    // ============================================
-    // Answer Result
-    // ============================================
-
-    function handleAnswerResult(msg) {
-        window._lastResult = msg;
+        // Hide reaction bar during game
+        var reactionBar = document.getElementById('reaction-bar');
+        if (reactionBar) reactionBar.classList.add('hidden');
     }
 
     // ============================================
@@ -253,59 +233,29 @@
 
     function handleRoundSummary(msg) {
         state.currentPhase = 'ANSWER_REVEAL';
-        timerBar.stop();
-        if (els.timerBarContainer) els.timerBarContainer.classList.add('hidden');
+        game.stopCountdown();
         pu.showView('reveal-view');
 
-        // Question echo
+        // Pass question context to reveal
         if (currentQuestion) {
-            if (els.revealQuestion) els.revealQuestion.textContent = currentQuestion.question_text;
-
-            var answers = currentQuestion.answers.map(function (text, i) { return { text: text, index: i }; });
-            revealBtns.setAnswers(answers);
-            revealBtns.showResult(msg.correct_answer_index != null ? msg.correct_answer_index : -1);
+            msg.question_text = currentQuestion.question_text;
+            msg.question = { text: currentQuestion.question_text };
         }
 
-        // Score
-        var result = window._lastResult || {};
-        var pts = result.points_earned || 0;
-        if (els.pointsEarned) {
-            els.pointsEarned.textContent = pts > 0 ? '+' + pts : '0';
-            els.pointsEarned.classList.toggle('zero', pts === 0);
-        }
+        reveal.updateRevealView(msg);
 
-        if (els.scoreDetail) {
-            els.scoreDetail.textContent = result.correct
-                ? 'Richtig!'
-                : 'Falsch \u2014 die Antwort war: ' + (msg.correct_answer || '');
-        }
-
-        // Streak
-        if (els.streakBadge) {
-            if (result.new_streak && result.new_streak > 1) {
-                els.streakBadge.classList.remove('hidden');
-                els.streakBadge.textContent = result.new_streak + 'x Serie';
-            } else {
-                els.streakBadge.classList.add('hidden');
-            }
-        }
-
-        // Rank
-        if (msg.leaderboard && state.playerName && els.rankDisplay) {
-            for (var i = 0; i < msg.leaderboard.length; i++) {
-                if (msg.leaderboard[i].name === state.playerName) {
-                    els.rankDisplay.textContent = 'Platz ' + msg.leaderboard[i].rank + ' \u2014 ' + msg.leaderboard[i].score + ' Punkte';
-                    break;
-                }
-            }
-        }
-
-        // Fun fact
-        if (msg.fun_fact) {
-            funFact.show(msg.fun_fact);
-        }
-
+        game.clearLastAnswerResult();
         myPowerUp = null;
+
+        // Show reaction bar during reveal
+        var reactionBar = document.getElementById('reaction-bar');
+        if (reactionBar) reactionBar.classList.remove('hidden');
+
+        // Show admin control bar if admin
+        var adminBar = document.getElementById('admin-control-bar');
+        if (adminBar) {
+            adminBar.classList.toggle('hidden', !state.isAdmin);
+        }
     }
 
     // ============================================
@@ -314,115 +264,67 @@
 
     function handleFinale(msg) {
         state.currentPhase = 'FINALE';
-        timerBar.stop();
-        if (els.timerBarContainer) els.timerBarContainer.classList.add('hidden');
+        game.stopCountdown();
         pu.showView('end-view');
 
-        // Podium
-        var podium = msg.podium || [];
-        renderPodium(podium);
+        end.updateEndView(msg);
+        end.setupRematchButton(send);
+        end.setupNewGameButton();
 
-        // Full leaderboard
-        var lb = msg.leaderboard || msg.all_players || [];
-        pu.renderLeaderboard(els.finaleLeaderboard, lb, state.playerName);
-
-        // Awards / Superlatives
-        renderAwards(msg.superlatives || []);
-
-        // Share card
-        var shareTexts = msg.share_texts || {};
-        var myShareText = shareTexts[state.playerName];
-        var copyBtn = document.getElementById('copy-result-btn');
-        if (copyBtn && myShareText) {
-            copyBtn.style.display = 'inline-flex';
-            copyBtn.onclick = function () {
-                navigator.clipboard.writeText(myShareText).then(function () {
-                    copyBtn.textContent = 'Kopiert!';
-                    setTimeout(function () { copyBtn.textContent = 'Ergebnis kopieren'; }, 2000);
-                }).catch(function () {});
-            };
-        }
+        // Hide bars
+        var reactionBar = document.getElementById('reaction-bar');
+        if (reactionBar) reactionBar.classList.add('hidden');
+        var adminBar = document.getElementById('admin-control-bar');
+        if (adminBar) adminBar.classList.add('hidden');
     }
 
     // ============================================
-    // Podium
+    // Paused View
     // ============================================
 
-    function renderPodium(podium) {
-        if (!els.podium) return;
-        // Reorder: [2nd, 1st, 3rd]
-        var ordered = [];
-        if (podium[1]) ordered.push(Object.assign({}, podium[1], { place: 2 }));
-        if (podium[0]) ordered.push(Object.assign({}, podium[0], { place: 1 }));
-        if (podium[2]) ordered.push(Object.assign({}, podium[2], { place: 3 }));
-
-        var medals = { 1: '\uD83E\uDD47', 2: '\uD83E\uDD48', 3: '\uD83E\uDD49' };
-        var barClass = { 1: 'first', 2: 'second', 3: 'third' };
-
-        els.podium.innerHTML = ordered
-            .map(function (p) {
-                return '<div class="podium-place">' +
-                    '<div class="podium-avatar">' + (medals[p.place] || '') + '</div>' +
-                    '<div class="podium-name">' + pu.escapeHtml(p.name) + '</div>' +
-                    '<div class="podium-score">' + p.score + ' Pkt.</div>' +
-                    '<div class="podium-bar ' + (barClass[p.place] || '') + '">' + p.place + '</div>' +
-                    '</div>';
-            })
-            .join('');
-    }
-
-    // ============================================
-    // Awards
-    // ============================================
-
-    function renderAwards(superlatives) {
-        var section = document.getElementById('awards-section');
-        if (!section || !superlatives || !superlatives.length) {
-            if (section) section.classList.add('hidden');
-            return;
+    function updatePausedView(data) {
+        var messageEl = document.getElementById('pause-message');
+        if (messageEl) {
+            if (data.pause_reason === 'admin_disconnected') {
+                messageEl.textContent = 'Waiting for host to reconnect...';
+            } else {
+                messageEl.textContent = 'Game paused';
+            }
         }
-        section.classList.remove('hidden');
-        section.innerHTML = '<div class="awards-title">Awards</div><div class="awards-grid"></div>';
-        var grid = section.querySelector('.awards-grid');
-
-        superlatives.forEach(function (s, i) {
-            var card = document.createElement('div');
-            card.className = 'award-card';
-            card.style.animationDelay = (i * 0.5) + 's';
-            card.innerHTML =
-                '<div class="award-icon">' + s.icon + '</div>' +
-                '<div class="award-name">' + pu.escapeHtml(s.award) + '</div>' +
-                '<div class="award-winner">' + pu.escapeHtml(s.winner) + '</div>' +
-                '<div class="award-detail">' + pu.escapeHtml(s.detail) + '</div>';
-            grid.appendChild(card);
-        });
     }
 
     // ============================================
     // Power-ups
     // ============================================
 
-    var POWERUP_META = {
-        joker: { icon: '\uD83C\uDCCF', label: 'Joker' },
-        double_points: { icon: '2x', label: 'Doppelt' },
-        freeze: { icon: '\uD83E\uDDCA', label: 'Einfrieren' },
-        time_boost: { icon: '\u23F1\uFE0F', label: '+5 Sek.' }
-    };
-
-    function renderPowerUp(type) {
-        var meta = POWERUP_META[type] || { icon: '?', label: type };
-        if (els.powerupIcon) els.powerupIcon.textContent = meta.icon;
-        if (els.powerupLabel) els.powerupLabel.textContent = meta.label;
-        if (els.powerupBtn) els.powerupBtn.classList.remove('used');
-    }
-
     function handlePowerUpApplied(msg) {
         if (msg.powerup_type === 'joker' && msg.joker_remove_index != null) {
-            answerBtns.eliminate(msg.joker_remove_index);
+            game.applyJoker(msg.joker_remove_index);
         }
         myPowerUp = null;
-        if (els.powerupBtn) els.powerupBtn.classList.add('used');
-        if (els.powerupBar) els.powerupBar.classList.add('hidden');
+        var powerupBtn = document.getElementById('powerup-btn');
+        if (powerupBtn) {
+            powerupBtn.classList.add('used');
+        }
+    }
+
+    // ============================================
+    // Reactions
+    // ============================================
+
+    function showFloatingReaction(emoji, playerName) {
+        var container = document.getElementById('reaction-container');
+        if (!container) return;
+
+        var el = document.createElement('div');
+        el.className = 'floating-reaction';
+        el.textContent = emoji;
+        el.style.left = (20 + Math.random() * 60) + '%';
+        container.appendChild(el);
+
+        setTimeout(function () {
+            if (el.parentNode) el.parentNode.removeChild(el);
+        }, 2000);
     }
 
     // ============================================
@@ -463,9 +365,6 @@
         els.joinBtn.disabled = true;
         els.joinBtn.textContent = 'Joining...';
 
-        if (els.joinSection) els.joinSection.classList.add('hidden');
-        if (els.waitingSection) els.waitingSection.classList.remove('hidden');
-
         if (state.ws && state.ws.readyState === WebSocket.OPEN) {
             send('join', { name: result.name });
         }
@@ -487,6 +386,65 @@
     }
 
     // ============================================
+    // Admin Controls Wiring
+    // ============================================
+
+    function setupAdminControls() {
+        // Skip question
+        var skipBtn = document.getElementById('skip-question-btn');
+        if (skipBtn) {
+            skipBtn.addEventListener('click', function () {
+                send('admin_skip', {});
+            });
+        }
+
+        // Next round (from admin bar)
+        var nextRoundAdminBtn = document.getElementById('next-round-admin-btn');
+        if (nextRoundAdminBtn) {
+            nextRoundAdminBtn.addEventListener('click', function () {
+                send('next_round', {});
+            });
+        }
+
+        // End game
+        var endGameBtn = document.getElementById('end-game-btn');
+        if (endGameBtn) {
+            endGameBtn.addEventListener('click', function () {
+                send('end_game', {});
+            });
+        }
+
+        // Next round (from reveal view)
+        var nextRoundBtn = document.getElementById('next-round-btn');
+        if (nextRoundBtn) {
+            nextRoundBtn.addEventListener('click', function () {
+                nextRoundBtn.disabled = true;
+                send('next_round', {});
+            });
+        }
+    }
+
+    // ============================================
+    // Reaction Bar Wiring
+    // ============================================
+
+    function setupReactionBar() {
+        var reactionBtns = document.querySelectorAll('.reaction-btn');
+        reactionBtns.forEach(function (btn) {
+            btn.addEventListener('click', function () {
+                var emoji = btn.dataset.emoji;
+                if (emoji) {
+                    send('reaction', { emoji: emoji });
+                    btn.classList.add('reaction-btn--sent');
+                    setTimeout(function () {
+                        btn.classList.remove('reaction-btn--sent');
+                    }, 500);
+                }
+            });
+        });
+    }
+
+    // ============================================
     // Initialization
     // ============================================
 
@@ -494,24 +452,31 @@
         setupJoinForm();
         lobby.init(send);
         setupRetryConnection();
+        setupAdminControls();
+        setupReactionBar();
+        pu.setupCollapsibles();
 
-        // Answer callback
-        answerBtns.onAnswer(function (index) {
-            send('submit_answer', { answer_index: index });
-        });
+        // Answer button clicks
+        var answerButtons = document.getElementById('answer-buttons');
+        if (answerButtons) {
+            answerButtons.addEventListener('click', function (e) {
+                var btn = e.target.closest('.answer-btn');
+                if (!btn || btn.disabled) return;
+                var index = parseInt(btn.dataset.index, 10);
+                if (!isNaN(index)) {
+                    game.handleAnswerClick(index, send);
+                }
+            });
+        }
 
         // Power-up button
-        if (els.powerupBtn) {
-            els.powerupBtn.addEventListener('click', function () {
+        var powerupBtn = document.getElementById('powerup-btn');
+        if (powerupBtn) {
+            powerupBtn.addEventListener('click', function () {
                 if (!myPowerUp) return;
                 send('use_powerup', { target_player_id: null });
             });
         }
-
-        // Timer expired
-        timerBar.onExpired(function () {
-            answerBtns.disable();
-        });
 
         // Auto-fill name from URL param ?name=... (admin self-join)
         var urlParams = new URLSearchParams(location.search);
@@ -519,6 +484,11 @@
         if (prefilledName && els.nameInput) {
             els.nameInput.value = prefilledName;
             els.joinBtn.disabled = false;
+        }
+
+        // Check if admin via URL param
+        if (urlParams.get('admin') === 'true') {
+            state.isAdmin = true;
         }
 
         // i18n init
