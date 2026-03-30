@@ -911,6 +911,12 @@ body {
     color: var(--color-accent-bright);
 }
 
+/* Category chips support multi-select — show checkmark when active */
+#category-chips .chip.active::before {
+    content: '✓ ';
+    font-size: 0.75rem;
+}
+
 .admin-question-preview {
     background: var(--color-bg-card);
     border: 1px solid var(--color-border);

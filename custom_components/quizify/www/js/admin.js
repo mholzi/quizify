@@ -13,6 +13,7 @@
 
     // Settings (from chips)
     let selectedCategory = 'mixed';
+    let selectedCategories = []; // for multi-select mode
     let selectedDifficulty = 'medium';
     let selectedRounds = 10;
 
@@ -35,7 +36,7 @@
         categoryChips: document.getElementById('category-chips'),
         difficultyChips: document.getElementById('difficulty-chips'),
         roundsChips: document.getElementById('rounds-chips'),
-        qrCanvas: document.getElementById('qr-canvas'),
+        qrContainer: document.getElementById('qr-container'),
         joinUrl: document.getElementById('join-url'),
         setupPlayerCount: document.getElementById('setup-player-count'),
         setupPlayerChips: document.getElementById('setup-player-chips'),
@@ -78,7 +79,46 @@
         });
     }
 
-    setupChips(els.categoryChips, v => { selectedCategory = v; });
+    // Category: Gemischt = single select, others = multi-select
+    function setupCategoryChips(container) {
+        if (!container) return;
+        container.addEventListener('click', (e) => {
+            const chip = e.target.closest('.chip');
+            if (!chip) return;
+            const val = chip.dataset.value;
+
+            if (val === 'mixed') {
+                // Gemischt selected — deselect all others, select only Gemischt
+                container.querySelectorAll('.chip').forEach(c => c.classList.remove('active'));
+                chip.classList.add('active');
+                selectedCategory = 'mixed';
+                selectedCategories = [];
+            } else {
+                // Deselect Gemischt
+                const mixedChip = container.querySelector('.chip[data-value="mixed"]');
+                if (mixedChip) mixedChip.classList.remove('active');
+
+                // Toggle this chip
+                chip.classList.toggle('active');
+
+                // Build selectedCategories from active chips
+                selectedCategories = Array.from(container.querySelectorAll('.chip.active'))
+                    .map(c => c.dataset.value);
+
+                if (selectedCategories.length === 0) {
+                    // Nothing selected — fall back to Gemischt
+                    if (mixedChip) mixedChip.classList.add('active');
+                    selectedCategory = 'mixed';
+                } else if (selectedCategories.length === 1) {
+                    selectedCategory = selectedCategories[0];
+                } else {
+                    selectedCategory = 'multi'; // signal to use selectedCategories array
+                }
+            }
+        });
+    }
+
+    setupCategoryChips(els.categoryChips);
     setupChips(els.difficultyChips, v => { selectedDifficulty = v; });
     setupChips(els.roundsChips, v => { selectedRounds = parseInt(v, 10); });
 
@@ -320,57 +360,41 @@
         return el.innerHTML;
     }
 
-    // ---- QR Code (minimal inline generator) ----
-    // Uses a simple approach — renders URL text; real QR needs a library.
-    // For production, load qrcode.min.js. Here we create a data URL placeholder.
+    // ---- QR Code (qrcodejs library) ----
+    let _qrInstance = null;
     function generateQR(url) {
-        const canvas = els.qrCanvas;
-        if (!canvas) return;
-        const ctx = canvas.getContext('2d');
-        canvas.width = 180;
-        canvas.height = 180;
-        ctx.fillStyle = '#ffffff';
-        ctx.fillRect(0, 0, 180, 180);
-        ctx.fillStyle = '#0b0e1a';
-        ctx.font = 'bold 14px sans-serif';
-        ctx.textAlign = 'center';
-        ctx.textBaseline = 'middle';
+        const container = document.getElementById('qr-container');
+        if (!container) return;
 
-        // Wrap URL text
-        const words = url.split('/');
-        const lines = [];
-        let line = '';
-        for (const word of words) {
-            const test = line ? line + '/' + word : word;
-            if (test.length > 22 && line) {
-                lines.push(line);
-                line = word;
-            } else {
-                line = test;
-            }
+        // Clear previous QR
+        container.innerHTML = '';
+
+        if (typeof QRCode !== 'undefined') {
+            _qrInstance = new QRCode(container, {
+                text: url,
+                width: 180,
+                height: 180,
+                colorDark: '#0b0e1a',
+                colorLight: '#ffffff',
+                correctLevel: QRCode.CorrectLevel.M,
+            });
+        } else {
+            // Fallback: just show the URL as text if library didn't load
+            container.innerHTML = `<div style="padding:20px;word-break:break-all;font-size:12px;">${url}</div>`;
         }
-        if (line) lines.push(line);
-
-        const lineHeight = 18;
-        const startY = 90 - ((lines.length - 1) * lineHeight) / 2;
-        lines.forEach((l, i) => {
-            ctx.fillText(l, 90, startY + i * lineHeight);
-        });
-
-        // Draw border squares to hint "QR code"
-        ctx.strokeStyle = '#0b0e1a';
-        ctx.lineWidth = 4;
-        ctx.strokeRect(8, 8, 40, 40);
-        ctx.strokeRect(132, 8, 40, 40);
-        ctx.strokeRect(8, 132, 40, 40);
     }
 
     // ---- Event listeners ----
 
     // Start game
     els.startGameBtn.addEventListener('click', () => {
+        const categoryPayload = selectedCategory === 'mixed'
+            ? null
+            : selectedCategory === 'multi'
+                ? selectedCategories
+                : selectedCategory;
         send('start_game', {
-            category: selectedCategory === 'mixed' ? null : selectedCategory,
+            category: categoryPayload,
             difficulty: selectedDifficulty === 'mixed' ? null : selectedDifficulty,
             num_rounds: selectedRounds,
         });
