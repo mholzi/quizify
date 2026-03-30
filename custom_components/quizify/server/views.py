@@ -20,7 +20,13 @@ if TYPE_CHECKING:
 
 _LOGGER = logging.getLogger(__name__)
 
-_VERSION = "0.1.0"
+_VERSION = "1.0.13"
+
+_NO_CACHE_HEADERS = {
+    "Cache-Control": "no-cache, no-store, must-revalidate",
+    "Pragma": "no-cache",
+    "Expires": "0",
+}
 
 
 def _read_file(path: Path) -> str:
@@ -48,7 +54,7 @@ class AdminView(HomeAssistantView):
             return web.Response(text="Admin page not found", status=500)
 
         html_content = await self.hass.async_add_executor_job(_read_file, html_path)
-        return web.Response(text=html_content, content_type="text/html")
+        return web.Response(text=html_content, content_type="text/html", headers=_NO_CACHE_HEADERS)
 
 
 class LauncherView(HomeAssistantView):
@@ -71,7 +77,7 @@ class LauncherView(HomeAssistantView):
             return web.Response(text="Launcher page not found", status=500)
 
         html_content = await self.hass.async_add_executor_job(_read_file, html_path)
-        return web.Response(text=html_content, content_type="text/html")
+        return web.Response(text=html_content, content_type="text/html", headers=_NO_CACHE_HEADERS)
 
 
 class PlayerView(HomeAssistantView):
@@ -94,7 +100,7 @@ class PlayerView(HomeAssistantView):
             return web.Response(text="Player page not found", status=500)
 
         html_content = await self.hass.async_add_executor_job(_read_file, html_path)
-        return web.Response(text=html_content, content_type="text/html")
+        return web.Response(text=html_content, content_type="text/html", headers=_NO_CACHE_HEADERS)
 
 
 class DashboardView(HomeAssistantView):
@@ -117,7 +123,7 @@ class DashboardView(HomeAssistantView):
             return web.Response(text="Dashboard page not found", status=500)
 
         html_content = await self.hass.async_add_executor_job(_read_file, html_path)
-        return web.Response(text=html_content, content_type="text/html")
+        return web.Response(text=html_content, content_type="text/html", headers=_NO_CACHE_HEADERS)
 
 
 class GameStatusView(HomeAssistantView):
@@ -175,7 +181,7 @@ class AnalyticsView(HomeAssistantView):
             return web.Response(text="Analytics page not found", status=500)
 
         html_content = await self.hass.async_add_executor_job(_read_file, html_path)
-        return web.Response(text=html_content, content_type="text/html")
+        return web.Response(text=html_content, content_type="text/html", headers=_NO_CACHE_HEADERS)
 
 
 class AnalyticsDataView(HomeAssistantView):
