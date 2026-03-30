@@ -1,7 +1,6 @@
 /**
  * Quizify — Admin panel client.
  * Manages game setup, lobby, live monitoring, and game flow control.
- * Mirrors Beatify admin UX: Setup → Lobby → In-Game → Reveal → Finale.
  */
 
 (function () {
@@ -11,10 +10,11 @@
     let ws = null;
     let reconnectAttempts = 0;
     const MAX_RECONNECT = 5;
+    let _redirecting = false;
 
     // Settings (from chips)
     let selectedCategory = 'mixed';
-    let selectedCategories = []; // for multi-select mode
+    let selectedCategories = [];
     let selectedDifficulty = 'medium';
     let selectedRounds = 10;
 
@@ -22,7 +22,7 @@
     let currentPhase = 'LOBBY';
     let playerCount = 0;
 
-    // ---- Simple inline timer (no TimerBar dependency) ----
+    // ---- Simple inline timer ----
     var adminTimerEl = null;
     var adminTimerInterval = null;
     var adminTimer = {
@@ -76,6 +76,8 @@
         revealQuestion: document.getElementById('reveal-question'),
         revealCorrect: document.getElementById('reveal-correct'),
         revealFunFact: document.getElementById('reveal-fun-fact'),
+        revealAnswersSection: document.getElementById('reveal-answers-section'),
+        revealResultsCards: document.getElementById('reveal-results-cards'),
         revealLeaderboard: document.getElementById('reveal-leaderboard'),
         continueBtn: document.getElementById('continue-btn'),
         // Finale
@@ -89,15 +91,25 @@
         adminCancelBtn: document.getElementById('admin-cancel-btn'),
     };
 
+    // ---- Redirect helper ----
+    function redirectToPlayer(name) {
+        _redirecting = true;
+        sessionStorage.setItem('quizify_admin_name', name);
+        var url = new URL('/quizify/player', location.href);
+        url.searchParams.set('name', name);
+        url.searchParams.set('admin', 'true');
+        window.location.href = url.toString();
+    }
+
     // ---- View management ----
     function showView(name) {
+        if (_redirecting) return;
         Object.values(views).forEach(function (v) { if (v) v.classList.remove('active'); });
         if (views[name]) views[name].classList.add('active');
     }
 
-    // ---- Collapsible sections (Beatify pattern) ----
+    // ---- Collapsible sections ----
     function setupCollapsibles() {
-        // Use event delegation on document so it works for dynamically shown sections too
         document.addEventListener('click', function (e) {
             var header = e.target.closest('.section-header-collapsible');
             if (!header) return;
@@ -121,7 +133,6 @@
         });
     }
 
-    // Category: Gemischt = single select, others = multi-select
     function setupCategoryChips(container) {
         if (!container) return;
         container.addEventListener('click', function (e) {
@@ -137,12 +148,9 @@
             } else {
                 var mixedChip = container.querySelector('.chip[data-value="mixed"]');
                 if (mixedChip) mixedChip.classList.remove('active');
-
                 chip.classList.toggle('active');
-
                 selectedCategories = Array.from(container.querySelectorAll('.chip.active'))
                     .map(function (c) { return c.dataset.value; });
-
                 if (selectedCategories.length === 0) {
                     if (mixedChip) mixedChip.classList.add('active');
                     selectedCategory = 'mixed';
@@ -191,9 +199,7 @@
         var proto = location.protocol === 'https:' ? 'wss:' : 'ws:';
         var savedToken = sessionStorage.getItem('quizify_admin_session_token');
         var url = proto + '//' + location.host + '/api/quizify/ws?role=admin';
-        if (savedToken) {
-            url += '&token=' + encodeURIComponent(savedToken);
-        }
+        if (savedToken) url += '&token=' + encodeURIComponent(savedToken);
         ws = new WebSocket(url);
 
         ws.onopen = function () {
@@ -274,10 +280,17 @@
         }
         if (msg.players) renderLobbyPlayers(msg.players);
 
+        // If game is running and we have a stored name, redirect to player.html
+        if (msg.phase !== 'LOBBY') {
+            var savedName = sessionStorage.getItem('quizify_admin_name');
+            if (savedName && !_redirecting) {
+                redirectToPlayer(savedName);
+                return;
+            }
+        }
+
         switch (msg.phase) {
             case 'LOBBY':
-                // If we're still on setup screen, stay there until user clicks Start Game
-                // If we already transitioned to lobby, stay on lobby
                 if (views.lobby.classList.contains('active') ||
                     views.game.classList.contains('active')) {
                     showView('lobby');
@@ -287,7 +300,7 @@
                 if (msg.question) {
                     handleQuestionStarted({
                         question_text: msg.question.text,
-                        correct_answer: msg.question.answers ? findCorrectAnswer(msg.question) : '',
+                        correct_answer: '',
                         timer_duration: msg.question.time_limit,
                         round_num: msg.round,
                         total_rounds: msg.total_rounds,
@@ -307,18 +320,25 @@
     }
 
     function handleQuestionStarted(msg) {
+        if (_redirecting) return;
         currentPhase = 'QUESTION_ACTIVE';
         showView('game');
 
         els.adminRound.textContent = 'Frage ' + msg.round_num + ' / ' + msg.total_rounds;
         els.adminQuestion.textContent = msg.question_text;
-        els.adminCorrect.textContent = 'Richtig: ' + (msg.correct_answer || '');
+        // Never show correct answer during active question
+        if (els.adminCorrect) {
+            els.adminCorrect.textContent = '';
+            els.adminCorrect.style.display = 'none';
+        }
 
         adminTimer.start(msg.timer_duration);
-        els.nextQuestionBtn.classList.add('hidden');
+        if (els.nextQuestionBtn) els.nextQuestionBtn.classList.add('hidden');
+        if (els.endGameBtn) els.endGameBtn.classList.add('hidden');
     }
 
     function handleRoundSummary(msg) {
+        if (_redirecting) return;
         currentPhase = 'ANSWER_REVEAL';
         adminTimer.stop();
         showView('reveal');
@@ -327,17 +347,57 @@
 
     function showReveal(msg) {
         var summary = msg.round_summary || msg;
-        els.revealRound.textContent = 'Frage ' + (msg.round || '') + ' / ' + (msg.total_rounds || '');
-        els.revealQuestion.textContent = summary.question_text || (msg.question ? msg.question.text : '') || '';
-        els.revealCorrect.textContent = 'Richtig: ' + (summary.correct_answer || '');
+        if (els.revealRound) els.revealRound.textContent = 'Frage ' + (msg.round || '') + ' / ' + (msg.total_rounds || '');
+        if (els.revealQuestion) els.revealQuestion.textContent = summary.question_text || (msg.question ? msg.question.text : '') || '';
+        if (els.revealCorrect) els.revealCorrect.textContent = 'Richtig: ' + (summary.correct_answer || '');
+        if (els.adminCorrect) {
+            els.adminCorrect.textContent = 'Richtig: ' + (summary.correct_answer || '');
+            els.adminCorrect.style.display = '';
+        }
+        if (els.endGameBtn) els.endGameBtn.classList.remove('hidden');
 
         var funFactText = summary.fun_fact || '';
-        if (funFactText) {
-            els.revealFunFact.classList.remove('hidden');
-            els.revealFunFact.classList.add('visible');
-            els.revealFunFact.querySelector('.fun-fact-text').textContent = funFactText;
-        } else {
-            els.revealFunFact.classList.add('hidden');
+        if (els.revealFunFact) {
+            if (funFactText) {
+                els.revealFunFact.classList.remove('hidden');
+                els.revealFunFact.classList.add('visible');
+                var ffText = els.revealFunFact.querySelector('.fun-fact-text');
+                if (ffText) ffText.textContent = funFactText;
+            } else {
+                els.revealFunFact.classList.add('hidden');
+            }
+        }
+
+        // Per-player result cards (Beatify-style)
+        var allAnswers = summary.all_answers || msg.all_answers || [];
+        if (allAnswers.length && els.revealResultsCards) {
+            if (els.revealAnswersSection) els.revealAnswersSection.style.display = '';
+            var sorted = allAnswers.slice().sort(function(a, b) { return (b.points_earned || 0) - (a.points_earned || 0); });
+            els.revealResultsCards.innerHTML = '<div class="results-cards-scroll">' + sorted.map(function(p) {
+                var ok = p.correct;
+                var noAns = p.no_answer;
+                var pts = p.points_earned || 0;
+                var spd = p.speed_bonus || 0;
+                var str = p.streak_bonus || 0;
+                var dbl = p.double_points || false;
+                var diff = p.difficulty_multiplier || 1.0;
+                var streak = p.streak || 0;
+                var scoreClass = ok && pts >= 1000 ? 'is-score-high' : ok ? 'is-score-medium' : 'is-score-zero';
+                var bonuses = '';
+                if (ok && spd > 0) bonuses += '<div class="card-bonus">⚡ +' + spd + ' Speed</div>';
+                if (ok && str > 0) bonuses += '<div class="card-bonus">🔥 +' + str + ' ' + streak + 'x Streak</div>';
+                if (ok && diff > 1.0) bonuses += '<div class="card-bonus">⭐ ' + diff.toFixed(1) + 'x Schwierigkeitsgrad</div>';
+                if (dbl) bonuses += '<div class="card-bonus">✨ 2x Double Points</div>';
+                return '<div class="result-card ' + scoreClass + '">' +
+                    '<div class="card-name">' + escapeHtml(p.player_name) + '</div>' +
+                    '<div class="card-guess">' + escapeHtml(p.answer_text || '—') + '</div>' +
+                    '<div class="card-accuracy">' + (ok ? '✅ Richtig' : noAns ? '⏱️ Keine Antwort' : '❌ Falsch') + '</div>' +
+                    bonuses +
+                    '<div class="card-score">' + (pts > 0 ? '+' + pts : '0') + '</div>' +
+                    '</div>';
+            }).join('') + '</div>';
+        } else if (els.revealAnswersSection) {
+            els.revealAnswersSection.style.display = 'none';
         }
 
         var lb = summary.leaderboard || msg.leaderboard || [];
@@ -345,6 +405,7 @@
     }
 
     function handleFinale(msg) {
+        if (_redirecting) return;
         currentPhase = 'FINALE';
         adminTimer.stop();
         showView('finale');
@@ -358,6 +419,8 @@
 
     function handleGameReset() {
         currentPhase = 'LOBBY';
+        sessionStorage.removeItem('quizify_admin_name');
+        _redirecting = false;
         showView('setup');
     }
 
@@ -366,26 +429,22 @@
     function renderLobbyPlayers(players) {
         var list = Array.isArray(players) ? players : Object.values(players);
         playerCount = list.length;
-        els.lobbyPlayerCount.textContent = playerCount;
+        if (els.lobbyPlayerCount) els.lobbyPlayerCount.textContent = playerCount;
 
-        // Toggle "Start Gameplay" button visibility
-        if (playerCount >= 1) {
-            els.startGameplayBtn.classList.remove('hidden');
-        } else {
-            els.startGameplayBtn.classList.add('hidden');
+        if (els.startGameplayBtn) {
+            els.startGameplayBtn.classList.toggle('hidden', playerCount < 1);
         }
-
-        // Toggle empty state
         if (els.lobbyPlayersEmpty) {
             els.lobbyPlayersEmpty.classList.toggle('hidden', playerCount > 0);
         }
-
-        els.lobbyPlayerChips.innerHTML = list
-            .map(function (p) {
-                var name = typeof p === 'string' ? p : (p.name || p);
-                return '<span class="player-chip"><span class="dot"></span>' + escapeHtml(name) + '</span>';
-            })
-            .join('');
+        if (els.lobbyPlayerChips) {
+            els.lobbyPlayerChips.innerHTML = list
+                .map(function (p) {
+                    var name = typeof p === 'string' ? p : (p.name || p);
+                    return '<span class="player-chip"><span class="dot"></span>' + escapeHtml(name) + '</span>';
+                })
+                .join('');
+        }
     }
 
     function renderLeaderboard(container, players) {
@@ -405,6 +464,7 @@
     }
 
     function renderPodium(container, podium) {
+        if (!container) return;
         var ordered = [];
         if (podium[1]) ordered.push(Object.assign({}, podium[1], { place: 2 }));
         if (podium[0]) ordered.push(Object.assign({}, podium[0], { place: 1 }));
@@ -425,17 +485,6 @@
             .join('');
     }
 
-    function findCorrectAnswer(question) {
-        if (question.correct_answer) return question.correct_answer;
-        if (question.answers && Array.isArray(question.answers)) {
-            for (var i = 0; i < question.answers.length; i++) {
-                var a = question.answers[i];
-                if (typeof a === 'object' && a.correct) return a.text;
-            }
-        }
-        return '';
-    }
-
     function escapeHtml(text) {
         return QuizifyUtils.escapeHtml(text);
     }
@@ -446,14 +495,10 @@
         var container = document.getElementById('qr-container');
         if (!container) return;
         container.innerHTML = '';
-
         if (typeof QRCode !== 'undefined') {
             _qrInstance = new QRCode(container, {
-                text: url,
-                width: 180,
-                height: 180,
-                colorDark: '#0b0e1a',
-                colorLight: '#ffffff',
+                text: url, width: 180, height: 180,
+                colorDark: '#0b0e1a', colorLight: '#ffffff',
                 correctLevel: QRCode.CorrectLevel.M,
             });
         } else {
@@ -461,68 +506,67 @@
         }
     }
 
-    // ---- Admin Join Modal (Beatify pattern) ----
+    // ---- Admin Join Modal (Start Game flow) ----
 
     function openAdminJoinModal() {
-        els.adminJoinModal.classList.remove('hidden');
-        els.adminNameInput.value = '';
-        els.adminJoinBtn.disabled = true;
-        var errorMsg = document.getElementById('admin-name-error');
-        if (errorMsg) errorMsg.classList.add('hidden');
-        els.adminNameInput.focus();
+        if (els.adminJoinModal) els.adminJoinModal.classList.remove('hidden');
+        if (els.adminNameInput) {
+            els.adminNameInput.value = '';
+            setTimeout(function() { els.adminNameInput.focus(); }, 100);
+        }
+        if (els.adminJoinBtn) els.adminJoinBtn.disabled = true;
     }
 
     function closeAdminJoinModal() {
-        els.adminJoinModal.classList.add('hidden');
-        els.adminNameInput.value = '';
-        els.adminJoinBtn.disabled = true;
+        if (els.adminJoinModal) els.adminJoinModal.classList.add('hidden');
     }
 
-    function handleAdminJoin() {
-        var name = els.adminNameInput.value.trim();
-        if (!name) return;
-
-        els.adminJoinBtn.disabled = true;
-        els.adminJoinBtn.textContent = 'Beitritt...';
-
-        // Send join message over the existing admin WS with is_admin flag
-        send('join', { name: name, is_admin: true });
-
-        // Close modal — admin stays on admin page
-        closeAdminJoinModal();
-        els.adminJoinBtn.textContent = 'Beitreten';
-
-        // Hide participate button — admin can only join once
-        if (els.participateBtn) {
-            els.participateBtn.disabled = true;
-            els.participateBtn.style.opacity = '0.4';
-            els.participateBtn.style.pointerEvents = 'none';
-            els.participateBtn.textContent = '✓ Beigetreten als ' + name;
+    function doStartGame() {
+        var name = els.adminNameInput ? els.adminNameInput.value.trim() : '';
+        if (!name) {
+            if (els.adminNameInput) {
+                els.adminNameInput.style.border = '2px solid #ff4757';
+                setTimeout(function() { els.adminNameInput.style.border = ''; }, 1500);
+            }
+            return;
         }
+
+        var categoryPayload = selectedCategory === 'mixed'
+            ? null
+            : selectedCategory === 'multi'
+                ? selectedCategories
+                : selectedCategory;
+
+        send('start_game', {
+            category: categoryPayload,
+            difficulty: selectedDifficulty === 'mixed' ? null : selectedDifficulty,
+            num_rounds: selectedRounds,
+        });
+
+        closeAdminJoinModal();
+        redirectToPlayer(name);
     }
 
     function setupAdminJoinModal() {
+        // Participate button — also opens the modal (for admin joining mid-lobby)
         on(els.participateBtn, 'click', openAdminJoinModal);
         on(els.adminCancelBtn, 'click', closeAdminJoinModal);
 
-        // Close on backdrop click
-        var backdrop = els.adminJoinModal.querySelector('.modal-backdrop');
+        var backdrop = els.adminJoinModal ? els.adminJoinModal.querySelector('.modal-backdrop') : null;
         if (backdrop) backdrop.addEventListener('click', closeAdminJoinModal);
 
-        // Enable/disable join button based on input
         on(els.adminNameInput, 'input', function () {
             var name = this.value.trim();
-            els.adminJoinBtn.disabled = !name || name.length > 20;
+            if (els.adminJoinBtn) els.adminJoinBtn.disabled = !name || name.length > 20;
         });
 
-        // Enter key submits
-        on(els.adminNameInput, 'keypress', function (e) {
-            if (e.key === 'Enter' && !els.adminJoinBtn.disabled) {
-                handleAdminJoin();
+        on(els.adminNameInput, 'keydown', function (e) {
+            if (e.key === 'Enter' && els.adminJoinBtn && !els.adminJoinBtn.disabled) {
+                doStartGame();
             }
         });
 
-        on(els.adminJoinBtn, 'click', handleAdminJoin);
+        on(els.adminJoinBtn, 'click', doStartGame);
     }
 
     // ---- Safe event binding helper ----
@@ -533,37 +577,26 @@
 
     // ---- Event listeners ----
 
-    // Setup screen → Lobby screen
+    // Setup screen → Lobby screen (shows QR, waits for players)
     on(els.startGameBtn, 'click', function () {
         showView('lobby');
         initJoinUrl();
     });
 
-    // Lobby → Start Gameplay
+    // Lobby: Start Gameplay button → open modal to get admin name, then start
     on(els.startGameplayBtn, 'click', function () {
-        var categoryPayload = selectedCategory === 'mixed'
-            ? null
-            : selectedCategory === 'multi'
-                ? selectedCategories
-                : selectedCategory;
-        send('start_game', {
-            category: categoryPayload,
-            difficulty: selectedDifficulty === 'mixed' ? null : selectedDifficulty,
-            num_rounds: selectedRounds,
-        });
+        openAdminJoinModal();
     });
 
-    // Next question
+    // In-game controls (only shown if admin stays on admin.html without redirect)
     on(els.nextQuestionBtn, 'click', function () { send('next_question', {}); });
     on(els.continueBtn, 'click', function () { send('next_question', {}); });
 
-    // End game
     on(els.endGameBtn, 'click', function () {
         var modal = document.getElementById('end-game-modal');
         if (modal) modal.classList.remove('hidden');
     });
 
-    // End game modal
     on('end-game-confirm-btn', 'click', function () {
         send('end_game', {});
         var modal = document.getElementById('end-game-modal');
@@ -579,29 +612,21 @@
         if (modal) modal.classList.add('hidden');
     });
 
-    // New game (finale)
     on(els.newGameBtn, 'click', function () { send('reset_game', {}); });
 
-    // Escape key closes modals
     document.addEventListener('keydown', function (e) {
         if (e.key === 'Escape') {
-            if (!els.adminJoinModal.classList.contains('hidden')) {
-                closeAdminJoinModal();
-            }
+            closeAdminJoinModal();
             var endModal = document.getElementById('end-game-modal');
-            if (endModal && !endModal.classList.contains('hidden')) {
-                endModal.classList.add('hidden');
-            }
+            if (endModal) endModal.classList.add('hidden');
         }
     });
 
     // ---- Generate join URL ----
     function initJoinUrl() {
         var joinUrl = window.location.origin + '/quizify/player';
-        els.joinUrl.textContent = joinUrl;
+        if (els.joinUrl) els.joinUrl.textContent = joinUrl;
         generateQR(joinUrl);
-
-        // Dashboard link
         if (els.dashboardLink) {
             els.dashboardLink.href = window.location.origin + '/quizify/dashboard';
         }
@@ -621,7 +646,7 @@
         setTimeout(function () { toast.style.opacity = '0'; }, 3000);
     }
 
-    // ---- Connection status indicator ----
+    // ---- Connection status ----
     function updateConnectionStatus(status) {
         var indicator = document.getElementById('conn-status');
         if (!indicator) {
@@ -631,15 +656,20 @@
             document.body.appendChild(indicator);
         }
         var colors = { connected: '#00b894', reconnecting: '#ffa502', disconnected: '#ff4757' };
-        // Dot only — no text label
         indicator.innerHTML = '<span style="width:10px;height:10px;border-radius:50%;display:inline-block;background:' +
             (colors[status] || '#636e8a') + ';box-shadow:0 0 6px ' + (colors[status] || '#636e8a') + ';"></span>';
     }
 
+    // ---- Update modal title for start game flow ----
+    var modalTitle = document.getElementById('admin-join-modal-title');
+    if (modalTitle) modalTitle.textContent = 'Spiel starten';
+    var modalSubtitle = els.adminJoinModal ? els.adminJoinModal.querySelector('p') : null;
+    if (modalSubtitle) modalSubtitle.textContent = 'Wie heißt du? Du spielst mit und kannst das Spiel steuern.';
+    if (els.adminJoinBtn) els.adminJoinBtn.textContent = '▶️ Starten & Beitreten';
+
     // ---- Init ----
     setupAdminJoinModal();
 
-    // i18n init
     if (window.QuizifyI18n) {
         QuizifyI18n.init().then(function () {
             QuizifyI18n.initPageTranslations();
