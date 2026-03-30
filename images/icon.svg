@@ -1,0 +1,74 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512" width="512" height="512">
+  <defs>
+    <!-- Dark circle background gradient (subtle depth) -->
+    <radialGradient id="bgGrad" cx="40%" cy="35%" r="65%">
+      <stop offset="0%" stop-color="#1e2040"/>
+      <stop offset="100%" stop-color="#0d0e1a"/>
+    </radialGradient>
+
+    <!-- Main Q gradient: purple top-left → cyan bottom-right -->
+    <linearGradient id="qGrad" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#a855f7"/>
+      <stop offset="50%" stop-color="#ec4899"/>
+      <stop offset="100%" stop-color="#22d3ee"/>
+    </linearGradient>
+
+    <!-- Answer dots gradient (cyan accent) -->
+    <linearGradient id="dotGrad" x1="0%" y1="0%" x2="0%" y2="100%">
+      <stop offset="0%" stop-color="#22d3ee"/>
+      <stop offset="100%" stop-color="#a855f7"/>
+    </linearGradient>
+
+    <!-- Glow filter -->
+    <filter id="glow" x="-20%" y="-20%" width="140%" height="140%">
+      <feGaussianBlur stdDeviation="8" result="coloredBlur"/>
+      <feMerge>
+        <feMergeNode in="coloredBlur"/>
+        <feMergeNode in="SourceGraphic"/>
+      </feMerge>
+    </filter>
+
+    <!-- Soft inner shadow for depth -->
+    <filter id="innerGlow" x="-10%" y="-10%" width="120%" height="120%">
+      <feGaussianBlur stdDeviation="4" result="blur"/>
+      <feMerge>
+        <feMergeNode in="blur"/>
+        <feMergeNode in="SourceGraphic"/>
+      </feMerge>
+    </filter>
+
+    <clipPath id="circleClip">
+      <circle cx="256" cy="256" r="240"/>
+    </clipPath>
+  </defs>
+
+  <!-- Background circle -->
+  <circle cx="256" cy="256" r="256" fill="#0d0e1a"/>
+  <circle cx="256" cy="256" r="240" fill="url(#bgGrad)"/>
+
+  <!-- Subtle ring border -->
+  <circle cx="256" cy="256" r="238" fill="none" stroke="url(#qGrad)" stroke-width="1.5" opacity="0.3"/>
+
+  <!-- === LETTER Q === -->
+  <!-- Main Q body (thick rounded letter) -->
+  <g filter="url(#glow)">
+    <!-- Q outer circle -->
+    <circle cx="220" cy="240" r="115" fill="none" stroke="url(#qGrad)" stroke-width="48" stroke-linecap="round"/>
+    <!-- Q tail (the diagonal stroke) -->
+    <line x1="290" y1="315" x2="355" y2="385" stroke="url(#qGrad)" stroke-width="46" stroke-linecap="round"/>
+  </g>
+
+  <!-- === ANSWER DOTS (right side, like multiple choice A B C D) === -->
+  <!-- Small dots in a vertical column suggesting quiz answer options -->
+  <g filter="url(#innerGlow)">
+    <!-- Dot A -->
+    <circle cx="390" cy="155" r="16" fill="url(#dotGrad)" opacity="0.95"/>
+    <!-- Dot B -->
+    <circle cx="390" cy="210" r="16" fill="url(#dotGrad)" opacity="0.75"/>
+    <!-- Dot C -->
+    <circle cx="390" cy="265" r="16" fill="url(#dotGrad)" opacity="0.55"/>
+    <!-- Dot D -->
+    <circle cx="390" cy="320" r="16" fill="url(#dotGrad)" opacity="0.35"/>
+  </g>
+
+</svg>
