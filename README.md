@@ -1,8 +1,14 @@
-# Quizify
+<p align="center">
+  <img src="images/quizify-logo.png" alt="Quizify" width="430"/>
+</p>
 
-> Multiplayer Useless Knowledge Quiz Game for Home Assistant
+<p align="center">
+  <strong>Multiplayer Useless Knowledge Quiz Game for Home Assistant</strong>
+</p>
 
-[![HACS Default](https://img.shields.io/badge/HACS-Default-orange.svg)](https://github.com/hacs/integration)
+<p align="center">
+  <a href="https://github.com/hacs/integration"><img src="https://img.shields.io/badge/HACS-Default-orange.svg" alt="HACS Default"/></a>
+</p>
 
 ## What is Quizify?
 
