@@ -2094,3 +2094,50 @@ footer {
   color: var(--color-text-muted, #a4a4b8);
   text-align: center;
 }
+
+/* ── Admin reveal: per-player answers table ── */
+.reveal-answers-table {
+  width: 100%;
+  border-collapse: collapse;
+  font-size: 0.9rem;
+}
+
+.reveal-answers-table th {
+  text-align: left;
+  padding: var(--space-sm) var(--space-md);
+  color: var(--color-text-muted, #a4a4b8);
+  font-weight: 600;
+  font-size: 0.8rem;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+  border-bottom: 1px solid var(--color-border, rgba(255,255,255,0.1));
+}
+
+.reveal-answers-table td {
+  padding: var(--space-sm) var(--space-md);
+  border-bottom: 1px solid var(--color-border, rgba(255,255,255,0.06));
+}
+
+.reveal-answers-table tr:last-child td {
+  border-bottom: none;
+}
+
+.reveal-answers-table .row-correct td:first-child {
+  color: #22d3ee;
+  font-weight: 700;
+}
+
+.reveal-answers-table .row-wrong td:first-child {
+  color: #f87171;
+}
+
+.reveal-answers-table .row-timeout td:first-child {
+  color: #a4a4b8;
+  font-style: italic;
+}
+
+.reveal-answers-table td:last-child {
+  text-align: right;
+  font-weight: 700;
+  color: #22d3ee;
+}
