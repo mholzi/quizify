@@ -160,8 +160,12 @@
 
         switch (msg.phase) {
             case 'LOBBY':
-                pu.showView('lobby-view');
-                lobby.renderLobby(msg);
+                if (!state.playerName) {
+                    pu.showView('join-view');
+                } else {
+                    pu.showView('lobby-view');
+                    lobby.renderLobby(msg);
+                }
                 break;
 
             case 'QUESTION_ACTIVE':
