@@ -131,6 +131,7 @@
     // ============================================
 
     var hasSubmitted = false;
+    var lastSubmittedIndex = -1;
 
     /**
      * Handle answer button click
@@ -140,6 +141,7 @@
     function handleAnswerClick(selectedIndex, sendFn) {
         if (hasSubmitted) return;
         hasSubmitted = true;
+        lastSubmittedIndex = selectedIndex;
 
         var answerButtons = document.getElementById('answer-buttons');
         if (answerButtons) {
@@ -161,15 +163,20 @@
     /**
      * Reset submission state for new round
      */
+    function getLastSubmittedIndex() {
+        return lastSubmittedIndex;
+    }
+
     function resetSubmissionState() {
         hasSubmitted = false;
+        lastSubmittedIndex = -1;
 
         var answerButtons = document.getElementById('answer-buttons');
         if (answerButtons) {
             var buttons = answerButtons.querySelectorAll('.answer-btn');
             for (var i = 0; i < buttons.length; i++) {
                 buttons[i].disabled = false;
-                buttons[i].classList.remove('is-selected', 'is-correct', 'is-wrong', 'is-eliminated');
+                buttons[i].classList.remove('is-selected', 'is-correct', 'is-wrong', 'is-eliminated', 'correct', 'wrong', 'dimmed');
             }
         }
 
@@ -469,7 +476,8 @@
         applyJoker: applyJoker,
         handleAnswerResult: handleAnswerResult,
         getLastAnswerResult: getLastAnswerResult,
-        clearLastAnswerResult: clearLastAnswerResult
+        clearLastAnswerResult: clearLastAnswerResult,
+        getLastSubmittedIndex: getLastSubmittedIndex
     };
 
 })();

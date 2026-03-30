@@ -65,6 +65,9 @@
         // Emotion display — prefer all_answers entry (has speed_bonus, correct, etc.)
         renderRevealEmotion(myAnswerEntry || currentPlayer);
 
+        // Flash answer buttons correct/wrong
+        flashAnswerButtons(data.correct_answer_index, myAnswerEntry);
+
         // Personal result — prefer all_answers entry (has breakdown), fall back to leaderboard player
         renderPersonalResult(myAnswerEntry || currentPlayer);
 
@@ -202,7 +205,12 @@
         if (!resultContent) return;
 
         if (!player) {
-            resultContent.innerHTML = '<div class="result-missed">Player not found</div>';
+            resultContent.innerHTML =
+                '<div class="result-missed-container">' +
+                    '<div class="result-missed-icon">👋</div>' +
+                    '<div class="result-missed-text">You joined after this round started</div>' +
+                    '<div class="result-missed-text" style="font-size:0.8rem;opacity:0.6;">You\'ll play from the next question!</div>' +
+                '</div>';
             return;
         }
 
@@ -334,6 +342,39 @@
 
         html += '</div>';
         container.innerHTML = html;
+    }
+
+    // ============================================
+    // Answer Button Flash
+    // ============================================
+
+    function flashAnswerButtons(correctShuffledIndex, myEntry) {
+        var answerButtons = document.getElementById('answer-buttons');
+        if (!answerButtons) return;
+
+        var buttons = answerButtons.querySelectorAll('.answer-btn');
+        if (!buttons.length) return;
+
+        var mySubmittedIndex = game && game.getLastSubmittedIndex ? game.getLastSubmittedIndex() : -1;
+
+        buttons.forEach(function(btn) {
+            var idx = parseInt(btn.dataset.index, 10);
+            btn.classList.remove('is-selected');
+
+            if (idx === correctShuffledIndex) {
+                btn.classList.add('correct');
+            } else if (idx === mySubmittedIndex && (!myEntry || !myEntry.correct)) {
+                btn.classList.add('wrong');
+            } else {
+                btn.classList.add('dimmed');
+            }
+        });
+
+        // Use all_answers to determine if player was correct
+        if (myEntry && !myEntry.correct && mySubmittedIndex >= 0) {
+            var wrongBtn = buttons[mySubmittedIndex];
+            if (wrongBtn) { wrongBtn.classList.remove('dimmed'); wrongBtn.classList.add('wrong'); }
+        }
     }
 
     // ============================================

@@ -163,14 +163,13 @@
                     handleQuestionStarted({
                         question_text: msg.question.text,
                         answers: msg.question.answers,
-                        timer_duration: msg.question.time_limit,
+                        // Use time_remaining for mid-round joiners, fall back to time_limit
+                        timer_duration: msg.question.time_remaining || msg.question.time_limit,
                         round_num: msg.round,
                         total_rounds: msg.total_rounds,
                         category: msg.question.category
                     });
                 } else {
-                    // Game is active but no question in snapshot (mid-round join)
-                    // Show game view anyway so player sees they're connected
                     pu.showView('game-view');
                 }
                 break;

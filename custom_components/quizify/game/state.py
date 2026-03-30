@@ -623,6 +623,10 @@ class QuizifyGameState:
 
         if self.phase == GamePhase.QUESTION_ACTIVE and self._current_question:
             q = self._current_question
+            # Calculate time remaining for mid-round joiners
+            import time as _time
+            elapsed = _time.monotonic() - self._round_start_time if self._round_start_time else 0.0
+            remaining = max(0.0, self._round_duration - elapsed)
             snapshot["question"] = {
                 "id": q.id,
                 "text": q.question,
@@ -630,6 +634,7 @@ class QuizifyGameState:
                 "difficulty": q.difficulty,
                 "category": q.category,
                 "time_limit": self._round_duration,
+                "time_remaining": round(remaining, 1),
             }
 
         if self.phase == GamePhase.ANSWER_REVEAL and self._round_summary:
