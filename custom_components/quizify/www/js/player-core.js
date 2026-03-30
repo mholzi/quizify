@@ -216,11 +216,15 @@
         // Power-up
         game.renderPowerUp(myPowerUp);
 
-        // Show admin control bar if admin
+        // Admin control bar during QUESTION_ACTIVE: End only (no Next)
         var adminBar = document.getElementById('admin-control-bar');
         if (adminBar) {
             adminBar.classList.toggle('hidden', !state.isAdmin);
         }
+        var nextRoundAdminBtn = document.getElementById('next-round-admin-btn');
+        var skipBtn = document.getElementById('skip-question-btn');
+        if (nextRoundAdminBtn) nextRoundAdminBtn.classList.add('hidden');
+        if (skipBtn) skipBtn.classList.add('hidden');
 
         // Hide reaction bar during game
         var reactionBar = document.getElementById('reaction-bar');
@@ -268,11 +272,15 @@
         var reactionBar = document.getElementById('reaction-bar');
         if (reactionBar) reactionBar.classList.remove('hidden');
 
-        // Show admin control bar if admin
+        // Admin control bar during ANSWER_REVEAL: End only (Next Round is in reveal card)
         var adminBar = document.getElementById('admin-control-bar');
         if (adminBar) {
             adminBar.classList.toggle('hidden', !state.isAdmin);
         }
+        var nextRoundAdminBtn2 = document.getElementById('next-round-admin-btn');
+        var skipBtn2 = document.getElementById('skip-question-btn');
+        if (nextRoundAdminBtn2) nextRoundAdminBtn2.classList.add('hidden');
+        if (skipBtn2) skipBtn2.classList.add('hidden');
     }
 
     // ============================================
