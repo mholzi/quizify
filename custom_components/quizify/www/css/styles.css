@@ -2168,3 +2168,15 @@ footer {
 .result-card.is-score-zero .card-score {
   color: var(--color-text-muted, #a4a4b8);
 }
+
+.result-card {
+  grid-template-columns: 1fr auto;
+  grid-template-rows: auto auto;
+}
+
+.result-card .card-bonus {
+  grid-column: 1;
+  font-size: 0.75rem;
+  color: #a855f7;
+  margin-top: 2px;
+}

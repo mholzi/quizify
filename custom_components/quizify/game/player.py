@@ -28,6 +28,7 @@ class PlayerSession:
     current_answer: int | None = None
     submission_time: float | None = None
     round_score: int = 0
+    round_score_breakdown: dict = field(default_factory=dict)  # speed_bonus, streak_bonus, diff_mult
     round_history: list[str] = field(default_factory=list)
 
     # Superlative tracking
@@ -49,6 +50,7 @@ class PlayerSession:
         self.current_answer = None
         self.submission_time = None
         self.round_score = 0
+        self.round_score_breakdown = {}
 
     def record_round_result(self, result: str) -> None:
         """Record the result of a round ('correct', 'wrong', or 'timeout')."""

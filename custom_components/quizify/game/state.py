@@ -359,6 +359,12 @@ class QuizifyGameState:
             streak_bonus = int((BASE_POINTS + speed_bonus) * diff_mult * (streak_mult - 1.0))
 
         player.round_score = points
+        player.round_score_breakdown = {
+            "speed_bonus": speed_bonus,
+            "streak_bonus": streak_bonus,
+            "difficulty_multiplier": diff_mult,
+            "double_points": double_active,
+        }
         player.score += points
 
         # Track hard question score
