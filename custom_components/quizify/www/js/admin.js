@@ -502,39 +502,45 @@
     }
 
     function setupAdminJoinModal() {
-        els.participateBtn.addEventListener('click', openAdminJoinModal);
-        els.adminCancelBtn.addEventListener('click', closeAdminJoinModal);
+        on(els.participateBtn, 'click', openAdminJoinModal);
+        on(els.adminCancelBtn, 'click', closeAdminJoinModal);
 
         // Close on backdrop click
         var backdrop = els.adminJoinModal.querySelector('.modal-backdrop');
         if (backdrop) backdrop.addEventListener('click', closeAdminJoinModal);
 
         // Enable/disable join button based on input
-        els.adminNameInput.addEventListener('input', function () {
+        on(els.adminNameInput, 'input', function () {
             var name = this.value.trim();
             els.adminJoinBtn.disabled = !name || name.length > 20;
         });
 
         // Enter key submits
-        els.adminNameInput.addEventListener('keypress', function (e) {
+        on(els.adminNameInput, 'keypress', function (e) {
             if (e.key === 'Enter' && !els.adminJoinBtn.disabled) {
                 handleAdminJoin();
             }
         });
 
-        els.adminJoinBtn.addEventListener('click', handleAdminJoin);
+        on(els.adminJoinBtn, 'click', handleAdminJoin);
+    }
+
+    // ---- Safe event binding helper ----
+    function on(id, event, fn) {
+        var el = typeof id === 'string' ? document.getElementById(id) : id;
+        if (el) el.addEventListener(event, fn);
     }
 
     // ---- Event listeners ----
 
-    // Setup screen → Lobby screen (Start Game creates the game session)
-    els.startGameBtn.addEventListener('click', function () {
+    // Setup screen → Lobby screen
+    on(els.startGameBtn, 'click', function () {
         showView('lobby');
         initJoinUrl();
     });
 
-    // Lobby → Start Gameplay (actually starts the quiz rounds)
-    els.startGameplayBtn.addEventListener('click', function () {
+    // Lobby → Start Gameplay
+    on(els.startGameplayBtn, 'click', function () {
         var categoryPayload = selectedCategory === 'mixed'
             ? null
             : selectedCategory === 'multi'
@@ -547,41 +553,34 @@
         });
     });
 
-    // Next question (from reveal or in-game skip)
-    els.nextQuestionBtn.addEventListener('click', function () {
-        send('next_question', {});
-    });
+    // Next question
+    on(els.nextQuestionBtn, 'click', function () { send('next_question', {}); });
+    on(els.continueBtn, 'click', function () { send('next_question', {}); });
 
-    els.continueBtn.addEventListener('click', function () {
-        send('next_question', {});
-    });
-
-    // End game — use modal
-    els.endGameBtn.addEventListener('click', function () {
+    // End game
+    on(els.endGameBtn, 'click', function () {
         var modal = document.getElementById('end-game-modal');
         if (modal) modal.classList.remove('hidden');
     });
 
-    // End game modal confirm/cancel
-    document.getElementById('end-game-confirm-btn').addEventListener('click', function () {
+    // End game modal
+    on('end-game-confirm-btn', 'click', function () {
         send('end_game', {});
-        document.getElementById('end-game-modal').classList.add('hidden');
+        var modal = document.getElementById('end-game-modal');
+        if (modal) modal.classList.add('hidden');
     });
-    document.getElementById('end-game-cancel-btn').addEventListener('click', function () {
-        document.getElementById('end-game-modal').classList.add('hidden');
+    on('end-game-cancel-btn', 'click', function () {
+        var modal = document.getElementById('end-game-modal');
+        if (modal) modal.classList.add('hidden');
     });
-    // Close end-game modal on backdrop click
-    (function () {
-        var backdrop = document.querySelector('#end-game-modal .modal-backdrop');
-        if (backdrop) backdrop.addEventListener('click', function () {
-            document.getElementById('end-game-modal').classList.add('hidden');
-        });
-    })();
+    var endBackdrop = document.querySelector('#end-game-modal .modal-backdrop');
+    if (endBackdrop) on(endBackdrop, 'click', function () {
+        var modal = document.getElementById('end-game-modal');
+        if (modal) modal.classList.add('hidden');
+    });
 
-    // New game (from finale)
-    els.newGameBtn.addEventListener('click', function () {
-        send('reset_game', {});
-    });
+    // New game (finale)
+    on(els.newGameBtn, 'click', function () { send('reset_game', {}); });
 
     // Escape key closes modals
     document.addEventListener('keydown', function (e) {
