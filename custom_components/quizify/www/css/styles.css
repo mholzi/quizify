@@ -4,6 +4,9 @@
    Design System Tokens (matching Beatify)
    ========================================== */
 
+/* Font fallback stack — works without Google Fonts */
+@import url('https://fonts.googleapis.com/css2?family=Outfit:wght@400;600;700;900&family=Inter:wght@400;500;600&display=swap');
+
 :root {
     /* Color Tokens - Background */
     --color-bg-primary: #0a0a12;
@@ -495,14 +498,21 @@ button, .btn {
     align-items: center;
     gap: var(--space-sm);
     width: 100%;
-    padding: var(--space-sm) var(--space-md);
-    background: transparent;
+    padding: 14px var(--space-md);
+    background: rgba(255, 255, 255, 0.03);
     border: none;
+    border-radius: 0;
     color: var(--color-text-white);
-    font-size: 0.875rem;
+    font-size: 0.9rem;
     font-weight: 600;
+    font-family: 'Outfit', 'Inter', system-ui, sans-serif;
     cursor: pointer;
     text-align: left;
+    transition: background 0.15s ease;
+}
+
+.section-header-collapsible:hover {
+    background: rgba(255, 255, 255, 0.06);
 }
 
 .section-header-collapsible .section-icon {
@@ -1222,9 +1232,12 @@ button, .btn {
 }
 
 .admin-actions {
-    display: flex;
-    gap: var(--space-md);
-    margin-top: var(--space-md);
+    position: sticky;
+    bottom: 0;
+    padding: var(--space-md);
+    margin: 0 calc(-1 * var(--space-md));
+    background: linear-gradient(transparent, var(--color-bg-primary) 25%);
+    z-index: 100;
 }
 
 .admin-actions .btn {
@@ -1233,9 +1246,10 @@ button, .btn {
 
 /* Admin content wrapper */
 .admin-content {
-    padding: 0 var(--space-md) var(--space-md);
+    padding: 0 var(--space-md) calc(var(--space-md) + 80px); /* extra bottom for sticky button */
     max-width: 600px;
     margin: 0 auto;
+    min-height: 100vh;
 }
 
 /* Lobby Actions — Sticky bottom bar */
