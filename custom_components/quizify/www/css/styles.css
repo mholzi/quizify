@@ -2294,3 +2294,60 @@ footer {
   color: #f87171;
   background: rgba(248,113,113,0.12);
 }
+
+/* ── Highlights section on finale ── */
+.highlights-container {
+  margin-top: var(--space-md, 12px);
+}
+
+.highlights-list {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-sm, 8px);
+}
+
+.highlight-card {
+  display: flex;
+  align-items: center;
+  gap: var(--space-md, 12px);
+  padding: var(--space-sm, 8px) var(--space-md, 12px);
+  background: var(--color-surface, rgba(255,255,255,0.05));
+  border-radius: var(--radius-md, 8px);
+  border-left: 3px solid #a855f7;
+  animation: highlight-entrance 0.4s ease-out both;
+}
+
+.highlight-icon {
+  font-size: 1.5rem;
+  flex-shrink: 0;
+}
+
+.highlight-body {
+  flex: 1;
+  min-width: 0;
+}
+
+.highlight-label {
+  font-size: 0.7rem;
+  text-transform: uppercase;
+  letter-spacing: 0.06em;
+  color: #a4a4b8;
+  font-weight: 600;
+}
+
+.highlight-player {
+  font-size: 0.95rem;
+  font-weight: 700;
+  color: #fff;
+}
+
+.highlight-value {
+  font-size: 0.8rem;
+  color: #a855f7;
+  font-weight: 600;
+}
+
+@keyframes highlight-entrance {
+  from { opacity: 0; transform: translateX(-12px); }
+  to   { opacity: 1; transform: translateX(0); }
+}

@@ -39,8 +39,12 @@
         // Superlatives
         renderSuperlatives(data.superlatives);
 
-        // Share card
-        renderShareCard(data.share_data);
+        // Highlights
+        renderHighlights(leaderboard);
+
+        // Share card — server sends share_texts keyed by player name
+        var shareData = data.share_data || (data.share_texts ? { emoji_grids: data.share_texts } : null);
+        renderShareCard(shareData);
 
         // Admin / player controls
         var adminControls = document.getElementById('end-admin-controls');
@@ -177,13 +181,18 @@
 
         var html = '';
         superlatives.forEach(function (award, index) {
-            var valueText = award.value || '';
+            // Support both server format {award, icon, winner, detail}
+            // and legacy format {title, emoji, player_name, value}
+            var emoji = award.icon || award.emoji || '🏆';
+            var title = award.award || award.title || '';
+            var player = award.winner || award.player_name || '';
+            var detail = award.detail || award.value || '';
 
             html += '<div class="superlative-card" style="animation-delay: ' + (index * 0.2) + 's">' +
-                '<div class="superlative-emoji">' + (award.emoji || '\uD83C\uDFC6') + '</div>' +
-                '<div class="superlative-title">' + pu.escapeHtml(award.title || '') + '</div>' +
-                '<div class="superlative-player">' + pu.escapeHtml(award.player_name || '') + '</div>' +
-                '<div class="superlative-value">' + pu.escapeHtml(String(valueText)) + '</div>' +
+                '<div class="superlative-emoji">' + emoji + '</div>' +
+                '<div class="superlative-title">' + pu.escapeHtml(title) + '</div>' +
+                '<div class="superlative-player">' + pu.escapeHtml(player) + '</div>' +
+                '<div class="superlative-value">' + pu.escapeHtml(String(detail)) + '</div>' +
             '</div>';
         });
 
@@ -246,6 +255,52 @@
     }
 
     // ============================================
+    // Highlights
+    // ============================================
+
+    function renderHighlights(leaderboard) {
+        var container = document.getElementById('highlights-container');
+        var listEl = document.getElementById('highlights-list');
+        if (!container || !listEl) return;
+        if (!leaderboard || leaderboard.length < 2) { container.classList.add('hidden'); return; }
+
+        var highlights = [];
+
+        // Top scorer this game
+        var winner = leaderboard[0];
+        if (winner) highlights.push({ icon: '🥇', label: 'Top Score', player: winner.name, value: winner.score + ' pts' });
+
+        // Longest streak
+        var streakLeader = leaderboard.slice().sort(function(a,b){ return (b.streak||0)-(a.streak||0); })[0];
+        if (streakLeader && streakLeader.streak > 1) {
+            highlights.push({ icon: '🔥', label: 'Best Streak', player: streakLeader.name, value: streakLeader.streak + ' in a row' });
+        }
+
+        // Most rounds correct (from round_history if available)
+        var mostCorrect = leaderboard.slice().sort(function(a,b){
+            var ac = (a.rounds_correct || 0); var bc = (b.rounds_correct || 0);
+            return bc - ac;
+        })[0];
+        if (mostCorrect && mostCorrect.rounds_correct > 0) {
+            highlights.push({ icon: '🎯', label: 'Most Correct', player: mostCorrect.name, value: mostCorrect.rounds_correct + ' questions' });
+        }
+
+        if (highlights.length === 0) { container.classList.add('hidden'); return; }
+
+        listEl.innerHTML = highlights.map(function(h, i) {
+            return '<div class="highlight-card" style="animation-delay:' + (i * 0.15) + 's">' +
+                '<span class="highlight-icon">' + h.icon + '</span>' +
+                '<div class="highlight-body">' +
+                    '<div class="highlight-label">' + pu.escapeHtml(h.label) + '</div>' +
+                    '<div class="highlight-player">' + pu.escapeHtml(h.player) + '</div>' +
+                    '<div class="highlight-value">' + pu.escapeHtml(h.value) + '</div>' +
+                '</div>' +
+            '</div>';
+        }).join('');
+        container.classList.remove('hidden');
+    }
+
+    // ============================================
     // Admin Actions
     // ============================================
 
@@ -304,7 +359,8 @@
         renderSuperlatives: renderSuperlatives,
         renderShareCard: renderShareCard,
         setupRematchButton: setupRematchButton,
-        setupNewGameButton: setupNewGameButton
+        setupNewGameButton: setupNewGameButton,
+        renderHighlights: renderHighlights
     };
 
 })();

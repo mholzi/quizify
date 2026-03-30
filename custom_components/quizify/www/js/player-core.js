@@ -110,6 +110,13 @@
 
             case 'answer_result':
                 game.handleAnswerResult(msg);
+                // Streak milestone toast
+                if (msg.correct && msg.new_streak) {
+                    var milestones = { 3: '🔥 3 in a row!', 5: '🔥🔥 5 in a row!', 7: '🔥🔥🔥 7 in a row! On fire!' };
+                    if (milestones[msg.new_streak]) {
+                        pu.showToast(milestones[msg.new_streak], 2500);
+                    }
+                }
                 break;
 
             case 'round_summary':
