@@ -1742,6 +1742,28 @@ button, .btn {
     flex: 1;
 }
 
+/* Inputs inside white modal need dark text + light background */
+.modal-content .input,
+.modal-content .name-input,
+.modal-content input[type="text"] {
+    background: #f3f4f6;
+    color: #1f2937;
+    border-color: #d1d5db;
+}
+
+.modal-content .input:focus,
+.modal-content .name-input:focus,
+.modal-content input[type="text"]:focus {
+    border-color: #a855f7;
+    box-shadow: 0 0 0 3px rgba(168, 85, 247, 0.2);
+}
+
+.modal-content .input::placeholder,
+.modal-content .name-input::placeholder,
+.modal-content input[type="text"]::placeholder {
+    color: #9ca3af;
+}
+
 /* ==========================================
    Text glow utilities
    ========================================== */
