@@ -3,109 +3,599 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
-    <title>Quizify — Player</title>
-
-    <!-- Fonts -->
+    <title data-i18n="join.title">Quizify - Join Game</title>
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@400;500;600;700;800&display=swap" rel="stylesheet">
-
+    <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@700;900&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="/quizify/static/css/styles.css">
     <link rel="icon" href="/quizify/static/img/icon-256.png" type="image/png">
     <link rel="manifest" href="/quizify/static/site.webmanifest">
+    <!-- Confetti library for celebrations -->
+    <script src="https://cdn.jsdelivr.net/npm/canvas-confetti@1.9.2/dist/confetti.browser.min.js"></script>
 </head>
 <body class="theme-dark">
-    <!-- Timer bar (fixed top, outside app-container) -->
-    <div id="timer-bar" class="timer-bar-container hidden">
-        <div class="timer-bar-fill"></div>
-    </div>
+    <header class="player-header">
+        <h1 class="wordmark"><span class="wordmark-quiz">Quiz</span><span class="wordmark-ify">ify</span></h1>
+        <div id="connection-indicator" class="connection-indicator connection-indicator--connected" aria-label="Connected" title="Connected">
+            <span class="connection-dot"></span>
+        </div>
+    </header>
 
-    <div class="app-container">
-        <header class="player-header">
-            <h1 class="wordmark">
-                <span class="wordmark-quiz">Quiz</span><span class="wordmark-ify">ify</span>
-            </h1>
-        </header>
+    <main class="player-container">
+        <!-- Loading state -->
+        <div id="loading-view" class="view">
+            <div class="loading-spinner"></div>
+            <p data-i18n="common.connecting">Connecting to game...</p>
+        </div>
 
-        <main class="player-container">
-            <!-- ========== LOBBY VIEW ========== -->
-            <div id="lobby-view" class="view active">
-                <div class="lobby-content">
-                    <div id="join-section" class="join-form">
-                        <p class="text-muted" data-i18n="lobby.enterName">Gib deinen Namen ein</p>
-                        <input type="text" id="name-input" class="name-input" placeholder="Dein Name" maxlength="20"
-                               autocomplete="off" autocapitalize="words">
-                        <button id="join-btn" class="btn btn-primary btn-glow join-btn" disabled data-i18n="lobby.joinBtn">Beitreten</button>
+        <!-- Error: Game not found -->
+        <div id="not-found-view" class="view hidden">
+            <div class="error-icon">🧠</div>
+            <h1 data-i18n="errors.gameNotFound">Game Not Found</h1>
+            <p data-i18n="errors.gameNotFoundHint">This game doesn't exist or the link is incorrect.</p>
+            <p class="hint" data-i18n="errors.askHostQr">Ask the host for a new QR code.</p>
+            <button id="refresh-btn" class="btn btn-primary btn-glow" data-i18n="common.retry">Try Again</button>
+        </div>
+
+        <!-- Error: Game ended -->
+        <div id="ended-view" class="view hidden">
+            <div class="error-icon">🎉</div>
+            <h1 data-i18n="errors.gameHasEnded">Game Has Ended</h1>
+            <p data-i18n="errors.thanksForPlaying">Thanks for playing Quizify!</p>
+            <p class="hint" data-i18n="errors.askHostNewGame">Ask the host to start a new game.</p>
+        </div>
+
+        <!-- Error: Game in progress (can't join mid-round) -->
+        <div id="in-progress-view" class="view hidden">
+            <div class="error-icon">⏳</div>
+            <h1 data-i18n="errors.gameInProgress">Game In Progress</h1>
+            <p data-i18n="errors.gameInProgressHint">The game is currently in a round. Try again in a moment.</p>
+            <button id="retry-btn" class="btn btn-primary btn-glow" data-i18n="common.retry">Try Again</button>
+        </div>
+
+        <!-- Join form -->
+        <div id="join-view" class="view hidden">
+            <div class="join-form">
+                <p data-i18n="join.enterName">Enter your name to play</p>
+                <div class="form-group">
+                    <input type="text" id="name-input" class="name-input"
+                           data-i18n-placeholder="join.namePlaceholder"
+                           placeholder="Your name" maxlength="20"
+                           autocomplete="off" autocapitalize="words"
+                           aria-describedby="name-validation-msg">
+                    <p id="name-validation-msg" class="validation-msg hidden"></p>
+                </div>
+                <button id="join-btn" class="btn btn-primary btn-glow join-btn" disabled data-i18n="join.joinButton">Join Game</button>
+            </div>
+        </div>
+
+        <!-- Lobby view -->
+        <div id="lobby-view" class="view hidden">
+            <div class="lobby-container lobby-container--compact">
+                <!-- Compact Header with Stat Badges -->
+                <div class="lobby-header-compact">
+                    <h2 class="section-header section-header--inline">
+                        <span class="section-icon" aria-hidden="true">🎮</span>
+                        <span data-i18n="lobby.gameLobby">Game Lobby</span>
+                    </h2>
+                    <div class="stat-badge-bar" aria-live="polite">
+                        <span class="stat-badge">
+                            <span class="stat-badge-icon" aria-hidden="true">👥</span>
+                            <span id="player-count-badge" class="stat-badge-value">0</span>
+                        </span>
+                        <!-- Difficulty Badge -->
+                        <span id="lobby-difficulty-badge" class="stat-badge stat-badge--difficulty"></span>
+                    </div>
+                </div>
+
+                <!-- How to Play Section - Collapsible -->
+                <section class="section-collapsible collapsed" id="how-to-play-section">
+                    <button type="button" class="section-header-collapsible" aria-expanded="false" aria-controls="how-to-play-content">
+                        <span class="section-icon" aria-hidden="true">🧠</span>
+                        <span data-i18n="lobby.howToPlay">How to Play</span>
+                        <span class="section-toggle" aria-hidden="true">▼</span>
+                    </button>
+                    <div class="section-content" id="how-to-play-content">
+                        <ol class="how-to-play-steps-compact">
+                            <li data-i18n="lobby.howToPlayStep1">Read the question carefully</li>
+                            <li data-i18n="lobby.howToPlayStep2">Pick the correct answer from A, B, or C</li>
+                            <li data-i18n="lobby.howToPlayStep3">Submit before the timer runs out</li>
+                            <li data-i18n="lobby.howToPlayStep4">Faster correct answers earn more points!</li>
+                        </ol>
+                    </div>
+                </section>
+
+                <!-- Players Section - Collapsible -->
+                <section class="section-collapsible" id="players-section">
+                    <button type="button" class="section-header-collapsible" aria-expanded="true" aria-controls="players-content">
+                        <span class="section-icon" aria-hidden="true">👥</span>
+                        <span data-i18n="lobby.playersInLobby">Players in Lobby</span>
+                        <span class="section-summary" id="players-summary">0</span>
+                        <span class="section-toggle" aria-hidden="true">▼</span>
+                    </button>
+                    <div class="section-content" id="players-content">
+                        <div id="player-list" class="player-cards-grid" aria-live="polite">
+                            <!-- Player cards rendered by JS -->
+                        </div>
+                        <p id="players-empty" class="empty-state-inline hidden">
+                            <span aria-hidden="true">👥</span>
+                            <span data-i18n="lobby.waitingForPlayers">Waiting for players to join...</span>
+                        </p>
+                    </div>
+                </section>
+
+                <!-- Invite Friends Section - Collapsible with QR and Dashboard -->
+                <section class="section-collapsible collapsed" id="invite-section">
+                    <button type="button" class="section-header-collapsible" aria-expanded="false" aria-controls="invite-content">
+                        <span class="section-icon" aria-hidden="true">📲</span>
+                        <span data-i18n="lobby.inviteFriends">Invite Friends</span>
+                        <span class="section-toggle" aria-hidden="true">▼</span>
+                    </button>
+                    <div class="section-content" id="invite-content">
+                        <div class="qr-section qr-section--compact">
+                            <div class="qr-container" id="player-qr-code" role="button" tabindex="0"
+                                 aria-label="Tap to enlarge QR code">
+                                <!-- QR code rendered here by JS -->
+                            </div>
+                            <p class="qr-hint" data-i18n="lobby.scanQrHint">Share the QR code or URL above</p>
+                            <!-- Inline dashboard link -->
+                            <a href="#" id="player-dashboard-url" class="dashboard-link" target="_blank">
+                                <span aria-hidden="true">📺</span>
+                                <span data-i18n="dashboard.castToTv">Cast to TV</span>
+                                <span class="dashboard-link-arrow" aria-hidden="true">→</span>
+                            </a>
+                        </div>
+                    </div>
+                </section>
+
+                <!-- Lobby Status (for non-admin players) -->
+                <div id="lobby-status" class="lobby-status-compact hidden">
+                    <p data-i18n="lobby.waitingForHost">Waiting for host to start the game...</p>
+                </div>
+
+                <!-- Sticky Lobby Actions (Admin only) -->
+                <div id="admin-controls" class="lobby-actions lobby-actions--sticky hidden">
+                    <button id="start-game-btn" class="btn btn-primary btn-large btn-full-width">
+                        <span class="btn-icon" aria-hidden="true">🎉</span>
+                        <span data-i18n="lobby.startGame">Start Game</span>
+                    </button>
+                </div>
+            </div>
+        </div>
+
+        <!-- Game view -->
+        <div id="game-view" class="view hidden">
+            <div class="game-container">
+                <!-- Game Header with Round Info -->
+                <div class="game-header-compact">
+                    <div class="game-header-left">
+                        <span class="section-icon" aria-hidden="true">🎮</span>
+                        <span id="round-indicator" class="round-indicator-text">
+                            <span data-i18n="game.roundLabel">Round</span>
+                            <span id="current-round">1</span>
+                            <span data-i18n="game.ofLabel">of</span>
+                            <span id="total-rounds">10</span>
+                        </span>
+                    </div>
+                    <div class="stat-badge-bar">
+                        <!-- Difficulty Badge -->
+                        <span id="game-difficulty-badge" class="stat-badge stat-badge--difficulty"></span>
+                    </div>
+                </div>
+                <!-- Last Round Banner -->
+                <div id="last-round-banner" class="last-round-banner hidden" data-i18n="game.finalRound">
+                    Final Round!
+                </div>
+
+                <!-- Question Card (replaces album-cover) -->
+                <div class="question-card-container">
+                    <div id="question-card" class="question-card">
+                        <div id="question-category" class="question-category"></div>
+                        <div id="question-text" class="question-text"></div>
+                    </div>
+                    <div id="question-loading" class="album-loading hidden">
+                        <div class="loading-spinner"></div>
+                    </div>
+                </div>
+
+                <!-- Timer with ARIA support -->
+                <div class="timer-container">
+                    <div id="timer" class="timer" role="timer" aria-live="polite" aria-label="Time remaining: 30 seconds">30</div>
+                </div>
+
+                <!-- Submission Tracker -->
+                <div id="submission-tracker" class="submission-tracker">
+                    <div id="submitted-players" class="submitted-players">
+                        <!-- Player indicators populated dynamically -->
+                    </div>
+                </div>
+
+                <!-- Answer Buttons A/B/C (replaces year-selector) - card-section pattern -->
+                <section id="answers-container" class="card-section answer-section">
+                    <h2 class="section-header">
+                        <span class="section-icon" aria-hidden="true">🎯</span>
+                        <span data-i18n="game.yourAnswer">Your Answer</span>
+                    </h2>
+                    <div id="answer-buttons" class="answer-buttons">
+                        <button class="answer-btn answer-btn-a" data-answer="A">
+                            <span class="answer-letter">A</span>
+                            <span id="answer-text-a" class="answer-text"></span>
+                        </button>
+                        <button class="answer-btn answer-btn-b" data-answer="B">
+                            <span class="answer-letter">B</span>
+                            <span id="answer-text-b" class="answer-text"></span>
+                        </button>
+                        <button class="answer-btn answer-btn-c" data-answer="C">
+                            <span class="answer-letter">C</span>
+                            <span id="answer-text-c" class="answer-text"></span>
+                        </button>
                     </div>
 
-                    <div id="waiting-section" class="hidden">
-                        <p class="waiting-message" data-i18n="lobby.waitingForHost">Warte auf den Host...</p>
-                        <div class="player-list mt-lg">
-                            <div class="player-list-header">
-                                <span class="card-header">Spieler</span>
-                                <span id="player-count" class="player-count">0</span>
-                            </div>
-                            <div id="player-chips" class="player-chips"></div>
+                    <!-- Power-up Button (replaces bet-toggle) -->
+                    <div class="powerup-container">
+                        <button id="powerup-btn" class="powerup-btn" type="button">
+                            <span class="powerup-icon">⚡</span>
+                            <span class="powerup-label" data-i18n="game.powerup">Power-Up</span>
+                        </button>
+                    </div>
+
+                    <div id="submitted-confirmation" class="submitted-confirmation hidden">
+                        <span class="checkmark">✓</span>
+                        <span data-i18n="game.submitted">Submitted!</span>
+                    </div>
+                </section>
+
+                <!-- Leaderboard - Collapsible section pattern -->
+                <section id="game-leaderboard" class="section-collapsible leaderboard-section collapsed">
+                    <button type="button" class="section-header-collapsible" id="leaderboard-toggle" aria-expanded="false" aria-controls="leaderboard-content">
+                        <span class="section-icon" aria-hidden="true">🏆</span>
+                        <span data-i18n="leaderboard.title">Leaderboard</span>
+                        <span class="section-summary" id="leaderboard-summary">--</span>
+                        <span class="section-toggle" aria-hidden="true">▼</span>
+                    </button>
+                    <div class="section-content" id="leaderboard-content">
+                        <div id="leaderboard-list" class="leaderboard-list">
+                            <!-- Populated by JavaScript -->
+                        </div>
+                    </div>
+                </section>
+            </div>
+        </div>
+
+        <!-- Reveal View -->
+        <div id="reveal-view" class="view hidden">
+            <div class="reveal-container reveal-container--compact">
+                <!-- Compact Header Bar -->
+                <div class="reveal-header-compact">
+                    <div class="reveal-header-left">
+                        <span class="section-icon" aria-hidden="true">🧠</span>
+                        <span class="round-indicator-text">
+                            <span data-i18n="game.roundLabel">Round</span>
+                            <span id="reveal-round">1</span>
+                            <span data-i18n="game.ofLabel">of</span>
+                            <span id="reveal-total">10</span>
+                        </span>
+                    </div>
+                    <div class="stat-badge-bar">
+                        <span id="reveal-difficulty-badge" class="stat-badge stat-badge--difficulty"></span>
+                    </div>
+                </div>
+
+                <!-- Question Text (replaces Song Hero: album + info) -->
+                <div class="reveal-song-hero">
+                    <div class="reveal-song-info">
+                        <div id="reveal-question-text" class="song-title">Question</div>
+                    </div>
+                </div>
+
+                <!-- Correct Answer Reveal (replaces Year Reveal) -->
+                <div class="reveal-year-section">
+                    <div id="reveal-emotion" class="reveal-emotion-inline hidden" aria-live="polite" aria-atomic="true">
+                        <!-- Populated by JS: NAILED IT!, SO CLOSE!, Oops!, etc. -->
+                    </div>
+                    <div class="correct-year-label" data-i18n="reveal.correctAnswerWas">Correct answer:</div>
+                    <div id="correct-answer" class="correct-year text-glow"></div>
+                </div>
+
+                <!-- Confetti Canvas -->
+                <canvas id="confetti-canvas" class="confetti-canvas"></canvas>
+
+                <!-- Fun Fact Card Section -->
+                <section id="fun-fact-container" class="card-section fun-fact-section hidden">
+                    <h2 class="section-header">
+                        <span class="section-icon" aria-hidden="true">💡</span>
+                        <span data-i18n="reveal.funFact">Fun Fact</span>
+                    </h2>
+                    <div class="section-content-padded">
+                        <div id="fun-fact" class="fun-fact-text"></div>
+                    </div>
+                </section>
+
+                <!-- Personal Result - Card Section -->
+                <section id="personal-result" class="card-section personal-result-section">
+                    <h2 class="section-header">
+                        <span class="section-icon" aria-hidden="true">🎯</span>
+                        <span data-i18n="reveal.yourResult">Your Result</span>
+                    </h2>
+                    <div id="result-content" class="section-content-padded">
+                        <!-- Populated dynamically -->
+                    </div>
+                </section>
+
+                <!-- All Answers Card Section (replaces All Guesses) -->
+                <section class="card-section guesses-section">
+                    <h2 class="section-header">
+                        <span class="section-icon" aria-hidden="true">👥</span>
+                        <span data-i18n="reveal.allAnswers">All Answers</span>
+                    </h2>
+                    <div id="reveal-results-cards" class="reveal-results-grid section-content-padded">
+                        <!-- Populated by JavaScript: shows all player answers -->
+                    </div>
+                </section>
+
+                <!-- Leaderboard - Expanded by default -->
+                <section id="reveal-leaderboard" class="section-collapsible leaderboard-section">
+                    <button type="button" class="section-header-collapsible" id="reveal-leaderboard-toggle" aria-expanded="true" aria-controls="reveal-leaderboard-content">
+                        <span class="section-icon" aria-hidden="true">🏆</span>
+                        <span data-i18n="leaderboard.standings">Standings</span>
+                        <span class="section-summary" id="reveal-leaderboard-summary">--</span>
+                        <span class="section-toggle" aria-hidden="true">▼</span>
+                    </button>
+                    <div class="section-content" id="reveal-leaderboard-content">
+                        <div id="reveal-leaderboard-list" class="leaderboard-list">
+                            <!-- Populated by JavaScript -->
+                        </div>
+                    </div>
+                </section>
+
+                <!-- Round Analytics - Collapsible, collapsed by default -->
+                <section id="round-analytics" class="section-collapsible round-analytics-section collapsed hidden">
+                    <button type="button" class="section-header-collapsible" id="round-analytics-toggle" aria-expanded="false">
+                        <span class="section-icon" aria-hidden="true">📊</span>
+                        <span data-i18n="analytics.title">Round Stats</span>
+                        <span class="section-toggle" aria-hidden="true">▼</span>
+                    </button>
+                    <div class="section-content">
+                        <div id="round-analytics-content" class="section-content-padded">
+                            <!-- Populated by JavaScript -->
+                        </div>
+                    </div>
+                </section>
+
+                <!-- Admin Controls -->
+                <div id="reveal-admin-controls" class="reveal-admin-controls hidden">
+                    <div class="reveal-admin-buttons">
+                        <button id="invite-players-btn" class="invite-btn" type="button"
+                                aria-label="Invite players to join the game">
+                            <span class="invite-btn-icon">📲</span>
+                            <span class="invite-btn-label" data-i18n="lobby.invitePlayers">Invite Players</span>
+                        </button>
+                        <button id="next-round-btn" class="next-round-btn" data-i18n="admin.nextRound">
+                            Next Round
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Paused View -->
+        <div id="paused-view" class="view hidden">
+            <div class="paused-container">
+                <div class="paused-icon">⏸️</div>
+                <h1 data-i18n="game.paused">Game Paused</h1>
+                <p id="pause-message" data-i18n="game.waitingForHost">Waiting for host to reconnect...</p>
+                <div class="paused-spinner">
+                    <div class="spinner"></div>
+                </div>
+                <p class="paused-hint" data-i18n="game.pausedHint">The game will resume when the host returns</p>
+            </div>
+        </div>
+
+        <!-- End View -->
+        <div id="end-view" class="view hidden">
+            <div class="end-container">
+                <!-- Header -->
+                <div class="end-header">
+                    <h1 class="end-title" data-i18n="leaderboard.gameOver">Game Over!</h1>
+                    <p class="end-subtitle" data-i18n="leaderboard.thanksForPlaying">Thanks for playing Quizify</p>
+                </div>
+
+                <!-- Podium for top 3 -->
+                <div class="podium">
+                    <div class="podium-place podium-2">
+                        <div class="podium-medal">🥈</div>
+                        <div class="podium-name" id="podium-2-name">---</div>
+                        <div class="podium-score" id="podium-2-score">0</div>
+                        <div class="podium-stand">2</div>
+                    </div>
+                    <div class="podium-place podium-1">
+                        <div class="podium-medal">🥇</div>
+                        <div class="podium-name" id="podium-1-name">---</div>
+                        <div class="podium-score" id="podium-1-score">0</div>
+                        <div class="podium-stand">1</div>
+                    </div>
+                    <div class="podium-place podium-3">
+                        <div class="podium-medal">🥉</div>
+                        <div class="podium-name" id="podium-3-name">---</div>
+                        <div class="podium-score" id="podium-3-score">0</div>
+                        <div class="podium-stand">3</div>
+                    </div>
+                </div>
+
+                <!-- Your result -->
+                <div class="your-result">
+                    <div class="your-result-header" data-i18n="reveal.yourResult">Your Result</div>
+                    <div class="your-result-rank" id="your-final-rank">#?</div>
+                    <div class="your-result-score" id="your-final-score">0 points</div>
+                    <div class="your-result-stats">
+                        <div class="stat">
+                            <span class="stat-value" id="stat-best-streak">0</span>
+                            <span class="stat-label" data-i18n="leaderboard.bestStreak">Best Streak</span>
+                        </div>
+                        <div class="stat">
+                            <span class="stat-value" id="stat-rounds">0</span>
+                            <span class="stat-label" data-i18n="leaderboard.roundsPlayed">Rounds Played</span>
+                        </div>
+                        <div class="stat">
+                            <span class="stat-value" id="stat-powerups">0</span>
+                            <span class="stat-label" data-i18n="leaderboard.powerupsUsed">Power-Ups Used</span>
                         </div>
                     </div>
                 </div>
-            </div>
 
-            <!-- ========== QUESTION VIEW ========== -->
-            <div id="question-view" class="view">
-                <div id="timer-bar-text" class="timer-text"></div>
-                <div class="question-area">
-                    <div id="round-indicator" class="round-indicator"></div>
-                    <div id="question-text" class="question-text"></div>
-                    <div id="question-category" class="question-category"></div>
+                <!-- Shareable Result Cards -->
+                <div id="share-container" class="share-container hidden">
+                    <div class="share-header" data-i18n="share.share_tab">📤 Share</div>
+                    <div id="share-emoji-grid" class="emoji-grid-preview"></div>
+                    <div class="share-buttons">
+                        <button id="share-copy-btn" class="share-btn" data-i18n="share.share_copy">📋 Copy Text</button>
+                        <button id="share-save-btn" class="share-btn" data-i18n="share.share_save">📤 Share Card</button>
+                    </div>
+                    <div id="share-toast" class="share-toast hidden" data-i18n="share.share_copied">Copied!</div>
                 </div>
-                <div id="powerup-bar" class="powerup-bar hidden">
-                    <button id="powerup-btn" class="powerup-btn">
-                        <span id="powerup-icon"></span>
-                        <span id="powerup-label"></span>
+
+                <!-- Superlatives / Fun Awards -->
+                <div id="superlatives-container" class="superlatives-container hidden">
+                    <!-- Rendered by JS: award cards with emoji, title, player name, value -->
+                </div>
+
+                <!-- Highlights Reel -->
+                <div id="highlights-container" class="highlights-container hidden">
+                    <div class="highlights-header" data-i18n="highlights.highlightsTab">🎬 Highlights</div>
+                    <div id="highlights-list" class="highlights-list">
+                        <!-- Populated by JavaScript -->
+                    </div>
+                </div>
+
+                <!-- Full leaderboard -->
+                <div class="final-leaderboard">
+                    <div class="final-leaderboard-header" data-i18n="leaderboard.fullRankings">Full Rankings</div>
+                    <div id="final-leaderboard-list" class="final-leaderboard-list">
+                        <!-- Populated by JavaScript -->
+                    </div>
+                </div>
+
+                <!-- Admin controls -->
+                <div id="end-admin-controls" class="end-admin-controls hidden">
+                    <button id="player-rematch-btn" class="btn btn-primary btn-large btn-full-width" data-i18n="admin.rematch">Rematch</button>
+                    <button id="new-game-btn" class="new-game-btn" data-i18n="admin.startNewGame">
+                        Start New Game
                     </button>
                 </div>
-                <div id="answers-container" class="answers-container"></div>
-            </div>
 
-            <!-- ========== REVEAL VIEW ========== -->
-            <div id="reveal-view" class="view">
-                <div class="question-area">
-                    <div id="reveal-question" class="question-text reveal-question-text"></div>
-                </div>
-                <div id="reveal-answers" class="answers-container"></div>
-                <div class="score-display">
-                    <div id="points-earned" class="points-earned"></div>
-                    <div id="score-detail" class="score-detail"></div>
-                    <div id="streak-badge" class="streak-badge hidden"></div>
-                    <div id="rank-display" class="rank-display"></div>
-                </div>
-                <div id="fun-fact" class="fun-fact-card hidden">
-                    <div class="fun-fact-label">Wusstest du?</div>
-                    <div class="fun-fact-text"></div>
+                <!-- Player message -->
+                <div id="end-player-message" class="end-player-message hidden">
+                    <p data-i18n="leaderboard.thanksEmoji">Thanks for playing! 🎉</p>
+                    <p class="end-hint" data-i18n="leaderboard.waitForHost">Wait for the host to start a new game</p>
                 </div>
             </div>
+        </div>
 
-            <!-- ========== FINALE VIEW ========== -->
-            <div id="finale-view" class="view">
-                <div class="podium-section">
-                    <div class="podium-title" data-i18n="podium.title">Ergebnis</div>
-                    <div id="podium" class="podium"></div>
-                </div>
-                <div id="awards-section" class="awards-section hidden"></div>
-                <div class="card">
-                    <div class="card-header" data-i18n="leaderboard.title">Rangliste</div>
-                    <div id="finale-leaderboard" class="leaderboard"></div>
-                </div>
-                <div class="finale-actions">
-                    <button id="copy-result-btn" class="btn btn-secondary" style="display:none;">
-                        <span data-i18n="finale.copyResult">Ergebnis kopieren</span>
-                    </button>
-                </div>
+        <!-- Admin Control Bar - visible across PLAYING/REVEAL for admin -->
+        <div id="admin-control-bar" class="admin-control-bar hidden">
+            <button id="skip-question-btn" class="control-btn" type="button">
+                <span class="control-icon">⏭️</span>
+                <span class="control-label" data-i18n="admin.skip">Skip</span>
+            </button>
+            <button id="next-round-admin-btn" class="control-btn" type="button">
+                <span class="control-icon">⏭️</span>
+                <span class="control-label" data-i18n="admin.next">Next</span>
+            </button>
+            <button id="end-game-btn" class="control-btn control-btn--danger" type="button">
+                <span class="control-icon">🛑</span>
+                <span class="control-label" data-i18n="admin.end">End</span>
+            </button>
+        </div>
+
+        <!-- Reaction Bar - visible during REVEAL only -->
+        <div id="reaction-bar" class="reaction-bar hidden">
+            <div class="reaction-bar-container">
+                <button class="reaction-btn" data-emoji="🔥" data-i18n-aria-label="reaction.fire" aria-label="Fire reaction">🔥</button>
+                <button class="reaction-btn" data-emoji="😂" data-i18n-aria-label="reaction.laugh" aria-label="Laugh reaction">😂</button>
+                <button class="reaction-btn" data-emoji="😱" data-i18n-aria-label="reaction.shocked" aria-label="Shocked reaction">😱</button>
+                <button class="reaction-btn" data-emoji="👏" data-i18n-aria-label="reaction.applause" aria-label="Applause reaction">👏</button>
+                <button class="reaction-btn" data-emoji="🤔" data-i18n-aria-label="reaction.thinking" aria-label="Thinking reaction">🤔</button>
             </div>
-        </main>
+        </div>
+
+        <!-- Floating Reactions Display -->
+        <div id="reaction-container" class="reaction-container"></div>
+    </main>
+
+    <!-- Reconnecting Overlay -->
+    <div id="reconnecting-overlay" class="reconnecting-overlay hidden">
+        <div class="reconnecting-content">
+            <div class="reconnecting-spinner">
+                <div class="spinner"></div>
+            </div>
+            <p id="reconnect-status" class="reconnect-status" data-i18n="errors.RECONNECTING">Reconnecting...</p>
+        </div>
     </div>
 
+    <!-- Connection Lost View -->
+    <div id="connection-lost-view" class="view hidden">
+        <div class="connection-lost-container">
+            <div class="connection-lost-icon">📡</div>
+            <h1 data-i18n="errors.CONNECTION_LOST">Connection Lost</h1>
+            <p data-i18n="errors.connectionLostHint">We couldn't reconnect to the game server.</p>
+            <button id="retry-connection-btn" class="btn btn-primary btn-glow" data-i18n="common.retry">Try Again</button>
+            <p class="connection-lost-hint" data-i18n="errors.checkNetwork">Make sure you're connected to the network</p>
+        </div>
+    </div>
+
+    <!-- QR Modal (Lobby - full screen) -->
+    <div id="qr-modal" class="qr-modal hidden" role="dialog" aria-modal="true"
+         aria-labelledby="qr-modal-title">
+        <div class="qr-modal-backdrop"></div>
+        <div class="qr-modal-content">
+            <h2 id="qr-modal-title" class="sr-only" data-i18n="lobby.joinGameQr">Join Game QR Code</h2>
+            <div id="qr-modal-code" class="qr-modal-code">
+                <!-- Large QR code rendered here -->
+            </div>
+            <p class="qr-modal-label" data-i18n="lobby.scanToJoin">Scan to join the game</p>
+            <button id="qr-modal-close" class="btn btn-secondary qr-modal-close"
+                    aria-label="Close QR code" data-i18n="common.close">Close</button>
+        </div>
+    </div>
+
+    <!-- Invite Modal (QR code during active game for admin) -->
+    <div id="invite-modal" class="invite-modal hidden" role="dialog" aria-modal="true"
+         aria-labelledby="invite-modal-title">
+        <div class="invite-modal-backdrop"></div>
+        <div class="invite-modal-content">
+            <h2 id="invite-modal-title" class="invite-modal-title" data-i18n="lobby.invitePlayers">Invite Players</h2>
+            <p class="invite-modal-hint" data-i18n="lobby.invitePlayersHint">Share this QR code or link with friends</p>
+            <div id="invite-modal-code" class="invite-modal-code">
+                <!-- QR code rendered here -->
+            </div>
+            <div class="invite-modal-url-container">
+                <input type="text" id="invite-modal-url" class="invite-modal-url" readonly
+                       aria-label="Join URL">
+                <button id="invite-copy-btn" class="invite-copy-btn" type="button"
+                        aria-label="Copy join link">
+                    <span class="invite-copy-icon">📋</span>
+                </button>
+            </div>
+            <p id="invite-copy-feedback" class="invite-copy-feedback hidden">Copied!</p>
+            <button id="invite-modal-close" class="btn btn-secondary invite-modal-close"
+                    aria-label="Close invite popup" data-i18n="common.close">Close</button>
+        </div>
+    </div>
+
+    <!-- Generic Confirmation Modal -->
+    <div id="confirm-modal" class="modal hidden" role="dialog" aria-modal="true" aria-labelledby="confirm-modal-title">
+        <div class="modal-backdrop"></div>
+        <div class="modal-content">
+            <h2 id="confirm-modal-title">Confirm</h2>
+            <p id="confirm-modal-message"></p>
+            <div class="modal-actions">
+                <button id="confirm-modal-yes" class="btn btn-primary" data-i18n="common.confirm">Confirm</button>
+                <button id="confirm-modal-no" class="btn btn-secondary" data-i18n="common.cancel">Cancel</button>
+            </div>
+        </div>
+    </div>
+
+    <script src="/quizify/static/js/vendor/qrcode.min.js"></script>
     <script src="/quizify/static/js/i18n.js"></script>
     <script src="/quizify/static/js/utils.js"></script>
     <script src="/quizify/static/js/timer.js"></script>
