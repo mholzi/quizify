@@ -30,10 +30,10 @@
 
     <main class="admin-content">
 
-        <!-- ========== SETUP VIEW (LOBBY) ========== -->
-        <div id="setup-view" class="view active">
+        <!-- ========== SETUP SCREEN ========== -->
+        <div id="setup-screen" class="view active">
 
-            <!-- Category Section — Collapsible -->
+            <!-- Category Section — Collapsible, expanded by default -->
             <section class="section-collapsible" id="category-section">
                 <button type="button" class="section-header-collapsible" aria-expanded="true" aria-controls="category-content">
                     <span class="section-icon" aria-hidden="true">📂</span>
@@ -51,7 +51,7 @@
                 </div>
             </section>
 
-            <!-- Game Settings Section — Collapsible -->
+            <!-- Game Settings Section — Collapsible, collapsed by default -->
             <section class="section-collapsible collapsed" id="game-settings-section">
                 <button type="button" class="section-header-collapsible" aria-expanded="false" aria-controls="game-settings-content">
                     <span class="section-icon" aria-hidden="true">&#x2699;&#xFE0F;</span>
@@ -90,49 +90,68 @@
                 </div>
             </section>
 
-            <!-- QR / Invite Section — Collapsible -->
-            <section class="section-collapsible" id="qr-section">
-                <button type="button" class="section-header-collapsible" aria-expanded="true" aria-controls="qr-content">
-                    <span class="section-icon" aria-hidden="true">&#x1F4F2;</span>
-                    <span data-i18n="admin.invitePlayers">Spieler einladen</span>
-                    <span class="section-toggle" aria-hidden="true">&#x25BC;</span>
-                </button>
-                <div class="section-content" id="qr-content">
-                    <div class="qr-section qr-section--compact">
-                        <div class="qr-container" id="qr-container" role="img" aria-label="QR Code"></div>
-                        <p id="join-url" class="qr-url-display qr-url-display--compact"></p>
-                    </div>
-
-                    <!-- Self-join -->
-                    <div class="self-join-row">
-                        <input type="text" id="self-join-name" placeholder="Dein Name" maxlength="20"
-                               autocomplete="off" autocapitalize="words"
-                               data-i18n-placeholder="admin.selfJoinPlaceholder">
-                        <button type="button" id="self-join-btn" class="btn btn-secondary" data-i18n="admin.selfJoin">Beitreten</button>
-                    </div>
-                </div>
-            </section>
-
-            <!-- Players Section — Collapsible -->
-            <section class="section-collapsible" id="players-section">
-                <button type="button" class="section-header-collapsible" aria-expanded="true" aria-controls="players-content">
-                    <span class="section-icon" aria-hidden="true">&#x1F465;</span>
-                    <span data-i18n="admin.players">Spieler</span>
-                    <span class="section-summary" id="setup-player-count">0</span>
-                    <span class="section-toggle" aria-hidden="true">&#x25BC;</span>
-                </button>
-                <div class="section-content" id="players-content">
-                    <div id="setup-player-chips" class="player-cards-grid" aria-live="polite" aria-label="Player list">
-                        <!-- Rendered dynamically -->
-                    </div>
-                </div>
-            </section>
-
-            <!-- Sticky Start Actions -->
-            <div class="lobby-actions lobby-actions--sticky">
-                <button type="button" id="start-game-btn" class="btn btn-primary btn-lg btn-block" disabled data-i18n="admin.startGame">
+            <!-- Start Game button -->
+            <div class="admin-actions">
+                <button type="button" id="start-game-btn" class="btn btn-primary btn-lg btn-block">
                     Spiel starten
                 </button>
+            </div>
+        </div>
+
+        <!-- ========== LOBBY SCREEN (hidden initially) ========== -->
+        <div id="lobby-screen" class="view">
+            <div class="lobby-container lobby-container--compact">
+
+                <!-- QR / Invite Section — Collapsible, expanded -->
+                <section class="section-collapsible" id="qr-section">
+                    <button type="button" class="section-header-collapsible" aria-expanded="true" aria-controls="qr-content">
+                        <span class="section-icon" aria-hidden="true">&#x1F4F2;</span>
+                        <span data-i18n="admin.invitePlayers">Spieler einladen</span>
+                        <span class="section-toggle" aria-hidden="true">&#x25BC;</span>
+                    </button>
+                    <div class="section-content" id="qr-content">
+                        <div class="qr-section qr-section--compact">
+                            <div class="qr-container" id="qr-container" role="img" aria-label="QR Code"></div>
+                            <p id="join-url" class="qr-url-display qr-url-display--compact"></p>
+                            <a href="#" id="dashboard-link" class="dashboard-link" target="_blank">
+                                <span aria-hidden="true">📺</span>
+                                <span data-i18n="dashboard.castToTv">Cast to TV</span>
+                                <span class="dashboard-link-arrow" aria-hidden="true">→</span>
+                            </a>
+                        </div>
+                    </div>
+                </section>
+
+                <!-- Players Section — Collapsible, expanded -->
+                <section class="section-collapsible" id="players-section">
+                    <button type="button" class="section-header-collapsible" aria-expanded="true" aria-controls="players-content">
+                        <span class="section-icon" aria-hidden="true">&#x1F465;</span>
+                        <span data-i18n="admin.players">Spieler</span>
+                        <span class="section-summary" id="lobby-player-count">0</span>
+                        <span class="section-toggle" aria-hidden="true">&#x25BC;</span>
+                    </button>
+                    <div class="section-content" id="players-content">
+                        <div id="lobby-player-chips" class="player-cards-grid" aria-live="polite" aria-label="Player list">
+                            <!-- Rendered dynamically -->
+                        </div>
+                        <p id="lobby-players-empty" class="empty-state-inline">
+                            <span aria-hidden="true">&#x1F465;</span>
+                            <span data-i18n="lobby.waitingForPlayers">Warte auf Spieler...</span>
+                        </p>
+                    </div>
+                </section>
+
+                <!-- Sticky Lobby Actions -->
+                <div class="lobby-actions lobby-actions--sticky">
+                    <button type="button" id="start-gameplay-btn" class="btn btn-primary btn-lg btn-block hidden">
+                        <span class="btn-icon" aria-hidden="true">▶️</span>
+                        <span data-i18n="admin.startGameplay">Spiel starten</span>
+                    </button>
+                    <button type="button" id="participate-btn" class="btn btn-secondary btn-lg btn-block">
+                        <span class="btn-icon" aria-hidden="true">🎮</span>
+                        <span data-i18n="admin.joinAsPlayer">Als Spieler beitreten</span>
+                    </button>
+                </div>
             </div>
         </div>
 
@@ -222,6 +241,26 @@
         </div>
 
     </main>
+
+    <!-- Admin join modal -->
+    <div id="admin-join-modal" class="modal hidden" role="dialog" aria-modal="true" aria-labelledby="admin-join-modal-title">
+        <div class="modal-backdrop"></div>
+        <div class="modal-content">
+            <h2 id="admin-join-modal-title" data-i18n="admin.joinTheGame">Spiel beitreten</h2>
+            <p data-i18n="admin.enterDisplayName">Gib deinen Namen ein, um als Spieler mit Admin-Rechten beizutreten.</p>
+            <div class="form-group">
+                <input type="text" id="admin-name-input" class="name-input"
+                       data-i18n-placeholder="join.namePlaceholder"
+                       placeholder="Dein Name" maxlength="20"
+                       autocomplete="off" autocapitalize="words">
+                <p id="admin-name-error" class="validation-msg hidden"></p>
+            </div>
+            <div class="modal-actions">
+                <button type="button" id="admin-join-btn" class="btn btn-primary" disabled data-i18n="join.joinButton">Beitreten</button>
+                <button type="button" id="admin-cancel-btn" class="btn btn-secondary" data-i18n="common.cancel">Abbrechen</button>
+            </div>
+        </div>
+    </div>
 
     <!-- End Game confirmation modal -->
     <div id="end-game-modal" class="modal hidden" role="dialog" aria-modal="true" aria-labelledby="end-game-modal-title">

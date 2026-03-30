@@ -207,6 +207,7 @@ class QuizifyWebSocketHandler:
     ) -> None:
         """Handle player join."""
         name = data.get("name", "").strip()
+        is_admin = data.get("is_admin", False)
 
         if not name:
             await self._send_error(ws, ERR_NAME_INVALID, "Name is required")
@@ -225,6 +226,11 @@ class QuizifyWebSocketHandler:
             player = game_state.get_player(name)
             # Cancel pending removal on reconnect
             self._cancel_pending_removal(name)
+
+            # If admin joins as player, keep the WS in admin connections
+            # so it receives both admin state updates and player messages
+            if is_admin:
+                self._admin_connections.add(ws)
 
             # Generate session token for reconnect
             session_token = str(uuid.uuid4())

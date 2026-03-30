@@ -1274,6 +1274,57 @@ button, .btn {
     margin-top: var(--space-sm);
 }
 
+/* Dashboard link (Cast to TV) */
+.dashboard-link {
+    display: inline-flex;
+    align-items: center;
+    gap: var(--space-xs);
+    margin-top: var(--space-sm);
+    font-size: 0.8rem;
+    color: var(--color-accent-secondary);
+    text-decoration: none;
+    opacity: 0.8;
+    transition: opacity 0.2s ease;
+}
+
+.dashboard-link:hover {
+    opacity: 1;
+}
+
+.dashboard-link-arrow {
+    font-size: 0.7rem;
+}
+
+/* Lobby container — compact layout matching Beatify */
+.lobby-container--compact {
+    padding: 0;
+}
+
+.lobby-container--compact .section-collapsible {
+    background: var(--color-surface-dark);
+    border: 1px solid var(--color-border-neon);
+    border-radius: var(--radius-md);
+    margin-bottom: var(--space-md);
+    overflow: hidden;
+}
+
+/* Empty state inline */
+.empty-state-inline {
+    text-align: center;
+    padding: var(--space-md);
+    color: var(--color-text-neon-muted);
+    font-size: 0.875rem;
+}
+
+/* Form group for modal inputs */
+.form-group {
+    margin-bottom: var(--space-md);
+}
+
+.form-group .name-input {
+    width: 100%;
+}
+
 /* ==========================================
    Leaderboard (Beatify style)
    ========================================== */
