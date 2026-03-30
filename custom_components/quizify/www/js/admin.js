@@ -97,14 +97,15 @@
 
     // ---- Collapsible sections (Beatify pattern) ----
     function setupCollapsibles() {
-        document.querySelectorAll('.section-header-collapsible').forEach(function (header) {
-            header.addEventListener('click', function () {
-                var section = header.closest('.section-collapsible');
-                if (section) {
-                    section.classList.toggle('collapsed');
-                    header.setAttribute('aria-expanded', !section.classList.contains('collapsed'));
-                }
-            });
+        // Use event delegation on document so it works for dynamically shown sections too
+        document.addEventListener('click', function (e) {
+            var header = e.target.closest('.section-header-collapsible');
+            if (!header) return;
+            var section = header.closest('.section-collapsible');
+            if (section) {
+                section.classList.toggle('collapsed');
+                header.setAttribute('aria-expanded', String(!section.classList.contains('collapsed')));
+            }
         });
     }
 
