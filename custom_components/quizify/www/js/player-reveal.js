@@ -21,6 +21,7 @@
      */
     function updateRevealView(data) {
         var players = data.players || [];
+        var allAnswers = data.all_answers || [];
 
         // Round indicator
         var roundEl = document.getElementById('reveal-round');
@@ -58,8 +59,8 @@
         // Personal result
         renderPersonalResult(currentPlayer);
 
-        // All answers grid
-        renderAllAnswers(players);
+        // All answers grid — use all_answers if available, fall back to players
+        renderAllAnswers(allAnswers.length > 0 ? allAnswers : players);
 
         // Leaderboard
         if (data.leaderboard) {
@@ -239,18 +240,20 @@
 
         sorted.forEach(function (player) {
             var isCurrentPlayer = player.name === state.playerName;
-            var isMissed = player.missed_round === true;
-            var roundScore = player.round_score || 0;
+            // Support both all_answers format and players format
+            var isMissed = player.no_answer === true || player.missed_round === true || player.answer_index === null;
+            var roundScore = player.points_earned || player.round_score || 0;
+            var isCorrect = player.correct === true;
 
             var scoreClass = isMissed ? 'is-score-zero' :
-                             roundScore > 0 ? 'is-score-high' : 'is-score-zero';
+                             isCorrect ? 'is-score-high' : 'is-score-zero';
 
-            var answerDisplay = isMissed ? '\u2014' : pu.escapeHtml(player.answer || 'n/a');
-            var resultDisplay = isMissed ? 'No answer' :
-                                player.correct ? '\u2705 Correct' : '\u274C Wrong';
+            var answerDisplay = isMissed ? '—' : pu.escapeHtml(player.answer_text || player.answer || '?');
+            var resultDisplay = isMissed ? '⏱️ No answer' :
+                                isCorrect ? '✅ Correct' : '❌ Wrong';
 
-            html += '<div class="result-card ' + scoreClass + (isCurrentPlayer ? ' is-current' : '') + '">' +
-                '<div class="card-name">' + pu.escapeHtml(player.name) + '</div>' +
+            html += '<div class="result-card ' + scoreClass + (isCurrentPlayer ? ' result-card--mine' : '') + '">' +
+                '<div class="card-name">' + pu.escapeHtml(player.player_name || player.name) + (isCurrentPlayer ? ' <span class="you-badge">You</span>' : '') + '</div>' +
                 '<div class="card-guess">' + answerDisplay + '</div>' +
                 '<div class="card-accuracy">' + resultDisplay + '</div>' +
                 '<div class="card-score">+' + roundScore + '</div>' +

@@ -640,6 +640,36 @@ class QuizifyWebSocketHandler:
 
         leaderboard = serialize_leaderboard(game_state.get_players())
 
+        # Build all_answers: what each player answered this round
+        all_answers = []
+        for player in game_state.get_players():
+            if player.submitted is not None:
+                # Map original answer index to shuffled index for display
+                submitted_orig = player.submitted
+                submitted_shuffled = None
+                for sh_idx, orig_idx in enumerate(self._shuffle_map):
+                    if orig_idx == submitted_orig:
+                        submitted_shuffled = sh_idx
+                        break
+                answer_text = self._shuffled_answers[submitted_shuffled] if submitted_shuffled is not None else "?"
+                is_correct = summary.question.answers[submitted_orig].correct if submitted_orig < len(summary.question.answers) else False
+                all_answers.append({
+                    "player_name": player.name,
+                    "answer_index": submitted_shuffled,
+                    "answer_text": answer_text,
+                    "correct": is_correct,
+                    "points_earned": player.last_round_points if hasattr(player, "last_round_points") else 0,
+                })
+            else:
+                all_answers.append({
+                    "player_name": player.name,
+                    "answer_index": None,
+                    "answer_text": "—",
+                    "correct": False,
+                    "points_earned": 0,
+                    "no_answer": True,
+                })
+
         summary_msg = serialize_round_summary(
             correct_answer_index=correct_shuffled_idx,
             correct_answer_text=summary.correct_answer.text,
@@ -647,6 +677,7 @@ class QuizifyWebSocketHandler:
             leaderboard=leaderboard,
             round_num=game_state.round,
             total_rounds=game_state.total_rounds,
+            all_answers=all_answers,
         )
         await self._broadcast(summary_msg)
 

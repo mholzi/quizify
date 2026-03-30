@@ -143,6 +143,7 @@ def serialize_round_summary(
     leaderboard: list[dict[str, Any]],
     round_num: int,
     total_rounds: int,
+    all_answers: list[dict[str, Any]] | None = None,
 ) -> dict[str, Any]:
     """Build round summary broadcast payload."""
     return {
@@ -153,4 +154,5 @@ def serialize_round_summary(
         "leaderboard": leaderboard,
         "round": round_num,
         "total_rounds": total_rounds,
+        "all_answers": all_answers or [],
     }
