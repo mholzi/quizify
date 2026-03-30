@@ -2026,3 +2026,49 @@ footer {
     color: var(--color-text-muted, #a4a4b8);
     font-size: 0.875rem;
 }
+
+/* ── Admin answer buttons (in-game, admin-as-player) ── */
+.admin-answer-area {
+  margin-top: var(--space-md);
+}
+
+.answer-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: var(--space-sm);
+}
+
+.admin-answer-btn {
+  padding: var(--space-sm) var(--space-md);
+  background: var(--color-surface);
+  border: 2px solid var(--color-border);
+  border-radius: var(--radius-md);
+  color: var(--color-text);
+  font-size: 0.95rem;
+  font-weight: 600;
+  cursor: pointer;
+  transition: background 0.15s, border-color 0.15s;
+  text-align: center;
+}
+
+.admin-answer-btn:hover:not(:disabled) {
+  background: var(--color-primary-dim, rgba(168,85,247,0.15));
+  border-color: var(--color-primary, #a855f7);
+}
+
+.admin-answer-btn.selected {
+  background: var(--color-primary-dim, rgba(168,85,247,0.2));
+  border-color: var(--color-primary, #a855f7);
+  color: var(--color-primary, #a855f7);
+}
+
+.admin-answer-btn:disabled {
+  opacity: 0.5;
+  cursor: not-allowed;
+}
+
+.admin-answer-status {
+  font-size: 0.85rem;
+  color: var(--color-text-muted, #a4a4b8);
+  text-align: center;
+}

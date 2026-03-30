@@ -182,10 +182,16 @@
                 <div id="game-leaderboard" class="leaderboard"></div>
             </section>
 
+            <!-- Admin answer buttons (shown during QUESTION_ACTIVE if admin joined as player) -->
+            <div id="admin-answer-area" class="admin-answer-area mt-md" style="display:none;">
+                <div id="admin-answer-buttons" class="answer-grid"></div>
+                <div id="admin-answer-status" class="admin-answer-status mt-sm"></div>
+            </div>
+
             <!-- Admin Actions — Sticky -->
             <div class="admin-actions lobby-actions--sticky mt-lg">
                 <button type="button" id="next-question-btn" class="btn btn-primary" data-i18n="admin.nextQuestion">N&auml;chste Frage</button>
-                <button type="button" id="end-game-btn" class="btn btn-danger" data-i18n="admin.endGame">Spiel beenden</button>
+                <button type="button" id="end-game-btn" class="btn btn-danger hidden" data-i18n="admin.endGame">Spiel beenden</button>
             </div>
         </div>
 
