@@ -149,23 +149,33 @@ class QuizifyWebSocketHandler:
                 return
             await self._handle_start_game(ws, data, game_state)
 
-        elif msg_type == "next_question":
-            if not is_admin:
+        elif msg_type in ("next_question", "next_round"):
+            player = game_state.get_player_by_ws(ws)
+            if not is_admin and not (player and player.is_admin):
                 await self._send_error(ws, ERR_INVALID_ACTION, "Admin only")
                 return
             await self._handle_next_question(ws, game_state)
 
         elif msg_type == "end_game":
-            if not is_admin:
+            player = game_state.get_player_by_ws(ws)
+            if not is_admin and not (player and player.is_admin):
                 await self._send_error(ws, ERR_INVALID_ACTION, "Admin only")
                 return
             await self._handle_end_game(ws, game_state)
 
         elif msg_type == "reset_game":
-            if not is_admin:
+            player = game_state.get_player_by_ws(ws)
+            if not is_admin and not (player and player.is_admin):
                 await self._send_error(ws, ERR_INVALID_ACTION, "Admin only")
                 return
             await self._handle_reset_game(ws, game_state)
+
+        elif msg_type == "admin_skip":
+            player = game_state.get_player_by_ws(ws)
+            if not is_admin and not (player and player.is_admin):
+                await self._send_error(ws, ERR_INVALID_ACTION, "Admin only")
+                return
+            await self._handle_next_question(ws, game_state)
 
         elif msg_type == "reconnect":
             await self._handle_reconnect(ws, data, game_state)
@@ -232,9 +242,9 @@ class QuizifyWebSocketHandler:
             # Cancel pending removal on reconnect
             self._cancel_pending_removal(name)
 
-            # If admin joins as player, keep the WS in admin connections
-            # so it receives both admin state updates and player messages
-            if is_admin:
+            # Mark player session as admin if they joined with is_admin flag
+            if is_admin and player:
+                player.is_admin = True
                 self._admin_connections.add(ws)
 
             # Generate session token for reconnect
