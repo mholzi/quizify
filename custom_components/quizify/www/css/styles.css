@@ -1266,6 +1266,9 @@ button, .btn {
     padding: var(--space-md);
     background: linear-gradient(transparent, var(--color-bg-primary) 20%);
     z-index: var(--z-control-bar);
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
 }
 
 /* QR Section — Compact layout */

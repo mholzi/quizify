@@ -475,6 +475,14 @@
         // Close modal — admin stays on admin page
         closeAdminJoinModal();
         els.adminJoinBtn.textContent = 'Beitreten';
+
+        // Hide participate button — admin can only join once
+        if (els.participateBtn) {
+            els.participateBtn.disabled = true;
+            els.participateBtn.style.opacity = '0.4';
+            els.participateBtn.style.pointerEvents = 'none';
+            els.participateBtn.textContent = '✓ Beigetreten als ' + name;
+        }
     }
 
     function setupAdminJoinModal() {
