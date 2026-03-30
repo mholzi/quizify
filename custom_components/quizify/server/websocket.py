@@ -1,15 +1,670 @@
-# TODO: Implement WebSocket protocol in Phase 5
 """WebSocket handler for Quizify real-time communication."""
 
 from __future__ import annotations
 
+import asyncio
 import logging
+import random
+from typing import TYPE_CHECKING, Any
+
+from aiohttp import WSMsgType, web
+
+from custom_components.quizify.const import (
+    DOMAIN,
+    ERR_ALREADY_SUBMITTED,
+    ERR_GAME_ALREADY_STARTED,
+    ERR_GAME_FULL,
+    ERR_GAME_NOT_STARTED,
+    ERR_INVALID_ACTION,
+    ERR_NAME_INVALID,
+    ERR_NAME_TAKEN,
+    ERR_NOT_IN_GAME,
+    ERR_ROUND_EXPIRED,
+    LOBBY_DISCONNECT_GRACE_PERIOD,
+)
+from custom_components.quizify.game.powerups import PowerUpEffect, PowerUpType
+from custom_components.quizify.game.state import AnswerResult, GamePhase, QuizifyGameState
+from custom_components.quizify.server.serializers import (
+    get_game_state,
+    serialize_finale,
+    serialize_leaderboard,
+    serialize_player_list,
+    serialize_question_for_admin,
+    serialize_question_for_player,
+    serialize_round_summary,
+)
+
+if TYPE_CHECKING:
+    from homeassistant.core import HomeAssistant
 
 _LOGGER = logging.getLogger(__name__)
 
 
-class QuizifyWebSocketView:
-    """Handles WebSocket connections for real-time game updates."""
+class QuizifyWebSocketHandler:
+    """Handle WebSocket connections for Quizify."""
 
-    def __init__(self) -> None:
-        """Initialize the WebSocket handler."""
+    HEARTBEAT_INTERVAL = 30
+
+    def __init__(self, hass: HomeAssistant) -> None:
+        """Initialize handler."""
+        self.hass = hass
+        self.connections: set[web.WebSocketResponse] = set()
+        self._admin_connections: set[web.WebSocketResponse] = set()
+        self._pending_removals: dict[str, asyncio.Task] = {}
+        self._timer_tick_task: asyncio.Task | None = None
+        # Answer shuffle mapping: original_index -> shuffled_index per round
+        self._shuffle_map: list[int] = []  # shuffled_index -> original_index
+        self._shuffled_answers: list[str] = []
+
+    async def handle(self, request: web.Request) -> web.WebSocketResponse:
+        """Handle WebSocket connection."""
+        ws = web.WebSocketResponse(heartbeat=self.HEARTBEAT_INTERVAL)
+        await ws.prepare(request)
+
+        is_admin = request.query.get("role") == "admin"
+
+        self.connections.add(ws)
+        if is_admin:
+            self._admin_connections.add(ws)
+
+        _LOGGER.debug(
+            "WebSocket connected (admin=%s), total: %d",
+            is_admin,
+            len(self.connections),
+        )
+
+        try:
+            async for msg in ws:
+                if msg.type == WSMsgType.TEXT:
+                    try:
+                        await self._handle_message(ws, msg.json(), is_admin)
+                    except Exception as err:  # noqa: BLE001
+                        _LOGGER.warning("Failed to handle WebSocket message: %s", err)
+                elif msg.type == WSMsgType.ERROR:
+                    _LOGGER.error("WebSocket error: %s", ws.exception())
+        finally:
+            self.connections.discard(ws)
+            self._admin_connections.discard(ws)
+            await self._handle_disconnect(ws)
+            _LOGGER.debug("WebSocket disconnected, total: %d", len(self.connections))
+
+        return ws
+
+    # ------------------------------------------------------------------
+    # Message dispatch
+    # ------------------------------------------------------------------
+
+    async def _handle_message(
+        self, ws: web.WebSocketResponse, data: dict, is_admin: bool
+    ) -> None:
+        """Route incoming WebSocket message."""
+        msg_type = data.get("type")
+        game_state = get_game_state(self.hass)
+
+        if not game_state:
+            await self._send_error(ws, ERR_GAME_NOT_STARTED, "No active game")
+            return
+
+        if msg_type == "admin_connect":
+            await self._handle_admin_connect(ws, game_state)
+
+        elif msg_type == "join":
+            await self._handle_join(ws, data, game_state)
+
+        elif msg_type == "submit_answer":
+            await self._handle_submit_answer(ws, data, game_state)
+
+        elif msg_type == "use_powerup":
+            await self._handle_use_powerup(ws, data, game_state)
+
+        elif msg_type == "start_game":
+            if not is_admin:
+                await self._send_error(ws, ERR_INVALID_ACTION, "Admin only")
+                return
+            await self._handle_start_game(ws, data, game_state)
+
+        elif msg_type == "next_question":
+            if not is_admin:
+                await self._send_error(ws, ERR_INVALID_ACTION, "Admin only")
+                return
+            await self._handle_next_question(ws, game_state)
+
+        elif msg_type == "end_game":
+            if not is_admin:
+                await self._send_error(ws, ERR_INVALID_ACTION, "Admin only")
+                return
+            await self._handle_end_game(ws, game_state)
+
+        elif msg_type == "reset_game":
+            if not is_admin:
+                await self._send_error(ws, ERR_INVALID_ACTION, "Admin only")
+                return
+            await self._handle_reset_game(ws, game_state)
+
+        elif msg_type == "get_state":
+            state_msg = game_state.get_state_snapshot()
+            state_msg["type"] = "game_state"
+            await self._safe_send(ws, state_msg)
+
+        else:
+            _LOGGER.warning("Unknown message type: %s", msg_type)
+
+    # ------------------------------------------------------------------
+    # Admin connect
+    # ------------------------------------------------------------------
+
+    async def _handle_admin_connect(
+        self, ws: web.WebSocketResponse, game_state: QuizifyGameState
+    ) -> None:
+        """Send full state to admin on connect."""
+        state = game_state.get_state_snapshot()
+        state["type"] = "game_state"
+        # Add join URL for admin
+        state["join_url"] = f"/quizify/player"
+        await self._safe_send(ws, state)
+
+    # ------------------------------------------------------------------
+    # Player join
+    # ------------------------------------------------------------------
+
+    async def _handle_join(
+        self, ws: web.WebSocketResponse, data: dict, game_state: QuizifyGameState
+    ) -> None:
+        """Handle player join."""
+        name = data.get("name", "").strip()
+
+        success, error_code = game_state.add_player(name, ws)
+
+        if success:
+            player = game_state.get_player(name)
+            # Cancel pending removal on reconnect
+            self._cancel_pending_removal(name)
+
+            # Send join confirmation
+            powerup = game_state._powerup_manager.get_powerup(name)
+            await self._safe_send(ws, {
+                "type": "joined",
+                "player_id": name,
+                "powerup": powerup.value if powerup else None,
+            })
+
+            # Send current state to the joining player
+            state = game_state.get_state_snapshot()
+            state["type"] = "game_state"
+            await self._safe_send(ws, state)
+
+            # Broadcast player list to everyone
+            players = game_state.get_players()
+            await self._broadcast({
+                "type": "player_joined",
+                "players": serialize_player_list(players),
+            })
+        else:
+            error_messages = {
+                ERR_NAME_TAKEN: "Name bereits vergeben",
+                ERR_NAME_INVALID: "Bitte gib einen Namen ein",
+                ERR_GAME_FULL: "Spiel ist voll",
+            }
+            await self._send_error(
+                ws, error_code or ERR_INVALID_ACTION,
+                error_messages.get(error_code or "", "Beitritt fehlgeschlagen"),
+            )
+
+    # ------------------------------------------------------------------
+    # Submit answer
+    # ------------------------------------------------------------------
+
+    async def _handle_submit_answer(
+        self, ws: web.WebSocketResponse, data: dict, game_state: QuizifyGameState
+    ) -> None:
+        """Handle answer submission from player."""
+        player = game_state.get_player_by_ws(ws)
+        if not player:
+            await self._send_error(ws, ERR_NOT_IN_GAME, "Not in game")
+            return
+
+        if game_state.phase != GamePhase.QUESTION_ACTIVE:
+            await self._send_error(ws, ERR_GAME_NOT_STARTED, "No active question")
+            return
+
+        shuffled_index = data.get("answer_index")
+        if shuffled_index is None or not isinstance(shuffled_index, int):
+            await self._send_error(ws, ERR_INVALID_ACTION, "Invalid answer index")
+            return
+
+        # Map shuffled index back to original index
+        if 0 <= shuffled_index < len(self._shuffle_map):
+            original_index = self._shuffle_map[shuffled_index]
+        else:
+            await self._send_error(ws, ERR_INVALID_ACTION, "Answer index out of range")
+            return
+
+        result = game_state.submit_answer(player.name, original_index)
+
+        if isinstance(result, AnswerResult):
+            # Calculate speed/streak bonus breakdown
+            base_points = result.points_earned
+            await self._safe_send(ws, {
+                "type": "answer_result",
+                "correct": result.correct,
+                "points_earned": result.points_earned,
+                "speed_bonus": 0,
+                "streak_bonus": 0,
+                "new_streak": result.new_streak,
+                "new_total": result.new_total,
+            })
+
+            # If round was auto-evaluated (all submitted), broadcast summary
+            if game_state.phase == GamePhase.ANSWER_REVEAL:
+                await self._broadcast_round_summary(game_state)
+        elif isinstance(result, str):
+            error_messages = {
+                ERR_ALREADY_SUBMITTED: "Bereits geantwortet",
+                ERR_ROUND_EXPIRED: "Zeit abgelaufen",
+                ERR_NOT_IN_GAME: "Nicht im Spiel",
+                ERR_GAME_NOT_STARTED: "Kein aktives Spiel",
+            }
+            await self._send_error(
+                ws, result, error_messages.get(result, result)
+            )
+
+    # ------------------------------------------------------------------
+    # Power-ups
+    # ------------------------------------------------------------------
+
+    async def _handle_use_powerup(
+        self, ws: web.WebSocketResponse, data: dict, game_state: QuizifyGameState
+    ) -> None:
+        """Handle power-up usage."""
+        player = game_state.get_player_by_ws(ws)
+        if not player:
+            await self._send_error(ws, ERR_NOT_IN_GAME, "Not in game")
+            return
+
+        target_id = data.get("target_player_id")
+        result = game_state.use_powerup(player.name, target_id)
+
+        if isinstance(result, PowerUpEffect):
+            # Broadcast power-up application to all
+            effect_data: dict[str, Any] = {
+                "type": "powerup_applied",
+                "powerup_type": result.type.value,
+                "source_player": result.source_player,
+                "target_player": result.target_player,
+            }
+
+            # For joker, send the removed answer to the using player only
+            if result.type == PowerUpType.JOKER and result.joker_remove_index is not None:
+                # Map original index to shuffled index for the player
+                shuffled_remove_idx = None
+                for shuffled_idx, orig_idx in enumerate(self._shuffle_map):
+                    if orig_idx == result.joker_remove_index:
+                        shuffled_remove_idx = shuffled_idx
+                        break
+
+                await self._safe_send(ws, {
+                    "type": "powerup_applied",
+                    "powerup_type": "joker",
+                    "source_player": result.source_player,
+                    "joker_remove_index": shuffled_remove_idx,
+                })
+            else:
+                await self._broadcast(effect_data)
+        elif isinstance(result, str):
+            await self._send_error(ws, result, "Power-up nicht verfügbar")
+
+    # ------------------------------------------------------------------
+    # Admin: start game
+    # ------------------------------------------------------------------
+
+    async def _handle_start_game(
+        self, ws: web.WebSocketResponse, data: dict, game_state: QuizifyGameState
+    ) -> None:
+        """Handle admin start_game command."""
+        category = data.get("category")
+        difficulty = data.get("difficulty")
+        num_rounds = data.get("num_rounds", 10)
+
+        try:
+            game_info = game_state.start_game(
+                category=category,
+                difficulty=difficulty,
+                num_rounds=num_rounds,
+            )
+        except ValueError as err:
+            await self._send_error(ws, ERR_GAME_ALREADY_STARTED, str(err))
+            return
+
+        # Start the first question
+        await self._start_next_question(game_state)
+
+    # ------------------------------------------------------------------
+    # Admin: next question
+    # ------------------------------------------------------------------
+
+    async def _handle_next_question(
+        self, ws: web.WebSocketResponse, game_state: QuizifyGameState
+    ) -> None:
+        """Handle admin next_question command."""
+        if game_state.phase not in (GamePhase.LOBBY, GamePhase.ANSWER_REVEAL):
+            await self._send_error(ws, ERR_INVALID_ACTION, "Cannot advance now")
+            return
+
+        await self._start_next_question(game_state)
+
+    # ------------------------------------------------------------------
+    # Admin: end game
+    # ------------------------------------------------------------------
+
+    async def _handle_end_game(
+        self, ws: web.WebSocketResponse, game_state: QuizifyGameState
+    ) -> None:
+        """Handle admin end_game command."""
+        self._cancel_timer_tick()
+        finale_data = game_state.end_game()
+
+        from custom_components.quizify.game.scoring import calculate_podium  # noqa: PLC0415
+
+        podium = calculate_podium(game_state.get_players())
+        all_players = game_state.get_players()
+        finale_msg = serialize_finale(podium, all_players)
+        await self._broadcast(finale_msg)
+
+    # ------------------------------------------------------------------
+    # Admin: reset game
+    # ------------------------------------------------------------------
+
+    async def _handle_reset_game(
+        self, ws: web.WebSocketResponse, game_state: QuizifyGameState
+    ) -> None:
+        """Handle admin reset_game command (return to lobby)."""
+        self._cancel_timer_tick()
+        game_state.reset_to_lobby()
+
+        await self._broadcast({"type": "game_reset"})
+
+        state = game_state.get_state_snapshot()
+        state["type"] = "game_state"
+        await self._broadcast(state)
+
+    # ------------------------------------------------------------------
+    # Question flow
+    # ------------------------------------------------------------------
+
+    async def _start_next_question(self, game_state: QuizifyGameState) -> None:
+        """Start the next question: shuffle answers, broadcast, start timer ticks."""
+        self._cancel_timer_tick()
+
+        question = game_state.start_next_question()
+        if question is None:
+            # Game ended (no more questions or round limit reached)
+            if game_state.phase == GamePhase.FINALE:
+                from custom_components.quizify.game.scoring import calculate_podium  # noqa: PLC0415
+
+                podium = calculate_podium(game_state.get_players())
+                all_players = game_state.get_players()
+                finale_msg = serialize_finale(podium, all_players)
+                await self._broadcast(finale_msg)
+            return
+
+        # Shuffle answers — build mapping
+        indices = list(range(len(question.answers)))
+        random.shuffle(indices)
+        self._shuffle_map = indices  # shuffled_pos -> original_index
+        self._shuffled_answers = [question.answers[i].text for i in indices]
+
+        # Broadcast question to players (no correct flag)
+        player_msg = serialize_question_for_player(
+            question=question,
+            shuffled_answers=self._shuffled_answers,
+            round_num=game_state.round,
+            total_rounds=game_state.total_rounds,
+            timer_duration=game_state._round_duration,
+        )
+        await self._broadcast_to_players(player_msg)
+
+        # Send question with correct answer to admin
+        admin_msg = serialize_question_for_admin(
+            question=question,
+            round_num=game_state.round,
+            total_rounds=game_state.total_rounds,
+            timer_duration=game_state._round_duration,
+        )
+        await self._broadcast_to_admins(admin_msg)
+
+        # Notify players who got a power-up this round
+        for player in game_state.get_players():
+            powerup = game_state._powerup_manager.get_powerup(player.name)
+            if powerup and player.connected:
+                await self._safe_send(player.ws, {
+                    "type": "powerup_assigned",
+                    "powerup_type": powerup.value,
+                })
+
+        # Broadcast game state
+        await self._broadcast({
+            "type": "game_state",
+            "phase": game_state.phase.value,
+            "round": game_state.round,
+            "total_rounds": game_state.total_rounds,
+            "player_count": len(game_state.get_players()),
+        })
+
+        # Start timer tick task
+        self._start_timer_tick(game_state)
+
+    # ------------------------------------------------------------------
+    # Timer ticks
+    # ------------------------------------------------------------------
+
+    def _start_timer_tick(self, game_state: QuizifyGameState) -> None:
+        """Start async task that sends timer_tick every second."""
+        self._cancel_timer_tick()
+
+        async def tick_loop() -> None:
+            try:
+                duration = game_state._round_duration
+                remaining = duration
+                while remaining > 0 and game_state.phase == GamePhase.QUESTION_ACTIVE:
+                    await self._broadcast({"type": "timer_tick", "remaining": round(remaining, 1)})
+                    await asyncio.sleep(1.0)
+                    remaining -= 1.0
+
+                # Timer expired
+                if game_state.phase == GamePhase.QUESTION_ACTIVE:
+                    await self._broadcast({"type": "timer_tick", "remaining": 0})
+                    # Auto-evaluate round
+                    game_state.evaluate_round()
+                    if game_state.phase == GamePhase.ANSWER_REVEAL:
+                        await self._broadcast_round_summary(game_state)
+            except asyncio.CancelledError:
+                pass
+
+        self._timer_tick_task = asyncio.ensure_future(tick_loop())
+
+    def _cancel_timer_tick(self) -> None:
+        """Cancel the timer tick task."""
+        if self._timer_tick_task is not None:
+            self._timer_tick_task.cancel()
+            self._timer_tick_task = None
+
+    # ------------------------------------------------------------------
+    # Round summary broadcast
+    # ------------------------------------------------------------------
+
+    async def _broadcast_round_summary(self, game_state: QuizifyGameState) -> None:
+        """Broadcast round summary to all clients."""
+        summary = game_state.get_round_summary()
+        if not summary:
+            return
+
+        # Find the correct answer's shuffled index
+        correct_shuffled_idx = -1
+        for a in summary.question.answers:
+            if a.correct:
+                original_idx = summary.question.answers.index(a)
+                for shuffled_idx, orig_idx in enumerate(self._shuffle_map):
+                    if orig_idx == original_idx:
+                        correct_shuffled_idx = shuffled_idx
+                        break
+                break
+
+        leaderboard = serialize_leaderboard(game_state.get_players())
+
+        summary_msg = serialize_round_summary(
+            correct_answer_index=correct_shuffled_idx,
+            correct_answer_text=summary.correct_answer.text,
+            fun_fact=summary.fun_fact,
+            leaderboard=leaderboard,
+            round_num=game_state.round,
+            total_rounds=game_state.total_rounds,
+        )
+        await self._broadcast(summary_msg)
+
+    # ------------------------------------------------------------------
+    # Disconnect handling
+    # ------------------------------------------------------------------
+
+    async def _handle_disconnect(self, ws: web.WebSocketResponse) -> None:
+        """Handle WebSocket disconnection."""
+        game_state = get_game_state(self.hass)
+        if not game_state:
+            return
+
+        player = game_state.get_player_by_ws(ws)
+        if not player:
+            return
+
+        player.connected = False
+        _LOGGER.info("Player disconnected: %s", player.name)
+
+        # Broadcast updated player list
+        players = game_state.get_players()
+        await self._broadcast({
+            "type": "player_left",
+            "players": serialize_player_list(players),
+        })
+
+        # In lobby, schedule removal after grace period
+        if game_state.phase == GamePhase.LOBBY:
+            async def remove_after_timeout(name: str) -> None:
+                await asyncio.sleep(LOBBY_DISCONNECT_GRACE_PERIOD)
+                gs = get_game_state(self.hass)
+                if gs:
+                    p = gs.get_player(name)
+                    if p and not p.connected:
+                        gs.remove_player(name)
+                        remaining = gs.get_players()
+                        await self._broadcast({
+                            "type": "player_left",
+                            "players": serialize_player_list(remaining),
+                        })
+                        _LOGGER.info("Removed disconnected player after grace period: %s", name)
+
+            task = asyncio.ensure_future(remove_after_timeout(player.name))
+            self._pending_removals[player.name] = task
+
+    def _cancel_pending_removal(self, name: str) -> None:
+        """Cancel a pending player removal on reconnect."""
+        task = self._pending_removals.pop(name, None)
+        if task and not task.done():
+            task.cancel()
+            _LOGGER.info("Cancelled removal for reconnecting player: %s", name)
+
+    # ------------------------------------------------------------------
+    # Broadcast helpers
+    # ------------------------------------------------------------------
+
+    async def _broadcast(self, message: dict) -> None:
+        """Broadcast message to all connected clients in parallel."""
+        if not self.connections:
+            return
+        tasks = [
+            self._safe_send(ws, message)
+            for ws in list(self.connections)
+            if not ws.closed
+        ]
+        if tasks:
+            await asyncio.gather(*tasks)
+
+    async def _broadcast_to_players(self, message: dict) -> None:
+        """Broadcast to non-admin connections only."""
+        player_conns = self.connections - self._admin_connections
+        if not player_conns:
+            return
+        tasks = [
+            self._safe_send(ws, message)
+            for ws in list(player_conns)
+            if not ws.closed
+        ]
+        if tasks:
+            await asyncio.gather(*tasks)
+
+    async def _broadcast_to_admins(self, message: dict) -> None:
+        """Broadcast to admin connections only."""
+        if not self._admin_connections:
+            return
+        tasks = [
+            self._safe_send(ws, message)
+            for ws in list(self._admin_connections)
+            if not ws.closed
+        ]
+        if tasks:
+            await asyncio.gather(*tasks)
+
+    async def _safe_send(self, ws: web.WebSocketResponse, message: dict) -> None:
+        """Send message to a single WebSocket, catching errors."""
+        try:
+            await ws.send_json(message)
+        except Exception as err:  # noqa: BLE001
+            _LOGGER.warning("Failed to send to WebSocket: %s", err)
+
+    async def _send_error(self, ws: web.WebSocketResponse, code: str, message: str) -> None:
+        """Send an error message to a client."""
+        await self._safe_send(ws, {
+            "type": "error",
+            "code": code,
+            "message": message,
+        })
+
+    # ------------------------------------------------------------------
+    # Broadcast callback for game state
+    # ------------------------------------------------------------------
+
+    async def broadcast_state(self, payload: dict[str, Any] | None = None) -> None:
+        """Broadcast callback — called by game state on auto-events."""
+        if payload is not None:
+            event = payload.get("event")
+            if event == "round_evaluated":
+                game_state = get_game_state(self.hass)
+                if game_state:
+                    await self._broadcast_round_summary(game_state)
+                return
+            if event == "game_ended":
+                game_state = get_game_state(self.hass)
+                if game_state:
+                    from custom_components.quizify.game.scoring import calculate_podium  # noqa: PLC0415
+
+                    podium = calculate_podium(game_state.get_players())
+                    all_players = game_state.get_players()
+                    finale_msg = serialize_finale(podium, all_players)
+                    await self._broadcast(finale_msg)
+                return
+
+        # Default: broadcast full state
+        game_state = get_game_state(self.hass)
+        if game_state:
+            state = game_state.get_state_snapshot()
+            state["type"] = "game_state"
+            await self._broadcast(state)
+
+    async def cleanup_game_tasks(self) -> None:
+        """Cancel all pending tasks."""
+        self._cancel_timer_tick()
+
+        for task in list(self._pending_removals.values()):
+            if not task.done():
+                task.cancel()
+        self._pending_removals.clear()
+
+        _LOGGER.debug("Cleaned up all pending game tasks")

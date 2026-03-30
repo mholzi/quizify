@@ -19,12 +19,12 @@ from .game.state import QuizifyGameState
 from .server import async_register_static_paths
 from .server.views import (
     AdminView,
+    GameStatusView,
     LauncherView,
     PlayerView,
-    GameStatusView,
     StatusView,
 )
-from .server.websocket import QuizifyWebSocketView
+from .server.websocket import QuizifyWebSocketHandler
 
 if TYPE_CHECKING:
     from homeassistant.config_entries import ConfigEntry
@@ -41,12 +41,19 @@ async def async_setup_entry(hass: HomeAssistant, entry: ConfigEntry) -> bool:
     hass.data.setdefault(DOMAIN, {})
 
     # Initialize game state
-    game_state = QuizifyGameState()
+    game_state = QuizifyGameState(hass=hass, entry_id=entry.entry_id)
+
+    # Initialize WebSocket handler
+    ws_handler = QuizifyWebSocketHandler(hass)
+
+    # Wire broadcast callback so game state can push events to clients
+    game_state.set_broadcast_callback(ws_handler.broadcast_state)
 
     # Store game infrastructure
     hass.data[DOMAIN] = {
         "entry_id": entry.entry_id,
         "game": game_state,
+        "ws_handler": ws_handler,
     }
 
     # Register HTTP views
@@ -55,6 +62,9 @@ async def async_setup_entry(hass: HomeAssistant, entry: ConfigEntry) -> bool:
     hass.http.register_view(PlayerView(hass))
     hass.http.register_view(GameStatusView(hass))
     hass.http.register_view(StatusView(hass))
+
+    # Register WebSocket endpoint
+    hass.http.app.router.add_get("/api/quizify/ws", ws_handler.handle)
 
     # Register static file paths
     await async_register_static_paths(hass)
@@ -78,6 +88,13 @@ async def async_setup_entry(hass: HomeAssistant, entry: ConfigEntry) -> bool:
 async def async_unload_entry(hass: HomeAssistant, entry: ConfigEntry) -> bool:  # noqa: ARG001
     """Unload a config entry."""
     _LOGGER.debug("Unloading Quizify integration")
+
+    # Clean up WebSocket handler tasks
+    domain_data = hass.data.get(DOMAIN)
+    if domain_data:
+        ws_handler = domain_data.get("ws_handler")
+        if ws_handler:
+            await ws_handler.cleanup_game_tasks()
 
     # Remove sidebar panel
     try:
