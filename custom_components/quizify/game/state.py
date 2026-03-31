@@ -393,6 +393,9 @@ class QuizifyGameState:
         """Manually trigger round evaluation (e.g. when timer expires)."""
         if self.phase != GamePhase.QUESTION_ACTIVE:
             return None
+        # Guard against double evaluation (race between timer tick and all_submitted)
+        if self._round_summary is not None:
+            return self._round_summary
         return self._do_evaluate_round()
 
     def _do_evaluate_round(self) -> RoundSummary:

@@ -655,9 +655,9 @@ class QuizifyWebSocketHandler:
         # Build all_answers: what each player answered this round
         all_answers = []
         for player in game_state.get_players():
-            if player.submitted is not None:
+            if player.submitted and player.current_answer is not None:
                 # Map original answer index to shuffled index for display
-                submitted_orig = player.submitted
+                submitted_orig = player.current_answer  # player.submitted is bool; use current_answer for the index
                 submitted_shuffled = None
                 for sh_idx, orig_idx in enumerate(self._shuffle_map):
                     if orig_idx == submitted_orig:
