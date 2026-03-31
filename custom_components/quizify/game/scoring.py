@@ -5,8 +5,8 @@ from __future__ import annotations
 from .player import PlayerSession
 from .types import DIFFICULTY_MULTIPLIERS, Difficulty
 
-BASE_POINTS = 1000
-MAX_SPEED_BONUS = 500
+BASE_POINTS = 10
+MAX_SPEED_BONUS = 5
 MAX_STREAK_MULTIPLIER_STACKS = 5
 STREAK_MULTIPLIER_PER_STACK = 0.1
 
