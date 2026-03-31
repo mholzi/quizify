@@ -31,6 +31,7 @@ class Question:
     difficulty: str = "medium"
     fun_fact: str = ""
     category: str = ""
+    language: str = "de"
 
 
 def _parse_question(data: dict, category_name: str) -> Question | None:
@@ -100,11 +101,13 @@ class QuestionBank:
 
         questions_data = raw.get("questions", [])
         category_name = raw.get("name", category)
+        pack_language = raw.get("language", "de")
         questions: list[Question] = []
 
         for entry in questions_data:
             q = _parse_question(entry, category_name)
             if q is not None:
+                q.language = pack_language
                 questions.append(q)
 
         self._categories[category] = questions
@@ -148,11 +151,14 @@ class QuestionBank:
         return shuffled
 
     def reset(
-        self, category: str | None = None, difficulty: str | None = None
+        self,
+        category: str | None = None,
+        difficulty: str | None = None,
+        language: str | None = None,
     ) -> None:
         """Reset and rebuild the question queue for a new game session."""
         self._queue_index = 0
-        self._build_queue(category, difficulty)
+        self._build_queue(category, difficulty, language)
 
     def get_question_count(
         self, category: str, difficulty: str | None = None
@@ -178,7 +184,10 @@ class QuestionBank:
         return question.answers[0]
 
     def _build_queue(
-        self, category: str | None = None, difficulty: str | None = None
+        self,
+        category: str | None = None,
+        difficulty: str | None = None,
+        language: str | None = None,
     ) -> None:
         """Build and shuffle the internal question queue."""
         if category is not None:
@@ -188,6 +197,9 @@ class QuestionBank:
 
         if difficulty is not None:
             pool = [q for q in pool if q.difficulty == difficulty]
+
+        if language is not None:
+            pool = [q for q in pool if q.language == language]
 
         self._queue = self.shuffle_questions(pool)
         self._queue_index = 0

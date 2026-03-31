@@ -89,6 +89,7 @@ class QuizifyGameState:
         self.total_rounds: int = 10
         self.category: str | None = None
         self.difficulty: str = DIFFICULTY_DEFAULT
+        self.language: str = "de"
         self.join_url: str | None = None
 
         # Sub-managers
@@ -165,6 +166,7 @@ class QuizifyGameState:
         category: str | None = None,
         difficulty: str | None = None,
         num_rounds: int = 10,
+        language: str | None = None,
     ) -> dict[str, Any]:
         """Start a new game session.
 
@@ -177,12 +179,13 @@ class QuizifyGameState:
         self.game_id = secrets.token_urlsafe(8)
         self.category = category
         self.difficulty = difficulty or DIFFICULTY_DEFAULT
+        self.language = language or "de"
         self.total_rounds = num_rounds
         self.round = 0
 
         # Load questions
         self._question_bank.load_all_categories()
-        self._question_bank.reset(category=category, difficulty=difficulty)
+        self._question_bank.reset(category=category, difficulty=difficulty, language=self.language)
 
         # Verify questions are available
         if not self._question_bank._queue:

@@ -1,0 +1,607 @@
+{
+  "name": "Animals & Nature",
+  "language": "en",
+  "version": "1.0",
+  "questions": [
+    {
+      "id": "nat_en_001",
+      "question": "How many hearts does an octopus have?",
+      "answers": [
+        {"text": "2", "correct": false},
+        {"text": "3", "correct": true},
+        {"text": "5", "correct": false}
+      ],
+      "difficulty": "easy",
+      "fun_fact": "An octopus has three hearts: two pump blood to the gills, and the third pumps it to the rest of the body. The main heart stops beating when the octopus swims — which is why they prefer crawling.",
+      "category": "Animals & Nature"
+    },
+    {
+      "id": "nat_en_002",
+      "question": "Which mammal cannot jump?",
+      "answers": [
+        {"text": "Hippopotamus", "correct": false},
+        {"text": "Elephant", "correct": true},
+        {"text": "Rhinoceros", "correct": false}
+      ],
+      "difficulty": "easy",
+      "fun_fact": "Elephants are the only mammals that cannot jump. Their bone structure simply doesn't allow it — all four feet must remain on the ground at all times.",
+      "category": "Animals & Nature"
+    },
+    {
+      "id": "nat_en_003",
+      "question": "How long can a Greenland shark live?",
+      "answers": [
+        {"text": "Up to 150 years", "correct": false},
+        {"text": "Up to 300 years", "correct": false},
+        {"text": "Up to 500 years", "correct": true}
+      ],
+      "difficulty": "hard",
+      "fun_fact": "The Greenland shark is the longest-lived vertebrate known to science. It reaches sexual maturity at around 150 years old — one individual was estimated to be around 500 years old.",
+      "category": "Animals & Nature"
+    },
+    {
+      "id": "nat_en_004",
+      "question": "Which animal sleeps only about 2 hours per day?",
+      "answers": [
+        {"text": "Giraffe", "correct": true},
+        {"text": "Horse", "correct": false},
+        {"text": "Dolphin", "correct": false}
+      ],
+      "difficulty": "medium",
+      "fun_fact": "Giraffes sleep an average of just 1.9 hours a day, often in short 5-minute naps. They rarely lie down because getting back up takes too long and leaves them vulnerable.",
+      "category": "Animals & Nature"
+    },
+    {
+      "id": "nat_en_005",
+      "question": "Which insect can pull 850 times its own body weight?",
+      "answers": [
+        {"text": "Ant", "correct": false},
+        {"text": "Dung beetle", "correct": true},
+        {"text": "Stag beetle", "correct": false}
+      ],
+      "difficulty": "medium",
+      "fun_fact": "The horned dung beetle (Onthophagus taurus) is the world's strongest animal relative to its weight. That's equivalent to a human pulling six fully loaded double-decker buses.",
+      "category": "Animals & Nature"
+    },
+    {
+      "id": "nat_en_006",
+      "question": "Which animal has the highest blood pressure of any living creature?",
+      "answers": [
+        {"text": "Blue whale", "correct": false},
+        {"text": "Giraffe", "correct": true},
+        {"text": "Elephant", "correct": false}
+      ],
+      "difficulty": "medium",
+      "fun_fact": "Giraffes have a blood pressure of around 280/180 mmHg — twice that of humans. Their heart weighs up to 12 kg and must pump blood almost 2 metres up to the brain.",
+      "category": "Animals & Nature"
+    },
+    {
+      "id": "nat_en_007",
+      "question": "How do elephants communicate over long distances?",
+      "answers": [
+        {"text": "Through ultrasound", "correct": false},
+        {"text": "Through infrasound vibrations in the ground", "correct": true},
+        {"text": "Through chemical signals in the air", "correct": false}
+      ],
+      "difficulty": "medium",
+      "fun_fact": "Elephants produce infrasound waves that travel through the ground and are detected by other elephants through their feet. They can communicate over distances of up to 32 kilometres.",
+      "category": "Animals & Nature"
+    },
+    {
+      "id": "nat_en_008",
+      "question": "Which bird can fly backwards?",
+      "answers": [
+        {"text": "Kingfisher", "correct": false},
+        {"text": "Hummingbird", "correct": true},
+        {"text": "Swift", "correct": false}
+      ],
+      "difficulty": "easy",
+      "fun_fact": "Hummingbirds are the only birds capable of sustained backwards flight. Their wings beat up to 80 times per second, and their heart beats over 1,200 times per minute.",
+      "category": "Animals & Nature"
+    },
+    {
+      "id": "nat_en_009",
+      "question": "Which animal can change sex during its lifetime?",
+      "answers": [
+        {"text": "Clownfish", "correct": true},
+        {"text": "Goldfish", "correct": false},
+        {"text": "Pufferfish", "correct": false}
+      ],
+      "difficulty": "medium",
+      "fun_fact": "All clownfish are born male. The dominant female leads the group — if she dies, the top-ranking male transforms into a female. This means Nemo would have become Nemo's new mum.",
+      "category": "Animals & Nature"
+    },
+    {
+      "id": "nat_en_010",
+      "question": "How much DNA do humans share with bananas?",
+      "answers": [
+        {"text": "About 25%", "correct": false},
+        {"text": "About 44%", "correct": false},
+        {"text": "About 60%", "correct": true}
+      ],
+      "difficulty": "hard",
+      "fun_fact": "Humans and bananas share around 60% of their DNA. Many genes governing basic cell functions are similar across nearly all living things because they come from common ancestors.",
+      "category": "Animals & Nature"
+    },
+    {
+      "id": "nat_en_011",
+      "question": "Which animal has the longest pregnancy?",
+      "answers": [
+        {"text": "Blue whale (12 months)", "correct": false},
+        {"text": "Elephant (22 months)", "correct": true},
+        {"text": "Rhinoceros (18 months)", "correct": false}
+      ],
+      "difficulty": "easy",
+      "fun_fact": "African elephants are pregnant for nearly two years — the longest gestation of any land mammal. The calf already weighs around 100 kg at birth.",
+      "category": "Animals & Nature"
+    },
+    {
+      "id": "nat_en_012",
+      "question": "Which plant is considered the fastest-growing in the world?",
+      "answers": [
+        {"text": "Bamboo", "correct": true},
+        {"text": "Eucalyptus", "correct": false},
+        {"text": "Giant water lily", "correct": false}
+      ],
+      "difficulty": "easy",
+      "fun_fact": "Certain bamboo species can grow up to 91 cm per day — almost 1 cm per hour. You can literally watch bamboo grow.",
+      "category": "Animals & Nature"
+    },
+    {
+      "id": "nat_en_013",
+      "question": "Which animal uses tools to open shells?",
+      "answers": [
+        {"text": "Dolphin", "correct": false},
+        {"text": "Sea otter", "correct": true},
+        {"text": "Seal", "correct": false}
+      ],
+      "difficulty": "easy",
+      "fun_fact": "Sea otters lie on their backs, balance a rock on their chest and smash shellfish against it. Each otter has a favourite stone, which it stores in a skin pouch under its arm.",
+      "category": "Animals & Nature"
+    },
+    {
+      "id": "nat_en_014",
+      "question": "How many eyes does a bee have?",
+      "answers": [
+        {"text": "2", "correct": false},
+        {"text": "5", "correct": true},
+        {"text": "8", "correct": false}
+      ],
+      "difficulty": "medium",
+      "fun_fact": "Bees have five eyes: two large compound eyes on the sides of their head and three small simple eyes (ocelli) on top, which measure light intensity and polarisation.",
+      "category": "Animals & Nature"
+    },
+    {
+      "id": "nat_en_015",
+      "question": "Which animal can run on water?",
+      "answers": [
+        {"text": "Basilisk lizard", "correct": true},
+        {"text": "Flying frog", "correct": false},
+        {"text": "Water agama", "correct": false}
+      ],
+      "difficulty": "medium",
+      "fun_fact": "The basilisk lizard, also called the 'Jesus Christ lizard', can run across water at up to 1.5 metres per second. Specialised skin flaps on its hind feet create air pockets beneath the surface.",
+      "category": "Animals & Nature"
+    },
+    {
+      "id": "nat_en_016",
+      "question": "Which is the loudest animal in the world?",
+      "answers": [
+        {"text": "Blue whale", "correct": false},
+        {"text": "Pistol shrimp", "correct": true},
+        {"text": "Howler monkey", "correct": false}
+      ],
+      "difficulty": "hard",
+      "fun_fact": "The pistol shrimp produces a snap of over 200 decibels with its claw — louder than a gunshot. The resulting cavitation bubble briefly reaches temperatures close to the surface of the Sun.",
+      "category": "Animals & Nature"
+    },
+    {
+      "id": "nat_en_017",
+      "question": "How do homing pigeons navigate?",
+      "answers": [
+        {"text": "Using Earth's magnetic field", "correct": true},
+        {"text": "By the stars", "correct": false},
+        {"text": "By the smell of bodies of water", "correct": false}
+      ],
+      "difficulty": "medium",
+      "fun_fact": "Homing pigeons have tiny magnetite crystals in their beaks that act like a built-in compass. They can sense Earth's magnetic field and navigate over hundreds of kilometres.",
+      "category": "Animals & Nature"
+    },
+    {
+      "id": "nat_en_018",
+      "question": "Which animal has the largest brain proportional to its body size?",
+      "answers": [
+        {"text": "Dolphin", "correct": false},
+        {"text": "Ant", "correct": true},
+        {"text": "Hummingbird", "correct": false}
+      ],
+      "difficulty": "hard",
+      "fun_fact": "An ant's brain makes up about 15% of its total body mass. In humans it's only around 2%. Ant colonies display collective intelligence that far exceeds individual brains.",
+      "category": "Animals & Nature"
+    },
+    {
+      "id": "nat_en_019",
+      "question": "How many teeth can a shark produce in its lifetime?",
+      "answers": [
+        {"text": "About 5,000", "correct": false},
+        {"text": "About 15,000", "correct": false},
+        {"text": "Over 30,000", "correct": true}
+      ],
+      "difficulty": "medium",
+      "fun_fact": "Sharks have a conveyor belt of teeth: new rows constantly grow behind existing ones. A single shark can produce over 30,000 teeth in its lifetime.",
+      "category": "Animals & Nature"
+    },
+    {
+      "id": "nat_en_020",
+      "question": "Which tree is the oldest known living organism?",
+      "answers": [
+        {"text": "Giant sequoia", "correct": false},
+        {"text": "Bristlecone pine", "correct": true},
+        {"text": "Olive tree", "correct": false}
+      ],
+      "difficulty": "hard",
+      "fun_fact": "The oldest known bristlecone pine, named 'Methuselah', in California is over 4,850 years old. Its exact location is kept secret to protect it from vandalism.",
+      "category": "Animals & Nature"
+    },
+    {
+      "id": "nat_en_021",
+      "question": "Which animal can survive for months without its head?",
+      "answers": [
+        {"text": "Earthworm", "correct": false},
+        {"text": "Cockroach", "correct": true},
+        {"text": "Centipede", "correct": false}
+      ],
+      "difficulty": "medium",
+      "fun_fact": "A cockroach can live for weeks without its head because it breathes through openings in its body and has a decentralised nervous system. It eventually dies of dehydration since it can't drink.",
+      "category": "Animals & Nature"
+    },
+    {
+      "id": "nat_en_022",
+      "question": "How do dolphins sleep?",
+      "answers": [
+        {"text": "They don't sleep at all", "correct": false},
+        {"text": "With only one half of their brain", "correct": true},
+        {"text": "Only a few seconds at a time", "correct": false}
+      ],
+      "difficulty": "easy",
+      "fun_fact": "Dolphins practise 'unihemispheric sleep': one brain half sleeps while the other stays awake. This allows them to keep breathing and watch for predators — they literally sleep with one eye open.",
+      "category": "Animals & Nature"
+    },
+    {
+      "id": "nat_en_023",
+      "question": "Which animal has blue blood?",
+      "answers": [
+        {"text": "Horseshoe crab", "correct": true},
+        {"text": "Squid", "correct": false},
+        {"text": "Starfish", "correct": false}
+      ],
+      "difficulty": "medium",
+      "fun_fact": "Horseshoe crab blood is copper-based rather than iron-based, making it blue. It is used in medicine to detect bacterial toxins in vaccines — a litre costs over €13,000.",
+      "category": "Animals & Nature"
+    },
+    {
+      "id": "nat_en_024",
+      "question": "How far can a flea jump relative to its own body length?",
+      "answers": [
+        {"text": "50 times its body length", "correct": false},
+        {"text": "150 times its body length", "correct": true},
+        {"text": "300 times its body length", "correct": false}
+      ],
+      "difficulty": "medium",
+      "fun_fact": "A flea can jump 150 times its own body length. Scaled to a human, that would be a jump of nearly 300 metres — the length of three football pitches.",
+      "category": "Animals & Nature"
+    },
+    {
+      "id": "nat_en_025",
+      "question": "Which animal produces the strongest natural fibre?",
+      "answers": [
+        {"text": "Silkworm", "correct": false},
+        {"text": "Darwin's bark spider", "correct": true},
+        {"text": "Mussel", "correct": false}
+      ],
+      "difficulty": "hard",
+      "fun_fact": "The silk of Darwin's bark spider is ten times stronger than Kevlar and the toughest known biological material. Its webs can span rivers and stretch up to 25 metres.",
+      "category": "Animals & Nature"
+    },
+    {
+      "id": "nat_en_026",
+      "question": "Which animal has no stomach?",
+      "answers": [
+        {"text": "Seahorse", "correct": true},
+        {"text": "Starfish", "correct": false},
+        {"text": "Jellyfish", "correct": false}
+      ],
+      "difficulty": "medium",
+      "fun_fact": "Seahorses have no stomach — food passes straight through their intestine. This means they must eat almost constantly, consuming up to 3,000 tiny crustaceans per day.",
+      "category": "Animals & Nature"
+    },
+    {
+      "id": "nat_en_027",
+      "question": "Which animal can see ultraviolet light?",
+      "answers": [
+        {"text": "Cat", "correct": false},
+        {"text": "Reindeer", "correct": true},
+        {"text": "Dog", "correct": false}
+      ],
+      "difficulty": "hard",
+      "fun_fact": "Reindeer can see UV light, which helps them in the Arctic winter. Predator urine and lichen (their food) stand out sharply against snow under UV light.",
+      "category": "Animals & Nature"
+    },
+    {
+      "id": "nat_en_028",
+      "question": "How many legs does a woodlouse have?",
+      "answers": [
+        {"text": "10", "correct": false},
+        {"text": "14", "correct": true},
+        {"text": "18", "correct": false}
+      ],
+      "difficulty": "medium",
+      "fun_fact": "Woodlice have 14 legs and are not insects but crustaceans. They are the only crustaceans to live entirely on land, breathing through gill-like organs on their hind legs.",
+      "category": "Animals & Nature"
+    },
+    {
+      "id": "nat_en_029",
+      "question": "Which animal can lower its body temperature to nearly 0°C to survive winter?",
+      "answers": [
+        {"text": "Brown bear", "correct": false},
+        {"text": "Arctic ground squirrel", "correct": true},
+        {"text": "Marmot", "correct": false}
+      ],
+      "difficulty": "hard",
+      "fun_fact": "The Arctic ground squirrel drops its body temperature to as low as −2.9°C during hibernation — below freezing. It is the only mammal known to survive a sub-zero body temperature.",
+      "category": "Animals & Nature"
+    },
+    {
+      "id": "nat_en_030",
+      "question": "Which fungus is the largest known organism on Earth?",
+      "answers": [
+        {"text": "Giant puffball", "correct": false},
+        {"text": "Honey fungus", "correct": true},
+        {"text": "Fly agaric", "correct": false}
+      ],
+      "difficulty": "hard",
+      "fun_fact": "A honey fungus (Armillaria ostoyae) in Oregon covers 9 square kilometres underground and is estimated to be 2,400 years old. Its mycelium network is larger than 1,200 football pitches.",
+      "category": "Animals & Nature"
+    },
+    {
+      "id": "nat_en_031",
+      "question": "Which animal has fingerprints nearly identical to human fingerprints?",
+      "answers": [
+        {"text": "Chimpanzee", "correct": false},
+        {"text": "Koala", "correct": true},
+        {"text": "Gorilla", "correct": false}
+      ],
+      "difficulty": "medium",
+      "fun_fact": "Koala fingerprints are so similar to human ones that they are almost indistinguishable even under a microscope. Koalas are not related to primates — the fingerprints evolved independently.",
+      "category": "Animals & Nature"
+    },
+    {
+      "id": "nat_en_032",
+      "question": "Which animal can clone itself?",
+      "answers": [
+        {"text": "Marbled crayfish", "correct": true},
+        {"text": "Axolotl", "correct": false},
+        {"text": "Starfish", "correct": false}
+      ],
+      "difficulty": "medium",
+      "fun_fact": "The marbled crayfish reproduces exclusively through parthenogenesis — every individual is a genetic clone of its mother. The entire species likely descended from a single animal in a German aquarium in the 1990s.",
+      "category": "Animals & Nature"
+    },
+    {
+      "id": "nat_en_033",
+      "question": "How many scents can a dog distinguish?",
+      "answers": [
+        {"text": "About 10,000", "correct": false},
+        {"text": "About 1 million", "correct": false},
+        {"text": "Over 1 trillion", "correct": true}
+      ],
+      "difficulty": "medium",
+      "fun_fact": "A dog's nose has up to 300 million scent receptors (humans have 6 million). Dogs can detect individual molecules — equivalent to a teaspoon of sugar dissolved in two Olympic swimming pools.",
+      "category": "Animals & Nature"
+    },
+    {
+      "id": "nat_en_034",
+      "question": "Which animal has the most legs?",
+      "answers": [
+        {"text": "Millipede with 750 legs", "correct": false},
+        {"text": "Eumillipes persephone with over 1,300 legs", "correct": true},
+        {"text": "Giant millipede with 400 legs", "correct": false}
+      ],
+      "difficulty": "hard",
+      "fun_fact": "Eumillipes persephone was discovered in Australia in 2021 and has up to 1,306 legs — the first animal to truly deserve the name 'millipede'.",
+      "category": "Animals & Nature"
+    },
+    {
+      "id": "nat_en_035",
+      "question": "Which animal can regrow its own tail?",
+      "answers": [
+        {"text": "Gecko", "correct": false},
+        {"text": "Axolotl", "correct": true},
+        {"text": "Iguana", "correct": false}
+      ],
+      "difficulty": "easy",
+      "fun_fact": "The axolotl can regenerate not just its tail but also limbs, organs, and even parts of its brain — without scarring. Scientists study it intensively for regenerative medicine.",
+      "category": "Animals & Nature"
+    },
+    {
+      "id": "nat_en_036",
+      "question": "What is the fastest animal in the world in a dive?",
+      "answers": [
+        {"text": "Golden eagle", "correct": false},
+        {"text": "Peregrine falcon", "correct": true},
+        {"text": "Common swift", "correct": false}
+      ],
+      "difficulty": "easy",
+      "fun_fact": "The peregrine falcon reaches speeds over 380 km/h in a dive — faster than a high-speed train. Special bony tubercles in its nostrils deflect airflow so it can breathe at those speeds.",
+      "category": "Animals & Nature"
+    },
+    {
+      "id": "nat_en_037",
+      "question": "Which jellyfish is theoretically immortal?",
+      "answers": [
+        {"text": "Moon jellyfish", "correct": false},
+        {"text": "Turritopsis dohrnii", "correct": true},
+        {"text": "Portuguese man o' war", "correct": false}
+      ],
+      "difficulty": "medium",
+      "fun_fact": "Turritopsis dohrnii can reverse its life cycle and transform from a mature adult back into a polyp — again and again. It is the only known biologically immortal animal.",
+      "category": "Animals & Nature"
+    },
+    {
+      "id": "nat_en_038",
+      "question": "How many species of beetles are estimated to exist on Earth?",
+      "answers": [
+        {"text": "About 50,000", "correct": false},
+        {"text": "About 150,000", "correct": false},
+        {"text": "About 400,000", "correct": true}
+      ],
+      "difficulty": "medium",
+      "fun_fact": "With around 400,000 known species, beetles are the most species-rich order in the animal kingdom. Biologist J.B.S. Haldane reportedly said the Creator had 'an inordinate fondness for beetles'.",
+      "category": "Animals & Nature"
+    },
+    {
+      "id": "nat_en_039",
+      "question": "Which animal has three eyelids per eye?",
+      "answers": [
+        {"text": "Owl", "correct": false},
+        {"text": "Camel", "correct": true},
+        {"text": "Crocodile", "correct": false}
+      ],
+      "difficulty": "medium",
+      "fun_fact": "Camels have three eyelids per eye: two with lashes and a transparent third that acts like goggles against sandstorms. They can see with the third eyelid closed.",
+      "category": "Animals & Nature"
+    },
+    {
+      "id": "nat_en_040",
+      "question": "Which animal eats its own brain?",
+      "answers": [
+        {"text": "Sea squirt", "correct": true},
+        {"text": "Sea cucumber", "correct": false},
+        {"text": "Sponge", "correct": false}
+      ],
+      "difficulty": "hard",
+      "fun_fact": "The sea squirt swims as a larva and has a simple brain. Once it attaches to a surface, it digests its own brain and nervous system because it no longer needs them.",
+      "category": "Animals & Nature"
+    },
+    {
+      "id": "nat_en_041",
+      "question": "Which animal can survive the longest without water?",
+      "answers": [
+        {"text": "Camel", "correct": false},
+        {"text": "Kangaroo rat", "correct": true},
+        {"text": "Desert tortoise", "correct": false}
+      ],
+      "difficulty": "medium",
+      "fun_fact": "The kangaroo rat can live its entire life without drinking a single drop of water. It extracts all moisture from metabolising dry seeds and has extremely efficient kidneys.",
+      "category": "Animals & Nature"
+    },
+    {
+      "id": "nat_en_042",
+      "question": "Which plant folds its leaves when touched?",
+      "answers": [
+        {"text": "Venus flytrap", "correct": false},
+        {"text": "Mimosa (Mimosa pudica)", "correct": true},
+        {"text": "Sundew", "correct": false}
+      ],
+      "difficulty": "easy",
+      "fun_fact": "The mimosa folds its leaves within seconds of being touched. Remarkably, it can learn: after repeated harmless stimulation it stops responding — a form of memory without a brain.",
+      "category": "Animals & Nature"
+    },
+    {
+      "id": "nat_en_043",
+      "question": "How many brains does a leech have?",
+      "answers": [
+        {"text": "1", "correct": false},
+        {"text": "16", "correct": false},
+        {"text": "32", "correct": true}
+      ],
+      "difficulty": "hard",
+      "fun_fact": "A leech has 32 brains — technically 32 ganglia, each functioning as a mini-brain. It also has 10 stomachs, 3 jaws, and 300 teeth.",
+      "category": "Animals & Nature"
+    },
+    {
+      "id": "nat_en_044",
+      "question": "Which animal sleeps up to 22 hours a day?",
+      "answers": [
+        {"text": "Sloth", "correct": false},
+        {"text": "Koala", "correct": true},
+        {"text": "Mouse lemur", "correct": false}
+      ],
+      "difficulty": "easy",
+      "fun_fact": "Koalas sleep up to 22 hours a day because eucalyptus leaves are extremely low in nutrients and require a lot of energy to digest. Their caecum, at 2 metres, is the longest relative to body size of any mammal.",
+      "category": "Animals & Nature"
+    },
+    {
+      "id": "nat_en_045",
+      "question": "Which fish can climb trees on land?",
+      "answers": [
+        {"text": "Mudskipper", "correct": false},
+        {"text": "Climbing perch", "correct": true},
+        {"text": "Lungfish", "correct": false}
+      ],
+      "difficulty": "medium",
+      "fun_fact": "The climbing perch (Anabas testudineus) can crawl on land using its gill covers and fins, and can even climb trees. It breathes atmospheric air through a special labyrinth organ.",
+      "category": "Animals & Nature"
+    },
+    {
+      "id": "nat_en_046",
+      "question": "How long does it take a plastic bottle to decompose in nature?",
+      "answers": [
+        {"text": "About 100 years", "correct": false},
+        {"text": "About 450 years", "correct": true},
+        {"text": "About 1,000 years", "correct": false}
+      ],
+      "difficulty": "easy",
+      "fun_fact": "A PET bottle takes around 450 years to decompose, breaking down into ever-smaller microplastics but never truly disappearing. Only about 9% of all plastic ever produced has been recycled.",
+      "category": "Animals & Nature"
+    },
+    {
+      "id": "nat_en_047",
+      "question": "Which animal can generate and hunt with electric fields?",
+      "answers": [
+        {"text": "Electric eel", "correct": true},
+        {"text": "Hammerhead shark", "correct": false},
+        {"text": "Ray", "correct": false}
+      ],
+      "difficulty": "easy",
+      "fun_fact": "The electric eel can generate shocks of up to 860 volts — enough to stun a horse. It is not actually an eel but a knifefish more closely related to catfish.",
+      "category": "Animals & Nature"
+    },
+    {
+      "id": "nat_en_048",
+      "question": "Which animal has the largest eye in the animal kingdom?",
+      "answers": [
+        {"text": "Blue whale", "correct": false},
+        {"text": "Colossal squid", "correct": true},
+        {"text": "Swordfish", "correct": false}
+      ],
+      "difficulty": "medium",
+      "fun_fact": "The eyes of the colossal squid can be up to 27 cm in diameter — the size of a football. This allows it to detect the faint bioluminescence of sperm whales in the deep ocean.",
+      "category": "Animals & Nature"
+    },
+    {
+      "id": "nat_en_049",
+      "question": "Which insect can lift 1,000 times its own body weight?",
+      "answers": [
+        {"text": "Leafcutter ant", "correct": false},
+        {"text": "Rhinoceros beetle", "correct": true},
+        {"text": "Hercules bee", "correct": false}
+      ],
+      "difficulty": "medium",
+      "fun_fact": "The rhinoceros beetle can carry 850 to 1,141 times its own body weight. Scaled to a human, that would be lifting 65 tonnes — the weight of a battle tank.",
+      "category": "Animals & Nature"
+    },
+    {
+      "id": "nat_en_050",
+      "question": "Which creature has more nerve cells in its arms than in its brain?",
+      "answers": [
+        {"text": "Starfish", "correct": false},
+        {"text": "Octopus", "correct": true},
+        {"text": "Jellyfish", "correct": false}
+      ],
+      "difficulty": "easy",
+      "fun_fact": "Two thirds of an octopus's 500 million neurons are in its arms, not its brain. Each arm can taste, feel, and make decisions independently — even severed arms react for several minutes.",
+      "category": "Animals & Nature"
+    }
+  ]
+}

@@ -1,0 +1,607 @@
+{
+  "name": "Pop Culture",
+  "language": "en",
+  "version": "1.0",
+  "questions": [
+    {
+      "id": "pop_en_001",
+      "question": "Which film has grossed the most money worldwide (as of 2024)?",
+      "answers": [
+        {"text": "Avengers: Endgame", "correct": false},
+        {"text": "Avatar", "correct": true},
+        {"text": "Titanic", "correct": false}
+      ],
+      "difficulty": "easy",
+      "fun_fact": "James Cameron's Avatar grossed over $2.9 billion, making it the highest-grossing film of all time — Cameron also holds third place with Titanic.",
+      "category": "Pop Culture"
+    },
+    {
+      "id": "pop_en_002",
+      "question": "Which video game is the best-selling of all time?",
+      "answers": [
+        {"text": "Tetris", "correct": false},
+        {"text": "GTA V", "correct": false},
+        {"text": "Minecraft", "correct": true}
+      ],
+      "difficulty": "easy",
+      "fun_fact": "Minecraft has sold over 300 million copies. It was originally developed by a single person — Swedish developer Markus 'Notch' Persson.",
+      "category": "Pop Culture"
+    },
+    {
+      "id": "pop_en_003",
+      "question": "Which song was the first YouTube video to reach one billion views?",
+      "answers": [
+        {"text": "Baby — Justin Bieber", "correct": false},
+        {"text": "Gangnam Style — PSY", "correct": true},
+        {"text": "Despacito — Luis Fonsi", "correct": false}
+      ],
+      "difficulty": "easy",
+      "fun_fact": "Gangnam Style hit a billion views in 2012 and actually overflowed YouTube's view counter, which could only count up to 2.1 billion at the time.",
+      "category": "Pop Culture"
+    },
+    {
+      "id": "pop_en_004",
+      "question": "What was the first fully computer-animated feature film?",
+      "answers": [
+        {"text": "Shrek", "correct": false},
+        {"text": "Toy Story", "correct": true},
+        {"text": "Finding Nemo", "correct": false}
+      ],
+      "difficulty": "easy",
+      "fun_fact": "Toy Story was released in 1995 and produced by Pixar. Steve Jobs funded the studio and saved it from bankruptcy multiple times before the film became a massive hit.",
+      "category": "Pop Culture"
+    },
+    {
+      "id": "pop_en_005",
+      "question": "Which band has sold the most albums worldwide?",
+      "answers": [
+        {"text": "The Rolling Stones", "correct": false},
+        {"text": "Led Zeppelin", "correct": false},
+        {"text": "The Beatles", "correct": true}
+      ],
+      "difficulty": "easy",
+      "fun_fact": "The Beatles have sold an estimated 600 million records. Their active career lasted only about eight years — from 1962 to 1970.",
+      "category": "Pop Culture"
+    },
+    {
+      "id": "pop_en_006",
+      "question": "Which TV series holds the record for the most Emmy wins for a drama?",
+      "answers": [
+        {"text": "Breaking Bad", "correct": false},
+        {"text": "Game of Thrones", "correct": true},
+        {"text": "The Sopranos", "correct": false}
+      ],
+      "difficulty": "medium",
+      "fun_fact": "Game of Thrones won 59 Emmys in total. Despite the controversial final season, it remains the most awarded drama series in Emmy history.",
+      "category": "Pop Culture"
+    },
+    {
+      "id": "pop_en_007",
+      "question": "Which actor was awarded a posthumous Oscar for playing the Joker?",
+      "answers": [
+        {"text": "Jack Nicholson", "correct": false},
+        {"text": "Joaquin Phoenix", "correct": false},
+        {"text": "Heath Ledger", "correct": true}
+      ],
+      "difficulty": "easy",
+      "fun_fact": "Heath Ledger died in January 2008, six months before The Dark Knight premiered. He locked himself in a hotel room for weeks to prepare for the role.",
+      "category": "Pop Culture"
+    },
+    {
+      "id": "pop_en_008",
+      "question": "What was Nintendo before it became a video game company?",
+      "answers": [
+        {"text": "A playing card manufacturer", "correct": true},
+        {"text": "An electronics conglomerate", "correct": false},
+        {"text": "A toy manufacturer", "correct": false}
+      ],
+      "difficulty": "medium",
+      "fun_fact": "Nintendo was founded in 1889 and made traditional Japanese hanafuda playing cards. It took nearly 100 years before the company became a video game giant.",
+      "category": "Pop Culture"
+    },
+    {
+      "id": "pop_en_009",
+      "question": "How was nearly all of Toy Story 2 saved from accidental deletion?",
+      "answers": [
+        {"text": "A backup on an employee's home computer saved the film", "correct": true},
+        {"text": "The film had to be completely re-animated", "correct": false},
+        {"text": "An IT specialist recovered the data", "correct": false}
+      ],
+      "difficulty": "hard",
+      "fun_fact": "A mistyped delete command wiped 90% of the film's data. Technical director Galyn Susman happened to have a copy on her home computer because she was working from home after having a baby.",
+      "category": "Pop Culture"
+    },
+    {
+      "id": "pop_en_010",
+      "question": "Which streaming service produced the first series to win an Emmy for Best Drama?",
+      "answers": [
+        {"text": "Amazon Prime Video", "correct": false},
+        {"text": "Netflix", "correct": false},
+        {"text": "Hulu", "correct": true}
+      ],
+      "difficulty": "medium",
+      "fun_fact": "Hulu's The Handmaid's Tale won the first streaming Emmy for Best Drama in 2017. Netflix won many Emmys with The Crown but claimed that award later.",
+      "category": "Pop Culture"
+    },
+    {
+      "id": "pop_en_011",
+      "question": "Which artist has the most number-one hits on the US Billboard charts?",
+      "answers": [
+        {"text": "Elvis Presley", "correct": false},
+        {"text": "The Beatles", "correct": true},
+        {"text": "Michael Jackson", "correct": false}
+      ],
+      "difficulty": "medium",
+      "fun_fact": "The Beatles hold the record with 20 number-one hits in the US. On a single day in April 1964, they simultaneously occupied all top 5 spots in the Billboard Hot 100.",
+      "category": "Pop Culture"
+    },
+    {
+      "id": "pop_en_012",
+      "question": "Which film won the very first Oscar for Best Picture?",
+      "answers": [
+        {"text": "Sunrise", "correct": false},
+        {"text": "Wings", "correct": true},
+        {"text": "The Jazz Singer", "correct": false}
+      ],
+      "difficulty": "hard",
+      "fun_fact": "Wings won at the first Oscar ceremony in 1929. The entire event lasted only 15 minutes, and the winners were announced three months in advance.",
+      "category": "Pop Culture"
+    },
+    {
+      "id": "pop_en_013",
+      "question": "In which country was Tetris invented?",
+      "answers": [
+        {"text": "Japan", "correct": false},
+        {"text": "USA", "correct": false},
+        {"text": "Soviet Union", "correct": true}
+      ],
+      "difficulty": "easy",
+      "fun_fact": "Tetris was created in 1985 by Russian programmer Alexei Pajitnov in Moscow. Due to Soviet law, he received no income from his game for many years.",
+      "category": "Pop Culture"
+    },
+    {
+      "id": "pop_en_014",
+      "question": "Which animated series has aired continuously on US television since 1989?",
+      "answers": [
+        {"text": "South Park", "correct": false},
+        {"text": "The Simpsons", "correct": true},
+        {"text": "Family Guy", "correct": false}
+      ],
+      "difficulty": "easy",
+      "fun_fact": "The Simpsons is the longest-running American animated primetime series. Matt Groening sketched the characters in just 15 minutes in a producer's waiting room.",
+      "category": "Pop Culture"
+    },
+    {
+      "id": "pop_en_015",
+      "question": "Which book is the best-selling after the Bible?",
+      "answers": [
+        {"text": "Harry Potter and the Philosopher's Stone", "correct": false},
+        {"text": "The Lord of the Rings", "correct": false},
+        {"text": "Don Quixote", "correct": true}
+      ],
+      "difficulty": "hard",
+      "fun_fact": "Don Quixote by Miguel de Cervantes was published in 1605 and has sold an estimated 500 million copies. It is considered the first modern novel in world literature.",
+      "category": "Pop Culture"
+    },
+    {
+      "id": "pop_en_016",
+      "question": "Which actress was the first woman to gross one billion dollars at the box office?",
+      "answers": [
+        {"text": "Angelina Jolie", "correct": false},
+        {"text": "Emma Watson", "correct": true},
+        {"text": "Scarlett Johansson", "correct": false}
+      ],
+      "difficulty": "medium",
+      "fun_fact": "Emma Watson reached this milestone largely through the Harry Potter films. She was just 11 years old when the first film was released.",
+      "category": "Pop Culture"
+    },
+    {
+      "id": "pop_en_017",
+      "question": "What was the title of the first video ever uploaded to YouTube?",
+      "answers": [
+        {"text": "Me at the zoo", "correct": true},
+        {"text": "Lazy Sunday", "correct": false},
+        {"text": "Evolution of Dance", "correct": false}
+      ],
+      "difficulty": "medium",
+      "fun_fact": "The 18-second video 'Me at the zoo' shows YouTube co-founder Jawed Karim in front of elephants at San Diego Zoo. It was uploaded on 23 April 2005.",
+      "category": "Pop Culture"
+    },
+    {
+      "id": "pop_en_018",
+      "question": "Which famous actor turned down the role of Gandalf in The Lord of the Rings?",
+      "answers": [
+        {"text": "Anthony Hopkins", "correct": false},
+        {"text": "Sean Connery", "correct": true},
+        {"text": "Christopher Lee", "correct": false}
+      ],
+      "difficulty": "medium",
+      "fun_fact": "Sean Connery declined because he didn't understand the screenplay. He was reportedly offered 15% of box office revenues — that would have been over $400 million.",
+      "category": "Pop Culture"
+    },
+    {
+      "id": "pop_en_019",
+      "question": "Which instrument plays the iconic Jaws theme?",
+      "answers": [
+        {"text": "Cello", "correct": true},
+        {"text": "Double bass", "correct": false},
+        {"text": "Tuba", "correct": false}
+      ],
+      "difficulty": "hard",
+      "fun_fact": "John Williams' iconic two-note motif is played by cellos. Director Steven Spielberg initially thought Williams was joking when he heard the simple theme for the first time.",
+      "category": "Pop Culture"
+    },
+    {
+      "id": "pop_en_020",
+      "question": "What colour was the original iPhone released in 2007?",
+      "answers": [
+        {"text": "Black and silver", "correct": true},
+        {"text": "White and silver", "correct": false},
+        {"text": "All black", "correct": false}
+      ],
+      "difficulty": "medium",
+      "fun_fact": "Steve Jobs unveiled the first iPhone in January 2007. The prototype on stage kept crashing, so the team carefully ordered the demo to show each feature only once.",
+      "category": "Pop Culture"
+    },
+    {
+      "id": "pop_en_021",
+      "question": "Which Disney film was the first to gross over $1 billion?",
+      "answers": [
+        {"text": "The Lion King (1994)", "correct": false},
+        {"text": "Toy Story 3", "correct": true},
+        {"text": "Frozen", "correct": false}
+      ],
+      "difficulty": "hard",
+      "fun_fact": "Toy Story 3 crossed the billion-dollar mark in 2010 as the first pure Disney/Pixar film to do so — fittingly, a film about growing up for an audience that had grown up with the franchise.",
+      "category": "Pop Culture"
+    },
+    {
+      "id": "pop_en_022",
+      "question": "What is the famous Konami Code hidden in many video games?",
+      "answers": [
+        {"text": "Up, Up, Down, Down, Left, Right, Left, Right, B, A", "correct": true},
+        {"text": "Left, Right, Left, Right, Up, Down, Up, Down, A, B", "correct": false},
+        {"text": "Up, Down, Up, Down, Left, Right, B, A, Start", "correct": false}
+      ],
+      "difficulty": "medium",
+      "fun_fact": "The Konami Code was invented in 1986 by developer Kazuhisa Hashimoto for the game Gradius because he found it too difficult. It now appears in hundreds of games and even websites.",
+      "category": "Pop Culture"
+    },
+    {
+      "id": "pop_en_023",
+      "question": "Which rapper was a ballet dancer before his music career?",
+      "answers": [
+        {"text": "Tupac Shakur", "correct": true},
+        {"text": "Eminem", "correct": false},
+        {"text": "Jay-Z", "correct": false}
+      ],
+      "difficulty": "hard",
+      "fun_fact": "Tupac attended the Baltimore School for the Arts, where he studied ballet, acting, and poetry. He even played the Mouse in a production of The Nutcracker.",
+      "category": "Pop Culture"
+    },
+    {
+      "id": "pop_en_024",
+      "question": "Which animal inspired the Pokémon character Pikachu?",
+      "answers": [
+        {"text": "Mouse", "correct": false},
+        {"text": "Squirrel", "correct": false},
+        {"text": "Pika (a small mountain mammal)", "correct": true}
+      ],
+      "difficulty": "medium",
+      "fun_fact": "Pikachu's designer Atsuko Nishida was inspired by the pika, a small mammal found in Asian mountains. The name combines 'pika' with 'chu', the Japanese onomatopoeia for an electric crackle.",
+      "category": "Pop Culture"
+    },
+    {
+      "id": "pop_en_025",
+      "question": "Which famous TV series was originally developed as 'The Untitled Lindelof Project'?",
+      "answers": [
+        {"text": "Breaking Bad", "correct": false},
+        {"text": "Lost", "correct": true},
+        {"text": "The Walking Dead", "correct": false}
+      ],
+      "difficulty": "hard",
+      "fun_fact": "Lost was developed at record speed: just 12 weeks from first concept to finished pilot. The pilot cost $13 million — the most expensive series pilot at the time.",
+      "category": "Pop Culture"
+    },
+    {
+      "id": "pop_en_026",
+      "question": "Which song has the most streams on Spotify (as of 2024)?",
+      "answers": [
+        {"text": "Shape of You — Ed Sheeran", "correct": false},
+        {"text": "Blinding Lights — The Weeknd", "correct": true},
+        {"text": "One Dance — Drake", "correct": false}
+      ],
+      "difficulty": "medium",
+      "fun_fact": "Blinding Lights spent over 90 weeks on the Billboard Hot 100 — an absolute record. The Weeknd drew inspiration from 80s synth-pop for the sound.",
+      "category": "Pop Culture"
+    },
+    {
+      "id": "pop_en_027",
+      "question": "Which country is the Netflix series Squid Game set in?",
+      "answers": [
+        {"text": "Japan", "correct": false},
+        {"text": "South Korea", "correct": true},
+        {"text": "Thailand", "correct": false}
+      ],
+      "difficulty": "easy",
+      "fun_fact": "Squid Game became the most-watched Netflix series ever. Director Hwang Dong-hyuk wrote the screenplay in 2009 but couldn't find a studio willing to produce it for over a decade.",
+      "category": "Pop Culture"
+    },
+    {
+      "id": "pop_en_028",
+      "question": "Which superhero was originally conceived as a villain?",
+      "answers": [
+        {"text": "Wolverine", "correct": true},
+        {"text": "Deadpool", "correct": false},
+        {"text": "Venom", "correct": false}
+      ],
+      "difficulty": "medium",
+      "fun_fact": "Wolverine first appeared in 1974 as an opponent of the Hulk. He was intended as a one-off antagonist but became so popular he turned hero and eventually the most iconic X-Men member.",
+      "category": "Pop Culture"
+    },
+    {
+      "id": "pop_en_029",
+      "question": "Which famous director made the Thriller music video for Michael Jackson?",
+      "answers": [
+        {"text": "Steven Spielberg", "correct": false},
+        {"text": "John Landis", "correct": true},
+        {"text": "Martin Scorsese", "correct": false}
+      ],
+      "difficulty": "hard",
+      "fun_fact": "The Thriller video cost $500,000 — the most expensive music video of its time. At 14 minutes long, it was the first music video inducted into the Library of Congress.",
+      "category": "Pop Culture"
+    },
+    {
+      "id": "pop_en_030",
+      "question": "Which was the first video game played in space?",
+      "answers": [
+        {"text": "Tetris", "correct": false},
+        {"text": "Game Boy Tetris", "correct": true},
+        {"text": "Pong", "correct": false}
+      ],
+      "difficulty": "medium",
+      "fun_fact": "Russian cosmonaut Alexander Serebrov played Tetris on a Game Boy aboard the Mir space station in 1993. That Game Boy was later auctioned for $1,220.",
+      "category": "Pop Culture"
+    },
+    {
+      "id": "pop_en_031",
+      "question": "Which actress has appeared in the most episodes of a single TV series?",
+      "answers": [
+        {"text": "Mariska Hargitay (Law & Order: SVU)", "correct": true},
+        {"text": "Ellen Pompeo (Grey's Anatomy)", "correct": false},
+        {"text": "Jennifer Aniston (Friends)", "correct": false}
+      ],
+      "difficulty": "hard",
+      "fun_fact": "Mariska Hargitay has played Olivia Benson in Law & Order: SVU since 1999 — over 500 episodes. Her mother was actress Jayne Mansfield.",
+      "category": "Pop Culture"
+    },
+    {
+      "id": "pop_en_032",
+      "question": "What was the first word ever sent over the internet?",
+      "answers": [
+        {"text": "Hello", "correct": false},
+        {"text": "Lo", "correct": true},
+        {"text": "Test", "correct": false}
+      ],
+      "difficulty": "hard",
+      "fun_fact": "In 1969, 'Login' was intended to be sent, but the computer crashed after 'L' and 'O'. The internet's first word was an accidental 'Lo' — as in 'Lo and behold'.",
+      "category": "Pop Culture"
+    },
+    {
+      "id": "pop_en_033",
+      "question": "Which streaming service has the most subscribers worldwide (as of 2024)?",
+      "answers": [
+        {"text": "Disney+", "correct": false},
+        {"text": "Netflix", "correct": true},
+        {"text": "Amazon Prime Video", "correct": false}
+      ],
+      "difficulty": "easy",
+      "fun_fact": "Netflix started in 1997 as a DVD-by-mail rental service. Co-founder Reed Hastings reportedly got the idea after paying a $40 late fee for an Apollo 13 VHS tape.",
+      "category": "Pop Culture"
+    },
+    {
+      "id": "pop_en_034",
+      "question": "Which Lord of the Rings character was originally scripted to die in the battle at the Black Gate?",
+      "answers": [
+        {"text": "Legolas", "correct": false},
+        {"text": "Aragorn", "correct": true},
+        {"text": "Gimli", "correct": false}
+      ],
+      "difficulty": "hard",
+      "fun_fact": "Peter Jackson actually filmed scenes of Aragorn fighting Sauron and dying. The sequence was cut because it deviated too far from Tolkien's story.",
+      "category": "Pop Culture"
+    },
+    {
+      "id": "pop_en_035",
+      "question": "Which musician has won the most Grammy Awards?",
+      "answers": [
+        {"text": "Quincy Jones", "correct": false},
+        {"text": "Beyoncé", "correct": true},
+        {"text": "Georg Solti", "correct": false}
+      ],
+      "difficulty": "medium",
+      "fun_fact": "Beyoncé has won over 30 Grammys, making her the most decorated artist in Grammy history. She was only nine years old at her first audition.",
+      "category": "Pop Culture"
+    },
+    {
+      "id": "pop_en_036",
+      "question": "Which social media network was the first to reach one billion users?",
+      "answers": [
+        {"text": "YouTube", "correct": false},
+        {"text": "Facebook", "correct": true},
+        {"text": "WhatsApp", "correct": false}
+      ],
+      "difficulty": "easy",
+      "fun_fact": "Facebook hit one billion monthly active users in 2012. Mark Zuckerberg coded the first version in just two weeks in his Harvard dorm room.",
+      "category": "Pop Culture"
+    },
+    {
+      "id": "pop_en_037",
+      "question": "What is the name of the fictional language created for Game of Thrones?",
+      "answers": [
+        {"text": "Elvish", "correct": false},
+        {"text": "Klingon", "correct": false},
+        {"text": "Dothraki", "correct": true}
+      ],
+      "difficulty": "easy",
+      "fun_fact": "Linguist David J. Peterson created Dothraki with over 4,000 words and its own grammar. He beat out 30 other applicants who also wanted to develop the language.",
+      "category": "Pop Culture"
+    },
+    {
+      "id": "pop_en_038",
+      "question": "Which famous fictional character is described as blonde in the books but portrayed as brunette in the films?",
+      "answers": [
+        {"text": "Katniss Everdeen", "correct": false},
+        {"text": "James Bond", "correct": true},
+        {"text": "Hermione Granger", "correct": false}
+      ],
+      "difficulty": "medium",
+      "fun_fact": "In Ian Fleming's novels, James Bond is described as dark-haired with a scar. It wasn't until Daniel Craig in 2006 that Bond became blonde — and Fleming would have hated it.",
+      "category": "Pop Culture"
+    },
+    {
+      "id": "pop_en_039",
+      "question": "Which famous meme came from a photo of a perpetually grumpy-looking cat?",
+      "answers": [
+        {"text": "Keyboard Cat", "correct": false},
+        {"text": "Grumpy Cat", "correct": true},
+        {"text": "Nyan Cat", "correct": false}
+      ],
+      "difficulty": "easy",
+      "fun_fact": "Grumpy Cat (real name Tardar Sauce) had feline dwarfism, which caused her permanently grumpy expression. Her owner reportedly earned over $100 million from the cat.",
+      "category": "Pop Culture"
+    },
+    {
+      "id": "pop_en_040",
+      "question": "How many books are in the Harry Potter series?",
+      "answers": [
+        {"text": "6", "correct": false},
+        {"text": "7", "correct": true},
+        {"text": "8", "correct": false}
+      ],
+      "difficulty": "easy",
+      "fun_fact": "J.K. Rowling was rejected by 12 publishers before Bloomsbury published Harry Potter. The editor only agreed because his eight-year-old daughter loved the first chapter.",
+      "category": "Pop Culture"
+    },
+    {
+      "id": "pop_en_041",
+      "question": "Which actor has appeared in the most Marvel Cinematic Universe films?",
+      "answers": [
+        {"text": "Chris Evans", "correct": false},
+        {"text": "Robert Downey Jr.", "correct": false},
+        {"text": "Samuel L. Jackson", "correct": true}
+      ],
+      "difficulty": "medium",
+      "fun_fact": "Samuel L. Jackson appeared as Nick Fury in over 11 MCU films. He signed an unprecedented nine-film contract with Marvel — the longest actor contract in Hollywood history.",
+      "category": "Pop Culture"
+    },
+    {
+      "id": "pop_en_042",
+      "question": "What is true about the first emoji ever created?",
+      "answers": [
+        {"text": "It was the heart emoji", "correct": false},
+        {"text": "It was the smiley emoji", "correct": false},
+        {"text": "It was part of a set of 176 emojis", "correct": true}
+      ],
+      "difficulty": "medium",
+      "fun_fact": "The first 176 emojis were designed in 1999 by Japanese designer Shigetaka Kurita for mobile carrier NTT DoCoMo. Each emoji was only 12×12 pixels. The originals are now displayed in New York's MoMA.",
+      "category": "Pop Culture"
+    },
+    {
+      "id": "pop_en_043",
+      "question": "Which legendary video game character was named after the landlord of a Nintendo warehouse?",
+      "answers": [
+        {"text": "Luigi", "correct": false},
+        {"text": "Mario", "correct": true},
+        {"text": "Donkey Kong", "correct": false}
+      ],
+      "difficulty": "medium",
+      "fun_fact": "Mario was named after Mario Segale, the landlord of Nintendo's US warehouse. Segale once stormed in demanding overdue rent — and inadvertently inspired the world's most famous game character.",
+      "category": "Pop Culture"
+    },
+    {
+      "id": "pop_en_044",
+      "question": "Which film was the first to be released with the Dolby Atmos sound system?",
+      "answers": [
+        {"text": "Gravity", "correct": false},
+        {"text": "Brave", "correct": true},
+        {"text": "The Dark Knight Rises", "correct": false}
+      ],
+      "difficulty": "hard",
+      "fun_fact": "Pixar's Brave was the first theatrical film with Dolby Atmos in 2012. The system uses up to 128 separate audio channels and can position sounds three-dimensionally in a room.",
+      "category": "Pop Culture"
+    },
+    {
+      "id": "pop_en_045",
+      "question": "Which famous musician worked as a part-time baggage handler before becoming famous?",
+      "answers": [
+        {"text": "Ozzy Osbourne", "correct": false},
+        {"text": "John Lennon", "correct": false},
+        {"text": "Freddie Mercury", "correct": true}
+      ],
+      "difficulty": "medium",
+      "fun_fact": "Freddie Mercury worked at London's Heathrow Airport as a baggage handler and sold second-hand clothes at Kensington Market before Queen broke through.",
+      "category": "Pop Culture"
+    },
+    {
+      "id": "pop_en_046",
+      "question": "Which word was Oxford Dictionary's 'Word of the Year' in 2013?",
+      "answers": [
+        {"text": "YOLO", "correct": false},
+        {"text": "Selfie", "correct": true},
+        {"text": "Hashtag", "correct": false}
+      ],
+      "difficulty": "medium",
+      "fun_fact": "Usage of the word 'selfie' rose 17,000% in 2013. The oldest known selfie actually dates back to 1839 — a photograph taken by chemist Robert Cornelius.",
+      "category": "Pop Culture"
+    },
+    {
+      "id": "pop_en_047",
+      "question": "How many seasons did the original Star Trek series have?",
+      "answers": [
+        {"text": "3", "correct": true},
+        {"text": "5", "correct": false},
+        {"text": "7", "correct": false}
+      ],
+      "difficulty": "medium",
+      "fun_fact": "The original series ran for only three seasons (1966–1969) and was cancelled due to poor ratings. It became a cult hit in reruns and launched a multi-billion-dollar franchise.",
+      "category": "Pop Culture"
+    },
+    {
+      "id": "pop_en_048",
+      "question": "What was the subject of one of the first widely shared GIFs on the internet?",
+      "answers": [
+        {"text": "A cat", "correct": false},
+        {"text": "An aeroplane", "correct": true},
+        {"text": "A dog", "correct": false}
+      ],
+      "difficulty": "medium",
+      "fun_fact": "The GIF format was developed by CompuServe in 1987. One of the first widely shared GIFs showed a spinning aeroplane. The debate over pronunciation ('GIF' vs 'JIF') continues to this day.",
+      "category": "Pop Culture"
+    },
+    {
+      "id": "pop_en_049",
+      "question": "Which Hollywood star was a bodybuilder and won the Mr. Universe title before becoming an actor?",
+      "answers": [
+        {"text": "Sylvester Stallone", "correct": false},
+        {"text": "Arnold Schwarzenegger", "correct": true},
+        {"text": "Dwayne 'The Rock' Johnson", "correct": false}
+      ],
+      "difficulty": "easy",
+      "fun_fact": "Arnold Schwarzenegger won his first Mr. Universe title at just 20 years old. He sometimes trained so hard he passed out in the gym.",
+      "category": "Pop Culture"
+    },
+    {
+      "id": "pop_en_050",
+      "question": "What colour was the dress that divided the internet in 2015 (#TheDress)?",
+      "answers": [
+        {"text": "It was actually blue and black", "correct": true},
+        {"text": "It was actually white and gold", "correct": false},
+        {"text": "It was actually blue and brown", "correct": false}
+      ],
+      "difficulty": "easy",
+      "fun_fact": "The viral dress phenomenon of 2015 was studied by scientists and published in academic journals. The differing perceptions arise from how the brain compensates for ambient lighting.",
+      "category": "Pop Culture"
+    }
+  ]
+}

@@ -458,12 +458,14 @@ class QuizifyWebSocketHandler:
         category = data.get("category")
         difficulty = data.get("difficulty")
         num_rounds = data.get("num_rounds", 10)
+        language = data.get("language", "de")
 
         try:
             game_info = game_state.start_game(
                 category=category,
                 difficulty=difficulty,
                 num_rounds=num_rounds,
+                language=language,
             )
         except ValueError as err:
             await self._send_error(ws, ERR_GAME_ALREADY_STARTED, str(err))

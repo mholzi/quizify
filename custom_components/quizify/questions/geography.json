@@ -1,0 +1,607 @@
+{
+  "name": "Geography",
+  "language": "en",
+  "version": "1.0",
+  "questions": [
+    {
+      "id": "geo_en_001",
+      "question": "Which country has the most time zones?",
+      "answers": [
+        {"text": "France", "correct": true},
+        {"text": "Russia", "correct": false},
+        {"text": "USA", "correct": false}
+      ],
+      "difficulty": "hard",
+      "fun_fact": "France has 12 time zones thanks to its overseas territories — more than any other country, even Russia with 11.",
+      "category": "Geography"
+    },
+    {
+      "id": "geo_en_002",
+      "question": "Which city gets more rainfall: London or Sydney?",
+      "answers": [
+        {"text": "Sydney", "correct": true},
+        {"text": "London", "correct": false},
+        {"text": "Both about the same", "correct": false}
+      ],
+      "difficulty": "medium",
+      "fun_fact": "Sydney receives around 1,200 mm of rain per year, while London gets only about 600 mm. London's reputation as a rainy city is greatly exaggerated.",
+      "category": "Geography"
+    },
+    {
+      "id": "geo_en_003",
+      "question": "Which country has the most lakes in the world?",
+      "answers": [
+        {"text": "Canada", "correct": true},
+        {"text": "Finland", "correct": false},
+        {"text": "Sweden", "correct": false}
+      ],
+      "difficulty": "medium",
+      "fun_fact": "Canada holds over 60% of all lakes in the world — more than all other countries combined.",
+      "category": "Geography"
+    },
+    {
+      "id": "geo_en_004",
+      "question": "Which capital city sits at the highest altitude above sea level?",
+      "answers": [
+        {"text": "La Paz, Bolivia", "correct": true},
+        {"text": "Quito, Ecuador", "correct": false},
+        {"text": "Bogotá, Colombia", "correct": false}
+      ],
+      "difficulty": "medium",
+      "fun_fact": "La Paz sits at about 3,640 metres above sea level. Water boils there at around 87°C, making cooking take significantly longer.",
+      "category": "Geography"
+    },
+    {
+      "id": "geo_en_005",
+      "question": "Which African country was never a European colony?",
+      "answers": [
+        {"text": "Ethiopia", "correct": true},
+        {"text": "Ghana", "correct": false},
+        {"text": "Morocco", "correct": false}
+      ],
+      "difficulty": "easy",
+      "fun_fact": "Ethiopia defeated the Italian army at the Battle of Adwa in 1896 and remained one of the few African countries to stay fully independent throughout the colonial era.",
+      "category": "Geography"
+    },
+    {
+      "id": "geo_en_006",
+      "question": "Which country has more people than all of South America combined?",
+      "answers": [
+        {"text": "India", "correct": true},
+        {"text": "China", "correct": false},
+        {"text": "Indonesia", "correct": false}
+      ],
+      "difficulty": "medium",
+      "fun_fact": "India has over 1.4 billion people; South America has only around 430 million. The Indian state of Uttar Pradesh alone has more people than Brazil.",
+      "category": "Geography"
+    },
+    {
+      "id": "geo_en_007",
+      "question": "Which river is longer: the Nile or the Amazon?",
+      "answers": [
+        {"text": "It's disputed — both are roughly equal", "correct": true},
+        {"text": "The Nile, clearly", "correct": false},
+        {"text": "The Amazon, clearly", "correct": false}
+      ],
+      "difficulty": "hard",
+      "fun_fact": "Depending on measurement method and source definition, both have been declared the world's longest river. Newer measurements favour the Amazon; traditionally the Nile held the title.",
+      "category": "Geography"
+    },
+    {
+      "id": "geo_en_008",
+      "question": "What is the capital of Myanmar?",
+      "answers": [
+        {"text": "Naypyidaw", "correct": true},
+        {"text": "Yangon", "correct": false},
+        {"text": "Mandalay", "correct": false}
+      ],
+      "difficulty": "hard",
+      "fun_fact": "Naypyidaw became the capital in 2005 and is a nearly deserted planned city featuring 20-lane highways with almost no traffic.",
+      "category": "Geography"
+    },
+    {
+      "id": "geo_en_009",
+      "question": "Which country shares borders with the most other countries?",
+      "answers": [
+        {"text": "China", "correct": true},
+        {"text": "Russia", "correct": false},
+        {"text": "Brazil", "correct": false}
+      ],
+      "difficulty": "medium",
+      "fun_fact": "China borders 14 countries — the same number as Russia. They jointly hold the record.",
+      "category": "Geography"
+    },
+    {
+      "id": "geo_en_010",
+      "question": "Which lake is the deepest in the world?",
+      "answers": [
+        {"text": "Lake Baikal", "correct": true},
+        {"text": "Lake Tanganyika", "correct": false},
+        {"text": "Caspian Sea", "correct": false}
+      ],
+      "difficulty": "easy",
+      "fun_fact": "Lake Baikal in Siberia is 1,642 metres deep and contains about 20% of the world's unfrozen fresh surface water.",
+      "category": "Geography"
+    },
+    {
+      "id": "geo_en_011",
+      "question": "Which country contains the driest place on Earth?",
+      "answers": [
+        {"text": "Chile", "correct": true},
+        {"text": "Egypt", "correct": false},
+        {"text": "Namibia", "correct": false}
+      ],
+      "difficulty": "medium",
+      "fun_fact": "Parts of the Atacama Desert in Chile have never recorded rainfall. Some areas resemble Mars so closely that NASA tests rovers there.",
+      "category": "Geography"
+    },
+    {
+      "id": "geo_en_012",
+      "question": "Which is the only country entirely surrounded by another country — and this happens twice?",
+      "answers": [
+        {"text": "No single country — but both San Marino and Vatican City lie entirely within Italy", "correct": true},
+        {"text": "Lesotho", "correct": false},
+        {"text": "Monaco", "correct": false}
+      ],
+      "difficulty": "hard",
+      "fun_fact": "Both San Marino and Vatican City are completely surrounded by Italy. Lesotho is also an enclave nation, but it sits within South Africa.",
+      "category": "Geography"
+    },
+    {
+      "id": "geo_en_013",
+      "question": "Which continent has the most countries?",
+      "answers": [
+        {"text": "Africa", "correct": true},
+        {"text": "Europe", "correct": false},
+        {"text": "Asia", "correct": false}
+      ],
+      "difficulty": "easy",
+      "fun_fact": "Africa has 54 recognised states — more than any other continent. Many of these borders were drawn by colonial powers using a ruler on a map.",
+      "category": "Geography"
+    },
+    {
+      "id": "geo_en_014",
+      "question": "What is the largest island in the world that is not its own continent?",
+      "answers": [
+        {"text": "Greenland", "correct": true},
+        {"text": "Borneo", "correct": false},
+        {"text": "Madagascar", "correct": false}
+      ],
+      "difficulty": "easy",
+      "fun_fact": "Greenland covers 2.16 million km² but has only around 56,000 inhabitants. It belongs politically to Denmark but geographically lies in North America.",
+      "category": "Geography"
+    },
+    {
+      "id": "geo_en_015",
+      "question": "Which desert is the largest in the world?",
+      "answers": [
+        {"text": "Antarctica", "correct": true},
+        {"text": "Sahara", "correct": false},
+        {"text": "Gobi", "correct": false}
+      ],
+      "difficulty": "medium",
+      "fun_fact": "Antarctica is technically a desert, receiving less than 250 mm of precipitation per year. At 14 million km² it is larger than the Sahara.",
+      "category": "Geography"
+    },
+    {
+      "id": "geo_en_016",
+      "question": "Which European country has the lowest population density?",
+      "answers": [
+        {"text": "Iceland", "correct": true},
+        {"text": "Norway", "correct": false},
+        {"text": "Finland", "correct": false}
+      ],
+      "difficulty": "medium",
+      "fun_fact": "Iceland has only about 3.5 inhabitants per square kilometre. There are more sheep than people — roughly 800,000 sheep versus 380,000 residents.",
+      "category": "Geography"
+    },
+    {
+      "id": "geo_en_017",
+      "question": "Which country has the longest coastline in the world?",
+      "answers": [
+        {"text": "Canada", "correct": true},
+        {"text": "Indonesia", "correct": false},
+        {"text": "Australia", "correct": false}
+      ],
+      "difficulty": "easy",
+      "fun_fact": "Canada's coastline stretches over 202,000 km. Walking it at 8 hours per day would take more than 19 years.",
+      "category": "Geography"
+    },
+    {
+      "id": "geo_en_018",
+      "question": "In which country is the geographical centre of Europe located?",
+      "answers": [
+        {"text": "Lithuania", "correct": true},
+        {"text": "Germany", "correct": false},
+        {"text": "Poland", "correct": false}
+      ],
+      "difficulty": "hard",
+      "fun_fact": "According to the Institut Géographique National, Europe's centre is near the village of Purnuškės, north of Vilnius in Lithuania.",
+      "category": "Geography"
+    },
+    {
+      "id": "geo_en_019",
+      "question": "Which mountain continues to grow taller every year?",
+      "answers": [
+        {"text": "Mount Everest", "correct": true},
+        {"text": "Mont Blanc", "correct": false},
+        {"text": "Kilimanjaro", "correct": false}
+      ],
+      "difficulty": "easy",
+      "fun_fact": "Mount Everest grows about 4 mm per year due to the tectonic collision between the Indian and Eurasian plates.",
+      "category": "Geography"
+    },
+    {
+      "id": "geo_en_020",
+      "question": "Which country is shaped like a boot?",
+      "answers": [
+        {"text": "Italy", "correct": true},
+        {"text": "Portugal", "correct": false},
+        {"text": "Croatia", "correct": false}
+      ],
+      "difficulty": "easy",
+      "fun_fact": "Italy's boot shape is so distinctive it's one of the most recognisable countries on any world map. Sicily is the 'ball' the boot is kicking.",
+      "category": "Geography"
+    },
+    {
+      "id": "geo_en_021",
+      "question": "Which country produces the most coffee in the world?",
+      "answers": [
+        {"text": "Brazil", "correct": true},
+        {"text": "Colombia", "correct": false},
+        {"text": "Vietnam", "correct": false}
+      ],
+      "difficulty": "easy",
+      "fun_fact": "Brazil produces about one third of the world's coffee. In 2021, an unusual frost destroyed so many coffee plants in Brazil that prices rose globally.",
+      "category": "Geography"
+    },
+    {
+      "id": "geo_en_022",
+      "question": "Which 'sea' is actually a lake?",
+      "answers": [
+        {"text": "The Caspian Sea", "correct": true},
+        {"text": "The Red Sea", "correct": false},
+        {"text": "The Dead Sea", "correct": false}
+      ],
+      "difficulty": "easy",
+      "fun_fact": "The Caspian Sea is the world's largest lake. It's called a 'sea' because of its size and salinity, but has no natural connection to the oceans.",
+      "category": "Geography"
+    },
+    {
+      "id": "geo_en_023",
+      "question": "Which US state was purchased from Russia?",
+      "answers": [
+        {"text": "Alaska", "correct": true},
+        {"text": "Hawaii", "correct": false},
+        {"text": "Maine", "correct": false}
+      ],
+      "difficulty": "easy",
+      "fun_fact": "The USA bought Alaska from Russia in 1867 for $7.2 million — about 2 cents per hectare. Critics at the time called it 'Seward's Icebox'.",
+      "category": "Geography"
+    },
+    {
+      "id": "geo_en_024",
+      "question": "In which country can you stand in the western and eastern hemispheres simultaneously?",
+      "answers": [
+        {"text": "United Kingdom", "correct": true},
+        {"text": "Spain", "correct": false},
+        {"text": "Ghana", "correct": false}
+      ],
+      "difficulty": "medium",
+      "fun_fact": "The Prime Meridian runs through the Royal Observatory in Greenwich, London. You can literally stand with one foot in the East and one in the West.",
+      "category": "Geography"
+    },
+    {
+      "id": "geo_en_025",
+      "question": "Which country has the most active volcanoes?",
+      "answers": [
+        {"text": "Indonesia", "correct": true},
+        {"text": "Japan", "correct": false},
+        {"text": "Iceland", "correct": false}
+      ],
+      "difficulty": "medium",
+      "fun_fact": "Indonesia sits on the Pacific Ring of Fire and has about 130 active volcanoes. The 1883 eruption of Krakatoa was so loud it was heard nearly 5,000 km away.",
+      "category": "Geography"
+    },
+    {
+      "id": "geo_en_026",
+      "question": "Which two continents are separated by the Bosphorus?",
+      "answers": [
+        {"text": "Europe and Asia", "correct": true},
+        {"text": "Europe and Africa", "correct": false},
+        {"text": "Asia and Africa", "correct": false}
+      ],
+      "difficulty": "easy",
+      "fun_fact": "Istanbul is the only major city in the world that spans two continents. Millions of people commute between Europe and Asia by ferry every day.",
+      "category": "Geography"
+    },
+    {
+      "id": "geo_en_027",
+      "question": "Which country changed its name in 2018?",
+      "answers": [
+        {"text": "North Macedonia (formerly Macedonia)", "correct": true},
+        {"text": "Eswatini (formerly Swaziland)", "correct": false},
+        {"text": "Czechia (formerly Czech Republic)", "correct": false}
+      ],
+      "difficulty": "hard",
+      "fun_fact": "Macedonia renamed itself North Macedonia to settle a decades-long naming dispute with Greece. Eswatini (formerly Swaziland) also changed its name in 2018.",
+      "category": "Geography"
+    },
+    {
+      "id": "geo_en_028",
+      "question": "Which country has more than 17,000 islands?",
+      "answers": [
+        {"text": "Indonesia", "correct": true},
+        {"text": "Philippines", "correct": false},
+        {"text": "Greece", "correct": false}
+      ],
+      "difficulty": "medium",
+      "fun_fact": "Indonesia consists of over 17,500 islands, of which only about 6,000 are inhabited. It stretches over 5,000 km — as wide as Lisbon to Moscow.",
+      "category": "Geography"
+    },
+    {
+      "id": "geo_en_029",
+      "question": "Which European country has no university?",
+      "answers": [
+        {"text": "Vatican City", "correct": true},
+        {"text": "San Marino", "correct": false},
+        {"text": "Liechtenstein", "correct": false}
+      ],
+      "difficulty": "hard",
+      "fun_fact": "Vatican City has the Vatican Library and the Pontifical Academy of Sciences, but no university in the traditional sense. With around 800 residents, it is the world's smallest state.",
+      "category": "Geography"
+    },
+    {
+      "id": "geo_en_030",
+      "question": "Which country spans the most degrees of latitude?",
+      "answers": [
+        {"text": "Chile", "correct": true},
+        {"text": "Brazil", "correct": false},
+        {"text": "Russia", "correct": false}
+      ],
+      "difficulty": "hard",
+      "fun_fact": "Chile stretches over 4,300 km from north to south but averages only 177 km in width. It ranges from desert in the north to near-Antarctic regions in the south.",
+      "category": "Geography"
+    },
+    {
+      "id": "geo_en_031",
+      "question": "Which city serves as capital for two separate entities simultaneously?",
+      "answers": [
+        {"text": "Nicosia", "correct": true},
+        {"text": "Jerusalem", "correct": false},
+        {"text": "Bratislava", "correct": false}
+      ],
+      "difficulty": "hard",
+      "fun_fact": "Nicosia in Cyprus is the last divided capital in Europe. The northern part is the capital of the Turkish Republic of Northern Cyprus; the south is the capital of the Republic of Cyprus.",
+      "category": "Geography"
+    },
+    {
+      "id": "geo_en_032",
+      "question": "Which country has the most pyramids?",
+      "answers": [
+        {"text": "Sudan", "correct": true},
+        {"text": "Egypt", "correct": false},
+        {"text": "Mexico", "correct": false}
+      ],
+      "difficulty": "medium",
+      "fun_fact": "Sudan has over 200 pyramids — nearly twice as many as Egypt. The Nubian pyramids at Meroë are smaller but far more numerous, and far less well known.",
+      "category": "Geography"
+    },
+    {
+      "id": "geo_en_033",
+      "question": "What percentage of Earth's surface is covered by water?",
+      "answers": [
+        {"text": "About 71%", "correct": true},
+        {"text": "About 55%", "correct": false},
+        {"text": "About 83%", "correct": false}
+      ],
+      "difficulty": "easy",
+      "fun_fact": "Although 71% of Earth is covered in water, over 96% of it is salt water. Only a tiny fraction is available as fresh drinking water.",
+      "category": "Geography"
+    },
+    {
+      "id": "geo_en_034",
+      "question": "Which is the largest island nation in the world by area?",
+      "answers": [
+        {"text": "Indonesia", "correct": true},
+        {"text": "Madagascar", "correct": false},
+        {"text": "Japan", "correct": false}
+      ],
+      "difficulty": "medium",
+      "fun_fact": "Indonesia covers nearly 1.9 million km² and is the largest island nation. It would be the fifth-largest country in Europe.",
+      "category": "Geography"
+    },
+    {
+      "id": "geo_en_035",
+      "question": "What is the lowest point on Earth's land surface?",
+      "answers": [
+        {"text": "The Dead Sea", "correct": true},
+        {"text": "Death Valley", "correct": false},
+        {"text": "Turpan Depression", "correct": false}
+      ],
+      "difficulty": "easy",
+      "fun_fact": "The surface of the Dead Sea sits about 430 metres below sea level and sinks further each year. Its salt content is so high you cannot sink in it.",
+      "category": "Geography"
+    },
+    {
+      "id": "geo_en_036",
+      "question": "Which country has the largest time zone offset with its neighbour?",
+      "answers": [
+        {"text": "China", "correct": true},
+        {"text": "India", "correct": false},
+        {"text": "Russia", "correct": false}
+      ],
+      "difficulty": "hard",
+      "fun_fact": "Although China spans five geographic time zones, the entire country uses just one (UTC+8). At the border with Afghanistan, clocks jump by 3.5 hours.",
+      "category": "Geography"
+    },
+    {
+      "id": "geo_en_037",
+      "question": "Which city has the largest population in the world (metro area)?",
+      "answers": [
+        {"text": "Tokyo", "correct": true},
+        {"text": "Shanghai", "correct": false},
+        {"text": "Delhi", "correct": false}
+      ],
+      "difficulty": "medium",
+      "fun_fact": "Greater Tokyo has over 37 million inhabitants — more than all of Canada. Its rail system transports around 40 million passengers per day.",
+      "category": "Geography"
+    },
+    {
+      "id": "geo_en_038",
+      "question": "Which country lies in all four hemispheres at once?",
+      "answers": [
+        {"text": "Kiribati", "correct": true},
+        {"text": "Ecuador", "correct": false},
+        {"text": "Indonesia", "correct": false}
+      ],
+      "difficulty": "hard",
+      "fun_fact": "The island nation of Kiribati straddles both the Equator and the International Date Line, placing it in the northern, southern, eastern, and western hemispheres.",
+      "category": "Geography"
+    },
+    {
+      "id": "geo_en_039",
+      "question": "What is the longest mountain range in the world?",
+      "answers": [
+        {"text": "The Andes", "correct": true},
+        {"text": "The Himalayas", "correct": false},
+        {"text": "The Rocky Mountains", "correct": false}
+      ],
+      "difficulty": "easy",
+      "fun_fact": "The Andes stretch over 7,000 km along South America's west coast through seven countries. The longest range overall is the Mid-Ocean Ridge beneath the sea.",
+      "category": "Geography"
+    },
+    {
+      "id": "geo_en_040",
+      "question": "Which country has more English-speaking inhabitants than the United Kingdom?",
+      "answers": [
+        {"text": "Nigeria", "correct": true},
+        {"text": "South Africa", "correct": false},
+        {"text": "Canada", "correct": false}
+      ],
+      "difficulty": "medium",
+      "fun_fact": "Nigeria has over 200 million inhabitants, and English is the official language, making it home to more English speakers than the UK.",
+      "category": "Geography"
+    },
+    {
+      "id": "geo_en_041",
+      "question": "Which is the smallest ocean in the world?",
+      "answers": [
+        {"text": "Arctic Ocean", "correct": true},
+        {"text": "Indian Ocean", "correct": false},
+        {"text": "Southern Ocean", "correct": false}
+      ],
+      "difficulty": "easy",
+      "fun_fact": "The Arctic Ocean covers about 14 million km² — roughly one tenth the size of the Pacific. It is mostly frozen in winter.",
+      "category": "Geography"
+    },
+    {
+      "id": "geo_en_042",
+      "question": "Which landlocked country has the world's largest navy?",
+      "answers": [
+        {"text": "Bolivia", "correct": true},
+        {"text": "Paraguay", "correct": false},
+        {"text": "Mongolia", "correct": false}
+      ],
+      "difficulty": "medium",
+      "fun_fact": "Bolivia maintains a navy of about 5,000 personnel on Lake Titicaca despite having no sea access. It lost its coastline to Chile in the War of the Pacific in 1884.",
+      "category": "Geography"
+    },
+    {
+      "id": "geo_en_043",
+      "question": "Which European country has the most saunas per capita?",
+      "answers": [
+        {"text": "Finland", "correct": true},
+        {"text": "Sweden", "correct": false},
+        {"text": "Estonia", "correct": false}
+      ],
+      "difficulty": "medium",
+      "fun_fact": "Finland has around 3.3 million saunas for 5.5 million people — almost one sauna for every two Finns. There are even saunas in parliament buildings and a Burger King.",
+      "category": "Geography"
+    },
+    {
+      "id": "geo_en_044",
+      "question": "Which German state borders the most other German states?",
+      "answers": [
+        {"text": "Hesse", "correct": true},
+        {"text": "Bavaria", "correct": false},
+        {"text": "Lower Saxony", "correct": false}
+      ],
+      "difficulty": "medium",
+      "fun_fact": "Hesse shares borders with six other German states: Lower Saxony, Thuringia, Bavaria, Baden-Württemberg, Rhineland-Palatinate, and North Rhine-Westphalia.",
+      "category": "Geography"
+    },
+    {
+      "id": "geo_en_045",
+      "question": "Which country gifted the Statue of Liberty to the USA?",
+      "answers": [
+        {"text": "France", "correct": true},
+        {"text": "United Kingdom", "correct": false},
+        {"text": "Netherlands", "correct": false}
+      ],
+      "difficulty": "easy",
+      "fun_fact": "The Statue of Liberty arrived in 350 pieces by ship from France in 1885. The head was displayed at world exhibitions in Paris for years beforehand.",
+      "category": "Geography"
+    },
+    {
+      "id": "geo_en_046",
+      "question": "Which country has a flag that is not rectangular?",
+      "answers": [
+        {"text": "Nepal", "correct": true},
+        {"text": "Bhutan", "correct": false},
+        {"text": "Sri Lanka", "correct": false}
+      ],
+      "difficulty": "medium",
+      "fun_fact": "Nepal's flag consists of two stacked triangles and is the only non-rectangular national flag in the world. Switzerland's flag is square but still has four sides.",
+      "category": "Geography"
+    },
+    {
+      "id": "geo_en_047",
+      "question": "Which country has no official capital?",
+      "answers": [
+        {"text": "Nauru", "correct": true},
+        {"text": "Tuvalu", "correct": false},
+        {"text": "Monaco", "correct": false}
+      ],
+      "difficulty": "hard",
+      "fun_fact": "The Pacific island nation of Nauru has no official capital. Government operations are based in the Yaren district. At 21 km², Nauru is the third smallest country in the world.",
+      "category": "Geography"
+    },
+    {
+      "id": "geo_en_048",
+      "question": "Which European capital was built on 14 islands?",
+      "answers": [
+        {"text": "Stockholm", "correct": true},
+        {"text": "Helsinki", "correct": false},
+        {"text": "Copenhagen", "correct": false}
+      ],
+      "difficulty": "medium",
+      "fun_fact": "Stockholm spans 14 islands connected by 57 bridges. The old town Gamla Stan stands on the island of Stadsholmen and was founded in the 13th century.",
+      "category": "Geography"
+    },
+    {
+      "id": "geo_en_049",
+      "question": "Which country renamed its capital in 2019?",
+      "answers": [
+        {"text": "Kazakhstan (Astana → Nur-Sultan → Astana again)", "correct": true},
+        {"text": "Turkey (Istanbul → Ankara)", "correct": false},
+        {"text": "Myanmar (Yangon → Naypyidaw)", "correct": false}
+      ],
+      "difficulty": "medium",
+      "fun_fact": "Kazakhstan renamed its capital Nur-Sultan in 2019 to honour outgoing president Nursultan Nazarbayev, then reversed the decision back to Astana in 2022.",
+      "category": "Geography"
+    },
+    {
+      "id": "geo_en_050",
+      "question": "Which river flows through the most European capitals?",
+      "answers": [
+        {"text": "The Danube", "correct": true},
+        {"text": "The Rhine", "correct": false},
+        {"text": "The Elbe", "correct": false}
+      ],
+      "difficulty": "medium",
+      "fun_fact": "The Danube flows through four European capitals: Vienna, Bratislava, Budapest, and Belgrade. No other river in the world links so many capital cities.",
+      "category": "Geography"
+    }
+  ]
+}
