@@ -17,6 +17,7 @@
     let selectedCategories = [];
     let selectedDifficulty = 'medium';
     let selectedRounds = 10;
+    let selectedLanguage = 'de';
 
     // Game state
     let currentPhase = 'LOBBY';
@@ -54,6 +55,7 @@
         categorySummary: document.getElementById('category-summary'),
         difficultyChips: document.getElementById('difficulty-chips'),
         roundsChips: document.getElementById('rounds-chips'),
+        languageChips: document.getElementById('language-chips'),
         gameSettingsSummary: document.getElementById('game-settings-summary'),
         qrContainer: document.getElementById('qr-container'),
         joinUrl: document.getElementById('join-url'),
@@ -192,6 +194,32 @@
         selectedRounds = parseInt(v, 10);
         updateSettingsSummary();
     });
+    setupChips(els.languageChips, function (v) {
+        selectedLanguage = v;
+        // Show/hide category chips based on selected language
+        if (els.categoryChips) {
+            var chips = els.categoryChips.querySelectorAll('.chip[data-lang]');
+            chips.forEach(function (chip) {
+                chip.style.display = (chip.dataset.lang === v) ? '' : 'none';
+            });
+            // Reset to mixed if current category doesn't match language
+            var activeChip = els.categoryChips.querySelector('.chip.active');
+            if (activeChip && activeChip.dataset.lang && activeChip.dataset.lang !== v) {
+                activeChip.classList.remove('active');
+                var mixedChip = els.categoryChips.querySelector('.chip[data-value="mixed"]');
+                if (mixedChip) mixedChip.classList.add('active');
+                selectedCategory = 'mixed';
+                selectedCategories = [];
+            }
+        }
+        updateSettingsSummary();
+    });
+    // Init: hide English category chips on load
+    if (els.categoryChips) {
+        els.categoryChips.querySelectorAll('.chip[data-lang="en"]').forEach(function (chip) {
+            chip.style.display = 'none';
+        });
+    }
     setupCollapsibles();
 
     // ---- WebSocket ----
@@ -544,6 +572,7 @@
             category: categoryPayload,
             difficulty: selectedDifficulty === 'mixed' ? null : selectedDifficulty,
             num_rounds: selectedRounds,
+            language: selectedLanguage,
         });
 
         closeAdminJoinModal();
