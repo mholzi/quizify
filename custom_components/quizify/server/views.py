@@ -69,7 +69,7 @@ class LauncherView(HomeAssistantView):
 
     url = "/quizify/launcher"
     name = "quizify:launcher"
-    requires_auth = True
+    requires_auth = False  # Served inside HA's auth-protected iframe panel; no sensitive data
 
     def __init__(self, hass: HomeAssistant) -> None:
         """Initialize the launcher view."""
