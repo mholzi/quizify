@@ -413,8 +413,13 @@
             deltaBadge = '<span class="rank-delta rank-delta--down">▼' + Math.abs(entry.rank_delta) + '</span>';
         }
 
-        return '<div class="leaderboard-entry' + currentClass + disconnectedClass + '" data-name="' + pu.escapeHtml(entry.name) + '">' +
+        var colorDot = entry.color
+            ? '<span class="player-color-dot" style="background:' + entry.color + '"></span>'
+            : '';
+        var colorBorder = entry.color ? ' style="border-left:3px solid ' + entry.color + '"' : '';
+        return '<div class="leaderboard-entry' + currentClass + disconnectedClass + '"' + colorBorder + ' data-name="' + pu.escapeHtml(entry.name) + '">' +
             '<span class="entry-rank' + rankClass + '">' + rank + '</span>' +
+            colorDot +
             '<span class="entry-name">' + pu.escapeHtml(entry.name) + youBadge + '</span>' +
             deltaBadge +
             '<span class="entry-score">' + entry.score + '</span>' +

@@ -97,6 +97,11 @@
                     pu.saveSession(msg.session_token, state.playerName);
                 }
                 if (msg.is_admin) state.isAdmin = true;
+                if (msg.color) {
+                    state.playerColor = msg.color;
+                    // Apply as CSS custom property on root for global use
+                    document.documentElement.style.setProperty('--my-player-color', msg.color);
+                }
                 // Request full state so we switch to the correct view immediately
                 send('get_state', {});
                 break;

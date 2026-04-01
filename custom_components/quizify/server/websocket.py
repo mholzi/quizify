@@ -227,13 +227,15 @@ class QuizifyWebSocketHandler:
             # Generate session token for reconnect
             session_token = self._conn.create_session_token(name)
 
-            # Send join confirmation with session token
+            # Send join confirmation with session token and assigned color
             powerup = game_state.get_player_powerup(name)
+            player_obj = game_state.get_player(name)
             await self._conn._safe_send(ws, {
                 "type": "joined",
                 "player_id": name,
                 "powerup": powerup.value if powerup else None,
                 "session_token": session_token,
+                "color": player_obj.color if player_obj else "",
             })
 
             # Send current state to the joining player

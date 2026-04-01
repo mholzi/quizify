@@ -22,7 +22,8 @@
         currentPhase: 'LOBBY',
         reconnectAttempts: 0,
         isReconnecting: false,
-        intentionalLeave: false
+        intentionalLeave: false,
+        playerColor: '',  // assigned by server on join
     };
 
     // ============================================
@@ -226,12 +227,15 @@
                 var name = typeof p === 'string' ? p : (p.name || p);
                 var isYou = name === state.playerName;
                 var isDisconnected = p.connected === false;
+                var color = (p.color) || '';
                 var classes = 'player-card' +
                     (isYou ? ' player-card--you' : '') +
                     (isDisconnected ? ' player-card--disconnected' : '');
+                var colorStyle = color ? ' style="--player-color:' + color + ';border-left:4px solid ' + color + ';"' : '';
                 var awayBadge = isDisconnected ? '<span class="away-badge">(away)</span>' : '';
                 var youBadge = isYou ? '<span class="you-badge">(you)</span>' : '';
-                return '<div class="' + classes + '" data-player="' + escapeHtml(name) + '">' +
+                return '<div class="' + classes + '"' + colorStyle + ' data-player="' + escapeHtml(name) + '">' +
+                    '<span class="player-color-dot" style="background:' + (color || '#888') + '"></span>' +
                     '<span class="player-name">' + escapeHtml(name) + youBadge + awayBadge + '</span>' +
                     '</div>';
             })
