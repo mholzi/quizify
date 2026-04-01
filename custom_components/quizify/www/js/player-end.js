@@ -58,15 +58,36 @@
             if (playerMessage) playerMessage.classList.remove('hidden');
         }
 
-        // Confetti for winner
-        if (currentPlayer && currentPlayer.rank === 1 && typeof confetti === 'function') {
-            setTimeout(function () {
-                confetti({
-                    particleCount: 150,
-                    spread: 90,
-                    origin: { y: 0.6 }
-                });
-            }, 1500);
+        // Confetti celebration on finale
+        if (typeof confetti === 'function') {
+            var isWinner = currentPlayer && currentPlayer.rank === 1;
+
+            if (isWinner) {
+                // Winner: epic gold + rainbow burst
+                setTimeout(function () {
+                    confetti({ particleCount: 200, spread: 100, origin: { y: 0.6 }, colors: ['#FFD700', '#FFA500', '#FFEC70'] });
+                }, 600);
+                setTimeout(function () {
+                    confetti({ particleCount: 120, spread: 130, origin: { x: 0.1, y: 0.5 }, colors: ['#FFD700', '#fff', '#FFA500'] });
+                    confetti({ particleCount: 120, spread: 130, origin: { x: 0.9, y: 0.5 }, colors: ['#FFD700', '#fff', '#FFA500'] });
+                }, 1100);
+                setTimeout(function () {
+                    confetti({ particleCount: 80, spread: 80, origin: { y: 0.4 }, colors: ['#FFD700', '#FFEC70'] });
+                }, 1800);
+            } else {
+                // All other players: celebratory burst (scaled by rank)
+                var rank = currentPlayer ? currentPlayer.rank : 5;
+                var count = Math.max(40, 120 - (rank - 2) * 15);
+                setTimeout(function () {
+                    confetti({ particleCount: count, spread: 80, origin: { y: 0.6 } });
+                }, 800);
+                if (rank <= 3) {
+                    setTimeout(function () {
+                        confetti({ particleCount: Math.round(count * 0.6), spread: 100, origin: { x: 0.2, y: 0.5 } });
+                        confetti({ particleCount: Math.round(count * 0.6), spread: 100, origin: { x: 0.8, y: 0.5 } });
+                    }, 1400);
+                }
+            }
         }
     }
 
