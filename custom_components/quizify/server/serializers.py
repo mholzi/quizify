@@ -106,6 +106,7 @@ def serialize_leaderboard(players: list[PlayerSession]) -> list[dict[str, Any]]:
             "streak_bonus": breakdown.get("streak_bonus", 0),
             "difficulty_multiplier": breakdown.get("difficulty_multiplier", 1.0),
             "double_points": breakdown.get("double_points", False),
+            "color": p.color,
         })
     return result
 
@@ -118,6 +119,7 @@ def serialize_player_list(players: list[PlayerSession]) -> list[dict[str, Any]]:
             "score": p.score,
             "streak": p.streak,
             "connected": p.connected,
+            "color": p.color,
         }
         for p in players
     ]

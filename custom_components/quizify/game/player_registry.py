@@ -18,7 +18,7 @@ from ..const import (
 if TYPE_CHECKING:
     from aiohttp import web
 
-from .player import PlayerSession
+from .player import PlayerSession, PLAYER_COLORS
 
 _LOGGER = logging.getLogger(__name__)
 
@@ -77,9 +77,14 @@ class PlayerRegistry:
         joined_late = phase_value != "LOBBY"
         initial_score = average_score_fn() if joined_late else 0
 
+        # Assign a unique color from the palette (cycle if more than palette size)
+        used_colors = {p.color for p in self.players.values()}
+        available = [c for c in PLAYER_COLORS if c not in used_colors]
+        color = available[0] if available else PLAYER_COLORS[len(self.players) % len(PLAYER_COLORS)]
+
         # Add new player
         player = PlayerSession(
-            name=name, ws=ws, score=initial_score, streak=0, joined_late=joined_late
+            name=name, ws=ws, score=initial_score, streak=0, joined_late=joined_late, color=color
         )
         self.players[name] = player
         self._sessions[player.session_id] = name
@@ -133,6 +138,7 @@ class PlayerRegistry:
                 "streak": p.streak,
                 "is_admin": p.is_admin,
                 "submitted": p.submitted,
+                "color": p.color,
             }
             for p in self.players.values()
         ]

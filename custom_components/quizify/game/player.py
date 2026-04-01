@@ -11,6 +11,31 @@ if TYPE_CHECKING:
     from aiohttp import web
 
 
+# Palette of distinct, accessible colours for player identification
+PLAYER_COLORS = [
+    "#FF6B6B",  # coral red
+    "#4ECDC4",  # teal
+    "#45B7D1",  # sky blue
+    "#96CEB4",  # sage green
+    "#FFEAA7",  # soft yellow
+    "#DDA0DD",  # plum
+    "#98D8C8",  # mint
+    "#F7DC6F",  # gold
+    "#BB8FCE",  # lavender
+    "#F0A500",  # amber
+    "#6BCB77",  # green
+    "#FF9F43",  # orange
+    "#A29BFE",  # periwinkle
+    "#FD79A8",  # pink
+    "#74B9FF",  # light blue
+    "#55EFC4",  # aquamarine
+    "#FDCB6E",  # mango
+    "#E17055",  # terracotta
+    "#00CEC9",  # cyan
+    "#6C5CE7",  # purple
+]
+
+
 @dataclass
 class PlayerSession:
     """Represents a connected player."""
@@ -22,6 +47,7 @@ class PlayerSession:
     streak: int = 0
     connected: bool = True
     is_admin: bool = False
+    color: str = ""  # assigned on join from PLAYER_COLORS palette
     joined_late: bool = False
     joined_at: float = field(default_factory=time.time)
     submitted: bool = False
