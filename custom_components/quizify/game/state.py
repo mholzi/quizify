@@ -605,6 +605,15 @@ class QuizifyGameState:
     # State access
     # ------------------------------------------------------------------
 
+    @property
+    def round_duration(self) -> float:
+        """Public accessor for current round duration."""
+        return self._round_duration
+
+    def get_player_powerup(self, player_name: str):
+        """Get the power-up held by a player."""
+        return self._powerup_manager.get_powerup(player_name)
+
     def get_phase(self) -> GamePhase:
         """Return current game phase."""
         return self.phase

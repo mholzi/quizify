@@ -107,6 +107,45 @@ class QuizifyAnalytics:
         if (exc := task.exception()) is not None:
             _LOGGER.error("Unhandled error in analytics save task: %s", exc)
 
+    async def record_game(
+        self,
+        game_id: str,
+        category: str | None,
+        difficulty: str,
+        num_rounds: int,
+        players: dict[str, int],
+        duration_seconds: int,
+        started_at: int | None = None,
+    ) -> None:
+        """Record a completed game."""
+        now = int(time.time())
+        player_count = len(players)
+        avg_score = sum(players.values()) / player_count if player_count > 0 else 0
+        winner = max(players, key=players.get) if players else ""  # type: ignore[arg-type]
+
+        record: GameRecord = {
+            "game_id": game_id,
+            "started_at": started_at or (now - duration_seconds),
+            "ended_at": now,
+            "duration_seconds": duration_seconds,
+            "player_count": player_count,
+            "category": category or "mixed",
+            "question_count": num_rounds,
+            "rounds_played": num_rounds,
+            "average_score": round(avg_score, 1),
+            "difficulty": difficulty,
+            "player_scores": players,
+            "winner": winner,
+        }
+        await self.add_game(record)
+        _LOGGER.info(
+            "Game %s recorded: %d players, %d rounds, winner=%s",
+            game_id,
+            player_count,
+            num_rounds,
+            winner,
+        )
+
     async def add_game(self, record: GameRecord) -> None:
         """Add game record and schedule save."""
         self._data["games"].append(record)
