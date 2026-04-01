@@ -60,15 +60,19 @@
                     }
                 }
 
-                // Try session-based reconnect first
+                // Try session-based reconnect first — but skip for admin
+                // self-join (?admin=true) to avoid a stale session token
+                // from a prior game blocking the fresh join.
                 var session = pu.getSession();
-                if (session.token && session.name) {
+                var isAdminSelfJoin = new URLSearchParams(location.search).get('admin') === 'true';
+                if (!isAdminSelfJoin && session.token && session.name) {
                     send('reconnect', { session_token: session.token, name: session.name });
                 } else if (state.playerName) {
                     var joinMsg = { name: state.playerName };
                     if (state.isAdmin) joinMsg.is_admin = true;
                     send('join', joinMsg);
                 }
+                // else: waiting for auto-join interval or user to click join
             },
             onMessage: handleMessage,
             onReconnect: connect,
@@ -403,6 +407,13 @@
     function handleError(msg) {
         console.warn('[Quizify] Error:', msg.code, msg.message);
         pu.showToast(msg.message || msg.code);
+
+        // If the error happened during join, reset the button so the user can retry
+        if (!state.playerName && els.joinBtn) {
+            els.joinBtn.disabled = false;
+            els.joinBtn.textContent = 'Join Game';
+            if (els.nameInput) els.nameInput.style.borderColor = '#ff4757';
+        }
     }
 
     // ============================================
