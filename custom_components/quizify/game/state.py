@@ -98,6 +98,12 @@ class QuizifyGameState:
         self._question_bank = QuestionBank()
         self._powerup_manager = PowerUpManager()
 
+        # Load question history if HA context available
+        if hass is not None:
+            from pathlib import Path as _Path
+            history_path = _Path(hass.config.path("quizify", "question_history.json"))
+            self._question_bank.load_history(history_path)
+
         # Current round state
         self._current_question: Question | None = None
         self._timers: dict[str, QuestionTimer] = {}  # player_id → timer
@@ -242,6 +248,9 @@ class QuizifyGameState:
 
         self.round += 1
         self._current_question = question
+
+        # Record this question as shown for history tracking
+        self._question_bank.record_shown(question.id)
 
         # Determine time limit from difficulty
         try:
@@ -471,6 +480,9 @@ class QuizifyGameState:
 
         # Record to analytics
         self._record_analytics()
+
+        # Save question history so next game prioritises least-recently-shown
+        self._question_bank.flush_shown_history()
 
         _LOGGER.info("Game ended after %d rounds", self.round)
         self._fire_broadcast("game_ended")

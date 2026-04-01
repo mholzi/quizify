@@ -89,6 +89,11 @@ class QuestionBank:
         self._queue: list[Question] = []
         self._queue_index: int = 0
         self._loaded: bool = False
+        # Question history: maps question_id -> unix timestamp last shown (or 0 if never)
+        self._history: dict[str, float] = {}
+        self._history_path: Path | None = None
+        # Questions shown in the current game (to record at end)
+        self._shown_this_game: list[str] = []
 
     def load_category(self, category: str) -> list[Question]:
         """Load questions for a single category from its JSON file."""
@@ -201,6 +206,47 @@ class QuestionBank:
         # Should never happen with validated questions, but be safe.
         return question.answers[0]
 
+    # ------------------------------------------------------------------
+    # Question history
+    # ------------------------------------------------------------------
+
+    def load_history(self, history_path: Path) -> None:
+        """Load question history from a JSON file."""
+        self._history_path = history_path
+        if history_path.exists():
+            try:
+                raw = json.loads(history_path.read_text(encoding="utf-8"))
+                self._history = {k: float(v) for k, v in raw.items()}
+                _LOGGER.debug("Loaded question history: %d entries", len(self._history))
+            except (json.JSONDecodeError, ValueError) as exc:
+                _LOGGER.warning("Failed to load question history: %s", exc)
+                self._history = {}
+        else:
+            self._history = {}
+
+    def save_history(self) -> None:
+        """Persist question history to disk."""
+        if self._history_path is None:
+            return
+        try:
+            self._history_path.parent.mkdir(parents=True, exist_ok=True)
+            self._history_path.write_text(
+                json.dumps(self._history, indent=2), encoding="utf-8"
+            )
+        except OSError as exc:
+            _LOGGER.warning("Failed to save question history: %s", exc)
+
+    def record_shown(self, question_id: str) -> None:
+        """Mark a question as shown now."""
+        import time as _time
+        self._history[question_id] = _time.time()
+        self._shown_this_game.append(question_id)
+
+    def flush_shown_history(self) -> None:
+        """Save history at end of game and reset the shown-this-game list."""
+        self._shown_this_game = []
+        self.save_history()
+
     def _build_queue(
         self,
         category: str | None = None,
@@ -219,5 +265,15 @@ class QuestionBank:
         if language is not None:
             pool = [q for q in pool if q.language == language]
 
-        self._queue = self.shuffle_questions(pool)
+        # Sort by history: never-shown questions first, then oldest-shown first.
+        # Within each group, randomise to avoid predictable ordering.
+        if self._history:
+            import random as _random
+            never_shown = [q for q in pool if q.id not in self._history]
+            previously_shown = [q for q in pool if q.id in self._history]
+            _random.shuffle(never_shown)
+            previously_shown.sort(key=lambda q: self._history.get(q.id, 0))
+            self._queue = never_shown + previously_shown
+        else:
+            self._queue = self.shuffle_questions(pool)
         self._queue_index = 0
