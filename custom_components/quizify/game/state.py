@@ -404,7 +404,9 @@ class QuizifyGameState:
     def _do_evaluate_round(self) -> RoundSummary:
         """Internal: evaluate the round, build summary, transition to ANSWER_REVEAL."""
         question = self._current_question
-        assert question is not None  # noqa: S101
+        if question is None:
+            _LOGGER.error("evaluate_round called with no active question")
+            return self._round_summary  # type: ignore[return-value]
 
         correct_answer = self._question_bank.get_correct_answer(question)
 

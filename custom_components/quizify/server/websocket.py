@@ -67,6 +67,10 @@ class QuizifyWebSocketHandler:
         self._admin_session_token: str | None = None
         self._admin_disconnect_task: asyncio.Task | None = None
         self._ADMIN_SESSION_GRACE = 120  # seconds
+        # Rate limiting
+        self._message_timestamps: dict[int, list[float]] = {}  # ws id -> recent message timestamps
+        self._RATE_LIMIT_WINDOW = 1.0  # seconds
+        self._RATE_LIMIT_MAX = 15  # max messages per window
 
     async def handle(self, request: web.Request) -> web.WebSocketResponse:
         """Handle WebSocket connection."""
@@ -101,6 +105,16 @@ class QuizifyWebSocketHandler:
         try:
             async for msg in ws:
                 if msg.type == WSMsgType.TEXT:
+                    # Rate limiting
+                    ws_id = id(ws)
+                    now = asyncio.get_event_loop().time()
+                    timestamps = self._message_timestamps.setdefault(ws_id, [])
+                    # Remove old timestamps outside window
+                    self._message_timestamps[ws_id] = [t for t in timestamps if now - t < self._RATE_LIMIT_WINDOW]
+                    if len(self._message_timestamps[ws_id]) >= self._RATE_LIMIT_MAX:
+                        _LOGGER.warning("Rate limit exceeded for WebSocket %s", ws_id)
+                        continue  # skip this message silently
+                    self._message_timestamps[ws_id].append(now)
                     try:
                         await self._handle_message(ws, msg.json(), is_admin)
                     except Exception as err:  # noqa: BLE001
@@ -111,6 +125,7 @@ class QuizifyWebSocketHandler:
             self.connections.discard(ws)
             self._admin_connections.discard(ws)
             self._dashboard_connections.discard(ws)
+            self._message_timestamps.pop(id(ws), None)
             await self._handle_disconnect(ws)
             _LOGGER.debug("WebSocket disconnected, total: %d", len(self.connections))
 
@@ -218,7 +233,6 @@ class QuizifyWebSocketHandler:
     ) -> None:
         """Handle player join."""
         name = data.get("name", "").strip()
-        is_admin = data.get("is_admin", False)
 
         if not name:
             await self._send_error(ws, ERR_NAME_INVALID, "Name is required")
@@ -237,11 +251,6 @@ class QuizifyWebSocketHandler:
             player = game_state.get_player(name)
             # Cancel pending removal on reconnect
             self._cancel_pending_removal(name)
-
-            # Mark player session as admin if they joined with is_admin flag
-            if is_admin and player:
-                player.is_admin = True
-                self._admin_connections.add(ws)
 
             # Generate session token for reconnect
             session_token = str(uuid.uuid4())
