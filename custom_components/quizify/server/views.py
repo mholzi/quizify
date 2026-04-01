@@ -6,6 +6,7 @@ import logging
 from pathlib import Path
 from typing import TYPE_CHECKING
 
+import aiohttp
 from aiohttp import web
 from homeassistant.components.http import HomeAssistantView
 
@@ -17,6 +18,12 @@ from custom_components.quizify.server.serializers import (
 
 if TYPE_CHECKING:
     from homeassistant.core import HomeAssistant
+
+# GitHub raw URL for pack version manifests
+_PACK_VERSIONS_URL = (
+    "https://raw.githubusercontent.com/mholzi/quizify/main/"
+    "custom_components/quizify/questions/versions.json"
+)
 
 _LOGGER = logging.getLogger(__name__)
 
@@ -204,3 +211,87 @@ class AnalyticsDataView(HomeAssistantView):
         period = request.query.get("period", "30d")
         metrics = analytics.compute_metrics(period)
         return web.json_response(metrics)
+
+
+class PackVersionsView(HomeAssistantView):
+    """API endpoint — installed question pack versions."""
+
+    url = "/api/quizify/packs"
+    name = "api:quizify:packs"
+    requires_auth = True
+
+    def __init__(self, hass: HomeAssistant) -> None:
+        """Initialize the pack versions view."""
+        self.hass = hass
+
+    async def get(self, request: web.Request) -> web.Response:  # noqa: ARG002
+        """Return installed pack version metadata."""
+        game = self.hass.data.get(DOMAIN, {}).get("game")
+        if game is None:
+            return web.json_response({})
+
+        # Ensure packs are loaded
+        await self.hass.async_add_executor_job(game._question_bank.load_all_categories)
+        installed = game._question_bank.get_pack_versions()
+        return web.json_response(installed)
+
+
+class PackUpdateCheckView(HomeAssistantView):
+    """API endpoint — compare installed packs against latest versions on GitHub."""
+
+    url = "/api/quizify/packs/updates"
+    name = "api:quizify:packs:updates"
+    requires_auth = True
+
+    def __init__(self, hass: HomeAssistant) -> None:
+        """Initialize the pack update check view."""
+        self.hass = hass
+
+    async def get(self, request: web.Request) -> web.Response:  # noqa: ARG002
+        """Check GitHub for updated question packs.
+
+        Returns a JSON object with:
+          - installed: dict of slug -> {version, name, language, question_count}
+          - upstream: dict of slug -> version (from GitHub versions.json), or null on error
+          - updates: list of {slug, name, installed_version, upstream_version}
+        """
+        game = self.hass.data.get(DOMAIN, {}).get("game")
+        if game is None:
+            return web.json_response({"error": "game not initialised"}, status=503)
+
+        await self.hass.async_add_executor_job(game._question_bank.load_all_categories)
+        installed = game._question_bank.get_pack_versions()
+
+        # Fetch upstream versions.json from GitHub (best-effort, 5s timeout)
+        upstream: dict | None = None
+        try:
+            timeout = aiohttp.ClientTimeout(total=5)
+            async with aiohttp.ClientSession(timeout=timeout) as session:
+                async with session.get(_PACK_VERSIONS_URL) as resp:
+                    if resp.status == 200:
+                        upstream = await resp.json(content_type=None)
+        except Exception as exc:  # noqa: BLE001
+            _LOGGER.warning("Pack update check failed: %s", exc)
+
+        updates = []
+        if upstream:
+            for slug, meta in installed.items():
+                upstream_version = upstream.get(slug)
+                if upstream_version and upstream_version != meta["version"]:
+                    updates.append(
+                        {
+                            "slug": slug,
+                            "name": meta["name"],
+                            "installed_version": meta["version"],
+                            "upstream_version": upstream_version,
+                        }
+                    )
+
+        return web.json_response(
+            {
+                "installed": installed,
+                "upstream": upstream,
+                "updates": updates,
+                "upstream_available": upstream is not None,
+            }
+        )

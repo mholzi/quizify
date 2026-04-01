@@ -86,6 +86,7 @@ class QuestionBank:
         """Initialize the question bank."""
         self._questions_dir = questions_dir or QUESTIONS_DIR
         self._categories: dict[str, list[Question]] = {}
+        self._pack_versions: dict[str, dict] = {}
         self._queue: list[Question] = []
         self._queue_index: int = 0
         self._loaded: bool = False
@@ -111,6 +112,7 @@ class QuestionBank:
         questions_data = raw.get("questions", [])
         category_name = raw.get("name", category)
         pack_language = raw.get("language", "de")
+        pack_version = raw.get("version", "1.0")
         questions: list[Question] = []
 
         for entry in questions_data:
@@ -120,7 +122,13 @@ class QuestionBank:
                 questions.append(q)
 
         self._categories[category] = questions
-        _LOGGER.debug("Loaded %d questions for category '%s'", len(questions), category)
+        self._pack_versions[category] = {
+            "version": pack_version,
+            "name": category_name,
+            "language": pack_language,
+            "question_count": len(questions),
+        }
+        _LOGGER.debug("Loaded %d questions for category '%s' (v%s)", len(questions), category, pack_version)
         return questions
 
     def load_all_categories(self) -> dict[str, list[Question]]:
@@ -152,6 +160,10 @@ class QuestionBank:
     def get_categories(self) -> list[str]:
         """Return list of loaded category slugs."""
         return list(self._categories.keys())
+
+    def get_pack_versions(self) -> dict[str, dict]:
+        """Return metadata (version, name, language, question_count) for each loaded pack."""
+        return dict(self._pack_versions)
 
     def get_next_question(
         self, category: str | None = None, difficulty: str | None = None

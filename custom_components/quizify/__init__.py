@@ -25,6 +25,8 @@ from .server.views import (
     DashboardView,
     GameStatusView,
     LauncherView,
+    PackUpdateCheckView,
+    PackVersionsView,
     PlayerView,
     StatusView,
 )
@@ -75,6 +77,8 @@ async def async_setup_entry(hass: HomeAssistant, entry: ConfigEntry) -> bool:
     hass.http.register_view(StatusView(hass))
     hass.http.register_view(AnalyticsView(hass))
     hass.http.register_view(AnalyticsDataView(hass))
+    hass.http.register_view(PackVersionsView(hass))
+    hass.http.register_view(PackUpdateCheckView(hass))
 
     # Register WebSocket endpoint
     hass.http.app.router.add_get("/api/quizify/ws", ws_handler.handle)

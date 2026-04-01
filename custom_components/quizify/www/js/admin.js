@@ -710,4 +710,64 @@
 
     connect();
     updateConnectionStatus('reconnecting');
+
+    // ---- Question pack update check ----
+    checkPackUpdates();
 })();
+
+/**
+ * Fetch /api/quizify/packs/updates and show a banner if any packs have updates.
+ * Runs once on page load; silently does nothing if the request fails or GitHub
+ * is unreachable (e.g. fully offline HA setup).
+ */
+async function checkPackUpdates() {
+    try {
+        const resp = await fetch('/api/quizify/packs/updates');
+        if (!resp.ok) return;
+        const data = await resp.json();
+        if (!data.upstream_available || !data.updates || data.updates.length === 0) return;
+
+        const updates = data.updates;
+        const names = updates.map(u => u.name + ' (' + u.installed_version + ' → ' + u.upstream_version + ')').join(', ');
+
+        // Build banner
+        const banner = document.createElement('div');
+        banner.id = 'pack-update-banner';
+        banner.style.cssText = [
+            'background:#1e3a5f',
+            'border:1px solid #3b82f6',
+            'border-radius:10px',
+            'padding:10px 14px',
+            'margin:12px 0',
+            'display:flex',
+            'align-items:flex-start',
+            'gap:10px',
+            'font-size:0.85rem',
+            'color:#e2e8f0',
+            'position:relative',
+        ].join(';');
+
+        banner.innerHTML =
+            '<span style="font-size:1.2rem;flex-shrink:0">📦</span>' +
+            '<div style="flex:1">' +
+                '<strong style="color:#93c5fd">Question pack updates available</strong>' +
+                '<div style="margin-top:3px;color:#94a3b8">' + names + '</div>' +
+                '<div style="margin-top:5px;font-size:0.78rem;color:#64748b">' +
+                    'Update your packs by replacing the JSON files in ' +
+                    '<code style="background:#0f172a;padding:1px 4px;border-radius:3px">custom_components/quizify/questions/</code>' +
+                    ' and restarting Home Assistant.' +
+                '</div>' +
+            '</div>' +
+            '<button onclick="document.getElementById(\'pack-update-banner\').remove()" ' +
+                'style="background:none;border:none;color:#64748b;cursor:pointer;font-size:1rem;padding:0;flex-shrink:0" ' +
+                'title="Dismiss">✕</button>';
+
+        // Insert at top of setup screen, before first section
+        const setupScreen = document.getElementById('setup-screen');
+        if (setupScreen) {
+            setupScreen.insertBefore(banner, setupScreen.firstChild);
+        }
+    } catch (_e) {
+        // Silently ignore — offline or HA not ready
+    }
+}
