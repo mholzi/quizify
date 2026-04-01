@@ -71,6 +71,9 @@
         // Personal result — prefer all_answers entry (has breakdown), fall back to leaderboard player
         renderPersonalResult(myAnswerEntry || currentPlayer);
 
+        // Answer distribution bars
+        renderAnswerDistribution(data.answer_distribution, data.correct_answer_index, allAnswers);
+
         // All answers grid — use all_answers if available, fall back to players
         renderAllAnswers(allAnswers.length > 0 ? allAnswers : players);
 
@@ -110,6 +113,48 @@
      * Render fun fact slide-in card
      * @param {string|null} text - Fun fact text
      */
+    function renderAnswerDistribution(distribution, correctIndex, allAnswers) {
+        var container = document.getElementById('answer-distribution');
+        if (!container) return;
+        if (!distribution || distribution.length === 0) {
+            container.classList.add('hidden');
+            return;
+        }
+
+        // Build answer text map from allAnswers
+        var answerTexts = {};
+        if (allAnswers && allAnswers.length > 0) {
+            allAnswers.forEach(function(a) {
+                if (a.answer_index !== null && a.answer_index !== undefined && a.answer_text) {
+                    answerTexts[a.answer_index] = a.answer_text;
+                }
+            });
+        }
+
+        var optionLabels = ['A', 'B', 'C', 'D'];
+
+        container.innerHTML = distribution
+            .filter(function(d) { return !d.no_answer; })
+            .map(function(d) {
+                var isCorrect = d.index === correctIndex;
+                var label = optionLabels[d.index] || String(d.index + 1);
+                var text = answerTexts[d.index] || '';
+                var barClass = isCorrect ? 'answer-bar answer-bar--correct' : 'answer-bar';
+                var pct = d.percent || 0;
+                return '<div class="' + barClass + '">' +
+                    '<div class="answer-bar__header">' +
+                        '<span class="answer-bar__label">' + label + '</span>' +
+                        (text ? '<span class="answer-bar__text">' + pu.escapeHtml(text) + '</span>' : '') +
+                        '<span class="answer-bar__pct">' + pct + '%</span>' +
+                    '</div>' +
+                    '<div class="answer-bar__track">' +
+                        '<div class="answer-bar__fill" style="width:' + pct + '%"></div>' +
+                    '</div>' +
+                '</div>';
+            }).join('');
+        container.classList.remove('hidden');
+    }
+
     function renderFunFact(text) {
         var container = document.getElementById('fun-fact-container');
         var funFactEl = document.getElementById('fun-fact');

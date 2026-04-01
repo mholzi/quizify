@@ -661,6 +661,7 @@ class QuizifyWebSocketHandler:
             total_rounds=game_state.total_rounds,
             all_answers=all_answers,
             question_text=summary.question.question,
+            num_answer_options=len(game_state.shuffled_answers),
         )
         await self._conn.broadcast(summary_msg)
 
