@@ -55,9 +55,6 @@ class QuizifyWebSocketHandler:
         self._dashboard_connections: set[web.WebSocketResponse] = set()
         self._pending_removals: dict[str, asyncio.Task] = {}
         self._timer_tick_task: asyncio.Task | None = None
-        # Answer shuffle mapping: original_index -> shuffled_index per round
-        self._shuffle_map: list[int] = []  # shuffled_index -> original_index
-        self._shuffled_answers: list[str] = []
         self._game_state_ref: object | None = None  # set on first game_state access
         # Session tokens for player reconnect
         self._session_tokens: dict[str, str] = {}  # token → player_name
@@ -366,8 +363,8 @@ class QuizifyWebSocketHandler:
             return
 
         # Map shuffled index back to original index
-        if 0 <= shuffled_index < len(self._shuffle_map):
-            original_index = self._shuffle_map[shuffled_index]
+        if 0 <= shuffled_index < len(game_state.shuffle_map):
+            original_index = game_state.shuffle_map[shuffled_index]
         else:
             await self._send_error(ws, ERR_INVALID_ACTION, "Answer index out of range")
             return
@@ -429,7 +426,7 @@ class QuizifyWebSocketHandler:
             if result.type == PowerUpType.JOKER and result.joker_remove_index is not None:
                 # Map original index to shuffled index for the player
                 shuffled_remove_idx = None
-                for shuffled_idx, orig_idx in enumerate(self._shuffle_map):
+                for shuffled_idx, orig_idx in enumerate(game_state.shuffle_map):
                     if orig_idx == result.joker_remove_index:
                         shuffled_remove_idx = shuffled_idx
                         break
@@ -540,13 +537,12 @@ class QuizifyWebSocketHandler:
         # Shuffle answers — build mapping
         indices = list(range(len(question.answers)))
         random.shuffle(indices)
-        self._shuffle_map = indices  # shuffled_pos -> original_index
-        self._shuffled_answers = [question.answers[i].text for i in indices]
+        game_state.set_round_shuffle(indices, [question.answers[i].text for i in indices])
 
         # Broadcast question to players (no correct flag)
         player_msg = serialize_question_for_player(
             question=question,
-            shuffled_answers=self._shuffled_answers,
+            shuffled_answers=game_state.shuffled_answers,
             round_num=game_state.round,
             total_rounds=game_state.total_rounds,
             timer_duration=game_state.round_duration,
@@ -639,7 +635,7 @@ class QuizifyWebSocketHandler:
         for a in summary.question.answers:
             if a.correct:
                 original_idx = summary.question.answers.index(a)
-                for shuffled_idx, orig_idx in enumerate(self._shuffle_map):
+                for shuffled_idx, orig_idx in enumerate(game_state.shuffle_map):
                     if orig_idx == original_idx:
                         correct_shuffled_idx = shuffled_idx
                         break
@@ -654,11 +650,11 @@ class QuizifyWebSocketHandler:
                 # Map original answer index to shuffled index for display
                 submitted_orig = player.current_answer  # player.submitted is bool; use current_answer for the index
                 submitted_shuffled = None
-                for sh_idx, orig_idx in enumerate(self._shuffle_map):
+                for sh_idx, orig_idx in enumerate(game_state.shuffle_map):
                     if orig_idx == submitted_orig:
                         submitted_shuffled = sh_idx
                         break
-                answer_text = self._shuffled_answers[submitted_shuffled] if submitted_shuffled is not None else "?"
+                answer_text = game_state.shuffled_answers[submitted_shuffled] if submitted_shuffled is not None else "?"
                 is_correct = summary.question.answers[submitted_orig].correct if submitted_orig < len(summary.question.answers) else False
                 breakdown = player.round_score_breakdown
                 all_answers.append({

@@ -122,6 +122,10 @@ class QuizifyGameState:
         self._finale_podium: list | None = None
         self._finale_superlatives: list | None = None
 
+        # Round shuffle state (owned here, not in WS handler)
+        self.shuffle_map: list[int] = []        # shuffled_pos -> original_index
+        self.shuffled_answers: list[str] = []   # answers in shuffled order
+
     # ------------------------------------------------------------------
     # Player registry delegation
     # ------------------------------------------------------------------
@@ -532,6 +536,8 @@ class QuizifyGameState:
         self._powerup_manager.reset()
         self._finale_podium = None
         self._finale_superlatives = None
+        self.shuffle_map = []
+        self.shuffled_answers = []
 
         for player in self._player_registry.players.values():
             player.reset_for_new_game()
@@ -604,6 +610,11 @@ class QuizifyGameState:
     # ------------------------------------------------------------------
     # State access
     # ------------------------------------------------------------------
+
+    def set_round_shuffle(self, shuffle_map: list[int], shuffled_answers: list[str]) -> None:
+        """Store the shuffle mapping for the current round."""
+        self.shuffle_map = shuffle_map
+        self.shuffled_answers = shuffled_answers
 
     @property
     def round_duration(self) -> float:
