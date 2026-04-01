@@ -4,6 +4,7 @@ from __future__ import annotations
 
 from dataclasses import dataclass
 
+from ..const import MIN_PLAYERS
 from .player import PlayerSession
 
 
@@ -25,7 +26,6 @@ class Superlative:
         }
 
 
-MIN_PLAYERS = 2
 MIN_ROUNDS = 3
 
 
@@ -118,6 +118,7 @@ def compute_superlatives(players: list[PlayerSession]) -> list[Superlative]:
     best_ratio = 0.0
     best_correct = 0
     perfect_player: str | None = None
+    perfect_player_obj: PlayerSession | None = None
     for p in players:
         if p.name in awarded:
             continue
@@ -130,13 +131,14 @@ def compute_superlatives(players: list[PlayerSession]) -> list[Superlative]:
             best_ratio = ratio
             best_correct = correct
             perfect_player = p.name
+            perfect_player_obj = p
 
-    if perfect_player and best_correct >= 2:
+    if perfect_player and perfect_player_obj and best_correct >= 2:
         pct = int(best_ratio * 100)
         _try_award(
             "Perfect Round",
             "💯",
-            f"{best_correct}/{len([p for p in players if p.name == perfect_player][0].round_history)} correct ({pct}%)",
+            f"{best_correct}/{len(perfect_player_obj.round_history)} correct ({pct}%)",
             perfect_player,
         )
 

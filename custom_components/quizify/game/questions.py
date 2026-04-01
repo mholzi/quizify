@@ -8,6 +8,8 @@ import random
 from dataclasses import dataclass, field
 from pathlib import Path
 
+from ..const import ANSWERS_PER_QUESTION
+
 _LOGGER = logging.getLogger(__name__)
 
 QUESTIONS_DIR = Path(__file__).resolve().parent.parent / "questions"
@@ -47,9 +49,11 @@ def _parse_question(data: dict, category_name: str) -> Question | None:
             return None
 
     answers_raw = data["answers"]
-    if not isinstance(answers_raw, list) or len(answers_raw) != 3:
+    if not isinstance(answers_raw, list) or len(answers_raw) != ANSWERS_PER_QUESTION:
         _LOGGER.warning(
-            "Skipping question '%s': expected 3 answers, got %s",
+            "Skipping question '%s': expected %d answers, got %s",
+            data["id"],
+            ANSWERS_PER_QUESTION,
             data["id"],
             len(answers_raw) if isinstance(answers_raw, list) else type(answers_raw),
         )
@@ -85,6 +89,7 @@ class QuestionBank:
         self._categories: dict[str, list[Question]] = {}
         self._queue: list[Question] = []
         self._queue_index: int = 0
+        self._loaded: bool = False
 
     def load_category(self, category: str) -> list[Question]:
         """Load questions for a single category from its JSON file."""
@@ -115,7 +120,14 @@ class QuestionBank:
         return questions
 
     def load_all_categories(self) -> dict[str, list[Question]]:
-        """Discover and load all category JSON files."""
+        """Discover and load all category JSON files.
+
+        Subsequent calls return the cached result without re-reading from disk.
+        Call reload_categories() to force a fresh load.
+        """
+        if self._loaded:
+            return dict(self._categories)
+
         if not self._questions_dir.is_dir():
             _LOGGER.warning("Questions directory not found: %s", self._questions_dir)
             return {}
@@ -124,7 +136,14 @@ class QuestionBank:
             category_slug = file_path.stem
             self.load_category(category_slug)
 
+        self._loaded = True
         return dict(self._categories)
+
+    def reload_categories(self) -> dict[str, list[Question]]:
+        """Clear the cache and reload all categories from disk."""
+        self._loaded = False
+        self._categories = {}
+        return self.load_all_categories()
 
     def get_categories(self) -> list[str]:
         """Return list of loaded category slugs."""

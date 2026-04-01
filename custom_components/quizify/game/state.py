@@ -4,6 +4,7 @@ from __future__ import annotations
 
 import asyncio
 import logging
+import random
 import secrets
 import time
 from collections.abc import Awaitable, Callable
@@ -28,7 +29,7 @@ from .player_registry import PlayerRegistry
 from .powerups import FREEZE_DURATION, TIME_BOOST_DURATION, PowerUpEffect, PowerUpManager, PowerUpType
 from .questions import Answer, Question, QuestionBank
 from .highlights import compute_superlatives
-from .scoring import calculate_podium, calculate_round_score
+from .scoring import BASE_POINTS, MAX_SPEED_BONUS, calculate_podium, calculate_round_score, get_streak_multiplier
 from .share import build_share_data
 from .timer import QuestionTimer
 from .types import DIFFICULTY_MULTIPLIERS, TIME_LIMITS, Difficulty
@@ -116,6 +117,10 @@ class QuizifyGameState:
         # Analytics / stats service (injected from __init__.py)
         self._stats_service = None
         self._game_start_time: float | None = None
+
+        # Cached finale data (computed once in end_game, cleared in reset_to_lobby)
+        self._finale_podium: list | None = None
+        self._finale_superlatives: list | None = None
 
     # ------------------------------------------------------------------
     # Player registry delegation
@@ -262,7 +267,6 @@ class QuizifyGameState:
         # Randomly assign power-ups (one per round, random player)
         connected = [p for p in self._player_registry.players.values() if p.connected]
         if connected:
-            import random
             lucky_player = random.choice(connected)
             powerup = self._powerup_manager.assign_random_powerup(lucky_player.name)
             _LOGGER.debug("Power-up %s assigned to %s", powerup.value, lucky_player.name)
@@ -338,10 +342,6 @@ class QuizifyGameState:
         if player.streak > player.max_streak:
             player.max_streak = player.streak
 
-        from custom_components.quizify.game.scoring import (
-            BASE_POINTS, MAX_SPEED_BONUS, DIFFICULTY_MULTIPLIERS, get_streak_multiplier
-        )
-
         points = calculate_round_score(
             correct=correct,
             elapsed=elapsed,
@@ -410,15 +410,19 @@ class QuizifyGameState:
 
         # Score any players who didn't submit (they get 0, streak resets)
         # Also record round results and per-round scores for share cards / superlatives
+        # Cache validate_answer result per player to avoid double calls
+        player_correct: dict[str, bool] = {}
         for player in self._player_registry.players.values():
             if not player.submitted:
                 player.streak = 0
                 player.record_round_result("timeout")
                 player.round_scores.append(0)
+                player_correct[player.name] = False
             else:
                 is_correct = self._question_bank.validate_answer(
                     question, player.current_answer or -1
                 )
+                player_correct[player.name] = is_correct
                 player.record_round_result("correct" if is_correct else "wrong")
                 player.round_scores.append(player.round_score)
 
@@ -430,10 +434,7 @@ class QuizifyGameState:
             results.append(
                 AnswerResult(
                     player_id=player.name,
-                    correct=player.submitted
-                    and self._question_bank.validate_answer(
-                        question, player.current_answer or -1
-                    ),
+                    correct=player_correct.get(player.name, False),
                     points_earned=player.round_score,
                     new_streak=player.streak,
                     new_total=player.score,
@@ -463,7 +464,11 @@ class QuizifyGameState:
         self.phase = GamePhase.FINALE
         self._current_question = None
 
-        podium = calculate_podium(self.get_players())
+        # Cache podium and superlatives once so get_state_snapshot() can reuse them
+        self._finale_podium = calculate_podium(self.get_players())
+        self._finale_superlatives = compute_superlatives(self.get_players())
+
+        podium = self._finale_podium
 
         # Build share cards
         share_data = build_share_data(self)
@@ -523,6 +528,8 @@ class QuizifyGameState:
         self._round_summary = None
         self._timers.clear()
         self._powerup_manager.reset()
+        self._finale_podium = None
+        self._finale_superlatives = None
 
         for player in self._player_registry.players.values():
             player.reset_for_new_game()
@@ -642,8 +649,7 @@ class QuizifyGameState:
         if self.phase == GamePhase.QUESTION_ACTIVE and self._current_question:
             q = self._current_question
             # Calculate time remaining for mid-round joiners
-            import time as _time
-            elapsed = _time.monotonic() - self._round_start_time if self._round_start_time else 0.0
+            elapsed = time.monotonic() - self._round_start_time if self._round_start_time else 0.0
             remaining = max(0.0, self._round_duration - elapsed)
             snapshot["question"] = {
                 "id": q.id,
@@ -673,12 +679,13 @@ class QuizifyGameState:
             }
 
         if self.phase == GamePhase.FINALE:
-            podium = calculate_podium(self.get_players())
+            # Use cached values computed once in end_game()
+            podium = self._finale_podium or calculate_podium(self.get_players())
             snapshot["podium"] = [
                 {"name": p.name, "score": p.score, "rank": i + 1}
                 for i, p in enumerate(podium)
             ]
-            awards = compute_superlatives(self.get_players())
+            awards = self._finale_superlatives if self._finale_superlatives is not None else compute_superlatives(self.get_players())
             if awards:
                 snapshot["superlatives"] = [s.to_dict() for s in awards]
 
