@@ -188,12 +188,18 @@ class QuestionBank:
     def reset(
         self,
         category: str | None = None,
+        categories: list[str] | None = None,
         difficulty: str | None = None,
         language: str | None = None,
     ) -> None:
-        """Reset and rebuild the question queue for a new game session."""
+        """Reset and rebuild the question queue for a new game session.
+
+        Pass ``categories`` (list of slugs) to restrict to a specific subset.
+        Pass ``category`` (single slug) for single-category mode.
+        Pass neither for mixed (all categories).
+        """
         self._queue_index = 0
-        self._build_queue(category, difficulty, language)
+        self._build_queue(category, difficulty, language, categories)
 
     def get_question_count(
         self, category: str, difficulty: str | None = None
@@ -264,9 +270,15 @@ class QuestionBank:
         category: str | None = None,
         difficulty: str | None = None,
         language: str | None = None,
+        categories: list[str] | None = None,
     ) -> None:
-        """Build and shuffle the internal question queue."""
-        if category is not None:
+        """Build and shuffle the internal question queue.
+
+        Priority: ``categories`` list > single ``category`` > all (mixed).
+        """
+        if categories:
+            pool = [q for slug in categories for q in self._categories.get(slug, [])]
+        elif category is not None:
             pool = list(self._categories.get(category, []))
         else:
             pool = [q for qs in self._categories.values() for q in qs]

@@ -399,6 +399,9 @@
             }
         }
 
+        // ---- Answer distribution chart ----
+        renderAnswerDistribution(summary, msg);
+
         // Per-player result cards (Beatify-style)
         var allAnswers = summary.all_answers || msg.all_answers || [];
         if (allAnswers.length && els.revealResultsCards) {
@@ -433,6 +436,61 @@
 
         var lb = summary.leaderboard || msg.leaderboard || [];
         renderLeaderboard(els.revealLeaderboard, lb);
+    }
+
+    function renderAnswerDistribution(summary, msg) {
+        var container = document.getElementById('reveal-distribution');
+        if (!container) return;
+
+        var distribution = summary.answer_distribution || msg.answer_distribution || [];
+        var answerTexts = [];
+
+        // Build answer text array from all_answers entries (pick first occurrence per index)
+        var allAnswers = summary.all_answers || msg.all_answers || [];
+        allAnswers.forEach(function(a) {
+            if (typeof a.answer_index === 'number' && !answerTexts[a.answer_index]) {
+                answerTexts[a.answer_index] = a.answer_text || '';
+            }
+        });
+
+        // Also try msg.question.answers for authoritative labels
+        if (msg.question && Array.isArray(msg.question.answers)) {
+            msg.question.answers.forEach(function(a, i) {
+                answerTexts[i] = a.text || answerTexts[i] || '';
+            });
+        }
+
+        var correctIndex = summary.correct_answer_index;
+        if (typeof correctIndex === 'undefined') correctIndex = msg.correct_answer_index;
+
+        if (!distribution.length) {
+            container.style.display = 'none';
+            return;
+        }
+        container.style.display = '';
+
+        var html = '<div class="distribution-chart">';
+        distribution.forEach(function(item) {
+            if (item.no_answer) return; // skip timeout row
+            var isCorrect = item.index === correctIndex;
+            var barColor = isCorrect ? '#00b894' : '#636e8a';
+            var label = answerTexts[item.index] || ('Antwort ' + (item.index + 1));
+            var pct = item.percent || 0;
+            var count = item.count || 0;
+            html +=
+                '<div class="dist-row">' +
+                    '<div class="dist-label" title="' + escapeHtml(label) + '">' +
+                        (isCorrect ? '<span class="dist-correct-icon">✓</span>' : '') +
+                        escapeHtml(label) +
+                    '</div>' +
+                    '<div class="dist-bar-wrap">' +
+                        '<div class="dist-bar" style="width:' + Math.max(pct, 2) + '%;background:' + barColor + ';"></div>' +
+                    '</div>' +
+                    '<div class="dist-meta">' + count + ' (' + pct + '%)</div>' +
+                '</div>';
+        });
+        html += '</div>';
+        container.innerHTML = html;
     }
 
     function handleFinale(msg) {

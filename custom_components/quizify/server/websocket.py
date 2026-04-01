@@ -431,14 +431,23 @@ class QuizifyWebSocketHandler:
             await self._conn.send_error(ws, ERR_GAME_ALREADY_STARTED, "Game already running")
             return
 
-        category = data.get("category")
+        raw_category = data.get("category")
         difficulty = data.get("difficulty")
         num_rounds = data.get("num_rounds", 10)
         language = data.get("language", "de")
 
+        # category may be None (mixed), a string (single), or a list (multi)
+        if isinstance(raw_category, list):
+            category = None
+            categories = raw_category if raw_category else None
+        else:
+            category = raw_category or None
+            categories = None
+
         try:
             game_state.start_game(
                 category=category,
+                categories=categories,
                 difficulty=difficulty,
                 num_rounds=num_rounds,
                 language=language,

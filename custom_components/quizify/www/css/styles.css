@@ -3854,3 +3854,58 @@ footer {
   from { opacity: 0; transform: translateX(-12px); }
   to   { opacity: 1; transform: translateX(0); }
 }
+
+/* ---- Answer distribution chart (#66) ---- */
+.distribution-chart {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  margin-top: 8px;
+}
+
+.dist-row {
+  display: grid;
+  grid-template-columns: 1fr 2fr auto;
+  align-items: center;
+  gap: 8px;
+}
+
+.dist-label {
+  font-size: 0.8rem;
+  color: #e2e8f0;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  display: flex;
+  align-items: center;
+  gap: 4px;
+}
+
+.dist-correct-icon {
+  color: #00b894;
+  font-weight: 900;
+  font-size: 0.85rem;
+  flex-shrink: 0;
+}
+
+.dist-bar-wrap {
+  background: #2d2d4e;
+  border-radius: 4px;
+  height: 18px;
+  overflow: hidden;
+}
+
+.dist-bar {
+  height: 100%;
+  border-radius: 4px;
+  transition: width 0.5s ease;
+  min-width: 4px;
+}
+
+.dist-meta {
+  font-size: 0.75rem;
+  color: #a4a4b8;
+  white-space: nowrap;
+  text-align: right;
+  min-width: 52px;
+}

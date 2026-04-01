@@ -173,11 +173,16 @@ class QuizifyGameState:
     def start_game(
         self,
         category: str | None = None,
+        categories: list[str] | None = None,
         difficulty: str | None = None,
         num_rounds: int = 10,
         language: str | None = None,
     ) -> dict[str, Any]:
         """Start a new game session.
+
+        Pass ``categories`` (list of slugs) for multi-category mode.
+        Pass ``category`` (single slug) for single-category mode.
+        Pass neither for mixed (all packs).
 
         Returns dict with game info on success.
         Raises ValueError on invalid state.
@@ -187,6 +192,7 @@ class QuizifyGameState:
 
         self.game_id = secrets.token_urlsafe(8)
         self.category = category
+        self.categories = categories or []
         self.difficulty = difficulty or DIFFICULTY_DEFAULT
         self.language = language or "de"
         self.total_rounds = num_rounds
@@ -194,7 +200,12 @@ class QuizifyGameState:
 
         # Load questions
         self._question_bank.load_all_categories()
-        self._question_bank.reset(category=category, difficulty=difficulty, language=self.language)
+        self._question_bank.reset(
+            category=category,
+            categories=categories,
+            difficulty=difficulty,
+            language=self.language,
+        )
 
         # Verify questions are available
         if not self._question_bank._queue:
