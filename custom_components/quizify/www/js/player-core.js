@@ -569,13 +569,12 @@
             });
         }
 
-        // Show join form immediately — don't wait for WS to render UI.
-        // The join button stays disabled until WS is open (set in onOpen).
-        // This ensures the player sees a form even on slow connections (e.g. Nabu Casa).
-        if (!prefilledName) {
-            pu.showView('join-view');
-            if (els.joinBtn) els.joinBtn.disabled = true;
-        }
+        // Always show join-view immediately — don't wait for WS.
+        // For pre-filled names (admin self-join), the form is visible but
+        // auto-submit fires once WS opens. Prevents a blank screen on slow
+        // connections such as Nabu Casa remote access.
+        pu.showView('join-view');
+        if (els.joinBtn) els.joinBtn.disabled = true;
 
         // Connect WebSocket
         pu.updateConnectionIndicator('reconnecting');
