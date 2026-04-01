@@ -31,7 +31,7 @@ from .highlights import compute_superlatives
 from .scoring import calculate_podium, calculate_round_score
 from .share import build_share_data
 from .timer import QuestionTimer
-from .types import DIFFICULTY_MULTIPLIERS, TIME_LIMITS, Difficulty, RoundResult
+from .types import DIFFICULTY_MULTIPLIERS, TIME_LIMITS, Difficulty
 
 if TYPE_CHECKING:
     from aiohttp import web
