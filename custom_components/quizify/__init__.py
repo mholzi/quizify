@@ -29,7 +29,6 @@ from .server.views import (
     StatusView,
 )
 from .server.websocket import QuizifyWebSocketHandler
-from .services.stats import StatsService
 
 if TYPE_CHECKING:
     from homeassistant.config_entries import ConfigEntry
@@ -49,12 +48,9 @@ async def async_setup_entry(hass: HomeAssistant, entry: ConfigEntry) -> bool:
     analytics = QuizifyAnalytics(hass)
     await analytics.load()
 
-    # Initialize stats service
-    stats_service = StatsService(analytics)
-
     # Initialize game state
     game_state = QuizifyGameState(hass=hass, entry_id=entry.entry_id)
-    game_state._stats_service = stats_service
+    game_state._stats_service = analytics
 
     # Initialize WebSocket handler
     ws_handler = QuizifyWebSocketHandler(hass)
@@ -68,7 +64,6 @@ async def async_setup_entry(hass: HomeAssistant, entry: ConfigEntry) -> bool:
         "game": game_state,
         "ws_handler": ws_handler,
         "analytics": analytics,
-        "stats_service": stats_service,
     }
 
     # Register HTTP views

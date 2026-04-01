@@ -257,7 +257,7 @@ class QuizifyWebSocketHandler:
             self._session_tokens[session_token] = name
 
             # Send join confirmation with session token
-            powerup = game_state._powerup_manager.get_powerup(name)
+            powerup = game_state.get_player_powerup(name)
             await self._safe_send(ws, {
                 "type": "joined",
                 "player_id": name,
@@ -323,7 +323,7 @@ class QuizifyWebSocketHandler:
         self._session_tokens[new_token] = name
 
         # Send reconnect success with new token
-        powerup = game_state._powerup_manager.get_powerup(name)
+        powerup = game_state.get_player_powerup(name)
         await self._safe_send(ws, {
             "type": "reconnected",
             "player_id": name,
@@ -549,7 +549,7 @@ class QuizifyWebSocketHandler:
             shuffled_answers=self._shuffled_answers,
             round_num=game_state.round,
             total_rounds=game_state.total_rounds,
-            timer_duration=game_state._round_duration,
+            timer_duration=game_state.round_duration,
         )
         await self._broadcast_to_players(player_msg)
 
@@ -558,7 +558,7 @@ class QuizifyWebSocketHandler:
             question=question,
             round_num=game_state.round,
             total_rounds=game_state.total_rounds,
-            timer_duration=game_state._round_duration,
+            timer_duration=game_state.round_duration,
         )
         await self._broadcast_to_admins(admin_msg)
 
@@ -568,7 +568,7 @@ class QuizifyWebSocketHandler:
 
         # Notify players who got a power-up this round
         for player in players:
-            powerup = game_state._powerup_manager.get_powerup(player.name)
+            powerup = game_state.get_player_powerup(player.name)
             if powerup and player.connected:
                 await self._safe_send(player.ws, {
                     "type": "powerup_assigned",
@@ -599,7 +599,7 @@ class QuizifyWebSocketHandler:
 
         async def tick_loop() -> None:
             try:
-                duration = game_state._round_duration
+                duration = game_state.round_duration
                 remaining = duration
                 while remaining > 0 and game_state.phase == GamePhase.QUESTION_ACTIVE:
                     await self._broadcast({"type": "timer_tick", "remaining": round(remaining, 1)})
