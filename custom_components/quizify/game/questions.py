@@ -54,7 +54,6 @@ def _parse_question(data: dict, category_name: str) -> Question | None:
             "Skipping question '%s': expected %d answers, got %s",
             data["id"],
             ANSWERS_PER_QUESTION,
-            data["id"],
             len(answers_raw) if isinstance(answers_raw, list) else type(answers_raw),
         )
         return None
