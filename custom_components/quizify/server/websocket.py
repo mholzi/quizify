@@ -64,13 +64,30 @@ class QuizifyWebSocketHandler:
         await ws.prepare(request)
 
         role = request.query.get("role")
-        is_admin = role == "admin"
         is_dashboard = role == "dashboard"
         admin_token = request.query.get("token")
 
-        # Validate admin token for reconnection
-        if is_admin and admin_token and self._conn.validate_admin_token(admin_token):
-            _LOGGER.info("Admin reconnected with valid session token")
+        # Admin role grant rules (#140 fix):
+        # 1. Valid session token in ?token= → always grant (reconnect path)
+        # 2. No token yet issued (fresh HA restart / first ever admin) → grant once
+        # 3. Token already issued but no matching token provided → reject
+        # This prevents any LAN user from self-declaring admin after the first
+        # host has connected and received a session token.
+        is_admin = False
+        if role == "admin":
+            existing_token = self._conn._admin_session_token
+            if admin_token and self._conn.validate_admin_token(admin_token):
+                is_admin = True
+                _LOGGER.info("Admin reconnected with valid session token")
+            elif not existing_token:
+                # No token issued yet — this is the first admin connection
+                is_admin = True
+                _LOGGER.info("Admin connected (no token issued yet — first connection)")
+            else:
+                _LOGGER.warning(
+                    "Admin connection attempt without valid token rejected (ip=%s)",
+                    request.remote,
+                )
 
         self._conn.add_connection(ws, is_admin=is_admin, is_dashboard=is_dashboard)
 
@@ -123,6 +140,9 @@ class QuizifyWebSocketHandler:
             return
 
         if msg_type == "admin_connect":
+            if not is_admin:
+                await self._conn.send_error(ws, ERR_INVALID_ACTION, "Admin only")
+                return
             await self._handle_admin_connect(ws, game_state)
 
         elif msg_type == "join":
