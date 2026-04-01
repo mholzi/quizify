@@ -43,9 +43,23 @@
     // Connect WebSocket
     // ============================================
 
+    var _wsOpenTimeout = null;
+
     function connect() {
         state.ws = pu.createWebSocket('/api/quizify/ws', {
             onOpen: function () {
+                // Clear the connection timeout
+                if (_wsOpenTimeout) { clearTimeout(_wsOpenTimeout); _wsOpenTimeout = null; }
+
+                // Re-enable join button once WS is open
+                if (els.joinBtn && !state.playerName) {
+                    var nameVal = els.nameInput ? els.nameInput.value.trim() : '';
+                    els.joinBtn.disabled = nameVal.length === 0;
+                    if (els.joinBtn.textContent === 'Retry Connection') {
+                        els.joinBtn.textContent = 'Join Game';
+                    }
+                }
+
                 // Try session-based reconnect first
                 var session = pu.getSession();
                 if (session.token && session.name) {
@@ -550,9 +564,35 @@
             });
         }
 
+        // Show join form immediately — don't wait for WS to render UI.
+        // The join button stays disabled until WS is open (set in onOpen).
+        // This ensures the player sees a form even on slow connections (e.g. Nabu Casa).
+        if (!prefilledName) {
+            pu.showView('join-view');
+            if (els.joinBtn) els.joinBtn.disabled = true;
+        }
+
         // Connect WebSocket
         pu.updateConnectionIndicator('reconnecting');
         connect();
+
+        // Fallback: if WS hasn't opened after 10s, re-enable join button with error hint
+        _wsOpenTimeout = setTimeout(function () {
+            if (!state.ws || state.ws.readyState !== WebSocket.OPEN) {
+                if (els.joinBtn) {
+                    els.joinBtn.disabled = false;
+                    els.joinBtn.textContent = 'Retry Connection';
+                    els.joinBtn.addEventListener('click', function retryOnce() {
+                        els.joinBtn.removeEventListener('click', retryOnce);
+                        els.joinBtn.disabled = true;
+                        els.joinBtn.textContent = 'Join Game';
+                        state.reconnectAttempts = 0;
+                        connect();
+                    }, { once: true });
+                }
+                pu.updateConnectionIndicator('disconnected');
+            }
+        }, 10000);
 
         // Auto-join if name was pre-filled
         if (prefilledName) {
