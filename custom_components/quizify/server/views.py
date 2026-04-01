@@ -46,7 +46,7 @@ class AdminView(HomeAssistantView):
 
     url = "/quizify/admin"
     name = "quizify:admin"
-    requires_auth = True
+    requires_auth = False
 
     def __init__(self, hass: HomeAssistant) -> None:
         """Initialize the admin view."""
@@ -173,7 +173,7 @@ class AnalyticsView(HomeAssistantView):
 
     url = "/quizify/analytics"
     name = "quizify:analytics"
-    requires_auth = True
+    requires_auth = False
 
     def __init__(self, hass: HomeAssistant) -> None:
         """Initialize the analytics view."""
@@ -196,7 +196,7 @@ class AnalyticsDataView(HomeAssistantView):
 
     url = "/api/quizify/analytics/data"
     name = "api:quizify:analytics:data"
-    requires_auth = True
+    requires_auth = False
 
     def __init__(self, hass: HomeAssistant) -> None:
         """Initialize the analytics data view."""
@@ -218,7 +218,7 @@ class PackVersionsView(HomeAssistantView):
 
     url = "/api/quizify/packs"
     name = "api:quizify:packs"
-    requires_auth = True
+    requires_auth = False
 
     def __init__(self, hass: HomeAssistant) -> None:
         """Initialize the pack versions view."""
@@ -241,7 +241,7 @@ class PackUpdateCheckView(HomeAssistantView):
 
     url = "/api/quizify/packs/updates"
     name = "api:quizify:packs:updates"
-    requires_auth = True
+    requires_auth = False
 
     def __init__(self, hass: HomeAssistant) -> None:
         """Initialize the pack update check view."""
