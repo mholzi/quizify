@@ -105,14 +105,8 @@ class QuizifyGameState:
         self._round_duration: float = DEFAULT_ROUND_DURATION
         self._round_summary: RoundSummary | None = None
 
-        # Timer task for auto-evaluate when time expires
-        self._timer_task: asyncio.Task | None = None
-
         # Broadcast callback — set by websocket layer
         self._broadcast_callback: Callable[[dict[str, Any]], Awaitable[None]] | None = None
-
-        # Background task tracking to prevent GC
-        self._bg_tasks: set[asyncio.Task] = set()
 
         # Analytics / stats service (injected from __init__.py)
         self._stats_service = None
@@ -278,19 +272,6 @@ class QuizifyGameState:
         self.phase = GamePhase.QUESTION_ACTIVE
         self._round_summary = None
 
-        # Start timer task for auto-evaluation
-        self._cancel_timer_task()
-        if self._hass is not None:
-            self._timer_task = self._hass.async_create_task(
-                self._round_timer_task()
-            )
-        else:
-            # Fallback for non-HA contexts (testing)
-            loop = asyncio.get_event_loop()
-            self._timer_task = loop.create_task(self._round_timer_task())
-            self._bg_tasks.add(self._timer_task)
-            self._timer_task.add_done_callback(self._bg_tasks.discard)
-
         _LOGGER.info(
             "Round %d/%d started: %s (%.0fs)",
             self.round,
@@ -391,7 +372,6 @@ class QuizifyGameState:
 
         # Check if all players have submitted → auto-evaluate
         if self._player_registry.all_submitted():
-            self._cancel_timer_task()
             self._do_evaluate_round()
 
         return result
@@ -466,7 +446,6 @@ class QuizifyGameState:
 
     def end_game(self) -> dict[str, Any]:
         """End the game and transition to FINALE."""
-        self._cancel_timer_task()
         self.phase = GamePhase.FINALE
         self._current_question = None
 
@@ -520,13 +499,13 @@ class QuizifyGameState:
             except Exception as err:  # noqa: BLE001
                 _LOGGER.warning("Failed to record analytics: %s", err)
 
-        task = asyncio.ensure_future(_do_record())
-        self._bg_tasks.add(task)
-        task.add_done_callback(self._bg_tasks.discard)
+        if self._hass is not None:
+            self._hass.async_create_task(_do_record())
+        else:
+            asyncio.ensure_future(_do_record())
 
     def reset_to_lobby(self) -> None:
         """Reset the game back to lobby state for a new game."""
-        self._cancel_timer_task()
         self.phase = GamePhase.LOBBY
         self.game_id = None
         self.round = 0
@@ -729,26 +708,10 @@ class QuizifyGameState:
             return
         payload = self.get_state_snapshot()
         payload["event"] = event
-        task = asyncio.ensure_future(self._broadcast_callback(payload))
-        self._bg_tasks.add(task)
-        task.add_done_callback(self._bg_tasks.discard)
+        coro = self._broadcast_callback(payload)
+        if self._hass is not None:
+            self._hass.async_create_task(coro)
+        else:
+            asyncio.ensure_future(coro)
 
-    # ------------------------------------------------------------------
-    # Timer management
-    # ------------------------------------------------------------------
 
-    async def _round_timer_task(self) -> None:
-        """Wait for the round duration then auto-evaluate."""
-        try:
-            await asyncio.sleep(self._round_duration)
-            if self.phase == GamePhase.QUESTION_ACTIVE:
-                _LOGGER.info("Round %d timer expired, auto-evaluating", self.round)
-                self._do_evaluate_round()
-        except asyncio.CancelledError:
-            pass
-
-    def _cancel_timer_task(self) -> None:
-        """Cancel the running timer task if any."""
-        if self._timer_task is not None:
-            self._timer_task.cancel()
-            self._timer_task = None
