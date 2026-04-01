@@ -42,8 +42,7 @@ def compute_superlatives(players: list[PlayerSession]) -> list[Superlative]:
     if max_rounds < MIN_ROUNDS:
         return []
 
-    awarded: set[str] = []  # noqa: this is actually a list used as ordered set below
-    awarded = set()
+    awarded: set[str] = set()
     results: list[Superlative] = []
 
     def _try_award(award: str, icon: str, detail: str, winner: str | None) -> None:

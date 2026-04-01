@@ -126,21 +126,27 @@ class QuizifyAnalytics:
         )
 
     async def _prune_old_records(self) -> None:
-        """Prune old records past retention period."""
+        """Prune old records past retention period, always applying age filter first."""
         now = time.time()
         cutoff = now - (RETENTION_DAYS * 24 * 60 * 60)
 
         games = self._data["games"]
-        if len(games) <= MAX_DETAILED_RECORDS:
-            return
+        original_count = len(games)
 
-        self._data["games"] = [g for g in games if g["ended_at"] >= cutoff]
+        # Always apply age-based filter first (regardless of total count)
+        games = [g for g in games if g["ended_at"] >= cutoff]
 
-        _LOGGER.info(
-            "Pruned analytics: %d -> %d games",
-            len(games),
-            len(self._data["games"]),
-        )
+        # Then cap at max record count to prevent unbounded growth
+        if len(games) > MAX_DETAILED_RECORDS:
+            games = games[-MAX_DETAILED_RECORDS:]
+
+        if len(games) != original_count:
+            self._data["games"] = games
+            _LOGGER.info(
+                "Pruned analytics: %d -> %d games",
+                original_count,
+                len(games),
+            )
 
     def get_games(
         self, start_date: int | None = None, end_date: int | None = None

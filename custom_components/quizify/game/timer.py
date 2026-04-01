@@ -52,10 +52,14 @@ class QuestionTimer:
         self._bonus_time += seconds
 
     def get_elapsed(self) -> float:
-        """Get elapsed time since start — used for speed bonus calculation."""
+        """Get effective elapsed time since start — used for speed bonus calculation.
+
+        Subtracts any accumulated pause credit (e.g. from Freeze power-up) so that
+        frozen players are not penalised with a lower speed bonus.
+        """
         if self._start_time is None:
             return 0.0
-        return time.monotonic() - self._start_time
+        return max(0.0, time.monotonic() - self._start_time - self._pause_remaining)
 
     def reset(self, duration: float | None = None) -> None:
         """Reset the timer, optionally with a new duration."""

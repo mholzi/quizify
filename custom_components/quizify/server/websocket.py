@@ -793,8 +793,9 @@ class QuizifyWebSocketHandler:
         Admin-as-player connections (in both self.connections and _admin_connections)
         also receive player messages so they see questions/answers without the correct flag.
         """
-        # All connections that have joined as players (have a PlayerSession)
-        player_names = {p.name for p in self._game_state_ref.get_players()} if self._game_state_ref else set()
+        # Capture ref once to avoid race between two accesses
+        gs = self._game_state_ref
+        gs_players = gs.get_players() if gs else []
 
         tasks = []
         for ws in list(self.connections):
@@ -802,7 +803,7 @@ class QuizifyWebSocketHandler:
                 continue
             # Include if: not admin, OR admin who also joined as player
             is_pure_admin = ws in self._admin_connections and not any(
-                p.ws is ws for p in (self._game_state_ref.get_players() if self._game_state_ref else [])
+                p.ws is ws for p in gs_players
             )
             if not is_pure_admin:
                 tasks.append(self._safe_send(ws, message))

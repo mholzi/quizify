@@ -43,7 +43,7 @@ def build_emoji_grid(
         emoji_row,
         f"  {correct_count}/{total_rounds} correct",
         "",
-        "quizify.fun",
+        "github.com/mholzi/quizify",
     ]
 
     return "\n".join(lines)
