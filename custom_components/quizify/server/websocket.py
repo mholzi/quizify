@@ -55,7 +55,6 @@ class QuizifyWebSocketHandler:
         self._dashboard_connections: set[web.WebSocketResponse] = set()
         self._pending_removals: dict[str, asyncio.Task] = {}
         self._timer_tick_task: asyncio.Task | None = None
-        self._game_state_ref: object | None = None  # set on first game_state access
         # Session tokens for player reconnect
         self._session_tokens: dict[str, str] = {}  # token → player_name
         # Player disconnect grace period (keep session alive)
@@ -88,10 +87,6 @@ class QuizifyWebSocketHandler:
             self._admin_connections.add(ws)
         if is_dashboard:
             self._dashboard_connections.add(ws)
-        # Keep game state reference for broadcast logic
-        gs = get_game_state(self.hass)
-        if gs:
-            self._game_state_ref = gs
 
         _LOGGER.debug(
             "WebSocket connected (admin=%s), total: %d",
@@ -782,8 +777,7 @@ class QuizifyWebSocketHandler:
         Admin-as-player connections (in both self.connections and _admin_connections)
         also receive player messages so they see questions/answers without the correct flag.
         """
-        # Capture ref once to avoid race between two accesses
-        gs = self._game_state_ref
+        gs = get_game_state(self.hass)
         gs_players = gs.get_players() if gs else []
 
         tasks = []
@@ -807,8 +801,9 @@ class QuizifyWebSocketHandler:
         """
         if not self._admin_connections:
             return
+        _gs = get_game_state(self.hass)
         player_ws_set = {
-            p.ws for p in (self._game_state_ref.get_players() if self._game_state_ref else [])
+            p.ws for p in (_gs.get_players() if _gs else [])
         }
         tasks = [
             self._safe_send(ws, message)
