@@ -26,5 +26,8 @@ ERR_INVALID_ACTION = "INVALID_ACTION"
 ERR_GAME_FULL = "GAME_FULL"
 ERR_NO_QUESTIONS_REMAINING = "NO_QUESTIONS_REMAINING"
 
+# Question structure
+ANSWERS_PER_QUESTION = 3
+
 # Question bank configuration
 QUESTIONS_DIR = "quizify/questions"

@@ -150,29 +150,25 @@ class QuizifyWebSocketHandler:
             await self._handle_start_game(ws, data, game_state)
 
         elif msg_type in ("next_question", "next_round"):
-            player = game_state.get_player_by_ws(ws)
-            if not is_admin and not (player and player.is_admin):
+            if not self._is_authorized_admin(ws, is_admin, game_state):
                 await self._send_error(ws, ERR_INVALID_ACTION, "Admin only")
                 return
             await self._handle_next_question(ws, game_state)
 
         elif msg_type == "end_game":
-            player = game_state.get_player_by_ws(ws)
-            if not is_admin and not (player and player.is_admin):
+            if not self._is_authorized_admin(ws, is_admin, game_state):
                 await self._send_error(ws, ERR_INVALID_ACTION, "Admin only")
                 return
             await self._handle_end_game(ws, game_state)
 
         elif msg_type == "reset_game":
-            player = game_state.get_player_by_ws(ws)
-            if not is_admin and not (player and player.is_admin):
+            if not self._is_authorized_admin(ws, is_admin, game_state):
                 await self._send_error(ws, ERR_INVALID_ACTION, "Admin only")
                 return
             await self._handle_reset_game(ws, game_state)
 
         elif msg_type == "admin_skip":
-            player = game_state.get_player_by_ws(ws)
-            if not is_admin and not (player and player.is_admin):
+            if not self._is_authorized_admin(ws, is_admin, game_state):
                 await self._send_error(ws, ERR_INVALID_ACTION, "Admin only")
                 return
             await self._handle_next_question(ws, game_state)
@@ -497,16 +493,8 @@ class QuizifyWebSocketHandler:
     ) -> None:
         """Handle admin end_game command."""
         self._cancel_timer_tick()
-        finale_data = game_state.end_game()
-
-        from custom_components.quizify.game.scoring import calculate_podium  # noqa: PLC0415
-
-        podium = calculate_podium(game_state.get_players())
-        all_players = game_state.get_players()
-        share_texts = finale_data.get("share_texts")
-        awards = [s.to_dict() for s in compute_superlatives(all_players)]
-        finale_msg = serialize_finale(podium, all_players, share_texts=share_texts, superlatives=awards)
-        await self._broadcast(finale_msg)
+        game_state.end_game()
+        await self._broadcast_finale(game_state)
 
     # ------------------------------------------------------------------
     # Admin: reset game
@@ -537,15 +525,7 @@ class QuizifyWebSocketHandler:
         if question is None:
             # Game ended (no more questions or round limit reached)
             if game_state.phase == GamePhase.FINALE:
-                from custom_components.quizify.game.scoring import calculate_podium  # noqa: PLC0415
-                from custom_components.quizify.game.share import build_share_data  # noqa: PLC0415
-
-                podium = calculate_podium(game_state.get_players())
-                all_players = game_state.get_players()
-                share_data = build_share_data(game_state)
-                awards = [s.to_dict() for s in compute_superlatives(all_players)]
-                finale_msg = serialize_finale(podium, all_players, share_texts=share_data.get("share_texts"), superlatives=awards)
-                await self._broadcast(finale_msg)
+                await self._broadcast_finale(game_state)
             return
 
         # Shuffle answers — build mapping
@@ -573,8 +553,12 @@ class QuizifyWebSocketHandler:
         )
         await self._broadcast_to_admins(admin_msg)
 
+        # Cache players and leaderboard to avoid redundant calls
+        players = game_state.get_players()
+        leaderboard = serialize_leaderboard(players)
+
         # Notify players who got a power-up this round
-        for player in game_state.get_players():
+        for player in players:
             powerup = game_state._powerup_manager.get_powerup(player.name)
             if powerup and player.connected:
                 await self._safe_send(player.ws, {
@@ -588,9 +572,9 @@ class QuizifyWebSocketHandler:
             "phase": game_state.phase.value,
             "round": game_state.round,
             "total_rounds": game_state.total_rounds,
-            "player_count": len(game_state.get_players()),
-            "players": serialize_leaderboard(game_state.get_players()),
-            "leaderboard": serialize_leaderboard(game_state.get_players()),
+            "player_count": len(players),
+            "players": leaderboard,
+            "leaderboard": leaderboard,
         })
 
         # Start timer tick task
@@ -667,7 +651,7 @@ class QuizifyWebSocketHandler:
                         break
                 answer_text = self._shuffled_answers[submitted_shuffled] if submitted_shuffled is not None else "?"
                 is_correct = summary.question.answers[submitted_orig].correct if submitted_orig < len(summary.question.answers) else False
-                breakdown = player.round_score_breakdown if hasattr(player, "round_score_breakdown") else {}
+                breakdown = player.round_score_breakdown
                 all_answers.append({
                     "player_name": player.name,
                     "answer_index": submitted_shuffled,
@@ -845,6 +829,35 @@ class QuizifyWebSocketHandler:
         })
 
     # ------------------------------------------------------------------
+    # Admin auth helper
+    # ------------------------------------------------------------------
+
+    def _is_authorized_admin(
+        self, ws: web.WebSocketResponse, is_admin: bool, game_state: QuizifyGameState
+    ) -> bool:
+        """Return True if the connection is authorized to perform admin actions."""
+        player = game_state.get_player_by_ws(ws)
+        return is_admin or bool(player and player.is_admin)
+
+    # ------------------------------------------------------------------
+    # Finale broadcast helper
+    # ------------------------------------------------------------------
+
+    async def _broadcast_finale(self, game_state: QuizifyGameState) -> None:
+        """Build and broadcast the finale message (podium + superlatives + share texts)."""
+        from custom_components.quizify.game.scoring import calculate_podium  # noqa: PLC0415
+        from custom_components.quizify.game.share import build_share_data  # noqa: PLC0415
+
+        podium = calculate_podium(game_state.get_players())
+        all_players = game_state.get_players()
+        share_data = build_share_data(game_state)
+        awards = [s.to_dict() for s in compute_superlatives(all_players)]
+        finale_msg = serialize_finale(
+            podium, all_players, share_texts=share_data.get("share_texts"), superlatives=awards
+        )
+        await self._broadcast(finale_msg)
+
+    # ------------------------------------------------------------------
     # Broadcast callback for game state
     # ------------------------------------------------------------------
 
@@ -860,15 +873,7 @@ class QuizifyWebSocketHandler:
             if event == "game_ended":
                 game_state = get_game_state(self.hass)
                 if game_state:
-                    from custom_components.quizify.game.scoring import calculate_podium  # noqa: PLC0415
-                    from custom_components.quizify.game.share import build_share_data  # noqa: PLC0415
-
-                    podium = calculate_podium(game_state.get_players())
-                    all_players = game_state.get_players()
-                    share_data = build_share_data(game_state)
-                    awards = [s.to_dict() for s in compute_superlatives(all_players)]
-                    finale_msg = serialize_finale(podium, all_players, share_texts=share_data.get("share_texts"), superlatives=awards)
-                    await self._broadcast(finale_msg)
+                    await self._broadcast_finale(game_state)
                 return
 
         # Default: broadcast full state

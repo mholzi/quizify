@@ -27,8 +27,8 @@ def calculate_round_score(
     """Calculate points earned for a single round.
 
     Scoring formula (correct answers only):
-        base        = 1000
-        speed_bonus = up to 500 (linear decay over time_limit)
+        base        = 10
+        speed_bonus = up to 5 (linear decay over time_limit)
         difficulty  = easy x1.0, medium x1.5, hard x2.0
         streak      = 1.0 + min(streak, 5) * 0.1
         double      = x2 if active
