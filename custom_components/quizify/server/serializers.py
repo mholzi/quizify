@@ -157,8 +157,12 @@ def serialize_round_summary(
     total_rounds: int,
     all_answers: list[dict[str, Any]] | None = None,
     question_text: str = "",
+    num_answer_options: int = 3,
 ) -> dict[str, Any]:
     """Build round summary broadcast payload."""
+    # Compute answer distribution from all_answers
+    answer_distribution = _compute_answer_distribution(all_answers or [], num_answer_options)
+
     return {
         "type": "round_summary",
         "correct_answer_index": correct_answer_index,
@@ -168,5 +172,44 @@ def serialize_round_summary(
         "round": round_num,
         "total_rounds": total_rounds,
         "all_answers": all_answers or [],
+        "answer_distribution": answer_distribution,
         "question_text": question_text,
     }
+
+
+def _compute_answer_distribution(
+    all_answers: list[dict[str, Any]], num_options: int
+) -> list[dict[str, Any]]:
+    """Compute per-option vote counts and percentages.
+
+    Returns a list of dicts: [{"index": 0, "count": 3, "percent": 60}, ...]
+    Includes a separate entry for no_answer (timeout) players.
+    """
+    counts = [0] * num_options
+    no_answer_count = 0
+    total = len(all_answers)
+
+    for entry in all_answers:
+        idx = entry.get("answer_index")
+        if entry.get("no_answer") or idx is None:
+            no_answer_count += 1
+        elif isinstance(idx, int) and 0 <= idx < num_options:
+            counts[idx] += 1
+
+    distribution = []
+    for i, count in enumerate(counts):
+        distribution.append({
+            "index": i,
+            "count": count,
+            "percent": round(count / total * 100) if total > 0 else 0,
+        })
+
+    if no_answer_count > 0:
+        distribution.append({
+            "index": None,
+            "count": no_answer_count,
+            "percent": round(no_answer_count / total * 100) if total > 0 else 0,
+            "no_answer": True,
+        })
+
+    return distribution
