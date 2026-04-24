@@ -1,81 +1,85 @@
-/* Quizify - Beatify Design System Port */
+/* Quizify — Broadcast Living Room Design System */
+/* Memorable thing: "It felt like a real game show on my TV." */
+/* Do not deviate from these tokens without reading DESIGN.md first. */
 
 /* ==========================================
-   Design System Tokens (matching Beatify)
+   Design System Tokens — Broadcast Living Room
    ========================================== */
 
-/* Font fallback stack — works without Google Fonts */
-@import url('https://fonts.googleapis.com/css2?family=Outfit:wght@400;600;700;900&family=Inter:wght@400;500;600&display=swap');
+/* Typography — Unbounded (display) + Instrument Sans (body/UI) + JetBrains Mono (numeric) */
+@import url('https://fonts.googleapis.com/css2?family=Unbounded:wght@400;500;600;700;800;900&family=Instrument+Sans:ital,wght@0,400;0,500;0,600;0,700;1,400&family=JetBrains+Mono:wght@400;500;600;700&display=swap');
 
 :root {
-    /* Color Tokens - Background */
-    --color-bg-primary: #0a0a12;
-    --color-bg-surface: rgba(255, 255, 255, 0.05);
-    --color-bg-light: #f5f5f5;
-    --color-bg-white: #ffffff;
-    --color-bg-card: #f9fafb;
-    --color-bg-card-alt: #f3f4f6;
+    /* ---- Color: Broadcast Living Room ---- */
 
-    /* Color Tokens - Accent */
-    --color-accent-primary: #ff2d6a;
-    --color-accent-secondary: #00f5ff;
-    --color-accent-brand: #6366f1;
-    --color-accent-brand-hover: #4f46e5;
-    --color-accent-blue: #3b82f6;
-    --color-accent-blue-hover: #2563eb;
+    /* Background — deep saturated royal blue, studio navy */
+    --color-bg-primary: #0B1739;
+    --color-bg-surface: rgba(244, 235, 207, 0.04);
+    --color-bg-light: #F6F1E4;       /* light-mode page cream */
+    --color-bg-white: #FFFCF2;        /* light-mode lifted paper */
+    --color-bg-card: #F6F1E4;
+    --color-bg-card-alt: #EDE6D1;
 
-    /* Color Tokens - Semantic */
-    --color-success: #10b981;
-    --color-success-hover: #059669;
-    --color-success-light: #d1fae5;
-    --color-success-alt: #22c55e;
-    --color-success-neon: #39ff14;
-    --color-warning: #f59e0b;
-    --color-warning-dark: #d97706;
-    --color-warning-light: #fef3c7;
-    --color-warning-alt: #ff6600;
-    --color-error: #ef4444;
-    --color-error-dark: #dc2626;
-    --color-error-light: #fee2e2;
-    --color-error-neon: #ff0040;
+    /* Accent — broadcast gold is the ONE accent color */
+    --color-accent-primary: #F4C430;           /* broadcast gold — THE trophy */
+    --color-accent-secondary: #F4C430;         /* legacy alias → same gold (single accent) */
+    --color-accent-brand: #F4C430;             /* legacy alias → same gold */
+    --color-accent-brand-hover: #E0AF1C;
+    --color-accent-blue: #4EC5B8;              /* legacy blue → remapped to muted teal (info register) */
+    --color-accent-blue-hover: #3FB6A8;
 
-    /* Purple */
-    --color-purple-primary: #8b5cf6;
-    --color-neon-purple: #9d4edd;
+    /* Semantic */
+    --color-success: #F4C430;                  /* correct = gold (trophy) */
+    --color-success-hover: #E0AF1C;
+    --color-success-light: rgba(244, 196, 48, 0.12);
+    --color-success-alt: #F4C430;
+    --color-success-neon: #F4C430;
+    --color-warning: #E0AF1C;                  /* gold at lower intensity */
+    --color-warning-dark: #B2852F;
+    --color-warning-light: rgba(224, 175, 28, 0.15);
+    --color-warning-alt: #E0AF1C;
+    --color-error: #D65858;                    /* warm red, NOT fire-engine */
+    --color-error-dark: #B84A4A;
+    --color-error-light: rgba(214, 88, 88, 0.15);
+    --color-error-neon: #D65858;
+
+    /* Purple tokens — remapped to muted mauve (for player dots), not UI purple */
+    --color-purple-primary: #A77CB7;
+    --color-neon-purple: #A77CB7;
 
     /* Badge backgrounds */
-    --color-success-bg: rgba(16, 185, 129, 0.15);
-    --color-accent-brand-bg: rgba(99, 102, 241, 0.15);
-    --color-error-bg: rgba(239, 68, 68, 0.15);
+    --color-success-bg: rgba(244, 196, 48, 0.12);
+    --color-accent-brand-bg: rgba(244, 196, 48, 0.10);
+    --color-error-bg: rgba(214, 88, 88, 0.12);
 
-    /* Color Tokens - Text */
-    --color-text-primary: #1f2937;
-    --color-text-secondary: #374151;
-    --color-text-muted: #6b7280;
-    --color-text-light: #9ca3af;
-    --color-text-white: #ffffff;
-    --color-text-dark: #1a1a1a;
-    --color-text-heading: #444444;
-    --color-text-neon-muted: #b3b3c2;
+    /* Text — warm parchment, NOT pure white */
+    --color-text-primary: #0B1739;             /* light-mode text becomes studio navy */
+    --color-text-secondary: #1B2A56;
+    --color-text-muted: #8FA0C6;               /* cool desaturated blue-gray */
+    --color-text-light: #8FA0C6;
+    --color-text-white: #F4EBCF;               /* dark-mode primary text — PARCHMENT not white */
+    --color-text-dark: #0B1739;
+    --color-text-heading: #F4EBCF;
+    --color-text-neon-muted: #8FA0C6;
 
-    /* Color Tokens - Border */
-    --color-border-light: #e5e7eb;
-    --color-border-medium: #d1d5db;
-    --color-border-dark: #333333;
-    --color-border-neon: rgba(255, 255, 255, 0.1);
+    /* Borders — hairline is the barely-there divider */
+    --color-border-light: #D9D2BE;
+    --color-border-medium: #BDB297;
+    --color-border-dark: #21305E;
+    --color-border-neon: #21305E;              /* was rgba white — now explicit hairline */
 
-    /* Dark Theme Surface Colors */
-    --color-dark-surface: rgba(255, 255, 255, 0.05);
-    --color-dark-surface-hover: rgba(255, 255, 255, 0.08);
-    --color-dark-card: rgba(255, 255, 255, 0.03);
-    --color-surface-dark: #1a1a2e;
+    /* Dark theme surface colors — lifted navies */
+    --color-dark-surface: #142148;
+    --color-dark-surface-hover: #1B2A56;
+    --color-dark-card: #142148;
+    --color-surface-dark: #142148;
 
-    /* Medal colors */
-    --color-gold: #ffd700;
-    --color-silver: #c0c0c0;
-    --color-bronze: #cd7f32;
+    /* Medal colors — 1st is broadcast gold, others are muted supporting tones */
+    --color-gold: #F4C430;                     /* was #ffd700 — now matches primary accent */
+    --color-silver: #8FA0C6;                   /* muted cool blue-gray */
+    --color-bronze: #B2852F;                   /* dim gold (accent-dim) */
 
-    /* Spacing Tokens */
+    /* Spacing Tokens (unchanged — these work) */
     --space-xs: 4px;
     --space-sm: 8px;
     --space-md: 16px;
@@ -83,11 +87,11 @@
     --space-xl: 32px;
     --space-2xl: 48px;
 
-    /* Typography Tokens */
-    --font-display: 'Outfit', system-ui, sans-serif;
-    --font-body: 'Inter', system-ui, sans-serif;
-    --font-system: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, sans-serif;
-    --font-mono: monospace;
+    /* ---- Typography: broadcast register ---- */
+    --font-display: 'Unbounded', system-ui, sans-serif;
+    --font-body: 'Instrument Sans', system-ui, sans-serif;
+    --font-system: 'Instrument Sans', system-ui, -apple-system, BlinkMacSystemFont, sans-serif;
+    --font-mono: 'JetBrains Mono', ui-monospace, SFMono-Regular, monospace;
 
     --font-size-xs: 10px;
     --font-size-sm: 12px;
@@ -107,31 +111,32 @@
     --font-weight-bold: 700;
     --font-weight-extrabold: 800;
 
-    /* Effect Tokens - Glow */
-    --glow-primary: 0 0 20px var(--color-accent-primary);
-    --glow-secondary: 0 0 20px var(--color-accent-secondary);
-    --glow-success: 0 0 20px var(--color-success-neon);
-    --glow-warning: 0 0 20px var(--color-warning);
-    --glow-error: 0 0 20px var(--color-error);
+    /* Effect Tokens — Glow (broadcast rim light, sparingly) */
+    --glow-primary: 0 0 24px rgba(244, 196, 48, 0.35);
+    --glow-secondary: 0 0 24px rgba(244, 196, 48, 0.35);
+    --glow-success: 0 0 24px rgba(244, 196, 48, 0.35);
+    --glow-warning: 0 0 20px rgba(224, 175, 28, 0.3);
+    --glow-error: 0 0 20px rgba(214, 88, 88, 0.3);
+    --accent-glow: rgba(244, 196, 48, 0.35);
 
-    /* Effect Tokens - Shadow */
-    --shadow-sm: 0 2px 4px rgba(0, 0, 0, 0.1);
-    --shadow-md: 0 2px 8px rgba(0, 0, 0, 0.1);
-    --shadow-lg: 0 4px 16px rgba(0, 0, 0, 0.1);
-    --shadow-xl: 0 8px 32px rgba(0, 0, 0, 0.15);
+    /* Shadow Tokens */
+    --shadow-sm: 0 2px 4px rgba(0, 0, 0, 0.25);
+    --shadow-md: 0 4px 12px rgba(0, 0, 0, 0.35);
+    --shadow-lg: 0 8px 24px rgba(0, 0, 0, 0.45);
+    --shadow-xl: 0 16px 40px rgba(0, 0, 0, 0.55);
 
-    /* Border Radius Tokens */
+    /* Border Radius Tokens — tighter than before (no 20px bubbles) */
     --radius-sm: 4px;
     --radius-md: 8px;
-    --radius-lg: 12px;
-    --radius-xl: 16px;
-    --radius-2xl: 20px;
+    --radius-lg: 10px;
+    --radius-xl: 12px;
+    --radius-2xl: 12px;          /* legacy alias → also 12px; broadcast rejects bubble */
     --radius-full: 9999px;
 
     /* Transition Tokens */
-    --transition-fast: 150ms ease;
-    --transition-normal: 300ms ease;
-    --transition-slow: 500ms ease;
+    --transition-fast: 120ms ease-out;
+    --transition-normal: 220ms ease-out;
+    --transition-slow: 500ms ease-in-out;
 
     /* Z-Index Tokens */
     --z-control-bar: 100;
@@ -169,7 +174,7 @@ body {
    ========================================== */
 
 .wordmark {
-    font-family: 'Outfit', var(--font-system);
+    font-family: var(--font-display);
     font-weight: 900;
     font-size: var(--font-size-hero);
     letter-spacing: -0.02em;
@@ -181,15 +186,12 @@ body {
 }
 
 .wordmark-ify {
-    background: linear-gradient(90deg, var(--color-accent-primary), var(--color-accent-secondary));
-    -webkit-background-clip: text;
-    -webkit-text-fill-color: transparent;
-    background-clip: text;
-    color: transparent;
+    color: var(--color-accent-primary);
+    /* Broadcast Living Room: one solid gold, no gradient (gradients rejected) */
 }
 
 .wordmark-hero {
-    text-shadow: 0 0 40px rgba(255, 45, 106, 0.5);
+    text-shadow: 0 0 40px var(--accent-glow);
 }
 
 .logo-loading {
@@ -265,7 +267,7 @@ body {
 }
 
 .admin-header .wordmark {
-    font-size: 2rem;
+    font-size: 1.5rem;        /* 24px \u2014 broadcast register, not hero */
     margin: 0;
 }
 
@@ -336,22 +338,29 @@ button, .btn {
 }
 
 .btn-primary {
-    background: var(--color-accent-blue);
-    color: var(--color-text-white);
+    background: var(--color-accent-primary);
+    color: var(--color-bg-primary);              /* navy text on gold for contrast */
+    font-family: var(--font-display);
+    font-weight: 700;
+    letter-spacing: 0.04em;
+    text-transform: uppercase;
+    box-shadow: 0 0 24px var(--accent-glow);
 }
 
 .btn-primary:hover:not(:disabled) {
-    background: var(--color-accent-blue-hover);
+    background: var(--color-accent-brand-hover);
+    box-shadow: 0 0 32px var(--accent-glow);
 }
 
 .btn-secondary {
-    background: rgba(255, 255, 255, 0.1);
+    background: transparent;
     color: var(--color-text-white);
     border: 1px solid var(--color-border-neon);
 }
 
 .btn-secondary:hover:not(:disabled) {
-    background: rgba(255, 255, 255, 0.15);
+    background: var(--color-dark-surface-hover);
+    border-color: var(--color-accent-primary);
 }
 
 .btn-danger {
@@ -419,7 +428,7 @@ button, .btn {
 
 .input:focus, .name-input:focus {
     border-color: var(--color-accent-primary);
-    box-shadow: 0 0 0 3px rgba(255, 45, 106, 0.2);
+    box-shadow: 0 0 0 3px rgba(244, 196, 48, 0.2);
 }
 
 .input::placeholder, .name-input::placeholder {
@@ -511,7 +520,7 @@ button, .btn {
     color: var(--color-text-white);
     font-size: 0.9rem;
     font-weight: 600;
-    font-family: 'Outfit', 'Inter', system-ui, sans-serif;
+    font-family: var(--font-display), var(--font-body);
     cursor: pointer;
     text-align: left;
     transition: background 0.15s ease;
@@ -530,7 +539,7 @@ button, .btn {
     font-size: 0.75rem;
     font-weight: 400;
     color: var(--color-accent-secondary);
-    background: rgba(0, 245, 255, 0.1);
+    background: rgba(244, 196, 48, 0.1);
     padding: 2px 8px;
     border-radius: var(--radius-sm);
 }
@@ -584,7 +593,7 @@ button, .btn {
 
 .chip.active,
 .chip.chip--active {
-    background: rgba(0, 245, 255, 0.2);
+    background: rgba(244, 196, 48, 0.2);
     border-color: var(--color-accent-secondary);
     color: var(--color-accent-secondary);
 }
@@ -682,7 +691,7 @@ button, .btn {
 }
 
 .toggle-compact input:checked + .toggle-switch-compact {
-    background: rgba(0, 245, 255, 0.3);
+    background: rgba(244, 196, 48, 0.3);
 }
 
 .toggle-compact input:checked + .toggle-switch-compact::after {
@@ -789,8 +798,8 @@ button, .btn {
     letter-spacing: 0.1em;
     margin-top: var(--space-sm);
     padding: 2px 10px;
-    background: rgba(0, 245, 255, 0.1);
-    border: 1px solid rgba(0, 245, 255, 0.3);
+    background: rgba(244, 196, 48, 0.1);
+    border: 1px solid rgba(244, 196, 48, 0.3);
     border-radius: var(--radius-full);
 }
 
@@ -828,7 +837,7 @@ button, .btn {
 
 .answer-btn:hover:not(:disabled) {
     border-color: var(--color-accent-primary);
-    background: rgba(255, 45, 106, 0.1);
+    background: rgba(244, 196, 48, 0.1);
 }
 
 .answer-btn:active:not(:disabled) {
@@ -856,13 +865,13 @@ button, .btn {
 /* Answer States */
 .answer-btn.selected {
     border-color: var(--color-accent-primary);
-    background: rgba(255, 45, 106, 0.15);
+    background: rgba(244, 196, 48, 0.15);
     box-shadow: var(--glow-primary);
 }
 
 .answer-btn.selected .answer-label {
     background: var(--color-accent-primary);
-    color: white;
+    color: var(--color-bg-primary);
 }
 
 .answer-btn.correct {
@@ -874,7 +883,7 @@ button, .btn {
 
 .answer-btn.correct .answer-label {
     background: var(--color-success);
-    color: white;
+    color: var(--color-bg-primary);
 }
 
 @keyframes glow-correct {
@@ -891,7 +900,7 @@ button, .btn {
 
 .answer-btn.wrong .answer-label {
     background: var(--color-error);
-    color: white;
+    color: var(--color-text-white);
 }
 
 @keyframes shake {
@@ -933,7 +942,7 @@ button, .btn {
     align-items: center;
     gap: var(--space-sm);
     padding: 10px 20px;
-    background: linear-gradient(135deg, rgba(255, 45, 106, 0.2), rgba(0, 245, 255, 0.2));
+    background: linear-gradient(135deg, rgba(244, 196, 48, 0.2), rgba(244, 196, 48, 0.2));
     border: 1px solid var(--color-accent-primary);
     border-radius: var(--radius-full);
     color: var(--color-accent-secondary);
@@ -955,8 +964,8 @@ button, .btn {
 }
 
 @keyframes powerup-glow {
-    from { box-shadow: 0 0 5px rgba(255, 45, 106, 0.4); }
-    to { box-shadow: 0 0 15px rgba(255, 45, 106, 0.4); }
+    from { box-shadow: 0 0 5px rgba(244, 196, 48, 0.4); }
+    to { box-shadow: 0 0 15px rgba(244, 196, 48, 0.4); }
 }
 
 /* ==========================================
@@ -1020,8 +1029,8 @@ button, .btn {
    ========================================== */
 
 .fun-fact-card {
-    background: linear-gradient(135deg, rgba(255, 45, 106, 0.1), rgba(0, 245, 255, 0.1));
-    border: 1px solid rgba(255, 45, 106, 0.3);
+    background: linear-gradient(135deg, rgba(244, 196, 48, 0.1), rgba(244, 196, 48, 0.1));
+    border: 1px solid rgba(244, 196, 48, 0.3);
     border-radius: var(--radius-lg);
     padding: var(--space-lg);
     margin-top: var(--space-lg);
@@ -1227,7 +1236,7 @@ button, .btn {
 .self-join-row input:focus {
     outline: none;
     border-color: var(--color-accent-primary);
-    box-shadow: 0 0 0 3px rgba(255, 45, 106, 0.2);
+    box-shadow: 0 0 0 3px rgba(244, 196, 48, 0.2);
 }
 
 .self-join-row input::placeholder {
@@ -1591,20 +1600,20 @@ button, .btn {
 
 .podium-bar.first {
     height: 140px;
-    background: linear-gradient(180deg, var(--color-gold), #b8860b);
+    background: linear-gradient(180deg, var(--color-gold), var(--color-warning-dark));
     color: #1a1a1a;
 }
 
 .podium-bar.second {
     height: 100px;
-    background: linear-gradient(180deg, var(--color-silver), #8a8a8a);
+    background: linear-gradient(180deg, var(--color-silver), #5E6A8A);
     color: #1a1a1a;
 }
 
 .podium-bar.third {
     height: 70px;
-    background: linear-gradient(180deg, var(--color-bronze), #8b4513);
-    color: white;
+    background: linear-gradient(180deg, var(--color-bronze), #6F5423);
+    color: var(--color-text-white);
 }
 
 /* ==========================================
@@ -1702,7 +1711,7 @@ button, .btn {
 }
 
 .launcher-title {
-    font-family: 'Outfit', var(--font-system);
+    font-family: var(--font-display);
     font-size: 48px;
     font-weight: 900;
     letter-spacing: -0.02em;
@@ -1820,7 +1829,7 @@ button, .btn {
 .modal-content .input:focus,
 .modal-content .name-input:focus,
 .modal-content input[type="text"]:focus {
-    border-color: #a855f7;
+    border-color: #F4C430;
     box-shadow: 0 0 0 3px rgba(168, 85, 247, 0.2);
 }
 
@@ -1946,7 +1955,7 @@ footer {
 }
 
 .end-title {
-    font-family: 'Outfit', var(--font-system);
+    font-family: var(--font-display);
     font-size: 2rem;
     font-weight: 900;
     color: var(--color-text-white);
@@ -1973,19 +1982,19 @@ footer {
 
 .podium-1 .podium-stand {
     height: 130px;
-    background: linear-gradient(180deg, var(--color-gold), #b8860b);
+    background: linear-gradient(180deg, var(--color-gold), var(--color-warning-dark));
     color: #1a1a1a;
 }
 
 .podium-2 .podium-stand {
     height: 95px;
-    background: linear-gradient(180deg, var(--color-silver), #8a8a8a);
+    background: linear-gradient(180deg, var(--color-silver), #5E6A8A);
     color: #1a1a1a;
 }
 
 .podium-3 .podium-stand {
     height: 65px;
-    background: linear-gradient(180deg, var(--color-bronze), #8b4513);
+    background: linear-gradient(180deg, var(--color-bronze), #6F5423);
     color: var(--color-text-white);
 }
 
@@ -2018,7 +2027,7 @@ footer {
 }
 
 .your-result-rank {
-    font-family: 'Outfit', var(--font-system);
+    font-family: var(--font-display);
     font-size: 2.5rem;
     font-weight: 900;
     background: linear-gradient(135deg, var(--color-accent-primary), var(--color-accent-secondary));
@@ -2312,8 +2321,8 @@ footer {
     align-items: center;
     gap: var(--space-xs);
     padding: var(--space-xs) var(--space-sm);
-    background: rgba(255, 45, 106, 0.15);
-    border: 1px solid rgba(255, 45, 106, 0.3);
+    background: rgba(244, 196, 48, 0.15);
+    border: 1px solid rgba(244, 196, 48, 0.3);
     border-radius: var(--radius-full);
     color: var(--color-accent-primary);
     font-size: 0.75rem;
@@ -2386,7 +2395,7 @@ footer {
 
 /* Answer button color variants */
 .answer-btn-a {
-    border-left: 3px solid rgba(0, 245, 255, 0.4);
+    border-left: 3px solid rgba(244, 196, 48, 0.4);
 }
 
 .answer-btn-b {
@@ -2394,7 +2403,7 @@ footer {
 }
 
 .answer-btn-c {
-    border-left: 3px solid rgba(255, 45, 106, 0.4);
+    border-left: 3px solid rgba(244, 196, 48, 0.4);
 }
 
 /* Answer letter circle */
@@ -2416,7 +2425,7 @@ footer {
 .answer-btn.is-selected,
 .is-selected {
     border-color: var(--color-accent-primary);
-    background: rgba(255, 45, 106, 0.15);
+    background: rgba(244, 196, 48, 0.15);
     box-shadow: var(--glow-primary);
 }
 
@@ -2554,7 +2563,7 @@ footer {
 }
 
 .is-current-player {
-    background: rgba(255, 45, 106, 0.08);
+    background: rgba(244, 196, 48, 0.08);
     border-radius: var(--radius-md);
 }
 
@@ -2598,7 +2607,7 @@ footer {
 }
 
 .song-title {
-    font-family: 'Outfit', var(--font-system);
+    font-family: var(--font-display);
     font-size: 1.2rem;
     font-weight: 800;
     color: var(--color-text-white);
@@ -2861,7 +2870,7 @@ footer {
     width: 22px;
     height: 22px;
     border-radius: var(--radius-full);
-    background: rgba(0, 245, 255, 0.12);
+    background: rgba(244, 196, 48, 0.12);
     color: var(--color-accent-secondary);
     font-size: 0.7rem;
     font-weight: 700;
@@ -3233,7 +3242,7 @@ footer {
 }
 
 .invite-modal-title {
-    font-family: 'Outfit', var(--font-system);
+    font-family: var(--font-display);
     font-size: 1.25rem;
     font-weight: 800;
     color: var(--color-text-white);
@@ -3247,7 +3256,7 @@ footer {
 }
 
 .invite-modal-code {
-    font-family: 'Outfit', var(--font-system);
+    font-family: var(--font-display);
     font-size: 2rem;
     font-weight: 900;
     color: var(--color-accent-secondary);
@@ -3280,8 +3289,8 @@ footer {
     align-items: center;
     justify-content: center;
     padding: var(--space-xs) var(--space-sm);
-    background: rgba(0, 245, 255, 0.1);
-    border: 1px solid rgba(0, 245, 255, 0.3);
+    background: rgba(244, 196, 48, 0.1);
+    border: 1px solid rgba(244, 196, 48, 0.3);
     border-radius: var(--radius-sm);
     color: var(--color-accent-secondary);
     font-size: 0.8rem;
@@ -3294,7 +3303,7 @@ footer {
 }
 
 .invite-copy-btn:hover {
-    background: rgba(0, 245, 255, 0.2);
+    background: rgba(244, 196, 48, 0.2);
 }
 
 .invite-copy-icon {
@@ -3433,8 +3442,8 @@ footer {
 }
 
 .result-card.result-card--mine {
-    border-color: rgba(255, 45, 106, 0.4);
-    background: rgba(255, 45, 106, 0.08);
+    border-color: rgba(244, 196, 48, 0.4);
+    background: rgba(244, 196, 48, 0.08);
 }
 
 .card-name {
@@ -3469,7 +3478,7 @@ footer {
 .you-badge {
     font-size: 0.65rem;
     font-weight: 500;
-    background: rgba(255, 45, 106, 0.2);
+    background: rgba(244, 196, 48, 0.2);
     color: var(--color-accent-primary);
     padding: 1px 5px;
     border-radius: 4px;
@@ -3509,7 +3518,7 @@ footer {
 
 .result-value.is-correct { color: #00b894; }
 .result-value.is-wrong   { color: #ff4757; }
-.result-value.is-bonus   { color: #00f5ff; }
+.result-value.is-bonus   { color: #F4C430; }
 .result-value.is-streak  { color: #ffa502; }
 
 .streak-bonus-row .result-label {
@@ -3521,7 +3530,7 @@ footer {
     margin-top: var(--space-sm);
     font-size: 1.5rem;
     font-weight: 900;
-    font-family: 'Outfit', sans-serif;
+    font-family: var(--font-display), sans-serif;
     color: var(--color-accent-secondary);
     text-align: center;
     text-shadow: var(--glow-secondary);
@@ -3578,13 +3587,13 @@ footer {
 
 .admin-answer-btn:hover:not(:disabled) {
   background: var(--color-primary-dim, rgba(168,85,247,0.15));
-  border-color: var(--color-primary, #a855f7);
+  border-color: var(--color-primary, #F4C430);
 }
 
 .admin-answer-btn.selected {
   background: var(--color-primary-dim, rgba(168,85,247,0.2));
-  border-color: var(--color-primary, #a855f7);
-  color: var(--color-primary, #a855f7);
+  border-color: var(--color-primary, #F4C430);
+  color: var(--color-primary, #F4C430);
 }
 
 .admin-answer-btn:disabled {
@@ -3627,7 +3636,7 @@ footer {
 }
 
 .result-card.is-score-medium {
-  border-left-color: #a855f7;
+  border-left-color: #F4C430;
   background: rgba(168, 85, 247, 0.08);
 }
 
@@ -3680,7 +3689,7 @@ footer {
 .result-card .card-bonus {
   grid-column: 1;
   font-size: 0.75rem;
-  color: #a855f7;
+  color: #F4C430;
   margin-top: 2px;
 }
 
@@ -3770,7 +3779,7 @@ footer {
 }
 
 .points-popup--streak {
-  color: #a855f7;
+  color: #F4C430;
   text-shadow: 0 0 10px rgba(168,85,247,0.5);
 }
 
@@ -3816,7 +3825,7 @@ footer {
   padding: var(--space-sm, 8px) var(--space-md, 12px);
   background: var(--color-surface, rgba(255,255,255,0.05));
   border-radius: var(--radius-md, 8px);
-  border-left: 3px solid #a855f7;
+  border-left: 3px solid #F4C430;
   animation: highlight-entrance 0.4s ease-out both;
 }
 
@@ -3841,12 +3850,12 @@ footer {
 .highlight-player {
   font-size: 0.95rem;
   font-weight: 700;
-  color: #fff;
+  color: var(--color-text-white);
 }
 
 .highlight-value {
   font-size: 0.8rem;
-  color: #a855f7;
+  color: #F4C430;
   font-weight: 600;
 }
 

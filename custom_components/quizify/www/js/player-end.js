@@ -58,37 +58,9 @@
             if (playerMessage) playerMessage.classList.remove('hidden');
         }
 
-        // Confetti celebration on finale
-        if (typeof confetti === 'function') {
-            var isWinner = currentPlayer && currentPlayer.rank === 1;
-
-            if (isWinner) {
-                // Winner: epic gold + rainbow burst
-                setTimeout(function () {
-                    confetti({ particleCount: 200, spread: 100, origin: { y: 0.6 }, colors: ['#FFD700', '#FFA500', '#FFEC70'] });
-                }, 600);
-                setTimeout(function () {
-                    confetti({ particleCount: 120, spread: 130, origin: { x: 0.1, y: 0.5 }, colors: ['#FFD700', '#fff', '#FFA500'] });
-                    confetti({ particleCount: 120, spread: 130, origin: { x: 0.9, y: 0.5 }, colors: ['#FFD700', '#fff', '#FFA500'] });
-                }, 1100);
-                setTimeout(function () {
-                    confetti({ particleCount: 80, spread: 80, origin: { y: 0.4 }, colors: ['#FFD700', '#FFEC70'] });
-                }, 1800);
-            } else {
-                // All other players: celebratory burst (scaled by rank)
-                var rank = currentPlayer ? currentPlayer.rank : 5;
-                var count = Math.max(40, 120 - (rank - 2) * 15);
-                setTimeout(function () {
-                    confetti({ particleCount: count, spread: 80, origin: { y: 0.6 } });
-                }, 800);
-                if (rank <= 3) {
-                    setTimeout(function () {
-                        confetti({ particleCount: Math.round(count * 0.6), spread: 100, origin: { x: 0.2, y: 0.5 } });
-                        confetti({ particleCount: Math.round(count * 0.6), spread: 100, origin: { x: 0.8, y: 0.5 } });
-                    }, 1400);
-                }
-            }
-        }
+        // Broadcast Living Room: no confetti on finale.
+        // The restraint is the differentiation. A single spotlight and tabular score-tick IS the effect.
+        // See DESIGN.md — "The dramatic pause IS the effect. Restraint crowns louder than chaos."
     }
 
     // ============================================
@@ -337,31 +309,27 @@
         canvas.height = 400;
         var ctx = canvas.getContext('2d');
 
-        // Background
-        ctx.fillStyle = '#0d0e1a';
+        // Background — Broadcast Living Room studio navy
+        ctx.fillStyle = '#0B1739';
         ctx.fillRect(0, 0, 600, 400);
 
-        // Gradient accent bar top
-        var grad = ctx.createLinearGradient(0, 0, 600, 0);
-        grad.addColorStop(0, '#a855f7');
-        grad.addColorStop(0.5, '#ec4899');
-        grad.addColorStop(1, '#22d3ee');
-        ctx.fillStyle = grad;
-        ctx.fillRect(0, 0, 600, 6);
+        // Accent bar top — single broadcast gold, no gradient
+        ctx.fillStyle = '#F4C430';
+        ctx.fillRect(0, 0, 600, 4);
 
         // Logo
-        ctx.font = 'bold 32px system-ui, sans-serif';
-        ctx.fillStyle = '#ffffff';
-        ctx.fillText('🧠 Quizify', 30, 55);
+        ctx.font = 'bold 32px "Unbounded", system-ui, sans-serif';
+        ctx.fillStyle = '#F4EBCF';
+        ctx.fillText('Quizify', 30, 55);
 
         // Category
-        ctx.font = '16px system-ui, sans-serif';
-        ctx.fillStyle = '#a4a4b8';
-        ctx.fillText((shareData && shareData.category ? shareData.category : ''), 30, 80);
+        ctx.font = '14px "JetBrains Mono", ui-monospace, monospace';
+        ctx.fillStyle = '#8FA0C6';
+        ctx.fillText((shareData && shareData.category ? shareData.category.toUpperCase() : ''), 30, 80);
 
         // Emoji grid
         ctx.font = '28px system-ui, sans-serif';
-        ctx.fillStyle = '#ffffff';
+        ctx.fillStyle = '#F4EBCF';
         var lines = emojiGrid.split('\n');
         var y = 120;
         lines.forEach(function(line) {
@@ -372,8 +340,8 @@
         });
 
         // Footer
-        ctx.font = '14px system-ui, sans-serif';
-        ctx.fillStyle = '#a855f7';
+        ctx.font = '13px "JetBrains Mono", ui-monospace, monospace';
+        ctx.fillStyle = '#F4C430';
         ctx.fillText('quizify.fun', 30, 370);
 
         // Download or share

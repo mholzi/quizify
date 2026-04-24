@@ -4,13 +4,19 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title data-i18n="launcher.title">Quizify</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Unbounded:wght@400;700;900&family=Instrument+Sans:wght@400;500;600&family=JetBrains+Mono:wght@400;500;700&display=swap" rel="stylesheet">
     <style>
         :root {
-            --color-bg-primary: #0a0a12;
-            --color-accent-primary: #ff2d6a;
-            --color-accent-secondary: #00f5ff;
-            --color-text-primary: #ffffff;
-            --color-text-muted: #8b8b9e;
+            /* Broadcast Living Room launcher tokens */
+            --color-bg-primary: #0B1739;
+            --color-accent-primary: #F4C430;
+            --color-accent-secondary: #F4C430;
+            --color-text-primary: #F4EBCF;
+            --color-text-muted: #8FA0C6;
+            --color-surface-dark: #142148;
+            --color-border-neon: #21305E;
         }
 
         * {
@@ -20,8 +26,14 @@
         }
 
         body {
-            font-family: 'Inter', system-ui, -apple-system, sans-serif;
+            font-family: 'Instrument Sans', system-ui, -apple-system, sans-serif;
             background: var(--color-bg-primary);
+            background-image:
+                linear-gradient(var(--color-bg-primary), var(--color-bg-primary)),
+                repeating-linear-gradient(0deg,
+                    rgba(255, 255, 255, 0.03) 0, rgba(255, 255, 255, 0.03) 1px,
+                    transparent 1px, transparent 3px);
+            background-blend-mode: overlay;
             color: var(--color-text-primary);
             min-height: 100vh;
             display: flex;
@@ -33,9 +45,12 @@
         }
 
         .logo {
+            font-family: 'Unbounded', system-ui, sans-serif;
             font-size: 48px;
-            font-weight: 700;
-            margin-bottom: 16px;
+            font-weight: 900;
+            letter-spacing: -0.02em;
+            margin-bottom: 20px;
+            line-height: 1;
         }
 
         .logo .quiz {
@@ -43,61 +58,67 @@
         }
 
         .logo .ify {
-            background: linear-gradient(135deg, var(--color-accent-primary), var(--color-accent-secondary));
-            -webkit-background-clip: text;
-            -webkit-text-fill-color: transparent;
-            background-clip: text;
+            color: var(--color-accent-primary);
         }
 
         .message {
-            font-size: 18px;
+            font-size: 17px;
             color: var(--color-text-muted);
             margin-bottom: 32px;
             line-height: 1.5;
+            max-width: 440px;
         }
 
         .btn {
             display: inline-flex;
             align-items: center;
             gap: 10px;
-            padding: 18px 40px;
-            background: linear-gradient(135deg, var(--color-accent-primary), #ff6b9d);
-            color: white;
+            padding: 16px 36px;
+            background: var(--color-accent-primary);
+            color: var(--color-bg-primary);
             text-decoration: none;
-            border-radius: 14px;
-            font-size: 18px;
-            font-weight: 600;
-            transition: transform 0.15s ease, box-shadow 0.15s ease;
+            border-radius: 10px;
+            font-family: 'Unbounded', system-ui, sans-serif;
+            font-size: 15px;
+            font-weight: 700;
+            text-transform: uppercase;
+            letter-spacing: 0.06em;
+            transition: transform 120ms ease-out, box-shadow 120ms ease-out;
             cursor: pointer;
             border: none;
-            letter-spacing: 0.02em;
+            box-shadow: 0 0 32px rgba(244, 196, 48, 0.35);
         }
 
         .btn:hover {
-            transform: scale(1.03);
-            box-shadow: 0 0 30px rgba(255, 45, 106, 0.4);
+            transform: translateY(-1px);
+            box-shadow: 0 0 40px rgba(244, 196, 48, 0.5);
         }
 
         .btn:active {
-            transform: scale(0.97);
+            transform: translateY(0);
         }
 
         .btn-icon {
-            font-size: 22px;
+            font-size: 18px;
         }
 
         .hint {
             margin-top: 24px;
-            font-size: 14px;
+            font-family: 'JetBrains Mono', ui-monospace, monospace;
+            font-size: 12px;
             color: var(--color-text-muted);
             min-height: 20px;
+            letter-spacing: 0.06em;
         }
 
         .status {
             margin-top: 12px;
-            font-size: 13px;
+            font-family: 'JetBrains Mono', ui-monospace, monospace;
+            font-size: 11px;
             color: var(--color-text-muted);
-            opacity: 0.6;
+            opacity: 0.5;
+            letter-spacing: 0.12em;
+            text-transform: uppercase;
         }
 
         @keyframes pulse {

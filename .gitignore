@@ -55,3 +55,4 @@ Thumbs.db
 
 # ---- Misc ----
 *.bak
+.gstack/

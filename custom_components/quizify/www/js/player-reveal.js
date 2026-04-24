@@ -231,10 +231,8 @@
         emotionEl.classList.add('reveal-emotion--' + emotionType);
         emotionEl.classList.remove('hidden');
 
-        // Confetti on correct
-        if (correct && typeof confetti === 'function') {
-            confetti({ particleCount: 80, spread: 60, origin: { y: 0.7 } });
-        }
+        // Broadcast Living Room: no confetti on correct-answer reveal.
+        // The gold glow sweep on the correct tile (320ms ease-out) IS the celebration. See DESIGN.md.
     }
 
     // ============================================
