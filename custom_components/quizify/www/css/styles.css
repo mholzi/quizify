@@ -1782,12 +1782,14 @@ button, .btn {
 
 .modal-content {
     position: relative;
-    background: var(--color-bg-white);
+    background: var(--color-dark-surface-hover);     /* surface-2 navy \u2014 not cream */
+    border: 1px solid var(--color-border-neon);      /* hairline */
     padding: var(--space-lg);
     border-radius: var(--radius-lg);
     max-width: 400px;
     width: 90%;
-    color: var(--color-text-primary);
+    color: var(--color-text-white);                   /* parchment \u2014 not navy */
+    box-shadow: 0 16px 48px rgba(0, 0, 0, 0.6);
     animation: modalFadeIn var(--transition-fast);
 }
 
@@ -1797,14 +1799,17 @@ button, .btn {
 }
 
 .modal-content h2 {
+    font-family: var(--font-display);
+    font-weight: 700;
     margin-bottom: var(--space-sm);
     font-size: var(--font-size-xl);
-    color: var(--color-text-primary);
+    color: var(--color-text-white);                   /* parchment */
+    letter-spacing: -0.01em;
 }
 
 .modal-content p {
     margin-bottom: var(--space-md);
-    color: var(--color-text-muted);
+    color: var(--color-text-neon-muted);              /* blue-gray muted */
 }
 
 .modal-actions {
@@ -1817,26 +1822,26 @@ button, .btn {
     flex: 1;
 }
 
-/* Inputs inside white modal need dark text + light background */
+/* Inputs inside dark modal: lifted surface bg + parchment text + hairline border */
 .modal-content .input,
 .modal-content .name-input,
 .modal-content input[type="text"] {
-    background: #f3f4f6;
-    color: #1f2937;
-    border-color: #d1d5db;
+    background: var(--color-bg-primary);              /* studio navy */
+    color: var(--color-text-white);                   /* parchment */
+    border-color: var(--color-border-neon);           /* hairline */
 }
 
 .modal-content .input:focus,
 .modal-content .name-input:focus,
 .modal-content input[type="text"]:focus {
-    border-color: #F4C430;
-    box-shadow: 0 0 0 3px rgba(168, 85, 247, 0.2);
+    border-color: var(--color-accent-primary);        /* broadcast gold */
+    box-shadow: 0 0 0 3px rgba(244, 196, 48, 0.22);
 }
 
 .modal-content .input::placeholder,
 .modal-content .name-input::placeholder,
 .modal-content input[type="text"]::placeholder {
-    color: #9ca3af;
+    color: var(--color-text-neon-muted);              /* muted blue-gray */
 }
 
 /* ==========================================
@@ -3343,15 +3348,16 @@ footer {
 
 /* Confirm modal */
 .confirm-modal-title {
+    font-family: var(--font-display);
     font-size: 1.1rem;
     font-weight: 700;
-    color: var(--color-text-primary);
+    color: var(--color-text-white);                  /* parchment on dark surface */
     margin-bottom: var(--space-sm);
 }
 
 .confirm-modal-message {
     font-size: 0.9rem;
-    color: var(--color-text-muted);
+    color: var(--color-text-neon-muted);             /* muted blue-gray on dark */
     line-height: 1.5;
 }
 

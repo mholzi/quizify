@@ -3,6 +3,47 @@
 All notable changes to Quizify are documented here. This project follows
 [Semantic Versioning](https://semver.org/).
 
+## [1.1.0-beta.3] — 2026-04-24
+
+Critical hotfix. **Please upgrade from beta.1 or beta.2 immediately** —
+the player flow was broken in both and this release restores it.
+
+### 🚨 Critical regression fix
+
+- **Player flow was fully broken in beta.1 and beta.2.** The redesign
+  accidentally dropped the `utils.js` `<script>` include from
+  `player.html`, which caused `player-utils.js` to fail with
+  `TypeError: utils.escapeHtml is not a function` the moment the server
+  broadcast a `player_joined` event. Symptom: the Join button stayed on
+  "JOINING..." forever and no players could enter the lobby. This exact
+  same drop happened once before (see commits `86025d1`, `4fe6712`) and
+  is now marked with a `DO NOT REMOVE` comment so it doesn't happen a
+  third time.
+
+### 🐛 Fixes
+
+- **Admin-join modal was rendering in light-mode palette** (cream
+  background, dark navy text, peach "Starten & Beitreten" button) because
+  `.modal-content` CSS referenced `--color-bg-white` and
+  `--color-text-primary`, which the redesign repurposed for light-mode
+  support. The modal styles now explicitly use the dark surface tokens
+  (`--color-dark-surface-hover` navy background, `--color-text-white`
+  parchment text, hairline border, box-shadow) so the modal matches the
+  rest of the dark-mode UI regardless of how the light/dark tokens are
+  wired.
+- `.confirm-modal-title` / `.confirm-modal-message` also fixed — same
+  root cause.
+- Modal input field now uses studio navy background with parchment text
+  and broadcast-gold focus ring (was light gray bg, dark text, old
+  purple focus shadow).
+
+### 🧹 Internal
+
+- Cache-busters bumped to `?v=1.1.0-beta.3` and service worker
+  `CACHE_VERSION` bumped to `quizify-v1.1.0-beta.3`.
+
+---
+
 ## [1.1.0-beta.2] — 2026-04-24
 
 Follow-up on beta.1 after auditing the live deployment. Six color-drift
