@@ -57,6 +57,10 @@ async def async_setup_entry(hass: HomeAssistant, entry: ConfigEntry) -> bool:
     # Initialize WebSocket handler
     ws_handler = QuizifyWebSocketHandler(hass)
 
+    # Load persisted admin session token (survives HA restarts).
+    # Without this, any LAN client could seize admin after every restart.
+    await ws_handler._conn.async_load_admin_token()
+
     # Wire broadcast callback so game state can push events to clients
     game_state.set_broadcast_callback(ws_handler.broadcast_state)
 

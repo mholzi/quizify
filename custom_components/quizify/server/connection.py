@@ -3,6 +3,7 @@ from __future__ import annotations
 
 import asyncio
 import logging
+import time
 import uuid
 from typing import TYPE_CHECKING, Any
 
@@ -12,8 +13,18 @@ from custom_components.quizify.server.serializers import get_game_state
 
 if TYPE_CHECKING:
     from homeassistant.core import HomeAssistant
+    from homeassistant.helpers.storage import Store
 
 _LOGGER = logging.getLogger(__name__)
+
+# Storage for admin session token persistence across HA restarts.
+# Without this, the first LAN client to connect after every HA restart
+# can seize admin privileges (see #1 in logical review).
+_STORAGE_KEY = "quizify_admin_token"
+_STORAGE_VERSION = 1
+# Session tokens TTL \u2014 tokens older than this are treated as expired even
+# if still in memory. Prevents cross-game token reuse on long-lived HA instances.
+_PLAYER_TOKEN_TTL = 24 * 60 * 60  # 24 hours
 
 
 class ConnectionManager:
@@ -28,10 +39,17 @@ class ConnectionManager:
         self.connections: set[web.WebSocketResponse] = set()
         self._admin_connections: set[web.WebSocketResponse] = set()
         self._dashboard_connections: set[web.WebSocketResponse] = set()
-        self._session_tokens: dict[str, str] = {}  # token -> player_name
+        # Token \u2192 (player_name, issued_at_monotonic). Tokens older than
+        # _PLAYER_TOKEN_TTL are treated as expired.
+        self._session_tokens: dict[str, tuple[str, float]] = {}
         self._admin_session_token: str | None = None
         self._admin_disconnect_task: asyncio.Task | None = None
         self._pending_removals: dict[str, asyncio.Task] = {}
+
+        # Persistent storage for admin token (survives HA restarts).
+        # Store is lazy-created on first use because its import requires HA runtime.
+        self._store: Store | None = None
+        self._admin_token_loaded = False
 
     # ------------------------------------------------------------------
     # Connection lifecycle
@@ -62,18 +80,75 @@ class ConnectionManager:
         self._admin_connections.add(ws)
 
     # ------------------------------------------------------------------
-    # Admin session token
+    # Admin session token (persisted across HA restarts)
     # ------------------------------------------------------------------
 
+    def _get_store(self) -> Store:
+        """Lazily create the HA storage instance."""
+        if self._store is None:
+            from homeassistant.helpers.storage import Store  # noqa: PLC0415
+            self._store = Store(self.hass, _STORAGE_VERSION, _STORAGE_KEY)
+        return self._store
+
+    async def async_load_admin_token(self) -> None:
+        """Load the persisted admin token from HA storage.
+
+        Called once at integration setup. If no token is persisted, the next
+        admin connection will bootstrap one \u2014 but that bootstrap now requires
+        HA auth via the /api/quizify/admin_claim endpoint, not \"first LAN
+        connection wins\".
+        """
+        if self._admin_token_loaded:
+            return
+        try:
+            data = await self._get_store().async_load()
+            if data and isinstance(data, dict):
+                self._admin_session_token = data.get("token")
+                if self._admin_session_token:
+                    _LOGGER.info(
+                        "Loaded persisted admin session token from HA storage"
+                    )
+        except Exception as err:  # noqa: BLE001
+            _LOGGER.warning("Failed to load admin token from storage: %s", err)
+        self._admin_token_loaded = True
+
+    async def _async_save_admin_token(self) -> None:
+        """Persist the current admin token to HA storage."""
+        try:
+            await self._get_store().async_save(
+                {"token": self._admin_session_token}
+                if self._admin_session_token
+                else None
+            )
+        except Exception as err:  # noqa: BLE001
+            _LOGGER.warning("Failed to persist admin token: %s", err)
+
     def get_or_create_admin_token(self) -> str:
-        """Return the current admin session token, creating one if needed."""
+        """Return the current admin session token, creating one if needed.
+
+        Newly created tokens are persisted asynchronously so they survive HA
+        restarts. This is the primary defense against LAN takeover attacks
+        (see #1 in logical review).
+        """
         if not self._admin_session_token:
             self._admin_session_token = str(uuid.uuid4())
+            # Fire-and-forget persist; missing the write isn't fatal, the
+            # token just won't survive the next restart.
+            asyncio.ensure_future(self._async_save_admin_token())
         return self._admin_session_token
 
     def validate_admin_token(self, token: str) -> bool:
         """Return True if *token* matches the current admin session token."""
         return bool(token and token == self._admin_session_token)
+
+    def clear_admin_token(self) -> None:
+        """Explicit admin-token reset (e.g. user clicked 'Log out admin').
+
+        Also clears persisted storage so the next admin claim must be
+        HA-auth-gated.
+        """
+        self._admin_session_token = None
+        asyncio.ensure_future(self._async_save_admin_token())
 
     def cancel_admin_disconnect(self) -> None:
         """Cancel a running admin-disconnect grace-period task."""
@@ -88,17 +163,18 @@ class ConnectionManager:
             await asyncio.sleep(self.ADMIN_SESSION_GRACE)
             _LOGGER.info("Admin session grace period expired, clearing token")
             self._admin_session_token = None
+            await self._async_save_admin_token()
 
         self._admin_disconnect_task = asyncio.ensure_future(admin_timeout())
 
     # ------------------------------------------------------------------
-    # Player session tokens
+    # Player session tokens (with TTL, see #13 in logical review)
     # ------------------------------------------------------------------
 
     def create_session_token(self, player_name: str) -> str:
         """Create and store a new session token for *player_name*."""
         token = str(uuid.uuid4())
-        self._session_tokens[token] = player_name
+        self._session_tokens[token] = (player_name, time.monotonic())
         return token
 
     def rotate_session_token(self, old_token: str, player_name: str) -> str:
@@ -107,14 +183,30 @@ class ConnectionManager:
         return self.create_session_token(player_name)
 
     def get_player_for_token(self, token: str) -> str | None:
-        """Return the player name associated with *token*, or None."""
-        return self._session_tokens.get(token)
+        """Return the player name associated with *token*, or None.
+
+        Expired tokens (older than _PLAYER_TOKEN_TTL) are treated as absent
+        and removed from the registry.
+        """
+        entry = self._session_tokens.get(token)
+        if not entry:
+            return None
+        name, issued_at = entry
+        if time.monotonic() - issued_at > _PLAYER_TOKEN_TTL:
+            self._session_tokens.pop(token, None)
+            return None
+        return name
 
     def clear_player_tokens(self, player_name: str) -> None:
         """Remove all session tokens belonging to *player_name*."""
-        stale = [t for t, n in self._session_tokens.items() if n == player_name]
+        stale = [t for t, (n, _ts) in self._session_tokens.items() if n == player_name]
         for t in stale:
             self._session_tokens.pop(t, None)
+
+    def clear_all_player_tokens(self) -> None:
+        """Wipe every player token. Called on game reset to prevent
+        cross-game token reuse (see #13 in logical review)."""
+        self._session_tokens.clear()
 
     # ------------------------------------------------------------------
     # Pending-removal registry
@@ -180,16 +272,23 @@ class ConnectionManager:
         """Broadcast admin-only messages (with correct answer) to pure admin connections.
 
         Admin-as-player connections are excluded so they don't see the
-        correct answer before submitting.
+        correct answer before submitting. Exclusion is by `is_admin` flag
+        on the PlayerSession, not ws identity, so that after an
+        admin-as-player reconnect (new ws object) they are still correctly
+        excluded (#18 in logical review).
         """
         if not self._admin_connections:
             return
         gs = get_game_state(self.hass)
-        player_ws_set = {p.ws for p in gs.get_players()} if gs else set()
+        admin_as_player_ws = set()
+        if gs:
+            for p in gs.get_players():
+                if p.is_admin and p.ws is not None:
+                    admin_as_player_ws.add(p.ws)
         tasks = [
             self._safe_send(ws, message)
             for ws in list(self._admin_connections)
-            if not ws.closed and ws not in player_ws_set
+            if not ws.closed and ws not in admin_as_player_ws
         ]
         if tasks:
             await asyncio.gather(*tasks)

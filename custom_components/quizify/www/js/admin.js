@@ -294,7 +294,28 @@
                 break;
             case 'error':
                 console.warn('[Quizify Admin] Error:', msg.code, msg.message);
-                showErrorToast(msg.message || msg.code);
+                // Translate server error codes to user-friendly German.
+                // Raw server messages can leak into toasts (e.g. "Admin only")
+                // when they shouldn't be visible to the user (#22 in review).
+                var errorTranslations = {
+                    'INVALID_ACTION': 'Aktion nicht erlaubt',
+                    'GAME_ALREADY_STARTED': 'Spiel l\u00E4uft bereits',
+                    'GAME_NOT_STARTED': 'Kein aktives Spiel',
+                    'ROUND_EXPIRED': 'Zeit abgelaufen',
+                    'ALREADY_SUBMITTED': 'Bereits geantwortet',
+                    'NAME_TAKEN': 'Name bereits vergeben',
+                    'NAME_INVALID': 'Ung\u00FCltiger Name',
+                    'GAME_FULL': 'Spiel ist voll',
+                    'NOT_IN_GAME': 'Nicht im Spiel',
+                    'NO_QUESTIONS_REMAINING': 'Keine Fragen mehr',
+                };
+                var userMsg = errorTranslations[msg.code] || msg.message || 'Fehler';
+                // Suppress the noisy "Admin only" ping from initial admin_connect
+                // attempt \u2014 it's expected when not yet authenticated.
+                if (msg.code === 'INVALID_ACTION' && msg.message === 'Admin only') {
+                    break;
+                }
+                showErrorToast(userMsg);
                 break;
         }
     }
@@ -620,11 +641,22 @@
             return;
         }
 
+        // Disable button to prevent double-click (#17 in logical review).
+        if (els.adminJoinBtn) {
+            els.adminJoinBtn.disabled = true;
+            els.adminJoinBtn.textContent = '\u25B6\uFE0F Starting\u2026';
+        }
+
         var categoryPayload = selectedCategory === 'mixed'
             ? null
             : selectedCategory === 'multi'
                 ? selectedCategories
                 : selectedCategory;
+
+        // Pre-save the name so the game_state handler's auto-redirect fires
+        // as soon as the server confirms the phase change (#5 in logical
+        // review: wait for ACK before navigating).
+        sessionStorage.setItem('quizify_admin_name', name);
 
         send('start_game', {
             category: categoryPayload,
@@ -633,8 +665,18 @@
             language: selectedLanguage,
         });
 
+        // Safety timeout: if for any reason the server doesn't respond in
+        // 3s, fall back to the old behavior so the user isn't stuck.
+        setTimeout(function () {
+            if (!_redirecting) {
+                redirectToPlayer(name);
+            }
+        }, 3000);
+
         closeAdminJoinModal();
-        redirectToPlayer(name);
+        // NB: do NOT call redirectToPlayer(name) synchronously here \u2014 the
+        // handleGameState handler will call it once the server broadcasts
+        // the phase transition, guaranteeing start_game was processed.
     }
 
     function setupAdminJoinModal() {
@@ -679,8 +721,17 @@
     });
 
     // In-game controls (only shown if admin stays on admin.html without redirect)
-    on(els.nextQuestionBtn, 'click', function () { send('next_question', {}); });
-    on(els.continueBtn, 'click', function () { send('next_question', {}); });
+    // Button-disable on click to prevent double-advance (#17 in logical review).
+    // Re-enabled by handleGameState / handleQuestionStarted when the next phase arrives.
+    function _debouncedSend(btn, msgType) {
+        if (!btn || btn.disabled) return;
+        btn.disabled = true;
+        send(msgType, {});
+        // Re-enable after 1.5s as a safety net (in case server doesn't respond).
+        setTimeout(function () { btn.disabled = false; }, 1500);
+    }
+    on(els.nextQuestionBtn, 'click', function () { _debouncedSend(els.nextQuestionBtn, 'next_question'); });
+    on(els.continueBtn, 'click', function () { _debouncedSend(els.continueBtn, 'next_question'); });
 
     on(els.endGameBtn, 'click', function () {
         var modal = document.getElementById('end-game-modal');

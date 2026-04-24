@@ -178,6 +178,25 @@
         return lastSubmittedIndex;
     }
 
+    /**
+     * Lock the UI into the "already submitted" state.
+     * Used when reconnecting mid-round (#14 in logical review): server says
+     * we've already submitted, so disable all answer buttons and show the
+     * confirmation, even though we don't know which answer index we picked.
+     */
+    function lockSubmitted() {
+        hasSubmitted = true;
+        var answerButtons = document.getElementById('answer-buttons');
+        if (answerButtons) {
+            var buttons = answerButtons.querySelectorAll('.answer-btn');
+            for (var i = 0; i < buttons.length; i++) {
+                buttons[i].disabled = true;
+            }
+        }
+        var confirmation = document.getElementById('submitted-confirmation');
+        if (confirmation) confirmation.classList.remove('hidden');
+    }
+
     function resetSubmissionState() {
         hasSubmitted = false;
         lastSubmittedIndex = -1;
@@ -539,6 +558,7 @@
         updateTimer: updateTimer,
         renderQuestion: renderQuestion,
         handleAnswerClick: handleAnswerClick,
+        lockSubmitted: lockSubmitted,
         resetSubmissionState: resetSubmissionState,
         updateGameView: updateGameView,
         renderSubmissionTracker: renderSubmissionTracker,

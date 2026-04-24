@@ -1,85 +1,90 @@
-/* Quizify — Broadcast Living Room Design System */
-/* Memorable thing: "It felt like a real game show on my TV." */
+/* Quizify — Soft Parlor Design System */
+/* Memorable thing: "Cozy and friendly — like a family board game." */
 /* Do not deviate from these tokens without reading DESIGN.md first. */
 
 /* ==========================================
-   Design System Tokens — Broadcast Living Room
+   Design System Tokens — Soft Parlor
    ========================================== */
 
-/* Typography — Unbounded (display) + Instrument Sans (body/UI) + JetBrains Mono (numeric) */
-@import url('https://fonts.googleapis.com/css2?family=Unbounded:wght@400;500;600;700;800;900&family=Instrument+Sans:ital,wght@0,400;0,500;0,600;0,700;1,400&family=JetBrains+Mono:wght@400;500;600;700&display=swap');
+/* Typography — Cabinet Grotesk (display) + DM Sans (body/UI) + JetBrains Mono (numeric) */
+@import url('https://fonts.googleapis.com/css2?family=DM+Sans:ital,opsz,wght@0,9..40,400;0,9..40,500;0,9..40,600;0,9..40,700;1,9..40,400&family=JetBrains+Mono:wght@400;500;600;700&display=swap');
+@import url('https://api.fontshare.com/v2/css?f[]=cabinet-grotesk@500,700,800,900&display=swap');
 
 :root {
-    /* ---- Color: Broadcast Living Room ---- */
+    /* ---- Color: Soft Parlor ---- */
+    /* Warm paper background, multi-color accents at muted saturation. */
 
-    /* Background — deep saturated royal blue, studio navy */
-    --color-bg-primary: #0B1739;
-    --color-bg-surface: rgba(244, 235, 207, 0.04);
-    --color-bg-light: #F6F1E4;       /* light-mode page cream */
-    --color-bg-white: #FFFCF2;        /* light-mode lifted paper */
-    --color-bg-card: #F6F1E4;
-    --color-bg-card-alt: #EDE6D1;
+    /* Background — warm cream paper */
+    --color-bg-primary: #FAF6EC;       /* cream paper */
+    --color-bg-surface: #FFFFFF;       /* lifted surface (cards) */
+    --color-bg-light: #FAF6EC;
+    --color-bg-white: #FFFFFF;
+    --color-bg-card: #FFFFFF;
+    --color-bg-card-alt: #F3EEDF;
 
-    /* Accent — broadcast gold is the ONE accent color */
-    --color-accent-primary: #F4C430;           /* broadcast gold — THE trophy */
-    --color-accent-secondary: #F4C430;         /* legacy alias → same gold (single accent) */
-    --color-accent-brand: #F4C430;             /* legacy alias → same gold */
-    --color-accent-brand-hover: #E0AF1C;
-    --color-accent-blue: #4EC5B8;              /* legacy blue → remapped to muted teal (info register) */
-    --color-accent-blue-hover: #3FB6A8;
+    /* Primary accent: warm coral. Secondary accents: sage, sky, sun. */
+    /* Multi-color is intentional here \u2014 Soft Parlor uses the 4 as a
+       cohesive party-game palette, always at the same muted saturation. */
+    --color-accent-primary: #E88A7F;           /* warm coral \u2014 primary CTAs, correct answers */
+    --color-accent-secondary: #7FA897;         /* muted sage */
+    --color-accent-brand: #E88A7F;             /* legacy alias \u2192 coral */
+    --color-accent-brand-hover: #D97568;
+    --color-accent-blue: #7FA8C4;              /* muted sky */
+    --color-accent-blue-hover: #6A9AB6;
 
     /* Semantic */
-    --color-success: #F4C430;                  /* correct = gold (trophy) */
-    --color-success-hover: #E0AF1C;
-    --color-success-light: rgba(244, 196, 48, 0.12);
-    --color-success-alt: #F4C430;
-    --color-success-neon: #F4C430;
-    --color-warning: #E0AF1C;                  /* gold at lower intensity */
-    --color-warning-dark: #B2852F;
-    --color-warning-light: rgba(224, 175, 28, 0.15);
-    --color-warning-alt: #E0AF1C;
-    --color-error: #D65858;                    /* warm red, NOT fire-engine */
-    --color-error-dark: #B84A4A;
-    --color-error-light: rgba(214, 88, 88, 0.15);
-    --color-error-neon: #D65858;
+    --color-success: #7FA897;                  /* sage for correct */
+    --color-success-hover: #6E9685;
+    --color-success-light: rgba(127, 168, 151, 0.18);
+    --color-success-alt: #7FA897;
+    --color-success-neon: #7FA897;
+    --color-warning: #E8C47F;                  /* sun (warm yellow) */
+    --color-warning-dark: #D1AC65;
+    --color-warning-light: rgba(232, 196, 127, 0.20);
+    --color-warning-alt: #E8C47F;
+    --color-error: #D66A6A;                    /* muted brick \u2014 never fire-engine */
+    --color-error-dark: #BB5353;
+    --color-error-light: rgba(214, 106, 106, 0.15);
+    --color-error-neon: #D66A6A;
 
-    /* Purple tokens — remapped to muted mauve (for player dots), not UI purple */
-    --color-purple-primary: #A77CB7;
-    --color-neon-purple: #A77CB7;
+    /* Player-dot / pill palette (muted mauve for variety) */
+    --color-purple-primary: #B78FC7;
+    --color-neon-purple: #B78FC7;
 
-    /* Badge backgrounds */
-    --color-success-bg: rgba(244, 196, 48, 0.12);
-    --color-accent-brand-bg: rgba(244, 196, 48, 0.10);
-    --color-error-bg: rgba(214, 88, 88, 0.12);
+    /* Badge backgrounds (soft tints of the accent colors) */
+    --color-success-bg: rgba(127, 168, 151, 0.18);
+    --color-accent-brand-bg: rgba(232, 138, 127, 0.16);
+    --color-error-bg: rgba(214, 106, 106, 0.14);
 
-    /* Text — warm parchment, NOT pure white */
-    --color-text-primary: #0B1739;             /* light-mode text becomes studio navy */
-    --color-text-secondary: #1B2A56;
-    --color-text-muted: #8FA0C6;               /* cool desaturated blue-gray */
-    --color-text-light: #8FA0C6;
-    --color-text-white: #F4EBCF;               /* dark-mode primary text — PARCHMENT not white */
-    --color-text-dark: #0B1739;
-    --color-text-heading: #F4EBCF;
-    --color-text-neon-muted: #8FA0C6;
+    /* Text — dark ink on cream. No pure black, no pure white. */
+    --color-text-primary: #2A2820;             /* warm ink */
+    --color-text-secondary: #3C3930;
+    --color-text-muted: #6E6A5C;               /* warm olive-gray */
+    --color-text-light: #8F8A78;
+    --color-text-white: #2A2820;               /* on cream body, "text-white" = dark ink */
+    --color-text-dark: #2A2820;
+    --color-text-heading: #2A2820;
+    --color-text-neon-muted: #6E6A5C;
 
-    /* Borders — hairline is the barely-there divider */
-    --color-border-light: #D9D2BE;
-    --color-border-medium: #BDB297;
-    --color-border-dark: #21305E;
-    --color-border-neon: #21305E;              /* was rgba white — now explicit hairline */
+    /* Borders — subtle warm neutrals */
+    --color-border-light: #E5DFCF;             /* hairline on cream */
+    --color-border-medium: #D4CEBC;
+    --color-border-dark: #BDB597;
+    --color-border-neon: #E5DFCF;              /* legacy alias \u2192 hairline */
 
-    /* Dark theme surface colors — lifted navies */
-    --color-dark-surface: #142148;
-    --color-dark-surface-hover: #1B2A56;
-    --color-dark-card: #142148;
-    --color-surface-dark: #142148;
+    /* Surface colors (Soft Parlor is light-primary, so "dark surface"
+       tokens are remapped to lifted-paper whites) */
+    --color-dark-surface: #FFFFFF;
+    --color-dark-surface-hover: #F3EEDF;
+    --color-dark-card: #FFFFFF;
+    --color-surface-dark: #FFFFFF;
 
-    /* Medal colors — 1st is broadcast gold, others are muted supporting tones */
-    --color-gold: #F4C430;                     /* was #ffd700 — now matches primary accent */
-    --color-silver: #8FA0C6;                   /* muted cool blue-gray */
-    --color-bronze: #B2852F;                   /* dim gold (accent-dim) */
+    /* Medal colors */
+    --color-gold: #E8C47F;                     /* sun */
+    --color-silver: #B8B2A0;                   /* muted warm silver */
+    --color-bronze: #C99466;                   /* warm bronze */
 
-    /* Spacing Tokens (unchanged — these work) */
+    /* Spacing Tokens */
     --space-xs: 4px;
     --space-sm: 8px;
     --space-md: 16px;
@@ -87,10 +92,10 @@
     --space-xl: 32px;
     --space-2xl: 48px;
 
-    /* ---- Typography: broadcast register ---- */
-    --font-display: 'Unbounded', system-ui, sans-serif;
-    --font-body: 'Instrument Sans', system-ui, sans-serif;
-    --font-system: 'Instrument Sans', system-ui, -apple-system, BlinkMacSystemFont, sans-serif;
+    /* ---- Typography: parlor register ---- */
+    --font-display: 'Cabinet Grotesk', 'DM Sans', system-ui, sans-serif;
+    --font-body: 'DM Sans', system-ui, sans-serif;
+    --font-system: 'DM Sans', system-ui, -apple-system, BlinkMacSystemFont, sans-serif;
     --font-mono: 'JetBrains Mono', ui-monospace, SFMono-Regular, monospace;
 
     --font-size-xs: 10px;
@@ -111,32 +116,32 @@
     --font-weight-bold: 700;
     --font-weight-extrabold: 800;
 
-    /* Effect Tokens — Glow (broadcast rim light, sparingly) */
-    --glow-primary: 0 0 24px rgba(244, 196, 48, 0.35);
-    --glow-secondary: 0 0 24px rgba(244, 196, 48, 0.35);
-    --glow-success: 0 0 24px rgba(244, 196, 48, 0.35);
-    --glow-warning: 0 0 20px rgba(224, 175, 28, 0.3);
-    --glow-error: 0 0 20px rgba(214, 88, 88, 0.3);
-    --accent-glow: rgba(244, 196, 48, 0.35);
+    /* Effect Tokens \u2014 soft shadows, no neon glow */
+    --glow-primary: 0 4px 12px rgba(232, 138, 127, 0.22);
+    --glow-secondary: 0 4px 12px rgba(127, 168, 151, 0.22);
+    --glow-success: 0 4px 14px rgba(127, 168, 151, 0.28);
+    --glow-warning: 0 4px 12px rgba(232, 196, 127, 0.22);
+    --glow-error: 0 4px 12px rgba(214, 106, 106, 0.22);
+    --accent-glow: rgba(232, 138, 127, 0.22);
 
-    /* Shadow Tokens */
-    --shadow-sm: 0 2px 4px rgba(0, 0, 0, 0.25);
-    --shadow-md: 0 4px 12px rgba(0, 0, 0, 0.35);
-    --shadow-lg: 0 8px 24px rgba(0, 0, 0, 0.45);
-    --shadow-xl: 0 16px 40px rgba(0, 0, 0, 0.55);
+    /* Shadow Tokens \u2014 soft drop shadows, layered depth */
+    --shadow-sm: 0 1px 2px rgba(42, 40, 32, 0.06);
+    --shadow-md: 0 2px 8px rgba(42, 40, 32, 0.08);
+    --shadow-lg: 0 6px 20px rgba(42, 40, 32, 0.10);
+    --shadow-xl: 0 16px 40px rgba(42, 40, 32, 0.14);
 
-    /* Border Radius Tokens — tighter than before (no 20px bubbles) */
-    --radius-sm: 4px;
-    --radius-md: 8px;
-    --radius-lg: 10px;
-    --radius-xl: 12px;
-    --radius-2xl: 12px;          /* legacy alias → also 12px; broadcast rejects bubble */
+    /* Border Radius Tokens \u2014 rounded, friendly, but never bubbly */
+    --radius-sm: 6px;
+    --radius-md: 10px;
+    --radius-lg: 12px;
+    --radius-xl: 14px;
+    --radius-2xl: 14px;
     --radius-full: 9999px;
 
     /* Transition Tokens */
     --transition-fast: 120ms ease-out;
     --transition-normal: 220ms ease-out;
-    --transition-slow: 500ms ease-in-out;
+    --transition-slow: 400ms ease-in-out;
 
     /* Z-Index Tokens */
     --z-control-bar: 100;
@@ -161,8 +166,13 @@ html {
 
 body {
     font-family: var(--font-system);
-    background: var(--color-bg-primary);
-    color: var(--color-text-white);
+    /* Soft Parlor: warm cream background with subtle radial glow hints
+       (coral top-right, sky bottom-left) to break up the flat plane. */
+    background:
+        radial-gradient(ellipse at 85% 15%, rgba(232, 138, 127, 0.08) 0%, transparent 55%),
+        radial-gradient(ellipse at 15% 85%, rgba(127, 168, 196, 0.06) 0%, transparent 55%),
+        var(--color-bg-primary);
+    color: var(--color-text-primary);
     min-height: 100dvh;
     line-height: 1.5;
     overflow-x: hidden;
@@ -175,23 +185,22 @@ body {
 
 .wordmark {
     font-family: var(--font-display);
-    font-weight: 900;
+    font-weight: 800;
     font-size: var(--font-size-hero);
     letter-spacing: -0.02em;
     line-height: 1;
 }
 
 .wordmark-quiz {
-    color: var(--color-text-white);
+    color: var(--color-text-primary);     /* dark ink on cream */
 }
 
 .wordmark-ify {
-    color: var(--color-accent-primary);
-    /* Broadcast Living Room: one solid gold, no gradient (gradients rejected) */
+    color: var(--color-accent-primary);   /* warm coral */
 }
 
 .wordmark-hero {
-    text-shadow: 0 0 40px var(--accent-glow);
+    text-shadow: 0 6px 20px rgba(232, 138, 127, 0.25);
 }
 
 .logo-loading {
@@ -339,28 +348,35 @@ button, .btn {
 
 .btn-primary {
     background: var(--color-accent-primary);
-    color: var(--color-bg-primary);              /* navy text on gold for contrast */
+    color: #FFFFFF;                              /* white on coral for max contrast */
     font-family: var(--font-display);
     font-weight: 700;
-    letter-spacing: 0.04em;
-    text-transform: uppercase;
-    box-shadow: 0 0 24px var(--accent-glow);
+    letter-spacing: 0.02em;
+    text-transform: none;                         /* Soft Parlor: sentence case */
+    box-shadow: var(--glow-primary);
+    border-radius: var(--radius-md);
 }
 
 .btn-primary:hover:not(:disabled) {
     background: var(--color-accent-brand-hover);
-    box-shadow: 0 0 32px var(--accent-glow);
+    transform: translateY(-1px);
+    box-shadow: 0 6px 16px rgba(232, 138, 127, 0.32);
 }
 
 .btn-secondary {
-    background: transparent;
-    color: var(--color-text-white);
-    border: 1px solid var(--color-border-neon);
+    background: var(--color-bg-surface);
+    color: var(--color-text-primary);
+    border: 1px solid var(--color-border-light);
+    border-radius: var(--radius-md);
+    font-family: var(--font-body);
+    font-weight: 600;
+    box-shadow: var(--shadow-sm);
 }
 
 .btn-secondary:hover:not(:disabled) {
-    background: var(--color-dark-surface-hover);
+    background: var(--color-bg-card-alt);
     border-color: var(--color-accent-primary);
+    transform: translateY(-1px);
 }
 
 .btn-danger {

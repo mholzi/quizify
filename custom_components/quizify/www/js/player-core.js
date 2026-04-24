@@ -203,6 +203,18 @@
                         total_rounds: msg.total_rounds,
                         category: msg.question.category
                     });
+
+                    // #14: if we're reconnecting mid-round and server thinks
+                    // we've already submitted, lock the UI accordingly so we
+                    // don't get ERR_ALREADY_SUBMITTED toasts on re-tap.
+                    if (msg.leaderboard && state.playerName) {
+                        var me = msg.leaderboard.find(function (p) {
+                            return p && p.name === state.playerName;
+                        });
+                        if (me && me.submitted) {
+                            game.lockSubmitted();
+                        }
+                    }
                 } else {
                     pu.showView('game-view');
                 }
@@ -406,7 +418,23 @@
 
     function handleError(msg) {
         console.warn('[Quizify] Error:', msg.code, msg.message);
-        pu.showToast(msg.message || msg.code);
+        // Translate server error codes to user-friendly German strings so
+        // players don't see raw codes like "INVALID_ACTION" in toasts
+        // (#22 in logical review).
+        var errorTranslations = {
+            'INVALID_ACTION': 'Aktion nicht erlaubt',
+            'GAME_ALREADY_STARTED': 'Spiel l\u00E4uft bereits',
+            'GAME_NOT_STARTED': 'Kein aktives Spiel',
+            'ROUND_EXPIRED': 'Zeit abgelaufen',
+            'ALREADY_SUBMITTED': 'Bereits geantwortet',
+            'NAME_TAKEN': 'Name bereits vergeben',
+            'NAME_INVALID': 'Ung\u00FCltiger Name',
+            'GAME_FULL': 'Spiel ist voll',
+            'NOT_IN_GAME': 'Nicht im Spiel',
+            'GAME_ENDED': 'Spiel ist vorbei',
+        };
+        var userMsg = errorTranslations[msg.code] || msg.message || 'Fehler';
+        pu.showToast(userMsg);
 
         // If the error happened during join, reset the button so the user can retry
         if (!state.playerName && els.joinBtn) {

@@ -3,6 +3,153 @@
 All notable changes to Quizify are documented here. This project follows
 [Semantic Versioning](https://semver.org/).
 
+## [1.1.0-beta.4] — 2026-04-24
+
+Substantial release: a full logical review surfaced ~23 bugs in the state
+machine / auth / reconnect layers. All CRITICAL and HIGH-severity findings
+are fixed in this release. Plus the design system pivots from **Broadcast
+Living Room** to **Soft Parlor** after a 5-theme shotgun comparison.
+
+### 🔒 Security (CRITICAL)
+
+- **LAN admin takeover after HA restart is closed.** Admin session tokens
+  now persist to HA storage (`Store(..., "quizify_admin_token")`) and
+  survive restarts. The "first admin wins" rule only fires on fresh
+  installs where no token has ever been issued. On all subsequent restarts
+  the legitimate admin's stored token validates immediately, and any other
+  LAN client trying `?role=admin` is rejected. A bootstrap warning is
+  logged prominently on first-claim so the host knows if someone else
+  beat them to it.
+- **Dashboard disconnect no longer races the admin timeout.** The
+  `_handle_disconnect` OR clause that let any non-player disconnect
+  trigger `schedule_admin_timeout()` has been removed. Only real admin
+  connection closures now start the grace timer.
+
+### 🔒 Security (HIGH)
+
+- **Name-collision impersonation during gameplay closed.** A disconnected
+  player's slot can now ONLY be reclaimed via the token-based
+  `reconnect` message during gameplay phases. Reconnection by re-typing
+  the name is still allowed in LOBBY (where scores are zero and
+  impersonation is cosmetic). Previously, during an active round, a
+  malicious LAN user could type a disconnected player's name and inherit
+  their score.
+- **Player session tokens now have a 24-hour TTL** and are wiped entirely
+  on `reset_to_lobby`, preventing cross-game token reuse.
+- **Name validation now NFKC-normalizes and strips all control / format
+  characters** (U+2000–U+206F). Zero-width joiners, RTL overrides, and
+  other invisible-character spoofing vectors are removed before the name
+  is registered.
+
+### 🎮 Gameplay correctness (HIGH)
+
+- **Round-summary broadcast no longer fires twice** on the timer-expiry /
+  last-submit race. The state machine's `_fire_broadcast("round_evaluated")`
+  is now the single authoritative path. Players no longer see the reveal
+  flash or leaderboard re-animate.
+- **Timer broadcast is now authoritative per-player.** Each player's
+  `QuestionTimer` is broadcast to them directly (every 500 ms), so
+  time-boost and freeze power-ups are now visible on the affected
+  player's UI. Before, the broadcast used a single shared
+  `asyncio.sleep(1.0)` counter that ignored per-player deltas — power-ups
+  were silently dead.
+- **Admin self-join race fixed.** Clicking "Starten & Beitreten" no
+  longer navigates away before the server receives `start_game`. The
+  redirect now waits for the server's phase-change broadcast (with a 3 s
+  safety fallback) so the game always starts.
+- **Admin-as-player authority now wired correctly.** When the admin
+  self-joins, `PlayerSession.is_admin` is set to True so the
+  `_is_authorized_admin` fallback works. Before, the check was dead code
+  and admin controls on the player page silently failed.
+- **`reset_to_lobby` now cleans up all pending tasks** — previously,
+  `schedule_player_removal` tasks from the previous game could fire
+  mid-new-lobby and silently drop players. `conn.cleanup()` is called
+  first, then all player tokens wiped.
+- **`start_game` now requires at least one connected player.** Prevents
+  the phantom-rounds bug where an admin double-click before self-join
+  lands starts a 0-player game that runs N rounds of empty countdowns.
+
+### 🎮 Gameplay correctness (MEDIUM)
+
+- **Late joiners no longer prevent `all_submitted()` early-advance.**
+  Players who join mid-round are excluded from the all-submitted check
+  so an early-arriving player doesn't force the round to run its full
+  duration.
+- **Mid-round reconnect preserves submitted state.** If a player
+  reconnects after already submitting, their client now correctly locks
+  the answer buttons (new `lockSubmitted()` API) based on the server's
+  leaderboard state, instead of resetting to a "tap an answer" UI that
+  then errors with `ALREADY_SUBMITTED`.
+- **`broadcast_to_admins` now excludes admin-as-player by `is_admin`
+  flag, not stale WebSocket identity.** Previously, after an admin-
+  as-player reconnect, a stale `ws` reference let the admin see the
+  correct-answer spoiler message meant for pure-admin connections.
+
+### 🐛 UX (MEDIUM)
+
+- **Admin buttons disable on click** (`nextQuestionBtn`, `continueBtn`,
+  `adminJoinBtn`) to prevent double-advance "Cannot advance now" toasts
+  from racing the state transition. Re-enabled on next phase message or
+  after a 1.5 s safety timeout.
+- **Server error codes are translated to user-friendly German** strings
+  on both admin and player clients. Raw codes like
+  `"INVALID_ACTION Admin only"` no longer leak as opaque toast text.
+- **Malformed WebSocket JSON now returns a structured error** to the
+  client instead of being silently swallowed. Players get an explicit
+  "Malformed message" toast if their client sends garbage; the submit
+  isn't lost in silence.
+- **Rate-limited WebSocket messages now get an explicit error toast**
+  and the first message counts toward the window, closing the
+  rapid-first-message DoS vector.
+
+### ⭐ Visual — Soft Parlor redesign
+
+Complete visual pivot from Broadcast Living Room to **Soft Parlor**.
+
+- **New palette** — warm cream paper `#FAF6EC` background, coral
+  `#E88A7F` primary accent, sage `#7FA897` / sky `#7FA8C4` / sun `#E8C47F`
+  secondary accents at equal muted saturation. Warm ink `#2A2820` text
+  (not pure black). Dark mode defers to the light-primary design.
+- **New typography** — Cabinet Grotesk (display, via Fontshare) +
+  DM Sans (body) + JetBrains Mono (numeric). Unbounded and Instrument
+  Sans are out.
+- **Decoration is soft glows, not CRT scanlines.** Two radial gradients
+  on the page background (coral top-right, sky bottom-left) at 6–10 %
+  opacity. All CRT / scanline / phosphor decoration from Broadcast
+  Living Room is gone.
+- **Soft drop shadows and rounded 10–14 px corners** — Soft Parlor
+  rejects bubble-rounded (20 px+) as hard as Broadcast Living Room did.
+- **CTAs are sentence-case, not ALL CAPS.** Soft Parlor uses quieter
+  typography; the warmth is in the palette.
+- **No more confetti on finale** (carried forward — third time this
+  preference has been confirmed across three design directions).
+- New [DESIGN.md](./DESIGN.md) with the full Soft Parlor system.
+
+### 🧹 Internal
+
+- Cache-busters bumped to `?v=1.1.0-beta.4`, service worker
+  `CACHE_VERSION` to `quizify-v1.1.0-beta.4`.
+- `ConnectionManager` gained `async_load_admin_token()` / persistent
+  HA storage for admin token, `clear_admin_token()`, `clear_all_player_tokens()`.
+- `QuizifyGameState.get_player_timer(name)` exposed for the per-player
+  timer broadcast.
+- `PlayerRegistry._sanitize_name()` helper centralizes name validation.
+
+### ⚠️ Upgrade notes
+
+- **The first admin connection after installing beta.4 will "bootstrap"
+  the new persisted token**, logged as `ADMIN BOOTSTRAP: granting admin
+  to first connection`. From that point forward, only clients with the
+  stored token can claim admin, even after HA restarts. If you see a
+  bootstrap log entry and it wasn't you, someone on your LAN beat you
+  to it — remove the integration and reinstall to reset.
+- **Beta.1 through beta.3 users:** your stored admin token in the
+  browser's sessionStorage is still valid; reconnect works seamlessly.
+- Hard-reload admin / player tabs after upgrade so the service worker
+  picks up the new bundle.
+
+---
+
 ## [1.1.0-beta.3] — 2026-04-24
 
 Critical hotfix. **Please upgrade from beta.1 or beta.2 immediately** —

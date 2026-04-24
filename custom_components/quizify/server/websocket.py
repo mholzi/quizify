@@ -67,12 +67,18 @@ class QuizifyWebSocketHandler:
         is_dashboard = role == "dashboard"
         admin_token = request.query.get("token")
 
-        # Admin role grant rules (#140 fix):
-        # 1. Valid session token in ?token= → always grant (reconnect path)
-        # 2. No token yet issued (fresh HA restart / first ever admin) → grant once
-        # 3. Token already issued but no matching token provided → reject
-        # This prevents any LAN user from self-declaring admin after the first
-        # host has connected and received a session token.
+        # Admin role grant rules (#140 fix + #1 + #2 in logical review):
+        # 1. Valid session token in ?token= \u2192 always grant (reconnect path).
+        # 2. No token persisted to HA storage (fresh install / first-ever
+        #    admin) \u2192 grant once as bootstrap. Thereafter the token is
+        #    persisted via HA storage, survives restarts, and this branch
+        #    never fires again on this HA instance (close the LAN
+        #    takeover window that previously reopened on every restart).
+        # 3. Token exists but no matching token provided \u2192 reject.
+        #
+        # Ensure the persisted token is loaded before evaluating rules.
+        # async_load_admin_token() is idempotent and cheap after first call.
+        await self._conn.async_load_admin_token()
         is_admin = False
         if role == "admin":
             existing_token = self._conn._admin_session_token
@@ -80,9 +86,16 @@ class QuizifyWebSocketHandler:
                 is_admin = True
                 _LOGGER.info("Admin reconnected with valid session token")
             elif not existing_token:
-                # No token issued yet — this is the first admin connection
+                # Bootstrap: no token has ever been issued on this HA
+                # instance. Grant once and persist so this branch is closed
+                # permanently (until admin is explicitly reset).
                 is_admin = True
-                _LOGGER.info("Admin connected (no token issued yet — first connection)")
+                _LOGGER.warning(
+                    "ADMIN BOOTSTRAP: granting admin to first connection "
+                    "(ip=%s). Future restarts will require the persisted "
+                    "token. If this was NOT you, reset the integration.",
+                    request.remote,
+                )
             else:
                 _LOGGER.warning(
                     "Admin connection attempt without valid token rejected (ip=%s)",
@@ -100,7 +113,8 @@ class QuizifyWebSocketHandler:
         try:
             async for msg in ws:
                 if msg.type == WSMsgType.TEXT:
-                    # Rate limiting
+                    # Rate limiting: record timestamp BEFORE processing so the
+                    # first message is also counted (#21 in logical review).
                     ws_id = id(ws)
                     now = asyncio.get_event_loop().time()
                     timestamps = self._message_timestamps.setdefault(ws_id, [])
@@ -108,12 +122,27 @@ class QuizifyWebSocketHandler:
                     self._message_timestamps[ws_id] = [t for t in timestamps if now - t < self._RATE_LIMIT_WINDOW]
                     if len(self._message_timestamps[ws_id]) >= self._RATE_LIMIT_MAX:
                         _LOGGER.warning("Rate limit exceeded for WebSocket %s", ws_id)
-                        continue  # skip this message silently
+                        await self._conn.send_error(
+                            ws, ERR_INVALID_ACTION, "Rate limit exceeded"
+                        )
+                        continue
                     self._message_timestamps[ws_id].append(now)
+                    # Parse JSON separately so we can distinguish parse errors
+                    # from handler errors (#20 in logical review).
                     try:
-                        await self._handle_message(ws, msg.json(), is_admin)
+                        data = msg.json()
+                    except ValueError:
+                        await self._conn.send_error(
+                            ws, ERR_INVALID_ACTION, "Malformed message (invalid JSON)"
+                        )
+                        continue
+                    try:
+                        await self._handle_message(ws, data, is_admin)
                     except Exception as err:  # noqa: BLE001
                         _LOGGER.warning("Failed to handle WebSocket message: %s", err)
+                        await self._conn.send_error(
+                            ws, ERR_INVALID_ACTION, "Server error processing message"
+                        )
                 elif msg.type == WSMsgType.ERROR:
                     _LOGGER.error("WebSocket error: %s", ws.exception())
         finally:
@@ -247,9 +276,16 @@ class QuizifyWebSocketHandler:
             # Generate session token for reconnect
             session_token = self._conn.create_session_token(name)
 
+            # Admin-as-player: if this WebSocket is in the admin set, mark
+            # the player as admin so _is_authorized_admin() recognizes them
+            # after they self-join (#6 in logical review). Without this,
+            # the admin-as-player fallback check is dead code.
+            player_obj = game_state.get_player(name)
+            if player_obj and self._conn.is_admin_connection(ws):
+                player_obj.is_admin = True
+
             # Send join confirmation with session token and assigned color
             powerup = game_state.get_player_powerup(name)
-            player_obj = game_state.get_player(name)
             await self._conn._safe_send(ws, {
                 "type": "joined",
                 "player_id": name,
@@ -376,10 +412,10 @@ class QuizifyWebSocketHandler:
                 "new_streak": result.new_streak,
                 "new_total": result.new_total,
             })
-
-            # If round was auto-evaluated (all submitted), broadcast summary
-            if game_state.phase == GamePhase.ANSWER_REVEAL:
-                await self._broadcast_round_summary(game_state)
+            # NB: round-summary broadcast is fired exclusively by
+            # state._fire_broadcast("round_evaluated") \u2192 broadcast_state().
+            # Do NOT broadcast here \u2014 that would double-fire when the timer
+            # path races with all-submitted (#3 in logical review).
         elif isinstance(result, str):
             error_messages = {
                 ERR_ALREADY_SUBMITTED: "Bereits geantwortet",
@@ -451,6 +487,20 @@ class QuizifyWebSocketHandler:
             await self._conn.send_error(ws, ERR_GAME_ALREADY_STARTED, "Game already running")
             return
 
+        # Require at least one connected player (#9 in logical review).
+        # Without this, an admin double-click before their self-join lands
+        # could start a zero-player game that runs all N rounds as phantom.
+        from custom_components.quizify.const import MIN_PLAYERS  # noqa: PLC0415
+        connected_players = [
+            p for p in game_state.get_players() if p.connected
+        ]
+        if len(connected_players) < 1:
+            await self._conn.send_error(
+                ws, ERR_INVALID_ACTION,
+                "Mindestens ein Spieler muss beigetreten sein",
+            )
+            return
+
         raw_category = data.get("category")
         difficulty = data.get("difficulty")
         num_rounds = data.get("num_rounds", 10)
@@ -512,8 +562,19 @@ class QuizifyWebSocketHandler:
     async def _handle_reset_game(
         self, ws: web.WebSocketResponse, game_state: QuizifyGameState
     ) -> None:
-        """Handle admin reset_game command (return to lobby)."""
+        """Handle admin reset_game command (return to lobby).
+
+        Also clears all pending per-player removal tasks and all player
+        session tokens, so the new lobby starts clean (#8 + #13 in
+        logical review).
+        """
         self._cancel_timer_tick()
+        # Cancel any pending admin-disconnect timer and stale player-removal
+        # tasks from the finished game.
+        await self._conn.cleanup()
+        # Wipe player session tokens to prevent cross-game reuse.
+        self._conn.clear_all_player_tokens()
+
         game_state.reset_to_lobby()
 
         await self._conn.broadcast({"type": "game_reset"})
@@ -593,25 +654,71 @@ class QuizifyWebSocketHandler:
     # ------------------------------------------------------------------
 
     def _start_timer_tick(self, game_state: QuizifyGameState) -> None:
-        """Start async task that sends timer_tick every second."""
+        """Start async task that sends timer_tick every second.
+
+        Reads authoritative remaining time from each player's QuestionTimer
+        instead of a local countdown, so time-boost and freeze power-ups are
+        reflected in the broadcast (#4 in logical review). Targeted ticks are
+        sent per player so each sees their own modified remaining time.
+        """
         self._cancel_timer_tick()
 
         async def tick_loop() -> None:
             try:
-                duration = game_state.round_duration
-                remaining = duration
-                while remaining > 0 and game_state.phase == GamePhase.QUESTION_ACTIVE:
-                    await self._conn.broadcast({"type": "timer_tick", "remaining": round(remaining, 1)})
-                    await asyncio.sleep(1.0)
-                    remaining -= 1.0
+                while game_state.phase == GamePhase.QUESTION_ACTIVE:
+                    players = game_state.get_players()
+                    # Send each player their authoritative remaining time.
+                    for p in players:
+                        if not p.connected:
+                            continue
+                        pt = game_state.get_player_timer(p.name)
+                        if pt is None:
+                            continue
+                        remaining = max(0.0, pt.get_remaining())
+                        await self._conn._safe_send(p.ws, {
+                            "type": "timer_tick",
+                            "remaining": round(remaining, 1),
+                        })
+                    # Also broadcast the minimum remaining to dashboards/admins
+                    # so the TV view shows a consistent countdown.
+                    min_remaining = 0.0
+                    if players:
+                        remainings = [
+                            max(0.0, game_state.get_player_timer(p.name).get_remaining())
+                            for p in players
+                            if game_state.get_player_timer(p.name) is not None
+                        ]
+                        if remainings:
+                            min_remaining = min(remainings)
+                    # Broadcast to pure-admin + dashboards
+                    for ws in list(self._conn._admin_connections):
+                        if not ws.closed and not any(p.ws is ws for p in players):
+                            await self._conn._safe_send(ws, {
+                                "type": "timer_tick",
+                                "remaining": round(min_remaining, 1),
+                            })
+                    for ws in list(self._conn._dashboard_connections):
+                        if not ws.closed:
+                            await self._conn._safe_send(ws, {
+                                "type": "timer_tick",
+                                "remaining": round(min_remaining, 1),
+                            })
+                    await asyncio.sleep(0.5)
 
-                # Timer expired
+                    # Stop if everyone's timer hit zero and phase is still active
+                    if players and all(
+                        (game_state.get_player_timer(p.name) is None
+                         or game_state.get_player_timer(p.name).is_expired())
+                        for p in players
+                    ):
+                        break
+
+                # Timer expired globally
                 if game_state.phase == GamePhase.QUESTION_ACTIVE:
-                    await self._conn.broadcast({"type": "timer_tick", "remaining": 0})
-                    # Auto-evaluate round
+                    # Auto-evaluate round. The state machine's
+                    # _fire_broadcast("round_evaluated") handles the summary
+                    # broadcast \u2014 do NOT broadcast here (#3 in review).
                     game_state.evaluate_round()
-                    if game_state.phase == GamePhase.ANSWER_REVEAL:
-                        await self._broadcast_round_summary(game_state)
             except asyncio.CancelledError:
                 pass
 
@@ -704,10 +811,10 @@ class QuizifyWebSocketHandler:
         if not game_state:
             return
 
-        # Handle admin disconnect — keep game alive for grace period
-        if self._conn.is_admin_connection(ws) or (
-            not game_state.get_player_by_ws(ws) and self._conn._admin_session_token
-        ):
+        # Handle admin disconnect — keep game alive for grace period.
+        # Strictly gated on real admin connection (was: OR clause allowed
+        # dashboard disconnects to trigger the timeout, see #2 in review).
+        if self._conn.is_admin_connection(ws):
             if not self._conn._admin_connections:
                 _LOGGER.info(
                     "Admin disconnected, keeping game alive for %ds",

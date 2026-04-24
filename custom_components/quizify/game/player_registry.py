@@ -3,6 +3,7 @@
 from __future__ import annotations
 
 import logging
+import unicodedata
 from typing import TYPE_CHECKING, Any
 
 from ..const import (
@@ -21,6 +22,31 @@ if TYPE_CHECKING:
 from .player import PlayerSession, PLAYER_COLORS
 
 _LOGGER = logging.getLogger(__name__)
+
+
+def _sanitize_name(raw: str) -> str:
+    """Normalize and strip unsafe characters from a player name.
+
+    Defends against impersonation via:
+    - Unicode case-folding mismatches ("Alıce" vs "Alice")
+    - Right-to-left override / zero-width characters that render
+      identical but compare different (\u202e, \u200b, etc.)
+    - Control characters
+    - Trailing/leading whitespace
+
+    (#15 in logical review.)
+    """
+    # NFKC normalizes compatibility-equivalent characters.
+    n = unicodedata.normalize("NFKC", raw or "").strip()
+    # Strip formatting / invisible category Cf characters (RTL overrides,
+    # zero-width joiners, etc.) and all other control chars (Cc).
+    n = "".join(
+        ch for ch in n
+        if unicodedata.category(ch) not in ("Cc", "Cf", "Cs", "Co", "Cn")
+    )
+    # Collapse consecutive whitespace to a single space.
+    n = " ".join(n.split())
+    return n
 
 
 class PlayerRegistry:
@@ -48,8 +74,8 @@ class PlayerRegistry:
         Returns:
             (success, error_code) - error_code is None on success
         """
-        # Validate name
-        name = name.strip()
+        # Validate + sanitize name (Unicode NFKC, strip control/format chars).
+        name = _sanitize_name(name)
         if not name or len(name) < MIN_NAME_LENGTH:
             return False, ERR_NAME_INVALID
         if len(name) > MAX_NAME_LENGTH:
@@ -59,13 +85,26 @@ class PlayerRegistry:
         if phase_value == "END":
             return False, ERR_GAME_ENDED
 
-        # Check for reconnection - case-insensitive match
+        # Check for reconnection - case-insensitive match.
+        #
+        # Security (#7 in logical review): during gameplay phases, a
+        # disconnected player's slot can ONLY be reclaimed via the
+        # session-token-based `reconnect` message, NEVER by re-typing the
+        # name in the join form. Otherwise an attacker on the same LAN
+        # could impersonate a disconnected player and inherit their score
+        # by guessing their name.
+        #
+        # In LOBBY (pre-game) phase, name-based reconnect is still allowed
+        # because scores are all zero \u2014 impersonation is cosmetic, and the
+        # UX win of "refresh the page, type the same name" is meaningful.
         for existing_name, existing_player in self.players.items():
             if existing_name.lower() == name.lower():
                 if not existing_player.connected:
+                    if phase_value != "LOBBY":
+                        return False, ERR_NAME_TAKEN
                     existing_player.ws = ws
                     existing_player.connected = True
-                    _LOGGER.info("Player reconnected: %s", existing_name)
+                    _LOGGER.info("Player reconnected by name (lobby): %s", existing_name)
                     return True, None
                 return False, ERR_NAME_TAKEN
 
@@ -144,11 +183,20 @@ class PlayerRegistry:
         ]
 
     def all_submitted(self) -> bool:
-        """Check if all connected players have submitted their answer."""
-        connected_players = [p for p in self.players.values() if p.connected]
-        if not connected_players:
+        """Check if all connected players have submitted their answer.
+
+        Late-joiners (who entered the game mid-round) are excluded from this
+        check \u2014 otherwise a new player arriving after most answers are in
+        would force the round to run the full timer duration even though all
+        the actual participants are done (#11 in logical review).
+        """
+        participants = [
+            p for p in self.players.values()
+            if p.connected and not p.joined_late
+        ]
+        if not participants:
             return False
-        return all(p.submitted for p in connected_players)
+        return all(p.submitted for p in participants)
 
     def get_average_score(self) -> int:
         """Calculate average score of all current players."""

@@ -6,17 +6,19 @@
     <title data-i18n="launcher.title">Quizify</title>
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Unbounded:wght@400;700;900&family=Instrument+Sans:wght@400;500;600&family=JetBrains+Mono:wght@400;500;700&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=DM+Sans:ital,opsz,wght@0,9..40,400;0,9..40,500;0,9..40,600;0,9..40,700;1,9..40,400&family=JetBrains+Mono:wght@400;500;700&display=swap" rel="stylesheet">
+    <link rel="preconnect" href="https://api.fontshare.com" crossorigin>
+    <link href="https://api.fontshare.com/v2/css?f[]=cabinet-grotesk@500,700,800,900&display=swap" rel="stylesheet">
     <style>
         :root {
-            /* Broadcast Living Room launcher tokens */
-            --color-bg-primary: #0B1739;
-            --color-accent-primary: #F4C430;
-            --color-accent-secondary: #F4C430;
-            --color-text-primary: #F4EBCF;
-            --color-text-muted: #8FA0C6;
-            --color-surface-dark: #142148;
-            --color-border-neon: #21305E;
+            /* Soft Parlor launcher tokens */
+            --color-bg-primary: #FAF6EC;
+            --color-accent-primary: #E88A7F;
+            --color-accent-secondary: #7FA897;
+            --color-text-primary: #2A2820;
+            --color-text-muted: #6E6A5C;
+            --color-surface-dark: #FFFFFF;
+            --color-border-neon: #E5DFCF;
         }
 
         * {
@@ -26,14 +28,11 @@
         }
 
         body {
-            font-family: 'Instrument Sans', system-ui, -apple-system, sans-serif;
+            font-family: 'DM Sans', system-ui, -apple-system, sans-serif;
             background: var(--color-bg-primary);
             background-image:
-                linear-gradient(var(--color-bg-primary), var(--color-bg-primary)),
-                repeating-linear-gradient(0deg,
-                    rgba(255, 255, 255, 0.03) 0, rgba(255, 255, 255, 0.03) 1px,
-                    transparent 1px, transparent 3px);
-            background-blend-mode: overlay;
+                radial-gradient(ellipse at 85% 15%, rgba(232, 138, 127, 0.10) 0%, transparent 55%),
+                radial-gradient(ellipse at 15% 85%, rgba(127, 168, 196, 0.08) 0%, transparent 55%);
             color: var(--color-text-primary);
             min-height: 100vh;
             display: flex;
@@ -45,9 +44,9 @@
         }
 
         .logo {
-            font-family: 'Unbounded', system-ui, sans-serif;
+            font-family: 'Cabinet Grotesk', system-ui, sans-serif;
             font-size: 48px;
-            font-weight: 900;
+            font-weight: 800;
             letter-spacing: -0.02em;
             margin-bottom: 20px;
             line-height: 1;
@@ -75,23 +74,23 @@
             gap: 10px;
             padding: 16px 36px;
             background: var(--color-accent-primary);
-            color: var(--color-bg-primary);
+            color: #FFFFFF;
             text-decoration: none;
             border-radius: 10px;
-            font-family: 'Unbounded', system-ui, sans-serif;
+            font-family: 'Cabinet Grotesk', system-ui, sans-serif;
             font-size: 15px;
             font-weight: 700;
-            text-transform: uppercase;
-            letter-spacing: 0.06em;
+            text-transform: none;
+            letter-spacing: 0.02em;
             transition: transform 120ms ease-out, box-shadow 120ms ease-out;
             cursor: pointer;
             border: none;
-            box-shadow: 0 0 32px rgba(244, 196, 48, 0.35);
+            box-shadow: 0 4px 16px rgba(232, 138, 127, 0.32);
         }
 
         .btn:hover {
             transform: translateY(-1px);
-            box-shadow: 0 0 40px rgba(244, 196, 48, 0.5);
+            box-shadow: 0 6px 22px rgba(232, 138, 127, 0.42);
         }
 
         .btn:active {
@@ -108,7 +107,7 @@
             font-size: 12px;
             color: var(--color-text-muted);
             min-height: 20px;
-            letter-spacing: 0.06em;
+            letter-spacing: 0.02em;
         }
 
         .status {
@@ -118,7 +117,7 @@
             color: var(--color-text-muted);
             opacity: 0.5;
             letter-spacing: 0.12em;
-            text-transform: uppercase;
+            text-transform: none;
         }
 
         @keyframes pulse {

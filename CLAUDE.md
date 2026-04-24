@@ -6,21 +6,22 @@ Multiplayer trivia quiz game for Home Assistant. Players scan a QR code, answer 
 
 **Always read [DESIGN.md](./DESIGN.md) before making any visual or UI decisions.**
 
-All typography, color, spacing, motion, layout, and aesthetic direction is defined there. The direction is *"Broadcast Living Room"* — the posture of a televised game show delivered at home scale. Memorable-thing anchor: *"It felt like a real game show on my TV."*
+All typography, color, spacing, motion, layout, and aesthetic direction is defined there. The direction is *"Soft Parlor"* — warm paper, coral + sage + sky + sun accents, family-board-game posture. Memorable-thing anchor: *"Cozy and friendly — like a family board game."*
 
 Key constants (do not deviate without explicit user approval):
-- Primary accent: broadcast gold `#F4C430` (TV-bright trophy color — nothing else in the category uses this saturation)
-- Background: studio navy `#0B1739` (deep saturated royal blue — category table stakes for game shows)
-- Display type: Unbounded (rounded-geometric heavy sans) — never Fraunces, never Inter, never Space Grotesk
-- Body/UI type: Instrument Sans — never Inter, Roboto, Open Sans, or system-ui
+- Primary accent: warm coral `#E88A7F` (hospitable, non-gendered, differentiated from category)
+- Secondary accents: sage `#7FA897`, sky `#7FA8C4`, sun `#E8C47F` — used as a cohesive palette at equal muted saturation
+- Background: cream paper `#FAF6EC` (NOT pure white, NOT dark — Soft Parlor is light-primary)
+- Display type: Cabinet Grotesk (warm geometric, Fontshare) — never Unbounded, never Fraunces, never Inter
+- Body/UI type: DM Sans — never Inter, Roboto, Open Sans, Poppins, system-ui
 - Mono type: JetBrains Mono — for all scores, timers, metadata
-- Primary text: warm parchment `#F4EBCF`, not pure white
-- Dark is the primary mode (light mode available for admin daytime use)
-- Never use: purple gradients, cartoon mascots, confetti on finale, bubbly 16px+ radii, neon saturated colors, pure white text
+- Primary text: warm ink `#2A2820`, NOT pure black
+- Light is the primary mode (dark mode available for late-night play)
+- Never use: dark backgrounds on primary surfaces, neon colors, confetti, bubbly 20px+ radii, cartoon mascots, gradient CTAs, CRT/scanline/phosphor decoration
 
 In QA / design-review mode, flag any code that doesn't match DESIGN.md. In pre-landing review, call out typography or color deviations explicitly.
 
-**Note:** A previous direction (Editorial Game Show — Fraunces + amber-brass `#E8B047` + cream `#F5EEDC`) was replaced on 2026-04-24. If you see those tokens in existing code, they represent drift to fix, not intent to preserve.
+**Note:** Previous directions (Editorial Game Show: Fraunces + amber-brass; Broadcast Living Room: Unbounded + studio navy + broadcast gold) were both superseded on 2026-04-24 by Soft Parlor. If you see any of those tokens in existing code, they represent drift to fix, not intent to preserve.
 
 ## Skill routing
 

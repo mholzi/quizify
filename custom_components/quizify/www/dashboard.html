@@ -5,43 +5,45 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
     <title>Quizify — Dashboard</title>
 
-    <!-- Broadcast Living Room fonts: Unbounded (display) + Instrument Sans (body) + JetBrains Mono (numeric) -->
+    <!-- Soft Parlor fonts: Cabinet Grotesk (display) + DM Sans (body) + JetBrains Mono (numeric) -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Unbounded:wght@400;500;600;700;800;900&family=Instrument+Sans:ital,wght@0,400;0,500;0,600;0,700;1,400&family=JetBrains+Mono:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=DM+Sans:ital,opsz,wght@0,9..40,400;0,9..40,500;0,9..40,600;0,9..40,700;1,9..40,400&family=JetBrains+Mono:wght@400;500;700&display=swap" rel="stylesheet">
+    <link rel="preconnect" href="https://api.fontshare.com" crossorigin>
+    <link href="https://api.fontshare.com/v2/css?f[]=cabinet-grotesk@500,700,800,900&display=swap" rel="stylesheet">
 
     <link rel="stylesheet" href="/quizify/static/css/styles.css">
     <link rel="icon" href="/quizify/static/img/icon-256.png" type="image/png">
     <link rel="manifest" href="/quizify/static/site.webmanifest">
 
-    <!-- Broadcast Living Room: no confetti. A single spotlight on the champion IS the effect. See DESIGN.md. -->
+    <!-- Soft Parlor: no confetti. A gentle champion reveal with warm light IS the effect. See DESIGN.md. -->
 
     <style>
         /* ==========================================
-           Dashboard — TV Host (Broadcast Living Room)
-           The signature surface. Deep studio navy,
-           broadcast gold, warm parchment. No confetti.
+           Dashboard — TV Host (Soft Parlor)
+           The signature surface. Cream paper, coral + sage accents,
+           warm ink. Soft shadows, rounded edges. No confetti.
            See DESIGN.md.
            ========================================== */
 
         :root {
             /* Broadcast Living Room tokens (duplicated here so dashboard is
                self-contained and survives if styles.css drifts). */
-            --dash-bg-primary: #0B1739;              /* studio navy */
-            --dash-accent-primary: #F4C430;          /* broadcast gold */
-            --dash-accent-secondary: #F4C430;        /* single accent — aliased */
-            --dash-surface-dark: #142148;            /* lifted card */
-            --dash-surface-2: #1B2A56;               /* modals, hover */
-            --dash-border-neon: #21305E;             /* hairline */
-            --dash-text-neon-muted: #8FA0C6;         /* cool blue-gray */
-            --dash-text-white: #F4EBCF;              /* warm parchment, NOT white */
-            --dash-success: #F4C430;                 /* correct = gold */
-            --dash-success-glow: rgba(244, 196, 48, 0.35);
-            --dash-error: #D65858;                   /* warm red */
-            --dash-warning: #E0AF1C;
-            --dash-gold: #F4C430;
-            --dash-silver: #8FA0C6;
-            --dash-bronze: #B2852F;
+            --dash-bg-primary: #FAF6EC;              /* cream paper */              /* studio navy */
+            --dash-accent-primary: #E88A7F;          /* warm coral */          /* broadcast gold */
+            --dash-accent-secondary: #7FA897;        /* muted sage */        /* single accent — aliased */
+            --dash-surface-dark: #FFFFFF;            /* lifted paper */            /* lifted card */
+            --dash-surface-2: #F3EEDF;               /* cream tint */               /* modals, hover */
+            --dash-border-neon: #E5DFCF;             /* warm hairline */             /* hairline */
+            --dash-text-neon-muted: #6E6A5C;         /* warm olive-gray */         /* cool blue-gray */
+            --dash-text-white: #2A2820;              /* dark ink on cream */              /* warm parchment, NOT white */
+            --dash-success: #7FA897;                 /* sage for correct */                 /* correct = gold */
+            --dash-success-glow: rgba(127, 168, 151, 0.35);
+            --dash-error: #D66A6A;                   /* warm red */
+            --dash-warning: #E8C47F;                 /* sun */
+            --dash-gold: #E8C47F;                    /* sun for podium 1st */
+            --dash-silver: #B8B2A0;                  /* warm silver */
+            --dash-bronze: #C99466;                  /* warm bronze */
         }
 
         * { box-sizing: border-box; margin: 0; padding: 0; }
@@ -50,16 +52,10 @@
             background: var(--dash-bg-primary);
             background-image:
                 linear-gradient(var(--dash-bg-primary), var(--dash-bg-primary)),
-                repeating-linear-gradient(
-                    0deg,
-                    rgba(255, 255, 255, 0.03) 0,
-                    rgba(255, 255, 255, 0.03) 1px,
-                    transparent 1px,
-                    transparent 3px
-                );
-            background-blend-mode: overlay;
+                radial-gradient(ellipse at 85% 15%, rgba(232, 138, 127, 0.08) 0%, transparent 55%);
+            background-blend-mode: normal;
             color: var(--dash-text-white);
-            font-family: 'Instrument Sans', system-ui, sans-serif;
+            font-family: 'DM Sans', system-ui, sans-serif;
             overflow: hidden;
             min-height: 100dvh;
         }
@@ -80,7 +76,7 @@
 
         /* ---- Wordmark ---- */
         .wordmark {
-            font-family: 'Unbounded', system-ui, sans-serif;
+            font-family: 'Cabinet Grotesk', system-ui, sans-serif;
             font-size: clamp(24px, 2.4vw, 34px);
             font-weight: 900;
             letter-spacing: -0.02em;
@@ -137,7 +133,7 @@
 
         .dashboard-timer-fill.critical {
             background: var(--dash-error);
-            box-shadow: 0 0 16px rgba(214, 88, 88, 0.45);
+            box-shadow: 0 0 16px rgba(214, 106, 106, 0.28);
             animation: pulse-bar 0.5s ease-in-out infinite alternate;
         }
 
@@ -180,7 +176,7 @@
         }
 
         .dashboard-no-game-title {
-            font-family: 'Unbounded', system-ui, sans-serif;
+            font-family: 'Cabinet Grotesk', system-ui, sans-serif;
             font-size: 1.5rem;
             font-weight: 700;
             color: var(--dash-text-white);
@@ -188,7 +184,7 @@
         }
 
         .dashboard-no-game-subtitle {
-            font-family: 'Instrument Sans', system-ui, sans-serif;
+            font-family: 'DM Sans', system-ui, sans-serif;
             font-size: 1rem;
             color: var(--dash-text-neon-muted);
         }
@@ -265,7 +261,7 @@
         }
 
         .dashboard-question {
-            font-family: 'Unbounded', system-ui, sans-serif;
+            font-family: 'Cabinet Grotesk', system-ui, sans-serif;
             font-size: clamp(32px, 4.2vw, 56px);
             font-weight: 700;
             line-height: 1.1;
@@ -290,7 +286,7 @@
             background: var(--dash-surface-dark);
             border: 1px solid var(--dash-border-neon);
             border-radius: 10px;
-            font-family: 'Instrument Sans', system-ui, sans-serif;
+            font-family: 'DM Sans', system-ui, sans-serif;
             font-size: clamp(16px, 1.8vw, 22px);
             font-weight: 500;
             color: var(--dash-text-white);
@@ -316,7 +312,7 @@
         /* Correct-answer reveal: gold glow sweep (320ms ease-out per DESIGN.md) */
         .dashboard-answer.correct {
             border-color: var(--dash-accent-primary);
-            background: linear-gradient(90deg, rgba(244, 196, 48, 0.14), rgba(244, 196, 48, 0.04));
+            background: linear-gradient(90deg, rgba(127, 168, 151, 0.14), rgba(232, 138, 127, 0.05));
             box-shadow: 0 0 40px var(--dash-success-glow);
             position: relative;
         }
@@ -343,7 +339,7 @@
             border: 1px solid var(--dash-border-neon);
             border-left: 3px solid var(--dash-accent-primary);
             border-radius: 10px;
-            font-family: 'Instrument Sans', system-ui, sans-serif;
+            font-family: 'DM Sans', system-ui, sans-serif;
             font-size: 1rem;
             line-height: 1.6;
             color: var(--dash-text-neon-muted);
@@ -407,7 +403,7 @@
             border-radius: 8px;
             background: var(--dash-surface-dark);
             border: 1px solid var(--dash-border-neon);
-            font-family: 'Instrument Sans', system-ui, sans-serif;
+            font-family: 'DM Sans', system-ui, sans-serif;
             font-size: 1rem;
             color: var(--dash-text-white);
             transition: border-color 120ms ease-out, background 120ms ease-out;
@@ -454,7 +450,7 @@
             font-weight: 500;
             color: var(--dash-accent-primary);
             padding: 2px 8px;
-            background: rgba(244, 196, 48, 0.10);
+            background: rgba(232, 138, 127, 0.10);
             border-radius: 4px;
             letter-spacing: 0.04em;
         }
@@ -502,7 +498,7 @@
         }
 
         .podium-title {
-            font-family: 'Unbounded', system-ui, sans-serif;
+            font-family: 'Cabinet Grotesk', system-ui, sans-serif;
             font-size: clamp(40px, 5vw, 72px);
             font-weight: 900;
             color: var(--dash-accent-primary);
@@ -532,7 +528,7 @@
         }
 
         .podium-name {
-            font-family: 'Instrument Sans', system-ui, sans-serif;
+            font-family: 'DM Sans', system-ui, sans-serif;
             font-size: 1.1rem;
             font-weight: 600;
             color: var(--dash-text-white);
@@ -557,7 +553,7 @@
             display: flex;
             align-items: center;
             justify-content: center;
-            font-family: 'Unbounded', system-ui, sans-serif;
+            font-family: 'Cabinet Grotesk', system-ui, sans-serif;
             font-size: 2rem;
             font-weight: 900;
             border-radius: 0;
@@ -649,14 +645,14 @@
         }
 
         .award-winner {
-            font-family: 'Instrument Sans', system-ui, sans-serif;
+            font-family: 'DM Sans', system-ui, sans-serif;
             font-size: 1.05rem;
             font-weight: 600;
             color: var(--dash-text-white);
         }
 
         .award-detail {
-            font-family: 'Instrument Sans', system-ui, sans-serif;
+            font-family: 'DM Sans', system-ui, sans-serif;
             font-size: 0.85rem;
             color: var(--dash-text-neon-muted);
         }
@@ -957,7 +953,7 @@
 
             renderAwards(msg.superlatives || []);
 
-            // Broadcast Living Room: no confetti. The dramatic pause IS the effect. See DESIGN.md.
+            // Soft Parlor: no confetti. The warm pause IS the effect. See DESIGN.md.
         }
 
         // ---- Renderers ----

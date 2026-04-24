@@ -623,6 +623,14 @@ class QuizifyGameState:
         """Public accessor for current round duration."""
         return self._round_duration
 
+    def get_player_timer(self, player_name: str):
+        """Return the authoritative QuestionTimer for a player, or None.
+
+        Exposed so the WebSocket handler can broadcast per-player remaining
+        time (so time-boost and freeze are visible on the player's UI, #4).
+        """
+        return self._timers.get(player_name)
+
     def get_player_powerup(self, player_name: str):
         """Get the power-up held by a player."""
         return self._powerup_manager.get_powerup(player_name)
