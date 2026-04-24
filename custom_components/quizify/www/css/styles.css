@@ -3516,13 +3516,13 @@ footer {
     color: var(--color-text-white);
 }
 
-.result-value.is-correct { color: #00b894; }
-.result-value.is-wrong   { color: #ff4757; }
+.result-value.is-correct { color: #F4C430; }
+.result-value.is-wrong   { color: #D65858; }
 .result-value.is-bonus   { color: #F4C430; }
-.result-value.is-streak  { color: #ffa502; }
+.result-value.is-streak  { color: #E0AF1C; }
 
 .streak-bonus-row .result-label {
-    color: #ffa502;
+    color: #E0AF1C;
     font-weight: 600;
 }
 
@@ -3891,7 +3891,7 @@ footer {
 }
 
 .dist-correct-icon {
-  color: #00b894;
+  color: #F4C430;
   font-weight: 900;
   font-size: 0.85rem;
   flex-shrink: 0;

@@ -412,7 +412,7 @@
         if (!state.playerName && els.joinBtn) {
             els.joinBtn.disabled = false;
             els.joinBtn.textContent = 'Join Game';
-            if (els.nameInput) els.nameInput.style.borderColor = '#ff4757';
+            if (els.nameInput) els.nameInput.style.borderColor = '#D65858';
         }
     }
 

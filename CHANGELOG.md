@@ -3,6 +3,40 @@
 All notable changes to Quizify are documented here. This project follows
 [Semantic Versioning](https://semver.org/).
 
+## [1.1.0-beta.2] — 2026-04-24
+
+Follow-up on beta.1 after auditing the live deployment. Six color-drift
+bugs where hardcoded JavaScript bypassed the design-system tokens.
+
+### 🐛 Fixes — color drift missed in beta.1
+
+- **Connection status dot** (top-right of admin + player headers) rendered
+  teal-green `#00b894`. Fixed in `admin.js` and `player-utils.js` to use
+  broadcast gold (connected), dim gold (reconnecting), warm red (disconnected),
+  each with matching rim-light glow.
+- **Answer-distribution chart** showed the correct-answer bar in teal-green
+  instead of broadcast gold. Fixed in `admin.js`.
+- **Residual teal / red / orange** in `styles.css` (`.result-value.is-correct`,
+  `.result-value.is-wrong`, `.result-value.is-streak`, `.dist-correct-icon`, etc.)
+  all mapped to broadcast palette tokens.
+- **Question-pack update banner** rendered in a SaaS-blue scheme
+  (`#1e3a5f` background with `#3b82f6` border, `#93c5fd` heading). Rewritten
+  as a navy surface card with a 3px gold left-accent and an Unbounded heading
+  in broadcast gold.
+- **Red validation borders** on name inputs (`#ff4757` fire-engine red) now
+  use warm red `#D65858` from the broadcast palette — matches the rest of
+  the error register.
+- **Inline `color:#a4a4b8`** on the admin setup hint text now uses
+  `var(--color-text-neon-muted)` so it follows the token.
+
+### 🧹 Internal
+
+- Cache-busters bumped to `?v=1.1.0-beta.2` so browsers pick up the fixed
+  CSS / JS on next load.
+- Service worker `CACHE_VERSION` bumped to `quizify-v1.1.0-beta.2`.
+
+---
+
 ## [1.1.0-beta.1] — 2026-04-24
 
 ### A note on this release
