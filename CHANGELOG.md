@@ -3,6 +3,30 @@
 All notable changes to Quizify are documented here. This project follows
 [Semantic Versioning](https://semver.org/).
 
+## [1.1.0-beta.8] — 2026-04-25
+
+The actual actual fix for admin-as-player. Beta.7 added is_admin to the
+serializer (correct), but the admin_token was never reaching the server
+because the client's URL-prefill code path didn't include it.
+
+### 🐛 The right code path this time
+
+- `?name=Markus` URL param set the input value but didn't set
+  `state.playerName`, so the auto-join path that included `admin_token`
+  never fired. Users had to click the Join Game button manually, and
+  `handleJoinClick()` didn't carry `admin_token` either. Two bugs
+  combined: an auto-join that didn't auto-fire, and a manual-join that
+  didn't authenticate.
+- Fixed both: URL prefill now also sets `state.playerName` (auto-join
+  fires), AND `handleJoinClick()` now reads the admin token from
+  sessionStorage and passes it in the join message.
+
+### 🧹 Internal
+
+- Cache-busters and SW `CACHE_VERSION` bumped to `1.1.0-beta.8`.
+
+---
+
 ## [1.1.0-beta.7] — 2026-04-25
 
 The actual root cause of admin-as-player. Beta.6 fixed the server-side

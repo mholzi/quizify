@@ -486,6 +486,18 @@
 
         if (state.ws && state.ws.readyState === WebSocket.OPEN) {
             var joinMsg = { name: result.name };
+            // Admin self-join: pass the persisted admin token so the server
+            // can promote this player to admin (Start Game, Skip, Next, End
+            // controls). Without this, admin-as-player never gets the
+            // is_admin flag set on the server side.
+            var isAdminSelfJoin = new URLSearchParams(location.search).get('admin') === 'true';
+            if (isAdminSelfJoin) {
+                var adminToken = sessionStorage.getItem('quizify_admin_session_token');
+                if (adminToken) {
+                    joinMsg.admin_token = adminToken;
+                    state.isAdmin = true;
+                }
+            }
             if (state.isAdmin) joinMsg.is_admin = true;
             send('join', joinMsg);
         }
@@ -605,6 +617,9 @@
         if (prefilledName && els.nameInput) {
             els.nameInput.value = prefilledName;
             els.joinBtn.disabled = false;
+            // Set state.playerName so the auto-join path fires on WS open
+            // (otherwise the user has to click the button manually).
+            state.playerName = prefilledName;
         }
 
         // Check if admin via URL param
