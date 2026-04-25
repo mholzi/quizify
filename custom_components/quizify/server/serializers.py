@@ -107,12 +107,19 @@ def serialize_leaderboard(players: list[PlayerSession]) -> list[dict[str, Any]]:
             "difficulty_multiplier": breakdown.get("difficulty_multiplier", 1.0),
             "double_points": breakdown.get("double_points", False),
             "color": p.color,
+            "is_admin": p.is_admin,
+            "submitted": p.submitted,
         })
     return result
 
 
 def serialize_player_list(players: list[PlayerSession]) -> list[dict[str, Any]]:
-    """Build player list for broadcast."""
+    """Build player list for broadcast.
+
+    NB: must include `is_admin` so the client can show admin controls
+    (Start Game button in the lobby, Skip/Next/End during gameplay).
+    Without it, admin-as-player can't drive the game from the player tab.
+    """
     return [
         {
             "name": p.name,
@@ -120,6 +127,7 @@ def serialize_player_list(players: list[PlayerSession]) -> list[dict[str, Any]]:
             "streak": p.streak,
             "connected": p.connected,
             "color": p.color,
+            "is_admin": p.is_admin,
         }
         for p in players
     ]

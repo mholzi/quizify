@@ -3,6 +3,28 @@
 All notable changes to Quizify are documented here. This project follows
 [Semantic Versioning](https://semver.org/).
 
+## [1.1.0-beta.7] — 2026-04-25
+
+The actual root cause of admin-as-player. Beta.6 fixed the server-side
+flag-setting (player.is_admin) but the bug was downstream in the
+serializer.
+
+### 🐛 The real fix
+
+- `serialize_player_list()` was stripping `is_admin` and `submitted` out
+  of the broadcast payload. Server set `player.is_admin = True`
+  correctly (per beta.6), but the `player_joined` broadcast never
+  included that field, so the client's `currentPlayer.is_admin` stayed
+  `undefined`, and `updateAdminControls()` kept the Start Game button
+  hidden. Now both serializers (`serialize_player_list` and
+  `serialize_leaderboard`) include `is_admin` and `submitted`.
+
+### 🧹 Internal
+
+- Cache-busters and SW `CACHE_VERSION` bumped to `1.1.0-beta.7`.
+
+---
+
 ## [1.1.0-beta.6] — 2026-04-25
 
 Three regressions caught during the live beta.5 game-flow test. All
