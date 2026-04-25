@@ -276,13 +276,29 @@ class QuizifyWebSocketHandler:
             # Generate session token for reconnect
             session_token = self._conn.create_session_token(name)
 
-            # Admin-as-player: if this WebSocket is in the admin set, mark
-            # the player as admin so _is_authorized_admin() recognizes them
-            # after they self-join (#6 in logical review). Without this,
-            # the admin-as-player fallback check is dead code.
+            # Admin-as-player: mark the player as admin if EITHER:
+            #   (a) this WebSocket itself is in the admin set (rare — happens
+            #       only if admin tab opened the player page in the same WS,
+            #       which it doesn't), OR
+            #   (b) the join message carries a valid admin_token (the player
+            #       tab passes the admin's persisted token after self-join
+            #       redirect from the admin tab).
+            # Without this, the admin-as-player Start Game button never
+            # appears in the player lobby (currentPlayer.is_admin stays
+            # false). Beta.4 only handled (a), missing the redirect path.
             player_obj = game_state.get_player(name)
-            if player_obj and self._conn.is_admin_connection(ws):
+            admin_token_in_join = data.get("admin_token", "")
+            is_admin_player = (
+                self._conn.is_admin_connection(ws)
+                or (admin_token_in_join
+                    and self._conn.validate_admin_token(admin_token_in_join))
+            )
+            if player_obj and is_admin_player:
                 player_obj.is_admin = True
+                # Also add this WS to the admin connections set so future
+                # admin-only actions from this tab (start_game, next_question)
+                # are authorized.
+                self._conn.add_to_admin_connections(ws)
 
             # Send join confirmation with session token and assigned color
             powerup = game_state.get_player_powerup(name)
@@ -482,23 +498,20 @@ class QuizifyWebSocketHandler:
     async def _handle_start_game(
         self, ws: web.WebSocketResponse, data: dict, game_state: QuizifyGameState
     ) -> None:
-        """Handle admin start_game command."""
+        """Handle admin start_game command.
+
+        NB: there is no MIN_PLAYERS check here. The admin-as-player flow in
+        admin.js sends `start_game` BEFORE the admin's player tab has joined
+        (the admin tab redirects to /quizify/player after firing start_game,
+        and the player join lands a moment later). A MIN_PLAYERS>=1 check
+        would block that flow entirely — my beta.4 fix did exactly that
+        and broke admin-as-player. The original review-era concern about
+        \"phantom rounds with zero players\" is self-correcting because the
+        admin's player tab joins within ~1s of the redirect; if it doesn't,
+        the round just runs no-answer which evaluates harmlessly.
+        """
         if game_state.phase != GamePhase.LOBBY:
             await self._conn.send_error(ws, ERR_GAME_ALREADY_STARTED, "Game already running")
-            return
-
-        # Require at least one connected player (#9 in logical review).
-        # Without this, an admin double-click before their self-join lands
-        # could start a zero-player game that runs all N rounds as phantom.
-        from custom_components.quizify.const import MIN_PLAYERS  # noqa: PLC0415
-        connected_players = [
-            p for p in game_state.get_players() if p.connected
-        ]
-        if len(connected_players) < 1:
-            await self._conn.send_error(
-                ws, ERR_INVALID_ACTION,
-                "Mindestens ein Spieler muss beigetreten sein",
-            )
             return
 
         raw_category = data.get("category")

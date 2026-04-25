@@ -3,6 +3,54 @@
 All notable changes to Quizify are documented here. This project follows
 [Semantic Versioning](https://semver.org/).
 
+## [1.1.0-beta.6] — 2026-04-25
+
+Three regressions caught during the live beta.5 game-flow test. All
+admin-as-player blockers; without these the admin can't actually play
+through a game.
+
+### 🐛 Critical regressions from beta.4
+
+- **`MIN_PLAYERS` check in `start_game` blocked the admin-as-player flow
+  entirely.** The check (added in beta.4 for the original "phantom rounds
+  with 0 players" concern) rejected every `start_game` because the
+  admin's player tab joins AFTER the redirect — so at the moment the
+  admin tab fires `start_game`, there are 0 connected players. With the
+  check active, the game stayed in LOBBY indefinitely. Removed the check
+  and added a long comment explaining why phantom-rounds isn't actually
+  a problem in the normal flow (the admin's player tab joins within
+  ~1 second of redirect; if it doesn't, the round just runs no-answer
+  and evaluates harmlessly).
+- **Admin-as-player `is_admin` flag was never set on the player session.**
+  The beta.4 fix keyed off `is_admin_connection(ws)`, but the player
+  WebSocket isn't admin-tagged — only the admin tab's WebSocket is, and
+  they're separate connections. Result: `currentPlayer.is_admin` stayed
+  `false`, the "Start Game" button never appeared in the lobby, and the
+  player view showed "Waiting for the host..." even though the current
+  player IS the host.
+
+  Fixed by passing the admin's persisted session token in the join
+  message: `player-core.js` now reads `quizify_admin_session_token` from
+  sessionStorage when `?admin=true` is in the URL and includes it as
+  `admin_token` in the join payload. Server validates the token and, if
+  valid, sets `player.is_admin = True` AND adds the player WS to the
+  admin connections set so subsequent admin actions from the player tab
+  (start_game, next_question, end_game) are authorized.
+
+### 🐛 UX
+
+- **Empty `lobby-difficulty-badge` pill** in player view. The HTML
+  element existed but no JavaScript ever wrote to it — it rendered as
+  a hollow coral-tinted pill next to the player count. Now populated by
+  `renderLobby()` with German labels: `🌱 Einfach` / `🎯 Mittel` /
+  `🔥 Schwer`. Hidden if no difficulty is broadcast.
+
+### 🧹 Internal
+
+- Cache-busters and SW `CACHE_VERSION` bumped to `1.1.0-beta.6`.
+
+---
+
 ## [1.1.0-beta.5] — 2026-04-25
 
 Soft Parlor finishing pass. Beta.4 shipped with the redesign in `styles.css`

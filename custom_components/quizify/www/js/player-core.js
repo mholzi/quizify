@@ -69,6 +69,17 @@
                     send('reconnect', { session_token: session.token, name: session.name });
                 } else if (state.playerName) {
                     var joinMsg = { name: state.playerName };
+                    // Admin self-join: pass the admin session token so the
+                    // server can mark this player as admin. Without this,
+                    // the admin's Start Game button never appears in the
+                    // lobby and admin-as-player can't drive the game.
+                    if (isAdminSelfJoin) {
+                        var adminToken = sessionStorage.getItem('quizify_admin_session_token');
+                        if (adminToken) {
+                            joinMsg.admin_token = adminToken;
+                            state.isAdmin = true;
+                        }
+                    }
                     if (state.isAdmin) joinMsg.is_admin = true;
                     send('join', joinMsg);
                 }

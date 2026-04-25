@@ -26,6 +26,28 @@
         var countBadgeEl = document.getElementById('player-count-badge');
         if (countBadgeEl) countBadgeEl.textContent = players.length;
 
+        // Difficulty badge — was rendering as an empty pill because no
+        // code wrote into it. Map server difficulty value to user-facing
+        // German label and show.
+        var diffBadgeEl = document.getElementById('lobby-difficulty-badge');
+        if (diffBadgeEl) {
+            var diffLabels = {
+                'easy': '🌱 Einfach',
+                'medium': '🎯 Mittel',
+                'hard': '🔥 Schwer',
+            };
+            var diff = data.difficulty || data.game_difficulty || '';
+            if (diff && diffLabels[diff]) {
+                diffBadgeEl.textContent = diffLabels[diff];
+                diffBadgeEl.classList.remove('hidden');
+            } else {
+                // No difficulty info yet — hide the empty pill instead of
+                // rendering a hollow placeholder.
+                diffBadgeEl.classList.add('hidden');
+                diffBadgeEl.textContent = '';
+            }
+        }
+
         // Players summary count
         var playersSummaryEl = document.getElementById('players-summary');
         if (playersSummaryEl) playersSummaryEl.textContent = players.length;
