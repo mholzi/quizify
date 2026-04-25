@@ -444,7 +444,7 @@ button, .btn {
 
 .input:focus, .name-input:focus {
     border-color: var(--color-accent-primary);
-    box-shadow: 0 0 0 3px rgba(244, 196, 48, 0.2);
+    box-shadow: 0 0 0 3px rgba(232, 138, 127, 0.2);
 }
 
 .input::placeholder, .name-input::placeholder {
@@ -555,7 +555,7 @@ button, .btn {
     font-size: 0.75rem;
     font-weight: 400;
     color: var(--color-accent-secondary);
-    background: rgba(244, 196, 48, 0.1);
+    background: rgba(232, 138, 127, 0.1);
     padding: 2px 8px;
     border-radius: var(--radius-sm);
 }
@@ -609,7 +609,7 @@ button, .btn {
 
 .chip.active,
 .chip.chip--active {
-    background: rgba(244, 196, 48, 0.2);
+    background: rgba(232, 138, 127, 0.2);
     border-color: var(--color-accent-secondary);
     color: var(--color-accent-secondary);
 }
@@ -707,7 +707,7 @@ button, .btn {
 }
 
 .toggle-compact input:checked + .toggle-switch-compact {
-    background: rgba(244, 196, 48, 0.3);
+    background: rgba(232, 138, 127, 0.3);
 }
 
 .toggle-compact input:checked + .toggle-switch-compact::after {
@@ -814,8 +814,8 @@ button, .btn {
     letter-spacing: 0.1em;
     margin-top: var(--space-sm);
     padding: 2px 10px;
-    background: rgba(244, 196, 48, 0.1);
-    border: 1px solid rgba(244, 196, 48, 0.3);
+    background: rgba(232, 138, 127, 0.1);
+    border: 1px solid rgba(232, 138, 127, 0.3);
     border-radius: var(--radius-full);
 }
 
@@ -853,7 +853,7 @@ button, .btn {
 
 .answer-btn:hover:not(:disabled) {
     border-color: var(--color-accent-primary);
-    background: rgba(244, 196, 48, 0.1);
+    background: rgba(232, 138, 127, 0.1);
 }
 
 .answer-btn:active:not(:disabled) {
@@ -881,7 +881,7 @@ button, .btn {
 /* Answer States */
 .answer-btn.selected {
     border-color: var(--color-accent-primary);
-    background: rgba(244, 196, 48, 0.15);
+    background: rgba(232, 138, 127, 0.15);
     box-shadow: var(--glow-primary);
 }
 
@@ -958,7 +958,7 @@ button, .btn {
     align-items: center;
     gap: var(--space-sm);
     padding: 10px 20px;
-    background: linear-gradient(135deg, rgba(244, 196, 48, 0.2), rgba(244, 196, 48, 0.2));
+    background: linear-gradient(135deg, rgba(232, 138, 127, 0.2), rgba(232, 138, 127, 0.2));
     border: 1px solid var(--color-accent-primary);
     border-radius: var(--radius-full);
     color: var(--color-accent-secondary);
@@ -980,8 +980,8 @@ button, .btn {
 }
 
 @keyframes powerup-glow {
-    from { box-shadow: 0 0 5px rgba(244, 196, 48, 0.4); }
-    to { box-shadow: 0 0 15px rgba(244, 196, 48, 0.4); }
+    from { box-shadow: 0 0 5px rgba(232, 138, 127, 0.4); }
+    to { box-shadow: 0 0 15px rgba(232, 138, 127, 0.4); }
 }
 
 /* ==========================================
@@ -1045,8 +1045,8 @@ button, .btn {
    ========================================== */
 
 .fun-fact-card {
-    background: linear-gradient(135deg, rgba(244, 196, 48, 0.1), rgba(244, 196, 48, 0.1));
-    border: 1px solid rgba(244, 196, 48, 0.3);
+    background: linear-gradient(135deg, rgba(232, 138, 127, 0.1), rgba(232, 138, 127, 0.1));
+    border: 1px solid rgba(232, 138, 127, 0.3);
     border-radius: var(--radius-lg);
     padding: var(--space-lg);
     margin-top: var(--space-lg);
@@ -1252,7 +1252,7 @@ button, .btn {
 .self-join-row input:focus {
     outline: none;
     border-color: var(--color-accent-primary);
-    box-shadow: 0 0 0 3px rgba(244, 196, 48, 0.2);
+    box-shadow: 0 0 0 3px rgba(232, 138, 127, 0.2);
 }
 
 .self-join-row input::placeholder {
@@ -1851,7 +1851,7 @@ button, .btn {
 .modal-content .name-input:focus,
 .modal-content input[type="text"]:focus {
     border-color: var(--color-accent-primary);        /* broadcast gold */
-    box-shadow: 0 0 0 3px rgba(244, 196, 48, 0.22);
+    box-shadow: 0 0 0 3px rgba(232, 138, 127, 0.22);
 }
 
 .modal-content .input::placeholder,
@@ -2342,8 +2342,8 @@ footer {
     align-items: center;
     gap: var(--space-xs);
     padding: var(--space-xs) var(--space-sm);
-    background: rgba(244, 196, 48, 0.15);
-    border: 1px solid rgba(244, 196, 48, 0.3);
+    background: rgba(232, 138, 127, 0.15);
+    border: 1px solid rgba(232, 138, 127, 0.3);
     border-radius: var(--radius-full);
     color: var(--color-accent-primary);
     font-size: 0.75rem;
@@ -2416,7 +2416,7 @@ footer {
 
 /* Answer button color variants */
 .answer-btn-a {
-    border-left: 3px solid rgba(244, 196, 48, 0.4);
+    border-left: 3px solid rgba(232, 138, 127, 0.4);
 }
 
 .answer-btn-b {
@@ -2424,7 +2424,7 @@ footer {
 }
 
 .answer-btn-c {
-    border-left: 3px solid rgba(244, 196, 48, 0.4);
+    border-left: 3px solid rgba(232, 138, 127, 0.4);
 }
 
 /* Answer letter circle */
@@ -2446,7 +2446,7 @@ footer {
 .answer-btn.is-selected,
 .is-selected {
     border-color: var(--color-accent-primary);
-    background: rgba(244, 196, 48, 0.15);
+    background: rgba(232, 138, 127, 0.15);
     box-shadow: var(--glow-primary);
 }
 
@@ -2584,7 +2584,7 @@ footer {
 }
 
 .is-current-player {
-    background: rgba(244, 196, 48, 0.08);
+    background: rgba(232, 138, 127, 0.08);
     border-radius: var(--radius-md);
 }
 
@@ -2891,7 +2891,7 @@ footer {
     width: 22px;
     height: 22px;
     border-radius: var(--radius-full);
-    background: rgba(244, 196, 48, 0.12);
+    background: rgba(232, 138, 127, 0.12);
     color: var(--color-accent-secondary);
     font-size: 0.7rem;
     font-weight: 700;
@@ -3310,8 +3310,8 @@ footer {
     align-items: center;
     justify-content: center;
     padding: var(--space-xs) var(--space-sm);
-    background: rgba(244, 196, 48, 0.1);
-    border: 1px solid rgba(244, 196, 48, 0.3);
+    background: rgba(232, 138, 127, 0.1);
+    border: 1px solid rgba(232, 138, 127, 0.3);
     border-radius: var(--radius-sm);
     color: var(--color-accent-secondary);
     font-size: 0.8rem;
@@ -3324,7 +3324,7 @@ footer {
 }
 
 .invite-copy-btn:hover {
-    background: rgba(244, 196, 48, 0.2);
+    background: rgba(232, 138, 127, 0.2);
 }
 
 .invite-copy-icon {
@@ -3464,8 +3464,8 @@ footer {
 }
 
 .result-card.result-card--mine {
-    border-color: rgba(244, 196, 48, 0.4);
-    background: rgba(244, 196, 48, 0.08);
+    border-color: rgba(232, 138, 127, 0.4);
+    background: rgba(232, 138, 127, 0.08);
 }
 
 .card-name {
@@ -3500,7 +3500,7 @@ footer {
 .you-badge {
     font-size: 0.65rem;
     font-weight: 500;
-    background: rgba(244, 196, 48, 0.2);
+    background: rgba(232, 138, 127, 0.2);
     color: var(--color-accent-primary);
     padding: 1px 5px;
     border-radius: 4px;
@@ -3538,9 +3538,9 @@ footer {
     color: var(--color-text-white);
 }
 
-.result-value.is-correct { color: #F4C430; }
+.result-value.is-correct { color: #E88A7F; }
 .result-value.is-wrong   { color: #D65858; }
-.result-value.is-bonus   { color: #F4C430; }
+.result-value.is-bonus   { color: #E88A7F; }
 .result-value.is-streak  { color: #E0AF1C; }
 
 .streak-bonus-row .result-label {
@@ -3609,13 +3609,13 @@ footer {
 
 .admin-answer-btn:hover:not(:disabled) {
   background: var(--color-primary-dim, rgba(168,85,247,0.15));
-  border-color: var(--color-primary, #F4C430);
+  border-color: var(--color-primary, #E88A7F);
 }
 
 .admin-answer-btn.selected {
   background: var(--color-primary-dim, rgba(168,85,247,0.2));
-  border-color: var(--color-primary, #F4C430);
-  color: var(--color-primary, #F4C430);
+  border-color: var(--color-primary, #E88A7F);
+  color: var(--color-primary, #E88A7F);
 }
 
 .admin-answer-btn:disabled {
@@ -3658,7 +3658,7 @@ footer {
 }
 
 .result-card.is-score-medium {
-  border-left-color: #F4C430;
+  border-left-color: #E88A7F;
   background: rgba(168, 85, 247, 0.08);
 }
 
@@ -3711,7 +3711,7 @@ footer {
 .result-card .card-bonus {
   grid-column: 1;
   font-size: 0.75rem;
-  color: #F4C430;
+  color: #E88A7F;
   margin-top: 2px;
 }
 
@@ -3801,7 +3801,7 @@ footer {
 }
 
 .points-popup--streak {
-  color: #F4C430;
+  color: #E88A7F;
   text-shadow: 0 0 10px rgba(168,85,247,0.5);
 }
 
@@ -3847,7 +3847,7 @@ footer {
   padding: var(--space-sm, 8px) var(--space-md, 12px);
   background: var(--color-surface, rgba(255,255,255,0.05));
   border-radius: var(--radius-md, 8px);
-  border-left: 3px solid #F4C430;
+  border-left: 3px solid #E88A7F;
   animation: highlight-entrance 0.4s ease-out both;
 }
 
@@ -3877,7 +3877,7 @@ footer {
 
 .highlight-value {
   font-size: 0.8rem;
-  color: #F4C430;
+  color: #E88A7F;
   font-weight: 600;
 }
 
@@ -3913,7 +3913,7 @@ footer {
 }
 
 .dist-correct-icon {
-  color: #F4C430;
+  color: #E88A7F;
   font-weight: 900;
   font-size: 0.85rem;
   flex-shrink: 0;

@@ -3,6 +3,51 @@
 All notable changes to Quizify are documented here. This project follows
 [Semantic Versioning](https://semver.org/).
 
+## [1.1.0-beta.5] — 2026-04-25
+
+Soft Parlor finishing pass. Beta.4 shipped with the redesign in `styles.css`
+and HTML, but ~25 hardcoded color values in JS and ~20 `rgba(244, 196, 48, …)`
+glows in CSS were never migrated from Broadcast Living Room. With cream-paper
+backgrounds and broadcast-gold rim-lights side by side, the result was a
+half-migrated UI. This release closes that drift.
+
+### 🐛 Visual drift cleanup
+
+- **Connection status dot** (`admin.js:800`, `player-utils.js:168`) was still
+  Broadcast gold `#F4C430`. Now sage `#7FA897` for connected, sun for
+  reconnecting, brick `#D66A6A` for disconnected — Soft Parlor palette.
+- **Distribution chart correct-answer bar** (`admin.js:497`) was still
+  Broadcast gold. Now sage. Wrong-answer bars use the cream hairline.
+- **Question-pack update banner** (`admin.js:850-880`) was a navy + gold
+  card. Rewritten as a white surface with coral left-accent, warm-ink
+  text, and a soft drop shadow on the cream-ground page.
+- **Score-share image canvas** (`player-end.js:313-345`) was still painting
+  studio navy + parchment + broadcast gold. Rewritten as cream paper +
+  warm ink + coral, matching what's actually on screen so shared images
+  reflect the live UI.
+- **CSS broadcast-gold glows** — ~20 `rgba(244, 196, 48, X)` in
+  `styles.css` (focus rings, badge backgrounds, gradient halos) all
+  swapped to coral `rgba(232, 138, 127, X)`.
+- **`<meta name="theme-color">`** in `admin.html` was still `#1a1a2e`
+  (the original dark surface color). Now `#FAF6EC` cream so iOS / Chrome
+  mobile status bar tints to match.
+- **Stale Broadcast comment** in `player.html` updated to Soft Parlor
+  language.
+
+### 🧹 Internal
+
+- Cache-busters bumped to `?v=1.1.0-beta.5`.
+- Service worker `CACHE_VERSION` to `quizify-v1.1.0-beta.5`.
+
+### ⚠️ Upgrade notes
+
+- This release is purely visual cleanup — no logic changes from beta.4.
+- All security fixes from beta.4 (admin token persistence, name-collision
+  reconnect, etc.) carry forward unchanged.
+- Hard-reload tabs after upgrade.
+
+---
+
 ## [1.1.0-beta.4] — 2026-04-24
 
 Substantial release: a full logical review surfaced ~23 bugs in the state

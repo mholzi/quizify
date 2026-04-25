@@ -494,7 +494,7 @@
         distribution.forEach(function(item) {
             if (item.no_answer) return; // skip timeout row
             var isCorrect = item.index === correctIndex;
-            var barColor = isCorrect ? '#F4C430' : '#21305E';  // broadcast gold for correct, hairline for rest
+            var barColor = isCorrect ? '#7FA897' : '#E5DFCF';  // sage for correct, cream hairline for rest
             var label = answerTexts[item.index] || ('Antwort ' + (item.index + 1));
             var pct = item.percent || 0;
             var count = item.count || 0;
@@ -788,19 +788,19 @@
     }
 
     // ---- Connection status ----
-    // Broadcast Living Room palette: connected = gold, warning = dim gold, error = warm red.
+    // Soft Parlor palette: connected = sage (success/correct), warning = sun, error = warm brick.
     function updateConnectionStatus(status) {
         var indicator = document.getElementById('conn-status');
         if (!indicator) {
             indicator = document.createElement('div');
             indicator.id = 'conn-status';
-            indicator.style.cssText = 'position:fixed;bottom:12px;right:12px;display:flex;align-items:center;gap:6px;font-size:0.75rem;color:#8FA0C6;z-index:100;';
+            indicator.style.cssText = 'position:fixed;bottom:12px;right:12px;display:flex;align-items:center;gap:6px;font-size:0.75rem;color:#6E6A5C;z-index:100;';
             document.body.appendChild(indicator);
         }
-        var colors = { connected: '#F4C430', reconnecting: '#E0AF1C', disconnected: '#D65858' };
-        var glow = { connected: 'rgba(244,196,48,0.5)', reconnecting: 'rgba(224,175,28,0.5)', disconnected: 'rgba(214,88,88,0.5)' };
-        var color = colors[status] || '#8FA0C6';
-        var glowColor = glow[status] || 'rgba(143,160,198,0.3)';
+        var colors = { connected: '#7FA897', reconnecting: '#E8C47F', disconnected: '#D66A6A' };
+        var glow = { connected: 'rgba(127,168,151,0.45)', reconnecting: 'rgba(232,196,127,0.45)', disconnected: 'rgba(214,106,106,0.45)' };
+        var color = colors[status] || '#6E6A5C';
+        var glowColor = glow[status] || 'rgba(110,106,92,0.25)';
         indicator.innerHTML = '<span style="width:10px;height:10px;border-radius:50%;display:inline-block;background:' +
             color + ';box-shadow:0 0 10px ' + glowColor + ';"></span>';
     }
@@ -846,35 +846,36 @@ async function checkPackUpdates() {
         // Build banner
         const banner = document.createElement('div');
         banner.id = 'pack-update-banner';
-        // Broadcast Living Room: surface navy + gold left-accent for the info-pack banner
+        // Soft Parlor: white surface + coral left-accent + warm ink text on cream-ground page
         banner.style.cssText = [
-            'background:#142148',
-            'border:1px solid #21305E',
-            'border-left:3px solid #F4C430',
-            'border-radius:8px',
-            'padding:10px 14px',
+            'background:#FFFFFF',
+            'border:1px solid #E5DFCF',
+            'border-left:3px solid #E88A7F',
+            'border-radius:10px',
+            'padding:12px 16px',
             'margin:12px 0',
             'display:flex',
             'align-items:flex-start',
             'gap:10px',
-            'font-size:0.85rem',
-            'color:#F4EBCF',
+            'font-size:0.9rem',
+            'color:#2A2820',
+            'box-shadow:0 2px 8px rgba(42, 40, 32, 0.08)',
             'position:relative',
         ].join(';');
 
         banner.innerHTML =
             '<span style="font-size:1.2rem;flex-shrink:0">📦</span>' +
             '<div style="flex:1">' +
-                '<strong style="color:#F4C430;font-family:\'Unbounded\',sans-serif;font-weight:700">Question pack updates available</strong>' +
-                '<div style="margin-top:3px;color:#F4EBCF">' + names + '</div>' +
-                '<div style="margin-top:5px;font-size:0.78rem;color:#8FA0C6">' +
+                '<strong style="color:#E88A7F;font-family:\'Cabinet Grotesk\',sans-serif;font-weight:700">Question pack updates available</strong>' +
+                '<div style="margin-top:3px;color:#2A2820">' + names + '</div>' +
+                '<div style="margin-top:5px;font-size:0.8rem;color:#6E6A5C">' +
                     'Update your packs by replacing the JSON files in ' +
-                    '<code style="background:#0B1739;padding:1px 4px;border-radius:3px;font-family:\'JetBrains Mono\',monospace">custom_components/quizify/questions/</code>' +
+                    '<code style="background:#F3EEDF;padding:1px 4px;border-radius:3px;font-family:\'JetBrains Mono\',monospace;color:#2A2820">custom_components/quizify/questions/</code>' +
                     ' and restarting Home Assistant.' +
                 '</div>' +
             '</div>' +
             '<button onclick="document.getElementById(\'pack-update-banner\').remove()" ' +
-                'style="background:none;border:none;color:#8FA0C6;cursor:pointer;font-size:1rem;padding:0;flex-shrink:0" ' +
+                'style="background:none;border:none;color:#6E6A5C;cursor:pointer;font-size:1rem;padding:0;flex-shrink:0" ' +
                 'title="Dismiss">✕</button>';
 
         // Insert at top of setup screen, before first section

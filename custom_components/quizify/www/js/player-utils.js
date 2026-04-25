@@ -161,14 +161,14 @@
         if (!el) {
             el = document.createElement('div');
             el.id = 'conn-status';
-            el.style.cssText = 'position:fixed;bottom:12px;right:12px;display:flex;align-items:center;gap:6px;font-size:0.75rem;color:#8FA0C6;z-index:100;';
+            el.style.cssText = 'position:fixed;bottom:12px;right:12px;display:flex;align-items:center;gap:6px;font-size:0.75rem;color:#6E6A5C;z-index:100;';
             document.body.appendChild(el);
         }
-        // Broadcast Living Room palette: connected = gold, warning = dim gold, error = warm red.
-        var colors = { connected: '#F4C430', reconnecting: '#E0AF1C', disconnected: '#D65858' };
-        var glow = { connected: 'rgba(244,196,48,0.5)', reconnecting: 'rgba(224,175,28,0.5)', disconnected: 'rgba(214,88,88,0.5)' };
-        var color = colors[status] || '#8FA0C6';
-        var glowColor = glow[status] || 'rgba(143,160,198,0.3)';
+        // Soft Parlor palette: connected = sage, warning = sun, error = warm brick.
+        var colors = { connected: '#7FA897', reconnecting: '#E8C47F', disconnected: '#D66A6A' };
+        var glow = { connected: 'rgba(127,168,151,0.45)', reconnecting: 'rgba(232,196,127,0.45)', disconnected: 'rgba(214,106,106,0.45)' };
+        var color = colors[status] || '#6E6A5C';
+        var glowColor = glow[status] || 'rgba(110,106,92,0.25)';
         // Dot only — no text label
         el.innerHTML = '<span style="width:10px;height:10px;border-radius:50%;display:inline-block;background:' +
             color + ';box-shadow:0 0 10px ' + glowColor + ';"></span>';

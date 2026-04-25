@@ -309,27 +309,27 @@
         canvas.height = 400;
         var ctx = canvas.getContext('2d');
 
-        // Background — Broadcast Living Room studio navy
-        ctx.fillStyle = '#0B1739';
+        // Background — Soft Parlor cream paper
+        ctx.fillStyle = '#FAF6EC';
         ctx.fillRect(0, 0, 600, 400);
 
-        // Accent bar top — single broadcast gold, no gradient
-        ctx.fillStyle = '#F4C430';
+        // Accent bar top — single coral
+        ctx.fillStyle = '#E88A7F';
         ctx.fillRect(0, 0, 600, 4);
 
         // Logo
-        ctx.font = 'bold 32px "Unbounded", system-ui, sans-serif';
-        ctx.fillStyle = '#F4EBCF';
+        ctx.font = 'bold 32px "Cabinet Grotesk", system-ui, sans-serif';
+        ctx.fillStyle = '#2A2820';
         ctx.fillText('Quizify', 30, 55);
 
         // Category
         ctx.font = '14px "JetBrains Mono", ui-monospace, monospace';
-        ctx.fillStyle = '#8FA0C6';
+        ctx.fillStyle = '#6E6A5C';
         ctx.fillText((shareData && shareData.category ? shareData.category.toUpperCase() : ''), 30, 80);
 
         // Emoji grid
         ctx.font = '28px system-ui, sans-serif';
-        ctx.fillStyle = '#F4EBCF';
+        ctx.fillStyle = '#2A2820';
         var lines = emojiGrid.split('\n');
         var y = 120;
         lines.forEach(function(line) {
@@ -341,7 +341,7 @@
 
         // Footer
         ctx.font = '13px "JetBrains Mono", ui-monospace, monospace';
-        ctx.fillStyle = '#F4C430';
+        ctx.fillStyle = '#E88A7F';
         ctx.fillText('quizify.fun', 30, 370);
 
         // Download or share
