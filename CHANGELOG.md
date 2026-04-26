@@ -3,6 +3,30 @@
 All notable changes to Quizify are documented here. This project follows
 [Semantic Versioning](https://semver.org/).
 
+## [1.1.0-beta.9] — 2026-04-26
+
+Recovery hatch for the stale-admin-token lockout. Beta.4 added admin
+token persistence; once the browser's sessionStorage gets out of sync
+with the server's persisted token, there's no in-product way to recover.
+This release adds an HA service to reset the persisted token.
+
+### 🛠 New: `quizify.reset_admin_session` service
+
+- Wipes the server's persisted admin token from HA storage.
+- Callable from Developer Tools → Services. Only available to HA
+  admins (HA's normal service auth).
+- Next admin connection bootstraps a fresh token via the
+  no-existing-token path.
+- Use when: the admin tab silently fails to connect (Admin only error
+  in console) and clearing browser sessionStorage doesn't help.
+
+### 🧹 Internal
+
+- Cache-busters and SW `CACHE_VERSION` bumped to `1.1.0-beta.9`.
+- Added `services.yaml` so the service shows up in the Dev Tools UI.
+
+---
+
 ## [1.1.0-beta.8] — 2026-04-25
 
 The actual actual fix for admin-as-player. Beta.7 added is_admin to the

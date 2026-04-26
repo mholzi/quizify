@@ -13,6 +13,7 @@ from homeassistant.components.frontend import (
     async_register_built_in_panel,
     async_remove_panel,
 )
+from homeassistant.core import ServiceCall
 
 from .analytics import QuizifyAnalytics
 from .const import DOMAIN
@@ -101,6 +102,32 @@ async def async_setup_entry(hass: HomeAssistant, entry: ConfigEntry) -> bool:
         require_admin=False,
     )
     _LOGGER.debug("Quizify sidebar panel registered")
+
+    # Register HA service to reset the persisted admin session token.
+    # Recovery path for the stale-token-locks-admin-out scenario:
+    # if the user's browser sessionStorage and the server's persisted
+    # token get out of sync (e.g. browser cleared, multiple HA restarts
+    # during dev, persistent storage edited externally), no admin tab
+    # can ever authenticate. This service — callable only by HA admins
+    # via Developer Tools → Services — wipes the persisted token so
+    # the next admin connection bootstraps a fresh one.
+    async def reset_admin_session(call: ServiceCall) -> None:  # noqa: ARG001
+        domain_data = hass.data.get(DOMAIN)
+        if domain_data:
+            handler = domain_data.get("ws_handler")
+            if handler:
+                handler._conn.clear_admin_token()
+                _LOGGER.warning(
+                    "Quizify admin session token RESET via HA service. "
+                    "Next admin connection will bootstrap a fresh token."
+                )
+
+    hass.services.async_register(
+        DOMAIN,
+        "reset_admin_session",
+        reset_admin_session,
+    )
+    _LOGGER.debug("Quizify reset_admin_session service registered")
 
     _LOGGER.info("Quizify integration setup complete")
     return True

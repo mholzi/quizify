@@ -1,0 +1,8 @@
+reset_admin_session:
+  name: Reset admin session
+  description: >-
+    Wipe the persisted admin session token. Use this if you can't access
+    the admin panel because the saved token is out of sync (e.g. browser
+    cleared, persistent storage edited externally). The next admin
+    connection will bootstrap a fresh token. Only callable by HA admins.
+  fields: {}
