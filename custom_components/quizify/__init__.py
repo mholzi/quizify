@@ -116,7 +116,12 @@ async def async_setup_entry(hass: HomeAssistant, entry: ConfigEntry) -> bool:
         if domain_data:
             handler = domain_data.get("ws_handler")
             if handler:
-                handler._conn.clear_admin_token()
+                # Use the async variant so the storage delete is awaited
+                # before this service call returns. Without awaiting,
+                # a subsequent admin connection can race the in-flight
+                # write and re-bootstrap with the old token before the
+                # delete actually lands on disk.
+                await handler._conn.async_clear_admin_token()
                 _LOGGER.warning(
                     "Quizify admin session token RESET via HA service. "
                     "Next admin connection will bootstrap a fresh token."

@@ -113,13 +113,22 @@ class ConnectionManager:
         self._admin_token_loaded = True
 
     async def _async_save_admin_token(self) -> None:
-        """Persist the current admin token to HA storage."""
+        """Persist the current admin token to HA storage.
+
+        When the token is cleared (None), DELETE the storage file via
+        `async_remove()` instead of calling `async_save(None)` — HA's
+        Store doesn't accept None and fails silently, leaving the old
+        token persisted. That bug let the stale-token-lockout state
+        survive even after the reset_admin_session service was called.
+        """
         try:
-            await self._get_store().async_save(
-                {"token": self._admin_session_token}
-                if self._admin_session_token
-                else None
-            )
+            store = self._get_store()
+            if self._admin_session_token:
+                await store.async_save({"token": self._admin_session_token})
+            else:
+                # Delete the storage file outright so the next load
+                # returns None and the bootstrap path fires.
+                await store.async_remove()
         except Exception as err:  # noqa: BLE001
             _LOGGER.warning("Failed to persist admin token: %s", err)
 
@@ -145,10 +154,28 @@ class ConnectionManager:
         """Explicit admin-token reset (e.g. user clicked 'Log out admin').
 
         Also clears persisted storage so the next admin claim must be
-        HA-auth-gated.
+        HA-auth-gated. NB: storage write is fire-and-forget; for the
+        synchronous-await variant used by the reset_admin_session service,
+        call async_clear_admin_token() instead.
         """
         self._admin_session_token = None
         asyncio.ensure_future(self._async_save_admin_token())
+
+    async def async_clear_admin_token(self) -> None:
+        """Async variant: clear in-memory token AND await the storage delete.
+
+        Used by the `quizify.reset_admin_session` service so the user
+        immediately has a clean slate when the service call returns.
+        Without awaiting the save, the next admin connection could race
+        the in-flight write and trigger an immediate re-bootstrap before
+        the old token file is actually deleted.
+        """
+        self._admin_session_token = None
+        await self._async_save_admin_token()
+        # Also reset the loaded flag so any subsequent
+        # async_load_admin_token call re-reads from storage (which is
+        # now empty) instead of returning the cached old value.
+        self._admin_token_loaded = True  # already loaded, just no token
 
     def cancel_admin_disconnect(self) -> None:
         """Cancel a running admin-disconnect grace-period task."""

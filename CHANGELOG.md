@@ -3,6 +3,35 @@
 All notable changes to Quizify are documented here. This project follows
 [Semantic Versioning](https://semver.org/).
 
+## [1.1.0-beta.10] — 2026-04-27
+
+The reset_admin_session service in beta.9 didn't actually work. Two
+bugs combined to silently keep the persisted token alive even after
+the service was called.
+
+### 🐛 The two bugs
+
+1. **`Store.async_save(None)` silently fails.** HA's Store doesn't
+   accept `None` as a value to save — it expects a dict. The save call
+   raised a TypeError that was caught by my try/except and logged as
+   a warning. So the in-memory token got cleared, but the persisted
+   file kept the old token. Next HA restart loaded the old token back.
+   Fix: when clearing, call `Store.async_remove()` to delete the file
+   outright instead of save(None).
+2. **The service handler called the sync `clear_admin_token()` which
+   used `asyncio.ensure_future()` for the storage write — fire and
+   forget.** The service call returned before the storage write
+   completed. Any admin connection that fired between the service
+   return and the actual write would hit the still-persisted token,
+   re-bootstrap, and overwrite the in-flight delete with a new save.
+   Fix: added `async_clear_admin_token()` that the service awaits.
+
+### 🧹 Internal
+
+- Cache-busters and SW `CACHE_VERSION` bumped to `1.1.0-beta.10`.
+
+---
+
 ## [1.1.0-beta.9] — 2026-04-26
 
 Recovery hatch for the stale-admin-token lockout. Beta.4 added admin
