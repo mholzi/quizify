@@ -3,6 +3,31 @@
 All notable changes to Quizify are documented here. This project follows
 [Semantic Versioning](https://semver.org/).
 
+## [1.1.1] — 2026-04-27
+
+Patch release closing five code-review findings from the gameplay state
+machine plus the service-worker caching issue. All bugs were filed
+independently from the v1.1.0 release work; verified still relevant on
+main before fixing.
+
+### 🐛 Fixes
+
+- **#143 Race condition: double round evaluation between timer and submit_answer.** `submit_answer` now routes through the guarded `evaluate_round()` instead of calling `_do_evaluate_round()` directly. Closes the window where the last-submit and timer-expiry paths could both transition the phase. The user-visible double-broadcast was already neutralized in 1.1.0 (centralized via `_fire_broadcast`), but the underlying state race is now also closed. Single-line fix.
+- **#144 `_do_evaluate_round` may return None on error path.** The `# type: ignore[return-value]` was masking a silent crash potential. Now raises `RuntimeError` instead, so the invariant violation is visible in logs. State machine bug, not user-visible bug, but defensive-correctness matters.
+- **#145 Double `validate_answer` + `current_answer or -1` scoring bug.** Two compounding bugs: `validate_answer` was called once in `submit_answer` and again in `_do_evaluate_round`, redundantly. Worse, the second call used `player.current_answer or -1` — and `0 or -1` is `-1` in Python, so any player who picked **answer index 0** (the first option, A) was misclassified as "no answer" in the round summary. **Fix:** added `last_answer_correct` field to `PlayerSession`, cached at submit time, read back in `_do_evaluate_round` — eliminates both the double-call and the falsy-zero bug. Real scoring fix that affected every game where someone picked A.
+- **#146 `get_correct_answer` falls back to `answers[0]`.** If a malformed question had no answer marked correct, the fallback returned the first answer (almost certainly wrong) and players saw the wrong answer displayed as correct. Now raises `ValueError` so the bug surfaces in logs instead of corrupting the game.
+- **#147 Service worker caching stale CSS / JS.** The SW used cache-first for static assets, which meant fresh CSS / JS didn't land after Quizify updates until users manually unregistered the SW. Switched to network-first for `/quizify/static/`; cache is now offline fallback only. Symptom was *"CSS works in incognito but not normal Chrome"* — exactly what I hit during the v1.1.0 testing session. Fixed.
+
+### 🧹 Internal
+
+- Cache-busters and SW `CACHE_VERSION` bumped to `1.1.1`.
+
+### ✅ PR cleanup
+
+- **#148 closed as superseded.** PR proposed the same admin-as-player fix that v1.1.0 already shipped via betas 6–8 and 10. Both implementations land at the same destination (admin token threaded through the join message; `is_admin` exposed in the player list serializer; `_is_authorized_admin` accepts player WS once the player is marked admin). Thanked the author and pointed to the merged commits.
+
+---
+
 ## [1.1.0] — 2026-04-27
 
 First stable release of the 1.1 line. Consolidates 10 betas worth of

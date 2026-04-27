@@ -1,12 +1,20 @@
 /**
  * Quizify Service Worker
  *
- * Caches static assets for faster subsequent loads.
- * Uses Cache-First for static assets, Network-First for HTML.
+ * Network-first for everything served by the integration (HTML + CSS + JS),
+ * with cache as offline fallback. Cache-first only for cross-origin font
+ * assets (Google Fonts, Fontshare) which version themselves via URL.
+ *
+ * Why network-first for static assets: cache-first served stale CSS / JS
+ * after every Quizify update because the SW returned the cached old
+ * version even when a new cache-buster was in the HTML reference.
+ * Symptom: "CSS works in incognito but not normal Chrome" (#147).
+ * Fresh-on-every-load is slower but correct; the user is mostly online
+ * during a game session anyway.
  */
 'use strict';
 
-var CACHE_VERSION = 'quizify-v1.1.0';
+var CACHE_VERSION = 'quizify-v1.1.1';
 var MAX_CACHE_ITEMS = 60;
 
 // Critical assets to precache on install
@@ -106,16 +114,19 @@ self.addEventListener('fetch', function(event) {
         return;
     }
 
-    // HTML pages: Network-First
+    // HTML pages: Network-First (always try fresh, fall back to cache offline)
     var accept = event.request.headers.get('accept') || '';
     if (accept.includes('text/html') || url.pathname.endsWith('.html')) {
         event.respondWith(networkFirst(event.request));
         return;
     }
 
-    // Static assets: Cache-First
+    // Static assets: Network-First (was Cache-First; #147 fix).
+    // Cache is offline fallback only. The cost is one extra network round-trip
+    // per asset on warm load; the benefit is that fresh CSS / JS lands the
+    // moment a new version deploys, no SW unregister required.
     if (url.pathname.startsWith('/quizify/static/')) {
-        event.respondWith(cacheFirst(event.request));
+        event.respondWith(networkFirst(event.request));
         return;
     }
 });

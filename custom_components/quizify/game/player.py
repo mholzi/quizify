@@ -53,6 +53,7 @@ class PlayerSession:
     submitted: bool = False
     current_answer: int | None = None
     submission_time: float | None = None
+    last_answer_correct: bool = False  # cached at submit_answer time, read in _do_evaluate_round
     round_score: int = 0
     round_score_breakdown: dict = field(default_factory=dict)  # speed_bonus, streak_bonus, diff_mult
     round_history: list[str] = field(default_factory=list)
@@ -75,6 +76,7 @@ class PlayerSession:
         self.submitted = False
         self.current_answer = None
         self.submission_time = None
+        self.last_answer_correct = False
         self.round_score = 0
         self.round_score_breakdown = {}
 

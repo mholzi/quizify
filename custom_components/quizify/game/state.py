@@ -330,6 +330,10 @@ class QuizifyGameState:
             return ERR_GAME_NOT_STARTED
 
         correct = self._question_bank.validate_answer(question, answer_index)
+        # Cache the result so _do_evaluate_round doesn't need to re-validate
+        # (#145 in code-review issues — also closes the `current_answer or -1`
+        # bug that misclassified players who picked answer index 0).
+        player.last_answer_correct = correct
 
         try:
             diff_enum = Difficulty(question.difficulty)
@@ -390,9 +394,12 @@ class QuizifyGameState:
             difficulty_multiplier=diff_mult,
         )
 
-        # Check if all players have submitted → auto-evaluate
+        # Check if all players have submitted → auto-evaluate.
+        # Route through the guarded `evaluate_round()` (not directly to
+        # `_do_evaluate_round`) so the `_round_summary is not None` check
+        # closes the race with the timer-expiry path. (#143 in code review.)
         if self._player_registry.all_submitted():
-            self._do_evaluate_round()
+            self.evaluate_round()
 
         return result
 
@@ -409,14 +416,20 @@ class QuizifyGameState:
         """Internal: evaluate the round, build summary, transition to ANSWER_REVEAL."""
         question = self._current_question
         if question is None:
-            _LOGGER.error("evaluate_round called with no active question")
-            return self._round_summary  # type: ignore[return-value]
+            # Hard invariant: this method is only called when a round is
+            # active. If the question is gone, the caller violated the
+            # state machine. Raise so the bug is visible instead of
+            # silently returning None and crashing downstream. (#144.)
+            raise RuntimeError(
+                "_do_evaluate_round called with no active question"
+            )
 
         correct_answer = self._question_bank.get_correct_answer(question)
 
-        # Score any players who didn't submit (they get 0, streak resets)
-        # Also record round results and per-round scores for share cards / superlatives
-        # Cache validate_answer result per player to avoid double calls
+        # Build per-player correctness from cached `last_answer_correct`
+        # set during submit_answer (#145). No second validate_answer call,
+        # and no `current_answer or -1` bug that misclassified answer
+        # index 0 as a timeout.
         player_correct: dict[str, bool] = {}
         for player in self._player_registry.players.values():
             if not player.submitted:
@@ -425,9 +438,7 @@ class QuizifyGameState:
                 player.round_scores.append(0)
                 player_correct[player.name] = False
             else:
-                is_correct = self._question_bank.validate_answer(
-                    question, player.current_answer or -1
-                )
+                is_correct = player.last_answer_correct
                 player_correct[player.name] = is_correct
                 player.record_round_result("correct" if is_correct else "wrong")
                 player.round_scores.append(player.round_score)

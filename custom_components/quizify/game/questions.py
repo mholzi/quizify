@@ -217,12 +217,21 @@ class QuestionBank:
         return question.answers[answer_index].correct
 
     def get_correct_answer(self, question: Question) -> Answer:
-        """Return the correct Answer for a question."""
+        """Return the correct Answer for a question.
+
+        Raises ValueError if no answer is marked correct. The validator
+        (`_parse_question`) requires exactly one correct answer per
+        question, so reaching this fallback means the question pack
+        is malformed at runtime. Better to fail loudly than silently
+        return `answers[0]` (which is almost certainly wrong) and
+        display the wrong answer to players. (#146.)
+        """
         for answer in question.answers:
             if answer.correct:
                 return answer
-        # Should never happen with validated questions, but be safe.
-        return question.answers[0]
+        raise ValueError(
+            f"Question {question.id!r} has no correct answer marked"
+        )
 
     # ------------------------------------------------------------------
     # Question history
