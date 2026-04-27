@@ -6,7 +6,7 @@
  */
 'use strict';
 
-var CACHE_VERSION = 'quizify-v1.1.0-beta.10';
+var CACHE_VERSION = 'quizify-v1.1.0';
 var MAX_CACHE_ITEMS = 60;
 
 // Critical assets to precache on install

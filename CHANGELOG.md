@@ -3,6 +3,86 @@
 All notable changes to Quizify are documented here. This project follows
 [Semantic Versioning](https://semver.org/).
 
+## [1.1.0] — 2026-04-27
+
+First stable release of the 1.1 line. Consolidates 10 betas worth of
+work into one shipping release. The version bumps from 1.0.45 to 1.1.0
+because this is the first release with the new design system, the new
+auth model, and a substantially expanded gameplay flow.
+
+### 🎯 What's in this release
+
+**Visual identity — Soft Parlor.** Cream paper background `#FAF6EC`,
+warm coral `#E88A7F` primary accent, sage / sky / sun secondary
+accents at equal muted saturation, warm ink `#2A2820` text. Cabinet
+Grotesk + DM Sans + JetBrains Mono typography stack. Soft drop shadows,
+rounded 10–14 px corners. Light-primary; dark mode defers. Memorable-
+thing anchor: *"Cozy and friendly — like a family board game."*
+See [DESIGN.md](./DESIGN.md) for the full system.
+
+**Security — admin auth hardened.** Admin session tokens persist to
+HA storage and survive restarts (closes the LAN-takeover window that
+previously reopened on every reboot). 24-hour TTL on player tokens,
+wiped on game reset. Name validation NFKC-normalizes and strips control /
+format characters (RTL override + zero-width impersonation closed).
+Name-collision impersonation during gameplay requires the original
+session token (no more "type the disconnected player's name to
+inherit their score"). Recovery hatch via the
+`quizify.reset_admin_session` HA service for stuck states.
+
+**Gameplay correctness.** Round-summary broadcast no longer fires
+twice on the timer-expiry / last-submit race. Per-player timer
+broadcast (time-boost and freeze power-ups now visible on the
+affected player's UI). Admin self-join race fixed (start_game no
+longer dropped by the navigation-before-send race). Admin-as-player
+authority correctly propagated through the join message
+(`is_admin` flag now travels). `reset_to_lobby` cleans up all
+pending tasks. Late joiners excluded from `all_submitted()`.
+Mid-round reconnect preserves submitted state. `broadcast_to_admins`
+excludes admin-as-player by `is_admin` flag, not stale ws identity.
+
+**UX.** Admin buttons disable on click (no more double-advance toasts).
+Server error codes translated to user-friendly German on both clients.
+Malformed JSON returns structured error. Connection status dot uses
+sage / sun / warm-red palette (was broadcast-gold). Empty
+`lobby-difficulty-badge` pill now populated with German labels.
+Admin-join modal no longer renders in light-mode palette.
+
+**Features carried forward from earlier branch work.** Question pack
+versioning with update check (#51). Multi-category mode (#21).
+Answer distribution chart on reveal (#66, #32, #139). WebSocket
+admin privilege-escalation fixes (#140, #142). Nabu Casa remote-UI
+fixes (#11 family).
+
+### ⚠️ Upgrade notes
+
+- HACS users on a beta will pick this up automatically. Stable
+  channel users see it as a regular update from 1.0.45.
+- After upgrade: hard-reload admin / player / dashboard tabs so
+  the service worker picks up the new bundle.
+- The first admin connection on a fresh install bootstraps the
+  persisted token. Look for `ADMIN BOOTSTRAP: granting admin to
+  first connection` in HA logs — if you see this and it wasn't
+  you, someone on your LAN beat you to it; remove + readd the
+  integration to reset.
+- If you ever get locked out of admin (“Admin only” errors and
+  refresh doesn't help), call the new
+  `quizify.reset_admin_session` service from Developer Tools —
+  see CHANGELOG for beta.10.
+
+### 📝 Known limitations
+
+- The full game-in-progress flow (question → reveal → leaderboard
+  → podium → finale) was not exercised end-to-end during this
+  release cycle due to repeated admin-auth lockouts during testing.
+  The lobby flow is verified; the gameplay loop is shipping on
+  the strength of the underlying logical-review fixes (23 findings
+  from the audit) and the per-fix manual review of each commit.
+  File any gameplay bugs at
+  [github.com/mholzi/quizify/issues](https://github.com/mholzi/quizify/issues).
+
+---
+
 ## [1.1.0-beta.10] — 2026-04-27
 
 The reset_admin_session service in beta.9 didn't actually work. Two
