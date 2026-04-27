@@ -100,6 +100,8 @@
         var url = new URL('/quizify/player', location.href);
         url.searchParams.set('name', name);
         url.searchParams.set('admin', 'true');
+        var adminToken = sessionStorage.getItem('quizify_admin_session_token');
+        if (adminToken) url.searchParams.set('admin_token', adminToken);
         window.location.href = url.toString();
     }
 
@@ -568,12 +570,16 @@
                 ? selectedCategories
                 : selectedCategory;
 
-        send('start_game', {
+        // Persist game config so the player lobby can send it with start_game.
+        // We defer the actual start until the admin is connected as a player —
+        // sending start_game here races with page navigation and the frame is
+        // often dropped, leaving the game stuck in LOBBY.
+        sessionStorage.setItem('quizify_game_config', JSON.stringify({
             category: categoryPayload,
             difficulty: selectedDifficulty === 'mixed' ? null : selectedDifficulty,
             num_rounds: selectedRounds,
             language: selectedLanguage,
-        });
+        }));
 
         closeAdminJoinModal();
         redirectToPlayer(name);

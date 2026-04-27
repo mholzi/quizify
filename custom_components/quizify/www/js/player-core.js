@@ -46,6 +46,12 @@
     var _wsOpenTimeout = null;
 
     function connect() {
+        var wsQuery = {};
+        var adminToken = sessionStorage.getItem('quizify_admin_session_token');
+        if (state.isAdmin && adminToken) {
+            wsQuery.role = 'admin';
+            wsQuery.token = adminToken;
+        }
         state.ws = pu.createWebSocket('/api/quizify/ws', {
             onOpen: function () {
                 // Clear the connection timeout
@@ -75,7 +81,7 @@
             onClose: function () {
                 state.ws = null;
             }
-        });
+        }, wsQuery);
     }
 
     // ============================================
@@ -560,6 +566,13 @@
         // Check if admin via URL param
         if (urlParams.get('admin') === 'true') {
             state.isAdmin = true;
+        }
+
+        // Persist admin token from URL so the WS connection can authenticate as admin.
+        // This is set by admin.js#redirectToPlayer when the admin joins as a player.
+        var urlAdminToken = urlParams.get('admin_token');
+        if (urlAdminToken) {
+            sessionStorage.setItem('quizify_admin_session_token', urlAdminToken);
         }
 
         // i18n init

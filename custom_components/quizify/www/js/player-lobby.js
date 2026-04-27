@@ -328,7 +328,15 @@
                 startBtn.disabled = true;
                 startBtn.innerHTML = '<span class="btn-icon" aria-hidden="true">🎉</span><span>Starting...</span>';
 
-                sendFn('start_game', {});
+                // Load game config saved by admin.js when the admin joined as a player
+                var payload = {};
+                try {
+                    var saved = sessionStorage.getItem('quizify_game_config');
+                    if (saved) payload = JSON.parse(saved) || {};
+                } catch (e) { /* ignore */ }
+
+                sendFn('start_game', payload);
+                sessionStorage.removeItem('quizify_game_config');
             });
         }
     }

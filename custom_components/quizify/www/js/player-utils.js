@@ -94,9 +94,18 @@
     // WebSocket Factory
     // ============================================
 
-    function createWebSocket(path, handlers) {
+    function createWebSocket(path, handlers, query) {
         var proto = location.protocol === 'https:' ? 'wss:' : 'ws:';
         var url = proto + '//' + location.host + path;
+        if (query && typeof query === 'object') {
+            var parts = [];
+            for (var k in query) {
+                if (Object.prototype.hasOwnProperty.call(query, k) && query[k] != null) {
+                    parts.push(encodeURIComponent(k) + '=' + encodeURIComponent(query[k]));
+                }
+            }
+            if (parts.length) url += '?' + parts.join('&');
+        }
 
         var ws = new WebSocket(url);
 

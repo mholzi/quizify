@@ -162,6 +162,10 @@ class QuizifyGameState:
         """Get player by WebSocket."""
         return self._player_registry.get_player_by_ws(ws)
 
+    def set_admin(self, name: str) -> bool:
+        """Mark a player as admin."""
+        return self._player_registry.set_admin(name)
+
     def get_players(self) -> list[PlayerSession]:
         """Return list of all player sessions."""
         return list(self._player_registry.players.values())

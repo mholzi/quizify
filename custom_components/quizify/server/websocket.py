@@ -126,7 +126,7 @@ class QuizifyWebSocketHandler:
             await self._handle_admin_connect(ws, game_state)
 
         elif msg_type == "join":
-            await self._handle_join(ws, data, game_state)
+            await self._handle_join(ws, data, game_state, is_admin)
 
         elif msg_type == "submit_answer":
             await self._handle_submit_answer(ws, data, game_state)
@@ -135,7 +135,7 @@ class QuizifyWebSocketHandler:
             await self._handle_use_powerup(ws, data, game_state)
 
         elif msg_type == "start_game":
-            if not is_admin:
+            if not self._is_authorized_admin(ws, is_admin, game_state):
                 await self._conn.send_error(ws, ERR_INVALID_ACTION, "Admin only")
                 return
             await self._handle_start_game(ws, data, game_state)
@@ -202,7 +202,11 @@ class QuizifyWebSocketHandler:
     # ------------------------------------------------------------------
 
     async def _handle_join(
-        self, ws: web.WebSocketResponse, data: dict, game_state: QuizifyGameState
+        self,
+        ws: web.WebSocketResponse,
+        data: dict,
+        game_state: QuizifyGameState,
+        is_admin: bool = False,
     ) -> None:
         """Handle player join."""
         name = data.get("name", "").strip()
@@ -221,6 +225,11 @@ class QuizifyWebSocketHandler:
         success, error_code = game_state.add_player(name, ws)
 
         if success:
+            # If this connection is authenticated as admin (role=admin), mark
+            # the joining player as admin so admin controls render in their UI
+            # and admin-gated commands are accepted.
+            if is_admin and data.get("is_admin"):
+                game_state.set_admin(name)
             # Cancel pending removal on reconnect
             self._conn.cancel_pending_removal(name)
 
@@ -236,6 +245,7 @@ class QuizifyWebSocketHandler:
                 "powerup": powerup.value if powerup else None,
                 "session_token": session_token,
                 "color": player_obj.color if player_obj else "",
+                "is_admin": player_obj.is_admin if player_obj else False,
             })
 
             # Send current state to the joining player

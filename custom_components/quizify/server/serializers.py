@@ -120,6 +120,7 @@ def serialize_player_list(players: list[PlayerSession]) -> list[dict[str, Any]]:
             "streak": p.streak,
             "connected": p.connected,
             "color": p.color,
+            "is_admin": p.is_admin,
         }
         for p in players
     ]
