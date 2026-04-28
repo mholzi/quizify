@@ -168,12 +168,19 @@
         });
     }
 
+    function _t(key, params) {
+        if (window.QuizifyI18n && typeof window.QuizifyI18n.t === 'function') {
+            return window.QuizifyI18n.t(key, params);
+        }
+        return key;
+    }
+
     function updateCategorySummary() {
         if (!els.categorySummary) return;
         if (selectedCategory === 'mixed') {
-            els.categorySummary.textContent = 'Gemischt';
+            els.categorySummary.textContent = _t('admin.categoryMixed');
         } else if (selectedCategory === 'multi') {
-            els.categorySummary.textContent = selectedCategories.length + ' Kategorien';
+            els.categorySummary.textContent = _t('admin.categoriesCountPlural', { count: selectedCategories.length });
         } else {
             var activeChip = els.categoryChips.querySelector('.chip.active');
             els.categorySummary.textContent = activeChip ? activeChip.textContent : selectedCategory;
@@ -183,8 +190,13 @@
     function updateSettingsSummary() {
         if (!els.gameSettingsSummary) return;
         var diffChip = els.difficultyChips ? els.difficultyChips.querySelector('.chip.active') : null;
-        var diffLabel = diffChip ? diffChip.textContent : 'Mittel';
-        els.gameSettingsSummary.innerHTML = diffLabel + ' &bull; ' + selectedRounds + ' Runden &bull; ' + selectedTimer + 's';
+        var diffLabel = diffChip ? diffChip.textContent : _t('difficulties.medium');
+        els.gameSettingsSummary.textContent = _t('admin.settingsSummary', {
+            difficulty: diffLabel,
+            rounds: selectedRounds,
+            roundsUnit: _t('admin.summaryRoundsUnit'),
+            timer: selectedTimer,
+        });
     }
 
     setupCategoryChips(els.categoryChips);
@@ -218,7 +230,19 @@
                 selectedCategories = [];
             }
         }
-        updateSettingsSummary();
+        // Re-translate the entire admin UI so labels switch
+        // immediately on language pick (was previously a static
+        // mismatch — admin saw mixed DE/EN labels).
+        if (window.QuizifyI18n) {
+            QuizifyI18n.setLanguage(v).then(function () {
+                QuizifyI18n.initPageTranslations();
+                updateSettingsSummary();
+                updateCategorySummary();
+            });
+        } else {
+            updateSettingsSummary();
+            updateCategorySummary();
+        }
     });
     // Init: hide English category chips on load
     if (els.categoryChips) {
@@ -349,6 +373,10 @@
 
         switch (msg.phase) {
             case 'LOBBY':
+                // Stay on whatever view is currently active (setup or
+                // lobby) instead of forcing setup. If admin loaded the
+                // page while game was running and it has since been
+                // reset, leave them on setup so they can configure.
                 if (views.lobby.classList.contains('active') ||
                     views.game.classList.contains('active')) {
                     showView('lobby');
@@ -372,6 +400,11 @@
                 if (msg.leaderboard) renderLeaderboard(els.revealLeaderboard, msg.leaderboard);
                 break;
             case 'FINALE':
+                // Land directly on finale view so the admin sees the
+                // result and the "Neues Spiel starten" button without
+                // first being shown the (no-op) setup screen. Fixes
+                // the lockout where admin clicked Spiel starten and
+                // server rejected because phase was already FINALE.
                 handleFinale(msg);
                 break;
         }
@@ -382,7 +415,10 @@
         currentPhase = 'QUESTION_ACTIVE';
         showView('game');
 
-        els.adminRound.textContent = 'Frage ' + msg.round_num + ' / ' + msg.total_rounds;
+        els.adminRound.textContent = _t('admin.questionCounter', {
+            current: msg.round_num,
+            total: msg.total_rounds,
+        });
         els.adminQuestion.textContent = msg.question_text;
         // Never show correct answer during active question
         if (els.adminCorrect) {
@@ -405,11 +441,15 @@
 
     function showReveal(msg) {
         var summary = msg.round_summary || msg;
-        if (els.revealRound) els.revealRound.textContent = 'Frage ' + (msg.round || '') + ' / ' + (msg.total_rounds || '');
+        if (els.revealRound) els.revealRound.textContent = _t('admin.questionCounter', {
+            current: msg.round || '',
+            total: msg.total_rounds || '',
+        });
         if (els.revealQuestion) els.revealQuestion.textContent = summary.question_text || (msg.question ? msg.question.text : '') || '';
-        if (els.revealCorrect) els.revealCorrect.textContent = 'Richtig: ' + (summary.correct_answer || '');
+        var correctAns = summary.correct_answer || '';
+        if (els.revealCorrect) els.revealCorrect.textContent = _t('admin.correctLabel', { answer: correctAns });
         if (els.adminCorrect) {
-            els.adminCorrect.textContent = 'Richtig: ' + (summary.correct_answer || '');
+            els.adminCorrect.textContent = _t('admin.correctLabel', { answer: correctAns });
             els.adminCorrect.style.display = '';
         }
         if (els.endGameBtn) els.endGameBtn.classList.remove('hidden');
@@ -445,14 +485,19 @@
                 var streak = p.streak || 0;
                 var scoreClass = ok && pts >= 1000 ? 'is-score-high' : ok ? 'is-score-medium' : 'is-score-zero';
                 var bonuses = '';
-                if (ok && spd > 0) bonuses += '<div class="card-bonus">⚡ +' + spd + ' Speed</div>';
-                if (ok && str > 0) bonuses += '<div class="card-bonus">🔥 +' + str + ' ' + streak + 'x Streak</div>';
-                if (ok && diff > 1.0) bonuses += '<div class="card-bonus">⭐ ' + diff.toFixed(1) + 'x Schwierigkeitsgrad</div>';
-                if (dbl) bonuses += '<div class="card-bonus">✨ 2x Double Points</div>';
+                if (ok && spd > 0) bonuses += '<div class="card-bonus">⚡ +' + spd + ' ' + escapeHtml(_t('game.speedBonus')) + '</div>';
+                if (ok && str > 0) bonuses += '<div class="card-bonus">🔥 +' + str + ' ' + escapeHtml(_t('game.streakBonusLabel', { count: streak })) + '</div>';
+                if (ok && diff > 1.0) bonuses += '<div class="card-bonus">⭐ ' + escapeHtml(_t('game.difficultyMultiplier', { value: diff.toFixed(1) })) + '</div>';
+                if (dbl) bonuses += '<div class="card-bonus">✨ ' + escapeHtml(_t('game.doublePoints')) + '</div>';
+                var accuracyLabel = ok
+                    ? '✅ ' + _t('admin.answerCorrect')
+                    : noAns
+                        ? '⏱️ ' + _t('admin.answerNone')
+                        : '❌ ' + _t('admin.answerWrong');
                 return '<div class="result-card ' + scoreClass + '">' +
                     '<div class="card-name">' + escapeHtml(p.player_name) + '</div>' +
                     '<div class="card-guess">' + escapeHtml(p.answer_text || '—') + '</div>' +
-                    '<div class="card-accuracy">' + (ok ? '✅ Richtig' : noAns ? '⏱️ Keine Antwort' : '❌ Falsch') + '</div>' +
+                    '<div class="card-accuracy">' + escapeHtml(accuracyLabel) + '</div>' +
                     bonuses +
                     '<div class="card-score">' + (pts > 0 ? '+' + pts : '0') + '</div>' +
                     '</div>';
@@ -501,7 +546,8 @@
             if (item.no_answer) return; // skip timeout row
             var isCorrect = item.index === correctIndex;
             var barColor = isCorrect ? '#7FA897' : '#E5DFCF';  // sage for correct, cream hairline for rest
-            var label = answerTexts[item.index] || ('Antwort ' + (item.index + 1));
+            var fallbackLabel = String.fromCharCode(65 + item.index); // A / B / C
+            var label = answerTexts[item.index] || fallbackLabel;
             var pct = item.percent || 0;
             var count = item.count || 0;
             html +=
@@ -588,13 +634,14 @@
 
         var medals = { 1: '🥇', 2: '🥈', 3: '🥉' };
         var barClass = { 1: 'first', 2: 'second', 3: 'third' };
+        var pointsShort = _t('leaderboard.pointsShort');
 
         container.innerHTML = ordered
             .map(function (p) {
                 return '<div class="podium-place">' +
                     '<div class="podium-avatar">' + (medals[p.place] || '') + '</div>' +
                     '<div class="podium-name">' + escapeHtml(p.name) + '</div>' +
-                    '<div class="podium-score">' + p.score + ' Pkt.</div>' +
+                    '<div class="podium-score">' + p.score + ' ' + escapeHtml(pointsShort) + '</div>' +
                     '<div class="podium-bar ' + (barClass[p.place] || '') + '">' + p.place + '</div>' +
                     '</div>';
             })
@@ -624,7 +671,18 @@
 
     // ---- Admin Join Modal (Start Game flow) ----
 
-    function openAdminJoinModal() {
+    function openAdminJoinModal(mode) {
+        // mode: 'start' (game in LOBBY, admin starting fresh) or
+        //       'join' (game already running, admin joining mid-flight).
+        // The modal copy adapts so we don't tell the host they're
+        // about to "Start game" when the game is already in progress.
+        var isStart = mode !== 'join';
+        var titleEl = document.getElementById('admin-join-modal-title');
+        var subtitleEl = document.getElementById('admin-join-modal-subtitle');
+        var btnLabelEl = document.getElementById('admin-join-btn-label');
+        if (titleEl) titleEl.textContent = _t(isStart ? 'admin.joinModalTitleStart' : 'admin.joinModalTitleJoin');
+        if (subtitleEl) subtitleEl.textContent = _t(isStart ? 'admin.joinModalSubtitleStart' : 'admin.joinModalSubtitleJoin');
+        if (btnLabelEl) btnLabelEl.textContent = _t(isStart ? 'admin.joinModalBtnStart' : 'admin.joinModalBtnJoin');
         if (els.adminJoinModal) els.adminJoinModal.classList.remove('hidden');
         if (els.adminNameInput) {
             els.adminNameInput.value = '';
@@ -650,7 +708,8 @@
         // Disable button to prevent double-click (#17 in logical review).
         if (els.adminJoinBtn) {
             els.adminJoinBtn.disabled = true;
-            els.adminJoinBtn.textContent = '\u25B6\uFE0F Starting\u2026';
+            var btnLabelEl = document.getElementById('admin-join-btn-label');
+            if (btnLabelEl) btnLabelEl.textContent = _t('admin.starting');
         }
 
         var categoryPayload = selectedCategory === 'mixed'
@@ -687,8 +746,9 @@
     }
 
     function setupAdminJoinModal() {
-        // Participate button — also opens the modal (for admin joining mid-lobby)
-        on(els.participateBtn, 'click', openAdminJoinModal);
+        // Participate button — opens the modal in "join" mode (game
+        // is in lobby, admin choosing to play along, no fresh start).
+        on(els.participateBtn, 'click', function () { openAdminJoinModal('join'); });
         on(els.adminCancelBtn, 'click', closeAdminJoinModal);
 
         var backdrop = els.adminJoinModal ? els.adminJoinModal.querySelector('.modal-backdrop') : null;
@@ -724,7 +784,10 @@
 
     // Lobby: Start Gameplay button → open modal to get admin name, then start
     on(els.startGameplayBtn, 'click', function () {
-        openAdminJoinModal();
+        // Lobby's primary CTA — actually starts the game (admin
+        // identifies themselves so server can transition LOBBY ➜
+        // QUESTION_ACTIVE). Modal copy: "Spiel starten".
+        openAdminJoinModal('start');
     });
 
     // In-game controls (only shown if admin stays on admin.html without redirect)
@@ -812,20 +875,23 @@
             color + ';box-shadow:0 0 10px ' + glowColor + ';"></span>';
     }
 
-    // ---- Update modal title for start game flow ----
-    var modalTitle = document.getElementById('admin-join-modal-title');
-    if (modalTitle) modalTitle.textContent = 'Spiel starten';
-    var modalSubtitle = els.adminJoinModal ? els.adminJoinModal.querySelector('p') : null;
-    if (modalSubtitle) modalSubtitle.textContent = 'Wie heißt du? Du spielst mit und kannst das Spiel steuern.';
-    if (els.adminJoinBtn) els.adminJoinBtn.textContent = '▶️ Starten & Beitreten';
-
     // ---- Init ----
     setupAdminJoinModal();
 
     if (window.QuizifyI18n) {
-        QuizifyI18n.init().then(function () {
+        // Apply selected language so admin sees correct labels on
+        // first paint (default is German). Selecting a different
+        // language chip via setupChips re-runs initPageTranslations.
+        QuizifyI18n.init(selectedLanguage).then(function () {
             QuizifyI18n.initPageTranslations();
+            updateSettingsSummary();
+            updateCategorySummary();
         });
+    } else {
+        // No i18n: still populate the summary chip with the timer
+        // value on first paint (was missing in v1.1.3).
+        updateSettingsSummary();
+        updateCategorySummary();
     }
 
     connect();

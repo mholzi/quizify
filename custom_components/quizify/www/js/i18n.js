@@ -83,28 +83,41 @@ window.QuizifyI18n = (function() {
         return currentLanguage;
     }
 
-    function initPageTranslations() {
-        document.querySelectorAll('[data-i18n]').forEach(function(el) {
+    function initPageTranslations(root) {
+        var scope = root || document;
+        scope.querySelectorAll('[data-i18n]').forEach(function(el) {
             var key = el.getAttribute('data-i18n');
             if (key) {
                 var translated = t(key);
                 if (translated !== key) el.textContent = translated;
             }
         });
-        document.querySelectorAll('[data-i18n-placeholder]').forEach(function(el) {
+        scope.querySelectorAll('[data-i18n-placeholder]').forEach(function(el) {
             var key = el.getAttribute('data-i18n-placeholder');
             if (key) {
                 var translated = t(key);
                 if (translated !== key) el.placeholder = translated;
             }
         });
-        document.querySelectorAll('[data-i18n-title]').forEach(function(el) {
+        scope.querySelectorAll('[data-i18n-title]').forEach(function(el) {
             var key = el.getAttribute('data-i18n-title');
             if (key) {
                 var translated = t(key);
                 if (translated !== key) el.title = translated;
             }
         });
+        scope.querySelectorAll('[data-i18n-aria-label]').forEach(function(el) {
+            var key = el.getAttribute('data-i18n-aria-label');
+            if (key) {
+                var translated = t(key);
+                if (translated !== key) el.setAttribute('aria-label', translated);
+            }
+        });
+        // Sync <html lang> with the active language so screen readers
+        // and translation extensions get the correct hint.
+        if (document.documentElement && currentLanguage) {
+            document.documentElement.lang = currentLanguage;
+        }
     }
 
     function detectBrowserLanguage() {

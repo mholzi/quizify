@@ -3,6 +3,114 @@
 All notable changes to Quizify are documented here. This project follows
 [Semantic Versioning](https://semver.org/).
 
+## [1.1.4] — 2026-04-28
+
+QA-driven cleanup: 18 findings from a live admin/player audit, grouped
+into one release. The headlines are a critical lockout fix and an
+end-to-end i18n sweep — the rest is polish.
+
+### 🔴 Fixed (critical)
+
+- **Admin lockout when joining a game already in FINALE.** When the
+  server sent its initial state snapshot to a re-joining admin, the
+  leaderboard inside it dropped the `is_admin` flag (only the dedicated
+  `serialize_leaderboard` had it; `state.get_leaderboard` did not).
+  The reveal client gated the *Start New Game* button on
+  `currentPlayer.is_admin`, so it stayed hidden — admin had no way to
+  start a fresh game and the only recovery was the
+  `quizify.reset_admin_session` HA service. Two-pronged fix:
+  - `state.py:get_leaderboard()` now includes `is_admin`.
+  - `player-end.js:updateEndView` also trusts `state.isAdmin` (set
+    from the URL `?admin=true` flag and confirmed by the server's
+    `joined` reply), so either source unlocks the button.
+
+- **Admin sees setup screen even when server is in FINALE.** Clicking
+  *Spiel starten* would silently fail (server rejected with
+  `INVALID_ACTION`) but the optimistic UI still flipped to lobby.
+  `admin.js:handleGameState` now lands the admin directly on the
+  finale view when the server reports phase=`FINALE` on first state,
+  so the *Neues Spiel starten* button is reachable in one click.
+
+### 🟠 Fixed (i18n / data leaks)
+
+- **`<html lang>` now follows the active translation language.**
+  Previously stuck on `lang="en"` regardless of UI language; broke
+  screen readers and translation extensions.
+- **Settings summary chip is no longer stale on first paint.** Was
+  showing `Mittel · 10 Runden` without the timer; now renders the full
+  summary (incl. `30s`) on init via an explicit `updateSettingsSummary()`
+  call after i18n boot.
+- **Whole finale screen is now translatable.** `Game Over!`,
+  `Thanks for playing Quizify`, `YOUR RESULT`, `0 points`, the stat
+  labels (`Best Streak`, `Rounds Played`, `Power-Ups Used`),
+  `Full Rankings`, the highlights row (`Top Score`, `Best Streak`,
+  `Most Correct` + their unit suffixes), and the
+  `Wait for the host…` hint all flow through `data-i18n` keys now,
+  and both `en.json` and `de.json` have the full set (203 keys at
+  parity).
+
+### 🟡 Fixed (mixed-language drift)
+
+- **Admin setup screen** is now fully consistent in the picked
+  language. Was a salad of EN headings (`Category`,
+  `Difficulty`, `Rounds`, `Invite Players`) and DE chip text
+  (`Mittel`, `Schwer`, `Spieleinstellungen`). Every label now resolves
+  through i18n; the bilingual `Gemischt / Mixed` chip is gone.
+- **Lobby** translates fully too — `Spieler`, `Warte auf Spieler…`,
+  `Als Spieler beitreten` etc. now have proper keys.
+- **Player join error banner** ("Name bereits vergeben" + "Enter your
+  name to play" on the same screen) is consistent now: the language is
+  whatever the game picked, applied uniformly.
+- **Page title** (`<title>`) now reflects the actual phase
+  (`Quizify — Beitreten` / `…— Lobby` / `…— Frage 3` / `…— Auflösung` /
+  `…— Endergebnis`) rather than being stuck on `Quizify - Join Game`
+  forever. Helps users with multiple tabs open.
+- **Language picker** in admin actually re-translates the visible page
+  on click (was previously a no-op for everything except the
+  category-chip filter).
+
+### 🟡 Fixed (copy / state)
+
+- **Modal copy is context-aware.** Click *Spiel starten* from the
+  setup screen → modal says *Spiel starten* / *Starten & Beitreten*.
+  Click *Als Spieler beitreten* mid-lobby → modal says *Beitreten* /
+  *Beitreten*. Was previously stuck on "Spiel starten" even when the
+  game had already started.
+- **Setup-screen hint** updated from the misleading *"Gib deinen Namen
+  ein, dann startet das Spiel"* (no name field is on the setup screen)
+  to *"Du gibst deinen Namen im nächsten Schritt ein"*.
+- **Disconnected players from the previous game are dropped on
+  `start_game`.** Previously, `sdfsdf`, `ewrwe` etc. lingered in the
+  new game's lobby with zeroed scores. Now `state.start_game()`
+  removes any non-connected player before resetting.
+- **Player-side language sync.** When the player joins a game whose
+  `language` is German (sent in the state snapshot), the player UI
+  switches to German automatically — even if the player's browser is
+  English. Previously the per-game language only affected questions,
+  not the surrounding UI.
+
+### 🟢 Fixed (polish)
+
+- Removed the default `class="theme-dark"` on `<body>` for both
+  `admin.html` and `player.html`. Soft Parlor is light-primary; the
+  class was stale leftover from the Broadcast Living Room direction
+  and could confuse theme-aware widgets. Dark mode (when implemented)
+  toggles the class explicitly.
+- `i18n.js` now also resolves `data-i18n-aria-label` (used by the
+  reaction emoji buttons), and accepts an optional `root` parameter
+  for scoped re-translation.
+- Reveal/finale dynamic labels (`✅ Richtig`, `⏱️ Keine Antwort`,
+  `❌ Falsch`, the bonus chips like *⚡ Speed* / *🔥 Streak* / *⭐
+  Difficulty*) now flow through i18n keys instead of hardcoded German.
+
+### 📚 Files touched
+
+`game/state.py`, `game/player_registry.py`, `server/websocket.py`,
+`server/serializers.py`, `www/admin.html`, `www/player.html`,
+`www/css/styles.css`, `www/js/admin.js`, `www/js/player-core.js`,
+`www/js/player-end.js`, `www/js/i18n.js`, `www/i18n/en.json`,
+`www/i18n/de.json`, `manifest.json`, `sw.js`, `CHANGELOG.md`.
+
 ## [1.1.3] — 2026-04-25
 
 Polish release: a missing-button bug found in live play, plus two

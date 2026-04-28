@@ -1,29 +1,93 @@
 {
+  "common": {
+    "cancel": "Abbrechen",
+    "close": "Schließen",
+    "confirm": "Bestätigen",
+    "connecting": "Verbinde mit Spiel...",
+    "retry": "Erneut versuchen"
+  },
+  "join": {
+    "title": "Quizify — Beitreten",
+    "enterName": "Gib deinen Namen ein, um zu spielen",
+    "namePlaceholder": "Dein Name",
+    "joinButton": "Beitreten"
+  },
   "lobby": {
+    "title": "Lobby",
     "enterName": "Gib deinen Namen ein",
     "namePlaceholder": "Dein Name",
     "joinBtn": "Beitreten",
-    "waitingForHost": "Warte auf den Host...",
-    "players": "Spieler"
+    "waitingForHost": "Warte, bis der Host das Spiel startet…",
+    "waitingForPlayers": "Warte auf Spieler…",
+    "players": "Spieler",
+    "playersInLobby": "Spieler in der Lobby",
+    "gameLobby": "Spiel-Lobby",
+    "howToPlay": "Spielanleitung",
+    "howToPlayStep1": "Lies die Frage aufmerksam.",
+    "howToPlayStep2": "Wähle die richtige Antwort aus A, B oder C.",
+    "howToPlayStep3": "Antworte, bevor die Zeit abläuft.",
+    "howToPlayStep4": "Schnellere richtige Antworten geben mehr Punkte!",
+    "inviteFriends": "Freunde einladen",
+    "invitePlayers": "Spieler einladen",
+    "invitePlayersHint": "Teile diesen QR-Code oder Link mit deinen Freunden.",
+    "joinGameQr": "Spiel beitreten – QR-Code",
+    "scanQrHint": "Teile den QR-Code oder die URL oben",
+    "scanToJoin": "Scannen, um beizutreten",
+    "startGame": "Spiel starten",
+    "copied": "Kopiert!",
+    "away": "abwesend"
   },
   "admin": {
-    "title": "Admin-Panel",
+    "title": "Quizify Admin",
     "category": "Kategorie",
+    "categoryMixed": "Gemischt",
+    "gameSettings": "Spieleinstellungen",
     "difficulty": "Schwierigkeit",
     "rounds": "Runden",
+    "language": "Sprache",
     "invitePlayers": "Spieler einladen",
     "selfJoin": "Selbst mitspielen",
     "selfJoinPlaceholder": "Dein Name",
     "selfJoinBtn": "Beitreten",
+    "joinAsPlayer": "Als Spieler beitreten",
     "startGame": "Spiel starten",
-    "nextQuestion": "N\u00e4chste Frage",
+    "startGameHint": "Du gibst deinen Namen im nächsten Schritt ein",
+    "startGameplay": "Runde starten",
+    "startGameplayHint": "Alle verbundenen Spieler spielen die nächste Runde mit.",
+    "joinModalTitleStart": "Spiel starten",
+    "joinModalTitleJoin": "Beitreten",
+    "joinModalSubtitleStart": "Wie heißt du? Du spielst mit und kannst das Spiel steuern.",
+    "joinModalSubtitleJoin": "Wähle deinen Namen, um mitzuspielen.",
+    "joinModalBtnStart": "Starten & Beitreten",
+    "joinModalBtnJoin": "Beitreten",
+    "starting": "Starte…",
+    "nextQuestion": "Nächste Frage",
+    "nextRound": "Nächste Runde",
     "endGame": "Spiel beenden",
+    "endGameConfirm": "Spiel beenden?",
+    "endGameWarning": "Alle Spieler werden getrennt.",
     "continueBtn": "Weiter",
     "newGame": "Neues Spiel",
     "startNewGame": "Neues Spiel starten",
     "timer": "Zeit pro Frage",
     "confirmEnd": "Spiel wirklich beenden?",
-    "correct": "Richtig"
+    "correct": "Richtig",
+    "skip": "Überspringen",
+    "next": "Nächste",
+    "end": "Ende",
+    "players": "Spieler",
+    "leaderboard": "Rangliste",
+    "answerDistribution": "Antwortverteilung",
+    "allAnswers": "Alle Antworten",
+    "result": "Ergebnis",
+    "questionCounter": "Frage {current} / {total}",
+    "correctLabel": "Richtig: {answer}",
+    "answerCorrect": "Richtig",
+    "answerWrong": "Falsch",
+    "answerNone": "Keine Antwort",
+    "summaryRoundsUnit": "Runden",
+    "settingsSummary": "{difficulty} • {rounds} {roundsUnit} • {timer}s",
+    "categoriesCountPlural": "{count} Kategorien"
   },
   "categories": {
     "mixed": "Gemischt",
@@ -40,17 +104,31 @@
   "game": {
     "question": "Frage",
     "of": "von",
+    "ofLabel": "von",
     "questionCounter": "Frage {current} / {total}",
     "timerLabel": "Zeit",
     "answerA": "A",
     "answerB": "B",
     "answerC": "C",
     "correctFeedback": "Richtig!",
-    "wrongFeedback": "Falsch \u2014 die Antwort war: {answer}",
+    "wrongFeedback": "Falsch — die Antwort war: {answer}",
     "points": "Punkte",
+    "pointsLabel": "{count} Punkte",
     "streak": "Serie",
-    "streakBadge": "{count}x Serie",
-    "rank": "Platz {rank} \u2014 {score} Punkte"
+    "streakBadge": "{count}× Serie",
+    "rank": "Platz {rank} — {score} Punkte",
+    "roundLabel": "Runde",
+    "finalRound": "Letzte Runde!",
+    "submitted": "Abgeschickt",
+    "yourAnswer": "Deine Antwort",
+    "waitingForHost": "Warte auf den Host…",
+    "powerup": "Power-Up",
+    "paused": "Spiel pausiert",
+    "pausedHint": "Das Spiel geht weiter, sobald der Host zurück ist",
+    "speedBonus": "Speed",
+    "streakBonusLabel": "{count}× Serie",
+    "difficultyMultiplier": "{value}× Schwierigkeit",
+    "doublePoints": "2× Doppelpunkte"
   },
   "powerups": {
     "joker": "Joker",
@@ -63,7 +141,16 @@
   },
   "leaderboard": {
     "title": "Rangliste",
-    "pointsShort": "Pkt."
+    "pointsShort": "Pkt.",
+    "gameOver": "Spiel vorbei!",
+    "thanksForPlaying": "Danke fürs Mitspielen mit Quizify",
+    "thanksEmoji": "Danke fürs Mitspielen! 🎉",
+    "waitForHost": "Warte, bis der Host ein neues Spiel startet",
+    "fullRankings": "Gesamtwertung",
+    "bestStreak": "Beste Serie",
+    "roundsPlayed": "Gespielte Runden",
+    "powerupsUsed": "Power-Ups genutzt",
+    "standings": "Rangliste"
   },
   "podium": {
     "title": "Ergebnis",
@@ -76,35 +163,87 @@
     "copyResult": "Ergebnis kopieren",
     "copied": "Kopiert!"
   },
+  "highlights": {
+    "highlightsTab": "🎬 Highlights",
+    "topScore": "Höchste Punktzahl",
+    "bestStreak": "Beste Serie",
+    "mostCorrect": "Meiste Richtige",
+    "scoreUnit": "{count} Pkt.",
+    "streakUnit": "{count} in Folge",
+    "correctUnit": "{count} Fragen"
+  },
+  "share": {
+    "share_tab": "📤 Teilen",
+    "share_copy": "📋 Text kopieren",
+    "share_save": "📤 Karte teilen",
+    "share_copied": "Kopiert!"
+  },
+  "reveal": {
+    "yourResult": "Dein Ergebnis",
+    "correctAnswerWas": "Richtige Antwort:",
+    "funFact": "Wusstest du?",
+    "allAnswers": "Alle Antworten"
+  },
+  "reaction": {
+    "fire": "Feuer-Reaktion",
+    "laugh": "Lach-Reaktion",
+    "shocked": "Schockiert-Reaktion",
+    "applause": "Applaus-Reaktion",
+    "thinking": "Nachdenklich-Reaktion"
+  },
   "launcher": {
-    "subtitle": "Das unn\u00fctze Wissen Quiz",
+    "subtitle": "Das unnütze Wissen Quiz",
     "joinGame": "Spiel beitreten",
     "admin": "Admin",
-    "gameRunning": "Spiel l\u00e4uft",
-    "questionActive": "Spiel l\u00e4uft \u2014 Frage aktiv",
-    "answerReveal": "Spiel l\u00e4uft \u2014 Aufl\u00f6sung",
+    "gameRunning": "Spiel läuft",
+    "questionActive": "Spiel läuft — Frage aktiv",
+    "answerReveal": "Spiel läuft — Auflösung",
     "gameEnded": "Spiel beendet"
   },
   "dashboard": {
     "waitingForStart": "Warte auf Spielstart...",
-    "leaderboard": "Rangliste"
+    "leaderboard": "Rangliste",
+    "castToTv": "Auf den TV streamen"
   },
   "connection": {
     "connected": "Verbunden",
     "reconnecting": "Verbindung wird wiederhergestellt...",
     "disconnected": "Verbindung getrennt"
   },
+  "analytics": {
+    "title": "Analyse"
+  },
   "errors": {
     "NAME_TAKEN": "Name bereits vergeben",
     "NAME_INVALID": "Bitte gib einen Namen ein",
     "GAME_FULL": "Spiel ist voll",
     "GAME_NOT_STARTED": "Kein aktives Spiel",
-    "GAME_ALREADY_STARTED": "Spiel l\u00e4uft bereits",
+    "GAME_ALREADY_STARTED": "Spiel läuft bereits",
     "ALREADY_SUBMITTED": "Bereits geantwortet",
     "ROUND_EXPIRED": "Zeit abgelaufen",
     "NOT_IN_GAME": "Nicht im Spiel",
-    "INVALID_ACTION": "Ung\u00fcltige Aktion",
+    "INVALID_ACTION": "Ungültige Aktion",
     "UNKNOWN": "Ein Fehler ist aufgetreten",
-    "unknownMessageType": "Unbekannter Nachrichtentyp"
+    "unknownMessageType": "Unbekannter Nachrichtentyp",
+    "CONNECTION_LOST": "Verbindung verloren",
+    "RECONNECTING": "Verbinde wieder...",
+    "askHostNewGame": "Bitte den Host, ein neues Spiel zu starten.",
+    "askHostQr": "Bitte den Host um einen neuen QR-Code.",
+    "checkNetwork": "Stelle sicher, dass du mit dem Netzwerk verbunden bist.",
+    "connectionLostHint": "Wir konnten dich nicht wieder mit dem Spiel verbinden.",
+    "gameHasEnded": "Spiel beendet",
+    "gameInProgress": "Spiel läuft",
+    "gameInProgressHint": "Eine Runde läuft gerade. Versuch's gleich noch mal.",
+    "gameNotFound": "Spiel nicht gefunden",
+    "gameNotFoundHint": "Dieses Spiel existiert nicht oder der Link ist falsch.",
+    "thanksForPlaying": "Danke fürs Mitspielen mit Quizify!"
+  },
+  "page": {
+    "titleAdmin": "Quizify — Admin",
+    "titleJoin": "Quizify — Beitreten",
+    "titleLobby": "Quizify — Lobby",
+    "titleQuestion": "Quizify — Frage {current}",
+    "titleReveal": "Quizify — Auflösung",
+    "titleFinale": "Quizify — Endergebnis"
   }
 }

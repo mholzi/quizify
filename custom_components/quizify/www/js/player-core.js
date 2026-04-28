@@ -92,6 +92,38 @@
     }
 
     // ============================================
+    // Document title — reflects current phase so users with multiple
+    // tabs open can tell which one is active. Was previously stuck on
+    // "Quizify - Join Game" forever.
+    // ============================================
+
+    function updatePageTitle(phase, msg) {
+        if (!window.QuizifyI18n) return;
+        var t = window.QuizifyI18n.t;
+        var title;
+        switch (phase) {
+            case 'LOBBY':
+                title = state.playerName ? t('page.titleLobby') : t('page.titleJoin');
+                break;
+            case 'QUESTION_ACTIVE':
+            case 'PLAYING':
+                title = t('page.titleQuestion', { current: (msg && msg.round) || 1 });
+                break;
+            case 'ANSWER_REVEAL':
+            case 'REVEAL':
+                title = t('page.titleReveal');
+                break;
+            case 'FINALE':
+            case 'END':
+                title = t('page.titleFinale');
+                break;
+            default:
+                title = t('page.titleJoin');
+        }
+        if (title && title !== document.title) document.title = title;
+    }
+
+    // ============================================
     // Message Router
     // ============================================
 
@@ -188,6 +220,21 @@
 
     function handleGameState(msg) {
         state.currentPhase = msg.phase;
+
+        // Sync UI language with the server-side game language so a
+        // German game shows German labels even if the player's
+        // browser is English. Only triggers a reload of translations
+        // when the language actually changes.
+        if (msg.language && window.QuizifyI18n &&
+            window.QuizifyI18n.getLanguage() !== msg.language) {
+            window.QuizifyI18n.setLanguage(msg.language).then(function () {
+                window.QuizifyI18n.initPageTranslations();
+                updatePageTitle(msg.phase, msg);
+            });
+        } else {
+            updatePageTitle(msg.phase, msg);
+        }
+
         if (msg.players) lobby.handlePlayerJoined(msg);
 
         switch (msg.phase) {

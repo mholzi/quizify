@@ -10,6 +10,13 @@
     var utils = window.QuizifyUtils || {};
     var state = pu.state;
 
+    function _t(key, params) {
+        if (window.QuizifyI18n && typeof window.QuizifyI18n.t === 'function') {
+            return window.QuizifyI18n.t(key, params);
+        }
+        return key;
+    }
+
     // ============================================
     // End View
     // ============================================
@@ -46,11 +53,24 @@
         var shareData = data.share_data || (data.share_texts ? { emoji_grids: data.share_texts } : null);
         renderShareCard(shareData);
 
-        // Admin / player controls
+        // Admin / player controls.
+        //
+        // Source-of-truth: trust ``state.isAdmin`` for gating the
+        // host-only "Start New Game" button. Earlier versions only
+        // looked at ``currentPlayer.is_admin`` from the leaderboard,
+        // which created a chronic lockout: when a player joined while
+        // the server was already in FINALE, the snapshot's leaderboard
+        // (built by ``state.get_leaderboard()``) didn't include
+        // ``is_admin`` per row, so the admin's button stayed hidden.
+        // ``state.isAdmin`` is set from the URL ``?admin=true`` flag
+        // and confirmed by the server's ``joined`` reply. v1.1.4 also
+        // restores ``is_admin`` to the snapshot leaderboard, so either
+        // signal is now sufficient — but local state is authoritative.
         var adminControls = document.getElementById('end-admin-controls');
         var playerMessage = document.getElementById('end-player-message');
+        var amAdmin = !!state.isAdmin || !!(currentPlayer && currentPlayer.is_admin);
 
-        if (currentPlayer && currentPlayer.is_admin) {
+        if (amAdmin) {
             if (adminControls) adminControls.classList.remove('hidden');
             if (playerMessage) playerMessage.classList.add('hidden');
         } else {
@@ -124,7 +144,7 @@
 
         if (currentPlayer) {
             if (rankEl) rankEl.textContent = '#' + currentPlayer.rank;
-            if (scoreEl) scoreEl.textContent = currentPlayer.score + ' points';
+            if (scoreEl) scoreEl.textContent = _t('game.pointsLabel', { count: currentPlayer.score });
             if (bestStreakEl) bestStreakEl.textContent = currentPlayer.best_streak || 0;
             if (roundsEl) roundsEl.textContent = currentPlayer.rounds_played || 0;
             if (powerupsEl) powerupsEl.textContent = currentPlayer.powerups_used || 0;
@@ -146,7 +166,9 @@
         listEl.innerHTML = leaderboard.map(function (entry) {
             var currentClass = entry.is_current ? 'is-current' : '';
             var disconnectedClass = entry.connected === false ? 'final-entry--disconnected' : '';
-            var awayBadge = entry.connected === false ? '<span class="away-badge">(away)</span>' : '';
+            var awayBadge = entry.connected === false
+                ? '<span class="away-badge">(' + pu.escapeHtml(_t('lobby.away') !== 'lobby.away' ? _t('lobby.away') : 'away') + ')</span>'
+                : '';
             return '<div class="final-entry ' + currentClass + ' ' + disconnectedClass + '">' +
                 '<span class="final-rank">#' + entry.rank + '</span>' +
                 '<span class="final-name">' + pu.escapeHtml(entry.name) + awayBadge + '</span>' +
@@ -267,12 +289,22 @@
 
         // Top scorer this game
         var winner = leaderboard[0];
-        if (winner) highlights.push({ icon: '🥇', label: 'Top Score', player: winner.name, value: winner.score + ' pts' });
+        if (winner) highlights.push({
+            icon: '🥇',
+            label: _t('highlights.topScore'),
+            player: winner.name,
+            value: _t('highlights.scoreUnit', { count: winner.score }),
+        });
 
         // Longest streak
         var streakLeader = leaderboard.slice().sort(function(a,b){ return (b.streak||0)-(a.streak||0); })[0];
         if (streakLeader && streakLeader.streak > 1) {
-            highlights.push({ icon: '🔥', label: 'Best Streak', player: streakLeader.name, value: streakLeader.streak + ' in a row' });
+            highlights.push({
+                icon: '🔥',
+                label: _t('highlights.bestStreak'),
+                player: streakLeader.name,
+                value: _t('highlights.streakUnit', { count: streakLeader.streak }),
+            });
         }
 
         // Most rounds correct (from round_history if available)
@@ -281,7 +313,12 @@
             return bc - ac;
         })[0];
         if (mostCorrect && mostCorrect.rounds_correct > 0) {
-            highlights.push({ icon: '🎯', label: 'Most Correct', player: mostCorrect.name, value: mostCorrect.rounds_correct + ' questions' });
+            highlights.push({
+                icon: '🎯',
+                label: _t('highlights.mostCorrect'),
+                player: mostCorrect.name,
+                value: _t('highlights.correctUnit', { count: mostCorrect.rounds_correct }),
+            });
         }
 
         if (highlights.length === 0) { container.classList.add('hidden'); return; }

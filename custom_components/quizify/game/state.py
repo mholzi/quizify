@@ -218,6 +218,21 @@ class QuizifyGameState:
         if not self._question_bank._queue:
             raise ValueError("No questions available for the selected category/difficulty")
 
+        # Drop players who are no longer connected before resetting
+        # scores. Players who disconnected during the previous game
+        # would otherwise persist in the new lobby/leaderboard with
+        # zeroed scores, cluttering the player list and showing as
+        # ghosts. Connected players (incl. admin-as-player whose tab
+        # still has a live WS) are kept and just have scores reset.
+        # NB: list(...) snapshot — we mutate the dict during iteration.
+        stale_names = [
+            name
+            for name, player in list(self._player_registry.players.items())
+            if not player.connected
+        ]
+        for name in stale_names:
+            self._player_registry.remove_player(name)
+
         # Reset player scores
         for player in self._player_registry.players.values():
             player.reset_for_new_game()
@@ -668,7 +683,16 @@ class QuizifyGameState:
         return self._current_question
 
     def get_leaderboard(self) -> list[dict[str, Any]]:
-        """Return sorted leaderboard data."""
+        """Return sorted leaderboard data.
+
+        NB: ``is_admin`` is required so the client can determine whether
+        the current viewer is the admin (and thus should see the
+        "Start New Game" / "Next Round" buttons). It was missing from
+        this serializer in earlier versions and produced a chronic
+        admin-lockout in the FINALE state — when a game-state snapshot
+        was sent on reconnect the leaderboard had no admin marker, so
+        the player-end client gated the controls off. See v1.1.4 notes.
+        """
         players = sorted(
             self._player_registry.players.values(),
             key=lambda p: p.score,
@@ -681,6 +705,7 @@ class QuizifyGameState:
                 "score": p.score,
                 "streak": p.streak,
                 "connected": p.connected,
+                "is_admin": p.is_admin,
             }
             for i, p in enumerate(players)
         ]

@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
-    <title data-i18n="admin.title">Quizify Admin</title>
+    <title data-i18n="page.titleAdmin">Quizify — Admin</title>
     <link rel="manifest" href="/quizify/static/site.webmanifest">
     <meta name="theme-color" content="#FAF6EC">
     <meta name="apple-mobile-web-app-capable" content="yes">
@@ -18,9 +18,9 @@
     <link href="https://fonts.googleapis.com/css2?family=DM+Sans:ital,opsz,wght@0,9..40,400;0,9..40,500;0,9..40,600;0,9..40,700;1,9..40,400&family=JetBrains+Mono:wght@400;500;700&display=swap" rel="stylesheet">
     <link rel="preconnect" href="https://api.fontshare.com" crossorigin>
     <link href="https://api.fontshare.com/v2/css?f[]=cabinet-grotesk@500,700,800,900&display=swap" rel="stylesheet">
-    <link rel="stylesheet" href="/quizify/static/css/styles.css?v=1.1.3">
+    <link rel="stylesheet" href="/quizify/static/css/styles.css?v=1.1.4">
 </head>
-<body class="theme-dark">
+<body>
     <header class="admin-header">
         <h1 class="wordmark"><span class="wordmark-quiz">Quiz</span><span class="wordmark-ify">ify</span></h1>
         <div class="admin-header-actions">
@@ -40,12 +40,12 @@
                 <button type="button" class="section-header-collapsible" aria-expanded="true" aria-controls="category-content">
                     <span class="section-icon" aria-hidden="true">📂</span>
                     <span data-i18n="admin.category">Kategorie</span>
-                    <span class="section-summary" id="category-summary">Gemischt</span>
+                    <span class="section-summary" id="category-summary" data-i18n="admin.categoryMixed">Gemischt</span>
                     <span class="section-toggle" aria-hidden="true">&#x25BC;</span>
                 </button>
                 <div class="section-content" id="category-content">
                     <div class="chip-group" id="category-chips" role="group" aria-label="Category">
-                        <button type="button" class="chip active" data-value="mixed">Gemischt / Mixed</button>
+                        <button type="button" class="chip active" data-value="mixed" data-i18n="admin.categoryMixed">Gemischt</button>
                         <button type="button" class="chip" data-value="geographie" data-lang="de">Geographie</button>
                         <button type="button" class="chip" data-value="tiere-natur" data-lang="de">Tiere &amp; Natur</button>
                         <button type="button" class="chip" data-value="popkultur" data-lang="de">Popkultur</button>
@@ -72,9 +72,9 @@
                             <span data-i18n="admin.difficulty">Schwierigkeit</span>
                         </div>
                         <div class="chip-group" id="difficulty-chips" role="group" aria-label="Difficulty">
-                            <button type="button" class="chip" data-value="easy">Einfach</button>
-                            <button type="button" class="chip active" data-value="medium">Mittel</button>
-                            <button type="button" class="chip" data-value="hard">Schwer</button>
+                            <button type="button" class="chip" data-value="easy" data-i18n="difficulties.easy">Einfach</button>
+                            <button type="button" class="chip active" data-value="medium" data-i18n="difficulties.medium">Mittel</button>
+                            <button type="button" class="chip" data-value="hard" data-i18n="difficulties.hard">Schwer</button>
                         </div>
                     </div>
 
@@ -109,7 +109,7 @@
                     <div class="setting-block">
                         <div class="setting-label">
                             <span class="setting-icon" aria-hidden="true">&#x1F310;</span>
-                            <span>Sprache / Language</span>
+                            <span data-i18n="admin.language">Sprache</span>
                         </div>
                         <div class="chip-group" id="language-chips" role="group" aria-label="Language">
                             <button type="button" class="chip active" data-value="de">🇩🇪 Deutsch</button>
@@ -122,9 +122,10 @@
             <!-- Start Game button -->
             <div class="admin-actions">
                 <button type="button" id="start-game-btn" class="btn btn-primary btn-lg btn-block">
-                    ▶️ Spiel starten
+                    <span aria-hidden="true">▶️</span>
+                    <span data-i18n="admin.startGame">Spiel starten</span>
                 </button>
-                <p class="hint-text mt-sm" style="text-align:center;font-size:0.8rem;color:var(--color-text-neon-muted);">Gib deinen Namen ein, dann startet das Spiel</p>
+                <p class="hint-text mt-sm" data-i18n="admin.startGameHint" style="text-align:center;font-size:0.8rem;color:var(--color-text-neon-muted);">Du gibst deinen Namen im nächsten Schritt ein</p>
             </div>
         </div>
 
@@ -208,7 +209,7 @@
             <section class="card-section mt-md">
                 <h2 class="section-header">
                     <span class="section-icon" aria-hidden="true">&#x1F3C6;</span>
-                    <span>Rangliste</span>
+                    <span data-i18n="leaderboard.title">Rangliste</span>
                 </h2>
                 <div id="game-leaderboard" class="leaderboard"></div>
             </section>
@@ -236,7 +237,7 @@
                 <div id="reveal-question" class="question-text" style="font-size:1.1rem;"></div>
                 <div id="reveal-correct" class="admin-correct-answer"></div>
                 <div id="reveal-fun-fact" class="fun-fact-card mt-md">
-                    <div class="fun-fact-label">Wusstest du?</div>
+                    <div class="fun-fact-label" data-i18n="funFact.label">Wusstest du?</div>
                     <div class="fun-fact-text"></div>
                 </div>
             </section>
@@ -245,7 +246,7 @@
             <div id="reveal-distribution" class="card-section mt-md" style="display:none;">
                 <h2 class="section-header">
                     <span class="section-icon" aria-hidden="true">📊</span>
-                    <span>Antwortverteilung</span>
+                    <span data-i18n="admin.answerDistribution">Antwortverteilung</span>
                 </h2>
                 <!-- filled by renderAnswerDistribution() -->
             </div>
@@ -254,7 +255,7 @@
             <section class="card-section mt-md" id="reveal-answers-section" style="display:none;">
                 <h2 class="section-header">
                     <span class="section-icon" aria-hidden="true">&#x1F465;</span>
-                    <span>Alle Antworten</span>
+                    <span data-i18n="admin.allAnswers">Alle Antworten</span>
                 </h2>
                 <div id="reveal-results-cards" class="reveal-results-grid"></div>
             </section>
@@ -262,7 +263,7 @@
             <section class="card-section mt-md">
                 <h2 class="section-header">
                     <span class="section-icon" aria-hidden="true">&#x1F3C6;</span>
-                    <span>Rangliste</span>
+                    <span data-i18n="leaderboard.title">Rangliste</span>
                 </h2>
                 <div id="reveal-leaderboard" class="leaderboard"></div>
             </section>
@@ -277,7 +278,7 @@
             <section class="card-section">
                 <h2 class="section-header">
                     <span class="section-icon" aria-hidden="true">&#x1F389;</span>
-                    <span>Ergebnis</span>
+                    <span data-i18n="admin.result">Ergebnis</span>
                 </h2>
                 <div id="admin-podium" class="podium"></div>
             </section>
@@ -285,13 +286,13 @@
             <section class="card-section mt-md">
                 <h2 class="section-header">
                     <span class="section-icon" aria-hidden="true">&#x1F3C6;</span>
-                    <span>Rangliste</span>
+                    <span data-i18n="leaderboard.title">Rangliste</span>
                 </h2>
                 <div id="admin-finale-leaderboard" class="leaderboard"></div>
             </section>
 
             <div class="admin-actions lobby-actions--sticky mt-lg">
-                <button type="button" id="new-game-btn" class="btn btn-primary btn-lg btn-block" data-i18n="finale.playAgain">Neues Spiel</button>
+                <button type="button" id="new-game-btn" class="btn btn-primary btn-lg btn-block" data-i18n="admin.startNewGame">Neues Spiel starten</button>
             </div>
         </div>
 
@@ -301,8 +302,8 @@
     <div id="admin-join-modal" class="modal hidden" role="dialog" aria-modal="true" aria-labelledby="admin-join-modal-title">
         <div class="modal-backdrop"></div>
         <div class="modal-content">
-            <h2 id="admin-join-modal-title">Spiel starten</h2>
-            <p>Wie heißt du? Du spielst mit und kannst das Spiel steuern.</p>
+            <h2 id="admin-join-modal-title" data-i18n="admin.joinModalTitleStart">Spiel starten</h2>
+            <p id="admin-join-modal-subtitle" data-i18n="admin.joinModalSubtitleStart">Wie heißt du? Du spielst mit und kannst das Spiel steuern.</p>
             <div class="form-group">
                 <input type="text" id="admin-name-input" class="name-input"
                        data-i18n-placeholder="join.namePlaceholder"
@@ -311,8 +312,11 @@
                 <p id="admin-name-error" class="validation-msg hidden"></p>
             </div>
             <div class="modal-actions">
-                <button type="button" id="admin-join-btn" class="btn btn-primary" disabled>▶️ Starten &amp; Beitreten</button>
-                <button type="button" id="admin-cancel-btn" class="btn btn-secondary">Abbrechen</button>
+                <button type="button" id="admin-join-btn" class="btn btn-primary" disabled>
+                    <span aria-hidden="true">▶️</span>
+                    <span id="admin-join-btn-label" data-i18n="admin.joinModalBtnStart">Starten &amp; Beitreten</span>
+                </button>
+                <button type="button" id="admin-cancel-btn" class="btn btn-secondary" data-i18n="common.cancel">Abbrechen</button>
             </div>
         </div>
     </div>
@@ -334,13 +338,13 @@
     <div id="error-toast" class="toast hidden" role="alert" aria-live="assertive"></div>
 
     <!-- Version badge -->
-    <div class="version-badge" id="version-badge">v1.1.3</div>
+    <div class="version-badge" id="version-badge">v1.1.4</div>
 
-    <script src="/quizify/static/js/vendor/qrcode.min.js?v=1.1.3"></script>
-    <script src="/quizify/static/js/i18n.js?v=1.1.3"></script>
-    <script src="/quizify/static/js/utils.js?v=1.1.3"></script>
+    <script src="/quizify/static/js/vendor/qrcode.min.js?v=1.1.4"></script>
+    <script src="/quizify/static/js/i18n.js?v=1.1.4"></script>
+    <script src="/quizify/static/js/utils.js?v=1.1.4"></script>
 
-    <script src="/quizify/static/js/admin.js?v=1.1.3"></script>
+    <script src="/quizify/static/js/admin.js?v=1.1.4"></script>
     <script>
         if ("serviceWorker" in navigator) {
             navigator.serviceWorker.register("/quizify/static/sw.js");
