@@ -3,6 +3,68 @@
 All notable changes to Quizify are documented here. This project follows
 [Semantic Versioning](https://semver.org/).
 
+## [1.1.2] — 2026-04-28
+
+Beatify-pattern fix for the admin-as-player flow. Beatify (Quizify's
+sister app, see DESIGN.md attribution) has shipped this same flow for
+years without the lockout bugs we hit during the v1.1.0 release cycle.
+Inspecting Beatify's code revealed Quizify had been over-engineering
+the wrong layer.
+
+### 🔧 The architectural fix
+
+Quizify was cryptographically validating an admin token threaded
+through the player's join message. Beatify trusts `is_admin: true` in
+the join message at face value. Both apps have the same effective
+threat model (LAN-trusted, HA-auth-gated tunnel for remote access),
+and Beatify's simpler approach has been bulletproof in production
+while Quizify's chained-token validation produced 8 betas worth of
+lockout bugs.
+
+**Server side** (`websocket.py`):
+- `_handle_join` no longer reads `admin_token` from the message body.
+  It reads `is_admin: true` and trusts it. `player.is_admin = True`
+  is set directly, no token validation, no add to `_admin_connections`.
+- `start_game` now uses `_is_authorized_admin(ws, is_admin, game_state)`
+  instead of just the WS-level `is_admin`. This accepts both pure-admin
+  WS connections AND player WS connections whose player session has
+  `is_admin = True`. Without this change, the admin-as-player can't
+  start the game because their player WS isn't tagged at the connect
+  level. (Was a separate bug from the join-validation issue.)
+- `joined` response now includes `is_admin` so the client can confirm.
+
+**Client side** (`player-core.js`):
+- Auto-join code path (lines 70-85): drops the `sessionStorage.getItem('quizify_admin_session_token')` lookup and the `joinMsg.admin_token = adminToken` assignment. Just sends `is_admin: true`.
+- Manual `handleJoinClick`: same simplification.
+
+The `quizify_admin_session_token` in sessionStorage is still used —
+the admin tab's WS connection (`?role=admin&token=...`) still validates
+it for the pure admin-dashboard auth path. That path closes the
+original `#140`/`#142` LAN-takeover vulnerability.
+
+**Trade-off**, documented in DESIGN.md: a malicious client on the LAN
+can now claim admin by sending `is_admin: true` in the join message.
+Mitigations: home LAN is trusted; Nabu Casa already gates remote
+access; "first admin claims it" still applies. Acceptable given
+the practical attack surface (a guest at your trivia party).
+
+### 🎉 Closes 8 betas of bugs
+
+Direct consequences of this change:
+- BUG #6 (stale-token-lockout) — no longer reachable, the join path
+  doesn't validate tokens. Recovery service is still useful for the
+  admin-dashboard WS path but the catastrophic blocked state is gone.
+- The bug pattern of "browser sessionStorage and server storage drift"
+  is structurally impossible for player joins now.
+- The ~50 lines of token-threading client+server code that we kept
+  fixing across betas 6, 7, 8, 10 are deleted.
+
+### 🧹 Internal
+
+- Cache-busters and SW `CACHE_VERSION` bumped to `1.1.2`.
+
+---
+
 ## [1.1.1] — 2026-04-27
 
 Patch release closing five code-review findings from the gameplay state

@@ -69,16 +69,14 @@
                     send('reconnect', { session_token: session.token, name: session.name });
                 } else if (state.playerName) {
                     var joinMsg = { name: state.playerName };
-                    // Admin self-join: pass the admin session token so the
-                    // server can mark this player as admin. Without this,
-                    // the admin's Start Game button never appears in the
-                    // lobby and admin-as-player can't drive the game.
+                    // Admin self-join: send `is_admin: true` in the join
+                    // message. Server trusts the flag (Beatify pattern).
+                    // No more cryptographic token threading through join
+                    // — the persisted admin token is only validated for
+                    // the pure admin-dashboard WS connect, not for player
+                    // joins. See DESIGN.md for the trust model.
                     if (isAdminSelfJoin) {
-                        var adminToken = sessionStorage.getItem('quizify_admin_session_token');
-                        if (adminToken) {
-                            joinMsg.admin_token = adminToken;
-                            state.isAdmin = true;
-                        }
+                        state.isAdmin = true;
                     }
                     if (state.isAdmin) joinMsg.is_admin = true;
                     send('join', joinMsg);
@@ -486,17 +484,12 @@
 
         if (state.ws && state.ws.readyState === WebSocket.OPEN) {
             var joinMsg = { name: result.name };
-            // Admin self-join: pass the persisted admin token so the server
-            // can promote this player to admin (Start Game, Skip, Next, End
-            // controls). Without this, admin-as-player never gets the
-            // is_admin flag set on the server side.
+            // Admin self-join: server trusts `is_admin: true` in the
+            // join message (Beatify pattern). No token validation in
+            // this path — see player-core.js connect() for rationale.
             var isAdminSelfJoin = new URLSearchParams(location.search).get('admin') === 'true';
             if (isAdminSelfJoin) {
-                var adminToken = sessionStorage.getItem('quizify_admin_session_token');
-                if (adminToken) {
-                    joinMsg.admin_token = adminToken;
-                    state.isAdmin = true;
-                }
+                state.isAdmin = true;
             }
             if (state.isAdmin) joinMsg.is_admin = true;
             send('join', joinMsg);

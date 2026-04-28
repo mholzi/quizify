@@ -184,7 +184,12 @@ class QuizifyWebSocketHandler:
             await self._handle_use_powerup(ws, data, game_state)
 
         elif msg_type == "start_game":
-            if not is_admin:
+            # Accept either WS-level admin (admin tab via ?role=admin) OR
+            # player-as-admin (a player whose session has is_admin=True from
+            # the join message). Without this, the admin-as-player flow can
+            # never advance LOBBY → QUESTION_ACTIVE because the player WS
+            # isn't tagged admin at the connect level.
+            if not self._is_authorized_admin(ws, is_admin, game_state):
                 await self._conn.send_error(ws, ERR_INVALID_ACTION, "Admin only")
                 return
             await self._handle_start_game(ws, data, game_state)
@@ -276,29 +281,29 @@ class QuizifyWebSocketHandler:
             # Generate session token for reconnect
             session_token = self._conn.create_session_token(name)
 
-            # Admin-as-player: mark the player as admin if EITHER:
-            #   (a) this WebSocket itself is in the admin set (rare — happens
-            #       only if admin tab opened the player page in the same WS,
-            #       which it doesn't), OR
-            #   (b) the join message carries a valid admin_token (the player
-            #       tab passes the admin's persisted token after self-join
-            #       redirect from the admin tab).
-            # Without this, the admin-as-player Start Game button never
-            # appears in the player lobby (currentPlayer.is_admin stays
-            # false). Beta.4 only handled (a), missing the redirect path.
+            # Admin-as-player: trust `is_admin: true` in the join message.
+            #
+            # This is the Beatify pattern (which has shipped without bugs
+            # for years). Earlier Quizify releases tried to cryptographically
+            # validate an admin token threaded through the player's join
+            # message; that pattern created a brittle state machine where
+            # browser sessionStorage and server token storage could drift
+            # apart with no in-product recovery (8 betas worth of bugs).
+            #
+            # Trust trade-off: a malicious client on the LAN could send
+            # `is_admin: true` and become admin. Mitigations:
+            #   - The user's home LAN is generally trusted.
+            #   - Nabu Casa already requires HA auth to reach the
+            #     integration through its tunnel.
+            #   - "First admin claims it" still applies; only one admin
+            #     slot exists per game.
+            # The persisted admin token is still validated for the pure
+            # admin-dashboard WebSocket connect (`?role=admin&token=...`),
+            # which is the higher-stakes path. Player joins are simpler.
+            # See DESIGN.md for the full rationale.
             player_obj = game_state.get_player(name)
-            admin_token_in_join = data.get("admin_token", "")
-            is_admin_player = (
-                self._conn.is_admin_connection(ws)
-                or (admin_token_in_join
-                    and self._conn.validate_admin_token(admin_token_in_join))
-            )
-            if player_obj and is_admin_player:
+            if player_obj and data.get("is_admin"):
                 player_obj.is_admin = True
-                # Also add this WS to the admin connections set so future
-                # admin-only actions from this tab (start_game, next_question)
-                # are authorized.
-                self._conn.add_to_admin_connections(ws)
 
             # Send join confirmation with session token and assigned color
             powerup = game_state.get_player_powerup(name)
@@ -308,6 +313,7 @@ class QuizifyWebSocketHandler:
                 "powerup": powerup.value if powerup else None,
                 "session_token": session_token,
                 "color": player_obj.color if player_obj else "",
+                "is_admin": player_obj.is_admin if player_obj else False,
             })
 
             # Send current state to the joining player
