@@ -1,6 +1,6 @@
 /**
  * Quizify Player - End Module
- * End screen: podium, superlatives, share card, full leaderboard, rematch/new-game
+ * End screen: podium, superlatives, share card, full leaderboard, new-game
  */
 
 (function () {
@@ -366,29 +366,11 @@
     // Admin Actions
     // ============================================
 
-    /**
-     * Wire up rematch button
-     * @param {Function} sendFn - Function to send WS messages
-     */
-    function setupRematchButton(sendFn) {
-        var rematchBtn = document.getElementById('player-rematch-btn');
-        if (rematchBtn) {
-            rematchBtn.onclick = function () {
-                rematchBtn.disabled = true;
-                var origText = rematchBtn.textContent;
-                rematchBtn.textContent = '\u23F3';
-                sendFn('rematch', {});
-                // Server will broadcast rematch_started - button stays disabled
-                setTimeout(function () {
-                    // Fallback restore if no response
-                    if (rematchBtn.disabled) {
-                        rematchBtn.disabled = false;
-                        rematchBtn.textContent = origText;
-                    }
-                }, 10000);
-            };
-        }
-    }
+    // Rematch button removed in v1.1.3. Hosts always start a fresh
+    // game from the admin URL (which also resets player session
+    // tokens). Keeping a single primary CTA on the finale screen
+    // simplifies the host's mental model — there's exactly one
+    // post-game action.
 
     /**
      * Wire up new game button
@@ -420,7 +402,6 @@
         renderFullLeaderboard: renderFullLeaderboard,
         renderSuperlatives: renderSuperlatives,
         renderShareCard: renderShareCard,
-        setupRematchButton: setupRematchButton,
         setupNewGameButton: setupNewGameButton,
         renderHighlights: renderHighlights
     };

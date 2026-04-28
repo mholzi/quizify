@@ -20,6 +20,8 @@
     "endGame": "Spiel beenden",
     "continueBtn": "Weiter",
     "newGame": "Neues Spiel",
+    "startNewGame": "Neues Spiel starten",
+    "timer": "Zeit pro Frage",
     "confirmEnd": "Spiel wirklich beenden?",
     "correct": "Richtig"
   },

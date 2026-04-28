@@ -524,6 +524,7 @@ class QuizifyWebSocketHandler:
         difficulty = data.get("difficulty")
         num_rounds = data.get("num_rounds", 10)
         language = data.get("language", "de")
+        timer_duration = data.get("timer_duration")
 
         # category may be None (mixed), a string (single), or a list (multi)
         if isinstance(raw_category, list):
@@ -533,6 +534,17 @@ class QuizifyWebSocketHandler:
             category = raw_category or None
             categories = None
 
+        # Validate timer_duration: must be a positive int in a sane range
+        # if provided, otherwise fall back to difficulty-based default.
+        timer_value: int | None = None
+        if timer_duration is not None:
+            try:
+                timer_value = int(timer_duration)
+                if timer_value < 5 or timer_value > 300:
+                    timer_value = None
+            except (TypeError, ValueError):
+                timer_value = None
+
         try:
             game_state.start_game(
                 category=category,
@@ -540,6 +552,7 @@ class QuizifyWebSocketHandler:
                 difficulty=difficulty,
                 num_rounds=num_rounds,
                 language=language,
+                timer_duration=timer_value,
             )
         except ValueError as err:
             await self._conn.send_error(ws, ERR_GAME_ALREADY_STARTED, str(err))
@@ -807,6 +820,14 @@ class QuizifyWebSocketHandler:
                     "no_answer": True,
                 })
 
+        # Build players list with is_admin so the reveal client can show
+        # the Next Round button to admin-as-player.
+        from custom_components.quizify.server.serializers import (  # noqa: PLC0415
+            serialize_player_list,
+        )
+        players_list = serialize_player_list(game_state.get_players())
+        last_round = game_state.round >= game_state.total_rounds
+
         summary_msg = serialize_round_summary(
             correct_answer_index=correct_shuffled_idx,
             correct_answer_text=summary.correct_answer.text,
@@ -817,6 +838,8 @@ class QuizifyWebSocketHandler:
             all_answers=all_answers,
             question_text=summary.question.question,
             num_answer_options=len(game_state.shuffled_answers),
+            players=players_list,
+            last_round=last_round,
         )
         await self._conn.broadcast(summary_msg)
 

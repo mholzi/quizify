@@ -2287,21 +2287,7 @@ footer {
     background: var(--color-accent-blue-hover);
 }
 
-.player-rematch-btn {
-    background: rgba(255, 255, 255, 0.1);
-    color: var(--color-text-white);
-    border: 1px solid var(--color-border-neon);
-    border-radius: var(--radius-md);
-    padding: var(--space-md) var(--space-lg);
-    font-weight: var(--font-weight-semibold);
-    cursor: pointer;
-    transition: all var(--transition-fast);
-}
-
-.player-rematch-btn:hover:not(:disabled) {
-    background: rgba(255, 255, 255, 0.15);
-    border-color: var(--color-accent-secondary);
-}
+/* .player-rematch-btn removed in v1.1.3 — rematch flow deprecated. */
 
 /* ==========================================
    Player Page: GAME VIEW

@@ -353,7 +353,6 @@
         pu.showView('end-view');
 
         end.updateEndView(msg);
-        end.setupRematchButton(send);
         end.setupNewGameButton();
 
         // Hide bars

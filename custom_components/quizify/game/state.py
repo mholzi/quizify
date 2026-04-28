@@ -111,6 +111,11 @@ class QuizifyGameState:
         self._round_duration: float = DEFAULT_ROUND_DURATION
         self._round_summary: RoundSummary | None = None
 
+        # Optional admin-chosen timer override (seconds). When set,
+        # overrides the difficulty-derived TIME_LIMITS lookup in
+        # start_next_question. Cleared on reset_to_lobby/end_game.
+        self._timer_override: int | None = None
+
         # Broadcast callback — set by websocket layer
         self._broadcast_callback: Callable[[dict[str, Any]], Awaitable[None]] | None = None
 
@@ -177,6 +182,7 @@ class QuizifyGameState:
         difficulty: str | None = None,
         num_rounds: int = 10,
         language: str | None = None,
+        timer_duration: int | None = None,
     ) -> dict[str, Any]:
         """Start a new game session.
 
@@ -197,6 +203,7 @@ class QuizifyGameState:
         self.language = language or "de"
         self.total_rounds = num_rounds
         self.round = 0
+        self._timer_override = timer_duration
 
         # Load questions
         self._question_bank.load_all_categories()
@@ -263,12 +270,17 @@ class QuizifyGameState:
         # Record this question as shown for history tracking
         self._question_bank.record_shown(question.id)
 
-        # Determine time limit from difficulty
-        try:
-            diff_enum = Difficulty(question.difficulty)
-        except ValueError:
-            diff_enum = Difficulty.MEDIUM
-        self._round_duration = float(TIME_LIMITS.get(diff_enum, DEFAULT_ROUND_DURATION))
+        # Determine time limit. Admin-chosen timer override (set in
+        # start_game) wins over the difficulty-derived default — the
+        # picker in the admin UI lets the host pick 20/30/45s up front.
+        if self._timer_override is not None:
+            self._round_duration = float(self._timer_override)
+        else:
+            try:
+                diff_enum = Difficulty(question.difficulty)
+            except ValueError:
+                diff_enum = Difficulty.MEDIUM
+            self._round_duration = float(TIME_LIMITS.get(diff_enum, DEFAULT_ROUND_DURATION))
         self._round_start_time = time.monotonic()
 
         # Reset per-round state
@@ -551,6 +563,7 @@ class QuizifyGameState:
         self._finale_superlatives = None
         self.shuffle_map = []
         self.shuffled_answers = []
+        self._timer_override = None
 
         for player in self._player_registry.players.values():
             player.reset_for_new_game()

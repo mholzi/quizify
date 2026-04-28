@@ -166,6 +166,8 @@ def serialize_round_summary(
     all_answers: list[dict[str, Any]] | None = None,
     question_text: str = "",
     num_answer_options: int = 3,
+    players: list[dict[str, Any]] | None = None,
+    last_round: bool = False,
 ) -> dict[str, Any]:
     """Build round summary broadcast payload."""
     # Compute answer distribution from all_answers
@@ -177,8 +179,16 @@ def serialize_round_summary(
         "correct_answer": correct_answer_text,
         "fun_fact": fun_fact,
         "leaderboard": leaderboard,
+        # `players` is required by the reveal client to determine
+        # admin-as-player for showing the Next Round button. Without
+        # it, currentPlayer.is_admin can't be resolved and the
+        # button stays hidden. (Was a real bug before this version.)
+        "players": players or leaderboard,
         "round": round_num,
         "total_rounds": total_rounds,
+        # `last_round` flag so the reveal can swap the Next Round
+        # button label to "Final Results" on the last round.
+        "last_round": last_round,
         "all_answers": all_answers or [],
         "answer_distribution": answer_distribution,
         "question_text": question_text,

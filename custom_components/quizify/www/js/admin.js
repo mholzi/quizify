@@ -18,6 +18,7 @@
     let selectedDifficulty = 'medium';
     let selectedRounds = 10;
     let selectedLanguage = 'de';
+    let selectedTimer = 30;  // seconds per question (20 / 30 / 45)
 
     // Game state
     let currentPhase = 'LOBBY';
@@ -55,6 +56,7 @@
         categorySummary: document.getElementById('category-summary'),
         difficultyChips: document.getElementById('difficulty-chips'),
         roundsChips: document.getElementById('rounds-chips'),
+        timerChips: document.getElementById('timer-chips'),
         languageChips: document.getElementById('language-chips'),
         gameSettingsSummary: document.getElementById('game-settings-summary'),
         qrContainer: document.getElementById('qr-container'),
@@ -182,7 +184,7 @@
         if (!els.gameSettingsSummary) return;
         var diffChip = els.difficultyChips ? els.difficultyChips.querySelector('.chip.active') : null;
         var diffLabel = diffChip ? diffChip.textContent : 'Mittel';
-        els.gameSettingsSummary.innerHTML = diffLabel + ' &bull; ' + selectedRounds + ' Runden';
+        els.gameSettingsSummary.innerHTML = diffLabel + ' &bull; ' + selectedRounds + ' Runden &bull; ' + selectedTimer + 's';
     }
 
     setupCategoryChips(els.categoryChips);
@@ -192,6 +194,10 @@
     });
     setupChips(els.roundsChips, function (v) {
         selectedRounds = parseInt(v, 10);
+        updateSettingsSummary();
+    });
+    setupChips(els.timerChips, function (v) {
+        selectedTimer = parseInt(v, 10);
         updateSettingsSummary();
     });
     setupChips(els.languageChips, function (v) {
@@ -663,6 +669,7 @@
             difficulty: selectedDifficulty === 'mixed' ? null : selectedDifficulty,
             num_rounds: selectedRounds,
             language: selectedLanguage,
+            timer_duration: selectedTimer,
         });
 
         // Safety timeout: if for any reason the server doesn't respond in

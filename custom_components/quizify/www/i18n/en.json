@@ -20,6 +20,8 @@
     "endGame": "End Game",
     "continueBtn": "Continue",
     "newGame": "New Game",
+    "startNewGame": "Start New Game",
+    "timer": "Time per Question",
     "confirmEnd": "Really end the game?",
     "correct": "Correct"
   },

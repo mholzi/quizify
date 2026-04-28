@@ -3,6 +3,44 @@
 All notable changes to Quizify are documented here. This project follows
 [Semantic Versioning](https://semver.org/).
 
+## [1.1.3] — 2026-04-25
+
+Polish release: a missing-button bug found in live play, plus two
+admin-UX requests.
+
+### 🐛 Fixed
+
+- **Next Round button hidden after a finished round.** The reveal
+  client renders the host's "Next Round" button only when it can find
+  the current player in `data.players` and read `is_admin: true`. The
+  `round_summary` broadcast didn't include `players` at all — it sent
+  `leaderboard`, which strips `is_admin`. Result: admin saw the reveal
+  but no way to advance. Fixed by adding `players` (full player list,
+  preserving `is_admin`) and `last_round` to the `round_summary` payload
+  via `serialize_round_summary` and `_broadcast_round_summary`.
+
+### ✨ Changed
+
+- **Removed the Rematch button** from the finale screen. Quizify is
+  not a rematch-style game — categories and difficulty are picked per
+  session, so "Rematch" was just a confusingly-named "Start New Game".
+  Now there's only **Start New Game**, which returns to the lobby with
+  fresh settings. (`player.html`, `player-end.js`,
+  `player-core.js`, `styles.css`.)
+
+### ✨ Added
+
+- **Timer length picker** in admin setup: 20s / 30s / 45s chips next to
+  Difficulty / Rounds / Language. The chosen value flows
+  `admin.js → start_game → websocket._handle_start_game →
+  state.start_game(timer_duration=…) → _round_duration` and overrides
+  the difficulty-derived TIME_LIMITS lookup for the whole game. Server
+  validates the value (must be int, 5–300s) and falls back to the
+  difficulty default if invalid. Default remains 30s.
+
+  i18n keys: `admin.timer` ("Zeit pro Frage" / "Time per Question") and
+  `admin.startNewGame` ("Neues Spiel starten" / "Start New Game").
+
 ## [1.1.2] — 2026-04-28
 
 Beatify-pattern fix for the admin-as-player flow. Beatify (Quizify's
