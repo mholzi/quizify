@@ -4,7 +4,6 @@
 
 # ---- Dev / build frameworks ----
 .claude/
-scripts/
 docs/
 .playwright-mcp/
 
@@ -56,3 +55,9 @@ Thumbs.db
 # ---- Misc ----
 *.bak
 .gstack/
+
+# ---- Standalone dev server state (scripts/dev_server.py) ----
+.quizify-data/
+
+# ---- Local QA venv ----
+.qa-venv/

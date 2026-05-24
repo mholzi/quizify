@@ -9,7 +9,7 @@
 Turn any gathering into a trivia battle. Players scan, questions fly, everyone competes. No app needed.
 
 [![Home Assistant](https://img.shields.io/badge/Home%20Assistant-2024.1+-41BDF5?style=for-the-badge&logo=homeassistant&logoColor=white)](https://www.home-assistant.io/)
-[![Version](https://img.shields.io/badge/Version-1.0.32-ff00ff?style=for-the-badge)](https://github.com/mholzi/quizify/releases)
+[![Version](https://img.shields.io/badge/Version-1.1.5-ff00ff?style=for-the-badge)](https://github.com/mholzi/quizify/releases)
 [![License](https://img.shields.io/badge/License-MIT-green?style=for-the-badge)](LICENSE)
 
 [**Get Started**](#installation) • [**How to Play**](#how-to-play) • [**Question Packs**](#question-packs)

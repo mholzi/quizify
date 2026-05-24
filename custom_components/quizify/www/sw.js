@@ -14,7 +14,16 @@
  */
 'use strict';
 
-var CACHE_VERSION = 'quizify-v1.1.4';
+var CACHE_VERSION = 'quizify-v1.1.5';
+
+// Listen for SKIP_WAITING from the page (sw-update.js posts it when the
+// user clicks "Reload" in the update banner). Without this the new SW
+// would idle as "waiting" until every tab closes.
+self.addEventListener('message', function (event) {
+    if (event.data && event.data.type === 'SKIP_WAITING') {
+        self.skipWaiting();
+    }
+});
 var MAX_CACHE_ITEMS = 60;
 
 // Critical assets to precache on install

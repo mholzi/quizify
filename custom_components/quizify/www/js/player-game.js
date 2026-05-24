@@ -97,6 +97,12 @@
      * Render question text and answer buttons
      * @param {Object} data - Question data with text, answers, category
      */
+    // Wager gate (gameplay idea #3). On the final round we block the
+    // answer buttons until the player submits a wager. Without this
+    // gate the player could just tap their answer instantly and never
+    // commit to a bet — which would defeat the Jeopardy-final tension.
+    var _wagerGate = { active: false, submitted: false };
+
     function renderQuestion(data) {
         var questionText = document.getElementById('question-text');
         var questionCategory = document.getElementById('question-category');
@@ -105,8 +111,13 @@
         if (questionText) questionText.textContent = data.question_text || '';
         if (questionCategory) questionCategory.textContent = data.category || '';
 
+        // Wager round detection — set BEFORE we touch buttons so we can
+        // disable them up-front, then enable once the wager is in.
+        _wagerGate.active = !!data.is_final_round;
+        _wagerGate.submitted = false;
+        _renderWagerPanel(data.is_final_round, data.player_score || 0);
+
         if (answerButtons) {
-            var labels = ['A', 'B', 'C'];
             var answers = data.answers || [];
             var buttons = answerButtons.querySelectorAll('.answer-btn');
 
@@ -126,7 +137,8 @@
                     btn.disabled = true;
                     btn.classList.remove('is-selected', 'is-correct', 'is-wrong', 'is-eliminated', 'hidden');
                 } else {
-                    btn.disabled = false;
+                    // Wager round: keep buttons disabled until wager submitted.
+                    btn.disabled = _wagerGate.active && !_wagerGate.submitted;
                     btn.classList.remove('is-selected', 'is-correct', 'is-wrong', 'is-eliminated', 'hidden');
                 }
             }
@@ -135,6 +147,70 @@
         // Show/hide submitted confirmation
         var confirmation = document.getElementById('submitted-confirmation');
         if (confirmation) confirmation.classList.toggle('hidden', !hasSubmitted);
+    }
+
+    function _renderWagerPanel(isFinal, currentScore) {
+        var panel = document.getElementById('wager-panel');
+        if (!panel) return;
+
+        var t = (window.QuizifyI18n && window.QuizifyI18n.t) || function (k) { return k; };
+
+        if (!isFinal) {
+            panel.classList.add('hidden');
+            return;
+        }
+        panel.classList.remove('hidden');
+
+        var titleEl = document.getElementById('wager-panel-title');
+        var hintEl = document.getElementById('wager-panel-hint');
+        var slider = document.getElementById('wager-slider');
+        var valueEl = document.getElementById('wager-value');
+        var bankEl = document.getElementById('wager-bank');
+        var submitBtn = document.getElementById('wager-submit-btn');
+
+        if (titleEl) titleEl.textContent = t('wager.title');
+        if (hintEl) hintEl.textContent = t('wager.hint');
+        if (bankEl) bankEl.textContent = currentScore;
+        if (slider) {
+            slider.value = '25';  // sensible default — quarter of bank
+            slider.disabled = false;
+        }
+
+        function syncValue() {
+            var pct = parseInt(slider.value, 10);
+            var pts = Math.floor(currentScore * pct / 100);
+            if (valueEl) valueEl.textContent = pct + '% (' + pts + ' Pkt.)';
+        }
+        if (slider && valueEl) {
+            slider.oninput = syncValue;
+            syncValue();
+        }
+
+        if (submitBtn) {
+            submitBtn.disabled = false;
+            submitBtn.textContent = t('wager.submit');
+            submitBtn.onclick = function () {
+                if (_wagerGate.submitted) return;
+                _wagerGate.submitted = true;
+                submitBtn.disabled = true;
+                if (slider) slider.disabled = true;
+                // Send via the player-core send() function.
+                var send = window.QuizifyPlayer && window.QuizifyPlayer.send;
+                if (send) send('submit_wager', { wager: parseInt(slider.value, 10) });
+                // Unlock answer buttons.
+                var answerButtons = document.getElementById('answer-buttons');
+                if (answerButtons) {
+                    answerButtons.querySelectorAll('.answer-btn').forEach(function (b) {
+                        b.disabled = false;
+                    });
+                }
+                // Collapse the panel into a smaller "wager: 25%" badge so
+                // the player remembers what they bet during the question.
+                panel.classList.add('wager-panel--collapsed');
+                if (titleEl) titleEl.textContent = t('wager.locked', { pct: parseInt(slider.value, 10) });
+                if (hintEl) hintEl.textContent = '';
+            };
+        }
     }
 
     // ============================================
@@ -457,19 +533,33 @@
     }
 
     /**
-     * Update leaderboard summary badge
+     * Update leaderboard summary badge.
+     *
+     * Shows the leader plus a "+N more" hint so a player below 1st place
+     * knows the list expands. Without the hint, the collapsed summary
+     * just reads "Alice: 19" and players 2-N have no signal that the
+     * full board exists. Singular vs plural matters in German ("1
+     * weiterer" / "2 weitere").
      */
     function updateLeaderboardSummary(leaderboard) {
         var summaryIds = ['leaderboard-summary', 'reveal-leaderboard-summary'];
+        var t = (window.QuizifyI18n && window.QuizifyI18n.t) || function (k) { return k; };
 
         summaryIds.forEach(function (id) {
             var summaryEl = document.getElementById(id);
             if (!summaryEl || !leaderboard || leaderboard.length === 0) return;
 
             var leader = leaderboard[0];
-            if (leader) {
-                summaryEl.textContent = leader.name + ': ' + leader.score;
+            if (!leader) return;
+
+            var summary = leader.name + ': ' + leader.score;
+            var others = leaderboard.length - 1;
+            if (others === 1) {
+                summary += '  ' + t('lobby.andOthersOne');
+            } else if (others > 1) {
+                summary += '  ' + t('lobby.andOthers', { count: others });
             }
+            summaryEl.textContent = summary;
         });
     }
 

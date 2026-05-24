@@ -10,23 +10,42 @@ from .player import PlayerSession
 
 @dataclass
 class Superlative:
-    """A single end-of-game award."""
+    """A single end-of-game award.
 
-    award: str  # e.g. "Fastest Finger"
+    Carries i18n keys + interpolation params so the client can render in
+    whatever language the player picked. Plain `award`/`detail` strings
+    are also emitted as English fallbacks for any consumer that doesn't
+    speak the i18n protocol yet.
+    """
+
+    award: str  # English fallback, e.g. "Fastest Finger"
     icon: str  # emoji
     winner: str  # player name
-    detail: str  # e.g. "avg 4.2s per correct answer"
+    detail: str  # English fallback, e.g. "avg 4.2s per correct answer"
+    award_key: str = ""  # e.g. "highlights.awards.fastestFinger"
+    detail_key: str = ""  # e.g. "highlights.details.fastestFinger"
+    detail_params: dict | None = None  # interpolation values for detail_key
 
-    def to_dict(self) -> dict[str, str]:
+    def to_dict(self) -> dict:
         return {
             "award": self.award,
             "icon": self.icon,
             "winner": self.winner,
             "detail": self.detail,
+            "award_key": self.award_key,
+            "detail_key": self.detail_key,
+            "detail_params": self.detail_params or {},
         }
 
 
 MIN_ROUNDS = 3
+# Threshold for "Most Accurate" award. The previous "Perfect Round" name
+# was misleading because the criterion was just "highest ratio" — a player
+# with 4/9 correct (44%) walked away with a "💯 PERFECT ROUND" trophy.
+# Rename + tighten: still award the best ratio, but only when it's
+# genuinely high (≥ 60%). Lowering bumps it from "ironic prize" to
+# "earned compliment."
+MOST_ACCURATE_MIN_RATIO = 0.60
 
 
 def compute_superlatives(players: list[PlayerSession]) -> list[Superlative]:
@@ -45,11 +64,27 @@ def compute_superlatives(players: list[PlayerSession]) -> list[Superlative]:
     awarded: set[str] = set()
     results: list[Superlative] = []
 
-    def _try_award(award: str, icon: str, detail: str, winner: str | None) -> None:
+    def _try_award(
+        award: str,
+        icon: str,
+        detail: str,
+        winner: str | None,
+        award_key: str = "",
+        detail_key: str = "",
+        detail_params: dict | None = None,
+    ) -> None:
         if winner is None or winner in awarded:
             return
         awarded.add(winner)
-        results.append(Superlative(award=award, icon=icon, winner=winner, detail=detail))
+        results.append(Superlative(
+            award=award,
+            icon=icon,
+            winner=winner,
+            detail=detail,
+            award_key=award_key,
+            detail_key=detail_key,
+            detail_params=detail_params,
+        ))
 
     # --- Fastest Finger: lowest average answer time (correct answers only) ---
     best_avg_time: float | None = None
@@ -69,6 +104,9 @@ def compute_superlatives(players: list[PlayerSession]) -> list[Superlative]:
             "⚡",
             f"avg {best_avg_time:.1f}s per correct answer",
             fastest_player,
+            award_key="highlights.awards.fastestFinger",
+            detail_key="highlights.details.fastestFinger",
+            detail_params={"avg": f"{best_avg_time:.1f}"},
         )
 
     # --- Comeback King: biggest score improvement second half vs first half ---
@@ -94,6 +132,9 @@ def compute_superlatives(players: list[PlayerSession]) -> list[Superlative]:
             "🚀",
             f"+{best_comeback} pts in the second half",
             comeback_player,
+            award_key="highlights.awards.comebackKing",
+            detail_key="highlights.details.comebackKing",
+            detail_params={"points": best_comeback},
         )
 
     # --- Hot Streak: longest streak achieved during the game ---
@@ -112,9 +153,13 @@ def compute_superlatives(players: list[PlayerSession]) -> list[Superlative]:
             "🔥",
             f"{best_streak} correct in a row",
             streak_player,
+            award_key="highlights.awards.hotStreak",
+            detail_key="highlights.details.hotStreak",
+            detail_params={"count": best_streak},
         )
 
-    # --- Perfect Round: highest correct-answer ratio (or most correct) ---
+    # --- Most Accurate: highest correct-answer ratio above MOST_ACCURATE_MIN_RATIO ---
+    # (renamed from "Perfect Round" to match the actual logic — see threshold above)
     best_ratio = 0.0
     best_correct = 0
     perfect_player: str | None = None
@@ -133,13 +178,25 @@ def compute_superlatives(players: list[PlayerSession]) -> list[Superlative]:
             perfect_player = p.name
             perfect_player_obj = p
 
-    if perfect_player and perfect_player_obj and best_correct >= 2:
+    if (
+        perfect_player
+        and perfect_player_obj
+        and best_correct >= 2
+        and best_ratio >= MOST_ACCURATE_MIN_RATIO
+    ):
         pct = int(best_ratio * 100)
         _try_award(
-            "Perfect Round",
-            "💯",
+            "Most Accurate",
+            "🎯",
             f"{best_correct}/{len(perfect_player_obj.round_history)} correct ({pct}%)",
             perfect_player,
+            award_key="highlights.awards.mostAccurate",
+            detail_key="highlights.details.mostAccurate",
+            detail_params={
+                "correct": best_correct,
+                "total": len(perfect_player_obj.round_history),
+                "pct": pct,
+            },
         )
 
     # --- Buzzkill: most freeze power-ups used against others ---
@@ -158,6 +215,9 @@ def compute_superlatives(players: list[PlayerSession]) -> list[Superlative]:
             "🧊",
             f"{most_freezes} freeze{'s' if most_freezes != 1 else ''} used",
             buzzkill_player,
+            award_key="highlights.awards.buzzkill",
+            detail_key="highlights.details.buzzkill",
+            detail_params={"count": most_freezes},
         )
 
     # --- Knowledge Expert: highest score on hard questions only ---
@@ -176,6 +236,9 @@ def compute_superlatives(players: list[PlayerSession]) -> list[Superlative]:
             "🧠",
             f"{best_hard} pts on hard questions",
             expert_player,
+            award_key="highlights.awards.knowledgeExpert",
+            detail_key="highlights.details.knowledgeExpert",
+            detail_params={"points": best_hard},
         )
 
     return results

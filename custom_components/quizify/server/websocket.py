@@ -11,7 +11,6 @@ from typing import TYPE_CHECKING, Any
 from aiohttp import WSMsgType, web
 
 from custom_components.quizify.const import (
-    DOMAIN,
     ERR_ALREADY_SUBMITTED,
     ERR_GAME_ALREADY_STARTED,
     ERR_GAME_FULL,
@@ -28,7 +27,6 @@ from custom_components.quizify.game.powerups import PowerUpEffect, PowerUpType
 from custom_components.quizify.game.state import AnswerResult, GamePhase, QuizifyGameState
 from custom_components.quizify.server.connection import ConnectionManager
 from custom_components.quizify.server.serializers import (
-    get_game_state,
     serialize_finale,
     serialize_leaderboard,
     serialize_player_list,
@@ -38,7 +36,9 @@ from custom_components.quizify.server.serializers import (
 )
 
 if TYPE_CHECKING:
-    from homeassistant.core import HomeAssistant
+    from collections.abc import Callable
+
+    from ..runtime import Runtime
 
 _LOGGER = logging.getLogger(__name__)
 
@@ -48,11 +48,20 @@ class QuizifyWebSocketHandler:
 
     HEARTBEAT_INTERVAL = 30
 
-    def __init__(self, hass: HomeAssistant) -> None:
+    def __init__(
+        self,
+        runtime: Runtime,
+        game_state_provider: "Callable[[], QuizifyGameState | None]",
+    ) -> None:
         """Initialize handler."""
-        self.hass = hass
-        self._conn = ConnectionManager(hass)
+        self._runtime = runtime
+        self._get_game_state = game_state_provider
+        self._conn = ConnectionManager(runtime, game_state_provider)
         self._timer_tick_task: asyncio.Task | None = None
+        # Optional TTS announcer. Set by __init__.py / dev_server after
+        # construction so the handler doesn't have to know about HA
+        # services. Calling announce_milestone on None is the no-op path.
+        self._tts_announcer = None
         # Rate limiting
         self._message_timestamps: dict[int, list[float]] = {}  # ws id -> recent message timestamps
         self._RATE_LIMIT_WINDOW = 1.0  # seconds
@@ -96,9 +105,20 @@ class QuizifyWebSocketHandler:
                     "token. If this was NOT you, reset the integration.",
                     request.remote,
                 )
-            else:
+            elif admin_token:
+                # A token was presented but failed validation — this is the
+                # interesting signal (real intrusion attempt or stale token).
                 _LOGGER.warning(
-                    "Admin connection attempt without valid token rejected (ip=%s)",
+                    "Admin connection attempt with INVALID token rejected (ip=%s)",
+                    request.remote,
+                )
+            else:
+                # No token presented and one is already on disk — the most
+                # common cause is a fresh browser tab on the home LAN, not
+                # an attack. Log at DEBUG so it doesn't drown the real
+                # signal above. The connection still gets player role only.
+                _LOGGER.debug(
+                    "Admin connection attempt without token (ip=%s)",
                     request.remote,
                 )
 
@@ -162,7 +182,7 @@ class QuizifyWebSocketHandler:
     ) -> None:
         """Route incoming WebSocket message."""
         msg_type = data.get("type")
-        game_state = get_game_state(self.hass)
+        game_state = self._get_game_state()
 
         if not game_state:
             await self._conn.send_error(ws, ERR_GAME_NOT_STARTED, "No active game")
@@ -206,6 +226,24 @@ class QuizifyWebSocketHandler:
                 return
             await self._handle_end_game(ws, game_state)
 
+        elif msg_type == "play_again":
+            if not self._is_authorized_admin(ws, is_admin, game_state):
+                await self._conn.send_error(ws, ERR_INVALID_ACTION, "Admin only")
+                return
+            await self._handle_play_again(ws, game_state)
+
+        elif msg_type == "pause_game":
+            if not self._is_authorized_admin(ws, is_admin, game_state):
+                await self._conn.send_error(ws, ERR_INVALID_ACTION, "Admin only")
+                return
+            await self._handle_pause_game(ws, game_state)
+
+        elif msg_type == "resume_game":
+            if not self._is_authorized_admin(ws, is_admin, game_state):
+                await self._conn.send_error(ws, ERR_INVALID_ACTION, "Admin only")
+                return
+            await self._handle_resume_game(ws, game_state)
+
         elif msg_type == "reset_game":
             if not self._is_authorized_admin(ws, is_admin, game_state):
                 await self._conn.send_error(ws, ERR_INVALID_ACTION, "Admin only")
@@ -218,6 +256,12 @@ class QuizifyWebSocketHandler:
                 return
             await self._handle_next_question(ws, game_state)
 
+        elif msg_type == "kick_player":
+            if not self._is_authorized_admin(ws, is_admin, game_state):
+                await self._conn.send_error(ws, ERR_INVALID_ACTION, "Admin only")
+                return
+            await self._handle_kick_player(ws, data, game_state)
+
         elif msg_type == "reconnect":
             await self._handle_reconnect(ws, data, game_state)
 
@@ -225,6 +269,12 @@ class QuizifyWebSocketHandler:
             state_msg = game_state.get_state_snapshot()
             state_msg["type"] = "game_state"
             await self._conn._safe_send(ws, state_msg)
+
+        elif msg_type == "reaction":
+            await self._handle_reaction(ws, data, game_state)
+
+        elif msg_type == "submit_wager":
+            await self._handle_submit_wager(ws, data, game_state)
 
         else:
             _LOGGER.warning("Unknown message type: %s", msg_type)
@@ -368,6 +418,19 @@ class QuizifyWebSocketHandler:
 
         _LOGGER.info("Player session-reconnected: %s", name)
 
+        # If we paused on admin disconnect and this is the admin coming
+        # back, auto-resume the game so players don't sit on the paused
+        # screen wondering. Resume only when WE caused the pause —
+        # leave admin-initiated pauses alone.
+        if (
+            player.is_admin
+            and game_state.phase == GamePhase.PAUSED
+            and game_state.get_pause_reason() == "admin_disconnected"
+        ):
+            if game_state.resume():
+                self._start_timer_tick(game_state)
+                _LOGGER.info("Auto-resumed after admin reconnect")
+
         # Generate a fresh token and revoke old one
         new_token = self._conn.rotate_session_token(token, name)
 
@@ -414,9 +477,11 @@ class QuizifyWebSocketHandler:
             await self._conn.send_error(ws, ERR_INVALID_ACTION, "Invalid answer index")
             return
 
-        # Map shuffled index back to original index
-        if 0 <= shuffled_index < len(game_state.shuffle_map):
-            original_index = game_state.shuffle_map[shuffled_index]
+        # Map shuffled index back to original index — use the player's
+        # own shuffle (anti-cheat per-player), falling back to canonical.
+        player_shuffle = game_state.get_player_shuffle(player.name)
+        if 0 <= shuffled_index < len(player_shuffle):
+            original_index = player_shuffle[shuffled_index]
         else:
             await self._conn.send_error(ws, ERR_INVALID_ACTION, "Answer index out of range")
             return
@@ -433,7 +498,21 @@ class QuizifyWebSocketHandler:
                 "difficulty_multiplier": result.difficulty_multiplier,
                 "new_streak": result.new_streak,
                 "new_total": result.new_total,
+                "milestone_bonus": result.milestone_bonus,
+                "milestone_streak": result.milestone_streak,
             })
+            # Broadcast a celebration event whenever a milestone hits so
+            # the TV/admin view can flash and other players see the moment.
+            if result.milestone_bonus:
+                await self._conn.broadcast({
+                    "type": "streak_milestone",
+                    "player_name": player.name,
+                    "streak": result.milestone_streak,
+                    "bonus": result.milestone_bonus,
+                })
+                # Also speak it if TTS is configured. Cheap to look up; the
+                # announcer no-ops if no TTS entity is set.
+                self._notify_tts_milestone(player.name, result.milestone_streak)
             # NB: round-summary broadcast is fired exclusively by
             # state._fire_broadcast("round_evaluated") \u2192 broadcast_state().
             # Do NOT broadcast here \u2014 that would double-fire when the timer
@@ -452,6 +531,125 @@ class QuizifyWebSocketHandler:
     # ------------------------------------------------------------------
     # Power-ups
     # ------------------------------------------------------------------
+
+    # ------------------------------------------------------------------
+    # Reactions (gameplay idea #11)
+    # ------------------------------------------------------------------
+
+    # Max reaction-bonus points a single correct answerer can collect per
+    # round. Without a cap, a 6-player room could pile 5 reactors × 1 pt =
+    # +5, which dwarfs the base 10-point scoring. Cap at 3 so reactions
+    # feel like a meaningful "tip your hat" without breaking the scoring.
+    _REACTION_BONUS_CAP_PER_ROUND = 3
+
+    async def _handle_reaction(
+        self, ws: web.WebSocketResponse, data: dict, game_state: QuizifyGameState
+    ) -> None:
+        """Broadcast an emoji reaction. If the reaction comes in during
+        ANSWER_REVEAL, also award a +1 bonus to each correct answerer
+        from that round — cheap "audience appreciation" mechanic. The
+        reactor themselves can only grant one such bonus per round
+        (tracked on PlayerSession.reaction_bonuses_given), and each
+        correct answerer caps at _REACTION_BONUS_CAP_PER_ROUND incoming
+        bonuses so a 6-player room can't pile 5 free points on the
+        leader every reveal."""
+        reactor = game_state.get_player_by_ws(ws)
+        if not reactor:
+            return  # silent: reactions are best-effort, not a hard error
+
+        emoji = data.get("emoji", "")
+        if not isinstance(emoji, str) or not (1 <= len(emoji) <= 8):
+            return  # ignore malformed
+
+        # Broadcast the visual reaction unconditionally so floating
+        # animations work in any phase.
+        await self._conn.broadcast({
+            "type": "reaction",
+            "emoji": emoji,
+            "player_name": reactor.name,
+        })
+
+        # Bonus path: only during reveal, only once per round per reactor.
+        if game_state.phase != GamePhase.ANSWER_REVEAL:
+            return
+        summary = game_state.get_round_summary()
+        if summary is None:
+            return
+        round_num = game_state.round
+        if round_num in reactor.reaction_bonuses_given:
+            return  # already granted a bonus this round
+        reactor.reaction_bonuses_given.add(round_num)
+
+        # Award +1 to each player who answered correctly this round,
+        # respecting the per-round incoming cap.
+        bonus_recipients: list[str] = []
+        for result in summary.results:
+            if not result.correct:
+                continue
+            recipient = game_state.get_player(result.player_id)
+            if not recipient or recipient.name == reactor.name:
+                continue  # can't tip your own hat
+            # Lazy bookkeeping: stash the per-round inbound counter on
+            # the player object (separate from `reaction_bonuses_given`
+            # which tracks OUTGOING bonuses). Using a dict so the data
+            # doesn't have to migrate to the dataclass schema.
+            bonuses_in = getattr(recipient, "_reaction_bonuses_received", None) or {}
+            if bonuses_in.get(round_num, 0) >= self._REACTION_BONUS_CAP_PER_ROUND:
+                continue
+            bonuses_in[round_num] = bonuses_in.get(round_num, 0) + 1
+            recipient._reaction_bonuses_received = bonuses_in  # type: ignore[attr-defined]
+            recipient.score += 1
+            recipient.round_score += 1
+            bonus_recipients.append(recipient.name)
+
+        if bonus_recipients:
+            # Broadcast a leaderboard update so phones see the bonus tick.
+            leaderboard = serialize_leaderboard(game_state.get_players())
+            await self._conn.broadcast({
+                "type": "reaction_bonus",
+                "from_player": reactor.name,
+                "to_players": bonus_recipients,
+                "leaderboard": leaderboard,
+            })
+
+    # ------------------------------------------------------------------
+    # Wager (gameplay idea #3 — Jeopardy-style final round)
+    # ------------------------------------------------------------------
+
+    async def _handle_submit_wager(
+        self, ws: web.WebSocketResponse, data: dict, game_state: QuizifyGameState
+    ) -> None:
+        """Accept a player's wager for the final round. Only valid when
+        we're on the last round and still in QUESTION_ACTIVE. The wager
+        is a PERCENT (0-100) of the player's current score — server
+        translates to absolute points at evaluation time so the
+        percentage stays meaningful even after a late-arriving reaction
+        bonus shifts scores."""
+        player = game_state.get_player_by_ws(ws)
+        if not player:
+            await self._conn.send_error(ws, ERR_NOT_IN_GAME, "Not in game")
+            return
+
+        if game_state.phase != GamePhase.QUESTION_ACTIVE:
+            return  # silent: wager window closed
+        if game_state.round != game_state.total_rounds:
+            return  # only final round accepts a wager
+
+        wager = data.get("wager")
+        try:
+            wager_int = int(wager)
+        except (TypeError, ValueError):
+            await self._conn.send_error(ws, ERR_INVALID_ACTION, "Invalid wager")
+            return
+        if not 0 <= wager_int <= 100:
+            await self._conn.send_error(ws, ERR_INVALID_ACTION, "Wager must be 0-100")
+            return
+
+        player.wager = wager_int
+        await self._conn._safe_send(ws, {
+            "type": "wager_accepted",
+            "wager": wager_int,
+        })
 
     async def _handle_use_powerup(
         self, ws: web.WebSocketResponse, data: dict, game_state: QuizifyGameState
@@ -558,6 +756,18 @@ class QuizifyWebSocketHandler:
             await self._conn.send_error(ws, ERR_GAME_ALREADY_STARTED, str(err))
             return
 
+        # Grace period before round 1's timer starts.
+        # The admin-as-player flow redirects the admin tab from /quizify/admin
+        # to /quizify/player AFTER sending start_game. That navigation +
+        # WebSocket reconnect + i18n init typically costs ~1.5-2.5s, during
+        # which the timer is already ticking on the server. Without a buffer
+        # the admin lands on round 1 with ~25s left on a 30s timer — much
+        # harder to land a fast answer, and especially harsh for the player
+        # who just spent time typing their name in the modal. Subsequent
+        # rounds (Next Round button click) don't have this gap since the
+        # admin is already on the player view.
+        await asyncio.sleep(2.5)
+
         # Start the first question
         await self._start_next_question(game_state)
 
@@ -591,6 +801,59 @@ class QuizifyWebSocketHandler:
     # Admin: reset game
     # ------------------------------------------------------------------
 
+    async def _handle_pause_game(
+        self, ws: web.WebSocketResponse, game_state: QuizifyGameState
+    ) -> None:
+        """Pause the current question. No-op if not in QUESTION_ACTIVE."""
+        if not game_state.pause(reason="admin_paused"):
+            return  # Silent no-op — UI can call this anytime
+        # Stop sending tick updates while paused.
+        self._cancel_timer_tick()
+        state = game_state.get_state_snapshot()
+        state["type"] = "game_state"
+        state["pause_reason"] = "admin_paused"
+        await self._conn.broadcast(state)
+
+    async def _handle_resume_game(
+        self, ws: web.WebSocketResponse, game_state: QuizifyGameState
+    ) -> None:
+        """Resume from PAUSED → restart timer ticks and broadcast state."""
+        if not game_state.resume():
+            return
+        state = game_state.get_state_snapshot()
+        state["type"] = "game_state"
+        await self._conn.broadcast(state)
+        # Restart the per-player tick loop.
+        self._start_timer_tick(game_state)
+
+    async def _handle_play_again(
+        self, ws: web.WebSocketResponse, game_state: QuizifyGameState
+    ) -> None:
+        """Restart with the previous game's settings — one-tap rematch.
+
+        Cheaper than full reset_game + admin re-enters everything: keeps
+        the existing players, just resets scores and starts the next game
+        with the cached settings. If we don't have a snapshot yet (server
+        never saw a start_game on this instance), fall back to reset.
+        """
+        if not getattr(game_state, "_last_settings", None):
+            await self._handle_reset_game(ws, game_state)
+            return
+        settings = game_state._last_settings
+        self._cancel_timer_tick()
+        # Reset to LOBBY first so start_game's phase guard passes; keeps
+        # players (reset_to_lobby leaves connected players in place).
+        game_state.reset_to_lobby()
+        try:
+            game_state.start_game(**settings)
+        except ValueError as err:
+            await self._conn.send_error(ws, ERR_GAME_ALREADY_STARTED, str(err))
+            return
+        # Same 2.5s grace as L3 — admin tab is still on the finale view
+        # and needs to redirect/reconnect before round 1's timer ticks.
+        await asyncio.sleep(2.5)
+        await self._start_next_question(game_state)
+
     async def _handle_reset_game(
         self, ws: web.WebSocketResponse, game_state: QuizifyGameState
     ) -> None:
@@ -616,6 +879,59 @@ class QuizifyWebSocketHandler:
         await self._conn.broadcast(state)
 
     # ------------------------------------------------------------------
+    # Admin: kick player
+    # ------------------------------------------------------------------
+
+    async def _handle_kick_player(
+        self, ws: web.WebSocketResponse, data: dict, game_state: QuizifyGameState
+    ) -> None:
+        """Remove a player from the lobby. LOBBY-only — kicking mid-game
+        would orphan their score and surprise everyone watching the TV.
+        Admins can always end the game first if they want a hard reset.
+        """
+        if game_state.phase != GamePhase.LOBBY:
+            await self._conn.send_error(
+                ws, ERR_INVALID_ACTION, "Players can only be kicked from the lobby"
+            )
+            return
+
+        target_name = (data.get("player_name") or data.get("name") or "").strip()
+        if not target_name:
+            await self._conn.send_error(ws, ERR_INVALID_ACTION, "Missing player_name")
+            return
+
+        target = game_state.get_player(target_name)
+        if not target:
+            await self._conn.send_error(ws, ERR_INVALID_ACTION, "Player not found")
+            return
+
+        if target.is_admin:
+            await self._conn.send_error(ws, ERR_INVALID_ACTION, "Cannot kick the admin")
+            return
+
+        # Close the target's WS politely so their client gets the signal and
+        # can show "you were removed" instead of looking offline. We don't
+        # rely on the closed event reaching us — remove_player flushes state
+        # immediately and the WS cleanup path is idempotent.
+        target_ws = target.ws
+        game_state.remove_player(target.name)
+        self._conn.clear_player_tokens(target.name)
+
+        if target_ws is not None and not target_ws.closed:
+            try:
+                await target_ws.send_json({"type": "kicked", "reason": "removed_by_admin"})
+                await target_ws.close()
+            except Exception as err:  # noqa: BLE001
+                _LOGGER.debug("Closing kicked player WS raised: %s", err)
+
+        _LOGGER.info("Admin kicked player: %s", target.name)
+
+        await self._conn.broadcast({
+            "type": "player_left",
+            "players": serialize_player_list(game_state.get_players()),
+        })
+
+    # ------------------------------------------------------------------
     # Question flow
     # ------------------------------------------------------------------
 
@@ -630,20 +946,38 @@ class QuizifyWebSocketHandler:
                 await self._broadcast_finale(game_state)
             return
 
-        # Shuffle answers — build mapping
+        # Canonical shuffle — used by admin/dashboard and as a fallback.
         indices = list(range(len(question.answers)))
         random.shuffle(indices)
         game_state.set_round_shuffle(indices, [question.answers[i].text for i in indices])
 
-        # Broadcast question to players (no correct flag)
-        player_msg = serialize_question_for_player(
-            question=question,
-            shuffled_answers=game_state.shuffled_answers,
-            round_num=game_state.round,
-            total_rounds=game_state.total_rounds,
-            timer_duration=game_state.round_duration,
-        )
-        await self._conn.broadcast_to_players(player_msg)
+        # Per-player shuffles: each phone sees A/B/C in its own order
+        # (anti-cheat — couch neighbours can't shout "B!"). The
+        # submit_answer path uses player.name to look this up.
+        game_state.clear_player_shuffles()
+        players_now = game_state.get_players()
+        for player in players_now:
+            player_indices = list(range(len(question.answers)))
+            random.shuffle(player_indices)
+            game_state.set_player_shuffle(player.name, player_indices)
+
+        # Send question per-player so each gets their own shuffled order.
+        is_final = game_state.round == game_state.total_rounds
+        for player in players_now:
+            if not player.connected:
+                continue
+            shuffle = game_state.get_player_shuffle(player.name)
+            shuffled_answers = [question.answers[i].text for i in shuffle]
+            player_msg = serialize_question_for_player(
+                question=question,
+                shuffled_answers=shuffled_answers,
+                round_num=game_state.round,
+                total_rounds=game_state.total_rounds,
+                timer_duration=game_state.round_duration,
+                is_final_round=is_final,
+                player_score=player.score,
+            )
+            await self._conn._safe_send(player.ws, player_msg)
 
         # Send question with correct answer to admin
         admin_msg = serialize_question_for_admin(
@@ -737,13 +1071,22 @@ class QuizifyWebSocketHandler:
                             })
                     await asyncio.sleep(0.5)
 
-                    # Stop if everyone's timer hit zero and phase is still active
-                    if players and all(
-                        (game_state.get_player_timer(p.name) is None
-                         or game_state.get_player_timer(p.name).is_expired())
-                        for p in players
-                    ):
-                        break
+                    # Stop if everyone's timer hit zero and phase is still active.
+                    # Only count CONNECTED players with a timer — a missing timer
+                    # used to be treated as "expired", which made the loop break
+                    # the instant a single late-joining player (e.g. admin's own
+                    # /quizify/player tab) connected before their per-player
+                    # timer existed, ending round 1 in ~1s. Now we require an
+                    # actual expired timer to count, and we ignore disconnected
+                    # players so they don't keep the timer alive forever.
+                    connected = [p for p in players if p.connected]
+                    if connected:
+                        timers_with_state = [
+                            game_state.get_player_timer(p.name) for p in connected
+                        ]
+                        timers_with_state = [t for t in timers_with_state if t is not None]
+                        if timers_with_state and all(t.is_expired() for t in timers_with_state):
+                            break
 
                 # Timer expired globally
                 if game_state.phase == GamePhase.QUESTION_ACTIVE:
@@ -785,22 +1128,25 @@ class QuizifyWebSocketHandler:
 
         leaderboard = serialize_leaderboard(game_state.get_players())
 
-        # Build all_answers: what each player answered this round
+        # Build all_answers: what each player answered this round.
+        # answer_index is the ORIGINAL question index (not shuffled) —
+        # with per-player shuffles, a shuffled index is meaningless to
+        # any other player. The client uses answer_text for display and
+        # correct_answer_text for highlighting their own button.
         all_answers = []
         for player in game_state.get_players():
             if player.submitted and player.current_answer is not None:
                 submitted_orig = player.current_answer
-                submitted_shuffled = None
-                for sh_idx, orig_idx in enumerate(game_state.shuffle_map):
-                    if orig_idx == submitted_orig:
-                        submitted_shuffled = sh_idx
-                        break
-                answer_text = game_state.shuffled_answers[submitted_shuffled] if submitted_shuffled is not None else "?"
+                answer_text = (
+                    summary.question.answers[submitted_orig].text
+                    if 0 <= submitted_orig < len(summary.question.answers)
+                    else "?"
+                )
                 is_correct = summary.question.answers[submitted_orig].correct if submitted_orig < len(summary.question.answers) else False
                 breakdown = player.round_score_breakdown
                 all_answers.append({
                     "player_name": player.name,
-                    "answer_index": submitted_shuffled,
+                    "answer_index": submitted_orig,  # original index, not shuffled
                     "answer_text": answer_text,
                     "correct": is_correct,
                     "points_earned": player.round_score,
@@ -840,6 +1186,7 @@ class QuizifyWebSocketHandler:
             num_answer_options=len(game_state.shuffled_answers),
             players=players_list,
             last_round=last_round,
+            question_id=summary.question.id,
         )
         await self._conn.broadcast(summary_msg)
 
@@ -849,7 +1196,7 @@ class QuizifyWebSocketHandler:
 
     async def _handle_disconnect(self, ws: web.WebSocketResponse) -> None:
         """Handle WebSocket disconnection."""
-        game_state = get_game_state(self.hass)
+        game_state = self._get_game_state()
         if not game_state:
             return
 
@@ -871,6 +1218,24 @@ class QuizifyWebSocketHandler:
         player.connected = False
         _LOGGER.info("Player disconnected: %s", player.name)
 
+        # Host-disconnect graceful recovery: if the admin-as-player tab
+        # drops mid-question, pause the game instead of letting the timer
+        # run out while everyone wonders what happened. The admin's
+        # PLAYER_SESSION_GRACE (60s by default) gives them time to reload
+        # or switch networks; if they don't come back, the existing
+        # remove-after-timeout below cleans up and the game can be
+        # resumed by another path.
+        if (
+            player.is_admin
+            and game_state.phase == GamePhase.QUESTION_ACTIVE
+            and game_state.pause(reason="admin_disconnected")
+        ):
+            self._cancel_timer_tick()
+            state = game_state.get_state_snapshot()
+            state["type"] = "game_state"
+            state["pause_reason"] = "admin_disconnected"
+            await self._conn.broadcast(state)
+
         # Broadcast updated player list
         players = game_state.get_players()
         await self._conn.broadcast({
@@ -887,7 +1252,7 @@ class QuizifyWebSocketHandler:
 
         async def remove_after_timeout(name: str, timeout: float) -> None:
             await asyncio.sleep(timeout)
-            gs = get_game_state(self.hass)
+            gs = self._get_game_state()
             if gs:
                 p = gs.get_player(name)
                 if p and not p.connected:
@@ -913,6 +1278,21 @@ class QuizifyWebSocketHandler:
         """Return True if the connection is authorized to perform admin actions."""
         player = game_state.get_player_by_ws(ws)
         return is_admin or bool(player and player.is_admin)
+
+    def _notify_tts_milestone(self, player_name: str, streak: int) -> None:
+        """Forward a milestone hit to the TTS announcer if one is wired.
+
+        Kept as a no-op when ``_tts_announcer`` is None (standalone dev
+        server, HA setup without TTS configured) so the handler doesn't
+        have to thread an Optional everywhere.
+        """
+        announcer = self._tts_announcer
+        if announcer is None:
+            return
+        try:
+            announcer.announce_milestone(player_name, streak)
+        except Exception as err:  # noqa: BLE001
+            _LOGGER.warning("TTS milestone announcement raised: %s", err)
 
     # ------------------------------------------------------------------
     # Finale broadcast helper
@@ -941,18 +1321,18 @@ class QuizifyWebSocketHandler:
         if payload is not None:
             event = payload.get("event")
             if event == "round_evaluated":
-                game_state = get_game_state(self.hass)
+                game_state = self._get_game_state()
                 if game_state:
                     await self._broadcast_round_summary(game_state)
                 return
             if event == "game_ended":
-                game_state = get_game_state(self.hass)
+                game_state = self._get_game_state()
                 if game_state:
                     await self._broadcast_finale(game_state)
                 return
 
         # Default: broadcast full state
-        game_state = get_game_state(self.hass)
+        game_state = self._get_game_state()
         if game_state:
             state = game_state.get_state_snapshot()
             state["type"] = "game_state"

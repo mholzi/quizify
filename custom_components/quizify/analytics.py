@@ -16,7 +16,7 @@ from pathlib import Path
 from typing import TYPE_CHECKING, Any, TypedDict
 
 if TYPE_CHECKING:
-    from homeassistant.core import HomeAssistant
+    from .runtime import Runtime
 
 _LOGGER = logging.getLogger(__name__)
 
@@ -42,35 +42,92 @@ class GameRecord(TypedDict):
     winner: str
 
 
+class PlayerAllTimeRecord(TypedDict):
+    """Aggregated stats for one player across every game they played."""
+
+    name: str
+    games_played: int
+    total_score: int
+    wins: int  # games where this player was the leader
+    best_streak: int
+    streak_milestones_hit: int
+    last_played: int  # unix seconds
+
+
 class AnalyticsData(TypedDict):
     """Complete analytics data schema."""
 
     version: int
     games: list[GameRecord]
+    # Rolled up at record_game time. Kept inside the same JSON file so a
+    # single load gives the dashboard everything; pruning never touches
+    # this map so all-time means all-time.
+    all_time_players: dict[str, PlayerAllTimeRecord]
 
 
 class QuizifyAnalytics:
     """Analytics storage with async file I/O and atomic writes."""
 
-    def __init__(self, hass: HomeAssistant) -> None:
+    def __init__(self, runtime: Runtime) -> None:
         """Initialize analytics storage."""
-        self._hass = hass
-        self._path = Path(hass.config.path("quizify", "analytics.json"))
+        self._runtime = runtime
+        self._path = runtime.data_dir / "analytics.json"
         self._data: AnalyticsData = self._empty_data()
         self._games_since_prune = 0
         self._save_lock = asyncio.Lock()
 
     def _empty_data(self) -> AnalyticsData:
         """Return empty analytics data structure."""
-        return {"version": 1, "games": []}
+        return {"version": 2, "games": [], "all_time_players": {}}
+
+    def _migrate(self, data: dict[str, Any]) -> AnalyticsData:
+        """Bring an on-disk record up to the current schema.
+
+        v1 → v2 added ``all_time_players``. Rebuild it from the existing
+        game history so users who upgrade get instant all-time stats
+        without losing their record.
+        """
+        data.setdefault("games", [])
+        if "all_time_players" not in data:
+            all_time: dict[str, PlayerAllTimeRecord] = {}
+            for g in data["games"]:
+                scores = g.get("player_scores") or {}
+                winner = g.get("winner") or ""
+                ended_at = int(g.get("ended_at", 0))
+                for name, score in scores.items():
+                    rec = all_time.get(name)
+                    if rec is None:
+                        rec = {
+                            "name": name,
+                            "games_played": 0,
+                            "total_score": 0,
+                            "wins": 0,
+                            "best_streak": 0,
+                            "streak_milestones_hit": 0,
+                            "last_played": 0,
+                        }
+                        all_time[name] = rec
+                    rec["games_played"] += 1
+                    rec["total_score"] += int(score)
+                    if name == winner:
+                        rec["wins"] += 1
+                    rec["last_played"] = max(rec["last_played"], ended_at)
+            data["all_time_players"] = all_time
+        data["version"] = 2
+        return data  # type: ignore[return-value]
 
     async def load(self) -> None:
         """Load analytics data from file."""
         try:
             if self._path.exists():
-                content = await self._hass.async_add_executor_job(self._path.read_text)
-                self._data = json.loads(content)
-                _LOGGER.debug("Loaded analytics: %d games", len(self._data.get("games", [])))
+                content = await self._runtime.run_in_executor(self._path.read_text)
+                raw = json.loads(content)
+                self._data = self._migrate(raw)
+                _LOGGER.debug(
+                    "Loaded analytics: %d games, %d all-time players",
+                    len(self._data.get("games", [])),
+                    len(self._data.get("all_time_players", {})),
+                )
                 await self._prune_old_records()
             else:
                 self._data = self._empty_data()
@@ -83,9 +140,10 @@ class QuizifyAnalytics:
         """Persist analytics data with atomic write."""
         async with self._save_lock:
             try:
-                await self._hass.async_add_executor_job(
-                    self._path.parent.mkdir, 0o755, True, True
-                )
+                def _mkdir() -> None:
+                    self._path.parent.mkdir(mode=0o755, parents=True, exist_ok=True)
+
+                await self._runtime.run_in_executor(_mkdir)
                 temp_path = self._path.with_suffix(".tmp")
                 content = json.dumps(self._data, indent=2)
 
@@ -93,7 +151,7 @@ class QuizifyAnalytics:
                     temp_path.write_text(content)
                     os.replace(temp_path, self._path)
 
-                await self._hass.async_add_executor_job(_write_atomic)
+                await self._runtime.run_in_executor(_write_atomic)
             except OSError as err:
                 _LOGGER.error("Failed to save analytics: %s", err)
 
@@ -116,8 +174,14 @@ class QuizifyAnalytics:
         players: dict[str, int],
         duration_seconds: int,
         started_at: int | None = None,
+        player_details: dict[str, dict[str, Any]] | None = None,
     ) -> None:
-        """Record a completed game."""
+        """Record a completed game.
+
+        ``player_details`` is optional and carries per-player stats that
+        aren't in the score-only dict: ``best_streak``, ``streak_milestones_hit``.
+        When omitted the rollup uses score only.
+        """
         now = int(time.time())
         player_count = len(players)
         avg_score = sum(players.values()) / player_count if player_count > 0 else 0
@@ -138,6 +202,12 @@ class QuizifyAnalytics:
             "winner": winner,
         }
         await self.add_game(record)
+        self._roll_into_all_time(
+            players=players,
+            winner=winner,
+            ended_at=now,
+            player_details=player_details or {},
+        )
         _LOGGER.info(
             "Game %s recorded: %d players, %d rounds, winner=%s",
             game_id,
@@ -145,6 +215,49 @@ class QuizifyAnalytics:
             num_rounds,
             winner,
         )
+
+    def _roll_into_all_time(
+        self,
+        players: dict[str, int],
+        winner: str,
+        ended_at: int,
+        player_details: dict[str, dict[str, Any]],
+    ) -> None:
+        """Merge this game's per-player numbers into the all-time map."""
+        all_time = self._data.setdefault("all_time_players", {})
+        for name, score in players.items():
+            rec = all_time.get(name)
+            if rec is None:
+                rec = {
+                    "name": name,
+                    "games_played": 0,
+                    "total_score": 0,
+                    "wins": 0,
+                    "best_streak": 0,
+                    "streak_milestones_hit": 0,
+                    "last_played": 0,
+                }
+                all_time[name] = rec
+            rec["games_played"] += 1
+            rec["total_score"] += int(score)
+            if name == winner:
+                rec["wins"] += 1
+            rec["last_played"] = max(rec["last_played"], ended_at)
+            details = player_details.get(name) or {}
+            game_best = int(details.get("best_streak", 0) or 0)
+            if game_best > rec["best_streak"]:
+                rec["best_streak"] = game_best
+            rec["streak_milestones_hit"] += int(
+                details.get("streak_milestones_hit", 0) or 0
+            )
+
+    def get_all_time_leaderboard(
+        self, limit: int | None = 25
+    ) -> list[PlayerAllTimeRecord]:
+        """Sorted all-time leaderboard. By total score, ties broken by wins."""
+        records = list(self._data.get("all_time_players", {}).values())
+        records.sort(key=lambda r: (r["total_score"], r["wins"]), reverse=True)
+        return records[:limit] if limit else records
 
     async def add_game(self, record: GameRecord) -> None:
         """Add game record and schedule save."""

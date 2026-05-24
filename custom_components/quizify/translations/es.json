@@ -3,7 +3,7 @@
         "step": {
             "user": {
                 "title": "Configurar Quizify",
-                "description": "Quizify es un juego de preguntas multijugador de conocimientos inútiles para Home Assistant."
+                "description": "Quizify es un juego de preguntas multijugador para Home Assistant. Los jugadores se unen desde sus móviles vía código QR; el televisor muestra la vista del anfitrión."
             }
         },
         "error": {
@@ -11,6 +11,30 @@
         },
         "abort": {
             "already_configured": "Quizify ya está configurado."
+        }
+    },
+    "options": {
+        "step": {
+            "init": {
+                "title": "Opciones de Quizify",
+                "description": "Integraciones opcionales de Home Assistant. Deja los campos vacíos para omitirlas — Quizify funciona perfectamente sin ellas.",
+                "data": {
+                    "party_light_entities": "Luces de fiesta",
+                    "tts_entity": "Proveedor de texto a voz",
+                    "media_player_entity": "Reproductor para TTS"
+                },
+                "data_description": {
+                    "party_light_entities": "Luces que cambian de color con la fase de la ronda (coral en pregunta, salvia en revelación, sol en final).",
+                    "tts_entity": "Entidad TTS (p. ej. tts.google_translate_say) para anuncios de hitos y resultados.",
+                    "media_player_entity": "Altavoz por el que se reproduce el audio TTS. Obligatorio si se configura un proveedor TTS."
+                }
+            }
+        }
+    },
+    "services": {
+        "reset_admin_session": {
+            "name": "Restablecer sesión de administrador",
+            "description": "Borra el token de sesión de administrador guardado. Úsalo si no puedes acceder al panel de administración porque el token está desincronizado. La próxima conexión de administrador generará un token nuevo."
         }
     }
 }

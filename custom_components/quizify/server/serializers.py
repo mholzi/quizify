@@ -4,19 +4,10 @@ from __future__ import annotations
 
 from typing import TYPE_CHECKING, Any
 
-from custom_components.quizify.const import DOMAIN
-
 if TYPE_CHECKING:
-    from homeassistant.core import HomeAssistant
-
     from custom_components.quizify.game.player import PlayerSession
     from custom_components.quizify.game.questions import Answer, Question
     from custom_components.quizify.game.state import QuizifyGameState
-
-
-def get_game_state(hass: HomeAssistant) -> QuizifyGameState | None:
-    """Look up the active QuizifyGameState from hass.data."""
-    return hass.data.get(DOMAIN, {}).get("game")
 
 
 def build_game_status_response(
@@ -44,8 +35,16 @@ def serialize_question_for_player(
     round_num: int,
     total_rounds: int,
     timer_duration: float,
+    is_final_round: bool = False,
+    player_score: int = 0,
 ) -> dict[str, Any]:
-    """Serialize a question for player broadcast (no correct flag)."""
+    """Serialize a question for player broadcast (no correct flag).
+
+    ``is_final_round`` tells the client to render the wager UI before
+    enabling the answer buttons (gameplay idea #3). ``player_score`` is
+    the per-player current score so the wager picker can show "Wagering
+    25 of 92 points" without an extra fetch.
+    """
     return {
         "type": "question_started",
         "question_text": question.question,
@@ -55,6 +54,8 @@ def serialize_question_for_player(
         "total_rounds": total_rounds,
         "category": question.category,
         "difficulty": question.difficulty,
+        "is_final_round": is_final_round,
+        "player_score": player_score,
     }
 
 
@@ -109,6 +110,13 @@ def serialize_leaderboard(players: list[PlayerSession]) -> list[dict[str, Any]]:
             "color": p.color,
             "is_admin": p.is_admin,
             "submitted": p.submitted,
+            # Whole-game stats — read by the finale screen
+            # (player-end.js looks for these exact keys; without them the
+            # "BESTE SERIE / GESPIELTE RUNDEN / POWER-UPS GENUTZT" cards
+            # all displayed 0 for everyone).
+            "best_streak": p.max_streak,
+            "rounds_played": len(p.round_history),
+            "powerups_used": p.powerups_used,
         })
     return result
 
@@ -168,6 +176,7 @@ def serialize_round_summary(
     num_answer_options: int = 3,
     players: list[dict[str, Any]] | None = None,
     last_round: bool = False,
+    question_id: str = "",
 ) -> dict[str, Any]:
     """Build round summary broadcast payload."""
     # Compute answer distribution from all_answers
@@ -177,6 +186,10 @@ def serialize_round_summary(
         "type": "round_summary",
         "correct_answer_index": correct_answer_index,
         "correct_answer": correct_answer_text,
+        # question_id flows to the client so the 🚩 flag-question button
+        # can POST it back to /api/quizify/flag-question for the pack
+        # maintainer to triage.
+        "question_id": question_id,
         "fun_fact": fun_fact,
         "leaderboard": leaderboard,
         # `players` is required by the reveal client to determine

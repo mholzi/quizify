@@ -3,7 +3,7 @@
         "step": {
             "user": {
                 "title": "Quizify einrichten",
-                "description": "Quizify ist ein Multiplayer-Quizspiel für unnützes Wissen für Home Assistant."
+                "description": "Quizify ist ein Multiplayer-Quizspiel für Home Assistant. Spieler treten per QR-Code von ihren Handys bei; der Fernseher zeigt die Host-Ansicht."
             }
         },
         "error": {
@@ -11,6 +11,30 @@
         },
         "abort": {
             "already_configured": "Quizify ist bereits konfiguriert."
+        }
+    },
+    "options": {
+        "step": {
+            "init": {
+                "title": "Quizify-Optionen",
+                "description": "Optionale Home-Assistant-Integrationen. Felder leer lassen, um sie zu überspringen — Quizify funktioniert auch ohne sie vollständig.",
+                "data": {
+                    "party_light_entities": "Party-Lichter",
+                    "tts_entity": "Text-zu-Sprache-Dienst",
+                    "media_player_entity": "Mediaplayer für TTS"
+                },
+                "data_description": {
+                    "party_light_entities": "Lichter, die mit der Spielphase mitleuchten (Koralle bei Frage, Salbei bei Auflösung, Sonne im Finale).",
+                    "tts_entity": "TTS-Entity (z. B. tts.google_translate_say) für Ansagen bei Meilensteinen und Rundenergebnissen.",
+                    "media_player_entity": "Lautsprecher, über den die TTS-Ansage abgespielt wird. Pflicht, wenn ein TTS-Dienst gesetzt ist."
+                }
+            }
+        }
+    },
+    "services": {
+        "reset_admin_session": {
+            "name": "Admin-Sitzung zurücksetzen",
+            "description": "Löscht das gespeicherte Admin-Session-Token. Nutze dies, wenn du nicht auf das Admin-Panel zugreifen kannst, weil das gespeicherte Token nicht mehr synchron ist. Die nächste Admin-Verbindung erzeugt ein neues Token."
         }
     }
 }

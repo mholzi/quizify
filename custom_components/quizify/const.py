@@ -31,3 +31,11 @@ ANSWERS_PER_QUESTION = 3
 
 # Question bank configuration
 QUESTIONS_DIR = "quizify/questions"
+
+# Options-flow config keys. Held in ConfigEntry.options (not .data) so
+# users can change them without re-creating the integration. All three
+# are optional — when unset, the corresponding HA-integration feature
+# (party lights / TTS announcements) silently no-ops.
+CONF_PARTY_LIGHT_ENTITIES = "party_light_entities"  # list[str], domain=light
+CONF_TTS_ENTITY = "tts_entity"  # str, single, domain=tts
+CONF_MEDIA_PLAYER_ENTITY = "media_player_entity"  # str, single, domain=media_player

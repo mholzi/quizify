@@ -55,12 +55,14 @@
     ];
 
     function showView(viewId) {
+        var revealedEl = null;
         for (var i = 0; i < viewIds.length; i++) {
             var el = document.getElementById(viewIds[i]);
             if (el) {
                 if (viewIds[i] === viewId) {
                     el.classList.remove('hidden');
                     el.classList.add('active');
+                    revealedEl = el;
                 } else {
                     el.classList.add('hidden');
                     el.classList.remove('active');
@@ -68,6 +70,16 @@
             }
         }
         state.currentView = viewId;
+
+        // Re-run i18n on the view we just revealed. The page-wide
+        // initPageTranslations runs once on load, but buttons inside views
+        // that start hidden (#next-round-btn in #reveal-view, etc.) skip
+        // translation if our translator looks at offsetParent — and even
+        // when it doesn't, swapping languages later won't reach them until
+        // we re-translate. Cheap to do per view-show.
+        if (revealedEl && window.QuizifyI18n && window.QuizifyI18n.isReady()) {
+            window.QuizifyI18n.initPageTranslations(revealedEl);
+        }
 
         // Auto-focus name input on join view
         if (viewId === 'join-view') {

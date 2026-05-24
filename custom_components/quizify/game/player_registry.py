@@ -106,6 +106,19 @@ class PlayerRegistry:
                     existing_player.connected = True
                     _LOGGER.info("Player reconnected by name (lobby): %s", existing_name)
                     return True, None
+                # Stale connected flag — the browser reloaded but
+                # _handle_disconnect hasn't fired yet, so the slot still looks
+                # taken. If the old WS is genuinely dead, allow takeover so
+                # the user isn't stuck staring at "Name taken" while their own
+                # ghost session lingers (Beatify #646).
+                if existing_player.ws is None or existing_player.ws.closed:
+                    _LOGGER.info(
+                        "Player %s: stale connected flag, old WS closed — allowing rejoin",
+                        existing_name,
+                    )
+                    existing_player.ws = ws
+                    existing_player.connected = True
+                    return True, None
                 return False, ERR_NAME_TAKEN
 
         # Check player limit
@@ -183,27 +196,45 @@ class PlayerRegistry:
         ]
 
     def all_submitted(self) -> bool:
-        """Check if all connected players have submitted their answer.
+        """Check if all genuinely-active players have submitted their answer.
 
-        Late-joiners (who entered the game mid-round) are excluded from this
-        check \u2014 otherwise a new player arriving after most answers are in
-        would force the round to run the full timer duration even though all
-        the actual participants are done (#11 in logical review).
+        Uses ``is_active`` (connected + WS open) rather than the raw
+        ``connected`` flag so a stale ghost (closed WebSocket whose
+        _handle_disconnect hasn't fired yet) can't block early reveal for
+        the whole room.
+
+        Late-joiners (who entered the game mid-round) are excluded \u2014
+        otherwise a new player arriving after most answers are in would
+        force the round to run the full timer duration even though all the
+        actual participants are done.
         """
         participants = [
             p for p in self.players.values()
-            if p.connected and not p.joined_late
+            if p.is_active and not p.joined_late
         ]
         if not participants:
             return False
         return all(p.submitted for p in participants)
 
     def get_average_score(self) -> int:
-        """Calculate average score of all current players."""
-        if not self.players:
+        """Average score for seeding late joiners.
+
+        Uses only players who have completed at least one round so that
+        joining late doesn't inherit a 0-inflated average from other
+        late joiners who themselves haven't played yet.
+        """
+        scored_players = [p for p in self.players.values() if p.rounds_played > 0]
+        if not scored_players:
             return 0
-        total = sum(p.score for p in self.players.values())
-        return round(total / len(self.players))
+        total = sum(p.score for p in scored_players)
+        return round(total / len(scored_players))
+
+    def clear_all_sessions(self) -> None:
+        """Wipe session_id \u2192 name map (for clean game reset)."""
+        count = len(self._sessions)
+        self._sessions.clear()
+        if count:
+            _LOGGER.info("Cleared %d player sessions", count)
 
     def set_admin(self, name: str) -> bool:
         """Set a player as admin."""

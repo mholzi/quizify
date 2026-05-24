@@ -29,14 +29,22 @@ from .player_registry import PlayerRegistry
 from .powerups import FREEZE_DURATION, TIME_BOOST_DURATION, PowerUpEffect, PowerUpManager, PowerUpType
 from .questions import Answer, Question, QuestionBank
 from .highlights import compute_superlatives
-from .scoring import BASE_POINTS, MAX_SPEED_BONUS, calculate_podium, calculate_round_score, get_streak_multiplier
+from .scoring import (
+    BASE_POINTS,
+    MAX_SPEED_BONUS,
+    calculate_podium,
+    calculate_round_score,
+    get_streak_milestone_bonus,
+    get_streak_multiplier,
+)
 from .share import build_share_data
 from .timer import QuestionTimer
 from .types import DIFFICULTY_MULTIPLIERS, TIME_LIMITS, Difficulty
 
 if TYPE_CHECKING:
     from aiohttp import web
-    from homeassistant.core import HomeAssistant
+
+    from ..runtime import Runtime
 
 _LOGGER = logging.getLogger(__name__)
 
@@ -48,6 +56,11 @@ class GamePhase(str, Enum):
     QUESTION_ACTIVE = "QUESTION_ACTIVE"
     ANSWER_REVEAL = "ANSWER_REVEAL"
     FINALE = "FINALE"
+    # PAUSED — admin-triggered pause during QUESTION_ACTIVE. Timer is
+    # frozen; resume returns to QUESTION_ACTIVE with the remaining time
+    # the player had before pause. Used both for explicit "Pause" button
+    # and for graceful host-disconnect handling.
+    PAUSED = "PAUSED"
 
 
 @dataclass
@@ -62,6 +75,11 @@ class AnswerResult:
     speed_bonus: int = 0
     streak_bonus: int = 0
     difficulty_multiplier: float = 1.0
+    # Milestone bonus (0 unless this round's streak landed exactly on a
+    # value in STREAK_MILESTONES). Surfaced separately so the client can
+    # render a celebratory toast instead of folding it into the breakdown.
+    milestone_bonus: int = 0
+    milestone_streak: int = 0  # the streak level reached, e.g. 5
 
 
 @dataclass
@@ -78,9 +96,9 @@ class RoundSummary:
 class QuizifyGameState:
     """Manages the overall game state for a Quizify session."""
 
-    def __init__(self, hass: HomeAssistant | None = None, entry_id: str = "") -> None:
+    def __init__(self, runtime: Runtime | None = None, entry_id: str = "") -> None:
         """Initialize game state."""
-        self._hass = hass
+        self._runtime = runtime
         self._entry_id = entry_id
 
         # Core state
@@ -98,10 +116,9 @@ class QuizifyGameState:
         self._question_bank = QuestionBank()
         self._powerup_manager = PowerUpManager()
 
-        # Load question history if HA context available
-        if hass is not None:
-            from pathlib import Path as _Path
-            history_path = _Path(hass.config.path("quizify", "question_history.json"))
+        # Load question history if a runtime is available (HA or standalone).
+        if runtime is not None:
+            history_path = runtime.data_dir / "question_history.json"
             self._question_bank.load_history(history_path)
 
         # Current round state
@@ -116,20 +133,41 @@ class QuizifyGameState:
         # start_next_question. Cleared on reset_to_lobby/end_game.
         self._timer_override: int | None = None
 
+        # Last-game settings snapshot for "Play again — same settings".
+        # None until a game has been started at least once.
+        self._last_settings: dict[str, Any] | None = None
+
+        # Pause bookkeeping.
+        self._paused_from: GamePhase | None = None
+        self._paused_remaining: dict[str, float] = {}
+        self._pause_reason: str | None = None
+
         # Broadcast callback — set by websocket layer
         self._broadcast_callback: Callable[[dict[str, Any]], Awaitable[None]] | None = None
 
+        # State-change observers (HA sensor entities subscribe here so they
+        # can push updates without polling). Pure callbacks, no async.
+        self._state_callbacks: list[Callable[[], None]] = []
+
         # Analytics / stats service (injected from __init__.py)
         self._stats_service = None
+        # Per-question stats sink (optional; standalone tests skip it).
+        self._question_stats = None
         self._game_start_time: float | None = None
 
         # Cached finale data (computed once in end_game, cleared in reset_to_lobby)
         self._finale_podium: list | None = None
         self._finale_superlatives: list | None = None
 
-        # Round shuffle state (owned here, not in WS handler)
-        self.shuffle_map: list[int] = []        # shuffled_pos -> original_index
-        self.shuffled_answers: list[str] = []   # answers in shuffled order
+        # Round shuffle state (owned here, not in WS handler).
+        # `shuffle_map` is the "canonical" per-round shuffle used by the
+        # admin/dashboard view and as a fallback for any code path that
+        # doesn't know a player. `player_shuffles` is per-player so two
+        # phones sitting next to each other see A/B/C in different
+        # orders — anti-cheat against couch-neighbour collusion.
+        self.shuffle_map: list[int] = []        # canonical: shuffled_pos -> original_index
+        self.shuffled_answers: list[str] = []   # canonical answers in shuffled order
+        self.player_shuffles: dict[str, list[int]] = {}  # name -> shuffled_pos -> original_index
 
     # ------------------------------------------------------------------
     # Player registry delegation
@@ -140,6 +178,39 @@ class QuizifyGameState:
         """Player dict — delegated to PlayerRegistry."""
         return self._player_registry.players
 
+    @property
+    def leader(self) -> PlayerSession | None:
+        """Current top-scoring player, or None if no players yet."""
+        players = self._player_registry.players
+        if not players:
+            return None
+        return max(players.values(), key=lambda p: p.score)
+
+    # ------------------------------------------------------------------
+    # State change observers (HA sensor push)
+    # ------------------------------------------------------------------
+
+    def register_state_callback(self, cb: Callable[[], None]) -> None:
+        """Subscribe to state-change notifications (used by sensor entities)."""
+        if cb not in self._state_callbacks:
+            self._state_callbacks.append(cb)
+
+    def unregister_state_callback(self, cb: Callable[[], None]) -> None:
+        """Unsubscribe a previously-registered observer."""
+        try:
+            self._state_callbacks.remove(cb)
+        except ValueError:
+            pass
+
+    def _notify_state_callbacks(self) -> None:
+        """Fire all registered state observers. Swallows per-callback errors
+        so one bad sensor can't break the broadcast pipeline."""
+        for cb in list(self._state_callbacks):
+            try:
+                cb()
+            except Exception as err:  # noqa: BLE001
+                _LOGGER.warning("State callback raised: %s", err)
+
     def add_player(
         self, name: str, ws: web.WebSocketResponse
     ) -> tuple[bool, str | None]:
@@ -147,17 +218,39 @@ class QuizifyGameState:
 
         Returns (success, error_code).
         """
-        return self._player_registry.add_player(
+        result = self._player_registry.add_player(
             name=name,
             ws=ws,
             phase_value=self.phase.value,
             average_score_fn=self._player_registry.get_average_score,
         )
+        success, _err = result
+        # If the player joined mid-round, give them a timer that tracks the
+        # round's remaining time. Without this the tick loop's "all timers
+        # missing or expired → break" condition treats them as already done
+        # and the round evaluates ~1s after start when the late-joiner is
+        # the ONLY connected player (the admin-self-join + redirect flow).
+        # Late joiners can also still answer the in-flight question this way.
+        if (
+            success
+            and self.phase == GamePhase.QUESTION_ACTIVE
+            and self._round_start_time is not None
+            and name not in self._timers
+        ):
+            elapsed = time.monotonic() - self._round_start_time
+            remaining = max(0.5, self._round_duration - elapsed)
+            timer = QuestionTimer(remaining)
+            timer.start()
+            self._timers[name] = timer
+        if success:
+            self._notify_state_callbacks()
+        return result
 
     def remove_player(self, name: str) -> None:
         """Remove a player from the game."""
         self._player_registry.remove_player(name)
         self._timers.pop(name, None)
+        self._notify_state_callbacks()
 
     def get_player(self, name: str) -> PlayerSession | None:
         """Get player by name."""
@@ -205,6 +298,18 @@ class QuizifyGameState:
         self.round = 0
         self._timer_override = timer_duration
 
+        # Persist for "Play again — same settings" (one-tap rematch).
+        # Snapshot here so a later reset_to_lobby keeps these and
+        # play_again can reuse them without re-prompting the admin.
+        self._last_settings = {
+            "category": category,
+            "categories": list(categories) if categories else None,
+            "difficulty": difficulty,
+            "num_rounds": num_rounds,
+            "language": self.language,
+            "timer_duration": timer_duration,
+        }
+
         # Load questions
         self._question_bank.load_all_categories()
         self._question_bank.reset(
@@ -250,6 +355,7 @@ class QuizifyGameState:
             num_rounds,
         )
 
+        self._notify_state_callbacks()
         return {
             "game_id": self.game_id,
             "total_rounds": self.total_rounds,
@@ -326,6 +432,7 @@ class QuizifyGameState:
             question.id,
             self._round_duration,
         )
+        self._notify_state_callbacks()
         return question
 
     def submit_answer(self, player_id: str, answer_index: int) -> AnswerResult | str:
@@ -350,6 +457,7 @@ class QuizifyGameState:
         # Record submission
         elapsed = timer.get_elapsed() if timer else 0.0
         player.submit_answer(answer_index, time.time())
+        player.last_elapsed = elapsed
 
         # Score immediately
         question = self._current_question
@@ -397,14 +505,55 @@ class QuizifyGameState:
             streak_mult = get_streak_multiplier(player.streak)
             streak_bonus = int((BASE_POINTS + speed_bonus) * diff_mult * (streak_mult - 1.0))
 
+        # Wager override (gameplay idea #3, Jeopardy-style final round).
+        # On the final round, if the player submitted a wager (0-100%
+        # of their pre-round score), it REPLACES the normal scoring:
+        # right answer adds the wager value, wrong subtracts. Speed/
+        # streak/difficulty multipliers are ignored — the wager IS the
+        # bet. We snapshot the player's score BEFORE adding points so
+        # the wager is computed against what they bet on, not the
+        # post-bet total.
+        wager_used: int | None = None
+        if (
+            self.round == self.total_rounds
+            and player.wager is not None
+        ):
+            bank = max(0, player.score)
+            wager_pts = int(bank * player.wager / 100)
+            wager_used = wager_pts
+            if correct:
+                points = wager_pts
+            else:
+                # Lose the wager — but never go below zero so a player
+                # can't be priced out of an existing rematch flow.
+                points = -min(wager_pts, bank)
+            # Clear bonuses since the wager overrides them.
+            speed_bonus = 0
+            streak_bonus = 0
+
+        # Streak milestone bonus — discrete spike awarded the round the
+        # streak EXACTLY equals a milestone value (3, 5, 10, 15, 20, 25).
+        # Wager rounds skip this so the bet stays the only thing in play.
+        milestone_bonus = 0
+        if correct and wager_used is None:
+            milestone_bonus = get_streak_milestone_bonus(player.streak)
+            if milestone_bonus:
+                points += milestone_bonus
+                player.streak_milestone_bonus_total += milestone_bonus
+                player.streak_milestones_hit += 1
+
         player.round_score = points
         player.round_score_breakdown = {
             "speed_bonus": speed_bonus,
             "streak_bonus": streak_bonus,
             "difficulty_multiplier": diff_mult,
             "double_points": double_active,
+            "wager": wager_used,
+            "milestone_bonus": milestone_bonus,
         }
         player.score += points
+        if player.score < 0:
+            player.score = 0
 
         # Track hard question score
         if correct and diff_enum == Difficulty.HARD:
@@ -419,6 +568,8 @@ class QuizifyGameState:
             speed_bonus=speed_bonus,
             streak_bonus=streak_bonus,
             difficulty_multiplier=diff_mult,
+            milestone_bonus=milestone_bonus,
+            milestone_streak=player.streak if milestone_bonus else 0,
         )
 
         # Check if all players have submitted → auto-evaluate.
@@ -469,6 +620,10 @@ class QuizifyGameState:
                 player_correct[player.name] = is_correct
                 player.record_round_result("correct" if is_correct else "wrong")
                 player.round_scores.append(player.round_score)
+            # Count this round toward the player's "rounds played" tally
+            # regardless of timeout/answer — what matters for the late-joiner
+            # average is that they've experienced a scored round.
+            player.rounds_played += 1
 
         # Build per-player results
         results: list[AnswerResult] = []
@@ -497,10 +652,76 @@ class QuizifyGameState:
 
         self.phase = GamePhase.ANSWER_REVEAL
 
+        # Record this round into the per-question stats. Only count
+        # players who actually submitted — timeouts shouldn't blame the
+        # question for the player being away. ``last_elapsed`` was
+        # captured against the round timer in submit_answer.
+        if self._question_stats is not None:
+            try:
+                submitted_results = [
+                    (player_correct.get(p.name, False), p.last_elapsed)
+                    for p in self._player_registry.players.values()
+                    if p.submitted
+                ]
+                self._question_stats.record_round(question.id, submitted_results)
+            except Exception as err:  # noqa: BLE001
+                _LOGGER.warning("Failed to record question stats: %s", err)
+
         _LOGGER.info("Round %d evaluated, transitioning to ANSWER_REVEAL", self.round)
         self._fire_broadcast("round_evaluated")
 
         return self._round_summary
+
+    # ------------------------------------------------------------------
+    # Pause / resume
+    # ------------------------------------------------------------------
+    #
+    # PAUSED freezes the per-player timers and remembers the phase to
+    # resume back into. Only QUESTION_ACTIVE is meaningfully pausable —
+    # pausing in LOBBY / ANSWER_REVEAL / FINALE is a no-op so the admin
+    # button can be wired unconditionally without phase checks in JS.
+
+    def pause(self, reason: str = "admin_paused") -> bool:
+        """Pause the game. Returns True if pause happened, False if no-op."""
+        if self.phase != GamePhase.QUESTION_ACTIVE:
+            return False
+        self._paused_from = GamePhase.QUESTION_ACTIVE
+        self._pause_reason = reason
+        # Snapshot remaining time per player and freeze timers in place.
+        # On resume we'll create fresh timers with the saved remaining.
+        self._paused_remaining = {}
+        for name, timer in self._timers.items():
+            self._paused_remaining[name] = max(0.0, timer.get_remaining())
+        self._timers.clear()
+        self.phase = GamePhase.PAUSED
+        _LOGGER.info("Game paused (reason=%s)", reason)
+        self._notify_state_callbacks()
+        return True
+
+    def resume(self) -> bool:
+        """Resume a paused game. Returns True if resume happened."""
+        if self.phase != GamePhase.PAUSED:
+            return False
+        # Restore timers with the remaining time they had at pause.
+        # Late-joiners during PAUSED won't be in _paused_remaining and
+        # get a fresh full-round timer here.
+        full = self._round_duration
+        for name in list(self._player_registry.players):
+            remaining = self._paused_remaining.get(name, full)
+            timer = QuestionTimer(remaining)
+            timer.start()
+            self._timers[name] = timer
+        self._paused_remaining = {}
+        self._pause_reason = None
+        self.phase = self._paused_from or GamePhase.QUESTION_ACTIVE
+        self._paused_from = None
+        _LOGGER.info("Game resumed")
+        self._notify_state_callbacks()
+        return True
+
+    def get_pause_reason(self) -> str | None:
+        """Return the current pause reason (or None if not paused)."""
+        return getattr(self, "_pause_reason", None)
 
     def end_game(self) -> dict[str, Any]:
         """End the game and transition to FINALE."""
@@ -533,6 +754,19 @@ class QuizifyGameState:
         # Save question history so next game prioritises least-recently-shown
         self._question_bank.flush_shown_history()
 
+        # Persist any per-question stats accumulated this game.
+        if self._question_stats is not None:
+            async def _save_qs() -> None:
+                try:
+                    await self._question_stats.save_if_dirty()
+                except Exception as err:  # noqa: BLE001
+                    _LOGGER.warning("Failed to save question stats: %s", err)
+
+            if self._runtime is not None:
+                self._runtime.create_task(_save_qs())
+            else:
+                asyncio.ensure_future(_save_qs())
+
         _LOGGER.info("Game ended after %d rounds", self.round)
         self._fire_broadcast("game_ended")
 
@@ -545,6 +779,16 @@ class QuizifyGameState:
 
         duration = int(time.time() - (self._game_start_time or time.time()))
         players = {p.name: p.score for p in self.get_players()}
+        # Per-player details feed the all-time rollup (best streak, milestone
+        # hits). Keep this map narrow so the analytics module never sees the
+        # full PlayerSession object — easier to evolve independently.
+        player_details = {
+            p.name: {
+                "best_streak": p.max_streak,
+                "streak_milestones_hit": p.streak_milestones_hit,
+            }
+            for p in self.get_players()
+        }
 
         async def _do_record() -> None:
             try:
@@ -556,12 +800,13 @@ class QuizifyGameState:
                     players=players,
                     duration_seconds=duration,
                     started_at=int(self._game_start_time) if self._game_start_time else None,
+                    player_details=player_details,
                 )
             except Exception as err:  # noqa: BLE001
                 _LOGGER.warning("Failed to record analytics: %s", err)
 
-        if self._hass is not None:
-            self._hass.async_create_task(_do_record())
+        if self._runtime is not None:
+            self._runtime.create_task(_do_record())
         else:
             asyncio.ensure_future(_do_record())
 
@@ -582,6 +827,8 @@ class QuizifyGameState:
 
         for player in self._player_registry.players.values():
             player.reset_for_new_game()
+
+        self._notify_state_callbacks()
 
     # ------------------------------------------------------------------
     # Power-ups
@@ -612,6 +859,12 @@ class QuizifyGameState:
 
         if effect is None:
             return ERR_INVALID_ACTION
+
+        # Count every successful power-up use for the finale "POWER-UPS GENUTZT"
+        # stat. Done here (not per type below) so all four types contribute.
+        source_player = self._player_registry.get_player(player_id)
+        if source_player:
+            source_player.powerups_used += 1
 
         # Apply side-effects
         if effect.type == PowerUpType.FREEZE and target_id:
@@ -653,9 +906,23 @@ class QuizifyGameState:
     # ------------------------------------------------------------------
 
     def set_round_shuffle(self, shuffle_map: list[int], shuffled_answers: list[str]) -> None:
-        """Store the shuffle mapping for the current round."""
+        """Store the canonical shuffle mapping for the current round."""
         self.shuffle_map = shuffle_map
         self.shuffled_answers = shuffled_answers
+
+    def set_player_shuffle(self, player_name: str, shuffle_map: list[int]) -> None:
+        """Store a per-player shuffle so each phone sees a different
+        A/B/C ordering. The submit_answer path uses this to map the
+        player's shuffled index back to the original answer index."""
+        self.player_shuffles[player_name] = shuffle_map
+
+    def get_player_shuffle(self, player_name: str) -> list[int]:
+        """Return the player's shuffle, falling back to canonical."""
+        return self.player_shuffles.get(player_name) or self.shuffle_map
+
+    def clear_player_shuffles(self) -> None:
+        """Wipe per-player shuffles. Called at round start."""
+        self.player_shuffles = {}
 
     @property
     def round_duration(self) -> float:
@@ -784,13 +1051,16 @@ class QuizifyGameState:
 
     def _fire_broadcast(self, event: str) -> None:
         """Fire a broadcast event via the callback if set."""
+        # Push sensor updates first — synchronous, cheap, and means HA
+        # entities reflect the new state even if the WS broadcast races.
+        self._notify_state_callbacks()
         if self._broadcast_callback is None:
             return
         payload = self.get_state_snapshot()
         payload["event"] = event
         coro = self._broadcast_callback(payload)
-        if self._hass is not None:
-            self._hass.async_create_task(coro)
+        if self._runtime is not None:
+            self._runtime.create_task(coro)
         else:
             asyncio.ensure_future(coro)
 

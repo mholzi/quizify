@@ -1,4 +1,9 @@
-"""HTTP views for Quizify."""
+"""HTTP handlers for Quizify (plain aiohttp, no Home Assistant coupling).
+
+The HA integration and the standalone dev server both register the same
+handlers — only the static-asset registration differs (HA uses
+``async_register_static_paths``; standalone uses aiohttp's ``add_static``).
+"""
 
 from __future__ import annotations
 
@@ -8,16 +13,13 @@ from typing import TYPE_CHECKING
 
 import aiohttp
 from aiohttp import web
-from homeassistant.components.http import HomeAssistantView
 
-from custom_components.quizify.const import DOMAIN
-from custom_components.quizify.server.serializers import (
-    build_game_status_response,
-    get_game_state,
-)
+from .context import APP_CTX_KEY
+from .serializers import build_game_status_response
 
 if TYPE_CHECKING:
-    from homeassistant.core import HomeAssistant
+    from .context import AppContext
+
 
 # GitHub raw URL for pack version manifests
 _PACK_VERSIONS_URL = (
@@ -35,263 +37,303 @@ _NO_CACHE_HEADERS = {
     "Expires": "0",
 }
 
+_WWW_DIR = Path(__file__).parent.parent / "www"
 
-def _read_file(path: Path) -> str:
-    """Read file contents (runs in executor)."""
-    return path.read_text(encoding="utf-8")
 
+def _get_ctx(request: web.Request) -> "AppContext":
+    """Pull the AppContext stashed on the aiohttp application."""
+    return request.app[APP_CTX_KEY]
 
-class AdminView(HomeAssistantView):
-    """Serve the admin page."""
 
-    url = "/quizify/admin"
-    name = "quizify:admin"
-    requires_auth = False
+async def _serve_html(request: web.Request, filename: str) -> web.Response:
+    """Read a file from www/ in an executor and return it as HTML."""
+    html_path = _WWW_DIR / filename
+    if not html_path.exists():
+        _LOGGER.error("Page not found: %s", html_path)
+        return web.Response(text=f"{filename} not found", status=500)
 
-    def __init__(self, hass: HomeAssistant) -> None:
-        """Initialize the admin view."""
-        self.hass = hass
+    ctx = _get_ctx(request)
+    html_content = await ctx.runtime.run_in_executor(html_path.read_text, "utf-8")
+    return web.Response(
+        text=html_content, content_type="text/html", headers=_NO_CACHE_HEADERS
+    )
 
-    async def get(self, request: web.Request) -> web.Response:  # noqa: ARG002
-        """Serve the admin HTML page."""
-        html_path = Path(__file__).parent.parent / "www" / "admin.html"
 
-        if not html_path.exists():
-            _LOGGER.error("Admin page not found: %s", html_path)
-            return web.Response(text="Admin page not found", status=500)
+async def admin_view(request: web.Request) -> web.Response:
+    """Serve the admin HTML page."""
+    return await _serve_html(request, "admin.html")
 
-        html_content = await self.hass.async_add_executor_job(_read_file, html_path)
-        return web.Response(text=html_content, content_type="text/html", headers=_NO_CACHE_HEADERS)
 
+async def launcher_view(request: web.Request) -> web.Response:
+    """Serve the launcher HTML page."""
+    return await _serve_html(request, "launcher.html")
 
-class LauncherView(HomeAssistantView):
-    """Serve the launcher page."""
 
-    url = "/quizify/launcher"
-    name = "quizify:launcher"
-    requires_auth = False  # Served inside HA's auth-protected iframe panel; no sensitive data
+async def player_view(request: web.Request) -> web.Response:
+    """Serve the player HTML page."""
+    return await _serve_html(request, "player.html")
 
-    def __init__(self, hass: HomeAssistant) -> None:
-        """Initialize the launcher view."""
-        self.hass = hass
 
-    async def get(self, request: web.Request) -> web.Response:  # noqa: ARG002
-        """Serve the launcher HTML page."""
-        html_path = Path(__file__).parent.parent / "www" / "launcher.html"
+async def dashboard_view(request: web.Request) -> web.Response:
+    """Serve the dashboard HTML page."""
+    return await _serve_html(request, "dashboard.html")
 
-        if not html_path.exists():
-            _LOGGER.error("Launcher page not found: %s", html_path)
-            return web.Response(text="Launcher page not found", status=500)
 
-        html_content = await self.hass.async_add_executor_job(_read_file, html_path)
-        return web.Response(text=html_content, content_type="text/html", headers=_NO_CACHE_HEADERS)
+async def analytics_view(request: web.Request) -> web.Response:
+    """Serve the analytics HTML page."""
+    return await _serve_html(request, "analytics.html")
 
 
-class PlayerView(HomeAssistantView):
-    """Serve the player page."""
+async def game_status_view(request: web.Request) -> web.Response:
+    """Return current game status."""
+    ctx = _get_ctx(request)
+    game_id = request.query.get("game_id")
+    return web.json_response(build_game_status_response(ctx.game, game_id))
 
-    url = "/quizify/player"
-    name = "quizify:player"
-    requires_auth = False
-
-    def __init__(self, hass: HomeAssistant) -> None:
-        """Initialize the player view."""
-        self.hass = hass
-
-    async def get(self, request: web.Request) -> web.Response:  # noqa: ARG002
-        """Serve the player HTML page."""
-        html_path = Path(__file__).parent.parent / "www" / "player.html"
-
-        if not html_path.exists():
-            _LOGGER.error("Player page not found: %s", html_path)
-            return web.Response(text="Player page not found", status=500)
-
-        html_content = await self.hass.async_add_executor_job(_read_file, html_path)
-        return web.Response(text=html_content, content_type="text/html", headers=_NO_CACHE_HEADERS)
-
-
-class DashboardView(HomeAssistantView):
-    """Serve the dashboard page."""
-
-    url = "/quizify/dashboard"
-    name = "quizify:dashboard"
-    requires_auth = False
-
-    def __init__(self, hass: HomeAssistant) -> None:
-        """Initialize the dashboard view."""
-        self.hass = hass
-
-    async def get(self, request: web.Request) -> web.Response:  # noqa: ARG002
-        """Serve the dashboard HTML page."""
-        html_path = Path(__file__).parent.parent / "www" / "dashboard.html"
-
-        if not html_path.exists():
-            _LOGGER.error("Dashboard page not found: %s", html_path)
-            return web.Response(text="Dashboard page not found", status=500)
-
-        html_content = await self.hass.async_add_executor_job(_read_file, html_path)
-        return web.Response(text=html_content, content_type="text/html", headers=_NO_CACHE_HEADERS)
-
-
-class GameStatusView(HomeAssistantView):
-    """API endpoint for game status."""
-
-    url = "/api/quizify/game-status"
-    name = "api:quizify:game-status"
-    requires_auth = False
-
-    def __init__(self, hass: HomeAssistant) -> None:
-        """Initialize the game status view."""
-        self.hass = hass
-
-    async def get(self, request: web.Request) -> web.Response:
-        """Return current game status."""
-        game_state = get_game_state(self.hass)
-        game_id = request.query.get("game_id")
-        response = build_game_status_response(game_state, game_id)
-        return web.json_response(response)
-
-
-class StatusView(HomeAssistantView):
-    """API endpoint for integration status."""
-
-    url = "/api/quizify/status"
-    name = "api:quizify:status"
-    requires_auth = False
-
-    def __init__(self, hass: HomeAssistant) -> None:
-        """Initialize the status view."""
-        self.hass = hass
-
-    async def get(self, request: web.Request) -> web.Response:  # noqa: ARG002
-        """Return integration status."""
-        return web.json_response({"version": _VERSION, "status": "ok"})
-
-
-class AnalyticsView(HomeAssistantView):
-    """Serve the analytics page."""
-
-    url = "/quizify/analytics"
-    name = "quizify:analytics"
-    requires_auth = False
-
-    def __init__(self, hass: HomeAssistant) -> None:
-        """Initialize the analytics view."""
-        self.hass = hass
-
-    async def get(self, request: web.Request) -> web.Response:  # noqa: ARG002
-        """Serve the analytics HTML page."""
-        html_path = Path(__file__).parent.parent / "www" / "analytics.html"
-
-        if not html_path.exists():
-            _LOGGER.error("Analytics page not found: %s", html_path)
-            return web.Response(text="Analytics page not found", status=500)
-
-        html_content = await self.hass.async_add_executor_job(_read_file, html_path)
-        return web.Response(text=html_content, content_type="text/html", headers=_NO_CACHE_HEADERS)
-
-
-class AnalyticsDataView(HomeAssistantView):
-    """API endpoint for analytics data."""
-
-    url = "/api/quizify/analytics/data"
-    name = "api:quizify:analytics:data"
-    requires_auth = False
-
-    def __init__(self, hass: HomeAssistant) -> None:
-        """Initialize the analytics data view."""
-        self.hass = hass
-
-    async def get(self, request: web.Request) -> web.Response:
-        """Return analytics data as JSON."""
-        analytics = self.hass.data.get(DOMAIN, {}).get("analytics")
-        if not analytics:
-            return web.json_response({"total_games": 0})
-
-        period = request.query.get("period", "30d")
-        metrics = analytics.compute_metrics(period)
-        return web.json_response(metrics)
-
-
-class PackVersionsView(HomeAssistantView):
-    """API endpoint — installed question pack versions."""
-
-    url = "/api/quizify/packs"
-    name = "api:quizify:packs"
-    requires_auth = False
-
-    def __init__(self, hass: HomeAssistant) -> None:
-        """Initialize the pack versions view."""
-        self.hass = hass
-
-    async def get(self, request: web.Request) -> web.Response:  # noqa: ARG002
-        """Return installed pack version metadata."""
-        game = self.hass.data.get(DOMAIN, {}).get("game")
-        if game is None:
-            return web.json_response({})
-
-        # Ensure packs are loaded
-        await self.hass.async_add_executor_job(game._question_bank.load_all_categories)
-        installed = game._question_bank.get_pack_versions()
-        return web.json_response(installed)
-
-
-class PackUpdateCheckView(HomeAssistantView):
-    """API endpoint — compare installed packs against latest versions on GitHub."""
-
-    url = "/api/quizify/packs/updates"
-    name = "api:quizify:packs:updates"
-    requires_auth = False
-
-    def __init__(self, hass: HomeAssistant) -> None:
-        """Initialize the pack update check view."""
-        self.hass = hass
-
-    async def get(self, request: web.Request) -> web.Response:  # noqa: ARG002
-        """Check GitHub for updated question packs.
-
-        Returns a JSON object with:
-          - installed: dict of slug -> {version, name, language, question_count}
-          - upstream: dict of slug -> version (from GitHub versions.json), or null on error
-          - updates: list of {slug, name, installed_version, upstream_version}
-        """
-        game = self.hass.data.get(DOMAIN, {}).get("game")
-        if game is None:
-            return web.json_response({"error": "game not initialised"}, status=503)
-
-        await self.hass.async_add_executor_job(game._question_bank.load_all_categories)
-        installed = game._question_bank.get_pack_versions()
-
-        # Fetch upstream versions.json from GitHub (best-effort, 5s timeout)
-        upstream: dict | None = None
-        try:
-            timeout = aiohttp.ClientTimeout(total=5)
-            async with aiohttp.ClientSession(timeout=timeout) as session:
-                async with session.get(_PACK_VERSIONS_URL) as resp:
-                    if resp.status == 200:
-                        upstream = await resp.json(content_type=None)
-        except Exception as exc:  # noqa: BLE001
-            _LOGGER.warning("Pack update check failed: %s", exc)
-
-        updates = []
-        if upstream:
-            for slug, meta in installed.items():
-                upstream_version = upstream.get(slug)
-                if upstream_version and upstream_version != meta["version"]:
-                    updates.append(
-                        {
-                            "slug": slug,
-                            "name": meta["name"],
-                            "installed_version": meta["version"],
-                            "upstream_version": upstream_version,
-                        }
-                    )
-
-        return web.json_response(
-            {
-                "installed": installed,
-                "upstream": upstream,
-                "updates": updates,
-                "upstream_available": upstream is not None,
-            }
-        )
+
+async def status_view(request: web.Request) -> web.Response:  # noqa: ARG001
+    """Return integration status."""
+    return web.json_response({"version": _VERSION, "status": "ok"})
+
+
+async def analytics_data_view(request: web.Request) -> web.Response:
+    """Return analytics data as JSON."""
+    ctx = _get_ctx(request)
+    if not ctx.analytics:
+        return web.json_response({"total_games": 0})
+
+    period = request.query.get("period", "30d")
+    return web.json_response(ctx.analytics.compute_metrics(period))
+
+
+async def question_stats_view(request: web.Request) -> web.Response:
+    """Return per-question difficulty stats.
+
+    Query params:
+      - ``mode``: ``hardest`` (default) or ``easiest``
+      - ``limit``: 1..100, default 25
+      - ``min_shown``: minimum times a question must have been shown
+        before it counts, default 3 (filters out noisy one-off misses)
+    """
+    ctx = _get_ctx(request)
+    if ctx.question_stats is None:
+        return web.json_response({"questions": []})
+
+    mode = request.query.get("mode", "hardest")
+    try:
+        limit = max(1, min(int(request.query.get("limit", "25")), 100))
+    except (TypeError, ValueError):
+        limit = 25
+    try:
+        min_shown = max(1, int(request.query.get("min_shown", "3")))
+    except (TypeError, ValueError):
+        min_shown = 3
+
+    if mode == "easiest":
+        items = ctx.question_stats.get_easiest(limit=limit, min_shown=min_shown)
+    else:
+        items = ctx.question_stats.get_hardest(limit=limit, min_shown=min_shown)
+    return web.json_response({"mode": mode, "questions": items})
+
+
+async def all_time_leaderboard_view(request: web.Request) -> web.Response:
+    """Return the all-time leaderboard (across every recorded game).
+
+    Optional ``?limit=N`` (default 25, max 100). The list is sorted by
+    total score with wins as tiebreaker. Each entry includes:
+    games_played, total_score, wins, best_streak, streak_milestones_hit,
+    last_played (unix seconds).
+    """
+    ctx = _get_ctx(request)
+    if not ctx.analytics:
+        return web.json_response({"players": []})
+
+    try:
+        limit = int(request.query.get("limit", "25"))
+    except (TypeError, ValueError):
+        limit = 25
+    limit = max(1, min(limit, 100))
+
+    return web.json_response({
+        "players": ctx.analytics.get_all_time_leaderboard(limit=limit),
+    })
+
+
+async def pack_versions_view(request: web.Request) -> web.Response:
+    """Return installed pack version metadata."""
+    ctx = _get_ctx(request)
+    await ctx.runtime.run_in_executor(ctx.game._question_bank.load_all_categories)
+    installed = ctx.game._question_bank.get_pack_versions()
+    return web.json_response(installed)
+
+
+async def pack_update_check_view(request: web.Request) -> web.Response:
+    """Check GitHub for updated question packs."""
+    ctx = _get_ctx(request)
+    await ctx.runtime.run_in_executor(ctx.game._question_bank.load_all_categories)
+    installed = ctx.game._question_bank.get_pack_versions()
+
+    # Fetch upstream versions.json from GitHub (best-effort, 5s timeout)
+    upstream: dict | None = None
+    try:
+        timeout = aiohttp.ClientTimeout(total=5)
+        async with aiohttp.ClientSession(timeout=timeout) as session:
+            async with session.get(_PACK_VERSIONS_URL) as resp:
+                if resp.status == 200:
+                    upstream = await resp.json(content_type=None)
+    except Exception as exc:  # noqa: BLE001
+        _LOGGER.warning("Pack update check failed: %s", exc)
+
+    updates = []
+    if upstream:
+        for slug, meta in installed.items():
+            upstream_version = upstream.get(slug)
+            if upstream_version and upstream_version != meta["version"]:
+                updates.append(
+                    {
+                        "slug": slug,
+                        "name": meta["name"],
+                        "installed_version": meta["version"],
+                        "upstream_version": upstream_version,
+                    }
+                )
+
+    return web.json_response(
+        {
+            "installed": installed,
+            "upstream": upstream,
+            "updates": updates,
+            "upstream_available": upstream is not None,
+        }
+    )
+
+
+# ---------------------------------------------------------------------------
+# Question flagging
+# ---------------------------------------------------------------------------
+#
+# Append-only JSONL log of player-flagged questions. Lives next to the
+# other dev/HA state in the runtime's data_dir. Each line is one report;
+# the pack maintainer can `jq` through it to find ambiguous or wrong
+# questions surfaced by real play.
+
+_FLAG_FILE = "flagged.jsonl"
+_FLAG_MAX_BYTES = 256 * 1024  # cap at ~256 KB to bound disk use
+_FLAG_REASON_MAX = 200
+
+
+async def flag_question_view(request: web.Request) -> web.Response:
+    """Record a player's flag on a question.
+
+    POST body: {"question_id": "geo_037", "reason": "...", "player_name": "..."}
+    All fields optional except question_id. reason is truncated; player_name
+    is best-effort (clients without an auth model can lie, but that's fine
+    for a "raise the maintainer's attention" signal).
+    """
+    import json
+    import time as _time
+
+    ctx = _get_ctx(request)
+    try:
+        body = await request.json()
+    except (ValueError, TypeError):
+        return web.json_response({"error": "invalid_json"}, status=400)
+
+    question_id = (body or {}).get("question_id")
+    if not isinstance(question_id, str) or not question_id:
+        return web.json_response({"error": "missing_question_id"}, status=400)
+
+    reason = str((body or {}).get("reason", ""))[:_FLAG_REASON_MAX]
+    player_name = str((body or {}).get("player_name", ""))[:50]
+
+    entry = {
+        "ts": int(_time.time()),
+        "question_id": question_id,
+        "reason": reason,
+        "player_name": player_name,
+        "remote": request.remote or "",
+    }
+
+    flag_path = ctx.runtime.data_dir / _FLAG_FILE
+
+    def _append() -> None:
+        flag_path.parent.mkdir(parents=True, exist_ok=True)
+        # Refuse to grow unbounded — drop oldest half if we hit the cap.
+        # JSONL is append-friendly, this is a rare event, so a copy-trim
+        # is acceptable. Keeps the cap from being silently bypassed.
+        if flag_path.exists() and flag_path.stat().st_size >= _FLAG_MAX_BYTES:
+            try:
+                lines = flag_path.read_text("utf-8").splitlines()
+                flag_path.write_text("\n".join(lines[len(lines) // 2:]) + "\n", "utf-8")
+            except OSError:
+                pass
+        with flag_path.open("a", encoding="utf-8") as f:
+            f.write(json.dumps(entry, ensure_ascii=False) + "\n")
+
+    await ctx.runtime.run_in_executor(_append)
+    _LOGGER.info("Question flagged: %s (reason=%r)", question_id, reason[:40])
+    return web.json_response({"ok": True})
+
+
+async def flag_list_view(request: web.Request) -> web.Response:
+    """Return all flagged questions as JSON.
+
+    Used by the analytics dashboard. Not exposed to players — but no auth
+    is enforced here (matches the rest of the API). On HA the auth layer
+    above us handles it; on standalone the home LAN is trusted.
+    """
+    import json
+
+    ctx = _get_ctx(request)
+    flag_path = ctx.runtime.data_dir / _FLAG_FILE
+
+    def _read() -> list[dict]:
+        if not flag_path.exists():
+            return []
+        entries: list[dict] = []
+        for line in flag_path.read_text("utf-8").splitlines():
+            line = line.strip()
+            if not line:
+                continue
+            try:
+                entries.append(json.loads(line))
+            except ValueError:
+                continue
+        return entries
+
+    entries = await ctx.runtime.run_in_executor(_read)
+    return web.json_response({"flags": entries})
+
+
+# ---------------------------------------------------------------------------
+# Route registration
+# ---------------------------------------------------------------------------
+
+# Each entry is (method, path, handler). Kept as data so the HA adapter and
+# the standalone server can register the same set without duplication.
+ROUTES: list[tuple[str, str, object]] = [
+    ("GET", "/quizify/admin", admin_view),
+    ("GET", "/quizify/launcher", launcher_view),
+    ("GET", "/quizify/player", player_view),
+    ("GET", "/quizify/dashboard", dashboard_view),
+    ("GET", "/quizify/analytics", analytics_view),
+    ("GET", "/api/quizify/game-status", game_status_view),
+    ("GET", "/api/quizify/status", status_view),
+    ("GET", "/api/quizify/analytics/data", analytics_data_view),
+    ("GET", "/api/quizify/all-time", all_time_leaderboard_view),
+    ("GET", "/api/quizify/question-stats", question_stats_view),
+    ("GET", "/api/quizify/packs", pack_versions_view),
+    ("GET", "/api/quizify/packs/updates", pack_update_check_view),
+    ("POST", "/api/quizify/flag-question", flag_question_view),
+    ("GET", "/api/quizify/flags", flag_list_view),
+]
+
+
+def register_routes(router: web.UrlDispatcher) -> None:
+    """Register Quizify HTTP routes on the given aiohttp router.
+
+    Used by both the HA adapter (``hass.http.app.router``) and the
+    standalone server (``aiohttp.web.Application().router``).
+    """
+    for method, path, handler in ROUTES:
+        router.add_route(method, path, handler)

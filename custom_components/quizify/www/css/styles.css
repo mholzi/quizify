@@ -149,6 +149,232 @@
     --z-overlay: 1100;
 }
 
+/* Accessibility: visible focus ring for keyboard navigation. Browsers
+   default styles vary; this gives every interactive element a clear
+   2 px coral ring + 2 px offset so users who tab can always see where
+   focus is. :focus-visible only fires for keyboard focus (not mouse
+   clicks), keeping the design clean for pointer users. */
+:focus-visible {
+    outline: 2px solid var(--color-accent-primary);
+    outline-offset: 2px;
+    border-radius: 4px;
+}
+button:focus-visible,
+input:focus-visible,
+a:focus-visible,
+[tabindex]:focus-visible {
+    outline: 2px solid var(--color-accent-primary);
+    outline-offset: 2px;
+}
+
+/* Visually-hidden text for screen readers only. Useful for sr-only
+   captions next to icon-only buttons. */
+.sr-only {
+    position: absolute;
+    width: 1px;
+    height: 1px;
+    padding: 0;
+    margin: -1px;
+    overflow: hidden;
+    clip: rect(0, 0, 0, 0);
+    white-space: nowrap;
+    border: 0;
+}
+
+/* Honor prefers-reduced-motion: kill animations that distract or
+   trigger vestibular issues. Keep transforms and color changes since
+   those are functional. */
+@media (prefers-reduced-motion: reduce) {
+    *,
+    *::before,
+    *::after {
+        animation-duration: 0.01ms !important;
+        animation-iteration-count: 1 !important;
+        transition-duration: 0.01ms !important;
+        scroll-behavior: auto !important;
+    }
+}
+
+/* Wager panel (gameplay idea #3 — Jeopardy-style final round).
+   Appears above the answer buttons on the final round only. The
+   answer buttons stay disabled until the player commits a wager,
+   so the panel has to be visually prominent — coral border, soft
+   shadow, generous padding. Once submitted it collapses into a small
+   "Wagered: 25%" badge that stays visible during the question so
+   the player remembers what they bet. */
+.wager-panel {
+    background: var(--color-bg-surface);
+    border: 2px solid var(--color-accent-primary);
+    border-radius: 14px;
+    padding: var(--space-lg);
+    margin: var(--space-md) 0;
+    box-shadow: 0 4px 16px rgba(232, 138, 127, 0.18);
+}
+.wager-panel-title {
+    margin: 0 0 var(--space-sm);
+    font-family: var(--font-display);
+    font-size: 1.1rem;
+    color: var(--color-text-heading);
+}
+.wager-panel-hint {
+    margin: 0 0 var(--space-md);
+    color: var(--color-text-muted);
+    font-size: 0.9rem;
+}
+.wager-slider-row {
+    display: flex;
+    align-items: center;
+    gap: var(--space-md);
+    margin-bottom: var(--space-sm);
+}
+.wager-slider-row input[type="range"] {
+    flex: 1;
+    accent-color: var(--color-accent-primary);
+}
+.wager-value {
+    font-family: var(--font-mono);
+    font-weight: 600;
+    font-size: 0.95rem;
+    min-width: 6.5em;
+    text-align: right;
+}
+.wager-bank-line {
+    margin: 0 0 var(--space-md);
+    font-size: 0.85rem;
+    color: var(--color-text-muted);
+}
+.wager-bank {
+    font-family: var(--font-mono);
+    font-weight: 600;
+    color: var(--color-text-primary);
+}
+.wager-panel--collapsed {
+    padding: var(--space-sm) var(--space-md);
+    background: var(--color-accent-brand-bg);
+    box-shadow: none;
+}
+.wager-panel--collapsed .wager-panel-hint,
+.wager-panel--collapsed .wager-slider-row,
+.wager-panel--collapsed .wager-bank-line,
+.wager-panel--collapsed #wager-submit-btn {
+    display: none;
+}
+
+/* Reaction-bonus toast (gameplay idea #11). When a reactor's 🔥/👏
+   gives this player a +1, a tiny floating "+1 from Alice 🎉" tag
+   flies up from the score area for 1.5 s. Keeps the bonus visible
+   without yanking attention from the reveal screen. */
+.reaction-bonus-toast {
+    position: fixed;
+    bottom: 80px;
+    left: 50%;
+    transform: translateX(-50%);
+    background: var(--color-success-bg);
+    color: var(--color-success);
+    border: 1px solid var(--color-success);
+    border-radius: 999px;
+    padding: 6px 14px;
+    font-size: 0.9rem;
+    font-weight: 600;
+    z-index: 9999;
+    pointer-events: none;
+    animation: reaction-bonus-rise 1500ms ease-out forwards;
+}
+@keyframes reaction-bonus-rise {
+    0%   { opacity: 0; transform: translateX(-50%) translateY(10px); }
+    20%  { opacity: 1; transform: translateX(-50%) translateY(0); }
+    80%  { opacity: 1; transform: translateX(-50%) translateY(-30px); }
+    100% { opacity: 0; transform: translateX(-50%) translateY(-50px); }
+}
+
+/* Flag-question button (🚩 in the Wusstest-du? header) — discreet,
+   icon-only, low contrast until hover/focus. Anyone can flag; the
+   click POSTs to /api/quizify/flag-question. Sized for thumbs but
+   visually quiet so it doesn't shout next to the fun fact. */
+.flag-question-btn {
+    margin-left: auto;
+    border: 0;
+    background: transparent;
+    font-size: 1.1rem;
+    line-height: 1;
+    width: 36px;
+    height: 36px;
+    border-radius: 50%;
+    cursor: pointer;
+    opacity: 0.45;
+    transition: opacity 120ms ease-out, background 120ms ease-out;
+}
+.flag-question-btn:hover,
+.flag-question-btn:focus-visible {
+    opacity: 1;
+    background: var(--color-error-bg);
+}
+.flag-question-btn:disabled {
+    cursor: default;
+}
+.flag-question-btn.is-flagged {
+    opacity: 1;
+    color: var(--color-success);
+}
+
+/* ==========================================
+   Dark Mode — late-night parlor
+   ==========================================
+   DESIGN.md promises "dark mode available for late-night play." Same
+   Soft Parlor palette, just inverted: deep warm-brown paper, cream ink,
+   accents kept at their original muted saturation so the brand still
+   reads the same across rooms. Triggered by the OS preference, not by
+   anything in-app — sofa-on-a-Friday-night just works.
+   Override only the surface/text/border tokens; accents stay constant.
+*/
+@media (prefers-color-scheme: dark) {
+    :root {
+        /* Backgrounds: warm dark "stained paper" — not pure black */
+        --color-bg-primary: #1F1B14;
+        --color-bg-surface: #2A2620;
+        --color-bg-light: #1F1B14;
+        --color-bg-white: #2A2620;
+        --color-bg-card: #2A2620;
+        --color-bg-card-alt: #34302A;
+
+        /* Surface aliases */
+        --color-dark-surface: #2A2620;
+        --color-dark-surface-hover: #34302A;
+        --color-dark-card: #2A2620;
+        --color-surface-dark: #1F1B14;
+
+        /* Text: warm cream ink on dark paper */
+        --color-text-primary: #F0E9D8;
+        --color-text-secondary: #DCD4C0;
+        --color-text-muted: #A89E89;
+        --color-text-light: #8A8170;
+        --color-text-white: #F0E9D8;
+        --color-text-dark: #F0E9D8;
+        --color-text-heading: #F0E9D8;
+        --color-text-neon-muted: #A89E89;
+
+        /* Borders: muted warm dark — keep the hairline feel */
+        --color-border-light: #3D3830;
+        --color-border-medium: #4D4738;
+        --color-border-dark: #5D5640;
+        --color-border-neon: #3D3830;
+
+        /* Soft tinted badges — re-tint for the dark surface */
+        --color-success-bg: rgba(127, 168, 151, 0.24);
+        --color-accent-brand-bg: rgba(232, 138, 127, 0.22);
+        --color-error-bg: rgba(214, 106, 106, 0.22);
+        --color-success-light: rgba(127, 168, 151, 0.24);
+        --color-warning-light: rgba(232, 196, 127, 0.26);
+        --color-error-light: rgba(214, 106, 106, 0.22);
+
+        /* Shadows: warmer + slightly heavier on dark */
+        --shadow-sm: 0 1px 2px rgba(0, 0, 0, 0.35);
+        --shadow-md: 0 2px 8px rgba(0, 0, 0, 0.45);
+        --shadow-lg: 0 6px 20px rgba(0, 0, 0, 0.50);
+        --shadow-xl: 0 16px 40px rgba(0, 0, 0, 0.55);
+    }
+}
+
 /* ==========================================
    Base Styles
    ========================================== */
@@ -1532,30 +1758,65 @@ button, .btn {
 }
 
 /* ==========================================
-   Podium (Beatify exact match)
+   Podium — Soft Parlor (Variant A: Family Trophy Shelf)
+   Cream "shelf" planks (no gradients), sun-yellow top edge
+   on 1st, soft warm radial glow behind champion, numbers
+   as medals. DESIGN.md §"Podium / Finale".
    ========================================== */
 
 .podium-section {
     text-align: center;
     padding: var(--space-xl) 0;
+    position: relative;
 }
 
+/* Soft warm radial glow behind the champion (coral + sun).
+   Sits behind the podium; pointer-events disabled. */
+.podium-section::before {
+    content: "";
+    position: absolute;
+    inset: 0;
+    background:
+      radial-gradient(ellipse 50% 60% at 50% 55%, rgba(232, 138, 127, 0.14), transparent 70%),
+      radial-gradient(ellipse 32% 36% at 50% 45%, rgba(232, 196, 127, 0.20), transparent 70%);
+    pointer-events: none;
+    z-index: 0;
+}
+.podium-section > * { position: relative; z-index: 1; }
+
+/* Champion title block above the podium row.
+   "Champion" in coral Cabinet Grotesk 900; name in warm ink CG 700. */
 .podium-title {
-    font-size: 1.5rem;
-    font-weight: var(--font-weight-extrabold);
+    font-family: var(--font-display, "Cabinet Grotesk"), sans-serif;
+    font-size: clamp(2rem, 4vw, 3.5rem);
+    font-weight: 900;
+    letter-spacing: -0.02em;
+    color: var(--color-accent-primary);
+    line-height: 1;
+    margin: 0 0 var(--space-sm) 0;
+    /* No gradient text — DESIGN.md says no gradients on text. */
+    background: none;
+    -webkit-text-fill-color: var(--color-accent-primary);
+}
+
+.podium-champion-name {
+    font-family: var(--font-display, "Cabinet Grotesk"), sans-serif;
+    font-weight: 700;
+    font-size: clamp(1.25rem, 2.2vw, 1.75rem);
+    color: var(--color-text);
+    letter-spacing: -0.01em;
     margin-bottom: var(--space-xl);
-    background: linear-gradient(135deg, var(--color-accent-primary), var(--color-accent-secondary));
-    -webkit-background-clip: text;
-    -webkit-text-fill-color: transparent;
-    background-clip: text;
+    line-height: 1.2;
 }
 
 .podium {
-    display: flex;
-    align-items: flex-end;
-    justify-content: center;
+    display: grid;
+    grid-template-columns: 1fr 1.15fr 1fr;
+    align-items: end;
     gap: var(--space-md);
-    margin-bottom: var(--space-xl);
+    margin: 0 auto var(--space-xl);
+    max-width: 720px;
+    padding: 0 var(--space-md);
     min-height: 220px;
 }
 
@@ -1563,73 +1824,112 @@ button, .btn {
     display: flex;
     flex-direction: column;
     align-items: center;
-    animation: podium-rise 0.8s cubic-bezier(0.175, 0.885, 0.32, 1.275) both;
+    gap: var(--space-xs);
+    animation: podium-rise 0.8s ease-out both;
 }
 
-.podium-place:nth-child(1) { animation-delay: 0.4s; }
-.podium-place:nth-child(2) { animation-delay: 0.6s; }
-.podium-place:nth-child(3) { animation-delay: 0.2s; }
+.podium-place:nth-child(1) { animation-delay: 0.2s; }
+.podium-place:nth-child(2) { animation-delay: 0.4s; }
+.podium-place:nth-child(3) { animation-delay: 0.6s; }
 
 @keyframes podium-rise {
-    from { transform: translateY(40px); opacity: 0; }
+    from { transform: translateY(24px); opacity: 0; }
     to { transform: translateY(0); opacity: 1; }
 }
 
-.podium-avatar {
-    width: 48px;
-    height: 48px;
-    border-radius: 50%;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    font-size: 1.5rem;
-    margin-bottom: var(--space-sm);
-}
-
 .podium-name {
-    font-weight: var(--font-weight-bold);
-    font-size: 0.9rem;
-    color: var(--color-text-white);
-    margin-bottom: var(--space-xs);
-    max-width: 100px;
+    font-family: var(--font-display, "Cabinet Grotesk"), sans-serif;
+    font-weight: 700;
+    font-size: 1.1rem;
+    color: var(--color-text);
+    max-width: 14ch;
     overflow: hidden;
     text-overflow: ellipsis;
     white-space: nowrap;
+    text-align: center;
 }
 
 .podium-score {
-    font-size: 0.8rem;
+    font-family: var(--font-mono, "JetBrains Mono"), ui-monospace, monospace;
+    font-weight: 500;
+    font-size: 0.875rem;
     color: var(--color-text-neon-muted);
+    font-variant-numeric: tabular-nums;
     margin-bottom: var(--space-sm);
 }
 
-.podium-bar {
-    width: 90px;
+/* The shelf plank — used by both admin TV (.podium-bar)
+   and player mobile (.podium-stand). Solid cream surface,
+   1px hairline border, rounded top, soft shadow. Number
+   centered as the "medal". No gradient. */
+.podium-bar,
+.podium-stand {
+    width: 100%;
+    background: var(--color-surface, #FFFFFF);
+    border: 1px solid var(--color-border-soft, var(--hairline, #E5DFCF));
     border-radius: var(--radius-md) var(--radius-md) 0 0;
     display: flex;
     align-items: flex-start;
     justify-content: center;
-    padding-top: var(--space-sm);
-    font-size: 1.25rem;
-    font-weight: var(--font-weight-extrabold);
+    padding-top: var(--space-md);
+    font-family: var(--font-mono, "JetBrains Mono"), ui-monospace, monospace;
+    font-weight: 700;
+    font-variant-numeric: tabular-nums;
+    color: var(--color-text-neon-muted);
+    box-shadow: 0 2px 8px -2px rgba(42, 40, 32, 0.10);
+    position: relative;
 }
 
-.podium-bar.first {
-    height: 140px;
-    background: linear-gradient(180deg, var(--color-gold), var(--color-warning-dark));
-    color: #1a1a1a;
+/* 1st place — tallest plank, sun-yellow top edge, warm halo cushion,
+   coral number. Per DESIGN.md: 200px tall on TV, 3px sun-yellow top. */
+.podium-bar.first,
+.podium-stand.first,
+.podium-1 .podium-stand {
+    height: 200px;
+    border-top: 3px solid var(--color-gold, #E8C47F);
+    color: var(--color-accent-primary, #E88A7F);
+    font-size: 3.5rem;
+}
+.podium-bar.first::before,
+.podium-stand.first::before,
+.podium-1 .podium-stand::before {
+    content: "";
+    position: absolute;
+    inset: -1px -1px auto -1px;
+    height: 24px;
+    background: linear-gradient(180deg, rgba(232, 196, 127, 0.35), transparent);
+    border-radius: var(--radius-md) var(--radius-md) 0 0;
+    pointer-events: none;
 }
 
-.podium-bar.second {
+/* 2nd place — muted warm silver top edge. */
+.podium-bar.second,
+.podium-stand.second,
+.podium-2 .podium-stand {
+    height: 150px;
+    border-top: 3px solid var(--color-silver, #B8B2A0);
+    font-size: 2.75rem;
+}
+
+/* 3rd place — warm bronze top edge. */
+.podium-bar.third,
+.podium-stand.third,
+.podium-3 .podium-stand {
     height: 100px;
-    background: linear-gradient(180deg, var(--color-silver), #5E6A8A);
-    color: #1a1a1a;
+    border-top: 3px solid var(--color-bronze, #C99466);
+    font-size: 2.25rem;
 }
 
-.podium-bar.third {
-    height: 70px;
-    background: linear-gradient(180deg, var(--color-bronze), #6F5423);
-    color: var(--color-text-white);
+/* Legacy .podium-avatar slot (rendered by admin.js renderPodium).
+   We keep the markup hook but hide it — the number on the plank
+   is the medal now ("numbers speak"). */
+.podium-avatar {
+    display: none;
+}
+
+/* Same for the .podium-medal div in player.html static markup. */
+.podium-medal {
+    display: none;
 }
 
 /* ==========================================
@@ -1989,44 +2289,27 @@ footer {
     color: var(--color-text-neon-muted);
 }
 
-/* Podium stands */
-.podium-stand {
-    width: 80px;
-    border-radius: var(--radius-md) var(--radius-md) 0 0;
-    display: flex;
-    align-items: flex-start;
-    justify-content: center;
-    padding-top: var(--space-sm);
-    font-size: 1.1rem;
-    font-weight: 800;
-}
-
+/* Mobile podium plank size overrides.
+   Base .podium-stand styling lives with .podium-bar above
+   (Soft Parlor shared block). Here we only re-tune heights
+   and number size for the smaller phone surface. */
 .podium-1 .podium-stand {
-    height: 130px;
-    background: linear-gradient(180deg, var(--color-gold), var(--color-warning-dark));
-    color: #1a1a1a;
+    height: 140px;
+    font-size: 2.5rem;
 }
 
 .podium-2 .podium-stand {
-    height: 95px;
-    background: linear-gradient(180deg, var(--color-silver), #5E6A8A);
-    color: #1a1a1a;
+    height: 105px;
+    font-size: 2rem;
 }
 
 .podium-3 .podium-stand {
-    height: 65px;
-    background: linear-gradient(180deg, var(--color-bronze), #6F5423);
-    color: var(--color-text-white);
-}
-
-.podium-medal {
+    height: 75px;
     font-size: 1.5rem;
-    margin-bottom: var(--space-xs);
-    text-align: center;
 }
 
 .podium-rise {
-    animation: podium-rise 0.8s cubic-bezier(0.175, 0.885, 0.32, 1.275) both;
+    animation: podium-rise 0.8s ease-out both;
 }
 
 /* Your personal result card */
@@ -2698,6 +2981,87 @@ footer {
     box-shadow: 0 0 8px var(--color-success-neon);
 }
 
+/* ============================================================
+   Answer-distribution variant F (Filling-Bar).
+   Each row IS the bar — text + percentage sit on top of a coral
+   wash that grows from the left to match vote percentage. Correct
+   row repaints sage with a ✓; the player's own row gets a "· DU"
+   tag in coral so per-player shuffle doesn't lose them.
+   Old .answer-bar styles above stay for back-compat but are unused.
+   ============================================================ */
+.ad-row {
+    position: relative;
+    min-height: 44px;
+    border: 1px solid var(--color-border-light);
+    border-radius: 8px;
+    overflow: hidden;
+    background: var(--color-bg-surface);
+    display: flex;
+    align-items: center;
+}
+.ad-row + .ad-row { margin-top: 6px; }
+
+.ad-fill {
+    position: absolute;
+    left: 0; top: 0; bottom: 0;
+    background: var(--color-accent-brand-bg);
+    transition: width 600ms ease-out;
+}
+
+.ad-content {
+    position: relative;
+    z-index: 1;
+    display: grid;
+    grid-template-columns: 26px 1fr auto;
+    align-items: center;
+    gap: 10px;
+    width: 100%;
+    padding: 8px 12px;
+}
+
+.ad-letter {
+    font-family: var(--font-mono);
+    font-weight: 700;
+    color: var(--color-text-muted);
+    font-size: 0.85rem;
+}
+
+.ad-text {
+    color: var(--color-text-primary);
+    font-size: 0.95rem;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+}
+
+.ad-pct {
+    font-family: var(--font-mono);
+    font-weight: 600;
+    color: var(--color-text-muted);
+    font-size: 0.85rem;
+}
+
+.ad-row--correct {
+    border-color: var(--color-success);
+}
+.ad-row--correct .ad-fill {
+    background: var(--color-success-light);
+}
+.ad-row--correct .ad-letter,
+.ad-row--correct .ad-text,
+.ad-row--correct .ad-pct {
+    color: var(--color-success);
+    font-weight: 700;
+}
+
+.ad-mine {
+    color: var(--color-accent-primary);
+    font-family: var(--font-mono);
+    font-size: 0.75rem;
+    font-weight: 700;
+    letter-spacing: 0.05em;
+}
+
 .fun-fact-section {
     background: var(--color-surface-dark);
     border: 1px solid var(--color-border-neon);
@@ -2917,6 +3281,625 @@ footer {
 }
 
 /* ==========================================
+   Setup — variant A (Hero CTA) + B (Preset Stacks)
+   ==========================================
+   Hero state by default. "Einstellungen anpassen" link flips
+   data-mode="detail" on #setup-screen and reveals the preset cards.
+   Hero hides via the data-mode selector. "Eigene" preset reveals
+   the existing chip rows below. */
+#setup-screen[data-mode="hero"] #setup-detail { display: none; }
+#setup-screen[data-mode="detail"] #setup-hero { display: none; }
+
+.setup-hero {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    gap: var(--space-md);
+    padding: var(--space-xl) var(--space-md);
+    min-height: 60vh;
+    text-align: center;
+}
+
+.setup-hero-emoji {
+    font-size: 3.4rem;
+    line-height: 1;
+}
+
+.setup-hero-headline {
+    font-family: var(--font-display);
+    font-weight: 800;
+    font-size: clamp(1.4rem, 5vw, 2.2rem);
+    line-height: 1.15;
+    margin: 0;
+    color: var(--color-text-heading);
+}
+.setup-hero-headline .accent { color: var(--color-accent-primary); }
+
+.setup-hero-summary {
+    font-family: var(--font-mono);
+    font-size: 0.85rem;
+    color: var(--color-text-muted);
+    margin: 0;
+    max-width: 90%;
+    line-height: 1.5;
+}
+
+.setup-hero .btn {
+    width: 100%;
+    max-width: 360px;
+    padding: 16px;
+    font-size: 1.05rem;
+}
+
+.setup-tweak-link {
+    background: transparent;
+    border: 0;
+    color: var(--color-text-muted);
+    font-family: var(--font-body);
+    font-size: 0.85rem;
+    padding: 8px;
+    cursor: pointer;
+    text-decoration: underline dotted var(--color-text-light);
+    text-underline-offset: 4px;
+}
+.setup-tweak-link:hover { color: var(--color-text-primary); }
+
+/* Detail (preset stacks) */
+.setup-detail {
+    padding: var(--space-md);
+    display: flex;
+    flex-direction: column;
+    gap: var(--space-md);
+    max-width: 600px;
+    margin: 0 auto;
+}
+
+.setup-back-btn {
+    align-self: flex-start;
+    background: transparent;
+    border: 0;
+    color: var(--color-text-muted);
+    font-family: var(--font-body);
+    font-size: 0.9rem;
+    padding: 6px 10px 6px 0;
+    cursor: pointer;
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+}
+.setup-back-btn:hover { color: var(--color-text-primary); }
+
+.setup-detail-title {
+    font-family: var(--font-display);
+    font-weight: 700;
+    font-size: 1.1rem;
+    color: var(--color-text-muted);
+    margin: 0;
+}
+
+.setup-presets {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+}
+
+.preset-card {
+    display: grid;
+    grid-template-columns: 36px 1fr auto;
+    align-items: center;
+    gap: 12px;
+    padding: 14px;
+    background: var(--color-bg-card-alt);
+    border: 1px solid var(--color-border-light);
+    border-radius: 10px;
+    cursor: pointer;
+    text-align: left;
+    font-family: var(--font-body);
+    color: var(--color-text-primary);
+    transition: border-color 120ms ease-out, background 120ms ease-out;
+}
+.preset-card:hover { border-color: var(--color-border-medium); }
+.preset-card.is-active {
+    border-color: var(--color-accent-primary);
+    background: var(--color-accent-brand-bg);
+}
+
+.preset-icon { font-size: 1.4rem; line-height: 1; }
+.preset-body { display: flex; flex-direction: column; gap: 2px; }
+.preset-name { font-weight: 700; font-size: 0.95rem; }
+.preset-meta {
+    font-family: var(--font-mono);
+    font-size: 0.72rem;
+    color: var(--color-text-muted);
+}
+.preset-duration {
+    font-family: var(--font-mono);
+    font-size: 0.72rem;
+    color: var(--color-text-light);
+    align-self: center;
+}
+
+.setup-custom {
+    display: flex;
+    flex-direction: column;
+    gap: 0;
+    padding-top: var(--space-md);
+    border-top: 1px dashed var(--color-border-light);
+}
+
+/* Conversation Form (variant F). Each setting renders as a numbered
+   question step. Number badges live in the question header; chips
+   answer the question below them, indented to align with the question
+   text (skipping the badge column). */
+.vF-step {
+    display: flex;
+    flex-direction: column;
+    gap: var(--space-sm);
+    padding: var(--space-md) 0;
+    border-bottom: 1px dashed var(--color-border-light);
+}
+.vF-step:last-child { border-bottom: 0; }
+
+.vF-q {
+    font-family: var(--font-display);
+    font-weight: 700;
+    font-size: 1rem;
+    color: var(--color-text-primary);
+    display: flex;
+    align-items: center;
+    gap: 8px;
+}
+
+.vF-q .num {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    width: 22px;
+    height: 22px;
+    border-radius: 50%;
+    background: var(--color-accent-primary);
+    color: var(--color-bg-primary);
+    font-family: var(--font-mono);
+    font-weight: 700;
+    font-size: 0.75rem;
+    flex-shrink: 0;
+}
+
+.vF-answers {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 6px;
+    padding-left: 30px;  /* align with question text, skipping the badge */
+}
+
+/* ==========================================
+   Player Lobby — variant B (You + the Room) + D (Rules)
+   ==========================================
+   Hero with mega avatar + name + DU BIST DRIN tag confirms identity
+   first. Orbit chips list co-players. Rules section underneath
+   teaches first-timers without an extra tap. Pulse dot in the
+   status line keeps "we're connected" alive. */
+#lobby-view {
+    padding: var(--space-md);
+    display: flex;
+    flex-direction: column;
+    gap: var(--space-md);
+    max-width: 480px;
+    margin: 0 auto;
+}
+
+.pl-hero {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    text-align: center;
+    gap: 6px;
+    padding: var(--space-lg) var(--space-md) var(--space-md);
+}
+
+.pl-megaAvatar {
+    width: 96px;
+    height: 96px;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-family: var(--font-mono);
+    font-weight: 700;
+    font-size: 2.4rem;
+    color: var(--color-bg-primary);
+    background: var(--color-accent-primary);
+    margin-bottom: 6px;
+    transition: transform 220ms ease-out;
+}
+
+.pl-megaName {
+    font-family: var(--font-display);
+    font-weight: 800;
+    font-size: 1.6rem;
+    color: var(--color-text-heading);
+    margin: 0;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    max-width: 100%;
+}
+
+.pl-tag {
+    display: inline-block;
+    font-family: var(--font-mono);
+    font-size: 0.72rem;
+    font-weight: 700;
+    letter-spacing: 0.08em;
+    color: var(--color-accent-primary);
+    padding: 3px 10px;
+    border-radius: 999px;
+    border: 1px solid var(--color-accent-primary);
+}
+
+.pl-meta {
+    font-family: var(--font-mono);
+    font-size: 0.78rem;
+    color: var(--color-text-muted);
+    margin: 8px 0 0;
+}
+
+.pl-also {
+    text-align: center;
+    color: var(--color-text-muted);
+    font-size: 0.9rem;
+    margin: 0;
+}
+
+.pl-orbits {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    gap: 12px;
+    padding: 0 var(--space-md);
+    min-height: 60px;  /* reserve space so layout doesn't jump on first join */
+}
+
+.pl-orbit {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 4px;
+    transition: opacity 220ms ease-out;
+}
+.pl-orbit.is-away { opacity: 0.45; }
+
+.pl-orbit-av {
+    width: 40px;
+    height: 40px;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-family: var(--font-mono);
+    font-weight: 700;
+    font-size: 0.95rem;
+    color: var(--color-bg-primary);
+}
+
+.pl-orbit-nm {
+    font-size: 0.78rem;
+    color: var(--color-text-muted);
+    max-width: 80px;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+}
+
+/* Variant D — rules block below the hero+orbits. */
+.pl-rules {
+    background: var(--color-bg-surface);
+    border: 1px solid var(--color-border-light);
+    border-radius: 12px;
+    padding: var(--space-md) var(--space-md) var(--space-md) var(--space-lg);
+}
+
+.pl-rulesTitle {
+    font-family: var(--font-display);
+    font-weight: 700;
+    font-size: 1rem;
+    color: var(--color-text-heading);
+    margin: 0 0 var(--space-sm);
+    display: flex;
+    align-items: center;
+    gap: 8px;
+}
+
+.pl-rules ol {
+    list-style: none;
+    counter-reset: r;
+    padding: 0;
+    margin: 0;
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+}
+
+.pl-rules li {
+    counter-increment: r;
+    padding-left: 32px;
+    position: relative;
+    font-size: 0.9rem;
+    line-height: 1.45;
+    color: var(--color-text-primary);
+}
+.pl-rules li::before {
+    content: counter(r);
+    position: absolute;
+    left: 0; top: 0;
+    width: 22px; height: 22px;
+    border-radius: 50%;
+    background: var(--color-accent-primary);
+    color: var(--color-bg-primary);
+    font-family: var(--font-mono);
+    font-weight: 700;
+    font-size: 0.78rem;
+    display: flex; align-items: center; justify-content: center;
+}
+
+/* Status line under everything (non-admin players only). */
+.pl-status {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    align-self: center;
+    color: var(--color-text-muted);
+    font-family: var(--font-mono);
+    font-size: 0.78rem;
+    padding: var(--space-sm) 0;
+}
+.pl-pulse {
+    width: 8px;
+    height: 8px;
+    border-radius: 50%;
+    background: var(--color-success);
+    animation: pl-pulse 1.6s ease-out infinite;
+}
+@keyframes pl-pulse {
+    0%, 100% { box-shadow: 0 0 0 0 var(--color-success-light); }
+    50%      { box-shadow: 0 0 0 6px transparent; }
+}
+
+/* ==========================================
+   Lobby — variant E ("Game-Show Countdown")
+   ==========================================
+   Marquee headline → QR + roster row → URL + cast link → countdown.
+   Designed so the headline carries the energy: "Gleich geht's los…"
+   when 1+ players, "Warten auf Spieler…" before that. Countdown line
+   makes the "we need 1 more" beat readable from across the room.
+*/
+.lobby-e {
+    display: flex;
+    flex-direction: column;
+    gap: var(--space-md);
+    padding: var(--space-md);
+    max-width: 760px;
+    margin: 0 auto;
+}
+
+.lobby-marquee {
+    text-align: center;
+    font-family: var(--font-display);
+    font-weight: 800;
+    font-size: clamp(1.4rem, 5vw, 2.2rem);
+    line-height: 1.1;
+    margin: 8px 0 0;
+    background: linear-gradient(180deg, var(--color-warning), var(--color-accent-primary));
+    -webkit-background-clip: text;
+    background-clip: text;
+    color: transparent;
+    /* Force fallback color visible if gradient-clip rendering trips up */
+    text-shadow: 0 0 0 transparent;
+}
+
+.lobby-e-row {
+    display: grid;
+    /* Single column on phones — the roster names need full width.
+       The 480px breakpoint below restores the side-by-side layout
+       once there's room. */
+    grid-template-columns: 1fr;
+    gap: var(--space-md);
+    align-items: stretch;
+    background: var(--color-bg-surface);
+    border: 1px solid var(--color-border-light);
+    border-radius: 12px;
+    padding: var(--space-md);
+}
+
+.lobby-e-qr {
+    /* On phones the QR shouldn't fill the whole card — cap at 220px so
+       it's scannable from across a small room without dominating. */
+    max-width: 220px;
+    margin: 0 auto;
+}
+
+@media (min-width: 480px) {
+    .lobby-e-row {
+        grid-template-columns: minmax(160px, 200px) 1fr;
+    }
+    .lobby-e-qr {
+        max-width: none;
+        margin: 0;
+    }
+}
+
+.lobby-e-qr {
+    background: #fff;
+    border-radius: 10px;
+    padding: 8px;
+    aspect-ratio: 1;
+    width: 100%;
+    align-self: center;
+}
+.lobby-e-qr canvas,
+.lobby-e-qr img,
+.lobby-e-qr svg {
+    width: 100% !important;
+    height: 100% !important;
+    display: block;
+}
+
+.lobby-e-roster {
+    display: flex;
+    flex-direction: column;
+    gap: 6px;
+    min-height: 0;
+    overflow-y: auto;
+}
+
+.lobby-e-rows {
+    display: flex;
+    flex-direction: column;
+    gap: 6px;
+}
+
+.lobby-e-row-card {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    padding: 8px 12px;
+    background: var(--color-bg-card-alt);
+    border-radius: 8px;
+    font-size: 0.95rem;
+    color: var(--color-text-primary);
+}
+.lobby-e-row-card .dot {
+    width: 18px;
+    height: 18px;
+    border-radius: 50%;
+    flex-shrink: 0;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    font-family: var(--font-mono);
+    font-weight: 700;
+    font-size: 0.7rem;
+    color: var(--color-bg-primary);
+}
+.lobby-e-row-card .name {
+    flex: 1;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+}
+.lobby-e-row-card .pending-tag {
+    font-family: var(--font-mono);
+    font-size: 0.65rem;
+    text-transform: uppercase;
+    color: var(--color-text-muted);
+    letter-spacing: 0.06em;
+}
+
+/* Kick button — icon-only ×, only shows on hover so it doesn't
+   distract from the player name in normal viewing. Without explicit
+   styling the browser default eats the .name's flex column at narrow
+   viewports (observed: kick = 48 px, name = 0 px). */
+.lobby-e-row-card .player-chip-kick {
+    background: transparent;
+    border: 0;
+    color: var(--color-text-muted);
+    font-size: 1.1rem;
+    line-height: 1;
+    padding: 4px 6px;
+    cursor: pointer;
+    opacity: 0;
+    transition: opacity 120ms ease-out, color 120ms ease-out;
+    border-radius: 4px;
+    flex-shrink: 0;
+}
+.lobby-e-row-card:hover .player-chip-kick,
+.lobby-e-row-card:focus-within .player-chip-kick {
+    opacity: 0.7;
+}
+.lobby-e-row-card .player-chip-kick:hover {
+    opacity: 1;
+    color: var(--color-error);
+    background: var(--color-error-bg);
+}
+
+.lobby-e-row-empty {
+    text-align: center;
+    color: var(--color-text-muted);
+    font-size: 0.85rem;
+    padding: var(--space-md) 0;
+}
+
+.lobby-e-url {
+    font-family: var(--font-mono);
+    font-size: 0.85rem;
+    color: var(--color-accent-primary);
+    text-align: center;
+    word-break: break-all;
+    margin: 0;
+}
+
+.lobby-e-cast {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    gap: 6px;
+    align-self: center;
+    color: var(--color-text-muted);
+    text-decoration: none;
+    font-size: 0.9rem;
+    padding: 6px 12px;
+    border-radius: 8px;
+    transition: background 120ms ease-out;
+}
+.lobby-e-cast:hover { background: var(--color-bg-card-alt); }
+
+.lobby-e-countdown {
+    text-align: center;
+    font-family: var(--font-mono);
+    font-size: 0.95rem;
+    color: var(--color-text-muted);
+    padding: var(--space-md) 0;
+    border-top: 1px dashed var(--color-border-light);
+    border-bottom: 1px dashed var(--color-border-light);
+}
+.lobby-e-countdown strong {
+    color: var(--color-success);
+    font-weight: 700;
+    margin: 0 4px;
+}
+.lobby-e-countdown-sep {
+    color: var(--color-border-medium);
+    margin: 0 6px;
+}
+.lobby-e-countdown.is-ready {
+    color: var(--color-success);
+}
+.lobby-e-countdown.is-ready strong { color: var(--color-accent-primary); }
+
+.lobby-e-actions {
+    display: flex;
+    flex-direction: column;
+    gap: var(--space-sm);
+    margin-top: var(--space-sm);
+}
+
+@media (min-width: 768px) {
+    .lobby-e {
+        padding: var(--space-lg);
+    }
+    .lobby-e-row {
+        grid-template-columns: minmax(200px, 280px) 1fr;
+        padding: var(--space-lg);
+        gap: var(--space-lg);
+    }
+}
+
+@media (min-width: 1280px) {
+    .lobby-marquee { font-size: 3rem; }
+    .lobby-e-countdown { font-size: 1.1rem; }
+}
+
+/* ==========================================
    Player Page: MODALS & CONTROLS
    ========================================== */
 
@@ -2935,6 +3918,16 @@ footer {
     z-index: var(--z-control-bar);
     backdrop-filter: blur(10px);
     -webkit-backdrop-filter: blur(10px);
+}
+
+/* Reserve scroll headroom so the sticky admin-control-bar doesn't
+   cover the Nächste-Runde button (or anything else at the bottom of
+   the reveal screen). Without this, scrolling to the end of the
+   reveal lands the next-round button visually inside the bar. The
+   :has() selector is supported on every browser HA ships with. */
+body:has(.admin-control-bar:not(.hidden)) #reveal-view,
+body:has(.admin-control-bar:not(.hidden)) #game-view {
+    padding-bottom: 96px;
 }
 
 .control-btn {
@@ -3403,10 +4396,68 @@ footer {
         min-height: 64px;
         font-size: 1.05rem;
     }
+}
 
-    .podium-bar {
-        width: 110px;
+/* ----- TV / projector viewports -----
+   The host screen is meant to be watched across a room (sofa, kitchen,
+   sometimes projected on a wall). At 1280-1919 px we lift the cap so
+   the lobby/setup/reveal cards claim more of the screen; at ≥ 1920 px
+   we also scale typography so the QR, player names, and question text
+   land legibly from 2-3 m away. We target both .admin-content (the
+   setup/lobby admin tab) and .player-container (which the host also
+   uses after admin-self-join — same DOM as players, just on the TV).
+*/
+@media (min-width: 1280px) {
+    .admin-container,
+    .admin-content,
+    .app-container,
+    .player-container {
+        max-width: 1100px;
+        padding-left: var(--space-lg);
+        padding-right: var(--space-lg);
     }
+
+    .question-text {
+        font-size: 2.2rem;
+        line-height: 1.25;
+    }
+
+    .answer-btn {
+        min-height: 80px;
+        font-size: 1.25rem;
+    }
+
+    /* TV podium: let the grid breathe wider on big screens. */
+    .podium { max-width: 880px; }
+}
+
+@media (min-width: 1920px) {
+    .admin-container,
+    .admin-content,
+    .app-container,
+    .player-container {
+        max-width: 1400px;
+        padding-left: var(--space-2xl);
+        padding-right: var(--space-2xl);
+    }
+
+    /* Bigger across the board so people on the couch can read it. */
+    .question-text {
+        font-size: 3rem;
+    }
+
+    .answer-btn {
+        min-height: 96px;
+        font-size: 1.5rem;
+    }
+
+    /* TV podium on 1920+: scale plank heights for legibility from 3 m away. */
+    .podium { max-width: 1040px; min-height: 280px; }
+    .podium-bar.first  { height: 260px; font-size: 4.5rem; }
+    .podium-bar.second { height: 195px; font-size: 3.5rem; }
+    .podium-bar.third  { height: 130px; font-size: 2.75rem; }
+    .podium-name { font-size: 1.5rem; }
+    .podium-score { font-size: 1.125rem; }
 }
 
 /* ==========================================
@@ -3926,3 +4977,381 @@ footer {
   text-align: right;
   min-width: 52px;
 }
+
+/* =============================================================
+   Player result page (Soft Parlor redesign, 2026-05-24)
+   Hero swaps between 4 states (X streak / Y big-points / Z wrong /
+   W missed); body below is identical. Admin overlays the ADMIN pill
+   and a sticky bottom action bar with Ende + Nächste Runde.
+   See ~/.gstack/projects/mholzi-quizify/designs/player-result-20260524/
+   for the source-of-truth visual reference.
+   ============================================================= */
+.pl-result {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  padding: 16px 16px 16px;
+  position: relative;
+  min-height: 100%;
+  /* room for the sticky admin bar without crowding the standings */
+  padding-bottom: 96px;
+}
+.pl-result-crown {
+  display: grid;
+  grid-template-columns: 1fr auto 1fr;
+  align-items: center;
+}
+.pl-result-round {
+  font-family: var(--font-mono);
+  font-weight: 700;
+  font-size: 10px;
+  color: var(--color-text-muted);
+  letter-spacing: 0.12em;
+  text-align: center;
+  text-transform: uppercase;
+}
+.pl-result-admin-pill {
+  display: inline-flex;
+  align-items: center;
+  gap: 4px;
+  justify-self: end;
+  font-family: var(--font-body);
+  font-size: 9.5px;
+  font-weight: 700;
+  color: var(--color-accent-primary);
+  letter-spacing: 0.10em;
+  background: var(--color-accent-brand-bg);
+  border: 1px solid rgba(232, 138, 127, 0.35);
+  padding: 2px 7px;
+  border-radius: 999px;
+}
+.pl-result-admin-pill[hidden] { display: none; }
+
+/* ---- Hero ---- */
+.pl-result-hero {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 4px;
+  text-align: center;
+  padding: 4px 0 2px;
+}
+/* shared verdict glyph circles */
+.pl-result-verdict-circle {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  color: #fff;
+  border-radius: 50%;
+  font-weight: 800;
+  width: 32px;
+  height: 32px;
+  font-size: 15px;
+}
+.pl-result-verdict-circle--correct { background: var(--color-success); }
+.pl-result-verdict-circle--wrong { background: var(--color-error); }
+.pl-result-verdict-circle--missed { background: var(--color-text-light); }
+
+/* state X — streak hero */
+.pl-result-hero--streak .pl-result-flame {
+  font-size: 40px;
+  line-height: 1;
+  margin-bottom: 2px;
+  filter: drop-shadow(0 4px 10px rgba(232, 138, 127, 0.35));
+}
+.pl-result-hero--streak .pl-result-headline {
+  font-family: var(--font-display);
+  font-weight: 800;
+  font-size: 24px;
+  line-height: 1.08;
+  letter-spacing: 0.005em;
+  color: var(--color-text-primary);
+}
+.pl-result-hero--streak .pl-result-pts {
+  font-family: var(--font-mono);
+  font-weight: 800;
+  font-size: 22px;
+  color: var(--color-accent-primary);
+  margin-top: 4px;
+}
+.pl-result-hero--streak .pl-result-pts-unit {
+  font-family: var(--font-body);
+  font-weight: 500;
+  font-size: 12px;
+  color: var(--color-text-muted);
+  margin-left: 4px;
+}
+.pl-result-breakdown {
+  font-family: var(--font-body);
+  font-size: 11px;
+  color: var(--color-text-muted);
+  margin-top: 2px;
+  letter-spacing: 0.01em;
+}
+.pl-result-breakdown b {
+  font-family: var(--font-mono);
+  font-weight: 700;
+  color: var(--color-text-primary);
+}
+
+/* state Y — big +N */
+.pl-result-hero--big .pl-result-big-points {
+  font-family: var(--font-mono);
+  font-weight: 800;
+  font-size: 96px;
+  line-height: 0.95;
+  color: var(--color-accent-primary);
+  letter-spacing: -0.02em;
+  text-shadow: 0 6px 22px rgba(232, 138, 127, 0.18);
+}
+.pl-result-hero--big .pl-result-pts-unit {
+  font-family: var(--font-body);
+  font-weight: 500;
+  font-size: 11px;
+  color: var(--color-text-muted);
+  letter-spacing: 0.18em;
+}
+/* shrink the big number when admin bar is showing — keeps the standings
+   visible without scrolling on common phone heights. */
+body.is-admin .pl-result-hero--big .pl-result-big-points { font-size: 84px; }
+
+/* state Z / W — wrong / missed */
+.pl-result-hero--wrong .pl-result-verdict,
+.pl-result-hero--missed .pl-result-verdict {
+  font-family: var(--font-display);
+  font-weight: 800;
+  font-size: 20px;
+  color: var(--color-text-primary);
+  letter-spacing: 0.005em;
+}
+.pl-result-hero--wrong .pl-result-sub,
+.pl-result-hero--missed .pl-result-sub {
+  font-family: var(--font-body);
+  font-size: 12px;
+  color: var(--color-text-muted);
+}
+.pl-result-hero--wrong .pl-result-sub b,
+.pl-result-hero--missed .pl-result-sub b {
+  color: var(--color-text-primary);
+  font-weight: 700;
+}
+.pl-result-hero--wrong .pl-result-zero,
+.pl-result-hero--missed .pl-result-zero {
+  font-family: var(--font-mono);
+  font-weight: 800;
+  font-size: 20px;
+  color: var(--color-text-light);
+  margin-top: 4px;
+}
+.pl-result-hero--wrong .pl-result-zero-unit,
+.pl-result-hero--missed .pl-result-zero-unit {
+  font-family: var(--font-body);
+  font-weight: 500;
+  font-size: 11px;
+  color: var(--color-text-light);
+  margin-left: 4px;
+}
+.pl-result-streak-lost {
+  font-family: var(--font-body);
+  font-size: 12px;
+  color: var(--color-error);
+  font-weight: 600;
+}
+
+/* ---- Answer strip ---- */
+.pl-result-answer-strip {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  background: var(--color-bg-card);
+  border: 1px solid var(--color-success);
+  border-radius: 8px;
+  padding: 7px 12px;
+  font-family: var(--font-body);
+  font-size: 12px;
+  color: var(--color-text-muted);
+}
+.pl-result-answer-strip b {
+  font-family: var(--font-display);
+  font-weight: 700;
+  color: var(--color-text-primary);
+  font-size: 13px;
+}
+.pl-result-answer-strip .pl-result-answer-mark {
+  color: var(--color-success);
+  font-weight: 800;
+}
+.pl-result-answer-strip--wrong {
+  border-color: var(--color-error);
+  background: var(--color-error-bg);
+}
+.pl-result-answer-strip--wrong .pl-result-answer-mark {
+  color: var(--color-error);
+}
+.pl-result-answer-strip--missed {
+  border-color: var(--color-border-light);
+  background: rgba(42, 40, 32, 0.04);
+  color: var(--color-text-light);
+}
+.pl-result-answer-strip--missed .pl-result-answer-mark {
+  color: var(--color-text-light);
+}
+
+/* ---- Shared section heads ---- */
+.pl-result-sec-head {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  font-family: var(--font-body);
+  font-size: 11px;
+  font-weight: 600;
+  color: var(--color-text-muted);
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  margin-bottom: 4px;
+}
+.pl-result-section { margin: 0; }
+
+/* ---- Fun fact ---- */
+.pl-result-funfact {
+  background: var(--color-bg-card);
+  border-left: 3px solid var(--color-warning);
+  border-radius: 8px;
+  padding: 10px 12px;
+  box-shadow: var(--shadow-md);
+}
+.pl-result-funfact-body {
+  font-family: var(--font-body);
+  font-size: 12.5px;
+  line-height: 1.4;
+  color: var(--color-text-primary);
+}
+
+/* ---- Standings ---- */
+.pl-result-standings {
+  background: var(--color-bg-card);
+  border-radius: 10px;
+  box-shadow: var(--shadow-md);
+  overflow: hidden;
+}
+.pl-result-srow {
+  display: grid;
+  grid-template-columns: 22px 22px 1fr auto auto;
+  align-items: center;
+  gap: 8px;
+  padding: 7px 12px;
+  border-bottom: 1px solid var(--color-border-light);
+  font-family: var(--font-body);
+  font-size: 13px;
+}
+.pl-result-srow:last-child { border-bottom: 0; }
+/* Medal tints — gold stronger, silver/bronze whisper */
+.pl-result-srow--gold   { background: rgba(232, 196, 127, 0.36); }
+.pl-result-srow--silver { background: rgba(170, 182, 194, 0.18); }
+.pl-result-srow--bronze { background: rgba(205, 140, 100, 0.16); }
+.pl-result-srow .pl-result-pos { color: var(--color-text-muted); }
+.pl-result-srow--gold   .pl-result-pos { color: #B08930; }
+.pl-result-srow--silver .pl-result-pos { color: #6F7C8A; }
+.pl-result-srow--bronze .pl-result-pos { color: #A35A2B; }
+/* "Me" indicator layers on top of any medal background. */
+.pl-result-srow--me {
+  border-left: 3px solid var(--color-accent-primary);
+  padding-left: 9px;
+}
+.pl-result-srow--me:not(.pl-result-srow--gold):not(.pl-result-srow--silver):not(.pl-result-srow--bronze) {
+  background: rgba(232, 138, 127, 0.07);
+}
+.pl-result-pos {
+  font-family: var(--font-mono);
+  font-weight: 700;
+  font-size: 11px;
+  text-align: right;
+}
+.pl-result-av {
+  width: 22px;
+  height: 22px;
+  border-radius: 50%;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  font-family: var(--font-display);
+  font-weight: 800;
+  font-size: 10px;
+  color: #fff;
+}
+.pl-result-nm {
+  font-family: var(--font-body);
+  color: var(--color-text-primary);
+  font-size: 13px;
+}
+.pl-result-srow--me .pl-result-nm { font-weight: 700; }
+.pl-result-delta {
+  font-family: var(--font-body);
+  font-size: 11px;
+  font-weight: 600;
+}
+.pl-result-delta--up { color: var(--color-success); }
+.pl-result-delta--down { color: var(--color-error); }
+.pl-result-delta--flat { color: var(--color-text-light); }
+.pl-result-sc {
+  font-family: var(--font-mono);
+  font-weight: 700;
+  font-size: 13px;
+  color: var(--color-text-primary);
+  min-width: 28px;
+  text-align: right;
+}
+
+/* ---- Admin bar (sticky bottom) ---- */
+.pl-result-admin-bar {
+  position: fixed;
+  left: 16px;
+  right: 16px;
+  bottom: 16px;
+  display: grid;
+  grid-template-columns: auto 1fr;
+  gap: 8px;
+  padding: 10px 10px;
+  background: rgba(250, 246, 236, 0.92);
+  backdrop-filter: blur(8px);
+  -webkit-backdrop-filter: blur(8px);
+  border: 1px solid var(--color-border-light);
+  border-radius: 14px;
+  box-shadow: 0 -6px 24px rgba(42, 40, 32, 0.08), 0 2px 0 rgba(42, 40, 32, 0.02);
+  z-index: 20;
+  max-width: 480px;
+  margin: 0 auto;
+}
+.pl-result-admin-bar.hidden { display: none; }
+.pl-result-bar-btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 6px;
+  font-family: var(--font-body);
+  font-weight: 700;
+  font-size: 14px;
+  border-radius: 10px;
+  cursor: pointer;
+  padding: 11px 14px;
+  border: 1px solid transparent;
+  line-height: 1;
+}
+.pl-result-bar-btn--ghost {
+  background: transparent;
+  border-color: var(--color-border-medium);
+  color: var(--color-text-secondary);
+}
+.pl-result-bar-btn--ghost:hover { background: rgba(42, 40, 32, 0.04); }
+.pl-result-bar-btn--primary {
+  background: var(--color-accent-primary);
+  color: #fff;
+  box-shadow: var(--glow-primary);
+}
+.pl-result-bar-btn--primary:hover { background: var(--color-accent-brand-hover); }
+.pl-result-bar-btn:disabled { opacity: 0.6; cursor: not-allowed; }
+
+/* When the admin bar isn't visible, the result page doesn't need bottom
+   room for it. The body container only reserves padding-bottom when admin
+   is active so non-admin players see content fill the screen. */
+body:not(.is-admin) .pl-result { padding-bottom: 16px; }

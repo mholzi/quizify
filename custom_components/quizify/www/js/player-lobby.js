@@ -15,6 +15,90 @@
 
     var previousPlayers = [];
 
+    // Variant B+D layout. Paints the hero (mega avatar + name + "DU BIST DRIN")
+    // for this player, and the orbit chips for the OTHER players. The
+    // count line reads "+ N weitere" or "Du wartest noch allein…". Pure
+    // DOM writes — no state of its own; relies on state.playerName as
+    // the source of truth for "who am I".
+    function _renderHeroAndOrbits(players, data) {
+        var hero = document.getElementById('pl-mega-avatar');
+        var nameEl = document.getElementById('pl-mega-name');
+        var alsoEl = document.getElementById('pl-also');
+        var orbits = document.getElementById('player-list');
+        var metaEl = document.getElementById('pl-meta');
+        if (!orbits) return;  // legacy markup — nothing to paint
+
+        var t = (window.QuizifyI18n && window.QuizifyI18n.t) || function (k) { return k; };
+        var myName = state.playerName || '';
+        var me = null;
+        var others = [];
+        for (var i = 0; i < players.length; i++) {
+            var p = players[i];
+            if (p && p.name === myName) me = p;
+            else others.push(p);
+        }
+
+        // Hero — only meaningful once we know our color from the server.
+        if (hero && nameEl) {
+            var initial = (myName || '?').charAt(0).toUpperCase();
+            var color = (me && me.color) || state.playerColor || 'var(--color-accent-primary)';
+            hero.textContent = initial;
+            hero.style.background = color;
+            hero.style.boxShadow = '0 0 0 6px ' + _hexWithAlpha(color, 0.22);
+            nameEl.textContent = myName || '…';
+        }
+
+        // Meta line under the hero: difficulty + round count if known.
+        if (metaEl) {
+            var bits = [];
+            var diffLabels = { 'easy': '🌱 Einfach', 'medium': '🎯 Mittel', 'hard': '🔥 Schwer' };
+            var diff = data && (data.difficulty || data.game_difficulty);
+            if (diff && diffLabels[diff]) bits.push(diffLabels[diff]);
+            var total = data && (data.total_rounds || data.num_rounds);
+            if (total) bits.push(total + ' ' + t('admin.summaryRoundsUnit'));
+            metaEl.textContent = bits.length ? bits.join(' · ') : t('lobby.gameLobby');
+        }
+
+        // Companion line.
+        if (alsoEl) {
+            if (others.length === 0) {
+                alsoEl.textContent = t('lobby.aloneWaiting');
+            } else if (others.length === 1) {
+                alsoEl.textContent = t('lobby.alsoOne');
+            } else {
+                alsoEl.textContent = t('lobby.alsoMany', { count: others.length });
+            }
+        }
+
+        // Orbit chips — one per OTHER player. Uses the same color the
+        // server assigned so chips match what each player sees on their
+        // own phone.
+        orbits.innerHTML = others.map(function (p) {
+            var initial = (p.name || '?').charAt(0).toUpperCase();
+            var bg = p.color || '#A89E89';
+            var awayClass = p.connected === false ? ' is-away' : '';
+            return '<div class="pl-orbit' + awayClass + '" data-player="' + _escape(p.name) + '">' +
+                '<span class="pl-orbit-av" style="background:' + bg + '">' + _escape(initial) + '</span>' +
+                '<span class="pl-orbit-nm">' + _escape(p.name || '') + '</span>' +
+            '</div>';
+        }).join('');
+    }
+
+    // Tiny helpers — keep scope tight.
+    function _escape(s) {
+        return String(s == null ? '' : s)
+            .replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;')
+            .replace(/"/g, '&quot;').replace(/'/g, '&#39;');
+    }
+    function _hexWithAlpha(hex, alpha) {
+        // Accepts #RRGGBB or already-rgba/var() — fallback to original.
+        if (typeof hex !== 'string' || !hex.startsWith('#') || hex.length !== 7) return hex;
+        var r = parseInt(hex.slice(1, 3), 16);
+        var g = parseInt(hex.slice(3, 5), 16);
+        var b = parseInt(hex.slice(5, 7), 16);
+        return 'rgba(' + r + ',' + g + ',' + b + ',' + alpha + ')';
+    }
+
     /**
      * Render the full lobby view from game state
      * @param {Object} data - game_state message
@@ -56,8 +140,11 @@
         var playersEmptyEl = document.getElementById('players-empty');
         if (playersEmptyEl) playersEmptyEl.classList.toggle('hidden', players.length > 0);
 
-        // Render player cards
-        pu.renderPlayerCards('player-list', players);
+        // Variant B+D layout: paint the hero (mega avatar + name + tag),
+        // then render OTHER players as orbit chips. Falls back gracefully
+        // on legacy markup — if the hero nodes aren't present, the orbit
+        // call still writes into #player-list as before.
+        _renderHeroAndOrbits(players, data);
 
         // Detect newly joined players and add animation class
         var previousNames = previousPlayers.map(function (p) { return p.name; });
@@ -106,7 +193,7 @@
         var playersEmptyEl = document.getElementById('players-empty');
         if (playersEmptyEl) playersEmptyEl.classList.toggle('hidden', players.length > 0);
 
-        pu.renderPlayerCards('player-list', players);
+        _renderHeroAndOrbits(players, data);
         updateAdminControls(players);
     }
 
@@ -122,7 +209,7 @@
         var playersEmptyEl = document.getElementById('players-empty');
         if (playersEmptyEl) playersEmptyEl.classList.toggle('hidden', players.length > 0);
 
-        pu.renderPlayerCards('player-list', players);
+        _renderHeroAndOrbits(players, data);
         updateAdminControls(players);
     }
 

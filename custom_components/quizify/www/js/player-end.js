@@ -101,6 +101,13 @@
             if (scoreEl) scoreEl.textContent = player ? player.score : '0';
         });
 
+        // Champion title block: fill the winner's name under "Champion".
+        var champEl = document.getElementById('podium-champion-name');
+        if (champEl) {
+            var champion = leaderboard.find(function (p) { return p.rank === 1; });
+            champEl.textContent = champion ? pu.escapeHtml(champion.name) : '---';
+        }
+
         // Animate podium rise with delays: 2nd (0s), 1st (1s), 3rd (2s)
         var podiumPlaces = document.querySelectorAll('.podium-place');
         podiumPlaces.forEach(function (el) {
@@ -196,12 +203,20 @@
 
         var html = '';
         superlatives.forEach(function (award, index) {
-            // Support both server format {award, icon, winner, detail}
-            // and legacy format {title, emoji, player_name, value}
+            // Server format: {award, icon, winner, detail, award_key, detail_key, detail_params}
+            // Legacy format: {title, emoji, player_name, value}
             var emoji = award.icon || award.emoji || '🏆';
-            var title = award.award || award.title || '';
+            // Prefer i18n keys if the server sent them; fall back to English literals.
+            var titleKey = award.award_key;
+            var detailKey = award.detail_key;
+            var detailParams = award.detail_params || {};
+            var title = titleKey ? _t(titleKey) : (award.award || award.title || '');
+            // If _t returned the key unchanged (missing translation), keep the
+            // English literal as a fallback so we never show "highlights.awards.x".
+            if (titleKey && title === titleKey) title = award.award || award.title || '';
             var player = award.winner || award.player_name || '';
-            var detail = award.detail || award.value || '';
+            var detail = detailKey ? _t(detailKey, detailParams) : (award.detail || award.value || '');
+            if (detailKey && detail === detailKey) detail = award.detail || award.value || '';
 
             html += '<div class="superlative-card" style="animation-delay: ' + (index * 0.2) + 's">' +
                 '<div class="superlative-emoji">' + emoji + '</div>' +
@@ -410,10 +425,35 @@
     // post-game action.
 
     /**
-     * Wire up new game button
+     * Wire up the finale CTAs.
+     *
+     * Two buttons:
+     *   - Wieder spielen (same settings): single-tap rematch. Server keeps
+     *     players + scores zeroed, reuses the cached settings. The admin
+     *     stays on /quizify/player and just waits for the next round.
+     *   - Neues Spiel: full reset — back to /quizify/admin setup screen.
      */
     function setupNewGameButton() {
+        var playAgainBtn = document.getElementById('play-again-same-btn');
         var newGameBtn = document.getElementById('new-game-btn');
+
+        if (playAgainBtn) {
+            playAgainBtn.onclick = function () {
+                var ws = state.ws;
+                if (!ws || ws.readyState !== WebSocket.OPEN) {
+                    // Fall back to full reset if our WS is gone.
+                    if (newGameBtn) newGameBtn.click();
+                    return;
+                }
+                playAgainBtn.disabled = true;
+                playAgainBtn.innerHTML = '<span>⏳</span>';
+                try { ws.send(JSON.stringify({ type: 'play_again' })); } catch (e) { /* ignore */ }
+                // Server will broadcast game_state QUESTION_ACTIVE → the
+                // phase router in player-core picks it up and switches
+                // views. No navigation needed.
+            };
+        }
+
         if (newGameBtn) {
             newGameBtn.onclick = function () {
                 try {
@@ -423,6 +463,10 @@
                     sessionStorage.removeItem('quizify_is_admin');
                 } catch (e) { /* ignore */ }
 
+                var ws = state.ws;
+                if (ws && ws.readyState === WebSocket.OPEN) {
+                    try { ws.send(JSON.stringify({ type: 'reset_game' })); } catch (e) { /* ignore */ }
+                }
                 window.location.href = '/quizify/admin';
             };
         }

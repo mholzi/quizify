@@ -3,7 +3,7 @@
         "step": {
             "user": {
                 "title": "Configurer Quizify",
-                "description": "Quizify est un jeu de quiz multijoueur de connaissances inutiles pour Home Assistant."
+                "description": "Quizify est un jeu de quiz multijoueur pour Home Assistant. Les joueurs rejoignent depuis leur téléphone via QR code ; la télévision affiche la vue de l'hôte."
             }
         },
         "error": {
@@ -11,6 +11,30 @@
         },
         "abort": {
             "already_configured": "Quizify est déjà configuré."
+        }
+    },
+    "options": {
+        "step": {
+            "init": {
+                "title": "Options Quizify",
+                "description": "Intégrations Home Assistant optionnelles. Laissez les champs vides pour les ignorer — Quizify fonctionne très bien sans elles.",
+                "data": {
+                    "party_light_entities": "Lumières d'ambiance",
+                    "tts_entity": "Fournisseur de synthèse vocale",
+                    "media_player_entity": "Lecteur multimédia pour TTS"
+                },
+                "data_description": {
+                    "party_light_entities": "Lumières qui changent de couleur selon la phase de la manche (corail pendant la question, sauge pendant la révélation, soleil au final).",
+                    "tts_entity": "Entité TTS (p. ex. tts.google_translate_say) pour les annonces de jalons et de résultats.",
+                    "media_player_entity": "Haut-parleur sur lequel le TTS est diffusé. Obligatoire si un fournisseur TTS est défini."
+                }
+            }
+        }
+    },
+    "services": {
+        "reset_admin_session": {
+            "name": "Réinitialiser la session admin",
+            "description": "Efface le jeton de session admin persistant. À utiliser si vous ne pouvez plus accéder au panneau admin parce que le jeton est désynchronisé. La prochaine connexion admin générera un nouveau jeton."
         }
     }
 }

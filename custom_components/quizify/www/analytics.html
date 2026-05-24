@@ -289,6 +289,24 @@
                     </table>
                 </div>
             </div>
+
+            <!-- Flagged Questions — populated from /api/quizify/flags -->
+            <div class="analytics-section" id="flags-section" style="display:none;">
+                <div class="section-title">🚩 Gemeldete Fragen</div>
+                <div class="card" style="overflow-x:auto;">
+                    <table class="games-table">
+                        <thead>
+                            <tr>
+                                <th>Frage-ID</th>
+                                <th>Gemeldet</th>
+                                <th>Spieler</th>
+                                <th>Grund</th>
+                            </tr>
+                        </thead>
+                        <tbody id="flagged-questions"></tbody>
+                    </table>
+                </div>
+            </div>
         </div>
 
         <div id="empty" class="empty-state" style="display:none;">
@@ -424,7 +442,38 @@
             }).join('');
         }
 
+        function loadFlags() {
+            fetch('/api/quizify/flags')
+                .then(function (r) { return r.json(); })
+                .then(function (data) {
+                    var flags = (data && data.flags) || [];
+                    if (!flags.length) {
+                        document.getElementById('flags-section').style.display = 'none';
+                        return;
+                    }
+                    document.getElementById('flags-section').style.display = 'block';
+                    // Newest first.
+                    flags.sort(function (a, b) { return (b.ts || 0) - (a.ts || 0); });
+                    var tbody = document.getElementById('flagged-questions');
+                    tbody.innerHTML = flags.slice(0, 100).map(function (f) {
+                        var when = f.ts
+                            ? new Date(f.ts * 1000).toLocaleString()
+                            : '';
+                        return '<tr>' +
+                            '<td><code>' + escapeHtml(f.question_id || '') + '</code></td>' +
+                            '<td>' + escapeHtml(when) + '</td>' +
+                            '<td>' + escapeHtml(f.player_name || '—') + '</td>' +
+                            '<td>' + escapeHtml(f.reason || '—') + '</td>' +
+                            '</tr>';
+                    }).join('');
+                })
+                .catch(function (err) {
+                    console.warn('Failed to load flags:', err);
+                });
+        }
+
         loadData();
+        loadFlags();
     })();
     </script>
 </body>

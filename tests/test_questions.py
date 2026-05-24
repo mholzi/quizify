@@ -7,14 +7,16 @@ from pathlib import Path
 
 import pytest
 
-# Add the game package parent to sys.path so we can import without triggering
-# the homeassistant-dependent custom_components/quizify/__init__.py.
-_GAME_PKG = Path(__file__).resolve().parent.parent / "custom_components" / "quizify"
-sys.path.insert(0, str(_GAME_PKG))
+_REPO_ROOT = Path(__file__).resolve().parent.parent
+sys.path.insert(0, str(_REPO_ROOT))
 
-from game.questions import Answer, Question, QuestionBank  # noqa: E402
+from custom_components.quizify.game.questions import (  # noqa: E402
+    Answer,
+    Question,
+    QuestionBank,
+)
 
-QUESTIONS_DIR = _GAME_PKG / "questions"
+QUESTIONS_DIR = _REPO_ROOT / "custom_components" / "quizify" / "questions"
 
 
 @pytest.fixture

@@ -144,8 +144,16 @@ class QuestionBank:
             _LOGGER.warning("Questions directory not found: %s", self._questions_dir)
             return {}
 
+        # Skip non-pack metadata files. `versions.json` is the pack
+        # manifest, not a question pack — loading it produced an empty
+        # "versions" category that tripped up tests and showed up as a
+        # 0-question option to the host.
+        _META_FILES = {"versions"}
+
         for file_path in sorted(self._questions_dir.glob("*.json")):
             category_slug = file_path.stem
+            if category_slug in _META_FILES:
+                continue
             self.load_category(category_slug)
 
         self._loaded = True

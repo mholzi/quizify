@@ -62,10 +62,19 @@
 
                 // Try session-based reconnect first — but skip for admin
                 // self-join (?admin=true) to avoid a stale session token
-                // from a prior game blocking the fresh join.
+                // from a prior game blocking the fresh join. The exception
+                // is `?reconnect=1`, which the admin lobby sets when it
+                // redirects after joining-as-player on the admin WS: the
+                // token in sessionStorage was JUST written, so we trust it
+                // and reconnect instead of doing a fresh join (which would
+                // race against the still-open admin WS and fail with
+                // "Name bereits vergeben").
                 var session = pu.getSession();
-                var isAdminSelfJoin = new URLSearchParams(location.search).get('admin') === 'true';
-                if (!isAdminSelfJoin && session.token && session.name) {
+                var params = new URLSearchParams(location.search);
+                var isAdminSelfJoin = params.get('admin') === 'true';
+                var forceReconnect = params.get('reconnect') === '1';
+                var useReconnect = (!isAdminSelfJoin || forceReconnect) && session.token && session.name;
+                if (useReconnect) {
                     send('reconnect', { session_token: session.token, name: session.name });
                 } else if (state.playerName) {
                     var joinMsg = { name: state.playerName };
@@ -97,8 +106,52 @@
     // "Quizify - Join Game" forever.
     // ============================================
 
+    // Snapshot of the most-recent phase/msg so updatePageTitle can fire
+    // again once i18n finishes loading. Without this, an admin-self-join
+    // redirect that lands while game_state is already QUESTION_ACTIVE
+    // would lose its title-update call (i18n.isReady() was still false
+    // at that moment) and the tab title stuck on "Quizify — Beitreten"
+    // for the entire round.
+    var _lastTitlePhase = null;
+    var _lastTitleMsg = null;
+
+    // ============================================
+    // Screen Wake Lock
+    // Phones lock the screen mid-question if the player isn't tapping —
+    // by the time they look up the next question is on. Hold a wake
+    // lock during QUESTION_ACTIVE only (don't drain battery in lobby
+    // or reveal). The lock auto-releases when the tab goes hidden;
+    // we re-acquire on visibilitychange below.
+    // ============================================
+    var _wakeLock = null;
+
+    async function _acquireWakeLock() {
+        if (!('wakeLock' in navigator)) return;  // unsupported browser
+        if (_wakeLock) return;  // already held
+        try {
+            _wakeLock = await navigator.wakeLock.request('screen');
+            _wakeLock.addEventListener('release', function () {
+                // OS released it (tab hidden, low battery, etc.) —
+                // clear so visibilitychange handler will re-acquire.
+                _wakeLock = null;
+            });
+        } catch (e) {
+            // NotAllowedError on iframes/permissions — silent.
+            _wakeLock = null;
+        }
+    }
+
+    function _releaseWakeLock() {
+        if (_wakeLock) {
+            try { _wakeLock.release(); } catch (e) { /* ignore */ }
+            _wakeLock = null;
+        }
+    }
+
     function updatePageTitle(phase, msg) {
-        if (!window.QuizifyI18n) return;
+        _lastTitlePhase = phase;
+        _lastTitleMsg = msg;
+        if (!window.QuizifyI18n || !window.QuizifyI18n.isReady()) return;
         var t = window.QuizifyI18n.t;
         var title;
         switch (phase) {
@@ -121,6 +174,11 @@
                 title = t('page.titleJoin');
         }
         if (title && title !== document.title) document.title = title;
+    }
+
+    // Re-fire any pending title update once i18n has finished loading.
+    function _flushPendingTitle() {
+        if (_lastTitlePhase) updatePageTitle(_lastTitlePhase, _lastTitleMsg);
     }
 
     // ============================================
@@ -208,9 +266,40 @@
                 showFloatingReaction(msg.emoji, msg.player_name);
                 break;
 
+            case 'reaction_bonus':
+                // Server awarded +1 to one or more correct answerers
+                // (gameplay idea #11). If I'm one of the recipients,
+                // flash a "+1 from X 🎉" toast. Either way the
+                // leaderboard payload updates scores.
+                handleReactionBonus(msg);
+                break;
+
+            case 'wager_accepted':
+                // Server confirmed our final-round wager. Nothing to
+                // do — the local UI already collapsed the panel on
+                // submit. Useful as a hook for analytics later.
+                break;
+
             case 'error':
                 handleError(msg);
                 break;
+        }
+    }
+
+    function handleReactionBonus(msg) {
+        var to = msg.to_players || [];
+        var from = msg.from_player || '';
+        if (state.playerName && to.indexOf(state.playerName) !== -1 && from) {
+            var t = (window.QuizifyI18n && window.QuizifyI18n.t) || function (k) { return k; };
+            var toast = document.createElement('div');
+            toast.className = 'reaction-bonus-toast';
+            toast.textContent = t('wager.bonusFromReaction', { from: from });
+            document.body.appendChild(toast);
+            setTimeout(function () { toast.remove(); }, 1600);
+        }
+        // If the server included an updated leaderboard, refresh it.
+        if (msg.leaderboard && game && game.updateLeaderboard) {
+            game.updateLeaderboard({ leaderboard: msg.leaderboard }, 'reveal-leaderboard-list');
         }
     }
 
@@ -220,6 +309,15 @@
 
     function handleGameState(msg) {
         state.currentPhase = msg.phase;
+
+        // Wake lock: only hold during active question. Cheap battery,
+        // doesn't fight the OS on lobby/reveal/finale screens where
+        // a sleeping screen costs nothing.
+        if (msg.phase === 'QUESTION_ACTIVE' || msg.phase === 'PLAYING') {
+            _acquireWakeLock();
+        } else {
+            _releaseWakeLock();
+        }
 
         // Sync UI language with the server-side game language so a
         // German game shows German labels even if the player's
@@ -290,6 +388,14 @@
             case 'PAUSED':
                 pu.showView('paused-view');
                 updatePausedView(msg);
+                // Admin's control bar stays visible during pause so they
+                // can resume / end. Swap Pause ↔ Resume.
+                var adminBarP = document.getElementById('admin-control-bar');
+                if (adminBarP) adminBarP.classList.toggle('hidden', !state.isAdmin);
+                var pauseBtnP = document.getElementById('pause-game-btn');
+                var resumeBtnP = document.getElementById('resume-game-btn');
+                if (pauseBtnP) pauseBtnP.classList.add('hidden');
+                if (resumeBtnP) resumeBtnP.classList.remove('hidden');
                 break;
         }
     }
@@ -323,15 +429,20 @@
         // Power-up
         game.renderPowerUp(myPowerUp);
 
-        // Admin control bar during QUESTION_ACTIVE: End only (no Next)
+        // Admin control bar during QUESTION_ACTIVE: End + Pause (no Next)
         var adminBar = document.getElementById('admin-control-bar');
         if (adminBar) {
             adminBar.classList.toggle('hidden', !state.isAdmin);
         }
         var nextRoundAdminBtn = document.getElementById('next-round-admin-btn');
         var skipBtn = document.getElementById('skip-question-btn');
+        var pauseBtn = document.getElementById('pause-game-btn');
+        var resumeBtn = document.getElementById('resume-game-btn');
         if (nextRoundAdminBtn) nextRoundAdminBtn.classList.add('hidden');
         if (skipBtn) skipBtn.classList.add('hidden');
+        // QUESTION_ACTIVE → Pause is the relevant CTA, Resume hidden.
+        if (pauseBtn) pauseBtn.classList.remove('hidden');
+        if (resumeBtn) resumeBtn.classList.add('hidden');
 
         // Hide reaction bar during game
         var reactionBar = document.getElementById('reaction-bar');
@@ -379,11 +490,12 @@
         var reactionBar = document.getElementById('reaction-bar');
         if (reactionBar) reactionBar.classList.remove('hidden');
 
-        // Admin control bar during ANSWER_REVEAL: End only (Next Round is in reveal card)
+        // Hide the global admin-control-bar (Pause + Ende) on ANSWER_REVEAL.
+        // The redesigned result page owns its own sticky bar with Ende +
+        // Nächste Runde — Pause makes no sense between rounds, and having
+        // two stacked sticky bars covered the standings.
         var adminBar = document.getElementById('admin-control-bar');
-        if (adminBar) {
-            adminBar.classList.toggle('hidden', !state.isAdmin);
-        }
+        if (adminBar) adminBar.classList.add('hidden');
         var nextRoundAdminBtn2 = document.getElementById('next-round-admin-btn');
         var skipBtn2 = document.getElementById('skip-question-btn');
         if (nextRoundAdminBtn2) nextRoundAdminBtn2.classList.add('hidden');
@@ -414,14 +526,14 @@
     // ============================================
 
     function updatePausedView(data) {
+        var t = (window.QuizifyI18n && window.QuizifyI18n.t) || function (k) { return k; };
+        var titleEl = document.getElementById('pause-title');
         var messageEl = document.getElementById('pause-message');
-        if (messageEl) {
-            if (data.pause_reason === 'admin_disconnected') {
-                messageEl.textContent = 'Waiting for host to reconnect...';
-            } else {
-                messageEl.textContent = 'Game paused';
-            }
-        }
+        var isDisconnect = data.pause_reason === 'admin_disconnected';
+        var titleKey = isDisconnect ? 'admin.pausedHostDisconnected' : 'admin.pausedTitle';
+        var hintKey = isDisconnect ? 'admin.pausedHostHint' : 'admin.pausedHint';
+        if (titleEl) titleEl.textContent = t(titleKey);
+        if (messageEl) messageEl.textContent = t(hintKey);
     }
 
     // ============================================
@@ -586,12 +698,32 @@
             });
         }
 
+        // Pause / resume — toggled by handleGameState based on phase.
+        var pauseBtn = document.getElementById('pause-game-btn');
+        if (pauseBtn) {
+            pauseBtn.addEventListener('click', function () { send('pause_game', {}); });
+        }
+        var resumeBtn = document.getElementById('resume-game-btn');
+        if (resumeBtn) {
+            resumeBtn.addEventListener('click', function () { send('resume_game', {}); });
+        }
+
         // Next round (from reveal view)
         var nextRoundBtn = document.getElementById('next-round-btn');
         if (nextRoundBtn) {
             nextRoundBtn.addEventListener('click', function () {
                 nextRoundBtn.disabled = true;
                 send('next_round', {});
+            });
+        }
+
+        // End game from the reveal page's sticky admin bar. Same server
+        // semantics as end-game-btn — added because the redesign moved
+        // the admin actions to a bottom-sticky bar on the reveal page.
+        var endFromReveal = document.getElementById('end-game-from-reveal-btn');
+        if (endFromReveal) {
+            endFromReveal.addEventListener('click', function () {
+                send('end_game', {});
             });
         }
     }
@@ -670,6 +802,10 @@
         if (window.QuizifyI18n) {
             QuizifyI18n.init().then(function () {
                 QuizifyI18n.initPageTranslations();
+                // game_state may have already arrived before i18n loaded;
+                // re-fire the title update so we don't sit on the stale
+                // "— Beitreten" forever (see updatePageTitle for the why).
+                _flushPendingTitle();
             });
         }
 
@@ -723,6 +859,11 @@
                         state.reconnectAttempts = 0;
                         connect();
                     }
+                }
+                // The OS releases wake locks when the tab hides \u2014 re-acquire
+                // when the player tabs back in mid-question.
+                if (state.currentPhase === 'QUESTION_ACTIVE' || state.currentPhase === 'PLAYING') {
+                    _acquireWakeLock();
                 }
             }
         });
