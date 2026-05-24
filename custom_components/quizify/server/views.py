@@ -29,8 +29,6 @@ _PACK_VERSIONS_URL = (
 
 _LOGGER = logging.getLogger(__name__)
 
-_VERSION = "1.0.13"
-
 _NO_CACHE_HEADERS = {
     "Cache-Control": "no-cache, no-store, must-revalidate",
     "Pragma": "no-cache",
@@ -39,14 +37,25 @@ _NO_CACHE_HEADERS = {
 
 _WWW_DIR = Path(__file__).parent.parent / "www"
 
+# Single placeholder substituted at serve time. Used in HTML asset URLs
+# (``?v={{VERSION}}``), the ``meta[name="quizify-version"]`` tag, and the
+# service worker's ``CACHE_VERSION``. Bumping manifest.json propagates
+# everywhere — no more drift between admin.html / player.html / sw.js.
+_VERSION_TOKEN = "{{VERSION}}"
+
 
 def _get_ctx(request: web.Request) -> "AppContext":
     """Pull the AppContext stashed on the aiohttp application."""
     return request.app[APP_CTX_KEY]
 
 
+def _apply_version(text: str, version: str) -> str:
+    """Replace every {{VERSION}} token with the live integration version."""
+    return text.replace(_VERSION_TOKEN, version)
+
+
 async def _serve_html(request: web.Request, filename: str) -> web.Response:
-    """Read a file from www/ in an executor and return it as HTML."""
+    """Read a file from www/, substitute {{VERSION}}, return as HTML."""
     html_path = _WWW_DIR / filename
     if not html_path.exists():
         _LOGGER.error("Page not found: %s", html_path)
@@ -54,8 +63,29 @@ async def _serve_html(request: web.Request, filename: str) -> web.Response:
 
     ctx = _get_ctx(request)
     html_content = await ctx.runtime.run_in_executor(html_path.read_text, "utf-8")
+    html_content = _apply_version(html_content, ctx.version)
     return web.Response(
         text=html_content, content_type="text/html", headers=_NO_CACHE_HEADERS
+    )
+
+
+async def sw_view(request: web.Request) -> web.Response:
+    """Serve the service worker with {{VERSION}} substituted.
+
+    Registered ahead of the static file handler so the templated copy
+    wins over the raw file on disk. Served with no-cache headers so
+    browsers always revalidate — a stale SW can't keep serving stale
+    asset caches.
+    """
+    sw_path = _WWW_DIR / "sw.js"
+    if not sw_path.exists():
+        return web.Response(text="sw.js not found", status=404)
+
+    ctx = _get_ctx(request)
+    body = await ctx.runtime.run_in_executor(sw_path.read_text, "utf-8")
+    body = _apply_version(body, ctx.version)
+    return web.Response(
+        text=body, content_type="application/javascript", headers=_NO_CACHE_HEADERS
     )
 
 
@@ -91,9 +121,10 @@ async def game_status_view(request: web.Request) -> web.Response:
     return web.json_response(build_game_status_response(ctx.game, game_id))
 
 
-async def status_view(request: web.Request) -> web.Response:  # noqa: ARG001
+async def status_view(request: web.Request) -> web.Response:
     """Return integration status."""
-    return web.json_response({"version": _VERSION, "status": "ok"})
+    ctx = _get_ctx(request)
+    return web.json_response({"version": ctx.version, "status": "ok"})
 
 
 async def analytics_data_view(request: web.Request) -> web.Response:
@@ -317,6 +348,10 @@ ROUTES: list[tuple[str, str, object]] = [
     ("GET", "/quizify/player", player_view),
     ("GET", "/quizify/dashboard", dashboard_view),
     ("GET", "/quizify/analytics", analytics_view),
+    # Service worker is a Python view (NOT a static file) so the
+    # {{VERSION}} placeholder in sw.js gets substituted. Registered
+    # before add_static so the templated copy wins over the raw file.
+    ("GET", "/quizify/static/sw.js", sw_view),
     ("GET", "/api/quizify/game-status", game_status_view),
     ("GET", "/api/quizify/status", status_view),
     ("GET", "/api/quizify/analytics/data", analytics_data_view),

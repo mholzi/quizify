@@ -3,6 +3,49 @@
 All notable changes to Quizify are documented here. This project follows
 [Semantic Versioning](https://semver.org/).
 
+## [1.1.7] — 2026-05-24
+
+Cache-buster system rewrite. Bumping the integration version now
+propagates everywhere — HTML asset URLs, service-worker cache name,
+`/api/quizify/status` payload, and a new `<meta name="quizify-version">`
+tag — without ever touching another file by hand. Fixes the drift that
+let `dashboard.html` ship referencing `?v=1.1.5` while everything else
+was at `1.1.6`, and let `/api/quizify/status` keep reporting `1.0.13`
+months after the real version moved on.
+
+### Added
+
+- `<meta name="quizify-version" content="...">` in every HTML head, so
+  in-browser tooling and support requests can read the live version
+  without parsing JS.
+- `tests/test_version_cachebuster.py` — 11 cases pinning the new pipeline:
+  manifest read, `AppContext.version` default-factory wiring, template
+  substitution, drift guard (no `{{VERSION}}` ever reaches the browser),
+  HTML no-cache headers, service-worker MIME + headers, and live version
+  in `/api/quizify/status`.
+
+### Changed
+
+- `manifest.json` is now the single source of truth for the cache-buster
+  version. `server/views.py::_serve_html` substitutes `{{VERSION}}` in
+  the response body at serve time; templates use `?v={{VERSION}}` on
+  every asset reference.
+- `sw.js` now declares `CACHE_VERSION = 'quizify-v{{VERSION}}'` and is
+  served by a new Python view (`sw_view`) ahead of the static handler,
+  so its template gets substituted too. Served as
+  `application/javascript` with `no-cache` headers so browsers always
+  revalidate (and the SW that controls every other asset cache stays in
+  step with the deployed version).
+- `AppContext` gained a `version` field, populated at startup via
+  `read_manifest_version()`. Existing call sites stay unchanged thanks
+  to a `default_factory`.
+
+### Fixed
+
+- `/api/quizify/status` now reports the live integration version from
+  `manifest.json` instead of the hardcoded `1.0.13` that had drifted
+  since v1.0.
+
 ## [1.1.4] — 2026-04-28
 
 QA-driven cleanup: 18 findings from a live admin/player audit, grouped
