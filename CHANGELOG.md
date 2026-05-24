@@ -3,6 +3,36 @@
 All notable changes to Quizify are documented here. This project follows
 [Semantic Versioning](https://semver.org/).
 
+## [1.1.8] — 2026-05-24
+
+Fix the "Spiel startet nicht zuverlässig" bug. When the admin clicked
+Start, every other player's phone briefly showed the question then
+switched to "Lost connection to the host" for ~1 second before the
+question came back. Root cause: the admin's intentional redirect from
+`/quizify/admin` to `/quizify/player` (so the admin can answer along)
+closes the admin WebSocket. The server used to react instantly by
+pausing the whole game with reason `admin_disconnected` and pushing
+that to every other client — what users saw as "not connected".
+
+### Fixed
+
+- **Admin-start no longer flashes "Lost connection to the host" on
+  every other player's screen.** The deferred-pause path now gives the
+  admin's redirect a 4-second grace window to reconnect via the player
+  WebSocket. Normal redirects complete in ~1 second, so the pause never
+  fires and the question round starts cleanly. Real admin disconnects
+  (closed tab, lost wifi) still pause the game after the 4-second
+  grace, just as before — only the spurious flash on every Start is
+  suppressed.
+
+### Added
+
+- `tests/test_admin_redirect_pause.py` — 6 regression cases pinning the
+  fix: disconnect-during-question doesn't pause inline, reconnect within
+  grace cancels the pause, no-reconnect still pauses after grace,
+  non-admin disconnect is a no-op, lobby disconnect is a no-op, and
+  rapid disconnect/reconnect/disconnect doesn't stack tasks.
+
 ## [1.1.7] — 2026-05-24
 
 Cache-buster system rewrite. Bumping the integration version now

@@ -48,6 +48,22 @@ class QuizifyWebSocketHandler:
 
     HEARTBEAT_INTERVAL = 30
 
+    # Admin-as-player redirect grace: when the admin clicks "Spiel starten"
+    # from /quizify/admin, admin.js navigates the tab to /quizify/player so
+    # the admin can answer questions. That navigation closes the admin's
+    # player WS for ~1-2 seconds before a new player WS reconnects with the
+    # session token. Without this grace period, _handle_disconnect would
+    # immediately pause the game with reason "admin_disconnected" — every
+    # other player's screen would flash "Lost connection to the host" for
+    # the duration of the redirect. With the grace, the redirect completes
+    # quietly and the game keeps running.
+    #
+    # 4 seconds covers: page load + i18n init + WS connect + reconnect
+    # round-trip, with margin. If admin genuinely disconnects (closed tab,
+    # lost wifi), the pause still fires after 4s — only the spurious
+    # redirect-driven flash is suppressed.
+    ADMIN_REDIRECT_GRACE = 4.0
+
     def __init__(
         self,
         runtime: Runtime,
@@ -58,6 +74,10 @@ class QuizifyWebSocketHandler:
         self._get_game_state = game_state_provider
         self._conn = ConnectionManager(runtime, game_state_provider)
         self._timer_tick_task: asyncio.Task | None = None
+        # Deferred-pause task scheduled by _handle_disconnect when the
+        # admin-as-player WS closes mid-question. Cancelled by reconnect
+        # or join when admin comes back within ADMIN_REDIRECT_GRACE.
+        self._admin_pause_task: asyncio.Task | None = None
         # Optional TTS announcer. Set by __init__.py / dev_server after
         # construction so the handler doesn't have to know about HA
         # services. Calling announce_milestone on None is the no-op path.
@@ -355,6 +375,13 @@ class QuizifyWebSocketHandler:
             if player_obj and data.get("is_admin"):
                 player_obj.is_admin = True
 
+            # Cancel any deferred admin-disconnect pause: the admin's
+            # redirect from /quizify/admin to /quizify/player took the
+            # fresh-join path (no session token) instead of the
+            # reconnect path. Same desired outcome — game keeps running.
+            if player_obj and player_obj.is_admin:
+                self._cancel_admin_pause()
+
             # Send join confirmation with session token and assigned color
             powerup = game_state.get_player_powerup(name)
             await self._conn._safe_send(ws, {
@@ -415,6 +442,15 @@ class QuizifyWebSocketHandler:
         player.ws = ws
         player.connected = True
         self._conn.cancel_pending_removal(name)
+
+        # If this is the admin returning from the intentional
+        # /quizify/admin → /quizify/player redirect after Start,
+        # cancel the deferred pause scheduled by _handle_disconnect.
+        # Without this, the pause would fire ~4s after the redirect
+        # completes — the user would see the question briefly, then
+        # the paused-view, defeating the whole grace-period fix.
+        if player.is_admin:
+            self._cancel_admin_pause()
 
         _LOGGER.info("Player session-reconnected: %s", name)
 
@@ -1225,16 +1261,21 @@ class QuizifyWebSocketHandler:
         # or switch networks; if they don't come back, the existing
         # remove-after-timeout below cleans up and the game can be
         # resumed by another path.
+        #
+        # BUT: the most common admin disconnect is the intentional
+        # admin.html → player.html redirect that fires when admin clicks
+        # "Spiel starten" (see admin.js::redirectToPlayer). The new
+        # player WS reconnects via session token within 1-2s. Pausing
+        # immediately would flash "Lost connection to the host" on every
+        # other player's screen for the duration of the redirect — what
+        # users perceive as the game "not reliably starting". Defer the
+        # pause by ADMIN_REDIRECT_GRACE seconds; if admin reconnects in
+        # time the pause never fires.
         if (
             player.is_admin
             and game_state.phase == GamePhase.QUESTION_ACTIVE
-            and game_state.pause(reason="admin_disconnected")
         ):
-            self._cancel_timer_tick()
-            state = game_state.get_state_snapshot()
-            state["type"] = "game_state"
-            state["pause_reason"] = "admin_disconnected"
-            await self._conn.broadcast(state)
+            self._schedule_admin_pause(player.name)
 
         # Broadcast updated player list
         players = game_state.get_players()
@@ -1267,6 +1308,64 @@ class QuizifyWebSocketHandler:
                     _LOGGER.info("Removed disconnected player after grace period: %s", name)
 
         self._conn.schedule_player_removal(player.name, grace, remove_after_timeout)
+
+    # ------------------------------------------------------------------
+    # Admin-redirect pause: defer the QUESTION_ACTIVE pause that would
+    # otherwise fire instantly when admin's WS closes (typically the
+    # intentional /quizify/admin → /quizify/player redirect after Start).
+    # ------------------------------------------------------------------
+
+    def _schedule_admin_pause(self, admin_name: str) -> None:
+        """Schedule a pause to fire ADMIN_REDIRECT_GRACE seconds from now.
+
+        If admin reconnects (via session token or fresh join) before the
+        timer expires, _cancel_admin_pause clears the task. Re-entrant:
+        cancels any prior pending task before scheduling a new one, so a
+        rapid disconnect-reconnect-disconnect doesn't stack tasks.
+        """
+        self._cancel_admin_pause()
+
+        async def pause_after_grace() -> None:
+            try:
+                await asyncio.sleep(self.ADMIN_REDIRECT_GRACE)
+                gs = self._get_game_state()
+                if gs is None:
+                    return
+                # Final sanity checks before pausing — admin may have
+                # reconnected via a path that doesn't cancel us, or the
+                # game may have advanced past QUESTION_ACTIVE on its own.
+                player = gs.get_player(admin_name)
+                if player and player.connected:
+                    _LOGGER.debug(
+                        "Admin %s reconnected within grace — skipping pause",
+                        admin_name,
+                    )
+                    return
+                if gs.phase != GamePhase.QUESTION_ACTIVE:
+                    return
+                if not gs.pause(reason="admin_disconnected"):
+                    return
+                self._cancel_timer_tick()
+                state = gs.get_state_snapshot()
+                state["type"] = "game_state"
+                state["pause_reason"] = "admin_disconnected"
+                await self._conn.broadcast(state)
+                _LOGGER.info(
+                    "Paused game after admin %s failed to reconnect within %.1fs",
+                    admin_name,
+                    self.ADMIN_REDIRECT_GRACE,
+                )
+            except asyncio.CancelledError:
+                # Normal path: admin reconnected in time. Don't log.
+                pass
+
+        self._admin_pause_task = asyncio.ensure_future(pause_after_grace())
+
+    def _cancel_admin_pause(self) -> None:
+        """Cancel any pending deferred admin-disconnect pause."""
+        if self._admin_pause_task and not self._admin_pause_task.done():
+            self._admin_pause_task.cancel()
+        self._admin_pause_task = None
 
     # ------------------------------------------------------------------
     # Admin auth helper
