@@ -206,50 +206,50 @@
 </head>
 <body>
     <div class="analytics-container">
-        <a href="/quizify/launcher" class="back-link">&larr; Back</a>
+        <a href="/quizify/launcher" class="back-link" data-i18n="analytics.back">&larr; Back</a>
 
         <header class="header">
             <h1 class="wordmark">
                 <span class="wordmark-quiz">Quiz</span><span class="wordmark-ify">ify</span>
             </h1>
-            <p class="subtitle">Analytics</p>
+            <p class="subtitle" data-i18n="analytics.title">Analytics</p>
         </header>
 
         <div class="period-selector">
-            <button class="period-btn" data-period="7d">7d</button>
-            <button class="period-btn active" data-period="30d">30d</button>
-            <button class="period-btn" data-period="90d">90d</button>
-            <button class="period-btn" data-period="all">All</button>
+            <button class="period-btn" data-period="7d" data-i18n="analytics.period7d">7d</button>
+            <button class="period-btn active" data-period="30d" data-i18n="analytics.period30d">30d</button>
+            <button class="period-btn" data-period="90d" data-i18n="analytics.period90d">90d</button>
+            <button class="period-btn" data-period="all" data-i18n="analytics.periodAll">All</button>
         </div>
 
-        <div id="loading" class="loading-state">Loading analytics...</div>
+        <div id="loading" class="loading-state" data-i18n="analytics.loading">Loading analytics...</div>
 
         <div id="content" style="display:none;">
             <!-- Stats Grid -->
             <div class="stats-grid">
                 <div class="stat-card">
                     <div class="stat-value" id="total-games">0</div>
-                    <div class="stat-label">Games</div>
+                    <div class="stat-label" data-i18n="analytics.statGames">Games</div>
                 </div>
                 <div class="stat-card">
                     <div class="stat-value" id="avg-players">0</div>
-                    <div class="stat-label">Avg. Players</div>
+                    <div class="stat-label" data-i18n="analytics.statAvgPlayers">Avg. Players</div>
                 </div>
                 <div class="stat-card">
                     <div class="stat-value" id="total-rounds">0</div>
-                    <div class="stat-label">Rounds</div>
+                    <div class="stat-label" data-i18n="analytics.statRounds">Rounds</div>
                 </div>
             </div>
 
             <!-- Games Over Time -->
             <div class="analytics-section">
-                <div class="section-title">Games Over Time</div>
+                <div class="section-title" data-i18n="analytics.sectionGamesOverTime">Games Over Time</div>
                 <div id="chart" class="chart-container"></div>
             </div>
 
             <!-- Top Players -->
             <div class="analytics-section">
-                <div class="section-title">Top Players</div>
+                <div class="section-title" data-i18n="analytics.sectionTopPlayers">Top Players</div>
                 <div class="card">
                     <div id="top-players"></div>
                 </div>
@@ -257,14 +257,14 @@
 
             <!-- Category Stats -->
             <div class="analytics-section">
-                <div class="section-title">Categories</div>
+                <div class="section-title" data-i18n="analytics.sectionCategories">Categories</div>
                 <div class="card">
                     <table class="games-table">
                         <thead>
                             <tr>
-                                <th>Category</th>
-                                <th>Games</th>
-                                <th>Avg. Score</th>
+                                <th data-i18n="analytics.thCategory">Category</th>
+                                <th data-i18n="analytics.thGames">Games</th>
+                                <th data-i18n="analytics.thAvgScore">Avg. Score</th>
                             </tr>
                         </thead>
                         <tbody id="category-stats"></tbody>
@@ -274,15 +274,15 @@
 
             <!-- Recent Games -->
             <div class="analytics-section">
-                <div class="section-title">Recent Games</div>
+                <div class="section-title" data-i18n="analytics.sectionRecentGames">Recent Games</div>
                 <div class="card" style="overflow-x:auto;">
                     <table class="games-table">
                         <thead>
                             <tr>
-                                <th>Date</th>
-                                <th>Category</th>
-                                <th>Players</th>
-                                <th>Winner</th>
+                                <th data-i18n="analytics.thDate">Date</th>
+                                <th data-i18n="analytics.thCategory">Category</th>
+                                <th data-i18n="analytics.thPlayers">Players</th>
+                                <th data-i18n="analytics.thWinner">Winner</th>
                             </tr>
                         </thead>
                         <tbody id="recent-games"></tbody>
@@ -292,15 +292,15 @@
 
             <!-- Flagged Questions — populated from /api/quizify/flags -->
             <div class="analytics-section" id="flags-section" style="display:none;">
-                <div class="section-title">🚩 Gemeldete Fragen</div>
+                <div class="section-title" data-i18n="analytics.sectionFlagged">🚩 Flagged Questions</div>
                 <div class="card" style="overflow-x:auto;">
                     <table class="games-table">
                         <thead>
                             <tr>
-                                <th>Frage-ID</th>
-                                <th>Gemeldet</th>
-                                <th>Spieler</th>
-                                <th>Grund</th>
+                                <th data-i18n="analytics.thFlagId">Question ID</th>
+                                <th data-i18n="analytics.thFlaggedWhen">Flagged</th>
+                                <th data-i18n="analytics.thFlaggedBy">Player</th>
+                                <th data-i18n="analytics.thFlagReason">Reason</th>
                             </tr>
                         </thead>
                         <tbody id="flagged-questions"></tbody>
@@ -309,11 +309,12 @@
             </div>
         </div>
 
-        <div id="empty" class="empty-state" style="display:none;">
+        <div id="empty" class="empty-state" style="display:none;" data-i18n="analytics.empty">
             No games played yet. Start a quiz to see analytics!
         </div>
     </div>
 
+    <script src="/quizify/static/js/i18n.js?v=1.1.6"></script>
     <script>
     (function() {
         'use strict';
@@ -370,7 +371,8 @@
                 })
                 .catch(function(err) {
                     console.error('Failed to load analytics:', err);
-                    document.getElementById('loading').textContent = 'Failed to load analytics.';
+                    var tFail = (window.QuizifyI18n && window.QuizifyI18n.t) || function (k) { return k; };
+                    document.getElementById('loading').textContent = tFail('analytics.loadFailed');
                 });
         }
 

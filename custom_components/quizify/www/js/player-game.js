@@ -346,13 +346,18 @@
      * Render submission tracker showing who has submitted
      * @param {Array} players - Array of player objects
      */
+    // Latest player list from the server, cached so the freeze/steal target
+    // picker can render opponents without re-requesting state.
+    var _latestPlayers = [];
+
     function renderSubmissionTracker(players) {
         var tracker = document.getElementById('submission-tracker');
         var container = document.getElementById('submitted-players');
 
-        if (!tracker || !container) return;
-
         var playerList = players || [];
+        _latestPlayers = playerList;
+
+        if (!tracker || !container) return;
         var submittedCount = playerList.filter(function (p) {
             return p.submitted;
         }).length;
@@ -593,6 +598,100 @@
     }
 
     /**
+     * Returns true for power-up types whose effect lands on another player
+     * (and therefore need a target picker).
+     */
+    function powerupNeedsTarget(powerupType) {
+        return powerupType === 'freeze' || powerupType === 'steal';
+    }
+
+    /**
+     * Open the target-picker modal so the player can choose who to freeze
+     * or steal from. Calls onConfirm(targetPlayerName) on selection.
+     */
+    function openTargetPicker(powerupType, onConfirm) {
+        var modal = document.getElementById('powerup-target-modal');
+        var titleEl = document.getElementById('powerup-target-title');
+        var hintEl = document.getElementById('powerup-target-hint');
+        var listEl = document.getElementById('powerup-target-list');
+        var cancelBtn = document.getElementById('powerup-target-cancel');
+        if (!modal || !listEl) return;
+
+        var t = (window.QuizifyI18n && window.QuizifyI18n.t) || function (k) { return k; };
+
+        // Active opponents = connected, not the local player.
+        var me = pu.state.playerName;
+        var opponents = (_latestPlayers || []).filter(function (p) {
+            return p && p.name && p.name !== me && p.connected !== false;
+        });
+
+        if (titleEl) {
+            titleEl.textContent = powerupType === 'steal'
+                ? t('powerups.pickStealTitle')
+                : t('powerups.pickFreezeTitle');
+        }
+
+        listEl.innerHTML = '';
+
+        if (opponents.length === 0) {
+            if (hintEl) hintEl.textContent = t('powerups.noOpponents');
+        } else {
+            if (hintEl) hintEl.textContent = t('powerups.pickHint');
+            opponents.forEach(function (opp) {
+                var li = document.createElement('li');
+                var btn = document.createElement('button');
+                btn.type = 'button';
+                btn.className = 'powerup-target-option';
+                btn.dataset.player = opp.name;
+                var colorDot = '';
+                if (opp.color) {
+                    colorDot = '<span class="powerup-target-dot" style="background:' +
+                        pu.escapeHtml(opp.color) + '"></span>';
+                }
+                btn.innerHTML = colorDot +
+                    '<span class="powerup-target-name">' + pu.escapeHtml(opp.name) + '</span>';
+                btn.addEventListener('click', function () {
+                    closeTargetPicker();
+                    onConfirm(opp.name);
+                });
+                li.appendChild(btn);
+                listEl.appendChild(li);
+            });
+        }
+
+        modal.classList.remove('hidden');
+
+        // One-shot listeners; closeTargetPicker tears them down.
+        function onCancel() { closeTargetPicker(); }
+        function onBackdrop(e) {
+            if (e.target && e.target.classList.contains('powerup-target-backdrop')) {
+                closeTargetPicker();
+            }
+        }
+        function onKey(e) {
+            if (e.key === 'Escape') closeTargetPicker();
+        }
+        if (cancelBtn) cancelBtn.addEventListener('click', onCancel, { once: true });
+        modal.addEventListener('click', onBackdrop);
+        document.addEventListener('keydown', onKey);
+        modal._teardown = function () {
+            modal.removeEventListener('click', onBackdrop);
+            document.removeEventListener('keydown', onKey);
+            if (cancelBtn) cancelBtn.removeEventListener('click', onCancel);
+        };
+    }
+
+    function closeTargetPicker() {
+        var modal = document.getElementById('powerup-target-modal');
+        if (!modal) return;
+        modal.classList.add('hidden');
+        if (typeof modal._teardown === 'function') {
+            modal._teardown();
+            modal._teardown = null;
+        }
+    }
+
+    /**
      * Handle joker power-up applied - eliminate one wrong answer
      * @param {number} removeIndex - Index of answer to eliminate
      */
@@ -656,6 +755,9 @@
         renderLeaderboardEntry: renderLeaderboardEntry,
         updateLeaderboardSummary: updateLeaderboardSummary,
         renderPowerUp: renderPowerUp,
+        powerupNeedsTarget: powerupNeedsTarget,
+        openTargetPicker: openTargetPicker,
+        closeTargetPicker: closeTargetPicker,
         applyJoker: applyJoker,
         handleAnswerResult: handleAnswerResult,
         getLastAnswerResult: getLastAnswerResult,

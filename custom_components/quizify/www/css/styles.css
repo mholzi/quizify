@@ -318,61 +318,58 @@ a:focus-visible,
 }
 
 /* ==========================================
-   Dark Mode — late-night parlor
+   Dark Mode — late-night parlor (opt-in)
    ==========================================
-   DESIGN.md promises "dark mode available for late-night play." Same
-   Soft Parlor palette, just inverted: deep warm-brown paper, cream ink,
-   accents kept at their original muted saturation so the brand still
-   reads the same across rooms. Triggered by the OS preference, not by
-   anything in-app — sofa-on-a-Friday-night just works.
-   Override only the surface/text/border tokens; accents stay constant.
+   DESIGN.md: light is the primary mode. Dark is offered for late-night
+   play but must be EXPLICITLY opted into via [data-theme="dark"] on
+   <html> or <body>. Never gated on prefers-color-scheme — a guest whose
+   OS happens to be in dark mode should still see the cream Soft Parlor
+   that the host is showing on the TV across the room.
 */
-@media (prefers-color-scheme: dark) {
-    :root {
-        /* Backgrounds: warm dark "stained paper" — not pure black */
-        --color-bg-primary: #1F1B14;
-        --color-bg-surface: #2A2620;
-        --color-bg-light: #1F1B14;
-        --color-bg-white: #2A2620;
-        --color-bg-card: #2A2620;
-        --color-bg-card-alt: #34302A;
+[data-theme="dark"] {
+    /* Backgrounds: warm dark "stained paper" — not pure black */
+    --color-bg-primary: #1F1B14;
+    --color-bg-surface: #2A2620;
+    --color-bg-light: #1F1B14;
+    --color-bg-white: #2A2620;
+    --color-bg-card: #2A2620;
+    --color-bg-card-alt: #34302A;
 
-        /* Surface aliases */
-        --color-dark-surface: #2A2620;
-        --color-dark-surface-hover: #34302A;
-        --color-dark-card: #2A2620;
-        --color-surface-dark: #1F1B14;
+    /* Surface aliases */
+    --color-dark-surface: #2A2620;
+    --color-dark-surface-hover: #34302A;
+    --color-dark-card: #2A2620;
+    --color-surface-dark: #1F1B14;
 
-        /* Text: warm cream ink on dark paper */
-        --color-text-primary: #F0E9D8;
-        --color-text-secondary: #DCD4C0;
-        --color-text-muted: #A89E89;
-        --color-text-light: #8A8170;
-        --color-text-white: #F0E9D8;
-        --color-text-dark: #F0E9D8;
-        --color-text-heading: #F0E9D8;
-        --color-text-neon-muted: #A89E89;
+    /* Text: warm cream ink on dark paper */
+    --color-text-primary: #F0E9D8;
+    --color-text-secondary: #DCD4C0;
+    --color-text-muted: #A89E89;
+    --color-text-light: #8A8170;
+    --color-text-white: #F0E9D8;
+    --color-text-dark: #F0E9D8;
+    --color-text-heading: #F0E9D8;
+    --color-text-neon-muted: #A89E89;
 
-        /* Borders: muted warm dark — keep the hairline feel */
-        --color-border-light: #3D3830;
-        --color-border-medium: #4D4738;
-        --color-border-dark: #5D5640;
-        --color-border-neon: #3D3830;
+    /* Borders: muted warm dark — keep the hairline feel */
+    --color-border-light: #3D3830;
+    --color-border-medium: #4D4738;
+    --color-border-dark: #5D5640;
+    --color-border-neon: #3D3830;
 
-        /* Soft tinted badges — re-tint for the dark surface */
-        --color-success-bg: rgba(127, 168, 151, 0.24);
-        --color-accent-brand-bg: rgba(232, 138, 127, 0.22);
-        --color-error-bg: rgba(214, 106, 106, 0.22);
-        --color-success-light: rgba(127, 168, 151, 0.24);
-        --color-warning-light: rgba(232, 196, 127, 0.26);
-        --color-error-light: rgba(214, 106, 106, 0.22);
+    /* Soft tinted badges — re-tint for the dark surface */
+    --color-success-bg: rgba(127, 168, 151, 0.24);
+    --color-accent-brand-bg: rgba(232, 138, 127, 0.22);
+    --color-error-bg: rgba(214, 106, 106, 0.22);
+    --color-success-light: rgba(127, 168, 151, 0.24);
+    --color-warning-light: rgba(232, 196, 127, 0.26);
+    --color-error-light: rgba(214, 106, 106, 0.22);
 
-        /* Shadows: warmer + slightly heavier on dark */
-        --shadow-sm: 0 1px 2px rgba(0, 0, 0, 0.35);
-        --shadow-md: 0 2px 8px rgba(0, 0, 0, 0.45);
-        --shadow-lg: 0 6px 20px rgba(0, 0, 0, 0.50);
-        --shadow-xl: 0 16px 40px rgba(0, 0, 0, 0.55);
-    }
+    /* Shadows: warmer + slightly heavier on dark */
+    --shadow-sm: 0 1px 2px rgba(0, 0, 0, 0.35);
+    --shadow-md: 0 2px 8px rgba(0, 0, 0, 0.45);
+    --shadow-lg: 0 6px 20px rgba(0, 0, 0, 0.50);
+    --shadow-xl: 0 16px 40px rgba(0, 0, 0, 0.55);
 }
 
 /* ==========================================
@@ -4339,6 +4336,128 @@ body:has(.admin-control-bar:not(.hidden)) #game-view {
 .invite-modal-close:hover {
     color: var(--color-text-white);
     background: rgba(255, 255, 255, 0.1);
+}
+
+/* Power-up target picker — freeze / steal.
+   Soft Parlor surface: cream content, coral accent on tap, no neon. */
+.powerup-target-modal {
+    position: fixed;
+    inset: 0;
+    z-index: var(--z-modal);
+    display: flex;
+    align-items: flex-end;
+    justify-content: center;
+    padding: var(--space-md);
+}
+
+.powerup-target-modal.hidden {
+    display: none;
+}
+
+.powerup-target-backdrop {
+    position: absolute;
+    inset: 0;
+    background: rgba(42, 40, 32, 0.55);
+}
+
+.powerup-target-content {
+    position: relative;
+    width: 100%;
+    max-width: 420px;
+    display: flex;
+    flex-direction: column;
+    gap: var(--space-md);
+    padding: var(--space-lg);
+    background: var(--color-bg-surface);
+    border: 1px solid var(--color-border-light);
+    border-radius: var(--radius-xl);
+    box-shadow: var(--shadow-xl);
+    animation: modalFadeIn var(--transition-fast);
+}
+
+.powerup-target-title {
+    margin: 0;
+    font-family: var(--font-display);
+    font-size: var(--font-size-xl);
+    font-weight: var(--font-weight-bold);
+    color: var(--color-text-primary);
+    text-align: center;
+}
+
+.powerup-target-hint {
+    margin: 0;
+    font-family: var(--font-body);
+    font-size: var(--font-size-base);
+    color: var(--color-text-muted);
+    text-align: center;
+}
+
+.powerup-target-list {
+    list-style: none;
+    margin: 0;
+    padding: 0;
+    display: flex;
+    flex-direction: column;
+    gap: var(--space-sm);
+    max-height: 50vh;
+    overflow-y: auto;
+}
+
+.powerup-target-list li {
+    margin: 0;
+}
+
+.powerup-target-option {
+    width: 100%;
+    min-height: 56px;
+    padding: var(--space-md);
+    display: flex;
+    align-items: center;
+    gap: var(--space-md);
+    background: var(--color-bg-card-alt);
+    border: 1px solid var(--color-border-light);
+    border-radius: var(--radius-lg);
+    font-family: var(--font-body);
+    font-size: var(--font-size-md);
+    color: var(--color-text-primary);
+    cursor: pointer;
+    text-align: left;
+    transition: background var(--transition-fast),
+                border-color var(--transition-fast),
+                transform var(--transition-fast);
+}
+
+.powerup-target-option:hover,
+.powerup-target-option:focus-visible {
+    background: var(--color-accent-brand-bg);
+    border-color: var(--color-accent-primary);
+}
+
+.powerup-target-option:active {
+    transform: scale(0.98);
+}
+
+.powerup-target-dot {
+    width: 14px;
+    height: 14px;
+    border-radius: var(--radius-full);
+    flex-shrink: 0;
+    border: 1px solid rgba(42, 40, 32, 0.12);
+}
+
+.powerup-target-name {
+    flex: 1;
+    font-weight: var(--font-weight-medium);
+}
+
+.powerup-target-cancel {
+    align-self: stretch;
+}
+
+@media (min-width: 480px) {
+    .powerup-target-modal {
+        align-items: center;
+    }
 }
 
 /* Confirm modal */

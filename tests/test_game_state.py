@@ -23,6 +23,7 @@ from custom_components.quizify.game.state import (  # noqa: E402
     GamePhase,
     QuizifyGameState,
 )
+from custom_components.quizify.game.powerups import PowerUpEffect, PowerUpType  # noqa: E402
 
 
 class _FakeRuntime:
@@ -493,3 +494,115 @@ class TestEndGame:
         result = state.start_next_question()
         assert result is None
         assert state.phase == GamePhase.FINALE
+
+
+# ---------- Power-up targeting ----------
+
+
+def _give(state: QuizifyGameState, name: str, powerup: PowerUpType) -> None:
+    """Drop a specific power-up into the player's inventory.
+
+    Avoids the random assignment path so tests can target a single type
+    without flaking.
+    """
+    state._powerup_manager._inventory[name] = powerup
+
+
+class TestPowerUpTargeting:
+    """Freeze and Steal need a target. The UI sends one via the picker,
+    but the server also accepts target_id=None and picks a random active
+    opponent — so the power-up never silently no-ops."""
+
+    def test_freeze_with_explicit_target_freezes_that_player(
+        self, state: QuizifyGameState
+    ) -> None:
+        state.add_player("Alice", _fake_ws())
+        state.add_player("Bob", _fake_ws())
+        state.add_player("Carol", _fake_ws())
+        state.start_game(language="de", num_rounds=3, difficulty="easy")
+        state.start_next_question()
+        _give(state, "Alice", PowerUpType.FREEZE)
+
+        effect = state.use_powerup("Alice", target_id="Bob")
+        assert isinstance(effect, PowerUpEffect)
+        assert effect.type == PowerUpType.FREEZE
+        assert effect.target_player == "Bob"
+
+    def test_freeze_with_null_target_picks_random_opponent(
+        self, state: QuizifyGameState
+    ) -> None:
+        state.add_player("Alice", _fake_ws())
+        state.add_player("Bob", _fake_ws())
+        state.add_player("Carol", _fake_ws())
+        state.start_game(language="de", num_rounds=3, difficulty="easy")
+        state.start_next_question()
+        _give(state, "Alice", PowerUpType.FREEZE)
+
+        effect = state.use_powerup("Alice", target_id=None)
+        assert isinstance(effect, PowerUpEffect)
+        # Source must never freeze itself.
+        assert effect.target_player in {"Bob", "Carol"}
+
+    def test_steal_with_null_target_picks_random_opponent_and_moves_points(
+        self, state: QuizifyGameState
+    ) -> None:
+        state.add_player("Alice", _fake_ws())
+        state.add_player("Bob", _fake_ws())
+        state.start_game(language="de", num_rounds=3, difficulty="easy")
+        state.start_next_question()
+        # Give Bob some round score so there's something worth stealing.
+        bob = state.get_player("Bob")
+        bob.round_score = 100
+        bob.score = 100
+        _give(state, "Alice", PowerUpType.STEAL)
+
+        effect = state.use_powerup("Alice", target_id=None)
+        assert isinstance(effect, PowerUpEffect)
+        assert effect.target_player == "Bob"
+        assert effect.stolen_points == 50  # half of 100
+        assert state.get_player("Alice").score == 50
+        assert state.get_player("Bob").score == 50
+
+    def test_freeze_with_no_opponents_returns_error_and_keeps_powerup(
+        self, state: QuizifyGameState
+    ) -> None:
+        """Single-player game: nothing to freeze. The server must reject
+        instead of consuming the power-up silently."""
+        state.add_player("Alice", _fake_ws())
+        state.start_game(language="de", num_rounds=3, difficulty="easy")
+        state.start_next_question()
+        _give(state, "Alice", PowerUpType.FREEZE)
+
+        result = state.use_powerup("Alice", target_id=None)
+        assert isinstance(result, str)  # error code
+        # Inventory still holds the power-up — try-again is allowed.
+        assert state._powerup_manager.get_powerup("Alice") == PowerUpType.FREEZE
+
+    def test_freeze_self_target_falls_back_to_random_opponent(
+        self, state: QuizifyGameState
+    ) -> None:
+        """A malformed/old client that passes own name as target_id must
+        not freeze itself — server treats it as 'no valid target' and
+        picks an opponent."""
+        state.add_player("Alice", _fake_ws())
+        state.add_player("Bob", _fake_ws())
+        state.start_game(language="de", num_rounds=3, difficulty="easy")
+        state.start_next_question()
+        _give(state, "Alice", PowerUpType.FREEZE)
+
+        effect = state.use_powerup("Alice", target_id="Alice")
+        assert isinstance(effect, PowerUpEffect)
+        assert effect.target_player == "Bob"
+
+    def test_joker_ignores_target_id(self, state: QuizifyGameState) -> None:
+        """Self-targeted power-ups (joker, double_points, time_boost)
+        must work regardless of target_id — they don't need one."""
+        state.add_player("Alice", _fake_ws())
+        state.start_game(language="de", num_rounds=3, difficulty="easy")
+        state.start_next_question()
+        _give(state, "Alice", PowerUpType.JOKER)
+
+        effect = state.use_powerup("Alice", target_id=None)
+        assert isinstance(effect, PowerUpEffect)
+        assert effect.type == PowerUpType.JOKER
+        assert effect.joker_remove_index is not None

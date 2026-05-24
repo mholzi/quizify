@@ -51,12 +51,15 @@
                 // Clear the connection timeout
                 if (_wsOpenTimeout) { clearTimeout(_wsOpenTimeout); _wsOpenTimeout = null; }
 
-                // Re-enable join button once WS is open
+                // Re-enable join button once WS is open. Compare via i18n
+                // so a German player whose button reads "Erneut verbinden"
+                // also gets flipped back to "Beitreten".
                 if (els.joinBtn && !state.playerName) {
+                    var tConn = (window.QuizifyI18n && window.QuizifyI18n.t) || function (k) { return k; };
                     var nameVal = els.nameInput ? els.nameInput.value.trim() : '';
                     els.joinBtn.disabled = nameVal.length === 0;
-                    if (els.joinBtn.textContent === 'Retry Connection') {
-                        els.joinBtn.textContent = 'Join Game';
+                    if (els.joinBtn.textContent === tConn('connection.retryConnection')) {
+                        els.joinBtn.textContent = tConn('join.joinButton');
                     }
                 }
 
@@ -544,14 +547,16 @@
         if (msg.powerup_type === 'joker' && msg.joker_remove_index != null) {
             game.applyJoker(msg.joker_remove_index);
         } else if (msg.powerup_type === 'steal') {
+            var tPwr = (window.QuizifyI18n && window.QuizifyI18n.t) || function (k) { return k; };
             var pts = msg.stolen_points || 0;
             if (msg.source_player === state.playerName) {
-                pu.showToast('🥷 Stolen +' + pts + ' pts from ' + (msg.target_player || 'opponent') + '!', 2500);
+                pu.showToast(tPwr('game.stoleFromOpponent', { points: pts, name: msg.target_player || tPwr('lobby.you') }), 2500);
             } else if (msg.target_player === state.playerName) {
-                pu.showToast('🥷 ' + (msg.source_player || 'Someone') + ' stole ' + pts + ' pts from you!', 2500);
+                pu.showToast(tPwr('game.stoleFromYou', { name: msg.source_player || tPwr('lobby.you'), points: pts }), 2500);
             }
         } else if (msg.powerup_type === 'freeze' && msg.target_player === state.playerName) {
-            pu.showToast('🧊 You were frozen for 5s!', 2000);
+            var tFrz = (window.QuizifyI18n && window.QuizifyI18n.t) || function (k) { return k; };
+            pu.showToast(tFrz('game.frozen'), 2000);
         }
         myPowerUp = null;
         var powerupBtn = document.getElementById('powerup-btn');
@@ -585,28 +590,29 @@
 
     function handleError(msg) {
         console.warn('[Quizify] Error:', msg.code, msg.message);
-        // Translate server error codes to user-friendly German strings so
-        // players don't see raw codes like "INVALID_ACTION" in toasts
-        // (#22 in logical review).
-        var errorTranslations = {
-            'INVALID_ACTION': 'Aktion nicht erlaubt',
-            'GAME_ALREADY_STARTED': 'Spiel l\u00E4uft bereits',
-            'GAME_NOT_STARTED': 'Kein aktives Spiel',
-            'ROUND_EXPIRED': 'Zeit abgelaufen',
-            'ALREADY_SUBMITTED': 'Bereits geantwortet',
-            'NAME_TAKEN': 'Name bereits vergeben',
-            'NAME_INVALID': 'Ung\u00FCltiger Name',
-            'GAME_FULL': 'Spiel ist voll',
-            'NOT_IN_GAME': 'Nicht im Spiel',
-            'GAME_ENDED': 'Spiel ist vorbei',
-        };
-        var userMsg = errorTranslations[msg.code] || msg.message || 'Fehler';
+        // Translate via i18n so the player's chosen locale wins. Previous
+        // inline map was German-only \u2014 English-speaking players saw "Aktion
+        // nicht erlaubt" regardless of language setting. Lookup pattern:
+        //   t('errors.<CODE>') returns the localized string OR the key
+        //   itself if missing. We treat key-as-result as "no translation"
+        //   and fall back to server message, then to errors.UNKNOWN.
+        var t = (window.QuizifyI18n && window.QuizifyI18n.t) || function (k) { return k; };
+        var key = 'errors.' + (msg.code || 'UNKNOWN');
+        var translated = t(key);
+        var userMsg;
+        if (translated && translated !== key) {
+            userMsg = translated;
+        } else if (msg.message) {
+            userMsg = msg.message;
+        } else {
+            userMsg = t('errors.UNKNOWN');
+        }
         pu.showToast(userMsg);
 
         // If the error happened during join, reset the button so the user can retry
         if (!state.playerName && els.joinBtn) {
             els.joinBtn.disabled = false;
-            els.joinBtn.textContent = 'Join Game';
+            els.joinBtn.textContent = t('join.joinButton');
             if (els.nameInput) els.nameInput.style.borderColor = '#D65858';
         }
     }
@@ -773,12 +779,20 @@
             });
         }
 
-        // Power-up button
+        // Power-up button — freeze/steal open a target picker; the rest fire
+        // immediately. Server still falls back to a random opponent if
+        // target_player_id is null, so even older clients keep working.
         var powerupBtn = document.getElementById('powerup-btn');
         if (powerupBtn) {
             powerupBtn.addEventListener('click', function () {
                 if (!myPowerUp) return;
-                send('use_powerup', { target_player_id: null });
+                if (game && game.powerupNeedsTarget && game.powerupNeedsTarget(myPowerUp)) {
+                    game.openTargetPicker(myPowerUp, function (targetName) {
+                        send('use_powerup', { target_player_id: targetName });
+                    });
+                } else {
+                    send('use_powerup', { target_player_id: null });
+                }
             });
         }
 
@@ -824,12 +838,13 @@
         _wsOpenTimeout = setTimeout(function () {
             if (!state.ws || state.ws.readyState !== WebSocket.OPEN) {
                 if (els.joinBtn) {
+                    var tRetry = (window.QuizifyI18n && window.QuizifyI18n.t) || function (k) { return k; };
                     els.joinBtn.disabled = false;
-                    els.joinBtn.textContent = 'Retry Connection';
+                    els.joinBtn.textContent = tRetry('connection.retryConnection');
                     els.joinBtn.addEventListener('click', function retryOnce() {
                         els.joinBtn.removeEventListener('click', retryOnce);
                         els.joinBtn.disabled = true;
-                        els.joinBtn.textContent = 'Join Game';
+                        els.joinBtn.textContent = tRetry('join.joinButton');
                         state.reconnectAttempts = 0;
                         connect();
                     }, { once: true });

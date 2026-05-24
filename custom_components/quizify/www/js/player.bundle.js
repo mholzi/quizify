@@ -2097,8 +2097,9 @@
         canvas.toBlob(function(blob) {
             var url = URL.createObjectURL(blob);
             if (navigator.share && navigator.canShare && navigator.canShare({ files: [new File([blob], 'quizify.png', { type: 'image/png' })] })) {
+                var tShare = (window.QuizifyI18n && window.QuizifyI18n.t) || function (k) { return k; };
                 navigator.share({
-                    title: 'Quizify Result',
+                    title: tShare('share.shareTitle'),
                     files: [new File([blob], 'quizify.png', { type: 'image/png' })]
                 }).catch(function() {});
             } else {
@@ -2537,13 +2538,18 @@
      * Render submission tracker showing who has submitted
      * @param {Array} players - Array of player objects
      */
+    // Latest player list from the server, cached so the freeze/steal target
+    // picker can render opponents without re-requesting state.
+    var _latestPlayers = [];
+
     function renderSubmissionTracker(players) {
         var tracker = document.getElementById('submission-tracker');
         var container = document.getElementById('submitted-players');
 
-        if (!tracker || !container) return;
-
         var playerList = players || [];
+        _latestPlayers = playerList;
+
+        if (!tracker || !container) return;
         var submittedCount = playerList.filter(function (p) {
             return p.submitted;
         }).length;
@@ -2784,6 +2790,100 @@
     }
 
     /**
+     * Returns true for power-up types whose effect lands on another player
+     * (and therefore need a target picker).
+     */
+    function powerupNeedsTarget(powerupType) {
+        return powerupType === 'freeze' || powerupType === 'steal';
+    }
+
+    /**
+     * Open the target-picker modal so the player can choose who to freeze
+     * or steal from. Calls onConfirm(targetPlayerName) on selection.
+     */
+    function openTargetPicker(powerupType, onConfirm) {
+        var modal = document.getElementById('powerup-target-modal');
+        var titleEl = document.getElementById('powerup-target-title');
+        var hintEl = document.getElementById('powerup-target-hint');
+        var listEl = document.getElementById('powerup-target-list');
+        var cancelBtn = document.getElementById('powerup-target-cancel');
+        if (!modal || !listEl) return;
+
+        var t = (window.QuizifyI18n && window.QuizifyI18n.t) || function (k) { return k; };
+
+        // Active opponents = connected, not the local player.
+        var me = pu.state.playerName;
+        var opponents = (_latestPlayers || []).filter(function (p) {
+            return p && p.name && p.name !== me && p.connected !== false;
+        });
+
+        if (titleEl) {
+            titleEl.textContent = powerupType === 'steal'
+                ? t('powerups.pickStealTitle')
+                : t('powerups.pickFreezeTitle');
+        }
+
+        listEl.innerHTML = '';
+
+        if (opponents.length === 0) {
+            if (hintEl) hintEl.textContent = t('powerups.noOpponents');
+        } else {
+            if (hintEl) hintEl.textContent = t('powerups.pickHint');
+            opponents.forEach(function (opp) {
+                var li = document.createElement('li');
+                var btn = document.createElement('button');
+                btn.type = 'button';
+                btn.className = 'powerup-target-option';
+                btn.dataset.player = opp.name;
+                var colorDot = '';
+                if (opp.color) {
+                    colorDot = '<span class="powerup-target-dot" style="background:' +
+                        pu.escapeHtml(opp.color) + '"></span>';
+                }
+                btn.innerHTML = colorDot +
+                    '<span class="powerup-target-name">' + pu.escapeHtml(opp.name) + '</span>';
+                btn.addEventListener('click', function () {
+                    closeTargetPicker();
+                    onConfirm(opp.name);
+                });
+                li.appendChild(btn);
+                listEl.appendChild(li);
+            });
+        }
+
+        modal.classList.remove('hidden');
+
+        // One-shot listeners; closeTargetPicker tears them down.
+        function onCancel() { closeTargetPicker(); }
+        function onBackdrop(e) {
+            if (e.target && e.target.classList.contains('powerup-target-backdrop')) {
+                closeTargetPicker();
+            }
+        }
+        function onKey(e) {
+            if (e.key === 'Escape') closeTargetPicker();
+        }
+        if (cancelBtn) cancelBtn.addEventListener('click', onCancel, { once: true });
+        modal.addEventListener('click', onBackdrop);
+        document.addEventListener('keydown', onKey);
+        modal._teardown = function () {
+            modal.removeEventListener('click', onBackdrop);
+            document.removeEventListener('keydown', onKey);
+            if (cancelBtn) cancelBtn.removeEventListener('click', onCancel);
+        };
+    }
+
+    function closeTargetPicker() {
+        var modal = document.getElementById('powerup-target-modal');
+        if (!modal) return;
+        modal.classList.add('hidden');
+        if (typeof modal._teardown === 'function') {
+            modal._teardown();
+            modal._teardown = null;
+        }
+    }
+
+    /**
      * Handle joker power-up applied - eliminate one wrong answer
      * @param {number} removeIndex - Index of answer to eliminate
      */
@@ -2847,6 +2947,9 @@
         renderLeaderboardEntry: renderLeaderboardEntry,
         updateLeaderboardSummary: updateLeaderboardSummary,
         renderPowerUp: renderPowerUp,
+        powerupNeedsTarget: powerupNeedsTarget,
+        openTargetPicker: openTargetPicker,
+        closeTargetPicker: closeTargetPicker,
         applyJoker: applyJoker,
         handleAnswerResult: handleAnswerResult,
         getLastAnswerResult: getLastAnswerResult,
@@ -2912,12 +3015,15 @@
                 // Clear the connection timeout
                 if (_wsOpenTimeout) { clearTimeout(_wsOpenTimeout); _wsOpenTimeout = null; }
 
-                // Re-enable join button once WS is open
+                // Re-enable join button once WS is open. Compare via i18n
+                // so a German player whose button reads "Erneut verbinden"
+                // also gets flipped back to "Beitreten".
                 if (els.joinBtn && !state.playerName) {
+                    var tConn = (window.QuizifyI18n && window.QuizifyI18n.t) || function (k) { return k; };
                     var nameVal = els.nameInput ? els.nameInput.value.trim() : '';
                     els.joinBtn.disabled = nameVal.length === 0;
-                    if (els.joinBtn.textContent === 'Retry Connection') {
-                        els.joinBtn.textContent = 'Join Game';
+                    if (els.joinBtn.textContent === tConn('connection.retryConnection')) {
+                        els.joinBtn.textContent = tConn('join.joinButton');
                     }
                 }
 
@@ -3405,14 +3511,16 @@
         if (msg.powerup_type === 'joker' && msg.joker_remove_index != null) {
             game.applyJoker(msg.joker_remove_index);
         } else if (msg.powerup_type === 'steal') {
+            var tPwr = (window.QuizifyI18n && window.QuizifyI18n.t) || function (k) { return k; };
             var pts = msg.stolen_points || 0;
             if (msg.source_player === state.playerName) {
-                pu.showToast('🥷 Stolen +' + pts + ' pts from ' + (msg.target_player || 'opponent') + '!', 2500);
+                pu.showToast(tPwr('game.stoleFromOpponent', { points: pts, name: msg.target_player || tPwr('lobby.you') }), 2500);
             } else if (msg.target_player === state.playerName) {
-                pu.showToast('🥷 ' + (msg.source_player || 'Someone') + ' stole ' + pts + ' pts from you!', 2500);
+                pu.showToast(tPwr('game.stoleFromYou', { name: msg.source_player || tPwr('lobby.you'), points: pts }), 2500);
             }
         } else if (msg.powerup_type === 'freeze' && msg.target_player === state.playerName) {
-            pu.showToast('🧊 You were frozen for 5s!', 2000);
+            var tFrz = (window.QuizifyI18n && window.QuizifyI18n.t) || function (k) { return k; };
+            pu.showToast(tFrz('game.frozen'), 2000);
         }
         myPowerUp = null;
         var powerupBtn = document.getElementById('powerup-btn');
@@ -3446,28 +3554,29 @@
 
     function handleError(msg) {
         console.warn('[Quizify] Error:', msg.code, msg.message);
-        // Translate server error codes to user-friendly German strings so
-        // players don't see raw codes like "INVALID_ACTION" in toasts
-        // (#22 in logical review).
-        var errorTranslations = {
-            'INVALID_ACTION': 'Aktion nicht erlaubt',
-            'GAME_ALREADY_STARTED': 'Spiel l\u00E4uft bereits',
-            'GAME_NOT_STARTED': 'Kein aktives Spiel',
-            'ROUND_EXPIRED': 'Zeit abgelaufen',
-            'ALREADY_SUBMITTED': 'Bereits geantwortet',
-            'NAME_TAKEN': 'Name bereits vergeben',
-            'NAME_INVALID': 'Ung\u00FCltiger Name',
-            'GAME_FULL': 'Spiel ist voll',
-            'NOT_IN_GAME': 'Nicht im Spiel',
-            'GAME_ENDED': 'Spiel ist vorbei',
-        };
-        var userMsg = errorTranslations[msg.code] || msg.message || 'Fehler';
+        // Translate via i18n so the player's chosen locale wins. Previous
+        // inline map was German-only \u2014 English-speaking players saw "Aktion
+        // nicht erlaubt" regardless of language setting. Lookup pattern:
+        //   t('errors.<CODE>') returns the localized string OR the key
+        //   itself if missing. We treat key-as-result as "no translation"
+        //   and fall back to server message, then to errors.UNKNOWN.
+        var t = (window.QuizifyI18n && window.QuizifyI18n.t) || function (k) { return k; };
+        var key = 'errors.' + (msg.code || 'UNKNOWN');
+        var translated = t(key);
+        var userMsg;
+        if (translated && translated !== key) {
+            userMsg = translated;
+        } else if (msg.message) {
+            userMsg = msg.message;
+        } else {
+            userMsg = t('errors.UNKNOWN');
+        }
         pu.showToast(userMsg);
 
         // If the error happened during join, reset the button so the user can retry
         if (!state.playerName && els.joinBtn) {
             els.joinBtn.disabled = false;
-            els.joinBtn.textContent = 'Join Game';
+            els.joinBtn.textContent = t('join.joinButton');
             if (els.nameInput) els.nameInput.style.borderColor = '#D65858';
         }
     }
@@ -3634,12 +3743,20 @@
             });
         }
 
-        // Power-up button
+        // Power-up button — freeze/steal open a target picker; the rest fire
+        // immediately. Server still falls back to a random opponent if
+        // target_player_id is null, so even older clients keep working.
         var powerupBtn = document.getElementById('powerup-btn');
         if (powerupBtn) {
             powerupBtn.addEventListener('click', function () {
                 if (!myPowerUp) return;
-                send('use_powerup', { target_player_id: null });
+                if (game && game.powerupNeedsTarget && game.powerupNeedsTarget(myPowerUp)) {
+                    game.openTargetPicker(myPowerUp, function (targetName) {
+                        send('use_powerup', { target_player_id: targetName });
+                    });
+                } else {
+                    send('use_powerup', { target_player_id: null });
+                }
             });
         }
 
@@ -3685,12 +3802,13 @@
         _wsOpenTimeout = setTimeout(function () {
             if (!state.ws || state.ws.readyState !== WebSocket.OPEN) {
                 if (els.joinBtn) {
+                    var tRetry = (window.QuizifyI18n && window.QuizifyI18n.t) || function (k) { return k; };
                     els.joinBtn.disabled = false;
-                    els.joinBtn.textContent = 'Retry Connection';
+                    els.joinBtn.textContent = tRetry('connection.retryConnection');
                     els.joinBtn.addEventListener('click', function retryOnce() {
                         els.joinBtn.removeEventListener('click', retryOnce);
                         els.joinBtn.disabled = true;
-                        els.joinBtn.textContent = 'Join Game';
+                        els.joinBtn.textContent = tRetry('join.joinButton');
                         state.reconnectAttempts = 0;
                         connect();
                     }, { once: true });

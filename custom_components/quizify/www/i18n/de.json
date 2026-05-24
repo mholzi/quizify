@@ -153,13 +153,22 @@
     "speedBonus": "Speed",
     "streakBonusLabel": "{count}× Serie",
     "difficultyMultiplier": "{value}× Schwierigkeit",
-    "doublePoints": "2× Doppelpunkte"
+    "doublePoints": "2× Doppelpunkte",
+    "stoleFromYou": "🥷 {name} hat dir {points} Punkte geklaut!",
+    "stoleFromOpponent": "🥷 Geklaut: +{points} Pkt. von {name}!",
+    "frozen": "🧊 Du wurdest 5 Sek. eingefroren!"
   },
   "powerups": {
     "joker": "Joker",
     "double_points": "Doppelt",
     "freeze": "Einfrieren",
-    "time_boost": "+5 Sek."
+    "time_boost": "+5 Sek.",
+    "steal": "Klauen",
+    "pickFreezeTitle": "Spieler einfrieren",
+    "pickStealTitle": "Punkte klauen von",
+    "pickHint": "Tippe einen Spieler an",
+    "noOpponents": "Keine anderen Spieler verfügbar",
+    "cancel": "Abbrechen"
   },
   "funFact": {
     "label": "Wusstest du?"
@@ -218,7 +227,8 @@
     "share_tab": "📤 Teilen",
     "share_copy": "📋 Text kopieren",
     "share_save": "📤 Karte teilen",
-    "share_copied": "Kopiert!"
+    "share_copied": "Kopiert!",
+    "shareTitle": "Quizify-Ergebnis"
   },
   "reveal": {
     "yourResult": "Dein Ergebnis",
@@ -310,6 +320,9 @@
     "thinking": "Nachdenklich-Reaktion"
   },
   "launcher": {
+    "title": "Quizify",
+    "openQuizify": "Quizify öffnen",
+    "clickToLaunch": "Quiz im Vollbild starten — keine Ablenkungen.",
     "subtitle": "Das unnütze Wissen Quiz",
     "joinGame": "Spiel beitreten",
     "admin": "Admin",
@@ -326,10 +339,37 @@
   "connection": {
     "connected": "Verbunden",
     "reconnecting": "Verbindung wird wiederhergestellt...",
-    "disconnected": "Verbindung getrennt"
+    "disconnected": "Verbindung getrennt",
+    "retryConnection": "Erneut verbinden"
   },
   "analytics": {
-    "title": "Analyse"
+    "title": "Analyse",
+    "back": "← Zurück",
+    "loading": "Lade Auswertung…",
+    "loadFailed": "Auswertung konnte nicht geladen werden.",
+    "period7d": "7T",
+    "period30d": "30T",
+    "period90d": "90T",
+    "periodAll": "Alle",
+    "statGames": "Spiele",
+    "statAvgPlayers": "Ø Spieler",
+    "statRounds": "Runden",
+    "sectionGamesOverTime": "Spiele im Zeitverlauf",
+    "sectionTopPlayers": "Top-Spieler",
+    "sectionCategories": "Kategorien",
+    "sectionRecentGames": "Letzte Spiele",
+    "sectionFlagged": "🚩 Gemeldete Fragen",
+    "thCategory": "Kategorie",
+    "thGames": "Spiele",
+    "thAvgScore": "Ø Punkte",
+    "thDate": "Datum",
+    "thPlayers": "Spieler",
+    "thWinner": "Sieger",
+    "thFlagId": "Frage-ID",
+    "thFlaggedWhen": "Gemeldet",
+    "thFlaggedBy": "Spieler",
+    "thFlagReason": "Grund",
+    "empty": "Noch keine Spiele gespielt. Starte ein Quiz, um Auswertungen zu sehen!"
   },
   "errors": {
     "NAME_TAKEN": "Name bereits vergeben",
@@ -341,6 +381,8 @@
     "ROUND_EXPIRED": "Zeit abgelaufen",
     "NOT_IN_GAME": "Nicht im Spiel",
     "INVALID_ACTION": "Ungültige Aktion",
+    "GAME_ENDED": "Spiel beendet",
+    "NO_QUESTIONS_REMAINING": "Keine Fragen mehr",
     "UNKNOWN": "Ein Fehler ist aufgetreten",
     "unknownMessageType": "Unbekannter Nachrichtentyp",
     "CONNECTION_LOST": "Verbindung verloren",

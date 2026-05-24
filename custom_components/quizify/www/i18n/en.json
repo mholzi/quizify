@@ -153,13 +153,22 @@
     "speedBonus": "Speed",
     "streakBonusLabel": "{count}× Streak",
     "difficultyMultiplier": "{value}× Difficulty",
-    "doublePoints": "2× Double Points"
+    "doublePoints": "2× Double Points",
+    "stoleFromYou": "🥷 {name} stole {points} points from you!",
+    "stoleFromOpponent": "🥷 Stolen: +{points} pts from {name}!",
+    "frozen": "🧊 You were frozen for 5s!"
   },
   "powerups": {
     "joker": "Joker",
     "double_points": "Double",
     "freeze": "Freeze",
-    "time_boost": "+5 Sec."
+    "time_boost": "+5 Sec.",
+    "steal": "Steal",
+    "pickFreezeTitle": "Freeze a player",
+    "pickStealTitle": "Steal from a player",
+    "pickHint": "Tap a player to target them",
+    "noOpponents": "No other players to target",
+    "cancel": "Cancel"
   },
   "funFact": {
     "label": "Did you know?"
@@ -218,7 +227,8 @@
     "share_tab": "📤 Share",
     "share_copy": "📋 Copy Text",
     "share_save": "📤 Share Card",
-    "share_copied": "Copied!"
+    "share_copied": "Copied!",
+    "shareTitle": "Quizify Result"
   },
   "reveal": {
     "yourResult": "Your Result",
@@ -310,6 +320,9 @@
     "thinking": "Thinking reaction"
   },
   "launcher": {
+    "title": "Quizify",
+    "openQuizify": "Open Quizify",
+    "clickToLaunch": "Launch the quiz in fullscreen — no distractions.",
     "subtitle": "The Useless Knowledge Quiz",
     "joinGame": "Join Game",
     "admin": "Admin",
@@ -326,10 +339,37 @@
   "connection": {
     "connected": "Connected",
     "reconnecting": "Reconnecting...",
-    "disconnected": "Disconnected"
+    "disconnected": "Disconnected",
+    "retryConnection": "Retry connection"
   },
   "analytics": {
-    "title": "Analytics"
+    "title": "Analytics",
+    "back": "← Back",
+    "loading": "Loading analytics…",
+    "loadFailed": "Failed to load analytics.",
+    "period7d": "7d",
+    "period30d": "30d",
+    "period90d": "90d",
+    "periodAll": "All",
+    "statGames": "Games",
+    "statAvgPlayers": "Avg. Players",
+    "statRounds": "Rounds",
+    "sectionGamesOverTime": "Games Over Time",
+    "sectionTopPlayers": "Top Players",
+    "sectionCategories": "Categories",
+    "sectionRecentGames": "Recent Games",
+    "sectionFlagged": "🚩 Flagged Questions",
+    "thCategory": "Category",
+    "thGames": "Games",
+    "thAvgScore": "Avg. Score",
+    "thDate": "Date",
+    "thPlayers": "Players",
+    "thWinner": "Winner",
+    "thFlagId": "Question ID",
+    "thFlaggedWhen": "Flagged",
+    "thFlaggedBy": "Player",
+    "thFlagReason": "Reason",
+    "empty": "No games played yet. Start a quiz to see analytics!"
   },
   "errors": {
     "NAME_TAKEN": "Name already taken",
@@ -341,6 +381,8 @@
     "ROUND_EXPIRED": "Time expired",
     "NOT_IN_GAME": "Not in game",
     "INVALID_ACTION": "Invalid action",
+    "GAME_ENDED": "Game ended",
+    "NO_QUESTIONS_REMAINING": "No questions remaining",
     "UNKNOWN": "An error occurred",
     "unknownMessageType": "Unknown message type",
     "CONNECTION_LOST": "Connection Lost",

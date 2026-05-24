@@ -472,22 +472,21 @@
                 if (!(msg.code === 'INVALID_ACTION' && msg.message === 'Admin only')) {
                     console.warn('[Quizify Admin] Error:', msg.code, msg.message);
                 }
-                // Translate server error codes to user-friendly German.
-                // Raw server messages can leak into toasts (e.g. "Admin only")
-                // when they shouldn't be visible to the user (#22 in review).
-                var errorTranslations = {
-                    'INVALID_ACTION': 'Aktion nicht erlaubt',
-                    'GAME_ALREADY_STARTED': 'Spiel l\u00E4uft bereits',
-                    'GAME_NOT_STARTED': 'Kein aktives Spiel',
-                    'ROUND_EXPIRED': 'Zeit abgelaufen',
-                    'ALREADY_SUBMITTED': 'Bereits geantwortet',
-                    'NAME_TAKEN': 'Name bereits vergeben',
-                    'NAME_INVALID': 'Ung\u00FCltiger Name',
-                    'GAME_FULL': 'Spiel ist voll',
-                    'NOT_IN_GAME': 'Nicht im Spiel',
-                    'NO_QUESTIONS_REMAINING': 'Keine Fragen mehr',
-                };
-                var userMsg = errorTranslations[msg.code] || msg.message || 'Fehler';
+                // Translate via i18n so admins in any locale see their own
+                // language. Previous inline German-only map ignored locale.
+                // Lookup pattern matches player-core.js handleError so both
+                // sides agree.
+                var tErr = (window.QuizifyI18n && window.QuizifyI18n.t) || function (k) { return k; };
+                var errKey = 'errors.' + (msg.code || 'UNKNOWN');
+                var translatedErr = tErr(errKey);
+                var userMsg;
+                if (translatedErr && translatedErr !== errKey) {
+                    userMsg = translatedErr;
+                } else if (msg.message) {
+                    userMsg = msg.message;
+                } else {
+                    userMsg = tErr('errors.UNKNOWN');
+                }
                 // Suppress the noisy "Admin only" ping from initial admin_connect
                 // attempt \u2014 it's expected when not yet authenticated.
                 if (msg.code === 'INVALID_ACTION' && msg.message === 'Admin only') {

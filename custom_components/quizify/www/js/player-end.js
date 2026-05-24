@@ -400,8 +400,9 @@
         canvas.toBlob(function(blob) {
             var url = URL.createObjectURL(blob);
             if (navigator.share && navigator.canShare && navigator.canShare({ files: [new File([blob], 'quizify.png', { type: 'image/png' })] })) {
+                var tShare = (window.QuizifyI18n && window.QuizifyI18n.t) || function (k) { return k; };
                 navigator.share({
-                    title: 'Quizify Result',
+                    title: tShare('share.shareTitle'),
                     files: [new File([blob], 'quizify.png', { type: 'image/png' })]
                 }).catch(function() {});
             } else {

@@ -846,6 +846,27 @@ class QuizifyGameState:
         if question is None:
             return ERR_INVALID_ACTION
 
+        # Resolve target for opponent-targeted power-ups BEFORE consuming
+        # inventory. The player UI passes an explicit target via picker, but
+        # we also accept null and pick a random active opponent (safety net
+        # for older clients / single-tap flow). If no opponent is connected
+        # at all, reject so the power-up stays in the inventory instead of
+        # silently no-op'ing.
+        held = self._powerup_manager.get_powerup(player_id)
+        if held in (PowerUpType.FREEZE, PowerUpType.STEAL):
+            target_player = (
+                self._player_registry.get_player(target_id) if target_id else None
+            )
+            if not target_id or target_id == player_id or not target_player or not target_player.is_active:
+                opponents = [
+                    name
+                    for name, p in self._player_registry.players.items()
+                    if name != player_id and p.is_active
+                ]
+                if not opponents:
+                    return ERR_INVALID_ACTION
+                target_id = random.choice(opponents)
+
         # Determine wrong answer indices for joker
         wrong_indices = [
             i for i, a in enumerate(question.answers) if not a.correct
