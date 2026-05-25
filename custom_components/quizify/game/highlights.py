@@ -4,7 +4,7 @@ from __future__ import annotations
 
 from dataclasses import dataclass
 
-from ..const import MIN_PLAYERS
+from ..const import MIN_PLAYERS_FOR_AWARDS
 from .player import PlayerSession
 
 
@@ -53,8 +53,9 @@ def compute_superlatives(players: list[PlayerSession]) -> list[Superlative]:
 
     Each award goes to exactly one player. A player can only win one award.
     Returns empty list if fewer than 2 players or fewer than 3 rounds played.
+    Solo games (single player) skip these — there's nothing to compare to.
     """
-    if len(players) < MIN_PLAYERS:
+    if len(players) < MIN_PLAYERS_FOR_AWARDS:
         return []
 
     max_rounds = max((len(p.round_history) for p in players), default=0)

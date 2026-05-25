@@ -748,42 +748,42 @@
     ];
 
     // Minimum players required before "ready" — keep in sync with
-    // const.MIN_PLAYERS on the server (currently 2). Used for the
-    // E-layout countdown line ("noch 1 fehlt") and to flip the
-    // marquee text between "Warten…" and "Gleich geht's los…".
-    var LOBBY_MIN_PLAYERS = 2;
+    // const.MIN_PLAYERS on the server (currently 1: solo play allowed).
+    // Used to flip the marquee text between "Waiting…" and "About to
+    // start…" and to gate the Start Game button.
+    var LOBBY_MIN_PLAYERS = 1;
 
     function renderLobbyPlayers(players) {
         var list = Array.isArray(players) ? players : Object.values(players);
         playerCount = list.length;
         if (els.lobbyPlayerCount) els.lobbyPlayerCount.textContent = playerCount;
 
-        // Marquee text — "Warten…" until min reached, then "Gleich geht's los…"
+        var isReady = playerCount >= LOBBY_MIN_PLAYERS;
+
+        // Marquee text — "Waiting…" until min reached, then "About to start…"
         var marqueeEl = document.getElementById('lobby-marquee');
         if (marqueeEl) {
-            var marqueeKey = playerCount >= LOBBY_MIN_PLAYERS
-                ? 'lobby.marqueeReady'
-                : 'lobby.marqueeWaiting';
-            marqueeEl.textContent = _t(marqueeKey);
+            marqueeEl.textContent = _t(isReady ? 'lobby.marqueeReady' : 'lobby.marqueeWaiting');
         }
 
-        // Countdown line under the QR row.
+        // Countdown line under the QR row. Once we're at threshold we
+        // hide it entirely — "Ready at 1 player · still need 0 more" is
+        // noise once the Start button is visible.
         var countdownEl = document.getElementById('lobby-countdown');
         var minEl = document.getElementById('lobby-min-players');
         var missingEl = document.getElementById('lobby-missing-players');
         if (minEl) minEl.textContent = LOBBY_MIN_PLAYERS;
         if (missingEl) {
-            var missing = Math.max(0, LOBBY_MIN_PLAYERS - playerCount);
-            missingEl.textContent = missing;
+            missingEl.textContent = Math.max(0, LOBBY_MIN_PLAYERS - playerCount);
         }
         if (countdownEl) {
-            countdownEl.classList.toggle('is-ready', playerCount >= LOBBY_MIN_PLAYERS);
+            countdownEl.classList.toggle('is-ready', isReady);
+            countdownEl.classList.toggle('hidden', isReady);
         }
 
         if (els.startGameplayBtn) {
-            // Now gated on min-players, not just >=1 — the start button
-            // only shows once the game can actually run a meaningful round.
-            els.startGameplayBtn.classList.toggle('hidden', playerCount < LOBBY_MIN_PLAYERS);
+            // Gated on min-players: shows as soon as we can run a round.
+            els.startGameplayBtn.classList.toggle('hidden', !isReady);
         }
 
         // Once the admin has joined as a player, swap the "Als Spieler
@@ -1249,20 +1249,19 @@ async function checkPackUpdates() {
             'position:relative',
         ].join(';');
 
+        const packPath = '<code style="background:#F3EEDF;padding:1px 4px;border-radius:3px;font-family:\'JetBrains Mono\',monospace;color:#2A2820">custom_components/quizify/questions/</code>';
+        const bodyText = _t('admin.packUpdateBody', { path: packPath });
+        const dismissTitle = _t('common.close');
         banner.innerHTML =
             '<span style="font-size:1.2rem;flex-shrink:0">📦</span>' +
             '<div style="flex:1">' +
-                '<strong style="color:#E88A7F;font-family:\'Cabinet Grotesk\',sans-serif;font-weight:700">Question pack updates available</strong>' +
+                '<strong style="color:#E88A7F;font-family:\'Cabinet Grotesk\',sans-serif;font-weight:700">' + _t('admin.packUpdateTitle') + '</strong>' +
                 '<div style="margin-top:3px;color:#2A2820">' + names + '</div>' +
-                '<div style="margin-top:5px;font-size:0.8rem;color:#6E6A5C">' +
-                    'Update your packs by replacing the JSON files in ' +
-                    '<code style="background:#F3EEDF;padding:1px 4px;border-radius:3px;font-family:\'JetBrains Mono\',monospace;color:#2A2820">custom_components/quizify/questions/</code>' +
-                    ' and restarting Home Assistant.' +
-                '</div>' +
+                '<div style="margin-top:5px;font-size:0.8rem;color:#6E6A5C">' + bodyText + '</div>' +
             '</div>' +
             '<button onclick="document.getElementById(\'pack-update-banner\').remove()" ' +
                 'style="background:none;border:none;color:#6E6A5C;cursor:pointer;font-size:1rem;padding:0;flex-shrink:0" ' +
-                'title="Dismiss">✕</button>';
+                'title="' + dismissTitle + '">✕</button>';
 
         // Insert at top of setup screen, before first section
         const setupScreen = document.getElementById('setup-screen');

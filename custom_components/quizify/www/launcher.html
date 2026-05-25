@@ -183,7 +183,7 @@
                 messageEl.textContent = QuizifyI18n.t('launcher.focusedTab') || 'Switched to Quizify tab! 🎯';
             } else if (state === 'blocked') {
                 messageEl.textContent = QuizifyI18n.t('launcher.popupBlocked') || 'Pop-up was blocked by your browser.';
-                hintEl.innerHTML = QuizifyI18n.t('launcher.allowPopups') || 'Allow pop-ups for this site, or <a href="' + window.location.origin + '/quizify/admin" target="_blank" style="color: var(--color-accent-secondary);">click here</a> to open directly.';
+                hintEl.innerHTML = QuizifyI18n.t('launcher.allowPopups', { url: window.location.origin + '/quizify/admin' });
             }
         }
 

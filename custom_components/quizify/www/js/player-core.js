@@ -237,9 +237,9 @@
                 game.handleAnswerResult(msg);
                 // Streak milestone toast
                 if (msg.correct && msg.new_streak) {
-                    var milestones = { 3: '🔥 3 in a row!', 5: '🔥🔥 5 in a row!', 7: '🔥🔥🔥 7 in a row! On fire!' };
-                    if (milestones[msg.new_streak]) {
-                        pu.showToast(milestones[msg.new_streak], 2500);
+                    var streakKeys = { 3: 'game.streakToast3', 5: 'game.streakToast5', 7: 'game.streakToast7' };
+                    if (streakKeys[msg.new_streak]) {
+                        pu.showToast(t(streakKeys[msg.new_streak]), 2500);
                     }
                 }
                 break;
@@ -644,7 +644,7 @@
 
         state.playerName = result.name;
         els.joinBtn.disabled = true;
-        els.joinBtn.textContent = 'Joining...';
+        els.joinBtn.textContent = t('join.joining');
 
         if (state.ws && state.ws.readyState === WebSocket.OPEN) {
             var joinMsg = { name: result.name };

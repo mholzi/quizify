@@ -4,7 +4,14 @@ DOMAIN = "quizify"
 
 # Game configuration
 MAX_PLAYERS = 20
-MIN_PLAYERS = 2
+# Solo play is allowed: a single player can run a full game (great for practice
+# / a quick round on the couch with one phone). Comparative end-of-game awards
+# still gate on MIN_PLAYERS_FOR_AWARDS — see game/highlights.py.
+MIN_PLAYERS = 1
+# Comparative end-of-game awards ("Comeback King", "Fastest Finger", …) only
+# make sense with at least two players to compare. Solo games skip these and
+# just show the personal stats card.
+MIN_PLAYERS_FOR_AWARDS = 2
 DEFAULT_ROUND_DURATION = 30  # seconds
 MAX_NAME_LENGTH = 20
 MIN_NAME_LENGTH = 1

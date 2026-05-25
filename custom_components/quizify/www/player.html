@@ -81,14 +81,14 @@
                      state.playerColor + first letter of state.playerName. -->
                 <div class="pl-megaAvatar" id="pl-mega-avatar" aria-hidden="true">·</div>
                 <h1 class="pl-megaName" id="pl-mega-name">…</h1>
-                <span class="pl-tag" data-i18n="lobby.youreIn">DU BIST DRIN</span>
+                <span class="pl-tag" data-i18n="lobby.youreIn">YOU'RE IN</span>
                 <p class="pl-meta" id="pl-meta">
-                    <span data-i18n="lobby.gameLobby">Spiel-Lobby</span>
+                    <span data-i18n="lobby.gameLobby">Game Lobby</span>
                 </p>
             </div>
 
             <p class="pl-also" id="pl-also">
-                <span data-i18n="lobby.aloneWaiting">Du wartest noch allein…</span>
+                <span data-i18n="lobby.aloneWaiting">Waiting on your own…</span>
             </p>
 
             <!-- Orbit row: every other player (not you) rendered as a
@@ -102,12 +102,12 @@
             <section class="pl-rules">
                 <h2 class="pl-rulesTitle">
                     <span aria-hidden="true">🧠</span>
-                    <span data-i18n="lobby.howToPlay">So spielst du</span>
+                    <span data-i18n="lobby.howToPlay">How to Play</span>
                 </h2>
                 <ol>
-                    <li data-i18n="lobby.howToPlayStep1">Eine Frage erscheint mit 3 Antworten.</li>
-                    <li data-i18n="lobby.howToPlayStep2">Tippe schnell — Tempo gibt Bonus.</li>
-                    <li data-i18n="lobby.howToPlayStep3">Streak von 3+ Richtigen lohnt sich.</li>
+                    <li data-i18n="lobby.howToPlayStep1">A question appears with 3 answers.</li>
+                    <li data-i18n="lobby.howToPlayStep2">Tap fast — speed earns a bonus.</li>
+                    <li data-i18n="lobby.howToPlayStep3">A streak of 3+ correct pays off.</li>
                 </ol>
             </section>
 
@@ -119,7 +119,7 @@
             <span id="players-summary" class="sr-only">0</span>
             <span id="lobby-difficulty-badge" class="sr-only"></span>
             <p id="players-empty" class="sr-only hidden">
-                <span data-i18n="lobby.waitingForPlayers">Warte auf Spieler…</span>
+                <span data-i18n="lobby.waitingForPlayers">Waiting for players to join…</span>
             </p>
             <div id="player-qr-code" class="sr-only" role="button" tabindex="-1"
                  data-i18n-aria-label="a11y.tapToEnlargeQr" aria-label="QR Code"></div>
@@ -130,14 +130,14 @@
             <!-- Lobby Status (for non-admin players) -->
             <div id="lobby-status" class="pl-status hidden">
                 <span class="pl-pulse"></span>
-                <span data-i18n="lobby.waitingForHost">Warte auf den Host…</span>
+                <span data-i18n="lobby.waitingForHost">Waiting for host to start the game…</span>
             </div>
 
             <!-- Sticky Admin Actions -->
             <div id="admin-controls" class="lobby-actions lobby-actions--sticky hidden">
                 <button id="start-game-btn" class="btn btn-primary btn-large btn-full-width">
                     <span class="btn-icon" aria-hidden="true">🎉</span>
-                    <span data-i18n="lobby.startGame">Spiel starten</span>
+                    <span data-i18n="lobby.startGame">Start Game</span>
                 </button>
             </div>
         </div>
@@ -209,7 +209,7 @@
                         <output id="wager-value" class="wager-value">25%</output>
                     </div>
                     <p class="wager-bank-line">
-                        <span data-i18n="wager.bank">Punktestand</span>:
+                        <span data-i18n="wager.bank">Current points</span>:
                         <span id="wager-bank" class="wager-bank">0</span>
                     </p>
                     <button id="wager-submit-btn" type="button" class="btn btn-primary btn-block">
@@ -279,9 +279,9 @@
                 <div class="pl-result-crown">
                     <span></span>
                     <span class="pl-result-round" aria-live="polite">
-                        <span data-i18n="game.roundLabel">Runde</span>
+                        <span data-i18n="game.roundLabel">Round</span>
                         <span id="reveal-round">1</span>
-                        <span data-i18n="game.ofLabel">von</span>
+                        <span data-i18n="game.ofLabel">of</span>
                         <span id="reveal-total">10</span>
                     </span>
                     <span class="pl-result-admin-pill" id="reveal-admin-pill" hidden>
@@ -296,7 +296,7 @@
                 <section id="fun-fact-container" class="pl-result-section pl-result-funfact-section hidden">
                     <div class="pl-result-sec-head">
                         <span aria-hidden="true">💡</span>
-                        <span data-i18n="reveal.funFact">Wusstest du?</span>
+                        <span data-i18n="reveal.funFact">Did you know?</span>
                         <button id="flag-question-btn"
                                 type="button"
                                 class="flag-question-btn"
@@ -312,7 +312,7 @@
                 <section class="pl-result-section">
                     <div class="pl-result-sec-head">
                         <span aria-hidden="true">🏆</span>
-                        <span data-i18n="leaderboard.standings">Rangliste</span>
+                        <span data-i18n="leaderboard.standings">Standings</span>
                     </div>
                     <div id="reveal-standings" class="pl-result-standings"></div>
                 </section>
@@ -320,10 +320,10 @@
                 <div id="reveal-admin-controls" class="pl-result-admin-bar hidden" role="group" aria-label="Admin actions">
                     <button id="end-game-from-reveal-btn" class="pl-result-bar-btn pl-result-bar-btn--ghost" type="button">
                         <span aria-hidden="true">⏹</span>
-                        <span data-i18n="admin.endGame">Ende</span>
+                        <span data-i18n="admin.endGame">End Game</span>
                     </button>
                     <button id="next-round-btn" class="pl-result-bar-btn pl-result-bar-btn--primary" type="button">
-                        <span data-i18n="admin.nextRound">Nächste Runde</span>
+                        <span data-i18n="admin.nextRound">Next Round</span>
                         <span aria-hidden="true">→</span>
                     </button>
                 </div>
@@ -447,10 +447,10 @@
                 <!-- Admin controls (two CTAs: same settings = one tap, new = full setup) -->
                 <div id="end-admin-controls" class="end-admin-controls hidden">
                     <button id="play-again-same-btn" class="btn btn-primary btn-large btn-full-width" data-i18n="admin.playAgainSame">
-                        Wieder spielen
+                        Play again — same settings
                     </button>
                     <button id="new-game-btn" class="btn btn-secondary btn-large btn-full-width" data-i18n="admin.startNewGame">
-                        Neues Spiel
+                        Start New Game
                     </button>
                 </div>
 
@@ -592,7 +592,7 @@
     </div>
 
     <!-- Version badge -->
-    <div class="version-badge" id="version-badge">v1.1.4</div>
+    <div class="version-badge" id="version-badge">v1.1.9</div>
 
     <script src="/quizify/static/js/vendor/qrcode.min.js?v={{VERSION}}"></script>
     <script src="/quizify/static/js/i18n.js?v={{VERSION}}"></script>

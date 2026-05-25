@@ -44,10 +44,11 @@
                 timerElement.classList.remove('timer--warning', 'timer--critical');
             }
 
-            timerElement.setAttribute('aria-label', 'Time remaining: ' + remaining + ' seconds');
+            var t = (window.QuizifyI18n && window.QuizifyI18n.t) || function (k) { return k; };
+            timerElement.setAttribute('aria-label', t('game.timerRemainingAria', { seconds: remaining }));
 
             if (remaining <= 0) {
-                timerElement.setAttribute('aria-label', 'Time is up!');
+                timerElement.setAttribute('aria-label', t('game.timerUpAria'));
                 stopCountdown();
             }
         }
@@ -86,7 +87,8 @@
             timerElement.classList.remove('timer--warning', 'timer--critical');
         }
 
-        timerElement.setAttribute('aria-label', 'Time remaining: ' + remaining + ' seconds');
+        var t = (window.QuizifyI18n && window.QuizifyI18n.t) || function (k) { return k; };
+        timerElement.setAttribute('aria-label', t('game.timerRemainingAria', { seconds: remaining }));
     }
 
     // ============================================

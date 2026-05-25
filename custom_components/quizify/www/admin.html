@@ -45,19 +45,17 @@
             <div id="setup-hero" class="setup-hero">
                 <div class="setup-hero-emoji" aria-hidden="true">🧠</div>
                 <h1 class="setup-hero-headline">
-                    <span data-i18n="setup.heroLine1">Bereit für eine</span><br>
-                    <span class="accent" data-i18n="setup.heroLine2">Runde Quizify?</span>
+                    <span data-i18n="setup.heroLine1">Ready for a</span><br>
+                    <span class="accent" data-i18n="setup.heroLine2">round of Quizify?</span>
                 </h1>
-                <p class="setup-hero-summary" id="setup-summary">
-                    Klassiker · 10 Runden · Mittel · 30 s · 🇩🇪
-                </p>
+                <p class="setup-hero-summary" id="setup-summary"></p>
                 <button type="button" id="start-game-btn" class="btn btn-primary btn-lg btn-block">
                     <span aria-hidden="true">▶︎</span>
-                    <span data-i18n="admin.startGame">Spiel starten</span>
+                    <span data-i18n="admin.startGame">Start Game</span>
                 </button>
                 <button type="button" id="setup-tweak-btn" class="setup-tweak-link"
                         data-i18n="setup.tweak">
-                    Einstellungen anpassen…
+                    Adjust settings…
                 </button>
             </div>
 
@@ -65,19 +63,19 @@
             <div id="setup-detail" class="setup-detail">
                 <button type="button" id="setup-back-btn" class="setup-back-btn">
                     <span aria-hidden="true">←</span>
-                    <span data-i18n="setup.back">zurück</span>
+                    <span data-i18n="setup.back">Back</span>
                 </button>
 
-                <h2 class="setup-detail-title" data-i18n="setup.pickMode">Wähle einen Modus</h2>
+                <h2 class="setup-detail-title" data-i18n="setup.pickMode">Pick a mode</h2>
 
                 <div class="setup-presets" id="setup-presets" role="radiogroup"
-                     data-i18n-aria-label="setup.pickMode" aria-label="Wähle einen Modus">
+                     data-i18n-aria-label="setup.pickMode" aria-label="Pick a mode">
                     <button type="button" class="preset-card" data-preset="schnellrunde"
                             data-rounds="5" data-difficulty="easy" data-timer="20">
                         <span class="preset-icon" aria-hidden="true">⚡</span>
                         <span class="preset-body">
-                            <span class="preset-name" data-i18n="setup.preset.fastName">Schnellrunde</span>
-                            <span class="preset-meta">5 Runden · Einfach · 20 s</span>
+                            <span class="preset-name" data-i18n="setup.preset.fastName">Quick round</span>
+                            <span class="preset-meta" data-i18n="setup.preset.fastMeta">5 rounds · Easy · 20 s</span>
                         </span>
                         <span class="preset-duration">~3 min</span>
                     </button>
@@ -85,8 +83,8 @@
                             data-rounds="10" data-difficulty="medium" data-timer="30">
                         <span class="preset-icon" aria-hidden="true">🧠</span>
                         <span class="preset-body">
-                            <span class="preset-name" data-i18n="setup.preset.classicName">Klassiker</span>
-                            <span class="preset-meta">10 Runden · Mittel · 30 s</span>
+                            <span class="preset-name" data-i18n="setup.preset.classicName">Classic</span>
+                            <span class="preset-meta" data-i18n="setup.preset.classicMeta">10 rounds · Medium · 30 s</span>
                         </span>
                         <span class="preset-duration">~8 min</span>
                     </button>
@@ -95,15 +93,15 @@
                         <span class="preset-icon" aria-hidden="true">🏆</span>
                         <span class="preset-body">
                             <span class="preset-name" data-i18n="setup.preset.marathonName">Marathon</span>
-                            <span class="preset-meta">20 Runden · Schwer · 45 s</span>
+                            <span class="preset-meta" data-i18n="setup.preset.marathonMeta">20 rounds · Hard · 45 s</span>
                         </span>
                         <span class="preset-duration">~20 min</span>
                     </button>
                     <button type="button" class="preset-card" data-preset="eigene">
                         <span class="preset-icon" aria-hidden="true">⚙️</span>
                         <span class="preset-body">
-                            <span class="preset-name" data-i18n="setup.preset.customName">Eigene Einstellungen</span>
-                            <span class="preset-meta" data-i18n="setup.preset.customMeta">Kategorie, Schwere, Runden frei wählen</span>
+                            <span class="preset-name" data-i18n="setup.preset.customName">Custom settings</span>
+                            <span class="preset-meta" data-i18n="setup.preset.customMeta">Pick category, difficulty, rounds yourself</span>
                         </span>
                     </button>
                 </div>
@@ -117,13 +115,13 @@
                          it's still updated by updateCategorySummary() even
                          though the F layout doesn't render a section
                          summary. Same for game-settings-summary. -->
-                    <span id="category-summary" class="sr-only" data-i18n="admin.categoryMixed">Gemischt</span>
-                    <span id="game-settings-summary" class="sr-only">Mittel · 10 Runden</span>
+                    <span id="category-summary" class="sr-only" data-i18n="admin.categoryMixed">Mixed</span>
+                    <span id="game-settings-summary" class="sr-only"></span>
 
                     <div class="vF-step">
-                        <div class="vF-q"><span class="num">1</span><span data-i18n="setup.eigene.q1">Welche Themen?</span></div>
+                        <div class="vF-q"><span class="num">1</span><span data-i18n="setup.eigene.q1">Which topics?</span></div>
                         <div class="vF-answers chip-group" id="category-chips" role="group" data-i18n-aria-label="admin.category" aria-label="Category">
-                            <button type="button" class="chip active" data-value="mixed" data-i18n="admin.categoryMixed">Gemischt</button>
+                            <button type="button" class="chip active" data-value="mixed" data-i18n="admin.categoryMixed">Mixed</button>
                             <button type="button" class="chip" data-value="geographie" data-lang="de">Geographie</button>
                             <button type="button" class="chip" data-value="tiere-natur" data-lang="de">Tiere &amp; Natur</button>
                             <button type="button" class="chip" data-value="popkultur" data-lang="de">Popkultur</button>
@@ -134,16 +132,16 @@
                     </div>
 
                     <div class="vF-step">
-                        <div class="vF-q"><span class="num">2</span><span data-i18n="setup.eigene.q2">Wie schwer?</span></div>
+                        <div class="vF-q"><span class="num">2</span><span data-i18n="setup.eigene.q2">How hard?</span></div>
                         <div class="vF-answers chip-group" id="difficulty-chips" role="group" data-i18n-aria-label="admin.difficulty" aria-label="Difficulty">
-                            <button type="button" class="chip" data-value="easy" data-i18n="difficulties.easy">Einfach</button>
-                            <button type="button" class="chip active" data-value="medium" data-i18n="difficulties.medium">Mittel</button>
-                            <button type="button" class="chip" data-value="hard" data-i18n="difficulties.hard">Schwer</button>
+                            <button type="button" class="chip" data-value="easy" data-i18n="difficulties.easy">Easy</button>
+                            <button type="button" class="chip active" data-value="medium" data-i18n="difficulties.medium">Medium</button>
+                            <button type="button" class="chip" data-value="hard" data-i18n="difficulties.hard">Hard</button>
                         </div>
                     </div>
 
                     <div class="vF-step">
-                        <div class="vF-q"><span class="num">3</span><span data-i18n="setup.eigene.q3">Wie viele Runden?</span></div>
+                        <div class="vF-q"><span class="num">3</span><span data-i18n="setup.eigene.q3">How many rounds?</span></div>
                         <div class="vF-answers chip-group" id="rounds-chips" role="group" data-i18n-aria-label="admin.rounds" aria-label="Rounds">
                             <button type="button" class="chip" data-value="5">5</button>
                             <button type="button" class="chip active" data-value="10">10</button>
@@ -153,7 +151,7 @@
                     </div>
 
                     <div class="vF-step">
-                        <div class="vF-q"><span class="num">4</span><span data-i18n="setup.eigene.q4">Wie viel Zeit pro Frage?</span></div>
+                        <div class="vF-q"><span class="num">4</span><span data-i18n="setup.eigene.q4">How long per question?</span></div>
                         <div class="vF-answers chip-group" id="timer-chips" role="group" data-i18n-aria-label="admin.timer" aria-label="Timer">
                             <button type="button" class="chip" data-value="20">20 s</button>
                             <button type="button" class="chip active" data-value="30">30 s</button>
@@ -162,7 +160,7 @@
                     </div>
 
                     <div class="vF-step">
-                        <div class="vF-q"><span class="num">5</span><span data-i18n="setup.eigene.q5">In welcher Sprache?</span></div>
+                        <div class="vF-q"><span class="num">5</span><span data-i18n="setup.eigene.q5">Which language?</span></div>
                         <div class="vF-answers chip-group" id="language-chips" role="group" data-i18n-aria-label="admin.language" aria-label="Language">
                             <button type="button" class="chip active" data-value="de">🇩🇪 Deutsch</button>
                             <button type="button" class="chip" data-value="en">🇬🇧 English</button>
@@ -171,7 +169,7 @@
                 </div>
 
                 <button type="button" id="setup-apply-btn" class="btn btn-primary btn-lg btn-block">
-                    <span data-i18n="setup.apply">Übernehmen</span>
+                    <span data-i18n="setup.apply">Apply</span>
                 </button>
             </div>
         </div>
@@ -186,7 +184,7 @@
             <div class="lobby-e">
 
                 <h2 class="lobby-marquee" id="lobby-marquee" data-i18n="lobby.marqueeWaiting">
-                    Warten auf Spieler…
+                    Waiting for players…
                 </h2>
 
                 <div class="lobby-e-row">
@@ -198,7 +196,7 @@
                             <!-- Filled by admin.js renderLobbyPlayers -->
                         </div>
                         <div id="lobby-players-empty" class="lobby-e-row-empty">
-                            <span data-i18n="lobby.waitingForPlayers">Warte auf Spieler...</span>
+                            <span data-i18n="lobby.waitingForPlayers">Waiting for players to join…</span>
                         </div>
                     </div>
                 </div>
@@ -212,16 +210,16 @@
                 </a>
 
                 <div class="lobby-e-countdown" id="lobby-countdown">
-                    <span data-i18n="lobby.readyHint">Bereit ab</span>
+                    <span data-i18n="lobby.readyHint">Ready at</span>
                     <strong id="lobby-min-players">2</strong>
-                    <span data-i18n="lobby.playersUnit">Spielern</span>
+                    <span data-i18n="lobby.playersUnit">players</span>
                     <span class="lobby-e-countdown-sep">·</span>
-                    <span data-i18n="lobby.stillMissing">noch</span>
+                    <span data-i18n="lobby.stillMissing">still need</span>
                     <strong id="lobby-missing-players">2</strong>
-                    <span data-i18n="lobby.stillMissingSuffix">fehlt</span>
+                    <span data-i18n="lobby.stillMissingSuffix">more</span>
                 </div>
 
-                <!-- The hidden Spieler count node is referenced by
+                <!-- The hidden player count node is referenced by
                      admin.js — kept for code stability even though the
                      value is no longer rendered as a section summary. -->
                 <span id="lobby-player-count" class="sr-only">0</span>
@@ -229,11 +227,11 @@
                 <div class="lobby-e-actions">
                     <button type="button" id="start-gameplay-btn" class="btn btn-primary btn-lg btn-block hidden">
                         <span class="btn-icon" aria-hidden="true">▶️</span>
-                        <span data-i18n="admin.startGameplay">Spiel starten</span>
+                        <span data-i18n="admin.startGameplay">Start Game</span>
                     </button>
                     <button type="button" id="participate-btn" class="btn btn-secondary btn-lg btn-block">
                         <span class="btn-icon" aria-hidden="true">🎮</span>
-                        <span data-i18n="admin.joinAsPlayer">Als Spieler beitreten</span>
+                        <span data-i18n="admin.joinAsPlayer">Join as Player</span>
                     </button>
                 </div>
             </div>
@@ -262,7 +260,7 @@
             <section class="card-section mt-md">
                 <h2 class="section-header">
                     <span class="section-icon" aria-hidden="true">&#x1F3C6;</span>
-                    <span data-i18n="leaderboard.title">Rangliste</span>
+                    <span data-i18n="leaderboard.title">Leaderboard</span>
                 </h2>
                 <div id="game-leaderboard" class="leaderboard"></div>
             </section>
@@ -275,8 +273,8 @@
 
             <!-- Admin Actions — Sticky -->
             <div class="admin-actions lobby-actions--sticky mt-lg">
-                <button type="button" id="next-question-btn" class="btn btn-primary" data-i18n="admin.nextQuestion">N&auml;chste Frage</button>
-                <button type="button" id="end-game-btn" class="btn btn-danger hidden" data-i18n="admin.endGame">Spiel beenden</button>
+                <button type="button" id="next-question-btn" class="btn btn-primary" data-i18n="admin.nextQuestion">Next Question</button>
+                <button type="button" id="end-game-btn" class="btn btn-danger hidden" data-i18n="admin.endGame">End Game</button>
             </div>
         </div>
 
@@ -290,7 +288,7 @@
                 <div id="reveal-question" class="question-text" style="font-size:1.1rem;"></div>
                 <div id="reveal-correct" class="admin-correct-answer"></div>
                 <div id="reveal-fun-fact" class="fun-fact-card mt-md">
-                    <div class="fun-fact-label" data-i18n="funFact.label">Wusstest du?</div>
+                    <div class="fun-fact-label" data-i18n="funFact.label">Did you know?</div>
                     <div class="fun-fact-text"></div>
                 </div>
             </section>
@@ -299,7 +297,7 @@
             <div id="reveal-distribution" class="card-section mt-md" style="display:none;">
                 <h2 class="section-header">
                     <span class="section-icon" aria-hidden="true">📊</span>
-                    <span data-i18n="admin.answerDistribution">Antwortverteilung</span>
+                    <span data-i18n="admin.answerDistribution">Answer Distribution</span>
                 </h2>
                 <!-- filled by renderAnswerDistribution() -->
             </div>
@@ -308,7 +306,7 @@
             <section class="card-section mt-md" id="reveal-answers-section" style="display:none;">
                 <h2 class="section-header">
                     <span class="section-icon" aria-hidden="true">&#x1F465;</span>
-                    <span data-i18n="admin.allAnswers">Alle Antworten</span>
+                    <span data-i18n="admin.allAnswers">All Answers</span>
                 </h2>
                 <div id="reveal-results-cards" class="reveal-results-grid"></div>
             </section>
@@ -316,13 +314,13 @@
             <section class="card-section mt-md">
                 <h2 class="section-header">
                     <span class="section-icon" aria-hidden="true">&#x1F3C6;</span>
-                    <span data-i18n="leaderboard.title">Rangliste</span>
+                    <span data-i18n="leaderboard.title">Leaderboard</span>
                 </h2>
                 <div id="reveal-leaderboard" class="leaderboard"></div>
             </section>
 
             <div class="admin-actions lobby-actions--sticky mt-lg">
-                <button type="button" id="continue-btn" class="btn btn-primary btn-lg btn-block" data-i18n="admin.continueBtn">Weiter</button>
+                <button type="button" id="continue-btn" class="btn btn-primary btn-lg btn-block" data-i18n="admin.continueBtn">Continue</button>
             </div>
         </div>
 
@@ -330,20 +328,20 @@
         <div id="admin-finale-view" class="view">
             <section class="card-section">
                 <h2 class="section-header">
-                    <span data-i18n="admin.result">Ergebnis</span>
+                    <span data-i18n="admin.result">Result</span>
                 </h2>
                 <div id="admin-podium" class="podium-section"></div>
             </section>
 
             <section class="card-section mt-md">
                 <h2 class="section-header">
-                    <span data-i18n="leaderboard.title">Rangliste</span>
+                    <span data-i18n="leaderboard.title">Leaderboard</span>
                 </h2>
                 <div id="admin-finale-leaderboard" class="leaderboard"></div>
             </section>
 
             <div class="admin-actions lobby-actions--sticky mt-lg">
-                <button type="button" id="new-game-btn" class="btn btn-primary btn-lg btn-block" data-i18n="admin.startNewGame">Neues Spiel starten</button>
+                <button type="button" id="new-game-btn" class="btn btn-primary btn-lg btn-block" data-i18n="admin.startNewGame">Start New Game</button>
             </div>
         </div>
 
@@ -353,21 +351,21 @@
     <div id="admin-join-modal" class="modal hidden" role="dialog" aria-modal="true" aria-labelledby="admin-join-modal-title">
         <div class="modal-backdrop"></div>
         <div class="modal-content">
-            <h2 id="admin-join-modal-title" data-i18n="admin.joinModalTitleStart">Spiel starten</h2>
-            <p id="admin-join-modal-subtitle" data-i18n="admin.joinModalSubtitleStart">Wie heißt du? Du spielst mit und kannst das Spiel steuern.</p>
+            <h2 id="admin-join-modal-title" data-i18n="admin.joinModalTitleStart">Start Game</h2>
+            <p id="admin-join-modal-subtitle" data-i18n="admin.joinModalSubtitleStart">What's your name? You'll play along and host the game.</p>
             <div class="form-group">
                 <input type="text" id="admin-name-input" class="name-input"
                        data-i18n-placeholder="join.namePlaceholder"
-                       placeholder="Dein Name" maxlength="20"
+                       placeholder="Your name" maxlength="20"
                        autocomplete="off" autocapitalize="words">
                 <p id="admin-name-error" class="validation-msg hidden"></p>
             </div>
             <div class="modal-actions">
                 <button type="button" id="admin-join-btn" class="btn btn-primary" disabled>
                     <span aria-hidden="true">▶️</span>
-                    <span id="admin-join-btn-label" data-i18n="admin.joinModalBtnStart">Starten &amp; Beitreten</span>
+                    <span id="admin-join-btn-label" data-i18n="admin.joinModalBtnStart">Start &amp; Join</span>
                 </button>
-                <button type="button" id="admin-cancel-btn" class="btn btn-secondary" data-i18n="common.cancel">Abbrechen</button>
+                <button type="button" id="admin-cancel-btn" class="btn btn-secondary" data-i18n="common.cancel">Cancel</button>
             </div>
         </div>
     </div>
@@ -376,11 +374,11 @@
     <div id="end-game-modal" class="modal hidden" role="dialog" aria-modal="true" aria-labelledby="end-game-modal-title">
         <div class="modal-backdrop"></div>
         <div class="modal-content">
-            <h2 id="end-game-modal-title" data-i18n="admin.endGameConfirm">Spiel beenden?</h2>
-            <p data-i18n="admin.endGameWarning">Alle Spieler werden getrennt.</p>
+            <h2 id="end-game-modal-title" data-i18n="admin.endGameConfirm">End game?</h2>
+            <p data-i18n="admin.endGameWarning">All players will be disconnected.</p>
             <div class="modal-actions">
-                <button type="button" id="end-game-confirm-btn" class="btn btn-primary" data-i18n="admin.endGame">Spiel beenden</button>
-                <button type="button" id="end-game-cancel-btn" class="btn btn-secondary" data-i18n="common.cancel">Abbrechen</button>
+                <button type="button" id="end-game-confirm-btn" class="btn btn-primary" data-i18n="admin.endGame">End Game</button>
+                <button type="button" id="end-game-cancel-btn" class="btn btn-secondary" data-i18n="common.cancel">Cancel</button>
             </div>
         </div>
     </div>
@@ -389,7 +387,7 @@
     <div id="error-toast" class="toast hidden" role="alert" aria-live="assertive"></div>
 
     <!-- Version badge -->
-    <div class="version-badge" id="version-badge">v1.1.4</div>
+    <div class="version-badge" id="version-badge">v1.1.9</div>
 
     <script src="/quizify/static/js/vendor/qrcode.min.js?v={{VERSION}}"></script>
     <script src="/quizify/static/js/i18n.js?v={{VERSION}}"></script>

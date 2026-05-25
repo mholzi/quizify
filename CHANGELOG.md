@@ -3,6 +3,66 @@
 All notable changes to Quizify are documented here. This project follows
 [Semantic Versioning](https://semver.org/).
 
+## [1.1.9] — 2026-05-25
+
+Solo play + an i18n sweep that cleans up every hardcoded German string
+that was leaking into English UI (and a handful of hardcoded English
+strings that never reached German users). Plus a real cache-bust on the
+translation JSON so future i18n changes actually surface in browsers.
+
+### Added
+
+- **Solo play** — a single player can now host and play a full round.
+  `MIN_PLAYERS` is 1 (was 2); comparative end-of-game awards still
+  require at least two players via the new `MIN_PLAYERS_FOR_AWARDS`
+  constant, so solo runs just show the personal stats card.
+- Lobby now hides the "Ready at N players · still need X more"
+  countdown line once the threshold is met — "still need 0 more" was
+  noise once the Start button appeared.
+
+### Fixed
+
+- **i18n leaks: every visible string now respects the active language.**
+  The admin hero subtitle, the three preset meta lines
+  (`5 rounds · Easy · 20 s` etc.), the lobby `game-settings-summary`,
+  the lobby "Waiting for players…" placeholder, and the player lobby
+  difficulty pill no longer show German when the UI is English (or
+  vice-versa). All static HTML defaults are now English (the i18n
+  source language); `de.json` ships every translation. Touched files:
+  `admin.html`, `player.html`, `dashboard.html`, `launcher.html`,
+  `analytics.html`, plus the JS modules that build the affected lines.
+- **TV dashboard now uses i18n at all.** `dashboard.html` imported
+  `i18n.js` but never called it — every label was baked in German.
+  "Frage X / Y", "Pkt.", "Wusstest du?", "Rangliste", "Ergebnis", and
+  "Warte auf Spielstart…" are now translated.
+- **Pack-update banner, streak toasts, timer aria-labels, analytics
+  empty states, "Joining…" button, and launcher popup-blocked hint**
+  are all wired through `t()` instead of hardcoded strings. German
+  users now see those in German.
+- `sw-update.js` fallback strings flipped from German to English —
+  consistent with English being the i18n source language.
+- `setup.back` value capitalized: `"back"` → `"Back"` (was rendering
+  lowercase, looked like a raw key).
+- Version badges in `admin.html` / `player.html` had been stuck at
+  `v1.1.4` since 1.1.5 because `bump_version.sh` only finds the
+  immediately previous version. They're now back in sync.
+
+### Internal
+
+- `i18n.js` now cache-busts `en.json` / `de.json` fetches using the
+  same `?v=<version>` query it reads from its own `<script>` tag.
+  Before: every release shipped new translation keys but browsers
+  served stale JSON forever. Now: bumping the integration version
+  invalidates the translation cache too.
+- New i18n keys (24 added, parity preserved): `setup.preset.fastMeta` /
+  `classicMeta` / `marathonMeta`, `admin.packUpdateTitle` /
+  `packUpdateBody`, `game.streakToast3/5/7`, `game.timerRemainingAria`
+  / `timerUpAria`, `dashboard.didYouKnow` / `result` /
+  `questionCounter` / `pointsShort` / `awards`, `analytics.emptyData`
+  / `emptyPlayers` / `emptyGames`, `launcher.clickToFocus` /
+  `focusQuizify` / `focusedTab` / `popupBlocked` / `allowPopups`,
+  `join.joining`.
+
 ## [1.1.8] — 2026-05-24
 
 Fix the "Spiel startet nicht zuverlässig" bug. When the admin clicked

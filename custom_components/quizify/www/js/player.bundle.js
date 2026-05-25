@@ -517,9 +517,9 @@
         // Meta line under the hero: difficulty + round count if known.
         if (metaEl) {
             var bits = [];
-            var diffLabels = { 'easy': '🌱 Einfach', 'medium': '🎯 Mittel', 'hard': '🔥 Schwer' };
+            var diffIcons = { 'easy': '🌱', 'medium': '🎯', 'hard': '🔥' };
             var diff = data && (data.difficulty || data.game_difficulty);
-            if (diff && diffLabels[diff]) bits.push(diffLabels[diff]);
+            if (diff && diffIcons[diff]) bits.push(diffIcons[diff] + ' ' + t('difficulties.' + diff));
             var total = data && (data.total_rounds || data.num_rounds);
             if (total) bits.push(total + ' ' + t('admin.summaryRoundsUnit'));
             metaEl.textContent = bits.length ? bits.join(' · ') : t('lobby.gameLobby');
@@ -577,18 +577,14 @@
         if (countBadgeEl) countBadgeEl.textContent = players.length;
 
         // Difficulty badge — was rendering as an empty pill because no
-        // code wrote into it. Map server difficulty value to user-facing
-        // German label and show.
+        // code wrote into it. Map server difficulty value to a localised
+        // label via i18n + a small icon.
         var diffBadgeEl = document.getElementById('lobby-difficulty-badge');
         if (diffBadgeEl) {
-            var diffLabels = {
-                'easy': '🌱 Einfach',
-                'medium': '🎯 Mittel',
-                'hard': '🔥 Schwer',
-            };
+            var diffIcons = { 'easy': '🌱', 'medium': '🎯', 'hard': '🔥' };
             var diff = data.difficulty || data.game_difficulty || '';
-            if (diff && diffLabels[diff]) {
-                diffBadgeEl.textContent = diffLabels[diff];
+            if (diff && diffIcons[diff]) {
+                diffBadgeEl.textContent = diffIcons[diff] + ' ' + t('difficulties.' + diff);
                 diffBadgeEl.classList.remove('hidden');
             } else {
                 // No difficulty info yet — hide the empty pill instead of
@@ -2236,10 +2232,11 @@
                 timerElement.classList.remove('timer--warning', 'timer--critical');
             }
 
-            timerElement.setAttribute('aria-label', 'Time remaining: ' + remaining + ' seconds');
+            var t = (window.QuizifyI18n && window.QuizifyI18n.t) || function (k) { return k; };
+            timerElement.setAttribute('aria-label', t('game.timerRemainingAria', { seconds: remaining }));
 
             if (remaining <= 0) {
-                timerElement.setAttribute('aria-label', 'Time is up!');
+                timerElement.setAttribute('aria-label', t('game.timerUpAria'));
                 stopCountdown();
             }
         }
@@ -2278,7 +2275,8 @@
             timerElement.classList.remove('timer--warning', 'timer--critical');
         }
 
-        timerElement.setAttribute('aria-label', 'Time remaining: ' + remaining + ' seconds');
+        var t = (window.QuizifyI18n && window.QuizifyI18n.t) || function (k) { return k; };
+        timerElement.setAttribute('aria-label', t('game.timerRemainingAria', { seconds: remaining }));
     }
 
     // ============================================
@@ -3201,9 +3199,9 @@
                 game.handleAnswerResult(msg);
                 // Streak milestone toast
                 if (msg.correct && msg.new_streak) {
-                    var milestones = { 3: '🔥 3 in a row!', 5: '🔥🔥 5 in a row!', 7: '🔥🔥🔥 7 in a row! On fire!' };
-                    if (milestones[msg.new_streak]) {
-                        pu.showToast(milestones[msg.new_streak], 2500);
+                    var streakKeys = { 3: 'game.streakToast3', 5: 'game.streakToast5', 7: 'game.streakToast7' };
+                    if (streakKeys[msg.new_streak]) {
+                        pu.showToast(t(streakKeys[msg.new_streak]), 2500);
                     }
                 }
                 break;
@@ -3608,7 +3606,7 @@
 
         state.playerName = result.name;
         els.joinBtn.disabled = true;
-        els.joinBtn.textContent = 'Joining...';
+        els.joinBtn.textContent = t('join.joining');
 
         if (state.ws && state.ws.readyState === WebSocket.OPEN) {
             var joinMsg = { name: result.name };

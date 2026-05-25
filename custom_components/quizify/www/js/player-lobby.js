@@ -51,9 +51,9 @@
         // Meta line under the hero: difficulty + round count if known.
         if (metaEl) {
             var bits = [];
-            var diffLabels = { 'easy': '🌱 Einfach', 'medium': '🎯 Mittel', 'hard': '🔥 Schwer' };
+            var diffIcons = { 'easy': '🌱', 'medium': '🎯', 'hard': '🔥' };
             var diff = data && (data.difficulty || data.game_difficulty);
-            if (diff && diffLabels[diff]) bits.push(diffLabels[diff]);
+            if (diff && diffIcons[diff]) bits.push(diffIcons[diff] + ' ' + t('difficulties.' + diff));
             var total = data && (data.total_rounds || data.num_rounds);
             if (total) bits.push(total + ' ' + t('admin.summaryRoundsUnit'));
             metaEl.textContent = bits.length ? bits.join(' · ') : t('lobby.gameLobby');
@@ -111,18 +111,14 @@
         if (countBadgeEl) countBadgeEl.textContent = players.length;
 
         // Difficulty badge — was rendering as an empty pill because no
-        // code wrote into it. Map server difficulty value to user-facing
-        // German label and show.
+        // code wrote into it. Map server difficulty value to a localised
+        // label via i18n + a small icon.
         var diffBadgeEl = document.getElementById('lobby-difficulty-badge');
         if (diffBadgeEl) {
-            var diffLabels = {
-                'easy': '🌱 Einfach',
-                'medium': '🎯 Mittel',
-                'hard': '🔥 Schwer',
-            };
+            var diffIcons = { 'easy': '🌱', 'medium': '🎯', 'hard': '🔥' };
             var diff = data.difficulty || data.game_difficulty || '';
-            if (diff && diffLabels[diff]) {
-                diffBadgeEl.textContent = diffLabels[diff];
+            if (diff && diffIcons[diff]) {
+                diffBadgeEl.textContent = diffIcons[diff] + ' ' + t('difficulties.' + diff);
                 diffBadgeEl.classList.remove('hidden');
             } else {
                 // No difficulty info yet — hide the empty pill instead of

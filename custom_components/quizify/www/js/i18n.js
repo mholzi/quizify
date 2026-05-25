@@ -13,7 +13,19 @@ window.QuizifyI18n = (function() {
 
     async function fetchTranslations(langCode) {
         try {
-            var response = await fetch('/quizify/static/i18n/' + langCode + '.json');
+            // Cache-bust via the page's cache-buster query param (set by the
+            // server-side template). Without this the browser HTTP cache
+            // pins the old JSON across releases, so translation fixes ship
+            // but don't surface until users clear cache.
+            var bust = '';
+            try {
+                var anyScript = document.querySelector('script[src*="i18n.js?v="]');
+                if (anyScript) {
+                    var m = anyScript.src.match(/[?&]v=([^&]+)/);
+                    if (m) bust = '?v=' + encodeURIComponent(m[1]);
+                }
+            } catch (_e) { /* ignore */ }
+            var response = await fetch('/quizify/static/i18n/' + langCode + '.json' + bust);
             if (!response.ok) {
                 console.warn('[i18n] Failed to load ' + langCode + '.json:', response.status);
                 return {};

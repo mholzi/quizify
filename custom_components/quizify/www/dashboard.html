@@ -714,7 +714,7 @@
                 <h1 class="wordmark" style="font-size:3rem;">
                     <span class="wordmark-quiz">Quiz</span><span class="wordmark-ify">ify</span>
                 </h1>
-                <p class="dashboard-waiting-text">Warte auf Spielstart...</p>
+                <p class="dashboard-waiting-text" data-i18n="dashboard.waitingForStart">Waiting for game to start…</p>
             </div>
         </div>
 
@@ -726,12 +726,12 @@
                     <div id="question-text" class="dashboard-question"></div>
                     <div id="answers-grid" class="dashboard-answers"></div>
                     <div id="fun-fact" class="dashboard-funfact">
-                        <div class="fun-fact-label">Wusstest du?</div>
+                        <div class="fun-fact-label" data-i18n="dashboard.didYouKnow">Did you know?</div>
                         <div id="fun-fact-text" class="fun-fact-text"></div>
                     </div>
                 </div>
                 <div class="dashboard-right">
-                    <div class="dashboard-leaderboard-title">Rangliste</div>
+                    <div class="dashboard-leaderboard-title" data-i18n="dashboard.leaderboard">Leaderboard</div>
                     <div id="leaderboard" class="dashboard-leaderboard"></div>
                 </div>
             </div>
@@ -741,12 +741,12 @@
         <div id="finale-view" class="dashboard-view">
             <div class="dashboard-finale">
                 <div class="podium-section">
-                    <div class="podium-title">Ergebnis</div>
+                    <div class="podium-title" data-i18n="dashboard.result">Result</div>
                     <div id="podium" class="podium"></div>
                 </div>
                 <div id="awards-section" class="awards-section hidden"></div>
                 <div class="finale-leaderboard-card">
-                    <div class="card-header">Rangliste</div>
+                    <div class="card-header" data-i18n="dashboard.leaderboard">Leaderboard</div>
                     <div id="finale-leaderboard" class="dashboard-leaderboard"></div>
                 </div>
             </div>
@@ -883,7 +883,9 @@
             showView('question');
             els.funFact.classList.remove('visible');
 
-            els.roundIndicator.textContent = 'Frage ' + msg.round_num + ' / ' + msg.total_rounds;
+            els.roundIndicator.textContent = window.QuizifyI18n
+                ? window.QuizifyI18n.t('dashboard.questionCounter', { current: msg.round_num, total: msg.total_rounds })
+                : 'Question ' + msg.round_num + ' / ' + msg.total_rounds;
             els.questionCategory.textContent = msg.category || '';
             els.questionText.textContent = msg.question_text;
 
@@ -983,11 +985,12 @@
             var medals = { 1: '\uD83E\uDD47', 2: '\uD83E\uDD48', 3: '\uD83E\uDD49' };
             var barClass = { 1: 'first', 2: 'second', 3: 'third' };
 
+            var ptsLabel = window.QuizifyI18n ? window.QuizifyI18n.t('dashboard.pointsShort') : 'pts';
             els.podium.innerHTML = ordered.map(function(p) {
                 return '<div class="podium-place">' +
                     '<div class="podium-avatar">' + (medals[p.place] || '') + '</div>' +
                     '<div class="podium-name">' + escapeHtml(p.name) + '</div>' +
-                    '<div class="podium-score">' + p.score + ' Pkt.</div>' +
+                    '<div class="podium-score">' + p.score + ' ' + ptsLabel + '</div>' +
                     '<div class="podium-bar ' + (barClass[p.place] || '') + '">' + p.place + '</div>' +
                     '</div>';
             }).join('');
@@ -1000,7 +1003,8 @@
                 return;
             }
             section.classList.remove('hidden');
-            section.innerHTML = '<div class="awards-title">Awards</div><div class="awards-grid"></div>';
+            var awardsLabel = window.QuizifyI18n ? window.QuizifyI18n.t('dashboard.awards') : 'Awards';
+            section.innerHTML = '<div class="awards-title">' + escapeHtml(awardsLabel) + '</div><div class="awards-grid"></div>';
             var grid = section.querySelector('.awards-grid');
 
             superlatives.forEach(function(s, i) {
@@ -1023,6 +1027,11 @@
         }
 
         // ---- Init ----
+        if (window.QuizifyI18n && typeof window.QuizifyI18n.init === 'function') {
+            window.QuizifyI18n.init().then(function () {
+                window.QuizifyI18n.initPageTranslations(document);
+            });
+        }
         connect();
     })();
     </script>

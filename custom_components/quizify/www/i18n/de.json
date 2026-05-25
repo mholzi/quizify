@@ -12,7 +12,8 @@
     "title": "Quizify — Beitreten",
     "enterName": "Gib deinen Namen ein, um zu spielen",
     "namePlaceholder": "Dein Name",
-    "joinButton": "Beitreten"
+    "joinButton": "Beitreten",
+    "joining": "Beitreten…"
   },
   "lobby": {
     "title": "Lobby",
@@ -112,7 +113,9 @@
     "answerNone": "Keine Antwort",
     "summaryRoundsUnit": "Runden",
     "settingsSummary": "{difficulty} • {rounds} {roundsUnit} • {timer}s",
-    "categoriesCountPlural": "{count} Kategorien"
+    "categoriesCountPlural": "{count} Kategorien",
+    "packUpdateTitle": "Fragenpaket-Updates verfügbar",
+    "packUpdateBody": "Aktualisiere deine Pakete, indem du die JSON-Dateien in {path} ersetzt und Home Assistant neu startest."
   },
   "categories": {
     "mixed": "Gemischt",
@@ -156,7 +159,12 @@
     "doublePoints": "2× Doppelpunkte",
     "stoleFromYou": "🥷 {name} hat dir {points} Punkte geklaut!",
     "stoleFromOpponent": "🥷 Geklaut: +{points} Pkt. von {name}!",
-    "frozen": "🧊 Du wurdest 5 Sek. eingefroren!"
+    "frozen": "🧊 Du wurdest 5 Sek. eingefroren!",
+    "streakToast3": "🔥 3 in Folge!",
+    "streakToast5": "🔥🔥 5 in Folge!",
+    "streakToast7": "🔥🔥🔥 7 in Folge! Du brennst!",
+    "timerRemainingAria": "Verbleibende Zeit: {seconds} Sekunden",
+    "timerUpAria": "Zeit abgelaufen!"
   },
   "powerups": {
     "joker": "Joker",
@@ -286,7 +294,7 @@
     "heroLine1": "Bereit für eine",
     "heroLine2": "Runde Quizify?",
     "tweak": "Einstellungen anpassen…",
-    "back": "zurück",
+    "back": "Zurück",
     "pickMode": "Wähle einen Modus",
     "apply": "Übernehmen",
     "preset": {
@@ -294,6 +302,9 @@
       "classicName": "Klassiker",
       "marathonName": "Marathon",
       "customName": "Eigene Einstellungen",
+      "fastMeta": "5 Runden · Einfach · 20 s",
+      "classicMeta": "10 Runden · Mittel · 30 s",
+      "marathonMeta": "20 Runden · Schwer · 45 s",
       "customMeta": "Kategorie, Schwere, Runden frei wählen"
     },
     "eigene": {
@@ -322,6 +333,11 @@
   "launcher": {
     "title": "Quizify",
     "openQuizify": "Quizify öffnen",
+    "clickToFocus": "Erneut klicken, um zum Spieltab zu wechseln",
+    "focusQuizify": "Zu Quizify wechseln",
+    "focusedTab": "Zu Quizify-Tab gewechselt! 🎯",
+    "popupBlocked": "Pop-up wurde vom Browser blockiert.",
+    "allowPopups": "Erlaube Pop-ups für diese Seite, oder <a href=\"{url}\" target=\"_blank\" style=\"color: var(--color-accent-secondary);\">klicke hier</a>, um direkt zu öffnen.",
     "clickToLaunch": "Quiz im Vollbild starten — keine Ablenkungen.",
     "subtitle": "Das unnütze Wissen Quiz",
     "joinGame": "Spiel beitreten",
@@ -332,9 +348,14 @@
     "gameEnded": "Spiel beendet"
   },
   "dashboard": {
-    "waitingForStart": "Warte auf Spielstart...",
+    "waitingForStart": "Warte auf Spielstart…",
     "leaderboard": "Rangliste",
-    "castToTv": "Auf den TV streamen"
+    "castToTv": "Auf den TV streamen",
+    "didYouKnow": "Wusstest du?",
+    "result": "Ergebnis",
+    "questionCounter": "Frage {current} / {total}",
+    "pointsShort": "Pkt.",
+    "awards": "Auszeichnungen"
   },
   "connection": {
     "connected": "Verbunden",
@@ -369,7 +390,10 @@
     "thFlaggedWhen": "Gemeldet",
     "thFlaggedBy": "Spieler",
     "thFlagReason": "Grund",
-    "empty": "Noch keine Spiele gespielt. Starte ein Quiz, um Auswertungen zu sehen!"
+    "empty": "Noch keine Spiele gespielt. Starte ein Quiz, um Auswertungen zu sehen!",
+    "emptyData": "Keine Daten",
+    "emptyPlayers": "Noch keine Spieler",
+    "emptyGames": "Noch keine Spiele"
   },
   "errors": {
     "NAME_TAKEN": "Name bereits vergeben",

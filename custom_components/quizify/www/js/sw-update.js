@@ -1,8 +1,8 @@
 /**
  * Quizify Service Worker registration + update prompt
  *
- * Registers the SW on every page, and shows a small "Neue Version
- * verfügbar — Neu laden?" banner when a new SW is waiting to activate.
+ * Registers the SW on every page, and shows a small "New version
+ * available — Reload?" banner when a new SW is waiting to activate.
  * Polls for updates on visibilitychange (cheap, only on tab-focus) so
  * the banner appears the next time the host comes back to the tab
  * after deploying — no manual refresh needed.
@@ -45,11 +45,11 @@
         ].join(';');
 
         var msg = document.createElement('span');
-        msg.textContent = _t('common.updateAvailable', 'Neue Version verfügbar');
+        msg.textContent = _t('common.updateAvailable', 'New version available');
 
         var reloadBtn = document.createElement('button');
         reloadBtn.type = 'button';
-        reloadBtn.textContent = _t('common.reload', 'Neu laden');
+        reloadBtn.textContent = _t('common.reload', 'Reload');
         reloadBtn.style.cssText = [
             'background:var(--color-accent-primary, #E88A7F)',
             'color:#fff',
@@ -70,7 +70,7 @@
         var dismissBtn = document.createElement('button');
         dismissBtn.type = 'button';
         dismissBtn.textContent = '✕';
-        dismissBtn.setAttribute('aria-label', _t('common.close', 'Schließen'));
+        dismissBtn.setAttribute('aria-label', _t('common.close', 'Close'));
         dismissBtn.style.cssText = [
             'background:transparent',
             'border:0',

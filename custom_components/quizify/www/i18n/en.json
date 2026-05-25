@@ -12,7 +12,8 @@
     "title": "Quizify — Join",
     "enterName": "Enter your name to play",
     "namePlaceholder": "Your name",
-    "joinButton": "Join Game"
+    "joinButton": "Join Game",
+    "joining": "Joining…"
   },
   "lobby": {
     "title": "Lobby",
@@ -112,7 +113,9 @@
     "answerNone": "No answer",
     "summaryRoundsUnit": "Rounds",
     "settingsSummary": "{difficulty} • {rounds} {roundsUnit} • {timer}s",
-    "categoriesCountPlural": "{count} Categories"
+    "categoriesCountPlural": "{count} Categories",
+    "packUpdateTitle": "Question pack updates available",
+    "packUpdateBody": "Update your packs by replacing the JSON files in {path} and restarting Home Assistant."
   },
   "categories": {
     "mixed": "Mixed",
@@ -156,7 +159,12 @@
     "doublePoints": "2× Double Points",
     "stoleFromYou": "🥷 {name} stole {points} points from you!",
     "stoleFromOpponent": "🥷 Stolen: +{points} pts from {name}!",
-    "frozen": "🧊 You were frozen for 5s!"
+    "frozen": "🧊 You were frozen for 5s!",
+    "streakToast3": "🔥 3 in a row!",
+    "streakToast5": "🔥🔥 5 in a row!",
+    "streakToast7": "🔥🔥🔥 7 in a row! On fire!",
+    "timerRemainingAria": "Time remaining: {seconds} seconds",
+    "timerUpAria": "Time is up!"
   },
   "powerups": {
     "joker": "Joker",
@@ -286,7 +294,7 @@
     "heroLine1": "Ready for a",
     "heroLine2": "round of Quizify?",
     "tweak": "Adjust settings…",
-    "back": "back",
+    "back": "Back",
     "pickMode": "Pick a mode",
     "apply": "Apply",
     "preset": {
@@ -294,6 +302,9 @@
       "classicName": "Classic",
       "marathonName": "Marathon",
       "customName": "Custom settings",
+      "fastMeta": "5 rounds · Easy · 20 s",
+      "classicMeta": "10 rounds · Medium · 30 s",
+      "marathonMeta": "20 rounds · Hard · 45 s",
       "customMeta": "Pick category, difficulty, rounds yourself"
     },
     "eigene": {
@@ -322,6 +333,11 @@
   "launcher": {
     "title": "Quizify",
     "openQuizify": "Open Quizify",
+    "clickToFocus": "Click again to focus the game tab",
+    "focusQuizify": "Focus Quizify",
+    "focusedTab": "Switched to Quizify tab! 🎯",
+    "popupBlocked": "Pop-up was blocked by your browser.",
+    "allowPopups": "Allow pop-ups for this site, or <a href=\"{url}\" target=\"_blank\" style=\"color: var(--color-accent-secondary);\">click here</a> to open directly.",
     "clickToLaunch": "Launch the quiz in fullscreen — no distractions.",
     "subtitle": "The Useless Knowledge Quiz",
     "joinGame": "Join Game",
@@ -332,9 +348,14 @@
     "gameEnded": "Game ended"
   },
   "dashboard": {
-    "waitingForStart": "Waiting for game to start...",
+    "waitingForStart": "Waiting for game to start…",
     "leaderboard": "Leaderboard",
-    "castToTv": "Cast to TV"
+    "castToTv": "Cast to TV",
+    "didYouKnow": "Did you know?",
+    "result": "Result",
+    "questionCounter": "Question {current} / {total}",
+    "pointsShort": "pts",
+    "awards": "Awards"
   },
   "connection": {
     "connected": "Connected",
@@ -369,7 +390,10 @@
     "thFlaggedWhen": "Flagged",
     "thFlaggedBy": "Player",
     "thFlagReason": "Reason",
-    "empty": "No games played yet. Start a quiz to see analytics!"
+    "empty": "No games played yet. Start a quiz to see analytics!",
+    "emptyData": "No data",
+    "emptyPlayers": "No players yet",
+    "emptyGames": "No games yet"
   },
   "errors": {
     "NAME_TAKEN": "Name already taken",

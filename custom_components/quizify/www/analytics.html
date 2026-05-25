@@ -322,6 +322,8 @@
 
         var currentPeriod = '30d';
 
+        var t = (window.QuizifyI18n && window.QuizifyI18n.t) || function (k) { return k; };
+
         function escapeHtml(text) {
             var el = document.createElement('span');
             el.textContent = text || '';
@@ -380,7 +382,7 @@
         function renderChart(chartData) {
             var container = document.getElementById('chart');
             if (!chartData || !chartData.labels || chartData.labels.length === 0) {
-                container.innerHTML = '<div class="empty-state" style="width:100%;padding:20px;">No data</div>';
+                container.innerHTML = '<div class="empty-state" style="width:100%;padding:20px;">' + escapeHtml(t('analytics.emptyData')) + '</div>';
                 return;
             }
 
@@ -400,7 +402,7 @@
         function renderTopPlayers(players) {
             var container = document.getElementById('top-players');
             if (!players.length) {
-                container.innerHTML = '<div class="empty-state">No players yet</div>';
+                container.innerHTML = '<div class="empty-state">' + escapeHtml(t('analytics.emptyPlayers')) + '</div>';
                 return;
             }
             container.innerHTML = players.map(function(p, i) {
@@ -417,7 +419,7 @@
         function renderCategoryStats(stats) {
             var tbody = document.getElementById('category-stats');
             if (!stats.length) {
-                tbody.innerHTML = '<tr><td colspan="3" class="empty-state">No data</td></tr>';
+                tbody.innerHTML = '<tr><td colspan="3" class="empty-state">' + escapeHtml(t('analytics.emptyData')) + '</td></tr>';
                 return;
             }
             tbody.innerHTML = stats.map(function(s) {
@@ -432,7 +434,7 @@
         function renderRecentGames(games) {
             var tbody = document.getElementById('recent-games');
             if (!games.length) {
-                tbody.innerHTML = '<tr><td colspan="4" class="empty-state">No games yet</td></tr>';
+                tbody.innerHTML = '<tr><td colspan="4" class="empty-state">' + escapeHtml(t('analytics.emptyGames')) + '</td></tr>';
                 return;
             }
             tbody.innerHTML = games.map(function(g) {
@@ -475,7 +477,14 @@
                 });
         }
 
-        loadData();
+        if (window.QuizifyI18n && typeof window.QuizifyI18n.init === 'function') {
+            window.QuizifyI18n.init().then(function () {
+                window.QuizifyI18n.initPageTranslations(document);
+                loadData();
+            });
+        } else {
+            loadData();
+        }
         loadFlags();
     })();
     </script>
