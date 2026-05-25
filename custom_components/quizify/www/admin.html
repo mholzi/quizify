@@ -25,6 +25,12 @@
     <header class="admin-header">
         <h1 class="wordmark"><span class="wordmark-quiz">Quiz</span><span class="wordmark-ify">ify</span></h1>
         <div class="admin-header-actions">
+            <button type="button" id="reset-game-btn" class="admin-header-btn hidden"
+                    data-i18n-aria-label="admin.resetGame"
+                    data-i18n-title="admin.resetGame"
+                    aria-label="Reset game" title="Reset game">
+                <span aria-hidden="true">⟲</span>
+            </button>
             <span id="conn-status" class="connection-indicator">
                 <span class="connection-dot"></span>
             </span>
@@ -383,11 +389,24 @@
         </div>
     </div>
 
+    <!-- Reset Game confirmation modal -->
+    <div id="reset-game-modal" class="modal hidden" role="dialog" aria-modal="true" aria-labelledby="reset-game-modal-title">
+        <div class="modal-backdrop"></div>
+        <div class="modal-content">
+            <h2 id="reset-game-modal-title" data-i18n="admin.resetGameConfirm">Reset game?</h2>
+            <p data-i18n="admin.resetGameWarning">The current round and all players will be cleared. You'll return to the setup screen.</p>
+            <div class="modal-actions">
+                <button type="button" id="reset-game-confirm-btn" class="btn btn-primary" data-i18n="admin.resetGame">Reset game</button>
+                <button type="button" id="reset-game-cancel-btn" class="btn btn-secondary" data-i18n="common.cancel">Cancel</button>
+            </div>
+        </div>
+    </div>
+
     <!-- Error toast -->
     <div id="error-toast" class="toast hidden" role="alert" aria-live="assertive"></div>
 
     <!-- Version badge -->
-    <div class="version-badge" id="version-badge">v1.1.9</div>
+    <div class="version-badge" id="version-badge">v1.1.10</div>
 
     <script src="/quizify/static/js/vendor/qrcode.min.js?v={{VERSION}}"></script>
     <script src="/quizify/static/js/i18n.js?v={{VERSION}}"></script>

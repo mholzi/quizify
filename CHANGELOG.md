@@ -3,6 +3,28 @@
 All notable changes to Quizify are documented here. This project follows
 [Semantic Versioning](https://semver.org/).
 
+## [1.1.10] — 2026-05-25
+
+A small admin quality-of-life addition: a header **Reset** button that
+clears the current game and all players, returning you to the setup
+screen. Useful when stale players linger in the lobby (e.g. someone
+joined hours ago and the tab is still open) or when you want to
+abandon a round mid-game and start over without going through the full
+End Game → finale → Start New Game flow.
+
+### Added
+
+- **Reset game button** in the admin header (icon `⟲`, top-right
+  next to the connection indicator). Visible on lobby / game / reveal
+  / finale, hidden on setup (nothing to reset). Click → confirm modal
+  ("The current round and all players will be cleared.") → sends
+  `reset_game` to the server, which wipes player tokens and returns
+  the game to LOBBY phase. Admin tab then auto-returns to setup.
+
+The server-side `reset_game` handler already existed (used by the
+finale's "Start New Game" button); this just exposes it from anywhere
+in the admin flow.
+
 ## [1.1.9] — 2026-05-25
 
 Solo play + an i18n sweep that cleans up every hardcoded German string

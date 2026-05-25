@@ -81,6 +81,7 @@
         gameLeaderboard: document.getElementById('game-leaderboard'),
         nextQuestionBtn: document.getElementById('next-question-btn'),
         endGameBtn: document.getElementById('end-game-btn'),
+        resetGameBtn: document.getElementById('reset-game-btn'),
         // Reveal
         revealRound: document.getElementById('reveal-round'),
         revealQuestion: document.getElementById('reveal-question'),
@@ -124,6 +125,12 @@
         if (_redirecting) return;
         Object.values(views).forEach(function (v) { if (v) v.classList.remove('active'); });
         if (views[name]) views[name].classList.add('active');
+        // Header reset button: only useful once a game exists. Hide it on
+        // the setup screen (nothing to reset) and reveal it everywhere
+        // else. handleGameReset returns us to 'setup', re-hiding it.
+        if (els.resetGameBtn) {
+            els.resetGameBtn.classList.toggle('hidden', name === 'setup');
+        }
     }
 
     // ---- Collapsible sections ----
@@ -1138,11 +1145,33 @@
 
     on(els.newGameBtn, 'click', function () { send('reset_game', {}); });
 
+    // ---- Reset Game button (header) ----
+    on(els.resetGameBtn, 'click', function () {
+        var modal = document.getElementById('reset-game-modal');
+        if (modal) modal.classList.remove('hidden');
+    });
+    on('reset-game-confirm-btn', 'click', function () {
+        send('reset_game', {});
+        var modal = document.getElementById('reset-game-modal');
+        if (modal) modal.classList.add('hidden');
+    });
+    on('reset-game-cancel-btn', 'click', function () {
+        var modal = document.getElementById('reset-game-modal');
+        if (modal) modal.classList.add('hidden');
+    });
+    var resetBackdrop = document.querySelector('#reset-game-modal .modal-backdrop');
+    if (resetBackdrop) on(resetBackdrop, 'click', function () {
+        var modal = document.getElementById('reset-game-modal');
+        if (modal) modal.classList.add('hidden');
+    });
+
     document.addEventListener('keydown', function (e) {
         if (e.key === 'Escape') {
             closeAdminJoinModal();
             var endModal = document.getElementById('end-game-modal');
             if (endModal) endModal.classList.add('hidden');
+            var resetModal = document.getElementById('reset-game-modal');
+            if (resetModal) resetModal.classList.add('hidden');
         }
     });
 
