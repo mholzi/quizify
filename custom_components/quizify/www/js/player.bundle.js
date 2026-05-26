@@ -543,9 +543,12 @@
             var initial = (p.name || '?').charAt(0).toUpperCase();
             var bg = p.color || '#A89E89';
             var awayClass = p.connected === false ? ' is-away' : '';
-            return '<div class="pl-orbit' + awayClass + '" data-player="' + _escape(p.name) + '">' +
+            var hostClass = p.is_admin ? ' is-host' : '';
+            var hostMark = p.is_admin ? '<span class="pl-orbit-host" aria-hidden="true">👑</span>' : '';
+            return '<div class="pl-orbit' + awayClass + hostClass + '" data-player="' + _escape(p.name) + '">' +
                 '<span class="pl-orbit-av" style="background:' + bg + '">' + _escape(initial) + '</span>' +
                 '<span class="pl-orbit-nm">' + _escape(p.name || '') + '</span>' +
+                hostMark +
             '</div>';
         }).join('');
     }

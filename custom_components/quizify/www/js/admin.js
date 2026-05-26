@@ -816,6 +816,11 @@
             els.lobbyPlayersEmpty.classList.toggle('hidden', playerCount > 0);
         }
         if (els.lobbyPlayerChips) {
+            var hostBadge = '<span class="host-badge" title="'
+                + escapeHtml(_t('admin.hostBadge') || 'Host')
+                + '" aria-label="'
+                + escapeHtml(_t('admin.hostBadge') || 'Host')
+                + '">👑</span>';
             els.lobbyPlayerChips.innerHTML = list
                 .map(function (p, idx) {
                     var name = typeof p === 'string' ? p : (p.name || p);
@@ -833,9 +838,10 @@
                             + '" title="'
                             + escapeHtml(_t('admin.kickPlayer') || ('Remove ' + name))
                             + '">&times;</button>';
-                    return '<div class="lobby-e-row-card">'
+                    return '<div class="lobby-e-row-card' + (isAdmin ? ' is-host' : '') + '">'
                         + '<span class="dot" style="background:' + color + '">' + escapeHtml(initial) + '</span>'
                         + '<span class="name">' + escapeHtml(name) + '</span>'
+                        + (isAdmin ? hostBadge : '')
                         + kickBtn
                         + '</div>';
                 })

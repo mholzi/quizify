@@ -3,6 +3,32 @@
 All notable changes to Quizify are documented here. This project follows
 [Semantic Versioning](https://semver.org/).
 
+## [1.1.11] — 2026-05-26
+
+Lobby polish: roster avatars now render at identical sizes, and the host
+player is marked with a crown so everyone (host included) can tell at a
+glance who's running the show.
+
+### Fixed
+
+- **Lobby avatars sized inconsistently.** Admin-lobby chips used to render
+  at slightly different sizes depending on flex layout pressure (visible
+  on the production lobby: one row's badge 30–40 % smaller than its
+  neighbour). The `.dot` and `.pl-orbit-av` rules now lock `min/max`
+  width+height so every chip renders at the exact same dimensions
+  regardless of name length, kick-button presence, or layout context.
+- **Admin avatars bumped from 18 px → 28 px** (admin lobby) so the dot
+  reads as an avatar instead of a colour dot. Font sizes scaled
+  accordingly.
+
+### Added
+
+- **Host marker** on the admin player's chip in both the admin lobby
+  (👑 next to the name + coral inner ring on the row) and the player
+  lobby's orbit chips (floating 👑 above the avatar + coral outer ring).
+  `admin.hostBadge` translation key added (EN/DE parity preserved at 375
+  keys).
+
 ## [1.1.10] — 2026-05-25
 
 A small admin quality-of-life addition: a header **Reset** button that

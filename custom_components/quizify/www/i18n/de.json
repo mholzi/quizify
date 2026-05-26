@@ -86,6 +86,7 @@
     "resetGame": "Spiel zurücksetzen",
     "resetGameConfirm": "Spiel zurücksetzen?",
     "resetGameWarning": "Die aktuelle Runde und alle Spieler werden gelöscht. Du landest wieder im Setup-Bildschirm.",
+    "hostBadge": "Host",
     "kickPlayer": "Spieler entfernen",
     "kickConfirm": "{name} aus der Lobby entfernen?",
     "continueBtn": "Weiter",

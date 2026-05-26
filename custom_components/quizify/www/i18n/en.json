@@ -86,6 +86,7 @@
     "resetGame": "Reset game",
     "resetGameConfirm": "Reset game?",
     "resetGameWarning": "The current round and all players will be cleared. You'll return to the setup screen.",
+    "hostBadge": "Host",
     "kickPlayer": "Remove player",
     "kickConfirm": "Remove {name} from the lobby?",
     "continueBtn": "Continue",
