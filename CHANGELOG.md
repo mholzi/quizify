@@ -3,6 +3,21 @@
 All notable changes to Quizify are documented here. This project follows
 [Semantic Versioning](https://semver.org/).
 
+## [1.1.13] — 2026-05-26
+
+Finale views now read loudly from across the room.
+
+### Changed
+
+- **Result / Podium / End-of-game text bumped another 20 %.** The admin
+  finale, dashboard finale, player end-view, and per-round reveal hero
+  now wrap their contents in `font-size: 1.2em`, layering on top of the
+  root's existing +20 % so everything inside renders at ~1.44× the
+  pre-v1.1.12 baseline. Headlines (`.podium-title`, `.end-title`),
+  champion name, podium plank numbers (80 px on first place), per-place
+  scores, and personal-result stats get explicit larger sizes so the
+  celebration moment actually celebrates.
+
 ## [1.1.12] — 2026-05-26
 
 Two small readability fixes from the production lobby.

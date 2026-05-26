@@ -5550,3 +5550,52 @@ body.is-admin .pl-result-hero--big .pl-result-big-points { font-size: 84px; }
    room for it. The body container only reserves padding-bottom when admin
    is active so non-admin players see content fill the screen. */
 body:not(.is-admin) .pl-result { padding-bottom: 16px; }
+
+/* ==========================================
+   FINALE / RESULT / PODIUM — extra emphasis
+   --------------------------------------------
+   The end-of-game views (admin podium, player end-view, dashboard
+   finale, player per-round reveal hero) are the celebration moment.
+   Bump everything inside them another 20 % on top of the root's
+   already-20 %-bumped baseline so the result reads loudly from across
+   the room (TV) and on a phone in someone's lap.
+
+   `em` (not `rem`) is intentional — it cascades, so every nested
+   element using `rem` inherits the magnified context only when it's
+   inside one of these wrappers. Nothing outside changes.
+   ========================================== */
+#admin-finale-view,
+#end-view,
+#finale-view,
+.pl-result {
+    font-size: 1.2em;
+}
+
+/* Champion / result headlines: the loudest piece of typography in the
+   app. Give the title and the winner's name an extra push beyond the
+   wrapper bump so they really anchor the screen. */
+#admin-finale-view .podium-title,
+#finale-view .podium-title,
+.end-title {
+    font-size: clamp(2.4rem, 4.8vw, 4.2rem);
+}
+#admin-finale-view .podium-champion-name,
+#finale-view .podium-champion-name {
+    font-size: clamp(1.5rem, 2.6vw, 2.1rem);
+}
+/* Per-place podium plank numbers — these read as the "medal" so they
+   should feel substantial. */
+#admin-finale-view .podium-bar.first,
+#finale-view .podium-bar.first,
+#finale-view .podium-stand.first { font-size: 4.2rem; }
+#admin-finale-view .podium-bar.second,
+#finale-view .podium-bar.second,
+#finale-view .podium-stand.second { font-size: 3.3rem; }
+#admin-finale-view .podium-bar.third,
+#finale-view .podium-bar.third,
+#finale-view .podium-stand.third { font-size: 2.7rem; }
+/* Player end-view: rank number is the hero. */
+.your-result-rank { font-size: 3rem; }
+.your-result-score { font-size: 1.3rem; }
+.stat-value { font-size: 1.5rem; }
+.stat-label { font-size: 0.85rem; }
