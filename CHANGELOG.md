@@ -3,6 +3,17 @@
 All notable changes to Quizify are documented here. This project follows
 [Semantic Versioning](https://semver.org/).
 
+## [1.1.14] — 2026-05-26
+
+### Changed
+
+- **Per-round reveal page bumped to match the finale.** The admin
+  `#admin-reveal-view` is now part of the `font-size: 1.2em` finale
+  scope, so the question text, "Richtig: …" callout, fun-fact card,
+  answer-distribution bars, all-answers list, and leaderboard read at
+  the same ~1.44× scale as the end-of-game podium. (The player-side
+  reveal — `.pl-result` — was already in this scope from v1.1.13.)
+
 ## [1.1.13] — 2026-05-26
 
 Finale views now read loudly from across the room.
