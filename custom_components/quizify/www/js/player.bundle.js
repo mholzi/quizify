@@ -1224,10 +1224,13 @@
             return;
         }
 
-        // State Y — big +N
+        // State Y — big +N. Skip the green ✓ circle on correct answers:
+        // the "+N PUNKTE" already reads as the positive verdict, and the
+        // extra tick competes for attention with the points number.
+        // Wrong answers (state Z) keep their ✗ so the negative outcome
+        // is still unmistakable.
         hero.classList.add('pl-result-hero--big');
         hero.innerHTML =
-            '<span class="pl-result-verdict-circle pl-result-verdict-circle--correct" aria-hidden="true">✓</span>' +
             '<div class="pl-result-big-points">+' + roundScore + '</div>' +
             '<div class="pl-result-pts-unit">' + pu.escapeHtml(t('game.points').toUpperCase()) + '</div>' +
             breakdownHtml;

@@ -3,6 +3,16 @@
 All notable changes to Quizify are documented here. This project follows
 [Semantic Versioning](https://semver.org/).
 
+## [1.1.17] — 2026-05-26
+
+### Changed
+
+- **Removed the green ✓ verdict circle on correct reveals.** The "+N
+  PUNKTE" already reads as the positive outcome — the extra tick
+  competed for attention with the points number. Wrong answers keep
+  their ✗ circle so the negative outcome is still unmistakable.
+  Touched both `player-reveal.js` and `player.bundle.js`.
+
 ## [1.1.16] — 2026-05-26
 
 ### Removed
