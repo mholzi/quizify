@@ -3,6 +3,27 @@
 All notable changes to Quizify are documented here. This project follows
 [Semantic Versioning](https://semver.org/).
 
+## [1.1.18] — 2026-05-26
+
+Reveal-page polish pass.
+
+### Changed
+
+- **Reveal text +30 %.** `.pl-result` font-size goes from `1.2em` to
+  `1.56em` (1.2 × 1.3). On top of the root's 19.2 px that lands the
+  per-round reveal at ~30 px wrapper size — readable from across the
+  room and at arm's length on a phone.
+- **More breathing room above the standings.** Added explicit
+  `margin-top` on the section containing `#reveal-standings` so the
+  "RANGLISTE" header has visual separation from the fun-fact card.
+- **Correct-answer line is now a proper callout.** The
+  `.pl-result-sub` line in wrong / missed states ("Richtige Antwort:
+  X") used to be muted 12 px text that disappeared into the layout
+  even though it carries the most useful information on the page.
+  It's now a soft sage pill (success-tint background, rounded
+  border), and the answer itself renders in `var(--font-display)` at
+  `1.1rem` in `var(--color-success)` so it reads at a glance.
+
 ## [1.1.17] — 2026-05-26
 
 ### Changed

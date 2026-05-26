@@ -5319,16 +5319,31 @@ body.is-admin .pl-result-hero--big .pl-result-big-points { font-size: 84px; }
   color: var(--color-text-primary);
   letter-spacing: 0.005em;
 }
+/* Sub line under the wrong/missed verdict that surfaces the correct
+ * answer ("Richtige Antwort: X"). Was muted-12px which made the
+ * actually-most-useful piece of information on the page (the right
+ * answer) disappear into the background. Now framed as a soft sage
+ * pill so the answer reads at a glance. */
 .pl-result-hero--wrong .pl-result-sub,
 .pl-result-hero--missed .pl-result-sub {
   font-family: var(--font-body);
-  font-size: 12px;
-  color: var(--color-text-muted);
+  font-size: 0.9rem;
+  color: var(--color-text-primary);
+  background: rgba(127, 168, 151, 0.14);
+  border: 1px solid rgba(127, 168, 151, 0.32);
+  border-radius: 12px;
+  padding: 10px 16px;
+  margin-top: 6px;
+  line-height: 1.4;
+  max-width: 100%;
 }
 .pl-result-hero--wrong .pl-result-sub b,
 .pl-result-hero--missed .pl-result-sub b {
-  color: var(--color-text-primary);
-  font-weight: 700;
+  font-family: var(--font-display);
+  font-weight: 800;
+  color: var(--color-success, #7FA897);
+  font-size: 1.1rem;
+  letter-spacing: -0.005em;
 }
 .pl-result-hero--wrong .pl-result-zero,
 .pl-result-hero--missed .pl-result-zero {
@@ -5566,9 +5581,20 @@ body:not(.is-admin) .pl-result { padding-bottom: 16px; }
    ========================================== */
 #admin-finale-view,
 #end-view,
-#finale-view,
-.pl-result {
+#finale-view {
     font-size: 1.2em;
+}
+/* Per-round reveal is the most-stared-at page mid-game — bump it
+ * harder than the other finale scopes. 1.56em = 1.2 × 1.3, layered on
+ * top of the root's 19.2 px so the wrapper renders at ~30 px. */
+.pl-result {
+    font-size: 1.56em;
+}
+/* Extra breathing room above the standings section. The default
+ * .pl-result { gap: 10px } sits between hero/answer-strip/fun-fact
+ * fine, but the leaderboard wants more visual separation. */
+.pl-result > .pl-result-section:has(#reveal-standings) {
+    margin-top: var(--space-md, 16px);
 }
 
 /* Champion / result headlines: the loudest piece of typography in the
