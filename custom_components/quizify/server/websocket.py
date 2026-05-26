@@ -893,11 +893,18 @@ class QuizifyWebSocketHandler:
     async def _handle_reset_game(
         self, ws: web.WebSocketResponse, game_state: QuizifyGameState
     ) -> None:
-        """Handle admin reset_game command (return to lobby).
+        """Handle admin reset_game command (truly fresh lobby).
 
-        Also clears all pending per-player removal tasks and all player
-        session tokens, so the new lobby starts clean (#8 + #13 in
-        logical review).
+        reset_to_lobby on its own keeps players in the registry (so the
+        finale's "Play again — same settings" path can reuse them). The
+        explicit reset_game button means "wipe everything" — so we ALSO:
+          1. Close every player WebSocket. Stale/abandoned connections
+             (test bots, dead phones) get pruned. Real clients see the
+             close and reconnect into a fresh lobby on their own.
+          2. Drop every player from the registry via clear_all_players()
+             so phantom names like "sdfsd 2" don't survive the reset.
+          3. Wipe per-player session tokens so the reconnect path can't
+             resurrect a cleared player under their old slot.
         """
         self._cancel_timer_tick()
         # Cancel any pending admin-disconnect timer and stale player-removal
@@ -906,6 +913,18 @@ class QuizifyWebSocketHandler:
         # Wipe player session tokens to prevent cross-game reuse.
         self._conn.clear_all_player_tokens()
 
+        # Close all player WSes so abandoned connections actually die.
+        # Snapshot the WS list first because closing mutates the registry
+        # indirectly via the on_disconnect handler.
+        stale_wses = [p.ws for p in game_state.get_players() if p.ws is not None]
+        for pws in stale_wses:
+            try:
+                await pws.close()
+            except Exception:  # noqa: BLE001 — best-effort cleanup
+                pass
+
+        # Drop every player from the registry (full wipe — not just score reset).
+        game_state.clear_all_players()
         game_state.reset_to_lobby()
 
         await self._conn.broadcast({"type": "game_reset"})

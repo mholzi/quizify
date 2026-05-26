@@ -3,6 +3,31 @@
 All notable changes to Quizify are documented here. This project follows
 [Semantic Versioning](https://semver.org/).
 
+## [1.1.15] — 2026-05-26
+
+Reset finally resets.
+
+### Fixed
+
+- **`reset_game` now actually clears the player registry.** Before:
+  `reset_to_lobby()` only zeroed each player's score — every connected
+  WebSocket (including stale/abandoned ones like leftover test bots or
+  reloaded-phone ghosts) stayed in the registry. The next game then
+  inherited them, and they reappeared mid-round (e.g. as "sdfsd 2" /
+  "Fjfj 2" entries on the leaderboard).
+
+  Now `_handle_reset_game`:
+  1. Closes every player WebSocket (real clients reconnect into the
+     fresh lobby automatically; abandoned ones die).
+  2. Drops every player from the registry via a new
+     `clear_all_players()` helper on `QuizifyGameState`.
+  3. Wipes per-player session tokens so reconnect can't resurrect a
+     cleared player into their old slot.
+
+  The "Play again — same settings" path on the finale is unchanged —
+  it still uses `reset_to_lobby()` directly and keeps players, by
+  design.
+
 ## [1.1.14] — 2026-05-26
 
 ### Changed

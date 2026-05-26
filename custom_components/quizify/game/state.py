@@ -252,6 +252,18 @@ class QuizifyGameState:
         self._timers.pop(name, None)
         self._notify_state_callbacks()
 
+    def clear_all_players(self) -> None:
+        """Drop every player from the registry.
+
+        Used by reset_game so the admin gets a truly empty lobby. The
+        ``reset_to_lobby`` path intentionally keeps players (for the
+        finale's "Play again — same settings" flow); reset_game is the
+        explicit "wipe everyone" action.
+        """
+        self._player_registry.reset()
+        self._timers.clear()
+        self._notify_state_callbacks()
+
     def get_player(self, name: str) -> PlayerSession | None:
         """Get player by name."""
         return self._player_registry.get_player(name)
