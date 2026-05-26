@@ -3,6 +3,27 @@
 All notable changes to Quizify are documented here. This project follows
 [Semantic Versioning](https://semver.org/).
 
+## [1.1.12] — 2026-05-26
+
+Two small readability fixes from the production lobby.
+
+### Fixed
+
+- **Player-side timer countdown no longer shows decimals.** The server
+  sends `remaining` rounded to one decimal (`19.5`, `12.3`, …) so the
+  bar animation feels smooth, but the player tab was rendering that
+  value as the count text — German locale displayed it as `19,5`. Both
+  `updateTimer` paths (`player-game.js`, `player.bundle.js`) now
+  `Math.ceil()` the value before display so the count ticks down as
+  whole seconds. The admin timer already did this; this brings the
+  player view into line.
+
+### Changed
+
+- **Body text +20 %.** Root `html` font-size bumped from 16 px → 19.2 px.
+  Everything sized in `rem` (which is nearly all typographic content)
+  scales up uniformly; absolute-px tokens and icon dimensions stay put.
+
 ## [1.1.11] — 2026-05-26
 
 Lobby polish: roster avatars now render at identical sizes, and the host

@@ -383,7 +383,11 @@ a:focus-visible,
 }
 
 html {
-    font-size: 16px;
+    /* Root rem size. Was 16px; bumped to 19.2 (16 × 1.2) so every
+     * rem-based font-size in the app scales up 20 % at once. Things
+     * sized in absolute px (icons, borders, the few --font-size-* tokens)
+     * stay put, which is the intent — only typographic content grows. */
+    font-size: 19.2px;
     -webkit-text-size-adjust: 100%;
 }
 

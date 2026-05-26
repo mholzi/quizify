@@ -75,7 +75,10 @@
         var timerElement = document.getElementById('timer');
         if (!timerElement) return;
 
-        timerElement.textContent = remaining;
+        // Server sends decimals (e.g. 19.5) for smoother bar animations;
+        // display as a whole-second integer so the count text reads cleanly.
+        var displaySeconds = Math.ceil(remaining);
+        timerElement.textContent = displaySeconds;
 
         if (remaining <= 5) {
             timerElement.classList.remove('timer--warning');
@@ -88,7 +91,7 @@
         }
 
         var t = (window.QuizifyI18n && window.QuizifyI18n.t) || function (k) { return k; };
-        timerElement.setAttribute('aria-label', t('game.timerRemainingAria', { seconds: remaining }));
+        timerElement.setAttribute('aria-label', t('game.timerRemainingAria', { seconds: displaySeconds }));
     }
 
     // ============================================
