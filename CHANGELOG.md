@@ -3,6 +3,26 @@
 All notable changes to Quizify are documented here. This project follows
 [Semantic Versioning](https://semver.org/).
 
+## [1.1.16] — 2026-05-26
+
+### Removed
+
+- **Dead `#admin-reveal-view` markup + admin.js handlers.** The host
+  tab always redirects to `/quizify/player` on game start, so the
+  per-round reveal is owned by `.pl-result` in `player.html`. The
+  duplicate admin-side reveal view never actually rendered for HACS
+  users; it was a stale layout from before the redirect flow existed.
+  Strip the HTML block (`#admin-reveal-view`), the `els.reveal*`
+  refs, `els.continueBtn`, the `showReveal()` and
+  `renderAnswerDistribution()` helpers, the `continue-btn` click
+  handler, and the `views.reveal` entry. `handleRoundSummary` shrinks
+  to a stub that stops the admin timer and updates `currentPhase`.
+  Also drops the orphan `#admin-reveal-view` entry from the
+  font-scale CSS scope (v1.1.14's bump no longer applies because the
+  view is gone).
+- Net diff: ~50 LOC + 45 LOC of admin.html removed. No behaviour
+  change for the production flow.
+
 ## [1.1.15] — 2026-05-26
 
 Reset finally resets.

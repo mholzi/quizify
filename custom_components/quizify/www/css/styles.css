@@ -5565,7 +5565,6 @@ body:not(.is-admin) .pl-result { padding-bottom: 16px; }
    inside one of these wrappers. Nothing outside changes.
    ========================================== */
 #admin-finale-view,
-#admin-reveal-view,
 #end-view,
 #finale-view,
 .pl-result {

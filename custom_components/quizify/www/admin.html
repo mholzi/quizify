@@ -284,51 +284,12 @@
             </div>
         </div>
 
-        <!-- ========== REVEAL VIEW ========== -->
-        <div id="admin-reveal-view" class="view">
-            <section class="card-section">
-                <h2 class="section-header">
-                    <span class="section-icon" aria-hidden="true">&#x2705;</span>
-                    <span id="reveal-round" class="round-indicator"></span>
-                </h2>
-                <div id="reveal-question" class="question-text" style="font-size:1.1rem;"></div>
-                <div id="reveal-correct" class="admin-correct-answer"></div>
-                <div id="reveal-fun-fact" class="fun-fact-card mt-md">
-                    <div class="fun-fact-label" data-i18n="funFact.label">Did you know?</div>
-                    <div class="fun-fact-text"></div>
-                </div>
-            </section>
+        <!-- ========== REVEAL VIEW removed in v1.1.16 ==========
+             The admin tab redirects to /quizify/player on game start
+             (the player view .pl-result owns the per-round reveal UX
+             in the production flow), so this duplicate view was never
+             actually rendered for HACS users. -->
 
-            <!-- Answer distribution chart -->
-            <div id="reveal-distribution" class="card-section mt-md" style="display:none;">
-                <h2 class="section-header">
-                    <span class="section-icon" aria-hidden="true">📊</span>
-                    <span data-i18n="admin.answerDistribution">Answer Distribution</span>
-                </h2>
-                <!-- filled by renderAnswerDistribution() -->
-            </div>
-
-            <!-- All Guesses — player result cards (Beatify-style) -->
-            <section class="card-section mt-md" id="reveal-answers-section" style="display:none;">
-                <h2 class="section-header">
-                    <span class="section-icon" aria-hidden="true">&#x1F465;</span>
-                    <span data-i18n="admin.allAnswers">All Answers</span>
-                </h2>
-                <div id="reveal-results-cards" class="reveal-results-grid"></div>
-            </section>
-
-            <section class="card-section mt-md">
-                <h2 class="section-header">
-                    <span class="section-icon" aria-hidden="true">&#x1F3C6;</span>
-                    <span data-i18n="leaderboard.title">Leaderboard</span>
-                </h2>
-                <div id="reveal-leaderboard" class="leaderboard"></div>
-            </section>
-
-            <div class="admin-actions lobby-actions--sticky mt-lg">
-                <button type="button" id="continue-btn" class="btn btn-primary btn-lg btn-block" data-i18n="admin.continueBtn">Continue</button>
-            </div>
-        </div>
 
         <!-- ========== FINALE VIEW ========== -->
         <div id="admin-finale-view" class="view">
@@ -406,7 +367,7 @@
     <div id="error-toast" class="toast hidden" role="alert" aria-live="assertive"></div>
 
     <!-- Version badge -->
-    <div class="version-badge" id="version-badge">v1.1.15</div>
+    <div class="version-badge" id="version-badge">v1.1.16</div>
 
     <script src="/quizify/static/js/vendor/qrcode.min.js?v={{VERSION}}"></script>
     <script src="/quizify/static/js/i18n.js?v={{VERSION}}"></script>

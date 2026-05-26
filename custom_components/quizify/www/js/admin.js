@@ -53,7 +53,6 @@
         setup: document.getElementById('setup-screen'),
         lobby: document.getElementById('lobby-screen'),
         game: document.getElementById('game-view'),
-        reveal: document.getElementById('admin-reveal-view'),
         finale: document.getElementById('admin-finale-view'),
     };
 
@@ -82,15 +81,6 @@
         nextQuestionBtn: document.getElementById('next-question-btn'),
         endGameBtn: document.getElementById('end-game-btn'),
         resetGameBtn: document.getElementById('reset-game-btn'),
-        // Reveal
-        revealRound: document.getElementById('reveal-round'),
-        revealQuestion: document.getElementById('reveal-question'),
-        revealCorrect: document.getElementById('reveal-correct'),
-        revealFunFact: document.getElementById('reveal-fun-fact'),
-        revealAnswersSection: document.getElementById('reveal-answers-section'),
-        revealResultsCards: document.getElementById('reveal-results-cards'),
-        revealLeaderboard: document.getElementById('reveal-leaderboard'),
-        continueBtn: document.getElementById('continue-btn'),
         // Finale
         adminPodium: document.getElementById('admin-podium'),
         adminFinaleLeaderboard: document.getElementById('admin-finale-leaderboard'),
@@ -554,9 +544,11 @@
                 if (msg.leaderboard) renderLeaderboard(els.gameLeaderboard, msg.leaderboard);
                 break;
             case 'ANSWER_REVEAL':
-                showView('reveal');
-                if (msg.round_summary) showReveal(msg);
-                if (msg.leaderboard) renderLeaderboard(els.revealLeaderboard, msg.leaderboard);
+                // No-op on the admin tab: the production flow always
+                // redirects the host to /quizify/player on game start,
+                // so the per-round reveal is owned by .pl-result in
+                // player.html. The old #admin-reveal-view was removed
+                // in v1.1.16.
                 break;
             case 'FINALE':
                 // Land directly on finale view so the admin sees the
@@ -590,139 +582,18 @@
         if (els.endGameBtn) els.endGameBtn.classList.add('hidden');
     }
 
-    function handleRoundSummary(msg) {
+    // handleRoundSummary / showReveal / renderAnswerDistribution lived
+    // here in v1.1.15 and earlier to populate the admin-only reveal
+    // view. The host always redirects to /quizify/player on game start,
+    // so they were never actually run for HACS users. Removed with
+    // the #admin-reveal-view markup in v1.1.16.
+    function handleRoundSummary(/* msg */) {
         if (_redirecting) return;
         currentPhase = 'ANSWER_REVEAL';
         adminTimer.stop();
-        showView('reveal');
-        showReveal(msg);
-    }
-
-    function showReveal(msg) {
-        var summary = msg.round_summary || msg;
-        if (els.revealRound) els.revealRound.textContent = _t('admin.questionCounter', {
-            current: msg.round || '',
-            total: msg.total_rounds || '',
-        });
-        if (els.revealQuestion) els.revealQuestion.textContent = summary.question_text || (msg.question ? msg.question.text : '') || '';
-        var correctAns = summary.correct_answer || '';
-        if (els.revealCorrect) els.revealCorrect.textContent = _t('admin.correctLabel', { answer: correctAns });
-        if (els.adminCorrect) {
-            els.adminCorrect.textContent = _t('admin.correctLabel', { answer: correctAns });
-            els.adminCorrect.style.display = '';
-        }
-        if (els.endGameBtn) els.endGameBtn.classList.remove('hidden');
-
-        var funFactText = summary.fun_fact || '';
-        if (els.revealFunFact) {
-            if (funFactText) {
-                els.revealFunFact.classList.remove('hidden');
-                els.revealFunFact.classList.add('visible');
-                var ffText = els.revealFunFact.querySelector('.fun-fact-text');
-                if (ffText) ffText.textContent = funFactText;
-            } else {
-                els.revealFunFact.classList.add('hidden');
-            }
-        }
-
-        // ---- Answer distribution chart ----
-        renderAnswerDistribution(summary, msg);
-
-        // Per-player result cards (Beatify-style)
-        var allAnswers = summary.all_answers || msg.all_answers || [];
-        if (allAnswers.length && els.revealResultsCards) {
-            if (els.revealAnswersSection) els.revealAnswersSection.style.display = '';
-            var sorted = allAnswers.slice().sort(function(a, b) { return (b.points_earned || 0) - (a.points_earned || 0); });
-            els.revealResultsCards.innerHTML = '<div class="results-cards-scroll">' + sorted.map(function(p) {
-                var ok = p.correct;
-                var noAns = p.no_answer;
-                var pts = p.points_earned || 0;
-                var spd = p.speed_bonus || 0;
-                var str = p.streak_bonus || 0;
-                var dbl = p.double_points || false;
-                var diff = p.difficulty_multiplier || 1.0;
-                var streak = p.streak || 0;
-                var scoreClass = ok && pts >= 1000 ? 'is-score-high' : ok ? 'is-score-medium' : 'is-score-zero';
-                var bonuses = '';
-                if (ok && spd > 0) bonuses += '<div class="card-bonus">⚡ +' + spd + ' ' + escapeHtml(_t('game.speedBonus')) + '</div>';
-                if (ok && str > 0) bonuses += '<div class="card-bonus">🔥 +' + str + ' ' + escapeHtml(_t('game.streakBonusLabel', { count: streak })) + '</div>';
-                if (ok && diff > 1.0) bonuses += '<div class="card-bonus">⭐ ' + escapeHtml(_t('game.difficultyMultiplier', { value: diff.toFixed(1) })) + '</div>';
-                if (dbl) bonuses += '<div class="card-bonus">✨ ' + escapeHtml(_t('game.doublePoints')) + '</div>';
-                var accuracyLabel = ok
-                    ? '✅ ' + _t('admin.answerCorrect')
-                    : noAns
-                        ? '⏱️ ' + _t('admin.answerNone')
-                        : '❌ ' + _t('admin.answerWrong');
-                return '<div class="result-card ' + scoreClass + '">' +
-                    '<div class="card-name">' + escapeHtml(p.player_name) + '</div>' +
-                    '<div class="card-guess">' + escapeHtml(p.answer_text || '—') + '</div>' +
-                    '<div class="card-accuracy">' + escapeHtml(accuracyLabel) + '</div>' +
-                    bonuses +
-                    '<div class="card-score">' + (pts > 0 ? '+' + pts : '0') + '</div>' +
-                    '</div>';
-            }).join('') + '</div>';
-        } else if (els.revealAnswersSection) {
-            els.revealAnswersSection.style.display = 'none';
-        }
-
-        var lb = summary.leaderboard || msg.leaderboard || [];
-        renderLeaderboard(els.revealLeaderboard, lb);
-    }
-
-    function renderAnswerDistribution(summary, msg) {
-        var container = document.getElementById('reveal-distribution');
-        if (!container) return;
-
-        var distribution = summary.answer_distribution || msg.answer_distribution || [];
-        var answerTexts = [];
-
-        // Build answer text array from all_answers entries (pick first occurrence per index)
-        var allAnswers = summary.all_answers || msg.all_answers || [];
-        allAnswers.forEach(function(a) {
-            if (typeof a.answer_index === 'number' && !answerTexts[a.answer_index]) {
-                answerTexts[a.answer_index] = a.answer_text || '';
-            }
-        });
-
-        // Also try msg.question.answers for authoritative labels
-        if (msg.question && Array.isArray(msg.question.answers)) {
-            msg.question.answers.forEach(function(a, i) {
-                answerTexts[i] = a.text || answerTexts[i] || '';
-            });
-        }
-
-        var correctIndex = summary.correct_answer_index;
-        if (typeof correctIndex === 'undefined') correctIndex = msg.correct_answer_index;
-
-        if (!distribution.length) {
-            container.style.display = 'none';
-            return;
-        }
-        container.style.display = '';
-
-        var html = '<div class="distribution-chart">';
-        distribution.forEach(function(item) {
-            if (item.no_answer) return; // skip timeout row
-            var isCorrect = item.index === correctIndex;
-            var barColor = isCorrect ? '#7FA897' : '#E5DFCF';  // sage for correct, cream hairline for rest
-            var fallbackLabel = String.fromCharCode(65 + item.index); // A / B / C
-            var label = answerTexts[item.index] || fallbackLabel;
-            var pct = item.percent || 0;
-            var count = item.count || 0;
-            html +=
-                '<div class="dist-row">' +
-                    '<div class="dist-label" title="' + escapeHtml(label) + '">' +
-                        (isCorrect ? '<span class="dist-correct-icon">✓</span>' : '') +
-                        escapeHtml(label) +
-                    '</div>' +
-                    '<div class="dist-bar-wrap">' +
-                        '<div class="dist-bar" style="width:' + Math.max(pct, 2) + '%;background:' + barColor + ';"></div>' +
-                    '</div>' +
-                    '<div class="dist-meta">' + count + ' (' + pct + '%)</div>' +
-                '</div>';
-        });
-        html += '</div>';
-        container.innerHTML = html;
+        // The player tab owns the reveal UI; nothing for the admin tab
+        // to render. Keeping this stub so the WS message router still
+        // has a target (avoids "undefined" route errors).
     }
 
     function handleFinale(msg) {
@@ -1127,7 +998,6 @@
         setTimeout(function () { btn.disabled = false; }, 1500);
     }
     on(els.nextQuestionBtn, 'click', function () { _debouncedSend(els.nextQuestionBtn, 'next_question'); });
-    on(els.continueBtn, 'click', function () { _debouncedSend(els.continueBtn, 'next_question'); });
 
     on(els.endGameBtn, 'click', function () {
         var modal = document.getElementById('end-game-modal');
