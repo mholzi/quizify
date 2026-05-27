@@ -3,6 +3,28 @@
 All notable changes to Quizify are documented here. This project follows
 [Semantic Versioning](https://semver.org/).
 
+## [1.1.22] — 2026-05-27
+
+Reveal header refactor + Rangliste fallback for round 1.
+
+### Fixed
+
+- **Rangliste no longer empty during round 1.** `data.leaderboard`
+  only ships with the round-summary message; during the first
+  question the section sat at "--". Now derives a zero-score
+  leaderboard from `data.players` as a fallback so users see the
+  full roster as soon as the question opens. `player-game.js`.
+
+### Changed
+
+- **Round indicator moved next to the Quizify wordmark.** Was
+  centred under it inside `.pl-result-crown` (which is now gone).
+  Lives in the global `.player-header` as a small mono caption
+  ("Round X of Y"); `showView()` in `player-utils.js` toggles
+  visibility — only shown on the reveal view. The crown div was
+  also empty since v1.1.21 removed the ADMIN pill, so the
+  refactor cleans it up entirely.
+
 ## [1.1.21] — 2026-05-27
 
 Reveal-page dark-mode polish: ghost button visible again, ADMIN pill out.

@@ -323,6 +323,23 @@
 
         if (data.leaderboard) {
             updateLeaderboard(data, 'leaderboard-list');
+        } else if (data.players && data.players.length > 0) {
+            // Fallback for round 1: server doesn't send `leaderboard` until
+            // the round-summary message, so during the very first question
+            // the section sat empty ("--"). Derive a zero-score board from
+            // the player list so users see who they're up against.
+            var fallback = data.players.map(function (p, idx) {
+                return {
+                    name: p.name,
+                    score: p.score || 0,
+                    rank: idx + 1,
+                    color: p.color,
+                    is_current: p.name === state.playerName,
+                    connected: p.connected !== false,
+                    streak: 0,
+                };
+            });
+            updateLeaderboard({ leaderboard: fallback }, 'leaderboard-list');
         }
     }
 

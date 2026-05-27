@@ -18,6 +18,16 @@
 <body>
     <header class="player-header">
         <h1 class="wordmark"><span class="wordmark-quiz">Quiz</span><span class="wordmark-ify">ify</span></h1>
+        <!-- Round indicator sits inline next to the wordmark on the reveal
+             view. showView() in player-utils.js toggles `hidden` based on
+             whether reveal-view is active. Text is populated by
+             renderFinaleReveal in player-reveal.js. -->
+        <span id="player-header-round" class="player-header-round" hidden aria-live="polite">
+            <span data-i18n="game.roundLabel">Round</span>
+            <span id="header-round-num">1</span>
+            <span data-i18n="game.ofLabel">of</span>
+            <span id="header-round-total">10</span>
+        </span>
         <!-- Connection status dot — JS updates via conn-status div -->
         <div id="connection-indicator" class="connection-indicator" aria-hidden="true"></div>
     </header>
@@ -277,15 +287,6 @@
                  (ADMIN pill removed 2026-05-27 — was redundant w/ the bar).
                  See gstack designs/player-result-20260524/. -->
             <div class="pl-result">
-                <div class="pl-result-crown">
-                    <span class="pl-result-round" aria-live="polite">
-                        <span data-i18n="game.roundLabel">Round</span>
-                        <span id="reveal-round">1</span>
-                        <span data-i18n="game.ofLabel">of</span>
-                        <span id="reveal-total">10</span>
-                    </span>
-                </div>
-
                 <div id="reveal-hero" class="pl-result-hero" aria-live="polite" aria-atomic="true"></div>
 
                 <div id="reveal-answer-strip" class="pl-result-answer-strip"></div>

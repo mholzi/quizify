@@ -64,9 +64,11 @@
             }
         }
 
-        // Round indicator
-        var roundEl = document.getElementById('reveal-round');
-        var totalEl = document.getElementById('reveal-total');
+        // Round indicator — now lives inline next to the wordmark in
+        // .player-header (moved from .pl-result-crown 2026-05-27).
+        // Visibility is toggled by showView() in player-utils.js.
+        var roundEl = document.getElementById('header-round-num');
+        var totalEl = document.getElementById('header-round-total');
         if (roundEl) roundEl.textContent = data.round || 1;
         if (totalEl) totalEl.textContent = data.total_rounds || 10;
 

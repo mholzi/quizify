@@ -71,6 +71,14 @@
         }
         state.currentView = viewId;
 
+        // Round indicator next to the wordmark — only visible on the
+        // reveal view. Text itself is populated by renderFinaleReveal.
+        var headerRound = document.getElementById('player-header-round');
+        if (headerRound) {
+            if (viewId === 'reveal-view') headerRound.removeAttribute('hidden');
+            else headerRound.setAttribute('hidden', '');
+        }
+
         // Re-run i18n on the view we just revealed. The page-wide
         // initPageTranslations runs once on load, but buttons inside views
         // that start hidden (#next-round-btn in #reveal-view, etc.) skip

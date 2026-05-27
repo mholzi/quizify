@@ -76,6 +76,14 @@
         }
         state.currentView = viewId;
 
+        // Round indicator next to the wordmark — only visible on the
+        // reveal view. Text itself is populated by renderFinaleReveal.
+        var headerRound = document.getElementById('player-header-round');
+        if (headerRound) {
+            if (viewId === 'reveal-view') headerRound.removeAttribute('hidden');
+            else headerRound.setAttribute('hidden', '');
+        }
+
         // Re-run i18n on the view we just revealed. The page-wide
         // initPageTranslations runs once on load, but buttons inside views
         // that start hidden (#next-round-btn in #reveal-view, etc.) skip
@@ -1003,9 +1011,11 @@
             }
         }
 
-        // Round indicator
-        var roundEl = document.getElementById('reveal-round');
-        var totalEl = document.getElementById('reveal-total');
+        // Round indicator — now lives inline next to the wordmark in
+        // .player-header (moved from .pl-result-crown 2026-05-27).
+        // Visibility is toggled by showView() in player-utils.js.
+        var roundEl = document.getElementById('header-round-num');
+        var totalEl = document.getElementById('header-round-total');
         if (roundEl) roundEl.textContent = data.round || 1;
         if (totalEl) totalEl.textContent = data.total_rounds || 10;
 
@@ -2383,6 +2393,23 @@
 
         if (data.leaderboard) {
             updateLeaderboard(data, 'leaderboard-list');
+        } else if (data.players && data.players.length > 0) {
+            // Fallback for round 1: server doesn't send `leaderboard` until
+            // the round-summary message, so during the very first question
+            // the section sat empty ("--"). Derive a zero-score board from
+            // the player list so users see who they're up against.
+            var fallback = data.players.map(function (p, idx) {
+                return {
+                    name: p.name,
+                    score: p.score || 0,
+                    rank: idx + 1,
+                    color: p.color,
+                    is_current: p.name === state.playerName,
+                    connected: p.connected !== false,
+                    streak: 0,
+                };
+            });
+            updateLeaderboard({ leaderboard: fallback }, 'leaderboard-list');
         }
     }
 

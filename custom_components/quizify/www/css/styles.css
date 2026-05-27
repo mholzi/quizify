@@ -589,8 +589,9 @@ body {
 /* Player header */
 .player-header {
     display: flex;
-    align-items: center;
+    align-items: baseline;
     justify-content: center;
+    gap: var(--space-sm);
     padding: var(--space-md) var(--space-md) 0;
 }
 
@@ -598,6 +599,21 @@ body {
     font-size: 2rem;
     margin: 0;
 }
+
+/* Round indicator inline next to the wordmark — appears only on the
+   reveal view (showView in player-utils.js toggles the hidden attr).
+   align-items:baseline on the parent keeps it sitting on the wordmark
+   baseline so it reads as a subtitle, not a floating chip. */
+.player-header-round {
+    font-family: var(--font-mono);
+    font-weight: 700;
+    font-size: 0.7rem;
+    color: var(--color-text-muted);
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    white-space: nowrap;
+}
+.player-header-round[hidden] { display: none; }
 
 /* Connection indicator */
 .connection-indicator {
@@ -5173,22 +5189,9 @@ body:has(.admin-control-bar:not(.hidden)) #game-view {
   /* room for the sticky admin bar without crowding the standings */
   padding-bottom: 96px;
 }
-.pl-result-crown {
-  /* ADMIN pill removed 2026-05-27 — crown is now just the round
-     indicator, centered above the hero. */
-  display: flex;
-  justify-content: center;
-  align-items: center;
-}
-.pl-result-round {
-  font-family: var(--font-mono);
-  font-weight: 700;
-  font-size: 10px;
-  color: var(--color-text-muted);
-  letter-spacing: 0.12em;
-  text-align: center;
-  text-transform: uppercase;
-}
+/* .pl-result-crown + .pl-result-round both removed 2026-05-27.
+   Round indicator now lives inline in .player-header (see
+   `.player-header-round`). Hero is the first thing on the reveal page. */
 
 /* ---- Hero ---- */
 .pl-result-hero {
