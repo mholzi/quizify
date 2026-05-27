@@ -48,6 +48,7 @@
     "andOthersOne": "+ 1 more",
     "marqueeWaiting": "Waiting for players…",
     "marqueeReady": "About to start…",
+    "backToSetup": "Settings",
     "readyHint": "Ready at",
     "playersUnit": "players",
     "stillMissing": "still need",

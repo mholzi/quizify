@@ -3987,12 +3987,39 @@ footer {
    makes the "we need 1 more" beat readable from across the room.
 */
 .lobby-e {
+    position: relative;
     display: flex;
     flex-direction: column;
     gap: var(--space-md);
     padding: var(--space-md);
     max-width: 760px;
     margin: 0 auto;
+}
+
+/* Lobby back-button — top-left ghost nav. Stays out of the marquee's
+   visual weight; small but discoverable. Sits above the marquee text. */
+.lobby-back-btn {
+    align-self: flex-start;
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    padding: 6px 12px;
+    background: var(--color-bg-surface);
+    color: var(--color-text-muted);
+    border: 1px solid var(--color-border-light);
+    border-radius: 999px;
+    font-family: var(--font-system, inherit);
+    font-size: 0.82rem;
+    font-weight: 600;
+    cursor: pointer;
+    transition: all 0.14s ease;
+    margin-bottom: 4px;
+}
+.lobby-back-btn:hover,
+.lobby-back-btn:focus {
+    color: var(--color-text-primary);
+    border-color: var(--color-border-medium);
+    background: var(--color-bg-card-alt);
 }
 
 .lobby-marquee {

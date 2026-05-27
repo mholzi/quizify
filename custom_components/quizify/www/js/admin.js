@@ -88,6 +88,7 @@
         adminPodium: document.getElementById('admin-podium'),
         adminFinaleLeaderboard: document.getElementById('admin-finale-leaderboard'),
         newGameBtn: document.getElementById('new-game-btn'),
+        lobbyBackBtn: document.getElementById('lobby-back-btn'),
         // Admin join modal
         adminJoinModal: document.getElementById('admin-join-modal'),
         adminNameInput: document.getElementById('admin-name-input'),
@@ -1051,6 +1052,14 @@
     on(els.startGameBtn, 'click', function () {
         showView('lobby');
         initJoinUrl();
+    });
+
+    // Lobby → setup. Round-trip nav so the host can tweak settings
+    // (difficulty, rounds, pack) after the QR is up without nuking
+    // already-joined players. No WS reset — server state survives,
+    // re-applying settings re-emits them on submit.
+    on(els.lobbyBackBtn, 'click', function () {
+        showView('setup');
     });
 
     // Lobby: "Spiel starten" — starts the game with players already in

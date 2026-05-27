@@ -3,6 +3,21 @@
 All notable changes to Quizify are documented here. This project follows
 [Semantic Versioning](https://semver.org/).
 
+## [1.1.32] — 2026-05-27
+
+### Added
+
+- **Back-button on the lobby/QR screen.** Once the host applies
+  settings and the lobby appears (QR + waiting-for-players marquee),
+  there was no way back to tweak rounds / difficulty / pack short of
+  resetting the whole game. New small ghost-button at the top-left
+  of the lobby (`← Einstellungen` / `← Settings`) calls
+  `showView('setup')`, returning the host to the preset chooser and
+  custom-settings form. The WS state is preserved — already-joined
+  players stay in the roster while the host adjusts settings, and
+  re-applying just re-emits the configuration. New i18n keys
+  `lobby.backToSetup` (DE + EN).
+
 ## [1.1.31] — 2026-05-27
 
 ### Changed

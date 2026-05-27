@@ -262,6 +262,15 @@
                  in admin.js renderLobbyPlayers). -->
             <div class="lobby-e">
 
+                <!-- Back to setup. Returns the host to the preset/custom
+                     chooser without resetting WS state — the QR + joined
+                     players survive a quick settings-tweak round-trip. -->
+                <button type="button" id="lobby-back-btn" class="lobby-back-btn"
+                        data-i18n-aria-label="lobby.backToSetup" aria-label="Back to settings">
+                    <span aria-hidden="true">←</span>
+                    <span data-i18n="lobby.backToSetup">Settings</span>
+                </button>
+
                 <h2 class="lobby-marquee" id="lobby-marquee" data-i18n="lobby.marqueeWaiting">
                     Waiting for players…
                 </h2>
