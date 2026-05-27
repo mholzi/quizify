@@ -2,6 +2,7 @@
   "name": "Tiere & Natur",
   "language": "de",
   "version": "1.0",
+  "theme": "nature",
   "questions": [
     {
       "id": "nat_001",
@@ -16,27 +17,15 @@
       "category": "Tiere & Natur"
     },
     {
-      "id": "nat_002",
-      "question": "Welches Säugetier kann nicht springen?",
-      "answers": [
-        {"text": "Nilpferd", "correct": false},
-        {"text": "Elefant", "correct": true},
-        {"text": "Nashorn", "correct": false}
-      ],
-      "difficulty": "easy",
-      "fun_fact": "Elefanten sind die einzigen Säugetiere, die nicht springen können. Ihre Knochenstruktur erlaubt es schlicht nicht — alle vier Beine bleiben immer am Boden.",
-      "category": "Tiere & Natur"
-    },
-    {
       "id": "nat_003",
-      "question": "Wie lange kann ein Grönlandhai leben?",
+      "question": "Wie alt kann ein Grönlandhai werden?",
       "answers": [
+        {"text": "Bis zu 80 Jahre", "correct": false},
         {"text": "Bis zu 150 Jahre", "correct": false},
-        {"text": "Bis zu 300 Jahre", "correct": false},
-        {"text": "Bis zu 500 Jahre", "correct": true}
+        {"text": "Bis zu 400 Jahre", "correct": true}
       ],
       "difficulty": "hard",
-      "fun_fact": "Der Grönlandhai ist das langlebigste bekannte Wirbeltier. Er wird erst mit etwa 150 Jahren geschlechtsreif — ein Exemplar wurde auf rund 500 Jahre geschätzt.",
+      "fun_fact": "Der Grönlandhai ist das langlebigste bekannte Wirbeltier. Eine Studie von 2016 (Nielsen et al.) schätzte ein Exemplar auf etwa 392 Jahre (±120) — 400 Jahre ist die best-belegte Obergrenze. Geschlechtsreife erst mit ca. 150 Jahren.",
       "category": "Tiere & Natur"
     },
     {
@@ -112,27 +101,15 @@
       "category": "Tiere & Natur"
     },
     {
-      "id": "nat_010",
-      "question": "Wie viel Prozent der DNA teilen Menschen mit Bananen?",
-      "answers": [
-        {"text": "Etwa 25 %", "correct": false},
-        {"text": "Etwa 44 %", "correct": false},
-        {"text": "Etwa 60 %", "correct": true}
-      ],
-      "difficulty": "hard",
-      "fun_fact": "Menschen und Bananen teilen rund 60 % ihrer DNA. Viele Gene für grundlegende Zellfunktionen sind bei fast allen Lebewesen ähnlich, weil sie von gemeinsamen Vorfahren stammen.",
-      "category": "Tiere & Natur"
-    },
-    {
       "id": "nat_011",
-      "question": "Welches Tier hat die längste Schwangerschaft?",
+      "question": "Welches Landtier hat die längste Tragezeit?",
       "answers": [
         {"text": "Blauwal (12 Monate)", "correct": false},
         {"text": "Elefant (22 Monate)", "correct": true},
         {"text": "Nashorn (18 Monate)", "correct": false}
       ],
       "difficulty": "easy",
-      "fun_fact": "Afrikanische Elefanten sind fast zwei Jahre schwanger — die längste Tragzeit aller Landsäugetiere. Das Kalb wiegt bei der Geburt bereits rund 100 Kilogramm.",
+      "fun_fact": "Afrikanische Elefanten sind fast zwei Jahre trächtig — die längste Gestationszeit aller Landsäugetiere. Das Kalb wiegt bei der Geburt bereits etwa 100 kg.",
       "category": "Tiere & Natur"
     },
     {
@@ -184,42 +161,6 @@
       "category": "Tiere & Natur"
     },
     {
-      "id": "nat_016",
-      "question": "Welches ist das lauteste Tier der Welt?",
-      "answers": [
-        {"text": "Blauwal", "correct": false},
-        {"text": "Pistolenkrebs", "correct": true},
-        {"text": "Brüllaffe", "correct": false}
-      ],
-      "difficulty": "hard",
-      "fun_fact": "Der Pistolenkrebs erzeugt mit seiner Schere einen Knall von über 200 Dezibel — lauter als ein Gewehrschuss. Die dabei entstehende Blase erreicht kurzzeitig fast die Temperatur der Sonnenoberfläche.",
-      "category": "Tiere & Natur"
-    },
-    {
-      "id": "nat_017",
-      "question": "Wie orientieren sich Brieftauben?",
-      "answers": [
-        {"text": "Am Magnetfeld der Erde", "correct": true},
-        {"text": "Am Sternenhimmel", "correct": false},
-        {"text": "An Gerüchen von Gewässern", "correct": false}
-      ],
-      "difficulty": "medium",
-      "fun_fact": "Brieftauben haben winzige Eisenoxid-Kristalle im Schnabel, die wie ein eingebauter Kompass funktionieren. Sie können das Magnetfeld der Erde wahrnehmen und sich so über Hunderte Kilometer orientieren.",
-      "category": "Tiere & Natur"
-    },
-    {
-      "id": "nat_018",
-      "question": "Welches Tier hat proportional das größte Gehirn?",
-      "answers": [
-        {"text": "Delfin", "correct": false},
-        {"text": "Ameise", "correct": true},
-        {"text": "Kolibri", "correct": false}
-      ],
-      "difficulty": "hard",
-      "fun_fact": "Das Gehirn einer Ameise macht etwa 15 % ihrer gesamten Körpermasse aus. Beim Menschen sind es nur rund 2 %. Ameisenkolonien zeigen kollektive Intelligenz, die einzelne Gehirne weit übersteigt.",
-      "category": "Tiere & Natur"
-    },
-    {
       "id": "nat_019",
       "question": "Wie viele Zähne kann ein Hai in seinem Leben produzieren?",
       "answers": [
@@ -233,26 +174,26 @@
     },
     {
       "id": "nat_020",
-      "question": "Welcher Baum ist der älteste bekannte lebende Organismus?",
+      "question": "Welche Baumart umfasst den ältesten bekannten nicht-klonalen Einzelbaum?",
       "answers": [
         {"text": "Mammutbaum", "correct": false},
-        {"text": "Langlebige Kiefer (Bristlecone Pine)", "correct": true},
+        {"text": "Borstenkiefer", "correct": true},
         {"text": "Olivenbaum", "correct": false}
       ],
       "difficulty": "hard",
-      "fun_fact": "Die älteste bekannte Langlebige Kiefer namens 'Methuselah' in Kalifornien ist über 4.850 Jahre alt. Ihr genauer Standort wird geheim gehalten, um sie vor Vandalismus zu schützen.",
+      "fun_fact": "Die älteste bekannte Borstenkiefer, 'Methusalem' genannt, in Kalifornien ist über 4.850 Jahre alt. Ihr genauer Standort wird geheim gehalten, um sie vor Vandalismus zu schützen.",
       "category": "Tiere & Natur"
     },
     {
       "id": "nat_021",
-      "question": "Welches Tier kann monatelang ohne Kopf überleben?",
+      "question": "Welches Tier kann wochenlang ohne Kopf überleben?",
       "answers": [
         {"text": "Regenwurm", "correct": false},
         {"text": "Kakerlake", "correct": true},
         {"text": "Tausendfüßler", "correct": false}
       ],
       "difficulty": "medium",
-      "fun_fact": "Eine Kakerlake kann wochenlang ohne Kopf leben, weil sie durch Öffnungen am Körper atmet und ein dezentrales Nervensystem hat. Sie stirbt schließlich an Dehydrierung, weil sie nichts trinken kann.",
+      "fun_fact": "Eine Kakerlake kann wochenlang ohne Kopf leben, weil sie durch Öffnungen in ihrem Körper atmet und ein dezentralisiertes Nervensystem hat. Sie stirbt schließlich an Dehydrierung, weil sie nicht trinken kann.",
       "category": "Tiere & Natur"
     },
     {
@@ -269,14 +210,14 @@
     },
     {
       "id": "nat_023",
-      "question": "Welches Tier hat blaues Blut?",
+      "question": "Welches dieser Tiere war als erstes bekannt für blaues, kupferbasiertes Blut?",
       "answers": [
         {"text": "Pfeilschwanzkrebs", "correct": true},
-        {"text": "Tintenfisch", "correct": false},
+        {"text": "Goldfisch", "correct": false},
         {"text": "Seestern", "correct": false}
       ],
       "difficulty": "medium",
-      "fun_fact": "Das Blut des Pfeilschwanzkrebses ist kupferbasiert statt eisenbasiert und daher blau. Es wird in der Medizin eingesetzt, um Bakteriengifte in Impfstoffen nachzuweisen — ein Liter kostet über 13.000 Euro.",
+      "fun_fact": "Das Blut des Pfeilschwanzkrebses basiert auf Kupfer statt Eisen und ist deshalb blau. Es wird in der Medizin zum Nachweis bakterieller Endotoxine in Impfstoffen verwendet — ein Liter kostet über 13.000 €.",
       "category": "Tiere & Natur"
     },
     {
@@ -336,7 +277,7 @@
         {"text": "18", "correct": false}
       ],
       "difficulty": "medium",
-      "fun_fact": "Asseln haben 14 Beine und sind keine Insekten, sondern Krebstiere. Sie sind die einzigen Krebstiere, die vollständig an Land leben, und atmen über kiemenähnliche Organe an den Hinterbeinen.",
+      "fun_fact": "Asseln haben 14 Beine und sind keine Insekten, sondern Krebstiere. Sie zählen zu den wenigen Krebstieren, die vollständig an Land leben, und atmen über pleopodale Tracheenlungen an der Unterseite ihres Hinterleibs.",
       "category": "Tiere & Natur"
     },
     {
@@ -388,39 +329,27 @@
       "category": "Tiere & Natur"
     },
     {
-      "id": "nat_033",
-      "question": "Wie viele Gerüche kann ein Hund unterscheiden?",
-      "answers": [
-        {"text": "Etwa 10.000", "correct": false},
-        {"text": "Etwa 1 Million", "correct": false},
-        {"text": "Über 1 Billion", "correct": true}
-      ],
-      "difficulty": "medium",
-      "fun_fact": "Die Nase eines Hundes hat bis zu 300 Millionen Riechrezeptoren (der Mensch hat 6 Millionen). Hunde können einzelne Moleküle erkennen — das entspricht einem Teelöffel Zucker in zwei olympischen Schwimmbecken.",
-      "category": "Tiere & Natur"
-    },
-    {
       "id": "nat_034",
-      "question": "Welches Tier hat die meisten Beine?",
+      "question": "Welches Tier hält den Rekord für die meisten jemals gezählten Beine an einem einzelnen Individuum?",
       "answers": [
-        {"text": "Tausendfüßler mit 750 Beinen", "correct": false},
-        {"text": "Eumillipes persephone mit über 1.300 Beinen", "correct": true},
-        {"text": "Riesenschnurfüßer mit 400 Beinen", "correct": false}
+        {"text": "Ein gewöhnlicher Gartentausendfüßler", "correct": false},
+        {"text": "Eumillipes persephone", "correct": true},
+        {"text": "Ein afrikanischer Riesentausendfüßler", "correct": false}
       ],
       "difficulty": "hard",
-      "fun_fact": "Eumillipes persephone wurde 2021 in Australien entdeckt und hat bis zu 1.306 Beine — das erste Tier, das den Namen 'Tausendfüßler' tatsächlich verdient hat.",
+      "fun_fact": "Eumillipes persephone wurde 2021 in Australien entdeckt und hat bis zu 1.306 Beine — das erste Tier, das den Namen 'Tausendfüßler' wirklich verdient.",
       "category": "Tiere & Natur"
     },
     {
       "id": "nat_035",
-      "question": "Welches Tier kann seinen eigenen Schwanz nachwachsen lassen?",
+      "question": "Welches Tier kann komplette Gliedmaßen, Organe und sogar Teile seines Gehirns nachwachsen lassen?",
       "answers": [
         {"text": "Gecko", "correct": false},
         {"text": "Axolotl", "correct": true},
         {"text": "Leguan", "correct": false}
       ],
       "difficulty": "easy",
-      "fun_fact": "Der Axolotl kann nicht nur seinen Schwanz, sondern auch Gliedmaßen, Organe und sogar Teile seines Gehirns vollständig regenerieren — ohne Narbenbildung. Forscher untersuchen ihn intensiv für die Regenerationsmedizin.",
+      "fun_fact": "Der Axolotl kann nicht nur seinen Schwanz, sondern auch Gliedmaßen, Organe und sogar Teile seines Gehirns nachwachsen lassen — ohne Narbenbildung. Wissenschaftler erforschen ihn intensiv für die regenerative Medizin.",
       "category": "Tiere & Natur"
     },
     {
@@ -457,18 +386,6 @@
       ],
       "difficulty": "medium",
       "fun_fact": "Mit rund 400.000 bekannten Arten sind Käfer die artenreichste Ordnung im Tierreich. Der Biologe J.B.S. Haldane soll gesagt haben, der Schöpfer habe 'eine übermäßige Vorliebe für Käfer' gehabt.",
-      "category": "Tiere & Natur"
-    },
-    {
-      "id": "nat_039",
-      "question": "Welches Tier hat drei Augenlider pro Auge?",
-      "answers": [
-        {"text": "Eule", "correct": false},
-        {"text": "Kamel", "correct": true},
-        {"text": "Krokodil", "correct": false}
-      ],
-      "difficulty": "medium",
-      "fun_fact": "Kamele haben drei Augenlider pro Auge: zwei mit Wimpern und ein durchsichtiges drittes, das wie eine Schutzbrille gegen Sandstürme wirkt. Sie können mit geschlossenem dritten Lid noch sehen.",
       "category": "Tiere & Natur"
     },
     {
@@ -509,14 +426,14 @@
     },
     {
       "id": "nat_043",
-      "question": "Wie viele Gehirne hat ein Blutegel?",
+      "question": "Wie viele Gehirne (Ganglien) hat ein Blutegel?",
       "answers": [
         {"text": "1", "correct": false},
         {"text": "16", "correct": false},
         {"text": "32", "correct": true}
       ],
       "difficulty": "hard",
-      "fun_fact": "Ein Blutegel hat 32 Gehirne — technisch gesehen 32 Ganglien, die jeweils als eigenständiges Mini-Gehirn fungieren. Dazu kommen 10 Mägen, 3 Kiefer und 300 Zähne.",
+      "fun_fact": "Ein Blutegel hat 32 Ganglien, von denen jedes als Mini-Gehirn funktioniert. Er hat außerdem 3 Kiefer, etwa 300 Zähne und einen komplexen Verdauungstrakt mit mehreren paarigen Blindsäcken zur Speicherung von Blutmahlzeiten.",
       "category": "Tiere & Natur"
     },
     {
@@ -557,14 +474,14 @@
     },
     {
       "id": "nat_047",
-      "question": "Welches Tier kann elektrische Felder erzeugen und damit jagen?",
+      "question": "Welches Tier kann elektrische Schläge von bis zu 860 Volt erzeugen, um Beute zu betäuben?",
       "answers": [
         {"text": "Zitteraal", "correct": true},
         {"text": "Hammerhai", "correct": false},
-        {"text": "Rochen", "correct": false}
+        {"text": "Muräne", "correct": false}
       ],
       "difficulty": "easy",
-      "fun_fact": "Der Zitteraal kann Stromstöße von bis zu 860 Volt erzeugen — genug, um ein Pferd zu betäuben. Er ist übrigens kein Aal, sondern ein Neuwelt-Messerfisch und näher mit dem Wels verwandt.",
+      "fun_fact": "Der Zitteraal kann Schläge von bis zu 860 Volt erzeugen — genug, um ein Pferd zu betäuben. Er ist eigentlich kein Aal, sondern ein Messerfisch, näher verwandt mit Welsen.",
       "category": "Tiere & Natur"
     },
     {
@@ -577,18 +494,6 @@
       ],
       "difficulty": "medium",
       "fun_fact": "Die Augen des Koloss-Kalmars haben einen Durchmesser von bis zu 27 cm — so groß wie ein Fußball. Damit kann er in der Tiefsee noch schwache Biolumineszenz von Pottwalen erkennen.",
-      "category": "Tiere & Natur"
-    },
-    {
-      "id": "nat_049",
-      "question": "Welches Insekt kann das 1.000-fache seines Eigengewichts heben?",
-      "answers": [
-        {"text": "Blattschneiderameise", "correct": false},
-        {"text": "Nashornkäfer", "correct": true},
-        {"text": "Herkulesbiene", "correct": false}
-      ],
-      "difficulty": "medium",
-      "fun_fact": "Der Nashornkäfer kann das 850- bis 1.141-fache seines Eigengewichts tragen. Übertragen auf einen Menschen wäre das, als würde man 65 Tonnen heben — das Gewicht eines Kampfpanzers.",
       "category": "Tiere & Natur"
     },
     {

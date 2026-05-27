@@ -999,6 +999,128 @@ button, .btn {
     font-size: 0.75rem;
 }
 
+/* Pack-Chip icon prefix (data-icon attribute on category chips).
+   Renders the emoji to the left of the chip text. Active chips still
+   get the checkmark via the rule above — icon and check coexist. */
+#category-chips .chip[data-icon]:not(.active)::before {
+    content: attr(data-icon) ' ';
+    font-size: 0.85rem;
+    margin-right: 2px;
+}
+
+/* When a theme-tab filter is active, chips not in the active theme
+   are hidden. The Mixed chip never hides — it stays as the "select
+   everything" escape hatch. */
+#category-chips .chip.hidden-by-theme {
+    display: none;
+}
+
+/* ==========================================
+   Phase 2: Featured-Spotlight + Theme-Tabs
+   ==========================================
+   Pack-picker scaling pattern. The flat chip-grid stays as the
+   baseline; the spotlight + theme-tabs are additive layers that
+   admin.js shows/hides based on per-language pack count:
+     - <5  packs visible: spotlight + tabs hidden, plain chips
+     - 5-9 packs:         spotlight visible, tabs hidden
+     - 10+ packs:         spotlight + tabs both visible (full Phase 2)
+   See ~/.gstack/designs/pack-ui-2026-05-27/phase2-themes.html for
+   the source mockup Markus approved on 2026-05-27. */
+
+.featured-spotlight {
+    position: relative;
+    background: linear-gradient(135deg, var(--color-accent-primary) 0%, var(--color-warning) 100%);
+    border-radius: 14px;
+    padding: 14px 16px 12px;
+    color: #fff;
+    margin-bottom: var(--space-md);
+    overflow: hidden;
+    box-shadow: 0 4px 14px rgba(232, 138, 127, 0.22);
+    cursor: pointer;
+    transition: transform 0.12s ease, box-shadow 0.12s ease;
+}
+.featured-spotlight:hover,
+.featured-spotlight:focus-within {
+    transform: translateY(-1px);
+    box-shadow: 0 6px 18px rgba(232, 138, 127, 0.28);
+}
+.featured-spotlight::before {
+    content: '\2728';
+    position: absolute;
+    top: -8px;
+    right: 10px;
+    font-size: 3.2rem;
+    opacity: 0.18;
+    pointer-events: none;
+}
+.featured-spotlight .spotlight-label {
+    font-family: var(--font-system, inherit);
+    font-size: 0.65rem;
+    text-transform: uppercase;
+    letter-spacing: 0.12em;
+    opacity: 0.92;
+    margin-bottom: 4px;
+}
+.featured-spotlight .spotlight-title {
+    font-weight: 700;
+    font-size: 1.15rem;
+    line-height: 1.15;
+    margin-bottom: 2px;
+}
+.featured-spotlight .spotlight-meta {
+    font-size: 0.8rem;
+    opacity: 0.9;
+    margin-bottom: 10px;
+}
+.featured-spotlight .spotlight-play-btn {
+    background: rgba(255, 255, 255, 0.95);
+    color: var(--color-text-primary);
+    border: 0;
+    border-radius: 999px;
+    padding: 7px 16px;
+    font-weight: 700;
+    font-size: 0.85rem;
+    cursor: pointer;
+}
+.featured-spotlight .spotlight-play-btn:hover {
+    background: #fff;
+}
+
+.theme-tabs {
+    display: flex;
+    gap: 6px;
+    overflow-x: auto;
+    margin-bottom: var(--space-sm);
+    padding-bottom: 2px;
+    scrollbar-width: none;
+}
+.theme-tabs::-webkit-scrollbar {
+    display: none;
+}
+.theme-tab {
+    flex: 0 0 auto;
+    background: var(--color-bg-surface);
+    border: 1.5px solid var(--color-border-light);
+    border-radius: 999px;
+    padding: 6px 12px;
+    font-size: 0.78rem;
+    font-weight: 600;
+    color: var(--color-text-muted);
+    cursor: pointer;
+    white-space: nowrap;
+    transition: all 0.12s ease;
+    font-family: var(--font-system, inherit);
+}
+.theme-tab:hover {
+    color: var(--color-text-primary);
+    border-color: var(--color-border-medium);
+}
+.theme-tab.active {
+    background: var(--color-text-primary);
+    color: var(--color-bg-surface);
+    border-color: var(--color-text-primary);
+}
+
 /* ==========================================
    Setting Rows (Beatify pattern)
    ========================================== */

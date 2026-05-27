@@ -2,6 +2,7 @@
   "name": "Animals & Nature",
   "language": "en",
   "version": "1.0",
+  "theme": "nature",
   "questions": [
     {
       "id": "nat_en_001",
@@ -16,27 +17,15 @@
       "category": "Animals & Nature"
     },
     {
-      "id": "nat_en_002",
-      "question": "Which mammal cannot jump?",
-      "answers": [
-        {"text": "Hippopotamus", "correct": false},
-        {"text": "Elephant", "correct": true},
-        {"text": "Rhinoceros", "correct": false}
-      ],
-      "difficulty": "easy",
-      "fun_fact": "Elephants are the only mammals that cannot jump. Their bone structure simply doesn't allow it — all four feet must remain on the ground at all times.",
-      "category": "Animals & Nature"
-    },
-    {
       "id": "nat_en_003",
       "question": "How long can a Greenland shark live?",
       "answers": [
+        {"text": "Up to 80 years", "correct": false},
         {"text": "Up to 150 years", "correct": false},
-        {"text": "Up to 300 years", "correct": false},
-        {"text": "Up to 500 years", "correct": true}
+        {"text": "Up to 400 years", "correct": true}
       ],
       "difficulty": "hard",
-      "fun_fact": "The Greenland shark is the longest-lived vertebrate known to science. It reaches sexual maturity at around 150 years old — one individual was estimated to be around 500 years old.",
+      "fun_fact": "The Greenland shark is the longest-lived vertebrate known to science. A landmark 2016 study estimated one individual at around 392 years old (±120), making 400 years the best-supported upper estimate. They reach sexual maturity at around 150 years old.",
       "category": "Animals & Nature"
     },
     {
@@ -112,20 +101,8 @@
       "category": "Animals & Nature"
     },
     {
-      "id": "nat_en_010",
-      "question": "How much DNA do humans share with bananas?",
-      "answers": [
-        {"text": "About 25%", "correct": false},
-        {"text": "About 44%", "correct": false},
-        {"text": "About 60%", "correct": true}
-      ],
-      "difficulty": "hard",
-      "fun_fact": "Humans and bananas share around 60% of their DNA. Many genes governing basic cell functions are similar across nearly all living things because they come from common ancestors.",
-      "category": "Animals & Nature"
-    },
-    {
       "id": "nat_en_011",
-      "question": "Which animal has the longest pregnancy?",
+      "question": "Which land animal has the longest pregnancy?",
       "answers": [
         {"text": "Blue whale (12 months)", "correct": false},
         {"text": "Elephant (22 months)", "correct": true},
@@ -184,42 +161,6 @@
       "category": "Animals & Nature"
     },
     {
-      "id": "nat_en_016",
-      "question": "Which is the loudest animal in the world?",
-      "answers": [
-        {"text": "Blue whale", "correct": false},
-        {"text": "Pistol shrimp", "correct": true},
-        {"text": "Howler monkey", "correct": false}
-      ],
-      "difficulty": "hard",
-      "fun_fact": "The pistol shrimp produces a snap of over 200 decibels with its claw — louder than a gunshot. The resulting cavitation bubble briefly reaches temperatures close to the surface of the Sun.",
-      "category": "Animals & Nature"
-    },
-    {
-      "id": "nat_en_017",
-      "question": "How do homing pigeons navigate?",
-      "answers": [
-        {"text": "Using Earth's magnetic field", "correct": true},
-        {"text": "By the stars", "correct": false},
-        {"text": "By the smell of bodies of water", "correct": false}
-      ],
-      "difficulty": "medium",
-      "fun_fact": "Homing pigeons have tiny magnetite crystals in their beaks that act like a built-in compass. They can sense Earth's magnetic field and navigate over hundreds of kilometres.",
-      "category": "Animals & Nature"
-    },
-    {
-      "id": "nat_en_018",
-      "question": "Which animal has the largest brain proportional to its body size?",
-      "answers": [
-        {"text": "Dolphin", "correct": false},
-        {"text": "Ant", "correct": true},
-        {"text": "Hummingbird", "correct": false}
-      ],
-      "difficulty": "hard",
-      "fun_fact": "An ant's brain makes up about 15% of its total body mass. In humans it's only around 2%. Ant colonies display collective intelligence that far exceeds individual brains.",
-      "category": "Animals & Nature"
-    },
-    {
       "id": "nat_en_019",
       "question": "How many teeth can a shark produce in its lifetime?",
       "answers": [
@@ -233,7 +174,7 @@
     },
     {
       "id": "nat_en_020",
-      "question": "Which tree is the oldest known living organism?",
+      "question": "Which tree species includes the oldest known individual non-clonal tree?",
       "answers": [
         {"text": "Giant sequoia", "correct": false},
         {"text": "Bristlecone pine", "correct": true},
@@ -245,7 +186,7 @@
     },
     {
       "id": "nat_en_021",
-      "question": "Which animal can survive for months without its head?",
+      "question": "Which animal can survive for weeks without its head?",
       "answers": [
         {"text": "Earthworm", "correct": false},
         {"text": "Cockroach", "correct": true},
@@ -269,10 +210,10 @@
     },
     {
       "id": "nat_en_023",
-      "question": "Which animal has blue blood?",
+      "question": "Which of these animals was the first known to have blue, copper-based blood?",
       "answers": [
         {"text": "Horseshoe crab", "correct": true},
-        {"text": "Squid", "correct": false},
+        {"text": "Goldfish", "correct": false},
         {"text": "Starfish", "correct": false}
       ],
       "difficulty": "medium",
@@ -336,7 +277,7 @@
         {"text": "18", "correct": false}
       ],
       "difficulty": "medium",
-      "fun_fact": "Woodlice have 14 legs and are not insects but crustaceans. They are the only crustaceans to live entirely on land, breathing through gill-like organs on their hind legs.",
+      "fun_fact": "Woodlice have 14 legs and are not insects but crustaceans. They are among the few crustaceans to live entirely on land, breathing through pleopodal lungs on the underside of their abdomen.",
       "category": "Animals & Nature"
     },
     {
@@ -388,24 +329,12 @@
       "category": "Animals & Nature"
     },
     {
-      "id": "nat_en_033",
-      "question": "How many scents can a dog distinguish?",
-      "answers": [
-        {"text": "About 10,000", "correct": false},
-        {"text": "About 1 million", "correct": false},
-        {"text": "Over 1 trillion", "correct": true}
-      ],
-      "difficulty": "medium",
-      "fun_fact": "A dog's nose has up to 300 million scent receptors (humans have 6 million). Dogs can detect individual molecules — equivalent to a teaspoon of sugar dissolved in two Olympic swimming pools.",
-      "category": "Animals & Nature"
-    },
-    {
       "id": "nat_en_034",
-      "question": "Which animal has the most legs?",
+      "question": "Which animal holds the record for the most legs ever counted on a single individual?",
       "answers": [
-        {"text": "Millipede with 750 legs", "correct": false},
-        {"text": "Eumillipes persephone with over 1,300 legs", "correct": true},
-        {"text": "Giant millipede with 400 legs", "correct": false}
+        {"text": "A common garden millipede", "correct": false},
+        {"text": "Eumillipes persephone", "correct": true},
+        {"text": "A giant African millipede", "correct": false}
       ],
       "difficulty": "hard",
       "fun_fact": "Eumillipes persephone was discovered in Australia in 2021 and has up to 1,306 legs — the first animal to truly deserve the name 'millipede'.",
@@ -413,7 +342,7 @@
     },
     {
       "id": "nat_en_035",
-      "question": "Which animal can regrow its own tail?",
+      "question": "Which animal can regrow entire limbs, organs, and parts of its brain?",
       "answers": [
         {"text": "Gecko", "correct": false},
         {"text": "Axolotl", "correct": true},
@@ -460,18 +389,6 @@
       "category": "Animals & Nature"
     },
     {
-      "id": "nat_en_039",
-      "question": "Which animal has three eyelids per eye?",
-      "answers": [
-        {"text": "Owl", "correct": false},
-        {"text": "Camel", "correct": true},
-        {"text": "Crocodile", "correct": false}
-      ],
-      "difficulty": "medium",
-      "fun_fact": "Camels have three eyelids per eye: two with lashes and a transparent third that acts like goggles against sandstorms. They can see with the third eyelid closed.",
-      "category": "Animals & Nature"
-    },
-    {
       "id": "nat_en_040",
       "question": "Which animal eats its own brain?",
       "answers": [
@@ -509,14 +426,14 @@
     },
     {
       "id": "nat_en_043",
-      "question": "How many brains does a leech have?",
+      "question": "How many brains (ganglia) does a leech have?",
       "answers": [
         {"text": "1", "correct": false},
         {"text": "16", "correct": false},
         {"text": "32", "correct": true}
       ],
       "difficulty": "hard",
-      "fun_fact": "A leech has 32 brains — technically 32 ganglia, each functioning as a mini-brain. It also has 10 stomachs, 3 jaws, and 300 teeth.",
+      "fun_fact": "A leech has 32 ganglia, each functioning as a mini-brain. It also has 3 jaws, around 300 teeth, and a complex digestive tract with multiple paired caeca for storing blood meals.",
       "category": "Animals & Nature"
     },
     {
@@ -557,11 +474,11 @@
     },
     {
       "id": "nat_en_047",
-      "question": "Which animal can generate and hunt with electric fields?",
+      "question": "Which animal can generate electric shocks of up to 860 volts to stun prey?",
       "answers": [
         {"text": "Electric eel", "correct": true},
         {"text": "Hammerhead shark", "correct": false},
-        {"text": "Ray", "correct": false}
+        {"text": "Moray eel", "correct": false}
       ],
       "difficulty": "easy",
       "fun_fact": "The electric eel can generate shocks of up to 860 volts — enough to stun a horse. It is not actually an eel but a knifefish more closely related to catfish.",
@@ -577,18 +494,6 @@
       ],
       "difficulty": "medium",
       "fun_fact": "The eyes of the colossal squid can be up to 27 cm in diameter — the size of a football. This allows it to detect the faint bioluminescence of sperm whales in the deep ocean.",
-      "category": "Animals & Nature"
-    },
-    {
-      "id": "nat_en_049",
-      "question": "Which insect can lift 1,000 times its own body weight?",
-      "answers": [
-        {"text": "Leafcutter ant", "correct": false},
-        {"text": "Rhinoceros beetle", "correct": true},
-        {"text": "Hercules bee", "correct": false}
-      ],
-      "difficulty": "medium",
-      "fun_fact": "The rhinoceros beetle can carry 850 to 1,141 times its own body weight. Scaled to a human, that would be lifting 65 tonnes — the weight of a battle tank.",
       "category": "Animals & Nature"
     },
     {

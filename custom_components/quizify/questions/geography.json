@@ -2,6 +2,7 @@
   "name": "Geography",
   "language": "en",
   "version": "1.0",
+  "theme": "geography",
   "questions": [
     {
       "id": "geo_en_001",
@@ -41,14 +42,14 @@
     },
     {
       "id": "geo_en_004",
-      "question": "Which capital city sits at the highest altitude above sea level?",
+      "question": "Which city is the highest administrative capital in the world by altitude above sea level?",
       "answers": [
         {"text": "La Paz, Bolivia", "correct": true},
         {"text": "Quito, Ecuador", "correct": false},
         {"text": "Bogotá, Colombia", "correct": false}
       ],
       "difficulty": "medium",
-      "fun_fact": "La Paz sits at about 3,640 metres above sea level. Water boils there at around 87°C, making cooking take significantly longer.",
+      "fun_fact": "La Paz, Bolivia's seat of government, sits at about 3,640 metres above sea level. Water boils there at around 87°C, making cooking take significantly longer.",
       "category": "Geography"
     },
     {
@@ -65,14 +66,14 @@
     },
     {
       "id": "geo_en_006",
-      "question": "Which country has more people than all of South America combined?",
+      "question": "Which country recently surpassed China to become the world's most populous?",
       "answers": [
         {"text": "India", "correct": true},
-        {"text": "China", "correct": false},
-        {"text": "Indonesia", "correct": false}
+        {"text": "Indonesia", "correct": false},
+        {"text": "United States", "correct": false}
       ],
       "difficulty": "medium",
-      "fun_fact": "India has over 1.4 billion people; South America has only around 430 million. The Indian state of Uttar Pradesh alone has more people than Brazil.",
+      "fun_fact": "India overtook China in 2023 with over 1.4 billion people. The Indian state of Uttar Pradesh alone has more inhabitants than Brazil.",
       "category": "Geography"
     },
     {
@@ -101,14 +102,14 @@
     },
     {
       "id": "geo_en_009",
-      "question": "Which country shares borders with the most other countries?",
+      "question": "Which two countries are tied for bordering the most other countries (14 each)?",
       "answers": [
-        {"text": "China", "correct": true},
-        {"text": "Russia", "correct": false},
-        {"text": "Brazil", "correct": false}
+        {"text": "China and Russia", "correct": true},
+        {"text": "China and India", "correct": false},
+        {"text": "Russia and Kazakhstan", "correct": false}
       ],
       "difficulty": "medium",
-      "fun_fact": "China borders 14 countries — the same number as Russia. They jointly hold the record.",
+      "fun_fact": "China and Russia each border 14 countries, jointly holding the world record. Brazil leads South America with 10 neighbours.",
       "category": "Geography"
     },
     {
@@ -137,14 +138,14 @@
     },
     {
       "id": "geo_en_012",
-      "question": "Which is the only country entirely surrounded by another country — and this happens twice?",
+      "question": "Which two countries in the world are each entirely surrounded by Italy?",
       "answers": [
-        {"text": "No single country — but both San Marino and Vatican City lie entirely within Italy", "correct": true},
-        {"text": "Lesotho", "correct": false},
-        {"text": "Monaco", "correct": false}
+        {"text": "San Marino and Vatican City", "correct": true},
+        {"text": "Monaco and Andorra", "correct": false},
+        {"text": "Liechtenstein and Luxembourg", "correct": false}
       ],
       "difficulty": "hard",
-      "fun_fact": "Both San Marino and Vatican City are completely surrounded by Italy. Lesotho is also an enclave nation, but it sits within South Africa.",
+      "fun_fact": "Both San Marino and Vatican City are completely enclaved by Italy. Lesotho is also an enclave nation, but it sits within South Africa.",
       "category": "Geography"
     },
     {
@@ -192,7 +193,7 @@
         {"text": "Finland", "correct": false}
       ],
       "difficulty": "medium",
-      "fun_fact": "Iceland has only about 3.5 inhabitants per square kilometre. There are more sheep than people — roughly 800,000 sheep versus 380,000 residents.",
+      "fun_fact": "Iceland has only about 3.5 inhabitants per square kilometre — one of the lowest densities in Europe.",
       "category": "Geography"
     },
     {
@@ -205,18 +206,6 @@
       ],
       "difficulty": "easy",
       "fun_fact": "Canada's coastline stretches over 202,000 km. Walking it at 8 hours per day would take more than 19 years.",
-      "category": "Geography"
-    },
-    {
-      "id": "geo_en_018",
-      "question": "In which country is the geographical centre of Europe located?",
-      "answers": [
-        {"text": "Lithuania", "correct": true},
-        {"text": "Germany", "correct": false},
-        {"text": "Poland", "correct": false}
-      ],
-      "difficulty": "hard",
-      "fun_fact": "According to the Institut Géographique National, Europe's centre is near the village of Purnuškės, north of Vilnius in Lithuania.",
       "category": "Geography"
     },
     {
@@ -256,18 +245,6 @@
       "category": "Geography"
     },
     {
-      "id": "geo_en_022",
-      "question": "Which 'sea' is actually a lake?",
-      "answers": [
-        {"text": "The Caspian Sea", "correct": true},
-        {"text": "The Red Sea", "correct": false},
-        {"text": "The Dead Sea", "correct": false}
-      ],
-      "difficulty": "easy",
-      "fun_fact": "The Caspian Sea is the world's largest lake. It's called a 'sea' because of its size and salinity, but has no natural connection to the oceans.",
-      "category": "Geography"
-    },
-    {
       "id": "geo_en_023",
       "question": "Which US state was purchased from Russia?",
       "answers": [
@@ -281,14 +258,14 @@
     },
     {
       "id": "geo_en_024",
-      "question": "In which country can you stand in the western and eastern hemispheres simultaneously?",
+      "question": "Which famous observatory marks the Prime Meridian dividing the eastern and western hemispheres?",
       "answers": [
-        {"text": "United Kingdom", "correct": true},
-        {"text": "Spain", "correct": false},
-        {"text": "Ghana", "correct": false}
+        {"text": "Royal Observatory Greenwich", "correct": true},
+        {"text": "Paris Observatory", "correct": false},
+        {"text": "Mount Wilson Observatory", "correct": false}
       ],
       "difficulty": "medium",
-      "fun_fact": "The Prime Meridian runs through the Royal Observatory in Greenwich, London. You can literally stand with one foot in the East and one in the West.",
+      "fun_fact": "The Prime Meridian was fixed at Greenwich, London in 1884. You can literally stand with one foot in the East and one in the West on its brass line.",
       "category": "Geography"
     },
     {
@@ -317,14 +294,14 @@
     },
     {
       "id": "geo_en_027",
-      "question": "Which country changed its name in 2018?",
+      "question": "Which country officially renamed itself in April 2018?",
       "answers": [
-        {"text": "North Macedonia (formerly Macedonia)", "correct": true},
-        {"text": "Eswatini (formerly Swaziland)", "correct": false},
+        {"text": "Eswatini (formerly Swaziland)", "correct": true},
+        {"text": "North Macedonia (formerly Macedonia)", "correct": false},
         {"text": "Czechia (formerly Czech Republic)", "correct": false}
       ],
       "difficulty": "hard",
-      "fun_fact": "Macedonia renamed itself North Macedonia to settle a decades-long naming dispute with Greece. Eswatini (formerly Swaziland) also changed its name in 2018.",
+      "fun_fact": "King Mswati III announced the change on Swaziland's 50th independence anniversary. North Macedonia's rename only took effect in February 2019, and Czechia adopted its short name back in 2016.",
       "category": "Geography"
     },
     {
@@ -353,22 +330,22 @@
     },
     {
       "id": "geo_en_030",
-      "question": "Which country spans the most degrees of latitude?",
+      "question": "Which country has the greatest north-to-south length on its mainland?",
       "answers": [
         {"text": "Chile", "correct": true},
         {"text": "Brazil", "correct": false},
         {"text": "Russia", "correct": false}
       ],
       "difficulty": "hard",
-      "fun_fact": "Chile stretches over 4,300 km from north to south but averages only 177 km in width. It ranges from desert in the north to near-Antarctic regions in the south.",
+      "fun_fact": "Chile stretches over 4,300 km from north to south but averages only 177 km in width. It ranges from the Atacama Desert in the north to near-Antarctic fjords in the south.",
       "category": "Geography"
     },
     {
       "id": "geo_en_031",
-      "question": "Which city serves as capital for two separate entities simultaneously?",
+      "question": "Which European city is currently divided and serves as the capital of two separate political entities?",
       "answers": [
         {"text": "Nicosia", "correct": true},
-        {"text": "Jerusalem", "correct": false},
+        {"text": "Belfast", "correct": false},
         {"text": "Bratislava", "correct": false}
       ],
       "difficulty": "hard",
@@ -408,7 +385,7 @@
         {"text": "Japan", "correct": false}
       ],
       "difficulty": "medium",
-      "fun_fact": "Indonesia covers nearly 1.9 million km² and is the largest island nation. It would be the fifth-largest country in Europe.",
+      "fun_fact": "Indonesia covers about 1.9 million km² across more than 17,000 islands, making it larger than every European country except Russia.",
       "category": "Geography"
     },
     {
@@ -425,14 +402,14 @@
     },
     {
       "id": "geo_en_036",
-      "question": "Which country has the largest time zone offset with its neighbour?",
+      "question": "Which country uses a single time zone despite spanning five geographic ones?",
       "answers": [
         {"text": "China", "correct": true},
         {"text": "India", "correct": false},
         {"text": "Russia", "correct": false}
       ],
       "difficulty": "hard",
-      "fun_fact": "Although China spans five geographic time zones, the entire country uses just one (UTC+8). At the border with Afghanistan, clocks jump by 3.5 hours.",
+      "fun_fact": "All of China runs on UTC+8 (Beijing Time). At the Afghan border, clocks jump 3.5 hours; Russia by contrast uses 11 different time zones.",
       "category": "Geography"
     },
     {
@@ -473,38 +450,26 @@
     },
     {
       "id": "geo_en_040",
-      "question": "Which country has more English-speaking inhabitants than the United Kingdom?",
+      "question": "Which country is home to the largest English-speaking population in Africa?",
       "answers": [
         {"text": "Nigeria", "correct": true},
         {"text": "South Africa", "correct": false},
-        {"text": "Canada", "correct": false}
+        {"text": "Kenya", "correct": false}
       ],
       "difficulty": "medium",
-      "fun_fact": "Nigeria has over 200 million inhabitants, and English is the official language, making it home to more English speakers than the UK.",
+      "fun_fact": "Nigeria has over 220 million inhabitants and English is the official language, used in government, education, and media. Estimates put English speakers there at 60-100 million.",
       "category": "Geography"
     },
     {
       "id": "geo_en_041",
-      "question": "Which is the smallest ocean in the world?",
+      "question": "Which is the smallest of the world's five oceans by area?",
       "answers": [
         {"text": "Arctic Ocean", "correct": true},
         {"text": "Indian Ocean", "correct": false},
-        {"text": "Southern Ocean", "correct": false}
+        {"text": "Atlantic Ocean", "correct": false}
       ],
       "difficulty": "easy",
       "fun_fact": "The Arctic Ocean covers about 14 million km² — roughly one tenth the size of the Pacific. It is mostly frozen in winter.",
-      "category": "Geography"
-    },
-    {
-      "id": "geo_en_042",
-      "question": "Which landlocked country has the world's largest navy?",
-      "answers": [
-        {"text": "Bolivia", "correct": true},
-        {"text": "Paraguay", "correct": false},
-        {"text": "Mongolia", "correct": false}
-      ],
-      "difficulty": "medium",
-      "fun_fact": "Bolivia maintains a navy of about 5,000 personnel on Lake Titicaca despite having no sea access. It lost its coastline to Chile in the War of the Pacific in 1884.",
       "category": "Geography"
     },
     {
@@ -523,12 +488,12 @@
       "id": "geo_en_044",
       "question": "Which German state borders the most other German states?",
       "answers": [
-        {"text": "Hesse", "correct": true},
-        {"text": "Bavaria", "correct": false},
-        {"text": "Lower Saxony", "correct": false}
+        {"text": "Lower Saxony", "correct": true},
+        {"text": "Hesse", "correct": false},
+        {"text": "Bavaria", "correct": false}
       ],
       "difficulty": "medium",
-      "fun_fact": "Hesse shares borders with six other German states: Lower Saxony, Thuringia, Bavaria, Baden-Württemberg, Rhineland-Palatinate, and North Rhine-Westphalia.",
+      "fun_fact": "Lower Saxony borders nine other German states: Schleswig-Holstein, Hamburg, Bremen, Mecklenburg-Vorpommern, Brandenburg, Saxony-Anhalt, Thuringia, Hesse, and North Rhine-Westphalia.",
       "category": "Geography"
     },
     {

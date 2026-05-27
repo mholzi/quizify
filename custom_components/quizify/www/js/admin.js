@@ -59,6 +59,10 @@
     const els = {
         categoryChips: document.getElementById('category-chips'),
         categorySummary: document.getElementById('category-summary'),
+        featuredSpotlight: document.getElementById('featured-spotlight'),
+        spotlightTitle: document.getElementById('spotlight-title'),
+        spotlightMeta: document.getElementById('spotlight-meta'),
+        themeTabs: document.getElementById('theme-tabs'),
         difficultyChips: document.getElementById('difficulty-chips'),
         roundsChips: document.getElementById('rounds-chips'),
         timerChips: document.getElementById('timer-chips'),
@@ -183,6 +187,95 @@
             return window.QuizifyI18n.t(key, params);
         }
         return key;
+    }
+
+    // ---- Phase 2: Pack-UI scaling (Featured-Spotlight + Theme-Tabs) ----
+    // Source mockup: ~/.gstack/designs/pack-ui-2026-05-27/phase2-themes.html.
+    // The flat chip-grid stays as the baseline; spotlight + tabs are
+    // additive layers shown only once the visible pack count justifies
+    // the UI complexity.
+    var PACK_UI_THRESHOLDS = { spotlight: 5, tabs: 10 };
+
+    // Featured pack per language. Picked deliberately (newest / most
+    // crowd-pleasing). Update when adding fresh packs.
+    var FEATURED_PACK = {
+        de: { value: 'geographie',  title: '🌍 Geographie',  meta: '47 Fragen · Familienfreundlich' },
+        en: { value: 'geography',   title: '🌍 Geography',   meta: '47 questions · Family-friendly' },
+    };
+
+    function visiblePackCount(lang) {
+        if (!els.categoryChips) return 0;
+        var sel = '.chip[data-lang="' + lang + '"]';
+        return els.categoryChips.querySelectorAll(sel).length;
+    }
+
+    function updatePackUIScaling(lang) {
+        var count = visiblePackCount(lang);
+        // Spotlight: shown ≥5 packs/lang, populated from FEATURED_PACK.
+        if (els.featuredSpotlight) {
+            if (count >= PACK_UI_THRESHOLDS.spotlight && FEATURED_PACK[lang]) {
+                els.featuredSpotlight.hidden = false;
+                if (els.spotlightTitle) els.spotlightTitle.textContent = FEATURED_PACK[lang].title;
+                if (els.spotlightMeta)  els.spotlightMeta.textContent  = FEATURED_PACK[lang].meta;
+            } else {
+                els.featuredSpotlight.hidden = true;
+            }
+        }
+        // Theme-tabs: shown ≥10 packs/lang.
+        if (els.themeTabs) {
+            els.themeTabs.hidden = (count < PACK_UI_THRESHOLDS.tabs);
+            // Reset to "all" whenever scaling re-applies so we don't
+            // accidentally hide chips for a theme that no longer matches.
+            if (!els.themeTabs.hidden) {
+                applyThemeFilter('all');
+            } else {
+                // Tabs hidden -> clear any leftover theme filter.
+                applyThemeFilter('all');
+            }
+        }
+    }
+
+    function applyThemeFilter(theme) {
+        if (!els.categoryChips) return;
+        if (els.themeTabs) {
+            els.themeTabs.querySelectorAll('.theme-tab').forEach(function (t) {
+                t.classList.toggle('active', t.dataset.theme === theme);
+            });
+        }
+        els.categoryChips.querySelectorAll('.chip[data-theme]').forEach(function (chip) {
+            var matches = (theme === 'all') || (chip.dataset.theme === theme);
+            chip.classList.toggle('hidden-by-theme', !matches);
+        });
+    }
+
+    function setupThemeTabs() {
+        if (!els.themeTabs) return;
+        els.themeTabs.addEventListener('click', function (e) {
+            var tab = e.target.closest('.theme-tab');
+            if (!tab) return;
+            applyThemeFilter(tab.dataset.theme || 'all');
+        });
+    }
+
+    function setupFeaturedSpotlight() {
+        if (!els.featuredSpotlight || !els.categoryChips) return;
+        els.featuredSpotlight.addEventListener('click', function () {
+            var lang = (typeof selectedLanguage === 'string') ? selectedLanguage : 'de';
+            var featured = FEATURED_PACK[lang];
+            if (!featured) return;
+            // Featured click = pick exactly this pack. Clears Mixed + any
+            // multi-select from prior interactions.
+            els.categoryChips.querySelectorAll('.chip').forEach(function (c) {
+                c.classList.remove('active');
+            });
+            var target = els.categoryChips.querySelector('.chip[data-value="' + featured.value + '"]');
+            if (target) {
+                target.classList.add('active');
+                selectedCategory = featured.value;
+                selectedCategories = [featured.value];
+                updateCategorySummary();
+            }
+        });
     }
 
     function updateCategorySummary() {
@@ -324,6 +417,11 @@
     markActivePreset();
 
     setupCategoryChips(els.categoryChips);
+    setupThemeTabs();
+    setupFeaturedSpotlight();
+    // Initial scaling pass — paints spotlight/tabs once we know the
+    // visible-pack-count for the default language.
+    updatePackUIScaling(typeof selectedLanguage === 'string' ? selectedLanguage : 'de');
     setupChips(els.difficultyChips, function (v) {
         selectedDifficulty = v;
         updateSettingsSummary();
@@ -354,6 +452,9 @@
                 selectedCategories = [];
             }
         }
+        // Re-evaluate pack-UI scaling: visible pack count may have
+        // crossed a threshold (e.g. DE has 12 packs but EN has 3).
+        updatePackUIScaling(v);
         // Re-translate the entire admin UI so labels switch
         // immediately on language pick (was previously a static
         // mismatch — admin saw mixed DE/EN labels).

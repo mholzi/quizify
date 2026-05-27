@@ -57,6 +57,10 @@
     "title": "Quizify Admin",
     "category": "Kategorie",
     "categoryMixed": "Gemischt",
+    "spotlightFeatured": "⭐ Empfohlen",
+    "spotlightPlay": "▶︎ Sofort spielen",
+    "themes": "Themen",
+    "themeAll": "Alle",
     "gameSettings": "Spieleinstellungen",
     "difficulty": "Schwierigkeit",
     "rounds": "Runden",
@@ -434,5 +438,10 @@
     "installApp": "Quizify-App installieren",
     "iosHintTitle": "Quizify installieren",
     "iosHintBody": "Tippe auf ⬆️ Teilen und dann \"Zum Home-Bildschirm\""
+  },
+  "theme": {
+    "geography": "🌍 Geo",
+    "nature": "🦋 Natur",
+    "popculture": "🎬 Pop"
   }
 }

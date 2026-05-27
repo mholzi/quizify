@@ -2,6 +2,7 @@
   "name": "Pop Culture",
   "language": "en",
   "version": "1.0",
+  "theme": "popculture",
   "questions": [
     {
       "id": "pop_en_001",
@@ -136,27 +137,15 @@
       "category": "Pop Culture"
     },
     {
-      "id": "pop_en_012",
-      "question": "Which film won the very first Oscar for Best Picture?",
-      "answers": [
-        {"text": "Sunrise", "correct": false},
-        {"text": "Wings", "correct": true},
-        {"text": "The Jazz Singer", "correct": false}
-      ],
-      "difficulty": "hard",
-      "fun_fact": "Wings won at the first Oscar ceremony in 1929. The entire event lasted only 15 minutes, and the winners were announced three months in advance.",
-      "category": "Pop Culture"
-    },
-    {
       "id": "pop_en_013",
       "question": "In which country was Tetris invented?",
       "answers": [
-        {"text": "Japan", "correct": false},
-        {"text": "USA", "correct": false},
-        {"text": "Soviet Union", "correct": true}
+        {"text": "Soviet Union", "correct": true},
+        {"text": "United States", "correct": false},
+        {"text": "Japan", "correct": false}
       ],
-      "difficulty": "easy",
-      "fun_fact": "Tetris was created in 1985 by Russian programmer Alexei Pajitnov in Moscow. Due to Soviet law, he received no income from his game for many years.",
+      "difficulty": "medium",
+      "fun_fact": "Tetris was created in 1984 by Alexey Pajitnov at the Computing Centre of the Soviet Academy of Sciences in Moscow.",
       "category": "Pop Culture"
     },
     {
@@ -169,30 +158,6 @@
       ],
       "difficulty": "easy",
       "fun_fact": "The Simpsons is the longest-running American animated primetime series. Matt Groening sketched the characters in just 15 minutes in a producer's waiting room.",
-      "category": "Pop Culture"
-    },
-    {
-      "id": "pop_en_015",
-      "question": "Which book is the best-selling after the Bible?",
-      "answers": [
-        {"text": "Harry Potter and the Philosopher's Stone", "correct": false},
-        {"text": "The Lord of the Rings", "correct": false},
-        {"text": "Don Quixote", "correct": true}
-      ],
-      "difficulty": "hard",
-      "fun_fact": "Don Quixote by Miguel de Cervantes was published in 1605 and has sold an estimated 500 million copies. It is considered the first modern novel in world literature.",
-      "category": "Pop Culture"
-    },
-    {
-      "id": "pop_en_016",
-      "question": "Which actress was the first woman to gross one billion dollars at the box office?",
-      "answers": [
-        {"text": "Angelina Jolie", "correct": false},
-        {"text": "Emma Watson", "correct": true},
-        {"text": "Scarlett Johansson", "correct": false}
-      ],
-      "difficulty": "medium",
-      "fun_fact": "Emma Watson reached this milestone largely through the Harry Potter films. She was just 11 years old when the first film was released.",
       "category": "Pop Culture"
     },
     {
@@ -221,14 +186,14 @@
     },
     {
       "id": "pop_en_019",
-      "question": "Which instrument plays the iconic Jaws theme?",
+      "question": "Which instrument plays the iconic two-note Jaws theme?",
       "answers": [
-        {"text": "Cello", "correct": true},
-        {"text": "Double bass", "correct": false},
+        {"text": "Double bass", "correct": true},
+        {"text": "Cello", "correct": false},
         {"text": "Tuba", "correct": false}
       ],
-      "difficulty": "hard",
-      "fun_fact": "John Williams' iconic two-note motif is played by cellos. Director Steven Spielberg initially thought Williams was joking when he heard the simple theme for the first time.",
+      "difficulty": "medium",
+      "fun_fact": "John Williams' two-note motif (E–F) is played by the double basses in the original score, supported by tuba and other low brass.",
       "category": "Pop Culture"
     },
     {
@@ -245,14 +210,14 @@
     },
     {
       "id": "pop_en_021",
-      "question": "Which Disney film was the first to gross over $1 billion?",
+      "question": "Which was the first Pixar film to gross over $1 billion worldwide?",
       "answers": [
-        {"text": "The Lion King (1994)", "correct": false},
         {"text": "Toy Story 3", "correct": true},
-        {"text": "Frozen", "correct": false}
+        {"text": "Finding Nemo", "correct": false},
+        {"text": "The Incredibles", "correct": false}
       ],
-      "difficulty": "hard",
-      "fun_fact": "Toy Story 3 crossed the billion-dollar mark in 2010 as the first pure Disney/Pixar film to do so — fittingly, a film about growing up for an audience that had grown up with the franchise.",
+      "difficulty": "medium",
+      "fun_fact": "Toy Story 3 (2010) was the first Pixar film to cross $1 billion worldwide. The first Disney-distributed film to cross that mark was Pirates of the Caribbean: Dead Man's Chest in 2006.",
       "category": "Pop Culture"
     },
     {
@@ -277,30 +242,6 @@
       ],
       "difficulty": "hard",
       "fun_fact": "Tupac attended the Baltimore School for the Arts, where he studied ballet, acting, and poetry. He even played the Mouse in a production of The Nutcracker.",
-      "category": "Pop Culture"
-    },
-    {
-      "id": "pop_en_024",
-      "question": "Which animal inspired the Pokémon character Pikachu?",
-      "answers": [
-        {"text": "Mouse", "correct": false},
-        {"text": "Squirrel", "correct": false},
-        {"text": "Pika (a small mountain mammal)", "correct": true}
-      ],
-      "difficulty": "medium",
-      "fun_fact": "Pikachu's designer Atsuko Nishida was inspired by the pika, a small mammal found in Asian mountains. The name combines 'pika' with 'chu', the Japanese onomatopoeia for an electric crackle.",
-      "category": "Pop Culture"
-    },
-    {
-      "id": "pop_en_025",
-      "question": "Which famous TV series was originally developed as 'The Untitled Lindelof Project'?",
-      "answers": [
-        {"text": "Breaking Bad", "correct": false},
-        {"text": "Lost", "correct": true},
-        {"text": "The Walking Dead", "correct": false}
-      ],
-      "difficulty": "hard",
-      "fun_fact": "Lost was developed at record speed: just 12 weeks from first concept to finished pilot. The pilot cost $13 million — the most expensive series pilot at the time.",
       "category": "Pop Culture"
     },
     {
@@ -353,14 +294,14 @@
     },
     {
       "id": "pop_en_030",
-      "question": "Which was the first video game played in space?",
+      "question": "Which video game was the first to be played in space?",
       "answers": [
-        {"text": "Tetris", "correct": false},
-        {"text": "Game Boy Tetris", "correct": true},
-        {"text": "Pong", "correct": false}
+        {"text": "Tetris", "correct": true},
+        {"text": "Pong", "correct": false},
+        {"text": "Super Mario Bros.", "correct": false}
       ],
-      "difficulty": "medium",
-      "fun_fact": "Russian cosmonaut Alexander Serebrov played Tetris on a Game Boy aboard the Mir space station in 1993. That Game Boy was later auctioned for $1,220.",
+      "difficulty": "hard",
+      "fun_fact": "Cosmonaut Alexander Serebrov took a Game Boy with a Tetris cartridge to the Mir space station in 1993 — the cartridge was later auctioned for $1,220.",
       "category": "Pop Culture"
     },
     {
@@ -449,14 +390,14 @@
     },
     {
       "id": "pop_en_038",
-      "question": "Which famous fictional character is described as blonde in the books but portrayed as brunette in the films?",
+      "question": "Which famous fictional character is described as dark-haired in the books but was portrayed as blonde in several films?",
       "answers": [
-        {"text": "Katniss Everdeen", "correct": false},
         {"text": "James Bond", "correct": true},
-        {"text": "Hermione Granger", "correct": false}
+        {"text": "Sherlock Holmes", "correct": false},
+        {"text": "Harry Potter", "correct": false}
       ],
-      "difficulty": "medium",
-      "fun_fact": "In Ian Fleming's novels, James Bond is described as dark-haired with a scar. It wasn't until Daniel Craig in 2006 that Bond became blonde — and Fleming would have hated it.",
+      "difficulty": "hard",
+      "fun_fact": "In Ian Fleming's novels, James Bond has black hair. Daniel Craig in 2006's Casino Royale was the first blonde film Bond — fans of the books were initially up in arms.",
       "category": "Pop Culture"
     },
     {
@@ -565,18 +506,6 @@
       ],
       "difficulty": "medium",
       "fun_fact": "The original series ran for only three seasons (1966–1969) and was cancelled due to poor ratings. It became a cult hit in reruns and launched a multi-billion-dollar franchise.",
-      "category": "Pop Culture"
-    },
-    {
-      "id": "pop_en_048",
-      "question": "What was the subject of one of the first widely shared GIFs on the internet?",
-      "answers": [
-        {"text": "A cat", "correct": false},
-        {"text": "An aeroplane", "correct": true},
-        {"text": "A dog", "correct": false}
-      ],
-      "difficulty": "medium",
-      "fun_fact": "The GIF format was developed by CompuServe in 1987. One of the first widely shared GIFs showed a spinning aeroplane. The debate over pronunciation ('GIF' vs 'JIF') continues to this day.",
       "category": "Pop Culture"
     },
     {

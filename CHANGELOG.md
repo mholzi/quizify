@@ -3,6 +3,32 @@
 All notable changes to Quizify are documented here. This project follows
 [Semantic Versioning](https://semver.org/).
 
+## [1.1.30] — 2026-05-27
+
+### Added
+
+- **Pack-picker scales for a growing library (Phase-2 UI scaffolding).**
+  The admin pack-selection screen now ships with two additive layers
+  that turn on automatically as the catalogue grows:
+  - **Featured-Spotlight** card — coral→sun gradient, surfaces a
+    recommended pack with a single "Play now" CTA. Click selects
+    that pack and clears any multi-select.
+  - **Theme-Tabs** row — pill-style horizontal scroll
+    (`All / Geo / Nature / Pop / …`) that filters which sub-pack
+    chips are visible. Theme assignment lives in each pack JSON as
+    a new top-level `theme` field (`geography`, `nature`,
+    `popculture` for the existing 6 packs).
+  Visibility thresholds (per language) are pure JS constants in
+  `admin.js`: spotlight ≥5 packs, tabs ≥10 packs. Below those, the
+  current flat chip-row stays unchanged — no visual regression
+  while the library is small. When generating new packs the UI
+  layers light up on their own.
+  New i18n keys (EN + DE): `admin.spotlightFeatured`,
+  `admin.spotlightPlay`, `admin.themes`, `admin.themeAll`,
+  `theme.geography`, `theme.nature`, `theme.popculture`. Source
+  mockup the design follows lives in
+  `.gstack/designs/pack-ui-2026-05-27/phase2-themes.html`.
+
 ## [1.1.29] — 2026-05-27
 
 ### Added

@@ -147,14 +147,35 @@
 
                     <div class="vF-step">
                         <div class="vF-q"><span class="num">1</span><span data-i18n="setup.eigene.q1">Which topics?</span></div>
+
+                        <!-- Phase 2: Featured-Spotlight. Clicking selects the featured pack and
+                             clears any multi-select. Hidden via CSS when pack count is too low
+                             to bother. JS populates title/meta from the featured pack. -->
+                        <div class="featured-spotlight" id="featured-spotlight" hidden>
+                            <div class="spotlight-label" data-i18n="admin.spotlightFeatured">⭐ Empfohlen</div>
+                            <div class="spotlight-title" id="spotlight-title"></div>
+                            <div class="spotlight-meta" id="spotlight-meta"></div>
+                            <button type="button" class="spotlight-play-btn" data-i18n="admin.spotlightPlay">▶︎ Spielen</button>
+                        </div>
+
+                        <!-- Phase 2: Theme-Tabs. Filter visible sub-pack chips. The "Alle" tab
+                             keeps all chips visible (current default). Tabs auto-hide via JS
+                             when fewer than 2 themes have visible packs for the active language. -->
+                        <div class="theme-tabs" id="theme-tabs" role="tablist" data-i18n-aria-label="admin.themes" aria-label="Themes" hidden>
+                            <button type="button" class="theme-tab active" data-theme="all" data-i18n="admin.themeAll">Alle</button>
+                            <button type="button" class="theme-tab" data-theme="geography" data-i18n="theme.geography">🌍 Geo</button>
+                            <button type="button" class="theme-tab" data-theme="nature" data-i18n="theme.nature">🦋 Natur</button>
+                            <button type="button" class="theme-tab" data-theme="popculture" data-i18n="theme.popculture">🎬 Pop</button>
+                        </div>
+
                         <div class="vF-answers chip-group" id="category-chips" role="group" data-i18n-aria-label="admin.category" aria-label="Category">
                             <button type="button" class="chip active" data-value="mixed" data-i18n="admin.categoryMixed">Mixed</button>
-                            <button type="button" class="chip" data-value="geographie" data-lang="de">Geographie</button>
-                            <button type="button" class="chip" data-value="tiere-natur" data-lang="de">Tiere &amp; Natur</button>
-                            <button type="button" class="chip" data-value="popkultur" data-lang="de">Popkultur</button>
-                            <button type="button" class="chip" data-value="geography" data-lang="en">Geography</button>
-                            <button type="button" class="chip" data-value="animals-nature" data-lang="en">Animals &amp; Nature</button>
-                            <button type="button" class="chip" data-value="pop-culture" data-lang="en">Pop Culture</button>
+                            <button type="button" class="chip" data-value="geographie" data-lang="de" data-theme="geography" data-icon="🌍">Geographie</button>
+                            <button type="button" class="chip" data-value="tiere-natur" data-lang="de" data-theme="nature" data-icon="🦋">Tiere &amp; Natur</button>
+                            <button type="button" class="chip" data-value="popkultur" data-lang="de" data-theme="popculture" data-icon="🎬">Popkultur</button>
+                            <button type="button" class="chip" data-value="geography" data-lang="en" data-theme="geography" data-icon="🌍">Geography</button>
+                            <button type="button" class="chip" data-value="animals-nature" data-lang="en" data-theme="nature" data-icon="🦋">Animals &amp; Nature</button>
+                            <button type="button" class="chip" data-value="pop-culture" data-lang="en" data-theme="popculture" data-icon="🎬">Pop Culture</button>
                         </div>
                     </div>
 

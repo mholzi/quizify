@@ -2,6 +2,7 @@
   "name": "Popkultur",
   "language": "de",
   "version": "1.0",
+  "theme": "popculture",
   "questions": [
     {
       "id": "pop_001",
@@ -136,27 +137,15 @@
       "category": "Popkultur"
     },
     {
-      "id": "pop_012",
-      "question": "Welcher Film gewann den allerersten Oscar für den besten Film?",
-      "answers": [
-        {"text": "Sunrise", "correct": false},
-        {"text": "Wings", "correct": true},
-        {"text": "The Jazz Singer", "correct": false}
-      ],
-      "difficulty": "hard",
-      "fun_fact": "Wings gewann 1929 bei der ersten Oscar-Verleihung. Die gesamte Zeremonie dauerte nur 15 Minuten, und die Gewinner wurden bereits drei Monate vorher bekannt gegeben.",
-      "category": "Popkultur"
-    },
-    {
       "id": "pop_013",
-      "question": "In welchem Land wurde das Videospiel 'Tetris' erfunden?",
+      "question": "In welchem Land wurde Tetris erfunden?",
       "answers": [
-        {"text": "Japan", "correct": false},
+        {"text": "Sowjetunion", "correct": true},
         {"text": "USA", "correct": false},
-        {"text": "Sowjetunion", "correct": true}
+        {"text": "Japan", "correct": false}
       ],
-      "difficulty": "easy",
-      "fun_fact": "Tetris wurde 1985 vom russischen Programmierer Alexei Paschitnow in Moskau entwickelt. Wegen der Sowjetgesetze erhielt er jahrelang keinerlei Einnahmen aus seinem Spiel.",
+      "difficulty": "medium",
+      "fun_fact": "Tetris wurde 1984 vom russischen Programmierer Alexei Pajitnov am Rechenzentrum der Sowjetischen Akademie der Wissenschaften in Moskau entwickelt.",
       "category": "Popkultur"
     },
     {
@@ -169,30 +158,6 @@
       ],
       "difficulty": "easy",
       "fun_fact": "Die Simpsons sind die am längsten laufende US-amerikanische Zeichentrickserie zur Primetime. Matt Groening zeichnete die Figuren in nur 15 Minuten im Warteraum eines Produzentenbüros.",
-      "category": "Popkultur"
-    },
-    {
-      "id": "pop_015",
-      "question": "Welches Buch ist nach der Bibel das meistverkaufte Buch der Welt?",
-      "answers": [
-        {"text": "Harry Potter und der Stein der Weisen", "correct": false},
-        {"text": "Der Herr der Ringe", "correct": false},
-        {"text": "Don Quijote", "correct": true}
-      ],
-      "difficulty": "hard",
-      "fun_fact": "Don Quijote von Miguel de Cervantes wurde 1605 veröffentlicht und hat schätzungsweise über 500 Millionen Exemplare verkauft. Es gilt als der erste moderne Roman der Weltliteratur.",
-      "category": "Popkultur"
-    },
-    {
-      "id": "pop_016",
-      "question": "Welche berühmte Schauspielerin war die erste Frau, die eine Milliarde Dollar an den Kinokassen einspielte?",
-      "answers": [
-        {"text": "Angelina Jolie", "correct": false},
-        {"text": "Emma Watson", "correct": true},
-        {"text": "Scarlett Johansson", "correct": false}
-      ],
-      "difficulty": "medium",
-      "fun_fact": "Emma Watson erreichte diesen Meilenstein hauptsächlich durch die Harry-Potter-Filme. Sie war erst 11 Jahre alt, als der erste Film in die Kinos kam.",
       "category": "Popkultur"
     },
     {
@@ -221,14 +186,14 @@
     },
     {
       "id": "pop_019",
-      "question": "Welches Instrument spielt die Filmmusik-Melodie von 'Der weiße Hai'?",
+      "question": "Welches Instrument spielt das ikonische Zwei-Noten-Motiv aus 'Der weiße Hai' (Jaws)?",
       "answers": [
-        {"text": "Cello", "correct": true},
-        {"text": "Kontrabass", "correct": false},
+        {"text": "Kontrabass", "correct": true},
+        {"text": "Cello", "correct": false},
         {"text": "Tuba", "correct": false}
       ],
-      "difficulty": "hard",
-      "fun_fact": "John Williams' ikonisches Zwei-Noten-Motiv wird von Celli gespielt. Regisseur Steven Spielberg dachte zunächst, Williams mache einen Witz, als er das simple Thema zum ersten Mal hörte.",
+      "difficulty": "medium",
+      "fun_fact": "John Williams' berühmtes Zwei-Noten-Motiv (E–F) wird im Original von den Kontrabässen gespielt, unterstützt von Tuba und tiefen Blechbläsern.",
       "category": "Popkultur"
     },
     {
@@ -245,14 +210,14 @@
     },
     {
       "id": "pop_021",
-      "question": "Welcher Disney-Film war der erste, der über 1 Milliarde Dollar einspielte?",
+      "question": "Welcher Pixar-Film war der erste, der weltweit über 1 Milliarde US-Dollar einspielte?",
       "answers": [
-        {"text": "Der König der Löwen (1994)", "correct": false},
         {"text": "Toy Story 3", "correct": true},
-        {"text": "Die Eiskönigin", "correct": false}
+        {"text": "Findet Nemo", "correct": false},
+        {"text": "Die Unglaublichen", "correct": false}
       ],
-      "difficulty": "hard",
-      "fun_fact": "Toy Story 3 knackte 2010 als erster reiner Disney/Pixar-Film die Milliarden-Grenze. Der Film handelt passenderweise vom Erwachsenwerden — genau wie sein Publikum, das mit den Filmen aufgewachsen war.",
+      "difficulty": "medium",
+      "fun_fact": "Toy Story 3 (2010) war der erste Pixar-Film über 1 Mrd. Dollar. Der erste Disney-vertriebene Film überhaupt war Pirates of the Caribbean: Dead Man's Chest 2006.",
       "category": "Popkultur"
     },
     {
@@ -277,30 +242,6 @@
       ],
       "difficulty": "hard",
       "fun_fact": "Tupac besuchte die Baltimore School for the Arts und studierte dort Ballett, Schauspiel und Lyrik. Er spielte sogar die Rolle der Maus in einer Aufführung von 'Der Nussknacker'.",
-      "category": "Popkultur"
-    },
-    {
-      "id": "pop_024",
-      "question": "Welches Tier inspirierte die Pokémon-Figur Pikachu?",
-      "answers": [
-        {"text": "Maus", "correct": false},
-        {"text": "Eichhörnchen", "correct": false},
-        {"text": "Pika (ein Pfeifhase)", "correct": true}
-      ],
-      "difficulty": "medium",
-      "fun_fact": "Pikachus Designer Atsuko Nishida ließ sich vom Pika inspirieren, einem kleinen Nagetier aus den Bergen Asiens. Der Name kombiniert 'Pika' mit 'chu', dem japanischen Lautmalerei-Wort für elektrisches Knistern.",
-      "category": "Popkultur"
-    },
-    {
-      "id": "pop_025",
-      "question": "Welche berühmte TV-Serie wurde zuerst als 'The Untitled Lindelof Project' entwickelt?",
-      "answers": [
-        {"text": "Breaking Bad", "correct": false},
-        {"text": "Lost", "correct": true},
-        {"text": "The Walking Dead", "correct": false}
-      ],
-      "difficulty": "hard",
-      "fun_fact": "Lost wurde in Rekordzeit entwickelt: Vom ersten Konzept bis zum fertigen Pilotfilm vergingen nur 12 Wochen. Der Pilot kostete 13 Millionen Dollar — damals der teuerste Serienpilot aller Zeiten.",
       "category": "Popkultur"
     },
     {
@@ -353,14 +294,14 @@
     },
     {
       "id": "pop_030",
-      "question": "Welches war das erste Videospiel, das im Weltraum gespielt wurde?",
+      "question": "Welches Videospiel wurde als erstes im Weltall gespielt?",
       "answers": [
-        {"text": "Tetris", "correct": false},
-        {"text": "Game Boy Tetris", "correct": true},
-        {"text": "Pong", "correct": false}
+        {"text": "Tetris", "correct": true},
+        {"text": "Pong", "correct": false},
+        {"text": "Super Mario Bros.", "correct": false}
       ],
-      "difficulty": "medium",
-      "fun_fact": "Der russische Kosmonaut Alexander Serebrow spielte 1993 Tetris auf einem Game Boy auf der Raumstation Mir. Dieser Game Boy wurde später für 1.220 Dollar versteigert.",
+      "difficulty": "hard",
+      "fun_fact": "Der russische Kosmonaut Alexander Serebrov nahm 1993 einen Game Boy mit Tetris-Modul auf die Raumstation Mir mit. Das Modul wurde später für 1.220 USD versteigert.",
       "category": "Popkultur"
     },
     {
@@ -449,14 +390,14 @@
     },
     {
       "id": "pop_038",
-      "question": "Welcher berühmte Filmcharakter wurde in den Büchern als blond beschrieben, aber im Film brünett dargestellt?",
+      "question": "Welche berühmte fiktionale Figur wird in den Büchern als dunkelhaarig beschrieben, wurde in mehreren Filmen aber als Blondine/Blonder dargestellt?",
       "answers": [
-        {"text": "Katniss Everdeen", "correct": false},
         {"text": "James Bond", "correct": true},
-        {"text": "Hermine Granger", "correct": false}
+        {"text": "Sherlock Holmes", "correct": false},
+        {"text": "Harry Potter", "correct": false}
       ],
-      "difficulty": "medium",
-      "fun_fact": "In Ian Flemings Romanen wird James Bond als dunkelhaarig mit einer Narbe beschrieben. Erst mit Daniel Craig (2006) wurde Bond zum blonden Agenten — und Fleming hätte es gehasst.",
+      "difficulty": "hard",
+      "fun_fact": "In Ian Flemings Romanen hat James Bond schwarzes Haar. Daniel Craig war 2006 mit Casino Royale der erste blonde Film-Bond — Buch-Fans protestierten anfangs.",
       "category": "Popkultur"
     },
     {
@@ -565,18 +506,6 @@
       ],
       "difficulty": "medium",
       "fun_fact": "Die Originalserie lief nur drei Staffeln (1966-1969) und wurde wegen schlechter Quoten abgesetzt. Erst in den Wiederholungen wurde sie zum Kult und startete ein Milliarden-Dollar-Franchise.",
-      "category": "Popkultur"
-    },
-    {
-      "id": "pop_048",
-      "question": "Welches Tier war das erste GIF, das jemals im Internet geteilt wurde?",
-      "answers": [
-        {"text": "Eine Katze", "correct": false},
-        {"text": "Ein Flugzeug", "correct": true},
-        {"text": "Ein Hund", "correct": false}
-      ],
-      "difficulty": "medium",
-      "fun_fact": "Das GIF-Format wurde 1987 von CompuServe entwickelt. Eines der ersten weit verbreiteten GIFs zeigte ein sich drehendes Flugzeug. Die Aussprache ('GIF' vs. 'JIF') sorgt bis heute für erbitterte Internet-Debatten.",
       "category": "Popkultur"
     },
     {

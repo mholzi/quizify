@@ -2,6 +2,7 @@
   "name": "Geographie",
   "language": "de",
   "version": "1.0",
+  "theme": "geography",
   "questions": [
     {
       "id": "geo_001",
@@ -41,38 +42,38 @@
     },
     {
       "id": "geo_004",
-      "question": "Welche Hauptstadt liegt am höchsten über dem Meeresspiegel?",
+      "question": "Welche administrative Hauptstadt liegt am höchsten über dem Meeresspiegel?",
       "answers": [
         {"text": "La Paz, Bolivien", "correct": true},
         {"text": "Quito, Ecuador", "correct": false},
         {"text": "Bogotá, Kolumbien", "correct": false}
       ],
       "difficulty": "medium",
-      "fun_fact": "La Paz liegt auf etwa 3.640 Metern Höhe. Wasser kocht dort schon bei ca. 87 °C, was das Kochen deutlich länger dauern lässt.",
+      "fun_fact": "La Paz ist Boliviens Regierungssitz und liegt auf etwa 3.640 Metern Höhe. Wasser kocht dort schon bei ca. 87 °C, was das Kochen deutlich länger dauern lässt.",
       "category": "Geographie"
     },
     {
       "id": "geo_005",
-      "question": "Welches afrikanische Land war nie eine europäische Kolonie?",
+      "question": "Welches afrikanische Land wurde nie dauerhaft kolonisiert?",
       "answers": [
         {"text": "Äthiopien", "correct": true},
         {"text": "Ghana", "correct": false},
         {"text": "Marokko", "correct": false}
       ],
       "difficulty": "easy",
-      "fun_fact": "Äthiopien besiegte 1896 die italienische Armee in der Schlacht von Adua und blieb als eines der wenigen afrikanischen Länder stets unabhängig.",
+      "fun_fact": "Äthiopien besiegte 1896 die italienische Armee in der Schlacht von Adua. Abgesehen von einer kurzen italienischen Besatzung 1936–1941 blieb es stets unabhängig.",
       "category": "Geographie"
     },
     {
       "id": "geo_006",
-      "question": "Welches Land hat mehr Einwohner als ganz Südamerika zusammen?",
+      "question": "Welches Land hat kürzlich China überholt und ist nun das bevölkerungsreichste der Welt?",
       "answers": [
         {"text": "Indien", "correct": true},
-        {"text": "China", "correct": false},
-        {"text": "Indonesien", "correct": false}
+        {"text": "Indonesien", "correct": false},
+        {"text": "USA", "correct": false}
       ],
       "difficulty": "medium",
-      "fun_fact": "Indien hat über 1,4 Milliarden Einwohner, Südamerika insgesamt nur rund 430 Millionen. Allein der indische Bundesstaat Uttar Pradesh hat mehr Einwohner als Brasilien.",
+      "fun_fact": "Indien überholte 2023 China und hat über 1,4 Milliarden Einwohner. Allein der indische Bundesstaat Uttar Pradesh hat mehr Einwohner als Brasilien.",
       "category": "Geographie"
     },
     {
@@ -101,14 +102,14 @@
     },
     {
       "id": "geo_009",
-      "question": "Welches Land grenzt an die meisten anderen Länder?",
+      "question": "Welche zwei Länder teilen sich den Rekord für die meisten Nachbarländer (je 14)?",
       "answers": [
-        {"text": "China", "correct": true},
-        {"text": "Russland", "correct": false},
-        {"text": "Brasilien", "correct": false}
+        {"text": "China und Russland", "correct": true},
+        {"text": "China und Indien", "correct": false},
+        {"text": "Russland und Brasilien", "correct": false}
       ],
       "difficulty": "medium",
-      "fun_fact": "China teilt sich Grenzen mit 14 Nachbarländern — genauso viele wie Russland. Beide halten gemeinsam den Rekord.",
+      "fun_fact": "China und Russland grenzen jeweils an 14 Nachbarländer und halten gemeinsam den Weltrekord.",
       "category": "Geographie"
     },
     {
@@ -137,14 +138,14 @@
     },
     {
       "id": "geo_012",
-      "question": "Welches ist das einzige Land der Welt, das vollständig innerhalb eines anderen Landes liegt — und zwar zweimal?",
+      "question": "Welche zwei Länder sind jeweils vollständig von Italien umgeben?",
       "answers": [
-        {"text": "Kein Land — aber San Marino und Vatikanstadt liegen beide komplett in Italien", "correct": true},
-        {"text": "Lesotho", "correct": false},
-        {"text": "Monaco", "correct": false}
+        {"text": "San Marino und Vatikanstadt", "correct": true},
+        {"text": "Monaco und Andorra", "correct": false},
+        {"text": "Lesotho und Liechtenstein", "correct": false}
       ],
       "difficulty": "hard",
-      "fun_fact": "San Marino und die Vatikanstadt sind beide vollständig von Italien umgeben. Lesotho ist zwar auch eine Enklave, liegt aber in Südafrika, nicht in Italien.",
+      "fun_fact": "San Marino und die Vatikanstadt sind beide vollständig von Italien umschlossen. Lesotho ist ebenfalls eine Enklave, liegt aber innerhalb Südafrikas.",
       "category": "Geographie"
     },
     {
@@ -192,7 +193,7 @@
         {"text": "Finnland", "correct": false}
       ],
       "difficulty": "medium",
-      "fun_fact": "Island hat nur etwa 3,5 Einwohner pro Quadratkilometer. Es gibt dort mehr Schafe als Menschen — rund 800.000 Schafe bei etwa 380.000 Einwohnern.",
+      "fun_fact": "Island hat nur etwa 3,5 Einwohner pro Quadratkilometer und ist damit das am dünnsten besiedelte Land Europas.",
       "category": "Geographie"
     },
     {
@@ -205,18 +206,6 @@
       ],
       "difficulty": "easy",
       "fun_fact": "Kanadas Küstenlinie ist über 202.000 km lang. Wenn man sie abschreiten würde, bräuchte man bei 8 Stunden Gehen pro Tag über 19 Jahre.",
-      "category": "Geographie"
-    },
-    {
-      "id": "geo_018",
-      "question": "In welchem Land befindet sich der geografische Mittelpunkt Europas?",
-      "answers": [
-        {"text": "Litauen", "correct": true},
-        {"text": "Deutschland", "correct": false},
-        {"text": "Polen", "correct": false}
-      ],
-      "difficulty": "hard",
-      "fun_fact": "Der vom Institut Géographique National berechnete Mittelpunkt Europas liegt nahe dem Dorf Purnuškės nördlich von Vilnius in Litauen.",
       "category": "Geographie"
     },
     {
@@ -256,18 +245,6 @@
       "category": "Geographie"
     },
     {
-      "id": "geo_022",
-      "question": "Welches Meer ist eigentlich ein See?",
-      "answers": [
-        {"text": "Das Kaspische Meer", "correct": true},
-        {"text": "Das Rote Meer", "correct": false},
-        {"text": "Das Tote Meer", "correct": false}
-      ],
-      "difficulty": "easy",
-      "fun_fact": "Das Kaspische Meer ist der größte See der Welt. Es heißt ‚Meer' wegen seiner Größe und seines Salzgehalts, hat aber keine natürliche Verbindung zu den Ozeanen.",
-      "category": "Geographie"
-    },
-    {
       "id": "geo_023",
       "question": "Welcher Staat der USA wurde von Russland gekauft?",
       "answers": [
@@ -281,14 +258,14 @@
     },
     {
       "id": "geo_024",
-      "question": "In welchem Land kann man gleichzeitig in der westlichen und östlichen Hemisphäre stehen?",
+      "question": "Welches berühmte Observatorium markiert den Nullmeridian, an dem man gleichzeitig in der westlichen und östlichen Hemisphäre stehen kann?",
       "answers": [
-        {"text": "Großbritannien", "correct": true},
-        {"text": "Spanien", "correct": false},
-        {"text": "Ghana", "correct": false}
+        {"text": "Royal Observatory Greenwich", "correct": true},
+        {"text": "Pariser Observatorium", "correct": false},
+        {"text": "Sternwarte Berlin", "correct": false}
       ],
       "difficulty": "medium",
-      "fun_fact": "Der Nullmeridian verläuft durch das Royal Observatory in Greenwich, London. Man kann dort buchstäblich mit einem Fuß im Osten und dem anderen im Westen stehen.",
+      "fun_fact": "Der Nullmeridian verläuft seit 1884 durch das Royal Observatory in Greenwich, London. Besucher können dort buchstäblich mit einem Fuß im Osten und dem anderen im Westen stehen.",
       "category": "Geographie"
     },
     {
@@ -317,14 +294,14 @@
     },
     {
       "id": "geo_027",
-      "question": "Welches Land wechselte 2018 seinen Namen?",
+      "question": "Welches afrikanische Land wurde 2018 von Swasiland in seinen heutigen Namen umbenannt?",
       "answers": [
-        {"text": "Nordmazedonien (vorher Mazedonien)", "correct": true},
-        {"text": "Eswatini (vorher Swasiland)", "correct": false},
-        {"text": "Tschechien (vorher Tschechische Republik)", "correct": false}
+        {"text": "Eswatini", "correct": true},
+        {"text": "Lesotho", "correct": false},
+        {"text": "Botswana", "correct": false}
       ],
       "difficulty": "hard",
-      "fun_fact": "Mazedonien benannte sich in Nordmazedonien um, um einen jahrzehntelangen Namensstreit mit Griechenland beizulegen. Eswatini (ehemals Swasiland) änderte seinen Namen ebenfalls 2018.",
+      "fun_fact": "König Mswati III. verkündete die Umbenennung im April 2018 zum 50. Unabhängigkeitstag. ‚Eswatini' bedeutet ‚Land der Swazi' und beendete die koloniale Schreibweise.",
       "category": "Geographie"
     },
     {
@@ -341,38 +318,38 @@
     },
     {
       "id": "geo_029",
-      "question": "Welches europäische Land hat keine einzige Universität?",
+      "question": "Welcher europäische Staat hat auf seinem Territorium keine eigene Universität?",
       "answers": [
         {"text": "Vatikanstadt", "correct": true},
         {"text": "San Marino", "correct": false},
-        {"text": "Liechtenstein", "correct": false}
+        {"text": "Monaco", "correct": false}
       ],
       "difficulty": "hard",
-      "fun_fact": "Die Vatikanstadt hat zwar die Vatikanische Bibliothek und die Päpstliche Akademie der Wissenschaften, aber keine eigene Universität im klassischen Sinne. Mit rund 800 Einwohnern ist sie der kleinste Staat der Welt.",
+      "fun_fact": "Die Vatikanstadt verfügt zwar über die Vatikanische Bibliothek und die Päpstliche Akademie der Wissenschaften, aber die päpstlichen Universitäten liegen extraterritorial in Rom. Mit rund 800 Einwohnern ist der Vatikan der kleinste Staat der Welt.",
       "category": "Geographie"
     },
     {
       "id": "geo_030",
-      "question": "Welches Land durchquert die meisten Breitengrade?",
+      "question": "Welches Land hat die größte Nord-Süd-Ausdehnung auf seinem Festland?",
       "answers": [
         {"text": "Chile", "correct": true},
         {"text": "Brasilien", "correct": false},
         {"text": "Russland", "correct": false}
       ],
       "difficulty": "hard",
-      "fun_fact": "Chile erstreckt sich über mehr als 4.300 km von Nord nach Süd, ist aber im Durchschnitt nur 177 km breit. Es reicht von der Wüste bis zum Eis der Antarktis-Nähe.",
+      "fun_fact": "Chile erstreckt sich über mehr als 4.300 km von Nord nach Süd, ist aber im Durchschnitt nur 177 km breit. Es reicht von der Atacama-Wüste bis nach Patagonien.",
       "category": "Geographie"
     },
     {
       "id": "geo_031",
-      "question": "Welche Stadt war Hauptstadt von zwei verschiedenen Ländern gleichzeitig?",
+      "question": "Welche europäische Hauptstadt ist derzeit geteilt und dient als Hauptstadt zweier politischer Entitäten?",
       "answers": [
-        {"text": "Berlin (BRD und DDR nach Wiedervereinigung — aber eigentlich: Bratislava war nie Hauptstadt zweier Staaten gleichzeitig. Nikosia ist die geteilte Hauptstadt)", "correct": false},
         {"text": "Nikosia", "correct": true},
-        {"text": "Jerusalem", "correct": false}
+        {"text": "Belfast", "correct": false},
+        {"text": "Bratislava", "correct": false}
       ],
       "difficulty": "hard",
-      "fun_fact": "Nikosia auf Zypern ist die letzte geteilte Hauptstadt Europas. Der nördliche Teil ist die Hauptstadt der international kaum anerkannten Türkischen Republik Nordzypern, der südliche Teil die Hauptstadt der Republik Zypern.",
+      "fun_fact": "Nikosia auf Zypern ist die letzte geteilte Hauptstadt Europas. Der nördliche Teil ist Hauptstadt der international kaum anerkannten Türkischen Republik Nordzypern, der südliche Teil Hauptstadt der Republik Zypern.",
       "category": "Geographie"
     },
     {
@@ -408,7 +385,7 @@
         {"text": "Japan", "correct": false}
       ],
       "difficulty": "medium",
-      "fun_fact": "Indonesien hat eine Gesamtfläche von fast 1,9 Millionen km² und ist damit der größte Inselstaat. Es wäre das fünftgrößte Land Europas.",
+      "fun_fact": "Indonesien besteht aus rund 17.000 Inseln und hat eine Gesamtfläche von fast 1,9 Millionen km² — größer als jedes europäische Land außer Russland.",
       "category": "Geographie"
     },
     {
@@ -425,14 +402,14 @@
     },
     {
       "id": "geo_036",
-      "question": "Welches Land hat die Zeitzone mit dem größten Versatz zur Nachbarzone?",
+      "question": "Welches Land nutzt eine einzige Zeitzone, obwohl es geografisch fünf Zeitzonen umspannt?",
       "answers": [
         {"text": "China", "correct": true},
         {"text": "Indien", "correct": false},
         {"text": "Russland", "correct": false}
       ],
       "difficulty": "hard",
-      "fun_fact": "Obwohl China fünf geografische Zeitzonen umspannt, nutzt das ganze Land nur eine einzige Zeitzone (UTC+8). An der Grenze zu Afghanistan springt die Uhr um 3,5 Stunden.",
+      "fun_fact": "Ganz China läuft auf Pekinger Zeit (UTC+8), obwohl der Westen des Landes geografisch zu UTC+5 gehören würde. An der Grenze zu Afghanistan springt die Uhr um 3,5 Stunden.",
       "category": "Geographie"
     },
     {
@@ -473,14 +450,14 @@
     },
     {
       "id": "geo_040",
-      "question": "Welches Land hat mehr englischsprachige Einwohner als Großbritannien?",
+      "question": "Welches Land hat die größte englischsprachige Bevölkerung Afrikas?",
       "answers": [
         {"text": "Nigeria", "correct": true},
         {"text": "Südafrika", "correct": false},
-        {"text": "Kanada", "correct": false}
+        {"text": "Kenia", "correct": false}
       ],
       "difficulty": "medium",
-      "fun_fact": "Nigeria hat über 200 Millionen Einwohner, und Englisch ist die offizielle Amtssprache. Damit gibt es dort mehr englischsprachige Menschen als in Großbritannien.",
+      "fun_fact": "Nigeria hat über 200 Millionen Einwohner, und Englisch ist die offizielle Amtssprache — damit ist es das größte englischsprachige Land Afrikas.",
       "category": "Geographie"
     },
     {
@@ -496,39 +473,27 @@
       "category": "Geographie"
     },
     {
-      "id": "geo_042",
-      "question": "Welches Binnenland hat die größte Marine der Welt?",
-      "answers": [
-        {"text": "Bolivien", "correct": true},
-        {"text": "Paraguay", "correct": false},
-        {"text": "Mongolei", "correct": false}
-      ],
-      "difficulty": "medium",
-      "fun_fact": "Bolivien unterhält trotz fehlendem Meereszugang eine Marine mit rund 5.000 Soldaten am Titicacasee. Es verlor seine Küste 1884 im Salpeterkrieg gegen Chile und hofft auf Rückgabe.",
-      "category": "Geographie"
-    },
-    {
       "id": "geo_043",
-      "question": "Welches europäische Land ist am dünnsten besiedelt, hat aber die meisten Saunen pro Einwohner?",
+      "question": "Welches europäische Land hat die meisten Saunen pro Einwohner?",
       "answers": [
         {"text": "Finnland", "correct": true},
         {"text": "Schweden", "correct": false},
         {"text": "Estland", "correct": false}
       ],
       "difficulty": "medium",
-      "fun_fact": "Finnland hat rund 3,3 Millionen Saunen bei 5,5 Millionen Einwohnern — also fast eine Sauna für jeden zweiten Finnen. Es gibt sogar Saunen in Parlamenten und Burger-King-Filialen.",
+      "fun_fact": "Finnland hat rund 3,3 Millionen Saunen bei 5,5 Millionen Einwohnern — fast eine Sauna für jeden zweiten Finnen. Es gibt sogar Saunen im Parlament und in Burger-King-Filialen.",
       "category": "Geographie"
     },
     {
       "id": "geo_044",
-      "question": "Welcher Staat grenzt an die meisten deutschen Bundesländer?",
+      "question": "Welches deutsche Bundesland grenzt an die meisten anderen Bundesländer?",
       "answers": [
-        {"text": "Hessen", "correct": true},
-        {"text": "Bayern", "correct": false},
-        {"text": "Niedersachsen", "correct": false}
+        {"text": "Niedersachsen", "correct": true},
+        {"text": "Hessen", "correct": false},
+        {"text": "Bayern", "correct": false}
       ],
       "difficulty": "medium",
-      "fun_fact": "Hessen grenzt an sechs andere Bundesländer: Niedersachsen, Thüringen, Bayern, Baden-Württemberg, Rheinland-Pfalz und Nordrhein-Westfalen.",
+      "fun_fact": "Niedersachsen grenzt an neun Bundesländer: Schleswig-Holstein, Hamburg, Bremen, Mecklenburg-Vorpommern, Brandenburg, Sachsen-Anhalt, Thüringen, Hessen und Nordrhein-Westfalen.",
       "category": "Geographie"
     },
     {
@@ -583,12 +548,12 @@
       "id": "geo_049",
       "question": "Welches Land wechselte 2019 den Namen seiner Hauptstadt?",
       "answers": [
-        {"text": "Kasachstan (Astana → Nur-Sultan → wieder Astana)", "correct": true},
-        {"text": "Türkei (Istanbul → Ankara)", "correct": false},
-        {"text": "Myanmar (Rangun → Naypyidaw)", "correct": false}
+        {"text": "Kasachstan", "correct": true},
+        {"text": "Türkei", "correct": false},
+        {"text": "Myanmar", "correct": false}
       ],
       "difficulty": "medium",
-      "fun_fact": "Kasachstan benannte seine Hauptstadt 2019 zu Ehren des abtretenden Präsidenten Nursultan Nasarbajew in Nur-Sultan um, machte die Umbenennung 2022 aber wieder rückgängig zu Astana.",
+      "fun_fact": "Kasachstan benannte 2019 seine Hauptstadt Astana zu Ehren des abtretenden Präsidenten Nursultan Nasarbajew in Nur-Sultan um — und machte die Umbenennung 2022 wieder rückgängig zu Astana.",
       "category": "Geographie"
     },
     {

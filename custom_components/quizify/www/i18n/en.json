@@ -57,6 +57,10 @@
     "title": "Quizify Admin",
     "category": "Category",
     "categoryMixed": "Mixed",
+    "spotlightFeatured": "⭐ Featured",
+    "spotlightPlay": "▶︎ Play now",
+    "themes": "Themes",
+    "themeAll": "All",
     "gameSettings": "Game Settings",
     "difficulty": "Difficulty",
     "rounds": "Rounds",
@@ -434,5 +438,10 @@
     "installApp": "Install Quizify App",
     "iosHintTitle": "Install Quizify",
     "iosHintBody": "Tap ⬆️ Share, then \"Add to Home Screen\""
+  },
+  "theme": {
+    "geography": "🌍 Geo",
+    "nature": "🦋 Nature",
+    "popculture": "🎬 Pop"
   }
 }
