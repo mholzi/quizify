@@ -318,14 +318,67 @@ a:focus-visible,
 }
 
 /* ==========================================
-   Dark Mode — late-night parlor (opt-in)
+   Dark Mode — late-night parlor (auto + manual)
    ==========================================
-   DESIGN.md: light is the primary mode. Dark is offered for late-night
-   play but must be EXPLICITLY opted into via [data-theme="dark"] on
-   <html> or <body>. Never gated on prefers-color-scheme — a guest whose
-   OS happens to be in dark mode should still see the cream Soft Parlor
-   that the host is showing on the TV across the room.
+   DESIGN.md: light remains the primary aesthetic anchor (Soft Parlor cream
+   paper). As of 2026-05-27 (#50), dark mode auto-applies when the device's
+   OS reports `prefers-color-scheme: dark`. Overrides:
+   - `[data-theme="light"]` on <html> opts out of the @media auto-flip
+     (used on dashboard.html so the TV stays cream regardless of host OS).
+   - `[data-theme="dark"]` on <html> or <body> forces dark, beats both
+     the default light and the media query.
+
+   The two blocks below intentionally duplicate the same token list. Keep
+   them in sync when adding or revising dark tokens.
 */
+@media (prefers-color-scheme: dark) {
+  :root:not([data-theme="light"]) {
+    /* Backgrounds: warm dark "stained paper" — not pure black */
+    --color-bg-primary: #1F1B14;
+    --color-bg-surface: #2A2620;
+    --color-bg-light: #1F1B14;
+    --color-bg-white: #2A2620;
+    --color-bg-card: #2A2620;
+    --color-bg-card-alt: #34302A;
+
+    /* Surface aliases */
+    --color-dark-surface: #2A2620;
+    --color-dark-surface-hover: #34302A;
+    --color-dark-card: #2A2620;
+    --color-surface-dark: #1F1B14;
+
+    /* Text: warm cream ink on dark paper */
+    --color-text-primary: #F0E9D8;
+    --color-text-secondary: #DCD4C0;
+    --color-text-muted: #A89E89;
+    --color-text-light: #8A8170;
+    --color-text-white: #F0E9D8;
+    --color-text-dark: #F0E9D8;
+    --color-text-heading: #F0E9D8;
+    --color-text-neon-muted: #A89E89;
+
+    /* Borders: muted warm dark — keep the hairline feel */
+    --color-border-light: #3D3830;
+    --color-border-medium: #4D4738;
+    --color-border-dark: #5D5640;
+    --color-border-neon: #3D3830;
+
+    /* Soft tinted badges — re-tint for the dark surface */
+    --color-success-bg: rgba(127, 168, 151, 0.24);
+    --color-accent-brand-bg: rgba(232, 138, 127, 0.22);
+    --color-error-bg: rgba(214, 106, 106, 0.22);
+    --color-success-light: rgba(127, 168, 151, 0.24);
+    --color-warning-light: rgba(232, 196, 127, 0.26);
+    --color-error-light: rgba(214, 106, 106, 0.22);
+
+    /* Shadows: warmer + slightly heavier on dark */
+    --shadow-sm: 0 1px 2px rgba(0, 0, 0, 0.35);
+    --shadow-md: 0 2px 8px rgba(0, 0, 0, 0.45);
+    --shadow-lg: 0 6px 20px rgba(0, 0, 0, 0.50);
+    --shadow-xl: 0 16px 40px rgba(0, 0, 0, 0.55);
+  }
+}
+
 [data-theme="dark"] {
     /* Backgrounds: warm dark "stained paper" — not pure black */
     --color-bg-primary: #1F1B14;

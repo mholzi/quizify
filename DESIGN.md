@@ -125,7 +125,14 @@ Dark mode is explicitly **not the primary mode** for Soft Parlor. The aesthetic 
 | `--hairline` | `#3E382D` |
 | Accents stay at the light-mode saturation, unchanged. |
 
-Implementation: `[data-theme="dark"]` attribute on `<body>`. Accents don't desaturate — keeping their warmth is the whole point.
+Implementation (revised 2026-05-27, #50):
+
+- **Auto-detect**: dark tokens apply automatically when the device's OS reports `prefers-color-scheme: dark`, via a `@media (prefers-color-scheme: dark) { :root:not([data-theme="light"]) }` block in `styles.css`. This is the new default for the player + admin UIs (personal devices — guests / host's phone).
+- **TV escape**: `dashboard.html` ships with `<html data-theme="light">` so the TV stays Soft Parlor cream regardless of the host's OS preference. The across-the-room cream aesthetic stays the canonical brand image, which is what the prior "never gate on prefers-color-scheme" rule was protecting.
+- **Manual force-dark**: `[data-theme="dark"]` on `<html>` or `<body>` still works and beats both default light and the media query — use it if a flow needs forced dark.
+- Accents don't desaturate — keeping their warmth is the whole point.
+
+Earlier policy (before 2026-05-27) was: "never gated on `prefers-color-scheme` — a guest whose OS is dark should still see Soft Parlor cream". That was revised because (a) personal devices reasonably defer to OS preference and (b) the TV view is now explicitly locked light via `data-theme="light"`, so the cream-across-the-room aesthetic is preserved by mechanism rather than by blanket policy.
 
 ## Spacing
 
