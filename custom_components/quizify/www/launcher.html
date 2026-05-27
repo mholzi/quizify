@@ -165,7 +165,13 @@
             if (quizifyWindow) {
                 updateUI('opened');
             } else {
-                updateUI('blocked');
+                // Popup blocked (Android HA companion app, strict Safari,
+                // any WebView). The user's button click is still fresh
+                // enough to satisfy in-place navigation rules — fall back
+                // to direct redirect so the launcher isn't a dead-end.
+                // The previous "Pop-up blocked" message stayed sticky and
+                // re-clicking the button just re-failed window.open.
+                window.location.href = adminUrl;
             }
         }
 

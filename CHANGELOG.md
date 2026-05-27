@@ -3,6 +3,20 @@
 All notable changes to Quizify are documented here. This project follows
 [Semantic Versioning](https://semver.org/).
 
+## [1.1.28] — 2026-05-27
+
+### Fixed
+
+- **Launcher no longer a dead-end on Android HA companion app.**
+  `launcher.html` used to call `window.open(adminUrl, 'quizify_game')`
+  and, when blocked (Android WebView, strict Safari, any embedded
+  browser), it showed a "Pop-up was blocked" message with a manual
+  link — but pressing the main button again just re-failed
+  `window.open`. The blocked branch now falls back to
+  `window.location.href = adminUrl`, so a single click of "Open
+  Quizify" always navigates into the integration. Desktop popup
+  flow unchanged.
+
 ## [1.1.27] — 2026-05-27
 
 ### Changed
