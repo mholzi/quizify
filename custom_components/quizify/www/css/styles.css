@@ -3751,7 +3751,9 @@ footer {
        The 480px breakpoint below restores the side-by-side layout
        once there's room. */
     grid-template-columns: 1fr;
-    gap: var(--space-md);
+    /* space-lg gives the just-joined player card visible breathing room
+       below the QR (#149 — live-test feedback that the card felt cramped). */
+    gap: var(--space-lg);
     align-items: stretch;
     background: var(--color-bg-surface);
     border: 1px solid var(--color-border-light);
@@ -3809,23 +3811,28 @@ footer {
 .lobby-e-row-card {
     display: flex;
     align-items: center;
-    gap: 10px;
-    padding: 8px 12px;
+    gap: 12px;
+    /* Roomier padding + soft border/shadow so a fresh joiner reads the
+       chip as a discrete "you're in" confirmation card, not a tight
+       roster entry (#149). */
+    padding: 14px 16px;
     background: var(--color-bg-card-alt);
-    border-radius: 8px;
-    font-size: 0.95rem;
+    border: 1px solid var(--color-border-light);
+    border-radius: 10px;
+    box-shadow: 0 1px 2px rgba(0, 0, 0, 0.05);
+    font-size: 1.05rem;
     color: var(--color-text-primary);
 }
 .lobby-e-row-card .dot {
     /* Explicit min/max so flex / line-height never squashes one chip
      * smaller than the others (observed on the production lobby where
      * different rows rendered at visibly different sizes). */
-    width: 28px;
-    height: 28px;
-    min-width: 28px;
-    min-height: 28px;
-    max-width: 28px;
-    max-height: 28px;
+    width: 36px;
+    height: 36px;
+    min-width: 36px;
+    min-height: 36px;
+    max-width: 36px;
+    max-height: 36px;
     border-radius: 50%;
     flex-shrink: 0;
     display: inline-flex;
@@ -3833,7 +3840,7 @@ footer {
     justify-content: center;
     font-family: var(--font-mono);
     font-weight: 700;
-    font-size: 0.9rem;
+    font-size: 1.05rem;
     line-height: 1;
     color: var(--color-bg-primary);
 }
