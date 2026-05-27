@@ -853,26 +853,50 @@ class QuizifyGameState:
         if question is None:
             return ERR_INVALID_ACTION
 
+        held = self._powerup_manager.get_powerup(player_id)
+
+        # Post-submit no-op gate. Joker/Double/TimeBoost only help BEFORE
+        # the source locks in their answer — activating them afterward
+        # consumes the power-up for nothing (live-test feedback). Reject
+        # early so the inventory survives for a future round.
+        source_player = self._player_registry.get_player(player_id)
+        if held in (
+            PowerUpType.JOKER,
+            PowerUpType.DOUBLE_POINTS,
+            PowerUpType.TIME_BOOST,
+        ) and source_player and source_player.submitted:
+            return ERR_INVALID_ACTION
+
         # Resolve target for opponent-targeted power-ups BEFORE consuming
         # inventory. The player UI passes an explicit target via picker, but
         # we also accept null and pick a random active opponent (safety net
         # for older clients / single-tap flow). If no opponent is connected
         # at all, reject so the power-up stays in the inventory instead of
         # silently no-op'ing.
-        held = self._powerup_manager.get_powerup(player_id)
         if held in (PowerUpType.FREEZE, PowerUpType.STEAL):
             target_player = (
                 self._player_registry.get_player(target_id) if target_id else None
             )
             if not target_id or target_id == player_id or not target_player or not target_player.is_active:
+                # For FREEZE the random fallback should also skip already-submitted
+                # players so the pause is actually useful (otherwise freezing a
+                # locked-in opponent burns the power-up for nothing).
                 opponents = [
                     name
                     for name, p in self._player_registry.players.items()
                     if name != player_id and p.is_active
+                    and (held != PowerUpType.FREEZE or not p.submitted)
                 ]
                 if not opponents:
                     return ERR_INVALID_ACTION
                 target_id = random.choice(opponents)
+
+        # FREEZE: explicit-target submitted-check (random fallback already
+        # filters submitted players above).
+        if held == PowerUpType.FREEZE and target_id:
+            target_check = self._player_registry.get_player(target_id)
+            if target_check and target_check.submitted:
+                return ERR_INVALID_ACTION
 
         # Determine wrong answer indices for joker
         wrong_indices = [

@@ -606,3 +606,59 @@ class TestPowerUpTargeting:
         assert isinstance(effect, PowerUpEffect)
         assert effect.type == PowerUpType.JOKER
         assert effect.joker_remove_index is not None
+
+    @pytest.mark.parametrize(
+        "pu_type",
+        [PowerUpType.JOKER, PowerUpType.DOUBLE_POINTS, PowerUpType.TIME_BOOST],
+    )
+    def test_self_powerup_rejected_after_submit(
+        self, state: QuizifyGameState, pu_type: PowerUpType
+    ) -> None:
+        """Joker / DoublePoints / TimeBoost only help BEFORE the source locks
+        in — activating them after submit consumes the inventory for nothing.
+        Server now rejects and keeps the power-up for a future round."""
+        state.add_player("Alice", _fake_ws())
+        state.add_player("Bob", _fake_ws())
+        state.start_game(language="de", num_rounds=3, difficulty="easy")
+        state.start_next_question()
+        _give(state, "Alice", pu_type)
+        # Submit before trying to use the power-up.
+        state.submit_answer("Alice", 0)
+        result = state.use_powerup("Alice", target_id=None)
+        assert isinstance(result, str), f"{pu_type.value} should reject post-submit"
+        assert state._powerup_manager.get_powerup("Alice") == pu_type, (
+            f"{pu_type.value} should stay in inventory after rejected use"
+        )
+
+    def test_freeze_skips_submitted_target_in_random_pick(
+        self, state: QuizifyGameState
+    ) -> None:
+        """When freeze falls back to a random opponent and one of them has
+        already submitted, the fallback should pick someone who can still
+        be timer-paused."""
+        state.add_player("Alice", _fake_ws())
+        state.add_player("Bob", _fake_ws())
+        state.add_player("Carol", _fake_ws())
+        state.start_game(language="de", num_rounds=3, difficulty="easy")
+        state.start_next_question()
+        # Bob locks in early.
+        state.submit_answer("Bob", 0)
+        _give(state, "Alice", PowerUpType.FREEZE)
+
+        effect = state.use_powerup("Alice", target_id=None)
+        assert isinstance(effect, PowerUpEffect)
+        assert effect.target_player == "Carol", "Freeze fallback must skip submitted Bob"
+
+    def test_freeze_rejects_explicit_submitted_target(self, state: QuizifyGameState) -> None:
+        """Even with an explicit picker selection, freezing a player who has
+        already submitted is a no-op — reject so the inventory survives."""
+        state.add_player("Alice", _fake_ws())
+        state.add_player("Bob", _fake_ws())
+        state.start_game(language="de", num_rounds=3, difficulty="easy")
+        state.start_next_question()
+        state.submit_answer("Bob", 0)
+        _give(state, "Alice", PowerUpType.FREEZE)
+
+        result = state.use_powerup("Alice", target_id="Bob")
+        assert isinstance(result, str), "Freeze on submitted target should be rejected"
+        assert state._powerup_manager.get_powerup("Alice") == PowerUpType.FREEZE

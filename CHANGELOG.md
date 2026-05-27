@@ -3,6 +3,26 @@
 All notable changes to Quizify are documented here. This project follows
 [Semantic Versioning](https://semver.org/).
 
+## [1.1.25] — 2026-05-27
+
+Power-up post-submit no-op gates.
+
+### Fixed
+
+- **Joker / DoublePoints / TimeBoost rejected after the source player
+  has already submitted.** Activating them once the answer is locked
+  in had no effect on scoring or timer — the power-up was silently
+  consumed. Now `use_powerup` returns an error and the inventory
+  survives for a future round.
+- **Freeze rejected if the target has already submitted.** The
+  random-opponent fallback also filters out submitted players first,
+  so freeze always lands on someone who can still be timer-paused.
+- Steal intentionally not gated — stealing AFTER a target submits is
+  the optimal timing (their `round_score` is non-zero), so the
+  existing flow is correct.
+
+Added 5 new tests for the gates (full suite 131/131 pass).
+
 ## [1.1.24] — 2026-05-27
 
 ### Fixed
