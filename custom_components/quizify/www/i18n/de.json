@@ -164,6 +164,7 @@
     "stoleFromYou": "🥷 {name} hat dir {points} Punkte geklaut!",
     "stoleFromOpponent": "🥷 Geklaut: +{points} Pkt. von {name}!",
     "frozen": "🧊 Du wurdest 5 Sek. eingefroren!",
+    "opponentUsedJoker": "🎴 {name} hat Joker benutzt",
     "streakToast3": "🔥 3 in Folge!",
     "streakToast5": "🔥🔥 5 in Folge!",
     "streakToast7": "🔥🔥🔥 7 in Folge! Du brennst!",

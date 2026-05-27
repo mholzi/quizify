@@ -164,6 +164,7 @@
     "stoleFromYou": "🥷 {name} stole {points} points from you!",
     "stoleFromOpponent": "🥷 Stolen: +{points} pts from {name}!",
     "frozen": "🧊 You were frozen for 5s!",
+    "opponentUsedJoker": "🎴 {name} used Joker",
     "streakToast3": "🔥 3 in a row!",
     "streakToast5": "🔥🔥 5 in a row!",
     "streakToast7": "🔥🔥🔥 7 in a row! On fire!",

@@ -723,6 +723,14 @@ class QuizifyWebSocketHandler:
                     "source_player": result.source_player,
                     "joker_remove_index": shuffled_remove_idx,
                 })
+                # Public broadcast w/o joker_remove_index — opponents get a
+                # "Player X used Joker" toast (the removed-answer index is
+                # per-shuffle so it stays in the private send above).
+                await self._conn.broadcast({
+                    "type": "powerup_applied",
+                    "powerup_type": "joker",
+                    "source_player": result.source_player,
+                })
             elif result.type == PowerUpType.STEAL:
                 effect_data["stolen_points"] = result.stolen_points
                 await self._conn.broadcast(effect_data)

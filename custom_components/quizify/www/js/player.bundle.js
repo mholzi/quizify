@@ -3425,7 +3425,13 @@
 
     function handlePowerUpApplied(msg) {
         if (msg.powerup_type === 'joker' && msg.joker_remove_index != null) {
+            // Private send to source with the removed-answer index.
             game.applyJoker(msg.joker_remove_index);
+        } else if (msg.powerup_type === 'joker' && msg.source_player !== state.playerName) {
+            // Public broadcast — surface opponent's joker use to other
+            // players (no removed-index since shuffle is per-player).
+            var tJk = (window.QuizifyI18n && window.QuizifyI18n.t) || function (k) { return k; };
+            pu.showToast(tJk('game.opponentUsedJoker', { name: msg.source_player }), 2000);
         } else if (msg.powerup_type === 'steal') {
             var tPwr = (window.QuizifyI18n && window.QuizifyI18n.t) || function (k) { return k; };
             var pts = msg.stolen_points || 0;
@@ -3438,10 +3444,17 @@
             var tFrz = (window.QuizifyI18n && window.QuizifyI18n.t) || function (k) { return k; };
             pu.showToast(tFrz('game.frozen'), 2000);
         }
-        myPowerUp = null;
-        var powerupBtn = document.getElementById('powerup-btn');
-        if (powerupBtn) {
-            powerupBtn.classList.add('used');
+        // Only the source's local power-up button needs clearing. Previously
+        // this was unconditional — for STEAL/FREEZE that meant a third party
+        // who happened to hold a power-up would lose their UI state when an
+        // unrelated event broadcasted. Now the only player whose myPowerUp
+        // gets reset is the one who just used theirs.
+        if (msg.source_player === state.playerName) {
+            myPowerUp = null;
+            var powerupBtn = document.getElementById('powerup-btn');
+            if (powerupBtn) {
+                powerupBtn.classList.add('used');
+            }
         }
     }
 

@@ -3,6 +3,26 @@
 All notable changes to Quizify are documented here. This project follows
 [Semantic Versioning](https://semver.org/).
 
+## [1.1.27] — 2026-05-27
+
+### Changed
+
+- **JOKER use now visible to opponents.** Previously only the source
+  player saw the removed-answer index; nothing was broadcast. Server
+  now sends a public `powerup_applied` event (without the per-shuffle
+  `joker_remove_index`) alongside the private one, and the client
+  surfaces it as a `🎴 {name} used Joker` toast on opponents. The
+  private message keeps the removed-index so the source's UI still
+  removes the wrong answer locally.
+
+### Fixed
+
+- **Powerup-button state no longer cleared on third parties.** The
+  `handlePowerUpApplied` handler used to reset `myPowerUp = null`
+  unconditionally — so a third player who happened to hold a
+  power-up would lose their UI state when an unrelated STEAL/FREEZE
+  broadcasted. Now only the source player's local state is cleared.
+
 ## [1.1.26] — 2026-05-27
 
 ### Added
