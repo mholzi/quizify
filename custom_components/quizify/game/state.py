@@ -1018,6 +1018,12 @@ class QuizifyGameState:
             "total_rounds": self.total_rounds,
             "category": self.category,
             "difficulty": self.difficulty,
+            # The player client uses this to sync its UI locale with the
+            # game language (player-core.js handleGameState). Without it
+            # the UI stayed at the browser locale (e.g., German chrome
+            # over English questions if the host picked EN but the guest's
+            # phone is DE). Live-test Mai-27.
+            "language": self.language,
             "players": self._player_registry.get_players_state(),
             "leaderboard": self.get_leaderboard(),
         }

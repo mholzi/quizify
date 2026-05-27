@@ -3,6 +3,18 @@
 All notable changes to Quizify are documented here. This project follows
 [Semantic Versioning](https://semver.org/).
 
+## [1.1.24] — 2026-05-27
+
+### Fixed
+
+- **UI now follows game language.** `get_state_snapshot()` in
+  `game/state.py` was omitting the `language` field from the
+  WebSocket snapshot, so `player-core.js`'s language-sync branch
+  (`if (msg.language && QuizifyI18n.getLanguage() !== msg.language)`)
+  never fired. Result: an EN game on a DE-locale phone showed
+  German UI chrome over English questions. Adding the field is a
+  one-line fix; the sync logic on the client side already existed.
+
 ## [1.1.23] — 2026-05-27
 
 Lobby + reveal polish from continued live-test feedback.
