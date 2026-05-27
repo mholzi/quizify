@@ -1000,9 +1000,10 @@ button, .btn {
 }
 
 /* Pack-Chip icon prefix (data-icon attribute on category chips).
-   Renders the emoji to the left of the chip text. Active chips still
-   get the checkmark via the rule above — icon and check coexist. */
-#category-chips .chip[data-icon]:not(.active)::before {
+   Used only when the chip is rendered in its original pill form (no
+   .chip-group--cards parent). The Mixed chip in card-mode hides the
+   ✓ pseudo since the card layout draws its own check corner. */
+#category-chips:not(.chip-group--cards) .chip[data-icon]:not(.active)::before {
     content: attr(data-icon) ' ';
     font-size: 0.85rem;
     margin-right: 2px;
@@ -1013,6 +1014,88 @@ button, .btn {
    everything" escape hatch. */
 #category-chips .chip.hidden-by-theme {
     display: none;
+}
+
+/* ==========================================
+   Pack-Cards (chip-group--cards modifier)
+   ========================================== */
+/* When the chip-group has the .chip-group--cards class, each child
+   .chip is restyled as a card with icon + name + count. The existing
+   JS wiring (setupCategoryChips) still selects by .chip, so multi-
+   select, Mixed-toggle, and language filtering all keep working
+   without changes. Source: ~/.gstack/designs/pack-ui-2026-05-27/
+   phase2-themes.html (sub-pack-grid section). */
+#category-chips.chip-group--cards {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: var(--space-sm);
+    margin-top: var(--space-sm);
+}
+
+#category-chips.chip-group--cards .chip {
+    /* Reset the pill defaults */
+    padding: 12px 14px;
+    font-size: 1rem;
+    background: var(--color-bg-surface);
+    border: 1.5px solid var(--color-border-light);
+    border-radius: 14px;
+    color: var(--color-text-primary);
+    /* Card layout */
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 3px;
+    min-height: 92px;
+    text-align: left;
+    position: relative;
+    transition: all 0.14s ease;
+}
+#category-chips.chip-group--cards .chip:hover {
+    border-color: var(--color-border-medium);
+    transform: translateY(-1px);
+    box-shadow: 0 4px 12px rgba(42, 40, 32, 0.08);
+}
+#category-chips.chip-group--cards .chip.active {
+    background: var(--color-accent-brand-bg);
+    border-color: var(--color-accent-primary);
+    color: var(--color-text-primary);
+    box-shadow: 0 4px 14px rgba(232, 138, 127, 0.18);
+}
+/* Card-mode suppresses the inherited ✓-prefix; we draw our own corner check. */
+#category-chips.chip-group--cards .chip.active::before {
+    content: none;
+}
+#category-chips.chip-group--cards .chip.active::after {
+    content: '✓';
+    position: absolute;
+    top: 8px;
+    right: 10px;
+    color: var(--color-accent-primary);
+    font-weight: 700;
+    font-size: 1rem;
+}
+#category-chips.chip-group--cards .pack-card-icon {
+    font-size: 1.55rem;
+    line-height: 1;
+}
+#category-chips.chip-group--cards .pack-card-name {
+    font-family: var(--font-display, var(--font-system, inherit));
+    font-weight: 700;
+    font-size: 0.98rem;
+    line-height: 1.18;
+}
+#category-chips.chip-group--cards .pack-card-count {
+    font-family: var(--font-mono, ui-monospace, monospace);
+    font-size: 0.7rem;
+    color: var(--color-text-muted);
+    letter-spacing: 0.04em;
+}
+
+/* Tablet+: 3-col grid feels more balanced. */
+@media (min-width: 600px) {
+    #category-chips.chip-group--cards {
+        grid-template-columns: repeat(3, 1fr);
+    }
 }
 
 /* ==========================================

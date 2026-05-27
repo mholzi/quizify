@@ -3,6 +3,30 @@
 All notable changes to Quizify are documented here. This project follows
 [Semantic Versioning](https://semver.org/).
 
+## [1.1.31] — 2026-05-27
+
+### Changed
+
+- **Pack-picker now matches the approved Phase-2 mockup verbatim.**
+  v1.1.30 left the spotlight + theme-tabs behind a "≥5 packs / ≥10
+  packs" visibility gate while the catalogue was still tiny. Markus
+  asked for the mockup as-shipped, so:
+  - Featured-Spotlight is always rendered (coral→sun gradient,
+    "Sofort spielen" CTA), populated per-language from
+    `FEATURED_PACK` in `admin.js`.
+  - Theme-Tabs row is always rendered (Alle / Geo / Natur / Pop).
+  - Pack chips graduated to **pack-cards** — 2-col grid on mobile,
+    3-col on tablet, each card showing emoji icon, pack name in
+    display weight, and a question-count line in monospace. The
+    Mixed option is now the first card in the grid (🎲 Gemischt /
+    Alle Packs) instead of a separate pill. Active state draws a
+    coral border + ✓ in the top-right corner.
+  Pack-card structural diff lives in the `.chip-group--cards`
+  modifier class so the existing `setupCategoryChips` multi-select
+  wiring keeps working unchanged — buttons stay `.chip`s under the
+  hood, just visually upgraded. Source mockup remains
+  `.gstack/designs/pack-ui-2026-05-27/phase2-themes.html`.
+
 ## [1.1.30] — 2026-05-27
 
 ### Added

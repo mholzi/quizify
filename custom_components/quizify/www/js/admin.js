@@ -189,12 +189,12 @@
         return key;
     }
 
-    // ---- Phase 2: Pack-UI scaling (Featured-Spotlight + Theme-Tabs) ----
-    // Source mockup: ~/.gstack/designs/pack-ui-2026-05-27/phase2-themes.html.
-    // The flat chip-grid stays as the baseline; spotlight + tabs are
-    // additive layers shown only once the visible pack count justifies
-    // the UI complexity.
-    var PACK_UI_THRESHOLDS = { spotlight: 5, tabs: 10 };
+    // ---- Phase 2: Pack-UI (Featured-Spotlight + Theme-Tabs) ----
+    // Always-on per the approved mockup
+    // (~/.gstack/designs/pack-ui-2026-05-27/phase2-themes.html). The
+    // spotlight + tabs render regardless of pack count; Markus made the
+    // call on 2026-05-27 to drop the threshold gating after seeing the
+    // first cut with 3 packs and asking for "genauso wie in den Mockups".
 
     // Featured pack per language. Picked deliberately (newest / most
     // crowd-pleasing). Update when adding fresh packs.
@@ -203,36 +203,16 @@
         en: { value: 'geography',   title: '🌍 Geography',   meta: '47 questions · Family-friendly' },
     };
 
-    function visiblePackCount(lang) {
-        if (!els.categoryChips) return 0;
-        var sel = '.chip[data-lang="' + lang + '"]';
-        return els.categoryChips.querySelectorAll(sel).length;
-    }
-
     function updatePackUIScaling(lang) {
-        var count = visiblePackCount(lang);
-        // Spotlight: shown ≥5 packs/lang, populated from FEATURED_PACK.
-        if (els.featuredSpotlight) {
-            if (count >= PACK_UI_THRESHOLDS.spotlight && FEATURED_PACK[lang]) {
-                els.featuredSpotlight.hidden = false;
-                if (els.spotlightTitle) els.spotlightTitle.textContent = FEATURED_PACK[lang].title;
-                if (els.spotlightMeta)  els.spotlightMeta.textContent  = FEATURED_PACK[lang].meta;
-            } else {
-                els.featuredSpotlight.hidden = true;
-            }
+        // Populate spotlight from FEATURED_PACK for the current language.
+        if (els.featuredSpotlight && FEATURED_PACK[lang]) {
+            if (els.spotlightTitle) els.spotlightTitle.textContent = FEATURED_PACK[lang].title;
+            if (els.spotlightMeta)  els.spotlightMeta.textContent  = FEATURED_PACK[lang].meta;
         }
-        // Theme-tabs: shown ≥10 packs/lang.
-        if (els.themeTabs) {
-            els.themeTabs.hidden = (count < PACK_UI_THRESHOLDS.tabs);
-            // Reset to "all" whenever scaling re-applies so we don't
-            // accidentally hide chips for a theme that no longer matches.
-            if (!els.themeTabs.hidden) {
-                applyThemeFilter('all');
-            } else {
-                // Tabs hidden -> clear any leftover theme filter.
-                applyThemeFilter('all');
-            }
-        }
+        // Re-apply the "all" theme filter so a language switch clears any
+        // leftover hidden-by-theme state on chips that just became
+        // visible for the new language.
+        applyThemeFilter('all');
     }
 
     function applyThemeFilter(theme) {
