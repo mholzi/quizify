@@ -5174,8 +5174,10 @@ body:has(.admin-control-bar:not(.hidden)) #game-view {
   padding-bottom: 96px;
 }
 .pl-result-crown {
-  display: grid;
-  grid-template-columns: 1fr auto 1fr;
+  /* ADMIN pill removed 2026-05-27 — crown is now just the round
+     indicator, centered above the hero. */
+  display: flex;
+  justify-content: center;
   align-items: center;
 }
 .pl-result-round {
@@ -5187,22 +5189,6 @@ body:has(.admin-control-bar:not(.hidden)) #game-view {
   text-align: center;
   text-transform: uppercase;
 }
-.pl-result-admin-pill {
-  display: inline-flex;
-  align-items: center;
-  gap: 4px;
-  justify-self: end;
-  font-family: var(--font-body);
-  font-size: 9.5px;
-  font-weight: 700;
-  color: var(--color-accent-primary);
-  letter-spacing: 0.10em;
-  background: var(--color-accent-brand-bg);
-  border: 1px solid rgba(232, 138, 127, 0.35);
-  padding: 2px 7px;
-  border-radius: 999px;
-}
-.pl-result-admin-pill[hidden] { display: none; }
 
 /* ---- Hero ---- */
 .pl-result-hero {
@@ -5531,10 +5517,14 @@ body.is-admin .pl-result-hero--big .pl-result-big-points { font-size: 84px; }
 }
 .pl-result-bar-btn--ghost {
   background: transparent;
-  border-color: var(--color-border-medium);
-  color: var(--color-text-secondary);
+  /* Bar is a fixed cream surface regardless of theme, so the ghost
+     text must be dark ink (not the theme-aware text token, which goes
+     cream in dark mode and disappears against the bar). #149-style
+     visibility fix for the admin "End game" button on dark-OS hosts. */
+  border-color: #C9C0A8;
+  color: #2A2820;
 }
-.pl-result-bar-btn--ghost:hover { background: rgba(42, 40, 32, 0.04); }
+.pl-result-bar-btn--ghost:hover { background: rgba(42, 40, 32, 0.06); }
 .pl-result-bar-btn--primary {
   background: var(--color-accent-primary);
   color: #fff;

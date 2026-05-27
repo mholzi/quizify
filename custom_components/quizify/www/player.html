@@ -273,19 +273,16 @@
         <div id="reveal-view" class="view hidden">
             <!-- Result page (Soft Parlor redesign, 2026-05-24). Hero swaps
                  between 4 states (X streak / Y big-points / Z wrong / W missed);
-                 body below is identical. Admin overlays the ADMIN pill and a
-                 sticky bottom bar. See gstack designs/player-result-20260524/. -->
+                 body below is identical. Admin overlays a sticky bottom bar
+                 (ADMIN pill removed 2026-05-27 — was redundant w/ the bar).
+                 See gstack designs/player-result-20260524/. -->
             <div class="pl-result">
                 <div class="pl-result-crown">
-                    <span></span>
                     <span class="pl-result-round" aria-live="polite">
                         <span data-i18n="game.roundLabel">Round</span>
                         <span id="reveal-round">1</span>
                         <span data-i18n="game.ofLabel">of</span>
                         <span id="reveal-total">10</span>
-                    </span>
-                    <span class="pl-result-admin-pill" id="reveal-admin-pill" hidden>
-                        <span aria-hidden="true">●</span> ADMIN
                     </span>
                 </div>
 

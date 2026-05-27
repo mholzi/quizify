@@ -3,6 +3,42 @@
 All notable changes to Quizify are documented here. This project follows
 [Semantic Versioning](https://semver.org/).
 
+## [1.1.21] — 2026-05-27
+
+Reveal-page dark-mode polish: ghost button visible again, ADMIN pill out.
+
+### Fixed
+
+- **"Spiel beenden" button now readable on dark-OS hosts.**
+  `.pl-result-bar-btn--ghost` was using `var(--color-text-secondary)`,
+  which becomes cream under the new auto-dark (#50). The sticky admin
+  bar itself is a fixed cream surface regardless of theme — so the
+  ghost text was cream-on-cream and disappeared. Now hardcoded dark
+  ink (`#2A2820`) + a softer hardcoded border (`#C9C0A8`) to match
+  the bar's paper aesthetic. Regression from v1.1.19's #50 fix.
+
+### Removed
+
+- **ADMIN pill on the reveal page.** The little coral "● ADMIN" chip
+  in the top-right of the result page was redundant with the sticky
+  admin bar at the bottom (which is host-only and obvious). HTML, CSS
+  (`.pl-result-admin-pill` block), and the JS show/hide logic gone.
+  `.pl-result-crown` is now a centered flex with just the round
+  indicator. Bundle rebuilt.
+
+### Known issues (not in this release)
+
+- **Rangliste empty during round 1 question.** Server doesn't send
+  `data.leaderboard` until the round-summary message — during the
+  first question the section sits at "--". Filed separately for a
+  follow-up; needs a client-side fallback or a backend change.
+- **HACS browse list shows "icon not available".** The
+  `brand/icon.png` introduced in v1.1.19 serves the HA Core post-install
+  Integrations panel (via the new Brands Proxy API) but HACS's pre-install
+  browse UI still pulls from the `home-assistant/brands` CDN. The new flow
+  doesn't replace the brands repo for HACS surfaces; a PR may still be
+  needed there.
+
 ## [1.1.20] — 2026-05-27
 
 End-screen polish: drop the share feature, shorter primary CTA, wider podium.

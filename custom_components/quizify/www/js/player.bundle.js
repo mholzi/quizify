@@ -1026,13 +1026,8 @@
         // Admin controls — sticky bottom bar
         var adminControls = document.getElementById('reveal-admin-controls');
         var nextRoundBtn = document.getElementById('next-round-btn');
-        var adminPill = document.getElementById('reveal-admin-pill');
         var isAdmin = !!(currentPlayer && currentPlayer.is_admin);
         if (document.body) document.body.classList.toggle('is-admin', isAdmin);
-        if (adminPill) {
-            if (isAdmin) adminPill.removeAttribute('hidden');
-            else adminPill.setAttribute('hidden', '');
-        }
         if (adminControls) {
             if (isAdmin) adminControls.classList.remove('hidden');
             else adminControls.classList.add('hidden');
