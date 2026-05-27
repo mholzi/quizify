@@ -3,6 +3,37 @@
 All notable changes to Quizify are documented here. This project follows
 [Semantic Versioning](https://semver.org/).
 
+## [1.1.19] — 2026-05-27
+
+Lobby polish, OS-aware dark mode, HACS brand assets.
+
+### Added
+
+- **Auto-apply dark theme (#50).** Personal-device UIs (player + admin)
+  now follow the OS `prefers-color-scheme: dark` preference. The
+  dashboard (TV view) ships with `<html data-theme="light">` so the
+  Soft Parlor cream aesthetic stays across the room regardless of the
+  host's OS. Manual `[data-theme="dark"]` still beats both. DESIGN.md
+  updated to document the revised policy and the TV escape.
+- **HACS brand icons via Brands Proxy API.**
+  `custom_components/quizify/brand/icon.png` (256×256) +
+  `icon@2x.png` (512×512). Home Assistant 2026.3+ serves these
+  automatically via `/api/brands/integration/quizify/…` — no PR to
+  home-assistant/brands required (that flow was retired in Feb 2026).
+
+### Changed
+
+- **Lobby player-card prominence (#149).** Fresh-joiner chips now read
+  as proper "you're in" confirmations: `.lobby-e-row` gap goes from
+  `--space-md` to `--space-lg` (mobile single-col gains 8 px below the
+  QR), `.lobby-e-row-card` gets roomier padding (`14px 16px`), bumped
+  font (`1.05rem`), and a soft border + 1 px shadow. Avatar dot scales
+  28 → 36 px so it carries the chip visually. Live-test feedback that
+  the card felt cramped under the QR.
+- **In-repo icon sources matched to HACS spec.** `images/icon.png`
+  512 → 256, `images/icon@2x.png` 1024 → 512 to align with the
+  brand-proxy submission. README rendering keeps the same source files.
+
 ## [1.1.18] — 2026-05-26
 
 Reveal-page polish pass.
