@@ -2469,11 +2469,17 @@ footer {
 }
 
 .stat-label {
-    font-size: 0.7rem;
+    /* Centered + 20 % smaller per Mai-27 live-test feedback so all three
+       labels read uniformly under their stat value (was left-aligned and
+       inconsistent between Power-Ups GENUTZT and the shorter labels). */
+    font-size: 0.56rem;
     font-weight: 500;
     color: var(--color-text-neon-muted);
     text-transform: uppercase;
     letter-spacing: 0.05em;
+    text-align: center;
+    display: block;
+    width: 100%;
 }
 
 /* Superlatives */
@@ -3772,9 +3778,18 @@ footer {
 .lobby-e-qr {
     background: #fff;
     border-radius: 10px;
-    padding: 8px;
+    /* Padding removed + line-height:0 + flex centering: prior 8px CSS
+       padding stacked on top of the QR library's own quiet zone and
+       inline-element baseline gave a visibly larger top white border
+       than bottom (Mai-27 live-test). QR is still scannable since the
+       library renders its own quiet-zone. */
+    padding: 0;
+    line-height: 0;
     aspect-ratio: 1;
     width: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
     align-self: center;
 }
 .lobby-e-qr canvas,
@@ -3783,6 +3798,7 @@ footer {
     width: 100% !important;
     height: 100% !important;
     display: block;
+    vertical-align: top;
 }
 
 .lobby-e-roster {
@@ -4050,6 +4066,14 @@ body:has(.admin-control-bar:not(.hidden)) #game-view {
 /* Reaction bar */
 .reaction-bar {
     padding: var(--space-sm) 0;
+}
+
+/* When the sticky admin bar is showing (host on reveal view), the
+   reaction emojis used to sit behind it (Mai-27 live test). Push the
+   reaction row above the ~80 px bar height so admins still see the
+   full row of buttons. Non-admins fall through to the default padding. */
+body.is-admin .reaction-bar {
+    margin-bottom: 80px;
 }
 
 .reaction-bar-container {
@@ -5403,7 +5427,8 @@ body.is-admin .pl-result-hero--big .pl-result-big-points { font-size: 84px; }
 }
 .pl-result-funfact-body {
   font-family: var(--font-body);
-  font-size: 12.5px;
+  /* +20 % (Mai-27 live test): 12.5 px was hard to read at arm's length. */
+  font-size: 15px;
   line-height: 1.4;
   color: var(--color-text-primary);
 }
@@ -5423,7 +5448,9 @@ body.is-admin .pl-result-hero--big .pl-result-big-points { font-size: 84px; }
   padding: 7px 12px;
   border-bottom: 1px solid var(--color-border-light);
   font-family: var(--font-body);
-  font-size: 13px;
+  /* +20 % (Mai-27 live test): 13 px → 15.6 px so names & scores read
+     as easily as the fun fact above. */
+  font-size: 15.6px;
 }
 .pl-result-srow:last-child { border-bottom: 0; }
 /* Medal tints — gold stronger, silver/bronze whisper */

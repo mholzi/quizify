@@ -3,6 +3,40 @@
 All notable changes to Quizify are documented here. This project follows
 [Semantic Versioning](https://semver.org/).
 
+## [1.1.23] — 2026-05-27
+
+Lobby + reveal polish from continued live-test feedback.
+
+### Fixed
+
+- **QR code asymmetric padding** (admin lobby). The white container
+  had a visibly larger top border than bottom because the qrcode
+  library's quiet zone stacked on top of an 8 px CSS padding and
+  inline-element baseline. Now `padding: 0; line-height: 0` with
+  flex centering — the library's built-in quiet zone is enough for
+  scannability.
+- **Reaction-bar emoji icons covered by the sticky admin bar.**
+  Added `body.is-admin .reaction-bar { margin-bottom: 80px }` so the
+  emoji row floats above the bottom action bar when the host is on
+  the reveal view.
+
+### Changed
+
+- **Fun fact +20 % font size.** `.pl-result-funfact-body` 12.5 → 15 px
+  — readable at arm's length now.
+- **Standings +20 % font size.** `.pl-result-srow` 13 → 15.6 px so
+  names and scores read at the same weight as the fun fact above.
+- **Finale stat labels centered + −20 % font.** `.stat-label`
+  text-align center, font 0.7 → 0.56 rem. All three labels
+  (Beste Serie / Gespielte Runden / Power-Ups Genutzt) now line up
+  under their value uniformly.
+
+### Removed
+
+- **Join-URL line under the lobby QR.** `<p id="join-url" class="lobby-e-url">`
+  + its JS populate in admin.js. The QR + the "Cast to TV" link cover
+  the join path already; the literal URL was visual noise.
+
 ## [1.1.22] — 2026-05-27
 
 Reveal header refactor + Rangliste fallback for round 1.

@@ -65,7 +65,6 @@
         languageChips: document.getElementById('language-chips'),
         gameSettingsSummary: document.getElementById('game-settings-summary'),
         qrContainer: document.getElementById('qr-container'),
-        joinUrl: document.getElementById('join-url'),
         dashboardLink: document.getElementById('dashboard-link'),
         lobbyPlayerCount: document.getElementById('lobby-player-count'),
         lobbyPlayerChips: document.getElementById('lobby-player-chips'),
@@ -1054,7 +1053,6 @@
     // ---- Generate join URL ----
     function initJoinUrl() {
         var joinUrl = window.location.origin + '/quizify/player';
-        if (els.joinUrl) els.joinUrl.textContent = joinUrl;
         generateQR(joinUrl);
         if (els.dashboardLink) {
             els.dashboardLink.href = window.location.origin + '/quizify/dashboard';
