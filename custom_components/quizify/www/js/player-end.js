@@ -49,10 +49,6 @@
         // Highlights
         renderHighlights(leaderboard);
 
-        // Share card — server sends share_texts keyed by player name
-        var shareData = data.share_data || (data.share_texts ? { emoji_grids: data.share_texts } : null);
-        renderShareCard(shareData);
-
         // Admin / player controls.
         //
         // Source-of-truth: trust ``state.isAdmin`` for gating the
@@ -231,66 +227,6 @@
     }
 
     // ============================================
-    // Share Card
-    // ============================================
-
-    /**
-     * Render shareable emoji grid + copy button
-     * @param {Object|null} shareData - Share data with emoji_grids
-     */
-    function renderShareCard(shareData) {
-        var container = document.getElementById('share-container');
-        if (!container) return;
-
-        if (!shareData || !shareData.emoji_grids) {
-            container.classList.add('hidden');
-            return;
-        }
-
-        var myGrid = shareData.emoji_grids[state.playerName];
-        if (!myGrid) {
-            var keys = Object.keys(shareData.emoji_grids);
-            if (keys.length === 1) {
-                myGrid = shareData.emoji_grids[keys[0]];
-            }
-        }
-        if (!myGrid) {
-            container.classList.add('hidden');
-            return;
-        }
-
-        var gridEl = document.getElementById('share-emoji-grid');
-        if (gridEl) {
-            var lines = myGrid.split('\n').map(function (line) {
-                return '<div class="emoji-grid-line">' + pu.escapeHtml(line) + '</div>';
-            }).join('');
-            gridEl.innerHTML = lines;
-            gridEl.dataset.rawText = myGrid;
-        }
-
-        var copyBtn = document.getElementById('share-copy-btn');
-        if (copyBtn) {
-            copyBtn.onclick = function () {
-                navigator.clipboard.writeText(myGrid).then(function () {
-                    var toast = document.getElementById('share-toast');
-                    if (toast) {
-                        toast.classList.remove('hidden');
-                        setTimeout(function () { toast.classList.add('hidden'); }, 2000);
-                    }
-                });
-            };
-        }
-
-        // PNG share card
-        var saveBtn = document.getElementById('share-save-btn');
-        if (saveBtn) {
-            saveBtn.onclick = function () { generateShareCard(myGrid, shareData); };
-        }
-
-        container.classList.remove('hidden');
-    }
-
-    // ============================================
     // Highlights
     // ============================================
 
@@ -349,70 +285,6 @@
             '</div>';
         }).join('');
         container.classList.remove('hidden');
-    }
-
-    // ============================================
-    // PNG Share Card
-    // ============================================
-
-    function generateShareCard(emojiGrid, shareData) {
-        var canvas = document.createElement('canvas');
-        canvas.width = 600;
-        canvas.height = 400;
-        var ctx = canvas.getContext('2d');
-
-        // Background — Soft Parlor cream paper
-        ctx.fillStyle = '#FAF6EC';
-        ctx.fillRect(0, 0, 600, 400);
-
-        // Accent bar top — single coral
-        ctx.fillStyle = '#E88A7F';
-        ctx.fillRect(0, 0, 600, 4);
-
-        // Logo
-        ctx.font = 'bold 32px "Cabinet Grotesk", system-ui, sans-serif';
-        ctx.fillStyle = '#2A2820';
-        ctx.fillText('Quizify', 30, 55);
-
-        // Category
-        ctx.font = '14px "JetBrains Mono", ui-monospace, monospace';
-        ctx.fillStyle = '#6E6A5C';
-        ctx.fillText((shareData && shareData.category ? shareData.category.toUpperCase() : ''), 30, 80);
-
-        // Emoji grid
-        ctx.font = '28px system-ui, sans-serif';
-        ctx.fillStyle = '#2A2820';
-        var lines = emojiGrid.split('\n');
-        var y = 120;
-        lines.forEach(function(line) {
-            if (line.trim()) {
-                ctx.fillText(line, 30, y);
-                y += 42;
-            }
-        });
-
-        // Footer
-        ctx.font = '13px "JetBrains Mono", ui-monospace, monospace';
-        ctx.fillStyle = '#E88A7F';
-        ctx.fillText('quizify.fun', 30, 370);
-
-        // Download or share
-        canvas.toBlob(function(blob) {
-            var url = URL.createObjectURL(blob);
-            if (navigator.share && navigator.canShare && navigator.canShare({ files: [new File([blob], 'quizify.png', { type: 'image/png' })] })) {
-                var tShare = (window.QuizifyI18n && window.QuizifyI18n.t) || function (k) { return k; };
-                navigator.share({
-                    title: tShare('share.shareTitle'),
-                    files: [new File([blob], 'quizify.png', { type: 'image/png' })]
-                }).catch(function() {});
-            } else {
-                var a = document.createElement('a');
-                a.href = url;
-                a.download = 'quizify-result.png';
-                a.click();
-                setTimeout(function() { URL.revokeObjectURL(url); }, 1000);
-            }
-        }, 'image/png');
     }
 
     // ============================================
@@ -483,7 +355,6 @@
         renderYourResult: renderYourResult,
         renderFullLeaderboard: renderFullLeaderboard,
         renderSuperlatives: renderSuperlatives,
-        renderShareCard: renderShareCard,
         setupNewGameButton: setupNewGameButton,
         renderHighlights: renderHighlights
     };

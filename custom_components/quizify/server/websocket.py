@@ -1417,17 +1417,13 @@ class QuizifyWebSocketHandler:
     # ------------------------------------------------------------------
 
     async def _broadcast_finale(self, game_state: QuizifyGameState) -> None:
-        """Build and broadcast the finale message (podium + superlatives + share texts)."""
+        """Build and broadcast the finale message (podium + superlatives)."""
         from custom_components.quizify.game.scoring import calculate_podium  # noqa: PLC0415
-        from custom_components.quizify.game.share import build_share_data  # noqa: PLC0415
 
         podium = calculate_podium(game_state.get_players())
         all_players = game_state.get_players()
-        share_data = build_share_data(game_state)
         awards = [s.to_dict() for s in compute_superlatives(all_players)]
-        finale_msg = serialize_finale(
-            podium, all_players, share_texts=share_data.get("share_texts"), superlatives=awards
-        )
+        finale_msg = serialize_finale(podium, all_players, superlatives=awards)
         await self._conn.broadcast(finale_msg)
 
     # ------------------------------------------------------------------

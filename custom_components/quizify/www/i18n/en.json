@@ -92,7 +92,7 @@
     "continueBtn": "Continue",
     "newGame": "New Game",
     "startNewGame": "Start New Game",
-    "playAgainSame": "Play again — same settings",
+    "playAgainSame": "Play again",
     "timer": "Time per Question",
     "confirmEnd": "Really end the game?",
     "correct": "Correct",
@@ -234,13 +234,6 @@
       "buzzkill": "{count}× freeze used",
       "knowledgeExpert": "{points} pts on hard questions"
     }
-  },
-  "share": {
-    "share_tab": "📤 Share",
-    "share_copy": "📋 Copy Text",
-    "share_save": "📤 Share Card",
-    "share_copied": "Copied!",
-    "shareTitle": "Quizify Result"
   },
   "reveal": {
     "yourResult": "Your Result",

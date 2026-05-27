@@ -1889,8 +1889,13 @@ button, .btn {
     align-items: end;
     gap: var(--space-md);
     margin: 0 auto var(--space-xl);
+    /* 90 % of the parent gives the podium room to breathe on phones
+       (was visibly narrow per #live-feedback); 720 px caps it on
+       desktop / dashboard so it doesn't sprawl. Inner padding dropped
+       since the outer 5 % gutter is enough breathing room. */
+    width: 90%;
     max-width: 720px;
-    padding: 0 var(--space-md);
+    padding: 0;
     min-height: 220px;
 }
 
@@ -2453,89 +2458,6 @@ footer {
     color: var(--color-text-neon-muted);
     text-transform: uppercase;
     letter-spacing: 0.05em;
-}
-
-/* Share section */
-.share-container {
-    width: 100%;
-    background: var(--color-surface-dark);
-    border: 1px solid var(--color-border-neon);
-    border-radius: var(--radius-lg);
-    padding: var(--space-lg);
-}
-
-.share-header {
-    font-size: 0.75rem;
-    font-weight: 700;
-    text-transform: uppercase;
-    letter-spacing: 0.08em;
-    color: var(--color-text-neon-muted);
-    margin-bottom: var(--space-md);
-}
-
-.share-buttons {
-    display: flex;
-    gap: var(--space-sm);
-    flex-wrap: wrap;
-}
-
-.share-btn {
-    display: inline-flex;
-    align-items: center;
-    gap: var(--space-sm);
-    padding: var(--space-sm) var(--space-md);
-    background: var(--color-dark-surface);
-    border: 1px solid var(--color-border-neon);
-    border-radius: var(--radius-md);
-    color: var(--color-text-white);
-    font-size: 0.85rem;
-    font-weight: 500;
-    cursor: pointer;
-    transition: all var(--transition-fast);
-    font-family: var(--font-system);
-}
-
-.share-btn:hover {
-    background: rgba(255, 255, 255, 0.1);
-    border-color: var(--color-accent-secondary);
-}
-
-.share-btn:active {
-    transform: scale(0.97);
-}
-
-.share-toast {
-    display: none;
-    padding: var(--space-sm) var(--space-md);
-    background: rgba(16, 185, 129, 0.15);
-    border: 1px solid rgba(16, 185, 129, 0.3);
-    border-radius: var(--radius-md);
-    color: var(--color-success);
-    font-size: 0.85rem;
-    text-align: center;
-    margin-top: var(--space-sm);
-}
-
-.share-toast.visible {
-    display: block;
-    animation: pop-in 0.3s ease-out;
-}
-
-/* Emoji grid preview */
-.emoji-grid-preview {
-    font-family: var(--font-mono);
-    font-size: 1.1rem;
-    line-height: 1.6;
-    padding: var(--space-md);
-    background: rgba(255, 255, 255, 0.03);
-    border-radius: var(--radius-md);
-    text-align: center;
-    margin-bottom: var(--space-md);
-}
-
-.emoji-grid-line {
-    display: block;
-    letter-spacing: 2px;
 }
 
 /* Superlatives */

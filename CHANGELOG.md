@@ -3,6 +3,30 @@
 All notable changes to Quizify are documented here. This project follows
 [Semantic Versioning](https://semver.org/).
 
+## [1.1.20] — 2026-05-27
+
+End-screen polish: drop the share feature, shorter primary CTA, wider podium.
+
+### Removed
+
+- **Share/Teilen functionality** — the finale screen no longer renders the
+  emoji-grid share card or Copy-Text / Share-Card buttons. Server-side
+  emission is gone too: `game/share.py` deleted, `share_texts` removed
+  from `FinaleMessage`, `serialize_finale`, and the `phase=FINALE`
+  payload. PNG share-card generator dropped from `player-end.js`. 13
+  files / -494 lines.
+
+### Changed
+
+- **Shorter primary CTA on the finale screen.** Button label was
+  "Wieder spielen — gleiche Einstellungen" / "Play again — same
+  settings" and wrapped over four lines on a phone. Now
+  "Nochmal spielen" / "Play again" — fits on one line.
+- **Podium bar chart breathes.** `.podium` was visibly narrow on phones
+  (~60 % of viewport with the old `0 var(--space-md)` inner padding).
+  Now `width: 90 %` of parent with `padding: 0`; the 720 px desktop
+  cap stays so the dashboard doesn't sprawl.
+
 ## [1.1.19] — 2026-05-27
 
 Lobby polish, OS-aware dark mode, HACS brand assets.

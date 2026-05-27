@@ -92,7 +92,7 @@
     "continueBtn": "Weiter",
     "newGame": "Neues Spiel",
     "startNewGame": "Neues Spiel starten",
-    "playAgainSame": "Wieder spielen — gleiche Einstellungen",
+    "playAgainSame": "Nochmal spielen",
     "timer": "Zeit pro Frage",
     "confirmEnd": "Spiel wirklich beenden?",
     "correct": "Richtig",
@@ -234,13 +234,6 @@
       "buzzkill": "{count}× eingefroren",
       "knowledgeExpert": "{points} Pkt. bei schweren Fragen"
     }
-  },
-  "share": {
-    "share_tab": "📤 Teilen",
-    "share_copy": "📋 Text kopieren",
-    "share_save": "📤 Karte teilen",
-    "share_copied": "Kopiert!",
-    "shareTitle": "Quizify-Ergebnis"
   },
   "reveal": {
     "yourResult": "Dein Ergebnis",

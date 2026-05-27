@@ -83,7 +83,6 @@ class TestServerMessageShapes:
             leaderboard=[],
             all_players=[],
         ).to_dict()
-        assert m["share_texts"] == {}
         assert m["superlatives"] == []
 
     def test_game_state_phase_field(self) -> None:

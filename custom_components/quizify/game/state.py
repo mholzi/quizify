@@ -37,7 +37,6 @@ from .scoring import (
     get_streak_milestone_bonus,
     get_streak_multiplier,
 )
-from .share import build_share_data
 from .timer import QuestionTimer
 from .types import DIFFICULTY_MULTIPLIERS, TIME_LIMITS, Difficulty
 
@@ -746,9 +745,6 @@ class QuizifyGameState:
 
         podium = self._finale_podium
 
-        # Build share cards
-        share_data = build_share_data(self)
-
         finale_data = {
             "phase": GamePhase.FINALE.value,
             "leaderboard": self.get_leaderboard(),
@@ -757,7 +753,6 @@ class QuizifyGameState:
                 for i, p in enumerate(podium)
             ],
             "total_rounds": self.round,
-            "share_texts": share_data.get("share_texts", {}),
         }
 
         # Record to analytics

@@ -155,14 +155,12 @@ class RoundSummaryMessage:
 
 @dataclass
 class FinaleMessage:
-    """Broadcast when the game ends — podium + full leaderboard +
-    superlatives + per-player share texts."""
+    """Broadcast when the game ends — podium + full leaderboard + superlatives."""
 
     type: Literal["finale"]
     podium: list[dict[str, Any]]  # [{rank, name, score}, ...]
     leaderboard: list[dict[str, Any]]  # full sorted board
     all_players: list[dict[str, Any]]  # alias of leaderboard (back-compat)
-    share_texts: dict[str, str] = field(default_factory=dict)
     superlatives: list[dict[str, Any]] = field(default_factory=list)
 
     def to_dict(self) -> dict[str, Any]:
@@ -266,8 +264,7 @@ TYPESCRIPT_DECLARATIONS = """
 //       players: Player[]; round: number; total_rounds: number; last_round: boolean;
 //       all_answers: AnswerEntry[]; answer_distribution: DistEntry[]; question_text: string; }
 //   | { type: 'finale'; podium: PodiumEntry[]; leaderboard: LeaderboardEntry[];
-//       all_players: LeaderboardEntry[]; share_texts: Record<string, string>;
-//       superlatives: Superlative[]; }
+//       all_players: LeaderboardEntry[]; superlatives: Superlative[]; }
 //   | { type: 'game_state'; phase: GamePhase; round: number; total_rounds: number;
 //       players: Player[]; leaderboard?: LeaderboardEntry[]; question?: QuestionState;
 //       pause_reason?: 'admin_paused' | 'admin_disconnected'; }

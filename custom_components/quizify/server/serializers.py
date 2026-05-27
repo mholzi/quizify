@@ -144,7 +144,6 @@ def serialize_player_list(players: list[PlayerSession]) -> list[dict[str, Any]]:
 def serialize_finale(
     podium: list[PlayerSession],
     all_players: list[PlayerSession],
-    share_texts: dict[str, str] | None = None,
     superlatives: list[dict[str, str]] | None = None,
 ) -> dict[str, Any]:
     """Build finale payload with podium and full leaderboard."""
@@ -157,8 +156,6 @@ def serialize_finale(
         "leaderboard": serialize_leaderboard(all_players),
         "all_players": serialize_leaderboard(all_players),
     }
-    if share_texts:
-        result["share_texts"] = share_texts
     if superlatives:
         result["superlatives"] = superlatives
     return result
