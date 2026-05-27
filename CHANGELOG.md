@@ -3,6 +3,30 @@
 All notable changes to Quizify are documented here. This project follows
 [Semantic Versioning](https://semver.org/).
 
+## [1.1.29] — 2026-05-27
+
+### Added
+
+- **PWA install button on the admin page.** Adopts the same pattern
+  Beatify uses: small `📲` button in the admin header that surfaces
+  when the browser fires `beforeinstallprompt` (Android Chrome/Edge/
+  Samsung). Clicking it calls `prompt()` and hides the button after
+  the user picks. On iOS Safari — where the prompt API doesn't
+  exist — the button is shown anyway and opens a manual hint modal
+  walking the user through Share → Add to Home Screen. When the app
+  is already running in standalone mode, the button stays hidden.
+  EN + DE i18n keys: `pwa.installApp`, `pwa.iosHintTitle`,
+  `pwa.iosHintBody`.
+
+### Fixed
+
+- **PWA theme & background color match Soft Parlor.**
+  `site.webmanifest` had `#0b0e1a` (legacy Broadcast Living Room
+  navy) for both `theme_color` and `background_color`; the splash
+  screen on a freshly-installed PWA flashed dark blue before the
+  actual cream UI loaded. Updated to `#FAF6EC` (cream paper) so the
+  install/launch sequence is visually consistent.
+
 ## [1.1.28] — 2026-05-27
 
 ### Fixed

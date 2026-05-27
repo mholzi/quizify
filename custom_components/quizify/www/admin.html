@@ -25,6 +25,16 @@
     <header class="admin-header">
         <h1 class="wordmark"><span class="wordmark-quiz">Quiz</span><span class="wordmark-ify">ify</span></h1>
         <div class="admin-header-actions">
+            <!-- PWA Install Button — hidden by default, shown via JS when
+                 beforeinstallprompt fires (Android Chrome/Edge) or when
+                 iOS Safari is detected (where the prompt API doesn't
+                 exist — the iOS hint modal takes over). -->
+            <button type="button" id="pwa-install-btn" class="admin-header-btn pwa-install-btn hidden"
+                    data-i18n-aria-label="pwa.installApp"
+                    data-i18n-title="pwa.installApp"
+                    aria-label="Install Quizify App" title="Install Quizify App">
+                <span aria-hidden="true">📲</span>
+            </button>
             <button type="button" id="reset-game-btn" class="admin-header-btn hidden"
                     data-i18n-aria-label="admin.resetGame"
                     data-i18n-title="admin.resetGame"
@@ -36,6 +46,17 @@
             </span>
         </div>
     </header>
+
+    <!-- iOS PWA Install Hint — shown when the user taps the install button
+         on iOS Safari (where beforeinstallprompt doesn't fire). Explains
+         the Share → Add to Home Screen flow that Apple requires. -->
+    <div class="pwa-ios-hint hidden" id="pwa-ios-hint" role="dialog" aria-modal="true" aria-labelledby="pwa-ios-hint-title">
+        <div class="pwa-ios-hint-content">
+            <button type="button" class="pwa-ios-hint-close" id="pwa-ios-hint-close" aria-label="Close">&times;</button>
+            <p id="pwa-ios-hint-title"><strong data-i18n="pwa.iosHintTitle">Install Quizify</strong></p>
+            <p data-i18n="pwa.iosHintBody">Tap <span aria-hidden="true">⬆️</span> Share, then <strong>"Add to Home Screen"</strong></p>
+        </div>
+    </div>
 
     <main class="admin-content">
 

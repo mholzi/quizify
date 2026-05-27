@@ -6,8 +6,8 @@
   "scope": "/quizify/",
   "display": "standalone",
   "orientation": "any",
-  "theme_color": "#0b0e1a",
-  "background_color": "#0b0e1a",
+  "theme_color": "#FAF6EC",
+  "background_color": "#FAF6EC",
   "lang": "en",
   "categories": ["entertainment", "games"],
   "icons": [

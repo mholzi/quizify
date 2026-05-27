@@ -1115,6 +1115,72 @@
 
     // ---- Question pack update check ----
     checkPackUpdates();
+
+    // ---- PWA install button ----
+    // Android Chrome / Edge / Samsung Browser: fire beforeinstallprompt
+    // when the page is install-eligible. We cache the prompt so the user
+    // can trigger it on click. iOS Safari doesn't support this API, so
+    // we detect iOS separately and show the manual Add-to-Home-Screen
+    // hint modal instead. If the app is already installed (standalone
+    // display-mode or iOS-standalone), do nothing.
+    (function () {
+        var installBtn = document.getElementById('pwa-install-btn');
+        if (!installBtn) return;
+        var isStandalone = window.matchMedia('(display-mode: standalone)').matches
+            || window.navigator.standalone === true;
+        if (isStandalone) return;
+
+        var deferredPrompt = null;
+
+        window.addEventListener('beforeinstallprompt', function (e) {
+            e.preventDefault();
+            deferredPrompt = e;
+            installBtn.classList.remove('hidden');
+        });
+
+        window.addEventListener('appinstalled', function () {
+            installBtn.classList.add('hidden');
+            deferredPrompt = null;
+        });
+
+        // iOS detection — Safari on iPhone/iPad never fires
+        // beforeinstallprompt, so surface the install button anyway
+        // and let it open the manual hint modal.
+        var isIOS = /iPad|iPhone|iPod/.test(window.navigator.userAgent)
+            && !window.MSStream;
+        var iosHint = document.getElementById('pwa-ios-hint');
+        if (isIOS && iosHint) {
+            installBtn.classList.remove('hidden');
+        }
+
+        installBtn.addEventListener('click', function () {
+            if (deferredPrompt) {
+                deferredPrompt.prompt();
+                deferredPrompt.userChoice.then(function () {
+                    deferredPrompt = null;
+                    installBtn.classList.add('hidden');
+                });
+            } else if (iosHint) {
+                iosHint.classList.remove('hidden');
+            }
+        });
+
+        var iosClose = document.getElementById('pwa-ios-hint-close');
+        if (iosClose && iosHint) {
+            iosClose.addEventListener('click', function () {
+                iosHint.classList.add('hidden');
+            });
+            // Backdrop click + Escape close the hint.
+            iosHint.addEventListener('click', function (e) {
+                if (e.target === iosHint) iosHint.classList.add('hidden');
+            });
+            document.addEventListener('keydown', function (e) {
+                if (e.key === 'Escape' && !iosHint.classList.contains('hidden')) {
+                    iosHint.classList.add('hidden');
+                }
+            });
+        }
+    })();
 })();
 
 /**

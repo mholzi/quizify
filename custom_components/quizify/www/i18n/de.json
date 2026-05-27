@@ -429,5 +429,10 @@
     "titleQuestion": "Quizify — Frage {current}",
     "titleReveal": "Quizify — Auflösung",
     "titleFinale": "Quizify — Endergebnis"
+  },
+  "pwa": {
+    "installApp": "Quizify-App installieren",
+    "iosHintTitle": "Quizify installieren",
+    "iosHintBody": "Tippe auf ⬆️ Teilen und dann \"Zum Home-Bildschirm\""
   }
 }

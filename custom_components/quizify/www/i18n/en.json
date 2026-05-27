@@ -429,5 +429,10 @@
     "titleQuestion": "Quizify — Question {current}",
     "titleReveal": "Quizify — Reveal",
     "titleFinale": "Quizify — Final Results"
+  },
+  "pwa": {
+    "installApp": "Install Quizify App",
+    "iosHintTitle": "Install Quizify",
+    "iosHintBody": "Tap ⬆️ Share, then \"Add to Home Screen\""
   }
 }

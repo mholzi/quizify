@@ -586,6 +586,69 @@ body {
     background: var(--color-bg-surface);
 }
 
+/* PWA Install Button — same admin-header-btn frame but coral-leaning
+   so it reads as the "do this" CTA when it surfaces (revealed by the
+   beforeinstallprompt JS handler in admin.js, or by iOS detection).
+   .hidden default keeps it out of layout until install is actually
+   possible. */
+.pwa-install-btn.admin-header-btn {
+    color: var(--color-accent-primary);
+    border-color: rgba(232, 138, 127, 0.45);
+}
+
+/* iOS Add-to-Home-Screen hint modal — backdrop + centered card,
+   shown when iOS Safari users tap the install button (where the
+   beforeinstallprompt API isn't available so we walk them through
+   the manual Share → Add to Home Screen flow). */
+.pwa-ios-hint {
+    position: fixed;
+    inset: 0;
+    background: rgba(31, 27, 20, 0.55);
+    display: flex;
+    align-items: flex-end;
+    justify-content: center;
+    z-index: 200;
+    padding: var(--space-md);
+    animation: pwa-fade-in 160ms ease-out;
+}
+.pwa-ios-hint.hidden { display: none; }
+.pwa-ios-hint-content {
+    background: var(--color-bg-card, #FFFFFF);
+    border-radius: 14px;
+    padding: var(--space-lg) var(--space-lg) calc(var(--space-lg) + env(safe-area-inset-bottom));
+    max-width: 420px;
+    width: 100%;
+    position: relative;
+    box-shadow: 0 -8px 32px rgba(31, 27, 20, 0.20);
+    line-height: 1.5;
+    color: var(--color-text-primary);
+}
+.pwa-ios-hint-content p {
+    margin: 0 0 var(--space-sm) 0;
+}
+.pwa-ios-hint-content p:last-child {
+    margin-bottom: 0;
+}
+.pwa-ios-hint-close {
+    position: absolute;
+    top: 8px;
+    right: 12px;
+    background: transparent;
+    border: 0;
+    color: var(--color-text-muted);
+    font-size: 1.5rem;
+    line-height: 1;
+    padding: 4px 8px;
+    cursor: pointer;
+}
+@keyframes pwa-fade-in {
+    from { opacity: 0; }
+    to { opacity: 1; }
+}
+@media (min-width: 480px) {
+    .pwa-ios-hint { align-items: center; }
+}
+
 /* Player header */
 .player-header {
     display: flex;
