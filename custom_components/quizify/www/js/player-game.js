@@ -658,7 +658,17 @@
         if (opponents.length === 0) {
             if (hintEl) hintEl.textContent = t('powerups.noOpponents');
         } else {
-            if (hintEl) hintEl.textContent = t('powerups.pickHint');
+            // STEAL is most effective after the target has locked in their
+            // answer (target.round_score is non-zero, so half is non-zero).
+            // Surface that as a hint + per-opponent "answered" badge so
+            // players don't burn the power-up on someone who hasn't yet
+            // earned anything to steal. FREEZE keeps the generic pickHint
+            // (server v1.1.25 rejects submitted targets for FREEZE anyway).
+            if (hintEl) {
+                hintEl.textContent = powerupType === 'steal'
+                    ? t('powerups.stealHint')
+                    : t('powerups.pickHint');
+            }
             opponents.forEach(function (opp) {
                 var li = document.createElement('li');
                 var btn = document.createElement('button');
@@ -670,8 +680,14 @@
                     colorDot = '<span class="powerup-target-dot" style="background:' +
                         pu.escapeHtml(opp.color) + '"></span>';
                 }
+                var submittedBadge = '';
+                if (powerupType === 'steal' && opp.submitted) {
+                    submittedBadge = '<span class="powerup-target-submitted">' +
+                        pu.escapeHtml(t('powerups.targetAnswered')) + '</span>';
+                }
                 btn.innerHTML = colorDot +
-                    '<span class="powerup-target-name">' + pu.escapeHtml(opp.name) + '</span>';
+                    '<span class="powerup-target-name">' + pu.escapeHtml(opp.name) + '</span>' +
+                    submittedBadge;
                 btn.addEventListener('click', function () {
                     closeTargetPicker();
                     onConfirm(opp.name);

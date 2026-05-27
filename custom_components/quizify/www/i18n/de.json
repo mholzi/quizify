@@ -179,6 +179,8 @@
     "pickFreezeTitle": "Spieler einfrieren",
     "pickStealTitle": "Punkte klauen von",
     "pickHint": "Tippe einen Spieler an",
+    "stealHint": "💡 Am effektivsten wenn das Ziel schon geantwortet hat",
+    "targetAnswered": "hat geantwortet",
     "noOpponents": "Keine anderen Spieler verfügbar",
     "cancel": "Abbrechen"
   },

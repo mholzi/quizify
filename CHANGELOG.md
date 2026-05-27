@@ -3,6 +3,18 @@
 All notable changes to Quizify are documented here. This project follows
 [Semantic Versioning](https://semver.org/).
 
+## [1.1.26] — 2026-05-27
+
+### Added
+
+- **STEAL target-picker UX hint.** The steal modal now shows
+  "💡 Most effective once the target has answered" and tags each
+  opponent who has already submitted with an "answered" chip.
+  Pairs with the v1.1.25 logic — submitted targets have non-zero
+  `round_score`, which is what STEAL halves. The hint surfaces the
+  optimal timing strategy that previously required reading the
+  source code to discover. EN + DE.
+
 ## [1.1.25] — 2026-05-27
 
 Power-up post-submit no-op gates.

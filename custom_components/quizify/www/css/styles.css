@@ -4548,6 +4548,23 @@ body.is-admin .reaction-bar {
     font-weight: var(--font-weight-medium);
 }
 
+/* "answered" chip on the steal picker — appears on opponents who have
+   locked in their answer this round. Signals "good target, has points
+   worth stealing" since target.round_score is non-zero. */
+.powerup-target-submitted {
+    flex-shrink: 0;
+    font-family: var(--font-mono);
+    font-size: 0.65rem;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 0.08em;
+    color: var(--color-success, #2F7A4F);
+    background: rgba(127, 168, 151, 0.18);
+    border: 1px solid rgba(127, 168, 151, 0.32);
+    padding: 2px 8px;
+    border-radius: 999px;
+}
+
 .powerup-target-cancel {
     align-self: stretch;
 }
