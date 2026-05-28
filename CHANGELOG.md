@@ -3,6 +3,31 @@
 All notable changes to Quizify are documented here. This project follows
 [Semantic Versioning](https://semver.org/).
 
+## [1.1.34] — 2026-05-28
+
+### Fixed
+
+- **Phase-2 pack-picker now renders correctly on iOS Safari /
+  HA companion app.** The Featured-Spotlight and Theme-Tabs were
+  inheriting iOS's default button chrome (rounded pill with blue
+  text, ignoring the designed gradient + dark active state) plus
+  the global `button, .btn { min-width: 44px; min-height: 44px; }`
+  rule was forcing the tabs to be too large and overriding the
+  custom padding. Fix:
+  - Added `appearance: none; -webkit-appearance: none;` to
+    `.theme-tab`, `.featured-spotlight`, and `.spotlight-play-btn`.
+  - Reset `min-width: 0; min-height: 0;` on the same three so the
+    global tap-target floor doesn't fight the compact pill design.
+  - Switched the spotlight gradient + play-button colors from
+    `var(--color-accent-primary)` / `var(--color-warning)` /
+    `var(--color-text-primary)` to literal hex (`#E88A7F`,
+    `#E8C47F`, `#FFFFFF`, `#2A2820`) so they render consistently
+    regardless of any per-page theme override.
+  - Locked `admin.html` to light mode (`<html data-theme="light">`)
+    to match the approved Soft Parlor mockup and prevent
+    dark-mode-host devices from auto-flipping into the dark token
+    set mid-screen.
+
 ## [1.1.33] — 2026-05-28
 
 ### Fixed

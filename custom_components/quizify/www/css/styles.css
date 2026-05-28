@@ -1110,12 +1110,17 @@ button, .btn {
    See ~/.gstack/designs/pack-ui-2026-05-27/phase2-themes.html for
    the source mockup Markus approved on 2026-05-27. */
 
+/* div not button — but keep iOS treatment defensive in case it inherits any
+   appearance from an ancestor (some HA WebView contexts add chrome to
+   interactive elements). */
 .featured-spotlight {
+    appearance: none;
+    -webkit-appearance: none;
     position: relative;
-    background: linear-gradient(135deg, var(--color-accent-primary) 0%, var(--color-warning) 100%);
+    background: linear-gradient(135deg, #E88A7F 0%, #E8C47F 100%);
     border-radius: 14px;
     padding: 14px 16px 12px;
-    color: #fff;
+    color: #FFFFFF;
     margin-bottom: var(--space-md);
     overflow: hidden;
     box-shadow: 0 4px 14px rgba(232, 138, 127, 0.22);
@@ -1156,14 +1161,19 @@ button, .btn {
     margin-bottom: 10px;
 }
 .featured-spotlight .spotlight-play-btn {
+    appearance: none;
+    -webkit-appearance: none;
     background: rgba(255, 255, 255, 0.95);
-    color: var(--color-text-primary);
+    color: #2A2820;
     border: 0;
     border-radius: 999px;
     padding: 7px 16px;
     font-weight: 700;
     font-size: 0.85rem;
     cursor: pointer;
+    min-width: 0;
+    min-height: 0;
+    font-family: inherit;
 }
 .featured-spotlight .spotlight-play-btn:hover {
     background: #fff;
@@ -1180,19 +1190,27 @@ button, .btn {
 .theme-tabs::-webkit-scrollbar {
     display: none;
 }
+/* Reset iOS Safari's default button chrome — without these the global
+   "button, .btn" rule's min-width/min-height + iOS native pill style win,
+   and the tabs end up rendering as fat blue-text iOS buttons instead of
+   the small dark/cream pills the mockup calls for. */
 .theme-tab {
+    appearance: none;
+    -webkit-appearance: none;
     flex: 0 0 auto;
     background: var(--color-bg-surface);
     border: 1.5px solid var(--color-border-light);
     border-radius: 999px;
     padding: 6px 12px;
+    min-width: 0;
+    min-height: 0;
     font-size: 0.78rem;
     font-weight: 600;
     color: var(--color-text-muted);
     cursor: pointer;
     white-space: nowrap;
     transition: all 0.12s ease;
-    font-family: var(--font-system, inherit);
+    font-family: inherit;
 }
 .theme-tab:hover {
     color: var(--color-text-primary);
