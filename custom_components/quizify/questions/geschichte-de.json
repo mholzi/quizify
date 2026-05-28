@@ -90,7 +90,7 @@
     },
     {
       "id": "geschichte_de_005",
-      "question": "Was machten die alten Spartaner mit Neugeborenen, die schwach wirkten?",
+      "question": "Was machten die alten Spartaner laut Plutarch mit Neugeborenen, die schwach wirkten?",
       "answers": [
         {
           "text": "Sie wurden ausgesetzt",
@@ -337,7 +337,7 @@
         }
       ],
       "difficulty": "medium",
-      "fun_fact": "Dünnbier (Convent-Bier) hatte nur 1–2 % Alkohol und war sicherer als unbehandeltes Wasser, weil es beim Brauen abgekocht wurde. Selbst Mönche tranken es zum Frühstück.",
+      "fun_fact": "Dünnbier hatte nur 1–2 % Alkohol und war sicherer als unbehandeltes Wasser, weil es beim Brauen abgekocht wurde. Selbst Mönche tranken es zum Frühstück.",
       "category": "Geschichte"
     },
     {
@@ -384,7 +384,7 @@
     },
     {
       "id": "geschichte_de_019",
-      "question": "Was waren 'Schluchzweiber' im mittelalterlichen Trauergeschäft?",
+      "question": "Was waren 'Klageweiber' im mittelalterlichen Trauergeschäft?",
       "answers": [
         {
           "text": "Professionelle Klageweiber bei Beerdigungen",
@@ -489,7 +489,7 @@
     },
     {
       "id": "geschichte_de_024",
-      "question": "Was startete am 1. April 1700 das russische Neujahr — auf Geheiß von Peter dem Großen?",
+      "question": "Was änderte Peter der Große 1700 am russischen Neujahr?",
       "answers": [
         {
           "text": "Es wurde vom 1. September auf den 1. Januar verlegt",
@@ -548,27 +548,6 @@
       ],
       "difficulty": "medium",
       "fun_fact": "Goldschätze waren extrem selten. Captain Kidd erbeutete einmal Gold, aber die meisten Piraten freuten sich über Segeltuch, Werkzeug, Medizin und Lebensmittel.",
-      "category": "Geschichte"
-    },
-    {
-      "id": "geschichte_de_027",
-      "question": "Welcher Erfinder ließ sich seine eigene Totenmaske aus Gummi anfertigen — bevor er starb?",
-      "answers": [
-        {
-          "text": "Charles Goodyear",
-          "correct": true
-        },
-        {
-          "text": "Thomas Edison",
-          "correct": false
-        },
-        {
-          "text": "Alfred Nobel",
-          "correct": false
-        }
-      ],
-      "difficulty": "hard",
-      "fun_fact": "Goodyear war so besessen von Vulkanisation, dass er Visitenkarten, Geldbörsen und sogar eine Autobiografie aus Gummi anfertigen ließ. Er starb verarmt, obwohl seine Erfindung die Welt veränderte.",
       "category": "Geschichte"
     },
     {
@@ -908,27 +887,6 @@
       "category": "Geschichte"
     },
     {
-      "id": "geschichte_de_044",
-      "question": "Was geschah mit Hitlers Plänen für 'Welthauptstadt Germania'?",
-      "answers": [
-        {
-          "text": "Sie wurden nie gebaut — der Boden war zu sumpfig",
-          "correct": true
-        },
-        {
-          "text": "Sie wurden nach 1945 von den Alliierten gesprengt",
-          "correct": false
-        },
-        {
-          "text": "Sie wurden in Argentinien teilweise umgesetzt",
-          "correct": false
-        }
-      ],
-      "difficulty": "medium",
-      "fun_fact": "Speer ließ einen massiven Beton-Testblock errichten, um zu prüfen, ob Berlins Boden die geplante Riesenhalle trägt. Der Schwerbelastungskörper steht bis heute in Berlin-Tempelhof.",
-      "category": "Geschichte"
-    },
-    {
       "id": "geschichte_de_045",
       "question": "Was war die 'Operation Cornflakes' der OSS 1944?",
       "answers": [
@@ -1035,7 +993,7 @@
     },
     {
       "id": "geschichte_de_050",
-      "question": "Was war 'Acoustic Kitty' gefolgt von — eine weitere CIA-Tier-Idee?",
+      "question": "Was war 'Bat Bomb' — ein US-Militärprojekt im Zweiten Weltkrieg?",
       "answers": [
         {
           "text": "Bombentragende Fledermäuse gegen Japan",
@@ -1051,7 +1009,7 @@
         }
       ],
       "difficulty": "hard",
-      "fun_fact": "Das US 'Bat Bomb'-Projekt wollte Fledermäuse mit Napalm-Kapseln in japanische Holzhausstädte fliegen lassen. Sie zündeten versehentlich eine US-Air-Base an. Eingestellt 1944.",
+      "fun_fact": "Das US-'Bat Bomb'-Projekt wollte Fledermäuse mit Napalm-Kapseln in japanische Holzhausstädte fliegen lassen. Sie zündeten versehentlich eine US-Air-Base an. Eingestellt 1944.",
       "category": "Geschichte"
     }
   ]

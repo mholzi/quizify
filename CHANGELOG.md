@@ -3,6 +3,21 @@
 All notable changes to Quizify are documented here. This project follows
 [Semantic Versioning](https://semver.org/).
 
+## [1.1.38] — 2026-05-28
+
+### Changed
+
+- **Quiz-pack-review pass across all twelve v1.1.37 packs.** Twelve
+  pack-reviewer agents ran the full review → fix → re-verify pipeline
+  in parallel, with chunked review subagents per pack producing
+  per-question verdicts (factual / distractor / fun-fact / clarity /
+  difficulty). Aggregate: 34 questions fixed in place, 21 deleted as
+  unfixable (ambiguous, disputed, or duplicate facts), 2 skipped. The
+  twelve new packs went from 594 → 573 questions total. All fixed
+  questions were re-verified clean by independent subagents. Per-pack
+  review reports are next to the JSON files (`*-review.md`). Pack-
+  card counts in `admin.html` updated to match the new totals.
+
 ## [1.1.37] — 2026-05-28
 
 ### Added

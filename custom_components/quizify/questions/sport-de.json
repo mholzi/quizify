@@ -18,14 +18,14 @@
     },
     {
       "id": "sport_de_002",
-      "question": "Welche Farbe der olympischen Ringe fehlt in keiner einzigen Nationalflagge der Welt?",
+      "question": "Warum wählte Pierre de Coubertin 1913 ausgerechnet Blau, Gelb, Schwarz, Grün, Rot und weißen Hintergrund für die olympischen Ringe?",
       "answers": [
-        {"text": "Keine — jede Flagge enthält mindestens eine der fünf Ringfarben", "correct": true},
-        {"text": "Grün — Saudi-Arabiens Flagge enthält keinen Ring", "correct": false},
-        {"text": "Schwarz — die meisten Pazifikflaggen verwenden es nicht", "correct": false}
+        {"text": "Damit jede damalige Nationalflagge mindestens eine dieser Farben enthielt", "correct": true},
+        {"text": "Weil es die fünf Druckfarben des damaligen Vier-Farb-Drucks plus Weiß waren", "correct": false},
+        {"text": "Weil es die Wappenfarben der fünf größten olympischen Gastgeber-Nationen waren", "correct": false}
       ],
-      "difficulty": "easy",
-      "fun_fact": "Pierre de Coubertin wählte 1913 Blau, Gelb, Schwarz, Grün und Rot plus weißen Hintergrund genau deshalb so, dass jede damalige Nationalflagge mindestens eine dieser sechs Farben enthielt.",
+      "difficulty": "medium",
+      "fun_fact": "Coubertin kombinierte die fünf Ringfarben mit dem weißen Hintergrund zu einer Palette von sechs Farben — so deckte das Logo jede einzelne Nationalflagge der Welt mit mindestens einer Farbe ab. Eine bewusste Inklusions-Geste lange bevor das Wort 'Inklusion' existierte.",
       "category": "Sport"
     },
     {
@@ -54,26 +54,26 @@
     },
     {
       "id": "sport_de_005",
-      "question": "Welches Land trat bei der Fußball-WM 1950 in Brasilien an, ohne in der Qualifikation auch nur ein einziges Spiel bestritten zu haben — weil alle Gegner zurückzogen?",
+      "question": "Welches Land qualifizierte sich für die Fußball-WM 1950 in Brasilien kampflos, ohne ein einziges Spiel zu bestreiten — und sagte dann trotzdem ab?",
       "answers": [
         {"text": "Indien", "correct": true},
         {"text": "Schottland", "correct": false},
         {"text": "Die Türkei", "correct": false}
       ],
       "difficulty": "hard",
-      "fun_fact": "Indien qualifizierte sich kampflos für die WM 1950, sagte dann aber selbst ab — die FIFA hatte das Spielen ohne Schuhe verboten, und das war für die indische Mannschaft unzumutbar.",
+      "fun_fact": "Indien rutschte in die WM, weil alle asiatischen Gruppengegner zurückzogen — verzichtete dann aber wegen der hohen Reisekosten, mangelnder Vorbereitung und der Priorität auf die Olympiade 1952. Die oft erzählte Geschichte vom FIFA-Schuhverbot ist ein verbreiteter Mythos, der die echten finanziellen und organisatorischen Gründe überdeckt.",
       "category": "Sport"
     },
     {
       "id": "sport_de_006",
-      "question": "Welche Disziplin war bei den Olympischen Spielen 1900 in Paris Teil des offiziellen Programms?",
+      "question": "Welche skurrile Disziplin wurde bei den Olympischen Spielen 1900 in Paris tatsächlich ausgetragen?",
       "answers": [
         {"text": "Lebende Tauben als Schießziele", "correct": true},
         {"text": "Heißluftballon-Weitfahrt", "correct": false},
         {"text": "Pferdekutschen-Rennen", "correct": false}
       ],
       "difficulty": "easy",
-      "fun_fact": "Bei Paris 1900 wurden rund 300 lebende Tauben als Ziele abgeschossen — der Belgier Léon de Lunden gewann mit 21 Treffern. Es war die einzige olympische Disziplin in der Geschichte, bei der absichtlich Tiere getötet wurden.",
+      "fun_fact": "Bei Paris 1900 wurden rund 300 lebende Tauben als Ziele abgeschossen — der Belgier Léon de Lunden gewann mit 21 Treffern. Es war die einzige Disziplin in Olympia-Geschichte, bei der absichtlich Tiere getötet wurden; das IOC zählt sie heute nicht mehr zum offiziellen Programm.",
       "category": "Sport"
     },
     {
@@ -186,14 +186,14 @@
     },
     {
       "id": "sport_de_016",
-      "question": "Wie alt war Dimitrios Loundras, der jüngste Olympia-Medaillengewinner aller Zeiten (Turnen 1896)?",
+      "question": "Wie alt war Dimitrios Loundras, der jüngste namentlich bekannte Olympia-Medaillengewinner der Neuzeit (Turnen 1896)?",
       "answers": [
         {"text": "10 Jahre", "correct": true},
         {"text": "13 Jahre", "correct": false},
         {"text": "16 Jahre", "correct": false}
       ],
       "difficulty": "medium",
-      "fun_fact": "Der Grieche gewann im Mannschafts-Barren Bronze bei den ersten modernen Olympischen Spielen in Athen — später wurde er Konteradmiral der griechischen Marine und kämpfte in zwei Weltkriegen.",
+      "fun_fact": "Der Grieche gewann im Mannschafts-Barren Bronze bei den ersten modernen Olympischen Spielen in Athen — später wurde er Konteradmiral der griechischen Marine und kämpfte in zwei Weltkriegen. Bei Paris 1900 gab es übrigens einen noch jüngeren französischen Steuermann im Ruder-Team, dessen Name aber nie überliefert wurde.",
       "category": "Sport"
     },
     {
@@ -425,18 +425,6 @@
       "category": "Sport"
     },
     {
-      "id": "sport_de_036",
-      "question": "Welche bizarre Strafe konnte einem Boxer in der antiken Olympia drohen, wenn er aufgab?",
-      "answers": [
-        {"text": "Öffentliches Auspeitschen durch die Kampfrichter", "correct": true},
-        {"text": "Lebenslanges Verbot, einen Bart zu tragen", "correct": false},
-        {"text": "Verbannung aus seiner Heimatstadt", "correct": false}
-      ],
-      "difficulty": "hard",
-      "fun_fact": "Antikes Boxen kannte keine Runden und keine Gewichtsklassen — gekämpft wurde, bis einer aufgab oder bewusstlos war. Wer kapitulierte, galt als entehrt und konnte von den Hellanodiken (Kampfrichtern) körperlich gezüchtigt werden. Manche Boxer kämpften lieber bis zum Tod.",
-      "category": "Sport"
-    },
-    {
       "id": "sport_de_037",
       "question": "Warum haben Golfbälle eigentlich diese kleinen Dellen (Dimples)?",
       "answers": [
@@ -473,18 +461,6 @@
       "category": "Sport"
     },
     {
-      "id": "sport_de_040",
-      "question": "Warum hat ein Bowling-Spiel ausgerechnet 10 Pins?",
-      "answers": [
-        {"text": "Weil eine ältere Variante mit 9 Pins im 19. Jh. in US-Bundesstaaten als Glücksspiel verboten wurde — also fügte man einfach einen 10. Pin hinzu", "correct": true},
-        {"text": "Weil die ersten Profi-Bowler exakt 10 Punkte pro Wurf für die Statistik wollten", "correct": false},
-        {"text": "Weil Brunswick als erster Hersteller nur Holz für maximal 10 Kegel zur Verfügung hatte", "correct": false}
-      ],
-      "difficulty": "medium",
-      "fun_fact": "Connecticut verbot 1841 das damals populäre Nine-Pin-Bowling als Glücksspiel — Spieler umgingen das Verbot, indem sie einen zehnten Pin ergänzten, und das Ten-Pin-Bowling war geboren.",
-      "category": "Sport"
-    },
-    {
       "id": "sport_de_041",
       "question": "Was ist beim Curling die strenge Herkunfts-Vorschrift für die Steine?",
       "answers": [
@@ -500,7 +476,7 @@
       "id": "sport_de_042",
       "question": "Welche ungewöhnliche Doppelkarriere hatte Football-Star Bo Jackson in den späten 1980ern?",
       "answers": [
-        {"text": "Er war gleichzeitig NFL-All-Pro (Raiders) und MLB-All-Star (Royals) — der einzige Spieler mit dieser Doppel-Auszeichnung", "correct": true},
+        {"text": "Er war gleichzeitig NFL-Pro-Bowler (Raiders) und MLB-All-Star (Royals) — der einzige Spieler mit dieser Doppel-Auszeichnung", "correct": true},
         {"text": "Er spielte parallel NBA-Basketball für die Lakers und NFL-Football", "correct": false},
         {"text": "Er war zugleich Profi-Eishockeyspieler und NFL-Running-Back", "correct": false}
       ],

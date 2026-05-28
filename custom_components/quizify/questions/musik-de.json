@@ -78,14 +78,14 @@
     },
     {
       "id": "musik_de_007",
-      "question": "Wie viele vollständige Sinfonien hinterließ Johann Sebastian Bach?",
+      "question": "Wie viele klassische Sinfonien im Sinne Haydns und Mozarts hinterließ Johann Sebastian Bach?",
       "answers": [
         {"text": "Keine einzige", "correct": true},
         {"text": "9", "correct": false},
         {"text": "41", "correct": false}
       ],
       "difficulty": "hard",
-      "fun_fact": "Bach komponierte über 1.000 Werke — aber keine einzige Sinfonie im klassischen Sinn. Die Form wurde erst nach seinem Tod von Haydn und Mozart geprägt.",
+      "fun_fact": "Bach komponierte über 1.000 Werke — auch 15 dreistimmige „Sinfonias\" (BWV 787-801) für Cembalo. Die klassische Orchester-Sinfonie als Form wurde aber erst nach seinem Tod von Haydn und Mozart geprägt.",
       "category": "Musik"
     },
     {
@@ -98,30 +98,6 @@
       ],
       "difficulty": "hard",
       "fun_fact": "Phrenologen klauten Haydns Schädel kurz nach seiner Beerdigung 1809, um sein „musikalisches Genie\" zu vermessen. Erst 1954 wurde er wieder mit dem restlichen Skelett vereint.",
-      "category": "Musik"
-    },
-    {
-      "id": "musik_de_009",
-      "question": "Komponierte der späte, taube Beethoven noch in allen Tonarten?",
-      "answers": [
-        {"text": "Ja — er komponierte in seinem Kopf weiter ohne Tonart-Vermeidung", "correct": true},
-        {"text": "Nein — er vermied B-Dur konsequent", "correct": false},
-        {"text": "Nein — er hielt sich nur an C-Dur und a-Moll", "correct": false}
-      ],
-      "difficulty": "hard",
-      "fun_fact": "Trotz vollständiger Taubheit schrieb Beethoven die 9. Sinfonie und die späten Streichquartette — in seinem Kopf hörte er die Musik vollkommen klar, in allen Tonarten.",
-      "category": "Musik"
-    },
-    {
-      "id": "musik_de_010",
-      "question": "Welcher Komponist soll seine Werke immer beim Schein einer Kerze auf seinem Hut komponiert haben?",
-      "answers": [
-        {"text": "Niemand — das ist eine erfundene Legende ohne historischen Beleg", "correct": true},
-        {"text": "Mozart, während Tourneen im Wagen", "correct": false},
-        {"text": "Chopin in seinen letzten Lebensjahren", "correct": false}
-      ],
-      "difficulty": "hard",
-      "fun_fact": "Es gibt unzählige romantisierte Komponisten-Anekdoten — diese gehört NICHT dazu. Eine schöne Erinnerung daran, dass nicht jede schöne Geschichte echt ist.",
       "category": "Musik"
     },
     {
@@ -486,11 +462,11 @@
     },
     {
       "id": "musik_de_041",
-      "question": "Welches Land gewann den Eurovision Song Contest am häufigsten?",
+      "question": "Welche zwei Länder teilen sich den Rekord für die meisten Eurovision-Song-Contest-Siege?",
       "answers": [
-        {"text": "Schweden (gleichauf mit Irland)", "correct": true},
-        {"text": "Deutschland", "correct": false},
-        {"text": "Vereinigtes Königreich", "correct": false}
+        {"text": "Schweden und Irland", "correct": true},
+        {"text": "Deutschland und Frankreich", "correct": false},
+        {"text": "Vereinigtes Königreich und Norwegen", "correct": false}
       ],
       "difficulty": "medium",
       "fun_fact": "Schweden holte 2023 mit Loreens „Tattoo\" den siebten Sieg und zog mit Irland gleich — beide Länder teilen sich den Rekord mit jeweils 7 ESC-Siegen.",

@@ -198,14 +198,14 @@
     },
     {
       "id": "history_en_017",
-      "question": "What odd item did the Pope ban from chess sets in 1061?",
+      "question": "What did Cardinal Peter Damian condemn to Pope Alexander II in 1061?",
       "answers": [
-        {"text": "The game itself, calling it a vice", "correct": true},
-        {"text": "Ivory pieces", "correct": false},
-        {"text": "The queen piece", "correct": false}
+        {"text": "Playing chess", "correct": true},
+        {"text": "Reading Greek poetry", "correct": false},
+        {"text": "Eating peacock", "correct": false}
       ],
       "difficulty": "hard",
-      "fun_fact": "Cardinal Damian wrote to Pope Alexander II condemning chess as a frivolous distraction unworthy of clergy. The ban was widely ignored, even by bishops.",
+      "fun_fact": "Damian condemned chess as a frivolous distraction unworthy of clergy. The disapproval was widely ignored, even by bishops who continued playing.",
       "category": "History"
     },
     {
@@ -269,18 +269,6 @@
       "category": "History"
     },
     {
-      "id": "history_en_023",
-      "question": "What strange item did pirates almost never actually wear, despite the modern image?",
-      "answers": [
-        {"text": "Eye patches over a blind eye", "correct": true},
-        {"text": "Cotton shirts", "correct": false},
-        {"text": "Leather boots", "correct": false}
-      ],
-      "difficulty": "hard",
-      "fun_fact": "Eye patches were likely worn to keep one eye dark-adapted for going below deck, not to cover injuries. There's almost no historical evidence of widespread pirate eye injuries.",
-      "category": "History"
-    },
-    {
       "id": "history_en_024",
       "question": "What did Isaac Newton spend more time studying than physics?",
       "answers": [
@@ -302,18 +290,6 @@
       ],
       "difficulty": "medium",
       "fun_fact": "The legend that her hair turned white the night before her execution is medically impossible — hair doesn't change colour that fast — but the story stuck for centuries.",
-      "category": "History"
-    },
-    {
-      "id": "history_en_026",
-      "question": "What did Benjamin Franklin propose as the national bird of the United States?",
-      "answers": [
-        {"text": "The wild turkey", "correct": true},
-        {"text": "The mockingbird", "correct": false},
-        {"text": "The bald eagle", "correct": false}
-      ],
-      "difficulty": "easy",
-      "fun_fact": "Franklin wrote that the bald eagle was 'a bird of bad moral character' and the turkey was 'a much more respectable bird' and a true native American.",
       "category": "History"
     },
     {
@@ -354,14 +330,14 @@
     },
     {
       "id": "history_en_030",
-      "question": "What did Thomas Jefferson keep on display at the White House from Lewis and Clark?",
+      "question": "What did Thomas Jefferson keep on display at the White House from Zebulon Pike's expedition?",
       "answers": [
         {"text": "Two live grizzly bear cubs", "correct": true},
         {"text": "A herd of buffalo", "correct": false},
         {"text": "A captured British naval flag", "correct": false}
       ],
       "difficulty": "hard",
-      "fun_fact": "The cubs were gifts from explorer Zebulon Pike. Jefferson kept them in cages on the White House lawn before shipping them to a museum after they became unmanageable.",
+      "fun_fact": "Pike sent the cubs as a gift in 1807. Jefferson kept them in cages on the White House lawn before shipping them to Charles Willson Peale's museum after they became unmanageable.",
       "category": "History"
     },
     {
@@ -390,14 +366,14 @@
     },
     {
       "id": "history_en_033",
-      "question": "What did the British actually use to camouflage tanks in World War I?",
+      "question": "What did the British actually use to camouflage ships in World War I?",
       "answers": [
         {"text": "Painted dazzle patterns inspired by Cubism", "correct": true},
         {"text": "Real tree branches glued to the hull", "correct": false},
         {"text": "Sheets of polished mirror", "correct": false}
       ],
       "difficulty": "hard",
-      "fun_fact": "Dazzle camouflage didn't hide ships or tanks — it made it hard to judge their speed and direction. Artists including Norman Wilkinson designed the patterns.",
+      "fun_fact": "Dazzle camouflage didn't hide ships — it made it hard for U-boat crews to judge their speed and direction. Marine artist Norman Wilkinson designed the patterns.",
       "category": "History"
     },
     {
@@ -434,18 +410,6 @@
       ],
       "difficulty": "medium",
       "fun_fact": "The Panorama segment showed farmers picking spaghetti from trees. Hundreds of viewers called in asking how to grow their own — they were told to put a sprig in tomato sauce.",
-      "category": "History"
-    },
-    {
-      "id": "history_en_037",
-      "question": "What odd item was found in Hitler's personal bunker after the war?",
-      "answers": [
-        {"text": "A vegetarian cookbook collection", "correct": true},
-        {"text": "A working ham radio set", "correct": false},
-        {"text": "A chess set carved from elephant ivory", "correct": false}
-      ],
-      "difficulty": "medium",
-      "fun_fact": "Hitler was strictly vegetarian in his later years and obsessed with the topic. His cook Constanze Manziarly prepared his last meal — likely spaghetti with a light sauce.",
       "category": "History"
     },
     {
@@ -582,14 +546,14 @@
     },
     {
       "id": "history_en_049",
-      "question": "What did Soviet engineers seriously propose to defeat the cold during Operation Barbarossa's winter?",
+      "question": "What did Soviet tank crews do to keep their engines running through the winter of 1941-42?",
       "answers": [
-        {"text": "Spraying perfume on tanks to mask diesel", "correct": false},
-        {"text": "Wrapping engines in dog fur from sled teams", "correct": false},
-        {"text": "Mixing kerosene into engine oil", "correct": true}
+        {"text": "Sprayed perfume on tanks to mask diesel", "correct": false},
+        {"text": "Wrapped engines in dog fur from sled teams", "correct": false},
+        {"text": "Mixed kerosene into the engine oil", "correct": true}
       ],
       "difficulty": "hard",
-      "fun_fact": "Soviet crews added kerosene or fuel to oil to keep it flowing at minus 40°C. It worked — German engines just froze solid, immobilising whole panzer divisions.",
+      "fun_fact": "Soviet crews thinned their oil with kerosene to keep it flowing at minus 40°C. It worked — German engines just froze solid, immobilising whole panzer divisions.",
       "category": "History"
     },
     {

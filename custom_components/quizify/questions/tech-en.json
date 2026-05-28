@@ -216,23 +216,23 @@
     },
     {
       "id": "tech_en_011",
-      "question": "Why is a software glitch called a 'bug'?",
+      "question": "What did Grace Hopper's team famously tape into a logbook in 1947?",
       "answers": [
         {
-          "text": "An actual moth was found inside an early computer",
+          "text": "A moth that had been stuck in a computer relay",
           "correct": true
         },
         {
-          "text": "Early code looked like crawling insects on punch cards",
+          "text": "A punch card with the very first 'Hello World' on it",
           "correct": false
         },
         {
-          "text": "It's an acronym for Bad Unintended Glitch",
+          "text": "A vacuum tube that had melted onto the chassis",
           "correct": false
         }
       ],
       "difficulty": "medium",
-      "fun_fact": "In 1947, operators of the Harvard Mark II found a moth stuck in a relay. Grace Hopper's team taped it into the logbook with the note 'first actual case of bug being found'. The log page is preserved at the Smithsonian.",
+      "fun_fact": "Operators of the Harvard Mark II found the moth jammed in a relay and labelled it 'first actual case of bug being found'. The term 'bug' for a technical fault was already decades old — Edison used it in 1878 — but the moth made the story famous. The log page is preserved at the Smithsonian.",
       "category": "Technology"
     },
     {

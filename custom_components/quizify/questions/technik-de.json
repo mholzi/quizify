@@ -29,18 +29,6 @@
       "category": "Technik"
     },
     {
-      "id": "technik_de_003",
-      "question": "Wofür stand das 'http' in der ersten URL der Welt ursprünglich nicht?",
-      "answers": [
-        {"text": "Es gab keine Konkurrenz — es war von Anfang an 'HyperText Transfer Protocol'", "correct": true},
-        {"text": "'High Throughput Transfer Protocol'", "correct": false},
-        {"text": "'Hyperlink Tracking Protocol'", "correct": false}
-      ],
-      "difficulty": "medium",
-      "fun_fact": "Tim Berners-Lee prägte den Begriff direkt am CERN. Die erste Webseite info.cern.ch ging 1991 online und ist heute noch in einer rekonstruierten Form abrufbar.",
-      "category": "Technik"
-    },
-    {
       "id": "technik_de_004",
       "question": "Was wurde laut Legende als allererstes über das Internet (ARPANET) verschickt — also das erste Wort?",
       "answers": [
@@ -326,18 +314,6 @@
       ],
       "difficulty": "easy",
       "fun_fact": "Die abgeschrägte Ecke ist ISO 7810-genormt. Vor SIM-Karten hatten z.B. EC-Karten das gleiche Prinzip. Heute sind Nano-SIMs nur noch etwa so groß wie der Chip selbst.",
-      "category": "Technik"
-    },
-    {
-      "id": "technik_de_028",
-      "question": "Was kann ein moderner Taschenrechner — die einfachste Solar-Variante — mehr als alle Computer der NASA-Apollo-Missionen zusammen?",
-      "answers": [
-        {"text": "Rechenleistung — bei Apollo waren die Bordcomputer extrem limitiert", "correct": true},
-        {"text": "Nichts, NASA hatte hochmoderne Rechner", "correct": false},
-        {"text": "Nur Wurzelziehen", "correct": false}
-      ],
-      "difficulty": "medium",
-      "fun_fact": "Der Apollo Guidance Computer hatte 64 KB Speicher und 2 MHz Takt. Ein typischer Solar-Taschenrechner heute übertrifft das problemlos. Trotzdem brachte die NASA damit Menschen auf den Mond.",
       "category": "Technik"
     },
     {

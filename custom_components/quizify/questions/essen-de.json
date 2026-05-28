@@ -43,7 +43,7 @@
         }
       ],
       "difficulty": "medium",
-      "fun_fact": "Das Croissant geht auf das Wiener Kipferl zurück. Erst Marie Antoinette brachte es im 18. Jahrhundert mit nach Paris, wo französische Bäcker es mit Butter-Blätterteig verfeinerten.",
+      "fun_fact": "Das Croissant geht auf das Wiener Kipferl zurück, das spätestens im 17. Jahrhundert in Österreich gebacken wurde. Erst in Paris entwickelten Bäcker im 19. Jahrhundert daraus die heute bekannte Form mit Butter-Blätterteig.",
       "category": "Essen & Trinken"
     },
     {
@@ -194,27 +194,6 @@
       "category": "Essen & Trinken"
     },
     {
-      "id": "essen_de_010",
-      "question": "Welches Volk aß zuerst Tomaten in Europa, ohne sie für giftig zu halten?",
-      "answers": [
-        {
-          "text": "Die Italiener",
-          "correct": true
-        },
-        {
-          "text": "Die Spanier",
-          "correct": false
-        },
-        {
-          "text": "Die Franzosen",
-          "correct": false
-        }
-      ],
-      "difficulty": "hard",
-      "fun_fact": "Nordeuropäer hielten die Tomate jahrhundertelang für giftig — weil sie auf zinnhaltigen Tellern säurebedingt Blei löste. Italiener aßen sie auf neutralerem Geschirr und überlebten problemlos.",
-      "category": "Essen & Trinken"
-    },
-    {
       "id": "essen_de_011",
       "question": "Was war ursprünglich Bestandteil von Coca-Cola, wurde aber später entfernt?",
       "answers": [
@@ -317,27 +296,6 @@
       ],
       "difficulty": "medium",
       "fun_fact": "Britische Kolonialoffiziere in Indien mischten bitteres Chinin-Tonic mit Gin, um es trinkbar zu machen. Chinin wirkt gegen Malaria — der Cocktail rettete vermutlich tausende Leben.",
-      "category": "Essen & Trinken"
-    },
-    {
-      "id": "essen_de_016",
-      "question": "Welche Teesorte ist in Wahrheit ein fermentierter grüner Tee?",
-      "answers": [
-        {
-          "text": "Schwarzer Tee",
-          "correct": true
-        },
-        {
-          "text": "Weißer Tee",
-          "correct": false
-        },
-        {
-          "text": "Mate-Tee",
-          "correct": false
-        }
-      ],
-      "difficulty": "medium",
-      "fun_fact": "Grüner, weißer und schwarzer Tee stammen alle von derselben Pflanze (Camellia sinensis). Der Unterschied liegt nur in der Verarbeitung — schwarzer Tee wird stärker oxidiert, was die dunkle Farbe ergibt.",
       "category": "Essen & Trinken"
     },
     {
@@ -668,12 +626,12 @@
           "correct": false
         },
         {
-          "text": "Gelb",
+          "text": "Rot",
           "correct": false
         }
       ],
       "difficulty": "medium",
-      "fun_fact": "Ursprünglich waren Karotten lila oder weiß. Niederländische Züchter entwickelten im 17. Jahrhundert die orange Karotte — vermutlich zu Ehren des Hauses Oranien, der niederländischen Königsfamilie.",
+      "fun_fact": "Ursprünglich waren Karotten in Persien und Afghanistan vor allem lila. Niederländische Züchter entwickelten im 17. Jahrhundert die orange Karotte — vermutlich zu Ehren des Hauses Oranien, der niederländischen Königsfamilie.",
       "category": "Essen & Trinken"
     },
     {
@@ -887,27 +845,6 @@
       "category": "Essen & Trinken"
     },
     {
-      "id": "essen_de_043",
-      "question": "Was ist die teuerste regelmäßig konsumierte Zutat in Spitzenrestaurants?",
-      "answers": [
-        {
-          "text": "Weißer Trüffel aus dem Piemont",
-          "correct": true
-        },
-        {
-          "text": "Iranischer Beluga-Kaviar",
-          "correct": false
-        },
-        {
-          "text": "Spanischer Schinken Ibérico",
-          "correct": false
-        }
-      ],
-      "difficulty": "medium",
-      "fun_fact": "Weißer Alba-Trüffel kann pro Kilo über 6.000 Euro kosten und lässt sich nicht züchten. Bei einer Auktion 2007 wurde ein einzelner 1,5-kg-Trüffel für 330.000 Dollar an einen Hongkonger Käufer versteigert.",
-      "category": "Essen & Trinken"
-    },
-    {
       "id": "essen_de_044",
       "question": "In welchem Land gilt lautes Nudeln-Schlürfen im Restaurant als Kompliment an den Koch?",
       "answers": [
@@ -993,7 +930,7 @@
     },
     {
       "id": "essen_de_048",
-      "question": "Wer war die erste Fernsehköchin, die mit einer eigenen TV-Show weltberühmt wurde?",
+      "question": "Welche Fernsehköchin etablierte ab 1963 die französische Küche im US-Fernsehen und wurde damit weltberühmt?",
       "answers": [
         {
           "text": "Julia Child",
@@ -1009,7 +946,7 @@
         }
       ],
       "difficulty": "medium",
-      "fun_fact": "Julia Childs The French Chef startete 1963 im US-Bildungsfernsehen. Sie machte aufwendige französische Küche für Hausfrauen verständlich — und etablierte ein TV-Genre, von dem Generationen von Köchen heute leben.",
+      "fun_fact": "Julia Childs Sendung „The French Chef“ startete 1963 im US-Bildungsfernsehen. Sie machte aufwendige französische Küche für Hausfrauen verständlich — und etablierte ein TV-Genre, von dem Generationen von Köchen heute leben.",
       "category": "Essen & Trinken"
     },
     {

@@ -102,14 +102,14 @@
     },
     {
       "id": "music_en_009",
-      "question": "Which Russian composer orchestrated Mussorgsky's 'Pictures at an Exhibition' into its famous version?",
+      "question": "Which composer orchestrated Mussorgsky's 'Pictures at an Exhibition' into its famous version?",
       "answers": [
         {"text": "Maurice Ravel", "correct": true},
         {"text": "Nikolai Rimsky-Korsakov", "correct": false},
         {"text": "Sergei Rachmaninoff", "correct": false}
       ],
       "difficulty": "hard",
-      "fun_fact": "Mussorgsky wrote Pictures at an Exhibition for solo piano in 1874. The orchestral version most people know was made by the Frenchman Ravel in 1922 — Ravel wasn't Russian at all.",
+      "fun_fact": "Mussorgsky wrote Pictures at an Exhibition for solo piano in 1874. The orchestral version most people know was made by the French composer Maurice Ravel in 1922.",
       "category": "Music"
     },
     {
@@ -306,10 +306,10 @@
     },
     {
       "id": "music_en_026",
-      "question": "Which woodwind instrument is the largest member of its family commonly used in orchestras and is sometimes called the 'clown of the orchestra'?",
+      "question": "Which woodwind instrument is sometimes called the 'clown of the orchestra'?",
       "answers": [
         {"text": "Bassoon", "correct": true},
-        {"text": "Contrabassoon", "correct": false},
+        {"text": "Oboe", "correct": false},
         {"text": "Bass clarinet", "correct": false}
       ],
       "difficulty": "medium",
@@ -438,14 +438,14 @@
     },
     {
       "id": "music_en_037",
-      "question": "What is the highest individual Grammy honor, won multiple times by classical conductor Sir Georg Solti?",
+      "question": "Which classical conductor held the record for most Grammy Awards won by an individual until Beyoncé surpassed him in 2023?",
       "answers": [
-        {"text": "Most Grammy Awards won by an individual", "correct": true},
-        {"text": "Grammy for Best New Artist", "correct": false},
-        {"text": "Grammy for Album of the Year", "correct": false}
+        {"text": "Sir Georg Solti", "correct": true},
+        {"text": "Leonard Bernstein", "correct": false},
+        {"text": "Herbert von Karajan", "correct": false}
       ],
       "difficulty": "hard",
-      "fun_fact": "Sir Georg Solti won 31 competitive Grammys, holding the record as most-awarded individual for many years before Beyoncé surpassed him in the 2020s.",
+      "fun_fact": "Sir Georg Solti won 31 competitive Grammys, mostly for his work with the Chicago Symphony. Beyoncé surpassed his individual total in 2023, taking the all-time record.",
       "category": "Music"
     },
     {
@@ -582,14 +582,14 @@
     },
     {
       "id": "music_en_049",
-      "question": "Which Italian word marks the slowest standard tempo in classical music?",
+      "question": "Of these three Italian tempo markings, which indicates the slowest pace?",
       "answers": [
         {"text": "Largo", "correct": true},
         {"text": "Allegro", "correct": false},
         {"text": "Presto", "correct": false}
       ],
       "difficulty": "easy",
-      "fun_fact": "Largo typically sits around 40–60 beats per minute. Even slower indications like 'grave' or 'larghissimo' exist but are rarely used.",
+      "fun_fact": "Largo typically sits around 40–60 beats per minute. Even slower markings like 'grave' and 'larghissimo' exist but are less commonly used.",
       "category": "Music"
     },
     {

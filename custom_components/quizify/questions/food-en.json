@@ -78,7 +78,7 @@
     },
     {
       "id": "food_en_007",
-      "question": "The fortune cookie is most strongly associated with which country's cuisine in the West, but actually originated where?",
+      "question": "Although associated with Chinese restaurants in the West, fortune cookies actually originated in which country?",
       "answers": [
         {"text": "Japan", "correct": true},
         {"text": "China", "correct": false},
@@ -221,18 +221,6 @@
       "category": "Food & Drink"
     },
     {
-      "id": "food_en_019",
-      "question": "The 'IPA' style of beer was originally brewed strong and hoppy for what reason?",
-      "answers": [
-        {"text": "To survive long sea voyages to India", "correct": true},
-        {"text": "To please Indian royalty", "correct": false},
-        {"text": "To pair with curry", "correct": false}
-      ],
-      "difficulty": "medium",
-      "fun_fact": "India Pale Ale was heavily hopped and higher in alcohol so it could survive the long journey from Britain to colonial India without spoiling.",
-      "category": "Food & Drink"
-    },
-    {
       "id": "food_en_020",
       "question": "Root beer originally got its distinctive flavour from the root of which plant, later banned by the FDA?",
       "answers": [
@@ -285,7 +273,7 @@
       "question": "The cooking term 'al dente' literally means what in Italian?",
       "answers": [
         {"text": "To the tooth", "correct": true},
-        {"text": "To the bite", "correct": false},
+        {"text": "To the heart", "correct": false},
         {"text": "Just right", "correct": false}
       ],
       "difficulty": "easy",

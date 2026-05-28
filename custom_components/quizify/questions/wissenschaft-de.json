@@ -126,7 +126,7 @@
     },
     {
       "id": "wissenschaft_de_011",
-      "question": "Was würdest du in der Mitte eines schwarzen Lochs theoretisch erleben, wenn du dort hineinfällst?",
+      "question": "Was würdest du theoretisch erleben, wenn du in ein schwarzes Loch fällst?",
       "answers": [
         {"text": "Spaghettifizierung", "correct": true},
         {"text": "Sofortige Verdampfung", "correct": false},
@@ -181,7 +181,7 @@
         {"text": "Sie bleibt gleich", "correct": false}
       ],
       "difficulty": "medium",
-      "fun_fact": "Einsteins Zeitdilatation: GPS-Satelliten ticken pro Tag etwa 7 Mikrosekunden langsamer wegen ihrer Geschwindigkeit. Die Software muss das korrigieren, sonst würde GPS schnell unbrauchbar werden.",
+      "fun_fact": "Einsteins Zeitdilatation: GPS-Satelliten ticken durch ihre Geschwindigkeit etwa 7 Mikrosekunden pro Tag langsamer (Spezielle Relativität), durch die geringere Gravitation aber 45 Mikrosekunden schneller (Allgemeine Relativität). Beide Effekte muss die Software korrigieren, sonst würde GPS schnell unbrauchbar werden.",
       "category": "Wissenschaft"
     },
     {
@@ -218,18 +218,6 @@
       ],
       "difficulty": "easy",
       "fun_fact": "Heißes Wasser hat mehr Energie zum Verdampfen und zerfällt in feine Tröpfchen, die in extremer Kälte sofort zu Schneekristallen werden. In Sibirien ein beliebter Internet-Trick.",
-      "category": "Wissenschaft"
-    },
-    {
-      "id": "wissenschaft_de_019",
-      "question": "Was wäre theoretisch nötig, um zwei verschränkte Quantenteilchen zu trennen?",
-      "answers": [
-        {"text": "Sie können nicht getrennt werden", "correct": true},
-        {"text": "Sehr starke Magnetfelder", "correct": false},
-        {"text": "Sehr hohe Geschwindigkeit", "correct": false}
-      ],
-      "difficulty": "hard",
-      "fun_fact": "Bei der Quantenverschränkung bleiben Teilchen unabhängig von der Entfernung verbunden. Misst man eines, kennt man sofort den Zustand des anderen — Einstein nannte das spukhafte Fernwirkung.",
       "category": "Wissenschaft"
     },
     {
@@ -342,14 +330,14 @@
     },
     {
       "id": "wissenschaft_de_029",
-      "question": "Was ist die einzige bekannte Säure, die Glas auflöst?",
+      "question": "Welche Säure ist dafür bekannt, Glas anzugreifen?",
       "answers": [
         {"text": "Salzsäure", "correct": false},
         {"text": "Schwefelsäure", "correct": false},
         {"text": "Flusssäure", "correct": true}
       ],
       "difficulty": "medium",
-      "fun_fact": "Flusssäure (HF) ist die einzige verbreitete Säure, die Glas zerstört. Sie wird in Plastikflaschen gelagert. Sie ist nicht extrem stark, aber sehr giftig — Hautkontakt kann tödlich sein.",
+      "fun_fact": "Flusssäure (HF) reagiert mit Siliziumdioxid und löst Glas auf — deshalb wird sie in Plastikflaschen gelagert. Sie ist nicht extrem stark, aber sehr giftig — Hautkontakt kann tödlich sein.",
       "category": "Wissenschaft"
     },
     {
@@ -449,18 +437,6 @@
       "category": "Wissenschaft"
     },
     {
-      "id": "wissenschaft_de_038",
-      "question": "Wie entstand die Erfindung der Pommes Frites in den USA als Fast-Food-Beilage?",
-      "answers": [
-        {"text": "Aus einem militärischen Versorgungsplan", "correct": false},
-        {"text": "Aus einem Versuch, Wein zu kühlen", "correct": false},
-        {"text": "Aus einer belgischen Tradition, die US-Soldaten mitbrachten", "correct": true}
-      ],
-      "difficulty": "hard",
-      "fun_fact": "Im 1. Weltkrieg trafen US-Soldaten in Belgien auf frittierte Kartoffelstreifen. Weil die Belgier dort Französisch sprachen, nannten sie sie 'French Fries' — und brachten sie nach Hause.",
-      "category": "Wissenschaft"
-    },
-    {
       "id": "wissenschaft_de_039",
       "question": "Was war die Teflon-Beschichtung ursprünglich?",
       "answers": [
@@ -481,7 +457,7 @@
         {"text": "Als geplantes Snack-Konzept eines Konzerns", "correct": false}
       ],
       "difficulty": "medium",
-      "fun_fact": "1853 beschwerte sich ein Gast bei Koch George Crum, seine Pommes seien zu dick. Aus Trotz schnitt Crum sie hauchdünn und überfrittierte sie — der Gast war begeistert. Geboren waren die Chips.",
+      "fun_fact": "Der Legende nach beschwerte sich 1853 ein Gast bei Koch George Crum, seine Pommes seien zu dick. Aus Trotz schnitt Crum sie hauchdünn und überfrittierte sie — der Gast war begeistert. Die Geschichte ist historisch nicht eindeutig belegt, aber die populärste Ursprungs-Erzählung.",
       "category": "Wissenschaft"
     },
     {
@@ -590,18 +566,6 @@
       ],
       "difficulty": "medium",
       "fun_fact": "Tränen bilden einen dünnen Film auf der Hornhaut. Mit jedem Lidschlag wird er erneuert — die wechselnden Lichtreflexionen erzeugen den Glitzer-Effekt, den Kameras gerne einfangen.",
-      "category": "Wissenschaft"
-    },
-    {
-      "id": "wissenschaft_de_050",
-      "question": "Was war der erste menschliche Antikörper, der medizinisch isoliert wurde?",
-      "answers": [
-        {"text": "Insulin", "correct": false},
-        {"text": "Diphtherie-Antitoxin", "correct": true},
-        {"text": "Penicillin", "correct": false}
-      ],
-      "difficulty": "easy",
-      "fun_fact": "Emil von Behring entwickelte 1890 das Diphtherie-Antitoxin — der erste medizinische Einsatz von Antikörpern. Dafür bekam er 1901 den allerersten Medizin-Nobelpreis.",
       "category": "Wissenschaft"
     }
   ]

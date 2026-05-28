@@ -12,7 +12,7 @@
         {"text": "Stone lifting", "correct": false},
         {"text": "Log throwing", "correct": false}
       ],
-      "difficulty": "easy",
+      "difficulty": "medium",
       "fun_fact": "Britain won all three medals at the 1908 Games because teams entered as separate London police units — City Police took gold, Liverpool Police silver, and Metropolitan Police K Division bronze.",
       "category": "Sport"
     },
@@ -61,7 +61,7 @@
         {"text": "Two athletes performed but only one was scored", "correct": false}
       ],
       "difficulty": "medium",
-      "fun_fact": "Critics mocked the event as the most contradictory in Olympic history. It was dropped after Barcelona 1992 when the IOC quietly admitted that 'synchronised' with no partner made little sense.",
+      "fun_fact": "Critics mocked the event as the most contradictory in Olympic history. It was dropped after Barcelona 1992 because the IOC added a team event for Atlanta 1996 and chose to keep duet + team rather than carry three sub-disciplines.",
       "category": "Sport"
     },
     {
@@ -90,9 +90,9 @@
     },
     {
       "id": "sport_en_008",
-      "question": "Which Olympic event was scored using a system where competitors deliberately tried to *not* hit the target perfectly?",
+      "question": "Which Olympic event was scored purely on how far a motionless diver drifted underwater after entering the pool?",
       "answers": [
-        {"text": "Plunge for distance (diving for distance underwater without moving)", "correct": true},
+        {"text": "Plunge for distance (no kicking, no swimming, only the dive's momentum counted)", "correct": true},
         {"text": "Tandem cycling sprint", "correct": false},
         {"text": "Rope climbing for style", "correct": false}
       ],
@@ -245,18 +245,6 @@
       "category": "Sport"
     },
     {
-      "id": "sport_en_021",
-      "question": "Why are the seams on an American football shaped the way they are?",
-      "answers": [
-        {"text": "Originally to make pig-bladder balls easier to grip and sew, later retained for aerodynamics", "correct": true},
-        {"text": "To match the proportions of a rugby ball reduced by 30%", "correct": false},
-        {"text": "Walter Camp designed them to mimic a baseball stitch", "correct": false}
-      ],
-      "difficulty": "hard",
-      "fun_fact": "Early American footballs were inflated pig bladders inside leather, hence the nickname 'pigskin'. The pointed prolate shape evolved from rounder rugby balls as throwing — not just kicking — became central to the game.",
-      "category": "Sport"
-    },
-    {
       "id": "sport_en_022",
       "question": "Which NFL team is the only one publicly owned by its fans rather than a private owner?",
       "answers": [
@@ -265,7 +253,7 @@
         {"text": "Cleveland Browns", "correct": false}
       ],
       "difficulty": "easy",
-      "fun_fact": "Over 360,000 shareholders own the Packers. Shares pay no dividend, can't appreciate in value, and can't be resold for profit — yet the team has held five share offerings since 1923 to fund stadium upgrades.",
+      "fun_fact": "Over 360,000 shareholders own the Packers. Shares pay no dividend, can't appreciate in value, and can't be resold for profit — yet the team has held six share offerings (1923, 1935, 1950, 1997, 2011, 2021) to fund stadium upgrades.",
       "category": "Sport"
     },
     {
@@ -278,18 +266,6 @@
       ],
       "difficulty": "medium",
       "fun_fact": "FIFA introduced the mandatory yellow card for shirt removal in 2004, citing time-wasting and 'unsporting' behaviour. The rule remains controversial — many goalscorers still strip their shirts despite the booking.",
-      "category": "Sport"
-    },
-    {
-      "id": "sport_en_024",
-      "question": "Which footballer has scored a 'perfect hat-trick' (one with left foot, one with right foot, one header) the most times in his career?",
-      "answers": [
-        {"text": "Cristiano Ronaldo", "correct": true},
-        {"text": "Robert Lewandowski", "correct": false},
-        {"text": "Karim Benzema", "correct": false}
-      ],
-      "difficulty": "hard",
-      "fun_fact": "Ronaldo has scored over a dozen perfect hat-tricks across club and country. He famously credits left-foot and heading practice for offsetting his naturally dominant right foot.",
       "category": "Sport"
     },
     {
