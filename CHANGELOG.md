@@ -3,6 +3,24 @@
 All notable changes to Quizify are documented here. This project follows
 [Semantic Versioning](https://semver.org/).
 
+## [1.1.33] — 2026-05-28
+
+### Fixed
+
+- **Cache-busting query string now on every static asset.** The
+  `{{VERSION}}`-substitution infrastructure already existed (see
+  `server/views.py` → `_apply_version`), but four files were missing
+  the `?v={{VERSION}}` suffix on at least one of their `<link>` or
+  `<script>` tags:
+  - `dashboard.html` — `styles.css`, `i18n.js`, `utils.js`
+  - `launcher.html` — `i18n.js`
+  - `analytics.html` — `styles.css`
+  Result: after a HACS update, the affected pages could keep serving
+  the previous version's CSS/JS from the browser cache until a hard
+  refresh. With all asset URLs now version-stamped, bumping
+  `manifest.json` propagates fresh URLs through admin / player /
+  dashboard / launcher / analytics in one step.
+
 ## [1.1.32] — 2026-05-27
 
 ### Added
