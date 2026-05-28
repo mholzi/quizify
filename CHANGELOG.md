@@ -3,6 +3,25 @@
 All notable changes to Quizify are documented here. This project follows
 [Semantic Versioning](https://semver.org/).
 
+## [1.1.35] — 2026-05-28
+
+### Fixed
+
+- **Launcher button works in Android HA companion app.** v1.1.28
+  added a `window.location.href` fallback when `window.open`
+  returned null, but Android's HA-companion WebView is one of the
+  cases where `window.open` returns *non-null* yet no tab actually
+  opens — so the code took the "opened" branch, no fallback ran,
+  and the user got stuck. On top of that, the "Pop-up was blocked"
+  message's manual escape link used `target="_blank"`, which the
+  same WebView also blocks — so clicking it did nothing either.
+  Both dead-ends are gone in v1.1.35: the launcher button is now a
+  plain `<a href="/quizify/admin">` element styled as the primary
+  CTA, no popup attempt, no JS-driven open/focus state. Native
+  in-place navigation works in WebView, iOS Safari, and every
+  desktop browser. Power users who want a separate tab can still
+  ctrl/cmd-click or right-click → "Open in new tab".
+
 ## [1.1.34] — 2026-05-28
 
 ### Fixed

@@ -87,6 +87,7 @@
             cursor: pointer;
             border: none;
             box-shadow: 0 4px 16px rgba(232, 138, 127, 0.32);
+            -webkit-tap-highlight-color: transparent;
         }
 
         .btn:hover {
@@ -136,65 +137,24 @@
         <span class="quiz">Quiz</span><span class="ify">ify</span>
     </div>
     <p class="message" id="message" data-i18n="launcher.clickToLaunch">Launch the quiz in fullscreen — no distractions.</p>
-    <button class="btn" id="openBtn" onclick="openQuizify()">
+    <!-- Plain anchor instead of <button onclick="window.open(...)">. The
+         button was a dead-end inside the Android HA companion WebView (and
+         any embedded browser that blocks popups): window.open returned
+         non-null but never actually opened a tab, and the "click here"
+         fallback link inside the blocked-message had target="_blank" which
+         hit the same block. With <a href> the browser does its native
+         navigation — works in WebView, on iOS Safari, and on desktop. -->
+    <a class="btn" id="openBtn" href="/quizify/admin">
         <span class="btn-icon">🧠</span>
         <span data-i18n="launcher.openQuizify">Open Quizify</span>
-    </button>
+    </a>
     <p class="hint" id="hint"></p>
-    <p class="status" id="status"></p>
 
     <script src="/quizify/static/js/i18n.js?v={{VERSION}}"></script>
     <script>
-        var quizifyWindow = null;
-
-        function openQuizify() {
-            var adminUrl = window.location.origin + '/quizify/admin';
-
-            // If we already have an open window, focus it
-            if (quizifyWindow && !quizifyWindow.closed) {
-                quizifyWindow.focus();
-                updateUI('focused');
-                return;
-            }
-
-            var messageEl = document.getElementById('message');
-            messageEl.classList.add('opening');
-
-            quizifyWindow = window.open(adminUrl, 'quizify_game', 'noopener');
-
-            if (quizifyWindow) {
-                updateUI('opened');
-            } else {
-                // Popup blocked (Android HA companion app, strict Safari,
-                // any WebView). The user's button click is still fresh
-                // enough to satisfy in-place navigation rules — fall back
-                // to direct redirect so the launcher isn't a dead-end.
-                // The previous "Pop-up blocked" message stayed sticky and
-                // re-clicking the button just re-failed window.open.
-                window.location.href = adminUrl;
-            }
-        }
-
-        function updateUI(state) {
-            var messageEl = document.getElementById('message');
-            var hintEl = document.getElementById('hint');
-            var btnEl = document.getElementById('openBtn');
-            messageEl.classList.remove('opening');
-
-            if (state === 'opened') {
-                messageEl.textContent = QuizifyI18n.t('launcher.openedInNewTab') || 'Quizify is running in a new tab! 🧠';
-                hintEl.textContent = QuizifyI18n.t('launcher.clickToFocus') || 'Click again to focus the game tab';
-                btnEl.querySelector('[data-i18n]').textContent = QuizifyI18n.t('launcher.focusQuizify') || 'Focus Quizify';
-            } else if (state === 'focused') {
-                messageEl.textContent = QuizifyI18n.t('launcher.focusedTab') || 'Switched to Quizify tab! 🎯';
-            } else if (state === 'blocked') {
-                messageEl.textContent = QuizifyI18n.t('launcher.popupBlocked') || 'Pop-up was blocked by your browser.';
-                hintEl.innerHTML = QuizifyI18n.t('launcher.allowPopups', { url: window.location.origin + '/quizify/admin' });
-            }
-        }
-
-        // Initialize i18n
-        window.addEventListener('load', async function() {
+        // i18n only — navigation is handled by the <a href>. No popup
+        // attempt, no fallback ladder. The launcher is now stateless.
+        window.addEventListener('load', async function () {
             await QuizifyI18n.init();
             QuizifyI18n.initPageTranslations();
         });
