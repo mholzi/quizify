@@ -3,6 +3,21 @@
 All notable changes to Quizify are documented here. This project follows
 [Semantic Versioning](https://semver.org/).
 
+## [1.1.36] — 2026-05-28
+
+### Fixed
+
+- **Pack-cards now fill the full row width.** `.vF-answers` carries
+  `padding-left: 30px` so answer chips align with the question text
+  (skipping the numbered badge column). With the new
+  `.chip-group--cards` layout from v1.1.31 onward, that 30 px offset
+  made the pack-card grid visibly narrower than the Featured
+  Spotlight and Theme-Tabs sitting above it — a roughly 12 px gap
+  on the right edge plus a wider gap on the left, breaking the
+  vertical alignment of the Phase-2 layout. The `.chip-group--cards`
+  modifier now zeroes the inherited padding so the card grid spans
+  the full content area, matching the spotlight and tabs.
+
 ## [1.1.35] — 2026-05-28
 
 ### Fixed

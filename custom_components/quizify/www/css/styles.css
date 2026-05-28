@@ -1030,6 +1030,7 @@ button, .btn {
     grid-template-columns: 1fr 1fr;
     gap: var(--space-sm);
     margin-top: var(--space-sm);
+    padding-left: 0;
 }
 
 #category-chips.chip-group--cards .chip {
