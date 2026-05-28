@@ -3,6 +3,30 @@
 All notable changes to Quizify are documented here. This project follows
 [Semantic Versioning](https://semver.org/).
 
+## [1.1.37] — 2026-05-28
+
+### Added
+
+- **Six new question themes: Sport, Music, Science, History, Food &
+  Drink, and Technology.** Each ships in both German and English,
+  bringing the trivia library from 3 themes to 9 and from ~256 to
+  ~838 questions across 18 packs. The new packs follow the same
+  "Unnützes Wissen" tone — surprising, counter-intuitive, weird-but-
+  true trivia rather than capital-of-X / year-of-Y lookup-facts.
+  Generated and validated in batch on 2026-05-28, with a 10-rule
+  anti-pattern list (no superlatives without consensus, no
+  convention-drift records, no internal contradictions, etc.)
+  distilled from the Mai-27 quiz-pack-review cleanup.
+- **Pack-picker UI extended for the new themes.** Six new theme tabs
+  (⚽ Sport / 🎵 Musik / 🔬 Wissen / 📜 Historie / 🍔 Essen / 💡 Tech)
+  next to the existing Geo / Natur / Pop tabs, plus twelve new pack
+  cards (one per theme × language) in the chip grid. The total tab
+  count is now ten (Alle + 9 themes), at the upper end of the
+  approved Phase-2 mockup's visual budget. Featured Spotlight still
+  points at Geography for both languages; rotate manually in
+  `admin.js` `FEATURED_PACK` when you want to surface a different
+  pack.
+
 ## [1.1.36] — 2026-05-28
 
 ### Fixed

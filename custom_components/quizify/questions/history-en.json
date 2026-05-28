@@ -1,0 +1,608 @@
+{
+  "name": "History",
+  "language": "en",
+  "version": "1.0",
+  "theme": "history",
+  "questions": [
+    {
+      "id": "history_en_001",
+      "question": "Which Roman emperor tried to make his horse a consul?",
+      "answers": [
+        {"text": "Caligula", "correct": true},
+        {"text": "Nero", "correct": false},
+        {"text": "Commodus", "correct": false}
+      ],
+      "difficulty": "medium",
+      "fun_fact": "Caligula reportedly planned to appoint his beloved horse Incitatus to the consulship — historians debate whether he meant it or was mocking the Senate.",
+      "category": "History"
+    },
+    {
+      "id": "history_en_002",
+      "question": "What did ancient Romans use as mouthwash?",
+      "answers": [
+        {"text": "Urine", "correct": true},
+        {"text": "Vinegar", "correct": false},
+        {"text": "Olive oil", "correct": false}
+      ],
+      "difficulty": "medium",
+      "fun_fact": "Portuguese urine was especially prized — the ammonia whitened teeth. Rome even taxed the urine trade under Emperor Vespasian.",
+      "category": "History"
+    },
+    {
+      "id": "history_en_003",
+      "question": "What unusual item did Cleopatra reportedly dissolve to win a bet with Mark Antony?",
+      "answers": [
+        {"text": "A pearl earring", "correct": true},
+        {"text": "A gold coin", "correct": false},
+        {"text": "An emerald", "correct": false}
+      ],
+      "difficulty": "medium",
+      "fun_fact": "Pliny the Elder wrote that Cleopatra dissolved a priceless pearl in vinegar and drank it to win a wager over throwing the most expensive dinner ever.",
+      "category": "History"
+    },
+    {
+      "id": "history_en_004",
+      "question": "Which ancient Greek philosopher reportedly died from laughing at his own joke?",
+      "answers": [
+        {"text": "Chrysippus", "correct": true},
+        {"text": "Socrates", "correct": false},
+        {"text": "Diogenes", "correct": false}
+      ],
+      "difficulty": "hard",
+      "fun_fact": "Chrysippus of Soli supposedly died laughing after watching a donkey eat his figs and joking that it needed wine to wash them down.",
+      "category": "History"
+    },
+    {
+      "id": "history_en_005",
+      "question": "What did Spartan boys have to do to graduate from their training?",
+      "answers": [
+        {"text": "Steal food without getting caught", "correct": true},
+        {"text": "Memorize the Iliad", "correct": false},
+        {"text": "Build their own armour", "correct": false}
+      ],
+      "difficulty": "medium",
+      "fun_fact": "The agoge deliberately underfed boys to force them to steal. Getting caught meant a beating — not for stealing, but for being clumsy enough to be noticed.",
+      "category": "History"
+    },
+    {
+      "id": "history_en_006",
+      "question": "Why did ancient Egyptians shave off their eyebrows?",
+      "answers": [
+        {"text": "To mourn a dead cat", "correct": true},
+        {"text": "To honour the pharaoh's birthday", "correct": false},
+        {"text": "To prepare for battle", "correct": false}
+      ],
+      "difficulty": "hard",
+      "fun_fact": "Herodotus reported that Egyptian families shaved their eyebrows when a household cat died, as cats were sacred to the goddess Bastet.",
+      "category": "History"
+    },
+    {
+      "id": "history_en_007",
+      "question": "What was the official cause of death listed for the Greek playwright Aeschylus?",
+      "answers": [
+        {"text": "A tortoise dropped on his head by an eagle", "correct": true},
+        {"text": "Poisoned wine", "correct": false},
+        {"text": "Drowning in a fountain", "correct": false}
+      ],
+      "difficulty": "hard",
+      "fun_fact": "Ancient sources claim an eagle mistook Aeschylus's bald head for a rock and dropped a tortoise on it to crack the shell.",
+      "category": "History"
+    },
+    {
+      "id": "history_en_008",
+      "question": "What strange object did Roman soldiers receive part of their salary in?",
+      "answers": [
+        {"text": "Salt", "correct": true},
+        {"text": "Olive oil", "correct": false},
+        {"text": "Wine", "correct": false}
+      ],
+      "difficulty": "easy",
+      "fun_fact": "The Latin word for salt allowance was 'salarium' — the root of the modern word 'salary'. Salt preserved food and was genuinely valuable.",
+      "category": "History"
+    },
+    {
+      "id": "history_en_009",
+      "question": "How did the Roman emperor Elagabalus reportedly kill dinner guests at a banquet?",
+      "answers": [
+        {"text": "Suffocated them with flower petals", "correct": true},
+        {"text": "Released lions into the dining hall", "correct": false},
+        {"text": "Served poisoned wine", "correct": false}
+      ],
+      "difficulty": "hard",
+      "fun_fact": "The Historia Augusta describes Elagabalus dropping so many rose petals from the ceiling that guests smothered underneath them.",
+      "category": "History"
+    },
+    {
+      "id": "history_en_010",
+      "question": "What did Pythagoras famously forbid his followers from eating?",
+      "answers": [
+        {"text": "Beans", "correct": true},
+        {"text": "Fish", "correct": false},
+        {"text": "Bread", "correct": false}
+      ],
+      "difficulty": "medium",
+      "fun_fact": "Pythagoreans considered beans unclean and possibly housing human souls. Legend says Pythagoras let assassins kill him rather than flee through a bean field.",
+      "category": "History"
+    },
+    {
+      "id": "history_en_011",
+      "question": "What did medieval monks use to glue manuscripts together that we'd find strange today?",
+      "answers": [
+        {"text": "Boiled animal hides and fish bladders", "correct": true},
+        {"text": "Beeswax mixed with honey", "correct": false},
+        {"text": "Tree sap and egg yolks", "correct": false}
+      ],
+      "difficulty": "medium",
+      "fun_fact": "Isinglass — made from fish swim bladders — was a prized medieval adhesive and is still used today in some restoration work.",
+      "category": "History"
+    },
+    {
+      "id": "history_en_012",
+      "question": "Why did Tycho Brahe wear a metal prosthetic nose?",
+      "answers": [
+        {"text": "He lost his real one in a duel over a math formula", "correct": true},
+        {"text": "A horse bit it off during an experiment", "correct": false},
+        {"text": "He was disfigured by smallpox as a child", "correct": false}
+      ],
+      "difficulty": "medium",
+      "fun_fact": "Brahe lost his nose tip in a 1566 sword duel with his cousin over who was the better mathematician. He wore a brass replacement for the rest of his life.",
+      "category": "History"
+    },
+    {
+      "id": "history_en_013",
+      "question": "What unusual profession existed in medieval England called a 'gong farmer'?",
+      "answers": [
+        {"text": "Cleaning out cesspits and latrines", "correct": true},
+        {"text": "Ringing church bells through the night", "correct": false},
+        {"text": "Training falcons for the nobility", "correct": false}
+      ],
+      "difficulty": "medium",
+      "fun_fact": "Gong farmers were only allowed to work at night and lived in segregated areas — but they were paid extremely well, sometimes earning more than craftsmen.",
+      "category": "History"
+    },
+    {
+      "id": "history_en_014",
+      "question": "What strange phenomenon swept through Strasbourg in 1518?",
+      "answers": [
+        {"text": "Hundreds of people danced uncontrollably for weeks", "correct": true},
+        {"text": "A plague of frogs filled the streets", "correct": false},
+        {"text": "Every clock in the city stopped at once", "correct": false}
+      ],
+      "difficulty": "hard",
+      "fun_fact": "The Dancing Plague of 1518 saw around 400 people dance non-stop. Some collapsed from exhaustion and reportedly died. The cause remains debated — ergot poisoning, mass hysteria, or both.",
+      "category": "History"
+    },
+    {
+      "id": "history_en_015",
+      "question": "What did Leonardo da Vinci write his private notebooks in to keep them secret?",
+      "answers": [
+        {"text": "Mirror-image script", "correct": true},
+        {"text": "Ancient Phoenician", "correct": false},
+        {"text": "A cipher based on bird drawings", "correct": false}
+      ],
+      "difficulty": "easy",
+      "fun_fact": "Leonardo wrote right-to-left in mirror script, readable only by holding the page to a mirror. He was left-handed, which may have made it more natural too.",
+      "category": "History"
+    },
+    {
+      "id": "history_en_016",
+      "question": "What did medieval doctors prescribe to cure the Black Death?",
+      "answers": [
+        {"text": "Sitting in a sewer to smell the bad air", "correct": true},
+        {"text": "Drinking pure spring water", "correct": false},
+        {"text": "Fasting for forty days", "correct": false}
+      ],
+      "difficulty": "hard",
+      "fun_fact": "Medieval medicine believed plague spread through 'miasma' or bad air, so some treatments involved overwhelming the body with even worse smells to drive out the disease.",
+      "category": "History"
+    },
+    {
+      "id": "history_en_017",
+      "question": "What odd item did the Pope ban from chess sets in 1061?",
+      "answers": [
+        {"text": "The game itself, calling it a vice", "correct": true},
+        {"text": "Ivory pieces", "correct": false},
+        {"text": "The queen piece", "correct": false}
+      ],
+      "difficulty": "hard",
+      "fun_fact": "Cardinal Damian wrote to Pope Alexander II condemning chess as a frivolous distraction unworthy of clergy. The ban was widely ignored, even by bishops.",
+      "category": "History"
+    },
+    {
+      "id": "history_en_018",
+      "question": "What was unusual about how castle staircases were designed?",
+      "answers": [
+        {"text": "They spiralled clockwise to favour right-handed defenders", "correct": true},
+        {"text": "Every step was a different height to confuse intruders", "correct": false},
+        {"text": "They were always built without handrails", "correct": false}
+      ],
+      "difficulty": "medium",
+      "fun_fact": "Clockwise spirals gave right-handed defenders coming down room to swing, while right-handed attackers coming up had the central pillar in their sword arm.",
+      "category": "History"
+    },
+    {
+      "id": "history_en_019",
+      "question": "What did the Catholic Church try to do to Halley's Comet in 1456?",
+      "answers": [
+        {"text": "Excommunicate it", "correct": true},
+        {"text": "Bless it for safe passage", "correct": false},
+        {"text": "Declare it the eighth wonder", "correct": false}
+      ],
+      "difficulty": "hard",
+      "fun_fact": "Pope Callixtus III reportedly ordered prayers against the comet, which was blamed for plague and Ottoman victories. Modern historians dispute whether a formal excommunication occurred.",
+      "category": "History"
+    },
+    {
+      "id": "history_en_020",
+      "question": "What unusual job did the 'Groom of the Stool' have in the English royal court?",
+      "answers": [
+        {"text": "Assisting the king on the toilet", "correct": true},
+        {"text": "Caring for the king's hunting dogs", "correct": false},
+        {"text": "Polishing the throne every morning", "correct": false}
+      ],
+      "difficulty": "medium",
+      "fun_fact": "Despite the task, it was a prized position — Grooms of the Stool gained immense political influence through their daily intimate access to the monarch.",
+      "category": "History"
+    },
+    {
+      "id": "history_en_021",
+      "question": "At the peak of Dutch tulip mania, what could a single rare tulip bulb be exchanged for?",
+      "answers": [
+        {"text": "A canal-side house in Amsterdam", "correct": true},
+        {"text": "A small fishing fleet", "correct": false},
+        {"text": "A barrel of gold dust", "correct": false}
+      ],
+      "difficulty": "medium",
+      "fun_fact": "At the 1637 peak, a single Semper Augustus bulb traded for around 10,000 guilders — roughly the price of a fine Amsterdam house. The market collapsed within weeks.",
+      "category": "History"
+    },
+    {
+      "id": "history_en_022",
+      "question": "What was Napoleon's actual height in modern measurements?",
+      "answers": [
+        {"text": "About 1.69 m, average for his era", "correct": true},
+        {"text": "Only 1.55 m, unusually short", "correct": false},
+        {"text": "Over 1.85 m, unusually tall", "correct": false}
+      ],
+      "difficulty": "medium",
+      "fun_fact": "The 'short Napoleon' myth came from confusion between French and English inches. His height of 5'2\" in French units equalled about 5'7\" English — perfectly normal.",
+      "category": "History"
+    },
+    {
+      "id": "history_en_023",
+      "question": "What strange item did pirates almost never actually wear, despite the modern image?",
+      "answers": [
+        {"text": "Eye patches over a blind eye", "correct": true},
+        {"text": "Cotton shirts", "correct": false},
+        {"text": "Leather boots", "correct": false}
+      ],
+      "difficulty": "hard",
+      "fun_fact": "Eye patches were likely worn to keep one eye dark-adapted for going below deck, not to cover injuries. There's almost no historical evidence of widespread pirate eye injuries.",
+      "category": "History"
+    },
+    {
+      "id": "history_en_024",
+      "question": "What did Isaac Newton spend more time studying than physics?",
+      "answers": [
+        {"text": "Alchemy and Biblical prophecy", "correct": true},
+        {"text": "Music theory and opera", "correct": false},
+        {"text": "Horse breeding and stable design", "correct": false}
+      ],
+      "difficulty": "medium",
+      "fun_fact": "Newton wrote over a million words on alchemy and Biblical chronology. Economist John Maynard Keynes called him 'the last of the magicians' after reading the papers.",
+      "category": "History"
+    },
+    {
+      "id": "history_en_025",
+      "question": "What unusual injury did Marie Antoinette's hair famously suffer overnight?",
+      "answers": [
+        {"text": "It supposedly turned white from stress", "correct": true},
+        {"text": "It caught fire from a chandelier", "correct": false},
+        {"text": "Rats chewed it during sleep", "correct": false}
+      ],
+      "difficulty": "medium",
+      "fun_fact": "The legend that her hair turned white the night before her execution is medically impossible — hair doesn't change colour that fast — but the story stuck for centuries.",
+      "category": "History"
+    },
+    {
+      "id": "history_en_026",
+      "question": "What did Benjamin Franklin propose as the national bird of the United States?",
+      "answers": [
+        {"text": "The wild turkey", "correct": true},
+        {"text": "The mockingbird", "correct": false},
+        {"text": "The bald eagle", "correct": false}
+      ],
+      "difficulty": "easy",
+      "fun_fact": "Franklin wrote that the bald eagle was 'a bird of bad moral character' and the turkey was 'a much more respectable bird' and a true native American.",
+      "category": "History"
+    },
+    {
+      "id": "history_en_027",
+      "question": "What strange product was Coca-Cola originally sold as?",
+      "answers": [
+        {"text": "A medicinal tonic containing cocaine", "correct": true},
+        {"text": "A cleaning solution for brass", "correct": false},
+        {"text": "An aftershave for barbers", "correct": false}
+      ],
+      "difficulty": "easy",
+      "fun_fact": "Invented in 1886 by pharmacist John Pemberton, the original recipe contained coca leaf extract. Cocaine was removed around 1903, though the leaves are still used decocainised.",
+      "category": "History"
+    },
+    {
+      "id": "history_en_028",
+      "question": "What was unusual about how Catherine the Great of Russia actually died?",
+      "answers": [
+        {"text": "She had a stroke on the toilet", "correct": true},
+        {"text": "She was crushed by a horse", "correct": false},
+        {"text": "She drowned in a bathtub", "correct": false}
+      ],
+      "difficulty": "medium",
+      "fun_fact": "Catherine died of a stroke in 1796 after collapsing in her water closet. The infamous 'horse' rumour was anti-Russian propaganda spread by her enemies in Europe.",
+      "category": "History"
+    },
+    {
+      "id": "history_en_029",
+      "question": "What did the 1814 London Beer Flood unleash on the streets?",
+      "answers": [
+        {"text": "Around 1.5 million litres of beer", "correct": true},
+        {"text": "A cloud of brewery smoke that blocked the sun", "correct": false},
+        {"text": "Thousands of escaped brewery rats", "correct": false}
+      ],
+      "difficulty": "hard",
+      "fun_fact": "A ruptured vat at the Meux Brewery sent a wave of porter through the parish of St Giles. At least 8 people drowned in beer in their cellars and basements.",
+      "category": "History"
+    },
+    {
+      "id": "history_en_030",
+      "question": "What did Thomas Jefferson keep on display at the White House from Lewis and Clark?",
+      "answers": [
+        {"text": "Two live grizzly bear cubs", "correct": true},
+        {"text": "A herd of buffalo", "correct": false},
+        {"text": "A captured British naval flag", "correct": false}
+      ],
+      "difficulty": "hard",
+      "fun_fact": "The cubs were gifts from explorer Zebulon Pike. Jefferson kept them in cages on the White House lawn before shipping them to a museum after they became unmanageable.",
+      "category": "History"
+    },
+    {
+      "id": "history_en_031",
+      "question": "What did the CIA spend years trying to do to Fidel Castro using a poisoned object?",
+      "answers": [
+        {"text": "Make his beard fall out with thallium", "correct": true},
+        {"text": "Replace his cigars with chocolate", "correct": false},
+        {"text": "Steal his shoes for forensic study", "correct": false}
+      ],
+      "difficulty": "medium",
+      "fun_fact": "Operation Mongoose included a plan to dust Castro's shoes with thallium salts so his beard would fall out and humiliate him before a UN speech. It never happened.",
+      "category": "History"
+    },
+    {
+      "id": "history_en_032",
+      "question": "What unusual cargo did the Soviet space programme send to orbit in 1957?",
+      "answers": [
+        {"text": "A stray Moscow street dog named Laika", "correct": true},
+        {"text": "A trained chimpanzee from Cuba", "correct": false},
+        {"text": "A live chicken to test reproduction", "correct": false}
+      ],
+      "difficulty": "easy",
+      "fun_fact": "Laika died within hours of launch from overheating — the Soviets admitted this only decades later. The mission had no plan to return her safely.",
+      "category": "History"
+    },
+    {
+      "id": "history_en_033",
+      "question": "What did the British actually use to camouflage tanks in World War I?",
+      "answers": [
+        {"text": "Painted dazzle patterns inspired by Cubism", "correct": true},
+        {"text": "Real tree branches glued to the hull", "correct": false},
+        {"text": "Sheets of polished mirror", "correct": false}
+      ],
+      "difficulty": "hard",
+      "fun_fact": "Dazzle camouflage didn't hide ships or tanks — it made it hard to judge their speed and direction. Artists including Norman Wilkinson designed the patterns.",
+      "category": "History"
+    },
+    {
+      "id": "history_en_034",
+      "question": "What weird item did the CIA try to weaponise in the 1960s under Project Acoustic Kitty?",
+      "answers": [
+        {"text": "A surgically implanted cat", "correct": true},
+        {"text": "A trained pigeon with a tiny camera", "correct": false},
+        {"text": "A robotic squirrel", "correct": false}
+      ],
+      "difficulty": "hard",
+      "fun_fact": "The CIA spent around $20 million implanting a microphone in a cat to eavesdrop on Soviet diplomats. On its first mission, the cat was reportedly hit by a taxi.",
+      "category": "History"
+    },
+    {
+      "id": "history_en_035",
+      "question": "What did Salvador Dalí design for a famous brand in 1969 that we still see today?",
+      "answers": [
+        {"text": "The Chupa Chups logo", "correct": true},
+        {"text": "The Coca-Cola contour bottle", "correct": false},
+        {"text": "The Michelin Man", "correct": false}
+      ],
+      "difficulty": "medium",
+      "fun_fact": "Dalí designed the daisy-shaped Chupa Chups logo on a napkin in a single afternoon. He insisted it go on top of the lollipop so it would always be visible.",
+      "category": "History"
+    },
+    {
+      "id": "history_en_036",
+      "question": "What strange phenomenon did the BBC report on April Fools' Day 1957?",
+      "answers": [
+        {"text": "A Swiss spaghetti harvest from trees", "correct": true},
+        {"text": "A flying car prototype over London", "correct": false},
+        {"text": "A whale migration up the Thames", "correct": false}
+      ],
+      "difficulty": "medium",
+      "fun_fact": "The Panorama segment showed farmers picking spaghetti from trees. Hundreds of viewers called in asking how to grow their own — they were told to put a sprig in tomato sauce.",
+      "category": "History"
+    },
+    {
+      "id": "history_en_037",
+      "question": "What odd item was found in Hitler's personal bunker after the war?",
+      "answers": [
+        {"text": "A vegetarian cookbook collection", "correct": true},
+        {"text": "A working ham radio set", "correct": false},
+        {"text": "A chess set carved from elephant ivory", "correct": false}
+      ],
+      "difficulty": "medium",
+      "fun_fact": "Hitler was strictly vegetarian in his later years and obsessed with the topic. His cook Constanze Manziarly prepared his last meal — likely spaghetti with a light sauce.",
+      "category": "History"
+    },
+    {
+      "id": "history_en_038",
+      "question": "What weird side project did Werner von Braun pursue alongside rocket science?",
+      "answers": [
+        {"text": "Writing a sci-fi novel about Mars colonies", "correct": true},
+        {"text": "Designing miniature golf courses", "correct": false},
+        {"text": "Breeding ornamental koi fish", "correct": false}
+      ],
+      "difficulty": "hard",
+      "fun_fact": "His 1952 novel 'Das Marsprojekt' described a Mars mission in detail and named the colony's leader the 'Elon' — a Hebrew word meaning leader. Yes, really.",
+      "category": "History"
+    },
+    {
+      "id": "history_en_039",
+      "question": "What unusual deception did the Allies use in Operation Mincemeat in 1943?",
+      "answers": [
+        {"text": "A corpse with fake invasion plans", "correct": true},
+        {"text": "Inflatable rubber tanks in Kent", "correct": false},
+        {"text": "Radio broadcasts in fake German", "correct": false}
+      ],
+      "difficulty": "medium",
+      "fun_fact": "British intelligence dressed a homeless man's corpse as a Royal Marines officer and floated it off Spain with documents suggesting an invasion of Greece, not Sicily. The Germans believed it.",
+      "category": "History"
+    },
+    {
+      "id": "history_en_040",
+      "question": "What did the United States seriously consider doing to the Moon in 1958?",
+      "answers": [
+        {"text": "Detonating a nuclear bomb on its surface", "correct": true},
+        {"text": "Painting a giant US flag visible from Earth", "correct": false},
+        {"text": "Carving Mount Rushmore into a crater", "correct": false}
+      ],
+      "difficulty": "hard",
+      "fun_fact": "Project A119 planned a visible nuclear flash on the Moon as a Cold War show of force. Carl Sagan worked on it as a young scientist. The project was scrapped over public backlash fears.",
+      "category": "History"
+    },
+    {
+      "id": "history_en_041",
+      "question": "How did Australia's 1932 Emu War end?",
+      "answers": [
+        {"text": "Australia lost to the birds", "correct": true},
+        {"text": "A peace treaty was signed with emu advocates", "correct": false},
+        {"text": "All the emus were captured and zoo-bound", "correct": false}
+      ],
+      "difficulty": "easy",
+      "fun_fact": "The Australian military fired thousands of rounds at emus damaging crops but managed only a few hundred kills. The emus scattered into small groups and outran the soldiers. The military withdrew.",
+      "category": "History"
+    },
+    {
+      "id": "history_en_042",
+      "question": "What was the duration of the shortest war in history, between Britain and Zanzibar in 1896?",
+      "answers": [
+        {"text": "Around 38 minutes", "correct": true},
+        {"text": "About 6 hours", "correct": false},
+        {"text": "Just under 3 days", "correct": false}
+      ],
+      "difficulty": "medium",
+      "fun_fact": "The Anglo-Zanzibar War ended after British warships shelled the palace. Estimates range from 38 to 45 minutes — fast enough that nobody quite agrees on the exact number.",
+      "category": "History"
+    },
+    {
+      "id": "history_en_043",
+      "question": "What ridiculous event caused the 1925-1926 War of the Stray Dog between Greece and Bulgaria?",
+      "answers": [
+        {"text": "A soldier chased his dog across the border", "correct": true},
+        {"text": "Bulgaria refused to return a royal pet", "correct": false},
+        {"text": "A pack of dogs ate a diplomat's lunch", "correct": false}
+      ],
+      "difficulty": "hard",
+      "fun_fact": "A Greek soldier crossed into Bulgaria chasing his dog and was shot. Greece invaded. The League of Nations intervened and forced a withdrawal within days.",
+      "category": "History"
+    },
+    {
+      "id": "history_en_044",
+      "question": "What unlikely weapon did the US develop in World War II called the Bat Bomb?",
+      "answers": [
+        {"text": "Bats carrying tiny incendiary devices", "correct": true},
+        {"text": "Baseball-bat-shaped depth charges", "correct": false},
+        {"text": "Sonar mimicking actual bat calls", "correct": false}
+      ],
+      "difficulty": "medium",
+      "fun_fact": "Thousands of Mexican free-tailed bats were fitted with timed napalm capsules to roost in Japanese buildings before igniting. A test accidentally burned down a US Army airfield.",
+      "category": "History"
+    },
+    {
+      "id": "history_en_045",
+      "question": "What unusual plan did the British MI5 propose to assassinate Hitler that was rejected?",
+      "answers": [
+        {"text": "Lacing his tea with female hormones", "correct": true},
+        {"text": "Hiding a bomb inside an Oscar statue", "correct": false},
+        {"text": "Replacing his moustache wax with explosive paste", "correct": false}
+      ],
+      "difficulty": "hard",
+      "fun_fact": "Operation Foxley considered injecting oestrogen into Hitler's food to make him less aggressive and bald. Planners ultimately worried that a martyred Hitler would rally Germany.",
+      "category": "History"
+    },
+    {
+      "id": "history_en_046",
+      "question": "What strange object caused the Pig War of 1859 between Britain and the US?",
+      "answers": [
+        {"text": "A single pig eating potatoes", "correct": true},
+        {"text": "A stolen sow worth a fortune", "correct": false},
+        {"text": "A pig parade gone wrong", "correct": false}
+      ],
+      "difficulty": "medium",
+      "fun_fact": "An American farmer shot a British-owned pig on San Juan Island. Both sides sent troops. Despite weeks of standoff, the only casualty was the pig itself.",
+      "category": "History"
+    },
+    {
+      "id": "history_en_047",
+      "question": "What was unusual about the soldiers who fought the Battle of Castle Itter in May 1945?",
+      "answers": [
+        {"text": "Americans and Germans fought side by side", "correct": true},
+        {"text": "It was fought entirely in snowshoes", "correct": false},
+        {"text": "Both sides used wooden rifles", "correct": false}
+      ],
+      "difficulty": "hard",
+      "fun_fact": "US troops and Wehrmacht defectors jointly defended French VIP prisoners against the SS. It's the only known WWII battle where Americans and Germans fought together.",
+      "category": "History"
+    },
+    {
+      "id": "history_en_048",
+      "question": "What odd outcome did the Football War of 1969 between El Salvador and Honduras have?",
+      "answers": [
+        {"text": "It lasted only 100 hours", "correct": true},
+        {"text": "It was decided by a penalty shootout", "correct": false},
+        {"text": "Both sides claimed FIFA membership in victory", "correct": false}
+      ],
+      "difficulty": "medium",
+      "fun_fact": "Tensions over World Cup qualifiers ignited deeper disputes over land and migration. The fighting lasted four days, killed around 3,000, and disrupted the region for years.",
+      "category": "History"
+    },
+    {
+      "id": "history_en_049",
+      "question": "What did Soviet engineers seriously propose to defeat the cold during Operation Barbarossa's winter?",
+      "answers": [
+        {"text": "Spraying perfume on tanks to mask diesel", "correct": false},
+        {"text": "Wrapping engines in dog fur from sled teams", "correct": false},
+        {"text": "Mixing kerosene into engine oil", "correct": true}
+      ],
+      "difficulty": "hard",
+      "fun_fact": "Soviet crews added kerosene or fuel to oil to keep it flowing at minus 40°C. It worked — German engines just froze solid, immobilising whole panzer divisions.",
+      "category": "History"
+    },
+    {
+      "id": "history_en_050",
+      "question": "What ridiculous reason did Paraguay give for declaring war on the Allies in February 1945?",
+      "answers": [
+        {"text": "To qualify for UN founding membership", "correct": true},
+        {"text": "To honour an old colonial treaty", "correct": false},
+        {"text": "To recover a stolen presidential carriage", "correct": false}
+      ],
+      "difficulty": "hard",
+      "fun_fact": "Several Latin American countries declared war on Germany weeks before the war ended specifically to be invited to the San Francisco UN founding conference. Paraguay sent no troops.",
+      "category": "History"
+    }
+  ]
+}

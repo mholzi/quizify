@@ -1,0 +1,1058 @@
+{
+  "name": "Technology",
+  "language": "en",
+  "version": "1.0",
+  "theme": "tech",
+  "questions": [
+    {
+      "id": "tech_en_001",
+      "question": "What was the first commercial domain name ever registered on the internet?",
+      "answers": [
+        {
+          "text": "symbolics.com",
+          "correct": true
+        },
+        {
+          "text": "apple.com",
+          "correct": false
+        },
+        {
+          "text": "ibm.com",
+          "correct": false
+        }
+      ],
+      "difficulty": "hard",
+      "fun_fact": "Symbolics, a Massachusetts computer manufacturer, registered symbolics.com in March 1985 — beating IBM, Apple and HP to the punch. The domain still exists and was sold to an investor in 2009.",
+      "category": "Technology"
+    },
+    {
+      "id": "tech_en_002",
+      "question": "What does the very first website ever published still describe?",
+      "answers": [
+        {
+          "text": "The World Wide Web project itself",
+          "correct": true
+        },
+        {
+          "text": "A CERN particle experiment",
+          "correct": false
+        },
+        {
+          "text": "An online phone directory",
+          "correct": false
+        }
+      ],
+      "difficulty": "medium",
+      "fun_fact": "info.cern.ch was the first website — it explained what the WWW was, how to set up a server, and how to use a browser. A restored copy is still online today.",
+      "category": "Technology"
+    },
+    {
+      "id": "tech_en_003",
+      "question": "What was the content of the very first email ever sent over ARPANET between two computers?",
+      "answers": [
+        {
+          "text": "QWERTYUIOP (a test string)",
+          "correct": true
+        },
+        {
+          "text": "Hello World",
+          "correct": false
+        },
+        {
+          "text": "Are you receiving this?",
+          "correct": false
+        }
+      ],
+      "difficulty": "hard",
+      "fun_fact": "Ray Tomlinson, who chose the @ symbol, said the first networked email was 'something like QWERTYUIOP' — just keys mashed in a row as a test.",
+      "category": "Technology"
+    },
+    {
+      "id": "tech_en_004",
+      "question": "Why did Ray Tomlinson choose the @ symbol for email addresses?",
+      "answers": [
+        {
+          "text": "It was unused in names and meant 'at'",
+          "correct": true
+        },
+        {
+          "text": "It was the only free key on his keyboard",
+          "correct": false
+        },
+        {
+          "text": "It was an ARPANET protocol requirement",
+          "correct": false
+        }
+      ],
+      "difficulty": "medium",
+      "fun_fact": "Tomlinson needed a separator that would never appear in someone's name. The @ key was rarely used and conveniently meant 'at' — perfect for 'user at host'.",
+      "category": "Technology"
+    },
+    {
+      "id": "tech_en_005",
+      "question": "What was YouTube originally designed to be before it pivoted to general video sharing?",
+      "answers": [
+        {
+          "text": "A video dating site",
+          "correct": true
+        },
+        {
+          "text": "A music download store",
+          "correct": false
+        },
+        {
+          "text": "A film school portfolio site",
+          "correct": false
+        }
+      ],
+      "difficulty": "medium",
+      "fun_fact": "YouTube launched in 2005 as 'Tune In, Hook Up' — a dating site where users uploaded videos describing their ideal partner. Nobody uploaded any, so the founders opened it to all videos.",
+      "category": "Technology"
+    },
+    {
+      "id": "tech_en_006",
+      "question": "What was the first item ever sold on eBay (then called AuctionWeb)?",
+      "answers": [
+        {
+          "text": "A broken laser pointer",
+          "correct": true
+        },
+        {
+          "text": "A used Beanie Baby",
+          "correct": false
+        },
+        {
+          "text": "A vintage comic book",
+          "correct": false
+        }
+      ],
+      "difficulty": "hard",
+      "fun_fact": "Pierre Omidyar listed a broken laser pointer for fun. It sold for $14.83. When he emailed the buyer to confirm they understood it was broken, the buyer replied: 'I'm a collector of broken laser pointers.'",
+      "category": "Technology"
+    },
+    {
+      "id": "tech_en_007",
+      "question": "What was Amazon's original planned name before Jeff Bezos changed it?",
+      "answers": [
+        {
+          "text": "Cadabra",
+          "correct": true
+        },
+        {
+          "text": "Relentless",
+          "correct": false
+        },
+        {
+          "text": "Bookmart",
+          "correct": false
+        }
+      ],
+      "difficulty": "hard",
+      "fun_fact": "Bezos first registered Cadabra (as in 'abracadabra') — but a lawyer misheard it as 'cadaver' on the phone. He picked Amazon for the big river vibe. relentless.com still redirects to amazon.com today.",
+      "category": "Technology"
+    },
+    {
+      "id": "tech_en_008",
+      "question": "What does the 'www' prefix on web addresses technically refer to?",
+      "answers": [
+        {
+          "text": "A subdomain (the web server's hostname)",
+          "correct": true
+        },
+        {
+          "text": "A required protocol identifier",
+          "correct": false
+        },
+        {
+          "text": "A top-level domain like .com",
+          "correct": false
+        }
+      ],
+      "difficulty": "medium",
+      "fun_fact": "'www' is just a conventional subdomain name — like 'mail' or 'ftp'. There's no rule that web servers must use it, which is why example.com and www.example.com can serve different content.",
+      "category": "Technology"
+    },
+    {
+      "id": "tech_en_009",
+      "question": "What was Google's original name when it was a Stanford research project?",
+      "answers": [
+        {
+          "text": "BackRub",
+          "correct": true
+        },
+        {
+          "text": "PageLink",
+          "correct": false
+        },
+        {
+          "text": "Searchly",
+          "correct": false
+        }
+      ],
+      "difficulty": "medium",
+      "fun_fact": "Larry Page and Sergey Brin called it BackRub because it analyzed 'back links' pointing to pages. They renamed it Google — a misspelling of 'googol' (10^100) — to suggest indexing huge amounts of data.",
+      "category": "Technology"
+    },
+    {
+      "id": "tech_en_010",
+      "question": "Why does the Wi-Fi name field in routers often have a 32-character limit?",
+      "answers": [
+        {
+          "text": "The 802.11 SSID standard caps it at 32 bytes",
+          "correct": true
+        },
+        {
+          "text": "Routers run out of memory beyond 32 characters",
+          "correct": false
+        },
+        {
+          "text": "DNS rules apply to network names",
+          "correct": false
+        }
+      ],
+      "difficulty": "hard",
+      "fun_fact": "The IEEE 802.11 spec defines the SSID (Service Set Identifier) as a max 32-octet field. That hard limit predates almost every router you've ever owned.",
+      "category": "Technology"
+    },
+    {
+      "id": "tech_en_011",
+      "question": "Why is a software glitch called a 'bug'?",
+      "answers": [
+        {
+          "text": "An actual moth was found inside an early computer",
+          "correct": true
+        },
+        {
+          "text": "Early code looked like crawling insects on punch cards",
+          "correct": false
+        },
+        {
+          "text": "It's an acronym for Bad Unintended Glitch",
+          "correct": false
+        }
+      ],
+      "difficulty": "medium",
+      "fun_fact": "In 1947, operators of the Harvard Mark II found a moth stuck in a relay. Grace Hopper's team taped it into the logbook with the note 'first actual case of bug being found'. The log page is preserved at the Smithsonian.",
+      "category": "Technology"
+    },
+    {
+      "id": "tech_en_012",
+      "question": "Why was the QWERTY keyboard layout designed the way it is?",
+      "answers": [
+        {
+          "text": "To space out common letters and prevent typewriter jams",
+          "correct": true
+        },
+        {
+          "text": "To maximize typing speed for English",
+          "correct": false
+        },
+        {
+          "text": "To match the alphabet on early telegraph keys",
+          "correct": false
+        }
+      ],
+      "difficulty": "medium",
+      "fun_fact": "Christopher Sholes arranged keys so that frequently paired letters wouldn't hit each other on mechanical typewriters. The layout stuck even after the jamming problem disappeared.",
+      "category": "Technology"
+    },
+    {
+      "id": "tech_en_013",
+      "question": "Why is the 'save' icon in most software a floppy disk most users have never seen?",
+      "answers": [
+        {
+          "text": "It became a universal symbol before icons were rethought",
+          "correct": true
+        },
+        {
+          "text": "Microsoft trademarked it and no one can change it",
+          "correct": false
+        },
+        {
+          "text": "Floppy disks are still legally required for backups in many countries",
+          "correct": false
+        }
+      ],
+      "difficulty": "easy",
+      "fun_fact": "The 3.5-inch floppy became the 'save' icon in the 1980s and stuck around through inertia. A whole generation now recognizes the symbol without ever having touched the object.",
+      "category": "Technology"
+    },
+    {
+      "id": "tech_en_014",
+      "question": "What does the 'Ctrl+Alt+Delete' shortcut on Windows actually do at the hardware level?",
+      "answers": [
+        {
+          "text": "Triggers a secure interrupt the OS reserves for itself",
+          "correct": true
+        },
+        {
+          "text": "Sends three simultaneous keypresses to any focused app",
+          "correct": false
+        },
+        {
+          "text": "Cuts power to the keyboard controller",
+          "correct": false
+        }
+      ],
+      "difficulty": "hard",
+      "fun_fact": "Originally an IBM PC engineer's debugging shortcut for quick reboots, the combo was repurposed as a 'Secure Attention Sequence' so malware couldn't fake the Windows login screen.",
+      "category": "Technology"
+    },
+    {
+      "id": "tech_en_015",
+      "question": "Why do file paths on Windows use backslashes while almost every other OS uses forward slashes?",
+      "answers": [
+        {
+          "text": "DOS already used forward slash for command options",
+          "correct": true
+        },
+        {
+          "text": "Microsoft wanted to differentiate from Unix on principle",
+          "correct": false
+        },
+        {
+          "text": "Backslash was the only key not used by IBM PC software",
+          "correct": false
+        }
+      ],
+      "difficulty": "hard",
+      "fun_fact": "MS-DOS used / for command flags before it gained directories. When subfolders were added, the / was taken — so Microsoft picked \\ for paths, and Windows inherited it forever.",
+      "category": "Technology"
+    },
+    {
+      "id": "tech_en_016",
+      "question": "What does the 'K' in 'OK button' historically stand for in some accounts?",
+      "answers": [
+        {
+          "text": "A joking misspelling of 'all correct' (oll korrect)",
+          "correct": true
+        },
+        {
+          "text": "The German word 'klar' meaning clear",
+          "correct": false
+        },
+        {
+          "text": "Kelvin, used in early thermal acknowledgments",
+          "correct": false
+        }
+      ],
+      "difficulty": "medium",
+      "fun_fact": "OK likely comes from 1830s Boston newspaper slang where misspellings were a running joke — 'oll korrect' was abbreviated OK. It became one of the most universal words on Earth.",
+      "category": "Technology"
+    },
+    {
+      "id": "tech_en_017",
+      "question": "Why does the loading 'hourglass' or 'spinner' often spin even when nothing is happening?",
+      "answers": [
+        {
+          "text": "It's animated on a separate thread, decoupled from real work",
+          "correct": true
+        },
+        {
+          "text": "It's tied to CPU clock cycles, not actual progress",
+          "correct": false
+        },
+        {
+          "text": "Operating systems require visible animation at all times",
+          "correct": false
+        }
+      ],
+      "difficulty": "medium",
+      "fun_fact": "Spinners usually run on a UI thread independent of the task. If the worker crashes or hangs, the animation keeps going — giving the illusion of progress when there is none.",
+      "category": "Technology"
+    },
+    {
+      "id": "tech_en_018",
+      "question": "What is the origin of the term 'spam' for unwanted email?",
+      "answers": [
+        {
+          "text": "A Monty Python sketch where Spam dominates a menu",
+          "correct": true
+        },
+        {
+          "text": "An acronym for 'Sending Persistent Annoying Mail'",
+          "correct": false
+        },
+        {
+          "text": "A bug in an early IBM mail server called SPAM-1",
+          "correct": false
+        }
+      ],
+      "difficulty": "medium",
+      "fun_fact": "In the sketch, every dish on the menu contains Spam and Vikings drown out conversation chanting 'spam, spam, spam'. Early online users started using it for messages that drowned out discussion.",
+      "category": "Technology"
+    },
+    {
+      "id": "tech_en_019",
+      "question": "Why is computer memory measured in bytes of 8 bits, not 10?",
+      "answers": [
+        {
+          "text": "8 bits cleanly encode one character in early systems",
+          "correct": true
+        },
+        {
+          "text": "The first transistor packs had exactly 8 pins",
+          "correct": false
+        },
+        {
+          "text": "Binary math only works with multiples of 8",
+          "correct": false
+        }
+      ],
+      "difficulty": "hard",
+      "fun_fact": "IBM's System/360 in the 1960s standardized 8-bit bytes because that was enough to encode every character plus some control codes. The choice locked in for the next 60 years of computing.",
+      "category": "Technology"
+    },
+    {
+      "id": "tech_en_020",
+      "question": "What does CAPTCHA literally stand for?",
+      "answers": [
+        {
+          "text": "Completely Automated Public Turing test to tell Computers and Humans Apart",
+          "correct": true
+        },
+        {
+          "text": "Common Access Protocol To Counter Hostile Automation",
+          "correct": false
+        },
+        {
+          "text": "Centralized Authentication Process for Trusted Human Access",
+          "correct": false
+        }
+      ],
+      "difficulty": "medium",
+      "fun_fact": "Coined at Carnegie Mellon in 2003, the acronym is a nod to Alan Turing's test. ReCAPTCHA was later used by Google to help digitize old books — every squiggly word you typed trained their OCR.",
+      "category": "Technology"
+    },
+    {
+      "id": "tech_en_021",
+      "question": "Why is Bluetooth named after a medieval Viking king?",
+      "answers": [
+        {
+          "text": "Harald 'Bluetooth' united Denmark — symbolizing unified devices",
+          "correct": true
+        },
+        {
+          "text": "His tomb was found near the inventor's home in Lund",
+          "correct": false
+        },
+        {
+          "text": "His face appeared on Ericsson's first wireless chip",
+          "correct": false
+        }
+      ],
+      "difficulty": "medium",
+      "fun_fact": "King Harald Blåtand united Danish tribes around 958. Intel engineer Jim Kardach proposed the name for a tech that 'unites' devices. The Bluetooth logo is even a rune monogram of his initials H and B.",
+      "category": "Technology"
+    },
+    {
+      "id": "tech_en_022",
+      "question": "Wi-Fi research at CSIRO drew from work originally aimed at detecting what?",
+      "answers": [
+        {
+          "text": "Exploding mini black holes in radio astronomy",
+          "correct": true
+        },
+        {
+          "text": "Soviet submarine sonar signatures",
+          "correct": false
+        },
+        {
+          "text": "Atmospheric lightning strikes for weather modeling",
+          "correct": false
+        }
+      ],
+      "difficulty": "hard",
+      "fun_fact": "Australian astronomer John O'Sullivan worked on math to clean up radio signals from evaporating black holes. The technique was repurposed at CSIRO into the algorithms behind 802.11a/g Wi-Fi.",
+      "category": "Technology"
+    },
+    {
+      "id": "tech_en_023",
+      "question": "What was the first widely-sold USB flash drive's storage capacity at launch?",
+      "answers": [
+        {
+          "text": "8 megabytes",
+          "correct": true
+        },
+        {
+          "text": "128 megabytes",
+          "correct": false
+        },
+        {
+          "text": "512 kilobytes",
+          "correct": false
+        }
+      ],
+      "difficulty": "hard",
+      "fun_fact": "IBM and Trek 2000 launched the DiskOnKey / ThumbDrive around 2000 at 8 MB — roughly five floppy disks' worth — and it instantly replaced the floppy in offices worldwide.",
+      "category": "Technology"
+    },
+    {
+      "id": "tech_en_024",
+      "question": "Why does the iPhone's default keyboard show a '123' key instead of a number row?",
+      "answers": [
+        {
+          "text": "To keep letters big enough for fat-finger accuracy",
+          "correct": true
+        },
+        {
+          "text": "Apple patented the modal layout and forbade number rows",
+          "correct": false
+        },
+        {
+          "text": "iOS can't render two keyboard rows above the spacebar",
+          "correct": false
+        }
+      ],
+      "difficulty": "medium",
+      "fun_fact": "Apple's HCI team found that adding a number row shrank letter keys enough to push typo rates noticeably higher. The modal '123' layout was a deliberate accuracy tradeoff.",
+      "category": "Technology"
+    },
+    {
+      "id": "tech_en_025",
+      "question": "Why do many TV remotes still send infrared light instead of using Bluetooth?",
+      "answers": [
+        {
+          "text": "Infrared is cheap, low-power and good enough for one-way commands",
+          "correct": true
+        },
+        {
+          "text": "Bluetooth signals interfere with TV tuners",
+          "correct": false
+        },
+        {
+          "text": "FCC rules forbid radio remotes for home electronics",
+          "correct": false
+        }
+      ],
+      "difficulty": "medium",
+      "fun_fact": "An IR LED and a button cell can outlive the TV. Bluetooth needs pairing, more power, and more silicon. For 'press button → channel changes', IR remains hard to beat economically.",
+      "category": "Technology"
+    },
+    {
+      "id": "tech_en_026",
+      "question": "What was the original purpose of the SD card's tiny write-protect switch?",
+      "answers": [
+        {
+          "text": "Purely a hint — the host device decides whether to honor it",
+          "correct": true
+        },
+        {
+          "text": "A hardware fuse that physically blocks the write pin",
+          "correct": false
+        },
+        {
+          "text": "A backup power switch for the internal controller",
+          "correct": false
+        }
+      ],
+      "difficulty": "hard",
+      "fun_fact": "The lock tab does nothing inside the card. It just flips a switch in the slot the host reads. Any device — or any tape covering the switch — can ignore it completely.",
+      "category": "Technology"
+    },
+    {
+      "id": "tech_en_027",
+      "question": "Why do car key fobs occasionally stop working in supermarket parking lots?",
+      "answers": [
+        {
+          "text": "Nearby radio noise can jam their weak signal",
+          "correct": true
+        },
+        {
+          "text": "Steel shopping carts block the signal entirely",
+          "correct": false
+        },
+        {
+          "text": "Car batteries detect crowds and disable remote unlock",
+          "correct": false
+        }
+      ],
+      "difficulty": "medium",
+      "fun_fact": "Car remotes use unlicensed bands shared with other devices. Old freezer compressors, broken LED signs, even other cars' transmitters can blanket a parking lot in noise until you walk closer to your car.",
+      "category": "Technology"
+    },
+    {
+      "id": "tech_en_028",
+      "question": "Why was the original Game Boy screen green?",
+      "answers": [
+        {
+          "text": "Cheap reflective LCDs rendered best in green",
+          "correct": true
+        },
+        {
+          "text": "Nintendo's mascot Mario wore green at the time",
+          "correct": false
+        },
+        {
+          "text": "Green light is less harmful to children's eyes",
+          "correct": false
+        }
+      ],
+      "difficulty": "medium",
+      "fun_fact": "Nintendo picked a reflective monochrome LCD to maximize battery life. The cheapest, highest-contrast option happened to render in that famous swampy green.",
+      "category": "Technology"
+    },
+    {
+      "id": "tech_en_029",
+      "question": "Why does the Roomba sometimes spiral instead of going straight?",
+      "answers": [
+        {
+          "text": "It uses random-walk algorithms instead of a map",
+          "correct": true
+        },
+        {
+          "text": "It's tracking a hidden ceiling beacon",
+          "correct": false
+        },
+        {
+          "text": "It calibrates its gyroscope every few minutes",
+          "correct": false
+        }
+      ],
+      "difficulty": "medium",
+      "fun_fact": "Early Roombas had no SLAM mapping. They used a mix of straight runs, wall-following, and spirals on dirty spots — descended from MIT robotics research on simple insect-like behaviors.",
+      "category": "Technology"
+    },
+    {
+      "id": "tech_en_030",
+      "question": "Why did early digital cameras include a fake 'click' shutter sound?",
+      "answers": [
+        {
+          "text": "To reassure users the picture was actually taken",
+          "correct": true
+        },
+        {
+          "text": "FCC rules required an audible operation signal",
+          "correct": false
+        },
+        {
+          "text": "It masked the sound of writing data to memory cards",
+          "correct": false
+        }
+      ],
+      "difficulty": "easy",
+      "fun_fact": "Without moving mirrors, digital cameras are silent. Designers added the synthetic click for confidence — and in Japan and South Korea, regulators later required it to deter surreptitious photos.",
+      "category": "Technology"
+    },
+    {
+      "id": "tech_en_031",
+      "question": "Why did the supersonic Concorde get noticeably longer during flight?",
+      "answers": [
+        {
+          "text": "Friction heating stretched the airframe by about 20 cm",
+          "correct": true
+        },
+        {
+          "text": "Wing flex pulled the fuselage like a rubber band",
+          "correct": false
+        },
+        {
+          "text": "Fuel transfer extended an internal telescoping section",
+          "correct": false
+        }
+      ],
+      "difficulty": "hard",
+      "fun_fact": "At Mach 2, skin temperatures hit ~100°C and the aluminum airframe expanded. Pilots would wedge their cap into a gap between panels during cruise; on landing the gap closed again, trapping it.",
+      "category": "Technology"
+    },
+    {
+      "id": "tech_en_032",
+      "question": "What was the very first item to be sold over the internet according to one well-known account?",
+      "answers": [
+        {
+          "text": "A Sting CD on a site called NetMarket",
+          "correct": true
+        },
+        {
+          "text": "A pepperoni pizza from Pizza Hut",
+          "correct": false
+        },
+        {
+          "text": "A Stanford-branded coffee mug",
+          "correct": false
+        }
+      ],
+      "difficulty": "hard",
+      "fun_fact": "In August 1994, NetMarket sold a Sting CD over an SSL-encrypted connection — the first widely-publicized secure online purchase. The New York Times wrote about it the next day.",
+      "category": "Technology"
+    },
+    {
+      "id": "tech_en_033",
+      "question": "Why do commercial airliners dim the cabin lights for takeoff and landing at night?",
+      "answers": [
+        {
+          "text": "So eyes adapt to the dark if an evacuation is needed",
+          "correct": true
+        },
+        {
+          "text": "To reduce strain on the engines' generators",
+          "correct": false
+        },
+        {
+          "text": "Because dim lights help passengers sleep faster",
+          "correct": false
+        }
+      ],
+      "difficulty": "medium",
+      "fun_fact": "If something goes wrong on takeoff or landing — the riskiest phases — your eyes are already adjusted to outside darkness, so you can see emergency lighting and exits the moment you stand up.",
+      "category": "Technology"
+    },
+    {
+      "id": "tech_en_034",
+      "question": "Why do car cup holders exist in such ridiculous numbers in American cars?",
+      "answers": [
+        {
+          "text": "The drive-through coffee culture pushed automakers to add more",
+          "correct": true
+        },
+        {
+          "text": "US federal safety rules mandate one per seat",
+          "correct": false
+        },
+        {
+          "text": "Insurance premiums dropped for cars with more holders",
+          "correct": false
+        }
+      ],
+      "difficulty": "easy",
+      "fun_fact": "Cup holders only became standard after the 1980s as fast-food and giant sodas exploded. Today some minivans have 18+ cup holders — a number that bewilders European designers.",
+      "category": "Technology"
+    },
+    {
+      "id": "tech_en_035",
+      "question": "Tesla cars famously hide a 'Mars' easter egg in which interface?",
+      "answers": [
+        {
+          "text": "The navigation map, which can switch to a Martian surface view",
+          "correct": true
+        },
+        {
+          "text": "The seat-massage menu, which has a 'Mars gravity' setting",
+          "correct": false
+        },
+        {
+          "text": "The charging screen, which shows a SpaceX rocket fueling",
+          "correct": false
+        }
+      ],
+      "difficulty": "medium",
+      "fun_fact": "After the Falcon Heavy launched a Tesla Roadster toward Mars, Tesla added a software toggle that re-skins the navigation map as the surface of Mars — a nod to Elon Musk's other company.",
+      "category": "Technology"
+    },
+    {
+      "id": "tech_en_036",
+      "question": "Why are airplane windows always rounded instead of square?",
+      "answers": [
+        {
+          "text": "Square corners concentrate stress and crack the fuselage",
+          "correct": true
+        },
+        {
+          "text": "Round windows are cheaper to manufacture",
+          "correct": false
+        },
+        {
+          "text": "They prevent reflections that disorient pilots",
+          "correct": false
+        }
+      ],
+      "difficulty": "medium",
+      "fun_fact": "The de Havilland Comet, the first jet airliner, had square windows. Several broke up mid-flight when metal fatigue cracked from the corners. Every airliner since has used rounded windows.",
+      "category": "Technology"
+    },
+    {
+      "id": "tech_en_037",
+      "question": "Why does the steering wheel of most modern cars vibrate when you drift out of your lane?",
+      "answers": [
+        {
+          "text": "A motor mimics a rumble strip via the steering column",
+          "correct": true
+        },
+        {
+          "text": "The tires actually detect lane paint under them",
+          "correct": false
+        },
+        {
+          "text": "The brake assist briefly grabs one wheel",
+          "correct": false
+        }
+      ],
+      "difficulty": "medium",
+      "fun_fact": "Lane-keep systems use cameras to spot lane lines, then drive a small motor in the steering column to fake the feel of a rumble strip — taking advantage of a reflex drivers already know.",
+      "category": "Technology"
+    },
+    {
+      "id": "tech_en_038",
+      "question": "What is unusual about the toilet flush on a commercial airliner?",
+      "answers": [
+        {
+          "text": "It uses vacuum suction, not water flow",
+          "correct": true
+        },
+        {
+          "text": "It heats waste to over 200°C before storing it",
+          "correct": false
+        },
+        {
+          "text": "It dumps waste into a sealed compartment in the wing",
+          "correct": false
+        }
+      ],
+      "difficulty": "medium",
+      "fun_fact": "Aircraft toilets use a partial vacuum, so a tiny squirt of non-stick coating and a blast of air whisks waste into a tank. Modern planes do not — contrary to legend — dump it in flight.",
+      "category": "Technology"
+    },
+    {
+      "id": "tech_en_039",
+      "question": "Why do many Boeing 747s historically carry a small spiral staircase in the front?",
+      "answers": [
+        {
+          "text": "To reach the upper deck, originally a first-class lounge",
+          "correct": true
+        },
+        {
+          "text": "It's a structural reinforcement disguised as stairs",
+          "correct": false
+        },
+        {
+          "text": "It hides the cockpit emergency exit hatch",
+          "correct": false
+        }
+      ],
+      "difficulty": "medium",
+      "fun_fact": "The 747's upper deck began life as a piano bar / lounge for first-class passengers in the 1970s. The famous spiral staircase led up to it — later airlines replaced it with seats.",
+      "category": "Technology"
+    },
+    {
+      "id": "tech_en_040",
+      "question": "Why do modern cars often play an artificial engine sound through the speakers?",
+      "answers": [
+        {
+          "text": "Quiet engines feel underpowered, so the sound is faked",
+          "correct": true
+        },
+        {
+          "text": "Regulations require a minimum engine volume inside the cabin",
+          "correct": false
+        },
+        {
+          "text": "It's a side effect of active noise cancellation",
+          "correct": false
+        }
+      ],
+      "difficulty": "medium",
+      "fun_fact": "Many turbocharged and electric cars are so quiet that drivers feel disconnected. Manufacturers like BMW, Ford and VW pipe synthesized engine sound through the speakers to restore the feel of speed.",
+      "category": "Technology"
+    },
+    {
+      "id": "tech_en_041",
+      "question": "Why did Amazon Alexa devices once start ordering dollhouses across an entire US city?",
+      "answers": [
+        {
+          "text": "A TV anchor said the trigger phrase on the news",
+          "correct": true
+        },
+        {
+          "text": "A firmware bug looped a sample order command",
+          "correct": false
+        },
+        {
+          "text": "Children figured out a shared voice exploit",
+          "correct": false
+        }
+      ],
+      "difficulty": "medium",
+      "fun_fact": "In 2017, a San Diego morning show reported on a girl who'd ordered a dollhouse via Alexa. The anchor repeated the phrase on air — and Alexas in countless living rooms tried to order their own.",
+      "category": "Technology"
+    },
+    {
+      "id": "tech_en_042",
+      "question": "Why does the Roomba have an origin in military robotics?",
+      "answers": [
+        {
+          "text": "iRobot first built bomb-disposal and reconnaissance robots",
+          "correct": true
+        },
+        {
+          "text": "DARPA funded the original vacuum prototype",
+          "correct": false
+        },
+        {
+          "text": "It was reverse-engineered from a Soviet floor-cleaning drone",
+          "correct": false
+        }
+      ],
+      "difficulty": "hard",
+      "fun_fact": "iRobot built the PackBot, used in Iraq and Afghanistan for bomb disposal, before they made the Roomba. Cleaning floors and clearing IEDs share more navigation challenges than you'd think.",
+      "category": "Technology"
+    },
+    {
+      "id": "tech_en_043",
+      "question": "Why did early Google Home devices sometimes wake up during Super Bowl ads?",
+      "answers": [
+        {
+          "text": "The ads contained the wake phrase 'OK Google'",
+          "correct": true
+        },
+        {
+          "text": "TV audio briefly exceeded a frequency threshold",
+          "correct": false
+        },
+        {
+          "text": "Cellphone signals during the game spoofed the trigger",
+          "correct": false
+        }
+      ],
+      "difficulty": "medium",
+      "fun_fact": "A 2017 Google Home Super Bowl ad triggered every Google Home within earshot of a TV. Google had to detect its own ad audio and filter it — and other voice assistants now do the same.",
+      "category": "Technology"
+    },
+    {
+      "id": "tech_en_044",
+      "question": "Why are smart light bulbs sometimes a major home security risk?",
+      "answers": [
+        {
+          "text": "Discarded bulbs can leak stored Wi-Fi credentials",
+          "correct": true
+        },
+        {
+          "text": "They run a full Linux kernel exposed to the internet",
+          "correct": false
+        },
+        {
+          "text": "Their LEDs leak the home's MAC address as light flicker",
+          "correct": false
+        }
+      ],
+      "difficulty": "hard",
+      "fun_fact": "Researchers have pulled plaintext Wi-Fi passwords from used smart bulbs bought on eBay. The cheap microcontrollers inside often store credentials unencrypted in flash memory.",
+      "category": "Technology"
+    },
+    {
+      "id": "tech_en_045",
+      "question": "Why do many smart speakers occasionally answer a question nobody asked?",
+      "answers": [
+        {
+          "text": "Background audio briefly resembles the wake word",
+          "correct": true
+        },
+        {
+          "text": "They periodically test their own speech engine out loud",
+          "correct": false
+        },
+        {
+          "text": "Their microphones pick up the neighbor's speaker as a signal",
+          "correct": false
+        }
+      ],
+      "difficulty": "easy",
+      "fun_fact": "Wake-word detection is tuned to favor false positives over missed activations. TV dialogue, certain song lyrics, even a slammed door can sound enough like 'Alexa' or 'Hey Google' to wake the device.",
+      "category": "Technology"
+    },
+    {
+      "id": "tech_en_046",
+      "question": "Why was the term 'thermostat war' coined in some smart-home households?",
+      "answers": [
+        {
+          "text": "Multiple smart thermostats overriding each other in loops",
+          "correct": true
+        },
+        {
+          "text": "AI assistants arguing over preferred room temperature",
+          "correct": false
+        },
+        {
+          "text": "A patent dispute between Nest and Ecobee",
+          "correct": false
+        }
+      ],
+      "difficulty": "medium",
+      "fun_fact": "Households with HomeKit, Nest and Alexa-integrated thermostats have reported feedback loops where each platform 'corrects' the other's setting, leaving the heater oscillating all night.",
+      "category": "Technology"
+    },
+    {
+      "id": "tech_en_047",
+      "question": "Why does Microsoft's Tay chatbot remain a famous AI cautionary tale?",
+      "answers": [
+        {
+          "text": "Twitter users taught it offensive opinions within 24 hours",
+          "correct": true
+        },
+        {
+          "text": "It tried to phone the police on a Microsoft engineer",
+          "correct": false
+        },
+        {
+          "text": "It accidentally started a flame war with Cortana",
+          "correct": false
+        }
+      ],
+      "difficulty": "easy",
+      "fun_fact": "Released in 2016, Tay learned from public Twitter interactions. Trolls coordinated to flood it with abusive content, and Microsoft pulled the bot offline less than a day later.",
+      "category": "Technology"
+    },
+    {
+      "id": "tech_en_048",
+      "question": "Why are some robot vacuums banned from certain government buildings?",
+      "answers": [
+        {
+          "text": "They map floor plans and upload them to the cloud",
+          "correct": true
+        },
+        {
+          "text": "Their LIDAR interferes with security cameras",
+          "correct": false
+        },
+        {
+          "text": "Their batteries fail safety standards",
+          "correct": false
+        }
+      ],
+      "difficulty": "medium",
+      "fun_fact": "Several agencies have raised concerns that cloud-connected robot vacuums build detailed maps of building interiors. For sensitive sites, that's a counterintelligence problem.",
+      "category": "Technology"
+    },
+    {
+      "id": "tech_en_049",
+      "question": "Why did some smart fridges in 2014 reportedly send spam emails?",
+      "answers": [
+        {
+          "text": "They were hijacked into a botnet via weak credentials",
+          "correct": true
+        },
+        {
+          "text": "They auto-emailed grocery lists to whole address books",
+          "correct": false
+        },
+        {
+          "text": "A firmware bug attached marketing PDFs to every email",
+          "correct": false
+        }
+      ],
+      "difficulty": "hard",
+      "fun_fact": "Security firm Proofpoint reported that compromised IoT devices — including at least one internet-connected fridge — sent hundreds of thousands of spam emails as part of a botnet.",
+      "category": "Technology"
+    },
+    {
+      "id": "tech_en_050",
+      "question": "Why do many AI image generators struggle to draw human hands correctly?",
+      "answers": [
+        {
+          "text": "Hands appear in countless poses in training data",
+          "correct": true
+        },
+        {
+          "text": "Their training data deliberately excludes hand close-ups",
+          "correct": false
+        },
+        {
+          "text": "The models can't process more than four fingers per object",
+          "correct": false
+        }
+      ],
+      "difficulty": "medium",
+      "fun_fact": "Hands take wildly different shapes from every angle, fingers overlap, and training images label them inconsistently. Models often produce a 'hand-shaped blob' with the wrong finger count.",
+      "category": "Technology"
+    }
+  ]
+}

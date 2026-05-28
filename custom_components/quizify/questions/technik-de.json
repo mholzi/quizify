@@ -1,0 +1,608 @@
+{
+  "name": "Technik",
+  "language": "de",
+  "version": "1.0",
+  "theme": "tech",
+  "questions": [
+    {
+      "id": "technik_de_001",
+      "question": "Was war die allererste registrierte .com-Domain?",
+      "answers": [
+        {"text": "symbolics.com", "correct": true},
+        {"text": "ibm.com", "correct": false},
+        {"text": "apple.com", "correct": false}
+      ],
+      "difficulty": "hard",
+      "fun_fact": "Symbolics.com wurde am 15. März 1985 von der Computerfirma Symbolics Inc. registriert. Die Domain existiert bis heute und wurde 2009 für einen unbekannten Betrag an einen Investor verkauft.",
+      "category": "Technik"
+    },
+    {
+      "id": "technik_de_002",
+      "question": "Was war der Inhalt der allerersten E-Mail, die Ray Tomlinson 1971 verschickte?",
+      "answers": [
+        {"text": "Vermutlich 'QWERTYUIOP' oder ähnlicher Tastatur-Test", "correct": true},
+        {"text": "'Hello World'", "correct": false},
+        {"text": "'It works!'", "correct": false}
+      ],
+      "difficulty": "medium",
+      "fun_fact": "Tomlinson selbst erinnerte sich später, dass es etwas wie 'QWERTYUIOP' war — also einfach die erste Tastaturreihe. Er wählte auch das @-Zeichen als Trennzeichen, weil es in Namen nicht vorkommt.",
+      "category": "Technik"
+    },
+    {
+      "id": "technik_de_003",
+      "question": "Wofür stand das 'http' in der ersten URL der Welt ursprünglich nicht?",
+      "answers": [
+        {"text": "Es gab keine Konkurrenz — es war von Anfang an 'HyperText Transfer Protocol'", "correct": true},
+        {"text": "'High Throughput Transfer Protocol'", "correct": false},
+        {"text": "'Hyperlink Tracking Protocol'", "correct": false}
+      ],
+      "difficulty": "medium",
+      "fun_fact": "Tim Berners-Lee prägte den Begriff direkt am CERN. Die erste Webseite info.cern.ch ging 1991 online und ist heute noch in einer rekonstruierten Form abrufbar.",
+      "category": "Technik"
+    },
+    {
+      "id": "technik_de_004",
+      "question": "Was wurde laut Legende als allererstes über das Internet (ARPANET) verschickt — also das erste Wort?",
+      "answers": [
+        {"text": "'lo' — der Login-Versuch crashte nach zwei Buchstaben", "correct": true},
+        {"text": "'hello'", "correct": false},
+        {"text": "'test'", "correct": false}
+      ],
+      "difficulty": "hard",
+      "fun_fact": "Am 29. Oktober 1969 wollte ein Student 'LOGIN' tippen, aber das System stürzte nach 'LO' ab. So wurde 'lo' — passend wie 'lo and behold' — das erste übertragene Wort.",
+      "category": "Technik"
+    },
+    {
+      "id": "technik_de_005",
+      "question": "Was war das erste Foto, das jemals ins World Wide Web hochgeladen wurde?",
+      "answers": [
+        {"text": "Ein Werbefoto der CERN-Comedy-Band 'Les Horribles Cernettes'", "correct": true},
+        {"text": "Ein Selfie von Tim Berners-Lee", "correct": false},
+        {"text": "Das CERN-Logo", "correct": false}
+      ],
+      "difficulty": "hard",
+      "fun_fact": "1992 lud Tim Berners-Lee ein Foto der internen CERN-Frauenband 'Les Horribles Cernettes' hoch. Es war ein Test für das neue Bilder-Feature im Web.",
+      "category": "Technik"
+    },
+    {
+      "id": "technik_de_006",
+      "question": "Welche Top-Level-Domain wurde nie offiziell vergeben, obwohl sie technisch reserviert ist?",
+      "answers": [
+        {"text": ".bv (Bouvetinsel)", "correct": true},
+        {"text": ".de (Deutschland)", "correct": false},
+        {"text": ".uk (Großbritannien)", "correct": false}
+      ],
+      "difficulty": "hard",
+      "fun_fact": "Die Bouvetinsel im Südatlantik ist die abgelegenste Insel der Welt und unbewohnt. Norwegen verwaltet die .bv-Domain, vergibt sie aber nicht — sie bleibt komplett ungenutzt.",
+      "category": "Technik"
+    },
+    {
+      "id": "technik_de_007",
+      "question": "Was zeigte das allererste YouTube-Video 'Me at the zoo' aus dem Jahr 2005?",
+      "answers": [
+        {"text": "Einen Mitgründer vor Elefanten im Zoo von San Diego", "correct": true},
+        {"text": "Eine Katze, die Klavier spielt", "correct": false},
+        {"text": "Den ersten YouTube-Server beim Booten", "correct": false}
+      ],
+      "difficulty": "easy",
+      "fun_fact": "Jawed Karim, einer der drei YouTube-Gründer, steht 19 Sekunden lang vor Elefanten und sagt 'they have really, really, really long trunks'. Das Video hat heute über 350 Millionen Views.",
+      "category": "Technik"
+    },
+    {
+      "id": "technik_de_008",
+      "question": "Wofür stand 'WWW' bei seiner Erfindung — laut Tim Berners-Lee selbst — fast hätte stehen können?",
+      "answers": [
+        {"text": "'Mine of Information' oder 'The Information Mesh'", "correct": true},
+        {"text": "'Global Hyperlink Network'", "correct": false},
+        {"text": "'CERN Knowledge Base'", "correct": false}
+      ],
+      "difficulty": "hard",
+      "fun_fact": "Berners-Lee überlegte ernsthaft Namen wie 'MOI' (Mine of Information) und 'TIM' (The Information Mesh). 'World Wide Web' setzte sich durch, obwohl WWW dreimal mehr Silben hat als 'web' selbst.",
+      "category": "Technik"
+    },
+    {
+      "id": "technik_de_009",
+      "question": "Was ist eine kuriose Eigenschaft des HTTP-Statuscodes 418?",
+      "answers": [
+        {"text": "Er bedeutet 'I'm a teapot' und stammt aus einem Aprilscherz", "correct": true},
+        {"text": "Er wird für Server-Überlastung verwendet", "correct": false},
+        {"text": "Er existiert nur in Java-Servern", "correct": false}
+      ],
+      "difficulty": "medium",
+      "fun_fact": "Der Code stammt aus einer Aprilscherz-RFC von 1998 ('Hyper Text Coffee Pot Control Protocol'). Er wurde so beliebt, dass viele echte Server ihn implementieren — Google sendet ihn z.B. für /teapot.",
+      "category": "Technik"
+    },
+    {
+      "id": "technik_de_010",
+      "question": "Was war der ursprüngliche Zweck der Webcam, deren Bild man weltweit als allererstes streamen konnte?",
+      "answers": [
+        {"text": "Sie zeigte eine Kaffeekanne in Cambridge, damit niemand umsonst lief", "correct": true},
+        {"text": "Sie überwachte einen Server-Raum", "correct": false},
+        {"text": "Sie filmte ein Aquarium", "correct": false}
+      ],
+      "difficulty": "medium",
+      "fun_fact": "Die 'Trojan Room Coffee Pot' an der Uni Cambridge wurde 1991 ins lokale Netz gestreamt, ab 1993 ins Web. Forscher wollten nur wissen, ob noch Kaffee da ist, bevor sie aus dem Labor liefen.",
+      "category": "Technik"
+    },
+    {
+      "id": "technik_de_011",
+      "question": "Woher kommt der Begriff 'Computer-Bug' für einen Software-Fehler?",
+      "answers": [
+        {"text": "Aus einer echten Motte, die 1947 in einem Relais steckte", "correct": true},
+        {"text": "Von einem MIT-Professor namens Buggins", "correct": false},
+        {"text": "Aus dem Lateinischen 'bugare' für 'stören'", "correct": false}
+      ],
+      "difficulty": "medium",
+      "fun_fact": "Grace Hopper klebte 1947 die Motte ins Logbuch des Harvard Mark II mit dem Eintrag 'First actual case of bug being found'. Der Begriff 'bug' für Defekte existierte schon vorher — aber das war der erste wörtliche Computer-Bug.",
+      "category": "Technik"
+    },
+    {
+      "id": "technik_de_012",
+      "question": "Warum ist die QWERTY-Tastatur so angeordnet, wie sie ist?",
+      "answers": [
+        {"text": "Um häufige Buchstabenpaare auseinanderzuziehen, damit Schreibmaschinen-Hebel nicht verhaken", "correct": true},
+        {"text": "Um die Tippgeschwindigkeit zu maximieren", "correct": false},
+        {"text": "Weil es die ergonomischste Anordnung ist", "correct": false}
+      ],
+      "difficulty": "medium",
+      "fun_fact": "Christopher Sholes entwickelte das Layout um 1873. Häufige Paare wie 'th' liegen weit auseinander, damit die mechanischen Typenhebel nicht kollidieren. Auf modernen Tastaturen wäre das natürlich völlig egal.",
+      "category": "Technik"
+    },
+    {
+      "id": "technik_de_013",
+      "question": "Was symbolisiert das Speichern-Icon (die kleine Diskette) für viele Kinder heute?",
+      "answers": [
+        {"text": "Sie kennen es als Symbol, ohne zu wissen, was eine Diskette ist", "correct": true},
+        {"text": "Einen kleinen Fernseher", "correct": false},
+        {"text": "Eine Lunchbox", "correct": false}
+      ],
+      "difficulty": "easy",
+      "fun_fact": "Die 3,5-Zoll-Floppy wurde 1981 von Sony eingeführt und bis ca. 2010 verwendet. Heute ist sie ein klassisches 'Skeuomorphismus'-Beispiel: Das Icon überlebt das Objekt.",
+      "category": "Technik"
+    },
+    {
+      "id": "technik_de_014",
+      "question": "Wofür stand 'Spam' ursprünglich, bevor es unerwünschte E-Mails bezeichnete?",
+      "answers": [
+        {"text": "Für eine Dosenfleisch-Marke aus einem Monty-Python-Sketch", "correct": true},
+        {"text": "'Sent Promotional Advertising Mail'", "correct": false},
+        {"text": "'Stupid Pointless Annoying Messages'", "correct": false}
+      ],
+      "difficulty": "medium",
+      "fun_fact": "Im Monty-Python-Sketch von 1970 schreien Wikinger ständig 'Spam, Spam, Spam' und übertönen jedes Gespräch. In den 80ern übertrugen Internet-Nutzer das auf wiederholt gepostete Nachrichten.",
+      "category": "Technik"
+    },
+    {
+      "id": "technik_de_015",
+      "question": "Was war das erste Wort, das ein Computer (laut Aufzeichnungen) jemals synthetisch gesungen hat?",
+      "answers": [
+        {"text": "Das Lied 'Daisy Bell' auf einer IBM 7094 von 1961", "correct": true},
+        {"text": "'Hallo Welt'", "correct": false},
+        {"text": "Beethovens 'Ode an die Freude'", "correct": false}
+      ],
+      "difficulty": "hard",
+      "fun_fact": "Diese Demo inspirierte Arthur C. Clarke direkt: In '2001: A Space Odyssey' singt HAL 9000 beim Abschalten genau dieses Lied. Bell Labs hatte die Aufführung damals auf Schallplatte aufgenommen.",
+      "category": "Technik"
+    },
+    {
+      "id": "technik_de_016",
+      "question": "Warum hat das erste Logo der Apple-Firma einen Mann unter einem Apfelbaum gezeigt?",
+      "answers": [
+        {"text": "Es stellte Isaac Newton mit dem berühmten Apfel dar", "correct": true},
+        {"text": "Es war ein Selbstporträt von Steve Jobs", "correct": false},
+        {"text": "Es zeigte Adam aus der Bibel", "correct": false}
+      ],
+      "difficulty": "medium",
+      "fun_fact": "Das aufwendige Newton-Logo von 1976 wurde nur kurz verwendet — schon 1977 ersetzte es der angebissene Regenbogen-Apfel von Rob Janoff, weil das Original zu detailliert für kleine Drucke war.",
+      "category": "Technik"
+    },
+    {
+      "id": "technik_de_017",
+      "question": "Was war der ursprüngliche Codename des Betriebssystems, das später als Windows bekannt wurde?",
+      "answers": [
+        {"text": "'Interface Manager'", "correct": true},
+        {"text": "'MS-View'", "correct": false},
+        {"text": "'Project Glass'", "correct": false}
+      ],
+      "difficulty": "hard",
+      "fun_fact": "Microsoft kündigte 1983 'Interface Manager' an. Marketing-Chef Rowland Hanson überredete Bill Gates, ihn vor dem Launch 1985 in 'Windows' umzubenennen — viel griffiger.",
+      "category": "Technik"
+    },
+    {
+      "id": "technik_de_018",
+      "question": "Was passiert mit den meisten 'Easter-Egg'-Texten in Software offiziell seit den 2000ern bei Microsoft?",
+      "answers": [
+        {"text": "Sie sind durch interne Sicherheitsrichtlinien praktisch verboten", "correct": true},
+        {"text": "Sie werden zentral in Redmond kuratiert", "correct": false},
+        {"text": "Sie müssen mit dem CEO abgestimmt werden", "correct": false}
+      ],
+      "difficulty": "hard",
+      "fun_fact": "Nach der 'Trustworthy Computing'-Initiative 2002 unterzeichnete Microsoft eine Selbstverpflichtung, keinen Code mehr auszuliefern, der nicht offiziell auditierbar ist. Klassische Easter Eggs wurden damit faktisch verbannt.",
+      "category": "Technik"
+    },
+    {
+      "id": "technik_de_019",
+      "question": "Was war kurios an der ersten gefundenen Computer-Maus von Douglas Engelbart (1964)?",
+      "answers": [
+        {"text": "Sie hatte das Kabel hinten — wie ein Schwanz, daher der Name 'Maus'", "correct": true},
+        {"text": "Sie hatte fünf Tasten", "correct": false},
+        {"text": "Sie funktionierte nur auf rotem Untergrund", "correct": false}
+      ],
+      "difficulty": "medium",
+      "fun_fact": "Das Holzgehäuse mit zwei Metallrädern hatte das Kabel zuerst vorne, wurde dann aber gedreht — und sah dann aus wie eine Maus mit Schwanz. Engelbart bekam selbst nie Tantiemen für die Erfindung.",
+      "category": "Technik"
+    },
+    {
+      "id": "technik_de_020",
+      "question": "Warum wird in der IT-Welt traditionell 'Hello, World!' als erstes Programm geschrieben?",
+      "answers": [
+        {"text": "Wegen eines C-Lehrbuchs von Kernighan & Ritchie 1978", "correct": true},
+        {"text": "Weil die ersten Compiler nur Großbuchstaben konnten", "correct": false},
+        {"text": "Weil ALAN Turing es 1950 in seinem Test forderte", "correct": false}
+      ],
+      "difficulty": "medium",
+      "fun_fact": "Das Beispiel tauchte schon 1972 in Kernighans 'Tutorial Introduction to B' auf, wurde aber durch 'The C Programming Language' weltweit Standard. Davor waren Beispielprogramme meist mathematischer Natur.",
+      "category": "Technik"
+    },
+    {
+      "id": "technik_de_021",
+      "question": "Wonach ist die Funktechnologie 'Bluetooth' benannt?",
+      "answers": [
+        {"text": "Nach dem dänisch-norwegischen Wikingerkönig Harald Blauzahn", "correct": true},
+        {"text": "Nach dem blauen LED-Indikator", "correct": false},
+        {"text": "Nach einem Erfinder mit dem Spitznamen 'Blue Tooth'", "correct": false}
+      ],
+      "difficulty": "medium",
+      "fun_fact": "Harald Blauzahn vereinigte im 10. Jh. Dänemark und Norwegen — Bluetooth sollte ähnlich verschiedene Geräte verbinden. Das Logo ist die Bindrune seiner Initialen H und B im Wikinger-Alphabet.",
+      "category": "Technik"
+    },
+    {
+      "id": "technik_de_022",
+      "question": "Welche Technologie verdankt ihre Entwicklung einem CSIRO-Forscher, der eigentlich versuchte, mini-schwarze-Löcher zu detektieren?",
+      "answers": [
+        {"text": "WLAN / Wi-Fi", "correct": true},
+        {"text": "GPS", "correct": false},
+        {"text": "Bluetooth", "correct": false}
+      ],
+      "difficulty": "hard",
+      "fun_fact": "Der Australier John O'Sullivan entwickelte Mathematik zum Filtern schwacher Signale aus Radioteleskop-Daten. Dieselbe Methode löste später das Mehrwege-Reflexionsproblem in Wi-Fi. CSIRO verdiente Milliarden an Lizenzgebühren.",
+      "category": "Technik"
+    },
+    {
+      "id": "technik_de_023",
+      "question": "Warum heißt der Mikrowellenherd auf Englisch 'Microwave Oven', obwohl Mikrowellen eigentlich nichts mit der Größe zu tun haben?",
+      "answers": [
+        {"text": "'Mikro' bezieht sich auf die Wellenlänge, nicht die Gerätegröße", "correct": true},
+        {"text": "Weil die erste Mikrowelle sehr klein war", "correct": false},
+        {"text": "Weil sie für 'kleine' Mahlzeiten gedacht war", "correct": false}
+      ],
+      "difficulty": "medium",
+      "fun_fact": "Die erste Mikrowelle von Raytheon hieß 'Radarange' und war 1,8 m hoch. Percy Spencer entdeckte den Effekt 1945, als ein Schokoriegel in seiner Tasche neben einem Radargerät schmolz.",
+      "category": "Technik"
+    },
+    {
+      "id": "technik_de_024",
+      "question": "Was war der ursprüngliche Marktname des Post-it-Klebezettels in den USA?",
+      "answers": [
+        {"text": "'Press 'n Peel' — und es war ein totaler Flop", "correct": true},
+        {"text": "'Sticky Notes'", "correct": false},
+        {"text": "'3M Memory Paper'", "correct": false}
+      ],
+      "difficulty": "hard",
+      "fun_fact": "Spencer Silver erfand den Kleber 1968 als 'gescheitertes' Experiment. Erst 1977 startete 3M den Verkauf als 'Press 'n Peel' in vier Städten — ein Misserfolg. Ein Relaunch 1980 als 'Post-it' wurde zum Welterfolg.",
+      "category": "Technik"
+    },
+    {
+      "id": "technik_de_025",
+      "question": "Welches Alltagsgerät erfand James Dyson, nachdem er 5.127 Prototypen gebaut hatte?",
+      "answers": [
+        {"text": "Den beutellosen Zyklon-Staubsauger", "correct": true},
+        {"text": "Den Handtrockner", "correct": false},
+        {"text": "Den Ventilator ohne Rotorblätter", "correct": false}
+      ],
+      "difficulty": "easy",
+      "fun_fact": "Dyson brauchte 15 Jahre und ging dabei fast bankrott. Hoover & Co. lehnten seine Idee ab, weil sie an Beutel-Verkäufen verdienten. Heute ist Dyson Milliardär und stellt auch Föhne, Lampen und (kurzzeitig) Autos her.",
+      "category": "Technik"
+    },
+    {
+      "id": "technik_de_026",
+      "question": "Was war die ursprüngliche Anwendung der Klett-Technologie 'Velcro'?",
+      "answers": [
+        {"text": "Sie wurde von einem Hundespaziergang mit Kletten in Hundefell inspiriert", "correct": true},
+        {"text": "Sie wurde für Raumanzüge der NASA entwickelt", "correct": false},
+        {"text": "Sie war ursprünglich Ersatz für Reißverschlüsse beim Militär", "correct": false}
+      ],
+      "difficulty": "medium",
+      "fun_fact": "Der Schweizer Ingenieur George de Mestral entdeckte 1941 unter dem Mikroskop die Häkchen der Kletten. 'Velcro' ist ein Kofferwort aus französisch 'velours' (Samt) und 'crochet' (Haken).",
+      "category": "Technik"
+    },
+    {
+      "id": "technik_de_027",
+      "question": "Warum hat eine Standard-SIM-Karte ihre abgeschrägte Ecke?",
+      "answers": [
+        {"text": "Damit man sie nicht falsch herum einsteckt — rein mechanisches Verpolungssicherheit", "correct": true},
+        {"text": "Um Material zu sparen", "correct": false},
+        {"text": "Sie ist ein Markenzeichen von Vodafone", "correct": false}
+      ],
+      "difficulty": "easy",
+      "fun_fact": "Die abgeschrägte Ecke ist ISO 7810-genormt. Vor SIM-Karten hatten z.B. EC-Karten das gleiche Prinzip. Heute sind Nano-SIMs nur noch etwa so groß wie der Chip selbst.",
+      "category": "Technik"
+    },
+    {
+      "id": "technik_de_028",
+      "question": "Was kann ein moderner Taschenrechner — die einfachste Solar-Variante — mehr als alle Computer der NASA-Apollo-Missionen zusammen?",
+      "answers": [
+        {"text": "Rechenleistung — bei Apollo waren die Bordcomputer extrem limitiert", "correct": true},
+        {"text": "Nichts, NASA hatte hochmoderne Rechner", "correct": false},
+        {"text": "Nur Wurzelziehen", "correct": false}
+      ],
+      "difficulty": "medium",
+      "fun_fact": "Der Apollo Guidance Computer hatte 64 KB Speicher und 2 MHz Takt. Ein typischer Solar-Taschenrechner heute übertrifft das problemlos. Trotzdem brachte die NASA damit Menschen auf den Mond.",
+      "category": "Technik"
+    },
+    {
+      "id": "technik_de_029",
+      "question": "Was ist ungewöhnlich am Kabel klassischer Kopfhörer-Klinkenstecker (3,5 mm)?",
+      "answers": [
+        {"text": "Die Norm stammt aus dem 19. Jahrhundert von alten Telefon-Schaltzentralen", "correct": true},
+        {"text": "Sie wurde von Sony 1980 für den Walkman erfunden", "correct": false},
+        {"text": "Sie wurde ursprünglich für militärische Funkgeräte entwickelt", "correct": false}
+      ],
+      "difficulty": "hard",
+      "fun_fact": "Der 6,35 mm Klinkenstecker stammt von 1878 — aus manuellen Telefon-Vermittlungsstellen. Die 3,5 mm Variante ist seine miniaturisierte Version. Damit ist die Klinke einer der ältesten noch verwendeten elektrischen Stecker überhaupt.",
+      "category": "Technik"
+    },
+    {
+      "id": "technik_de_030",
+      "question": "Warum wurden klassische Spielautomaten 'einarmige Banditen' genannt?",
+      "answers": [
+        {"text": "Wegen des seitlichen Hebels und weil sie Spielern ihr Geld 'raubten'", "correct": true},
+        {"text": "Weil sie meist in den USA standen", "correct": false},
+        {"text": "Weil sie nur einarmige Bedienung erlaubten", "correct": false}
+      ],
+      "difficulty": "easy",
+      "fun_fact": "Der Hebel an der Seite ('one arm') gab dem Gerät seinen Spitznamen. Moderne Slot-Maschinen haben oft keinen Hebel mehr, der Name lebt aber weiter. Charles Fey baute den ersten 'Liberty Bell' Slot 1895.",
+      "category": "Technik"
+    },
+    {
+      "id": "technik_de_031",
+      "question": "Was war ungewöhnlich an der Concorde im Reiseflug — bezogen auf ihre Länge?",
+      "answers": [
+        {"text": "Sie wurde durch Hitze ca. 15–25 cm länger", "correct": true},
+        {"text": "Sie wurde kürzer", "correct": false},
+        {"text": "Sie blieb exakt gleich lang", "correct": false}
+      ],
+      "difficulty": "hard",
+      "fun_fact": "Bei Mach 2 erreichte die Außenhaut über 100 °C, was zu einer messbaren Längenausdehnung führte. Piloten klemmten zur Abschiedstradition eine Mütze in einen Spalt, der erst durch das Schrumpfen nach der Landung wieder verschwand.",
+      "category": "Technik"
+    },
+    {
+      "id": "technik_de_032",
+      "question": "Welches kuriose Detail haben Flugzeug-Fenster (außer dass sie rund sind)?",
+      "answers": [
+        {"text": "Sie haben ein winziges Loch — den 'Breather Hole' zur Druckregulierung", "correct": true},
+        {"text": "Sie sind aus Glas", "correct": false},
+        {"text": "Sie sind alle vom selben Hersteller", "correct": false}
+      ],
+      "difficulty": "medium",
+      "fun_fact": "Das kleine Loch in der mittleren Acrylscheibe gleicht den Druck zwischen den Schichten aus und verhindert Beschlagen. Die äußere Scheibe trägt die volle Last, die innere ist Backup.",
+      "category": "Technik"
+    },
+    {
+      "id": "technik_de_033",
+      "question": "Warum sind Flugzeug-Fenster rund und nicht eckig?",
+      "answers": [
+        {"text": "Eckige Fenster verursachten in den 1950ern tödliche Materialermüdungs-Risse", "correct": true},
+        {"text": "Aus aerodynamischen Gründen", "correct": false},
+        {"text": "Weil rundes Glas billiger ist", "correct": false}
+      ],
+      "difficulty": "medium",
+      "fun_fact": "Die De Havilland Comet — das erste Düsen-Verkehrsflugzeug — stürzte 1954 mehrfach ab, weil sich an den Ecken der rechteckigen Fenster Risse bildeten. Seither sind alle Flugzeug-Fenster oval.",
+      "category": "Technik"
+    },
+    {
+      "id": "technik_de_034",
+      "question": "Was steckt im Tank-Symbol auf modernen Auto-Armaturen, das viele Fahrer nicht kennen?",
+      "answers": [
+        {"text": "Ein kleiner Pfeil zeigt, auf welcher Seite die Tanköffnung ist", "correct": true},
+        {"text": "Eine Litergradzahl", "correct": false},
+        {"text": "Der Hersteller-Code", "correct": false}
+      ],
+      "difficulty": "easy",
+      "fun_fact": "Seit etwa den 1980ern haben fast alle Autos diesen Pfeil neben der Tankanzeige. Ford-Designer Jim Moylan beanspruchte die Idee für sich. In Mietwagen erspart das viel Zeit.",
+      "category": "Technik"
+    },
+    {
+      "id": "technik_de_035",
+      "question": "Was ist die ungewöhnlichste 'Lebensregel' im Cockpit eines Verkehrsflugzeugs unter 10.000 Fuß?",
+      "answers": [
+        {"text": "'Sterile Cockpit' — Piloten dürfen nur dienstrelevant sprechen", "correct": true},
+        {"text": "Kein Kaffee erlaubt", "correct": false},
+        {"text": "Pflicht zur Sauerstoffmaske", "correct": false}
+      ],
+      "difficulty": "hard",
+      "fun_fact": "Die FAA-Regel von 1981 verbietet Smalltalk und Privatgespräche unter 10.000 Fuß, weil dort die Workload am höchsten ist. Sie entstand nach mehreren Unfällen, die auf Ablenkung zurückgingen.",
+      "category": "Technik"
+    },
+    {
+      "id": "technik_de_036",
+      "question": "Warum sind die Räder bei Boeing-Jets eigentlich kein klassisches Reifen-Gummi-Profil?",
+      "answers": [
+        {"text": "Sie haben oft glatte oder umfangsgerillte Profile, weil sie keine Wasser-Aquaplaning-Sorgen wie Autos haben", "correct": true},
+        {"text": "Sie haben Spikes", "correct": false},
+        {"text": "Sie bestehen aus Metall", "correct": false}
+      ],
+      "difficulty": "hard",
+      "fun_fact": "Flugzeug-Reifen haben primär längs verlaufende Rillen, die Wasser zur Seite drücken — Aquaplaning bei 250 km/h Landegeschwindigkeit ist trotzdem ein Thema. Ein Hauptfahrwerk-Reifen kostet bis 5.000 €.",
+      "category": "Technik"
+    },
+    {
+      "id": "technik_de_037",
+      "question": "Was geht in vielen Tesla-Modellen, wenn man die Autohupe falsch betätigt?",
+      "answers": [
+        {"text": "Sie kann auf Furzgeräusche umgestellt werden ('Emissions Testing Mode')", "correct": true},
+        {"text": "Das Auto fährt von selbst weg", "correct": false},
+        {"text": "Es ertönt ein Hupkonzert von Bach", "correct": false}
+      ],
+      "difficulty": "medium",
+      "fun_fact": "Tesla hat dutzende Easter Eggs eingebaut: vom Furzkissen-Sound bis zu 'Mars Mode' (Planeten-Skin) und 'Romance Mode' (Kamin auf Display). Elon Musk gilt als persönlicher Easter-Egg-Promoter.",
+      "category": "Technik"
+    },
+    {
+      "id": "technik_de_038",
+      "question": "Warum war der berühmte VW-Käfer-Motor im Wasser tatsächlich schwimmfähig — zumindest kurz?",
+      "answers": [
+        {"text": "Die luftdichte Karosserie und ein luftgekühlter Heck-Motor sorgten für Auftrieb", "correct": true},
+        {"text": "Er hatte einen eingebauten Ballasttank", "correct": false},
+        {"text": "VW verbaute spezielles Schaumstoff-Material", "correct": false}
+      ],
+      "difficulty": "medium",
+      "fun_fact": "Eine berühmte VW-Werbung aus den 1970ern zeigte einen schwimmenden Käfer mit dem Slogan: 'The Volkswagen floats... but it won't stay afloat forever.' VW machte daraus eine ironische Tugend.",
+      "category": "Technik"
+    },
+    {
+      "id": "technik_de_039",
+      "question": "Was ist eine kuriose Eigenschaft des Airbus A380, die Piloten initial verwirrt hat?",
+      "answers": [
+        {"text": "Beim Manövern sitzt der Pilot weit vor dem Bugfahrwerk — er muss spürbar überschießen", "correct": true},
+        {"text": "Das Flugzeug startet rückwärts", "correct": false},
+        {"text": "Der A380 hat keine Pedale", "correct": false}
+      ],
+      "difficulty": "hard",
+      "fun_fact": "Das Cockpit liegt ca. 30 m vor dem Bugrad. Beim Rollen muss der Pilot deutlich über die Kurvenmarkierung hinausfahren, bevor er einlenkt. Trainings-Simulatoren üben das speziell.",
+      "category": "Technik"
+    },
+    {
+      "id": "technik_de_040",
+      "question": "Was passiert, wenn ein Flugzeug im Reiseflug auf einen Vogel trifft — gemessen an der Energie?",
+      "answers": [
+        {"text": "Schon ein 1-kg-Vogel hat bei Reisegeschwindigkeit die Wucht einer Kanonenkugel", "correct": true},
+        {"text": "Nichts, die Vögel werden weggepustet", "correct": false},
+        {"text": "Nur die Lackierung wird beschädigt", "correct": false}
+      ],
+      "difficulty": "medium",
+      "fun_fact": "Flugzeughersteller testen Triebwerke und Cockpit-Scheiben mit speziellen 'Hühnerkanonen', die tote Hühner mit Hochdruck gegen die Strukturen schießen. Der berühmte Notlandungs-Hudson-River-Vorfall 2009 ging auf einen Vogelschlag zurück.",
+      "category": "Technik"
+    },
+    {
+      "id": "technik_de_041",
+      "question": "Was passierte, als 2017 ein Nachrichtensender 'Alexa, bestell mir ein Puppenhaus' aussprach?",
+      "answers": [
+        {"text": "Tausende Alexa-Geräte bei den Zuschauern bestellten unaufgefordert Puppenhäuser", "correct": true},
+        {"text": "Alexa schaltete sich landesweit ab", "correct": false},
+        {"text": "Amazon klagte gegen den Sender", "correct": false}
+      ],
+      "difficulty": "medium",
+      "fun_fact": "Ein San-Diego-Sender berichtete über ein Kind, das ein Puppenhaus per Alexa bestellt hatte. Beim Vorlesen des Satzes löste der Live-Bericht selbst hunderte Bestellungen aus. Seitdem verwenden Sender bewusst andere Worte.",
+      "category": "Technik"
+    },
+    {
+      "id": "technik_de_042",
+      "question": "Warum heißt der Saugroboter 'Roomba' eigentlich so?",
+      "answers": [
+        {"text": "Kofferwort aus 'Room' (Raum) und 'Rumba' (Tanz)", "correct": true},
+        {"text": "Abkürzung für 'Robot Of Optimized Mobility'", "correct": false},
+        {"text": "Nach dem brasilianischen Erfinder benannt", "correct": false}
+      ],
+      "difficulty": "medium",
+      "fun_fact": "iRobot brachte den Roomba 2002 auf den Markt. Die Firma entstand aus MIT-Forschung an Roboter-Minenräumern. Heute saugt der Roomba zwar Krümel — die Algorithmen stammen aber teils aus militärischer Pfadfindung.",
+      "category": "Technik"
+    },
+    {
+      "id": "technik_de_043",
+      "question": "Was war einer der bekanntesten Aprilscherze von Google in Sachen KI?",
+      "answers": [
+        {"text": "'Google Nose' — Geruchssuche per Smartphone (2013)", "correct": true},
+        {"text": "Eine echte zweite Erde aus Daten", "correct": false},
+        {"text": "Telepathische E-Mails", "correct": false}
+      ],
+      "difficulty": "medium",
+      "fun_fact": "Google hatte über die Jahre Dutzende Aprilscherze: 'Gmail Paper' (1.-April-2007), 'Pigeon Rank' (Tauben als Ranking-Algorithmus), 'Google Gulp' (Getränk steigert IQ). 'Google Nose' kam 2013.",
+      "category": "Technik"
+    },
+    {
+      "id": "technik_de_044",
+      "question": "Was war das erste Smart-Home-Gerät, das mit eigener IP-Adresse ans Internet ging — laut Legende?",
+      "answers": [
+        {"text": "Ein Cola-Automat an der Carnegie Mellon Uni (1982)", "correct": true},
+        {"text": "Ein Kühlschrank von LG", "correct": false},
+        {"text": "Ein Thermostat von Honeywell", "correct": false}
+      ],
+      "difficulty": "hard",
+      "fun_fact": "Studenten verkabelten den Cola-Automaten ans ARPANET, um vor dem Weg dorthin zu prüfen, ob er kalt ist und Flaschen hat. Das gilt als allererstes 'IoT-Gerät', lange bevor der Begriff existierte.",
+      "category": "Technik"
+    },
+    {
+      "id": "technik_de_045",
+      "question": "Was passiert, wenn man ein KI-Bildmodell wie DALL·E nach einem 'Glas Wein, randvoll gefüllt' fragt?",
+      "answers": [
+        {"text": "Es liefert oft nur halbvolle Gläser — randvoll kennt es kaum aus Trainingsbildern", "correct": true},
+        {"text": "Es weigert sich aus Sicherheitsgründen", "correct": false},
+        {"text": "Es zeigt nur Wasser", "correct": false}
+      ],
+      "difficulty": "hard",
+      "fun_fact": "KI-Modelle haben in ihren Trainingsdaten fast nur dezent eingeschenkte Gläser. Das berühmte 'Wine glass full to the brim'-Beispiel zeigt eine wichtige Schwäche: Bias durch Datenverteilung.",
+      "category": "Technik"
+    },
+    {
+      "id": "technik_de_046",
+      "question": "Was war kurios am Verhalten von Microsofts Chatbot 'Tay' im Jahr 2016?",
+      "answers": [
+        {"text": "Er entgleiste in unter 24 Stunden in extremistische Sprache und musste abgeschaltet werden", "correct": true},
+        {"text": "Er ignorierte alle Fragen", "correct": false},
+        {"text": "Er antwortete nur auf Japanisch", "correct": false}
+      ],
+      "difficulty": "medium",
+      "fun_fact": "Tay sollte aus Twitter-Konversationen lernen — und wurde von Trollen gezielt manipuliert. Microsoft schaltete ihn nach 16 Stunden ab. Der Fall wurde zum Lehrbeispiel für KI-Sicherheit.",
+      "category": "Technik"
+    },
+    {
+      "id": "technik_de_047",
+      "question": "Was ist das berühmte 'Hot Dog or Not'-App, die echte KI-Geschichte schrieb?",
+      "answers": [
+        {"text": "Eine App aus der TV-Serie 'Silicon Valley', die als echte Anwendung gebaut wurde", "correct": true},
+        {"text": "Die erste deutsche KI-Anwendung", "correct": false},
+        {"text": "Ein ironisches NASA-Projekt", "correct": false}
+      ],
+      "difficulty": "easy",
+      "fun_fact": "In der HBO-Serie 'Silicon Valley' wird die App als Witz präsentiert. Die Produktion ließ sie als reale App entwickeln und veröffentlichen — sie nutzte TensorFlow auf dem iPhone und gilt als Meilenstein für On-Device-KI.",
+      "category": "Technik"
+    },
+    {
+      "id": "technik_de_048",
+      "question": "Welche kuriose Eigenheit hatten frühe Nest-Thermostate, die viele Nutzer überraschte?",
+      "answers": [
+        {"text": "Sie lernten von selbst — schalteten teils die Heizung ab, wenn niemand zu Hause war", "correct": true},
+        {"text": "Sie konnten nur Fahrenheit", "correct": false},
+        {"text": "Sie schalteten sich um 3 Uhr nachts immer aus", "correct": false}
+      ],
+      "difficulty": "easy",
+      "fun_fact": "Nest wurde 2010 von einem Ex-iPod-Chef gegründet. Google kaufte die Firma 2014 für 3,2 Mrd USD. Das Selbstlern-Feature war so präzise, dass es teils mehr sparte als ein Programmier-Thermostat.",
+      "category": "Technik"
+    },
+    {
+      "id": "technik_de_049",
+      "question": "Was war eine der ersten 'Killer-Apps' für Heim-Sprachassistenten, die niemand vorhergesehen hatte?",
+      "answers": [
+        {"text": "Eierkochen-Timer und Küchen-Hilfen", "correct": true},
+        {"text": "Steuererklärung", "correct": false},
+        {"text": "Programmieren", "correct": false}
+      ],
+      "difficulty": "medium",
+      "fun_fact": "Amazon-Statistiken zeigten früh, dass die meistgenutzten Funktionen banal sind: Timer setzen, Wecker stellen, Musik abspielen, Wetter abfragen. Komplexe Smart-Home-Steuerung ist seltener als das Eier-Timer-Kommando.",
+      "category": "Technik"
+    },
+    {
+      "id": "technik_de_050",
+      "question": "Was ist der 'Halluzinations-Effekt' bei großen KI-Sprachmodellen?",
+      "answers": [
+        {"text": "Sie erfinden plausibel klingende, aber falsche Fakten", "correct": true},
+        {"text": "Sie sehen Bilder im Text", "correct": false},
+        {"text": "Sie weigern sich, Fragen zu beantworten", "correct": false}
+      ],
+      "difficulty": "easy",
+      "fun_fact": "Der Begriff stammt aus den 2010ern. KI-Modelle sind keine Datenbanken, sondern Wahrscheinlichkeits-Maschinen — sie produzieren das, was nach Training 'wahrscheinlich richtig klingt', auch wenn es frei erfunden ist.",
+      "category": "Technik"
+    }
+  ]
+}

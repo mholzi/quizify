@@ -1,0 +1,1058 @@
+{
+  "name": "Geschichte",
+  "language": "de",
+  "version": "1.0",
+  "theme": "history",
+  "questions": [
+    {
+      "id": "geschichte_de_001",
+      "question": "Welcher römische Kaiser wollte angeblich sein Pferd zum Konsul ernennen?",
+      "answers": [
+        {
+          "text": "Caligula",
+          "correct": true
+        },
+        {
+          "text": "Nero",
+          "correct": false
+        },
+        {
+          "text": "Tiberius",
+          "correct": false
+        }
+      ],
+      "difficulty": "easy",
+      "fun_fact": "Caligula liebte sein Pferd Incitatus so sehr, dass er ihm angeblich ein Marmorhaus, Diener und eine Einladung zum Konsulamt versprach. Historiker streiten, ob das Satire oder Wahnsinn war.",
+      "category": "Geschichte"
+    },
+    {
+      "id": "geschichte_de_002",
+      "question": "Was war in Athen das Strafmaß für Sokrates' Hinrichtung?",
+      "answers": [
+        {
+          "text": "Er musste den Schierlingsbecher selbst trinken",
+          "correct": true
+        },
+        {
+          "text": "Er wurde gekreuzigt",
+          "correct": false
+        },
+        {
+          "text": "Er wurde von der Klippe gestürzt",
+          "correct": false
+        }
+      ],
+      "difficulty": "medium",
+      "fun_fact": "Sokrates trank das Gift freiwillig und plauderte dabei mit seinen Schülern, bis die Lähmung sein Herz erreichte. Platon hielt die Szene im Dialog Phaidon fest.",
+      "category": "Geschichte"
+    },
+    {
+      "id": "geschichte_de_003",
+      "question": "Wofür wurde im alten Ägypten Nilschlamm besonders geschätzt?",
+      "answers": [
+        {
+          "text": "Als Dünger für die Felder",
+          "correct": true
+        },
+        {
+          "text": "Als Mumifizierungsmittel",
+          "correct": false
+        },
+        {
+          "text": "Als Bauzement für die Pyramiden",
+          "correct": false
+        }
+      ],
+      "difficulty": "easy",
+      "fun_fact": "Die jährliche Nilüberschwemmung brachte fruchtbaren Schlamm und machte Ägypten zur Kornkammer der Antike. Ohne diesen Schlamm wäre das Niltal nur Wüste.",
+      "category": "Geschichte"
+    },
+    {
+      "id": "geschichte_de_004",
+      "question": "Welche Substanz nutzten reiche Römerinnen als Make-up — mit fatalen Folgen?",
+      "answers": [
+        {
+          "text": "Bleiweiß",
+          "correct": true
+        },
+        {
+          "text": "Quecksilber-Salbe",
+          "correct": false
+        },
+        {
+          "text": "Arsen-Puder",
+          "correct": false
+        }
+      ],
+      "difficulty": "medium",
+      "fun_fact": "Bleiweiß sorgte für die modische blasse Haut — und für chronische Bleivergiftung mit Haarausfall, Zahnverlust und Unfruchtbarkeit. Die Mode überlebte trotzdem Jahrhunderte.",
+      "category": "Geschichte"
+    },
+    {
+      "id": "geschichte_de_005",
+      "question": "Was machten die alten Spartaner mit Neugeborenen, die schwach wirkten?",
+      "answers": [
+        {
+          "text": "Sie wurden ausgesetzt",
+          "correct": true
+        },
+        {
+          "text": "Sie wurden in Klöster gegeben",
+          "correct": false
+        },
+        {
+          "text": "Sie bekamen Sondertraining",
+          "correct": false
+        }
+      ],
+      "difficulty": "medium",
+      "fun_fact": "Laut Plutarch entschied ein Ältestenrat über das Schicksal Neugeborener — schwache Kinder wurden am Berg Taygetos ausgesetzt. Archäologen zweifeln allerdings, ob das wirklich systematisch geschah.",
+      "category": "Geschichte"
+    },
+    {
+      "id": "geschichte_de_006",
+      "question": "Wofür war der römische Vomitorium-Raum tatsächlich da?",
+      "answers": [
+        {
+          "text": "Als Durchgang im Amphitheater",
+          "correct": true
+        },
+        {
+          "text": "Zum Erbrechen bei Gelagen",
+          "correct": false
+        },
+        {
+          "text": "Als Toilettenraum",
+          "correct": false
+        }
+      ],
+      "difficulty": "hard",
+      "fun_fact": "Vomitorium kommt von vomere (ausspucken) und meint einen Gang, durch den die Zuschauermassen ins Theater 'gespuckt' wurden. Der Erbrech-Mythos entstand erst in der Neuzeit.",
+      "category": "Geschichte"
+    },
+    {
+      "id": "geschichte_de_007",
+      "question": "Was tat Hannibal mit seinen Kriegselefanten auf dem Marsch über die Alpen?",
+      "answers": [
+        {
+          "text": "Die meisten starben unterwegs",
+          "correct": true
+        },
+        {
+          "text": "Er ließ sie in Spanien zurück",
+          "correct": false
+        },
+        {
+          "text": "Sie überlebten alle und kämpften in Italien",
+          "correct": false
+        }
+      ],
+      "difficulty": "medium",
+      "fun_fact": "Von 37 Elefanten überlebten nur wenige die Alpen 218 v. Chr. Der Rest erlag der Kälte, Stürzen oder Erschöpfung. Hannibals letzter Elefant hieß angeblich Surus.",
+      "category": "Geschichte"
+    },
+    {
+      "id": "geschichte_de_008",
+      "question": "Was passierte mit der berühmten Bibliothek von Alexandria?",
+      "answers": [
+        {
+          "text": "Sie verfiel über Jahrhunderte durch mehrere Brände",
+          "correct": true
+        },
+        {
+          "text": "Caesar verbrannte sie an einem Tag komplett",
+          "correct": false
+        },
+        {
+          "text": "Sie wurde 642 von Arabern niedergebrannt",
+          "correct": false
+        }
+      ],
+      "difficulty": "hard",
+      "fun_fact": "Die Bibliothek brannte mehrfach (Caesar 48 v. Chr., Aurelian 270 n. Chr., später noch öfter) und zerfiel zusätzlich durch Vernachlässigung. Es gab nie einen einzelnen 'Untergang'.",
+      "category": "Geschichte"
+    },
+    {
+      "id": "geschichte_de_009",
+      "question": "Was war Diogenes' Wohnsitz?",
+      "answers": [
+        {
+          "text": "Eine große Tonne (Pithos)",
+          "correct": true
+        },
+        {
+          "text": "Eine Höhle bei Korinth",
+          "correct": false
+        },
+        {
+          "text": "Ein Tempelvorhof in Athen",
+          "correct": false
+        }
+      ],
+      "difficulty": "easy",
+      "fun_fact": "Diogenes lebte demonstrativ in einem großen Tonkrug auf dem Marktplatz. Als Alexander der Große ihm einen Wunsch erfüllen wollte, bat er nur: 'Geh mir aus der Sonne.'",
+      "category": "Geschichte"
+    },
+    {
+      "id": "geschichte_de_010",
+      "question": "Wie starb der Tragödiendichter Aischylos der Legende nach?",
+      "answers": [
+        {
+          "text": "Eine Schildkröte fiel ihm auf den Kopf",
+          "correct": true
+        },
+        {
+          "text": "Er ertrank in der Badewanne",
+          "correct": false
+        },
+        {
+          "text": "Er erstickte an einer Olive",
+          "correct": false
+        }
+      ],
+      "difficulty": "medium",
+      "fun_fact": "Ein Adler soll seine Glatze für einen Stein gehalten und eine Schildkröte darauf fallen gelassen haben, um den Panzer zu knacken. Plinius hielt die Geschichte für glaubwürdig.",
+      "category": "Geschichte"
+    },
+    {
+      "id": "geschichte_de_011",
+      "question": "Was war im Mittelalter der Beruf eines 'Gongfermors'?",
+      "answers": [
+        {
+          "text": "Er leerte Latrinengruben",
+          "correct": true
+        },
+        {
+          "text": "Er läutete die Kirchenglocken",
+          "correct": false
+        },
+        {
+          "text": "Er bewachte die Stadttore",
+          "correct": false
+        }
+      ],
+      "difficulty": "hard",
+      "fun_fact": "Gongfermors arbeiteten nachts, bekamen Spitzenlöhne und einen Schluck Branntwein zur Stärkung. Einer namens Richard the Raker fiel 1326 in London in seine eigene Grube und ertrank.",
+      "category": "Geschichte"
+    },
+    {
+      "id": "geschichte_de_012",
+      "question": "Welcher Renaissance-Astronom verlor seine Nase im Duell?",
+      "answers": [
+        {
+          "text": "Tycho Brahe",
+          "correct": true
+        },
+        {
+          "text": "Johannes Kepler",
+          "correct": false
+        },
+        {
+          "text": "Galileo Galilei",
+          "correct": false
+        }
+      ],
+      "difficulty": "medium",
+      "fun_fact": "Brahe duellierte sich 1566 mit einem Cousin um eine mathematische Formel und trug danach eine Prothese aus Messing (gelegentlich auch Silber oder Gold) auf der Nase.",
+      "category": "Geschichte"
+    },
+    {
+      "id": "geschichte_de_013",
+      "question": "Was bewahrte Klosterbibliotheken im Mittelalter vor Bücherdieben?",
+      "answers": [
+        {
+          "text": "Bücher waren mit Ketten am Pult festgeschlossen",
+          "correct": true
+        },
+        {
+          "text": "Türen wurden mit Wachsiegel verschlossen",
+          "correct": false
+        },
+        {
+          "text": "Sie waren mit Flüchen versehen, die niemand brechen wollte",
+          "correct": false
+        }
+      ],
+      "difficulty": "easy",
+      "fun_fact": "Sogenannte Libri catenati hingen an Eisenketten — manche Bibliotheken wie die Hereford Cathedral Library zeigen dieses System noch heute im Originalzustand.",
+      "category": "Geschichte"
+    },
+    {
+      "id": "geschichte_de_014",
+      "question": "Wofür diente die mittelalterliche 'Schandmaske' aus Eisen?",
+      "answers": [
+        {
+          "text": "Als öffentliche Demütigung für Klatschtanten und Trunkenbolde",
+          "correct": true
+        },
+        {
+          "text": "Als Schutz vor der Pest",
+          "correct": false
+        },
+        {
+          "text": "Als Kriegsrüstung für Adlige",
+          "correct": false
+        }
+      ],
+      "difficulty": "medium",
+      "fun_fact": "Die Maske hatte oft groteske Züge (Eselsohren, lange Zunge). Die Verurteilten wurden damit am Marktplatz angekettet — eine Strafe, die soziale Schande wichtiger nahm als körperlichen Schmerz.",
+      "category": "Geschichte"
+    },
+    {
+      "id": "geschichte_de_015",
+      "question": "Wie verteidigten sich Burgbewohner gegen Belagerer, wenn die Vorräte knapp wurden?",
+      "answers": [
+        {
+          "text": "Sie warfen tote Tiere oder Pestleichen über die Mauer",
+          "correct": true
+        },
+        {
+          "text": "Sie zündeten Strohpuppen mit Tierfett an",
+          "correct": false
+        },
+        {
+          "text": "Sie schickten Brieftauben mit Friedensangeboten",
+          "correct": false
+        }
+      ],
+      "difficulty": "hard",
+      "fun_fact": "Bei der Belagerung von Caffa 1346 katapultierten die Mongolen pestverseuchte Leichen in die Stadt — eine der frühesten dokumentierten Anwendungen biologischer Kriegsführung.",
+      "category": "Geschichte"
+    },
+    {
+      "id": "geschichte_de_016",
+      "question": "Was war im Mittelalter ein häufiges Getränk auch für Kinder?",
+      "answers": [
+        {
+          "text": "Dünnbier",
+          "correct": true
+        },
+        {
+          "text": "Met mit Wasser",
+          "correct": false
+        },
+        {
+          "text": "Ziegenmilch mit Honig",
+          "correct": false
+        }
+      ],
+      "difficulty": "medium",
+      "fun_fact": "Dünnbier (Convent-Bier) hatte nur 1–2 % Alkohol und war sicherer als unbehandeltes Wasser, weil es beim Brauen abgekocht wurde. Selbst Mönche tranken es zum Frühstück.",
+      "category": "Geschichte"
+    },
+    {
+      "id": "geschichte_de_017",
+      "question": "Was tat Papst Gregor IX. 1233 gegen Katzen?",
+      "answers": [
+        {
+          "text": "Er erklärte sie zu Helfern des Teufels",
+          "correct": true
+        },
+        {
+          "text": "Er ließ sie in Klöstern verbieten",
+          "correct": false
+        },
+        {
+          "text": "Er setzte ein Kopfgeld auf sie aus",
+          "correct": false
+        }
+      ],
+      "difficulty": "hard",
+      "fun_fact": "In seiner Bulle Vox in Rama verband Gregor IX. schwarze Katzen mit Hexerei. Manche Historiker vermuten, die nachfolgende Katzentötung habe die Pestratten-Population begünstigt — andere bezweifeln den Zusammenhang.",
+      "category": "Geschichte"
+    },
+    {
+      "id": "geschichte_de_018",
+      "question": "Was war Leonardo da Vincis Notizbuch-Eigenheit?",
+      "answers": [
+        {
+          "text": "Er schrieb spiegelverkehrt von rechts nach links",
+          "correct": true
+        },
+        {
+          "text": "Er nutzte nur lila Tinte",
+          "correct": false
+        },
+        {
+          "text": "Er verschlüsselte alles in Latein-Anagrammen",
+          "correct": false
+        }
+      ],
+      "difficulty": "easy",
+      "fun_fact": "Die Spiegelschrift war lesbar, wenn man die Seite vor einen Spiegel hielt. Ob Linkshändigkeit, Geheimhaltung oder Tintenflecken-Vermeidung der Grund waren, wird bis heute diskutiert.",
+      "category": "Geschichte"
+    },
+    {
+      "id": "geschichte_de_019",
+      "question": "Was waren 'Schluchzweiber' im mittelalterlichen Trauergeschäft?",
+      "answers": [
+        {
+          "text": "Professionelle Klageweiber bei Beerdigungen",
+          "correct": true
+        },
+        {
+          "text": "Nonnen, die für Verstorbene beteten",
+          "correct": false
+        },
+        {
+          "text": "Frauen, die Witwen-Trostbriefe schrieben",
+          "correct": false
+        }
+      ],
+      "difficulty": "medium",
+      "fun_fact": "Klageweiber wurden bezahlt, damit sie laut weinten und so den Status des Verstorbenen unterstrichen. In manchen Gegenden hielt sich der Beruf bis ins 20. Jahrhundert.",
+      "category": "Geschichte"
+    },
+    {
+      "id": "geschichte_de_020",
+      "question": "Welches Tier wurde im Mittelalter mehrfach offiziell vor Gericht gestellt?",
+      "answers": [
+        {
+          "text": "Schweine",
+          "correct": true
+        },
+        {
+          "text": "Wölfe",
+          "correct": false
+        },
+        {
+          "text": "Hunde",
+          "correct": false
+        }
+      ],
+      "difficulty": "hard",
+      "fun_fact": "Schweine, die Kinder verletzt oder getötet hatten, bekamen einen Anwalt und einen ordentlichen Prozess. In Falaise wurde 1386 eine Sau in Kleidung gehängt — Gerichtsprotokolle existieren noch.",
+      "category": "Geschichte"
+    },
+    {
+      "id": "geschichte_de_021",
+      "question": "Welche Blume löste 1637 in den Niederlanden eine Spekulationsblase aus?",
+      "answers": [
+        {
+          "text": "Die Tulpe",
+          "correct": true
+        },
+        {
+          "text": "Die Pfingstrose",
+          "correct": false
+        },
+        {
+          "text": "Die Hyazinthe",
+          "correct": false
+        }
+      ],
+      "difficulty": "easy",
+      "fun_fact": "Auf dem Höhepunkt der Tulpenmanie kostete eine einzelne Semper Augustus-Zwiebel so viel wie ein Amsterdamer Grachtenhaus. Der Crash kam binnen Wochen.",
+      "category": "Geschichte"
+    },
+    {
+      "id": "geschichte_de_022",
+      "question": "Was trugen echte Piraten der Karibik in Wahrheit eher selten?",
+      "answers": [
+        {
+          "text": "Eine Augenklappe",
+          "correct": true
+        },
+        {
+          "text": "Pistolen",
+          "correct": false
+        },
+        {
+          "text": "Bandanas",
+          "correct": false
+        }
+      ],
+      "difficulty": "medium",
+      "fun_fact": "Augenklappen sind in Piraten-Logbüchern kaum dokumentiert. Eine Theorie: Sie halfen, ein Auge an Dunkelheit zu gewöhnen — das ist aber Spekulation, nicht belegte Praxis.",
+      "category": "Geschichte"
+    },
+    {
+      "id": "geschichte_de_023",
+      "question": "Was war Napoleons offizielle Körpergröße — und das Missverständnis dazu?",
+      "answers": [
+        {
+          "text": "Er war mit ~1,68 m durchschnittlich groß; das 'klein' kam von französischen vs. englischen Zoll",
+          "correct": true
+        },
+        {
+          "text": "Er war nachweislich nur 1,52 m groß",
+          "correct": false
+        },
+        {
+          "text": "Er war 1,80 m und logischerweise nicht klein",
+          "correct": false
+        }
+      ],
+      "difficulty": "hard",
+      "fun_fact": "Französische Zoll waren länger als englische. 5 Fuß 2 Zoll französisch entsprachen etwa 1,68 m — für die damalige Zeit normal. Britische Propaganda machte daraus 'klein'.",
+      "category": "Geschichte"
+    },
+    {
+      "id": "geschichte_de_024",
+      "question": "Was startete am 1. April 1700 das russische Neujahr — auf Geheiß von Peter dem Großen?",
+      "answers": [
+        {
+          "text": "Es wurde vom 1. September auf den 1. Januar verlegt",
+          "correct": true
+        },
+        {
+          "text": "Es wurde abgeschafft und durch Ostern ersetzt",
+          "correct": false
+        },
+        {
+          "text": "Es wurde nach julianischem Schöpfungsjahr neu nummeriert",
+          "correct": false
+        }
+      ],
+      "difficulty": "medium",
+      "fun_fact": "Peter zwang Russland zum westlichen Datum und feierte 1700 mit Feuerwerk und obligatorischen Tannenbäumen. Die orthodoxe Kirche behielt aber den alten Kalender bei.",
+      "category": "Geschichte"
+    },
+    {
+      "id": "geschichte_de_025",
+      "question": "Was tat Marie Antoinette wirklich, als das Volk kein Brot hatte?",
+      "answers": [
+        {
+          "text": "Sie sagte den Satz nie — er stammt aus Rousseaus Buch",
+          "correct": true
+        },
+        {
+          "text": "Sie sagte ihn vor dem Hofstaat in Versailles",
+          "correct": false
+        },
+        {
+          "text": "Sie schrieb ihn in einem Brief an die Mutter",
+          "correct": false
+        }
+      ],
+      "difficulty": "medium",
+      "fun_fact": "Rousseau erwähnte den Kuchen-Satz schon 1767 in seinen Bekenntnissen — Marie Antoinette war damals noch ein Kind in Wien. Die Zuschreibung war Revolutionspropaganda.",
+      "category": "Geschichte"
+    },
+    {
+      "id": "geschichte_de_026",
+      "question": "Was war die hauptsächliche Beute der echten Piraten?",
+      "answers": [
+        {
+          "text": "Stoffe, Werkzeug und Alltagsgüter",
+          "correct": true
+        },
+        {
+          "text": "Gold und Edelsteine",
+          "correct": false
+        },
+        {
+          "text": "Königliche Schätze",
+          "correct": false
+        }
+      ],
+      "difficulty": "medium",
+      "fun_fact": "Goldschätze waren extrem selten. Captain Kidd erbeutete einmal Gold, aber die meisten Piraten freuten sich über Segeltuch, Werkzeug, Medizin und Lebensmittel.",
+      "category": "Geschichte"
+    },
+    {
+      "id": "geschichte_de_027",
+      "question": "Welcher Erfinder ließ sich seine eigene Totenmaske aus Gummi anfertigen — bevor er starb?",
+      "answers": [
+        {
+          "text": "Charles Goodyear",
+          "correct": true
+        },
+        {
+          "text": "Thomas Edison",
+          "correct": false
+        },
+        {
+          "text": "Alfred Nobel",
+          "correct": false
+        }
+      ],
+      "difficulty": "hard",
+      "fun_fact": "Goodyear war so besessen von Vulkanisation, dass er Visitenkarten, Geldbörsen und sogar eine Autobiografie aus Gummi anfertigen ließ. Er starb verarmt, obwohl seine Erfindung die Welt veränderte.",
+      "category": "Geschichte"
+    },
+    {
+      "id": "geschichte_de_028",
+      "question": "Was war Mozarts erster offizieller Auftritt vor Adel?",
+      "answers": [
+        {
+          "text": "Mit 6 Jahren bei Kaiserin Maria Theresia in Wien",
+          "correct": true
+        },
+        {
+          "text": "Mit 12 Jahren am französischen Hof",
+          "correct": false
+        },
+        {
+          "text": "Mit 4 Jahren beim Erzbischof von Salzburg",
+          "correct": false
+        }
+      ],
+      "difficulty": "easy",
+      "fun_fact": "Wolfgang sprang Marie Antoinette (sie war 7) auf den Schoß und versprach, sie zu heiraten. Sein Vater Leopold organisierte die Tournee aus PR-Gründen quer durch Europa.",
+      "category": "Geschichte"
+    },
+    {
+      "id": "geschichte_de_029",
+      "question": "Welches Material trug Königin Elizabeth I. auf der Haut?",
+      "answers": [
+        {
+          "text": "Bleiweiß-Schminke (Venetian Ceruse)",
+          "correct": true
+        },
+        {
+          "text": "Eine Mischung aus Honig und Eigelb",
+          "correct": false
+        },
+        {
+          "text": "Reines Quecksilber als Glanzmittel",
+          "correct": false
+        }
+      ],
+      "difficulty": "medium",
+      "fun_fact": "Die bleihaltige Schminke zerstörte langfristig ihre Haut — und je schlimmer es wurde, desto dicker schmierte sie. Spätporträts zeigen das geisterhafte 'Mask of Youth'.",
+      "category": "Geschichte"
+    },
+    {
+      "id": "geschichte_de_030",
+      "question": "Was machte James Watt nicht, obwohl es ihm gern angedichtet wird?",
+      "answers": [
+        {
+          "text": "Er erfand die Dampfmaschine nicht — er verbesserte sie",
+          "correct": true
+        },
+        {
+          "text": "Er entdeckte den Wasserdampf-Druck",
+          "correct": false
+        },
+        {
+          "text": "Er war Kapitän einer Dampflokomotive",
+          "correct": false
+        }
+      ],
+      "difficulty": "medium",
+      "fun_fact": "Thomas Newcomen baute die erste funktionierende Dampfmaschine bereits 1712. Watt fügte 1769 den entscheidenden Separatkondensator hinzu und machte sie effizient genug für die Industrie.",
+      "category": "Geschichte"
+    },
+    {
+      "id": "geschichte_de_031",
+      "question": "Was war 'Operation Acoustic Kitty' der CIA in den 1960ern?",
+      "answers": [
+        {
+          "text": "Eine verkabelte Spionage-Katze gegen die Sowjetbotschaft",
+          "correct": true
+        },
+        {
+          "text": "Ein Abhörsystem in Moskauer Telefonzellen",
+          "correct": false
+        },
+        {
+          "text": "Ein Lautsprecher-Programm gegen Kuba",
+          "correct": false
+        }
+      ],
+      "difficulty": "hard",
+      "fun_fact": "Die CIA implantierte einer Katze ein Mikrofon und eine Antenne. Beim ersten Einsatz wurde sie von einem Taxi überfahren. Das Projekt kostete angeblich 20 Millionen Dollar und wurde eingestellt.",
+      "category": "Geschichte"
+    },
+    {
+      "id": "geschichte_de_032",
+      "question": "Was war die ungewöhnliche Tarnung im britischen Operation Mincemeat 1943?",
+      "answers": [
+        {
+          "text": "Eine Leiche mit falschen Geheimdokumenten",
+          "correct": true
+        },
+        {
+          "text": "Ein U-Boot aus Pappmaché",
+          "correct": false
+        },
+        {
+          "text": "Eine ganze Flotte aus aufblasbaren Panzern",
+          "correct": false
+        }
+      ],
+      "difficulty": "medium",
+      "fun_fact": "Die Briten ließen die Leiche eines Obdachlosen als 'Major Martin' mit Fake-Plänen vor Spanien anschwemmen. Hitler verlegte daraufhin Truppen nach Griechenland — die Alliierten landeten ungehindert in Sizilien.",
+      "category": "Geschichte"
+    },
+    {
+      "id": "geschichte_de_033",
+      "question": "Was war 'Project A119' der US Air Force 1958?",
+      "answers": [
+        {
+          "text": "Plan, eine Atombombe auf dem Mond zu zünden",
+          "correct": true
+        },
+        {
+          "text": "Spionagesatelliten gegen China",
+          "correct": false
+        },
+        {
+          "text": "Geheime U-Boot-Flotte unter dem Arktiseis",
+          "correct": false
+        }
+      ],
+      "difficulty": "hard",
+      "fun_fact": "Die Air Force wollte den Sowjets eine PR-Show liefern — eine sichtbare Atomexplosion auf dem Mond. Carl Sagan arbeitete als junger Wissenschaftler mit. Der Plan wurde gekippt, weil ein wissenschaftlich genutzter Mond mehr wert war.",
+      "category": "Geschichte"
+    },
+    {
+      "id": "geschichte_de_034",
+      "question": "Wer war die einzige Person, die je drei Mal vom Blitz getroffen wurde und überlebte?",
+      "answers": [
+        {
+          "text": "Roy Sullivan, ein Parkranger — sogar 7-mal",
+          "correct": true
+        },
+        {
+          "text": "Niemand, das ist ein Mythos",
+          "correct": false
+        },
+        {
+          "text": "Ein finnischer Holzfäller, 4-mal",
+          "correct": false
+        }
+      ],
+      "difficulty": "medium",
+      "fun_fact": "Sullivan überlebte zwischen 1942 und 1977 sieben Blitzeinschläge, dokumentiert von Guinness. Er starb 1983 — an einer selbst zugefügten Schussverletzung wegen unglücklicher Liebe.",
+      "category": "Geschichte"
+    },
+    {
+      "id": "geschichte_de_035",
+      "question": "Was geschah mit dem sowjetischen Flugzeug, das 1987 in Moskau landete?",
+      "answers": [
+        {
+          "text": "Mathias Rust landete auf dem Roten Platz",
+          "correct": true
+        },
+        {
+          "text": "Es entführte sich selbst nach Stockholm",
+          "correct": false
+        },
+        {
+          "text": "Es stürzte in die Lenin-Statue",
+          "correct": false
+        }
+      ],
+      "difficulty": "medium",
+      "fun_fact": "Der 18-jährige Westdeutsche flog mit einer Cessna durch die sowjetische Luftabwehr und landete neben dem Kreml. Gorbatschow nutzte den Skandal, um konservative Militärchefs zu entlassen.",
+      "category": "Geschichte"
+    },
+    {
+      "id": "geschichte_de_036",
+      "question": "Was machte die US Navy mit Delfinen im Kalten Krieg?",
+      "answers": [
+        {
+          "text": "Sie trainierte sie zum Minenaufspüren und Wachschwimmen",
+          "correct": true
+        },
+        {
+          "text": "Sie züchtete sie mit Kommunikationsimplantaten",
+          "correct": false
+        },
+        {
+          "text": "Sie nutzte sie als Postboten zwischen U-Booten",
+          "correct": false
+        }
+      ],
+      "difficulty": "easy",
+      "fun_fact": "Das Marine Mammal Program existiert seit 1960 und nutzt Delfine und Seelöwen. Sie werden bis heute eingesetzt, etwa zum Schutz von Atom-U-Boot-Basen in Bangor.",
+      "category": "Geschichte"
+    },
+    {
+      "id": "geschichte_de_037",
+      "question": "Was war besonders an der 'Großen Smogkatastrophe' 1952 in London?",
+      "answers": [
+        {
+          "text": "Der Smog war so dicht, dass Menschen drinnen erstickten",
+          "correct": true
+        },
+        {
+          "text": "Er färbte sich grün durch eine Chemiefabrik-Leck",
+          "correct": false
+        },
+        {
+          "text": "Er dauerte volle 6 Monate ohne Pause",
+          "correct": false
+        }
+      ],
+      "difficulty": "medium",
+      "fun_fact": "Vom 5. bis 9. Dezember 1952 starben schätzungsweise 4.000 bis 12.000 Menschen am Smog. Das Theater musste schließen, weil Schauspieler die Bühne nicht mehr sahen.",
+      "category": "Geschichte"
+    },
+    {
+      "id": "geschichte_de_038",
+      "question": "Was war der echte Auslöser des Hindenburg-Absturzes 1937 (nach heutiger Forschung)?",
+      "answers": [
+        {
+          "text": "Vermutlich eine elektrostatische Entladung am Wasserstoff",
+          "correct": true
+        },
+        {
+          "text": "Sabotage durch einen kommunistischen Mechaniker",
+          "correct": false
+        },
+        {
+          "text": "Ein Blitz aus einem klaren Himmel",
+          "correct": false
+        }
+      ],
+      "difficulty": "hard",
+      "fun_fact": "Die Hülle war mit aluminiumhaltiger Lackmischung beschichtet — ähnlich Raketenkraftstoff. Statische Aufladung beim Andocken könnte Wasserstoff entzündet haben. Die genaue Ursache ist bis heute umstritten.",
+      "category": "Geschichte"
+    },
+    {
+      "id": "geschichte_de_039",
+      "question": "Was machte Stalin mit Fotos von gefallenen Genossen?",
+      "answers": [
+        {
+          "text": "Er ließ sie aus offiziellen Fotos retuschieren",
+          "correct": true
+        },
+        {
+          "text": "Er archivierte sie alle persönlich in einem Geheim-Album",
+          "correct": false
+        },
+        {
+          "text": "Er ließ sie verbrennen vor laufender Kamera",
+          "correct": false
+        }
+      ],
+      "difficulty": "easy",
+      "fun_fact": "Vom NKWD-Chef Jeschow blieb nach seiner Hinrichtung nur ein leerer Fluss auf dem Foto neben Stalin. Vorher-Nachher-Bilder zeigen die sowjetische Retusche-Praxis besonders deutlich.",
+      "category": "Geschichte"
+    },
+    {
+      "id": "geschichte_de_040",
+      "question": "Was tat Kim Jong-Il 1978 mit dem südkoreanischen Regisseur Shin Sang-ok?",
+      "answers": [
+        {
+          "text": "Er ließ ihn entführen, um Filme zu produzieren",
+          "correct": true
+        },
+        {
+          "text": "Er drehte mit ihm eine Dokumentation in Pjöngjang",
+          "correct": false
+        },
+        {
+          "text": "Er finanzierte ihm ein Studio in Hongkong",
+          "correct": false
+        }
+      ],
+      "difficulty": "hard",
+      "fun_fact": "Shin und seine Frau wurden in Hongkong entführt und mussten in Nordkorea Filme drehen — darunter ein Godzilla-Klon namens Pulgasari. 1986 floh er bei einem Filmfestival in Wien zur US-Botschaft.",
+      "category": "Geschichte"
+    },
+    {
+      "id": "geschichte_de_041",
+      "question": "Wie endete der Emu-Krieg in Australien 1932?",
+      "answers": [
+        {
+          "text": "Australien verlor gegen die Emus",
+          "correct": true
+        },
+        {
+          "text": "Die Emus wurden in einer Woche ausgerottet",
+          "correct": false
+        },
+        {
+          "text": "Es wurde ein Friedensvertrag mit Vogelschützern geschlossen",
+          "correct": false
+        }
+      ],
+      "difficulty": "easy",
+      "fun_fact": "Die Armee zog mit Maschinengewehren gegen 20.000 Emus los — und scheiterte. Die Vögel waren zu schnell und zu klug. Major Meredith verglich sie mit unverwundbaren Zulus.",
+      "category": "Geschichte"
+    },
+    {
+      "id": "geschichte_de_042",
+      "question": "Wie lang dauerte der kürzeste Krieg der Geschichte?",
+      "answers": [
+        {
+          "text": "Etwa 38 Minuten — Großbritannien gegen Sansibar 1896",
+          "correct": true
+        },
+        {
+          "text": "Etwa 3 Stunden — Schweden gegen Norwegen 1814",
+          "correct": false
+        },
+        {
+          "text": "Etwa 1 Tag — Honduras gegen El Salvador 1969",
+          "correct": false
+        }
+      ],
+      "difficulty": "medium",
+      "fun_fact": "Sansibar weigerte sich, einen britischen Marionettensultan zu akzeptieren. Die Royal Navy beschoss den Palast — der Sultan floh nach 38 Minuten und 500 Toten auf seiner Seite.",
+      "category": "Geschichte"
+    },
+    {
+      "id": "geschichte_de_043",
+      "question": "Worum ging es im 'Schweinekrieg' 1859 zwischen USA und Großbritannien?",
+      "answers": [
+        {
+          "text": "Ein erschossenes Schwein auf der Insel San Juan",
+          "correct": true
+        },
+        {
+          "text": "Ein Zollstreit über Schweinefleisch-Exporte",
+          "correct": false
+        },
+        {
+          "text": "Ein Schmugglerschiff voller lebender Schweine",
+          "correct": false
+        }
+      ],
+      "difficulty": "hard",
+      "fun_fact": "Ein amerikanischer Siedler erschoss ein britisches Schwein im Garten. Beide Länder schickten Soldaten — die einzige Verletzung des 'Kriegs' war eben jenes Schwein.",
+      "category": "Geschichte"
+    },
+    {
+      "id": "geschichte_de_044",
+      "question": "Was geschah mit Hitlers Plänen für 'Welthauptstadt Germania'?",
+      "answers": [
+        {
+          "text": "Sie wurden nie gebaut — der Boden war zu sumpfig",
+          "correct": true
+        },
+        {
+          "text": "Sie wurden nach 1945 von den Alliierten gesprengt",
+          "correct": false
+        },
+        {
+          "text": "Sie wurden in Argentinien teilweise umgesetzt",
+          "correct": false
+        }
+      ],
+      "difficulty": "medium",
+      "fun_fact": "Speer ließ einen massiven Beton-Testblock errichten, um zu prüfen, ob Berlins Boden die geplante Riesenhalle trägt. Der Schwerbelastungskörper steht bis heute in Berlin-Tempelhof.",
+      "category": "Geschichte"
+    },
+    {
+      "id": "geschichte_de_045",
+      "question": "Was war die 'Operation Cornflakes' der OSS 1944?",
+      "answers": [
+        {
+          "text": "Gefälschte Briefe wurden in deutsche Postsäcke gemischt",
+          "correct": true
+        },
+        {
+          "text": "Frühstücksflocken wurden über Berlin abgeworfen",
+          "correct": false
+        },
+        {
+          "text": "Spionage-Mikrofilme in Cornflakes-Packungen",
+          "correct": false
+        }
+      ],
+      "difficulty": "hard",
+      "fun_fact": "US-Bomber griffen Postzüge an, und Agenten warfen Säcke mit gefälschten Anti-Nazi-Briefen daneben. Die Reichspost lieferte sie ahnungslos aus. Eine der bizarrsten Propaganda-Operationen.",
+      "category": "Geschichte"
+    },
+    {
+      "id": "geschichte_de_046",
+      "question": "Was war besonders am sogenannten '335-Jahres-Krieg'?",
+      "answers": [
+        {
+          "text": "Es fiel kein einziger Schuss in 335 Jahren",
+          "correct": true
+        },
+        {
+          "text": "Er dauerte 335 Jahre ohne Pause",
+          "correct": false
+        },
+        {
+          "text": "Er wurde dreimal offiziell beendet und wieder erklärt",
+          "correct": false
+        }
+      ],
+      "difficulty": "medium",
+      "fun_fact": "Die Scilly-Inseln und die Niederlande befanden sich theoretisch von 1651 bis 1986 im Kriegszustand, weil ein Friedensvertrag schlicht vergessen wurde. Niemand starb, niemand kämpfte.",
+      "category": "Geschichte"
+    },
+    {
+      "id": "geschichte_de_047",
+      "question": "Was war Project Habakkuk im Zweiten Weltkrieg?",
+      "answers": [
+        {
+          "text": "Ein Plan, Flugzeugträger aus Eis und Sägemehl zu bauen",
+          "correct": true
+        },
+        {
+          "text": "Eine Spionagekampagne in der Türkei",
+          "correct": false
+        },
+        {
+          "text": "Ein U-Boot mit Atomantrieb",
+          "correct": false
+        }
+      ],
+      "difficulty": "hard",
+      "fun_fact": "Pykrete (Eis + Sägemehl) war kugelsicher und schmolz sehr langsam. Ein Prototyp wurde in Kanada gebaut, aber das Projekt wurde 1943 aus Kostengründen gestoppt.",
+      "category": "Geschichte"
+    },
+    {
+      "id": "geschichte_de_048",
+      "question": "Was war kurios am 'Pastetenkrieg' 1838 zwischen Mexiko und Frankreich?",
+      "answers": [
+        {
+          "text": "Ein französischer Konditor forderte Schadenersatz für geplünderte Pasteten",
+          "correct": true
+        },
+        {
+          "text": "Beide Länder kämpften um ein Pasteten-Patent",
+          "correct": false
+        },
+        {
+          "text": "Eine Pastete vergiftete den mexikanischen Präsidenten",
+          "correct": false
+        }
+      ],
+      "difficulty": "hard",
+      "fun_fact": "Konditor Remontel reklamierte 60.000 Pesos für seinen geplünderten Laden. Frankreich nahm das zum Anlass, Veracruz zu blockieren. Mexiko musste schließlich 600.000 Pesos zahlen.",
+      "category": "Geschichte"
+    },
+    {
+      "id": "geschichte_de_049",
+      "question": "Was war die japanische Geheim-Waffe der 'Fu-Go'-Operation im Zweiten Weltkrieg?",
+      "answers": [
+        {
+          "text": "Bombenballons über den Pazifik in die USA",
+          "correct": true
+        },
+        {
+          "text": "U-Boot-Drohnen mit Brandbomben",
+          "correct": false
+        },
+        {
+          "text": "Brieftauben mit Sprengsätzen",
+          "correct": false
+        }
+      ],
+      "difficulty": "medium",
+      "fun_fact": "Über 9.000 Ballons mit Bomben wurden gestartet. Nur einer tötete tatsächlich Menschen — eine schwangere Frau und fünf Kinder bei einem Picknick in Oregon 1945.",
+      "category": "Geschichte"
+    },
+    {
+      "id": "geschichte_de_050",
+      "question": "Was war 'Acoustic Kitty' gefolgt von — eine weitere CIA-Tier-Idee?",
+      "answers": [
+        {
+          "text": "Bombentragende Fledermäuse gegen Japan",
+          "correct": true
+        },
+        {
+          "text": "Mit Sprengstoff bestückte Bienen-Schwärme",
+          "correct": false
+        },
+        {
+          "text": "Trainierte Affen als Spionage-Boten in Kuba",
+          "correct": false
+        }
+      ],
+      "difficulty": "hard",
+      "fun_fact": "Das US 'Bat Bomb'-Projekt wollte Fledermäuse mit Napalm-Kapseln in japanische Holzhausstädte fliegen lassen. Sie zündeten versehentlich eine US-Air-Base an. Eingestellt 1944.",
+      "category": "Geschichte"
+    }
+  ]
+}

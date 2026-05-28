@@ -443,6 +443,12 @@
   "theme": {
     "geography": "🌍 Geo",
     "nature": "🦋 Natur",
-    "popculture": "🎬 Pop"
+    "popculture": "🎬 Pop",
+    "sport": "⚽ Sport",
+    "music": "🎵 Musik",
+    "science": "🔬 Wissen",
+    "history": "📜 Historie",
+    "food": "🍔 Essen",
+    "tech": "💡 Tech"
   }
 }

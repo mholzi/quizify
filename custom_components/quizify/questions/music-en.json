@@ -1,0 +1,608 @@
+{
+  "name": "Music",
+  "language": "en",
+  "version": "1.0",
+  "theme": "music",
+  "questions": [
+    {
+      "id": "music_en_001",
+      "question": "Which classical composer reportedly worked himself to death writing his own Requiem mass?",
+      "answers": [
+        {"text": "Wolfgang Amadeus Mozart", "correct": true},
+        {"text": "Ludwig van Beethoven", "correct": false},
+        {"text": "Franz Schubert", "correct": false}
+      ],
+      "difficulty": "easy",
+      "fun_fact": "Mozart died in 1791 while writing his Requiem, commissioned anonymously by a count who wanted to pass it off as his own. His student Süssmayr completed it after his death.",
+      "category": "Music"
+    },
+    {
+      "id": "music_en_002",
+      "question": "Which composer continued composing major works after going completely deaf?",
+      "answers": [
+        {"text": "Ludwig van Beethoven", "correct": true},
+        {"text": "Johann Sebastian Bach", "correct": false},
+        {"text": "Frédéric Chopin", "correct": false}
+      ],
+      "difficulty": "easy",
+      "fun_fact": "Beethoven wrote his Ninth Symphony while profoundly deaf. At its premiere in 1824 he reportedly had to be turned around to see the audience applauding.",
+      "category": "Music"
+    },
+    {
+      "id": "music_en_003",
+      "question": "Which composer was so superstitious about a 'Ninth Symphony curse' that he labeled his ninth as 'Das Lied von der Erde' instead?",
+      "answers": [
+        {"text": "Gustav Mahler", "correct": true},
+        {"text": "Anton Bruckner", "correct": false},
+        {"text": "Jean Sibelius", "correct": false}
+      ],
+      "difficulty": "hard",
+      "fun_fact": "Mahler feared the 'curse of the ninth' that killed Beethoven and Schubert after their ninth symphonies. He tried to dodge it by not numbering 'Das Lied von der Erde' — then died while writing his actual Tenth.",
+      "category": "Music"
+    },
+    {
+      "id": "music_en_004",
+      "question": "Which composer wrote a piece for piano that instructs the performer to sit silently at the instrument?",
+      "answers": [
+        {"text": "John Cage", "correct": true},
+        {"text": "Philip Glass", "correct": false},
+        {"text": "Karlheinz Stockhausen", "correct": false}
+      ],
+      "difficulty": "easy",
+      "fun_fact": "John Cage's 4'33\" (1952) consists of four minutes and thirty-three seconds of intentional silence. The 'music' is whatever ambient sound the audience hears in the room.",
+      "category": "Music"
+    },
+    {
+      "id": "music_en_005",
+      "question": "Which Italian composer wrote concertos for an all-female orphanage orchestra in Venice?",
+      "answers": [
+        {"text": "Antonio Vivaldi", "correct": true},
+        {"text": "Giuseppe Verdi", "correct": false},
+        {"text": "Gioachino Rossini", "correct": false}
+      ],
+      "difficulty": "medium",
+      "fun_fact": "Vivaldi taught at the Ospedale della Pietà in Venice for decades. Many of his concertos, including parts of The Four Seasons, were composed for the orphan girls who performed behind iron grilles.",
+      "category": "Music"
+    },
+    {
+      "id": "music_en_006",
+      "question": "Which composer's premiere of 'The Rite of Spring' triggered a famous riot in the audience?",
+      "answers": [
+        {"text": "Igor Stravinsky", "correct": true},
+        {"text": "Maurice Ravel", "correct": false},
+        {"text": "Claude Debussy", "correct": false}
+      ],
+      "difficulty": "medium",
+      "fun_fact": "At the 1913 Paris premiere of Le Sacre du Printemps, the dissonant music and primitive choreography sparked such uproar that the orchestra reportedly could not hear itself play.",
+      "category": "Music"
+    },
+    {
+      "id": "music_en_007",
+      "question": "Which composer was paid in herring for his work as a young choirboy in Lüneburg?",
+      "answers": [
+        {"text": "Johann Sebastian Bach", "correct": true},
+        {"text": "George Frideric Handel", "correct": false},
+        {"text": "Georg Philipp Telemann", "correct": false}
+      ],
+      "difficulty": "hard",
+      "fun_fact": "Teenage Bach reportedly received barrels of pickled herring as part of his payment as a scholarship singer at the Michaelisschule in Lüneburg around 1700.",
+      "category": "Music"
+    },
+    {
+      "id": "music_en_008",
+      "question": "Which composer reportedly stabbed his own foot with a heavy conducting staff and died of the wound?",
+      "answers": [
+        {"text": "Jean-Baptiste Lully", "correct": true},
+        {"text": "Henry Purcell", "correct": false},
+        {"text": "Jean-Philippe Rameau", "correct": false}
+      ],
+      "difficulty": "hard",
+      "fun_fact": "In 1687 Lully, conducting a Te Deum for the king's recovery, struck his toe with the long staff used to beat time. The wound turned gangrenous and he died months later.",
+      "category": "Music"
+    },
+    {
+      "id": "music_en_009",
+      "question": "Which Russian composer orchestrated Mussorgsky's 'Pictures at an Exhibition' into its famous version?",
+      "answers": [
+        {"text": "Maurice Ravel", "correct": true},
+        {"text": "Nikolai Rimsky-Korsakov", "correct": false},
+        {"text": "Sergei Rachmaninoff", "correct": false}
+      ],
+      "difficulty": "hard",
+      "fun_fact": "Mussorgsky wrote Pictures at an Exhibition for solo piano in 1874. The orchestral version most people know was made by the Frenchman Ravel in 1922 — Ravel wasn't Russian at all.",
+      "category": "Music"
+    },
+    {
+      "id": "music_en_010",
+      "question": "Which record label famously rejected The Beatles in 1962 before EMI signed them?",
+      "answers": [
+        {"text": "Decca Records", "correct": true},
+        {"text": "Columbia Records", "correct": false},
+        {"text": "Atlantic Records", "correct": false}
+      ],
+      "difficulty": "medium",
+      "fun_fact": "Decca's Dick Rowe told Brian Epstein 'guitar groups are on the way out'. EMI's Parlophone signed them instead, and the rest is history.",
+      "category": "Music"
+    },
+    {
+      "id": "music_en_011",
+      "question": "Which iconic riff did Keith Richards reportedly record in his sleep on a cassette recorder?",
+      "answers": [
+        {"text": "(I Can't Get No) Satisfaction", "correct": true},
+        {"text": "Smoke on the Water", "correct": false},
+        {"text": "Sweet Child o' Mine", "correct": false}
+      ],
+      "difficulty": "medium",
+      "fun_fact": "Richards woke up in a Florida hotel in 1965, hummed the riff into a cassette recorder, and went back to sleep. The tape contained the riff followed by 40 minutes of snoring.",
+      "category": "Music"
+    },
+    {
+      "id": "music_en_012",
+      "question": "Which Nirvana song was famously inspired by a deodorant brand graffitied on Kurt Cobain's wall?",
+      "answers": [
+        {"text": "Smells Like Teen Spirit", "correct": true},
+        {"text": "Come As You Are", "correct": false},
+        {"text": "In Bloom", "correct": false}
+      ],
+      "difficulty": "medium",
+      "fun_fact": "Kathleen Hanna of Bikini Kill spray-painted 'Kurt smells like Teen Spirit' on his wall, referring to his girlfriend's deodorant. Cobain thought she meant rebellious teen spirit.",
+      "category": "Music"
+    },
+    {
+      "id": "music_en_013",
+      "question": "Which Queen song was originally considered too long and weird to be a single?",
+      "answers": [
+        {"text": "Bohemian Rhapsody", "correct": true},
+        {"text": "Killer Queen", "correct": false},
+        {"text": "Somebody to Love", "correct": false}
+      ],
+      "difficulty": "easy",
+      "fun_fact": "At nearly six minutes, Bohemian Rhapsody was far longer than typical 1975 radio singles. EMI executives wanted it cut, but Freddie Mercury refused — it became one of the best-selling singles ever.",
+      "category": "Music"
+    },
+    {
+      "id": "music_en_014",
+      "question": "Which famous rock band's name was suggested by a comment that they would 'go down like a lead balloon'?",
+      "answers": [
+        {"text": "Led Zeppelin", "correct": true},
+        {"text": "Iron Maiden", "correct": false},
+        {"text": "Black Sabbath", "correct": false}
+      ],
+      "difficulty": "medium",
+      "fun_fact": "The phrase came from either Keith Moon or John Entwistle of The Who. Jimmy Page liked it, dropped the 'a' in 'lead' to avoid mispronunciation, and Led Zeppelin was born.",
+      "category": "Music"
+    },
+    {
+      "id": "music_en_015",
+      "question": "Which Beatles album cover features the band walking across a zebra crossing?",
+      "answers": [
+        {"text": "Abbey Road", "correct": true},
+        {"text": "Let It Be", "correct": false},
+        {"text": "Revolver", "correct": false}
+      ],
+      "difficulty": "easy",
+      "fun_fact": "The 1969 cover was shot in about ten minutes by Iain Macmillan from a stepladder. Paul McCartney is barefoot, which fueled the 'Paul is dead' conspiracy theory.",
+      "category": "Music"
+    },
+    {
+      "id": "music_en_016",
+      "question": "Which song did Dolly Parton famously turn down letting Elvis Presley record because his manager demanded half the publishing rights?",
+      "answers": [
+        {"text": "I Will Always Love You", "correct": true},
+        {"text": "Jolene", "correct": false},
+        {"text": "9 to 5", "correct": false}
+      ],
+      "difficulty": "hard",
+      "fun_fact": "Dolly refused Colonel Tom Parker's demand for half her publishing. When Whitney Houston's 1992 cover became a massive hit, Parton's preserved rights reportedly earned her many millions.",
+      "category": "Music"
+    },
+    {
+      "id": "music_en_017",
+      "question": "Which David Bowie persona was 'killed off' on stage at the Hammersmith Odeon in 1973?",
+      "answers": [
+        {"text": "Ziggy Stardust", "correct": true},
+        {"text": "The Thin White Duke", "correct": false},
+        {"text": "Aladdin Sane", "correct": false}
+      ],
+      "difficulty": "medium",
+      "fun_fact": "Bowie shocked his band and fans by announcing mid-show 'this is the last show we'll ever do', retiring the Ziggy Stardust character. Most of the band only learned about it onstage.",
+      "category": "Music"
+    },
+    {
+      "id": "music_en_018",
+      "question": "Which Beach Boys album was famously a response to The Beatles' 'Rubber Soul'?",
+      "answers": [
+        {"text": "Pet Sounds", "correct": true},
+        {"text": "Surfin' Safari", "correct": false},
+        {"text": "Smiley Smile", "correct": false}
+      ],
+      "difficulty": "medium",
+      "fun_fact": "Brian Wilson said Rubber Soul inspired him to make a complete album with no filler. Paul McCartney later said Pet Sounds in turn inspired Sgt. Pepper's.",
+      "category": "Music"
+    },
+    {
+      "id": "music_en_019",
+      "question": "Which instrument is technically classified as a percussion instrument because its strings are struck by hammers?",
+      "answers": [
+        {"text": "Piano", "correct": true},
+        {"text": "Harp", "correct": false},
+        {"text": "Harpsichord", "correct": false}
+      ],
+      "difficulty": "medium",
+      "fun_fact": "The piano's full name 'pianoforte' means 'soft-loud' because, unlike the harpsichord which plucks strings, its felt hammers strike strings with varying force.",
+      "category": "Music"
+    },
+    {
+      "id": "music_en_020",
+      "question": "Which brass instrument was named after its Belgian inventor in the 1840s?",
+      "answers": [
+        {"text": "Saxophone", "correct": true},
+        {"text": "Tuba", "correct": false},
+        {"text": "Trombone", "correct": false}
+      ],
+      "difficulty": "easy",
+      "fun_fact": "Adolphe Sax patented the saxophone in 1846. Despite being made of brass, it's classified as a woodwind because it uses a single reed like a clarinet.",
+      "category": "Music"
+    },
+    {
+      "id": "music_en_021",
+      "question": "Which orchestral string instrument is held between the knees rather than on the shoulder?",
+      "answers": [
+        {"text": "Cello", "correct": true},
+        {"text": "Viola", "correct": false},
+        {"text": "Violin", "correct": false}
+      ],
+      "difficulty": "easy",
+      "fun_fact": "The cello's full name is violoncello, meaning 'small large viol'. Its endpin, used to rest on the floor, only became standard in the late 19th century.",
+      "category": "Music"
+    },
+    {
+      "id": "music_en_022",
+      "question": "Which keyboard instrument uses plucked strings rather than struck strings?",
+      "answers": [
+        {"text": "Harpsichord", "correct": true},
+        {"text": "Piano", "correct": false},
+        {"text": "Celesta", "correct": false}
+      ],
+      "difficulty": "medium",
+      "fun_fact": "Pressing a harpsichord key flicks a quill called a plectrum against a string. This is why a harpsichord cannot play louder or softer based on touch.",
+      "category": "Music"
+    },
+    {
+      "id": "music_en_023",
+      "question": "Which instrument did Benjamin Franklin invent, made of spinning glass bowls?",
+      "answers": [
+        {"text": "Glass armonica", "correct": true},
+        {"text": "Theremin", "correct": false},
+        {"text": "Hurdy-gurdy", "correct": false}
+      ],
+      "difficulty": "hard",
+      "fun_fact": "Franklin's 1761 glass armonica was so popular Mozart and Beethoven wrote for it. Rumors that it caused madness in players eventually led to its decline.",
+      "category": "Music"
+    },
+    {
+      "id": "music_en_024",
+      "question": "Which electronic instrument is played without being touched, by moving hands near two antennas?",
+      "answers": [
+        {"text": "Theremin", "correct": true},
+        {"text": "Ondes Martenot", "correct": false},
+        {"text": "Moog synthesizer", "correct": false}
+      ],
+      "difficulty": "medium",
+      "fun_fact": "Russian inventor Léon Theremin patented his instrument in 1928. One antenna controls pitch, the other controls volume — the player never makes physical contact.",
+      "category": "Music"
+    },
+    {
+      "id": "music_en_025",
+      "question": "How many strings does a standard classical guitar have?",
+      "answers": [
+        {"text": "Six", "correct": true},
+        {"text": "Twelve", "correct": false},
+        {"text": "Four", "correct": false}
+      ],
+      "difficulty": "easy",
+      "fun_fact": "The six-string layout became standard in the early 19th century. Earlier baroque guitars typically had five courses of paired strings.",
+      "category": "Music"
+    },
+    {
+      "id": "music_en_026",
+      "question": "Which woodwind instrument is the largest member of its family commonly used in orchestras and is sometimes called the 'clown of the orchestra'?",
+      "answers": [
+        {"text": "Bassoon", "correct": true},
+        {"text": "Contrabassoon", "correct": false},
+        {"text": "Bass clarinet", "correct": false}
+      ],
+      "difficulty": "medium",
+      "fun_fact": "The bassoon's comedic reputation comes from pieces like Dukas's 'The Sorcerer's Apprentice'. Its tube, if unfolded, would stretch about 2.5 metres.",
+      "category": "Music"
+    },
+    {
+      "id": "music_en_027",
+      "question": "Which instrument from the violin family is tuned a fifth lower than the violin?",
+      "answers": [
+        {"text": "Viola", "correct": true},
+        {"text": "Cello", "correct": false},
+        {"text": "Double bass", "correct": false}
+      ],
+      "difficulty": "hard",
+      "fun_fact": "The viola uses the alto clef, the only common instrument to do so, because its range sits awkwardly between treble and bass clefs.",
+      "category": "Music"
+    },
+    {
+      "id": "music_en_028",
+      "question": "Which percussion instrument uses pedals to change the pitch of its drumheads during performance?",
+      "answers": [
+        {"text": "Timpani", "correct": true},
+        {"text": "Snare drum", "correct": false},
+        {"text": "Bongos", "correct": false}
+      ],
+      "difficulty": "medium",
+      "fun_fact": "Modern pedal timpani let the player retune mid-piece with a foot pedal. Before this innovation, timpanists had to hand-tighten screws around the rim to change pitch.",
+      "category": "Music"
+    },
+    {
+      "id": "music_en_029",
+      "question": "Which Police song was inspired by surveillance and stalking but is often misinterpreted as a romantic love song?",
+      "answers": [
+        {"text": "Every Breath You Take", "correct": true},
+        {"text": "Roxanne", "correct": false},
+        {"text": "Message in a Bottle", "correct": false}
+      ],
+      "difficulty": "medium",
+      "fun_fact": "Sting wrote 'Every Breath You Take' after his divorce. He has said he finds it disturbing that the song is so often played at weddings.",
+      "category": "Music"
+    },
+    {
+      "id": "music_en_030",
+      "question": "Which Beatles song features a tape collage and a piano chord that lasts roughly 40 seconds at the end?",
+      "answers": [
+        {"text": "A Day in the Life", "correct": true},
+        {"text": "Strawberry Fields Forever", "correct": false},
+        {"text": "Tomorrow Never Knows", "correct": false}
+      ],
+      "difficulty": "medium",
+      "fun_fact": "The final E-major chord on Sgt. Pepper's closing track was played simultaneously on three pianos and a harmonium, with engineers cranking up the gain as it decayed.",
+      "category": "Music"
+    },
+    {
+      "id": "music_en_031",
+      "question": "Which Phil Collins song was inspired by his divorce and famously kicks off with a long, slow build before a dramatic drum fill?",
+      "answers": [
+        {"text": "In the Air Tonight", "correct": true},
+        {"text": "Against All Odds", "correct": false},
+        {"text": "One More Night", "correct": false}
+      ],
+      "difficulty": "easy",
+      "fun_fact": "The famous gated reverb drum sound was discovered accidentally in the studio while recording with Peter Gabriel. The 1981 track helped define '80s drum production.",
+      "category": "Music"
+    },
+    {
+      "id": "music_en_032",
+      "question": "Which Don McLean song allegorically references 'the day the music died', referring to a 1959 plane crash?",
+      "answers": [
+        {"text": "American Pie", "correct": true},
+        {"text": "Vincent", "correct": false},
+        {"text": "Castles in the Air", "correct": false}
+      ],
+      "difficulty": "medium",
+      "fun_fact": "The crash killed Buddy Holly, Ritchie Valens, and The Big Bopper near Clear Lake, Iowa. McLean's 1971 song spans over eight minutes and is full of cryptic references.",
+      "category": "Music"
+    },
+    {
+      "id": "music_en_033",
+      "question": "Which Toto song's lyrics describe 'blessing' an entire African continent in its chorus?",
+      "answers": [
+        {"text": "Africa", "correct": true},
+        {"text": "Rosanna", "correct": false},
+        {"text": "Hold the Line", "correct": false}
+      ],
+      "difficulty": "easy",
+      "fun_fact": "Co-writer David Paich has admitted he had never been to Africa when he wrote the song in 1981, basing the imagery on documentaries and his Catholic school upbringing.",
+      "category": "Music"
+    },
+    {
+      "id": "music_en_034",
+      "question": "Which Eagles song's title was inspired by a real road in California, according to some band members?",
+      "answers": [
+        {"text": "Hotel California", "correct": true},
+        {"text": "Take It Easy", "correct": false},
+        {"text": "Witchy Woman", "correct": false}
+      ],
+      "difficulty": "medium",
+      "fun_fact": "Don Henley has said the 1976 song is about the dark underbelly of the American Dream, not a real hotel — despite many theories pointing to specific buildings.",
+      "category": "Music"
+    },
+    {
+      "id": "music_en_035",
+      "question": "Which Michael Jackson song features a spoken-word rap from horror actor Vincent Price?",
+      "answers": [
+        {"text": "Thriller", "correct": true},
+        {"text": "Beat It", "correct": false},
+        {"text": "Smooth Criminal", "correct": false}
+      ],
+      "difficulty": "easy",
+      "fun_fact": "Vincent Price reportedly recorded his menacing voice-over in just two takes. Producer Quincy Jones paid him a flat fee instead of royalties — a decision Price's estate is said to have regretted.",
+      "category": "Music"
+    },
+    {
+      "id": "music_en_036",
+      "question": "What standard speed in RPM does a typical long-playing vinyl album rotate at?",
+      "answers": [
+        {"text": "33 1/3", "correct": true},
+        {"text": "45", "correct": false},
+        {"text": "78", "correct": false}
+      ],
+      "difficulty": "easy",
+      "fun_fact": "Columbia introduced the 33 1/3 RPM LP in 1948. The slower speed allowed about 22 minutes per side instead of the few minutes on older 78 RPM shellac discs.",
+      "category": "Music"
+    },
+    {
+      "id": "music_en_037",
+      "question": "What is the highest individual Grammy honor, won multiple times by classical conductor Sir Georg Solti?",
+      "answers": [
+        {"text": "Most Grammy Awards won by an individual", "correct": true},
+        {"text": "Grammy for Best New Artist", "correct": false},
+        {"text": "Grammy for Album of the Year", "correct": false}
+      ],
+      "difficulty": "hard",
+      "fun_fact": "Sir Georg Solti won 31 competitive Grammys, holding the record as most-awarded individual for many years before Beyoncé surpassed him in the 2020s.",
+      "category": "Music"
+    },
+    {
+      "id": "music_en_038",
+      "question": "Which album cover features a prism splitting white light into a rainbow?",
+      "answers": [
+        {"text": "Pink Floyd – The Dark Side of the Moon", "correct": true},
+        {"text": "Led Zeppelin – Houses of the Holy", "correct": false},
+        {"text": "King Crimson – In the Court of the Crimson King", "correct": false}
+      ],
+      "difficulty": "easy",
+      "fun_fact": "The 1973 cover was designed by Storm Thorgerson of Hipgnosis. The band reportedly chose it from a handful of options in only a few minutes.",
+      "category": "Music"
+    },
+    {
+      "id": "music_en_039",
+      "question": "Which album cover famously shows a baby underwater chasing a dollar bill?",
+      "answers": [
+        {"text": "Nirvana – Nevermind", "correct": true},
+        {"text": "Nirvana – In Utero", "correct": false},
+        {"text": "Pearl Jam – Ten", "correct": false}
+      ],
+      "difficulty": "easy",
+      "fun_fact": "The 1991 cover was photographed in a swimming pool. Decades later, the now-adult baby Spencer Elden filed lawsuits over the image, which were ultimately dismissed.",
+      "category": "Music"
+    },
+    {
+      "id": "music_en_040",
+      "question": "Which streaming service was launched in Sweden in 2008 and reshaped recorded music revenue worldwide?",
+      "answers": [
+        {"text": "Spotify", "correct": true},
+        {"text": "Tidal", "correct": false},
+        {"text": "Deezer", "correct": false}
+      ],
+      "difficulty": "easy",
+      "fun_fact": "Spotify launched publicly in October 2008 with an invitation-only freemium model. It only entered the US market in 2011, three years later.",
+      "category": "Music"
+    },
+    {
+      "id": "music_en_041",
+      "question": "What does the abbreviation 'A&R' stand for in the recorded music industry?",
+      "answers": [
+        {"text": "Artists and Repertoire", "correct": true},
+        {"text": "Audio and Recording", "correct": false},
+        {"text": "Albums and Royalties", "correct": false}
+      ],
+      "difficulty": "medium",
+      "fun_fact": "A&R staff at a label scout new artists and match them with songs and producers. The role dates back to the early 20th century, when labels assigned material to singers.",
+      "category": "Music"
+    },
+    {
+      "id": "music_en_042",
+      "question": "Which physical music format superseded vinyl as the dominant album format in the late 1980s?",
+      "answers": [
+        {"text": "Compact disc", "correct": true},
+        {"text": "MiniDisc", "correct": false},
+        {"text": "8-track cartridge", "correct": false}
+      ],
+      "difficulty": "easy",
+      "fun_fact": "The CD was jointly developed by Philips and Sony and launched commercially in 1982. By around 1988, CDs were outselling vinyl LPs in many major markets.",
+      "category": "Music"
+    },
+    {
+      "id": "music_en_043",
+      "question": "Which lossy audio format developed by Fraunhofer enabled the late-1990s digital music boom?",
+      "answers": [
+        {"text": "MP3", "correct": true},
+        {"text": "WAV", "correct": false},
+        {"text": "FLAC", "correct": false}
+      ],
+      "difficulty": "medium",
+      "fun_fact": "MP3 (MPEG-1 Audio Layer III) was standardized in 1993 by Fraunhofer-Gesellschaft in Germany. Its small file sizes made services like Napster and iTunes possible.",
+      "category": "Music"
+    },
+    {
+      "id": "music_en_044",
+      "question": "Which Andy Warhol-designed album cover features a peelable banana sticker on early pressings?",
+      "answers": [
+        {"text": "The Velvet Underground & Nico", "correct": true},
+        {"text": "The Doors – The Doors", "correct": false},
+        {"text": "Jefferson Airplane – Surrealistic Pillow", "correct": false}
+      ],
+      "difficulty": "hard",
+      "fun_fact": "Original 1967 copies of the album had a sticker that could be peeled off to reveal a flesh-coloured banana underneath. Intact early pressings are now collector items.",
+      "category": "Music"
+    },
+    {
+      "id": "music_en_045",
+      "question": "Which composer wrote the opera 'The Magic Flute' shortly before his death in 1791?",
+      "answers": [
+        {"text": "Wolfgang Amadeus Mozart", "correct": true},
+        {"text": "Christoph Willibald Gluck", "correct": false},
+        {"text": "Joseph Haydn", "correct": false}
+      ],
+      "difficulty": "medium",
+      "fun_fact": "Die Zauberflöte premiered in September 1791, just two months before Mozart died. It's full of Masonic symbolism — both Mozart and the librettist Schikaneder were Freemasons.",
+      "category": "Music"
+    },
+    {
+      "id": "music_en_046",
+      "question": "Which Pink Floyd album features the band burning a stunt man in a business suit on the cover?",
+      "answers": [
+        {"text": "Wish You Were Here", "correct": true},
+        {"text": "Animals", "correct": false},
+        {"text": "The Wall", "correct": false}
+      ],
+      "difficulty": "hard",
+      "fun_fact": "Stuntman Ronnie Rondell was actually set ablaze for the 1975 cover. The wind shifted on one take and burned off part of his moustache.",
+      "category": "Music"
+    },
+    {
+      "id": "music_en_047",
+      "question": "Which guitar pickup type is generally known for its quieter, hum-cancelling design compared to single-coils?",
+      "answers": [
+        {"text": "Humbucker", "correct": true},
+        {"text": "Piezo", "correct": false},
+        {"text": "Lipstick", "correct": false}
+      ],
+      "difficulty": "medium",
+      "fun_fact": "Gibson engineer Seth Lover patented the humbucker in the late 1950s. Pairing two coils wound in opposite directions cancels the 60 Hz hum that plagued single-coil pickups.",
+      "category": "Music"
+    },
+    {
+      "id": "music_en_048",
+      "question": "Which national anthem uses a melody originally written as a British drinking song?",
+      "answers": [
+        {"text": "The Star-Spangled Banner", "correct": true},
+        {"text": "God Save the King", "correct": false},
+        {"text": "La Marseillaise", "correct": false}
+      ],
+      "difficulty": "medium",
+      "fun_fact": "The tune is 'To Anacreon in Heaven', a popular 18th-century London gentlemen's club song. Francis Scott Key wrote new lyrics in 1814 and it became the US anthem in 1931.",
+      "category": "Music"
+    },
+    {
+      "id": "music_en_049",
+      "question": "Which Italian word marks the slowest standard tempo in classical music?",
+      "answers": [
+        {"text": "Largo", "correct": true},
+        {"text": "Allegro", "correct": false},
+        {"text": "Presto", "correct": false}
+      ],
+      "difficulty": "easy",
+      "fun_fact": "Largo typically sits around 40–60 beats per minute. Even slower indications like 'grave' or 'larghissimo' exist but are rarely used.",
+      "category": "Music"
+    },
+    {
+      "id": "music_en_050",
+      "question": "Which 1981 Soft Cell hit was a cover of a 1964 Northern Soul track originally sung by Gloria Jones?",
+      "answers": [
+        {"text": "Tainted Love", "correct": true},
+        {"text": "Bedsitter", "correct": false},
+        {"text": "Say Hello, Wave Goodbye", "correct": false}
+      ],
+      "difficulty": "hard",
+      "fun_fact": "Gloria Jones first recorded 'Tainted Love' in 1964 as an unsuccessful B-side. Soft Cell's synth-pop version spent 43 weeks on the US Billboard Hot 100, a record at the time.",
+      "category": "Music"
+    }
+  ]
+}

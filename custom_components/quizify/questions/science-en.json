@@ -1,0 +1,608 @@
+{
+  "name": "Science",
+  "language": "en",
+  "version": "1.0",
+  "theme": "science",
+  "questions": [
+    {
+      "id": "science_en_001",
+      "question": "On which planet does it rain diamonds?",
+      "answers": [
+        {"text": "Neptune", "correct": true},
+        {"text": "Mars", "correct": false},
+        {"text": "Mercury", "correct": false}
+      ],
+      "difficulty": "medium",
+      "fun_fact": "On Neptune and Uranus, immense pressure breaks methane apart. The carbon crystallises into diamonds that fall through the atmosphere — some thought to be hailstone-sized.",
+      "category": "Science"
+    },
+    {
+      "id": "science_en_002",
+      "question": "How does a Venusian day compare to a Venusian year?",
+      "answers": [
+        {"text": "The day is longer than the year", "correct": true},
+        {"text": "They are the same length", "correct": false},
+        {"text": "The day is shorter", "correct": false}
+      ],
+      "difficulty": "hard",
+      "fun_fact": "Venus rotates so slowly that one Venus day (243 Earth days) lasts longer than one Venus year (225 Earth days). It also spins backwards relative to most planets.",
+      "category": "Science"
+    },
+    {
+      "id": "science_en_003",
+      "question": "What would happen to your blood in space without a suit?",
+      "answers": [
+        {"text": "It would neither boil nor freeze", "correct": true},
+        {"text": "It would boil instantly", "correct": false},
+        {"text": "It would freeze instantly", "correct": false}
+      ],
+      "difficulty": "hard",
+      "fun_fact": "Common misconception: blood does NOT boil in vacuum because your blood vessels maintain enough internal pressure. You'd pass out in about 15 seconds, but your blood stays liquid.",
+      "category": "Science"
+    },
+    {
+      "id": "science_en_004",
+      "question": "What is the largest known volcano in the solar system?",
+      "answers": [
+        {"text": "Olympus Mons on Mars", "correct": true},
+        {"text": "Mauna Loa on Earth", "correct": false},
+        {"text": "A volcano on Venus", "correct": false}
+      ],
+      "difficulty": "easy",
+      "fun_fact": "Olympus Mons rises about 22 km — nearly three times the height of Mount Everest — and its base is the size of the state of Arizona.",
+      "category": "Science"
+    },
+    {
+      "id": "science_en_005",
+      "question": "What colour is the sunset on Mars?",
+      "answers": [
+        {"text": "Blue", "correct": true},
+        {"text": "Red", "correct": false},
+        {"text": "Green", "correct": false}
+      ],
+      "difficulty": "medium",
+      "fun_fact": "Mars has red daytime skies but blue sunsets. The fine dust scatters red light forward and lets blue light pass through near the sun — exactly opposite to Earth.",
+      "category": "Science"
+    },
+    {
+      "id": "science_en_006",
+      "question": "What happens if you try to fall into a black hole feet-first?",
+      "answers": [
+        {"text": "You get stretched into a thin string", "correct": true},
+        {"text": "You bounce off the event horizon", "correct": false},
+        {"text": "You instantly burn up", "correct": false}
+      ],
+      "difficulty": "medium",
+      "fun_fact": "Physicists call it 'spaghettification': gravity pulls your feet much harder than your head, stretching you into a long thin shape long before you reach the singularity.",
+      "category": "Science"
+    },
+    {
+      "id": "science_en_007",
+      "question": "Which is the only moon in the solar system with a thick atmosphere?",
+      "answers": [
+        {"text": "Titan", "correct": true},
+        {"text": "Europa", "correct": false},
+        {"text": "Ganymede", "correct": false}
+      ],
+      "difficulty": "medium",
+      "fun_fact": "Saturn's moon Titan has an atmosphere denser than Earth's, with lakes and rivers of liquid methane. It is the only place besides Earth with stable surface liquid.",
+      "category": "Science"
+    },
+    {
+      "id": "science_en_008",
+      "question": "What is the temperature on Mercury's night side?",
+      "answers": [
+        {"text": "Around -170°C — freezing cold", "correct": true},
+        {"text": "Around 400°C — molten hot", "correct": false},
+        {"text": "Around 20°C — like a mild night", "correct": false}
+      ],
+      "difficulty": "hard",
+      "fun_fact": "Despite being the closest planet to the Sun, Mercury has almost no atmosphere to retain heat. Day-side temperatures hit 430°C, but the night side plunges to about -170°C.",
+      "category": "Science"
+    },
+    {
+      "id": "science_en_009",
+      "question": "What would a teaspoon of neutron star material weigh on Earth?",
+      "answers": [
+        {"text": "About 6 billion tonnes", "correct": true},
+        {"text": "About 6 tonnes", "correct": false},
+        {"text": "About 60 kilograms", "correct": false}
+      ],
+      "difficulty": "hard",
+      "fun_fact": "Neutron stars cram more mass than the Sun into a ball about 20 km across. A single sugar-cube of the stuff would weigh roughly as much as Mount Everest.",
+      "category": "Science"
+    },
+    {
+      "id": "science_en_010",
+      "question": "Where in the solar system does it most likely snow metal?",
+      "answers": [
+        {"text": "On Venus's mountains", "correct": true},
+        {"text": "On Jupiter's poles", "correct": false},
+        {"text": "On Saturn's rings", "correct": false}
+      ],
+      "difficulty": "hard",
+      "fun_fact": "Venus's highest peaks are coated in a reflective 'frost' thought to be metallic compounds like bismuth or lead sulphide that condense out of the scorching atmosphere at altitude.",
+      "category": "Science"
+    },
+    {
+      "id": "science_en_011",
+      "question": "If you fell into a perfectly frictionless tunnel through Earth, how long would the trip to the other side take?",
+      "answers": [
+        {"text": "About 42 minutes", "correct": true},
+        {"text": "About 2 hours", "correct": false},
+        {"text": "About 10 minutes", "correct": false}
+      ],
+      "difficulty": "hard",
+      "fun_fact": "Ignoring air and friction, gravity pulls you in simple harmonic motion. Any straight tunnel through Earth — pole to pole or otherwise — takes the same roughly 42 minutes.",
+      "category": "Science"
+    },
+    {
+      "id": "science_en_012",
+      "question": "Does time pass faster at the top of a mountain or at sea level?",
+      "answers": [
+        {"text": "Faster at the top", "correct": true},
+        {"text": "Faster at sea level", "correct": false},
+        {"text": "Exactly the same", "correct": false}
+      ],
+      "difficulty": "medium",
+      "fun_fact": "General relativity: clocks tick faster where gravity is weaker. Your head ages very slightly faster than your feet — measurable with modern atomic clocks.",
+      "category": "Science"
+    },
+    {
+      "id": "science_en_013",
+      "question": "Can a single photon be in two places at once?",
+      "answers": [
+        {"text": "Yes, until it's measured", "correct": true},
+        {"text": "No, never", "correct": false},
+        {"text": "Only inside a black hole", "correct": false}
+      ],
+      "difficulty": "medium",
+      "fun_fact": "In quantum mechanics, particles exist in superposition until measured. The double-slit experiment shows a single photon interfering with itself, as if it took both paths.",
+      "category": "Science"
+    },
+    {
+      "id": "science_en_014",
+      "question": "What happens to glass over many centuries — does it slowly flow like a liquid?",
+      "answers": [
+        {"text": "No, it stays solid", "correct": true},
+        {"text": "Yes, very slowly", "correct": false},
+        {"text": "Only stained glass does", "correct": false}
+      ],
+      "difficulty": "medium",
+      "fun_fact": "The old 'medieval window panes are thicker at the bottom because glass flows' story is a myth. Glass is an amorphous solid — the thickness was just how it was made.",
+      "category": "Science"
+    },
+    {
+      "id": "science_en_015",
+      "question": "What happens to the boiling point of water at the top of Mount Everest?",
+      "answers": [
+        {"text": "It drops to about 70°C", "correct": true},
+        {"text": "It stays at 100°C", "correct": false},
+        {"text": "It rises above 100°C", "correct": false}
+      ],
+      "difficulty": "easy",
+      "fun_fact": "Lower air pressure means water boils sooner. At Everest's summit it boils at around 70°C — too cool to properly cook food or sterilise water.",
+      "category": "Science"
+    },
+    {
+      "id": "science_en_016",
+      "question": "Why is the sky blue?",
+      "answers": [
+        {"text": "Air molecules scatter blue light more than red", "correct": true},
+        {"text": "Sunlight reflects off the oceans", "correct": false},
+        {"text": "The atmosphere is made of a blue gas", "correct": false}
+      ],
+      "difficulty": "easy",
+      "fun_fact": "Rayleigh scattering: shorter (bluer) wavelengths bounce off air molecules much more than longer (redder) ones. At sunset, light travels through more air so most blue is scattered away.",
+      "category": "Science"
+    },
+    {
+      "id": "science_en_017",
+      "question": "If you could hear sound in space, how loud would the Sun be on Earth?",
+      "answers": [
+        {"text": "About as loud as a jet engine", "correct": true},
+        {"text": "Barely audible", "correct": false},
+        {"text": "Completely silent", "correct": false}
+      ],
+      "difficulty": "hard",
+      "fun_fact": "The Sun's surface pulses constantly. If space carried sound, the noise reaching Earth would be roughly 100 decibels — like standing near a jet at takeoff.",
+      "category": "Science"
+    },
+    {
+      "id": "science_en_018",
+      "question": "What does it feel like to touch absolute zero?",
+      "answers": [
+        {"text": "Impossible — you can never actually reach it", "correct": true},
+        {"text": "Burning cold like dry ice", "correct": false},
+        {"text": "Just very, very cold", "correct": false}
+      ],
+      "difficulty": "hard",
+      "fun_fact": "The third law of thermodynamics says you can get arbitrarily close to absolute zero (-273.15°C) but never actually reach it. Labs have hit a few billionths of a degree above.",
+      "category": "Science"
+    },
+    {
+      "id": "science_en_019",
+      "question": "What is the only force that gets stronger as objects move apart?",
+      "answers": [
+        {"text": "The strong nuclear force between quarks", "correct": true},
+        {"text": "Gravity", "correct": false},
+        {"text": "Electromagnetism", "correct": false}
+      ],
+      "difficulty": "hard",
+      "fun_fact": "Quarks are bound by gluons in a way that grows stronger with distance — like a rubber band. That's why you can never isolate a single quark.",
+      "category": "Science"
+    },
+    {
+      "id": "science_en_020",
+      "question": "Why does a helium balloon make your voice sound high?",
+      "answers": [
+        {"text": "Sound travels faster through helium", "correct": true},
+        {"text": "Helium shrinks your vocal cords", "correct": false},
+        {"text": "Helium changes the pitch your vocal cords vibrate at", "correct": false}
+      ],
+      "difficulty": "medium",
+      "fun_fact": "Your vocal cords vibrate at the same frequency, but sound travels nearly three times faster in helium. That shifts the resonance of your vocal tract upward, changing the timbre.",
+      "category": "Science"
+    },
+    {
+      "id": "science_en_021",
+      "question": "Which metal is liquid at room temperature?",
+      "answers": [
+        {"text": "Mercury", "correct": true},
+        {"text": "Lead", "correct": false},
+        {"text": "Aluminium", "correct": false}
+      ],
+      "difficulty": "easy",
+      "fun_fact": "Mercury melts at -39°C, making it the only metal liquid at typical room temperature. Gallium melts in your hand (29°C) but is solid in a cool room.",
+      "category": "Science"
+    },
+    {
+      "id": "science_en_022",
+      "question": "What happens when you drop a piece of caesium into water?",
+      "answers": [
+        {"text": "It explodes violently", "correct": true},
+        {"text": "It dissolves quietly", "correct": false},
+        {"text": "It floats and rusts", "correct": false}
+      ],
+      "difficulty": "medium",
+      "fun_fact": "Alkali metals get more reactive as you go down the group. Caesium reacts with water so fast that the hydrogen released ignites instantly — even ice triggers an explosion.",
+      "category": "Science"
+    },
+    {
+      "id": "science_en_023",
+      "question": "Which element makes up about 75% of all visible matter in the universe?",
+      "answers": [
+        {"text": "Hydrogen", "correct": true},
+        {"text": "Oxygen", "correct": false},
+        {"text": "Iron", "correct": false}
+      ],
+      "difficulty": "easy",
+      "fun_fact": "Most matter formed in the first minutes after the Big Bang was hydrogen. Heavier elements like oxygen and iron were forged later inside stars.",
+      "category": "Science"
+    },
+    {
+      "id": "science_en_024",
+      "question": "Which substance expands when it freezes — making it unusual among materials?",
+      "answers": [
+        {"text": "Water", "correct": true},
+        {"text": "Mercury", "correct": false},
+        {"text": "Olive oil", "correct": false}
+      ],
+      "difficulty": "easy",
+      "fun_fact": "Almost all substances contract when they solidify, but water expands by about 9% — which is why ice floats and burst pipes are a winter hazard.",
+      "category": "Science"
+    },
+    {
+      "id": "science_en_025",
+      "question": "Why is glass transparent to visible light but not to ultraviolet?",
+      "answers": [
+        {"text": "Its electrons absorb UV photons but not visible ones", "correct": true},
+        {"text": "Glass has tiny holes that block UV", "correct": false},
+        {"text": "UV light is too small to fit through glass", "correct": false}
+      ],
+      "difficulty": "hard",
+      "fun_fact": "Visible light photons don't have enough energy to excite the electrons in silica glass, so they pass through. UV photons do — they get absorbed, which is why window glass blocks sunburn UVB.",
+      "category": "Science"
+    },
+    {
+      "id": "science_en_026",
+      "question": "What's unusual about the noble gas helium at extremely low temperatures?",
+      "answers": [
+        {"text": "It becomes a superfluid that climbs walls", "correct": true},
+        {"text": "It turns bright green", "correct": false},
+        {"text": "It becomes magnetic", "correct": false}
+      ],
+      "difficulty": "hard",
+      "fun_fact": "Below 2.17 K, helium-4 becomes a superfluid with zero viscosity. It can flow through tiny pores, form a thin creeping film, and even siphon itself out of an open container.",
+      "category": "Science"
+    },
+    {
+      "id": "science_en_027",
+      "question": "Which acid is strong enough to dissolve glass?",
+      "answers": [
+        {"text": "Hydrofluoric acid", "correct": true},
+        {"text": "Sulphuric acid", "correct": false},
+        {"text": "Hydrochloric acid", "correct": false}
+      ],
+      "difficulty": "medium",
+      "fun_fact": "Hydrofluoric acid is actually a weak acid by pH, but it reacts with silicon dioxide. It's stored in plastic bottles because it would eat through glass containers.",
+      "category": "Science"
+    },
+    {
+      "id": "science_en_028",
+      "question": "What's odd about the density of ordinary tap water at 4°C?",
+      "answers": [
+        {"text": "Water is densest at 4°C, not at 0°C", "correct": true},
+        {"text": "Water is least dense at 4°C", "correct": false},
+        {"text": "Density of water doesn't change with temperature", "correct": false}
+      ],
+      "difficulty": "medium",
+      "fun_fact": "Water reaches maximum density at about 4°C. That's why lakes freeze top-down: the densest water sinks, leaving colder water and then ice floating on the surface — keeping fish alive below.",
+      "category": "Science"
+    },
+    {
+      "id": "science_en_029",
+      "question": "Why does cutting an onion make you cry?",
+      "answers": [
+        {"text": "It releases a gas that turns into mild sulphuric acid in your eyes", "correct": true},
+        {"text": "Onions contain capsaicin like chillies", "correct": false},
+        {"text": "The smell triggers a reflex tear", "correct": false}
+      ],
+      "difficulty": "medium",
+      "fun_fact": "Damaged onion cells release an enzyme that produces syn-propanethial-S-oxide. The volatile gas reacts with the moisture in your eyes to form a tiny amount of sulphuric acid.",
+      "category": "Science"
+    },
+    {
+      "id": "science_en_030",
+      "question": "What happens to a rubber band when you stretch it quickly?",
+      "answers": [
+        {"text": "It heats up", "correct": true},
+        {"text": "It cools down", "correct": false},
+        {"text": "Its temperature doesn't change", "correct": false}
+      ],
+      "difficulty": "hard",
+      "fun_fact": "Counter-intuitively, rubber heats up when stretched and cools when released — opposite to most materials. Touch a thick rubber band to your lip while stretching it to feel the warmth.",
+      "category": "Science"
+    },
+    {
+      "id": "science_en_031",
+      "question": "Which household device was invented after a chocolate bar melted in an engineer's pocket?",
+      "answers": [
+        {"text": "The microwave oven", "correct": true},
+        {"text": "The hair dryer", "correct": false},
+        {"text": "The electric kettle", "correct": false}
+      ],
+      "difficulty": "medium",
+      "fun_fact": "In 1945 Percy Spencer noticed a chocolate bar melt while he stood near a radar magnetron. He tested popcorn, then an egg (which exploded), and patented the microwave oven.",
+      "category": "Science"
+    },
+    {
+      "id": "science_en_032",
+      "question": "Which medicine was discovered after a scientist returned from holiday to a mouldy lab dish?",
+      "answers": [
+        {"text": "Penicillin", "correct": true},
+        {"text": "Aspirin", "correct": false},
+        {"text": "Insulin", "correct": false}
+      ],
+      "difficulty": "easy",
+      "fun_fact": "Alexander Fleming came back in 1928 to find a Petri dish contaminated with Penicillium mould — and the bacteria around it dead. The discovery launched the antibiotic era.",
+      "category": "Science"
+    },
+    {
+      "id": "science_en_033",
+      "question": "What did the inventor of Velcro get the idea from?",
+      "answers": [
+        {"text": "Burrs sticking to his dog's fur", "correct": true},
+        {"text": "A spider's web", "correct": false},
+        {"text": "Fish scales", "correct": false}
+      ],
+      "difficulty": "easy",
+      "fun_fact": "Swiss engineer George de Mestral examined burrs under a microscope after a 1941 hike, saw their tiny hooks, and spent years recreating the design with synthetic fibres.",
+      "category": "Science"
+    },
+    {
+      "id": "science_en_034",
+      "question": "Which everyday product was originally invented to clean soot off wallpaper?",
+      "answers": [
+        {"text": "Play-Doh", "correct": true},
+        {"text": "Silly Putty", "correct": false},
+        {"text": "Sticky tape", "correct": false}
+      ],
+      "difficulty": "medium",
+      "fun_fact": "Play-Doh started as a 1930s wallpaper cleaner. When coal heating declined and vinyl wallpaper arrived, the company rebranded the malleable putty as a children's toy.",
+      "category": "Science"
+    },
+    {
+      "id": "science_en_035",
+      "question": "Post-it Notes were created because of which lab accident?",
+      "answers": [
+        {"text": "A scientist made a glue that wasn't sticky enough", "correct": true},
+        {"text": "A scientist spilled glue on a notebook", "correct": false},
+        {"text": "A scientist mixed two glues by mistake", "correct": false}
+      ],
+      "difficulty": "medium",
+      "fun_fact": "3M's Spencer Silver invented a weak, reusable adhesive in 1968. It sat unused for years until a colleague used it to anchor bookmarks in his church hymnal — the Post-it was born.",
+      "category": "Science"
+    },
+    {
+      "id": "science_en_036",
+      "question": "How was the artificial sweetener saccharin discovered?",
+      "answers": [
+        {"text": "A chemist forgot to wash his hands and noticed dinner tasted sweet", "correct": true},
+        {"text": "A chemist tested cane sugar derivatives systematically", "correct": false},
+        {"text": "A chemist analysed honey", "correct": false}
+      ],
+      "difficulty": "hard",
+      "fun_fact": "In 1879 Constantin Fahlberg ate bread at home, noticed it was sweet, and traced the taste to a compound he'd handled in the lab — the world's first artificial sweetener.",
+      "category": "Science"
+    },
+    {
+      "id": "science_en_037",
+      "question": "Safety glass was invented after a chemist did what?",
+      "answers": [
+        {"text": "Dropped a coated flask and saw it cracked but didn't shatter", "correct": true},
+        {"text": "Heated sand to a new temperature", "correct": false},
+        {"text": "Melted plastic onto a window pane", "correct": false}
+      ],
+      "difficulty": "hard",
+      "fun_fact": "Édouard Bénédictus dropped a flask coated with dried cellulose nitrate in 1903 and noticed it held its shape. He patented laminated safety glass — now used in car windshields.",
+      "category": "Science"
+    },
+    {
+      "id": "science_en_038",
+      "question": "What is the origin story of the Slinky toy?",
+      "answers": [
+        {"text": "A naval engineer knocked a tension spring off a shelf", "correct": true},
+        {"text": "A child stretched out a Christmas decoration", "correct": false},
+        {"text": "A clockmaker built a faulty mechanism", "correct": false}
+      ],
+      "difficulty": "medium",
+      "fun_fact": "In 1943, Richard James was developing springs to stabilise ship instruments. One fell off a shelf and 'walked' down to the floor. His wife found the name 'Slinky' in a dictionary.",
+      "category": "Science"
+    },
+    {
+      "id": "science_en_039",
+      "question": "How did the inventor of the pacemaker come to install one in himself?",
+      "answers": [
+        {"text": "He miscalculated a resistor by a factor of 100", "correct": true},
+        {"text": "He copied a Russian design", "correct": false},
+        {"text": "He used a clock spring as a model", "correct": false}
+      ],
+      "difficulty": "hard",
+      "fun_fact": "Wilson Greatbatch grabbed the wrong-value resistor in 1956 and built a circuit that pulsed like a heart. The implantable pacemaker that followed has saved millions of lives.",
+      "category": "Science"
+    },
+    {
+      "id": "science_en_040",
+      "question": "Super Glue was discovered while researchers were trying to make what?",
+      "answers": [
+        {"text": "Clear plastic gun sights for World War II", "correct": true},
+        {"text": "A new kind of paint", "correct": false},
+        {"text": "A waterproof bandage", "correct": false}
+      ],
+      "difficulty": "medium",
+      "fun_fact": "Harry Coover stumbled on cyanoacrylate in 1942 while developing transparent plastic sights. It stuck to everything and was rejected — until he revisited it years later as adhesive.",
+      "category": "Science"
+    },
+    {
+      "id": "science_en_041",
+      "question": "How many bones is a baby born with compared to an adult?",
+      "answers": [
+        {"text": "More — around 300 vs 206", "correct": true},
+        {"text": "Fewer — around 100 vs 206", "correct": false},
+        {"text": "Exactly the same number", "correct": false}
+      ],
+      "difficulty": "easy",
+      "fun_fact": "Babies have about 300 separate bones; many fuse during growth, leaving adults with 206. The skull alone starts as several pieces joined by flexible cartilage.",
+      "category": "Science"
+    },
+    {
+      "id": "science_en_042",
+      "question": "Roughly how much of your body weight is made up of bacteria and other microbes?",
+      "answers": [
+        {"text": "About 1–2 kilograms", "correct": true},
+        {"text": "Less than 10 grams", "correct": false},
+        {"text": "About 10 kilograms", "correct": false}
+      ],
+      "difficulty": "medium",
+      "fun_fact": "You carry roughly the same number of microbial cells as human cells. Total mass is around 1–2 kg — most of it living in your gut, where it helps digest food and train immunity.",
+      "category": "Science"
+    },
+    {
+      "id": "science_en_043",
+      "question": "Which organ in the human body can regrow itself even after most of it is removed?",
+      "answers": [
+        {"text": "The liver", "correct": true},
+        {"text": "The pancreas", "correct": false},
+        {"text": "The kidney", "correct": false}
+      ],
+      "difficulty": "medium",
+      "fun_fact": "Remove up to 70% of a healthy liver and the remainder can grow back to nearly its original size within months — uniquely among major human organs.",
+      "category": "Science"
+    },
+    {
+      "id": "science_en_044",
+      "question": "What part of the body keeps growing throughout your entire life?",
+      "answers": [
+        {"text": "Your ears and nose (cartilage)", "correct": true},
+        {"text": "Your bones", "correct": false},
+        {"text": "Your eyes", "correct": false}
+      ],
+      "difficulty": "easy",
+      "fun_fact": "Cartilage in the ears and nose keeps slowly adding cells your whole life, while gravity stretches the tissue. Eyes, by contrast, are nearly full-size at birth.",
+      "category": "Science"
+    },
+    {
+      "id": "science_en_045",
+      "question": "Why can't you tickle yourself?",
+      "answers": [
+        {"text": "Your brain predicts the sensation and cancels it", "correct": true},
+        {"text": "Your skin's nerves shut down when you touch yourself", "correct": false},
+        {"text": "Tickling only works with cold fingers", "correct": false}
+      ],
+      "difficulty": "medium",
+      "fun_fact": "The cerebellum predicts the touch from your own hand and dampens the response. People with certain neurological conditions, like schizophrenia, can sometimes tickle themselves.",
+      "category": "Science"
+    },
+    {
+      "id": "science_en_046",
+      "question": "Roughly how long would it take all the blood in your body to pass through your heart once?",
+      "answers": [
+        {"text": "About one minute", "correct": true},
+        {"text": "About one hour", "correct": false},
+        {"text": "About one second", "correct": false}
+      ],
+      "difficulty": "medium",
+      "fun_fact": "Your heart pumps about 5 litres per minute at rest — roughly your total blood volume. Every drop of you cycles through the heart roughly once a minute.",
+      "category": "Science"
+    },
+    {
+      "id": "science_en_047",
+      "question": "What surprising thing happens to your height during the day?",
+      "answers": [
+        {"text": "You shrink by about 1–2 cm", "correct": true},
+        {"text": "You grow by about 1 cm", "correct": false},
+        {"text": "Your height stays exactly the same", "correct": false}
+      ],
+      "difficulty": "medium",
+      "fun_fact": "Gravity compresses the discs between your vertebrae over the day, so you measure shorter in the evening. A night's sleep lets the discs rehydrate and restore your height.",
+      "category": "Science"
+    },
+    {
+      "id": "science_en_048",
+      "question": "Which sense is so 'wired up' to your brain that losing it can disrupt memory?",
+      "answers": [
+        {"text": "Smell", "correct": true},
+        {"text": "Hearing", "correct": false},
+        {"text": "Touch", "correct": false}
+      ],
+      "difficulty": "medium",
+      "fun_fact": "Smell is the only sense routed directly to the limbic system, which handles memory and emotion. Loss of smell is sometimes an early warning of Alzheimer's or Parkinson's.",
+      "category": "Science"
+    },
+    {
+      "id": "science_en_049",
+      "question": "What unusual thing did the early anaesthetic chloroform first become famous for?",
+      "answers": [
+        {"text": "Queen Victoria using it during childbirth", "correct": true},
+        {"text": "Knocking out an elephant in a circus", "correct": false},
+        {"text": "Powering a balloon engine", "correct": false}
+      ],
+      "difficulty": "hard",
+      "fun_fact": "Chloroform was controversial because some believed pain in childbirth was 'natural'. Queen Victoria used it for the birth of Prince Leopold in 1853, making it socially acceptable.",
+      "category": "Science"
+    },
+    {
+      "id": "science_en_050",
+      "question": "Which common procedure was once performed by barbers as a sideline to haircuts?",
+      "answers": [
+        {"text": "Surgery — including tooth extractions and bloodletting", "correct": true},
+        {"text": "Eye exams", "correct": false},
+        {"text": "Vaccinations", "correct": false}
+      ],
+      "difficulty": "medium",
+      "fun_fact": "Medieval barber-surgeons did everything from shaving to amputations. The red-and-white striped barber pole represents blood and bandages from those bloodletting days.",
+      "category": "Science"
+    }
+  ]
+}

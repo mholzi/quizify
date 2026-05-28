@@ -1,0 +1,608 @@
+{
+  "name": "Sport",
+  "language": "en",
+  "version": "1.0",
+  "theme": "sport",
+  "questions": [
+    {
+      "id": "sport_en_001",
+      "question": "Which event was contested at the Olympics from 1900 to 1920 but never returned as a regular discipline?",
+      "answers": [
+        {"text": "Tug of war", "correct": true},
+        {"text": "Stone lifting", "correct": false},
+        {"text": "Log throwing", "correct": false}
+      ],
+      "difficulty": "easy",
+      "fun_fact": "Britain won all three medals at the 1908 Games because teams entered as separate London police units — City Police took gold, Liverpool Police silver, and Metropolitan Police K Division bronze.",
+      "category": "Sport"
+    },
+    {
+      "id": "sport_en_002",
+      "question": "At which Olympics were live animals shot for medals as an officially contested event?",
+      "answers": [
+        {"text": "Paris 1900", "correct": true},
+        {"text": "Athens 1896", "correct": false},
+        {"text": "St. Louis 1904", "correct": false}
+      ],
+      "difficulty": "medium",
+      "fun_fact": "Live pigeon shooting featured nearly 300 birds shot from cages. Belgian Leon de Lunden won with 21 kills. It was the only Olympics where animals were intentionally killed for sport.",
+      "category": "Sport"
+    },
+    {
+      "id": "sport_en_003",
+      "question": "What unusual feat did Eric Moussambani from Equatorial Guinea achieve at the Sydney 2000 Olympics?",
+      "answers": [
+        {"text": "He won his 100m freestyle heat after both rivals were disqualified — with one of the slowest Olympic times ever", "correct": true},
+        {"text": "He set a world record despite never training in a 50m pool", "correct": false},
+        {"text": "He swam the entire race underwater on a single breath", "correct": false}
+      ],
+      "difficulty": "medium",
+      "fun_fact": "Moussambani had only learned to swim eight months earlier in a 20m hotel pool. He finished in 1:52.72 — slower than most Olympic 200m times — but the crowd of 17,000 gave him a standing ovation.",
+      "category": "Sport"
+    },
+    {
+      "id": "sport_en_004",
+      "question": "Art competitions — for painting, sculpture, literature, music and architecture — once awarded Olympic medals. When were they last held?",
+      "answers": [
+        {"text": "London 1948", "correct": true},
+        {"text": "Berlin 1936", "correct": false},
+        {"text": "Stockholm 1912", "correct": false}
+      ],
+      "difficulty": "hard",
+      "fun_fact": "Pierre de Coubertin himself won gold for literature in 1912 under a pseudonym for his poem 'Ode to Sport'. The medals were dropped because most competing artists were professionals, violating amateur rules.",
+      "category": "Sport"
+    },
+    {
+      "id": "sport_en_005",
+      "question": "Solo synchronised swimming was an Olympic event in 1984, 1988 and 1992. What's odd about its name?",
+      "answers": [
+        {"text": "A single swimmer was 'synchronising' only with the music", "correct": true},
+        {"text": "Swimmers competed against their own mirrored reflection", "correct": false},
+        {"text": "Two athletes performed but only one was scored", "correct": false}
+      ],
+      "difficulty": "medium",
+      "fun_fact": "Critics mocked the event as the most contradictory in Olympic history. It was dropped after Barcelona 1992 when the IOC quietly admitted that 'synchronised' with no partner made little sense.",
+      "category": "Sport"
+    },
+    {
+      "id": "sport_en_006",
+      "question": "At the 1904 St. Louis Olympics marathon, the gold medallist nearly died. What had he ingested mid-race?",
+      "answers": [
+        {"text": "Strychnine mixed with brandy and raw egg whites", "correct": true},
+        {"text": "Raw opium dissolved in milk", "correct": false},
+        {"text": "Pure ether on sugar cubes", "correct": false}
+      ],
+      "difficulty": "hard",
+      "fun_fact": "Thomas Hicks's handlers gave him strychnine — a rat poison that acts as a stimulant in tiny doses — twice during the race. He had to be carried across the line and could not collect his medal in person.",
+      "category": "Sport"
+    },
+    {
+      "id": "sport_en_007",
+      "question": "Why was the marathon distance fixed at exactly 42.195 km (26 miles 385 yards)?",
+      "answers": [
+        {"text": "To finish in front of the royal box at the 1908 London Olympics", "correct": true},
+        {"text": "It was the exact distance from Marathon to Athens in 490 BC", "correct": false},
+        {"text": "Pierre de Coubertin picked it from a hat at random", "correct": false}
+      ],
+      "difficulty": "medium",
+      "fun_fact": "The original 1896 marathon was only about 40 km. The 1908 London course was extended so the start was at Windsor Castle and the finish lay before Queen Alexandra's box at White City Stadium. The IAAF fixed it permanently in 1921.",
+      "category": "Sport"
+    },
+    {
+      "id": "sport_en_008",
+      "question": "Which Olympic event was scored using a system where competitors deliberately tried to *not* hit the target perfectly?",
+      "answers": [
+        {"text": "Plunge for distance (diving for distance underwater without moving)", "correct": true},
+        {"text": "Tandem cycling sprint", "correct": false},
+        {"text": "Rope climbing for style", "correct": false}
+      ],
+      "difficulty": "hard",
+      "fun_fact": "At St. Louis 1904, divers leapt in, then floated motionless face-down for 60 seconds. Distance covered by drift was measured. American William Dickey won with 19.05 m. Spectators found it agonisingly dull and it was never repeated.",
+      "category": "Sport"
+    },
+    {
+      "id": "sport_en_009",
+      "question": "How did the Olympic torch relay originate?",
+      "answers": [
+        {"text": "It was invented by the Nazi regime for the 1936 Berlin Games", "correct": true},
+        {"text": "It dates back to the ancient Greek Olympics in Olympia", "correct": false},
+        {"text": "It started at Athens 1896 as Pierre de Coubertin's idea", "correct": false}
+      ],
+      "difficulty": "medium",
+      "fun_fact": "Carl Diem designed the relay for Berlin 1936 as propaganda linking the Third Reich to ancient Greece. It was so visually striking that the IOC kept it after the war — the only Nazi-era invention still part of every modern Games.",
+      "category": "Sport"
+    },
+    {
+      "id": "sport_en_010",
+      "question": "At the 1936 Berlin Olympics, who supposedly handed Jesse Owens his winning long-jump tip in the qualifying round?",
+      "answers": [
+        {"text": "His German rival Luz Long", "correct": true},
+        {"text": "American coach Lawson Robertson", "correct": false},
+        {"text": "Hitler's chauffeur Erich Kempka", "correct": false}
+      ],
+      "difficulty": "easy",
+      "fun_fact": "Long reportedly advised Owens to take off well before the board to avoid fouling. Owens won gold, Long took silver, and they posed arm-in-arm — a famous photo of friendship across the Nazi regime's racial lines.",
+      "category": "Sport"
+    },
+    {
+      "id": "sport_en_011",
+      "question": "What do competitors in the annual Cooper's Hill event in Gloucestershire, England, chase down a near-vertical slope?",
+      "answers": [
+        {"text": "A 3.6 kg wheel of Double Gloucester cheese", "correct": true},
+        {"text": "A wooden barrel filled with cider", "correct": false},
+        {"text": "A live greased pig", "correct": false}
+      ],
+      "difficulty": "easy",
+      "fun_fact": "The cheese reaches over 110 km/h. Winners get to keep the wheel. Broken bones and concussions are so common that ambulances are stationed at the bottom — the race continues anyway.",
+      "category": "Sport"
+    },
+    {
+      "id": "sport_en_012",
+      "question": "In the sport of Wife Carrying, originating in Finland, what is the traditional prize for the winning couple?",
+      "answers": [
+        {"text": "The wife's weight in beer", "correct": true},
+        {"text": "A year's supply of reindeer meat", "correct": false},
+        {"text": "A wooden sauna shipped to the winner's home", "correct": false}
+      ],
+      "difficulty": "easy",
+      "fun_fact": "The 'Estonian carry' — wife hanging upside-down on the husband's back with her legs around his neck — was developed for the championships and now dominates because it leaves the carrier's arms free.",
+      "category": "Sport"
+    },
+    {
+      "id": "sport_en_013",
+      "question": "Chess boxing alternates rounds of chess and boxing. How can a competitor win on the board rather than in the ring?",
+      "answers": [
+        {"text": "By checkmate or by their opponent running out of chess clock time", "correct": true},
+        {"text": "Only by forcing a resignation — the clock doesn't apply", "correct": false},
+        {"text": "By capturing the opponent's queen", "correct": false}
+      ],
+      "difficulty": "medium",
+      "fun_fact": "Each player has 9 minutes total on the chess clock spread over multiple rounds. After exhausting boxing, players often blunder — heavy breathing and adrenaline ruin board calculation.",
+      "category": "Sport"
+    },
+    {
+      "id": "sport_en_014",
+      "question": "The longest professional tennis match on record lasted over 11 hours across three days. Where was it played?",
+      "answers": [
+        {"text": "Wimbledon", "correct": true},
+        {"text": "US Open", "correct": false},
+        {"text": "Australian Open", "correct": false}
+      ],
+      "difficulty": "medium",
+      "fun_fact": "Isner vs Mahut in 2010 ended 70-68 in the fifth set. The scoreboard initially broke because it wasn't programmed for scores that high. Both players received commemorative trophies and Wimbledon later introduced a fifth-set tiebreak rule.",
+      "category": "Sport"
+    },
+    {
+      "id": "sport_en_015",
+      "question": "What does an 'Iron Man' triathlon involve, in order?",
+      "answers": [
+        {"text": "3.86 km swim, 180 km bike, 42.2 km run", "correct": true},
+        {"text": "5 km swim, 150 km bike, 50 km run", "correct": false},
+        {"text": "10 km swim, 100 km bike, 40 km run", "correct": false}
+      ],
+      "difficulty": "easy",
+      "fun_fact": "The format was invented in 1978 during a debate among Hawaiian athletes over who was fittest — swimmers, cyclists or runners. Naval officer John Collins suggested combining all three. Fifteen people started; twelve finished.",
+      "category": "Sport"
+    },
+    {
+      "id": "sport_en_016",
+      "question": "In the Finnish sport of mobile phone throwing, what category exists alongside 'distance'?",
+      "answers": [
+        {"text": "Freestyle, judged on aesthetic style of the throw", "correct": true},
+        {"text": "Accuracy at hitting a phone-shaped target", "correct": false},
+        {"text": "Maximum number of phones thrown in 60 seconds", "correct": false}
+      ],
+      "difficulty": "medium",
+      "fun_fact": "The world record for distance is over 110 m. Old Nokias are preferred for their aerodynamics. Organisers say it's a cathartic protest against mobile-phone overuse.",
+      "category": "Sport"
+    },
+    {
+      "id": "sport_en_017",
+      "question": "Bog snorkelling, an annual race in Wales, has one strict rule about technique. What is it?",
+      "answers": [
+        {"text": "Competitors may not use conventional swimming strokes — only flipper kicks", "correct": true},
+        {"text": "Competitors must keep their snorkel above water the entire race", "correct": false},
+        {"text": "Competitors must swim with their eyes closed", "correct": false}
+      ],
+      "difficulty": "medium",
+      "fun_fact": "Racers cross 120 yards of murky peat trench twice. The world record is under 1 minute 18 seconds. Wetsuits are optional but strongly advised — the bog water hovers around 10°C.",
+      "category": "Sport"
+    },
+    {
+      "id": "sport_en_018",
+      "question": "Sepak takraw — popular across Southeast Asia — combines volleyball rules with which forbidden body part rule?",
+      "answers": [
+        {"text": "Players may not use their hands or arms", "correct": true},
+        {"text": "Players may not let the ball touch their head", "correct": false},
+        {"text": "Players must keep one foot on the ground at all times", "correct": false}
+      ],
+      "difficulty": "medium",
+      "fun_fact": "Played with a woven rattan ball, sepak takraw rewards bicycle kicks across the net from full height. Skilled players spike the ball downward from above the 1.5m net using their feet.",
+      "category": "Sport"
+    },
+    {
+      "id": "sport_en_019",
+      "question": "Buzkashi, the national sport of Afghanistan, uses what as the 'ball'?",
+      "answers": [
+        {"text": "A headless goat or calf carcass", "correct": true},
+        {"text": "A leather sack filled with sand", "correct": false},
+        {"text": "A wooden cylinder wrapped in sheepskin", "correct": false}
+      ],
+      "difficulty": "easy",
+      "fun_fact": "Riders on horseback try to drag the 30-50 kg carcass into a scoring circle. Matches can last days. Genghis Khan's cavalry are believed to have played an early form on the Central Asian steppe.",
+      "category": "Sport"
+    },
+    {
+      "id": "sport_en_020",
+      "question": "Kabaddi, a contact team sport from South Asia, has one peculiar rule about what the attacking 'raider' must do.",
+      "answers": [
+        {"text": "Continuously chant 'kabaddi' on a single breath while raiding", "correct": true},
+        {"text": "Carry a small wooden baton at all times", "correct": false},
+        {"text": "Touch the opposing captain before any other player", "correct": false}
+      ],
+      "difficulty": "medium",
+      "fun_fact": "If the raider inhales mid-chant, they're out. The sport featured at the 1936 Berlin Olympics as a demonstration event and has been part of the Asian Games since 1990.",
+      "category": "Sport"
+    },
+    {
+      "id": "sport_en_021",
+      "question": "Why are the seams on an American football shaped the way they are?",
+      "answers": [
+        {"text": "Originally to make pig-bladder balls easier to grip and sew, later retained for aerodynamics", "correct": true},
+        {"text": "To match the proportions of a rugby ball reduced by 30%", "correct": false},
+        {"text": "Walter Camp designed them to mimic a baseball stitch", "correct": false}
+      ],
+      "difficulty": "hard",
+      "fun_fact": "Early American footballs were inflated pig bladders inside leather, hence the nickname 'pigskin'. The pointed prolate shape evolved from rounder rugby balls as throwing — not just kicking — became central to the game.",
+      "category": "Sport"
+    },
+    {
+      "id": "sport_en_022",
+      "question": "Which NFL team is the only one publicly owned by its fans rather than a private owner?",
+      "answers": [
+        {"text": "Green Bay Packers", "correct": true},
+        {"text": "Pittsburgh Steelers", "correct": false},
+        {"text": "Cleveland Browns", "correct": false}
+      ],
+      "difficulty": "easy",
+      "fun_fact": "Over 360,000 shareholders own the Packers. Shares pay no dividend, can't appreciate in value, and can't be resold for profit — yet the team has held five share offerings since 1923 to fund stadium upgrades.",
+      "category": "Sport"
+    },
+    {
+      "id": "sport_en_023",
+      "question": "In football (soccer), what was unusual about the rule for goal celebrations until the 1990s in the English league?",
+      "answers": [
+        {"text": "There was no rule against removing your shirt — bookings for it only began in 2004 worldwide", "correct": true},
+        {"text": "Goalkeepers were forbidden from celebrating", "correct": false},
+        {"text": "Players could be fined for shaking the opposing goalkeeper's hand", "correct": false}
+      ],
+      "difficulty": "medium",
+      "fun_fact": "FIFA introduced the mandatory yellow card for shirt removal in 2004, citing time-wasting and 'unsporting' behaviour. The rule remains controversial — many goalscorers still strip their shirts despite the booking.",
+      "category": "Sport"
+    },
+    {
+      "id": "sport_en_024",
+      "question": "Which footballer has scored a 'perfect hat-trick' (one with left foot, one with right foot, one header) the most times in his career?",
+      "answers": [
+        {"text": "Cristiano Ronaldo", "correct": true},
+        {"text": "Robert Lewandowski", "correct": false},
+        {"text": "Karim Benzema", "correct": false}
+      ],
+      "difficulty": "hard",
+      "fun_fact": "Ronaldo has scored over a dozen perfect hat-tricks across club and country. He famously credits left-foot and heading practice for offsetting his naturally dominant right foot.",
+      "category": "Sport"
+    },
+    {
+      "id": "sport_en_025",
+      "question": "What did the first FIFA World Cup trophy, the Jules Rimet, suffer in 1966 and 1983?",
+      "answers": [
+        {"text": "It was stolen twice — recovered once by a dog in 1966, never found after 1983", "correct": true},
+        {"text": "It was melted down for charity then re-cast in solid bronze", "correct": false},
+        {"text": "It was struck by lightning during an open-top parade", "correct": false}
+      ],
+      "difficulty": "medium",
+      "fun_fact": "A dog named Pickles found the trophy under a hedge in South London a week after the 1966 theft. Brazil was given the original permanently after their third win in 1970. It was stolen again from Rio in 1983 and is believed to have been melted down.",
+      "category": "Sport"
+    },
+    {
+      "id": "sport_en_026",
+      "question": "What is the maximum legal width of an NFL goalpost upright?",
+      "answers": [
+        {"text": "About 18 feet 6 inches (5.64 m) between uprights", "correct": true},
+        {"text": "Exactly 12 feet (3.66 m)", "correct": false},
+        {"text": "Exactly 24 feet (7.32 m), matching football goals", "correct": false}
+      ],
+      "difficulty": "hard",
+      "fun_fact": "College goalposts are the same width but were 23 feet 4 inches until 1991. NFL kickers complain that even from 60+ yards, the narrow target is psychologically harder than a soccer goal at any distance.",
+      "category": "Sport"
+    },
+    {
+      "id": "sport_en_027",
+      "question": "Which feature of the modern football was standardised only after the 1970 World Cup?",
+      "answers": [
+        {"text": "Black-and-white panels (Adidas Telstar) for TV visibility", "correct": true},
+        {"text": "Synthetic leather replacing real leather", "correct": false},
+        {"text": "32 panels in any colour scheme", "correct": false}
+      ],
+      "difficulty": "medium",
+      "fun_fact": "Before the Telstar, balls were plain brown leather, hard to see on black-and-white TV. The 32-panel truncated-icosahedron pattern was designed at Adidas specifically so spectators watching at home could follow the play.",
+      "category": "Sport"
+    },
+    {
+      "id": "sport_en_028",
+      "question": "How does a 'safety' score points in American football?",
+      "answers": [
+        {"text": "The defensive team tackles the ball carrier in the offense's own end zone for 2 points", "correct": true},
+        {"text": "The defence intercepts inside the 5-yard line for 1 point", "correct": false},
+        {"text": "The defence forces a punt from inside the 10-yard line for 3 points", "correct": false}
+      ],
+      "difficulty": "medium",
+      "fun_fact": "After conceding a safety, the team must then kick off to the opposition — losing both the points and possession. It's the only score where the defending team also gains the ball.",
+      "category": "Sport"
+    },
+    {
+      "id": "sport_en_029",
+      "question": "Which footballer holds the record for the fastest red card in a professional match?",
+      "answers": [
+        {"text": "Lee Todd — sent off after 2 seconds for swearing at the referee", "correct": true},
+        {"text": "Vinnie Jones — sent off after 5 seconds for a sliding tackle", "correct": false},
+        {"text": "Pepe — sent off after 8 seconds for headbutting an opponent", "correct": false}
+      ],
+      "difficulty": "hard",
+      "fun_fact": "Cross Farm Park Celtic player Todd swore loudly after the kickoff whistle startled him in 2000. The referee was within earshot and dismissed him on the spot — before he had even touched the ball.",
+      "category": "Sport"
+    },
+    {
+      "id": "sport_en_030",
+      "question": "The NFL's 'Heidi Game' in 1968 is remembered for what unusual reason?",
+      "answers": [
+        {"text": "NBC cut away from the live broadcast to show the film Heidi, missing the entire ending", "correct": true},
+        {"text": "A snow blizzard during play resembled a scene from Heidi", "correct": false},
+        {"text": "A goat named Heidi ran onto the field and stopped play", "correct": false}
+      ],
+      "difficulty": "medium",
+      "fun_fact": "With 65 seconds left and the Jets leading the Raiders, NBC switched to Heidi on schedule. The Raiders scored twice in nine seconds to win 43-32. Viewer outrage led to the 'Heidi Rule' guaranteeing all NFL games are shown to their conclusion.",
+      "category": "Sport"
+    },
+    {
+      "id": "sport_en_031",
+      "question": "What did the inventor of basketball, James Naismith, use as the first 'baskets' in 1891?",
+      "answers": [
+        {"text": "Peach baskets nailed to a balcony", "correct": true},
+        {"text": "Empty barrels set on the floor", "correct": false},
+        {"text": "Old bicycle wheels with netting attached", "correct": false}
+      ],
+      "difficulty": "easy",
+      "fun_fact": "Each made basket required someone to climb a ladder and retrieve the ball — they hadn't thought to cut the bottoms out. The bottomless metal hoop arrived in 1906.",
+      "category": "Sport"
+    },
+    {
+      "id": "sport_en_032",
+      "question": "The Frisbee is named after which real-world object?",
+      "answers": [
+        {"text": "Pie tins from the Frisbie Pie Company of Connecticut", "correct": true},
+        {"text": "A Yale dormitory called Frisbee Hall", "correct": false},
+        {"text": "An Alpine bird called the Frisbean that hovers in updrafts", "correct": false}
+      ],
+      "difficulty": "easy",
+      "fun_fact": "Yale students tossed empty Frisbie pie tins for fun. Wham-O bought the plastic design in 1957 from a man who had been selling them as 'Pluto Platters', and renamed them Frisbees to match the campus slang.",
+      "category": "Sport"
+    },
+    {
+      "id": "sport_en_033",
+      "question": "Where were the ancient Olympic Games held continuously for nearly 1,200 years?",
+      "answers": [
+        {"text": "Olympia, a sanctuary in the western Peloponnese", "correct": true},
+        {"text": "Mount Olympus in northern Greece", "correct": false},
+        {"text": "Athens, in the Panathenaic Stadium", "correct": false}
+      ],
+      "difficulty": "easy",
+      "fun_fact": "The ancient Games ran from 776 BC until they were banned by the Christian emperor Theodosius I in 393 AD. Athletes competed naked, women were banned as spectators, and a sacred truce halted wars across Greece.",
+      "category": "Sport"
+    },
+    {
+      "id": "sport_en_034",
+      "question": "Volleyball was invented in 1895 as a calmer alternative to which sport for older businessmen?",
+      "answers": [
+        {"text": "Basketball", "correct": true},
+        {"text": "Tennis", "correct": false},
+        {"text": "Handball", "correct": false}
+      ],
+      "difficulty": "medium",
+      "fun_fact": "YMCA director William G. Morgan invented 'mintonette' so his middle-aged members didn't have to do basketball's physical contact. A spectator suggested 'volleyball' after watching players volley the ball back and forth.",
+      "category": "Sport"
+    },
+    {
+      "id": "sport_en_035",
+      "question": "The oldest sporting trophy still awarded was first contested in 1851. What is it?",
+      "answers": [
+        {"text": "The America's Cup (sailing)", "correct": true},
+        {"text": "The Ashes urn (cricket)", "correct": false},
+        {"text": "The Stanley Cup (ice hockey)", "correct": false}
+      ],
+      "difficulty": "medium",
+      "fun_fact": "The schooner America won the trophy off the Isle of Wight in 1851, beating 15 British yachts. The New York Yacht Club held it for 132 years — the longest winning streak in sport — until Australia II broke it in 1983.",
+      "category": "Sport"
+    },
+    {
+      "id": "sport_en_036",
+      "question": "Modern boxing gloves were popularised because of which rule reform?",
+      "answers": [
+        {"text": "The Marquess of Queensberry rules of 1867", "correct": true},
+        {"text": "The Tunney–Dempsey reforms of 1927", "correct": false},
+        {"text": "The Olympic amateur code of 1904", "correct": false}
+      ],
+      "difficulty": "medium",
+      "fun_fact": "Bare-knuckle prizefights of the 1800s could last over 75 rounds. The Queensberry rules introduced gloves, three-minute rounds and the 10-second knockout count — turning boxing from spectacle into a regulated sport.",
+      "category": "Sport"
+    },
+    {
+      "id": "sport_en_037",
+      "question": "Why are the holes in a golf ball — the dimples — there at all?",
+      "answers": [
+        {"text": "They reduce drag by triggering turbulent airflow, letting the ball fly further than a smooth one", "correct": true},
+        {"text": "They reduce the ball's weight so swing speeds can be higher", "correct": false},
+        {"text": "They were originally just decoration and were never proven to help", "correct": false}
+      ],
+      "difficulty": "hard",
+      "fun_fact": "Early players noticed scuffed old balls flew further than new smooth ones. Engineer William Taylor patented the dimple pattern in 1905. A typical dimpled ball travels roughly twice as far as a smooth one of the same weight.",
+      "category": "Sport"
+    },
+    {
+      "id": "sport_en_038",
+      "question": "Tennis terminology — 'love' for zero — most likely derives from which root?",
+      "answers": [
+        {"text": "The French 'l'oeuf' (the egg), because zero looks like an egg", "correct": true},
+        {"text": "The Old English 'lof' meaning praise", "correct": false},
+        {"text": "Cricket slang from the 1800s", "correct": false}
+      ],
+      "difficulty": "medium",
+      "fun_fact": "The 'egg' for nought theory parallels American baseball's 'goose egg' for zero. Some etymologists prefer 'playing for love' (playing for nothing), but the French connection is broadly accepted as the strongest match.",
+      "category": "Sport"
+    },
+    {
+      "id": "sport_en_039",
+      "question": "Why does a standard ten-pin bowling lane have exactly 10 pins?",
+      "answers": [
+        {"text": "To circumvent a 19th-century Connecticut law banning nine-pin bowling", "correct": true},
+        {"text": "It matches the number of digits on a player's hands", "correct": false},
+        {"text": "It was a marketing change to lift declining pub bowling revenue", "correct": false}
+      ],
+      "difficulty": "hard",
+      "fun_fact": "Connecticut banned nine-pin in 1841 because it was associated with gambling. Players added a tenth pin and rearranged them in a triangle — technically a different game, legally distinct, and the modern format stuck nationwide.",
+      "category": "Sport"
+    },
+    {
+      "id": "sport_en_040",
+      "question": "The Tour de France's iconic yellow leader's jersey is yellow because of what?",
+      "answers": [
+        {"text": "The newspaper L'Auto that organised it was printed on yellow paper", "correct": true},
+        {"text": "Yellow was the easiest colour for spectators to see at speed", "correct": false},
+        {"text": "The first leader insisted on his favourite colour", "correct": false}
+      ],
+      "difficulty": "medium",
+      "fun_fact": "The maillot jaune was introduced in 1919 to make the race leader visible in the peloton. L'Auto used yellow paper to stand out from its main rival, Le Vélo, which was green.",
+      "category": "Sport"
+    },
+    {
+      "id": "sport_en_041",
+      "question": "Bo Jackson was a star in which two professional sports simultaneously?",
+      "answers": [
+        {"text": "MLB baseball and NFL American football", "correct": true},
+        {"text": "NBA basketball and MLB baseball", "correct": false},
+        {"text": "NFL football and NHL ice hockey", "correct": false}
+      ],
+      "difficulty": "easy",
+      "fun_fact": "Jackson is the only athlete named an All-Star in both MLB and the NFL. A hip injury in a 1991 playoff game effectively ended both careers — he later played one more MLB season with a prosthetic hip.",
+      "category": "Sport"
+    },
+    {
+      "id": "sport_en_042",
+      "question": "How long is a regulation Olympic swimming pool?",
+      "answers": [
+        {"text": "50 metres", "correct": true},
+        {"text": "100 metres", "correct": false},
+        {"text": "25 metres", "correct": false}
+      ],
+      "difficulty": "easy",
+      "fun_fact": "Short-course world records (25 m pools) are typically faster than long-course (50 m) records because each push-off the wall gives a brief speed boost. Many swimmers consider 25 m pools 'cheating fast'.",
+      "category": "Sport"
+    },
+    {
+      "id": "sport_en_043",
+      "question": "What is the highest break possible in a single frame of snooker, under standard rules?",
+      "answers": [
+        {"text": "155", "correct": true},
+        {"text": "147", "correct": false},
+        {"text": "180", "correct": false}
+      ],
+      "difficulty": "hard",
+      "fun_fact": "The 147 'maximum' is the famous benchmark, but a free ball at the start can theoretically push it to 155. It has happened once in professional play: Jamie Burnett scored 148 in 2004.",
+      "category": "Sport"
+    },
+    {
+      "id": "sport_en_044",
+      "question": "How many dimples does a standard regulation golf ball typically have?",
+      "answers": [
+        {"text": "Between 300 and 500", "correct": true},
+        {"text": "Exactly 1,000", "correct": false},
+        {"text": "Around 50", "correct": false}
+      ],
+      "difficulty": "medium",
+      "fun_fact": "Most balls have 336 to 392 dimples in a precise geometric pattern. The exact number affects spin and flight; manufacturers fiercely guard their dimple geometries as trade secrets.",
+      "category": "Sport"
+    },
+    {
+      "id": "sport_en_045",
+      "question": "Usain Bolt's 100m world record of 9.58 seconds was set in 2009. What was unusual about his reaction time at the start?",
+      "answers": [
+        {"text": "It was 0.146 s — slower than several rivals he beat", "correct": true},
+        {"text": "It was the fastest ever recorded at 0.099 s", "correct": false},
+        {"text": "Officials initially disqualified him for a false start", "correct": false}
+      ],
+      "difficulty": "hard",
+      "fun_fact": "Bolt's top speed in that race reached over 44.7 km/h. His relatively slow starts and astonishing top-end were both due to his height (1.95 m) — taller frames take longer to accelerate but cover more ground per stride.",
+      "category": "Sport"
+    },
+    {
+      "id": "sport_en_046",
+      "question": "What does a baseball umpire signal by sweeping both arms outward at waist level?",
+      "answers": [
+        {"text": "Safe", "correct": true},
+        {"text": "Strike", "correct": false},
+        {"text": "Foul ball", "correct": false}
+      ],
+      "difficulty": "easy",
+      "fun_fact": "Hand signals were introduced in the late 19th century to help deaf player William Hoy follow the calls. They became permanent because they helped distant fans and players hear-impaired by stadium crowds.",
+      "category": "Sport"
+    },
+    {
+      "id": "sport_en_047",
+      "question": "Why is a cricket Test match called a 'Test'?",
+      "answers": [
+        {"text": "Because it tests the players' skill and stamina over five days", "correct": true},
+        {"text": "After a 19th-century cricket bat factory called Test Brothers", "correct": false},
+        {"text": "Because the first match was played on a ground named Test Field", "correct": false}
+      ],
+      "difficulty": "medium",
+      "fun_fact": "Test cricket began in 1877 between Australia and England. With sessions of about 6 hours daily for up to 5 days, a single match can run over 30 hours of play — the longest format in mainstream sport.",
+      "category": "Sport"
+    },
+    {
+      "id": "sport_en_048",
+      "question": "The standard height of a basketball hoop has been 10 feet (3.05 m) since the sport was invented. Why?",
+      "answers": [
+        {"text": "It's simply the height of the gymnasium balcony where Naismith first nailed up the peach baskets", "correct": true},
+        {"text": "It was set at the average reach of a tall man plus 50%", "correct": false},
+        {"text": "It was chosen at the 1936 Olympics as half the average court length", "correct": false}
+      ],
+      "difficulty": "medium",
+      "fun_fact": "Naismith nailed the baskets to the running track balcony in his Springfield, Massachusetts gymnasium. The balcony was 10 feet high. Despite players now averaging much taller than in 1891, the rim height has never been raised.",
+      "category": "Sport"
+    },
+    {
+      "id": "sport_en_049",
+      "question": "Which rule did Formula 1 introduce in 2014 that often confused fans during a race?",
+      "answers": [
+        {"text": "Double points awarded for the final race of the season", "correct": true},
+        {"text": "Mandatory pit stops every 15 laps", "correct": false},
+        {"text": "A reverse grid for the second race of a double-header", "correct": false}
+      ],
+      "difficulty": "hard",
+      "fun_fact": "The double-points rule was designed to keep championship suspense alive, but Lewis Hamilton clinched the 2014 title in Abu Dhabi anyway. The rule was so widely mocked that it was scrapped after just one season.",
+      "category": "Sport"
+    },
+    {
+      "id": "sport_en_050",
+      "question": "What changed in figure skating scoring after the 2002 Salt Lake City judging scandal?",
+      "answers": [
+        {"text": "The 6.0 system was scrapped for a cumulative points-based score with no maximum", "correct": true},
+        {"text": "Judges were forbidden from talking to each other during competition", "correct": false},
+        {"text": "Pairs skating was split into separate male and female events", "correct": false}
+      ],
+      "difficulty": "medium",
+      "fun_fact": "After a French judge admitted to a vote-swapping deal, the ISU replaced the iconic '6.0' system with a Code of Points where each element gets a base value plus 'grade of execution'. Theoretical maximums now run into the 300s for free skates.",
+      "category": "Sport"
+    }
+  ]
+}

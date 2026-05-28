@@ -1,0 +1,608 @@
+{
+  "name": "Musik",
+  "language": "de",
+  "version": "1.0",
+  "theme": "music",
+  "questions": [
+    {
+      "id": "musik_de_001",
+      "question": "Mit wie vielen Jahren komponierte Mozart angeblich seine erste Sinfonie?",
+      "answers": [
+        {"text": "8 Jahre", "correct": true},
+        {"text": "12 Jahre", "correct": false},
+        {"text": "5 Jahre", "correct": false}
+      ],
+      "difficulty": "easy",
+      "fun_fact": "Mozart schrieb seine 1. Sinfonie 1764 in London — sein Vater Leopold lag krank im Bett und Wolfgang durfte zu Hause nicht Klavier spielen. Aus Langeweile komponierte er.",
+      "category": "Musik"
+    },
+    {
+      "id": "musik_de_002",
+      "question": "Welcher berühmte Komponist war am Ende seines Lebens komplett taub?",
+      "answers": [
+        {"text": "Beethoven", "correct": true},
+        {"text": "Mozart", "correct": false},
+        {"text": "Bach", "correct": false}
+      ],
+      "difficulty": "easy",
+      "fun_fact": "Beethoven dirigierte die Uraufführung seiner 9. Sinfonie 1824, ohne den tobenden Applaus hinter sich zu hören — eine Sängerin musste ihn am Ärmel zum Publikum drehen.",
+      "category": "Musik"
+    },
+    {
+      "id": "musik_de_003",
+      "question": "Was sägte Beethoven angeblich von den Beinen seines Klaviers ab?",
+      "answers": [
+        {"text": "Die Beine — um die Vibrationen über den Boden zu spüren", "correct": true},
+        {"text": "Nur die vorderen Beine — als Stimmhilfe", "correct": false},
+        {"text": "Die Pedale — er fand sie überflüssig", "correct": false}
+      ],
+      "difficulty": "medium",
+      "fun_fact": "Als Beethoven taub wurde, sägte er die Beine seines Klaviers ab, legte sich auf den Boden und spürte die Töne durch die Holzvibrationen.",
+      "category": "Musik"
+    },
+    {
+      "id": "musik_de_004",
+      "question": "Welches Instrument lernte Mozart laut Anekdote als erstes?",
+      "answers": [
+        {"text": "Cembalo", "correct": true},
+        {"text": "Violine", "correct": false},
+        {"text": "Flöte", "correct": false}
+      ],
+      "difficulty": "medium",
+      "fun_fact": "Mit drei Jahren spielte Mozart bereits Akkorde auf dem Cembalo seiner Schwester Nannerl — das Klavier in heutiger Form gab es damals noch nicht.",
+      "category": "Musik"
+    },
+    {
+      "id": "musik_de_005",
+      "question": "Wer komponierte das Stück „4'33\" — vier Minuten und 33 Sekunden Stille?",
+      "answers": [
+        {"text": "John Cage", "correct": true},
+        {"text": "Igor Strawinsky", "correct": false},
+        {"text": "Arnold Schönberg", "correct": false}
+      ],
+      "difficulty": "medium",
+      "fun_fact": "John Cages „4'33\" wurde 1952 uraufgeführt. Der Pianist saß stumm am Klavier — die „Musik\" sind die Umgebungsgeräusche des Publikums.",
+      "category": "Musik"
+    },
+    {
+      "id": "musik_de_006",
+      "question": "Welcher dieser Komponisten starb NICHT vor seinem 40. Geburtstag?",
+      "answers": [
+        {"text": "Joseph Haydn", "correct": true},
+        {"text": "Wolfgang Amadeus Mozart", "correct": false},
+        {"text": "Franz Schubert", "correct": false}
+      ],
+      "difficulty": "medium",
+      "fun_fact": "Haydn wurde 77 Jahre alt. Mozart starb mit 35, Schubert sogar schon mit 31 — beide gelten als die größten Frühvollendeten der Musikgeschichte.",
+      "category": "Musik"
+    },
+    {
+      "id": "musik_de_007",
+      "question": "Wie viele vollständige Sinfonien hinterließ Johann Sebastian Bach?",
+      "answers": [
+        {"text": "Keine einzige", "correct": true},
+        {"text": "9", "correct": false},
+        {"text": "41", "correct": false}
+      ],
+      "difficulty": "hard",
+      "fun_fact": "Bach komponierte über 1.000 Werke — aber keine einzige Sinfonie im klassischen Sinn. Die Form wurde erst nach seinem Tod von Haydn und Mozart geprägt.",
+      "category": "Musik"
+    },
+    {
+      "id": "musik_de_008",
+      "question": "Was passierte mit Joseph Haydns Schädel nach seinem Tod?",
+      "answers": [
+        {"text": "Er wurde gestohlen und tauchte erst 145 Jahre später wieder auf", "correct": true},
+        {"text": "Er wurde in einer Goldurne in Wien ausgestellt", "correct": false},
+        {"text": "Er ging bei einem Brand in Eisenstadt verloren", "correct": false}
+      ],
+      "difficulty": "hard",
+      "fun_fact": "Phrenologen klauten Haydns Schädel kurz nach seiner Beerdigung 1809, um sein „musikalisches Genie\" zu vermessen. Erst 1954 wurde er wieder mit dem restlichen Skelett vereint.",
+      "category": "Musik"
+    },
+    {
+      "id": "musik_de_009",
+      "question": "Komponierte der späte, taube Beethoven noch in allen Tonarten?",
+      "answers": [
+        {"text": "Ja — er komponierte in seinem Kopf weiter ohne Tonart-Vermeidung", "correct": true},
+        {"text": "Nein — er vermied B-Dur konsequent", "correct": false},
+        {"text": "Nein — er hielt sich nur an C-Dur und a-Moll", "correct": false}
+      ],
+      "difficulty": "hard",
+      "fun_fact": "Trotz vollständiger Taubheit schrieb Beethoven die 9. Sinfonie und die späten Streichquartette — in seinem Kopf hörte er die Musik vollkommen klar, in allen Tonarten.",
+      "category": "Musik"
+    },
+    {
+      "id": "musik_de_010",
+      "question": "Welcher Komponist soll seine Werke immer beim Schein einer Kerze auf seinem Hut komponiert haben?",
+      "answers": [
+        {"text": "Niemand — das ist eine erfundene Legende ohne historischen Beleg", "correct": true},
+        {"text": "Mozart, während Tourneen im Wagen", "correct": false},
+        {"text": "Chopin in seinen letzten Lebensjahren", "correct": false}
+      ],
+      "difficulty": "hard",
+      "fun_fact": "Es gibt unzählige romantisierte Komponisten-Anekdoten — diese gehört NICHT dazu. Eine schöne Erinnerung daran, dass nicht jede schöne Geschichte echt ist.",
+      "category": "Musik"
+    },
+    {
+      "id": "musik_de_011",
+      "question": "Welches Beatles-Mitglied wurde NICHT 1980 geboren?",
+      "answers": [
+        {"text": "Alle vier — keiner von ihnen wurde 1980 geboren", "correct": true},
+        {"text": "Nur Ringo Starr", "correct": false},
+        {"text": "Nur John Lennon", "correct": false}
+      ],
+      "difficulty": "easy",
+      "fun_fact": "Eine Trickfrage: Die Beatles waren bereits 1960 eine Band. Alle vier Mitglieder wurden zwischen 1940 und 1943 geboren — John Lennon wurde 1980 ermordet.",
+      "category": "Musik"
+    },
+    {
+      "id": "musik_de_012",
+      "question": "Wie hieß David Bowies außerirdisches Bühnen-Alter-Ego in den 1970ern?",
+      "answers": [
+        {"text": "Ziggy Stardust", "correct": true},
+        {"text": "Aladdin Sane", "correct": false},
+        {"text": "The Thin White Duke", "correct": false}
+      ],
+      "difficulty": "easy",
+      "fun_fact": "Bowie erfand mehrere Bühnenfiguren. Alle drei Antworten sind echte Bowie-Personae — aber nur Ziggy Stardust war der Alien-Rockstar von 1972.",
+      "category": "Musik"
+    },
+    {
+      "id": "musik_de_013",
+      "question": "Wollte Queen „Bohemian Rhapsody\" ursprünglich als Single oder als reinen Albumtrack veröffentlichen?",
+      "answers": [
+        {"text": "Als Single — Queen setzte sich gegen das Plattenlabel durch", "correct": true},
+        {"text": "Als Albumtrack — die Band fand den Song zu lang fürs Radio", "correct": false},
+        {"text": "Gar nicht — der Song wurde erst nach Mercurys Tod veröffentlicht", "correct": false}
+      ],
+      "difficulty": "medium",
+      "fun_fact": "EMI fand die 5:55 Minuten zu lang fürs Radio. Freddie Mercury gab das Tape heimlich DJ Kenny Everett, der es 14-mal am Wochenende spielte — der Rest ist Geschichte.",
+      "category": "Musik"
+    },
+    {
+      "id": "musik_de_014",
+      "question": "Wie viele Beatles trugen einen Künstlernamen statt ihres Geburtsnamens?",
+      "answers": [
+        {"text": "Einer — Ringo Starr (eigentlich Richard Starkey)", "correct": true},
+        {"text": "Zwei — Ringo Starr und George Harrison", "correct": false},
+        {"text": "Alle vier hatten Künstlernamen", "correct": false}
+      ],
+      "difficulty": "medium",
+      "fun_fact": "Nur Ringo Starr ist ein Künstlername — Richard Starkey nannte sich so wegen seiner vielen Ringe. John, Paul und George trugen ihre Geburtsnamen.",
+      "category": "Musik"
+    },
+    {
+      "id": "musik_de_015",
+      "question": "Unter welchem Namen traten Lennon und McCartney 1960 quasi als eigene Vorgruppe auf?",
+      "answers": [
+        {"text": "The Nurk Twins", "correct": true},
+        {"text": "The Quarrymen Two", "correct": false},
+        {"text": "The Silver Beetles", "correct": false}
+      ],
+      "difficulty": "hard",
+      "fun_fact": "John und Paul traten 1960 als Duo „Nurk Twins\" in einem Pub auf — quasi als eigene Vorband, bevor sie wenig später wieder als Beatles spielten.",
+      "category": "Musik"
+    },
+    {
+      "id": "musik_de_016",
+      "question": "Wer war NICHT auf dem ikonischen „Abbey Road\"-Cover-Zebrastreifen?",
+      "answers": [
+        {"text": "Yoko Ono", "correct": true},
+        {"text": "John Lennon", "correct": false},
+        {"text": "Paul McCartney", "correct": false}
+      ],
+      "difficulty": "easy",
+      "fun_fact": "Nur die vier Beatles überquerten den Zebrastreifen am 8. August 1969. Das Shooting dauerte ganze 10 Minuten — Paul ging barfuß.",
+      "category": "Musik"
+    },
+    {
+      "id": "musik_de_017",
+      "question": "Welcher dieser Rockstars wählte seinen Künstlernamen nach einem Messer, nicht nach einem Boxer?",
+      "answers": [
+        {"text": "David Bowie (nach dem Bowie-Messer)", "correct": true},
+        {"text": "Sting (nach dem Bienenstich-Messer)", "correct": false},
+        {"text": "Slash (nach dem Schnitt eines Säbels)", "correct": false}
+      ],
+      "difficulty": "hard",
+      "fun_fact": "David Robert Jones wählte „Bowie\" nach Jim Bowies legendärem Messer, um Verwechslungen mit Davy Jones (The Monkees) zu vermeiden.",
+      "category": "Musik"
+    },
+    {
+      "id": "musik_de_018",
+      "question": "Welches Pink-Floyd-Album hielt sich über 900 Wochen in den Billboard-Charts?",
+      "answers": [
+        {"text": "The Dark Side of the Moon", "correct": true},
+        {"text": "The Wall", "correct": false},
+        {"text": "Wish You Were Here", "correct": false}
+      ],
+      "difficulty": "medium",
+      "fun_fact": "„The Dark Side of the Moon\" (1973) blieb über 900 Wochen in den US-Charts — länger als jedes andere Album in der Geschichte.",
+      "category": "Musik"
+    },
+    {
+      "id": "musik_de_019",
+      "question": "Wer veröffentlichte die erste Studio-Aufnahme von „Yesterday\"?",
+      "answers": [
+        {"text": "Die Beatles selbst, 1965", "correct": true},
+        {"text": "Frank Sinatra, 1964", "correct": false},
+        {"text": "Elvis Presley, 1963", "correct": false}
+      ],
+      "difficulty": "medium",
+      "fun_fact": "Paul McCartney träumte die Melodie und nannte sie zunächst „Scrambled Eggs\". „Yesterday\" erschien 1965 auf „Help!\" und ist mit über 2.000 Cover-Versionen Weltrekord.",
+      "category": "Musik"
+    },
+    {
+      "id": "musik_de_020",
+      "question": "Was war der ursprüngliche Bandname von Led Zeppelin?",
+      "answers": [
+        {"text": "The New Yardbirds", "correct": true},
+        {"text": "The Lead Balloons", "correct": false},
+        {"text": "Page & Plant", "correct": false}
+      ],
+      "difficulty": "hard",
+      "fun_fact": "Jimmy Page tourte mit „The New Yardbirds\" weiter, nachdem sich die Yardbirds aufgelöst hatten. Keith Moon (The Who) prophezeite, die Band gehe unter „wie ein Bleizeppelin\" — der Name blieb.",
+      "category": "Musik"
+    },
+    {
+      "id": "musik_de_021",
+      "question": "Wie viele Saiten hat eine klassische Konzertgitarre?",
+      "answers": [
+        {"text": "6", "correct": true},
+        {"text": "7", "correct": false},
+        {"text": "12", "correct": false}
+      ],
+      "difficulty": "easy",
+      "fun_fact": "Die klassische Gitarre hat 6 Nylonsaiten. 12-saitige Gitarren existieren — aber nur als Folk-/Rock-Variante mit gedoppelten Saiten.",
+      "category": "Musik"
+    },
+    {
+      "id": "musik_de_022",
+      "question": "Welches Instrument wurde von Adolphe Sax erfunden?",
+      "answers": [
+        {"text": "Saxophon", "correct": true},
+        {"text": "Klarinette", "correct": false},
+        {"text": "Posaune", "correct": false}
+      ],
+      "difficulty": "easy",
+      "fun_fact": "Der Belgier Adolphe Sax patentierte das Saxophon 1846 — eigentlich als Militär- und Orchesterinstrument. Erst Jazz machte es weltberühmt.",
+      "category": "Musik"
+    },
+    {
+      "id": "musik_de_023",
+      "question": "Wie viel kostete die teuerste je verkaufte Stradivari-Geige?",
+      "answers": [
+        {"text": "Über 15 Millionen Dollar", "correct": true},
+        {"text": "Etwa 800.000 Dollar", "correct": false},
+        {"text": "Etwa 2,5 Millionen Dollar", "correct": false}
+      ],
+      "difficulty": "medium",
+      "fun_fact": "Die „Lady Blunt\"-Stradivari erzielte 2011 rund 15,9 Mio. Dollar bei einer Auktion. Antonio Stradivari baute im 18. Jahrhundert ca. 1.100 Instrumente, etwa 650 existieren noch.",
+      "category": "Musik"
+    },
+    {
+      "id": "musik_de_024",
+      "question": "Welches dieser Instrumente hat KEINE Tasten im klassischen Sinn?",
+      "answers": [
+        {"text": "Theremin", "correct": true},
+        {"text": "Klavier", "correct": false},
+        {"text": "Akkordeon", "correct": false}
+      ],
+      "difficulty": "medium",
+      "fun_fact": "Das Theremin (1920 von Léon Theremin erfunden) wird berührungslos gespielt — die Hände bewegen sich nur in der Nähe zweier Antennen, die Höhe und Lautstärke steuern.",
+      "category": "Musik"
+    },
+    {
+      "id": "musik_de_025",
+      "question": "Wie viele Tasten hat ein modernes Konzertklavier?",
+      "answers": [
+        {"text": "88", "correct": true},
+        {"text": "76", "correct": false},
+        {"text": "96", "correct": false}
+      ],
+      "difficulty": "easy",
+      "fun_fact": "88 Tasten — 52 weiße und 36 schwarze. Bösendorfer baut auch Klaviere mit 92 oder sogar 97 Tasten, aber das ist die Ausnahme.",
+      "category": "Musik"
+    },
+    {
+      "id": "musik_de_026",
+      "question": "Sind Stradivari-Geigen in Blindtests messbar besser als moderne Geigen?",
+      "answers": [
+        {"text": "Nein — in Blindtests konnten Profis sie nicht zuverlässig unterscheiden", "correct": true},
+        {"text": "Ja — sie klingen deutlich heller und lauter", "correct": false},
+        {"text": "Ja — aber nur bei Aufnahmen, nicht live", "correct": false}
+      ],
+      "difficulty": "hard",
+      "fun_fact": "Studien (u.a. 2014 in Paris) zeigten: Top-Geiger erkennen Stradivaris nicht zuverlässig in Blindtests und bevorzugten oft moderne Instrumente. Der Mythos ist größer als die Akustik.",
+      "category": "Musik"
+    },
+    {
+      "id": "musik_de_027",
+      "question": "Welches Blechblasinstrument hat im Orchester die längste gewickelte Rohrlänge?",
+      "answers": [
+        {"text": "Tuba", "correct": true},
+        {"text": "Posaune", "correct": false},
+        {"text": "Trompete", "correct": false}
+      ],
+      "difficulty": "medium",
+      "fun_fact": "Eine Kontrabasstuba hat gewickelt etwa 5,5 m Rohrlänge — eine Trompete nur rund 1,5 m. Die Tuba ist auch das tiefste Blechblasinstrument im Orchester.",
+      "category": "Musik"
+    },
+    {
+      "id": "musik_de_028",
+      "question": "Wer erfand das Klavier (Hammerklavier)?",
+      "answers": [
+        {"text": "Bartolomeo Cristofori, um 1700", "correct": true},
+        {"text": "Johann Sebastian Bach, um 1730", "correct": false},
+        {"text": "Heinrich Steinway, um 1853", "correct": false}
+      ],
+      "difficulty": "hard",
+      "fun_fact": "Cristofori arbeitete als Cembalobauer in Florenz und entwickelte um 1700 das „gravicembalo col piano e forte\" — das erste Instrument mit dynamischer Anschlagstärke.",
+      "category": "Musik"
+    },
+    {
+      "id": "musik_de_029",
+      "question": "Welche Instrumenten-Art gilt als das größte Musikinstrument der Welt?",
+      "answers": [
+        {"text": "Eine Orgel (in Atlantic City, USA)", "correct": true},
+        {"text": "Eine Kirchenglocke in Russland", "correct": false},
+        {"text": "Ein Kontrabass aus Cincinnati", "correct": false}
+      ],
+      "difficulty": "medium",
+      "fun_fact": "Die Boardwalk-Hall-Orgel in Atlantic City hat über 33.000 Pfeifen — die größte über 19 m lang. Sie ist offiziell das größte und lauteste Musikinstrument der Welt.",
+      "category": "Musik"
+    },
+    {
+      "id": "musik_de_030",
+      "question": "Wie wird der Bogen einer Geige traditionell bespannt?",
+      "answers": [
+        {"text": "Mit Haaren aus dem Pferdeschweif", "correct": true},
+        {"text": "Mit Nylonfäden", "correct": false},
+        {"text": "Mit Katzendarm", "correct": false}
+      ],
+      "difficulty": "easy",
+      "fun_fact": "Ein Geigenbogen ist mit 150–200 Haaren bespannt — meist aus Mongolei oder Sibirien, weil das Klima dort die Haare besonders robust macht. Katzendarm war einmal für die Saiten üblich, nicht den Bogen.",
+      "category": "Musik"
+    },
+    {
+      "id": "musik_de_031",
+      "question": "Welcher Weihnachtssong gilt als der meistverkaufte Song aller Zeiten?",
+      "answers": [
+        {"text": "„White Christmas\" von Bing Crosby", "correct": true},
+        {"text": "„Last Christmas\" von Wham!", "correct": false},
+        {"text": "„All I Want for Christmas Is You\" von Mariah Carey", "correct": false}
+      ],
+      "difficulty": "medium",
+      "fun_fact": "„White Christmas\" (1942) hat sich schätzungsweise über 50 Mio. Mal verkauft und gilt laut Guinness-Buch als meistverkaufte Single aller Zeiten.",
+      "category": "Musik"
+    },
+    {
+      "id": "musik_de_032",
+      "question": "Welcher Welthit war zuerst eine Country-Ballade einer anderen Künstlerin?",
+      "answers": [
+        {"text": "„I Will Always Love You\" — Whitney Houston coverte Dolly Parton", "correct": true},
+        {"text": "„Bohemian Rhapsody\" — Queen coverte ein Volkslied", "correct": false},
+        {"text": "„Imagine\" — John Lennon coverte Yoko Ono", "correct": false}
+      ],
+      "difficulty": "easy",
+      "fun_fact": "Dolly Parton schrieb „I Will Always Love You\" 1973 als Abschiedssong an ihren Mentor. Whitneys Cover aus „Bodyguard\" (1992) wurde um ein Vielfaches erfolgreicher als das Original.",
+      "category": "Musik"
+    },
+    {
+      "id": "musik_de_033",
+      "question": "Welcher berühmte Song entstand laut Legende komplett im Traum seines Komponisten?",
+      "answers": [
+        {"text": "„Yesterday\" von Paul McCartney", "correct": true},
+        {"text": "„Hey Jude\" von Paul McCartney", "correct": false},
+        {"text": "„Let It Be\" von Paul McCartney", "correct": false}
+      ],
+      "difficulty": "medium",
+      "fun_fact": "McCartney träumte 1965 die komplette Melodie und nannte sie zunächst „Scrambled Eggs\". Erst Wochen später ergänzte er den heutigen Text.",
+      "category": "Musik"
+    },
+    {
+      "id": "musik_de_034",
+      "question": "Welcher Song wurde zuerst von Otis Redding aufgenommen, bevor Aretha Franklin ihn weltberühmt machte?",
+      "answers": [
+        {"text": "„Respect\"", "correct": true},
+        {"text": "„I Will Always Love You\"", "correct": false},
+        {"text": "„Hallelujah\"", "correct": false}
+      ],
+      "difficulty": "hard",
+      "fun_fact": "Otis Redding schrieb und veröffentlichte „Respect\" 1965. Aretha drehte den Song 1967 komplett um — Redding sagte später: „Diese Frau hat mir meinen Song geklaut.\"",
+      "category": "Musik"
+    },
+    {
+      "id": "musik_de_035",
+      "question": "Welcher Song hält den Rekord für die meisten Wochen auf Platz 1 der US-Billboard-Hot-100?",
+      "answers": [
+        {"text": "„Old Town Road\" von Lil Nas X", "correct": true},
+        {"text": "„Despacito\" von Luis Fonsi", "correct": false},
+        {"text": "„Uptown Funk\" von Mark Ronson", "correct": false}
+      ],
+      "difficulty": "medium",
+      "fun_fact": "„Old Town Road\" stand 2019 ganze 19 Wochen auf Platz 1 — Rekord. Anfangs flog der Song aus den Country-Charts, weil er angeblich „nicht country genug\" sei.",
+      "category": "Musik"
+    },
+    {
+      "id": "musik_de_036",
+      "question": "Welcher Beatles-Song entstand, um Johns Sohn Julian nach der elterlichen Trennung zu trösten?",
+      "answers": [
+        {"text": "„Hey Jude\"", "correct": true},
+        {"text": "„Let It Be\"", "correct": false},
+        {"text": "„Imagine\"", "correct": false}
+      ],
+      "difficulty": "medium",
+      "fun_fact": "McCartney fuhr 1968 zu Cynthia und Julian Lennon, um sie nach Johns Trennung zu trösten. Er sang „Hey Jules\" — später wurde daraus „Hey Jude\".",
+      "category": "Musik"
+    },
+    {
+      "id": "musik_de_037",
+      "question": "Aus welcher Sprache stammt das englische Wort „earworm\" (Ohrwurm)?",
+      "answers": [
+        {"text": "Aus dem Deutschen — direkte Lehnübersetzung von „Ohrwurm\"", "correct": true},
+        {"text": "Aus dem Lateinischen — von „aurivermis\"", "correct": false},
+        {"text": "Aus dem Französischen — von „ver d'oreille\"", "correct": false}
+      ],
+      "difficulty": "hard",
+      "fun_fact": "Das englische „earworm\" wurde aus dem deutschen „Ohrwurm\" entlehnt. Forscher der Uni Cincinnati zeigten 2003: 98 % aller Menschen hatten schon mal einen.",
+      "category": "Musik"
+    },
+    {
+      "id": "musik_de_038",
+      "question": "Welcher Song war der erste komplett spanischsprachige Nummer-1-Hit der US-Billboard-Charts?",
+      "answers": [
+        {"text": "„La Bamba\" von Los Lobos (1987)", "correct": true},
+        {"text": "„Despacito\" von Luis Fonsi (2017)", "correct": false},
+        {"text": "„Macarena\" von Los del Río (1996)", "correct": false}
+      ],
+      "difficulty": "hard",
+      "fun_fact": "„La Bamba\" — ursprünglich ein mexikanisches Volkslied — wurde 1987 in der Los-Lobos-Version zur ersten spanischsprachigen Nr.-1 der US-Billboard-Charts.",
+      "category": "Musik"
+    },
+    {
+      "id": "musik_de_039",
+      "question": "Welcher Song wurde 1965 als erstes Musikstück im Weltraum gespielt?",
+      "answers": [
+        {"text": "„Jingle Bells\" (Gemini 6)", "correct": true},
+        {"text": "„Fly Me to the Moon\" (Apollo 11)", "correct": false},
+        {"text": "„Space Oddity\" (Skylab)", "correct": false}
+      ],
+      "difficulty": "hard",
+      "fun_fact": "Die Astronauten Wally Schirra und Tom Stafford schmuggelten Mundharmonika und Glöckchen an Bord von Gemini 6 und spielten am 16. Dez. 1965 „Jingle Bells\" als Scherz.",
+      "category": "Musik"
+    },
+    {
+      "id": "musik_de_040",
+      "question": "Wo entstand der berühmte Riff von Deep Purples „Smoke on the Water\"?",
+      "answers": [
+        {"text": "Nach einem Casino-Brand am Genfersee in Montreux 1971", "correct": true},
+        {"text": "In einem Londoner Taxi während eines Verkehrsstaus", "correct": false},
+        {"text": "Bei einer Probe in den Abbey-Road-Studios", "correct": false}
+      ],
+      "difficulty": "medium",
+      "fun_fact": "Während eines Frank-Zappa-Konzerts brannte das Montreux-Casino ab. Deep Purple sahen den Rauch über den Genfer See ziehen — und schrieben daraus einen der berühmtesten Rock-Riffs der Geschichte.",
+      "category": "Musik"
+    },
+    {
+      "id": "musik_de_041",
+      "question": "Welches Land gewann den Eurovision Song Contest am häufigsten?",
+      "answers": [
+        {"text": "Schweden (gleichauf mit Irland)", "correct": true},
+        {"text": "Deutschland", "correct": false},
+        {"text": "Vereinigtes Königreich", "correct": false}
+      ],
+      "difficulty": "medium",
+      "fun_fact": "Schweden holte 2023 mit Loreens „Tattoo\" den siebten Sieg und zog mit Irland gleich — beide Länder teilen sich den Rekord mit jeweils 7 ESC-Siegen.",
+      "category": "Musik"
+    },
+    {
+      "id": "musik_de_042",
+      "question": "Welches berühmte Label lehnte die Beatles 1962 mit den Worten „Gitarrenbands sind out\" ab?",
+      "answers": [
+        {"text": "Decca Records", "correct": true},
+        {"text": "EMI", "correct": false},
+        {"text": "Capitol Records", "correct": false}
+      ],
+      "difficulty": "medium",
+      "fun_fact": "Dick Rowe von Decca traf am 1. Januar 1962 die Entscheidung. Er gilt als „der Mann, der die Beatles ablehnte\" — kompensierte aber später mit der Unterzeichnung der Rolling Stones.",
+      "category": "Musik"
+    },
+    {
+      "id": "musik_de_043",
+      "question": "Welches Album-Cover sorgte für einen Skandal, weil ein nacktes Baby unter Wasser zu sehen war?",
+      "answers": [
+        {"text": "„Nevermind\" von Nirvana", "correct": true},
+        {"text": "„The Wall\" von Pink Floyd", "correct": false},
+        {"text": "„Born in the U.S.A.\" von Bruce Springsteen", "correct": false}
+      ],
+      "difficulty": "medium",
+      "fun_fact": "Das Baby auf Nirvanas „Nevermind\"-Cover (1991) heißt Spencer Elden und verklagte die Band Jahrzehnte später wegen „Kinderpornografie\". Die Klage wurde abgewiesen.",
+      "category": "Musik"
+    },
+    {
+      "id": "musik_de_044",
+      "question": "Was ist heute der weltweit umsatzstärkste Vertriebsweg für Musik?",
+      "answers": [
+        {"text": "Streaming", "correct": true},
+        {"text": "CDs", "correct": false},
+        {"text": "Vinyl", "correct": false}
+      ],
+      "difficulty": "easy",
+      "fun_fact": "Streaming macht über 65 % der weltweiten Musikumsätze aus (IFPI Global Music Report). Vinyl ist zurück — aber nur ein Bruchteil des Streamings.",
+      "category": "Musik"
+    },
+    {
+      "id": "musik_de_045",
+      "question": "Welches Plattenformat erlebt seit den 2010ern ein erstaunliches Comeback?",
+      "answers": [
+        {"text": "Vinyl", "correct": true},
+        {"text": "MiniDisc", "correct": false},
+        {"text": "DAT-Kassette", "correct": false}
+      ],
+      "difficulty": "easy",
+      "fun_fact": "Vinyl-Verkäufe haben 2022 in den USA erstmals seit 1987 die CD-Verkäufe übertroffen. Kassetten erleben ebenfalls ein Nischen-Comeback — aber weit kleiner.",
+      "category": "Musik"
+    },
+    {
+      "id": "musik_de_046",
+      "question": "In welcher Stadt fand 1956 die allererste Ausgabe des Eurovision Song Contest statt?",
+      "answers": [
+        {"text": "Lugano (Schweiz)", "correct": true},
+        {"text": "London (Vereinigtes Königreich)", "correct": false},
+        {"text": "Cannes (Frankreich)", "correct": false}
+      ],
+      "difficulty": "hard",
+      "fun_fact": "Die erste Ausgabe fand 1956 in Lugano statt. Lys Assia aus der Schweiz gewann — der einzige Sieg vor heimischem Publikum in der ESC-Geschichte.",
+      "category": "Musik"
+    },
+    {
+      "id": "musik_de_047",
+      "question": "Ist die „Paul-is-dead\"-Verschwörungstheorie offiziell bestätigt worden?",
+      "answers": [
+        {"text": "Nein — sie wurde nie bestätigt und Paul McCartney lebt nachweislich noch", "correct": true},
+        {"text": "Ja — McCartney bestätigte sie 1995 in einem Interview", "correct": false},
+        {"text": "Teilweise — Beatles-Mitglieder bestätigten Codes auf „Sgt. Pepper\"", "correct": false}
+      ],
+      "difficulty": "hard",
+      "fun_fact": "Die „Paul-is-dead\"-Theorie rankt sich um „Sgt. Pepper\" und „Abbey Road\" — wurde aber nie bestätigt. McCartney lebt nachweislich noch und scherzt regelmäßig darüber.",
+      "category": "Musik"
+    },
+    {
+      "id": "musik_de_048",
+      "question": "Welcher Künstler hält den Rekord für die meistverkaufte Single seit der modernen Charts-Ära?",
+      "answers": [
+        {"text": "Elton John mit „Candle in the Wind 1997\"", "correct": true},
+        {"text": "Mariah Carey mit „All I Want for Christmas Is You\"", "correct": false},
+        {"text": "Whitney Houston mit „I Will Always Love You\"", "correct": false}
+      ],
+      "difficulty": "medium",
+      "fun_fact": "Elton Johns Tribute an Prinzessin Diana verkaufte sich über 33 Mio. Mal — die meistverkaufte Single seit Beginn der modernen Charts-Ära.",
+      "category": "Musik"
+    },
+    {
+      "id": "musik_de_049",
+      "question": "Mit welchem Eurovision-Beitrag startete ABBA 1974 ihre Weltkarriere?",
+      "answers": [
+        {"text": "„Waterloo\"", "correct": true},
+        {"text": "„Mamma Mia\"", "correct": false},
+        {"text": "„Dancing Queen\"", "correct": false}
+      ],
+      "difficulty": "easy",
+      "fun_fact": "ABBA gewann mit „Waterloo\" 1974 in Brighton und startete damit ihre Weltkarriere. Trickreich: „Mamma Mia\" und „Dancing Queen\" waren NIE beim ESC.",
+      "category": "Musik"
+    },
+    {
+      "id": "musik_de_050",
+      "question": "Welcher Decca-Manager ging als „der Mann, der die Beatles ablehnte\" in die Musikgeschichte ein?",
+      "answers": [
+        {"text": "Dick Rowe", "correct": true},
+        {"text": "Brian Epstein", "correct": false},
+        {"text": "George Martin", "correct": false}
+      ],
+      "difficulty": "hard",
+      "fun_fact": "Dick Rowe lehnte die Beatles am 1. Januar 1962 ab. Brian Epstein war übrigens der Beatles-Manager, George Martin ihr legendärer Produzent bei EMI/Parlophone.",
+      "category": "Musik"
+    }
+  ]
+}

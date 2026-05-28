@@ -1,0 +1,608 @@
+{
+  "name": "Food & Drink",
+  "language": "en",
+  "version": "1.0",
+  "theme": "food",
+  "questions": [
+    {
+      "id": "food_en_001",
+      "question": "The modern sandwich is named after which English aristocrat?",
+      "answers": [
+        {"text": "The Earl of Sandwich", "correct": true},
+        {"text": "The Duke of Bread", "correct": false},
+        {"text": "Lord Buttercup", "correct": false}
+      ],
+      "difficulty": "easy",
+      "fun_fact": "John Montagu, 4th Earl of Sandwich, allegedly asked for meat between two slices of bread in 1762 so he could keep playing cards without greasy fingers.",
+      "category": "Food & Drink"
+    },
+    {
+      "id": "food_en_002",
+      "question": "Which country is widely credited with inventing the croissant?",
+      "answers": [
+        {"text": "Austria", "correct": true},
+        {"text": "France", "correct": false},
+        {"text": "Italy", "correct": false}
+      ],
+      "difficulty": "medium",
+      "fun_fact": "The croissant descends from the Austrian 'kipferl'. It only became 'French' after Viennese baker August Zang opened a bakery in Paris in 1839.",
+      "category": "Food & Drink"
+    },
+    {
+      "id": "food_en_003",
+      "question": "Which two countries officially dispute the invention of French fries?",
+      "answers": [
+        {"text": "Belgium and France", "correct": true},
+        {"text": "Germany and France", "correct": false},
+        {"text": "Netherlands and Belgium", "correct": false}
+      ],
+      "difficulty": "medium",
+      "fun_fact": "Belgians claim fries were invented in the Meuse Valley in the 1600s. The 'French' label likely comes from US soldiers in WWI who heard French-speaking Belgians.",
+      "category": "Food & Drink"
+    },
+    {
+      "id": "food_en_004",
+      "question": "Hawaiian pizza was actually invented in which country?",
+      "answers": [
+        {"text": "Canada", "correct": true},
+        {"text": "Hawaii (USA)", "correct": false},
+        {"text": "Italy", "correct": false}
+      ],
+      "difficulty": "easy",
+      "fun_fact": "Greek-Canadian Sam Panopoulos invented Hawaiian pizza in Chatham, Ontario in 1962. The name comes from the brand of canned pineapple he used.",
+      "category": "Food & Drink"
+    },
+    {
+      "id": "food_en_005",
+      "question": "General Tso's chicken, a staple of American Chinese menus, originated in which country?",
+      "answers": [
+        {"text": "Taiwan", "correct": true},
+        {"text": "Mainland China", "correct": false},
+        {"text": "USA", "correct": false}
+      ],
+      "difficulty": "hard",
+      "fun_fact": "Chef Peng Chang-kuei created it in Taiwan in the 1950s. It was sweetened and battered for American tastes when it reached New York in the 1970s.",
+      "category": "Food & Drink"
+    },
+    {
+      "id": "food_en_006",
+      "question": "Tikka masala, often called Britain's national dish, was likely invented in which city?",
+      "answers": [
+        {"text": "Glasgow", "correct": true},
+        {"text": "Mumbai", "correct": false},
+        {"text": "London", "correct": false}
+      ],
+      "difficulty": "medium",
+      "fun_fact": "The dish is widely attributed to Glasgow chef Ali Ahmed Aslam in the 1970s, who reportedly added tomato soup and cream to a customer's 'too dry' chicken tikka.",
+      "category": "Food & Drink"
+    },
+    {
+      "id": "food_en_007",
+      "question": "The fortune cookie is most strongly associated with which country's cuisine in the West, but actually originated where?",
+      "answers": [
+        {"text": "Japan", "correct": true},
+        {"text": "China", "correct": false},
+        {"text": "USA", "correct": false}
+      ],
+      "difficulty": "hard",
+      "fun_fact": "Fortune cookies trace back to 19th-century Japanese 'tsujiura senbei'. They became associated with Chinese restaurants in California in the early 1900s.",
+      "category": "Food & Drink"
+    },
+    {
+      "id": "food_en_008",
+      "question": "Vindaloo, a famously fiery Indian curry, has its name rooted in which European language?",
+      "answers": [
+        {"text": "Portuguese", "correct": true},
+        {"text": "English", "correct": false},
+        {"text": "Spanish", "correct": false}
+      ],
+      "difficulty": "hard",
+      "fun_fact": "Vindaloo comes from the Portuguese 'carne de vinha d'alhos' (meat in wine and garlic), brought to Goa by Portuguese colonisers.",
+      "category": "Food & Drink"
+    },
+    {
+      "id": "food_en_009",
+      "question": "Spaghetti Bolognese, as served abroad, is barely recognised in which Italian city?",
+      "answers": [
+        {"text": "Bologna", "correct": true},
+        {"text": "Rome", "correct": false},
+        {"text": "Milan", "correct": false}
+      ],
+      "difficulty": "medium",
+      "fun_fact": "In Bologna, ragù is traditionally served with tagliatelle, not spaghetti. The mayor once asked foreign restaurants to stop calling it 'spaghetti bolognese'.",
+      "category": "Food & Drink"
+    },
+    {
+      "id": "food_en_010",
+      "question": "The chimichanga, a deep-fried burrito, was reportedly invented in which country?",
+      "answers": [
+        {"text": "USA", "correct": true},
+        {"text": "Mexico", "correct": false},
+        {"text": "Spain", "correct": false}
+      ],
+      "difficulty": "medium",
+      "fun_fact": "Legend credits Monica Flin of El Charro Café in Tucson, Arizona (1922), who accidentally dropped a burrito into a deep fryer and exclaimed a Spanish swear word she cleaned up to 'chimichanga'.",
+      "category": "Food & Drink"
+    },
+    {
+      "id": "food_en_011",
+      "question": "Which active ingredient was originally in Coca-Cola in the late 1800s?",
+      "answers": [
+        {"text": "Cocaine (from coca leaves)", "correct": true},
+        {"text": "Morphine", "correct": false},
+        {"text": "Nicotine", "correct": false}
+      ],
+      "difficulty": "easy",
+      "fun_fact": "Coca-Cola contained small amounts of cocaine from coca leaf extract until around 1903. Today it still uses 'decocainised' coca leaf extract for flavour.",
+      "category": "Food & Drink"
+    },
+    {
+      "id": "food_en_012",
+      "question": "Under EU law, sparkling wine can only be called 'Champagne' if it comes from which region?",
+      "answers": [
+        {"text": "Champagne, France", "correct": true},
+        {"text": "Anywhere in France", "correct": false},
+        {"text": "Anywhere in the EU", "correct": false}
+      ],
+      "difficulty": "easy",
+      "fun_fact": "The protected designation of origin restricts the name 'Champagne' to sparkling wine produced in the Champagne region using specific grape varieties and methods.",
+      "category": "Food & Drink"
+    },
+    {
+      "id": "food_en_013",
+      "question": "Kopi luwak coffee is famous (and expensive) because the beans are first processed by what?",
+      "answers": [
+        {"text": "A civet's digestive system", "correct": true},
+        {"text": "A volcanic spring", "correct": false},
+        {"text": "A wood-fired kiln", "correct": false}
+      ],
+      "difficulty": "medium",
+      "fun_fact": "Asian palm civets eat the coffee cherries, and the beans are collected from their droppings. Enzymes in their gut alter the beans' flavour.",
+      "category": "Food & Drink"
+    },
+    {
+      "id": "food_en_014",
+      "question": "Pu-erh tea is unusual because it is intentionally what?",
+      "answers": [
+        {"text": "Aged and fermented for years", "correct": true},
+        {"text": "Distilled like spirits", "correct": false},
+        {"text": "Frozen before brewing", "correct": false}
+      ],
+      "difficulty": "medium",
+      "fun_fact": "Pu-erh from Yunnan, China, is microbially fermented and can age for decades. Vintage cakes can sell for thousands of dollars per kilogram.",
+      "category": "Food & Drink"
+    },
+    {
+      "id": "food_en_015",
+      "question": "Real absinthe gets its green colour primarily from what?",
+      "answers": [
+        {"text": "Chlorophyll from herbs", "correct": true},
+        {"text": "Added food dye", "correct": false},
+        {"text": "Copper sulphate", "correct": false}
+      ],
+      "difficulty": "hard",
+      "fun_fact": "Traditional absinthe's green hue comes from chlorophyll in the final steeping with herbs like hyssop and petite wormwood. The colour naturally fades to amber over time.",
+      "category": "Food & Drink"
+    },
+    {
+      "id": "food_en_016",
+      "question": "Gin gets its dominant flavour from which botanical?",
+      "answers": [
+        {"text": "Juniper berries", "correct": true},
+        {"text": "Coriander seeds", "correct": false},
+        {"text": "Angelica root", "correct": false}
+      ],
+      "difficulty": "easy",
+      "fun_fact": "By legal definition in the EU and US, a spirit cannot be called gin unless juniper is the predominant flavour.",
+      "category": "Food & Drink"
+    },
+    {
+      "id": "food_en_017",
+      "question": "Tequila can only legally be called tequila if it's made from which plant?",
+      "answers": [
+        {"text": "Blue Weber agave", "correct": true},
+        {"text": "Cactus", "correct": false},
+        {"text": "Sugarcane", "correct": false}
+      ],
+      "difficulty": "medium",
+      "fun_fact": "Tequila must be made from at least 51% Blue Weber agave and produced in specific regions of Mexico, primarily Jalisco.",
+      "category": "Food & Drink"
+    },
+    {
+      "id": "food_en_018",
+      "question": "Butter tea, a staple in Tibet, is typically made with butter from which animal?",
+      "answers": [
+        {"text": "Yak", "correct": true},
+        {"text": "Sheep", "correct": false},
+        {"text": "Buffalo", "correct": false}
+      ],
+      "difficulty": "medium",
+      "fun_fact": "Tibetan po cha mixes tea with yak butter and salt. It's drunk all day to combat dehydration and chapped lips at high altitudes.",
+      "category": "Food & Drink"
+    },
+    {
+      "id": "food_en_019",
+      "question": "The 'IPA' style of beer was originally brewed strong and hoppy for what reason?",
+      "answers": [
+        {"text": "To survive long sea voyages to India", "correct": true},
+        {"text": "To please Indian royalty", "correct": false},
+        {"text": "To pair with curry", "correct": false}
+      ],
+      "difficulty": "medium",
+      "fun_fact": "India Pale Ale was heavily hopped and higher in alcohol so it could survive the long journey from Britain to colonial India without spoiling.",
+      "category": "Food & Drink"
+    },
+    {
+      "id": "food_en_020",
+      "question": "Root beer originally got its distinctive flavour from the root of which plant, later banned by the FDA?",
+      "answers": [
+        {"text": "Sassafras", "correct": true},
+        {"text": "Liquorice", "correct": false},
+        {"text": "Burdock", "correct": false}
+      ],
+      "difficulty": "hard",
+      "fun_fact": "Sassafras root contains safrole, a compound the FDA banned as a food additive in 1960 over cancer concerns. Modern root beer uses safrole-free flavourings.",
+      "category": "Food & Drink"
+    },
+    {
+      "id": "food_en_021",
+      "question": "The Maillard reaction, responsible for browning seared meat and toast, is a reaction between what?",
+      "answers": [
+        {"text": "Amino acids and sugars", "correct": true},
+        {"text": "Fats and water", "correct": false},
+        {"text": "Acids and alcohols", "correct": false}
+      ],
+      "difficulty": "medium",
+      "fun_fact": "Named after French chemist Louis-Camille Maillard, it's distinct from caramelisation (which is only sugars) and creates hundreds of flavour compounds.",
+      "category": "Food & Drink"
+    },
+    {
+      "id": "food_en_022",
+      "question": "Why does garlic sometimes turn blue or green when pickled or cooked with acid?",
+      "answers": [
+        {"text": "Sulphur compounds react with amino acids", "correct": true},
+        {"text": "It absorbs copper from the pot", "correct": false},
+        {"text": "Chlorophyll is released", "correct": false}
+      ],
+      "difficulty": "hard",
+      "fun_fact": "Garlic's allicin reacts with amino acids to form harmless pigments called pyrroles. The garlic is still safe to eat.",
+      "category": "Food & Drink"
+    },
+    {
+      "id": "food_en_023",
+      "question": "'Sous vide' literally translates from French as what?",
+      "answers": [
+        {"text": "Under vacuum", "correct": true},
+        {"text": "Slow cook", "correct": false},
+        {"text": "Low fire", "correct": false}
+      ],
+      "difficulty": "easy",
+      "fun_fact": "Food is sealed in a vacuum bag and cooked in a precisely controlled water bath, allowing very even, consistent cooking impossible with traditional methods.",
+      "category": "Food & Drink"
+    },
+    {
+      "id": "food_en_024",
+      "question": "The cooking term 'al dente' literally means what in Italian?",
+      "answers": [
+        {"text": "To the tooth", "correct": true},
+        {"text": "To the bite", "correct": false},
+        {"text": "Just right", "correct": false}
+      ],
+      "difficulty": "easy",
+      "fun_fact": "It describes pasta cooked so it still has a slight firmness when bitten — a texture preferred for both flavour and a lower glycaemic response.",
+      "category": "Food & Drink"
+    },
+    {
+      "id": "food_en_025",
+      "question": "Adding salt to water for boiling raises the boiling point by roughly how much for normal cooking amounts?",
+      "answers": [
+        {"text": "Less than 1°C — negligibly", "correct": true},
+        {"text": "About 5°C", "correct": false},
+        {"text": "About 10°C", "correct": false}
+      ],
+      "difficulty": "medium",
+      "fun_fact": "You'd need to dissolve enormous amounts of salt to meaningfully raise the boiling point. We salt pasta water for flavour, not for faster cooking.",
+      "category": "Food & Drink"
+    },
+    {
+      "id": "food_en_026",
+      "question": "What is 'mise en place' in a professional kitchen?",
+      "answers": [
+        {"text": "Everything prepped and in its place before cooking", "correct": true},
+        {"text": "A plating technique", "correct": false},
+        {"text": "The chef's hierarchy", "correct": false}
+      ],
+      "difficulty": "easy",
+      "fun_fact": "French for 'putting in place', it's the discipline of pre-measuring, chopping, and arranging every ingredient so service runs smoothly.",
+      "category": "Food & Drink"
+    },
+    {
+      "id": "food_en_027",
+      "question": "Why does cutting onions make you cry?",
+      "answers": [
+        {"text": "They release a volatile sulphur gas that becomes sulphuric acid in your eyes", "correct": true},
+        {"text": "Histamines irritate the cornea", "correct": false},
+        {"text": "Onion juice has a high pH", "correct": false}
+      ],
+      "difficulty": "medium",
+      "fun_fact": "Crushed onion cells release syn-propanethial-S-oxide, a gas that reacts with the water in your eyes to form a mild sulphuric acid, triggering tears.",
+      "category": "Food & Drink"
+    },
+    {
+      "id": "food_en_028",
+      "question": "What happens to an egg's white that makes it firm when cooked?",
+      "answers": [
+        {"text": "Proteins denature and bond", "correct": true},
+        {"text": "Water evaporates", "correct": false},
+        {"text": "Sugars crystallise", "correct": false}
+      ],
+      "difficulty": "medium",
+      "fun_fact": "Heat unfolds the egg's proteins, which then tangle and bond into a solid network — a permanent change called denaturation.",
+      "category": "Food & Drink"
+    },
+    {
+      "id": "food_en_029",
+      "question": "'Confit' traditionally refers to food preserved how?",
+      "answers": [
+        {"text": "Slowly cooked and stored in its own fat", "correct": true},
+        {"text": "Smoked over fruitwood", "correct": false},
+        {"text": "Pickled in vinegar", "correct": false}
+      ],
+      "difficulty": "medium",
+      "fun_fact": "Confit de canard (duck confit) is a Gascon classic — duck legs cured in salt, then slow-cooked and submerged in their own fat, where they keep for months.",
+      "category": "Food & Drink"
+    },
+    {
+      "id": "food_en_030",
+      "question": "Why do chefs rest meat after cooking?",
+      "answers": [
+        {"text": "It lets muscle fibres relax and reabsorb juices", "correct": true},
+        {"text": "It finishes the chemical cooking", "correct": false},
+        {"text": "It lowers the internal temperature for safety", "correct": false}
+      ],
+      "difficulty": "easy",
+      "fun_fact": "While cooking, juices are pushed toward the centre. Resting redistributes them so they don't all run out when you cut in.",
+      "category": "Food & Drink"
+    },
+    {
+      "id": "food_en_031",
+      "question": "Carrots were historically what colour before orange ones were popularised?",
+      "answers": [
+        {"text": "Purple and yellow", "correct": true},
+        {"text": "Red and white", "correct": false},
+        {"text": "Black and green", "correct": false}
+      ],
+      "difficulty": "medium",
+      "fun_fact": "Wild carrots were purple, yellow, and white. Orange carrots were cultivated by Dutch growers around the 16th–17th century.",
+      "category": "Food & Drink"
+    },
+    {
+      "id": "food_en_032",
+      "question": "Botanically speaking, a banana is classified as a what?",
+      "answers": [
+        {"text": "Berry", "correct": true},
+        {"text": "Drupe", "correct": false},
+        {"text": "Nut", "correct": false}
+      ],
+      "difficulty": "medium",
+      "fun_fact": "Bananas develop from a single ovary with seeds embedded in the flesh, fitting the botanical definition of a berry. Strawberries, ironically, are not berries.",
+      "category": "Food & Drink"
+    },
+    {
+      "id": "food_en_033",
+      "question": "Honey found in ancient Egyptian tombs was reportedly still edible because honey does what?",
+      "answers": [
+        {"text": "Essentially never spoils", "correct": true},
+        {"text": "Crystallises into a preservative", "correct": false},
+        {"text": "Becomes alcoholic over time", "correct": false}
+      ],
+      "difficulty": "easy",
+      "fun_fact": "Honey's low water content, low pH, and natural hydrogen peroxide make it inhospitable to microbes. Sealed properly, it can last thousands of years.",
+      "category": "Food & Drink"
+    },
+    {
+      "id": "food_en_034",
+      "question": "Why is chocolate toxic to dogs but not to humans?",
+      "answers": [
+        {"text": "Dogs can't metabolise theobromine efficiently", "correct": true},
+        {"text": "Dogs are allergic to cocoa butter", "correct": false},
+        {"text": "Sugar damages canine kidneys", "correct": false}
+      ],
+      "difficulty": "medium",
+      "fun_fact": "Humans metabolise theobromine in hours. Dogs take far longer, letting it build to toxic levels that affect the heart and nervous system.",
+      "category": "Food & Drink"
+    },
+    {
+      "id": "food_en_035",
+      "question": "Peanuts are botanically not nuts. What are they?",
+      "answers": [
+        {"text": "Legumes", "correct": true},
+        {"text": "Drupes", "correct": false},
+        {"text": "Tubers", "correct": false}
+      ],
+      "difficulty": "easy",
+      "fun_fact": "Peanuts grow underground in pods, like peas and lentils. True nuts, like hazelnuts, grow on trees with a hard shell that doesn't open on its own.",
+      "category": "Food & Drink"
+    },
+    {
+      "id": "food_en_036",
+      "question": "Cashews are sold shelled because the shell contains what?",
+      "answers": [
+        {"text": "An irritant chemical related to poison ivy", "correct": true},
+        {"text": "A naturally occurring cyanide compound", "correct": false},
+        {"text": "A bitter alkaloid", "correct": false}
+      ],
+      "difficulty": "hard",
+      "fun_fact": "Cashew shells contain urushiol, the same skin irritant in poison ivy. Workers handle them carefully, and the nuts are roasted to neutralise residue.",
+      "category": "Food & Drink"
+    },
+    {
+      "id": "food_en_037",
+      "question": "Apple seeds contain a compound that releases what in the body when chewed?",
+      "answers": [
+        {"text": "Cyanide (in tiny amounts)", "correct": true},
+        {"text": "Caffeine", "correct": false},
+        {"text": "Strychnine", "correct": false}
+      ],
+      "difficulty": "medium",
+      "fun_fact": "Apple seeds contain amygdalin, which releases small amounts of cyanide when chewed. You'd need to eat the seeds from dozens of apples for a harmful dose.",
+      "category": "Food & Drink"
+    },
+    {
+      "id": "food_en_038",
+      "question": "Most commercial 'wasabi' served outside Japan is actually made primarily from what?",
+      "answers": [
+        {"text": "Horseradish dyed green", "correct": true},
+        {"text": "Mustard seed paste", "correct": false},
+        {"text": "Wild rocket", "correct": false}
+      ],
+      "difficulty": "easy",
+      "fun_fact": "Real wasabi rhizome is hard to grow and expensive. Most paste worldwide is dyed horseradish with a touch of mustard.",
+      "category": "Food & Drink"
+    },
+    {
+      "id": "food_en_039",
+      "question": "Lobsters were historically considered such poor food that in colonial America they were fed mainly to whom?",
+      "answers": [
+        {"text": "Prisoners and servants", "correct": true},
+        {"text": "Royalty's pets", "correct": false},
+        {"text": "Sailors only", "correct": false}
+      ],
+      "difficulty": "medium",
+      "fun_fact": "Lobsters washed up by the thousand and were seen as 'sea cockroaches'. Servants in Massachusetts reportedly had clauses limiting how often they could be fed lobster.",
+      "category": "Food & Drink"
+    },
+    {
+      "id": "food_en_040",
+      "question": "Most ground cinnamon sold in North America and Europe is not 'true' cinnamon but which cheaper variety?",
+      "answers": [
+        {"text": "Cassia", "correct": true},
+        {"text": "Ceylon", "correct": false},
+        {"text": "Saigon vanilla bark", "correct": false}
+      ],
+      "difficulty": "hard",
+      "fun_fact": "Cassia is bolder and cheaper but contains more coumarin, which can be harmful to the liver in very large doses. True 'Ceylon' cinnamon has much less.",
+      "category": "Food & Drink"
+    },
+    {
+      "id": "food_en_041",
+      "question": "The Michelin star rating system was originally created to do what?",
+      "answers": [
+        {"text": "Sell more car tyres", "correct": true},
+        {"text": "Train French chefs", "correct": false},
+        {"text": "Promote rail dining cars", "correct": false}
+      ],
+      "difficulty": "easy",
+      "fun_fact": "The Michelin tyre company started the guide in 1900 to encourage motorists to drive more — and wear out more tyres — by giving them places to visit.",
+      "category": "Food & Drink"
+    },
+    {
+      "id": "food_en_042",
+      "question": "Which country opened a chain of fake McDonald's-style restaurants, including one called 'Mash Donald's'?",
+      "answers": [
+        {"text": "Iran", "correct": true},
+        {"text": "North Korea", "correct": false},
+        {"text": "Cuba", "correct": false}
+      ],
+      "difficulty": "hard",
+      "fun_fact": "With McDonald's absent from Iran, copycat chains using altered logos and names like 'Mash Donald's' and 'Pizza Hat' have popped up in Tehran.",
+      "category": "Food & Drink"
+    },
+    {
+      "id": "food_en_043",
+      "question": "Sushi in pre-modern Japan was originally a method primarily designed to do what?",
+      "answers": [
+        {"text": "Preserve fish using fermented rice", "correct": true},
+        {"text": "Make rice last longer", "correct": false},
+        {"text": "Stretch expensive fish further", "correct": false}
+      ],
+      "difficulty": "medium",
+      "fun_fact": "Early 'narezushi' wrapped fish in fermenting rice for months. The rice was thrown away, and only the preserved fish was eaten. Modern nigiri came later, in Edo Japan.",
+      "category": "Food & Drink"
+    },
+    {
+      "id": "food_en_044",
+      "question": "In Japan, slurping noodles loudly at a ramen shop is generally considered what?",
+      "answers": [
+        {"text": "A compliment to the chef", "correct": true},
+        {"text": "Extremely rude", "correct": false},
+        {"text": "A sign you're a foreigner", "correct": false}
+      ],
+      "difficulty": "easy",
+      "fun_fact": "Slurping cools noodles, aerates the broth, and signals enjoyment. It's the opposite of Western table manners.",
+      "category": "Food & Drink"
+    },
+    {
+      "id": "food_en_045",
+      "question": "What is unusual about how 'fugu' (pufferfish) chefs in Japan are licensed?",
+      "answers": [
+        {"text": "They train for years to remove organs containing a deadly toxin", "correct": true},
+        {"text": "They must be born in a coastal prefecture", "correct": false},
+        {"text": "They can only serve it under government supervision", "correct": false}
+      ],
+      "difficulty": "medium",
+      "fun_fact": "Pufferfish liver and ovaries contain tetrodotoxin, far deadlier than cyanide. Chefs train for years and must pass a strict exam before they can prepare and serve fugu.",
+      "category": "Food & Drink"
+    },
+    {
+      "id": "food_en_046",
+      "question": "In South Korea, what 'dining' activity has become a massive online entertainment genre?",
+      "answers": [
+        {"text": "Mukbang — eating huge meals on camera", "correct": true},
+        {"text": "Silent dinners", "correct": false},
+        {"text": "Blind taste tests", "correct": false}
+      ],
+      "difficulty": "easy",
+      "fun_fact": "Mukbang ('eating broadcast') hosts livestream themselves eating enormous portions, often earning a living from viewer donations and ads.",
+      "category": "Food & Drink"
+    },
+    {
+      "id": "food_en_047",
+      "question": "What is the traditional purpose of tipping the bill in many parts of Japan?",
+      "answers": [
+        {"text": "There isn't one — tipping is generally not done", "correct": true},
+        {"text": "To pay servers' wages directly", "correct": false},
+        {"text": "To skip the queue next time", "correct": false}
+      ],
+      "difficulty": "easy",
+      "fun_fact": "In Japan, good service is the standard, not a bonus. Tipping can be seen as awkward or even rude; staff may chase you down to return the money.",
+      "category": "Food & Drink"
+    },
+    {
+      "id": "food_en_048",
+      "question": "In Italy, ordering a cappuccino after about 11 a.m. is widely considered what?",
+      "answers": [
+        {"text": "A foreigner move — locals usually drink it only in the morning", "correct": true},
+        {"text": "Illegal in some regions", "correct": false},
+        {"text": "A polite dinner gesture", "correct": false}
+      ],
+      "difficulty": "easy",
+      "fun_fact": "Italians believe milky coffee interferes with digestion after meals, so cappuccino is breakfast-only. Espresso or macchiato is the post-meal norm.",
+      "category": "Food & Drink"
+    },
+    {
+      "id": "food_en_049",
+      "question": "In a French restaurant, what does it traditionally mean if you place your knife and fork parallel on your plate?",
+      "answers": [
+        {"text": "You're finished eating", "correct": true},
+        {"text": "The food was bad", "correct": false},
+        {"text": "You want the bill", "correct": false}
+      ],
+      "difficulty": "medium",
+      "fun_fact": "Crossed cutlery means 'I'm still eating'. Parallel placement, usually at the 4 o'clock position, tells the server they can clear your plate.",
+      "category": "Food & Drink"
+    },
+    {
+      "id": "food_en_050",
+      "question": "The world's oldest restaurant still in operation, according to Guinness, is in which city?",
+      "answers": [
+        {"text": "Madrid", "correct": true},
+        {"text": "Rome", "correct": false},
+        {"text": "Paris", "correct": false}
+      ],
+      "difficulty": "hard",
+      "fun_fact": "Sobrino de Botín in Madrid has been serving roast suckling pig from its wood-fired oven since 1725. The oven has reportedly never been allowed to go out.",
+      "category": "Food & Drink"
+    }
+  ]
+}

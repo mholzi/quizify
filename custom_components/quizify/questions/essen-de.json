@@ -1,0 +1,1058 @@
+{
+  "name": "Essen & Trinken",
+  "language": "de",
+  "version": "1.0",
+  "theme": "food",
+  "questions": [
+    {
+      "id": "essen_de_001",
+      "question": "Wer hat der Legende nach das Sandwich erfunden?",
+      "answers": [
+        {
+          "text": "John Montagu, der 4. Earl of Sandwich",
+          "correct": true
+        },
+        {
+          "text": "Ein Londoner Bäckermeister namens Sandwich",
+          "correct": false
+        },
+        {
+          "text": "Ein französischer Koch am Hof Ludwigs XV.",
+          "correct": false
+        }
+      ],
+      "difficulty": "easy",
+      "fun_fact": "Der britische Adlige John Montagu soll im 18. Jahrhundert Fleisch zwischen zwei Brotscheiben verlangt haben, um beim Kartenspielen die Hände frei zu haben. Der Ort Sandwich in Kent gab ihm seinen Titel — und uns das Wort.",
+      "category": "Essen & Trinken"
+    },
+    {
+      "id": "essen_de_002",
+      "question": "Aus welchem Land stammt das Croissant ursprünglich?",
+      "answers": [
+        {
+          "text": "Österreich",
+          "correct": true
+        },
+        {
+          "text": "Frankreich",
+          "correct": false
+        },
+        {
+          "text": "Italien",
+          "correct": false
+        }
+      ],
+      "difficulty": "medium",
+      "fun_fact": "Das Croissant geht auf das Wiener Kipferl zurück. Erst Marie Antoinette brachte es im 18. Jahrhundert mit nach Paris, wo französische Bäcker es mit Butter-Blätterteig verfeinerten.",
+      "category": "Essen & Trinken"
+    },
+    {
+      "id": "essen_de_003",
+      "question": "Welches Land beansprucht die Erfindung der Pommes frites neben Frankreich?",
+      "answers": [
+        {
+          "text": "Belgien",
+          "correct": true
+        },
+        {
+          "text": "Niederlande",
+          "correct": false
+        },
+        {
+          "text": "Spanien",
+          "correct": false
+        }
+      ],
+      "difficulty": "easy",
+      "fun_fact": "In Belgien sollen sie schon im 17. Jahrhundert frittiert worden sein, als die Maas zugefroren war und Bauern Kartoffelstreifen statt Fischstreifen frittierten. Die Belgier streiten bis heute mit Frankreich um den Urheberrechtstitel.",
+      "category": "Essen & Trinken"
+    },
+    {
+      "id": "essen_de_004",
+      "question": "Was stimmt am Marco-Polo-Nudeln-Mythos NICHT?",
+      "answers": [
+        {
+          "text": "Italien kannte Nudeln schon lange vor Polos Reise",
+          "correct": true
+        },
+        {
+          "text": "Polo brachte zuerst die Spaghetti nach Venedig",
+          "correct": false
+        },
+        {
+          "text": "Polo brachte zuerst die Lasagne nach Venedig",
+          "correct": false
+        }
+      ],
+      "difficulty": "medium",
+      "fun_fact": "Der Marco-Polo-Mythos ist Marketing aus den 1920ern. Etrusker und Römer aßen schon lange vor Polos Reise Teigwaren — und in Sizilien produzierten Araber im 12. Jahrhundert industriell getrocknete Nudeln.",
+      "category": "Essen & Trinken"
+    },
+    {
+      "id": "essen_de_005",
+      "question": "Aus welchem Land kommt der Döner Kebab in seiner heutigen Form?",
+      "answers": [
+        {
+          "text": "Deutschland",
+          "correct": true
+        },
+        {
+          "text": "Türkei",
+          "correct": false
+        },
+        {
+          "text": "Griechenland",
+          "correct": false
+        }
+      ],
+      "difficulty": "medium",
+      "fun_fact": "Das gegrillte Drehfleisch ist türkisch — aber der Döner im Fladenbrot mit Salat und Soße wurde in den 1970ern in West-Berlin erfunden. In der Türkei selbst isst man Döner traditionell auf dem Teller.",
+      "category": "Essen & Trinken"
+    },
+    {
+      "id": "essen_de_006",
+      "question": "Wer hat die Tiefkühlkost erfunden, indem er Inuit beim Eisfischen beobachtete?",
+      "answers": [
+        {
+          "text": "Clarence Birdseye",
+          "correct": true
+        },
+        {
+          "text": "Henry Heinz",
+          "correct": false
+        },
+        {
+          "text": "Carl von Linde",
+          "correct": false
+        }
+      ],
+      "difficulty": "hard",
+      "fun_fact": "Birdseye sah in Labrador, wie Fische bei minus 40 Grad sofort durchfroren und nach dem Auftauen frisch schmeckten. Daraus entwickelte er das Schockfrosten — die Grundlage der gesamten Tiefkühlindustrie.",
+      "category": "Essen & Trinken"
+    },
+    {
+      "id": "essen_de_007",
+      "question": "Welches Lebensmittel wurde als Beifang der Wikinger nach Europa gebracht?",
+      "answers": [
+        {
+          "text": "Kabeljau (Stockfisch)",
+          "correct": true
+        },
+        {
+          "text": "Hering",
+          "correct": false
+        },
+        {
+          "text": "Lachs",
+          "correct": false
+        }
+      ],
+      "difficulty": "hard",
+      "fun_fact": "Wikinger trockneten Kabeljau im Wind zu Stockfisch, der monatelang haltbar war. Diese Konservierungsmethode machte ihre langen Seefahrten erst möglich — und Stockfisch ist bis heute Portugals Nationalspeise.",
+      "category": "Essen & Trinken"
+    },
+    {
+      "id": "essen_de_008",
+      "question": "Welches Land hat die Pizza Margherita erfunden?",
+      "answers": [
+        {
+          "text": "Italien (Neapel)",
+          "correct": true
+        },
+        {
+          "text": "USA (New York)",
+          "correct": false
+        },
+        {
+          "text": "Griechenland",
+          "correct": false
+        }
+      ],
+      "difficulty": "easy",
+      "fun_fact": "1889 wurde die Pizza in Neapel für Königin Margherita kreiert — mit Tomate, Mozzarella und Basilikum in den Farben der italienischen Flagge. Die belegte Fladenbrot-Tradition selbst ist allerdings über 2000 Jahre alt.",
+      "category": "Essen & Trinken"
+    },
+    {
+      "id": "essen_de_009",
+      "question": "Welches Gewürz war im Mittelalter zeitweise wertvoller als Gold?",
+      "answers": [
+        {
+          "text": "Schwarzer Pfeffer",
+          "correct": true
+        },
+        {
+          "text": "Zimt",
+          "correct": false
+        },
+        {
+          "text": "Muskat",
+          "correct": false
+        }
+      ],
+      "difficulty": "medium",
+      "fun_fact": "Pfefferkörner wurden im Mittelalter als Zahlungsmittel akzeptiert — daher das Wort Pfeffersack für reiche Kaufleute. Mieten und Steuern konnten in Pfeffer beglichen werden.",
+      "category": "Essen & Trinken"
+    },
+    {
+      "id": "essen_de_010",
+      "question": "Welches Volk aß zuerst Tomaten in Europa, ohne sie für giftig zu halten?",
+      "answers": [
+        {
+          "text": "Die Italiener",
+          "correct": true
+        },
+        {
+          "text": "Die Spanier",
+          "correct": false
+        },
+        {
+          "text": "Die Franzosen",
+          "correct": false
+        }
+      ],
+      "difficulty": "hard",
+      "fun_fact": "Nordeuropäer hielten die Tomate jahrhundertelang für giftig — weil sie auf zinnhaltigen Tellern säurebedingt Blei löste. Italiener aßen sie auf neutralerem Geschirr und überlebten problemlos.",
+      "category": "Essen & Trinken"
+    },
+    {
+      "id": "essen_de_011",
+      "question": "Was war ursprünglich Bestandteil von Coca-Cola, wurde aber später entfernt?",
+      "answers": [
+        {
+          "text": "Kokainspuren aus Kokablättern",
+          "correct": true
+        },
+        {
+          "text": "Echtes Goldpulver",
+          "correct": false
+        },
+        {
+          "text": "Alkohol aus Wein",
+          "correct": false
+        }
+      ],
+      "difficulty": "easy",
+      "fun_fact": "Die Originalrezeptur von 1886 enthielt Extrakte aus Kokablättern mit Kokainspuren. Ab 1903 wurde das Kokain entfernt — Kokablatt-Extrakt (entcoffeiniert) ist aber bis heute angeblich Bestandteil.",
+      "category": "Essen & Trinken"
+    },
+    {
+      "id": "essen_de_012",
+      "question": "Wo darf laut EU-Recht Champagner produziert werden?",
+      "answers": [
+        {
+          "text": "Nur in der Region Champagne in Frankreich",
+          "correct": true
+        },
+        {
+          "text": "In ganz Frankreich",
+          "correct": false
+        },
+        {
+          "text": "In allen EU-Ländern mit Champagner-Lizenz",
+          "correct": false
+        }
+      ],
+      "difficulty": "easy",
+      "fun_fact": "Nur Schaumwein aus der Champagne darf so heißen. Sogar Kalifornien musste California Champagne abschaffen. In Deutschland heißt das Pendant Sekt, in Italien Spumante, in Spanien Cava.",
+      "category": "Essen & Trinken"
+    },
+    {
+      "id": "essen_de_013",
+      "question": "Welches Getränk entstand zufällig, als ein Apotheker Sodawasser zu Sirup gab?",
+      "answers": [
+        {
+          "text": "Coca-Cola",
+          "correct": true
+        },
+        {
+          "text": "Tonic Water",
+          "correct": false
+        },
+        {
+          "text": "Red Bull",
+          "correct": false
+        }
+      ],
+      "difficulty": "medium",
+      "fun_fact": "Apotheker John Pemberton mischte 1886 in Atlanta seinen Sirup ursprünglich mit Leitungswasser. Erst ein Kollege goss versehentlich Sodawasser dazu — und das prickelnde Resultat begeisterte die Kunden.",
+      "category": "Essen & Trinken"
+    },
+    {
+      "id": "essen_de_014",
+      "question": "Warum schwimmen Eiswürfel in Whisky on the Rocks oben?",
+      "answers": [
+        {
+          "text": "Weil Eis weniger dicht ist als flüssiges Wasser",
+          "correct": true
+        },
+        {
+          "text": "Weil der Alkohol das Eis nach oben drückt",
+          "correct": false
+        },
+        {
+          "text": "Weil Eis Luftblasen enthält",
+          "correct": false
+        }
+      ],
+      "difficulty": "medium",
+      "fun_fact": "Wasser ist eine der wenigen Substanzen, deren feste Form weniger dicht ist als die flüssige — ein Glücksfall für die Biologie, sonst würden Seen von unten zufrieren und alles Leben darin sterben.",
+      "category": "Essen & Trinken"
+    },
+    {
+      "id": "essen_de_015",
+      "question": "Welches alkoholische Getränk wurde in England als Medizin gegen Malaria entwickelt?",
+      "answers": [
+        {
+          "text": "Gin Tonic",
+          "correct": true
+        },
+        {
+          "text": "Bloody Mary",
+          "correct": false
+        },
+        {
+          "text": "Pimms",
+          "correct": false
+        }
+      ],
+      "difficulty": "medium",
+      "fun_fact": "Britische Kolonialoffiziere in Indien mischten bitteres Chinin-Tonic mit Gin, um es trinkbar zu machen. Chinin wirkt gegen Malaria — der Cocktail rettete vermutlich tausende Leben.",
+      "category": "Essen & Trinken"
+    },
+    {
+      "id": "essen_de_016",
+      "question": "Welche Teesorte ist in Wahrheit ein fermentierter grüner Tee?",
+      "answers": [
+        {
+          "text": "Schwarzer Tee",
+          "correct": true
+        },
+        {
+          "text": "Weißer Tee",
+          "correct": false
+        },
+        {
+          "text": "Mate-Tee",
+          "correct": false
+        }
+      ],
+      "difficulty": "medium",
+      "fun_fact": "Grüner, weißer und schwarzer Tee stammen alle von derselben Pflanze (Camellia sinensis). Der Unterschied liegt nur in der Verarbeitung — schwarzer Tee wird stärker oxidiert, was die dunkle Farbe ergibt.",
+      "category": "Essen & Trinken"
+    },
+    {
+      "id": "essen_de_017",
+      "question": "Mit welcher Geschwindigkeit kann ein Champagnerkorken aus der Flasche fliegen?",
+      "answers": [
+        {
+          "text": "Über 60 km/h",
+          "correct": true
+        },
+        {
+          "text": "Etwa 20 km/h",
+          "correct": false
+        },
+        {
+          "text": "Etwa 200 km/h",
+          "correct": false
+        }
+      ],
+      "difficulty": "hard",
+      "fun_fact": "In einer Champagnerflasche herrschen etwa 6 bar Druck — dreimal so viel wie in einem Autoreifen. Fliegende Korken sind eine echte Verletzungsgefahr und verursachen jährlich Augenverletzungen.",
+      "category": "Essen & Trinken"
+    },
+    {
+      "id": "essen_de_018",
+      "question": "Warum war Bier im Mittelalter sicherer zu trinken als Wasser?",
+      "answers": [
+        {
+          "text": "Weil das Brauen die Krankheitserreger abtötete",
+          "correct": true
+        },
+        {
+          "text": "Weil der Alkoholgehalt so hoch war",
+          "correct": false
+        },
+        {
+          "text": "Weil Bier nur aus Quellwasser gebraut wurde",
+          "correct": false
+        }
+      ],
+      "difficulty": "medium",
+      "fun_fact": "Beim Brauen wird das Wasser gekocht und Bakterien sterben ab. Mittelalterliches Dünnbier hatte oft unter 2 Prozent Alkohol und wurde sogar Kindern zum Frühstück gegeben — als sichere Alternative zu verseuchtem Stadtwasser.",
+      "category": "Essen & Trinken"
+    },
+    {
+      "id": "essen_de_019",
+      "question": "Was ist die wertvollste Kaffeesorte der Welt, die aus Tier-Exkrementen gewonnen wird?",
+      "answers": [
+        {
+          "text": "Kopi Luwak",
+          "correct": true
+        },
+        {
+          "text": "Blue Mountain",
+          "correct": false
+        },
+        {
+          "text": "Jamaican Wallenford",
+          "correct": false
+        }
+      ],
+      "difficulty": "easy",
+      "fun_fact": "Schleichkatzen fressen Kaffeekirschen und scheiden die Bohnen wieder aus. Verdauungsenzyme verändern den Geschmack. Ein Kilo kann mehrere hundert Euro kosten — viele Plantagen halten die Tiere allerdings unter Tierschutz-bedenklichen Bedingungen.",
+      "category": "Essen & Trinken"
+    },
+    {
+      "id": "essen_de_020",
+      "question": "Warum knallt Sekt beim Öffnen lauter, wenn man die Flasche schüttelt?",
+      "answers": [
+        {
+          "text": "Weil sich die Kohlensäure schneller aus der Flüssigkeit löst",
+          "correct": true
+        },
+        {
+          "text": "Weil der Druck in der Flasche steigt",
+          "correct": false
+        },
+        {
+          "text": "Weil der Korken weicher wird",
+          "correct": false
+        }
+      ],
+      "difficulty": "hard",
+      "fun_fact": "Durch das Schütteln entstehen viele kleine Gasbläschen an Mikro-Unebenheiten. Beim Öffnen entweicht das CO2 schlagartig — der Druck bleibt gleich, aber die Reaktion ist explosiver.",
+      "category": "Essen & Trinken"
+    },
+    {
+      "id": "essen_de_021",
+      "question": "Was passiert chemisch bei der Maillard-Reaktion?",
+      "answers": [
+        {
+          "text": "Aminosäuren reagieren mit Zucker und ergeben braune Aromastoffe",
+          "correct": true
+        },
+        {
+          "text": "Stärke wird in Zucker umgewandelt",
+          "correct": false
+        },
+        {
+          "text": "Fett wird oxidiert und entwickelt Röstaromen",
+          "correct": false
+        }
+      ],
+      "difficulty": "hard",
+      "fun_fact": "Die Maillard-Reaktion erklärt, warum Steaks, Brotkruste und Röstkaffee so gut schmecken. Sie startet bei etwa 140 Grad — deshalb wird gekochtes Fleisch nie braun, da Wasser nur bis 100 Grad heiß wird.",
+      "category": "Essen & Trinken"
+    },
+    {
+      "id": "essen_de_022",
+      "question": "Warum wird Knoblauch beim Einlegen in Essig manchmal blau-grün?",
+      "answers": [
+        {
+          "text": "Schwefelverbindungen reagieren mit Kupferspuren",
+          "correct": true
+        },
+        {
+          "text": "Chlorophyll wird durch Säure freigesetzt",
+          "correct": false
+        },
+        {
+          "text": "Die Knoblauchzelle verschimmelt harmlos",
+          "correct": false
+        }
+      ],
+      "difficulty": "hard",
+      "fun_fact": "Die Verfärbung ist völlig harmlos und tritt vor allem bei jungem Knoblauch auf. Schwefelverbindungen bilden mit minimalen Mengen Kupfer (aus Wasser oder Salz) farbige Komplexe.",
+      "category": "Essen & Trinken"
+    },
+    {
+      "id": "essen_de_023",
+      "question": "Was bedeutet die Kochtechnik Sous-vide?",
+      "answers": [
+        {
+          "text": "Garen im Vakuumbeutel bei niedriger Temperatur im Wasserbad",
+          "correct": true
+        },
+        {
+          "text": "Trockenes Niedrigtemperaturgaren im Ofen",
+          "correct": false
+        },
+        {
+          "text": "Schnelles Anbraten bei höchster Hitze",
+          "correct": false
+        }
+      ],
+      "difficulty": "easy",
+      "fun_fact": "Sous-vide ist französisch für unter Vakuum. Da die Wassertemperatur exakt kontrolliert wird, kann Fleisch stundenlang bei 55 Grad garen, ohne zu übergaren — ein Steak wird butterzart und gleichmäßig rosa.",
+      "category": "Essen & Trinken"
+    },
+    {
+      "id": "essen_de_024",
+      "question": "Welcher Mythos über Salzwasser beim Nudelnkochen ist FALSCH?",
+      "answers": [
+        {
+          "text": "Salz lässt Wasser schneller kochen",
+          "correct": true
+        },
+        {
+          "text": "Salz würzt die Nudeln von innen",
+          "correct": false
+        },
+        {
+          "text": "Salz beeinflusst die Stärkefreisetzung",
+          "correct": false
+        }
+      ],
+      "difficulty": "medium",
+      "fun_fact": "Salz erhöht den Siedepunkt minimal — die Wirkung ist aber so gering, dass Wasser dadurch sogar etwas LANGSAMER kocht, nicht schneller. Der wahre Zweck: Würzen.",
+      "category": "Essen & Trinken"
+    },
+    {
+      "id": "essen_de_025",
+      "question": "Warum verlieren grüne Bohnen ihre Farbe, wenn man sie zu lange kocht?",
+      "answers": [
+        {
+          "text": "Säuren aus der Pflanze zerstören das Chlorophyll",
+          "correct": true
+        },
+        {
+          "text": "Hitze oxidiert die Farbstoffe",
+          "correct": false
+        },
+        {
+          "text": "Vitamin C bleicht das Grün aus",
+          "correct": false
+        }
+      ],
+      "difficulty": "hard",
+      "fun_fact": "Zellsäuren reagieren mit Chlorophyll zu Pheophytin — bräunlich-olivgrün. Profis blanchieren Gemüse deshalb kurz in viel Wasser und schrecken eiskalt ab: kürzere Kontaktzeit, leuchtendes Grün bleibt erhalten.",
+      "category": "Essen & Trinken"
+    },
+    {
+      "id": "essen_de_026",
+      "question": "Was bedeutet al dente beim Nudelnkochen wörtlich?",
+      "answers": [
+        {
+          "text": "Auf den Zahn",
+          "correct": true
+        },
+        {
+          "text": "Bissfest",
+          "correct": false
+        },
+        {
+          "text": "Perfekt gegart",
+          "correct": false
+        }
+      ],
+      "difficulty": "easy",
+      "fun_fact": "Die wörtliche Übersetzung ist auf den Zahn — Nudeln sollen beim Hineinbeißen leichten Widerstand bieten. Wissenschaftlich verdaut man al dente gekochte Pasta langsamer, der Blutzucker steigt weniger stark.",
+      "category": "Essen & Trinken"
+    },
+    {
+      "id": "essen_de_027",
+      "question": "Warum sollte man Steak nach dem Braten ruhen lassen?",
+      "answers": [
+        {
+          "text": "Damit sich die Säfte gleichmäßig im Fleisch verteilen",
+          "correct": true
+        },
+        {
+          "text": "Damit das Fleisch noch weitergart",
+          "correct": false
+        },
+        {
+          "text": "Damit das Fett sich verfestigt",
+          "correct": false
+        }
+      ],
+      "difficulty": "medium",
+      "fun_fact": "Beim Braten ziehen sich die Muskelfasern zusammen und pressen den Saft nach innen. Beim Ruhen entspannen sie sich wieder — schneidet man zu früh an, läuft der ganze Saft auf den Teller statt im Fleisch zu bleiben.",
+      "category": "Essen & Trinken"
+    },
+    {
+      "id": "essen_de_028",
+      "question": "Warum wäscht man Sushi-Reis vor dem Kochen, italienischen Risotto-Reis aber nicht?",
+      "answers": [
+        {
+          "text": "Risotto braucht die Oberflächenstärke für die Cremigkeit",
+          "correct": true
+        },
+        {
+          "text": "Risotto-Reis ist beim Kauf bereits vorgewaschen",
+          "correct": false
+        },
+        {
+          "text": "Sushi-Reis enthält mehr Pestizidrückstände als Risotto",
+          "correct": false
+        }
+      ],
+      "difficulty": "easy",
+      "fun_fact": "Beim Polieren der Körner entsteht Stärkestaub an der Oberfläche. Beim Sushi will man körnig-locker, also weg damit. Bei Risotto braucht man genau diese Stärke, damit die Soße cremig wird — deshalb wird der Reis dort sogar zusätzlich gerührt.",
+      "category": "Essen & Trinken"
+    },
+    {
+      "id": "essen_de_029",
+      "question": "Was unterscheidet einen Wok von einer normalen Pfanne grundlegend?",
+      "answers": [
+        {
+          "text": "Die Hitzeverteilung mit heißem Boden und kühleren Rändern",
+          "correct": true
+        },
+        {
+          "text": "Das Material aus Aluminium statt Eisen",
+          "correct": false
+        },
+        {
+          "text": "Die antihaftbeschichtete Oberfläche",
+          "correct": false
+        }
+      ],
+      "difficulty": "medium",
+      "fun_fact": "Im Wok hat man eine Hitze-Zone unten und eine Warmhalte-Zone oben am Rand. Köche werfen Zutaten zwischen den Zonen hin und her — so wird alles perfekt gegart, ohne zu verbrennen. Das funktioniert nur mit der typischen Schüsselform.",
+      "category": "Essen & Trinken"
+    },
+    {
+      "id": "essen_de_030",
+      "question": "Warum karamellisieren Zwiebeln beim langen Braten?",
+      "answers": [
+        {
+          "text": "Pflanzeneigener Zucker wird durch Hitze braun und süß",
+          "correct": true
+        },
+        {
+          "text": "Stärke verwandelt sich in Karamell",
+          "correct": false
+        },
+        {
+          "text": "Die Aminosäuren verbrennen kontrolliert",
+          "correct": false
+        }
+      ],
+      "difficulty": "medium",
+      "fun_fact": "Zwiebeln enthalten überraschend viel Zucker (etwa 6–8 Prozent). Beim langen Braten bei mittlerer Hitze karamellisiert dieser Zucker — deshalb werden lange geschmorte Zwiebeln tiefbraun und süß statt scharf.",
+      "category": "Essen & Trinken"
+    },
+    {
+      "id": "essen_de_031",
+      "question": "Wie lange ist Honig theoretisch haltbar?",
+      "answers": [
+        {
+          "text": "Praktisch unbegrenzt — er verdirbt nicht",
+          "correct": true
+        },
+        {
+          "text": "Etwa 5 Jahre",
+          "correct": false
+        },
+        {
+          "text": "Maximal 20 Jahre",
+          "correct": false
+        }
+      ],
+      "difficulty": "medium",
+      "fun_fact": "Honig hat so wenig Wasser und so viel Zucker, dass Bakterien darin nicht überleben. In ägyptischen Pyramidengräbern fand man 3000 Jahre alten Honig, der noch essbar war.",
+      "category": "Essen & Trinken"
+    },
+    {
+      "id": "essen_de_032",
+      "question": "Welche Farbe hatten Karotten ursprünglich?",
+      "answers": [
+        {
+          "text": "Lila",
+          "correct": true
+        },
+        {
+          "text": "Orange",
+          "correct": false
+        },
+        {
+          "text": "Gelb",
+          "correct": false
+        }
+      ],
+      "difficulty": "medium",
+      "fun_fact": "Ursprünglich waren Karotten lila oder weiß. Niederländische Züchter entwickelten im 17. Jahrhundert die orange Karotte — vermutlich zu Ehren des Hauses Oranien, der niederländischen Königsfamilie.",
+      "category": "Essen & Trinken"
+    },
+    {
+      "id": "essen_de_033",
+      "question": "Was sind Bananen botanisch gesehen?",
+      "answers": [
+        {
+          "text": "Beeren",
+          "correct": true
+        },
+        {
+          "text": "Steinobst",
+          "correct": false
+        },
+        {
+          "text": "Kernobst",
+          "correct": false
+        }
+      ],
+      "difficulty": "easy",
+      "fun_fact": "Botanisch sind Bananen Beeren — Erdbeeren dagegen nicht. Die Bananenstaude ist außerdem keine Palme und kein Baum, sondern die größte krautige Pflanze der Welt.",
+      "category": "Essen & Trinken"
+    },
+    {
+      "id": "essen_de_034",
+      "question": "Warum ist Schokolade für Hunde giftig, für Menschen aber nicht?",
+      "answers": [
+        {
+          "text": "Hunde können das enthaltene Theobromin nicht abbauen",
+          "correct": true
+        },
+        {
+          "text": "Hunde reagieren allergisch auf Kakao",
+          "correct": false
+        },
+        {
+          "text": "Hunde können den Zucker nicht verdauen",
+          "correct": false
+        }
+      ],
+      "difficulty": "medium",
+      "fun_fact": "Theobromin wirkt ähnlich wie Koffein. Menschen bauen es in wenigen Stunden ab, Hunde brauchen 18 Stunden. Zartbitterschokolade ist besonders gefährlich — sie enthält bis zu zehnmal mehr Theobromin als Milchschokolade.",
+      "category": "Essen & Trinken"
+    },
+    {
+      "id": "essen_de_035",
+      "question": "Warum schwimmen Äpfel im Wasser?",
+      "answers": [
+        {
+          "text": "Sie bestehen zu etwa 25 Prozent aus Luft",
+          "correct": true
+        },
+        {
+          "text": "Sie haben eine wasserabweisende Schale",
+          "correct": false
+        },
+        {
+          "text": "Sie enthalten besonders wenig Wasser",
+          "correct": false
+        }
+      ],
+      "difficulty": "hard",
+      "fun_fact": "Äpfel bestehen zu etwa einem Viertel aus eingeschlossener Luft — sie schwimmen problemlos. Tomaten dagegen sind kompakter und sinken. Apfeltauchen funktioniert nur dank dieser Luftblasen im Apfelinneren.",
+      "category": "Essen & Trinken"
+    },
+    {
+      "id": "essen_de_036",
+      "question": "Warum schmecken Erdbeeren in Deutschland im Winter oft fad?",
+      "answers": [
+        {
+          "text": "Sie reifen während des langen Transports nach, nicht am Strauch",
+          "correct": true
+        },
+        {
+          "text": "Im Winter werden andere Sorten angebaut",
+          "correct": false
+        },
+        {
+          "text": "Kälte zerstört die Geschmacksstoffe",
+          "correct": false
+        }
+      ],
+      "difficulty": "medium",
+      "fun_fact": "Erdbeeren produzieren ihre Aromen nur in der letzten Reifephase am Strauch. Importbeeren werden grün geerntet und reifen unterwegs nach — sie werden rot, aber nicht aromatisch. Saisonale Beeren schmecken deshalb dramatisch besser.",
+      "category": "Essen & Trinken"
+    },
+    {
+      "id": "essen_de_037",
+      "question": "Was ist die Hauptzutat in Marzipan?",
+      "answers": [
+        {
+          "text": "Süße Mandeln und Zucker",
+          "correct": true
+        },
+        {
+          "text": "Nougat und Honig",
+          "correct": false
+        },
+        {
+          "text": "Cashewnüsse und Sirup",
+          "correct": false
+        }
+      ],
+      "difficulty": "easy",
+      "fun_fact": "Echtes Marzipan besteht aus gemahlenen süßen Mandeln, Zucker und etwas Rosenwasser. Lübecker Marzipan ist EU-geschützt und muss mindestens 70 Prozent Mandelmasse enthalten — billiges Marzipan-Ersatz nutzt oft Aprikosenkerne.",
+      "category": "Essen & Trinken"
+    },
+    {
+      "id": "essen_de_038",
+      "question": "Warum brennt scharfes Essen in Mund und Magen?",
+      "answers": [
+        {
+          "text": "Capsaicin täuscht den Hitze-Schmerz-Rezeptoren echte Hitze vor",
+          "correct": true
+        },
+        {
+          "text": "Capsaicin verbrennt tatsächlich die Schleimhäute",
+          "correct": false
+        },
+        {
+          "text": "Es ist eine allergische Immunreaktion",
+          "correct": false
+        }
+      ],
+      "difficulty": "medium",
+      "fun_fact": "Capsaicin aktiviert dieselben Rezeptoren wie tatsächliche Hitze (über 43 Grad). Das Gehirn meldet Brennen, obwohl gar keine Verbrennung stattfindet — deshalb hilft fettige Milch besser als Wasser, weil sie Capsaicin löst.",
+      "category": "Essen & Trinken"
+    },
+    {
+      "id": "essen_de_039",
+      "question": "Welches alltägliche Gewürz wurde historisch häufig mit Backsteinmehl gestreckt?",
+      "answers": [
+        {
+          "text": "Paprikapulver",
+          "correct": true
+        },
+        {
+          "text": "Zimt",
+          "correct": false
+        },
+        {
+          "text": "Schwarzer Pfeffer",
+          "correct": false
+        }
+      ],
+      "difficulty": "hard",
+      "fun_fact": "Gewürz-Fälschung ist uralt: gemahlene Steine, Sägemehl, sogar Bleimennige für die rote Farbe. Heute prüft die EU mit DNA-Tests — und findet trotzdem regelmäßig Fälschungen, vor allem bei Safran und Oregano.",
+      "category": "Essen & Trinken"
+    },
+    {
+      "id": "essen_de_040",
+      "question": "Wie viel Wasser braucht die Produktion von einem Kilo Rindfleisch im Schnitt?",
+      "answers": [
+        {
+          "text": "Über 15.000 Liter",
+          "correct": true
+        },
+        {
+          "text": "Etwa 500 Liter",
+          "correct": false
+        },
+        {
+          "text": "Etwa 3.000 Liter",
+          "correct": false
+        }
+      ],
+      "difficulty": "hard",
+      "fun_fact": "Der virtuelle Wasserverbrauch umfasst Futtermittelanbau, Tränken und Verarbeitung. Hülsenfrüchte brauchen vergleichsweise nur etwa 4.000 Liter pro Kilo. Ein Hamburger entspricht somit dem Wasserverbrauch von etwa 2 Monaten Duschen.",
+      "category": "Essen & Trinken"
+    },
+    {
+      "id": "essen_de_041",
+      "question": "Welches Restaurant gilt laut Guinness-Buch als das älteste, noch in Betrieb befindliche der Welt?",
+      "answers": [
+        {
+          "text": "Sobrino de Botín in Madrid",
+          "correct": true
+        },
+        {
+          "text": "Casa Pedro in Madrid",
+          "correct": false
+        },
+        {
+          "text": "Le Procope in Paris",
+          "correct": false
+        }
+      ],
+      "difficulty": "hard",
+      "fun_fact": "Sobrino de Botín existiert seit 1725 und ist im Guinness-Buch als ältestes Restaurant der Welt geführt. Berühmte Stammgäste waren Goya und Hemingway, der es in Fiesta verewigte.",
+      "category": "Essen & Trinken"
+    },
+    {
+      "id": "essen_de_042",
+      "question": "Wer vergibt die berühmten Michelin-Sterne?",
+      "answers": [
+        {
+          "text": "Der Reifenhersteller Michelin",
+          "correct": true
+        },
+        {
+          "text": "Eine französische Köchevereinigung",
+          "correct": false
+        },
+        {
+          "text": "Das französische Tourismusministerium",
+          "correct": false
+        }
+      ],
+      "difficulty": "easy",
+      "fun_fact": "Der Guide Michelin wurde 1900 vom Reifenhersteller herausgegeben, um Autofahrer auf längere Reisen und damit mehr Reifenverschleiß zu animieren. Die Sterne kamen erst 1926 — als Marketing-Tool für Reifen.",
+      "category": "Essen & Trinken"
+    },
+    {
+      "id": "essen_de_043",
+      "question": "Was ist die teuerste regelmäßig konsumierte Zutat in Spitzenrestaurants?",
+      "answers": [
+        {
+          "text": "Weißer Trüffel aus dem Piemont",
+          "correct": true
+        },
+        {
+          "text": "Iranischer Beluga-Kaviar",
+          "correct": false
+        },
+        {
+          "text": "Spanischer Schinken Ibérico",
+          "correct": false
+        }
+      ],
+      "difficulty": "medium",
+      "fun_fact": "Weißer Alba-Trüffel kann pro Kilo über 6.000 Euro kosten und lässt sich nicht züchten. Bei einer Auktion 2007 wurde ein einzelner 1,5-kg-Trüffel für 330.000 Dollar an einen Hongkonger Käufer versteigert.",
+      "category": "Essen & Trinken"
+    },
+    {
+      "id": "essen_de_044",
+      "question": "In welchem Land gilt lautes Nudeln-Schlürfen im Restaurant als Kompliment an den Koch?",
+      "answers": [
+        {
+          "text": "Japan",
+          "correct": true
+        },
+        {
+          "text": "Deutschland",
+          "correct": false
+        },
+        {
+          "text": "Italien",
+          "correct": false
+        }
+      ],
+      "difficulty": "easy",
+      "fun_fact": "In Japan ist lautes Nudeln-Schlürfen ein Zeichen der Wertschätzung — es signalisiert dem Koch, dass das Essen schmeckt. In den meisten westlichen Esskulturen gilt dasselbe Geräusch als unhöflich.",
+      "category": "Essen & Trinken"
+    },
+    {
+      "id": "essen_de_045",
+      "question": "Was war der ursprüngliche Zweck der Gabel, als sie nach Europa kam?",
+      "answers": [
+        {
+          "text": "Sie diente nur dem Aufspießen — Essen verzehrte man mit den Fingern",
+          "correct": true
+        },
+        {
+          "text": "Sie wurde nur für die Kochzubereitung benutzt",
+          "correct": false
+        },
+        {
+          "text": "Sie war Krönungsinsignie der byzantinischen Kaiser",
+          "correct": false
+        }
+      ],
+      "difficulty": "medium",
+      "fun_fact": "Die zweizinkige Gabel zum Aufspießen kam aus Byzanz nach Italien. In Frankreich galt sie noch im 17. Jahrhundert als weibisch — Ludwig XIV. aß sein Leben lang mit den Fingern. Erst später etablierte sich die Gabel als allgemeines Essbesteck.",
+      "category": "Essen & Trinken"
+    },
+    {
+      "id": "essen_de_046",
+      "question": "Welche Stadt hat regelmäßig die meisten 3-Sterne-Michelin-Restaurants weltweit?",
+      "answers": [
+        {
+          "text": "Tokio",
+          "correct": true
+        },
+        {
+          "text": "Paris",
+          "correct": false
+        },
+        {
+          "text": "Rom",
+          "correct": false
+        }
+      ],
+      "difficulty": "hard",
+      "fun_fact": "Tokio hat seit Jahren mehr 3-Sterne-Restaurants als Paris. Japan insgesamt führt regelmäßig die Statistik an — was viele überrascht, weil der Guide ursprünglich französisch ist.",
+      "category": "Essen & Trinken"
+    },
+    {
+      "id": "essen_de_047",
+      "question": "Aus welcher Tradition stammt das moderne Buffet?",
+      "answers": [
+        {
+          "text": "Dem schwedischen Smörgåsbord",
+          "correct": true
+        },
+        {
+          "text": "Der französischen Hofküche Versailles",
+          "correct": false
+        },
+        {
+          "text": "Den amerikanischen Cafeterias der 1950er",
+          "correct": false
+        }
+      ],
+      "difficulty": "medium",
+      "fun_fact": "Smörgåsbord bedeutet Brot-und-Butter-Tisch und stammt aus dem 16. Jahrhundert. Bei der Weltausstellung 1939 in New York wurde es als Konzept international bekannt — das All-you-can-eat-Restaurant ist dessen amerikanische Antwort.",
+      "category": "Essen & Trinken"
+    },
+    {
+      "id": "essen_de_048",
+      "question": "Wer war die erste Fernsehköchin, die mit einer eigenen TV-Show weltberühmt wurde?",
+      "answers": [
+        {
+          "text": "Julia Child",
+          "correct": true
+        },
+        {
+          "text": "Lidia Bastianich",
+          "correct": false
+        },
+        {
+          "text": "Sarah Wiener",
+          "correct": false
+        }
+      ],
+      "difficulty": "medium",
+      "fun_fact": "Julia Childs The French Chef startete 1963 im US-Bildungsfernsehen. Sie machte aufwendige französische Küche für Hausfrauen verständlich — und etablierte ein TV-Genre, von dem Generationen von Köchen heute leben.",
+      "category": "Essen & Trinken"
+    },
+    {
+      "id": "essen_de_049",
+      "question": "Was bestellt man, wenn man in Schottland Haggis essen will?",
+      "answers": [
+        {
+          "text": "Schafsmagen gefüllt mit Innereien und Hafer",
+          "correct": true
+        },
+        {
+          "text": "Geräucherte Hering-Filets",
+          "correct": false
+        },
+        {
+          "text": "Süßes Hafer-Whisky-Dessert",
+          "correct": false
+        }
+      ],
+      "difficulty": "easy",
+      "fun_fact": "Haggis ist Schottlands Nationalgericht — gehacktes Innereien-Hafer-Gemisch im Schafsmagen gekocht. Beim jährlichen Burns Supper am 25. Januar wird der Haggis mit Dudelsack-Begleitung serviert und mit einem Gedicht von Robert Burns geehrt.",
+      "category": "Essen & Trinken"
+    },
+    {
+      "id": "essen_de_050",
+      "question": "Warum gilt in Italien Cappuccino nach 11 Uhr als unüblich?",
+      "answers": [
+        {
+          "text": "Milch nach dem Essen gilt als verdauungsstörend",
+          "correct": true
+        },
+        {
+          "text": "Cappuccino ist nur ein Frühstücksgetränk per Gesetz",
+          "correct": false
+        },
+        {
+          "text": "Nachmittagskaffee wurde verboten",
+          "correct": false
+        }
+      ],
+      "difficulty": "medium",
+      "fun_fact": "In Italien gilt Milch als Mahlzeit, nicht als Getränk. Nach dem Mittag- oder Abendessen schwört man auf Espresso — Cappuccino dazu wäre wie Frühstück nach dem Steak. Touristen erkennt man sofort am Cappuccino-Bestellen um 14 Uhr.",
+      "category": "Essen & Trinken"
+    }
+  ]
+}

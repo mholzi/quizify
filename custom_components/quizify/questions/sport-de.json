@@ -1,0 +1,536 @@
+{
+  "name": "Sport",
+  "language": "de",
+  "version": "1.0",
+  "theme": "sport",
+  "questions": [
+    {
+      "id": "sport_de_001",
+      "question": "Welche Sportart war bei den Olympischen Sommerspielen 1900 in Paris im Programm, kehrte aber nie als reguläre Disziplin zurück?",
+      "answers": [
+        {"text": "Tauziehen", "correct": true},
+        {"text": "Wettsägen", "correct": false},
+        {"text": "Steinheben", "correct": false}
+      ],
+      "difficulty": "easy",
+      "fun_fact": "Tauziehen war von 1900 bis 1920 fünfmal olympisch. Großbritannien gewann allein bei Olympia 1908 alle drei Medaillen, weil die Teams aus verschiedenen Londoner Polizeieinheiten gegeneinander antraten.",
+      "category": "Sport"
+    },
+    {
+      "id": "sport_de_002",
+      "question": "Welche Farbe der olympischen Ringe fehlt in keiner einzigen Nationalflagge der Welt?",
+      "answers": [
+        {"text": "Keine — jede Flagge enthält mindestens eine der fünf Ringfarben", "correct": true},
+        {"text": "Grün — Saudi-Arabiens Flagge enthält keinen Ring", "correct": false},
+        {"text": "Schwarz — die meisten Pazifikflaggen verwenden es nicht", "correct": false}
+      ],
+      "difficulty": "easy",
+      "fun_fact": "Pierre de Coubertin wählte 1913 Blau, Gelb, Schwarz, Grün und Rot plus weißen Hintergrund genau deshalb so, dass jede damalige Nationalflagge mindestens eine dieser sechs Farben enthielt.",
+      "category": "Sport"
+    },
+    {
+      "id": "sport_de_003",
+      "question": "Was machte der äquatorialguineische Schwimmer Eric Moussambani bei Olympia 2000 in Sydney über 100 m Freistil berühmt?",
+      "answers": [
+        {"text": "Er gewann seinen Vorlauf, weil beide Konkurrenten disqualifiziert wurden — mit einer der langsamsten olympischen 100-m-Zeiten überhaupt", "correct": true},
+        {"text": "Er stellte als erster Afrikaner einen Weltrekord über 100 m Freistil auf", "correct": false},
+        {"text": "Er sprang versehentlich vor dem Startsignal und wurde trotzdem Olympiasieger", "correct": false}
+      ],
+      "difficulty": "medium",
+      "fun_fact": "Moussambani hatte vor Sydney nie in einem 50-m-Becken trainiert. Er brauchte 1:52,72 für die 100 m — etwa doppelt so lange wie der Weltrekord — und die 17.000 Zuschauer feierten ihn frenetisch beim Zielanschlag.",
+      "category": "Sport"
+    },
+    {
+      "id": "sport_de_004",
+      "question": "Bei welchen Olympischen Spielen wurden die Goldmedaillen tatsächlich zuletzt komplett aus massivem Gold gefertigt?",
+      "answers": [
+        {"text": "Stockholm 1912", "correct": true},
+        {"text": "Berlin 1936", "correct": false},
+        {"text": "London 1948", "correct": false}
+      ],
+      "difficulty": "medium",
+      "fun_fact": "Seit 1912 bestehen Goldmedaillen vorgeschrieben aus mindestens 92,5 % Silber mit nur etwa 6 Gramm Goldauflage. Eine aktuelle Olympia-Goldmedaille hätte als reines Gold einen Materialwert von rund 40.000 Euro — so ist sie weniger als ein Zehntel davon wert.",
+      "category": "Sport"
+    },
+    {
+      "id": "sport_de_005",
+      "question": "Welches Land trat bei der Fußball-WM 1950 in Brasilien an, ohne in der Qualifikation auch nur ein einziges Spiel bestritten zu haben — weil alle Gegner zurückzogen?",
+      "answers": [
+        {"text": "Indien", "correct": true},
+        {"text": "Schottland", "correct": false},
+        {"text": "Die Türkei", "correct": false}
+      ],
+      "difficulty": "hard",
+      "fun_fact": "Indien qualifizierte sich kampflos für die WM 1950, sagte dann aber selbst ab — die FIFA hatte das Spielen ohne Schuhe verboten, und das war für die indische Mannschaft unzumutbar.",
+      "category": "Sport"
+    },
+    {
+      "id": "sport_de_006",
+      "question": "Welche Disziplin war bei den Olympischen Spielen 1900 in Paris Teil des offiziellen Programms?",
+      "answers": [
+        {"text": "Lebende Tauben als Schießziele", "correct": true},
+        {"text": "Heißluftballon-Weitfahrt", "correct": false},
+        {"text": "Pferdekutschen-Rennen", "correct": false}
+      ],
+      "difficulty": "easy",
+      "fun_fact": "Bei Paris 1900 wurden rund 300 lebende Tauben als Ziele abgeschossen — der Belgier Léon de Lunden gewann mit 21 Treffern. Es war die einzige olympische Disziplin in der Geschichte, bei der absichtlich Tiere getötet wurden.",
+      "category": "Sport"
+    },
+    {
+      "id": "sport_de_007",
+      "question": "Welcher Marathonläufer beendete den olympischen Marathon 1968 in Mexiko-Stadt erst, als die Siegerehrung längst vorbei war — und wurde dafür weltberühmt?",
+      "answers": [
+        {"text": "John Stephen Akhwari aus Tansania", "correct": true},
+        {"text": "Shizo Kanakuri aus Japan", "correct": false},
+        {"text": "Abebe Bikila aus Äthiopien", "correct": false}
+      ],
+      "difficulty": "medium",
+      "fun_fact": "Akhwari war nach einem Sturz schwer verletzt, lief aber weiter und kam mehr als eine Stunde nach dem Sieger ins fast leere Stadion. Auf die Frage, warum er nicht aufgegeben habe, sagte er: „Mein Land hat mich nicht 5.000 Meilen geschickt, um ein Rennen zu starten. Es hat mich geschickt, um es zu beenden.“",
+      "category": "Sport"
+    },
+    {
+      "id": "sport_de_008",
+      "question": "Was war bis 1948 ein offizieller Bestandteil der Olympischen Spiele — neben den sportlichen Wettkämpfen?",
+      "answers": [
+        {"text": "Kunstwettbewerbe mit Medaillen für Malerei, Bildhauerei und Literatur", "correct": true},
+        {"text": "Wissenschafts-Olympiaden mit Medaillen für Physik und Chemie", "correct": false},
+        {"text": "Religiöse Zeremonien mit eigenen olympischen Auszeichnungen", "correct": false}
+      ],
+      "difficulty": "medium",
+      "fun_fact": "Von 1912 bis 1948 wurden 151 olympische Medaillen in Kunstwettbewerben vergeben — alle Werke mussten sportbezogene Themen behandeln. Pierre de Coubertin selbst gewann 1912 Gold für Literatur, allerdings unter Pseudonym.",
+      "category": "Sport"
+    },
+    {
+      "id": "sport_de_009",
+      "question": "Warum lautet das olympische Motto seit 2021 nicht mehr nur „Citius, Altius, Fortius“?",
+      "answers": [
+        {"text": "Es wurde um „Communiter“ ergänzt — „gemeinsam“", "correct": true},
+        {"text": "Es wurde um „Sanius“ ergänzt — „gesünder“", "correct": false},
+        {"text": "Es wurde um „Pacifice“ ergänzt — „friedlich“", "correct": false}
+      ],
+      "difficulty": "medium",
+      "fun_fact": "Das IOC fügte 2021 erstmals seit 1894 ein viertes Wort hinzu: Das Motto lautet nun „Citius, Altius, Fortius – Communiter“ („Schneller, höher, stärker – gemeinsam“). Es war eine Reaktion auf die Pandemie-Verschiebung von Tokio 2020.",
+      "category": "Sport"
+    },
+    {
+      "id": "sport_de_010",
+      "question": "Bei welchem skurrilen finnischen Sport tragen Männer ihre Partnerin durch einen Hindernisparcours?",
+      "answers": [
+        {"text": "Wife Carrying (Eukonkanto)", "correct": true},
+        {"text": "Husband Tossing", "correct": false},
+        {"text": "Couple Sprinting", "correct": false}
+      ],
+      "difficulty": "easy",
+      "fun_fact": "Die Weltmeisterschaft findet seit 1992 im finnischen Sonkajärvi statt — der Preis für den Sieger ist traditionell das Gewicht der Ehefrau in Bier.",
+      "category": "Sport"
+    },
+    {
+      "id": "sport_de_011",
+      "question": "Bei welcher englischen Tradition jagen Teilnehmer einen Käselaib einen steilen Hügel hinunter?",
+      "answers": [
+        {"text": "Cooper's Hill Cheese Rolling", "correct": true},
+        {"text": "Yorkshire Cheddar Chase", "correct": false},
+        {"text": "Devon Dairy Derby", "correct": false}
+      ],
+      "difficulty": "easy",
+      "fun_fact": "Der Doppelgloucester-Käse erreicht beim Rollen bis zu 110 km/h — fast jedes Jahr gibt es gebrochene Knochen, und der Sieger bekommt den Käse als Trophäe.",
+      "category": "Sport"
+    },
+    {
+      "id": "sport_de_012",
+      "question": "Welcher Hybrid-Sport kombiniert Runden im Boxring mit Runden am Schachbrett?",
+      "answers": [
+        {"text": "Schachboxen", "correct": true},
+        {"text": "Boxgolf", "correct": false},
+        {"text": "Ringschach", "correct": false}
+      ],
+      "difficulty": "easy",
+      "fun_fact": "Erfunden vom niederländischen Künstler Iepe Rubingh im Jahr 2003 — gewonnen wird per K.o. im Ring oder per Schachmatt am Brett, je nachdem was zuerst passiert.",
+      "category": "Sport"
+    },
+    {
+      "id": "sport_de_013",
+      "question": "Wie lange dauerte das längste Tennismatch der Geschichte (Isner gegen Mahut, Wimbledon 2010)?",
+      "answers": [
+        {"text": "Über 11 Stunden", "correct": true},
+        {"text": "Knapp 6 Stunden", "correct": false},
+        {"text": "Fast 18 Stunden", "correct": false}
+      ],
+      "difficulty": "medium",
+      "fun_fact": "Das Match zog sich über drei Tage und endete im fünften Satz mit 70:68 für Isner — die Anzeigetafel kapitulierte zwischendurch, weil sie für solche Spielstände nie programmiert worden war.",
+      "category": "Sport"
+    },
+    {
+      "id": "sport_de_014",
+      "question": "Bei welchem südostasiatischen Sport spielen die Teams eine Art Volleyball — aber nur mit Füßen, Knien und Kopf?",
+      "answers": [
+        {"text": "Sepak Takraw", "correct": true},
+        {"text": "Kabaddi", "correct": false},
+        {"text": "Buzkashi", "correct": false}
+      ],
+      "difficulty": "medium",
+      "fun_fact": "Der Ball aus Rattan wiegt nur etwa 170 Gramm — Spitzenspieler schmettern ihn mit Salto-Akrobatik aus dem Stand übers Netz, ähnlich einem umgekehrten Fallrückzieher.",
+      "category": "Sport"
+    },
+    {
+      "id": "sport_de_015",
+      "question": "Bei welchem indischen Mannschaftssport müssen Angreifer beim Eindringen ins gegnerische Feld ununterbrochen rufen, um den Atem zu beweisen?",
+      "answers": [
+        {"text": "Kabaddi", "correct": true},
+        {"text": "Kho Kho", "correct": false},
+        {"text": "Mallakhamb", "correct": false}
+      ],
+      "difficulty": "medium",
+      "fun_fact": "Der Sprechgesang dient als Lungentest — sobald der Angreifer Luft holt, ist sein Zug vorbei. Indien gewann jede einzelne Kabaddi-Weltmeisterschaft bis 2016.",
+      "category": "Sport"
+    },
+    {
+      "id": "sport_de_016",
+      "question": "Wie alt war Dimitrios Loundras, der jüngste Olympia-Medaillengewinner aller Zeiten (Turnen 1896)?",
+      "answers": [
+        {"text": "10 Jahre", "correct": true},
+        {"text": "13 Jahre", "correct": false},
+        {"text": "16 Jahre", "correct": false}
+      ],
+      "difficulty": "medium",
+      "fun_fact": "Der Grieche gewann im Mannschafts-Barren Bronze bei den ersten modernen Olympischen Spielen in Athen — später wurde er Konteradmiral der griechischen Marine und kämpfte in zwei Weltkriegen.",
+      "category": "Sport"
+    },
+    {
+      "id": "sport_de_017",
+      "question": "Welches alpenländische Wintersport-Pendant zum Curling wird mit einem Holzstock auf Eis gespielt — ganz ohne Besen?",
+      "answers": [
+        {"text": "Eisstockschießen", "correct": true},
+        {"text": "Eishornussen", "correct": false},
+        {"text": "Schneestockwerfen", "correct": false}
+      ],
+      "difficulty": "hard",
+      "fun_fact": "Bei den Olympischen Winterspielen 1936 und 1964 war Eisstockschießen offiziell Demonstrationssport — der Stock wiegt bis zu 3,8 Kilogramm und wird gleitend statt geworfen gespielt.",
+      "category": "Sport"
+    },
+    {
+      "id": "sport_de_018",
+      "question": "Welcher Spieler erzielte das schnellste Tor der WM-Geschichte nach nur 10,8 Sekunden?",
+      "answers": [
+        {"text": "Hakan Şükür", "correct": true},
+        {"text": "Miroslav Klose", "correct": false},
+        {"text": "Ronaldo Nazário", "correct": false}
+      ],
+      "difficulty": "easy",
+      "fun_fact": "Hakan Şükür traf 2002 im Spiel um Platz 3 gegen Südkorea bereits in der ersten Spielminute. Kurios: Es war sein einziges Tor bei der gesamten WM 2002.",
+      "category": "Sport"
+    },
+    {
+      "id": "sport_de_019",
+      "question": "Wie viele Mannschaften nahmen am ersten WM-Turnier 1930 in Uruguay teil?",
+      "answers": [
+        {"text": "13", "correct": true},
+        {"text": "16", "correct": false},
+        {"text": "8", "correct": false}
+      ],
+      "difficulty": "easy",
+      "fun_fact": "Es gab keine Qualifikation — Länder mussten lediglich eingeladen werden. Viele europäische Teams sagten wegen der langen Schiffsreise ab; nur vier reisten überhaupt nach Südamerika.",
+      "category": "Sport"
+    },
+    {
+      "id": "sport_de_020",
+      "question": "Welches ungewöhnliche Material wurde für die erste WM-Trophäe (Coupe Jules Rimet) als Sockel verwendet?",
+      "answers": [
+        {"text": "Halbedelstein Lapislazuli", "correct": true},
+        {"text": "Brasilianisches Mahagoni-Holz", "correct": false},
+        {"text": "Karrara-Marmor", "correct": false}
+      ],
+      "difficulty": "hard",
+      "fun_fact": "Die Trophäe wurde 1983 in Rio de Janeiro gestohlen und nie wiedergefunden — vermutlich eingeschmolzen. Der blaue Lapislazuli-Sockel war eines der teuersten Bauteile der Original-Statuette.",
+      "category": "Sport"
+    },
+    {
+      "id": "sport_de_021",
+      "question": "Was machte das WM-Finale 1950 zwischen Brasilien und Uruguay so besonders?",
+      "answers": [
+        {"text": "Es war offiziell gar kein Finale, sondern das letzte Spiel einer Endrunden-Gruppe", "correct": true},
+        {"text": "Es wurde wegen Regen zweimal abgebrochen", "correct": false},
+        {"text": "Beide Teams spielten ohne Trikotnummern", "correct": false}
+      ],
+      "difficulty": "medium",
+      "fun_fact": "Die WM 1950 hatte als einzige in der Geschichte kein klassisches K.-o.-Finale. Brasilien hätte ein Unentschieden gereicht — Uruguay gewann 2:1 (das 'Maracanazo'). 200.000 Fans verließen das Stadion in Schockstarre.",
+      "category": "Sport"
+    },
+    {
+      "id": "sport_de_022",
+      "question": "Welche Trikotnummer trug Johan Cruyff bei der WM 1974, obwohl ihm eigentlich die 9 zustand?",
+      "answers": [
+        {"text": "Die 14", "correct": true},
+        {"text": "Die 7", "correct": false},
+        {"text": "Die 10", "correct": false}
+      ],
+      "difficulty": "medium",
+      "fun_fact": "Cruyff hatte sich bei Ajax die 14 ausgesucht und behielt sie auch im Nationalteam. Die Nummer wurde bei Ajax 2007 ihm zu Ehren gesperrt — einzigartig im niederländischen Fußball.",
+      "category": "Sport"
+    },
+    {
+      "id": "sport_de_023",
+      "question": "Welches Tier war das Maskottchen der WM 1966 in England — die erste WM mit Maskottchen überhaupt?",
+      "answers": [
+        {"text": "Ein Löwe (Willie)", "correct": true},
+        {"text": "Ein Bulldog", "correct": false},
+        {"text": "Ein Pferd", "correct": false}
+      ],
+      "difficulty": "easy",
+      "fun_fact": "'World Cup Willie' war der erste kommerziell vermarktete Sport-Maskottchen-Charakter der Geschichte und legte den Grundstein für die heutige Merchandising-Industrie im Sport.",
+      "category": "Sport"
+    },
+    {
+      "id": "sport_de_024",
+      "question": "Wie lange dauerte Diego Maradonas berühmtes 'Tor des Jahrhunderts' gegen England 1986 vom ersten Ballkontakt bis zum Abschluss?",
+      "answers": [
+        {"text": "Etwa 10 Sekunden", "correct": true},
+        {"text": "Etwa 25 Sekunden", "correct": false},
+        {"text": "Etwa 4 Sekunden", "correct": false}
+      ],
+      "difficulty": "medium",
+      "fun_fact": "Maradona dribbelte in rund 10 Sekunden über 60 Meter an fünf englischen Spielern vorbei. Im selben Spiel fiel auch die berüchtigte 'Hand Gottes' — beide Tore innerhalb von nur vier Minuten.",
+      "category": "Sport"
+    },
+    {
+      "id": "sport_de_025",
+      "question": "Welches Land gewann die erste Europameisterschaft 1960, obwohl es im Viertelfinale ein 'Geschenk-Spiel' bekam?",
+      "answers": [
+        {"text": "Sowjetunion", "correct": true},
+        {"text": "Jugoslawien", "correct": false},
+        {"text": "Frankreich", "correct": false}
+      ],
+      "difficulty": "hard",
+      "fun_fact": "Spanien weigerte sich aus politischen Gründen unter Franco, im Viertelfinale gegen die UdSSR anzutreten — die Sowjets kamen kampflos weiter und gewannen das Turnier am Ende gegen Jugoslawien.",
+      "category": "Sport"
+    },
+    {
+      "id": "sport_de_026",
+      "question": "Welcher Spieler erzielte das allererste Tor in der Geschichte der Bundesliga (1963)?",
+      "answers": [
+        {"text": "Timo Konietzka (Borussia Dortmund)", "correct": true},
+        {"text": "Uwe Seeler (Hamburger SV)", "correct": false},
+        {"text": "Helmut Haller (TSV 1860 München)", "correct": false}
+      ],
+      "difficulty": "medium",
+      "fun_fact": "Timo Konietzka traf für Borussia Dortmund nach nur 58 Sekunden gegen Werder Bremen — das offiziell erste Bundesliga-Tor überhaupt. Bayern München war übrigens in der ersten Bundesliga-Saison gar nicht dabei.",
+      "category": "Sport"
+    },
+    {
+      "id": "sport_de_027",
+      "question": "Wen attackierte Zinédine Zidane mit seinem berüchtigten Kopfstoß im WM-Finale 2006?",
+      "answers": [
+        {"text": "Marco Materazzi", "correct": true},
+        {"text": "Fabio Cannavaro", "correct": false},
+        {"text": "Gennaro Gattuso", "correct": false}
+      ],
+      "difficulty": "easy",
+      "fun_fact": "Zidane wurde in seinem letzten Profispiel vom Platz gestellt. Trotz Roter Karte wurde er nachträglich zum besten Spieler der WM (Goldener Ball) gewählt — einzigartig in der Turniergeschichte.",
+      "category": "Sport"
+    },
+    {
+      "id": "sport_de_028",
+      "question": "Aus welchem Küchengegenstand entstand laut Legende der Frisbee?",
+      "answers": [
+        {"text": "Kuchenform der Frisbie Pie Company", "correct": true},
+        {"text": "Pizzateller aus einer Trattoria", "correct": false},
+        {"text": "Käseglocke einer französischen Käserei", "correct": false}
+      ],
+      "difficulty": "easy",
+      "fun_fact": "Studenten der Yale University warfen sich in den 1940ern leere Blechformen der Frisbie Pie Company zu — daraus wurde das Plastik-Spielzeug Frisbee. Der Name wurde nur leicht angepasst.",
+      "category": "Sport"
+    },
+    {
+      "id": "sport_de_029",
+      "question": "Womit fingen die Spieler im ersten Basketballspiel 1891 die Bälle?",
+      "answers": [
+        {"text": "Pfirsichkörben an der Wand", "correct": true},
+        {"text": "Holzkisten ohne Boden", "correct": false},
+        {"text": "Geflochtenen Weidenkörben am Boden", "correct": false}
+      ],
+      "difficulty": "easy",
+      "fun_fact": "James Naismith ließ einfach zwei Pfirsichkörbe an die Wand der Turnhalle nageln. Nach jedem Korb musste jemand mit einer Leiter den Ball wieder herausholen — bis jemand auf die Idee kam, den Boden des Korbs herauszuschneiden.",
+      "category": "Sport"
+    },
+    {
+      "id": "sport_de_030",
+      "question": "In welchem ungewöhnlichen Umfeld entwickelten Mönche im Mittelalter die Vorform des Tennis?",
+      "answers": [
+        {"text": "In Klosterhöfen — mit der bloßen Handfläche", "correct": true},
+        {"text": "Auf Marktplätzen — mit Holzbrettern", "correct": false},
+        {"text": "In Burgkellern — mit Lederhandschuhen", "correct": false}
+      ],
+      "difficulty": "easy",
+      "fun_fact": "Französische Mönche spielten ab dem 12. Jahrhundert 'Jeu de paume' (Spiel mit der Handfläche) in Klosterhöfen. Schläger kamen erst Jahrhunderte später dazu — der Name 'Tennis' stammt vermutlich vom französischen 'Tenez!' (Halt!), das man vor dem Aufschlag rief.",
+      "category": "Sport"
+    },
+    {
+      "id": "sport_de_031",
+      "question": "Wie traten die Athleten bei den antiken Olympischen Spielen in Griechenland an?",
+      "answers": [
+        {"text": "Vollständig nackt", "correct": true},
+        {"text": "In weißen Leinentuniken", "correct": false},
+        {"text": "In bemalten Lederhosen", "correct": false}
+      ],
+      "difficulty": "easy",
+      "fun_fact": "Das griechische Wort 'Gymnasium' bedeutet wörtlich 'Ort der Nacktheit'. Verheiratete Frauen durften bei Strafe des Todes nicht zusehen — unverheiratete jedoch schon, was als Heiratsmarkt galt.",
+      "category": "Sport"
+    },
+    {
+      "id": "sport_de_032",
+      "question": "Welche brutale Kampfsportart der antiken Olympia kombinierte Boxen und Ringen fast ohne Regeln?",
+      "answers": [
+        {"text": "Pankration", "correct": true},
+        {"text": "Hoplomachia", "correct": false},
+        {"text": "Diaulos", "correct": false}
+      ],
+      "difficulty": "medium",
+      "fun_fact": "Verboten waren nur Beißen und Augenausstechen — alles andere, inklusive Knochenbrüchen und Würgen bis zur Bewusstlosigkeit, war erlaubt. Ein Sieger namens Arrichion soll posthum gekrönt worden sein: Er starb beim Erwürgtwerden, aber sein Gegner gab vorher wegen eines gebrochenen Zehs auf.",
+      "category": "Sport"
+    },
+    {
+      "id": "sport_de_033",
+      "question": "Welche überraschende olympische Premiere fand bei den Sommerspielen 2020 in Tokio statt?",
+      "answers": [
+        {"text": "Skateboarding wurde olympische Disziplin", "correct": true},
+        {"text": "Schach wurde olympische Disziplin", "correct": false},
+        {"text": "Darts wurde olympische Disziplin", "correct": false}
+      ],
+      "difficulty": "medium",
+      "fun_fact": "Die 13-jährige Japanerin Momiji Nishiya gewann Gold im Street-Skateboarding — eine der jüngsten Olympiasiegerinnen aller Zeiten. Bei Paris 2024 folgte dann Breakdance als nächste 'urbane' Disziplin.",
+      "category": "Sport"
+    },
+    {
+      "id": "sport_de_034",
+      "question": "Welcher kuriose Vorwurf führte 1919 zum 'Black Sox'-Skandal im US-Baseball?",
+      "answers": [
+        {"text": "Acht Spieler verloren die World Series absichtlich gegen Bestechungsgeld", "correct": true},
+        {"text": "Die Spieler trugen schwarze Trikots aus Protest gegen den Klub-Besitzer", "correct": false},
+        {"text": "Die Mannschaft wurde wegen rassistischer Beleidigungen disqualifiziert", "correct": false}
+      ],
+      "difficulty": "medium",
+      "fun_fact": "Acht Spieler der Chicago White Sox nahmen Geld von Glücksspielern, um die World Series gegen Cincinnati zu verlieren. Star Shoeless Joe Jackson wurde lebenslang gesperrt — obwohl er in der Serie .375 schlug, einer der besten Werte überhaupt.",
+      "category": "Sport"
+    },
+    {
+      "id": "sport_de_035",
+      "question": "Wie wurde die erste Tour de France 1903 finanziert?",
+      "answers": [
+        {"text": "Als Werbe-Stunt einer Sportzeitung gegen einen Konkurrenten", "correct": true},
+        {"text": "Als königlich-französisches Prestige-Projekt", "correct": false},
+        {"text": "Als Wohltätigkeits-Event nach einer Cholera-Epidemie", "correct": false}
+      ],
+      "difficulty": "medium",
+      "fun_fact": "Die Sportzeitung 'L'Auto' erfand das Rennen, um die rivalisierende 'Le Vélo' auszustechen — und um mehr Zeitungen zu verkaufen. Der Plan ging auf: Die Auflage verdreifachte sich. 'Le Vélo' ging wenige Jahre später pleite.",
+      "category": "Sport"
+    },
+    {
+      "id": "sport_de_036",
+      "question": "Welche bizarre Strafe konnte einem Boxer in der antiken Olympia drohen, wenn er aufgab?",
+      "answers": [
+        {"text": "Öffentliches Auspeitschen durch die Kampfrichter", "correct": true},
+        {"text": "Lebenslanges Verbot, einen Bart zu tragen", "correct": false},
+        {"text": "Verbannung aus seiner Heimatstadt", "correct": false}
+      ],
+      "difficulty": "hard",
+      "fun_fact": "Antikes Boxen kannte keine Runden und keine Gewichtsklassen — gekämpft wurde, bis einer aufgab oder bewusstlos war. Wer kapitulierte, galt als entehrt und konnte von den Hellanodiken (Kampfrichtern) körperlich gezüchtigt werden. Manche Boxer kämpften lieber bis zum Tod.",
+      "category": "Sport"
+    },
+    {
+      "id": "sport_de_037",
+      "question": "Warum haben Golfbälle eigentlich diese kleinen Dellen (Dimples)?",
+      "answers": [
+        {"text": "Sie verringern den Luftwiderstand, dadurch fliegt der Ball etwa doppelt so weit wie ein glatter Ball", "correct": true},
+        {"text": "Sie sorgen für besseren Grip am Schlägerblatt beim Treffmoment", "correct": false},
+        {"text": "Sie machen den Ball für das Auge auf dem Grün besser sichtbar", "correct": false}
+      ],
+      "difficulty": "easy",
+      "fun_fact": "Die ersten Golfer entdeckten zufällig, dass alte, zerkratzte Bälle weiter flogen als neue glatte — daraus entstand das Dimple-Design.",
+      "category": "Sport"
+    },
+    {
+      "id": "sport_de_038",
+      "question": "Was aß Usain Bolt während der Olympischen Spiele in Peking 2008, als er den 100m-Weltrekord aufstellte?",
+      "answers": [
+        {"text": "Chicken McNuggets — angeblich rund 1000 Stück in 10 Tagen", "correct": true},
+        {"text": "Ausschließlich jamaikanisches Ackee mit Saltfish aus dem Olympischen Dorf", "correct": false},
+        {"text": "Eine streng vegane Rohkost-Diät seines Sportarztes", "correct": false}
+      ],
+      "difficulty": "easy",
+      "fun_fact": "Bolt traute dem chinesischen Essen nicht und blieb bei McDonald's — laut eigener Aussage frühstückte, lunchte und abendessen er Nuggets.",
+      "category": "Sport"
+    },
+    {
+      "id": "sport_de_039",
+      "question": "Was ist beim Eishockey-Puck eine kuriose Vorbereitungs-Vorschrift der NHL?",
+      "answers": [
+        {"text": "Er wird vor dem Spiel eingefroren, um beim Aufprall weniger zu springen", "correct": true},
+        {"text": "Er wird in Salzwasser getränkt, damit er auf dem Eis besser gleitet", "correct": false},
+        {"text": "Er muss vor jedem Drittel mit Bienenwachs poliert werden", "correct": false}
+      ],
+      "difficulty": "easy",
+      "fun_fact": "Die NHL lagert Pucks bei etwa -14°C in einem Gefrierschrank an der Bande — ein gefrorener Puck springt deutlich weniger und gleitet sauberer.",
+      "category": "Sport"
+    },
+    {
+      "id": "sport_de_040",
+      "question": "Warum hat ein Bowling-Spiel ausgerechnet 10 Pins?",
+      "answers": [
+        {"text": "Weil eine ältere Variante mit 9 Pins im 19. Jh. in US-Bundesstaaten als Glücksspiel verboten wurde — also fügte man einfach einen 10. Pin hinzu", "correct": true},
+        {"text": "Weil die ersten Profi-Bowler exakt 10 Punkte pro Wurf für die Statistik wollten", "correct": false},
+        {"text": "Weil Brunswick als erster Hersteller nur Holz für maximal 10 Kegel zur Verfügung hatte", "correct": false}
+      ],
+      "difficulty": "medium",
+      "fun_fact": "Connecticut verbot 1841 das damals populäre Nine-Pin-Bowling als Glücksspiel — Spieler umgingen das Verbot, indem sie einen zehnten Pin ergänzten, und das Ten-Pin-Bowling war geboren.",
+      "category": "Sport"
+    },
+    {
+      "id": "sport_de_041",
+      "question": "Was ist beim Curling die strenge Herkunfts-Vorschrift für die Steine?",
+      "answers": [
+        {"text": "Sie werden fast ausschließlich aus Granit einer einzigen kleinen schottischen Insel (Ailsa Craig) gefertigt", "correct": true},
+        {"text": "Sie müssen aus norwegischem Vulkangestein bestehen, das nur im Sommer gewonnen wird", "correct": false},
+        {"text": "Sie dürfen nur aus kanadischem Quarzit nördlich des 60. Breitengrads stammen", "correct": false}
+      ],
+      "difficulty": "medium",
+      "fun_fact": "Ailsa Craig ist ein winziger unbewohnter Felsen vor der schottischen Westküste — sein extrem dichter, wasserabweisender Granit ist nahezu konkurrenzlos für Curlingsteine.",
+      "category": "Sport"
+    },
+    {
+      "id": "sport_de_042",
+      "question": "Welche ungewöhnliche Doppelkarriere hatte Football-Star Bo Jackson in den späten 1980ern?",
+      "answers": [
+        {"text": "Er war gleichzeitig NFL-All-Pro (Raiders) und MLB-All-Star (Royals) — der einzige Spieler mit dieser Doppel-Auszeichnung", "correct": true},
+        {"text": "Er spielte parallel NBA-Basketball für die Lakers und NFL-Football", "correct": false},
+        {"text": "Er war zugleich Profi-Eishockeyspieler und NFL-Running-Back", "correct": false}
+      ],
+      "difficulty": "medium",
+      "fun_fact": "Bo Jackson bezeichnete Football als sein „Hobby“ und Baseball als seinen „Job“ — bis eine Hüftverletzung 1991 seine Football-Karriere beendete.",
+      "category": "Sport"
+    },
+    {
+      "id": "sport_de_043",
+      "question": "Was passiert bei einem Cricket-Test-Match traditionell mit dem Ball — anders als in fast jedem anderen Ballsport?",
+      "answers": [
+        {"text": "Derselbe Ball wird über 80 Overs (rund 6 Stunden Spielzeit) verwendet, bevor ein neuer angefordert werden darf", "correct": true},
+        {"text": "Nach jeder Over wird ein frischer Ball gebracht, um Manipulation zu verhindern", "correct": false},
+        {"text": "Der Ball wird nach jeder gefangenen Bowling-Phase im Eiswasser abgekühlt", "correct": false}
+      ],
+      "difficulty": "medium",
+      "fun_fact": "Wie sich der alte, abgenutzte Ball verhält („reverse swing“) ist taktisch entscheidend — daher das berüchtigte „Ball-Tampering“-Skandalpotenzial, etwa der australische Sandpaper-Vorfall 2018.",
+      "category": "Sport"
+    },
+    {
+      "id": "sport_de_044",
+      "question": "Was ist eine bizarre, aber bis heute gültige Regel beim formellen Pferderennen-Reglement des Jockey Club?",
+      "answers": [
+        {"text": "Bei Vollblut-Rennpferden ist künstliche Befruchtung verboten — nur Natursprung („live cover“) zählt für die Stammbaum-Anerkennung", "correct": true},
+        {"text": "Jockeys dürfen während des Rennens nicht sprechen, sonst droht Disqualifikation", "correct": false},
+        {"text": "Vor jedem Rennen müssen die Pferde mindestens 48 Stunden Stallruhe gehabt haben", "correct": false}
+      ],
+      "difficulty": "hard",
+      "fun_fact": "Diese Natursprung-Pflicht macht Vollblut-Zucht extrem teuer und logistisch komplex — und ist der Grund, warum Top-Hengste wie Galileo Decksprung-Honorare im sechsstelligen Bereich erzielten.",
+      "category": "Sport"
+    }
+  ]
+}
