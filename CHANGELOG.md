@@ -7,6 +7,20 @@ All notable changes to Quizify are documented here. This project follows
 
 ### Added
 
+- **Live answer distribution chart on the TV dashboard** (closes
+  #151). The README has always advertised "live answer distribution"
+  as part of the TV dashboard but the page only ever toggled a
+  green/red border on each answer tile — the per-answer percent was
+  never visualized. Now at reveal time each answer card renders a
+  horizontal bar plus tabular-num percent, sized for TV viewing
+  distance (`clamp(10–14 px)` bar height, `clamp(16–22 px)` percent
+  text). Correct answer's bar fills in sage green per DESIGN.md;
+  wrong answers use a muted sage-tinted fill that fades with the
+  existing `.wrong` opacity. Bars animate from 0 → target with a
+  400 ms delay so the correct/wrong colour wave lands first, then
+  the chart populates in over 800 ms. Empty distribution (no
+  submissions) renders cleanly — server returns 0 % for each entry,
+  bars stay at width 0, percent text shows "0 %".
 - **Top Score end-of-game award** (closes #150). The README has
   always advertised `🥇 Top Score` as one of the headline highlights
   but it was never implemented. Now awarded to the player whose best

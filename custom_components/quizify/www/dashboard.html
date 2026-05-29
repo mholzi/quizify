@@ -329,7 +329,52 @@
         }
 
         .dashboard-answer.wrong {
-            opacity: 0.28;
+            opacity: 0.32;
+        }
+
+        /* Answer-distribution chart (issue #151) — hidden during question,
+           fades in + animates the bars at reveal time. TV viewing distance
+           means: thick bars, large percent text, no precision noise. The
+           bar is sized to claim ~30 % of the answer-row width so the
+           answer text still owns the card. */
+        .dashboard-answer-distribution {
+            display: flex;
+            align-items: center;
+            gap: clamp(10px, 1vw, 14px);
+            margin-left: auto;
+            opacity: 0;
+            transition: opacity 220ms ease-out 320ms;  /* fade in after correct/wrong colour lands */
+            min-width: clamp(140px, 22%, 280px);
+            flex-shrink: 0;
+        }
+        .dashboard-answer.revealed .dashboard-answer-distribution {
+            opacity: 1;
+        }
+        .dashboard-answer-bar {
+            flex: 1 1 auto;
+            height: clamp(10px, 1vw, 14px);
+            background: rgba(255, 255, 255, 0.08);
+            border-radius: 999px;
+            overflow: hidden;
+        }
+        .dashboard-answer-bar-fill {
+            height: 100%;
+            width: 0%;
+            background: rgba(127, 168, 151, 0.42);  /* sage muted for wrong */
+            border-radius: 999px;
+            transition: width 800ms cubic-bezier(0.22, 0.61, 0.36, 1) 400ms;
+        }
+        .dashboard-answer.correct .dashboard-answer-bar-fill {
+            background: var(--dash-success);  /* sage green per DESIGN.md */
+        }
+        .dashboard-answer-percent {
+            font-family: 'JetBrains Mono', ui-monospace, monospace;
+            font-size: clamp(16px, 1.6vw, 22px);
+            font-weight: 600;
+            color: var(--dash-text-white);
+            min-width: clamp(48px, 4.5vw, 72px);
+            text-align: right;
+            font-variant-numeric: tabular-nums;
         }
 
         /* Fun fact on reveal */
@@ -898,9 +943,17 @@
             var labels = ['A', 'B', 'C', 'D'];
             currentAnswers = msg.answers || [];
             els.answersGrid.innerHTML = currentAnswers.map(function(text, i) {
+                // Distribution markup is included up-front but kept hidden via
+                // the .revealed class on the parent (issue #151). Embedding it
+                // at question-render time avoids a DOM thrash at reveal — only
+                // the fill-width + percent-text change.
                 return '<div class="dashboard-answer" data-index="' + i + '">' +
                     '<span class="answer-label">' + (labels[i] || '') + '</span>' +
                     '<span class="answer-text">' + escapeHtml(text) + '</span>' +
+                    '<div class="dashboard-answer-distribution" aria-hidden="true">' +
+                        '<div class="dashboard-answer-bar"><div class="dashboard-answer-bar-fill"></div></div>' +
+                        '<span class="dashboard-answer-percent">0%</span>' +
+                    '</div>' +
                     '</div>';
             }).join('');
         }
@@ -924,6 +977,17 @@
             // Highlight correct answer
             var correctIdx = summary.correct_answer_index != null ? summary.correct_answer_index : -1;
             var answerEls = els.answersGrid.querySelectorAll('.dashboard-answer');
+
+            // Issue #151: render live answer distribution at reveal.
+            // Server sends [{index, count, percent}, ...]; empty when no one
+            // submitted. The .revealed class triggers the CSS fade-in; bar
+            // fill widths animate from 0 % to their target. Tabular-num
+            // percent text avoids width-jitter as the value updates.
+            var distByIdx = {};
+            (summary.answer_distribution || []).forEach(function(d) {
+                if (d && typeof d.index === 'number') distByIdx[d.index] = d;
+            });
+
             answerEls.forEach(function(el) {
                 var idx = parseInt(el.dataset.index, 10);
                 if (idx === correctIdx) {
@@ -931,6 +995,14 @@
                 } else {
                     el.classList.add('wrong');
                 }
+                el.classList.add('revealed');
+
+                var entry = distByIdx[idx];
+                var pct = (entry && typeof entry.percent === 'number') ? entry.percent : 0;
+                var fill = el.querySelector('.dashboard-answer-bar-fill');
+                var pctEl = el.querySelector('.dashboard-answer-percent');
+                if (fill) fill.style.width = pct + '%';
+                if (pctEl) pctEl.textContent = pct + '%';
             });
 
             // Fun fact
