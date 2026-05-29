@@ -510,8 +510,17 @@
             flex-direction: column;
             align-items: center;
             overflow-y: auto;
-            padding-bottom: 32px;
-            gap: 48px;
+            padding-top: 12px;
+            padding-bottom: 16px;
+            /* Tightened all vertical spacing per Markus 2026-05-29
+               (msg 323): on a 720p TV viewport the awards row (incl.
+               Top Score card) was below the fold even after dropping
+               48 → 24 px in the first pass. The full chain — finale
+               gap + podium-section gap + podium-title clamp + podium-
+               place height — is now at the floor of what still reads
+               TV-legibly. Beyond this, the layout would need to go
+               horizontal (podium on the left, awards on the right). */
+            gap: 12px;
             position: relative;
         }
 
@@ -538,14 +547,17 @@
             display: flex;
             flex-direction: column;
             align-items: center;
-            gap: 28px;
+            /* 28 → 12 to give the awards row room on 720p TVs. */
+            gap: 12px;
             position: relative;
             z-index: 1;
         }
 
         .podium-title {
             font-family: 'Cabinet Grotesk', system-ui, sans-serif;
-            font-size: clamp(40px, 5vw, 72px);
+            /* clamp top dropped 72 → 48 so 'Result' is still TV-legible
+               but stops dominating the awards-row vertical budget. */
+            font-size: clamp(28px, 3.6vw, 48px);
             font-weight: 900;
             color: var(--dash-accent-primary);
             letter-spacing: -0.02em;
@@ -581,7 +593,8 @@
             flex-direction: column;
             align-items: center;
             justify-content: space-between;
-            height: 280px;
+            /* 280 → 220 so the awards row stays above the fold on 720p TVs. */
+            height: 220px;
             gap: 8px;
         }
         .podium-label {
@@ -683,21 +696,23 @@
             border-top: 3px solid var(--dash-bronze);
         }
 
+        /* Bar heights stay proportional but scaled down — fits in the
+           220 px podium-place height with room for the top label. */
         .podium-bar.first {
-            height: 200px;
+            height: 150px;
             border-top: 3px solid var(--dash-accent-primary);
             color: var(--dash-accent-primary);
             box-shadow: 0 -20px 40px var(--dash-success-glow);
         }
 
         .podium-bar.second {
-            height: 164px;
+            height: 122px;
             border-top: 3px solid var(--dash-silver);
             color: var(--dash-silver);
         }
 
         .podium-bar.third {
-            height: 136px;
+            height: 102px;
             border-top: 3px solid var(--dash-bronze);
             color: var(--dash-bronze);
         }
@@ -735,26 +750,37 @@
         }
 
         .award-card {
+            /* Compact horizontal pill — fits the awards row above the
+               fold at 720p TV viewport. Per Markus 2026-05-29 (msg 323):
+               the previous tall vertical card forced the row off-screen.
+               Icon + name + winner now sit on a single line; the longer
+               detail string sits as a quiet second line under the
+               winner so a long fact still has room. */
             display: flex;
-            flex-direction: column;
+            flex-direction: row;
             align-items: center;
-            gap: 8px;
-            padding: 18px 22px;
+            gap: 14px;
+            padding: 12px 18px;
             background: var(--dash-surface-dark);
             border: 1px solid var(--dash-border-neon);
-            border-radius: 10px;
-            min-width: 180px;
-            text-align: center;
+            border-radius: 999px;
+            min-width: 220px;
+            text-align: left;
             opacity: 0;
             transform: translateY(20px);
             animation: award-appear 0.5s ease forwards;
+        }
+        .award-card .award-text {
+            display: flex;
+            flex-direction: column;
+            gap: 2px;
         }
 
         @keyframes award-appear {
             to { opacity: 1; transform: translateY(0); }
         }
 
-        .award-icon { font-size: 1.8rem; line-height: 1; }
+        .award-icon { font-size: 2rem; line-height: 1; flex-shrink: 0; }
 
         .award-name {
             font-family: 'JetBrains Mono', ui-monospace, monospace;
@@ -1201,11 +1227,15 @@
                 var card = document.createElement('div');
                 card.className = 'award-card';
                 card.style.animationDelay = (i * 0.5) + 's';
+                // Compact pill layout (Markus 2026-05-29 msg 323): icon
+                // owns the left chip, award-name + winner share one line,
+                // detail wraps as a quiet sub-line.
                 card.innerHTML =
                     '<div class="award-icon">' + s.icon + '</div>' +
-                    '<div class="award-name">' + escapeHtml(s.award) + '</div>' +
-                    '<div class="award-winner">' + escapeHtml(s.winner) + '</div>' +
-                    '<div class="award-detail">' + escapeHtml(s.detail) + '</div>';
+                    '<div class="award-text">' +
+                        '<div class="award-name">' + escapeHtml(s.award) + ' · <span class="award-winner">' + escapeHtml(s.winner) + '</span></div>' +
+                        '<div class="award-detail">' + escapeHtml(s.detail) + '</div>' +
+                    '</div>';
                 grid.appendChild(card);
             });
         }
