@@ -3,6 +3,23 @@
 All notable changes to Quizify are documented here. This project follows
 [Semantic Versioning](https://semver.org/).
 
+## [1.1.44] — 2026-05-29
+
+### Fixed
+
+- **Setup-detail panel no longer overflows narrow phone viewports.**
+  `.setup-detail` had `max-width: 600 px` and `margin: 0 auto` but no
+  explicit `width`, so the flex column sized itself to the max-content
+  of its preset cards (each ~568 px wide once rendered with full
+  difficulty + duration text). On a 390 px iPhone viewport the panel
+  landed at 600 px and forced the whole document into 616 px
+  horizontal scroll — every pack-card in the picker grid sat half off-
+  screen. Found via headless browse at true 390×844 emulation per the
+  new pre-release verification gate in CLAUDE.md (workflow caught
+  this on the first iteration). Added `width: 100%` + `box-sizing:
+  border-box`; `max-width: 600 px` still caps the panel on
+  tablet/desktop.
+
 ## [1.1.43] — 2026-05-29
 
 ### Fixed

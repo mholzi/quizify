@@ -3685,8 +3685,16 @@ footer {
     display: flex;
     flex-direction: column;
     gap: var(--space-md);
+    /* v1.1.44: width:100% + box-sizing:border-box so the panel respects
+       its parent at narrow viewports. Without width:100% the flex column
+       container was sizing to max-content of its children (the preset
+       cards) and landing at 600 px even on a 390 px iPhone, forcing the
+       whole page into horizontal scroll. max-width still caps it on
+       tablet/desktop. Markus' mobile-cut-off live test 2026-05-29. */
+    width: 100%;
     max-width: 600px;
     margin: 0 auto;
+    box-sizing: border-box;
 }
 
 .setup-back-btn {
