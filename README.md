@@ -28,6 +28,14 @@ A question appears. Everyone races to answer. Points fly. Streaks build. Champio
 
 No apps to download. No accounts to create. Just scan a QR code and play.
 
+<div align="center">
+
+<img src="images/qr-lobby.png" alt="Quizify lobby — QR code, player roster, Start Game button" width="600">
+
+*The lobby. Players scan, drop in, scoreboard ready.*
+
+</div>
+
 ---
 
 <br>
@@ -128,6 +136,14 @@ The first connection from a fresh HA instance also bootstraps a persistent **adm
 
 **Players are unaffected** — joining at `/quizify/player` stays password-free, so guests still scan the QR code and play with zero friction.
 
+<div align="center">
+
+<img src="images/player-join.png" alt="Player join screen — type your name, hit Join Game" width="280">
+
+*What a guest sees after scanning the QR code. Type a name, tap Join.*
+
+</div>
+
 ---
 
 <br>
@@ -137,6 +153,8 @@ The first connection from a fresh HA instance also bootstraps a persistent **adm
 <div align="center">
 
 ### For Players
+
+<img src="images/player-gameplay.png" alt="Player gameplay — category, question, timer, three answer cards" width="320">
 
 *Scan the QR. Type your name. Buzz in.*
 
@@ -159,6 +177,8 @@ A fun fact appears for context ("Giraffen schlafen im Schnitt nur 1,9 Stunden am
 
 ### For Hosts
 
+<img src="images/admin-setup.png" alt="Admin setup — Ready for a round of Quizify? hero, Classic preset summary, Start Game CTA" width="600">
+
 *Pick the pack. Pick the difficulty. Hit start.*
 
 </div>
@@ -180,6 +200,14 @@ Cast `/quizify/dashboard` to the TV for a shared spectator screen — large ques
 <br>
 
 ## Game Features
+
+<div align="center">
+
+<img src="images/reveal-screen.png" alt="Per-round reveal — sage callout with correct answer, fun fact card, live leaderboard" width="320">
+
+*Every round ends with the verdict, the fact, and the standings.*
+
+</div>
 
 ### Scoring That Creates Drama
 
@@ -251,6 +279,14 @@ If a phone loses WiFi, locks, or accidentally closes the browser, the player ses
 <br>
 
 ## The Finale
+
+<div align="center">
+
+<img src="images/podium-screen.png" alt="Finale podium — Champion banner, 1-2-3 plank podium, personal result card" width="320">
+
+*Glory. Bragging rights. Maybe a rematch.*
+
+</div>
 
 The last round ends. The podium animates in: 1st in the centre, 2nd on the left, 3rd on the right. The champion's name reads in coral display type. Personal stats appear: best streak, rounds played, power-ups used, fastest finger.
 
