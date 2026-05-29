@@ -30,7 +30,7 @@ No apps to download. No accounts to create. Just scan a QR code and play.
 
 <div align="center">
 
-<img src="images/qr-lobby.png" alt="Quizify lobby — QR code, player roster, Start Game button" width="600">
+<img src="images/qr-lobby.png" alt="Quizify lobby — QR code, player roster, Start Game button" width="300">
 
 *The lobby. Players scan, drop in, scoreboard ready.*
 
@@ -138,7 +138,7 @@ The first connection from a fresh HA instance also bootstraps a persistent **adm
 
 <div align="center">
 
-<img src="images/player-join.png" alt="Player join screen — type your name, hit Join Game" width="280">
+<img src="images/player-join.png" alt="Player join screen — type your name, hit Join Game" width="300">
 
 *What a guest sees after scanning the QR code. Type a name, tap Join.*
 
@@ -154,7 +154,7 @@ The first connection from a fresh HA instance also bootstraps a persistent **adm
 
 ### For Players
 
-<img src="images/player-gameplay.png" alt="Player gameplay — category, question, timer, three answer cards" width="320">
+<img src="images/player-gameplay.png" alt="Player gameplay — category, question, timer, three answer cards" width="300">
 
 *Scan the QR. Type your name. Buzz in.*
 
@@ -177,7 +177,7 @@ A fun fact appears for context ("Giraffen schlafen im Schnitt nur 1,9 Stunden am
 
 ### For Hosts
 
-<img src="images/admin-setup.png" alt="Admin setup — Ready for a round of Quizify? hero, Classic preset summary, Start Game CTA" width="600">
+<img src="images/admin-setup.png" alt="Admin setup — Ready for a round of Quizify? hero, Classic preset summary, Start Game CTA" width="300">
 
 *Pick the pack. Pick the difficulty. Hit start.*
 
@@ -203,7 +203,7 @@ Cast `/quizify/dashboard` to the TV for a shared spectator screen — large ques
 
 <div align="center">
 
-<img src="images/reveal-screen.png" alt="Per-round reveal — sage callout with correct answer, fun fact card, live leaderboard" width="320">
+<img src="images/reveal-screen.png" alt="Per-round reveal — sage callout with correct answer, fun fact card, live leaderboard" width="300">
 
 *Every round ends with the verdict, the fact, and the standings.*
 
@@ -282,7 +282,7 @@ If a phone loses WiFi, locks, or accidentally closes the browser, the player ses
 
 <div align="center">
 
-<img src="images/podium-screen.png" alt="Finale podium — Champion banner, 1-2-3 plank podium, personal result card" width="320">
+<img src="images/podium-screen.png" alt="Finale podium — Champion banner, 1-2-3 plank podium, personal result card" width="300">
 
 *Glory. Bragging rights. Maybe a rematch.*
 
