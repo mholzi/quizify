@@ -108,7 +108,7 @@ Quizify automatically adds itself to your Home Assistant sidebar.
 1. Open Home Assistant
 2. Look for **Quizify** in the left sidebar
 3. Click to open the launcher
-4. Hit **"Quizify öffnen"** / **"Open Quizify"** — the game opens in a clean fullscreen tab (no HA chrome)
+4. Hit **"Quizify öffnen"** / **"Open Quizify"** — navigates to `/quizify/admin`. The HA sidebar/header still wraps it; install Quizify as a PWA (next paragraph) if you want a truly chromeless fullscreen launcher.
 
 > **Tip:** If you don't see Quizify in the sidebar, restart Home Assistant.
 
@@ -193,7 +193,7 @@ Solo play is supported since v1.1.9 — host self-joins, lobby unlocks with one 
 Reset the game at any time (header ⟲ button), end the game cleanly (finale + podium), kick a player out (× next to their name). The admin tab also redirects to the player view on game start, so you play along while staying in control.
 
 **TV Dashboard**
-Cast `/quizify/dashboard` to the TV for a shared spectator screen — large question, live answer distribution, podium reveal at the finale. Players watch the TV, tap on their phones.
+Cast `/quizify/dashboard` to the TV for a shared spectator screen — large question, three answer tiles that flip green (correct) / red (wrong) at reveal, fun-fact card, top-5 leaderboard with streak markers, and the full podium at the finale. Players watch the TV, tap on their phones. _A live answer-distribution bar chart at reveal is on the roadmap — see [#151](https://github.com/mholzi/quizify/issues/151)._
 
 ---
 
@@ -228,15 +228,27 @@ Points = (Base + Speed Bonus) × Difficulty × Streak × (×2 if Double Points p
 **Example:** Medium difficulty, instant answer, 3× streak in a row:
 `(10 + 5) × 1.5 × 1.3 = **29 pts**`
 
-### Time Limits (Default)
+### Time Limits
 
-| Difficulty | Round Timer |
-|------------|-------------|
+Two paths, two sets of defaults:
+
+**Preset timers** (what you get clicking Quick / Classic / Marathon):
+
+| Preset | Timer |
+|--------|-------|
+| ⚡ Quick Round | 20 s |
+| 🧠 Classic | 30 s |
+| 🏆 Marathon | 45 s |
+
+**Difficulty-derived defaults** (when you change just the difficulty chip without a preset):
+
+| Difficulty | Timer |
+|------------|-------|
 | Easy | 20 s |
-| Medium | 30 s |
-| Hard | 45 s |
+| Medium | 15 s |
+| Hard | 10 s |
 
-All three are overridable in the Custom Settings panel.
+Both are overridable from the Custom Settings panel — pick any timer in `5–300 s`.
 
 ### Streak Milestones
 
@@ -262,9 +274,11 @@ One random player receives a random power-up at the start of each round. Use it 
 
 Freeze and Steal require selecting a target player — only offered when 2+ players are in the game.
 
-### Live Emoji Reactions
+### Live Emoji Reactions (and a tiny scoring twist)
 
-A reaction row sits below every reveal screen. Tap 🔥 😂 😱 👏 🤔 and your emoji floats across every other player's screen. Costs nothing, scores nothing, but the room feels louder.
+A reaction row sits below every reveal screen. Tap 🔥 😂 😱 👏 🤔 and your emoji floats across every other player's screen.
+
+There's a small scoring mechanic baked in: **a reaction sent during the reveal grants +1 point to every player who answered that round correctly** — "audience appreciation". Each reactor can only grant the bonus once per round, and each correct answerer caps at +3 incoming bonus per round so a 6-player table can't pile free points on the leader every reveal. Reactions sent outside the reveal phase (lobby, mid-question) are pure visual.
 
 ### Late-Joiners Get a Fair Shake
 
@@ -288,9 +302,9 @@ If a phone loses WiFi, locks, or accidentally closes the browser, the player ses
 
 </div>
 
-The last round ends. The podium animates in: 1st in the centre, 2nd on the left, 3rd on the right. The champion's name reads in coral display type. Personal stats appear: best streak, rounds played, power-ups used, fastest finger.
+The last round ends. The podium animates in: 1st in the centre, 2nd on the left, 3rd on the right. The champion's name reads in coral display type. Below the podium, a "Your Result" card shows your rank, total score, and three personal stats: **best streak, rounds played, power-ups used**.
 
-End-of-game awards drop next: **🥇 Top Score, 🚀 Comeback King, ⚡ Fastest Finger** (and more). Each goes to exactly one player; awards skip themselves on solo games where there's nothing to compare against.
+End-of-game awards drop next: **⚡ Fastest Finger, 🚀 Comeback King, 🔥 Hot Streak, 🎯 Most Accurate, 🧊 Buzzkill, 🧠 Knowledge Expert.** Each goes to exactly one player, gated on plausibility (e.g. Comeback King needs ≥4 rounds played). Awards skip themselves on solo games where there's nothing to compare against. _A 'Top Score' award for the highest single-round score is on the roadmap — see [#150](https://github.com/mholzi/quizify/issues/150)._
 
 A leaderboard with all players follows so latecomers and bottom-of-the-pack still see their rank.
 
@@ -307,7 +321,7 @@ Quizify ships with **839 questions across 18 themed packs in 9 themes**, in both
 | Theme | 🇩🇪 Deutsch | 🇬🇧 English |
 |-------|-------------|-------------|
 | 🌍 **Geographie / Geography** | 47 | 47 |
-| 🦒 **Tiere & Natur / Animals & Nature** | 42 | 42 |
+| 🦋 **Tiere & Natur / Animals & Nature** | 42 | 42 |
 | 🎬 **Popkultur / Pop Culture** | 44 | 44 |
 | ⚽ **Sport** | 42 | 48 |
 | 🎵 **Musik / Music** | 48 | 50 |
@@ -350,9 +364,8 @@ Pack files live in `custom_components/quizify/questions/`. Drop a JSON file in t
 **Rules:**
 - Exactly **3 answers** per question
 - Exactly **1 correct** answer
-- `difficulty`: `easy`, `medium`, or `hard`
-- `language`: `de`, `en`, or any ISO code
-- `theme`: one of `geography`, `nature`, `popculture`, `sport`, `music`, `science`, `history`, `food`, `tech` — used by the theme-tab filter
+- Per-question fields the loader reads: `id` (required), `question` (required), `answers` (required), `difficulty` (default `medium`), `fun_fact` (optional), `category` (optional, falls back to pack name)
+- Pack-level fields: `name`, `language` (`de` / `en` — only those are wired into the language chip; other ISO codes load but won't be selectable from the UI), `theme` (one of `geography`, `nature`, `popculture`, `sport`, `music`, `science`, `history`, `food`, `tech` — drives the theme-tab filter and pack-card icon), `version`
 - File goes in the `questions/` directory — picked up automatically on next game start
 
 ---
@@ -368,7 +381,7 @@ Quizify speaks your guests' language.
 
 The UI follows the game language (since v1.1.24) — pick German in the pack-picker and the entire admin / player / dashboard surface switches to German labels, tooltips, error messages, fun-fact labels, and end-game awards. Switch to English and the whole thing flips.
 
-378 i18n keys, full parity between locales, validated in CI.
+390 i18n keys, full parity between locales, validated in CI.
 
 ---
 
@@ -411,7 +424,7 @@ That's it. No mDNS, no broadcast, no additional ports.
 
 **Tips:**
 - The QR code uses the HA URL as seen by the admin's browser — make sure that URL is reachable from the guest network
-- If using a reverse proxy (nginx/Caddy), ensure WebSocket upgrades are allowed for `/quizify/api/ws` (standard HA proxy configs already handle this)
+- If using a reverse proxy (nginx/Caddy), ensure WebSocket upgrades are allowed for `/api/quizify/ws` (standard HA proxy configs already handle this)
 - If using HTTPS with a self-signed cert, guests may need to accept it once
 
 > **⚠️ Fritzbox users:** The Fritzbox guest WiFi fully isolates clients from your home network — this cannot be overridden with firewall rules. Players must join the main WiFi, or use a separate VLAN-capable router to create a guest network with selective LAN access.
@@ -461,7 +474,7 @@ Home Assistant
 
 Quizify is built with substantial help from AI coding tools (Claude Code). That's not a confession — it's a feature. Here's what that looks like in practice:
 
-- **Test coverage**: 126 Python tests across 9 test files, exercising the game state machine, WebSocket protocol, scoring math, power-up effects, admin-redirect grace window, and version cache-buster — every regression gets a test before the fix lands.
+- **Test coverage**: 131 Python tests across 8 test files, exercising the game state machine, WebSocket protocol, scoring math, power-up effects, admin-redirect grace window, and version cache-buster — every regression gets a test before the fix lands.
 - **Architecture is documented in code**: see `game/state.py` `reset_to_lobby()` vs. the new `clear_all_players()` (added in v1.1.15) — the comment block walks through *why* `reset_to_lobby` intentionally keeps players (for the finale's "Play again — same settings" path) while the explicit reset button needs to drop everyone, and references the specific user-visible bug ("phantom 'sdfsd 2' / 'Fjfj 2' players surviving a reset") that drove the change.
 - **Eighty-plus releases with traceable root causes**, not just "fixed". i18n hygiene, pack-picker scalability, iOS Safari quirks, and cache-buster propagation all got dedicated sweeps in v1.1.x.
 - **MIT-licensed, fully local, no telemetry**.
