@@ -5397,22 +5397,26 @@ body.is-admin .reaction-bar {
   100% { opacity: 1; transform: scale(1); }
 }
 
-/* ── Version badge ── */
+/* ── Version badge ──
+   v1.1.46 per Markus 2026-05-29 (msg 285): moved from fixed bottom-right
+   corner to the end of the page flow, significantly smaller. The fixed-
+   corner version overlapped sticky footers (Übernehmen button, action
+   bars) and read as a debug overlay; the inline end-of-page placement
+   reads as a quiet footer. Size dropped 0.7 rem → 0.55 rem so the
+   badge stops competing for visual weight. */
 .version-badge {
-  position: fixed;
-  bottom: 8px;
-  right: 10px;
-  font-size: 0.7rem;
-  color: var(--color-text-muted, rgba(42, 40, 32, 0.45));
+  display: block;
+  text-align: center;
+  padding: 14px 0 18px;
+  font-size: 0.55rem;
+  color: var(--color-text-muted, rgba(42, 40, 32, 0.4));
   font-family: var(--font-mono, monospace);
-  pointer-events: none;
-  z-index: 9999;
   user-select: none;
-  letter-spacing: 0.04em;
+  letter-spacing: 0.05em;
 }
 [data-theme="dark"] .version-badge,
 body.theme-dark .version-badge {
-  color: rgba(255, 255, 255, 0.35);
+  color: rgba(255, 255, 255, 0.3);
 }
 
 /* ── Score animation & points popup ── */

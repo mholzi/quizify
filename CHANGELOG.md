@@ -3,6 +3,20 @@
 All notable changes to Quizify are documented here. This project follows
 [Semantic Versioning](https://semver.org/).
 
+## [1.1.46] — 2026-05-29
+
+### Changed
+
+- **Version badge moved to end-of-page and shrunk.** Per Markus
+  (msg 285): the fixed bottom-right corner placement overlapped sticky
+  footers (Übernehmen button, action bars) on phone viewports and read
+  as a debug overlay. Now `position: static` + `text-align: center` +
+  `padding: 14 px 0 18 px`, so the badge sits as a quiet footer line
+  after the page content. Font dropped from 0.7 rem to 0.55 rem so it
+  stops competing for visual weight. Mobile-verified at 390×844 per
+  the CLAUDE.md workflow — no scroll regression, badge invisible
+  unless you scroll to the bottom (which is the desired behavior).
+
 ## [1.1.45] — 2026-05-29
 
 ### Added
