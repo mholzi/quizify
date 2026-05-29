@@ -3,6 +3,42 @@
 All notable changes to Quizify are documented here. This project follows
 [Semantic Versioning](https://semver.org/).
 
+## [1.1.39] — 2026-05-29
+
+### Fixed
+
+- **Theme-tab filter now actually filters pack cards.** With 9 themes
+  + 18 cards in the picker after v1.1.37, clicking a theme tab (like
+  Natur, Sport, Musik) should hide cards from other themes. It
+  didn't. Root cause: a CSS specificity collision. The
+  `.chip-group--cards .chip { display: flex }` rule that paints
+  card-style layout has the same specificity (1 id + 2 classes) as
+  `.chip.hidden-by-theme { display: none }`, but appears later in
+  the stylesheet, so it silently won — the filter added the class to
+  non-matching chips and `display: flex` kept them visible anyway.
+  Fixed by bumping the hidden-by-theme rule's specificity with a
+  duplicate-class selector. Theme tabs now hide/show as expected on
+  every theme.
+- **Cards no longer overflow the viewport on phones.** The 2-column
+  card grid used `grid-template-columns: 1fr 1fr`, which respects
+  each column's min-content (the widest label like "Wissenschaft" /
+  "Tiere & Natur"). With 18 cards, the widest labels forced the grid
+  wider than narrow-phone viewports, causing horizontal scroll.
+  Switched to `minmax(0, 1fr) minmax(0, 1fr)` so columns can shrink
+  past content min-width, and added `overflow-wrap: anywhere` on
+  `.pack-card-name` so long names wrap inside the fixed track
+  instead of pushing the card outward.
+- **Version badge actually shows the running version.** The
+  bottom-right `version-badge` element existed on both admin.html
+  and player.html but its inner text was hardcoded to `v1.1.18`
+  (the version when it was first added). Switched to
+  `v{{VERSION}}` so the server's existing `_apply_version`
+  substitution paints the live version on every request — handy for
+  spotting cache issues from a glance. Also bumped the color to use
+  `--color-text-muted` so the badge is visible against the Soft
+  Parlor cream background (the old `rgba(255,255,255,0.25)` was
+  invisible on light theme).
+
 ## [1.1.38] — 2026-05-28
 
 ### Changed

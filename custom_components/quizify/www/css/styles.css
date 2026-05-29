@@ -1011,8 +1011,14 @@ button, .btn {
 
 /* When a theme-tab filter is active, chips not in the active theme
    are hidden. The Mixed chip never hides — it stays as the "select
-   everything" escape hatch. */
-#category-chips .chip.hidden-by-theme {
+   everything" escape hatch.
+   Specificity guard: the `.chip-group--cards .chip` rule below sets
+   `display: flex` and has the SAME specificity as this one (1 id + 2
+   classes). Without `.chip-group--cards` here, source order would let
+   the card-mode rule override `display: none` and the theme filter
+   would silently do nothing in card mode. Bumping specificity with
+   a duplicate-class trick keeps the rule single-line. */
+#category-chips .chip.hidden-by-theme.hidden-by-theme {
     display: none;
 }
 
@@ -1027,7 +1033,10 @@ button, .btn {
    phase2-themes.html (sub-pack-grid section). */
 #category-chips.chip-group--cards {
     display: grid;
-    grid-template-columns: 1fr 1fr;
+    /* minmax(0, 1fr) lets columns shrink past their min-content width — with 12+ cards
+       and labels like "Essen & Trinken" / "Tiere & Natur", plain `1fr` would size each
+       column to the widest label and overflow the viewport on narrow phones. */
+    grid-template-columns: minmax(0, 1fr) minmax(0, 1fr);
     gap: var(--space-sm);
     margin-top: var(--space-sm);
     padding-left: 0;
@@ -1084,6 +1093,10 @@ button, .btn {
     font-weight: 700;
     font-size: 0.98rem;
     line-height: 1.18;
+    /* Wrap long names like "Essen & Trinken" / "Tiere & Natur" inside the
+       fixed-width grid track instead of forcing the card wider. */
+    overflow-wrap: anywhere;
+    word-break: break-word;
 }
 #category-chips.chip-group--cards .pack-card-count {
     font-family: var(--font-mono, ui-monospace, monospace);
@@ -1095,7 +1108,7 @@ button, .btn {
 /* Tablet+: 3-col grid feels more balanced. */
 @media (min-width: 600px) {
     #category-chips.chip-group--cards {
-        grid-template-columns: repeat(3, 1fr);
+        grid-template-columns: repeat(3, minmax(0, 1fr));
     }
 }
 
@@ -5365,12 +5378,17 @@ body.is-admin .reaction-bar {
   position: fixed;
   bottom: 8px;
   right: 10px;
-  font-size: 0.65rem;
-  color: rgba(255, 255, 255, 0.25);
-  font-family: monospace;
+  font-size: 0.7rem;
+  color: var(--color-text-muted, rgba(42, 40, 32, 0.45));
+  font-family: var(--font-mono, monospace);
   pointer-events: none;
   z-index: 9999;
   user-select: none;
+  letter-spacing: 0.04em;
+}
+[data-theme="dark"] .version-badge,
+body.theme-dark .version-badge {
+  color: rgba(255, 255, 255, 0.35);
 }
 
 /* ── Score animation & points popup ── */
