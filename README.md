@@ -9,10 +9,10 @@
 Turn any gathering into a trivia battle. Players scan, questions fly, everyone competes. No app needed.
 
 [![Home Assistant](https://img.shields.io/badge/Home%20Assistant-2024.1+-41BDF5?style=for-the-badge&logo=homeassistant&logoColor=white)](https://www.home-assistant.io/)
-[![Version](https://img.shields.io/badge/Version-1.1.5-ff00ff?style=for-the-badge)](https://github.com/mholzi/quizify/releases)
+[![Version](https://img.shields.io/github/v/release/mholzi/quizify?style=for-the-badge&color=ff00ff&label=Version)](https://github.com/mholzi/quizify/releases)
 [![License](https://img.shields.io/badge/License-MIT-green?style=for-the-badge)](LICENSE)
 
-[**Get Started**](#installation) • [**How to Play**](#how-to-play) • [**Question Packs**](#question-packs)
+[**Get Started**](#setup-in-home-assistant) • [**How to Play**](#the-experience) • [**Question Packs**](#question-packs) • [**See It In Action**](#the-experience)
 
 ---
 
@@ -22,7 +22,7 @@ Turn any gathering into a trivia battle. Players scan, questions fly, everyone c
 
 ## What Is Quizify?
 
-**Quizify is an open-source trivia quiz game for Home Assistant** — a multiplayer party game that runs entirely on your local network.
+**Quizify is an open-source trivia quiz game for Home Assistant** — a multiplayer party game that turns any phone in the room into a buzzer and any TV into a game-show screen.
 
 A question appears. Everyone races to answer. Points fly. Streaks build. Champions emerge.
 
@@ -34,21 +34,27 @@ No apps to download. No accounts to create. Just scan a QR code and play.
 
 ## Why Parties Are Better With Quizify
 
-**Zero Friction Entry** — Players scan a QR code. That's it. No apps. No accounts. 10 seconds from scan to playing.
+**Zero Friction Entry** — Players scan a QR code. That's it. No apps. No accounts. No WiFi password drama. 10 seconds from scan to playing.
 
-**Runs Fully Local** — No cloud. No subscription. No data leaves your network. Fast, private, reliable.
+**Runs Fully Local** — No cloud. No subscription. No data leaves your network. Free and open-source. Your trivia, your network, your business.
 
-**Everyone Competes** — Points, speed bonuses, streaks, power-ups, and a dramatic finale with podium and awards. Real competition, real laughs.
+**Solo or Squad** — Play alone for a couch session, or up to 20+ players for a full party. The host can self-join and play along, or just stay at the wheel.
 
-**Works on Any Screen** — Dashboard mode for the TV. Players use their phones. No extra hardware needed.
+**Everyone Competes** — Points, speed bonuses, streaks, five different power-ups, and a dramatic finale with podium and end-of-game awards. Real competition, real laughs.
+
+**Works on Any Screen** — Dashboard mode for the TV. Players use their phones. Admin runs the show. No extra hardware needed.
+
+**Eight Themes, Two Languages** — 839 questions across 18 themed packs (Geography, Pop Culture, Animals & Nature, Sport, Music, Science, History, Food & Drink, Technology) in German and English. Mix them, filter them, swap mid-session.
 
 ---
 
 <br>
 
-## Installation
+## Setup In Home Assistant
 
-### Via HACS (Recommended)
+### Step 1: Install
+
+**Via HACS (Recommended)** — One click to add the repository, then install:
 
 [![Open your Home Assistant instance and open a repository inside the Home Assistant Community Store.](https://my.home-assistant.io/badges/hacs_repository.svg)](https://my.home-assistant.io/redirect/hacs_repository/?owner=mholzi&repository=quizify&category=integration)
 
@@ -61,14 +67,14 @@ HACS → ⋮ Menu → Custom Repositories
 → Restart Home Assistant
 ```
 
-### Manual
+**Manual**
 ```bash
 cd /config/custom_components
 git clone https://github.com/mholzi/quizify.git quizify
 # Restart Home Assistant
 ```
 
-### Configure
+### Step 2: Configure
 
 [![Open your Home Assistant instance and start setting up a new integration.](https://my.home-assistant.io/badges/config_flow_start.svg)](https://my.home-assistant.io/redirect/config_flow_start/?domain=quizify)
 
@@ -77,38 +83,107 @@ Or manually:
 Settings → Devices & Services → Add Integration → "Quizify"
 ```
 
+That's it. Quizify is now installed.
+
 ---
 
 <br>
 
-## How to Play
+## Opening Quizify (Admin)
 
-### For the Host (Admin)
+After installation, access Quizify to start a game:
 
-1. Open `/quizify/admin` on your device
-2. Select **language**, **category**, **difficulty**, and **round count**
-3. Share the QR code or join URL with players
-4. Enter your name to join as a player (optional)
-5. Hit **▶️ Spiel starten** — the game begins
+### Option 1: HA Sidebar (Recommended)
+
+Quizify automatically adds itself to your Home Assistant sidebar.
+
+1. Open Home Assistant
+2. Look for **Quizify** in the left sidebar
+3. Click to open the launcher
+4. Hit **"Quizify öffnen"** / **"Open Quizify"** — the game opens in a clean fullscreen tab (no HA chrome)
+
+> **Tip:** If you don't see Quizify in the sidebar, restart Home Assistant.
+
+### Option 2: Direct URL
+
+```
+http://YOUR-HA-IP:8123/quizify/admin
+```
+
+### Option 3: HA Companion App
+
+1. Open the HA Companion app
+2. Tap the menu (☰) or swipe from left
+3. Select **Quizify** from the sidebar
+
+Quizify also installs as a **Progressive Web App** — once you've opened `/quizify/admin` from the launcher, tap the install prompt on the admin screen (browsers that support PWAs) and Quizify gets its own home-screen icon, fullscreen, no browser chrome.
+
+### Hosting Requires a Home Assistant Login
+
+The admin side of Quizify is protected by **your Home Assistant login**. The first time you open `/quizify/admin` on a device, you're sent to the normal HA login screen; after that the device stays signed in and opening Quizify is instant.
+
+The first connection from a fresh HA instance also bootstraps a persistent **admin token** — only the device that bootstrapped it can fire `start_game`, `reset_game`, `end_game`, or `kick_player`. If a stranger finds the URL on your home network, they can connect as a player but **cannot** start, reset, or control the game.
+
+> Lost your admin tab? Call the `quizify.reset_admin_session` service from Developer Tools → Services. The next admin connection re-bootstraps a fresh token.
+
+**Players are unaffected** — joining at `/quizify/player` stays password-free, so guests still scan the QR code and play with zero friction.
+
+---
+
+<br>
+
+## The Experience
+
+<div align="center">
 
 ### For Players
 
-1. Scan the QR code or visit the join URL on your phone
-2. Enter your name
-3. Answer questions before the timer runs out
-4. Watch the live leaderboard after each round
+*Scan the QR. Type your name. Buzz in.*
 
-### Dashboard / TV Mode
+</div>
 
-Open `/quizify/dashboard` on your TV for a shared screen view showing the leaderboard, question, and live player activity.
+**The Rush**
+A question appears. The clock is ticking. Three answers. You think you know it... but is it really *that* one?
+
+**The Strategy**
+Answer fast for a speed bonus. Hit a streak for multiplier points. Got a Joker? Knock out one wrong answer and turn 33% into 50%.
+
+**The Reveal**
+The correct answer drops in a sage-green callout. The room reacts. Someone nailed it on a 5-streak. Someone burned their Joker on a question they would have gotten anyway. Everyone's laughing.
+
+A fun fact appears for context ("Giraffen schlafen im Schnitt nur 1,9 Stunden am Tag…"). The leaderboard reshuffles with delta arrows. **Next round** is one tap away.
+
+<br>
+
+<div align="center">
+
+### For Hosts
+
+*Pick the pack. Pick the difficulty. Hit start.*
+
+</div>
+
+**Three Presets, or Custom**
+Quick Round (5 rounds · Easy · 20s), Classic (10 rounds · Medium · 30s), Marathon (20 rounds · Hard · 45s) — or unfold the Custom panel to dial in any combination of theme, language, difficulty, round count, and per-question timer.
+
+**Solo or Squad**
+Solo play is supported since v1.1.9 — host self-joins, lobby unlocks with one player. Or wait for up to 20 friends. The lobby shows the QR code, the join URL, and a live roster as people drop in.
+
+**Full Control**
+Reset the game at any time (header ⟲ button), end the game cleanly (finale + podium), kick a player out (× next to their name). The admin tab also redirects to the player view on game start, so you play along while staying in control.
+
+**TV Dashboard**
+Cast `/quizify/dashboard` to the TV for a shared spectator screen — large question, live answer distribution, podium reveal at the finale. Players watch the TV, tap on their phones.
 
 ---
 
 <br>
 
-## Scoring
+## Game Features
 
-**Base Formula (correct answers only):**
+### Scoring That Creates Drama
+
+**Base formula (correct answers only):**
 
 ```
 Points = (Base + Speed Bonus) × Difficulty × Streak × (×2 if Double Points power-up)
@@ -122,34 +197,68 @@ Points = (Base + Speed Bonus) × Difficulty × Streak × (×2 if Double Points p
 | **Streak multiplier** | +10% per correct answer in a row, max +50% at 5× |
 | **Wrong / timeout** | 0 pts, streak resets |
 
-**Example:** Medium question, instant answer, 3× streak:
+**Example:** Medium difficulty, instant answer, 3× streak in a row:
 `(10 + 5) × 1.5 × 1.3 = **29 pts**`
 
-### Time Limits by Difficulty
+### Time Limits (Default)
 
-| Difficulty | Time |
-|------------|------|
-| Easy | 20s |
-| Medium | 15s |
-| Hard | 10s |
+| Difficulty | Round Timer |
+|------------|-------------|
+| Easy | 20 s |
+| Medium | 30 s |
+| Hard | 45 s |
 
----
+All three are overridable in the Custom Settings panel.
 
-<br>
+### Streak Milestones
 
-## Power-Ups
+Three points where a streak yells at the room with a toast notification:
 
-One random player receives a random power-up at the start of each round. Use it during the question phase — power-ups are consumed immediately.
+- **🔥 3 in a row** — first toast pops, +30 % streak multiplier kicks in
+- **🔥🔥 5 in a row** — second toast, multiplier caps at +50 %
+- **🔥🔥🔥 7 in a row — On fire!** — third toast for bragging rights
+
+Miss one and the streak resets. The pressure is real.
+
+### Power-Ups
+
+One random player receives a random power-up at the start of each round. Use it during the question phase — power-ups are consumed immediately and **the public broadcast** tells everyone who used what.
 
 | Power-Up | Effect |
 |----------|--------|
-| 🃏 **Joker** | Removes one wrong answer (25% → 33% chance of guessing right) |
+| 🃏 **Joker** | Removes one wrong answer (33 % → 50 % chance of guessing right) |
 | ✌️ **Double Points** | This round's points count double |
 | 🥶 **Freeze** | Pauses an opponent's timer for 5 seconds |
 | ⏱️ **Time Boost** | Adds +5 seconds to your own timer |
 | 🥷 **Steal** | Takes 50% of a target player's current round points |
 
-Freeze and Steal require selecting a target player — only available with 2+ players.
+Freeze and Steal require selecting a target player — only offered when 2+ players are in the game.
+
+### Live Emoji Reactions
+
+A reaction row sits below every reveal screen. Tap 🔥 😂 😱 👏 🤔 and your emoji floats across every other player's screen. Costs nothing, scores nothing, but the room feels louder.
+
+### Late-Joiners Get a Fair Shake
+
+If a friend shows up mid-game, they can join from the QR code on the spot. New players inherit the **average score of the current room** so they're not stuck at zero for the next 5 rounds — they compete fairly from their first question.
+
+### Reconnect Without Losing Your Spot
+
+If a phone loses WiFi, locks, or accidentally closes the browser, the player session is held by a session token. Reopening the URL within the grace period reconnects them to the same slot — score, streak, and power-up intact.
+
+---
+
+<br>
+
+## The Finale
+
+The last round ends. The podium animates in: 1st in the centre, 2nd on the left, 3rd on the right. The champion's name reads in coral display type. Personal stats appear: best streak, rounds played, power-ups used, fastest finger.
+
+End-of-game awards drop next: **🥇 Top Score, 🚀 Comeback King, ⚡ Fastest Finger** (and more). Each goes to exactly one player; awards skip themselves on solo games where there's nothing to compare against.
+
+A leaderboard with all players follows so latecomers and bottom-of-the-pack still see their rank.
+
+Then **"Start New Game"** (same settings, same players) or **Reset Game** (fresh lobby, everyone re-joins). The next round of demands is one tap away.
 
 ---
 
@@ -157,51 +266,73 @@ Freeze and Steal require selecting a target player — only available with 2+ pl
 
 ## Question Packs
 
-Quizify ships with 300 questions across 6 categories in two languages:
+Quizify ships with **839 questions across 18 themed packs in 9 themes**, in both German and English.
 
-| Category | Language | Questions |
-|----------|----------|-----------|
-| Geographie | 🇩🇪 DE | 50 |
-| Tiere & Natur | 🇩🇪 DE | 50 |
-| Popkultur | 🇩🇪 DE | 50 |
-| Geography | 🇬🇧 EN | 50 |
-| Animals & Nature | 🇬🇧 EN | 50 |
-| Pop Culture | 🇬🇧 EN | 50 |
+| Theme | 🇩🇪 Deutsch | 🇬🇧 English |
+|-------|-------------|-------------|
+| 🌍 **Geographie / Geography** | 47 | 47 |
+| 🦒 **Tiere & Natur / Animals & Nature** | 42 | 42 |
+| 🎬 **Popkultur / Pop Culture** | 44 | 44 |
+| ⚽ **Sport** | 42 | 48 |
+| 🎵 **Musik / Music** | 48 | 50 |
+| 🔬 **Wissenschaft / Science** | 47 | 49 |
+| 📜 **Geschichte / History** | 48 | 47 |
+| 🍔 **Essen & Trinken / Food & Drink** | 47 | 49 |
+| 💡 **Technik / Technology** | 48 | 50 |
 
-The language selector in the admin UI filters both the category chips and the question pool — no mixing of languages mid-game.
+The pack-picker shows a **Featured Spotlight** at the top, a row of **theme tabs** to filter, and a card grid for individual pack selection. **Mixed mode** drops you a random question from every selected pack, so you can stir all of Geography + Pop + Sport together for chaos mode.
 
-### Adding Custom Question Packs
+All packs follow an "Unnützes Wissen" editorial line — surprising, counter-intuitive, weird-but-true trivia. Less "capital of France", more "the average cloud weighs about 500 tons".
 
-Question packs are simple JSON files stored in `custom_components/quizify/questions/`:
+### Custom Question Packs
+
+Pack files live in `custom_components/quizify/questions/`. Drop a JSON file in there, restart Home Assistant, and it appears in the picker on the next game start.
 
 ```json
 {
-  "name": "Science",
+  "name": "Movies",
   "language": "en",
+  "theme": "popculture",
   "version": "1.0",
   "questions": [
     {
-      "id": "sci_001",
-      "question": "What is the speed of light?",
+      "id": "mov_001",
+      "question": "Which actor has appeared in the most Marvel Cinematic Universe films?",
       "answers": [
-        {"text": "299,792 km/s", "correct": true},
-        {"text": "150,000 km/s", "correct": false},
-        {"text": "500,000 km/s", "correct": false}
+        {"text": "Samuel L. Jackson", "correct": true},
+        {"text": "Robert Downey Jr.", "correct": false},
+        {"text": "Chris Evans", "correct": false}
       ],
       "difficulty": "medium",
-      "fun_fact": "Light takes about 8 minutes to travel from the Sun to Earth.",
-      "category": "Science"
+      "fun_fact": "Samuel L. Jackson appeared as Nick Fury in over 11 MCU films. He signed an unprecedented nine-film contract with Marvel — the longest acting contract in Hollywood history.",
+      "category": "Movies"
     }
   ]
 }
 ```
 
-Rules:
+**Rules:**
 - Exactly **3 answers** per question
 - Exactly **1 correct** answer
 - `difficulty`: `easy`, `medium`, or `hard`
 - `language`: `de`, `en`, or any ISO code
+- `theme`: one of `geography`, `nature`, `popculture`, `sport`, `music`, `science`, `history`, `food`, `tech` — used by the theme-tab filter
 - File goes in the `questions/` directory — picked up automatically on next game start
+
+---
+
+<br>
+
+## Multi-Language Support
+
+Quizify speaks your guests' language.
+
+- **🇩🇪 Deutsch** — Vollständige Unterstützung
+- **🇬🇧 English** — Full support
+
+The UI follows the game language (since v1.1.24) — pick German in the pack-picker and the entire admin / player / dashboard surface switches to German labels, tooltips, error messages, fun-fact labels, and end-game awards. Switch to English and the whole thing flips.
+
+378 i18n keys, full parity between locales, validated in CI.
 
 ---
 
@@ -216,7 +347,8 @@ Quizify includes a built-in analytics dashboard at `/quizify/analytics`:
 - Top players by cumulative score
 - Category breakdown with average scores
 - Games-over-time chart (7d / 30d / 90d / all)
-- Recent game history
+- Recent game history with podium and round count
+- Flagged questions (players can flag a wrong/confusing question from the reveal screen)
 
 Data is stored locally in `config/quizify/analytics.json` with a 90-day retention window.
 
@@ -226,19 +358,79 @@ Data is stored locally in `config/quizify/analytics.json` with a 90-day retentio
 
 ## Network Setup
 
-Quizify runs on Home Assistant's HTTP server — **no extra ports needed**.
+Quizify runs entirely within Home Assistant's HTTP server — **no extra ports or services needed**.
 
 | Protocol | Port | Purpose |
 |----------|------|---------|
 | HTTP/HTTPS | 8123 (default) | Game UI, API, static assets |
-| WebSocket | 8123 (same port) | Real-time game sync |
+| WebSocket | 8123 (same port) | Real-time game communication |
 
-If players are on a separate WiFi/VLAN, add a single firewall rule:
+**If players are on a separate WiFi/VLAN**, add a single firewall rule:
+
 ```
 Guest VLAN → HA IP : TCP 8123
 ```
 
-> **⚠️ Fritzbox users:** The Fritzbox guest WiFi fully isolates clients from your home network — players must be on the main WiFi, or use a VLAN-capable router with selective LAN access.
+That's it. No mDNS, no broadcast, no additional ports.
+
+**Tips:**
+- The QR code uses the HA URL as seen by the admin's browser — make sure that URL is reachable from the guest network
+- If using a reverse proxy (nginx/Caddy), ensure WebSocket upgrades are allowed for `/quizify/api/ws` (standard HA proxy configs already handle this)
+- If using HTTPS with a self-signed cert, guests may need to accept it once
+
+> **⚠️ Fritzbox users:** The Fritzbox guest WiFi fully isolates clients from your home network — this cannot be overridden with firewall rules. Players must join the main WiFi, or use a separate VLAN-capable router to create a guest network with selective LAN access.
+
+---
+
+<br>
+
+## Technical Details
+
+### Requirements
+- **Home Assistant** 2024.1+
+- **HACS** (recommended) or manual installation
+- A device with a browser for the admin / TV view; phones for players
+
+### How It Works
+- Native Home Assistant integration — no extra services
+- WebSocket-based real-time sync for admin, players, and TV dashboard
+- Local processing — no cloud required
+- Session token reconnect for mid-game drops
+- Up to 20 concurrent players (tested; WiFi is the practical limit)
+- PWA install on the admin page for a native-feeling launcher
+
+### Architecture
+```
+Home Assistant
+    └── Quizify Integration
+            ├── Game State Manager    (game/state.py)
+            ├── WebSocket Handler     (server/websocket.py)
+            ├── Question Bank         (game/questions.py)
+            ├── Power-Up Manager      (game/powerups.py)
+            ├── Player Registry       (game/player_registry.py)
+            ├── Highlights Engine     (game/highlights.py)
+            ├── Analytics Service     (analytics.py)
+            └── Web UI
+                    ├── /quizify/admin       (host)
+                    ├── /quizify/player      (mobile)
+                    ├── /quizify/dashboard   (TV)
+                    └── /quizify/analytics   (stats)
+```
+
+---
+
+<br>
+
+## Built With AI Assistance
+
+Quizify is built with substantial help from AI coding tools (Claude Code). That's not a confession — it's a feature. Here's what that looks like in practice:
+
+- **Test coverage**: 126 Python tests across 9 test files, exercising the game state machine, WebSocket protocol, scoring math, power-up effects, admin-redirect grace window, and version cache-buster — every regression gets a test before the fix lands.
+- **Architecture is documented in code**: see `game/state.py` `reset_to_lobby()` vs. the new `clear_all_players()` (added in v1.1.15) — the comment block walks through *why* `reset_to_lobby` intentionally keeps players (for the finale's "Play again — same settings" path) while the explicit reset button needs to drop everyone, and references the specific user-visible bug ("phantom 'sdfsd 2' / 'Fjfj 2' players surviving a reset") that drove the change.
+- **Eighty-plus releases with traceable root causes**, not just "fixed". i18n hygiene, pack-picker scalability, iOS Safari quirks, and cache-buster propagation all got dedicated sweeps in v1.1.x.
+- **MIT-licensed, fully local, no telemetry**.
+
+The AI is the typist. The decisions, the architecture, the bug triage, and the "ship it" call are all human. If something looks off in the code, [open an issue](https://github.com/mholzi/quizify/issues) — that's how the documented bug-fix sweeps started in the first place.
 
 ---
 
@@ -253,33 +445,57 @@ Tested with 20+ players. Your WiFi is the only real constraint.
 </details>
 
 <details>
+<summary><strong>Can I play alone?</strong></summary>
+<br>
+Yes! Solo play is supported since v1.1.9. Open <code>/quizify/admin</code>, hit "Start Game", click "Join as Player" with your name, and the Start button appears. End-of-game comparative awards (Comeback King etc.) skip themselves since there's nothing to compare; the personal stats card still shows your streaks and timing.
+</details>
+
+<details>
 <summary><strong>Can someone join mid-game?</strong></summary>
 <br>
-Yes! Late joiners inherit the current average score so they can compete fairly from round one.
+Yes! Late joiners scan the QR code, type a name, and drop in. They inherit the current average score so they're not stuck at zero — they compete fairly from their first question.
 </details>
 
 <details>
 <summary><strong>What if a player disconnects?</strong></summary>
 <br>
-Players can reconnect using the session token stored in their browser. The game continues for everyone else and the reconnected player picks up from the current state.
+Players can reconnect using the session token stored in their browser. The game continues for everyone else and the reconnected player picks up from the current state. If the host disconnects (closed tab, lost WiFi), the game pauses with a 4-second grace window — long enough for the typical admin-tab redirect to land — then auto-resumes when the host reconnects.
 </details>
 
 <details>
 <summary><strong>Can the admin also play?</strong></summary>
 <br>
-Yes! Click "Als Spieler beitreten" / "Join as Player" in the lobby. You'll see answer buttons inline and compete alongside other players, while retaining admin controls.
+Yes! Click "Als Spieler beitreten" / "Join as Player" in the lobby and pick a name. When you hit Start, your admin tab redirects to the player view and you play with the rest of the room. Admin controls (next round, end game, kick player, reset) remain available via a sticky bottom bar.
+</details>
+
+<details>
+<summary><strong>I see phantom players from old test runs.</strong></summary>
+<br>
+Hit the <strong>Reset Game</strong> button (⟲ icon in the top-right of the admin header). It closes every player WebSocket, clears the registry, and wipes session tokens — fresh empty lobby. Added in v1.1.15 specifically for this case.
 </details>
 
 <details>
 <summary><strong>Can I add my own questions?</strong></summary>
 <br>
-Yes — see <a href="#adding-custom-question-packs">Adding Custom Question Packs</a> above.
+Yes — see <a href="#custom-question-packs">Custom Question Packs</a>. Drop a JSON file in <code>custom_components/quizify/questions/</code>, restart Home Assistant, and it appears in the picker.
 </details>
 
 <details>
 <summary><strong>What languages are supported?</strong></summary>
 <br>
-German (🇩🇪) and English (🇬🇧) question packs are included. The language selector in admin filters question packs automatically.
+German (🇩🇪) and English (🇬🇧) — for both the UI and the question packs. The UI follows the game language: pick German and the entire admin + player + dashboard + analytics surface flips to German. v1.1.24 closed the last hardcoded-locale leaks.
+</details>
+
+<details>
+<summary><strong>Do players need to install an app?</strong></summary>
+<br>
+No. Players use the URL in a browser. The host can install Quizify as a PWA (admin page) for a native-feeling launcher, but it's purely optional.
+</details>
+
+<details>
+<summary><strong>Does it work over Nabu Casa / remote URLs?</strong></summary>
+<br>
+Yes. The QR code uses whatever URL the admin's browser sees, so opening <code>/quizify/admin</code> on a Nabu Casa URL produces a Nabu Casa join URL for players. Works the same on local LAN with hostname or IP.
 </details>
 
 ---
@@ -288,59 +504,63 @@ German (🇩🇪) and English (🇬🇧) question packs are included. The langua
 
 ## What's New
 
-### v1.0.32 — Language Selector & English Packs 🇬🇧
-- **Language selector in admin UI** — 🇩🇪 Deutsch / 🇬🇧 English chip toggle in Game Settings
-- Category chips filter automatically based on selected language; resets to Mixed on language switch
-- Language passed in `start_game` WebSocket payload
+### v1.1.41 — End-screen Typography Lock 🎯
+- **End-screen rank / score / stats actually shrink now.** v1.1.40 reduced four classes by 20 % but a later "anchor bump" block silently overrode all four. Pulled the override; live-tested via CDP browser-harness against the running HA. The end-screen rank/score/stat block now stops eating the viewport above the leaderboard for real this time.
 
-### v1.0.31 — English Question Packs
-- 150 English questions across 3 new categories: Geography, Pop Culture, Animals & Nature (50 each)
-- Backend `QuestionBank` now stores and filters by language from pack metadata
-- `start_game` and `reset` accept a `language` parameter; default remains `de`
+### v1.1.40 — Typography Pass Across Player Screens 📐
+- **"Richtige Antwort: X" callout +20 %** for the load-bearing element on the reveal view; surrounding context (your-answer strip, fun-fact body, section heads) +10 %
+- **Game view question text –20 %** so 3-line questions stop dominating the viewport
+- **End-screen personal-result block –20 %** so the rank card stops eating the screen above the leaderboard
+- **Podium spans 90 vw, not 90 % of the parent** — fixed phone squeeze caused by parent horizontal padding
 
-### v1.0.30 — Rescaled Scoring
-- Base points: 1000 → **10**
-- Max speed bonus: 500 → **5**
-- Cleaner, more readable scores for a party game context
+### v1.1.39 — Theme Filter + Card Overflow Fix 🔧
+- Theme-tab filter actually filters pack cards (CSS specificity collision pulled, hidden-by-theme rule now wins)
+- Cards no longer overflow viewport on phones (`minmax(0, 1fr)` grid columns + `overflow-wrap: anywhere`)
+- Version badge actually shows the running version (was hardcoded to `v1.1.18` since first added)
 
-### v1.0.29 — Fix Score Shown as 0 in Reveal
-- Fixed correct answers showing as +0 pts in the all_answers reveal card — `player.submitted` (a bool) was incorrectly used as an answer index instead of `player.current_answer`
-- Added guard against double round evaluation (race condition between timer tick and `all_submitted`)
+### v1.1.37 — Six New Themes 📚
+- **Sport, Music, Science, History, Food & Drink, Technology** — each in 🇩🇪 + 🇬🇧, bringing the library from 3 themes to 9 and ~256 questions to ~838 questions across 18 packs
+- All new packs follow the "Unnützes Wissen" editorial line — surprising, counter-intuitive, weird-but-true facts
+- Pack-picker grew six new theme tabs (⚽ / 🎵 / 🔬 / 📜 / 🍔 / 💡) and twelve new pack cards
 
-### v1.0.28 — Complete Player Page CSS
-- Full CSS rework for player.html: responsive layout, mobile-first, dark theme consistency
+### v1.1.31 — Pack-Picker Phase 2 🎨
+- **Featured Spotlight** card (coral→sun gradient, "Sofort spielen" CTA) at the top of the pack-picker
+- **Theme tabs row** filters which packs are visible
+- **Pack cards** (2-col grid on mobile, 3-col on tablet) replace the old chip pills — emoji icon, display-type name, monospace question count, coral-border + ✓ active state
 
-### v1.0.11 — Version Badge & Cache Busting
-- Version badge displayed bottom-right on admin.html and player.html
-- All CSS/JS assets stamped with `?v=x.x.x` for reliable cache invalidation
-- `scripts/bump_version.sh` added for future version bumps
+### v1.1.29 — PWA Install Button 📲
+- Admin page now offers "Install Quizify" via the browser's PWA install prompt. Native-feeling icon on home screen, fullscreen launcher, no browser chrome.
 
-### v1.0.10 — Emotion & Beatify-Style Reveal UI
-- Emotion text (NAILED IT! / Wrong! / Too slow!) with random variants
-- Correct answer hero display with cyan glow
-- Personal result card with full score breakdown (base, speed, streak, difficulty)
-- `round_score`, `correct`, bonuses included in leaderboard payload
+### v1.1.24 — UI Follows Game Language 🌍
+- The entire admin + player + dashboard + analytics surface now flips locale when the game language changes mid-session. No more half-translated screens.
 
-### v1.0.9 — Score Breakdown in Reveal
-- `speed_bonus`, `streak_bonus`, `difficulty_multiplier` now stored on `PlayerSession` after scoring
-- Breakdown included in `all_answers` payload and shown on reveal cards
+### v1.1.18 — Reveal-Page Polish ✨
+- Per-round reveal text **+30 %** (most-stared-at page mid-game)
+- **More gap above Rangliste** for visual separation
+- **Correct-answer line is now a sage-pill callout** — was muted 12 px gray text, now a soft sage-tinted pill with the answer in display 800-weight green so it reads at a glance
 
-### v1.0.8 — Beatify-Style Reveal Cards
-- Per-player reveal cards with left accent bar, sorted by round score
-- Replaces the plain table from v1.0.7
+### v1.1.17 — Drop Green Tick on Correct Reveal 🎯
+- The big "+N PUNKTE" already reads as the positive verdict; the green ✓ was competing for attention. Wrong answers keep the ✗ so negatives stay unmistakable.
 
-### v1.0.7 — Per-Player Answers Table in Reveal
-- Backend already sent `all_answers` in round_summary — frontend now renders it
-- Admin reveal shows player name, chosen answer, ✅/❌/⏱️, and points
+### v1.1.16 — Remove Dead Admin-Reveal-View 🧹
+- Stripped 192 LOC of unused admin-side reveal markup + handlers. Production flow always redirects the host to `/quizify/player` on game start, so the duplicate admin reveal never actually rendered.
 
-### v1.0.6 — Admin Answer Buttons Fix
-- Fixed `is_admin` flag being `false` when question first rendered for admin-as-player
-- Stores last question payload, re-renders on `joined` event confirmation
+### v1.1.15 — Reset Finally Resets 🔄
+- `reset_to_lobby()` used to only zero scores — every connected WebSocket stayed in the registry. That's why phantom players ("sdfsd 2") reappeared across games. Now Reset closes every player WS, drops the entire registry, and wipes session tokens. Truly fresh lobby.
 
-### v1.0.5 — Admin Gameplay Fix
-- Hid correct answer from admin during `QUESTION_ACTIVE` phase
-- Added answer buttons to admin game view so admin can play inline
-- "End Game" hidden during question phase, shown again on reveal
+### v1.1.13 — Bigger Result + Podium Typography 🏆
+- Finale / podium / end-of-game text bumped another 20 %. Headlines, champion name, podium plank numbers, per-place scores, and personal stats all get explicit larger sizes so the celebration moment actually celebrates.
+
+### v1.1.12 — Integer Timer + 20 % Bigger Text ⏱️
+- Player-side timer no longer shows decimals (server sends `19.5`, German locale rendered it as `19,5`). Now `Math.ceil()` for display, raw kept for the bar.
+- Root body font-size bumped 16 px → 19.2 px so every rem-sized piece of typography scales up 20 %.
+
+### v1.1.10 — Admin Header Reset Button ⟲
+- Small `⟲` icon in the admin header, hidden on setup, visible everywhere else. Click → confirm modal → wipes current game + players → back to setup. Useful for the stale-lobby scenario.
+
+### v1.1.9 — Solo Play + i18n Sweep 🎮
+- **Solo play.** `MIN_PLAYERS` 2 → 1. Comparative end-of-game awards still gate on `MIN_PLAYERS_FOR_AWARDS = 2`.
+- **i18n sweep.** Every hardcoded German leak in the English UI (and a handful of hardcoded English strings that never reached German users) properly routed through `t()`. 24 new keys, full EN/DE parity, cache-bust on translation JSON.
 
 ### v1.0.0 — Initial Release 🎉
 - WebSocket-based multiplayer trivia game
@@ -349,44 +569,40 @@ German (🇩🇪) and English (🇬🇧) question packs are included. The langua
 - 5 power-ups: Joker, Double Points, Freeze, Time Boost, Steal
 - Reconnect support with session tokens
 - Admin dashboard with QR code, player list, and game controls
-- Player mobile UI with emoji avatar picker
-- Leaderboard with delta arrows and sort animation
-- Score counter animation and floating points popups
-- Collapsible leaderboard on reveal (collapsed by default)
-- Rematch button on finale screen
 - Dashboard / TV mode at `/quizify/dashboard`
 - Analytics tracking at `/quizify/analytics`
 
-[View all releases →](https://github.com/mholzi/quizify/releases)
+[View full changelog →](https://github.com/mholzi/quizify/releases)
 
 ---
 
 <br>
 
-## Technical Details
+## Troubleshooting
 
-### Requirements
-- **Home Assistant** 2024.1+
-- **HACS** (recommended) or manual installation
+**Phantom players in the lobby?**
+- Hit the **Reset Game** button (⟲ icon, top-right of the admin header). Closes every player WS, drops the registry, wipes session tokens. Fresh empty lobby.
 
-### Architecture
-```
-Home Assistant
-    └── Quizify Integration
-            ├── Game State Manager    (game/state.py)
-            ├── WebSocket Handler     (server/websocket.py)
-            ├── Question Bank         (game/questions.py)
-            ├── Power-Up Manager      (game/powerups.py)
-            ├── Analytics Service     (analytics.py)
-            └── Web UI (Admin + Player + Dashboard)
-```
+**Cannot start the game (button stays hidden)?**
+- Quizify needs at least one player in the lobby to start. Click "Als Spieler beitreten" / "Join as Player" to self-join — the Start button unhides immediately.
+- If you see "still need X more" stuck on the screen, do a hard refresh (Ctrl/Cmd + Shift + R) — your browser may be cached on an older release.
 
-### How It Works
-- Native Home Assistant integration — no extra services
-- WebSocket-based real-time sync for all clients
-- Local processing — no cloud required
-- Session token reconnect for mid-game drops
-- Up to 20 concurrent players
+**Admin tab can't fire `start_game` ("Admin only" error)?**
+- Your device hasn't bootstrapped the admin token. Run the `quizify.reset_admin_session` service from Developer Tools → Services. The next admin connection re-bootstraps a fresh token.
+
+**Players can't connect?**
+- Verify Home Assistant is accessible on the network the players are on.
+- Try IP address instead of hostname.
+- Guests on a separate WiFi/VLAN? See [Network Setup](#network-setup) — just open TCP 8123.
+- Fritzbox guest WiFi isolates clients from the home network — players must join the main WiFi (see warning in [Network Setup](#network-setup)).
+
+**QR code won't scan?**
+- Improve display lighting.
+- Verify the QR URL is reachable from the player's network.
+- Some legacy phone scanners need the URL hostname, not the IP — try opening `/quizify/admin` from the host on a hostname-based URL if your network resolves it.
+
+**Browser stuck on old version after HACS update?**
+- Hard refresh (Ctrl/Cmd + Shift + R). Quizify cache-busts every static asset via `?v={{VERSION}}`, but the browser's HTML cache can sometimes lag a version behind.
 
 ---
 
@@ -394,11 +610,11 @@ Home Assistant
 
 ## Contributing
 
-Contributions welcome! Bug fixes, new question packs, translations, or features — all appreciated.
+Contributions welcome! Bug fixes, new question packs, translations, additional themes — all appreciated.
 
-Quick start: Fork → Branch → PR.
+Quick start: Fork → Branch → PR. See [open issues](https://github.com/mholzi/quizify/issues) for ideas and the [good first issues](https://github.com/mholzi/quizify/issues?q=is%3Aopen+label%3A%22good+first+issue%22) label for easy starting points.
 
-See [open issues](https://github.com/mholzi/quizify/issues) for ideas and [good first issues](https://github.com/mholzi/quizify/issues?q=is%3Aopen+label%3A%22good+first+issue%22) for easy starting points.
+**Pack contributions** are especially welcome. Drop a JSON file in `custom_components/quizify/questions/`, follow the schema in [Custom Question Packs](#custom-question-packs), and open a PR. The repo has a pack-review pipeline (10-rule anti-pattern list, parallel agent review) that runs on every pack before merge.
 
 ---
 
@@ -418,13 +634,13 @@ MIT License. See [LICENSE](LICENSE) for details.
 
 The next trivia battle is one QR scan away.
 
-[**Install Quizify Now**](#installation)
+[**Install Quizify Now**](#setup-in-home-assistant)
 
 ---
 
 **The open-source trivia quiz for Home Assistant. Built for fun.**
 
-[Report Bug](https://github.com/mholzi/quizify/issues) · [Request Feature](https://github.com/mholzi/quizify/issues)
+[Report Bug](https://github.com/mholzi/quizify/issues) · [Request Feature](https://github.com/mholzi/quizify/issues) · [Discussions](https://github.com/mholzi/quizify/discussions)
 
 <br>
 
