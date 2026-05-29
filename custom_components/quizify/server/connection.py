@@ -278,6 +278,36 @@ class ConnectionManager:
         if tasks:
             await asyncio.gather(*tasks)
 
+    async def broadcast_to_admins_and_dashboards(self, message: dict) -> None:
+        """Same as broadcast_to_admins but also delivers to the TV-dashboard
+        spectator connections (role=dashboard).
+
+        Dashboards need the same canonical-order question payload the admin
+        sees — they render an unshuffled view of the same content. Without
+        this, the dashboard's question-view answer-grid never populates and
+        the v1.1.47 #151 answer-distribution chart has nothing to attach to.
+        Admin-as-player connections are still excluded so a player who is
+        also admin doesn't see the correct answer before submitting.
+        """
+        if not self._admin_connections and not self._dashboard_connections:
+            return
+        gs = self._get_game_state()
+        admin_as_player_ws: set[web.WebSocketResponse] = set()
+        if gs:
+            for p in gs.get_players():
+                if p.is_admin and p.ws is not None:
+                    admin_as_player_ws.add(p.ws)
+        targets: set[web.WebSocketResponse] = set()
+        targets.update(self._admin_connections)
+        targets.update(self._dashboard_connections)
+        tasks = [
+            self._safe_send(ws, message)
+            for ws in targets
+            if not ws.closed and ws not in admin_as_player_ws
+        ]
+        if tasks:
+            await asyncio.gather(*tasks)
+
     async def _safe_send(self, ws: web.WebSocketResponse, message: dict) -> None:
         """Send *message* to *ws*, swallowing any send errors."""
         try:

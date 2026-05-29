@@ -974,8 +974,18 @@
         function handleRoundSummary(msg) {
             var summary = msg.round_summary || msg;
 
-            // Highlight correct answer
-            var correctIdx = summary.correct_answer_index != null ? summary.correct_answer_index : -1;
+            // Highlight correct answer.
+            // We prefer the ORIGINAL-order index when the server sends it
+            // (added 2026-05-29 in v1.1.47): the dashboard renders an
+            // unshuffled answer-grid, so the per-player canonical shuffle
+            // map would point at the wrong tile. Old payloads without the
+            // field fall back to the existing canonical index — that's the
+            // pre-fix behavior, only slightly wrong, so the UI doesn't
+            // break on stale clients.
+            var correctIdx = summary.correct_answer_index_original;
+            if (correctIdx == null || correctIdx < 0) {
+                correctIdx = summary.correct_answer_index != null ? summary.correct_answer_index : -1;
+            }
             var answerEls = els.answersGrid.querySelectorAll('.dashboard-answer');
 
             // Issue #151: render live answer distribution at reveal.

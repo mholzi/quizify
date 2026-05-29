@@ -1049,7 +1049,11 @@ class QuizifyWebSocketHandler:
             total_rounds=game_state.total_rounds,
             timer_duration=game_state.round_duration,
         )
-        await self._conn.broadcast_to_admins(admin_msg)
+        # Also fan out to TV-dashboard connections so their question-view
+        # populates with the same canonical-order payload. Without this the
+        # dashboard's answer-grid stays empty and the v1.1.47 #151 answer-
+        # distribution bars never attach. Admin-as-player still excluded.
+        await self._conn.broadcast_to_admins_and_dashboards(admin_msg)
 
         # Cache players and leaderboard to avoid redundant calls
         players = game_state.get_players()
@@ -1178,13 +1182,16 @@ class QuizifyWebSocketHandler:
         if not summary:
             return
 
-        # Find the correct answer's shuffled index
+        # Find the correct answer's shuffled index (canonical) AND its
+        # original index in question.answers — dashboard needs the latter
+        # because it renders unshuffled answer tiles (per #151 audit).
         correct_shuffled_idx = -1
+        correct_original_idx = -1
         for a in summary.question.answers:
             if a.correct:
-                original_idx = summary.question.answers.index(a)
+                correct_original_idx = summary.question.answers.index(a)
                 for shuffled_idx, orig_idx in enumerate(game_state.shuffle_map):
-                    if orig_idx == original_idx:
+                    if orig_idx == correct_original_idx:
                         correct_shuffled_idx = shuffled_idx
                         break
                 break
@@ -1239,6 +1246,7 @@ class QuizifyWebSocketHandler:
 
         summary_msg = serialize_round_summary(
             correct_answer_index=correct_shuffled_idx,
+            correct_answer_index_original=correct_original_idx,
             correct_answer_text=summary.correct_answer.text,
             fun_fact=summary.fun_fact,
             leaderboard=leaderboard,

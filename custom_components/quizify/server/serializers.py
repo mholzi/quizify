@@ -174,14 +174,24 @@ def serialize_round_summary(
     players: list[dict[str, Any]] | None = None,
     last_round: bool = False,
     question_id: str = "",
+    correct_answer_index_original: int = -1,
 ) -> dict[str, Any]:
-    """Build round summary broadcast payload."""
+    """Build round summary broadcast payload.
+
+    ``correct_answer_index`` is in CANONICAL-shuffle space — the per-player
+    reveal client uses it to highlight the right tile in its own shuffle.
+    ``correct_answer_index_original`` is in question-JSON-order — the TV
+    dashboard renders unshuffled answers (no per-spectator shuffle), so it
+    needs the original index to colour the correct tile. Both are sent in
+    the same payload to avoid a dashboard-only round_summary fork.
+    """
     # Compute answer distribution from all_answers
     answer_distribution = _compute_answer_distribution(all_answers or [], num_answer_options)
 
     return {
         "type": "round_summary",
         "correct_answer_index": correct_answer_index,
+        "correct_answer_index_original": correct_answer_index_original,
         "correct_answer": correct_answer_text,
         # question_id flows to the client so the 🚩 flag-question button
         # can POST it back to /api/quizify/flag-question for the pack

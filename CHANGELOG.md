@@ -5,6 +5,26 @@ All notable changes to Quizify are documented here. This project follows
 
 ## [1.1.47] — 2026-05-29
 
+### Fixed
+
+- **TV dashboard receives question_started broadcasts.** The
+  dashboard's question-view answer-grid was never populating in real
+  game flow because `question_started` was only broadcast via
+  `broadcast_to_admins`, which excludes dashboards. Added
+  `broadcast_to_admins_and_dashboards` and switched the question-
+  start broadcast to use it. Admin-as-player connections are still
+  excluded so a player who is also admin doesn't see the correct
+  answer before submitting.
+- **TV dashboard highlights the correct answer on reveal.**
+  `round_summary.correct_answer_index` is in canonical-shuffle space
+  (used by the per-player reveal client to highlight in each player's
+  shuffled order). The dashboard renders an unshuffled answer-grid,
+  so using the canonical index would highlight the wrong tile.
+  Server now also sends `correct_answer_index_original` — the
+  index in question-JSON order — and the dashboard reads that
+  field, falling back to the canonical index for stale clients.
+  Caught by the per-user-shuffle audit Markus requested 2026-05-29.
+
 ### Added
 
 - **Live answer distribution chart on the TV dashboard** (closes
