@@ -87,6 +87,53 @@ def compute_superlatives(players: list[PlayerSession]) -> list[Superlative]:
             detail_params=detail_params,
         ))
 
+    # --- Top Score: highest single-round score (per issue #150) ---
+    # Distinct from the podium (cumulative total) and Hot Streak (longest
+    # correct streak). Awards the player whose best *single round* was the
+    # highest in the game. Tie-break: earliest round number wins. Skipped
+    # when all players' best round was below TOP_SCORE_MIN so a sleepy
+    # game doesn't get a hollow trophy. Placed first because the README's
+    # iconic order ("🥇 Top Score, 🚀 Comeback King, ⚡ Fastest Finger")
+    # implies it's the headline highlight — and slotting it later would
+    # often pre-block the most likely Top-Score winner with Comeback King.
+    TOP_SCORE_MIN = 25
+    best_round_score: int | None = None
+    best_round_player: str | None = None
+    best_round_index: int | None = None
+    for p in players:
+        if p.name in awarded:
+            continue
+        scores = p.round_scores
+        if not scores:
+            continue
+        player_max = max(scores)
+        if player_max < TOP_SCORE_MIN:
+            continue
+        player_max_round = scores.index(player_max) + 1  # 1-based for display
+        if best_round_score is None or player_max > best_round_score or (
+            player_max == best_round_score
+            and best_round_index is not None
+            and player_max_round < best_round_index
+        ):
+            best_round_score = player_max
+            best_round_player = p.name
+            best_round_index = player_max_round
+
+    if (
+        best_round_player
+        and best_round_score is not None
+        and best_round_index is not None
+    ):
+        _try_award(
+            "Top Score",
+            "🥇",
+            f"{best_round_score} pts in round {best_round_index}",
+            best_round_player,
+            award_key="highlights.awards.topScore",
+            detail_key="highlights.details.topScore",
+            detail_params={"points": best_round_score, "round": best_round_index},
+        )
+
     # --- Fastest Finger: lowest average answer time (correct answers only) ---
     best_avg_time: float | None = None
     fastest_player: str | None = None

@@ -232,7 +232,8 @@
       "hotStreak": "Hot Streak",
       "mostAccurate": "Most Accurate",
       "buzzkill": "Buzzkill",
-      "knowledgeExpert": "Knowledge Expert"
+      "knowledgeExpert": "Knowledge Expert",
+      "topScore": "Top Score"
     },
     "details": {
       "fastestFinger": "avg {avg}s per correct answer",
@@ -240,7 +241,8 @@
       "hotStreak": "{count} correct in a row",
       "mostAccurate": "{correct}/{total} correct ({pct}%)",
       "buzzkill": "{count}× freeze used",
-      "knowledgeExpert": "{points} pts on hard questions"
+      "knowledgeExpert": "{points} pts on hard questions",
+      "topScore": "{points} pts in round {round}"
     }
   },
   "reveal": {

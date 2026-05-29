@@ -232,7 +232,8 @@
       "hotStreak": "Heiße Serie",
       "mostAccurate": "Höchste Trefferquote",
       "buzzkill": "Spielverderber",
-      "knowledgeExpert": "Wissens-Profi"
+      "knowledgeExpert": "Wissens-Profi",
+      "topScore": "Top-Punktzahl"
     },
     "details": {
       "fastestFinger": "Ø {avg}s pro richtiger Antwort",
@@ -240,7 +241,8 @@
       "hotStreak": "{count} richtige in Folge",
       "mostAccurate": "{correct}/{total} richtig ({pct}%)",
       "buzzkill": "{count}× eingefroren",
-      "knowledgeExpert": "{points} Pkt. bei schweren Fragen"
+      "knowledgeExpert": "{points} Pkt. bei schweren Fragen",
+      "topScore": "{points} Pkt. in Runde {round}"
     }
   },
   "reveal": {

@@ -3,6 +3,31 @@
 All notable changes to Quizify are documented here. This project follows
 [Semantic Versioning](https://semver.org/).
 
+## [1.1.47] — 2026-05-29
+
+### Added
+
+- **Top Score end-of-game award** (closes #150). The README has
+  always advertised `🥇 Top Score` as one of the headline highlights
+  but it was never implemented. Now awarded to the player whose best
+  *single round* was the highest in the game — distinct from the
+  podium (cumulative total) and Hot Streak (longest streak).
+  - Mechanic: walk each player's `round_scores`, pick per-player max,
+    award the player with the highest max. Tie-break: earliest round
+    number wins (the player who hit the peak first).
+  - Skip threshold: `TOP_SCORE_MIN = 25 pts`. Below it the trophy
+    is suppressed — a sleepy game shouldn't get a hollow "Top Score:
+    Alice — 3 pts" trophy.
+  - Placed first in the award chain so the headline winner doesn't
+    get pre-blocked by Comeback King or Hot Streak (which often
+    coincide with a big single-round haul).
+- New i18n keys `highlights.awards.topScore` / `highlights.details.
+  topScore` for EN ("Top Score" / "{points} pts in round {round}")
+  and DE ("Top-Punktzahl" / "{points} Pkt. in Runde {round}").
+- 5 new unit tests in `tests/test_highlights_top_score.py` covering
+  the award firing, tie-break, floor, empty-scores edge case, and
+  the awarded-uniqueness invariant.
+
 ## [1.1.46] — 2026-05-29
 
 ### Changed
