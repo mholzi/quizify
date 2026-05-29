@@ -3,6 +3,22 @@
 All notable changes to Quizify are documented here. This project follows
 [Semantic Versioning](https://semver.org/).
 
+## [1.1.42] — 2026-05-29
+
+### Changed
+
+- **Theme-tabs row no longer looks cut off.** With nine themes plus
+  the `Alle` reset (ten total), the row needs to scroll horizontally
+  on any phone-width viewport — but the rightmost visible tab being
+  half-cut read as a layout bug, not as a scroll affordance. Added a
+  right-edge mask gradient (`linear-gradient(to right, black
+  calc(100% - 24px), transparent 100%)`) so the cut fades into the
+  background instead of clipping abruptly. Tightened tab padding
+  from `6 px 12 px` to `5 px 10 px` and font from `0.78 rem` to
+  `0.72 rem` so a couple more tabs fit per viewport before scrolling
+  is required. Together the row now reads as "swipe for more" rather
+  than "broken layout."
+
 ## [1.1.41] — 2026-05-29
 
 ### Fixed

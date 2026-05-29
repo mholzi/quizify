@@ -1200,6 +1200,14 @@ button, .btn {
     margin-bottom: var(--space-sm);
     padding-bottom: 2px;
     scrollbar-width: none;
+    /* v1.1.42: scroll-indicator. With 10 themes the row overflows on
+       any phone-width viewport. The mask fades the right edge to hint
+       that more tabs exist beyond what's visible; without it the cut
+       reads as a layout bug. Markus 2026-05-29 live test. */
+    -webkit-mask-image: linear-gradient(to right, black calc(100% - 24px), transparent 100%);
+    mask-image: linear-gradient(to right, black calc(100% - 24px), transparent 100%);
+    /* Padding so the active-tab outline isn't clipped by the mask edge. */
+    padding-right: 4px;
 }
 .theme-tabs::-webkit-scrollbar {
     display: none;
@@ -1215,10 +1223,12 @@ button, .btn {
     background: var(--color-bg-surface);
     border: 1.5px solid var(--color-border-light);
     border-radius: 999px;
-    padding: 6px 12px;
+    /* v1.1.42: tighter padding + slightly smaller text so more tabs fit
+       per viewport before the user has to scroll. Was 6/12 + 0.78 rem. */
+    padding: 5px 10px;
     min-width: 0;
     min-height: 0;
-    font-size: 0.78rem;
+    font-size: 0.72rem;
     font-weight: 600;
     color: var(--color-text-muted);
     cursor: pointer;
