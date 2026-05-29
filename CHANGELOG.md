@@ -3,6 +3,21 @@
 All notable changes to Quizify are documented here. This project follows
 [Semantic Versioning](https://semver.org/).
 
+## [1.1.41] — 2026-05-29
+
+### Fixed
+
+- **End-screen rank / score / stats actually shrink now.** v1.1.40
+  reduced `.your-result-rank` / `.your-result-score` / `.stat-value`
+  / `.stat-label` by 20 % at lines 2731–2783, but a later "anchor
+  bump" block at lines 5989–5992 silently overrode all four with
+  larger sizes (3 / 1.3 / 1.5 / 0.85 rem). Live test on Markus'
+  Home Assistant via browser-harness CDP showed `.your-result-rank`
+  computed to 3 rem instead of the expected 2 rem. Pulled the
+  override block to match the v1.1.40 intent: 2.4 / 1.04 / 1.2 /
+  0.68 rem. The end-screen rank/score/stat block now stops eating
+  the viewport above the leaderboard for real this time.
+
 ## [1.1.40] — 2026-05-29
 
 ### Changed
