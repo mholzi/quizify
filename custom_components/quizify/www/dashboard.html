@@ -512,16 +512,80 @@
             overflow-y: auto;
             padding-top: 12px;
             padding-bottom: 16px;
-            /* Tightened all vertical spacing per Markus 2026-05-29
-               (msg 323): on a 720p TV viewport the awards row (incl.
-               Top Score card) was below the fold even after dropping
-               48 → 24 px in the first pass. The full chain — finale
-               gap + podium-section gap + podium-title clamp + podium-
-               place height — is now at the floor of what still reads
-               TV-legibly. Beyond this, the layout would need to go
-               horizontal (podium on the left, awards on the right). */
             gap: 12px;
             position: relative;
+        }
+
+        /* Two-column finale (msg 326 option 1). Podium on the left, awards
+           + leaderboard on the right — both columns share the available
+           vertical room instead of stacking, so the awards row and the
+           leaderboard land above the fold on a 720p TV. */
+        .dashboard-finale--split {
+            flex-direction: row;
+            align-items: stretch;
+            justify-content: center;
+            gap: clamp(24px, 3vw, 48px);
+            padding: 16px clamp(16px, 3vw, 40px);
+        }
+        .dashboard-finale-left {
+            /* Podium owns the showcase real estate, so give it more
+               room than the awards/leaderboard column (~58/42 split).
+               min-width: 0 lets the flex item actually shrink. */
+            flex: 1.4 1 0;
+            min-width: 0;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            position: relative;
+            z-index: 1;
+            overflow: hidden;
+        }
+        .dashboard-finale-right {
+            flex: 1 1 0;
+            min-width: 0;
+            display: flex;
+            flex-direction: column;
+            gap: 16px;
+            position: relative;
+            z-index: 1;
+            max-height: 100%;
+            overflow: hidden;
+        }
+        /* On split layout the side panel for 4+ players stacks UNDER the
+           podium instead of beside it — the left column is already tight. */
+        .dashboard-finale--split .podium-wrap {
+            flex-direction: column;
+            align-items: center;
+            gap: 16px;
+        }
+        /* Constrain podium width so the bars stay inside the left column. */
+        .dashboard-finale--split .podium {
+            min-height: 200px;
+            gap: clamp(12px, 1.4vw, 24px);
+        }
+        .dashboard-finale--split .podium-bar {
+            width: clamp(72px, 8vw, 110px);
+        }
+        /* Awards row stacks vertically inside the right column on the
+           split layout — pill cards still read TV-legibly. */
+        .dashboard-finale--split .awards-section {
+            flex-direction: column;
+            align-items: stretch;
+            gap: 8px;
+        }
+        .dashboard-finale--split .awards-grid {
+            flex-direction: column;
+            align-items: stretch;
+        }
+        .dashboard-finale--split .award-card {
+            min-width: 0;
+            width: 100%;
+        }
+        .dashboard-finale--split .finale-leaderboard-card {
+            flex: 1 1 auto;
+            min-height: 0;
+            overflow: hidden;
         }
 
         .dashboard-finale::before {
@@ -885,20 +949,27 @@
 
         <!-- FINALE VIEW -->
         <div id="finale-view" class="dashboard-view">
-            <div class="dashboard-finale">
-                <div class="podium-section">
-                    <div class="podium-title" data-i18n="dashboard.result">Result</div>
-                    <!-- podium-wrap holds the podium itself + the side panel for
-                         players beyond the top 3 (renders empty / hidden when ≤ 3). -->
-                    <div class="podium-wrap">
-                        <div id="podium" class="podium"></div>
-                        <div id="podium-others" class="podium-others" hidden></div>
+            <!-- v1.1.47 (msg 326 option 1): two-column finale so the awards
+                 row and final leaderboard sit beside the podium instead of
+                 stacking below it. On a 720p TV the previous stacked layout
+                 pushed the awards row off-screen even after aggressive
+                 vertical-spacing cuts. Side-by-side fits cleanly. -->
+            <div class="dashboard-finale dashboard-finale--split">
+                <div class="dashboard-finale-left">
+                    <div class="podium-section">
+                        <div class="podium-title" data-i18n="dashboard.result">Result</div>
+                        <div class="podium-wrap">
+                            <div id="podium" class="podium"></div>
+                            <div id="podium-others" class="podium-others" hidden></div>
+                        </div>
                     </div>
                 </div>
-                <div id="awards-section" class="awards-section hidden"></div>
-                <div class="finale-leaderboard-card">
-                    <div class="card-header" data-i18n="dashboard.leaderboard">Leaderboard</div>
-                    <div id="finale-leaderboard" class="dashboard-leaderboard"></div>
+                <div class="dashboard-finale-right">
+                    <div id="awards-section" class="awards-section hidden"></div>
+                    <div class="finale-leaderboard-card">
+                        <div class="card-header" data-i18n="dashboard.leaderboard">Leaderboard</div>
+                        <div id="finale-leaderboard" class="dashboard-leaderboard"></div>
+                    </div>
                 </div>
             </div>
         </div>
