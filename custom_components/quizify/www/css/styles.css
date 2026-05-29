@@ -1415,7 +1415,9 @@ button, .btn {
 }
 
 .question-text {
-    font-size: 1.35rem;
+    /* -20 % per Markus' live test 2026-05-29: previous 1.35 rem felt too
+       heavy on phones once 3-line questions started appearing. */
+    font-size: 1.08rem;
     font-weight: var(--font-weight-bold);
     line-height: 1.4;
     color: var(--color-text-white);
@@ -2205,11 +2207,11 @@ button, .btn {
     align-items: end;
     gap: var(--space-md);
     margin: 0 auto var(--space-xl);
-    /* 90 % of the parent gives the podium room to breathe on phones
-       (was visibly narrow per #live-feedback); 720 px caps it on
-       desktop / dashboard so it doesn't sprawl. Inner padding dropped
-       since the outer 5 % gutter is enough breathing room. */
-    width: 90%;
+    /* 90 % of the VIEWPORT (not the parent) per Markus 2026-05-29: the
+       parent container's horizontal padding was squeezing the podium
+       to ~75 % of the screen. `vw` ignores parent padding entirely; the
+       720 px cap keeps it sensible on tablets and the TV view. */
+    width: 90vw;
     max-width: 720px;
     padding: 0;
     min-height: 220px;
@@ -2717,7 +2719,8 @@ footer {
 }
 
 .your-result-header {
-    font-size: 0.75rem;
+    /* -20 % per Markus' live test 2026-05-29; bumped from 0.75 rem. */
+    font-size: 0.6rem;
     font-weight: 700;
     text-transform: uppercase;
     letter-spacing: 0.08em;
@@ -2727,7 +2730,8 @@ footer {
 
 .your-result-rank {
     font-family: var(--font-display);
-    font-size: 2.5rem;
+    /* -20 % per Markus' live test 2026-05-29; bumped from 2.5 rem. */
+    font-size: 2rem;
     font-weight: 900;
     background: linear-gradient(135deg, var(--color-accent-primary), var(--color-accent-secondary));
     -webkit-background-clip: text;
@@ -2738,7 +2742,8 @@ footer {
 }
 
 .your-result-score {
-    font-size: 1.1rem;
+    /* -20 % per Markus' live test 2026-05-29; bumped from 1.1 rem. */
+    font-size: 0.88rem;
     font-weight: 700;
     color: var(--color-accent-secondary);
     text-align: center;
@@ -2763,7 +2768,8 @@ footer {
 }
 
 .stat-value {
-    font-size: 1.25rem;
+    /* -20 % per Markus' live test 2026-05-29; bumped from 1.25 rem. */
+    font-size: 1rem;
     font-weight: 800;
     color: var(--color-text-white);
 }
@@ -5671,7 +5677,9 @@ body.is-admin .pl-result-hero--big .pl-result-big-points { font-size: 84px; }
 .pl-result-hero--wrong .pl-result-sub,
 .pl-result-hero--missed .pl-result-sub {
   font-family: var(--font-body);
-  font-size: 0.9rem;
+  /* +20 % per Markus' live test 2026-05-29: the "Richtige Antwort: X"
+     surface is the load-bearing element on this view; bumped from 0.9 rem. */
+  font-size: 1.08rem;
   color: var(--color-text-primary);
   background: rgba(127, 168, 151, 0.14);
   border: 1px solid rgba(127, 168, 151, 0.32);
@@ -5686,14 +5694,16 @@ body.is-admin .pl-result-hero--big .pl-result-big-points { font-size: 84px; }
   font-family: var(--font-display);
   font-weight: 800;
   color: var(--color-success, #7FA897);
-  font-size: 1.1rem;
+  /* +20 % matching .pl-result-sub bump; bumped from 1.1 rem. */
+  font-size: 1.32rem;
   letter-spacing: -0.005em;
 }
 .pl-result-hero--wrong .pl-result-zero,
 .pl-result-hero--missed .pl-result-zero {
   font-family: var(--font-mono);
   font-weight: 800;
-  font-size: 20px;
+  /* +10 % per Markus' live test 2026-05-29; bumped from 20 px. */
+  font-size: 22px;
   color: var(--color-text-light);
   margin-top: 4px;
 }
@@ -5707,7 +5717,8 @@ body.is-admin .pl-result-hero--big .pl-result-big-points { font-size: 84px; }
 }
 .pl-result-streak-lost {
   font-family: var(--font-body);
-  font-size: 12px;
+  /* +10 % per Markus' live test 2026-05-29; bumped from 12 px. */
+  font-size: 13.2px;
   color: var(--color-error);
   font-weight: 600;
 }
@@ -5722,14 +5733,16 @@ body.is-admin .pl-result-hero--big .pl-result-big-points { font-size: 84px; }
   border-radius: 8px;
   padding: 7px 12px;
   font-family: var(--font-body);
-  font-size: 12px;
+  /* +10 % per Markus' live test 2026-05-29; bumped from 12 px. */
+  font-size: 13.2px;
   color: var(--color-text-muted);
 }
 .pl-result-answer-strip b {
   font-family: var(--font-display);
   font-weight: 700;
   color: var(--color-text-primary);
-  font-size: 13px;
+  /* +10 % matching strip bump; bumped from 13 px. */
+  font-size: 14.3px;
 }
 .pl-result-answer-strip .pl-result-answer-mark {
   color: var(--color-success);
@@ -5757,7 +5770,8 @@ body.is-admin .pl-result-hero--big .pl-result-big-points { font-size: 84px; }
   align-items: center;
   gap: 6px;
   font-family: var(--font-body);
-  font-size: 11px;
+  /* +10 % per Markus' live test 2026-05-29; bumped from 11 px. */
+  font-size: 12.1px;
   font-weight: 600;
   color: var(--color-text-muted);
   letter-spacing: 0.08em;
@@ -5776,8 +5790,8 @@ body.is-admin .pl-result-hero--big .pl-result-big-points { font-size: 84px; }
 }
 .pl-result-funfact-body {
   font-family: var(--font-body);
-  /* +20 % (Mai-27 live test): 12.5 px was hard to read at arm's length. */
-  font-size: 15px;
+  /* Mai-27 +20 % (15 px) plus Mai-29 +10 % per Markus' live test. */
+  font-size: 16.5px;
   line-height: 1.4;
   color: var(--color-text-primary);
 }

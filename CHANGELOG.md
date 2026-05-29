@@ -3,6 +3,26 @@
 All notable changes to Quizify are documented here. This project follows
 [Semantic Versioning](https://semver.org/).
 
+## [1.1.40] — 2026-05-29
+
+### Changed
+
+- **Typography pass across the three player screens** based on
+  Markus' live-test feedback at 05:50–05:59 local. Reveal: the
+  "Richtige Antwort: X" surface (`.pl-result-sub` + bold) bumped
+  +20 % so the load-bearing element on that view reads at a glance;
+  the surrounding context (your-answer strip, fun-fact body, section
+  heads, score-zero) bumped +10 %. Game: `.question-text` reduced
+  -20 % so 3-line questions stop dominating the viewport. End-screen:
+  the personal-result block (`.your-result-rank`, `.your-result-score`,
+  `.your-result-header`, `.stat-value`) all reduced -20 % so the rank
+  card stops eating the screen above the leaderboard.
+- **Podium spans 90 % of the viewport, not 90 % of the parent.** The
+  parent container's horizontal padding was squeezing the podium to
+  ~75 % of the screen on phones. Switched from `width: 90%` to
+  `width: 90vw` (still capped at 720 px on tablet+). Now matches the
+  intent of the original Mai-27 spec.
+
 ## [1.1.39] — 2026-05-29
 
 ### Fixed
