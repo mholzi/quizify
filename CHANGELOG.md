@@ -5,6 +5,26 @@ All notable changes to Quizify are documented here. This project follows
 
 ## [1.1.47] — 2026-05-29
 
+### Changed
+
+- **Finale view is now a two-column layout** (msg 326). On a 720p TV
+  the previous stacked layout (podium → awards → leaderboard) pushed
+  the awards row and the leaderboard below the fold. Side-by-side:
+  podium on the left (~58 %), awards stack + final leaderboard on
+  the right (~42 %). All three sections land above the fold on a
+  standard cast / 720p TV.
+- **Podium reshaped** (msg 320). Names + medal + score sit on TOP
+  of each podium column (in a flex label wrapper) and bars share a
+  baseline at the bottom — previously the labels staircased with
+  bar height. Added a side panel for players beyond the top 3
+  ("Also playing" / "Außerdem dabei") that lists rank + name +
+  score in a compact rail; hidden when ≤ 3 players. On the split
+  layout the side panel stacks under the podium.
+- **Award cards reshaped as horizontal pills** (msg 323). Icon owns
+  the left chip; name · winner share one line; the longer detail
+  string wraps as a quiet sub-line. The vertical card had no room
+  on a 720p split layout.
+
 ### Fixed
 
 - **TV dashboard receives question_started broadcasts.** The
