@@ -165,6 +165,150 @@ async def status_view(request: web.Request) -> web.Response:
     return web.json_response({"version": ctx.version, "status": "ok"})
 
 
+# Theme → emoji map. Mirrors admin.html data-icon attributes.
+# Single source of truth; both featured-pack and any future chip-rendering
+# helper read from here.
+_THEME_ICONS = {
+    "geography": "🌍",
+    "nature": "🦋",
+    "popculture": "🎬",
+    "sport": "⚽",
+    "music": "🎵",
+    "science": "🔬",
+    "history": "📜",
+    "food": "🍔",
+    "tech": "💡",
+}
+
+# Per Markus 2026-05-29 (msg 283): the Featured Spotlight rotates between
+# two logics, alternating by day-of-year so the same logic doesn't lock
+# in for weeks. Day 0/2/4… = Most-Played (this-week winners surface).
+# Day 1/3/5… = Most-Difficult (lowest correct rate; challenges people).
+# Fallback to Geographie / Geography when no analytics data has built
+# up yet.
+_FEATURED_DEFAULT_DE = "geographie"
+_FEATURED_DEFAULT_EN = "geography"
+_FEATURED_MIN_PLAYS = 1   # need at least 1 play to qualify for most-played
+_FEATURED_MIN_SHOWN = 10  # aggregate shown_count for most-difficult
+
+
+async def featured_pack_view(request: web.Request) -> web.Response:
+    """Pick the Featured Spotlight pack for the admin setup screen.
+
+    Query: ``?lang=de|en``.
+
+    Returns ``{value, title, meta, logic}`` where logic is the rule that
+    picked the pack — useful for tooltips and for the frontend to know
+    whether to show a "Popular" or "Hardest" badge.
+
+    Falls back to a hardcoded default if analytics + question_stats are
+    both empty (fresh install).
+    """
+    import datetime as _dt
+
+    ctx = _get_ctx(request)
+    lang = (request.query.get("lang") or "de").lower()
+    if lang not in ("de", "en"):
+        lang = "de"
+
+    # Even day → most-played, odd day → most-difficult.
+    # tm_yday is 1-based (Jan 1 = 1), so day 1 starts with most-difficult.
+    day_of_year = _dt.datetime.now().timetuple().tm_yday
+    logic = "most-played" if day_of_year % 2 == 0 else "most-difficult"
+
+    bank = ctx.game._question_bank if ctx.game else None
+    if bank is None:
+        return web.json_response({})
+
+    # Filter packs to the requested language.
+    pack_versions = bank.get_pack_versions()
+    lang_packs = {
+        cat: meta for cat, meta in pack_versions.items()
+        if meta.get("language", "de") == lang
+    }
+    if not lang_packs:
+        return web.json_response({})
+
+    chosen: str | None = None
+    if logic == "most-played" and ctx.analytics is not None:
+        try:
+            metrics = ctx.analytics.compute_metrics("30d")
+            cat_plays = {
+                c["category"]: c.get("games_played", 0)
+                for c in metrics.get("category_stats", [])
+            }
+            candidates = [
+                (cat, cat_plays.get(cat, 0)) for cat in lang_packs
+            ]
+            candidates.sort(key=lambda x: x[1], reverse=True)
+            if candidates and candidates[0][1] >= _FEATURED_MIN_PLAYS:
+                chosen = candidates[0][0]
+        except (KeyError, AttributeError, TypeError):
+            chosen = None
+    elif logic == "most-difficult" and ctx.question_stats is not None:
+        try:
+            qstats = ctx.question_stats._data["questions"]
+            pack_rates: dict[str, float] = {}
+            for cat in lang_packs:
+                shown = 0
+                correct = 0
+                for q in bank._categories.get(cat, []):
+                    s = qstats.get(q.id)
+                    if s and s.get("shown_count", 0) >= 1:
+                        shown += s["shown_count"]
+                        correct += s.get("correct_count", 0)
+                if shown >= _FEATURED_MIN_SHOWN:
+                    pack_rates[cat] = correct / shown
+            if pack_rates:
+                chosen = min(pack_rates, key=pack_rates.__getitem__)
+        except (KeyError, AttributeError, TypeError):
+            chosen = None
+
+    if chosen is None:
+        # Fallback: prefer Geographie/Geography if present, else first pack.
+        default = _FEATURED_DEFAULT_EN if lang == "en" else _FEATURED_DEFAULT_DE
+        chosen = default if default in lang_packs else next(iter(lang_packs))
+        logic_used = "default"
+    else:
+        logic_used = logic
+
+    meta = lang_packs[chosen]
+    # Read pack JSON once for theme (icon lookup). Cheap — packs are
+    # already on disk and aiohttp's executor handles the blocking read.
+    pack_path = bank._questions_dir / f"{chosen}.json"
+    try:
+        raw = await ctx.runtime.run_in_executor(
+            pack_path.read_text, "utf-8"
+        )
+        theme = json.loads(raw).get("theme", "")
+    except (OSError, ValueError):
+        theme = ""
+    icon = _THEME_ICONS.get(theme, "🎲")
+
+    count = meta.get("question_count", 0)
+    if lang == "de":
+        unit = "Fragen"
+        sub = {
+            "most-played": "Beliebt diese Woche",
+            "most-difficult": "Härteste Herausforderung",
+            "default": "Familienfreundlich",
+        }[logic_used]
+    else:
+        unit = "questions"
+        sub = {
+            "most-played": "Popular this week",
+            "most-difficult": "Hardest challenge",
+            "default": "Family-friendly",
+        }[logic_used]
+
+    return web.json_response({
+        "value": chosen,
+        "title": f"{icon} {meta.get('name', chosen)}",
+        "meta": f"{count} {unit} · {sub}",
+        "logic": logic_used,
+    })
+
+
 async def analytics_data_view(request: web.Request) -> web.Response:
     """Return analytics data as JSON."""
     ctx = _get_ctx(request)
@@ -392,6 +536,7 @@ ROUTES: list[tuple[str, str, object]] = [
     ("GET", "/quizify/static/sw.js", sw_view),
     ("GET", "/api/quizify/game-status", game_status_view),
     ("GET", "/api/quizify/status", status_view),
+    ("GET", "/api/quizify/featured-pack", featured_pack_view),
     ("GET", "/api/quizify/analytics/data", analytics_data_view),
     ("GET", "/api/quizify/all-time", all_time_leaderboard_view),
     ("GET", "/api/quizify/question-stats", question_stats_view),

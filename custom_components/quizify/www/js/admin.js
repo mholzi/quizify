@@ -197,19 +197,50 @@
     // call on 2026-05-27 to drop the threshold gating after seeing the
     // first cut with 3 packs and asking for "genauso wie in den Mockups".
 
-    // Featured pack per language. Picked deliberately (newest / most
-    // crowd-pleasing). Update when adding fresh packs.
+    // Fallback Featured Pack — used while the /api/quizify/featured-pack
+    // fetch is in flight, and as a hard fallback if the endpoint errors.
+    // Real selection comes from the backend (most-played on even days,
+    // most-difficult on odd days). Markus 2026-05-29 (msg 283).
     var FEATURED_PACK = {
         de: { value: 'geographie',  title: '🌍 Geographie',  meta: '47 Fragen · Familienfreundlich' },
         en: { value: 'geography',   title: '🌍 Geography',   meta: '47 questions · Family-friendly' },
     };
 
-    function updatePackUIScaling(lang) {
-        // Populate spotlight from FEATURED_PACK for the current language.
-        if (els.featuredSpotlight && FEATURED_PACK[lang]) {
-            if (els.spotlightTitle) els.spotlightTitle.textContent = FEATURED_PACK[lang].title;
-            if (els.spotlightMeta)  els.spotlightMeta.textContent  = FEATURED_PACK[lang].meta;
+    // Cache resolved featured packs by language so a quick lang-toggle
+    // doesn't double-fetch. Cleared on a real page reload.
+    var _featuredCache = {};
+
+    function _paintFeatured(lang, data) {
+        if (!els.featuredSpotlight) return;
+        if (els.spotlightTitle) els.spotlightTitle.textContent = data.title;
+        if (els.spotlightMeta)  els.spotlightMeta.textContent  = data.meta;
+        // Remember selection for the spotlight-click handler.
+        els.featuredSpotlight.dataset.value = data.value;
+    }
+
+    function _fetchFeatured(lang) {
+        if (_featuredCache[lang]) {
+            _paintFeatured(lang, _featuredCache[lang]);
+            return;
         }
+        fetch('/api/quizify/featured-pack?lang=' + encodeURIComponent(lang))
+            .then(function (r) { return r.ok ? r.json() : null; })
+            .then(function (data) {
+                if (data && data.value && data.title) {
+                    _featuredCache[lang] = data;
+                    _paintFeatured(lang, data);
+                }
+            })
+            .catch(function () { /* paint already showed fallback */ });
+    }
+
+    function updatePackUIScaling(lang) {
+        // Paint fallback synchronously so the spotlight is never blank,
+        // then kick off the live fetch.
+        if (els.featuredSpotlight && FEATURED_PACK[lang]) {
+            _paintFeatured(lang, FEATURED_PACK[lang]);
+        }
+        _fetchFeatured(lang);
         // Re-apply the "all" theme filter so a language switch clears any
         // leftover hidden-by-theme state on chips that just became
         // visible for the new language.
@@ -242,18 +273,22 @@
         if (!els.featuredSpotlight || !els.categoryChips) return;
         els.featuredSpotlight.addEventListener('click', function () {
             var lang = (typeof selectedLanguage === 'string') ? selectedLanguage : 'de';
-            var featured = FEATURED_PACK[lang];
-            if (!featured) return;
+            // Prefer the dynamically resolved spotlight pack (data-value
+            // set by _paintFeatured); fall back to the static map if the
+            // fetch hadn't landed yet.
+            var packValue = els.featuredSpotlight.dataset.value
+                || (FEATURED_PACK[lang] && FEATURED_PACK[lang].value);
+            if (!packValue) return;
             // Featured click = pick exactly this pack. Clears Mixed + any
             // multi-select from prior interactions.
             els.categoryChips.querySelectorAll('.chip').forEach(function (c) {
                 c.classList.remove('active');
             });
-            var target = els.categoryChips.querySelector('.chip[data-value="' + featured.value + '"]');
+            var target = els.categoryChips.querySelector('.chip[data-value="' + packValue + '"]');
             if (target) {
                 target.classList.add('active');
-                selectedCategory = featured.value;
-                selectedCategories = [featured.value];
+                selectedCategory = packValue;
+                selectedCategories = [packValue];
                 updateCategorySummary();
             }
         });

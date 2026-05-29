@@ -3,6 +3,25 @@
 All notable changes to Quizify are documented here. This project follows
 [Semantic Versioning](https://semver.org/).
 
+## [1.1.45] — 2026-05-29
+
+### Added
+
+- **Featured Spotlight rotates between two analytics-driven logics.**
+  Was hardcoded to Geographie / Geography in `admin.js`. Per Markus
+  (msg 283), the spotlight now alternates by day-of-year:
+  - **Even days → Most-Played** (the pack with the most `games_played`
+    over the last 30 days for the current language)
+  - **Odd days → Most-Difficult** (the pack with the lowest aggregate
+    `correct_count / shown_count` ratio across its questions)
+  - **Fallback → Geographie / Geography** when analytics is empty
+    (fresh install, < 1 play or < 10 shown_count across the pack)
+  New endpoint `GET /api/quizify/featured-pack?lang=de|en` returns
+  `{value, title, meta, logic}`. Frontend paints the static fallback
+  synchronously then fetches and replaces — spotlight is never blank.
+  Subtitle reflects logic ("Beliebt diese Woche" / "Härteste
+  Herausforderung" / "Familienfreundlich").
+
 ## [1.1.44] — 2026-05-29
 
 ### Fixed
