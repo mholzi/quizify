@@ -553,6 +553,21 @@
             text-shadow: 0 0 40px var(--dash-success-glow);
         }
 
+        /* Podium row: labels (medal + name + score) hover at the top in a
+           single horizontal line, bars grow down to a shared baseline so the
+           bottom edge is visually flush. Per Markus 2026-05-29 (msg 320):
+           previously the medal+name+score sat directly above each bar, which
+           meant the label rows were staircased (label-of-1st sat much higher
+           than label-of-3rd). With `justify-content: space-between` + fixed
+           total height per .podium-place, labels align across columns and
+           bars still stand on the same floor. */
+        .podium-wrap {
+            display: flex;
+            justify-content: center;
+            align-items: flex-start;
+            gap: clamp(20px, 3vw, 48px);
+            width: 100%;
+        }
         .podium {
             display: flex;
             align-items: flex-end;
@@ -565,7 +580,67 @@
             display: flex;
             flex-direction: column;
             align-items: center;
-            gap: 10px;
+            justify-content: space-between;
+            height: 280px;
+            gap: 8px;
+        }
+        .podium-label {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 6px;
+        }
+
+        /* Side panel for players beyond the top 3 — appears to the right
+           of the podium with a quiet ranked list. Per Markus 2026-05-29
+           (msg 320). Hidden when there are ≤ 3 players. */
+        .podium-others {
+            display: flex;
+            flex-direction: column;
+            gap: 8px;
+            min-width: 220px;
+            max-width: 280px;
+            margin-top: 16px;
+        }
+        .podium-others-title {
+            font-family: 'JetBrains Mono', ui-monospace, monospace;
+            font-size: 12px;
+            font-weight: 600;
+            letter-spacing: 0.12em;
+            text-transform: uppercase;
+            color: var(--dash-text-neon-muted);
+            margin-bottom: 4px;
+        }
+        .podium-other-row {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            gap: 12px;
+            padding: 8px 12px;
+            background: var(--dash-surface-dark);
+            border: 1px solid var(--dash-border-neon);
+            border-radius: 8px;
+            font-family: 'DM Sans', system-ui, sans-serif;
+            color: var(--dash-text-white);
+        }
+        .podium-other-rank {
+            font-family: 'JetBrains Mono', ui-monospace, monospace;
+            color: var(--dash-text-neon-muted);
+            font-size: 12px;
+            min-width: 24px;
+        }
+        .podium-other-name {
+            flex: 1 1 auto;
+            font-size: 14px;
+            overflow: hidden;
+            text-overflow: ellipsis;
+            white-space: nowrap;
+        }
+        .podium-other-score {
+            font-family: 'JetBrains Mono', ui-monospace, monospace;
+            font-size: 13px;
+            color: var(--dash-accent-primary);
+            font-variant-numeric: tabular-nums;
         }
 
         .podium-avatar {
@@ -787,7 +862,12 @@
             <div class="dashboard-finale">
                 <div class="podium-section">
                     <div class="podium-title" data-i18n="dashboard.result">Result</div>
-                    <div id="podium" class="podium"></div>
+                    <!-- podium-wrap holds the podium itself + the side panel for
+                         players beyond the top 3 (renders empty / hidden when ≤ 3). -->
+                    <div class="podium-wrap">
+                        <div id="podium" class="podium"></div>
+                        <div id="podium-others" class="podium-others" hidden></div>
+                    </div>
                 </div>
                 <div id="awards-section" class="awards-section hidden"></div>
                 <div class="finale-leaderboard-card">
@@ -1059,6 +1139,11 @@
         }
 
         function renderPodium(podium) {
+            // Per Markus 2026-05-29 (msg 320): names + medal + score sit on
+            // TOP of each podium column (in a flex label wrapper), bar at
+            // bottom. With `justify-content: space-between` on .podium-place
+            // and a fixed total height, labels align across columns and
+            // bars share a baseline.
             var ordered = [];
             if (podium[1]) ordered.push({ name: podium[1].name, score: podium[1].score, place: 2 });
             if (podium[0]) ordered.push({ name: podium[0].name, score: podium[0].score, place: 1 });
@@ -1070,12 +1155,35 @@
             var ptsLabel = window.QuizifyI18n ? window.QuizifyI18n.t('dashboard.pointsShort') : 'pts';
             els.podium.innerHTML = ordered.map(function(p) {
                 return '<div class="podium-place">' +
-                    '<div class="podium-avatar">' + (medals[p.place] || '') + '</div>' +
-                    '<div class="podium-name">' + escapeHtml(p.name) + '</div>' +
-                    '<div class="podium-score">' + p.score + ' ' + ptsLabel + '</div>' +
+                    '<div class="podium-label">' +
+                        '<div class="podium-avatar">' + (medals[p.place] || '') + '</div>' +
+                        '<div class="podium-name">' + escapeHtml(p.name) + '</div>' +
+                        '<div class="podium-score">' + p.score + ' ' + ptsLabel + '</div>' +
+                    '</div>' +
                     '<div class="podium-bar ' + (barClass[p.place] || '') + '">' + p.place + '</div>' +
                     '</div>';
             }).join('');
+
+            // Render players 4+ in the side panel.
+            var othersEl = document.getElementById('podium-others');
+            if (!othersEl) return;
+            var others = podium.slice(3);
+            if (!others.length) {
+                othersEl.setAttribute('hidden', '');
+                othersEl.innerHTML = '';
+                return;
+            }
+            othersEl.removeAttribute('hidden');
+            var title = window.QuizifyI18n ? window.QuizifyI18n.t('dashboard.runnersUp') : 'Also playing';
+            othersEl.innerHTML = '<div class="podium-others-title">' + escapeHtml(title) + '</div>' +
+                others.map(function(p, i) {
+                    var rank = i + 4;  // 4th, 5th, \u2026
+                    return '<div class="podium-other-row">' +
+                        '<span class="podium-other-rank">#' + rank + '</span>' +
+                        '<span class="podium-other-name">' + escapeHtml(p.name) + '</span>' +
+                        '<span class="podium-other-score">' + p.score + '</span>' +
+                    '</div>';
+                }).join('');
         }
 
         function renderAwards(superlatives) {

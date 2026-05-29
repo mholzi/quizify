@@ -362,7 +362,8 @@
     "result": "Result",
     "questionCounter": "Question {current} / {total}",
     "pointsShort": "pts",
-    "awards": "Awards"
+    "awards": "Awards",
+    "runnersUp": "Also playing"
   },
   "connection": {
     "connected": "Connected",

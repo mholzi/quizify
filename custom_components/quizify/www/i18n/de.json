@@ -362,7 +362,8 @@
     "result": "Ergebnis",
     "questionCounter": "Frage {current} / {total}",
     "pointsShort": "Pkt.",
-    "awards": "Auszeichnungen"
+    "awards": "Auszeichnungen",
+    "runnersUp": "Außerdem dabei"
   },
   "connection": {
     "connected": "Verbunden",
