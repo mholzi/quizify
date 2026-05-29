@@ -33,6 +33,18 @@ from custom_components.quizify.server.views import (  # noqa: E402
     status_view,
     sw_view,
 )
+import custom_components.quizify.server.views as _views  # noqa: E402
+
+
+@pytest.fixture(autouse=True)
+def _stub_live_version(monkeypatch):
+    """v1.1.43 made _serve_html / sw_view read the live manifest.json
+    instead of trusting the cached ctx.version (so a direct-rsync deploy
+    busts the browser cache without an integration reload). The view-level
+    tests in this file pass a sentinel version through ctx and expect to
+    see it in the response — patch _get_live_version to just echo the
+    fallback so the sentinel reaches the assertions."""
+    monkeypatch.setattr(_views, "_get_live_version", lambda fallback: fallback)
 
 
 # ---------- Helpers ----------

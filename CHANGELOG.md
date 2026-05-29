@@ -3,6 +3,25 @@
 All notable changes to Quizify are documented here. This project follows
 [Semantic Versioning](https://semver.org/).
 
+## [1.1.43] — 2026-05-29
+
+### Fixed
+
+- **Cache-buster now actually busts after direct file deploys.** The
+  `{{VERSION}}` template substitution was reading `ctx.version`, which
+  is set once at integration setup and never refreshes. A direct-
+  rsync deploy (CSS / JS / pack-JSON changes hit the disk without an
+  HA integration reload) left the asset URLs stuck at the old
+  `?v=1.1.40`; browsers saw the same URL as before and served the
+  cached old CSS forever. Now `_serve_html` and `sw_view` call
+  `_get_live_version()` instead, which mtime-caches the manifest
+  read so we only re-parse when manifest.json actually changes
+  on disk. Cost is one stat-call per request, free hit after deploy.
+  Found on Markus' Home Assistant via browser-harness CDP test — the
+  end-screen typography fix from v1.1.41 was on disk but the badge
+  + cache-bust URLs stuck at v1.1.40 until the integration was
+  manually reloaded.
+
 ## [1.1.42] — 2026-05-29
 
 ### Changed

@@ -11,6 +11,8 @@ import logging
 from pathlib import Path
 from typing import TYPE_CHECKING
 
+import json
+import os
 import aiohttp
 from aiohttp import web
 
@@ -36,6 +38,7 @@ _NO_CACHE_HEADERS = {
 }
 
 _WWW_DIR = Path(__file__).parent.parent / "www"
+_MANIFEST_PATH = Path(__file__).parent.parent / "manifest.json"
 
 # Single placeholder substituted at serve time. Used in HTML asset URLs
 # (``?v={{VERSION}}``), the ``meta[name="quizify-version"]`` tag, and the
@@ -43,10 +46,45 @@ _WWW_DIR = Path(__file__).parent.parent / "www"
 # everywhere — no more drift between admin.html / player.html / sw.js.
 _VERSION_TOKEN = "{{VERSION}}"
 
+# mtime-keyed cache for the live manifest version. Without this the
+# integration would re-parse manifest.json on every request; with it we
+# only re-read when the file actually changed (which means a deploy
+# happened). Tuple of (mtime_ns, version).
+_MANIFEST_CACHE: tuple[int, str] | None = None
+
 
 def _get_ctx(request: web.Request) -> "AppContext":
     """Pull the AppContext stashed on the aiohttp application."""
     return request.app[APP_CTX_KEY]
+
+
+def _get_live_version(fallback: str) -> str:
+    """Read the live manifest version, busting the cache when the file changes.
+
+    Why this exists: ``ctx.version`` is set at integration setup time, so a
+    direct-rsync deploy (manifest.json updated on disk without an HA
+    integration reload) would leave ``ctx.version`` stale. The HTML asset
+    URLs use ``?v={{VERSION}}`` for cache-busting; if VERSION never moves,
+    browsers serve the stale CSS/JS forever after a deploy and the user
+    has to manually clear cache. Re-reading manifest.json on mtime change
+    fixes the cache-bust round-trip end-to-end.
+
+    Falls back to ``fallback`` (typically ``ctx.version``) if the file is
+    missing or unreadable — defensive, since this code path runs on every
+    HTML request.
+    """
+    global _MANIFEST_CACHE
+    try:
+        mtime_ns = os.stat(_MANIFEST_PATH).st_mtime_ns
+        if _MANIFEST_CACHE is not None and _MANIFEST_CACHE[0] == mtime_ns:
+            return _MANIFEST_CACHE[1]
+        data = json.loads(_MANIFEST_PATH.read_text(encoding="utf-8"))
+        version = str(data.get("version", fallback))
+        _MANIFEST_CACHE = (mtime_ns, version)
+        return version
+    except (OSError, ValueError, KeyError) as exc:
+        _LOGGER.debug("Could not read live version from manifest: %s", exc)
+        return fallback
 
 
 def _apply_version(text: str, version: str) -> str:
@@ -63,7 +101,7 @@ async def _serve_html(request: web.Request, filename: str) -> web.Response:
 
     ctx = _get_ctx(request)
     html_content = await ctx.runtime.run_in_executor(html_path.read_text, "utf-8")
-    html_content = _apply_version(html_content, ctx.version)
+    html_content = _apply_version(html_content, _get_live_version(ctx.version))
     return web.Response(
         text=html_content, content_type="text/html", headers=_NO_CACHE_HEADERS
     )
@@ -83,7 +121,7 @@ async def sw_view(request: web.Request) -> web.Response:
 
     ctx = _get_ctx(request)
     body = await ctx.runtime.run_in_executor(sw_path.read_text, "utf-8")
-    body = _apply_version(body, ctx.version)
+    body = _apply_version(body, _get_live_version(ctx.version))
     return web.Response(
         text=body, content_type="application/javascript", headers=_NO_CACHE_HEADERS
     )
