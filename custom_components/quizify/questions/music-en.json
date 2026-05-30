@@ -603,6 +603,594 @@
       "difficulty": "hard",
       "fun_fact": "Gloria Jones first recorded 'Tainted Love' in 1964 as an unsuccessful B-side. Soft Cell's synth-pop version spent 43 weeks on the US Billboard Hot 100, a record at the time.",
       "category": "Music"
+    },
+    {
+      "id": "music_en_051",
+      "question": "Which composer wrote almost all of his major works while serving as Kapellmeister to the wealthy Esterházy family for nearly 30 years?",
+      "answers": [
+        {"text": "Joseph Haydn", "correct": true},
+        {"text": "Johann Sebastian Bach", "correct": false},
+        {"text": "Antonio Salieri", "correct": false}
+      ],
+      "difficulty": "medium",
+      "fun_fact": "Haydn's isolation at the Esterházy palace meant he had to be original because, as he put it, there was no one nearby to copy. He wrote over 100 symphonies during his service.",
+      "category": "Music"
+    },
+    {
+      "id": "music_en_052",
+      "question": "Which Austrian pianist lost his right arm in World War I and commissioned a series of piano concertos written for the left hand alone?",
+      "answers": [
+        {"text": "Paul Wittgenstein", "correct": true},
+        {"text": "Maurice Ravel", "correct": false},
+        {"text": "Sergei Prokofiev", "correct": false}
+      ],
+      "difficulty": "hard",
+      "fun_fact": "Pianist Paul Wittgenstein lost his right arm in World War I and commissioned left-hand concertos from Ravel, Prokofiev, Strauss, and Britten. He is the brother of philosopher Ludwig Wittgenstein.",
+      "category": "Music"
+    },
+    {
+      "id": "music_en_053",
+      "question": "What is the longest section of a modern symphony orchestra by number of players?",
+      "answers": [
+        {"text": "Strings", "correct": true},
+        {"text": "Brass", "correct": false},
+        {"text": "Percussion", "correct": false}
+      ],
+      "difficulty": "easy",
+      "fun_fact": "A standard symphony orchestra has around 60 string players out of roughly 100 musicians total. They typically include first and second violins, violas, cellos, and double basses.",
+      "category": "Music"
+    },
+    {
+      "id": "music_en_054",
+      "question": "Which composer wrote a famous Symphony No. 45 in which the players gradually leave the stage during the final movement?",
+      "answers": [
+        {"text": "Joseph Haydn", "correct": true},
+        {"text": "Carl Philipp Emanuel Bach", "correct": false},
+        {"text": "Luigi Boccherini", "correct": false}
+      ],
+      "difficulty": "hard",
+      "fun_fact": "Haydn's 'Farewell' Symphony was a hint to Prince Esterházy that the musicians wanted to go home to their families. The prince reportedly took the hint and granted leave the next day.",
+      "category": "Music"
+    },
+    {
+      "id": "music_en_055",
+      "question": "Which legendary jazz saxophonist was nicknamed 'Bird'?",
+      "answers": [
+        {"text": "Charlie Parker", "correct": true},
+        {"text": "John Coltrane", "correct": false},
+        {"text": "Sonny Rollins", "correct": false}
+      ],
+      "difficulty": "easy",
+      "fun_fact": "The nickname is widely said to come from his love of chicken — reportedly stemming from an incident where a car he was riding in hit a chicken, which Parker insisted on cooking later.",
+      "category": "Music"
+    },
+    {
+      "id": "music_en_056",
+      "question": "Which jazz trumpeter released the hugely influential 1959 album 'Kind of Blue'?",
+      "answers": [
+        {"text": "Miles Davis", "correct": true},
+        {"text": "Dizzy Gillespie", "correct": false},
+        {"text": "Chet Baker", "correct": false}
+      ],
+      "difficulty": "easy",
+      "fun_fact": "'Kind of Blue' was recorded in just two sessions with minimal rehearsal — the players were given only sketches of modal scales to improvise on. It remains the best-selling jazz album of all time.",
+      "category": "Music"
+    },
+    {
+      "id": "music_en_057",
+      "question": "Which jazz pianist composed 'Round Midnight', one of the most recorded jazz standards ever?",
+      "answers": [
+        {"text": "Thelonious Monk", "correct": true},
+        {"text": "Bill Evans", "correct": false},
+        {"text": "Oscar Peterson", "correct": false}
+      ],
+      "difficulty": "medium",
+      "fun_fact": "Monk reportedly began writing 'Round Midnight' as a teenager in the 1930s. His angular, dissonant playing style was initially dismissed as 'wrong notes' before being recognised as visionary.",
+      "category": "Music"
+    },
+    {
+      "id": "music_en_058",
+      "question": "Which jazz singer was known as 'Lady Day' and famously recorded the harrowing protest song 'Strange Fruit'?",
+      "answers": [
+        {"text": "Billie Holiday", "correct": true},
+        {"text": "Ella Fitzgerald", "correct": false},
+        {"text": "Sarah Vaughan", "correct": false}
+      ],
+      "difficulty": "medium",
+      "fun_fact": "Holiday's 1939 recording of 'Strange Fruit' depicted the lynching of Black Americans. Her label refused to release it, so she recorded it for a small specialty label instead.",
+      "category": "Music"
+    },
+    {
+      "id": "music_en_059",
+      "question": "What does the term 'BPM' stand for in electronic and dance music production?",
+      "answers": [
+        {"text": "Beats per minute", "correct": true},
+        {"text": "Bass pulse modulation", "correct": false},
+        {"text": "Bars per measure", "correct": false}
+      ],
+      "difficulty": "easy",
+      "fun_fact": "Drum and bass tracks typically sit between 160 and 180 BPM, while house tracks usually hover around 120 to 130 BPM. DJs match BPMs to blend tracks smoothly.",
+      "category": "Music"
+    },
+    {
+      "id": "music_en_060",
+      "question": "Which company released the Minimoog in 1970, helping make synthesizers portable and stage-friendly?",
+      "answers": [
+        {"text": "Moog", "correct": true},
+        {"text": "Roland", "correct": false},
+        {"text": "Korg", "correct": false}
+      ],
+      "difficulty": "medium",
+      "fun_fact": "Before the Minimoog, synthesizers were room-sized modular cabinets connected by patch cables. Bob Moog's compact, hard-wired keyboard version made the synth a viable touring instrument.",
+      "category": "Music"
+    },
+    {
+      "id": "music_en_061",
+      "question": "Which Roland drum machine, originally a commercial flop, became the iconic sound of acid house in the late 1980s?",
+      "answers": [
+        {"text": "TR-808", "correct": true},
+        {"text": "TR-909", "correct": false},
+        {"text": "CR-78", "correct": false}
+      ],
+      "difficulty": "hard",
+      "fun_fact": "The TR-808 was discontinued in 1983 after poor sales — its drum sounds were considered too unrealistic. Cheap second-hand units then powered hip-hop, electro, and dance music for decades.",
+      "category": "Music"
+    },
+    {
+      "id": "music_en_062",
+      "question": "Which German group is widely regarded as a foundational influence on electronic music, synth-pop, and techno?",
+      "answers": [
+        {"text": "Kraftwerk", "correct": true},
+        {"text": "Tangerine Dream", "correct": false},
+        {"text": "Can", "correct": false}
+      ],
+      "difficulty": "medium",
+      "fun_fact": "Kraftwerk's Düsseldorf studio, Kling Klang, was kept so secret that for years it had no listed phone number. Their robotic stage persona inspired generations of electronic acts.",
+      "category": "Music"
+    },
+    {
+      "id": "music_en_063",
+      "question": "Which hip-hop group released the landmark 1988 album 'It Takes a Nation of Millions to Hold Us Back'?",
+      "answers": [
+        {"text": "Public Enemy", "correct": true},
+        {"text": "N.W.A", "correct": false},
+        {"text": "Run-DMC", "correct": false}
+      ],
+      "difficulty": "medium",
+      "fun_fact": "Public Enemy's production team, the Bomb Squad, layered dozens of samples per track. Tightening copyright rulings in the early 1990s made that dense sampling style nearly impossible to clear today.",
+      "category": "Music"
+    },
+    {
+      "id": "music_en_064",
+      "question": "Which rapper became the first hip-hop artist to win the Pulitzer Prize for Music, in 2018?",
+      "answers": [
+        {"text": "Kendrick Lamar", "correct": true},
+        {"text": "Jay-Z", "correct": false},
+        {"text": "Drake", "correct": false}
+      ],
+      "difficulty": "medium",
+      "fun_fact": "Lamar won for his album 'DAMN.', breaking a streak of jazz and classical winners. The Pulitzer board called it 'a virtuosic song collection unified by its vernacular authenticity'.",
+      "category": "Music"
+    },
+    {
+      "id": "music_en_065",
+      "question": "Which New York City borough is most commonly credited as the birthplace of hip-hop in the 1970s?",
+      "answers": [
+        {"text": "The Bronx", "correct": true},
+        {"text": "Brooklyn", "correct": false},
+        {"text": "Queens", "correct": false}
+      ],
+      "difficulty": "easy",
+      "fun_fact": "A 1973 back-to-school party hosted by DJ Kool Herc at 1520 Sedgwick Avenue in the Bronx is widely cited as the genesis moment, when he isolated and looped drum breaks for dancers.",
+      "category": "Music"
+    },
+    {
+      "id": "music_en_066",
+      "question": "Which Scottish bagpipe variety is traditionally used in military and ceremonial settings?",
+      "answers": [
+        {"text": "Great Highland bagpipe", "correct": true},
+        {"text": "Uilleann pipes", "correct": false},
+        {"text": "Northumbrian smallpipes", "correct": false}
+      ],
+      "difficulty": "medium",
+      "fun_fact": "The Great Highland bagpipe is played standing and uses mouth-blown air. Uilleann pipes, by contrast, are Irish and use a bellows pumped by the elbow — they are played sitting down.",
+      "category": "Music"
+    },
+    {
+      "id": "music_en_067",
+      "question": "Which Indian string instrument did Beatles guitarist George Harrison famously study under Ravi Shankar?",
+      "answers": [
+        {"text": "Sitar", "correct": true},
+        {"text": "Sarod", "correct": false},
+        {"text": "Veena", "correct": false}
+      ],
+      "difficulty": "easy",
+      "fun_fact": "Harrison first played a sitar on 'Norwegian Wood' in 1965, helping spark Western interest in Indian classical music. The sitar has sympathetic strings that vibrate without being plucked.",
+      "category": "Music"
+    },
+    {
+      "id": "music_en_068",
+      "question": "Which Australian Aboriginal wind instrument is traditionally made from a hollowed-out eucalyptus trunk?",
+      "answers": [
+        {"text": "Didgeridoo", "correct": true},
+        {"text": "Bullroarer", "correct": false},
+        {"text": "Clapstick", "correct": false}
+      ],
+      "difficulty": "medium",
+      "fun_fact": "The hollow tube is typically created by termites eating out the centre of a living eucalyptus branch. Players use circular breathing to sustain the drone for minutes at a time.",
+      "category": "Music"
+    },
+    {
+      "id": "music_en_069",
+      "question": "Which Japanese stringed instrument has three strings and a body traditionally covered with skin?",
+      "answers": [
+        {"text": "Shamisen", "correct": true},
+        {"text": "Koto", "correct": false},
+        {"text": "Shakuhachi", "correct": false}
+      ],
+      "difficulty": "medium",
+      "fun_fact": "The shamisen is plucked with a large fan-shaped plectrum called a bachi. Historically, its body was covered with cat or dog skin, though synthetic alternatives are now common.",
+      "category": "Music"
+    },
+    {
+      "id": "music_en_070",
+      "question": "How many semitones are there in a standard Western octave?",
+      "answers": [
+        {"text": "Twelve", "correct": true},
+        {"text": "Seven", "correct": false},
+        {"text": "Eight", "correct": false}
+      ],
+      "difficulty": "easy",
+      "fun_fact": "The 12-tone equal-tempered scale divides the octave into 12 equally spaced semitones. Many non-Western traditions use systems with different numbers of pitches per octave.",
+      "category": "Music"
+    },
+    {
+      "id": "music_en_071",
+      "question": "By what frequency ratio does pitch change when a note moves up by exactly one octave?",
+      "answers": [
+        {"text": "Doubled", "correct": true},
+        {"text": "Increased by 50 percent", "correct": false},
+        {"text": "Tripled", "correct": false}
+      ],
+      "difficulty": "medium",
+      "fun_fact": "If A4 is 440 Hz, then A5 is 880 Hz and A3 is 220 Hz. This doubling pattern is why notes an octave apart sound 'the same' in pitch class to the human ear.",
+      "category": "Music"
+    },
+    {
+      "id": "music_en_072",
+      "question": "Which musical interval, made of two notes a tritone apart, was historically nicknamed 'the devil in music'?",
+      "answers": [
+        {"text": "Augmented fourth", "correct": true},
+        {"text": "Perfect fifth", "correct": false},
+        {"text": "Minor third", "correct": false}
+      ],
+      "difficulty": "hard",
+      "fun_fact": "Medieval theorists called the tritone 'diabolus in musica' because of its harsh, unstable sound. Modern composers from Wagner to Black Sabbath have exploited that tension deliberately.",
+      "category": "Music"
+    },
+    {
+      "id": "music_en_073",
+      "question": "What is the standard tuning frequency for the note A above middle C in most modern orchestras?",
+      "answers": [
+        {"text": "440 Hz", "correct": true},
+        {"text": "432 Hz", "correct": false},
+        {"text": "415 Hz", "correct": false}
+      ],
+      "difficulty": "medium",
+      "fun_fact": "440 Hz was adopted as an international standard by ISO in 1955. Many baroque ensembles still tune to around 415 Hz to match historical instruments.",
+      "category": "Music"
+    },
+    {
+      "id": "music_en_074",
+      "question": "In Western music notation, how many lines does a standard staff have?",
+      "answers": [
+        {"text": "Five", "correct": true},
+        {"text": "Four", "correct": false},
+        {"text": "Six", "correct": false}
+      ],
+      "difficulty": "easy",
+      "fun_fact": "The five-line staff stabilised in the 17th century. Earlier medieval notation often used four lines, and Gregorian chant is still typically written that way.",
+      "category": "Music"
+    },
+    {
+      "id": "music_en_075",
+      "question": "Which wooden component of a violin transmits vibrations from the strings to the body?",
+      "answers": [
+        {"text": "Bridge", "correct": true},
+        {"text": "Scroll", "correct": false},
+        {"text": "Chin rest", "correct": false}
+      ],
+      "difficulty": "medium",
+      "fun_fact": "The violin bridge is held in place purely by string tension — no glue. Inside the violin, a small dowel called the sound post helps transfer those vibrations to the back plate.",
+      "category": "Music"
+    },
+    {
+      "id": "music_en_076",
+      "question": "What material are traditional violin bow hairs made from?",
+      "answers": [
+        {"text": "Horsehair", "correct": true},
+        {"text": "Silk thread", "correct": false},
+        {"text": "Cat gut", "correct": false}
+      ],
+      "difficulty": "medium",
+      "fun_fact": "A typical bow uses about 150 to 200 strands of horsehair, usually from stallions because mare hair is weakened by urine. Players apply rosin so the hairs grip the strings.",
+      "category": "Music"
+    },
+    {
+      "id": "music_en_077",
+      "question": "Italian luthier Antonio Stradivari worked primarily in which city, now famous for violin-making?",
+      "answers": [
+        {"text": "Cremona", "correct": true},
+        {"text": "Venice", "correct": false},
+        {"text": "Florence", "correct": false}
+      ],
+      "difficulty": "medium",
+      "fun_fact": "Stradivari built around 1,100 instruments in Cremona between roughly 1666 and 1737. About 650 survive today, and individual examples have sold for over 15 million dollars.",
+      "category": "Music"
+    },
+    {
+      "id": "music_en_078",
+      "question": "Which brass instrument is sounded by buzzing the lips into a cup-shaped mouthpiece and changing pitch with a slide?",
+      "answers": [
+        {"text": "Trombone", "correct": true},
+        {"text": "Trumpet", "correct": false},
+        {"text": "French horn", "correct": false}
+      ],
+      "difficulty": "easy",
+      "fun_fact": "The trombone is one of the few orchestral instruments to use a slide rather than valves to change pitch. Its name comes from the Italian for 'large trumpet'.",
+      "category": "Music"
+    },
+    {
+      "id": "music_en_079",
+      "question": "Which large pipe-organ component pushes air through the pipes to produce sound?",
+      "answers": [
+        {"text": "Bellows", "correct": true},
+        {"text": "Pedal board", "correct": false},
+        {"text": "Stop knob", "correct": false}
+      ],
+      "difficulty": "medium",
+      "fun_fact": "Before electric blowers, pipe organs needed humans or animals to pump bellows. Bach reportedly had assistants pumping the air supply while he played his Leipzig church organs.",
+      "category": "Music"
+    },
+    {
+      "id": "music_en_080",
+      "question": "Which 1985 charity concert was broadcast live from venues in London and Philadelphia to raise money for Ethiopian famine relief?",
+      "answers": [
+        {"text": "Live Aid", "correct": true},
+        {"text": "Farm Aid", "correct": false},
+        {"text": "The Concert for Bangladesh", "correct": false}
+      ],
+      "difficulty": "easy",
+      "fun_fact": "Live Aid was watched by an estimated 1.5 billion people worldwide. Queen's 20-minute Wembley set is widely regarded as one of the greatest live performances in rock history.",
+      "category": "Music"
+    },
+    {
+      "id": "music_en_082",
+      "question": "Which 1969 music festival was held on a dairy farm in Bethel, New York, and drew an audience of around 400,000?",
+      "answers": [
+        {"text": "Woodstock", "correct": true},
+        {"text": "Monterey Pop", "correct": false},
+        {"text": "Isle of Wight Festival", "correct": false}
+      ],
+      "difficulty": "easy",
+      "fun_fact": "Despite the name, Woodstock was held on Max Yasgur's farm about 60 miles from the town of Woodstock itself. The original venue in Wallkill backed out weeks before the festival.",
+      "category": "Music"
+    },
+    {
+      "id": "music_en_083",
+      "question": "Which annual desert festival in Nevada is famous for art installations and a culminating effigy burn, and incorporates significant electronic music camps?",
+      "answers": [
+        {"text": "Burning Man", "correct": true},
+        {"text": "Coachella", "correct": false},
+        {"text": "Lollapalooza", "correct": false}
+      ],
+      "difficulty": "medium",
+      "fun_fact": "Burning Man takes place in the Black Rock Desert and temporarily becomes one of Nevada's largest cities. Sound camps blasting techno and house throughout the night are a fixture of the event.",
+      "category": "Music"
+    },
+    {
+      "id": "music_en_084",
+      "question": "Which British band's 1972 'Ziggy Stardust' tour was famously chronicled in a D. A. Pennebaker concert film?",
+      "answers": [
+        {"text": "David Bowie and the Spiders from Mars", "correct": true},
+        {"text": "T. Rex", "correct": false},
+        {"text": "Roxy Music", "correct": false}
+      ],
+      "difficulty": "hard",
+      "fun_fact": "The film 'Ziggy Stardust and the Spiders from Mars' captured the final concert at the Hammersmith Odeon in 1973, the same show where Bowie shocked his band by announcing the persona's retirement.",
+      "category": "Music"
+    },
+    {
+      "id": "music_en_085",
+      "question": "Which Madonna album, released in 1989, sparked Pepsi to pull a commercial featuring her after religious backlash?",
+      "answers": [
+        {"text": "Like a Prayer", "correct": true},
+        {"text": "True Blue", "correct": false},
+        {"text": "Erotica", "correct": false}
+      ],
+      "difficulty": "hard",
+      "fun_fact": "Pepsi had paid Madonna 5 million dollars for the campaign but cancelled it within days of the music video's release. Madonna reportedly kept the fee anyway.",
+      "category": "Music"
+    },
+    {
+      "id": "music_en_086",
+      "question": "Which Italian word, used as a musical dynamic marking, indicates 'very loud'?",
+      "answers": [
+        {"text": "Fortissimo", "correct": true},
+        {"text": "Mezzoforte", "correct": false},
+        {"text": "Pianissimo", "correct": false}
+      ],
+      "difficulty": "easy",
+      "fun_fact": "Fortissimo is written as 'ff' in scores. Tchaikovsky's '1812 Overture' famously calls for 'ffff' — four f's — at the cannon-fire climax.",
+      "category": "Music"
+    },
+    {
+      "id": "music_en_087",
+      "question": "How many distinct keys are on a standard full-size modern piano?",
+      "answers": [
+        {"text": "88", "correct": true},
+        {"text": "76", "correct": false},
+        {"text": "96", "correct": false}
+      ],
+      "difficulty": "easy",
+      "fun_fact": "The 88-key range, from A0 to C8, covers more than seven octaves. Steinway settled on this layout in the late 19th century, and it has been standard ever since.",
+      "category": "Music"
+    },
+    {
+      "id": "music_en_088",
+      "question": "Which Swedish pop group won the 1974 Eurovision Song Contest with their song 'Waterloo' and went on to global fame?",
+      "answers": [
+        {"text": "ABBA", "correct": true},
+        {"text": "Roxette", "correct": false},
+        {"text": "Ace of Base", "correct": false}
+      ],
+      "difficulty": "easy",
+      "fun_fact": "ABBA's win in Brighton catapulted them from a Swedish act to international stars. The name is an acronym of the members' first names: Agnetha, Björn, Benny, and Anni-Frid.",
+      "category": "Music"
+    },
+    {
+      "id": "music_en_089",
+      "question": "Which 1980s music technology standard let electronic instruments and computers exchange performance data over a simple cable?",
+      "answers": [
+        {"text": "MIDI", "correct": true},
+        {"text": "S/PDIF", "correct": false},
+        {"text": "ASIO", "correct": false}
+      ],
+      "difficulty": "medium",
+      "fun_fact": "MIDI 1.0 was finalised in 1983 and remained largely unchanged for nearly four decades. It sends performance instructions, not audio — which is why MIDI files are tiny compared to recordings.",
+      "category": "Music"
+    },
+    {
+      "id": "music_en_090",
+      "question": "Which Beatles album was the band's first to be recorded entirely on eight-track tape?",
+      "answers": [
+        {"text": "Abbey Road", "correct": true},
+        {"text": "Sgt. Pepper's Lonely Hearts Club Band", "correct": false},
+        {"text": "Revolver", "correct": false}
+      ],
+      "difficulty": "hard",
+      "fun_fact": "Earlier Beatles albums, including Sgt. Pepper's, were made on four-track machines bounced together. Abbey Road in 1969 finally gave engineers the headroom of true eight-track recording.",
+      "category": "Music"
+    },
+    {
+      "id": "music_en_091",
+      "question": "Which country pioneered the modern 'K-pop' idol industry and acts like BTS and Blackpink?",
+      "answers": [
+        {"text": "South Korea", "correct": true},
+        {"text": "Japan", "correct": false},
+        {"text": "China", "correct": false}
+      ],
+      "difficulty": "easy",
+      "fun_fact": "South Korea's idol-training system can put trainees through years of singing, dancing, and language lessons before debut. K-pop exports became a significant part of the country's cultural economy.",
+      "category": "Music"
+    },
+    {
+      "id": "music_en_092",
+      "question": "Which conductor led the Berlin Philharmonic for 34 years from 1955 until 1989 and recorded a vast classical catalog for Deutsche Grammophon?",
+      "answers": [
+        {"text": "Herbert von Karajan", "correct": true},
+        {"text": "Wilhelm Furtwängler", "correct": false},
+        {"text": "Claudio Abbado", "correct": false}
+      ],
+      "difficulty": "medium",
+      "fun_fact": "Karajan was one of the first conductors to embrace the recording studio as an instrument in itself. He insisted on close-up filming of his face and hands, often with eyes closed.",
+      "category": "Music"
+    },
+    {
+      "id": "music_en_093",
+      "question": "Which famous classical-music venue in Milan has been the site of major opera premieres since 1778?",
+      "answers": [
+        {"text": "La Scala", "correct": true},
+        {"text": "Teatro La Fenice", "correct": false},
+        {"text": "Royal Opera House", "correct": false}
+      ],
+      "difficulty": "medium",
+      "fun_fact": "La Scala opened on the site of a former church called Santa Maria alla Scala — hence the name. It hosted premieres of operas by Verdi, Puccini, and many others.",
+      "category": "Music"
+    },
+    {
+      "id": "music_en_094",
+      "question": "Which French composer wrote the orchestral piece 'Boléro', built almost entirely on a single repeated rhythmic figure?",
+      "answers": [
+        {"text": "Maurice Ravel", "correct": true},
+        {"text": "Claude Debussy", "correct": false},
+        {"text": "Camille Saint-Saëns", "correct": false}
+      ],
+      "difficulty": "medium",
+      "fun_fact": "Ravel called Boléro 'a piece for orchestra without music'. The single snare-drum ostinato repeats unchanged for roughly 15 minutes while the orchestration gradually thickens.",
+      "category": "Music"
+    },
+    {
+      "id": "music_en_095",
+      "question": "Which folk-music collector traveled the American South in the 20th century making field recordings of blues, work songs, and prison chants?",
+      "answers": [
+        {"text": "Alan Lomax", "correct": true},
+        {"text": "Pete Seeger", "correct": false},
+        {"text": "Woody Guthrie", "correct": false}
+      ],
+      "difficulty": "hard",
+      "fun_fact": "Lomax and his father John worked for the Library of Congress, recording artists like Lead Belly and Muddy Waters. Their archive preserved styles that might otherwise have been lost.",
+      "category": "Music"
+    },
+    {
+      "id": "music_en_096",
+      "question": "Which guitar effect pedal type adds a clipped, harmonically rich sound and is associated with hard rock and metal?",
+      "answers": [
+        {"text": "Distortion", "correct": true},
+        {"text": "Chorus", "correct": false},
+        {"text": "Reverb", "correct": false}
+      ],
+      "difficulty": "easy",
+      "fun_fact": "Distortion arose partly by accident in the 1950s and 60s when guitarists overdrove tube amps beyond their clean limits. Dedicated pedals later let players get the sound at any volume.",
+      "category": "Music"
+    },
+    {
+      "id": "music_en_097",
+      "question": "Which 1959 American Brill Building songwriting duo wrote pop hits including 'Will You Love Me Tomorrow' and 'The Loco-Motion'?",
+      "answers": [
+        {"text": "Goffin and King", "correct": true},
+        {"text": "Lennon and McCartney", "correct": false},
+        {"text": "Bacharach and David", "correct": false}
+      ],
+      "difficulty": "hard",
+      "fun_fact": "Gerry Goffin and Carole King married as teenagers and wrote a string of hits in New York's Brill Building scene. King later went solo and recorded the landmark 1971 album 'Tapestry'.",
+      "category": "Music"
+    },
+    {
+      "id": "music_en_098",
+      "question": "Which Brazilian musical genre, developed in the late 1950s, blends samba with jazz harmony and is associated with Antônio Carlos Jobim?",
+      "answers": [
+        {"text": "Bossa nova", "correct": true},
+        {"text": "Forró", "correct": false},
+        {"text": "Choro", "correct": false}
+      ],
+      "difficulty": "medium",
+      "fun_fact": "Jobim's 'The Girl from Ipanema', released in 1962, became one of the most recorded songs in history. The genre's name roughly translates as 'new trend' in Portuguese.",
+      "category": "Music"
+    },
+    {
+      "id": "music_en_099",
+      "question": "Which famous violinist's recordings include the 2007 incognito experiment of busking unrecognised in a Washington DC subway station?",
+      "answers": [
+        {"text": "Joshua Bell", "correct": true},
+        {"text": "Itzhak Perlman", "correct": false},
+        {"text": "Hilary Hahn", "correct": false}
+      ],
+      "difficulty": "hard",
+      "fun_fact": "The Washington Post arranged the experiment with Bell playing a 1713 Stradivarius. Over 1,000 commuters passed by in 45 minutes; only a handful stopped to listen, and he earned about 32 dollars.",
+      "category": "Music"
+    },
+    {
+      "id": "music_en_100",
+      "question": "Which type of microphone is most commonly preferred in professional studios for recording vocals due to its sensitivity?",
+      "answers": [
+        {"text": "Large-diaphragm condenser", "correct": true},
+        {"text": "Dynamic", "correct": false},
+        {"text": "Ribbon", "correct": false}
+      ],
+      "difficulty": "medium",
+      "fun_fact": "Large-diaphragm condensers capture more high-frequency detail than dynamic mics but require external phantom power. Dynamic mics like the Shure SM58 are still preferred for live vocals because they handle loud sources without distortion.",
+      "category": "Music"
     }
   ]
 }

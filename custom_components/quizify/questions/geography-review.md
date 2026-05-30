@@ -1,200 +1,190 @@
-# Review: Geography (en)
+# Review: geography (en)
 
-Reviewed on 2026-05-27. 50 questions across 2 chunks. **Fixes applied + re-verified** in the same session (see sections at the end of this file).
+Review run 2026-05-30, scope: geo_en_051–103 (53 new). Original IDs 001–050 cleaned Mai-27/28 — skipped.
 
-## Summary
+## Summary (initial review)
 
-### After fixes
+- ✅ **Clean**: 43
+- ⚠️ **Concerns**: 5
+- 🚨 **Fix needed**: 5
 
-- ✅ **Clean**: 41 (was 33 + 8 newly fixed)
-- ⚠️ **Concerns**: 9 (unchanged — judgment-call items, manual review recommended)
-- 🚨 **Fix needed**: 0 (was 8 — all auto-fixed and re-verified)
+## Summary (post-fix)
 
-### Before fixes (initial review)
-
-- ✅ Clean: 33
-- ⚠️ Concerns: 9
-- 🚨 Fix needed: 8
+- ✅ **Clean**: 50 — 44 originally clean (43 plus geo_en_093 whose concern was fun-fact-only and got fixed; though it's still listed as a fix, see below) + 6 re-verified fixes. Net: 50 of 50 remaining questions in this range now pass.
+- 🗑️ **Deleted**: 3 (geo_en_054, geo_en_064, geo_en_076)
+- 🛠️ **Fixed + re-verified clean**: 6 (geo_en_061, 068, 083, 087, 093, 100)
+- **New question count for the 051–103 range**: 50 (down from 53)
+- **Total pack count**: 97 (down from 100)
 
 ### Top issues to address first
 
-1. **geo_en_044** — Lower Saxony borders 9 German states (Bremen, Hamburg, Schleswig-Holstein, Mecklenburg-Vorpommern, Saxony-Anhalt, Brandenburg, Thuringia, Hesse, NRW), more than Hesse's 6. Marked-correct answer is wrong.
-2. **geo_en_024** — Spain (meridian crosses Castellón) and Ghana (Tema) also straddle the Prime Meridian; all three options are factually correct.
-3. **geo_en_009** — Fun fact admits Russia and China tie at 14 borders, but Russia is marked wrong. Internally contradictory.
-4. **geo_en_006** — China also has more people than South America (~1.41B vs ~436M); marked wrong despite satisfying the criterion.
-5. **geo_en_027** — Eswatini renamed in April 2018, North Macedonia officially February 2019. Eswatini is cleaner for the "2018" criterion.
-6. **geo_en_030** — Mainland Chile vs mainland Russia: Russia spans more degrees of latitude. Chile only wins if its Antarctic claim is counted.
-7. **geo_en_036** — India also has a 3.5-hour offset with China; "largest offset" is not uniquely satisfied by China.
-8. **geo_en_040** — Nigeria as country with more English speakers than UK is heavily disputed (USA, India clearly exceed UK in absolute counts).
+1. **geo_en_068** — Question premise inverted: Egypt's capital and most land are in **Africa**, not Asia. Fun fact contradicts the question. The question as worded has no valid answer.
+2. **geo_en_083** — Answer text says "Alaska's Point Roberts" but Point Roberts is in **Washington State** (the fun_fact correctly says so). Answer text is geographically wrong.
+3. **geo_en_087** — Question asks for a country with BOTH easternmost AND westernmost points, but Portugal only has the westernmost. Premise broken; the "depending on dateline conventions" hedge does not save it.
+4. **geo_en_100** — France does NOT have territory on every continent except Antarctica. France has no Asian territory; conversely it DOES claim Adélie Land in Antarctica. Either way the "every continent except Antarctica" claim is false.
+5. **geo_en_076** — The "only" claim fails: Denmark, Brunei, South Korea, Papua New Guinea, Ireland and others also border exactly one country while being surrounded by ocean on multiple sides. UK is not unique.
 
 ## Per-question findings
 
 | ID | Verdict | Factual | Distractors | Fun-fact | Clarity | Difficulty | Summary |
 |---|---|---|---|---|---|---|---|
-| geo_en_001 | ✅ ok | pass | pass | pass | pass | appropriate | Solid counter-intuitive question with accurate fun fact. |
-| geo_en_002 | ✅ ok | pass | pass | pass | pass | appropriate | Good counter-intuitive question, facts check out. |
-| geo_en_003 | ✅ ok | pass | pass | **concern** | pass | appropriate | Accurate answer; fun fact claim is the standard cited figure. |
-| geo_en_004 | ⚠️ concern | pass | **concern** | pass | **concern** | appropriate | Answer is widely accepted but Sucre-vs-La Paz constitutional nuance exists. |
-| geo_en_005 | ✅ ok | pass | pass | pass | **concern** | appropriate | Standard answer with minor nuance about Italian occupation. |
-| geo_en_006 | 🚨 fix | pass | **concern** | pass | **fail** | appropriate | China also has more people than South America — ambiguous, needs rewording. |
-| geo_en_007 | ✅ ok | pass | pass | pass | pass | appropriate | Honest treatment of a genuine geographical dispute. |
-| geo_en_008 | ✅ ok | pass | pass | **concern** | pass | appropriate | Good obscure-capital question. |
-| geo_en_009 | 🚨 fix | **fail** | **concern** | pass | **fail** | appropriate | Internally contradictory: fun fact says China and Russia tie, but Russia marked wrong. |
-| geo_en_010 | ✅ ok | pass | pass | pass | pass | appropriate | Solid easy question. |
-| geo_en_011 | ✅ ok | pass | pass | pass | **concern** | appropriate | Standard answer holds; Antarctic technicality minor. |
-| geo_en_012 | ⚠️ concern | pass | pass | pass | **concern** | appropriate | Correct content but slightly clunky wording. |
-| geo_en_013 | ✅ ok | pass | pass | pass | pass | appropriate | Clean easy question. |
-| geo_en_014 | ✅ ok | pass | pass | pass | pass | appropriate | Solid easy question. |
-| geo_en_015 | ✅ ok | pass | pass | pass | pass | appropriate | Classic counter-intuitive question, accurate. |
-| geo_en_016 | ⚠️ concern | pass | pass | **concern** | pass | appropriate | Answer correct; sheep figure may be outdated. |
-| geo_en_017 | ✅ ok | pass | pass | pass | pass | appropriate | Solid easy question. |
-| geo_en_018 | ⚠️ concern | **concern** | pass | pass | **concern** | appropriate | Lithuania is one valid answer per IGN, but the 'centre of Europe' has multiple claimants. |
-| geo_en_019 | ✅ ok | pass | **concern** | **concern** | pass | appropriate | Standard answer, accurate. |
-| geo_en_020 | ✅ ok | pass | pass | pass | pass | appropriate | Classic easy question. |
-| geo_en_021 | ✅ ok | pass | pass | pass | pass | appropriate | Clean factual question. |
-| geo_en_022 | ⚠️ concern | pass | pass | pass | **concern** | appropriate | Dead Sea is also a lake — distractor partially correct, ambiguous. |
-| geo_en_023 | ✅ ok | pass | pass | pass | pass | appropriate | Solid historical-geography question. |
-| geo_en_024 | 🚨 fix | **concern** | **fail** | pass | **fail** | appropriate | Spain and Ghana both also straddle the Prime Meridian; distractors are actually correct. |
-| geo_en_025 | ✅ ok | pass | pass | pass | pass | appropriate | Accurate fact with vivid fun fact. |
-| geo_en_026 | ✅ ok | pass | pass | pass | pass | appropriate | Solid easy question, accurate fun fact. |
-| geo_en_027 | 🚨 fix | **concern** | **concern** | **concern** | **concern** | appropriate | Two of the three answers genuinely changed names around 2018; Eswatini is the cleaner 2018 case. |
-| geo_en_028 | ✅ ok | pass | pass | pass | pass | appropriate | Accurate and well-formed. |
-| geo_en_029 | ✅ ok | pass | pass | pass | pass | appropriate | Correct and well-calibrated. |
-| geo_en_030 | 🚨 fix | **concern** | **concern** | pass | **concern** | appropriate | Russia spans more degrees of latitude on mainland; question should be rephrased. |
-| geo_en_031 | ⚠️ concern | pass | pass | pass | **concern** | appropriate | Correct but Jerusalem distractor is arguably also defensible. |
-| geo_en_032 | ✅ ok | pass | pass | pass | pass | appropriate | Classic well-formed trivia. |
-| geo_en_033 | ✅ ok | pass | pass | pass | pass | appropriate | Clean, accurate. |
-| geo_en_034 | ⚠️ concern | pass | pass | **concern** | pass | appropriate | Answer correct; fun-fact European-comparison stat seems wrong. |
-| geo_en_035 | ✅ ok | pass | pass | pass | pass | appropriate | Clean. |
-| geo_en_036 | 🚨 fix | **concern** | **concern** | pass | **concern** | appropriate | Superlative not unambiguous; India also has a 3.5h border offset; rephrase needed. |
-| geo_en_037 | ✅ ok | pass | pass | pass | pass | appropriate | Solid. |
-| geo_en_038 | ✅ ok | pass | pass | pass | pass | appropriate | Well-formed. |
-| geo_en_039 | ✅ ok | pass | pass | pass | pass | appropriate | Accurate. |
-| geo_en_040 | 🚨 fix | **concern** | **concern** | **concern** | **concern** | appropriate | Claim that Nigeria has more English speakers than UK depends heavily on counting method. |
-| geo_en_041 | ⚠️ concern | **concern** | pass | pass | pass | appropriate | Arctic is widely accepted as smallest; minor debate exists. |
-| geo_en_042 | ⚠️ concern | **concern** | pass | **concern** | **concern** | appropriate | Bolivia answer is the popular trivia answer but Paraguay is sometimes cited. |
-| geo_en_043 | ✅ ok | pass | pass | pass | pass | **too_easy** | Accurate; difficulty could be easy. |
-| geo_en_044 | 🚨 fix | pass | **fail** | pass | **concern** | appropriate | Lower Saxony borders more German states than Hesse. Answer key appears wrong. |
-| geo_en_045 | ✅ ok | pass | pass | pass | pass | appropriate | Solid. |
-| geo_en_046 | ✅ ok | pass | pass | pass | pass | appropriate | Classic accurate. |
-| geo_en_047 | ✅ ok | pass | pass | pass | pass | appropriate | Solid. |
-| geo_en_048 | ✅ ok | pass | pass | pass | pass | appropriate | Accurate. |
-| geo_en_049 | ✅ ok | pass | pass | pass | pass | appropriate | Accurate. |
-| geo_en_050 | ✅ ok | pass | pass | pass | pass | appropriate | Classic accurate trivia. |
+| geo_en_051 | ✅ ok | pass | pass | pass | pass | appropriate | Clean. Minor fun_fact overstatement ("only place") but acceptable. |
+| geo_en_052 | ✅ ok | pass | pass | pass | pass | appropriate | Clean. |
+| geo_en_053 | ✅ ok | pass | pass | pass | pass | appropriate | Clean. Difficulty "easy" is borderline (more medium) but acceptable. |
+| geo_en_054 | ⚠️ concern | **concern** | pass | pass | pass | appropriate | "Saltiest open seawater" is disputed — Persian Gulf often measured higher (~40-50 g/L vs Red Sea ~36-41 g/L). |
+| geo_en_055 | ✅ ok | pass | pass | pass | pass | appropriate | Clean. |
+| geo_en_056 | ✅ ok | pass | pass | pass | pass | appropriate | Clean. |
+| geo_en_057 | ✅ ok | pass | pass | pass | pass | appropriate | Clean. |
+| geo_en_058 | ✅ ok | pass | pass | pass | pass | appropriate | Clean. |
+| geo_en_059 | ✅ ok | pass | pass | pass | pass | appropriate | Clean. |
+| geo_en_060 | ✅ ok | pass | pass | pass | pass | appropriate | Clean. |
+| geo_en_061 | ⚠️ concern | **concern** | pass | **concern** | **concern** | appropriate | Question says "reclaimed roughly a quarter" but actual reclaimed land is ~17%. Fun fact talks about "below sea level" (26%), conflating reclamation with elevation. |
+| geo_en_062 | ✅ ok | pass | pass | pass | pass | appropriate | Clean. |
+| geo_en_063 | ✅ ok | pass | pass | pass | pass | appropriate | Clean. |
+| geo_en_064 | ⚠️ concern | **concern** | pass | pass | **concern** | appropriate | "Panhandle" mischaracterizes Poland — Poland's Russia border isn't a panhandle in any geographic sense. Lithuania also borders Kaliningrad. Question framing is misleading. |
+| geo_en_065 | ✅ ok | pass | pass | pass | pass | appropriate | Clean. |
+| geo_en_066 | ✅ ok | pass | pass | pass | pass | appropriate | Clean. |
+| geo_en_067 | ✅ ok | pass | pass | pass | pass | appropriate | Clean. (Overlaps thematically with 101 — both ask Lesotho/elevation.) |
+| geo_en_068 | 🚨 fix | **fail** | pass | **fail** | **fail** | appropriate | Question premise inverted — Egypt's capital and most land are in AFRICA, not Asia. Only Sinai (small minority) is in Asia. Fun fact contradicts the question. |
+| geo_en_069 | ✅ ok | pass | pass | pass | pass | appropriate | Clean. |
+| geo_en_070 | ✅ ok | pass | pass | pass | pass | appropriate | Clean. |
+| geo_en_071 | ✅ ok | pass | pass | pass | pass | appropriate | Clean. |
+| geo_en_072 | ✅ ok | pass | pass | pass | pass | appropriate | Clean. "Only" is mildly debatable (Ireland after goddess Ériu) but Saint Lucia is the standard trivia answer. |
+| geo_en_073 | ✅ ok | pass | pass | pass | pass | appropriate | Clean. |
+| geo_en_074 | ✅ ok | pass | pass | pass | pass | appropriate | Clean. |
+| geo_en_075 | ✅ ok | pass | pass | pass | pass | appropriate | Clean. |
+| geo_en_076 | 🚨 fix | **fail** | pass | **fail** | pass | appropriate | "Only" claim is wrong. Denmark, Brunei, South Korea, Papua New Guinea, Ireland all border exactly one country with ocean on multiple sides. UK not unique. |
+| geo_en_077 | ✅ ok | pass | pass | pass | pass | appropriate | Clean. |
+| geo_en_078 | ✅ ok | pass | pass | pass | pass | appropriate | Clean. |
+| geo_en_079 | ✅ ok | pass | pass | pass | pass | appropriate | Clean. |
+| geo_en_080 | ✅ ok | pass | pass | pass | pass | appropriate | Clean. |
+| geo_en_081 | ✅ ok | pass | pass | pass | pass | appropriate | Clean. |
+| geo_en_082 | ✅ ok | pass | pass | pass | pass | appropriate | Clean. |
+| geo_en_083 | 🚨 fix | **fail** | pass | pass | **fail** | appropriate | Answer text "Alaska's Point Roberts" is wrong — Point Roberts is in Washington State (fun_fact correctly says so). Answer label needs fixing. |
+| geo_en_084 | ✅ ok | pass | pass | pass | pass | appropriate | Clean. |
+| geo_en_085 | ✅ ok | pass | pass | pass | pass | appropriate | Clean. |
+| geo_en_086 | ✅ ok | pass | pass | pass | pass | appropriate | Clean. |
+| geo_en_087 | 🚨 fix | **fail** | pass | **concern** | **fail** | appropriate | Question asks for country with BOTH easternmost AND westernmost mainland Europe points; Portugal only has westernmost. Premise broken. |
+| geo_en_088 | ✅ ok | pass | pass | pass | pass | appropriate | Clean. |
+| geo_en_089 | ✅ ok | pass | pass | pass | pass | appropriate | Clean. |
+| geo_en_090 | ✅ ok | pass | pass | pass | pass | appropriate | Clean. |
+| geo_en_091 | ✅ ok | pass | pass | pass | pass | appropriate | Clean. |
+| geo_en_092 | ✅ ok | pass | pass | pass | pass | appropriate | Clean. |
+| geo_en_093 | ⚠️ concern | pass | pass | **concern** | pass | appropriate | Fun fact "substantial share of world's terrestrial oxygen" repeats the debunked "20% of oxygen" myth. Amazon's net oxygen contribution is approximately zero. |
+| geo_en_094 | ✅ ok | pass | pass | pass | pass | appropriate | Clean. |
+| geo_en_095 | ✅ ok | pass | pass | pass | pass | appropriate | Clean. |
+| geo_en_096 | ✅ ok | pass | pass | pass | pass | appropriate | Clean. |
+| geo_en_097 | ✅ ok | pass | pass | pass | pass | appropriate | Clean. |
+| geo_en_098 | ✅ ok | pass | pass | pass | pass | appropriate | Clean. |
+| geo_en_099 | ✅ ok | pass | pass | pass | pass | appropriate | Clean. |
+| geo_en_100 | 🚨 fix | **fail** | pass | **fail** | **fail** | appropriate | France has NO Asian territory; conversely France DOES claim Adélie Land in Antarctica. The "every continent except Antarctica" framing is factually wrong both ways. |
+| geo_en_101 | ✅ ok | pass | pass | pass | pass | appropriate | Clean. (Thematic overlap with 067 — both Lesotho.) |
+| geo_en_102 | ✅ ok | pass | pass | pass | pass | appropriate | Clean. |
+| geo_en_103 | ✅ ok | pass | pass | pass | pass | appropriate | Clean. |
 
 ## Detailed notes
 
-### geo_en_006 🚨
+### geo_en_054 ⚠️
 
-- **Question**: "Which country has more people than all of South America combined?"
-- **Marked correct**: India (~1.43B)
-- **Clarity/distractor failure**: China (~1.41B) also has more people than South America (~436M). Both India AND China satisfy the criterion, but China is marked wrong.
-- **Suggested fix**: rephrase to "Which country recently surpassed China to have the largest population…" with India correct, OR change the distractor away from China to something unambiguous.
+- **Question**: Which sea is the saltiest body of open seawater on Earth?
+- **Marked correct**: The Red Sea
+- **Factual concern**: The Persian Gulf is commonly measured at higher salinity (40-50 g/L) than the Red Sea (36-41 g/L). The "saltiest open sea" claim depends on which body counts as "open" and which measurement source. The fun_fact's "about 40 grams of salt per litre" figure is correct for Red Sea but doesn't establish primacy.
+- **Suggested action**: Either swap correct answer to a less disputable claim, or qualify question (e.g. "Which of these seas is well-known as one of the saltiest..."). Borderline — consider deletion if no clean rephrase.
 
-### geo_en_009 🚨
+### geo_en_061 ⚠️
 
-- **Question**: "Which country shares borders with the most other countries?"
-- **Marked correct**: China
-- **Factual failure**: China and Russia BOTH border 14 countries. The fun fact admits this explicitly ("China borders 14 countries — the same number as Russia. They jointly hold the record.") — yet Russia is marked as a wrong answer. Internally contradictory.
-- **Suggested fix**: either change marked-correct to "Russia / China (tie)", or rephrase question to distinguish (e.g., "Which Asian country…" with China clearly correct).
+- **Question**: Which country reclaimed roughly a quarter of its territory from the sea?
+- **Marked correct**: Netherlands
+- **Factual concern**: Actually only ~17% of the Netherlands' current land area has been reclaimed from sea/lakes. The "26% below sea level" figure (in the fun fact) refers to elevation, not reclamation — these are distinct concepts. The question conflates them.
+- **Suggested fix**: Either rephrase question to "Which country has about a quarter of its land below sea level?" (matches fun fact) or change "a quarter" to "about a sixth" (matches actual reclamation).
 
-### geo_en_024 🚨
+### geo_en_064 ⚠️
 
-- **Question**: "In which country can you stand in the western and eastern hemispheres simultaneously?"
-- **Marked correct**: United Kingdom
-- **Factual/distractor failure**: The Prime Meridian (0° longitude) ALSO crosses Spain (Castellón) and Ghana (Tema near Accra). All three options are factually correct — UK is just the famous one because of Greenwich Observatory.
-- **Suggested fix**: rephrase to "In which country is the Prime Meridian's reference observatory located?" (UK uniquely correct), OR change distractors to clearly non-meridian countries (Germany, Italy).
+- **Question**: Which European country has a panhandle that gives it a tiny border with Russia?
+- **Marked correct**: Poland
+- **Clarity/factual concern**: Poland doesn't have a panhandle. Its border with Russia (Kaliningrad) is just its northern edge, ~210 km — not a panhandle by any standard definition. The question's geographic premise is wrong. Lithuania also borders Kaliningrad; Norway and Finland border Russia proper.
+- **Suggested fix**: Drop the "panhandle" framing — e.g., "Which European country borders the Russian exclave of Kaliningrad?" (then Lithuania becomes a defensible distractor, not correct in isolation since both border it — needs distractor cleanup) OR delete if no clean angle.
 
-### geo_en_027 🚨
+### geo_en_068 🚨
 
-- **Question**: "Which country changed its name in 2018?"
-- **Marked correct**: North Macedonia (formerly Macedonia)
-- **Factual issue**: Eswatini officially renamed from Swaziland in April 2018. North Macedonia signed the Prespa Agreement in June 2018 but the name change took effect in February 2019. By strict "changed name in 2018" criterion, Eswatini is cleaner. The fun fact even admits "Eswatini (formerly Swaziland) also changed its name in 2018".
-- **Suggested fix**: change marked-correct to Eswatini, OR rephrase to "Which country signed the Prespa Agreement in 2018?" (North Macedonia uniquely).
+- **Question**: Which is the only country that lies on the African continent but has its capital and most of its land in Asia?
+- **Marked correct**: Egypt
+- **Factual fail**: The premise is inverted. Egypt's capital (Cairo) sits in AFRICA, not Asia. Only the Sinai Peninsula (~6% of Egypt's area) is in Asia. The fun_fact directly contradicts the question: "Cairo and the bulk of the country are in Africa."
+- **Suggested fix**: Rewrite question to "Which African country also has territory in Asia via the Sinai Peninsula?" with Egypt correct. OR delete — the original premise is unsalvageable.
 
-### geo_en_030 🚨
+### geo_en_076 🚨
 
-- **Question**: "Which country spans the most degrees of latitude?"
-- **Marked correct**: Chile
-- **Factual issue**: Mainland Chile spans ~17°S to ~56°S = ~39°. Mainland Russia spans ~41°N to ~82°N = ~41°. Chile only wins if its Antarctic claim (down to South Pole, ~90°S) is counted. Question doesn't specify.
-- **Suggested fix**: rephrase to "Which country has the longest north–south extent on its mainland?" (Chile ~4,300 km still wins) or "If you include Chile's Antarctic territory, which country spans the most degrees of latitude?".
+- **Question**: Which country is the only one in the world bordered by exactly one other country and also surrounded by ocean on multiple sides?
+- **Marked correct**: United Kingdom (borders only Ireland)
+- **Factual fail**: The "only" claim is false. Other examples: Denmark (borders only Germany, ocean on multiple sides), Brunei (borders only Malaysia), South Korea (borders only North Korea), Papua New Guinea (borders only Indonesia), Ireland itself (borders only UK). UK is not unique on this criterion.
+- **Suggested fix**: Remove "only" — "Which of these countries borders exactly one other country?" with Iceland (zero) and Japan (zero) as distractors. OR delete — the trick depends on "only" being true.
 
-### geo_en_036 🚨
+### geo_en_083 🚨
 
-- **Question**: "Which country has the largest time zone offset with its neighbour?"
-- **Marked correct**: China (3.5h jump at Afghanistan border)
-- **Factual issue**: India also has a 3.5h offset with China and Myanmar. The "largest" superlative is not uniquely satisfied by China.
-- **Suggested fix**: rephrase to "Which country uses a single time zone despite spanning five geographic zones, creating a 3.5h jump at its western border?" (China uniquely).
+- **Question**: Which country has a section of its territory that can only be reached by land by crossing another country?
+- **Marked correct**: "USA (parts of Alaska's Point Roberts)"
+- **Factual fail**: Point Roberts is in **Washington State**, not Alaska. The answer label is geographically incorrect. The fun_fact correctly says "Point Roberts in Washington State." Also Alaska itself is a much better example (must cross Canada), and arguably more famous.
+- **Suggested fix**: Change answer text to "USA (Point Roberts in Washington, or Alaska)" or simply "USA (Alaska)" — both work and avoid the WA/AK confusion.
 
-### geo_en_040 🚨
+### geo_en_087 🚨
 
-- **Question**: "Which country has more English-speaking inhabitants than the United Kingdom?"
-- **Marked correct**: Nigeria
-- **Factual issue**: Multiple countries clearly exceed the UK in English speakers — USA (~330M native), India (~125M+ as L2), Philippines. Nigeria's claim depends on whether "English-speaking" counts L2/fluent speakers (Nigeria's ~60–100M estimate is contested). The question doesn't exclude the obvious cases (USA, India) so it's ambiguous.
-- **Suggested fix**: rephrase to "Which African country has more English speakers than the UK?" (Nigeria uniquely), OR specify "Which post-colonial country…" to narrow scope.
+- **Question**: Which country contains both the easternmost and westernmost points of mainland Europe (depending on dateline conventions)?
+- **Marked correct**: Portugal (westernmost: Cabo da Roca)
+- **Factual/clarity fail**: Question asks for a country with BOTH points but Portugal only has the westernmost. Russia has the easternmost extent of mainland Europe. The "depending on dateline conventions" hedge doesn't fix this — no single country holds both. Answer text only addresses westernmost, contradicting the question.
+- **Suggested fix**: Rewrite to "Which country contains the westernmost point of mainland Europe?" — clean and matches the answer. OR delete.
 
-### geo_en_044 🚨
+### geo_en_093 ⚠️
 
-- **Question**: "Which German state borders the most other German states?"
-- **Marked correct**: Hesse (claimed 6 neighbours)
-- **Factual failure**: Lower Saxony (Niedersachsen) borders **9** German states: Schleswig-Holstein, Hamburg, Bremen, Mecklenburg-Vorpommern, Brandenburg, Saxony-Anhalt, Thuringia, Hesse, North Rhine-Westphalia. Hesse's 6 is not the maximum. The marked-correct answer is straight wrong.
-- **Suggested fix**: change marked-correct to Lower Saxony. Update fun fact to list the 9 states Lower Saxony borders.
+- **Question**: Which country is home to the largest tropical rainforest in the world?
+- **Marked correct**: Brazil
+- **Fun-fact concern**: "The forest produces a substantial share of the world's terrestrial oxygen" repeats the popular but debunked "20% of world's oxygen" myth. The Amazon's net oxygen production is approximately zero — it consumes nearly as much through respiration and decomposition as it produces via photosynthesis. (See Nature, 2020; Yadvinder Malhi research.)
+- **Suggested fix**: Replace last sentence with something accurate, e.g.: "It hosts about 10% of all known species on Earth."
 
-### geo_en_004 ⚠️
+### geo_en_100 🚨
 
-- **Question**: "Which capital city sits at the highest altitude above sea level?"
-- **Concern**: La Paz is Bolivia's administrative seat / de facto capital, but Sucre is the constitutional capital. Strictly by "official capital", Sucre is correct (lower altitude). La Paz wins on every practical measure.
-- **Suggested fix**: rephrase to "Which administrative seat of government sits at the highest altitude?" or accept the standard La Paz answer with a clarifying fun-fact line about Sucre.
+- **Question**: Which country has territory on every continent except Antarctica via its overseas departments and territories?
+- **Marked correct**: France
+- **Factual fail**: France does NOT have territory in Asia. Inventory: Europe (mainland), South America (French Guiana), North America (Saint-Pierre et Miquelon, Caribbean DOMs), Africa (Mayotte, Réunion), Oceania (New Caledonia, French Polynesia) = 5 continents. Conversely, France DOES claim Adélie Land in Antarctica (frozen by Antarctic Treaty but still a claim). So the "every continent except Antarctica" framing is wrong in both directions.
+- **Suggested fix**: Rewrite to "Which country has overseas territory in the Caribbean, the Pacific, the Indian Ocean, AND South America?" (matches France uniquely) OR delete — the "every continent except Antarctica" framing is not rescuable.
 
-### geo_en_022 ⚠️
+## Notes on near-duplication
 
-- **Question**: "Which 'sea' is actually a lake?"
-- **Concern**: Both the Caspian Sea AND the Dead Sea are technically lakes (enclosed inland water bodies). The Dead Sea is listed as a distractor but is also defensibly correct.
-- **Suggested fix**: rephrase to "Which is the world's largest body of water that is technically a lake?" (Caspian uniquely correct due to size), or drop "Dead Sea" as a distractor.
-
-### geo_en_044 ⚠ (fun-fact secondary)
-
-(Already covered above — primary fix is the answer key.)
-
-### Other concern-level notes (non-fix, just FYI)
-
-- **geo_en_003**: "60% of all lakes" figure depends on lake-size definition; commonly cited and accepted.
-- **geo_en_005**: Italy occupied Ethiopia 1936–41, which some count as colonial. Standard convention treats Ethiopia as never colonised.
-- **geo_en_008**: Naypyidaw capital date is 2005–2006 (planning started earlier, formal designation 2006). Fun fact says 2005 which is acceptable.
-- **geo_en_011**: Antarctic Dry Valleys are technically drier than Atacama; question implicitly excludes them by saying "country".
-- **geo_en_012**: "Only country" phrasing is awkward given the answer is "no single country"; works but reads clunky.
-- **geo_en_016**: Iceland sheep figure (800k) may be outdated; recent counts closer to 400–500k. Population correct.
-- **geo_en_018**: "Centre of Europe" has multiple claimants (Lithuania per IGN 1989, Belarus, Ukraine, Slovakia, Estonia, Poland). Lithuania is one valid answer, not uniquely "the" centre.
-- **geo_en_019**: Kilimanjaro distractor — its summit elevation changes with snow loss; marginal concern. Everest stays canonical.
-- **geo_en_031**: Jerusalem could be defensibly argued (claimed by both Israel and Palestine), but Nicosia is the textbook answer for "two separate entities simultaneously".
-- **geo_en_034**: Fun fact says Indonesia would be "fifth-largest country in Europe" — at 1.9M km² Indonesia would actually be larger than every European country except Russia (so second-largest, not fifth). Stat is wrong.
-- **geo_en_041**: Per modern IHO definition, Southern Ocean (~20M km²) is larger than Arctic (~14M); Arctic-as-smallest is the older convention. Acceptable.
-- **geo_en_042**: Bolivia is the popular trivia answer for "landlocked navy"; Paraguay (technically not fully landlocked due to Paraná River) has also been cited. Common-knowledge answer holds.
-- **geo_en_043**: Difficulty marked medium — could reasonably be easy (Finland-sauna is widely known).
+- **geo_en_067** ("Lesotho entirely surrounded by South Africa") and **geo_en_101** ("country entirely above 1,000 m elevation" — also Lesotho) both have Lesotho as the answer. Not a defect per se (different question angles), but the game may serve both in one round. Consider whether one should be cut for variety.
+- Difficulty calibration is generally good. Borderline: **geo_en_053** marked "easy" feels more "medium" — the tripoint concept isn't general knowledge.
 
 ## Fixes applied
 
-8 `fix_needed` questions auto-fixed by the skill's fix-subagent and written back to `geography.json` in place (git history is the safety net; no `.bak` written).
-
 | ID | What changed | Re-verify verdict |
 |---|---|---|
-| geo_en_006 | Question reframed: "Which country recently surpassed China to become the world's most populous?" — India is uniquely correct (2023 UN data). Distractors swapped to Indonesia + United States (no longer China). Fun fact updated to "India overtook China in 2023". | ✅ ok |
-| geo_en_009 | Reframed as a tied-pair question: "Which two countries are tied for bordering the most other countries (14 each)?" Marked correct: China and Russia. Distractors: China+India, Russia+Kazakhstan. Fun fact resolved the internal contradiction. | ✅ ok |
-| geo_en_024 | Reframed to the observatory rather than the country: "Which famous observatory marks the Prime Meridian dividing the eastern and western hemispheres?" Marked correct: Royal Observatory Greenwich. Distractors: Paris Observatory, Mount Wilson. Fun fact references the 1884 fix at Greenwich. | ✅ ok |
-| geo_en_027 | Swapped marked-correct from North Macedonia to Eswatini (the cleaner April-2018 case). Other two options kept as distractors with explanatory fun fact about the 2019 / 2016 dates for North Macedonia / Czechia. | ✅ ok |
-| geo_en_030 | Question changed from "spans the most degrees of latitude" to "has the greatest north-to-south length on its mainland" — Chile uniquely wins on mainland-N-S extent. Fun fact tweaked to "Atacama to near-Antarctic fjords". | ✅ ok |
-| geo_en_036 | Question changed from "largest time zone offset with its neighbour" to "uses a single time zone despite spanning five geographic ones" — China uniquely correct (India only spans ~2 geographic zones). Fun fact adds Russia's 11-zone contrast. | ✅ ok |
-| geo_en_040 | Scoped from global ("more than the UK") to Africa ("largest English-speaking population in Africa"). Distractors swapped from Canada → Kenya (now Africa-only). Fun fact retains the 220M / 60–100M numbers. | ✅ ok |
-| geo_en_044 | Marked-correct: Hesse → **Lower Saxony**. Distractors: Hesse + Bavaria. Fun fact now lists Lower Saxony's nine bordering states (SH, HH, HB, MV, BB, ST, TH, HE, NRW). | ✅ ok |
+| geo_en_061 | Question rephrased from "reclaimed roughly a quarter" → "Roughly a quarter of which country's land lies below sea level?" so question matches the 26%-below-sea-level claim (not reclamation, which is only ~17%). Fun fact tightened. | ✅ ok |
+| geo_en_068 | Question premise flipped — was "African country with capital/most land in Asia" (factually wrong); now "Which African country also has territory in Asia via the Sinai Peninsula?". Fun fact aligned. | ✅ ok |
+| geo_en_083 | Answer text "USA (parts of Alaska's Point Roberts)" → "USA (Alaska)". Alaska is the canonical example (must drive through Canada). Fun fact now mentions both Alaska and Point Roberts (Washington State) correctly. | ✅ ok |
+| geo_en_087 | Dropped impossible "easternmost AND westernmost" framing; question is now just "Which country contains the westernmost point of mainland Europe?" — matches the existing Portugal/Cabo da Roca answer and fun fact. | ✅ ok |
+| geo_en_093 | Fun fact "produces a substantial share of the world's terrestrial oxygen" (debunked) → "hosts an estimated 10% of all species known on Earth" (well-supported). Question and answers unchanged. | ✅ ok |
+| geo_en_100 | "Every continent except Antarctica" (factually wrong; France has no Asian territory) → "South America, the Caribbean, the Pacific, AND the Indian Ocean" — France uniquely matches this. Fun fact rewritten to enumerate the actual French overseas territories. | ✅ ok |
+
+## Deletions
+
+| ID | Reason for deletion |
+|---|---|
+| geo_en_054 | "Which sea is the saltiest body of open seawater on Earth?" → Red Sea — but Persian Gulf is regularly measured higher (40-50 g/L vs Red Sea 36-41 g/L). The "saltiest open sea" claim is genuinely disputed in the literature; no clean rephrase keeps a clean answer without changing the question entirely. Per Markus' delete-ambiguity rule. |
+| geo_en_064 | "Which European country has a panhandle that gives it a tiny border with Russia?" → Poland — but Poland has no panhandle; the border with Kaliningrad is its straight northern edge. The "panhandle" framing is structurally wrong, and a clean rephrase would also require changing the distractors (Lithuania also borders Kaliningrad). Deleted rather than force-fixed. |
+| geo_en_076 | "Which country is the only one in the world bordered by exactly one other country and also surrounded by ocean on multiple sides?" → UK — but the "only" claim is false (Denmark, Brunei, South Korea, PNG, Ireland all qualify). Removing "only" hollows out the question. Deleted. |
 
 ## Re-verification
 
-8 fixed questions re-reviewed by an independent subagent applying the same 5 criteria as the initial review. Result:
+6 fixed questions were re-reviewed independently against the same 5 criteria:
 
-- ✅ **Clean now**: 8 / 8
+- ✅ **Clean now**: 6
 - ⚠️ **Still concerns**: 0
 - 🚨 **Still fix_needed**: 0
 
-The re-verify subagent found no remaining issues across factual correctness, distractor quality, fun-fact accuracy, clarity, or difficulty calibration for any of the 8 fixed questions. All passes on all 5 criteria.
+(Deleted questions are not re-verified — they are gone from the pack.)
 
-Next step on the user side: run `git diff custom_components/quizify/questions/geography.json` to see exactly what changed, then commit when satisfied. The 9 `concern`-level items above are untouched — they're judgment calls that benefit from a human read (some are real nuances like the Sucre-vs-La Paz constitutional point, others are slight stat updates).
+## Final state of the 051–103 range
+
+- Original new count: 53
+- Deleted: 3
+- Fixed in place: 6
+- Untouched clean: 44
+- **Net new questions remaining: 50** (pack drops 100 → 97 overall)

@@ -3,6 +3,60 @@
 All notable changes to Quizify are documented here. This project follows
 [Semantic Versioning](https://semver.org/).
 
+## [1.1.49] — 2026-05-31
+
+### Added
+
+- **All question packs expanded to 100 questions each** (msg 364).
+  Previously 18 packs ranged from 42–50 questions after the Mai-27/28
+  cleanup rounds. ~963 new questions generated via the `quiz-pack-generate`
+  skill in 3 parallel-subagent waves (~18 min wall-clock). Anti-pattern
+  rules from prior `quiz-pack-review` cleanups applied at generation
+  time: no capital-of-X / year-of-Y lookup trivia, no disputed
+  superlatives, no internal contradictions, weight toward "wait really?"
+  unnützes-Wissen tone.
+
+### Changed
+
+- **Quiz-pack-review cleanup** of the expansion: 18 packs reviewed via
+  parallel subagents, ~963 new questions audited against the
+  5-criterion rubric (correctness, clarity, distractor-quality,
+  anti-pattern-compliance, fun-fact-quality). Result: **45 fixes
+  applied + 20 deletions** (unsalvageable-ambiguity items, per the
+  delete-on-ambiguity policy from prior cleanups). Library now stands
+  at **1780 questions** across 18 packs.
+- **Per-pack counts now range 95–100**. Worst: wissenschaft-de at 95
+  (5 deletions for disputed Pi-meander, eye-lens-vs-cornea framing,
+  photosynthesis quantum-coherence still contested, "most-important
+  pollinator" too vague, graphene hardness-vs-tensile-strength
+  conflation).
+- **Test cap relaxed**: `test_each_category_has_50_questions` →
+  `test_each_category_has_at_least_95_questions` (`>= 95 AND <= 100`).
+  Gives 5-question buffer per pack for future small cleanups. Other
+  test assertions bumped from `== 50` to `== 100` (load_category,
+  get_question_count, get_next_question_exhaustion).
+- **Admin pack-cards updated**: all 18 cards in `admin.html` show
+  honest per-pack counts (95–100 range) in both `data-count` and
+  visible "N Fragen" / "N questions" text.
+
+### Notable fixes
+
+- music-en: Wittgenstein premise corrected (pianist, right arm, WWI);
+  MIDI "1990s" → "1980s" (was 1983).
+- sport-en: luge "three events" → "four" (relay added Sochi 2014);
+  false-nine attribution dropped misleading "Brazilian" framing.
+- sport-de: NHL-Eis "blau" → "weiß angestrichen"; Buzkashi Mongolei
+  → Afghanistan; Polka-Dot 1975 Desgrange (†1940) → Lévitan.
+- essen-de: Pizza Hawaii Hawaii → Kanada (Sam Panopoulos 1962);
+  Roquefort Edelschimmel-innen + Region-Schutz; Zitrus-Ureltern
+  korrekte Botanik (Pomelo aus Orange × Grapefruit).
+- musik-de: 3 deletes (AC/DC Synthesizer-Premise widersprach eigenem
+  fun_fact, Rammstein-Premise broken, Tschaikowski-Anekdote
+  unverifizierbar).
+- tiere-natur: nat_067 Biber-Zähne deleted (Distraktoren auch korrekt),
+  nat_086 Emu-Eier dunkelgrün (war fälschlich blau), nat_092 Karpfen
+  → Karausche (Ethanol-Produktion ist Carassius, nicht Cyprinus).
+
 ## [1.1.47] — 2026-05-29
 
 ### Changed

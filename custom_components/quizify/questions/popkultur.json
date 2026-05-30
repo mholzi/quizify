@@ -531,6 +531,666 @@
       "difficulty": "easy",
       "fun_fact": "Das virale Kleid-Phänomen von 2015 wurde von Wissenschaftlern untersucht und in Fachzeitschriften veröffentlicht. Die unterschiedliche Wahrnehmung entsteht durch die Art, wie unser Gehirn Beleuchtung kompensiert.",
       "category": "Popkultur"
+    },
+    {
+      "id": "pop_051",
+      "question": "Welcher Schauspieler trug im ersten 'Star Wars'-Film das Darth-Vader-Kostüm, lieh der Figur aber NICHT die Stimme?",
+      "answers": [
+        {"text": "David Prowse", "correct": true},
+        {"text": "James Earl Jones", "correct": false},
+        {"text": "Peter Mayhew", "correct": false}
+      ],
+      "difficulty": "medium",
+      "fun_fact": "Der britische Bodybuilder David Prowse spielte Vader körperlich, doch George Lucas fand seinen West-Country-Akzent ungeeignet und ließ ihn von James Earl Jones synchronisieren. Prowse erfuhr davon erst bei der Premiere.",
+      "category": "Popkultur"
+    },
+    {
+      "id": "pop_052",
+      "question": "Welche Animationsfirma produzierte den Film 'Shrek'?",
+      "answers": [
+        {"text": "DreamWorks", "correct": true},
+        {"text": "Pixar", "correct": false},
+        {"text": "Illumination", "correct": false}
+      ],
+      "difficulty": "easy",
+      "fun_fact": "Shrek erschien 2001 und gewann den allerersten Oscar für den besten animierten Spielfilm. Chris Farley sollte ursprünglich die Hauptrolle sprechen — nach seinem Tod übernahm Mike Myers.",
+      "category": "Popkultur"
+    },
+    {
+      "id": "pop_053",
+      "question": "In welchem Land wurde der Streamingdienst Spotify gegründet?",
+      "answers": [
+        {"text": "Schweden", "correct": true},
+        {"text": "USA", "correct": false},
+        {"text": "Großbritannien", "correct": false}
+      ],
+      "difficulty": "easy",
+      "fun_fact": "Spotify wurde 2006 in Stockholm von Daniel Ek und Martin Lorentzon gegründet. Der Name entstand laut Ek aus einem Missverständnis — Lorentzon rief etwas aus dem Nebenraum, das wie 'Spotify' klang.",
+      "category": "Popkultur"
+    },
+    {
+      "id": "pop_054",
+      "question": "Welcher deutsche Film gewann 2023 vier Oscars, darunter den für den besten internationalen Film?",
+      "answers": [
+        {"text": "Im Westen nichts Neues", "correct": true},
+        {"text": "Das Lehrerzimmer", "correct": false},
+        {"text": "Toni Erdmann", "correct": false}
+      ],
+      "difficulty": "medium",
+      "fun_fact": "Edward Bergers Verfilmung von Erich Maria Remarques Anti-Kriegs-Roman war die erste deutsche Produktion, die in der Kategorie Beste Kamera einen Oscar gewann. Insgesamt war der Film für neun Oscars nominiert.",
+      "category": "Popkultur"
+    },
+    {
+      "id": "pop_055",
+      "question": "Welcher Schauspieler spielt den Protagonisten Walter White in 'Breaking Bad'?",
+      "answers": [
+        {"text": "Bryan Cranston", "correct": true},
+        {"text": "Jon Hamm", "correct": false},
+        {"text": "Michael C. Hall", "correct": false}
+      ],
+      "difficulty": "easy",
+      "fun_fact": "Bryan Cranston war vor Breaking Bad vor allem als nerviger Vater in der Sitcom 'Malcolm mittendrin' bekannt. Der Sender AMC zweifelte zunächst an der Besetzung, weil sie ihn für zu komödiantisch hielten.",
+      "category": "Popkultur"
+    },
+    {
+      "id": "pop_056",
+      "question": "Welche Band veröffentlichte das Album 'The Dark Side of the Moon', das jahrzehntelang ununterbrochen in den US-Billboard-200-Charts blieb?",
+      "answers": [
+        {"text": "Pink Floyd", "correct": true},
+        {"text": "Led Zeppelin", "correct": false},
+        {"text": "The Doors", "correct": false}
+      ],
+      "difficulty": "medium",
+      "fun_fact": "Das Album von 1973 hielt sich über 900 Wochen in den Billboard-Charts — länger als jedes andere Album. Die ikonische Prisma-Grafik entstand beim Designstudio Hipgnosis, dessen Honorar Pink Floyd nach dem 'pay what you think it's worth'-Prinzip selbst festlegte.",
+      "category": "Popkultur"
+    },
+    {
+      "id": "pop_057",
+      "question": "Welcher Schauspieler verkörperte Hannibal Lecter in 'Das Schweigen der Lämmer' (1991)?",
+      "answers": [
+        {"text": "Anthony Hopkins", "correct": true},
+        {"text": "Ralph Fiennes", "correct": false},
+        {"text": "Gary Oldman", "correct": false}
+      ],
+      "difficulty": "easy",
+      "fun_fact": "Anthony Hopkins steht mit nur knapp 16 Minuten Leinwandzeit für eine Hauptrolle als kürzester Oscar-prämierter Auftritt in der Filmgeschichte. Sein berühmtes Zischen bei der Erwähnung der Leber war improvisiert.",
+      "category": "Popkultur"
+    },
+    {
+      "id": "pop_058",
+      "question": "Welches Spielzeug-Franchise inspirierte 2023 einen Kinofilm, der weltweit über 1,4 Milliarden Dollar einspielte?",
+      "answers": [
+        {"text": "Barbie", "correct": true},
+        {"text": "Hot Wheels", "correct": false},
+        {"text": "My Little Pony", "correct": false}
+      ],
+      "difficulty": "easy",
+      "fun_fact": "Greta Gerwigs 'Barbie' verbrauchte angeblich so viel rosa Farbe, dass es weltweit zu einer kurzzeitigen Knappheit der Rosco-Lackmarke kam. Margot Robbie war auch Produzentin des Films.",
+      "category": "Popkultur"
+    },
+    {
+      "id": "pop_059",
+      "question": "Welche Hauptrolle spielte Til Schweiger in der Filmreihe, die mit 'Keinohrhasen' 2007 startete?",
+      "answers": [
+        {"text": "Ludo", "correct": true},
+        {"text": "Henry", "correct": false},
+        {"text": "Felix", "correct": false}
+      ],
+      "difficulty": "medium",
+      "fun_fact": "Keinohrhasen lockte über sechs Millionen Zuschauer ins Kino und war der erfolgreichste deutsche Film des Jahres. Schweiger führte zugleich Regie, schrieb das Drehbuch und produzierte.",
+      "category": "Popkultur"
+    },
+    {
+      "id": "pop_060",
+      "question": "Welcher deutsche Schlager-Künstler veröffentlichte den Welthit 'Du'?",
+      "answers": [
+        {"text": "Peter Maffay", "correct": true},
+        {"text": "Howard Carpendale", "correct": false},
+        {"text": "Roland Kaiser", "correct": false}
+      ],
+      "difficulty": "medium",
+      "fun_fact": "Peter Maffays 'Du' aus dem Jahr 1970 hielt sich 17 Wochen in den deutschen Charts und wurde zur Hymne einer Generation. Maffay wurde in Rumänien geboren und kam erst mit 14 Jahren nach Deutschland.",
+      "category": "Popkultur"
+    },
+    {
+      "id": "pop_062",
+      "question": "Welcher deutsche Filmpreis wird in Form eines goldenen Rehkitzes verliehen?",
+      "answers": [
+        {"text": "Der Bambi", "correct": true},
+        {"text": "Die Goldene Kamera", "correct": false},
+        {"text": "Der Deutsche Filmpreis (Lola)", "correct": false}
+      ],
+      "difficulty": "easy",
+      "fun_fact": "Der Bambi wird seit 1948 vom Verlagshaus Hubert Burda Media vergeben und ist nach dem Reh aus Felix Saltens Roman benannt. Die Trophäe besteht heute aus 24-karätigem Gold auf Bronze.",
+      "category": "Popkultur"
+    },
+    {
+      "id": "pop_063",
+      "question": "Welche Band stammt aus Düsseldorf und gilt als Pionier der elektronischen Musik?",
+      "answers": [
+        {"text": "Kraftwerk", "correct": true},
+        {"text": "Rammstein", "correct": false},
+        {"text": "Scorpions", "correct": false}
+      ],
+      "difficulty": "medium",
+      "fun_fact": "Kraftwerk gründete sich 1970 und beeinflusste Genres von Hip-Hop bis Techno. Für ihren Song 'Talk' lieh sich Coldplay 2005 nach mehreren Anläufen offiziell ein Riff aus Kraftwerks 'Computer Love'.",
+      "category": "Popkultur"
+    },
+    {
+      "id": "pop_064",
+      "question": "Welcher Berliner Club gilt international als einer der bekanntesten Techno-Tempel der Welt?",
+      "answers": [
+        {"text": "Berghain", "correct": true},
+        {"text": "Watergate", "correct": false},
+        {"text": "Tresor", "correct": false}
+      ],
+      "difficulty": "medium",
+      "fun_fact": "Das Berghain residiert in einem ehemaligen Heizkraftwerk in Friedrichshain. Die Türsteher-Politik ist so legendär unberechenbar, dass Forscher der Humboldt-Universität sie wissenschaftlich untersucht haben.",
+      "category": "Popkultur"
+    },
+    {
+      "id": "pop_065",
+      "question": "Welche deutsche Band hatte 1997 mit 'Engel' einen ihrer ersten internationalen Erfolge?",
+      "answers": [
+        {"text": "Rammstein", "correct": true},
+        {"text": "Die Toten Hosen", "correct": false},
+        {"text": "Die Ärzte", "correct": false}
+      ],
+      "difficulty": "easy",
+      "fun_fact": "Rammsteins Sänger Till Lindemann war vor seiner Musikerkarriere Leistungsschwimmer und qualifizierte sich beinahe für die Olympischen Spiele 1980 in Moskau.",
+      "category": "Popkultur"
+    },
+    {
+      "id": "pop_066",
+      "question": "Welches Computerspiel-Studio aus Mülheim an der Ruhr entwickelte die 'Die Siedler'-Reihe ursprünglich?",
+      "answers": [
+        {"text": "Blue Byte", "correct": true},
+        {"text": "Crytek", "correct": false},
+        {"text": "Yager", "correct": false}
+      ],
+      "difficulty": "hard",
+      "fun_fact": "Blue Byte wurde 1988 gegründet und 2001 von Ubisoft übernommen. Der erste Siedler-Teil von 1993 war einer der ersten deutschen Echtzeitstrategie-Hits und verkaufte sich allein in Deutschland über 200.000 Mal.",
+      "category": "Popkultur"
+    },
+    {
+      "id": "pop_067",
+      "question": "Welcher Comic-Verlag erschuf Superman, Batman und Wonder Woman?",
+      "answers": [
+        {"text": "DC Comics", "correct": true},
+        {"text": "Marvel", "correct": false},
+        {"text": "Image Comics", "correct": false}
+      ],
+      "difficulty": "easy",
+      "fun_fact": "DC steht für 'Detective Comics' — den Titel, in dem Batman 1939 debütierte. Wonder Woman wurde vom Psychologen William Moulton Marston erfunden, der auch den Lügendetektor mitentwickelte.",
+      "category": "Popkultur"
+    },
+    {
+      "id": "pop_068",
+      "question": "Welcher Belgier zeichnete die Comicfigur Tim aus 'Tim und Struppi'?",
+      "answers": [
+        {"text": "Hergé", "correct": true},
+        {"text": "Peyo", "correct": false},
+        {"text": "André Franquin", "correct": false}
+      ],
+      "difficulty": "medium",
+      "fun_fact": "Hergé war das Pseudonym von Georges Remi — gebildet aus seinen umgekehrten Initialen R.G., französisch ausgesprochen. Die ersten Tim-Abenteuer erschienen 1929 als Beilage einer katholischen Zeitung.",
+      "category": "Popkultur"
+    },
+    {
+      "id": "pop_069",
+      "question": "Wie heißt der Modedesigner, der das ikonische Logo mit den ineinander verschlungenen Cs für sein Modehaus entwarf?",
+      "answers": [
+        {"text": "Coco Chanel", "correct": true},
+        {"text": "Yves Saint Laurent", "correct": false},
+        {"text": "Christian Dior", "correct": false}
+      ],
+      "difficulty": "easy",
+      "fun_fact": "Gabrielle 'Coco' Chanel wurde in einem Armenhaus geboren und arbeitete als Hutmacherin, bevor sie ihr Modeimperium aufbaute. Das Parfüm Nº5 ist seit 1921 ohne Rezepturwechsel im Verkauf.",
+      "category": "Popkultur"
+    },
+    {
+      "id": "pop_070",
+      "question": "Welcher deutsche Film gewann 1979 als erste deutsche Produktion die Goldene Palme von Cannes?",
+      "answers": [
+        {"text": "Die Blechtrommel", "correct": true},
+        {"text": "Das Boot", "correct": false},
+        {"text": "Lola rennt", "correct": false}
+      ],
+      "difficulty": "hard",
+      "fun_fact": "Volker Schlöndorffs Verfilmung von Günter Grass' Roman gewann zusätzlich den Oscar für den besten fremdsprachigen Film. Hauptdarsteller David Bennent war beim Dreh erst elf Jahre alt.",
+      "category": "Popkultur"
+    },
+    {
+      "id": "pop_071",
+      "question": "Welche Spielkonsole führte 2006 als erste Bewegungssteuerung mit Kontrollern als Standard ein?",
+      "answers": [
+        {"text": "Nintendo Wii", "correct": true},
+        {"text": "PlayStation 3", "correct": false},
+        {"text": "Xbox 360", "correct": false}
+      ],
+      "difficulty": "easy",
+      "fun_fact": "Die Wii verkaufte sich weltweit über 100 Millionen Mal. Der Codename während der Entwicklung war 'Revolution' — Nintendo benannte sie kurz vor dem Launch um, was viele Fans damals verwirrte.",
+      "category": "Popkultur"
+    },
+    {
+      "id": "pop_072",
+      "question": "Welcher japanische Manga-Zeichner schuf die Reihe 'Dragon Ball'?",
+      "answers": [
+        {"text": "Akira Toriyama", "correct": true},
+        {"text": "Eiichiro Oda", "correct": false},
+        {"text": "Masashi Kishimoto", "correct": false}
+      ],
+      "difficulty": "medium",
+      "fun_fact": "Toriyama entwarf vor Dragon Ball auch das Charakter-Design für die Videospiel-Reihen Dragon Quest und Chrono Trigger. Dragon Ball lief von 1984 bis 1995 wöchentlich im Manga-Magazin Shōnen Jump.",
+      "category": "Popkultur"
+    },
+    {
+      "id": "pop_073",
+      "question": "Welcher Schauspieler spielt den Hauptcharakter Frodo Beutlin in Peter Jacksons 'Der Herr der Ringe'-Trilogie?",
+      "answers": [
+        {"text": "Elijah Wood", "correct": true},
+        {"text": "Sean Astin", "correct": false},
+        {"text": "Orlando Bloom", "correct": false}
+      ],
+      "difficulty": "easy",
+      "fun_fact": "Elijah Wood war erst 18, als er für die Rolle gecastet wurde. Er schickte ein selbstgedrehtes Audition-Tape, in dem er als Frodo verkleidet im Wald herumlief — Jackson war sofort überzeugt.",
+      "category": "Popkultur"
+    },
+    {
+      "id": "pop_074",
+      "question": "Welche Mode-Marke veröffentlichte 1972 ein Logo mit einem stilisierten 'Swoosh'?",
+      "answers": [
+        {"text": "Nike", "correct": true},
+        {"text": "Adidas", "correct": false},
+        {"text": "Puma", "correct": false}
+      ],
+      "difficulty": "easy",
+      "fun_fact": "Das Nike-Swoosh-Logo entwarf die Grafik-Studentin Carolyn Davidson für nur 35 US-Dollar. Jahre später schenkte Nike-Gründer Phil Knight ihr Firmenaktien im Wert von rund einer Million Dollar.",
+      "category": "Popkultur"
+    },
+    {
+      "id": "pop_075",
+      "question": "In welchem Online-Spiel kämpfen bis zu 100 Spieler auf einer schrumpfenden Insel gegeneinander, mit Bauelementen als Markenzeichen?",
+      "answers": [
+        {"text": "Fortnite", "correct": true},
+        {"text": "PUBG", "correct": false},
+        {"text": "Apex Legends", "correct": false}
+      ],
+      "difficulty": "easy",
+      "fun_fact": "Fortnite Battle Royale erschien 2017 als Free-to-Play-Modus und spielte allein 2018 über 5 Milliarden Dollar ein. Das ursprüngliche 'Save the World' war eigentlich ein PvE-Koop-Spiel — der Battle-Royale-Modus war ein nachträglicher Versuch.",
+      "category": "Popkultur"
+    },
+    {
+      "id": "pop_076",
+      "question": "Welcher Schauspieler spielte den Bösewicht Silva im James-Bond-Film 'Skyfall' (2012)?",
+      "answers": [
+        {"text": "Javier Bardem", "correct": true},
+        {"text": "Christoph Waltz", "correct": false},
+        {"text": "Mads Mikkelsen", "correct": false}
+      ],
+      "difficulty": "medium",
+      "fun_fact": "Bardem gewann 2008 einen Oscar für 'No Country for Old Men'. Christoph Waltz übernahm die Bond-Bösewicht-Rolle erst im Nachfolger 'Spectre' (2015) als Ernst Stavro Blofeld, Mads Mikkelsen spielte Le Chiffre in 'Casino Royale' (2006).",
+      "category": "Popkultur"
+    },
+    {
+      "id": "pop_077",
+      "question": "Welche schwedische Pop-Gruppe gewann 1974 den Eurovision Song Contest mit 'Waterloo'?",
+      "answers": [
+        {"text": "ABBA", "correct": true},
+        {"text": "Roxette", "correct": false},
+        {"text": "Ace of Base", "correct": false}
+      ],
+      "difficulty": "easy",
+      "fun_fact": "ABBAs Sieg in Brighton machte sie über Nacht weltberühmt. Die BBC-Jury gab ABBA damals null Punkte — der Auftritt gilt heute als einer der einflussreichsten Eurovision-Momente überhaupt.",
+      "category": "Popkultur"
+    },
+    {
+      "id": "pop_078",
+      "question": "Welche deutsche Kult-Krimi-Reihe basiert auf den Romanen von Jörg Maurer und spielt im bayerischen Garmisch-Partenkirchen?",
+      "answers": [
+        {"text": "Hubert ohne Staller", "correct": false},
+        {"text": "Eberhofer-Krimis", "correct": false},
+        {"text": "Kommissar Jennerwein-Reihe", "correct": true}
+      ],
+      "difficulty": "hard",
+      "fun_fact": "Die Jennerwein-Bücher verkauften sich millionenfach; die Kino-Adaption 'Jennerwein – Hochsaison' mit Florian Brückner kommt 2026 ins Kino. Autor Jörg Maurer ist hauptberuflich Pianist und tritt mit Kabarett-Programmen auf.",
+      "category": "Popkultur"
+    },
+    {
+      "id": "pop_079",
+      "question": "Welcher US-Late-Night-Talkshow-Host moderierte 'The Tonight Show' von 1962 bis 1992?",
+      "answers": [
+        {"text": "Johnny Carson", "correct": true},
+        {"text": "Jay Leno", "correct": false},
+        {"text": "David Letterman", "correct": false}
+      ],
+      "difficulty": "hard",
+      "fun_fact": "Carson moderierte 4.531 Folgen und prägte das Format der modernen US-Late-Night-Show. Bei seiner letzten Sendung schauten über 50 Millionen Amerikaner zu — fast jeder fünfte Einwohner des Landes.",
+      "category": "Popkultur"
+    },
+    {
+      "id": "pop_080",
+      "question": "Welcher Streamingdienst veröffentlichte die Serie 'The Mandalorian' als Launch-Titel?",
+      "answers": [
+        {"text": "Disney+", "correct": true},
+        {"text": "Apple TV+", "correct": false},
+        {"text": "HBO Max", "correct": false}
+      ],
+      "difficulty": "medium",
+      "fun_fact": "Die Serie startete am Tag der Disney+-Eröffnung im November 2019. Die LED-Volumen-Bühne 'StageCraft', die für die Drehs entwickelt wurde, revolutionierte seither Hollywood-Produktionen.",
+      "category": "Popkultur"
+    },
+    {
+      "id": "pop_081",
+      "question": "Welches Computerspiel-Genre erfand 'Dune II' aus dem Jahr 1992 maßgeblich mit?",
+      "answers": [
+        {"text": "Echtzeit-Strategie", "correct": true},
+        {"text": "First-Person-Shooter", "correct": false},
+        {"text": "Battle Royale", "correct": false}
+      ],
+      "difficulty": "hard",
+      "fun_fact": "Westwood Studios' Dune II etablierte Bausteine wie Ressourcen-Sammeln, Basis-Bau und Einheiten-Produktion. Ohne Dune II hätte es weder Command & Conquer noch StarCraft in heutiger Form gegeben.",
+      "category": "Popkultur"
+    },
+    {
+      "id": "pop_082",
+      "question": "Welche US-Sängerin gewann 2025 mit dem Album 'Cowboy Carter' Grammys in Country-Kategorien?",
+      "answers": [
+        {"text": "Beyoncé", "correct": true},
+        {"text": "Rihanna", "correct": false},
+        {"text": "Lizzo", "correct": false}
+      ],
+      "difficulty": "medium",
+      "fun_fact": "Beyoncé wurde 2025 als erste schwarze Künstlerin mit dem Grammy für 'Best Country Album' ausgezeichnet. Cowboy Carter entstand teils als Reaktion auf eine Country-Awards-Show, die sie 2016 ausgepfiffen hatte.",
+      "category": "Popkultur"
+    },
+    {
+      "id": "pop_083",
+      "question": "Welcher Filmemacher dreht seine Filme bekanntermaßen mit reichlich Blutspritzern und langen Dialog-Szenen — darunter 'Pulp Fiction' und 'Kill Bill'?",
+      "answers": [
+        {"text": "Quentin Tarantino", "correct": true},
+        {"text": "Robert Rodriguez", "correct": false},
+        {"text": "Guy Ritchie", "correct": false}
+      ],
+      "difficulty": "easy",
+      "fun_fact": "Tarantino arbeitete vor seinem Durchbruch jahrelang in einer Videothek in Manhattan Beach. Er sagt selbst, das tausendfache Anschauen von B-Movies dort sei seine eigentliche Filmhochschule gewesen.",
+      "category": "Popkultur"
+    },
+    {
+      "id": "pop_084",
+      "question": "Welches Online-Phänomen entstand 2014 als ALS-Spendenaktion mit Eiswasser?",
+      "answers": [
+        {"text": "Ice Bucket Challenge", "correct": true},
+        {"text": "Cinnamon Challenge", "correct": false},
+        {"text": "Mannequin Challenge", "correct": false}
+      ],
+      "difficulty": "easy",
+      "fun_fact": "Die Ice Bucket Challenge sammelte weltweit über 220 Millionen Dollar für die ALS-Forschung. Die Spenden ermöglichten 2016 die Entdeckung eines neuen ALS-Gens namens NEK1.",
+      "category": "Popkultur"
+    },
+    {
+      "id": "pop_085",
+      "question": "Welcher deutsche Komiker wurde mit der Comedy-Show 'RTL Samstag Nacht' in den 1990ern berühmt?",
+      "answers": [
+        {"text": "Stefan Raab", "correct": false},
+        {"text": "Wigald Boning", "correct": false},
+        {"text": "Anke Engelke", "correct": true}
+      ],
+      "difficulty": "medium",
+      "fun_fact": "Anke Engelke kam in der zweiten Staffel zur Show und wurde mit Charakteren wie 'Ricky' bekannt. RTL Samstag Nacht orientierte sich am US-Format 'Saturday Night Live' und brachte viele heutige TV-Größen hervor.",
+      "category": "Popkultur"
+    },
+    {
+      "id": "pop_086",
+      "question": "Welche Pokémon-Generation umfasste die ersten westlich veröffentlichten Editionen Rot und Blau (1999)?",
+      "answers": [
+        {"text": "Erste Generation", "correct": true},
+        {"text": "Zweite Generation", "correct": false},
+        {"text": "Dritte Generation", "correct": false}
+      ],
+      "difficulty": "easy",
+      "fun_fact": "Die ersten Pokémon-Editionen erschienen 1996 in Japan für den Game Boy. Schöpfer Satoshi Tajiri ließ sich vom Insektensammeln seiner Kindheit inspirieren — daher tragen viele Pokémon Käfer- oder Insektenzüge.",
+      "category": "Popkultur"
+    },
+    {
+      "id": "pop_087",
+      "question": "Welcher österreichische Schauspieler gewann zwei Oscars für seine Rollen in Quentin-Tarantino-Filmen?",
+      "answers": [
+        {"text": "Christoph Waltz", "correct": true},
+        {"text": "Til Schweiger", "correct": false},
+        {"text": "Daniel Brühl", "correct": false}
+      ],
+      "difficulty": "medium",
+      "fun_fact": "Waltz gewann 2010 für 'Inglourious Basterds' und 2013 für 'Django Unchained'. Vor seinem Durchbruch mit Tarantino war er in Deutschland und Österreich vor allem aus TV-Serien wie 'Der Alte' bekannt.",
+      "category": "Popkultur"
+    },
+    {
+      "id": "pop_088",
+      "question": "Welche Disney-Prinzessin singt das Lied 'Lass jetzt los' ('Let It Go') im gleichnamigen Film?",
+      "answers": [
+        {"text": "Elsa", "correct": true},
+        {"text": "Moana", "correct": false},
+        {"text": "Rapunzel", "correct": false}
+      ],
+      "difficulty": "easy",
+      "fun_fact": "Idina Menzel sang die englische Version. 'Let It Go' wurde in 41 Sprachen übersetzt und gewann den Oscar für den besten Filmsong 2014. Disney veröffentlichte sogar einen Clip, in dem alle 25 Sprach-Versionen ineinander übergehen.",
+      "category": "Popkultur"
+    },
+    {
+      "id": "pop_089",
+      "question": "Welcher US-Sender produziert die Comedy-Serie 'The Office' (US)?",
+      "answers": [
+        {"text": "NBC", "correct": true},
+        {"text": "HBO", "correct": false},
+        {"text": "CBS", "correct": false}
+      ],
+      "difficulty": "medium",
+      "fun_fact": "Die US-Version basiert auf dem britischen Original von Ricky Gervais. NBC bestellte zunächst nur sechs Folgen — heute ist die Serie eines der meistgestreamten Comedy-Formate weltweit.",
+      "category": "Popkultur"
+    },
+    {
+      "id": "pop_090",
+      "question": "Welche US-amerikanische Sängerin veröffentlichte 2008 ihr zweites Album 'Fearless' und gewann damit den Grammy für 'Album of the Year'?",
+      "answers": [
+        {"text": "Taylor Swift", "correct": true},
+        {"text": "Katy Perry", "correct": false},
+        {"text": "Miley Cyrus", "correct": false}
+      ],
+      "difficulty": "medium",
+      "fun_fact": "Taylor Swift war mit 20 Jahren beim Grammy-Gewinn 2010 die damals jüngste Album-of-the-Year-Gewinnerin (erst 2020 von Billie Eilish unterboten). Später nahm sie ihre frühen Alben komplett neu auf, um die Rechte an ihren eigenen Songs zurückzugewinnen.",
+      "category": "Popkultur"
+    },
+    {
+      "id": "pop_091",
+      "question": "Welcher deutsche Schauspieler spielt im internationalen Marvel-Film 'The First Avenger: Civil War' die Rolle des Bösewichts Helmut Zemo?",
+      "answers": [
+        {"text": "Daniel Brühl", "correct": true},
+        {"text": "Moritz Bleibtreu", "correct": false},
+        {"text": "Til Schweiger", "correct": false}
+      ],
+      "difficulty": "medium",
+      "fun_fact": "Brühl übernahm die Rolle ab 2016 erneut in der Disney+-Serie 'Falcon and the Winter Soldier'. Seinen Durchbruch hatte er 2003 mit 'Good Bye, Lenin!'.",
+      "category": "Popkultur"
+    },
+    {
+      "id": "pop_092",
+      "question": "Welches Videospiel-Studio aus Polen entwickelte 'The Witcher 3: Wild Hunt'?",
+      "answers": [
+        {"text": "CD Projekt Red", "correct": true},
+        {"text": "Techland", "correct": false},
+        {"text": "11 bit studios", "correct": false}
+      ],
+      "difficulty": "medium",
+      "fun_fact": "CD Projekt Red entstand aus einem PC-Vertriebshändler im Warschau der 1990er. The Witcher 3 gewann über 250 'Game of the Year'-Awards — mehr als jedes andere Spiel zuvor.",
+      "category": "Popkultur"
+    },
+    {
+      "id": "pop_093",
+      "question": "Welcher französische Modedesigner kreierte 1947 den 'New Look' mit Wespentaille und voller Glockenrock-Silhouette?",
+      "answers": [
+        {"text": "Christian Dior", "correct": true},
+        {"text": "Hubert de Givenchy", "correct": false},
+        {"text": "Pierre Cardin", "correct": false}
+      ],
+      "difficulty": "hard",
+      "fun_fact": "Dior brauchte für eine einzige New-Look-Robe bis zu 20 Meter Stoff — ein Skandal in der noch von Rationierung geprägten Nachkriegszeit. In Paris zerrissen Hausfrauen demonstrativ Models das Kleid vom Leib.",
+      "category": "Popkultur"
+    },
+    {
+      "id": "pop_094",
+      "question": "Welche Fantasy-TV-Serie über eine Adelsfamilien-Fehde um den 'Eisernen Thron' wurde von HBO produziert?",
+      "answers": [
+        {"text": "Game of Thrones", "correct": true},
+        {"text": "The Witcher", "correct": false},
+        {"text": "Vikings", "correct": false}
+      ],
+      "difficulty": "easy",
+      "fun_fact": "Game of Thrones spielt im fiktiven Königreich Westeros, ebenso wie das HBO-Prequel 'House of the Dragon'. Autor George R. R. Martin hat die Geschichte und Geographie seiner Welt im über 300-seitigen Begleitband 'Die Welt von Eis und Feuer' detailliert.",
+      "category": "Popkultur"
+    },
+    {
+      "id": "pop_095",
+      "question": "Welcher Musiker wurde 2016 als erster Songwriter mit dem Literaturnobelpreis ausgezeichnet?",
+      "answers": [
+        {"text": "Bob Dylan", "correct": true},
+        {"text": "Leonard Cohen", "correct": false},
+        {"text": "Bruce Springsteen", "correct": false}
+      ],
+      "difficulty": "medium",
+      "fun_fact": "Dylan reagierte tagelang nicht auf die Bekanntgabe und reiste erst Monate später nach Stockholm. Seine Dankesrede schickte er auf Audio ein — die Nobelstiftung musste schließlich die Frist verlängern.",
+      "category": "Popkultur"
+    },
+    {
+      "id": "pop_096",
+      "question": "Welcher schwedische YouTuber war von 2013 bis 2022 fast durchgehend meistabonnierter Einzel-Creator?",
+      "answers": [
+        {"text": "PewDiePie", "correct": true},
+        {"text": "MrBeast", "correct": false},
+        {"text": "Markiplier", "correct": false}
+      ],
+      "difficulty": "medium",
+      "fun_fact": "PewDiePie (Felix Kjellberg) wurde 2022 vom Amerikaner MrBeast als meistabonniertem Einzel-Creator abgelöst. MrBeast überschritt 2024 die 300-Millionen-Marke.",
+      "category": "Popkultur"
+    },
+    {
+      "id": "pop_097",
+      "question": "Welcher französische Luxuskonzern besitzt unter anderem Louis Vuitton, Dior und Tiffany?",
+      "answers": [
+        {"text": "LVMH", "correct": true},
+        {"text": "Kering", "correct": false},
+        {"text": "Richemont", "correct": false}
+      ],
+      "difficulty": "hard",
+      "fun_fact": "LVMH steht für Louis Vuitton Moët Hennessy und ist der größte Luxuskonzern der Welt. Gründer Bernard Arnault war zeitweise reichster Mensch der Welt — vor Elon Musk und Jeff Bezos.",
+      "category": "Popkultur"
+    },
+    {
+      "id": "pop_098",
+      "question": "Welche deutsche Casting-Show suchte ab 2002 nach Deutschlands nächster Pop-Sensation und brachte Stars wie Daniel Küblböck und Mark Medlock hervor?",
+      "answers": [
+        {"text": "Deutschland sucht den Superstar", "correct": true},
+        {"text": "Popstars", "correct": false},
+        {"text": "The Voice of Germany", "correct": false}
+      ],
+      "difficulty": "easy",
+      "fun_fact": "DSDS-Sieger der ersten Staffel war Alexander Klaws. Das Format basiert auf der britischen Show 'Pop Idol' und Dieter Bohlen war von Anfang bis zur 18. Staffel ununterbrochen in der Jury.",
+      "category": "Popkultur"
+    },
+    {
+      "id": "pop_099",
+      "question": "Welcher Animationsfilm-Klassiker von Studio Ghibli aus dem Jahr 2001 handelt von einem Mädchen namens Chihiro in einer Geisterwelt?",
+      "answers": [
+        {"text": "Chihiros Reise ins Zauberland", "correct": true},
+        {"text": "Prinzessin Mononoke", "correct": false},
+        {"text": "Mein Nachbar Totoro", "correct": false}
+      ],
+      "difficulty": "medium",
+      "fun_fact": "Hayao Miyazakis Film war 20 Jahre lang der erfolgreichste japanische Film aller Zeiten. Er gewann 2003 als erster und bisher einziger handgezeichneter Anime den Oscar für den besten Animationsfilm.",
+      "category": "Popkultur"
+    },
+    {
+      "id": "pop_100",
+      "question": "Welcher Internet-Trend von 2018 verleitete laut Berichten Jugendliche dazu, Waschmittel-Kapseln zu essen?",
+      "answers": [
+        {"text": "Tide Pod Challenge", "correct": true},
+        {"text": "Cinnamon Challenge", "correct": false},
+        {"text": "Salt Challenge", "correct": false}
+      ],
+      "difficulty": "hard",
+      "fun_fact": "Die US-Giftnotrufe verzeichneten 2018 in den ersten zwei Wochen mehr Tide-Pod-Vorfälle bei Teenagern als im gesamten Vorjahr. YouTube musste eigens eine Filterregel für entsprechende Videos einführen.",
+      "category": "Popkultur"
+    },
+    {
+      "id": "pop_101",
+      "question": "Welcher legendäre Musiker starb 2016 in seinem Anwesen Paisley Park in Minnesota?",
+      "answers": [
+        {"text": "Prince", "correct": true},
+        {"text": "David Bowie", "correct": false},
+        {"text": "Tom Petty", "correct": false}
+      ],
+      "difficulty": "medium",
+      "fun_fact": "Prince hinterließ über 8.000 unveröffentlichte Songs in einem Tresor namens 'The Vault'. Schätzungen zufolge könnte daraus jahrzehntelang neues Material erscheinen.",
+      "category": "Popkultur"
+    },
+    {
+      "id": "pop_102",
+      "question": "Welcher deutsche Filmregisseur drehte 'Das Boot' (1981) und 'Die unendliche Geschichte' (1984)?",
+      "answers": [
+        {"text": "Wolfgang Petersen", "correct": true},
+        {"text": "Werner Herzog", "correct": false},
+        {"text": "Wim Wenders", "correct": false}
+      ],
+      "difficulty": "medium",
+      "fun_fact": "Petersen wechselte nach Hollywood und drehte dort 'In the Line of Fire', 'Air Force One' und 'Troja'. 'Das Boot' war für sechs Oscars nominiert — eine Rekordzahl für einen fremdsprachigen Film damals.",
+      "category": "Popkultur"
+    },
+    {
+      "id": "pop_103",
+      "question": "In welcher Stadt findet seit 1929 jährlich die Verleihung der Academy Awards (Oscars) statt?",
+      "answers": [
+        {"text": "Los Angeles", "correct": true},
+        {"text": "New York", "correct": false},
+        {"text": "Las Vegas", "correct": false}
+      ],
+      "difficulty": "easy",
+      "fun_fact": "Die erste Oscar-Verleihung dauerte nur 15 Minuten und fand im Hollywood Roosevelt Hotel vor 270 Gästen statt. Tickets kosteten damals fünf Dollar — heute sind sie unverkäuflich und exklusiv für Geladene.",
+      "category": "Popkultur"
+    },
+    {
+      "id": "pop_104",
+      "question": "Welches Mobile-Game von Niantic ließ 2016 Millionen Menschen weltweit mit dem Smartphone Pokémon in der echten Welt jagen?",
+      "answers": [
+        {"text": "Pokémon GO", "correct": true},
+        {"text": "Pokémon Masters", "correct": false},
+        {"text": "Pokémon Unite", "correct": false}
+      ],
+      "difficulty": "easy",
+      "fun_fact": "Pokémon GO überschritt im ersten Jahr eine Milliarde Dollar Umsatz und löste weltweit den 'Augmented-Reality-Boom' aus. Niantic entstand ursprünglich als internes Google-Startup.",
+      "category": "Popkultur"
+    },
+    {
+      "id": "pop_105",
+      "question": "Welcher Soundtrack-Komponist schrieb die Musik zu 'Indiana Jones', 'E.T.' und 'Schindlers Liste'?",
+      "answers": [
+        {"text": "John Williams", "correct": true},
+        {"text": "Hans Zimmer", "correct": false},
+        {"text": "Ennio Morricone", "correct": false}
+      ],
+      "difficulty": "medium",
+      "fun_fact": "John Williams ist mit über 50 Oscar-Nominierungen die meistnominierte lebende Person der Oscar-Geschichte. Mit über 90 Jahren komponierte er noch die Musik zum fünften Indiana-Jones-Film 2023.",
+      "category": "Popkultur"
+    },
+    {
+      "id": "pop_106",
+      "question": "Welche Sneaker-Marke entstand aus einer Kooperation zwischen Adidas und Rapper Kanye West?",
+      "answers": [
+        {"text": "Yeezy", "correct": true},
+        {"text": "Air Jordan", "correct": false},
+        {"text": "Off-White", "correct": false}
+      ],
+      "difficulty": "medium",
+      "fun_fact": "Die Yeezy-Linie startete 2015 und brachte Adidas zeitweise über zwei Milliarden Dollar Umsatz pro Jahr. Nach kontroversen Aussagen Wests beendete Adidas 2022 die Partnerschaft.",
+      "category": "Popkultur"
     }
   ]
 }

@@ -1053,6 +1053,1056 @@
       "difficulty": "medium",
       "fun_fact": "Hands take wildly different shapes from every angle, fingers overlap, and training images label them inconsistently. Models often produce a 'hand-shaped blob' with the wrong finger count.",
       "category": "Technology"
+    },
+    {
+      "id": "tech_en_051",
+      "question": "What was the ENIAC computer's primary original purpose when built during World War II?",
+      "answers": [
+        {
+          "text": "Calculating artillery firing tables",
+          "correct": true
+        },
+        {
+          "text": "Breaking the German Enigma code",
+          "correct": false
+        },
+        {
+          "text": "Simulating early atomic-bomb yields",
+          "correct": false
+        }
+      ],
+      "difficulty": "medium",
+      "fun_fact": "ENIAC was commissioned by the US Army's Ballistic Research Laboratory to crunch firing tables that human 'computers' couldn't keep up with. By the time it was operational in 1945, the war was almost over — so its first real workloads were hydrogen-bomb feasibility calculations.",
+      "category": "Technology"
+    },
+    {
+      "id": "tech_en_052",
+      "question": "Why did early programmers refer to computer operators as 'computers' themselves?",
+      "answers": [
+        {
+          "text": "'Computer' originally meant a person who did calculations by hand",
+          "correct": true
+        },
+        {
+          "text": "Operators wore lab coats matching the machine's color",
+          "correct": false
+        },
+        {
+          "text": "Each operator was assigned a serial number like the machines",
+          "correct": false
+        }
+      ],
+      "difficulty": "easy",
+      "fun_fact": "Until the 1940s, a 'computer' was a job title — often held by women who did long arithmetic for astronomy, physics or ballistics. The electronic machine was named after them, not the other way around.",
+      "category": "Technology"
+    },
+    {
+      "id": "tech_en_053",
+      "question": "Why was the world's first stored-program computer nicknamed 'Baby'?",
+      "answers": [
+        {
+          "text": "It was a small test machine for a larger planned successor",
+          "correct": true
+        },
+        {
+          "text": "Its inventors' newborn daughter inspired the name",
+          "correct": false
+        },
+        {
+          "text": "It cried out an audible tone whenever it crashed",
+          "correct": false
+        }
+      ],
+      "difficulty": "hard",
+      "fun_fact": "The Manchester Baby ran its first program in June 1948 — 52 minutes to find the highest factor of a number. It was a small-scale proof-of-concept for the larger Manchester Mark 1.",
+      "category": "Technology"
+    },
+    {
+      "id": "tech_en_054",
+      "question": "What was unusual about the Apollo Guidance Computer's memory compared to modern RAM?",
+      "answers": [
+        {
+          "text": "It was woven by hand from copper wire and tiny ferrite cores",
+          "correct": true
+        },
+        {
+          "text": "It used vacuum tubes the size of a deck of cards",
+          "correct": false
+        },
+        {
+          "text": "It stored data magnetically on punched paper tape",
+          "correct": false
+        }
+      ],
+      "difficulty": "hard",
+      "fun_fact": "The AGC's read-only program memory was 'core rope' — wires threaded by hand through or around tiny iron rings to encode 1s and 0s. The work was done by women at Raytheon, sometimes called 'Little Old Lady' memory.",
+      "category": "Technology"
+    },
+    {
+      "id": "tech_en_055",
+      "question": "Why did early hard disks make a loud clunking sound when powered off?",
+      "answers": [
+        {
+          "text": "The read/write head physically parked itself against a stop",
+          "correct": true
+        },
+        {
+          "text": "Internal capacitors discharged through the chassis",
+          "correct": false
+        },
+        {
+          "text": "The cooling fan slammed shut to seal out dust",
+          "correct": false
+        }
+      ],
+      "difficulty": "medium",
+      "fun_fact": "Old drives moved the head with a solenoid that snapped it to a parking position when power was cut. Modern drives use a gentler ramp, but the iconic 'clunk' lives on in retro-computing nostalgia.",
+      "category": "Technology"
+    },
+    {
+      "id": "tech_en_056",
+      "question": "Why did punch cards have one corner clipped off diagonally?",
+      "answers": [
+        {
+          "text": "So operators could see at a glance if a card was misaligned",
+          "correct": true
+        },
+        {
+          "text": "To fit them through narrow card-reader slots",
+          "correct": false
+        },
+        {
+          "text": "To reserve a spot for the operator's initials",
+          "correct": false
+        }
+      ],
+      "difficulty": "medium",
+      "fun_fact": "A dropped deck was an operator's nightmare. The clipped corner — combined with diagonal stripes drawn across the deck's edge — let you spot upside-down or out-of-order cards instantly.",
+      "category": "Technology"
+    },
+    {
+      "id": "tech_en_057",
+      "question": "What did the Xerox Alto, built in 1973, pioneer that wouldn't reach the public for nearly a decade?",
+      "answers": [
+        {
+          "text": "A graphical user interface with mouse and windows",
+          "correct": true
+        },
+        {
+          "text": "Color laser printing in the home",
+          "correct": false
+        },
+        {
+          "text": "Touchscreen tablet input",
+          "correct": false
+        }
+      ],
+      "difficulty": "medium",
+      "fun_fact": "The Alto had a bitmapped display, a three-button mouse, overlapping windows and Ethernet networking — years before Apple's Lisa or the Macintosh. Steve Jobs famously visited Xerox PARC in 1979 and was floored.",
+      "category": "Technology"
+    },
+    {
+      "id": "tech_en_058",
+      "question": "Why are floppy disks called 'floppy' if the 3.5-inch ones felt rigid?",
+      "answers": [
+        {
+          "text": "The magnetic disk inside the hard plastic shell is flexible",
+          "correct": true
+        },
+        {
+          "text": "The earliest prototypes folded in half for storage",
+          "correct": false
+        },
+        {
+          "text": "Engineers named them after a cartoon character",
+          "correct": false
+        }
+      ],
+      "difficulty": "easy",
+      "fun_fact": "Open a 3.5-inch floppy and you'll find a thin, bendy magnetic disk inside. The 5.25-inch and 8-inch ancestors had no rigid shell at all — those were genuinely floppy.",
+      "category": "Technology"
+    },
+    {
+      "id": "tech_en_059",
+      "question": "Why did IBM choose Microsoft's DOS over its main rival CP/M for the original IBM PC?",
+      "answers": [
+        {
+          "text": "CP/M's author missed the crucial meeting with IBM",
+          "correct": true
+        },
+        {
+          "text": "CP/M cost ten times as much per license",
+          "correct": false
+        },
+        {
+          "text": "CP/M didn't support IBM's new floppy format",
+          "correct": false
+        }
+      ],
+      "difficulty": "hard",
+      "fun_fact": "The legend goes that Digital Research's Gary Kildall was flying his plane the day IBM came calling, and the deal slipped to Microsoft — who didn't even own a DOS yet and quickly bought QDOS to relicense. Historians dispute the details, but the missed-meeting story is enshrined in tech lore.",
+      "category": "Technology"
+    },
+    {
+      "id": "tech_en_060",
+      "question": "What did the very first webcam ever made monitor, sitting in a Cambridge University break room?",
+      "answers": [
+        {
+          "text": "A coffee pot, so researchers knew when it was full",
+          "correct": true
+        },
+        {
+          "text": "A fish tank, as a screen-saver experiment",
+          "correct": false
+        },
+        {
+          "text": "A whiteboard, to share notes between offices",
+          "correct": false
+        }
+      ],
+      "difficulty": "medium",
+      "fun_fact": "The Trojan Room Coffee Pot at Cambridge's Computer Lab was the first webcam subject — set up in 1991 so people upstairs didn't trudge down to an empty pot. It went online in 1993 and ran until 2001.",
+      "category": "Technology"
+    },
+    {
+      "id": "tech_en_061",
+      "question": "Why is the file-format extension '.zip' named that way?",
+      "answers": [
+        {
+          "text": "To suggest the speed of compressing files compared to ARC",
+          "correct": true
+        },
+        {
+          "text": "It abbreviates 'Zero-Information Packaging'",
+          "correct": false
+        },
+        {
+          "text": "Its creator's wife was nicknamed Zippy",
+          "correct": false
+        }
+      ],
+      "difficulty": "hard",
+      "fun_fact": "Phil Katz designed PKZIP in 1989 as a faster competitor to the dominant ARC format. He picked 'zip' for the sound of moving quickly. The format has outlived almost every other compressor of its era.",
+      "category": "Technology"
+    },
+    {
+      "id": "tech_en_062",
+      "question": "What did the world's first banner ad in 1994 advertise?",
+      "answers": [
+        {
+          "text": "AT&T's vision of the future internet",
+          "correct": true
+        },
+        {
+          "text": "Netscape's brand-new web browser",
+          "correct": false
+        },
+        {
+          "text": "Pizza Hut's online ordering trial",
+          "correct": false
+        }
+      ],
+      "difficulty": "hard",
+      "fun_fact": "HotWired ran the AT&T ad in October 1994 with the line 'Have you ever clicked your mouse right HERE?'. Its click-through rate was a now-unimaginable 44%.",
+      "category": "Technology"
+    },
+    {
+      "id": "tech_en_063",
+      "question": "Why does the HTTP status code '418' exist in the official IETF specification?",
+      "answers": [
+        {
+          "text": "It's an April Fools' joke: 'I'm a teapot'",
+          "correct": true
+        },
+        {
+          "text": "It signals that a server is over its hourly request quota",
+          "correct": false
+        },
+        {
+          "text": "It identifies servers reserved for academic use only",
+          "correct": false
+        }
+      ],
+      "difficulty": "medium",
+      "fun_fact": "RFC 2324, published on April 1, 1998, defined the Hyper Text Coffee Pot Control Protocol. Teapots are supposed to refuse to brew coffee with status 418 — and several real web frameworks support it for fun.",
+      "category": "Technology"
+    },
+    {
+      "id": "tech_en_064",
+      "question": "What is the original meaning of the term 'cookie' in web browsers?",
+      "answers": [
+        {
+          "text": "Borrowed from 'magic cookie' — a token passed between programs",
+          "correct": true
+        },
+        {
+          "text": "An acronym for 'Client-Owned Object Key'",
+          "correct": false
+        },
+        {
+          "text": "Named after Cookie Monster as a Netscape inside joke",
+          "correct": false
+        }
+      ],
+      "difficulty": "medium",
+      "fun_fact": "Unix programs had been passing 'magic cookies' — opaque tokens of state — long before the web existed. Netscape's Lou Montulli borrowed the term in 1994 for the tiny files browsers stored on disk.",
+      "category": "Technology"
+    },
+    {
+      "id": "tech_en_065",
+      "question": "Why does the typical URL include the cryptic-looking sequence '://'?",
+      "answers": [
+        {
+          "text": "Tim Berners-Lee later said he wished he had skipped it",
+          "correct": true
+        },
+        {
+          "text": "It's required by the TCP/IP packet format",
+          "correct": false
+        },
+        {
+          "text": "Each character signals a different routing layer",
+          "correct": false
+        }
+      ],
+      "difficulty": "medium",
+      "fun_fact": "Berners-Lee has apologised in talks for the '//' in URLs — he admitted it wasn't strictly necessary and that the world would have saved an enormous amount of typing if he'd left it out.",
+      "category": "Technology"
+    },
+    {
+      "id": "tech_en_066",
+      "question": "What was the first phone widely sold as a 'smartphone' before the iPhone?",
+      "answers": [
+        {
+          "text": "The IBM Simon Personal Communicator",
+          "correct": true
+        },
+        {
+          "text": "The original Palm Pilot",
+          "correct": false
+        },
+        {
+          "text": "The Nokia 3310",
+          "correct": false
+        }
+      ],
+      "difficulty": "hard",
+      "fun_fact": "IBM Simon launched in 1994 — a brick with a touchscreen, email, fax, calendar and apps. Only about 50,000 sold, but it predates the term 'smartphone' becoming common by nearly a decade.",
+      "category": "Technology"
+    },
+    {
+      "id": "tech_en_067",
+      "question": "Why did early iPhone cameras lack a flash for the first three generations?",
+      "answers": [
+        {
+          "text": "Apple judged early LED flashes too ugly and too power-hungry",
+          "correct": true
+        },
+        {
+          "text": "Patents from Nokia blocked use of LED flashes on phones",
+          "correct": false
+        },
+        {
+          "text": "Apple was waiting for a flash thin enough to fit",
+          "correct": false
+        }
+      ],
+      "difficulty": "medium",
+      "fun_fact": "The flash didn't arrive until the iPhone 4 in 2010. Apple was famously reluctant to ship hardware they considered low-quality, preferring no feature to a bad one.",
+      "category": "Technology"
+    },
+    {
+      "id": "tech_en_068",
+      "question": "Why does the modern smartphone touchscreen typically not work with a regular pencil eraser?",
+      "answers": [
+        {
+          "text": "It senses the tiny electrical charge of a fingertip, not pressure",
+          "correct": true
+        },
+        {
+          "text": "Erasers are slightly too small to register",
+          "correct": false
+        },
+        {
+          "text": "The pencil graphite confuses the optical sensors",
+          "correct": false
+        }
+      ],
+      "difficulty": "easy",
+      "fun_fact": "Capacitive touchscreens detect changes in a tiny electrical field at the surface. Rubber erasers don't conduct, so they're invisible — but a banana, a sausage or a damp glove will all happily tap a phone.",
+      "category": "Technology"
+    },
+    {
+      "id": "tech_en_069",
+      "question": "Why do most smartphones use 'lithium-polymer' instead of removable AA-style batteries?",
+      "answers": [
+        {
+          "text": "Polymer batteries can be molded into thin custom shapes",
+          "correct": true
+        },
+        {
+          "text": "AA cells don't hold a charge long enough for any phone",
+          "correct": false
+        },
+        {
+          "text": "Polymer cells are the only kind that can fast-charge",
+          "correct": false
+        }
+      ],
+      "difficulty": "medium",
+      "fun_fact": "Lithium-polymer cells use a flexible pouch instead of a rigid can, so designers can shape them around cameras and antennas. That's why a modern phone has a strange-looking battery you can't easily swap.",
+      "category": "Technology"
+    },
+    {
+      "id": "tech_en_070",
+      "question": "Why do mobile phone signals weaken inside elevators and basements?",
+      "answers": [
+        {
+          "text": "Metal walls form a 'Faraday cage' that blocks radio waves",
+          "correct": true
+        },
+        {
+          "text": "Network operators throttle service in enclosed spaces",
+          "correct": false
+        },
+        {
+          "text": "Building electrical wiring cancels cell-tower frequencies",
+          "correct": false
+        }
+      ],
+      "difficulty": "easy",
+      "fun_fact": "A continuous metal shell traps radio waves on its outer surface, leaving a quiet zone inside. The same physics is why a car can be safe in a lightning storm and why your microwave doesn't cook you.",
+      "category": "Technology"
+    },
+    {
+      "id": "tech_en_071",
+      "question": "Why did 19th-century umbrella makers go to court when steel ribs replaced whalebone ribs?",
+      "answers": [
+        {
+          "text": "Whalebone-rib patents tried to block the cheaper steel ones",
+          "correct": true
+        },
+        {
+          "text": "Steel ribs were declared dangerous in lightning storms",
+          "correct": false
+        },
+        {
+          "text": "Whaling unions sued to keep their bone supply contracts",
+          "correct": false
+        }
+      ],
+      "difficulty": "hard",
+      "fun_fact": "Samuel Fox patented his steel 'Paragon' umbrella frame in 1852, but earlier whalebone patent holders fought to keep their market. Steel won, and whales got a small early reprieve as a side effect.",
+      "category": "Technology"
+    },
+    {
+      "id": "tech_en_072",
+      "question": "Why are most modern bicycle chains 'half-inch pitch'?",
+      "answers": [
+        {
+          "text": "An early standard from the 1880s that everyone copied",
+          "correct": true
+        },
+        {
+          "text": "It's the smallest pitch that survives off-road use",
+          "correct": false
+        },
+        {
+          "text": "Half-inch matches the wheel rim's bead-seat diameter",
+          "correct": false
+        }
+      ],
+      "difficulty": "medium",
+      "fun_fact": "The half-inch (12.7 mm) pitch was set by early bicycle and roller-chain makers in Britain. It became so widespread that gear teeth, derailleurs and chainrings worldwide are still built around it — even on $10,000 racing bikes.",
+      "category": "Technology"
+    },
+    {
+      "id": "tech_en_073",
+      "question": "Why does a Phillips-head screw deliberately let the screwdriver slip out under high torque?",
+      "answers": [
+        {
+          "text": "To prevent over-tightening on early assembly lines",
+          "correct": true
+        },
+        {
+          "text": "To stop the screw head from snapping off",
+          "correct": false
+        },
+        {
+          "text": "To make removal easier years later when rusted",
+          "correct": false
+        }
+      ],
+      "difficulty": "hard",
+      "fun_fact": "Henry Phillips' cross-shaped slot was designed to 'cam out' before stripping the screw or breaking the joint — useful when factory torque wrenches were rare. Modern variants like Pozidriv reduce that effect.",
+      "category": "Technology"
+    },
+    {
+      "id": "tech_en_074",
+      "question": "Why do most modern can openers cut the side of the can instead of the lid?",
+      "answers": [
+        {
+          "text": "It leaves a smoother edge and no metal slivers in the food",
+          "correct": true
+        },
+        {
+          "text": "It uses less force, easier on arthritic hands",
+          "correct": false
+        },
+        {
+          "text": "It's a regulatory requirement in the EU",
+          "correct": false
+        }
+      ],
+      "difficulty": "medium",
+      "fun_fact": "Side-cutting 'safety' openers separate the rim from the can wall, leaving the lid as a non-sharp disc that lifts out. The classic top-cutting design left a jagged ring and tiny metal shavings — a hidden food-safety issue.",
+      "category": "Technology"
+    },
+    {
+      "id": "tech_en_075",
+      "question": "Why does a Thermos flask keep both hot drinks hot and cold drinks cold?",
+      "answers": [
+        {
+          "text": "A vacuum gap blocks heat from flowing in or out",
+          "correct": true
+        },
+        {
+          "text": "Its lining absorbs the dominant temperature of its contents",
+          "correct": false
+        },
+        {
+          "text": "An internal heat exchanger averages the temperature both ways",
+          "correct": false
+        }
+      ],
+      "difficulty": "easy",
+      "fun_fact": "James Dewar's 1892 vacuum flask removes nearly all the air between two glass walls, killing conduction and convection. Heat can only escape by radiation, which the silver coating reflects back.",
+      "category": "Technology"
+    },
+    {
+      "id": "tech_en_076",
+      "question": "Why do railway tracks usually have a small gap between sections of rail?",
+      "answers": [
+        {
+          "text": "Steel expands in hot weather and would buckle otherwise",
+          "correct": true
+        },
+        {
+          "text": "It's where the signalling sensors connect to the rail",
+          "correct": false
+        },
+        {
+          "text": "Each gap marks the end of one rail-owner's section",
+          "correct": false
+        }
+      ],
+      "difficulty": "easy",
+      "fun_fact": "Steel rails grow several centimetres per kilometre on hot summer days. The classic 'clickety-clack' sound was the wheels crossing those expansion gaps. Continuous welded rail today uses prestressing instead.",
+      "category": "Technology"
+    },
+    {
+      "id": "tech_en_077",
+      "question": "Why do commercial jet engines often have spiral patterns painted on their spinning hubs?",
+      "answers": [
+        {
+          "text": "To make it obvious from outside whether the engine is running",
+          "correct": true
+        },
+        {
+          "text": "To improve airflow into the compressor blades",
+          "correct": false
+        },
+        {
+          "text": "To reduce icing through a strobe effect",
+          "correct": false
+        }
+      ],
+      "difficulty": "medium",
+      "fun_fact": "Ground crews need a quick visual check before approaching an engine, since a running turbofan can suck in a person from many metres away. The spiral becomes a blurred disc when the engine is spooled up.",
+      "category": "Technology"
+    },
+    {
+      "id": "tech_en_078",
+      "question": "Why is the maximum length of a freight train in many countries limited by air-brake physics?",
+      "answers": [
+        {
+          "text": "Brake-line pressure takes too long to reach the last cars",
+          "correct": true
+        },
+        {
+          "text": "Steel couplers can't take the pull of more than 100 cars",
+          "correct": false
+        },
+        {
+          "text": "Diesel engines run out of fuel beyond a fixed length",
+          "correct": false
+        }
+      ],
+      "difficulty": "hard",
+      "fun_fact": "Westinghouse-style air brakes work by venting pressure along a single hose. On very long trains, the rear cars react seconds later than the front, risking jackknifing — which is why distributed locomotives in the middle of the train help.",
+      "category": "Technology"
+    },
+    {
+      "id": "tech_en_079",
+      "question": "Why are most car license plates in Europe roughly the same size?",
+      "answers": [
+        {
+          "text": "An EU directive standardised the dimensions in the 1990s",
+          "correct": true
+        },
+        {
+          "text": "Plate makers across Europe share a single supplier",
+          "correct": false
+        },
+        {
+          "text": "Speed cameras can only read one specific plate size",
+          "correct": false
+        }
+      ],
+      "difficulty": "medium",
+      "fun_fact": "The EU's standard plate (520×110 mm) lets cars cross borders without swapping plates and gives speed cameras a predictable target. Some countries — like the UK — also allow a taller two-row variant.",
+      "category": "Technology"
+    },
+    {
+      "id": "tech_en_080",
+      "question": "Why are diesel locomotives almost always actually 'diesel-electric'?",
+      "answers": [
+        {
+          "text": "The diesel engine runs a generator that powers electric motors",
+          "correct": true
+        },
+        {
+          "text": "Diesel engines can't reverse direction quickly enough on their own",
+          "correct": false
+        },
+        {
+          "text": "Pure diesel locomotives are banned in most countries",
+          "correct": false
+        }
+      ],
+      "difficulty": "medium",
+      "fun_fact": "Mechanically connecting a diesel engine to the wheels of a heavy train would need a monstrous gearbox. Instead, the engine spins a generator, and electric traction motors at each axle do the work — high torque from zero RPM, no clutch.",
+      "category": "Technology"
+    },
+    {
+      "id": "tech_en_081",
+      "question": "Why do many airliners have a small upturned 'winglet' at the wingtips?",
+      "answers": [
+        {
+          "text": "It reduces the swirling vortex that wastes fuel",
+          "correct": true
+        },
+        {
+          "text": "It's required as a navigation-light mounting point",
+          "correct": false
+        },
+        {
+          "text": "It stops birds from striking the wing edge",
+          "correct": false
+        }
+      ],
+      "difficulty": "easy",
+      "fun_fact": "High-pressure air under the wing leaks around to the low-pressure top, forming a vortex that drags the plane backward. Winglets disrupt that leak, saving roughly 4–5% of fuel on a long flight.",
+      "category": "Technology"
+    },
+    {
+      "id": "tech_en_082",
+      "question": "Why do most modern wind turbines have exactly three blades?",
+      "answers": [
+        {
+          "text": "Three blades balance efficiency, cost and smooth rotation",
+          "correct": true
+        },
+        {
+          "text": "Two-blade designs are forbidden by aviation authorities",
+          "correct": false
+        },
+        {
+          "text": "Three matches the number of phases in the power grid",
+          "correct": false
+        }
+      ],
+      "difficulty": "medium",
+      "fun_fact": "More blades catch slightly more wind but cost more and create more drag; two blades are cheaper but vibrate as they pass the tower. Three is the engineering sweet spot — and looks more pleasing to most people, too.",
+      "category": "Technology"
+    },
+    {
+      "id": "tech_en_083",
+      "question": "Why do pumped-storage hydro plants count as 'giant batteries' for the grid?",
+      "answers": [
+        {
+          "text": "They pump water uphill when power is cheap and release it when needed",
+          "correct": true
+        },
+        {
+          "text": "They store electricity in supercapacitors lining the dam wall",
+          "correct": false
+        },
+        {
+          "text": "Their turbines double as chemical battery banks",
+          "correct": false
+        }
+      ],
+      "difficulty": "medium",
+      "fun_fact": "Excess solar or wind power runs giant pumps that lift water into an upper reservoir. When demand spikes, the water rushes back down through turbines — round-trip efficiency around 70–80%. It's still the dominant grid-scale energy storage on Earth.",
+      "category": "Technology"
+    },
+    {
+      "id": "tech_en_084",
+      "question": "Why do modern home LED bulbs often have a small 'brick' attached at the base?",
+      "answers": [
+        {
+          "text": "It converts mains AC into the low-voltage DC the LED needs",
+          "correct": true
+        },
+        {
+          "text": "It is a tiny battery that smooths flicker during power dips",
+          "correct": false
+        },
+        {
+          "text": "It is an antenna for the bulb's smart-home features",
+          "correct": false
+        }
+      ],
+      "difficulty": "easy",
+      "fun_fact": "An LED needs steady DC at a few volts, but your wall socket delivers fluctuating AC at 120 or 230 V. The little driver brick crammed into the screw base handles the conversion — and is often the first thing to fail.",
+      "category": "Technology"
+    },
+    {
+      "id": "tech_en_085",
+      "question": "Why does a single nuclear fuel pellet the size of a fingertip contain so much energy?",
+      "answers": [
+        {
+          "text": "Splitting uranium releases millions of times more energy than burning coal",
+          "correct": true
+        },
+        {
+          "text": "Each pellet is compressed under extreme pressure before use",
+          "correct": false
+        },
+        {
+          "text": "The pellet is filled with liquid hydrogen as a booster",
+          "correct": false
+        }
+      ],
+      "difficulty": "medium",
+      "fun_fact": "One uranium-235 fission releases about 200 million electron-volts; burning a carbon atom releases about 4. A pellet the size of a pencil eraser can match the energy of about a tonne of coal.",
+      "category": "Technology"
+    },
+    {
+      "id": "tech_en_086",
+      "question": "Why is Gorilla Glass on smartphones so much tougher than ordinary window glass?",
+      "answers": [
+        {
+          "text": "It is dunked in molten salt to swap small ions for larger ones",
+          "correct": true
+        },
+        {
+          "text": "It is laminated with an invisible layer of woven Kevlar",
+          "correct": false
+        },
+        {
+          "text": "It is annealed for several days in a vacuum oven",
+          "correct": false
+        }
+      ],
+      "difficulty": "hard",
+      "fun_fact": "Corning's process puts the glass in a 400 °C potassium salt bath. Larger potassium ions squeeze into spots vacated by smaller sodium ones, leaving the surface under permanent compression — like prestressed concrete.",
+      "category": "Technology"
+    },
+    {
+      "id": "tech_en_087",
+      "question": "Why is graphene considered a 'wonder material' in modern research?",
+      "answers": [
+        {
+          "text": "It is a one-atom-thick sheet of carbon stronger than steel",
+          "correct": true
+        },
+        {
+          "text": "It is the only known room-temperature superconductor",
+          "correct": false
+        },
+        {
+          "text": "It can fold and unfold itself when heated",
+          "correct": false
+        }
+      ],
+      "difficulty": "medium",
+      "fun_fact": "Graphene was first isolated in 2004 by peeling layers off graphite with sticky tape — a trick that won the 2010 Nobel Prize in Physics. A square metre weighs less than a milligram but supports the weight of a cat.",
+      "category": "Technology"
+    },
+    {
+      "id": "tech_en_088",
+      "question": "Why does a memory-foam mattress feel firmer in a cold room than in a warm one?",
+      "answers": [
+        {
+          "text": "Its polymer becomes more rigid as temperature drops",
+          "correct": true
+        },
+        {
+          "text": "The air pockets inside shrink and the foam compresses less",
+          "correct": false
+        },
+        {
+          "text": "Cold air increases friction between the foam cells",
+          "correct": false
+        }
+      ],
+      "difficulty": "medium",
+      "fun_fact": "Memory foam is a viscoelastic polyurethane: warmer temperatures soften it and let it mould to the body, cooler ones stiffen it. NASA originally developed the material to cushion astronauts during launch.",
+      "category": "Technology"
+    },
+    {
+      "id": "tech_en_089",
+      "question": "Why are bulletproof vests usually built from many thin layers instead of one thick sheet?",
+      "answers": [
+        {
+          "text": "Each layer absorbs and spreads a bit of the bullet's energy",
+          "correct": true
+        },
+        {
+          "text": "Single sheets crack instantly under any impact",
+          "correct": false
+        },
+        {
+          "text": "Manufacturing limits prevent making thicker sheets",
+          "correct": false
+        }
+      ],
+      "difficulty": "medium",
+      "fun_fact": "Layers of woven Kevlar or UHMWPE catch the bullet like a net, stretching and decelerating it across the whole vest. A solid plate would still stop the bullet, but transfer far more bruising force to the wearer.",
+      "category": "Technology"
+    },
+    {
+      "id": "tech_en_090",
+      "question": "Why does a typical fingerprint sensor on a phone work even if your finger is slightly dirty?",
+      "answers": [
+        {
+          "text": "It senses tiny electrical capacitance differences between ridges and valleys",
+          "correct": true
+        },
+        {
+          "text": "It scans body heat through the glass cover",
+          "correct": false
+        },
+        {
+          "text": "It uses ultrasound to image the bone underneath",
+          "correct": false
+        }
+      ],
+      "difficulty": "medium",
+      "fun_fact": "Capacitive fingerprint sensors don't take a 'photo' — they map a grid of tiny capacitors that respond differently to the skin ridges and the air gaps between them. Some newer phones do use ultrasound to image deeper.",
+      "category": "Technology"
+    },
+    {
+      "id": "tech_en_091",
+      "question": "Why does an ABS car-brake sensor at each wheel use a small toothed ring?",
+      "answers": [
+        {
+          "text": "A magnetic sensor counts the teeth to measure wheel speed",
+          "correct": true
+        },
+        {
+          "text": "The teeth physically vibrate the brake to prevent lockup",
+          "correct": false
+        },
+        {
+          "text": "The teeth dissipate heat from the brake disc",
+          "correct": false
+        }
+      ],
+      "difficulty": "hard",
+      "fun_fact": "The toothed 'tone ring' spins past a magnetic pickup, producing a frequency proportional to wheel speed. Anti-lock brakes compare wheels and release pressure on any wheel about to lock — too fast for a human to do.",
+      "category": "Technology"
+    },
+    {
+      "id": "tech_en_092",
+      "question": "Why does a passive infrared (PIR) motion sensor often miss a person standing perfectly still?",
+      "answers": [
+        {
+          "text": "It detects changes in heat across its field, not absolute heat",
+          "correct": true
+        },
+        {
+          "text": "Its sensor needs ultrasonic input to confirm the signal",
+          "correct": false
+        },
+        {
+          "text": "Standing humans emit less heat than walking ones",
+          "correct": false
+        }
+      ],
+      "difficulty": "medium",
+      "fun_fact": "A PIR sensor's two halves see the world through a segmented lens. When a warm body moves across the segments, the two halves see unequal heat and trigger. A motionless person produces no difference — and goes unseen.",
+      "category": "Technology"
+    },
+    {
+      "id": "tech_en_093",
+      "question": "Why do tall skyscrapers usually sway a noticeable amount in the wind?",
+      "answers": [
+        {
+          "text": "A flexible structure absorbs wind energy better than a rigid one",
+          "correct": true
+        },
+        {
+          "text": "It saves on steel by allowing some movement",
+          "correct": false
+        },
+        {
+          "text": "Sway is required to keep elevators balanced",
+          "correct": false
+        }
+      ],
+      "difficulty": "medium",
+      "fun_fact": "Skyscrapers are designed to flex — sometimes a metre or more at the top — so the wind's energy is dissipated instead of shattering rigid joints. The Taipei 101 even has a huge tuned mass damper hanging inside to soak up the motion.",
+      "category": "Technology"
+    },
+    {
+      "id": "tech_en_094",
+      "question": "Why is concrete usually reinforced with steel bars inside?",
+      "answers": [
+        {
+          "text": "Concrete is strong in compression but weak in tension",
+          "correct": true
+        },
+        {
+          "text": "Steel keeps the concrete from drying too fast",
+          "correct": false
+        },
+        {
+          "text": "The bars conduct away electrical surges during storms",
+          "correct": false
+        }
+      ],
+      "difficulty": "easy",
+      "fun_fact": "Squeeze concrete and it shrugs you off; pull it apart and it cracks easily. Steel bars handle the pulling forces — and conveniently expand and contract at almost the same rate as concrete, so they don't crack the slab in temperature swings.",
+      "category": "Technology"
+    },
+    {
+      "id": "tech_en_095",
+      "question": "Why are large suspension bridges almost always cleaned and painted continuously?",
+      "answers": [
+        {
+          "text": "Rust would slowly weaken the steel cables and deck",
+          "correct": true
+        },
+        {
+          "text": "Paint refreshes the bridge's radar signature for aviation",
+          "correct": false
+        },
+        {
+          "text": "Inspections legally require visible new paint each year",
+          "correct": false
+        }
+      ],
+      "difficulty": "easy",
+      "fun_fact": "The Golden Gate Bridge's iconic 'international orange' is constantly being touched up — a small crew has been painting it nearly nonstop since 1937. The aim is not aesthetics but corrosion protection.",
+      "category": "Technology"
+    },
+    {
+      "id": "tech_en_096",
+      "question": "Why did the Morris Worm of 1988 inadvertently bring down much of the early internet?",
+      "answers": [
+        {
+          "text": "A bug made it infect each machine many times, overloading it",
+          "correct": true
+        },
+        {
+          "text": "It deliberately deleted system files on every host",
+          "correct": false
+        },
+        {
+          "text": "It cut transatlantic cables by attacking router firmware",
+          "correct": false
+        }
+      ],
+      "difficulty": "hard",
+      "fun_fact": "Robert Morris meant to gauge the size of the internet, not crash it — but his worm reinfected machines repeatedly, grinding them to a halt. He became the first person convicted under the US Computer Fraud and Abuse Act.",
+      "category": "Technology"
+    },
+    {
+      "id": "tech_en_097",
+      "question": "Why are passwords typically stored as 'hashes' rather than as plain text?",
+      "answers": [
+        {
+          "text": "A stolen hash file does not reveal the original passwords",
+          "correct": true
+        },
+        {
+          "text": "Hashes take less disk space than passwords",
+          "correct": false
+        },
+        {
+          "text": "Hashes are required by law in most countries",
+          "correct": false
+        }
+      ],
+      "difficulty": "medium",
+      "fun_fact": "A good hash function turns a password into a fixed-length scramble that can't be reversed. The site only stores the hash and re-hashes what you type to compare. Even an attacker who steals the database has to guess each password and rehash.",
+      "category": "Technology"
+    },
+    {
+      "id": "tech_en_098",
+      "question": "Why was the Linux operating system originally announced as 'just a hobby, won't be big and professional like gnu'?",
+      "answers": [
+        {
+          "text": "Linus Torvalds posted that line on a Usenet group in 1991",
+          "correct": true
+        },
+        {
+          "text": "It was Richard Stallman's review of an early Linux release",
+          "correct": false
+        },
+        {
+          "text": "Bell Labs added it as a footnote to a Unix manual",
+          "correct": false
+        }
+      ],
+      "difficulty": "medium",
+      "fun_fact": "Torvalds, then a student in Helsinki, modestly underestimated his project in his August 1991 announcement on comp.os.minix. Today, Linux runs most servers, all of Android, and every one of the world's fastest supercomputers.",
+      "category": "Technology"
+    },
+    {
+      "id": "tech_en_099",
+      "question": "Why does the open-source license 'BSD' have so many slightly different versions?",
+      "answers": [
+        {
+          "text": "Various clauses were dropped over time as legally unnecessary",
+          "correct": true
+        },
+        {
+          "text": "Each US university wanted its own variant",
+          "correct": false
+        },
+        {
+          "text": "International translations changed the legal meaning",
+          "correct": false
+        }
+      ],
+      "difficulty": "hard",
+      "fun_fact": "The original BSD license had four clauses, including an 'advertising clause' requiring every ad to credit Berkeley. Over the years projects trimmed it down — modern 2-clause and 3-clause BSD are the survivors.",
+      "category": "Technology"
+    },
+    {
+      "id": "tech_en_100",
+      "question": "Why does the Mozilla Firefox browser have a fox wrapped around a globe as its logo?",
+      "answers": [
+        {
+          "text": "The name refers to a red panda — sometimes called a 'firefox'",
+          "correct": true
+        },
+        {
+          "text": "Mozilla wanted a wild-animal logo for every product",
+          "correct": false
+        },
+        {
+          "text": "An early intern's pet fox inspired the original sketch",
+          "correct": false
+        }
+      ],
+      "difficulty": "medium",
+      "fun_fact": "The Firefox name is the English nickname for the red panda. Mozilla later sponsored two real red pandas at Knoxville Zoo. The logo is sometimes mistaken for a regular fox, but the project has always meant the panda.",
+      "category": "Technology"
     }
   ]
 }

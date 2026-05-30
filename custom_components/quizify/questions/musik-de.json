@@ -579,6 +579,594 @@
       "difficulty": "hard",
       "fun_fact": "Dick Rowe lehnte die Beatles am 1. Januar 1962 ab. Brian Epstein war übrigens der Beatles-Manager, George Martin ihr legendärer Produzent bei EMI/Parlophone.",
       "category": "Musik"
+    },
+    {
+      "id": "musik_de_052",
+      "question": "Welches Tier inspirierte Camille Saint-Saëns zu einem berühmten Cello-Solo aus „Der Karneval der Tiere\"?",
+      "answers": [
+        {"text": "Der Schwan", "correct": true},
+        {"text": "Der Elefant", "correct": false},
+        {"text": "Der Löwe", "correct": false}
+      ],
+      "difficulty": "easy",
+      "fun_fact": "„Le Cygne\" (Der Schwan) ist das einzige Stück aus dem Zyklus, dessen Aufführung Saint-Saëns zu Lebzeiten erlaubte. Den Rest hielt er für zu albern für seinen Ruf.",
+      "category": "Musik"
+    },
+    {
+      "id": "musik_de_053",
+      "question": "Wie viele Streicher sitzen typischerweise in einem klassischen Sinfonieorchester der „Großen Besetzung\"?",
+      "answers": [
+        {"text": "Etwa 60", "correct": true},
+        {"text": "Etwa 20", "correct": false},
+        {"text": "Etwa 120", "correct": false}
+      ],
+      "difficulty": "medium",
+      "fun_fact": "Die Standard-Streichergruppe besteht aus etwa 16 ersten Geigen, 14 zweiten Geigen, 12 Bratschen, 10 Celli und 8 Kontrabässen — zusammen rund 60 Musiker.",
+      "category": "Musik"
+    },
+    {
+      "id": "musik_de_054",
+      "question": "Welcher Komponist schrieb seine berühmte „Moldau\" über einen Fluss, obwohl er beim Komponieren bereits völlig taub war?",
+      "answers": [
+        {"text": "Bedřich Smetana", "correct": true},
+        {"text": "Antonín Dvořák", "correct": false},
+        {"text": "Leoš Janáček", "correct": false}
+      ],
+      "difficulty": "hard",
+      "fun_fact": "Smetana komponierte „Die Moldau\" 1874 — zu diesem Zeitpunkt war er bereits ein Jahr lang vollständig ertaubt, ähnlich wie Beethoven mit der 9. Sinfonie.",
+      "category": "Musik"
+    },
+    {
+      "id": "musik_de_055",
+      "question": "Was war Antonio Vivaldis Hauptberuf neben dem Komponieren?",
+      "answers": [
+        {"text": "Katholischer Priester", "correct": true},
+        {"text": "Schiffskapitän in Venedig", "correct": false},
+        {"text": "Mathematik-Professor", "correct": false}
+      ],
+      "difficulty": "medium",
+      "fun_fact": "Vivaldi wurde 1703 zum Priester geweiht und hieß wegen seiner roten Haare „il prete rosso\" — der rote Priester. Er unterrichtete am Mädchenwaisenhaus Ospedale della Pietà in Venedig.",
+      "category": "Musik"
+    },
+    {
+      "id": "musik_de_056",
+      "question": "Welche Tonart gilt traditionell als die „Trauer-Tonart\" der Klassik?",
+      "answers": [
+        {"text": "d-Moll", "correct": true},
+        {"text": "C-Dur", "correct": false},
+        {"text": "G-Dur", "correct": false}
+      ],
+      "difficulty": "medium",
+      "fun_fact": "Mozart wählte d-Moll für sein Requiem, Bach für die „Toccata und Fuge\". Der Charakter wurde schon im 18. Jh. von Theoretikern wie Mattheson als „andächtig-tragisch\" beschrieben.",
+      "category": "Musik"
+    },
+    {
+      "id": "musik_de_057",
+      "question": "Wie viele vollständige Sinfonien komponierte Gustav Mahler?",
+      "answers": [
+        {"text": "Neun (die zehnte blieb unvollendet)", "correct": true},
+        {"text": "Vier", "correct": false},
+        {"text": "Einundvierzig", "correct": false}
+      ],
+      "difficulty": "hard",
+      "fun_fact": "Mahler glaubte an den „Fluch der Neunten\" — die Vorstellung, dass nach Beethovens 9. jeder große Sinfoniker bei dieser Zahl sterben würde. Er starb tatsächlich an seiner 10.",
+      "category": "Musik"
+    },
+    {
+      "id": "musik_de_058",
+      "question": "In welcher Stadt fand 1913 die berühmte Skandal-Uraufführung von Strawinskys „Le Sacre du printemps\" statt?",
+      "answers": [
+        {"text": "Paris", "correct": true},
+        {"text": "Wien", "correct": false},
+        {"text": "Sankt Petersburg", "correct": false}
+      ],
+      "difficulty": "medium",
+      "fun_fact": "Die Premiere am 29. Mai 1913 im Théâtre des Champs-Élysées löste einen Tumult aus — das Publikum prügelte sich, die Polizei musste eingreifen. Heute gilt das Werk als Meilenstein der Moderne.",
+      "category": "Musik"
+    },
+    {
+      "id": "musik_de_059",
+      "question": "Welche Form hat Richard Wagners „Ring des Nibelungen\" in einer typischen Gesamtaufführung?",
+      "answers": [
+        {"text": "Vier Opern an vier Abenden, insgesamt etwa 15 Stunden Musik", "correct": true},
+        {"text": "Eine durchgängige Oper von etwa fünf Stunden", "correct": false},
+        {"text": "Sieben Akte ohne Pause an einem Abend", "correct": false}
+      ],
+      "difficulty": "easy",
+      "fun_fact": "Der Zyklus besteht aus „Das Rheingold\", „Die Walküre\", „Siegfried\" und „Götterdämmerung\". In Bayreuth wird er traditionell innerhalb einer Festspielwoche aufgeführt.",
+      "category": "Musik"
+    },
+    {
+      "id": "musik_de_060",
+      "question": "Welcher Komponist arrangierte den berühmten „Hochzeitsmarsch\" aus dem „Sommernachtstraum\"?",
+      "answers": [
+        {"text": "Felix Mendelssohn Bartholdy", "correct": true},
+        {"text": "Richard Wagner", "correct": false},
+        {"text": "Franz Liszt", "correct": false}
+      ],
+      "difficulty": "easy",
+      "fun_fact": "Mendelssohn schrieb den Marsch 1842 als Schauspielmusik. Ironischerweise stammt der traditionelle „Einzugsmarsch\" („Hier kommt die Braut\") von Wagner — aus „Lohengrin\".",
+      "category": "Musik"
+    },
+    {
+      "id": "musik_de_061",
+      "question": "Welche Rockband ist die meistverkaufte aller Zeiten?",
+      "answers": [
+        {"text": "The Beatles", "correct": true},
+        {"text": "The Rolling Stones", "correct": false},
+        {"text": "AC/DC", "correct": false}
+      ],
+      "difficulty": "easy",
+      "fun_fact": "Die Beatles haben weltweit schätzungsweise über 600 Millionen Tonträger verkauft — laut RIAA und Guinness die meistverkaufte Band der Musikgeschichte.",
+      "category": "Musik"
+    },
+    {
+      "id": "musik_de_062",
+      "question": "Wie lange dauerte die Aufnahme von Queens „Bohemian Rhapsody\" insgesamt?",
+      "answers": [
+        {"text": "Etwa drei Wochen mit über 180 Overdubs", "correct": true},
+        {"text": "Ein einziger Tag mit Live-Take", "correct": false},
+        {"text": "Über sechs Monate verteilt auf zwei Jahre", "correct": false}
+      ],
+      "difficulty": "medium",
+      "fun_fact": "Der Operetten-Abschnitt erforderte so viele Overdubs, dass das analoge Tonband nach den Sessions fast durchsichtig war. Producer Roy Thomas Baker arbeitete in fünf Studios parallel.",
+      "category": "Musik"
+    },
+    {
+      "id": "musik_de_063",
+      "question": "Welche Band hatte ursprünglich den Namen „On a Friday\"?",
+      "answers": [
+        {"text": "Radiohead", "correct": true},
+        {"text": "Coldplay", "correct": false},
+        {"text": "Muse", "correct": false}
+      ],
+      "difficulty": "hard",
+      "fun_fact": "Die Band benannte sich nach dem Talking-Heads-Song „Radio Head\" um, kurz bevor sie 1992 ihren ersten Plattenvertrag mit EMI unterschrieb.",
+      "category": "Musik"
+    },
+    {
+      "id": "musik_de_064",
+      "question": "Welcher Rocksong wurde so oft in Gitarrenläden gespielt, dass viele Geschäfte ihn auf Schildern verbieten?",
+      "answers": [
+        {"text": "„Stairway to Heaven\" von Led Zeppelin", "correct": true},
+        {"text": "„Hotel California\" von den Eagles", "correct": false},
+        {"text": "„Sweet Child o' Mine\" von Guns N' Roses", "correct": false}
+      ],
+      "difficulty": "medium",
+      "fun_fact": "Im Film „Wayne's World\" (1992) hängt im Gitarrenladen ein Schild: „No Stairway to Heaven\". Viele reale Läden haben das übernommen — der Riff wurde zum Klischee.",
+      "category": "Musik"
+    },
+    {
+      "id": "musik_de_065",
+      "question": "Welches Album von Fleetwood Mac entstand mitten in den Trennungen aller Bandmitglieder voneinander?",
+      "answers": [
+        {"text": "Rumours (1977)", "correct": true},
+        {"text": "Tusk (1979)", "correct": false},
+        {"text": "Mirage (1982)", "correct": false}
+      ],
+      "difficulty": "medium",
+      "fun_fact": "Während der Aufnahmen trennten sich Lindsey Buckingham und Stevie Nicks, John und Christine McVie ließen sich scheiden, Mick Fleetwoods Ehe brach auseinander. Das Album verkaufte sich über 40 Millionen Mal.",
+      "category": "Musik"
+    },
+    {
+      "id": "musik_de_067",
+      "question": "Aus welcher Stadt stammte die einflussreiche Plattenfirma Motown, die in den 1960ern den „Sound of Young America\" prägte?",
+      "answers": [
+        {"text": "Detroit", "correct": true},
+        {"text": "Memphis", "correct": false},
+        {"text": "Philadelphia", "correct": false}
+      ],
+      "difficulty": "medium",
+      "fun_fact": "Berry Gordy gründete Motown 1959 in Detroit — der Name ist eine Kombination aus „Motor\" und „Town\" wegen der Autoindustrie. Künstler wie The Supremes, Stevie Wonder und Marvin Gaye starteten dort.",
+      "category": "Musik"
+    },
+    {
+      "id": "musik_de_068",
+      "question": "Welche britische Sängerin verkaufte mit ihrem Album „21\" über 31 Millionen Exemplare?",
+      "answers": [
+        {"text": "Adele", "correct": true},
+        {"text": "Amy Winehouse", "correct": false},
+        {"text": "Dua Lipa", "correct": false}
+      ],
+      "difficulty": "easy",
+      "fun_fact": "„21\" (2011) war zwei Jahre in Folge das weltweit meistverkaufte Album. Adele schrieb es nach einer Trennung — der Titel verweist auf ihr damaliges Alter.",
+      "category": "Musik"
+    },
+    {
+      "id": "musik_de_069",
+      "question": "Welche Band veröffentlichte 1973 das Konzeptalbum „The Dark Side of the Moon\" in einer Aufnahmesitzung in den Abbey-Road-Studios?",
+      "answers": [
+        {"text": "Pink Floyd", "correct": true},
+        {"text": "King Crimson", "correct": false},
+        {"text": "Genesis", "correct": false}
+      ],
+      "difficulty": "easy",
+      "fun_fact": "Die Aufnahmen liefen über neun Monate — parallel arbeiteten dort die Beatles an „Let It Be\"-Resten und Wings an einem neuen Album. Die berühmte Prismen-Cover-Grafik stammt von Storm Thorgerson.",
+      "category": "Musik"
+    },
+    {
+      "id": "musik_de_070",
+      "question": "Welcher Stadt verdankt der Begriff „Grunge\" seine musikalische Heimat?",
+      "answers": [
+        {"text": "Seattle", "correct": true},
+        {"text": "Detroit", "correct": false},
+        {"text": "Boston", "correct": false}
+      ],
+      "difficulty": "easy",
+      "fun_fact": "Nirvana, Pearl Jam, Soundgarden und Alice in Chains kamen alle aus dem Großraum Seattle. Das Label Sub Pop prägte den Sound Ende der 1980er entscheidend mit.",
+      "category": "Musik"
+    },
+    {
+      "id": "musik_de_071",
+      "question": "Welcher Jazzmusiker gilt mit „Kind of Blue\" (1959) als Begründer des modalen Jazz?",
+      "answers": [
+        {"text": "Miles Davis", "correct": true},
+        {"text": "John Coltrane", "correct": false},
+        {"text": "Dizzy Gillespie", "correct": false}
+      ],
+      "difficulty": "medium",
+      "fun_fact": "„Kind of Blue\" ist bis heute das meistverkaufte Jazz-Album aller Zeiten. Coltrane spielte mit, ebenso Bill Evans am Klavier — aufgenommen wurde in nur zwei Sessions, fast komplett ohne Proben.",
+      "category": "Musik"
+    },
+    {
+      "id": "musik_de_072",
+      "question": "In welchem New Yorker Stadtteil entstand in den 1970ern die Hip-Hop-Kultur?",
+      "answers": [
+        {"text": "The Bronx", "correct": true},
+        {"text": "Brooklyn", "correct": false},
+        {"text": "Harlem", "correct": false}
+      ],
+      "difficulty": "medium",
+      "fun_fact": "DJ Kool Herc legte am 11. August 1973 auf einer Block-Party an der Sedgwick Avenue im West Bronx auf — bis heute gilt das als symbolische Geburtsstunde des Hip-Hop.",
+      "category": "Musik"
+    },
+    {
+      "id": "musik_de_073",
+      "question": "Welches Instrument spielte Jazz-Legende Charlie Parker hauptsächlich?",
+      "answers": [
+        {"text": "Altsaxophon", "correct": true},
+        {"text": "Trompete", "correct": false},
+        {"text": "Klarinette", "correct": false}
+      ],
+      "difficulty": "easy",
+      "fun_fact": "Parker, Spitzname „Bird\", prägte zusammen mit Dizzy Gillespie in den 1940ern den Bebop. Der New Yorker Jazz-Club „Birdland\" wurde 1949 nach ihm benannt.",
+      "category": "Musik"
+    },
+    {
+      "id": "musik_de_074",
+      "question": "Welcher Rapper veröffentlichte 2017 mit „DAMN.\" das erste Hip-Hop-Album, das einen Pulitzer-Preis für Musik gewann?",
+      "answers": [
+        {"text": "Kendrick Lamar", "correct": true},
+        {"text": "Jay-Z", "correct": false},
+        {"text": "Drake", "correct": false}
+      ],
+      "difficulty": "medium",
+      "fun_fact": "Lamar erhielt den Pulitzer Prize for Music 2018 — vor ihm waren ausschließlich Klassik- und Jazzwerke ausgezeichnet worden. Die Jury lobte „virtuose Lyrik\" und „authentische afroamerikanische Lebensrealität\".",
+      "category": "Musik"
+    },
+    {
+      "id": "musik_de_075",
+      "question": "Welcher Jazz-Stil entstand in den späten 1940ern als reaktion auf den tanzbaren Swing — schnell, virtuos und nicht zum Tanzen gedacht?",
+      "answers": [
+        {"text": "Bebop", "correct": true},
+        {"text": "Dixieland", "correct": false},
+        {"text": "Smooth Jazz", "correct": false}
+      ],
+      "difficulty": "medium",
+      "fun_fact": "Bebop entstand in New Yorker Clubs wie dem Minton's Playhouse in Harlem. Charlie Parker, Dizzy Gillespie und Thelonious Monk machten die Improvisation zum Mittelpunkt — bewusst weg von der Tanzfunktion.",
+      "category": "Musik"
+    },
+    {
+      "id": "musik_de_076",
+      "question": "Welches Hip-Hop-Duo veröffentlichte 1986 mit „Walk This Way\" zusammen mit Aerosmith einen frühen Rap-Rock-Crossover-Hit?",
+      "answers": [
+        {"text": "Run-DMC", "correct": true},
+        {"text": "Beastie Boys", "correct": false},
+        {"text": "Public Enemy", "correct": false}
+      ],
+      "difficulty": "hard",
+      "fun_fact": "Die Aerosmith-Originalfassung von 1975 war ein moderater Hit. Run-DMCs Cover machte sowohl Hip-Hop für ein weißes MTV-Publikum als auch Aerosmith für eine neue Generation populär.",
+      "category": "Musik"
+    },
+    {
+      "id": "musik_de_077",
+      "question": "Welche Sängerin gilt als „Queen of Soul\"?",
+      "answers": [
+        {"text": "Aretha Franklin", "correct": true},
+        {"text": "Diana Ross", "correct": false},
+        {"text": "Gladys Knight", "correct": false}
+      ],
+      "difficulty": "easy",
+      "fun_fact": "Aretha Franklin erhielt den Titel offiziell schon in den späten 1960ern. 1987 war sie die erste Frau, die in die Rock and Roll Hall of Fame aufgenommen wurde.",
+      "category": "Musik"
+    },
+    {
+      "id": "musik_de_078",
+      "question": "Welcher Jazz-Club im Greenwich Village gilt seit 1935 als eine der wichtigsten Jazz-Bühnen der Welt?",
+      "answers": [
+        {"text": "Village Vanguard", "correct": true},
+        {"text": "Cotton Club", "correct": false},
+        {"text": "Apollo Theater", "correct": false}
+      ],
+      "difficulty": "hard",
+      "fun_fact": "Im Village Vanguard wurden über 100 Live-Alben aufgenommen — u.a. von John Coltrane, Bill Evans und Sonny Rollins. Der Cotton Club lag in Harlem, das Apollo Theater ebenfalls.",
+      "category": "Musik"
+    },
+    {
+      "id": "musik_de_079",
+      "question": "Welche deutsche Band gilt als wichtige Vorläuferin der elektronischen Musik weltweit?",
+      "answers": [
+        {"text": "Kraftwerk", "correct": true},
+        {"text": "Scorpions", "correct": false},
+        {"text": "Rammstein", "correct": false}
+      ],
+      "difficulty": "easy",
+      "fun_fact": "Kraftwerk aus Düsseldorf prägte mit Alben wie „Autobahn\" (1974) und „Trans Europa Express\" (1977) den Sound von Techno, Synthpop und Hip-Hop maßgeblich.",
+      "category": "Musik"
+    },
+    {
+      "id": "musik_de_080",
+      "question": "Was bedeutet die Abkürzung „BPM\" in der elektronischen Musik?",
+      "answers": [
+        {"text": "Beats per Minute", "correct": true},
+        {"text": "Bass per Mix", "correct": false},
+        {"text": "Bridge per Measure", "correct": false}
+      ],
+      "difficulty": "easy",
+      "fun_fact": "Klassischer Techno läuft meist bei 120–135 BPM, House bei 118–135 BPM, Drum'n'Bass dagegen bei 160–180 BPM. Hardcore-Gabber kann 200+ BPM erreichen.",
+      "category": "Musik"
+    },
+    {
+      "id": "musik_de_081",
+      "question": "Welcher Synthesizer aus den 1980ern prägte mit seinem FM-Klang die Pop- und Filmmusik dieser Dekade maßgeblich?",
+      "answers": [
+        {"text": "Yamaha DX7", "correct": true},
+        {"text": "Moog Minimoog", "correct": false},
+        {"text": "Roland TR-808", "correct": false}
+      ],
+      "difficulty": "medium",
+      "fun_fact": "Der DX7 erschien 1983 und verkaufte sich über 200.000 Mal — bis dahin Synthesizer-Rekord. Sein typischer „E-Piano\"-Sound ist auf unzähligen Pop-Balladen der 80er zu hören.",
+      "category": "Musik"
+    },
+    {
+      "id": "musik_de_082",
+      "question": "Welche Drum-Machine prägte mit ihrem charakteristischen Bass-Kick maßgeblich Hip-Hop und elektronische Musik?",
+      "answers": [
+        {"text": "Roland TR-808", "correct": true},
+        {"text": "Yamaha RX5", "correct": false},
+        {"text": "Korg DDM-110", "correct": false}
+      ],
+      "difficulty": "medium",
+      "fun_fact": "Die 808 erschien 1980, war kommerziell zunächst ein Flop und wurde wegen ihres „unrealistischen\" Klangs ausgerangiert. Genau dieser Sound wurde später Kult — von Marvin Gaye bis Kanye West.",
+      "category": "Musik"
+    },
+    {
+      "id": "musik_de_083",
+      "question": "In welchem Genre gilt ein Tempo um 174 BPM als Standard?",
+      "answers": [
+        {"text": "Drum and Bass", "correct": true},
+        {"text": "House", "correct": false},
+        {"text": "Reggae", "correct": false}
+      ],
+      "difficulty": "hard",
+      "fun_fact": "Drum and Bass entstand Mitte der 1990er aus dem britischen Jungle. Die schnellen Breakbeats werden meist mit halb so schnellen Basslines kombiniert, was den typischen „Double-Time\"-Eindruck erzeugt.",
+      "category": "Musik"
+    },
+    {
+      "id": "musik_de_084",
+      "question": "In welcher Stadt entstand in den späten 1980ern die Techno-Szene um Künstler wie Juan Atkins und Derrick May?",
+      "answers": [
+        {"text": "Detroit", "correct": true},
+        {"text": "Chicago", "correct": false},
+        {"text": "Berlin", "correct": false}
+      ],
+      "difficulty": "medium",
+      "fun_fact": "Die „Belleville Three\" — Juan Atkins, Kevin Saunderson und Derrick May — gelten als Pioniere des Detroit-Techno. Chicago dagegen war die Geburtsstadt des House.",
+      "category": "Musik"
+    },
+    {
+      "id": "musik_de_085",
+      "question": "Welcher französische Duo-Act prägte mit Helmen die elektronische Tanzmusik der 2000er entscheidend mit?",
+      "answers": [
+        {"text": "Daft Punk", "correct": true},
+        {"text": "Justice", "correct": false},
+        {"text": "Air", "correct": false}
+      ],
+      "difficulty": "easy",
+      "fun_fact": "Thomas Bangalter und Guy-Manuel de Homem-Christo traten seit 1999 fast immer mit Robotermasken auf. 2021 löste sich das Duo nach 28 Jahren auf.",
+      "category": "Musik"
+    },
+    {
+      "id": "musik_de_086",
+      "question": "Welcher deutsche Sänger landete 1984 mit „99 Luftballons\" in den USA einen Nummer-2-Hit auf Deutsch?",
+      "answers": [
+        {"text": "Es war eine Sängerin: Nena", "correct": true},
+        {"text": "Falco", "correct": false},
+        {"text": "Herbert Grönemeyer", "correct": false}
+      ],
+      "difficulty": "easy",
+      "fun_fact": "Die deutschsprachige Version erreichte Platz 2 der US-Billboard-Hot-100. Die englische Version „99 Red Balloons\" lief parallel und wurde in Großbritannien Nummer 1.",
+      "category": "Musik"
+    },
+    {
+      "id": "musik_de_087",
+      "question": "Welche deutsche Band hatte 1999 mit „Du hast\" einen weltweiten Hit?",
+      "answers": [
+        {"text": "Rammstein", "correct": true},
+        {"text": "Die Toten Hosen", "correct": false},
+        {"text": "Tokio Hotel", "correct": false}
+      ],
+      "difficulty": "easy",
+      "fun_fact": "„Du hast\" erschien 1997 auf „Sehnsucht\" und wurde 1999 durch die Verwendung im „Matrix\"-Soundtrack international bekannt. Rammstein singt bis heute fast ausschließlich auf Deutsch.",
+      "category": "Musik"
+    },
+    {
+      "id": "musik_de_088",
+      "question": "Welches Genre bezeichnete in Westdeutschland Ende der 1970er die Bewegung um Künstler wie Nena, Falco oder Joachim Witt?",
+      "answers": [
+        {"text": "Neue Deutsche Welle (NDW)", "correct": true},
+        {"text": "Krautrock", "correct": false},
+        {"text": "Deutschpop", "correct": false}
+      ],
+      "difficulty": "medium",
+      "fun_fact": "Die NDW entstand ab 1978 als deutsche Antwort auf Punk und New Wave. Bekannte Hits: „Da Da Da\" (Trio), „Goldener Reiter\" (Joachim Witt), „99 Luftballons\" (Nena).",
+      "category": "Musik"
+    },
+    {
+      "id": "musik_de_089",
+      "question": "Welches deutsche Musikgenre der späten 1960er und 1970er beeinflusste später Brian Eno und David Bowie maßgeblich?",
+      "answers": [
+        {"text": "Krautrock", "correct": true},
+        {"text": "Schlager", "correct": false},
+        {"text": "Liedermacher-Folk", "correct": false}
+      ],
+      "difficulty": "medium",
+      "fun_fact": "Bands wie Can, Neu!, Faust und Tangerine Dream prägten den Krautrock. Bowie verbrachte Ende der 70er bewusst Zeit in Berlin und nahm dort seine „Berlin-Trilogie\" auf.",
+      "category": "Musik"
+    },
+    {
+      "id": "musik_de_090",
+      "question": "Welche deutsche Schlagersängerin verkaufte mit „Atemlos durch die Nacht\" 2013 einen der erfolgreichsten deutschen Schlager-Hits des 21. Jahrhunderts?",
+      "answers": [
+        {"text": "Helene Fischer", "correct": true},
+        {"text": "Andrea Berg", "correct": false},
+        {"text": "Vanessa Mai", "correct": false}
+      ],
+      "difficulty": "easy",
+      "fun_fact": "„Atemlos durch die Nacht\" stammt aus dem Album „Farbenspiel\", das sich allein in Deutschland über 2 Millionen Mal verkaufte und mehrfach Diamant-Status erhielt.",
+      "category": "Musik"
+    },
+    {
+      "id": "musik_de_091",
+      "question": "Wer sang den deutschen Eurovision-Sieger-Beitrag „Ein bisschen Frieden\" 1982?",
+      "answers": [
+        {"text": "Nicole", "correct": true},
+        {"text": "Lena Meyer-Landrut", "correct": false},
+        {"text": "Katja Ebstein", "correct": false}
+      ],
+      "difficulty": "medium",
+      "fun_fact": "Nicole war 17, als sie 1982 in Harrogate gewann — der erste deutsche ESC-Sieg überhaupt. Der zweite kam erst 2010 durch Lena mit „Satellite\".",
+      "category": "Musik"
+    },
+    {
+      "id": "musik_de_092",
+      "question": "Welche deutsche Band hatte 1983 mit „Da Da Da\" einen Welthit mit einer minimalistischen Casio-Begleitung?",
+      "answers": [
+        {"text": "Trio", "correct": true},
+        {"text": "Spider Murphy Gang", "correct": false},
+        {"text": "Extrabreit", "correct": false}
+      ],
+      "difficulty": "hard",
+      "fun_fact": "Das Trio aus Großenkneten benutzte einen Casio-VL-1-Heimsynthesizer. „Da Da Da\" verkaufte sich weltweit über 13 Millionen Mal — auch in den USA und Japan.",
+      "category": "Musik"
+    },
+    {
+      "id": "musik_de_093",
+      "question": "Welcher österreichische Künstler erreichte 1986 mit „Rock Me Amadeus\" als erster und bisher einziger Deutschsprachiger Platz 1 der US-Billboard-Hot-100?",
+      "answers": [
+        {"text": "Falco", "correct": true},
+        {"text": "Udo Jürgens", "correct": false},
+        {"text": "Hubert von Goisern", "correct": false}
+      ],
+      "difficulty": "medium",
+      "fun_fact": "Falco (Johann Hölzel) erreichte am 29. März 1986 die US-Spitze. Auch sein Album „Falco 3\" stand auf Platz 1 — beides Premieren für einen deutschsprachigen Act.",
+      "category": "Musik"
+    },
+    {
+      "id": "musik_de_095",
+      "question": "Welche deutsche Stadt gilt seit den 1990ern als Welthauptstadt des Technos?",
+      "answers": [
+        {"text": "Berlin", "correct": true},
+        {"text": "Hamburg", "correct": false},
+        {"text": "Frankfurt am Main", "correct": false}
+      ],
+      "difficulty": "easy",
+      "fun_fact": "Nach dem Mauerfall öffneten in Berliner Industrieruinen legendäre Clubs wie Tresor und später das Berghain. 2024 wurde die Berliner Techno-Kultur in die UNESCO-Liste des immateriellen Kulturerbes aufgenommen.",
+      "category": "Musik"
+    },
+    {
+      "id": "musik_de_096",
+      "question": "Wie viele Hertz hat der Kammerton „a'\", auf den heute international gestimmt wird?",
+      "answers": [
+        {"text": "440 Hz", "correct": true},
+        {"text": "432 Hz", "correct": false},
+        {"text": "415 Hz", "correct": false}
+      ],
+      "difficulty": "medium",
+      "fun_fact": "Die ISO-Norm legt seit 1955 das „a'\" auf 440 Hz fest. Historisch lag der Kammerton oft tiefer — barocke Orchester spielen heute meist mit 415 Hz, was etwa einen Halbton tiefer ist.",
+      "category": "Musik"
+    },
+    {
+      "id": "musik_de_097",
+      "question": "Wie nennt man die Spielanweisung „sehr leise\" in der Notenschrift?",
+      "answers": [
+        {"text": "pianissimo (pp)", "correct": true},
+        {"text": "forte (f)", "correct": false},
+        {"text": "moderato (mod.)", "correct": false}
+      ],
+      "difficulty": "easy",
+      "fun_fact": "Pianissimo steht für „sehr leise\", forte für „laut\" und moderato ist eine Tempo-Angabe („mäßig schnell\"). Tschaikowski schrieb in seiner 6. Sinfonie sogar „pppppp\" — ein Witz unter Musikern.",
+      "category": "Musik"
+    },
+    {
+      "id": "musik_de_098",
+      "question": "Wie heißt die Kunst, Akkorde und Stimmen so zu verknüpfen, dass mehrere Melodien gleichzeitig klingen?",
+      "answers": [
+        {"text": "Kontrapunkt", "correct": true},
+        {"text": "Kontrabass", "correct": false},
+        {"text": "Kontraktion", "correct": false}
+      ],
+      "difficulty": "medium",
+      "fun_fact": "Der strenge Kontrapunkt erreichte mit Bachs „Kunst der Fuge\" einen Höhepunkt. Das Wort kommt vom lateinischen „punctus contra punctum\" — Note gegen Note.",
+      "category": "Musik"
+    },
+    {
+      "id": "musik_de_099",
+      "question": "Welcher Werkstoff wird traditionell für die Decke einer hochwertigen Konzertgeige verwendet?",
+      "answers": [
+        {"text": "Fichtenholz", "correct": true},
+        {"text": "Eichenholz", "correct": false},
+        {"text": "Mahagoni", "correct": false}
+      ],
+      "difficulty": "hard",
+      "fun_fact": "Die Decke wird fast immer aus Fichte gefertigt, der Boden meist aus Ahorn. Italienische Geigenbauer bevorzugten Fichten aus dem Val di Fiemme — dem sogenannten „klingenden Wald\".",
+      "category": "Musik"
+    },
+    {
+      "id": "musik_de_100",
+      "question": "Was ist eine „Coda\" in einem Musikstück?",
+      "answers": [
+        {"text": "Ein abschließender Teil am Ende eines Stücks", "correct": true},
+        {"text": "Der Mittelteil einer Sonate", "correct": false},
+        {"text": "Die Einleitung vor dem Hauptthema", "correct": false}
+      ],
+      "difficulty": "medium",
+      "fun_fact": "„Coda\" kommt vom italienischen Wort für „Schwanz\". Sie schließt ein Stück oder einen Satz musikalisch ab — Beethoven dehnte Codas in seinen Sinfonien teils zu eigenständigen Klangereignissen aus.",
+      "category": "Musik"
+    },
+    {
+      "id": "musik_de_101",
+      "question": "Welche populäre Konzert-Tournee gilt mit über 2 Milliarden US-Dollar Bruttoeinnahmen als umsatzstärkste der Musikgeschichte?",
+      "answers": [
+        {"text": "Taylor Swifts „Eras Tour\"", "correct": true},
+        {"text": "Coldplays „Music of the Spheres\"-Tour", "correct": false},
+        {"text": "Elton Johns „Farewell Yellow Brick Road\"-Tour", "correct": false}
+      ],
+      "difficulty": "medium",
+      "fun_fact": "Die „Eras Tour\" (2023–2024) brach als erste Konzert-Tournee die 2-Milliarden-Dollar-Marke. Die Setlist umfasste über 40 Songs und dauerte rund drei Stunden pro Show.",
+      "category": "Musik"
+    },
+    {
+      "id": "musik_de_102",
+      "question": "Wie heißt das berühmte Klassik-Festival, das Richard Wagner ab 1876 in einer eigens dafür gebauten Stadt veranstaltete?",
+      "answers": [
+        {"text": "Die Bayreuther Festspiele", "correct": true},
+        {"text": "Die Salzburger Festspiele", "correct": false},
+        {"text": "Die Festspiele von Verona", "correct": false}
+      ],
+      "difficulty": "hard",
+      "fun_fact": "Wagner ließ in Bayreuth ein eigenes Festspielhaus mit verstecktem Orchestergraben bauen. Die Eröffnung 1876 mit dem kompletten „Ring\"-Zyklus war ein finanzielles Desaster — bis Ludwig II. die Schulden übernahm.",
+      "category": "Musik"
     }
   ]
 }

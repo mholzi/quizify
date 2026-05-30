@@ -1011,6 +1011,618 @@
       "difficulty": "hard",
       "fun_fact": "Das US-'Bat Bomb'-Projekt wollte Fledermäuse mit Napalm-Kapseln in japanische Holzhausstädte fliegen lassen. Sie zündeten versehentlich eine US-Air-Base an. Eingestellt 1944.",
       "category": "Geschichte"
+    },
+    {
+      "id": "geschichte_de_051",
+      "question": "Was nutzten römische Soldaten anstelle von Toilettenpapier?",
+      "answers": [
+        {"text": "Einen Schwamm an einem Stock", "correct": true},
+        {"text": "Frische Olivenblätter", "correct": false},
+        {"text": "Ein Stück Schaffell", "correct": false}
+      ],
+      "difficulty": "medium",
+      "fun_fact": "Der sogenannte Tersorium wurde in einem Eimer mit Essigwasser zwischen den Benutzungen gereinigt — und auf Gemeinschaftslatrinen geteilt. Aus dieser Praxis stammt vermutlich die Redensart 'das falsche Ende des Stocks erwischen'.",
+      "category": "Geschichte"
+    },
+    {
+      "id": "geschichte_de_052",
+      "question": "Was war im alten Rom 'Garum'?",
+      "answers": [
+        {"text": "Eine Würzsauce aus fermentierten Fischeingeweiden", "correct": true},
+        {"text": "Ein Honig-Wein für Senatoren", "correct": false},
+        {"text": "Ein Heilmittel aus Eselsmilch", "correct": false}
+      ],
+      "difficulty": "medium",
+      "fun_fact": "Garum wurde monatelang in der Sonne fermentiert und überall im Reich gehandelt. Pompeji hatte ganze Werkstätten dafür — der Geruch war angeblich so stark, dass Produktion innerhalb der Stadtmauern verboten war.",
+      "category": "Geschichte"
+    },
+    {
+      "id": "geschichte_de_053",
+      "question": "Was machten römische Gladiatoren mit ihrem Schweiß?",
+      "answers": [
+        {"text": "Sie verkauften ihn als Schönheitsmittel", "correct": true},
+        {"text": "Sie verbrannten ihn als Opfergabe", "correct": false},
+        {"text": "Sie tranken ihn vor dem Kampf", "correct": false}
+      ],
+      "difficulty": "hard",
+      "fun_fact": "Schweiß und Hautabschabungen wurden mit dem Schaber (Strigilis) gesammelt, in Tiegeln abgefüllt und an reiche Römerinnen verkauft — angeblich als Faltencreme und Aphrodisiakum.",
+      "category": "Geschichte"
+    },
+    {
+      "id": "geschichte_de_054",
+      "question": "Was wuchs auf dem antiken Forum Romanum lange Zeit ungestört?",
+      "answers": [
+        {"text": "Eine Kuhweide — das 'Campo Vaccino'", "correct": true},
+        {"text": "Ein Olivenhain für Tempelöl", "correct": false},
+        {"text": "Ein Lavendelfeld der Vestalinnen", "correct": false}
+      ],
+      "difficulty": "medium",
+      "fun_fact": "Nach dem Niedergang Roms verschwand das Forum unter Erdschichten und wurde jahrhundertelang als Viehweide genutzt. Erst Ausgrabungen ab dem 18. Jahrhundert legten es frei.",
+      "category": "Geschichte"
+    },
+    {
+      "id": "geschichte_de_055",
+      "question": "Was machten Pharaonen mit ihren Katzen, wenn diese starben?",
+      "answers": [
+        {"text": "Sie wurden mumifiziert und feierlich bestattet", "correct": true},
+        {"text": "Sie wurden im Nil versenkt", "correct": false},
+        {"text": "Sie wurden den Priestern als Talisman geschenkt", "correct": false}
+      ],
+      "difficulty": "easy",
+      "fun_fact": "Katzen waren der Göttin Bastet heilig. Im Tempel von Bubastis fanden Archäologen über 300.000 mumifizierte Katzen. Die Familie eines toten Hauskaters rasierte sich aus Trauer die Augenbrauen.",
+      "category": "Geschichte"
+    },
+    {
+      "id": "geschichte_de_056",
+      "question": "Was war im alten Griechenland die 'Ostrakismos'-Abstimmung?",
+      "answers": [
+        {"text": "Bürger schrieben Namen auf Tonscherben, um jemanden zu verbannen", "correct": true},
+        {"text": "Eine Wahl der schönsten Olive des Jahres", "correct": false},
+        {"text": "Eine Lotterie für freie Theaterplätze", "correct": false}
+      ],
+      "difficulty": "medium",
+      "fun_fact": "Wer 6.000 Scherben gegen sich hatte, musste zehn Jahre Athen verlassen — ohne Verlust von Besitz oder Bürgerrechten. Daher unser Wort 'Ostrakismus' für soziale Ausgrenzung.",
+      "category": "Geschichte"
+    },
+    {
+      "id": "geschichte_de_057",
+      "question": "Was war ungewöhnlich an der antiken Stadt Çatalhöyük (heutige Türkei)?",
+      "answers": [
+        {"text": "Sie hatte keine Straßen — Eingang erfolgte über die Dächer", "correct": true},
+        {"text": "Sie wurde komplett unter Wasser gebaut", "correct": false},
+        {"text": "Alle Häuser waren rund", "correct": false}
+      ],
+      "difficulty": "hard",
+      "fun_fact": "In dieser 9.000 Jahre alten Siedlung standen die Lehmziegelhäuser Wand an Wand. Bewohner kletterten über Leitern aufs Dach und stiegen durch Öffnungen ein. Tote wurden unter dem Bett begraben.",
+      "category": "Geschichte"
+    },
+    {
+      "id": "geschichte_de_059",
+      "question": "Was passierte im Mittelalter, wenn ein Bauernhaus brannte?",
+      "answers": [
+        {"text": "Die Nachbarn waren oft per Eid zur Hilfe verpflichtet", "correct": true},
+        {"text": "Die Kirche zahlte automatisch Schadenersatz", "correct": false},
+        {"text": "Der Besitzer wurde wegen Fahrlässigkeit ausgepeitscht", "correct": false}
+      ],
+      "difficulty": "medium",
+      "fun_fact": "Dorfgemeinschaften hatten Brandeide, weil eine Funke das ganze Dorf vernichten konnte. Wer beim Löschen fehlte, riskierte hohe Strafen — oder Ausschluss aus der Gemeinde.",
+      "category": "Geschichte"
+    },
+    {
+      "id": "geschichte_de_060",
+      "question": "Was war ein 'Hutmacherwahnsinn' im 18. und 19. Jahrhundert?",
+      "answers": [
+        {"text": "Vergiftung durch Quecksilberdämpfe bei der Filzherstellung", "correct": true},
+        {"text": "Eine Mode-Hysterie um immer höhere Hüte", "correct": false},
+        {"text": "Eine Bewegung gegen Kopfbedeckungen in Kirchen", "correct": false}
+      ],
+      "difficulty": "medium",
+      "fun_fact": "Quecksilbernitrat machte Tierhaare zu Filz — und die Hutmacher krank. Zittern, Reizbarkeit, Halluzinationen waren typisch. Lewis Carrolls 'Verrückter Hutmacher' karikiert diese Berufskrankheit.",
+      "category": "Geschichte"
+    },
+    {
+      "id": "geschichte_de_061",
+      "question": "Wie warnten mittelalterliche Bäcker sich selbst vor Diebstahl-Anklagen?",
+      "answers": [
+        {"text": "Sie gaben ein zusätzliches Brot pro Dutzend gratis dazu", "correct": true},
+        {"text": "Sie ließen jede Brotcharge vom Priester segnen", "correct": false},
+        {"text": "Sie hängten Wachsiegel an jedes Brot", "correct": false}
+      ],
+      "difficulty": "medium",
+      "fun_fact": "Daher der englische Begriff 'baker's dozen' (13 statt 12). Wer zu leichtes Brot verkaufte, riskierte am Pranger zu landen — also gab man lieber ein Brot mehr.",
+      "category": "Geschichte"
+    },
+    {
+      "id": "geschichte_de_062",
+      "question": "Was war ein 'Narrenschiff' im spätmittelalterlichen Europa?",
+      "answers": [
+        {"text": "Eine literarisch-moralische Allegorie, kein echtes Schiff", "correct": true},
+        {"text": "Ein Schiff, auf das psychisch Kranke verbannt wurden", "correct": false},
+        {"text": "Ein Karnevalsboot in venezianischen Kanälen", "correct": false}
+      ],
+      "difficulty": "hard",
+      "fun_fact": "Sebastian Brants 'Narrenschiff' (1494) war ein satirisches Werk über menschliche Torheiten. Die populäre Vorstellung, man habe Geisteskranke tatsächlich auf Schiffen ausgesetzt, gilt heute als Mythos.",
+      "category": "Geschichte"
+    },
+    {
+      "id": "geschichte_de_063",
+      "question": "Was war an mittelalterlichen Glasfenstern technisch besonders?",
+      "answers": [
+        {"text": "Sie fließen nicht — die Wellen sind Herstellungsbedingt", "correct": true},
+        {"text": "Sie enthielten echtes Gold im Glas", "correct": false},
+        {"text": "Sie wurden im Vakuum gegossen", "correct": false}
+      ],
+      "difficulty": "medium",
+      "fun_fact": "Der Mythos, altes Glas würde langsam herabfließen, hält sich hartnäckig. Tatsächlich sind die ungleichmäßigen Dicken auf das Mundblas-Verfahren zurückzuführen — Glas ist bei Raumtemperatur fest.",
+      "category": "Geschichte"
+    },
+    {
+      "id": "geschichte_de_064",
+      "question": "Was war im Mittelalter eine 'Schandgeige'?",
+      "answers": [
+        {"text": "Ein Halsbrett, das zwei Streithähne aneinanderkettete", "correct": true},
+        {"text": "Eine Geige mit schiefem Klang als Strafe für Musiker", "correct": false},
+        {"text": "Ein Folterwerkzeug für Bettler", "correct": false}
+      ],
+      "difficulty": "hard",
+      "fun_fact": "Zwei Frauen, die sich öffentlich gestritten hatten, wurden Gesicht zu Gesicht in das geigenförmige Brett gespannt und durch die Stadt geführt. Die Demütigung sollte sie zur Versöhnung zwingen.",
+      "category": "Geschichte"
+    },
+    {
+      "id": "geschichte_de_065",
+      "question": "Wie wuschen sich Adelige am Hof Ludwigs XIV. typischerweise?",
+      "answers": [
+        {"text": "Mit Tüchern und Parfüm statt mit Wasser", "correct": true},
+        {"text": "Täglich im warmen Marmorbad", "correct": false},
+        {"text": "Einmal monatlich im Spiegelsaal-Brunnen", "correct": false}
+      ],
+      "difficulty": "easy",
+      "fun_fact": "Vollbäder galten als gesundheitsgefährdend — man fürchtete, Wasser öffne die Poren für Krankheiten. Stattdessen wischte man sich mit Tüchern ab und maskierte Gerüche mit schweren Parfüms.",
+      "category": "Geschichte"
+    },
+    {
+      "id": "geschichte_de_066",
+      "question": "Was tat Friedrich Wilhelm I. von Preußen mit besonders großen Männern?",
+      "answers": [
+        {"text": "Er rekrutierte sie für sein Riesengarde-Regiment", "correct": true},
+        {"text": "Er ließ sie als Wachen vor seinem Schlafzimmer aufstellen", "correct": false},
+        {"text": "Er verheiratete sie zwangsweise mit großen Frauen", "correct": false}
+      ],
+      "difficulty": "medium",
+      "fun_fact": "Die 'Langen Kerls' mussten mindestens 1,88 m groß sein. Friedrich Wilhelm kaufte, tauschte oder entführte sie aus ganz Europa. Sein Sohn Friedrich II. löste das teure Regiment nach Thronbesteigung auf.",
+      "category": "Geschichte"
+    },
+    {
+      "id": "geschichte_de_067",
+      "question": "Was war ein 'Hofzwerg' an europäischen Adelshöfen?",
+      "answers": [
+        {"text": "Ein kleinwüchsiger Höfling mit oft hohem Status", "correct": true},
+        {"text": "Ein Maskottchen aus Holz für Festumzüge", "correct": false},
+        {"text": "Ein Zwergpony als Geschenk an Prinzessinnen", "correct": false}
+      ],
+      "difficulty": "medium",
+      "fun_fact": "Hofzwerge wie der spanische Sebastián de Morra (von Velázquez porträtiert) waren oft persönliche Berater des Königs und genossen Privilegien, die normalen Adligen verwehrt waren.",
+      "category": "Geschichte"
+    },
+    {
+      "id": "geschichte_de_068",
+      "question": "Womit wurde im Barock die Perücke gepudert?",
+      "answers": [
+        {"text": "Mit feinem Weizenmehl oder Stärke", "correct": true},
+        {"text": "Mit Bleiweiß", "correct": false},
+        {"text": "Mit pulverisiertem Elfenbein", "correct": false}
+      ],
+      "difficulty": "medium",
+      "fun_fact": "Die Mehl-Steuer in England 1795 führte dazu, dass die Mode der weißen Perücken in nur wenigen Jahren ausstarb. Männer mit ungepuderter Perücke galten plötzlich als politisch fortschrittlich.",
+      "category": "Geschichte"
+    },
+    {
+      "id": "geschichte_de_069",
+      "question": "Was war ein 'Wunderkammer' im 16. und 17. Jahrhundert?",
+      "answers": [
+        {"text": "Eine private Sammlung kurioser Objekte aus aller Welt", "correct": true},
+        {"text": "Ein Geheimraum für alchemistische Experimente", "correct": false},
+        {"text": "Ein Beichtstuhl für besondere Sünden", "correct": false}
+      ],
+      "difficulty": "easy",
+      "fun_fact": "Fürsten und reiche Bürger sammelten Korallen, ausgestopfte Krokodile, Mineralien und Mumienteile in einem Raum. Diese Sammlungen waren die Vorläufer moderner Museen.",
+      "category": "Geschichte"
+    },
+    {
+      "id": "geschichte_de_070",
+      "question": "Was tat der spanische König Karl II. ('der Verhexte') zur Heilung versuchen lassen?",
+      "answers": [
+        {"text": "Er ließ Leichen frisch verstorbener Heiliger ins Schlafzimmer bringen", "correct": true},
+        {"text": "Er ließ sich täglich mit Stierblut waschen", "correct": false},
+        {"text": "Er trank pulverisiertes Diamantwasser", "correct": false}
+      ],
+      "difficulty": "hard",
+      "fun_fact": "Karl II. war durch Inzucht der Habsburger schwer krank und unfruchtbar. Hofärzte griffen zu immer skurrileren Mitteln, darunter Reliquien im Bett. Sein Tod 1700 löste den Spanischen Erbfolgekrieg aus.",
+      "category": "Geschichte"
+    },
+    {
+      "id": "geschichte_de_071",
+      "question": "Warum hatten viele Habsburger einen markanten Unterkiefer?",
+      "answers": [
+        {"text": "Wegen jahrhundertelanger Inzucht in der Dynastie", "correct": true},
+        {"text": "Wegen einer speziellen Diät am Hof", "correct": false},
+        {"text": "Wegen einer Krankheit, die alle Adligen befiel", "correct": false}
+      ],
+      "difficulty": "easy",
+      "fun_fact": "Die 'Habsburger Lippe' ist auf Generationen von Cousin-Heiraten zurückzuführen. Genetische Studien aus den 2010ern haben den Zusammenhang nachgewiesen — Karl II. war das extremste Beispiel.",
+      "category": "Geschichte"
+    },
+    {
+      "id": "geschichte_de_072",
+      "question": "Was passierte beim sogenannten 'Defenestration von Prag' 1618?",
+      "answers": [
+        {"text": "Drei Beamte wurden aus einem Fenster geworfen — und überlebten", "correct": true},
+        {"text": "Ein Fenster wurde rituell zertrümmert", "correct": false},
+        {"text": "Ein Astronom stürzte beim Sternegucken aus dem Turm", "correct": false}
+      ],
+      "difficulty": "medium",
+      "fun_fact": "Die drei katholischen Statthalter fielen 21 Meter — und landeten weich (Misthaufen oder göttlicher Schutz, je nach Konfession). Der Vorfall löste den Dreißigjährigen Krieg aus.",
+      "category": "Geschichte"
+    },
+    {
+      "id": "geschichte_de_073",
+      "question": "Was waren die 'Schwedenköpfe' nach dem Dreißigjährigen Krieg in Norddeutschland?",
+      "answers": [
+        {"text": "Bemalte Köpfe an Hausfassaden als Erinnerung", "correct": true},
+        {"text": "Eine besondere Frisur der Veteranen", "correct": false},
+        {"text": "Eine Münzsorte mit dem schwedischen König", "correct": false}
+      ],
+      "difficulty": "hard",
+      "fun_fact": "In Hansestädten wie Wismar zieren Schwedenköpfe noch heute Hafenanlagen und Häuser — als Symbol der schwedischen Herrschaftszeit nach 1648. Die berühmtesten Originale stehen heute im Museum.",
+      "category": "Geschichte"
+    },
+    {
+      "id": "geschichte_de_074",
+      "question": "Wie hieß die offizielle Berufsbezeichnung für Wecker-Männer im 19. Jahrhundert?",
+      "answers": [
+        {"text": "Knocker-up", "correct": true},
+        {"text": "Bell-walker", "correct": false},
+        {"text": "Morning-crier", "correct": false}
+      ],
+      "difficulty": "medium",
+      "fun_fact": "In britischen Industriestädten klopften Knocker-ups mit langen Stangen an Schlafzimmerfenster, um Fabrikarbeiter zu wecken. Der Beruf existierte noch bis in die 1970er — länger als die Erfindung des Weckers.",
+      "category": "Geschichte"
+    },
+    {
+      "id": "geschichte_de_075",
+      "question": "Was geschah 1858 in London als 'Großer Gestank'?",
+      "answers": [
+        {"text": "Die Themse stank so stark, dass das Parlament fast aufgab", "correct": true},
+        {"text": "Eine Brauerei explodierte und überflutete Bierfässer", "correct": false},
+        {"text": "Ein Walkadaver wurde an die Tower Bridge gespült", "correct": false}
+      ],
+      "difficulty": "medium",
+      "fun_fact": "Im heißen Sommer 1858 stieg der Gestank von Abwasser in der Themse so hoch, dass Vorhänge mit Chlorkalk getränkt wurden. Das Parlament beschloss endlich Joseph Bazalgettes Kanalisationssystem.",
+      "category": "Geschichte"
+    },
+    {
+      "id": "geschichte_de_076",
+      "question": "Was machte die 'Radium Girls' in den 1920ern krank?",
+      "answers": [
+        {"text": "Sie leckten Pinsel mit radioaktiver Leuchtfarbe an", "correct": true},
+        {"text": "Sie atmeten Asbest in Uhrenfabriken ein", "correct": false},
+        {"text": "Sie schluckten Quecksilber bei Thermometer-Tests", "correct": false}
+      ],
+      "difficulty": "medium",
+      "fun_fact": "Fabrikarbeiterinnen bemalten Ziffernblätter mit Radium-Farbe und spitzten den Pinsel im Mund. Ihre Klagen führten zu bahnbrechenden Arbeitsschutzgesetzen in den USA.",
+      "category": "Geschichte"
+    },
+    {
+      "id": "geschichte_de_077",
+      "question": "Was tat der österreichische Kaiser Franz Joseph fast jeden Morgen?",
+      "answers": [
+        {"text": "Er erledigte Akten ab 4 Uhr früh", "correct": true},
+        {"text": "Er nahm ein Eisbad im Schloss Schönbrunn", "correct": false},
+        {"text": "Er schoss aus dem Fenster auf Spatzen", "correct": false}
+      ],
+      "difficulty": "medium",
+      "fun_fact": "Der Kaiser stand um 3:30 Uhr auf, wusch sich in eiskaltem Wasser und arbeitete dann bis spät in den Abend. Er schlief auf einem schlichten Eisenbett und nahm bis zuletzt keinen Aufzug.",
+      "category": "Geschichte"
+    },
+    {
+      "id": "geschichte_de_078",
+      "question": "Welche Sportart wurde 1900 bei den Olympischen Spielen einmalig ausgetragen?",
+      "answers": [
+        {"text": "Lebendes Taubenschießen", "correct": true},
+        {"text": "Heißluftballon-Rennen über Paris", "correct": false},
+        {"text": "Tauchen mit Steinen am Fuß", "correct": false}
+      ],
+      "difficulty": "hard",
+      "fun_fact": "Bei den Pariser Spielen 1900 wurden rund 300 lebende Tauben getötet. Der Belgier Léon de Lunden gewann mit 21 Treffern. Schon Zeitgenossen empfanden die Disziplin als 'unwürdig' — sie wurde nie wieder ausgetragen.",
+      "category": "Geschichte"
+    },
+    {
+      "id": "geschichte_de_079",
+      "question": "Was war besonders an den 'Spanischen Reitern' der Wiener Hofreitschule?",
+      "answers": [
+        {"text": "Die Pferde sind weder spanisch noch werden sie in Wien gezüchtet", "correct": true},
+        {"text": "Die Reiter dürfen nur Spanisch sprechen", "correct": false},
+        {"text": "Die Schule wurde von König Philipp II. gegründet", "correct": false}
+      ],
+      "difficulty": "hard",
+      "fun_fact": "Die Lipizzaner stammen ursprünglich aus der Hofgestüt-Tradition in Lipica (heute Slowenien). 'Spanisch' bezieht sich auf den ursprünglichen Einsatz spanischer Pferdezuchtlinien im 16. Jahrhundert.",
+      "category": "Geschichte"
+    },
+    {
+      "id": "geschichte_de_080",
+      "question": "Was war Heinrich Schliemann von Beruf, bevor er Troja ausgrub?",
+      "answers": [
+        {"text": "Kaufmann (er machte ein Vermögen mit Indigo und Munition)", "correct": true},
+        {"text": "Berufsoffizier in der preußischen Armee", "correct": false},
+        {"text": "Klavierlehrer in Sankt Petersburg", "correct": false}
+      ],
+      "difficulty": "medium",
+      "fun_fact": "Schliemann wurde im Krimkrieg reich durch Waffenhandel. Mit 46 Jahren zog er sich aus dem Geschäft zurück und finanzierte seine archäologische Leidenschaft selbst. Heute gilt seine Ausgrabungsmethode als zerstörerisch.",
+      "category": "Geschichte"
+    },
+    {
+      "id": "geschichte_de_081",
+      "question": "Was fanden Archäologen 1991 in den Ötztaler Alpen?",
+      "answers": [
+        {"text": "Eine über 5.000 Jahre alte Gletschermumie", "correct": true},
+        {"text": "Ein römisches Bergwerk", "correct": false},
+        {"text": "Eine napoleonische Geheimkanone", "correct": false}
+      ],
+      "difficulty": "easy",
+      "fun_fact": "Ötzi trug eine Pfeilspitze in der Schulter und hatte Tätowierungen, deren Lage mit modernen Akupunkturpunkten übereinstimmt. Sein letztes Mahl bestand aus Steinbock und Hirsch.",
+      "category": "Geschichte"
+    },
+    {
+      "id": "geschichte_de_082",
+      "question": "Was zeigte sich, als Howard Carter 1922 Tutanchamuns Grab öffnete?",
+      "answers": [
+        {"text": "Es war weitgehend unberaubt — fast einzigartig in Ägypten", "correct": true},
+        {"text": "Es war komplett leer geräumt", "correct": false},
+        {"text": "Es enthielt nur eine einzige Goldmaske", "correct": false}
+      ],
+      "difficulty": "easy",
+      "fun_fact": "Die meisten Pharaonengräber waren bereits in der Antike geplündert. Tutanchamuns Grab überdauerte unentdeckt, weil ein späteres Grab darüber gebaut wurde und den Eingang verdeckte.",
+      "category": "Geschichte"
+    },
+    {
+      "id": "geschichte_de_083",
+      "question": "Was war an der Stadt Pompeji nach dem Vesuv-Ausbruch 79 n. Chr. besonders konserviert?",
+      "answers": [
+        {"text": "Brot, Graffiti und Alltagsgegenstände blieben erhalten", "correct": true},
+        {"text": "Nur die Tempel und Theater überstanden die Asche", "correct": false},
+        {"text": "Lediglich Knochenreste, kaum Bauwerke", "correct": false}
+      ],
+      "difficulty": "easy",
+      "fun_fact": "Wandschriften zeigen Wahlwerbung, Liebesgrüße und derbe Witze. Eine Bäckerei enthielt 81 verkohlte Brote noch im Ofen. Selbst die Form menschlicher Körper blieb als Hohlraum in der Asche erhalten.",
+      "category": "Geschichte"
+    },
+    {
+      "id": "geschichte_de_084",
+      "question": "Was nutzten die Inka anstelle einer geschriebenen Sprache?",
+      "answers": [
+        {"text": "Quipus — Schnüre mit Knoten", "correct": true},
+        {"text": "Tonscherben mit Mustern", "correct": false},
+        {"text": "Bemalte Glasperlen", "correct": false}
+      ],
+      "difficulty": "medium",
+      "fun_fact": "Quipus codierten Zahlen über Knotentypen und Schnurfarben. Ob auch ganze Worte codierbar waren, ist bis heute Forschungsgegenstand — viele Quipus wurden von spanischen Eroberern verbrannt.",
+      "category": "Geschichte"
+    },
+    {
+      "id": "geschichte_de_085",
+      "question": "Was war typisch für Wikinger-Bestattungen reicher Männer?",
+      "answers": [
+        {"text": "Bestattung im eigenen Schiff samt Beigaben", "correct": true},
+        {"text": "Mumifizierung in Birkenrinde", "correct": false},
+        {"text": "Verbrennung im Vulkan", "correct": false}
+      ],
+      "difficulty": "easy",
+      "fun_fact": "Das Oseberg-Schiff in Norwegen enthielt zwei Frauen und reiche Grabbeigaben aus dem Jahr 834. Manchmal wurden Schiffe verbrannt, manchmal vergraben — die Größe spiegelte den sozialen Status.",
+      "category": "Geschichte"
+    },
+    {
+      "id": "geschichte_de_086",
+      "question": "Was war an Wikingern KEIN historisch belegtes Merkmal?",
+      "answers": [
+        {"text": "Hörnerhelme", "correct": true},
+        {"text": "Lange Bootsfahrten bis Nordamerika", "correct": false},
+        {"text": "Handelsbeziehungen bis Bagdad", "correct": false}
+      ],
+      "difficulty": "easy",
+      "fun_fact": "Hörnerhelme wurden im 19. Jahrhundert durch Wagner-Opern populär. Kein einziger archäologischer Wikingerhelm hat Hörner — sie wären im Kampf hinderlich gewesen.",
+      "category": "Geschichte"
+    },
+    {
+      "id": "geschichte_de_087",
+      "question": "Welche frühe Hochkultur entwickelte sich entlang des Indus-Flusses?",
+      "answers": [
+        {"text": "Die Harappa-Kultur mit geplanten Städten und Kanalisation", "correct": true},
+        {"text": "Die Olmeken-Kultur", "correct": false},
+        {"text": "Die Minoische Kultur", "correct": false}
+      ],
+      "difficulty": "medium",
+      "fun_fact": "Mohenjo-Daro hatte um 2.500 v. Chr. öffentliche Bäder, einen Getreidespeicher und ein Abwassersystem aus gebrannten Ziegeln. Die Schrift dieser Kultur ist bis heute nicht entziffert.",
+      "category": "Geschichte"
+    },
+    {
+      "id": "geschichte_de_088",
+      "question": "Was geschah mit der Stadt Pompeji nach dem Vesuv-Ausbruch — bis ins 18. Jahrhundert?",
+      "answers": [
+        {"text": "Sie geriet in Vergessenheit unter Asche und Bauland", "correct": true},
+        {"text": "Sie wurde zur Pilgerstätte für Vulkangötter", "correct": false},
+        {"text": "Sie diente als Steinbruch für Neapel", "correct": false}
+      ],
+      "difficulty": "medium",
+      "fun_fact": "Erst 1748 begannen systematische Ausgrabungen. Davor hatten Bauern die Asche bestellt, ohne zu wissen, was darunter lag. Der Name 'Pompeji' war zwar überliefert, aber niemand wusste den genauen Ort.",
+      "category": "Geschichte"
+    },
+    {
+      "id": "geschichte_de_089",
+      "question": "Was geschah Alexander Graham Bell ungewollt mit dem Wort 'Hello'?",
+      "answers": [
+        {"text": "Er bevorzugte 'Ahoy' als Telefon-Begrüßung — Edison setzte 'Hello' durch", "correct": true},
+        {"text": "Er erfand 'Hello' speziell für sein Telefon", "correct": false},
+        {"text": "Er verbot 'Hello' aus religiösen Gründen", "correct": false}
+      ],
+      "difficulty": "medium",
+      "fun_fact": "Bell schlug 'Ahoy-hoy' vor, weil es seemännisch klar war. Edison propagierte 'Hello' in seinen Bedienungsanleitungen — und der Konkurrent gewann diesen Sprachkrieg.",
+      "category": "Geschichte"
+    },
+    {
+      "id": "geschichte_de_090",
+      "question": "Was war Karl Drais' bekannteste Erfindung von 1817?",
+      "answers": [
+        {"text": "Die Laufmaschine (Draisine) — Vorläuferin des Fahrrads", "correct": true},
+        {"text": "Die erste Dampflokomotive Deutschlands", "correct": false},
+        {"text": "Der Heißluftballon mit Lenkruder", "correct": false}
+      ],
+      "difficulty": "easy",
+      "fun_fact": "Drais entwickelte die Laufmaschine, nachdem Pferdefutter wegen des 'Jahres ohne Sommer' 1816 knapp wurde. Man trat sich mit den Füßen vorwärts — Pedale kamen erst Jahrzehnte später.",
+      "category": "Geschichte"
+    },
+    {
+      "id": "geschichte_de_091",
+      "question": "Was war das 'Jahr ohne Sommer' 1816?",
+      "answers": [
+        {"text": "Eine globale Klimakrise nach dem Tambora-Vulkanausbruch", "correct": true},
+        {"text": "Eine literarische Erfindung Mary Shelleys", "correct": false},
+        {"text": "Eine politisch verordnete Trauerphase in Europa", "correct": false}
+      ],
+      "difficulty": "medium",
+      "fun_fact": "Der Tambora-Ausbruch 1815 in Indonesien war der größte historisch belegte Vulkanausbruch. Schnee fiel im Juni in Neuengland, Ernten fielen aus. Während der grauen Wochen am Genfer See entstand Frankenstein.",
+      "category": "Geschichte"
+    },
+    {
+      "id": "geschichte_de_092",
+      "question": "Was war die Besonderheit der ersten Kreditkarte 1950?",
+      "answers": [
+        {"text": "Sie war aus Karton, nicht aus Plastik", "correct": true},
+        {"text": "Sie funktionierte nur in einem einzigen Restaurant", "correct": false},
+        {"text": "Sie wurde nur an Frauen ausgegeben", "correct": false}
+      ],
+      "difficulty": "hard",
+      "fun_fact": "Der Diners Club startete mit einer kartonierten Karte für 27 Restaurants in New York. Frank McNamara kam auf die Idee, nachdem er beim Essen seine Brieftasche vergessen hatte.",
+      "category": "Geschichte"
+    },
+    {
+      "id": "geschichte_de_093",
+      "question": "Was war die ursprüngliche Funktion des Klebebands 'Post-it' nicht?",
+      "answers": [
+        {"text": "Es war ursprünglich ein gescheiterter Versuch, einen starken Kleber zu entwickeln", "correct": true},
+        {"text": "Es war als Tapetenfixierung gedacht", "correct": false},
+        {"text": "Es sollte Verbände in Krankenhäusern halten", "correct": false}
+      ],
+      "difficulty": "medium",
+      "fun_fact": "Spencer Silver bei 3M suchte 1968 einen Superkleber und bekam stattdessen einen schwachen, ablösbaren. Erst Jahre später erkannte ein Kollege beim Singen im Kirchenchor: das ist ein perfektes Lesezeichen.",
+      "category": "Geschichte"
+    },
+    {
+      "id": "geschichte_de_094",
+      "question": "Was lag der Erfindung des Mikrowellenherds 1945 zugrunde?",
+      "answers": [
+        {"text": "Ein geschmolzener Schokoriegel in der Tasche eines Radar-Ingenieurs", "correct": true},
+        {"text": "Ein Patent aus der Sowjetunion", "correct": false},
+        {"text": "Ein Versuch, Holzpaletten zu trocknen", "correct": false}
+      ],
+      "difficulty": "medium",
+      "fun_fact": "Percy Spencer arbeitete bei Raytheon an Magnetrons für Radargeräte, als ihm der Schokoriegel in der Tasche schmolz. Der erste kommerzielle Mikrowellenherd 1947 war fast 1,80 m hoch und wog 340 kg.",
+      "category": "Geschichte"
+    },
+    {
+      "id": "geschichte_de_095",
+      "question": "Wofür wurde der Klettverschluss 1948 inspiriert?",
+      "answers": [
+        {"text": "Durch Kletten am Fell eines Hundes nach einem Spaziergang", "correct": true},
+        {"text": "Durch ein Patent für Geheimagentenausrüstung", "correct": false},
+        {"text": "Durch Marathonläufer mit lockernden Schuhen", "correct": false}
+      ],
+      "difficulty": "medium",
+      "fun_fact": "Der Schweizer Ingenieur George de Mestral schaute durchs Mikroskop und sah die winzigen Häkchen der Klettfrüchte. Er brauchte über zehn Jahre, bis er sie technisch nachbauen konnte.",
+      "category": "Geschichte"
+    },
+    {
+      "id": "geschichte_de_096",
+      "question": "Was passierte den ersten Telefonbüchern um 1880?",
+      "answers": [
+        {"text": "Sie enthielten kaum Nummern, nur Namen — Vermittler stellten durch", "correct": true},
+        {"text": "Sie wurden wegen Datenschutz sofort verboten", "correct": false},
+        {"text": "Sie waren komplett auf Latein gedruckt", "correct": false}
+      ],
+      "difficulty": "hard",
+      "fun_fact": "Frühe Telefonbücher waren reine Teilnehmerlisten. Erst nach Einführung der automatischen Vermittlung wurden Nummern relevant. Das erste deutsche Verzeichnis 1881 in Berlin nannte 187 Teilnehmer.",
+      "category": "Geschichte"
+    },
+    {
+      "id": "geschichte_de_097",
+      "question": "Was tat Hedy Lamarr neben ihrer Karriere als Hollywood-Schauspielerin?",
+      "answers": [
+        {"text": "Sie meldete ein Funkpatent zur sicheren Torpedo-Steuerung an", "correct": true},
+        {"text": "Sie betrieb eine geheime Telegrafenstation in Wien", "correct": false},
+        {"text": "Sie erfand das erste Tonbandgerät", "correct": false}
+      ],
+      "difficulty": "medium",
+      "fun_fact": "Lamarr und Komponist George Antheil reichten 1942 ein Patent für ein Frequenzsprungverfahren ein. Die US-Marine nutzte es damals kaum — das verwandte Spread-Spectrum-Prinzip ist heute aus moderner Funktechnik nicht wegzudenken.",
+      "category": "Geschichte"
+    },
+    {
+      "id": "geschichte_de_098",
+      "question": "Was war besonders an der Reichstagskuppel-Vorgängerin von 1894?",
+      "answers": [
+        {"text": "Sie war damals die größte Stahl-Glas-Konstruktion ihrer Art in Deutschland", "correct": true},
+        {"text": "Sie war komplett aus Holz", "correct": false},
+        {"text": "Sie war abnehmbar für Feiertage", "correct": false}
+      ],
+      "difficulty": "hard",
+      "fun_fact": "Die ursprüngliche Kuppel von Paul Wallot war eine technische Meisterleistung. Sie brannte 1933 nach dem Reichstagsbrand aus und wurde im Krieg endgültig zerstört. Norman Fosters Glaskuppel folgte erst 1999.",
+      "category": "Geschichte"
+    },
+    {
+      "id": "geschichte_de_099",
+      "question": "Was machte das Berliner Schloss zwischen 1950 und 1976 ungewöhnlich?",
+      "answers": [
+        {"text": "Es wurde gesprengt und durch den Palast der Republik ersetzt", "correct": true},
+        {"text": "Es diente als sowjetische Botschaft", "correct": false},
+        {"text": "Es wurde Stein für Stein nach Moskau verlegt", "correct": false}
+      ],
+      "difficulty": "medium",
+      "fun_fact": "Die DDR-Führung sprengte 1950 das kriegsbeschädigte Schloss aus ideologischen Gründen. Der Palast der Republik stand bis 2008 — heute steht dort das rekonstruierte Humboldt Forum.",
+      "category": "Geschichte"
+    },
+    {
+      "id": "geschichte_de_100",
+      "question": "Was machten DDR-Trabant-Karosserien anders als Westautos?",
+      "answers": [
+        {"text": "Sie bestanden aus Duroplast — einem mit Baumwolle verstärkten Kunststoff", "correct": true},
+        {"text": "Sie waren komplett aus Aluminium", "correct": false},
+        {"text": "Sie hatten Holzrahmen unter dem Blech", "correct": false}
+      ],
+      "difficulty": "medium",
+      "fun_fact": "Duroplast war ein Kompromiss wegen knappen Stahls. Hartnäckiger Mythos: Trabis wären aus Pappe. Tatsächlich sind sie schwer brennbar und korrosionsfest, aber kaum recycelbar.",
+      "category": "Geschichte"
+    },
+    {
+      "id": "geschichte_de_101",
+      "question": "Was war ungewöhnlich am sowjetischen Hund 'Laika' 1957?",
+      "answers": [
+        {"text": "Sie war das erste Lebewesen in einer Erdumlaufbahn", "correct": true},
+        {"text": "Sie kehrte nach drei Tagen sicher zur Erde zurück", "correct": false},
+        {"text": "Sie wurde nach der Landung Maskottchen des Kreml", "correct": false}
+      ],
+      "difficulty": "easy",
+      "fun_fact": "Laika starb wenige Stunden nach dem Start an Überhitzung. Die Sowjets gaben das jahrzehntelang nicht zu — erst 2002 wurden die Details öffentlich. Eine Rückkehrkapsel war nie geplant.",
+      "category": "Geschichte"
+    },
+    {
+      "id": "geschichte_de_102",
+      "question": "Was war typisch für die Currywurst-Erfinderin Herta Heuwer in Berlin 1949?",
+      "answers": [
+        {"text": "Sie tauschte mit britischen Soldaten Schnaps gegen Curry und Ketchup", "correct": true},
+        {"text": "Sie hatte ein Patent für die Wurst selbst", "correct": false},
+        {"text": "Sie betrieb ein Sternerestaurant am Kurfürstendamm", "correct": false}
+      ],
+      "difficulty": "medium",
+      "fun_fact": "Heuwer ließ ihre Sauce 'Chillup' 1959 patentieren — nicht die Wurst. An ihrer Imbissbude in Charlottenburg verkaufte sie pro Woche bis zu 10.000 Currywürste, eine Markterfindung der Nachkriegszeit.",
+      "category": "Geschichte"
     }
   ]
 }

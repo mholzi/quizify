@@ -990,6 +990,1119 @@
       "difficulty": "medium",
       "fun_fact": "In Italien gilt Milch als Mahlzeit, nicht als Getränk. Nach dem Mittag- oder Abendessen schwört man auf Espresso — Cappuccino dazu wäre wie Frühstück nach dem Steak. Touristen erkennt man sofort am Cappuccino-Bestellen um 14 Uhr.",
       "category": "Essen & Trinken"
+    },
+    {
+      "id": "essen_de_051",
+      "question": "Welches Lebensmittel wurde in der Antike als 'Götterspeise' der Mayas und Azteken verehrt?",
+      "answers": [
+        {
+          "text": "Kakao",
+          "correct": true
+        },
+        {
+          "text": "Mais",
+          "correct": false
+        },
+        {
+          "text": "Avocado",
+          "correct": false
+        }
+      ],
+      "difficulty": "easy",
+      "fun_fact": "Die Azteken nannten Kakao 'Speise der Götter' — der botanische Name Theobroma cacao bedeutet genau das. Kakaobohnen waren so wertvoll, dass sie als Zahlungsmittel dienten: für 100 Bohnen bekam man einen Truthahn.",
+      "category": "Essen & Trinken"
+    },
+    {
+      "id": "essen_de_052",
+      "question": "Warum bekommen Wasabi-Esser eine brennende Nase statt einer brennenden Zunge?",
+      "answers": [
+        {
+          "text": "Die Schärfe ist flüchtig und steigt in die Nasenhöhle auf",
+          "correct": true
+        },
+        {
+          "text": "Wasabi enthält gar kein Capsaicin",
+          "correct": false
+        },
+        {
+          "text": "Die Zunge ist gegen Wasabi unempfindlich",
+          "correct": false
+        }
+      ],
+      "difficulty": "medium",
+      "fun_fact": "Wasabis Schärfe stammt von Allylsenföl, das verdampft und über den Rachen in die Nasenhöhle aufsteigt. Anders als Chili-Capsaicin (fettlöslich) ist es wasserlöslich — der Brenneffekt verschwindet deshalb in Sekunden statt Minuten.",
+      "category": "Essen & Trinken"
+    },
+    {
+      "id": "essen_de_053",
+      "question": "Welche deutsche Wurst genießt EU-weiten geografischen Herkunftsschutz?",
+      "answers": [
+        {
+          "text": "Nürnberger Rostbratwurst",
+          "correct": true
+        },
+        {
+          "text": "Frankfurter Würstchen",
+          "correct": false
+        },
+        {
+          "text": "Wiener Würstchen",
+          "correct": false
+        }
+      ],
+      "difficulty": "medium",
+      "fun_fact": "Die Nürnberger Rostbratwurst ist seit 2003 EU-geschützt: sie muss aus grobem Schweinefleisch sein, exakt 7-9 cm lang und maximal 25 Gramm wiegen — und darf nur im Stadtgebiet Nürnbergs produziert werden. Frankfurter dagegen ist in Deutschland eine Sortenbezeichnung.",
+      "category": "Essen & Trinken"
+    },
+    {
+      "id": "essen_de_054",
+      "question": "Warum brennen die Augen beim Zwiebelschneiden?",
+      "answers": [
+        {
+          "text": "Ein Schwefelgas reagiert mit der Tränenflüssigkeit zu Säure",
+          "correct": true
+        },
+        {
+          "text": "Zwiebelsaft enthält ein mildes Reizgift",
+          "correct": false
+        },
+        {
+          "text": "Mikroskopische Zwiebelpartikel kratzen das Auge",
+          "correct": false
+        }
+      ],
+      "difficulty": "medium",
+      "fun_fact": "Beim Schneiden entweicht aus der Zwiebel Propanthial-S-oxid. Im Auge reagiert es mit Tränenwasser zu Schwefelsäure — die Tränendrüsen spülen die Reizung weg. Kaltes Wasser oder das Schneiden unter laufender Haube hilft, weil das Gas nicht aufsteigt.",
+      "category": "Essen & Trinken"
+    },
+    {
+      "id": "essen_de_055",
+      "question": "Welche Beere ist die Hauptzutat des englischen Gins?",
+      "answers": [
+        {
+          "text": "Wacholderbeere",
+          "correct": true
+        },
+        {
+          "text": "Schlehenbeere",
+          "correct": false
+        },
+        {
+          "text": "Holunderbeere",
+          "correct": false
+        }
+      ],
+      "difficulty": "easy",
+      "fun_fact": "Das Wort Gin stammt vom niederländischen Genever, was wiederum von Juniperus (Wacholder) kommt. Ohne Wacholder darf eine Spirituose laut EU-Verordnung gar nicht Gin heißen — alle anderen Botanicals sind optional.",
+      "category": "Essen & Trinken"
+    },
+    {
+      "id": "essen_de_056",
+      "question": "Was ist das traditionelle Hauptbindemittel für echtes Lübecker Marzipan, das es vom Königsberger Marzipan unterscheidet?",
+      "answers": [
+        {
+          "text": "Rosenwasser statt Eiweiß",
+          "correct": true
+        },
+        {
+          "text": "Mehr Mandelanteil und kein Eiweiß",
+          "correct": false
+        },
+        {
+          "text": "Karamellisierter Zucker",
+          "correct": false
+        }
+      ],
+      "difficulty": "hard",
+      "fun_fact": "Lübecker Marzipan wird traditionell mit Rosenwasser parfümiert, das von Hanse-Kaufleuten aus dem Orient importiert wurde. Königsberger Marzipan dagegen wird oberflächlich abgeflämmt und bekommt dadurch eine bräunliche Kruste.",
+      "category": "Essen & Trinken"
+    },
+    {
+      "id": "essen_de_057",
+      "question": "Welches alltägliche Brotaroma entsteht durch dieselbe chemische Reaktion wie das Aroma von gebratenem Steak?",
+      "answers": [
+        {
+          "text": "Die Brotkruste",
+          "correct": true
+        },
+        {
+          "text": "Der saure Geschmack des Sauerteigs",
+          "correct": false
+        },
+        {
+          "text": "Die hefige Note frischen Brots",
+          "correct": false
+        }
+      ],
+      "difficulty": "medium",
+      "fun_fact": "Sowohl die Brotkruste als auch die Steakkruste entstehen durch die Maillard-Reaktion zwischen Aminosäuren und Zucker bei Temperaturen über 140 Grad. Die weiche Brotkrume bleibt aromaarm, weil sie nie über 100 Grad heiß wird — wie gekochtes Fleisch.",
+      "category": "Essen & Trinken"
+    },
+    {
+      "id": "essen_de_058",
+      "question": "Welcher Wein darf im Holzfass nicht ausgebaut werden, weil ihn der Eichenkontakt zerstören würde?",
+      "answers": [
+        {
+          "text": "Riesling",
+          "correct": true
+        },
+        {
+          "text": "Chardonnay",
+          "correct": false
+        },
+        {
+          "text": "Cabernet Sauvignon",
+          "correct": false
+        }
+      ],
+      "difficulty": "hard",
+      "fun_fact": "Riesling ist so filigran, dass Eichenholz-Aromen seine Mineralität und Fruchtklarheit überdecken würden. Deshalb wird er fast immer im neutralen Stahltank oder im uralten Holzfass ausgebaut, das keine Tannine mehr abgibt — Stuckfässer im Rheingau sind oft 50 Jahre alt.",
+      "category": "Essen & Trinken"
+    },
+    {
+      "id": "essen_de_059",
+      "question": "Welche Backware war im 18. Jahrhundert ursprünglich ein Brot zum Reisen, weil es zweimal gebacken extrem haltbar wurde?",
+      "answers": [
+        {
+          "text": "Zwieback",
+          "correct": true
+        },
+        {
+          "text": "Brezel",
+          "correct": false
+        },
+        {
+          "text": "Pumpernickel",
+          "correct": false
+        }
+      ],
+      "difficulty": "easy",
+      "fun_fact": "Zwieback heißt wörtlich 'zweimal gebacken' — der zweite Backvorgang entzieht ihm alle Restfeuchte. Seefahrer und Soldaten konnten ihn monatelang lagern. Heute kennt man ihn vor allem als Schonkost und Kinderbrei.",
+      "category": "Essen & Trinken"
+    },
+    {
+      "id": "essen_de_060",
+      "question": "Welche Kochtechnik nutzt Salzkruste, um Fisch oder Fleisch in seinem eigenen Saft zu garen?",
+      "answers": [
+        {
+          "text": "Garen in der Salzkruste",
+          "correct": true
+        },
+        {
+          "text": "Niedrigtemperatur-Garen",
+          "correct": false
+        },
+        {
+          "text": "Konfieren",
+          "correct": false
+        }
+      ],
+      "difficulty": "medium",
+      "fun_fact": "Die Salzkruste isoliert das Gargut von der Trockenhitze des Ofens und schließt den Saft hermetisch ein. Trotz der Menge Salz wird das Innere überraschend dezent gewürzt, da das Salz nur die Außenschicht direkt berührt — beim Aufschlagen löst sich die Kruste in einem Stück.",
+      "category": "Essen & Trinken"
+    },
+    {
+      "id": "essen_de_061",
+      "question": "Welches Brot ist nach einem westfälischen Mönch benannt, der Pferdefutter zubereitete?",
+      "answers": [
+        {
+          "text": "Pumpernickel",
+          "correct": true
+        },
+        {
+          "text": "Roggenbrot",
+          "correct": false
+        },
+        {
+          "text": "Vollkornbrot",
+          "correct": false
+        }
+      ],
+      "difficulty": "hard",
+      "fun_fact": "Eine Legende besagt, ein Westfale habe sein dunkles Roggenbrot 'bon pour Nickel' (gut für sein Pferd Nickel) genannt — das ist aber wahrscheinlich erfunden. Sicher ist: Pumpernickel backt 16-24 Stunden bei niedriger Temperatur. Die Maillard-Reaktion gibt ihm die typische schwarze Farbe.",
+      "category": "Essen & Trinken"
+    },
+    {
+      "id": "essen_de_062",
+      "question": "Warum ist ein original neapolitanischer Pizzateig nur kurz haltbar?",
+      "answers": [
+        {
+          "text": "Er enthält keine Konservierungsstoffe und muss sehr lange gehen",
+          "correct": true
+        },
+        {
+          "text": "Er enthält frische Hefe statt Trockenhefe",
+          "correct": false
+        },
+        {
+          "text": "Er wird mit nur einer einzigen Mehlsorte hergestellt",
+          "correct": false
+        }
+      ],
+      "difficulty": "medium",
+      "fun_fact": "Die UNESCO-anerkannte Pizza-Napoletana-Tradition schreibt eine Gehzeit von mindestens 8-24 Stunden vor. Lange Gehzeit baut komplexe Stärke ab — das macht den Teig bekömmlicher. Industrielle Pizzateige nutzen Enzyme als Abkürzung.",
+      "category": "Essen & Trinken"
+    },
+    {
+      "id": "essen_de_063",
+      "question": "Welcher Käse darf laut EU-Verordnung nur in einer bestimmten griechischen Region produziert werden?",
+      "answers": [
+        {
+          "text": "Feta",
+          "correct": true
+        },
+        {
+          "text": "Halloumi",
+          "correct": false
+        },
+        {
+          "text": "Mozzarella",
+          "correct": false
+        }
+      ],
+      "difficulty": "medium",
+      "fun_fact": "Seit 2002 ist Feta EU-rechtlich nur als Käse aus bestimmten griechischen Regionen erlaubt. Dänemark produzierte jahrzehntelang 'Feta' aus Kuhmilch — der musste in Salat-Käse umbenannt werden. Original-Feta ist Schaf- und/oder Ziegenmilch.",
+      "category": "Essen & Trinken"
+    },
+    {
+      "id": "essen_de_064",
+      "question": "Was unterscheidet einen echten Espresso wissenschaftlich von Filterkaffee?",
+      "answers": [
+        {
+          "text": "Heißes Wasser wird unter Druck durch das Pulver gepresst",
+          "correct": true
+        },
+        {
+          "text": "Der Espresso wird aus dunkler gerösteten Bohnen gemacht",
+          "correct": false
+        },
+        {
+          "text": "Espresso enthält pro Tasse mehr Koffein",
+          "correct": false
+        }
+      ],
+      "difficulty": "medium",
+      "fun_fact": "Bei einer Espresso-Maschine drücken etwa 9 bar Druck heißes Wasser in 25-30 Sekunden durch das fein gemahlene Pulver. Dieser Druck löst Öle, die als Crema oben schwimmen. Pro Tasse hat Espresso weniger Koffein als Filterkaffee — er ist nur konzentrierter.",
+      "category": "Essen & Trinken"
+    },
+    {
+      "id": "essen_de_065",
+      "question": "Was ist das schwarze Pulver im echten Pfeffer der Schwarze-Pfeffer-Mühle eigentlich?",
+      "answers": [
+        {
+          "text": "Unreife Pfefferbeeren mit getrockneter Schale",
+          "correct": true
+        },
+        {
+          "text": "Eine eigene Pfeffer-Sorte mit naturschwarzer Frucht",
+          "correct": false
+        },
+        {
+          "text": "Reife Pfefferbeeren, dunkel geröstet",
+          "correct": false
+        }
+      ],
+      "difficulty": "hard",
+      "fun_fact": "Schwarz, weiß, grün und rot sind alles Beeren derselben Pflanze (Piper nigrum) in verschiedenen Reifestadien. Schwarzer Pfeffer sind unreife, getrocknete Beeren; weißer Pfeffer ist die reife Beere mit entfernter Schale. Roter Pfeffer der Schinusbaum ist gar kein echter Pfeffer.",
+      "category": "Essen & Trinken"
+    },
+    {
+      "id": "essen_de_066",
+      "question": "Warum wird Tee in Großbritannien traditionell mit Milch getrunken?",
+      "answers": [
+        {
+          "text": "Um das empfindliche Porzellan vor Hitzeschocks zu schützen",
+          "correct": true
+        },
+        {
+          "text": "Weil die Briten den bitteren Geschmack nicht mochten",
+          "correct": false
+        },
+        {
+          "text": "Aus Kostengründen, um den Tee zu strecken",
+          "correct": false
+        }
+      ],
+      "difficulty": "hard",
+      "fun_fact": "Frühes englisches Porzellan war so dünn, dass kochend heißer Tee es springen lassen konnte. Kalte Milch zuerst in die Tasse, dann den Tee — das schonte das Geschirr. Die 'Milk in first'-Debatte hält bis heute an, obwohl modernes Porzellan das Problem nicht mehr hat.",
+      "category": "Essen & Trinken"
+    },
+    {
+      "id": "essen_de_067",
+      "question": "Welches deutsche Backwerk gewann seinen Namen vom alten Wort für 'Armring'?",
+      "answers": [
+        {
+          "text": "Brezel",
+          "correct": true
+        },
+        {
+          "text": "Bagel",
+          "correct": false
+        },
+        {
+          "text": "Kringel",
+          "correct": false
+        }
+      ],
+      "difficulty": "medium",
+      "fun_fact": "Brezel kommt vom lateinischen 'bracchium' (Arm) — die Form imitiert gekreuzte Arme zum Gebet. Mönche sollen sie als Belohnung für Kinder gebacken haben, die ihre Gebete kannten. Die typische Bräune entsteht durch ein Natronlauge-Bad vor dem Backen.",
+      "category": "Essen & Trinken"
+    },
+    {
+      "id": "essen_de_068",
+      "question": "Welche traditionelle bayerische Süßspeise wird in einer Pfanne mit Butter und Zucker hergerissen statt geschnitten?",
+      "answers": [
+        {
+          "text": "Kaiserschmarrn",
+          "correct": true
+        },
+        {
+          "text": "Apfelstrudel",
+          "correct": false
+        },
+        {
+          "text": "Dampfnudel",
+          "correct": false
+        }
+      ],
+      "difficulty": "easy",
+      "fun_fact": "Eine Legende führt den Kaiserschmarrn auf einen Pfannkuchen-Unfall des kaiserlichen Hofkochs zurück, der den misslungenen Pfannkuchen kurzerhand zerriss und mit Puderzucker servierte — Franz Joseph I. soll begeistert gewesen sein. 'Schmarrn' heißt im Bairischen 'Unsinn'.",
+      "category": "Essen & Trinken"
+    },
+    {
+      "id": "essen_de_069",
+      "question": "In welchem Land wurde die Pizza Hawaii Mitte des 20. Jahrhunderts tatsächlich erfunden?",
+      "answers": [
+        {
+          "text": "Kanada",
+          "correct": true
+        },
+        {
+          "text": "USA (Hawaii)",
+          "correct": false
+        },
+        {
+          "text": "Italien",
+          "correct": false
+        }
+      ],
+      "difficulty": "easy",
+      "fun_fact": "Die Pizza Hawaii wurde 1962 in Ontario, Kanada vom griechischstämmigen Sam Panopoulos erfunden, der mit Konservenananas und Schinken experimentierte. In Italien gilt sie als Affront — der Präsident Islands schlug 2017 sogar im Scherz ein Ananas-Verbot vor.",
+      "category": "Essen & Trinken"
+    },
+    {
+      "id": "essen_de_070",
+      "question": "Welches Müsli wurde als kalte Krankenhauskost in der Schweiz erfunden?",
+      "answers": [
+        {
+          "text": "Bircher-Müesli",
+          "correct": true
+        },
+        {
+          "text": "Cornflakes",
+          "correct": false
+        },
+        {
+          "text": "Knuspermüsli",
+          "correct": false
+        }
+      ],
+      "difficulty": "medium",
+      "fun_fact": "Der Schweizer Arzt Maximilian Bircher-Benner entwickelte um 1900 das Müesli aus eingeweichten Haferflocken, Apfel, Nüssen und Kondensmilch als rohköstliche Krankenkost. Die Originalrezeptur enthielt mehr Apfel als Hafer — modernes Trocken-Müsli ist eine kommerzielle Anpassung.",
+      "category": "Essen & Trinken"
+    },
+    {
+      "id": "essen_de_071",
+      "question": "Was ist 'Umami' geschmacklich?",
+      "answers": [
+        {
+          "text": "Eine eigene fünfte Grundgeschmacksrichtung neben süß, sauer, salzig und bitter",
+          "correct": true
+        },
+        {
+          "text": "Ein japanisches Wort für die süß-salzige Kombination",
+          "correct": false
+        },
+        {
+          "text": "Eine Geschmacksverstärkungs-Empfindung ohne eigenen Rezeptor",
+          "correct": false
+        }
+      ],
+      "difficulty": "easy",
+      "fun_fact": "Umami wurde 1908 vom japanischen Chemiker Ikeda als eigener Geschmacksinn identifiziert — ausgelöst durch Glutamat. Erst 2002 fand die Wissenschaft den entsprechenden Rezeptor auf der Zunge. Parmesan, reife Tomaten, Pilze und Sojasoße sind besonders umami-reich.",
+      "category": "Essen & Trinken"
+    },
+    {
+      "id": "essen_de_072",
+      "question": "Welches scharfe Lebensmittel wird mit Scoville-Einheiten gemessen?",
+      "answers": [
+        {
+          "text": "Chilischoten",
+          "correct": true
+        },
+        {
+          "text": "Senf",
+          "correct": false
+        },
+        {
+          "text": "Wasabi",
+          "correct": false
+        }
+      ],
+      "difficulty": "easy",
+      "fun_fact": "Wilbur Scoville entwickelte 1912 einen Test: Wie stark muss Capsaicin in Zuckerwasser verdünnt werden, bis die Schärfe nicht mehr schmeckbar ist? Eine Paprika hat 0 Scoville, Tabasco 2.500, eine Habanero 100.000+. Reines Capsaicin: 16 Millionen.",
+      "category": "Essen & Trinken"
+    },
+    {
+      "id": "essen_de_073",
+      "question": "Welches deutsche Bundesland produziert traditionell den Schwarzwälder Schinken?",
+      "answers": [
+        {
+          "text": "Baden-Württemberg",
+          "correct": true
+        },
+        {
+          "text": "Bayern",
+          "correct": false
+        },
+        {
+          "text": "Rheinland-Pfalz",
+          "correct": false
+        }
+      ],
+      "difficulty": "easy",
+      "fun_fact": "Schwarzwälder Schinken hat EU-Herkunftsschutz und muss im Schwarzwald gepökelt, kalt geräuchert und gereift werden. Das typische Tannen- und Fichten-Holzrauch verleiht ihm das tiefdunkle Äußere — der Reifeprozess dauert mindestens drei Monate.",
+      "category": "Essen & Trinken"
+    },
+    {
+      "id": "essen_de_074",
+      "question": "Wie viele unterschiedliche Aromastoffe enthält ein gebrühter Kaffee chemisch etwa?",
+      "answers": [
+        {
+          "text": "Über 800",
+          "correct": true
+        },
+        {
+          "text": "Etwa 30",
+          "correct": false
+        },
+        {
+          "text": "Etwa 100",
+          "correct": false
+        }
+      ],
+      "difficulty": "hard",
+      "fun_fact": "Kaffee ist chemisch komplexer als Wein. Wissenschaftler haben über 800 flüchtige Aromastoffe identifiziert. Wein hat etwa 200, ein Apfel etwa 250. Die Vielfalt entsteht erst beim Rösten — die grüne Bohne riecht grasig und uninteressant.",
+      "category": "Essen & Trinken"
+    },
+    {
+      "id": "essen_de_075",
+      "question": "Warum wurde der Hamburger nach der Stadt Hamburg benannt?",
+      "answers": [
+        {
+          "text": "Deutsche Auswanderer brachten das gehackte Steak nach Amerika mit",
+          "correct": true
+        },
+        {
+          "text": "Er wurde im 19. Jahrhundert in Hamburg erfunden",
+          "correct": false
+        },
+        {
+          "text": "Der erste Burger-Imbiss hieß 'Hamburger Grill' in New York",
+          "correct": false
+        }
+      ],
+      "difficulty": "medium",
+      "fun_fact": "Im 19. Jahrhundert war das 'Hamburg Steak' bei deutschen Auswanderern auf Hamburger Schiffen nach New York üblich — fein gehacktes Rindfleisch. Amerikanische Lokale boten es als 'Steak nach Hamburger Art' an. Erst um 1900 kam das Brötchen drumherum, vermutlich auf einer Volksfest.",
+      "category": "Essen & Trinken"
+    },
+    {
+      "id": "essen_de_076",
+      "question": "Was ist Bouillabaisse?",
+      "answers": [
+        {
+          "text": "Eine Fischsuppe aus Marseille",
+          "correct": true
+        },
+        {
+          "text": "Eine kalte Avocado-Vorspeise",
+          "correct": false
+        },
+        {
+          "text": "Ein Lammragout aus der Provence",
+          "correct": false
+        }
+      ],
+      "difficulty": "easy",
+      "fun_fact": "Bouillabaisse war ursprünglich Fischerkost — die unverkäuflichen Fische des Tages wurden mit Knoblauch, Tomate und Safran gekocht. Heute gibt es eine Marseille-Charta, die genau festlegt, welche Fische enthalten sein müssen — touristische Imitationen werden als Beleidigung empfunden.",
+      "category": "Essen & Trinken"
+    },
+    {
+      "id": "essen_de_077",
+      "question": "Welche japanische Reisweinart wird wie Bier gebraut, nicht gekeltert wie Wein?",
+      "answers": [
+        {
+          "text": "Sake",
+          "correct": true
+        },
+        {
+          "text": "Shochu",
+          "correct": false
+        },
+        {
+          "text": "Mirin",
+          "correct": false
+        }
+      ],
+      "difficulty": "hard",
+      "fun_fact": "Sake wird oft Reiswein genannt, ist aber technisch näher am Bier: Stärke wird mit Koji-Pilz zu Zucker abgebaut und dann zu Alkohol vergoren. Im Gegensatz zu Bier passieren beide Schritte gleichzeitig im selben Tank — diese 'multiple parallele Fermentation' ist einzigartig.",
+      "category": "Essen & Trinken"
+    },
+    {
+      "id": "essen_de_078",
+      "question": "Wer entwickelte 1869 die Margarine als günstige Butter-Alternative?",
+      "answers": [
+        {
+          "text": "Ein französischer Chemiker auf Aufforderung Napoleons III.",
+          "correct": true
+        },
+        {
+          "text": "Ein dänischer Bäcker für Brot ohne Butter",
+          "correct": false
+        },
+        {
+          "text": "Eine englische Großmolkerei",
+          "correct": false
+        }
+      ],
+      "difficulty": "hard",
+      "fun_fact": "Napoleon III. lobte einen Preis für eine billige Butter-Alternative für die Armee und ärmere Schichten aus. Chemiker Hippolyte Mège-Mouriès gewann mit einer Mischung aus Rindertalg und Milch. Der Name kommt von griechisch 'margaron' (Perle) — Mège-Mouriès dachte, das Fett bestehe aus Perlsäure.",
+      "category": "Essen & Trinken"
+    },
+    {
+      "id": "essen_de_079",
+      "question": "Was ist der traditionelle Hauptbestandteil eines englischen Trifle-Desserts?",
+      "answers": [
+        {
+          "text": "Schichten aus Biskuit, Sherry, Vanillecreme und Sahne",
+          "correct": true
+        },
+        {
+          "text": "Geschichtetes Eis mit Brandyfrüchten",
+          "correct": false
+        },
+        {
+          "text": "Schichten aus Käse, Trockenfrüchten und Honig",
+          "correct": false
+        }
+      ],
+      "difficulty": "medium",
+      "fun_fact": "Trifle bedeutet eigentlich 'Kleinigkeit' — ironisch, weil das aufwendige geschichtete Dessert über Stunden zieht. Die Schichtung soll aus dem 16. Jahrhundert stammen. Sherry-Tränken des Biskuits ist Pflicht — alkoholfreie Versionen heißen oft nur 'Layered Pudding'.",
+      "category": "Essen & Trinken"
+    },
+    {
+      "id": "essen_de_080",
+      "question": "Welches südostasiatische Obst riecht so durchdringend, dass es in Hotels und U-Bahnen Singapurs verboten ist?",
+      "answers": [
+        {
+          "text": "Durian",
+          "correct": true
+        },
+        {
+          "text": "Jackfrucht",
+          "correct": false
+        },
+        {
+          "text": "Mangostan",
+          "correct": false
+        }
+      ],
+      "difficulty": "easy",
+      "fun_fact": "Durian-Geruch wird mit Kanalisation, Gas oder verdorbenen Zwiebeln verglichen, schmeckt aber cremig-süß. In Singapur und Thailand zeigen Symbole in U-Bahnen Durian-Verbote. Der Schriftsteller Anthony Burgess beschrieb das Esserlebnis als 'Vanille-Pudding auf der Toilette essen'.",
+      "category": "Essen & Trinken"
+    },
+    {
+      "id": "essen_de_081",
+      "question": "Welches Gewürz wird aus den Narben einer Krokusblüte gewonnen und ist deshalb extrem teuer?",
+      "answers": [
+        {
+          "text": "Safran",
+          "correct": true
+        },
+        {
+          "text": "Kurkuma",
+          "correct": false
+        },
+        {
+          "text": "Kardamom",
+          "correct": false
+        }
+      ],
+      "difficulty": "easy",
+      "fun_fact": "Für ein Kilo Safran braucht man die Narben von etwa 150.000 Krokusblüten, gepflückt in einer kurzen Herbstwoche. Per Hand. Der Preis liegt bei mehreren tausend Euro pro Kilo — Safran ist gewichtsmäßig teurer als Gold und wird deshalb häufig gefälscht.",
+      "category": "Essen & Trinken"
+    },
+    {
+      "id": "essen_de_082",
+      "question": "Welche Nuss wird botanisch nicht als Nuss klassifiziert, sondern als Hülsenfrucht?",
+      "answers": [
+        {
+          "text": "Erdnuss",
+          "correct": true
+        },
+        {
+          "text": "Walnuss",
+          "correct": false
+        },
+        {
+          "text": "Haselnuss",
+          "correct": false
+        }
+      ],
+      "difficulty": "medium",
+      "fun_fact": "Erdnüsse wachsen unter der Erde in Schoten, wie Erbsen oder Linsen — sie sind verwandte. Mandeln und Cashews sind Steinfrüchte (Verwandte der Pflaume), Pistazien auch. Botanisch echte Nüsse sind Walnuss, Haselnuss, Esskastanie und Pekannuss.",
+      "category": "Essen & Trinken"
+    },
+    {
+      "id": "essen_de_083",
+      "question": "Welche kalte Suppe wird in Andalusien an heißen Sommertagen serviert?",
+      "answers": [
+        {
+          "text": "Gazpacho",
+          "correct": true
+        },
+        {
+          "text": "Borschtsch",
+          "correct": false
+        },
+        {
+          "text": "Vichyssoise",
+          "correct": false
+        }
+      ],
+      "difficulty": "easy",
+      "fun_fact": "Gazpacho war ursprünglich Feldarbeiterkost: hartes Brot, Wasser, Knoblauch, Olivenöl und Essig wurden im Mörser zerstoßen. Tomaten kamen erst nach der Entdeckung Amerikas dazu — heute ist die Tomate die Hauptzutat. Vichyssoise wird zwar auch kalt serviert, ist aber französisch.",
+      "category": "Essen & Trinken"
+    },
+    {
+      "id": "essen_de_084",
+      "question": "Welches Lebensmittel führte 1986 zur Erfindung der Slow-Food-Bewegung als Protest gegen Fast Food?",
+      "answers": [
+        {
+          "text": "Die Eröffnung eines McDonald's an der Spanischen Treppe in Rom",
+          "correct": true
+        },
+        {
+          "text": "Eine Lebensmittelvergiftung in einer Pizzeria-Kette",
+          "correct": false
+        },
+        {
+          "text": "Die Industrialisierung der italienischen Tomatenproduktion",
+          "correct": false
+        }
+      ],
+      "difficulty": "hard",
+      "fun_fact": "Carlo Petrini protestierte 1986 gegen die geplante McDonald's-Filiale an der Spanischen Treppe — er kochte vor Ort öffentlich Penne. Daraus entstand 1989 die internationale Slow-Food-Bewegung, die heute weltweit über 100.000 Mitglieder in 160 Ländern hat.",
+      "category": "Essen & Trinken"
+    },
+    {
+      "id": "essen_de_085",
+      "question": "Welche Frucht ist die ursprüngliche Form der heutigen Erdbeere und wuchs wild in europäischen Wäldern?",
+      "answers": [
+        {
+          "text": "Die Walderdbeere",
+          "correct": true
+        },
+        {
+          "text": "Die Himbeere",
+          "correct": false
+        },
+        {
+          "text": "Die Brombeere",
+          "correct": false
+        }
+      ],
+      "difficulty": "medium",
+      "fun_fact": "Die heutige Garten-Erdbeere ist eine Kreuzung aus dem 18. Jahrhundert zwischen einer chilenischen und einer nordamerikanischen Art — beide nach Europa gebracht. Die heimische Walderdbeere ist viel kleiner und aromatischer, aber kaum kommerziell anbaubar.",
+      "category": "Essen & Trinken"
+    },
+    {
+      "id": "essen_de_086",
+      "question": "Warum gilt es in China als unhöflich, alle Reiskörner aufzuessen?",
+      "answers": [
+        {
+          "text": "Ein leerer Teller signalisiert dem Gastgeber, dass er nicht genug serviert hat",
+          "correct": true
+        },
+        {
+          "text": "Reiskörner gelten als Glückssymbol und werden geehrt",
+          "correct": false
+        },
+        {
+          "text": "Die letzten Körner dienen als Opfer an die Ahnen",
+          "correct": false
+        }
+      ],
+      "difficulty": "medium",
+      "fun_fact": "In vielen asiatischen Esskulturen, vor allem China, ist ein leergegessener Teller eine Kritik am Gastgeber — er habe nicht genug aufgetischt. Etwas auf dem Teller zu lassen, signalisiert Sättigung und Großzügigkeit. In Japan dagegen ist Aufessen das höfliche Verhalten.",
+      "category": "Essen & Trinken"
+    },
+    {
+      "id": "essen_de_087",
+      "question": "Was bewirkt die Kohlensäure in Mineralwasser im Mund tatsächlich?",
+      "answers": [
+        {
+          "text": "Sie aktiviert Schmerzrezeptoren als leichten Reiz",
+          "correct": true
+        },
+        {
+          "text": "Sie öffnet Geschmacksknospen für mehr Aroma",
+          "correct": false
+        },
+        {
+          "text": "Sie reinigt die Zunge zwischen Bissen",
+          "correct": false
+        }
+      ],
+      "difficulty": "hard",
+      "fun_fact": "Das Prickeln entsteht nicht durch platzende Bläschen, sondern durch Kohlensäure, die auf der Zunge zu Säure reagiert. Sie aktiviert dieselben Schmerzrezeptoren wie scharfes Essen — nur viel schwächer. Astronauten schmecken Sprudel ohne Schwerkraft anders, weil die Bläschen nicht aufsteigen.",
+      "category": "Essen & Trinken"
+    },
+    {
+      "id": "essen_de_088",
+      "question": "Wer schrieb die einflussreichste französische Kochlehre 'Le Guide Culinaire' und gilt als Begründer der modernen Restaurantküche?",
+      "answers": [
+        {
+          "text": "Auguste Escoffier",
+          "correct": true
+        },
+        {
+          "text": "Marie-Antoine Carême",
+          "correct": false
+        },
+        {
+          "text": "Paul Bocuse",
+          "correct": false
+        }
+      ],
+      "difficulty": "medium",
+      "fun_fact": "Escoffier veröffentlichte 1903 'Le Guide Culinaire' mit über 5.000 Rezepten — bis heute das Standardwerk. Er erfand auch das Brigade-System (Saucier, Poissonnier etc.), das jede Profi-Küche heute nutzt. Carême war früher (1800), aber Escoffier strukturierte die moderne Restaurantküche.",
+      "category": "Essen & Trinken"
+    },
+    {
+      "id": "essen_de_089",
+      "question": "Was ist die Hauptzutat, die Sauerkraut zur Konservenmethode macht?",
+      "answers": [
+        {
+          "text": "Milchsäurebakterien fermentieren den Kohl",
+          "correct": true
+        },
+        {
+          "text": "Essig konserviert den Kohl chemisch",
+          "correct": false
+        },
+        {
+          "text": "Salz entzieht Wasser bis Bakterien absterben",
+          "correct": false
+        }
+      ],
+      "difficulty": "medium",
+      "fun_fact": "Salz wirkt nur als Selektor: Es lässt nur Milchsäurebakterien überleben, die den Kohlzucker zu Milchsäure umwandeln. Diese saure Umgebung konserviert. Die Tradition kam vermutlich aus China entlang der Seidenstraße — Genghis Khans Reiter aßen schon fermentierten Kohl.",
+      "category": "Essen & Trinken"
+    },
+    {
+      "id": "essen_de_090",
+      "question": "Welches Speiseöl raucht beim Erhitzen am spätesten und eignet sich daher am besten zum scharfen Anbraten?",
+      "answers": [
+        {
+          "text": "Raffiniertes Erdnussöl oder Rapsöl",
+          "correct": true
+        },
+        {
+          "text": "Natives Olivenöl extra",
+          "correct": false
+        },
+        {
+          "text": "Leinöl",
+          "correct": false
+        }
+      ],
+      "difficulty": "medium",
+      "fun_fact": "Der Rauchpunkt eines Öls hängt von Restsubstanzen ab, die bei Hitze verbrennen. Natives Olivenöl raucht schon bei 170 Grad und entwickelt dabei bittere und potenziell schädliche Verbindungen. Raffiniertes Erdnuss- oder Rapsöl hält über 220 Grad aus — ideal zum Anbraten.",
+      "category": "Essen & Trinken"
+    },
+    {
+      "id": "essen_de_091",
+      "question": "Welche Kaffeezubereitungsmethode wurde nach einem italienischen Erfinder benannt, der das Wassergefäß umdrehte?",
+      "answers": [
+        {
+          "text": "Die Moka-Kanne (Bialetti)",
+          "correct": true
+        },
+        {
+          "text": "Die Aeropress",
+          "correct": false
+        },
+        {
+          "text": "Die Chemex",
+          "correct": false
+        }
+      ],
+      "difficulty": "medium",
+      "fun_fact": "Alfonso Bialetti patentierte 1933 die achteckige Aluminium-Moka. Wasser im Unterteil wird erhitzt, der Dampfdruck drückt es durch das Kaffeepulver in den oberen Behälter. In Italien steht in fast jeder Küche eine Moka — sie ist Teil der italienischen Designgeschichte.",
+      "category": "Essen & Trinken"
+    },
+    {
+      "id": "essen_de_092",
+      "question": "Wer entdeckte zufällig im 19. Jahrhundert die Pasteurisierung, weil er für die Weinindustrie ein Verderbnis-Problem lösen sollte?",
+      "answers": [
+        {
+          "text": "Louis Pasteur",
+          "correct": true
+        },
+        {
+          "text": "Robert Koch",
+          "correct": false
+        },
+        {
+          "text": "Justus von Liebig",
+          "correct": false
+        }
+      ],
+      "difficulty": "medium",
+      "fun_fact": "Französische Weinbauern verloren in den 1860ern viel Wein durch Verderbnis. Napoleon III. bat Louis Pasteur um Hilfe. Er entdeckte, dass kurzes Erhitzen auf etwa 60 Grad Bakterien abtötete, ohne den Wein zu zerstören. Das Verfahren rettete später Milch, Bier und vermutlich Millionen Menschenleben.",
+      "category": "Essen & Trinken"
+    },
+    {
+      "id": "essen_de_093",
+      "question": "Welches Lebensmittel besteht zu fast 90 Prozent aus Wasser, schmeckt aber nach viel mehr?",
+      "answers": [
+        {
+          "text": "Gurke",
+          "correct": true
+        },
+        {
+          "text": "Apfel",
+          "correct": false
+        },
+        {
+          "text": "Karotte",
+          "correct": false
+        }
+      ],
+      "difficulty": "easy",
+      "fun_fact": "Die Gurke besteht zu 96 Prozent aus Wasser — sie ist das wasserreichste verbreitete Gemüse. Trotzdem schmeckt sie deutlich nach Aromen (Hexenal, Nonadienal), die in winzigen Mengen wirken. Iceberg-Salat liegt bei 95 Prozent, Tomate bei 94 Prozent.",
+      "category": "Essen & Trinken"
+    },
+    {
+      "id": "essen_de_094",
+      "question": "Welche traditionelle Methode der Bierherstellung wurde 1516 in Bayern erstmals gesetzlich geregelt?",
+      "answers": [
+        {
+          "text": "Das Reinheitsgebot mit nur Wasser, Malz, Hopfen (und später Hefe)",
+          "correct": true
+        },
+        {
+          "text": "Die Klosterbrau-Lizenz für katholische Orden",
+          "correct": false
+        },
+        {
+          "text": "Die Untergärungs-Pflicht für lagerfähiges Bier",
+          "correct": false
+        }
+      ],
+      "difficulty": "easy",
+      "fun_fact": "Das Reinheitsgebot wurde 1516 in Ingolstadt unter Herzog Wilhelm IV. erlassen — ursprünglich auch als Brotgetreide-Schutz: Roggen und Weizen sollten für Brot reserviert bleiben. Hefe stand nicht drin, weil ihre Existenz noch unbekannt war. Es gilt als ältestes Lebensmittelgesetz der Welt.",
+      "category": "Essen & Trinken"
+    },
+    {
+      "id": "essen_de_095",
+      "question": "Welcher französische Käse reift mit Edelschimmel im Inneren in den Höhlen einer einzigen geschützten Region?",
+      "answers": [
+        {
+          "text": "Roquefort",
+          "correct": true
+        },
+        {
+          "text": "Brie",
+          "correct": false
+        },
+        {
+          "text": "Camembert",
+          "correct": false
+        }
+      ],
+      "difficulty": "medium",
+      "fun_fact": "Roquefort wird mit dem Edelschimmel Penicillium roqueforti im Inneren geimpft und reift ausschließlich in den Kalkstein-Höhlen von Roquefort-sur-Soulzon. Brie und Camembert tragen ihren Schimmel dagegen als weiße Rinde außen (Penicillium camemberti). Roquefort ist außerdem der älteste benannte Käse der Welt.",
+      "category": "Essen & Trinken"
+    },
+    {
+      "id": "essen_de_096",
+      "question": "Welche deutsche Spezialität ist eine schwarz-rote Süßspeise aus roten Beeren mit Stärkebindung?",
+      "answers": [
+        {
+          "text": "Rote Grütze",
+          "correct": true
+        },
+        {
+          "text": "Schwarzwälder Kirschtorte",
+          "correct": false
+        },
+        {
+          "text": "Pflaumenmus",
+          "correct": false
+        }
+      ],
+      "difficulty": "easy",
+      "fun_fact": "Rote Grütze ist vor allem norddeutsch und dänisch — die typische Mischung enthält Johannisbeeren, Himbeeren, Erdbeeren und Kirschen. Klassisch wird sie mit Vanillesoße oder Milch serviert. Im Süden Deutschlands ist sie kaum bekannt, dort dominieren Mehlspeisen.",
+      "category": "Essen & Trinken"
+    },
+    {
+      "id": "essen_de_097",
+      "question": "Was passiert, wenn man Eiweiß zu Schnee schlägt?",
+      "answers": [
+        {
+          "text": "Proteine entfalten sich und schließen Luftbläschen ein",
+          "correct": true
+        },
+        {
+          "text": "Wasser verdampft durch die Reibung der Bewegung",
+          "correct": false
+        },
+        {
+          "text": "Eisenpartikel im Eiweiß bilden eine stabile Struktur",
+          "correct": false
+        }
+      ],
+      "difficulty": "medium",
+      "fun_fact": "Eiweiß-Proteine sind im rohen Zustand gefaltet. Beim Schlagen entfalten sie sich (Denaturierung) und umschließen Luftbläschen. Eine Spur Fett (z.B. Eigelb) bricht den Schaum sofort. In einer Kupferschüssel reagieren die Proteine mit Spuren von Kupfer und werden noch stabiler — französische Patissiers schwören drauf.",
+      "category": "Essen & Trinken"
+    },
+    {
+      "id": "essen_de_098",
+      "question": "Welches deutsche Brotgebäck wird vor dem Backen in heißer Natronlauge oder Backsoda-Wasser gebadet?",
+      "answers": [
+        {
+          "text": "Laugenbrezel und Laugenbrötchen",
+          "correct": true
+        },
+        {
+          "text": "Pumpernickel",
+          "correct": false
+        },
+        {
+          "text": "Roggenmischbrot",
+          "correct": false
+        }
+      ],
+      "difficulty": "medium",
+      "fun_fact": "Das Laugenbad lässt die Stärke an der Oberfläche reagieren — die Maillard-Reaktion startet bei niedrigerer Temperatur und gibt die typische tiefbraune, glänzende Kruste und den charakteristischen Geschmack. Industrielle Bäcker nutzen 3-4 Prozent Natronlauge, was nach dem Backen ungiftig ist.",
+      "category": "Essen & Trinken"
+    },
+    {
+      "id": "essen_de_099",
+      "question": "Welche schwäbische Spezialität wird oft 'Herrgottsbescheißerle' genannt?",
+      "answers": [
+        {
+          "text": "Maultaschen",
+          "correct": true
+        },
+        {
+          "text": "Spätzle",
+          "correct": false
+        },
+        {
+          "text": "Linsen mit Saiten",
+          "correct": false
+        }
+      ],
+      "difficulty": "medium",
+      "fun_fact": "Mönche aus Maulbronn sollen während der Fastenzeit Fleisch in Teigtaschen versteckt haben, um es vor Gottes Augen zu verbergen — daher der Spitzname. Maultaschen sind heute EU-geschützte regionale Spezialität und werden in der Brühe oder geschmälzt serviert.",
+      "category": "Essen & Trinken"
+    },
+    {
+      "id": "essen_de_100",
+      "question": "Warum ist echter Balsamico aus Modena viel teurer als günstige 'Aceto Balsamico'-Varianten?",
+      "answers": [
+        {
+          "text": "Er reift mindestens 12 Jahre in mehreren Holzfässern",
+          "correct": true
+        },
+        {
+          "text": "Er wird aus seltenen schwarzen Trauben gepresst",
+          "correct": false
+        },
+        {
+          "text": "Er enthält gemahlene Trüffel als Geschmacksverstärker",
+          "correct": false
+        }
+      ],
+      "difficulty": "hard",
+      "fun_fact": "Tradizionale di Modena DOP reift mindestens 12 Jahre, oft 25-100 Jahre, und wird durch immer kleinere Fässer aus verschiedenen Holzsorten gefüllt. Eine 100ml-Flasche kann hunderte Euro kosten. Industrieller 'Aceto Balsamico' ist meist Weinessig mit Karamell-Farbe — eine völlig andere Liga.",
+      "category": "Essen & Trinken"
+    },
+    {
+      "id": "essen_de_101",
+      "question": "Welche italienische Süßspeise wird wörtlich 'zieh mich hoch' genannt, weil sie wegen Koffein und Zucker beleben soll?",
+      "answers": [
+        {
+          "text": "Tiramisu",
+          "correct": true
+        },
+        {
+          "text": "Panna cotta",
+          "correct": false
+        },
+        {
+          "text": "Cannoli",
+          "correct": false
+        }
+      ],
+      "difficulty": "easy",
+      "fun_fact": "Tiramisù bedeutet wörtlich 'zieh mich hoch' oder 'mach mich munter' — wegen des Espresso-Anteils. Das Dessert ist überraschend jung: Es wurde nachweislich erst in den 1960ern in Treviso erfunden, ist also kein jahrhundertealter Klassiker, wie viele glauben.",
+      "category": "Essen & Trinken"
+    },
+    {
+      "id": "essen_de_102",
+      "question": "Was ist ein Sommelier eigentlich von der Berufsbezeichnung her?",
+      "answers": [
+        {
+          "text": "Ursprünglich ein Lasttiertreiber, der königliches Gepäck transportierte",
+          "correct": true
+        },
+        {
+          "text": "Ein französischer Adelstitel für Weinhändler",
+          "correct": false
+        },
+        {
+          "text": "Ein mittelalterlicher Mönch, der Klosterwein verkostete",
+          "correct": false
+        }
+      ],
+      "difficulty": "hard",
+      "fun_fact": "Das Wort 'sommelier' stammt vom altfranzösischen 'somier' für Lasttier-Treiber. Diese transportierten königliches Gepäck inklusive Wein und mussten Trinkbarkeit prüfen (auch auf Gift). Mit der Zeit wurde daraus der spezialisierte Wein-Service in Hofküchen und später in Restaurants.",
+      "category": "Essen & Trinken"
+    },
+    {
+      "id": "essen_de_103",
+      "question": "Welche Frucht ist genetisch ein Elternteil sowohl der Orange als auch der Grapefruit?",
+      "answers": [
+        {
+          "text": "Pomelo",
+          "correct": true
+        },
+        {
+          "text": "Mandarine",
+          "correct": false
+        },
+        {
+          "text": "Zitrone",
+          "correct": false
+        }
+      ],
+      "difficulty": "hard",
+      "fun_fact": "Fast alle heutigen Zitrusfrüchte stammen aus Kreuzungen von drei Urarten: Mandarine, Pomelo und Zitronatzitrone. Die Orange ist eine Mandarine-Pomelo-Kreuzung, die Grapefruit eine Orange-Pomelo-Kreuzung — die Pomelo steckt also in beiden. Die Zitrone wiederum ist Bitterorange × Zitronatzitrone.",
+      "category": "Essen & Trinken"
     }
   ]
 }

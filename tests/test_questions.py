@@ -47,7 +47,7 @@ def sample_question() -> Question:
 class TestLoadCategory:
     def test_load_category_returns_questions(self, bank: QuestionBank) -> None:
         questions = bank.load_category("geographie")
-        assert len(questions) == 50
+        assert len(questions) == 100
         assert all(isinstance(q, Question) for q in questions)
 
     def test_load_all_categories(self, bank: QuestionBank) -> None:
@@ -61,9 +61,11 @@ class TestLoadCategory:
         result = qb.load_category("nonexistent")
         assert result == []
 
-    def test_each_category_has_50_questions(self, bank: QuestionBank) -> None:
+    def test_each_category_has_at_least_95_questions(self, bank: QuestionBank) -> None:
         for cat in bank.get_categories():
-            assert bank.get_question_count(cat) == 50, f"{cat} should have 50 questions"
+            count = bank.get_question_count(cat)
+            assert count >= 95, f"{cat} has only {count} questions (floor: 95)"
+            assert count <= 100, f"{cat} has {count} questions (ceiling: 100)"
 
 
 class TestValidateAnswer:
@@ -91,13 +93,13 @@ class TestValidateAnswer:
 class TestQuestionCount:
     def test_get_question_count(self, bank: QuestionBank) -> None:
         count = bank.get_question_count("geographie")
-        assert count == 50
+        assert count == 100
 
     def test_get_question_count_by_difficulty(self, bank: QuestionBank) -> None:
         easy = bank.get_question_count("geographie", "easy")
         medium = bank.get_question_count("geographie", "medium")
         hard = bank.get_question_count("geographie", "hard")
-        assert easy + medium + hard == 50
+        assert easy + medium + hard == 100
         assert easy > 0
         assert medium > 0
         assert hard > 0
@@ -111,7 +113,7 @@ class TestResetAndShuffle:
         bank.reset("geographie")
         second_run = [bank.get_next_question("geographie") for _ in range(5)]
 
-        # With 50 questions, the chance of identical order is negligible
+        # With 100 questions, the chance of identical order is negligible
         first_ids = [q.id for q in first_run if q]
         second_ids = [q.id for q in second_run if q]
         assert len(first_ids) == 5
@@ -123,7 +125,7 @@ class TestResetAndShuffle:
         bank = QuestionBank(questions_dir=QUESTIONS_DIR)
         bank.load_category("geographie")
         bank.reset("geographie")
-        for _ in range(50):
+        for _ in range(100):
             q = bank.get_next_question("geographie")
             assert q is not None
         assert bank.get_next_question("geographie") is None

@@ -1,162 +1,156 @@
-# Review: Sport (de)
+# Review: sport-de.json (de)
 
-Reviewed on 2026-05-28. 44 questions across 2 chunks. **Fixes applied + re-verified** in the same session (see sections at the end of this file).
+Review run 2026-05-30, scope: sport_de_045–102 (58 new).
+
+Bewertet wurden ausschließlich die NEUEN Fragen (sport_de_045 bis sport_de_102, 58 Stück). Die Original-IDs 001–044 wurden bereits am 27./28. Mai bereinigt und in diesem Lauf übersprungen. IDs 036 und 040 fehlen im Pack (vermutlich früher gelöscht).
 
 ## Summary
 
-### After fixes
-
-- ✅ **Clean**: 35 (was 30 + 5 newly fixed)
-- ⚠️ **Concerns**: 7 (unchanged judgment-call items, manual review recommended)
-- 🚨 **Fix needed**: 0 (was 7 — 5 auto-fixed, 2 deleted)
-- 🗑️ **Deleted**: 2
-- 📦 **Pack size**: 44 → 42
-
-### Before fixes (initial review)
-
-- ✅ Clean: 30
-- ⚠️ Concerns: 7
-- 🚨 Fix needed: 7
+- ✅ **Clean**: 48
+- ⚠️ **Concerns**: 6
+- 🚨 **Fix needed**: 4
 
 ### Top issues to address first
 
-1. **sport_de_002** — Question asks WHICH ring color is in every flag; answer says "none — every flag contains at least one". The question/answer don't match grammatically, and the fun_fact mentions 6 colors (incl. white) while the answer references only the 5 ring colors.
-2. **sport_de_005** — India did NOT "trat an" (compete) at the 1950 WC — India withdrew before the tournament. The shoeless-shoes ban story in the fun_fact is also a disputed myth, not the documented primary reason.
-3. **sport_de_006** — Live pigeon shooting's status as an "official" Olympic event at Paris 1900 is disputed by the IOC; commonly listed in trivia but officially unofficial.
-4. **sport_de_016** — Loundras was the youngest *verified* Olympic medalist; an unidentified French child coxswain at Paris 1900 may have been younger. "Aller Zeiten" overclaims.
-5. **sport_de_036** — The claim that boxers who surrendered were publicly whipped by Hellanodikai is weakly sourced; rods were used for rule enforcement (not specifically for surrender).
-6. **sport_de_040** — The "10th pin added to circumvent the 9-pin ban" is the classic legend but historically disputed; nine-pin and ten-pin bowling existed in parallel.
-7. **sport_de_042** — Bo Jackson is famously a Pro Bowler + MLB All-Star; the "All-Pro" specific phrasing is technically defensible (2nd-team All-Pro 1990) but disputable.
+1. **sport_de_065** — Behauptung "Eishockey-Eis leicht blau gefärbt" ist faktisch falsch; das Eis ist WEISS gefärbt (Farbschicht zwischen zwei Eis-Lagen), der Fun-Fact widerspricht der Frage sogar selbst.
+2. **sport_de_072** — Buzkashi wird als "Mongolei-Nationalsport" bezeichnet; tatsächlich ist es der Nationalsport Afghanistans (auch Tadschikistan, Kirgistan). Der Fun-Fact widerspricht der Frage offen ("ist in Afghanistan ... Nationalsport").
+3. **sport_de_048** — Snooker-Weisser-Ball ist nach aktueller WPBSA-Regel exakt gleich groß/schwer wie die Farbbälle (52,5 mm). Die "marginal kleiner und leichter"-Aussage ist eine veraltete Trivia-Behauptung aus Pre-1995-Regelwerken.
+4. **sport_de_092** — Fun-Fact behauptet, Henri Desgrange habe das Polka-Dot-Trikot 1975 persönlich ausgewählt. Desgrange starb 1940. Die Trikot-Einführung 1975 erfolgte unter Félix Lévitan.
 
 ## Per-question findings
 
 | ID | Verdict | Factual | Distractors | Fun-fact | Clarity | Difficulty | Summary |
 |---|---|---|---|---|---|---|---|
-| sport_de_001 | ✅ ok | pass | pass | pass | pass | appropriate | Tauziehen Olympic 1900-1920 — accurate. |
-| sport_de_002 | 🚨 fix | **concern** | pass | **concern** | **fail** | appropriate | Question asks WHICH color; answer is "none" — grammatical mismatch. Fun-fact says 6 colors incl. white. |
-| sport_de_003 | ✅ ok | pass | pass | pass | pass | appropriate | Moussambani's 100m heat at Sydney 2000 — accurate. |
-| sport_de_004 | ✅ ok | pass | pass | pass | pass | appropriate | Stockholm 1912 last solid-gold medals — accurate. |
-| sport_de_005 | 🚨 fix | **fail** | pass | **fail** | **concern** | appropriate | India withdrew, did not "trat an" at WC 1950. Shoeless ban is disputed myth. |
-| sport_de_006 | 🚨 fix | **concern** | pass | pass | **concern** | appropriate | Live pigeon shooting's "official" Olympic status disputed by IOC. |
-| sport_de_007 | ✅ ok | pass | pass | pass | pass | appropriate | Akhwari Mexico 1968 marathon — accurate. |
-| sport_de_008 | ✅ ok | pass | pass | pass | pass | appropriate | Olympic art competitions 1912-1948 — accurate. |
-| sport_de_009 | ✅ ok | pass | pass | pass | pass | appropriate | "Communiter" added 2021 — accurate. |
-| sport_de_010 | ✅ ok | pass | pass | pass | pass | appropriate | Eukonkanto (Wife Carrying), Sonkajärvi — accurate. |
-| sport_de_011 | ✅ ok | pass | pass | pass | pass | appropriate | Cooper's Hill Cheese Rolling — accurate. |
-| sport_de_012 | ✅ ok | pass | pass | pass | pass | appropriate | Schachboxen, Iepe Rubingh 2003 — accurate. |
-| sport_de_013 | ✅ ok | pass | pass | pass | pass | appropriate | Isner vs Mahut 11h match Wimbledon 2010 — accurate. |
-| sport_de_014 | ✅ ok | pass | pass | pass | pass | appropriate | Sepak Takraw description — accurate. |
-| sport_de_015 | ✅ ok | pass | pass | pass | pass | appropriate | Kabaddi sprechgesang rule — accurate. |
-| sport_de_016 | 🚨 fix | **concern** | pass | pass | **concern** | appropriate | Loundras is youngest *verified* medalist; "aller Zeiten" overclaims given unidentified Paris 1900 coxswain. |
-| sport_de_017 | ✅ ok | pass | pass | pass | pass | appropriate | Eisstockschießen demo sport 1936 + 1964 — accurate. |
-| sport_de_018 | ✅ ok | pass | pass | pass | pass | appropriate | Hakan Şükür 10.8s WC 2002 — accurate. |
-| sport_de_019 | ✅ ok | pass | pass | pass | pass | appropriate | 13 teams 1930 WC — accurate. |
-| sport_de_020 | ✅ ok | pass | pass | pass | pass | appropriate | Lapis-lazuli base on Jules Rimet trophy — accurate. |
-| sport_de_021 | ✅ ok | pass | pass | pass | pass | appropriate | 1950 WC final-group format, Maracanazo — accurate. |
-| sport_de_022 | ✅ ok | pass | pass | pass | pass | appropriate | Cruyff #14 at WC 1974 — accurate. |
-| sport_de_023 | ✅ ok | pass | pass | pass | pass | appropriate | World Cup Willie lion 1966 — accurate. |
-| sport_de_024 | ✅ ok | pass | pass | pass | pass | appropriate | Maradona "goal of century" ~10s — accurate. |
-| sport_de_025 | ✅ ok | pass | pass | pass | pass | appropriate | USSR 1960 Euro, Spain forfeit — accurate. |
-| sport_de_026 | ✅ ok | pass | pass | pass | pass | appropriate | Konietzka first Bundesliga goal — accurate. |
-| sport_de_027 | ✅ ok | pass | pass | pass | pass | appropriate | Zidane–Materazzi headbutt — accurate. |
-| sport_de_028 | ✅ ok | pass | pass | pass | pass | appropriate | Frisbie Pie Company origin — accurate. |
-| sport_de_029 | ✅ ok | pass | pass | pass | pass | appropriate | Peach baskets, Naismith 1891 — accurate. |
-| sport_de_030 | ✅ ok | pass | pass | pass | pass | appropriate | Jeu de paume monastic origin — accurate. |
-| sport_de_031 | ✅ ok | pass | pass | pass | pass | appropriate | Ancient Olympics naked — accurate. |
-| sport_de_032 | ✅ ok | pass | pass | pass | pass | appropriate | Pankration — accurate. |
-| sport_de_033 | ✅ ok | pass | pass | pass | pass | appropriate | Skateboard premiere Tokyo 2020 — accurate. |
-| sport_de_034 | ✅ ok | pass | pass | pass | pass | appropriate | Black Sox 1919 scandal — accurate. |
-| sport_de_035 | ✅ ok | pass | pass | pass | pass | appropriate | Tour de France origin via L'Auto — accurate. |
-| sport_de_036 | 🚨 fix | **fail** | pass | **concern** | pass | appropriate | Whipping-for-surrender claim is not well-documented; rods used for rule enforcement only. |
-| sport_de_037 | ✅ ok | pass | pass | pass | pass | appropriate | Golf-ball dimples ~2x distance — accurate. |
-| sport_de_038 | ✅ ok | pass | pass | pass | pass | appropriate | Bolt McNuggets — accurate (self-reported). |
-| sport_de_039 | ✅ ok | pass | pass | pass | pass | appropriate | Frozen NHL pucks — accurate. |
-| sport_de_040 | 🚨 fix | **concern** | pass | **concern** | pass | appropriate | 9-pin-ban → 10-pin origin story is disputed legend, not documented historical fact. |
-| sport_de_041 | ✅ ok | pass | pass | pass | pass | appropriate | Ailsa Craig curling granite — accurate. |
-| sport_de_042 | 🚨 fix | **concern** | pass | **concern** | pass | appropriate | Bo Jackson is famously Pro Bowl + MLB All-Star; "All-Pro" specifically is technically true but easily disputed. |
-| sport_de_043 | ✅ ok | pass | pass | pass | pass | appropriate | Cricket Test 80-over new-ball rule — accurate. |
-| sport_de_044 | ⚠️ concern | pass | pass | pass | **concern** | appropriate | "Live cover" rule accurate; question wording ("bizarre", "Pferderennen-Reglement") loose — registry vs. racing rule. |
+| sport_de_045 | ✅ ok | pass | pass | pass | pass | appropriate | Yokozuna + Ozeki sind die zwei höchsten Profi-Ränge, korrekt. |
+| sport_de_046 | ✅ ok | pass | pass | pass | pass | appropriate | Curlingstein 17,24–19,96 kg — "rund 20 kg" passt. |
+| sport_de_047 | ✅ ok | pass | pass | pass | pass | appropriate | Polo: 4 Spieler pro Team, korrekt. |
+| sport_de_048 | 🚨 fix | **fail** | pass | pass | pass | appropriate | Cue ball laut aktueller WPBSA-Regel gleich groß/schwer wie Farbbälle — Trivia-Mythos. |
+| sport_de_049 | ✅ ok | pass | pass | pass | pass | appropriate | Ironman-Schwimmdistanz 3,86 km, korrekt. |
+| sport_de_050 | ⚠️ concern | **concern** | pass | pass | **concern** | appropriate | "Kein Bob kann mehr aktiv beschleunigen" ist physikalisch ungenau — die Schwerkraft beschleunigt natürlich weiter. |
+| sport_de_051 | ✅ ok | pass | pass | pass | pass | appropriate | Tennisbälle unter Druck, korrekt. |
+| sport_de_052 | ✅ ok | pass | pass | pass | pass | appropriate | Wellenbrecher-Bahnleinen, korrekt. |
+| sport_de_053 | ✅ ok | pass | pass | pass | pass | appropriate | Magnus-Effekt + Roberto Carlos 1997 (Tournoi de France), korrekt. |
+| sport_de_054 | ✅ ok | pass | pass | pass | pass | appropriate | 18 Löcher, korrekt; St-Andrews-Historie stimmt. |
+| sport_de_055 | ✅ ok | pass | pass | pass | pass | appropriate | Patriots' Day = Lexington/Concord, korrekt. |
+| sport_de_056 | ✅ ok | pass | pass | pass | pass | appropriate | LCL-Plüschlöwen, korrekt. |
+| sport_de_057 | ✅ ok | pass | pass | pass | pass | appropriate | Caber Toss bei Highland Games, korrekt. |
+| sport_de_058 | ✅ ok | pass | pass | pass | pass | appropriate | Greco-Roman ohne Beinangriffe, korrekt. |
+| sport_de_059 | ✅ ok | pass | pass | pass | pass | appropriate | "House" beim Curling, korrekt. |
+| sport_de_060 | ✅ ok | pass | pass | pass | pass | appropriate | Aero-Helm-Strömungsabriss, korrekt. |
+| sport_de_061 | ✅ ok | pass | pass | pass | pass | appropriate | Baseball ohne Spieluhr, korrekt. |
+| sport_de_062 | ✅ ok | pass | pass | pass | pass | appropriate | Gretzky #99 ligaweit gesperrt 2000, korrekt; auch #42-MLB stimmt. |
+| sport_de_063 | ✅ ok | pass | pass | pass | pass | appropriate | World Marbles Championship Tinsley Green, korrekt. |
+| sport_de_064 | ✅ ok | pass | pass | pass | pass | appropriate | Rungrado-1.-Mai-Stadion ~114k, korrekt. |
+| sport_de_065 | 🚨 fix | **fail** | pass | **fail** | **concern** | appropriate | "Eis leicht blau gefärbt" ist falsch — Eis ist weiß lackiert; Fun-Fact widerspricht der Frage. |
+| sport_de_066 | ✅ ok | pass | pass | pass | pass | appropriate | Box-Runde 3 Minuten (Queensberry), korrekt. |
+| sport_de_067 | ✅ ok | pass | pass | pass | pass | appropriate | MLB-Schläger Massivholz, korrekt. |
+| sport_de_068 | ✅ ok | pass | pass | pass | pass | appropriate | Wilt Chamberlain 100 Punkte ohne Video, korrekt (Hershey 1962). |
+| sport_de_069 | ⚠️ concern | pass | pass | pass | **concern** | appropriate | Frageformulierung "Doppelfehler in Folge" ist semantisch unsauber — ein Doppelfehler IST bereits der Punktverlust. |
+| sport_de_070 | ✅ ok | pass | pass | pass | pass | appropriate | Bjørndalen Biathlon, korrekt. |
+| sport_de_071 | ✅ ok | pass | pass | pass | pass | appropriate | Speer-Schwerpunktverlagerung 1986, korrekt (Uwe-Hohn-Rekord 1984 = 104,80 m). |
+| sport_de_072 | 🚨 fix | **fail** | pass | **fail** | **concern** | appropriate | Buzkashi ist Nationalsport Afghanistans, NICHT der Mongolei; Fun-Fact widerspricht Frage. |
+| sport_de_073 | ✅ ok | pass | pass | pass | pass | appropriate | 64 Felder, korrekt; Alfons-X.-Anekdote plausibel. |
+| sport_de_074 | ⚠️ concern | pass | pass | pass | **concern** | appropriate | Frageformulierung kohärent? "Vorname-Effekt" wird im Antworttext nicht aufgelöst; Frage und Antwort passen thematisch nicht zusammen. |
+| sport_de_075 | ✅ ok | pass | pass | pass | pass | appropriate | Bogenschießen-Kinn-Pflaster, korrekt. |
+| sport_de_076 | ✅ ok | pass | pass | pass | pass | appropriate | Beamon 8,90 m (1968), Powell 8,95 m (1991), korrekt. |
+| sport_de_077 | ✅ ok | pass | pass | pass | pass | appropriate | Headis, korrekt. |
+| sport_de_078 | ✅ ok | pass | pass | pass | pass | appropriate | Wasserball 7 Spieler, korrekt. |
+| sport_de_079 | ✅ ok | pass | pass | pass | pass | appropriate | Tour-Gangschaltung-Verbot bis 1937, korrekt; Desgrange-Zitat-Tonfall plausibel. |
+| sport_de_080 | ✅ ok | pass | pass | pass | pass | appropriate | Bannister 1954, korrekt. |
+| sport_de_081 | ✅ ok | pass | pass | pass | pass | appropriate | Fierljeppen, korrekt. |
+| sport_de_082 | ✅ ok | pass | pass | pass | pass | appropriate | Rote Karte WM 1970, korrekt (Ken Aston). |
+| sport_de_083 | ✅ ok | pass | pass | pass | pass | appropriate | Olympia-Sprungbecken ≥ 5 m tief, korrekt. |
+| sport_de_084 | ✅ ok | pass | pass | pass | pass | appropriate | NHL-Helmpflicht 1979, MacTavish letzter Helmloser, korrekt. |
+| sport_de_085 | ✅ ok | pass | pass | pass | pass | appropriate | 15 rote Snooker-Kugeln, korrekt. |
+| sport_de_086 | ✅ ok | pass | pass | pass | pass | appropriate | Wimbledon-Membrandach 2009, korrekt. |
+| sport_de_087 | ✅ ok | pass | pass | pass | pass | appropriate | Skeleton-Kufentemperatur, korrekt (heute IBSF, vormals FIBT). |
+| sport_de_088 | ✅ ok | pass | pass | pass | pass | appropriate | XCO Mountainbike-Format, korrekt. |
+| sport_de_089 | ✅ ok | pass | pass | pass | pass | appropriate | Stabhochsprung-Magnesium, korrekt; FIVB-Erwähnung im Distraktor unsauber (FIVB ist Volleyball, hier wäre World Athletics richtig) — aber nur im Distraktor, daher kein Fehler. |
+| sport_de_090 | ⚠️ concern | pass | pass | **concern** | **concern** | appropriate | Tschechien-WM-2010-Sieg korrekt, aber Frageprämisse "überraschend kleines Land" passt nicht zu Eishockey-Großmacht Tschechien; Fun-Fact widerspricht Prämisse selbst. |
+| sport_de_091 | ✅ ok | pass | pass | pass | pass | appropriate | Libero 1998 eingeführt, korrekt. |
+| sport_de_092 | 🚨 fix | pass | pass | **fail** | pass | appropriate | Fun-Fact-Fehler: Henri Desgrange starb 1940, kann das 1975 eingeführte Polka-Dot-Trikot nicht "persönlich" ausgewählt haben. Einführung erfolgte unter Félix Lévitan. |
+| sport_de_093 | ✅ ok | pass | pass | pass | pass | appropriate | Rückpass-Regel 1992, korrekt. |
+| sport_de_094 | ✅ ok | pass | pass | pass | pass | appropriate | Sprint-Reaktionszeit < 0,1 s = Fehlstart, korrekt. |
+| sport_de_095 | ✅ ok | pass | pass | pass | pass | appropriate | Palio di Siena Pferderennen, korrekt (Piazza del Campo). |
+| sport_de_096 | ✅ ok | pass | pass | pass | pass | appropriate | Nordische Kombination Skispringen + Langlauf, korrekt; Gundersen-Methode korrekt benannt. |
+| sport_de_097 | ✅ ok | pass | pass | pass | pass | appropriate | Boxring quadratisch, korrekt. |
+| sport_de_098 | ✅ ok | pass | pass | pass | pass | appropriate | Unterwasser-Delfin-Kick, 15-m-Limit, korrekt. |
+| sport_de_099 | ✅ ok | pass | pass | pass | pass | appropriate | Shinty schottisch, korrekt. |
+| sport_de_100 | ⚠️ concern | pass | pass | pass | **concern** | appropriate | Formulierung "kuriose Bewegung führt … nicht ausführen darf" hat Grammatik-Fehler ("führt … darf nicht ausführen"); fachlich aber korrekt. |
+| sport_de_101 | ✅ ok | pass | pass | pass | pass | appropriate | Maya/Azteken Ulama/Pok-ta-Pok korrekt; Olmeken-Distraktor "Pelota Vasca" eindeutig falsch (= Basken). |
+| sport_de_102 | ✅ ok | pass | pass | pass | pass | appropriate | Phelps 28 Medaillen (23 Gold), korrekt. |
 
 ## Detailed notes
 
-### sport_de_002 🚨
+### sport_de_048 🚨
 
-- **Question**: "Welche Farbe der olympischen Ringe fehlt in keiner einzigen Nationalflagge der Welt?"
-- **Marked correct**: "Keine — jede Flagge enthält mindestens eine der fünf Ringfarben"
-- **Clarity failure**: The question asks for a specific *color* ("welche Farbe"); the answer instead claims "no color is missing" — different grammatical category. Also, the Coubertin design intent included **white** (the background), so the 6-colors-including-white framing in the fun_fact doesn't match the 5-ring-colors framing in the answer.
-- **Suggested fix**: rephrase question to frame Coubertin's design intent about flag-coverage, so the answer is clearly the design rationale, not a "which color" guess.
+- **Frage**: Welche überraschende Vorgabe gilt im Snooker für den weißen Spielball gegenüber den 21 farbigen Bällen?
+- **Markiert korrekt**: Er ist marginal kleiner und leichter als die anderen Bälle
+- **Factual: fail** — Nach aktuellem WPBSA-/WSF-Reglement sind ALLE 22 Bälle gleich groß (52,5 mm ± 0,05 mm) und nominal gleich schwer. Die Behauptung "marginal kleiner und leichter" stammt aus älteren Regelwerken (vor den 1990ern), als die Cue-Ball-Größe tatsächlich kleiner war (1 7/8" vs. 2 1/16"). Heute ist sie ein langlebiger Trivia-Mythos.
+- **Suggested fix**: Frage löschen (kann nicht durch eine kleine Korrektur gerettet werden, weil die "überraschende Vorgabe" einfach nicht mehr existiert) ODER umformulieren auf eine echte aktuelle Snooker-Eigenheit.
 
-### sport_de_005 🚨
+### sport_de_050 ⚠️
 
-- **Question**: "Welches Land trat bei der Fußball-WM 1950 in Brasilien an, ohne in der Qualifikation auch nur ein einziges Spiel bestritten zu haben — weil alle Gegner zurückzogen?"
-- **Marked correct**: India
-- **Factual failure**: India qualified by walkover but **withdrew before the tournament** — India did NOT "trat an" (compete) in Brazil. Question premise is factually wrong.
-- **Fun_fact also disputed**: The "FIFA banned shoeless play" reason is a long-debunked popular myth — the real reasons were travel cost, AIFF financial reluctance, and competing priorities (Olympics).
-- **Suggested fix**: rephrase to "Welches Land qualifizierte sich kampflos für die WM 1950, sagte dann aber selbst ab?" — India correct, fun_fact updated to reflect mixed reasons.
+- **Frage**: Was ist beim Bobsport der zentrale Grund, warum die Anschiebephase das ganze Rennen entscheidet?
+- **Markiert korrekt**: Im engen Eiskanal kann kein Bob mehr aktiv beschleunigen — nur die Anfangsenergie zählt
+- **Clarity concern**: Bobs werden im Kanal sehr wohl durch Gravitation beschleunigt — die Endgeschwindigkeit liegt typischerweise bei 130–150 km/h, die Push-Geschwindigkeit nur bei ~40 km/h. Gemeint ist "ohne menschliches Zutun nach dem Sprung in den Bob"; die Formulierung "kann kein Bob mehr aktiv beschleunigen" ist aber physikalisch missverständlich.
+- **Suggested fix**: "Nach dem Einsteigen kann die Crew dem Bob keine zusätzliche Energie mehr zuführen — alles, was nicht aus dem Anschub kommt, kommt aus der Schwerkraft."
 
-### sport_de_006 🚨
+### sport_de_065 🚨
 
-- **Question**: "Welche Disziplin war bei den Olympischen Spielen 1900 in Paris Teil des offiziellen Programms?"
-- **Marked correct**: "Lebende Tauben als Schießziele"
-- **Factual concern**: The IOC officially classifies many Paris 1900 events as unofficial or "demonstrations" — live pigeon shooting is widely cited as Olympic in trivia but considered unofficial by the IOC's modern reviews. The qualifier "offiziellen Programms" makes this misleading.
-- **Suggested fix**: drop "offiziellen" or rephrase to "wurde ausgetragen" (more neutral wording).
+- **Frage**: Warum wird Eishockey auf NHL-Eisflächen seit Jahrzehnten leicht blau gefärbt?
+- **Markiert korrekt**: Der schwarze Puck wird auf hellem Eis bei TV-Übertragungen besser sichtbar
+- **Factual: fail** — Die NHL-Eisflächen werden NICHT blau gefärbt. Tatsächlich wird das Eis WEISS lackiert (durch eine dünne weiße Farbschicht zwischen zwei Eis-Lagen). Die blauen Linien und das Mittelkreis-Logo werden separat aufgemalt. Der Fun-Fact widerspricht der Frage sogar offen ("Die Eisfarbe entsteht durch eine dünne weiße Farbschicht zwischen zwei Eis-Lagen plus blaue Logo-Akzente.").
+- **Suggested fix**: Frage umformulieren — z.B. "Warum wird Eishockey auf NHL-Eisflächen weiß angestrichen?" mit der gleichen Antwort. Frage und Fun-Fact harmonieren dann.
 
-### sport_de_016 🚨
+### sport_de_069 ⚠️
 
-- **Question**: "Wie alt war Dimitrios Loundras, der jüngste Olympia-Medaillengewinner aller Zeiten (Turnen 1896)?"
-- **Marked correct**: "10 Jahre"
-- **Factual concern**: Loundras's age (10y 218d) is correct, but he is the *youngest verified/documented* medalist — at Paris 1900 there is the famous unidentified French boy coxswain (estimated 7–10 years old), often cited as the actual youngest. "Aller Zeiten" overclaims.
-- **Suggested fix**: add "namentlich bekannte" — "der jüngste namentlich bekannte Olympia-Medaillengewinner".
+- **Frage**: Wie viele Doppelfehler in Folge darf ein Tennisspieler bei einem Aufschlag begehen, bevor er den Punkt verliert?
+- **Clarity concern**: Ein Doppelfehler IST per Definition der Punktverlust (zweiter Aufschlag ins Aus). Die Frage müsste eigentlich lauten "Wie viele Aufschlagfehler in Folge darf ein Spieler begehen…" — Antwort wäre dann "Einen, der zweite Aufschlag muss treffen" (eine Aufschlagfehler-Wiederholung ergibt zusammen einen Doppelfehler).
+- **Suggested fix**: "Wie viele Aufschlagfehler in Folge darf ein Tennisspieler begehen, bevor er den Punkt verliert?" — Inhalt bleibt identisch, semantisch sauber.
 
-### sport_de_036 🚨
+### sport_de_072 🚨
 
-- **Question**: "Welche bizarre Strafe konnte einem Boxer in der antiken Olympia drohen, wenn er aufgab?"
-- **Marked correct**: "Öffentliches Auspeitschen durch die Kampfrichter"
-- **Factual failure**: The Hellanodikai did wield rods (rhabdouchoi/rod-bearers), but historical sources document their use for **rule enforcement** (false starts, fouling), not specifically as punishment for surrender. The "whipped for quitting" claim is a modern embellishment without classical source backing.
-- **Suggested fix**: delete — there's no clean factual replacement for a "bizarre punishment for surrendering" premise.
+- **Frage**: Was passiert beim Mongolei-Nationalsport „Buzkashi" als Spielobjekt zwischen den Reitern?
+- **Factual: fail** — Buzkashi ist Nationalsport AFGHANISTANS (auch in Tadschikistan, Kirgistan, Kasachstan, Usbekistan und im nördlichen Pakistan verbreitet), NICHT der Mongolei. Mongoliens Nationalsportarten sind die "Drei Männerspiele" der Naadam-Festspiele: Ringen (Bökh), Bogenschießen und Pferderennen. Der Fun-Fact selbst sagt korrekt "in Afghanistan und mehreren zentralasiatischen Ländern Nationalsport" — widerspricht damit der Frage frontal.
+- **Suggested fix**: Frage umformulieren: "Was passiert beim afghanischen Nationalsport „Buzkashi" als Spielobjekt zwischen den Reitern?" — Rest bleibt identisch, Fun-Fact passt dann.
 
-### sport_de_040 🚨
+### sport_de_074 ⚠️
 
-- **Question**: "Warum hat ein Bowling-Spiel ausgerechnet 10 Pins?"
-- **Marked correct**: "Weil eine ältere Variante mit 9 Pins im 19. Jh. in US-Bundesstaaten als Glücksspiel verboten wurde — also fügte man einfach einen 10. Pin hinzu"
-- **Factual concern**: This is the classic urban legend often repeated in trivia but historically disputed. Ten-pin bowling existed and developed in parallel to nine-pin (skittles); there's no documented case of someone explicitly adding a 10th pin to evade the Connecticut law. Historians generally treat this as folklore.
-- **Suggested fix**: delete — the question's premise is folklore not historical fact.
+- **Frage**: Welcher kuriose Vorname-Effekt gilt im Profi-Stierkampf in Spanien als statistische Auffälligkeit?
+- **Markiert korrekt**: Die Stiere haben Namen, die Toreros werden gewogen — und die Stiere müssen mindestens 460 kg auf die Waage bringen
+- **Clarity concern**: Frage und Antwort passen thematisch nicht zusammen. Die Frage handelt vom "Vorname-Effekt" (statistische Auffälligkeit bei Namen), die Antwort handelt vom Mindestgewicht der Stiere — das ist KEIN "Vorname-Effekt". Die Frage suggeriert eine Studie über Stier-Namen-Statistik, die Antwort gibt eine Reglement-Trivia. Inkohärent.
+- **Suggested fix**: Frage löschen — der "Vorname-Effekt"-Aufhänger wirkt zudem so erfunden, dass eine saubere Reformulierung nicht möglich ist, ohne die Frage komplett neu zu schreiben.
 
-### sport_de_042 🚨
+### sport_de_090 ⚠️
 
-- **Question**: "Welche ungewöhnliche Doppelkarriere hatte Football-Star Bo Jackson in den späten 1980ern?"
-- **Marked correct**: "Er war gleichzeitig NFL-All-Pro (Raiders) und MLB-All-Star (Royals) — der einzige Spieler mit dieser Doppel-Auszeichnung"
-- **Factual concern**: Bo Jackson was a 1990 **Pro Bowler** + 2nd-team All-Pro (AP) and a 1989 **MLB All-Star**. The famous claim is "only player named to All-Star teams in both MLB and NFL" — typically phrased as "Pro Bowl + All-Star", not "All-Pro + All-Star". The current wording is technically defensible but easy to dispute.
-- **Suggested fix**: replace "NFL-All-Pro" with "NFL-Pro-Bowler" — more accurate and less disputable.
+- **Frage**: Welches überraschend kleine Land hatte 2010 erstmals einen Eishockey-Weltmeistertitel — gegen alle Favoriten?
+- **Markiert korrekt**: Tschechien
+- **Factual/Clarity concern**: Tschechien gewann 2010 tatsächlich die WM in Köln (2:1 gegen Russland). ABER: Tschechien ist KEIN "überraschend kleines Land" — es ist eine historische Eishockey-Großmacht mit mehreren WM-Titeln davor (1999, 2000, 2001, 2005). Auch war es nicht "erstmals" — Tschechien hatte schon mehrfach Gold. Der Fun-Fact erkennt das Problem selbst und versucht es zu retten ("ist Tschechien eine Eishockey-Großmacht"). Die Frageprämisse ist sachlich falsch.
+- **Suggested fix**: Frage löschen oder komplett umformulieren — z.B. "Welches Land gewann 2010 in Köln den Eishockey-Weltmeistertitel?" ohne die "überraschend klein"-Prämisse. Damit verliert die Frage aber ihren Pep — Löschung ist sauberer.
 
-### sport_de_044 ⚠️
+### sport_de_092 🚨
 
-- **Question**: "Was ist eine bizarre, aber bis heute gültige Regel beim formellen Pferderennen-Reglement des Jockey Club?"
-- **Clarity concern**: The natural-cover rule is actually a **stud-book registration rule** (for Thoroughbred pedigree recognition), not a "Pferderennen-Reglement" (racing-day rule). The answer text gets this right ("für die Stammbaum-Anerkennung") but the question framing implies racing rules. Loose but not factually wrong.
-- Left as-is — concerns are stylistic, not breaking.
+- **Frage**: Welche kuriose Vorgabe gilt im Tour-de-France-Reglement für den Sieger des Berg-Trikots ("Maillot à pois")?
+- **Markiert korrekt**: Das Polka-Dot-Muster wurde 1975 vom Schokoladen-Hersteller Chocolat Poulain eingeführt
+- **Fun-fact: fail** — Fun-Fact behauptet "Henri Desgrange wählte das Pünktchen-Muster persönlich". Desgrange starb 1940, das Polka-Dot-Trikot wurde 1975 unter Tour-Direktor **Félix Lévitan** eingeführt — 35 Jahre nach Desgranges Tod. Faktischer Widerspruch zur eigenen Frage-Antwort.
+- **Suggested fix**: Fun-Fact ersetzen durch: "Félix Lévitan, damaliger Tour-Direktor, wählte das Pünktchen-Muster 1975, weil es an die Verpackung des Sponsors Chocolat Poulain erinnerte. Das Trikot überdauerte den Sponsor und ist heute ikonisch."
 
-## Fixes applied
+### sport_de_100 ⚠️
 
-| ID | What changed | Re-verify verdict |
-|---|---|---|
-| sport_de_002 | Question rephrased to ask about Coubertin's design intent; answer states the universal-flag-coverage rationale. Fun_fact unified on 5 ring colors + white background. | ✅ ok |
-| sport_de_005 | Question rephrased: "Welches Land qualifizierte sich kampflos für die WM 1950 in Brasilien, sagte dann aber selbst ab?". Fun_fact downgrades the shoes ban to a "oft kolportierter Mythos" alongside the real cost/Olympics reasons. | ✅ ok |
-| sport_de_006 | "Teil des offiziellen Programms" softened to "wurde ausgetragen" — sidesteps the IOC unofficial-status dispute. | ✅ ok |
-| sport_de_016 | "jüngste ... aller Zeiten" → "jüngste namentlich bekannte ... der Neuzeit". Fun_fact preserved. | ✅ ok |
-| sport_de_042 | "NFL-All-Pro" replaced with "NFL-Pro-Bowler"; fun_fact preserved. | ✅ ok |
+- **Frage**: Welche kuriose Bewegung führt ein Turner beim Pferdsprung-Anlauf laut FIG-Reglement nicht ausführen darf?
+- **Clarity concern**: Grammatikfehler — "führt … nicht ausführen darf" — entweder "Welche kuriose Bewegung **darf** ein Turner … nicht ausführen?" ODER "Welche kuriose Bewegung **führt** ein Turner … nicht aus?" Fachlich ist die Aussage (Stehenbleiben verboten) korrekt.
+- **Suggested fix**: Frage umformulieren zu "Welche kuriose Bewegung darf ein Turner beim Pferdsprung-Anlauf laut FIG-Reglement nicht ausführen?".
 
-## Deletions
+## Empfehlung
 
-| ID | Reason for deletion |
-|---|---|
-| sport_de_036 | The "whipped for surrender" claim is a modern embellishment without classical sourcing; no clean factual replacement for the "bizarre punishment for surrendering" premise. |
-| sport_de_040 | The 9-pin-ban → 10-pin origin is a popular legend, historically disputed and treated as folklore by bowling historians; no clean replacement preserves the question's framing. |
+- 4 Fragen mit `fix_needed` Status: **sport_de_048**, **sport_de_065**, **sport_de_072**, **sport_de_092**.
+  - 048 (Snooker-Cue-Ball-Mythos): empfehle **Löschung** — der "überraschende Unterschied" existiert in der modernen Regel schlicht nicht.
+  - 065 (Eis-Farbe): **umformulieren** auf "weiß" — Antwort und Fun-Fact bleiben gültig.
+  - 072 (Buzkashi-Land): **umformulieren** auf "afghanisch" — Rest bleibt gültig.
+  - 092 (Polka-Dot Desgrange-Fehler): **Fun-Fact korrigieren** — Frage und Antwort bleiben.
+- 6 Fragen mit `concern` Status: **sport_de_050**, **sport_de_069**, **sport_de_074**, **sport_de_090**, **sport_de_100** sowie kleinere Formulierungsanmerkungen.
+  - 050, 069, 100: Formulierungen schärfen.
+  - 074, 090: empfehle **Löschung** — die Inkohärenzen sind nicht durch Mini-Edits sauber zu beheben (074 hat Frage/Antwort-Themenbruch, 090 hat falsche Prämisse).
 
-## Re-verification
-
-5 fixed questions re-reviewed by an independent pass. Of those:
-- ✅ **Clean now**: 5
-- ⚠️ **Still concerns**: 0
-- 🚨 **Still fix_needed**: 0
-
-(Deleted questions are not re-verified — they're gone.)
+Markus entscheidet, ob die Concerns reine Wording-Politur kriegen oder mit gelöscht werden. Per CLAUDE.md-Regel "Markus' preference: ambiguity that can't be cleanly resolved gets the question deleted" wären 048, 074, 090 zusätzlich zur Löschung empfohlen.

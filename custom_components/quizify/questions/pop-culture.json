@@ -531,6 +531,666 @@
       "difficulty": "easy",
       "fun_fact": "The viral dress phenomenon of 2015 was studied by scientists and published in academic journals. The differing perceptions arise from how the brain compensates for ambient lighting.",
       "category": "Pop Culture"
+    },
+    {
+      "id": "pop_en_051",
+      "question": "In Star Wars, which actor wore the Darth Vader suit while James Earl Jones provided the voice?",
+      "answers": [
+        {"text": "David Prowse", "correct": true},
+        {"text": "Peter Mayhew", "correct": false},
+        {"text": "Kenny Baker", "correct": false}
+      ],
+      "difficulty": "medium",
+      "fun_fact": "British bodybuilder David Prowse only learned his lines wouldn't be used when he saw the finished film — he hadn't been told the voice would be dubbed and was reportedly furious in the screening.",
+      "category": "Pop Culture"
+    },
+    {
+      "id": "pop_en_052",
+      "question": "What everyday object did the Star Wars lightsaber sound effect originate from?",
+      "answers": [
+        {"text": "An idling film projector mixed with TV interference", "correct": true},
+        {"text": "A vacuum cleaner motor", "correct": false},
+        {"text": "An electric razor on a metal plate", "correct": false}
+      ],
+      "difficulty": "hard",
+      "fun_fact": "Sound designer Ben Burtt accidentally created the hum when his microphone picked up a broken TV near a running projector. He then waved the mic past a speaker to add the swoosh on movement.",
+      "category": "Pop Culture"
+    },
+    {
+      "id": "pop_en_053",
+      "question": "What is the asking price for the head of the Hollywood Sign letters that were sold off in the 1980s?",
+      "answers": [
+        {"text": "Each letter was sponsored by a donor for around $27,000", "correct": true},
+        {"text": "The letters were given away for free", "correct": false},
+        {"text": "Each letter sold for over $1 million", "correct": false}
+      ],
+      "difficulty": "hard",
+      "fun_fact": "When the rotting 1923 sign was replaced in 1978, each of the nine letters was sponsored for $27,777. Hugh Hefner bought the Y, Alice Cooper sponsored an O in memory of Groucho Marx, and Andy Williams bought the W.",
+      "category": "Pop Culture"
+    },
+    {
+      "id": "pop_en_054",
+      "question": "Which famous movie line was almost entirely improvised?",
+      "answers": [
+        {"text": "'I'm the king of the world!' in Titanic", "correct": true},
+        {"text": "'May the Force be with you' in Star Wars", "correct": false},
+        {"text": "'Here's looking at you, kid' in Casablanca", "correct": false}
+      ],
+      "difficulty": "medium",
+      "fun_fact": "James Cameron came up with the line on set after shouting it himself in frustration during pre-production. Leonardo DiCaprio thought it was corny but delivered it anyway — it became one of cinema's most quoted lines.",
+      "category": "Pop Culture"
+    },
+    {
+      "id": "pop_en_055",
+      "question": "What was the original ending of the 1982 film Blade Runner that test audiences hated?",
+      "answers": [
+        {"text": "Deckard's voice-over narration explaining the plot", "correct": true},
+        {"text": "Deckard being killed by a replicant", "correct": false},
+        {"text": "Rachael being revealed as the villain", "correct": false}
+      ],
+      "difficulty": "hard",
+      "fun_fact": "Harrison Ford reportedly hated the voice-over and tried to deliberately read it badly so the studio would drop it. The Director's Cut released in 1992 removed it entirely.",
+      "category": "Pop Culture"
+    },
+    {
+      "id": "pop_en_056",
+      "question": "Which Oscar-winning film was almost titled 'Three Thousand'?",
+      "answers": [
+        {"text": "Pretty Woman", "correct": true},
+        {"text": "American Beauty", "correct": false},
+        {"text": "Forrest Gump", "correct": false}
+      ],
+      "difficulty": "medium",
+      "fun_fact": "The original 'Three Thousand' was a dark drama about a drug-addicted sex worker who is dumped at the end. Disney bought the script and turned it into a romantic comedy — the title referred to her weekly fee.",
+      "category": "Pop Culture"
+    },
+    {
+      "id": "pop_en_057",
+      "question": "What unusual thing did Andy Serkis do to prepare for playing Gollum?",
+      "answers": [
+        {"text": "He observed his cat coughing up hairballs", "correct": true},
+        {"text": "He fasted for two weeks", "correct": false},
+        {"text": "He lived in a cave for a month", "correct": false}
+      ],
+      "difficulty": "medium",
+      "fun_fact": "Serkis based Gollum's iconic raspy voice partly on his cat's hairball noises. He was originally hired only to voice the character but ended up performing it in motion capture, revolutionising the technique.",
+      "category": "Pop Culture"
+    },
+    {
+      "id": "pop_en_059",
+      "question": "What was the original profession of the actor who played Chewbacca?",
+      "answers": [
+        {"text": "Hospital orderly", "correct": true},
+        {"text": "Professional wrestler", "correct": false},
+        {"text": "Circus performer", "correct": false}
+      ],
+      "difficulty": "hard",
+      "fun_fact": "Peter Mayhew was 7'3\" and worked as a porter at a London hospital when Star Wars producers spotted him. He was reportedly hired because he was the only person who could stand up without help when asked during the casting.",
+      "category": "Pop Culture"
+    },
+    {
+      "id": "pop_en_060",
+      "question": "What was unusual about the production of the 1999 film The Blair Witch Project?",
+      "answers": [
+        {"text": "The actors were given daily notes telling them where to go but no script", "correct": true},
+        {"text": "It was shot entirely in a Hollywood studio", "correct": false},
+        {"text": "All dialogue was recorded after filming", "correct": false}
+      ],
+      "difficulty": "easy",
+      "fun_fact": "The actors really got lost in the Maryland woods, ate dwindling rations, and were genuinely cold and frustrated. Made for around $60,000, it earned nearly $250 million worldwide.",
+      "category": "Pop Culture"
+    },
+    {
+      "id": "pop_en_061",
+      "question": "Which sitcom finale was watched live by more US viewers than any other scripted episode in history?",
+      "answers": [
+        {"text": "M*A*S*H", "correct": true},
+        {"text": "Friends", "correct": false},
+        {"text": "Seinfeld", "correct": false}
+      ],
+      "difficulty": "medium",
+      "fun_fact": "The 1983 M*A*S*H finale drew about 106 million viewers on CBS. New York City reported a major spike in water usage right after the broadcast as millions flushed at once.",
+      "category": "Pop Culture"
+    },
+    {
+      "id": "pop_en_062",
+      "question": "What did the cast of Friends each earn per episode in the final two seasons?",
+      "answers": [
+        {"text": "$1 million each", "correct": true},
+        {"text": "$250,000 each", "correct": false},
+        {"text": "$3 million each", "correct": false}
+      ],
+      "difficulty": "easy",
+      "fun_fact": "The six leads negotiated as a single block from season three onward, refusing to take pay raises unless all received the same — a strategy still cited as a Hollywood case study in collective bargaining.",
+      "category": "Pop Culture"
+    },
+    {
+      "id": "pop_en_063",
+      "question": "What breed of dog is Scooby-Doo?",
+      "answers": [
+        {"text": "Great Dane", "correct": true},
+        {"text": "Sheepdog", "correct": false},
+        {"text": "Labrador", "correct": false}
+      ],
+      "difficulty": "easy",
+      "fun_fact": "Scooby's name came from the scat lyric 'doo-be-doo-be-doo' in Frank Sinatra's 'Strangers in the Night'. Producer Fred Silverman heard it on a flight and used it to lock in the character's final name.",
+      "category": "Pop Culture"
+    },
+    {
+      "id": "pop_en_064",
+      "question": "What was the very first TV commercial ever broadcast in the United States?",
+      "answers": [
+        {"text": "A Bulova watch ad", "correct": true},
+        {"text": "A Coca-Cola ad", "correct": false},
+        {"text": "A Ford Motors ad", "correct": false}
+      ],
+      "difficulty": "hard",
+      "fun_fact": "The 10-second Bulova spot aired on 1 July 1941 before a Brooklyn Dodgers game on WNBT in New York. It cost the company about $9 to air.",
+      "category": "Pop Culture"
+    },
+    {
+      "id": "pop_en_065",
+      "question": "Which long-running TV show's pilot featured a completely different lead actor before being recast?",
+      "answers": [
+        {"text": "The Big Bang Theory", "correct": true},
+        {"text": "Friends", "correct": false},
+        {"text": "Seinfeld", "correct": false}
+      ],
+      "difficulty": "medium",
+      "fun_fact": "The unaired 2006 pilot had different actresses playing Penny (then called Katie) and an entirely different female lead. CBS rejected it, the creators rewrote, and the recast 2007 pilot launched a 12-season run.",
+      "category": "Pop Culture"
+    },
+    {
+      "id": "pop_en_066",
+      "question": "Which TV show is famous for its theme song that contains no lyrics, just whistling?",
+      "answers": [
+        {"text": "The Andy Griffith Show", "correct": true},
+        {"text": "Cheers", "correct": false},
+        {"text": "Seinfeld", "correct": false}
+      ],
+      "difficulty": "medium",
+      "fun_fact": "The theme, 'The Fishin' Hole', actually has lyrics, but only the whistled version was used on TV. Andy Griffith himself sang the lyrical version on a later album release.",
+      "category": "Pop Culture"
+    },
+    {
+      "id": "pop_en_067",
+      "question": "Which classic cocktail surged in popularity in the US after being featured as Don Draper's signature drink on Mad Men?",
+      "answers": [
+        {"text": "The Old Fashioned", "correct": true},
+        {"text": "The Martini", "correct": false},
+        {"text": "The Manhattan", "correct": false}
+      ],
+      "difficulty": "medium",
+      "fun_fact": "Don Draper's signature drink turned an old-man cocktail into a hipster staple — bartenders across the US reported Old Fashioned orders rising over 40% during the show's run.",
+      "category": "Pop Culture"
+    },
+    {
+      "id": "pop_en_068",
+      "question": "Which famous TV character was never shown from the waist down in their entire run?",
+      "answers": [
+        {"text": "Wilson on Home Improvement (always behind a fence)", "correct": true},
+        {"text": "Maris on Frasier", "correct": false},
+        {"text": "Vera on Cheers", "correct": false}
+      ],
+      "difficulty": "easy",
+      "fun_fact": "Neighbour Wilson was always shown with his face partially hidden behind the backyard fence. In the series finale, the cast finally revealed his full face during a curtain call — the actor was Earl Hindman.",
+      "category": "Pop Culture"
+    },
+    {
+      "id": "pop_en_069",
+      "question": "Which Beatles album was the first to feature lyrics printed on its sleeve?",
+      "answers": [
+        {"text": "Sgt. Pepper's Lonely Hearts Club Band", "correct": true},
+        {"text": "Abbey Road", "correct": false},
+        {"text": "Revolver", "correct": false}
+      ],
+      "difficulty": "medium",
+      "fun_fact": "Released in 1967, Sgt. Pepper's was the first major rock album to print full lyrics on the back cover — at the time considered a radical artistic gesture treating pop songs like poetry.",
+      "category": "Pop Culture"
+    },
+    {
+      "id": "pop_en_070",
+      "question": "What is the longest song ever to top the Billboard Hot 100?",
+      "answers": [
+        {"text": "Taylor Swift's 'All Too Well (10 Minute Version)'", "correct": true},
+        {"text": "Don McLean's 'American Pie'", "correct": false},
+        {"text": "Queen's 'Bohemian Rhapsody'", "correct": false}
+      ],
+      "difficulty": "medium",
+      "fun_fact": "At 10 minutes 13 seconds, Swift's 2021 re-recording broke a record held since 1972 by 'American Pie' (8:42). The original 'All Too Well' from 2012 was about half that length.",
+      "category": "Pop Culture"
+    },
+    {
+      "id": "pop_en_071",
+      "question": "Which iconic instrument did Jimi Hendrix famously play right-handed-strung but flipped upside down?",
+      "answers": [
+        {"text": "Fender Stratocaster", "correct": true},
+        {"text": "Gibson Les Paul", "correct": false},
+        {"text": "Rickenbacker 360", "correct": false}
+      ],
+      "difficulty": "medium",
+      "fun_fact": "Hendrix was left-handed but learned on right-handed guitars by flipping them. This put the controls and tremolo above the strings — and shifted the angled pickup, giving his Strat its distinctive tone.",
+      "category": "Pop Culture"
+    },
+    {
+      "id": "pop_en_072",
+      "question": "What was unusual about Queen's 'Bohemian Rhapsody' when it was released in 1975?",
+      "answers": [
+        {"text": "At nearly six minutes, radio executives said it was far too long for a single", "correct": true},
+        {"text": "It was the first song recorded entirely a cappella", "correct": false},
+        {"text": "It was released only on vinyl, never on cassette", "correct": false}
+      ],
+      "difficulty": "easy",
+      "fun_fact": "EMI tried to make Queen cut the song down. Freddie Mercury refused and gave a copy to DJ Kenny Everett, who played it 14 times in two days — public demand forced the full release.",
+      "category": "Pop Culture"
+    },
+    {
+      "id": "pop_en_073",
+      "question": "Which musician played all the instruments on their multi-platinum debut album?",
+      "answers": [
+        {"text": "Prince — on 1978's For You", "correct": true},
+        {"text": "Phil Collins on Face Value", "correct": false},
+        {"text": "Lenny Kravitz on Let Love Rule", "correct": false}
+      ],
+      "difficulty": "hard",
+      "fun_fact": "Prince was 19 when he produced, arranged, composed and played all 27 instruments on For You. His Warner Bros. contract giving him full creative control was unprecedented for an unknown artist.",
+      "category": "Pop Culture"
+    },
+    {
+      "id": "pop_en_074",
+      "question": "On what occasion did ABBA first publicly perform 'Dancing Queen'?",
+      "answers": [
+        {"text": "A Swedish royal wedding gala", "correct": true},
+        {"text": "The Eurovision Song Contest", "correct": false},
+        {"text": "A New Year's Eve TV special", "correct": false}
+      ],
+      "difficulty": "hard",
+      "fun_fact": "ABBA played 'Dancing Queen' on 18 June 1976 at a televised gala the night before the wedding of Sweden's King Carl XVI Gustaf — months before the song's official commercial release.",
+      "category": "Pop Culture"
+    },
+    {
+      "id": "pop_en_075",
+      "question": "What does the band name ABBA stand for?",
+      "answers": [
+        {"text": "The initials of the four members' first names", "correct": true},
+        {"text": "A Swedish word for 'father'", "correct": false},
+        {"text": "A reference to a Stockholm street", "correct": false}
+      ],
+      "difficulty": "easy",
+      "fun_fact": "ABBA stands for Agnetha, Björn, Benny, and Anni-Frid. The name was also conveniently the name of a Swedish fish-canning company, which gave permission for the band to use it.",
+      "category": "Pop Culture"
+    },
+    {
+      "id": "pop_en_076",
+      "question": "Which artist released the first commercially available CD album?",
+      "answers": [
+        {"text": "Billy Joel — 52nd Street", "correct": true},
+        {"text": "The Bee Gees — Saturday Night Fever", "correct": false},
+        {"text": "ABBA — The Visitors", "correct": false}
+      ],
+      "difficulty": "hard",
+      "fun_fact": "Released in Japan in October 1982, Billy Joel's 52nd Street was the first commercial CD pressing. The first players cost around $1,000 — about $3,000 in today's money.",
+      "category": "Pop Culture"
+    },
+    {
+      "id": "pop_en_077",
+      "question": "What was Pac-Man's original name in Japan before its US release?",
+      "answers": [
+        {"text": "Puck-Man", "correct": true},
+        {"text": "Maze-Man", "correct": false},
+        {"text": "Chomp", "correct": false}
+      ],
+      "difficulty": "easy",
+      "fun_fact": "Namco changed the name for the US because they feared vandals would easily scratch the 'P' on arcade cabinets into something obscene. The character's name came from the Japanese onomatopoeia 'paku-paku' for the sound of opening and closing your mouth.",
+      "category": "Pop Culture"
+    },
+    {
+      "id": "pop_en_078",
+      "question": "Why does Mario wear a hat and overalls?",
+      "answers": [
+        {"text": "Hardware limits made hair and shirt-arms hard to animate", "correct": true},
+        {"text": "Designer Shigeru Miyamoto thought plumbers looked cool", "correct": false},
+        {"text": "He was originally a circus performer", "correct": false}
+      ],
+      "difficulty": "medium",
+      "fun_fact": "On the Donkey Kong arcade in 1981, sprites were tiny and Nintendo couldn't realistically animate hair flowing or arms with sleeves moving against a shirt. A hat solved hair; overalls made arm movement visible against a coloured body.",
+      "category": "Pop Culture"
+    },
+    {
+      "id": "pop_en_079",
+      "question": "Which game console had a notorious 'red ring of death' hardware failure?",
+      "answers": [
+        {"text": "Xbox 360", "correct": true},
+        {"text": "PlayStation 3", "correct": false},
+        {"text": "Nintendo Wii", "correct": false}
+      ],
+      "difficulty": "easy",
+      "fun_fact": "The failure rate was estimated at over 50% in early units. Microsoft eventually took a $1.15 billion charge in 2007 to cover warranty repairs — one of the largest hardware recalls in gaming history.",
+      "category": "Pop Culture"
+    },
+    {
+      "id": "pop_en_080",
+      "question": "Which 1993 game is widely credited with inventing the first-person shooter genre as we know it?",
+      "answers": [
+        {"text": "Doom", "correct": true},
+        {"text": "Half-Life", "correct": false},
+        {"text": "GoldenEye 007", "correct": false}
+      ],
+      "difficulty": "easy",
+      "fun_fact": "id Software's Doom built on 1992's Wolfenstein 3D but added textured floors, varied heights and multiplayer 'deathmatch' — a word id co-founder John Romero coined. Within two years it was installed on more PCs than Windows.",
+      "category": "Pop Culture"
+    },
+    {
+      "id": "pop_en_081",
+      "question": "Why did the Atari 2600 game E.T. become legendary?",
+      "answers": [
+        {"text": "It was so bad that unsold copies were buried in a New Mexico landfill", "correct": true},
+        {"text": "It was the first video game to win an Oscar", "correct": false},
+        {"text": "It crashed every NASA computer of the 1980s", "correct": false}
+      ],
+      "difficulty": "medium",
+      "fun_fact": "Made in just six weeks to meet the 1982 Christmas rush, E.T. is often blamed for the 1983 video game crash. The landfill burial was confirmed in 2014 when archaeologists excavated thousands of cartridges in Alamogordo.",
+      "category": "Pop Culture"
+    },
+    {
+      "id": "pop_en_082",
+      "question": "What error number became infamous on Diablo III's 2012 launch day?",
+      "answers": [
+        {"text": "Error 37", "correct": true},
+        {"text": "Error 404", "correct": false},
+        {"text": "Error 500", "correct": false}
+      ],
+      "difficulty": "hard",
+      "fun_fact": "'Error 37' meant Blizzard's servers were full, locking players out of an always-online game they had paid for. The message became a meme and forced Blizzard to apologise publicly within days.",
+      "category": "Pop Culture"
+    },
+    {
+      "id": "pop_en_083",
+      "question": "What was the name of the first arcade video game ever sold commercially?",
+      "answers": [
+        {"text": "Computer Space (1971)", "correct": true},
+        {"text": "Pong (1972)", "correct": false},
+        {"text": "Space Invaders (1978)", "correct": false}
+      ],
+      "difficulty": "hard",
+      "fun_fact": "Computer Space was designed by Nolan Bushnell, who went on to found Atari. It flopped commercially because players found the controls too complex — Bushnell learned from this and made Pong dead simple.",
+      "category": "Pop Culture"
+    },
+    {
+      "id": "pop_en_084",
+      "question": "What was Stan Lee's signature catchphrase, used on countless Marvel comic pages?",
+      "answers": [
+        {"text": "Excelsior!", "correct": true},
+        {"text": "True Believers!", "correct": false},
+        {"text": "Onward and upward!", "correct": false}
+      ],
+      "difficulty": "easy",
+      "fun_fact": "Lee chose 'Excelsior!' — Latin for 'ever upward' and the New York state motto — because he wanted a sign-off no other writer was using. He cameoed in over 30 Marvel films.",
+      "category": "Pop Culture"
+    },
+    {
+      "id": "pop_en_085",
+      "question": "Which superhero was inspired by a real person — the writer's wife?",
+      "answers": [
+        {"text": "Wonder Woman", "correct": true},
+        {"text": "Catwoman", "correct": false},
+        {"text": "Storm", "correct": false}
+      ],
+      "difficulty": "hard",
+      "fun_fact": "Psychologist William Moulton Marston created Wonder Woman in 1941 inspired by his wife Elizabeth and their partner Olive Byrne, who both championed early feminist ideas. Marston also helped invent the lie-detector — which became Wonder Woman's Lasso of Truth.",
+      "category": "Pop Culture"
+    },
+    {
+      "id": "pop_en_086",
+      "question": "Which comic book superhero made his debut in Detective Comics #27 in 1939?",
+      "answers": [
+        {"text": "Batman", "correct": true},
+        {"text": "Superman", "correct": false},
+        {"text": "Green Lantern", "correct": false}
+      ],
+      "difficulty": "medium",
+      "fun_fact": "DC stands for Detective Comics — named after the very title that introduced Batman. Co-creator Bill Finger fought for decades to receive credit alongside Bob Kane and was officially acknowledged by DC only in 2015.",
+      "category": "Pop Culture"
+    },
+    {
+      "id": "pop_en_087",
+      "question": "In which TV show did the Marvel character X-23 first appear before crossing into films?",
+      "answers": [
+        {"text": "X-Men: Evolution", "correct": true},
+        {"text": "Spider-Man: The Animated Series", "correct": false},
+        {"text": "Wolverine and the X-Men", "correct": false}
+      ],
+      "difficulty": "hard",
+      "fun_fact": "X-23 (Laura Kinney) was created by Craig Kyle and Christopher Yost for the 2003 animated series as Wolverine's female clone. She crossed into live action in 2017's Logan, played by Dafne Keen.",
+      "category": "Pop Culture"
+    },
+    {
+      "id": "pop_en_088",
+      "question": "What was the very first item ever sold on eBay in 1995?",
+      "answers": [
+        {"text": "A broken laser pointer — for $14.83", "correct": true},
+        {"text": "A used Beanie Baby", "correct": false},
+        {"text": "An autographed baseball", "correct": false}
+      ],
+      "difficulty": "medium",
+      "fun_fact": "Founder Pierre Omidyar emailed the winning bidder to make sure he understood the laser pointer was broken. The buyer replied that he collected broken laser pointers — that was the moment Omidyar realised eBay would work.",
+      "category": "Pop Culture"
+    },
+    {
+      "id": "pop_en_089",
+      "question": "Which dance craze went viral after a music video by South Korean artist PSY?",
+      "answers": [
+        {"text": "The Gangnam Style horse dance", "correct": true},
+        {"text": "The Macarena", "correct": false},
+        {"text": "The Floss", "correct": false}
+      ],
+      "difficulty": "easy",
+      "fun_fact": "PSY based the horse-trot dance on his idea of how a wealthy Gangnam district resident would dance ironically. The 2012 video kicked off K-pop's mainstream global breakthrough.",
+      "category": "Pop Culture"
+    },
+    {
+      "id": "pop_en_090",
+      "question": "What was the original purpose of the @ symbol used in email addresses?",
+      "answers": [
+        {"text": "It was a commercial shorthand for 'at the price of'", "correct": true},
+        {"text": "It was invented in 1971 specifically for email", "correct": false},
+        {"text": "It started as a medieval scribal abbreviation for 'and'", "correct": false}
+      ],
+      "difficulty": "medium",
+      "fun_fact": "The @ sign was used by merchants for centuries before computer programmer Ray Tomlinson picked it in 1971 to separate user from machine in email addresses — he wanted a character that wouldn't appear in any name.",
+      "category": "Pop Culture"
+    },
+    {
+      "id": "pop_en_091",
+      "question": "What does 'GIF' stand for, and how does its creator say it's pronounced?",
+      "answers": [
+        {"text": "Graphics Interchange Format — pronounced 'JIF' according to its creator", "correct": true},
+        {"text": "General Image File — pronounced with a hard G", "correct": false},
+        {"text": "Graphical Internet Frame — pronounced 'GHIF'", "correct": false}
+      ],
+      "difficulty": "easy",
+      "fun_fact": "Steve Wilhite, who created the format at CompuServe in 1987, insisted on the soft-G pronunciation, even joking it was 'jraphics interchange format'. Most of the internet still says it the other way.",
+      "category": "Pop Culture"
+    },
+    {
+      "id": "pop_en_092",
+      "question": "Which website did Mark Zuckerberg launch before Facebook that landed him in disciplinary trouble at Harvard?",
+      "answers": [
+        {"text": "Facemash", "correct": true},
+        {"text": "Friendster", "correct": false},
+        {"text": "Hot or Not", "correct": false}
+      ],
+      "difficulty": "medium",
+      "fun_fact": "In 2003, Zuckerberg scraped student photos from Harvard's online house directories without permission and let users rank them by attractiveness. The site received 22,000 page views in its first four hours and was shut down within days.",
+      "category": "Pop Culture"
+    },
+    {
+      "id": "pop_en_093",
+      "question": "What was Reddit originally going to be — before pivoting in its first week?",
+      "answers": [
+        {"text": "A food-ordering app for mobile phones", "correct": true},
+        {"text": "A photo-sharing site like Flickr", "correct": false},
+        {"text": "An online encyclopedia", "correct": false}
+      ],
+      "difficulty": "medium",
+      "fun_fact": "Steve Huffman and Alexis Ohanian originally pitched 'My Mobile Menu' to Y Combinator in 2005 and were rejected. Paul Graham told them to build something else — they came up with Reddit in 48 hours.",
+      "category": "Pop Culture"
+    },
+    {
+      "id": "pop_en_094",
+      "question": "Which iconic clothing item was originally designed as durable workwear for miners and labourers?",
+      "answers": [
+        {"text": "Levi's blue jeans", "correct": true},
+        {"text": "The Hawaiian shirt", "correct": false},
+        {"text": "The polo shirt", "correct": false}
+      ],
+      "difficulty": "easy",
+      "fun_fact": "Levi Strauss & Jacob Davis patented the riveted denim trouser in 1873 for California Gold Rush miners. The copper rivets at stress points were the actual innovation in the patent — not the fabric itself.",
+      "category": "Pop Culture"
+    },
+    {
+      "id": "pop_en_095",
+      "question": "Why does the little Ralph Lauren polo logo show a polo player?",
+      "answers": [
+        {"text": "Lauren wanted to evoke aristocratic 'old money' sportswear", "correct": true},
+        {"text": "Lauren himself was a professional polo player", "correct": false},
+        {"text": "The logo was bought from an actual British polo club", "correct": false}
+      ],
+      "difficulty": "easy",
+      "fun_fact": "Ralph Lauren (born Ralph Lifshitz) had never played polo. He picked the sport because it was associated with English aristocracy — exactly the world his brand sold to upwardly mobile American customers.",
+      "category": "Pop Culture"
+    },
+    {
+      "id": "pop_en_096",
+      "question": "Which luxury fashion house started by selling leather travel trunks in Paris?",
+      "answers": [
+        {"text": "Louis Vuitton", "correct": true},
+        {"text": "Chanel", "correct": false},
+        {"text": "Gucci", "correct": false}
+      ],
+      "difficulty": "easy",
+      "fun_fact": "Louis Vuitton opened his trunk-maker shop in 1854. His flat-topped trunks were a revolution — previous trunks had domed lids to shed rain, but flat tops could be stacked for train and ship travel.",
+      "category": "Pop Culture"
+    },
+    {
+      "id": "pop_en_097",
+      "question": "What did Coco Chanel revolutionise in women's fashion in the 1920s?",
+      "answers": [
+        {"text": "She popularised trousers, jersey fabric and the 'little black dress' for women", "correct": true},
+        {"text": "She invented the corset", "correct": false},
+        {"text": "She designed the first wedding dress in white", "correct": false}
+      ],
+      "difficulty": "medium",
+      "fun_fact": "Chanel used jersey — previously a men's underwear fabric — to make comfortable women's daywear. Her 1926 'little black dress' was nicknamed 'Chanel's Ford' by Vogue because it would be as universal as the Model T.",
+      "category": "Pop Culture"
+    },
+    {
+      "id": "pop_en_098",
+      "question": "What did Michael Jordan reportedly insist on changing every game during his career?",
+      "answers": [
+        {"text": "His socks and underwear", "correct": false},
+        {"text": "He wore his University of North Carolina shorts under his Bulls uniform", "correct": true},
+        {"text": "He demanded a new ball for every quarter", "correct": false}
+      ],
+      "difficulty": "medium",
+      "fun_fact": "Jordan wore his lucky UNC shorts under every game uniform — which is also why NBA shorts got longer in the 1990s: he needed his Bulls shorts cut bigger to fit over the college pair.",
+      "category": "Pop Culture"
+    },
+    {
+      "id": "pop_en_099",
+      "question": "For what unusual category did the modern Olympics award medals from 1912 to 1948?",
+      "answers": [
+        {"text": "Painting, sculpture and other fine arts", "correct": true},
+        {"text": "Competitive cooking", "correct": false},
+        {"text": "Speed reading", "correct": false}
+      ],
+      "difficulty": "hard",
+      "fun_fact": "Pierre de Coubertin, founder of the modern Olympics, insisted on medals for painting, sculpture, architecture, literature and music. About 151 medals were awarded across seven Games before the IOC ended the practice.",
+      "category": "Pop Culture"
+    },
+    {
+      "id": "pop_en_100",
+      "question": "What did the Wimbledon tennis tournament traditionally insist all players wear?",
+      "answers": [
+        {"text": "Predominantly white clothing", "correct": true},
+        {"text": "Predominantly green clothing", "correct": false},
+        {"text": "A specific Wimbledon-issued kit", "correct": false}
+      ],
+      "difficulty": "easy",
+      "fun_fact": "The rule dates to the Victorian era when visible sweat stains were considered scandalous — white showed sweat least. The All England Club still enforces it, with strict guidelines on the thickness of any non-white trim.",
+      "category": "Pop Culture"
+    },
+    {
+      "id": "pop_en_101",
+      "question": "What was Lady Gaga's career before she became a global pop star?",
+      "answers": [
+        {"text": "She worked as a songwriter for other artists at Interscope", "correct": true},
+        {"text": "She was a child actress on Broadway", "correct": false},
+        {"text": "She was a competitive figure skater", "correct": false}
+      ],
+      "difficulty": "medium",
+      "fun_fact": "Before her solo breakthrough, Gaga wrote songs for Britney Spears, the Pussycat Dolls and Fergie. She was dropped from her first label, Def Jam, after only three months in 2006.",
+      "category": "Pop Culture"
+    },
+    {
+      "id": "pop_en_102",
+      "question": "Which Golden Age Hollywood actress co-invented a frequency-hopping radio technology used in modern Wi-Fi?",
+      "answers": [
+        {"text": "Hedy Lamarr", "correct": true},
+        {"text": "Marilyn Monroe", "correct": false},
+        {"text": "Audrey Hepburn", "correct": false}
+      ],
+      "difficulty": "medium",
+      "fun_fact": "The Austrian-American actress patented a frequency-hopping system in 1942 to prevent jamming of Allied torpedoes. The underlying idea is a foundation of modern Wi-Fi, Bluetooth and GPS.",
+      "category": "Pop Culture"
+    },
+    {
+      "id": "pop_en_103",
+      "question": "What did Keanu Reeves famously do after the success of The Matrix sequels?",
+      "answers": [
+        {"text": "He gave large portions of his back-end pay to the costume and effects crew", "correct": true},
+        {"text": "He bought every cast member a Porsche", "correct": false},
+        {"text": "He retired from acting for five years", "correct": false}
+      ],
+      "difficulty": "easy",
+      "fun_fact": "Reeves reportedly redirected an estimated $75–100 million of his Matrix back-end profits to the special effects and costume departments, saying they were what really made the films work.",
+      "category": "Pop Culture"
+    },
+    {
+      "id": "pop_en_104",
+      "question": "Which pop star's tour rider is known to require humidifiers in every dressing room to protect her voice?",
+      "answers": [
+        {"text": "Mariah Carey", "correct": true},
+        {"text": "Madonna", "correct": false},
+        {"text": "Christina Aguilera", "correct": false}
+      ],
+      "difficulty": "medium",
+      "fun_fact": "Carey's riders famously demand humidifiers, a specific temperature range, and quiet time before shows. She calls her cords her 'precious instruments' and reportedly avoids speaking on show days to save her range.",
+      "category": "Pop Culture"
+    },
+    {
+      "id": "pop_en_105",
+      "question": "Which famous actor was a professional clown before getting into film?",
+      "answers": [
+        {"text": "Pierce Brosnan", "correct": true},
+        {"text": "Robin Williams", "correct": false},
+        {"text": "Steve Carell", "correct": false}
+      ],
+      "difficulty": "hard",
+      "fun_fact": "Brosnan trained as a fire-eater and circus clown in London in his late teens before turning to acting. He performed in the streets and at children's parties to make ends meet.",
+      "category": "Pop Culture"
+    },
+    {
+      "id": "pop_en_106",
+      "question": "Which famous talk-show host kept the same band leader for 25 years?",
+      "answers": [
+        {"text": "Johnny Carson, with Doc Severinsen", "correct": true},
+        {"text": "David Letterman, with Paul Shaffer", "correct": false},
+        {"text": "Jay Leno, with Kevin Eubanks", "correct": false}
+      ],
+      "difficulty": "medium",
+      "fun_fact": "Severinsen led the NBC Orchestra on The Tonight Show from 1967 to 1992. His flamboyant suits became a running joke — Carson once said Severinsen looked like 'a Las Vegas pimp' on national TV.",
+      "category": "Pop Culture"
     }
   ]
 }

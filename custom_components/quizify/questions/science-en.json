@@ -591,6 +591,618 @@
       "difficulty": "medium",
       "fun_fact": "Medieval barber-surgeons did everything from shaving to amputations. The red-and-white striped barber pole represents blood and bandages from those bloodletting days.",
       "category": "Science"
+    },
+    {
+      "id": "science_en_051",
+      "question": "What happens to GPS satellite clocks if you don't account for relativity?",
+      "answers": [
+        {"text": "GPS positions would drift by about 10 km per day", "correct": true},
+        {"text": "GPS would lose signal entirely", "correct": false},
+        {"text": "Nothing — the effect is too small to matter", "correct": false}
+      ],
+      "difficulty": "hard",
+      "fun_fact": "GPS clocks tick faster than ground clocks by about 38 microseconds a day (gravitational + velocity effects combined). Engineers pre-tune the satellites' onboard clocks before launch so they appear correct from the ground.",
+      "category": "Science"
+    },
+    {
+      "id": "science_en_052",
+      "question": "If you push an object hard enough, can it ever reach the speed of light?",
+      "answers": [
+        {"text": "No — its mass effectively grows without bound", "correct": true},
+        {"text": "Yes, with enough energy", "correct": false},
+        {"text": "Only inside a vacuum", "correct": false}
+      ],
+      "difficulty": "medium",
+      "fun_fact": "As an object's speed approaches c, the energy needed to accelerate it further rises toward infinity. Only massless particles like photons travel at light speed — and they only ever travel at exactly that speed.",
+      "category": "Science"
+    },
+    {
+      "id": "science_en_053",
+      "question": "What is unusual about the rest mass of a photon?",
+      "answers": [
+        {"text": "It is zero", "correct": true},
+        {"text": "It depends on the colour of the light", "correct": false},
+        {"text": "It is the same as an electron", "correct": false}
+      ],
+      "difficulty": "easy",
+      "fun_fact": "Photons have no rest mass — which is why they can travel at the speed of light. They still carry energy and momentum, which is how solar sails work.",
+      "category": "Science"
+    },
+    {
+      "id": "science_en_054",
+      "question": "Which everyday object relies directly on quantum tunnelling to work?",
+      "answers": [
+        {"text": "Flash memory in a USB stick", "correct": true},
+        {"text": "An incandescent light bulb", "correct": false},
+        {"text": "A mechanical watch", "correct": false}
+      ],
+      "difficulty": "hard",
+      "fun_fact": "Flash memory stores bits by trapping electrons that tunnel through a thin insulator. Without quantum tunnelling, USB sticks, SSDs, and modern smartphones couldn't store data.",
+      "category": "Science"
+    },
+    {
+      "id": "science_en_055",
+      "question": "If you cool a gas, what happens to its entropy according to the third law of thermodynamics?",
+      "answers": [
+        {"text": "It approaches a minimum as temperature approaches absolute zero", "correct": true},
+        {"text": "It rises without limit", "correct": false},
+        {"text": "It stays constant regardless of temperature", "correct": false}
+      ],
+      "difficulty": "medium",
+      "fun_fact": "At absolute zero a perfect crystal would have zero entropy — only one possible microstate. Real materials always have some residual disorder, but they approach that limit asymptotically.",
+      "category": "Science"
+    },
+    {
+      "id": "science_en_056",
+      "question": "Which fundamental particle is responsible for giving other particles mass?",
+      "answers": [
+        {"text": "The Higgs boson", "correct": true},
+        {"text": "The neutrino", "correct": false},
+        {"text": "The gluon", "correct": false}
+      ],
+      "difficulty": "medium",
+      "fun_fact": "The Higgs field permeates all space. Particles interact with it to varying degrees — strong interactions yield heavy particles, no interaction yields massless ones like photons. CERN confirmed the Higgs in 2012.",
+      "category": "Science"
+    },
+    {
+      "id": "science_en_057",
+      "question": "What happens to the perceived pitch of a siren as an ambulance speeds toward you?",
+      "answers": [
+        {"text": "The pitch rises", "correct": true},
+        {"text": "The pitch falls", "correct": false},
+        {"text": "The pitch stays the same", "correct": false}
+      ],
+      "difficulty": "easy",
+      "fun_fact": "The Doppler effect compresses sound waves in front of a moving source and stretches them behind. The same effect on light tells astronomers whether galaxies are approaching (blueshift) or receding (redshift).",
+      "category": "Science"
+    },
+    {
+      "id": "science_en_058",
+      "question": "Why does ice on a frozen lake feel slippery underfoot?",
+      "answers": [
+        {"text": "A thin liquid-like layer forms on the surface even below freezing", "correct": true},
+        {"text": "Ice has a naturally frictionless crystal face", "correct": false},
+        {"text": "Pressure from your shoe melts the ice", "correct": false}
+      ],
+      "difficulty": "medium",
+      "fun_fact": "The old 'pressure melts the ice under your skates' story has been mostly debunked. Modern measurements show ice naturally has a quasi-liquid surface layer down to about -20°C — that's what makes it slippery.",
+      "category": "Science"
+    },
+    {
+      "id": "science_en_059",
+      "question": "What surprising property does the element gallium have at body temperature?",
+      "answers": [
+        {"text": "It melts in your hand", "correct": true},
+        {"text": "It glows red", "correct": false},
+        {"text": "It becomes magnetic", "correct": false}
+      ],
+      "difficulty": "easy",
+      "fun_fact": "Gallium melts at about 29.8°C — below human body temperature. Magicians use it for the 'spoon that melts in your tea' trick because it stays solid at room temperature but liquefies on contact with warm skin.",
+      "category": "Science"
+    },
+    {
+      "id": "science_en_060",
+      "question": "Which gas, despite making up roughly 78% of Earth's atmosphere, is mostly chemically inert at normal conditions?",
+      "answers": [
+        {"text": "Nitrogen", "correct": true},
+        {"text": "Carbon dioxide", "correct": false},
+        {"text": "Argon", "correct": false}
+      ],
+      "difficulty": "easy",
+      "fun_fact": "The triple bond in N2 is one of the strongest in chemistry — breaking it takes huge energy. That's why agriculture relies on the Haber-Bosch process, which uses high heat and pressure to fix atmospheric nitrogen into fertilizer.",
+      "category": "Science"
+    },
+    {
+      "id": "science_en_061",
+      "question": "Pure gold is too soft for jewellery — what is typically added to harden it?",
+      "answers": [
+        {"text": "Copper or silver", "correct": true},
+        {"text": "Iron", "correct": false},
+        {"text": "Aluminium", "correct": false}
+      ],
+      "difficulty": "easy",
+      "fun_fact": "24-karat gold is so soft you can scratch it with a fingernail. Most jewellery is 18K or 14K — alloyed with copper (giving rose gold), silver (giving paler tones), or palladium (white gold) for durability.",
+      "category": "Science"
+    },
+    {
+      "id": "science_en_062",
+      "question": "Why are diamonds and graphite so different despite both being pure carbon?",
+      "answers": [
+        {"text": "Their carbon atoms are arranged in different crystal structures", "correct": true},
+        {"text": "Diamonds contain trace nitrogen, graphite doesn't", "correct": false},
+        {"text": "Graphite is a compound, not pure carbon", "correct": false}
+      ],
+      "difficulty": "easy",
+      "fun_fact": "Diamond's carbon atoms form a rigid 3D tetrahedral lattice (extremely hard). Graphite's atoms form weakly bonded sheets that slide past each other — which is why pencils write and graphite makes a good lubricant.",
+      "category": "Science"
+    },
+    {
+      "id": "science_en_063",
+      "question": "Which everyday metal is the best electrical conductor of all elements?",
+      "answers": [
+        {"text": "Silver", "correct": true},
+        {"text": "Copper", "correct": false},
+        {"text": "Gold", "correct": false}
+      ],
+      "difficulty": "medium",
+      "fun_fact": "Silver beats copper slightly in conductivity, but copper is used for most wiring because it's far cheaper and doesn't tarnish in the same brittle way. Gold is used for connector plating because it never oxidises.",
+      "category": "Science"
+    },
+    {
+      "id": "science_en_064",
+      "question": "What state of matter is a candle flame?",
+      "answers": [
+        {"text": "Mostly gas, plus tiny incandescent particles", "correct": true},
+        {"text": "Plasma", "correct": false},
+        {"text": "A solid suspension", "correct": false}
+      ],
+      "difficulty": "medium",
+      "fun_fact": "Most candle flames aren't hot enough to ionise air into plasma. They're hot gas carrying glowing soot particles (incandescent carbon) that give the yellow colour. A much hotter blowtorch flame can reach plasma territory.",
+      "category": "Science"
+    },
+    {
+      "id": "science_en_065",
+      "question": "How many chambers does a cow's stomach have?",
+      "answers": [
+        {"text": "Four", "correct": true},
+        {"text": "One", "correct": false},
+        {"text": "Two", "correct": false}
+      ],
+      "difficulty": "easy",
+      "fun_fact": "Cows are ruminants: the rumen, reticulum, omasum, and abomasum each play a role in breaking down tough plant fibres. Cows regurgitate and re-chew partially digested food as 'cud'.",
+      "category": "Science"
+    },
+    {
+      "id": "science_en_066",
+      "question": "What is unusual about the DNA in your mitochondria?",
+      "answers": [
+        {"text": "It is inherited only from your mother", "correct": true},
+        {"text": "It changes every few years", "correct": false},
+        {"text": "It is identical to your father's", "correct": false}
+      ],
+      "difficulty": "medium",
+      "fun_fact": "Mitochondria carry their own circular DNA — a relic of an ancient bacterium that was absorbed by early cells. Sperm mitochondria are destroyed after fertilisation, so only the mother's are passed on.",
+      "category": "Science"
+    },
+    {
+      "id": "science_en_067",
+      "question": "Roughly how many cells in the human body are replaced over a lifetime?",
+      "answers": [
+        {"text": "Most cell types are continually replaced — but not neurons in the cortex", "correct": true},
+        {"text": "All cells are replaced every seven years", "correct": false},
+        {"text": "Cells are never replaced after childhood", "correct": false}
+      ],
+      "difficulty": "medium",
+      "fun_fact": "Gut lining cells turn over in days, skin cells in weeks, red blood cells in months, bone over years. But most neurons in your cerebral cortex were made before birth and stay with you for life.",
+      "category": "Science"
+    },
+    {
+      "id": "science_en_068",
+      "question": "What does a tardigrade do when conditions become unbearable?",
+      "answers": [
+        {"text": "It enters a near-dehydrated 'tun' state and can survive vacuum", "correct": true},
+        {"text": "It dies almost immediately", "correct": false},
+        {"text": "It grows a hard shell and burrows underground", "correct": false}
+      ],
+      "difficulty": "medium",
+      "fun_fact": "Tardigrades (water bears) survive boiling, freezing, radiation, and even open space. They expel almost all water and curl into a 'tun' — metabolism nearly halts, and they rehydrate years later.",
+      "category": "Science"
+    },
+    {
+      "id": "science_en_069",
+      "question": "How does an octopus 'see' colour despite being colourblind?",
+      "answers": [
+        {"text": "It may sense colour through pigment-detecting cells in its skin", "correct": true},
+        {"text": "It memorises colours from chemical cues", "correct": false},
+        {"text": "Octopuses can't sense colour at all", "correct": false}
+      ],
+      "difficulty": "hard",
+      "fun_fact": "Octopus eyes have only one photoreceptor type — yet they perform vivid camouflage. One hypothesis: opsin proteins in their skin let the whole animal sample wavelength via a distributed 'skin-vision' system.",
+      "category": "Science"
+    },
+    {
+      "id": "science_en_070",
+      "question": "Which sea creature is biologically considered effectively immortal under the right conditions?",
+      "answers": [
+        {"text": "Turritopsis dohrnii — a small jellyfish", "correct": true},
+        {"text": "The giant clam", "correct": false},
+        {"text": "The sea cucumber", "correct": false}
+      ],
+      "difficulty": "hard",
+      "fun_fact": "When stressed, Turritopsis dohrnii can revert from its adult medusa form back to a polyp and start its life cycle over. In the lab it has been observed doing this repeatedly — though predators still get most in the wild.",
+      "category": "Science"
+    },
+    {
+      "id": "science_en_071",
+      "question": "Why do leaves change colour in autumn?",
+      "answers": [
+        {"text": "Chlorophyll breaks down, revealing other pigments that were there all along", "correct": true},
+        {"text": "Leaves manufacture new red and yellow pigments in autumn", "correct": false},
+        {"text": "Falling temperatures bleach the leaves chemically", "correct": false}
+      ],
+      "difficulty": "easy",
+      "fun_fact": "Carotenoids (yellows/oranges) are present all summer but masked by green chlorophyll. As days shorten, trees recycle the chlorophyll and the underlying pigments become visible. Reds (anthocyanins) are often produced fresh in autumn.",
+      "category": "Science"
+    },
+    {
+      "id": "science_en_072",
+      "question": "What surprising thing does your stomach lining do every few days?",
+      "answers": [
+        {"text": "It rebuilds itself to avoid being digested by its own acid", "correct": true},
+        {"text": "It changes pH from acidic to alkaline", "correct": false},
+        {"text": "It absorbs most of the food you eat", "correct": false}
+      ],
+      "difficulty": "medium",
+      "fun_fact": "Stomach acid is strong enough to dissolve metal. A thick mucus layer protects the lining — and the cells underneath are replaced every few days, faster than nearly any other tissue.",
+      "category": "Science"
+    },
+    {
+      "id": "science_en_073",
+      "question": "How do bees communicate the location of food to the hive?",
+      "answers": [
+        {"text": "By performing a 'waggle dance' encoding angle and distance", "correct": true},
+        {"text": "By releasing a scented trail other bees follow", "correct": false},
+        {"text": "By guiding scouts back one at a time", "correct": false}
+      ],
+      "difficulty": "easy",
+      "fun_fact": "Karl von Frisch decoded the dance in the 1940s — the angle relative to vertical equals the angle to the food relative to the sun, and dance duration encodes distance. He won a Nobel Prize in 1973 for the discovery.",
+      "category": "Science"
+    },
+    {
+      "id": "science_en_074",
+      "question": "Roughly how long does it take sunlight to reach Earth?",
+      "answers": [
+        {"text": "About 8 minutes", "correct": true},
+        {"text": "About 8 seconds", "correct": false},
+        {"text": "About 8 hours", "correct": false}
+      ],
+      "difficulty": "easy",
+      "fun_fact": "Light travels 150 million kilometres from the Sun in about 8 minutes 20 seconds. The sunlight you see actually left the Sun's surface before you started reading this sentence.",
+      "category": "Science"
+    },
+    {
+      "id": "science_en_075",
+      "question": "Which planet in our solar system has the fastest winds?",
+      "answers": [
+        {"text": "Neptune", "correct": true},
+        {"text": "Jupiter", "correct": false},
+        {"text": "Saturn", "correct": false}
+      ],
+      "difficulty": "medium",
+      "fun_fact": "Neptune's winds can exceed 2000 km/h — faster than the speed of sound on Earth. The cause is still debated, since Neptune receives barely any sunlight to drive weather.",
+      "category": "Science"
+    },
+    {
+      "id": "science_en_076",
+      "question": "How many planets in our solar system could float in a sufficiently large body of water?",
+      "answers": [
+        {"text": "One — Saturn, because it's less dense than water", "correct": true},
+        {"text": "None — all planets sink", "correct": false},
+        {"text": "All gas giants float", "correct": false}
+      ],
+      "difficulty": "medium",
+      "fun_fact": "Saturn's average density is about 0.69 g/cm³ — lower than water (1 g/cm³). In a sufficiently large ocean it would float, though it would leave a colossal ring residue.",
+      "category": "Science"
+    },
+    {
+      "id": "science_en_077",
+      "question": "Where in the solar system is the largest known canyon?",
+      "answers": [
+        {"text": "On Mars — Valles Marineris", "correct": true},
+        {"text": "On Earth — the Grand Canyon", "correct": false},
+        {"text": "On Mercury", "correct": false}
+      ],
+      "difficulty": "medium",
+      "fun_fact": "Valles Marineris stretches over 4000 km across Mars — about as long as the United States is wide — and reaches 7 km deep in places. The Grand Canyon would be a side branch by comparison.",
+      "category": "Science"
+    },
+    {
+      "id": "science_en_078",
+      "question": "What happens to a star roughly the size of our Sun at the end of its life?",
+      "answers": [
+        {"text": "It sheds its outer layers and becomes a white dwarf", "correct": true},
+        {"text": "It collapses directly into a black hole", "correct": false},
+        {"text": "It explodes as a supernova", "correct": false}
+      ],
+      "difficulty": "medium",
+      "fun_fact": "Sun-sized stars expand into red giants, then puff off a glowing planetary nebula, leaving an Earth-sized white dwarf at the centre. Only stars roughly 8+ solar masses end as supernovae.",
+      "category": "Science"
+    },
+    {
+      "id": "science_en_079",
+      "question": "Roughly how many stars are estimated to be in the observable universe?",
+      "answers": [
+        {"text": "More than the grains of sand on all Earth's beaches", "correct": true},
+        {"text": "About the same as the world's population", "correct": false},
+        {"text": "Roughly 100 million", "correct": false}
+      ],
+      "difficulty": "easy",
+      "fun_fact": "Astronomers estimate at least 10^22 stars in the observable universe — vastly more than the 10^18 or so grains of sand on Earth. Each large galaxy alone contains hundreds of billions of stars.",
+      "category": "Science"
+    },
+    {
+      "id": "science_en_080",
+      "question": "What is unusual about Mercury's orbital path?",
+      "answers": [
+        {"text": "Its orbit precesses — a tiny shift that confirmed general relativity", "correct": true},
+        {"text": "It orbits the Sun backwards", "correct": false},
+        {"text": "Its orbit is a perfect circle", "correct": false}
+      ],
+      "difficulty": "hard",
+      "fun_fact": "Mercury's perihelion shifts about 43 arcseconds per century beyond what Newtonian gravity predicts. Einstein's general relativity explained the gap exactly — one of its first observational confirmations in 1915.",
+      "category": "Science"
+    },
+    {
+      "id": "science_en_081",
+      "question": "What is the cosmic microwave background?",
+      "answers": [
+        {"text": "Leftover light from about 380,000 years after the Big Bang", "correct": true},
+        {"text": "Radiation from distant supernovae", "correct": false},
+        {"text": "Microwaves emitted by our own galaxy", "correct": false}
+      ],
+      "difficulty": "medium",
+      "fun_fact": "The CMB fills the universe in every direction at about 2.7 K. About 1% of the static on old analog TV sets tuned between channels was actually CMB photons that began their journey when the universe first became transparent.",
+      "category": "Science"
+    },
+    {
+      "id": "science_en_082",
+      "question": "In a room of just 23 people, what is the probability that at least two share a birthday?",
+      "answers": [
+        {"text": "Over 50%", "correct": true},
+        {"text": "About 6%", "correct": false},
+        {"text": "About 23%", "correct": false}
+      ],
+      "difficulty": "medium",
+      "fun_fact": "The 'birthday paradox' is counterintuitive because we picture our own birthday matching someone, but the question is any pair matching — the number of possible pairs grows fast (23 people = 253 pairs).",
+      "category": "Science"
+    },
+    {
+      "id": "science_en_083",
+      "question": "What is unusual about the number 1 when it comes to leading digits of real-world data?",
+      "answers": [
+        {"text": "It appears as the leading digit about 30% of the time", "correct": true},
+        {"text": "It almost never appears as a leading digit", "correct": false},
+        {"text": "It appears with exactly 11% frequency, like every other digit", "correct": false}
+      ],
+      "difficulty": "hard",
+      "fun_fact": "Benford's Law: in many datasets — populations, financial figures, physical constants — leading digits follow a logarithmic distribution where 1 appears ~30%, 2 ~17%, down to 9 ~5%. Auditors use it to detect fraud.",
+      "category": "Science"
+    },
+    {
+      "id": "science_en_084",
+      "question": "If you fold a sheet of paper in half 42 times, roughly how thick would it be?",
+      "answers": [
+        {"text": "Thick enough to reach the Moon", "correct": true},
+        {"text": "About a metre", "correct": false},
+        {"text": "About the height of a skyscraper", "correct": false}
+      ],
+      "difficulty": "hard",
+      "fun_fact": "Doubling 42 times multiplies thickness by 2^42 ≈ 4.4 trillion. A 0.1 mm sheet becomes around 440,000 km thick — beyond lunar distance. In practice, paper can usually only be folded 7–8 times before it becomes unfoldable.",
+      "category": "Science"
+    },
+    {
+      "id": "science_en_085",
+      "question": "How many holes does a standard drinking straw have?",
+      "answers": [
+        {"text": "One — topologically it's a single tube", "correct": true},
+        {"text": "Two — one at each end", "correct": false},
+        {"text": "Zero — both ends are openings, not holes", "correct": false}
+      ],
+      "difficulty": "medium",
+      "fun_fact": "Topologists count by genus — the number of 'handles' on a surface. A straw is topologically equivalent to a donut (torus), which has one hole. A coffee mug also has exactly one — the handle.",
+      "category": "Science"
+    },
+    {
+      "id": "science_en_086",
+      "question": "Why does your nose run when you eat very spicy food?",
+      "answers": [
+        {"text": "Capsaicin triggers nerves that signal irritation, prompting mucus production", "correct": true},
+        {"text": "Spice molecules physically push mucus out", "correct": false},
+        {"text": "Stomach acid rises and reaches the nose", "correct": false}
+      ],
+      "difficulty": "easy",
+      "fun_fact": "Capsaicin binds to TRPV1 receptors — the same nerves that detect physical heat and damage. Your brain reads it as a burn, and reflexes like runny nose and sweating kick in to 'cool' the perceived injury.",
+      "category": "Science"
+    },
+    {
+      "id": "science_en_087",
+      "question": "Roughly how much blood does an average adult human contain?",
+      "answers": [
+        {"text": "About 5 litres", "correct": true},
+        {"text": "About 15 litres", "correct": false},
+        {"text": "About 1 litre", "correct": false}
+      ],
+      "difficulty": "easy",
+      "fun_fact": "Average adults carry about 4.5–5.5 litres of blood, roughly 7% of body weight. Blood plasma alone is about 90% water — which is why staying hydrated keeps circulation efficient.",
+      "category": "Science"
+    },
+    {
+      "id": "science_en_088",
+      "question": "Which type of vaccine introduced the very first inoculation against a disease?",
+      "answers": [
+        {"text": "A smallpox vaccine using cowpox material", "correct": true},
+        {"text": "A polio vaccine", "correct": false},
+        {"text": "A measles vaccine", "correct": false}
+      ],
+      "difficulty": "easy",
+      "fun_fact": "In 1796 Edward Jenner inoculated a boy with cowpox material and showed it protected against smallpox. The Latin word for cow ('vacca') gave us 'vaccine'. Smallpox is the only human disease eradicated worldwide.",
+      "category": "Science"
+    },
+    {
+      "id": "science_en_089",
+      "question": "Why don't your eyes get tired even though they move constantly all day?",
+      "answers": [
+        {"text": "Eye muscles are the fastest and most efficient in the body", "correct": true},
+        {"text": "Your eyes barely move when you focus", "correct": false},
+        {"text": "Eyes use ATP recycled from blinking", "correct": false}
+      ],
+      "difficulty": "hard",
+      "fun_fact": "Eye muscles can make over 100,000 movements daily and rarely fatigue. They have very high mitochondrial density and fast-twitch fibres optimised for tiny, precise corrections — your eyes never sit perfectly still even when 'fixed' on a point.",
+      "category": "Science"
+    },
+    {
+      "id": "science_en_090",
+      "question": "What unusual thing happens to your blood vessels when you blush?",
+      "answers": [
+        {"text": "Facial veins dilate in response to a social-emotion signal", "correct": true},
+        {"text": "Blood pressure drops sharply", "correct": false},
+        {"text": "Blood vessels constrict to push blood to the face", "correct": false}
+      ],
+      "difficulty": "medium",
+      "fun_fact": "Blushing is unique in that it's a vascular reaction to emotion alone — no other species shows the same conscious flush. Darwin called it 'the most peculiar and the most human of all expressions'.",
+      "category": "Science"
+    },
+    {
+      "id": "science_en_091",
+      "question": "What did the word 'bug' in computing originally refer to?",
+      "answers": [
+        {"text": "An actual moth found inside a 1947 relay computer", "correct": true},
+        {"text": "Confused code by an early programmer", "correct": false},
+        {"text": "A misreading of a binary instruction", "correct": false}
+      ],
+      "difficulty": "easy",
+      "fun_fact": "Grace Hopper's team taped a moth into the Harvard Mark II's logbook in 1947, noting 'first actual case of bug being found'. The metaphor of 'bugs' for technical faults already existed — but this cemented the term in computing.",
+      "category": "Science"
+    },
+    {
+      "id": "science_en_092",
+      "question": "Who is generally credited as the first computer programmer?",
+      "answers": [
+        {"text": "Ada Lovelace", "correct": true},
+        {"text": "Alan Turing", "correct": false},
+        {"text": "Grace Hopper", "correct": false}
+      ],
+      "difficulty": "easy",
+      "fun_fact": "In the 1840s Ada Lovelace wrote an algorithm for Charles Babbage's never-built Analytical Engine — to compute Bernoulli numbers. She also speculated machines could one day compose music, anticipating general-purpose computing.",
+      "category": "Science"
+    },
+    {
+      "id": "science_en_093",
+      "question": "What was Alan Turing's famous proposed test for machine intelligence originally called?",
+      "answers": [
+        {"text": "The Imitation Game", "correct": true},
+        {"text": "The AI Trial", "correct": false},
+        {"text": "The Thinking Test", "correct": false}
+      ],
+      "difficulty": "medium",
+      "fun_fact": "In his 1950 paper Turing proposed an 'imitation game' where a judge chats with a human and a machine via text and must tell them apart. The term 'Turing Test' came later from other researchers.",
+      "category": "Science"
+    },
+    {
+      "id": "science_en_094",
+      "question": "Roughly how often has the number of transistors on a chip doubled, as observed by Gordon Moore?",
+      "answers": [
+        {"text": "About every two years", "correct": true},
+        {"text": "About every six months", "correct": false},
+        {"text": "About every ten years", "correct": false}
+      ],
+      "difficulty": "easy",
+      "fun_fact": "Moore's 1965 observation projected a doubling roughly every year, later revised to about every two years. It guided the chip industry for decades — though physical limits are now slowing the pace.",
+      "category": "Science"
+    },
+    {
+      "id": "science_en_095",
+      "question": "What original purpose did the @ symbol serve before email made it famous?",
+      "answers": [
+        {"text": "It meant 'at the rate of' in accounting and trade", "correct": true},
+        {"text": "It was invented for email and had no prior use", "correct": false},
+        {"text": "It marked footnotes in medieval manuscripts", "correct": false}
+      ],
+      "difficulty": "easy",
+      "fun_fact": "The @ symbol meant 'at the price of' for centuries (e.g. '5 apples @ 10 cents'). Ray Tomlinson picked it in 1971 to separate user from machine in early email because it was unambiguous and unused in names.",
+      "category": "Science"
+    },
+    {
+      "id": "science_en_096",
+      "question": "Which sweetener was discovered when a researcher licked his finger after handling chemicals in the lab?",
+      "answers": [
+        {"text": "Aspartame", "correct": true},
+        {"text": "Stevia", "correct": false},
+        {"text": "Sucralose", "correct": false}
+      ],
+      "difficulty": "hard",
+      "fun_fact": "James Schlatter discovered aspartame in 1965 while developing an ulcer drug. He licked his finger to pick up paper, tasted intense sweetness, and traced it to the intermediate compound — now in thousands of diet products.",
+      "category": "Science"
+    },
+    {
+      "id": "science_en_097",
+      "question": "How was X-ray imaging first discovered?",
+      "answers": [
+        {"text": "Wilhelm Röntgen noticed a fluorescent screen glowing across the room", "correct": true},
+        {"text": "Marie Curie isolated them from uranium ore", "correct": false},
+        {"text": "Edison's lab patented them", "correct": false}
+      ],
+      "difficulty": "easy",
+      "fun_fact": "In 1895 Röntgen was experimenting with cathode-ray tubes when he saw a barium-coated screen fluoresce despite being shielded. Weeks later he produced the first X-ray image — of his wife's hand and wedding ring.",
+      "category": "Science"
+    },
+    {
+      "id": "science_en_098",
+      "question": "Vulcanised rubber was invented after Charles Goodyear accidentally did what?",
+      "answers": [
+        {"text": "Dropped a rubber-sulphur mix onto a hot stove", "correct": true},
+        {"text": "Buried rubber in a sulphur mine", "correct": false},
+        {"text": "Boiled rubber with seawater", "correct": false}
+      ],
+      "difficulty": "medium",
+      "fun_fact": "Goodyear had been trying for years to stop natural rubber from melting in summer and cracking in winter. The 1839 stove accident showed sulphur + heat created a tough, elastic material — modern tyres descend from that mishap.",
+      "category": "Science"
+    },
+    {
+      "id": "science_en_099",
+      "question": "What surprising property does graphene — a single layer of carbon atoms — have?",
+      "answers": [
+        {"text": "It's stronger than steel by weight, yet flexible and conductive", "correct": true},
+        {"text": "It's the heaviest known material", "correct": false},
+        {"text": "It's a perfect electrical insulator", "correct": false}
+      ],
+      "difficulty": "medium",
+      "fun_fact": "A single sheet of graphene is about 200 times stronger than steel of the same thickness. Andre Geim and Konstantin Novoselov isolated it in 2004 using sticky tape on graphite — and won the 2010 Nobel Prize.",
+      "category": "Science"
+    },
+    {
+      "id": "science_en_100",
+      "question": "How does an electric eel actually generate its shock?",
+      "answers": [
+        {"text": "Specialised cells stacked like batteries fire simultaneously", "correct": true},
+        {"text": "Friction from rapid swimming generates current", "correct": false},
+        {"text": "It absorbs static electricity from the water", "correct": false}
+      ],
+      "difficulty": "medium",
+      "fun_fact": "Electrocytes — modified muscle cells — line the eel's body. When fired in unison they produce pulses up to 600 volts. The same principle inspired Alessandro Volta's first battery design in 1800.",
+      "category": "Science"
+    },
+    {
+      "id": "science_en_101",
+      "question": "Why does cracking your knuckles make a popping sound?",
+      "answers": [
+        {"text": "Gas bubbles in joint fluid rapidly form or collapse", "correct": true},
+        {"text": "Bones briefly grind against each other", "correct": false},
+        {"text": "Tendons snap back into place", "correct": false}
+      ],
+      "difficulty": "medium",
+      "fun_fact": "Synovial fluid contains dissolved gases. Stretching the joint drops the pressure and forms a tiny cavity — the pop is the cavity collapsing or forming. Long-running studies show knuckle cracking does NOT cause arthritis.",
+      "category": "Science"
     }
   ]
 }

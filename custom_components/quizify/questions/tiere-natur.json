@@ -507,6 +507,678 @@
       "difficulty": "easy",
       "fun_fact": "Zwei Drittel der 500 Millionen Neuronen eines Oktopus sitzen in seinen Armen, nicht im Gehirn. Jeder Arm kann unabhängig schmecken, fühlen und Entscheidungen treffen — selbst abgetrennte Arme reagieren noch minutenlang.",
       "category": "Tiere & Natur"
+    },
+    {
+      "id": "nat_051",
+      "question": "Welche Farbe hat das Fell eines Eisbären unter seinem durchsichtigen Haar?",
+      "answers": [
+        {"text": "Weiß", "correct": false},
+        {"text": "Schwarz", "correct": true},
+        {"text": "Grau", "correct": false}
+      ],
+      "difficulty": "medium",
+      "fun_fact": "Eisbärenhaare sind hohl und durchsichtig — die Haut darunter ist schwarz. Die weiße Erscheinung entsteht durch Lichtstreuung in den Haarröhrchen. Die dunkle Haut absorbiert Sonnenwärme besonders effizient.",
+      "category": "Tiere & Natur"
+    },
+    {
+      "id": "nat_052",
+      "question": "Wie viele Mägen hat eine Kuh?",
+      "answers": [
+        {"text": "Einen mit vier Kammern", "correct": true},
+        {"text": "Vier separate Mägen", "correct": false},
+        {"text": "Zwei", "correct": false}
+      ],
+      "difficulty": "medium",
+      "fun_fact": "Kühe haben anatomisch einen Magen mit vier Kammern: Pansen, Netzmagen, Blättermagen und Labmagen. Nur der Labmagen produziert Verdauungssäfte — die anderen drei sind spezialisierte Gärkammern für die mikrobielle Zellulose-Zersetzung.",
+      "category": "Tiere & Natur"
+    },
+    {
+      "id": "nat_053",
+      "question": "Welches Säugetier ist als einziges nicht in der Lage zu springen?",
+      "answers": [
+        {"text": "Nilpferd", "correct": false},
+        {"text": "Elefant", "correct": true},
+        {"text": "Nashorn", "correct": false}
+      ],
+      "difficulty": "easy",
+      "fun_fact": "Elefanten sind die einzigen Säugetiere, die nicht springen können — selbst beim schnellsten Lauf hat immer mindestens ein Fuß Bodenkontakt. Ihre Knochenstruktur und ihr Gewicht erlauben keine Flugphase.",
+      "category": "Tiere & Natur"
+    },
+    {
+      "id": "nat_054",
+      "question": "Welches Tier verfügt über die kräftigste Bisskraft im Verhältnis zu seiner Körpergröße?",
+      "answers": [
+        {"text": "Tasmanischer Teufel", "correct": true},
+        {"text": "Hyäne", "correct": false},
+        {"text": "Wolf", "correct": false}
+      ],
+      "difficulty": "hard",
+      "fun_fact": "Der Tasmanische Teufel hat eine Bisskraft von etwa 14 kg pro kg Körpergewicht — relativ gesehen stärker als bei einem Löwen. Sein massiver Kiefer kann ganze Knochen zerkleinern, was ihm erlaubt, Kadaver vollständig zu verwerten.",
+      "category": "Tiere & Natur"
+    },
+    {
+      "id": "nat_055",
+      "question": "Welcher Vogel baut das größte Nest aller Singvögel?",
+      "answers": [
+        {"text": "Webervogel", "correct": false},
+        {"text": "Siedelweber", "correct": true},
+        {"text": "Storch", "correct": false}
+      ],
+      "difficulty": "hard",
+      "fun_fact": "Siedelweber in der Kalahari bauen riesige Gemeinschaftsnester mit über 100 Kammern, die mehrere Generationen über mehr als 100 Jahre bewohnen. Die größten wiegen über eine Tonne und können ganze Bäume zum Umstürzen bringen.",
+      "category": "Tiere & Natur"
+    },
+    {
+      "id": "nat_056",
+      "question": "Wie atmen Schildkröten unter Wasser im Winterschlaf?",
+      "answers": [
+        {"text": "Sie halten einfach die Luft an", "correct": false},
+        {"text": "Über die Kloake", "correct": true},
+        {"text": "Über Hautporen am Hals", "correct": false}
+      ],
+      "difficulty": "hard",
+      "fun_fact": "Manche Wasserschildkröten nehmen im Winter Sauerstoff aus dem Wasser über stark durchblutete Schleimhäute in ihrer Kloake auf — eine Technik, die als 'cloacal respiration' bekannt ist und ihnen monatelangen Aufenthalt unter Eis ermöglicht.",
+      "category": "Tiere & Natur"
+    },
+    {
+      "id": "nat_057",
+      "question": "Welche Pflanze fängt und verdaut die meisten Insekten pro Pflanze?",
+      "answers": [
+        {"text": "Venusfliegenfalle", "correct": false},
+        {"text": "Wasserschlauch (Utricularia)", "correct": true},
+        {"text": "Kannenpflanze", "correct": false}
+      ],
+      "difficulty": "hard",
+      "fun_fact": "Wasserschlauchpflanzen besitzen winzige Saugfallen, die in unter einer Millisekunde zuschnappen — die schnellste Bewegung im Pflanzenreich. Eine einzelne Pflanze kann tausende Mikroorganismen pro Tag verzehren.",
+      "category": "Tiere & Natur"
+    },
+    {
+      "id": "nat_058",
+      "question": "Welcher Vogel kann Monate am Stück fliegen, ohne zu landen?",
+      "answers": [
+        {"text": "Alpensegler", "correct": true},
+        {"text": "Albatros", "correct": false},
+        {"text": "Möwe", "correct": false}
+      ],
+      "difficulty": "medium",
+      "fun_fact": "Der Alpensegler bleibt nachweislich bis zu 200 Tage durchgehend in der Luft — er frisst, schläft und paart sich im Flug. Belegt wurde das durch Mikro-Datenlogger, die Beschleunigung und Höhe der Vögel aufzeichneten.",
+      "category": "Tiere & Natur"
+    },
+    {
+      "id": "nat_059",
+      "question": "Wie viele Geschmacksrezeptoren hat ein Wels?",
+      "answers": [
+        {"text": "Etwa 10.000", "correct": false},
+        {"text": "Etwa 50.000", "correct": false},
+        {"text": "Über 175.000", "correct": true}
+      ],
+      "difficulty": "hard",
+      "fun_fact": "Welse haben über 175.000 Geschmacksknospen — verteilt über den gesamten Körper, nicht nur im Mund. Sie sind im Grunde schwimmende Zungen, was ihnen erlaubt, Beute in komplett trübem Wasser zu orten.",
+      "category": "Tiere & Natur"
+    },
+    {
+      "id": "nat_060",
+      "question": "Welches Tier hat den langsamsten Verdauungstrakt unter den Säugetieren?",
+      "answers": [
+        {"text": "Koala", "correct": false},
+        {"text": "Faultier", "correct": true},
+        {"text": "Riesenpanda", "correct": false}
+      ],
+      "difficulty": "easy",
+      "fun_fact": "Ein Faultier braucht bis zu 30 Tage, um eine einzige Mahlzeit zu verdauen. Sein Stoffwechsel ist so langsam, dass es im Schnitt nur einmal pro Woche zum Boden absteigt, um sich zu erleichtern.",
+      "category": "Tiere & Natur"
+    },
+    {
+      "id": "nat_061",
+      "question": "Welche Tiergruppe kann fliegen, ohne Vögel oder Insekten zu sein?",
+      "answers": [
+        {"text": "Fledermäuse", "correct": true},
+        {"text": "Flughörnchen", "correct": false},
+        {"text": "Flugfische", "correct": false}
+      ],
+      "difficulty": "easy",
+      "fun_fact": "Fledermäuse sind die einzigen Säugetiere, die aktiv flattern und nicht nur gleiten. Flughörnchen und Flugfische gleiten lediglich — sie können nicht Höhe gewinnen oder dauerhaft in der Luft bleiben.",
+      "category": "Tiere & Natur"
+    },
+    {
+      "id": "nat_062",
+      "question": "Welche Frucht ist botanisch betrachtet eine Beere?",
+      "answers": [
+        {"text": "Erdbeere", "correct": false},
+        {"text": "Banane", "correct": true},
+        {"text": "Himbeere", "correct": false}
+      ],
+      "difficulty": "medium",
+      "fun_fact": "Botanisch ist eine Banane eine Beere — sie entsteht aus einem einzigen Fruchtknoten und hat Samen im Inneren. Erdbeeren und Himbeeren hingegen sind Sammelnussfrüchte. Wassermelonen und Avocados sind ebenfalls Beeren.",
+      "category": "Tiere & Natur"
+    },
+    {
+      "id": "nat_063",
+      "question": "Welches Tier produziert quadratische Kotpellets?",
+      "answers": [
+        {"text": "Wombat", "correct": true},
+        {"text": "Känguru", "correct": false},
+        {"text": "Kaninchen", "correct": false}
+      ],
+      "difficulty": "medium",
+      "fun_fact": "Wombats sind die einzigen bekannten Tiere, die würfelförmigen Kot produzieren. Der Grund: unterschiedlich elastische Darmwand-Regionen formen den Kot. Wombats nutzen die Würfel als Reviermarkierungen, die nicht wegrollen.",
+      "category": "Tiere & Natur"
+    },
+    {
+      "id": "nat_064",
+      "question": "Welches Säugetier hat die längste Schwangerschaft?",
+      "answers": [
+        {"text": "Afrikanischer Elefant", "correct": true},
+        {"text": "Giraffe", "correct": false},
+        {"text": "Blauwal", "correct": false}
+      ],
+      "difficulty": "easy",
+      "fun_fact": "Mit etwa 22 Monaten Tragzeit hält der Afrikanische Elefant den Rekord unter Säugetieren. Die lange Entwicklung im Mutterleib ist nötig, weil Elefantenkälber bei der Geburt bereits laufen und das komplexe Sozialverhalten ihrer Herde verstehen müssen.",
+      "category": "Tiere & Natur"
+    },
+    {
+      "id": "nat_065",
+      "question": "Welche Eigenschaft macht die Färsenfischlinge (Bombardierkäfer) besonders gefährlich?",
+      "answers": [
+        {"text": "Sie spritzen 100 °C heißes Wehrsekret", "correct": true},
+        {"text": "Sie können elektrische Schläge austeilen", "correct": false},
+        {"text": "Sie sind hochgiftig bei Berührung", "correct": false}
+      ],
+      "difficulty": "hard",
+      "fun_fact": "Bombardierkäfer mischen in einer speziellen Reaktionskammer Hydrochinone mit Wasserstoffperoxid — die explosive Reaktion erzeugt einen Strahl mit fast 100 °C, der mit hörbarem Knall hunderte Male pro Sekunde gepulst wird.",
+      "category": "Tiere & Natur"
+    },
+    {
+      "id": "nat_066",
+      "question": "Wie schwer ist das Herz eines Blauwals etwa?",
+      "answers": [
+        {"text": "Etwa 50 kg", "correct": false},
+        {"text": "Etwa 180 kg", "correct": true},
+        {"text": "Etwa 500 kg", "correct": false}
+      ],
+      "difficulty": "medium",
+      "fun_fact": "Das Herz eines Blauwals wiegt etwa 180 kg — so viel wie ein kleines Motorrad. Es schlägt nur etwa 8 bis 10 Mal pro Minute, beim Tauchen sogar auf 2 Schläge pro Minute herunter.",
+      "category": "Tiere & Natur"
+    },
+    {
+      "id": "nat_068",
+      "question": "Welche Strategie nutzt ein Igel zur Verteidigung neben seinen Stacheln?",
+      "answers": [
+        {"text": "Er stellt sich tot", "correct": false},
+        {"text": "Er bedeckt seine Stacheln mit eigenem Speichel", "correct": true},
+        {"text": "Er stößt einen UV-Lichtblitz aus", "correct": false}
+      ],
+      "difficulty": "medium",
+      "fun_fact": "Igel betreiben 'Selbstspucken': Sie kauen auf bitter schmeckenden oder giftigen Substanzen und verteilen den entstehenden Speichel-Schaum auf ihre Stacheln. Die Forschung vermutet, das macht Fressfeinde vorsichtig.",
+      "category": "Tiere & Natur"
+    },
+    {
+      "id": "nat_069",
+      "question": "Welche Tiergruppe stellt mehr als die Hälfte aller bekannten Tierarten?",
+      "answers": [
+        {"text": "Insekten", "correct": true},
+        {"text": "Fische", "correct": false},
+        {"text": "Spinnentiere", "correct": false}
+      ],
+      "difficulty": "easy",
+      "fun_fact": "Über 1 Million beschriebener Tierarten sind Insekten — das sind rund 60 % aller bekannten Arten. Schätzungen gehen davon aus, dass mehrere Millionen weitere Insektenarten noch unentdeckt sind.",
+      "category": "Tiere & Natur"
+    },
+    {
+      "id": "nat_070",
+      "question": "Welches Tier kann seinen Magen aus dem Körper ausstülpen, um Beute außerhalb zu verdauen?",
+      "answers": [
+        {"text": "Seestern", "correct": true},
+        {"text": "Krake", "correct": false},
+        {"text": "Seegurke", "correct": false}
+      ],
+      "difficulty": "medium",
+      "fun_fact": "Ein Seestern kann seinen Magen durch die Mundöffnung nach außen stülpen, ihn in geöffnete Muschelschalen schieben und das Muschelfleisch außerhalb seines Körpers verdauen. Erst danach wird der Magen wieder eingezogen.",
+      "category": "Tiere & Natur"
+    },
+    {
+      "id": "nat_071",
+      "question": "Wie viele Lider hat ein Kamel pro Auge?",
+      "answers": [
+        {"text": "Eins", "correct": false},
+        {"text": "Zwei", "correct": false},
+        {"text": "Drei", "correct": true}
+      ],
+      "difficulty": "hard",
+      "fun_fact": "Kamele besitzen pro Auge drei Lider: zwei mit Wimpern gegen Sand und ein drittes, durchsichtiges Lid, das sie wie einen Scheibenwischer über das Auge ziehen können — bei Sandstürmen sehen sie damit hindurch und schützen gleichzeitig die Hornhaut.",
+      "category": "Tiere & Natur"
+    },
+    {
+      "id": "nat_072",
+      "question": "Welches Geräusch macht eine Giraffe normalerweise?",
+      "answers": [
+        {"text": "Sie ist fast komplett stumm", "correct": true},
+        {"text": "Sie wiehert wie ein Pferd", "correct": false},
+        {"text": "Sie brüllt wie ein Esel", "correct": false}
+      ],
+      "difficulty": "medium",
+      "fun_fact": "Giraffen kommunizieren überwiegend mit Infraschall unter 20 Hz — für Menschen unhörbar. Tagsüber sind sie nahezu lautlos; nachts wurden allerdings tiefe Brummlaute aufgezeichnet, deren Funktion unklar bleibt.",
+      "category": "Tiere & Natur"
+    },
+    {
+      "id": "nat_073",
+      "question": "Welche Funktion hat das Geweih eines Hirsches?",
+      "answers": [
+        {"text": "Es wächst lebenslang weiter", "correct": false},
+        {"text": "Es wird jährlich abgeworfen und wächst neu", "correct": true},
+        {"text": "Es besteht aus Horn wie bei Antilopen", "correct": false}
+      ],
+      "difficulty": "easy",
+      "fun_fact": "Hirsche werfen ihre Knochengeweihe jedes Jahr ab und lassen sie komplett neu wachsen — bis zu 2,5 cm pro Tag. Damit ist das Geweih das am schnellsten wachsende Säugetiergewebe überhaupt.",
+      "category": "Tiere & Natur"
+    },
+    {
+      "id": "nat_074",
+      "question": "Welches Insekt hat das komplexeste Farbensehen im Tierreich?",
+      "answers": [
+        {"text": "Libelle", "correct": true},
+        {"text": "Schmetterling", "correct": false},
+        {"text": "Honigbiene", "correct": false}
+      ],
+      "difficulty": "medium",
+      "fun_fact": "Libellen besitzen bis zu 30 verschiedene Opsin-Gene für Farbsehen — Menschen haben nur 3. Sie können nicht nur UV-Licht sehen, sondern auch polarisiertes Licht und Farben in einer Auflösung, die wir uns kaum vorstellen können.",
+      "category": "Tiere & Natur"
+    },
+    {
+      "id": "nat_075",
+      "question": "Wie verhindern Spechte, dass sie sich beim Hämmern Gehirnerschütterungen zuziehen?",
+      "answers": [
+        {"text": "Ein Knochenbügel um das Gehirn", "correct": true},
+        {"text": "Eine flüssigkeitsgefüllte Schädelkammer", "correct": false},
+        {"text": "Verlangsamte Reaktion im Aufprallmoment", "correct": false}
+      ],
+      "difficulty": "hard",
+      "fun_fact": "Spechte haben ein knöchernes Zungenbein, das vom Schnabel über den Schädel zurück ins Gehirn führt und das Gehirn wie ein Sicherheitsgurt umfasst. Zusätzlich schließt sich ein drittes Augenlid, damit ihnen die Augen nicht aus dem Kopf springen.",
+      "category": "Tiere & Natur"
+    },
+    {
+      "id": "nat_076",
+      "question": "Welche Pflanzenart kann mehrere hundert Jahre alt werden, ohne zu blühen, und stirbt nach der ersten Blüte?",
+      "answers": [
+        {"text": "Agave", "correct": false},
+        {"text": "Puya raimondii", "correct": true},
+        {"text": "Bromelie", "correct": false}
+      ],
+      "difficulty": "hard",
+      "fun_fact": "Puya raimondii aus den Anden wächst bis zu 100 Jahre, treibt dann einen 10 Meter hohen Blütenstand mit etwa 30.000 Blüten und stirbt anschließend. Sie gilt als die größte Bromelie der Welt.",
+      "category": "Tiere & Natur"
+    },
+    {
+      "id": "nat_077",
+      "question": "Welches Tier kann seine eigenen Eingeweide ausstoßen, um Fressfeinde abzulenken?",
+      "answers": [
+        {"text": "Seegurke", "correct": true},
+        {"text": "Seeanemone", "correct": false},
+        {"text": "Tintenfisch", "correct": false}
+      ],
+      "difficulty": "medium",
+      "fun_fact": "Seegurken stoßen bei Bedrohung Teile ihrer inneren Organe durch den After aus. Die klebrigen, manchmal giftigen Fäden lenken oder verstricken Angreifer — die Eingeweide wachsen innerhalb weniger Wochen vollständig nach.",
+      "category": "Tiere & Natur"
+    },
+    {
+      "id": "nat_078",
+      "question": "Welches Säugetier legt Eier?",
+      "answers": [
+        {"text": "Schnabeltier", "correct": true},
+        {"text": "Beuteltier", "correct": false},
+        {"text": "Erdferkel", "correct": false}
+      ],
+      "difficulty": "easy",
+      "fun_fact": "Das Schnabeltier und die Schnabeligel (Ameisenigel) sind die einzigen eierlegenden Säugetiere. Männliche Schnabeltiere besitzen zudem giftige Sporne an den Hinterbeinen — eine extrem seltene Kombination im Tierreich.",
+      "category": "Tiere & Natur"
+    },
+    {
+      "id": "nat_079",
+      "question": "Welche Funktion erfüllen die schwarzen Streifen eines Zebras nach aktueller Forschung?",
+      "answers": [
+        {"text": "Tarnung gegen Löwen", "correct": false},
+        {"text": "Abwehr von Stechfliegen", "correct": true},
+        {"text": "Temperaturregulation durch Konvektion", "correct": false}
+      ],
+      "difficulty": "medium",
+      "fun_fact": "Experimente mit gestreiften Pferdedecken (Caro et al. 2019) zeigten: Tsetse- und Bremsenfliegen landen seltener auf gestreiften Mustern. Die Streifen verwirren wahrscheinlich das Polarisations-Sehen der Insekten.",
+      "category": "Tiere & Natur"
+    },
+    {
+      "id": "nat_080",
+      "question": "Welches Lebewesen kann in komplett trockenem Zustand jahrelang überleben?",
+      "answers": [
+        {"text": "Bärtierchen", "correct": true},
+        {"text": "Asselspinne", "correct": false},
+        {"text": "Salzkrebs", "correct": false}
+      ],
+      "difficulty": "easy",
+      "fun_fact": "Bärtierchen können ihren Wassergehalt auf unter 3 % senken und in den Kryptobiose-Zustand wechseln. In diesem Zustand überleben sie Vakuum, kosmische Strahlung, −272 °C sowie über 150 °C — Experimente schickten sie unbeschadet ins All.",
+      "category": "Tiere & Natur"
+    },
+    {
+      "id": "nat_081",
+      "question": "Welche Tierart bestäubt mit Abstand die meisten Nutzpflanzen weltweit?",
+      "answers": [
+        {"text": "Honigbiene", "correct": false},
+        {"text": "Wilde Bienen und Wildbestäuber zusammen", "correct": true},
+        {"text": "Schmetterling", "correct": false}
+      ],
+      "difficulty": "hard",
+      "fun_fact": "Studien (Garibaldi et al. 2013) zeigen: Wildbienen, Schwebfliegen und andere Wildbestäuber leisten zusammen mehr Bestäubungsarbeit als Honigbienen. Honigbienen werden überschätzt, weil sie sichtbarer und domestiziert sind.",
+      "category": "Tiere & Natur"
+    },
+    {
+      "id": "nat_082",
+      "question": "Welche Pflanze blüht nur alle paar Jahre und stinkt dabei nach verrottendem Fleisch?",
+      "answers": [
+        {"text": "Rafflesia", "correct": false},
+        {"text": "Titanenwurz", "correct": true},
+        {"text": "Lotus", "correct": false}
+      ],
+      "difficulty": "medium",
+      "fun_fact": "Die Titanenwurz (Amorphophallus titanum) bildet die größte unverzweigte Blütenstandsstruktur der Welt — bis 3 Meter hoch. Sie blüht nur alle 2 bis 10 Jahre für 24 bis 36 Stunden und lockt mit Aasgeruch fliegende Bestäuber an.",
+      "category": "Tiere & Natur"
+    },
+    {
+      "id": "nat_083",
+      "question": "Welches Tier kann am tiefsten tauchen?",
+      "answers": [
+        {"text": "Pottwal", "correct": false},
+        {"text": "Cuvier-Schnabelwal", "correct": true},
+        {"text": "Kaiserpinguin", "correct": false}
+      ],
+      "difficulty": "hard",
+      "fun_fact": "Der Cuvier-Schnabelwal hält den Tieftauchrekord unter Säugetieren: belegte 2.992 Meter Tiefe und Tauchgänge von über 3 Stunden Dauer. Sein Körper kollabiert dabei kontrolliert — die Lunge zieht sich fast vollständig zusammen.",
+      "category": "Tiere & Natur"
+    },
+    {
+      "id": "nat_084",
+      "question": "Welche Pflanze produziert das größte einzelne Blatt der Welt?",
+      "answers": [
+        {"text": "Riesenseerose", "correct": false},
+        {"text": "Raphia regalis", "correct": true},
+        {"text": "Riesentaro", "correct": false}
+      ],
+      "difficulty": "hard",
+      "fun_fact": "Die Palmenart Raphia regalis bildet zusammenhängende Blätter von bis zu 25 Metern Länge — das längste Einzelblatt im Pflanzenreich. Ein einziges Blatt kann ein Familienhaus überdachen.",
+      "category": "Tiere & Natur"
+    },
+    {
+      "id": "nat_085",
+      "question": "Wie viele Beine hat ein Skorpion?",
+      "answers": [
+        {"text": "6", "correct": false},
+        {"text": "8", "correct": true},
+        {"text": "10", "correct": false}
+      ],
+      "difficulty": "easy",
+      "fun_fact": "Skorpione gehören wie Spinnen zu den Spinnentieren und haben 8 Beine. Die beiden Scheren sind keine Beine, sondern umgewandelte Mundwerkzeuge (Pedipalpen). Unter UV-Licht fluoreszieren Skorpione blau-grün — der Grund ist bis heute nicht restlos geklärt.",
+      "category": "Tiere & Natur"
+    },
+    {
+      "id": "nat_086",
+      "question": "Welches Tier hat dunkelgrüne Eier mit besonders dicker Schale, sodass Aborigines kunstvolle Reliefs hineinschnitzten?",
+      "answers": [
+        {"text": "Strauß", "correct": false},
+        {"text": "Emu", "correct": true},
+        {"text": "Kasuar", "correct": false}
+      ],
+      "difficulty": "medium",
+      "fun_fact": "Emu-Eier haben eine dunkelgrüne bis fast schwarze Schale, die unter dem Licht blau-grün schimmert. Die Aborigines schnitzten die dicken, mehrschichtigen Schalen kunstvoll in Reliefs — eine bis heute praktizierte Kunstform.",
+      "category": "Tiere & Natur"
+    },
+    {
+      "id": "nat_087",
+      "question": "Wofür dient die Hautfärbung eines Flamingos?",
+      "answers": [
+        {"text": "Sie stammt aus der Nahrung", "correct": true},
+        {"text": "Sie wird genetisch vererbt", "correct": false},
+        {"text": "Sie entsteht durch Sonneneinwirkung", "correct": false}
+      ],
+      "difficulty": "easy",
+      "fun_fact": "Flamingos werden grau geboren und färben sich erst durch Carotinoide aus ihrer Nahrung — vor allem aus Algen und Salinenkrebsen — rosa. Zoo-Flamingos bekommen carotinoidhaltige Zusatznahrung, sonst würden sie verblassen.",
+      "category": "Tiere & Natur"
+    },
+    {
+      "id": "nat_088",
+      "question": "Welches Verhalten zeigt der Pistolenkrebs?",
+      "answers": [
+        {"text": "Er erzeugt mit der Schere eine Schockwelle", "correct": true},
+        {"text": "Er feuert Sandkörner aus der Schere", "correct": false},
+        {"text": "Er produziert giftige Schleimkugeln", "correct": false}
+      ],
+      "difficulty": "medium",
+      "fun_fact": "Der Pistolenkrebs lässt seine Schere so schnell zuschnappen, dass eine Kavitationsblase entsteht. Beim Kollaps erreicht sie kurzzeitig fast 4.700 °C und erzeugt einen Knall bis zu 218 dB — eines der lautesten Tiergeräusche überhaupt.",
+      "category": "Tiere & Natur"
+    },
+    {
+      "id": "nat_089",
+      "question": "Was passiert mit Lachsen nach dem Laichen im Süßwasser?",
+      "answers": [
+        {"text": "Sie kehren wieder ins Meer zurück", "correct": false},
+        {"text": "Die meisten pazifischen Arten sterben", "correct": true},
+        {"text": "Sie bewachen ihre Eier monatelang", "correct": false}
+      ],
+      "difficulty": "medium",
+      "fun_fact": "Pazifische Lachsarten wie der Rotlachs sterben nach dem Laichen — ihr Körper baut sich während der Wanderung systematisch ab. Atlantische Lachse können hingegen mehrfach ablaichen und ins Meer zurückkehren.",
+      "category": "Tiere & Natur"
+    },
+    {
+      "id": "nat_090",
+      "question": "Was ist 'Mycelium'?",
+      "answers": [
+        {"text": "Die unterirdische Fadenstruktur eines Pilzes", "correct": true},
+        {"text": "Ein flechtenbildendes Bakterium", "correct": false},
+        {"text": "Der Schleimfilm einer Schnecke", "correct": false}
+      ],
+      "difficulty": "medium",
+      "fun_fact": "Das Mycelium ist das eigentliche 'Tier' des Pilzes — die sichtbaren Hüte sind nur Fruchtkörper. Mycelnetze können kilometerweit reichen und werden in der Forschung als 'Wood Wide Web' bezeichnet, weil sie Bäume informationell verbinden.",
+      "category": "Tiere & Natur"
+    },
+    {
+      "id": "nat_091",
+      "question": "Welche Eigenschaft hat das Sekret eines Schleimaals?",
+      "answers": [
+        {"text": "Es verdickt Wasser explosionsartig zu Schleim", "correct": true},
+        {"text": "Es leuchtet im Dunkeln", "correct": false},
+        {"text": "Es lähmt Beutetiere durch Berührung", "correct": false}
+      ],
+      "difficulty": "hard",
+      "fun_fact": "Schleimaale stoßen bei Bedrohung Drüsensekret aus, das in Sekunden mit Wasser zu mehreren Litern Schleim aufquillt. Der Schleim verstopft die Kiemen von Raubfischen — diese ersticken oder lassen den Aal sofort los.",
+      "category": "Tiere & Natur"
+    },
+    {
+      "id": "nat_092",
+      "question": "Welcher Fisch überlebt monatelang ohne Sauerstoff im Schlamm, indem er Ethanol produziert?",
+      "answers": [
+        {"text": "Karausche", "correct": true},
+        {"text": "Forelle", "correct": false},
+        {"text": "Stör", "correct": false}
+      ],
+      "difficulty": "hard",
+      "fun_fact": "Die Karausche (Carassius carassius) und der Goldfisch sind die einzigen Wirbeltiere, die Glukose anaerob zu Ethanol umwandeln und über die Kiemen ausscheiden können — so überstehen sie zugefrorene, sauerstofffreie Tümpel über den ganzen Winter.",
+      "category": "Tiere & Natur"
+    },
+    {
+      "id": "nat_093",
+      "question": "Welches Insekt produziert eine milchähnliche Substanz, um seine Embryonen zu ernähren?",
+      "answers": [
+        {"text": "Pazifische Schabe (Diploptera punctata)", "correct": true},
+        {"text": "Stubenfliege", "correct": false},
+        {"text": "Königin der Honigbiene", "correct": false}
+      ],
+      "difficulty": "hard",
+      "fun_fact": "Die Pazifische Schabe gebärt lebende Junge und versorgt ihre Embryonen mit einem milchähnlichen Sekret, das in der Gebärmutter zu Proteinkristallen wird. Diese Kristalle gelten als eines der dichtesten bekannten Nahrungsmittel — etwa dreimal so kalorienreich wie Büffelmilch.",
+      "category": "Tiere & Natur"
+    },
+    {
+      "id": "nat_094",
+      "question": "Welches Insekt wird gezielt als natürlicher Schädlingsbekämpfer im Gewächshaus eingesetzt?",
+      "answers": [
+        {"text": "Marienkäfer", "correct": true},
+        {"text": "Wespe", "correct": false},
+        {"text": "Florfliege", "correct": false}
+      ],
+      "difficulty": "easy",
+      "fun_fact": "Ein einziger Marienkäfer kann während seines Lebens über 5.000 Blattläuse fressen. Erwerbsgärtner bestellen ihn in Tausenderpackungen — eine umweltschonende Alternative zu Pestiziden.",
+      "category": "Tiere & Natur"
+    },
+    {
+      "id": "nat_095",
+      "question": "Welche Tiere bilden 'Superkolonien' mit Milliarden Individuen über mehrere Kontinente hinweg?",
+      "answers": [
+        {"text": "Argentinische Ameise", "correct": true},
+        {"text": "Termite", "correct": false},
+        {"text": "Honigbiene", "correct": false}
+      ],
+      "difficulty": "hard",
+      "fun_fact": "Die Argentinische Ameise (Linepithema humile) bildet weltweit Superkolonien, deren Mitglieder einander nicht angreifen. Eine einzige genetische Kolonie zieht sich von Portugal bis Italien — 6.000 km — und ist das größte bekannte Kooperativsystem der Welt.",
+      "category": "Tiere & Natur"
+    },
+    {
+      "id": "nat_096",
+      "question": "Was ist das gemeinsame Merkmal aller Wirbeltiere?",
+      "answers": [
+        {"text": "Sie besitzen einen Schädel", "correct": true},
+        {"text": "Sie atmen über Lungen", "correct": false},
+        {"text": "Sie haben Knochen", "correct": false}
+      ],
+      "difficulty": "medium",
+      "fun_fact": "Alle Wirbeltiere haben einen Schädel — selbst Knorpelfische wie Haie, deren Skelett ansonsten knöchernfrei ist. Der Schädel ist evolutionär ein Schutzpanzer für das Vorderhirn und das definierende Merkmal des Subphylums Vertebrata.",
+      "category": "Tiere & Natur"
+    },
+    {
+      "id": "nat_097",
+      "question": "Welche Süßwasserart kann zwischen Salzwasser und Süßwasser wechseln und dabei ihre Physiologie umbauen?",
+      "answers": [
+        {"text": "Europäischer Aal", "correct": true},
+        {"text": "Hecht", "correct": false},
+        {"text": "Wels", "correct": false}
+      ],
+      "difficulty": "medium",
+      "fun_fact": "Europäische Aale schlüpfen in der Sargassosee, wandern als Glasaale über Jahre nach Europa, leben dort jahrzehntelang im Süßwasser und kehren zur Fortpflanzung zurück. Ihre Augen, Nieren und Kiemen bauen sich dabei mehrfach um.",
+      "category": "Tiere & Natur"
+    },
+    {
+      "id": "nat_098",
+      "question": "Welche Methode nutzt die Klippschliefer-Art, um sich vor Greifvögeln zu schützen?",
+      "answers": [
+        {"text": "Ein dauerhaft postierter Wachposten", "correct": true},
+        {"text": "Tarnung durch Farbwechsel", "correct": false},
+        {"text": "Lautes Echoortungs-Signal", "correct": false}
+      ],
+      "difficulty": "hard",
+      "fun_fact": "Klippschliefer-Gruppen postieren stets einen Wachposten, der den Himmel nach Greifvögeln absucht. Bei Sichtung warnt er mit spezifischen Alarmrufen — unterschiedlich für Adler, Schlange und Säugetier-Bedrohung.",
+      "category": "Tiere & Natur"
+    },
+    {
+      "id": "nat_099",
+      "question": "Welche Funktion erfüllt der 'Bug' auf dem Kopf eines Pottwals?",
+      "answers": [
+        {"text": "Er fokussiert Schallwellen für die Echoortung", "correct": true},
+        {"text": "Er speichert Sauerstoff für Tieftauchgänge", "correct": false},
+        {"text": "Er kühlt das Blut vor dem Eintritt ins Gehirn", "correct": false}
+      ],
+      "difficulty": "medium",
+      "fun_fact": "Der riesige Spermaceti-Behälter im Pottwalkopf wirkt wie eine akustische Linse und bündelt seine Klicks zu den lautesten Tönen aller Tiere — bis zu 230 dB unter Wasser. Damit kann er Tintenfische in 1 km Entfernung orten.",
+      "category": "Tiere & Natur"
+    },
+    {
+      "id": "nat_101",
+      "question": "Welche Tierart hat einen so guten Geruchssinn, dass sie Krebs in Atemproben erschnüffeln kann?",
+      "answers": [
+        {"text": "Hund", "correct": true},
+        {"text": "Schwein", "correct": false},
+        {"text": "Frettchen", "correct": false}
+      ],
+      "difficulty": "medium",
+      "fun_fact": "Trainierte Hunde erkennen verschiedene Krebsarten in Atem- oder Urinproben mit Trefferquoten über 90 %. Ihr Geruchssinn ist etwa 10.000-mal feiner als der des Menschen — sie besitzen rund 300 Millionen Riechzellen.",
+      "category": "Tiere & Natur"
+    },
+    {
+      "id": "nat_102",
+      "question": "Welches Säugetier hat die längste Wanderroute pro Jahr?",
+      "answers": [
+        {"text": "Grauwal", "correct": true},
+        {"text": "Karibu", "correct": false},
+        {"text": "Gnus", "correct": false}
+      ],
+      "difficulty": "hard",
+      "fun_fact": "Grauwale legen pro Jahr bis zu 22.000 km zwischen Arktis und Lagunen Mexikos zurück — die längste bekannte Wanderung eines Säugetiers. Während dieser Reise fressen sie monatelang nicht und leben von ihren Fettreserven.",
+      "category": "Tiere & Natur"
+    },
+    {
+      "id": "nat_103",
+      "question": "Welches Phänomen tritt im Pflanzenreich als 'Mast' auf?",
+      "answers": [
+        {"text": "Synchrone Massenfruchtbildung im selben Jahr", "correct": true},
+        {"text": "Verholzung der Wurzeln im Winter", "correct": false},
+        {"text": "Reservebildung in den Blättern", "correct": false}
+      ],
+      "difficulty": "hard",
+      "fun_fact": "Eichen und Buchen produzieren in 'Mastjahren' gemeinsam extrem viele Früchte — und das im Umkreis von hunderten Kilometern synchron. Hypothese: So sättigen sie Pflanzenfresser, sodass genug Samen zum Keimen übrigbleiben.",
+      "category": "Tiere & Natur"
+    },
+    {
+      "id": "nat_104",
+      "question": "Welches dieser Tiere atmet teilweise über die Haut?",
+      "answers": [
+        {"text": "Frosch", "correct": true},
+        {"text": "Eidechse", "correct": false},
+        {"text": "Schlange", "correct": false}
+      ],
+      "difficulty": "easy",
+      "fun_fact": "Frösche atmen bis zu 50 % ihres Sauerstoffs über ihre dünne, feuchte Haut auf. Im Winter, wenn sie unter Wasser überwintern, decken sie ihren gesamten Sauerstoffbedarf ausschließlich über die Hautatmung.",
+      "category": "Tiere & Natur"
+    },
+    {
+      "id": "nat_105",
+      "question": "Welches Tier hat eine Zunge, die länger ist als sein Körper?",
+      "answers": [
+        {"text": "Chamäleon", "correct": true},
+        {"text": "Ameisenbär", "correct": false},
+        {"text": "Specht", "correct": false}
+      ],
+      "difficulty": "medium",
+      "fun_fact": "Die Zunge eines Chamäleons kann bis zur doppelten Körperlänge erreichen und schießt mit einer Beschleunigung von über 264 m/s² heraus — etwa fünfmal so schnell wie ein Kampfjet beim Start. Sie trifft die Beute in 0,07 Sekunden.",
+      "category": "Tiere & Natur"
+    },
+    {
+      "id": "nat_106",
+      "question": "Was ist die Hauptfunktion der Höcker bei Kamelen?",
+      "answers": [
+        {"text": "Wasserspeicher", "correct": false},
+        {"text": "Fettspeicher", "correct": true},
+        {"text": "Atmungshilfe", "correct": false}
+      ],
+      "difficulty": "easy",
+      "fun_fact": "Kamelhöcker speichern kein Wasser, sondern bis zu 36 kg Fett. Bei Bedarf wird das Fett verstoffwechselt und liefert zusätzlich metabolisches Wasser — pro Kilogramm Fett etwa ein Liter Wasser.",
+      "category": "Tiere & Natur"
+    },
+    {
+      "id": "nat_107",
+      "question": "Welche Pilze leuchten im Dunkeln?",
+      "answers": [
+        {"text": "Hallimasch und Ölbaumtrichterling", "correct": true},
+        {"text": "Steinpilz und Pfifferling", "correct": false},
+        {"text": "Trüffel und Champignon", "correct": false}
+      ],
+      "difficulty": "medium",
+      "fun_fact": "Über 80 Pilzarten zeigen Biolumineszenz — sie produzieren ein Enzym namens Luciferase. Das grünliche Leuchten zieht nachts Insekten an, die Sporen verbreiten. Der Effekt heißt 'Foxfire' und wurde schon von Aristoteles beschrieben.",
+      "category": "Tiere & Natur"
+    },
+    {
+      "id": "nat_108",
+      "question": "Welches Tier kann komplett im Eis einfrieren und im Frühling wieder auftauen?",
+      "answers": [
+        {"text": "Waldfrosch", "correct": true},
+        {"text": "Wasserschildkröte", "correct": false},
+        {"text": "Forelle", "correct": false}
+      ],
+      "difficulty": "hard",
+      "fun_fact": "Der nordamerikanische Waldfrosch (Rana sylvatica) überlebt das vollständige Einfrieren — bis zu 65 % seines Körperwassers werden zu Eis. Glukose wirkt als Frostschutz in den Zellen; Herzschlag und Atmung setzen monatelang komplett aus.",
+      "category": "Tiere & Natur"
     }
   ]
 }

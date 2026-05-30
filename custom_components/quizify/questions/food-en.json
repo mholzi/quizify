@@ -591,6 +591,618 @@
       "difficulty": "hard",
       "fun_fact": "Sobrino de Botín in Madrid has been serving roast suckling pig from its wood-fired oven since 1725. The oven has reportedly never been allowed to go out.",
       "category": "Food & Drink"
+    },
+    {
+      "id": "food_en_051",
+      "question": "Tomatoes, central to Italian cuisine, were originally brought to Europe from where?",
+      "answers": [
+        {"text": "The Americas", "correct": true},
+        {"text": "North Africa", "correct": false},
+        {"text": "Southeast Asia", "correct": false}
+      ],
+      "difficulty": "easy",
+      "fun_fact": "Tomatoes arrived in Europe via Spanish conquistadors in the 16th century. For about 200 years, many Europeans grew them only as ornamentals, fearing they were poisonous.",
+      "category": "Food & Drink"
+    },
+    {
+      "id": "food_en_052",
+      "question": "Forks took centuries to be accepted in Europe partly because the Catholic Church considered them what?",
+      "answers": [
+        {"text": "Decadent and unnatural", "correct": true},
+        {"text": "A choking hazard for children", "correct": false},
+        {"text": "Reserved for royalty only", "correct": false}
+      ],
+      "difficulty": "medium",
+      "fun_fact": "When a Byzantine princess introduced the fork to Venice in the 11th century, clergy condemned it as an affront to God, who gave us natural forks — our fingers. It took until the 18th century to become standard at European tables.",
+      "category": "Food & Drink"
+    },
+    {
+      "id": "food_en_053",
+      "question": "Margarine was originally invented in the 1860s in response to a contest sponsored by which ruler?",
+      "answers": [
+        {"text": "Napoleon III of France", "correct": true},
+        {"text": "Queen Victoria of Britain", "correct": false},
+        {"text": "Kaiser Wilhelm I of Germany", "correct": false}
+      ],
+      "difficulty": "hard",
+      "fun_fact": "Napoleon III offered a prize for a cheap butter substitute to feed the army and the poor. Chemist Hippolyte Mège-Mouriès won in 1869 with a beef-fat product he called oleomargarine.",
+      "category": "Food & Drink"
+    },
+    {
+      "id": "food_en_054",
+      "question": "The potato was treated with such suspicion in 18th-century France that one promoter posted armed guards around a potato field for what reason?",
+      "answers": [
+        {"text": "To make peasants think the crop was valuable and worth stealing", "correct": true},
+        {"text": "To stop foreign spies from copying the variety", "correct": false},
+        {"text": "Because potatoes were taxed at gold-equivalent rates", "correct": false}
+      ],
+      "difficulty": "hard",
+      "fun_fact": "Antoine-Augustin Parmentier deliberately had his royal potato plots guarded by day and left unguarded at night. Locals duly stole the 'precious' tubers and planted them in their own gardens.",
+      "category": "Food & Drink"
+    },
+    {
+      "id": "food_en_055",
+      "question": "Ketchup originally referred to a sauce based on what — long before tomatoes were involved?",
+      "answers": [
+        {"text": "Fermented fish", "correct": true},
+        {"text": "Pickled walnuts", "correct": false},
+        {"text": "Mushroom vinegar", "correct": false}
+      ],
+      "difficulty": "medium",
+      "fun_fact": "The word likely comes from a Hokkien Chinese fermented-fish sauce called 'kê-tsiap'. British sailors copied it with mushrooms and walnuts, and tomato versions only appeared in the early 19th century in America.",
+      "category": "Food & Drink"
+    },
+    {
+      "id": "food_en_056",
+      "question": "When you whip cream, what physically traps the air to make it fluffy?",
+      "answers": [
+        {"text": "A network of fat globules", "correct": true},
+        {"text": "Dissolved milk sugars", "correct": false},
+        {"text": "Cooling-induced ice crystals", "correct": false}
+      ],
+      "difficulty": "medium",
+      "fun_fact": "Whisking partially destabilises the fat in cream so the globules clump around air bubbles, holding them in place. Skim milk has too little fat to whip — that's why only high-fat cream works.",
+      "category": "Food & Drink"
+    },
+    {
+      "id": "food_en_057",
+      "question": "Bread rises because yeast produces what gas as it digests sugars?",
+      "answers": [
+        {"text": "Carbon dioxide", "correct": true},
+        {"text": "Methane", "correct": false},
+        {"text": "Oxygen", "correct": false}
+      ],
+      "difficulty": "easy",
+      "fun_fact": "Yeast also produces alcohol as a by-product, but most of it evaporates during baking. The CO2 is what gets trapped in the gluten network and makes dough expand.",
+      "category": "Food & Drink"
+    },
+    {
+      "id": "food_en_058",
+      "question": "Why does pineapple sting your tongue when eaten raw?",
+      "answers": [
+        {"text": "An enzyme called bromelain digests proteins in your mouth", "correct": true},
+        {"text": "Its citric acid level is unusually high", "correct": false},
+        {"text": "Tiny calcium crystals scratch the tissue", "correct": false}
+      ],
+      "difficulty": "medium",
+      "fun_fact": "Bromelain literally starts breaking down the proteins on your tongue's surface. Cooking or canning destroys the enzyme, which is why canned pineapple doesn't sting.",
+      "category": "Food & Drink"
+    },
+    {
+      "id": "food_en_059",
+      "question": "Adding a tiny amount of which compound to scrambled eggs causes them to set with a noticeably greener tint?",
+      "answers": [
+        {"text": "Iron, often from cast-iron cookware reacting with sulphur", "correct": true},
+        {"text": "Chlorine from tap water", "correct": false},
+        {"text": "Vitamin C from added citrus", "correct": false}
+      ],
+      "difficulty": "hard",
+      "fun_fact": "When egg sulphur reacts with iron, it forms iron sulphide — a greenish-grey compound. The same reaction is why overcooked hard-boiled yolks develop a green ring around them.",
+      "category": "Food & Drink"
+    },
+    {
+      "id": "food_en_060",
+      "question": "Hot peppers feel hot because capsaicin binds to which receptor in your mouth?",
+      "answers": [
+        {"text": "A heat-and-pain receptor (TRPV1)", "correct": true},
+        {"text": "A bitterness receptor on the tongue", "correct": false},
+        {"text": "A pressure receptor under the gums", "correct": false}
+      ],
+      "difficulty": "medium",
+      "fun_fact": "Capsaicin tricks the same receptor that would fire if you actually touched something hot. That's why your brain reacts with sweating and a rushing pulse even though nothing is burning.",
+      "category": "Food & Drink"
+    },
+    {
+      "id": "food_en_061",
+      "question": "Why is milk fat from grass-fed cows often yellower than fat from grain-fed cows?",
+      "answers": [
+        {"text": "Beta-carotene from fresh grass colours the fat", "correct": true},
+        {"text": "Higher iron levels in the blood", "correct": false},
+        {"text": "Sun exposure on the animal's hide", "correct": false}
+      ],
+      "difficulty": "hard",
+      "fun_fact": "Cows pass beta-carotene from fresh forage into their milk fat. Many industrial butters in winter add carrot or annatto colouring so blocks look consistent year-round.",
+      "category": "Food & Drink"
+    },
+    {
+      "id": "food_en_062",
+      "question": "Why does adding a pinch of salt to a slice of melon often make it taste sweeter?",
+      "answers": [
+        {"text": "Salt suppresses bitterness so the sweetness comes through more clearly", "correct": true},
+        {"text": "Salt chemically converts starch into sugar on the surface", "correct": false},
+        {"text": "Sodium directly activates sweet taste buds", "correct": false}
+      ],
+      "difficulty": "medium",
+      "fun_fact": "Sodium ions block some bitter taste signals. With less bitterness in the way, the brain perceives the same sugars as a stronger sweet flavour — the same trick is used in salted caramel and chocolate.",
+      "category": "Food & Drink"
+    },
+    {
+      "id": "food_en_063",
+      "question": "Ceviche, a famous raw-fish dish, is most closely associated with which country?",
+      "answers": [
+        {"text": "Peru", "correct": true},
+        {"text": "Japan", "correct": false},
+        {"text": "Portugal", "correct": false}
+      ],
+      "difficulty": "easy",
+      "fun_fact": "Ceviche is Peru's national dish — fish 'cooked' chemically by the citric acid in lime juice. The leftover marinade, called leche de tigre ('tiger's milk'), is drunk as a hangover cure.",
+      "category": "Food & Drink"
+    },
+    {
+      "id": "food_en_064",
+      "question": "Hákarl, a traditional Icelandic delicacy, is made from what?",
+      "answers": [
+        {"text": "Fermented Greenland shark", "correct": true},
+        {"text": "Salted puffin breast", "correct": false},
+        {"text": "Smoked reindeer heart", "correct": false}
+      ],
+      "difficulty": "medium",
+      "fun_fact": "Greenland shark meat is toxic when fresh because it's full of urea. Icelanders bury it for weeks to ferment, then hang it to cure for months. The result smells strongly of ammonia.",
+      "category": "Food & Drink"
+    },
+    {
+      "id": "food_en_065",
+      "question": "Poutine, smothering fries in gravy and cheese curds, originated in which Canadian province?",
+      "answers": [
+        {"text": "Quebec", "correct": true},
+        {"text": "Ontario", "correct": false},
+        {"text": "Nova Scotia", "correct": false}
+      ],
+      "difficulty": "easy",
+      "fun_fact": "Multiple Quebec diners claim the invention in the 1950s. The fresh squeaky curds are essential — older curds melt and ruin the texture.",
+      "category": "Food & Drink"
+    },
+    {
+      "id": "food_en_066",
+      "question": "The Ethiopian staple injera is a spongy flatbread made primarily from which grain?",
+      "answers": [
+        {"text": "Teff", "correct": true},
+        {"text": "Sorghum", "correct": false},
+        {"text": "Buckwheat", "correct": false}
+      ],
+      "difficulty": "medium",
+      "fun_fact": "Teff is a tiny grain native to the Ethiopian highlands. Injera batter is fermented for days before being cooked, giving it a tangy, slightly sour flavour and characteristic bubbly surface.",
+      "category": "Food & Drink"
+    },
+    {
+      "id": "food_en_067",
+      "question": "Casu marzu, a banned-in-most-of-the-EU Sardinian cheese, is intentionally infested with what?",
+      "answers": [
+        {"text": "Live cheese-fly larvae", "correct": true},
+        {"text": "Edible green mould", "correct": false},
+        {"text": "Wild yeast cultures", "correct": false}
+      ],
+      "difficulty": "hard",
+      "fun_fact": "Producers leave pecorino cheeses open so the cheese fly Piophila casei lays eggs in them. The maggots break down the fats, producing a creamy, intensely pungent paste eaten with the larvae still wriggling.",
+      "category": "Food & Drink"
+    },
+    {
+      "id": "food_en_068",
+      "question": "Pad thai, today seen as a quintessential Thai dish, was actually promoted by the government in the 1930s–40s for what reason?",
+      "answers": [
+        {"text": "To build a national identity and reduce rice consumption", "correct": true},
+        {"text": "To use surplus shrimp from the navy", "correct": false},
+        {"text": "To impress visiting Japanese diplomats", "correct": false}
+      ],
+      "difficulty": "hard",
+      "fun_fact": "Prime Minister Plaek Phibunsongkhram pushed pad thai as part of a nation-building campaign. Replacing pure rice meals with rice-noodle dishes saved rice for export during wartime.",
+      "category": "Food & Drink"
+    },
+    {
+      "id": "food_en_069",
+      "question": "By volume, what is the single largest ingredient in beer?",
+      "answers": [
+        {"text": "Water", "correct": true},
+        {"text": "Barley", "correct": false},
+        {"text": "Hops", "correct": false}
+      ],
+      "difficulty": "easy",
+      "fun_fact": "Beer is typically over 90% water. That's why brewing cities like Pilsen or Burton-on-Trent built their reputations on the mineral content of their local water as much as on the malt.",
+      "category": "Food & Drink"
+    },
+    {
+      "id": "food_en_070",
+      "question": "Bavaria's Reinheitsgebot of 1516 originally restricted beer to only which three ingredients?",
+      "answers": [
+        {"text": "Water, barley, and hops", "correct": true},
+        {"text": "Water, wheat, and yeast", "correct": false},
+        {"text": "Water, rye, and juniper", "correct": false}
+      ],
+      "difficulty": "medium",
+      "fun_fact": "Yeast wasn't on the original list because brewers didn't yet understand it — they thought fermentation just 'happened'. Yeast was added centuries later once Pasteur demonstrated its role.",
+      "category": "Food & Drink"
+    },
+    {
+      "id": "food_en_071",
+      "question": "A 'flight' on a tasting menu refers to what?",
+      "answers": [
+        {"text": "A small set of related drinks tasted side by side", "correct": true},
+        {"text": "A dessert course served between savoury dishes", "correct": false},
+        {"text": "An aged spirit served in a stemmed glass", "correct": false}
+      ],
+      "difficulty": "easy",
+      "fun_fact": "Beer, wine, and whisky flights typically come in three to five small pours, arranged from light to heavy so each one is judged before palate fatigue sets in.",
+      "category": "Food & Drink"
+    },
+    {
+      "id": "food_en_072",
+      "question": "Sparkling wine made in the same method as Champagne, but outside that region, undergoes its second fermentation where?",
+      "answers": [
+        {"text": "Inside the sealed bottle", "correct": true},
+        {"text": "In an open vat under pressure", "correct": false},
+        {"text": "In a steel pressure tank only", "correct": false}
+      ],
+      "difficulty": "medium",
+      "fun_fact": "The 'méthode traditionnelle' traps the CO2 from the second fermentation inside each bottle. Cheaper sparkling wines like Prosecco use the simpler Charmat method, fermenting in big tanks.",
+      "category": "Food & Drink"
+    },
+    {
+      "id": "food_en_073",
+      "question": "Decaffeinated coffee is not fully caffeine-free; a typical cup still contains roughly what?",
+      "answers": [
+        {"text": "A few milligrams of caffeine", "correct": true},
+        {"text": "Exactly zero caffeine, by law", "correct": false},
+        {"text": "About half the caffeine of regular coffee", "correct": false}
+      ],
+      "difficulty": "medium",
+      "fun_fact": "Most decaf processes remove around 97% of the caffeine, leaving a few milligrams per cup. Several cups can add up to the same dose as a single espresso.",
+      "category": "Food & Drink"
+    },
+    {
+      "id": "food_en_074",
+      "question": "Black, green, oolong, and white teas all come from the leaves of which single plant species?",
+      "answers": [
+        {"text": "Camellia sinensis", "correct": true},
+        {"text": "Theobroma cacao", "correct": false},
+        {"text": "Coffea arabica", "correct": false}
+      ],
+      "difficulty": "medium",
+      "fun_fact": "The differences come from how the leaves are processed — mostly how much they're oxidised. Herbal 'teas' like rooibos or chamomile aren't true tea at all, just infusions.",
+      "category": "Food & Drink"
+    },
+    {
+      "id": "food_en_075",
+      "question": "Single malt Scotch whisky must, by law, be made from a mash of what?",
+      "answers": [
+        {"text": "Only malted barley, at a single distillery", "correct": true},
+        {"text": "A blend of barley, corn, and rye", "correct": false},
+        {"text": "Any grain, as long as the whisky is aged 12+ years", "correct": false}
+      ],
+      "difficulty": "hard",
+      "fun_fact": "'Single' refers to a single distillery, not a single cask. The mash must be 100% malted barley and the whisky must be matured in oak casks in Scotland for at least three years.",
+      "category": "Food & Drink"
+    },
+    {
+      "id": "food_en_076",
+      "question": "Bourbon, by US federal regulation, must be made from a grain mix containing at least how much corn?",
+      "answers": [
+        {"text": "51%", "correct": true},
+        {"text": "75%", "correct": false},
+        {"text": "100%", "correct": false}
+      ],
+      "difficulty": "medium",
+      "fun_fact": "Bourbon must also be aged in new, charred oak barrels. The charring caramelises sugars in the wood and is what gives bourbon its golden colour and vanilla notes.",
+      "category": "Food & Drink"
+    },
+    {
+      "id": "food_en_077",
+      "question": "A 'three Michelin star' rating, in the guide's own wording, means a restaurant is what?",
+      "answers": [
+        {"text": "Worth a special journey", "correct": true},
+        {"text": "The best in its city", "correct": false},
+        {"text": "Cheapest among fine-dining options", "correct": false}
+      ],
+      "difficulty": "medium",
+      "fun_fact": "One star is 'a very good restaurant', two is 'worth a detour', three is 'worth a special journey'. The wording dates back to when the guide was telling motorists how far to drive.",
+      "category": "Food & Drink"
+    },
+    {
+      "id": "food_en_078",
+      "question": "In Italy, the small extra charge added to a restaurant bill simply for sitting down is called what?",
+      "answers": [
+        {"text": "Coperto", "correct": true},
+        {"text": "Servizio", "correct": false},
+        {"text": "Aperitivo", "correct": false}
+      ],
+      "difficulty": "easy",
+      "fun_fact": "Coperto literally means 'cover'. It originally paid for bread and the table linen, and it's usually a euro or two per person — separate from any service charge.",
+      "category": "Food & Drink"
+    },
+    {
+      "id": "food_en_079",
+      "question": "A traditional French restaurant 'brigade' is the kitchen hierarchy formalised by which famous chef?",
+      "answers": [
+        {"text": "Auguste Escoffier", "correct": true},
+        {"text": "Paul Bocuse", "correct": false},
+        {"text": "Marie-Antoine Carême", "correct": false}
+      ],
+      "difficulty": "hard",
+      "fun_fact": "Escoffier borrowed military structure to break the chaotic kitchens of his day into clear stations: saucier, poissonnier, pâtissier and so on. Most modern restaurants still echo his system.",
+      "category": "Food & Drink"
+    },
+    {
+      "id": "food_en_080",
+      "question": "What does it mean when a restaurant kitchen calls 'fire' on a dish?",
+      "answers": [
+        {"text": "Start cooking it now so it lands with the rest of the order", "correct": true},
+        {"text": "Discard it because it's been sitting too long", "correct": false},
+        {"text": "The chef is officially refusing the dish", "correct": false}
+      ],
+      "difficulty": "medium",
+      "fun_fact": "Orders are usually called in two steps: 'ordering' tells the line a ticket is in, and 'fire' tells them to actually start cooking it so all components hit the pass together.",
+      "category": "Food & Drink"
+    },
+    {
+      "id": "food_en_081",
+      "question": "Vanilla, the world's second-most-expensive spice, comes from the cured pods of which plant?",
+      "answers": [
+        {"text": "A climbing orchid", "correct": true},
+        {"text": "A tropical fern", "correct": false},
+        {"text": "A flowering cactus", "correct": false}
+      ],
+      "difficulty": "medium",
+      "fun_fact": "The orchid is native to Mexico, where it was pollinated by a specific stingless bee. Outside that range, every flower has to be hand-pollinated, which is why real vanilla is so expensive.",
+      "category": "Food & Drink"
+    },
+    {
+      "id": "food_en_082",
+      "question": "Saffron threads, sold by weight at gold-like prices, are which part of the crocus flower?",
+      "answers": [
+        {"text": "The flower's stigmas", "correct": true},
+        {"text": "Dried petals", "correct": false},
+        {"text": "Ground-up roots", "correct": false}
+      ],
+      "difficulty": "medium",
+      "fun_fact": "Each crocus has only three stigmas, and they must be hand-picked. It takes roughly 150,000 flowers to produce a single kilogram of dried saffron.",
+      "category": "Food & Drink"
+    },
+    {
+      "id": "food_en_083",
+      "question": "Black, white, and green peppercorns all come from the same plant. What is the main difference between them?",
+      "answers": [
+        {"text": "When they're harvested and how they're processed", "correct": true},
+        {"text": "They come from male versus female vines", "correct": false},
+        {"text": "Different soils used in their cultivation", "correct": false}
+      ],
+      "difficulty": "medium",
+      "fun_fact": "Green is unripe; black is unripe and dried with the skin on; white is ripe with the skin removed. Pink 'peppercorns' aren't actually pepper at all — they come from an unrelated tree.",
+      "category": "Food & Drink"
+    },
+    {
+      "id": "food_en_084",
+      "question": "Cloves, the small dark spice common in mulled wine, are actually what part of a plant?",
+      "answers": [
+        {"text": "Dried flower buds", "correct": true},
+        {"text": "Seeds from a pod", "correct": false},
+        {"text": "Bark scraped from twigs", "correct": false}
+      ],
+      "difficulty": "hard",
+      "fun_fact": "Cloves are buds from a Southeast Asian evergreen tree, picked before they open and then sun-dried. Their main active compound, eugenol, is so strong it's used in dentistry as a mild anaesthetic.",
+      "category": "Food & Drink"
+    },
+    {
+      "id": "food_en_085",
+      "question": "Sourdough bread rises without commercial yeast because it relies on what?",
+      "answers": [
+        {"text": "Wild yeast and bacteria from a starter culture", "correct": true},
+        {"text": "Chemical leaveners like baking soda", "correct": false},
+        {"text": "The bread's own gluten expanding under heat", "correct": false}
+      ],
+      "difficulty": "medium",
+      "fun_fact": "A sourdough starter is a living mix of wild yeasts and lactobacilli. The bacteria produce lactic and acetic acids, which is what gives sourdough its tang and improves keeping quality.",
+      "category": "Food & Drink"
+    },
+    {
+      "id": "food_en_086",
+      "question": "An authentic French baguette is, by tradition, made from only how many ingredients?",
+      "answers": [
+        {"text": "Four — flour, water, salt, and yeast", "correct": true},
+        {"text": "Six, including butter and sugar", "correct": false},
+        {"text": "Two — sourdough starter and water only", "correct": false}
+      ],
+      "difficulty": "easy",
+      "fun_fact": "A French decree from 1993 defines the 'baguette de tradition' and forbids any additives. The shape standardised in the 20th century partly because long, thin loaves bake faster.",
+      "category": "Food & Drink"
+    },
+    {
+      "id": "food_en_087",
+      "question": "Pita bread puffs up into a hollow pocket because of what?",
+      "answers": [
+        {"text": "Steam trapped between two thin layers of dough", "correct": true},
+        {"text": "Air whipped into the dough before baking", "correct": false},
+        {"text": "Baking soda reacting with yoghurt", "correct": false}
+      ],
+      "difficulty": "medium",
+      "fun_fact": "Very hot ovens flash the moisture in the thin dough into steam, blowing the top and bottom apart. When the bread cools and deflates, the gap stays — perfect for stuffing.",
+      "category": "Food & Drink"
+    },
+    {
+      "id": "food_en_088",
+      "question": "Pumpernickel, the dense dark German bread, gets much of its colour from which slow cooking process?",
+      "answers": [
+        {"text": "Hours of low-temperature steam baking", "correct": true},
+        {"text": "Burning off the crust in an open flame", "correct": false},
+        {"text": "Mixing molasses directly into the dough", "correct": false}
+      ],
+      "difficulty": "hard",
+      "fun_fact": "Traditional pumpernickel bakes at low temperatures for up to 24 hours. The long, gentle heat triggers Maillard reactions that deepen the bread to nearly black without burning it.",
+      "category": "Food & Drink"
+    },
+    {
+      "id": "food_en_089",
+      "question": "Chocolate was consumed for most of its history not as a bar but as what?",
+      "answers": [
+        {"text": "A bitter, spiced drink", "correct": true},
+        {"text": "A medicinal powder", "correct": false},
+        {"text": "A sweet pudding", "correct": false}
+      ],
+      "difficulty": "easy",
+      "fun_fact": "The Maya and Aztecs drank cacao mixed with chilli, vanilla, and sometimes maize, often frothed by pouring between vessels. Solid eating chocolate only appeared in the 19th century.",
+      "category": "Food & Drink"
+    },
+    {
+      "id": "food_en_090",
+      "question": "The first solid milk chocolate bar was developed in 1875 in which country?",
+      "answers": [
+        {"text": "Switzerland", "correct": true},
+        {"text": "Belgium", "correct": false},
+        {"text": "England", "correct": false}
+      ],
+      "difficulty": "medium",
+      "fun_fact": "Daniel Peter combined cocoa with the powdered milk that his neighbour Henri Nestlé had recently invented. The pair effectively created the milk-chocolate industry that Switzerland is still famous for.",
+      "category": "Food & Drink"
+    },
+    {
+      "id": "food_en_091",
+      "question": "Modern sweet ice cream became practical in the 19th century mainly thanks to which invention?",
+      "answers": [
+        {"text": "The hand-cranked freezer with ice and salt", "correct": true},
+        {"text": "The electric refrigerator", "correct": false},
+        {"text": "Pasteurised milk", "correct": false}
+      ],
+      "difficulty": "medium",
+      "fun_fact": "Nancy Johnson's 1843 patent for a hand-cranked ice-cream maker used a salt-and-ice bath around an inner can. The endothermic mix dropped temperatures below freezing long before household electric freezers existed.",
+      "category": "Food & Drink"
+    },
+    {
+      "id": "food_en_092",
+      "question": "Marshmallows were originally made from the sap of which plant, used as a sore-throat remedy?",
+      "answers": [
+        {"text": "The marsh mallow plant (Althaea officinalis)", "correct": true},
+        {"text": "Aloe vera", "correct": false},
+        {"text": "Sugar beet", "correct": false}
+      ],
+      "difficulty": "hard",
+      "fun_fact": "Ancient Egyptians whipped marsh-mallow root sap with honey for royalty. Modern marshmallows replaced the plant extract with gelatine in the 19th century, keeping only the name.",
+      "category": "Food & Drink"
+    },
+    {
+      "id": "food_en_093",
+      "question": "On New Year's Eve in Spain, tradition calls for eating exactly twelve of what as the clock strikes midnight?",
+      "answers": [
+        {"text": "Grapes — one for each chime", "correct": true},
+        {"text": "Olives soaked in brandy", "correct": false},
+        {"text": "Small almond cookies", "correct": false}
+      ],
+      "difficulty": "easy",
+      "fun_fact": "Eating one grape per chime is said to bring good luck for each month of the coming year. The tradition is often credited to Alicante grape growers marketing a 1909 surplus.",
+      "category": "Food & Drink"
+    },
+    {
+      "id": "food_en_094",
+      "question": "In South Korea, what dish is traditionally eaten on one's birthday for good luck and long life?",
+      "answers": [
+        {"text": "Miyeokguk, a seaweed soup", "correct": true},
+        {"text": "Bibimbap with extra egg", "correct": false},
+        {"text": "Bingsu shaved ice", "correct": false}
+      ],
+      "difficulty": "medium",
+      "fun_fact": "Mothers eat miyeokguk after giving birth for its iron and iodine, and children eat it on every birthday in remembrance. Skipping it on your birthday is considered a missed tradition.",
+      "category": "Food & Drink"
+    },
+    {
+      "id": "food_en_095",
+      "question": "Many Japanese families have come to associate Christmas Eve dinner with which Western fast-food brand, thanks to a 1970s ad campaign?",
+      "answers": [
+        {"text": "KFC", "correct": true},
+        {"text": "McDonald's", "correct": false},
+        {"text": "Pizza Hut", "correct": false}
+      ],
+      "difficulty": "easy",
+      "fun_fact": "KFC's 'Kentucky for Christmas' campaign launched in 1974 and stuck. Today many Japanese families pre-order their Christmas KFC bucket weeks in advance, and stores have long queues on December 24.",
+      "category": "Food & Drink"
+    },
+    {
+      "id": "food_en_096",
+      "question": "The blue veins in cheeses like Roquefort and Stilton come from what?",
+      "answers": [
+        {"text": "Penicillium mould introduced into the cheese", "correct": true},
+        {"text": "Copper wires used during ageing", "correct": false},
+        {"text": "Bruising of the curds when pressed", "correct": false}
+      ],
+      "difficulty": "medium",
+      "fun_fact": "Cheesemakers pierce the wheels with needles or wires so air reaches the inside, letting the introduced Penicillium roqueforti or P. glaucum grow and develop those blue-green veins.",
+      "category": "Food & Drink"
+    },
+    {
+      "id": "food_en_097",
+      "question": "Authentic Parmigiano-Reggiano cheese must be aged for at least how long before it can be sold under that name?",
+      "answers": [
+        {"text": "12 months", "correct": true},
+        {"text": "3 months", "correct": false},
+        {"text": "5 years", "correct": false}
+      ],
+      "difficulty": "hard",
+      "fun_fact": "Inspectors tap each wheel with a hammer and listen for flaws before approving it. Wheels are graded; only the best can be aged further and stamped as longer-aged Parmigiano-Reggiano.",
+      "category": "Food & Drink"
+    },
+    {
+      "id": "food_en_098",
+      "question": "Mozzarella di bufala, the prized Italian mozzarella, is made from the milk of what animal?",
+      "answers": [
+        {"text": "Water buffalo", "correct": true},
+        {"text": "Sheep", "correct": false},
+        {"text": "Goat", "correct": false}
+      ],
+      "difficulty": "easy",
+      "fun_fact": "Water buffalo milk has roughly twice the fat of cow milk, giving the cheese its rich, creamy interior. The protected version must come from specific regions of southern Italy.",
+      "category": "Food & Drink"
+    },
+    {
+      "id": "food_en_099",
+      "question": "Soy sauce, miso, and sake all owe their flavour to the same Japanese mould known as what?",
+      "answers": [
+        {"text": "Koji (Aspergillus oryzae)", "correct": true},
+        {"text": "Natto bacillus", "correct": false},
+        {"text": "Kombucha SCOBY", "correct": false}
+      ],
+      "difficulty": "medium",
+      "fun_fact": "Koji breaks starches into sugars and proteins into amino acids, building deep umami flavour. Japan designated A. oryzae its 'national fungus' in 2006 in recognition of its cultural importance.",
+      "category": "Food & Drink"
+    },
+    {
+      "id": "food_en_100",
+      "question": "Sauerkraut and kimchi are both preserved primarily by which kind of fermentation?",
+      "answers": [
+        {"text": "Lactic-acid fermentation by bacteria", "correct": true},
+        {"text": "Alcoholic fermentation by yeast", "correct": false},
+        {"text": "Vinegar pickling without microbes", "correct": false}
+      ],
+      "difficulty": "medium",
+      "fun_fact": "Lactobacillus species on the raw cabbage thrive in the salty, oxygen-poor brine and turn sugars into lactic acid. The acid both preserves the vegetables and gives them their characteristic tang.",
+      "category": "Food & Drink"
+    },
+    {
+      "id": "food_en_101",
+      "question": "Kombucha is brewed by fermenting sweet tea with a culture commonly nicknamed what?",
+      "answers": [
+        {"text": "A SCOBY", "correct": true},
+        {"text": "A kefir mother", "correct": false},
+        {"text": "A koji block", "correct": false}
+      ],
+      "difficulty": "easy",
+      "fun_fact": "SCOBY stands for 'symbiotic culture of bacteria and yeast'. The rubbery disc floats on the tea, with the yeast producing alcohol and the bacteria converting it into the drink's tart acids.",
+      "category": "Food & Drink"
     }
   ]
 }

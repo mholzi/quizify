@@ -507,6 +507,690 @@
       "difficulty": "hard",
       "fun_fact": "Diese Natursprung-Pflicht macht Vollblut-Zucht extrem teuer und logistisch komplex — und ist der Grund, warum Top-Hengste wie Galileo Decksprung-Honorare im sechsstelligen Bereich erzielten.",
       "category": "Sport"
+    },
+    {
+      "id": "sport_de_045",
+      "question": "Welcher japanische Sumo-Begriff bezeichnet die zwei höchsten Profi-Ränge, die ein Ringer überhaupt erreichen kann?",
+      "answers": [
+        {"text": "Yokozuna und Ozeki", "correct": true},
+        {"text": "Maegashira und Komusubi", "correct": false},
+        {"text": "Sekiwake und Juryo", "correct": false}
+      ],
+      "difficulty": "medium",
+      "fun_fact": "Ein Yokozuna kann nie degradiert werden — verliert er zu oft, wird von ihm erwartet, dass er von sich aus zurücktritt. Diese Regel macht den Titel zur härtesten Lebensentscheidung im Profisport.",
+      "category": "Sport"
+    },
+    {
+      "id": "sport_de_046",
+      "question": "Wie schwer ist ein offizieller Curlingstein laut World-Curling-Federation-Reglement etwa?",
+      "answers": [
+        {"text": "Rund 20 Kilogramm", "correct": true},
+        {"text": "Rund 8 Kilogramm", "correct": false},
+        {"text": "Rund 35 Kilogramm", "correct": false}
+      ],
+      "difficulty": "easy",
+      "fun_fact": "Ein Stein wiegt zwischen 17,24 und 19,96 kg. Die polierte Lauffläche ist nur ein schmaler Ring — der Rest des Steins berührt das Eis nie.",
+      "category": "Sport"
+    },
+    {
+      "id": "sport_de_047",
+      "question": "Wie viele Spieler stehen sich beim Polo pro Team gleichzeitig auf dem Feld gegenüber?",
+      "answers": [
+        {"text": "Vier", "correct": true},
+        {"text": "Sechs", "correct": false},
+        {"text": "Drei", "correct": false}
+      ],
+      "difficulty": "medium",
+      "fun_fact": "Ein Polo-Match besteht aus sechs „Chukkern“ zu je sieben Minuten — Pferde dürfen pro Chukker maximal einmal eingesetzt werden, weshalb ein Spieler typischerweise mehrere Ponys mitbringt.",
+      "category": "Sport"
+    },
+    {
+      "id": "sport_de_049",
+      "question": "Welche Distanz schwimmt ein Triathlet beim Ironman auf Hawaii vor den 180 km Rad und dem Marathon?",
+      "answers": [
+        {"text": "3,86 Kilometer", "correct": true},
+        {"text": "1,5 Kilometer", "correct": false},
+        {"text": "10 Kilometer", "correct": false}
+      ],
+      "difficulty": "medium",
+      "fun_fact": "Die Distanz entstand 1978 aus drei existierenden Hawaii-Rennen: Waikiki Roughwater Swim (2,4 Meilen), Around-Oahu Bike Race (112 Meilen) und Honolulu Marathon — einfach hintereinandergeklebt.",
+      "category": "Sport"
+    },
+    {
+      "id": "sport_de_050",
+      "question": "Was ist beim Bobsport der zentrale Grund, warum die Anschiebephase das ganze Rennen entscheidet?",
+      "answers": [
+        {"text": "Im engen Eiskanal kann kein Bob mehr aktiv beschleunigen — nur die Anfangsenergie zählt", "correct": true},
+        {"text": "Die Bremse darf in den letzten zwei Kurven nicht mehr betätigt werden", "correct": false},
+        {"text": "Der Pilot darf nur in den ersten 50 Metern lenken", "correct": false}
+      ],
+      "difficulty": "medium",
+      "fun_fact": "Eine Zehntelsekunde beim Anschub kostet im Ziel typischerweise drei Zehntel — deshalb rekrutieren Bob-Teams gezielt 100-m-Sprinter und Kugelstoßer aus der Leichtathletik.",
+      "category": "Sport"
+    },
+    {
+      "id": "sport_de_051",
+      "question": "Warum sind Tennisbälle in der Dose unter Druck verpackt?",
+      "answers": [
+        {"text": "Damit der Innendruck nicht entweicht und der Ball seine Sprunghöhe behält", "correct": true},
+        {"text": "Damit die Filzschicht beim Transport nicht aufquillt", "correct": false},
+        {"text": "Damit die Bälle in der Dose nicht aneinander reiben und verschleißen", "correct": false}
+      ],
+      "difficulty": "easy",
+      "fun_fact": "Eine geöffnete Dose verliert binnen weniger Wochen so viel Druck, dass die Bälle für Turniere unbrauchbar werden — bei Grand-Slam-Spielen werden die Bälle alle neun Spiele komplett gewechselt.",
+      "category": "Sport"
+    },
+    {
+      "id": "sport_de_052",
+      "question": "Welche besondere Vorrichtung sorgt im Profi-Schwimmbecken dafür, dass Wellen den Schwimmern nicht im Weg sind?",
+      "answers": [
+        {"text": "Spezielle Wellenbrecher-Leinen zwischen den Bahnen", "correct": true},
+        {"text": "Ein elektromagnetischer Wasserstabilisator unter den Startblöcken", "correct": false},
+        {"text": "Ein zweiter, höher liegender Beckenrand zur Reflexion der Wellen", "correct": false}
+      ],
+      "difficulty": "medium",
+      "fun_fact": "Die Bahnleinen bestehen aus großen rotierenden Scheiben, die ankommende Wellen-Energie aufnehmen und nach unten ableiten. Olympische Becken haben zusätzlich besonders tiefes Wasser (mindestens 2 m), weil tiefes Wasser weniger Reflexionen erzeugt.",
+      "category": "Sport"
+    },
+    {
+      "id": "sport_de_053",
+      "question": "Welches Phänomen erklärt, warum ein Fußball bei einer gut getretenen Flanke seitlich „banane“ ins Tor fliegt?",
+      "answers": [
+        {"text": "Der Magnus-Effekt durch den Drall am rotierenden Ball", "correct": true},
+        {"text": "Der Bernoulli-Druckverlust auf der Ballunterseite", "correct": false},
+        {"text": "Der Coriolis-Effekt durch die Erdrotation", "correct": false}
+      ],
+      "difficulty": "medium",
+      "fun_fact": "Roberto Carlos' legendärer Freistoß 1997 gegen Frankreich gilt als Lehrbuch-Magnus-Effekt: Der Ball rotierte mit über 10 Umdrehungen pro Sekunde, weshalb er nach der Mauer noch um fast einen Meter abbog.",
+      "category": "Sport"
+    },
+    {
+      "id": "sport_de_054",
+      "question": "Wie viele Löcher hat eine offizielle Golfrunde nach den R&A-Regeln?",
+      "answers": [
+        {"text": "18", "correct": true},
+        {"text": "21", "correct": false},
+        {"text": "12", "correct": false}
+      ],
+      "difficulty": "easy",
+      "fun_fact": "Bis Mitte des 18. Jahrhunderts hatte der St. Andrews Old Course 22 Löcher — die Mitglieder kürzten ihn auf 18, weil einige Bahnen zu kurz waren. Andere Plätze übernahmen die Zahl, und so wurde 18 zum Standard.",
+      "category": "Sport"
+    },
+    {
+      "id": "sport_de_055",
+      "question": "Warum begann der Boston Marathon historisch immer am Patriots' Day im April?",
+      "answers": [
+        {"text": "Er erinnert an den Beginn des amerikanischen Unabhängigkeitskriegs 1775", "correct": true},
+        {"text": "Es war der Geburtstag des ersten Bostoner Bürgermeisters", "correct": false},
+        {"text": "Es ist der Tag, an dem traditionell das Wetter in Massachusetts am stabilsten ist", "correct": false}
+      ],
+      "difficulty": "hard",
+      "fun_fact": "Der Patriots' Day gedenkt der Schlachten von Lexington und Concord. Der Boston Marathon ist seit 1897 der älteste jährlich ausgetragene Marathon der Welt — nur die Olympia-Marathons sind älter, finden aber nicht jährlich statt.",
+      "category": "Sport"
+    },
+    {
+      "id": "sport_de_056",
+      "question": "Welche kuriose Pflicht hat ein Tour-de-France-Etappensieger seit den 1990ern auf dem Podium?",
+      "answers": [
+        {"text": "Er muss zwei riesige Stoffhasen-ähnliche Plüschlöwen entgegennehmen (LCL-Sponsor)", "correct": true},
+        {"text": "Er muss in Versailles vor der Königlichen Loge salutieren", "correct": false},
+        {"text": "Er muss eine Glocke aus der Bretagne läuten", "correct": false}
+      ],
+      "difficulty": "medium",
+      "fun_fact": "Die Plüschlöwen sind Maskottchen der französischen Bank Crédit Lyonnais (LCL), Hauptsponsor des Gelben Trikots. Manche Fahrer haben über die Jahre Dutzende davon angesammelt.",
+      "category": "Sport"
+    },
+    {
+      "id": "sport_de_057",
+      "question": "Welche Sportart wird bei der „Highland Games“-Tradition in Schottland mit einem rund 6 Meter langen Baumstamm ausgetragen?",
+      "answers": [
+        {"text": "Caber Toss (Baumstammwerfen)", "correct": true},
+        {"text": "Shinty", "correct": false},
+        {"text": "Hammer Throw of Inverness", "correct": false}
+      ],
+      "difficulty": "easy",
+      "fun_fact": "Bewertet wird nicht die Weite, sondern wie gerade der Caber nach dem Werfen landet — der ideale Wurf zeigt mit dem oberen Ende in einer perfekten 12-Uhr-Position vom Werfer weg.",
+      "category": "Sport"
+    },
+    {
+      "id": "sport_de_058",
+      "question": "Was ist der entscheidende Unterschied zwischen Greco-Roman und Freestyle-Ringen bei Olympia?",
+      "answers": [
+        {"text": "Im griechisch-römischen Stil sind Angriffe und Griffe unterhalb der Hüfte komplett verboten", "correct": true},
+        {"text": "Im griechisch-römischen Stil tragen die Ringer Lederhandschuhe", "correct": false},
+        {"text": "Im griechisch-römischen Stil dauert eine Runde fünf statt drei Minuten", "correct": false}
+      ],
+      "difficulty": "medium",
+      "fun_fact": "Wegen des Verbots, die Beine anzugreifen, dominieren im griechisch-römischen Stil massive Oberkörper-Würfe — der berühmte „Suplex“ wurde dort entwickelt und später vom Pro-Wrestling übernommen.",
+      "category": "Sport"
+    },
+    {
+      "id": "sport_de_059",
+      "question": "Wie nennt man die kreisförmigen Markierungen auf einer Curling-Eisbahn, in die die Steine gespielt werden?",
+      "answers": [
+        {"text": "House (Haus)", "correct": true},
+        {"text": "Zone", "correct": false},
+        {"text": "Krater", "correct": false}
+      ],
+      "difficulty": "easy",
+      "fun_fact": "Das Eis im House wird vor jedem Spiel mit feinen Wassertröpfchen besprüht („pebbling“) — die gefrierenden Tropfen erzeugen eine winzige Rauheit, ohne die der Stein gar nicht curlen, also seitlich abbiegen, würde.",
+      "category": "Sport"
+    },
+    {
+      "id": "sport_de_060",
+      "question": "Warum tragen Radrennfahrer beim Zeitfahren diese auffällig spitz nach hinten gezogenen Helme?",
+      "answers": [
+        {"text": "Die Form lenkt Luftwirbel hinter dem Kopf so, dass der Strömungsabriss kleiner wird", "correct": true},
+        {"text": "Der spitze Hinterteil dient als Aufprallschutz beim Sturz nach hinten", "correct": false},
+        {"text": "Die Form verbessert die Belüftung und kühlt den Hinterkopf", "correct": false}
+      ],
+      "difficulty": "medium",
+      "fun_fact": "Spätere Modelle kappen den langen Schwanz wieder ab — Tests zeigten, dass eine kürzere Form bei seitlichem Wind weniger anfällig ist und in Realbedingungen oft schneller ist als ein perfekter Windkanal-Tropfen.",
+      "category": "Sport"
+    },
+    {
+      "id": "sport_de_061",
+      "question": "Welcher US-Sport zeichnet sich dadurch aus, dass es zwar einen offiziellen Spielplan gibt, aber im Reglement keinerlei Spieluhr existiert?",
+      "answers": [
+        {"text": "Baseball", "correct": true},
+        {"text": "American Football", "correct": false},
+        {"text": "Basketball", "correct": false}
+      ],
+      "difficulty": "easy",
+      "fun_fact": "Theoretisch kann ein Baseballspiel unendlich lange dauern. Seit 2023 versucht die MLB mit einer „Pitch Clock“ das Tempo zu beschleunigen — die Uhr läuft aber nur zwischen den Würfen, nicht über das ganze Spiel.",
+      "category": "Sport"
+    },
+    {
+      "id": "sport_de_062",
+      "question": "Was bedeutet die Trikotnummer 99 in der NHL — und warum darf sie kein Spieler mehr tragen?",
+      "answers": [
+        {"text": "Sie wurde 2000 ligaweit für Wayne Gretzky gesperrt", "correct": true},
+        {"text": "Sie ist abergläubisch und wird seit einem schweren Unfall freiwillig gemieden", "correct": false},
+        {"text": "Die Regel verbietet zweistellige Nummern größer als 89", "correct": false}
+      ],
+      "difficulty": "medium",
+      "fun_fact": "Die Sperre einer Nummer durch eine ganze Liga (nicht nur ein Verein) ist im Profisport extrem selten. In der MLB ist Jackie Robinsons Nummer 42 die einzige ligaweit gesperrte Nummer.",
+      "category": "Sport"
+    },
+    {
+      "id": "sport_de_063",
+      "question": "Welche bizarre Disziplin der World Marbles Championship wird seit 1932 jährlich am Karfreitag in einem englischen Pub-Garten ausgetragen?",
+      "answers": [
+        {"text": "Murmelschnipsen auf einer mit Sand bedeckten Betonplatte", "correct": true},
+        {"text": "Stein-Curling auf einer Wiese ohne Eis", "correct": false},
+        {"text": "Wettrennen mit Holzpferden auf einem Mini-Parcours", "correct": false}
+      ],
+      "difficulty": "hard",
+      "fun_fact": "Die WM findet im Greyhound-Pub in Tinsley Green (Sussex) statt. Gespielt wird mit 49 Glasmurmeln, die Spieler heißen „Marblers“ und der Sieger trinkt seinen Pokal traditionell mit Bier voll.",
+      "category": "Sport"
+    },
+    {
+      "id": "sport_de_064",
+      "question": "Welches Stadion gilt als das größte Fußballstadion der Welt nach offizieller Sitzplatz-Kapazität?",
+      "answers": [
+        {"text": "Rungrado-1.-Mai-Stadion in Pjöngjang, Nordkorea", "correct": true},
+        {"text": "Camp Nou in Barcelona", "correct": false},
+        {"text": "Maracanã in Rio de Janeiro", "correct": false}
+      ],
+      "difficulty": "medium",
+      "fun_fact": "Das Rungrado-Stadion fasst rund 114.000 Zuschauer und wird hauptsächlich für die Massenchoreographien der Arirang-Festspiele genutzt — reine Fußballspiele finden dort nur selten statt.",
+      "category": "Sport"
+    },
+    {
+      "id": "sport_de_065",
+      "question": "Warum wird Eishockey auf NHL-Eisflächen seit Jahrzehnten weiß angestrichen?",
+      "answers": [
+        {"text": "Der schwarze Puck wird auf hellem Eis bei TV-Übertragungen besser sichtbar", "correct": true},
+        {"text": "Blau-eingefärbtes Wasser gefriert deutlich schneller und gleichmäßiger", "correct": false},
+        {"text": "Die Farbe absorbiert ultraviolette Hallenbeleuchtung und schont die Augen der Spieler", "correct": false}
+      ],
+      "difficulty": "medium",
+      "fun_fact": "Die Eisfarbe entsteht durch eine dünne weiße Farbschicht zwischen zwei Eis-Lagen plus blaue Logo-Akzente. Insgesamt liegt das Eis nur etwa 2,5 cm dick auf einer gekühlten Betonplatte.",
+      "category": "Sport"
+    },
+    {
+      "id": "sport_de_066",
+      "question": "Was ist die typische Dauer einer Runde im Profi-Boxen nach Verbandsregel?",
+      "answers": [
+        {"text": "Drei Minuten", "correct": true},
+        {"text": "Fünf Minuten", "correct": false},
+        {"text": "Zwei Minuten", "correct": false}
+      ],
+      "difficulty": "easy",
+      "fun_fact": "Zwischen den Runden gibt es genau eine Minute Pause. Die Drei-Minuten-Vorgabe stammt aus den Queensberry-Regeln von 1867 und gilt bis heute weltweit für Männer-Profikämpfe.",
+      "category": "Sport"
+    },
+    {
+      "id": "sport_de_067",
+      "question": "Welches überraschende Material bildet den Kern eines hochwertigen Baseballschlägers in der MLB?",
+      "answers": [
+        {"text": "Massives Holz aus einem einzigen Stück — Aluminium und Hohlkerne sind verboten", "correct": true},
+        {"text": "Ein Carbonfaser-Verbund mit dünner Holzschicht", "correct": false},
+        {"text": "Eine hohl gefräste Aluminiumlegierung mit Korkfüllung", "correct": false}
+      ],
+      "difficulty": "medium",
+      "fun_fact": "Die MLB schreibt Holz vor — meist Esche oder Ahorn. In den Amateur-Ligen sind Alu-Schläger zulässig, weshalb Bälle dort deutlich weiter fliegen und Catcher in College-Spielen schwerere Brustpanzer tragen.",
+      "category": "Sport"
+    },
+    {
+      "id": "sport_de_068",
+      "question": "Was ist das Bemerkenswerte an Wilt Chamberlains 100-Punkte-Spiel von 1962?",
+      "answers": [
+        {"text": "Es ist bis heute das einzige 100-Punkte-Spiel in der NBA-Geschichte — und es existiert keine Videoaufzeichnung davon", "correct": true},
+        {"text": "Chamberlain spielte das ganze Spiel mit nur einer Hand wegen einer Verletzung", "correct": false},
+        {"text": "Das Spiel fand vor leerem Stadion bei Stromausfall statt", "correct": false}
+      ],
+      "difficulty": "medium",
+      "fun_fact": "Das Spiel fand in Hershey (Pennsylvania) statt — die Fernsehkameras waren nicht angereist. Es gibt nur eine Radio-Aufnahme der zweiten Halbzeit und ein bekanntes Foto Chamberlains mit handgeschriebenem „100“-Schild.",
+      "category": "Sport"
+    },
+    {
+      "id": "sport_de_069",
+      "question": "Wie viele Doppelfehler in Folge darf ein Tennisspieler bei einem Aufschlag begehen, bevor er den Punkt verliert?",
+      "answers": [
+        {"text": "Einen — der zweite Aufschlag muss treffen", "correct": true},
+        {"text": "Drei — danach geht der ganze Satz verloren", "correct": false},
+        {"text": "Zwei — danach gibt es eine offizielle Verwarnung", "correct": false}
+      ],
+      "difficulty": "easy",
+      "fun_fact": "Im Profitennis liegt die Doppelfehler-Quote bei rund 3 % aller Aufschläge — bei Damen tendenziell etwas höher als bei Herren, weil Damen riskanter zweite Aufschläge spielen.",
+      "category": "Sport"
+    },
+    {
+      "id": "sport_de_070",
+      "question": "Welche Disziplin gewann der Norweger Ole Einar Bjørndalen so dominant, dass er als „König des Sports“ gilt?",
+      "answers": [
+        {"text": "Biathlon", "correct": true},
+        {"text": "Langlauf", "correct": false},
+        {"text": "Nordische Kombination", "correct": false}
+      ],
+      "difficulty": "easy",
+      "fun_fact": "Bjørndalen sammelte über vier Jahrzehnte hinweg 8 olympische Goldmedaillen und 20 WM-Titel im Biathlon. Sein Spitzname „König des Biathlon“ wurde in Norwegen offiziell auf Briefmarken gewürdigt.",
+      "category": "Sport"
+    },
+    {
+      "id": "sport_de_071",
+      "question": "Was ist beim Speerwerfen seit 1986 verändert worden, weil zuvor die Würfe gefährlich weit flogen?",
+      "answers": [
+        {"text": "Der Schwerpunkt wurde nach vorne verlagert, damit der Speer früher in den Boden eintaucht", "correct": true},
+        {"text": "Die Spitze besteht jetzt aus Gummi statt Metall, damit niemand verletzt wird", "correct": false},
+        {"text": "Der Anlauf wurde auf maximal 10 Meter verkürzt", "correct": false}
+      ],
+      "difficulty": "hard",
+      "fun_fact": "Uwe Hohns Weltrekord von 1984 (104,80 m) hätte die Speere bald in die Zuschauerränge fliegen lassen. Die Schwerpunktverlagerung machte die Flugbahn steiler und reduzierte die typischen Weiten um rund 10 %.",
+      "category": "Sport"
+    },
+    {
+      "id": "sport_de_072",
+      "question": "Was passiert beim afghanischen Nationalsport „Buzkashi“ als Spielobjekt zwischen den Reitern?",
+      "answers": [
+        {"text": "Ein kopfloser Ziegen- oder Kalbskadaver wird ins gegnerische Ziel geschleppt", "correct": true},
+        {"text": "Ein lederner Ball mit einer kleinen Glocke im Inneren", "correct": false},
+        {"text": "Ein langer Filzteppich, der ausgerollt werden muss", "correct": false}
+      ],
+      "difficulty": "medium",
+      "fun_fact": "Buzkashi heißt wörtlich „Ziegenziehen“ und ist in Afghanistan und mehreren zentralasiatischen Ländern Nationalsport. Top-Reiter („Chapandazan“) trainieren jahrzehntelang und gelten als lokale Helden.",
+      "category": "Sport"
+    },
+    {
+      "id": "sport_de_073",
+      "question": "Wie viele Felder hat ein offizielles Schachbrett?",
+      "answers": [
+        {"text": "64", "correct": true},
+        {"text": "81", "correct": false},
+        {"text": "100", "correct": false}
+      ],
+      "difficulty": "easy",
+      "fun_fact": "Die Schach-Variante mit 100 Feldern (10×10) existiert tatsächlich und heißt „Großes Schach“ — wurde im 13. Jahrhundert vom kastilischen König Alfons X. propagiert, setzte sich aber nie durch.",
+      "category": "Sport"
+    },
+    {
+      "id": "sport_de_074",
+      "question": "Welcher kuriose Vorname-Effekt gilt im Profi-Stierkampf in Spanien als statistische Auffälligkeit?",
+      "answers": [
+        {"text": "Die Stiere haben Namen, die Toreros werden gewogen — und die Stiere müssen mindestens 460 kg auf die Waage bringen", "correct": true},
+        {"text": "Stiere werden nach dem Vornamen ihres Halters benannt — Stiere namens „Pedro“ überleben statistisch öfter", "correct": false},
+        {"text": "Toreros dürfen offiziell nur Künstlernamen mit höchstens vier Silben tragen", "correct": false}
+      ],
+      "difficulty": "hard",
+      "fun_fact": "Das Mindestgewicht (460–600 kg je nach Arena-Klasse) wird vor dem Kampf öffentlich verkündet. Stiere bekommen Namen aus den Stammbüchern der Zuchtbetriebe — manchmal Erbnamen, die seit Generationen weitergegeben werden.",
+      "category": "Sport"
+    },
+    {
+      "id": "sport_de_075",
+      "question": "Warum tragen Olympia-Athleten beim Bogenschießen ein einzelnes Pflaster auf dem Kinn?",
+      "answers": [
+        {"text": "Die Sehne berührt im Anker beim Lösen Lippe und Kinn — das Pflaster verringert Reibung und Schmerz", "correct": true},
+        {"text": "Es markiert die Sichtachse zur Pfeilspitze für den Trainer", "correct": false},
+        {"text": "Es enthält ein elektronisches Mikro für den Herzschlag-Sensor", "correct": false}
+      ],
+      "difficulty": "hard",
+      "fun_fact": "Profi-Bogenschützen haben dort oft kleine Schwielen oder Hautirritationen, weil die Sehne mit etwa 20–25 kg Zugkraft schnappt. Manche kleben sogar Mund, Nase und Kinnpartie ab — sieht skurril aus, ist aber Standardausrüstung.",
+      "category": "Sport"
+    },
+    {
+      "id": "sport_de_076",
+      "question": "Welcher Sportler stellte 1968 in Mexiko-Stadt mit 8,90 m einen Weitsprung-Weltrekord auf, der erst 1991 überboten wurde?",
+      "answers": [
+        {"text": "Bob Beamon", "correct": true},
+        {"text": "Carl Lewis", "correct": false},
+        {"text": "Ralph Boston", "correct": false}
+      ],
+      "difficulty": "medium",
+      "fun_fact": "Beamon übertraf den alten Rekord um 55 cm in einem einzigen Sprung — ein so absurder Sprung, dass die optische Messanlage gar nicht weit genug reichte und manuell mit Maßband nachgemessen werden musste.",
+      "category": "Sport"
+    },
+    {
+      "id": "sport_de_077",
+      "question": "Was ist „Headis“ — eine deutsche Sport-Erfindung der 2000er?",
+      "answers": [
+        {"text": "Tischtennis, aber nur mit dem Kopf gespielt", "correct": true},
+        {"text": "Eine Mischung aus Handball und Tennis mit Stirnband-Sensor", "correct": false},
+        {"text": "Hallen-Hockey mit Helm und Plastikschläger", "correct": false}
+      ],
+      "difficulty": "medium",
+      "fun_fact": "Erfunden 2006 von einem Sportstudenten in Kaiserslautern, der die Pingpongplatte am Schwimmbad zweckentfremdete. Heute gibt es eine offizielle deutsche Liga und Weltmeisterschaften — Spitzenspieler verdienen ihren Lebensunterhalt damit.",
+      "category": "Sport"
+    },
+    {
+      "id": "sport_de_078",
+      "question": "Wie viele Spieler einer Mannschaft sind beim Wasserball gleichzeitig im Wasser (inklusive Torwart)?",
+      "answers": [
+        {"text": "Sieben", "correct": true},
+        {"text": "Fünf", "correct": false},
+        {"text": "Neun", "correct": false}
+      ],
+      "difficulty": "medium",
+      "fun_fact": "Bodenkontakt ist im Wasserballbecken verboten — die Spieler treten also gut 30 Minuten Spielzeit ununterbrochen Wasser. Selbst der Torwart darf den Beckenrand nicht festhalten.",
+      "category": "Sport"
+    },
+    {
+      "id": "sport_de_079",
+      "question": "Warum bekam die Tour de France 1937 erstmals eine Gangschaltung am Rad zugelassen — was bis dahin als „Schummelei“ galt?",
+      "answers": [
+        {"text": "Der Veranstalter Henri Desgrange hielt Gangschaltungen für unsportlich und ließ sie über 30 Jahre lang verbieten", "correct": true},
+        {"text": "Die UCI-Verordnung von 1937 verbot vorher alle metallischen Komponenten am Rad", "correct": false},
+        {"text": "Die Gangschaltung wurde erst 1937 erfunden", "correct": false}
+      ],
+      "difficulty": "hard",
+      "fun_fact": "Bis 1937 mussten die Fahrer für Berg- und Flachstrecken das Hinterrad umdrehen, weil zwei verschieden große Ritzel auf den beiden Seiten der Nabe montiert waren. Desgrange schimpfte: „Variateurs sind für Großmütter und Tunten“.",
+      "category": "Sport"
+    },
+    {
+      "id": "sport_de_080",
+      "question": "Wer war der erste Mensch, der die Vier-Minuten-Schallmauer im Meilenlauf durchbrach?",
+      "answers": [
+        {"text": "Roger Bannister, 1954 in Oxford", "correct": true},
+        {"text": "Jim Ryun, 1966 in Berkeley", "correct": false},
+        {"text": "Steve Cram, 1985 in Oslo", "correct": false}
+      ],
+      "difficulty": "medium",
+      "fun_fact": "Bannister lief 3:59,4 Minuten — und nur 46 Tage später unterbot der Australier John Landy den Rekord nochmals. Vor 1954 galt die Vier-Minuten-Marke unter Medizinern als physiologisch unmöglich.",
+      "category": "Sport"
+    },
+    {
+      "id": "sport_de_081",
+      "question": "Welche merkwürdige Sportart wird beim niederländischen „Fierljeppen“ ausgeübt?",
+      "answers": [
+        {"text": "Stabsprung über Kanäle mit einem rund 13 Meter langen Aluminium-Stock", "correct": true},
+        {"text": "Schlittschuhlaufen im Watt bei Ebbe", "correct": false},
+        {"text": "Boulewerfen auf treibenden Holzpaletten", "correct": false}
+      ],
+      "difficulty": "medium",
+      "fun_fact": "Der Springer rennt auf einen schwimmenden Stab zu, klammert sich oben fest und lässt sich auf die andere Seite des Grabens fallen. Der Weltrekord liegt bei über 22 Metern — ursprünglich war es eine Bauern-Technik, um Felder zu durchqueren.",
+      "category": "Sport"
+    },
+    {
+      "id": "sport_de_082",
+      "question": "Was bedeutet die rote Karte beim Fußball seit ihrer Einführung 1970?",
+      "answers": [
+        {"text": "Sofortiger Platzverweis ohne Ersatz für den restlichen Spielverlauf", "correct": true},
+        {"text": "Verwarnung mit Pflicht-Auswechslung nach drei Minuten", "correct": false},
+        {"text": "Spielunterbrechung für mindestens fünf Minuten", "correct": false}
+      ],
+      "difficulty": "easy",
+      "fun_fact": "Der Engländer Ken Aston, ein FIFA-Schiri-Beauftragter, kam auf die Karten-Idee an einer Londoner Ampel: rot = stop, gelb = Vorsicht. Eingeführt wurde das System bei der WM 1970 in Mexiko.",
+      "category": "Sport"
+    },
+    {
+      "id": "sport_de_083",
+      "question": "Welche besondere Form hat der olympische Pool für Wasserspringen verglichen mit normalen Schwimmbecken?",
+      "answers": [
+        {"text": "Er ist mindestens 5 Meter tief", "correct": true},
+        {"text": "Er ist quadratisch statt rechteckig", "correct": false},
+        {"text": "Er hat einen leicht geneigten Boden zur Strömungsführung", "correct": false}
+      ],
+      "difficulty": "medium",
+      "fun_fact": "Bei einem Eintauchen vom 10-Meter-Turm erreicht der Springer rund 50 km/h. Die Tiefe von 5 m verhindert Bodenkontakt selbst bei missglückten Sprüngen — zusätzlich sprühen Düsen Wasser auf die Oberfläche, damit Springer im Anflug die Wasserlinie besser erkennen.",
+      "category": "Sport"
+    },
+    {
+      "id": "sport_de_084",
+      "question": "Was war im Frühen Profi-Eishockey lange unüblich — und wurde erst 1979 in der NHL zur Pflicht?",
+      "answers": [
+        {"text": "Das Tragen eines Helms", "correct": true},
+        {"text": "Das Tragen von Schienbeinschonern", "correct": false},
+        {"text": "Das Tragen von Handschuhen", "correct": false}
+      ],
+      "difficulty": "medium",
+      "fun_fact": "Spieler, die schon vor 1979 Profis waren, durften per Sonderregel weiter ohne Helm spielen. Der letzte Helmlose war Craig MacTavish — er spielte noch bis 1997 ohne Helm in der NHL.",
+      "category": "Sport"
+    },
+    {
+      "id": "sport_de_085",
+      "question": "Wie viele rote Kugeln liegen zu Beginn eines Snooker-Frames auf dem Tisch?",
+      "answers": [
+        {"text": "15", "correct": true},
+        {"text": "21", "correct": false},
+        {"text": "10", "correct": false}
+      ],
+      "difficulty": "medium",
+      "fun_fact": "Die theoretische Maximal-Punktzahl in einem Frame ist 147 — erreicht durch 15 Rote, jeweils gefolgt von der Schwarzen, dann alle Farben in Reihenfolge. Profis schaffen das im Schnitt etwa alle paar hundert Frames.",
+      "category": "Sport"
+    },
+    {
+      "id": "sport_de_086",
+      "question": "Welche seltsame Bauweise hat das Wimbledon-Centre-Court-Dach seit dem Umbau 2009?",
+      "answers": [
+        {"text": "Ein faltbares Stoff-Membrandach, das sich in unter 10 Minuten schließen lässt", "correct": true},
+        {"text": "Ein verglastes Schiebedach, das ausschließlich nachts geschlossen wird", "correct": false},
+        {"text": "Ein automatisch beweglicher Sonnenschirm im Zentrum des Platzes", "correct": false}
+      ],
+      "difficulty": "medium",
+      "fun_fact": "Das Membrandach besteht aus zehn beweglichen Stoff-Segmenten. Nach dem Schließen braucht der Court rund 30 Minuten Klimaanlage, um die Luftfeuchtigkeit auf spielbare Werte zu senken — sonst wird der Belag rutschig.",
+      "category": "Sport"
+    },
+    {
+      "id": "sport_de_087",
+      "question": "Welche unscheinbare Komponente eines Skeleton-Schlittens ist beim Bewerb tatsächlich reglementiert auf eine Maximaltemperatur vor dem Start?",
+      "answers": [
+        {"text": "Die Kufen — sie dürfen nicht wärmer als 4 °C über der Lufttemperatur sein", "correct": true},
+        {"text": "Die Handgriffe — Heizung ist strikt verboten", "correct": false},
+        {"text": "Die Atemluft im Helm — Anwärmen über 25 °C ist untersagt", "correct": false}
+      ],
+      "difficulty": "hard",
+      "fun_fact": "Eine erwärmte Kufe schmilzt das Eis effizienter und gleitet schneller — deshalb misst die FIBT vor jedem Lauf die Kufentemperatur per Infrarot-Sensor. Verstöße führen zur Disqualifikation.",
+      "category": "Sport"
+    },
+    {
+      "id": "sport_de_088",
+      "question": "Was charakterisiert das olympische Mountainbike-Rennen „Cross-Country“ (XCO) im Unterschied zur Downhill-Variante?",
+      "answers": [
+        {"text": "Es wird über mehrere Runden auf einer geschlossenen Strecke gefahren — bergauf und bergab", "correct": true},
+        {"text": "Es ist eine reine Bergab-Disziplin auf Zeit", "correct": false},
+        {"text": "Es wird ausschließlich nachts mit Stirnlampe ausgetragen", "correct": false}
+      ],
+      "difficulty": "easy",
+      "fun_fact": "XCO-Rennen dauern typischerweise 80–100 Minuten und enthalten technische Sektionen mit Wurzeln, Felsen und Sprüngen. Die Fahrer wechseln nicht selten 200–300 Höhenmeter pro Runde — das macht XCO einer der härtesten Ausdauer-Disziplinen überhaupt.",
+      "category": "Sport"
+    },
+    {
+      "id": "sport_de_089",
+      "question": "Warum schmieren Stabhochspringer ihre Hände vor dem Sprung mit Magnesium oder Kletter-Tape ein?",
+      "answers": [
+        {"text": "Sie brauchen extreme Griffsicherheit am Stab, während sie sich kopfüber überschlagen", "correct": true},
+        {"text": "Die FIVB schreibt eine Mindestschicht zur Stabsicherheit vor", "correct": false},
+        {"text": "Es soll die Sehnenscheidenentzündung beim Aufprall verhindern", "correct": false}
+      ],
+      "difficulty": "easy",
+      "fun_fact": "Bei einem Sprung über 6 m wirken kurzzeitig Beschleunigungen von rund 4g auf die Hände am Stab. Ohne Magnesium würde der Schweiß ausreichen, um den Stab im falschen Moment durchzulassen.",
+      "category": "Sport"
+    },
+    {
+      "id": "sport_de_090",
+      "question": "Welches überraschend kleine Land hatte 2010 erstmals einen Eishockey-Weltmeistertitel — gegen alle Favoriten?",
+      "answers": [
+        {"text": "Tschechien", "correct": true},
+        {"text": "Slowenien", "correct": false},
+        {"text": "Norwegen", "correct": false}
+      ],
+      "difficulty": "hard",
+      "fun_fact": "Tschechien gewann 2010 den WM-Titel in Köln im Finale gegen Russland — historisch ist Tschechien eine Eishockey-Großmacht, hatte aber gegen Kanada, Russland und Schweden Probleme. Slowenien und Norwegen sind zwar starke Underdogs, aber nie Weltmeister geworden.",
+      "category": "Sport"
+    },
+    {
+      "id": "sport_de_091",
+      "question": "Welche Funktion hat der „Libero“ im modernen Volleyball seit Einführung 1998?",
+      "answers": [
+        {"text": "Reiner Abwehrspezialist — er darf weder aufschlagen noch angreifen", "correct": true},
+        {"text": "Mannschaftskapitän mit Vetorecht gegenüber dem Trainer", "correct": false},
+        {"text": "Ersatzspieler nur für Verletzungs-Notfälle", "correct": false}
+      ],
+      "difficulty": "medium",
+      "fun_fact": "Der Libero trägt traditionell ein andersfarbiges Trikot, damit Schiedsrichter ihn sofort erkennen. Er darf beliebig oft ein- und auswechseln, ohne dass dies als regulärer Wechsel zählt — eine Sonderregel, die den Rallyes flüssiger macht.",
+      "category": "Sport"
+    },
+    {
+      "id": "sport_de_092",
+      "question": "Welche kuriose Vorgabe gilt im Tour-de-France-Reglement für den Sieger des Berg-Trikots („Maillot à pois“)?",
+      "answers": [
+        {"text": "Das Polka-Dot-Muster wurde 1975 vom Schokoladen-Hersteller Chocolat Poulain eingeführt — die Punkte spiegelten dessen Werbeverpackung wider", "correct": true},
+        {"text": "Der Bergkönig muss die letzte Etappe mit beiden Händen über dem Lenker fahren", "correct": false},
+        {"text": "Das Trikot darf nicht in zerstörtem Zustand auf dem Podium getragen werden", "correct": false}
+      ],
+      "difficulty": "hard",
+      "fun_fact": "Félix Lévitan, damaliger Tour-Direktor, wählte das Pünktchen-Muster 1975, weil es an die Verpackung des Sponsors Chocolat Poulain erinnerte. Das Trikot überdauerte den Sponsor und ist heute ikonisch.",
+      "category": "Sport"
+    },
+    {
+      "id": "sport_de_093",
+      "question": "Welche bekannte Fußball-Regel wurde 1992 grundlegend geändert, weil Spiele zu defensiv und langweilig wurden?",
+      "answers": [
+        {"text": "Das Rückpass-Verbot — Torwarte dürfen einen absichtlichen Rückpass mit dem Fuß nicht mehr mit der Hand aufnehmen", "correct": true},
+        {"text": "Die Abseits-Regel wurde komplett abgeschafft", "correct": false},
+        {"text": "Der Ball wurde von 450 g auf 350 g reduziert", "correct": false}
+      ],
+      "difficulty": "medium",
+      "fun_fact": "Auslöser war die WM 1990, bei der Teams gegen Ende Bälle minutenlang zwischen Verteidigern und Torwart hin- und herspielten, um Zeit zu verbrauchen. Nach der Regeländerung stiegen Tor-Quoten und Pass-Tempo deutlich.",
+      "category": "Sport"
+    },
+    {
+      "id": "sport_de_094",
+      "question": "Warum trainieren Spitzen-Sprinter ihren Start so präzise mit Reaktionszeiten unter 0,1 Sekunden?",
+      "answers": [
+        {"text": "Reaktionen unter 0,1 Sekunden gelten als Fehlstart und führen zur Disqualifikation", "correct": true},
+        {"text": "Unter 0,1 Sekunden wird die Zeit nicht mehr offiziell registriert", "correct": false},
+        {"text": "Der Startblock verformt sich erst nach 0,1 Sekunden korrekt", "correct": false}
+      ],
+      "difficulty": "medium",
+      "fun_fact": "Die 0,1-Sekunden-Schwelle ist eine biomechanische Annahme der World Athletics: Schneller könne ein Mensch auf das Startsignal nicht reagieren. Wissenschaftliche Studien deuten an, dass diese Grenze für manche Athleten unterschätzt ist — eine Diskussion über die Regel läuft seit Jahren.",
+      "category": "Sport"
+    },
+    {
+      "id": "sport_de_095",
+      "question": "Welche bemerkenswerte Sport-Tradition wird beim Palio di Siena seit dem Mittelalter ausgetragen?",
+      "answers": [
+        {"text": "Ein Pferderennen ohne Sattel um den zentralen Marktplatz der Stadt", "correct": true},
+        {"text": "Ein Schwert-Turnier am Domplatz", "correct": false},
+        {"text": "Ein Hindernislauf in mittelalterlichen Rüstungen durch die Altstadtgassen", "correct": false}
+      ],
+      "difficulty": "medium",
+      "fun_fact": "Zehn von 17 Stadtvierteln („Contrade“) treten an, die Wahl wird ausgelost. Ein Pferd kann auch ohne seinen abgeworfenen Reiter gewinnen — was schon mehrfach vorgekommen ist und „cavallo scosso“ heißt.",
+      "category": "Sport"
+    },
+    {
+      "id": "sport_de_096",
+      "question": "Welche zwei Sportarten kombiniert die Nordische Kombination im olympischen Programm?",
+      "answers": [
+        {"text": "Skispringen und Langlauf", "correct": true},
+        {"text": "Biathlon und Skispringen", "correct": false},
+        {"text": "Langlauf und Eisschnelllauf", "correct": false}
+      ],
+      "difficulty": "easy",
+      "fun_fact": "Die Startzeit für den Langlauf bestimmt sich nach dem Skisprung-Ergebnis: Wer dort führt, startet zuerst — wer dahinter liegt, startet entsprechend Sekunden später nach der „Gundersen-Methode“. Wer als Erster ins Ziel kommt, gewinnt.",
+      "category": "Sport"
+    },
+    {
+      "id": "sport_de_097",
+      "question": "Welche überraschende Eigenheit hat ein Boxring trotz seines Namens?",
+      "answers": [
+        {"text": "Er ist quadratisch, nicht rund", "correct": true},
+        {"text": "Er besteht aus Aluminium statt Holz", "correct": false},
+        {"text": "Er ist exakt 6 Meter über dem Boden montiert", "correct": false}
+      ],
+      "difficulty": "easy",
+      "fun_fact": "Bis ins 19. Jahrhundert kämpften Boxer in einem Kreis von Zuschauern — daher „Ring“. Die quadratische Form mit Seilen kam mit den London Prize Ring Rules von 1838 auf und wurde nie wieder geändert.",
+      "category": "Sport"
+    },
+    {
+      "id": "sport_de_098",
+      "question": "Welcher Trick beim Wettkampf-Schwimmen sorgt dafür, dass Sportler nach der Wende fast einen Meter schneller schwimmen als ohne?",
+      "answers": [
+        {"text": "Die Unterwasser-Delfin-Phase (Underwater Kick) nach Stoß von der Wand", "correct": true},
+        {"text": "Das Greifen der Trennleinen während der Wende", "correct": false},
+        {"text": "Das gezielte Ausatmen unter Wasser zur Auftriebsregulation", "correct": false}
+      ],
+      "difficulty": "medium",
+      "fun_fact": "Unter Wasser ist der Strömungswiderstand niedriger als an der Oberfläche, weil keine Wellenbildung stattfindet. Die FINA limitiert die Phase auf maximal 15 Meter — sonst würden Athleten halbe Bahnen unter Wasser kraulen.",
+      "category": "Sport"
+    },
+    {
+      "id": "sport_de_099",
+      "question": "Was zeichnet die schottische Sportart „Shinty“ aus, die als Vorläufer mehrerer moderner Stocksportarten gilt?",
+      "answers": [
+        {"text": "Sie wird mit einem hölzernen Krummstab und einem kleinen Lederball gespielt — der Stock darf in der Luft geschwungen werden", "correct": true},
+        {"text": "Sie wird ausschließlich auf gefrorenen Seen ausgetragen", "correct": false},
+        {"text": "Sie verbietet jeglichen Körperkontakt und wird mit einem Schiedsrichter pro Spieler gespielt", "correct": false}
+      ],
+      "difficulty": "hard",
+      "fun_fact": "Shinty ist verwandt mit dem irischen Hurling und gilt als gemeinsamer Vorfahr von Hockey und Lacrosse. In den schottischen Highlands gibt es bis heute eine Profi-Liga (Camanachd Cup).",
+      "category": "Sport"
+    },
+    {
+      "id": "sport_de_100",
+      "question": "Welche kuriose Bewegung führt ein Turner beim Pferdsprung-Anlauf laut FIG-Reglement nicht ausführen darf?",
+      "answers": [
+        {"text": "Stehenbleiben — der Anlauf muss kontinuierlich sein, sonst zählt der Versuch als Fehlversuch", "correct": true},
+        {"text": "Rufen oder Pfeifen während des Anlaufs", "correct": false},
+        {"text": "Den Boden mit Magnesium berühren", "correct": false}
+      ],
+      "difficulty": "medium",
+      "fun_fact": "Ein Turner hat 25 Meter Anlauf und darf maximal zwei Versuche. Spitzenturnerinnen wie Simone Biles erreichen vor dem Absprung-Tisch Geschwindigkeiten von über 25 km/h — das ist mit einem Marathon-Sprinttempo vergleichbar.",
+      "category": "Sport"
+    },
+    {
+      "id": "sport_de_101",
+      "question": "Welches Volk in Süd-Mexiko ist bekannt für sein historisches Ballspiel, bei dem ein massiver Kautschukball nur mit Hüfte und Knie gespielt werden durfte?",
+      "answers": [
+        {"text": "Die Maya und Azteken — das Spiel hieß „Ulama“ bzw. „Pok-ta-Pok“", "correct": true},
+        {"text": "Die Inkas — das Spiel hieß „Tlachtli“", "correct": false},
+        {"text": "Die Olmeken — das Spiel hieß „Pelota Vasca“", "correct": false}
+      ],
+      "difficulty": "hard",
+      "fun_fact": "Der Ball wog rund 4 Kilogramm und konnte tödliche Verletzungen verursachen. Bei einer Variante dieses Spiels sollen Verlierer-Teams rituell geopfert worden sein — moderne Historiker streiten allerdings, wie regelmäßig dies tatsächlich vorkam.",
+      "category": "Sport"
+    },
+    {
+      "id": "sport_de_102",
+      "question": "Welcher Sportler hält den Rekord für die meisten olympischen Medaillen aller Zeiten?",
+      "answers": [
+        {"text": "Michael Phelps mit 28 Medaillen (23 davon Gold)", "correct": true},
+        {"text": "Larisa Latynina mit 22 Medaillen (Turnen)", "correct": false},
+        {"text": "Paavo Nurmi mit 18 Medaillen (Leichtathletik)", "correct": false}
+      ],
+      "difficulty": "easy",
+      "fun_fact": "Phelps gewann von 2004 bis 2016 in vier Olympiaden. Seine 23 Goldmedaillen sind mehr als die meisten ganzen Nationen je gewonnen haben — Indien etwa hat in seiner gesamten Olympia-Geschichte nur rund zehn Goldmedaillen.",
+      "category": "Sport"
     }
   ]
 }

@@ -579,6 +579,618 @@
       "difficulty": "easy",
       "fun_fact": "Der Begriff stammt aus den 2010ern. KI-Modelle sind keine Datenbanken, sondern Wahrscheinlichkeits-Maschinen — sie produzieren das, was nach Training 'wahrscheinlich richtig klingt', auch wenn es frei erfunden ist.",
       "category": "Technik"
+    },
+    {
+      "id": "technik_de_051",
+      "question": "Wie viele Transistoren passen ungefähr auf einen modernen Smartphone-Chip wie den Apple A17 Pro?",
+      "answers": [
+        {"text": "Etwa 19 Milliarden", "correct": true},
+        {"text": "Etwa 50 Millionen", "correct": false},
+        {"text": "Etwa 800.000", "correct": false}
+      ],
+      "difficulty": "hard",
+      "fun_fact": "Der A17 Pro von 2023 enthält rund 19 Mrd Transistoren auf 3-nm-Strukturen — kleiner als ein Coronavirus. Ein Intel 8086 von 1978 hatte gerade mal 29.000 Transistoren.",
+      "category": "Technik"
+    },
+    {
+      "id": "technik_de_052",
+      "question": "Was bedeutet das 'Pi' im Namen des Einplatinencomputers Raspberry Pi?",
+      "answers": [
+        {"text": "Es steht für die Programmiersprache Python, die ursprünglich Hauptsprache sein sollte", "correct": true},
+        {"text": "Es ist die mathematische Konstante π", "correct": false},
+        {"text": "Es steht für 'Personal Interface'", "correct": false}
+      ],
+      "difficulty": "medium",
+      "fun_fact": "Die Raspberry Pi Foundation wählte den Namen 2009: 'Raspberry' folgt der alten Computer-Tradition, sich nach Früchten zu benennen (Apple, Apricot, Tangerine), 'Pi' verweist auf Python als geplante Hauptsprache.",
+      "category": "Technik"
+    },
+    {
+      "id": "technik_de_054",
+      "question": "Was ist eine Besonderheit des klassischen Stahlbetons im Vergleich zu reinem Beton?",
+      "answers": [
+        {"text": "Stahl und Beton haben einen fast identischen Wärmeausdehnungskoeffizienten", "correct": true},
+        {"text": "Stahlbeton leitet Strom besser als Kupfer", "correct": false},
+        {"text": "Stahlbeton ist leichter als Aluminium", "correct": false}
+      ],
+      "difficulty": "hard",
+      "fun_fact": "Beton ist druckfest, aber zugschwach — Stahl umgekehrt. Beide dehnen sich bei Wärme fast gleich aus (~12·10⁻⁶/K), sonst würde der Verbund bei Temperaturschwankungen reißen. Patentiert hat das Prinzip Joseph Monier 1867 für Pflanzenkübel.",
+      "category": "Technik"
+    },
+    {
+      "id": "technik_de_055",
+      "question": "Was war besonders ungewöhnlich an der Tastatur des Schreibmaschinen-Vorläufers 'Hansen Writing Ball' von 1865?",
+      "answers": [
+        {"text": "Die Tasten waren auf einer Kugel angeordnet", "correct": true},
+        {"text": "Sie hatte nur drei Tasten", "correct": false},
+        {"text": "Sie funktionierte mit Wasserdampf", "correct": false}
+      ],
+      "difficulty": "hard",
+      "fun_fact": "Der dänische Pfarrer Rasmus Malling-Hansen entwickelte das halbkugelförmige Gerät für Gehörlose. Friedrich Nietzsche kaufte einen — eine der ersten dokumentierten Schreibmaschinen-Nutzungen durch einen Schriftsteller.",
+      "category": "Technik"
+    },
+    {
+      "id": "technik_de_056",
+      "question": "Was bedeutet die Abkürzung 'PDF' in Adobes Dateiformat?",
+      "answers": [
+        {"text": "Portable Document Format", "correct": true},
+        {"text": "Printable Data File", "correct": false},
+        {"text": "Postscript Document Frame", "correct": false}
+      ],
+      "difficulty": "easy",
+      "fun_fact": "Adobe entwickelte PDF 1993 — das Ziel: ein Dokument soll auf jedem Gerät identisch aussehen. Bis 2008 war es ein proprietäres Format, seitdem ein offener ISO-Standard. Adobe hat den Reader bewusst kostenlos gehalten.",
+      "category": "Technik"
+    },
+    {
+      "id": "technik_de_057",
+      "question": "Wofür stand 'SMS' bei der Entwicklung 1992 ursprünglich?",
+      "answers": [
+        {"text": "Short Message Service", "correct": true},
+        {"text": "Simple Mobile Signal", "correct": false},
+        {"text": "Synchronized Messaging System", "correct": false}
+      ],
+      "difficulty": "easy",
+      "fun_fact": "Die erste SMS schickte 1992 der Software-Entwickler Neil Papworth (Sema Group) von einem PC mit dem Text 'Merry Christmas' an ein Orbitel-901-Handy im Vodafone-Netz. SMS sind auf 160 Zeichen limitiert, weil das in einen ungenutzten Signalisierungs-Slot der GSM-Telefonie passte.",
+      "category": "Technik"
+    },
+    {
+      "id": "technik_de_058",
+      "question": "Welche Eigenheit hat das Internet-Protokoll 'TCP/IP' beim Verbindungsaufbau?",
+      "answers": [
+        {"text": "Es nutzt einen 'Three-Way-Handshake' mit SYN/SYN-ACK/ACK", "correct": true},
+        {"text": "Es sendet jedes Paket doppelt", "correct": false},
+        {"text": "Es verschlüsselt automatisch alles", "correct": false}
+      ],
+      "difficulty": "medium",
+      "fun_fact": "Der Three-Way-Handshake stellt sicher, dass beide Seiten bereit sind. TCP wurde von Vint Cerf und Bob Kahn in den 1970ern entwickelt. UDP — die Alternative — verzichtet auf solche Garantien und ist deshalb schneller, aber unzuverlässiger.",
+      "category": "Technik"
+    },
+    {
+      "id": "technik_de_059",
+      "question": "Was war ungewöhnlich an der Suchmaschine 'AltaVista' bei ihrem Start 1995?",
+      "answers": [
+        {"text": "Sie konnte als erste das gesamte damalige Web in einem einzigen Index speichern", "correct": true},
+        {"text": "Sie funktionierte nur per Telefon", "correct": false},
+        {"text": "Sie verbot englische Suchbegriffe", "correct": false}
+      ],
+      "difficulty": "medium",
+      "fun_fact": "DEC entwickelte AltaVista, um die Power der eigenen Alpha-Prozessoren zu demonstrieren. Die Suchmaschine war Jahre vor Google Marktführer — wurde aber nach mehreren Verkäufen 2013 von Yahoo abgeschaltet.",
+      "category": "Technik"
+    },
+    {
+      "id": "technik_de_060",
+      "question": "Welches Element ist Hauptbestandteil moderner Computer-Chips?",
+      "answers": [
+        {"text": "Silizium", "correct": true},
+        {"text": "Aluminium", "correct": false},
+        {"text": "Titan", "correct": false}
+      ],
+      "difficulty": "easy",
+      "fun_fact": "Silizium ist nach Sauerstoff das zweithäufigste Element der Erdkruste. Für Chips wird es zu 99,9999999% Reinheit aufbereitet — das sind nur ein paar Fremdatome unter einer Milliarde. Daher der Name 'Silicon Valley'.",
+      "category": "Technik"
+    },
+    {
+      "id": "technik_de_061",
+      "question": "Wie heißt die Einheit, in der Datenmengen gemessen werden?",
+      "answers": [
+        {"text": "Byte", "correct": true},
+        {"text": "Watt", "correct": false},
+        {"text": "Hertz", "correct": false}
+      ],
+      "difficulty": "easy",
+      "fun_fact": "Ein Byte besteht aus 8 Bit — gerade genug, um ein einzelnes ASCII-Zeichen zu speichern. Der Name 'Byte' wurde 1956 bei IBM geprägt, bewusst anders geschrieben als 'bite', um Verwechslungen mit 'bit' zu vermeiden.",
+      "category": "Technik"
+    },
+    {
+      "id": "technik_de_062",
+      "question": "Was symbolisiert die kleine Lupe in Suchfunktionen fast aller Apps?",
+      "answers": [
+        {"text": "Sie ist ein metaphorisches Symbol für das Suchen — Skeuomorphismus", "correct": true},
+        {"text": "Sie zeigt die Zoomstufe", "correct": false},
+        {"text": "Sie ist nur Dekoration", "correct": false}
+      ],
+      "difficulty": "easy",
+      "fun_fact": "Apple etablierte das Lupen-Icon Anfang der 1990er für die Suche. Heute weltweit erkannt — selbst Generationen, die nie eine echte Lupe in der Hand hatten, verstehen das Symbol intuitiv.",
+      "category": "Technik"
+    },
+    {
+      "id": "technik_de_063",
+      "question": "Was ist 'Open Source' Software?",
+      "answers": [
+        {"text": "Software, deren Quellcode öffentlich einsehbar und meist veränderbar ist", "correct": true},
+        {"text": "Software, die im Freien funktionieren muss", "correct": false},
+        {"text": "Software, die nur auf offenen Servern läuft", "correct": false}
+      ],
+      "difficulty": "easy",
+      "fun_fact": "Der Begriff wurde 1998 nach der Freigabe von Netscape Navigator geprägt. Davor hieß es meist 'Free Software'. Die größte Open-Source-Erfolgsgeschichte ist Linux — heute Basis fast aller Server, Smartphones (Android) und Supercomputer der Welt.",
+      "category": "Technik"
+    },
+    {
+      "id": "technik_de_064",
+      "question": "Welcher Browser dominierte Ende der 1990er den Markt, bevor er praktisch verschwand?",
+      "answers": [
+        {"text": "Netscape Navigator", "correct": true},
+        {"text": "Mozilla Firefox", "correct": false},
+        {"text": "Google Chrome", "correct": false}
+      ],
+      "difficulty": "medium",
+      "fun_fact": "Netscape hatte 1996 rund 80% Marktanteil — bis Microsoft den Internet Explorer kostenlos mit Windows bündelte. Aus der Konkursmasse entstand Mozilla, später Firefox. Der berühmte 'Browser-Krieg' ist Lehrstoff in Wirtschafts-Hochschulen.",
+      "category": "Technik"
+    },
+    {
+      "id": "technik_de_065",
+      "question": "Was zeigt das berühmte 'BSOD' bei Windows-Computern an?",
+      "answers": [
+        {"text": "Einen Systemabsturz — den 'Blue Screen of Death'", "correct": true},
+        {"text": "Den Bildschirmschoner", "correct": false},
+        {"text": "Eine erfolgreiche Aktualisierung", "correct": false}
+      ],
+      "difficulty": "easy",
+      "fun_fact": "Der Blue Screen erscheint, wenn Windows einen nicht behebbaren Kernel-Fehler erkennt. In Windows 11 ist er teils schwarz statt blau — 'BSOD' funktioniert aber als Abkürzung weiter. Microsoft testete sogar lila und grün für interne Builds.",
+      "category": "Technik"
+    },
+    {
+      "id": "technik_de_066",
+      "question": "Welches Gerät verwandelt Bewegungsenergie direkt in elektrischen Strom?",
+      "answers": [
+        {"text": "Ein Generator", "correct": true},
+        {"text": "Ein Kondensator", "correct": false},
+        {"text": "Eine Diode", "correct": false}
+      ],
+      "difficulty": "easy",
+      "fun_fact": "Generatoren beruhen auf Faradays Induktionsgesetz von 1831 — bewegte Magnetfelder erzeugen Spannung. Fahrraddynamos, Windturbinen und AKW-Turbinen funktionieren alle nach diesem Prinzip, nur in unterschiedlicher Größenordnung.",
+      "category": "Technik"
+    },
+    {
+      "id": "technik_de_067",
+      "question": "Was ist eine 'CAPTCHA'-Abfrage im Web?",
+      "answers": [
+        {"text": "Ein Test, der Menschen von Bots unterscheidet", "correct": true},
+        {"text": "Ein Passwort-Wechsel-Prompt", "correct": false},
+        {"text": "Ein Werbeformat", "correct": false}
+      ],
+      "difficulty": "easy",
+      "fun_fact": "Die Abkürzung steht für 'Completely Automated Public Turing test to tell Computers and Humans Apart'. Googles reCAPTCHA nutzte die Tipps der Nutzer jahrelang, um Bücher zu digitalisieren und Adressen aus Street-View zu transkribieren.",
+      "category": "Technik"
+    },
+    {
+      "id": "technik_de_068",
+      "question": "Was unterscheidet eine SSD von einer klassischen HDD-Festplatte?",
+      "answers": [
+        {"text": "Eine SSD hat keine beweglichen Teile und nutzt Flash-Speicher", "correct": true},
+        {"text": "Eine SSD ist immer kleiner als 1 GB", "correct": false},
+        {"text": "Eine SSD ist immer aus Glas", "correct": false}
+      ],
+      "difficulty": "easy",
+      "fun_fact": "SSDs sind nicht nur schneller, sondern auch geräusch- und vibrationsfrei. Sie haben jedoch eine begrenzte Anzahl an Schreibzyklen pro Speicherzelle. Moderne Controller verteilen Schreibvorgänge gleichmäßig ('Wear Leveling').",
+      "category": "Technik"
+    },
+    {
+      "id": "technik_de_069",
+      "question": "Was bedeutet die Abkürzung 'USB'?",
+      "answers": [
+        {"text": "Universal Serial Bus", "correct": true},
+        {"text": "Universal System Buffer", "correct": false},
+        {"text": "Unified Standard Bridge", "correct": false}
+      ],
+      "difficulty": "easy",
+      "fun_fact": "USB wurde 1996 eingeführt, um den Kabelsalat aus PS/2, seriellen und parallelen Ports zu ersetzen. Der berühmte 'man steckt USB-A immer dreimal' liegt daran, dass der Stecker nicht symmetrisch ist — USB-C löst das mit beidseitiger Steckbarkeit.",
+      "category": "Technik"
+    },
+    {
+      "id": "technik_de_070",
+      "question": "Welche Eigenschaft hat das Material 'Aerogel', das in der NASA-Technik eingesetzt wird?",
+      "answers": [
+        {"text": "Es ist eines der leichtesten festen Materialien überhaupt", "correct": true},
+        {"text": "Es ist schwerer als Blei", "correct": false},
+        {"text": "Es ist flüssig bei Raumtemperatur", "correct": false}
+      ],
+      "difficulty": "medium",
+      "fun_fact": "Aerogel besteht zu 99,8% aus Luft und sieht aus wie 'gefrorener Rauch'. Die NASA setzte es 2006 bei der Stardust-Mission ein, um Kometenstaub einzufangen. Es isoliert hervorragend und hält enormen Temperaturen stand.",
+      "category": "Technik"
+    },
+    {
+      "id": "technik_de_071",
+      "question": "Was geschah am 'Y2K' (Jahr-2000-Problem) tatsächlich, als die Jahrtausendwende kam?",
+      "answers": [
+        {"text": "Dank massiver Vorab-Wartung passierte fast nichts — viele bezweifeln rückblickend die echte Gefahr", "correct": true},
+        {"text": "Weltweite Stromausfälle für mehrere Tage", "correct": false},
+        {"text": "Alle Banken stellten sich auf Bargeld um", "correct": false}
+      ],
+      "difficulty": "medium",
+      "fun_fact": "Schätzungen zufolge gaben Firmen und Regierungen weltweit über 300 Mrd USD für Y2K-Fixes aus. Das Problem entstand, weil Jahre lange als zweistellige Zahlen gespeichert wurden — '00' hätte als 1900 interpretiert werden können.",
+      "category": "Technik"
+    },
+    {
+      "id": "technik_de_072",
+      "question": "Welche Computer-Sicherheitslücke aus den 1980ern gilt als der erste 'Internet-Wurm'?",
+      "answers": [
+        {"text": "Der 'Morris-Worm' von 1988", "correct": true},
+        {"text": "Der 'ILOVEYOU'-Virus", "correct": false},
+        {"text": "Der 'WannaCry'-Wurm", "correct": false}
+      ],
+      "difficulty": "hard",
+      "fun_fact": "Robert Tappan Morris, Cornell-Student, wollte die Größe des Internets messen — sein Wurm legte stattdessen ca. 10% aller damals vernetzten Rechner lahm. Er wurde zu Sozialstunden verurteilt und ist heute MIT-Professor.",
+      "category": "Technik"
+    },
+    {
+      "id": "technik_de_073",
+      "question": "Was sind 'Cookies' in einem Webbrowser?",
+      "answers": [
+        {"text": "Kleine Textdateien, die Websites lokal auf dem Gerät speichern", "correct": true},
+        {"text": "Versteckte Bilder zur Tracking-Vermeidung", "correct": false},
+        {"text": "Werbe-Animationen", "correct": false}
+      ],
+      "difficulty": "easy",
+      "fun_fact": "Lou Montulli erfand Cookies 1994 bei Netscape — der Name kommt von 'magic cookie' aus der Unix-Welt. Die EU-DSGVO 2018 brachte die berühmten 'Cookie-Banner', die viele für nervig halten.",
+      "category": "Technik"
+    },
+    {
+      "id": "technik_de_074",
+      "question": "Wofür steht 'WiFi' eigentlich?",
+      "answers": [
+        {"text": "Es ist ein reiner Markenname — keine echte Abkürzung", "correct": true},
+        {"text": "Wireless Fidelity", "correct": false},
+        {"text": "Wide Frequency", "correct": false}
+      ],
+      "difficulty": "medium",
+      "fun_fact": "Die Wi-Fi Alliance ließ den Namen 1999 von einer Marketing-Agentur entwerfen — als Wortspiel mit 'Hi-Fi'. 'Wireless Fidelity' wurde nur als nachträglicher Erklärungs-Slogan verwendet und ist eigentlich Quatsch.",
+      "category": "Technik"
+    },
+    {
+      "id": "technik_de_075",
+      "question": "Welcher Mechanismus bremst ein modernes Verkehrsflugzeug nach der Landung am stärksten ab?",
+      "answers": [
+        {"text": "Die Radbremsen — Schubumkehr trägt nur einen kleineren Teil bei", "correct": true},
+        {"text": "Ein Fallschirm am Heck", "correct": false},
+        {"text": "Eine Magnetbremse in der Landebahn", "correct": false}
+      ],
+      "difficulty": "hard",
+      "fun_fact": "Schubumkehr hilft besonders bei Nässe und Glätte, aber die Hauptbremsleistung kommt aus karbon-verstärkten Radbremsen. Diese werden im Betrieb teils über 800 °C heiß — Cooling-Fans verhindern Brand-Risiken vor dem nächsten Start.",
+      "category": "Technik"
+    },
+    {
+      "id": "technik_de_076",
+      "question": "Was sind 'Phantomstaus' auf Autobahnen?",
+      "answers": [
+        {"text": "Staus ohne erkennbare Ursache — entstehen durch das Bremsen Einzelner in dichtem Verkehr", "correct": true},
+        {"text": "Staus, die nur in Videospielen vorkommen", "correct": false},
+        {"text": "Staus durch Geisterfahrer", "correct": false}
+      ],
+      "difficulty": "medium",
+      "fun_fact": "Schon eine kleine Bremsung pflanzt sich rückwärts als Stop-and-Go-Welle fort. Japanische Forscher um Yuki Sugiyama (Nagoya University) konnten den Effekt 2008 mit nur 22 Autos auf einer Kreisbahn nachstellen. Adaptive Tempomaten können die Welle dämpfen.",
+      "category": "Technik"
+    },
+    {
+      "id": "technik_de_077",
+      "question": "Welche Energieform speichert ein Pumpspeicherkraftwerk?",
+      "answers": [
+        {"text": "Lageenergie von Wasser in einem höher gelegenen Becken", "correct": true},
+        {"text": "Chemische Energie in Batterien", "correct": false},
+        {"text": "Wärme in geschmolzenem Salz", "correct": false}
+      ],
+      "difficulty": "medium",
+      "fun_fact": "Bei Stromüberschuss pumpen die Anlagen Wasser nach oben, bei Strommangel fließt es zurück und treibt Turbinen. Wirkungsgrad ca. 80%. Pumpspeicher sind heute die mit Abstand größten Energiespeicher der Welt — Batterien holen aber rapide auf.",
+      "category": "Technik"
+    },
+    {
+      "id": "technik_de_078",
+      "question": "Was ist das Besondere am Carbonfaser-Material in Rennwagen oder Flugzeugen?",
+      "answers": [
+        {"text": "Es ist leichter als Stahl, aber bei gleicher Masse deutlich fester", "correct": true},
+        {"text": "Es leitet keinen Strom", "correct": false},
+        {"text": "Es ist immer schwarz, weil es Licht absorbiert — daher der Name", "correct": false}
+      ],
+      "difficulty": "medium",
+      "fun_fact": "Carbonfasern bestehen aus 5–10 µm dünnen Kohlenstoff-Strängen, gebündelt zu Tausenden. Bei Boeings 787 sind über 50% der Struktur aus Verbundwerkstoffen — das macht das Flugzeug deutlich treibstoffeffizienter als reine Aluminium-Konstruktionen.",
+      "category": "Technik"
+    },
+    {
+      "id": "technik_de_079",
+      "question": "Welche Eigenheit hat Glas auf molekularer Ebene?",
+      "answers": [
+        {"text": "Es ist eigentlich eine 'amorphe' Substanz ohne Kristallstruktur — fast wie eine erstarrte Flüssigkeit", "correct": true},
+        {"text": "Es hat eine perfekt regelmäßige Kristallstruktur", "correct": false},
+        {"text": "Es ist eine Metallverbindung", "correct": false}
+      ],
+      "difficulty": "medium",
+      "fun_fact": "Glas hat keinen festen Schmelzpunkt — es wird bei Erwärmung kontinuierlich weicher. Der Mythos 'altes Kirchenglas fließt am unteren Ende dicker' stimmt aber nicht: Glas wurde damals einfach so produziert.",
+      "category": "Technik"
+    },
+    {
+      "id": "technik_de_080",
+      "question": "Was bewirkt der 'Doppler-Effekt' bei einer vorbeifahrenden Polizei-Sirene?",
+      "answers": [
+        {"text": "Die Tonhöhe sinkt, sobald die Quelle sich entfernt", "correct": true},
+        {"text": "Die Lautstärke verdoppelt sich", "correct": false},
+        {"text": "Der Ton wird metallischer", "correct": false}
+      ],
+      "difficulty": "medium",
+      "fun_fact": "Christian Doppler beschrieb den Effekt 1842. Radar-Geschwindigkeitsmesser nutzen dasselbe Prinzip mit reflektierten Funkwellen. Auch Sterne werden via Doppler-Verschiebung als 'Rotverschiebung' analysiert — Basis der Astronomie.",
+      "category": "Technik"
+    },
+    {
+      "id": "technik_de_081",
+      "question": "Welche Sensorart ermöglicht es Smartphones, ihre Lage im Raum zu erkennen?",
+      "answers": [
+        {"text": "Beschleunigungssensoren und Gyroskope", "correct": true},
+        {"text": "Mikrofone", "correct": false},
+        {"text": "Der Lichtsensor", "correct": false}
+      ],
+      "difficulty": "easy",
+      "fun_fact": "Diese MEMS-Sensoren ('Micro-Electro-Mechanical Systems') sind nur wenige Quadratmillimeter groß und messen Bewegung über winzige bewegliche Strukturen. Dieselbe Technik steckt in Airbags und Spielkonsolen-Controllern.",
+      "category": "Technik"
+    },
+    {
+      "id": "technik_de_082",
+      "question": "Was ist eine 'Brennstoffzelle'?",
+      "answers": [
+        {"text": "Ein Gerät, das aus Wasserstoff und Sauerstoff direkt Strom und Wasser erzeugt", "correct": true},
+        {"text": "Ein klassischer Verbrennungsmotor", "correct": false},
+        {"text": "Ein chemischer Schalter ohne Energieumwandlung", "correct": false}
+      ],
+      "difficulty": "medium",
+      "fun_fact": "Die Brennstoffzelle wurde schon 1839 von William Grove erfunden. Die NASA setzt sie seit den 1960ern in Raumkapseln ein — die Astronauten konnten das entstehende Wasser sogar trinken.",
+      "category": "Technik"
+    },
+    {
+      "id": "technik_de_083",
+      "question": "Welches Material wurde 2004 in Manchester isoliert und gewann 2010 den Physik-Nobelpreis?",
+      "answers": [
+        {"text": "Graphen — eine einzelne Lage Kohlenstoffatome", "correct": true},
+        {"text": "Kunststoff aus Pflanzenstärke", "correct": false},
+        {"text": "Recyceltes Aluminium", "correct": false}
+      ],
+      "difficulty": "hard",
+      "fun_fact": "Andre Geim und Konstantin Novoselov isolierten Graphen mit Klebeband aus Bleistift-Graphit. Es ist 200-mal stärker als Stahl, leitet besser als Kupfer und ist nur ein Atom dick. Industrielle Anwendungen sind aber bis heute begrenzt.",
+      "category": "Technik"
+    },
+    {
+      "id": "technik_de_084",
+      "question": "Welche Komponente in einer Wärmebildkamera macht die Wärmestrahlung sichtbar?",
+      "answers": [
+        {"text": "Ein Mikrobolometer-Sensor, der Infrarotstrahlung erfasst", "correct": true},
+        {"text": "Ein klassischer CMOS-Sensor wie in Handys", "correct": false},
+        {"text": "Ein Mikrofon-Array", "correct": false}
+      ],
+      "difficulty": "hard",
+      "fun_fact": "Mikrobolometer messen winzige Temperaturänderungen einer absorbierenden Pixel-Schicht. Erfunden in den USA für militärische Zwecke, heute auch in Smartphone-Aufsätzen verfügbar. Die Linsen bestehen oft aus Germanium statt Glas, weil Glas IR-Strahlung blockiert.",
+      "category": "Technik"
+    },
+    {
+      "id": "technik_de_085",
+      "question": "Was bewirkt der 'Tunneleffekt' in modernen Halbleitern?",
+      "answers": [
+        {"text": "Elektronen durchdringen klassisch unüberwindbare Barrieren — quantenmechanisch", "correct": true},
+        {"text": "Er sorgt für längere Akku-Laufzeit", "correct": false},
+        {"text": "Er ermöglicht, Daten per Schall zu übertragen", "correct": false}
+      ],
+      "difficulty": "hard",
+      "fun_fact": "Bei Strukturen unter etwa 5 nm beginnen Elektronen, Isolatorschichten quantenmechanisch zu 'durchtunneln' — ein Grund, warum die klassische Chip-Miniaturisierung an Grenzen stößt. Flash-Speicher und Tunnel-Dioden nutzen den Effekt aber bewusst.",
+      "category": "Technik"
+    },
+    {
+      "id": "technik_de_086",
+      "question": "Was ist eine 'Hash-Funktion' in der IT-Sicherheit?",
+      "answers": [
+        {"text": "Eine Einwegfunktion, die aus beliebig großen Daten einen festen Fingerabdruck erzeugt", "correct": true},
+        {"text": "Ein Verschlüsselungsverfahren mit zwei Schlüsseln", "correct": false},
+        {"text": "Eine Zufallspasswort-Generierung", "correct": false}
+      ],
+      "difficulty": "medium",
+      "fun_fact": "Hashes wie SHA-256 sind die Basis von Passwort-Speicherung, Software-Signaturen und Bitcoin-Mining. Aus dem Hash lässt sich der Ursprung praktisch nicht rekonstruieren — das ist genau der Sinn der Einweg-Eigenschaft.",
+      "category": "Technik"
+    },
+    {
+      "id": "technik_de_087",
+      "question": "Welches Betriebssystem nutzen die meisten Webserver weltweit als Basis?",
+      "answers": [
+        {"text": "Linux", "correct": true},
+        {"text": "macOS", "correct": false},
+        {"text": "Windows 10", "correct": false}
+      ],
+      "difficulty": "easy",
+      "fun_fact": "Linux startete 1991 als Hobby-Projekt eines finnischen Studenten. Heute laufen über 90% der weltweiten Webserver, alle Top-500-Supercomputer und über 70% der Smartphones (via Android-Kernel) auf Linux. Linus Torvalds entwickelt es noch heute.",
+      "category": "Technik"
+    },
+    {
+      "id": "technik_de_088",
+      "question": "Was ist die 'Cloud' in der IT?",
+      "answers": [
+        {"text": "Ein Netzwerk aus Rechenzentren, das Speicher und Rechenleistung über das Internet bereitstellt", "correct": true},
+        {"text": "Eine spezielle Software-Wolke um den Bildschirm", "correct": false},
+        {"text": "Eine Werbe-Animation in Webbrowsern", "correct": false}
+      ],
+      "difficulty": "easy",
+      "fun_fact": "Der Begriff 'Cloud' kommt aus alten Netzwerk-Diagrammen, wo das Internet als wolkige Form gezeichnet wurde. Amazon Web Services startete 2006 — heute ein Multi-Milliarden-Markt mit AWS, Microsoft Azure und Google Cloud als Hauptanbietern.",
+      "category": "Technik"
+    },
+    {
+      "id": "technik_de_089",
+      "question": "Wofür wird das Programm 'Photoshop' hauptsächlich genutzt?",
+      "answers": [
+        {"text": "Bildbearbeitung", "correct": true},
+        {"text": "Programmierung von Websites", "correct": false},
+        {"text": "Videoschnitt", "correct": false}
+      ],
+      "difficulty": "easy",
+      "fun_fact": "Die Brüder Thomas und John Knoll entwickelten Photoshop ursprünglich 1987 als Hobby-Projekt, Adobe kaufte die Software 1988. Heute ist 'photoshoppen' im Englischen ein Verb — etwas, das Marken wie Google selten erreichen, sich aber meist dagegen wehren.",
+      "category": "Technik"
+    },
+    {
+      "id": "technik_de_090",
+      "question": "Wonach ist die Programmiersprache 'Java' benannt?",
+      "answers": [
+        {"text": "Kaffee — 'Java' ist US-Slang für Kaffee", "correct": true},
+        {"text": "Cola", "correct": false},
+        {"text": "Tee", "correct": false}
+      ],
+      "difficulty": "medium",
+      "fun_fact": "Sun Microsystems veröffentlichte Java 1995 — der Name leitet sich vom Kaffee aus der indonesischen Insel Java ab. Daher auch das berühmte dampfende Tassen-Logo. Ursprünglicher Codename war 'Oak' — nach einer Eiche vor dem Büro des Erfinders James Gosling.",
+      "category": "Technik"
+    },
+    {
+      "id": "technik_de_091",
+      "question": "Was war ungewöhnlich am Bremssystem des Pariser Eiffelturms beim Bau 1889?",
+      "answers": [
+        {"text": "Die Aufzüge bewegten sich diagonal nach oben, mit hydraulischer Kraft", "correct": true},
+        {"text": "Sie liefen mit Wasserdampf", "correct": false},
+        {"text": "Sie wurden von Pferden gezogen", "correct": false}
+      ],
+      "difficulty": "hard",
+      "fun_fact": "Die schrägen Aufzüge in den Beinen waren technisch revolutionär — Otis lieferte die Mechanik. Wegen der gebogenen Schienen war das Tempo gering, aber zuverlässig. Teile der Original-Hydraulik aus 1889 sind bis heute in Betrieb.",
+      "category": "Technik"
+    },
+    {
+      "id": "technik_de_092",
+      "question": "Welche Technik wurde im Hoover Dam (USA, 1936) eingesetzt, damit der Beton nicht jahrzehntelang aushärtet?",
+      "answers": [
+        {"text": "Eingegossene Kühlleitungen mit zirkulierendem Wasser", "correct": true},
+        {"text": "Spezieller schnellhärtender Mond-Beton", "correct": false},
+        {"text": "Heizmatten im Inneren", "correct": false}
+      ],
+      "difficulty": "hard",
+      "fun_fact": "Hätten die Ingenieure einfach 3 Mio m³ Beton gegossen, würde der Damm laut Berechnungen erst nach über 100 Jahren auskühlen — und wäre dabei in unkontrollierbaren Spannungen gerissen. Die Kühlung verkürzte das auf wenige Jahre.",
+      "category": "Technik"
+    },
+    {
+      "id": "technik_de_093",
+      "question": "Welches Material verwendet das Pariser Centre Pompidou ungewöhnlich offen sichtbar an seiner Fassade?",
+      "answers": [
+        {"text": "Lüftungs- und Versorgungsrohre — farblich kodiert nach Funktion", "correct": true},
+        {"text": "Marmor", "correct": false},
+        {"text": "Holzlamellen", "correct": false}
+      ],
+      "difficulty": "medium",
+      "fun_fact": "Renzo Piano und Richard Rogers verlegten 1977 die Haustechnik bewusst nach außen — Lüftung blau, Wasser grün, Strom gelb, Sicherheit rot. So gewannen sie maximale Ausstellungsfläche innen.",
+      "category": "Technik"
+    },
+    {
+      "id": "technik_de_094",
+      "question": "Welche Funktion hat eine 'Firewall' in einem Computernetzwerk?",
+      "answers": [
+        {"text": "Sie filtert ein- und ausgehenden Datenverkehr nach Regeln", "correct": true},
+        {"text": "Sie kühlt überhitzte Server", "correct": false},
+        {"text": "Sie lädt automatisch alle Updates herunter", "correct": false}
+      ],
+      "difficulty": "easy",
+      "fun_fact": "Der Name stammt von Brandschutz-Mauern in Gebäuden, die Feuer am Übergreifen hindern. Die ersten Software-Firewalls entstanden Ende der 1980er bei DEC. Moderne 'Next-Generation Firewalls' arbeiten auf Anwendungsebene und erkennen einzelne Apps.",
+      "category": "Technik"
+    },
+    {
+      "id": "technik_de_095",
+      "question": "Was ist 'VPN' kurz erklärt?",
+      "answers": [
+        {"text": "Ein verschlüsselter Tunnel durch das Internet zu einem anderen Netzwerk", "correct": true},
+        {"text": "Eine besonders schnelle Glasfaserleitung", "correct": false},
+        {"text": "Ein neuer Mobilfunk-Standard", "correct": false}
+      ],
+      "difficulty": "easy",
+      "fun_fact": "VPN steht für 'Virtual Private Network'. Ursprünglich für Firmen entwickelt, damit Mitarbeiter sicher ins Büro-Netz kommen. Heute auch verbreitet, um geografische Sperren zu umgehen — Netflix sperrt allerdings die bekanntesten VPN-IP-Bereiche aktiv aus.",
+      "category": "Technik"
+    },
+    {
+      "id": "technik_de_096",
+      "question": "Welche kuriose Eigenheit hat der ICE-Hochgeschwindigkeitszug der Deutschen Bahn bei der Bremsung?",
+      "answers": [
+        {"text": "Er kann mit der Wirbelstrombremse berührungslos abbremsen — ohne Belag-Verschleiß", "correct": true},
+        {"text": "Er wirft Sand auf die Schienen", "correct": false},
+        {"text": "Er fährt einen Schleifbügel auf den Boden", "correct": false}
+      ],
+      "difficulty": "hard",
+      "fun_fact": "Magnete unter dem Zug induzieren in der Schiene Wirbelströme, die als magnetische Bremse wirken. Vorteil: kein Verschleiß. Nachteil: die Schiene erhitzt sich stark, weshalb die Bremse nur abschnittsweise zugelassen ist.",
+      "category": "Technik"
+    },
+    {
+      "id": "technik_de_097",
+      "question": "Wofür wurden die ersten 'Steckdosen' Anfang des 20. Jahrhunderts hauptsächlich genutzt?",
+      "answers": [
+        {"text": "Zum Anschluss von Lampen — sie sahen aus wie Lampenfassungen", "correct": true},
+        {"text": "Zum Heizen von Wasser", "correct": false},
+        {"text": "Zum Aufladen von Akkus", "correct": false}
+      ],
+      "difficulty": "medium",
+      "fun_fact": "Frühe Hausverkabelung kannte nur Beleuchtung. Erst als Bügeleisen, Radios und andere Geräte kamen, wurden eigene Wandsteckdosen entwickelt — bis heute gibt es weltweit über ein Dutzend inkompatible Stecker-Standards.",
+      "category": "Technik"
+    },
+    {
+      "id": "technik_de_098",
+      "question": "Welches optische Phänomen nutzen Glasfaserkabel zur Datenübertragung?",
+      "answers": [
+        {"text": "Totalreflexion des Lichts an der Faserwand", "correct": true},
+        {"text": "Diffraktion an Mikro-Gittern", "correct": false},
+        {"text": "Magnetfeld-Drehung", "correct": false}
+      ],
+      "difficulty": "medium",
+      "fun_fact": "Innerhalb der Faser wird das Licht so flach in den Mantel gelenkt, dass es zu 100% reflektiert wird — wie ein Lichtstrahl, der unter Wasser nicht entweicht. Charles Kao bekam 2009 den Physik-Nobelpreis für die Pionierarbeit dazu.",
+      "category": "Technik"
+    },
+    {
+      "id": "technik_de_099",
+      "question": "Welche Energieart wandelt eine Solarzelle direkt in Strom um?",
+      "answers": [
+        {"text": "Lichtenergie", "correct": true},
+        {"text": "Wärmeenergie", "correct": false},
+        {"text": "Windenergie", "correct": false}
+      ],
+      "difficulty": "easy",
+      "fun_fact": "Photovoltaik basiert auf dem photoelektrischen Effekt, den Einstein 1905 erklärte und für den er 1921 den Nobelpreis bekam — nicht für die Relativitätstheorie. Moderne Silizium-Zellen erreichen etwa 22–24% Wirkungsgrad.",
+      "category": "Technik"
+    },
+    {
+      "id": "technik_de_100",
+      "question": "Was bewirkt das berühmte 'Strg + Z' in den meisten Computer-Anwendungen?",
+      "answers": [
+        {"text": "Es macht die letzte Aktion rückgängig (Undo)", "correct": true},
+        {"text": "Es schließt das Programm", "correct": false},
+        {"text": "Es kopiert den markierten Text", "correct": false}
+      ],
+      "difficulty": "easy",
+      "fun_fact": "Die Idee einer Undo-Funktion tauchte 1968 in einer IBM-Arbeit von Lance Miller auf; etabliert wurde sie in den 1970ern bei Xerox PARC, u.a. durch Warren Teitelman in InterLisp. Strg+Z setzte sich als Tastenkürzel durch, weil das Z direkt neben Strg liegt — gut mit einer Hand erreichbar.",
+      "category": "Technik"
+    },
+    {
+      "id": "technik_de_101",
+      "question": "Was unterscheidet einen Quantencomputer grundlegend von einem klassischen Computer?",
+      "answers": [
+        {"text": "Er rechnet mit Qubits, die mehrere Zustände gleichzeitig einnehmen können", "correct": true},
+        {"text": "Er hat keine Software, nur Hardware", "correct": false},
+        {"text": "Er braucht keinen Strom", "correct": false}
+      ],
+      "difficulty": "medium",
+      "fun_fact": "Qubits nutzen Quanten-Superposition und Verschränkung. Heutige Quantencomputer brauchen Temperaturen nahe dem absoluten Nullpunkt (-273 °C) und sind nur für spezielle Probleme schneller als klassische Rechner — keine Konkurrenz zum Laptop.",
+      "category": "Technik"
+    },
+    {
+      "id": "technik_de_102",
+      "question": "Wofür steht die Endung '.gif' bei einer Bilddatei?",
+      "answers": [
+        {"text": "Graphics Interchange Format", "correct": true},
+        {"text": "General Image File", "correct": false},
+        {"text": "Global Internet Frame", "correct": false}
+      ],
+      "difficulty": "easy",
+      "fun_fact": "GIF entwickelte CompuServe 1987 — es war eines der ersten Formate, das Animationen im Web ermöglichte. Die Aussprache ist bis heute umstritten: GIF-Erfinder Steve Wilhite besteht auf 'Dschiff', während die meisten Nutzer 'Giff' sagen.",
+      "category": "Technik"
     }
   ]
 }

@@ -567,6 +567,642 @@
       "difficulty": "medium",
       "fun_fact": "Die Donau fließt durch vier europäische Hauptstädte: Wien, Bratislava, Budapest und Belgrad. Kein anderer Fluss der Welt verbindet so viele Hauptstädte.",
       "category": "Geographie"
+    },
+    {
+      "id": "geo_051",
+      "question": "Welcher Fluss fließt durch die meisten Länder?",
+      "answers": [
+        {"text": "Die Donau", "correct": true},
+        {"text": "Der Nil", "correct": false},
+        {"text": "Der Kongo", "correct": false}
+      ],
+      "difficulty": "easy",
+      "fun_fact": "Die Donau durchquert oder berührt 10 Länder — von Deutschland bis ins Schwarze Meer in Rumänien. Kein anderer Fluss der Welt verbindet so viele Staaten.",
+      "category": "Geographie"
+    },
+    {
+      "id": "geo_052",
+      "question": "Welcher Wasserfall ist der höchste der Welt?",
+      "answers": [
+        {"text": "Salto Ángel in Venezuela", "correct": true},
+        {"text": "Niagarafälle", "correct": false},
+        {"text": "Victoriafälle", "correct": false}
+      ],
+      "difficulty": "easy",
+      "fun_fact": "Der Salto Ángel stürzt 979 Meter in die Tiefe — so hoch, dass das Wasser auf dem Weg nach unten oft schon zu Nebel zerstäubt, bevor es den Boden erreicht.",
+      "category": "Geographie"
+    },
+    {
+      "id": "geo_053",
+      "question": "Auf welchem Kontinent gibt es keine einheimischen Schlangen?",
+      "answers": [
+        {"text": "Antarktis", "correct": true},
+        {"text": "Australien", "correct": false},
+        {"text": "Europa", "correct": false}
+      ],
+      "difficulty": "easy",
+      "fun_fact": "Die Antarktis ist zu kalt für wechselwarme Reptilien. Schlangen können dort nicht überleben, weil ihr Stoffwechsel bei Minusgraden zum Erliegen kommt.",
+      "category": "Geographie"
+    },
+    {
+      "id": "geo_054",
+      "question": "Welches Land hat geradlinige Grenzen, die fast perfekt entlang von Längen- und Breitengraden verlaufen?",
+      "answers": [
+        {"text": "Ägypten", "correct": true},
+        {"text": "Mongolei", "correct": false},
+        {"text": "Türkei", "correct": false}
+      ],
+      "difficulty": "medium",
+      "fun_fact": "Ägyptens Grenzen zu Libyen und Sudan sind nahezu perfekt gerade — sie wurden im 19. Jahrhundert mit dem Lineal entlang von Längen- und Breitengraden gezogen, ohne Rücksicht auf Geografie.",
+      "category": "Geographie"
+    },
+    {
+      "id": "geo_055",
+      "question": "In welcher dieser Städte nördlich des Polarkreises leben die meisten Menschen?",
+      "answers": [
+        {"text": "Murmansk in Russland", "correct": true},
+        {"text": "Tromsø in Norwegen", "correct": false},
+        {"text": "Longyearbyen auf Spitzbergen", "correct": false}
+      ],
+      "difficulty": "hard",
+      "fun_fact": "Murmansk ist die mit Abstand größte Stadt nördlich des Polarkreises — Tromsø und Longyearbyen sind deutlich kleiner. Dank des Golfstroms friert Murmansks Hafen trotz Polarklima nie zu.",
+      "category": "Geographie"
+    },
+    {
+      "id": "geo_056",
+      "question": "Welches Land der Erde liegt komplett über 1.000 Meter Höhe?",
+      "answers": [
+        {"text": "Lesotho", "correct": true},
+        {"text": "Bhutan", "correct": false},
+        {"text": "Nepal", "correct": false}
+      ],
+      "difficulty": "hard",
+      "fun_fact": "Lesotho ist das einzige unabhängige Land der Erde, dessen Staatsgebiet komplett über 1.000 Metern liegt. Selbst der tiefste Punkt liegt bei etwa 1.400 Metern — höher als die meisten europäischen Berge.",
+      "category": "Geographie"
+    },
+    {
+      "id": "geo_057",
+      "question": "Welcher Vulkan zerstörte 79 n. Chr. die Stadt Pompeji?",
+      "answers": [
+        {"text": "Vesuv", "correct": true},
+        {"text": "Ätna", "correct": false},
+        {"text": "Stromboli", "correct": false}
+      ],
+      "difficulty": "easy",
+      "fun_fact": "Der Vesuv ist heute der einzige aktive Vulkan auf dem europäischen Festland. In seiner unmittelbaren Umgebung leben über 3 Millionen Menschen — keine andere bewohnte Region weltweit liegt so dicht an einem aktiven Vulkan.",
+      "category": "Geographie"
+    },
+    {
+      "id": "geo_058",
+      "question": "Welches afrikanische Land ist vollständig von Südafrika umschlossen?",
+      "answers": [
+        {"text": "Lesotho", "correct": true},
+        {"text": "Eswatini", "correct": false},
+        {"text": "Botswana", "correct": false}
+      ],
+      "difficulty": "easy",
+      "fun_fact": "Lesotho ist komplett von Südafrika umgeben — eine sogenannte Enklave. Eswatini grenzt zwar an Südafrika, hat aber auch eine Grenze zu Mosambik und ist daher keine Enklave.",
+      "category": "Geographie"
+    },
+    {
+      "id": "geo_059",
+      "question": "Welches Gewässer ist der größte Binnensee der Erde?",
+      "answers": [
+        {"text": "Kaspisches Meer", "correct": true},
+        {"text": "Oberer See in Nordamerika", "correct": false},
+        {"text": "Victoriasee in Afrika", "correct": false}
+      ],
+      "difficulty": "medium",
+      "fun_fact": "Das Kaspische Meer hat rund 371.000 km² Fläche und trägt den Namen ‚Meer' wegen seines Salzgehalts. Es hat keine Verbindung zum Ozean und ist damit der größte Binnensee der Welt — größer als Deutschland.",
+      "category": "Geographie"
+    },
+    {
+      "id": "geo_060",
+      "question": "Welche Insel teilen sich drei Länder?",
+      "answers": [
+        {"text": "Borneo", "correct": true},
+        {"text": "Neuguinea", "correct": false},
+        {"text": "Hispaniola", "correct": false}
+      ],
+      "difficulty": "medium",
+      "fun_fact": "Borneo gehört zu Indonesien, Malaysia und Brunei — als einzige Insel der Welt mit drei Staaten. Neuguinea wird nur zwischen Indonesien und Papua-Neuguinea geteilt, Hispaniola zwischen Haiti und der Dominikanischen Republik.",
+      "category": "Geographie"
+    },
+    {
+      "id": "geo_061",
+      "question": "Welche Hauptstadt liegt fast direkt am Äquator?",
+      "answers": [
+        {"text": "Quito", "correct": true},
+        {"text": "Jakarta", "correct": false},
+        {"text": "Lima", "correct": false}
+      ],
+      "difficulty": "medium",
+      "fun_fact": "Quito in Ecuador liegt nur etwa 25 km südlich des Äquators. Das nahegelegene Denkmal ‚Mitad del Mundo' markiert die offizielle Linie — die echte verläuft allerdings einige hundert Meter weiter nördlich, wie GPS-Messungen zeigten.",
+      "category": "Geographie"
+    },
+    {
+      "id": "geo_062",
+      "question": "In welchem Land liegt der höchste Gipfel außerhalb Asiens?",
+      "answers": [
+        {"text": "Argentinien", "correct": true},
+        {"text": "Tansania", "correct": false},
+        {"text": "USA", "correct": false}
+      ],
+      "difficulty": "hard",
+      "fun_fact": "Der Aconcagua in den argentinischen Anden ist mit 6.961 Metern der höchste Berg außerhalb Asiens — und der höchste Punkt der gesamten westlichen und südlichen Hemisphäre.",
+      "category": "Geographie"
+    },
+    {
+      "id": "geo_063",
+      "question": "Welches afrikanische Land hat zwei Hauptstädte?",
+      "answers": [
+        {"text": "Eswatini", "correct": true},
+        {"text": "Kamerun", "correct": false},
+        {"text": "Marokko", "correct": false}
+      ],
+      "difficulty": "hard",
+      "fun_fact": "Eswatini hat Mbabane als administrative und Lobamba als königliche und gesetzgebende Hauptstadt. Südafrika hat sogar drei Hauptstädte: Pretoria, Kapstadt und Bloemfontein.",
+      "category": "Geographie"
+    },
+    {
+      "id": "geo_064",
+      "question": "Welches Meer liegt zwischen Griechenland und der Türkei?",
+      "answers": [
+        {"text": "Ägäisches Meer", "correct": true},
+        {"text": "Ionisches Meer", "correct": false},
+        {"text": "Adriatisches Meer", "correct": false}
+      ],
+      "difficulty": "easy",
+      "fun_fact": "Die Ägäis enthält über 2.000 Inseln, von denen aber nur etwa 170 bewohnt sind. Die Seegrenze zwischen Griechenland und der Türkei verläuft teilweise nur wenige hundert Meter von der türkischen Küste entfernt.",
+      "category": "Geographie"
+    },
+    {
+      "id": "geo_065",
+      "question": "In welchem Land werden über 800 verschiedene Sprachen gesprochen — mehr als in jedem anderen Land der Erde?",
+      "answers": [
+        {"text": "Papua-Neuguinea", "correct": true},
+        {"text": "Indien", "correct": false},
+        {"text": "Indonesien", "correct": false}
+      ],
+      "difficulty": "medium",
+      "fun_fact": "In Papua-Neuguinea werden über 840 lebende Sprachen gesprochen — etwa ein Achtel aller Sprachen der Welt. Bergketten und dichter Regenwald isolierten Tausende von Stämmen jahrtausendelang voneinander.",
+      "category": "Geographie"
+    },
+    {
+      "id": "geo_066",
+      "question": "In welchem Ort wurden die tiefsten Temperaturen einer dauerhaft bewohnten Siedlung gemessen?",
+      "answers": [
+        {"text": "Oimjakon in Sibirien", "correct": true},
+        {"text": "Nuuk in Grönland", "correct": false},
+        {"text": "Yellowknife in Kanada", "correct": false}
+      ],
+      "difficulty": "medium",
+      "fun_fact": "In Oimjakon in Sibirien wurden Temperaturen von unter −67 °C gemessen. Trotzdem leben dort ganzjährig rund 500 Menschen. Autos müssen den ganzen Tag laufen, sonst springen sie nicht mehr an.",
+      "category": "Geographie"
+    },
+    {
+      "id": "geo_067",
+      "question": "Welche Bucht ist berühmt für extreme Gezeiten von über 15 Metern Höhenunterschied?",
+      "answers": [
+        {"text": "Bay of Fundy in Kanada", "correct": true},
+        {"text": "Bucht von Neapel", "correct": false},
+        {"text": "Bucht von Tokio", "correct": false}
+      ],
+      "difficulty": "hard",
+      "fun_fact": "In der Bay of Fundy zwischen Nova Scotia und New Brunswick bewegen sich bei jedem Gezeitenwechsel rund 160 Milliarden Tonnen Wasser. Die Form der trichterförmigen Bucht verstärkt die normalen Gezeiten um ein Vielfaches.",
+      "category": "Geographie"
+    },
+    {
+      "id": "geo_068",
+      "question": "Welches Land ist das einzige, dessen Festland sowohl den Atlantik als auch den Indischen Ozean berührt?",
+      "answers": [
+        {"text": "Südafrika", "correct": true},
+        {"text": "Mosambik", "correct": false},
+        {"text": "Indien", "correct": false}
+      ],
+      "difficulty": "medium",
+      "fun_fact": "Am Kap Agulhas, dem südlichsten Punkt Afrikas, treffen Atlantik und Indischer Ozean offiziell aufeinander. Die meisten halten irrtümlich das Kap der Guten Hoffnung für diesen Punkt — es liegt aber 150 km weiter nordwestlich.",
+      "category": "Geographie"
+    },
+    {
+      "id": "geo_069",
+      "question": "Welche europäische Hauptstadt liegt auf der gleichen geographischen Breite wie Anchorage in Alaska?",
+      "answers": [
+        {"text": "Helsinki", "correct": true},
+        {"text": "Oslo", "correct": false},
+        {"text": "Berlin", "correct": false}
+      ],
+      "difficulty": "hard",
+      "fun_fact": "Helsinki liegt auf etwa 60° Nord — genauso weit nördlich wie Anchorage in Alaska. Dank des Golfstroms ist das Klima dort aber viel milder als in der eisigen Pazifikstadt.",
+      "category": "Geographie"
+    },
+    {
+      "id": "geo_070",
+      "question": "Welches dieser Länder hat keinen einzigen permanenten Fluss?",
+      "answers": [
+        {"text": "Saudi-Arabien", "correct": true},
+        {"text": "Ägypten", "correct": false},
+        {"text": "Marokko", "correct": false}
+      ],
+      "difficulty": "medium",
+      "fun_fact": "Saudi-Arabien hat keinen einzigen permanenten Fluss. Nur sogenannte Wadis führen nach Regenfällen kurzzeitig Wasser. Trinkwasser stammt fast komplett aus Meerwasser-Entsalzungsanlagen.",
+      "category": "Geographie"
+    },
+    {
+      "id": "geo_071",
+      "question": "Welche Wüste dehnt sich seit Jahrzehnten sichtbar nach Süden aus?",
+      "answers": [
+        {"text": "Sahara", "correct": true},
+        {"text": "Gobi", "correct": false},
+        {"text": "Atacama", "correct": false}
+      ],
+      "difficulty": "easy",
+      "fun_fact": "Die Sahara dehnt sich seit Jahrzehnten in Richtung Sahelzone aus — ein Prozess namens Desertifikation. Ein Großprojekt namens ‚Great Green Wall' soll mit einer 8.000 km langen Baumlinie vom Senegal bis Dschibuti dagegenhalten.",
+      "category": "Geographie"
+    },
+    {
+      "id": "geo_072",
+      "question": "Welche Insel im Mittelmeer ist die größte?",
+      "answers": [
+        {"text": "Sizilien", "correct": true},
+        {"text": "Sardinien", "correct": false},
+        {"text": "Zypern", "correct": false}
+      ],
+      "difficulty": "medium",
+      "fun_fact": "Sizilien ist mit rund 25.700 km² die größte Insel des Mittelmeers, Sardinien folgt mit 24.100 km² knapp dahinter. Zypern liegt auf Platz drei. Alle drei gehören geografisch zu Europa, kulturell aber jeweils mit ganz eigener Geschichte.",
+      "category": "Geographie"
+    },
+    {
+      "id": "geo_073",
+      "question": "Welches Land hat traditionell die meisten UNESCO-Welterbestätten?",
+      "answers": [
+        {"text": "Italien", "correct": true},
+        {"text": "Frankreich", "correct": false},
+        {"text": "Griechenland", "correct": false}
+      ],
+      "difficulty": "medium",
+      "fun_fact": "Italien führt seit Jahren das UNESCO-Ranking an, dicht gefolgt von China. Allein die Altstadt von Rom, der Vatikan und Florenz tragen einen erheblichen Teil bei — auf engstem Raum konzentriert.",
+      "category": "Geographie"
+    },
+    {
+      "id": "geo_074",
+      "question": "Mit welchem einzigen anderen Land teilt Kanada eine Landgrenze?",
+      "answers": [
+        {"text": "USA", "correct": true},
+        {"text": "Russland", "correct": false},
+        {"text": "Grönland", "correct": false}
+      ],
+      "difficulty": "easy",
+      "fun_fact": "Kanada teilt nur eine Landgrenze — die mit den USA. Mit 8.891 km ist sie die längste durchgehende Grenze zwischen zwei Ländern der Welt und wird vielerorts gar nicht physisch markiert.",
+      "category": "Geographie"
+    },
+    {
+      "id": "geo_075",
+      "question": "Welcher See ist der flächenmäßig größte See, der komplett innerhalb Deutschlands liegt?",
+      "answers": [
+        {"text": "Müritz", "correct": true},
+        {"text": "Bodensee", "correct": false},
+        {"text": "Chiemsee", "correct": false}
+      ],
+      "difficulty": "hard",
+      "fun_fact": "Die Müritz in Mecklenburg-Vorpommern ist mit 112 km² der größte See, der komplett auf deutschem Staatsgebiet liegt. Der Bodensee ist zwar viel größer, gehört aber zu drei Staaten: Deutschland, Schweiz, Österreich.",
+      "category": "Geographie"
+    },
+    {
+      "id": "geo_076",
+      "question": "Welche Region wird ‚Dach der Welt' genannt?",
+      "answers": [
+        {"text": "Tibet", "correct": true},
+        {"text": "Nepal", "correct": false},
+        {"text": "Mongolei", "correct": false}
+      ],
+      "difficulty": "easy",
+      "fun_fact": "Das tibetische Plateau liegt im Schnitt auf 4.500 Metern Höhe — höher als jeder Alpengipfel. Es ist so hoch, dass es das Klima ganz Asiens beeinflusst und den Monsun mit antreibt.",
+      "category": "Geographie"
+    },
+    {
+      "id": "geo_077",
+      "question": "Welches Land ist der weltweit größte Produzent von Bananen?",
+      "answers": [
+        {"text": "Indien", "correct": true},
+        {"text": "Ecuador", "correct": false},
+        {"text": "Philippinen", "correct": false}
+      ],
+      "difficulty": "medium",
+      "fun_fact": "Indien produziert über 30 Millionen Tonnen Bananen pro Jahr — fast ein Drittel der Weltproduktion. Fast alles davon wird aber im Inland gegessen. Größter Exporteur ist Ecuador.",
+      "category": "Geographie"
+    },
+    {
+      "id": "geo_078",
+      "question": "Welches Land verbietet per Gesetz das Besteigen seines höchsten Berges aus religiösen Gründen?",
+      "answers": [
+        {"text": "Bhutan", "correct": true},
+        {"text": "Nepal", "correct": false},
+        {"text": "Saudi-Arabien", "correct": false}
+      ],
+      "difficulty": "hard",
+      "fun_fact": "Bhutans Gangkhar Puensum (7.570 m) ist seit 1994 per Gesetz für Bergsteiger gesperrt — er gilt als Sitz von Geistern. Damit ist er der höchste unbestiegene Berg der Welt.",
+      "category": "Geographie"
+    },
+    {
+      "id": "geo_079",
+      "question": "Auf welcher Insel leben Lemuren in freier Wildbahn — und nirgendwo sonst auf der Erde?",
+      "answers": [
+        {"text": "Madagaskar", "correct": true},
+        {"text": "Sumatra", "correct": false},
+        {"text": "Borneo", "correct": false}
+      ],
+      "difficulty": "easy",
+      "fun_fact": "Madagaskar löste sich vor rund 88 Millionen Jahren vom indischen Kontinent. Auf der isolierten Insel entwickelten sich Lemuren — sie kommen sonst nirgendwo auf der Welt vor.",
+      "category": "Geographie"
+    },
+    {
+      "id": "geo_080",
+      "question": "Welche Hauptstadt sinkt jedes Jahr um mehrere Zentimeter ab und soll deshalb bis 2045 verlegt werden?",
+      "answers": [
+        {"text": "Jakarta", "correct": true},
+        {"text": "Bangkok", "correct": false},
+        {"text": "Manila", "correct": false}
+      ],
+      "difficulty": "easy",
+      "fun_fact": "Jakarta sinkt teils um bis zu 25 cm pro Jahr — vor allem wegen exzessiver Grundwasserentnahme. Die indonesische Regierung verlegt deshalb die Hauptstadt in die neue Planstadt Nusantara auf Borneo.",
+      "category": "Geographie"
+    },
+    {
+      "id": "geo_081",
+      "question": "Vor welchem Land liegt das größte zusammenhängende Korallenriff der Welt?",
+      "answers": [
+        {"text": "Australien", "correct": true},
+        {"text": "Belize", "correct": false},
+        {"text": "Indonesien", "correct": false}
+      ],
+      "difficulty": "easy",
+      "fun_fact": "Das Great Barrier Reef ist über 2.300 km lang und so groß, dass es als einzige biologische Struktur der Erde aus dem All sichtbar ist — größer als Italien.",
+      "category": "Geographie"
+    },
+    {
+      "id": "geo_082",
+      "question": "Welche Wüste ist die größte zusammenhängende Sandwüste der Welt?",
+      "answers": [
+        {"text": "Rub al-Chali in Arabien", "correct": true},
+        {"text": "Gobi in Asien", "correct": false},
+        {"text": "Kalahari in Afrika", "correct": false}
+      ],
+      "difficulty": "hard",
+      "fun_fact": "Die Rub al-Chali (‚das leere Viertel') auf der Arabischen Halbinsel ist die größte zusammenhängende Sandwüste der Erde mit Dünen bis 250 Meter Höhe. Die Sahara ist zwar insgesamt größer, besteht aber überwiegend aus Geröll- und Felswüste — nicht aus Sand.",
+      "category": "Geographie"
+    },
+    {
+      "id": "geo_083",
+      "question": "Wie sind die tiefen Fjorde Norwegens entstanden?",
+      "answers": [
+        {"text": "Durch Gletschererosion in den Eiszeiten", "correct": true},
+        {"text": "Durch tektonische Plattenverschiebung", "correct": false},
+        {"text": "Durch Vulkanausbrüche", "correct": false}
+      ],
+      "difficulty": "easy",
+      "fun_fact": "Norwegische Fjorde wurden während der Eiszeiten von kilometerdicken Gletschern in das Festland gefräst. Der Sognefjord ist mit 1.308 Metern Tiefe und 205 km Länge der tiefste und längste Fjord Europas.",
+      "category": "Geographie"
+    },
+    {
+      "id": "geo_084",
+      "question": "Wo liegt der Schnittpunkt von Äquator und Nullmeridian (0°, 0°)?",
+      "answers": [
+        {"text": "Mitten im Atlantischen Ozean", "correct": true},
+        {"text": "In Ghana, in der Stadt Accra", "correct": false},
+        {"text": "In Gabun, in der Stadt Libreville", "correct": false}
+      ],
+      "difficulty": "medium",
+      "fun_fact": "Der Schnittpunkt von Äquator und Nullmeridian liegt etwa 614 km südlich von Accra mitten im Golf von Guinea. Eine Boje namens ‚Soul Buoy' markiert die Stelle — wer dorthin reist, bekommt ein Diplom vom Ozeanographischen Institut.",
+      "category": "Geographie"
+    },
+    {
+      "id": "geo_085",
+      "question": "Welche Sprache hat weltweit die meisten Muttersprachler?",
+      "answers": [
+        {"text": "Mandarin-Chinesisch", "correct": true},
+        {"text": "Englisch", "correct": false},
+        {"text": "Hindi", "correct": false}
+      ],
+      "difficulty": "easy",
+      "fun_fact": "Mandarin hat rund 940 Millionen Muttersprachler. Englisch hat zwar mehr Sprecher insgesamt, aber die meisten lernen es als Zweitsprache — als Muttersprache liegt es mit rund 380 Millionen erst auf Platz drei hinter Spanisch.",
+      "category": "Geographie"
+    },
+    {
+      "id": "geo_086",
+      "question": "Welche Insel trennt sich seit Millionen Jahren langsam vom afrikanischen Festland?",
+      "answers": [
+        {"text": "Madagaskar", "correct": true},
+        {"text": "Sansibar", "correct": false},
+        {"text": "Sokotra", "correct": false}
+      ],
+      "difficulty": "hard",
+      "fun_fact": "Madagaskar driftet jährlich rund 2 cm weiter von Afrika weg. Die Trennung begann vor rund 165 Millionen Jahren — lange genug, dass sich auf der Insel eine einzigartige Tierwelt entwickeln konnte.",
+      "category": "Geographie"
+    },
+    {
+      "id": "geo_087",
+      "question": "Welche europäische Stadt hat über 2.500 Brücken — mehr als Venedig, Amsterdam und London zusammen?",
+      "answers": [
+        {"text": "Hamburg", "correct": true},
+        {"text": "Stockholm", "correct": false},
+        {"text": "Sankt Petersburg", "correct": false}
+      ],
+      "difficulty": "medium",
+      "fun_fact": "Hamburg hat über 2.500 Brücken. Grund sind die zahlreichen Fleete, Kanäle und der weit verzweigte Hafenbereich. Venedig hat dagegen nur rund 400 Brücken.",
+      "category": "Geographie"
+    },
+    {
+      "id": "geo_088",
+      "question": "Welcher Berg ist vom Erdmittelpunkt aus gemessen der höchste Gipfel der Erde?",
+      "answers": [
+        {"text": "Chimborazo in Ecuador", "correct": true},
+        {"text": "Mount Everest", "correct": false},
+        {"text": "K2", "correct": false}
+      ],
+      "difficulty": "medium",
+      "fun_fact": "Weil die Erde am Äquator ausgebeult ist, liegt der Gipfel des 6.263 m hohen Chimborazo rund 2.000 Meter weiter vom Erdmittelpunkt entfernt als der Mount Everest. Vom Meeresspiegel aus ist der Everest natürlich höher.",
+      "category": "Geographie"
+    },
+    {
+      "id": "geo_089",
+      "question": "Welcher Kanal verbindet das Mittelmeer mit dem Roten Meer?",
+      "answers": [
+        {"text": "Suezkanal", "correct": true},
+        {"text": "Panamakanal", "correct": false},
+        {"text": "Kieler Kanal", "correct": false}
+      ],
+      "difficulty": "easy",
+      "fun_fact": "Der Suezkanal wurde 1869 eröffnet und ist 193 km lang. Als 2021 das Containerschiff ‚Ever Given' den Kanal sechs Tage lang blockierte, stauten sich Waren im Wert von 9 Milliarden Dollar pro Tag.",
+      "category": "Geographie"
+    },
+    {
+      "id": "geo_090",
+      "question": "Wo verläuft die kürzeste Linienflugverbindung der Welt mit nur rund 90 Sekunden Flugzeit?",
+      "answers": [
+        {"text": "Auf den Orkney-Inseln in Schottland", "correct": true},
+        {"text": "Zwischen Saint Martin und Anguilla in der Karibik", "correct": false},
+        {"text": "Zwischen den japanischen Inseln Okinawa und Aguni", "correct": false}
+      ],
+      "difficulty": "hard",
+      "fun_fact": "Die nur 2,7 km kurze Verbindung zwischen den Orkney-Inseln Westray und Papa Westray ist die kürzeste planmäßige Linienflugstrecke der Welt. Bei Rückenwind dauert der Flug nur 53 Sekunden — kürzer als das Anschnallen.",
+      "category": "Geographie"
+    },
+    {
+      "id": "geo_091",
+      "question": "Welches Gewässer hat den höchsten gemessenen Salzgehalt der Welt?",
+      "answers": [
+        {"text": "Der Don-Juan-Teich in der Antarktis", "correct": true},
+        {"text": "Der Assalsee in Dschibuti", "correct": false},
+        {"text": "Der Karaboghasgolf am Kaspischen Meer", "correct": false}
+      ],
+      "difficulty": "hard",
+      "fun_fact": "Der Don-Juan-Teich in der Antarktis hat einen Salzgehalt von rund 40 % — über zehnmal so salzig wie Meerwasser. Selbst bei −50 °C friert er nicht zu, weil das gelöste Salz den Gefrierpunkt drastisch senkt.",
+      "category": "Geographie"
+    },
+    {
+      "id": "geo_092",
+      "question": "Aus der Luft betrachtet hat welche Hauptstadt die Form eines Flugzeugs?",
+      "answers": [
+        {"text": "Brasília", "correct": true},
+        {"text": "Canberra", "correct": false},
+        {"text": "Astana", "correct": false}
+      ],
+      "difficulty": "medium",
+      "fun_fact": "Brasília wurde ab 1956 binnen vier Jahren mitten im brasilianischen Hochland aus dem Boden gestampft. Der Stadtplaner Lúcio Costa entwarf den Grundriss in Form eines Flugzeugs — Symbol für den Aufbruch in eine neue Zeit.",
+      "category": "Geographie"
+    },
+    {
+      "id": "geo_093",
+      "question": "Welche US-Bundesstaaten teilen sich den Rekord für die meisten Nachbarstaaten (je acht)?",
+      "answers": [
+        {"text": "Tennessee und Missouri", "correct": true},
+        {"text": "Texas und Kalifornien", "correct": false},
+        {"text": "Pennsylvania und Ohio", "correct": false}
+      ],
+      "difficulty": "hard",
+      "fun_fact": "Tennessee und Missouri grenzen jeweils an acht andere Bundesstaaten und teilen sich den Rekord. Texas ist zwar riesig, hat aber nur vier Nachbarn — weniger als die meisten vermuten.",
+      "category": "Geographie"
+    },
+    {
+      "id": "geo_094",
+      "question": "Welche heutige türkische Stadt war fast 1.100 Jahre lang Hauptstadt des Oströmischen Reiches?",
+      "answers": [
+        {"text": "Konstantinopel, heute Istanbul", "correct": true},
+        {"text": "Ephesos", "correct": false},
+        {"text": "Smyrna, heute Izmir", "correct": false}
+      ],
+      "difficulty": "medium",
+      "fun_fact": "Kaiser Konstantin verlegte 330 n. Chr. die Hauptstadt von Rom nach Byzanz und benannte die Stadt nach sich selbst. Konstantinopel blieb fast 1.100 Jahre lang Hauptstadt des Oströmischen Reiches — länger, als Rom es jemals war.",
+      "category": "Geographie"
+    },
+    {
+      "id": "geo_095",
+      "question": "Welcher See liegt komplett in einem einzigen Vulkankrater und ist der tiefste See der USA?",
+      "answers": [
+        {"text": "Crater Lake in Oregon", "correct": true},
+        {"text": "Lake Tahoe", "correct": false},
+        {"text": "Yellowstone Lake", "correct": false}
+      ],
+      "difficulty": "medium",
+      "fun_fact": "Der Crater Lake entstand vor rund 7.700 Jahren, als der Vulkan Mount Mazama in sich zusammenbrach. Mit 594 Metern Tiefe ist er der tiefste See der USA — und so klar, dass Sonnenlicht über 100 Meter tief eindringt.",
+      "category": "Geographie"
+    },
+    {
+      "id": "geo_096",
+      "question": "Welches Land hat mit rund 270.000 Inseln die meisten Inseln der Welt?",
+      "answers": [
+        {"text": "Schweden", "correct": true},
+        {"text": "Finnland", "correct": false},
+        {"text": "Kanada", "correct": false}
+      ],
+      "difficulty": "hard",
+      "fun_fact": "Schweden hat rund 270.000 Inseln — mehr als jedes andere Land. Die meisten sind allerdings winzig und unbewohnt. Allein im Stockholmer Schärengarten liegen über 30.000 davon.",
+      "category": "Geographie"
+    },
+    {
+      "id": "geo_097",
+      "question": "Welche ist die einwohnerreichste Metropole südlich des Äquators?",
+      "answers": [
+        {"text": "São Paulo", "correct": true},
+        {"text": "Buenos Aires", "correct": false},
+        {"text": "Sydney", "correct": false}
+      ],
+      "difficulty": "medium",
+      "fun_fact": "São Paulo hat in der Metropolregion rund 22 Millionen Einwohner — mehr als jede andere Stadt auf der Südhalbkugel. Es liegt auf etwa 23° südlicher Breite.",
+      "category": "Geographie"
+    },
+    {
+      "id": "geo_098",
+      "question": "Welche Plattengrenze trennt zwei Kontinente und kann in Island über Wasser betreten werden?",
+      "answers": [
+        {"text": "Mittelatlantischer Rücken", "correct": true},
+        {"text": "Pazifischer Feuerring", "correct": false},
+        {"text": "San-Andreas-Verwerfung", "correct": false}
+      ],
+      "difficulty": "medium",
+      "fun_fact": "Im Thingvellir-Nationalpark in Island kann man zwischen der nordamerikanischen und der eurasischen Kontinentalplatte spazieren — der Spalt wird jährlich rund 2 cm breiter. Es ist einer der wenigen Orte, wo eine Plattengrenze über Wasser sichtbar ist.",
+      "category": "Geographie"
+    },
+    {
+      "id": "geo_099",
+      "question": "Welches Land hat als einzige Nationalflagge weltweit eine AK-47 abgebildet?",
+      "answers": [
+        {"text": "Mosambik", "correct": true},
+        {"text": "Simbabwe", "correct": false},
+        {"text": "Libyen", "correct": false}
+      ],
+      "difficulty": "hard",
+      "fun_fact": "Die Flagge Mosambiks zeigt eine Kalaschnikow AK-47, eine Hacke und ein Buch — Symbole für Verteidigung, Landwirtschaft und Bildung. Sie ist die einzige Nationalflagge der Welt, auf der eine moderne Schusswaffe zu sehen ist.",
+      "category": "Geographie"
+    },
+    {
+      "id": "geo_100",
+      "question": "Auf welcher Flussinsel wurde die Stadt Paris ursprünglich gegründet?",
+      "answers": [
+        {"text": "Île de la Cité", "correct": true},
+        {"text": "Île Saint-Louis", "correct": false},
+        {"text": "Île aux Cygnes", "correct": false}
+      ],
+      "difficulty": "medium",
+      "fun_fact": "Auf der Île de la Cité in der Seine steht heute Notre-Dame, dort gründeten Kelten und später Römer die Siedlung Lutetia. Die nahegelegene Île Saint-Louis wurde erst im 17. Jahrhundert besiedelt — vorher war sie eine Kuhweide.",
+      "category": "Geographie"
+    },
+    {
+      "id": "geo_101",
+      "question": "Wie viel Prozent der Fläche Grönlands sind dauerhaft von Eis bedeckt?",
+      "answers": [
+        {"text": "Etwa 80 %", "correct": true},
+        {"text": "Etwa 40 %", "correct": false},
+        {"text": "Etwa 99 %", "correct": false}
+      ],
+      "difficulty": "medium",
+      "fun_fact": "Rund 80 % Grönlands sind von einem bis zu 3.000 Meter dicken Eisschild bedeckt. Würde dieses Eis komplett schmelzen, würde der globale Meeresspiegel um etwa 7 Meter steigen.",
+      "category": "Geographie"
+    },
+    {
+      "id": "geo_102",
+      "question": "Welche zwei EU-Staaten haben überhaupt keine Eisenbahn auf ihrem Staatsgebiet?",
+      "answers": [
+        {"text": "Zypern und Malta", "correct": true},
+        {"text": "Luxemburg und Malta", "correct": false},
+        {"text": "Zypern und Estland", "correct": false}
+      ],
+      "difficulty": "hard",
+      "fun_fact": "Zypern und Malta sind die einzigen EU-Staaten ohne aktive Eisenbahn. Zyperns letzte Strecke wurde 1951 stillgelegt, Malta verlor seine Bahn schon 1931. Beide nutzen heute ausschließlich Straße und Schiff.",
+      "category": "Geographie"
+    },
+    {
+      "id": "geo_103",
+      "question": "Welche Hauptstadt liegt geographisch am weitesten südlich?",
+      "answers": [
+        {"text": "Wellington in Neuseeland", "correct": true},
+        {"text": "Canberra in Australien", "correct": false},
+        {"text": "Buenos Aires in Argentinien", "correct": false}
+      ],
+      "difficulty": "medium",
+      "fun_fact": "Wellington liegt auf 41° Süd — südlicher als jede andere souveräne Hauptstadt. Canberra folgt mit 35° Süd. Argentiniens Buenos Aires liegt mit 34° Süd noch weiter nördlich. Antarktis hat keine Hauptstadt.",
+      "category": "Geographie"
     }
   ]
 }

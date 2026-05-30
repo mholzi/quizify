@@ -8,9 +8,18 @@
       "id": "wissenschaft_de_001",
       "question": "Was würde mit deinem Blut passieren, wenn du im All ohne Anzug wärst?",
       "answers": [
-        {"text": "Es würde sofort kochen", "correct": false},
-        {"text": "Es würde gefrieren", "correct": false},
-        {"text": "Es würde weder kochen noch gefrieren", "correct": true}
+        {
+          "text": "Es würde sofort kochen",
+          "correct": false
+        },
+        {
+          "text": "Es würde gefrieren",
+          "correct": false
+        },
+        {
+          "text": "Es würde weder kochen noch gefrieren",
+          "correct": true
+        }
       ],
       "difficulty": "hard",
       "fun_fact": "Häufiger Irrtum: Blut kocht im Vakuum NICHT, weil die Blutgefäße genug Innendruck halten. Du würdest in ca. 15 Sekunden bewusstlos, aber dein Blut bleibt flüssig.",
@@ -20,9 +29,18 @@
       "id": "wissenschaft_de_002",
       "question": "Auf welchem Planeten regnet es Diamanten?",
       "answers": [
-        {"text": "Mars", "correct": false},
-        {"text": "Neptun", "correct": true},
-        {"text": "Merkur", "correct": false}
+        {
+          "text": "Mars",
+          "correct": false
+        },
+        {
+          "text": "Neptun",
+          "correct": true
+        },
+        {
+          "text": "Merkur",
+          "correct": false
+        }
       ],
       "difficulty": "medium",
       "fun_fact": "Auf Neptun und Uranus zerlegt der enorme Druck Methan in seine Bestandteile. Der Kohlenstoff kristallisiert zu Diamanten, die durch die Atmosphäre regnen — manche sollen so groß wie Hagelkörner sein.",
@@ -32,9 +50,18 @@
       "id": "wissenschaft_de_003",
       "question": "Wie lange dauert ein Tag auf der Venus im Vergleich zu einem Venus-Jahr?",
       "answers": [
-        {"text": "Tag und Jahr sind gleich lang", "correct": false},
-        {"text": "Der Tag ist kürzer", "correct": false},
-        {"text": "Der Tag ist länger als das Jahr", "correct": true}
+        {
+          "text": "Tag und Jahr sind gleich lang",
+          "correct": false
+        },
+        {
+          "text": "Der Tag ist kürzer",
+          "correct": false
+        },
+        {
+          "text": "Der Tag ist länger als das Jahr",
+          "correct": true
+        }
       ],
       "difficulty": "hard",
       "fun_fact": "Die Venus dreht sich so langsam um ihre Achse, dass ein Venus-Tag (243 Erdtage) länger ist als ein Venus-Jahr (225 Erdtage). Außerdem dreht sie sich rückwärts.",
@@ -44,9 +71,18 @@
       "id": "wissenschaft_de_004",
       "question": "Welche Farbe hat die Sonne tatsächlich, wenn man sie aus dem All betrachtet?",
       "answers": [
-        {"text": "Gelb", "correct": false},
-        {"text": "Weiß", "correct": true},
-        {"text": "Orange", "correct": false}
+        {
+          "text": "Gelb",
+          "correct": false
+        },
+        {
+          "text": "Weiß",
+          "correct": true
+        },
+        {
+          "text": "Orange",
+          "correct": false
+        }
       ],
       "difficulty": "medium",
       "fun_fact": "Die Sonne ist physikalisch weiß — sie sendet alle sichtbaren Wellenlängen gleichzeitig. Erst die Erdatmosphäre streut Blau heraus und lässt sie gelblich erscheinen.",
@@ -56,9 +92,18 @@
       "id": "wissenschaft_de_005",
       "question": "Was passiert mit einem Astronauten, der im All weint?",
       "answers": [
-        {"text": "Die Tränen bilden eine Kugel im Gesicht", "correct": true},
-        {"text": "Die Tränen verdampfen sofort", "correct": false},
-        {"text": "Es funktioniert genau wie auf der Erde", "correct": false}
+        {
+          "text": "Die Tränen bilden eine Kugel im Gesicht",
+          "correct": true
+        },
+        {
+          "text": "Die Tränen verdampfen sofort",
+          "correct": false
+        },
+        {
+          "text": "Es funktioniert genau wie auf der Erde",
+          "correct": false
+        }
       ],
       "difficulty": "easy",
       "fun_fact": "Ohne Schwerkraft fließen Tränen nicht ab — sie sammeln sich als wackelnde Wasserkugel am Auge, bis ein Astronaut sie wegwischt. Chris Hadfield hat das auf der ISS demonstriert.",
@@ -68,9 +113,18 @@
       "id": "wissenschaft_de_006",
       "question": "Welcher Planet im Sonnensystem könnte theoretisch auf Wasser schwimmen?",
       "answers": [
-        {"text": "Saturn", "correct": true},
-        {"text": "Jupiter", "correct": false},
-        {"text": "Neptun", "correct": false}
+        {
+          "text": "Saturn",
+          "correct": true
+        },
+        {
+          "text": "Jupiter",
+          "correct": false
+        },
+        {
+          "text": "Neptun",
+          "correct": false
+        }
       ],
       "difficulty": "easy",
       "fun_fact": "Saturn hat eine Dichte von nur 0,69 g/cm³ — geringer als Wasser. Gäbe es einen Ozean groß genug, würde Saturn obenauf schwimmen. (Praktisch geht das nicht — er würde zerbrechen.)",
@@ -80,9 +134,18 @@
       "id": "wissenschaft_de_007",
       "question": "Wie viel Prozent des Universums verstehen wir bisher tatsächlich?",
       "answers": [
-        {"text": "Etwa 5 %", "correct": true},
-        {"text": "Etwa 50 %", "correct": false},
-        {"text": "Etwa 90 %", "correct": false}
+        {
+          "text": "Etwa 5 %",
+          "correct": true
+        },
+        {
+          "text": "Etwa 50 %",
+          "correct": false
+        },
+        {
+          "text": "Etwa 90 %",
+          "correct": false
+        }
       ],
       "difficulty": "medium",
       "fun_fact": "Nur ca. 5 % des Universums besteht aus gewöhnlicher Materie. Der Rest ist Dunkle Materie (~27 %) und Dunkle Energie (~68 %) — beide kennen wir nur indirekt durch ihre Wirkung.",
@@ -92,9 +155,18 @@
       "id": "wissenschaft_de_008",
       "question": "Was ist auf dem Mond schwerer: ein Kilogramm Stahl oder ein Kilogramm Federn?",
       "answers": [
-        {"text": "Der Stahl", "correct": false},
-        {"text": "Die Federn", "correct": false},
-        {"text": "Sie sind gleich schwer", "correct": true}
+        {
+          "text": "Der Stahl",
+          "correct": false
+        },
+        {
+          "text": "Die Federn",
+          "correct": false
+        },
+        {
+          "text": "Sie sind gleich schwer",
+          "correct": true
+        }
       ],
       "difficulty": "easy",
       "fun_fact": "Ein Kilogramm ist überall ein Kilogramm — auch auf dem Mond. Nur das Gewicht (die Kraft, mit der die Schwerkraft zieht) ist auf dem Mond etwa ein Sechstel der Erdanziehung.",
@@ -104,9 +176,18 @@
       "id": "wissenschaft_de_009",
       "question": "Was passiert mit einem Tropfen Wasser im offenen Weltraum?",
       "answers": [
-        {"text": "Er gefriert sofort komplett", "correct": false},
-        {"text": "Er kocht und gefriert gleichzeitig", "correct": true},
-        {"text": "Er bleibt flüssig", "correct": false}
+        {
+          "text": "Er gefriert sofort komplett",
+          "correct": false
+        },
+        {
+          "text": "Er kocht und gefriert gleichzeitig",
+          "correct": true
+        },
+        {
+          "text": "Er bleibt flüssig",
+          "correct": false
+        }
       ],
       "difficulty": "medium",
       "fun_fact": "Im Vakuum verdampft Wasser durch den fehlenden Druck — die Verdunstungskälte gefriert gleichzeitig den Rest. Das Phänomen heißt Sublimation und wurde von NASA-Astronauten bei Wasseraustritten beobachtet.",
@@ -116,9 +197,18 @@
       "id": "wissenschaft_de_010",
       "question": "Wie viele Sterne kann man bei perfekter Sicht mit bloßem Auge sehen?",
       "answers": [
-        {"text": "Etwa 9.000", "correct": true},
-        {"text": "Etwa 100.000", "correct": false},
-        {"text": "Über eine Million", "correct": false}
+        {
+          "text": "Etwa 9.000",
+          "correct": true
+        },
+        {
+          "text": "Etwa 100.000",
+          "correct": false
+        },
+        {
+          "text": "Über eine Million",
+          "correct": false
+        }
       ],
       "difficulty": "easy",
       "fun_fact": "Insgesamt sind etwa 9.000 Sterne mit bloßem Auge sichtbar — aber immer nur die Hälfte gleichzeitig, weil die Erde im Weg ist. Realistisch siehst du je nach Lichtverschmutzung 2.000–4.500.",
@@ -128,9 +218,18 @@
       "id": "wissenschaft_de_011",
       "question": "Was würdest du theoretisch erleben, wenn du in ein schwarzes Loch fällst?",
       "answers": [
-        {"text": "Spaghettifizierung", "correct": true},
-        {"text": "Sofortige Verdampfung", "correct": false},
-        {"text": "Schwerelosigkeit", "correct": false}
+        {
+          "text": "Spaghettifizierung",
+          "correct": true
+        },
+        {
+          "text": "Sofortige Verdampfung",
+          "correct": false
+        },
+        {
+          "text": "Schwerelosigkeit",
+          "correct": false
+        }
       ],
       "difficulty": "medium",
       "fun_fact": "Der Begriff Spaghettifizierung stammt von Stephen Hawking. Die Gezeitenkräfte ziehen deine Füße viel stärker als deinen Kopf — du wirst zu einem unendlich langen Strang gestreckt.",
@@ -140,9 +239,18 @@
       "id": "wissenschaft_de_012",
       "question": "Welches der drei Objekte fällt im Vakuum am schnellsten zu Boden?",
       "answers": [
-        {"text": "Ein Bowlingball", "correct": false},
-        {"text": "Eine Feder", "correct": false},
-        {"text": "Alle gleich schnell", "correct": true}
+        {
+          "text": "Ein Bowlingball",
+          "correct": false
+        },
+        {
+          "text": "Eine Feder",
+          "correct": false
+        },
+        {
+          "text": "Alle gleich schnell",
+          "correct": true
+        }
       ],
       "difficulty": "easy",
       "fun_fact": "Galileo hatte recht: Ohne Luftwiderstand fallen alle Objekte gleich schnell. Apollo-15-Astronaut David Scott zeigte das 1971 live auf dem Mond mit einem Hammer und einer Falkenfeder.",
@@ -152,9 +260,18 @@
       "id": "wissenschaft_de_013",
       "question": "Kann Licht aus einem Material langsamer als aus einem anderen austreten?",
       "answers": [
-        {"text": "Nein, Licht ist immer gleich schnell", "correct": false},
-        {"text": "Ja, in Materialien wird es deutlich langsamer", "correct": true},
-        {"text": "Nur in Schwarzen Löchern", "correct": false}
+        {
+          "text": "Nein, Licht ist immer gleich schnell",
+          "correct": false
+        },
+        {
+          "text": "Ja, in Materialien wird es deutlich langsamer",
+          "correct": true
+        },
+        {
+          "text": "Nur in Schwarzen Löchern",
+          "correct": false
+        }
       ],
       "difficulty": "medium",
       "fun_fact": "In Wasser breitet sich Licht mit etwa 75 % der Vakuumlichtgeschwindigkeit aus, in Diamant nur mit 41 %. 1999 verlangsamten Forscher Licht in extrem kaltem Natriumgas auf 17 m/s — Fahrradgeschwindigkeit.",
@@ -164,9 +281,18 @@
       "id": "wissenschaft_de_014",
       "question": "Was ist heißer: ein Blitz oder die Oberfläche der Sonne?",
       "answers": [
-        {"text": "Die Sonne", "correct": false},
-        {"text": "Der Blitz", "correct": true},
-        {"text": "Beide etwa gleich heiß", "correct": false}
+        {
+          "text": "Die Sonne",
+          "correct": false
+        },
+        {
+          "text": "Der Blitz",
+          "correct": true
+        },
+        {
+          "text": "Beide etwa gleich heiß",
+          "correct": false
+        }
       ],
       "difficulty": "easy",
       "fun_fact": "Ein Blitz erreicht ca. 30.000 °C — etwa fünf Mal heißer als die Sonnenoberfläche mit rund 5.500 °C. Erst die Sonnenkorona ist mit Millionen Grad heißer.",
@@ -176,9 +302,18 @@
       "id": "wissenschaft_de_015",
       "question": "Was passiert mit der Zeit, wenn du dich sehr schnell bewegst?",
       "answers": [
-        {"text": "Sie vergeht schneller", "correct": false},
-        {"text": "Sie vergeht langsamer", "correct": true},
-        {"text": "Sie bleibt gleich", "correct": false}
+        {
+          "text": "Sie vergeht schneller",
+          "correct": false
+        },
+        {
+          "text": "Sie vergeht langsamer",
+          "correct": true
+        },
+        {
+          "text": "Sie bleibt gleich",
+          "correct": false
+        }
       ],
       "difficulty": "medium",
       "fun_fact": "Einsteins Zeitdilatation: GPS-Satelliten ticken durch ihre Geschwindigkeit etwa 7 Mikrosekunden pro Tag langsamer (Spezielle Relativität), durch die geringere Gravitation aber 45 Mikrosekunden schneller (Allgemeine Relativität). Beide Effekte muss die Software korrigieren, sonst würde GPS schnell unbrauchbar werden.",
@@ -188,9 +323,18 @@
       "id": "wissenschaft_de_016",
       "question": "Wie verhält sich ein Photon, das gleichzeitig durch zwei Spalte geschickt wird?",
       "answers": [
-        {"text": "Es teilt sich physikalisch in zwei Teile", "correct": false},
-        {"text": "Es interferiert mit sich selbst", "correct": true},
-        {"text": "Es wählt zufällig einen Spalt", "correct": false}
+        {
+          "text": "Es teilt sich physikalisch in zwei Teile",
+          "correct": false
+        },
+        {
+          "text": "Es interferiert mit sich selbst",
+          "correct": true
+        },
+        {
+          "text": "Es wählt zufällig einen Spalt",
+          "correct": false
+        }
       ],
       "difficulty": "hard",
       "fun_fact": "Im Doppelspaltexperiment verhält sich ein einzelnes Photon wie eine Welle und interferiert mit sich selbst. Sobald man hinschaut, verhält es sich wie ein Teilchen. Richard Feynman nannte das die zentrale Mystik der Quantenmechanik.",
@@ -200,9 +344,18 @@
       "id": "wissenschaft_de_017",
       "question": "Warum ist der Himmel blau?",
       "answers": [
-        {"text": "Wegen der Reflexion der Meere", "correct": false},
-        {"text": "Wegen der Streuung kürzerer Wellenlängen", "correct": true},
-        {"text": "Wegen der Stickstoffmoleküle, die blau leuchten", "correct": false}
+        {
+          "text": "Wegen der Reflexion der Meere",
+          "correct": false
+        },
+        {
+          "text": "Wegen der Streuung kürzerer Wellenlängen",
+          "correct": true
+        },
+        {
+          "text": "Wegen der Stickstoffmoleküle, die blau leuchten",
+          "correct": false
+        }
       ],
       "difficulty": "easy",
       "fun_fact": "Die Rayleigh-Streuung: Kürzere Wellenlängen (blau) werden in der Atmosphäre stärker gestreut als längere (rot). Bei Sonnenaufgang und -untergang ist der Weg durch die Atmosphäre länger — Rot bleibt übrig.",
@@ -212,9 +365,18 @@
       "id": "wissenschaft_de_018",
       "question": "Was passiert, wenn du heißes Wasser bei -40 °C in die Luft wirfst?",
       "answers": [
-        {"text": "Es fällt normal als Wasser zu Boden", "correct": false},
-        {"text": "Es gefriert mitten in der Luft zu Schnee", "correct": true},
-        {"text": "Es verdampft komplett", "correct": false}
+        {
+          "text": "Es fällt normal als Wasser zu Boden",
+          "correct": false
+        },
+        {
+          "text": "Es gefriert mitten in der Luft zu Schnee",
+          "correct": true
+        },
+        {
+          "text": "Es verdampft komplett",
+          "correct": false
+        }
       ],
       "difficulty": "easy",
       "fun_fact": "Heißes Wasser hat mehr Energie zum Verdampfen und zerfällt in feine Tröpfchen, die in extremer Kälte sofort zu Schneekristallen werden. In Sibirien ein beliebter Internet-Trick.",
@@ -224,9 +386,18 @@
       "id": "wissenschaft_de_020",
       "question": "Was würde passieren, wenn alle Menschen gleichzeitig in die Luft springen?",
       "answers": [
-        {"text": "Die Erde würde merklich erschüttert", "correct": false},
-        {"text": "Praktisch nichts Messbares", "correct": true},
-        {"text": "Die Erdrotation würde sich verlangsamen", "correct": false}
+        {
+          "text": "Die Erde würde merklich erschüttert",
+          "correct": false
+        },
+        {
+          "text": "Praktisch nichts Messbares",
+          "correct": true
+        },
+        {
+          "text": "Die Erdrotation würde sich verlangsamen",
+          "correct": false
+        }
       ],
       "difficulty": "medium",
       "fun_fact": "Die Erde wiegt ca. 6×10²¹ Mal mehr als alle Menschen zusammen. Selbst ein synchroner Sprung würde die Erde nur um den Bruchteil eines Atomdurchmessers verschieben — und auch das nur kurz.",
@@ -236,9 +407,18 @@
       "id": "wissenschaft_de_021",
       "question": "Welches Metall ist bei Raumtemperatur flüssig?",
       "answers": [
-        {"text": "Quecksilber", "correct": true},
-        {"text": "Blei", "correct": false},
-        {"text": "Aluminium", "correct": false}
+        {
+          "text": "Quecksilber",
+          "correct": true
+        },
+        {
+          "text": "Blei",
+          "correct": false
+        },
+        {
+          "text": "Aluminium",
+          "correct": false
+        }
       ],
       "difficulty": "easy",
       "fun_fact": "Quecksilber bleibt bis -39 °C flüssig. Es ist das einzige Metall, das bei normalen Raumbedingungen flüssig ist — und so dicht, dass eine Eisenkugel darauf schwimmt.",
@@ -248,9 +428,18 @@
       "id": "wissenschaft_de_022",
       "question": "Was passiert, wenn man Cäsium in Wasser wirft?",
       "answers": [
-        {"text": "Es löst sich friedlich auf", "correct": false},
-        {"text": "Es explodiert mit großer Heftigkeit", "correct": true},
-        {"text": "Es bleibt unverändert", "correct": false}
+        {
+          "text": "Es löst sich friedlich auf",
+          "correct": false
+        },
+        {
+          "text": "Es explodiert mit großer Heftigkeit",
+          "correct": true
+        },
+        {
+          "text": "Es bleibt unverändert",
+          "correct": false
+        }
       ],
       "difficulty": "medium",
       "fun_fact": "Cäsium reagiert so heftig mit Wasser, dass Glasbehälter zerbrechen. Schon Natrium fängt Feuer — und Cäsium ist noch deutlich reaktiver. Lagerung erfolgt unter Inertgas oder in Öl.",
@@ -260,9 +449,18 @@
       "id": "wissenschaft_de_023",
       "question": "Was ist das Element, das am häufigsten im Universum vorkommt?",
       "answers": [
-        {"text": "Sauerstoff", "correct": false},
-        {"text": "Kohlenstoff", "correct": false},
-        {"text": "Wasserstoff", "correct": true}
+        {
+          "text": "Sauerstoff",
+          "correct": false
+        },
+        {
+          "text": "Kohlenstoff",
+          "correct": false
+        },
+        {
+          "text": "Wasserstoff",
+          "correct": true
+        }
       ],
       "difficulty": "easy",
       "fun_fact": "Wasserstoff macht etwa 75 % der gesamten Masse des Universums aus. Sterne, Wasser, organische Moleküle — überall ist Wasserstoff der Hauptbaustein.",
@@ -272,9 +470,18 @@
       "id": "wissenschaft_de_024",
       "question": "Was hat eine größere Dichte: ein Liter Eis oder ein Liter Wasser?",
       "answers": [
-        {"text": "Das Wasser", "correct": true},
-        {"text": "Das Eis", "correct": false},
-        {"text": "Beide sind gleich dicht", "correct": false}
+        {
+          "text": "Das Wasser",
+          "correct": true
+        },
+        {
+          "text": "Das Eis",
+          "correct": false
+        },
+        {
+          "text": "Beide sind gleich dicht",
+          "correct": false
+        }
       ],
       "difficulty": "easy",
       "fun_fact": "Wasser ist eine seltene Ausnahme — gefroren wird es leichter, weil die Wassermoleküle ein offenes Kristallgitter bilden. Deshalb schwimmt Eis. Ohne diese Anomalie wären Seen im Winter komplett durchgefroren.",
@@ -284,9 +491,18 @@
       "id": "wissenschaft_de_025",
       "question": "Welche Eigenschaft hat Helium bei extrem niedrigen Temperaturen?",
       "answers": [
-        {"text": "Es fließt schwerelos und kriecht Wände hoch", "correct": true},
-        {"text": "Es wird magnetisch", "correct": false},
-        {"text": "Es wird radioaktiv", "correct": false}
+        {
+          "text": "Es fließt schwerelos und kriecht Wände hoch",
+          "correct": true
+        },
+        {
+          "text": "Es wird magnetisch",
+          "correct": false
+        },
+        {
+          "text": "Es wird radioaktiv",
+          "correct": false
+        }
       ],
       "difficulty": "hard",
       "fun_fact": "Unter -271 °C wird flüssiges Helium zum Suprafluid: Es fließt reibungsfrei, kriecht Behälterwände hoch und entkommt aus offenen Gefäßen. Erstmals beobachtet von Pjotr Kapiza 1937.",
@@ -296,9 +512,18 @@
       "id": "wissenschaft_de_026",
       "question": "Was passiert, wenn man Mentos in Cola wirft?",
       "answers": [
-        {"text": "Eine chemische Reaktion erzeugt CO2", "correct": false},
-        {"text": "Die raue Oberfläche löst Gasblasen frei", "correct": true},
-        {"text": "Säure löst die Mentos auf und macht Schaum", "correct": false}
+        {
+          "text": "Eine chemische Reaktion erzeugt CO2",
+          "correct": false
+        },
+        {
+          "text": "Die raue Oberfläche löst Gasblasen frei",
+          "correct": true
+        },
+        {
+          "text": "Säure löst die Mentos auf und macht Schaum",
+          "correct": false
+        }
       ],
       "difficulty": "medium",
       "fun_fact": "Reine Physik, keine Chemie. Die raue Mentos-Oberfläche bietet tausende Nukleationsstellen, an denen das gelöste CO2 in Sekunden ausgast — das ist die Fontäne.",
@@ -308,9 +533,18 @@
       "id": "wissenschaft_de_027",
       "question": "Welches Element hat den niedrigsten Schmelzpunkt aller Metalle?",
       "answers": [
-        {"text": "Gallium", "correct": false},
-        {"text": "Quecksilber", "correct": true},
-        {"text": "Blei", "correct": false}
+        {
+          "text": "Gallium",
+          "correct": false
+        },
+        {
+          "text": "Quecksilber",
+          "correct": true
+        },
+        {
+          "text": "Blei",
+          "correct": false
+        }
       ],
       "difficulty": "medium",
       "fun_fact": "Quecksilber schmilzt schon bei -39 °C — das ist der niedrigste Schmelzpunkt aller stabilen Metalle. Gallium kommt nahe heran (29 °C) und schmilzt sogar in der Handfläche.",
@@ -320,9 +554,18 @@
       "id": "wissenschaft_de_028",
       "question": "Wie viele bekannte chemische Elemente gibt es derzeit im Periodensystem?",
       "answers": [
-        {"text": "92", "correct": false},
-        {"text": "118", "correct": true},
-        {"text": "150", "correct": false}
+        {
+          "text": "92",
+          "correct": false
+        },
+        {
+          "text": "118",
+          "correct": true
+        },
+        {
+          "text": "150",
+          "correct": false
+        }
       ],
       "difficulty": "easy",
       "fun_fact": "Stand 2024: 118 Elemente. Element 118 (Oganesson) wurde 2002 erstmals erzeugt und 2016 offiziell benannt. Elemente jenseits 94 (Plutonium) gibt es in der Natur kaum oder gar nicht.",
@@ -332,9 +575,18 @@
       "id": "wissenschaft_de_029",
       "question": "Welche Säure ist dafür bekannt, Glas anzugreifen?",
       "answers": [
-        {"text": "Salzsäure", "correct": false},
-        {"text": "Schwefelsäure", "correct": false},
-        {"text": "Flusssäure", "correct": true}
+        {
+          "text": "Salzsäure",
+          "correct": false
+        },
+        {
+          "text": "Schwefelsäure",
+          "correct": false
+        },
+        {
+          "text": "Flusssäure",
+          "correct": true
+        }
       ],
       "difficulty": "medium",
       "fun_fact": "Flusssäure (HF) reagiert mit Siliziumdioxid und löst Glas auf — deshalb wird sie in Plastikflaschen gelagert. Sie ist nicht extrem stark, aber sehr giftig — Hautkontakt kann tödlich sein.",
@@ -344,9 +596,18 @@
       "id": "wissenschaft_de_030",
       "question": "Was passiert mit Gummi, wenn man ihn in flüssigen Stickstoff taucht?",
       "answers": [
-        {"text": "Er wird elastischer", "correct": false},
-        {"text": "Er wird so spröde wie Glas", "correct": true},
-        {"text": "Er fängt Feuer", "correct": false}
+        {
+          "text": "Er wird elastischer",
+          "correct": false
+        },
+        {
+          "text": "Er wird so spröde wie Glas",
+          "correct": true
+        },
+        {
+          "text": "Er fängt Feuer",
+          "correct": false
+        }
       ],
       "difficulty": "hard",
       "fun_fact": "Bei -196 °C wird Gummi glashart und zerspringt wie Porzellan. Genau das war ein Faktor beim Challenger-Unglück 1986 — die O-Ring-Dichtungen wurden bei der Kälte spröde.",
@@ -356,9 +617,18 @@
       "id": "wissenschaft_de_031",
       "question": "Wie wurde die Mikrowelle erfunden?",
       "answers": [
-        {"text": "Durch geplante Forschung an Wärmestrahlung", "correct": false},
-        {"text": "Weil ein Ingenieur einen geschmolzenen Schokoriegel bemerkte", "correct": true},
-        {"text": "Als Nebenprodukt der Mondlandung", "correct": false}
+        {
+          "text": "Durch geplante Forschung an Wärmestrahlung",
+          "correct": false
+        },
+        {
+          "text": "Weil ein Ingenieur einen geschmolzenen Schokoriegel bemerkte",
+          "correct": true
+        },
+        {
+          "text": "Als Nebenprodukt der Mondlandung",
+          "correct": false
+        }
       ],
       "difficulty": "easy",
       "fun_fact": "1945 stand Percy Spencer vor einem Radar-Magnetron, als der Schokoriegel in seiner Tasche schmolz. Er testete Popcorn (das poppte) und ein Ei (das explodierte) — und Raytheon hatte den ersten Mikrowellenofen.",
@@ -368,9 +638,18 @@
       "id": "wissenschaft_de_032",
       "question": "Wie wurde Penicillin entdeckt?",
       "answers": [
-        {"text": "Durch eine vergessene Petrischale", "correct": true},
-        {"text": "Durch gezielte Forschung gegen Infektionen", "correct": false},
-        {"text": "Durch einen Patienten, der es einnahm", "correct": false}
+        {
+          "text": "Durch eine vergessene Petrischale",
+          "correct": true
+        },
+        {
+          "text": "Durch gezielte Forschung gegen Infektionen",
+          "correct": false
+        },
+        {
+          "text": "Durch einen Patienten, der es einnahm",
+          "correct": false
+        }
       ],
       "difficulty": "easy",
       "fun_fact": "1928 ließ Alexander Fleming Bakterienkulturen offen liegen, als er in den Urlaub fuhr. Ein Schimmelpilz war hineingeflogen und hatte die Bakterien getötet — Penicillin war geboren. Schlampige Laborarbeit, Nobelpreis.",
@@ -380,9 +659,18 @@
       "id": "wissenschaft_de_033",
       "question": "Wovon ließ sich der Erfinder des Klettverschlusses inspirieren?",
       "answers": [
-        {"text": "Von Kletten am Fell seines Hundes", "correct": true},
-        {"text": "Von Druckknöpfen aus dem Militär", "correct": false},
-        {"text": "Von einem Reißverschluss-Defekt", "correct": false}
+        {
+          "text": "Von Kletten am Fell seines Hundes",
+          "correct": true
+        },
+        {
+          "text": "Von Druckknöpfen aus dem Militär",
+          "correct": false
+        },
+        {
+          "text": "Von einem Reißverschluss-Defekt",
+          "correct": false
+        }
       ],
       "difficulty": "easy",
       "fun_fact": "George de Mestral kam 1941 von einer Jagd zurück und entdeckte unter dem Mikroskop, wie die Häkchen der Kletten am Fell seines Hundes hingen. Es dauerte acht Jahre bis zum fertigen Produkt: Velcro.",
@@ -392,9 +680,18 @@
       "id": "wissenschaft_de_034",
       "question": "Wie kam Post-it zu seiner berühmten schwachen Klebkraft?",
       "answers": [
-        {"text": "Als gescheiterter Versuch für Superkleber", "correct": true},
-        {"text": "Durch gezielte Forschung für Notizzettel", "correct": false},
-        {"text": "Als Nebenprodukt der NASA", "correct": false}
+        {
+          "text": "Als gescheiterter Versuch für Superkleber",
+          "correct": true
+        },
+        {
+          "text": "Durch gezielte Forschung für Notizzettel",
+          "correct": false
+        },
+        {
+          "text": "Als Nebenprodukt der NASA",
+          "correct": false
+        }
       ],
       "difficulty": "medium",
       "fun_fact": "Spencer Silver entwickelte 1968 bei 3M einen Kleber, der eigentlich super stark werden sollte — wurde aber schwach. Erst 6 Jahre später hatte ein Kollege die Idee mit den Notizzetteln.",
@@ -404,9 +701,18 @@
       "id": "wissenschaft_de_035",
       "question": "Wie wurde der Herzschrittmacher zufällig erfunden?",
       "answers": [
-        {"text": "Falscher Widerstand im Schaltkreis", "correct": true},
-        {"text": "Aus einem militärischen Forschungsprogramm", "correct": false},
-        {"text": "Als Schrittzähler-Prototyp", "correct": false}
+        {
+          "text": "Falscher Widerstand im Schaltkreis",
+          "correct": true
+        },
+        {
+          "text": "Aus einem militärischen Forschungsprogramm",
+          "correct": false
+        },
+        {
+          "text": "Als Schrittzähler-Prototyp",
+          "correct": false
+        }
       ],
       "difficulty": "medium",
       "fun_fact": "Wilson Greatbatch wollte 1956 ein Gerät zur Aufzeichnung von Herzgeräuschen bauen. Er griff zum falschen Widerstand — das Gerät gab Impulse aus statt zu empfangen. Genau wie ein Herzschlag.",
@@ -416,9 +722,18 @@
       "id": "wissenschaft_de_036",
       "question": "Wofür wurde Coca-Cola ursprünglich entwickelt?",
       "answers": [
-        {"text": "Als Erfrischungsgetränk", "correct": false},
-        {"text": "Als Medizin gegen Kopfschmerzen", "correct": true},
-        {"text": "Als Reinigungsmittel", "correct": false}
+        {
+          "text": "Als Erfrischungsgetränk",
+          "correct": false
+        },
+        {
+          "text": "Als Medizin gegen Kopfschmerzen",
+          "correct": true
+        },
+        {
+          "text": "Als Reinigungsmittel",
+          "correct": false
+        }
       ],
       "difficulty": "medium",
       "fun_fact": "John Pemberton entwickelte Coca-Cola 1886 als Nervenstärkung und Kopfschmerz-Tonikum. Die ursprüngliche Rezeptur enthielt Cocain (aus der Cola-Pflanze) und Koffein.",
@@ -428,9 +743,18 @@
       "id": "wissenschaft_de_037",
       "question": "Wie entdeckte man die Röntgenstrahlung?",
       "answers": [
-        {"text": "Bei Experimenten mit Kathodenstrahlröhren", "correct": true},
-        {"text": "Bei der Suche nach Uran-Vorkommen", "correct": false},
-        {"text": "Bei medizinischer Krebsforschung", "correct": false}
+        {
+          "text": "Bei Experimenten mit Kathodenstrahlröhren",
+          "correct": true
+        },
+        {
+          "text": "Bei der Suche nach Uran-Vorkommen",
+          "correct": false
+        },
+        {
+          "text": "Bei medizinischer Krebsforschung",
+          "correct": false
+        }
       ],
       "difficulty": "medium",
       "fun_fact": "Wilhelm Conrad Röntgen bemerkte 1895 zufällig, dass ein Fluoreszenzschirm in der Nähe seiner Kathodenstrahlröhre leuchtete — selbst durch Pappe abgeschirmt. Sieben Wochen später hatte er das erste Röntgenbild (von der Hand seiner Frau).",
@@ -440,9 +764,18 @@
       "id": "wissenschaft_de_039",
       "question": "Was war die Teflon-Beschichtung ursprünglich?",
       "answers": [
-        {"text": "Eine Spezialfarbe für U-Boote", "correct": false},
-        {"text": "Ein Zufallsfund bei Kältemittel-Forschung", "correct": true},
-        {"text": "Eine Erfindung der Lebensmittelindustrie", "correct": false}
+        {
+          "text": "Eine Spezialfarbe für U-Boote",
+          "correct": false
+        },
+        {
+          "text": "Ein Zufallsfund bei Kältemittel-Forschung",
+          "correct": true
+        },
+        {
+          "text": "Eine Erfindung der Lebensmittelindustrie",
+          "correct": false
+        }
       ],
       "difficulty": "hard",
       "fun_fact": "Roy Plunkett experimentierte 1938 bei DuPont mit Kältemitteln. Ein Gas verschwand mysteriös — und hinterließ einen weißen, rutschigen Belag. PTFE (Teflon) erstmals an Bratpfannen erst 1956.",
@@ -452,9 +785,18 @@
       "id": "wissenschaft_de_040",
       "question": "Wie wurde die Kartoffelchips-Tüte erfunden?",
       "answers": [
-        {"text": "Aus Ärger über einen wählerischen Gast", "correct": true},
-        {"text": "Als Versorgung für die US-Armee", "correct": false},
-        {"text": "Als geplantes Snack-Konzept eines Konzerns", "correct": false}
+        {
+          "text": "Aus Ärger über einen wählerischen Gast",
+          "correct": true
+        },
+        {
+          "text": "Als Versorgung für die US-Armee",
+          "correct": false
+        },
+        {
+          "text": "Als geplantes Snack-Konzept eines Konzerns",
+          "correct": false
+        }
       ],
       "difficulty": "medium",
       "fun_fact": "Der Legende nach beschwerte sich 1853 ein Gast bei Koch George Crum, seine Pommes seien zu dick. Aus Trotz schnitt Crum sie hauchdünn und überfrittierte sie — der Gast war begeistert. Die Geschichte ist historisch nicht eindeutig belegt, aber die populärste Ursprungs-Erzählung.",
@@ -464,9 +806,18 @@
       "id": "wissenschaft_de_041",
       "question": "Warum müssen manche Menschen niesen, wenn sie in helles Licht schauen?",
       "answers": [
-        {"text": "Genetische Verkabelung im Gehirn", "correct": true},
-        {"text": "Augenreizung durch UV-Strahlen", "correct": false},
-        {"text": "Allergie gegen Sonnenlicht", "correct": false}
+        {
+          "text": "Genetische Verkabelung im Gehirn",
+          "correct": true
+        },
+        {
+          "text": "Augenreizung durch UV-Strahlen",
+          "correct": false
+        },
+        {
+          "text": "Allergie gegen Sonnenlicht",
+          "correct": false
+        }
       ],
       "difficulty": "medium",
       "fun_fact": "Etwa 18-35 % der Menschen haben den photischen Niesreflex (ACHOO-Syndrom). Vermutlich kreuzen sich Sehnerv und Trigeminus-Nerv im Gehirn — Lichtreiz wird fälschlich als Nasenreizung interpretiert. Es ist erblich.",
@@ -476,9 +827,18 @@
       "id": "wissenschaft_de_042",
       "question": "Wie schnell kann ein Nieser aus deiner Nase fliegen?",
       "answers": [
-        {"text": "Etwa 20 km/h", "correct": false},
-        {"text": "Über 150 km/h", "correct": true},
-        {"text": "Etwa 50 km/h", "correct": false}
+        {
+          "text": "Etwa 20 km/h",
+          "correct": false
+        },
+        {
+          "text": "Über 150 km/h",
+          "correct": true
+        },
+        {
+          "text": "Etwa 50 km/h",
+          "correct": false
+        }
       ],
       "difficulty": "easy",
       "fun_fact": "Ein Nieser erreicht bis zu 160 km/h und schleudert Tröpfchen über 8 Meter weit, wie MIT-Forschungen 2014 zeigten. Deshalb sind Niesen so effizient bei der Verbreitung von Erkältungen.",
@@ -488,9 +848,18 @@
       "id": "wissenschaft_de_043",
       "question": "Welches Organ kann sich nach einem Schaden komplett selbst regenerieren?",
       "answers": [
-        {"text": "Niere", "correct": false},
-        {"text": "Leber", "correct": true},
-        {"text": "Herz", "correct": false}
+        {
+          "text": "Niere",
+          "correct": false
+        },
+        {
+          "text": "Leber",
+          "correct": true
+        },
+        {
+          "text": "Herz",
+          "correct": false
+        }
       ],
       "difficulty": "easy",
       "fun_fact": "Die Leber kann sich aus nur 25 % des ursprünglichen Gewebes vollständig regenerieren. Daher sind Lebendspenden möglich — bei Spender und Empfänger wächst die Leber binnen Monaten nach.",
@@ -500,9 +869,18 @@
       "id": "wissenschaft_de_044",
       "question": "Wie viele Bakterien leben durchschnittlich auf und in einem Menschen?",
       "answers": [
-        {"text": "Etwa gleich viele wie eigene Zellen", "correct": true},
-        {"text": "Etwa 10 Mal weniger als eigene Zellen", "correct": false},
-        {"text": "Etwa 1000 Mal mehr als eigene Zellen", "correct": false}
+        {
+          "text": "Etwa gleich viele wie eigene Zellen",
+          "correct": true
+        },
+        {
+          "text": "Etwa 10 Mal weniger als eigene Zellen",
+          "correct": false
+        },
+        {
+          "text": "Etwa 1000 Mal mehr als eigene Zellen",
+          "correct": false
+        }
       ],
       "difficulty": "hard",
       "fun_fact": "Lange galt das 10:1-Verhältnis, aber eine Studie 2016 (Sender et al.) korrigierte es auf ungefähr 1:1 — etwa 38 Billionen Bakterien und 30 Billionen menschliche Zellen. Du bist also gut zur Hälfte mikrobiell.",
@@ -512,9 +890,18 @@
       "id": "wissenschaft_de_045",
       "question": "Wie viel Magensäure ist nötig, um eine Rasierklinge anzulösen?",
       "answers": [
-        {"text": "Sie kann das tatsächlich", "correct": true},
-        {"text": "Magensäure greift Metall nicht an", "correct": false},
-        {"text": "Nur künstliche Magensäure schafft das", "correct": false}
+        {
+          "text": "Sie kann das tatsächlich",
+          "correct": true
+        },
+        {
+          "text": "Magensäure greift Metall nicht an",
+          "correct": false
+        },
+        {
+          "text": "Nur künstliche Magensäure schafft das",
+          "correct": false
+        }
       ],
       "difficulty": "medium",
       "fun_fact": "Magensäure (pH 1-2) ist stark genug, um Metall zu korrodieren. Forensische Studien zeigen, dass Rasierklingen im Magen in etwa 24 Stunden deutliche Schäden bekommen — der Magen selbst überlebt, weil er sich alle paar Tage neu auskleidet.",
@@ -524,9 +911,18 @@
       "id": "wissenschaft_de_046",
       "question": "Welcher Knochen ist der einzige im menschlichen Körper, der nicht mit anderen verbunden ist?",
       "answers": [
-        {"text": "Steigbügel im Ohr", "correct": false},
-        {"text": "Zungenbein", "correct": true},
-        {"text": "Kniescheibe", "correct": false}
+        {
+          "text": "Steigbügel im Ohr",
+          "correct": false
+        },
+        {
+          "text": "Zungenbein",
+          "correct": true
+        },
+        {
+          "text": "Kniescheibe",
+          "correct": false
+        }
       ],
       "difficulty": "hard",
       "fun_fact": "Das Zungenbein im Hals ist nur durch Muskeln und Bänder gehalten — ohne direkten Kontakt zu anderen Knochen. Forensiker prüfen es: Ein gebrochenes Zungenbein deutet stark auf Strangulation hin.",
@@ -536,9 +932,18 @@
       "id": "wissenschaft_de_047",
       "question": "Was ist die häufigste Ursache für Schluckauf?",
       "answers": [
-        {"text": "Reizung des Zwerchfellnervs", "correct": true},
-        {"text": "Sauerstoffmangel im Blut", "correct": false},
-        {"text": "Niedriger Blutzucker", "correct": false}
+        {
+          "text": "Reizung des Zwerchfellnervs",
+          "correct": true
+        },
+        {
+          "text": "Sauerstoffmangel im Blut",
+          "correct": false
+        },
+        {
+          "text": "Niedriger Blutzucker",
+          "correct": false
+        }
       ],
       "difficulty": "medium",
       "fun_fact": "Schluckauf entsteht durch unwillkürliche Zwerchfellkontraktionen — der Nervus phrenicus wird gereizt. Charles Osborne hatte 68 Jahre lang ununterbrochenen Schluckauf (1922-1990), Weltrekord.",
@@ -548,9 +953,18 @@
       "id": "wissenschaft_de_048",
       "question": "Wie schnell wachsen Fingernägel im Vergleich zu Zehennägeln?",
       "answers": [
-        {"text": "Etwa gleich schnell", "correct": false},
-        {"text": "Fingernägel wachsen etwa 2-4 Mal schneller", "correct": true},
-        {"text": "Zehennägel wachsen schneller", "correct": false}
+        {
+          "text": "Etwa gleich schnell",
+          "correct": false
+        },
+        {
+          "text": "Fingernägel wachsen etwa 2-4 Mal schneller",
+          "correct": true
+        },
+        {
+          "text": "Zehennägel wachsen schneller",
+          "correct": false
+        }
       ],
       "difficulty": "easy",
       "fun_fact": "Fingernägel wachsen ca. 3,5 mm pro Monat, Zehennägel nur ca. 1,5 mm. Vermutlich, weil die Durchblutung in den Fingern besser ist und sie häufiger leicht verletzt werden.",
@@ -560,12 +974,1029 @@
       "id": "wissenschaft_de_049",
       "question": "Warum funkelt die Hornhaut der Augen, wenn das Auge sich bewegt?",
       "answers": [
-        {"text": "Mikroskopische Reflexionen der Tränenflüssigkeit", "correct": true},
-        {"text": "Elektrische Aktivität der Sehnerven", "correct": false},
-        {"text": "Lichtbrechung im Augapfel", "correct": false}
+        {
+          "text": "Mikroskopische Reflexionen der Tränenflüssigkeit",
+          "correct": true
+        },
+        {
+          "text": "Elektrische Aktivität der Sehnerven",
+          "correct": false
+        },
+        {
+          "text": "Lichtbrechung im Augapfel",
+          "correct": false
+        }
       ],
       "difficulty": "medium",
       "fun_fact": "Tränen bilden einen dünnen Film auf der Hornhaut. Mit jedem Lidschlag wird er erneuert — die wechselnden Lichtreflexionen erzeugen den Glitzer-Effekt, den Kameras gerne einfangen.",
+      "category": "Wissenschaft"
+    },
+    {
+      "id": "wissenschaft_de_050",
+      "question": "Was ist die Summe aller natürlichen Zahlen 1+2+3+... laut Zeta-Regularisierung?",
+      "answers": [
+        {
+          "text": "Unendlich",
+          "correct": false
+        },
+        {
+          "text": "-1/12",
+          "correct": true
+        },
+        {
+          "text": "Null",
+          "correct": false
+        }
+      ],
+      "difficulty": "hard",
+      "fun_fact": "Die unendliche Summe divergiert klassisch, lässt sich aber via Riemann-Zeta-Funktion analytisch zu -1/12 fortsetzen. In der Stringtheorie und der Berechnung des Casimir-Effekts taucht genau dieser Wert auf — eine Mathematik, die in der Physik tatsächlich funktioniert.",
+      "category": "Wissenschaft"
+    },
+    {
+      "id": "wissenschaft_de_051",
+      "question": "Wenn 23 Menschen in einem Raum sind, wie wahrscheinlich ist es, dass zwei am selben Tag Geburtstag haben?",
+      "answers": [
+        {
+          "text": "Unter 10 %",
+          "correct": false
+        },
+        {
+          "text": "Etwa 50 %",
+          "correct": true
+        },
+        {
+          "text": "Über 90 %",
+          "correct": false
+        }
+      ],
+      "difficulty": "medium",
+      "fun_fact": "Das Geburtstagsparadox: Schon bei 23 Personen liegt die Wahrscheinlichkeit über 50 %, bei 70 Personen bei 99,9 %. Es zählen nämlich alle Paar-Vergleiche, nicht nur Vergleiche mit dir selbst.",
+      "category": "Wissenschaft"
+    },
+    {
+      "id": "wissenschaft_de_052",
+      "question": "Wie viele Farben braucht man maximal, um jede beliebige Landkarte zu färben?",
+      "answers": [
+        {
+          "text": "Vier",
+          "correct": true
+        },
+        {
+          "text": "Sechs",
+          "correct": false
+        },
+        {
+          "text": "Es gibt keine Obergrenze",
+          "correct": false
+        }
+      ],
+      "difficulty": "medium",
+      "fun_fact": "Der Vier-Farben-Satz wurde 1976 von Appel und Haken bewiesen — der erste große mathematische Satz, dessen Beweis ohne Computer nicht möglich war. Über 1.900 Sonderfälle mussten maschinell durchgerechnet werden.",
+      "category": "Wissenschaft"
+    },
+    {
+      "id": "wissenschaft_de_053",
+      "question": "Wie viele Seiten hat ein Möbiusband?",
+      "answers": [
+        {
+          "text": "Zwei",
+          "correct": false
+        },
+        {
+          "text": "Eine",
+          "correct": true
+        },
+        {
+          "text": "Drei",
+          "correct": false
+        }
+      ],
+      "difficulty": "easy",
+      "fun_fact": "Klebt man einen Papierstreifen mit einer halben Drehung zusammen, entsteht eine Fläche mit nur einer Seite und einer Kante. Schneidet man das Band längs in der Mitte durch, erhält man kein zwei Bänder — sondern ein einziges, doppelt so langes.",
+      "category": "Wissenschaft"
+    },
+    {
+      "id": "wissenschaft_de_054",
+      "question": "Wie viele Primzahlen gibt es insgesamt?",
+      "answers": [
+        {
+          "text": "Unendlich viele",
+          "correct": true
+        },
+        {
+          "text": "Etwa 10²⁰ als Obergrenze",
+          "correct": false
+        },
+        {
+          "text": "Eine endliche, aber riesige Zahl",
+          "correct": false
+        }
+      ],
+      "difficulty": "easy",
+      "fun_fact": "Euklid bewies vor über 2.300 Jahren elegant, dass es unendlich viele Primzahlen gibt. Annahme: Es gäbe eine größte Primzahl. Multipliziert man alle bekannten Primzahlen und addiert 1, ist das Ergebnis entweder selbst prim oder hat einen Primteiler, der nicht in der Liste war. Widerspruch.",
+      "category": "Wissenschaft"
+    },
+    {
+      "id": "wissenschaft_de_056",
+      "question": "Was passiert beim berühmten Banach-Tarski-Paradoxon mit einer Kugel?",
+      "answers": [
+        {
+          "text": "Sie kann in zwei identische Kopien zerlegt werden",
+          "correct": true
+        },
+        {
+          "text": "Sie verschwindet im vierdimensionalen Raum",
+          "correct": false
+        },
+        {
+          "text": "Sie wird zu einem perfekten Würfel",
+          "correct": false
+        }
+      ],
+      "difficulty": "hard",
+      "fun_fact": "1924 bewiesen Banach und Tarski: Man kann eine Kugel in endlich viele Teile zerlegen und daraus zwei Kugeln gleicher Größe zusammensetzen — mathematisch wasserdicht. Physikalisch unmöglich, weil die Teile keine messbaren Volumina haben.",
+      "category": "Wissenschaft"
+    },
+    {
+      "id": "wissenschaft_de_057",
+      "question": "Wie viele Möglichkeiten gibt es, ein Kartendeck mit 52 Karten zu mischen?",
+      "answers": [
+        {
+          "text": "Etwa eine Milliarde",
+          "correct": false
+        },
+        {
+          "text": "Mehr als Atome auf der Erde",
+          "correct": true
+        },
+        {
+          "text": "Genau 52 Quadrillionen",
+          "correct": false
+        }
+      ],
+      "difficulty": "medium",
+      "fun_fact": "52! ergibt eine Zahl mit 68 Stellen — etwa 8×10⁶⁷. Mischt man ein Deck gründlich, ist die Reihenfolge mit überwältigender Wahrscheinlichkeit einzigartig in der Geschichte des Universums.",
+      "category": "Wissenschaft"
+    },
+    {
+      "id": "wissenschaft_de_058",
+      "question": "Was ist das Monty-Hall-Problem: Lohnt es sich, das Tor zu wechseln?",
+      "answers": [
+        {
+          "text": "Ja, die Gewinnchance verdoppelt sich",
+          "correct": true
+        },
+        {
+          "text": "Nein, beide Tore sind gleich wahrscheinlich",
+          "correct": false
+        },
+        {
+          "text": "Wechseln senkt die Chance auf ein Drittel",
+          "correct": false
+        }
+      ],
+      "difficulty": "medium",
+      "fun_fact": "Wechseln gewinnt mit 2/3 Wahrscheinlichkeit, Bleiben nur mit 1/3. Marilyn vos Savant erklärte das 1990 — und bekam tausende wütende Briefe von Mathematik-Professoren, die alle falsch lagen.",
+      "category": "Wissenschaft"
+    },
+    {
+      "id": "wissenschaft_de_059",
+      "question": "Was bedeutet die Eulersche Identität e^(iπ) + 1 = 0?",
+      "answers": [
+        {
+          "text": "Sie verknüpft fünf fundamentale Konstanten",
+          "correct": true
+        },
+        {
+          "text": "Sie beweist, dass Pi rational ist",
+          "correct": false
+        },
+        {
+          "text": "Sie definiert die Quantenmechanik",
+          "correct": false
+        }
+      ],
+      "difficulty": "hard",
+      "fun_fact": "Eine Gleichung, die e, i, π, 1 und 0 in eine Aussage zwingt. Richard Feynman nannte sie die schönste Formel der Mathematik. Sie folgt aus der Reihenentwicklung der Exponentialfunktion mit imaginären Argumenten.",
+      "category": "Wissenschaft"
+    },
+    {
+      "id": "wissenschaft_de_060",
+      "question": "Wie viele Sterne enthält unsere Milchstraße ungefähr?",
+      "answers": [
+        {
+          "text": "Etwa eine Milliarde",
+          "correct": false
+        },
+        {
+          "text": "Etwa 100 bis 400 Milliarden",
+          "correct": true
+        },
+        {
+          "text": "Etwa eine Billiarde",
+          "correct": false
+        }
+      ],
+      "difficulty": "easy",
+      "fun_fact": "Astronomen schätzen die Milchstraße auf 100 bis 400 Milliarden Sterne. Im beobachtbaren Universum gibt es mindestens zwei Billionen Galaxien — mehr Sterne als Sandkörner auf allen Stränden der Erde.",
+      "category": "Wissenschaft"
+    },
+    {
+      "id": "wissenschaft_de_061",
+      "question": "Was ist ein Neutronenstern, gemessen an Dichte?",
+      "answers": [
+        {
+          "text": "Ein Teelöffel davon wiegt eine Milliarde Tonnen",
+          "correct": true
+        },
+        {
+          "text": "Er hat etwa die Dichte von Blei",
+          "correct": false
+        },
+        {
+          "text": "Er ist etwa so dicht wie die Sonne",
+          "correct": false
+        }
+      ],
+      "difficulty": "medium",
+      "fun_fact": "In einem Neutronenstern sind Protonen und Elektronen zu Neutronen verschmolzen. Ein Teelöffel der Materie würde etwa eine Milliarde Tonnen wiegen — mehr als alle Menschen der Erde zusammen.",
+      "category": "Wissenschaft"
+    },
+    {
+      "id": "wissenschaft_de_062",
+      "question": "Was sind die roten Riesen-Sterne, in die unsere Sonne sich einmal verwandeln wird?",
+      "answers": [
+        {
+          "text": "Sterne am Ende ihres Lebens",
+          "correct": true
+        },
+        {
+          "text": "Frisch geborene Sonnen",
+          "correct": false
+        },
+        {
+          "text": "Tote Sternreste ohne Fusion",
+          "correct": false
+        }
+      ],
+      "difficulty": "easy",
+      "fun_fact": "Wenn der Wasserstoff im Kern aufgebraucht ist, dehnt sich ein sonnenähnlicher Stern auf das Hundertfache aus. Unsere Sonne wird in etwa 5 Milliarden Jahren so groß werden, dass sie die Erdumlaufbahn verschlingt.",
+      "category": "Wissenschaft"
+    },
+    {
+      "id": "wissenschaft_de_063",
+      "question": "Wie lange braucht Licht von der Sonne zur Erde?",
+      "answers": [
+        {
+          "text": "Etwa 8 Minuten",
+          "correct": true
+        },
+        {
+          "text": "Etwa eine Sekunde",
+          "correct": false
+        },
+        {
+          "text": "Etwa eine Stunde",
+          "correct": false
+        }
+      ],
+      "difficulty": "easy",
+      "fun_fact": "Sonnenlicht legt die 150 Millionen Kilometer in 8 Minuten 20 Sekunden zurück. Wenn die Sonne jetzt verlöschen würde, würden wir es erst 500 Sekunden später bemerken — und unsere Umlaufbahn ebenfalls erst dann verlassen.",
+      "category": "Wissenschaft"
+    },
+    {
+      "id": "wissenschaft_de_064",
+      "question": "Welcher Planet hat den größten Vulkan im Sonnensystem?",
+      "answers": [
+        {
+          "text": "Venus",
+          "correct": false
+        },
+        {
+          "text": "Mars",
+          "correct": true
+        },
+        {
+          "text": "Jupiter",
+          "correct": false
+        }
+      ],
+      "difficulty": "medium",
+      "fun_fact": "Olympus Mons auf dem Mars ist 22 km hoch — fast dreimal der Mount Everest — und hat den Durchmesser von Frankreich. Weil sich die Marsoberfläche nicht wie auf der Erde plattentektonisch bewegt, konnte er über Milliarden Jahre an einer Stelle wachsen.",
+      "category": "Wissenschaft"
+    },
+    {
+      "id": "wissenschaft_de_065",
+      "question": "Was passiert mit der Geschwindigkeit der Galaxien im Universum?",
+      "answers": [
+        {
+          "text": "Sie entfernen sich immer schneller voneinander",
+          "correct": true
+        },
+        {
+          "text": "Sie nähern sich langsam wieder an",
+          "correct": false
+        },
+        {
+          "text": "Sie stehen relativ zueinander still",
+          "correct": false
+        }
+      ],
+      "difficulty": "medium",
+      "fun_fact": "1998 entdeckten die Forschergruppen um Perlmutter, Schmidt und Riess: Die Expansion des Universums beschleunigt sich. Dafür verantwortlich ist die Dunkle Energie — Nobelpreis 2011.",
+      "category": "Wissenschaft"
+    },
+    {
+      "id": "wissenschaft_de_066",
+      "question": "Wie viele Monde hat Jupiter ungefähr?",
+      "answers": [
+        {
+          "text": "Genau einen",
+          "correct": false
+        },
+        {
+          "text": "Etwa 95 bestätigte",
+          "correct": true
+        },
+        {
+          "text": "Genau vier",
+          "correct": false
+        }
+      ],
+      "difficulty": "medium",
+      "fun_fact": "Jupiter hat über 95 bestätigte Monde — Saturn übertrifft das mittlerweile mit über 140. Galileo entdeckte 1610 die vier größten (Io, Europa, Ganymed, Kallisto), den ersten Beweis, dass nicht alles um die Erde kreist.",
+      "category": "Wissenschaft"
+    },
+    {
+      "id": "wissenschaft_de_067",
+      "question": "Was ist im Vakuum des Weltraums das Hindernis für Schall?",
+      "answers": [
+        {
+          "text": "Schall ist zu energiearm",
+          "correct": false
+        },
+        {
+          "text": "Es gibt keine Moleküle zum Schwingen",
+          "correct": true
+        },
+        {
+          "text": "Die Schwerelosigkeit blockiert Schall",
+          "correct": false
+        }
+      ],
+      "difficulty": "easy",
+      "fun_fact": "Schall braucht ein Medium aus Atomen oder Molekülen, die schwingen können. Im fast vollkommenen Vakuum des Alls fehlt das. Eine Explosion neben dir würde dich vielleicht durch Strahlung töten — aber sie wäre völlig lautlos.",
+      "category": "Wissenschaft"
+    },
+    {
+      "id": "wissenschaft_de_068",
+      "question": "Wie viele Chromosomen besitzt eine menschliche Zelle?",
+      "answers": [
+        {
+          "text": "23",
+          "correct": false
+        },
+        {
+          "text": "46",
+          "correct": true
+        },
+        {
+          "text": "92",
+          "correct": false
+        }
+      ],
+      "difficulty": "easy",
+      "fun_fact": "23 Chromosomenpaare, also 46 Chromosomen — je eines von Vater und Mutter. Eine Erdbeere hat 56, ein Karpfen über 100. Anzahl sagt nichts über Komplexität aus.",
+      "category": "Wissenschaft"
+    },
+    {
+      "id": "wissenschaft_de_069",
+      "question": "Welcher Anteil unserer DNA ist tatsächlich proteinkodierend?",
+      "answers": [
+        {
+          "text": "Etwa 2 %",
+          "correct": true
+        },
+        {
+          "text": "Etwa 50 %",
+          "correct": false
+        },
+        {
+          "text": "Praktisch 100 %",
+          "correct": false
+        }
+      ],
+      "difficulty": "hard",
+      "fun_fact": "Nur ungefähr 2 % unserer 3 Milliarden Basenpaare kodieren direkt für Proteine. Der Rest reguliert, schweigt oder hat Funktionen, die wir noch nicht verstehen — früher fälschlich „Junk-DNA“ genannt.",
+      "category": "Wissenschaft"
+    },
+    {
+      "id": "wissenschaft_de_070",
+      "question": "Wie viel DNA teilen Mensch und Schimpanse ungefähr?",
+      "answers": [
+        {
+          "text": "Etwa 50 %",
+          "correct": false
+        },
+        {
+          "text": "Etwa 98-99 %",
+          "correct": true
+        },
+        {
+          "text": "Praktisch 100 %",
+          "correct": false
+        }
+      ],
+      "difficulty": "easy",
+      "fun_fact": "Je nach Vergleichsmethode (1:1-Sequenzvergleich vs. Berücksichtigung von Insertionen) teilen Mensch und Schimpanse 98-99 % ihrer DNA. Die wenigen Prozent Unterschied umfassen Millionen Basenpaare — und entscheiden über Anatomie, Gehirngröße und Sprache.",
+      "category": "Wissenschaft"
+    },
+    {
+      "id": "wissenschaft_de_071",
+      "question": "Welches Wirbeltier hat ein viel größeres Genom als der Mensch?",
+      "answers": [
+        {
+          "text": "Elefant",
+          "correct": false
+        },
+        {
+          "text": "Lungenfisch",
+          "correct": true
+        },
+        {
+          "text": "Blauwal",
+          "correct": false
+        }
+      ],
+      "difficulty": "hard",
+      "fun_fact": "Lungenfische haben die größten bekannten Wirbeltier-Genome — der Marmor-Lungenfisch kommt auf über 100 Milliarden Basenpaare, mehr als 30 Mal so viel wie der Mensch. Größeres Genom heißt nicht komplexerer Organismus; viel davon ist repetitive Sequenz.",
+      "category": "Wissenschaft"
+    },
+    {
+      "id": "wissenschaft_de_072",
+      "question": "Was passiert mit den Mitochondrien in deinen Zellen — woher stammen sie evolutionär?",
+      "answers": [
+        {
+          "text": "Sie waren ursprünglich eigenständige Bakterien",
+          "correct": true
+        },
+        {
+          "text": "Sie sind Teil des ursprünglichen Zellkerns",
+          "correct": false
+        },
+        {
+          "text": "Sie entstehen aus Proteinen",
+          "correct": false
+        }
+      ],
+      "difficulty": "medium",
+      "fun_fact": "Die Endosymbiontentheorie (Lynn Margulis, 1967): Mitochondrien waren vor 1,5 Milliarden Jahren freilebende Bakterien, die in eine größere Zelle integriert wurden. Deshalb haben sie eigene DNA — die du nur von deiner Mutter erbst.",
+      "category": "Wissenschaft"
+    },
+    {
+      "id": "wissenschaft_de_073",
+      "question": "Welches Tier kann praktisch nicht altern?",
+      "answers": [
+        {
+          "text": "Quallen der Art Turritopsis dohrnii",
+          "correct": true
+        },
+        {
+          "text": "Riesenschildkröte",
+          "correct": false
+        },
+        {
+          "text": "Grönlandwal",
+          "correct": false
+        }
+      ],
+      "difficulty": "medium",
+      "fun_fact": "Turritopsis dohrnii kann ihren Zellzyklus zurück zur Larvenform schalten, wenn sie verletzt oder gestresst ist. Theoretisch unsterblich — bis sie gefressen wird oder krank.",
+      "category": "Wissenschaft"
+    },
+    {
+      "id": "wissenschaft_de_074",
+      "question": "Was ist das Tardigrad-Geheimnis: Wo überleben Bärtierchen extrem?",
+      "answers": [
+        {
+          "text": "Im Vakuum des Weltraums",
+          "correct": true
+        },
+        {
+          "text": "Nur in Süßwasser",
+          "correct": false
+        },
+        {
+          "text": "Nur in heißen Quellen",
+          "correct": false
+        }
+      ],
+      "difficulty": "medium",
+      "fun_fact": "Bärtierchen (Tardigraden) überleben Vakuum, kosmische Strahlung, Temperaturen von -272 °C bis +150 °C und Drücke wie in der Tiefsee. 2007 schickte ein ESA-Experiment Tardigraden ins All — viele überlebten den Trip ungeschützt.",
+      "category": "Wissenschaft"
+    },
+    {
+      "id": "wissenschaft_de_075",
+      "question": "Wie viele Zellen sterben in deinem Körper pro Sekunde?",
+      "answers": [
+        {
+          "text": "Mehrere Millionen",
+          "correct": true
+        },
+        {
+          "text": "Etwa hundert",
+          "correct": false
+        },
+        {
+          "text": "Nur ein paar Tausend",
+          "correct": false
+        }
+      ],
+      "difficulty": "easy",
+      "fun_fact": "Etwa 2-3 Millionen Zellen pro Sekunde — vor allem Blut- und Hautzellen. Sie werden durch Apoptose, den programmierten Zelltod, kontrolliert beseitigt und sofort durch neue ersetzt.",
+      "category": "Wissenschaft"
+    },
+    {
+      "id": "wissenschaft_de_077",
+      "question": "Welche Pflanzen können ihre Blütentemperatur aktiv über die Umgebungstemperatur heben?",
+      "answers": [
+        {
+          "text": "Aronstabgewächse durch Thermogenese",
+          "correct": true
+        },
+        {
+          "text": "Keine — Pflanzen sind immer umgebungswarm",
+          "correct": false
+        },
+        {
+          "text": "Nur Kakteen, durch Sonneneinspeicherung",
+          "correct": false
+        }
+      ],
+      "difficulty": "hard",
+      "fun_fact": "Manche Aronstabgewächse können durch Thermogenese in ihren Blüten Temperaturen bis zu 35-45 °C halten — auch nachts. Das lockt Bestäuber und verdunstet Duftstoffe. Andere thermogene Arten: Lotos und Skunk Cabbage.",
+      "category": "Wissenschaft"
+    },
+    {
+      "id": "wissenschaft_de_078",
+      "question": "Wie bewegt sich ein Tintenfisch blitzschnell vorwärts, wenn er Beute jagt oder flieht?",
+      "answers": [
+        {
+          "text": "Durch Rückstoßantrieb mit Wasser aus dem Mantel",
+          "correct": true
+        },
+        {
+          "text": "Durch ruderartige Bewegungen aller Arme",
+          "correct": false
+        },
+        {
+          "text": "Durch Anziehung an Strömungen",
+          "correct": false
+        }
+      ],
+      "difficulty": "medium",
+      "fun_fact": "Tintenfische ziehen Wasser in ihren Mantel und pressen es durch einen Siphon raus — Rückstoßantrieb. Manche Tintenfische erreichen so kurzzeitig über 40 km/h und springen sogar aus dem Wasser.",
+      "category": "Wissenschaft"
+    },
+    {
+      "id": "wissenschaft_de_079",
+      "question": "Welche Sprache verwenden Bienen, um Futterquellen zu kommunizieren?",
+      "answers": [
+        {
+          "text": "Hochfrequente Töne",
+          "correct": false
+        },
+        {
+          "text": "Den Schwänzeltanz",
+          "correct": true
+        },
+        {
+          "text": "Pheromonsprache",
+          "correct": false
+        }
+      ],
+      "difficulty": "easy",
+      "fun_fact": "Karl von Frisch entschlüsselte den Bienentanz und bekam 1973 den Nobelpreis. Im Schwänzeltanz codieren Bienen Richtung (relativ zur Sonne) und Entfernung (Dauer des Schwänzelns) der Futterquelle.",
+      "category": "Wissenschaft"
+    },
+    {
+      "id": "wissenschaft_de_081",
+      "question": "Welche Tiere können ihre Geschlechtszugehörigkeit im Laufe ihres Lebens wechseln?",
+      "answers": [
+        {
+          "text": "Clownfische",
+          "correct": true
+        },
+        {
+          "text": "Pinguine",
+          "correct": false
+        },
+        {
+          "text": "Wölfe",
+          "correct": false
+        }
+      ],
+      "difficulty": "easy",
+      "fun_fact": "Clownfische leben in Gruppen mit einem dominanten Weibchen. Stirbt es, verwandelt sich das größte Männchen biologisch in ein Weibchen. „Findet Nemo“ hätte also realistisch ganz anders weitergehen müssen.",
+      "category": "Wissenschaft"
+    },
+    {
+      "id": "wissenschaft_de_083",
+      "question": "Was ist die Heisenbergsche Unschärferelation?",
+      "answers": [
+        {
+          "text": "Ort und Impuls können nicht beide exakt bekannt sein",
+          "correct": true
+        },
+        {
+          "text": "Messungen sind immer technisch ungenau",
+          "correct": false
+        },
+        {
+          "text": "Licht ist immer langsamer als gemessen",
+          "correct": false
+        }
+      ],
+      "difficulty": "medium",
+      "fun_fact": "Werner Heisenberg formulierte 1927: Je präziser der Ort eines Teilchens bekannt ist, desto ungenauer sein Impuls — und umgekehrt. Das ist kein Messproblem, sondern eine fundamentale Eigenschaft der Natur.",
+      "category": "Wissenschaft"
+    },
+    {
+      "id": "wissenschaft_de_084",
+      "question": "Was ist der zweite Hauptsatz der Thermodynamik, vereinfacht?",
+      "answers": [
+        {
+          "text": "Entropie nimmt in geschlossenen Systemen immer zu",
+          "correct": true
+        },
+        {
+          "text": "Energie kann nie erzeugt werden",
+          "correct": false
+        },
+        {
+          "text": "Wärme fließt immer von kalt zu warm",
+          "correct": false
+        }
+      ],
+      "difficulty": "medium",
+      "fun_fact": "In einem isolierten System nimmt die Unordnung (Entropie) niemals ab. Genau deshalb funktionieren Perpetuum-mobile-Maschinen 2. Art nicht — und genau deshalb gibt es einen Zeitpfeil, der Vergangenheit von Zukunft unterscheidet.",
+      "category": "Wissenschaft"
+    },
+    {
+      "id": "wissenschaft_de_085",
+      "question": "Was passiert mit verschränkten Teilchen über große Distanzen?",
+      "answers": [
+        {
+          "text": "Sie ändern ihren Zustand instantan korreliert",
+          "correct": true
+        },
+        {
+          "text": "Sie verlieren ihre Verbindung sofort",
+          "correct": false
+        },
+        {
+          "text": "Sie senden Informationen mit Lichtgeschwindigkeit",
+          "correct": false
+        }
+      ],
+      "difficulty": "hard",
+      "fun_fact": "Misst man bei einem verschränkten Teilchen den Spin, ist der Zustand des Partners sofort festgelegt — egal wie weit entfernt. Einstein nannte es „spukhafte Fernwirkung“. Information übertragen kann man damit aber nicht; Aspect, Clauser und Zeilinger bekamen dafür 2022 den Nobelpreis.",
+      "category": "Wissenschaft"
+    },
+    {
+      "id": "wissenschaft_de_086",
+      "question": "Was ist der absolute Nullpunkt der Temperatur?",
+      "answers": [
+        {
+          "text": "0 Kelvin oder -273,15 °C",
+          "correct": true
+        },
+        {
+          "text": "0 °C",
+          "correct": false
+        },
+        {
+          "text": "-100 °C",
+          "correct": false
+        }
+      ],
+      "difficulty": "easy",
+      "fun_fact": "Bei 0 Kelvin steht jede Teilchenbewegung still. Erreichbar ist er nie ganz — nach dem 3. Hauptsatz der Thermodynamik. Aktueller Laborrekord: wenige Milliardstel Kelvin in Atomfallen.",
+      "category": "Wissenschaft"
+    },
+    {
+      "id": "wissenschaft_de_087",
+      "question": "Mit welcher Geschwindigkeit leiten die schnellsten Nervenfasern Signale weiter?",
+      "answers": [
+        {
+          "text": "Bis etwa 120 m/s (rund 430 km/h)",
+          "correct": true
+        },
+        {
+          "text": "Etwa 5 m/s (Schritttempo)",
+          "correct": false
+        },
+        {
+          "text": "Annähernd Lichtgeschwindigkeit",
+          "correct": false
+        }
+      ],
+      "difficulty": "medium",
+      "fun_fact": "Myelinisierte Nervenfasern leiten Aktionspotenziale bis zu 120 m/s. Deshalb fühlst du eine Berührung an den Zehen quasi sofort, obwohl das Signal physisch durch den ganzen Körper laufen muss. Unmyelinisierte Fasern (Schmerz, Temperatur) sind mit 0,5-2 m/s deutlich langsamer.",
+      "category": "Wissenschaft"
+    },
+    {
+      "id": "wissenschaft_de_088",
+      "question": "Welche Art von Eis kann es geben, das heißer ist als kochendes Wasser?",
+      "answers": [
+        {
+          "text": "Bei extrem hohem Druck",
+          "correct": true
+        },
+        {
+          "text": "Eis ist immer kalt",
+          "correct": false
+        },
+        {
+          "text": "Nur in der Schwerelosigkeit",
+          "correct": false
+        }
+      ],
+      "difficulty": "hard",
+      "fun_fact": "Unter Drücken jenseits 20.000 bar kann „Eis VII“ bei Temperaturen über 100 °C fest bleiben. Im Inneren von Eismonden wie Ganymed vermutet man genau solche exotischen Eisphasen.",
+      "category": "Wissenschaft"
+    },
+    {
+      "id": "wissenschaft_de_090",
+      "question": "Was zeigt das Foucaultsche Pendel?",
+      "answers": [
+        {
+          "text": "Die Erdrotation",
+          "correct": true
+        },
+        {
+          "text": "Die Schwerkraft des Mondes",
+          "correct": false
+        },
+        {
+          "text": "Magnetische Erdpolarität",
+          "correct": false
+        }
+      ],
+      "difficulty": "medium",
+      "fun_fact": "Léon Foucault hängte 1851 im Pariser Panthéon ein 67 m langes Pendel auf. Über Stunden wanderte die Schwingungsebene — nicht das Pendel, sondern die Erde drehte sich darunter weg. Erste mechanische Demonstration der Erdrotation.",
+      "category": "Wissenschaft"
+    },
+    {
+      "id": "wissenschaft_de_091",
+      "question": "Was ist der „erste Computer-Bug“ in der Geschichte?",
+      "answers": [
+        {
+          "text": "Eine echte Motte im Mark-II-Relais",
+          "correct": true
+        },
+        {
+          "text": "Ein Stromausfall bei ENIAC",
+          "correct": false
+        },
+        {
+          "text": "Ein Mathematikfehler bei Turing",
+          "correct": false
+        }
+      ],
+      "difficulty": "easy",
+      "fun_fact": "1947 fand Grace Hoppers Team eine Motte, die im Harvard Mark II zwischen Relais-Kontakten festsaß. Sie klebten sie ins Logbuch mit dem Eintrag „First actual case of bug being found“. Das Wort „Bug“ für Fehler war zwar älter — aber das Foto wurde Kultwert.",
+      "category": "Wissenschaft"
+    },
+    {
+      "id": "wissenschaft_de_092",
+      "question": "Wer programmierte den ersten Algorithmus für eine Maschine — bevor es sie überhaupt gab?",
+      "answers": [
+        {
+          "text": "Alan Turing",
+          "correct": false
+        },
+        {
+          "text": "Ada Lovelace",
+          "correct": true
+        },
+        {
+          "text": "John von Neumann",
+          "correct": false
+        }
+      ],
+      "difficulty": "easy",
+      "fun_fact": "Ada Lovelace schrieb 1843 einen Algorithmus zur Berechnung von Bernoulli-Zahlen für Charles Babbages nie gebaute Analytical Engine. Damit gilt sie als erste Programmiererin der Geschichte — fast hundert Jahre vor dem ersten echten Computer.",
+      "category": "Wissenschaft"
+    },
+    {
+      "id": "wissenschaft_de_093",
+      "question": "Was tat die berühmte Enigma-Maschine im 2. Weltkrieg?",
+      "answers": [
+        {
+          "text": "Sie verschlüsselte deutsche Funksprüche",
+          "correct": true
+        },
+        {
+          "text": "Sie berechnete Raketenbahnen",
+          "correct": false
+        },
+        {
+          "text": "Sie steuerte U-Boote",
+          "correct": false
+        }
+      ],
+      "difficulty": "easy",
+      "fun_fact": "Enigma erzeugte mit Rotoren eine Substitutionschiffre mit 159 Quintillionen Schlüsseln. Alan Turing und das Team in Bletchley Park knackten sie mit der Bombe-Maschine — Historiker schätzen, dass dies den Krieg um etwa zwei Jahre verkürzte.",
+      "category": "Wissenschaft"
+    },
+    {
+      "id": "wissenschaft_de_094",
+      "question": "Was beschreibt das Mooresche Gesetz?",
+      "answers": [
+        {
+          "text": "Verdopplung der Transistoren pro Chip alle ~2 Jahre",
+          "correct": true
+        },
+        {
+          "text": "Halbierung der Internetgeschwindigkeit alle 5 Jahre",
+          "correct": false
+        },
+        {
+          "text": "Verdopplung der Festplattengröße jährlich",
+          "correct": false
+        }
+      ],
+      "difficulty": "medium",
+      "fun_fact": "Gordon Moore beobachtete 1965, dass sich die Transistorenzahl pro Chip etwa alle 2 Jahre verdoppelt — eine Vorhersage, die über 50 Jahre lang erstaunlich genau eintraf. Inzwischen flacht die Kurve ab; die Atom-Grenzen werden erreicht.",
+      "category": "Wissenschaft"
+    },
+    {
+      "id": "wissenschaft_de_095",
+      "question": "Was zeigt das Halting-Problem in der Informatik?",
+      "answers": [
+        {
+          "text": "Es gibt prinzipiell unentscheidbare Probleme",
+          "correct": true
+        },
+        {
+          "text": "Computer können nichts berechnen ohne Strom",
+          "correct": false
+        },
+        {
+          "text": "Quantencomputer lösen alles in Sekunden",
+          "correct": false
+        }
+      ],
+      "difficulty": "hard",
+      "fun_fact": "Alan Turing bewies 1936: Kein Algorithmus kann allgemein vorhersagen, ob ein beliebiges Programm anhält oder ewig läuft. Das ist die theoretische Grenze der Berechenbarkeit — bevor der erste Computer existierte.",
+      "category": "Wissenschaft"
+    },
+    {
+      "id": "wissenschaft_de_096",
+      "question": "Was wog der erste kommerzielle Computer (UNIVAC I, 1951)?",
+      "answers": [
+        {
+          "text": "Etwa 13 Tonnen",
+          "correct": true
+        },
+        {
+          "text": "Etwa 100 Kilogramm",
+          "correct": false
+        },
+        {
+          "text": "Etwa 500 Tonnen",
+          "correct": false
+        }
+      ],
+      "difficulty": "medium",
+      "fun_fact": "UNIVAC I wog 13 Tonnen, brauchte 125 kW Strom und hatte weniger Speicher als jeder moderne Taschenrechner. 1952 sagte er live im US-Fernsehen den Wahlsieg Eisenhowers vorher — gegen den Konsens der Meinungsforscher.",
+      "category": "Wissenschaft"
+    },
+    {
+      "id": "wissenschaft_de_097",
+      "question": "Welches Säugetier ist evolutionär am nächsten mit dem Wal verwandt?",
+      "answers": [
+        {
+          "text": "Der Hai",
+          "correct": false
+        },
+        {
+          "text": "Das Flusspferd",
+          "correct": true
+        },
+        {
+          "text": "Der Seehund",
+          "correct": false
+        }
+      ],
+      "difficulty": "medium",
+      "fun_fact": "Wale und Flusspferde teilen einen Vorfahren vor etwa 55 Millionen Jahren. Wale stammen von landlebenden Paarhufern ab, die ins Wasser zurückkehrten. Fossilien wie Pakicetus zeigen den Übergang Schritt für Schritt.",
+      "category": "Wissenschaft"
+    },
+    {
+      "id": "wissenschaft_de_098",
+      "question": "Welcher Strom in deinem Gehirn lässt dich denken — elektrisch oder chemisch?",
+      "answers": [
+        {
+          "text": "Beides — elektrisch im Neuron, chemisch zwischen ihnen",
+          "correct": true
+        },
+        {
+          "text": "Rein elektrisch",
+          "correct": false
+        },
+        {
+          "text": "Rein chemisch",
+          "correct": false
+        }
+      ],
+      "difficulty": "easy",
+      "fun_fact": "Innerhalb eines Neurons läuft ein elektrisches Aktionspotenzial mit bis zu 120 m/s. An der Synapse zum nächsten Neuron werden Botenstoffe wie Glutamat oder Dopamin ausgeschüttet — die chemische Lücke wird in etwa 0,5 ms überbrückt.",
+      "category": "Wissenschaft"
+    },
+    {
+      "id": "wissenschaft_de_099",
+      "question": "Welches Phänomen beschreibt, dass heißes Wasser unter manchen Bedingungen schneller gefriert als kaltes?",
+      "answers": [
+        {
+          "text": "Der Mpemba-Effekt",
+          "correct": true
+        },
+        {
+          "text": "Der Joule-Thomson-Effekt",
+          "correct": false
+        },
+        {
+          "text": "Der Tyndall-Effekt",
+          "correct": false
+        }
+      ],
+      "difficulty": "hard",
+      "fun_fact": "Erasto Mpemba bemerkte 1963 als Schüler, dass heiße Milch beim Eismachen schneller gefror als kalte. Der Effekt ist unter bestimmten Bedingungen reproduzierbar; vollständig erklärt ist er bis heute nicht — Hypothesen reichen von Verdunstung über Konvektion bis zu Wasserstoffbrücken.",
+      "category": "Wissenschaft"
+    },
+    {
+      "id": "wissenschaft_de_100",
+      "question": "Was ist Plasma in der Physik?",
+      "answers": [
+        {
+          "text": "Der vierte Aggregatzustand",
+          "correct": true
+        },
+        {
+          "text": "Eine besondere Flüssigkeit",
+          "correct": false
+        },
+        {
+          "text": "Ein extrem kalter Festkörper",
+          "correct": false
+        }
+      ],
+      "difficulty": "easy",
+      "fun_fact": "Plasma ist ein Gas, dessen Atome ionisiert sind — Elektronen sind getrennt von den Kernen. Über 99 % der sichtbaren Materie im Universum (alle Sterne, das Polarlicht, das Innere einer Leuchtstoffröhre) ist Plasma, nicht fest, flüssig oder gasförmig.",
+      "category": "Wissenschaft"
+    },
+    {
+      "id": "wissenschaft_de_101",
+      "question": "Was unterscheidet die DNA von Pilzen evolutionär — sind sie näher an Pflanzen oder Tieren?",
+      "answers": [
+        {
+          "text": "Näher an Tieren",
+          "correct": true
+        },
+        {
+          "text": "Näher an Pflanzen",
+          "correct": false
+        },
+        {
+          "text": "Genauso weit von beiden entfernt",
+          "correct": false
+        }
+      ],
+      "difficulty": "medium",
+      "fun_fact": "Genetische Analysen seit den 1990ern zeigen: Pilze und Tiere teilen einen näheren gemeinsamen Vorfahren als Pilze und Pflanzen. Beide gehören zu den Opisthokonta — der gleichen Großgruppe wie wir.",
+      "category": "Wissenschaft"
+    },
+    {
+      "id": "wissenschaft_de_102",
+      "question": "Was machte die Voyager-1-Sonde 2012 historisch einmalig?",
+      "answers": [
+        {
+          "text": "Sie verließ als erstes von Menschen gebautes Objekt den Sonnenwind",
+          "correct": true
+        },
+        {
+          "text": "Sie landete auf einem Asteroiden",
+          "correct": false
+        },
+        {
+          "text": "Sie fotografierte zum ersten Mal die Sonne",
+          "correct": false
+        }
+      ],
+      "difficulty": "medium",
+      "fun_fact": "Voyager 1 trat 2012 in den interstellaren Raum ein — den Bereich jenseits der Heliopause, wo der Sonnenwind aufhört. Gestartet 1977, sendet sie immer noch Daten zurück; das Signal braucht inzwischen über 22 Stunden zur Erde.",
       "category": "Wissenschaft"
     }
   ]

@@ -579,6 +579,630 @@
       "difficulty": "medium",
       "fun_fact": "After a French judge admitted to a vote-swapping deal, the ISU replaced the iconic '6.0' system with a Code of Points where each element gets a base value plus 'grade of execution'. Theoretical maximums now run into the 300s for free skates.",
       "category": "Sport"
+    },
+    {
+      "id": "sport_en_051",
+      "question": "In professional sumo, what must the rikishi do at the very start of a bout before any pushing begins?",
+      "answers": [
+        {"text": "Both wrestlers must place both fists on the clay at the same instant", "correct": true},
+        {"text": "Bow to the opponent without making eye contact for ten seconds", "correct": false},
+        {"text": "Throw a fistful of salt into the opponent's chest", "correct": false}
+      ],
+      "difficulty": "medium",
+      "fun_fact": "If the simultaneous touch (tachi-ai) is not synchronised, the gyoji halts the bout and orders a restart. Top wrestlers spend years studying their opponent's breathing rhythm to time the touch.",
+      "category": "Sport"
+    },
+    {
+      "id": "sport_en_052",
+      "question": "Curling stones are made almost exclusively from granite quarried at only two places in the world. One is Wales. Where is the other?",
+      "answers": [
+        {"text": "Ailsa Craig, a small uninhabited Scottish island", "correct": true},
+        {"text": "A quarry in northern Finland near Rovaniemi", "correct": false},
+        {"text": "A mine on Canada's Vancouver Island", "correct": false}
+      ],
+      "difficulty": "hard",
+      "fun_fact": "Ailsa Craig 'Blue Hone' granite is so dense it barely absorbs water, preventing the cracking that ruins lesser stones. Kays of Scotland holds exclusive harvesting rights and supplies almost every elite curling stone in the world.",
+      "category": "Sport"
+    },
+    {
+      "id": "sport_en_053",
+      "question": "Why is a biathlon competitor penalised with a 150 m penalty loop for every shot they miss?",
+      "answers": [
+        {"text": "Roughly the distance a top skier covers in the time a missed shot would have saved", "correct": true},
+        {"text": "It matches the historical distance between two Norwegian army outposts", "correct": false},
+        {"text": "It is the standard length of a Winter Olympic biathlon ski track", "correct": false}
+      ],
+      "difficulty": "hard",
+      "fun_fact": "The penalty was calibrated so that ski speed and shooting accuracy weigh roughly equally on the final time. In sprint events, one missed target can knock an athlete from gold contention to outside the top twenty.",
+      "category": "Sport"
+    },
+    {
+      "id": "sport_en_054",
+      "question": "What is unusual about the playing surface of a hurling pitch compared with most field sports?",
+      "answers": [
+        {"text": "It is one of the largest in team sport, up to 145 m long by 90 m wide", "correct": true},
+        {"text": "It must be cut on the diagonal so the grass leans toward the goal", "correct": false},
+        {"text": "It is required to slope by 2 percent toward one goalmouth", "correct": false}
+      ],
+      "difficulty": "medium",
+      "fun_fact": "An adult hurling pitch dwarfs a football field. Combined with the sliotar's speed of well over 150 km/h off the hurley, hurling is often described as the fastest field sport on grass.",
+      "category": "Sport"
+    },
+    {
+      "id": "sport_en_055",
+      "question": "In cricket, what is a 'Nelson' and why are some players superstitious about it?",
+      "answers": [
+        {"text": "A score of 111, considered unlucky in English cricket folklore", "correct": true},
+        {"text": "A delivery that bounces twice before reaching the batter", "correct": false},
+        {"text": "The position a fielder takes directly behind the umpire", "correct": false}
+      ],
+      "difficulty": "medium",
+      "fun_fact": "Umpire David Shepherd famously hopped on one leg whenever the score reached 111, 222 or any multiple, to ward off the curse. The origin is said to relate to Admiral Nelson reputedly having 'one eye, one arm, one' — though that detail is mostly myth.",
+      "category": "Sport"
+    },
+    {
+      "id": "sport_en_056",
+      "question": "Why does the America's Cup yacht race use boats designed specifically for each edition rather than a standard class?",
+      "answers": [
+        {"text": "The defender chooses the boat type and rules, a tradition baked into the Deed of Gift", "correct": true},
+        {"text": "Modern carbon hulls warp after one season and cannot be reused", "correct": false},
+        {"text": "Race organisers auction the design rights to the highest sponsor every cycle", "correct": false}
+      ],
+      "difficulty": "hard",
+      "fun_fact": "The defender's right to pick the venue, schedule and class has produced wild swings — from massive J-class sloops in the 1930s to today's foiling catamarans that fly above the water at over 90 km/h.",
+      "category": "Sport"
+    },
+    {
+      "id": "sport_en_057",
+      "question": "What did the introduction of the offside rule change in early association football?",
+      "answers": [
+        {"text": "It ended the era of forwards permanently camped near the opponent's goal", "correct": true},
+        {"text": "It allowed goalkeepers to handle the ball outside the penalty area", "correct": false},
+        {"text": "It made throw-ins legal for the first time", "correct": false}
+      ],
+      "difficulty": "medium",
+      "fun_fact": "Before the rule, attackers stood by the opposing keeper waiting for long boots forward. The 1925 reform — needing only two defenders between attacker and goal instead of three — caused goals per game to nearly double in one season.",
+      "category": "Sport"
+    },
+    {
+      "id": "sport_en_058",
+      "question": "The first international football match in 1872 between Scotland and England ended with what score?",
+      "answers": [
+        {"text": "0-0", "correct": true},
+        {"text": "4-2 to Scotland", "correct": false},
+        {"text": "3-1 to England", "correct": false}
+      ],
+      "difficulty": "easy",
+      "fun_fact": "Played in Glasgow before 4,000 spectators, the match was goalless partly because both teams used radically different formations — England with seven forwards, Scotland with a then-revolutionary passing game using only six.",
+      "category": "Sport"
+    },
+    {
+      "id": "sport_en_059",
+      "question": "What is the only Olympic medal made from material recovered from electronic waste?",
+      "answers": [
+        {"text": "Every medal at Tokyo 2020", "correct": true},
+        {"text": "Only the gold medal at Beijing 2022", "correct": false},
+        {"text": "The bronze medals at Rio 2016", "correct": false}
+      ],
+      "difficulty": "easy",
+      "fun_fact": "Japan ran a two-year national drive collecting old smartphones and small appliances, yielding about 32 kg of gold, 3,500 kg of silver and 2,200 kg of bronze — enough to mint all 5,000 medals from recycled metals.",
+      "category": "Sport"
+    },
+    {
+      "id": "sport_en_060",
+      "question": "Why do speed skaters wear skin-tight suits with a small hood that covers their hair?",
+      "answers": [
+        {"text": "Loose hair creates measurable aerodynamic drag at speeds above 50 km/h", "correct": true},
+        {"text": "International rules require the head to be fully covered for safety", "correct": false},
+        {"text": "Body heat retention via the scalp prevents leg cramps", "correct": false}
+      ],
+      "difficulty": "medium",
+      "fun_fact": "Wind-tunnel tests at the Dutch national team showed even a few centimetres of exposed hair could cost an athlete 0.1 seconds over 500 m — enough to flip a podium finish.",
+      "category": "Sport"
+    },
+    {
+      "id": "sport_en_061",
+      "question": "In Formula 1, what does the chequered flag at the finish line actually signify under the regulations?",
+      "answers": [
+        {"text": "The end of the race, with positions frozen as cars cross the line for the final time", "correct": true},
+        {"text": "A warning that the leader has one lap remaining", "correct": false},
+        {"text": "An optional rest lap before the official end of the session", "correct": false}
+      ],
+      "difficulty": "easy",
+      "fun_fact": "The chequered flag's origin is disputed but the earliest documented use is from a 1906 French race. Pre-radio, the bold black-and-white pattern was simply the most visible signal a marshal could wave at a passing car.",
+      "category": "Sport"
+    },
+    {
+      "id": "sport_en_062",
+      "question": "Why is the marathon almost always the final event on the athletics programme at the Olympic Games?",
+      "answers": [
+        {"text": "Tradition since 1896 places it as the symbolic closing event of the Games", "correct": true},
+        {"text": "It is the only race that requires the city's streets to be closed", "correct": false},
+        {"text": "Television networks insisted on a guaranteed prime-time finale", "correct": false}
+      ],
+      "difficulty": "medium",
+      "fun_fact": "At several Games the marathon finishers actually run their final metres inside the closing ceremony, with medals presented in front of the full stadium crowd — a deliberate echo of the legend of Pheidippides.",
+      "category": "Sport"
+    },
+    {
+      "id": "sport_en_063",
+      "question": "What unusual physical adaptation do elite freedivers train to slow their oxygen use underwater?",
+      "answers": [
+        {"text": "Triggering the mammalian dive reflex, which lowers heart rate and constricts blood vessels", "correct": true},
+        {"text": "Voluntarily reducing red blood cell count before competition", "correct": false},
+        {"text": "Inhaling pure helium to reduce metabolic load", "correct": false}
+      ],
+      "difficulty": "hard",
+      "fun_fact": "The dive reflex is present in all humans but stronger in trained freedivers — some can drop their pulse from 70 to under 30 beats per minute within seconds of facial contact with cold water.",
+      "category": "Sport"
+    },
+    {
+      "id": "sport_en_064",
+      "question": "What does the term 'peloton' literally mean in the Tour de France?",
+      "answers": [
+        {"text": "A 'little ball' or platoon — the main bunch of riders moving together", "correct": true},
+        {"text": "The lone breakaway leader at the front of the race", "correct": false},
+        {"text": "A team's designated sprinter for the day's stage", "correct": false}
+      ],
+      "difficulty": "easy",
+      "fun_fact": "Riders at the back of a large peloton expend up to 40 percent less energy than the leader thanks to the slipstream — a fact that shapes nearly every tactical decision in road cycling.",
+      "category": "Sport"
+    },
+    {
+      "id": "sport_en_065",
+      "question": "What is the official maximum height a sumo wrestler may have his hair styled into for top-division bouts?",
+      "answers": [
+        {"text": "There is no height limit, but only top-division rikishi wear the ginkgo-leaf oicho-mage", "correct": true},
+        {"text": "Exactly 10 cm above the crown of the head", "correct": false},
+        {"text": "Half the wrestler's neck circumference", "correct": false}
+      ],
+      "difficulty": "hard",
+      "fun_fact": "The oicho-mage takes a specialised stablehand called a tokoyama up to 20 minutes to arrange. When a wrestler retires, his topknot is ceremonially cut piece by piece by friends, family and finally his coach.",
+      "category": "Sport"
+    },
+    {
+      "id": "sport_en_066",
+      "question": "What is unusual about the trophy awarded to the FA Cup winners in English football?",
+      "answers": [
+        {"text": "The current trophy is the fourth design used since 1872", "correct": true},
+        {"text": "It is solid gold and weighs over 12 kilograms", "correct": false},
+        {"text": "It is the same physical trophy that was awarded in 1872", "correct": false}
+      ],
+      "difficulty": "hard",
+      "fun_fact": "The original was stolen from a Birmingham shop window in 1895 and never recovered — likely melted down for the silver. A second version was retired in 1910, a third served from 1911 to 1991, and the current replica is in everyday use.",
+      "category": "Sport"
+    },
+    {
+      "id": "sport_en_067",
+      "question": "Which marker on a tennis court is sometimes nicknamed the 'tramlines'?",
+      "answers": [
+        {"text": "The pair of parallel lines down each side, used only for doubles", "correct": true},
+        {"text": "The baseline and service line viewed from the umpire's chair", "correct": false},
+        {"text": "The two service boxes when seen end-on", "correct": false}
+      ],
+      "difficulty": "easy",
+      "fun_fact": "The tramlines widen the court for doubles but are out of bounds in singles. The court width difference is 1.37 m on each side — a deceptively large area that completely changes serve angles.",
+      "category": "Sport"
+    },
+    {
+      "id": "sport_en_068",
+      "question": "Why does an ice hockey rink have rounded corners rather than square ones?",
+      "answers": [
+        {"text": "To let the puck flow continuously around the boards without dead spots", "correct": true},
+        {"text": "Square corners caused the ice to crack along the joins", "correct": false},
+        {"text": "Goalkeepers historically lobbied for a smaller defensive zone", "correct": false}
+      ],
+      "difficulty": "medium",
+      "fun_fact": "The original rinks were rectangular fields used for outdoor pond hockey, where corners drifted naturally with the ice. The first indoor rink to use deliberately rounded corners was Montreal's Victoria Skating Rink in 1875.",
+      "category": "Sport"
+    },
+    {
+      "id": "sport_en_069",
+      "question": "What forced FIFA to introduce goal-line technology in 2014?",
+      "answers": [
+        {"text": "A Frank Lampard shot in 2010 that crossed the line but was not given as a goal", "correct": true},
+        {"text": "Repeated controversies in the South American qualifiers of 2013", "correct": false},
+        {"text": "A petition signed by every UEFA referee that year", "correct": false}
+      ],
+      "difficulty": "easy",
+      "fun_fact": "Lampard's shot for England against Germany at the 2010 World Cup struck the bar, bounced over the line by nearly a metre, and was waved away. FIFA president Sepp Blatter, who had long opposed the technology, publicly reversed course within days.",
+      "category": "Sport"
+    },
+    {
+      "id": "sport_en_070",
+      "question": "What is the purpose of the small hole on a bowling ball besides the three finger holes?",
+      "answers": [
+        {"text": "It is a balance hole drilled to fine-tune the ball's rotation", "correct": true},
+        {"text": "It vents heat generated by friction with the lane", "correct": false},
+        {"text": "It is purely decorative and identifies the manufacturer", "correct": false}
+      ],
+      "difficulty": "medium",
+      "fun_fact": "Balance holes were so effective at letting bowlers tweak the ball's reaction that the US Bowling Congress banned them in 2020. Top-level players had to relearn their hook with cleanly drilled finger holes only.",
+      "category": "Sport"
+    },
+    {
+      "id": "sport_en_071",
+      "question": "Why are professional rugby balls oval rather than round?",
+      "answers": [
+        {"text": "The original pig-bladder ball took an oval shape when inflated", "correct": true},
+        {"text": "World Rugby chose the shape in 1923 to differentiate from football", "correct": false},
+        {"text": "Oval balls were proven more aerodynamic by 19th-century physicists", "correct": false}
+      ],
+      "difficulty": "easy",
+      "fun_fact": "Early balls used inflated pig bladders inside leather, which naturally bulged longer than wide. Once rubber bladders arrived in the 1870s, makers could have chosen any shape — but by then the oval had defined the sport.",
+      "category": "Sport"
+    },
+    {
+      "id": "sport_en_072",
+      "question": "In which sport would you legitimately attempt a 'Phelps' turn?",
+      "answers": [
+        {"text": "Competitive swimming butterfly", "correct": true},
+        {"text": "Synchronised diving", "correct": false},
+        {"text": "Water polo", "correct": false}
+      ],
+      "difficulty": "hard",
+      "fun_fact": "The 'Phelps' is a slang term for an open turn done so quickly the swimmer barely loses momentum. Michael Phelps's turn times in the 200 m butterfly were routinely a tenth of a second faster than his nearest rival's.",
+      "category": "Sport"
+    },
+    {
+      "id": "sport_en_073",
+      "question": "Why are golf courses traditionally laid out with exactly 18 holes?",
+      "answers": [
+        {"text": "St Andrews settled on 18 in 1764 and the rest of the world copied it", "correct": true},
+        {"text": "It matches the average number of strokes a beginner takes per hole", "correct": false},
+        {"text": "Eighteen was chosen by the R&A to fit a four-hour round of play", "correct": false}
+      ],
+      "difficulty": "medium",
+      "fun_fact": "The Old Course originally had 22 holes; players reduced it to 18 by combining short ones in 1764. Because St Andrews was already the most prestigious club, the new layout became the global standard within a generation.",
+      "category": "Sport"
+    },
+    {
+      "id": "sport_en_074",
+      "question": "What is the legal status of icing the puck in ice hockey?",
+      "answers": [
+        {"text": "It is a violation that stops play and forces a face-off in the offending team's zone", "correct": true},
+        {"text": "It is a strategic option that costs the team a two-minute minor penalty", "correct": false},
+        {"text": "It is allowed only when the team is shorthanded", "correct": false}
+      ],
+      "difficulty": "easy",
+      "fun_fact": "Icing — clearing the puck from your own half across the opposing goal line untouched — was banned in 1937 after a New York Americans game in which Boston iced the puck more than 60 times to protect a 3-2 lead.",
+      "category": "Sport"
+    },
+    {
+      "id": "sport_en_075",
+      "question": "Why do elite marathon runners often wear shoes with a thick foam midsole and an embedded carbon fibre plate?",
+      "answers": [
+        {"text": "The plate stiffens the shoe and stores elastic energy, returning a measurable percentage on each stride", "correct": true},
+        {"text": "The plate is purely cosmetic and was introduced as a marketing gimmick", "correct": false},
+        {"text": "The plate prevents stress fractures by limiting foot flex", "correct": false}
+      ],
+      "difficulty": "medium",
+      "fun_fact": "Independent biomechanics studies found the technology improves running economy by around 4 percent — enough that World Athletics now caps midsole stack height at 40 mm to prevent shoe technology from rewriting record books overnight.",
+      "category": "Sport"
+    },
+    {
+      "id": "sport_en_076",
+      "question": "What is the lowest possible numerical score with which a darts player can finish a leg in a standard 501 game?",
+      "answers": [
+        {"text": "Two, with a double-one finish", "correct": true},
+        {"text": "Zero, by hitting any bullseye twice in a row", "correct": false},
+        {"text": "Three, by hitting triple-one", "correct": false}
+      ],
+      "difficulty": "medium",
+      "fun_fact": "The 501 game requires you to end on a double. The smallest legal checkout is therefore a single double-one. The most prestigious finish is the nine-darter: scoring 501 in the minimum possible nine throws.",
+      "category": "Sport"
+    },
+    {
+      "id": "sport_en_077",
+      "question": "What is the role of the 'libero' in indoor volleyball?",
+      "answers": [
+        {"text": "A specialist back-row defender who wears a different-coloured shirt", "correct": true},
+        {"text": "The team captain who must remain at the net at all times", "correct": false},
+        {"text": "A roaming player allowed to spike from anywhere on the court", "correct": false}
+      ],
+      "difficulty": "easy",
+      "fun_fact": "The libero was introduced in 1998 to extend rallies after teams complained that booming serves were ending matches too quickly. They cannot attack the ball above net height and cannot serve in most international competitions.",
+      "category": "Sport"
+    },
+    {
+      "id": "sport_en_078",
+      "question": "Why is a free kick called 'indirect' in football?",
+      "answers": [
+        {"text": "Another player must touch the ball before it can legally enter the goal", "correct": true},
+        {"text": "The kick must be aimed away from the goal as a courtesy", "correct": false},
+        {"text": "The referee must touch the ball before it is kicked", "correct": false}
+      ],
+      "difficulty": "easy",
+      "fun_fact": "Referees signal an indirect free kick by holding one arm vertically in the air until the kick is taken and a second player touches the ball. Goals scored directly from an indirect free kick are disallowed and result in a goal kick to the opposition.",
+      "category": "Sport"
+    },
+    {
+      "id": "sport_en_079",
+      "question": "What unusual hazard sometimes interrupts play at Augusta National during the Masters golf tournament?",
+      "answers": [
+        {"text": "Tree pollen so dense it visibly drifts across the fairways", "correct": true},
+        {"text": "Migrating monarch butterflies that settle on the greens", "correct": false},
+        {"text": "Sudden subsidence of greens due to underlying sinkholes", "correct": false}
+      ],
+      "difficulty": "hard",
+      "fun_fact": "Augusta sits in one of the US's pollen-heaviest cities each April. Players have described seeing visible yellow clouds when they hit out of trees, and several have withdrawn over allergic reactions.",
+      "category": "Sport"
+    },
+    {
+      "id": "sport_en_080",
+      "question": "Why is the goal in lacrosse much smaller than in football, despite the ball being smaller?",
+      "answers": [
+        {"text": "The goal is sized so a goalkeeper with a stick can plausibly cover most of it", "correct": true},
+        {"text": "It was scaled down from a 19th-century football goal by exactly one-third", "correct": false},
+        {"text": "It is made smaller to fit indoor box lacrosse arenas", "correct": false}
+      ],
+      "difficulty": "medium",
+      "fun_fact": "The men's lacrosse goal is a 6-foot square. Shots regularly exceed 160 km/h, so even covering a goal that small with an oversized stick gives the goalkeeper only fractions of a second to react.",
+      "category": "Sport"
+    },
+    {
+      "id": "sport_en_081",
+      "question": "What is the standard surface of a Wimbledon tennis court?",
+      "answers": [
+        {"text": "100 percent perennial ryegrass", "correct": true},
+        {"text": "Synthetic grass over a rubber base", "correct": false},
+        {"text": "A blend of ryegrass and clay particles", "correct": false}
+      ],
+      "difficulty": "easy",
+      "fun_fact": "Wimbledon switched to pure ryegrass in 2001 for durability. Each court is mown to exactly 8 mm during the Championships, and the centre courts are reseeded every September and shut to play until the following June.",
+      "category": "Sport"
+    },
+    {
+      "id": "sport_en_082",
+      "question": "What does the 'pursuit' format in cross-country skiing mean for the starting order?",
+      "answers": [
+        {"text": "Skiers start at staggered intervals based on the time gaps from a previous race", "correct": true},
+        {"text": "All skiers start together but must follow the leader for the first kilometre", "correct": false},
+        {"text": "Skiers race in pairs, hunting down the pair ahead of them", "correct": false}
+      ],
+      "difficulty": "medium",
+      "fun_fact": "Pursuit racing means the first skier across the line is genuinely the day's winner — no need to wait for time calculations. The format also tends to produce dramatic late-race chases that work well on television.",
+      "category": "Sport"
+    },
+    {
+      "id": "sport_en_083",
+      "question": "Why do high jumpers approach the bar from a curved run-up rather than a straight one?",
+      "answers": [
+        {"text": "The curve generates centripetal lean, lowering the jumper's centre of mass at takeoff", "correct": true},
+        {"text": "It is required by World Athletics to standardise approach angles", "correct": false},
+        {"text": "A straight run-up was banned after multiple bar-clearing controversies", "correct": false}
+      ],
+      "difficulty": "hard",
+      "fun_fact": "Dick Fosbury revolutionised the event in 1968 with the back-first 'Fosbury Flop', which only works with a curved approach. Within a decade, almost every elite jumper had switched, and earlier styles like the straddle vanished from top competition.",
+      "category": "Sport"
+    },
+    {
+      "id": "sport_en_084",
+      "question": "Which event was added to the Winter Olympics in 1998 specifically to attract younger viewers?",
+      "answers": [
+        {"text": "Snowboarding", "correct": true},
+        {"text": "Freestyle aerials skiing", "correct": false},
+        {"text": "Short-track speed skating", "correct": false}
+      ],
+      "difficulty": "easy",
+      "fun_fact": "Snowboarding debuted at Nagano with halfpipe and giant slalom. The first gold medallist, Canadian Ross Rebagliati, briefly lost it to a positive cannabis test before the IOC ruled the substance was not on the banned list at the time.",
+      "category": "Sport"
+    },
+    {
+      "id": "sport_en_085",
+      "question": "What is unusual about the orientation of a baseball home plate compared with the other three bases?",
+      "answers": [
+        {"text": "It is a five-sided pentagon while the others are square", "correct": true},
+        {"text": "It is raised slightly above the level of the pitcher's mound", "correct": false},
+        {"text": "It is made of leather rather than rubber or stone", "correct": false}
+      ],
+      "difficulty": "medium",
+      "fun_fact": "Home plate was originally a 12-inch square, but umpires struggled to judge balls and strikes over a flat front edge. In 1900 a point was added facing the catcher, giving the plate its now-iconic pentagonal shape.",
+      "category": "Sport"
+    },
+    {
+      "id": "sport_en_086",
+      "question": "Why do professional cyclists shave their legs?",
+      "answers": [
+        {"text": "Mainly for easier post-crash wound cleaning and massage, not aerodynamics", "correct": true},
+        {"text": "Hair adds measurable wind resistance at racing speeds", "correct": false},
+        {"text": "Shaved legs help skin sweat evaporate faster during climbs", "correct": false}
+      ],
+      "difficulty": "medium",
+      "fun_fact": "Wind-tunnel tests show shaved legs do save a tiny amount of drag at race speeds — about 5 watts over an hour — but riders and team doctors agree the real benefit is keeping road rash clean and bandageable.",
+      "category": "Sport"
+    },
+    {
+      "id": "sport_en_087",
+      "question": "Why does an outdoor 400 m running track have staggered starting lines for sprint events?",
+      "answers": [
+        {"text": "Outer lanes are longer around the curve, so starts are offset to equalise distance", "correct": true},
+        {"text": "It prevents runners from drafting in each other's slipstream", "correct": false},
+        {"text": "It reduces wind interference from competitors ahead", "correct": false}
+      ],
+      "difficulty": "easy",
+      "fun_fact": "The radius of the outermost lane on a standard track is roughly 7 metres greater than the innermost. Across a full 400 m lap, that adds up to about 53 metres extra running — corrected entirely by the staggered start.",
+      "category": "Sport"
+    },
+    {
+      "id": "sport_en_088",
+      "question": "What is the name of the lane in cricket between the two sets of stumps?",
+      "answers": [
+        {"text": "The pitch", "correct": true},
+        {"text": "The crease", "correct": false},
+        {"text": "The runway", "correct": false}
+      ],
+      "difficulty": "easy",
+      "fun_fact": "A Test pitch is 22 yards long — a length set in 1744 to match the historical English measurement of a 'chain'. Groundskeepers spend days preparing each pitch's surface to favour batters, bowlers or a balanced contest.",
+      "category": "Sport"
+    },
+    {
+      "id": "sport_en_089",
+      "question": "Which luge event was added to the Winter Olympics programme at Sochi 2014, bringing the total to four?",
+      "answers": [
+        {"text": "Team relay", "correct": true},
+        {"text": "Mixed doubles", "correct": false},
+        {"text": "Sprint singles", "correct": false}
+      ],
+      "difficulty": "hard",
+      "fun_fact": "The relay involves a man, a woman and a doubles pair sliding in sequence, each triggering a touchpad to start the next. Germany dominated the format in its first three Games, winning every gold medal between 2014 and 2022.",
+      "category": "Sport"
+    },
+    {
+      "id": "sport_en_090",
+      "question": "Why is a typical professional cycling team built around a single 'general classification' rider rather than every rider racing for themselves?",
+      "answers": [
+        {"text": "Drafting and tactical sacrifice mean a protected leader can finish minutes ahead of solo rivals", "correct": true},
+        {"text": "UCI rules require teams to nominate a single leader before each Grand Tour", "correct": false},
+        {"text": "Sponsors pay bonuses only when one rider wins the overall classification", "correct": false}
+      ],
+      "difficulty": "medium",
+      "fun_fact": "Teammates donate wheels, shelter the leader from the wind, and even sacrifice their own bikes during mechanical failures. A typical Tour de France winner spends roughly 80 percent of riding time tucked safely inside the team's protective formation.",
+      "category": "Sport"
+    },
+    {
+      "id": "sport_en_091",
+      "question": "Why does a clay tennis court visibly affect ball behaviour compared with grass?",
+      "answers": [
+        {"text": "The crushed brick surface grips the ball, slowing it and increasing its bounce height", "correct": true},
+        {"text": "Clay absorbs spin entirely, making slice serves ineffective", "correct": false},
+        {"text": "Clay reflects more heat, softening the ball over a long match", "correct": false}
+      ],
+      "difficulty": "medium",
+      "fun_fact": "The slower bounce favours grinding baseliners and is why Rafael Nadal won the French Open 14 times — more than any player has won any other single Grand Slam.",
+      "category": "Sport"
+    },
+    {
+      "id": "sport_en_092",
+      "question": "What is the maximum number of players a football team may have on the pitch at one time?",
+      "answers": [
+        {"text": "Eleven, including the goalkeeper", "correct": true},
+        {"text": "Ten outfield players plus the goalkeeper, for twelve total", "correct": false},
+        {"text": "Nine in normal play, with substitutes adding two more", "correct": false}
+      ],
+      "difficulty": "easy",
+      "fun_fact": "If a team drops below seven players — through red cards or injuries with no substitutes left — the match is automatically abandoned. This has happened repeatedly in lower-league football, most famously when Sheffield United were reduced to six against West Brom in 2002.",
+      "category": "Sport"
+    },
+    {
+      "id": "sport_en_093",
+      "question": "Why does the heart rate of a Tour de France climber spike well above what cardiologists consider safe at rest?",
+      "answers": [
+        {"text": "Trained endurance hearts can sustain rates of 180+ for hours without harm thanks to a hugely enlarged stroke volume", "correct": true},
+        {"text": "Climbers deliberately enter cardiac arrhythmia to boost short-term power", "correct": false},
+        {"text": "Tour doctors permit temporary use of stimulants on mountain stages", "correct": false}
+      ],
+      "difficulty": "hard",
+      "fun_fact": "An elite climber's resting heart rate may be in the 30s while their maximum reaches the high 190s. Stroke volume — blood pumped per beat — is often twice that of a sedentary adult, letting the heart move enormous oxygen loads.",
+      "category": "Sport"
+    },
+    {
+      "id": "sport_en_094",
+      "question": "What is the function of the small 'dimpled' surface on the grip end of a tennis racquet?",
+      "answers": [
+        {"text": "It gives the overgrip something to bond with so it does not rotate during play", "correct": true},
+        {"text": "It absorbs vibration from off-centre hits", "correct": false},
+        {"text": "It allows umpires to identify the player's racquet brand from a distance", "correct": false}
+      ],
+      "difficulty": "medium",
+      "fun_fact": "Most pros wrap a fresh overgrip every match or two; the textured base layer is what keeps the new grip from sliding when their hands get sweaty during long rallies.",
+      "category": "Sport"
+    },
+    {
+      "id": "sport_en_095",
+      "question": "Why did the modern pentathlon, designed by Pierre de Coubertin, include the specific events of pistol shooting, fencing, swimming, riding and running?",
+      "answers": [
+        {"text": "They were the imagined skills of a 19th-century cavalry officer caught behind enemy lines", "correct": true},
+        {"text": "Each event represents a different ancient Greek god", "correct": false},
+        {"text": "They were chosen by lot from Coubertin's favourite sports", "correct": false}
+      ],
+      "difficulty": "medium",
+      "fun_fact": "Coubertin envisioned a soldier shooting his way out, fencing past a guard, swimming a river, riding an unfamiliar horse and running home. The riding event uses an unfamiliar horse drawn by lot — a deliberate echo of the original premise.",
+      "category": "Sport"
+    },
+    {
+      "id": "sport_en_096",
+      "question": "Why are footballs in a stadium often kept inside a heated cabinet during cold-weather matches?",
+      "answers": [
+        {"text": "Cold air inside the ball reduces pressure, making it fly differently and feel sluggish", "correct": true},
+        {"text": "Cold leather absorbs water that freezes in mid-air", "correct": false},
+        {"text": "Stadium rules ban balls below a fixed temperature for safety", "correct": false}
+      ],
+      "difficulty": "medium",
+      "fun_fact": "A drop of 10 °C lowers a ball's internal pressure by roughly 0.4 psi. The NFL's 2015 'Deflategate' controversy was eventually explained partly by this effect — though investigators disagreed about how much was deliberate.",
+      "category": "Sport"
+    },
+    {
+      "id": "sport_en_097",
+      "question": "What does a baseball pitcher's 'splitter' grip do to the ball's flight path?",
+      "answers": [
+        {"text": "It causes the ball to suddenly drop downward late in its trajectory", "correct": true},
+        {"text": "It makes the ball curve gently sideways like a slider", "correct": false},
+        {"text": "It accelerates the ball over the final five metres", "correct": false}
+      ],
+      "difficulty": "hard",
+      "fun_fact": "The fingers split widely across the seams produce reduced backspin compared with a fastball, so gravity wins out faster than batters expect. Pitchers blame the splitter for the high elbow-injury rates seen in 1980s and 90s pitchers.",
+      "category": "Sport"
+    },
+    {
+      "id": "sport_en_098",
+      "question": "Which footballing role did the 'false nine' famously revive in the 2010s?",
+      "answers": [
+        {"text": "A nominal centre-forward who drops deep, dragging defenders out of position", "correct": true},
+        {"text": "A goalkeeper who plays outfield in the final minutes", "correct": false},
+        {"text": "A defender allowed to score from open play only", "correct": false}
+      ],
+      "difficulty": "medium",
+      "fun_fact": "Pep Guardiola used Lionel Messi as a false nine for Barcelona, creating empty central space for wide players to attack. The tactic so disorganised opponents that it shaped a decade of midfield-heavy formations across Europe.",
+      "category": "Sport"
+    },
+    {
+      "id": "sport_en_099",
+      "question": "What is the role of a 'pacemaker' in elite middle-distance and long-distance track racing?",
+      "answers": [
+        {"text": "A runner hired to set a fast pre-agreed pace for the first portion of the race", "correct": true},
+        {"text": "A device worn on the wrist that flashes the target lap time", "correct": false},
+        {"text": "The lead athlete in a championship final by reputation", "correct": false}
+      ],
+      "difficulty": "easy",
+      "fun_fact": "Pacemakers — sometimes called rabbits — drop out partway through, having helped set up a fast time. They are common in record-attempt meets but banned from championship finals, where tactical racing rules the day.",
+      "category": "Sport"
+    },
+    {
+      "id": "sport_en_100",
+      "question": "Why is the strike zone in baseball defined relative to the batter's body rather than a fixed height?",
+      "answers": [
+        {"text": "Tall and short batters would otherwise have wildly different effective hitting zones", "correct": true},
+        {"text": "Catchers historically lobbied for an adjustable zone to ease their reach", "correct": false},
+        {"text": "Pitchers used to grip the ball to a fixed height before each pitch", "correct": false}
+      ],
+      "difficulty": "medium",
+      "fun_fact": "The current rule defines the zone from the midpoint between the shoulders and the top of the trousers down to the hollow beneath the kneecap. Automated strike-zone tracking now triangulates each batter's exact dimensions before every at-bat.",
+      "category": "Sport"
+    },
+    {
+      "id": "sport_en_101",
+      "question": "Why does the discus thrower spin before releasing the discus rather than throwing from a standing position?",
+      "answers": [
+        {"text": "The rotation adds tangential velocity, dramatically increasing release speed", "correct": true},
+        {"text": "Standing throws are explicitly banned by World Athletics rules", "correct": false},
+        {"text": "The spin lets the thrower align the discus with the prevailing wind", "correct": false}
+      ],
+      "difficulty": "medium",
+      "fun_fact": "Top throwers complete one and a half turns in around 1.5 seconds, reaching release speeds of 25 m/s or more. A standing throw of the same discus typically travels less than half the distance of a rotational throw.",
+      "category": "Sport"
+    },
+    {
+      "id": "sport_en_102",
+      "question": "Why are short-track speed-skating helmets often equipped with a chin strap that can break away under load?",
+      "answers": [
+        {"text": "A breakaway strap prevents neck injury if the helmet snags during a high-speed crash", "correct": true},
+        {"text": "It allows officials to remove the helmet quickly during medal ceremonies", "correct": false},
+        {"text": "The strap doubles as a microphone mount for coaches", "correct": false}
+      ],
+      "difficulty": "hard",
+      "fun_fact": "Short-track crashes routinely send multiple skaters sliding into the padded barriers at over 50 km/h. A helmet that detaches cleanly under sudden force is considered safer than one that pulls the skater's head backward.",
+      "category": "Sport"
     }
   ]
 }

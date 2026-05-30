@@ -567,6 +567,630 @@
       "difficulty": "hard",
       "fun_fact": "Several Latin American countries declared war on Germany weeks before the war ended specifically to be invited to the San Francisco UN founding conference. Paraguay sent no troops.",
       "category": "History"
+    },
+    {
+      "id": "history_en_051",
+      "question": "What did ancient Romans use to whiten their togas?",
+      "answers": [
+        {"text": "Stale urine collected from public latrines", "correct": true},
+        {"text": "A paste of crushed seashells", "correct": false},
+        {"text": "Sap from cedar trees", "correct": false}
+      ],
+      "difficulty": "medium",
+      "fun_fact": "Fullers used ammonia from aged urine to bleach wool. Pots stood on Roman street corners for citizens to contribute — and the cloth-cleaners paid the city for the privilege.",
+      "category": "History"
+    },
+    {
+      "id": "history_en_052",
+      "question": "What did the ancient Aztecs use cocoa beans for besides drinking?",
+      "answers": [
+        {"text": "As currency to buy goods", "correct": true},
+        {"text": "As ammunition in slingshots", "correct": false},
+        {"text": "As decorative beads in jewellery", "correct": false}
+      ],
+      "difficulty": "easy",
+      "fun_fact": "A turkey could cost around 100 cocoa beans and a fresh avocado just three. Counterfeit beans made from clay were a known problem in Aztec markets.",
+      "category": "History"
+    },
+    {
+      "id": "history_en_053",
+      "question": "What surprising material were the first toothbrushes with bristles made from?",
+      "answers": [
+        {"text": "Hog hair set in bamboo or bone", "correct": true},
+        {"text": "Braided silk threads dipped in wax", "correct": false},
+        {"text": "Fine copper wire wrapped in linen", "correct": false}
+      ],
+      "difficulty": "medium",
+      "fun_fact": "Bristle toothbrushes appeared in Tang-era China using stiff hairs from the necks of cold-climate pigs. European travellers later copied the design and substituted horsehair.",
+      "category": "History"
+    },
+    {
+      "id": "history_en_054",
+      "question": "What unusual currency did the people of Yap Island use for centuries?",
+      "answers": [
+        {"text": "Giant stone wheels over three metres wide", "correct": true},
+        {"text": "Polished whale teeth on cords", "correct": false},
+        {"text": "Strings of dried coconut shells", "correct": false}
+      ],
+      "difficulty": "medium",
+      "fun_fact": "Some Rai stones were too heavy to move, so ownership simply transferred verbally — everyone on the island just remembered who owned which stone. One famous stone sat at the bottom of the sea and still counted as wealth.",
+      "category": "History"
+    },
+    {
+      "id": "history_en_056",
+      "question": "What strange material did ancient Egyptians use to preserve mummies' organs?",
+      "answers": [
+        {"text": "Natron salt scooped from desert lakes", "correct": true},
+        {"text": "Crushed lapis lazuli paste", "correct": false},
+        {"text": "Crocodile fat boiled with myrrh", "correct": false}
+      ],
+      "difficulty": "medium",
+      "fun_fact": "Natron is a naturally occurring mix of sodium carbonate and bicarbonate. Embalmers packed bodies in it for around 40 days to draw out all moisture before wrapping.",
+      "category": "History"
+    },
+    {
+      "id": "history_en_057",
+      "question": "What did Vikings actually wear on their heads in battle?",
+      "answers": [
+        {"text": "Simple iron or leather caps with no horns", "correct": true},
+        {"text": "Bronze helmets shaped like animal skulls", "correct": false},
+        {"text": "Hoods of seal skin lined with fur", "correct": false}
+      ],
+      "difficulty": "easy",
+      "fun_fact": "The horned-helmet image came from 19th-century opera costumes for Wagner's Ring cycle. Archaeology has produced only two near-complete Viking helmets — the Gjermundbu from Norway and the Yarm helmet from Yorkshire — and neither has horns.",
+      "category": "History"
+    },
+    {
+      "id": "history_en_058",
+      "question": "What did medieval European peasants drink instead of water at most meals?",
+      "answers": [
+        {"text": "Weak ale called small beer", "correct": true},
+        {"text": "Boiled goat's milk with herbs", "correct": false},
+        {"text": "Tea brewed from hedgerow leaves", "correct": false}
+      ],
+      "difficulty": "medium",
+      "fun_fact": "Small beer was so dilute that even children drank it. The brewing process killed waterborne pathogens, making it safer than river water in towns.",
+      "category": "History"
+    },
+    {
+      "id": "history_en_059",
+      "question": "What odd thing did the city of Paris ban in 1530 for safety reasons?",
+      "answers": [
+        {"text": "Throwing chamber pot contents out of windows", "correct": true},
+        {"text": "Wearing wooden clogs after dark", "correct": false},
+        {"text": "Riding horses across the Pont Neuf", "correct": false}
+      ],
+      "difficulty": "medium",
+      "fun_fact": "Tossers were supposed to shout 'gardez l'eau' — 'watch out for the water' — before emptying pots. The phrase is one source theory for the English word 'loo'.",
+      "category": "History"
+    },
+    {
+      "id": "history_en_060",
+      "question": "What did the Library of Alexandria reportedly do to every ship that docked in the harbour?",
+      "answers": [
+        {"text": "Confiscated and copied any books on board", "correct": true},
+        {"text": "Demanded a written poem as a docking fee", "correct": false},
+        {"text": "Searched the crew for hidden maps", "correct": false}
+      ],
+      "difficulty": "medium",
+      "fun_fact": "Ptolemaic officials kept the originals and returned the copies, building one of antiquity's largest collections. The owners were rarely amused but had little choice.",
+      "category": "History"
+    },
+    {
+      "id": "history_en_061",
+      "question": "What did Mongol warriors carry under their saddles on long campaigns?",
+      "answers": [
+        {"text": "Raw meat that tenderised as they rode", "correct": true},
+        {"text": "Spare bowstrings wrapped in silk", "correct": false},
+        {"text": "Sacks of fermented millet for currency", "correct": false}
+      ],
+      "difficulty": "hard",
+      "fun_fact": "The friction and sweat softened tough cuts during the day. Whether this is the true origin of steak tartare is debated, but the practice itself was widely recorded by travellers.",
+      "category": "History"
+    },
+    {
+      "id": "history_en_062",
+      "question": "What unusual perk did Roman gladiators' sweat reportedly become?",
+      "answers": [
+        {"text": "A sought-after ingredient in face creams", "correct": true},
+        {"text": "An offering burned at temple altars", "correct": false},
+        {"text": "A flavouring sprinkled on imperial bread", "correct": false}
+      ],
+      "difficulty": "hard",
+      "fun_fact": "Vendors scraped the mix of sweat, oil and arena dust from a gladiator's skin with a strigil and bottled it as a beauty product. Wealthy Roman women paid handsomely.",
+      "category": "History"
+    },
+    {
+      "id": "history_en_063",
+      "question": "What did sailors traditionally drink instead of water on long Royal Navy voyages?",
+      "answers": [
+        {"text": "A daily ration of rum mixed with water", "correct": true},
+        {"text": "Vinegar diluted with lemon juice", "correct": false},
+        {"text": "Strong tea boiled with ginger", "correct": false}
+      ],
+      "difficulty": "easy",
+      "fun_fact": "The diluted rum was called 'grog' after Admiral Edward Vernon's nickname 'Old Grog'. The daily ration was finally abolished by the Royal Navy in 1970.",
+      "category": "History"
+    },
+    {
+      "id": "history_en_064",
+      "question": "What did the city of Edinburgh's residents shout out their windows before throwing waste?",
+      "answers": [
+        {"text": "'Gardyloo!'", "correct": true},
+        {"text": "'Heads below!'", "correct": false},
+        {"text": "'Mind the burn!'", "correct": false}
+      ],
+      "difficulty": "hard",
+      "fun_fact": "The cry was a corruption of the French 'gardez l'eau'. Tenement dwellers gave only a moment's warning before chamber pots emptied into the High Street.",
+      "category": "History"
+    },
+    {
+      "id": "history_en_065",
+      "question": "What surprising material were ancient Roman concrete sea walls made stronger by?",
+      "answers": [
+        {"text": "Volcanic ash that reacted with seawater", "correct": true},
+        {"text": "Crushed seashells from oyster farms", "correct": false},
+        {"text": "Iron filings from forge workshops", "correct": false}
+      ],
+      "difficulty": "hard",
+      "fun_fact": "Pozzolana ash from around Vesuvius reacts with calcium and seawater to form crystals that actually grow over centuries — which is why Roman harbour ruins are still standing.",
+      "category": "History"
+    },
+    {
+      "id": "history_en_066",
+      "question": "What did medieval European kings often appoint a special person to do at meals?",
+      "answers": [
+        {"text": "Taste every dish before they ate", "correct": true},
+        {"text": "Recite a poem between courses", "correct": false},
+        {"text": "Polish each piece of cutlery in view", "correct": false}
+      ],
+      "difficulty": "easy",
+      "fun_fact": "Food tasters checked for poison and worked for surprisingly long careers — many monarchs preferred trusting familiar people over rotating in fresh ones.",
+      "category": "History"
+    },
+    {
+      "id": "history_en_067",
+      "question": "What odd structure did Persian king Xerxes order built across the Hellespont in 480 BC?",
+      "answers": [
+        {"text": "A floating bridge of lashed-together ships", "correct": true},
+        {"text": "A stone causeway sunk by slaves", "correct": false},
+        {"text": "A chain of rafts pulled by elephants", "correct": false}
+      ],
+      "difficulty": "medium",
+      "fun_fact": "When a storm destroyed the first bridge, Xerxes ordered the sea itself whipped 300 times as punishment. The engineers were beheaded; the rebuilt bridge held.",
+      "category": "History"
+    },
+    {
+      "id": "history_en_068",
+      "question": "What did Inca messengers called chasquis use to carry information across the empire?",
+      "answers": [
+        {"text": "Knotted cords called quipus", "correct": true},
+        {"text": "Painted clay tablets baked in the sun", "correct": false},
+        {"text": "Carved wooden sticks dyed by region", "correct": false}
+      ],
+      "difficulty": "medium",
+      "fun_fact": "A relay of trained runners could move quipus from Cusco to Quito — over 2,000 km — in about a week. The knot patterns encoded numbers and likely narrative content.",
+      "category": "History"
+    },
+    {
+      "id": "history_en_069",
+      "question": "What did Henry VIII famously do with his lute strings between meals?",
+      "answers": [
+        {"text": "Played and composed his own music", "correct": true},
+        {"text": "Wore them as decorative wristbands", "correct": false},
+        {"text": "Sold them to court ladies as charms", "correct": false}
+      ],
+      "difficulty": "medium",
+      "fun_fact": "Henry was a competent musician and wrote dozens of pieces. The song 'Greensleeves' has long been credited to him, though musicologists now consider that attribution dubious.",
+      "category": "History"
+    },
+    {
+      "id": "history_en_070",
+      "question": "What was the surprising main fuel of medieval European castles' kitchens?",
+      "answers": [
+        {"text": "Wood, requiring vast forest reserves", "correct": true},
+        {"text": "Peat dug from monastery bogs", "correct": false},
+        {"text": "Whale oil shipped from the north", "correct": false}
+      ],
+      "difficulty": "easy",
+      "fun_fact": "A large household could burn through hundreds of cartloads of wood a year. Some kings kept entire forests reserved purely to feed the royal kitchens and hearths.",
+      "category": "History"
+    },
+    {
+      "id": "history_en_071",
+      "question": "What did the residents of Pompeii leave behind that surprised 18th-century excavators?",
+      "answers": [
+        {"text": "Painted advertisements and rude graffiti", "correct": true},
+        {"text": "Detailed star charts on every wall", "correct": false},
+        {"text": "Wooden boards listing daily lottery winners", "correct": false}
+      ],
+      "difficulty": "medium",
+      "fun_fact": "Walls feature election posters, brothel adverts, and insults like 'Successus was here'. The scratched messages are one of antiquity's richest windows into ordinary speech.",
+      "category": "History"
+    },
+    {
+      "id": "history_en_072",
+      "question": "What did Roman Emperor Claudius famously have a stutter and limp from?",
+      "answers": [
+        {"text": "A likely childhood illness", "correct": true},
+        {"text": "A javelin wound from a training accident", "correct": false},
+        {"text": "Years of being kicked by palace horses", "correct": false}
+      ],
+      "difficulty": "medium",
+      "fun_fact": "Claudius's family hid him away because they thought him an embarrassment. The disregard probably saved his life during Caligula's purges — and he ended up emperor.",
+      "category": "History"
+    },
+    {
+      "id": "history_en_073",
+      "question": "What surprising profession did the Inca empire formally employ called a 'quipucamayoc'?",
+      "answers": [
+        {"text": "Reader of knotted-cord records", "correct": true},
+        {"text": "Counter of llamas at mountain passes", "correct": false},
+        {"text": "Painter of temple sun symbols", "correct": false}
+      ],
+      "difficulty": "hard",
+      "fun_fact": "Quipucamayocs were trusted accountants and historians whose knot-reading skill took years to master. After the Spanish conquest, surviving quipucamayocs were often consulted as living archives.",
+      "category": "History"
+    },
+    {
+      "id": "history_en_074",
+      "question": "What did Renaissance Florence's wealthy citizens do with their pet falcons?",
+      "answers": [
+        {"text": "Listed them in their wills as valuable estate", "correct": true},
+        {"text": "Trained them to deliver perfumed letters", "correct": false},
+        {"text": "Released them at funerals as a status display", "correct": false}
+      ],
+      "difficulty": "medium",
+      "fun_fact": "A trained hunting falcon could be more valuable than a horse. Owners listed individual birds by name in wills and inventories alongside silverware and jewellery.",
+      "category": "History"
+    },
+    {
+      "id": "history_en_075",
+      "question": "What unusual feature did Roman emperor Trajan's column in Rome originally have?",
+      "answers": [
+        {"text": "A spiral interior staircase to the top", "correct": true},
+        {"text": "Hollow chambers used as imperial wine cellars", "correct": false},
+        {"text": "Bronze plates that rang in the wind", "correct": false}
+      ],
+      "difficulty": "hard",
+      "fun_fact": "Almost 200 narrow steps spiral up inside the column. Lit by small slits, it ends at a platform where Trajan's statue once stood — replaced in 1588 by a statue of St Peter.",
+      "category": "History"
+    },
+    {
+      "id": "history_en_076",
+      "question": "What did the inhabitants of medieval Iceland use instead of stone for major buildings?",
+      "answers": [
+        {"text": "Stacked turf and driftwood", "correct": true},
+        {"text": "Whalebone frames thatched with kelp", "correct": false},
+        {"text": "Volcanic glass slabs cut by hand", "correct": false}
+      ],
+      "difficulty": "medium",
+      "fun_fact": "Iceland had almost no native trees and limited workable stone. Turf walls metres thick kept houses warm through winters — and required rebuilding every few decades.",
+      "category": "History"
+    },
+    {
+      "id": "history_en_077",
+      "question": "What did King Charles II of England keep at his palace alongside his courtiers?",
+      "answers": [
+        {"text": "A herd of pet spaniels with run of the rooms", "correct": true},
+        {"text": "A collection of trained pickpockets", "correct": false},
+        {"text": "A working blacksmith's forge", "correct": false}
+      ],
+      "difficulty": "medium",
+      "fun_fact": "The dogs slept in the king's bed and followed him into council meetings. The breed we now call the King Charles Spaniel keeps his name and the same general look.",
+      "category": "History"
+    },
+    {
+      "id": "history_en_078",
+      "question": "What did the ancient Olympics require all male athletes to do during competition?",
+      "answers": [
+        {"text": "Compete completely naked", "correct": true},
+        {"text": "Speak only in rhymed couplets", "correct": false},
+        {"text": "Wear a wreath made of laurel and bronze", "correct": false}
+      ],
+      "difficulty": "easy",
+      "fun_fact": "The Greek word 'gymnos' means naked — the root of 'gymnasium'. One reason married women were barred as spectators on pain of death, though unmarried girls could watch.",
+      "category": "History"
+    },
+    {
+      "id": "history_en_079",
+      "question": "What did the Aztec capital Tenochtitlan have that astonished the arriving Spanish in 1519?",
+      "answers": [
+        {"text": "Streets so clean they were swept daily", "correct": true},
+        {"text": "A canal system longer than all of Venice combined", "correct": false},
+        {"text": "Public stadiums seating 100,000 people", "correct": false}
+      ],
+      "difficulty": "medium",
+      "fun_fact": "Hundreds of municipal workers swept the streets and emptied public latrines into boats for night-soil collection. Spanish chroniclers compared the city favourably to anywhere in Europe.",
+      "category": "History"
+    },
+    {
+      "id": "history_en_080",
+      "question": "What did medieval lords stockpile as a strategic resource in their cellars?",
+      "answers": [
+        {"text": "Barrels of salted herring", "correct": true},
+        {"text": "Bricks of pressed tea leaves", "correct": false},
+        {"text": "Boxes of dried saffron threads", "correct": false}
+      ],
+      "difficulty": "medium",
+      "fun_fact": "Salted herring kept for months and powered fasting-day meals across Catholic Europe. The Hanseatic League grew rich largely on the Baltic herring trade.",
+      "category": "History"
+    },
+    {
+      "id": "history_en_081",
+      "question": "What strange device did Greek inventor Heron of Alexandria reportedly build in the first century?",
+      "answers": [
+        {"text": "A working steam-powered toy", "correct": true},
+        {"text": "A self-loading crossbow", "correct": false},
+        {"text": "A mechanical writing arm", "correct": false}
+      ],
+      "difficulty": "hard",
+      "fun_fact": "His aeolipile was a hollow sphere that spun when heated water inside turned to jetting steam. Treated as a curiosity, it never developed into anything practical for almost 1,700 years.",
+      "category": "History"
+    },
+    {
+      "id": "history_en_082",
+      "question": "What surprising service did medieval European monasteries widely provide travellers?",
+      "answers": [
+        {"text": "Free overnight lodging and meals", "correct": true},
+        {"text": "Currency exchange between local mints", "correct": false},
+        {"text": "Trained dogs to guide them to the next town", "correct": false}
+      ],
+      "difficulty": "easy",
+      "fun_fact": "The Rule of St Benedict obliged monasteries to receive guests 'as Christ'. The hostel tradition created a continent-wide network long before formal inns existed.",
+      "category": "History"
+    },
+    {
+      "id": "history_en_083",
+      "question": "What did the residents of medieval London sometimes do when the Thames froze solid?",
+      "answers": [
+        {"text": "Held full markets and bonfires on the ice", "correct": true},
+        {"text": "Carved temporary chapels into the surface", "correct": false},
+        {"text": "Raced wooden sleds for cash prizes", "correct": false}
+      ],
+      "difficulty": "medium",
+      "fun_fact": "The 'Frost Fairs' featured printing presses, fairground rides and roasted ox. The last big one was 1814 — after that, a new London Bridge let water flow faster and the Thames stopped freezing solid.",
+      "category": "History"
+    },
+    {
+      "id": "history_en_084",
+      "question": "What odd diplomatic gift did Sultan Hārūn al-Rashīd send Charlemagne around 802 AD?",
+      "answers": [
+        {"text": "A live elephant called Abul-Abbas", "correct": true},
+        {"text": "A library of one thousand bound books", "correct": false},
+        {"text": "A solid silver model of Baghdad", "correct": false}
+      ],
+      "difficulty": "hard",
+      "fun_fact": "The elephant walked from Baghdad to Aachen via North Africa and Italy. Charlemagne paraded Abul-Abbas at court and on military expeditions until the animal died around 810.",
+      "category": "History"
+    },
+    {
+      "id": "history_en_085",
+      "question": "What did medieval European universities sometimes require students to do during exams?",
+      "answers": [
+        {"text": "Defend their thesis aloud against any challenger for hours", "correct": true},
+        {"text": "Compose a sonnet in Latin while standing", "correct": false},
+        {"text": "Demonstrate juggling as a sign of dexterity", "correct": false}
+      ],
+      "difficulty": "medium",
+      "fun_fact": "The 'disputatio' could last all day. A student had to handle objections in real time from masters and any spectator — both training and ritual humiliation rolled into one.",
+      "category": "History"
+    },
+    {
+      "id": "history_en_086",
+      "question": "What did the ancient Roman aqueduct system deliver to the city beyond drinking water?",
+      "answers": [
+        {"text": "Water for public fountains, baths and toilets", "correct": true},
+        {"text": "A daily ration of imported snowmelt", "correct": false},
+        {"text": "Heated water piped from natural hot springs", "correct": false}
+      ],
+      "difficulty": "easy",
+      "fun_fact": "At its peak Rome had 11 aqueducts feeding around 1,000 public fountains, hundreds of baths, and the famous Cloaca Maxima sewer — which is still functioning today as part of modern Rome's drainage.",
+      "category": "History"
+    },
+    {
+      "id": "history_en_087",
+      "question": "What unusual practice did the Hittites use in diplomacy around 1259 BC?",
+      "answers": [
+        {"text": "Signed one of history's earliest written peace treaties", "correct": true},
+        {"text": "Exchanged child hostages dressed as priests", "correct": false},
+        {"text": "Required envoys to walk on hot coals", "correct": false}
+      ],
+      "difficulty": "hard",
+      "fun_fact": "The treaty of Kadesh between Hittites and Egyptians survives in cuneiform and hieroglyphic versions. A copy hangs at the UN headquarters in New York as a symbol of early diplomacy.",
+      "category": "History"
+    },
+    {
+      "id": "history_en_088",
+      "question": "What surprising material did Byzantine emperors use to seal their most important documents?",
+      "answers": [
+        {"text": "Lead discs stamped with imperial insignia", "correct": true},
+        {"text": "Beeswax mixed with powdered sapphires", "correct": false},
+        {"text": "Resin from Lebanese cedar boiled with gold", "correct": false}
+      ],
+      "difficulty": "medium",
+      "fun_fact": "The 'bulla' gave us the word 'bull' as in 'papal bull'. Heavy lead seals deterred forgery and survived in archives for over a millennium.",
+      "category": "History"
+    },
+    {
+      "id": "history_en_089",
+      "question": "What did medieval guild apprentices typically receive instead of regular wages?",
+      "answers": [
+        {"text": "Room, board, training and clothes only", "correct": true},
+        {"text": "A daily ration of silver coins from the guild", "correct": false},
+        {"text": "Free entry to all city festivals", "correct": false}
+      ],
+      "difficulty": "easy",
+      "fun_fact": "Apprenticeships could last seven years. Only after producing a 'masterpiece' judged by the guild could a journeyman set up his own workshop and start charging customers.",
+      "category": "History"
+    },
+    {
+      "id": "history_en_090",
+      "question": "What did ancient Chinese emperors employ a special official to taste before serving?",
+      "answers": [
+        {"text": "Every dish and every cup of wine", "correct": true},
+        {"text": "Each pinch of incense burned at altars", "correct": false},
+        {"text": "Every brush of ink used in proclamations", "correct": false}
+      ],
+      "difficulty": "medium",
+      "fun_fact": "The 'taster' role existed in imperial courts from the Han dynasty onward. Silver chopsticks were also used because some poisons were believed to tarnish silver.",
+      "category": "History"
+    },
+    {
+      "id": "history_en_091",
+      "question": "What did the Romans build at Bath in England specifically for the local hot springs?",
+      "answers": [
+        {"text": "A vast bathing complex around a temple to Sulis Minerva", "correct": true},
+        {"text": "A military prison with steam-heated walls", "correct": false},
+        {"text": "A floating market on stilts above the water", "correct": false}
+      ],
+      "difficulty": "medium",
+      "fun_fact": "Visitors threw curse tablets — sheets of inscribed lead — into the spring asking the goddess to punish thieves. Over 130 have been recovered, naming suspects in surprisingly petty disputes.",
+      "category": "History"
+    },
+    {
+      "id": "history_en_092",
+      "question": "What did medieval Venetian glassmakers do to keep their trade secrets safe?",
+      "answers": [
+        {"text": "Were confined to the island of Murano under penalty of death", "correct": true},
+        {"text": "Worked only by candlelight with curtains drawn", "correct": false},
+        {"text": "Spoke a coded dialect in the workshop", "correct": false}
+      ],
+      "difficulty": "medium",
+      "fun_fact": "Murano artisans enjoyed high status and could marry into the nobility — but leaving Venice to set up workshops abroad was treated as treason and assassins were sent after defectors.",
+      "category": "History"
+    },
+    {
+      "id": "history_en_093",
+      "question": "What did Egyptian pharaoh Hatshepsut do that was unusual for a queen regnant?",
+      "answers": [
+        {"text": "Wore a false ceremonial beard", "correct": true},
+        {"text": "Spoke only through male translators", "correct": false},
+        {"text": "Refused to be depicted in any artwork", "correct": false}
+      ],
+      "difficulty": "medium",
+      "fun_fact": "Statues show Hatshepsut with the traditional pharaonic beard and male regalia. Her stepson Thutmose III later had many of her images defaced — historians still argue whether out of malice or politics.",
+      "category": "History"
+    },
+    {
+      "id": "history_en_094",
+      "question": "What odd structure did 19th-century Londoners build largely for tourists called the Tower Subway?",
+      "answers": [
+        {"text": "An underwater tunnel with a tiny cable-driven carriage", "correct": true},
+        {"text": "A floating restaurant on chains across the Thames", "correct": false},
+        {"text": "A glass dome housing a giant clockwork model of Big Ben", "correct": false}
+      ],
+      "difficulty": "hard",
+      "fun_fact": "Opened in 1870, the cable car carried a dozen people at a time. It was so slow and cramped that it became a foot tunnel within months — and still survives as a utility passage today.",
+      "category": "History"
+    },
+    {
+      "id": "history_en_095",
+      "question": "What did medieval Scandinavian sagas record being used as legal evidence?",
+      "answers": [
+        {"text": "Sworn oaths backed by named witnesses", "correct": true},
+        {"text": "Patterns of bird flight observed at dawn", "correct": false},
+        {"text": "Dreams interpreted by appointed seers", "correct": false}
+      ],
+      "difficulty": "medium",
+      "fun_fact": "Icelandic 'Thing' assemblies relied on memorised oaths and witness networks. Cases could be decided by the number and standing of those willing to swear on your behalf.",
+      "category": "History"
+    },
+    {
+      "id": "history_en_096",
+      "question": "What did ancient Greek doctors often prescribe for a wide range of ailments?",
+      "answers": [
+        {"text": "A long walk or a controlled fast", "correct": true},
+        {"text": "Inhaling smoke from burning olive pits", "correct": false},
+        {"text": "Sleeping next to a tame snake", "correct": false}
+      ],
+      "difficulty": "medium",
+      "fun_fact": "Hippocratic medicine emphasised diet, exercise and rest more than dramatic interventions — a philosophy that looks oddly modern compared to the bleeding-heavy medicine of much later centuries.",
+      "category": "History"
+    },
+    {
+      "id": "history_en_097",
+      "question": "What did the city of Pompeii leave behind on its sidewalks that surprised excavators?",
+      "answers": [
+        {"text": "Embedded raised stepping stones to cross flooded streets", "correct": true},
+        {"text": "Coloured tiles marking the city's tax districts", "correct": false},
+        {"text": "Iron rings for tying up exotic pets", "correct": false}
+      ],
+      "difficulty": "medium",
+      "fun_fact": "Streets doubled as drains during storms. Spaced stones let pedestrians cross dry-footed, while cart wheels passed through the gaps — a clever piece of urban engineering.",
+      "category": "History"
+    },
+    {
+      "id": "history_en_098",
+      "question": "What unusual role did the cats of the Hermitage Museum in St Petersburg traditionally play?",
+      "answers": [
+        {"text": "Official rodent control on the palace payroll", "correct": true},
+        {"text": "Models for in-house sculptors", "correct": false},
+        {"text": "Living thermometers for the gallery climate", "correct": false}
+      ],
+      "difficulty": "medium",
+      "fun_fact": "Empress Elizabeth brought in cats in the 1740s to handle mice. Their descendants still live in the basements with their own staff, food allowance and an annual public 'Day of the Cat'.",
+      "category": "History"
+    },
+    {
+      "id": "history_en_099",
+      "question": "What did 19th-century European doctors believe about the new habit of bicycle riding?",
+      "answers": [
+        {"text": "It caused a dangerous condition called 'bicycle face'", "correct": true},
+        {"text": "It magnetised the rider's blood after long trips", "correct": false},
+        {"text": "It cured stammering by jolting the throat", "correct": false}
+      ],
+      "difficulty": "hard",
+      "fun_fact": "Newspapers warned that strained expressions and hard breathing while cycling could permanently distort the face — especially women's. The 'condition' quietly vanished as cycling became normal.",
+      "category": "History"
+    },
+    {
+      "id": "history_en_100",
+      "question": "What unusual product did the city of Cologne export to the world starting in the 1700s?",
+      "answers": [
+        {"text": "A scented water called eau de Cologne", "correct": true},
+        {"text": "Hand-painted porcelain dolls in pairs", "correct": false},
+        {"text": "Mechanical singing birds in gilt cages", "correct": false}
+      ],
+      "difficulty": "easy",
+      "fun_fact": "Italian-born Giovanni Maria Farina blended a citrus scent in Cologne in 1709 and named it after his adopted city. The recipe is still made by his descendants at the original address.",
+      "category": "History"
+    },
+    {
+      "id": "history_en_101",
+      "question": "What surprising thing did Pope Gregory IX issue a papal bull against in 1233?",
+      "answers": [
+        {"text": "Cats, especially black ones", "correct": true},
+        {"text": "Wearing pointed shoes in church", "correct": false},
+        {"text": "Eating dinner after sunset", "correct": false}
+      ],
+      "difficulty": "hard",
+      "fun_fact": "The bull 'Vox in Rama' linked cats with devil worship and helped fuel cat-killing campaigns. Some historians argue that fewer cats meant more rats — which mattered when the Black Death arrived a century later.",
+      "category": "History"
+    },
+    {
+      "id": "history_en_102",
+      "question": "What did the Aztecs send the Spanish in 1519 as a diplomatic offering?",
+      "answers": [
+        {"text": "Gold ornaments, feathered cloaks and cacao", "correct": true},
+        {"text": "A trained jaguar in a wheeled cage", "correct": false},
+        {"text": "A book of constellation maps", "correct": false}
+      ],
+      "difficulty": "medium",
+      "fun_fact": "Moctezuma's gifts were intended to impress and perhaps to send the visitors politely away. They had the opposite effect — Cortés interpreted the gold as evidence of richer hoards inland.",
+      "category": "History"
+    },
+    {
+      "id": "history_en_103",
+      "question": "What odd habit did the Persian Achaemenid kings reportedly indulge in before big decisions?",
+      "answers": [
+        {"text": "Debated each plan once drunk and once sober", "correct": true},
+        {"text": "Slept on the palace roof for three nights", "correct": false},
+        {"text": "Bathed in goat's milk for an entire day", "correct": false}
+      ],
+      "difficulty": "hard",
+      "fun_fact": "Herodotus reports the practice: any decision approved both drunk and sober was considered tested from both sides. Modern behavioural science has occasionally praised the underlying logic.",
+      "category": "History"
     }
   ]
 }

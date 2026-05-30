@@ -507,6 +507,702 @@
       "difficulty": "easy",
       "fun_fact": "Two thirds of an octopus's 500 million neurons are in its arms, not its brain. Each arm can taste, feel, and make decisions independently — even severed arms react for several minutes.",
       "category": "Animals & Nature"
+    },
+    {
+      "id": "nat_en_051",
+      "question": "Which mammal is one of the very few that lays eggs instead of giving birth?",
+      "answers": [
+        {"text": "Platypus", "correct": true},
+        {"text": "Wombat", "correct": false},
+        {"text": "Opossum", "correct": false}
+      ],
+      "difficulty": "easy",
+      "fun_fact": "The platypus is a monotreme — a mammal that lays eggs. Males also have venomous spurs on their hind legs powerful enough to kill a small dog and cause humans excruciating pain that morphine barely dulls.",
+      "category": "Animals & Nature"
+    },
+    {
+      "id": "nat_en_052",
+      "question": "What is the long spiral 'tusk' of the narwhal actually made of?",
+      "answers": [
+        {"text": "A modified tooth", "correct": true},
+        {"text": "Compacted bone", "correct": false},
+        {"text": "Keratin, like a rhino horn", "correct": false}
+      ],
+      "difficulty": "medium",
+      "fun_fact": "The narwhal's 'tusk' is a single canine tooth that grows straight through the upper lip and can reach 3 metres. It is riddled with about ten million nerve endings, letting the whale taste salinity and temperature through it.",
+      "category": "Animals & Nature"
+    },
+    {
+      "id": "nat_en_053",
+      "question": "Which mammal is famously resistant to cancer and barely ages?",
+      "answers": [
+        {"text": "Naked mole rat", "correct": true},
+        {"text": "Capybara", "correct": false},
+        {"text": "Aardvark", "correct": false}
+      ],
+      "difficulty": "medium",
+      "fun_fact": "Naked mole rats live up to 30 years — ten times longer than similar-sized rodents — and almost never develop cancer. Their cells produce an unusually heavy form of hyaluronan that prevents tumour growth.",
+      "category": "Animals & Nature"
+    },
+    {
+      "id": "nat_en_054",
+      "question": "Which is the only mammal covered in keratin scales?",
+      "answers": [
+        {"text": "Armadillo", "correct": false},
+        {"text": "Pangolin", "correct": true},
+        {"text": "Anteater", "correct": false}
+      ],
+      "difficulty": "easy",
+      "fun_fact": "Pangolins are the only mammals with true scales made of keratin — the same material as human fingernails. When threatened they roll into a tight ball that even lions struggle to open.",
+      "category": "Animals & Nature"
+    },
+    {
+      "id": "nat_en_055",
+      "question": "Why do bats almost always hang upside down to rest?",
+      "answers": [
+        {"text": "Their leg tendons lock passively under their own weight", "correct": true},
+        {"text": "Hanging keeps their wing membranes warm", "correct": false},
+        {"text": "It improves their echolocation range", "correct": false}
+      ],
+      "difficulty": "medium",
+      "fun_fact": "A bat's foot tendons are arranged so its own body weight clamps the talons shut — it costs zero muscular effort to hang. A sleeping bat that dies in this pose can stay attached to the ceiling indefinitely.",
+      "category": "Animals & Nature"
+    },
+    {
+      "id": "nat_en_056",
+      "question": "Which marine mammal is the closest living relative of the elephant?",
+      "answers": [
+        {"text": "Manatee", "correct": true},
+        {"text": "Walrus", "correct": false},
+        {"text": "Hippopotamus", "correct": false}
+      ],
+      "difficulty": "hard",
+      "fun_fact": "Manatees and dugongs share a common ancestor with elephants from around 50 million years ago. Like elephants, they grow tusks and replace their molars in a slow-moving conveyor belt throughout life.",
+      "category": "Animals & Nature"
+    },
+    {
+      "id": "nat_en_057",
+      "question": "Vampire bats are known for which unusual social behaviour?",
+      "answers": [
+        {"text": "Regurgitating blood to feed roost-mates that didn't find food", "correct": true},
+        {"text": "Building communal nests from twigs", "correct": false},
+        {"text": "Singing duets at dawn", "correct": false}
+      ],
+      "difficulty": "medium",
+      "fun_fact": "Vampire bats starve within about 70 hours, so they share blood meals by regurgitation — and remember who returned the favour. They form long-term 'friendships' and prefer to share with bats that previously shared with them.",
+      "category": "Animals & Nature"
+    },
+    {
+      "id": "nat_en_058",
+      "question": "Why does a sloth's fur often look green?",
+      "answers": [
+        {"text": "Algae live in tiny grooves in each hair", "correct": true},
+        {"text": "Pigment from their diet of leaves", "correct": false},
+        {"text": "A copper-based skin compound", "correct": false}
+      ],
+      "difficulty": "easy",
+      "fun_fact": "Each sloth hair has microscopic cracks that hold rainwater, and algae grow inside them. The greenish coat camouflages the sloth in the canopy and is even home to moths found nowhere else.",
+      "category": "Animals & Nature"
+    },
+    {
+      "id": "nat_en_059",
+      "question": "Why does a beaver's front teeth appear bright orange?",
+      "answers": [
+        {"text": "The enamel contains iron", "correct": true},
+        {"text": "Tannins from chewing bark", "correct": false},
+        {"text": "A natural fluorescent pigment", "correct": false}
+      ],
+      "difficulty": "hard",
+      "fun_fact": "Beaver incisors have iron-rich enamel that is harder than ordinary tooth enamel and resists acid better. Researchers studied the structure to design tougher human dental fillings.",
+      "category": "Animals & Nature"
+    },
+    {
+      "id": "nat_en_060",
+      "question": "Which large mammal's vocalisations include calls so low that humans cannot hear them?",
+      "answers": [
+        {"text": "Giraffe", "correct": false},
+        {"text": "Blue whale", "correct": true},
+        {"text": "Polar bear", "correct": false}
+      ],
+      "difficulty": "hard",
+      "fun_fact": "Blue whale calls dip below 20 Hz — beneath human hearing — yet are so loud (up to 188 decibels) that they can travel for hundreds of kilometres through deep ocean sound channels.",
+      "category": "Animals & Nature"
+    },
+    {
+      "id": "nat_en_061",
+      "question": "Which animal has an eye bigger than its brain?",
+      "answers": [
+        {"text": "Ostrich", "correct": true},
+        {"text": "Owl", "correct": false},
+        {"text": "Eagle", "correct": false}
+      ],
+      "difficulty": "easy",
+      "fun_fact": "An ostrich eyeball is roughly 5 cm across — larger than its walnut-sized brain. The huge eye, the biggest of any land animal, lets the bird spot predators from kilometres away on the savanna.",
+      "category": "Animals & Nature"
+    },
+    {
+      "id": "nat_en_062",
+      "question": "How do male Gentoo penguins typically court a female?",
+      "answers": [
+        {"text": "By presenting her with a smooth pebble", "correct": true},
+        {"text": "By offering a freshly caught fish", "correct": false},
+        {"text": "By performing a long underwater dive", "correct": false}
+      ],
+      "difficulty": "easy",
+      "fun_fact": "Gentoo males hunt for the smoothest pebble they can find and lay it at the female's feet. Accepted pebbles go into the nest — and females have been observed stealing prized stones from rivals' nests.",
+      "category": "Animals & Nature"
+    },
+    {
+      "id": "nat_en_063",
+      "question": "How far can an owl rotate its head?",
+      "answers": [
+        {"text": "About 180 degrees", "correct": false},
+        {"text": "About 270 degrees", "correct": true},
+        {"text": "A full 360 degrees", "correct": false}
+      ],
+      "difficulty": "medium",
+      "fun_fact": "Owls turn their heads up to about 270° because their eyes are fixed tubes in the skull and cannot swivel. Extra neck vertebrae and special blood-vessel reservoirs keep the brain supplied during the twist.",
+      "category": "Animals & Nature"
+    },
+    {
+      "id": "nat_en_064",
+      "question": "Compared to its body, which bird lays the largest egg of any species?",
+      "answers": [
+        {"text": "Kiwi", "correct": true},
+        {"text": "Ostrich", "correct": false},
+        {"text": "Hummingbird", "correct": false}
+      ],
+      "difficulty": "medium",
+      "fun_fact": "A kiwi egg can weigh nearly a quarter of the mother's body weight — proportionally six times larger than a chicken's egg. X-rays of pregnant kiwis show the egg occupying almost the entire abdomen.",
+      "category": "Animals & Nature"
+    },
+    {
+      "id": "nat_en_065",
+      "question": "Why are flamingos pink?",
+      "answers": [
+        {"text": "Pigments from the algae and shrimp they eat", "correct": true},
+        {"text": "Their feathers reflect ultraviolet light", "correct": false},
+        {"text": "A pigment they synthesise in their liver", "correct": false}
+      ],
+      "difficulty": "easy",
+      "fun_fact": "Flamingos hatch grey-white and turn pink from beta-carotene pigments in algae and brine shrimp. Captive flamingos fed a plain diet fade to pale grey — zoos add carotenoids to keep them showy.",
+      "category": "Animals & Nature"
+    },
+    {
+      "id": "nat_en_066",
+      "question": "What stops a woodpecker from giving itself brain damage while hammering?",
+      "answers": [
+        {"text": "A spongy bone structure and a hyoid bone that wraps around the skull", "correct": true},
+        {"text": "An extra-thick layer of fluid around the brain", "correct": false},
+        {"text": "They pause between strikes long enough for shock to dissipate", "correct": false}
+      ],
+      "difficulty": "medium",
+      "fun_fact": "A woodpecker's skull contains spongy plate-like bone and a long elastic hyoid that loops over the cranium like a seat belt, distributing impact. Strikes can hit 1,200 g of deceleration — enough to concuss most animals.",
+      "category": "Animals & Nature"
+    },
+    {
+      "id": "nat_en_067",
+      "question": "Which family of birds has been shown to manufacture and customise tools?",
+      "answers": [
+        {"text": "Pigeons", "correct": false},
+        {"text": "Corvids (crows and ravens)", "correct": true},
+        {"text": "Swallows", "correct": false}
+      ],
+      "difficulty": "medium",
+      "fun_fact": "New Caledonian crows bend twigs into hooks and trim leaf edges into barbed probes — different shapes for different jobs. They also pass tool-making techniques on to their young, a form of culture.",
+      "category": "Animals & Nature"
+    },
+    {
+      "id": "nat_en_068",
+      "question": "How does the common swift manage to sleep during its long migrations?",
+      "answers": [
+        {"text": "It dozes briefly while still flying", "correct": true},
+        {"text": "It clings to cliffs at night", "correct": false},
+        {"text": "It rests on the ocean surface", "correct": false}
+      ],
+      "difficulty": "hard",
+      "fun_fact": "Tracking studies show common swifts can stay airborne for up to 10 months without landing, gliding in slow circles at altitude to catch micro-sleeps. They eat, drink, mate and sleep on the wing.",
+      "category": "Animals & Nature"
+    },
+    {
+      "id": "nat_en_069",
+      "question": "Which living bird has the longest wingspan?",
+      "answers": [
+        {"text": "Wandering albatross", "correct": true},
+        {"text": "Andean condor", "correct": false},
+        {"text": "Marabou stork", "correct": false}
+      ],
+      "difficulty": "hard",
+      "fun_fact": "A wandering albatross can stretch its wings to 3.5 metres. A specialised shoulder-locking tendon holds the wings open with almost no muscle effort, so the bird can glide for hours without a single flap.",
+      "category": "Animals & Nature"
+    },
+    {
+      "id": "nat_en_070",
+      "question": "How long can a chameleon's tongue be relative to its body?",
+      "answers": [
+        {"text": "About half its body length", "correct": false},
+        {"text": "Up to about twice its body length", "correct": true},
+        {"text": "Up to five times its body length", "correct": false}
+      ],
+      "difficulty": "easy",
+      "fun_fact": "Small chameleon species can shoot their tongue out to roughly twice their body length in about 1/16 of a second, accelerating faster than a fighter jet. A sticky mucus tip glues prey on contact.",
+      "category": "Animals & Nature"
+    },
+    {
+      "id": "nat_en_071",
+      "question": "How does a snake manage to swallow prey wider than its own head?",
+      "answers": [
+        {"text": "Its lower jaw halves are connected by a stretchy ligament, not fused", "correct": true},
+        {"text": "It dislocates and re-locates its jaw with each meal", "correct": false},
+        {"text": "It chews the prey into smaller pieces first", "correct": false}
+      ],
+      "difficulty": "medium",
+      "fun_fact": "The two halves of a snake's lower jaw are joined by an elastic ligament that lets them spread sideways. The jaw never actually dislocates — the popular myth is wrong, but the stretch is dramatic enough to swallow a deer in some pythons.",
+      "category": "Animals & Nature"
+    },
+    {
+      "id": "nat_en_072",
+      "question": "How does the wood frog survive a North American winter?",
+      "answers": [
+        {"text": "It burrows deep below the frost line", "correct": false},
+        {"text": "It freezes solid and thaws back to life", "correct": true},
+        {"text": "It migrates south with songbirds", "correct": false}
+      ],
+      "difficulty": "medium",
+      "fun_fact": "The wood frog stops its heart and lets up to 65% of its body water turn to ice. Glucose pumped into its cells acts as antifreeze, and in spring it simply thaws and hops away — sometimes within an hour of warming.",
+      "category": "Animals & Nature"
+    },
+    {
+      "id": "nat_en_073",
+      "question": "What distinctive feature gives the glass frog its name?",
+      "answers": [
+        {"text": "You can see its beating heart through the skin of its belly", "correct": true},
+        {"text": "Its eggs are translucent like marbles", "correct": false},
+        {"text": "Its bones glow faintly under moonlight", "correct": false}
+      ],
+      "difficulty": "easy",
+      "fun_fact": "Glass frogs have transparent ventral skin that reveals the heart, liver and digestive tract. When they sleep, they hide most of their red blood cells in the liver, making them up to 60% more see-through.",
+      "category": "Animals & Nature"
+    },
+    {
+      "id": "nat_en_074",
+      "question": "What is unusual about the male of most deep-sea anglerfish species?",
+      "answers": [
+        {"text": "He permanently fuses to the female and becomes a sperm-producing appendage", "correct": true},
+        {"text": "He guards thousands of eggs alone for months", "correct": false},
+        {"text": "He glows brighter than the female to attract her", "correct": false}
+      ],
+      "difficulty": "medium",
+      "fun_fact": "In many anglerfish species the tiny male bites into the much larger female and stays attached for life, their tissues merging until he is little more than a sperm gland. He receives nutrients directly from her bloodstream.",
+      "category": "Animals & Nature"
+    },
+    {
+      "id": "nat_en_075",
+      "question": "Which animal can strike its prey with the acceleration of a small-calibre bullet?",
+      "answers": [
+        {"text": "Pistol shrimp", "correct": false},
+        {"text": "Mantis shrimp", "correct": true},
+        {"text": "Box jellyfish", "correct": false}
+      ],
+      "difficulty": "medium",
+      "fun_fact": "A peacock mantis shrimp's club-like appendage accelerates underwater at over 10,000 g, smashing snail shells and even cracking aquarium glass. The strike is so fast the surrounding water briefly boils into vapour bubbles.",
+      "category": "Animals & Nature"
+    },
+    {
+      "id": "nat_en_076",
+      "question": "Where does most of the fine white sand on a tropical coral beach actually come from?",
+      "answers": [
+        {"text": "It is excreted by parrotfish that bite and grind coral", "correct": true},
+        {"text": "It is eroded directly from offshore cliffs", "correct": false},
+        {"text": "It is dust blown in from inland deserts", "correct": false}
+      ],
+      "difficulty": "medium",
+      "fun_fact": "A single large parrotfish can produce several hundred kilograms of coral sand per year by chewing coral, digesting the algae and excreting the rest. Much of a Maldives beach is, technically, parrotfish poo.",
+      "category": "Animals & Nature"
+    },
+    {
+      "id": "nat_en_077",
+      "question": "How does the archerfish catch insects above the water?",
+      "answers": [
+        {"text": "It spits a precisely aimed jet of water", "correct": true},
+        {"text": "It leaps out and snatches them mid-air", "correct": false},
+        {"text": "It lures them with bioluminescent flashes", "correct": false}
+      ],
+      "difficulty": "easy",
+      "fun_fact": "Archerfish shoot water jets up to 2 metres and compensate for light refraction at the water surface — a calculation that takes humans years of physics. Young fish learn to aim by watching the adults.",
+      "category": "Animals & Nature"
+    },
+    {
+      "id": "nat_en_078",
+      "question": "Which gland in a snake's mouth is the evolutionary source of its venom?",
+      "answers": [
+        {"text": "A modified salivary gland", "correct": true},
+        {"text": "A modified tear gland", "correct": false},
+        {"text": "A specialised pancreas duct", "correct": false}
+      ],
+      "difficulty": "hard",
+      "fun_fact": "Venom in snakes evolved from ordinary salivary glands — proteins meant for digestion became weapons. The same molecular toolkit also gave rise to venom in lizards like the Komodo dragon.",
+      "category": "Animals & Nature"
+    },
+    {
+      "id": "nat_en_079",
+      "question": "Where do salmon use Earth's magnetic field?",
+      "answers": [
+        {"text": "To find the exact river of their birth when returning to spawn", "correct": true},
+        {"text": "To stay upright in fast currents", "correct": false},
+        {"text": "To synchronise their colour change", "correct": false}
+      ],
+      "difficulty": "hard",
+      "fun_fact": "Salmon imprint on the unique magnetic signature of their natal river and use it years later to return from thousands of kilometres at sea. Iron-containing cells in their nose act as a built-in compass.",
+      "category": "Animals & Nature"
+    },
+    {
+      "id": "nat_en_080",
+      "question": "How long does a typical adult mayfly live after it emerges from the water?",
+      "answers": [
+        {"text": "A few weeks", "correct": false},
+        {"text": "A day or less", "correct": true},
+        {"text": "About three months", "correct": false}
+      ],
+      "difficulty": "easy",
+      "fun_fact": "Adult mayflies of many species live less than 24 hours — some species only a few minutes — and don't even have a working mouth. They live for years as aquatic nymphs and emerge only to mate.",
+      "category": "Animals & Nature"
+    },
+    {
+      "id": "nat_en_081",
+      "question": "Which predator has roughly a 95% success rate when hunting?",
+      "answers": [
+        {"text": "Lion", "correct": false},
+        {"text": "Dragonfly", "correct": true},
+        {"text": "Great white shark", "correct": false}
+      ],
+      "difficulty": "medium",
+      "fun_fact": "Dragonflies catch up to 95% of the prey they target, far better than lions (~25%) or sharks. Their independently moving compound eyes and predictive flight neurons let them intercept rather than chase.",
+      "category": "Animals & Nature"
+    },
+    {
+      "id": "nat_en_082",
+      "question": "Which microscopic animal can survive boiling, freezing, radiation and even the vacuum of space?",
+      "answers": [
+        {"text": "Tardigrade", "correct": true},
+        {"text": "Rotifer", "correct": false},
+        {"text": "Copepod", "correct": false}
+      ],
+      "difficulty": "medium",
+      "fun_fact": "Tardigrades survive by drying into a 'tun' state with less than 3% water and a protective protein that turns their cells into glass-like solids. Live tardigrades were recovered after exposure to open space in 2007.",
+      "category": "Animals & Nature"
+    },
+    {
+      "id": "nat_en_083",
+      "question": "How many colour-receiving cone types does a mantis shrimp's eye have?",
+      "answers": [
+        {"text": "3, like humans", "correct": false},
+        {"text": "About 12 to 16", "correct": true},
+        {"text": "Just 1", "correct": false}
+      ],
+      "difficulty": "medium",
+      "fun_fact": "Mantis shrimp eyes carry 12 to 16 types of photoreceptors. Counter-intuitively, behavioural tests suggest they discriminate colours less finely than humans — but each receptor works as a fast spectral channel, like onboard hardware.",
+      "category": "Animals & Nature"
+    },
+    {
+      "id": "nat_en_084",
+      "question": "Through which body part does a butterfly taste?",
+      "answers": [
+        {"text": "Its feet", "correct": true},
+        {"text": "Its antennae", "correct": false},
+        {"text": "The tip of its proboscis only", "correct": false}
+      ],
+      "difficulty": "easy",
+      "fun_fact": "Butterflies have taste sensors on their feet, so they 'taste' a leaf the moment they land. Females use this to identify the exact plant species their caterpillars can eat before laying eggs.",
+      "category": "Animals & Nature"
+    },
+    {
+      "id": "nat_en_085",
+      "question": "What is the relationship between many ant species and aphids?",
+      "answers": [
+        {"text": "The ants protect aphids and 'milk' them for sugary honeydew", "correct": true},
+        {"text": "The ants are parasitised by aphid larvae", "correct": false},
+        {"text": "The ants prey on aphids as their main food", "correct": false}
+      ],
+      "difficulty": "easy",
+      "fun_fact": "Some ants herd aphids like livestock, carrying them to fresh plants and defending them from ladybirds. In return the ants stroke the aphids with their antennae to trigger droplets of sugary honeydew.",
+      "category": "Animals & Nature"
+    },
+    {
+      "id": "nat_en_086",
+      "question": "How do African termite mounds keep their interior at a stable temperature?",
+      "answers": [
+        {"text": "Internal chimneys drive passive air convection", "correct": true},
+        {"text": "Worker termites fan their wings constantly", "correct": false},
+        {"text": "Symbiotic algae absorb excess heat", "correct": false}
+      ],
+      "difficulty": "medium",
+      "fun_fact": "Macrotermes mounds use a network of chimneys and side vents that pulls cool air in through the base and pushes warm air out the top — a passive design that inspired Zimbabwe's Eastgate Centre, which uses 90% less air-conditioning.",
+      "category": "Animals & Nature"
+    },
+    {
+      "id": "nat_en_087",
+      "question": "Which animal is estimated to have the most teeth — over 20,000 on a microscopic 'tongue'?",
+      "answers": [
+        {"text": "Garden snail", "correct": true},
+        {"text": "Catfish", "correct": false},
+        {"text": "Sea urchin", "correct": false}
+      ],
+      "difficulty": "medium",
+      "fun_fact": "A garden snail's radula is a ribbon-like tongue covered in thousands of microscopic teeth used to rasp food. Limpets have an even tougher version — their teeth are made of the strongest known biological material, stronger than spider silk.",
+      "category": "Animals & Nature"
+    },
+    {
+      "id": "nat_en_088",
+      "question": "What unusual problem-solving ability has the slime mould Physarum polycephalum been shown to have?",
+      "answers": [
+        {"text": "It can find the shortest path through a maze without a brain", "correct": true},
+        {"text": "It can recognise individual human faces", "correct": false},
+        {"text": "It can navigate by the position of the sun", "correct": false}
+      ],
+      "difficulty": "hard",
+      "fun_fact": "In a famous 2010 experiment, slime mould placed on a map of Japan grew connections between food stacks that closely matched the actual Tokyo rail network — without neurons, eyes or any central control.",
+      "category": "Animals & Nature"
+    },
+    {
+      "id": "nat_en_089",
+      "question": "Why do periodical cicadas emerge after exactly 13 or 17 years rather than, say, 12 or 15?",
+      "answers": [
+        {"text": "Prime-number cycles make it harder for predators to synchronise", "correct": true},
+        {"text": "These are the only cycles their sap-feeding can sustain", "correct": false},
+        {"text": "They follow the sunspot cycle", "correct": false}
+      ],
+      "difficulty": "hard",
+      "fun_fact": "13 and 17 are prime numbers, so any predator whose population peaks every 2, 3, 4, 5 or 6 years can rarely align with a cicada emergence. The trick lets billions of cicadas appear at once and overwhelm anything that eats them.",
+      "category": "Animals & Nature"
+    },
+    {
+      "id": "nat_en_090",
+      "question": "Pando in Utah, often called the largest known organism by mass, is what kind of life form?",
+      "answers": [
+        {"text": "A single clonal colony of quaking aspen trees", "correct": true},
+        {"text": "A continuous coral reef", "correct": false},
+        {"text": "An underground network of fungal hyphae", "correct": false}
+      ],
+      "difficulty": "medium",
+      "fun_fact": "Pando looks like a forest of 47,000 aspens but is actually one organism sharing a single root system, weighing about 6,000 tonnes. Some estimates put its age at thousands of years.",
+      "category": "Animals & Nature"
+    },
+    {
+      "id": "nat_en_091",
+      "question": "Which everyday fruit is mildly radioactive thanks to its high potassium content?",
+      "answers": [
+        {"text": "Banana", "correct": true},
+        {"text": "Apple", "correct": false},
+        {"text": "Pineapple", "correct": false}
+      ],
+      "difficulty": "easy",
+      "fun_fact": "Bananas contain potassium-40, a naturally radioactive isotope. The dose is so tiny it's harmless, but the 'banana equivalent dose' is a tongue-in-cheek unit used to explain radiation risks to the public.",
+      "category": "Animals & Nature"
+    },
+    {
+      "id": "nat_en_092",
+      "question": "Why did the rediscovery of the Wollemi pine in 1994 cause such a sensation?",
+      "answers": [
+        {"text": "It was known only from 90-million-year-old fossils", "correct": true},
+        {"text": "Its bark contains a powerful natural pesticide", "correct": false},
+        {"text": "It grows faster than bamboo", "correct": false}
+      ],
+      "difficulty": "hard",
+      "fun_fact": "The Wollemi pine was thought extinct since the time of the dinosaurs until a hiker stumbled on a few dozen trees in a remote Australian canyon. The exact location is kept secret, and saplings are now sold worldwide.",
+      "category": "Animals & Nature"
+    },
+    {
+      "id": "nat_en_093",
+      "question": "Why does the corpse flower smell so strongly of rotting meat when it blooms?",
+      "answers": [
+        {"text": "It mimics carrion to attract flies and beetles for pollination", "correct": true},
+        {"text": "It is digesting trapped insects inside its bloom", "correct": false},
+        {"text": "It uses the smell to repel grazing animals", "correct": false}
+      ],
+      "difficulty": "easy",
+      "fun_fact": "Amorphophallus titanum can stand 3 metres tall and warms its bloom to body temperature to broadcast the stench of rotting flesh, drawing carrion flies. It blooms unpredictably, sometimes only once a decade.",
+      "category": "Animals & Nature"
+    },
+    {
+      "id": "nat_en_094",
+      "question": "How does the dodder plant (Cuscuta) feed itself?",
+      "answers": [
+        {"text": "It wraps around other plants and taps into their sap with rootlike haustoria", "correct": true},
+        {"text": "It catches insects with sticky pads", "correct": false},
+        {"text": "It absorbs nutrients only from rainwater", "correct": false}
+      ],
+      "difficulty": "medium",
+      "fun_fact": "Dodder has almost no chlorophyll and survives by stealing water and nutrients from host plants. Seedlings can even 'sniff out' nearby tomato plants and grow toward the scent, ignoring less tasty neighbours.",
+      "category": "Animals & Nature"
+    },
+    {
+      "id": "nat_en_095",
+      "question": "How many true leaves does the desert plant Welwitschia mirabilis produce in its entire lifetime?",
+      "answers": [
+        {"text": "Two — and only two", "correct": true},
+        {"text": "Roughly one new leaf per year", "correct": false},
+        {"text": "Hundreds, shed seasonally", "correct": false}
+      ],
+      "difficulty": "hard",
+      "fun_fact": "Welwitschia grows just two strap-like leaves that keep extending and tattering for the plant's entire life — which can last over 1,500 years in the Namib Desert. It is the only living member of its plant family.",
+      "category": "Animals & Nature"
+    },
+    {
+      "id": "nat_en_096",
+      "question": "Why can a mature giant sequoia survive most forest fires unharmed?",
+      "answers": [
+        {"text": "Its thick fibrous bark is highly fire-resistant", "correct": true},
+        {"text": "It pumps water down its trunk when smoke appears", "correct": false},
+        {"text": "Its leaves release a flame-retardant gas", "correct": false}
+      ],
+      "difficulty": "medium",
+      "fun_fact": "Sequoia bark can be over 60 cm thick and is laced with tannins and almost no resin, so it chars rather than burns. Sequoias actually depend on fire: the heat opens their cones and clears competing plants for seedlings.",
+      "category": "Animals & Nature"
+    },
+    {
+      "id": "nat_en_097",
+      "question": "How do mangrove trees deal with the salt in seawater?",
+      "answers": [
+        {"text": "They filter most salt at the roots and excrete the rest from special leaf glands", "correct": true},
+        {"text": "They store all salt in fruit that drops into the sea", "correct": false},
+        {"text": "They convert it into oxygen through photosynthesis", "correct": false}
+      ],
+      "difficulty": "medium",
+      "fun_fact": "Mangrove roots act as ultrafilters that block up to 97% of salt. Whatever sneaks through is concentrated in older leaves or pushed out via salt-secreting glands — visible as tiny crystals on the leaf surface.",
+      "category": "Animals & Nature"
+    },
+    {
+      "id": "nat_en_098",
+      "question": "What kind of organism is a lichen?",
+      "answers": [
+        {"text": "A partnership between a fungus and an alga or cyanobacterium", "correct": true},
+        {"text": "A type of slow-growing moss", "correct": false},
+        {"text": "An ancient lineage of land-dwelling sponges", "correct": false}
+      ],
+      "difficulty": "easy",
+      "fun_fact": "Lichens are a stable symbiosis: the fungus builds the body, the photosynthetic partner provides sugars. The combination is so tough that lichens were the first organisms shown to survive exposure to outer space.",
+      "category": "Animals & Nature"
+    },
+    {
+      "id": "nat_en_099",
+      "question": "What is the so-called 'wood wide web' that connects most forest trees?",
+      "answers": [
+        {"text": "Underground networks of mycorrhizal fungi linking tree roots", "correct": true},
+        {"text": "Airborne pheromones released by leaves under attack", "correct": false},
+        {"text": "Electrical signals travelling through interlocking branches", "correct": false}
+      ],
+      "difficulty": "hard",
+      "fun_fact": "Mycorrhizal fungi wrap around tree roots and trade nutrients for sugars, but they also link different trees underground. Experiments tracked carbon flowing from large 'mother trees' to younger seedlings through this fungal web.",
+      "category": "Animals & Nature"
+    },
+    {
+      "id": "nat_en_100",
+      "question": "Where on Earth has it essentially never rained on record in some weather stations?",
+      "answers": [
+        {"text": "Atacama Desert, Chile", "correct": true},
+        {"text": "Gobi Desert, Mongolia", "correct": false},
+        {"text": "Kalahari Desert, Namibia", "correct": false}
+      ],
+      "difficulty": "easy",
+      "fun_fact": "Parts of the Atacama have weather stations that have never registered measurable rainfall. NASA tests Mars rovers there because the soil is so dry and lifeless it serves as the closest earthly analogue of the Red Planet.",
+      "category": "Animals & Nature"
+    },
+    {
+      "id": "nat_en_101",
+      "question": "What's odd about the Sailing Stones of Death Valley's Racetrack Playa?",
+      "answers": [
+        {"text": "They slide across the flat lakebed and leave long trails", "correct": true},
+        {"text": "They emit a faint hum at sunset", "correct": false},
+        {"text": "They are perfectly round and identical in size", "correct": false}
+      ],
+      "difficulty": "medium",
+      "fun_fact": "The rocks drift for hundreds of metres, leaving grooves no one ever sees them make. Time-lapse cameras in 2014 finally caught the trick: thin sheets of winter ice break up and gentle winds push the floating ice — and the rocks frozen into it — across the mud.",
+      "category": "Animals & Nature"
+    },
+    {
+      "id": "nat_en_102",
+      "question": "Why does Antarctica's 'Blood Falls' flow bright red?",
+      "answers": [
+        {"text": "Iron-rich brine from beneath the glacier oxidises in the air", "correct": true},
+        {"text": "Red algae bloom in the meltwater each summer", "correct": false},
+        {"text": "Volcanic ash stains the ice below the surface", "correct": false}
+      ],
+      "difficulty": "medium",
+      "fun_fact": "Trapped under Taylor Glacier is a salty, iron-rich lake cut off from sunlight for over a million years. When the brine seeps out and meets oxygen, the iron rusts on contact and paints the ice a vivid blood-red.",
+      "category": "Animals & Nature"
+    },
+    {
+      "id": "nat_en_103",
+      "question": "What happens to most animals that fall into Tanzania's Lake Natron?",
+      "answers": [
+        {"text": "They become calcified and 'mummified' by the lake's chemistry", "correct": true},
+        {"text": "They are rapidly digested by piranha-like fish", "correct": false},
+        {"text": "They turn fluorescent pink overnight", "correct": false}
+      ],
+      "difficulty": "hard",
+      "fun_fact": "Lake Natron's water is alkaline enough to burn skin and saturated with sodium carbonate. Dead birds and bats washed ashore are coated in salts and harden into eerie stone-like statues — yet the lake is also the breeding ground for nearly all of Africa's lesser flamingos.",
+      "category": "Animals & Nature"
+    },
+    {
+      "id": "nat_en_104",
+      "question": "What causes the glowing blue 'sea sparkle' sometimes seen in waves at night?",
+      "answers": [
+        {"text": "Bioluminescent plankton flashing when disturbed", "correct": true},
+        {"text": "Reflected moonlight off salt crystals", "correct": false},
+        {"text": "Static electricity from breaking waves", "correct": false}
+      ],
+      "difficulty": "easy",
+      "fun_fact": "Dinoflagellates such as Noctiluca scintillans emit a brief blue flash when jostled — a startle response that may attract bigger predators to eat whatever is disturbing them. Dense blooms can make every footprint glow.",
+      "category": "Animals & Nature"
+    },
+    {
+      "id": "nat_en_105",
+      "question": "Roughly how many lightning strikes hit the Earth every second?",
+      "answers": [
+        {"text": "About 1", "correct": false},
+        {"text": "About 100", "correct": true},
+        {"text": "About 10,000", "correct": false}
+      ],
+      "difficulty": "medium",
+      "fun_fact": "Satellites count around 8 million lightning strikes a day — roughly 100 per second worldwide. The single most lightning-prone spot is Lake Maracaibo in Venezuela, where storms light up the sky almost every night.",
+      "category": "Animals & Nature"
+    },
+    {
+      "id": "nat_en_106",
+      "question": "Why do the methane lakes of Russia's Yamal Peninsula sometimes form spectacular ice bubbles?",
+      "answers": [
+        {"text": "Methane from decomposing plants is trapped under the freezing surface", "correct": true},
+        {"text": "Cosmic rays ionise the water as it freezes", "correct": false},
+        {"text": "Reindeer migrations stir the lakebed mud", "correct": false}
+      ],
+      "difficulty": "medium",
+      "fun_fact": "Microbes in the lake sediment turn dead plants into methane. The gas rises in plumes and gets trapped as the surface freezes, stacking up into ghostly white discs. Punch a hole, hold a flame, and you can ignite a column of fire.",
+      "category": "Animals & Nature"
+    },
+    {
+      "id": "nat_en_107",
+      "question": "What causes 'fairy circles' — almost perfect bare-earth rings in some African grasslands?",
+      "answers": [
+        {"text": "Likely competition between grass roots for scarce water", "correct": true},
+        {"text": "Buried meteorites slowly rusting", "correct": false},
+        {"text": "Underground colonies of glow-worms", "correct": false}
+      ],
+      "difficulty": "hard",
+      "fun_fact": "Fairy circles in the Namib are still debated, but the leading explanation is that grasses self-organise into rings to share scarce rainwater — neighbours drink the centre dry while the ring keeps moisture for itself. Termite-based theories survive as runners-up.",
+      "category": "Animals & Nature"
+    },
+    {
+      "id": "nat_en_108",
+      "question": "What is a 'snow roller', a phenomenon occasionally spotted in open fields?",
+      "answers": [
+        {"text": "A natural snowball formed when wind pushes wet snow across the ground", "correct": true},
+        {"text": "A type of high-altitude lenticular cloud", "correct": false},
+        {"text": "A spinning column of ice crystals during a blizzard", "correct": false}
+      ],
+      "difficulty": "hard",
+      "fun_fact": "Snow rollers form only when wet, sticky snow sits on a slick base layer and steady wind nudges chunks along. They roll up into hollow cylinders that can grow taller than a bicycle wheel — and then collapse the moment you touch them.",
+      "category": "Animals & Nature"
     }
   ]
 }

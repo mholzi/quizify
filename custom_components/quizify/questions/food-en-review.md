@@ -1,129 +1,93 @@
 # Review: Food & Drink (en)
 
-Reviewed on 2026-05-28. 50 questions across 2 chunks.
+Review run 2026-05-30, scope: food_en_051–101 (51 new).
+Original IDs (food_en_001–050) were cleaned Mai-27/28 and were skipped this run.
 
 ## Summary
 
-- Clean: 45
-- Concerns: 5
-- Fix needed: 0
+- ✅ **Clean**: 51
+- ⚠️ **Concerns**: 0
+- 🚨 **Fix needed**: 0
 
-Post-fix state:
-- Fixed: 2 (food_en_007, food_en_024)
-- Deleted: 1 (food_en_019)
-- Skipped: 2 (food_en_004, food_en_030 — concern-only, not ambiguity-based)
-- Pack count: 50 -> 49
+No fix_needed items, no ambiguity-driven concerns — nothing to apply via fix-subagent or delete.
 
 ## Per-question findings
 
 | ID | Verdict | Factual | Distractors | Fun-fact | Clarity | Difficulty | Summary |
 |---|---|---|---|---|---|---|---|
-| food_en_001 | ok | pass | pass | pass | pass | appropriate | Clean. |
-| food_en_002 | ok | pass | pass | pass | pass | appropriate | Clean. |
-| food_en_003 | ok | pass | pass | pass | pass | appropriate | Clean. |
-| food_en_004 | concern | pass | pass | pass | pass | **too_hard** | "Easy" likely undershoots — Hawaiian-pizza-is-Canadian is a known counter-intuitive fact; better as medium. |
-| food_en_005 | ok | pass | pass | pass | pass | appropriate | Clean. |
-| food_en_006 | ok | pass | pass | pass | pass | appropriate | Clean. |
-| food_en_007 | concern | pass | pass | pass | **concern** | appropriate | Wording is convoluted ("most strongly associated... but actually originated where?"). |
-| food_en_008 | ok | pass | pass | pass | pass | appropriate | Clean. |
-| food_en_009 | ok | pass | pass | pass | pass | appropriate | Clean. |
-| food_en_010 | ok | pass | pass | pass | pass | appropriate | Clean. |
-| food_en_011 | ok | pass | pass | pass | pass | appropriate | Clean. |
-| food_en_012 | ok | pass | pass | pass | pass | appropriate | Clean. |
-| food_en_013 | ok | pass | pass | pass | pass | appropriate | Clean. |
-| food_en_014 | ok | pass | pass | pass | pass | appropriate | Clean. |
-| food_en_015 | ok | pass | pass | pass | pass | appropriate | Clean. |
-| food_en_016 | ok | pass | pass | pass | pass | appropriate | Clean. |
-| food_en_017 | ok | pass | pass | pass | pass | appropriate | Clean. |
-| food_en_018 | ok | pass | pass | pass | pass | appropriate | Clean. |
-| food_en_019 | concern | **concern** | pass | **concern** | pass | appropriate | "IPA invented to survive India voyage" is disputed by modern beer historians (Martyn Cornell etc.) — pre-existing hopped ales were already shipped; the strong-and-hoppy-for-voyage premise is partly mythology. |
-| food_en_020 | ok | pass | pass | pass | pass | appropriate | Clean. |
-| food_en_021 | ok | pass | pass | pass | pass | appropriate | Clean. |
-| food_en_022 | ok | pass | pass | pass | pass | appropriate | Clean. |
-| food_en_023 | ok | pass | pass | pass | pass | appropriate | Clean. |
-| food_en_024 | concern | pass | **concern** | pass | pass | appropriate | Distractor "To the bite" is a defensible idiomatic translation of al dente — multi-correct risk. |
-| food_en_025 | ok | pass | pass | pass | pass | appropriate | Clean. |
-| food_en_026 | ok | pass | pass | pass | pass | appropriate | Clean. |
-| food_en_027 | ok | pass | pass | pass | pass | appropriate | Clean. |
-| food_en_028 | ok | pass | pass | pass | pass | appropriate | Clean. |
-| food_en_029 | ok | pass | pass | pass | pass | appropriate | Clean. |
-| food_en_030 | concern | pass | pass | **concern** | pass | appropriate | Fun fact's "juices pushed to centre, redistribute on rest" is the common explanation but disputed by food scientists (López-Alt). Question stem itself is fine. |
-| food_en_031 | ok | pass | pass | pass | pass | appropriate | Clean. |
-| food_en_032 | ok | pass | pass | pass | pass | appropriate | Clean. |
-| food_en_033 | ok | pass | pass | pass | pass | appropriate | Clean. |
-| food_en_034 | ok | pass | pass | pass | pass | appropriate | Clean. |
-| food_en_035 | ok | pass | pass | pass | pass | appropriate | Clean. |
-| food_en_036 | ok | pass | pass | pass | pass | appropriate | Clean. |
-| food_en_037 | ok | pass | pass | pass | pass | appropriate | Clean. |
-| food_en_038 | ok | pass | pass | pass | pass | appropriate | Clean. |
-| food_en_039 | ok | pass | pass | pass | pass | appropriate | Clean. |
-| food_en_040 | ok | pass | pass | pass | pass | appropriate | Clean. |
-| food_en_041 | ok | pass | pass | pass | pass | appropriate | Clean. |
-| food_en_042 | ok | pass | pass | pass | pass | appropriate | Clean. |
-| food_en_043 | ok | pass | pass | pass | pass | appropriate | Clean. |
-| food_en_044 | ok | pass | pass | pass | pass | appropriate | Clean. |
-| food_en_045 | ok | pass | pass | pass | pass | appropriate | Clean. |
-| food_en_046 | ok | pass | pass | pass | pass | appropriate | Clean. |
-| food_en_047 | ok | pass | pass | pass | pass | appropriate | Clean. |
-| food_en_048 | ok | pass | pass | pass | pass | appropriate | Clean. |
-| food_en_049 | ok | pass | pass | pass | pass | appropriate | Clean. |
-| food_en_050 | ok | pass | pass | pass | pass | appropriate | Clean. |
+| food_en_051 | ✅ ok | pass | pass | pass | pass | appropriate | Clean. Tomatoes via 16th-c. Spanish from the Americas — well-documented. |
+| food_en_052 | ✅ ok | pass | pass | pass | pass | appropriate | Clean. Maria Argyropoulina + Peter Damian's condemnation matches the historical record. |
+| food_en_053 | ✅ ok | pass | pass | pass | pass | appropriate | Clean. Napoleon III, 1869, Mège-Mouriès — all accurate. |
+| food_en_054 | ✅ ok | pass | pass | pass | pass | appropriate | Clean. Parmentier's reverse-psychology potato plot is well-attested. |
+| food_en_055 | ✅ ok | pass | pass | pass | pass | appropriate | Clean. Hokkien "kê-tsiap" → English ketchup etymology is the accepted account. |
+| food_en_056 | ✅ ok | pass | pass | pass | pass | appropriate | Clean. Partially destabilised fat globules trap air — standard food science. |
+| food_en_057 | ✅ ok | pass | pass | pass | pass | appropriate | Clean. CO2 from yeast fermentation, basic biology. |
+| food_en_058 | ✅ ok | pass | pass | pass | pass | appropriate | Clean. Bromelain is a proteolytic enzyme — correct mechanism. |
+| food_en_059 | ✅ ok | pass | pass | pass | pass | appropriate | Clean. Iron + sulphur → iron sulphide (greenish) is well-documented for both the yolk ring and greenish scrambled eggs in cast iron. |
+| food_en_060 | ✅ ok | pass | pass | pass | pass | appropriate | Clean. TRPV1 (formerly VR1) is exactly the capsaicin receptor. |
+| food_en_061 | ✅ ok | pass | pass | pass | pass | appropriate | Clean. Beta-carotene in fresh forage → yellow milk fat — confirmed. |
+| food_en_062 | ✅ ok | pass | pass | pass | pass | appropriate | Clean. Sodium suppresses bitterness signalling — the accepted explanation. |
+| food_en_063 | ✅ ok | pass | pass | pass | pass | appropriate | Clean. Ceviche is Peru's declared national dish; leche de tigre tradition accurate. |
+| food_en_064 | ✅ ok | pass | pass | pass | pass | appropriate | Clean. Greenland shark + urea + fermentation curing — all correct. |
+| food_en_065 | ✅ ok | pass | pass | pass | pass | appropriate | Clean. Quebec origin (Warwick / Drummondville etc. disputed within QC); fresh squeaky curds essential. |
+| food_en_066 | ✅ ok | pass | pass | pass | pass | appropriate | Clean. Teff (Eragrostis tef) is correct; multi-day fermentation accurate. |
+| food_en_067 | ✅ ok | pass | pass | pass | pass | appropriate | Clean. Piophila casei + EU sales restrictions — accurate. |
+| food_en_068 | ✅ ok | pass | pass | pass | pass | appropriate | Clean. Phibunsongkhram's nation-building campaign + rice-saving rationale — well-documented. |
+| food_en_069 | ✅ ok | pass | pass | pass | pass | appropriate | Clean. Beer is ~90-95% water by volume — correct. |
+| food_en_070 | ✅ ok | pass | pass | pass | pass | appropriate | Clean. 1516 Bavarian Reinheitsgebot specified water/barley/hops; yeast role added later. |
+| food_en_071 | ✅ ok | pass | pass | pass | pass | appropriate | Clean. Standard hospitality definition. |
+| food_en_072 | ✅ ok | pass | pass | pass | pass | appropriate | Clean. Méthode traditionnelle = in-bottle second fermentation; Charmat distinction correct. |
+| food_en_073 | ✅ ok | pass | pass | pass | pass | appropriate | Clean. Decaf typically retains 2-15 mg per cup — accurate. |
+| food_en_074 | ✅ ok | pass | pass | pass | pass | appropriate | Clean. Camellia sinensis is the single tea species. |
+| food_en_075 | ✅ ok | pass | pass | pass | pass | appropriate | Clean. Single = single distillery, malted barley only — exactly the SWA definition. |
+| food_en_076 | ✅ ok | pass | pass | pass | pass | appropriate | Clean. 27 CFR §5.22 — 51% corn minimum, new charred oak required. |
+| food_en_077 | ✅ ok | pass | pass | pass | pass | appropriate | Clean. Three-star = "worth a special journey" is Michelin's own wording. |
+| food_en_078 | ✅ ok | pass | pass | pass | pass | appropriate | Clean. Coperto = cover charge; servizio is a good distractor. |
+| food_en_079 | ✅ ok | pass | pass | pass | pass | appropriate | Clean. Escoffier formalised the brigade system; Carême is a clever harder distractor. |
+| food_en_080 | ✅ ok | pass | pass | pass | pass | appropriate | Clean. "Fire" = start cooking now — standard kitchen vocabulary. |
+| food_en_081 | ✅ ok | pass | pass | pass | pass | appropriate | Clean. Vanilla planifolia is a climbing orchid; Melipona bees are the native (stingless) pollinator. |
+| food_en_082 | ✅ ok | pass | pass | pass | pass | appropriate | Clean. Three stigmas per Crocus sativus flower; ~150,000 flowers per kg is the standard figure. |
+| food_en_083 | ✅ ok | pass | pass | pass | pass | appropriate | Clean. All from Piper nigrum; pink "peppercorns" (Schinus terebinthifolia) really aren't pepper. |
+| food_en_084 | ✅ ok | pass | pass | pass | pass | appropriate | Clean. Syzygium aromaticum buds; eugenol use in dentistry accurate. |
+| food_en_085 | ✅ ok | pass | pass | pass | pass | appropriate | Clean. Wild yeast + Lactobacillus = correct sourdough microbiology. |
+| food_en_086 | ✅ ok | pass | pass | pass | pass | appropriate | Clean. Decree of 13 September 1993 defines "pain de tradition française" with exactly these ingredients. |
+| food_en_087 | ✅ ok | pass | pass | pass | pass | appropriate | Clean. Steam-pocket mechanism is correct. |
+| food_en_088 | ✅ ok | pass | pass | pass | pass | appropriate | Clean. Westfälischer Pumpernickel bakes up to 24h at ~120°C; Maillard browning produces the dark colour. |
+| food_en_089 | ✅ ok | pass | pass | pass | pass | appropriate | Clean. Maya/Aztec spiced cacao drink predates solid chocolate by centuries. |
+| food_en_090 | ✅ ok | pass | pass | pass | pass | appropriate | Clean. Daniel Peter + Henri Nestlé, Switzerland 1875 — confirmed. |
+| food_en_091 | ✅ ok | pass | pass | pass | pass | appropriate | Clean. Nancy Johnson's 1843 hand-cranked freezer patent — correct date and endothermic salt-ice mechanism. |
+| food_en_092 | ✅ ok | pass | pass | pass | pass | appropriate | Clean. Althaea officinalis root mucilage; gelatine substitution in 19th c. |
+| food_en_093 | ✅ ok | pass | pass | pass | pass | appropriate | Clean. Las doce uvas de la suerte; 1909 Alicante surplus story is the accepted origin. |
+| food_en_094 | ✅ ok | pass | pass | pass | pass | appropriate | Clean. Miyeokguk birthday tradition is well-known in Korea. |
+| food_en_095 | ✅ ok | pass | pass | pass | pass | appropriate | Clean. 1974 "Kentucky for Christmas" campaign — correct year and brand. |
+| food_en_096 | ✅ ok | pass | pass | pass | pass | appropriate | Clean. P. roqueforti / P. glaucum + needle-piercing for aeration — accurate. |
+| food_en_097 | ✅ ok | pass | pass | pass | pass | appropriate | Clean. Parmigiano-Reggiano PDO requires minimum 12 months ageing. |
+| food_en_098 | ✅ ok | pass | pass | pass | pass | appropriate | Clean. Mozzarella di Bufala Campana DOP = water-buffalo milk. |
+| food_en_099 | ✅ ok | pass | pass | pass | pass | appropriate | Clean. Aspergillus oryzae was designated kokkin (national fungus) by Brewing Society of Japan in 2006. |
+| food_en_100 | ✅ ok | pass | pass | pass | pass | appropriate | Clean. Lactic-acid fermentation by Lactobacillus is correct mechanism for both. |
+| food_en_101 | ✅ ok | pass | pass | pass | pass | appropriate | Clean. SCOBY acronym is exactly as stated. |
 
 ## Detailed notes
 
-### food_en_004 (concern)
-
-- Question: Hawaiian pizza was actually invented in which country?
-- Marked correct: Canada
-- Difficulty concern: "easy" undershoots — the answer being Canada (not Hawaii or Italy) is counter-intuitive trivia, better suited to "medium".
-- Suggested fix: bump difficulty to medium. (Not auto-fixed — calibration concerns are judgment calls.)
-
-### food_en_007 (concern -> fixed)
-
-- Question: "The fortune cookie is most strongly associated with which country's cuisine in the West, but actually originated where?"
-- Clarity concern: convoluted two-clause wording with awkward "where?" coda.
-- Fix applied: rewrote to "Although associated with Chinese restaurants in the West, fortune cookies actually originated in which country?" — answers, fun_fact, difficulty unchanged.
-
-### food_en_019 (concern -> deleted)
-
-- Question: IPA brewed strong/hoppy to survive sea voyages to India.
-- Factual concern: the "invented for the India voyage" origin story is contested by modern beer historians (Martyn Cornell, Pete Brown). Hopped ales were already shipped to India; the extra hopping/ABV was incremental, not the origin. The "correct" answer is the popular story but is the kind of disputed historical claim that's hard to defend at a live game table.
-- Fix applied: deleted (per "ambiguity that can't be cleanly resolved gets the question deleted" rule).
-
-### food_en_024 (concern -> fixed)
-
-- Question: "Al dente" literally means what in Italian?
-- Marked correct: "To the tooth"
-- Distractor concern: "To the bite" is a defensible idiomatic translation — players who know Italian could legitimately pick it.
-- Fix applied: distractor "To the bite" -> "To the heart" (clearly wrong, plausible-sounding).
-
-### food_en_030 (concern)
-
-- Question: Why do chefs rest meat after cooking?
-- Marked correct: "It lets muscle fibres relax and reabsorb juices"
-- Fun-fact concern: the "juices pushed to centre, redistribute on rest" explanation is the popular version but disputed by food scientists (e.g., Kenji López-Alt argues resting mostly cools juices so they're thicker and less runny, not that they "redistribute"). Question stem is fine; fun-fact mechanism is borderline.
-- Suggested fix: optionally rephrase fun fact to "As meat cools during resting, juices thicken and stay in the meat instead of running out when sliced." (Not auto-fixed — not a clear factual error, judgment call.)
+No questions with non-pass criteria — no detailed notes needed.
 
 ## Fixes applied
 
-| ID | What changed | Re-verify verdict |
-|---|---|---|
-| food_en_007 | Rewrote question stem for clarity: "Although associated with Chinese restaurants in the West, fortune cookies actually originated in which country?" — answers/fun_fact/difficulty unchanged. | ok |
-| food_en_024 | Distractor "To the bite" -> "To the heart" to remove the defensible-second-correct issue. | ok |
+None — no fix_needed items in this batch.
 
 ## Deletions
 
-| ID | Reason for deletion |
-|---|---|
-| food_en_019 | The "IPA brewed strong/hoppy specifically to survive the India voyage" claim is widely repeated but contested by modern beer historians (Martyn Cornell, Pete Brown). Pre-existing hopped ales were already shipped to India; the origin story can't be cleanly defended at the table. Removing per the ambiguity-deletion rule. |
+None — no ambiguity-driven concerns warranting deletion.
 
 ## Re-verification
 
-2 fixed questions re-reviewed. Of those:
-- Clean now: 2
-- Still concerns: 0
-- Still fix_needed: 0
+Not required — no fixes were applied.
 
-(Deleted questions are not re-verified — they're gone.)
+---
 
-Pack count: 50 -> 49.
+**Final pack state (post-review):**
+- Total questions in pack: 100 (unchanged)
+- New IDs reviewed (food_en_051–101): 51
+- All 51 new questions verified clean across all five criteria
+- Original IDs (food_en_001–050) skipped per scope (cleaned Mai-27/28)
+- Note: food_en_019 is absent from the pack (gap in numbering, predates this review)
