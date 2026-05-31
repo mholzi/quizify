@@ -3,6 +3,20 @@
 All notable changes to Quizify are documented here. This project follows
 [Semantic Versioning](https://semver.org/).
 
+## [1.1.51] — 2026-05-31
+
+### Fixed
+
+- **Starting a new game while one is still running now applies the new
+  settings.** Picking a fresh category/language and pressing "Spiel
+  starten" while a previous game still lingered in a non-LOBBY phase was
+  silently rejected by the server's phase guard — the old game (and its
+  category/language) just kept running, so the admin's selection never
+  reached the backend (picked Geographie/DE but kept seeing the previous
+  English *mixed* game). `_handle_start_game` now resets to LOBBY first
+  (keeping connected players), mirroring the "play again" path, so the
+  fresh settings always take effect. Regression tests added.
+
 ## [1.1.50] — 2026-05-31
 
 ### Fixed

@@ -758,9 +758,17 @@ class QuizifyWebSocketHandler:
         admin's player tab joins within ~1s of the redirect; if it doesn't,
         the round just runs no-answer which evaluates harmlessly.
         """
+        # An explicit admin "Spiel starten" is a fresh-start intent. If a
+        # previous game is still lingering in a non-LOBBY phase (a solo game
+        # the admin never formally reset, or a finished FINALE), the old phase
+        # guard silently rejected this start and left the OLD game's
+        # category/language running — the new settings never applied. Markus
+        # 2026-05-31: picked Geographie/DE but kept seeing the previous English
+        # mixed game. Reset to LOBBY first (keeps connected players) so the
+        # fresh settings always take effect. Mirrors _handle_play_again.
         if game_state.phase != GamePhase.LOBBY:
-            await self._conn.send_error(ws, ERR_GAME_ALREADY_STARTED, "Game already running")
-            return
+            self._cancel_timer_tick()
+            game_state.reset_to_lobby()
 
         raw_category = data.get("category")
         difficulty = data.get("difficulty")
