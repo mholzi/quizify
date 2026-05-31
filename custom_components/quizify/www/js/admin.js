@@ -24,6 +24,14 @@
     let selectedDifficulty = 'medium';
     let selectedRounds = 10;
     let selectedLanguage = 'de';
+    // Restore the last-used language across full-page reloads. The player
+    // tab's "Neues Spiel starten" button navigates to /quizify/admin, which
+    // reloads this script — without persistence an English game silently
+    // dropped back to German on the next setup screen (Markus 2026-05-31).
+    try {
+        var _storedLang = localStorage.getItem('quizify_admin_language');
+        if (_storedLang === 'de' || _storedLang === 'en') selectedLanguage = _storedLang;
+    } catch (e) { /* localStorage unavailable (private mode / webview) */ }
     let selectedTimer = 30;  // seconds per question (20 / 30 / 45)
 
     // Game state
@@ -452,6 +460,9 @@
     });
     setupChips(els.languageChips, function (v) {
         selectedLanguage = v;
+        // Persist so a full-page reload (player-end "Neues Spiel starten"
+        // → /quizify/admin) keeps the choice instead of resetting to German.
+        try { localStorage.setItem('quizify_admin_language', v); } catch (e) { /* ignore */ }
         // Show/hide category chips based on selected language
         if (els.categoryChips) {
             var chips = els.categoryChips.querySelectorAll('.chip[data-lang]');
@@ -485,10 +496,17 @@
             updateCategorySummary();
         }
     });
-    // Init: hide English category chips on load
+    // Init: sync language-chip active state + category-chip visibility to
+    // the restored language (default German). Without this, a reloaded admin
+    // page always showed the German chip active even after restoring English.
+    if (els.languageChips) {
+        els.languageChips.querySelectorAll('.chip').forEach(function (c) {
+            c.classList.toggle('active', c.dataset.value === selectedLanguage);
+        });
+    }
     if (els.categoryChips) {
-        els.categoryChips.querySelectorAll('.chip[data-lang="en"]').forEach(function (chip) {
-            chip.style.display = 'none';
+        els.categoryChips.querySelectorAll('.chip[data-lang]').forEach(function (chip) {
+            chip.style.display = (chip.dataset.lang === selectedLanguage) ? '' : 'none';
         });
     }
     setupCollapsibles();

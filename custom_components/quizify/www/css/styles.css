@@ -552,7 +552,9 @@ body {
     align-items: center;
     justify-content: space-between;
     gap: var(--space-md);
-    margin-bottom: var(--space-lg);
+    padding: var(--space-md) var(--space-md) 0;
+    max-width: 600px;
+    margin: 0 auto var(--space-lg);
 }
 
 .admin-header .wordmark {
@@ -652,31 +654,49 @@ body {
 /* Player header */
 .player-header {
     display: flex;
-    align-items: baseline;
-    justify-content: center;
+    align-items: center;
+    justify-content: space-between;
     gap: var(--space-sm);
-    padding: var(--space-md) var(--space-md) 0;
+    padding: 14px var(--space-md);
+    border-bottom: 1px solid var(--color-border-light);
+    position: relative;
 }
 
 .player-header .wordmark {
-    font-size: 2rem;
+    font-size: 1.55rem;
     margin: 0;
 }
 
-/* Round indicator inline next to the wordmark — appears only on the
-   reveal view (showView in player-utils.js toggles the hidden attr).
-   align-items:baseline on the parent keeps it sitting on the wordmark
-   baseline so it reads as a subtitle, not a floating chip. */
+/* Round indicator — app-bar style (variant C, Markus 2026-05-31). The
+   wordmark sits left, this counter right-aligns via space-between and
+   appears only on the reveal view (showView in player-utils.js toggles
+   the hidden attr). margin-right clears the absolutely-positioned
+   connection dot in the top-right corner. */
 .player-header-round {
+    display: inline-flex;
+    align-items: center;
+    gap: 7px;
+    margin-right: var(--space-lg);
     font-family: var(--font-mono);
     font-weight: 700;
     font-size: 0.7rem;
     color: var(--color-text-muted);
-    letter-spacing: 0.12em;
+    letter-spacing: 0.06em;
     text-transform: uppercase;
     white-space: nowrap;
 }
 .player-header-round[hidden] { display: none; }
+
+/* Sage status accent before the round label. */
+.player-header-round-dot {
+    width: 6px;
+    height: 6px;
+    border-radius: 50%;
+    background: var(--color-accent-secondary);
+}
+/* Current round number in coral; muted slash separator. */
+.player-header-round-num { color: var(--color-accent-primary); }
+.player-header-round-sep { color: var(--color-border-dark); }
 
 /* Connection indicator */
 .connection-indicator {

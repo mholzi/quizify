@@ -23,9 +23,10 @@
              whether reveal-view is active. Text is populated by
              renderFinaleReveal in player-reveal.js. -->
         <span id="player-header-round" class="player-header-round" hidden aria-live="polite">
+            <span class="player-header-round-dot" aria-hidden="true"></span>
             <span data-i18n="game.roundLabel">Round</span>
-            <span id="header-round-num">1</span>
-            <span data-i18n="game.ofLabel">of</span>
+            <span class="player-header-round-num" id="header-round-num">1</span>
+            <span class="player-header-round-sep" aria-hidden="true">/</span>
             <span id="header-round-total">10</span>
         </span>
         <!-- Connection status dot — JS updates via conn-status div -->

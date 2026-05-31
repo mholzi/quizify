@@ -3,6 +3,28 @@
 All notable changes to Quizify are documented here. This project follows
 [Semantic Versioning](https://semver.org/).
 
+## [1.1.50] — 2026-05-31
+
+### Fixed
+
+- **Language no longer resets to German after a finished game.** The
+  player's "Neues Spiel starten" button reloads the admin page
+  (`/quizify/admin`), and `admin.js` hard-initialised the language to
+  German on every load — so picking English at setup was silently lost
+  on the next game. Fix: persist the chosen language in `localStorage`
+  and restore it (plus the language chip + category-chip visibility) on
+  load (`admin.js`).
+
+### Changed
+
+- **Player in-game header redesigned (app-bar layout).** The "Quizify"
+  wordmark now sits left and the round counter ("Runde 1 / 10" — sage
+  dot, coral current round) right-aligns, with a hairline below,
+  replacing the cramped inline "Quizify Runde 1 von 10" treatment
+  (`player.html`, `styles.css` `.player-header`). Verified at 390 px.
+- **Admin header centered** with a `max-width` and top padding
+  (`styles.css` `.admin-header`).
+
 ## [1.1.49] — 2026-05-31
 
 ### Added
