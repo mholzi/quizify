@@ -2040,6 +2040,69 @@
       "difficulty": "easy",
       "fun_fact": "From the Cape of Good Hope, the only landmass directly south across the Southern Ocean is Antarctica, around 4,000 km away. The latitudes between are nicknamed the 'Roaring Forties' for their fierce westerly winds.",
       "category": "Geography"
+    },
+    {
+      "id": "geo_en_104",
+      "question": "Which city lies farther west: Reno, Nevada or Los Angeles, California?",
+      "answers": [
+        {
+          "text": "Reno, Nevada",
+          "correct": true
+        },
+        {
+          "text": "Los Angeles, California",
+          "correct": false
+        },
+        {
+          "text": "They sit at the same longitude",
+          "correct": false
+        }
+      ],
+      "difficulty": "easy",
+      "fun_fact": "Reno sits at about 119.8° W while Los Angeles is near 118.2° W, so Reno is roughly 160 km farther west — California's coastline actually curves back eastward as it runs south toward Los Angeles.",
+      "category": "Geography"
+    },
+    {
+      "id": "geo_en_105",
+      "question": "If you stand in the Spanish town of Llívia, you are in Spanish territory completely surrounded by which country?",
+      "answers": [
+        {
+          "text": "France",
+          "correct": true
+        },
+        {
+          "text": "Andorra",
+          "correct": false
+        },
+        {
+          "text": "Portugal",
+          "correct": false
+        }
+      ],
+      "difficulty": "medium",
+      "fun_fact": "Llívia became a Spanish exclave by a quirk of the 1659 Treaty of the Pyrenees: the deal ceded 'villages' to France, but Llívia was legally a town, so Spain kept it — leaving it stranded a few kilometres inside France.",
+      "category": "Geography"
+    },
+    {
+      "id": "geo_en_106",
+      "question": "Which US state contains the point of the lower 48 states closest to the continent of Africa?",
+      "answers": [
+        {
+          "text": "Maine",
+          "correct": true
+        },
+        {
+          "text": "Florida",
+          "correct": false
+        },
+        {
+          "text": "South Carolina",
+          "correct": false
+        }
+      ],
+      "difficulty": "hard",
+      "fun_fact": "Quoddy Head in eastern Maine is the easternmost point of the contiguous United States, and its far-northeast position makes it the closest mainland US spot to Africa's northwest coast — nearer than anywhere in Florida, even though Florida lies much farther south.",
+      "category": "Geography"
     }
   ]
 }

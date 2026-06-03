@@ -1191,6 +1191,18 @@
       "difficulty": "medium",
       "fun_fact": "Severinsen led the NBC Orchestra on The Tonight Show from 1967 to 1992. His flamboyant suits became a running joke — Carson once said Severinsen looked like 'a Las Vegas pimp' on national TV.",
       "category": "Pop Culture"
+    },
+    {
+      "id": "pop_en_107",
+      "question": "Why was the bubble-wrap that became a global packaging staple originally invented?",
+      "answers": [
+        {"text": "It was meant to be sold as textured wallpaper", "correct": true},
+        {"text": "It was designed as insulation for spacecraft", "correct": false},
+        {"text": "It was created as a children's pool float", "correct": false}
+      ],
+      "difficulty": "medium",
+      "fun_fact": "Engineers Alfred Fielding and Marc Chavannes sealed two shower curtains together in 1957 hoping to sell trendy wallpaper. That flopped, a greenhouse-insulation pitch flopped too, and only when IBM needed to protect a new computer in shipping did the product find its calling.",
+      "category": "Pop Culture"
     }
   ]
 }

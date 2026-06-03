@@ -1191,6 +1191,18 @@
       "difficulty": "medium",
       "fun_fact": "Large-diaphragm condensers capture more high-frequency detail than dynamic mics but require external phantom power. Dynamic mics like the Shure SM58 are still preferred for live vocals because they handle loud sources without distortion.",
       "category": "Music"
+    },
+    {
+      "id": "music_en_101",
+      "question": "A guitarist plays a string, then lightly touches its exact midpoint without pressing down. What surprising thing happens to the sound?",
+      "answers": [
+        {"text": "It jumps up one octave higher", "correct": true},
+        {"text": "It drops down one octave lower", "correct": false},
+        {"text": "It stops making any sound at all", "correct": false}
+      ],
+      "difficulty": "medium",
+      "fun_fact": "This trick is called a natural harmonic. Touching the midpoint mutes the fundamental and lets only the doubled-frequency overtone ring, so the note leaps an octave even though no fret is pressed. Touching at one-third of the length yields a note an octave-and-a-fifth up.",
+      "category": "Music"
     }
   ]
 }

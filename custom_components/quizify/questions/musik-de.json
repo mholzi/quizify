@@ -1167,6 +1167,42 @@
       "difficulty": "hard",
       "fun_fact": "Wagner ließ in Bayreuth ein eigenes Festspielhaus mit verstecktem Orchestergraben bauen. Die Eröffnung 1876 mit dem kompletten „Ring\"-Zyklus war ein finanzielles Desaster — bis Ludwig II. die Schulden übernahm.",
       "category": "Musik"
+    },
+    {
+      "id": "musik_de_103",
+      "question": "Was hört man bei einem klassischen Orchester ganz am Anfang, kurz bevor das eigentliche Stück beginnt?",
+      "answers": [
+        {"text": "Alle stimmen gemeinsam auf denselben Ton ein", "correct": true},
+        {"text": "Der Dirigent zählt das Tempo laut vor", "correct": false},
+        {"text": "Die Bläser spielen eine kurze Begrüßungsfanfare", "correct": false}
+      ],
+      "difficulty": "easy",
+      "fun_fact": "Den Anfangston gibt traditionell die Oboe vor — nicht etwa der Konzertmeister. Die Oboe gilt als besonders stimmstabil, deshalb richten sich alle anderen Instrumente nach ihr.",
+      "category": "Musik"
+    },
+    {
+      "id": "musik_de_104",
+      "question": "Was passiert mit dem Tonsignal einer Schallplatte, das physikalisch in der Rille steckt, wenn man sie rückwärts abspielt?",
+      "answers": [
+        {"text": "Man hört die Musik tatsächlich rückwärts abgespielt", "correct": true},
+        {"text": "Die Nadel springt sofort aus der Rille heraus", "correct": false},
+        {"text": "Es entsteht nur ein gleichmäßiges Rauschen ohne Töne", "correct": false}
+      ],
+      "difficulty": "medium",
+      "fun_fact": "Die Rille speichert die reine Schwingungsform — die Nadel kann sie in beide Richtungen abtasten. Genau das nutzten Bands für versteckte Rückwärts-Botschaften, das sogenannte Backmasking. Eine CD dagegen liest nur in fester Richtung.",
+      "category": "Musik"
+    },
+    {
+      "id": "musik_de_105",
+      "question": "Warum klingt ein und dasselbe Lied am Telefon dünner als über gute Lautsprecher, obwohl die Melodie identisch ist?",
+      "answers": [
+        {"text": "Die tiefen und sehr hohen Frequenzen werden vom Telefon weggeschnitten", "correct": true},
+        {"text": "Das Telefon spielt die Melodie automatisch eine Oktave höher", "correct": false},
+        {"text": "Die einzelnen Töne werden in zufälliger Reihenfolge übertragen", "correct": false}
+      ],
+      "difficulty": "hard",
+      "fun_fact": "Klassische Telefonie überträgt nur etwa 300 bis 3400 Hz. Genau in diesem schmalen Band liegt aber die Grundfrequenz der menschlichen Stimme — deshalb versteht man Sprache problemlos, während Musik ihren Körper verliert.",
+      "category": "Musik"
     }
   ]
 }

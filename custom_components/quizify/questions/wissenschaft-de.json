@@ -1998,6 +1998,111 @@
       "difficulty": "medium",
       "fun_fact": "Voyager 1 trat 2012 in den interstellaren Raum ein — den Bereich jenseits der Heliopause, wo der Sonnenwind aufhört. Gestartet 1977, sendet sie immer noch Daten zurück; das Signal braucht inzwischen über 22 Stunden zur Erde.",
       "category": "Wissenschaft"
+    },
+    {
+      "id": "wissenschaft_de_103",
+      "question": "Was hat bei gleichem Volumen die geringere Dichte: trockene oder feuchte Luft?",
+      "answers": [
+        {
+          "text": "Feuchte Luft",
+          "correct": true
+        },
+        {
+          "text": "Trockene Luft",
+          "correct": false
+        },
+        {
+          "text": "Beide sind exakt gleich dicht",
+          "correct": false
+        }
+      ],
+      "difficulty": "easy",
+      "fun_fact": "Klingt verkehrt, ist aber so: Wasserdampf-Moleküle sind leichter als die Stickstoff- und Sauerstoffmoleküle, die sie verdrängen. Feuchte Luft ist deshalb weniger dicht als trockene — deshalb erzielen Flugzeuge an schwülen, heißen Tagen weniger Auftrieb und brauchen längere Startbahnen.",
+      "category": "Wissenschaft"
+    },
+    {
+      "id": "wissenschaft_de_104",
+      "question": "Wohin verschwindet das Fett, wenn ein Mensch abnimmt?",
+      "answers": [
+        {
+          "text": "Es wird zum Großteil ausgeatmet",
+          "correct": true
+        },
+        {
+          "text": "Es wird in Muskeln umgewandelt",
+          "correct": false
+        },
+        {
+          "text": "Es wird über den Schweiß ausgeschieden",
+          "correct": false
+        }
+      ],
+      "difficulty": "medium",
+      "fun_fact": "Eine Studie von 2014 rechnete es durch: Verbranntes Fett verlässt den Körper zu rund 84 % als ausgeatmetes CO2, der Rest als Wasser. Du atmest dein Übergewicht buchstäblich aus.",
+      "category": "Wissenschaft"
+    },
+    {
+      "id": "wissenschaft_de_105",
+      "question": "Was passiert mit reinem Sauerstoff bei sehr tiefen Temperaturen?",
+      "answers": [
+        {
+          "text": "Er wird flüssig und ist magnetisch",
+          "correct": true
+        },
+        {
+          "text": "Er wird zu einem brennbaren Pulver",
+          "correct": false
+        },
+        {
+          "text": "Er verliert seine Reaktionsfähigkeit dauerhaft",
+          "correct": false
+        }
+      ],
+      "difficulty": "hard",
+      "fun_fact": "Unter -183 °C wird Sauerstoff zu einer blassblauen Flüssigkeit — und die haftet an einem Magneten, weil das O2-Molekül zwei ungepaarte Elektronen hat. Gießt man flüssigen Sauerstoff zwischen Magnetpole, bleibt er in der Luft hängen.",
+      "category": "Wissenschaft"
+    },
+    {
+      "id": "wissenschaft_de_106",
+      "question": "Wie groß ist der Abstand zwischen Erde und Mond ungefähr, gemessen an den anderen Planeten?",
+      "answers": [
+        {
+          "text": "Alle anderen Planeten des Sonnensystems passen nebeneinander hinein",
+          "correct": true
+        },
+        {
+          "text": "Nur etwa drei Erddurchmesser",
+          "correct": false
+        },
+        {
+          "text": "Über tausend Erddurchmesser",
+          "correct": false
+        }
+      ],
+      "difficulty": "medium",
+      "fun_fact": "Der mittlere Abstand Erde–Mond beträgt rund 384.000 km. Legt man die Durchmesser von Merkur, Venus, Mars, Jupiter, Saturn, Uranus und Neptun aneinander, kommt man auf etwa 380.000 km — sie passen alle in die Lücke.",
+      "category": "Wissenschaft"
+    },
+    {
+      "id": "wissenschaft_de_107",
+      "question": "Können Bäume miteinander kommunizieren und sich gegenseitig versorgen?",
+      "answers": [
+        {
+          "text": "Ja, über Pilznetzwerke im Boden",
+          "correct": true
+        },
+        {
+          "text": "Nein, Pflanzen agieren völlig isoliert",
+          "correct": false
+        },
+        {
+          "text": "Nur wenn sich ihre Äste direkt berühren",
+          "correct": false
+        }
+      ],
+      "difficulty": "easy",
+      "fun_fact": "Über unterirdische Pilzfäden (Mykorrhiza) tauschen Bäume Zucker, Nährstoffe und sogar Warnsignale aus — Forscher nennen es scherzhaft das Wood Wide Web. Mutterbäume können gezielt ihren eigenen Nachwuchs mit Kohlenstoff versorgen.",
+      "category": "Wissenschaft"
     }
   ]
 }

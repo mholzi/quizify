@@ -1191,6 +1191,18 @@
       "difficulty": "easy",
       "fun_fact": "GIF entwickelte CompuServe 1987 — es war eines der ersten Formate, das Animationen im Web ermöglichte. Die Aussprache ist bis heute umstritten: GIF-Erfinder Steve Wilhite besteht auf 'Dschiff', während die meisten Nutzer 'Giff' sagen.",
       "category": "Technik"
+    },
+    {
+      "id": "technik_de_103",
+      "question": "Was steckt überraschenderweise in einer Tonne alter Smartphones im Vergleich zu einer Tonne Golderz aus einer Mine?",
+      "answers": [
+        {"text": "Deutlich mehr Gold — die Handy-Platinen sind goldhaltiger als das meiste Erz", "correct": true},
+        {"text": "Exakt gleich viel Gold, daher lohnt sich Recycling kaum", "correct": false},
+        {"text": "Praktisch kein Gold, Platinen enthalten nur Kupfer", "correct": false}
+      ],
+      "difficulty": "medium",
+      "fun_fact": "Eine Tonne Smartphones enthält ein Vielfaches an Gold wie typisches Golderz, das oft nur wenige Gramm pro Tonne liefert — Fachleute nennen das 'Urban Mining'. Das Gold sitzt als hauchdünne Schicht auf Kontakten und Steckverbindern, weil es nicht korrodiert.",
+      "category": "Technik"
     }
   ]
 }

@@ -1191,6 +1191,18 @@
       "difficulty": "easy",
       "fun_fact": "Phelps gewann von 2004 bis 2016 in vier Olympiaden. Seine 23 Goldmedaillen sind mehr als die meisten ganzen Nationen je gewonnen haben — Indien etwa hat in seiner gesamten Olympia-Geschichte nur rund zehn Goldmedaillen.",
       "category": "Sport"
+    },
+    {
+      "id": "sport_de_103",
+      "question": "Warum spreizen Skispringer ihre Ski seit den 1990ern in eine V-Form, obwohl das mehr Luftwiderstand erzeugt?",
+      "answers": [
+        {"text": "Die V-Stellung vergrößert die tragende Fläche und erzeugt mehr Auftrieb, was die Weite trotz höheren Widerstands steigert", "correct": true},
+        {"text": "Die V-Stellung verringert den Luftwiderstand am Vorderkörper und macht den Springer dadurch spürbar schneller", "correct": false},
+        {"text": "Die V-Stellung ist reine Vorschrift der Punktrichter und bringt aerodynamisch keinerlei Vorteil", "correct": false}
+      ],
+      "difficulty": "hard",
+      "fun_fact": "Der Schwede Jan Boklöv entwickelte den V-Stil um 1985 eher zufällig und wurde von den Punktrichtern zunächst für die 'unästhetische' Haltung abgestraft. Erst als seine Weiten konkurrenzlos wurden, setzte sich die Technik flächendeckend durch und verdrängte den jahrzehntelang üblichen Parallelstil komplett.",
+      "category": "Sport"
     }
   ]
 }

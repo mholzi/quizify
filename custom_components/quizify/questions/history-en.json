@@ -1191,6 +1191,18 @@
       "difficulty": "hard",
       "fun_fact": "Herodotus reports the practice: any decision approved both drunk and sober was considered tested from both sides. Modern behavioural science has occasionally praised the underlying logic.",
       "category": "History"
+    },
+    {
+      "id": "history_en_104",
+      "question": "Which everyday invention is actually older than the telephone?",
+      "answers": [
+        {"text": "The fax machine", "correct": true},
+        {"text": "The television", "correct": false},
+        {"text": "The light bulb", "correct": false}
+      ],
+      "difficulty": "easy",
+      "fun_fact": "Alexander Bain patented a fax-like device in 1843, decades before Bell's 1876 telephone. It scanned a message with a pendulum and reproduced it as marks at the other end.",
+      "category": "History"
     }
   ]
 }

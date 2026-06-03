@@ -1191,6 +1191,18 @@
       "difficulty": "medium",
       "fun_fact": "Die Yeezy-Linie startete 2015 und brachte Adidas zeitweise über zwei Milliarden Dollar Umsatz pro Jahr. Nach kontroversen Aussagen Wests beendete Adidas 2022 die Partnerschaft.",
       "category": "Popkultur"
+    },
+    {
+      "id": "pop_107",
+      "question": "Der markante Schrei eines fallenden Soldaten in 'Star Wars' ist derselbe Tonschnipsel wie in Hunderten anderer Filme. Was ist über diesen sogenannten 'Wilhelm-Schrei' wahr?",
+      "answers": [
+        {"text": "Es ist eine einzige Aufnahme von 1951, die seither immer wieder neu eingesetzt wird", "correct": true},
+        {"text": "Es ist ein Computereffekt, der für jeden Film neu generiert wird", "correct": false},
+        {"text": "Es ist eine Aufnahme von Schauspieler Harrison Ford aus den 1970ern", "correct": false}
+      ],
+      "difficulty": "hard",
+      "fun_fact": "Der Schrei wurde 1951 für den Western 'Distant Drums' aufgenommen und erhielt seinen Namen erst später nach der Figur Private Wilhelm aus einem Film von 1953. Sounddesigner Ben Burtt grub die Aufnahme für 'Star Wars' aus und machte sie zum Insider-Gag der Branche.",
+      "category": "Popkultur"
     }
   ]
 }

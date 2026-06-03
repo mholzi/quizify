@@ -1179,6 +1179,30 @@
       "difficulty": "hard",
       "fun_fact": "Der nordamerikanische Waldfrosch (Rana sylvatica) überlebt das vollständige Einfrieren — bis zu 65 % seines Körperwassers werden zu Eis. Glukose wirkt als Frostschutz in den Zellen; Herzschlag und Atmung setzen monatelang komplett aus.",
       "category": "Tiere & Natur"
+    },
+    {
+      "id": "nat_109",
+      "question": "Zu welcher Pflanzengruppe gehört die Erdnuss botanisch?",
+      "answers": [
+        {"text": "Hülsenfrüchte (wie Erbsen und Bohnen)", "correct": true},
+        {"text": "Nüsse (wie Walnuss und Haselnuss)", "correct": false},
+        {"text": "Steinfrüchte (wie Kirsche und Pflaume)", "correct": false}
+      ],
+      "difficulty": "easy",
+      "fun_fact": "Trotz ihres Namens ist die Erdnuss keine Nuss, sondern eine Hülsenfrucht — eng verwandt mit Erbsen und Linsen. Ihre Blüten bohren sich nach der Bestäubung in den Boden, wo die Früchte unterirdisch reifen.",
+      "category": "Tiere & Natur"
+    },
+    {
+      "id": "nat_110",
+      "question": "Bei welchem Tier trägt und gebiert ausschließlich das Männchen den Nachwuchs?",
+      "answers": [
+        {"text": "Seepferdchen", "correct": true},
+        {"text": "Tintenfisch", "correct": false},
+        {"text": "Frosch", "correct": false}
+      ],
+      "difficulty": "medium",
+      "fun_fact": "Beim Seepferdchen legt das Weibchen die Eier in eine Bruttasche am Bauch des Männchens. Das Männchen befruchtet sie dort, versorgt sie über Wochen mit Nährstoffen und presst am Ende bis zu 1.000 fertige Jungtiere heraus — eine echte männliche Schwangerschaft.",
+      "category": "Tiere & Natur"
     }
   ]
 }

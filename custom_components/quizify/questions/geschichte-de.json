@@ -1623,6 +1623,18 @@
       "difficulty": "medium",
       "fun_fact": "Heuwer ließ ihre Sauce 'Chillup' 1959 patentieren — nicht die Wurst. An ihrer Imbissbude in Charlottenburg verkaufte sie pro Woche bis zu 10.000 Currywürste, eine Markterfindung der Nachkriegszeit.",
       "category": "Geschichte"
+    },
+    {
+      "id": "geschichte_de_103",
+      "question": "Was traf zu, als die Azteken um 1325 Tenochtitlán gründeten?",
+      "answers": [
+        {"text": "In Oxford wurde da bereits seit über 200 Jahren unterrichtet", "correct": true},
+        {"text": "In Oxford begann der Lehrbetrieb erst Jahrzehnte später", "correct": false},
+        {"text": "Oxford und Tenochtitlán entstanden im selben Jahr", "correct": false}
+      ],
+      "difficulty": "medium",
+      "fun_fact": "Lehre in Oxford ist schon ab etwa 1096 belegt, fest etabliert ab 1167 — die Universität war also rund zwei Jahrhunderte alt, bevor die Azteken ihre Hauptstadt überhaupt gründeten. Solche Chronologie-Überschneidungen wirken oft falsch, weil 'Antike' und 'Neue Welt' im Kopf zeitlich getrennt liegen.",
+      "category": "Geschichte"
     }
   ]
 }
