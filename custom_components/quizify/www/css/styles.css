@@ -436,11 +436,14 @@ a:focus-visible,
 }
 
 html {
-    /* Root rem size. Was 16px; bumped to 19.2 (16 × 1.2) so every
-     * rem-based font-size in the app scales up 20 % at once. Things
-     * sized in absolute px (icons, borders, the few --font-size-* tokens)
-     * stay put, which is the intent — only typographic content grows. */
-    font-size: 19.2px;
+    /* Root rem size. The 19.2px (16 × 1.2) experiment from 2026-05-29
+     * stacked on top of several per-element +20 % bumps and made
+     * typographic content read as oversized on phones (Markus' live
+     * test 2026-06-04, game + reveal screenshots). Reverted to the 16px
+     * baseline — every rem-based font-size shrinks back ~17 % at once,
+     * while per-element intent (e.g. the load-bearing "Richtige Antwort"
+     * surface) is preserved via its own rem bump. */
+    font-size: 16px;
     -webkit-text-size-adjust: 100%;
 }
 
@@ -5739,6 +5742,10 @@ body.is-admin .pl-result-hero--big .pl-result-big-points { font-size: 84px; }
   /* +20 % matching .pl-result-sub bump; bumped from 1.1 rem. */
   font-size: 1.32rem;
   letter-spacing: -0.005em;
+  /* Break the answer onto its own line under the "Richtige Antwort:" label
+     instead of flowing inline (Markus' live test 2026-06-04). */
+  display: block;
+  margin-top: 2px;
 }
 .pl-result-hero--wrong .pl-result-zero,
 .pl-result-hero--missed .pl-result-zero {
