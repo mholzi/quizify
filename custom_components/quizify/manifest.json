@@ -12,5 +12,5 @@
   "description": "Multiplayer trivia quiz game for Home Assistant. Players join via QR code; the TV is the host screen.",
   "iot_class": "local_push",
   "issue_tracker": "https://github.com/mholzi/quizify/issues",
-  "version": "1.1.51"
+  "version": "1.1.52"
 }

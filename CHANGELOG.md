@@ -3,6 +3,20 @@
 All notable changes to Quizify are documented here. This project follows
 [Semantic Versioning](https://semver.org/).
 
+## [1.1.52] — 2026-06-04
+
+### Changed
+
+- **All 18 question packs topped back up to a clean 100 questions each
+  (1800 total).** Several packs had drifted below 100 (leftovers from the
+  earlier quiz-pack-review deletions: geography 97, musik-de 97,
+  wissenschaft-de 95, tiere-natur 98, plus seven packs at 99). Refilled the
+  20 missing questions via quiz-pack-generate (extend mode), each in the
+  pack's language and "unnützes Wissen" style, then ran quiz-pack-review
+  over the new questions: two factually-flawed geography items were
+  replaced and four review concerns tightened. No gameplay or schema
+  changes — content only.
+
 ## [1.1.51] — 2026-05-31
 
 ### Fixed
