@@ -3,6 +3,17 @@
 All notable changes to Quizify are documented here. This project follows
 [Semantic Versioning](https://semver.org/).
 
+## [1.1.61] — 2026-06-07
+
+### Fixed
+
+- **Player finale redesign (v1.1.57) now actually ships.** The player page
+  loads the pre-built `player.bundle.js`, but the bundle was not rebuilt after
+  `player-end.js` was edited, so the Trophy Tiles superlatives, Vertical
+  Timeline highlights, and Ranked Bars leaderboard never reached the player
+  screen. Rebuilt the bundle via `scripts/build_bundle.py`. (Admin pages load
+  `admin.js` directly and were unaffected.)
+
 ## [1.1.60] — 2026-06-07
 
 ### Fixed
