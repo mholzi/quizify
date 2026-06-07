@@ -3,6 +3,12 @@
 All notable changes to Quizify are documented here. This project follows
 [Semantic Versioning](https://semver.org/).
 
+## [1.1.56] — 2026-06-07
+
+### Changed
+
+- **Player screen is always light mode.** Previously the player screen followed the device OS dark/light setting; now it is pinned to light (`data-theme="light"`) like the admin and dashboard screens.
+
 ## [1.1.55] — 2026-06-07
 
 ### Changed
