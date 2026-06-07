@@ -2149,39 +2149,88 @@ button, .btn {
     margin-bottom: var(--space-sm);
 }
 
+/* Leaderboard — Ranked Bars (Soft Parlor, approved 2026-06-07).
+   Each row carries a faint sage bar scaled to the player's score so
+   the gaps read at a glance. Top-3 ranks get a medal-tinted dot; the
+   current player's row gets a coral left border. */
 .final-entry {
     display: flex;
     align-items: center;
-    gap: var(--space-md);
-    padding: var(--space-sm) 0;
-    border-bottom: 1px solid var(--color-border-neon);
+    gap: var(--space-sm);
+    padding: 5px 0;
 }
 
 .final-rank {
-    width: 28px;
-    text-align: center;
-    font-weight: var(--font-weight-bold);
-    font-size: 0.85rem;
+    width: 18px;
+    text-align: right;
+    font-family: var(--font-mono);
+    font-weight: 700;
+    font-size: 0.8rem;
     color: var(--color-text-neon-muted);
     flex-shrink: 0;
 }
 
-.final-name {
+.final-track {
+    position: relative;
     flex: 1;
+    min-width: 0;
+    height: 30px;
+    background: var(--color-bg-white, #FFFFFF);
+    border: 1px solid var(--color-border-neon, #E5DFCF);
+    border-radius: var(--radius-md, 8px);
+    overflow: hidden;
+    display: flex;
+    align-items: center;
+}
+
+.final-fill {
+    position: absolute;
+    left: 0;
+    top: 0;
+    bottom: 0;
+    background: rgba(127, 168, 151, 0.20);
+    border-radius: var(--radius-md, 8px) 0 0 var(--radius-md, 8px);
+    transition: width 0.6s ease;
+}
+
+.final-name {
+    position: relative;
+    z-index: 1;
+    flex: 1;
+    min-width: 0;
+    display: flex;
+    align-items: center;
+    gap: 6px;
+    padding-left: 10px;
     font-weight: var(--font-weight-medium);
     color: var(--color-text-white);
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
 }
+
+.lb-mdot {
+    width: 9px;
+    height: 9px;
+    border-radius: 50%;
+    flex-shrink: 0;
+}
+.lb-mdot--gold   { background: #E8C47F; }
+.lb-mdot--silver { background: #AAB6C2; }
+.lb-mdot--bronze { background: #CD8C64; }
 
 .final-score {
+    width: 48px;
+    text-align: right;
+    font-family: var(--font-mono);
     font-weight: var(--font-weight-bold);
     font-variant-numeric: tabular-nums;
-    color: var(--color-accent-secondary);
+    color: var(--color-text-white);
+    flex-shrink: 0;
 }
 
-.final-entry.is-current {
-    background: rgba(255, 255, 255, 0.05);
-    border-radius: var(--radius-md);
-    padding: var(--space-sm) var(--space-md);
+.final-entry.is-current .final-track {
+    border-left: 3px solid var(--color-accent-primary, #E88A7F);
 }
 
 /* ==========================================
@@ -2821,51 +2870,81 @@ footer {
 }
 
 /* Superlatives */
+/* Superlatives — Trophy Tiles (Soft Parlor, approved 2026-06-07).
+   2-col grid of square cream cards, each award glyph in a rotating
+   colored disc (coral/sage/sky/sun). */
 .superlatives-container {
     width: 100%;
+    margin-top: var(--space-lg);
+}
+
+.superlatives-header {
+    font-family: var(--font-display);
+    font-weight: 800;
+    font-size: 0.95rem;
+    letter-spacing: -0.01em;
+    color: var(--color-text-white);
+    margin-bottom: var(--space-sm);
+}
+
+.superlatives-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: var(--space-sm);
 }
 
 .superlative-card {
     display: flex;
+    flex-direction: column;
     align-items: center;
-    gap: var(--space-md);
-    padding: var(--space-sm) var(--space-md);
-    background: var(--color-dark-surface);
-    border: 1px solid var(--color-border-neon);
+    text-align: center;
+    gap: 2px;
+    padding: var(--space-md) var(--space-sm);
+    background: var(--color-bg-white, #FFFFFF);
     border-radius: var(--radius-md);
-    margin-bottom: var(--space-sm);
-    transition: background var(--transition-fast);
+    box-shadow: var(--shadow-sm);
+    animation: superlative-entrance 0.4s ease-out both;
 }
 
-.superlative-card:hover {
-    background: rgba(255, 255, 255, 0.06);
+.superlative-disc {
+    width: 38px;
+    height: 38px;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 1.15rem;
+    margin-bottom: var(--space-xs);
 }
-
-.superlative-emoji {
-    font-size: 1.5rem;
-    flex-shrink: 0;
-}
+.sup-disc--coral { background: rgba(232, 138, 127, 0.18); }
+.sup-disc--sage  { background: rgba(127, 168, 151, 0.18); }
+.sup-disc--sky   { background: rgba(127, 168, 196, 0.18); }
+.sup-disc--sun   { background: rgba(232, 196, 127, 0.22); }
 
 .superlative-title {
-    font-size: 0.7rem;
-    font-weight: 600;
-    text-transform: uppercase;
-    letter-spacing: 0.06em;
-    color: var(--color-text-neon-muted);
+    font-family: var(--font-display);
+    font-size: 0.8rem;
+    font-weight: 700;
+    color: var(--color-text-white);
+    line-height: 1.2;
 }
 
 .superlative-player {
-    font-size: 0.95rem;
-    font-weight: 700;
+    font-size: 0.8rem;
     color: var(--color-text-white);
 }
 
 .superlative-value {
-    margin-left: auto;
-    font-size: 0.85rem;
-    font-weight: 600;
-    color: var(--color-accent-secondary);
-    flex-shrink: 0;
+    font-family: var(--font-mono);
+    font-size: 0.65rem;
+    color: var(--color-text-neon-muted);
+    letter-spacing: 0.02em;
+    margin-top: 2px;
+}
+
+@keyframes superlative-entrance {
+    from { opacity: 0; transform: translateY(8px) scale(0.96); }
+    to   { opacity: 1; transform: translateY(0) scale(1); }
 }
 
 /* Highlights header */
@@ -5473,42 +5552,63 @@ body.theme-dark .version-badge {
 }
 
 /* ── Highlights section on finale ── */
+/* Highlights — Vertical Timeline (Soft Parlor, approved 2026-06-07).
+   Sage hairline spine with a rotating-color dot per moment, cards
+   branch to the right. Reads top-to-bottom as the story of the game. */
 .highlights-container {
   margin-top: var(--space-md, 12px);
 }
 
 .highlights-list {
-  display: flex;
-  flex-direction: column;
-  gap: var(--space-sm, 8px);
+  position: relative;
+  padding-left: 22px;
 }
 
-.highlight-card {
-  display: flex;
-  align-items: center;
-  gap: var(--space-md, 12px);
-  padding: var(--space-sm, 8px) var(--space-md, 12px);
-  background: var(--color-surface, #F3EEDF);
-  border-radius: var(--radius-md, 8px);
-  border-left: 3px solid #E88A7F;
+.highlights-list::before {
+  content: '';
+  position: absolute;
+  left: 6px;
+  top: 6px;
+  bottom: 6px;
+  width: 2px;
+  background: var(--color-accent-secondary, #7FA897);
+  opacity: 0.45;
+}
+
+.highlight-item {
+  position: relative;
+  margin-bottom: var(--space-sm, 8px);
   animation: highlight-entrance 0.4s ease-out both;
 }
 
-.highlight-icon {
-  font-size: 1.5rem;
-  flex-shrink: 0;
+.highlight-dot {
+  position: absolute;
+  left: -22px;
+  top: 5px;
+  width: 12px;
+  height: 12px;
+  border-radius: 50%;
+  border: 2px solid var(--color-bg-primary, #FAF6EC);
 }
+.hl-dot--coral { background: #E88A7F; }
+.hl-dot--sage  { background: #7FA897; }
+.hl-dot--sky   { background: #7FA8C4; }
+.hl-dot--sun   { background: #E8C47F; }
 
-.highlight-body {
-  flex: 1;
-  min-width: 0;
+.highlight-card {
+  background: var(--color-bg-white, #FFFFFF);
+  border: 1px solid var(--color-border-neon, #E5DFCF);
+  border-radius: var(--radius-md, 8px);
+  box-shadow: var(--shadow-sm);
+  padding: var(--space-sm, 8px) var(--space-md, 12px);
 }
 
 .highlight-label {
-  font-size: 0.7rem;
+  font-family: var(--font-mono);
+  font-size: 0.65rem;
   text-transform: uppercase;
   letter-spacing: 0.06em;
-  color: #a4a4b8;
+  color: var(--color-text-neon-muted, #6E6A5C);
   font-weight: 600;
 }
 
@@ -5519,9 +5619,10 @@ body.theme-dark .version-badge {
 }
 
 .highlight-value {
-  font-size: 0.8rem;
-  color: #E88A7F;
-  font-weight: 600;
+  font-family: var(--font-mono);
+  font-size: 0.75rem;
+  color: var(--color-text-neon-muted, #6E6A5C);
+  font-weight: 500;
 }
 
 @keyframes highlight-entrance {

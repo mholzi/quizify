@@ -3,6 +3,21 @@
 All notable changes to Quizify are documented here. This project follows
 [Semantic Versioning](https://semver.org/).
 
+## [1.1.57] — 2026-06-07
+
+### Changed
+
+- **Finale screen redesign — three sections reworked via design-shotgun.**
+  - **Superlatives → Trophy Tiles:** awards now render as a 2-column grid
+    of cream cards, each glyph in a rotating colored disc (coral/sage/sky/sun).
+  - **Highlights → Vertical Timeline:** highlights now read top-to-bottom as
+    a sage-spine timeline with rotating-color dots, each moment a card
+    branching right.
+  - **Leaderboard → Ranked Bars:** each final-standings row now carries a
+    faint sage bar scaled to the player's score so gaps read at a glance,
+    with medal-tinted dots on the top 3 and a coral left border on your own
+    row. Added `leaderboard.awardsHeader` i18n key (DE/EN).
+
 ## [1.1.56] — 2026-06-07
 
 ### Changed

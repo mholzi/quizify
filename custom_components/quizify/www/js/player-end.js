@@ -166,15 +166,31 @@
         var listEl = document.getElementById('final-leaderboard-list');
         if (!listEl) return;
 
+        // Ranked Bars: each row carries a faint sage bar scaled to the
+        // player's score, so the gaps between players read at a glance.
+        // Top-3 ranks get a medal-tinted dot; the current player's row gets
+        // a coral left border.
+        var maxScore = leaderboard.reduce(function (m, e) {
+            return Math.max(m, e.score || 0);
+        }, 0) || 1;
+        var MEDAL_DOTS = { 1: 'lb-mdot--gold', 2: 'lb-mdot--silver', 3: 'lb-mdot--bronze' };
+
         listEl.innerHTML = leaderboard.map(function (entry) {
             var currentClass = entry.is_current ? 'is-current' : '';
             var disconnectedClass = entry.connected === false ? 'final-entry--disconnected' : '';
             var awayBadge = entry.connected === false
                 ? '<span class="away-badge">(' + pu.escapeHtml(_t('lobby.away') !== 'lobby.away' ? _t('lobby.away') : 'away') + ')</span>'
                 : '';
+            var pct = Math.max(8, Math.round(((entry.score || 0) / maxScore) * 100));
+            var medalDot = MEDAL_DOTS[entry.rank]
+                ? '<span class="lb-mdot ' + MEDAL_DOTS[entry.rank] + '"></span>'
+                : '';
             return '<div class="final-entry ' + currentClass + ' ' + disconnectedClass + '">' +
-                '<span class="final-rank">#' + entry.rank + '</span>' +
-                '<span class="final-name">' + pu.escapeHtml(entry.name) + awayBadge + '</span>' +
+                '<span class="final-rank">' + entry.rank + '</span>' +
+                '<div class="final-track">' +
+                    '<div class="final-fill" style="width:' + pct + '%"></div>' +
+                    '<span class="final-name">' + medalDot + pu.escapeHtml(entry.name) + awayBadge + '</span>' +
+                '</div>' +
                 '<span class="final-score">' + entry.score + '</span>' +
             '</div>';
         }).join('');
@@ -197,7 +213,10 @@
             return;
         }
 
-        var html = '';
+        // Trophy Tiles: 2-col grid of square cards, each with the award glyph
+        // in a rotating colored disc (coral/sage/sky/sun across the palette).
+        var DISC_TINTS = ['sup-disc--coral', 'sup-disc--sage', 'sup-disc--sky', 'sup-disc--sun'];
+        var cards = '';
         superlatives.forEach(function (award, index) {
             // Server format: {award, icon, winner, detail, award_key, detail_key, detail_params}
             // Legacy format: {title, emoji, player_name, value}
@@ -214,15 +233,20 @@
             var detail = detailKey ? _t(detailKey, detailParams) : (award.detail || award.value || '');
             if (detailKey && detail === detailKey) detail = award.detail || award.value || '';
 
-            html += '<div class="superlative-card" style="animation-delay: ' + (index * 0.2) + 's">' +
-                '<div class="superlative-emoji">' + emoji + '</div>' +
+            var tint = DISC_TINTS[index % DISC_TINTS.length];
+            cards += '<div class="superlative-card" style="animation-delay: ' + (index * 0.2) + 's">' +
+                '<div class="superlative-disc ' + tint + '">' + emoji + '</div>' +
                 '<div class="superlative-title">' + pu.escapeHtml(title) + '</div>' +
                 '<div class="superlative-player">' + pu.escapeHtml(player) + '</div>' +
                 '<div class="superlative-value">' + pu.escapeHtml(String(detail)) + '</div>' +
             '</div>';
         });
 
-        container.innerHTML = html;
+        container.innerHTML =
+            '<div class="superlatives-header" data-i18n="leaderboard.awardsHeader">' +
+                pu.escapeHtml(_t('leaderboard.awardsHeader') !== 'leaderboard.awardsHeader' ? _t('leaderboard.awardsHeader') : 'Auszeichnungen') +
+            '</div>' +
+            '<div class="superlatives-grid">' + cards + '</div>';
         container.classList.remove('hidden');
     }
 
@@ -274,10 +298,15 @@
 
         if (highlights.length === 0) { container.classList.add('hidden'); return; }
 
+        // Vertical Timeline: a sage spine with a rotating-color dot per moment,
+        // each card branching to the right. Reads top-to-bottom as the story
+        // of the game.
+        var DOT_TINTS = ['hl-dot--coral', 'hl-dot--sage', 'hl-dot--sky', 'hl-dot--sun'];
         listEl.innerHTML = highlights.map(function(h, i) {
-            return '<div class="highlight-card" style="animation-delay:' + (i * 0.15) + 's">' +
-                '<span class="highlight-icon">' + h.icon + '</span>' +
-                '<div class="highlight-body">' +
+            var tint = DOT_TINTS[i % DOT_TINTS.length];
+            return '<div class="highlight-item" style="animation-delay:' + (i * 0.15) + 's">' +
+                '<span class="highlight-dot ' + tint + '"></span>' +
+                '<div class="highlight-card">' +
                     '<div class="highlight-label">' + pu.escapeHtml(h.label) + '</div>' +
                     '<div class="highlight-player">' + pu.escapeHtml(h.player) + '</div>' +
                     '<div class="highlight-value">' + pu.escapeHtml(h.value) + '</div>' +
