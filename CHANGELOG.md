@@ -3,6 +3,16 @@
 All notable changes to Quizify are documented here. This project follows
 [Semantic Versioning](https://semver.org/).
 
+## [1.1.55] — 2026-06-07
+
+### Changed
+
+- **Question count shown when you select topics manually.** Picking one pack
+  now shows its question count below the grid (e.g. "100 Fragen"); picking
+  multiple packs shows the combined total (e.g. "3 Packs · 297 Fragen").
+  Selecting Gemischt hides the tally. Driven by the `data-count` attributes
+  already on each pack card — no server round-trip needed.
+
 ## [1.1.54] — 2026-06-07
 
 ### Changed

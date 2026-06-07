@@ -304,13 +304,33 @@
 
     function updateCategorySummary() {
         if (!els.categorySummary) return;
+        var countEl = document.getElementById('question-count-summary');
         if (selectedCategory === 'mixed') {
             els.categorySummary.textContent = _t('admin.categoryMixed');
+            if (countEl) countEl.classList.add('hidden');
         } else if (selectedCategory === 'multi') {
             els.categorySummary.textContent = _t('admin.categoriesCountPlural', { count: selectedCategories.length });
+            if (countEl) {
+                var total = 0;
+                selectedCategories.forEach(function (val) {
+                    var chip = els.categoryChips.querySelector('.chip[data-value="' + val + '"]');
+                    if (chip) total += parseInt(chip.dataset.count || '0', 10);
+                });
+                countEl.textContent = selectedCategories.length + ' Packs · ' + total + ' Fragen';
+                countEl.classList.remove('hidden');
+            }
         } else {
             var activeChip = els.categoryChips.querySelector('.chip.active');
             els.categorySummary.textContent = activeChip ? activeChip.textContent : selectedCategory;
+            if (countEl) {
+                var count = activeChip ? parseInt(activeChip.dataset.count || '0', 10) : 0;
+                if (count > 0) {
+                    countEl.textContent = count + ' Fragen';
+                    countEl.classList.remove('hidden');
+                } else {
+                    countEl.classList.add('hidden');
+                }
+            }
         }
     }
 

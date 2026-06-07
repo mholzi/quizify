@@ -1135,6 +1135,17 @@ button, .btn {
     }
 }
 
+.question-count-summary {
+    margin-top: 10px;
+    font-family: var(--font-mono, ui-monospace, monospace);
+    font-size: 0.75rem;
+    color: var(--color-text-muted);
+    letter-spacing: 0.04em;
+}
+.question-count-summary:not(.hidden) {
+    display: block;
+}
+
 /* ==========================================
    Phase 2: Featured-Spotlight + Theme-Tabs
    ==========================================
