@@ -3,6 +3,18 @@
 All notable changes to Quizify are documented here. This project follows
 [Semantic Versioning](https://semver.org/).
 
+## [1.1.60] — 2026-06-07
+
+### Fixed
+
+- **Ready screen no longer mislabels a custom-topic game as "Klassiker".**
+  The preset match (Schnellrunde/Klassiker/Marathon) only looked at
+  rounds/difficulty/timer and ignored the topic selection, so picking your
+  own topics while keeping the default settings still showed "Klassiker" and
+  highlighted that preset card. A preset implies mixed topics, so a specific
+  topic selection now correctly reads as custom (Eigene) — the preset label
+  drops and your chosen topics show on the coral line below the summary.
+
 ## [1.1.59] — 2026-06-07
 
 ### Added

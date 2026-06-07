@@ -429,6 +429,12 @@
     ];
 
     function _matchingPreset() {
+        // A preset (Schnellrunde / Klassiker / Marathon) is a full bundle that
+        // implies mixed topics. Once the host picks specific topics it is no
+        // longer that preset — it's custom (Eigene). So a non-mixed category
+        // selection never matches a preset, which stops the ready screen from
+        // mislabelling a custom topic run as "Klassiker".
+        if (selectedCategory !== 'mixed') return null;
         for (var i = 0; i < _PRESETS.length; i++) {
             var p = _PRESETS[i];
             if (p.rounds === selectedRounds && p.difficulty === selectedDifficulty && p.timer === selectedTimer) {
