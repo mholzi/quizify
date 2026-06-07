@@ -321,6 +321,9 @@
     }
 
     function updateCategorySummary() {
+        // Keep the ready-screen topics line in sync with every category
+        // change (chips, spotlight click, language switch).
+        updateHeroSummary();
         if (!els.categorySummary) return;
         var countEl = document.getElementById('question-count-summary');
         if (selectedCategory === 'mixed') {
@@ -385,6 +388,38 @@
         parts.push(selectedTimer + ' s');
         parts.push(langFlag);
         heroEl.textContent = parts.join(' · ');
+
+        // Topics line below the summary row: list the manually-chosen packs
+        // so the ready screen reflects a custom topic selection. Hidden for
+        // 'mixed' (no specific topics) since that needs no callout.
+        var topicsEl = document.getElementById('setup-topics');
+        if (topicsEl) {
+            var names = _selectedCategoryNames();
+            if (names.length === 0) {
+                topicsEl.classList.add('hidden');
+                topicsEl.textContent = '';
+            } else {
+                topicsEl.textContent = '🎯 ' + names.join(' · ');
+                topicsEl.classList.remove('hidden');
+            }
+        }
+    }
+
+    // Display names of the manually-selected topic packs, read from the
+    // pack cards in the DOM. Returns [] for the 'mixed' (all-packs) case.
+    function _selectedCategoryNames() {
+        if (selectedCategory === 'mixed' || !els.categoryChips) return [];
+        var values = selectedCategory === 'multi'
+            ? selectedCategories
+            : [selectedCategory];
+        var names = [];
+        values.forEach(function (val) {
+            var chip = els.categoryChips.querySelector('.chip[data-value="' + val + '"]');
+            if (!chip) return;
+            var nameEl = chip.querySelector('.pack-card-name');
+            names.push(nameEl ? nameEl.textContent.trim() : val);
+        });
+        return names;
     }
 
     var _PRESETS = [

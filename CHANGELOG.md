@@ -3,6 +3,17 @@
 All notable changes to Quizify are documented here. This project follows
 [Semantic Versioning](https://semver.org/).
 
+## [1.1.59] — 2026-06-07
+
+### Added
+
+- **Selected topics now appear on the "Bereit für eine Runde" screen.** When
+  you pick specific topic packs yourself, the ready screen shows them on a
+  coral line just below the settings summary row (e.g. "🎯 Geographie · Sport
+  · Wissenschaft"). The line is hidden for Gemischt (all packs), where there
+  is nothing specific to call out. Names are read from the live pack cards so
+  they stay in sync.
+
 ## [1.1.58] — 2026-06-07
 
 ### Fixed

@@ -3759,6 +3759,19 @@ footer {
     line-height: 1.5;
 }
 
+/* Selected-topics line on the ready screen — shown only when the host
+   picked specific packs (not Gemischt). Coral to read as a chosen accent,
+   sits just below the mono settings summary. */
+.setup-hero-topics {
+    font-family: var(--font-body);
+    font-size: 0.85rem;
+    font-weight: 600;
+    color: var(--color-accent-primary, #E88A7F);
+    margin: 6px 0 0;
+    max-width: 90%;
+    line-height: 1.4;
+}
+
 .setup-hero .btn {
     width: 100%;
     max-width: 360px;
