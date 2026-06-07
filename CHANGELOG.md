@@ -3,6 +3,14 @@
 All notable changes to Quizify are documented here. This project follows
 [Semantic Versioning](https://semver.org/).
 
+## [1.1.54] — 2026-06-07
+
+### Changed
+
+- **"Open Quizify" button now opens in a new tab.** The launcher button
+  (`target="_blank"`) navigates to `/quizify/admin` in a new browser tab
+  instead of the same tab, so the HA sidebar stays accessible.
+
 ## [1.1.53] — 2026-06-07
 
 ### Fixed
