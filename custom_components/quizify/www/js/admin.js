@@ -209,10 +209,27 @@
     // fetch is in flight, and as a hard fallback if the endpoint errors.
     // Real selection comes from the backend (most-played on even days,
     // most-difficult on odd days). Markus 2026-05-29 (msg 283).
+    // Count is NOT hardcoded — it's read from the matching pack card's
+    // data-count at paint time (see _featuredFallback) so the fallback can
+    // never drift from the real pack size the way a literal "47" did.
     var FEATURED_PACK = {
-        de: { value: 'geographie',  title: '🌍 Geographie',  meta: '47 Fragen · Familienfreundlich' },
-        en: { value: 'geography',   title: '🌍 Geography',   meta: '47 questions · Family-friendly' },
+        de: { value: 'geographie',  title: '🌍 Geographie',  unit: 'Fragen',    sub: 'Familienfreundlich' },
+        en: { value: 'geography',   title: '🌍 Geography',   unit: 'questions', sub: 'Family-friendly' },
     };
+
+    // Build the fallback spotlight object, pulling the live question count
+    // from the matching pack card in the DOM (same source the grid shows).
+    function _featuredFallback(lang) {
+        var base = FEATURED_PACK[lang];
+        if (!base) return null;
+        var meta = base.sub;
+        if (els.categoryChips) {
+            var chip = els.categoryChips.querySelector('.chip[data-value="' + base.value + '"]');
+            var count = chip ? parseInt(chip.dataset.count || '0', 10) : 0;
+            if (count > 0) meta = count + ' ' + base.unit + ' · ' + base.sub;
+        }
+        return { value: base.value, title: base.title, meta: meta };
+    }
 
     // Cache resolved featured packs by language so a quick lang-toggle
     // doesn't double-fetch. Cleared on a real page reload.
@@ -245,8 +262,9 @@
     function updatePackUIScaling(lang) {
         // Paint fallback synchronously so the spotlight is never blank,
         // then kick off the live fetch.
-        if (els.featuredSpotlight && FEATURED_PACK[lang]) {
-            _paintFeatured(lang, FEATURED_PACK[lang]);
+        var fallback = _featuredFallback(lang);
+        if (els.featuredSpotlight && fallback) {
+            _paintFeatured(lang, fallback);
         }
         _fetchFeatured(lang);
         // Re-apply the "all" theme filter so a language switch clears any

@@ -3,6 +3,17 @@
 All notable changes to Quizify are documented here. This project follows
 [Semantic Versioning](https://semver.org/).
 
+## [1.1.58] — 2026-06-07
+
+### Fixed
+
+- **Featured Spotlight badge showed a stale "47 Fragen" for Geographie.**
+  The spotlight fallback (shown while the /api/quizify/featured-pack fetch
+  is in flight) hardcoded a "47 questions" count that no longer matched the
+  pack (Geographie has 100, Geography 97). The fallback now reads the live
+  question count from the matching pack card's `data-count` — the same
+  source the topic grid shows — so it can never drift again.
+
 ## [1.1.57] — 2026-06-07
 
 ### Changed
