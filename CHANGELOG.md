@@ -3,6 +3,48 @@
 All notable changes to Quizify are documented here. This project follows
 [Semantic Versioning](https://semver.org/).
 
+## [1.1.53] — 2026-06-07
+
+### Fixed
+
+- **Soft Parlor design system — 60+ violations resolved across all screens.**
+  A full audit surfaced 8 issue clusters inherited from the superseded
+  Broadcast Living Room and Beatify design directions:
+  - **Correct/wrong answer states:** neon green (`rgba(57,255,20)`) and
+    fire-engine red (`rgba(255,0,64)`) replaced with Soft Parlor sage
+    (`#7FA897`) and warm brick (`#D66A6A`). The `glow-correct` keyframe
+    also cleaned.
+  - **Cyan pollution:** `#22d3ee` (a foreign design-system color) removed
+    from all 8 locations — score displays, reveal emotions, rank-delta
+    badges, and the points popup — replaced with coral and sage per the
+    Soft Parlor token map.
+  - **Gradient CTAs and gradient text clip:** `linear-gradient` backgrounds
+    on `.featured-spotlight`, `.lobby-marquee`, `.points-earned`, and
+    `.your-result-rank` all converted to solid `var(--coral)` (#E88A7F).
+    `-webkit-background-clip: text` clips removed.
+  - **Ghost backgrounds:** 12+ `rgba(255,255,255,0.03–0.10)` values that
+    were invisible on the cream `#FAF6EC` surface replaced with warm
+    tokens (`#F3EEDF`, `#E5DFCF`). Affects chips, answer-bar track,
+    answer-letter circles, timer bar, and result-row dividers.
+  - **Admin control bar:** dark navy `rgba(10,10,18,0.95)` → cream frosted
+    `rgba(250,246,236,0.96)` with a warm hairline border. Reconnecting
+    overlay and modal backdrops switched to warm dark scrim
+    `rgba(31,27,20,0.88)`.
+  - **Dashboard correct-answer state:** border and star glyph changed from
+    coral (primary accent) to sage (semantic correct color), matching the
+    player screen. Answer-bar track `rgba(255,255,255,0.08)` → `#E5DFCF`.
+  - **Leaderboard medal colors:** CSS generic gold/silver/bronze
+    (`#ffd700`, `#c0c0c0`, `#cd7f32`) with neon `text-shadow` glows
+    replaced with muted tinted pill backgrounds (no glow).
+  - **Answer distribution chart:** dark navy track `#2d2d4e` and
+    invisible label `#e2e8f0` replaced with `#E5DFCF` / `#6E6A5C`.
+  - Additional: neon-purple Beatify hover shadows on `.card`/`.card-section`
+    removed; timer `text-shadow` glows removed; `.admin-answer-btn`
+    neon-purple fallback replaced with coral; streak color `#E0AF1C` →
+    `var(--sun)` (#E8C47F); `.game-status-badge` neon-green → sage;
+    all `system-ui` font fallbacks dropped from dashboard; `theme-dark`
+    class removed from `<body>` (was inverting the CSS selector gate).
+
 ## [1.1.52] — 2026-06-04
 
 ### Changed
