@@ -49,14 +49,14 @@
 
         * { box-sizing: border-box; margin: 0; padding: 0; }
 
-        body.theme-dark.dashboard-body {
+        body.dashboard-body {
             background: var(--dash-bg-primary);
             background-image:
                 linear-gradient(var(--dash-bg-primary), var(--dash-bg-primary)),
                 radial-gradient(ellipse at 85% 15%, rgba(232, 138, 127, 0.08) 0%, transparent 55%);
             background-blend-mode: normal;
             color: var(--dash-text-white);
-            font-family: 'DM Sans', system-ui, sans-serif;
+            font-family: 'DM Sans', sans-serif;
             overflow: hidden;
             min-height: 100dvh;
         }
@@ -77,7 +77,7 @@
 
         /* ---- Wordmark ---- */
         .wordmark {
-            font-family: 'Cabinet Grotesk', system-ui, sans-serif;
+            font-family: 'Cabinet Grotesk', sans-serif;
             font-size: clamp(24px, 2.4vw, 34px);
             font-weight: 900;
             letter-spacing: -0.02em;
@@ -177,7 +177,7 @@
         }
 
         .dashboard-no-game-title {
-            font-family: 'Cabinet Grotesk', system-ui, sans-serif;
+            font-family: 'Cabinet Grotesk', sans-serif;
             font-size: 1.5rem;
             font-weight: 700;
             color: var(--dash-text-white);
@@ -185,7 +185,7 @@
         }
 
         .dashboard-no-game-subtitle {
-            font-family: 'DM Sans', system-ui, sans-serif;
+            font-family: 'DM Sans', sans-serif;
             font-size: 1rem;
             color: var(--dash-text-neon-muted);
         }
@@ -262,7 +262,7 @@
         }
 
         .dashboard-question {
-            font-family: 'Cabinet Grotesk', system-ui, sans-serif;
+            font-family: 'Cabinet Grotesk', sans-serif;
             font-size: clamp(32px, 4.2vw, 56px);
             font-weight: 700;
             line-height: 1.1;
@@ -287,7 +287,7 @@
             background: var(--dash-surface-dark);
             border: 1px solid var(--dash-border-neon);
             border-radius: 10px;
-            font-family: 'DM Sans', system-ui, sans-serif;
+            font-family: 'DM Sans', sans-serif;
             font-size: clamp(16px, 1.8vw, 22px);
             font-weight: 500;
             color: var(--dash-text-white);
@@ -310,11 +310,10 @@
             line-height: 1;
         }
 
-        /* Correct-answer reveal: gold glow sweep (320ms ease-out per DESIGN.md) */
+        /* Correct-answer reveal */
         .dashboard-answer.correct {
-            border-color: var(--dash-accent-primary);
-            background: linear-gradient(90deg, rgba(127, 168, 151, 0.14), rgba(232, 138, 127, 0.05));
-            box-shadow: 0 0 40px var(--dash-success-glow);
+            border-color: var(--dash-success);
+            background: rgba(127, 168, 151, 0.10);
             position: relative;
         }
 
@@ -324,7 +323,7 @@
             right: 16px;
             top: 50%;
             transform: translateY(-50%);
-            color: var(--dash-accent-primary);
+            color: var(--dash-success);
             font-size: 16px;
         }
 
@@ -353,7 +352,7 @@
         .dashboard-answer-bar {
             flex: 1 1 auto;
             height: clamp(10px, 1vw, 14px);
-            background: rgba(255, 255, 255, 0.08);
+            background: #E5DFCF;
             border-radius: 999px;
             overflow: hidden;
         }
@@ -385,7 +384,7 @@
             border: 1px solid var(--dash-border-neon);
             border-left: 3px solid var(--dash-accent-primary);
             border-radius: 10px;
-            font-family: 'DM Sans', system-ui, sans-serif;
+            font-family: 'DM Sans', sans-serif;
             font-size: 1rem;
             line-height: 1.6;
             color: var(--dash-text-neon-muted);
@@ -449,7 +448,7 @@
             border-radius: 8px;
             background: var(--dash-surface-dark);
             border: 1px solid var(--dash-border-neon);
-            font-family: 'DM Sans', system-ui, sans-serif;
+            font-family: 'DM Sans', sans-serif;
             font-size: 1rem;
             color: var(--dash-text-white);
             transition: border-color 120ms ease-out, background 120ms ease-out;
@@ -618,7 +617,7 @@
         }
 
         .podium-title {
-            font-family: 'Cabinet Grotesk', system-ui, sans-serif;
+            font-family: 'Cabinet Grotesk', sans-serif;
             /* clamp top dropped 72 → 48 so 'Result' is still TV-legible
                but stops dominating the awards-row vertical budget. */
             font-size: clamp(28px, 3.6vw, 48px);
@@ -697,7 +696,7 @@
             background: var(--dash-surface-dark);
             border: 1px solid var(--dash-border-neon);
             border-radius: 8px;
-            font-family: 'DM Sans', system-ui, sans-serif;
+            font-family: 'DM Sans', sans-serif;
             color: var(--dash-text-white);
         }
         .podium-other-rank {
@@ -726,7 +725,7 @@
         }
 
         .podium-name {
-            font-family: 'DM Sans', system-ui, sans-serif;
+            font-family: 'DM Sans', sans-serif;
             font-size: 1.1rem;
             font-weight: 600;
             color: var(--dash-text-white);
@@ -751,7 +750,7 @@
             display: flex;
             align-items: center;
             justify-content: center;
-            font-family: 'Cabinet Grotesk', system-ui, sans-serif;
+            font-family: 'Cabinet Grotesk', sans-serif;
             font-size: 2rem;
             font-weight: 900;
             border-radius: 0;
@@ -856,14 +855,14 @@
         }
 
         .award-winner {
-            font-family: 'DM Sans', system-ui, sans-serif;
+            font-family: 'DM Sans', sans-serif;
             font-size: 1.05rem;
             font-weight: 600;
             color: var(--dash-text-white);
         }
 
         .award-detail {
-            font-family: 'DM Sans', system-ui, sans-serif;
+            font-family: 'DM Sans', sans-serif;
             font-size: 0.85rem;
             color: var(--dash-text-neon-muted);
         }
@@ -904,7 +903,7 @@
         }
     </style>
 </head>
-<body class="theme-dark dashboard-body">
+<body class="dashboard-body">
 
     <main class="dashboard-container">
         <div class="dashboard-header">
