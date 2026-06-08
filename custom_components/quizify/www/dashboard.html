@@ -3,6 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="quizify-version" content="{{VERSION}}">
+    <meta name="quizify-ha-lang" content="{{HA_LANG}}">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
     <title>Quizify — Dashboard</title>
 
@@ -1318,7 +1319,7 @@
 
         // ---- Init ----
         if (window.QuizifyI18n && typeof window.QuizifyI18n.init === 'function') {
-            window.QuizifyI18n.init().then(function () {
+            window.QuizifyI18n.init(window.QuizifyI18n.getPreferredLanguage()).then(function () {
                 window.QuizifyI18n.initPageTranslations(document);
             });
         }

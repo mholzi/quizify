@@ -3812,8 +3812,34 @@ footer {
 }
 .hero-feature:hover { transform: translateY(-2px); box-shadow: var(--shadow-xl); }
 .hero-feature:active { transform: translateY(0); }
+/* Selected state — the card toggles a pack like the chips, not an instant launch. */
+.hero-feature.active {
+    border-color: var(--color-accent-primary);
+    box-shadow: 0 0 0 1.5px rgba(232, 138, 127, 0.35), var(--shadow-lg);
+}
 .hero-feature-icon { font-size: 2rem; line-height: 1; flex: none; }
 .hero-feature-body { display: flex; flex-direction: column; min-width: 0; }
+/* Round check on the right; filled coral only when the pack is selected. */
+.hero-feature-check {
+    flex: none;
+    margin-left: auto;
+    width: 22px;
+    height: 22px;
+    border-radius: 50%;
+    border: 2px solid var(--color-border-light);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 0.75rem;
+    font-weight: 700;
+    color: transparent;
+    transition: background 0.12s ease, border-color 0.12s ease;
+}
+.hero-feature.active .hero-feature-check {
+    border-color: var(--color-accent-primary);
+    background: var(--color-accent-primary);
+    color: #fff;
+}
 .hero-feature-top { display: flex; align-items: center; gap: 8px; }
 .hero-feature-tag {
     font-family: var(--font-mono);

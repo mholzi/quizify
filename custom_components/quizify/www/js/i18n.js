@@ -139,6 +139,23 @@ window.QuizifyI18n = (function() {
         return 'en';
     }
 
+    // Preferred UI language for HOST screens (launcher, admin, dashboard):
+    // Home Assistant's configured language wins, injected server-side into the
+    // quizify-ha-lang meta tag. Falls back to browser locale (e.g. standalone
+    // dev server where the tag is empty). Without this, host screens flashed
+    // English then flipped to the browser language, ignoring the HA setting.
+    function getPreferredLanguage() {
+        try {
+            var meta = document.querySelector('meta[name="quizify-ha-lang"]');
+            var haLang = meta ? meta.getAttribute('content') : '';
+            // Guard against an unsubstituted {{HA_LANG}} token.
+            if (haLang && haLang.indexOf('{') === -1) {
+                return haLang.toLowerCase().indexOf('de') === 0 ? 'de' : 'en';
+            }
+        } catch (_e) { /* ignore */ }
+        return detectBrowserLanguage();
+    }
+
     async function init(langCode) {
         if (loadPromise) return loadPromise;
         var lang = langCode || detectBrowserLanguage();
@@ -157,6 +174,7 @@ window.QuizifyI18n = (function() {
         getLanguage: getLanguage,
         initPageTranslations: initPageTranslations,
         detectBrowserLanguage: detectBrowserLanguage,
+        getPreferredLanguage: getPreferredLanguage,
         init: init,
         isReady: isReady
     };

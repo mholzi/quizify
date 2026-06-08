@@ -3,6 +3,20 @@
 All notable changes to Quizify are documented here. This project follows
 [Semantic Versioning](https://semver.org/).
 
+## [1.2.3] — 2026-06-08
+
+### Fixed
+
+- **Host screens follow your Home Assistant language.** The launcher, dashboard,
+  and analytics pages flashed English and then flipped to the browser language,
+  ignoring the HA setting. They now resolve the HA language first (like the admin
+  screen), so an English Home Assistant stays English. Player phones still follow
+  the guest's own browser language.
+- **World Cup is now a selectable pack, not an instant start.** Tapping the World
+  Cup card on the setup screen used to launch the game immediately. It now toggles
+  the pack on/off with a checkmark, exactly like the other categories — pick it (or
+  any pack) and start with the “Start Game” button.
+
 ## [1.2.2] — 2026-06-08
 
 ### Fixed
