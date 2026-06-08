@@ -1,114 +1,29 @@
 /**
- * Quizify Service Worker registration + update prompt
+ * Quizify Service Worker registration
  *
- * Registers the SW on every page, and shows a small "New version
- * available — Reload?" banner when a new SW is waiting to activate.
- * Polls for updates on visibilitychange (cheap, only on tab-focus) so
- * the banner appears the next time the host comes back to the tab
- * after deploying — no manual refresh needed.
+ * Registers the SW for PWA install + offline asset caching, and quietly
+ * refreshes it on tab-focus. That's it — no "New version available" banner
+ * and no forced reload.
  *
- * Self-contained so admin.html / player.html / dashboard.html can all
- * drop a single <script> tag.
+ * Why no banner: the asset cache-buster is now a content fingerprint
+ * (?v=<version>-<hash>), so the next natural page load already pulls fresh
+ * CSS/JS/i18n. There's nothing to nag about, and dropping the auto-reload
+ * means an always-on host screen can't reload itself mid-game. A new SW
+ * activates silently in the background; its assets land on the next load.
+ *
+ * Self-contained so admin.html / player.html / dashboard.html can all drop a
+ * single <script> tag.
  */
 (function () {
     'use strict';
 
     if (!('serviceWorker' in navigator)) return;
 
-    function _t(key, fallback) {
-        if (window.QuizifyI18n && typeof window.QuizifyI18n.t === 'function') {
-            var v = window.QuizifyI18n.t(key);
-            if (v && v !== key) return v;
-        }
-        return fallback;
-    }
-
-    function showUpdateBanner(worker) {
-        if (document.getElementById('quizify-sw-update-banner')) return;
-        var banner = document.createElement('div');
-        banner.id = 'quizify-sw-update-banner';
-        banner.setAttribute('role', 'status');
-        banner.setAttribute('aria-live', 'polite');
-        banner.style.cssText = [
-            'position:fixed', 'left:50%', 'transform:translateX(-50%)',
-            'bottom:16px', 'z-index:99999',
-            'background:var(--color-bg-surface, #fff)',
-            'color:var(--color-text-primary, #2A2820)',
-            'border:1px solid var(--color-border-medium, #D4CEBC)',
-            'border-radius:12px',
-            'padding:12px 16px',
-            'box-shadow:0 6px 20px rgba(42, 40, 32, 0.18)',
-            'display:flex', 'gap:12px', 'align-items:center',
-            'font-family:var(--font-body, system-ui)',
-            'font-size:0.95rem',
-            'max-width:calc(100vw - 32px)'
-        ].join(';');
-
-        var msg = document.createElement('span');
-        msg.textContent = _t('common.updateAvailable', 'New version available');
-
-        var reloadBtn = document.createElement('button');
-        reloadBtn.type = 'button';
-        reloadBtn.textContent = _t('common.reload', 'Reload');
-        reloadBtn.style.cssText = [
-            'background:var(--color-accent-primary, #E88A7F)',
-            'color:#fff',
-            'border:0',
-            'border-radius:8px',
-            'padding:8px 14px',
-            'font-weight:600',
-            'cursor:pointer',
-            'font-family:inherit'
-        ].join(';');
-        reloadBtn.addEventListener('click', function () {
-            // Tell waiting SW to take over; controllerchange handler reloads.
-            if (worker) worker.postMessage({ type: 'SKIP_WAITING' });
-            // Fallback: reload after 1.5s if controllerchange never fires.
-            setTimeout(function () { window.location.reload(); }, 1500);
-        });
-
-        var dismissBtn = document.createElement('button');
-        dismissBtn.type = 'button';
-        dismissBtn.textContent = '✕';
-        dismissBtn.setAttribute('aria-label', _t('common.close', 'Close'));
-        dismissBtn.style.cssText = [
-            'background:transparent',
-            'border:0',
-            'cursor:pointer',
-            'font-size:1.1rem',
-            'color:var(--color-text-muted, #6E6A5C)',
-            'padding:4px 6px'
-        ].join(';');
-        dismissBtn.addEventListener('click', function () { banner.remove(); });
-
-        banner.appendChild(msg);
-        banner.appendChild(reloadBtn);
-        banner.appendChild(dismissBtn);
-        document.body.appendChild(banner);
-    }
-
-    function trackWaiting(reg) {
-        if (reg.waiting && navigator.serviceWorker.controller) {
-            showUpdateBanner(reg.waiting);
-        }
-        reg.addEventListener('updatefound', function () {
-            var installing = reg.installing;
-            if (!installing) return;
-            installing.addEventListener('statechange', function () {
-                if (installing.state === 'installed' && navigator.serviceWorker.controller) {
-                    showUpdateBanner(installing);
-                }
-            });
-        });
-    }
-
     navigator.serviceWorker.register('/quizify/static/sw.js')
         .then(function (reg) {
-            trackWaiting(reg);
-
-            // Re-check for updates when the user comes back to the tab.
-            // Cheap and matches the typical "deploy then look at TV again"
-            // mental model for a HA integration.
+            // Check for a newer SW when the host comes back to the tab. The new
+            // SW installs and activates on its own; fresh assets are served on
+            // the next page load. No banner, no forced reload.
             document.addEventListener('visibilitychange', function () {
                 if (document.visibilityState === 'visible') {
                     reg.update().catch(function () { /* ignore */ });
@@ -118,12 +33,4 @@
         .catch(function (err) {
             console.warn('[SW] registration failed', err);
         });
-
-    // When the new SW takes control, reload so the new code runs.
-    var _refreshing = false;
-    navigator.serviceWorker.addEventListener('controllerchange', function () {
-        if (_refreshing) return;
-        _refreshing = true;
-        window.location.reload();
-    });
 })();

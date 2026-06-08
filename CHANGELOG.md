@@ -3,6 +3,16 @@
 All notable changes to Quizify are documented here. This project follows
 [Semantic Versioning](https://semver.org/).
 
+## [1.2.6] — 2026-06-08
+
+### Changed
+
+- **Removed the "New version available" reload banner.** Now that the asset
+  cache-buster is a content fingerprint, the next page load already pulls the
+  fresh version, so the banner was redundant. Dropping it (and its auto-reload)
+  also means an always-on host screen never reloads itself mid-game. The service
+  worker still handles PWA install and offline caching, and refreshes silently.
+
 ## [1.2.5] — 2026-06-08
 
 Consolidated release of the 1.2.x line under a fresh version number for clean
