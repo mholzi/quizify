@@ -3,6 +3,27 @@
 All notable changes to Quizify are documented here. This project follows
 [Semantic Versioning](https://semver.org/).
 
+## [1.2.0] — 2026-06-08
+
+> Pre-release for beta testing.
+
+### Added
+
+- **World Cup quiz packs (English + German).** A new Men's FIFA World Cup
+  category in the surprising-trivia style — `World Cup` (100 questions) and
+  `Weltmeisterschaft` (99). Generated and reviewed for factual accuracy;
+  selectable from the category list like any other pack.
+- **World Cup featured on the first admin screen.** A spotlight card on the
+  setup hero lets the host launch a World Cup game in one tap, without opening
+  “Adjust settings”. The card and the pack it starts follow the active
+  language (World Cup ↔ Weltmeisterschaft).
+
+### Fixed
+
+- **Category cards show the right question counts again.** After the +50-per-pack
+  update the setup-screen cards still read ~100; they now reflect the real
+  counts (150, or 148–149 where review removed an ambiguous question).
+
 ## [1.1.0] — 2026-06-08
 
 ### Added
