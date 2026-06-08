@@ -3,6 +3,19 @@
 All notable changes to Quizify are documented here. This project follows
 [Semantic Versioning](https://semver.org/).
 
+## [1.2.2] — 2026-06-08
+
+### Fixed
+
+- **Asset cache-buster no longer depends on bumping the version.** Static
+  assets are served immutable, so the `?v=` query string is the only way to
+  force a refetch — and it was keyed only to the manifest version. A reused or
+  forgotten version bump left `?v=` unchanged, so browsers kept serving old
+  CSS/JS/i18n (the World Cup card showed English on a German setup). The `?v=`
+  params and the service-worker cache key now derive from a fingerprint of the
+  asset files, so any CSS/JS/i18n change invalidates caches automatically. The
+  displayed version stays clean. Resolves the recurrence of #147.
+
 ## [1.2.1] — 2026-06-08
 
 ### Fixed

@@ -11,8 +11,10 @@ import logging
 from pathlib import Path
 from typing import TYPE_CHECKING
 
+import hashlib
 import json
 import os
+import time
 import aiohttp
 from aiohttp import web
 
@@ -51,6 +53,25 @@ _VERSION_TOKEN = "{{VERSION}}"
 # there's no hass — admin.js then falls back to browser locale. Replacing
 # it unconditionally means the raw token never leaks into the page.
 _HA_LANG_TOKEN = "{{HA_LANG}}"
+
+# Cache-buster token for the ``?v=`` asset query strings and the service
+# worker's ``CACHE_VERSION``. Distinct from {{VERSION}} (which stays the clean
+# semantic version for the meta tag) — this one is ``<version>-<fingerprint>``
+# where the fingerprint is a short hash of the served asset files. Because it
+# changes whenever ANY css/js/i18n file changes, cache-busting no longer
+# depends on remembering to bump manifest.json. That manual dependency was the
+# recurring failure (#147, and 1.2.0 being built twice under one version): a
+# reused version left ?v= unchanged, so HA's immutable static cache_headers
+# kept serving stale assets.
+_ASSET_VER_TOKEN = "{{ASSET_VER}}"
+
+# Subdirs under www/ that hold the ?v=-busted assets.
+_ASSET_SUBDIRS = ("css", "js", "i18n")
+
+# Recompute the fingerprint at most this often — a small dir walk, bounded so
+# a burst of player.html loads at game start doesn't re-walk per request.
+_ASSET_FP_TTL_NS = 5 * 1_000_000_000  # 5s
+_ASSET_FP_CACHE: tuple[int, str] | None = None  # (monotonic_ns, fingerprint)
 
 # mtime-keyed cache for the live manifest version. Without this the
 # integration would re-parse manifest.json on every request; with it we
@@ -93,6 +114,50 @@ def _get_live_version(fallback: str) -> str:
         return fallback
 
 
+def _compute_asset_fingerprint(www_dir: Path = _WWW_DIR) -> str:
+    """Short hash over the served assets' (relative path, mtime, size).
+
+    Changes whenever any css/js/i18n file is added, removed, or edited — so the
+    cache-buster moves on any real asset change, with no manifest bump needed.
+    Cheap: a handful of ``stat`` calls. Falls back to an empty-tree hash if the
+    dirs are missing (defensive — runs on the HTML serve path).
+    """
+    h = hashlib.md5(usedforsecurity=False)
+    for sub in _ASSET_SUBDIRS:
+        d = www_dir / sub
+        if not d.is_dir():
+            continue
+        for p in sorted(d.rglob("*")):
+            if not p.is_file():
+                continue
+            try:
+                st = p.stat()
+            except OSError:
+                continue
+            h.update(str(p.relative_to(www_dir)).encode())
+            h.update(str(st.st_mtime_ns).encode())
+            h.update(str(st.st_size).encode())
+    return h.hexdigest()[:8]
+
+
+def _get_asset_version(version: str) -> str:
+    """Cache-buster value ``<version>-<asset_fingerprint>``.
+
+    The version prefix keeps it readable (which release) and back-compatible
+    with assertions that look for ``?v=<version>``; the fingerprint suffix is
+    what makes it move on asset changes. Fingerprint recompute is throttled to
+    ``_ASSET_FP_TTL_NS``.
+    """
+    global _ASSET_FP_CACHE
+    now = time.monotonic_ns()
+    if _ASSET_FP_CACHE is not None and now - _ASSET_FP_CACHE[0] < _ASSET_FP_TTL_NS:
+        fingerprint = _ASSET_FP_CACHE[1]
+    else:
+        fingerprint = _compute_asset_fingerprint()
+        _ASSET_FP_CACHE = (now, fingerprint)
+    return f"{version}-{fingerprint}"
+
+
 def _apply_version(text: str, version: str) -> str:
     """Replace every {{VERSION}} token with the live integration version."""
     return text.replace(_VERSION_TOKEN, version)
@@ -106,8 +171,10 @@ async def _serve_html(request: web.Request, filename: str) -> web.Response:
         return web.Response(text=f"{filename} not found", status=500)
 
     ctx = _get_ctx(request)
+    version = _get_live_version(ctx.version)
     html_content = await ctx.runtime.run_in_executor(html_path.read_text, "utf-8")
-    html_content = _apply_version(html_content, _get_live_version(ctx.version))
+    html_content = _apply_version(html_content, version)
+    html_content = html_content.replace(_ASSET_VER_TOKEN, _get_asset_version(version))
     html_content = html_content.replace(_HA_LANG_TOKEN, ctx.ha_language or "")
     return web.Response(
         text=html_content, content_type="text/html", headers=_NO_CACHE_HEADERS
@@ -127,8 +194,10 @@ async def sw_view(request: web.Request) -> web.Response:
         return web.Response(text="sw.js not found", status=404)
 
     ctx = _get_ctx(request)
+    version = _get_live_version(ctx.version)
     body = await ctx.runtime.run_in_executor(sw_path.read_text, "utf-8")
-    body = _apply_version(body, _get_live_version(ctx.version))
+    body = _apply_version(body, version)
+    body = body.replace(_ASSET_VER_TOKEN, _get_asset_version(version))
     return web.Response(
         text=body, content_type="application/javascript", headers=_NO_CACHE_HEADERS
     )
