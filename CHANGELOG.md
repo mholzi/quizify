@@ -5,8 +5,6 @@ All notable changes to Quizify are documented here. This project follows
 
 ## [1.2.0] — 2026-06-08
 
-> Pre-release for beta testing.
-
 ### Added
 
 - **World Cup quiz packs (English + German).** A new Men's FIFA World Cup
