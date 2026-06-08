@@ -79,6 +79,7 @@
 
     const els = {
         categoryChips: document.getElementById('category-chips'),
+        heroPackChips: document.getElementById('hero-pack-chips'),
         categorySummary: document.getElementById('category-summary'),
         featuredSpotlight: document.getElementById('featured-spotlight'),
         spotlightTitle: document.getElementById('spotlight-title'),
@@ -202,6 +203,53 @@
                 }
             }
             updateCategorySummary();
+        });
+    }
+
+    // ---- Hero pack picker (variant C) ----
+    // The hero chips are a thin proxy over #category-chips, which stays the
+    // single source of truth for selection + the start payload. Building from
+    // it means we never hand-maintain a second pack list. The featured pack
+    // (World Cup / Weltmeisterschaft) is excluded — it has the spotlight card.
+    var _FEATURED_PACK_VALUES = ['world-cup', 'weltmeisterschaft'];
+
+    function buildHeroPackChips() {
+        if (!els.heroPackChips || !els.categoryChips) return;
+        els.heroPackChips.innerHTML = '';
+        els.categoryChips.querySelectorAll('.chip').forEach(function (cat) {
+            var value = cat.dataset.value;
+            if (_FEATURED_PACK_VALUES.indexOf(value) !== -1) return;
+            // Language filter: Mixed (no data-lang) plus the active language.
+            var lang = cat.dataset.lang;
+            if (lang && lang !== selectedLanguage) return;
+
+            var nameEl = cat.querySelector('.pack-card-name');
+            var name = nameEl ? nameEl.textContent : value;
+            var icon = cat.dataset.icon || '';
+
+            var chip = document.createElement('button');
+            chip.type = 'button';
+            chip.className = 'hero-pack-chip' + (cat.classList.contains('active') ? ' active' : '');
+            chip.dataset.value = value;
+            chip.innerHTML = '<span class="hpc-icon" aria-hidden="true">' + icon + '</span>' +
+                '<span class="hpc-name"></span>';
+            chip.querySelector('.hpc-name').textContent = name;
+            chip.addEventListener('click', function () {
+                // Proxy to the real category chip so all existing selection
+                // logic (mixed/single/multi + summary) runs unchanged.
+                var target = els.categoryChips.querySelector('.chip[data-value="' + value + '"]');
+                if (target) target.click();
+                syncHeroPackChips();
+            });
+            els.heroPackChips.appendChild(chip);
+        });
+    }
+
+    function syncHeroPackChips() {
+        if (!els.heroPackChips || !els.categoryChips) return;
+        els.heroPackChips.querySelectorAll('.hero-pack-chip').forEach(function (chip) {
+            var cat = els.categoryChips.querySelector('.chip[data-value="' + chip.dataset.value + '"]');
+            chip.classList.toggle('active', !!(cat && cat.classList.contains('active')));
         });
     }
 
@@ -539,6 +587,7 @@
     // Initial scaling pass — paints spotlight/tabs once we know the
     // visible-pack-count for the default language.
     updatePackUIScaling(typeof selectedLanguage === 'string' ? selectedLanguage : 'de');
+    buildHeroPackChips();
     setupChips(els.difficultyChips, function (v) {
         selectedDifficulty = v;
         updateSettingsSummary();
@@ -574,6 +623,8 @@
         // Re-evaluate pack-UI scaling: visible pack count may have
         // crossed a threshold (e.g. DE has 12 packs but EN has 3).
         updatePackUIScaling(v);
+        // Rebuild the hero pack chips for the new language.
+        buildHeroPackChips();
         // Re-translate the entire admin UI so labels switch
         // immediately on language pick (was previously a static
         // mismatch — admin saw mixed DE/EN labels).
@@ -1356,6 +1407,9 @@
             QuizifyI18n.initPageTranslations();
             updateSettingsSummary();
             updateCategorySummary();
+            // Rebuild hero pack chips now that labels are translated (the
+            // shared "Mixed" chip reads its translated name post-i18n).
+            buildHeroPackChips();
         });
     } else {
         // No i18n: still populate the summary chip with the timer

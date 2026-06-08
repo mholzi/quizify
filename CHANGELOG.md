@@ -11,10 +11,11 @@ All notable changes to Quizify are documented here. This project follows
   category in the surprising-trivia style — `World Cup` (100 questions) and
   `Weltmeisterschaft` (99). Generated and reviewed for factual accuracy;
   selectable from the category list like any other pack.
-- **World Cup featured on the first admin screen.** A spotlight card on the
-  setup hero lets the host launch a World Cup game in one tap, without opening
-  “Adjust settings”. The card and the pack it starts follow the active
-  language (World Cup ↔ Weltmeisterschaft).
+- **Pick your pack from the first screen.** The setup screen now carries the
+  pack picker itself — a featured World Cup spotlight card plus every pack as a
+  chip — so the host chooses what to play in one tap, without opening “Adjust
+  settings”. Game settings (difficulty, rounds, timer) stay there. The featured
+  card and chips follow the active language (World Cup ↔ Weltmeisterschaft).
 
 ### Fixed
 
