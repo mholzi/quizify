@@ -3,6 +3,16 @@
 All notable changes to Quizify are documented here. This project follows
 [Semantic Versioning](https://semver.org/).
 
+## [1.2.1] — 2026-06-08
+
+### Fixed
+
+- **Stale assets after updating.** While in beta, 1.2.0 was built twice under
+  the same version number, so the `?v=` cache-buster never changed and browsers
+  kept serving the old CSS/JS — the World Cup card showed English text on a
+  German setup and the new pack chips didn't render. 1.2.1 bumps the version so
+  clients fetch the current assets. No functional change beyond 1.2.0.
+
 ## [1.2.0] — 2026-06-08
 
 ### Added
