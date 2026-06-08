@@ -28,6 +28,8 @@ from custom_components.quizify.server.context import (  # noqa: E402
 )
 from custom_components.quizify.server.views import (  # noqa: E402
     _apply_version,
+    _compute_asset_fingerprint,
+    _get_asset_version,
     admin_view,
     player_view,
     status_view,
@@ -114,6 +116,49 @@ class TestTemplateSubstitution:
         assert _apply_version(text, "1.2.3") == text
 
 
+class TestAssetFingerprint:
+    """The cache-buster must move on ANY asset change, not just a manifest
+    version bump. These guard the #147 root cause: a reused version (1.2.0 was
+    built twice) left ?v= unchanged, so HA's immutable static cache served
+    stale CSS/JS until the version finally moved."""
+
+    def _write(self, root, sub, name, body):
+        d = root / sub
+        d.mkdir(parents=True, exist_ok=True)
+        (d / name).write_text(body, encoding="utf-8")
+
+    def test_fingerprint_changes_when_asset_content_changes(self, tmp_path) -> None:
+        self._write(tmp_path, "css", "styles.css", "a {}")
+        fp1 = _compute_asset_fingerprint(tmp_path)
+        # Edit the file (size changes) — same as shipping a new CSS build.
+        self._write(tmp_path, "css", "styles.css", "a { color: red }")
+        fp2 = _compute_asset_fingerprint(tmp_path)
+        assert fp1 != fp2, "fingerprint must change when an asset's content changes"
+
+    def test_fingerprint_changes_when_asset_added(self, tmp_path) -> None:
+        self._write(tmp_path, "js", "admin.js", "x")
+        fp1 = _compute_asset_fingerprint(tmp_path)
+        self._write(tmp_path, "i18n", "de.json", "{}")
+        fp2 = _compute_asset_fingerprint(tmp_path)
+        assert fp1 != fp2, "fingerprint must change when an asset is added"
+
+    def test_fingerprint_stable_when_nothing_changes(self, tmp_path) -> None:
+        self._write(tmp_path, "js", "admin.js", "x")
+        assert _compute_asset_fingerprint(tmp_path) == _compute_asset_fingerprint(tmp_path)
+
+    def test_fingerprint_is_short_hex(self, tmp_path) -> None:
+        self._write(tmp_path, "css", "styles.css", "a {}")
+        fp = _compute_asset_fingerprint(tmp_path)
+        assert len(fp) == 8 and all(c in "0123456789abcdef" for c in fp)
+
+    def test_asset_version_is_version_plus_fingerprint(self) -> None:
+        av = _get_asset_version("9.9.9")
+        # Back-compat: starts with the version (so ?v=<version> assertions hold),
+        # and carries a fingerprint suffix that busts on asset changes.
+        assert av.startswith("9.9.9-")
+        assert len(av) > len("9.9.9-")
+
+
 # ---------- Integration: real view fns + real HTML / sw.js on disk ----------
 
 
@@ -142,8 +187,12 @@ class TestHtmlSubstitution:
         resp = await admin_view(_fake_request("9.9.9-test", ha_language="en"))
         assert resp.status == 200
         assert "{{VERSION}}" not in resp.text
+        assert "{{ASSET_VER}}" not in resp.text
         assert "{{HA_LANG}}" not in resp.text
-        assert "?v=9.9.9-test" in resp.text
+        # ?v= now carries <version>-<fingerprint>, not the bare version.
+        assert "?v=9.9.9-test-" in resp.text
+        # The meta tag keeps the clean semantic version.
+        assert 'name="quizify-version" content="9.9.9-test"' in resp.text
 
     async def test_admin_html_injects_ha_language(self) -> None:
         """HA's configured language lands in the meta tag admin.js reads to

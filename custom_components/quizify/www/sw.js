@@ -17,7 +17,7 @@
 // CACHE_VERSION is templated by server/views.py::sw_view at serve time —
 // {{VERSION}} is replaced with the integration version from manifest.json.
 // Bumping manifest.json invalidates every old SW cache on the next install.
-var CACHE_VERSION = 'quizify-v{{VERSION}}';
+var CACHE_VERSION = 'quizify-v{{ASSET_VER}}';
 
 // Listen for SKIP_WAITING from the page (sw-update.js posts it when the
 // user clicks "Reload" in the update banner). Without this the new SW

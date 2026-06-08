@@ -10,7 +10,7 @@
     <link href="https://fonts.googleapis.com/css2?family=DM+Sans:ital,opsz,wght@0,9..40,400;0,9..40,500;0,9..40,600;0,9..40,700;1,9..40,400&family=JetBrains+Mono:wght@400;500;700&display=swap" rel="stylesheet">
     <link rel="preconnect" href="https://api.fontshare.com" crossorigin>
     <link href="https://api.fontshare.com/v2/css?f[]=cabinet-grotesk@500,700,800,900&display=swap" rel="stylesheet">
-    <link rel="stylesheet" href="/quizify/static/css/styles.css?v={{VERSION}}">
+    <link rel="stylesheet" href="/quizify/static/css/styles.css?v={{ASSET_VER}}">
     <link rel="icon" href="/quizify/static/img/icon-256.png" type="image/png">
     <link rel="manifest" href="/quizify/static/site.webmanifest">
     <!-- Soft Parlor: no confetti library. The warm reveal IS the celebration. See DESIGN.md. -->
@@ -582,16 +582,16 @@
     <!-- Version badge -->
     <div class="version-badge" id="version-badge">v{{VERSION}}</div>
 
-    <script src="/quizify/static/js/vendor/qrcode.min.js?v={{VERSION}}"></script>
-    <script src="/quizify/static/js/i18n.js?v={{VERSION}}"></script>
+    <script src="/quizify/static/js/vendor/qrcode.min.js?v={{ASSET_VER}}"></script>
+    <script src="/quizify/static/js/i18n.js?v={{ASSET_VER}}"></script>
     <!-- DO NOT REMOVE utils.js \u2014 player-utils.js depends on window.QuizifyUtils. -->
     <!-- Dropped twice before (see commits 86025d1, 055e58c). Third time's not charming. -->
-    <script src="/quizify/static/js/utils.js?v={{VERSION}}"></script>
+    <script src="/quizify/static/js/utils.js?v={{ASSET_VER}}"></script>
     <!-- Bundle of player-utils + lobby + game + reveal + end + core
          (concatenated by scripts/build_bundle.py). Cuts the request
          waterfall from 6 sequential JS fetches to 1 \u2014 meaningful on
          4G phones that take ~80ms RTT per request. -->
-    <script src="/quizify/static/js/player.bundle.js?v={{VERSION}}"></script>
-    <script src="/quizify/static/js/sw-update.js?v={{VERSION}}"></script>
+    <script src="/quizify/static/js/player.bundle.js?v={{ASSET_VER}}"></script>
+    <script src="/quizify/static/js/sw-update.js?v={{ASSET_VER}}"></script>
 </body>
 </html>
