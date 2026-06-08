@@ -327,7 +327,8 @@
     "tag": "Neu",
     "worldCupTitle": "Weltmeisterschaft",
     "worldCupDesc": "Kuriose Fakten zur Fußball-WM",
-    "worldCupPlay": "WM-Quiz starten"
+    "worldCupPlay": "WM-Quiz starten",
+    "orChoose": "oder wähle ein anderes Pack"
   },
   "wager": {
     "title": "Letzte Runde — Wagerunde",
