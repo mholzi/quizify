@@ -23,7 +23,12 @@
     let selectedCategories = [];
     let selectedDifficulty = 'medium';
     let selectedRounds = 10;
-    let selectedLanguage = 'de';
+    // First-visit default follows the browser locale so English-speaking
+    // users don't get a German UI they can't read (#152). German browsers
+    // still resolve to 'de'. A stored preference (below) always wins.
+    let selectedLanguage = (window.QuizifyI18n && QuizifyI18n.detectBrowserLanguage)
+        ? QuizifyI18n.detectBrowserLanguage()
+        : 'en';
     // Restore the last-used language across full-page reloads. The player
     // tab's "Neues Spiel starten" button navigates to /quizify/admin, which
     // reloads this script — without persistence an English game silently

@@ -3,6 +3,17 @@
 All notable changes to Quizify are documented here. This project follows
 [Semantic Versioning](https://semver.org/).
 
+## [1.0.1] — 2026-06-08
+
+### Fixed
+
+- **Admin UI no longer forces German for English speakers.** The setup screen
+  defaulted its interface language to German on first visit, so the brief flash
+  of English at load switched to German and stayed there with no obvious way
+  back ([#152](https://github.com/mholzi/quizify/issues/152)). First-visit UI
+  language now follows the browser locale (German browsers still get German),
+  with the English-chip toggle and stored preference unchanged.
+
 ## [1.0.0] — 2026-06-07
 
 The first official release of Quizify — a multiplayer trivia party game that
