@@ -3,6 +3,9 @@
 <head>
     <meta charset="UTF-8">
     <meta name="quizify-version" content="{{VERSION}}">
+    <!-- Home Assistant's configured language; the launcher follows it so it
+         doesn't flash English then flip to the browser language. -->
+    <meta name="quizify-ha-lang" content="{{HA_LANG}}">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title data-i18n="launcher.title">Quizify</title>
     <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -155,7 +158,7 @@
         // i18n only — navigation is handled by the <a href>. No popup
         // attempt, no fallback ladder. The launcher is now stateless.
         window.addEventListener('load', async function () {
-            await QuizifyI18n.init();
+            await QuizifyI18n.init(QuizifyI18n.getPreferredLanguage());
             QuizifyI18n.initPageTranslations();
         });
     </script>

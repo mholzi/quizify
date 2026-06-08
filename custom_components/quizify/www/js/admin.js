@@ -240,9 +240,11 @@
                 var target = els.categoryChips.querySelector('.chip[data-value="' + value + '"]');
                 if (target) target.click();
                 syncHeroPackChips();
+                syncHeroFeatureCardState();
             });
             els.heroPackChips.appendChild(chip);
         });
+        syncHeroFeatureCardState();
     }
 
     function syncHeroPackChips() {
@@ -251,6 +253,17 @@
             var cat = els.categoryChips.querySelector('.chip[data-value="' + chip.dataset.value + '"]');
             chip.classList.toggle('active', !!(cat && cat.classList.contains('active')));
         });
+    }
+
+    // Reflect the World Cup pack's selected state on the featured card (active
+    // border + checkmark), mirroring the category chip for the active language.
+    function syncHeroFeatureCardState() {
+        if (!els.heroFeatureCard || !els.categoryChips) return;
+        var pack = (selectedLanguage === 'de') ? 'weltmeisterschaft' : 'world-cup';
+        var cat = els.categoryChips.querySelector('.chip[data-value="' + pack + '"]');
+        var active = !!(cat && cat.classList.contains('active'));
+        els.heroFeatureCard.classList.toggle('active', active);
+        els.heroFeatureCard.setAttribute('aria-pressed', active ? 'true' : 'false');
     }
 
     function _t(key, params) {
@@ -1250,23 +1263,16 @@
         initJoinUrl();
     });
 
-    // Featured pack spotlight (hero) → one-tap launch of the World Cup pack
-    // in the admin's current language. Sets it as the active category, then
-    // follows the same path as Start Game (→ lobby / QR screen). The actual
-    // start_game payload is built later from selectedCategory/selectedLanguage.
+    // Featured pack spotlight (hero) → SELECT/DESELECT the World Cup pack, the
+    // same as the other category chips. It does NOT start the game; the host
+    // picks packs (card + chips) and then taps "Start Game". Proxies to the
+    // World Cup category chip so all existing selection logic runs unchanged.
     on(els.heroFeatureCard, 'click', function () {
         var pack = (selectedLanguage === 'de') ? 'weltmeisterschaft' : 'world-cup';
-        selectedCategory = pack;
-        selectedCategories = [pack];
-        // Sync chip active-state so a later "Adjust settings" visit reflects it.
-        if (els.categoryChips) {
-            els.categoryChips.querySelectorAll('.chip').forEach(function (c) {
-                c.classList.toggle('active', c.dataset.value === pack);
-            });
-        }
-        updateCategorySummary();
-        showView('lobby');
-        initJoinUrl();
+        var target = els.categoryChips && els.categoryChips.querySelector('.chip[data-value="' + pack + '"]');
+        if (target) target.click();
+        syncHeroFeatureCardState();
+        syncHeroPackChips();
     });
 
     // Lobby → setup. Round-trip nav so the host can tweak settings
