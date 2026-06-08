@@ -1,7 +1,7 @@
 {
   "name": "Music",
   "language": "en",
-  "version": "1.0",
+  "version": "1.1",
   "theme": "music",
   "questions": [
     {
@@ -1202,6 +1202,606 @@
       ],
       "difficulty": "medium",
       "fun_fact": "This trick is called a natural harmonic. Touching the midpoint mutes the fundamental and lets only the doubled-frequency overtone ring, so the note leaps an octave even though no fret is pressed. Touching at one-third of the length yields a note an octave-and-a-fifth up.",
+      "category": "Music"
+    },
+    {
+      "id": "music_en_102",
+      "question": "Why does helium make your singing voice sound high and squeaky?",
+      "answers": [
+        {"text": "Sound travels faster through it, raising the resonant pitches", "correct": true},
+        {"text": "It physically shrinks your vocal cords", "correct": false},
+        {"text": "It makes your vocal cords vibrate twice as fast", "correct": false}
+      ],
+      "difficulty": "easy",
+      "fun_fact": "Your vocal cords vibrate at the same frequency in helium as in air, so the fundamental pitch barely changes. What shifts are the resonances of your vocal tract: sound moves about three times faster in helium, raising those resonant frequencies and giving the cartoonish 'Donald Duck' timbre.",
+      "category": "Music"
+    },
+    {
+      "id": "music_en_103",
+      "question": "Why does a tuning fork have two prongs instead of one?",
+      "answers": [
+        {"text": "The two prongs cancel each other's recoil so it rings far longer", "correct": true},
+        {"text": "Two prongs are needed to produce two notes at once", "correct": false},
+        {"text": "The second prong doubles the volume of the note", "correct": false}
+      ],
+      "difficulty": "medium",
+      "fun_fact": "The prongs vibrate in opposite directions, so the sideways forces on the handle cancel out. This means almost no energy leaks away through your hand, letting a tuning fork hum its pure tone for a remarkably long time.",
+      "category": "Music"
+    },
+    {
+      "id": "music_en_104",
+      "question": "What is physically happening to a wine glass when a singer shatters it with their voice?",
+      "answers": [
+        {"text": "The voice matches the glass's resonant frequency until it flexes apart", "correct": true},
+        {"text": "The sound heats the glass until it cracks", "correct": false},
+        {"text": "Air pressure from the note crushes the glass inward", "correct": false}
+      ],
+      "difficulty": "easy",
+      "fun_fact": "Every wine glass has a natural resonant frequency you can hear by tapping it. If a singer holds exactly that pitch loudly enough, the glass flexes a little more with each sound wave until the vibrations exceed what it can bend, and it shatters.",
+      "category": "Music"
+    },
+    {
+      "id": "music_en_105",
+      "question": "Why do orchestras tune to the oboe rather than another instrument?",
+      "answers": [
+        {"text": "Its pitch is stable and its piercing tone cuts through the whole ensemble", "correct": true},
+        {"text": "It is the oldest instrument in the orchestra", "correct": false},
+        {"text": "It is the only instrument that cannot be retuned mid-performance", "correct": false}
+      ],
+      "difficulty": "medium",
+      "fun_fact": "The oboe's reed gives it a very steady pitch that doesn't drift much with temperature, and its bright, penetrating tone is easy for everyone to hear over the others. Its sustained 'A' became the practical reference note for the whole orchestra.",
+      "category": "Music"
+    },
+    {
+      "id": "music_en_106",
+      "question": "When you hum with your mouth closed, where is the sound actually coming out?",
+      "answers": [
+        {"text": "Your nose", "correct": true},
+        {"text": "Tiny gaps between your lips", "correct": false},
+        {"text": "Vibrations through your cheeks", "correct": false}
+      ],
+      "difficulty": "easy",
+      "fun_fact": "With your lips sealed, the only open path for the sound to escape is up through your nasal cavity and out your nostrils. Pinch your nose shut while humming and the sound almost completely stops, which is why you can't hum with a blocked nose.",
+      "category": "Music"
+    },
+    {
+      "id": "music_en_107",
+      "question": "Why does a deeper, lower-pitched sound travel through walls and floors better than a high one?",
+      "answers": [
+        {"text": "Its longer waves lose less energy passing through solid material", "correct": true},
+        {"text": "Low sounds are always played louder than high ones", "correct": false},
+        {"text": "Bass notes are attracted to solid objects", "correct": false}
+      ],
+      "difficulty": "easy",
+      "fun_fact": "Low-frequency bass has long wavelengths that are harder for a wall to absorb or block, so they pass through with less loss. High frequencies have short waves that get scattered and soaked up easily, which is why you mostly hear the thumping bass from a neighbour's party.",
+      "category": "Music"
+    },
+    {
+      "id": "music_en_108",
+      "question": "What does rosin, rubbed on a violin bow, actually do to the horsehair?",
+      "answers": [
+        {"text": "Makes it sticky so it grips and releases the string thousands of times a second", "correct": true},
+        {"text": "Makes the hair slippery so it glides smoothly", "correct": false},
+        {"text": "Tightens the hair so it stays in tune", "correct": false}
+      ],
+      "difficulty": "medium",
+      "fun_fact": "Bare horsehair is too slippery to make a string sing. Rosin makes the hair grab the string and drag it sideways, then let go, then grab again, hundreds or thousands of times per second. This rapid stick-slip motion is what sets the string vibrating.",
+      "category": "Music"
+    },
+    {
+      "id": "music_en_109",
+      "question": "Why can't you tell which direction very deep bass sounds are coming from?",
+      "answers": [
+        {"text": "Their long waves reach both ears almost identically", "correct": true},
+        {"text": "Bass sounds travel too fast for the brain to locate", "correct": false},
+        {"text": "Low sounds bypass the ears and enter through the body", "correct": false}
+      ],
+      "difficulty": "hard",
+      "fun_fact": "Your brain locates sound partly by comparing tiny timing and loudness differences between your two ears. Deep bass has wavelengths many metres long, so it bends around your head and hits both ears nearly the same way. This is why a home theatre needs only one subwoofer, but multiple smaller speakers.",
+      "category": "Music"
+    },
+    {
+      "id": "music_en_110",
+      "question": "Why does your own recorded voice sound strange and unfamiliar to you?",
+      "answers": [
+        {"text": "You normally hear it partly through your skull bones", "correct": true},
+        {"text": "Microphones distort the human voice", "correct": false},
+        {"text": "Recordings always play back slightly faster", "correct": false}
+      ],
+      "difficulty": "easy",
+      "fun_fact": "When you speak, sound reaches your inner ear two ways: through the air and through the bones of your skull. Bone conduction carries extra low frequencies, making your voice sound deeper to you. A recording only captures the airborne version, so it sounds thinner and higher than you expect.",
+      "category": "Music"
+    },
+    {
+      "id": "music_en_111",
+      "question": "Why does a guitar string sound higher when you press it down at a fret?",
+      "answers": [
+        {"text": "You shorten the vibrating length, so it vibrates faster", "correct": true},
+        {"text": "Pressing increases the tension of the string", "correct": false},
+        {"text": "Your finger adds energy that raises the pitch", "correct": false}
+      ],
+      "difficulty": "easy",
+      "fun_fact": "Pressing a string against a fret shortens the part that's free to vibrate. A shorter length vibrates more times per second, raising the pitch. This is why frets get closer together as you move up the neck: each one shortens the string by the same proportion, not the same distance.",
+      "category": "Music"
+    },
+    {
+      "id": "music_en_112",
+      "question": "Why do brass instruments like the trumpet get warmer and go sharp the longer you play them?",
+      "answers": [
+        {"text": "Your warm breath heats the air inside, speeding up the sound", "correct": true},
+        {"text": "The metal expands and tightens the valves", "correct": false},
+        {"text": "The mouthpiece slowly loosens with use", "correct": false}
+      ],
+      "difficulty": "easy",
+      "fun_fact": "Sound travels faster through warmer air, which raises the pitch of every note. As you blow warm breath through a cold trumpet, the air column heats up and the instrument drifts sharp, which is why players warm up and then nudge their tuning slide out.",
+      "category": "Music"
+    },
+    {
+      "id": "music_en_113",
+      "question": "What makes a mute change a trumpet's sound when it's pushed into the bell?",
+      "answers": [
+        {"text": "It blocks and reshapes which frequencies escape", "correct": true},
+        {"text": "It physically slows the player's air", "correct": false},
+        {"text": "It cools the air to lower the pitch", "correct": false}
+      ],
+      "difficulty": "medium",
+      "fun_fact": "A mute partly blocks the bell and absorbs or reflects certain frequencies, letting others through. This filters the tone, taming the loud, bright high harmonics and producing the nasal, buzzy or distant sound used so famously in jazz.",
+      "category": "Music"
+    },
+    {
+      "id": "music_en_114",
+      "question": "Why does blowing across the top of a bottle make a note, and why does a fuller bottle sound higher?",
+      "answers": [
+        {"text": "The air inside resonates, and less air vibrates faster", "correct": true},
+        {"text": "The water itself vibrates to make the tone", "correct": false},
+        {"text": "Your breath echoes off the bottom of the bottle", "correct": false}
+      ],
+      "difficulty": "medium",
+      "fun_fact": "Blowing across the opening sets the column of air inside vibrating like a spring. A bottle with more water has a smaller air pocket, which vibrates faster and gives a higher note. Tapping the same bottle does the opposite: more water means more mass and a lower tapped pitch.",
+      "category": "Music"
+    },
+    {
+      "id": "music_en_115",
+      "question": "Why do two slightly out-of-tune strings produce a wavering, pulsing sound?",
+      "answers": [
+        {"text": "Their waves drift in and out of step, adding then cancelling", "correct": true},
+        {"text": "One string is physically vibrating the other", "correct": false},
+        {"text": "The human ear cannot hold two pitches at once", "correct": false}
+      ],
+      "difficulty": "medium",
+      "fun_fact": "When two pitches are very close, their sound waves slowly slip in and out of alignment. When they line up they reinforce and get louder; when opposed they cancel and get quieter. The result is a regular throb called 'beats', and tuners listen for it to slow and stop as the strings match.",
+      "category": "Music"
+    },
+    {
+      "id": "music_en_116",
+      "question": "What does the curled-up tube of a French horn or trumpet actually accomplish?",
+      "answers": [
+        {"text": "It packs a long air column into a compact, holdable shape", "correct": true},
+        {"text": "The curls add a spinning vibration to the tone", "correct": false},
+        {"text": "Each loop produces a different note", "correct": false}
+      ],
+      "difficulty": "easy",
+      "fun_fact": "The pitch of a brass instrument depends mainly on the total length of its tubing. A trumpet uncoiled is over a metre and a half long, and a French horn unwound stretches several metres. Coiling that length into loops keeps the instrument playable without changing the note.",
+      "category": "Music"
+    },
+    {
+      "id": "music_en_117",
+      "question": "Why does a struck cymbal keep ringing long after the drum next to it has gone silent?",
+      "answers": [
+        {"text": "Its stiff metal vibrates with very little energy loss", "correct": true},
+        {"text": "Cymbals are hit much harder than drums", "correct": false},
+        {"text": "The air around a cymbal keeps pushing it", "correct": false}
+      ],
+      "difficulty": "medium",
+      "fun_fact": "A drumhead is stretched skin that flexes easily and quickly hands its energy to the air, so the sound dies fast. A cymbal is rigid metal that vibrates in many overlapping modes and loses energy slowly, letting it shimmer and decay for many seconds.",
+      "category": "Music"
+    },
+    {
+      "id": "music_en_118",
+      "question": "Why does a piano sound 'wrong' and tinny if every note is tuned to its exact mathematical frequency?",
+      "answers": [
+        {"text": "Real strings are stiff, so their overtones run slightly sharp", "correct": true},
+        {"text": "Pianos can only be tuned by ear, never by maths", "correct": false},
+        {"text": "The wooden case distorts perfect frequencies", "correct": false}
+      ],
+      "difficulty": "hard",
+      "fun_fact": "Real piano strings are stiff, so their overtones are stretched slightly sharper than pure maths predicts. To make octaves sound right to the ear, tuners deliberately tune the high notes a touch sharp and the low notes a touch flat, a practice called 'stretch tuning'.",
+      "category": "Music"
+    },
+    {
+      "id": "music_en_119",
+      "question": "What is the buzzing object that actually makes the sound in a clarinet or saxophone?",
+      "answers": [
+        {"text": "A thin reed that flutters against the mouthpiece", "correct": true},
+        {"text": "A spinning metal disc inside the mouthpiece", "correct": false},
+        {"text": "The player's vibrating lips", "correct": false}
+      ],
+      "difficulty": "medium",
+      "fun_fact": "A single reed, usually shaved from cane, vibrates rapidly against the mouthpiece opening, chopping the airflow into pulses that set the air column ringing. The reed opens and closes hundreds of times per second, and players carry spares because reeds wear out and crack.",
+      "category": "Music"
+    },
+    {
+      "id": "music_en_120",
+      "question": "Why can a soprano singing the very highest notes sometimes be heard clearly over a full, loud orchestra?",
+      "answers": [
+        {"text": "Trained singers concentrate energy in a frequency band the orchestra is weak in", "correct": true},
+        {"text": "The orchestra always plays quietly under a soprano", "correct": false},
+        {"text": "High notes physically travel faster than low ones", "correct": false}
+      ],
+      "difficulty": "hard",
+      "fun_fact": "Trained operatic singers develop the 'singer's formant', a cluster of resonance around 2,800 to 3,400 hertz where the orchestra produces relatively little energy and the human ear is especially sensitive. The voice slots into that gap and carries over the ensemble without a microphone.",
+      "category": "Music"
+    },
+    {
+      "id": "music_en_121",
+      "question": "Why does a drum sound completely dead and toneless out in open air with no surfaces nearby?",
+      "answers": [
+        {"text": "No surfaces reflect the sound back, so there is no reverberation", "correct": true},
+        {"text": "Open air mutes low frequencies entirely", "correct": false},
+        {"text": "Wind pulls the sound away from the drum", "correct": false}
+      ],
+      "difficulty": "easy",
+      "fun_fact": "Indoors, walls, floors and ceilings bounce sound back so notes blend and linger as reverberation. In a wide open field there's nothing to reflect the sound, so it spreads out and vanishes, leaving instruments sounding flat and lifeless. Concert halls are shaped specifically to control these reflections.",
+      "category": "Music"
+    },
+    {
+      "id": "music_en_122",
+      "question": "Why do headphones with active noise cancelling fight outside noise instead of just blocking it?",
+      "answers": [
+        {"text": "They play a mirror-image wave that cancels the incoming sound", "correct": true},
+        {"text": "They vibrate to shake the noise apart", "correct": false},
+        {"text": "They speed up the sound so your ear misses it", "correct": false}
+      ],
+      "difficulty": "medium",
+      "fun_fact": "A tiny microphone listens to the incoming noise, and the headphone instantly plays a sound wave that is its exact opposite. Where one wave pushes, the other pulls, and the two add up to near-silence. It works best on steady low drones like an aeroplane engine and struggles with sudden, unpredictable sounds.",
+      "category": "Music"
+    },
+    {
+      "id": "music_en_123",
+      "question": "Why does a string player's vibrato make a note sound richer rather than just wobbly?",
+      "answers": [
+        {"text": "The pitch wavers around a centre the ear settles on", "correct": true},
+        {"text": "It physically adds more strings to the vibration", "correct": false},
+        {"text": "It makes the note louder with each wobble", "correct": false}
+      ],
+      "difficulty": "medium",
+      "fun_fact": "Vibrato rocks the pitch slightly up and down by rolling the finger on the string. The ear averages this into a single, warmer-sounding note, and the constant tiny changes help the sound carry and stand out against an orchestra, much as a flickering light catches the eye more than a steady one.",
+      "category": "Music"
+    },
+    {
+      "id": "music_en_124",
+      "question": "Why does a double bass need such a huge body compared to a violin?",
+      "answers": [
+        {"text": "Big, slow sound waves need a large surface to move enough air", "correct": true},
+        {"text": "The body must be heavy to hold the thick strings' tension", "correct": false},
+        {"text": "A larger body is purely for the player to lean on", "correct": false}
+      ],
+      "difficulty": "hard",
+      "fun_fact": "Low notes are long, slow waves, and pushing that much air efficiently takes a large vibrating surface. A violin's small body would barely move the air at bass frequencies, so the instrument grows huge to project its deep notes, and even then much of the lowest energy is felt as much as heard.",
+      "category": "Music"
+    },
+    {
+      "id": "music_en_125",
+      "question": "Why does plucking a string near the bridge give a thinner, brighter, more nasal tone?",
+      "answers": [
+        {"text": "It favours the higher overtones over the deep fundamental", "correct": true},
+        {"text": "The string is tighter near the bridge", "correct": false},
+        {"text": "The bridge adds a metallic ring to every note", "correct": false}
+      ],
+      "difficulty": "medium",
+      "fun_fact": "Where you pluck a string decides which overtones it favours. Pluck near the middle and the deep fundamental dominates, giving a round, mellow tone. Pluck close to the bridge and you excite the higher harmonics, producing the bright, biting, nasal sound guitarists and harpsichords use for contrast.",
+      "category": "Music"
+    },
+    {
+      "id": "music_en_126",
+      "question": "The word 'jazz' originally had nothing to do with music. What did it first mean in early-1900s slang?",
+      "answers": [
+        {"text": "Pep, energy, or liveliness", "correct": true},
+        {"text": "A cheap kind of whiskey", "correct": false},
+        {"text": "A type of dance shoe", "correct": false}
+      ],
+      "difficulty": "medium",
+      "fun_fact": "The earliest printed uses of 'jazz' appear around 1912 in baseball writing, meaning vigour or spirit, before the term attached itself to the new music coming out of New Orleans.",
+      "category": "Music"
+    },
+    {
+      "id": "music_en_127",
+      "question": "The disc jockey term 'DJ' aside, where does the word 'turntable' literally come from?",
+      "answers": [
+        {"text": "A table whose top turns", "correct": true},
+        {"text": "A railway term for switching engines", "correct": false},
+        {"text": "The name of its 1920s inventor", "correct": false}
+      ],
+      "difficulty": "easy",
+      "fun_fact": "The name is pure description: a flat surface that rotates. Railways did use 'turntables' to spin locomotives around, and the audio device borrowed the everyday word for the same reason.",
+      "category": "Music"
+    },
+    {
+      "id": "music_en_128",
+      "question": "The 'Mellotron', a keyboard heard on many 1960s records, made sound in a surprising way. How did it work?",
+      "answers": [
+        {"text": "Each key played a strip of pre-recorded tape", "correct": true},
+        {"text": "It used tiny tuned tuning forks", "correct": false},
+        {"text": "It blew air across glass tubes", "correct": false}
+      ],
+      "difficulty": "hard",
+      "fun_fact": "Pressing a Mellotron key dragged a length of magnetic tape across a playback head, replaying a real recording of a flute or violin. Hold too long and you ran out of tape, so notes had a strict time limit.",
+      "category": "Music"
+    },
+    {
+      "id": "music_en_129",
+      "question": "The Fender 'Stratocaster' guitar was partly shaped the way it is for a very practical reason. What was it?",
+      "answers": [
+        {"text": "Its contours were carved so it wouldn't dig into the player's ribs", "correct": true},
+        {"text": "It was shaped to float if dropped in water", "correct": false},
+        {"text": "Its curves were copied from a violin for tradition", "correct": false}
+      ],
+      "difficulty": "medium",
+      "fun_fact": "Earlier slab-bodied guitars pressed uncomfortably against the player. Leo Fender's team added the body contours after performers complained, making comfort, not looks, the original driver of the iconic shape.",
+      "category": "Music"
+    },
+    {
+      "id": "music_en_130",
+      "question": "The word 'piano' is short for 'pianoforte'. What do those two Italian roots literally describe?",
+      "answers": [
+        {"text": "Soft and loud", "correct": true},
+        {"text": "Hand and finger", "correct": false},
+        {"text": "Wood and string", "correct": false}
+      ],
+      "difficulty": "easy",
+      "fun_fact": "The instrument was a breakthrough because, unlike the harpsichord, it could play both quietly ('piano') and loudly ('forte') depending on touch. Its full original name advertised that single revolutionary feature.",
+      "category": "Music"
+    },
+    {
+      "id": "music_en_131",
+      "question": "The 'gramophone' record got its spiral groove for a reason most people never think about. Why a spiral?",
+      "answers": [
+        {"text": "So a single continuous track could spiral inward without lifting the needle", "correct": true},
+        {"text": "Because spirals were cheaper to stamp than circles", "correct": false},
+        {"text": "To match the spiral shape of the human ear", "correct": false}
+      ],
+      "difficulty": "medium",
+      "fun_fact": "A single spiral lets the needle travel steadily from edge to centre across one unbroken path. Concentric rings would force the needle to jump between separate circles, which no playback arm could do smoothly.",
+      "category": "Music"
+    },
+    {
+      "id": "music_en_132",
+      "question": "Before the metronome, what objective tool did musicians lack that Maelzel's 1815 device finally gave them?",
+      "answers": [
+        {"text": "A repeatable, steady beat to practise against", "correct": true},
+        {"text": "A way to navigate ships by sound at sea", "correct": false},
+        {"text": "A heartbeat monitor for use by doctors", "correct": false}
+      ],
+      "difficulty": "medium",
+      "fun_fact": "Early pendulum tempo devices existed before Maelzel's famous 1815 patented design. The goal was always the same: give musicians an objective, repeatable beat instead of relying on a teacher's swinging hand or foot.",
+      "category": "Music"
+    },
+    {
+      "id": "music_en_133",
+      "question": "The 'ukulele' got its Hawaiian name, often translated as 'jumping flea', for a surprising reason. What inspired it?",
+      "answers": [
+        {"text": "The rapid jumping movement of the player's fingers", "correct": true},
+        {"text": "The insects that lived in early island instruments", "correct": false},
+        {"text": "A dance where performers hopped on one foot", "correct": false}
+      ],
+      "difficulty": "hard",
+      "fun_fact": "The instrument arrived with Portuguese immigrants in the 1880s. Hawaiians reportedly named it for how a skilled player's fingers darted across the strings like a flea, a vivid description rather than a literal pest problem.",
+      "category": "Music"
+    },
+    {
+      "id": "music_en_134",
+      "question": "The 'A side' and 'B side' of a single exist because of a basic physical fact about early records. What was it?",
+      "answers": [
+        {"text": "A disc has two playable faces", "correct": true},
+        {"text": "Records were graded A or B by sound quality", "correct": false},
+        {"text": "The letters marked which way to load the player", "correct": false}
+      ],
+      "difficulty": "easy",
+      "fun_fact": "With two sides to fill, labels put the song they were promoting on the 'A side' and a lesser track on the 'B side'. Some B sides accidentally became bigger hits than the songs they were meant to support.",
+      "category": "Music"
+    },
+    {
+      "id": "music_en_135",
+      "question": "The word 'orchestra' originally referred not to a group of musicians but to what?",
+      "answers": [
+        {"text": "A semicircular space in front of an ancient Greek stage", "correct": true},
+        {"text": "A type of large stringed instrument", "correct": false},
+        {"text": "The conductor's raised wooden platform", "correct": false}
+      ],
+      "difficulty": "hard",
+      "fun_fact": "In ancient Greek theatres, the 'orchestra' was the ground-level area where the chorus danced and sang. Only much later did the word shift to mean the body of instrumentalists who eventually occupied that same front space.",
+      "category": "Music"
+    },
+    {
+      "id": "music_en_136",
+      "question": "The electric guitar was invented largely to solve one practical problem. What was it?",
+      "answers": [
+        {"text": "Acoustic guitars were too quiet to be heard over big bands", "correct": true},
+        {"text": "Acoustic guitars went out of tune in hot venues", "correct": false},
+        {"text": "Acoustic guitars were too expensive to mass-produce", "correct": false}
+      ],
+      "difficulty": "medium",
+      "fun_fact": "In 1930s dance bands, guitarists were drowned out by horns and drums. Amplifying the strings with a pickup let the guitar finally cut through, which is why early electric models prized volume over tone.",
+      "category": "Music"
+    },
+    {
+      "id": "music_en_137",
+      "question": "The 'wah-wah' guitar pedal got its name in the most literal way possible. How?",
+      "answers": [
+        {"text": "It mimics a voice saying 'wah'", "correct": true},
+        {"text": "It was named after its inventor, Walter Wah", "correct": false},
+        {"text": "'WAH' stood for Wide Audio Harmonics", "correct": false}
+      ],
+      "difficulty": "easy",
+      "fun_fact": "The pedal sweeps a tone filter as you rock your foot, producing a vocal-like 'wah' sound. The effect was reportedly discovered while engineers were trying to imitate a muted trumpet.",
+      "category": "Music"
+    },
+    {
+      "id": "music_en_138",
+      "question": "The 'concert pitch' standard exists partly because, before it, the same written note sounded different where?",
+      "answers": [
+        {"text": "In different cities and countries", "correct": true},
+        {"text": "At different times of day", "correct": false},
+        {"text": "On stringed versus wind instruments only", "correct": false}
+      ],
+      "difficulty": "medium",
+      "fun_fact": "Before international agreement, an 'A' in one town could be noticeably higher or lower than the same note elsewhere, so a singer travelling between cities might find a piece suddenly too high to sing. Standardising pitch fixed that chaos.",
+      "category": "Music"
+    },
+    {
+      "id": "music_en_139",
+      "question": "The 'banjo' descends most directly from instruments brought to the Americas by whom?",
+      "answers": [
+        {"text": "Enslaved West Africans", "correct": true},
+        {"text": "Irish indentured labourers", "correct": false},
+        {"text": "Spanish colonial soldiers", "correct": false}
+      ],
+      "difficulty": "medium",
+      "fun_fact": "The banjo's gourd-bodied, skin-headed ancestors came from West Africa with enslaved people. Only later did the instrument become a fixture of American folk and minstrel music, far from its true origins.",
+      "category": "Music"
+    },
+    {
+      "id": "music_en_140",
+      "question": "The 'tin whistle' or 'penny whistle' earned its 'penny' name for what reason?",
+      "answers": [
+        {"text": "Early mass-produced ones cost about a penny", "correct": true},
+        {"text": "Players left them out to collect pennies", "correct": false},
+        {"text": "They were made from melted-down coins", "correct": false}
+      ],
+      "difficulty": "medium",
+      "fun_fact": "In 19th-century Britain, cheap tinplate whistles sold for roughly a penny, making music accessible to almost anyone. The throwaway price, not the material's value, gave the instrument its enduring nickname.",
+      "category": "Music"
+    },
+    {
+      "id": "music_en_141",
+      "question": "The 'concertina' and accordion both make sound using the same hidden mechanism. What is it?",
+      "answers": [
+        {"text": "Air vibrating thin metal reeds", "correct": true},
+        {"text": "Tiny hammers striking strings", "correct": false},
+        {"text": "Air whistling across open pipes", "correct": false}
+      ],
+      "difficulty": "medium",
+      "fun_fact": "Squeezing the bellows pushes air past free metal reeds that vibrate to make pitch, the same principle as a harmonica. The keys or buttons simply choose which reeds the air is allowed to reach.",
+      "category": "Music"
+    },
+    {
+      "id": "music_en_142",
+      "question": "The word 'album', for a collection of songs, came from an older meaning. What did an 'album' first hold?",
+      "answers": [
+        {"text": "A bound book of blank pages or pockets", "correct": true},
+        {"text": "A list of approved court musicians", "correct": false},
+        {"text": "A type of white ceremonial robe", "correct": false}
+      ],
+      "difficulty": "hard",
+      "fun_fact": "Early 78 RPM records held only minutes per side, so multiple discs were sold together in bound book-like 'albums' of sleeves. When the long-playing record arrived, the name stuck even though the book was gone.",
+      "category": "Music"
+    },
+    {
+      "id": "music_en_143",
+      "question": "The 'kazoo' changes your voice into a buzz using what hidden part?",
+      "answers": [
+        {"text": "A thin vibrating membrane", "correct": true},
+        {"text": "A tiny brass reed", "correct": false},
+        {"text": "A coiled spring inside the tube", "correct": false}
+      ],
+      "difficulty": "medium",
+      "fun_fact": "You don't blow a kazoo, you hum into it. Your voice rattles a thin membrane, adding the buzzy timbre. Stop humming and blow, and nothing happens, which is why so many first-time players are baffled.",
+      "category": "Music"
+    },
+    {
+      "id": "music_en_144",
+      "question": "The 'sustain pedal' on a piano produces its effect by doing what to the strings?",
+      "answers": [
+        {"text": "Lifting the dampers off so strings keep ringing", "correct": true},
+        {"text": "Pressing extra felt onto the strings", "correct": false},
+        {"text": "Shifting the keyboard sideways slightly", "correct": false}
+      ],
+      "difficulty": "medium",
+      "fun_fact": "Normally a felt damper falls onto each string when you release a key. The right pedal raises all dampers at once, so notes ring on and even strings you didn't play vibrate in sympathy, enriching the sound.",
+      "category": "Music"
+    },
+    {
+      "id": "music_en_145",
+      "question": "The 'recorder', the simple school flute, got its English name from an old meaning of 'record'. What did that word mean?",
+      "answers": [
+        {"text": "To sing or warble, as a bird does", "correct": true},
+        {"text": "To write down a melody", "correct": false},
+        {"text": "To repeat a teacher's notes", "correct": false}
+      ],
+      "difficulty": "hard",
+      "fun_fact": "In late medieval English, 'to record' could mean to practise a tune quietly or to sing like a bird. The instrument took its name from that sense long before 'record' came to mean storing sound.",
+      "category": "Music"
+    },
+    {
+      "id": "music_en_146",
+      "question": "The standard symphony orchestra tunes to the oboe at the start of a concert for a practical reason. Why the oboe?",
+      "answers": [
+        {"text": "Its pitch is stable and its tone cuts clearly through", "correct": true},
+        {"text": "It is always the most expensive instrument present", "correct": false},
+        {"text": "It is the only instrument that cannot retune itself", "correct": false}
+      ],
+      "difficulty": "hard",
+      "fun_fact": "The oboe holds its pitch reliably and its penetrating, reedy tone is easy for everyone to hear over a noisy stage. By tradition it sounds the tuning 'A', and the rest of the orchestra matches it.",
+      "category": "Music"
+    },
+    {
+      "id": "music_en_147",
+      "question": "The 'whammy bar' or tremolo arm on an electric guitar was originally added to imitate what?",
+      "answers": [
+        {"text": "The vibrato of a singer or violinist", "correct": true},
+        {"text": "The wail of a police siren", "correct": false},
+        {"text": "The hum of an organ", "correct": false}
+      ],
+      "difficulty": "medium",
+      "fun_fact": "The bar slackens and tightens the strings to wobble the pitch, mimicking the expressive vibrato of the human voice or a bowed string. The confusingly named 'tremolo arm' actually produces vibrato, not tremolo.",
+      "category": "Music"
+    },
+    {
+      "id": "music_en_148",
+      "question": "The 'a cappella' style of singing without instruments has a name that literally points to where it came from. What does 'a cappella' mean?",
+      "answers": [
+        {"text": "In the manner of the chapel", "correct": true},
+        {"text": "Without any written music", "correct": false},
+        {"text": "With a single leading voice", "correct": false}
+      ],
+      "difficulty": "medium",
+      "fun_fact": "The Italian phrase means 'in the chapel style', recalling church music sung by voices alone. The term survives today for everything from doo-wop to choirs, long detached from its religious roots.",
+      "category": "Music"
+    },
+    {
+      "id": "music_en_149",
+      "question": "The guitar 'slide' (bottleneck) technique in blues traces partly to a homemade instrument played how?",
+      "answers": [
+        {"text": "A single wire nailed to a wall or board, plucked and slid", "correct": true},
+        {"text": "A clay pot struck with wooden spoons", "correct": false},
+        {"text": "A stretched animal bladder blown like a horn", "correct": false}
+      ],
+      "difficulty": "hard",
+      "fun_fact": "The 'diddley bow', a single string tensioned on a porch wall or plank, was a common first instrument in the rural American South. Sliding a bottle or bone along the wire produced the swooping pitches that fed into bottleneck blues guitar.",
+      "category": "Music"
+    },
+    {
+      "id": "music_en_150",
+      "question": "The Beatles' song 'Yesterday' is one of the most-covered songs in history. Roughly how many recorded cover versions does it have?",
+      "answers": [
+        {"text": "Over 2,000", "correct": true},
+        {"text": "About 300", "correct": false},
+        {"text": "Around 50", "correct": false}
+      ],
+      "difficulty": "easy",
+      "fun_fact": "Guinness World Records has long cited 'Yesterday' as having well over 2,000 recorded cover versions. Paul McCartney dreamed the melody and worried he had subconsciously stolen it from someone else.",
+      "category": "Music"
+    },
+    {
+      "id": "music_en_151",
+      "question": "Michael Jackson's 'Thriller' is the best-selling album ever. It is estimated to have sold over how many copies worldwide?",
+      "answers": [
+        {"text": "Around 70 million", "correct": true},
+        {"text": "Around 10 million", "correct": false},
+        {"text": "Around 200 million", "correct": false}
+      ],
+      "difficulty": "easy",
+      "fun_fact": "'Thriller' is estimated to have sold around 70 million copies. At its 1980s peak it was reportedly selling about a million copies a week.",
       "category": "Music"
     }
   ]

@@ -1,7 +1,7 @@
 {
   "name": "Tiere & Natur",
   "language": "de",
-  "version": "1.0",
+  "version": "1.1",
   "theme": "nature",
   "questions": [
     {
@@ -1202,6 +1202,594 @@
       ],
       "difficulty": "medium",
       "fun_fact": "Beim Seepferdchen legt das Weibchen die Eier in eine Bruttasche am Bauch des Männchens. Das Männchen befruchtet sie dort, versorgt sie über Wochen mit Nährstoffen und presst am Ende bis zu 1.000 fertige Jungtiere heraus — eine echte männliche Schwangerschaft.",
+      "category": "Tiere & Natur"
+    },
+    {
+      "id": "nat_111",
+      "question": "Warum schmeckt Honig so süß und wird (richtig gelagert) niemals schlecht?",
+      "answers": [
+        {"text": "Sein extrem niedriger Wassergehalt entzieht Bakterien das Wasser", "correct": true},
+        {"text": "Bienen geben ein Konservierungsmittel aus ihrem Stachel bei", "correct": false},
+        {"text": "Der hohe Säuregehalt tötet alle Keime sofort ab", "correct": false}
+      ],
+      "difficulty": "medium",
+      "fun_fact": "Honig ist eine übersättigte Zuckerlösung mit unter 18 % Wasser. Diese Trockenheit zieht jeder Mikrobe das Wasser aus der Zelle. Archäologen fanden in ägyptischen Gräbern über 3.000 Jahre alten Honig, der noch essbar war.",
+      "category": "Tiere & Natur"
+    },
+    {
+      "id": "nat_112",
+      "question": "Warum sind die Blätter im Sommer grün?",
+      "answers": [
+        {"text": "Chlorophyll schluckt rotes und blaues Licht und wirft grünes zurück", "correct": true},
+        {"text": "Grünes Sonnenlicht wird von den Blättern besonders stark aufgenommen", "correct": false},
+        {"text": "Die Zellwände der Blätter bestehen aus grünem Farbstoff", "correct": false}
+      ],
+      "difficulty": "easy",
+      "fun_fact": "Pflanzen nutzen Grün am wenigsten — sie reflektieren es. Die Sonne strahlt zwar kräftig im grünen Bereich, doch genau diesen Bereich lässt das Chlorophyll weitgehend ungenutzt zurückprallen. Vermutlich vermeidet die Pflanze damit eine Überlastung durch zu viel Licht.",
+      "category": "Tiere & Natur"
+    },
+    {
+      "id": "nat_113",
+      "question": "Warum wird Laub im Herbst bunt?",
+      "answers": [
+        {"text": "Das grüne Chlorophyll wird abgebaut und legt darunterliegende Farben frei", "correct": true},
+        {"text": "Der erste Frost färbt die Blätter chemisch gelb und rot", "correct": false},
+        {"text": "Die Blätter nehmen Farbstoffe aus dem Regenwasser auf", "correct": false}
+      ],
+      "difficulty": "easy",
+      "fun_fact": "Gelb und Orange stecken die ganze Saison im Blatt — sie werden vom dominanten Grün nur überdeckt. Wird das Chlorophyll vor dem Winter abgebaut und zurückgezogen, kommen die gelben Carotinoide zum Vorschein.",
+      "category": "Tiere & Natur"
+    },
+    {
+      "id": "nat_114",
+      "question": "Wie schaffen es Glühwürmchen, Licht völlig ohne Wärme zu erzeugen?",
+      "answers": [
+        {"text": "Durch eine chemische Reaktion mit dem Enzym Luciferase", "correct": true},
+        {"text": "Durch Reibung winziger Schuppen am Hinterleib", "correct": false},
+        {"text": "Durch elektrische Entladungen zwischen zwei Hautschichten", "correct": false}
+      ],
+      "difficulty": "easy",
+      "fun_fact": "Glühwürmchen erreichen nahezu 100 % Lichtausbeute — fast keine Energie geht als Wärme verloren. Eine Glühbirne schafft kaum 10 %. Der Stoff Luciferin reagiert mit Sauerstoff, gesteuert durch das Enzym Luciferase.",
+      "category": "Tiere & Natur"
+    },
+    {
+      "id": "nat_115",
+      "question": "Warum kann ein Gecko kopfüber an einer glatten Glasscheibe laufen?",
+      "answers": [
+        {"text": "Millionen winziger Härchen nutzen molekulare Anziehungskräfte", "correct": true},
+        {"text": "Seine Füße sondern einen klebrigen Saugschleim ab", "correct": false},
+        {"text": "Winzige Saugnäpfe an den Zehen erzeugen ein Vakuum", "correct": false}
+      ],
+      "difficulty": "medium",
+      "fun_fact": "Geckozehen tragen Millionen feinster Härchen (Setae), die so nah an die Oberfläche kommen, dass die Van-der-Waals-Kräfte zwischen den Molekülen greifen. Kein Klebstoff, kein Sog — reine Physik der Atomhüllen.",
+      "category": "Tiere & Natur"
+    },
+    {
+      "id": "nat_116",
+      "question": "Warum macht eine scharfe Chili im Mund ein Hitzegefühl, obwohl nichts wirklich heiß ist?",
+      "answers": [
+        {"text": "Capsaicin aktiviert genau die Nerven, die sonst echte Hitze melden", "correct": true},
+        {"text": "Die Schärfe erhöht kurzfristig die Temperatur im Mundraum", "correct": false},
+        {"text": "Der Stoff reizt die Geschmacksknospen für bitter und sauer zugleich", "correct": false}
+      ],
+      "difficulty": "easy",
+      "fun_fact": "Capsaicin dockt am Rezeptor TRPV1 an — demselben, der bei über 43 °C Hitze auslöst. Das Gehirn 'glaubt' an Verbrennung. Deshalb hilft Milch besser als Wasser: Das Fett löst das wasserabweisende Capsaicin von den Nerven.",
+      "category": "Tiere & Natur"
+    },
+    {
+      "id": "nat_117",
+      "question": "Warum bringt eine aufgeschnittene Zwiebel uns zum Weinen?",
+      "answers": [
+        {"text": "Sie setzt ein flüchtiges Gas frei, das in den Augen Säure bildet", "correct": true},
+        {"text": "Der Zwiebelsaft reizt die Augen rein durch seinen Geruch", "correct": false},
+        {"text": "Feine Zwiebelpartikel fliegen in die Augen und kratzen", "correct": false}
+      ],
+      "difficulty": "medium",
+      "fun_fact": "Beim Schneiden zerstörte Zellen mischen Enzyme, die ein flüchtiges Gas (syn-Propanthial-S-oxid) freisetzen. In der Tränenflüssigkeit wird daraus Schwefelsäure — die Augen spülen reflexartig. Kühlen verlangsamt die Reaktion.",
+      "category": "Tiere & Natur"
+    },
+    {
+      "id": "nat_118",
+      "question": "Warum verändern Hortensien je nach Boden ihre Blütenfarbe?",
+      "answers": [
+        {"text": "Aluminium aus saurem Boden lässt sie blau statt rosa blühen", "correct": true},
+        {"text": "Mehr Sonnenlicht im sauren Boden bleicht die Blüten blau", "correct": false},
+        {"text": "Der Stickstoffgehalt steuert direkt den roten Blütenfarbstoff", "correct": false}
+      ],
+      "difficulty": "hard",
+      "fun_fact": "Der Farbstoff der Hortensie ist immer derselbe — aber nur in saurem Boden kann die Pflanze Aluminium aufnehmen, das ihn ins Blaue verschiebt. Im kalkhaltigen, basischen Boden bleibt das Aluminium gebunden und die Blüten werden rosa.",
+      "category": "Tiere & Natur"
+    },
+    {
+      "id": "nat_119",
+      "question": "Warum knallt ein Donner erst einige Sekunden nach dem Blitz?",
+      "answers": [
+        {"text": "Schall ist viel langsamer als Licht", "correct": true},
+        {"text": "Der Donner entsteht erst, nachdem der Blitz den Boden erreicht hat", "correct": false},
+        {"text": "Wolken dämpfen den Schall und verzögern ihn dadurch", "correct": false}
+      ],
+      "difficulty": "easy",
+      "fun_fact": "Licht erreicht uns praktisch sofort, Schall braucht rund 3 Sekunden pro Kilometer. Zählt man die Sekunden zwischen Blitz und Donner und teilt durch drei, hat man die Entfernung des Gewitters in Kilometern.",
+      "category": "Tiere & Natur"
+    },
+    {
+      "id": "nat_120",
+      "question": "Warum gefriert ein See im Winter von oben nach unten zu — und nicht umgekehrt?",
+      "answers": [
+        {"text": "Wasser ist bei 4 °C am dichtesten und schwersten", "correct": true},
+        {"text": "Die Kälte dringt zuerst über den Seeboden ein", "correct": false},
+        {"text": "Eis ist schwerer als Wasser und steigt erst beim Tauen auf", "correct": false}
+      ],
+      "difficulty": "medium",
+      "fun_fact": "Wasser hat seine größte Dichte bei 4 °C — kälteres, leichteres Wasser steigt nach oben und gefriert dort. Diese Anomalie rettet Fische: Unter der Eisdecke bleibt es bei lebensfreundlichen 4 °C, sonst würden Seen komplett durchfrieren.",
+      "category": "Tiere & Natur"
+    },
+    {
+      "id": "nat_121",
+      "question": "Warum wirkt der Himmel an einem klaren Tag blau?",
+      "answers": [
+        {"text": "Luftmoleküle streuen blaues Licht stärker als rotes", "correct": true},
+        {"text": "Das Sonnenlicht spiegelt sich im blauen Meer", "correct": false},
+        {"text": "Die obere Atmosphäre besteht aus blauem Gas", "correct": false}
+      ],
+      "difficulty": "medium",
+      "fun_fact": "Kurzwelliges blaues Licht prallt an den Luftmolekülen viel stärker in alle Richtungen ab als rotes (Rayleigh-Streuung). Bei Sonnenuntergang reist das Licht durch mehr Luft, das Blau verstreut sich weg — übrig bleibt das Rot.",
+      "category": "Tiere & Natur"
+    },
+    {
+      "id": "nat_122",
+      "question": "Warum sehen wir bei einem Regenbogen die Farben getrennt?",
+      "answers": [
+        {"text": "Regentropfen brechen Sonnenlicht je nach Farbe unterschiedlich stark", "correct": true},
+        {"text": "Jeder Regentropfen ist von Natur aus farbig getönt", "correct": false},
+        {"text": "Die Wolken filtern das Licht in einzelne Farbbänder", "correct": false}
+      ],
+      "difficulty": "easy",
+      "fun_fact": "Jeder Tropfen wirkt wie ein winziges Prisma: Beim Eintritt wird das Licht gebrochen, hinten reflektiert und beim Austritt nochmals gebrochen. Da jede Farbe in einem leicht anderen Winkel austritt, fächern sie sich auf — bei genau rund 42 Grad.",
+      "category": "Tiere & Natur"
+    },
+    {
+      "id": "nat_123",
+      "question": "Warum schwimmt Eis auf dem Wasser, statt unterzugehen?",
+      "answers": [
+        {"text": "Beim Gefrieren bilden die Moleküle ein weiträumigeres Gitter", "correct": true},
+        {"text": "Eingeschlossene Luftbläschen machen Eis insgesamt leichter", "correct": false},
+        {"text": "Eis ist kälter und kalte Stoffe steigen grundsätzlich auf", "correct": false}
+      ],
+      "difficulty": "easy",
+      "fun_fact": "Fast jeder Stoff wird beim Erstarren dichter — Wasser ist die große Ausnahme. Gefrierende Wassermoleküle ordnen sich zu einem sechseckigen Gitter mit mehr Lücken, weshalb Eis rund 9 % weniger dicht ist und oben schwimmt.",
+      "category": "Tiere & Natur"
+    },
+    {
+      "id": "nat_124",
+      "question": "Wie 'riecht' eine Schlange ihre Beute?",
+      "answers": [
+        {"text": "Mit der gespaltenen Zunge sammelt sie Duftpartikel für ein Organ am Gaumen", "correct": true},
+        {"text": "Über feine Geruchsporen entlang ihres Bauchs", "correct": false},
+        {"text": "Durch das Aufnehmen von Wärme über die Zungenspitze", "correct": false}
+      ],
+      "difficulty": "medium",
+      "fun_fact": "Die züngelnde Schlange fängt Duftmoleküle aus der Luft ein und führt sie zum Jacobson-Organ am Gaumen. Die zwei Zungenspitzen liefern getrennte Proben — so 'riecht' die Schlange in Stereo und weiß, aus welcher Richtung die Beute kommt.",
+      "category": "Tiere & Natur"
+    },
+    {
+      "id": "nat_125",
+      "question": "Wie findet eine Fledermaus im Dunkeln ihre Beute?",
+      "answers": [
+        {"text": "Sie stößt Ultraschallrufe aus und hört deren Echo", "correct": true},
+        {"text": "Sie nimmt die Körperwärme der Insekten wahr", "correct": false},
+        {"text": "Sie folgt den elektrischen Feldern der Beutetiere", "correct": false}
+      ],
+      "difficulty": "easy",
+      "fun_fact": "Fledermäuse schreien für uns unhörbar und werten das zurückkehrende Echo aus. Ihre Rufe gehören mit über 100 dB zu den lautesten Tierlauten überhaupt. Um sich nicht selbst zu betäuben, koppeln sie beim Schrei kurz ihr eigenes Mittelohr ab.",
+      "category": "Tiere & Natur"
+    },
+    {
+      "id": "nat_126",
+      "question": "Warum schmilzt Streusalz das Eis auf winterlichen Straßen?",
+      "answers": [
+        {"text": "Salz senkt den Gefrierpunkt des Wassers unter 0 °C", "correct": true},
+        {"text": "Salzkristalle erzeugen beim Auflösen spürbare Wärme", "correct": false},
+        {"text": "Das Salz reflektiert Sonnenwärme verstärkt auf das Eis", "correct": false}
+      ],
+      "difficulty": "easy",
+      "fun_fact": "Gelöstes Salz stört das Gefrieren der Wassermoleküle — Salzwasser gefriert erst weit unter null. Unter etwa −21 °C nützt Kochsalz allerdings nichts mehr; dann braucht man andere Auftaumittel wie Calciumchlorid.",
+      "category": "Tiere & Natur"
+    },
+    {
+      "id": "nat_127",
+      "question": "Warum quietscht frischer Schnee, wenn man bei großer Kälte darüber läuft?",
+      "answers": [
+        {"text": "Eiskristalle brechen und reiben aneinander, statt zu schmelzen", "correct": true},
+        {"text": "Eingeschlossene Luft entweicht pfeifend aus dem Schnee", "correct": false},
+        {"text": "Die Schuhsohle vibriert auf der harten Eisschicht", "correct": false}
+      ],
+      "difficulty": "medium",
+      "fun_fact": "Bei milderer Kälte sind die Schneekristalle von einer hauchdünnen, fast flüssigen Oberflächenschicht überzogen, die wie ein Schmierfilm wirkt — der Schnee gleitet eher lautlos. Bei strenger Kälte fehlt dieser Film: Die spröden Kristalle zerbrechen und scheuern hörbar aneinander — daher das typische Knirschen.",
+      "category": "Tiere & Natur"
+    },
+    {
+      "id": "nat_128",
+      "question": "Warum funkeln Sterne, Planeten dagegen kaum?",
+      "answers": [
+        {"text": "Sternenlicht kommt als Punkt an und wird von der Luft stärker abgelenkt", "correct": true},
+        {"text": "Sterne senden ihr Licht in regelmäßigen Pulsen aus", "correct": false},
+        {"text": "Planeten leuchten von sich aus und sind deshalb stabiler", "correct": false}
+      ],
+      "difficulty": "hard",
+      "fun_fact": "Sterne sind so weit weg, dass sie als reiner Lichtpunkt ankommen — jede Luftturbulenz lässt diesen Punkt zappeln. Planeten erscheinen als winzige Scheibe; ihr Geflacker mittelt sich über die Fläche aus, deshalb leuchten sie ruhig.",
+      "category": "Tiere & Natur"
+    },
+    {
+      "id": "nat_129",
+      "question": "Warum fühlt sich ein Holzgeländer bei gleicher Temperatur wärmer an als ein Metallgeländer?",
+      "answers": [
+        {"text": "Metall leitet Wärme schneller von der Hand weg", "correct": true},
+        {"text": "Metall ist tatsächlich kälter als das Holz daneben", "correct": false},
+        {"text": "Holz erzeugt durch seine Maserung etwas Reibungswärme", "correct": false}
+      ],
+      "difficulty": "easy",
+      "fun_fact": "Beide haben dieselbe Temperatur — aber Metall transportiert die Wärme deiner Hand viel schneller ab als Holz. Die Haut meldet diesen schnellen Wärmeverlust als 'kalt'. Wir messen also nicht Temperatur, sondern Wärmefluss.",
+      "category": "Tiere & Natur"
+    },
+    {
+      "id": "nat_130",
+      "question": "Wie entsteht das Gift, mit dem eine Brennnessel auf der Haut brennt?",
+      "answers": [
+        {"text": "Winzige Glashärchen brechen ab und spritzen Reizstoffe in die Haut", "correct": true},
+        {"text": "Ein klebriger Saft auf den Blättern ätzt die Hautoberfläche", "correct": false},
+        {"text": "Die Blattfarbstoffe lösen bei Sonne eine Reaktion aus", "correct": false}
+      ],
+      "difficulty": "medium",
+      "fun_fact": "Die Brennhaare sind verkieselte Hohlnadeln mit Sollbruchstelle. Bei Berührung brechen sie wie eine Glasspritze ab und injizieren einen Cocktail aus Histamin und Ameisensäure. Greift man fest und entschlossen zu, brechen viele Haare flach ab — und es brennt weniger.",
+      "category": "Tiere & Natur"
+    },
+    {
+      "id": "nat_131",
+      "question": "Warum wirken viele Pflanzen unter UV-Licht für Bienen ganz anders gemustert als für uns?",
+      "answers": [
+        {"text": "Blüten tragen für uns unsichtbare UV-Muster als Landebahn", "correct": true},
+        {"text": "Bienen sehen Pflanzen grundsätzlich nur in Schwarz-Weiß", "correct": false},
+        {"text": "Das UV-Licht färbt die Blütenblätter vorübergehend um", "correct": false}
+      ],
+      "difficulty": "hard",
+      "fun_fact": "Viele Blüten haben UV-reflektierende Bereiche, die zum Nektar weisen — sogenannte 'Saftmale'. Bienen sehen UV statt Rot und nehmen diese Muster wie Landebahn-Markierungen wahr. Für uns sieht dieselbe Blüte oft einfarbig aus.",
+      "category": "Tiere & Natur"
+    },
+    {
+      "id": "nat_132",
+      "question": "Warum klebt ein Insekt im Spinnennetz fest, die Spinne selbst aber nicht?",
+      "answers": [
+        {"text": "Nur ein Teil der Fäden ist klebrig, und die Spinne läuft auf den trockenen", "correct": true},
+        {"text": "Die Spinne sondert ständig ein Lösungsmittel an den Beinen ab", "correct": false},
+        {"text": "Die Beine der Spinne sind zu glatt, um irgendwo haften zu bleiben", "correct": false}
+      ],
+      "difficulty": "medium",
+      "fun_fact": "Im Radnetz sind nur die spiralförmigen Fangfäden mit Klebetröpfchen besetzt — die radialen Speichen sind trocken. Die Spinne kennt ihr Netz und tritt gezielt auf die trockenen Fäden; zusätzlich berührt sie es nur mit den Spitzen ihrer Beine.",
+      "category": "Tiere & Natur"
+    },
+    {
+      "id": "nat_133",
+      "question": "Warum leuchtet manches Meerwasser nachts blau auf, wenn man hindurchwatet?",
+      "answers": [
+        {"text": "Winzige Plankton-Algen geben bei Bewegung Licht ab", "correct": true},
+        {"text": "Das Mondlicht spiegelt sich in aufgewühlten Salzkristallen", "correct": false},
+        {"text": "Die Reibung der Wellen erzeugt schwache elektrische Funken", "correct": false}
+      ],
+      "difficulty": "medium",
+      "fun_fact": "Das 'Meeresleuchten' stammt von Dinoflagellaten — Einzellern, die bei Erschütterung kurz aufblitzen. Vermutlich ist es ein Schreckreflex: Das Aufleuchten lockt größere Räuber an, die wiederum die kleinen Planktonfresser jagen.",
+      "category": "Tiere & Natur"
+    },
+    {
+      "id": "nat_134",
+      "question": "Warum bleibt ein Pinguin mit nackten Füßen auf dem Eis stehen, ohne festzufrieren?",
+      "answers": [
+        {"text": "Ein Gegenstromsystem hält die Füße knapp über dem Gefrierpunkt", "correct": true},
+        {"text": "Die Fußsohlen sind von einer dicken Fettschicht isoliert", "correct": false},
+        {"text": "Pinguine geben über die Füße permanent Körperwärme ans Eis ab", "correct": false}
+      ],
+      "difficulty": "hard",
+      "fun_fact": "In den Beinen verlaufen warme und kalte Blutgefäße eng beieinander: Das warme Blut wärmt das zurückströmende kalte vor. So verlieren die Pinguine kaum Körperwärme, und die Füße werden zugleich nur knapp über 0 °C gehalten — warm genug, um nicht festzufrieren, aber kalt genug, um keine Wärme zu verschwenden.",
+      "category": "Tiere & Natur"
+    },
+    {
+      "id": "nat_135",
+      "question": "Woher stammt der Name 'Löwenzahn' für die gelbe Wiesenblume?",
+      "answers": [
+        {"text": "Von der Form der gezackten Blätter", "correct": true},
+        {"text": "Von der goldgelben Blütenfarbe", "correct": false},
+        {"text": "Von der haarigen Pusteblume", "correct": false}
+      ],
+      "difficulty": "easy",
+      "fun_fact": "Die tief eingeschnittenen, spitzen Blattzacken erinnerten an ein Löwengebiss — daher 'Löwenzahn'. Das französische 'dent de lion' (Löwenzahn) wurde im Englischen zu 'dandelion' verschliffen, sodass die Herkunft dort kaum noch erkennbar ist.",
+      "category": "Tiere & Natur"
+    },
+    {
+      "id": "nat_136",
+      "question": "Das Antibiotikum Penicillin wurde 1928 entdeckt, weil etwas schiefging. Was?",
+      "answers": [
+        {"text": "Eine Bakterienkultur wurde versehentlich von Schimmel verunreinigt", "correct": true},
+        {"text": "Ein Kühlschrank fiel über das Wochenende aus", "correct": false},
+        {"text": "Zwei Proben wurden im Labor vertauscht", "correct": false}
+      ],
+      "difficulty": "easy",
+      "fun_fact": "Alexander Fleming ließ vor dem Urlaub eine Bakterienschale offen stehen. Ein Schimmelpilz (Penicillium) flog hinein und tötete ringsum die Bakterien ab. Erst diese 'Schlamperei' führte zum ersten Antibiotikum — eine der folgenreichsten Pannen der Medizingeschichte.",
+      "category": "Tiere & Natur"
+    },
+    {
+      "id": "nat_137",
+      "question": "Der Klettverschluss wurde nach einem Spaziergang erfunden. Welches Naturvorbild lieferte die Idee?",
+      "answers": [
+        {"text": "Kletten, die sich im Hundefell verhakten", "correct": true},
+        {"text": "Spinnweben zwischen zwei Sträuchern", "correct": false},
+        {"text": "Efeu, das an einer Mauer haftete", "correct": false}
+      ],
+      "difficulty": "easy",
+      "fun_fact": "Der Schweizer Ingenieur George de Mestral untersuchte 1941 unter dem Mikroskop, warum Klettenfrüchte so hartnäckig im Fell seines Hundes klebten: winzige Häkchen. Das kopierte er — der Name 'Velcro' kombiniert die französischen Wörter 'velours' (Samt) und 'crochet' (Haken).",
+      "category": "Tiere & Natur"
+    },
+    {
+      "id": "nat_139",
+      "question": "Woher hat das Meerschweinchen seinen deutschen Namen, obwohl es kein Schwein ist?",
+      "answers": [
+        {"text": "Von den quiekenden, schweineähnlichen Lauten und der Ankunft übers Meer", "correct": true},
+        {"text": "Von seiner rosa Haut unter dem Fell", "correct": false},
+        {"text": "Weil es früher in Schweineställen gehalten wurde", "correct": false}
+      ],
+      "difficulty": "easy",
+      "fun_fact": "Die Tiere kamen per Schiff über das Meer aus Südamerika nach Europa — 'Meer'-schweinchen. Das 'Schweinchen' verdanken sie ihren grunzenden, quiekenden Lauten und dem gedrungenen Körperbau. Mit Schweinen sind die Nagetiere nicht verwandt.",
+      "category": "Tiere & Natur"
+    },
+    {
+      "id": "nat_140",
+      "question": "Der Truthahn heißt auf Englisch 'turkey'. Was ist der Grund für diese irreführende Bezeichnung?",
+      "answers": [
+        {"text": "Man verwechselte ihn mit einem über die Türkei gehandelten Perlhuhn", "correct": true},
+        {"text": "Die ersten Exemplare wurden in der Türkei gezüchtet", "correct": false},
+        {"text": "Sein Ruf klang für englische Ohren wie 'turk-turk'", "correct": false}
+      ],
+      "difficulty": "easy",
+      "fun_fact": "Englische Händler kannten ein ähnliches Geflügel, das über osmanisch-türkische Routen importiert wurde — den 'turkey-cock'. Als der echte Truthahn aus Amerika kam, übertrug man den Namen einfach. Ironie: In der Türkei selbst heißt der Vogel 'hindi', also 'der Indische'.",
+      "category": "Tiere & Natur"
+    },
+    {
+      "id": "nat_141",
+      "question": "Warum trägt das Stiefmütterchen diesen ungewöhnlichen Namen?",
+      "answers": [
+        {"text": "Aus einer Deutung der Blütenanordnung als Stiefmutter und Töchter", "correct": true},
+        {"text": "Weil es ohne Pflege auf Friedhöfen wuchs", "correct": false},
+        {"text": "Weil Stiefmütter es traditionell verschenkten", "correct": false}
+      ],
+      "difficulty": "medium",
+      "fun_fact": "Eine alte volkstümliche Erzählung deutet die fünf Blütenblätter als Familie: Das unterste, größte (die 'Stiefmutter') sitzt auf zwei Kelchblättern, die beiden seitlichen (ihre eigenen Töchter) auf je einem, die oberen Stiefkinder müssen sich ein Kelchblatt teilen.",
+      "category": "Tiere & Natur"
+    },
+    {
+      "id": "nat_142",
+      "question": "Die Form des modernen Hochgeschwindigkeitszugs Shinkansen wurde umgestaltet, inspiriert von einem Tier. Welchem?",
+      "answers": [
+        {"text": "Dem Eisvogel", "correct": true},
+        {"text": "Dem Wanderfalken", "correct": false},
+        {"text": "Dem Schwertfisch", "correct": false}
+      ],
+      "difficulty": "medium",
+      "fun_fact": "Der japanische Shinkansen erzeugte beim Tunnelausfahren laute Knalle. Ein Ingenieur und Vogelbeobachter formte die Zugnase dem Schnabel des Eisvogels nach, der lautlos ins Wasser eintaucht. Ergebnis: leiserer Zug, weniger Luftwiderstand und sogar weniger Stromverbrauch.",
+      "category": "Tiere & Natur"
+    },
+    {
+      "id": "nat_143",
+      "question": "Woher stammt das Wort 'Orchidee'?",
+      "answers": [
+        {"text": "Vom griechischen Wort für 'Hoden'", "correct": true},
+        {"text": "Vom Namen einer griechischen Göttin", "correct": false},
+        {"text": "Vom lateinischen Wort für 'Gold'", "correct": false}
+      ],
+      "difficulty": "medium",
+      "fun_fact": "Der Begriff geht auf das griechische 'orchis' (Hoden) zurück. Theophrast benannte die Pflanze so wegen der paarigen, hodenförmigen Wurzelknollen mancher heimischer Arten. Die prächtigen Blüten, an die wir heute denken, spielten bei der Namensgebung keine Rolle.",
+      "category": "Tiere & Natur"
+    },
+    {
+      "id": "nat_144",
+      "question": "Das Material Kork stammt von der Korkeiche. Was geschieht mit dem Baum, wenn man die Rinde erntet?",
+      "answers": [
+        {"text": "Er überlebt und bildet die Rinde nach", "correct": true},
+        {"text": "Er wird dafür gefällt", "correct": false},
+        {"text": "Er stirbt innerhalb weniger Jahre ab", "correct": false}
+      ],
+      "difficulty": "easy",
+      "fun_fact": "Die Korkrinde wird alle 9 bis 12 Jahre vorsichtig abgeschält, der Baum lebt weiter und regeneriert die Schicht. Eine Korkeiche kann so über 200 Jahre lang geerntet werden — Kork ist damit eines der wenigen vollständig nachwachsenden Naturmaterialien ohne Baumfällung.",
+      "category": "Tiere & Natur"
+    },
+    {
+      "id": "nat_145",
+      "question": "Warum wird Bärlauch 'Bär'-lauch genannt?",
+      "answers": [
+        {"text": "Bären fressen ihn nach dem Winterschlaf zur Stärkung", "correct": true},
+        {"text": "Seine Blätter haben die Form einer Bärentatze", "correct": false},
+        {"text": "Er wächst bevorzugt in Bärenhöhlen", "correct": false}
+      ],
+      "difficulty": "easy",
+      "fun_fact": "Der Überlieferung nach fressen Bären die frischen Blätter nach dem Winterschlaf, um wieder zu Kräften zu kommen — daher der Name. Auch der lateinische Artname 'Allium ursinum' bedeutet wörtlich 'Bärenlauch'. Vom Geschmack her ist er ein wilder Verwandter des Knoblauchs.",
+      "category": "Tiere & Natur"
+    },
+    {
+      "id": "nat_146",
+      "question": "Das Insektizid Pyrethrum, lange ein natürliches 'Bio'-Mittel, wird aus welcher Pflanze gewonnen?",
+      "answers": [
+        {"text": "Aus bestimmten Chrysanthemen", "correct": true},
+        {"text": "Aus Brennnesseln", "correct": false},
+        {"text": "Aus Tabakpflanzen", "correct": false}
+      ],
+      "difficulty": "medium",
+      "fun_fact": "Schon im 19. Jahrhundert wurden getrocknete Blüten bestimmter Chrysanthemen-Arten zu 'Insektenpulver' vermahlen. Der Wirkstoff lähmt das Nervensystem von Insekten, ist für Säugetiere aber kaum giftig — die Grundlage vieler heutiger synthetischer Pyrethroide.",
+      "category": "Tiere & Natur"
+    },
+    {
+      "id": "nat_147",
+      "question": "Warum heißt die Pflanze 'Vergissmeinnicht'?",
+      "answers": [
+        {"text": "Wegen einer mittelalterlichen Sage um einen ertrinkenden Ritter", "correct": true},
+        {"text": "Weil ihre Samen jahrhundertelang keimfähig bleiben", "correct": false},
+        {"text": "Weil ihr Duft das Gedächtnis schärft", "correct": false}
+      ],
+      "difficulty": "medium",
+      "fun_fact": "Einer mittelalterlichen Sage zufolge pflückte ein Ritter die Blümchen am Flussufer für seine Geliebte, stürzte ins Wasser und rief beim Untergehen 'Vergiss mein nicht!'. Die Geschichte verbreitete sich europaweit — daher trägt die Blume in vielen Sprachen sinngleiche Namen.",
+      "category": "Tiere & Natur"
+    },
+    {
+      "id": "nat_148",
+      "question": "Die Tollwut-Impfung wurde 1885 erstmals erfolgreich am Menschen erprobt. Wodurch wurde das Virus dafür abgeschwächt?",
+      "answers": [
+        {"text": "Durch Trocknen von infiziertem Kaninchen-Rückenmark", "correct": true},
+        {"text": "Durch Erhitzen einer Speichelprobe", "correct": false},
+        {"text": "Durch wiederholtes Einfrieren von Hundeblut", "correct": false}
+      ],
+      "difficulty": "hard",
+      "fun_fact": "Louis Pasteur ließ Rückenmark tollwütiger Kaninchen tagelang trocknen, was die Viren immer schwächer machte. Aus dieser abgestuften Reihe baute er den Impfstoff — getestet am gebissenen Jungen Joseph Meister, der überlebte. Der Begriff Vakzine geht auf das lateinische 'vacca' (Kuh) zurück.",
+      "category": "Tiere & Natur"
+    },
+    {
+      "id": "nat_149",
+      "question": "Woher kommt der Name 'Tausendfüßler', obwohl kaum eine Art so viele Beine hat?",
+      "answers": [
+        {"text": "'Tausend' steht hier alt für eine unzählbar große Menge", "correct": true},
+        {"text": "Die ersten gefundenen Exemplare hatten exakt 1000 Beine", "correct": false},
+        {"text": "Es ist eine fehlerhafte Übersetzung aus dem Lateinischen", "correct": false}
+      ],
+      "difficulty": "medium",
+      "fun_fact": "Das lateinische 'mille pedes' (tausend Füße) meinte ursprünglich 'unzählig viele' — eine sprichwörtliche, keine gezählte Menge. Die meisten Arten haben zwischen 30 und 400 Beine. Erst 2021 wurde überhaupt die erste Art mit über tausend echten Beinen entdeckt.",
+      "category": "Tiere & Natur"
+    },
+    {
+      "id": "nat_150",
+      "question": "Warum heißt die Avocado in manchen Sprachen historisch 'Butterbirne'?",
+      "answers": [
+        {"text": "Wegen ihres hohen Fettgehalts und der weichen Konsistenz", "correct": true},
+        {"text": "Weil sie aus echter Butter gezüchtet wurde", "correct": false},
+        {"text": "Weil sie nur mit Butter genießbar ist", "correct": false}
+      ],
+      "difficulty": "medium",
+      "fun_fact": "Die Avocado ist eine der wenigen Früchte mit sehr hohem Fettanteil — daher 'Butterbirne'. Ihr eigentlicher Name geht jedoch auf das aztekische Wort 'ahuacatl' zurück, das auch 'Hoden' bedeutete, weil die Früchte paarweise herabhingen.",
+      "category": "Tiere & Natur"
+    },
+    {
+      "id": "nat_151",
+      "question": "Die Wespentaille ist eine extrem dünne Einschnürung zwischen Brust und Hinterleib. Was ermöglicht sie der Wespe unter anderem?",
+      "answers": [
+        {"text": "Den Hinterleib hochbeweglich zu führen, etwa beim Stechen", "correct": true},
+        {"text": "Das Gift dort zu speichern", "correct": false},
+        {"text": "Über sie als Atemkanal Luft zu holen", "correct": false}
+      ],
+      "difficulty": "hard",
+      "fun_fact": "Die fadendünne Einschnürung macht den Hinterleib extrem beweglich, sodass die Wespe ihren Stachel gezielt nach vorn und unten richten kann. Sie wirkt zugleich als Engpass: Durch die enge Stelle passt nur Flüssignahrung — erwachsene Wespen können feste Beute deshalb nicht selbst verdauen.",
+      "category": "Tiere & Natur"
+    },
+    {
+      "id": "nat_152",
+      "question": "Woher stammt der Name 'Petersilie'?",
+      "answers": [
+        {"text": "Vom griechischen Wort für 'Felsen-Sellerie'", "correct": true},
+        {"text": "Vom Apostel Petrus, dem sie geweiht war", "correct": false},
+        {"text": "Von einem Gärtner namens Peter Silie", "correct": false}
+      ],
+      "difficulty": "hard",
+      "fun_fact": "Das Wort geht über das Lateinische auf das griechische 'petroselinon' zurück: 'petra' (Fels) und 'selinon' (Sellerie/Eppich) — also 'Felsen-Eppich', weil die Wildform an Felsen wuchs. Mit dem Vornamen Peter hat die Pflanze nichts zu tun.",
+      "category": "Tiere & Natur"
+    },
+    {
+      "id": "nat_153",
+      "question": "Warum nennt man den Marienkäfer in vielen Sprachen nach der Jungfrau Maria?",
+      "answers": [
+        {"text": "Bauern sahen ihn als himmlische Hilfe gegen Blattläuse", "correct": true},
+        {"text": "Sein Panzer hat die typische Farbe von Marienstatuen", "correct": false},
+        {"text": "Er erschien erstmals an einem Marienfeiertag", "correct": false}
+      ],
+      "difficulty": "easy",
+      "fun_fact": "Im Mittelalter fraßen die Käfer die Blattlausplagen von den Feldern — Bauern deuteten das als Geschenk der Gottesmutter und nannten sie 'Marienkäfer'. Im Englischen 'ladybird/ladybug', im Französischen verweist der Name ebenfalls auf 'unsere Liebe Frau'.",
+      "category": "Tiere & Natur"
+    },
+    {
+      "id": "nat_154",
+      "question": "Die Pflanze 'Vanille' verdankt ihren Namen welchem Umstand?",
+      "answers": [
+        {"text": "Der schmalen, schotenförmigen Kapsel — spanisch 'kleine Scheide'", "correct": true},
+        {"text": "Der weißen Blütenfarbe", "correct": false},
+        {"text": "Einer Hafenstadt, über die sie gehandelt wurde", "correct": false}
+      ],
+      "difficulty": "hard",
+      "fun_fact": "'Vanille' kommt vom spanischen 'vainilla', der Verkleinerungsform von 'vaina' (Scheide/Hülse) — wegen der schmalen Fruchtkapsel. Vanille ist zudem die einzige Orchidee, deren Frucht als Gewürz genutzt wird, und außerhalb ihrer Heimat muss jede Blüte von Hand bestäubt werden.",
+      "category": "Tiere & Natur"
+    },
+    {
+      "id": "nat_155",
+      "question": "Woher hat das Nilpferd den wissenschaftlichen Namen 'Hippopotamus'?",
+      "answers": [
+        {"text": "Vom griechischen 'Flusspferd'", "correct": true},
+        {"text": "Vom Entdecker Hippo aus Potam", "correct": false},
+        {"text": "Vom lateinischen Wort für 'dickhäutig'", "correct": false}
+      ],
+      "difficulty": "easy",
+      "fun_fact": "'Hippopotamus' setzt sich aus den griechischen Wörtern 'hippos' (Pferd) und 'potamos' (Fluss) zusammen — wörtlich 'Flusspferd'. Genetisch ist das Tier allerdings überhaupt nicht mit Pferden verwandt, sondern überraschenderweise mit Walen und Delfinen.",
+      "category": "Tiere & Natur"
+    },
+    {
+      "id": "nat_156",
+      "question": "Der Name 'Pinguin' wurde ursprünglich für einen ganz anderen Vogel verwendet. Für welchen?",
+      "answers": [
+        {"text": "Den heute ausgestorbenen Riesenalk der Nordhalbkugel", "correct": true},
+        {"text": "Den Albatros", "correct": false},
+        {"text": "Den Kormoran", "correct": false}
+      ],
+      "difficulty": "medium",
+      "fun_fact": "Europäische Seefahrer nannten zuerst den flugunfähigen Riesenalk der Nordatlantik-Inseln 'Pinguin'. Als sie auf der Südhalbkugel ähnlich watschelnde Vögel entdeckten, übertrugen sie den Namen. Der echte Riesenalk starb Mitte des 19. Jahrhunderts aus — der Name lebt nur bei den Südvögeln weiter.",
+      "category": "Tiere & Natur"
+    },
+    {
+      "id": "nat_157",
+      "question": "Warum heißt das Gänseblümchen so?",
+      "answers": [
+        {"text": "Es wuchs verbreitet auf abgeweideten Gänsewiesen", "correct": true},
+        {"text": "Seine Blüten ähneln einem Gänsefuß", "correct": false},
+        {"text": "Gänse fressen es besonders gern", "correct": false}
+      ],
+      "difficulty": "easy",
+      "fun_fact": "Das robuste Blümchen gedieh besonders auf kurz gehaltenen Wiesen, wo Gänse weideten — daher der Name. Es blüht fast das ganze Jahr und schließt seine Blüten abends und bei Regen. Der englische Name 'daisy' stammt von 'day's eye' (Tagesauge), weil es sich morgens öffnet.",
+      "category": "Tiere & Natur"
+    },
+    {
+      "id": "nat_158",
+      "question": "Woher stammt der Name 'Walnuss'?",
+      "answers": [
+        {"text": "Von 'welsch', der alten Bezeichnung für 'fremd/romanisch'", "correct": true},
+        {"text": "Vom Walfang, bei dem sie als Proviant diente", "correct": false},
+        {"text": "Von der wallenden Form der Schale", "correct": false}
+      ],
+      "difficulty": "medium",
+      "fun_fact": "'Walnuss' geht auf 'welsche Nuss' zurück — 'welsch' bezeichnete im Mittelalter alles Romanisch-Fremdländische, weil die Nuss aus den südlichen, römisch geprägten Ländern eingeführt wurde. Mit Walen hat sie nichts zu tun. Dasselbe Wort 'welsch' steckt bis heute in Bezeichnungen wie 'Welschland' für die romanischsprachigen Gebiete der Schweiz.",
+      "category": "Tiere & Natur"
+    },
+    {
+      "id": "nat_159",
+      "question": "Wie viele Eier kann eine einzelne Königin der Termiten an einem einzigen Tag legen?",
+      "answers": [
+        {"text": "Bis zu 30.000", "correct": true},
+        {"text": "Bis zu 300", "correct": false},
+        {"text": "Bis zu 1.500", "correct": false}
+      ],
+      "difficulty": "easy",
+      "fun_fact": "Eine afrikanische Termitenkönigin legt bis zu 30.000 Eier pro Tag — rund eines alle drei Sekunden, rund um die Uhr. Ihr Hinterleib schwillt dabei so stark an, dass sie sich nicht mehr bewegen kann und von Arbeiterinnen gefüttert werden muss.",
+      "category": "Tiere & Natur"
+    },
+    {
+      "id": "nat_160",
+      "question": "Bei einem alten Baum mit ausgeprägtem Kernholz: Wie viel Prozent des Stamms (über der Erde) besteht ungefähr aus totem Gewebe?",
+      "answers": [
+        {"text": "Über 90 %", "correct": true},
+        {"text": "Etwa 40 %", "correct": false},
+        {"text": "Etwa 10 %", "correct": false}
+      ],
+      "difficulty": "hard",
+      "fun_fact": "Bei alten Kernholzbäumen ist das Holz im Inneren des Stamms totes Gewebe — nur eine dünne Schicht direkt unter der Rinde lebt und transportiert Wasser und Nährstoffe. Ein solcher massiver Baum ist also überwiegend eine tote Stütze, getragen von einer hauchdünnen lebenden Hülle. Bei jungen Bäumen oder reinen Splintholzarten lebt dagegen ein deutlich größerer Anteil.",
       "category": "Tiere & Natur"
     }
   ]

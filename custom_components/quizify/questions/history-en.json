@@ -1,7 +1,7 @@
 {
   "name": "History",
   "language": "en",
-  "version": "1.0",
+  "version": "1.1",
   "theme": "history",
   "questions": [
     {
@@ -1202,6 +1202,606 @@
       ],
       "difficulty": "easy",
       "fun_fact": "Alexander Bain patented a fax-like device in 1843, decades before Bell's 1876 telephone. It scanned a message with a pendulum and reproduced it as marks at the other end.",
+      "category": "History"
+    },
+    {
+      "id": "history_en_105",
+      "question": "Why does old glass in medieval cathedral windows look thicker at the bottom?",
+      "answers": [
+        {"text": "It was made uneven and installed thick-side down", "correct": true},
+        {"text": "Glass slowly flows downward like a liquid over centuries", "correct": false},
+        {"text": "Centuries of rain eroded the top edge thinner", "correct": false}
+      ],
+      "difficulty": "medium",
+      "fun_fact": "Old crown glass was spun into uneven discs, so glaziers logically set the heavier edge at the bottom. The 'glass flows' myth is false — glass is an amorphous solid that doesn't sag at room temperature on human timescales.",
+      "category": "History"
+    },
+    {
+      "id": "history_en_106",
+      "question": "Why did Roman lead water pipes not poison everyone as badly as you'd expect?",
+      "answers": [
+        {"text": "Hard water coated the pipes in protective mineral scale", "correct": true},
+        {"text": "The lead was mixed with neutralising tin", "correct": false},
+        {"text": "Romans boiled all water before drinking it", "correct": false}
+      ],
+      "difficulty": "hard",
+      "fun_fact": "Rome's water was rich in calcium carbonate, which quickly lined the pipes with limescale and sealed the lead away from the flowing water. Constantly running water also limited how long any water touched the metal.",
+      "category": "History"
+    },
+    {
+      "id": "history_en_107",
+      "question": "How did ancient ice merchants ship ice across oceans without it melting away?",
+      "answers": [
+        {"text": "Packing it in sawdust, which insulated the blocks", "correct": true},
+        {"text": "Coating each block in a thick layer of beeswax", "correct": false},
+        {"text": "Sailing only at night and storing it below the waterline", "correct": false}
+      ],
+      "difficulty": "easy",
+      "fun_fact": "In the 1800s Frederic Tudor shipped New England ice as far as India. Sawdust — a waste product from sawmills — trapped air so well that losses on long voyages were surprisingly small.",
+      "category": "History"
+    },
+    {
+      "id": "history_en_108",
+      "question": "Why did sailors in the age of sail risk death without limes or lemons?",
+      "answers": [
+        {"text": "Their bodies can't make vitamin C and collagen falls apart", "correct": true},
+        {"text": "Citrus was the only thing that killed seawater bacteria", "correct": false},
+        {"text": "The acid was needed to digest salted meat", "correct": false}
+      ],
+      "difficulty": "easy",
+      "fun_fact": "Scurvy is collagen failure: without vitamin C the body can't bind connective tissue, so old wounds reopen and gums rot. Humans are among the few mammals that lost the gene to synthesise their own.",
+      "category": "History"
+    },
+    {
+      "id": "history_en_109",
+      "question": "Why were medieval suits of armour surprisingly easy to move and fight in?",
+      "answers": [
+        {"text": "The weight was spread across the whole body, not carried in the arms", "correct": true},
+        {"text": "The steel was hollow to save weight", "correct": false},
+        {"text": "Knights were winched onto horses because they couldn't walk", "correct": false}
+      ],
+      "difficulty": "easy",
+      "fun_fact": "A full field harness weighed about as much as a modern soldier's kit, but distributed over every limb. Fit knights could run, mount unaided and even do cartwheels — the crane-and-immobile-knight image is a Hollywood myth.",
+      "category": "History"
+    },
+    {
+      "id": "history_en_110",
+      "question": "Why did old black-and-white film actors' red lipstick photograph as black?",
+      "answers": [
+        {"text": "Early film was blind to red light and saw it as dark", "correct": true},
+        {"text": "Studios used special black lipstick for contrast", "correct": false},
+        {"text": "Hot stage lights chemically darkened the makeup", "correct": false}
+      ],
+      "difficulty": "medium",
+      "fun_fact": "Orthochromatic film stock was sensitive to blue and green but barely to red, so red lips, freckles and rosy skin came out dark. Makeup artists had to paint actors in unnatural colours to look right on screen.",
+      "category": "History"
+    },
+    {
+      "id": "history_en_111",
+      "question": "Why did people in past centuries commonly sleep in two separate sessions each night?",
+      "answers": [
+        {"text": "Without artificial light, the body naturally splits sleep in two", "correct": true},
+        {"text": "Laws required households to wake and check fires at midnight", "correct": false},
+        {"text": "Beds were too short to lie down fully in one stretch", "correct": false}
+      ],
+      "difficulty": "easy",
+      "fun_fact": "References to 'first sleep' and 'second sleep' fill pre-industrial writing, with a waking hour between for prayer, talk or sex. Cheap lighting compressed sleep into one block — and sleep labs have reproduced the two-phase pattern in people kept in darkness.",
+      "category": "History"
+    },
+    {
+      "id": "history_en_112",
+      "question": "Why did sourdough bread feed cities for millennia before anyone understood why it rose?",
+      "answers": [
+        {"text": "Wild yeast and bacteria fermenting the dough release gas", "correct": true},
+        {"text": "Pounding the dough physically beat air bubbles into it", "correct": false},
+        {"text": "The heat of the oven boiled water into expanding steam pockets", "correct": false}
+      ],
+      "difficulty": "easy",
+      "fun_fact": "Bakers kept a 'starter' alive for generations without knowing it teemed with microbes. The yeast eat sugars and breathe out carbon dioxide that gets trapped in the gluten, puffing the loaf up.",
+      "category": "History"
+    },
+    {
+      "id": "history_en_113",
+      "question": "Why did medieval blacksmiths quench red-hot blades in liquid to harden them?",
+      "answers": [
+        {"text": "Rapid cooling locks the steel into a hard crystal structure", "correct": true},
+        {"text": "The water washed impurities out of the metal", "correct": false},
+        {"text": "Steam pressure compressed the blade's surface", "correct": false}
+      ],
+      "difficulty": "medium",
+      "fun_fact": "Sudden cooling traps carbon in a brittle, hard arrangement called martensite. Smiths discovered this by trial and error centuries before metallurgy existed — and some folklore swore blades quenched in blood or urine were superior.",
+      "category": "History"
+    },
+    {
+      "id": "history_en_114",
+      "question": "Why did gold coins survive shipwrecks looking brand new while silver ones corroded?",
+      "answers": [
+        {"text": "Gold barely reacts with anything, including seawater", "correct": true},
+        {"text": "Gold is heavier so it sank into protective sand faster", "correct": false},
+        {"text": "Gold coins were always coated in a sealing varnish", "correct": false}
+      ],
+      "difficulty": "easy",
+      "fun_fact": "Gold is one of the least reactive metals, so sunken hoards gleam after centuries underwater. Silver tarnishes because it reacts readily with sulphur compounds in seawater, blackening the surface.",
+      "category": "History"
+    },
+    {
+      "id": "history_en_115",
+      "question": "Why did the lime mortar in ancient buildings actually get stronger over time?",
+      "answers": [
+        {"text": "It slowly absorbs carbon dioxide and turns back into stone", "correct": true},
+        {"text": "Plant roots grew through it and bound it together", "correct": false},
+        {"text": "Repeated rain compressed the particles tighter", "correct": false}
+      ],
+      "difficulty": "hard",
+      "fun_fact": "Lime mortar carbonates: it pulls CO2 from the air and reverts to calcium carbonate — essentially limestone — over years to centuries. Some Roman walls are still slowly hardening today.",
+      "category": "History"
+    },
+    {
+      "id": "history_en_116",
+      "question": "Why did ancient Egyptian wall paintings keep their bright blue colour for thousands of years?",
+      "answers": [
+        {"text": "They used a man-made pigment that is chemically extremely stable", "correct": true},
+        {"text": "The tombs were filled with a preserving gas", "correct": false},
+        {"text": "They reapplied the paint during yearly festivals", "correct": false}
+      ],
+      "difficulty": "medium",
+      "fun_fact": "Egyptian blue, made by heating sand, copper and natron, is one of the oldest synthetic pigments. It's so stable it still glows under infrared light — a property modern scientists now use to detect ancient traces invisible to the eye.",
+      "category": "History"
+    },
+    {
+      "id": "history_en_117",
+      "question": "Why did a single struck match start a fire only after a chemical was added in the 1800s?",
+      "answers": [
+        {"text": "Friction heat had to ignite a phosphorus compound on the tip", "correct": true},
+        {"text": "Matches needed a hidden spark of static electricity", "correct": false},
+        {"text": "The wood had to be soaked in alcohol first", "correct": false}
+      ],
+      "difficulty": "medium",
+      "fun_fact": "Early friction matches used white phosphorus, which ignites at low temperature but poisoned factory workers, rotting their jaws — 'phossy jaw'. Safer red phosphorus, split onto a separate striker strip, gave us the modern safety match.",
+      "category": "History"
+    },
+    {
+      "id": "history_en_118",
+      "question": "Why did people once put a silver coin in milk to keep it from going off?",
+      "answers": [
+        {"text": "Silver ions actually slow bacterial growth", "correct": true},
+        {"text": "The coin's weight pushed cream to the bottom", "correct": false},
+        {"text": "Silver cooled the milk faster than the jug", "correct": false}
+      ],
+      "difficulty": "medium",
+      "fun_fact": "Silver has genuine antimicrobial properties — ancient peoples lined water and wine vessels with it. The effect is modest, but the underlying chemistry is real and is still used in modern wound dressings.",
+      "category": "History"
+    },
+    {
+      "id": "history_en_119",
+      "question": "Why did old lighthouses stay visible from far out at sea before electric lamps?",
+      "answers": [
+        {"text": "Curved lenses and mirrors concentrated a flame into a beam", "correct": true},
+        {"text": "The flames were fed pure oxygen to burn brighter", "correct": false},
+        {"text": "The towers were painted with glowing phosphorescent paint", "correct": false}
+      ],
+      "difficulty": "easy",
+      "fun_fact": "The Fresnel lens, invented in 1822, used concentric rings of glass to bend scattered light into one powerful beam, letting a modest oil flame be seen for tens of kilometres. The same principle now sits in car headlights and traffic lights.",
+      "category": "History"
+    },
+    {
+      "id": "history_en_120",
+      "question": "Before dentists understood tooth decay, what was actually rotting people's teeth?",
+      "answers": [
+        {"text": "Bacteria eating sugar and making acid that dissolves enamel", "correct": true},
+        {"text": "Teeth dissolving naturally without salt in the diet", "correct": false},
+        {"text": "Cold sea air cracking enamel from the inside", "correct": false}
+      ],
+      "difficulty": "easy",
+      "fun_fact": "Cavities are an infection: mouth bacteria ferment sugars and excrete acid that dissolves enamel. This is why tooth decay exploded only after cheap sugar arrived — skeletons from before the sugar trade have strikingly fewer cavities.",
+      "category": "History"
+    },
+    {
+      "id": "history_en_121",
+      "question": "Why did the bodies in peat bogs stay so intact that they look recently dead?",
+      "answers": [
+        {"text": "Acidic, oxygen-free bog water tans skin and stops decay", "correct": true},
+        {"text": "The cold of northern bogs froze them permanently", "correct": false},
+        {"text": "Bog minerals turned the bodies slowly to stone", "correct": false}
+      ],
+      "difficulty": "medium",
+      "fun_fact": "Bog acids and a lack of oxygen halt the bacteria that cause rot, while tannins tan the skin like leather. Some bog bodies are 2,000 years old yet still show fingerprints, stubble and the contents of their last meal.",
+      "category": "History"
+    },
+    {
+      "id": "history_en_122",
+      "question": "Why did Stradivarius violins supposedly sound so good, according to one leading theory?",
+      "answers": [
+        {"text": "A cold-climate growth spell made unusually dense, even wood", "correct": true},
+        {"text": "The maker sealed them with a secret gold varnish", "correct": false},
+        {"text": "The strings were spun from a now-extinct silkworm", "correct": false}
+      ],
+      "difficulty": "hard",
+      "fun_fact": "One theory ties the instruments to the 'Little Ice Age', when long cold winters produced slow, dense, uniform tree growth. The real cause is still debated, and blind tests show experts often can't reliably pick a Stradivarius from a modern violin.",
+      "category": "History"
+    },
+    {
+      "id": "history_en_123",
+      "question": "Why did people once cool buildings in hot climates without any electricity?",
+      "answers": [
+        {"text": "Wind towers funnelled breezes and evaporating water cooled the air", "correct": true},
+        {"text": "Thick walls were packed with blocks of imported ice", "correct": false},
+        {"text": "Underground fires created a draft that pulled heat out", "correct": false}
+      ],
+      "difficulty": "medium",
+      "fun_fact": "Persian 'badgirs' caught wind and drew it down over pools or damp surfaces; as the water evaporated it stole heat, chilling the incoming air. The same evaporative-cooling physics runs through modern swamp coolers.",
+      "category": "History"
+    },
+    {
+      "id": "history_en_124",
+      "question": "Why did salt and sugar preserve food for centuries before refrigeration existed?",
+      "answers": [
+        {"text": "They pull water out of microbes and dry them to death", "correct": true},
+        {"text": "They coat the food in an airtight crystal shell", "correct": false},
+        {"text": "They lower the food's temperature as they dissolve", "correct": false}
+      ],
+      "difficulty": "easy",
+      "fun_fact": "Heavy salt or sugar makes the surrounding water so concentrated that osmosis sucks moisture out of any bacteria, shrivelling them. That's why salted fish, ham and jam keep for months at room temperature.",
+      "category": "History"
+    },
+    {
+      "id": "history_en_125",
+      "question": "Why did a compass let medieval sailors find north long before anyone knew what magnetism was?",
+      "answers": [
+        {"text": "A magnetised needle aligns with Earth's magnetic field", "correct": true},
+        {"text": "The needle was drawn toward the bright Pole Star", "correct": false},
+        {"text": "Ocean currents nudged the floating needle northward", "correct": false}
+      ],
+      "difficulty": "easy",
+      "fun_fact": "Earth behaves like a giant magnet, so a freely pivoting magnetised needle swings to point roughly north. Chinese navigators used floating lodestone compasses centuries before Europeans, with no theory of why it worked.",
+      "category": "History"
+    },
+    {
+      "id": "history_en_126",
+      "question": "Why did ancient Roman roads survive two thousand years of traffic and weather?",
+      "answers": [
+        {"text": "Layered stone and gravel let water drain and spread loads", "correct": true},
+        {"text": "The stones were fused together with molten iron", "correct": false},
+        {"text": "They were carved from single giant slabs of bedrock", "correct": false}
+      ],
+      "difficulty": "medium",
+      "fun_fact": "Roman engineers built up multiple layers — a deep rubble base, gravel, then tight-fitting paving stones — and crowned the surface so rainwater ran off into side ditches. Keeping water out of the foundation is exactly why they lasted.",
+      "category": "History"
+    },
+    {
+      "id": "history_en_127",
+      "question": "Why did medieval stained glass makers add gold to get a deep red colour?",
+      "answers": [
+        {"text": "Tiny gold particles scatter light to appear ruby red", "correct": true},
+        {"text": "Gold was the only pigment that survived the furnace", "correct": false},
+        {"text": "Gold reflected sunlight to brighten the whole window", "correct": false}
+      ],
+      "difficulty": "hard",
+      "fun_fact": "'Ruby gold' glass owes its colour to gold nanoparticles suspended in the melt, which scatter light toward red — an accidental brush with nanotechnology centuries early. The same effect colours the famous Roman Lycurgus Cup, which glows green or red depending on the light.",
+      "category": "History"
+    },
+    {
+      "id": "history_en_128",
+      "question": "Why did early submarine crews have to surface so often before modern air systems?",
+      "answers": [
+        {"text": "Exhaled carbon dioxide built up and poisoned the air", "correct": true},
+        {"text": "The hull leaked too much to stay down for long", "correct": false},
+        {"text": "Cold deep water froze the engines solid", "correct": false}
+      ],
+      "difficulty": "medium",
+      "fun_fact": "Running out of oxygen is rarely the first danger in a sealed space — rising CO2 is. It makes crews drowsy and breathless long before the oxygen is gone, which is why early subs surfaced frequently to vent and refresh the air.",
+      "category": "History"
+    },
+    {
+      "id": "history_en_129",
+      "question": "Why was the modern necktie originally worn, according to its name's French origin?",
+      "answers": [
+        {"text": "It copied scarves worn by Croatian soldiers", "correct": true},
+        {"text": "It marked a sailor's rank at sea", "correct": false},
+        {"text": "It held a nobleman's collar shut in cold weather", "correct": false}
+      ],
+      "difficulty": "medium",
+      "fun_fact": "The French word 'cravate' came from 'Croate' (Croatian) after 17th-century Croatian mercenaries in Paris wore knotted neck scarves that Parisians copied as fashion.",
+      "category": "History"
+    },
+    {
+      "id": "history_en_130",
+      "question": "Why are dishes served with spinach often called 'Florentine'?",
+      "answers": [
+        {"text": "A French queen from Florence adored spinach", "correct": true},
+        {"text": "Spinach was first farmed near Florence", "correct": false},
+        {"text": "A Florentine painter only ate green food", "correct": false}
+      ],
+      "difficulty": "medium",
+      "fun_fact": "Catherine de' Medici left Florence to marry into French royalty and supposedly demanded spinach at every meal, so French cooks tagged spinach dishes 'à la florentine' in her honour.",
+      "category": "History"
+    },
+    {
+      "id": "history_en_131",
+      "question": "The word 'salary' aside, which common word comes from the Roman day when monthly debts fell due?",
+      "answers": [
+        {"text": "'Candidate', from the white togas of office-seekers", "correct": false},
+        {"text": "'Calendar' itself, from 'calends', the day debts were called", "correct": true},
+        {"text": "'Census', from counting heads at festivals", "correct": false}
+      ],
+      "difficulty": "medium",
+      "fun_fact": "'Calendar' comes from the Latin 'kalendae', the first day of each month when debts fell due and account books — the 'calendarium' — were settled.",
+      "category": "History"
+    },
+    {
+      "id": "history_en_132",
+      "question": "Why do we call unwanted bulk email 'spam'?",
+      "answers": [
+        {"text": "From a Monty Python sketch repeating a tinned-meat brand", "correct": true},
+        {"text": "It's an acronym for 'sales promotion and marketing'", "correct": false},
+        {"text": "Named after a programmer called Sam P. Ackerman", "correct": false}
+      ],
+      "difficulty": "easy",
+      "fun_fact": "In a 1970 Monty Python's Flying Circus sketch a café menu drowns in repetitions of 'Spam', so early internet users adopted the word for messages that crowd out everything else.",
+      "category": "History"
+    },
+    {
+      "id": "history_en_133",
+      "question": "What is the real reason ketchup was originally bottled and sold?",
+      "answers": [
+        {"text": "As a medicine sold in pill form", "correct": true},
+        {"text": "As a wood stain for furniture", "correct": false},
+        {"text": "As a fuel additive for lamps", "correct": false}
+      ],
+      "difficulty": "medium",
+      "fun_fact": "In the 1830s an American doctor branded tomato ketchup as a cure for indigestion and even sold it as concentrated 'tomato pills' before it became a condiment.",
+      "category": "History"
+    },
+    {
+      "id": "history_en_134",
+      "question": "According to popular legend, why is the breakfast pastry called a 'croissant' shaped like a crescent?",
+      "answers": [
+        {"text": "To celebrate a victory over Ottoman forces", "correct": true},
+        {"text": "To fit neatly around a coffee cup", "correct": false},
+        {"text": "To copy the shape of a baker's oven door", "correct": false}
+      ],
+      "difficulty": "easy",
+      "fun_fact": "Legend ties the crescent shape to bakers mocking the Ottoman crescent emblem after the 1683 Siege of Vienna, though the buttery French croissant we know was perfected much later in Paris and its true origin is uncertain.",
+      "category": "History"
+    },
+    {
+      "id": "history_en_135",
+      "question": "What was the original purpose of the small 'fifth pocket' inside the right front pocket of jeans?",
+      "answers": [
+        {"text": "To hold a pocket watch", "correct": true},
+        {"text": "To store spare rivets", "correct": false},
+        {"text": "To carry matches kept dry", "correct": false}
+      ],
+      "difficulty": "easy",
+      "fun_fact": "Levi's added the tiny pocket in the 1870s specifically so working men could tuck away a pocket watch; it long outlived the gadget it was designed for.",
+      "category": "History"
+    },
+    {
+      "id": "history_en_136",
+      "question": "Why does the word 'quarantine' specifically suggest a period of forty?",
+      "answers": [
+        {"text": "Ships were isolated for forty days during plague", "correct": true},
+        {"text": "Forty was the Roman legal limit for any detention", "correct": false},
+        {"text": "Doctors believed illness peaked on the fortieth hour", "correct": false}
+      ],
+      "difficulty": "easy",
+      "fun_fact": "Venetian authorities made arriving ships wait 'quaranta giorni' — forty days — before docking during plague outbreaks, and the Italian for forty gave us the word.",
+      "category": "History"
+    },
+    {
+      "id": "history_en_137",
+      "question": "Why is the radio distress call 'Mayday' that particular word?",
+      "answers": [
+        {"text": "From the French 'm'aidez', meaning 'help me'", "correct": true},
+        {"text": "Named after a ship that sank in May", "correct": false},
+        {"text": "From a captain named Matthew Day", "correct": false}
+      ],
+      "difficulty": "easy",
+      "fun_fact": "A London radio officer coined it in 1923 from the French 'venez m'aider' ('come help me') because much air traffic at the time was between England and France.",
+      "category": "History"
+    },
+    {
+      "id": "history_en_138",
+      "question": "What accidental discovery led to the invention of the microwave oven?",
+      "answers": [
+        {"text": "A chocolate bar melted in an engineer's pocket", "correct": true},
+        {"text": "A radar dish overheated a cup of tea", "correct": false},
+        {"text": "A lightning strike cooked a stored chicken", "correct": false}
+      ],
+      "difficulty": "easy",
+      "fun_fact": "Engineer Percy Spencer noticed a chocolate bar melting near an active radar magnetron in 1945; he then deliberately popped corn and exploded an egg to confirm the cooking effect.",
+      "category": "History"
+    },
+    {
+      "id": "history_en_139",
+      "question": "Why do British police carry the nickname 'bobbies'?",
+      "answers": [
+        {"text": "After the politician who founded the force, Robert Peel", "correct": true},
+        {"text": "From the bobbing helmets they once wore", "correct": false},
+        {"text": "After a famous first constable named Bob", "correct": false}
+      ],
+      "difficulty": "easy",
+      "fun_fact": "Robert Peel set up London's Metropolitan Police in 1829, so officers were nicknamed 'bobbies' (and earlier 'peelers') after his first name and surname.",
+      "category": "History"
+    },
+    {
+      "id": "history_en_140",
+      "question": "What was the original, non-musical purpose of the saxophone's inventor in creating it?",
+      "answers": [
+        {"text": "To bridge the gap between brass and woodwind in military bands", "correct": true},
+        {"text": "To amplify foghorns for harbour ships", "correct": false},
+        {"text": "To test the acoustics of opera houses", "correct": false}
+      ],
+      "difficulty": "hard",
+      "fun_fact": "Adolphe Sax patented the saxophone in the 1840s aiming to give marching military bands an instrument that carried outdoors better than strings yet blended brass power with woodwind agility.",
+      "category": "History"
+    },
+    {
+      "id": "history_en_141",
+      "question": "Why is a sandwich called a 'sandwich'?",
+      "answers": [
+        {"text": "After an earl who wanted to eat without leaving his card table", "correct": true},
+        {"text": "After a beach town where it was first sold", "correct": false},
+        {"text": "From an old word meaning 'pressed bread'", "correct": false}
+      ],
+      "difficulty": "easy",
+      "fun_fact": "The 4th Earl of Sandwich reputedly asked for meat between bread so he could keep gambling one-handed, and companions began ordering 'the same as Sandwich'.",
+      "category": "History"
+    },
+    {
+      "id": "history_en_142",
+      "question": "What was the Slinky originally being developed to do?",
+      "answers": [
+        {"text": "Stabilise sensitive instruments on rocking ships", "correct": true},
+        {"text": "Measure earthquakes in remote valleys", "correct": false},
+        {"text": "Untangle telephone wires automatically", "correct": false}
+      ],
+      "difficulty": "medium",
+      "fun_fact": "Naval engineer Richard James was experimenting with tension springs to keep shipboard equipment steady in 1943 when one tumbled off a shelf and 'walked' — inspiring the toy.",
+      "category": "History"
+    },
+    {
+      "id": "history_en_143",
+      "question": "Why does the word 'cappuccino' refer to a coffee drink?",
+      "answers": [
+        {"text": "Its colour resembled the brown robes of Capuchin friars", "correct": true},
+        {"text": "It was first brewed in a town called Cappucci", "correct": false},
+        {"text": "It was named after a barista, Carlo Cappuccini", "correct": false}
+      ],
+      "difficulty": "easy",
+      "fun_fact": "The drink's light brown shade matched the hooded habits of Capuchin monks, whose order also lent its name to the capuchin monkey for the same reason.",
+      "category": "History"
+    },
+    {
+      "id": "history_en_144",
+      "question": "What was unusual about the route of the 1908 'New York to Paris' automobile race?",
+      "answers": [
+        {"text": "It was driven mostly westward across three continents", "correct": true},
+        {"text": "It used only electric cars the whole way", "correct": false},
+        {"text": "It was completed entirely without refuelling", "correct": false}
+      ],
+      "difficulty": "hard",
+      "fun_fact": "Competitors drove west from New York across the United States, were shipped to Asia, then crossed Siberia and Europe to Paris — a roughly 22,000-mile route that took the winner 169 days.",
+      "category": "History"
+    },
+    {
+      "id": "history_en_145",
+      "question": "Why are the wide leather chairs in barbershops historically tied to surgery?",
+      "answers": [
+        {"text": "Barbers once performed bloodletting and minor surgery", "correct": true},
+        {"text": "Surgeons borrowed barbers' chairs for operations", "correct": false},
+        {"text": "Barbershops doubled as recovery wards", "correct": false}
+      ],
+      "difficulty": "medium",
+      "fun_fact": "For centuries 'barber-surgeons' cut hair and also pulled teeth, set bones and let blood; the red-and-white barber pole represents blood and the bandages used to wrap the arm.",
+      "category": "History"
+    },
+    {
+      "id": "history_en_146",
+      "question": "What is the real origin of the phrase 'the whole nine yards'?",
+      "answers": [
+        {"text": "It remains genuinely unknown despite many claims", "correct": true},
+        {"text": "It refers to a standard bolt of cloth for a kilt", "correct": false},
+        {"text": "It refers to fighter-plane machine-gun belts", "correct": false}
+      ],
+      "difficulty": "hard",
+      "fun_fact": "Etymologists have hunted for decades, and the popular ammunition-belt and tailoring stories are unproven; the earliest printed uses don't even agree on the number, making this a celebrated unsolved origin.",
+      "category": "History"
+    },
+    {
+      "id": "history_en_147",
+      "question": "Why is a marathon race that particular distance, tied to ancient Greece?",
+      "answers": [
+        {"text": "After a messenger's run from the town of Marathon", "correct": true},
+        {"text": "It was the length of an Olympic stadium track times forty", "correct": false},
+        {"text": "It matched the daily march of a Spartan army", "correct": false}
+      ],
+      "difficulty": "easy",
+      "fun_fact": "The race honours the legend of a runner carrying news of victory from Marathon to Athens; the modern 42.195 km distance traces to the 1908 London Olympics and was officially standardised in 1921.",
+      "category": "History"
+    },
+    {
+      "id": "history_en_148",
+      "question": "What was the surprising original use of bubble wrap when it was invented in 1957?",
+      "answers": [
+        {"text": "Textured wallpaper for homes", "correct": true},
+        {"text": "Insulation for greenhouse roofs", "correct": false},
+        {"text": "Padding for athletic shoes", "correct": false}
+      ],
+      "difficulty": "medium",
+      "fun_fact": "Two engineers sealed two shower curtains together hoping to sell trendy three-dimensional wallpaper; it flopped, and only later did they pitch the air pockets as protective packaging.",
+      "category": "History"
+    },
+    {
+      "id": "history_en_149",
+      "question": "Why does the word 'denim', the fabric of jeans, point to a French city?",
+      "answers": [
+        {"text": "It comes from 'de Nîmes', meaning 'from Nîmes'", "correct": true},
+        {"text": "It was named after a tailor, Henri Denim", "correct": false},
+        {"text": "It comes from the French word for 'durable'", "correct": false}
+      ],
+      "difficulty": "medium",
+      "fun_fact": "The sturdy twill was 'serge de Nîmes' — serge from the town of Nîmes — while 'jeans' separately comes from Genoa, the Italian port whose sailors wore the cotton cloth.",
+      "category": "History"
+    },
+    {
+      "id": "history_en_150",
+      "question": "What was Coca-Cola's rival 7 Up originally marketed as containing?",
+      "answers": [
+        {"text": "A mood-stabilising drug, lithium", "correct": true},
+        {"text": "Crushed citrus seeds for vitamins", "correct": false},
+        {"text": "Trace amounts of real gold flakes", "correct": false}
+      ],
+      "difficulty": "medium",
+      "fun_fact": "Launched in 1929 as 'Bib-Label Lithiated Lemon-Lime Soda', it contained lithium citrate, a compound later used to treat mood disorders; the lithium was removed in 1948.",
+      "category": "History"
+    },
+    {
+      "id": "history_en_151",
+      "question": "Why do we say a clumsy mistake is a 'blooper', a word born in early broadcasting?",
+      "answers": [
+        {"text": "From the 'bloop' sound of a recording error", "correct": true},
+        {"text": "After a comedian named Sid Blooper", "correct": false},
+        {"text": "From a Dutch word for 'red face'", "correct": false}
+      ],
+      "difficulty": "hard",
+      "fun_fact": "Early radio and TV engineers called the low 'bloop' noise made when a sound recording was cut or spliced wrong a 'blooper', and the term spread to mean any on-air flub.",
+      "category": "History"
+    },
+    {
+      "id": "history_en_152",
+      "question": "What was the original purpose of high-heeled shoes, centuries before fashion?",
+      "answers": [
+        {"text": "To help cavalry riders grip their stirrups", "correct": true},
+        {"text": "To keep feet above flooded city streets", "correct": false},
+        {"text": "To make soldiers appear taller in formation", "correct": false}
+      ],
+      "difficulty": "easy",
+      "fun_fact": "Persian horsemen wore heeled riding boots so their feet locked into stirrups while shooting bows; European aristocrats later adopted heels as a manly status symbol before women's fashion claimed them.",
+      "category": "History"
+    },
+    {
+      "id": "history_en_153",
+      "question": "Roughly how long ago did the last woolly mammoths still walk the Earth?",
+      "answers": [
+        {"text": "They were still alive when the Egyptian pyramids stood", "correct": true},
+        {"text": "They died out a million years before any human civilisation", "correct": false},
+        {"text": "They vanished just as the dinosaurs disappeared", "correct": false}
+      ],
+      "difficulty": "easy",
+      "fun_fact": "A small population survived on Wrangel Island off Siberia until around 2000 BC. The Great Pyramid of Giza was already about 500 years old by the time the very last mammoths died.",
+      "category": "History"
+    },
+    {
+      "id": "history_en_154",
+      "question": "How many years separate Cleopatra from the building of the Great Pyramid of Giza?",
+      "answers": [
+        {"text": "About 2,500 years", "correct": true},
+        {"text": "About 500 years", "correct": false},
+        {"text": "About 5,000 years", "correct": false}
+      ],
+      "difficulty": "medium",
+      "fun_fact": "Cleopatra lived closer in time to the Moon landing than to the construction of the pyramids. The pyramids were already ancient tourist attractions when she was queen.",
       "category": "History"
     }
   ]

@@ -1,7 +1,7 @@
 {
   "name": "Sport",
   "language": "en",
-  "version": "1.0",
+  "version": "1.1",
   "theme": "sport",
   "questions": [
     {
@@ -1202,6 +1202,606 @@
       ],
       "difficulty": "hard",
       "fun_fact": "Short-track crashes routinely send multiple skaters sliding into the padded barriers at over 50 km/h. A helmet that detaches cleanly under sudden force is considered safer than one that pulls the skater's head backward.",
+      "category": "Sport"
+    },
+    {
+      "id": "sport_en_103",
+      "question": "Why does a curveball in baseball actually curve, according to physicists?",
+      "answers": [
+        {"text": "The spin makes air move faster on one side, lowering pressure and pushing the ball sideways", "correct": true},
+        {"text": "The ball's stitches catch crosswinds that physically blow it off course", "correct": false},
+        {"text": "The ball deforms in flight and rolls toward its heavier side", "correct": false}
+      ],
+      "difficulty": "medium",
+      "fun_fact": "This is the Magnus effect. The break looks like a sharp last-second jerk, but high-speed cameras show the curve is actually a smooth, continuous arc the whole way to the plate — the 'break' is an illusion of the batter's perspective.",
+      "category": "Sport"
+    },
+    {
+      "id": "sport_en_104",
+      "question": "What happens inside a sprinter's muscles in the final metres of a 100 m race that forces even the fastest runners to slow down?",
+      "answers": [
+        {"text": "Their fuel system can't resupply fast enough, so power output drops before the finish", "correct": true},
+        {"text": "Lactic acid physically dissolves the muscle fibres mid-stride", "correct": false},
+        {"text": "The lungs run completely out of stored oxygen at exactly 80 metres", "correct": false}
+      ],
+      "difficulty": "hard",
+      "fun_fact": "Top sprinters actually reach peak speed around 60-70 m and then decelerate slightly to the line. The 100 m is won not by who accelerates most but by who slows down least — phosphocreatine stores in the muscle empty in roughly 8-10 seconds.",
+      "category": "Sport"
+    },
+    {
+      "id": "sport_en_105",
+      "question": "Why can a skilled archer's heartbeat ruin a shot, and what do they do about it?",
+      "answers": [
+        {"text": "They release the arrow in the gap between heartbeats to avoid the pulse jolting the bow", "correct": true},
+        {"text": "They hold their breath until the heart temporarily stops", "correct": false},
+        {"text": "They press the bow against the chest so the heartbeat steadies the aim", "correct": false}
+      ],
+      "difficulty": "medium",
+      "fun_fact": "Each heartbeat sends a tiny tremor up the arm that can shift the aim point. Elite archers and biathletes train to feel their pulse and squeeze the release in the roughly half-second lull between beats.",
+      "category": "Sport"
+    },
+    {
+      "id": "sport_en_106",
+      "question": "Why do swimmers exhale underwater instead of holding their breath the whole stroke cycle?",
+      "answers": [
+        {"text": "Holding air makes them too buoyant and creates tension, so steady exhaling keeps the body level and relaxed", "correct": true},
+        {"text": "Exhaling underwater cools the lungs and prevents overheating", "correct": false},
+        {"text": "The rules forbid surfacing with air still in the lungs", "correct": false}
+      ],
+      "difficulty": "easy",
+      "fun_fact": "A chest full of held air floats the upper body and sinks the legs, wrecking the streamlined position. Continuous exhalation also means the swimmer only needs a quick inhale when the mouth clears the water, costing less time.",
+      "category": "Sport"
+    },
+    {
+      "id": "sport_en_107",
+      "question": "Why does chalk help a gymnast or weightlifter grip the bar better?",
+      "answers": [
+        {"text": "It absorbs sweat and moisture, so the skin grips the bar instead of sliding on a film of water", "correct": true},
+        {"text": "It chemically softens the skin so it moulds around the bar", "correct": false},
+        {"text": "It creates a sticky glue-like layer between hand and metal", "correct": false}
+      ],
+      "difficulty": "easy",
+      "fun_fact": "Gym chalk is magnesium carbonate, not the calcium chalk used on blackboards. Counter-intuitively, it works by drying the skin rather than adding stickiness — friction between dry skin and bar is far higher than between wet skin and bar.",
+      "category": "Sport"
+    },
+    {
+      "id": "sport_en_108",
+      "question": "Why is it physically impossible to keep your eye fully on the ball at the moment you hit it in fast sports like tennis or baseball?",
+      "answers": [
+        {"text": "The ball moves faster than the eye can track in the final fraction of a second, so the brain predicts where it will be", "correct": true},
+        {"text": "Blinking is an involuntary reflex that always triggers on contact", "correct": false},
+        {"text": "The eye loses focus whenever the head turns toward the ball", "correct": false}
+      ],
+      "difficulty": "easy",
+      "fun_fact": "Eye-tracking studies show batters lose sight of a fast pitch several metres before contact. 'Keep your eye on the ball' is impossible to obey literally — what good hitters actually do is jump their gaze ahead to the predicted contact point.",
+      "category": "Sport"
+    },
+    {
+      "id": "sport_en_109",
+      "question": "Why does a footballer's free kick suddenly 'dip' or swerve more violently when struck a certain way?",
+      "answers": [
+        {"text": "At a critical speed the airflow around the ball changes from smooth to turbulent, abruptly altering the forces on it", "correct": true},
+        {"text": "The ball heats up from the impact and the warm air inside makes it lighter", "correct": false},
+        {"text": "Stadium air pressure changes when the crowd inhales together", "correct": false}
+      ],
+      "difficulty": "hard",
+      "fun_fact": "The famous 'knuckleball' free kick is struck with almost no spin near this transition speed, so the airflow flips erratically and the ball wobbles unpredictably. A ball with smoother panels reaches the chaotic zone at a different speed, which is why new World Cup balls spark goalkeeper complaints.",
+      "category": "Sport"
+    },
+    {
+      "id": "sport_en_110",
+      "question": "Why do cross-country skiers apply a different wax to the middle of the ski than to the tips and tails?",
+      "answers": [
+        {"text": "The middle 'grip' wax holds the snow for push-off, while the ends are slick so the ski glides forward", "correct": true},
+        {"text": "The middle wax is purely to protect the ski from the skier's weight", "correct": false},
+        {"text": "Coloured middle wax helps judges identify each skier from a distance", "correct": false}
+      ],
+      "difficulty": "medium",
+      "fun_fact": "When a classic skier presses down, the ski's camber flattens and the grip wax bites the snow to push off; when they glide, the camber lifts the grip zone clear so only the slick ends touch. Getting the wax wrong for the day's snow temperature can lose a race outright.",
+      "category": "Sport"
+    },
+    {
+      "id": "sport_en_111",
+      "question": "Why does spinning rapidly let a figure skater pull their arms in and suddenly whirl faster?",
+      "answers": [
+        {"text": "Pulling mass closer to the spin axis conserves rotation, so the same energy spins them faster", "correct": true},
+        {"text": "Tucked arms reduce air resistance against the body", "correct": false},
+        {"text": "The skate blade grips the ice more when the body is compact", "correct": false}
+      ],
+      "difficulty": "easy",
+      "fun_fact": "This is conservation of angular momentum — the same physics that makes a collapsing star spin up. A skater can roughly double their spin rate just by drawing the arms and a leg into the body, with no extra push from the ice.",
+      "category": "Sport"
+    },
+    {
+      "id": "sport_en_112",
+      "question": "Why do boxers exhale sharply with a hiss every time they throw a punch?",
+      "answers": [
+        {"text": "Tensing the core on a sharp exhale braces the body so more force transfers into the punch", "correct": true},
+        {"text": "It cools the blood rushing to the arms", "correct": false},
+        {"text": "It is purely to intimidate the opponent with the sound", "correct": false}
+      ],
+      "difficulty": "medium",
+      "fun_fact": "The forced exhale stiffens the trunk so the punching arm has a solid base to drive from, and it also empties the lungs so a body shot landing at that instant does less damage. The same breath-and-brace trick appears in martial arts as the 'kiai' shout.",
+      "category": "Sport"
+    },
+    {
+      "id": "sport_en_113",
+      "question": "Why does a basketball player's jump shot fly truer with backspin on the ball?",
+      "answers": [
+        {"text": "Backspin makes the ball deflect softly off the rim and gives it a more stable, predictable flight", "correct": true},
+        {"text": "Backspin makes the ball lighter as it rises", "correct": false},
+        {"text": "Backspin magnetises the ball slightly toward the metal rim", "correct": false}
+      ],
+      "difficulty": "easy",
+      "fun_fact": "A backspinning shot that hits the rim tends to grab and drop in rather than bounce away, giving 'shooter's roll'. The spin also lends the ball a steadier, more consistent flight through the air.",
+      "category": "Sport"
+    },
+    {
+      "id": "sport_en_114",
+      "question": "Why does a long jumper run a long approach before takeoff instead of jumping from a standing start?",
+      "answers": [
+        {"text": "Forward running speed is converted into horizontal distance, so faster approach means a longer jump", "correct": true},
+        {"text": "The run-up is needed to memorise the exact takeoff foot", "correct": false},
+        {"text": "Rules require a minimum approach distance of 30 metres", "correct": false}
+      ],
+      "difficulty": "easy",
+      "fun_fact": "Roughly the same fast athletes win both the long jump and the sprints, because horizontal speed at the board is the single biggest factor in distance. Standing long jump exists as a separate event and produces less than half the distance of a running jump.",
+      "category": "Sport"
+    },
+    {
+      "id": "sport_en_115",
+      "question": "Why does a tennis ball bounce lower and slower as a match wears on?",
+      "answers": [
+        {"text": "Repeated impacts fluff up the felt and let pressurised air slowly leak out, deadening the bounce", "correct": true},
+        {"text": "The ball absorbs sweat and becomes heavier", "correct": false},
+        {"text": "Friction permanently flattens one side of the rubber core", "correct": false}
+      ],
+      "difficulty": "medium",
+      "fun_fact": "Pressurised tennis balls start losing air the moment the can is opened, which is why pros demand fresh balls every nine games. The roughened, fluffed felt also creates more drag, slowing the ball through the air as well as off the court.",
+      "category": "Sport"
+    },
+    {
+      "id": "sport_en_116",
+      "question": "Why do downhill speed skiers crouch into an extreme tuck rather than standing tall for better balance?",
+      "answers": [
+        {"text": "The tuck slashes air resistance, which is by far the biggest force slowing them at high speed", "correct": true},
+        {"text": "Crouching lets the skis carve deeper into the snow for grip", "correct": false},
+        {"text": "The low position keeps blood from rushing to the head", "correct": false}
+      ],
+      "difficulty": "easy",
+      "fun_fact": "At over 130 km/h, air resistance dwarfs the friction of skis on snow. Wind-tunnel work on the tuck position can be worth several km/h, which over a long course is the difference between a medal and mid-pack.",
+      "category": "Sport"
+    },
+    {
+      "id": "sport_en_117",
+      "question": "Why does a properly thrown javelin briefly point slightly upward as it flies, then level off?",
+      "answers": [
+        {"text": "It is launched nose-high so it slices into the air efficiently and glides like a small wing", "correct": true},
+        {"text": "The metal tip is heated before throwing to make it rise", "correct": false},
+        {"text": "Air trapped in the hollow shaft lifts the front", "correct": false}
+      ],
+      "difficulty": "medium",
+      "fun_fact": "The javelin is a gliding airfoil, and its balance point matters enormously. The men's javelin was actually redesigned in 1986 to move the centre of gravity forward, making it nosedive sooner — throws had grown so long that javelins were nearly reaching the far end of stadiums.",
+      "category": "Sport"
+    },
+    {
+      "id": "sport_en_118",
+      "question": "Why do elite runners breathe in a rhythm linked to their footsteps?",
+      "answers": [
+        {"text": "Coordinating breath with stride reduces strain from the impact forces hitting the body each step", "correct": true},
+        {"text": "It is required by the body's inability to breathe and move legs at once", "correct": false},
+        {"text": "Matched rhythm sends more blood to the lungs than to the legs", "correct": false}
+      ],
+      "difficulty": "medium",
+      "fun_fact": "Many runners settle into a 2:2 pattern — inhale for two steps, exhale for two. Exhaling always lands on the same foot, so some coaches teach alternating patterns like 3:2 to spread the landing stress evenly between both legs and reduce side stitches.",
+      "category": "Sport"
+    },
+    {
+      "id": "sport_en_119",
+      "question": "Why does cold water make a freediver's body involuntarily slow its heart rate?",
+      "answers": [
+        {"text": "Cold on the face triggers a built-in reflex that conserves oxygen for the brain and heart", "correct": true},
+        {"text": "Cold water thickens the blood so the heart pumps less often", "correct": false},
+        {"text": "The cold numbs the nerves that signal the heart to beat", "correct": false}
+      ],
+      "difficulty": "easy",
+      "fun_fact": "Just splashing cold water on your face triggers a milder version of this same reflex — your pulse drops within seconds. It is shared with diving mammals like seals, and is strongest when the water is cold and the breath is held together.",
+      "category": "Sport"
+    },
+    {
+      "id": "sport_en_120",
+      "question": "Why does a cyclist riding closely behind another save a large amount of energy?",
+      "answers": [
+        {"text": "The lead rider punches a hole in the air, leaving a low-pressure pocket the follower coasts into", "correct": true},
+        {"text": "The follower is pulled forward by the lead rider's tyre suction on the road", "correct": false},
+        {"text": "Two bikes close together weigh less due to combined momentum", "correct": false}
+      ],
+      "difficulty": "easy",
+      "fun_fact": "At racing speed most of a cyclist's effort goes to pushing air aside, so tucking into the slipstream can cut energy use by around a third. This is why breakaway riders, alone in the wind, are so often reeled in by a sheltered chasing pack.",
+      "category": "Sport"
+    },
+    {
+      "id": "sport_en_121",
+      "question": "Why does a golfer's drive travel farther on a hot day than a cold one, all else being equal?",
+      "answers": [
+        {"text": "Warm air is less dense, so the ball meets less resistance and flies farther", "correct": true},
+        {"text": "Heat makes the golf ball expand and become more aerodynamic", "correct": false},
+        {"text": "Warm muscles always swing exactly 10 percent faster", "correct": false}
+      ],
+      "difficulty": "medium",
+      "fun_fact": "Thinner warm air means less drag but also slightly less lift, yet the distance gain still wins out — roughly a couple of yards per 10°C. This is also why drives go dramatically farther at high altitude, where the air is thinner still.",
+      "category": "Sport"
+    },
+    {
+      "id": "sport_en_122",
+      "question": "Why do sprinters explode out of a crouched start in blocks rather than starting upright?",
+      "answers": [
+        {"text": "The forward lean lets them push against the blocks and drive the body's weight into acceleration", "correct": true},
+        {"text": "Crouching stores energy in the spine like a spring", "correct": false},
+        {"text": "The low start hides the runner's eyes from the starting gun's flash", "correct": false}
+      ],
+      "difficulty": "easy",
+      "fun_fact": "Blocks give something solid to push against, and the low body angle means more of the leg drive goes into forward motion rather than straight up. Runners stay leaning forward for the first several strides, only standing tall once near top speed.",
+      "category": "Sport"
+    },
+    {
+      "id": "sport_en_123",
+      "question": "Why does a ski jumper hold the skis in a wide 'V' shape in the air instead of keeping them parallel?",
+      "answers": [
+        {"text": "The V spreads more surface to the oncoming air, generating extra lift to fly farther", "correct": true},
+        {"text": "The V keeps the skis from crossing and tripping the jumper", "correct": false},
+        {"text": "Parallel skis are banned for being too dangerous on landing", "correct": false}
+      ],
+      "difficulty": "medium",
+      "fun_fact": "The V-style was mocked when Sweden's Jan Boklov adopted it in the late 1980s and judges docked his style points — but he won so much on distance that everyone copied it. It generates noticeably more lift than the old parallel-ski technique.",
+      "category": "Sport"
+    },
+    {
+      "id": "sport_en_124",
+      "question": "Why does a weightlifter often perform better when chalk-coated and breathing in just before a heavy lift?",
+      "answers": [
+        {"text": "Holding a deep breath pressurises the abdomen, creating a rigid core that protects the spine and transfers force", "correct": true},
+        {"text": "The held breath floods the muscles with extra stored oxygen", "correct": false},
+        {"text": "Inhaling makes the body lighter against gravity", "correct": false}
+      ],
+      "difficulty": "medium",
+      "fun_fact": "This braced breath-hold is the Valsalva manoeuvre, and it turns the torso into a stiff column that stops the lifter folding under the bar. Doing it on every rep does spike blood pressure sharply, which is why it is reserved for genuinely heavy efforts.",
+      "category": "Sport"
+    },
+    {
+      "id": "sport_en_125",
+      "question": "Why does a thrown discus travel farther when it tilts slightly into a headwind?",
+      "answers": [
+        {"text": "Like a wing, it generates more lift flying into the wind, which keeps it airborne longer", "correct": true},
+        {"text": "The headwind cools the metal and reduces its weight", "correct": false},
+        {"text": "Wind from the front spins the discus faster, adding distance", "correct": false}
+      ],
+      "difficulty": "hard",
+      "fun_fact": "Counter to intuition, a discus can fly farther into a moderate headwind than with a tailwind, because the faster airflow over its angled face produces more lift. Throwers actively read the flag and time their attempts for the right breeze.",
+      "category": "Sport"
+    },
+    {
+      "id": "sport_en_126",
+      "question": "Why do speed skaters' clap skates have a hinge that lets the blade detach from the heel during each stride?",
+      "answers": [
+        {"text": "The hinge keeps the blade flat on the ice longer, letting the skater push for more of each stride", "correct": true},
+        {"text": "The hinge folds the skate flat for easier carrying", "correct": false},
+        {"text": "It lets skaters quickly swap blades between races", "correct": false}
+      ],
+      "difficulty": "hard",
+      "fun_fact": "In a fixed skate, lifting the heel pulls the blade tip off the ice and ends the push early. The hinged clap skate, which snaps back with an audible clap, keeps the blade down through the full ankle extension — it cut world records dramatically when introduced in the late 1990s.",
+      "category": "Sport"
+    },
+    {
+      "id": "sport_en_127",
+      "question": "The word 'soccer' is actually an abbreviation of which longer term?",
+      "answers": [
+        {"text": "Association football", "correct": true},
+        {"text": "Society football", "correct": false},
+        {"text": "Scottish football", "correct": false}
+      ],
+      "difficulty": "easy",
+      "fun_fact": "British students in the 1880s shortened 'Association' to 'assoc' and then 'soccer', the same slang habit that turned 'rugby' fans into 'ruggers'. The term was common in England long before Americans adopted it.",
+      "category": "Sport"
+    },
+    {
+      "id": "sport_en_128",
+      "question": "What gave the sport of badminton its name?",
+      "answers": [
+        {"text": "It was named after Badminton House, an English country estate", "correct": true},
+        {"text": "It comes from the Sanskrit word for shuttlecock", "correct": false},
+        {"text": "It was named after the British India town of Badminton", "correct": false}
+      ],
+      "difficulty": "easy",
+      "fun_fact": "Guests of the Duke of Beaufort played an Indian game called 'poona' in the great hall of Badminton House in Gloucestershire around 1873. The estate's name simply stuck to the game they brought back.",
+      "category": "Sport"
+    },
+    {
+      "id": "sport_en_129",
+      "question": "The marathon-style event of the 'pentathlon' aside, which modern Olympic sport takes its name from a Greek word meaning 'feat of strength'?",
+      "answers": [
+        {"text": "Athletics, from 'athlon' (prize/contest)", "correct": true},
+        {"text": "Gymnastics, from 'gymnos' (strength)", "correct": false},
+        {"text": "Decathlon, from 'deka-thlon' (strong ten)", "correct": false}
+      ],
+      "difficulty": "medium",
+      "fun_fact": "'Athlon' meant a contest fought for a prize, and an 'athletes' was one who competed for it. The root reveals that prize-winning, not mere participation, was baked into the very word from the start.",
+      "category": "Sport"
+    },
+    {
+      "id": "sport_en_130",
+      "question": "Why is the scoring system in tennis based on the unusual sequence 15, 30, 40?",
+      "answers": [
+        {"text": "It likely came from a clock face, with points marked at quarter-hour positions", "correct": true},
+        {"text": "It was copied from the points in a French dice game", "correct": false},
+        {"text": "It reflects the original betting stakes of 15, 30 and 40 sous", "correct": false}
+      ],
+      "difficulty": "medium",
+      "fun_fact": "The clock-face theory holds that 45 was shortened to 40 so the hand could move to 50 for the 'advantage' before reaching 60 for game. No single record proves it, but the quarter-hour pattern fits remarkably well.",
+      "category": "Sport"
+    },
+    {
+      "id": "sport_en_131",
+      "question": "The word 'gymnasium' comes from a Greek practice that would scandalise a modern gym. What did 'gymnos' mean?",
+      "answers": [
+        {"text": "Naked", "correct": true},
+        {"text": "Sweating", "correct": false},
+        {"text": "Disciplined", "correct": false}
+      ],
+      "difficulty": "easy",
+      "fun_fact": "Greek athletes trained and competed nude, and a 'gymnasion' was literally 'a place to be naked'. The modern word for a school subject and a fitness centre still carries that root, minus the dress code.",
+      "category": "Sport"
+    },
+    {
+      "id": "sport_en_132",
+      "question": "The game of squash got its name from what physical property of its ball?",
+      "answers": [
+        {"text": "The ball squashes against the wall on impact", "correct": true},
+        {"text": "Players were squashed together in a small court", "correct": false},
+        {"text": "It was first played with a squashed tennis ball", "correct": false}
+      ],
+      "difficulty": "easy",
+      "fun_fact": "Squash evolved at Harrow School around 1830 when boys used a punctured, softer rackets ball that 'squashed' on the wall instead of bouncing hard. The squashy ball demanded more running, which is exactly why the game caught on.",
+      "category": "Sport"
+    },
+    {
+      "id": "sport_en_133",
+      "question": "The card game term aside, why is the at-bat hitting area in baseball called the 'batter's box'?",
+      "answers": [
+        {"text": "It was added to stop batters creeping forward toward the pitcher", "correct": true},
+        {"text": "Early batters stood inside an actual wooden crate", "correct": false},
+        {"text": "It marks where the equipment box once sat", "correct": false}
+      ],
+      "difficulty": "medium",
+      "fun_fact": "Before the box was drawn, hitters would edge closer to the plate to attack pitches early. The chalk rectangle, formalised in the 1870s, fixed the batter's legal standing area and the rule survives essentially unchanged.",
+      "category": "Sport"
+    },
+    {
+      "id": "sport_en_134",
+      "question": "Why does golf use the term 'caddie' for the person carrying a player's clubs?",
+      "answers": [
+        {"text": "From the French 'cadet', meaning a young helper or junior", "correct": true},
+        {"text": "From a Scottish word for a leather club bag", "correct": false},
+        {"text": "From the surname of golf's first professional club-carrier", "correct": false}
+      ],
+      "difficulty": "easy",
+      "fun_fact": "Mary, Queen of Scots, who learned golf in France, is said to have used military 'cadets' to carry her clubs. The word entered Scots as 'cawdy' for an errand boy before settling on the golf course.",
+      "category": "Sport"
+    },
+    {
+      "id": "sport_en_135",
+      "question": "The word 'derby' for a local sporting rivalry traces back to which original event?",
+      "answers": [
+        {"text": "A chaotic mass football game between two parishes in Derby, England", "correct": true},
+        {"text": "The Earl of Derby's private fencing tournaments", "correct": false},
+        {"text": "A 19th-century Derby cricket club's grudge matches", "correct": false}
+      ],
+      "difficulty": "medium",
+      "fun_fact": "Shrovetide football in Derby pitted two halves of the town against each other in a violent, day-long scrum. 'Local derby' came to mean any heated neighbourhood contest, and the horse race at Epsom borrowed the name separately from the Earl of Derby.",
+      "category": "Sport"
+    },
+    {
+      "id": "sport_en_136",
+      "question": "What is the original purpose of the 'pea' inside a football referee's whistle?",
+      "answers": [
+        {"text": "The rattling pea makes the trilling sound that carries over a crowd", "correct": true},
+        {"text": "It marks whistles approved for international matches", "correct": false},
+        {"text": "It lets the referee taste-test for tampering", "correct": false}
+      ],
+      "difficulty": "medium",
+      "fun_fact": "Whistles were invented by Joseph Hudson of Birmingham, who first sold them to London police. His pea whistle, the Acme Thunderer, launched in 1884 and its loud, carrying trill let referees finally be heard above the roar of the crowd.",
+      "category": "Sport"
+    },
+    {
+      "id": "sport_en_137",
+      "question": "The boxing term 'southpaw' for a left-handed fighter is popularly said to have borrowed its name from which other sport?",
+      "answers": [
+        {"text": "Baseball", "correct": true},
+        {"text": "Cricket", "correct": false},
+        {"text": "Fencing", "correct": false}
+      ],
+      "difficulty": "easy",
+      "fun_fact": "According to the popular story, early American ballparks were oriented so a left-handed pitcher's throwing arm faced south, and sportswriters dubbed him a 'southpaw'. Boxing later adopted the word for left-handers, though lexicographers note the term may actually predate the game.",
+      "category": "Sport"
+    },
+    {
+      "id": "sport_en_138",
+      "question": "Why is the long-distance running event called a 'marathon' rather than being named after a runner?",
+      "answers": [
+        {"text": "It honours a messenger's legendary run from the town of Marathon", "correct": true},
+        {"text": "'Marathon' was ancient Greek for 'great endurance'", "correct": false},
+        {"text": "It was named after the Marathon family who funded the first race", "correct": false}
+      ],
+      "difficulty": "easy",
+      "fun_fact": "The name comes from the place, not the man. The runner Pheidippides supposedly carried news of victory from the plain of Marathon to Athens, and the 1896 organisers named the new race after his route's starting point.",
+      "category": "Sport"
+    },
+    {
+      "id": "sport_en_139",
+      "question": "The word 'rugby' came about because of an incident at Rugby School involving which act?",
+      "answers": [
+        {"text": "A boy picked up the ball and ran with it during football", "correct": true},
+        {"text": "A headmaster banned a rougher ball game and renamed it", "correct": false},
+        {"text": "Students invented an oval ball in the school workshop", "correct": false}
+      ],
+      "difficulty": "easy",
+      "fun_fact": "The legend credits pupil William Webb Ellis with first running while carrying the ball around 1823. Historians doubt the exact tale, but the school's distinctive handling game spread under the town's name, and rugby's World Cup trophy is named the Webb Ellis Cup.",
+      "category": "Sport"
+    },
+    {
+      "id": "sport_en_140",
+      "question": "Why does the sport of curling refer to its playing area as a 'sheet'?",
+      "answers": [
+        {"text": "Players once swept and slid stones across a flat sheet of natural pond ice", "correct": true},
+        {"text": "The first rinks were marked out with bedsheets", "correct": false},
+        {"text": "It is short for 'sheet of granite' from the stones' source", "correct": false}
+      ],
+      "difficulty": "medium",
+      "fun_fact": "Curling began on frozen Scottish lochs, and 'sheet' simply described the smooth expanse of ice a match was played on. The term survived indoors even though modern sheets are carefully prepared and 'pebbled' with sprayed water droplets.",
+      "category": "Sport"
+    },
+    {
+      "id": "sport_en_141",
+      "question": "The badminton and tennis term 'let' (a replayed point) shares an origin with which old meaning of the word?",
+      "answers": [
+        {"text": "'To hinder' or obstruct, as in 'without let or hindrance'", "correct": true},
+        {"text": "'To allow', as in letting someone serve again", "correct": false},
+        {"text": "'To rent', from leasing a court", "correct": false}
+      ],
+      "difficulty": "hard",
+      "fun_fact": "The archaic 'let' meaning obstruction survives almost only in racket sports and legal phrasing. A serve that clips the net is 'hindered' on its way, so the point is replayed; the everyday meaning of 'let' as 'allow' is a completely separate, opposite word.",
+      "category": "Sport"
+    },
+    {
+      "id": "sport_en_142",
+      "question": "Why was the basketball 'dribble' originally a bounce pass to oneself, invented to get around which rule?",
+      "answers": [
+        {"text": "The early rule banned running while holding the ball", "correct": true},
+        {"text": "Players were not allowed to pass to a teammate twice in a row", "correct": false},
+        {"text": "The ball could not be thrown above shoulder height", "correct": false}
+      ],
+      "difficulty": "medium",
+      "fun_fact": "Naismith's first rules forbade running with the ball, so trapped players bounced it ahead and chased it as a legal way to advance. Coaches initially saw dribbling as a desperate last resort rather than the core skill it became.",
+      "category": "Sport"
+    },
+    {
+      "id": "sport_en_143",
+      "question": "The word 'stadium' originally referred to what, before it meant a sporting arena?",
+      "answers": [
+        {"text": "A unit of distance, the length of a Greek footrace", "correct": true},
+        {"text": "The wooden benches spectators sat on", "correct": false},
+        {"text": "The starting block carved from stone", "correct": false}
+      ],
+      "difficulty": "medium",
+      "fun_fact": "A 'stadion' was about 180 metres, the length of the original sprint at Olympia. The track took the name of the distance, and eventually the whole arena built around it inherited the word 'stadium'.",
+      "category": "Sport"
+    },
+    {
+      "id": "sport_en_144",
+      "question": "Why is a knockdown in boxing counted to ten specifically, rather than any other number?",
+      "answers": [
+        {"text": "The Queensberry rules picked ten seconds as a fair recovery window", "correct": true},
+        {"text": "It matched the ten rounds of early championship bouts", "correct": false},
+        {"text": "Ten was the number of judges originally seated ringside", "correct": false}
+      ],
+      "difficulty": "medium",
+      "fun_fact": "Before the count, a downed bare-knuckle fighter simply had 30 seconds and a chalk 'scratch' line to toe. The ten-second count, codified in the 1860s, created the dramatic, suspenseful tradition of the referee's count we know today.",
+      "category": "Sport"
+    },
+    {
+      "id": "sport_en_145",
+      "question": "The hockey term 'puck' is believed to derive from a word in which sport's vocabulary?",
+      "answers": [
+        {"text": "Hurling, where 'to puck' means to strike the ball", "correct": true},
+        {"text": "Cricket, from 'puck' meaning a hard knock", "correct": false},
+        {"text": "Lacrosse, from an Indigenous word for disc", "correct": false}
+      ],
+      "difficulty": "hard",
+      "fun_fact": "In the Irish game of hurling, 'to puck' the sliotar means to hit it sharply. Irish immigrants helped shape early ice hockey in Canada, and the flat rubber disc likely inherited the striking word as its name.",
+      "category": "Sport"
+    },
+    {
+      "id": "sport_en_146",
+      "question": "Why does a golf score of one stroke under par on a hole get called a 'birdie'?",
+      "answers": [
+        {"text": "From American slang 'bird', meaning something excellent", "correct": true},
+        {"text": "A bird once flew into a famous winning putt", "correct": false},
+        {"text": "It was named after golfer Henry Bird", "correct": false}
+      ],
+      "difficulty": "easy",
+      "fun_fact": "In 1903 a player at Atlantic City said a fine shot was 'a bird of a shot', 1900s American slang for excellent. The 'birdie' caught on, and 'eagle' and 'albatross' were later coined as bigger birds for even better scores.",
+      "category": "Sport"
+    },
+    {
+      "id": "sport_en_147",
+      "question": "The cricketing term 'over' for a set of six deliveries originally referred to what?",
+      "answers": [
+        {"text": "The umpire calling 'over' to switch bowling ends", "correct": true},
+        {"text": "The ball being bowled over the batsman's shoulder", "correct": false},
+        {"text": "A bowler's run-up crossing over the crease", "correct": false}
+      ],
+      "difficulty": "hard",
+      "fun_fact": "When a bowler finished a set of balls, the umpire called 'over!' to signal play would switch to the opposite end. The word for the announcement became the word for the unit, even though early overs were four balls, not six.",
+      "category": "Sport"
+    },
+    {
+      "id": "sport_en_148",
+      "question": "Why is the front-crawl swimming stroke sometimes still called the 'Australian crawl'?",
+      "answers": [
+        {"text": "Australian swimmers popularised the flutter-kick version around 1900", "correct": true},
+        {"text": "It was first swum across Sydney Harbour as a stunt", "correct": false},
+        {"text": "Australia made it compulsory in school swimming", "correct": false}
+      ],
+      "difficulty": "medium",
+      "fun_fact": "Swimmers like Richmond Cavill in Sydney refined an alternating overarm stroke with a flutter kick that proved far faster than the breaststroke and sidestroke then dominant. The world simply called the speedy new style the 'Australian crawl'.",
+      "category": "Sport"
+    },
+    {
+      "id": "sport_en_149",
+      "question": "The word 'gymkhana', used for equestrian and motoring skill events, was assembled from languages in which region?",
+      "answers": [
+        {"text": "British India, blending Hindi-Urdu and English", "correct": true},
+        {"text": "Colonial East Africa, from Swahili and Portuguese", "correct": false},
+        {"text": "Persia, from two Farsi words for horse and field", "correct": false}
+      ],
+      "difficulty": "hard",
+      "fun_fact": "'Gend-khana' meant a ball-game house in Hindi-Urdu, and British colonials reshaped it into 'gymkhana', mixing in 'gymnasium'. It first described a sports clubhouse before coming to mean the skill-and-obstacle contests held there.",
+      "category": "Sport"
+    },
+    {
+      "id": "sport_en_150",
+      "question": "Why do football clubs in England traditionally play a 'Boxing Day' fixture on 26 December?",
+      "answers": [
+        {"text": "It dates to when the holiday gave working-class fans a rare free day to attend", "correct": true},
+        {"text": "Clubs once gave away boxed gifts to fans that day", "correct": false},
+        {"text": "It commemorates a famous match played in a boxing ring", "correct": false}
+      ],
+      "difficulty": "easy",
+      "fun_fact": "Boxing Day was a holiday when servants and workers were given the day off and a 'Christmas box' of money or goods. With the masses suddenly free, football scheduled matches to fill the stands, and the packed festive fixture list became a beloved tradition.",
+      "category": "Sport"
+    },
+    {
+      "id": "sport_en_151",
+      "question": "A regulation NBA basketball game lasts 48 minutes of clock time. Roughly how long is the ball actually in live play?",
+      "answers": [
+        {"text": "About 48 minutes — but the average game takes well over two hours of real time", "correct": true},
+        {"text": "About 90 minutes once stoppages and replays are counted", "correct": false},
+        {"text": "About 20 minutes, the rest being free throws and timeouts", "correct": false}
+      ],
+      "difficulty": "easy",
+      "fun_fact": "The 48 minutes of game clock stretch into roughly 2 hours 15 minutes of wall-clock time because the clock stops on every whistle, free throw, timeout and substitution — so under half the broadcast is live action.",
+      "category": "Sport"
+    },
+    {
+      "id": "sport_en_152",
+      "question": "In American football, studies of broadcasts have measured how much actual ball-in-play action a typical three-hour NFL game contains. Roughly how much is it?",
+      "answers": [
+        {"text": "About 11 minutes", "correct": true},
+        {"text": "About 35 minutes", "correct": false},
+        {"text": "About 60 minutes", "correct": false}
+      ],
+      "difficulty": "easy",
+      "fun_fact": "A Wall Street Journal study clocked the average play at around 4 seconds, with about 130 plays per game — totalling roughly 11 minutes of action inside a broadcast that runs three hours, most of which is replays and players standing around.",
       "category": "Sport"
     }
   ]

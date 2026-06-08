@@ -1,7 +1,7 @@
 {
   "name": "Science",
   "language": "en",
-  "version": "1.0",
+  "version": "1.1",
   "theme": "science",
   "questions": [
     {
@@ -1202,6 +1202,606 @@
       ],
       "difficulty": "medium",
       "fun_fact": "Synovial fluid contains dissolved gases. Stretching the joint drops the pressure and forms a tiny cavity — the pop is the cavity collapsing or forming. Long-running studies show knuckle cracking does NOT cause arthritis.",
+      "category": "Science"
+    },
+    {
+      "id": "science_en_102",
+      "question": "Why does hot water sometimes freeze faster than cold water?",
+      "answers": [
+        {"text": "It's a real but still-debated effect called the Mpemba effect", "correct": true},
+        {"text": "It never does — that's a pure myth", "correct": false},
+        {"text": "Hot water contains less oxygen, which lowers its freezing point", "correct": false}
+      ],
+      "difficulty": "medium",
+      "fun_fact": "Named after a Tanzanian schoolboy who noticed his hot ice-cream mix froze first, the Mpemba effect has been reproduced many times. Proposed causes include evaporation, convection, and dissolved gases — but no single explanation is fully settled.",
+      "category": "Science"
+    },
+    {
+      "id": "science_en_103",
+      "question": "Why does a microwave heat food but barely warm the ceramic plate underneath?",
+      "answers": [
+        {"text": "Microwaves agitate water molecules, and the plate has almost none", "correct": true},
+        {"text": "The plate reflects microwaves away from itself", "correct": false},
+        {"text": "Ceramic is too dense for microwaves to penetrate", "correct": false}
+      ],
+      "difficulty": "easy",
+      "fun_fact": "Microwaves are tuned to flip water (and fat and sugar) molecules back and forth billions of times a second, and the friction makes heat. A dry ceramic plate only feels hot because the food warms it by contact.",
+      "category": "Science"
+    },
+    {
+      "id": "science_en_104",
+      "question": "Why do your fingertips wrinkle after a long bath?",
+      "answers": [
+        {"text": "Your nervous system actively constricts blood vessels to pucker the skin", "correct": true},
+        {"text": "The outer skin simply soaks up water and swells", "correct": false},
+        {"text": "Soap strips oils, causing the skin to shrink", "correct": false}
+      ],
+      "difficulty": "medium",
+      "fun_fact": "It was long assumed to be passive swelling, but the wrinkling is a controlled nervous-system response — people with certain nerve damage don't wrinkle. The grooves may improve grip on wet objects, like rain treads on a tyre.",
+      "category": "Science"
+    },
+    {
+      "id": "science_en_105",
+      "question": "Why does a spinning ice skater speed up when they pull their arms in?",
+      "answers": [
+        {"text": "Conservation of angular momentum forces them to spin faster", "correct": true},
+        {"text": "Pulling in reduces air resistance against their arms", "correct": false},
+        {"text": "Their muscles add a burst of rotational force", "correct": false}
+      ],
+      "difficulty": "easy",
+      "fun_fact": "Angular momentum stays constant unless something stops it. Bring the mass closer to the spin axis and the rotation rate must rise to compensate — the same physics that makes a collapsing star spin into a rapidly pulsing object.",
+      "category": "Science"
+    },
+    {
+      "id": "science_en_106",
+      "question": "Why does food taste bland when you have a blocked nose?",
+      "answers": [
+        {"text": "Most of what we call 'taste' is actually smell from the back of the mouth", "correct": true},
+        {"text": "A blocked nose numbs the taste buds on the tongue", "correct": false},
+        {"text": "Congestion changes saliva chemistry, masking flavours", "correct": false}
+      ],
+      "difficulty": "easy",
+      "fun_fact": "The tongue only detects about five basic tastes. Everything else — coffee, strawberry, roast meat — is aroma rising from your mouth into your nose as you chew, a process called retronasal smell.",
+      "category": "Science"
+    },
+    {
+      "id": "science_en_107",
+      "question": "Why does a bridge or building have gaps in its joints?",
+      "answers": [
+        {"text": "To let materials expand and contract with temperature", "correct": true},
+        {"text": "To drain rainwater away from the structure", "correct": false},
+        {"text": "To make the structure flex in high winds", "correct": false}
+      ],
+      "difficulty": "easy",
+      "fun_fact": "Steel and concrete expand when hot. A long bridge can grow by a metre or more on a summer day; without expansion joints, the parts would push against each other and buckle. The Eiffel Tower grows about 15 cm taller in summer.",
+      "category": "Science"
+    },
+    {
+      "id": "science_en_108",
+      "question": "What makes a glow stick light up when you bend it?",
+      "answers": [
+        {"text": "Snapping it mixes two chemicals that react and release light", "correct": true},
+        {"text": "Bending generates electricity that powers a tiny bulb", "correct": false},
+        {"text": "It exposes a glowing powder to oxygen in the air", "correct": false}
+      ],
+      "difficulty": "medium",
+      "fun_fact": "A glass vial inside breaks, letting hydrogen peroxide mix with another compound. The reaction energises a dye that emits light — no heat involved. Cooling a glow stick in the fridge makes it dimmer but last much longer.",
+      "category": "Science"
+    },
+    {
+      "id": "science_en_109",
+      "question": "Why does a cast-iron pan keep sizzling food even after you turn the heat off?",
+      "answers": [
+        {"text": "Its high thermal mass stores a lot of heat and releases it slowly", "correct": true},
+        {"text": "Iron keeps generating heat through slow oxidation", "correct": false},
+        {"text": "The seasoning layer traps heat like an insulator", "correct": false}
+      ],
+      "difficulty": "medium",
+      "fun_fact": "Cast iron is heavy and holds heat far longer than thin aluminium. That stored energy keeps the surface searing-hot even off the flame, which is why a steak keeps sizzling — and why the handle stays dangerously hot.",
+      "category": "Science"
+    },
+    {
+      "id": "science_en_110",
+      "question": "Why can you see your breath on a cold day?",
+      "answers": [
+        {"text": "Warm moist breath cools and the water vapour condenses into droplets", "correct": true},
+        {"text": "Carbon dioxide you exhale turns visible in the cold", "correct": false},
+        {"text": "Cold air freezes the breath into tiny ice crystals instantly", "correct": false}
+      ],
+      "difficulty": "easy",
+      "fun_fact": "Your breath is warm and saturated with water vapour. When it hits cold air it can't hold that moisture, so it condenses into a fog of tiny droplets — the same process that forms clouds, just on a personal scale.",
+      "category": "Science"
+    },
+    {
+      "id": "science_en_111",
+      "question": "Why does a needle or paperclip float on water if placed gently?",
+      "answers": [
+        {"text": "Surface tension forms a 'skin' strong enough to hold it", "correct": true},
+        {"text": "Steel is actually less dense than water", "correct": false},
+        {"text": "Trapped air bubbles keep it buoyant", "correct": false}
+      ],
+      "difficulty": "easy",
+      "fun_fact": "Water molecules cling tightly to each other, creating a flexible surface film. The denser-than-water needle dents the film but doesn't break it — the same tension lets pond skaters walk on water. A drop of soap breaks it and the needle sinks.",
+      "category": "Science"
+    },
+    {
+      "id": "science_en_112",
+      "question": "Why does a struck tuning fork keep ringing while a struck pillow makes no sound?",
+      "answers": [
+        {"text": "The fork vibrates freely at a steady frequency; the pillow absorbs the energy", "correct": true},
+        {"text": "Metal stores electricity that powers the vibration", "correct": false},
+        {"text": "The pillow is too light to make air move", "correct": false}
+      ],
+      "difficulty": "medium",
+      "fun_fact": "A tuning fork is shaped to vibrate cleanly at one frequency with little energy loss, so it rings on. Soft materials convert the impact energy into heat almost instantly through internal friction — which is exactly why they make good soundproofing.",
+      "category": "Science"
+    },
+    {
+      "id": "science_en_113",
+      "question": "Why does opening a warm fizzy drink make it foam over more than a cold one?",
+      "answers": [
+        {"text": "Warm liquid holds less dissolved gas, so it escapes faster", "correct": true},
+        {"text": "Heat increases the pressure of the gas inside", "correct": false},
+        {"text": "Warm bubbles are larger and rise more violently", "correct": false}
+      ],
+      "difficulty": "medium",
+      "fun_fact": "Gases dissolve better in cold liquids than warm ones — the opposite of most solids. A warm soda is already 'over-full' of carbon dioxide, so the moment you release the pressure it rushes out in a foamy surge.",
+      "category": "Science"
+    },
+    {
+      "id": "science_en_114",
+      "question": "What is actually happening when iron 'rusts'?",
+      "answers": [
+        {"text": "Iron combines with oxygen and water to form a new compound", "correct": true},
+        {"text": "The metal slowly evaporates into the air", "correct": false},
+        {"text": "Bacteria eat away at the iron surface", "correct": false}
+      ],
+      "difficulty": "easy",
+      "fun_fact": "Rust is iron oxide — iron chemically bonding with oxygen, sped up by water. Unlike aluminium's tight oxide layer, rust is flaky and keeps exposing fresh metal underneath, so an iron object can rust all the way through.",
+      "category": "Science"
+    },
+    {
+      "id": "science_en_115",
+      "question": "Why do noise-cancelling headphones go quiet by making more sound?",
+      "answers": [
+        {"text": "They emit a sound wave that is the exact inverse of the noise", "correct": true},
+        {"text": "They blast white noise loud enough to mask everything", "correct": false},
+        {"text": "They vibrate to physically block the eardrum", "correct": false}
+      ],
+      "difficulty": "medium",
+      "fun_fact": "A microphone samples the incoming noise, and the headphone plays a mirror-image wave. Where one wave pushes, the other pulls, and they cancel — called destructive interference. It works best on steady low drones like jet engines.",
+      "category": "Science"
+    },
+    {
+      "id": "science_en_116",
+      "question": "Why doesn't a passenger feel like they're moving in a smooth, fast-cruising aeroplane?",
+      "answers": [
+        {"text": "We sense acceleration, not constant velocity", "correct": true},
+        {"text": "The cabin pressure cancels the sensation of speed", "correct": false},
+        {"text": "The plane is moving too fast for our senses to register", "correct": false}
+      ],
+      "difficulty": "medium",
+      "fun_fact": "Your inner ear detects changes in speed and direction, not steady motion. Cruising at 900 km/h feels like sitting still, but the slightest bump or turn is instantly obvious — the same reason you don't feel Earth hurtling through space.",
+      "category": "Science"
+    },
+    {
+      "id": "science_en_117",
+      "question": "Why does stainless steel resist rust while ordinary steel does not?",
+      "answers": [
+        {"text": "Chromium forms an invisible self-healing protective layer", "correct": true},
+        {"text": "Stainless steel contains no iron at all", "correct": false},
+        {"text": "It is coated in a thin film of clear plastic", "correct": false}
+      ],
+      "difficulty": "medium",
+      "fun_fact": "Add enough chromium and it reacts with oxygen to form a microscopically thin oxide film that seals the surface. Scratch it and the layer instantly reforms — which is why stainless steel cutlery shrugs off scratches that would rust plain iron.",
+      "category": "Science"
+    },
+    {
+      "id": "science_en_118",
+      "question": "Why can a tiny LED indicator run for years on a watch battery while a bulb drains it in minutes?",
+      "answers": [
+        {"text": "LEDs convert most of their energy to light, not waste heat", "correct": true},
+        {"text": "LEDs recharge themselves from ambient light", "correct": false},
+        {"text": "LEDs only light up part of the time, too fast to see", "correct": false}
+      ],
+      "difficulty": "medium",
+      "fun_fact": "An old incandescent bulb wastes around 90% of its energy as heat, glowing as a side effect. An LED produces light directly from electrons dropping energy levels in a semiconductor, so it sips power and barely warms up.",
+      "category": "Science"
+    },
+    {
+      "id": "science_en_119",
+      "question": "Why does a helium-filled airship or balloon eventually sink even without a leak?",
+      "answers": [
+        {"text": "Helium atoms are tiny enough to seep through the material itself", "correct": true},
+        {"text": "Helium gradually turns into a heavier gas", "correct": false},
+        {"text": "Cooling overnight permanently compresses the helium", "correct": false}
+      ],
+      "difficulty": "hard",
+      "fun_fact": "Helium is a single small atom that diffuses straight through the microscopic gaps in rubber and many plastics. That's why party balloons droop in a day or two — the gas literally escapes through walls that look perfectly solid.",
+      "category": "Science"
+    },
+    {
+      "id": "science_en_120",
+      "question": "Why does a thrown boomerang come back?",
+      "answers": [
+        {"text": "Spin plus its wing shape creates an uneven force that curves its path", "correct": true},
+        {"text": "Air pushes equally on both arms and bounces it back", "correct": false},
+        {"text": "The weight at one end pulls it into a circle", "correct": false}
+      ],
+      "difficulty": "hard",
+      "fun_fact": "Each arm is shaped like an aeroplane wing. As it spins, the top arm moves through the air faster than the bottom, generating more lift on top. Combined with the gyroscopic spin, this steadily tilts the flight path into a returning arc.",
+      "category": "Science"
+    },
+    {
+      "id": "science_en_121",
+      "question": "Why does a chameleon change colour?",
+      "answers": [
+        {"text": "It rearranges tiny crystals in its skin to reflect different light", "correct": true},
+        {"text": "It pumps coloured pigments in from its bloodstream", "correct": false},
+        {"text": "It grows and sheds coloured scales rapidly", "correct": false}
+      ],
+      "difficulty": "hard",
+      "fun_fact": "Beneath the skin lie layers of nanocrystals. By stretching or relaxing the cells, the chameleon changes the spacing of these crystals, which shifts which wavelengths bounce back — a structural colour, not a paint. Mood and temperature drive it more than camouflage.",
+      "category": "Science"
+    },
+    {
+      "id": "science_en_122",
+      "question": "Why does a dropped slice of buttered toast seem to land butter-side down?",
+      "answers": [
+        {"text": "Table height gives it just enough time for a half rotation", "correct": true},
+        {"text": "The butter makes that side heavier so it falls first", "correct": false},
+        {"text": "It's pure superstition with no physical basis", "correct": false}
+      ],
+      "difficulty": "hard",
+      "fun_fact": "Toast slides off a table with a slight spin. The typical height of a dining table gives it just enough time to rotate about half a turn before hitting the floor — so the side that started up tends to land down. Off a tall ladder it would flip fully.",
+      "category": "Science"
+    },
+    {
+      "id": "science_en_123",
+      "question": "Why do two soap bubbles merge into one larger bubble rather than staying separate?",
+      "answers": [
+        {"text": "Merging reduces the total surface area, which lowers their energy", "correct": true},
+        {"text": "Static electricity pulls the films together", "correct": false},
+        {"text": "Air pressure outside squeezes them into one", "correct": false}
+      ],
+      "difficulty": "medium",
+      "fun_fact": "Surface tension always tries to minimise area. One big bubble has less surface than two small ones of the same total volume, so merging lowers energy — the same principle that makes raindrops spherical, the shape with the least surface for its volume.",
+      "category": "Science"
+    },
+    {
+      "id": "science_en_124",
+      "question": "Why does a wet road shimmer like a puddle in the distance on a hot day?",
+      "answers": [
+        {"text": "Hot air bends light, creating a mirage that reflects the sky", "correct": true},
+        {"text": "Heat makes the road surface temporarily reflective", "correct": false},
+        {"text": "Rising water vapour forms a real thin film of water", "correct": false}
+      ],
+      "difficulty": "medium",
+      "fun_fact": "A layer of very hot air just above the road bends light upward as it passes from cooler air above. Your brain reads the bent sky-light as a reflective puddle. The same bending of light over hot deserts creates classic desert mirages.",
+      "category": "Science"
+    },
+    {
+      "id": "science_en_125",
+      "question": "Why does shaking a bottle of oil and water mix them, but they separate again on standing?",
+      "answers": [
+        {"text": "Water and oil molecules attract their own kind far more strongly", "correct": true},
+        {"text": "Oil is lighter than air and rises out of the water", "correct": false},
+        {"text": "The two liquids chemically repel and push apart", "correct": false}
+      ],
+      "difficulty": "easy",
+      "fun_fact": "Water molecules are polar and cling to each other; oil molecules are non-polar and don't mix in. Shaking just breaks the oil into droplets, which soon merge and float to the top. Soap works as a bridge between the two, which is how it lifts grease.",
+      "category": "Science"
+    },
+    {
+      "id": "science_en_126",
+      "question": "What does the word 'oxygen' literally mean?",
+      "answers": [
+        {"text": "Acid-former", "correct": true},
+        {"text": "Life-giver", "correct": false},
+        {"text": "Air-breaker", "correct": false}
+      ],
+      "difficulty": "medium",
+      "fun_fact": "Lavoisier coined it from Greek for 'acid-producing', wrongly believing oxygen was essential to all acids. He was mistaken — many acids contain no oxygen at all — but the name stuck for good.",
+      "category": "Science"
+    },
+    {
+      "id": "science_en_127",
+      "question": "The element cobalt is named after what?",
+      "answers": [
+        {"text": "A goblin from German mining folklore", "correct": true},
+        {"text": "A blue flower", "correct": false},
+        {"text": "A Greek sea god", "correct": false}
+      ],
+      "difficulty": "easy",
+      "fun_fact": "Miners blamed 'kobolds' — mischievous spirits — for ore that yielded no useful metal and gave off toxic arsenic fumes when smelted. That worthless-looking ore turned out to contain cobalt.",
+      "category": "Science"
+    },
+    {
+      "id": "science_en_128",
+      "question": "Which gas was a popular party and fairground entertainment for decades before doctors used it as an anaesthetic?",
+      "answers": [
+        {"text": "Nitrous oxide (laughing gas)", "correct": true},
+        {"text": "Ether", "correct": false},
+        {"text": "Chloroform", "correct": false}
+      ],
+      "difficulty": "medium",
+      "fun_fact": "Nitrous oxide was a high-society and fairground amusement for decades before anyone tried it for surgery. In 1844 the dentist Horace Wells watched a 'laughing gas' show, noticed a man feel no pain after injuring his leg, and went on to pursue the gas as a surgical anaesthetic.",
+      "category": "Science"
+    },
+    {
+      "id": "science_en_129",
+      "question": "The word 'gas' was deliberately invented by a 17th-century chemist based on which existing word?",
+      "answers": [
+        {"text": "The Greek word for 'chaos'", "correct": true},
+        {"text": "The Latin word for 'breath'", "correct": false},
+        {"text": "The Dutch word for 'smoke'", "correct": false}
+      ],
+      "difficulty": "hard",
+      "fun_fact": "Jan Baptist van Helmont coined 'gas' around 1640, adapting it from 'chaos' to describe the formless, space-filling vapours he produced. It is one of the few scientific words invented whole-cloth by a single person.",
+      "category": "Science"
+    },
+    {
+      "id": "science_en_130",
+      "question": "What gives the chemical element 'nickel' its name?",
+      "answers": [
+        {"text": "A devil-like sprite blamed for fake copper ore", "correct": true},
+        {"text": "A Swedish silver coin", "correct": false},
+        {"text": "The chemist who isolated it", "correct": false}
+      ],
+      "difficulty": "easy",
+      "fun_fact": "German miners called the reddish ore 'kupfernickel' — 'Old Nick's copper' — because it looked like copper ore but yielded none. The trickster name survived when the actual new metal was extracted from it.",
+      "category": "Science"
+    },
+    {
+      "id": "science_en_131",
+      "question": "The 'pasteurisation' process that keeps milk safe was originally developed by Louis Pasteur to rescue what?",
+      "answers": [
+        {"text": "Wine and beer", "correct": true},
+        {"text": "Cheese", "correct": false},
+        {"text": "Drinking water", "correct": false}
+      ],
+      "difficulty": "easy",
+      "fun_fact": "French winemakers were losing fortunes to wine that mysteriously soured. Pasteur showed gentle heating killed the microbes responsible. Only later was the same trick applied to milk, which now carries his name.",
+      "category": "Science"
+    },
+    {
+      "id": "science_en_132",
+      "question": "Why do we call a faint electrical response of the skin a 'galvanic' response?",
+      "answers": [
+        {"text": "A scientist made dead frog legs twitch with electricity", "correct": true},
+        {"text": "It was named after a French river", "correct": false},
+        {"text": "It comes from the Latin for 'lightning'", "correct": false}
+      ],
+      "difficulty": "medium",
+      "fun_fact": "Luigi Galvani noticed in the 1780s that a spark made a dissected frog's leg kick. He thought he'd found 'animal electricity'. He was wrong about the cause, but his name lives on in galvanising, galvanometers, and the galvanic skin response.",
+      "category": "Science"
+    },
+    {
+      "id": "science_en_133",
+      "question": "The word 'salary' comes from a substance once so valued it was used in part as Roman pay. What was it?",
+      "answers": [
+        {"text": "Salt", "correct": true},
+        {"text": "Iron", "correct": false},
+        {"text": "Olive oil", "correct": false}
+      ],
+      "difficulty": "easy",
+      "fun_fact": "'Salary' derives from the Latin 'salarium', linked to salt. Salt's role in preserving food before refrigeration made it a strategic resource — and gave us the phrase 'worth your salt'.",
+      "category": "Science"
+    },
+    {
+      "id": "science_en_134",
+      "question": "The metal 'palladium' was named after which newly discovered object in the sky?",
+      "answers": [
+        {"text": "The asteroid Pallas", "correct": true},
+        {"text": "Halley's Comet", "correct": false},
+        {"text": "A new moon of Saturn", "correct": false}
+      ],
+      "difficulty": "hard",
+      "fun_fact": "William Hyde Wollaston named palladium in 1802 after Pallas, an asteroid spotted just months earlier. Astronomy was so fashionable that naming a metal after a fresh sky discovery was a deliberate nod to the moment.",
+      "category": "Science"
+    },
+    {
+      "id": "science_en_135",
+      "question": "The 'Petri dish' used in every biology lab is named after a man who worked as what?",
+      "answers": [
+        {"text": "An assistant to Robert Koch", "correct": true},
+        {"text": "A glassblower", "correct": false},
+        {"text": "A pharmacist", "correct": false}
+      ],
+      "difficulty": "easy",
+      "fun_fact": "Julius Petri was Robert Koch's assistant when he devised the shallow lidded dish in the 1880s, so cultures could grow without contamination. A simple tweak to existing labware made his name permanent.",
+      "category": "Science"
+    },
+    {
+      "id": "science_en_136",
+      "question": "Why is the 'Celsius' temperature scale the reverse of how its inventor first defined it?",
+      "answers": [
+        {"text": "He originally set 0 as boiling and 100 as freezing", "correct": true},
+        {"text": "He never finished the scale before he died", "correct": false},
+        {"text": "A printing error flipped the numbers", "correct": false}
+      ],
+      "difficulty": "hard",
+      "fun_fact": "Anders Celsius's 1742 scale put 0 at the boiling point of water and 100 at freezing. The scale was flipped to today's familiar orientation shortly after his death, possibly by Carl Linnaeus.",
+      "category": "Science"
+    },
+    {
+      "id": "science_en_137",
+      "question": "The word 'quarantine' comes from a practice involving what specific number?",
+      "answers": [
+        {"text": "Forty days of isolation for ships", "correct": true},
+        {"text": "Four weeks in a hospital", "correct": false},
+        {"text": "Fourteen days at sea", "correct": false}
+      ],
+      "difficulty": "easy",
+      "fun_fact": "During plague outbreaks, Venice forced arriving ships to wait offshore for 'quaranta giorni' — forty days — before docking. The Italian word for forty gave us 'quarantine', long before anyone understood germ theory.",
+      "category": "Science"
+    },
+    {
+      "id": "science_en_138",
+      "question": "The Bunsen burner found in school labs was actually designed by Robert Bunsen mainly to do what?",
+      "answers": [
+        {"text": "Study the colours elements give to a flame", "correct": true},
+        {"text": "Heat water faster than a candle", "correct": false},
+        {"text": "Provide light for evening lectures", "correct": false}
+      ],
+      "difficulty": "medium",
+      "fun_fact": "Bunsen wanted a clean, near-colourless flame so the light emitted by heated elements wasn't masked. That quest led him and Kirchhoff to spectroscopy — and to discovering caesium and rubidium by their flame colours.",
+      "category": "Science"
+    },
+    {
+      "id": "science_en_139",
+      "question": "The word 'algorithm' is derived from what?",
+      "answers": [
+        {"text": "The name of a Persian mathematician", "correct": true},
+        {"text": "The Greek word for 'number rule'", "correct": false},
+        {"text": "An early mechanical calculator", "correct": false}
+      ],
+      "difficulty": "easy",
+      "fun_fact": "It comes from al-Khwarizmi, a 9th-century scholar whose name was Latinised as 'Algoritmi'. His work also gave us the word 'algebra', from 'al-jabr', meaning the reunion of broken parts.",
+      "category": "Science"
+    },
+    {
+      "id": "science_en_140",
+      "question": "Which familiar lab tool got its name because early versions were shaped like a retort animal's neck?",
+      "answers": [
+        {"text": "That's a trick — 'retort' comes from 'twisted back', not an animal", "correct": true},
+        {"text": "The flask, named after a swan", "correct": false},
+        {"text": "The pipette, named after a stork", "correct": false}
+      ],
+      "difficulty": "medium",
+      "fun_fact": "The retort, a bulb with a long downward-bending neck, takes its name from Latin 'retortus', meaning 'twisted back' — describing the curved tube, not any creature. Alchemists used it to distil and collect vapours.",
+      "category": "Science"
+    },
+    {
+      "id": "science_en_141",
+      "question": "The temperature unit 'Fahrenheit' set its zero point using what mixture?",
+      "answers": [
+        {"text": "Ice, water, and salt", "correct": true},
+        {"text": "Melting candle wax", "correct": false},
+        {"text": "Boiling vinegar", "correct": false}
+      ],
+      "difficulty": "medium",
+      "fun_fact": "Fahrenheit fixed 0° at the coldest temperature he could reliably reproduce — a brine of ice, water, and ammonium chloride. That's why his freezing and body-temperature numbers look so arbitrary today.",
+      "category": "Science"
+    },
+    {
+      "id": "science_en_142",
+      "question": "Why is dynamite's key ingredient, nitroglycerin, also kept in some heart patients' medicine cabinets?",
+      "answers": [
+        {"text": "It relaxes blood vessels and eases chest pain", "correct": true},
+        {"text": "It thins the blood like aspirin", "correct": false},
+        {"text": "It steadies the heartbeat electrically", "correct": false}
+      ],
+      "difficulty": "medium",
+      "fun_fact": "Factory workers handling nitroglycerin noticed their chest pain eased on workdays and returned on weekends. The same explosive compound, in tiny doses, widens blood vessels and is still prescribed for angina.",
+      "category": "Science"
+    },
+    {
+      "id": "science_en_143",
+      "question": "The chemical symbols 'Na' for sodium and 'K' for potassium come from older names. What language are those source names from?",
+      "answers": [
+        {"text": "Latin — 'natrium' and 'kalium'", "correct": true},
+        {"text": "Greek — from their flame colours", "correct": false},
+        {"text": "German — from their modern lab names", "correct": false}
+      ],
+      "difficulty": "medium",
+      "fun_fact": "Many element symbols hide their old Latin names: 'natrium' for sodium, 'kalium' for potassium, 'ferrum' for iron, 'aurum' for gold. The English names changed but the Latin abbreviations were kept.",
+      "category": "Science"
+    },
+    {
+      "id": "science_en_144",
+      "question": "The word 'laser' is an acronym. What does its first letter, 'L', stand for?",
+      "answers": [
+        {"text": "Light", "correct": true},
+        {"text": "Linear", "correct": false},
+        {"text": "Laminar", "correct": false}
+      ],
+      "difficulty": "easy",
+      "fun_fact": "It stands for 'Light Amplification by Stimulated Emission of Radiation'. Its microwave predecessor, the maser, came first — and Einstein predicted stimulated emission, the core principle, back in 1917.",
+      "category": "Science"
+    },
+    {
+      "id": "science_en_145",
+      "question": "The unit of electrical resistance, the 'ohm', is named after a man whose famous law was at first what?",
+      "answers": [
+        {"text": "Ridiculed and ignored", "correct": true},
+        {"text": "Immediately celebrated", "correct": false},
+        {"text": "Stolen from a rival", "correct": false}
+      ],
+      "difficulty": "medium",
+      "fun_fact": "Georg Ohm's relationship between voltage, current, and resistance was dismissed by German academics in the 1820s, costing him his teaching post. Recognition came decades later — the resistance unit now bears his name.",
+      "category": "Science"
+    },
+    {
+      "id": "science_en_146",
+      "question": "What was the original purpose of the bubble wrap that protects parcels today?",
+      "answers": [
+        {"text": "Textured wallpaper", "correct": true},
+        {"text": "A greenhouse insulator", "correct": false},
+        {"text": "A swimming-pool cover", "correct": false}
+      ],
+      "difficulty": "easy",
+      "fun_fact": "Inventors sealed two shower curtains together in 1957 hoping to sell trendy 3D wallpaper. It flopped. They pivoted to greenhouse insulation, which also failed — until IBM used it to protect a shipped computer.",
+      "category": "Science"
+    },
+    {
+      "id": "science_en_147",
+      "question": "The word 'pencil' shares a root with a word for which animal's body part?",
+      "answers": [
+        {"text": "A small tail or brush of hair", "correct": true},
+        {"text": "A bird's beak", "correct": false},
+        {"text": "A horse's hoof", "correct": false}
+      ],
+      "difficulty": "medium",
+      "fun_fact": "'Pencil' descends from Latin 'penicillus', meaning 'little tail' — originally a fine brush. The same root gives us 'penicillin', named because the mould's spore structures looked brush-like under a microscope.",
+      "category": "Science"
+    },
+    {
+      "id": "science_en_148",
+      "question": "Which element, used to make old gas lamps glow bright white, is named after a Norse god?",
+      "answers": [
+        {"text": "Thorium, named after Thor, made gas mantles glow brightly", "correct": true},
+        {"text": "Scandium powered early streetlights", "correct": false},
+        {"text": "Holmium was burned for light", "correct": false}
+      ],
+      "difficulty": "medium",
+      "fun_fact": "Before electric bulbs, gas lamps used mantles soaked in thorium compounds, which glow brilliant white when heated. Thorium was named after Thor — a fittingly powerful name for the element that lit cities at night.",
+      "category": "Science"
+    },
+    {
+      "id": "science_en_149",
+      "question": "The 'decibel' unit used to measure sound loudness is named in honour of which inventor?",
+      "answers": [
+        {"text": "Alexander Graham Bell", "correct": true},
+        {"text": "Thomas Edison", "correct": false},
+        {"text": "Heinrich Hertz", "correct": false}
+      ],
+      "difficulty": "easy",
+      "fun_fact": "The 'bel' honours Bell for his work on telephones and hearing; a decibel is one-tenth of a bel. The scale is logarithmic, so a 10-decibel rise represents roughly a tenfold jump in sound intensity.",
+      "category": "Science"
+    },
+    {
+      "id": "science_en_150",
+      "question": "How many atoms are in a single human body, roughly?",
+      "answers": [
+        {"text": "About 7 octillion (7 × 10²⁷)", "correct": true},
+        {"text": "About 7 billion (7 × 10⁹)", "correct": false},
+        {"text": "About 7 quadrillion (7 × 10¹⁵)", "correct": false}
+      ],
+      "difficulty": "easy",
+      "fun_fact": "That's a 7 followed by 27 zeros. If you tried to count your own atoms at one per second, it would take vastly longer than the current age of the universe — by a factor of trillions of trillions.",
+      "category": "Science"
+    },
+    {
+      "id": "science_en_151",
+      "question": "In a single breath of air, roughly how many molecules do you inhale?",
+      "answers": [
+        {"text": "Around 10²² (tens of sextillions)", "correct": true},
+        {"text": "Around 10 billion", "correct": false},
+        {"text": "Around 10 million", "correct": false}
+      ],
+      "difficulty": "hard",
+      "fun_fact": "One breath holds about 25 sextillion (2.5×10²²) molecules. Statistically, with each breath you inhale a few molecules that were once breathed out by Julius Caesar, because air mixes globally over centuries.",
       "category": "Science"
     }
   ]

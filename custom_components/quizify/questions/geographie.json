@@ -1,7 +1,7 @@
 {
   "name": "Geographie",
   "language": "de",
-  "version": "1.0",
+  "version": "1.1",
   "theme": "geography",
   "questions": [
     {
@@ -1202,6 +1202,594 @@
       ],
       "difficulty": "medium",
       "fun_fact": "Wellington liegt auf 41° Süd — südlicher als jede andere souveräne Hauptstadt. Canberra folgt mit 35° Süd. Argentiniens Buenos Aires liegt mit 34° Süd noch weiter nördlich. Antarktis hat keine Hauptstadt.",
+      "category": "Geographie"
+    },
+    {
+      "id": "geo_104",
+      "question": "Warum ist der Himmel tagsüber blau?",
+      "answers": [
+        {"text": "Blaues Licht wird in der Luft stärker gestreut als rotes", "correct": true},
+        {"text": "Das Meer spiegelt seine Farbe an den Himmel", "correct": false},
+        {"text": "Die Ozonschicht ist von Natur aus blau gefärbt", "correct": false}
+      ],
+      "difficulty": "easy",
+      "fun_fact": "Kurzwelliges blaues Licht prallt an den Luftmolekülen viel häufiger ab als rotes — die sogenannte Rayleigh-Streuung. Beim Sonnenuntergang muss das Licht einen längeren Weg durch die Atmosphäre nehmen, das Blau ist dann ‚verbraucht', und das Rot bleibt übrig.",
+      "category": "Geographie"
+    },
+    {
+      "id": "geo_105",
+      "question": "Warum schmeckt Meerwasser salzig?",
+      "answers": [
+        {"text": "Flüsse spülen über Jahrmillionen gelöstes Gestein ins Meer", "correct": true},
+        {"text": "Unterseeische Salzlager lösen sich direkt im Wasser auf", "correct": false},
+        {"text": "Fische scheiden ständig Salz über ihre Kiemen aus", "correct": false}
+      ],
+      "difficulty": "medium",
+      "fun_fact": "Regen löst Mineralien aus dem Gestein, Flüsse tragen sie ins Meer, und wenn Wasser verdunstet, bleibt das Salz zurück. Über Jahrmillionen hat sich so genug angesammelt, dass man aus dem Salz der Ozeane eine 150 Meter dicke Schicht über alle Kontinente legen könnte.",
+      "category": "Geographie"
+    },
+    {
+      "id": "geo_106",
+      "question": "Warum gibt es Ebbe und Flut?",
+      "answers": [
+        {"text": "Durch die Anziehungskraft von Mond und Sonne", "correct": true},
+        {"text": "Durch das Aufheizen des Wassers am Tag", "correct": false},
+        {"text": "Durch die Rotation unterseeischer Strömungen", "correct": false}
+      ],
+      "difficulty": "easy",
+      "fun_fact": "Die Schwerkraft des Mondes zieht das Wasser zu einem Berg — und auf der gegenüberliegenden Erdseite entsteht durch die Fliehkraft ein zweiter Wasserberg. Deshalb gibt es an den meisten Küsten zweimal täglich Flut, nicht nur einmal.",
+      "category": "Geographie"
+    },
+    {
+      "id": "geo_107",
+      "question": "Wodurch entsteht ein Regenbogen?",
+      "answers": [
+        {"text": "Licht wird in Regentropfen gebrochen und aufgefächert", "correct": true},
+        {"text": "Wassertropfen leuchten von selbst in Farben", "correct": false},
+        {"text": "Sonnenlicht spiegelt sich an Staub in den Wolken", "correct": false}
+      ],
+      "difficulty": "easy",
+      "fun_fact": "Jeder Regentropfen wirkt wie ein winziges Prisma. Deshalb steht ein Regenbogen immer der Sonne genau gegenüber — und zwei Menschen sehen nie exakt denselben Regenbogen, weil das Licht für jedes Auge aus anderen Tropfen kommt.",
+      "category": "Geographie"
+    },
+    {
+      "id": "geo_108",
+      "question": "Warum fließt warmes Wasser aus der Karibik bis vor die Küste Norwegens?",
+      "answers": [
+        {"text": "Eine riesige Meeresströmung, der Golfstrom, transportiert es", "correct": true},
+        {"text": "Warmes Wasser ist leichter und schwimmt um die Erde", "correct": false},
+        {"text": "Der Wind treibt es in einer geraden Linie nach Norden", "correct": false}
+      ],
+      "difficulty": "easy",
+      "fun_fact": "Der Golfstrom transportiert mehr Energie als tausende Kraftwerke zusammen. Ohne ihn wäre es in London oder Oslo mehrere Grad kälter — Skandinavien läge sonst klimatisch eher auf dem Niveau von Sibirien.",
+      "category": "Geographie"
+    },
+    {
+      "id": "geo_109",
+      "question": "Warum sind Wüsten nachts oft eisig kalt, obwohl es tagsüber glühend heiß ist?",
+      "answers": [
+        {"text": "Trockene Luft ohne Wolken speichert kaum Wärme", "correct": true},
+        {"text": "Der Sand kühlt sich aktiv durch Verdunstung ab", "correct": false},
+        {"text": "Kalte Höhenwinde sinken nachts in die Wüste herab", "correct": false}
+      ],
+      "difficulty": "medium",
+      "fun_fact": "Wasserdampf in der Luft wirkt wie eine Decke, die Wärme hält. In der Wüste fehlt diese Feuchtigkeit fast völlig, deshalb entweicht die Tageshitze nachts ungehindert ins All — in der Sahara kann es nachts unter den Gefrierpunkt fallen.",
+      "category": "Geographie"
+    },
+    {
+      "id": "geo_110",
+      "question": "Was passiert im sogenannten Auge eines Wirbelsturms?",
+      "answers": [
+        {"text": "Dort ist es windstill und der Himmel oft klar", "correct": true},
+        {"text": "Dort sind die Winde am allerstärksten", "correct": false},
+        {"text": "Dort regnet es am heftigsten von allen Stellen", "correct": false}
+      ],
+      "difficulty": "medium",
+      "fun_fact": "Im Zentrum eines Hurrikans sinkt die Luft ab statt aufzusteigen — deshalb herrscht dort fast Stille und manchmal scheint sogar die Sonne. Direkt daneben, in der ‚Augenwand', tobt jedoch der stärkste Wind des gesamten Sturms.",
+      "category": "Geographie"
+    },
+    {
+      "id": "geo_111",
+      "question": "Warum ist es auf Berggipfeln kälter als im Tal, obwohl man der Sonne näher ist?",
+      "answers": [
+        {"text": "Die Luft wird mit der Höhe dünner und hält weniger Wärme", "correct": true},
+        {"text": "Auf Gipfeln weht ständig kalter Wind aus dem Weltall", "correct": false},
+        {"text": "Schnee auf den Gipfeln kühlt die Luft aktiv herunter", "correct": false}
+      ],
+      "difficulty": "medium",
+      "fun_fact": "Die Luft heizt sich nicht direkt durch die Sonne auf, sondern durch die warme Erdoberfläche darunter. Je höher man kommt, desto dünner ist die Luft und desto weniger Wärme kann sie halten — pro 100 Meter Aufstieg sinkt die Temperatur um rund 0,6 Grad.",
+      "category": "Geographie"
+    },
+    {
+      "id": "geo_112",
+      "question": "Was sind Polarlichter und wodurch entstehen sie?",
+      "answers": [
+        {"text": "Geladene Teilchen der Sonne treffen auf die Atmosphäre", "correct": true},
+        {"text": "Sonnenlicht spiegelt sich an Eiskristallen über den Polen", "correct": false},
+        {"text": "Das Erdmagnetfeld glüht bei großer Kälte von selbst", "correct": false}
+      ],
+      "difficulty": "easy",
+      "fun_fact": "Teilchen vom Sonnenwind werden vom Erdmagnetfeld zu den Polen gelenkt und bringen dort Gase zum Leuchten — Sauerstoff grün, Stickstoff violett. Genau dasselbe gibt es auf der Südhalbkugel als ‚Aurora australis'.",
+      "category": "Geographie"
+    },
+    {
+      "id": "geo_113",
+      "question": "Warum sieht man bei einem Gewitter den Blitz immer vor dem Donner?",
+      "answers": [
+        {"text": "Licht ist viel schneller als der Schall", "correct": true},
+        {"text": "Der Blitz entsteht zeitlich vor dem Donner", "correct": false},
+        {"text": "Der Donner muss sich erst in den Wolken aufbauen", "correct": false}
+      ],
+      "difficulty": "easy",
+      "fun_fact": "Blitz und Donner entstehen im selben Moment, aber Licht erreicht uns fast sofort, während Schall nur rund 340 Meter pro Sekunde zurücklegt. Zählt man die Sekunden bis zum Donner und teilt durch drei, weiß man die Entfernung des Gewitters in Kilometern.",
+      "category": "Geographie"
+    },
+    {
+      "id": "geo_114",
+      "question": "Wodurch entstehen Erdbeben?",
+      "answers": [
+        {"text": "Riesige Gesteinsplatten verschieben sich ruckartig gegeneinander", "correct": true},
+        {"text": "Hohlräume tief im Erdinneren brechen plötzlich ein", "correct": false},
+        {"text": "Das Erdmagnetfeld entlädt sich periodisch im Boden", "correct": false}
+      ],
+      "difficulty": "easy",
+      "fun_fact": "Die Kontinentalplatten schieben sich unaufhörlich, verhaken sich aber und bauen Spannung auf. Wenn sie sich plötzlich lösen, bebt die Erde — dieselbe Energie, die Erdbeben auslöst, türmt über Jahrmillionen auch ganze Gebirge auf.",
+      "category": "Geographie"
+    },
+    {
+      "id": "geo_115",
+      "question": "Warum gibt es überhaupt Jahreszeiten?",
+      "answers": [
+        {"text": "Weil die Erdachse geneigt ist", "correct": true},
+        {"text": "Weil die Erde im Sommer näher an der Sonne ist", "correct": false},
+        {"text": "Weil die Sonne im Lauf des Jahres heißer und kühler wird", "correct": false}
+      ],
+      "difficulty": "easy",
+      "fun_fact": "Die Erde ist um 23,5 Grad geneigt, deshalb trifft die Sonne im Sommer steiler und länger auf eine Erdhälfte. Tatsächlich ist die Erde im europäischen Winter sogar näher an der Sonne — die Neigung schlägt die Entfernung also klar.",
+      "category": "Geographie"
+    },
+    {
+      "id": "geo_116",
+      "question": "Wie entsteht eine Wüstenoase mitten im Sand?",
+      "answers": [
+        {"text": "Grundwasser tritt an einer Stelle an die Oberfläche", "correct": true},
+        {"text": "Regenwolken bleiben über einem festen Punkt hängen", "correct": false},
+        {"text": "Pflanzenwurzeln ziehen Feuchtigkeit aus der Luft", "correct": false}
+      ],
+      "difficulty": "medium",
+      "fun_fact": "Wasser, das oft hunderte Kilometer entfernt in Bergen versickert ist, fließt unterirdisch durch Gesteinsschichten und tritt an einer Senke wieder zutage. Manches Oasenwasser in der Sahara fiel als Regen, bevor es überhaupt Menschen gab.",
+      "category": "Geographie"
+    },
+    {
+      "id": "geo_117",
+      "question": "Warum kocht Wasser auf hohen Bergen schon bei deutlich unter 100 Grad?",
+      "answers": [
+        {"text": "Weil der Luftdruck mit der Höhe sinkt", "correct": true},
+        {"text": "Weil die dünne Luft das Wasser schneller erhitzt", "correct": false},
+        {"text": "Weil Bergwasser von Natur aus weniger Mineralien hat", "correct": false}
+      ],
+      "difficulty": "hard",
+      "fun_fact": "Wasser siedet, wenn sein Dampfdruck den Luftdruck übersteigt. Oben ist der Luftdruck niedriger, also reicht weniger Hitze — auf dem Mount Everest kocht Wasser schon bei etwa 70 Grad, weshalb man dort kaum ein vernünftiges Ei kochen kann.",
+      "category": "Geographie"
+    },
+    {
+      "id": "geo_118",
+      "question": "Warum bilden sich Wolken überhaupt am Himmel?",
+      "answers": [
+        {"text": "Aufsteigende Luft kühlt ab und Wasserdampf wird sichtbar", "correct": true},
+        {"text": "Winde tragen Nebel vom Boden in große Höhen", "correct": false},
+        {"text": "Die Sonne verdampft Wasser direkt zu sichtbaren Tropfen", "correct": false}
+      ],
+      "difficulty": "medium",
+      "fun_fact": "Warme Luft steigt auf, kühlt in der Höhe ab, und der unsichtbare Wasserdampf kondensiert zu winzigen Tröpfchen an Staubteilchen. Eine durchschnittliche Schönwetterwolke wiegt dabei mehrere hundert Tonnen — sie schwebt nur, weil die Tröpfchen so winzig sind.",
+      "category": "Geographie"
+    },
+    {
+      "id": "geo_119",
+      "question": "Warum bleibt ein Eisberg im Wasser schwimmen, statt unterzugehen?",
+      "answers": [
+        {"text": "Gefrorenes Wasser ist leichter als flüssiges", "correct": true},
+        {"text": "Eingeschlossene Luftblasen tragen den Eisberg", "correct": false},
+        {"text": "Das Salz im Meerwasser drückt das Eis nach oben", "correct": false}
+      ],
+      "difficulty": "easy",
+      "fun_fact": "Wasser ist eine der wenigen Substanzen, die sich beim Gefrieren ausdehnen — Eis ist deshalb rund neun Prozent leichter. Genau diese Eigenschaft lässt nur etwa ein Zehntel eines Eisbergs aus dem Wasser ragen, der Rest bleibt verborgen.",
+      "category": "Geographie"
+    },
+    {
+      "id": "geo_120",
+      "question": "Wie entstehen Höhlen mit Tropfsteinen tief im Kalkgestein?",
+      "answers": [
+        {"text": "Saures Regenwasser löst den Kalk über Jahrtausende auf", "correct": true},
+        {"text": "Unterirdische Flüsse fräsen das harte Gestein mechanisch weg", "correct": false},
+        {"text": "Erdwärme schmilzt den Kalkstein langsam von innen", "correct": false}
+      ],
+      "difficulty": "medium",
+      "fun_fact": "Regenwasser nimmt Kohlendioxid auf und wird leicht sauer — diese schwache Säure löst Kalk auf und höhlt das Gestein aus. Tropft das Wasser dann von der Decke, lagert sich der Kalk wieder ab: Ein Tropfstein wächst oft nur einen Zentimeter pro Jahrhundert.",
+      "category": "Geographie"
+    },
+    {
+      "id": "geo_121",
+      "question": "Warum riecht es kurz vor einem Sommerregen oft so erdig und frisch?",
+      "answers": [
+        {"text": "Der Regen wirbelt Duftstoffe aus dem trockenen Boden auf", "correct": true},
+        {"text": "Das Wasser selbst hat einen feinen Eigengeruch", "correct": false},
+        {"text": "Blitze erzeugen den Geruch von verbrannter Luft", "correct": false}
+      ],
+      "difficulty": "hard",
+      "fun_fact": "Der Geruch heißt ‚Petrichor'. Bodenbakterien produzieren in Trockenphasen eine Substanz namens Geosmin, die fallende Tropfen als feinen Nebel in die Luft schleudern. Die menschliche Nase ist dafür empfindlicher als für viele andere Düfte.",
+      "category": "Geographie"
+    },
+    {
+      "id": "geo_122",
+      "question": "Warum gefriert ein Süßwassersee im Winter zu, das Meer drumherum aber meist nicht?",
+      "answers": [
+        {"text": "Salz senkt den Gefrierpunkt des Meerwassers", "correct": true},
+        {"text": "Meerwasser besteht aus einer anderen Art von Wassermolekülen", "correct": false},
+        {"text": "Meerwasser speichert mehr Wärme aus dem Erdinneren", "correct": false}
+      ],
+      "difficulty": "medium",
+      "fun_fact": "Gelöstes Salz stört die Bildung von Eiskristallen, deshalb friert Meerwasser erst bei etwa minus 1,8 Grad. Genau dieses Prinzip nutzt man im Winter, wenn man Salz auf vereiste Straßen streut, um das Eis zum Schmelzen zu bringen.",
+      "category": "Geographie"
+    },
+    {
+      "id": "geo_123",
+      "question": "Wie kann ein Fluss bergauf zu fließen scheinen, wie man es an manchen Orten beobachtet?",
+      "answers": [
+        {"text": "Es ist eine optische Täuschung durch die Landschaft", "correct": true},
+        {"text": "Die Erdrotation drückt das Wasser an manchen Stellen hoch", "correct": false},
+        {"text": "Magnetisches Gestein zieht das Wasser den Hang hinauf", "correct": false}
+      ],
+      "difficulty": "hard",
+      "fun_fact": "An sogenannten ‚Gravity Hills' fehlt der Horizont als Bezugspunkt, sodass ein sanftes Gefälle aussieht wie eine Steigung. Wasser und sogar ausgekuppelte Autos scheinen bergauf zu rollen — fließen aber in Wahrheit ganz normal bergab.",
+      "category": "Geographie"
+    },
+    {
+      "id": "geo_124",
+      "question": "Warum erscheint der Mond am Horizont viel größer als hoch am Himmel?",
+      "answers": [
+        {"text": "Es ist eine Sinnestäuschung unseres Gehirns", "correct": true},
+        {"text": "Die Atmosphäre wirkt am Horizont wie eine Lupe", "correct": false},
+        {"text": "Der Mond ist am Horizont tatsächlich näher an der Erde", "correct": false}
+      ],
+      "difficulty": "hard",
+      "fun_fact": "Misst man nach, ist der Mond am Horizont sogar einen Tick kleiner. Das Gehirn vergleicht ihn dort mit Bäumen und Häusern und schätzt ihn größer ein — fotografiert man ihn, verschwindet der Effekt komplett.",
+      "category": "Geographie"
+    },
+    {
+      "id": "geo_125",
+      "question": "Warum ist Schnee weiß, obwohl er aus durchsichtigem Wasser besteht?",
+      "answers": [
+        {"text": "Unzählige Eiskristalle streuen das Licht in alle Richtungen", "correct": true},
+        {"text": "Schnee enthält winzige weiße Mineralpartikel", "correct": false},
+        {"text": "Die Kälte entzieht dem Eis seine Farbe", "correct": false}
+      ],
+      "difficulty": "easy",
+      "fun_fact": "Ein einzelner Eiskristall ist klar, aber in einer Schneeflocke brechen sich die vielen Flächen so oft, dass alle Farben gleichmäßig zurückgeworfen werden — und das ergibt Weiß. Tief gepresster Gletscherschnee wirkt dagegen oft bläulich.",
+      "category": "Geographie"
+    },
+    {
+      "id": "geo_126",
+      "question": "Warum bilden Zugvögel und auch Wolken am Himmel manchmal lange, ordentliche Reihen?",
+      "answers": [
+        {"text": "Aufsteigende Warmluftschläuche ordnen sie in Bahnen", "correct": true},
+        {"text": "Das Erdmagnetfeld zwingt sie in gerade Linien", "correct": false},
+        {"text": "Der Jetstream presst alles in der Höhe zusammen", "correct": false}
+      ],
+      "difficulty": "medium",
+      "fun_fact": "Wo warme Luft in Streifen aufsteigt und dazwischen absinkt, entstehen am Himmel parallele ‚Wolkenstraßen'. Greifvögel nutzen genau diese unsichtbaren Aufwinde, um über hunderte Kilometer zu gleiten, fast ohne einen Flügelschlag.",
+      "category": "Geographie"
+    },
+    {
+      "id": "geo_127",
+      "question": "Warum bewegen sich Sanddünen in der Wüste über die Jahre langsam fort?",
+      "answers": [
+        {"text": "Der Wind trägt Sand über den Kamm auf die andere Seite", "correct": true},
+        {"text": "Die ganze Düne rutscht als Block über den Boden", "correct": false},
+        {"text": "Hitze lässt den Sand wie eine zähe Flüssigkeit fließen", "correct": false}
+      ],
+      "difficulty": "medium",
+      "fun_fact": "Der Wind weht Sandkörner die flache Seite hinauf und lässt sie auf der steilen Rückseite herabrieseln — so wandert die ganze Düne, oft mehrere Meter pro Jahr. Manche Wüstendünen ‚singen' dabei sogar mit einem tiefen Brummen, wenn der Sand rutscht.",
+      "category": "Geographie"
+    },
+    {
+      "id": "geo_128",
+      "question": "Woher stammt der Name des Landes Venezuela?",
+      "answers": [
+        {"text": "Von ‚Klein-Venedig', wegen Pfahlbauten im Wasser", "correct": true},
+        {"text": "Von einem indigenen Wort für ‚Land der Adern'", "correct": false},
+        {"text": "Vom Namen eines spanischen Entdeckers", "correct": false}
+      ],
+      "difficulty": "medium",
+      "fun_fact": "Als europäische Seefahrer um 1500 die Pfahlbauten der Ureinwohner am Maracaibo-See sahen, erinnerten sie sich an Venedig und nannten die Gegend ‚Venezuela' — kleines Venedig.",
+      "category": "Geographie"
+    },
+    {
+      "id": "geo_129",
+      "question": "Wonach sind die Kanarischen Inseln benannt?",
+      "answers": [
+        {"text": "Nach Hunden", "correct": true},
+        {"text": "Nach dem Kanarienvogel", "correct": false},
+        {"text": "Nach einem römischen Kaiser", "correct": false}
+      ],
+      "difficulty": "medium",
+      "fun_fact": "Der Name geht auf das lateinische ‚Canariae Insulae' — ‚Inseln der Hunde' — zurück, weil dort große Hunde lebten. Der Kanarienvogel wurde umgekehrt nach den Inseln benannt, nicht andersherum.",
+      "category": "Geographie"
+    },
+    {
+      "id": "geo_131",
+      "question": "Woher hat der Pazifische Ozean seinen Namen?",
+      "answers": [
+        {"text": "Weil er bei der ersten Durchquerung auffallend ruhig war", "correct": true},
+        {"text": "Nach der Insel Pacifica", "correct": false},
+        {"text": "Vom lateinischen Wort für ‚der Weite'", "correct": false}
+      ],
+      "difficulty": "easy",
+      "fun_fact": "Magellan nannte ihn ‚Mar Pacífico' — friedliches Meer — weil er ihn nach den stürmischen Gewässern um Südamerika erstaunlich ruhig vorfand. Der Name täuscht: hier toben einige der heftigsten Taifune der Erde.",
+      "category": "Geographie"
+    },
+    {
+      "id": "geo_132",
+      "question": "Wie entstand der Name der Stadt Buenos Aires?",
+      "answers": [
+        {"text": "Von einer Schutzheiligen der Seefahrer für ‚gute Winde'", "correct": true},
+        {"text": "Weil die Luft dort besonders sauber war", "correct": false},
+        {"text": "Nach einem spanischen Gouverneur namens Aires", "correct": false}
+      ],
+      "difficulty": "hard",
+      "fun_fact": "Der vollständige Gründungsname ehrte ‚Nuestra Señora del Buen Ayre', eine Madonna, die als Schutzpatronin der Seeleute für günstige Winde galt. ‚Buenos Aires' bedeutet wörtlich ‚gute Winde'.",
+      "category": "Geographie"
+    },
+    {
+      "id": "geo_133",
+      "question": "Woher leitet sich der Name des Mittelmeers in vielen europäischen Sprachen ab?",
+      "answers": [
+        {"text": "Vom Lateinischen für ‚Meer mitten im Land'", "correct": true},
+        {"text": "Vom Namen einer antiken Hafenstadt", "correct": false},
+        {"text": "Von einem Wort für ‚das mittlere Blau'", "correct": false}
+      ],
+      "difficulty": "easy",
+      "fun_fact": "‚Mediterraneus' setzt sich aus ‚medius' (Mitte) und ‚terra' (Land) zusammen. Für die Römer war es schlicht das Meer mitten in ihrer bekannten Welt — sie nannten es auch ‚Mare Nostrum', unser Meer.",
+      "category": "Geographie"
+    },
+    {
+      "id": "geo_134",
+      "question": "Wonach ist der Indische Ozean benannt — und was ist daran ungewöhnlich?",
+      "answers": [
+        {"text": "Er ist der einzige Ozean, der nach einem Land benannt ist", "correct": true},
+        {"text": "Er trägt den Namen seines Entdeckers", "correct": false},
+        {"text": "Er ist nach einer Himmelsrichtung benannt", "correct": false}
+      ],
+      "difficulty": "medium",
+      "fun_fact": "Atlantik, Pazifik und Arktis tragen mythologische oder beschreibende Namen — nur der Indische Ozean ist nach einem heutigen Staat, Indien, benannt. Schon antike Karten nannten ihn so.",
+      "category": "Geographie"
+    },
+    {
+      "id": "geo_135",
+      "question": "Woher kommt der Name der Region Patagonien an der Südspitze Südamerikas?",
+      "answers": [
+        {"text": "Von 'Patagón', einer Romanfigur aus einem spanischen Ritterroman", "correct": true},
+        {"text": "Von einem Wort der Ureinwohner für 'windiges Land'", "correct": false},
+        {"text": "Nach dem Forscher Patago", "correct": false}
+      ],
+      "difficulty": "hard",
+      "fun_fact": "Magellans Mannschaft taufte die hochgewachsenen Ureinwohner 'Patagones'. Der wissenschaftliche Konsens leitet den Namen vom wilden Riesen 'Patagón' aus dem Ritterroman 'Primaleón' (1512) ab, der damals in Spanien populär war. Daraus wurde der Name der ganzen Region.",
+      "category": "Geographie"
+    },
+    {
+      "id": "geo_136",
+      "question": "Warum heißt das Rote Meer ‚rot'?",
+      "answers": [
+        {"text": "Vermutlich wegen zeitweise rötlich blühender Algen", "correct": true},
+        {"text": "Wegen roter Korallen am Meeresgrund", "correct": false},
+        {"text": "Wegen des roten Sands der umliegenden Wüsten", "correct": false}
+      ],
+      "difficulty": "medium",
+      "fun_fact": "Eine verbreitete Erklärung ist eine Algenart, die das Wasser zeitweise rötlich-braun färbt. Andere Theorien verweisen auf eine antike Himmelsrichtungs-Farbcodierung, bei der Rot für Süden stand.",
+      "category": "Geographie"
+    },
+    {
+      "id": "geo_137",
+      "question": "Wonach ist der Kontinent Europa benannt?",
+      "answers": [
+        {"text": "Nach einer Frau aus der griechischen Mythologie", "correct": true},
+        {"text": "Nach dem griechischen Wort für ‚Sonnenuntergang'", "correct": false},
+        {"text": "Nach einem antiken Königreich", "correct": false}
+      ],
+      "difficulty": "easy",
+      "fun_fact": "Europa war in der griechischen Mythologie eine phönizische Prinzessin, die Zeus in Gestalt eines Stiers nach Kreta entführte. Wie aus einer einzelnen Sagengestalt ein Erdteilname wurde, ist bis heute nicht restlos geklärt.",
+      "category": "Geographie"
+    },
+    {
+      "id": "geo_138",
+      "question": "Woher stammt das Wort ‚Atlas' für ein Kartenbuch?",
+      "answers": [
+        {"text": "Von einem Titanen der griechischen Mythologie", "correct": true},
+        {"text": "Von einem flämischen Drucker namens Atlas", "correct": false},
+        {"text": "Vom arabischen Wort für ‚gesammelte Karten'", "correct": false}
+      ],
+      "difficulty": "medium",
+      "fun_fact": "Der Titan Atlas trug der Sage nach das Himmelsgewölbe. Der Kartograf Mercator druckte seine Sammlung 1595 mit Atlas auf dem Titel — seither heißt jedes Kartenbuch so.",
+      "category": "Geographie"
+    },
+    {
+      "id": "geo_139",
+      "question": "Wonach ist die US-Stadt Los Angeles eigentlich benannt?",
+      "answers": [
+        {"text": "Nach Engeln, als Teil eines viel längeren religiösen Namens", "correct": true},
+        {"text": "Nach einem spanischen General namens Ángel", "correct": false},
+        {"text": "Nach einer einheimischen Vogelart", "correct": false}
+      ],
+      "difficulty": "medium",
+      "fun_fact": "Der ursprüngliche Siedlungsname von 1781 war ellenlang und ehrte die ‚Königin der Engel'. ‚Los Ángeles' — die Engel — ist nur das übrig gebliebene Kürzel eines Namens mit über 40 Buchstaben.",
+      "category": "Geographie"
+    },
+    {
+      "id": "geo_140",
+      "question": "Woher kommt der Name des Bundesstaates Pennsylvania?",
+      "answers": [
+        {"text": "Von einem Gründer namens Penn plus ‚Waldland'", "correct": true},
+        {"text": "Vom Stift (engl. pen), mit dem die Verfassung geschrieben wurde", "correct": false},
+        {"text": "Von einem Wort der Ureinwohner für ‚Hügelland'", "correct": false}
+      ],
+      "difficulty": "hard",
+      "fun_fact": "‚Sylvania' ist Latein für Waldland. Der Quäker William Penn wollte das Gebiet eigentlich nur ‚Sylvania' nennen — der König fügte zu Ehren von Penns Vater dessen Namen hinzu, sehr zum Unbehagen des bescheidenen Penn.",
+      "category": "Geographie"
+    },
+    {
+      "id": "geo_141",
+      "question": "Warum trägt das Land Ecuador diesen Namen?",
+      "answers": [
+        {"text": "Weil der Äquator hindurchführt", "correct": true},
+        {"text": "Nach einem indigenen Wort für ‚Mitte'", "correct": false},
+        {"text": "Nach einem spanischen Vermesser namens Ecuad", "correct": false}
+      ],
+      "difficulty": "easy",
+      "fun_fact": "‚Ecuador' ist schlicht das spanische Wort für Äquator. Es ist das einzige Land der Welt, das nach einem Breitengrad benannt ist — der Äquator verläuft tatsächlich quer durch das Staatsgebiet.",
+      "category": "Geographie"
+    },
+    {
+      "id": "geo_142",
+      "question": "Wonach ist die Inselgruppe der Seychellen benannt?",
+      "answers": [
+        {"text": "Nach einem französischen Finanzminister", "correct": true},
+        {"text": "Nach einem Wort für ‚glückliche Inseln'", "correct": false},
+        {"text": "Nach dem Entdecker Vasco da Gama", "correct": false}
+      ],
+      "difficulty": "hard",
+      "fun_fact": "Die Inseln wurden nach Jean Moreau de Séchelles benannt, dem Finanzminister Ludwigs XV. Ein Steuerbeamter steht also Pate für eines der berühmtesten Urlaubsparadiese der Welt.",
+      "category": "Geographie"
+    },
+    {
+      "id": "geo_143",
+      "question": "Woher leitet sich der Name der Sahara ab?",
+      "answers": [
+        {"text": "Vom arabischen Wort für ‚Wüste'", "correct": true},
+        {"text": "Vom Namen eines untergegangenen Königreichs", "correct": false},
+        {"text": "Vom Wort für ‚das große Gelb'", "correct": false}
+      ],
+      "difficulty": "medium",
+      "fun_fact": "‚Sahara' kommt vom arabischen ‚ṣaḥrāʾ' für Wüste. ‚Sahara-Wüste' heißt damit eigentlich ‚Wüste-Wüste' — ein Pleonasmus, den fast alle Sprachen ahnungslos übernommen haben.",
+      "category": "Geographie"
+    },
+    {
+      "id": "geo_144",
+      "question": "Wonach ist der US-Bundesstaat Kalifornien benannt?",
+      "answers": [
+        {"text": "Nach einer fiktiven Insel aus einem Ritterroman", "correct": true},
+        {"text": "Nach dem heißen Klima (lat. ‚calidus')", "correct": false},
+        {"text": "Nach einem spanischen Heiligen namens Califor", "correct": false}
+      ],
+      "difficulty": "hard",
+      "fun_fact": "Spanische Entdecker benannten die Region nach ‚Kalifornien', einer mythischen Goldinsel aus einem populären spanischen Ritterroman von 1510, regiert von einer Amazonenkönigin. Sie hielten die Halbinsel anfangs für eine Insel.",
+      "category": "Geographie"
+    },
+    {
+      "id": "geo_145",
+      "question": "Warum heißt der Schwarzwald ‚schwarz'?",
+      "answers": [
+        {"text": "Wegen der dichten, dunkel wirkenden Nadelwälder", "correct": true},
+        {"text": "Wegen schwarzer Erde durch alten Vulkanismus", "correct": false},
+        {"text": "Wegen häufiger dunkler Gewitterwolken", "correct": false}
+      ],
+      "difficulty": "easy",
+      "fun_fact": "Schon die Römer empfanden die dichten Tannen- und Fichtenbestände als so undurchdringlich dunkel, dass sie das Gebiet ‚Silva Nigra' — schwarzer Wald — nannten. Unter dem Kronendach blieb es selbst tagsüber düster.",
+      "category": "Geographie"
+    },
+    {
+      "id": "geo_146",
+      "question": "Woher kommt der Name des Landes Pakistan?",
+      "answers": [
+        {"text": "Aus Anfangsbuchstaben und Silben mehrerer Regionen", "correct": true},
+        {"text": "Von einem persischen Wort für ‚heiliges Land'", "correct": false},
+        {"text": "Vom Namen des Gründervaters Ali Pak", "correct": false}
+      ],
+      "difficulty": "hard",
+      "fun_fact": "‚Pakistan' wurde 1933 als Kunstwort gebildet — aus Buchstaben von Regionen wie Punjab, Afghania und Kaschmir, mit der Endung ‚-stan' für Land. Zugleich bedeutet es im Persischen/Urdu ungefähr ‚Land der Reinen'.",
+      "category": "Geographie"
+    },
+    {
+      "id": "geo_147",
+      "question": "Wonach ist die Stadt São Paulo in Brasilien benannt?",
+      "answers": [
+        {"text": "Nach dem Apostel Paulus, wegen des Gründungsdatums", "correct": true},
+        {"text": "Nach einem portugiesischen König Paulo", "correct": false},
+        {"text": "Nach einem Jesuiten namens Paulo de Anchieta", "correct": false}
+      ],
+      "difficulty": "medium",
+      "fun_fact": "Jesuiten gründeten die Missionsstation 1554 am Tag der Bekehrung des Apostels Paulus und benannten sie nach ihm. Aus dem Missionsdorf wurde die heute größte Stadt der Südhalbkugel.",
+      "category": "Geographie"
+    },
+    {
+      "id": "geo_148",
+      "question": "Warum gibt es in den USA so viele Orte mit der Endung ‚-ville'?",
+      "answers": [
+        {"text": "Weil ‚ville' französisch für ‚Stadt' ist", "correct": true},
+        {"text": "Weil ein Siedler namens Ville zahlreiche Orte gründete", "correct": false},
+        {"text": "Weil es eine indianische Endung für ‚Siedlung' ist", "correct": false}
+      ],
+      "difficulty": "medium",
+      "fun_fact": "Nach der amerikanischen Revolution war Frankreich als Verbündeter beliebt, und die französische Endung ‚-ville' (Stadt) wurde Mode. Heute tragen über 5.000 US-Ortschaften diese Endung.",
+      "category": "Geographie"
+    },
+    {
+      "id": "geo_149",
+      "question": "Woher hat der Bundesstaat Bayern seinen Namen?",
+      "answers": [
+        {"text": "Von einem germanischen Volksstamm, den Bajuwaren", "correct": true},
+        {"text": "Vom keltischen Wort für ‚Bergland'", "correct": false},
+        {"text": "Von einem mittelalterlichen Herzog namens Bayer", "correct": false}
+      ],
+      "difficulty": "medium",
+      "fun_fact": "‚Bayern' geht auf die Bajuwaren zurück, deren Name wohl ‚Männer aus Böhmen' bedeutet — sie wanderten in der Spätantike in die Region ein. Der Stamm gab dem Land seinen Namen, lange bevor es ein Königreich wurde.",
+      "category": "Geographie"
+    },
+    {
+      "id": "geo_150",
+      "question": "Wonach ist die Stadt Rio de Janeiro benannt — obwohl der Name irreführend ist?",
+      "answers": [
+        {"text": "Nach einem ‚Fluss', der gar keiner ist", "correct": true},
+        {"text": "Nach einem portugiesischen Seefahrer namens Janeiro", "correct": false},
+        {"text": "Nach einer einheimischen Flussgottheit", "correct": false}
+      ],
+      "difficulty": "medium",
+      "fun_fact": "‚Rio de Janeiro' heißt ‚Fluss des Januars'. Portugiesische Seefahrer erreichten die Bucht im Januar 1502 und hielten sie irrtümlich für eine Flussmündung — dabei ist die Guanabara-Bucht gar kein Fluss.",
+      "category": "Geographie"
+    },
+    {
+      "id": "geo_151",
+      "question": "Woher kommt der Name des Schwarzen Meeres?",
+      "answers": [
+        {"text": "Vermutlich aus einer Farbcodierung der Himmelsrichtungen", "correct": true},
+        {"text": "Wegen des dunklen vulkanischen Meeresbodens", "correct": false},
+        {"text": "Nach einer untergegangenen schwarzen Hafenstadt", "correct": false}
+      ],
+      "difficulty": "hard",
+      "fun_fact": "Eine verbreitete Theorie führt den Namen auf ein altes anatolisch-türkisches System zurück, in dem Schwarz für Norden stand. Tatsächlich ist das Meer unterhalb von etwa 150 Metern sauerstofffrei und dort lebensfeindlich dunkel.",
+      "category": "Geographie"
+    },
+    {
+      "id": "geo_152",
+      "question": "Wie viele Menschen leben in der gesamten Antarktis dauerhaft das ganze Jahr über?",
+      "answers": [
+        {"text": "Etwa 1.000 bis 4.000", "correct": true},
+        {"text": "Etwa 50.000 bis 70.000", "correct": false},
+        {"text": "Etwa 300.000 bis 400.000", "correct": false}
+      ],
+      "difficulty": "easy",
+      "fun_fact": "Die Antarktis ist der einzige Kontinent ohne ständige Bevölkerung. Nur Forscher in Stationen leben dort — im Sommer rund 4.000, im dunklen Winter sinkt die Zahl auf etwa 1.000.",
+      "category": "Geographie"
+    },
+    {
+      "id": "geo_153",
+      "question": "Wie viel Prozent der gesamten Landfläche der Erde nimmt Russland ein?",
+      "answers": [
+        {"text": "Etwa 11 %", "correct": true},
+        {"text": "Etwa 4 %", "correct": false},
+        {"text": "Etwa 25 %", "correct": false}
+      ],
+      "difficulty": "medium",
+      "fun_fact": "Russland bedeckt rund ein Neuntel der gesamten Landfläche der Erde. Damit ist es flächenmäßig fast so groß wie der gesamte Zwergplanet Pluto.",
       "category": "Geographie"
     }
   ]

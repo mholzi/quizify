@@ -1,7 +1,7 @@
 {
   "name": "Animals & Nature",
   "language": "en",
-  "version": "1.0",
+  "version": "1.1",
   "theme": "nature",
   "questions": [
     {
@@ -1202,6 +1202,606 @@
       ],
       "difficulty": "hard",
       "fun_fact": "Snow rollers form only when wet, sticky snow sits on a slick base layer and steady wind nudges chunks along. They roll up into hollow cylinders that can grow taller than a bicycle wheel — and then collapse the moment you touch them.",
+      "category": "Animals & Nature"
+    },
+    {
+      "id": "nat_en_109",
+      "question": "Why is the sky blue during the day?",
+      "answers": [
+        {"text": "Air molecules scatter blue light more than red", "correct": true},
+        {"text": "Sunlight reflects off the blue oceans", "correct": false},
+        {"text": "The upper atmosphere is naturally tinted blue", "correct": false}
+      ],
+      "difficulty": "easy",
+      "fun_fact": "Tiny air molecules scatter short blue wavelengths far more than long red ones, an effect called Rayleigh scattering. At sunset the light travels through more air, so the blue is scattered away and the leftover reds and oranges reach your eye.",
+      "category": "Animals & Nature"
+    },
+    {
+      "id": "nat_en_110",
+      "question": "Why does cutting an onion make you cry?",
+      "answers": [
+        {"text": "It releases a gas that forms acid in your eyes", "correct": true},
+        {"text": "The smell is simply very strong", "correct": false},
+        {"text": "Onion juice is mildly acidic on its own", "correct": false}
+      ],
+      "difficulty": "easy",
+      "fun_fact": "Slicing ruptures onion cells, which mix enzymes and sulphur compounds into a volatile gas. When it reaches the moisture in your eyes it turns into a mild sulphuric acid, and your tear glands flush it out. Chilling the onion slows the reaction.",
+      "category": "Animals & Nature"
+    },
+    {
+      "id": "nat_en_111",
+      "question": "Why do your fingers go wrinkly after a long bath?",
+      "answers": [
+        {"text": "Your nervous system actively shrinks the skin for grip", "correct": true},
+        {"text": "The skin soaks up water and swells unevenly", "correct": false},
+        {"text": "Soap dries out the outer skin layer", "correct": false}
+      ],
+      "difficulty": "medium",
+      "fun_fact": "Wrinkling is not passive swelling but an active response: nerves trigger blood vessels under the skin to constrict, puckering the surface. The grooves work like rain treads on a tyre, and people with certain nerve damage do not wrinkle at all.",
+      "category": "Animals & Nature"
+    },
+    {
+      "id": "nat_en_112",
+      "question": "Why does a hot drink sometimes cool faster than a warm one when both are put in a freezer?",
+      "answers": [
+        {"text": "It can, an effect named after a Tanzanian schoolboy", "correct": true},
+        {"text": "It never happens, hotter water always takes longer", "correct": false},
+        {"text": "Only if the warm water contains more minerals", "correct": false}
+      ],
+      "difficulty": "hard",
+      "fun_fact": "This is the Mpemba effect, named after Erasto Mpemba who noticed it making ice cream. Under certain conditions hotter water can freeze first, possibly due to evaporation, convection currents and dissolved gases, though the exact cause is still debated.",
+      "category": "Animals & Nature"
+    },
+    {
+      "id": "nat_en_113",
+      "question": "Why does ice float on water instead of sinking?",
+      "answers": [
+        {"text": "Water expands and gets lighter when it freezes", "correct": true},
+        {"text": "Trapped air bubbles keep the ice buoyant", "correct": false},
+        {"text": "Ice is colder, and cold things rise", "correct": false}
+      ],
+      "difficulty": "easy",
+      "fun_fact": "Most substances get denser when solid, but water molecules lock into an open hexagonal lattice when freezing, making ice about 9 percent less dense than liquid water. If ice sank, ponds would freeze from the bottom up and most aquatic life would die each winter.",
+      "category": "Animals & Nature"
+    },
+    {
+      "id": "nat_en_114",
+      "question": "Why does a cut apple turn brown?",
+      "answers": [
+        {"text": "An enzyme reacts with oxygen to make brown pigment", "correct": true},
+        {"text": "The exposed flesh starts to rot immediately", "correct": false},
+        {"text": "Light bleaches the colour out of the white flesh", "correct": false}
+      ],
+      "difficulty": "easy",
+      "fun_fact": "Cutting damages cells and lets an enzyme meet oxygen, producing brown melanin-like compounds, the same browning seen in bananas and avocados. A squeeze of lemon slows it because vitamin C and acid block the enzyme.",
+      "category": "Animals & Nature"
+    },
+    {
+      "id": "nat_en_115",
+      "question": "Why do leaves turn red and orange in autumn?",
+      "answers": [
+        {"text": "Green chlorophyll fades, revealing pigments already there", "correct": true},
+        {"text": "The cold air dyes the leaves directly", "correct": false},
+        {"text": "The tree pumps red sap into the leaves to protect them", "correct": false}
+      ],
+      "difficulty": "easy",
+      "fun_fact": "Yellow and orange carotenoids sit in leaves all summer but are masked by green chlorophyll. As days shorten the tree stops making chlorophyll, unmasking those colours, while some species actively make new red anthocyanins on top.",
+      "category": "Animals & Nature"
+    },
+    {
+      "id": "nat_en_116",
+      "question": "Why does a stick partly submerged in water look bent?",
+      "answers": [
+        {"text": "Light changes speed and direction entering the water", "correct": true},
+        {"text": "Water magnifies the underwater half", "correct": false},
+        {"text": "The stick really does flex from water pressure", "correct": false}
+      ],
+      "difficulty": "medium",
+      "fun_fact": "Light travels slower in water than in air, so it bends at the surface, an effect called refraction. Your brain assumes light travels straight, so the submerged part appears shifted. The same bending is why a pool always looks shallower than it is.",
+      "category": "Animals & Nature"
+    },
+    {
+      "id": "nat_en_117",
+      "question": "Why is the ocean salty?",
+      "answers": [
+        {"text": "Rivers carry dissolved minerals from rock into the sea", "correct": true},
+        {"text": "Sea creatures release salt as they breathe", "correct": false},
+        {"text": "The seabed is made of solid salt that slowly dissolves", "correct": false}
+      ],
+      "difficulty": "medium",
+      "fun_fact": "Rain weathers rocks on land and rivers wash the dissolved salts into the ocean, where they concentrate as water evaporates and leaves the salt behind. Underwater volcanic vents add more. The process has run for billions of years.",
+      "category": "Animals & Nature"
+    },
+    {
+      "id": "nat_en_118",
+      "question": "Why do bruises change colour from purple to green to yellow?",
+      "answers": [
+        {"text": "The body breaks down spilled blood into coloured pigments", "correct": true},
+        {"text": "Different blood vessels heal at different speeds", "correct": false},
+        {"text": "Oxygen slowly seeps in and bleaches the skin", "correct": false}
+      ],
+      "difficulty": "medium",
+      "fun_fact": "A bruise is blood leaked under the skin. As the body recycles the haemoglobin it passes through biliverdin, which is green, and then bilirubin, which is yellow-brown, painting the bruise through a rainbow before it clears.",
+      "category": "Animals & Nature"
+    },
+    {
+      "id": "nat_en_119",
+      "question": "Why does the Moon look much bigger near the horizon than overhead?",
+      "answers": [
+        {"text": "It is an optical illusion in your brain", "correct": true},
+        {"text": "The atmosphere magnifies it like a lens near the horizon", "correct": false},
+        {"text": "The Moon is genuinely closer when it is rising", "correct": false}
+      ],
+      "difficulty": "medium",
+      "fun_fact": "The Moon is actually the same size in the sky in both positions, and you can prove it by measuring it with an outstretched thumb. The horizon illusion likely arises because nearby objects like trees and buildings give your brain a misleading sense of scale.",
+      "category": "Animals & Nature"
+    },
+    {
+      "id": "nat_en_120",
+      "question": "What makes a chilli pepper feel hot in your mouth?",
+      "answers": [
+        {"text": "A molecule that triggers your heat-sensing nerves", "correct": true},
+        {"text": "Tiny acid droplets that burn the tongue", "correct": false},
+        {"text": "Microscopic spines that scratch the mouth", "correct": false}
+      ],
+      "difficulty": "easy",
+      "fun_fact": "Capsaicin binds to the same receptor that detects real heat and physical burns, so your brain genuinely thinks your mouth is on fire even though nothing is actually hot. Birds lack this sensitivity, which is how chilli plants get their seeds spread by birds but not mammals.",
+      "category": "Animals & Nature"
+    },
+    {
+      "id": "nat_en_121",
+      "question": "Why do we get goosebumps when cold or frightened?",
+      "answers": [
+        {"text": "Tiny muscles raise hairs, a leftover from furrier ancestors", "correct": true},
+        {"text": "Cold air physically pushes the skin upward", "correct": false},
+        {"text": "Blood rushing to the surface bumps up the skin", "correct": false}
+      ],
+      "difficulty": "medium",
+      "fun_fact": "Each body hair has a tiny muscle that contracts to stand the hair up. In furry animals this traps warm air or makes them look bigger when threatened. On nearly hairless humans it does almost nothing useful, a vestigial reflex.",
+      "category": "Animals & Nature"
+    },
+    {
+      "id": "nat_en_122",
+      "question": "Why does honey almost never spoil, even after thousands of years?",
+      "answers": [
+        {"text": "It is too low in water and too acidic for microbes", "correct": true},
+        {"text": "Bees add a natural preservative to it", "correct": false},
+        {"text": "The sugar is a type that bacteria cannot eat", "correct": false}
+      ],
+      "difficulty": "medium",
+      "fun_fact": "Honey is so concentrated in sugar that it pulls water out of any bacteria that land in it, and it is mildly acidic and produces traces of hydrogen peroxide. Edible honey has been found in 3,000-year-old Egyptian tombs.",
+      "category": "Animals & Nature"
+    },
+    {
+      "id": "nat_en_123",
+      "question": "Why does a rainbow always appear as an arc?",
+      "answers": [
+        {"text": "Raindrops bend light back at a fixed angle from the sun", "correct": true},
+        {"text": "The curve of the Earth shapes the light", "correct": false},
+        {"text": "Rainbows are flat but clouds hide the straight parts", "correct": false}
+      ],
+      "difficulty": "hard",
+      "fun_fact": "Each raindrop bends and reflects sunlight back at close to 42 degrees, so only drops sitting on a cone at that angle from the anti-sun point send colour to your eye, tracing a circle. From an aircraft you can sometimes see the full ring.",
+      "category": "Animals & Nature"
+    },
+    {
+      "id": "nat_en_124",
+      "question": "How do fireflies produce their glow?",
+      "answers": [
+        {"text": "A chemical reaction in their body makes almost pure light", "correct": true},
+        {"text": "They reflect moonlight off shiny scales", "correct": false},
+        {"text": "Friction from their wings creates sparks", "correct": false}
+      ],
+      "difficulty": "easy",
+      "fun_fact": "Fireflies mix a molecule called luciferin with oxygen and an enzyme to make light, and the reaction is nearly 100 percent efficient, producing almost no heat. A normal incandescent bulb wastes most of its energy as heat by comparison.",
+      "category": "Animals & Nature"
+    },
+    {
+      "id": "nat_en_125",
+      "question": "Why do a duck's feathers stay dry even when it dives underwater?",
+      "answers": [
+        {"text": "It coats them with water-repellent oil it spreads itself", "correct": true},
+        {"text": "Its feathers are made of a naturally waterproof wax", "correct": false},
+        {"text": "A layer of warm air pushes the water away", "correct": false}
+      ],
+      "difficulty": "medium",
+      "fun_fact": "A duck has a gland near its tail that produces oil, which it rubs over its feathers while preening. Combined with the tightly zipped microstructure of the feathers, this makes water bead up and roll off, keeping the bird buoyant and insulated.",
+      "category": "Animals & Nature"
+    },
+    {
+      "id": "nat_en_126",
+      "question": "Why does metal feel colder than wood at the same temperature?",
+      "answers": [
+        {"text": "Metal pulls heat from your hand faster", "correct": true},
+        {"text": "Metal is actually colder than nearby wood", "correct": false},
+        {"text": "Wood gives off a small amount of its own heat", "correct": false}
+      ],
+      "difficulty": "medium",
+      "fun_fact": "Both objects in the same room are the same temperature, but metal conducts heat away from your skin far faster than wood, so your nerves sense rapid heat loss and read it as cold. Your skin senses heat flow, not temperature directly.",
+      "category": "Animals & Nature"
+    },
+    {
+      "id": "nat_en_127",
+      "question": "Why do bees make hexagonal cells in their honeycomb?",
+      "answers": [
+        {"text": "Hexagons store the most honey using the least wax", "correct": true},
+        {"text": "Bees can only bend wax into six-sided shapes", "correct": false},
+        {"text": "Six sides match the six legs of a bee", "correct": false}
+      ],
+      "difficulty": "medium",
+      "fun_fact": "Among shapes that tile a surface with no gaps, the hexagon encloses the most area for the least perimeter, so bees use the least wax to store the most honey. Recent studies suggest bees start with round cells that flow into hexagons as the wax warms.",
+      "category": "Animals & Nature"
+    },
+    {
+      "id": "nat_en_128",
+      "question": "Why does whipping turn cream from a liquid into a fluffy solid?",
+      "answers": [
+        {"text": "Fat globules link up and trap air bubbles", "correct": true},
+        {"text": "The cream cools and partly freezes as you whip", "correct": false},
+        {"text": "Air chemically reacts with the milk sugar", "correct": false}
+      ],
+      "difficulty": "hard",
+      "fun_fact": "Whipping forces in air and knocks the protective coating off the fat droplets, so they clump together around the air bubbles and build a stable foam. Whip too long and the fat fully clumps, squeezing out liquid, and you get butter.",
+      "category": "Animals & Nature"
+    },
+    {
+      "id": "nat_en_129",
+      "question": "Why does a magnet lose its magnetism if you heat it enough?",
+      "answers": [
+        {"text": "Heat scrambles the aligned atoms inside it", "correct": true},
+        {"text": "The metal melts and the magnetism drips out", "correct": false},
+        {"text": "Heat reverses the magnet's north and south poles", "correct": false}
+      ],
+      "difficulty": "hard",
+      "fun_fact": "A magnet works because its atoms point the same way. Above a threshold called the Curie temperature, heat jostles the atoms so violently that they point randomly and the magnetism vanishes. For iron that point is around 770 degrees Celsius.",
+      "category": "Animals & Nature"
+    },
+    {
+      "id": "nat_en_130",
+      "question": "How does a gecko walk straight up a smooth glass window?",
+      "answers": [
+        {"text": "Millions of tiny hairs create a weak molecular stickiness", "correct": true},
+        {"text": "Suction cups on its toes grip the surface", "correct": false},
+        {"text": "A sticky glue oozes from its footpads", "correct": false}
+      ],
+      "difficulty": "medium",
+      "fun_fact": "Each gecko toe carries millions of microscopic hairs that get so close to the surface that faint van der Waals forces between molecules add up to a strong grip, with no glue or suction involved. The toes peel off cleanly, so the gecko never gets stuck.",
+      "category": "Animals & Nature"
+    },
+    {
+      "id": "nat_en_131",
+      "question": "Why does the air smell fresh and earthy just after rain?",
+      "answers": [
+        {"text": "Rain releases oils and a compound made by soil microbes", "correct": true},
+        {"text": "Rainwater itself carries a clean scent", "correct": false},
+        {"text": "The rain washes pollen out of the air", "correct": false}
+      ],
+      "difficulty": "medium",
+      "fun_fact": "That smell, called petrichor, comes partly from plant oils released by raindrops and partly from geosmin, a molecule made by soil bacteria. Humans are astonishingly sensitive to geosmin, able to detect just a few parts per trillion.",
+      "category": "Animals & Nature"
+    },
+    {
+      "id": "nat_en_132",
+      "question": "Why does a tree trunk grow visible rings, one for each year?",
+      "answers": [
+        {"text": "It grows fast in spring and slowly in late summer", "correct": true},
+        {"text": "Each ring is a scar from a cold winter freeze", "correct": false},
+        {"text": "Insects bore one circular tunnel per year", "correct": false}
+      ],
+      "difficulty": "easy",
+      "fun_fact": "In spring a tree adds wide, pale, fast-growing wood and later in the season denser, darker wood, so each pair forms one ring. The rings also record history, with wide rings in wet years and narrow ones in droughts, letting scientists read past climates.",
+      "category": "Animals & Nature"
+    },
+    {
+      "id": "nat_en_133",
+      "question": "The word 'dandelion' comes from a French phrase describing what part of the plant?",
+      "answers": [
+        {"text": "The jagged leaves, 'lion's tooth'", "correct": true},
+        {"text": "The yellow flower, 'sun's crown'", "correct": false},
+        {"text": "The fluffy seeds, 'wind's feather'", "correct": false}
+      ],
+      "difficulty": "easy",
+      "fun_fact": "'Dandelion' comes from the French 'dent de lion' — lion's tooth — for the plant's toothed leaf edges. Its other French nickname, 'pissenlit', literally means 'wet the bed', referring to its strong diuretic effect.",
+      "category": "Animals & Nature"
+    },
+    {
+      "id": "nat_en_134",
+      "question": "The 'guinea pig' is named misleadingly because it is neither a pig nor from Guinea. Where is it actually from?",
+      "answers": [
+        {"text": "The Andes of South America", "correct": true},
+        {"text": "The highlands of Papua New Guinea", "correct": false},
+        {"text": "The forests of West Africa", "correct": false}
+      ],
+      "difficulty": "easy",
+      "fun_fact": "Guinea pigs were domesticated in the Andes thousands of years ago, originally as food. The 'pig' likely comes from their squealing, and 'guinea' may be a garbled reference to the trade route that brought them to Europe.",
+      "category": "Animals & Nature"
+    },
+    {
+      "id": "nat_en_135",
+      "question": "The word 'orchid' derives from an ancient Greek word for which body part, because of the plant's twin root tubers?",
+      "answers": [
+        {"text": "Testicles", "correct": true},
+        {"text": "Kidneys", "correct": false},
+        {"text": "Earlobes", "correct": false}
+      ],
+      "difficulty": "medium",
+      "fun_fact": "'Orchid' comes from the Greek 'orkhis', meaning testicle, after the paired underground tubers of European orchids. For centuries the plants were eaten as supposed aphrodisiacs based on this resemblance.",
+      "category": "Animals & Nature"
+    },
+    {
+      "id": "nat_en_136",
+      "question": "The first organism deliberately driven to extinction as a public-health goal was which creature?",
+      "answers": [
+        {"text": "The variola (smallpox) virus", "correct": true},
+        {"text": "The rat flea", "correct": false},
+        {"text": "The tsetse fly", "correct": false}
+      ],
+      "difficulty": "medium",
+      "fun_fact": "Smallpox was declared eradicated in 1980 after a global vaccination campaign — the only human disease ever deliberately wiped out in the wild. Two official stocks of the virus are still kept frozen in secure labs.",
+      "category": "Animals & Nature"
+    },
+    {
+      "id": "nat_en_137",
+      "question": "Velcro was invented after its creator examined what under a microscope?",
+      "answers": [
+        {"text": "Burdock burrs stuck to his dog's fur", "correct": true},
+        {"text": "The suckers on an octopus arm", "correct": false},
+        {"text": "The barbs on a porcupine quill", "correct": false}
+      ],
+      "difficulty": "easy",
+      "fun_fact": "Swiss engineer George de Mestral studied the tiny hooks of burdock burrs clinging to his dog after a 1941 walk, then spent years recreating them as the hook-and-loop fastener. The name blends the French 'velours' and 'crochet'.",
+      "category": "Animals & Nature"
+    },
+    {
+      "id": "nat_en_138",
+      "question": "The word 'butterfly' may originate from an old belief that the insects did what?",
+      "answers": [
+        {"text": "Stole milk and butter", "correct": true},
+        {"text": "Were the souls of bakers", "correct": false},
+        {"text": "Turned flowers yellow", "correct": false}
+      ],
+      "difficulty": "medium",
+      "fun_fact": "One long-standing theory holds that 'butterfly' reflects folklore that the insects, or witches in their form, stole butter and milk. Another points simply to the butter-yellow colour of common European species like the brimstone.",
+      "category": "Animals & Nature"
+    },
+    {
+      "id": "nat_en_139",
+      "question": "The Pomeranian, a tiny lapdog, was bred down from what kind of working dog?",
+      "answers": [
+        {"text": "Large Arctic sled-pulling dogs", "correct": true},
+        {"text": "Mediterranean fishing dogs", "correct": false},
+        {"text": "African hunting hounds", "correct": false}
+      ],
+      "difficulty": "medium",
+      "fun_fact": "Pomeranians descend from big spitz-type sled dogs of the Arctic and weighed around 14 kg in the 1700s. Queen Victoria fell for the breed and favoured smaller specimens, shrinking the fashionable size to today's 2–3 kg.",
+      "category": "Animals & Nature"
+    },
+    {
+      "id": "nat_en_140",
+      "question": "The reason carrots are commonly orange today is largely down to what historical event?",
+      "answers": [
+        {"text": "Dutch growers cultivating orange ones, possibly to honour the House of Orange", "correct": true},
+        {"text": "A Roman law banning purple vegetables", "correct": false},
+        {"text": "A medieval fungus that wiped out red carrots", "correct": false}
+      ],
+      "difficulty": "medium",
+      "fun_fact": "Early cultivated carrots were purple, white and yellow. Orange carrots, rich in beta-carotene, were stabilised by Dutch growers around the 16th–17th centuries and became the dominant type — the patriotic 'House of Orange' link is a popular but debated explanation.",
+      "category": "Animals & Nature"
+    },
+    {
+      "id": "nat_en_141",
+      "question": "The word 'panic' traces back to which figure from Greek mythology?",
+      "answers": [
+        {"text": "Pan, the goat-legged god of the wild", "correct": true},
+        {"text": "Medusa, the snake-haired Gorgon", "correct": false},
+        {"text": "Chronos, the god of time", "correct": false}
+      ],
+      "difficulty": "medium",
+      "fun_fact": "'Panic' comes from Pan, the half-goat nature god believed to cause sudden, irrational fear in lonely places and to stampede flocks. The same root names 'panpipes', the reed instrument he supposedly invented.",
+      "category": "Animals & Nature"
+    },
+    {
+      "id": "nat_en_142",
+      "question": "Aspirin's active ingredient was originally derived from the bark of which tree?",
+      "answers": [
+        {"text": "Willow", "correct": true},
+        {"text": "Oak", "correct": false},
+        {"text": "Birch", "correct": false}
+      ],
+      "difficulty": "easy",
+      "fun_fact": "Willow bark, used for pain since ancient Egypt, contains salicin. Chemists turned it into acetylsalicylic acid in the 1890s — the name 'aspirin' nods to Spiraea, another salicin-rich plant from which the acid was also obtained.",
+      "category": "Animals & Nature"
+    },
+    {
+      "id": "nat_en_143",
+      "question": "The 'turkey' bird is named after the country Turkey because of a trade mix-up. What bird was it confused with?",
+      "answers": [
+        {"text": "The guinea fowl", "correct": true},
+        {"text": "The peacock", "correct": false},
+        {"text": "The pheasant", "correct": false}
+      ],
+      "difficulty": "easy",
+      "fun_fact": "Europeans first met guinea fowl imported via Ottoman lands and called them 'turkey fowl'. When the unrelated American bird arrived, the name stuck to it instead. Tellingly, Turkish calls the bird 'hindi', meaning 'from India'.",
+      "category": "Animals & Nature"
+    },
+    {
+      "id": "nat_en_144",
+      "question": "The poinsettia, a Christmas plant, gets its English name from a 19th-century American who did what?",
+      "answers": [
+        {"text": "Served as a diplomat and sent the plant home from Mexico", "correct": true},
+        {"text": "Painted the first botanical illustration of it", "correct": false},
+        {"text": "Patented a way to keep it red indoors", "correct": false}
+      ],
+      "difficulty": "hard",
+      "fun_fact": "Joel Roberts Poinsett, the first US minister to Mexico, shipped cuttings back to South Carolina in the 1820s. In Mexico the plant is called 'Flor de Nochebuena', the Christmas Eve flower; its showy red parts are leaves, not petals.",
+      "category": "Animals & Nature"
+    },
+    {
+      "id": "nat_en_145",
+      "question": "The word 'mortgage' literally means what, from its French roots?",
+      "answers": [
+        {"text": "'Death pledge'", "correct": true},
+        {"text": "'Stone promise'", "correct": false},
+        {"text": "'Land bond'", "correct": false}
+      ],
+      "difficulty": "hard",
+      "fun_fact": "'Mortgage' combines Old French 'mort' (dead) and 'gage' (pledge): the deal 'dies' either when the debt is paid or when the borrower defaults. The same 'mort' root surfaces in nature's names too, from the deadly nightshade to the death's-head hawkmoth.",
+      "category": "Animals & Nature"
+    },
+    {
+      "id": "nat_en_146",
+      "question": "Penicillin, the first true antibiotic, was discovered because of what accident in Alexander Fleming's lab?",
+      "answers": [
+        {"text": "A mould blew in and killed bacteria on a forgotten dish", "correct": true},
+        {"text": "A test tube cracked and mixed two cultures", "correct": false},
+        {"text": "A lab cat knocked over a fungal sample", "correct": false}
+      ],
+      "difficulty": "easy",
+      "fun_fact": "In 1928 Fleming returned from holiday to find a stray Penicillium mould had cleared a ring in his Staphylococcus dish. He almost overlooked it; mass production only arrived during World War II, over a decade later.",
+      "category": "Animals & Nature"
+    },
+    {
+      "id": "nat_en_147",
+      "question": "The 'ladybird' (ladybug) beetle was named in medieval Europe in honour of whom?",
+      "answers": [
+        {"text": "The Virgin Mary", "correct": true},
+        {"text": "Queen Eleanor of Aquitaine", "correct": false},
+        {"text": "A Saxon harvest goddess", "correct": false}
+      ],
+      "difficulty": "medium",
+      "fun_fact": "Farmers grateful that the beetles ate crop-destroying aphids dedicated them to 'Our Lady', the Virgin Mary — hence 'ladybird'. The common red-with-seven-spots species was linked to her seven joys and seven sorrows.",
+      "category": "Animals & Nature"
+    },
+    {
+      "id": "nat_en_148",
+      "question": "The word 'avocado' descends from an Aztec word that also meant what?",
+      "answers": [
+        {"text": "Testicle", "correct": true},
+        {"text": "Green stone", "correct": false},
+        {"text": "Butter fruit", "correct": false}
+      ],
+      "difficulty": "easy",
+      "fun_fact": "The Nahuatl 'ahuacatl' meant both the fruit and 'testicle', likely from the way the fruits hang in pairs. Spanish speakers reshaped it into 'aguacate', which English then softened to 'avocado'.",
+      "category": "Animals & Nature"
+    },
+    {
+      "id": "nat_en_149",
+      "question": "The teddy bear is named after US President Theodore Roosevelt because of what 1902 incident?",
+      "answers": [
+        {"text": "He refused to shoot a bear that had been tied up for him", "correct": true},
+        {"text": "He kept a pet bear cub in the White House", "correct": false},
+        {"text": "He survived a bear attack on a hunt", "correct": false}
+      ],
+      "difficulty": "easy",
+      "fun_fact": "On a Mississippi hunt, Roosevelt declined to shoot a captured black bear, calling it unsportsmanlike. A newspaper cartoon spread the story, and a shopkeeper began selling 'Teddy's bears' — the toy was born.",
+      "category": "Animals & Nature"
+    },
+    {
+      "id": "nat_en_150",
+      "question": "Why was the 'kiwifruit' renamed from its original name 'Chinese gooseberry' in the 1950s?",
+      "answers": [
+        {"text": "New Zealand exporters wanted a marketable, less Cold-War-loaded name", "correct": true},
+        {"text": "Growers were legally barred from using the word 'gooseberry'", "correct": false},
+        {"text": "A trademark dispute forced the change", "correct": false}
+      ],
+      "difficulty": "hard",
+      "fun_fact": "The fruit originated in China but was commercialised by New Zealand growers, who rebranded it after their national kiwi bird — partly to dodge high US tariffs on 'berries' and avoid 'Chinese' during the Cold War era.",
+      "category": "Animals & Nature"
+    },
+    {
+      "id": "nat_en_151",
+      "question": "The word 'tulip' comes from a Turkish word for what everyday object?",
+      "answers": [
+        {"text": "A turban", "correct": true},
+        {"text": "A teardrop", "correct": false},
+        {"text": "A lantern", "correct": false}
+      ],
+      "difficulty": "easy",
+      "fun_fact": "'Tulip' traces to the Turkish 'tülbent', meaning turban, which the flower's shape was thought to resemble. The flower triggered 'tulip mania' in 1630s Holland, when single rare bulbs briefly sold for the price of a house.",
+      "category": "Animals & Nature"
+    },
+    {
+      "id": "nat_en_152",
+      "question": "The hugely popular Labrador Retriever actually originated on which island, not in Labrador?",
+      "answers": [
+        {"text": "Newfoundland", "correct": true},
+        {"text": "Iceland", "correct": false},
+        {"text": "Greenland", "correct": false}
+      ],
+      "difficulty": "medium",
+      "fun_fact": "The breed descends from the St. John's water dog of Newfoundland, used by fishermen to haul nets and retrieve fish. English nobles refined it in the 1800s; the 'Labrador' name appears to be an early geographic muddle that stuck.",
+      "category": "Animals & Nature"
+    },
+    {
+      "id": "nat_en_153",
+      "question": "The chemical element cobalt is named after a creature from German miners' folklore. What kind of creature?",
+      "answers": [
+        {"text": "A mischievous goblin (kobold)", "correct": true},
+        {"text": "A cave-dwelling dragon", "correct": false},
+        {"text": "A poisonous toad", "correct": false}
+      ],
+      "difficulty": "hard",
+      "fun_fact": "Miners blamed troublesome ore that gave off toxic arsenic fumes on the 'kobold', a goblin said to haunt mines and swap good metal for worthless rock. The blue-tinged ore kept the name when cobalt was isolated as an element.",
+      "category": "Animals & Nature"
+    },
+    {
+      "id": "nat_en_154",
+      "question": "The marigold flower's English name is a contraction of which phrase?",
+      "answers": [
+        {"text": "'Mary's gold'", "correct": true},
+        {"text": "'Marsh gold'", "correct": false},
+        {"text": "'Morning gold'", "correct": false}
+      ],
+      "difficulty": "easy",
+      "fun_fact": "'Marigold' comes from 'Mary's gold', linking the golden blooms to the Virgin Mary in medieval England. In Mexico, a different but related marigold is central to Día de los Muertos, where its scent is said to guide spirits home.",
+      "category": "Animals & Nature"
+    },
+    {
+      "id": "nat_en_155",
+      "question": "WD-40, the lubricant spray, gets the '40' in its name from what?",
+      "answers": [
+        {"text": "It was the 40th formula the chemist tried", "correct": true},
+        {"text": "It works down to minus 40 degrees", "correct": false},
+        {"text": "It contains 40 ingredients", "correct": false}
+      ],
+      "difficulty": "medium",
+      "fun_fact": "WD-40 stands for 'Water Displacement, 40th formula' — the version that finally worked in 1953. It was first developed to protect Atlas missile parts from rust before becoming a household staple.",
+      "category": "Animals & Nature"
+    },
+    {
+      "id": "nat_en_156",
+      "question": "The word 'mammal' was coined by Linnaeus from a Latin root highlighting which feature?",
+      "answers": [
+        {"text": "The milk-producing mammary glands", "correct": true},
+        {"text": "The presence of a backbone", "correct": false},
+        {"text": "Warm blood", "correct": false}
+      ],
+      "difficulty": "medium",
+      "fun_fact": "Linnaeus chose 'Mammalia' (from Latin 'mamma', breast) in 1758, spotlighting milk over hair or warm blood. Historians note the choice came as he campaigned for mothers to breastfeed rather than use wet nurses.",
+      "category": "Animals & Nature"
+    },
+    {
+      "id": "nat_en_157",
+      "question": "To make one jar of honey, about how many times could a honeybee colony's combined flights circle the Earth?",
+      "answers": [
+        {"text": "About twice", "correct": true},
+        {"text": "About once", "correct": false},
+        {"text": "About 12 times", "correct": false}
+      ],
+      "difficulty": "medium",
+      "fun_fact": "To make 500 grams of honey, the bees of a colony together fly roughly 88,000 kilometres — about twice around the planet, whose circumference is around 40,000 kilometres — visiting some two million flowers along the way.",
+      "category": "Animals & Nature"
+    },
+    {
+      "id": "nat_en_158",
+      "question": "How much can a blue whale's tongue weigh?",
+      "answers": [
+        {"text": "As much as an elephant", "correct": true},
+        {"text": "As much as a large dog", "correct": false},
+        {"text": "As much as a horse", "correct": false}
+      ],
+      "difficulty": "easy",
+      "fun_fact": "A blue whale's tongue alone can weigh around 2.7 tonnes — about the same as an adult elephant. Its heart is the largest of any animal, roughly the size of a small bumper car and weighing close to 200 kilograms.",
       "category": "Animals & Nature"
     }
   ]

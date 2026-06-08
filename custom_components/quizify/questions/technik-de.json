@@ -1,7 +1,7 @@
 {
   "name": "Technik",
   "language": "de",
-  "version": "1.0",
+  "version": "1.1",
   "theme": "tech",
   "questions": [
     {
@@ -1202,6 +1202,606 @@
       ],
       "difficulty": "medium",
       "fun_fact": "Eine Tonne Smartphones enthält ein Vielfaches an Gold wie typisches Golderz, das oft nur wenige Gramm pro Tonne liefert — Fachleute nennen das 'Urban Mining'. Das Gold sitzt als hauchdünne Schicht auf Kontakten und Steckverbindern, weil es nicht korrodiert.",
+      "category": "Technik"
+    },
+    {
+      "id": "technik_de_104",
+      "question": "Warum bleiben Seifenblasen nicht ewig stabil, sondern platzen irgendwann?",
+      "answers": [
+        {"text": "Das Wasser verdunstet und läuft nach unten ab, bis die Haut zu dünn wird", "correct": true},
+        {"text": "Die Luft im Inneren kühlt ab und zieht sich zusammen", "correct": false},
+        {"text": "Der Sauerstoff in der Blase wird langsam aufgebraucht", "correct": false}
+      ],
+      "difficulty": "easy",
+      "fun_fact": "Eine Seifenblase ist nur etwa ein zehntausendstel Millimeter dick. Die schillernden Farben entstehen durch Interferenz des Lichts an der dünnen Haut — kurz vor dem Platzen wird die Wand stellenweise schwarz, weil sie dünner als eine Lichtwellenlänge ist.",
+      "category": "Technik"
+    },
+    {
+      "id": "technik_de_105",
+      "question": "Warum knackt ein Kaminfeuer oder ein Lagerfeuer eigentlich?",
+      "answers": [
+        {"text": "Eingeschlossene Wasser- und Gasbläschen im Holz platzen explosionsartig", "correct": true},
+        {"text": "Die Flammen schlagen gegen die kalte Luft darüber", "correct": false},
+        {"text": "Asche fällt von oben in die Glut zurück", "correct": false}
+      ],
+      "difficulty": "easy",
+      "fun_fact": "In den Holzfasern eingeschlossenes Wasser und Harz verdampfen bei Hitze, der Druck steigt, bis die Zelle aufplatzt — das Knacken ist im Grunde eine winzige Dampfexplosion. Trockenes Holz knackt deutlich weniger als frisch geschlagenes.",
+      "category": "Technik"
+    },
+    {
+      "id": "technik_de_106",
+      "question": "Warum hält ein Saugnapf an einer glatten Fliese?",
+      "answers": [
+        {"text": "Nicht der Saugnapf selbst, sondern der äußere Luftdruck presst ihn an", "correct": true},
+        {"text": "Statische Elektrizität zieht den Gummi an die Wand", "correct": false},
+        {"text": "Im Inneren entsteht ein leichter Magnetismus", "correct": false}
+      ],
+      "difficulty": "medium",
+      "fun_fact": "Beim Andrücken wird die Luft hinausgequetscht, sodass innen ein Unterdruck herrscht. Der ganz normale Luftdruck von außen drückt dann mit etwa einem Kilogramm pro Quadratzentimeter dagegen. Im Vakuum würde gar kein Saugnapf funktionieren.",
+      "category": "Technik"
+    },
+    {
+      "id": "technik_de_107",
+      "question": "Warum lässt sich ein Reißverschluss überhaupt schließen und wieder öffnen?",
+      "answers": [
+        {"text": "Der Schieber zwingt die Zähne abwechselnd ineinander zu haken", "correct": true},
+        {"text": "Winzige Magnete in den Zähnen ziehen sich an", "correct": false},
+        {"text": "Ein Klebestreifen im Stoff hält die Seiten zusammen", "correct": false}
+      ],
+      "difficulty": "easy",
+      "fun_fact": "Der keilförmige Schieber führt die Zähne so, dass jeder Zahn in die Lücke zwischen zwei gegenüberliegende rutscht und sich verhakt. Die englische Bezeichnung 'zipper' entstand 1923 als Lautmalerei für das Reißgeräusch.",
+      "category": "Technik"
+    },
+    {
+      "id": "technik_de_108",
+      "question": "Warum bleibt ein Helium-Luftballon nach ein, zwei Tagen schlaff am Boden liegen?",
+      "answers": [
+        {"text": "Die winzigen Helium-Atome entweichen direkt durch die Ballonhülle", "correct": true},
+        {"text": "Das Helium wird im Inneren langsam zu schwererer Luft", "correct": false},
+        {"text": "Der Ballon kühlt aus und das Gas zieht sich zusammen", "correct": false}
+      ],
+      "difficulty": "medium",
+      "fun_fact": "Helium-Atome sind so klein, dass sie sich durch die mikroskopischen Poren der Latexhülle hindurchzwängen. Folienballons aus metallbeschichtetem Kunststoff haben engere Strukturen und halten deshalb tagelang oder wochenlang die Luft.",
+      "category": "Technik"
+    },
+    {
+      "id": "technik_de_109",
+      "question": "Was passiert chemisch, wenn eine aufgeschnittene Apfelhälfte braun wird?",
+      "answers": [
+        {"text": "Sauerstoff reagiert mit Enzymen im Fruchtfleisch", "correct": true},
+        {"text": "Der Zucker im Apfel beginnt zu gären", "correct": false},
+        {"text": "Das Tageslicht bleicht die Schnittfläche aus", "correct": false}
+      ],
+      "difficulty": "easy",
+      "fun_fact": "Beim Schneiden treten Enzyme aus zerstörten Zellen aus und reagieren mit Luftsauerstoff zu braunen Melaninen — derselbe enzymatische Vorgang lässt auch geschnittene Avocados und Bananen nachdunkeln. Zitronensaft stoppt es, weil die Säure das Enzym lahmlegt.",
+      "category": "Technik"
+    },
+    {
+      "id": "technik_de_110",
+      "question": "Warum schäumt frisch eingegossenes Sprudelwasser stärker, wenn das Glas innen Kratzer hat?",
+      "answers": [
+        {"text": "Die Kratzer bieten Keimstellen, an denen sich Gasbläschen bilden können", "correct": true},
+        {"text": "Raue Stellen sind kälter und ziehen Gas an", "correct": false},
+        {"text": "Kratzer erzeugen winzige elektrische Ladungen", "correct": false}
+      ],
+      "difficulty": "medium",
+      "fun_fact": "Gelöstes CO₂ braucht eine winzige Unebenheit als Startpunkt, um eine Blase zu bilden — das nennt sich Nukleation. Genau deshalb lässt ein Mentos-Bonbon mit rauer Oberfläche eine Cola-Flasche schlagartig überschäumen.",
+      "category": "Technik"
+    },
+    {
+      "id": "technik_de_111",
+      "question": "Warum fühlt sich ein Metallgeländer kälter an als ein Holzgeländer bei gleicher Temperatur?",
+      "answers": [
+        {"text": "Metall leitet die Wärme schneller aus der Hand ab", "correct": true},
+        {"text": "Metall ist tatsächlich immer ein paar Grad kälter", "correct": false},
+        {"text": "Die Handfeuchtigkeit verdunstet auf Metall schneller", "correct": false}
+      ],
+      "difficulty": "medium",
+      "fun_fact": "Beide haben dieselbe Temperatur, aber Metall transportiert die Körperwärme rasend schnell weg, während Holz sie staut. Was wir als 'kalt' empfinden, ist eigentlich die Geschwindigkeit des Wärmeabflusses — nicht die Temperatur selbst.",
+      "category": "Technik"
+    },
+    {
+      "id": "technik_de_112",
+      "question": "Warum hält ein gewöhnlicher Knoten in einem Seil überhaupt?",
+      "answers": [
+        {"text": "Die Reibung zwischen den verschlungenen Strängen klemmt sie fest", "correct": true},
+        {"text": "Die Seilfasern verkleben sich beim Zuziehen leicht", "correct": false},
+        {"text": "Das Seil dehnt sich und schnappt elastisch zusammen", "correct": false}
+      ],
+      "difficulty": "medium",
+      "fun_fact": "Ein Knoten hält allein durch Reibung: Die Stränge pressen sich gegenseitig so stark, dass sie nicht mehr aneinander vorbeirutschen. Mathematiker erforschen Knoten in einem eigenen Teilgebiet, der Knotentheorie — sie hilft sogar, DNA-Verschlingungen zu verstehen.",
+      "category": "Technik"
+    },
+    {
+      "id": "technik_de_113",
+      "question": "Warum bildet sich bei einer Glühlampe nach langem Betrieb ein dunkler Schleier auf dem Glas?",
+      "answers": [
+        {"text": "Verdampftes Wolfram vom Glühdraht schlägt sich am Glas nieder", "correct": true},
+        {"text": "Ruß aus der heißen Luft im Inneren setzt sich ab", "correct": false},
+        {"text": "Das Glas selbst verbrennt langsam an der heißesten Stelle", "correct": false}
+      ],
+      "difficulty": "hard",
+      "fun_fact": "Der Wolframdraht ist über 2000 °C heiß und verdampft langsam, das Metall kondensiert am kühleren Glas. Genau dieses Abdampfen macht den Draht mit der Zeit dünner, bis er durchbrennt — fast immer im Moment des Einschaltens.",
+      "category": "Technik"
+    },
+    {
+      "id": "technik_de_114",
+      "question": "Warum bleibt heißer Kaffee in einer Thermoskanne stundenlang warm?",
+      "answers": [
+        {"text": "Zwischen zwei Wänden ist ein Vakuum, das Wärmeübertragung fast unterbindet", "correct": true},
+        {"text": "Eine eingebaute Heizfolie hält die Temperatur konstant", "correct": false},
+        {"text": "Das dicke Material speichert die Wärme wie ein Schwamm", "correct": false}
+      ],
+      "difficulty": "medium",
+      "fun_fact": "Die Doppelwand mit Vakuum dazwischen lässt weder Wärmeleitung noch Konvektion zu, und die verspiegelte Innenseite reflektiert die Wärmestrahlung zurück. James Dewar erfand das Prinzip 1892 für die Forschung — die Vermarktung als Thermosflasche kam erst später.",
+      "category": "Technik"
+    },
+    {
+      "id": "technik_de_115",
+      "question": "Warum klebt nasser Sand am Strand zusammen, trockener Sand aber nicht?",
+      "answers": [
+        {"text": "Dünne Wasserbrücken zwischen den Körnern ziehen sie zusammen", "correct": true},
+        {"text": "Das Salz im Meerwasser verklebt die Körner", "correct": false},
+        {"text": "Nasser Sand kühlt ab und zieht sich zusammen", "correct": false}
+      ],
+      "difficulty": "medium",
+      "fun_fact": "Die Oberflächenspannung des Wassers bildet winzige Brücken zwischen den Körnern und hält sie zusammen — Kapillarkräfte. Ist der Sand jedoch komplett unter Wasser, verschwindet der Effekt wieder, weshalb eine Sandburg nur mit feuchtem, nicht mit tropfnassem Sand gelingt.",
+      "category": "Technik"
+    },
+    {
+      "id": "technik_de_116",
+      "question": "Warum sieht man bei einem Gewitter den Blitz lange vor dem Donner?",
+      "answers": [
+        {"text": "Licht ist fast millionenfach schneller als Schall", "correct": true},
+        {"text": "Der Donner entsteht erst Sekunden nach dem Blitz", "correct": false},
+        {"text": "Schall wird von Wolken zunächst zurückgehalten", "correct": false}
+      ],
+      "difficulty": "easy",
+      "fun_fact": "Schall legt rund 340 Meter pro Sekunde zurück, Licht erreicht uns praktisch sofort. Pro drei Sekunden zwischen Blitz und Donner ist das Gewitter etwa einen Kilometer entfernt — eine simple Faustregel, die erstaunlich gut stimmt.",
+      "category": "Technik"
+    },
+    {
+      "id": "technik_de_117",
+      "question": "Warum bilden sich an einem kalten Getränkeglas Wassertropfen an der Außenseite?",
+      "answers": [
+        {"text": "Luftfeuchtigkeit kondensiert an der kalten Glaswand", "correct": true},
+        {"text": "Wasser sickert durch das poröse Glas nach außen", "correct": false},
+        {"text": "Das Glas schwitzt eine dünne Schicht aus", "correct": false}
+      ],
+      "difficulty": "easy",
+      "fun_fact": "Warme Luft kann mehr Wasserdampf halten als kalte. An der kühlen Glaswand sinkt die Temperatur unter den Taupunkt, und der Dampf wird flüssig. Genau dasselbe Prinzip lässt morgens Tau auf dem Gras erscheinen.",
+      "category": "Technik"
+    },
+    {
+      "id": "technik_de_118",
+      "question": "Warum entsteht beim Reiben eines Luftballons an den Haaren statische Elektrizität?",
+      "answers": [
+        {"text": "Elektronen werden von einem Material auf das andere übertragen", "correct": true},
+        {"text": "Die Reibungswärme erzeugt einen kleinen Stromstoß", "correct": false},
+        {"text": "Die Luft im Ballon lädt sich durch die Bewegung auf", "correct": false}
+      ],
+      "difficulty": "medium",
+      "fun_fact": "Beim Reiben wandern Elektronen von den Haaren auf den Ballon, der dadurch negativ geladen wird und die nun positiven Haare anzieht. Diese Aufladung durch Kontakt heißt Reibungselektrizität und war schon den alten Griechen mit Bernstein bekannt.",
+      "category": "Technik"
+    },
+    {
+      "id": "technik_de_119",
+      "question": "Was lässt Brotteig beim Backen aufgehen und luftig werden?",
+      "answers": [
+        {"text": "Hefepilze erzeugen Kohlendioxid-Bläschen im Teig", "correct": true},
+        {"text": "Die Hitze dehnt das Mehl stark aus", "correct": false},
+        {"text": "Wasser im Teig verwandelt sich vollständig in Luft", "correct": false}
+      ],
+      "difficulty": "easy",
+      "fun_fact": "Hefe verstoffwechselt Zucker und gibt dabei CO₂ ab, das den Teig durchlöchert. Das Klebereiweiß Gluten bildet ein dehnbares Netz, das die Gasblasen einfängt — beim Backen härtet diese Struktur aus und das Brot bleibt locker.",
+      "category": "Technik"
+    },
+    {
+      "id": "technik_de_120",
+      "question": "Warum hält ein Magnet an einer Kühlschranktür, aber nicht an einer Aluminiumdose?",
+      "answers": [
+        {"text": "Nur eisenhaltige Metalle werden von Magneten angezogen", "correct": true},
+        {"text": "Aluminium ist zu dünn für die Magnetkraft", "correct": false},
+        {"text": "Die Lackschicht der Dose blockiert den Magnetismus", "correct": false}
+      ],
+      "difficulty": "medium",
+      "fun_fact": "Magnete haften nur an ferromagnetischen Metallen wie Eisen, Nickel oder Kobalt — Aluminium und Kupfer gehören nicht dazu. Kuriose Ausnahme: Bewegt man einen starken Magneten an Aluminium vorbei, entstehen Wirbelströme, die ihn spürbar abbremsen, ohne festzuhalten.",
+      "category": "Technik"
+    },
+    {
+      "id": "technik_de_121",
+      "question": "Warum schmeckt frisch gepresster Orangensaft direkt nach dem Zähneputzen so bitter und seltsam?",
+      "answers": [
+        {"text": "Ein Inhaltsstoff der Zahnpasta blockiert die Süß-Geschmacksrezeptoren", "correct": true},
+        {"text": "Die Zahnpasta hinterlässt einen sauren Film auf den Zähnen", "correct": false},
+        {"text": "Fluorid reagiert mit der Fruchtsäure zu Bitterstoffen", "correct": false}
+      ],
+      "difficulty": "hard",
+      "fun_fact": "Das Schaummittel Natriumlaurylsulfat in vielen Zahnpasten dämpft kurzzeitig die Rezeptoren für Süßes und hebt gleichzeitig die Wahrnehmung von Bitterem an. Deshalb schmeckt sonst süßer Saft plötzlich scharf-bitter.",
+      "category": "Technik"
+    },
+    {
+      "id": "technik_de_122",
+      "question": "Warum kann man durch eine Lupe ein Feuer entfachen?",
+      "answers": [
+        {"text": "Die gewölbte Linse bündelt das Sonnenlicht auf einen winzigen heißen Punkt", "correct": true},
+        {"text": "Das Glas verstärkt die Wärmestrahlung wie ein Verstärker", "correct": false},
+        {"text": "Die Lupe speichert Sonnenenergie und gibt sie gebündelt ab", "correct": false}
+      ],
+      "difficulty": "easy",
+      "fun_fact": "Eine Sammellinse vereint die parallel einfallenden Sonnenstrahlen in einem Brennpunkt, wo die gesamte aufgefangene Energie auf einen Punkt konzentriert wird. Dort können schnell mehrere hundert Grad entstehen — genug, um trockenes Papier zu entzünden.",
+      "category": "Technik"
+    },
+    {
+      "id": "technik_de_123",
+      "question": "Warum hört man am Meer in einer Muschel angeblich das 'Rauschen des Ozeans'?",
+      "answers": [
+        {"text": "Die Muschel verstärkt zufällige Umgebungsgeräusche als Resonanzkörper", "correct": true},
+        {"text": "In der Muschel bleibt echter Meeresschall gespeichert", "correct": false},
+        {"text": "Das eigene Ohr erzeugt darin ein Echo des Blutkreislaufs", "correct": false}
+      ],
+      "difficulty": "hard",
+      "fun_fact": "Der Hohlraum der Muschel wirkt als Resonator, der bestimmte Frequenzen der ständig vorhandenen Hintergrundgeräusche hervorhebt. Eine leere Tasse am Ohr erzeugt den gleichen Effekt — mit dem Meer hat das Rauschen nichts zu tun.",
+      "category": "Technik"
+    },
+    {
+      "id": "technik_de_124",
+      "question": "Warum verbrennt man sich an heißem Wasserdampf schlimmer als an gleich heißem flüssigem Wasser?",
+      "answers": [
+        {"text": "Beim Kondensieren auf der Haut gibt der Dampf zusätzliche Wärme frei", "correct": true},
+        {"text": "Dampf ist heimlich heißer als kochendes Wasser", "correct": false},
+        {"text": "Dampf dringt tiefer in die Haut ein als Wasser", "correct": false}
+      ],
+      "difficulty": "hard",
+      "fun_fact": "Wasserdampf trägt eine zusätzliche Energiemenge, die Kondensationswärme, die beim Übergang zurück zu flüssigem Wasser auf der Haut schlagartig frei wird. Diese versteckte Wärme macht Dampf bei gleicher Temperatur weit gefährlicher als kochendes Wasser.",
+      "category": "Technik"
+    },
+    {
+      "id": "technik_de_125",
+      "question": "Warum bleibt ein Eiswürfel im Wasserglas an der Oberfläche und sinkt nicht ab?",
+      "answers": [
+        {"text": "Eis ist weniger dicht als flüssiges Wasser", "correct": true},
+        {"text": "Die im Eis eingeschlossene Luft trägt es", "correct": false},
+        {"text": "Kaltes Eis stößt das wärmere Wasser ab", "correct": false}
+      ],
+      "difficulty": "easy",
+      "fun_fact": "Wasser ist eine der wenigen Substanzen, die sich beim Gefrieren ausdehnen — die Moleküle ordnen sich zu einem lockeren Kristallgitter. Deshalb schwimmt Eis, und Seen frieren von oben zu, was Fische im Winter unter der Eisdecke überleben lässt.",
+      "category": "Technik"
+    },
+    {
+      "id": "technik_de_126",
+      "question": "Warum hält Klebeband besser, wenn man es kräftig andrückt?",
+      "answers": [
+        {"text": "Der Druck presst den weichen Kleber in jede winzige Unebenheit", "correct": true},
+        {"text": "Die Reibungswärme beim Andrücken aktiviert den Kleber", "correct": false},
+        {"text": "Der Druck lädt das Band statisch auf", "correct": false}
+      ],
+      "difficulty": "medium",
+      "fun_fact": "Der Kleber auf Klebeband ist ein zähflüssiger Haftkleber, der unter Druck in die mikroskopischen Vertiefungen der Oberfläche fließt und so die Kontaktfläche maximiert. Gehalten wird er dann von schwachen molekularen Anziehungskräften, den Van-der-Waals-Kräften.",
+      "category": "Technik"
+    },
+    {
+      "id": "technik_de_127",
+      "question": "Warum gibt eine gestimmte Gitarrensaite einen höheren Ton, je kürzer man sie greift?",
+      "answers": [
+        {"text": "Eine kürzere Saite schwingt schneller und erzeugt eine höhere Frequenz", "correct": true},
+        {"text": "Die kürzere Saite steht unter mehr Spannung", "correct": false},
+        {"text": "Weniger Saitenlänge bedeutet weniger Luftwiderstand", "correct": false}
+      ],
+      "difficulty": "medium",
+      "fun_fact": "Die Tonhöhe hängt von der Schwingungsfrequenz ab: Je kürzer die schwingende Länge, desto schneller die Schwingung und desto höher der Ton. Dickere und lockerere Saiten schwingen langsamer — deshalb klingen die Basssaiten tiefer als die dünnen oben.",
+      "category": "Technik"
+    },
+    {
+      "id": "technik_de_128",
+      "question": "Woher stammt der Begriff 'Roboter', der heute weltweit verwendet wird?",
+      "answers": [
+        {"text": "Aus einem tschechischen Theaterstück von 1920 — von 'robota' (Fronarbeit)", "correct": true},
+        {"text": "Aus einem englischen Patent für eine Fabrikmaschine", "correct": false},
+        {"text": "Aus dem japanischen Wort für 'künstlicher Helfer'", "correct": false}
+      ],
+      "difficulty": "easy",
+      "fun_fact": "Karel Čapek nutzte das Wort 1920 in seinem Stück 'R.U.R.', vorgeschlagen hatte es sein Bruder Josef. 'Robota' bedeutet im Tschechischen Zwangs- oder Fronarbeit — die Roboter im Stück sind künstliche Arbeiter, die sich am Ende erheben.",
+      "category": "Technik"
+    },
+    {
+      "id": "technik_de_129",
+      "question": "Woher kommt der Name der Suchmaschine 'Yahoo'?",
+      "answers": [
+        {"text": "Aus 'Yet Another Hierarchical Officious Oracle'", "correct": true},
+        {"text": "Aus dem Indianer-Wort für 'finden'", "correct": false},
+        {"text": "Aus den Initialen der beiden Gründer", "correct": false}
+      ],
+      "difficulty": "hard",
+      "fun_fact": "Die Gründer Jerry Yang und David Filo mochten zwar das rückwirkende Akronym, wählten 'Yahoo' aber vor allem, weil es in Gullivers Reisen eine derbe, ungehobelte Kreatur bezeichnet — sie nannten sich selbst augenzwinkernd so.",
+      "category": "Technik"
+    },
+    {
+      "id": "technik_de_130",
+      "question": "Was war der Auslöser dafür, dass der Klebstoff 'Superkleber' (Cyanacrylat) überhaupt erfunden wurde?",
+      "answers": [
+        {"text": "Er entstand als Reinfall bei der Suche nach klaren Kunststoff-Zielvisieren im Krieg", "correct": true},
+        {"text": "Er war ein gezieltes Projekt für die Schuhindustrie", "correct": false},
+        {"text": "Er wurde als Zahnfüllung entwickelt", "correct": false}
+      ],
+      "difficulty": "medium",
+      "fun_fact": "Harry Coover stieß 1942 auf die Substanz, verwarf sie aber, weil sie an allem festklebte. Erst 1958 erkannte er den Wert und brachte sie als 'Eastman 910' auf den Markt. Im Vietnamkrieg wurde sie genutzt, um Wunden vorübergehend zu verschließen.",
+      "category": "Technik"
+    },
+    {
+      "id": "technik_de_131",
+      "question": "Warum stehen auf vielen Taschenrechnern und Telefon-Tasten die Ziffern in unterschiedlicher Reihenfolge angeordnet?",
+      "answers": [
+        {"text": "Telefone wurden bewusst andersherum angeordnet als die schon etablierten Rechenmaschinen", "correct": true},
+        {"text": "Reiner Zufall der jeweiligen Hersteller", "correct": false},
+        {"text": "Telefone folgen der Schreibmaschinen-Norm", "correct": false}
+      ],
+      "difficulty": "medium",
+      "fun_fact": "Rechenmaschinen hatten die 1 unten. Als Bell in den 1950ern das Tastentelefon entwarf, testete man Layouts und entschied sich für die 1 oben links — unter anderem, weil Nutzer mit Rechenmaschinen-Tastaturen zu schnell tippten und sich verwählten.",
+      "category": "Technik"
+    },
+    {
+      "id": "technik_de_132",
+      "question": "Woher hat die Programmiersprache 'Python' ihren Namen?",
+      "answers": [
+        {"text": "Von der britischen Comedy-Truppe Monty Python", "correct": true},
+        {"text": "Von der Schlangenart, die der Erfinder als Haustier hielt", "correct": false},
+        {"text": "Es ist ein Akronym für 'Practical Yet Helpful Object Notation'", "correct": false}
+      ],
+      "difficulty": "easy",
+      "fun_fact": "Guido van Rossum suchte 1991 einen kurzen, einprägsamen Namen und las gerade Skripte von 'Monty Python's Flying Circus'. Bis heute tauchen in der Python-Dokumentation Anspielungen wie 'spam' und 'eggs' statt der üblichen 'foo' und 'bar' auf.",
+      "category": "Technik"
+    },
+    {
+      "id": "technik_de_133",
+      "question": "Was war der eigentliche Zweck, für den die Kreissäge erfunden wurde — laut verbreiteter Überlieferung?",
+      "answers": [
+        {"text": "Eine Shaker-Frau verbesserte die mühsame Handsäge in einer Spinnerei", "correct": true},
+        {"text": "Sie wurde für den Bau von Eisenbahnschwellen erfunden", "correct": false},
+        {"text": "Sie entstand als Werkzeug für Steinmetze", "correct": false}
+      ],
+      "difficulty": "hard",
+      "fun_fact": "Tabitha Babbitt, Mitglied der Shaker-Gemeinschaft, soll um 1810 beobachtet haben, dass Männer beim Sägen die halbe Bewegung verschwendeten, und montierte eine runde Klinge an ihr Spinnrad. Als Shaker meldete sie nie ein Patent an.",
+      "category": "Technik"
+    },
+    {
+      "id": "technik_de_134",
+      "question": "Woher stammt das @-Zeichen, lange bevor es in E-Mail-Adressen auftauchte?",
+      "answers": [
+        {"text": "Aus dem Handel — es stand für 'zum Preis von je'", "correct": true},
+        {"text": "Es wurde 1971 eigens für die erste E-Mail erfunden", "correct": false},
+        {"text": "Aus der mittelalterlichen Notenschrift", "correct": false}
+      ],
+      "difficulty": "easy",
+      "fun_fact": "Kaufleute schrieben '7 Äpfel @ 2 Cent', also 7 Äpfel zum Stückpreis von 2 Cent. Deshalb saß das Zeichen schon auf Schreibmaschinen, als Ray Tomlinson 1971 nach einem ungenutzten Symbol für Adressen suchte — und genau deshalb griff er es auf.",
+      "category": "Technik"
+    },
+    {
+      "id": "technik_de_135",
+      "question": "Warum heißt der Begriff 'pixel' eigentlich so?",
+      "answers": [
+        {"text": "Es ist eine Kurzform von 'picture element'", "correct": true},
+        {"text": "Es kommt vom lateinischen 'pix' für 'Punkt'", "correct": false},
+        {"text": "Es ist nach dem Erfinder Paul Ixel benannt", "correct": false}
+      ],
+      "difficulty": "easy",
+      "fun_fact": "Die Kurzform 'pixel' aus 'pix' (umgangssprachlich für pictures) und 'element' wurde Mitte der 1960er bei Bildverarbeitern am Jet Propulsion Laboratory geprägt, als man Raumsonden-Fotos digital aufbereitete. Es gab sogar den selten genutzten Vorschlag 'pel'.",
+      "category": "Technik"
+    },
+    {
+      "id": "technik_de_136",
+      "question": "Welches Alltagsgerät entstand zufällig, weil zwei Ingenieure eigentlich eine abwaschbare 3D-Tapete herstellen wollten?",
+      "answers": [
+        {"text": "Die Luftpolsterfolie", "correct": true},
+        {"text": "Der Klettverschluss", "correct": false},
+        {"text": "Der Schwamm aus Kunststoff", "correct": false}
+      ],
+      "difficulty": "medium",
+      "fun_fact": "1957 wollten Alfred Fielding und Marc Chavannes eigentlich eine abwaschbare 3D-Tapete herstellen, indem sie zwei Duschvorhänge verschweißten. Der Reinfall steckte voller Luftblasen — bis IBM die Folie 1959 als Polster für empfindliche Computer entdeckte.",
+      "category": "Technik"
+    },
+    {
+      "id": "technik_de_137",
+      "question": "Woher stammt der Begriff 'Akku' bzw. 'Akkumulator' für einen wiederaufladbaren Energiespeicher?",
+      "answers": [
+        {"text": "Vom lateinischen 'accumulare' — anhäufen, ansammeln", "correct": true},
+        {"text": "Vom Namen des Erfinders Antoine Accu", "correct": false},
+        {"text": "Von 'accurate current', also 'genauer Strom'", "correct": false}
+      ],
+      "difficulty": "easy",
+      "fun_fact": "Ein Akkumulator 'häuft' Energie an, um sie später wieder abzugeben — daher der lateinische Ursprung. Die erste wiederaufladbare Variante war der Blei-Akku von Gaston Planté aus dem Jahr 1859, ein Prinzip, das in jeder Autobatterie bis heute steckt.",
+      "category": "Technik"
+    },
+    {
+      "id": "technik_de_138",
+      "question": "Was bezeichnete das Wort 'Computer' jahrhundertelang, bevor es Maschinen meinte?",
+      "answers": [
+        {"text": "Einen Menschen, der beruflich Berechnungen ausführte", "correct": true},
+        {"text": "Ein mechanisches Zahnrad in Uhren", "correct": false},
+        {"text": "Eine Rechentafel aus Holz", "correct": false}
+      ],
+      "difficulty": "easy",
+      "fun_fact": "Schon im 17. Jahrhundert war ein 'computer' eine Person — oft ganze Büros voller Menschen, die etwa Sternpositionen oder Artillerietabellen ausrechneten. Bei der NASA arbeiteten in den 1960ern noch menschliche 'computer', deren Geschichte der Film 'Hidden Figures' erzählt.",
+      "category": "Technik"
+    },
+    {
+      "id": "technik_de_139",
+      "question": "Warum hieß das soziale Netzwerk Twitter ursprünglich anders?",
+      "answers": [
+        {"text": "Es startete unter dem Namen 'twttr' — Vokale wurden später ergänzt", "correct": true},
+        {"text": "Es hieß zuerst 'Status' und wurde umbenannt", "correct": false},
+        {"text": "Es trug zunächst den Namen 'Chirp'", "correct": false}
+      ],
+      "difficulty": "medium",
+      "fun_fact": "Inspiriert von Flickr ließen die Gründer 2006 zunächst die Vokale weg. 'Twitter' bedeutet im Englischen das Gezwitscher von Vögeln und kurzes, belangloses Geplapper — beides passte zur Idee kurzer Statusmeldungen. Die Domain twttr.com gab es bereits.",
+      "category": "Technik"
+    },
+    {
+      "id": "technik_de_140",
+      "question": "Wofür wurde die Mikrowellen-Technik ursprünglich gebaut, bevor sie Essen erwärmte?",
+      "answers": [
+        {"text": "Für Radar zur Ortung von Flugzeugen und Schiffen", "correct": true},
+        {"text": "Für die drahtlose Telegrafie über den Atlantik", "correct": false},
+        {"text": "Für medizinische Röntgengeräte", "correct": false}
+      ],
+      "difficulty": "easy",
+      "fun_fact": "Das Herzstück, das Magnetron, war im Zweiten Weltkrieg ein Hochleistungs-Radarbauteil. Der Ingenieur Percy Spencer beim Rüstungs- und Radarkonzern Raytheon bemerkte, dass ein Schokoriegel in seiner Tasche neben einem Magnetron schmolz — so kam man der Garwirkung auf die Spur. Küchengeräte waren reiner Nebeneffekt.",
+      "category": "Technik"
+    },
+    {
+      "id": "technik_de_141",
+      "question": "Woher kommt der Begriff 'Pixar' beim berühmten Animationsstudio?",
+      "answers": [
+        {"text": "Aus einem erfundenen, spanisch klingenden Verb 'pixar' plus 'radar'", "correct": true},
+        {"text": "Aus den Initialen der sechs Gründer", "correct": false},
+        {"text": "Aus 'Pixel Art'", "correct": false}
+      ],
+      "difficulty": "hard",
+      "fun_fact": "Mitgründer Alvy Ray Smith wollte einen Namen, der nach 'Bilder machen' klingt, und erfand das Pseudo-Spanische 'pixar'. Kollege Loren Carpenter steuerte 'radar' bei. Pixar war zuerst ein Hardware-Unternehmen, das teure Grafikcomputer verkaufte, bevor es Filme machte.",
+      "category": "Technik"
+    },
+    {
+      "id": "technik_de_142",
+      "question": "Was war der ursprüngliche Zweck des Geräts, aus dem das Telefon entstand — laut Alexander Graham Bells Arbeit?",
+      "answers": [
+        {"text": "Eine Hörhilfe und Sprachtraining für Gehörlose", "correct": true},
+        {"text": "Ein schnellerer Telegraf für Börsenkurse", "correct": false},
+        {"text": "Ein Musikinstrument zur Tonübertragung", "correct": false}
+      ],
+      "difficulty": "easy",
+      "fun_fact": "Bell unterrichtete Gehörlose, seine Mutter und seine Frau waren taub. Seine Experimente zur Sichtbarmachung von Sprache führten zur Übertragung von Schall über Draht. Er hielt das Telefon zeitweise sogar für eine Ablenkung von seiner eigentlichen Mission.",
+      "category": "Technik"
+    },
+    {
+      "id": "technik_de_143",
+      "question": "Warum trägt das Betriebssystem 'Linux' diesen Namen, obwohl der Erfinder ihn fast verhindert hätte?",
+      "answers": [
+        {"text": "Linus Torvalds fand es zu eitel und wollte es 'Freax' nennen", "correct": true},
+        {"text": "Es war als reines Akronym gedacht", "correct": false},
+        {"text": "Der Name wurde von einer Abstimmung im Internet bestimmt", "correct": false}
+      ],
+      "difficulty": "medium",
+      "fun_fact": "Torvalds plante 'Freax' (aus free, freak und X). Ein Kollege, der den FTP-Server betreute, legte das Projekt 1991 einfach unter dem Ordnernamen 'linux' ab — und der blieb hängen. Torvalds gab später zu, er sei zu schüchtern gewesen, seinen eigenen Namen zu verwenden.",
+      "category": "Technik"
+    },
+    {
+      "id": "technik_de_144",
+      "question": "Woher kommt der Begriff 'Batterie' für einen Stromspeicher aus mehreren Zellen?",
+      "answers": [
+        {"text": "Vom militärischen 'Geschütz-Batterie' — eine Reihe gekoppelter Einheiten", "correct": true},
+        {"text": "Vom französischen Wort für 'Behälter'", "correct": false},
+        {"text": "Vom Namen des Erfinders Pierre Batterie", "correct": false}
+      ],
+      "difficulty": "medium",
+      "fun_fact": "Benjamin Franklin verglich um 1749 eine Reihe verbundener Leidener Flaschen mit einer 'battery' aus Kanonen, die gemeinsam feuern. Der militärische Begriff für eine Gruppe gekoppelter Geschütze wurde so zum Wort für jede Reihe verbundener Zellen.",
+      "category": "Technik"
+    },
+    {
+      "id": "technik_de_145",
+      "question": "Was war die erste Ware, die jemals über das Internet kommerziell verkauft wurde — laut den Beteiligten?",
+      "answers": [
+        {"text": "Eine CD von Sting im Jahr 1994", "correct": true},
+        {"text": "Ein Computer-Lehrbuch", "correct": false},
+        {"text": "Ein Abonnement für eine Zeitung", "correct": false}
+      ],
+      "difficulty": "hard",
+      "fun_fact": "Am 11. August 1994 verkaufte das Versandhaus NetMarket Sting's Album 'Ten Summoner's Tales' und übertrug die Kreditkartendaten erstmals verschlüsselt. Die New York Times titelte damals, ein neues Zeitalter des Online-Handels habe begonnen — Amazon gab es noch nicht.",
+      "category": "Technik"
+    },
+    {
+      "id": "technik_de_146",
+      "question": "Warum heißt die Netzwerktechnik 'Ethernet' eigentlich so?",
+      "answers": [
+        {"text": "Nach dem 'Äther', dem einst vermuteten Medium für Lichtwellen", "correct": true},
+        {"text": "Nach der Chemikalie Ether, mit der die Kabel gereinigt wurden", "correct": false},
+        {"text": "Nach dem Erfinder Robert Ether", "correct": false}
+      ],
+      "difficulty": "medium",
+      "fun_fact": "Robert Metcalfe prägte den Namen 1973 am Xerox PARC. Der 'luminiferous aether' war ein im 19. Jahrhundert angenommenes, allgegenwärtiges Medium, durch das sich Licht ausbreiten sollte — als Metapher für das Kabel, durch das die Daten zu allen Geräten fließen.",
+      "category": "Technik"
+    },
+    {
+      "id": "technik_de_147",
+      "question": "Woher stammt der Name 'Apache' für die weltweit verbreitete Webserver-Software?",
+      "answers": [
+        {"text": "Aus einem Wortspiel — ein Server aus vielen 'Patches' war 'a patchy server'", "correct": true},
+        {"text": "Aus Respekt vor dem gleichnamigen Indianervolk", "correct": false},
+        {"text": "Aus einem Akronym der Gründernamen", "correct": false}
+      ],
+      "difficulty": "medium",
+      "fun_fact": "Die Software entstand 1995 aus dem NCSA-Server, den die Entwickler mit vielen Patches flickten — daher 'a patchy server'. Die Apache Software Foundation deutete den Namen später bewusst auch als Hommage an die Widerstandsfähigkeit des Apache-Volkes.",
+      "category": "Technik"
+    },
+    {
+      "id": "technik_de_148",
+      "question": "Was war ungewöhnlich an der allerersten Webseite, die je online ging?",
+      "answers": [
+        {"text": "Sie erklärte einfach, was das World Wide Web ist und wie man es nutzt", "correct": true},
+        {"text": "Sie zeigte nur ein einzelnes blinkendes Wort", "correct": false},
+        {"text": "Sie war ein Online-Shop für Bücher", "correct": false}
+      ],
+      "difficulty": "medium",
+      "fun_fact": "Tim Berners-Lee stellte die Seite 1991 am CERN online — schlichter Text mit Links, der das Web selbst beschrieb. Eine rekonstruierte Version läuft bis heute unter ihrer Originaladresse. Sie war zugleich Anleitung und erstes Beispiel für Hypertext im Web.",
+      "category": "Technik"
+    },
+    {
+      "id": "technik_de_149",
+      "question": "Wonach ist die Maßeinheit für elektrische Leistung, das 'Watt', benannt?",
+      "answers": [
+        {"text": "Nach dem Dampfmaschinen-Ingenieur James Watt", "correct": true},
+        {"text": "Nach dem lateinischen Wort 'vattus' für Kraft", "correct": false},
+        {"text": "Nach dem Ort Watt in Schottland", "correct": false}
+      ],
+      "difficulty": "easy",
+      "fun_fact": "James Watt verbesserte im 18. Jahrhundert die Dampfmaschine entscheidend. Um seine Maschinen zu verkaufen, erfand er auch die Einheit 'Pferdestärke' als Vergleich zu echten Pferden — die Einheit Watt zu seinen Ehren wurde aber erst 1882 offiziell eingeführt.",
+      "category": "Technik"
+    },
+    {
+      "id": "technik_de_150",
+      "question": "Warum heißt das Speichermedium 'Festplatte' im Englischen 'hard disk' — im Gegensatz wozu?",
+      "answers": [
+        {"text": "Im Gegensatz zur biegsamen 'floppy disk', der Diskette", "correct": true},
+        {"text": "Weil sie schwer zu beschreiben war", "correct": false},
+        {"text": "Weil ihr Gehäuse aus gehärtetem Stahl bestand", "correct": false}
+      ],
+      "difficulty": "easy",
+      "fun_fact": "Die starren Magnetscheiben der 'hard disk' unterschieden sie von den flexiblen Plastik-Disketten, den 'floppies', die sich tatsächlich biegen ließen. IBM stellte die erste Festplatte 1956 vor — sie war so groß wie zwei Kühlschränke und fasste nur etwa 5 Megabyte.",
+      "category": "Technik"
+    },
+    {
+      "id": "technik_de_151",
+      "question": "Woher stammt der Begriff 'Patch' für eine Software-Korrektur?",
+      "answers": [
+        {"text": "Von echten Klebestreifen, die Löcher in Lochstreifen-Programmen flickten", "correct": true},
+        {"text": "Von einem Programmierer namens Patrick 'Patch' Lee", "correct": false},
+        {"text": "Von militärischen Stoff-Abzeichen für gelöste Aufgaben", "correct": false}
+      ],
+      "difficulty": "medium",
+      "fun_fact": "Frühe Programme steckten auf Lochstreifen oder Lochkarten. Wollte man einen Fehler korrigieren, klebte man Stücke über falsche Löcher oder stanzte neue — man 'flickte' den Streifen wörtlich. Der Begriff überlebte den Wechsel zu rein digitaler Software.",
+      "category": "Technik"
+    },
+    {
+      "id": "technik_de_152",
+      "question": "Wie lange dauert ein einziger Taktzyklus eines modernen 3-GHz-Prozessors ungefähr?",
+      "answers": [
+        {"text": "Etwa eine drittel Nanosekunde — Licht legt darin nur rund 10 cm zurück", "correct": true},
+        {"text": "Etwa eine Tausendstelsekunde", "correct": false},
+        {"text": "Etwa eine Millionstelsekunde", "correct": false}
+      ],
+      "difficulty": "hard",
+      "fun_fact": "In den 0,33 Nanosekunden eines Taktzyklus schafft selbst Licht im Vakuum nur etwa 10 cm. Deshalb ist die physische Länge der Leiterbahnen auf dem Chip ein echtes Designproblem: Ein Signal darf nicht zu weit reisen müssen, sonst kommt es zu spät an.",
+      "category": "Technik"
+    },
+    {
+      "id": "technik_de_153",
+      "question": "Wie viele Suchanfragen verarbeitet Google ungefähr pro Sekunde weltweit?",
+      "answers": [
+        {"text": "Rund 100.000", "correct": true},
+        {"text": "Rund 500", "correct": false},
+        {"text": "Rund 30 Millionen", "correct": false}
+      ],
+      "difficulty": "easy",
+      "fun_fact": "Etwa 100.000 Suchanfragen pro Sekunde ergeben über 8 Milliarden pro Tag. Ein erheblicher Teil davon sind Anfragen, die Google noch nie zuvor in exakt dieser Formulierung gesehen hat — bis heute rund 15 Prozent.",
       "category": "Technik"
     }
   ]
