@@ -52,7 +52,7 @@ No apps to download. No accounts to create. Just scan a QR code and play.
 
 **Works on Any Screen** — Dashboard mode for the TV. Players use their phones. Admin runs the show. No extra hardware needed.
 
-**Eight Themes, Two Languages** — 839 questions across 18 themed packs (Geography, Pop Culture, Animals & Nature, Sport, Music, Science, History, Food & Drink, Technology) in German and English. Mix them, filter them, swap mid-session.
+**Ten Themes, Two Languages** — 2,893 questions across 20 themed packs (Geography, Pop Culture, Animals & Nature, Sport, Music, Science, History, Food & Drink, Technology, World Cup) in German and English. Mix them, filter them, swap mid-session.
 
 ---
 
@@ -183,8 +183,8 @@ A fun fact appears for context ("Giraffen schlafen im Schnitt nur 1,9 Stunden am
 
 </div>
 
-**Three Presets, or Custom**
-Quick Round (5 rounds · Easy · 20s), Classic (10 rounds · Medium · 30s), Marathon (20 rounds · Hard · 45s) — or unfold the Custom panel to dial in any combination of theme, language, difficulty, round count, and per-question timer.
+**Pick a pack, then a mode**
+Choose your pack right on the first screen (featured card + chips), then a preset — Quick Round (5 rounds · Easy · 20s), Classic (10 rounds · Medium · 30s), Marathon (20 rounds · Hard · 45s) — or unfold the Custom panel to dial in language, difficulty, round count, and per-question timer.
 
 **Solo or Squad**
 Solo play is supported since v1.1.9 — host self-joins, lobby unlocks with one player. Or wait for up to 20 friends. The lobby shows the QR code, the join URL, and a live roster as people drop in.
@@ -316,21 +316,22 @@ Then **"Start New Game"** (same settings, same players) or **Reset Game** (fresh
 
 ## Question Packs
 
-Quizify ships with **839 questions across 18 themed packs in 9 themes**, in both German and English.
+Quizify ships with **2,893 questions across 20 themed packs in 10 themes**, in both German and English.
 
 | Theme | 🇩🇪 Deutsch | 🇬🇧 English |
 |-------|-------------|-------------|
-| 🌍 **Geographie / Geography** | 47 | 47 |
-| 🦋 **Tiere & Natur / Animals & Nature** | 42 | 42 |
-| 🎬 **Popkultur / Pop Culture** | 44 | 44 |
-| ⚽ **Sport** | 42 | 48 |
-| 🎵 **Musik / Music** | 48 | 50 |
-| 🔬 **Wissenschaft / Science** | 47 | 49 |
-| 📜 **Geschichte / History** | 48 | 47 |
-| 🍔 **Essen & Trinken / Food & Drink** | 47 | 49 |
-| 💡 **Technik / Technology** | 48 | 50 |
+| 🌍 **Geographie / Geography** | 149 | 150 |
+| 🦋 **Tiere & Natur / Animals & Nature** | 149 | 150 |
+| 🎬 **Popkultur / Pop Culture** | 149 | 150 |
+| ⚽ **Sport** | 148 | 150 |
+| 🎵 **Musik / Music** | 150 | 150 |
+| 🔬 **Wissenschaft / Science** | 150 | 150 |
+| 📜 **Geschichte / History** | 149 | 150 |
+| 🍔 **Essen & Trinken / Food & Drink** | 150 | 150 |
+| 💡 **Technik / Technology** | 150 | 150 |
+| 🏆 **Weltmeisterschaft / World Cup** | 99 | 100 |
 
-The pack-picker shows a **Featured Spotlight** at the top, a row of **theme tabs** to filter, and a card grid for individual pack selection. **Mixed mode** drops you a random question from every selected pack, so you can stir all of Geography + Pop + Sport together for chaos mode.
+Pack selection lives on the **first screen**: a featured pack card (e.g. World Cup) up top, with every other pack as a tappable chip right beneath it — tap to select or deselect, mix several, then hit **Start Game**. Game settings (difficulty, rounds, timer) stay one tap away under **Adjust settings**. **Mixed mode** drops you a random question from every selected pack, so you can stir Geography + Pop + Sport together for chaos mode.
 
 All packs follow an "Unnützes Wissen" editorial line — surprising, counter-intuitive, weird-but-true trivia. Less "capital of France", more "the average cloud weighs about 500 tons".
 
@@ -365,7 +366,7 @@ Pack files live in `custom_components/quizify/questions/`. Drop a JSON file in t
 - Exactly **3 answers** per question
 - Exactly **1 correct** answer
 - Per-question fields the loader reads: `id` (required), `question` (required), `answers` (required), `difficulty` (default `medium`), `fun_fact` (optional), `category` (optional, falls back to pack name)
-- Pack-level fields: `name`, `language` (`de` / `en` — only those are wired into the language chip; other ISO codes load but won't be selectable from the UI), `theme` (one of `geography`, `nature`, `popculture`, `sport`, `music`, `science`, `history`, `food`, `tech` — drives the theme-tab filter and pack-card icon), `version`
+- Pack-level fields: `name`, `language` (`de` / `en` — only those are wired into the language chip; other ISO codes load but won't be selectable from the UI), `theme` (one of `geography`, `nature`, `popculture`, `sport`, `music`, `science`, `history`, `food`, `tech`, `worldcup` — drives the theme-tab filter and pack-card icon), `version`
 - File goes in the `questions/` directory — picked up automatically on next game start
 
 ---
@@ -474,7 +475,7 @@ Home Assistant
 
 Quizify is built with substantial help from AI coding tools (Claude Code). That's not a confession — it's a feature. Here's what that looks like in practice:
 
-- **Test coverage**: 131 Python tests across 8 test files, exercising the game state machine, WebSocket protocol, scoring math, power-up effects, admin-redirect grace window, and version cache-buster — every regression gets a test before the fix lands.
+- **Test coverage**: 145 Python tests across 10 test files, exercising the game state machine, WebSocket protocol, scoring math, power-up effects, admin-redirect grace window, and the asset-fingerprint cache-buster — every regression gets a test before the fix lands.
 - **Architecture is documented in code**: see `game/state.py` `reset_to_lobby()` vs. the new `clear_all_players()` (added in v1.1.15) — the comment block walks through *why* `reset_to_lobby` intentionally keeps players (for the finale's "Play again — same settings" path) while the explicit reset button needs to drop everyone, and references the specific user-visible bug ("phantom 'sdfsd 2' / 'Fjfj 2' players surviving a reset") that drove the change.
 - **Eighty-plus releases with traceable root causes**, not just "fixed". i18n hygiene, pack-picker scalability, iOS Safari quirks, and cache-buster propagation all got dedicated sweeps in v1.1.x.
 - **MIT-licensed, fully local, no telemetry**.
@@ -552,6 +553,12 @@ Yes. The QR code uses whatever URL the admin's browser sees, so opening <code>/q
 <br>
 
 ## What's New
+
+### v1.2.6 — World Cup Night 🏆
+- **Two new World Cup packs** (🇬🇧 World Cup · 🇩🇪 Weltmeisterschaft, ~200 questions) — surprising, weird-but-true facts about football's biggest stage, generated and reviewed for accuracy. The library is now ~2,890 questions across 20 packs.
+- **Pack selection moved to the first screen** — a featured pack card plus every pack as a tappable chip, so you pick what to play in one tap without opening "Adjust settings". Game settings (difficulty, rounds, timer) stay there.
+- **Every host screen follows your Home Assistant language** — the launcher, dashboard, and analytics no longer flash English and flip to the browser language.
+- **Self-healing asset cache** — the cache-buster is now a content fingerprint, so updates land on the next page load without manual cache clearing. The in-page "New version available" banner was removed (no surprise reloads on a TV mid-game).
 
 ### v1.1.41 — End-screen Typography Lock 🎯
 - **End-screen rank / score / stats actually shrink now.** v1.1.40 reduced four classes by 20 % but a later "anchor bump" block silently overrode all four. Pulled the override; live-tested via CDP browser-harness against the running HA. The end-screen rank/score/stat block now stops eating the viewport above the leaderboard for real this time.
@@ -651,7 +658,8 @@ Yes. The QR code uses whatever URL the admin's browser sees, so opening <code>/q
 - Some legacy phone scanners need the URL hostname, not the IP — try opening `/quizify/admin` from the host on a hostname-based URL if your network resolves it.
 
 **Browser stuck on old version after HACS update?**
-- Hard refresh (Ctrl/Cmd + Shift + R). Quizify cache-busts every static asset via `?v={{VERSION}}`, but the browser's HTML cache can sometimes lag a version behind.
+- Quizify cache-busts every static asset via a **content fingerprint** (`?v=<version>-<hash>`), so a normal page load already pulls the fresh version after an update — no manual cache clearing.
+- The integration's Python only reloads on a full **Home Assistant restart**, so after a HACS update do Settings → System → Restart (not just "reload integration"). A long-open tab can be reloaded once if it still looks stale.
 
 ---
 
