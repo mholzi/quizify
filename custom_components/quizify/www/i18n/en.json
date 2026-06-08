@@ -323,6 +323,12 @@
       "q5": "Which language?"
     }
   },
+  "featured": {
+    "tag": "New",
+    "worldCupTitle": "World Cup",
+    "worldCupDesc": "100 surprising football facts",
+    "worldCupPlay": "Play World Cup"
+  },
   "wager": {
     "title": "Final Round — Wager",
     "hint": "Bet a chunk of your points. Right = double, wrong = lose.",

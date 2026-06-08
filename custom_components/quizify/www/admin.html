@@ -81,6 +81,25 @@
                 </h1>
                 <p class="setup-hero-summary" id="setup-summary"></p>
                 <p class="setup-hero-topics hidden" id="setup-topics"></p>
+                <!-- Featured pack spotlight — surfaces a pack on the first
+                     screen so the host can launch it in one tap, without
+                     opening "Adjust settings". The whole card is the tap
+                     target; the coral pill is a visual affordance. Pack +
+                     copy follow the active language (World Cup / WM). -->
+                <button type="button" id="hero-feature-card" class="hero-feature" data-feature="worldcup">
+                    <span class="hero-feature-icon" aria-hidden="true">🏆</span>
+                    <span class="hero-feature-body">
+                        <span class="hero-feature-top">
+                            <span class="hero-feature-tag" data-i18n="featured.tag">New</span>
+                            <span class="hero-feature-title" data-i18n="featured.worldCupTitle">World Cup</span>
+                        </span>
+                        <span class="hero-feature-desc" data-i18n="featured.worldCupDesc">100 surprising football facts</span>
+                        <span class="hero-feature-play">
+                            <span aria-hidden="true">▶︎</span>
+                            <span data-i18n="featured.worldCupPlay">Play World Cup</span>
+                        </span>
+                    </span>
+                </button>
                 <button type="button" id="start-game-btn" class="btn btn-primary btn-lg btn-block">
                     <span aria-hidden="true">▶︎</span>
                     <span data-i18n="admin.startGame">Start Game</span>

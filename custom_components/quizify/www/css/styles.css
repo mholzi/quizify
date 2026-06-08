@@ -3792,6 +3792,68 @@ footer {
 }
 .setup-tweak-link:hover { color: var(--color-text-primary); }
 
+/* Featured pack spotlight on the hero — one-tap launch of a highlighted
+   pack. Soft Parlor card: lifted paper, hairline border, soft shadow, sun
+   "New" pill, coral play affordance. The whole card is the button. */
+.hero-feature {
+    display: flex;
+    align-items: center;
+    gap: var(--space-md);
+    width: 100%;
+    max-width: 360px;
+    text-align: left;
+    background: var(--color-bg-card);
+    border: 1px solid var(--color-border-light);
+    border-radius: var(--radius-xl);
+    padding: 14px 15px;
+    box-shadow: var(--shadow-lg);
+    cursor: pointer;
+    transition: transform 0.12s ease, box-shadow 0.12s ease;
+}
+.hero-feature:hover { transform: translateY(-2px); box-shadow: var(--shadow-xl); }
+.hero-feature:active { transform: translateY(0); }
+.hero-feature-icon { font-size: 2rem; line-height: 1; flex: none; }
+.hero-feature-body { display: flex; flex-direction: column; min-width: 0; }
+.hero-feature-top { display: flex; align-items: center; gap: 8px; }
+.hero-feature-tag {
+    font-family: var(--font-mono);
+    font-size: 0.6rem;
+    font-weight: 700;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    background: var(--color-warning);
+    color: #5C4A16;
+    padding: 3px 8px;
+    border-radius: var(--radius-full);
+}
+.hero-feature-title {
+    font-family: var(--font-display);
+    font-weight: 700;
+    font-size: 1.1rem;
+    color: var(--color-text-heading);
+}
+.hero-feature-desc {
+    font-family: var(--font-body);
+    font-size: 0.82rem;
+    color: var(--color-text-muted);
+    margin-top: 2px;
+    line-height: 1.35;
+}
+.hero-feature-play {
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    align-self: flex-start;
+    margin-top: 10px;
+    background: var(--color-accent-primary);
+    color: #fff;
+    font-family: var(--font-body);
+    font-weight: 700;
+    font-size: 0.82rem;
+    padding: 8px 12px;
+    border-radius: var(--radius-md);
+}
+
 /* Detail (preset stacks) */
 .setup-detail {
     padding: var(--space-md);

@@ -323,6 +323,12 @@
       "q5": "In welcher Sprache?"
     }
   },
+  "featured": {
+    "tag": "Neu",
+    "worldCupTitle": "Weltmeisterschaft",
+    "worldCupDesc": "Kuriose Fakten zur Fußball-WM",
+    "worldCupPlay": "WM-Quiz starten"
+  },
   "wager": {
     "title": "Letzte Runde — Wagerunde",
     "hint": "Setze einen Teil deiner Punkte. Richtig = gewinnen, falsch = verlieren.",
