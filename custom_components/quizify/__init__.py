@@ -86,6 +86,9 @@ async def async_setup_entry(hass: HomeAssistant, entry: ConfigEntry) -> bool:
         analytics=analytics,
         ws_handler=ws_handler,
         question_stats=question_stats,
+        # HA's configured language drives the admin UI's initial language
+        # (Settings → General). hass.config.language is always set on HA.
+        ha_language=hass.config.language,
     )
 
     # Stash on hass.data so existing tooling (services.yaml, lookups in

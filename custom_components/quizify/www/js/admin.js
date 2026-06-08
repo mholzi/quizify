@@ -23,20 +23,28 @@
     let selectedCategories = [];
     let selectedDifficulty = 'medium';
     let selectedRounds = 10;
-    // First-visit default follows the browser locale so English-speaking
-    // users don't get a German UI they can't read (#152). German browsers
-    // still resolve to 'de'. A stored preference (below) always wins.
-    let selectedLanguage = (window.QuizifyI18n && QuizifyI18n.detectBrowserLanguage)
-        ? QuizifyI18n.detectBrowserLanguage()
-        : 'en';
-    // Restore the last-used language across full-page reloads. The player
-    // tab's "Neues Spiel starten" button navigates to /quizify/admin, which
-    // reloads this script — without persistence an English game silently
-    // dropped back to German on the next setup screen (Markus 2026-05-31).
-    try {
-        var _storedLang = localStorage.getItem('quizify_admin_language');
-        if (_storedLang === 'de' || _storedLang === 'en') selectedLanguage = _storedLang;
-    } catch (e) { /* localStorage unavailable (private mode / webview) */ }
+    // Initial UI language, in priority order (#152):
+    //   1. Home Assistant's configured language (Settings → General),
+    //      injected server-side into the quizify-ha-lang meta tag.
+    //   2. Browser locale — the standalone dev server has no hass, so the
+    //      meta tag is empty there.
+    //   3. 'en' as a final fallback.
+    // HA is authoritative; there is no localStorage persistence. A full-page
+    // reload (e.g. player-end "Neues Spiel starten" → /quizify/admin) always
+    // resolves back to the HA language rather than a stale per-device choice.
+    let selectedLanguage = (function () {
+        function normalize(code) {
+            return String(code || '').toLowerCase().indexOf('de') === 0 ? 'de' : 'en';
+        }
+        var meta = document.querySelector('meta[name="quizify-ha-lang"]');
+        var haLang = meta ? meta.getAttribute('content') : '';
+        // Guard against an unsubstituted {{HA_LANG}} token leaking through.
+        if (haLang && haLang.indexOf('{') === -1) return normalize(haLang);
+        if (window.QuizifyI18n && QuizifyI18n.detectBrowserLanguage) {
+            return QuizifyI18n.detectBrowserLanguage();
+        }
+        return 'en';
+    })();
     let selectedTimer = 30;  // seconds per question (20 / 30 / 45)
 
     // Game state
@@ -543,10 +551,9 @@
         updateSettingsSummary();
     });
     setupChips(els.languageChips, function (v) {
+        // Session-only switch — not persisted. On the next full-page reload
+        // the UI resolves back to the Home Assistant language (#152).
         selectedLanguage = v;
-        // Persist so a full-page reload (player-end "Neues Spiel starten"
-        // → /quizify/admin) keeps the choice instead of resetting to German.
-        try { localStorage.setItem('quizify_admin_language', v); } catch (e) { /* ignore */ }
         // Show/hide category chips based on selected language
         if (els.categoryChips) {
             var chips = els.categoryChips.querySelectorAll('.chip[data-lang]');

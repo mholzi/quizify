@@ -3,6 +3,10 @@
 <head>
     <meta charset="UTF-8">
     <meta name="quizify-version" content="{{VERSION}}">
+    <!-- Home Assistant's configured language (Settings → General). Server
+         substitutes the 2-letter code; empty on the standalone dev server.
+         admin.js reads this to pick the initial UI language. -->
+    <meta name="quizify-ha-lang" content="{{HA_LANG}}">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
     <title data-i18n="page.titleAdmin">Quizify — Admin</title>
     <link rel="manifest" href="/quizify/static/site.webmanifest">
