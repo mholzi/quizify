@@ -1,0 +1,146 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Quizify — Multiplayer Trivia for Home Assistant</title>
+<meta name="description" content="An open-source multiplayer trivia party game for Home Assistant. Players scan a QR code, answer on their phones, watch the TV host screen. No apps, no accounts, runs entirely on your local network. 2,893 questions across 20 packs in German and English.">
+<link rel="canonical" href="https://mholzi.github.io/quizify/">
+<meta property="og:type" content="website">
+<meta property="og:title" content="Quizify — Multiplayer Trivia for Home Assistant">
+<meta property="og:description" content="Scan a QR code, answer on your phone, watch the TV. No apps, no accounts, fully local. 2,893 questions across 20 packs in two languages.">
+<meta property="og:url" content="https://mholzi.github.io/quizify/">
+<meta property="og:image" content="https://raw.githubusercontent.com/mholzi/quizify/main/images/quizify-logo.png">
+<meta name="twitter:card" content="summary_large_image">
+<link rel="icon" href="https://raw.githubusercontent.com/mholzi/quizify/main/images/icon.png" type="image/png">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="preconnect" href="https://api.fontshare.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=DM+Sans:ital,opsz,wght@0,9..40,400;0,9..40,500;0,9..40,600;0,9..40,700&family=JetBrains+Mono:wght@400;500;700&display=swap" rel="stylesheet">
+<link href="https://api.fontshare.com/v2/css?f[]=cabinet-grotesk@500,700,800,900&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+
+<nav class="nav">
+  <div class="wrap">
+    <span class="brand">Quiz<span class="c">ify</span></span>
+    <div class="nav-links">
+      <a href="#features">Features</a>
+      <a href="#packs">Packs</a>
+      <a href="#install">Install</a>
+      <a class="nav-cta" href="https://my.home-assistant.io/redirect/hacs_repository/?owner=mholzi&repository=quizify&category=integration">Add to HACS</a>
+    </div>
+  </div>
+</nav>
+
+<header class="hero wrap">
+  <img class="logo" src="https://raw.githubusercontent.com/mholzi/quizify/main/images/quizify-logo.png" alt="Quizify">
+  <h1>The party trivia game that lives in your <span class="c">Home Assistant</span></h1>
+  <p class="tag">The TV is the host. Every phone is a buzzer. Scan a QR code and play — no apps, no accounts, entirely on your local network.</p>
+  <div class="badges">
+    <a href="https://www.home-assistant.io/"><img src="https://img.shields.io/badge/Home%20Assistant-2024.1+-41BDF5?style=flat-square&logo=homeassistant&logoColor=white" alt="Home Assistant 2024.1+"></a>
+    <a href="https://github.com/mholzi/quizify/releases"><img src="https://img.shields.io/github/v/release/mholzi/quizify?style=flat-square&color=E88A7F&label=version" alt="Latest version"></a>
+    <a href="https://github.com/mholzi/quizify/stargazers"><img src="https://img.shields.io/github/stars/mholzi/quizify?style=flat-square&logo=github&color=7FA897" alt="GitHub stars"></a>
+    <a href="https://github.com/mholzi/quizify/blob/main/LICENSE"><img src="https://img.shields.io/github/license/mholzi/quizify?style=flat-square&color=7FA8C4" alt="MIT license"></a>
+  </div>
+  <div class="cta-row">
+    <a class="btn btn-primary" href="https://my.home-assistant.io/redirect/hacs_repository/?owner=mholzi&repository=quizify&category=integration">▶︎ Add to HACS</a>
+    <a class="btn btn-ghost" href="https://github.com/mholzi/quizify">View on GitHub</a>
+  </div>
+  <div class="hero-shot">
+    <img src="https://raw.githubusercontent.com/mholzi/quizify/main/images/qr-lobby.png" alt="The Quizify lobby — QR code, player roster, Start Game button">
+  </div>
+</header>
+
+<section class="wrap">
+  <div class="wc">
+    <span class="ico">🏆</span>
+    <div class="body">
+      <span class="pill">New</span>
+      <h3>World Cup packs — just in time for the tournament</h3>
+      <p>Two brand-new packs (English &amp; German), ~200 surprising, weird-but-true facts about football's biggest stage. Pick it right on the first screen and kick off.</p>
+    </div>
+    <a class="btn btn-primary" href="https://github.com/mholzi/quizify/releases/latest">See the release</a>
+  </div>
+</section>
+
+<section id="features" class="wrap">
+  <span class="eyebrow">Why parties are better with it</span>
+  <h2>Zero friction. Real competition.</h2>
+  <p class="lead">Built to feel like a family board game — cozy, warm, inclusive — and to get out of the way so the room can play.</p>
+  <div class="grid">
+    <div class="feat"><div class="fi">📱</div><h3>Scan and play</h3><p>The TV shows a QR code. Guests scan, type a name, and they're in. No app store, no account, ten seconds to the lobby.</p></div>
+    <div class="feat"><div class="fi">🔒</div><h3>Fully local</h3><p>No cloud, no subscription, no telemetry. Everything runs on your Home Assistant. Free and open-source.</p></div>
+    <div class="feat"><div class="fi">🎴</div><h3>Power-ups</h3><p>Joker, Double Points, Freeze, Steal, and a time boost turn a quiz into a party where a comfortable lead can vanish in a round.</p></div>
+    <div class="feat"><div class="fi">🔥</div><h3>Streaks &amp; speed</h3><p>Answer fast for a bonus, take on harder packs for a multiplier, and set off streak fireworks at 3, 5, and 7 in a row.</p></div>
+    <div class="feat"><div class="fi">🏆</div><h3>A real finale</h3><p>A podium, per-player superlatives, a highlights reel, and a full ranked leaderboard so the night ends on an event.</p></div>
+    <div class="feat"><div class="fi">📺</div><h3>Works on any screen</h3><p>Cast the dashboard to the TV, players use their phones, the host runs the show. No extra hardware.</p></div>
+  </div>
+  <div class="stats">
+    <div class="stat"><div class="n">2,893</div><div class="l">questions</div></div>
+    <div class="stat"><div class="n">20</div><div class="l">themed packs</div></div>
+    <div class="stat"><div class="n">10</div><div class="l">themes</div></div>
+    <div class="stat"><div class="n">2</div><div class="l">languages</div></div>
+  </div>
+</section>
+
+<section class="wrap">
+  <span class="eyebrow">See it in action</span>
+  <h2>From the QR scan to the podium</h2>
+  <div class="shots">
+    <div class="shot"><img src="https://raw.githubusercontent.com/mholzi/quizify/main/images/player-gameplay.png" alt="Player gameplay — category, question, timer, three answer cards"><span>Buzz in on your phone</span></div>
+    <div class="shot"><img src="https://raw.githubusercontent.com/mholzi/quizify/main/images/reveal-screen.png" alt="Per-round reveal — correct answer callout, fun fact, leaderboard"><span>The verdict, the fact, the standings</span></div>
+    <div class="shot"><img src="https://raw.githubusercontent.com/mholzi/quizify/main/images/podium-screen.png" alt="Finale podium — champion banner, 1-2-3 podium, personal result"><span>Glory and bragging rights</span></div>
+  </div>
+</section>
+
+<section id="packs" class="wrap">
+  <span class="eyebrow">Question packs</span>
+  <h2>Ten themes, two languages, all surprising</h2>
+  <p class="lead">Every pack follows an "Unnützes Wissen" line — counter-intuitive, weird-but-true trivia. Less "capital of France", more "the average cloud weighs about 500 tons". Pick one on the first screen, or mix several for chaos mode.</p>
+  <div class="packs">
+    <table>
+      <thead><tr><th>Theme</th><th style="text-align:right">🇩🇪 Deutsch</th><th style="text-align:right">🇬🇧 English</th></tr></thead>
+      <tbody>
+        <tr><td>🌍 Geographie / Geography</td><td class="n">149</td><td class="n">150</td></tr>
+        <tr><td>🦋 Tiere &amp; Natur / Animals &amp; Nature</td><td class="n">149</td><td class="n">150</td></tr>
+        <tr><td>🎬 Popkultur / Pop Culture</td><td class="n">149</td><td class="n">150</td></tr>
+        <tr><td>⚽ Sport</td><td class="n">148</td><td class="n">150</td></tr>
+        <tr><td>🎵 Musik / Music</td><td class="n">150</td><td class="n">150</td></tr>
+        <tr><td>🔬 Wissenschaft / Science</td><td class="n">150</td><td class="n">150</td></tr>
+        <tr><td>📜 Geschichte / History</td><td class="n">149</td><td class="n">150</td></tr>
+        <tr><td>🍔 Essen &amp; Trinken / Food &amp; Drink</td><td class="n">150</td><td class="n">150</td></tr>
+        <tr><td>💡 Technik / Technology</td><td class="n">150</td><td class="n">150</td></tr>
+        <tr><td>🏆 Weltmeisterschaft / World Cup</td><td class="n">99</td><td class="n">100</td></tr>
+      </tbody>
+    </table>
+  </div>
+</section>
+
+<section id="install" class="wrap install">
+  <span class="eyebrow">Setup</span>
+  <h2>Installed in three steps</h2>
+  <ol>
+    <li><b>Add via HACS.</b> Open the <a href="https://my.home-assistant.io/redirect/hacs_repository/?owner=mholzi&repository=quizify&category=integration">HACS repository link</a>, install Quizify, and restart Home Assistant.</li>
+    <li><b>Add the integration.</b> Settings → Devices &amp; Services → Add Integration → <code>Quizify</code>.</li>
+    <li><b>Open Quizify.</b> It appears in your sidebar. Hit <code>Quizify öffnen</code>, pick a pack, and start the game — guests scan the QR code to join.</li>
+  </ol>
+  <p class="center" style="margin-top:26px"><a class="btn btn-primary" href="https://my.home-assistant.io/redirect/hacs_repository/?owner=mholzi&repository=quizify&category=integration">▶︎ Add to HACS</a></p>
+</section>
+
+<footer>
+  <div class="wrap">
+    <div class="flinks">
+      <a href="https://github.com/mholzi/quizify">GitHub</a>
+      <a href="https://github.com/mholzi/quizify/issues">Report a Bug</a>
+      <a href="https://github.com/mholzi/quizify/discussions">Discussions</a>
+      <a href="https://github.com/mholzi/quizify/releases">Releases</a>
+    </div>
+    <div>MIT-licensed · fully local · no telemetry</div>
+    <div class="sub">Made with ❤️ for the Home Assistant community</div>
+  </div>
+</footer>
+
+</body>
+</html>
