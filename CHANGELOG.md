@@ -7,12 +7,14 @@ All notable changes to Quizify are documented here. This project follows
 
 ### Fixed
 
-- **Admin UI no longer forces German for English speakers.** The setup screen
-  defaulted its interface language to German on first visit, so the brief flash
-  of English at load switched to German and stayed there with no obvious way
-  back ([#152](https://github.com/mholzi/quizify/issues/152)). First-visit UI
-  language now follows the browser locale (German browsers still get German),
-  with the English-chip toggle and stored preference unchanged.
+- **Admin UI now follows your Home Assistant language.** The setup screen
+  defaulted to German on first visit, so English speakers saw a flash of
+  English that switched to German and stayed there with no obvious way back
+  ([#152](https://github.com/mholzi/quizify/issues/152)). The admin interface
+  now uses Home Assistant's configured language (Settings → General). Any
+  non-German language (French, Spanish, …) falls back to English, since the UI
+  ships in German and English only. The 🇩🇪/🇬🇧 toggle still switches the UI for
+  the current session.
 
 ## [1.0.0] — 2026-06-07
 

@@ -68,3 +68,8 @@ class AppContext:
     # endpoint. Default-factory keeps existing AppContext(...) call sites
     # working without passing version explicitly.
     version: str = field(default_factory=read_manifest_version)
+    # Home Assistant's configured language (``hass.config.language``), set
+    # only on the HA path. ``None`` on the standalone dev server, which has
+    # no hass. The admin page uses this as the first source for its initial
+    # UI language (substituted into the ``{{HA_LANG}}`` token).
+    ha_language: str | None = None

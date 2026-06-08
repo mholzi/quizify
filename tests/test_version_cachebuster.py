@@ -59,7 +59,7 @@ def _read_manifest_version_from_disk() -> str:
     return json.loads(manifest.read_text())["version"]
 
 
-def _fake_ctx(version: str) -> AppContext:
+def _fake_ctx(version: str, ha_language: str | None = None) -> AppContext:
     """Build a minimal AppContext for view-level tests."""
     runtime = MagicMock()
 
@@ -74,6 +74,7 @@ def _fake_ctx(version: str) -> AppContext:
         ws_handler=MagicMock(),
         question_stats=None,
         version=version,
+        ha_language=ha_language,
     )
 
 
@@ -116,10 +117,10 @@ class TestTemplateSubstitution:
 # ---------- Integration: real view fns + real HTML / sw.js on disk ----------
 
 
-def _fake_request(version: str) -> web.Request:
+def _fake_request(version: str, ha_language: str | None = None) -> web.Request:
     """Minimal request stub: views only read `request.app[APP_CTX_KEY]`."""
     req = MagicMock(spec=web.Request)
-    req.app = {APP_CTX_KEY: _fake_ctx(version)}
+    req.app = {APP_CTX_KEY: _fake_ctx(version, ha_language)}
     return req
 
 
@@ -138,10 +139,24 @@ class TestHtmlSubstitution:
         assert 'name="quizify-version" content="9.9.9-test"' in body
 
     async def test_admin_html_has_no_unresolved_tokens(self) -> None:
-        resp = await admin_view(_fake_request("9.9.9-test"))
+        resp = await admin_view(_fake_request("9.9.9-test", ha_language="en"))
         assert resp.status == 200
         assert "{{VERSION}}" not in resp.text
+        assert "{{HA_LANG}}" not in resp.text
         assert "?v=9.9.9-test" in resp.text
+
+    async def test_admin_html_injects_ha_language(self) -> None:
+        """HA's configured language lands in the meta tag admin.js reads to
+        pick the initial UI language (#152)."""
+        resp = await admin_view(_fake_request("9.9.9-test", ha_language="de"))
+        assert 'name="quizify-ha-lang" content="de"' in resp.text
+
+    async def test_admin_html_empty_ha_language_without_hass(self) -> None:
+        """Standalone dev server has no hass (ha_language is None): the token
+        resolves to an empty string, never leaks the literal {{HA_LANG}}."""
+        resp = await admin_view(_fake_request("9.9.9-test", ha_language=None))
+        assert "{{HA_LANG}}" not in resp.text
+        assert 'name="quizify-ha-lang" content=""' in resp.text
 
     async def test_html_served_with_no_cache_headers(self) -> None:
         """HTML must always revalidate — otherwise a months-old admin.html

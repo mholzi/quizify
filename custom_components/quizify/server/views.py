@@ -46,6 +46,12 @@ _MANIFEST_PATH = Path(__file__).parent.parent / "manifest.json"
 # everywhere — no more drift between admin.html / player.html / sw.js.
 _VERSION_TOKEN = "{{VERSION}}"
 
+# Substituted in served HTML with Home Assistant's configured language
+# (``ctx.ha_language``). Empty string on the standalone dev server, where
+# there's no hass — admin.js then falls back to browser locale. Replacing
+# it unconditionally means the raw token never leaks into the page.
+_HA_LANG_TOKEN = "{{HA_LANG}}"
+
 # mtime-keyed cache for the live manifest version. Without this the
 # integration would re-parse manifest.json on every request; with it we
 # only re-read when the file actually changed (which means a deploy
@@ -102,6 +108,7 @@ async def _serve_html(request: web.Request, filename: str) -> web.Response:
     ctx = _get_ctx(request)
     html_content = await ctx.runtime.run_in_executor(html_path.read_text, "utf-8")
     html_content = _apply_version(html_content, _get_live_version(ctx.version))
+    html_content = html_content.replace(_HA_LANG_TOKEN, ctx.ha_language or "")
     return web.Response(
         text=html_content, content_type="text/html", headers=_NO_CACHE_HEADERS
     )
