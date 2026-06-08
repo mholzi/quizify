@@ -185,6 +185,7 @@ _THEME_ICONS = {
     "history": "📜",
     "food": "🍔",
     "tech": "💡",
+    "worldcup": "🏆",
 }
 
 # Per Markus 2026-05-29 (msg 283): the Featured Spotlight rotates between

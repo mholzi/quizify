@@ -62,10 +62,12 @@ class TestLoadCategory:
         result = qb.load_category("nonexistent")
         assert result == []
 
-    def test_each_category_has_at_least_145_questions(self, bank: QuestionBank) -> None:
+    def test_each_category_within_expected_size(self, bank: QuestionBank) -> None:
+        # Themed packs run ~150 (148-150 after review deletions); the standalone
+        # World Cup packs are a deliberate 100. Floor catches gross truncation.
         for cat in bank.get_categories():
             count = bank.get_question_count(cat)
-            assert count >= 145, f"{cat} has only {count} questions (floor: 145)"
+            assert count >= 95, f"{cat} has only {count} questions (floor: 95)"
             assert count <= 150, f"{cat} has {count} questions (ceiling: 150)"
 
 
