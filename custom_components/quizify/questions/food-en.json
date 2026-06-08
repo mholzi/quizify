@@ -1,7 +1,7 @@
 {
   "name": "Food & Drink",
   "language": "en",
-  "version": "1.0",
+  "version": "1.1",
   "theme": "food",
   "questions": [
     {
@@ -1202,6 +1202,606 @@
       ],
       "difficulty": "easy",
       "fun_fact": "SCOBY stands for 'symbiotic culture of bacteria and yeast'. The rubbery disc floats on the tea, with the yeast producing alcohol and the bacteria converting it into the drink's tart acids.",
+      "category": "Food & Drink"
+    },
+    {
+      "id": "food_en_102",
+      "question": "Why does popcorn pop?",
+      "answers": [
+        {"text": "Water inside the kernel turns to steam and bursts the hull", "correct": true},
+        {"text": "The sugars caramelise and expand suddenly", "correct": false},
+        {"text": "Trapped air pockets heat up and crack the shell", "correct": false}
+      ],
+      "difficulty": "easy",
+      "fun_fact": "A popcorn kernel needs about 14% moisture sealed inside its hard hull. The trapped water flashes to steam at high pressure, and when the hull finally gives way, the starchy inside explodes and turns inside out. Too-dry kernels won't pop at all.",
+      "category": "Food & Drink"
+    },
+    {
+      "id": "food_en_103",
+      "question": "Why does bread go stale even when it's kept perfectly sealed and moist?",
+      "answers": [
+        {"text": "The starch molecules recrystallise, a process called retrogradation", "correct": true},
+        {"text": "The bread slowly dries out no matter how it's stored", "correct": false},
+        {"text": "Mould begins growing invisibly inside the crumb", "correct": false}
+      ],
+      "difficulty": "hard",
+      "fun_fact": "Staling isn't really about losing water — it's the starch reorganising into a firmer crystal structure as it cools. That's why warming stale bread briefly makes it soft again: the heat reverses the retrogradation for a while.",
+      "category": "Food & Drink"
+    },
+    {
+      "id": "food_en_104",
+      "question": "Why does a freshly poured glass of cola eventually go flat?",
+      "answers": [
+        {"text": "Dissolved carbon dioxide escapes back into the air", "correct": true},
+        {"text": "The sugar absorbs the bubbles over time", "correct": false},
+        {"text": "The acid neutralises and stops producing gas", "correct": false}
+      ],
+      "difficulty": "easy",
+      "fun_fact": "Soda is bottled under pressure to force extra CO2 into the liquid. Once opened, the gas is no longer held in and slowly diffuses out. Rough surfaces and scratches give bubbles a place to form, which is why a poured glass goes flat faster than the sealed bottle.",
+      "category": "Food & Drink"
+    },
+    {
+      "id": "food_en_105",
+      "question": "Why does adding a little acid like lemon juice help keep cut apples from browning?",
+      "answers": [
+        {"text": "It slows the enzyme that reacts with oxygen", "correct": true},
+        {"text": "It seals the surface with a sugar coating", "correct": false},
+        {"text": "It kills bacteria that cause the colour change", "correct": false}
+      ],
+      "difficulty": "medium",
+      "fun_fact": "Cut fruit browns because an enzyme reacts with oxygen to form brown pigments. Acid lowers the pH below the level that enzyme needs to work, and the vitamin C in citrus also mops up oxygen, so the flesh stays pale longer.",
+      "category": "Food & Drink"
+    },
+    {
+      "id": "food_en_106",
+      "question": "Why does a cup of coffee or tea look darker in the middle and lighter at the thin edge?",
+      "answers": [
+        {"text": "Less liquid depth means less colour for light to pass through", "correct": true},
+        {"text": "The surface oils concentrate toward the centre", "correct": false},
+        {"text": "Heat rising from the middle changes the colour", "correct": false}
+      ],
+      "difficulty": "easy",
+      "fun_fact": "The colour you see depends on how much liquid the light travels through. At the shallow rim there's barely any depth, so more light gets through and it looks paler — the same reason a deep sea looks darker than a shallow puddle of the same water.",
+      "category": "Food & Drink"
+    },
+    {
+      "id": "food_en_107",
+      "question": "Why does whisking egg whites turn them from clear liquid into a stiff white foam?",
+      "answers": [
+        {"text": "Beating unfolds the proteins so they trap air and bond together", "correct": true},
+        {"text": "The whisking adds tiny ice crystals that hold the shape", "correct": false},
+        {"text": "Friction heat partly cooks the whites", "correct": false}
+      ],
+      "difficulty": "medium",
+      "fun_fact": "Egg white is mostly water and tightly coiled proteins. Whisking physically unwinds those proteins, which then link up around the air bubbles, building a stable scaffold. A trace of fat or yolk wrecks it, because fat interferes with the protein bonds.",
+      "category": "Food & Drink"
+    },
+    {
+      "id": "food_en_108",
+      "question": "Why does sparkling wine famously go 'pop' and shoot the cork when uncorked?",
+      "answers": [
+        {"text": "Pressure inside the bottle is several times atmospheric pressure", "correct": true},
+        {"text": "The cork expands and snaps free as it warms", "correct": false},
+        {"text": "Shaking creates a small chemical explosion", "correct": false}
+      ],
+      "difficulty": "medium",
+      "fun_fact": "A Champagne bottle holds roughly three times the pressure of a car tyre, created by trapped CO2 from the second fermentation. The thick glass and wired cork exist to contain it — released suddenly, a cork can leave the bottle at highway speeds.",
+      "category": "Food & Drink"
+    },
+    {
+      "id": "food_en_109",
+      "question": "Why does butter, but not olive oil, turn solid in the fridge?",
+      "answers": [
+        {"text": "Butter's fats are mostly saturated and pack tightly when cold", "correct": true},
+        {"text": "Butter contains water that freezes", "correct": false},
+        {"text": "Olive oil has a natural antifreeze compound", "correct": false}
+      ],
+      "difficulty": "easy",
+      "fun_fact": "Saturated fats are straight molecules that stack neatly into a solid at cool temperatures. Olive oil is rich in unsaturated fats with kinked shapes that can't pack together easily, so it stays liquid in the fridge — though it will eventually cloud and thicken if cold enough.",
+      "category": "Food & Drink"
+    },
+    {
+      "id": "food_en_110",
+      "question": "Why do you smell food more strongly when it's hot than when it's cold?",
+      "answers": [
+        {"text": "Heat makes the aroma molecules evaporate faster into the air", "correct": true},
+        {"text": "Hot food produces brand-new scent chemicals", "correct": false},
+        {"text": "Heat opens up the nostrils to take in more air", "correct": false}
+      ],
+      "difficulty": "easy",
+      "fun_fact": "Smell relies on volatile molecules reaching receptors in your nose, and heat gives them the energy to lift off into the air. It's why warm bread is intensely fragrant and why ice cream needs a lot of sugar and fat to taste rich — cold dulls both aroma and sweetness.",
+      "category": "Food & Drink"
+    },
+    {
+      "id": "food_en_111",
+      "question": "Why does milk sometimes curdle when you pour it into hot coffee or tea?",
+      "answers": [
+        {"text": "Acidity and heat make the milk proteins clump together", "correct": true},
+        {"text": "The caffeine chemically splits the milk fat", "correct": false},
+        {"text": "Tannins freeze the proteins on contact", "correct": false}
+      ],
+      "difficulty": "easy",
+      "fun_fact": "Milk proteins stay dispersed at neutral pH, but coffee and tea are mildly acidic, and heat speeds the reaction. Older milk is already slightly more acidic as it sours, so it curdles far more readily even before it tastes off.",
+      "category": "Food & Drink"
+    },
+    {
+      "id": "food_en_112",
+      "question": "Why does freshly baked bread feel soft but a baguette crust goes crackly and hard?",
+      "answers": [
+        {"text": "The crust loses moisture and the sugars there brown and harden", "correct": true},
+        {"text": "The crust is made from a different, denser dough", "correct": false},
+        {"text": "Steam is deliberately kept away from the crust", "correct": false}
+      ],
+      "difficulty": "hard",
+      "fun_fact": "The outer surface reaches high temperatures, driving off water and triggering browning reactions that leave a brittle, dry shell. Bakers actually inject steam early in baking to delay the crust setting, which lets the loaf expand fully before the surface crisps.",
+      "category": "Food & Drink"
+    },
+    {
+      "id": "food_en_113",
+      "question": "Why does a watermelon make a hollow, deep sound when you tap a ripe one?",
+      "answers": [
+        {"text": "A ripe melon's flesh is looser and resonates at a lower pitch", "correct": true},
+        {"text": "Ripe melons contain a pocket of gas inside", "correct": false},
+        {"text": "The rind thins out and vibrates more as it ripens", "correct": false}
+      ],
+      "difficulty": "medium",
+      "fun_fact": "As a watermelon ripens, the cell walls in the flesh break down and the fruit becomes less dense and springier. That changes how it vibrates when tapped — an unripe melon sounds higher and tighter, a ripe one sounds deeper and more resonant.",
+      "category": "Food & Drink"
+    },
+    {
+      "id": "food_en_114",
+      "question": "Why does salt make ice melt and is used to grit roads in winter?",
+      "answers": [
+        {"text": "Salt lowers the freezing point of water", "correct": true},
+        {"text": "Salt chemically reacts with ice to produce heat", "correct": false},
+        {"text": "Salt is darker and absorbs more sunlight", "correct": false}
+      ],
+      "difficulty": "easy",
+      "fun_fact": "Dissolved salt gets in the way of water molecules trying to lock into ice crystals, so the water must get colder than 0°C before it can freeze. The same principle lets old ice-cream makers reach sub-freezing temperatures using an ice-and-salt bath.",
+      "category": "Food & Drink"
+    },
+    {
+      "id": "food_en_115",
+      "question": "Why does honey eventually turn cloudy and grainy in the jar?",
+      "answers": [
+        {"text": "The sugars crystallise out of the dense syrup", "correct": true},
+        {"text": "It is starting to ferment and spoil", "correct": false},
+        {"text": "Water is slowly evaporating from the surface", "correct": false}
+      ],
+      "difficulty": "medium",
+      "fun_fact": "Honey is a supersaturated sugar solution — it holds more sugar than would normally dissolve. Over time some of that sugar comes out as crystals, especially when cool. It's a sign of purity, not spoilage, and gentle warming dissolves it back to clear liquid.",
+      "category": "Food & Drink"
+    },
+    {
+      "id": "food_en_116",
+      "question": "Why does cooking pasta make the water turn cloudy and a bit slippery?",
+      "answers": [
+        {"text": "Starch leaches out of the pasta into the water", "correct": true},
+        {"text": "The pasta releases trapped air bubbles", "correct": false},
+        {"text": "Salt reacts with the flour to form a film", "correct": false}
+      ],
+      "difficulty": "medium",
+      "fun_fact": "As pasta cooks, surface starch dissolves into the water, making it cloudy. That starchy water is prized by cooks: a splash of it helps a sauce cling to the noodles and emulsify, which is why many recipes say to save a cupful before draining.",
+      "category": "Food & Drink"
+    },
+    {
+      "id": "food_en_117",
+      "question": "Why does a carbonated drink fizz up violently when you drop a mint sweet into it?",
+      "answers": [
+        {"text": "The sweet's rough surface gives countless bubbles a place to form at once", "correct": true},
+        {"text": "The mint chemically reacts with the cola to make new gas", "correct": false},
+        {"text": "The sweet dissolves and releases its own trapped air", "correct": false}
+      ],
+      "difficulty": "medium",
+      "fun_fact": "The classic mint-and-cola geyser is physics, not a chemical reaction. The candy's pitted surface is covered in microscopic nooks, each one a launch site where dissolved CO2 can rapidly form bubbles, releasing the gas almost all at once.",
+      "category": "Food & Drink"
+    },
+    {
+      "id": "food_en_118",
+      "question": "Why does meat shrink and tighten on the grill as it cooks?",
+      "answers": [
+        {"text": "Heat makes the muscle proteins contract and squeeze out water", "correct": true},
+        {"text": "The fat melts away and leaves the meat smaller", "correct": false},
+        {"text": "The surface seals and traps everything inside", "correct": false}
+      ],
+      "difficulty": "easy",
+      "fun_fact": "As proteins heat up they coil tighter and wring moisture out of the meat, which is why an overcooked steak ends up smaller and drier. It's also why a thin patty can curl into a dome — the edges contract faster than the middle.",
+      "category": "Food & Drink"
+    },
+    {
+      "id": "food_en_119",
+      "question": "Why does chopping or crushing garlic make it far more pungent than leaving the clove whole?",
+      "answers": [
+        {"text": "Damage triggers an enzyme reaction that creates the sharp compounds", "correct": true},
+        {"text": "Cutting releases an oil that was sealed in the centre", "correct": false},
+        {"text": "Air rushing in oxidises the surface instantly", "correct": false}
+      ],
+      "difficulty": "hard",
+      "fun_fact": "An intact clove barely smells. Breaking the cells lets an enzyme meet a separate compound, and only then does it form allicin, the molecule behind garlic's bite. Letting crushed garlic rest a few minutes before cooking lets that reaction finish for a stronger flavour.",
+      "category": "Food & Drink"
+    },
+    {
+      "id": "food_en_120",
+      "question": "Why does a cold fizzy drink go flat faster when it warms up?",
+      "answers": [
+        {"text": "Warmer liquid can hold less dissolved gas", "correct": true},
+        {"text": "Heat speeds up a chemical reaction that destroys the bubbles", "correct": false},
+        {"text": "The warmth thickens the liquid and traps less gas", "correct": false}
+      ],
+      "difficulty": "easy",
+      "fun_fact": "Gases dissolve better in cold liquids than warm ones, the opposite of how solids like sugar behave. As a drink warms, it simply can't hold as much CO2, so the gas escapes more quickly — which is why warm soda fizzes over the moment you open it.",
+      "category": "Food & Drink"
+    },
+    {
+      "id": "food_en_121",
+      "question": "Why does a microwave heat a bowl of soup but leave the ceramic bowl relatively cool?",
+      "answers": [
+        {"text": "The microwaves agitate water molecules, and the bowl has little water", "correct": true},
+        {"text": "The metal in the microwave only heats food, not containers", "correct": false},
+        {"text": "Ceramic reflects the microwaves back into the food", "correct": false}
+      ],
+      "difficulty": "medium",
+      "fun_fact": "Microwaves are tuned to make water molecules rotate rapidly, generating heat from within the food. A dry ceramic bowl has almost nothing for the waves to grab, so it only gets warm by contact with the hot soup — which is why the handle of a mug can stay cool while the drink scalds.",
+      "category": "Food & Drink"
+    },
+    {
+      "id": "food_en_122",
+      "question": "Why does a pinch of cornstarch or flour thicken a sauce as it heats?",
+      "answers": [
+        {"text": "The starch granules swell and absorb the liquid", "correct": true},
+        {"text": "The flour reacts with the fat to form a gel", "correct": false},
+        {"text": "It lowers the boiling point so the sauce reduces faster", "correct": false}
+      ],
+      "difficulty": "medium",
+      "fun_fact": "In heat and moisture, starch granules drink up surrounding water and balloon, getting in each other's way and thickening the mix — a process called gelatinisation. Overheat it or add too much acid and the granules burst and the sauce thins back out.",
+      "category": "Food & Drink"
+    },
+    {
+      "id": "food_en_123",
+      "question": "Why do leafy vegetables turn a brighter green for a moment when you first drop them in boiling water?",
+      "answers": [
+        {"text": "Heat drives out tiny gas bubbles that were dulling the colour", "correct": true},
+        {"text": "Boiling creates new green pigment in the leaves", "correct": false},
+        {"text": "The water dissolves a brown coating off the surface", "correct": false}
+      ],
+      "difficulty": "medium",
+      "fun_fact": "Raw leaves have microscopic air pockets between their cells that scatter light and mute the colour. Brief heat collapses that air, so the vivid green of the chlorophyll shows through. Keep cooking, though, and acids break the chlorophyll down to a drab olive.",
+      "category": "Food & Drink"
+    },
+    {
+      "id": "food_en_124",
+      "question": "Why does cream become whipped cream but eventually turn into butter if you keep beating it?",
+      "answers": [
+        {"text": "Over-beating forces the fat globules to clump into solid butter", "correct": true},
+        {"text": "The air escapes and the cream collapses into fat", "correct": false},
+        {"text": "Friction heat melts and re-solidifies the cream", "correct": false}
+      ],
+      "difficulty": "hard",
+      "fun_fact": "Whipping first coats air bubbles with fat to make a foam. Keep going and the fat globules slam together so hard their membranes rupture and they fuse, squeezing out the watery buttermilk and leaving a solid lump of butter — exactly how butter has always been churned.",
+      "category": "Food & Drink"
+    },
+    {
+      "id": "food_en_125",
+      "question": "Why does a glass of cold water fog up on the outside on a humid day?",
+      "answers": [
+        {"text": "Water vapour in the air condenses on the cold surface", "correct": true},
+        {"text": "Water seeps through tiny pores in the glass", "correct": false},
+        {"text": "The cold makes the glass sweat out its own moisture", "correct": false}
+      ],
+      "difficulty": "easy",
+      "fun_fact": "The droplets come from the air, not the drink. When humid air touches the chilled glass it cools below its dew point and can't hold all its moisture, so water condenses on the outside — the same reason a chilled bottle of beer or wine 'sweats' on a warm day.",
+      "category": "Food & Drink"
+    },
+    {
+      "id": "food_en_126",
+      "question": "The word 'salary' comes from a Roman practice connected to which seasoning?",
+      "answers": [
+        {"text": "Salt", "correct": true},
+        {"text": "Pepper", "correct": false},
+        {"text": "Vinegar", "correct": false}
+      ],
+      "difficulty": "easy",
+      "fun_fact": "'Salary' derives from the Latin 'salarium', linked to soldiers' pay and salt, which was once so valuable it was used almost like currency. The phrase 'worth his salt' echoes the same idea.",
+      "category": "Food & Drink"
+    },
+    {
+      "id": "food_en_127",
+      "question": "The cocktail and the rooster-tail share a name because 'cocktail' is thought to originally describe what?",
+      "answers": [
+        {"text": "A horse's docked, perked-up tail", "correct": true},
+        {"text": "A type of rooster feather garnish", "correct": false},
+        {"text": "A French egg-based aperitif", "correct": false}
+      ],
+      "difficulty": "hard",
+      "fun_fact": "One leading theory traces 'cocktail' to horses whose tails were docked so they stuck up like a rooster's, making them look lively and spirited — a quality then applied to a lively, mixed drink.",
+      "category": "Food & Drink"
+    },
+    {
+      "id": "food_en_128",
+      "question": "The Caesar salad is named after a person, not the Roman emperor. Who was he?",
+      "answers": [
+        {"text": "A restaurateur named Caesar Cardini", "correct": true},
+        {"text": "A Roman general who loved greens", "correct": false},
+        {"text": "A French chef named Jules César", "correct": false}
+      ],
+      "difficulty": "medium",
+      "fun_fact": "Italian-American Caesar Cardini reportedly improvised the salad in his Tijuana restaurant in 1924 when a busy Fourth of July left the kitchen low on ingredients. He tossed it tableside to make it a spectacle.",
+      "category": "Food & Drink"
+    },
+    {
+      "id": "food_en_129",
+      "question": "The Margherita pizza was supposedly named in 1889 to honour whom?",
+      "answers": [
+        {"text": "Queen Margherita of Italy", "correct": true},
+        {"text": "A Naples flower-seller named Margherita", "correct": false},
+        {"text": "A saint, Santa Margherita", "correct": false}
+      ],
+      "difficulty": "easy",
+      "fun_fact": "The pizza's tomato, mozzarella, and basil are said to mirror the red, white, and green of the Italian flag, made for the visiting queen. The story is much-loved even if historians debate its details.",
+      "category": "Food & Drink"
+    },
+    {
+      "id": "food_en_130",
+      "question": "Graham crackers were invented in the 1800s by a preacher who intended them to do what?",
+      "answers": [
+        {"text": "Suppress unhealthy urges and curb the appetite", "correct": true},
+        {"text": "Cure the common cold", "correct": false},
+        {"text": "Replace bread during a wheat shortage", "correct": false}
+      ],
+      "difficulty": "hard",
+      "fun_fact": "Sylvester Graham promoted a bland, plain diet he believed would calm the passions and discourage vice. His plain whole-wheat cracker was meant to be deliberately unexciting — the opposite of today's sweet, honeyed version.",
+      "category": "Food & Drink"
+    },
+    {
+      "id": "food_en_131",
+      "question": "The word 'whisky' comes from a Gaelic phrase meaning what?",
+      "answers": [
+        {"text": "Water of life", "correct": true},
+        {"text": "Fire of the barley", "correct": false},
+        {"text": "Gold of the highlands", "correct": false}
+      ],
+      "difficulty": "easy",
+      "fun_fact": "'Whisky' descends from the Gaelic 'uisge beatha', meaning 'water of life' — a direct echo of the Latin 'aqua vitae'. Several European spirits, like aquavit, carry the same hopeful name.",
+      "category": "Food & Drink"
+    },
+    {
+      "id": "food_en_132",
+      "question": "Worcestershire sauce was reportedly created by accident when an early batch was what?",
+      "answers": [
+        {"text": "Forgotten in a cellar and left to age for months", "correct": true},
+        {"text": "Spilled into a barrel of vinegar", "correct": false},
+        {"text": "Boiled far too long by mistake", "correct": false}
+      ],
+      "difficulty": "medium",
+      "fun_fact": "The story goes that chemists Lea and Perrins found their first attempt unpalatable and abandoned the barrels. Rediscovered much later, the fermented sauce had mellowed into something delicious.",
+      "category": "Food & Drink"
+    },
+    {
+      "id": "food_en_133",
+      "question": "The pretzel's distinctive knotted shape is traditionally said to represent what?",
+      "answers": [
+        {"text": "Arms folded in prayer", "correct": true},
+        {"text": "A baker's coiled rope", "correct": false},
+        {"text": "The sun and its rays", "correct": false}
+      ],
+      "difficulty": "easy",
+      "fun_fact": "One legend credits a medieval monk who shaped leftover dough to look like a child's arms crossed in prayer, giving the treats to children who learned their prayers. The three holes were sometimes linked to the Trinity.",
+      "category": "Food & Drink"
+    },
+    {
+      "id": "food_en_134",
+      "question": "The English word 'ginger' and the spice's name ultimately trace back to a root word in which ancient language?",
+      "answers": [
+        {"text": "Sanskrit", "correct": true},
+        {"text": "Ancient Egyptian", "correct": false},
+        {"text": "Old Norse", "correct": false}
+      ],
+      "difficulty": "hard",
+      "fun_fact": "The name passed from Sanskrit through Greek and Latin into English over many centuries. The spice itself travelled the same long trade routes from South Asia, which is why so many languages share a similar-sounding word for it.",
+      "category": "Food & Drink"
+    },
+    {
+      "id": "food_en_135",
+      "question": "Popsicles were famously invented by an 11-year-old who did what?",
+      "answers": [
+        {"text": "Left a cup of soda and a stir-stick outside overnight in the cold", "correct": true},
+        {"text": "Mixed crushed ice with fruit syrup at a fair", "correct": false},
+        {"text": "Froze juice in a metal ice tray on purpose", "correct": false}
+      ],
+      "difficulty": "easy",
+      "fun_fact": "Frank Epperson left flavoured soda powder, water, and a stirring stick on a porch in 1905; a freezing night did the rest. He patented the frozen treat as an adult, calling it the 'Epsicle' before it became the Popsicle.",
+      "category": "Food & Drink"
+    },
+    {
+      "id": "food_en_136",
+      "question": "Nachos got their name from the nickname of the man who improvised them. What was his job?",
+      "answers": [
+        {"text": "A restaurant maître d' improvising a snack for guests", "correct": true},
+        {"text": "A travelling circus cook", "correct": false},
+        {"text": "A border-town fishmonger", "correct": false}
+      ],
+      "difficulty": "medium",
+      "fun_fact": "Ignacio 'Nacho' Anaya reportedly threw together fried tortillas, cheese, and jalapeños for hungry diners in Piedras Negras, Mexico, around 1940 when the kitchen was closed. The dish took his nickname.",
+      "category": "Food & Drink"
+    },
+    {
+      "id": "food_en_137",
+      "question": "Tea bags are widely said to have been created by accident when a merchant did what?",
+      "answers": [
+        {"text": "Sent tea samples in small silk pouches customers brewed whole", "correct": true},
+        {"text": "Dropped loose tea into a sieve made of cloth", "correct": false},
+        {"text": "Wrapped tea in paper to keep it dry at sea", "correct": false}
+      ],
+      "difficulty": "medium",
+      "fun_fact": "Early-1900s New York merchant Thomas Sullivan mailed tea in little silk bags as samples. Customers, unsure what to do, dunked the whole bag in hot water — and liked the convenience so much they asked for more.",
+      "category": "Food & Drink"
+    },
+    {
+      "id": "food_en_138",
+      "question": "The word 'restaurant' originally referred to what?",
+      "answers": [
+        {"text": "A restorative meat broth sold to revive customers", "correct": true},
+        {"text": "A roadside inn for tired travellers", "correct": false},
+        {"text": "A guild that licensed cooks", "correct": false}
+      ],
+      "difficulty": "hard",
+      "fun_fact": "In 18th-century Paris, a 'restaurant' was a fortifying bouillon meant to 'restore' health. The word later shifted to mean the establishment that served such restoratives, then any eating house.",
+      "category": "Food & Drink"
+    },
+    {
+      "id": "food_en_139",
+      "question": "Tonic water originally contained quinine because it was used to fight which disease?",
+      "answers": [
+        {"text": "Malaria", "correct": true},
+        {"text": "Scurvy", "correct": false},
+        {"text": "Cholera", "correct": false}
+      ],
+      "difficulty": "medium",
+      "fun_fact": "British colonists in tropical regions drank bitter quinine tonic as an anti-malarial, then mixed in gin, sugar, and lime to make it palatable — effectively inventing the gin and tonic as medicine.",
+      "category": "Food & Drink"
+    },
+    {
+      "id": "food_en_140",
+      "question": "Pound cake earned its name because the original recipe called for what?",
+      "answers": [
+        {"text": "A pound each of flour, butter, sugar, and eggs", "correct": true},
+        {"text": "A cake weighing exactly one pound when baked", "correct": false},
+        {"text": "Dough that was pounded by hand for an hour", "correct": false}
+      ],
+      "difficulty": "easy",
+      "fun_fact": "The simple one-pound-of-everything ratio made the recipe easy to remember and pass along by word of mouth in an era when many bakers couldn't read — no written recipe required.",
+      "category": "Food & Drink"
+    },
+    {
+      "id": "food_en_141",
+      "question": "The English word 'cappuccino' comes from a comparison to what?",
+      "answers": [
+        {"text": "The brown hooded robes of Capuchin friars", "correct": true},
+        {"text": "A cap-shaped Italian coffee cup", "correct": false},
+        {"text": "A small monkey with a frothy mane", "correct": false}
+      ],
+      "difficulty": "medium",
+      "fun_fact": "The drink's colour was likened to the robes of Capuchin monks. The same monks lent their name to the capuchin monkey, whose colouring also resembles that distinctive hooded brown.",
+      "category": "Food & Drink"
+    },
+    {
+      "id": "food_en_142",
+      "question": "The chilli pepper got its confusing 'pepper' name because Columbus believed it was related to what?",
+      "answers": [
+        {"text": "Black peppercorns he was sent to find", "correct": true},
+        {"text": "A type of fiery ginger", "correct": false},
+        {"text": "The mustard plant", "correct": false}
+      ],
+      "difficulty": "medium",
+      "fun_fact": "Columbus was searching for the lucrative black-pepper trade of the East Indies. When he met the spicy New World fruit, he called it 'pepper' too — and the misnomer stuck across countless languages.",
+      "category": "Food & Drink"
+    },
+    {
+      "id": "food_en_143",
+      "question": "The dessert known as Peach Melba was created by a famous chef in honour of whom?",
+      "answers": [
+        {"text": "An opera singer, Nellie Melba", "correct": true},
+        {"text": "A Australian fruit grower named Melba", "correct": false},
+        {"text": "A duchess who adored peaches", "correct": false}
+      ],
+      "difficulty": "medium",
+      "fun_fact": "Chef Auguste Escoffier created the peach-and-raspberry dessert in the 1890s for soprano Nellie Melba. Melba toast, the thin crisp bread, was also named for her after she was served it during an illness.",
+      "category": "Food & Drink"
+    },
+    {
+      "id": "food_en_144",
+      "question": "The word 'barbecue' most likely entered English from which language?",
+      "answers": [
+        {"text": "A Caribbean Taíno word for a wooden cooking frame", "correct": true},
+        {"text": "A French phrase meaning 'beard to tail'", "correct": false},
+        {"text": "A Spanish word for a charcoal pit", "correct": false}
+      ],
+      "difficulty": "easy",
+      "fun_fact": "It comes from the Taíno 'barbacoa', a raised wooden grate for slow-cooking meat over a fire. The popular 'beard-to-tail' French story is a charming folk etymology with no real evidence behind it.",
+      "category": "Food & Drink"
+    },
+    {
+      "id": "food_en_145",
+      "question": "Brandy got its name from a Dutch word describing how it was made. What does that word mean?",
+      "answers": [
+        {"text": "Burnt (i.e. distilled) wine", "correct": true},
+        {"text": "Strong harvest wine", "correct": false},
+        {"text": "Golden barrel water", "correct": false}
+      ],
+      "difficulty": "hard",
+      "fun_fact": "'Brandy' shortens the Dutch 'brandewijn', meaning 'burnt wine' — a nod to distillation, where wine is heated to concentrate the alcohol. Dutch traders spread both the technique and the name across Europe.",
+      "category": "Food & Drink"
+    },
+    {
+      "id": "food_en_146",
+      "question": "Carbonated soft drinks exist largely because an 18th-century scientist figured out how to do what?",
+      "answers": [
+        {"text": "Infuse water with the gas given off by brewing beer", "correct": true},
+        {"text": "Trap volcanic gas in sealed bottles", "correct": false},
+        {"text": "Boil mineral springs to release bubbles", "correct": false}
+      ],
+      "difficulty": "medium",
+      "fun_fact": "Joseph Priestley suspended water above a brewery's fermenting vats to dissolve the carbon dioxide, inventing artificially carbonated water in 1767. He hoped fizzy water might cure scurvy at sea — it didn't, but it launched the soda industry.",
+      "category": "Food & Drink"
+    },
+    {
+      "id": "food_en_147",
+      "question": "The English word 'biscuit' literally means what, describing how it was originally made?",
+      "answers": [
+        {"text": "Twice-cooked", "correct": true},
+        {"text": "Quick-bread", "correct": false},
+        {"text": "Hard-baked", "correct": false}
+      ],
+      "difficulty": "easy",
+      "fun_fact": "From the Latin 'bis coctus', 'biscuit' refers to bread baked twice to dry it out completely. This made it last for months at sea or on campaign — the original purpose of ship's biscuit and hardtack.",
+      "category": "Food & Drink"
+    },
+    {
+      "id": "food_en_148",
+      "question": "The bagel's signature boiled-then-baked method exists mainly to give it what?",
+      "answers": [
+        {"text": "A chewy, dense crust that resists going stale", "correct": true},
+        {"text": "A naturally sweet flavour", "correct": false},
+        {"text": "A hollow centre for filling", "correct": false}
+      ],
+      "difficulty": "easy",
+      "fun_fact": "Briefly boiling the dough sets the outer starch before baking, creating that distinctive shiny, chewy crust. The sturdy result travelled and kept well — practical for the communities that popularised it.",
+      "category": "Food & Drink"
+    },
+    {
+      "id": "food_en_149",
+      "question": "Chewing gum as we know it became possible thanks to chicle, a substance originally chewed by which people?",
+      "answers": [
+        {"text": "The ancient Maya and Aztecs", "correct": true},
+        {"text": "Viking seafarers", "correct": false},
+        {"text": "Ancient Greeks", "correct": false}
+      ],
+      "difficulty": "medium",
+      "fun_fact": "Chicle is the dried sap of the sapodilla tree, chewed in Mesoamerica for centuries. It reached the US in the 1860s via exiled Mexican general Santa Anna, who hoped to sell it as a rubber substitute before it became gum.",
+      "category": "Food & Drink"
+    },
+    {
+      "id": "food_en_150",
+      "question": "Roughly how much water does it take to produce a single 250 ml glass of milk, counting the cow's feed and drinking water?",
+      "answers": [
+        {"text": "About 255 litres", "correct": true},
+        {"text": "About 25 litres", "correct": false},
+        {"text": "About 2.5 litres", "correct": false}
+      ],
+      "difficulty": "medium",
+      "fun_fact": "Most of that 'water footprint' goes into growing the grass and feed crops the cow eats, not the water it drinks directly. A single glass of milk hides roughly a bathtub's worth of water.",
+      "category": "Food & Drink"
+    },
+    {
+      "id": "food_en_151",
+      "question": "A teaspoon of pure caffeine powder is enough to do what to an adult?",
+      "answers": [
+        {"text": "Potentially kill them", "correct": true},
+        {"text": "Keep them awake for exactly 24 hours", "correct": false},
+        {"text": "Have no effect, as it's too diluted", "correct": false}
+      ],
+      "difficulty": "medium",
+      "fun_fact": "A lethal dose is roughly 10 grams, about a teaspoon of the pure powder. You'd need around 75 to 100 cups of coffee to reach that, which is why brewed coffee is safe but the raw powder is regulated.",
       "category": "Food & Drink"
     }
   ]

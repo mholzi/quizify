@@ -47,7 +47,8 @@ def sample_question() -> Question:
 class TestLoadCategory:
     def test_load_category_returns_questions(self, bank: QuestionBank) -> None:
         questions = bank.load_category("geographie")
-        assert len(questions) == 100
+        assert len(questions) == bank.get_question_count("geographie")
+        assert 145 <= len(questions) <= 150
         assert all(isinstance(q, Question) for q in questions)
 
     def test_load_all_categories(self, bank: QuestionBank) -> None:
@@ -61,11 +62,11 @@ class TestLoadCategory:
         result = qb.load_category("nonexistent")
         assert result == []
 
-    def test_each_category_has_at_least_95_questions(self, bank: QuestionBank) -> None:
+    def test_each_category_has_at_least_145_questions(self, bank: QuestionBank) -> None:
         for cat in bank.get_categories():
             count = bank.get_question_count(cat)
-            assert count >= 95, f"{cat} has only {count} questions (floor: 95)"
-            assert count <= 100, f"{cat} has {count} questions (ceiling: 100)"
+            assert count >= 145, f"{cat} has only {count} questions (floor: 145)"
+            assert count <= 150, f"{cat} has {count} questions (ceiling: 150)"
 
 
 class TestValidateAnswer:
@@ -93,13 +94,13 @@ class TestValidateAnswer:
 class TestQuestionCount:
     def test_get_question_count(self, bank: QuestionBank) -> None:
         count = bank.get_question_count("geographie")
-        assert count == 100
+        assert 145 <= count <= 150
 
     def test_get_question_count_by_difficulty(self, bank: QuestionBank) -> None:
         easy = bank.get_question_count("geographie", "easy")
         medium = bank.get_question_count("geographie", "medium")
         hard = bank.get_question_count("geographie", "hard")
-        assert easy + medium + hard == 100
+        assert easy + medium + hard == bank.get_question_count("geographie")
         assert easy > 0
         assert medium > 0
         assert hard > 0
@@ -125,7 +126,7 @@ class TestResetAndShuffle:
         bank = QuestionBank(questions_dir=QUESTIONS_DIR)
         bank.load_category("geographie")
         bank.reset("geographie")
-        for _ in range(100):
+        for _ in range(bank.get_question_count("geographie")):
             q = bank.get_next_question("geographie")
             assert q is not None
         assert bank.get_next_question("geographie") is None

@@ -1,7 +1,7 @@
 {
   "name": "Geography",
   "language": "en",
-  "version": "1.0",
+  "version": "1.1",
   "theme": "geography",
   "questions": [
     {
@@ -2102,6 +2102,1056 @@
       ],
       "difficulty": "hard",
       "fun_fact": "Quoddy Head in eastern Maine is the easternmost point of the contiguous United States, and its far-northeast position makes it the closest mainland US spot to Africa's northwest coast — nearer than anywhere in Florida, even though Florida lies much farther south.",
+      "category": "Geography"
+    },
+    {
+      "id": "geo_en_107",
+      "question": "Why is the ocean blue?",
+      "answers": [
+        {
+          "text": "Water itself absorbs red light and scatters blue",
+          "correct": true
+        },
+        {
+          "text": "It simply reflects the colour of the sky",
+          "correct": false
+        },
+        {
+          "text": "Blue algae tint the water across the globe",
+          "correct": false
+        }
+      ],
+      "difficulty": "medium",
+      "fun_fact": "Pure water is faintly blue even in a deep bathtub. Water molecules absorb longer red wavelengths, so the light that survives to bounce back is blue — the sky's reflection only adds a little on top.",
+      "category": "Geography"
+    },
+    {
+      "id": "geo_en_108",
+      "question": "What makes desert sand dunes 'sing' or boom as they move?",
+      "answers": [
+        {
+          "text": "Avalanching sand grains vibrating in unison",
+          "correct": true
+        },
+        {
+          "text": "Wind whistling through buried rock crevices",
+          "correct": false
+        },
+        {
+          "text": "Trapped underground gas escaping the dune",
+          "correct": false
+        }
+      ],
+      "difficulty": "hard",
+      "fun_fact": "When sand of just the right size and dryness slides down a dune face, the grains shear past each other in sync, producing a low droning hum that can reach 105 decibels and be heard kilometres away.",
+      "category": "Geography"
+    },
+    {
+      "id": "geo_en_109",
+      "question": "Why does the Dead Sea let swimmers float so easily?",
+      "answers": [
+        {
+          "text": "Its extreme salt content makes the water denser than the body",
+          "correct": true
+        },
+        {
+          "text": "Underground gas bubbles push bathers upward",
+          "correct": false
+        },
+        {
+          "text": "Its unusually cold water is far denser than warm seawater",
+          "correct": false
+        }
+      ],
+      "difficulty": "easy",
+      "fun_fact": "The Dead Sea is about ten times saltier than the ocean. That dissolved salt makes the water denser than a human body, so you bob on the surface like a cork rather than swimming through it.",
+      "category": "Geography"
+    },
+    {
+      "id": "geo_en_110",
+      "question": "What causes the salt flats of Bolivia to act like a giant mirror after rain?",
+      "answers": [
+        {
+          "text": "A thin sheet of water over a perfectly flat salt crust",
+          "correct": true
+        },
+        {
+          "text": "Reflective salt crystals that polish themselves smooth",
+          "correct": false
+        },
+        {
+          "text": "A layer of mercury beneath the salt surface",
+          "correct": false
+        }
+      ],
+      "difficulty": "easy",
+      "fun_fact": "When a shallow film of rainwater sits on the Salar de Uyuni, the salt below is so flat that the water has nowhere to pool or ripple, turning the whole plain into the world's largest natural mirror reflecting the sky.",
+      "category": "Geography"
+    },
+    {
+      "id": "geo_en_111",
+      "question": "Why does a geyser like Old Faithful erupt in regular bursts rather than flowing steadily?",
+      "answers": [
+        {
+          "text": "Trapped water superheats until it flashes to steam and blasts out",
+          "correct": true
+        },
+        {
+          "text": "An underground pump cycles the water on and off",
+          "correct": false
+        },
+        {
+          "text": "Tides far below ground squeeze the water upward",
+          "correct": false
+        }
+      ],
+      "difficulty": "medium",
+      "fun_fact": "In a geyser's narrow plumbing, water deep down stays liquid above 100°C under pressure. Once it finally boils, the sudden expansion to steam ejects the column above it, then the chamber refills and the cycle repeats.",
+      "category": "Geography"
+    },
+    {
+      "id": "geo_en_112",
+      "question": "What makes a rainforest produce much of its own rainfall?",
+      "answers": [
+        {
+          "text": "Trees release water vapour that forms clouds and rain",
+          "correct": true
+        },
+        {
+          "text": "The canopy is cold enough to condense passing sea fog",
+          "correct": false
+        },
+        {
+          "text": "Rivers evaporate faster under the dense tree cover",
+          "correct": false
+        }
+      ],
+      "difficulty": "medium",
+      "fun_fact": "Amazon trees pump enormous amounts of moisture into the air through their leaves. This 'transpiration' seeds clouds, so a single water molecule can fall as rain, be re-released by a tree, and fall again several times across the basin.",
+      "category": "Geography"
+    },
+    {
+      "id": "geo_en_113",
+      "question": "Why is fresh snow such a brilliant white when the ice it's made of is clear?",
+      "answers": [
+        {
+          "text": "Countless tiny crystal facets scatter all colours of light equally",
+          "correct": true
+        },
+        {
+          "text": "Snow contains microscopic white mineral dust",
+          "correct": false
+        },
+        {
+          "text": "Frozen air bubbles glow white in sunlight",
+          "correct": false
+        }
+      ],
+      "difficulty": "easy",
+      "fun_fact": "A single ice crystal is transparent, but a snowdrift is a jumble of millions of them. Light bounces off all those surfaces in every direction, and since no colour is absorbed more than another, the pile looks white.",
+      "category": "Geography"
+    },
+    {
+      "id": "geo_en_114",
+      "question": "Why does the air get colder as you climb a mountain, even though you're nearer the Sun?",
+      "answers": [
+        {
+          "text": "Thinner high air holds less heat and expands as it rises",
+          "correct": true
+        },
+        {
+          "text": "Mountain peaks block the Sun's warming rays",
+          "correct": false
+        },
+        {
+          "text": "Snow on the summit cools the surrounding air",
+          "correct": false
+        }
+      ],
+      "difficulty": "medium",
+      "fun_fact": "Air is warmed mainly from the ground up, not directly by sunlight. As you go higher the air thins and any rising parcel expands and cools, dropping roughly 6.5°C for every kilometre of altitude.",
+      "category": "Geography"
+    },
+    {
+      "id": "geo_en_115",
+      "question": "What causes the Northern Lights to glow in the sky?",
+      "answers": [
+        {
+          "text": "Charged particles from the Sun striking atoms in the upper atmosphere",
+          "correct": true
+        },
+        {
+          "text": "Sunlight refracting through high-altitude ice clouds",
+          "correct": false
+        },
+        {
+          "text": "Reflections of city lights off the polar ice cap",
+          "correct": false
+        }
+      ],
+      "difficulty": "easy",
+      "fun_fact": "The aurora's colours reveal which gas is glowing: oxygen high up gives green and red, while nitrogen produces blues and purples. The same particle storms can also disrupt satellites and power grids.",
+      "category": "Geography"
+    },
+    {
+      "id": "geo_en_116",
+      "question": "Why does the Moon pull ocean tides up on both sides of the Earth at once?",
+      "answers": [
+        {
+          "text": "The Moon pulls the near ocean and the far ocean lags behind",
+          "correct": true
+        },
+        {
+          "text": "The Moon's light heats and expands the seas on both sides",
+          "correct": false
+        },
+        {
+          "text": "The Sun fills in the bulge opposite the Moon",
+          "correct": false
+        }
+      ],
+      "difficulty": "hard",
+      "fun_fact": "Gravity tugs the near-side ocean toward the Moon, but the solid Earth gets pulled away from the far-side ocean, leaving a second bulge behind. That's why most coasts get two high tides a day, not one.",
+      "category": "Geography"
+    },
+    {
+      "id": "geo_en_117",
+      "question": "Why does a beach feel cooler than the inland on a hot summer afternoon?",
+      "answers": [
+        {
+          "text": "Cooler air flows in from the sea as warm land air rises",
+          "correct": true
+        },
+        {
+          "text": "Sea spray physically chills the surrounding air",
+          "correct": false
+        },
+        {
+          "text": "Coastal sand reflects almost all of the Sun's heat",
+          "correct": false
+        }
+      ],
+      "difficulty": "easy",
+      "fun_fact": "Land heats up far faster than water. The hot air over the land rises, and cooler air sitting over the sea rushes in to replace it, creating the refreshing onshore breeze that beachgoers feel by midday.",
+      "category": "Geography"
+    },
+    {
+      "id": "geo_en_118",
+      "question": "What makes quicksand so dangerous to step into?",
+      "answers": [
+        {
+          "text": "Water-saturated sand loses its firmness and can't bear weight",
+          "correct": true
+        },
+        {
+          "text": "It actively sucks objects down toward the centre of the Earth",
+          "correct": false
+        },
+        {
+          "text": "Hidden currents drag anything that lands on it sideways",
+          "correct": false
+        }
+      ],
+      "difficulty": "medium",
+      "fun_fact": "Quicksand is just ordinary sand whose grains are floated apart by upward-seeping water, so it can't support weight. You actually can't sink fully under because your body is less dense than the slurry — the danger is getting stuck as the tide rises.",
+      "category": "Geography"
+    },
+    {
+      "id": "geo_en_119",
+      "question": "Why does sea ice, made from salty ocean water, taste only faintly salty?",
+      "answers": [
+        {
+          "text": "Salt is squeezed out as the water freezes",
+          "correct": true
+        },
+        {
+          "text": "Ocean salt evaporates away before the ice forms",
+          "correct": false
+        },
+        {
+          "text": "Only freshwater rivers freeze on the ocean surface",
+          "correct": false
+        }
+      ],
+      "difficulty": "hard",
+      "fun_fact": "When seawater freezes, the crystal structure of ice rejects the salt, pushing it into briny pockets that gradually drain out. Old sea ice becomes fresh enough that polar explorers have melted it for drinking water.",
+      "category": "Geography"
+    },
+    {
+      "id": "geo_en_120",
+      "question": "Why do most of the world's great deserts sit near the same latitudes north and south of the equator?",
+      "answers": [
+        {
+          "text": "Air that rose at the equator sinks there, dry and rainless",
+          "correct": true
+        },
+        {
+          "text": "Those bands are simply the farthest from any ocean",
+          "correct": false
+        },
+        {
+          "text": "The Sun lingers longest over those exact latitudes",
+          "correct": false
+        }
+      ],
+      "difficulty": "hard",
+      "fun_fact": "Warm equatorial air rises and dumps its rain, then drifts and descends around 30° north and south. Sinking air warms and dries out, which is why the Sahara, Arabian, and Australian deserts all cluster along those belts.",
+      "category": "Geography"
+    },
+    {
+      "id": "geo_en_121",
+      "question": "What gives the Grand Canyon's rock layers their many different colours?",
+      "answers": [
+        {
+          "text": "Different minerals, especially iron, in each rock layer",
+          "correct": true
+        },
+        {
+          "text": "Sunlight hitting the walls at changing angles",
+          "correct": false
+        },
+        {
+          "text": "Algae growing in coloured bands on the cliffs",
+          "correct": false
+        }
+      ],
+      "difficulty": "easy",
+      "fun_fact": "Each band marks a different ancient environment. Iron is the main painter: oxidised iron makes reds and oranges, while greener and grey layers formed where there was less oxygen, so the canyon walls read like a colour-coded timeline.",
+      "category": "Geography"
+    },
+    {
+      "id": "geo_en_122",
+      "question": "Why does a river bend more and more sharply over time instead of running straight?",
+      "answers": [
+        {
+          "text": "Water erodes the outer bank and deposits sand on the inner one",
+          "correct": true
+        },
+        {
+          "text": "Rivers always follow underground magnetic lines",
+          "correct": false
+        },
+        {
+          "text": "The planet's rotation forces all rivers into curves",
+          "correct": false
+        }
+      ],
+      "difficulty": "medium",
+      "fun_fact": "On a bend, water moves faster on the outside and chews away the bank, while it slows on the inside and drops sediment. This lopsided action exaggerates the curve until loops sometimes pinch off into oxbow lakes.",
+      "category": "Geography"
+    },
+    {
+      "id": "geo_en_123",
+      "question": "Why is the air at the bottom of a deep valley sometimes colder at night than higher up the slopes?",
+      "answers": [
+        {
+          "text": "Cold dense air drains downhill and pools at the bottom",
+          "correct": true
+        },
+        {
+          "text": "Valley floors are always closer to underground ice",
+          "correct": false
+        },
+        {
+          "text": "Sunlight never reaches the valley floor at all",
+          "correct": false
+        }
+      ],
+      "difficulty": "medium",
+      "fun_fact": "On clear, still nights the ground chills the air touching it, and because cold air is heavier it slides down the slopes and collects on the valley floor. These 'frost hollows' can be several degrees colder than the hillsides above.",
+      "category": "Geography"
+    },
+    {
+      "id": "geo_en_124",
+      "question": "What makes a hot spring hot in the first place?",
+      "answers": [
+        {
+          "text": "Water seeps down to hot rock and rises back up heated",
+          "correct": true
+        },
+        {
+          "text": "Sunlight concentrated by surrounding pale rocks",
+          "correct": false
+        },
+        {
+          "text": "Friction from the water flowing through narrow cracks",
+          "correct": false
+        }
+      ],
+      "difficulty": "easy",
+      "fun_fact": "Rainwater trickles deep underground, gets warmed by hot rock or nearby magma, then buoyantly rises back to the surface. In volcanic regions the water can emerge near boiling, and it often carries dissolved minerals that build colourful terraces.",
+      "category": "Geography"
+    },
+    {
+      "id": "geo_en_125",
+      "question": "Why do clouds, full of tonnes of water, float instead of falling?",
+      "answers": [
+        {
+          "text": "Their droplets are tiny and rising warm air holds them up",
+          "correct": true
+        },
+        {
+          "text": "Water vapour is naturally lighter than the air below",
+          "correct": false
+        },
+        {
+          "text": "Static electricity suspends the droplets in place",
+          "correct": false
+        }
+      ],
+      "difficulty": "easy",
+      "fun_fact": "A cloud's water is split into droplets so small that air resistance lets them drift down at a crawl, and gentle updrafts easily keep them aloft. Only when droplets merge into raindrops do they finally grow heavy enough to fall.",
+      "category": "Geography"
+    },
+    {
+      "id": "geo_en_126",
+      "question": "Why does the sea look like it has a sharp 'edge' at the horizon?",
+      "answers": [
+        {
+          "text": "The Earth curves away beyond a certain distance",
+          "correct": true
+        },
+        {
+          "text": "A wall of denser air blocks the view past it",
+          "correct": false
+        },
+        {
+          "text": "Sunlight can only travel a fixed distance over water",
+          "correct": false
+        }
+      ],
+      "difficulty": "easy",
+      "fun_fact": "Because the planet is round, the surface drops away from your line of sight. For someone standing on the shore the horizon sits only about 5 km off — climb a cliff or a ship's mast and that edge retreats much farther.",
+      "category": "Geography"
+    },
+    {
+      "id": "geo_en_127",
+      "question": "What makes a glacier flow downhill like an extremely slow river?",
+      "answers": [
+        {
+          "text": "Its own weight makes the ice deform and slide",
+          "correct": true
+        },
+        {
+          "text": "Wind pushes the ice steadily down the valley",
+          "correct": false
+        },
+        {
+          "text": "Meltwater freezes behind it and shoves it forward",
+          "correct": false
+        }
+      ],
+      "difficulty": "medium",
+      "fun_fact": "Under the immense pressure of its own mass, glacial ice behaves a bit like putty, deforming internally while meltwater at its base lets it slide. Some glaciers creep along at only a few centimetres a day.",
+      "category": "Geography"
+    },
+    {
+      "id": "geo_en_128",
+      "question": "Why does a flat, snow-free road sometimes shimmer with a fake 'puddle' on a hot day?",
+      "answers": [
+        {
+          "text": "Light bends through a layer of hot air near the surface",
+          "correct": true
+        },
+        {
+          "text": "Heat melts a thin film of tar that reflects the sky",
+          "correct": false
+        },
+        {
+          "text": "Rising steam from the road condenses into a mirage",
+          "correct": false
+        }
+      ],
+      "difficulty": "medium",
+      "fun_fact": "A blazing road heats the air just above it, and light passing from cooler air into that hot layer bends upward. Your eye traces it back as a patch of sky on the ground — the same mirage that fools desert travellers with imaginary lakes.",
+      "category": "Geography"
+    },
+    {
+      "id": "geo_en_129",
+      "question": "Why does the temperature deep inside a cave stay almost the same all year round?",
+      "answers": [
+        {
+          "text": "Thick rock insulates it from surface weather",
+          "correct": true
+        },
+        {
+          "text": "Caves are heated by a steady flow of warm groundwater",
+          "correct": false
+        },
+        {
+          "text": "Trapped air can't move, so it never changes temperature",
+          "correct": false
+        }
+      ],
+      "difficulty": "easy",
+      "fun_fact": "Surrounding rock is a poor conductor and a huge heat store, so deep caves hover close to the local yearly average temperature whatever the season. That stability is why caves were prized for storing food and ageing cheese and wine.",
+      "category": "Geography"
+    },
+    {
+      "id": "geo_en_130",
+      "question": "What makes the water of a tropical lagoon look such a vivid turquoise?",
+      "answers": [
+        {
+          "text": "Shallow water over pale sand reflects blue-green light back up",
+          "correct": true
+        },
+        {
+          "text": "Dissolved copper minerals dye the water turquoise",
+          "correct": false
+        },
+        {
+          "text": "A surface film of plankton scatters green light",
+          "correct": false
+        }
+      ],
+      "difficulty": "medium",
+      "fun_fact": "In shallow water the seabed of white coral sand bounces sunlight back before deep water can swallow the blue-green wavelengths. Over a dark or deep bottom the very same sea would instead look a far darker blue.",
+      "category": "Geography"
+    },
+    {
+      "id": "geo_en_131",
+      "question": "The country of Ecuador takes its name from what?",
+      "answers": [
+        {
+          "text": "The equator running through it",
+          "correct": true
+        },
+        {
+          "text": "An indigenous king named Equa",
+          "correct": false
+        },
+        {
+          "text": "A Spanish word for gold",
+          "correct": false
+        }
+      ],
+      "difficulty": "easy",
+      "fun_fact": "'Ecuador' is simply the Spanish word for equator. It is the only country in the world named after a line of latitude rather than a person, place, or feature.",
+      "category": "Geography"
+    },
+    {
+      "id": "geo_en_132",
+      "question": "How did the Pacific Ocean get its name?",
+      "answers": [
+        {
+          "text": "Magellan found it unusually calm and peaceful",
+          "correct": true
+        },
+        {
+          "text": "It was named after a Spanish ship, the Pacífica",
+          "correct": false
+        },
+        {
+          "text": "It comes from a Polynesian word for vast",
+          "correct": false
+        }
+      ],
+      "difficulty": "easy",
+      "fun_fact": "Magellan called it 'Mar Pacífico' (peaceful sea) in 1520 after surviving the stormy strait at South America's tip and finding the waters beyond eerily calm. The name stuck despite the Pacific's many typhoons.",
+      "category": "Geography"
+    },
+    {
+      "id": "geo_en_133",
+      "question": "The Canary Islands were named after what?",
+      "answers": [
+        {
+          "text": "Dogs",
+          "correct": true
+        },
+        {
+          "text": "The canary bird",
+          "correct": false
+        },
+        {
+          "text": "The colour canary yellow",
+          "correct": false
+        }
+      ],
+      "difficulty": "medium",
+      "fun_fact": "The name comes from the Latin 'Canariae Insulae', meaning 'Islands of the Dogs', possibly after large dogs found there by the Romans. The canary bird is named after the islands, not the other way around.",
+      "category": "Geography"
+    },
+    {
+      "id": "geo_en_134",
+      "question": "Why is Greenland called 'green' when it is mostly ice?",
+      "answers": [
+        {
+          "text": "Erik the Red picked the name to attract settlers",
+          "correct": true
+        },
+        {
+          "text": "Its southern coast was once a lush jungle",
+          "correct": false
+        },
+        {
+          "text": "It is a mistranslation of an old Norse word for ice",
+          "correct": false
+        }
+      ],
+      "difficulty": "easy",
+      "fun_fact": "Erik the Red, banished from Iceland, named the icy island 'Greenland' around 982 AD specifically because an appealing name would lure colonists. It may be history's earliest recorded real-estate marketing spin.",
+      "category": "Geography"
+    },
+    {
+      "id": "geo_en_135",
+      "question": "The name 'America' honours Amerigo Vespucci. What was unusual about how it was applied?",
+      "answers": [
+        {
+          "text": "A mapmaker added it for South America without Vespucci's knowledge",
+          "correct": true
+        },
+        {
+          "text": "Vespucci personally paid to have it named after him",
+          "correct": false
+        },
+        {
+          "text": "It was originally the name of his ship",
+          "correct": false
+        }
+      ],
+      "difficulty": "medium",
+      "fun_fact": "German cartographer Martin Waldseemüller printed 'America' on a 1507 map, crediting Vespucci for recognising it as a new continent. He later regretted it and removed the name, but it had already caught on across Europe.",
+      "category": "Geography"
+    },
+    {
+      "id": "geo_en_136",
+      "question": "Which sea is named after a man who, by legend, drowned in it?",
+      "answers": [
+        {
+          "text": "The Aegean Sea",
+          "correct": true
+        },
+        {
+          "text": "The Adriatic Sea",
+          "correct": false
+        },
+        {
+          "text": "The Ionian Sea",
+          "correct": false
+        }
+      ],
+      "difficulty": "medium",
+      "fun_fact": "In Greek myth, King Aegeus threw himself into the sea after wrongly believing his son Theseus had died fighting the Minotaur, because Theseus forgot to swap his black sails for white ones.",
+      "category": "Geography"
+    },
+    {
+      "id": "geo_en_137",
+      "question": "The Indian Ocean is unusual among the major oceans because it is named after what?",
+      "answers": [
+        {
+          "text": "A country",
+          "correct": true
+        },
+        {
+          "text": "A compass direction",
+          "correct": false
+        },
+        {
+          "text": "An ancient sea god",
+          "correct": false
+        }
+      ],
+      "difficulty": "medium",
+      "fun_fact": "It is the only ocean named after a single nation, India. The others take their names from a Greek titan (Atlantic), calmness (Pacific), the far north (Arctic), and the southern pole (Southern).",
+      "category": "Geography"
+    },
+    {
+      "id": "geo_en_138",
+      "question": "The country name 'Pakistan' was created in 1933 in what way?",
+      "answers": [
+        {
+          "text": "As an acronym from the names of its regions",
+          "correct": true
+        },
+        {
+          "text": "By translating an ancient Sanskrit prayer",
+          "correct": false
+        },
+        {
+          "text": "By a vote among British colonial officers",
+          "correct": false
+        }
+      ],
+      "difficulty": "hard",
+      "fun_fact": "A student named Choudhry Rahmat Ali coined it from Punjab, Afghania, Kashmir, Sindh and Baluchistan, while it also conveniently means 'land of the pure' in Persian and Urdu.",
+      "category": "Geography"
+    },
+    {
+      "id": "geo_en_139",
+      "question": "Why does the African country Cameroon carry a name meaning 'shrimp'?",
+      "answers": [
+        {
+          "text": "Portuguese sailors found a river full of shrimp",
+          "correct": true
+        },
+        {
+          "text": "Its coastline is shaped like a shrimp",
+          "correct": false
+        },
+        {
+          "text": "Shrimp was its main export to Europe",
+          "correct": false
+        }
+      ],
+      "difficulty": "hard",
+      "fun_fact": "In 1472 Portuguese explorers named the Wouri estuary 'Rio dos Camarões' (River of Shrimp) after the swarms of ghost shrimp they saw. The whole country eventually took its name from that river.",
+      "category": "Geography"
+    },
+    {
+      "id": "geo_en_140",
+      "question": "The US state of Rhode Island is thought to be named after a comparison to which Mediterranean island?",
+      "answers": [
+        {
+          "text": "Rhodes, in Greece",
+          "correct": true
+        },
+        {
+          "text": "Sardinia, in Italy",
+          "correct": false
+        },
+        {
+          "text": "Cyprus",
+          "correct": false
+        }
+      ],
+      "difficulty": "hard",
+      "fun_fact": "An explorer's likening of an island in Narragansett Bay to the Greek isle of Rhodes is one leading theory. Ironically, Rhode Island is the smallest US state and its mainland is not an island at all.",
+      "category": "Geography"
+    },
+    {
+      "id": "geo_en_141",
+      "question": "The word 'continent' originally comes from a Latin phrase meaning what?",
+      "answers": [
+        {
+          "text": "Continuous land",
+          "correct": true
+        },
+        {
+          "text": "Land of many peoples",
+          "correct": false
+        },
+        {
+          "text": "Land beyond the sea",
+          "correct": false
+        }
+      ],
+      "difficulty": "medium",
+      "fun_fact": "It derives from 'terra continens', meaning 'continuous land' — a stretch of ground held together without a break. The same Latin root gives us the everyday word 'contain'.",
+      "category": "Geography"
+    },
+    {
+      "id": "geo_en_142",
+      "question": "How did Brazil get its name?",
+      "answers": [
+        {
+          "text": "From a red dyewood tree harvested there",
+          "correct": true
+        },
+        {
+          "text": "From a Portuguese explorer named Brazão",
+          "correct": false
+        },
+        {
+          "text": "From a native word meaning sunshine",
+          "correct": false
+        }
+      ],
+      "difficulty": "medium",
+      "fun_fact": "Brazil is named after brazilwood, a tree yielding a prized red dye that was the colony's first major export. The country was effectively named after a commodity rather than a person or place.",
+      "category": "Geography"
+    },
+    {
+      "id": "geo_en_143",
+      "question": "The Strait of Magellan is named after the explorer, but who actually completed the first circumnavigation he began?",
+      "answers": [
+        {
+          "text": "His crew, after Magellan died mid-voyage",
+          "correct": true
+        },
+        {
+          "text": "Magellan himself returned home safely",
+          "correct": false
+        },
+        {
+          "text": "A rival captain who finished it decades later",
+          "correct": false
+        }
+      ],
+      "difficulty": "medium",
+      "fun_fact": "Magellan was killed in the Philippines in 1521, so he never personally circled the globe. His captain Juan Sebastián Elcano brought the last ship home in 1522, completing the first lap of the planet.",
+      "category": "Geography"
+    },
+    {
+      "id": "geo_en_144",
+      "question": "The Dead Sea earned its name for what reason?",
+      "answers": [
+        {
+          "text": "Almost nothing can live in its salty water",
+          "correct": true
+        },
+        {
+          "text": "A great battle once dyed it red with blood",
+          "correct": false
+        },
+        {
+          "text": "An ancient city drowned beneath it",
+          "correct": false
+        }
+      ],
+      "difficulty": "easy",
+      "fun_fact": "Its extreme salinity, nearly ten times that of the ocean, kills off fish and plants, leaving the water 'dead'. Only a few hardy microbes manage to survive in it.",
+      "category": "Geography"
+    },
+    {
+      "id": "geo_en_145",
+      "question": "The Caribbean Sea takes its name from what?",
+      "answers": [
+        {
+          "text": "The Carib people who lived in the region",
+          "correct": true
+        },
+        {
+          "text": "A Spanish word for coral",
+          "correct": false
+        },
+        {
+          "text": "Christopher Columbus's flagship",
+          "correct": false
+        }
+      ],
+      "difficulty": "medium",
+      "fun_fact": "It is named for the Carib, an Indigenous people of the Lesser Antilles. The word 'cannibal' also derives from a Spanish rendering of their name, the result of disputed colonial-era accounts.",
+      "category": "Geography"
+    },
+    {
+      "id": "geo_en_146",
+      "question": "The Sahara Desert's name is striking because in Arabic it essentially means what?",
+      "answers": [
+        {
+          "text": "Desert",
+          "correct": true
+        },
+        {
+          "text": "Endless sand",
+          "correct": false
+        },
+        {
+          "text": "Land of fire",
+          "correct": false
+        }
+      ],
+      "difficulty": "medium",
+      "fun_fact": "'Sahara' comes from the Arabic word for desert, so 'Sahara Desert' literally translates to 'Desert Desert'. Similar redundancies appear in names like the 'La Brea Tar Pits', which means 'the tar tar pits'.",
+      "category": "Geography"
+    },
+    {
+      "id": "geo_en_147",
+      "question": "The Philippines was named in honour of whom?",
+      "answers": [
+        {
+          "text": "King Philip II of Spain",
+          "correct": true
+        },
+        {
+          "text": "The explorer Ferdinand Magellan",
+          "correct": false
+        },
+        {
+          "text": "A Catholic saint named Philip",
+          "correct": false
+        }
+      ],
+      "difficulty": "medium",
+      "fun_fact": "A Spanish expedition named the islands 'Las Islas Filipinas' in 1543 after the then-crown prince, the future Philip II. Magellan, who reached the islands first, has no country named after him at all.",
+      "category": "Geography"
+    },
+    {
+      "id": "geo_en_148",
+      "question": "The English Channel separating England and France is called what in French?",
+      "answers": [
+        {
+          "text": "La Manche — 'the sleeve'",
+          "correct": true
+        },
+        {
+          "text": "Le Détroit — 'the strait'",
+          "correct": false
+        },
+        {
+          "text": "La Mer Anglaise — 'the English Sea'",
+          "correct": false
+        }
+      ],
+      "difficulty": "hard",
+      "fun_fact": "The French name 'La Manche' means 'the sleeve', a reference to the channel's long tapering shape. The two countries effectively named the same stretch of water after two completely different things.",
+      "category": "Geography"
+    },
+    {
+      "id": "geo_en_149",
+      "question": "The country of Venezuela was named because early explorers thought a lakeside settlement resembled what city?",
+      "answers": [
+        {
+          "text": "Venice",
+          "correct": true
+        },
+        {
+          "text": "Genoa",
+          "correct": false
+        },
+        {
+          "text": "Lisbon",
+          "correct": false
+        }
+      ],
+      "difficulty": "hard",
+      "fun_fact": "Stilt houses over Lake Maracaibo reminded a 1499 Spanish expedition of Venice, so they named the land 'Venezuela', or 'little Venice'. A country was named after a passing resemblance to an Italian canal city.",
+      "category": "Geography"
+    },
+    {
+      "id": "geo_en_150",
+      "question": "Iceland and Greenland are sometimes said to have 'swapped' the wrong names. Which one is actually greener?",
+      "answers": [
+        {
+          "text": "Iceland",
+          "correct": true
+        },
+        {
+          "text": "Greenland",
+          "correct": false
+        },
+        {
+          "text": "They are equally barren",
+          "correct": false
+        }
+      ],
+      "difficulty": "easy",
+      "fun_fact": "Iceland is far greener and warmer than its name suggests, thanks to the Gulf Stream, while Greenland is about 80% covered by ice sheet. The naming is a quirk of history, not geography.",
+      "category": "Geography"
+    },
+    {
+      "id": "geo_en_151",
+      "question": "Wall Street in New York City got its name from what?",
+      "answers": [
+        {
+          "text": "An actual defensive wall built by Dutch settlers",
+          "correct": true
+        },
+        {
+          "text": "A famous banker named Jan de Waal",
+          "correct": false
+        },
+        {
+          "text": "The high stone walls of its first bank",
+          "correct": false
+        }
+      ],
+      "difficulty": "medium",
+      "fun_fact": "The Dutch built a wooden palisade wall along the northern edge of their settlement of New Amsterdam in the 1650s for defence. The wall is long gone, but the street tracing its line kept the name.",
+      "category": "Geography"
+    },
+    {
+      "id": "geo_en_152",
+      "question": "The Bering Strait between Asia and North America is named after Vitus Bering, who was born in which country?",
+      "answers": [
+        {
+          "text": "Denmark",
+          "correct": true
+        },
+        {
+          "text": "Russia",
+          "correct": false
+        },
+        {
+          "text": "Britain",
+          "correct": false
+        }
+      ],
+      "difficulty": "hard",
+      "fun_fact": "Bering was a Danish-born navigator sailing in the service of the Russian Empire when he charted the strait in 1728. He later died of scurvy and exposure on an island that also now bears his name.",
+      "category": "Geography"
+    },
+    {
+      "id": "geo_en_153",
+      "question": "The country of Argentina takes its name from a Latin word for which metal?",
+      "answers": [
+        {
+          "text": "Silver",
+          "correct": true
+        },
+        {
+          "text": "Gold",
+          "correct": false
+        },
+        {
+          "text": "Iron",
+          "correct": false
+        }
+      ],
+      "difficulty": "medium",
+      "fun_fact": "'Argentina' derives from 'argentum', Latin for silver, born of an early legend about a 'Sierra de la Plata', a mountain of silver. The metal proved a myth there, but the hopeful name endured.",
+      "category": "Geography"
+    },
+    {
+      "id": "geo_en_154",
+      "question": "The Atlantic Ocean is named after what?",
+      "answers": [
+        {
+          "text": "Atlas, a titan of Greek mythology",
+          "correct": true
+        },
+        {
+          "text": "The lost city of Atlantis",
+          "correct": false
+        },
+        {
+          "text": "An ancient Phoenician trading port",
+          "correct": false
+        }
+      ],
+      "difficulty": "medium",
+      "fun_fact": "The name comes from 'Sea of Atlas', referring to the titan condemned to hold up the sky, who the Greeks placed near the Atlas Mountains in northwest Africa at the edge of their known world.",
+      "category": "Geography"
+    },
+    {
+      "id": "geo_en_155",
+      "question": "Russia is so large that it covers roughly what fraction of all the land on Earth?",
+      "answers": [
+        {
+          "text": "About one ninth",
+          "correct": true
+        },
+        {
+          "text": "About one third",
+          "correct": false
+        },
+        {
+          "text": "About one fifth",
+          "correct": false
+        }
+      ],
+      "difficulty": "medium",
+      "fun_fact": "Russia spans about 17 million square kilometres, roughly 11% of Earth's land area. That single country is larger than the entire surface of the dwarf planet Pluto.",
+      "category": "Geography"
+    },
+    {
+      "id": "geo_en_156",
+      "question": "Africa is so much bigger than it looks on most maps that you could fit the USA, China, and India inside it at once. True or false?",
+      "answers": [
+        {
+          "text": "True",
+          "correct": true
+        },
+        {
+          "text": "False — it only fits the USA",
+          "correct": false
+        },
+        {
+          "text": "False — Africa is smaller than China",
+          "correct": false
+        }
+      ],
+      "difficulty": "easy",
+      "fun_fact": "Africa is about 30 million square kilometres. The USA, China, and India combined cover roughly 25 million and would still fit inside it — the Mercator projection badly shrinks equatorial regions and inflates the poles.",
       "category": "Geography"
     }
   ]

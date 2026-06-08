@@ -1,7 +1,7 @@
 {
   "name": "Technology",
   "language": "en",
-  "version": "1.0",
+  "version": "1.1",
   "theme": "tech",
   "questions": [
     {
@@ -2102,6 +2102,1056 @@
       ],
       "difficulty": "medium",
       "fun_fact": "The Firefox name is the English nickname for the red panda. Mozilla later sponsored two real red pandas at Knoxville Zoo. The logo is sometimes mistaken for a regular fox, but the project has always meant the panda.",
+      "category": "Technology"
+    },
+    {
+      "id": "tech_en_101",
+      "question": "Why does microwave-oven radiation heat food but not the ceramic plate it sits on?",
+      "answers": [
+        {
+          "text": "The waves grab onto water molecules, and dry ceramic has almost none",
+          "correct": true
+        },
+        {
+          "text": "Ceramic is coated with a microwave-reflecting glaze at the factory",
+          "correct": false
+        },
+        {
+          "text": "The plate sits below the beam, which only sweeps the top layer",
+          "correct": false
+        }
+      ],
+      "difficulty": "easy",
+      "fun_fact": "Microwaves are tuned to flip water (and to a lesser degree fat and sugar) molecules back and forth billions of times a second, and that jiggling is heat. A dry ceramic plate has nothing to flip, so it only warms up by touching the hot food.",
+      "category": "Technology"
+    },
+    {
+      "id": "tech_en_102",
+      "question": "Why does adding salt to icy roads actually melt the ice?",
+      "answers": [
+        {
+          "text": "Salt lowers the temperature at which water freezes",
+          "correct": true
+        },
+        {
+          "text": "Salt crystals generate heat as they dissolve into the ice",
+          "correct": false
+        },
+        {
+          "text": "Salt is darker than ice and absorbs more sunlight",
+          "correct": false
+        }
+      ],
+      "difficulty": "easy",
+      "fun_fact": "Dissolved salt gets in the way of water molecules trying to lock into a solid crystal, so the freezing point drops below 0 °C. That's also why seawater stays liquid well below the point where fresh water would turn to ice.",
+      "category": "Technology"
+    },
+    {
+      "id": "tech_en_103",
+      "question": "Why does a stick of dynamite need a separate small detonator to go off?",
+      "answers": [
+        {
+          "text": "The main charge is stable and only a sharp shock will set it off",
+          "correct": true
+        },
+        {
+          "text": "The detonator supplies the oxygen the explosive lacks",
+          "correct": false
+        },
+        {
+          "text": "The main charge is too cold to ignite without a heater",
+          "correct": false
+        }
+      ],
+      "difficulty": "medium",
+      "fun_fact": "Dynamite is deliberately formulated to be hard to set off by accident — you can drop it or burn it without an explosion. A tiny blasting cap delivers the violent shockwave needed to trigger the main charge, which is why the two are stored apart.",
+      "category": "Technology"
+    },
+    {
+      "id": "tech_en_104",
+      "question": "Why does pressing the brake pedal in a car multiply your foot's force enough to stop a two-ton vehicle?",
+      "answers": [
+        {
+          "text": "Brake fluid carries the pressure undiminished to wider pistons",
+          "correct": true
+        },
+        {
+          "text": "A spring in the pedal stores energy and releases it at the wheel",
+          "correct": false
+        },
+        {
+          "text": "The engine briefly runs in reverse to assist the braking",
+          "correct": false
+        }
+      ],
+      "difficulty": "medium",
+      "fun_fact": "Because liquids barely compress, the pressure from your foot travels through the brake fluid to pistons with a much larger area at each wheel. Force equals pressure times area, so the wider pistons push far harder than your foot ever could.",
+      "category": "Technology"
+    },
+    {
+      "id": "tech_en_105",
+      "question": "Why does a non-stick frying pan keep food from sticking even when it gets very hot?",
+      "answers": [
+        {
+          "text": "Its coating is chemically slippery and almost nothing bonds to it",
+          "correct": true
+        },
+        {
+          "text": "The coating constantly releases a thin film of cooking oil",
+          "correct": false
+        },
+        {
+          "text": "Tiny holes in the surface let air cushion the food",
+          "correct": false
+        }
+      ],
+      "difficulty": "medium",
+      "fun_fact": "The coating is built from carbon-fluorine bonds, among the strongest in chemistry, leaving almost no free 'grip' for other molecules to latch onto. The same substance was discovered by accident in 1938 when a refrigerant gas turned into a waxy slippery solid in its canister.",
+      "category": "Technology"
+    },
+    {
+      "id": "tech_en_106",
+      "question": "Why can a tiny laser pointer's red dot look just as bright a hundred metres away as it does up close?",
+      "answers": [
+        {
+          "text": "Its light waves march in step and barely spread out",
+          "correct": true
+        },
+        {
+          "text": "The dot is reflected back to your eye by dust in the air",
+          "correct": false
+        },
+        {
+          "text": "The battery boosts the power automatically over distance",
+          "correct": false
+        }
+      ],
+      "difficulty": "medium",
+      "fun_fact": "Ordinary light spreads out fast because its waves are jumbled. Laser light is 'coherent' — the waves are aligned and the same colour — so the beam stays tight. That's why a laser fired at the Moon still lands in a spot only a few kilometres wide.",
+      "category": "Technology"
+    },
+    {
+      "id": "tech_en_107",
+      "question": "Why does an ordinary glass window let visible light through but block most of the Sun's ultraviolet rays?",
+      "answers": [
+        {
+          "text": "The glass absorbs the higher-energy ultraviolet but not visible light",
+          "correct": true
+        },
+        {
+          "text": "Ultraviolet light is too large to fit through the glass",
+          "correct": false
+        },
+        {
+          "text": "A reflective metal layer bounces the ultraviolet back outside",
+          "correct": false
+        }
+      ],
+      "difficulty": "medium",
+      "fun_fact": "Glass molecules happily absorb the energy of ultraviolet photons but let visible light slip through. That's why you can get a tan outdoors but rarely sunburn through a closed car window — though the longer UVA rays do sneak through.",
+      "category": "Technology"
+    },
+    {
+      "id": "tech_en_108",
+      "question": "Why does a spinning bicycle wheel make the whole bike surprisingly hard to tip over?",
+      "answers": [
+        {
+          "text": "A spinning wheel resists changes to the direction of its axle",
+          "correct": true
+        },
+        {
+          "text": "The spinning air around the wheel pushes the bike upright",
+          "correct": false
+        },
+        {
+          "text": "Centrifugal force pulls the rider's weight toward the centre",
+          "correct": false
+        }
+      ],
+      "difficulty": "medium",
+      "fun_fact": "A spinning wheel acts like a gyroscope: its spin axis 'wants' to keep pointing the same way, resisting tilt. It's not the whole story of why bikes balance — steering geometry matters more — but the effect is real and is why a rolling coin stays up far longer than a still one.",
+      "category": "Technology"
+    },
+    {
+      "id": "tech_en_109",
+      "question": "Why does cling film stick to a glass bowl without any glue?",
+      "answers": [
+        {
+          "text": "Weak static charges and molecular attraction pull it tight to the surface",
+          "correct": true
+        },
+        {
+          "text": "A microscopic layer of edible adhesive is sprayed on at the factory",
+          "correct": false
+        },
+        {
+          "text": "Tiny suction cups molded into the film grip the glass",
+          "correct": false
+        }
+      ],
+      "difficulty": "medium",
+      "fun_fact": "Cling film clings through a mix of static electricity picked up as it unrolls and the faint van der Waals attraction between molecules that lets very flat surfaces hug each other. That same molecular attraction is what lets a gecko walk up a pane of glass.",
+      "category": "Technology"
+    },
+    {
+      "id": "tech_en_110",
+      "question": "Why does a refrigerator actually make the kitchen slightly warmer overall, not cooler?",
+      "answers": [
+        {
+          "text": "It moves heat from inside to the room and adds its motor's heat too",
+          "correct": true
+        },
+        {
+          "text": "Its compressor creates new heat from the cold air",
+          "correct": false
+        },
+        {
+          "text": "The door seals trap warm air that escapes into the room",
+          "correct": false
+        }
+      ],
+      "difficulty": "easy",
+      "fun_fact": "A fridge doesn't destroy heat — it pumps it from the cold interior out through the coils on the back, plus the energy its motor burns. So leaving the fridge door open to 'cool the room' actually heats it up over time.",
+      "category": "Technology"
+    },
+    {
+      "id": "tech_en_111",
+      "question": "Why does a candle flame point upward no matter how you tilt the candle?",
+      "answers": [
+        {
+          "text": "Hot gas is lighter than surrounding air and rises against gravity",
+          "correct": true
+        },
+        {
+          "text": "The wick channels the flame straight along its fibres",
+          "correct": false
+        },
+        {
+          "text": "Oxygen is denser near the ceiling and pulls the flame up",
+          "correct": false
+        }
+      ],
+      "difficulty": "easy",
+      "fun_fact": "The flame's hot gases are less dense than the cool air around them, so buoyancy pushes them up — gravity defines 'up'. In the weightlessness of space, a candle flame has no 'up' and burns as a dim blue sphere instead of a teardrop.",
+      "category": "Technology"
+    },
+    {
+      "id": "tech_en_112",
+      "question": "Why does a pair of noise-cancelling headphones go quiet by actually producing sound?",
+      "answers": [
+        {
+          "text": "They play an opposite sound wave that cancels the noise out",
+          "correct": true
+        },
+        {
+          "text": "They emit an ultrasonic tone that numbs the eardrum",
+          "correct": false
+        },
+        {
+          "text": "They vibrate the ear canal to block incoming pressure",
+          "correct": false
+        }
+      ],
+      "difficulty": "easy",
+      "fun_fact": "A microphone listens to the incoming noise, and the headphone instantly plays a mirror-image wave — where the noise pushes, the headphone pulls. The two waves meet and flatten out, a trick called destructive interference that works best on steady drones like jet engines.",
+      "category": "Technology"
+    },
+    {
+      "id": "tech_en_113",
+      "question": "Why does a tightly closed jar lid become easier to open after you run it under hot water?",
+      "answers": [
+        {
+          "text": "The metal lid expands faster than the glass and loosens its grip",
+          "correct": true
+        },
+        {
+          "text": "Hot water dissolves the sticky residue sealing the threads",
+          "correct": false
+        },
+        {
+          "text": "Steam pressure inside pushes the lid outward",
+          "correct": false
+        }
+      ],
+      "difficulty": "easy",
+      "fun_fact": "Metal expands more than glass for the same rise in temperature. Heat the lid and it grows a hair faster than the jar's neck, breaking the tight seal. The same trick — heating the outer part — frees stuck metal bolts and rings.",
+      "category": "Technology"
+    },
+    {
+      "id": "tech_en_114",
+      "question": "Why do most touch-free public bathroom faucets detect your hands using invisible light?",
+      "answers": [
+        {
+          "text": "They shine infrared and watch for it to bounce back off your hand",
+          "correct": true
+        },
+        {
+          "text": "They sense the tiny heat your hand radiates onto the spout",
+          "correct": false
+        },
+        {
+          "text": "They measure a change in air pressure as your hand approaches",
+          "correct": false
+        }
+      ],
+      "difficulty": "medium",
+      "fun_fact": "A small infrared LED beams light the eye can't see, and a sensor watches for the reflection when a hand moves into range. That's why dark, light-absorbing sleeves or very dark hands sometimes fail to trigger the sensor — there's nothing to bounce the beam back.",
+      "category": "Technology"
+    },
+    {
+      "id": "tech_en_115",
+      "question": "Why does a phone's GPS need to know the exact time to within a few billionths of a second to find your location?",
+      "answers": [
+        {
+          "text": "It measures tiny delays in signals travelling from satellites",
+          "correct": true
+        },
+        {
+          "text": "Satellites only transmit your position during precise time slots",
+          "correct": false
+        },
+        {
+          "text": "The clock synchronises your phone with the nearest cell tower",
+          "correct": false
+        }
+      ],
+      "difficulty": "hard",
+      "fun_fact": "GPS works by timing how long signals take to arrive from several satellites, and radio waves cover 30 cm per billionth of a second. A clock error of one millionth of a second would put you 300 metres off — which is why each satellite carries an atomic clock.",
+      "category": "Technology"
+    },
+    {
+      "id": "tech_en_116",
+      "question": "Why does squeezing the trigger on a spray bottle turn liquid into a fine mist instead of a stream?",
+      "answers": [
+        {
+          "text": "Liquid is forced through a tiny nozzle that breaks it into droplets",
+          "correct": true
+        },
+        {
+          "text": "A heater flash-boils the liquid into vapour at the tip",
+          "correct": false
+        },
+        {
+          "text": "Compressed air stored in the handle blasts the liquid apart",
+          "correct": false
+        }
+      ],
+      "difficulty": "easy",
+      "fun_fact": "The trigger drives a small piston that shoves liquid through a narrow nozzle, often with a swirl chamber that spins it. Forced through the tiny hole at speed, the sheet of liquid becomes unstable and shatters into a cloud of droplets — no air pump required.",
+      "category": "Technology"
+    },
+    {
+      "id": "tech_en_117",
+      "question": "Why does a fluorescent tube light glow when there's no glowing filament inside it?",
+      "answers": [
+        {
+          "text": "Electricity excites a gas that emits invisible light, and a coating turns it visible",
+          "correct": true
+        },
+        {
+          "text": "A hidden filament behind the white coating provides the light",
+          "correct": false
+        },
+        {
+          "text": "The tube is filled with a substance that glows on its own continuously",
+          "correct": false
+        }
+      ],
+      "difficulty": "hard",
+      "fun_fact": "Electric current excites mercury vapour inside the tube, which gives off ultraviolet light you can't see. The white powder coating the glass absorbs that UV and re-emits it as visible light — a process called fluorescence, hence the name.",
+      "category": "Technology"
+    },
+    {
+      "id": "tech_en_118",
+      "question": "Why does a digital photo of a fast-spinning helicopter rotor sometimes show the blades as bent, broken, or standing still?",
+      "answers": [
+        {
+          "text": "The sensor scans the image line by line while the blades move",
+          "correct": true
+        },
+        {
+          "text": "The blades genuinely flex into those shapes at high speed",
+          "correct": false
+        },
+        {
+          "text": "Lens distortion only affects very fast-moving objects",
+          "correct": false
+        }
+      ],
+      "difficulty": "hard",
+      "fun_fact": "Many camera sensors don't capture the whole frame at once — they read it top to bottom in a sliding window. A blade can move a long way between the top and bottom of the image, so it gets recorded in a warped position. The effect is called the rolling-shutter or 'jello' effect.",
+      "category": "Technology"
+    },
+    {
+      "id": "tech_en_119",
+      "question": "Why does a touchscreen still work through a thin plastic screen protector but not through a thick leather glove?",
+      "answers": [
+        {
+          "text": "It senses your finger's charge through thin material but not thick insulation",
+          "correct": true
+        },
+        {
+          "text": "The plastic is transparent to touch but leather blocks the light",
+          "correct": false
+        },
+        {
+          "text": "Screen protectors contain a conductive metal mesh",
+          "correct": false
+        }
+      ],
+      "difficulty": "medium",
+      "fun_fact": "A phone screen senses the small electrical change your finger makes in a field just above the glass. A thin plastic film barely affects that field, but thick, dry leather pushes your finger too far away to register — which is why special touch gloves have conductive thread woven into the fingertips.",
+      "category": "Technology"
+    },
+    {
+      "id": "tech_en_120",
+      "question": "Why does pumping the handle of a car's hydraulic jack lift something far heavier than you could lift by hand?",
+      "answers": [
+        {
+          "text": "A small piston pushes fluid against a much larger one, multiplying force",
+          "correct": true
+        },
+        {
+          "text": "The oil expands as it is pumped and pushes the load up",
+          "correct": false
+        },
+        {
+          "text": "A coiled spring inside stores each pump and releases it at once",
+          "correct": false
+        }
+      ],
+      "difficulty": "easy",
+      "fun_fact": "You push a thin piston many times over a long distance, and the trapped oil moves a fat piston a tiny distance with enormous force. You're trading distance for power — the same energy, just rearranged — which is why lifting a car takes dozens of small pumps.",
+      "category": "Technology"
+    },
+    {
+      "id": "tech_en_121",
+      "question": "Why does a car's side window shatter into tiny blunt cubes instead of long sharp shards?",
+      "answers": [
+        {
+          "text": "The glass is rapidly cooled during making, locking in stress that crumbles it",
+          "correct": true
+        },
+        {
+          "text": "A laser scores a grid of cut lines across the glass at the factory",
+          "correct": false
+        },
+        {
+          "text": "The glass is too thin to form long pieces when it breaks",
+          "correct": false
+        }
+      ],
+      "difficulty": "hard",
+      "fun_fact": "Side and rear car windows are 'tempered': the surface is cooled fast while the inside stays hot, leaving the whole pane under tension. When it breaks, that stored stress makes it disintegrate into harmless pebbles. The front windscreen is different — it's two layers bonded to a plastic film so it holds together.",
+      "category": "Technology"
+    },
+    {
+      "id": "tech_en_122",
+      "question": "Why does a tuning fork keep ringing a clear single note long after it has been struck?",
+      "answers": [
+        {
+          "text": "Its shape is built to vibrate at one frequency with little energy loss",
+          "correct": true
+        },
+        {
+          "text": "A tiny battery in the base sustains the vibration electronically",
+          "correct": false
+        },
+        {
+          "text": "The metal continues to expand and contract from the heat of the strike",
+          "correct": false
+        }
+      ],
+      "difficulty": "medium",
+      "fun_fact": "The two prongs swing in and out together, cancelling sideways forces so almost no energy leaks into the handle. That's why a tuning fork holds one steady pitch for a long time, and why it was the gold standard for tuning instruments before electronics.",
+      "category": "Technology"
+    },
+    {
+      "id": "tech_en_123",
+      "question": "Why does a smoke detector with a tiny radioactive source go off when smoke drifts inside it?",
+      "answers": [
+        {
+          "text": "Smoke particles disrupt a steady electric current the source maintains",
+          "correct": true
+        },
+        {
+          "text": "The radiation reacts chemically with smoke and produces a spark",
+          "correct": false
+        },
+        {
+          "text": "Smoke makes the radioactive source heat up past a trigger point",
+          "correct": false
+        }
+      ],
+      "difficulty": "hard",
+      "fun_fact": "An 'ionisation' smoke alarm uses a speck of americium to knock electrons off air molecules, creating a small steady current between two plates. Smoke particles soak up those charged bits, the current drops, and the alarm sounds — which is why even invisible smoke can set it off.",
+      "category": "Technology"
+    },
+    {
+      "id": "tech_en_124",
+      "question": "Why does a paper coffee filter let water through but hold back the ground beans?",
+      "answers": [
+        {
+          "text": "Its tangled fibres leave gaps too small for the grounds to pass",
+          "correct": true
+        },
+        {
+          "text": "The paper chemically repels the oils that bind the grounds",
+          "correct": false
+        },
+        {
+          "text": "Static electricity in the paper pins the grounds in place",
+          "correct": false
+        }
+      ],
+      "difficulty": "easy",
+      "fun_fact": "A coffee filter is just a dense mat of cellulose fibres with countless microscopic gaps — big enough for water molecules but too small for coffee grounds. Paper filters also trap most of the oily compounds that pass straight through a metal mesh, which is why filter coffee tastes 'cleaner' than French press.",
+      "category": "Technology"
+    },
+    {
+      "id": "tech_en_125",
+      "question": "What was the microwave oven accidentally discovered to do before anyone tried cooking with it?",
+      "answers": [
+        {
+          "text": "Melt a chocolate bar in an engineer's pocket",
+          "correct": true
+        },
+        {
+          "text": "Fog up the lens of a nearby camera",
+          "correct": false
+        },
+        {
+          "text": "Erase the data on magnetic tape reels",
+          "correct": false
+        }
+      ],
+      "difficulty": "easy",
+      "fun_fact": "Raytheon engineer Percy Spencer was standing near an active radar magnetron in 1945 when a peanut-cluster bar in his pocket melted. He next aimed it at popcorn kernels and an egg — the egg exploded — and the microwave oven was born from a radar part.",
+      "category": "Technology"
+    },
+    {
+      "id": "tech_en_126",
+      "question": "The adhesive behind Post-it Notes was originally invented as a failure while trying to make what?",
+      "answers": [
+        {
+          "text": "A super-strong aerospace glue",
+          "correct": true
+        },
+        {
+          "text": "A waterproof paint sealant",
+          "correct": false
+        },
+        {
+          "text": "A quick-drying wood varnish",
+          "correct": false
+        }
+      ],
+      "difficulty": "easy",
+      "fun_fact": "3M chemist Spencer Silver was aiming for a powerful adhesive in 1968 but produced a weak, reusable one instead. It sat unused for years until colleague Art Fry used it to anchor bookmarks in his church hymnal.",
+      "category": "Technology"
+    },
+    {
+      "id": "tech_en_127",
+      "question": "The 'mouse' pointing device got its name for what reason?",
+      "answers": [
+        {
+          "text": "Its cord looked like a mouse's tail",
+          "correct": true
+        },
+        {
+          "text": "It was small enough to hide in one hand",
+          "correct": false
+        },
+        {
+          "text": "It made a faint squeaking click",
+          "correct": false
+        }
+      ],
+      "difficulty": "easy",
+      "fun_fact": "Douglas Engelbart's lab built the first wooden prototype in the 1960s with a single cable trailing out the back. Nobody now remembers who first said it resembled a mouse, but the nickname stuck and the official name was forgotten.",
+      "category": "Technology"
+    },
+    {
+      "id": "tech_en_128",
+      "question": "The bar code was first patented decades before stores could use it because the inventors lacked what?",
+      "answers": [
+        {
+          "text": "A cheap, bright enough light to read it — the laser",
+          "correct": true
+        },
+        {
+          "text": "A printer that could print thin black lines",
+          "correct": false
+        },
+        {
+          "text": "Permission from grocery trade unions",
+          "correct": false
+        }
+      ],
+      "difficulty": "medium",
+      "fun_fact": "Norman Woodland and Bernard Silver patented their 'bull's-eye' barcode in 1952, but reliable scanning needed the laser, which didn't arrive until 1960. The first product ever scanned at a checkout, in 1974, was a pack of Wrigley's chewing gum.",
+      "category": "Technology"
+    },
+    {
+      "id": "tech_en_129",
+      "question": "The word 'robot' entered the world's languages through what?",
+      "answers": [
+        {
+          "text": "A 1920 Czech stage play about artificial workers",
+          "correct": true
+        },
+        {
+          "text": "An early IBM engineering manual",
+          "correct": false
+        },
+        {
+          "text": "A 1930s American science magazine",
+          "correct": false
+        }
+      ],
+      "difficulty": "easy",
+      "fun_fact": "Karel Capek's play 'R.U.R.' coined 'robot' from the Czech 'robota', meaning forced labour or drudgery. Karel credited his brother Josef with suggesting the word, so the most famous term in robotics came from a playwright, not an engineer.",
+      "category": "Technology"
+    },
+    {
+      "id": "tech_en_130",
+      "question": "Bubble wrap was originally marketed as what before it became packaging?",
+      "answers": [
+        {
+          "text": "Textured wallpaper",
+          "correct": true
+        },
+        {
+          "text": "A children's bath toy",
+          "correct": false
+        },
+        {
+          "text": "Insulation for greenhouse roofs",
+          "correct": false
+        }
+      ],
+      "difficulty": "easy",
+      "fun_fact": "In 1957 two engineers sealed two shower curtains together hoping to sell trendy 3D wallpaper. It flopped, they pitched it as greenhouse insulation, and only later did IBM use it to protect a shipped computer — finally finding its purpose.",
+      "category": "Technology"
+    },
+    {
+      "id": "tech_en_131",
+      "question": "The term 'pixel' is a shortened blend of which two words?",
+      "answers": [
+        {
+          "text": "Picture and element",
+          "correct": true
+        },
+        {
+          "text": "Pixel and cell",
+          "correct": false
+        },
+        {
+          "text": "Point and signal",
+          "correct": false
+        }
+      ],
+      "difficulty": "easy",
+      "fun_fact": "'Pixel' contracts 'pix' (a 1930s film-industry slang plural of 'pictures') with 'element'. The related word 'voxel' for a 3D point follows the same pattern, blending 'volume' with 'element'.",
+      "category": "Technology"
+    },
+    {
+      "id": "tech_en_132",
+      "question": "The first computer programmer is widely considered to be whom?",
+      "answers": [
+        {
+          "text": "Ada Lovelace, who wrote an algorithm in the 1840s",
+          "correct": true
+        },
+        {
+          "text": "Alan Turing, in the 1930s",
+          "correct": false
+        },
+        {
+          "text": "Charles Babbage, in the 1820s",
+          "correct": false
+        }
+      ],
+      "difficulty": "easy",
+      "fun_fact": "Ada Lovelace wrote notes on Babbage's never-built Analytical Engine, including a step-by-step method to compute Bernoulli numbers — recognised as the first published algorithm meant for a machine. The programming language Ada is named in her honour.",
+      "category": "Technology"
+    },
+    {
+      "id": "tech_en_133",
+      "question": "The keyboard 'Shift' key is named for the physical action it once performed. What did it shift?",
+      "answers": [
+        {
+          "text": "The whole typewriter carriage up or down",
+          "correct": true
+        },
+        {
+          "text": "An ink ribbon from black to red",
+          "correct": false
+        },
+        {
+          "text": "A metal guard away from the keys",
+          "correct": false
+        }
+      ],
+      "difficulty": "medium",
+      "fun_fact": "Early typewriters had two characters on each type bar. Pressing Shift literally lifted the carriage so the capital letter struck the paper instead of the lowercase one. The name survived into computing even though nothing physically shifts anymore.",
+      "category": "Technology"
+    },
+    {
+      "id": "tech_en_134",
+      "question": "Teflon's non-stick coating was discovered by accident while a chemist was trying to make what?",
+      "answers": [
+        {
+          "text": "A new refrigerator coolant gas",
+          "correct": true
+        },
+        {
+          "text": "A lubricant for car engines",
+          "correct": false
+        },
+        {
+          "text": "A waterproof fabric dye",
+          "correct": false
+        }
+      ],
+      "difficulty": "easy",
+      "fun_fact": "DuPont chemist Roy Plunkett opened a gas cylinder in 1938 and found the gas had spontaneously turned into a slippery white waxy solid. It was later used to seal equipment in the Manhattan Project before it ever reached a frying pan.",
+      "category": "Technology"
+    },
+    {
+      "id": "tech_en_135",
+      "question": "The 'pound sign' or hash key (#) on phones is officially called by what odd name?",
+      "answers": [
+        {
+          "text": "The octothorpe",
+          "correct": true
+        },
+        {
+          "text": "The crosshatch glyph",
+          "correct": false
+        },
+        {
+          "text": "The quadgrid",
+          "correct": false
+        }
+      ],
+      "difficulty": "hard",
+      "fun_fact": "Bell Labs engineers reportedly coined 'octothorpe' in the 1960s when adding the key to touch-tone phones — 'octo' for its eight points. The same symbol that named the modern hashtag started as telephone-company jargon.",
+      "category": "Technology"
+    },
+    {
+      "id": "tech_en_136",
+      "question": "Super Glue (cyanoacrylate) was twice rejected by its inventor before it succeeded, because of what flaw?",
+      "answers": [
+        {
+          "text": "It stuck to absolutely everything it touched",
+          "correct": true
+        },
+        {
+          "text": "It dried too slowly to be useful",
+          "correct": false
+        },
+        {
+          "text": "It gave off a toxic-smelling vapour",
+          "correct": false
+        }
+      ],
+      "difficulty": "medium",
+      "fun_fact": "Harry Coover first found the sticky compound in 1942 while developing clear gun sights, and dismissed it as a nuisance. Years later he realised the very flaw — instant bonding without heat or pressure — was the whole product.",
+      "category": "Technology"
+    },
+    {
+      "id": "tech_en_137",
+      "question": "The 'dashboard' in a car is named after a part of which earlier vehicle?",
+      "answers": [
+        {
+          "text": "A horse-drawn carriage",
+          "correct": true
+        },
+        {
+          "text": "A steam locomotive",
+          "correct": false
+        },
+        {
+          "text": "A sailing ship",
+          "correct": false
+        }
+      ],
+      "difficulty": "medium",
+      "fun_fact": "On a horse carriage, the 'dashboard' was a board that stopped mud and stones 'dashed up' by the horse's hooves from hitting the driver. Cars inherited the panel and the name, even though there are no longer any hooves to worry about.",
+      "category": "Technology"
+    },
+    {
+      "id": "tech_en_138",
+      "question": "Vulcanised rubber, the basis of modern tyres, was discovered when its inventor did what by accident?",
+      "answers": [
+        {
+          "text": "Dropped a rubber-sulfur mix onto a hot stove",
+          "correct": true
+        },
+        {
+          "text": "Left a rubber sheet out in a hailstorm",
+          "correct": false
+        },
+        {
+          "text": "Spilled acid on a pair of rubber boots",
+          "correct": false
+        }
+      ],
+      "difficulty": "easy",
+      "fun_fact": "Charles Goodyear had spent years trying to make rubber stable in heat and cold when, around 1839, a sample fell on a hot stove and charred into a tough, weatherproof material. Raw rubber until then melted in summer and cracked in winter.",
+      "category": "Technology"
+    },
+    {
+      "id": "tech_en_139",
+      "question": "The X-ray was discovered by accident while its discoverer was studying what?",
+      "answers": [
+        {
+          "text": "Glowing rays inside a vacuum tube",
+          "correct": true
+        },
+        {
+          "text": "The chemistry of photographic film",
+          "correct": false
+        },
+        {
+          "text": "Static electricity in dry winter air",
+          "correct": false
+        }
+      ],
+      "difficulty": "easy",
+      "fun_fact": "In 1895 Wilhelm Rontgen noticed a screen across the room glowing while he worked with a covered cathode-ray tube. He called the unknown radiation 'X' for unknown — and the placeholder letter became the permanent name.",
+      "category": "Technology"
+    },
+    {
+      "id": "tech_en_140",
+      "question": "The slang term 'spam' aside, why was junk fax once called the 'original' nuisance technology?",
+      "answers": [
+        {
+          "text": "Unwanted faxes wasted the recipient's own paper and ink",
+          "correct": true
+        },
+        {
+          "text": "Fax machines auto-dialled random numbers at night",
+          "correct": false
+        },
+        {
+          "text": "Faxes could secretly copy a company's files",
+          "correct": false
+        }
+      ],
+      "difficulty": "hard",
+      "fun_fact": "Junk faxing predated email spam as a complaint because the cost landed on the receiver: their machine, their paper, their toner. The US passed a law against unsolicited fax advertising in 1991, years before email spam laws existed.",
+      "category": "Technology"
+    },
+    {
+      "id": "tech_en_141",
+      "question": "Legend says the QWERTY keyboard's top row was arranged to help typewriter salesmen. What can you do with it?",
+      "answers": [
+        {
+          "text": "Type every letter of 'TYPEWRITER' using only that one row",
+          "correct": true
+        },
+        {
+          "text": "Spell a secret company motto diagonally",
+          "correct": false
+        },
+        {
+          "text": "Read the brand name in colour-coded keys",
+          "correct": false
+        }
+      ],
+      "difficulty": "hard",
+      "fun_fact": "All the letters of the word 'TYPEWRITER' appear in the top letter row, which let a salesman tap out the product's name quickly to impress a customer. It is widely believed — though not documented — that the layout was nudged to make this possible.",
+      "category": "Technology"
+    },
+    {
+      "id": "tech_en_142",
+      "question": "The term 'spam folder' aside, the very first piece of unsolicited bulk email in 1978 advertised what?",
+      "answers": [
+        {
+          "text": "A new line of computers",
+          "correct": true
+        },
+        {
+          "text": "A get-rich-quick chain letter",
+          "correct": false
+        },
+        {
+          "text": "Cut-price long-distance phone calls",
+          "correct": false
+        }
+      ],
+      "difficulty": "medium",
+      "fun_fact": "A marketer named Gary Thuerk emailed several hundred ARPANET users to promote DEC computers. The backlash was instant and fierce — yet he later claimed the campaign generated millions in sales, making him the unrepentant grandfather of spam.",
+      "category": "Technology"
+    },
+    {
+      "id": "tech_en_143",
+      "question": "The radio-frequency band used by Wi-Fi and microwave ovens, 2.4 GHz, became free to use for a surprising reason. Which?",
+      "answers": [
+        {
+          "text": "It was a 'junk' band where ovens already created interference",
+          "correct": true
+        },
+        {
+          "text": "A treaty reserved it for emergency services worldwide",
+          "correct": false
+        },
+        {
+          "text": "It was left over from abandoned television channels",
+          "correct": false
+        }
+      ],
+      "difficulty": "medium",
+      "fun_fact": "Regulators set aside certain 'ISM' bands as unlicensed precisely because devices like microwave ovens were already polluting them with noise. Wi-Fi, Bluetooth and cordless phones all settled into this electromagnetic junkyard because it was free.",
+      "category": "Technology"
+    },
+    {
+      "id": "tech_en_144",
+      "question": "The computer term 'patch', as in a software patch, comes from what physical object?",
+      "answers": [
+        {
+          "text": "Paper tape with holes covered or punched to fix code",
+          "correct": true
+        },
+        {
+          "text": "A cloth badge sewn onto an engineer's coat",
+          "correct": false
+        },
+        {
+          "text": "A rubber repair patch for cooling hoses",
+          "correct": false
+        }
+      ],
+      "difficulty": "hard",
+      "fun_fact": "Early programs were stored on punched paper or card. To fix an error without re-punching the whole thing, operators literally taped a patch of paper over wrong holes or punched new ones. The word for the fix outlived the tape itself.",
+      "category": "Technology"
+    },
+    {
+      "id": "tech_en_145",
+      "question": "The 'WD-40' lubricant's name records a piece of its own history. What does it mean?",
+      "answers": [
+        {
+          "text": "Water Displacement, 40th formula attempt",
+          "correct": true
+        },
+        {
+          "text": "Workshop Degreaser, model 40",
+          "correct": false
+        },
+        {
+          "text": "Wide-Duty oil, rated to 40 degrees",
+          "correct": false
+        }
+      ],
+      "difficulty": "medium",
+      "fun_fact": "A small lab set out to stop corrosion on missile shells in 1953 by displacing water, and only the 40th recipe worked. The name is literally the lab notebook label. Employees took it home, and public demand pushed it onto store shelves.",
+      "category": "Technology"
+    },
+    {
+      "id": "tech_en_146",
+      "question": "The flat-headed slot screw came long before the cross-head, but the cross-head was invented mainly to solve what?",
+      "answers": [
+        {
+          "text": "Screwdrivers sliding out of the slot on assembly lines",
+          "correct": true
+        },
+        {
+          "text": "Screws rusting solid in the slot over time",
+          "correct": false
+        },
+        {
+          "text": "Workers stripping the wrong-sized screw heads",
+          "correct": false
+        }
+      ],
+      "difficulty": "medium",
+      "fun_fact": "Flat slots are easy to cut but let the driver skate off sideways, a real problem for power tools in 1930s car factories. The self-centring cross design kept the driver seated — and the assembly line moving — which is why it spread fast.",
+      "category": "Technology"
+    },
+    {
+      "id": "tech_en_147",
+      "question": "The 'Blue Screen of Death' aside, the original meaning of a computer 'crash' borrowed from which earlier technology?",
+      "answers": [
+        {
+          "text": "Disk drive heads physically striking the spinning platter",
+          "correct": true
+        },
+        {
+          "text": "Telegraph keys jamming under fast operators",
+          "correct": false
+        },
+        {
+          "text": "Aircraft instrument panels failing in tests",
+          "correct": false
+        }
+      ],
+      "difficulty": "medium",
+      "fun_fact": "A 'head crash' was a literal, destructive event: the read-write head, which floats microns above a spinning disk, would touch down and gouge the surface. The word for the catastrophe spread to mean any sudden system failure.",
+      "category": "Technology"
+    },
+    {
+      "id": "tech_en_148",
+      "question": "The 'spam' nuisance aside, the @ sign on keyboards had a forgotten commercial job for centuries before email. What was it?",
+      "answers": [
+        {
+          "text": "Shorthand for 'at the price of' in trade and accounting",
+          "correct": true
+        },
+        {
+          "text": "A printer's mark showing where to cut a page",
+          "correct": false
+        },
+        {
+          "text": "A symbol for the planet Mercury in old charts",
+          "correct": false
+        }
+      ],
+      "difficulty": "medium",
+      "fun_fact": "Merchants wrote things like '12 apples @ 3 pence' long before computers existed, which is why the symbol was already on typewriter and keyboard layouts — sitting unused and available when email needed a separator.",
+      "category": "Technology"
+    },
+    {
+      "id": "tech_en_149",
+      "question": "Roughly how many transistors are packed into a modern high-end smartphone chip?",
+      "answers": [
+        {
+          "text": "Around 15 to 20 billion",
+          "correct": true
+        },
+        {
+          "text": "Around 50 to 80 million",
+          "correct": false
+        },
+        {
+          "text": "Around 4 to 6 million",
+          "correct": false
+        }
+      ],
+      "difficulty": "medium",
+      "fun_fact": "Recent flagship phone chips cross 15 billion transistors on a sliver of silicon the size of a fingernail. That's roughly two transistors for every human alive — sitting in your pocket.",
+      "category": "Technology"
+    },
+    {
+      "id": "tech_en_150",
+      "question": "How much of the world's electricity is consumed by data centres, by recent estimates?",
+      "answers": [
+        {
+          "text": "Around 1 to 2 percent",
+          "correct": true
+        },
+        {
+          "text": "Around 15 to 20 percent",
+          "correct": false
+        },
+        {
+          "text": "Less than one tenth of a percent",
+          "correct": false
+        }
+      ],
+      "difficulty": "easy",
+      "fun_fact": "Despite their reputation as energy monsters, all the world's data centres together draw only about 1 to 2 percent of global electricity — though that figure is climbing fast with AI workloads.",
       "category": "Technology"
     }
   ]

@@ -1,7 +1,7 @@
 {
   "name": "Sport",
   "language": "de",
-  "version": "1.0",
+  "version": "1.1",
   "theme": "sport",
   "questions": [
     {
@@ -1202,6 +1202,582 @@
       ],
       "difficulty": "hard",
       "fun_fact": "Der Schwede Jan Boklöv entwickelte den V-Stil um 1985 eher zufällig und wurde von den Punktrichtern zunächst für die 'unästhetische' Haltung abgestraft. Erst als seine Weiten konkurrenzlos wurden, setzte sich die Technik flächendeckend durch und verdrängte den jahrzehntelang üblichen Parallelstil komplett.",
+      "category": "Sport"
+    },
+    {
+      "id": "sport_de_104",
+      "question": "Warum schwitzt ein Mensch beim Sport überhaupt — was ist der physikalische Hauptzweck?",
+      "answers": [
+        {"text": "Der verdunstende Schweiß entzieht der Haut Wärme und kühlt so den Körper", "correct": true},
+        {"text": "Der Schweiß spült Milchsäure aus den Muskeln nach außen", "correct": false},
+        {"text": "Der Schweiß befeuchtet die Haut, damit die Muskeln geschmeidiger arbeiten", "correct": false}
+      ],
+      "difficulty": "easy",
+      "fun_fact": "Nicht der Schweiß selbst kühlt, sondern seine Verdunstung: Pro Gramm verdunstetem Schweiß werden dem Körper rund 0,6 Kilokalorien Wärme entzogen. Bei schwüler Luft verdunstet er schlecht — deshalb fühlt sich Sport bei Hitze und hoher Luftfeuchtigkeit doppelt anstrengend an.",
+      "category": "Sport"
+    },
+    {
+      "id": "sport_de_105",
+      "question": "Warum bekommt man beim Laufen manchmal plötzlich Seitenstechen?",
+      "answers": [
+        {"text": "Wahrscheinlich gerät das Bindegewebe zwischen Bauchorganen und Zwerchfell unter Zug und Reizung", "correct": true},
+        {"text": "Die Milz platzt kurzzeitig auf, um zusätzliche rote Blutkörperchen abzugeben", "correct": false},
+        {"text": "Im Darm bilden sich Gasblasen, die gegen die Rippen drücken", "correct": false}
+      ],
+      "difficulty": "medium",
+      "fun_fact": "Die führende Theorie ist eine Reizung des Bauchfells (Peritoneum): Beim Laufen ruckeln die Organe an ihren Aufhängungen. Deshalb hilft tiefes Bauchatmen und das Anspannen der Rumpfmuskulatur — und man sollte kurz vor dem Sport nicht zu viel trinken oder essen.",
+      "category": "Sport"
+    },
+    {
+      "id": "sport_de_106",
+      "question": "Warum bekommt ein Boxer durch einen Schlag ans Kinn so leicht ein K.o., obwohl das Kinn weit vom Gehirn entfernt ist?",
+      "answers": [
+        {"text": "Der Schlag versetzt den Kopf in eine schnelle Drehung, und das im Schädel rotierende Gehirn verliert kurz die Funktion", "correct": true},
+        {"text": "Im Kinn verläuft eine Hauptschlagader, deren Abdrücken sofort das Bewusstsein nimmt", "correct": false},
+        {"text": "Der Kieferknochen leitet die Stoßwelle direkt in das Innenohr und schaltet es ab", "correct": false}
+      ],
+      "difficulty": "medium",
+      "fun_fact": "Das Kinn ist ein langer Hebel: Ein Treffer dort dreht den Kopf abrupt. Das Gehirn schwimmt in Flüssigkeit und wird durch die plötzliche Rotation kurzzeitig 'durchgeschüttelt', was Nervensignale stört. Deshalb sind Haken seitlich aufs Kinn so wirksam wie gerade Treffer.",
+      "category": "Sport"
+    },
+    {
+      "id": "sport_de_107",
+      "question": "Warum wird ein Sportler beim Höhentraining in den Bergen ausdauernder, wenn er ins Flachland zurückkehrt?",
+      "answers": [
+        {"text": "Der Körper bildet in dünner Höhenluft mehr rote Blutkörperchen, die im Flachland mehr Sauerstoff transportieren", "correct": true},
+        {"text": "Die Lunge dehnt sich in der Höhe dauerhaft aus und fasst danach mehr Luft", "correct": false},
+        {"text": "Das Herz wächst in der Höhe, um den niedrigeren Luftdruck auszugleichen", "correct": false}
+      ],
+      "difficulty": "easy",
+      "fun_fact": "In großer Höhe ist weniger Sauerstoff in der Luft, also schüttet der Körper das Hormon Erythropoetin (EPO) aus und produziert mehr rote Blutkörperchen. Genau dieses körpereigene EPO wird in synthetischer Form auch als Dopingmittel missbraucht.",
+      "category": "Sport"
+    },
+    {
+      "id": "sport_de_108",
+      "question": "Warum tut ein Muskelkater erst ein bis zwei Tage nach dem Training am stärksten weh — und nicht sofort?",
+      "answers": [
+        {"text": "Er entsteht durch winzige Risse in den Muskelfasern, deren Entzündungsreaktion erst verzögert einsetzt", "correct": true},
+        {"text": "Eingelagerte Milchsäure kristallisiert über Nacht aus und reizt die Nerven", "correct": false},
+        {"text": "Der Muskel trocknet nach dem Sport langsam aus und verhärtet sich dadurch", "correct": false}
+      ],
+      "difficulty": "medium",
+      "fun_fact": "Die alte Milchsäure-Erklärung ist überholt: Laktat ist schon nach rund einer Stunde wieder abgebaut. Muskelkater stammt von Mikroverletzungen der Fasern; die Entzündung und der Reparaturprozess brauchen Zeit, weshalb der Schmerz typischerweise nach 24 bis 48 Stunden gipfelt.",
+      "category": "Sport"
+    },
+    {
+      "id": "sport_de_109",
+      "question": "Warum springt ein gut aufgepumpter Basketball höher zurück als ein schlaffer?",
+      "answers": [
+        {"text": "Die komprimierte Luft im Ball federt beim Aufprall zurück und gibt die Energie an den Ball ab", "correct": true},
+        {"text": "Das Gummi eines harten Balls ist schwerer und fällt deshalb schneller", "correct": false},
+        {"text": "Ein praller Ball hat weniger Oberfläche am Boden und damit weniger Reibung", "correct": false}
+      ],
+      "difficulty": "easy",
+      "fun_fact": "Beim Aufprall verformt sich der Ball und presst die Innenluft zusammen; diese drückt zurück wie eine Feder und schleudert den Ball nach oben. Die NBA schreibt deshalb einen genauen Innendruck vor: Ein Ball, der aus 1,80 m fällt, muss zwischen etwa 1,30 und 1,45 m zurückspringen.",
+      "category": "Sport"
+    },
+    {
+      "id": "sport_de_110",
+      "question": "Warum gleitet ein Schlittschuh fast reibungslos über Eis?",
+      "answers": [
+        {"text": "Unter der Kufe entsteht ein hauchdünner Wasserfilm, auf dem der Schuh gleitet", "correct": true},
+        {"text": "Eis ist von Natur aus völlig glatt und reibungsfrei wie poliertes Glas", "correct": false},
+        {"text": "Die Metallkufe stößt das Eis durch statische Aufladung leicht ab", "correct": false}
+      ],
+      "difficulty": "medium",
+      "fun_fact": "Lange galt der Druck der schmalen Kufe als alleinige Ursache, doch der reicht physikalisch nicht aus. Heute weiß man: Eis hat von Natur aus eine dünne, schon bei Frost flüssige Oberflächenschicht, und die Reibung der Kufe erwärmt sie zusätzlich — beides zusammen erzeugt den gleitfähigen Wasserfilm.",
+      "category": "Sport"
+    },
+    {
+      "id": "sport_de_111",
+      "question": "Warum hilft Kreide (Magnesia) Turnern und Kletterern, obwohl Feuchtigkeit eigentlich für besseren Halt sorgen müsste?",
+      "answers": [
+        {"text": "Sie nimmt den Handschweiß auf und hält die Haut trocken, was die Reibung erhöht", "correct": true},
+        {"text": "Sie bildet eine klebrige Schicht, die wie ein Kleber an der Stange haftet", "correct": false},
+        {"text": "Sie kühlt die Hände und strafft so die Haut für mehr Griffkraft", "correct": false}
+      ],
+      "difficulty": "easy",
+      "fun_fact": "Magnesiumcarbonat ist stark wasseranziehend und saugt den Schweiß weg. Ein dünner Schweißfilm wirkt wie ein Schmiermittel zwischen Haut und Gerät — trockene Haut dagegen 'verzahnt' sich mikroskopisch und greift deutlich besser.",
+      "category": "Sport"
+    },
+    {
+      "id": "sport_de_112",
+      "question": "Warum wird ein Marathonläufer um Kilometer 30 oft schlagartig kraftlos — der berüchtigte 'Mann mit dem Hammer'?",
+      "answers": [
+        {"text": "Die in Muskeln und Leber gespeicherten Kohlenhydrat-Reserven (Glykogen) sind erschöpft", "correct": true},
+        {"text": "Das Blut übersäuert plötzlich durch zu viel angesammelte Milchsäure", "correct": false},
+        {"text": "Die Muskeln verlieren durch das Schwitzen zu viel Wasser und schrumpfen", "correct": false}
+      ],
+      "difficulty": "medium",
+      "fun_fact": "Der Körper speichert nur Glykogen für etwa 30 bis 35 Kilometer. Danach muss er auf Fett umschalten, das aber viel langsamer Energie liefert. Deshalb essen Läufer unterwegs Gels — und 'Carbo-Loading' vor dem Rennen füllt die Speicher gezielt maximal auf.",
+      "category": "Sport"
+    },
+    {
+      "id": "sport_de_113",
+      "question": "Warum fühlt sich kaltes Schwimmbadwasser deutlich kälter an als Luft mit derselben Temperatur?",
+      "answers": [
+        {"text": "Wasser leitet Wärme weg vom Körper viel schneller als Luft", "correct": true},
+        {"text": "Wasser hat eine niedrigere Temperatur, als das Thermometer anzeigt", "correct": false},
+        {"text": "Der Wasserdruck presst die warme Hautschicht zusammen", "correct": false}
+      ],
+      "difficulty": "easy",
+      "fun_fact": "Wasser leitet Wärme rund 25-mal besser als Luft. Deshalb kühlt man im Wasser viel schneller aus — und deshalb tragen Triathleten und Freiwasserschwimmer Neoprenanzüge, die eine isolierende dünne Wasserschicht am Körper festhalten.",
+      "category": "Sport"
+    },
+    {
+      "id": "sport_de_114",
+      "question": "Warum wirft ein American-Football-Quarterback den Ball mit einer Drehung um seine Längsachse (Spiralwurf)?",
+      "answers": [
+        {"text": "Die Rotation stabilisiert den Ball wie ein Kreisel und hält ihn in der Flugrichtung", "correct": true},
+        {"text": "Die Drehung erzeugt einen Sog, der den Ball schneller fliegen lässt", "correct": false},
+        {"text": "Die Rotation lässt den Ball für den Fänger leichter sichtbar leuchten", "correct": false}
+      ],
+      "difficulty": "medium",
+      "fun_fact": "Ein rotierender Körper widersteht dem Kippen — derselbe Kreiseleffekt, der ein Fahrrad aufrecht hält. Ohne Spirale taumelt der längliche Ball und wird unberechenbar. Mit sauberer Spirale durchschneidet die Spitze die Luft und der Wurf bleibt weit und präzise.",
+      "category": "Sport"
+    },
+    {
+      "id": "sport_de_115",
+      "question": "Welcher körpereigene Mechanismus hilft Spitzen-Apnoetauchern, mit dem vorhandenen Sauerstoff besonders lange auszukommen?",
+      "answers": [
+        {"text": "Der Tauchreflex senkt im kalten Wasser Herzschlag und Sauerstoffverbrauch automatisch", "correct": true},
+        {"text": "Eine vorherige Atmung von reinem Sauerstoff verdünnt das Blut und spart Energie", "correct": false},
+        {"text": "Kalte Luft in der Lunge kühlt den Körper herunter und senkt so den Verbrauch", "correct": false}
+      ],
+      "difficulty": "hard",
+      "fun_fact": "Der 'Säugetier-Tauchreflex' wird ausgelöst, sobald das Gesicht ins kalte Wasser taucht: Der Puls fällt drastisch, und das Blut zieht sich aus Armen und Beinen in Richtung Herz und Hirn zurück. Dadurch reicht der vorhandene Sauerstoff für Minuten — ein Mechanismus, den wir mit Walen und Robben teilen.",
+      "category": "Sport"
+    },
+    {
+      "id": "sport_de_116",
+      "question": "Warum kann ein Eiskunstläufer eine Pirouette einfach durch Anlegen der Arme blitzschnell beschleunigen?",
+      "answers": [
+        {"text": "Durch die Drehimpulserhaltung — kleinerer Radius bedeutet höhere Drehgeschwindigkeit", "correct": true},
+        {"text": "Die angelegten Arme verringern den Luftwiderstand am Körper", "correct": false},
+        {"text": "Das zusätzliche Gewicht nah am Körper drückt die Kufe tiefer ins Eis", "correct": false}
+      ],
+      "difficulty": "medium",
+      "fun_fact": "Es ist exakt dasselbe Prinzip wie bei einem Spielzeugkreisel: Der Drehimpuls bleibt erhalten. Zieht der Läufer die Masse seiner Arme näher an die Drehachse, muss die Drehzahl steigen — Spitzenläufer erreichen so über 300 Umdrehungen pro Minute.",
+      "category": "Sport"
+    },
+    {
+      "id": "sport_de_117",
+      "question": "Warum trägt ein Fußball-Torwart im Winter manchmal ein kurzärmeliges Trikot, während die Feldspieler frieren?",
+      "answers": [
+        {"text": "Falsche Annahme — tatsächlich friert der Torwart am meisten, weil er sich kaum bewegt und wenig Wärme erzeugt", "correct": true},
+        {"text": "Torwart-Trikots enthalten ein elektrisches Heizgewebe im Stoff", "correct": false},
+        {"text": "Der Torwart steht im windgeschützten Bereich des Tornetzes", "correct": false}
+      ],
+      "difficulty": "easy",
+      "fun_fact": "Genau umgekehrt: Weil Muskelarbeit Wärme produziert, bleiben die ständig laufenden Feldspieler warm, während der überwiegend stehende Torwart auskühlt. Deshalb tragen Keeper oft lange Ärmel, Unterzieh-Shirts und sogar Handschuhe mit Thermofutter.",
+      "category": "Sport"
+    },
+    {
+      "id": "sport_de_118",
+      "question": "Warum schmieren Skifahrer und Snowboarder Wachs auf die Unterseite ihrer Bretter?",
+      "answers": [
+        {"text": "Das Wachs macht den Belag wasserabweisend und verringert die Reibung auf dem Schmelzwasserfilm", "correct": true},
+        {"text": "Das Wachs härtet den Belag, damit er auf Steinen nicht so leicht zerkratzt", "correct": false},
+        {"text": "Das Wachs füllt die Luftporen im Material und macht den Ski schwerer und stabiler", "correct": false}
+      ],
+      "difficulty": "easy",
+      "fun_fact": "Beim Gleiten entsteht durch Reibung ein dünner Wasserfilm zwischen Ski und Schnee. Ein unbehandelter Belag saugt dieses Wasser auf und 'klebt', das wasserabweisende Wachs lässt den Ski darüber gleiten. Für jede Schneetemperatur gibt es eigene Wachshärten.",
+      "category": "Sport"
+    },
+    {
+      "id": "sport_de_119",
+      "question": "Warum entsteht ein 'Doping-Verdacht' allein durch zu viele rote Blutkörperchen, selbst ohne nachweisbares Mittel?",
+      "answers": [
+        {"text": "Ein auffällig hoher Hämatokrit-Wert deutet auf Blutdoping hin, das die Sauerstoffversorgung künstlich steigert", "correct": true},
+        {"text": "Viele rote Blutkörperchen machen den Schweiß messbar dunkler", "correct": false},
+        {"text": "Sie verlangsamen den Herzschlag unter den erlaubten Mindestwert", "correct": false}
+      ],
+      "difficulty": "hard",
+      "fun_fact": "Der Hämatokrit gibt den Anteil roter Blutkörperchen am Blut an. Weil mehr davon mehr Sauerstoff zu den Muskeln bringen, manipulieren Dopingsünder ihn mit EPO oder Eigenbluttransfusionen. Der Radsport führte deshalb 1997 eine 50-Prozent-Obergrenze ein — wer drüber lag, wurde aus 'Gesundheitsgründen' gesperrt.",
+      "category": "Sport"
+    },
+    {
+      "id": "sport_de_120",
+      "question": "Warum hilft ein Eisbad — das Eintauchen in kaltes Wasser — der Regeneration nach hartem Training?",
+      "answers": [
+        {"text": "Die Kälte verengt die Blutgefäße und dämpft die Entzündung und Schwellung im Gewebe", "correct": true},
+        {"text": "Die Kälte tötet die im Muskel angesammelte Milchsäure ab", "correct": false},
+        {"text": "Das kalte Wasser presst durch seinen Druck die Müdigkeitsstoffe heraus", "correct": false}
+      ],
+      "difficulty": "medium",
+      "fun_fact": "Kälte zieht die Gefäße zusammen, reduziert Schwellung und betäubt Schmerzrezeptoren. Beim Aufwärmen weiten sie sich wieder und durchspülen das Gewebe. Interessant: Studien zeigen, dass Eisbäder direkt nach Krafttraining den Muskelaufbau sogar leicht bremsen können — Timing ist entscheidend.",
+      "category": "Sport"
+    },
+    {
+      "id": "sport_de_121",
+      "question": "Warum ist die Atemluft beim Sport in großer Kälte für die Lunge anstrengender, obwohl sie sauberer wirkt?",
+      "answers": [
+        {"text": "Die trockene Kaltluft muss im Körper erst erwärmt und befeuchtet werden, was die Atemwege reizt", "correct": true},
+        {"text": "Kalte Luft enthält weniger Sauerstoffmoleküle pro Atemzug", "correct": false},
+        {"text": "Kalte Luft gefriert kurzzeitig an den Lungenbläschen fest", "correct": false}
+      ],
+      "difficulty": "medium",
+      "fun_fact": "Kalte Luft ist sehr trocken. Der Körper erwärmt und befeuchtet sie in Sekundenbruchteilen, was Schleimhäute austrocknet und bei vielen das sogenannte Anstrengungsasthma auslöst. Deshalb atmen Wintersportler bei Frost bewusst durch die Nase oder über ein Tuch ein.",
+      "category": "Sport"
+    },
+    {
+      "id": "sport_de_122",
+      "question": "Warum fliegt ein Tischtennisball mit Topspin nach dem Auftreffen flach nach vorn weg statt hoch abzuspringen?",
+      "answers": [
+        {"text": "Die starke Vorwärtsrotation drückt den Ball beim Aufprall nach unten und nach vorn", "correct": true},
+        {"text": "Der Topspin macht den Ball schwerer und damit flugbahn-flacher", "correct": false},
+        {"text": "Die Rotation erhitzt die Balloberfläche, wodurch sie weicher abspringt", "correct": false}
+      ],
+      "difficulty": "hard",
+      "fun_fact": "Beim Aufprall wandelt die Reibung am Tisch einen Teil der Rotation in zusätzlichen Vorwärtsschub um — der Ball 'schießt' nach vorn und springt flacher. Genau deshalb ist ein Topspin-Ball für den Gegner so schwer zu kontern: Er kommt schneller und tiefer als erwartet.",
+      "category": "Sport"
+    },
+    {
+      "id": "sport_de_123",
+      "question": "Warum trinken Ausdauersportler bei großer Hitze oft salzhaltige Getränke statt reinem Wasser?",
+      "answers": [
+        {"text": "Mit dem Schweiß geht Salz verloren — zu viel reines Wasser kann den Salzhaushalt gefährlich verdünnen", "correct": true},
+        {"text": "Salz lässt das Wasser im Magen schneller verdunsten und kühlt von innen", "correct": false},
+        {"text": "Salz bindet die Milchsäure und macht sie unschädlich", "correct": false}
+      ],
+      "difficulty": "medium",
+      "fun_fact": "Schweiß enthält Natrium. Trinkt man bei extremer Belastung nur Wasser, kann der Natriumgehalt im Blut gefährlich absinken (Hyponatriämie) — das ist sogar riskanter als leichtes Dursten. Deshalb enthalten Sportgetränke gezielt Elektrolyte.",
+      "category": "Sport"
+    },
+    {
+      "id": "sport_de_124",
+      "question": "Warum verliert ein Sprinter auf den letzten Metern eines 100-Meter-Laufs trotzdem oft an Tempo?",
+      "answers": [
+        {"text": "Die schnell verfügbaren Energiespeicher in den Muskeln sind nach wenigen Sekunden nahezu erschöpft", "correct": true},
+        {"text": "Der Luftwiderstand steigt mit dem Quadrat der zurückgelegten Strecke", "correct": false},
+        {"text": "Die Muskeln kühlen gegen Ende des Laufs zu stark ab", "correct": false}
+      ],
+      "difficulty": "hard",
+      "fun_fact": "Für maximale Explosivkraft nutzt der Muskel den Speicherstoff Kreatinphosphat — der reicht nur etwa sechs bis acht Sekunden. Selbst Usain Bolt wurde am Ende minimal langsamer; er gewann, weil er weniger stark abbaute als die anderen, nicht weil er durchgehend beschleunigte.",
+      "category": "Sport"
+    },
+    {
+      "id": "sport_de_125",
+      "question": "Warum können Bahnradfahrer in der steil überhöhten Kurve schräg in die Bande fahren, ohne nach innen zu stürzen?",
+      "answers": [
+        {"text": "Die Fliehkraft drückt sie in die überhöhte Wand, sodass Schwerkraft und Fliehkraft sich ausgleichen", "correct": true},
+        {"text": "Spezielle Magnete in der Bahn halten die Räder an der Wand", "correct": false},
+        {"text": "Der Fahrtwind erzeugt einen Sog, der die Fahrer ansaugt", "correct": false}
+      ],
+      "difficulty": "medium",
+      "fun_fact": "Die Kurven einer Bahnradbahn sind bis zu 45 Grad überhöht. Bei voller Geschwindigkeit drückt die Fliehkraft den Fahrer senkrecht in den Steilhang — relativ zur Bahnoberfläche sitzt er dann fast 'gerade'. Bei zu langsamer Fahrt würde er hingegen nach innen abrutschen.",
+      "category": "Sport"
+    },
+    {
+      "id": "sport_de_126",
+      "question": "Warum erscheinen die Muskeln eines Bodybuilders kurz vor dem Wettkampf praller, wenn er gezielt Kohlenhydrate isst?",
+      "answers": [
+        {"text": "Jedes gespeicherte Gramm Glykogen bindet zusätzlich Wasser und lässt die Muskeln anschwellen", "correct": true},
+        {"text": "Kohlenhydrate werden direkt in zusätzliche Muskelfasern umgewandelt", "correct": false},
+        {"text": "Der Zucker färbt die Muskeln durch verstärkte Durchblutung dunkler", "correct": false}
+      ],
+      "difficulty": "hard",
+      "fun_fact": "Pro Gramm Glykogen lagert der Muskel rund drei Gramm Wasser ein. Bodybuilder entleeren ihre Speicher vor dem Wettkampf erst und 'laden' dann gezielt auf — die Muskeln saugen sich voll und wirken dadurch deutlich voluminöser. Genau dieses Wasser ist auch der Grund für schnelle Gewichtsschwankungen.",
+      "category": "Sport"
+    },
+    {
+      "id": "sport_de_127",
+      "question": "Warum hält ein Geckofuß an einer glatten Wand — und warum ist das für Kletterhandschuhe interessant?",
+      "answers": [
+        {"text": "Geckos haften über millionenfache Mikrohärchen per van-der-Waals-Kräften, nicht per Unterdruck", "correct": true},
+        {"text": "Geckos sondern an den Füßen einen unsichtbaren Klebstoff ab", "correct": false},
+        {"text": "Geckos erzeugen mit den Zehen einen elektrostatischen Sog", "correct": false}
+      ],
+      "difficulty": "hard",
+      "fun_fact": "Geckofüße tragen Millionen feinster Härchen, die so nah an die Oberfläche kommen, dass zwischenmolekulare van-der-Waals-Kräfte wirken — ganz ohne Kleber oder Saugnapf. Forscher entwickeln daraus 'Gecko-Tape' und Hafthandschuhe, mit denen Menschen testweise glatte Glaswände hochklettern konnten.",
+      "category": "Sport"
+    },
+    {
+      "id": "sport_de_128",
+      "question": "Woher stammt der Begriff „Marathon“ für den 42-Kilometer-Lauf?",
+      "answers": [
+        {"text": "Von einem griechischen Boten, der die Siegesnachricht von der Stadt Marathon nach Athen lief", "correct": true},
+        {"text": "Vom griechischen Wort für „Ausdauer“, das schon in der Antike Langläufe bezeichnete", "correct": false},
+        {"text": "Vom Namen des ersten antiken Olympiasiegers über die lange Distanz", "correct": false}
+      ],
+      "difficulty": "easy",
+      "fun_fact": "Die heute berühmte Distanz von 42,195 km ist gar nicht antik, sondern entstand erst 1908 in London: Die Strecke wurde so verlängert, dass der Start am Schloss Windsor und das Ziel vor der königlichen Loge im Stadion lag.",
+      "category": "Sport"
+    },
+    {
+      "id": "sport_de_129",
+      "question": "Warum heißt die Tennis-Wertung beim Punktestand eigentlich „Love“ für null Punkte?",
+      "answers": [
+        {"text": "Vermutlich vom französischen „l'œuf“ (das Ei) — die Null sieht aus wie ein Ei", "correct": true},
+        {"text": "Weil man aus reiner Liebe zum Spiel auch ohne Punkte weiterspielt", "correct": false},
+        {"text": "Von einem englischen Lord namens Love, der die Regel einführte", "correct": false}
+      ],
+      "difficulty": "easy",
+      "fun_fact": "Im Englischen wird „egg“ bis heute umgangssprachlich für eine Null verwendet, etwa im Cricket der „duck“ (von duck's egg). Die Eier-Theorie ist die am weitesten verbreitete Erklärung für das skurrile „Love“.",
+      "category": "Sport"
+    },
+    {
+      "id": "sport_de_131",
+      "question": "Woher kommt der Begriff „Bogey“ für ein Schlag-über-Par-Ergebnis im Golf?",
+      "answers": [
+        {"text": "Von einem populären Lied über den „Bogey Man“, einen unsichtbaren Gegenspieler", "correct": true},
+        {"text": "Vom Nachnamen des Golfers, der das Konzept des Par erfand", "correct": false},
+        {"text": "Vom schottischen Wort für „Sumpfloch“ am Spielfeldrand", "correct": false}
+      ],
+      "difficulty": "hard",
+      "fun_fact": "Ende des 19. Jahrhunderts stellten sich Golfer einen imaginären Gegner namens „Mr. Bogey“ vor, gegen den sie spielten. Erst später rutschte der Begriff eine Stufe nach unten zur heutigen Bedeutung (ein Schlag über Par).",
+      "category": "Sport"
+    },
+    {
+      "id": "sport_de_132",
+      "question": "Warum tragen die Spieler beim Tennis in Wimbledon traditionell fast ausschließlich weiße Kleidung?",
+      "answers": [
+        {"text": "Weiß zeigte im viktorianischen England keine unschicklichen Schweißflecken", "correct": true},
+        {"text": "Weiß war die einzige Farbe, die der Tennisclub steuerfrei importieren durfte", "correct": false},
+        {"text": "Weiß spiegelte die Sonne und schützte vor Augenblendung der Linienrichter", "correct": false}
+      ],
+      "difficulty": "medium",
+      "fun_fact": "Sichtbare Schweißflecken galten in der feinen Gesellschaft als unanständig. Wimbledon hält bis heute streng an der Weiß-Pflicht fest — selbst farbige Unterwäsche kann zu Ermahnungen führen.",
+      "category": "Sport"
+    },
+    {
+      "id": "sport_de_133",
+      "question": "Wie entstand der Sport Basketball überhaupt im Jahr 1891?",
+      "answers": [
+        {"text": "Ein Lehrer suchte ein Hallenspiel, um Studenten im Winter drinnen zu beschäftigen", "correct": true},
+        {"text": "Soldaten erfanden es, um in Kasernen ohne viel Platz fit zu bleiben", "correct": false},
+        {"text": "Es entwickelte sich aus einem indigenen Ballspiel nordamerikanischer Ureinwohner", "correct": false}
+      ],
+      "difficulty": "easy",
+      "fun_fact": "James Naismith bekam von seiner Schule den Auftrag, ein Spiel zu erfinden, das raue Wintersportler in der Halle beschäftigt, ohne dass sie sich verletzen. Er schrieb in unter einer Stunde 13 Grundregeln auf — neun davon gelten sinngemäß bis heute.",
+      "category": "Sport"
+    },
+    {
+      "id": "sport_de_134",
+      "question": "Warum heißt der Tennis-Spielort eigentlich „Court“ und das Aufschlagfeld „Service“?",
+      "answers": [
+        {"text": "Frühe Formen wurden an Königshöfen gespielt, wo ein Diener den Ball ins Spiel brachte", "correct": true},
+        {"text": "Weil die ersten Plätze auf Gerichtshöfen (engl. court) markiert wurden", "correct": false},
+        {"text": "Weil Tennis ursprünglich Teil der höfischen Tafel-Etikette beim Servieren war", "correct": false}
+      ],
+      "difficulty": "medium",
+      "fun_fact": "„Court“ verweist auf den royalen Hof (frz. „cour“), an dem das frühe Hallentennis populär war. Der „Service“ kommt davon, dass anfangs ein Bediensteter den Ball für den adligen Spieler ins Spiel warf, damit dieser nur schlagen musste.",
+      "category": "Sport"
+    },
+    {
+      "id": "sport_de_135",
+      "question": "Wie kam das Wort „Stadion“ als Bezeichnung für eine Sportarena zustande?",
+      "answers": [
+        {"text": "Es war ein antikes griechisches Längenmaß — die Laufstrecke war genau ein Stadion lang", "correct": true},
+        {"text": "Es leitet sich vom Namen des Architekten des ersten olympischen Baus ab", "correct": false},
+        {"text": "Es kommt vom lateinischen „stare“ (stehen), weil Zuschauer früher nur standen", "correct": false}
+      ],
+      "difficulty": "easy",
+      "fun_fact": "Ein Stadion entsprach etwa 180 bis 190 Metern. Der älteste olympische Wettkampf war ein Sprint über genau diese Distanz, der „Stadionlauf“ — der Sieger gab sogar dem ganzen Olympia-Zyklus seinen Namen.",
+      "category": "Sport"
+    },
+    {
+      "id": "sport_de_136",
+      "question": "Woher stammt der Begriff „Volleyball“ für die Sportart?",
+      "answers": [
+        {"text": "Vom englischen „to volley“ — den Ball direkt aus der Luft zurückspielen, bevor er den Boden berührt", "correct": true},
+        {"text": "Vom Erfinder William Volley, der das Netz zwischen zwei Bäume spannte", "correct": false},
+        {"text": "Vom lateinischen „volare“ (fliegen), weil der Ball über die Tribüne fliegen sollte", "correct": false}
+      ],
+      "difficulty": "easy",
+      "fun_fact": "Der Sport hieß anfangs „Mintonette“. Ein Zuschauer schlug vor, ihn nach dem charakteristischen Direktspiel aus der Luft umzubenennen — und „Volleyball“ blieb hängen, weil es das Wesen des Spiels traf.",
+      "category": "Sport"
+    },
+    {
+      "id": "sport_de_137",
+      "question": "Warum wird beim Squash und mehreren Rückschlagsportarten das Wort „Let“ für eine Spielwiederholung genutzt?",
+      "answers": [
+        {"text": "Es kommt von einem alten englischen Wort für „hindern“ — ein Hindernis lässt den Punkt wiederholen", "correct": true},
+        {"text": "Es ist die Abkürzung für „Lateral Exchange Turn“ aus dem Regelbuch", "correct": false},
+        {"text": "Es ehrt den Schiedsrichter Thomas Let, der die Regel einführte", "correct": false}
+      ],
+      "difficulty": "hard",
+      "fun_fact": "Dieses „let“ ist ein eigenes, heute fast ausgestorbenes Wort und nicht das alltägliche „to let“ (lassen). Es überlebte nur in Rechtsformeln wie „without let or hindrance“ und eben im Sport-Regelwerk.",
+      "category": "Sport"
+    },
+    {
+      "id": "sport_de_139",
+      "question": "Warum heißt die Boxgewichtsklasse direkt unter dem Schwergewicht „Cruisergewicht“ (engl. cruiserweight)?",
+      "answers": [
+        {"text": "Der Name spielte auf die mittelgroßen, wendigen Kriegsschiffe an, die „Cruiser“ hießen", "correct": true},
+        {"text": "Weil diese Boxer früher als Schiffsstewards auf Kreuzfahrten arbeiteten", "correct": false},
+        {"text": "Weil die Klasse zuerst auf einem Kreuzfahrtschiff ausgetragen wurde", "correct": false}
+      ],
+      "difficulty": "hard",
+      "fun_fact": "Wie ein Kreuzer (Cruiser) zwischen kleinen Zerstörern und großen Schlachtschiffen lag, liegt das Cruisergewicht zwischen Halbschwer- und Schwergewicht. In den USA hieß die Klasse anfangs sogar abweichend „Junior Heavyweight“.",
+      "category": "Sport"
+    },
+    {
+      "id": "sport_de_140",
+      "question": "Woher kommt der Name der Fußballposition „Stürmer“ bzw. im Englischen „Forward“?",
+      "answers": [
+        {"text": "In frühen Aufstellungen standen fast alle Spieler vorn und „stürmten“ gemeinsam nach vorne", "correct": true},
+        {"text": "Vom Namen des ersten Profi-Angreifers, Albert Sturm", "correct": false},
+        {"text": "Von einer militärischen Sturmtruppe, die das Spiel als Training nutzte", "correct": false}
+      ],
+      "difficulty": "easy",
+      "fun_fact": "Die ersten Fußballteams stellten teils nur einen Verteidiger und acht Angreifer auf — das Spiel war ein wildes Vorwärtsdrängen. Erst als Taktik aufkam, wanderten Spieler nach hinten und die heutige Positionsverteilung entstand.",
+      "category": "Sport"
+    },
+    {
+      "id": "sport_de_141",
+      "question": "Warum geht die heutige Form des FA-Cup-Pokals, der ältesten Fußballtrophäe der Welt, auf einen Nachbau zurück?",
+      "answers": [
+        {"text": "Weil das Original 1895 gestohlen wurde und man einen Nachbau anfertigen musste", "correct": true},
+        {"text": "Weil der ursprüngliche Pokal bei einem Brand im Vereinsheim zerstört wurde", "correct": false},
+        {"text": "Weil die alte Trophäe zu klein für die wachsende Namensgravur wurde", "correct": false}
+      ],
+      "difficulty": "medium",
+      "fun_fact": "Der FA Cup (seit 1871/72) ist der älteste Fußballwettbewerb der Welt. Die erste Trophäe wurde 1895 aus einem Schaufenster in Birmingham gestohlen und vermutlich eingeschmolzen — angeblich zu Falschmünzen verarbeitet.",
+      "category": "Sport"
+    },
+    {
+      "id": "sport_de_142",
+      "question": "Warum nennt man eine Drei-Treffer-Serie im Sport (etwa drei Tore eines Spielers) einen „Hattrick“?",
+      "answers": [
+        {"text": "Im Cricket bekam ein Spieler für drei Wickets in Folge traditionell einen neuen Hut geschenkt", "correct": true},
+        {"text": "Weil der erste Spieler mit drei Toren dabei seinen Hut dreimal lüftete", "correct": false},
+        {"text": "Vom Kartentrick mit drei Hüten, der bei Siegesfeiern gezeigt wurde", "correct": false}
+      ],
+      "difficulty": "easy",
+      "fun_fact": "Der Begriff stammt aus dem Cricket des 19. Jahrhunderts: Wer drei gegnerische Schlagmänner mit drei aufeinanderfolgenden Würfen ausschaltete, dessen Verein sammelte Geld für einen Hut. Erst später wanderte das Wort in Fußball und Eishockey.",
+      "category": "Sport"
+    },
+    {
+      "id": "sport_de_143",
+      "question": "Wie entstand der Sport Snooker und woher kommt sein ungewöhnlicher Name?",
+      "answers": [
+        {"text": "Britische Offiziere in Indien erfanden ihn — „Snooker“ war Soldatenslang für einen Neuling", "correct": true},
+        {"text": "Vom Erfinder Charles Snooker, einem englischen Billardtischbauer", "correct": false},
+        {"text": "Vom Hindi-Wort für „grüner Tisch“", "correct": false}
+      ],
+      "difficulty": "hard",
+      "fun_fact": "Der spätere Feldmarschall Neville Chamberlain (nicht der Premier) soll das Spiel um 1875 in Indien zusammengestellt haben. Als ein Mitspieler patzte, nannte er ihn scherzhaft „Snooker“, den Spitznamen für Kadetten im ersten Jahr — der Name blieb am Spiel hängen.",
+      "category": "Sport"
+    },
+    {
+      "id": "sport_de_144",
+      "question": "Warum sitzt der Schiedsrichterstuhl beim Tennis so hoch über dem Platz?",
+      "answers": [
+        {"text": "Damit der Stuhl-Schiedsrichter über das Netz hinweg beide Spielfeldhälften gleich gut einsehen kann", "correct": true},
+        {"text": "Weil die Tradition es von einem Thron für adlige Zuschauer übernahm", "correct": false},
+        {"text": "Damit Bälle, die ins Aus fliegen, nicht den Schiedsrichter treffen", "correct": false}
+      ],
+      "difficulty": "easy",
+      "fun_fact": "Die erhöhte Position gibt einen flachen Blickwinkel entlang der Linien und über das Netz. Der englische Begriff „umpire“ stammt übrigens vom altfranzösischen „nonper“ (der Unparteiische, der „Nicht-Gleiche“).",
+      "category": "Sport"
+    },
+    {
+      "id": "sport_de_145",
+      "question": "Woher hat der Begriff „Derby“ für ein Stadt- oder Lokalduell zweier Mannschaften seinen Ursprung?",
+      "answers": [
+        {"text": "Von einem chaotischen Massen-Fußballspiel in der englischen Stadt Derby", "correct": true},
+        {"text": "Vom Hut-Modell „Derby“, das Fans bei Lokalspielen trugen", "correct": false},
+        {"text": "Von einem walisischen Wort für „Nachbarschaft“", "correct": false}
+      ],
+      "difficulty": "medium",
+      "fun_fact": "In der Stadt Derby wurde am Faschingsdienstag ein wildes, regelloses Massenspiel zwischen zwei Stadtteilen ausgetragen, das „Shrovetide Football“. Der Ortsname wurde zum Synonym für ein hitziges Duell rivalisierender Nachbarn.",
+      "category": "Sport"
+    },
+    {
+      "id": "sport_de_146",
+      "question": "Wie kam es, dass der Begriff „Olympiade“ ursprünglich gar nicht das Sportfest meinte?",
+      "answers": [
+        {"text": "Eine Olympiade war der vierjährige Zeitraum zwischen zwei Spielen — die Griechen zählten damit die Jahre", "correct": true},
+        {"text": "Olympiade bezeichnete nur die Eröffnungszeremonie mit dem Feuer", "correct": false},
+        {"text": "Olympiade meinte ursprünglich allein den Marathonlauf", "correct": false}
+      ],
+      "difficulty": "easy",
+      "fun_fact": "Die antiken Griechen hatten keine durchgehende Jahreszählung wie wir. Sie datierten Ereignisse nach Olympiaden, also „im dritten Jahr der 75. Olympiade“. Streng genommen sind die Spiele selbst also nicht die Olympiade, sondern finden zu deren Beginn statt.",
+      "category": "Sport"
+    },
+    {
+      "id": "sport_de_147",
+      "question": "Warum ist der Tischtennis-Aufschlag heute so streng geregelt, dass der Ball offen auf der Handfläche liegen muss?",
+      "answers": [
+        {"text": "Früher versteckten Spieler den Ball in der Hand und gaben ihm unsichtbaren Effet beim Wurf", "correct": true},
+        {"text": "Damit der Schiedsrichter den Markenaufdruck des Balls prüfen kann", "correct": false},
+        {"text": "Weil ein in der Faust gehaltener Ball sich erwärmt und schneller springt", "correct": false}
+      ],
+      "difficulty": "medium",
+      "fun_fact": "In den 1930ern wurde der „Finger-Spin-Service“ so dominant, dass manche Spiele kaum noch Ballwechsel hatten. Die offene Handfläche und der Mindestwurf von 16 cm wurden eingeführt, um diesen unsichtbaren Drall zu verbieten.",
+      "category": "Sport"
+    },
+    {
+      "id": "sport_de_148",
+      "question": "Woher stammt der Begriff „Slalom“ im Skisport?",
+      "answers": [
+        {"text": "Aus dem Norwegischen — er bezeichnet eine Abfahrtsspur am Hang", "correct": true},
+        {"text": "Aus dem Italienischen für „seitliches Ausweichen“", "correct": false},
+        {"text": "Aus dem Französischen für „zwischen den Stangen“", "correct": false}
+      ],
+      "difficulty": "medium",
+      "fun_fact": "Das Wort stammt aus dem norwegischen Telemark-Dialekt und setzt sich aus einem Element für Hang bzw. Abhang und „låm“ (Spur im Schnee) zusammen. Norwegische Bauern legten unterschiedlich schwierige Abfahrtsspuren an und benannten sie nach Steilheit und Hindernissen — daraus entwickelte sich die heutige Disziplin.",
+      "category": "Sport"
+    },
+    {
+      "id": "sport_de_149",
+      "question": "Was war der eigentliche Vorläufer des heutigen Badminton-Spiels?",
+      "answers": [
+        {"text": "Ein Federball-Spiel namens „Battledore and Shuttlecock“, bei dem man den Ball möglichst lange in der Luft hielt", "correct": true},
+        {"text": "Ein chinesisches Schwertkampfspiel mit Federfächern", "correct": false},
+        {"text": "Ein römisches Wurfspiel mit beschwerten Lederbällen", "correct": false}
+      ],
+      "difficulty": "medium",
+      "fun_fact": "Der Sport ist nach dem englischen Landsitz „Badminton House“ benannt, wo britische Offiziere ihn populär machten. Davor spielte man jahrhundertelang das kooperative „Battledore and Shuttlecock“, bei dem es nur darum ging, den Federball nicht fallen zu lassen — kein Netz, kein Gegner.",
+      "category": "Sport"
+    },
+    {
+      "id": "sport_de_150",
+      "question": "Wie kam die Trikotnummer überhaupt in den Mannschaftssport — was war die ursprüngliche Funktion?",
+      "answers": [
+        {"text": "Sie sollte Zuschauern und Reportern helfen, die Spieler von der Tribüne aus zu identifizieren", "correct": true},
+        {"text": "Sie gab die Reihenfolge an, in der die Spieler aufs Feld laufen durften", "correct": false},
+        {"text": "Sie kennzeichnete den Marktwert eines Spielers für Wetten", "correct": false}
+      ],
+      "difficulty": "easy",
+      "fun_fact": "Vor den Rückennummern war es für Fans und Journalisten fast unmöglich, einzelne Spieler im Getümmel auseinanderzuhalten. Lange waren die Nummern starr an die Position gebunden (etwa Torwart 1), bevor frei wählbare Nummern erlaubt wurden.",
+      "category": "Sport"
+    },
+    {
+      "id": "sport_de_151",
+      "question": "Warum trägt der Stanley Cup, die berühmteste Eishockey-Trophäe Nordamerikas, die Namen aller Siegerspieler eingraviert?",
+      "answers": [
+        {"text": "Weil der Stifter Lord Stanley einen einzigen wandernden Pokal wollte, auf dem jeder Champion verewigt wird", "correct": true},
+        {"text": "Weil die Liga keine neuen Pokale gießen wollte und Platz sparen musste", "correct": false},
+        {"text": "Weil eine alte Aberglaubens-Regel verbietet, mehr als einen Pokal zu besitzen", "correct": false}
+      ],
+      "difficulty": "medium",
+      "fun_fact": "Der Stanley Cup ist seit 1892 derselbe wandernde Pokal — kein Verein behält ihn dauerhaft. Über 3000 Namen sind eingraviert; wenn die Ringe voll sind, wird der älteste entfernt und archiviert. Spieler dürfen den Pokal sogar je einen Tag privat behalten.",
+      "category": "Sport"
+    },
+    {
+      "id": "sport_de_152",
+      "question": "Wie viele Dellen (Dimples) hat ein typischer Golfball etwa?",
+      "answers": [
+        {"text": "Rund 330 bis 400", "correct": true},
+        {"text": "Rund 80 bis 120", "correct": false},
+        {"text": "Rund 900 bis 1000", "correct": false}
+      ],
+      "difficulty": "easy",
+      "fun_fact": "Die genaue Zahl variiert je nach Hersteller und Modell, liegt aber fast immer zwischen 300 und 450. Die Dellen verwirbeln die Luft und verringern den Luftwiderstand — ein Golfball mit Dellen fliegt fast doppelt so weit wie ein glatter.",
+      "category": "Sport"
+    },
+    {
+      "id": "sport_de_153",
+      "question": "Wie schnell ist ein scharf geschmetterter Federball (Badminton-Shuttle) gemessen worden?",
+      "answers": [
+        {"text": "Über 400 km/h", "correct": true},
+        {"text": "Etwa 150 km/h", "correct": false},
+        {"text": "Etwa 250 km/h", "correct": false}
+      ],
+      "difficulty": "easy",
+      "fun_fact": "Damit ist Badminton beim reinen Anfangstempo des Spielgeräts schneller als jeder Tennisaufschlag. Der Federball bremst allerdings extrem schnell ab — die kleinen Federn wirken wie ein Fallschirm, weshalb er beim Aufkommen viel langsamer ist.",
       "category": "Sport"
     }
   ]

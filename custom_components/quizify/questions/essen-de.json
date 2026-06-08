@@ -1,7 +1,7 @@
 {
   "name": "Essen & Trinken",
   "language": "de",
-  "version": "1.0",
+  "version": "1.1",
   "theme": "food",
   "questions": [
     {
@@ -2102,6 +2102,1056 @@
       ],
       "difficulty": "hard",
       "fun_fact": "Fast alle heutigen Zitrusfrüchte stammen aus Kreuzungen von drei Urarten: Mandarine, Pomelo und Zitronatzitrone. Die Orange ist eine Mandarine-Pomelo-Kreuzung, die Grapefruit eine Orange-Pomelo-Kreuzung — die Pomelo steckt also in beiden. Die Zitrone wiederum ist Bitterorange × Zitronatzitrone.",
+      "category": "Essen & Trinken"
+    },
+    {
+      "id": "essen_de_104",
+      "question": "Warum laufen einem beim Anblick von leckerem Essen schon die Tränen, äh, das Wasser im Mund zusammen?",
+      "answers": [
+        {
+          "text": "Speichel löst Aromastoffe und schützt zugleich die Zähne vor Säure",
+          "correct": true
+        },
+        {
+          "text": "Der Magen sendet ein Hungersignal direkt an die Mundhöhle",
+          "correct": false
+        },
+        {
+          "text": "Die Geschmacksknospen schwellen in Erwartung an",
+          "correct": false
+        }
+      ],
+      "difficulty": "easy",
+      "fun_fact": "Schon der Anblick oder Geruch von Essen startet die Speichelproduktion über einen Reflex. Speichel löst nicht nur Aromastoffe, damit man überhaupt schmecken kann, sondern enthält auch Puffer, die Säuren neutralisieren und den Zahnschmelz schützen.",
+      "category": "Essen & Trinken"
+    },
+    {
+      "id": "essen_de_105",
+      "question": "Warum schmeckt Essen bei einer Erkältung mit verstopfter Nase so fade?",
+      "answers": [
+        {
+          "text": "Das meiste Aroma nehmen wir über den Geruch wahr, nicht über die Zunge",
+          "correct": true
+        },
+        {
+          "text": "Die Zunge schwillt bei Erkältung leicht an und verliert Empfindlichkeit",
+          "correct": false
+        },
+        {
+          "text": "Fieber verändert die Temperatur der Geschmacksknospen",
+          "correct": false
+        }
+      ],
+      "difficulty": "easy",
+      "fun_fact": "Die Zunge erkennt nur fünf Grundgeschmäcker. Die eigentliche Vielfalt entsteht durch Duftmoleküle, die von hinten in die Nase aufsteigen. Hält man sich beim Essen die Nase zu, kann man Zwiebel und Apfel kaum unterscheiden.",
+      "category": "Essen & Trinken"
+    },
+    {
+      "id": "essen_de_106",
+      "question": "Warum tut es so weh, wenn man hastig zu viel Eis isst und einen Hirnfrost bekommt?",
+      "answers": [
+        {
+          "text": "Ein Nerv am Gaumen verwechselt die Kälte mit Schmerz hinter der Stirn",
+          "correct": true
+        },
+        {
+          "text": "Das Gehirn kühlt durch den Gaumen tatsächlich kurz ab",
+          "correct": false
+        },
+        {
+          "text": "Blutgefäße in der Zunge platzen mikroskopisch",
+          "correct": false
+        }
+      ],
+      "difficulty": "easy",
+      "fun_fact": "Beim Hirnfrost kühlt der Gaumen schnell ab, Blutgefäße verengen und weiten sich rasch. Der Drillingsnerv leitet das Signal, das Gehirn ordnet den Schmerz aber fälschlich der Stirn zu. Drückt man die warme Zunge an den Gaumen, verschwindet es schneller.",
+      "category": "Essen & Trinken"
+    },
+    {
+      "id": "essen_de_107",
+      "question": "Warum perlt Wasser auf einer heißen Pfanne herum, statt sofort zu verdampfen?",
+      "answers": [
+        {
+          "text": "Ein Dampfpolster unter dem Tropfen isoliert ihn von der Pfanne",
+          "correct": true
+        },
+        {
+          "text": "Das Fett auf der Pfanne stößt das Wasser ab",
+          "correct": false
+        },
+        {
+          "text": "Die Tropfen sind zu schwer, um zu verdampfen",
+          "correct": false
+        }
+      ],
+      "difficulty": "medium",
+      "fun_fact": "Das nennt man Leidenfrost-Effekt. Ab etwa 200 Grad verdampft die Unterseite des Tropfens sofort und bildet ein isolierendes Dampfkissen, auf dem der Rest tanzt. Köche prüfen damit, ob die Pfanne heiß genug ist.",
+      "category": "Essen & Trinken"
+    },
+    {
+      "id": "essen_de_108",
+      "question": "Warum macht eine Prise Salz auf wässriger Melone oder Grapefruit sie süßer schmeckend?",
+      "answers": [
+        {
+          "text": "Salz unterdrückt die Bitternoten, sodass die Süße stärker durchkommt",
+          "correct": true
+        },
+        {
+          "text": "Salz zieht Zucker aus dem Fruchtinneren an die Oberfläche",
+          "correct": false
+        },
+        {
+          "text": "Salz löst zusätzlichen Fruchtzucker aus den Zellwänden",
+          "correct": false
+        }
+      ],
+      "difficulty": "easy",
+      "fun_fact": "Natrium blockiert im Gehirn teilweise die Wahrnehmung von Bitterstoffen. Dadurch tritt die vorhandene Süße deutlicher hervor. Profis salzen deshalb sogar Karamell oder Schokolade leicht, um sie runder schmecken zu lassen.",
+      "category": "Essen & Trinken"
+    },
+    {
+      "id": "essen_de_109",
+      "question": "Warum bleibt frisch aufgeschnittener Apfel hell, wenn man ihn mit Zitronensaft beträufelt?",
+      "answers": [
+        {
+          "text": "Die Säure und das Vitamin C bremsen das bräunende Enzym aus",
+          "correct": true
+        },
+        {
+          "text": "Die Zitronensäure versiegelt die Schnittfläche luftdicht",
+          "correct": false
+        },
+        {
+          "text": "Das Zitronenöl bildet eine schützende Fettschicht",
+          "correct": false
+        }
+      ],
+      "difficulty": "medium",
+      "fun_fact": "Das Braunwerden ist eine enzymatische Reaktion mit Sauerstoff. Die saure Umgebung des Zitronensafts lähmt das verantwortliche Enzym, und das Vitamin C fängt zusätzlich den Sauerstoff ab. Derselbe Trick funktioniert mit Avocado oder Banane.",
+      "category": "Essen & Trinken"
+    },
+    {
+      "id": "essen_de_110",
+      "question": "Warum sprudelt ein Glas Cola heftig über, wenn man ein Mentos hineinwirft?",
+      "answers": [
+        {
+          "text": "Die raue Bonbon-Oberfläche bietet unzählige Startpunkte für Gasbläschen",
+          "correct": true
+        },
+        {
+          "text": "Das Bonbon reagiert chemisch mit der Kohlensäure zu neuem Gas",
+          "correct": false
+        },
+        {
+          "text": "Der Zucker im Bonbon verdrängt die Flüssigkeit explosionsartig",
+          "correct": false
+        }
+      ],
+      "difficulty": "easy",
+      "fun_fact": "Unter dem Mikroskop ist die Mentos-Oberfläche zerklüftet. Jede dieser winzigen Vertiefungen ist ein Keimpunkt, an dem sich gelöstes Kohlendioxid blitzschnell zu Blasen sammelt. Es ist reine Physik, keine chemische Reaktion.",
+      "category": "Essen & Trinken"
+    },
+    {
+      "id": "essen_de_111",
+      "question": "Warum schäumt Milch beim Aufschäumen für Cappuccino überhaupt?",
+      "answers": [
+        {
+          "text": "Milcheiweiße umhüllen die eingeschlagenen Luftbläschen und stabilisieren sie",
+          "correct": true
+        },
+        {
+          "text": "Der Milchzucker bindet Luft beim Erhitzen",
+          "correct": false
+        },
+        {
+          "text": "Das Milchfett dehnt sich durch Hitze zu Schaum aus",
+          "correct": false
+        }
+      ],
+      "difficulty": "medium",
+      "fun_fact": "Beim Aufschäumen entfalten sich die Molkenproteine und legen sich wie eine Haut um jede Luftblase. Deshalb schäumt fettarme Milch oft stabiler als Vollmilch, denn zu viel Fett kann die Bläschen destabilisieren.",
+      "category": "Essen & Trinken"
+    },
+    {
+      "id": "essen_de_112",
+      "question": "Warum schmeckt eine Tomate aus dem Kühlschrank fader als eine bei Zimmertemperatur?",
+      "answers": [
+        {
+          "text": "Kälte stoppt die Bildung der flüchtigen Aromastoffe in der Frucht",
+          "correct": true
+        },
+        {
+          "text": "Die Kälte friert die Geschmacksstoffe an der Schale fest",
+          "correct": false
+        },
+        {
+          "text": "Im Kühlschrank nimmt die Tomate fremde Gerüche auf",
+          "correct": false
+        }
+      ],
+      "difficulty": "medium",
+      "fun_fact": "Unter etwa 12 Grad schalten Tomaten die Produktion ihrer Duftstoffe ab, und ein Teil geht sogar unwiederbringlich verloren. Deshalb gehören Tomaten nicht in den Kühlschrank, sondern in die Obstschale.",
+      "category": "Essen & Trinken"
+    },
+    {
+      "id": "essen_de_113",
+      "question": "Warum bekommt man von einem zu schnell getrunkenen Glas Sekt rascher einen Schwips als von Wein?",
+      "answers": [
+        {
+          "text": "Die Kohlensäure beschleunigt die Aufnahme des Alkohols ins Blut",
+          "correct": true
+        },
+        {
+          "text": "Sekt enthält grundsätzlich mehr Alkohol als Wein",
+          "correct": false
+        },
+        {
+          "text": "Die Bläschen tragen den Alkohol direkt in die Lunge",
+          "correct": false
+        }
+      ],
+      "difficulty": "medium",
+      "fun_fact": "Das Kohlendioxid reizt vermutlich die Magenschleimhaut und beschleunigt die Passage in den Dünndarm, wo Alkohol am schnellsten ins Blut übergeht. Eine kleine Studie deutet darauf hin, dass prickelnde Getränke den Blutalkohol etwas schneller ansteigen lassen als stille — bewiesen ist der Effekt aber nicht abschließend.",
+      "category": "Essen & Trinken"
+    },
+    {
+      "id": "essen_de_114",
+      "question": "Warum verfärbt sich Guacamole an der Luft schnell braun, im Glas darunter aber nicht?",
+      "answers": [
+        {
+          "text": "Nur die Oberfläche reagiert mit Sauerstoff, das Innere ist abgeschirmt",
+          "correct": true
+        },
+        {
+          "text": "Licht zersetzt den grünen Farbstoff der Avocado",
+          "correct": false
+        },
+        {
+          "text": "Die Avocado oxidiert nur dort, wo sie warm wird",
+          "correct": false
+        }
+      ],
+      "difficulty": "easy",
+      "fun_fact": "Ein Enzym in der Avocado reagiert mit Luftsauerstoff zu braunen Farbstoffen. Deckt man die Guacamole mit Frischhaltefolie direkt auf der Oberfläche ab oder gibt eine Schicht Wasser darüber, bleibt sie grün, weil kein Sauerstoff herankommt.",
+      "category": "Essen & Trinken"
+    },
+    {
+      "id": "essen_de_115",
+      "question": "Warum schäumt Teig mit Backpulver im Ofen auf, ganz ohne Hefe?",
+      "answers": [
+        {
+          "text": "Backpulver setzt bei Hitze und Feuchtigkeit Kohlendioxid frei",
+          "correct": true
+        },
+        {
+          "text": "Das Mehl bildet beim Erhitzen selbst Gas",
+          "correct": false
+        },
+        {
+          "text": "Die eingeschlossene Luft dehnt sich beim Backen aus",
+          "correct": false
+        }
+      ],
+      "difficulty": "easy",
+      "fun_fact": "Backpulver ist ein Gemisch aus Natron und einem sauren Partner. Sobald Flüssigkeit und Wärme dazukommen, reagieren sie und produzieren Kohlendioxid, das den Teig lockert. Hefe macht im Grunde dasselbe, nur biologisch und viel langsamer.",
+      "category": "Essen & Trinken"
+    },
+    {
+      "id": "essen_de_116",
+      "question": "Warum gerinnt Milch, wenn man Zitronensaft hineingibt?",
+      "answers": [
+        {
+          "text": "Die Säure lässt die schwebenden Milcheiweiße verklumpen",
+          "correct": true
+        },
+        {
+          "text": "Die Zitrone tötet die Milchbakterien, die dann zusammenklumpen",
+          "correct": false
+        },
+        {
+          "text": "Das Milchfett trennt sich durch die Säure vom Wasser",
+          "correct": false
+        }
+      ],
+      "difficulty": "medium",
+      "fun_fact": "Milcheiweiße schweben normalerweise einzeln in der Flüssigkeit, weil sie sich gegenseitig abstoßen. Säure hebt diese Abstoßung auf, sie klumpen zusammen und fallen aus. Genau dieser Vorgang ist der erste Schritt jeder Käseherstellung.",
+      "category": "Essen & Trinken"
+    },
+    {
+      "id": "essen_de_117",
+      "question": "Warum klebt eine gekochte Spaghetti an der Wand — und warum ist das trotzdem ein schlechter Gartest?",
+      "answers": [
+        {
+          "text": "Die freigesetzte klebrige Stärke lässt auch noch zu weiche Nudeln haften",
+          "correct": true
+        },
+        {
+          "text": "Nur perfekt gegarte Nudeln sind klebrig genug zum Haften",
+          "correct": false
+        },
+        {
+          "text": "Die Restfeuchte wirkt wie ein Saugnapf an der Wand",
+          "correct": false
+        }
+      ],
+      "difficulty": "medium",
+      "fun_fact": "Beim Kochen tritt Stärke aus der Nudel aus und wird klebrig. Auch matschig überkochte Spaghetti kleben deshalb bestens an der Wand. Der Wandtest beweist also nur, dass die Nudel gekocht wurde, nicht dass sie bissfest ist.",
+      "category": "Essen & Trinken"
+    },
+    {
+      "id": "essen_de_118",
+      "question": "Warum bilden sich beim langsamen Erhitzen von Wasser zuerst kleine Bläschen am Topfboden?",
+      "answers": [
+        {
+          "text": "Es ist gelöste Luft, die bei Wärme aus dem Wasser entweicht",
+          "correct": true
+        },
+        {
+          "text": "Es ist bereits Wasserdampf vom heißen Boden",
+          "correct": false
+        },
+        {
+          "text": "Es sind Kalkpartikel, die aufsteigen",
+          "correct": false
+        }
+      ],
+      "difficulty": "hard",
+      "fun_fact": "Kaltes Wasser enthält gelösten Sauerstoff und Stickstoff. Beim Erwärmen sinkt die Löslichkeit, und diese Luft perlt lange vor dem eigentlichen Siedepunkt aus. Erst wenn es richtig brodelt, sind es echte Dampfblasen.",
+      "category": "Essen & Trinken"
+    },
+    {
+      "id": "essen_de_119",
+      "question": "Warum wird ein Steak in der heißen Pfanne braun, gekochtes Fleisch im Wasser aber grau?",
+      "answers": [
+        {
+          "text": "Die Bräunungsreaktion startet erst über 100 Grad — eine Temperatur, die Wasser nie erreicht",
+          "correct": true
+        },
+        {
+          "text": "Das kochende Wasser wäscht die braunen Farbstoffe sofort ab",
+          "correct": false
+        },
+        {
+          "text": "Im Wasser fehlt der Sauerstoff für die Bräunung",
+          "correct": false
+        }
+      ],
+      "difficulty": "medium",
+      "fun_fact": "Kochendes Wasser bleibt bei 100 Grad stecken, doch die appetitliche Bräunung braucht trockene Hitze von gut 140 Grad. Deshalb tupft man Fleisch vor dem Anbraten trocken, denn solange Wasser verdampft, kühlt es die Oberfläche unter diese Schwelle.",
+      "category": "Essen & Trinken"
+    },
+    {
+      "id": "essen_de_120",
+      "question": "Warum bleibt das Innere einer frittierten Pommes weich, während außen eine Kruste entsteht?",
+      "answers": [
+        {
+          "text": "Das heiße Öl trocknet nur die Oberfläche aus, innen kocht der Dampf",
+          "correct": true
+        },
+        {
+          "text": "Das Öl dringt gar nicht in die Kartoffel ein",
+          "correct": false
+        },
+        {
+          "text": "Die äußere Schicht enthält mehr Stärke als das Innere",
+          "correct": false
+        }
+      ],
+      "difficulty": "medium",
+      "fun_fact": "An der Oberfläche verdampft das Wasser sofort und es bildet sich eine knusprige, gebräunte Kruste. Im Inneren steigt die Temperatur dagegen nicht über 100 Grad, solange dort Wasser verdampft, sodass die Kartoffel praktisch gedämpft und weich bleibt.",
+      "category": "Essen & Trinken"
+    },
+    {
+      "id": "essen_de_121",
+      "question": "Warum löst sich Zucker in heißem Tee viel schneller als in kaltem Wasser?",
+      "answers": [
+        {
+          "text": "Wärmere Wassermoleküle bewegen sich schneller und umschließen den Zucker rascher",
+          "correct": true
+        },
+        {
+          "text": "Hitze spaltet die Zuckerkristalle chemisch auf",
+          "correct": false
+        },
+        {
+          "text": "Heißes Wasser kann grundsätzlich mehr Stoffe lösen als die Zuckermenge",
+          "correct": false
+        }
+      ],
+      "difficulty": "easy",
+      "fun_fact": "In warmem Wasser flitzen die Moleküle schneller und stoßen häufiger gegen die Kristalle, die sich dadurch zügiger auflösen. Heißes Wasser kann außerdem deutlich mehr Zucker aufnehmen, weshalb sich Sirup beim Abkühlen manchmal als Kristalle absetzt.",
+      "category": "Essen & Trinken"
+    },
+    {
+      "id": "essen_de_122",
+      "question": "Warum schmeckt abgestandene Cola schaler, obwohl noch genauso viel Zucker drin ist?",
+      "answers": [
+        {
+          "text": "Das entwichene Kohlendioxid lieferte einen Teil des prickelnd-sauren Eindrucks",
+          "correct": true
+        },
+        {
+          "text": "Der Zucker zerfällt an der Luft zu geschmacklosen Stoffen",
+          "correct": false
+        },
+        {
+          "text": "Das Koffein verdunstet zusammen mit dem Gas",
+          "correct": false
+        }
+      ],
+      "difficulty": "medium",
+      "fun_fact": "Gelöstes Kohlendioxid bildet im Getränk etwas Kohlensäure, die einen leicht sauren, frischen Eindruck macht. Entweicht das Gas, fehlt dieser Gegenpol zur Süße, und die Cola wirkt plötzlich klebrig-süß und langweilig.",
+      "category": "Essen & Trinken"
+    },
+    {
+      "id": "essen_de_123",
+      "question": "Warum klingt eine reife Wassermelone hohler, wenn man dagegen klopft?",
+      "answers": [
+        {
+          "text": "Das reife, lockere Fruchtfleisch schwingt und erzeugt einen tieferen Ton",
+          "correct": true
+        },
+        {
+          "text": "Reife Melonen bilden im Inneren einen großen Hohlraum",
+          "correct": false
+        },
+        {
+          "text": "Die Schale wird beim Reifen dünner und schwingt stärker",
+          "correct": false
+        }
+      ],
+      "difficulty": "medium",
+      "fun_fact": "Beim Reifen baut sich die feste Zellstruktur teilweise ab, das Fruchtfleisch wird wasserreicher und lockerer. Gängige Erklärung ist, dass diese Masse anders schwingt und beim Klopfen einen tieferen, volleren Klang gibt als eine unreife, dicht gepackte Melone.",
+      "category": "Essen & Trinken"
+    },
+    {
+      "id": "essen_de_124",
+      "question": "Warum bekommt man von Spargel kurz darauf streng riechenden Urin?",
+      "answers": [
+        {
+          "text": "Der Körper baut eine Schwefelverbindung des Spargels zu riechenden Stoffen ab",
+          "correct": true
+        },
+        {
+          "text": "Spargel reizt die Nieren zu vermehrter Ausscheidung",
+          "correct": false
+        },
+        {
+          "text": "Die Ballaststoffe des Spargels gären im Darm",
+          "correct": false
+        }
+      ],
+      "difficulty": "hard",
+      "fun_fact": "Spargel enthält Asparagusinsäure, die der Körper zu flüchtigen Schwefelverbindungen abbaut. Kurios ist, dass ein Teil der Menschen diesen Geruch genetisch bedingt gar nicht wahrnehmen kann, während er für andere unübersehbar ist.",
+      "category": "Essen & Trinken"
+    },
+    {
+      "id": "essen_de_125",
+      "question": "Warum gibt eine angeschnittene Zwiebel mit der Zeit immer weniger Schärfe an die Augen ab?",
+      "answers": [
+        {
+          "text": "Das reizende Gas verflüchtigt sich nach dem Schnitt allmählich",
+          "correct": true
+        },
+        {
+          "text": "Die Schnittfläche trocknet ein und versiegelt sich",
+          "correct": false
+        },
+        {
+          "text": "Das Licht zersetzt die scharfen Stoffe",
+          "correct": false
+        }
+      ],
+      "difficulty": "medium",
+      "fun_fact": "Der reizende Stoff entsteht erst beim Zerschneiden, wenn zwei vorher getrennte Zellbestandteile aufeinandertreffen, und entweicht dann als Gas. Mit der Zeit ist der Vorrat aufgebraucht und verflogen, sodass eine länger offene Zwiebel kaum noch zum Weinen bringt.",
+      "category": "Essen & Trinken"
+    },
+    {
+      "id": "essen_de_126",
+      "question": "Warum bildet sich an einem kalten Bierglas im Sommer außen Wassertropfen?",
+      "answers": [
+        {
+          "text": "Wasserdampf aus der warmen Luft kondensiert an der kühlen Glaswand",
+          "correct": true
+        },
+        {
+          "text": "Bier sickert durch die feinen Poren des Glases nach außen",
+          "correct": false
+        },
+        {
+          "text": "Das kalte Glas saugt Feuchtigkeit aktiv an",
+          "correct": false
+        }
+      ],
+      "difficulty": "easy",
+      "fun_fact": "Warme Luft trägt unsichtbaren Wasserdampf. Trifft sie auf das kalte Glas, kühlt sie unter den Taupunkt ab und der Dampf wird flüssig. Das Wasser kommt also aus der Raumluft, nicht aus dem Bier.",
+      "category": "Essen & Trinken"
+    },
+    {
+      "id": "essen_de_127",
+      "question": "Warum schmeckt Speiseeis weniger süß als die gleiche Masse ungefroren?",
+      "answers": [
+        {
+          "text": "Kälte dämpft die Empfindlichkeit der Süßrezeptoren auf der Zunge",
+          "correct": true
+        },
+        {
+          "text": "Beim Gefrieren zerfällt ein Teil des Zuckers",
+          "correct": false
+        },
+        {
+          "text": "Das Eis schmilzt zu langsam, um die volle Süße freizugeben",
+          "correct": false
+        }
+      ],
+      "difficulty": "hard",
+      "fun_fact": "Süßrezeptoren arbeiten bei Kälte träger. Deshalb wird Eismasse stark gezuckert, damit sie gefroren noch süß schmeckt. Lässt man Eis schmelzen, wirkt es plötzlich überraschend pappsüß, weil dann die volle Süße auf die wieder empfindlichen Rezeptoren trifft.",
+      "category": "Essen & Trinken"
+    },
+    {
+      "id": "essen_de_128",
+      "question": "Wie entstanden der Legende nach die Kartoffelchips?",
+      "answers": [
+        {
+          "text": "Ein Koch schnitt aus Ärger über einen Gast die Kartoffeln hauchdünn",
+          "correct": true
+        },
+        {
+          "text": "Eine Fabrik verbrannte versehentlich eine ganze Charge Pommes",
+          "correct": false
+        },
+        {
+          "text": "Ein Bäcker ließ Kartoffelteig zu lange im heißen Fett",
+          "correct": false
+        }
+      ],
+      "difficulty": "easy",
+      "fun_fact": "Der Überlieferung nach beschwerte sich 1853 ein Gast in Saratoga Springs, die Pommes seien zu dick. Koch George Crum schnitt sie aus Trotz papierdünn und frittierte sie knusprig — der Gast war begeistert. Die Geschichte ist als Anekdote berühmt, auch wenn manche Details umstritten sind.",
+      "category": "Essen & Trinken"
+    },
+    {
+      "id": "essen_de_129",
+      "question": "Was bedeutet das Wort 'Ketchup' ursprünglich, bevor es eine Tomatensoße bezeichnete?",
+      "answers": [
+        {
+          "text": "Eine fermentierte asiatische Fischsoße",
+          "correct": true
+        },
+        {
+          "text": "Ein eingedickter Traubensirup",
+          "correct": false
+        },
+        {
+          "text": "Ein scharfes Zwiebelmus",
+          "correct": false
+        }
+      ],
+      "difficulty": "medium",
+      "fun_fact": "Das Wort stammt vermutlich vom südchinesischen 'kê-tsiap', einer gegorenen Fischsoße. Britische Händler brachten es nach Europa, wo man es zunächst mit Pilzen oder Walnüssen nachkochte. Tomaten kamen erst um 1800 ins Rezept — Fisch war ursprünglich der Kern.",
+      "category": "Essen & Trinken"
+    },
+    {
+      "id": "essen_de_130",
+      "question": "Warum heißt der Cocktail 'Margarita' wie der spanische Frauenname?",
+      "answers": [
+        {
+          "text": "Er wurde nach einer Frau benannt, der man ihn der Legende nach widmete",
+          "correct": true
+        },
+        {
+          "text": "Margarita ist das spanische Wort für 'Salzrand'",
+          "correct": false
+        },
+        {
+          "text": "Er wurde zuerst in einer Bar namens Margarita gemixt",
+          "correct": false
+        }
+      ],
+      "difficulty": "medium",
+      "fun_fact": "Mehrere Bartender beanspruchen die Erfindung, doch alle Versionen verbinden den Drink mit einer Frau namens Margarita oder Marguerite, der er gewidmet worden sein soll. 'Margarita' ist zugleich das spanische Wort für Gänseblümchen — nicht für Salz.",
+      "category": "Essen & Trinken"
+    },
+    {
+      "id": "essen_de_131",
+      "question": "Wie kam die berühmte Sachertorte zu ihrem Namen?",
+      "answers": [
+        {
+          "text": "Nach dem 16-jährigen Lehrling Franz Sacher, der sie zubereitete",
+          "correct": true
+        },
+        {
+          "text": "Nach dem Wiener Stadtteil Sachern",
+          "correct": false
+        },
+        {
+          "text": "Nach einem ungarischen Wort für 'Schokolade'",
+          "correct": false
+        }
+      ],
+      "difficulty": "medium",
+      "fun_fact": "1832 sollte die Hofküche des Fürsten Metternich ein besonderes Dessert liefern, doch der Chefkoch war krank. Der erst 16-jährige Lehrling Franz Sacher sprang ein und improvisierte die Torte. Jahrzehnte später machte sein Sohn das Hotel Sacher damit weltberühmt.",
+      "category": "Essen & Trinken"
+    },
+    {
+      "id": "essen_de_132",
+      "question": "Was war der ursprüngliche Zweck von Corn Flakes, als sie erfunden wurden?",
+      "answers": [
+        {
+          "text": "Eine fade Gesundheitskost, die Gelüste dämpfen sollte",
+          "correct": true
+        },
+        {
+          "text": "Ein haltbares Marschproviant für Soldaten",
+          "correct": false
+        },
+        {
+          "text": "Ein Futtermittel, das versehentlich zum Frühstück wurde",
+          "correct": false
+        }
+      ],
+      "difficulty": "hard",
+      "fun_fact": "John Harvey Kellogg entwickelte die Flocken in einem Sanatorium als reizarme Diät — er war überzeugt, dass scharfe und süße Speisen schädliche Triebe weckten. Erst sein Bruder Will fügte gegen Johns Willen Zucker hinzu und machte daraus ein Massenprodukt.",
+      "category": "Essen & Trinken"
+    },
+    {
+      "id": "essen_de_133",
+      "question": "Wie entstand laut Überlieferung die englische Worcestershire-Sauce?",
+      "answers": [
+        {
+          "text": "Eine misslungene Charge reifte vergessen im Keller und wurde köstlich",
+          "correct": true
+        },
+        {
+          "text": "Ein Koch verschüttete Essig in einen Topf mit Sardellen",
+          "correct": false
+        },
+        {
+          "text": "Ein Apotheker mischte sie als Magenmedizin an",
+          "correct": false
+        }
+      ],
+      "difficulty": "hard",
+      "fun_fact": "Die Apotheker Lea und Perrins rührten das Gemisch nach indischem Rezept an, fanden es ungenießbar und stellten das Fass in den Keller. Monate später probierten sie es erneut — die Fermentation hatte es in eine würzige Delikatesse verwandelt.",
+      "category": "Essen & Trinken"
+    },
+    {
+      "id": "essen_de_134",
+      "question": "Woher hat das Brot 'Pumpernickel' der wahrscheinlicheren Theorie nach seinen Namen NICHT?",
+      "answers": [
+        {
+          "text": "Von Napoleons Pferd, das angeblich das Brot fraß",
+          "correct": true
+        },
+        {
+          "text": "Von einem alten Wort fürs Pupsen wegen seiner Verdaulichkeit",
+          "correct": false
+        },
+        {
+          "text": "Vom Niederdeutschen für einen groben Kerl",
+          "correct": false
+        }
+      ],
+      "difficulty": "medium",
+      "fun_fact": "Die Anekdote, Napoleon habe das dunkle Brot nur für sein Pferd Nicol für gut befunden ('bon pour Nickel'), gilt als spätere Erfindung. Sprachforscher führen den Namen eher auf 'pumpern' (für Blähungen) und 'Nickel' (grober Kerl) zurück.",
+      "category": "Essen & Trinken"
+    },
+    {
+      "id": "essen_de_135",
+      "question": "Was bedeutet das Wort 'Marmelade' in seiner portugiesischen Wurzel ursprünglich?",
+      "answers": [
+        {
+          "text": "Quittenmus",
+          "correct": true
+        },
+        {
+          "text": "Orangenschale",
+          "correct": false
+        },
+        {
+          "text": "Zuckersirup",
+          "correct": false
+        }
+      ],
+      "difficulty": "medium",
+      "fun_fact": "Das Wort kommt vom portugiesischen 'marmelo' für Quitte. Der erste 'Marmelade'-Aufstrich war ein fester Quittenmus. In der EU darf 'Marmelade' streng genommen nur Zitrus-Aufstrich heißen — alles andere ist offiziell 'Konfitüre', was in Deutschland für Verwirrung sorgte.",
+      "category": "Essen & Trinken"
+    },
+    {
+      "id": "essen_de_136",
+      "question": "Wie wurde das Eis am Stiel der Legende nach erfunden?",
+      "answers": [
+        {
+          "text": "Ein Kind ließ Limonade mit Rührstab über Nacht draußen einfrieren",
+          "correct": true
+        },
+        {
+          "text": "Ein Konditor tauchte versehentlich Sahne in flüssigen Stickstoff",
+          "correct": false
+        },
+        {
+          "text": "Ein Marktstand kühlte Saft mit Trockeneis herunter",
+          "correct": false
+        }
+      ],
+      "difficulty": "easy",
+      "fun_fact": "1905 soll der elfjährige Frank Epperson einen Becher mit Brausepulver-Wasser samt Rührstab auf der Veranda vergessen haben. Über Nacht fror er fest. Jahre später ließ Epperson das 'Epsicle' patentieren — heute weltweit als Popsicle bekannt.",
+      "category": "Essen & Trinken"
+    },
+    {
+      "id": "essen_de_137",
+      "question": "Was bedeutet 'Spaghetti' wörtlich übersetzt?",
+      "answers": [
+        {
+          "text": "Schnürchen",
+          "correct": true
+        },
+        {
+          "text": "Würmchen",
+          "correct": false
+        },
+        {
+          "text": "Weizenfädchen",
+          "correct": false
+        }
+      ],
+      "difficulty": "easy",
+      "fun_fact": "'Spaghetti' ist die Verkleinerungsform von 'spago', italienisch für Schnur oder Bindfaden — also wörtlich 'kleine Schnüre'. Viele Pastanamen sind solche Bilder: 'Vermicelli' heißt 'Würmchen', 'Linguine' bedeutet 'kleine Zungen'.",
+      "category": "Essen & Trinken"
+    },
+    {
+      "id": "essen_de_138",
+      "question": "Warum heißt der Marshmallow so, obwohl heute keine Pflanze mehr darin steckt?",
+      "answers": [
+        {
+          "text": "Er wurde früher aus dem Saft der Eibischwurzel (engl. marsh mallow) gemacht",
+          "correct": true
+        },
+        {
+          "text": "Der Erfinder hieß mit Nachnamen Marshmallow",
+          "correct": false
+        },
+        {
+          "text": "'Marshmallow' ist altenglisch für 'weicher Zucker'",
+          "correct": false
+        }
+      ],
+      "difficulty": "medium",
+      "fun_fact": "Ursprünglich gewann man die Süßigkeit aus dem zähen Saft der echten Eibischwurzel, der Sumpfmalve (englisch 'marsh mallow'). Als man die teure Wurzel durch Gelatine und aufgeschlagenen Zuckersirup ersetzte, blieb der Name, obwohl keine Pflanze mehr enthalten ist.",
+      "category": "Essen & Trinken"
+    },
+    {
+      "id": "essen_de_139",
+      "question": "Warum trägt der Pfirsich lateinisch den Beinamen 'persica'?",
+      "answers": [
+        {
+          "text": "Die Römer hielten ihn fälschlich für eine persische Frucht",
+          "correct": true
+        },
+        {
+          "text": "Er wurde von einem römischen Feldherrn namens Persicus entdeckt",
+          "correct": false
+        },
+        {
+          "text": "Seine Farbe erinnerte die Römer an persische Seide",
+          "correct": false
+        }
+      ],
+      "difficulty": "easy",
+      "fun_fact": "Der Pfirsich stammt ursprünglich aus China, gelangte aber über Persien nach Europa. Die Römer nannten ihn deshalb 'malum persicum' — persischer Apfel. Daraus wurde im Lauf der Jahrhunderte das deutsche 'Pfirsich' und das englische 'peach'.",
+      "category": "Essen & Trinken"
+    },
+    {
+      "id": "essen_de_140",
+      "question": "Wie kam der Nachtisch 'Pavlova' zu seinem Namen?",
+      "answers": [
+        {
+          "text": "Nach einer russischen Ballerina, die das Land bereiste",
+          "correct": true
+        },
+        {
+          "text": "Nach einer Köchin namens Anna Pavlova",
+          "correct": false
+        },
+        {
+          "text": "Nach dem russischen Wort für 'Wolke'",
+          "correct": false
+        }
+      ],
+      "difficulty": "medium",
+      "fun_fact": "Die luftige Baiser-Torte wurde zu Ehren der Primaballerina Anna Pawlowa kreiert, als sie in den 1920ern Australien und Neuseeland bereiste — die leichte Konsistenz sollte an ein Tutu erinnern. Beide Länder streiten bis heute, wer das Dessert zuerst erfand.",
+      "category": "Essen & Trinken"
+    },
+    {
+      "id": "essen_de_141",
+      "question": "Wovon ließ sich der Erfinder der dreieckigen Toblerone-Form nach eigener Aussage inspirieren?",
+      "answers": [
+        {
+          "text": "Einer pyramidenförmigen Tänzerinnen-Formation im Pariser Varieté",
+          "correct": true
+        },
+        {
+          "text": "Einem Stück Bergkäse aus dem Greyerzerland",
+          "correct": false
+        },
+        {
+          "text": "Einer Reihe von Tannenbäumen im Schnee",
+          "correct": false
+        }
+      ],
+      "difficulty": "medium",
+      "fun_fact": "Die Zacken werden gern dem Matterhorn zugeschrieben, dessen Silhouette heute auf der Packung prangt. Theodor Tobler selbst soll sich jedoch von einer pyramidenförmigen Tänzerinnen-Pose im Pariser Folies Bergère haben anregen lassen.",
+      "category": "Essen & Trinken"
+    },
+    {
+      "id": "essen_de_142",
+      "question": "Warum heißt die 'Praline' nach einem französischen Grafen?",
+      "answers": [
+        {
+          "text": "Sein Koch karamellisierte Mandeln und benannte sie nach dem Grafen Plessis-Praslin",
+          "correct": true
+        },
+        {
+          "text": "Der Graf brachte das Rezept aus Belgien mit nach Frankreich",
+          "correct": false
+        },
+        {
+          "text": "'Praline' war der Spitzname seiner Lieblingsköchin am Hof",
+          "correct": false
+        }
+      ],
+      "difficulty": "hard",
+      "fun_fact": "Im 17. Jahrhundert soll der Koch des Grafen du Plessis-Praslin Mandeln in gebranntem Zucker überzogen haben. Die 'praslines' wurden bei Hofe ein Hit. Über Belgien wurde 'Praline' später zum Sammelbegriff für gefüllte Schokoladenstücke.",
+      "category": "Essen & Trinken"
+    },
+    {
+      "id": "essen_de_143",
+      "question": "Was bedeutet 'Cappuccino' wörtlich und woher kommt der Name?",
+      "answers": [
+        {
+          "text": "Von der Kapuzenfarbe der Kapuzinermönche",
+          "correct": true
+        },
+        {
+          "text": "Vom italienischen Wort für 'kleine Schaumkappe'",
+          "correct": false
+        },
+        {
+          "text": "Vom Erfinder, einem Barista namens Cappuccio",
+          "correct": false
+        }
+      ],
+      "difficulty": "easy",
+      "fun_fact": "Die braune Farbe des Kaffees mit Milchhaube erinnerte an die Kutten der Kapuzinermönche (italienisch 'cappuccino', kleine Kapuze). Auch der Kapuzineraffe trägt seinen Namen wegen der 'Kappe' aus dunklem Fell auf dem Kopf.",
+      "category": "Essen & Trinken"
+    },
+    {
+      "id": "essen_de_144",
+      "question": "Wie entstand der französische Tarte Tatin der Überlieferung nach?",
+      "answers": [
+        {
+          "text": "Eine Wirtin vergaß den Teig und buk den Apfelkuchen verkehrt herum",
+          "correct": true
+        },
+        {
+          "text": "Ein Koch ließ einen fertigen Apfelkuchen auf den Boden fallen",
+          "correct": false
+        },
+        {
+          "text": "Ein Bäcker karamellisierte alte Äpfel zur Resteverwertung",
+          "correct": false
+        }
+      ],
+      "difficulty": "medium",
+      "fun_fact": "Die Schwestern Tatin betrieben um 1900 ein Hotel. Der Überlieferung nach ließ Stéphanie Tatin die Äpfel in Butter und Zucker zu lange brutzeln und legte den Teig kurzerhand oben drauf. Gestürzt serviert wurde der 'Unfall' zum Klassiker.",
+      "category": "Essen & Trinken"
+    },
+    {
+      "id": "essen_de_145",
+      "question": "Warum heißt der 'Hot Dog' ausgerechnet 'heißer Hund'?",
+      "answers": [
+        {
+          "text": "Wegen eines Spotts, die Wurst enthalte Hundefleisch",
+          "correct": true
+        },
+        {
+          "text": "Weil die Würste an der Leine eines Verkäufers baumelten",
+          "correct": false
+        },
+        {
+          "text": "Weil die ersten Verkäufer Dackel als Maskottchen hielten",
+          "correct": false
+        }
+      ],
+      "difficulty": "easy",
+      "fun_fact": "Die längliche Wurst wurde in den USA spöttisch 'Dachshund sausage' (Dackelwurst) genannt, weil die Form an den Hund erinnerte — und weil böse Gerüchte Hundefleisch in Würsten unterstellten. Daraus verkürzte sich um 1900 das volkstümliche 'hot dog'.",
+      "category": "Essen & Trinken"
+    },
+    {
+      "id": "essen_de_146",
+      "question": "Welches heute weltbekannte Getränk geht auf ein thailändisches Tonikum für Lkw-Fahrer zurück?",
+      "answers": [
+        {
+          "text": "Red Bull",
+          "correct": true
+        },
+        {
+          "text": "Eistee",
+          "correct": false
+        },
+        {
+          "text": "Tonic Water",
+          "correct": false
+        }
+      ],
+      "difficulty": "easy",
+      "fun_fact": "Red Bull basiert auf 'Krating Daeng', einem süßen, koffeinhaltigen Tonikum aus Thailand, das vor allem Fernfahrer und Arbeiter tranken. Der Österreicher Dietrich Mateschitz entdeckte es auf einer Geschäftsreise, passte es an westliche Geschmäcker an und versetzte es mit Kohlensäure.",
+      "category": "Essen & Trinken"
+    },
+    {
+      "id": "essen_de_147",
+      "question": "Was bedeutet das vermutete aztekische Ursprungswort von 'Schokolade' sinngemäß?",
+      "answers": [
+        {
+          "text": "Bitteres Wasser",
+          "correct": true
+        },
+        {
+          "text": "Speise der Götter",
+          "correct": false
+        },
+        {
+          "text": "Dunkle Bohne",
+          "correct": false
+        }
+      ],
+      "difficulty": "medium",
+      "fun_fact": "Der Begriff geht vermutlich auf das Nahuatl-Wort 'xocolatl' zurück, das oft mit 'bitteres Wasser' übersetzt wird — die Herleitung ist sprachwissenschaftlich allerdings umstritten. Die Azteken tranken Kakao ungesüßt, scharf und schaumig; die süße feste Tafelschokolade ist eine viel spätere europäische Erfindung.",
+      "category": "Essen & Trinken"
+    },
+    {
+      "id": "essen_de_148",
+      "question": "Wie kam der Teebeutel der Überlieferung nach in die Welt?",
+      "answers": [
+        {
+          "text": "Ein Händler verschickte Teeproben in kleinen Seidensäckchen",
+          "correct": true
+        },
+        {
+          "text": "Eine Fabrik nähte Teeblätter aus Versehen in Stoffreste ein",
+          "correct": false
+        },
+        {
+          "text": "Ein Wirt filterte heißen Tee notdürftig durch eine Socke",
+          "correct": false
+        }
+      ],
+      "difficulty": "easy",
+      "fun_fact": "Um 1908 verschickte der New Yorker Händler Thomas Sullivan Teeproben in kleinen Seidenbeuteln, um Porto zu sparen. Kunden warfen die Beutel versehentlich komplett ins heiße Wasser — und fanden das praktisch. So wurde aus einer Verpackung der Teebeutel.",
+      "category": "Essen & Trinken"
+    },
+    {
+      "id": "essen_de_149",
+      "question": "Warum wurde der rheinische Sauerbraten traditionell oft aus Pferdefleisch zubereitet?",
+      "answers": [
+        {
+          "text": "Die tagelange saure Marinade machte auch zähes Fleisch mürbe",
+          "correct": true
+        },
+        {
+          "text": "Pferdefleisch war damals teurer und galt als Festessen",
+          "correct": false
+        },
+        {
+          "text": "Pferde mochten den Geruch der Marinade und wurden so gemästet",
+          "correct": false
+        }
+      ],
+      "difficulty": "medium",
+      "fun_fact": "Das tagelange Einlegen in saurer Marinade machte auch zähes, älteres Fleisch zart — ideal für ausgedientes Arbeitsvieh. Heute nimmt man meist Rind, doch der 'echte' rheinische Sauerbraten gilt manchen Puristen weiterhin als Pferdegericht.",
+      "category": "Essen & Trinken"
+    },
+    {
+      "id": "essen_de_150",
+      "question": "Als was wurde Tomatenketchup-Extrakt in den USA der 1830er Jahre verkauft?",
+      "answers": [
+        {
+          "text": "Als Medizin in Pillenform gegen Verdauungsleiden",
+          "correct": true
+        },
+        {
+          "text": "Als roter Holzlack für Möbel",
+          "correct": false
+        },
+        {
+          "text": "Als Konservierungsmittel für rohes Fleisch",
+          "correct": false
+        }
+      ],
+      "difficulty": "hard",
+      "fun_fact": "Um 1834 pries der Arzt John Cook Bennett Tomaten als Heilmittel und verkaufte 'Tomato Pills' gegen Durchfall und Gelbsucht. Der Hype kollabierte als Quacksalberei, doch die Begeisterung für Tomatenextrakt ebnete den Weg für das Würzketchup von heute.",
+      "category": "Essen & Trinken"
+    },
+    {
+      "id": "essen_de_151",
+      "question": "Woher stammt die süddeutsch-österreichische Bezeichnung 'Semmel' für ein Brötchen?",
+      "answers": [
+        {
+          "text": "'Semmel' geht auf das lateinische 'simila' für feines Weizenmehl zurück",
+          "correct": true
+        },
+        {
+          "text": "'Semmel' kommt vom Namen eines Wiener Bäckers namens Semml",
+          "correct": false
+        },
+        {
+          "text": "'Semmel' bedeutet im Althochdeutschen 'rund geformt'",
+          "correct": false
+        }
+      ],
+      "difficulty": "medium",
+      "fun_fact": "Das süddeutsch-österreichische Wort 'Semmel' stammt vom lateinischen 'simila', dem feinsten, hellsten Weizenmehl der Antike. Helles Gebäck war lange ein Luxus — dunkles Roggenbrot war Alltagskost der ärmeren Bevölkerung.",
+      "category": "Essen & Trinken"
+    },
+    {
+      "id": "essen_de_152",
+      "question": "Wie viele Tassen Kaffee trinken die Menschen weltweit ungefähr pro Tag?",
+      "answers": [
+        {
+          "text": "Über 2 Milliarden",
+          "correct": true
+        },
+        {
+          "text": "Etwa 100 Millionen",
+          "correct": false
+        },
+        {
+          "text": "Etwa 400 Millionen",
+          "correct": false
+        }
+      ],
+      "difficulty": "easy",
+      "fun_fact": "Mehr als zwei Milliarden Tassen pro Tag bedeuten rein rechnerisch fast eine Tasse pro Tag und Erdbewohner — obwohl große Teile der Weltbevölkerung gar keinen Kaffee trinken. Die oft gehörte Behauptung, Kaffee sei 'nach Erdöl der meistgehandelte Rohstoff', ist übrigens ein Mythos.",
+      "category": "Essen & Trinken"
+    },
+    {
+      "id": "essen_de_153",
+      "question": "Wie viele Chilischoten der Sorte Jalapeño bräuchte man theoretisch, um die Schärfe einer einzigen Carolina Reaper zu erreichen?",
+      "answers": [
+        {
+          "text": "Mehr als 200",
+          "correct": true
+        },
+        {
+          "text": "Etwa 5",
+          "correct": false
+        },
+        {
+          "text": "Etwa 30",
+          "correct": false
+        }
+      ],
+      "difficulty": "medium",
+      "fun_fact": "Eine Jalapeño liegt bei rund 5.000 Scoville, eine Carolina Reaper bei über 1,5 Millionen. Das ist ein Faktor von mehr als 200 — man müsste also mehr als 200 Jalapeños auf einmal essen, um dieselbe Schärfe zu spüren.",
       "category": "Essen & Trinken"
     }
   ]

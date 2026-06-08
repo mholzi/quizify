@@ -1,7 +1,7 @@
 {
   "name": "Wissenschaft",
   "language": "de",
-  "version": "1.0",
+  "version": "1.1",
   "theme": "science",
   "questions": [
     {
@@ -2102,6 +2102,1056 @@
       ],
       "difficulty": "easy",
       "fun_fact": "Über unterirdische Pilzfäden (Mykorrhiza) tauschen Bäume Zucker, Nährstoffe und sogar Warnsignale aus — Forscher nennen es scherzhaft das Wood Wide Web. Mutterbäume können gezielt ihren eigenen Nachwuchs mit Kohlenstoff versorgen.",
+      "category": "Wissenschaft"
+    },
+    {
+      "id": "wissenschaft_de_108",
+      "question": "Warum bekommst du eine Gänsehaut, wenn dir kalt ist?",
+      "answers": [
+        {
+          "text": "Winzige Muskeln stellen die Härchen auf, um wärmende Luft zu halten",
+          "correct": true
+        },
+        {
+          "text": "Die Haut zieht sich zusammen und drückt Blut nach außen",
+          "correct": false
+        },
+        {
+          "text": "Nervenenden schwellen an und heben die Hautoberfläche an",
+          "correct": false
+        }
+      ],
+      "difficulty": "easy",
+      "fun_fact": "Jedes Haar hat einen winzigen Muskel (Musculus arrector pili), der es aufrichtet. Bei pelzigen Tieren bildet das eine dicke isolierende Luftschicht — beim fast nackten Menschen ist die Gänsehaut nur noch ein nutzloses Überbleibsel.",
+      "category": "Wissenschaft"
+    },
+    {
+      "id": "wissenschaft_de_109",
+      "question": "Warum brennen Chilischoten im Mund, obwohl gar keine echte Hitze entsteht?",
+      "answers": [
+        {
+          "text": "Capsaicin reizt dieselben Nerven wie echte Hitze",
+          "correct": true
+        },
+        {
+          "text": "Die Säure der Schote verätzt die Zungenoberfläche",
+          "correct": false
+        },
+        {
+          "text": "Winzige Kristalle ritzen die Schleimhaut auf",
+          "correct": false
+        }
+      ],
+      "difficulty": "medium",
+      "fun_fact": "Capsaicin dockt am Rezeptor TRPV1 an, der eigentlich vor echter Hitze warnt. Das Gehirn glaubt, der Mund verbrenne — obwohl die Temperatur unverändert ist. Derselbe Rezeptor erklärt, warum Wasser nicht hilft, fettige Milch aber schon.",
+      "category": "Wissenschaft"
+    },
+    {
+      "id": "wissenschaft_de_110",
+      "question": "Warum löscht Wasser einen Fettbrand nicht, sondern lässt ihn explodieren?",
+      "answers": [
+        {
+          "text": "Das Wasser verdampft schlagartig und schleudert brennendes Fett umher",
+          "correct": true
+        },
+        {
+          "text": "Wasser reagiert chemisch mit heißem Fett zu einem Brenngas",
+          "correct": false
+        },
+        {
+          "text": "Das Wasser leitet die Flamme über den entstehenden Dampf weiter",
+          "correct": false
+        }
+      ],
+      "difficulty": "easy",
+      "fun_fact": "Brennendes Fett ist weit über 100 °C heiß. Wasser sinkt nach unten, verdampft sofort und dehnt sich dabei rund 1700-fach aus — es reißt das brennende Fett als feinen Nebel mit nach oben. Aus einem Glas Wasser wird so eine meterhohe Stichflamme.",
+      "category": "Wissenschaft"
+    },
+    {
+      "id": "wissenschaft_de_111",
+      "question": "Warum knackt es, wenn man mit den Fingerknöcheln knackt?",
+      "answers": [
+        {
+          "text": "In der Gelenkflüssigkeit platzt eine Gasblase",
+          "correct": true
+        },
+        {
+          "text": "Zwei Knochen reiben kurz aneinander",
+          "correct": false
+        },
+        {
+          "text": "Ein Band schnappt über den Knochen",
+          "correct": false
+        }
+      ],
+      "difficulty": "medium",
+      "fun_fact": "Beim Ziehen am Gelenk fällt der Druck in der Gelenkschmiere, und es bildet sich blitzartig eine Gasblase — ihr Entstehen erzeugt das Geräusch. Deshalb kann man dasselbe Gelenk nicht sofort erneut knacken: Das Gas braucht etwa 20 Minuten, um sich wieder zu lösen.",
+      "category": "Wissenschaft"
+    },
+    {
+      "id": "wissenschaft_de_112",
+      "question": "Warum schwimmt ein riesiges Stahlschiff, obwohl Stahl viel schwerer als Wasser ist?",
+      "answers": [
+        {
+          "text": "Es verdrängt mehr Wassergewicht, als es selbst wiegt",
+          "correct": true
+        },
+        {
+          "text": "Die Luft im Inneren ist leichter als das Schiff",
+          "correct": false
+        },
+        {
+          "text": "Die Bugform erzeugt beim Stillstand Auftrieb",
+          "correct": false
+        }
+      ],
+      "difficulty": "easy",
+      "fun_fact": "Entscheidend ist nicht das Material, sondern die durchschnittliche Dichte des gesamten geformten Rumpfs samt Hohlraum. Solange das verdrängte Wasser mehr wiegt als das Schiff, trägt es. Ein massiver Stahlwürfel derselben Masse würde dagegen sofort untergehen.",
+      "category": "Wissenschaft"
+    },
+    {
+      "id": "wissenschaft_de_113",
+      "question": "Warum riecht es so typisch, wenn der Regen auf trockenen Boden trifft?",
+      "answers": [
+        {
+          "text": "Aufprallende Tropfen schleudern Bodenduftstoffe in die Luft",
+          "correct": true
+        },
+        {
+          "text": "Regenwolken setzen beim Bilden ein eigenes Aroma frei",
+          "correct": false
+        },
+        {
+          "text": "Die Luftfeuchtigkeit löst Duft aus den Pflanzenblättern",
+          "correct": false
+        }
+      ],
+      "difficulty": "medium",
+      "fun_fact": "Der Geruch heißt Petrichor. Bodenbakterien produzieren den Stoff Geosmin; treffen die ersten Tropfen auf, schleudern sie winzige Aerosole mit diesem Duft hoch. Die menschliche Nase ist auf Geosmin extrem empfindlich — wir riechen es noch bei wenigen Teilen pro Billion.",
+      "category": "Wissenschaft"
+    },
+    {
+      "id": "wissenschaft_de_114",
+      "question": "Warum bleiben Wassertropfen als Kugel zusammen und zerfließen nicht einfach?",
+      "answers": [
+        {
+          "text": "Wegen der Oberflächenspannung zwischen den Molekülen",
+          "correct": true
+        },
+        {
+          "text": "Wegen des Luftdrucks, der von außen drückt",
+          "correct": false
+        },
+        {
+          "text": "Wegen statischer Aufladung der Wasseroberfläche",
+          "correct": false
+        }
+      ],
+      "difficulty": "easy",
+      "fun_fact": "Wassermoleküle ziehen sich gegenseitig an; an der Oberfläche fehlen Nachbarn nach außen, also zieht der Film sich zur kleinstmöglichen Fläche zusammen — einer Kugel. Dieselbe Spannung trägt Wasserläufer-Insekten und lässt eine trockene Büroklammer auf Wasser liegen.",
+      "category": "Wissenschaft"
+    },
+    {
+      "id": "wissenschaft_de_115",
+      "question": "Warum werden deine Finger im Badewasser nach einer Weile schrumpelig?",
+      "answers": [
+        {
+          "text": "Das Nervensystem verengt aktiv die Blutgefäße in den Fingern",
+          "correct": true
+        },
+        {
+          "text": "Die Haut saugt sich mit Wasser voll und quillt auf",
+          "correct": false
+        },
+        {
+          "text": "Das Wasser löst Hautfett heraus und die Haut fällt ein",
+          "correct": false
+        }
+      ],
+      "difficulty": "hard",
+      "fun_fact": "Lange dachte man, die Haut quelle einfach auf. Tatsächlich steuert das vegetative Nervensystem die Falten: Es verengt die Blutgefäße, die Fingerkuppe schrumpft und faltet sich. Studien zeigen, dass solche Falten nasse Gegenstände besser greifen lassen — ein eingebautes Reifenprofil.",
+      "category": "Wissenschaft"
+    },
+    {
+      "id": "wissenschaft_de_116",
+      "question": "Warum hält ein Saugnapf an einer glatten Fläche?",
+      "answers": [
+        {
+          "text": "Der äußere Luftdruck presst ihn an, weil innen Luft fehlt",
+          "correct": true
+        },
+        {
+          "text": "Das weiche Gummi verklebt mit der Oberfläche",
+          "correct": false
+        },
+        {
+          "text": "Die Wölbung erzeugt eine magnetische Haftkraft",
+          "correct": false
+        }
+      ],
+      "difficulty": "easy",
+      "fun_fact": "Beim Andrücken wird die Luft unter dem Napf herausgepresst. Außen drückt dann die volle Atmosphäre — etwa 1 kg pro Quadratzentimeter — den Napf an die Wand. Im Vakuum würde ein Saugnapf sofort abfallen, weil dort keine Luft mehr von außen drückt.",
+      "category": "Wissenschaft"
+    },
+    {
+      "id": "wissenschaft_de_117",
+      "question": "Warum fühlt sich ein Metallgeländer kälter an als ein Holzgeländer bei gleicher Temperatur?",
+      "answers": [
+        {
+          "text": "Metall leitet die Wärme schneller aus der Hand ab",
+          "correct": true
+        },
+        {
+          "text": "Metall ist tatsächlich immer ein paar Grad kälter",
+          "correct": false
+        },
+        {
+          "text": "Die glatte Oberfläche täuscht der Haut Kälte vor",
+          "correct": false
+        }
+      ],
+      "difficulty": "easy",
+      "fun_fact": "Beide haben dieselbe Raumtemperatur — du fühlst aber nicht Temperatur, sondern Wärmefluss. Metall zieht die Wärme aus deiner Hand viel schneller ab als Holz, deshalb meldet die Haut Kälte. Genau deshalb friert man auf kaltem Fliesenboden mehr als auf Teppich gleicher Temperatur.",
+      "category": "Wissenschaft"
+    },
+    {
+      "id": "wissenschaft_de_118",
+      "question": "Warum platzt Popcorn auf, wenn man Maiskörner erhitzt?",
+      "answers": [
+        {
+          "text": "Eingeschlossenes Wasser verdampft und sprengt das Korn",
+          "correct": true
+        },
+        {
+          "text": "Die Stärke dehnt sich beim Schmelzen aus",
+          "correct": false
+        },
+        {
+          "text": "Die harte Schale verbrennt und zerbricht",
+          "correct": false
+        }
+      ],
+      "difficulty": "medium",
+      "fun_fact": "Jedes Korn enthält einen Tropfen Wasser in stärkehaltigem Inneren. Bei etwa 180 °C wird der Dampfdruck so hoch, dass die harte Schale platzt — die Stärke quillt explosionsartig nach außen und erstarrt zur fluffigen Masse. Andere Getreidekörner haben keine so druckdichte Schale und poppen deshalb nicht.",
+      "category": "Wissenschaft"
+    },
+    {
+      "id": "wissenschaft_de_119",
+      "question": "Warum klebt nasser Sand am Strand fest, während trockener Sand rieselt?",
+      "answers": [
+        {
+          "text": "Dünne Wasserbrücken zwischen den Körnern ziehen sie zusammen",
+          "correct": true
+        },
+        {
+          "text": "Das Wasser löst die Körner an und verklebt sie",
+          "correct": false
+        },
+        {
+          "text": "Nasser Sand wird elektrisch aufgeladen",
+          "correct": false
+        }
+      ],
+      "difficulty": "medium",
+      "fun_fact": "Zwischen den Sandkörnern bilden sich winzige Wasserbrücken, deren Oberflächenspannung die Körner aneinanderzieht — so wird der Sand formbar. Steht das Wasser zu hoch, verschwinden die Brücken wieder und der Sand wird matschig. Eine leicht feuchte Sandburg hält deshalb am besten.",
+      "category": "Wissenschaft"
+    },
+    {
+      "id": "wissenschaft_de_120",
+      "question": "Was verbrennt in einer Kerze eigentlich — das Wachs, der Docht oder etwas anderes?",
+      "answers": [
+        {
+          "text": "Der Docht saugt flüssiges Wachs hoch, das als Gas verbrennt",
+          "correct": true
+        },
+        {
+          "text": "Die Flamme schmilzt das feste Wachs direkt zu Licht",
+          "correct": false
+        },
+        {
+          "text": "Das Wachs verbrennt nur an seiner Oberfläche von außen",
+          "correct": false
+        }
+      ],
+      "difficulty": "medium",
+      "fun_fact": "Nicht der Docht ist der eigentliche Brennstoff. Die Flammenwärme schmilzt das Wachs, der Docht saugt es per Kapillarwirkung hoch, dort verdampft es und das Gas verbrennt. Eigentlich brennt also nie das feste Wachs, sondern immer nur Wachsdampf — der Docht ist nur die Pumpe.",
+      "category": "Wissenschaft"
+    },
+    {
+      "id": "wissenschaft_de_121",
+      "question": "Warum fühlt sich Wasser nasser an, wenn etwas Spülmittel hineinkommt?",
+      "answers": [
+        {
+          "text": "Das Mittel senkt die Oberflächenspannung, sodass Wasser besser benetzt",
+          "correct": true
+        },
+        {
+          "text": "Spülmittel macht die Wassermoleküle kleiner",
+          "correct": false
+        },
+        {
+          "text": "Die Seife erhöht die Temperatur des Wassers leicht",
+          "correct": false
+        }
+      ],
+      "difficulty": "hard",
+      "fun_fact": "Reines Wasser perlt durch seine hohe Oberflächenspannung an Fett und Stoff ab. Tenside im Spülmittel brechen diese Spannung, sodass das Wasser in feine Ritzen und Fasern dringt — es wird ein besseres Benetzungsmittel. Genau deshalb wäscht Wasser mit Seife, das pure Wasser dagegen schlecht.",
+      "category": "Wissenschaft"
+    },
+    {
+      "id": "wissenschaft_de_122",
+      "question": "Warum bekommen Taucher Probleme, wenn sie zu schnell auftauchen?",
+      "answers": [
+        {
+          "text": "Im Blut gelöstes Gas bildet beim Druckabfall Bläschen",
+          "correct": true
+        },
+        {
+          "text": "Das Herz schlägt durch den Druckwechsel zu schnell",
+          "correct": false
+        },
+        {
+          "text": "Die Lunge dehnt sich beim Aufstieg nicht schnell genug",
+          "correct": false
+        }
+      ],
+      "difficulty": "medium",
+      "fun_fact": "Unter Wasserdruck löst sich mehr Stickstoff im Blut — wie in einer geschlossenen Sprudelflasche. Steigt man zu schnell auf, fällt der Druck schlagartig und das Gas schäumt im Körper aus, genau wie beim Öffnen der Flasche. Diese Bläschen verursachen die gefürchtete Taucherkrankheit.",
+      "category": "Wissenschaft"
+    },
+    {
+      "id": "wissenschaft_de_123",
+      "question": "Warum wird Honig im Glas mit der Zeit fest und körnig?",
+      "answers": [
+        {
+          "text": "Der gelöste Zucker kristallisiert aus",
+          "correct": true
+        },
+        {
+          "text": "Der Honig verdunstet teilweise und trocknet ein",
+          "correct": false
+        },
+        {
+          "text": "Luft im Glas oxidiert den Zucker zu Kristallen",
+          "correct": false
+        }
+      ],
+      "difficulty": "easy",
+      "fun_fact": "Honig ist eine übersättigte Zuckerlösung — mehr Zucker, als das Wasser eigentlich halten kann. Mit der Zeit fällt der überschüssige Zucker als Kristalle aus. Sanftes Erwärmen im Wasserbad löst die Kristalle wieder, ohne den Honig zu zerstören. Wie schnell ein Honig fest wird, hängt vom Zuckerverhältnis ab: fruktosereiche Sorten wie Akazienhonig bleiben jahrelang flüssig.",
+      "category": "Wissenschaft"
+    },
+    {
+      "id": "wissenschaft_de_124",
+      "question": "Warum hört man am Meer ein Rauschen, wenn man eine Muschel ans Ohr hält?",
+      "answers": [
+        {
+          "text": "Die Muschel verstärkt das Umgebungsgeräusch um dich herum",
+          "correct": true
+        },
+        {
+          "text": "Im Inneren ist echter Meereshall eingeschlossen",
+          "correct": false
+        },
+        {
+          "text": "Die gewölbte Form erzeugt selbst leise Töne",
+          "correct": false
+        }
+      ],
+      "difficulty": "easy",
+      "fun_fact": "In der Muschel ist kein Meer gefangen. Der Hohlraum verstärkt durch Resonanz das ständige leise Hintergrundrauschen deiner Umgebung — Luftströme, ferner Verkehr, dein eigenes Blut. In einem absolut schalltoten Raum bliebe die Muschel still.",
+      "category": "Wissenschaft"
+    },
+    {
+      "id": "wissenschaft_de_125",
+      "question": "Warum schmecken Speisen im Flugzeug oft fader als am Boden?",
+      "answers": [
+        {
+          "text": "Trockene Kabinenluft und niedriger Druck dämpfen den Geschmackssinn",
+          "correct": true
+        },
+        {
+          "text": "Das Essen kühlt in der Höhe schneller aus",
+          "correct": false
+        },
+        {
+          "text": "Die Bordküche darf aus Sicherheitsgründen weniger würzen",
+          "correct": false
+        }
+      ],
+      "difficulty": "hard",
+      "fun_fact": "In Reiseflughöhe trocknen die niedrige Luftfeuchtigkeit und der reduzierte Kabinendruck die Nasenschleimhaut aus und dämpfen besonders die Wahrnehmung von süß und salzig — um bis zu 30 %. Deshalb würzen Airlines Bordessen kräftiger; Tomatensaft schmeckt oben sogar besser, weil sein herzhafter Umami-Geschmack kaum leidet.",
+      "category": "Wissenschaft"
+    },
+    {
+      "id": "wissenschaft_de_126",
+      "question": "Warum wird Apfelschnitt an der Luft braun?",
+      "answers": [
+        {
+          "text": "Sauerstoff lässt Stoffe im Fruchtfleisch oxidieren",
+          "correct": true
+        },
+        {
+          "text": "Das Tageslicht verfärbt die Schnittfläche",
+          "correct": false
+        },
+        {
+          "text": "Die Säure des Apfels verdunstet und hinterlässt Braunes",
+          "correct": false
+        }
+      ],
+      "difficulty": "easy",
+      "fun_fact": "Beim Schneiden werden Zellen verletzt; ein Enzym und Sauerstoff reagieren zu bräunlichen Pigmenten — derselbe Vorgang, der auch geschnittene Avocados und Bananen dunkel werden lässt. Ein Spritzer Zitronensaft bremst es, weil die Säure das Enzym lahmlegt.",
+      "category": "Wissenschaft"
+    },
+    {
+      "id": "wissenschaft_de_127",
+      "question": "Warum dröhnt eine Kirchenglocke noch lange nach, eine angeschlagene Tonschüssel aber kaum?",
+      "answers": [
+        {
+          "text": "Die Metallglocke schwingt mit viel weniger innerer Reibung",
+          "correct": true
+        },
+        {
+          "text": "Die Glocke ist nur größer und deshalb lauter",
+          "correct": false
+        },
+        {
+          "text": "Die Schüssel besteht aus Material, das keinen Schall leitet",
+          "correct": false
+        }
+      ],
+      "difficulty": "medium",
+      "fun_fact": "Wie lange ein Gegenstand klingt, hängt davon ab, wie schnell die Schwingung im Material ihre Energie verliert. Bronze hat sehr geringe innere Dämpfung, deshalb tönt eine Glocke minutenlang nach. Ton oder ein gesprungenes Material schluckt die Schwingung sofort — gesprungene Glocken klingen deshalb dumpf.",
+      "category": "Wissenschaft"
+    },
+    {
+      "id": "wissenschaft_de_128",
+      "question": "Warum bekommt man manchmal einen kurzen, stechenden Kopfschmerz beim schnellen Essen von Eis?",
+      "answers": [
+        {
+          "text": "Kälte am Gaumen verengt und weitet Gefäße ruckartig",
+          "correct": true
+        },
+        {
+          "text": "Das Eis kühlt direkt das Gehirn hinter der Stirn ab",
+          "correct": false
+        },
+        {
+          "text": "Der Zucker im Eis löst einen Nervenkrampf aus",
+          "correct": false
+        }
+      ],
+      "difficulty": "medium",
+      "fun_fact": "Der Gehirnfrost entsteht, wenn Kälte den Gaumen trifft: Blutgefäße verengen sich blitzschnell und weiten sich wieder, ein Nerv meldet das als Schmerz — fälschlich in die Stirn verlegt. Drückt man die Zunge an den warmen Gaumen, ist der Spuk meist nach Sekunden vorbei.",
+      "category": "Wissenschaft"
+    },
+    {
+      "id": "wissenschaft_de_129",
+      "question": "Warum klebt ein angeleckter, eiskalter Metallpfosten an der Zunge fest?",
+      "answers": [
+        {
+          "text": "Der Speichel gefriert blitzschnell zwischen Zunge und Metall",
+          "correct": true
+        },
+        {
+          "text": "Das kalte Metall saugt die Zunge an sich",
+          "correct": false
+        },
+        {
+          "text": "Die Zungenoberfläche wird vom Metall elektrisch angezogen",
+          "correct": false
+        }
+      ],
+      "difficulty": "easy",
+      "fun_fact": "Metall leitet Wärme rasend schnell ab. Der dünne Speichelfilm auf der Zunge verliert seine Wärme sofort und gefriert zu Eis, das Zunge und Pfosten verkittet. Warmes Wasser löst die Zunge wieder — Gewaltzug reißt nur die Haut ab.",
+      "category": "Wissenschaft"
+    },
+    {
+      "id": "wissenschaft_de_130",
+      "question": "Warum perlt Wasser von einem frisch gewachsten Auto ab, statt sich zu verteilen?",
+      "answers": [
+        {
+          "text": "Das Wachs macht die Oberfläche wasserabweisend, sodass Tropfen zusammenziehen",
+          "correct": true
+        },
+        {
+          "text": "Das Wachs lädt das Wasser elektrisch ab",
+          "correct": false
+        },
+        {
+          "text": "Die glänzende Schicht ist zu glatt für Wasser zum Anhaften",
+          "correct": false
+        }
+      ],
+      "difficulty": "easy",
+      "fun_fact": "Die Wachsschicht ist hydrophob — sie stößt Wasser ab, sodass die Oberflächenspannung die Tropfen zu Kugeln zusammenzieht, die abrollen. Dasselbe Prinzip nutzt die Lotusblüte mit ihrer mikrorauen Oberfläche, an der Wasser und Schmutz keinen Halt finden.",
+      "category": "Wissenschaft"
+    },
+    {
+      "id": "wissenschaft_de_131",
+      "question": "Warum bildet sich an einem kalten Getränkeglas im Sommer außen Wasser?",
+      "answers": [
+        {
+          "text": "Luftfeuchtigkeit kondensiert an der kalten Glaswand",
+          "correct": true
+        },
+        {
+          "text": "Wasser sickert durch winzige Poren im Glas nach außen",
+          "correct": false
+        },
+        {
+          "text": "Das kalte Glas zieht Feuchtigkeit aus der Hand",
+          "correct": false
+        }
+      ],
+      "difficulty": "easy",
+      "fun_fact": "Warme Luft hält viel unsichtbaren Wasserdampf. Trifft sie auf die kalte Glaswand, kühlt sie ab und kann den Dampf nicht mehr halten — er schlägt sich als Tröpfchen nieder. Genau so entsteht morgens der Tau auf der Wiese und beschlägt die Brille beim Betreten eines warmen Raums.",
+      "category": "Wissenschaft"
+    },
+    {
+      "id": "wissenschaft_de_132",
+      "question": "Woher stammt das chemische Symbol „Na“ für Natrium?",
+      "answers": [
+        {
+          "text": "Vom lateinischen Wort „natrium“ für Soda",
+          "correct": true
+        },
+        {
+          "text": "Vom Entdecker namens Nathan Adams",
+          "correct": false
+        },
+        {
+          "text": "Von der nordischen Salzgöttin Nanna",
+          "correct": false
+        }
+      ],
+      "difficulty": "medium",
+      "fun_fact": "„Na“ kommt von „natron“ bzw. lateinisch „natrium“, einer alten Bezeichnung für Soda. Auch „K“ (Kalium), „Fe“ (Eisen) und „Au“ (Gold) tragen lateinische Wurzeln — die Symbole folgen oft der alten Sprache, nicht dem modernen Namen.",
+      "category": "Wissenschaft"
+    },
+    {
+      "id": "wissenschaft_de_133",
+      "question": "Wovon leitet sich das Wort „Sauerstoff“ ab?",
+      "answers": [
+        {
+          "text": "Von der irrigen Annahme, er sei Bestandteil jeder Säure",
+          "correct": true
+        },
+        {
+          "text": "Vom sauren Geschmack des Gases",
+          "correct": false
+        },
+        {
+          "text": "Vom Entdecker, der Bauer war",
+          "correct": false
+        }
+      ],
+      "difficulty": "hard",
+      "fun_fact": "Antoine Lavoisier prägte den Namen „oxygène“ — griechisch für „Säurebildner“ — weil er glaubte, jede Säure enthalte das Element. Das war falsch: Salzsäure etwa enthält gar keinen Sauerstoff. Der irreführende Name blieb trotzdem überall hängen.",
+      "category": "Wissenschaft"
+    },
+    {
+      "id": "wissenschaft_de_134",
+      "question": "Wie kam der Klebstoff „Superkleber“ (Cyanacrylat) ursprünglich zur Welt?",
+      "answers": [
+        {
+          "text": "Als gescheiterter Versuch, klare Gewehr-Zielvorrichtungen zu gießen",
+          "correct": true
+        },
+        {
+          "text": "Als Zahnzement für die Marine",
+          "correct": false
+        },
+        {
+          "text": "Als Klebeband-Ersatz für die Mondmission",
+          "correct": false
+        }
+      ],
+      "difficulty": "easy",
+      "fun_fact": "Harry Coover arbeitete im Zweiten Weltkrieg an durchsichtigem Kunststoff für Zielgeräte — das Material klebte alles fest und war unbrauchbar. Erst Jahre später erkannte er, dass genau diese Klebrigkeit das Produkt war.",
+      "category": "Wissenschaft"
+    },
+    {
+      "id": "wissenschaft_de_135",
+      "question": "Warum heißt das Element Kobalt nach einem Berggeist?",
+      "answers": [
+        {
+          "text": "Weil Bergleute es für verhextes, nutzloses Erz hielten",
+          "correct": true
+        },
+        {
+          "text": "Weil es nur in einer Höhle namens Kobold gefunden wurde",
+          "correct": false
+        },
+        {
+          "text": "Weil es im Dunkeln blau leuchtet wie ein Geist",
+          "correct": false
+        }
+      ],
+      "difficulty": "medium",
+      "fun_fact": "Der Name kommt vom „Kobold“: Sächsische Bergleute verfluchten das Erz, weil es wie Silber aussah, aber keines lieferte und beim Verhütten giftige Arsendämpfe freisetzte. Sie schoben es bösen Berggeistern in die Schuhe.",
+      "category": "Wissenschaft"
+    },
+    {
+      "id": "wissenschaft_de_136",
+      "question": "Wie entstand das Schmerzmittel-Pulver Aspirin als Markenname?",
+      "answers": [
+        {
+          "text": "Aus „Acetyl“ plus der Pflanze Spierstaude (Spiraea)",
+          "correct": true
+        },
+        {
+          "text": "Aus den Initialen des Chemikers A. S. Pirin",
+          "correct": false
+        },
+        {
+          "text": "Aus dem lateinischen Wort für „schmerzlos“",
+          "correct": false
+        }
+      ],
+      "difficulty": "hard",
+      "fun_fact": "Salicylsäure wurde ursprünglich auch aus der Spierstaude (lateinisch Spiraea) gewonnen. „A“ steht für die Acetyl-Gruppe, „spir“ für die Pflanze — daraus baute Bayer 1899 den Kunstnamen Aspirin zusammen.",
+      "category": "Wissenschaft"
+    },
+    {
+      "id": "wissenschaft_de_137",
+      "question": "Wie wurde der erste vulkanisierte Gummi entdeckt?",
+      "answers": [
+        {
+          "text": "Durch ein Gemisch, das versehentlich auf einen heißen Ofen fiel",
+          "correct": true
+        },
+        {
+          "text": "Durch das Kochen von Kautschuk in Meerwasser",
+          "correct": false
+        },
+        {
+          "text": "Durch Blitzeinschlag in einen Kautschukbaum",
+          "correct": false
+        }
+      ],
+      "difficulty": "medium",
+      "fun_fact": "Charles Goodyear experimentierte jahrelang erfolglos, bis 1839 eine Mischung aus Kautschuk und Schwefel auf einen heißen Herd geriet. Statt zu schmelzen, wurde sie fest und elastisch — die Vulkanisation, die Autoreifen erst möglich machte.",
+      "category": "Wissenschaft"
+    },
+    {
+      "id": "wissenschaft_de_138",
+      "question": "Woher kommt der Name des Gases „Helium“?",
+      "answers": [
+        {
+          "text": "Es wurde zuerst auf der Sonne nachgewiesen, nicht auf der Erde",
+          "correct": true
+        },
+        {
+          "text": "Es wurde aus heliumhaltigem Mineral namens Helit gewonnen",
+          "correct": false
+        },
+        {
+          "text": "Es ist nach dem Chemiker Pierre Hélion benannt",
+          "correct": false
+        }
+      ],
+      "difficulty": "easy",
+      "fun_fact": "Helium ist nach dem griechischen Sonnengott Helios benannt: 1868 entdeckten Astronomen eine unbekannte Spektrallinie im Sonnenlicht. Erst 27 Jahre später fand man das Element auch auf der Erde — das einzige Element, das im All zuerst nachgewiesen wurde.",
+      "category": "Wissenschaft"
+    },
+    {
+      "id": "wissenschaft_de_139",
+      "question": "Wofür wurde das Süßmittel Saccharin ursprünglich entdeckt?",
+      "answers": [
+        {
+          "text": "Zufällig, weil ein Forscher vor dem Essen die Hände nicht wusch",
+          "correct": true
+        },
+        {
+          "text": "Gezielt als kalorienfreier Zucker für Diabetiker",
+          "correct": false
+        },
+        {
+          "text": "Als Konservierungsmittel für Fleisch",
+          "correct": false
+        }
+      ],
+      "difficulty": "easy",
+      "fun_fact": "Constantin Fahlberg forschte 1879 an Kohlenteer-Derivaten. Beim Abendessen schmeckte sein Brot süß — er hatte eine Chemikalie an den Fingern. Zurück im Labor probierte er reihenweise Bechergläser durch, bis er den Stoff fand: Saccharin.",
+      "category": "Wissenschaft"
+    },
+    {
+      "id": "wissenschaft_de_140",
+      "question": "Woher hat die Krankheit Malaria ihren Namen?",
+      "answers": [
+        {
+          "text": "Von italienisch „mala aria“ — schlechte Luft",
+          "correct": true
+        },
+        {
+          "text": "Vom Entdecker der Erreger, Pierre Malar",
+          "correct": false
+        },
+        {
+          "text": "Vom lateinischen Wort für Fieberschübe",
+          "correct": false
+        }
+      ],
+      "difficulty": "easy",
+      "fun_fact": "Lange glaubte man, die Krankheit komme von den üblen Dünsten der Sümpfe — daher „mala aria“. Tatsächlich übertragen Mücken aus den Sümpfen den Parasiten. Der falsche Name verriet immerhin den richtigen Ort der Ansteckung.",
+      "category": "Wissenschaft"
+    },
+    {
+      "id": "wissenschaft_de_141",
+      "question": "Warum bekam Schokolade ursprünglich eine harte Zuckerhülle, wie man sie von M&M's kennt?",
+      "answers": [
+        {
+          "text": "Damit Soldaten Schokolade tragen konnten, ohne dass sie schmolz",
+          "correct": true
+        },
+        {
+          "text": "Als Tarnung für Medikamente in der Apotheke",
+          "correct": false
+        },
+        {
+          "text": "Als bunte Dekoration für Hochzeitstorten",
+          "correct": false
+        }
+      ],
+      "difficulty": "medium",
+      "fun_fact": "Die Zuckerhülle löste ein militärisches Problem: Schokolade verflüssigte sich in warmen Gefechtszonen. Eine harte Schale hielt sie schmelzsicher — „melts in your mouth, not in your hand“ war ursprünglich eine ganz praktische Logistik-Erfindung.",
+      "category": "Wissenschaft"
+    },
+    {
+      "id": "wissenschaft_de_142",
+      "question": "Warum heißt die Einheit der Stromstärke „Ampere“ nach einer Person?",
+      "answers": [
+        {
+          "text": "Nach André-Marie Ampère, der den Zusammenhang von Strom und Magnetismus erforschte",
+          "correct": true
+        },
+        {
+          "text": "Nach dem griechischen Wort „amperos“ für Fluss",
+          "correct": false
+        },
+        {
+          "text": "Nach der ersten Stadt mit elektrischem Licht, Ampère",
+          "correct": false
+        }
+      ],
+      "difficulty": "easy",
+      "fun_fact": "Die Einheit der Stromstärke ehrt André-Marie Ampère, der im frühen 19. Jahrhundert zeigte, dass elektrischer Strom ein Magnetfeld erzeugt. Viele physikalische Einheiten — Volt, Ohm, Watt, Hertz, Newton — sind schlicht Nachnamen ihrer Pioniere.",
+      "category": "Wissenschaft"
+    },
+    {
+      "id": "wissenschaft_de_143",
+      "question": "Wofür wurde Botox medizinisch genutzt, bevor es zur Faltenbehandlung kam?",
+      "answers": [
+        {
+          "text": "Gegen Schielen und unkontrollierte Augenmuskel-Krämpfe",
+          "correct": true
+        },
+        {
+          "text": "Als Narkosemittel bei Operationen",
+          "correct": false
+        },
+        {
+          "text": "Zur Behandlung von Magengeschwüren",
+          "correct": false
+        }
+      ],
+      "difficulty": "medium",
+      "fun_fact": "Botulinumtoxin wurde zuerst gegen Schielen und Lidkrämpfe eingesetzt. Eine Augenärztin bemerkte, dass sich nebenbei die Falten ihrer Patienten glätteten — so wurde aus einem der stärksten bekannten Nervengifte ein Kosmetikprodukt.",
+      "category": "Wissenschaft"
+    },
+    {
+      "id": "wissenschaft_de_144",
+      "question": "Woher kommt das Wort „Atom“?",
+      "answers": [
+        {
+          "text": "Von griechisch „atomos“ — unteilbar",
+          "correct": true
+        },
+        {
+          "text": "Vom Physiker John Atom, der es zuerst beschrieb",
+          "correct": false
+        },
+        {
+          "text": "Vom lateinischen Wort für „kleinster Funke“",
+          "correct": false
+        }
+      ],
+      "difficulty": "easy",
+      "fun_fact": "Die alten Griechen nannten das kleinste, angeblich unteilbare Teilchen „atomos“. Ironie der Geschichte: Genau dieses „Unteilbare“ lässt sich in Protonen, Neutronen und Elektronen zerlegen — und beim Spalten setzt es enorme Energie frei.",
+      "category": "Wissenschaft"
+    },
+    {
+      "id": "wissenschaft_de_145",
+      "question": "Wie wurden die nützlichen Sicherheitsglas-Scheiben (Verbundglas) entdeckt?",
+      "answers": [
+        {
+          "text": "Ein Chemiker ließ einen Kolben fallen, der nicht zersplitterte",
+          "correct": true
+        },
+        {
+          "text": "Durch Forschung an kugelsicheren Westen",
+          "correct": false
+        },
+        {
+          "text": "Beim Versuch, Glas magnetisch zu machen",
+          "correct": false
+        }
+      ],
+      "difficulty": "medium",
+      "fun_fact": "Édouard Bénédictus stieß 1903 einen Glaskolben vom Tisch — der splitterte, blieb aber in Form. Innen hatte eingetrockneter Zellulosefilm das Glas zusammengehalten. Daraus entstand das Verbundglas heutiger Autoscheiben.",
+      "category": "Wissenschaft"
+    },
+    {
+      "id": "wissenschaft_de_146",
+      "question": "Warum trägt der „Geigerzähler“ für Radioaktivität diesen Namen?",
+      "answers": [
+        {
+          "text": "Nach dem Physiker Hans Geiger, der das Messprinzip entwickelte",
+          "correct": true
+        },
+        {
+          "text": "Weil das Knacken wie eine verstimmte Geige klingt",
+          "correct": false
+        },
+        {
+          "text": "Weil das erste Gerät in einem Geigenkasten transportiert wurde",
+          "correct": false
+        }
+      ],
+      "difficulty": "easy",
+      "fun_fact": "Der Zähler ist nach Hans Geiger benannt, der die Technik ab 1908 mit Ernest Rutherford entwickelte. Das charakteristische Knacken entsteht, wenn ein einzelnes Strahlungsteilchen ein Gas im Rohr kurz leitfähig macht — jeder Klick ist ein Treffer.",
+      "category": "Wissenschaft"
+    },
+    {
+      "id": "wissenschaft_de_147",
+      "question": "Wofür wurde Viagra entwickelt, bevor seine bekannte Wirkung auffiel?",
+      "answers": [
+        {
+          "text": "Gegen Angina pectoris und Bluthochdruck",
+          "correct": true
+        },
+        {
+          "text": "Als Mittel gegen Haarausfall",
+          "correct": false
+        },
+        {
+          "text": "Als Schlafmittel für Schichtarbeiter",
+          "correct": false
+        }
+      ],
+      "difficulty": "easy",
+      "fun_fact": "Der Wirkstoff Sildenafil sollte Herzpatienten helfen, indem er Blutgefäße weitet. In Studien wirkte er gegen die Brustschmerzen kaum — aber Probanden meldeten eine sehr spezifische Nebenwirkung. Daraufhin änderte der Hersteller die ganze Zielrichtung.",
+      "category": "Wissenschaft"
+    },
+    {
+      "id": "wissenschaft_de_148",
+      "question": "Woher stammt der Begriff „Vakzin“ bzw. „Vakzination“ für eine Impfung?",
+      "answers": [
+        {
+          "text": "Von lateinisch „vacca“ — die Kuh",
+          "correct": true
+        },
+        {
+          "text": "Von einem Arzt namens Léon Vaccin",
+          "correct": false
+        },
+        {
+          "text": "Vom Wort für „leer machen“, weil Erreger entfernt werden",
+          "correct": false
+        }
+      ],
+      "difficulty": "easy",
+      "fun_fact": "Edward Jenner nutzte um 1796 die harmlosen Kuhpocken (lateinisch „variolae vaccinae“), um gegen die tödlichen echten Pocken zu schützen. Weil der Schutz von der Kuh — „vacca“ — kam, heißen alle Impfungen bis heute Vakzine.",
+      "category": "Wissenschaft"
+    },
+    {
+      "id": "wissenschaft_de_149",
+      "question": "Wie kam Teebeutel in seiner heutigen Form überhaupt zustande?",
+      "answers": [
+        {
+          "text": "Ein Händler verschickte Teeproben in Seidensäckchen — Kunden tauchten sie versehentlich ganz ein",
+          "correct": true
+        },
+        {
+          "text": "Ein Erfinder wollte das Teesieb ersetzen",
+          "correct": false
+        },
+        {
+          "text": "Als Ration für Soldaten im Schützengraben",
+          "correct": false
+        }
+      ],
+      "difficulty": "medium",
+      "fun_fact": "Um 1908 verschickte der New Yorker Händler Thomas Sullivan Teeproben in kleinen Seidenbeuteln. Die Kunden missverstanden das und warfen den ganzen Beutel ins heiße Wasser. Die Beschwerden („zu feinmaschig“) verrieten ihm die Marktlücke.",
+      "category": "Wissenschaft"
+    },
+    {
+      "id": "wissenschaft_de_150",
+      "question": "Warum heißt das Element Phosphor „Lichtträger“?",
+      "answers": [
+        {
+          "text": "Weil es im Dunkeln von selbst grünlich leuchtet",
+          "correct": true
+        },
+        {
+          "text": "Weil es nur bei Tageslicht reagiert",
+          "correct": false
+        },
+        {
+          "text": "Weil es zuerst in Leuchttürmen verbrannt wurde",
+          "correct": false
+        }
+      ],
+      "difficulty": "medium",
+      "fun_fact": "„Phosphoros“ ist griechisch für „Lichtträger“. Der Alchemist Hennig Brand gewann das Element 1669 aus eingedampftem Urin und staunte, wie es im Dunkeln glühte. Dieses kalte Leuchten durch langsame Oxidation heißt bis heute Chemolumineszenz.",
+      "category": "Wissenschaft"
+    },
+    {
+      "id": "wissenschaft_de_151",
+      "question": "Wie fiel im Zweiten Weltkrieg auf, dass Radarstrahlen Lebewesen erwärmen?",
+      "answers": [
+        {
+          "text": "Techniker stellten sich zum Aufwärmen vor laufende Radargeräte",
+          "correct": true
+        },
+        {
+          "text": "Durch Versuche mit erhitzten Antennen im Labor",
+          "correct": false
+        },
+        {
+          "text": "Bei der Suche nach unsichtbaren Heizstrahlern",
+          "correct": false
+        }
+      ],
+      "difficulty": "hard",
+      "fun_fact": "Schon vor dem Mikrowellenherd berichteten Radartechniker im Zweiten Weltkrieg, dass sie sich an den Geräten die Hände wärmten und manche eine erhöhte Körpertemperatur bekamen. Diese Beobachtungen lieferten den ersten Hinweis, dass Mikrowellen Wasser im Gewebe erhitzen.",
+      "category": "Wissenschaft"
+    },
+    {
+      "id": "wissenschaft_de_152",
+      "question": "Woher kommt der Name der Maßeinheit „Watt“ für Leistung?",
+      "answers": [
+        {
+          "text": "Von James Watt, der die Dampfmaschine entscheidend verbesserte",
+          "correct": true
+        },
+        {
+          "text": "Vom englischen Wort „what“ für die unbekannte Größe",
+          "correct": false
+        },
+        {
+          "text": "Von der Stadt Watt, wo die erste Glühbirne brannte",
+          "correct": false
+        }
+      ],
+      "difficulty": "easy",
+      "fun_fact": "Die Einheit ehrt James Watt. Er prägte auch die Maßeinheit „Pferdestärke“ — um Käufern seiner Dampfmaschinen anschaulich zu zeigen, wie viele Zugpferde sie ersetzten. Marketing aus dem 18. Jahrhundert, das bis heute auf jedem Motorprospekt steht.",
+      "category": "Wissenschaft"
+    },
+    {
+      "id": "wissenschaft_de_153",
+      "question": "Wie fiel auf, dass der Krebs-Vorsorgetest „Pap-Abstrich“ Tumorzellen erkennen kann?",
+      "answers": [
+        {
+          "text": "Ein Forscher untersuchte eigentlich den Menstruationszyklus an Zellproben",
+          "correct": true
+        },
+        {
+          "text": "Durch gezielte Tumorforschung an Mäusen",
+          "correct": false
+        },
+        {
+          "text": "Bei der Entwicklung eines Schwangerschaftstests",
+          "correct": false
+        }
+      ],
+      "difficulty": "hard",
+      "fun_fact": "Georgios Papanicolaou sammelte ab den 1920ern Zellabstriche, um den weiblichen Zyklus zu studieren. Dabei entdeckte er, dass sich Krebszellen unter dem Mikroskop deutlich unterscheiden. Aus reiner Grundlagenforschung wurde einer der erfolgreichsten Vorsorgetests.",
+      "category": "Wissenschaft"
+    },
+    {
+      "id": "wissenschaft_de_154",
+      "question": "Warum heißt das Edelgas „Neon“ in Leuchtreklamen so?",
+      "answers": [
+        {
+          "text": "Von griechisch „neos“ — das Neue",
+          "correct": true
+        },
+        {
+          "text": "Weil es immer neonfarben leuchtet",
+          "correct": false
+        },
+        {
+          "text": "Nach dem Entdecker William Neon",
+          "correct": false
+        }
+      ],
+      "difficulty": "medium",
+      "fun_fact": "Als das Gas 1898 isoliert wurde, schlug der junge Sohn des Entdeckers den Namen „novum“ vor — die latinisierte griechische Form „neon“ („das Neue“) setzte sich durch. Das typische Rot-Orange entsteht erst, wenn Strom durch das Gas fließt.",
+      "category": "Wissenschaft"
+    },
+    {
+      "id": "wissenschaft_de_155",
+      "question": "Wie wurde die Radioaktivität entdeckt?",
+      "answers": [
+        {
+          "text": "Durch eine Fotoplatte, die in einer dunklen Schublade belichtet wurde",
+          "correct": true
+        },
+        {
+          "text": "Durch ein leuchtendes Gestein in einer Mine",
+          "correct": false
+        },
+        {
+          "text": "Bei der Suche nach neuen Röntgenröhren",
+          "correct": false
+        }
+      ],
+      "difficulty": "medium",
+      "fun_fact": "Henri Becquerel legte 1896 Uransalz auf eine eingewickelte Fotoplatte, um Sonnenlicht-Effekte zu testen. Wegen bewölkten Wetters verstaute er beides in einer Schublade — und die Platte wurde trotzdem belichtet. Das Uran strahlte von ganz allein.",
+      "category": "Wissenschaft"
+    },
+    {
+      "id": "wissenschaft_de_156",
+      "question": "Wie viele Atome enthält ein einziges Sandkorn ungefähr?",
+      "answers": [
+        {
+          "text": "Etwa eine Trilliarde (10^21)",
+          "correct": false
+        },
+        {
+          "text": "Etwa 50 Trillionen (5×10^19)",
+          "correct": true
+        },
+        {
+          "text": "Etwa eine Milliarde (10^9)",
+          "correct": false
+        }
+      ],
+      "difficulty": "hard",
+      "fun_fact": "Ein durchschnittliches Sandkorn enthält rund 50 Trillionen Atome (5×10^19). Diese Zahl sprengt jede Vorstellung — und doch ist sie winzig im Vergleich zur Materie um uns herum: Schon ein einziger Esslöffel Wasser enthält rund tausendmal mehr Atome als ein Sandkorn.",
+      "category": "Wissenschaft"
+    },
+    {
+      "id": "wissenschaft_de_157",
+      "question": "Wie viel von einem Atom ist tatsächlich mit Materie gefüllt — und wie viel ist leerer Raum?",
+      "answers": [
+        {
+          "text": "Etwa 90 %",
+          "correct": false
+        },
+        {
+          "text": "Etwa 50 %",
+          "correct": false
+        },
+        {
+          "text": "Verschwindend wenig — fast alles ist leer",
+          "correct": true
+        }
+      ],
+      "difficulty": "easy",
+      "fun_fact": "Würde der Kern eines Atoms die Größe einer Erbse haben, läge die Elektronenhülle hunderte Meter entfernt. Über 99,9999 % eines Atoms sind leerer Raum — du bestehst praktisch aus Nichts, gehalten von elektrischen Kräften.",
       "category": "Wissenschaft"
     }
   ]

@@ -1,7 +1,7 @@
 {
   "name": "Musik",
   "language": "de",
-  "version": "1.0",
+  "version": "1.1",
   "theme": "music",
   "questions": [
     {
@@ -1202,6 +1202,606 @@
       ],
       "difficulty": "hard",
       "fun_fact": "Klassische Telefonie überträgt nur etwa 300 bis 3400 Hz. Genau in diesem schmalen Band liegt aber die Grundfrequenz der menschlichen Stimme — deshalb versteht man Sprache problemlos, während Musik ihren Körper verliert.",
+      "category": "Musik"
+    },
+    {
+      "id": "musik_de_106",
+      "question": "Warum klingt eine Stimme für andere ganz anders als für einen selbst auf einer Aufnahme?",
+      "answers": [
+        {"text": "Beim Sprechen hört man sich zusätzlich über die Knochen des Schädels", "correct": true},
+        {"text": "Mikrofone heben die Stimme automatisch eine Oktave an", "correct": false},
+        {"text": "Die eigenen Ohren filtern nur die hohen Töne der Stimme heraus", "correct": false}
+      ],
+      "difficulty": "easy",
+      "fun_fact": "Beim Sprechen erreicht der Schall die Hörschnecke auf zwei Wegen: durch die Luft und durch Vibrationen der Schädelknochen. Der Knochenweg verstärkt vor allem die tiefen Frequenzen, deshalb klingt die eigene Stimme im Kopf voller als jede Aufnahme.",
+      "category": "Musik"
+    },
+    {
+      "id": "musik_de_107",
+      "question": "Was bringt bei einer Geige eigentlich den Hauptteil des hörbaren Tons hervor?",
+      "answers": [
+        {"text": "Der hölzerne Korpus, der die Schwingung der Saite verstärkt", "correct": true},
+        {"text": "Allein die schwingende Saite selbst", "correct": false},
+        {"text": "Die Spannung in den Bogenhaaren", "correct": false}
+      ],
+      "difficulty": "easy",
+      "fun_fact": "Eine schwingende Saite bewegt kaum Luft und wäre allein fast unhörbar. Erst der Steg überträgt die Schwingung auf die Decke, und der hohle Korpus wirkt als Resonanzkörper, der die Luft im Raum in Bewegung setzt.",
+      "category": "Musik"
+    },
+    {
+      "id": "musik_de_108",
+      "question": "Warum muss ein Orchester ein Blasinstrument vor dem Konzert erst warmspielen?",
+      "answers": [
+        {"text": "Warme Luft im Rohr lässt den Ton höher werden", "correct": true},
+        {"text": "Das Metall dehnt sich und verstopft sonst die Klappen", "correct": false},
+        {"text": "Kalte Instrumente erzeugen grundsätzlich keinen Ton", "correct": false}
+      ],
+      "difficulty": "medium",
+      "fun_fact": "Schall läuft in warmer Luft schneller, dadurch steigt die Tonhöhe einer Flöte oder Trompete spürbar an. Ein kaltes und ein warmgespieltes Blasinstrument können um einen Viertelton auseinanderliegen, weshalb vor dem Auftritt gestimmt wird.",
+      "category": "Musik"
+    },
+    {
+      "id": "musik_de_109",
+      "question": "Was passiert physikalisch, wenn ein hoher Ton ein Weinglas zum Zerspringen bringt?",
+      "answers": [
+        {"text": "Der Ton trifft genau die Eigenfrequenz des Glases", "correct": true},
+        {"text": "Die Schallwellen erhitzen das Glas bis zur Spannung", "correct": false},
+        {"text": "Der Ton presst die Luft im Glas zusammen", "correct": false}
+      ],
+      "difficulty": "medium",
+      "fun_fact": "Jedes Glas hat eine Resonanzfrequenz, bei der es von selbst nachschwingt. Trifft ein lauter Ton genau diese Frequenz, schaukeln sich die Schwingungen so stark auf, dass das Material reißt. Das funktioniert nur bei exakt passender Tonhöhe.",
+      "category": "Musik"
+    },
+    {
+      "id": "musik_de_110",
+      "question": "Warum klingen zwei leicht verstimmte Töne zusammen mit einem regelmäßigen An- und Abschwellen?",
+      "answers": [
+        {"text": "Die Schallwellen überlagern sich und löschen sich abwechselnd", "correct": true},
+        {"text": "Das Ohr schaltet schnell zwischen beiden Tönen hin und her", "correct": false},
+        {"text": "Der tiefere Ton drückt den höheren periodisch weg", "correct": false}
+      ],
+      "difficulty": "medium",
+      "fun_fact": "Dieses Phänomen heißt Schwebung. Liegen zwei Töne nur wenige Hertz auseinander, verstärken und löschen sich ihre Wellen abwechselnd. Klavierstimmer hören genau auf das Verschwinden dieser Schwebung, um zwei Saiten exakt gleich zu stimmen.",
+      "category": "Musik"
+    },
+    {
+      "id": "musik_de_111",
+      "question": "Wie erzeugt eine Mundharmonika ihre Töne?",
+      "answers": [
+        {"text": "Durch dünne Metallzungen, die im Luftstrom schwingen", "correct": true},
+        {"text": "Durch winzige Pfeifen unterschiedlicher Länge", "correct": false},
+        {"text": "Durch eine vibrierende Membran aus Kunststoff", "correct": false}
+      ],
+      "difficulty": "easy",
+      "fun_fact": "Hinter jedem Kanal sitzen kleine Metallzungen, die je nach Pusten oder Ziehen unterschiedlich schwingen. Dasselbe Prinzip nutzt das Akkordeon. Deshalb klingen beide trotz völlig anderer Form verwandt.",
+      "category": "Musik"
+    },
+    {
+      "id": "musik_de_112",
+      "question": "Warum hat ein Kontrabass einen so viel größeren Körper als eine Geige?",
+      "answers": [
+        {"text": "Tiefe Töne haben lange Wellen und brauchen mehr schwingende Fläche", "correct": true},
+        {"text": "Das größere Holz hält die dickeren Saiten besser fest", "correct": false},
+        {"text": "Der große Körper schützt die empfindlichen tiefen Saiten", "correct": false}
+      ],
+      "difficulty": "medium",
+      "fun_fact": "Tiefe Frequenzen haben mehrere Meter lange Schallwellen, die ein kleiner Körper kaum abstrahlen kann. Je tiefer ein Instrument klingen soll, desto mehr schwingende Fläche braucht es, deshalb wächst die Bauform von der Geige bis zum Kontrabass mit.",
+      "category": "Musik"
+    },
+    {
+      "id": "musik_de_113",
+      "question": "Was macht eigentlich das Pedal rechts unten am Flügel, wenn man es tritt?",
+      "answers": [
+        {"text": "Es hebt alle Dämpfer ab, sodass die Saiten frei nachklingen", "correct": true},
+        {"text": "Es macht den Anschlag lauter, indem die Hämmer härter treffen", "correct": false},
+        {"text": "Es spannt alle Saiten gleichzeitig etwas höher", "correct": false}
+      ],
+      "difficulty": "medium",
+      "fun_fact": "Normalerweise stoppen Filzdämpfer jede Saite, sobald die Taste losgelassen wird. Das rechte Pedal hebt alle Dämpfer gleichzeitig an, sodass auch nicht angeschlagene Saiten mitschwingen und der Klang voller und länger wird.",
+      "category": "Musik"
+    },
+    {
+      "id": "musik_de_114",
+      "question": "Warum kann ein einzelner Mensch im Chor einen Ton singen, der für sein Ohr richtig klingt, und trotzdem stört er den Gesamtklang?",
+      "answers": [
+        {"text": "Schon eine winzige Tonhöhenabweichung erzeugt hörbare Schwebungen", "correct": true},
+        {"text": "Eine einzelne Stimme ist immer lauter als der ganze Chor", "correct": false},
+        {"text": "Der Nachhall im Raum verdoppelt nur eine Stimme", "correct": false}
+      ],
+      "difficulty": "hard",
+      "fun_fact": "Singen viele Menschen exakt denselben Ton, summieren sich kleinste Abweichungen zu Schwebungen, die das Ohr als Unsauberkeit wahrnimmt. Genau deshalb klingt ein gut abgestimmter Chor strahlend, während eine einzige leicht zu hohe Stimme den ganzen Akkord trübt.",
+      "category": "Musik"
+    },
+    {
+      "id": "musik_de_115",
+      "question": "Warum brummt ein Lautsprecher bei tiefen Tönen spürbar, während man hohe Töne nur hört?",
+      "answers": [
+        {"text": "Tiefe Töne bewegen die Membran weit und versetzen die Luft kräftig", "correct": true},
+        {"text": "Tiefe Töne erzeugen im Lautsprecher zusätzlich Wärme", "correct": false},
+        {"text": "Hohe Töne werden vom Gehäuse vollständig geschluckt", "correct": false}
+      ],
+      "difficulty": "easy",
+      "fun_fact": "Für tiefe Töne muss die Membran große Luftmengen verschieben und schwingt deshalb weit aus, das spürt man als Druck auf der Haut. Hohe Töne brauchen nur winzige, schnelle Bewegungen, weshalb ein Hochtöner viel kleiner gebaut werden kann.",
+      "category": "Musik"
+    },
+    {
+      "id": "musik_de_116",
+      "question": "Wie verändert ein Posaunist die Tonhöhe, ohne Klappen oder Ventile zu benutzen?",
+      "answers": [
+        {"text": "Er verlängert oder verkürzt das Rohr mit einem Schiebezug", "correct": true},
+        {"text": "Er drückt die Luft durch unterschiedlich enge Mundstücke", "correct": false},
+        {"text": "Er ändert nur die Spannung seiner Lippen", "correct": false}
+      ],
+      "difficulty": "easy",
+      "fun_fact": "Die Posaune ist das einzige große Blechblasinstrument, das die Rohrlänge stufenlos verändert. Ein längeres Rohr bedeutet eine längere Luftsäule und damit einen tieferen Grundton, weshalb der Zug die Töne praktisch ohne Stufen verschiebt.",
+      "category": "Musik"
+    },
+    {
+      "id": "musik_de_117",
+      "question": "Warum klingt ein gezupfter und ein gestrichener Ton auf derselben Saite völlig unterschiedlich?",
+      "answers": [
+        {"text": "Der Bogen hält die Saite dauerhaft in Schwingung, der Zupf nur kurz", "correct": true},
+        {"text": "Der Bogen verändert die Länge der schwingenden Saite", "correct": false},
+        {"text": "Beim Zupfen klingt eine andere Saite mit", "correct": false}
+      ],
+      "difficulty": "medium",
+      "fun_fact": "Beim Zupfen schwingt die Saite frei aus und verklingt, der Ton hat einen scharfen Anfang. Der Bogen dagegen liefert über die Reibung ständig neue Energie nach, sodass der Ton beliebig lang und gleichmäßig stehen bleibt.",
+      "category": "Musik"
+    },
+    {
+      "id": "musik_de_118",
+      "question": "Warum hört sich Musik in einer leeren Wohnung hallig an und wird dumpfer, sobald Möbel und Teppiche drin sind?",
+      "answers": [
+        {"text": "Weiche Oberflächen schlucken den Schall, harte werfen ihn zurück", "correct": true},
+        {"text": "Möbel verlangsamen die Schallwellen im Raum", "correct": false},
+        {"text": "Teppiche senken die Tonhöhe der Musik", "correct": false}
+      ],
+      "difficulty": "easy",
+      "fun_fact": "In einem leeren Raum prallt Schall von kahlen Wänden immer wieder zurück und erzeugt langen Nachhall. Polster, Vorhänge und Teppiche nehmen die Schallenergie auf, statt sie zu reflektieren, deshalb klingt ein eingerichteter Raum trockener und ruhiger.",
+      "category": "Musik"
+    },
+    {
+      "id": "musik_de_119",
+      "question": "Was nutzt eine Kirchenorgel, um überhaupt einen einzigen Ton zu erzeugen?",
+      "answers": [
+        {"text": "Luft, die durch eine Pfeife geblasen wird", "correct": true},
+        {"text": "Saiten, die im Inneren angeschlagen werden", "correct": false},
+        {"text": "Metallzungen, die elektrisch in Schwingung versetzt werden", "correct": false}
+      ],
+      "difficulty": "easy",
+      "fun_fact": "Jede Orgelpfeife ist im Grunde eine fest gestimmte Flöte, durch die ein Blasebalg Luft drückt. Eine lange Pfeife klingt tief, eine kurze hoch. Große Orgeln besitzen deshalb Tausende einzelner Pfeifen für alle Töne und Klangfarben.",
+      "category": "Musik"
+    },
+    {
+      "id": "musik_de_120",
+      "question": "Warum kann man bei sehr lauter Musik manchmal Töne hören, die gar nicht abgespielt werden?",
+      "answers": [
+        {"text": "Das Ohr selbst erzeugt aus zwei Tönen einen zusätzlichen Differenzton", "correct": true},
+        {"text": "Laute Musik reizt das Auge, das Töne als Echo zurückmeldet", "correct": false},
+        {"text": "Die Lautsprecher senden bei Überlastung Geistertöne aus", "correct": false}
+      ],
+      "difficulty": "hard",
+      "fun_fact": "Bei großer Lautstärke arbeitet das Innenohr nicht mehr ganz linear und erzeugt aus zwei kräftigen Tönen einen zusätzlichen Kombinationston, oft die Differenz beider Frequenzen. Orgelbauer nutzen diesen Effekt, um mit zwei Pfeifen einen scheinbar viel tieferen Ton vorzutäuschen.",
+      "category": "Musik"
+    },
+    {
+      "id": "musik_de_121",
+      "question": "Warum klingt dieselbe Note auf einer Trompete und einer Flöte trotz gleicher Tonhöhe so verschieden?",
+      "answers": [
+        {"text": "Beide mischen unterschiedlich starke Obertöne zum Grundton", "correct": true},
+        {"text": "Die Flöte spielt heimlich eine Oktave höher", "correct": false},
+        {"text": "Die Trompete erzeugt nur reine Sinusschwingungen", "correct": false}
+      ],
+      "difficulty": "medium",
+      "fun_fact": "Jeder Instrumententon besteht aus einem Grundton und vielen leiseren Obertönen. Deren Mischung ergibt die Klangfarbe. Eine Flöte hat wenige, weiche Obertöne, eine Trompete viele scharfe, deshalb erkennt man die Instrumente sofort, obwohl die Tonhöhe identisch ist.",
+      "category": "Musik"
+    },
+    {
+      "id": "musik_de_122",
+      "question": "Warum erzeugt ein nasser Finger, der über den Rand eines Weinglases fährt, einen klaren Ton?",
+      "answers": [
+        {"text": "Der Finger versetzt das Glas durch Reibung in regelmäßige Schwingung", "correct": true},
+        {"text": "Das Wasser am Finger verdampft und pfeift dabei", "correct": false},
+        {"text": "Die Reibung erwärmt das Glas, bis es klingt", "correct": false}
+      ],
+      "difficulty": "medium",
+      "fun_fact": "Der Finger haftet kurz am Glas, rutscht ab und haftet erneut, viele Male pro Sekunde. Dieses Stick-Slip-Muster regt das Glas zu seiner Eigenfrequenz an. Genau dasselbe Reibungsprinzip lässt auch eine Geigensaite unter dem Bogen klingen.",
+      "category": "Musik"
+    },
+    {
+      "id": "musik_de_123",
+      "question": "Warum hört man ein vorbeifahrendes Martinshorn beim Näherkommen höher als beim Wegfahren?",
+      "answers": [
+        {"text": "Die Schallwellen werden vorne gestaucht und hinten gedehnt", "correct": true},
+        {"text": "Der Fahrer dreht die Tonhöhe beim Vorbeifahren herunter", "correct": false},
+        {"text": "Der Wind trägt die hohen Töne nur nach vorne", "correct": false}
+      ],
+      "difficulty": "medium",
+      "fun_fact": "Das ist der Doppler-Effekt. Bewegt sich die Schallquelle auf einen zu, treffen die Wellen dichter aufeinander und klingen höher, beim Entfernen ziehen sie sich auseinander und klingen tiefer. Der Sprung hörbar in der Mitte ist genau der Moment des Vorbeifahrens.",
+      "category": "Musik"
+    },
+    {
+      "id": "musik_de_124",
+      "question": "Warum trägt ein tiefer Bass aus einer Party viel weiter durch Wände als die Melodie?",
+      "answers": [
+        {"text": "Lange tiefe Wellen werden von Wänden kaum aufgehalten", "correct": true},
+        {"text": "Tiefe Töne sind grundsätzlich immer lauter", "correct": false},
+        {"text": "Hohe Töne lösen sich nach kurzer Strecke einfach auf", "correct": false}
+      ],
+      "difficulty": "hard",
+      "fun_fact": "Tiefe Frequenzen haben mehrere Meter lange Wellen, die Wände und Decken in Schwingung versetzen und so durchdringen. Kurze hohe Wellen werden dagegen schon von dünnen Hindernissen reflektiert oder geschluckt, deshalb bleibt vom Nachbarn nur das Wummern übrig.",
+      "category": "Musik"
+    },
+    {
+      "id": "musik_de_125",
+      "question": "Was bringt die Saiten einer E-Gitarre dazu, in einem Verstärker hörbar zu werden, obwohl der Korpus massiv ist?",
+      "answers": [
+        {"text": "Magnetische Tonabnehmer wandeln die Saitenschwingung in Strom um", "correct": true},
+        {"text": "Ein kleines Mikrofon im Inneren nimmt die Saiten auf", "correct": false},
+        {"text": "Der massive Korpus verstärkt den Ton wie ein Resonanzkasten", "correct": false}
+      ],
+      "difficulty": "medium",
+      "fun_fact": "Unter den Saiten sitzen Magnete mit Drahtspulen. Die schwingende Stahlsaite stört das Magnetfeld und erzeugt in der Spule einen winzigen Wechselstrom, der erst im Verstärker zu Klang wird. Deshalb funktioniert eine klassische E-Gitarre nur mit metallischen Saiten.",
+      "category": "Musik"
+    },
+    {
+      "id": "musik_de_126",
+      "question": "Warum schmerzen sehr laute Konzerte in den Ohren und können das Gehör dauerhaft schädigen?",
+      "answers": [
+        {"text": "Laute Schwingungen knicken winzige Haarzellen im Innenohr ab", "correct": true},
+        {"text": "Der Schall erhitzt das Trommelfell bis zur Verbrennung", "correct": false},
+        {"text": "Laute Töne pressen Luft schmerzhaft ins Mittelohr", "correct": false}
+      ],
+      "difficulty": "medium",
+      "fun_fact": "Im Innenohr sitzen Tausende feiner Haarzellen, die Schwingungen in Nervensignale umwandeln. Sehr lauter Schall biegt sie über, und anders als bei vielen Tieren wachsen sie beim Menschen nicht nach. Deshalb ist jeder Hörverlust durch Lärm endgültig.",
+      "category": "Musik"
+    },
+    {
+      "id": "musik_de_127",
+      "question": "Warum klingt eine Trommel mit straff gespanntem Fell höher als mit lockerem?",
+      "answers": [
+        {"text": "Höhere Spannung lässt das Fell schneller schwingen", "correct": true},
+        {"text": "Das straffe Fell ist dünner und deshalb leiser", "correct": false},
+        {"text": "Lockere Felle verschlucken die hohen Töne im Holz", "correct": false}
+      ],
+      "difficulty": "easy",
+      "fun_fact": "Je straffer ein Trommelfell gespannt ist, desto schneller schwingt es nach einem Schlag und desto höher klingt der Ton. Schlagzeuger stimmen deshalb ihre Trommeln über die Spannschrauben am Rand, genau wie ein Saiteninstrument über die Saitenspannung.",
+      "category": "Musik"
+    },
+    {
+      "id": "musik_de_128",
+      "question": "Warum spürt man bei einem Orgelkonzert manchmal Vibrationen im Bauch, obwohl man kaum etwas hört?",
+      "answers": [
+        {"text": "Sehr tiefe Töne liegen teils unter der Hörschwelle, sind aber spürbar", "correct": true},
+        {"text": "Die Orgel sendet zusätzlich Wärmestrahlung aus", "correct": false},
+        {"text": "Der Kirchenboden überträgt elektrische Impulse", "correct": false}
+      ],
+      "difficulty": "hard",
+      "fun_fact": "Die größten Orgelpfeifen erzeugen Töne um 16 Hertz, also an oder unter der Grenze des Hörbaren. Statt sie klar zu hören, nimmt der Körper sie als Vibration und Druck wahr. Komponisten setzen solche Subbässe gezielt ein, um Andacht oder Bedrohung körperlich fühlbar zu machen.",
+      "category": "Musik"
+    },
+    {
+      "id": "musik_de_129",
+      "question": "Warum ist eine Melodie unter Wasser für einen Schwimmer kaum zu orten?",
+      "answers": [
+        {"text": "Schall ist im Wasser viel schneller, das Ohr kann die Richtung kaum bestimmen", "correct": true},
+        {"text": "Wasser senkt jede Tonhöhe um eine Oktave", "correct": false},
+        {"text": "Unter Wasser hört der Mensch nur die hohen Frequenzen", "correct": false}
+      ],
+      "difficulty": "hard",
+      "fun_fact": "Im Wasser breitet sich Schall rund viermal schneller aus als in der Luft. Dadurch erreicht er beide Ohren fast gleichzeitig, und das Gehirn verliert den winzigen Zeitunterschied, mit dem es sonst die Richtung berechnet. Deshalb scheint Musik unter Wasser von überall zugleich zu kommen.",
+      "category": "Musik"
+    },
+    {
+      "id": "musik_de_130",
+      "question": "Woher stammt der Name der Musikrichtung „Jazz\" ursprünglich?",
+      "answers": [
+        {"text": "Aus dem amerikanischen Slang — die Wortbedeutung war anfangs vulgär", "correct": true},
+        {"text": "Von einem französischen Tanz namens „jasser\"", "correct": false},
+        {"text": "Von einem Trompeter namens Charles „Jazz\" Bolden", "correct": false}
+      ],
+      "difficulty": "easy",
+      "fun_fact": "Das Wort „jazz\" tauchte um 1912 zuerst im Baseball-Slang auf und hatte eine eindeutig sexuelle Nebenbedeutung. Viele frühe Musiker mochten den Begriff für ihre Musik deshalb gar nicht.",
+      "category": "Musik"
+    },
+    {
+      "id": "musik_de_131",
+      "question": "Wie entstand der Name „Rock 'n' Roll\" für die Musikrichtung?",
+      "answers": [
+        {"text": "Als Umschreibung für Sex — der Begriff stand schon vorher dafür", "correct": true},
+        {"text": "Vom Schaukeln der Tanzenden auf einem Schiffsdeck", "correct": false},
+        {"text": "Von einer Plattenpresse, die „rollte und rockte\"", "correct": false}
+      ],
+      "difficulty": "easy",
+      "fun_fact": "In afroamerikanischen Songs der 1920er und 30er waren „rock\" und „roll\" längst Codewörter für Sex. DJ Alan Freed übernahm den Begriff Anfang der 50er für die neue Musik der Jugend.",
+      "category": "Musik"
+    },
+    {
+      "id": "musik_de_132",
+      "question": "Welches Wort steckt sprachlich im Begriff „Schlager\"?",
+      "answers": [
+        {"text": "„Schlagen\" — gemeint ist ein Lied, das einschlägt", "correct": true},
+        {"text": "Der Schlagrahm einer Wiener Konditorei", "correct": false},
+        {"text": "Der Taktschläger des Dirigenten", "correct": false}
+      ],
+      "difficulty": "easy",
+      "fun_fact": "„Schlager\" leitet sich vom Verb „einschlagen\" ab — ein Lied, das beim Publikum einschlägt. Der Begriff entstand im Wien des 19. Jahrhunderts und wurde von dort in den deutschen Sprachraum getragen.",
+      "category": "Musik"
+    },
+    {
+      "id": "musik_de_133",
+      "question": "Was bezeichnete das Wort „Disco\" ursprünglich, bevor es eine Musikrichtung wurde?",
+      "answers": [
+        {"text": "Einen Ort, an dem Schallplatten statt einer Live-Band liefen", "correct": true},
+        {"text": "Eine runde, scheibenförmige Tanzfläche", "correct": false},
+        {"text": "Den ersten elektrischen Plattenspieler", "correct": false}
+      ],
+      "difficulty": "easy",
+      "fun_fact": "„Discothèque\" ist französisch und bedeutet wörtlich „Plattensammlung\", analog zu „Bibliothèque\". Gemeint war zunächst ein Lokal, in dem Schallplatten gespielt wurden, statt eine Band live auftreten zu lassen.",
+      "category": "Musik"
+    },
+    {
+      "id": "musik_de_134",
+      "question": "Wofür steht die Abkürzung im Namen des Synthesizer-Standards „MIDI\"?",
+      "answers": [
+        {"text": "Musical Instrument Digital Interface", "correct": true},
+        {"text": "Multiple Instrument Direct Input", "correct": false},
+        {"text": "Modular Integrated Digital Instrument", "correct": false}
+      ],
+      "difficulty": "medium",
+      "fun_fact": "MIDI wurde 1983 als gemeinsamer Standard mehrerer Konkurrenten eingeführt, damit Synthesizer verschiedener Hersteller miteinander reden konnten. Die Erfinder verzichteten bewusst auf Patentgebühren — sonst hätte es sich nie durchgesetzt.",
+      "category": "Musik"
+    },
+    {
+      "id": "musik_de_135",
+      "question": "Wie kam die Geigen-Bauform der Stradivari zu ihrem berühmten Klang — laut einer verbreiteten Theorie?",
+      "answers": [
+        {"text": "Durch besonders dichtes Holz aus der Zeit der Kleinen Eiszeit", "correct": true},
+        {"text": "Durch eine geheime, mit Gold versetzte Lackrezeptur", "correct": false},
+        {"text": "Durch monatelanges Einweichen des Holzes in Meerwasser", "correct": false}
+      ],
+      "difficulty": "hard",
+      "fun_fact": "In die Zeit der Kleinen Eiszeit fiel um 1645 bis 1715 das „Maunder-Minimum\", eine besonders kalte Phase. Bäume wuchsen langsamer, das Holz wurde dichter und gleichmäßiger — eine vieldiskutierte Erklärung für den Klang der Geigen aus dieser Zeit.",
+      "category": "Musik"
+    },
+    {
+      "id": "musik_de_136",
+      "question": "Woher stammt das Durchschlagzungen-Prinzip, das Mundharmonika und Akkordeon übernahmen?",
+      "answers": [
+        {"text": "Aus einem chinesischen Instrument, der Sheng", "correct": true},
+        {"text": "Von mechanischen Spieluhren des 18. Jahrhunderts", "correct": false},
+        {"text": "Von der Pfeife einer Dampflokomotive", "correct": false}
+      ],
+      "difficulty": "medium",
+      "fun_fact": "Die durchschlagende Zunge kennt man in China seit Jahrtausenden aus der Sheng-Mundorgel. Erst als solche Instrumente im 18. Jahrhundert nach Europa kamen, inspirierten sie Harmonium, Mundharmonika und Akkordeon.",
+      "category": "Musik"
+    },
+    {
+      "id": "musik_de_137",
+      "question": "Warum heißt der Blues „Blues\"?",
+      "answers": [
+        {"text": "Von der englischen Redewendung „to have the blue devils\" für Schwermut", "correct": true},
+        {"text": "Nach der blauen Arbeitskleidung der Baumwollpflücker", "correct": false},
+        {"text": "Nach einem Mississippi-Club namens „The Blue Room\"", "correct": false}
+      ],
+      "difficulty": "easy",
+      "fun_fact": "„The blue devils\" stand schon im 17. Jahrhundert für Niedergeschlagenheit, später verkürzt zu „the blues\". Musikalisch prägen die „blue notes\" — leicht erniedrigte Töne — den typisch melancholischen Klang.",
+      "category": "Musik"
+    },
+    {
+      "id": "musik_de_138",
+      "question": "Wie kam die elektrische Gitarre zu ihrer charakteristischen Verzerrung — der Overdrive-Sound?",
+      "answers": [
+        {"text": "Ursprünglich durch defekte oder übersteuerte Verstärker", "correct": true},
+        {"text": "Durch ein eigens dafür erfundenes Spezialkabel", "correct": false},
+        {"text": "Durch absichtlich angeritzte Lautsprecher ab Werk", "correct": false}
+      ],
+      "difficulty": "easy",
+      "fun_fact": "In den 50ern galt Verzerrung als Defekt, nicht als Effekt. Musiker zerschlitzten Lautsprecher oder drehten kaputte Röhrenverstärker auf, weil ihnen der „schmutzige\" Klang gefiel — daraus wurde später ein Verkaufsargument.",
+      "category": "Musik"
+    },
+    {
+      "id": "musik_de_139",
+      "question": "Was war am Patent des modernen Metronoms umstritten, dessen Taktgeber Beethoven begeistert nutzte?",
+      "answers": [
+        {"text": "Das Patent stammte von jemandem, der die Erfindung eines anderen übernahm", "correct": true},
+        {"text": "Es war zuerst als medizinisches Gerät zur Pulsmessung gedacht", "correct": false},
+        {"text": "Es wurde zunächst als Spielzeug für Jahrmärkte verkauft", "correct": false}
+      ],
+      "difficulty": "hard",
+      "fun_fact": "Johann Nepomuk Mälzel ließ sich 1815 das Metronom patentieren — die zugrunde liegende Pendelmechanik hatte aber Dietrich Nikolaus Winkel erfunden. Beethoven war einer der Ersten, der seinen Werken Metronomzahlen beifügte.",
+      "category": "Musik"
+    },
+    {
+      "id": "musik_de_140",
+      "question": "Was bedeutet das Wort „Oper\" wörtlich?",
+      "answers": [
+        {"text": "„Werk\" — vom lateinischen „opera\"", "correct": true},
+        {"text": "„Stimme\" — vom griechischen „opé\"", "correct": false},
+        {"text": "„Bühne\" — vom italienischen „opra\"", "correct": false}
+      ],
+      "difficulty": "easy",
+      "fun_fact": "„Opera\" ist der Plural des lateinischen „opus\" (Werk). Die ersten Opern um 1600 in Florenz wollten eigentlich das antike griechische Drama wiederbeleben — die durchgesungene Form war ein Nebenprodukt dieses Vorhabens.",
+      "category": "Musik"
+    },
+    {
+      "id": "musik_de_141",
+      "question": "Wie entstand der Begriff „Country-Musik\" als Genrebezeichnung?",
+      "answers": [
+        {"text": "Als Verkürzung von „Country and Western\", das „Hillbilly\" ersetzen sollte", "correct": true},
+        {"text": "Nach einer Plattenfirma namens Country Records", "correct": false},
+        {"text": "Nach einem Radiosender im ländlichen Texas", "correct": false}
+      ],
+      "difficulty": "easy",
+      "fun_fact": "Die Plattenindustrie verkaufte die Musik anfangs als „Hillbilly\", was als abwertend galt. „Country and Western\" wurde in den 1940ern als seriöserer Begriff eingeführt und später zu schlicht „Country\" verkürzt.",
+      "category": "Musik"
+    },
+    {
+      "id": "musik_de_142",
+      "question": "Warum tragen viele klassische Tonarten den Zusatz „wohltemperiert\", wie in Bachs berühmtem Werk?",
+      "answers": [
+        {"text": "Weil die Stimmung so angepasst wurde, dass alle Tonarten spielbar klingen", "correct": true},
+        {"text": "Weil die Instrumente vor dem Spiel angewärmt werden mussten", "correct": false},
+        {"text": "Weil die Musik bewusst sanft und gemäßigt klingen sollte", "correct": false}
+      ],
+      "difficulty": "hard",
+      "fun_fact": "Bei reiner Stimmung klingen entfernte Tonarten schief. Eine „temperierte\" Stimmung verteilt die Unreinheiten geschickt, sodass man in allen 24 Tonarten spielen kann — genau das demonstrierte Bach mit seinem Werk.",
+      "category": "Musik"
+    },
+    {
+      "id": "musik_de_143",
+      "question": "Wofür wurde die Pfeifenorgel ursprünglich erfunden, lange bevor sie in Kirchen stand?",
+      "answers": [
+        {"text": "Als Unterhaltungsinstrument im antiken Griechenland, mit Wasserdruck betrieben", "correct": true},
+        {"text": "Als Nebelhorn für Häfen am Mittelmeer", "correct": false},
+        {"text": "Als Signalgerät auf römischen Kriegsschiffen", "correct": false}
+      ],
+      "difficulty": "hard",
+      "fun_fact": "Die „Hydraulis\" wurde im 3. Jahrhundert v. Chr. in Alexandria erfunden und nutzte Wasserdruck, um die Luft konstant zu halten. Sie unterhielt römische Massen in Arenen — erst viel später wurde die Orgel zum Kircheninstrument.",
+      "category": "Musik"
+    },
+    {
+      "id": "musik_de_144",
+      "question": "Wie kam das Wort „Tango\" zu der Musik- und Tanzrichtung aus Argentinien?",
+      "answers": [
+        {"text": "Vermutlich aus afrikanischen Sprachen über versklavte Menschen", "correct": true},
+        {"text": "Von einem argentinischen Komponisten namens Tomás Tango", "correct": false},
+        {"text": "Von einem Hafenviertel namens „El Tango\" in Buenos Aires", "correct": false}
+      ],
+      "difficulty": "medium",
+      "fun_fact": "Der Tango entstand Ende des 19. Jahrhunderts in den Armenvierteln von Buenos Aires und Montevideo. Das Wort stammt wahrscheinlich aus afrikanischen Sprachen und bezeichnete dort Versammlungs- oder Tanzorte.",
+      "category": "Musik"
+    },
+    {
+      "id": "musik_de_145",
+      "question": "Welche Funktion hatte der allererste Walzer, als er in den Tanzsälen auftauchte und für Empörung sorgte?",
+      "answers": [
+        {"text": "Er galt als skandalös, weil sich die Paare eng umfassten", "correct": true},
+        {"text": "Er war als langsamer Trauertanz für Beerdigungen gedacht", "correct": false},
+        {"text": "Er durfte nur vom Adel und nie vom Volk getanzt werden", "correct": false}
+      ],
+      "difficulty": "medium",
+      "fun_fact": "Beim Walzer fassten sich die Tanzpartner erstmals geschlossen an und drehten sich Körper an Körper. Um 1800 empfanden viele das als unschicklich — Kritiker warnten gar vor gesundheitlichen Folgen des Drehens.",
+      "category": "Musik"
+    },
+    {
+      "id": "musik_de_146",
+      "question": "Was war der ursprüngliche Zweck des „Reggae\"-Vorläufers Sound System auf Jamaika?",
+      "answers": [
+        {"text": "Mobile Lautsprecheranlagen brachten Musik zu Leuten ohne Radio", "correct": true},
+        {"text": "Es waren Lautsprecher zur Verkehrslenkung in Kingston", "correct": false},
+        {"text": "Es diente der Beschallung von Zuckerrohrplantagen", "correct": false}
+      ],
+      "difficulty": "medium",
+      "fun_fact": "In den 1950ern fuhren DJs mit riesigen mobilen Anlagen durch Jamaika und veranstalteten Straßenpartys. Aus der Konkurrenz dieser Sound Systems entstanden Ska, Rocksteady und später Reggae — und das Toasting als Vorform des Rap.",
+      "category": "Musik"
+    },
+    {
+      "id": "musik_de_147",
+      "question": "Warum heißt die Stimmlage „Sopran\" so?",
+      "answers": [
+        {"text": "Vom italienischen „sopra\" — „darüber\", weil sie über den anderen liegt", "correct": true},
+        {"text": "Nach der Sängerin Sophia Soprani aus Mailand", "correct": false},
+        {"text": "Vom lateinischen „soporus\" für „klar klingend\"", "correct": false}
+      ],
+      "difficulty": "medium",
+      "fun_fact": "„Sopra\" heißt auf Italienisch „über\" — die höchste Stimme liegt über allen anderen. Verwandt ist „soprano\" auch mit dem Sopransaxophon, dem höchsten der gängigen Saxophone.",
+      "category": "Musik"
+    },
+    {
+      "id": "musik_de_148",
+      "question": "Wie kam das Schlagzeug-Set, wie wir es kennen, überhaupt zustande?",
+      "answers": [
+        {"text": "Damit ein einziger Spieler die Arbeit mehrerer Trommler übernehmen konnte", "correct": true},
+        {"text": "Es wurde komplett von einer Firma als fertiges Set erfunden", "correct": false},
+        {"text": "Es entstand aus militärischen Marschtrommeln auf Rädern", "correct": false}
+      ],
+      "difficulty": "medium",
+      "fun_fact": "Um 1900 war Personal teuer und Bühnen wurden enger. Das Fußpedal für die Bassdrum erlaubte es einem einzigen Musiker, gleichzeitig mehrere Trommeln und Becken zu spielen — so entstand das „Drum Kit\".",
+      "category": "Musik"
+    },
+    {
+      "id": "musik_de_149",
+      "question": "Wofür stand das Wort „Single\" bei Schallplatten ursprünglich?",
+      "answers": [
+        {"text": "Für eine Platte mit nur einem Hauptlied pro Seite", "correct": true},
+        {"text": "Für die erste Pressung einer Aufnahme", "correct": false},
+        {"text": "Für eine Platte, die nur ein einziges Mal abspielbar war", "correct": false}
+      ],
+      "difficulty": "easy",
+      "fun_fact": "Die Bezeichnung entstand im Gegensatz zum „Album\", das mehrere Lieder bündelte. Das Wort „Album\" wiederum kommt von gebundenen Foto- und Sammelbüchern, in denen früher mehrere Schellackplatten steckten.",
+      "category": "Musik"
+    },
+    {
+      "id": "musik_de_150",
+      "question": "Wie entstand der Begriff „a cappella\" für Gesang ohne Instrumente?",
+      "answers": [
+        {"text": "Vom italienischen „nach Art der Kapelle\" — also wie in der Kirche", "correct": true},
+        {"text": "Nach einem Chorleiter namens Antonio Cappella", "correct": false},
+        {"text": "Vom lateinischen „capella\" für „ohne Begleitung\"", "correct": false}
+      ],
+      "difficulty": "medium",
+      "fun_fact": "„A cappella\" heißt wörtlich „nach Art der Kapelle\". In der frühen Kirchenmusik sang man oft ohne Instrumente — daraus wurde der Begriff für rein vokale Musik, ganz gleich ob im Gospel-Chor oder in der modernen Popgruppe.",
+      "category": "Musik"
+    },
+    {
+      "id": "musik_de_151",
+      "question": "Was war der eigentliche Grund, warum CDs eine Spieldauer von rund 74 Minuten bekamen — laut der bekanntesten Erzählung?",
+      "answers": [
+        {"text": "Damit Beethovens 9. Sinfonie komplett auf eine Scheibe passt", "correct": true},
+        {"text": "Weil längere Scheiben in keinen Briefumschlag passten", "correct": false},
+        {"text": "Weil der Laser nach 74 Minuten zu heiß wurde", "correct": false}
+      ],
+      "difficulty": "medium",
+      "fun_fact": "Der Legende nach bestand ein Sony-Verantwortlicher darauf, dass Beethovens komplette 9. Sinfonie auf eine CD passen müsse. Das soll den Durchmesser von 12 cm und die Spieldauer festgelegt haben — historisch ist die Geschichte allerdings umstritten.",
+      "category": "Musik"
+    },
+    {
+      "id": "musik_de_152",
+      "question": "Woher kommt der Name der Notensilben „Do, Re, Mi\"?",
+      "answers": [
+        {"text": "Aus den Anfangssilben der Zeilen eines mittelalterlichen Hymnus", "correct": true},
+        {"text": "Aus den Initialen dreier italienischer Komponisten", "correct": false},
+        {"text": "Aus den Tönen, die drei verschiedene Kirchenglocken erzeugten", "correct": false}
+      ],
+      "difficulty": "medium",
+      "fun_fact": "Guido von Arezzo nahm im 11. Jahrhundert die Anfangssilben der Zeilen des Johannes-Hymnus „Ut queant laxis\": Ut, Re, Mi, Fa, Sol, La. Das spätere „Do\" ersetzte das schwer singbare „Ut\", „Si\" kam für die siebte Stufe dazu.",
+      "category": "Musik"
+    },
+    {
+      "id": "musik_de_153",
+      "question": "Warum wird das Wort „Karaoke\" so geschrieben — was bedeutet es wörtlich?",
+      "answers": [
+        {"text": "„Leeres Orchester\" auf Japanisch", "correct": true},
+        {"text": "„Lautes Singen\" auf Japanisch", "correct": false},
+        {"text": "„Singen ohne Scham\" auf Japanisch", "correct": false}
+      ],
+      "difficulty": "easy",
+      "fun_fact": "„Kara\" heißt „leer\" und „oke\" ist die Verkürzung von „okesutora\", der japanischen Aussprache von „Orchester\". Das Wort beschreibt also die fehlende Band — man singt zum leeren Orchester.",
+      "category": "Musik"
+    },
+    {
+      "id": "musik_de_154",
+      "question": "Wie viele schwarze Tasten hat ein Standardklavier mit 88 Tasten?",
+      "answers": [
+        {"text": "36", "correct": true},
+        {"text": "42", "correct": false},
+        {"text": "30", "correct": false}
+      ],
+      "difficulty": "easy",
+      "fun_fact": "Auf 88 Tasten verteilen sich 52 weiße und 36 schwarze. Die schwarzen sind in Gruppen zu zwei und drei angeordnet — genau deshalb findet man sich auch blind auf der Tastatur zurecht.",
+      "category": "Musik"
+    },
+    {
+      "id": "musik_de_155",
+      "question": "Wie viele Saiten hat eine moderne Konzert-Pedalharfe ungefähr?",
+      "answers": [
+        {"text": "47", "correct": true},
+        {"text": "24", "correct": false},
+        {"text": "88", "correct": false}
+      ],
+      "difficulty": "medium",
+      "fun_fact": "Eine Konzertharfe hat 47 Saiten und 7 Pedale. Über die Pedale kann die Harfenistin jede Tonstufe um einen Halbton verändern — die Füße spielen also kräftig mit.",
       "category": "Musik"
     }
   ]

@@ -1,7 +1,7 @@
 {
   "name": "Popkultur",
   "language": "de",
-  "version": "1.0",
+  "version": "1.1",
   "theme": "popculture",
   "questions": [
     {
@@ -1202,6 +1202,594 @@
       ],
       "difficulty": "hard",
       "fun_fact": "Der Schrei wurde 1951 für den Western 'Distant Drums' aufgenommen und erhielt seinen Namen erst später nach der Figur Private Wilhelm aus einem Film von 1953. Sounddesigner Ben Burtt grub die Aufnahme für 'Star Wars' aus und machte sie zum Insider-Gag der Branche.",
+      "category": "Popkultur"
+    },
+    {
+      "id": "pop_108",
+      "question": "Warum wirkt Filmblut auf der Leinwand oft dunkler und brauner als echtes Blut?",
+      "answers": [
+        {"text": "Weil echtes Rot unter Filmlicht zu grell und unecht wirkt", "correct": true},
+        {"text": "Weil Kameras die Farbe Rot grundsätzlich nicht aufnehmen können", "correct": false},
+        {"text": "Weil Filmblut aus Sicherheitsgründen keine roten Farbstoffe enthalten darf", "correct": false}
+      ],
+      "difficulty": "medium",
+      "fun_fact": "Das berühmteste Kunstblut 'Kensington Gore' wurde absichtlich dunkler gemischt, weil knallrotes Blut auf alten Filmen wie Farbe aussah. Bei Schwarz-Weiß-Filmen nutzte man sogar Schokoladensirup, weil dessen Konsistenz und Grauwert überzeugender flossen.",
+      "category": "Popkultur"
+    },
+    {
+      "id": "pop_109",
+      "question": "Wie erzeugt ein Theremin seinen Ton, ohne dass man es berührt?",
+      "answers": [
+        {"text": "Die Hand verändert ein elektrisches Feld zwischen sich und einer Antenne", "correct": true},
+        {"text": "Bewegungssensoren erkennen die Handposition optisch", "correct": false},
+        {"text": "Die Körperwärme der Hand steuert die Tonhöhe", "correct": false}
+      ],
+      "difficulty": "medium",
+      "fun_fact": "Die Hand bildet zusammen mit der Antenne einen Kondensator; je näher sie kommt, desto höher der Ton. Das Theremin von 1920 ist eines der wenigen Instrumente, das man ausschließlich durch Luftbewegung spielt — man hört es etwa im Soundtrack vieler alter Science-Fiction-Filme.",
+      "category": "Popkultur"
+    },
+    {
+      "id": "pop_110",
+      "question": "Warum klingt deine eigene Stimme auf einer Aufnahme so fremd?",
+      "answers": [
+        {"text": "Beim Sprechen hörst du sie zusätzlich über die Knochen im Schädel", "correct": true},
+        {"text": "Mikrofone verzerren tiefe Stimmen systematisch nach oben", "correct": false},
+        {"text": "Aufnahmegeräte schneiden hörbare Frequenzen automatisch weg", "correct": false}
+      ],
+      "difficulty": "easy",
+      "fun_fact": "Knochenleitung überträgt vor allem tiefe Frequenzen direkt ans Innenohr, daher klingst du für dich selbst voller. Eine Aufnahme zeigt nur die über die Luft übertragene, höhere Version — die alle anderen ohnehin hören.",
+      "category": "Popkultur"
+    },
+    {
+      "id": "pop_111",
+      "question": "Wodurch entsteht das typische Knistern, wenn man eine alte Schallplatte abspielt?",
+      "answers": [
+        {"text": "Staub und winzige Kratzer in der Rille lenken die Nadel ab", "correct": true},
+        {"text": "Die Platte gibt beim Drehen statische Funken ab", "correct": false},
+        {"text": "Der Plattenmotor erzeugt ein elektrisches Brummen", "correct": false}
+      ],
+      "difficulty": "easy",
+      "fun_fact": "Jedes Staubkorn und jeder Kratzer zwingt die Nadel zu einem kleinen Sprung, der als Knacken hörbar wird. Genau dieses Geräusch wird heute oft künstlich über Streaming-Tracks gelegt, um digitale Musik nostalgisch wirken zu lassen.",
+      "category": "Popkultur"
+    },
+    {
+      "id": "pop_112",
+      "question": "Warum trägt ein Filmcrew-Mitglied beim Greenscreen-Dreh möglichst kein Grün?",
+      "answers": [
+        {"text": "Grüne Kleidung würde am Computer durchsichtig und zeigte den Hintergrund", "correct": true},
+        {"text": "Grün stört die Belichtungsmessung der Kamera", "correct": false},
+        {"text": "Grüne Stoffe reflektieren zu viel Scheinwerferlicht", "correct": false}
+      ],
+      "difficulty": "easy",
+      "fun_fact": "Die Software ersetzt jede grüne Fläche durch das Hintergrundbild — also auch ein grünes T-Shirt. Grün wird gewählt, weil es am weitesten von menschlichen Hauttönen entfernt liegt; bei viel Laub im Bild nutzt man stattdessen Blau.",
+      "category": "Popkultur"
+    },
+    {
+      "id": "pop_113",
+      "question": "Wie hält ein Hologramm auf einer Kreditkarte sein dreidimensionales Bild fest?",
+      "answers": [
+        {"text": "Als mikroskopisches Muster, das Licht in verschiedene Richtungen beugt", "correct": true},
+        {"text": "Als winzige eingebettete 3D-Linse aus Glas", "correct": false},
+        {"text": "Als doppelt gedrucktes Bild, das sich beim Kippen verschiebt", "correct": false}
+      ],
+      "difficulty": "hard",
+      "fun_fact": "Ein Hologramm speichert kein Bild, sondern ein Beugungsmuster, das einfallendes Licht so umlenkt, dass das Auge Tiefe wahrnimmt. Genau deshalb lässt es sich nicht einfach fotokopieren — der Kopierer erfasst nur Helligkeit, nicht die Lichtrichtung.",
+      "category": "Popkultur"
+    },
+    {
+      "id": "pop_114",
+      "question": "Warum sieht man in Filmen oft, wie Regen vor einem dunklen Hintergrund gefilmt wird?",
+      "answers": [
+        {"text": "Vor hellem Hintergrund wären die dünnen Tropfen kaum sichtbar", "correct": true},
+        {"text": "Dunkle Hintergründe schützen die Kamera vor Wasserschäden", "correct": false},
+        {"text": "Heller Hintergrund lässt Regen rückwärts laufen wirken", "correct": false}
+      ],
+      "difficulty": "medium",
+      "fun_fact": "Regen reflektiert Licht und wird nur sichtbar, wenn er sich vor einem dunklen Bereich abhebt — deshalb beleuchten Filmcrews den Regen von hinten oder seitlich. Echter Regen ist auf Film fast unsichtbar, weshalb oft mit Spezialdüsen 'nachgeregnet' wird.",
+      "category": "Popkultur"
+    },
+    {
+      "id": "pop_115",
+      "question": "Was lässt die kleinen Lichtpunkte einer Discokugel durch den Raum wandern?",
+      "answers": [
+        {"text": "Die rotierende Kugel reflektiert einen Lichtstrahl in viele Richtungen", "correct": true},
+        {"text": "In jedem Spiegelchen steckt eine winzige Lichtquelle", "correct": false},
+        {"text": "Die Kugel sendet Lichtimpulse im Takt der Musik", "correct": false}
+      ],
+      "difficulty": "easy",
+      "fun_fact": "Jedes Spiegelchen wirft einen einzelnen Strahl zurück; weil die Kugel sich dreht, wandern die Punkte. Eine Discokugel leuchtet also selbst gar nicht — sie braucht immer einen gerichteten Scheinwerfer, um zu funktionieren.",
+      "category": "Popkultur"
+    },
+    {
+      "id": "pop_116",
+      "question": "Warum kann ein Sänger mit der Stimme ein Glas zum Zerspringen bringen?",
+      "answers": [
+        {"text": "Er trifft genau die Eigenfrequenz des Glases, das immer stärker mitschwingt", "correct": true},
+        {"text": "Die Schallwellen erhitzen das Glas bis zum Bruch", "correct": false},
+        {"text": "Sehr laute Töne pressen die Luft so stark, dass sie das Glas eindrücken", "correct": false}
+      ],
+      "difficulty": "hard",
+      "fun_fact": "Trifft die Stimme die Resonanzfrequenz des Glases, schaukelt sich dessen Schwingung auf, bis es bricht — das Prinzip der Resonanzkatastrophe. In Tests gelang das nur bei sehr lautem, exakt gehaltenem Ton, weshalb echte Aufnahmen davon selten sind.",
+      "category": "Popkultur"
+    },
+    {
+      "id": "pop_117",
+      "question": "Wie macht ein Mischpult-Regler ('Fader') eine Stimme im Lied lauter?",
+      "answers": [
+        {"text": "Er regelt, wie viel des elektrischen Signals durchgelassen wird", "correct": true},
+        {"text": "Er erhöht die Drehzahl des Aufnahmebandes", "correct": false},
+        {"text": "Er fügt zusätzliche Tonspuren in Echtzeit hinzu", "correct": false}
+      ],
+      "difficulty": "medium",
+      "fun_fact": "Ein Fader ist im Kern ein verstellbarer Widerstand, der mehr oder weniger Signal durchlässt. Tontechniker schieben ihn beim Mischen oft 'nach Gehör' und nicht nach festen Werten — deshalb klingt jede Live-Abmischung leicht anders.",
+      "category": "Popkultur"
+    },
+    {
+      "id": "pop_118",
+      "question": "Warum wirken Explosionen in Actionfilmen oft riesig, obwohl kaum echtes Feuer brennt?",
+      "answers": [
+        {"text": "Die orangefarbenen Feuerbälle entstehen meist durch zerstäubtes Benzin", "correct": true},
+        {"text": "Es sind fast immer reine Computereffekte ohne echtes Feuer", "correct": false},
+        {"text": "Der Rauch wird mit roten Lampen von innen beleuchtet", "correct": false}
+      ],
+      "difficulty": "medium",
+      "fun_fact": "Pyrotechniker zünden fein zerstäubtes Benzin, das als riesiger, ungefährlich kühler Feuerball nach oben steigt — die eigentliche Sprengung darunter ist viel kleiner. Der spektakuläre Pilz besteht also überwiegend aus brennendem Treibstoffnebel, nicht aus zerstörtem Gebäude.",
+      "category": "Popkultur"
+    },
+    {
+      "id": "pop_119",
+      "question": "Wodurch leuchtet ein Knicklicht (Glow Stick), wenn man es knickt?",
+      "answers": [
+        {"text": "Durch eine chemische Reaktion, die Licht statt Wärme erzeugt", "correct": true},
+        {"text": "Durch eine winzige Batterie mit LED im Inneren", "correct": false},
+        {"text": "Durch gespeichertes Sonnenlicht, das langsam abgegeben wird", "correct": false}
+      ],
+      "difficulty": "medium",
+      "fun_fact": "Beim Knicken zerbricht eine Glasampulle, zwei Chemikalien mischen sich und setzen Energie als kaltes Licht frei — Chemolumineszenz. Genau dieselbe Reaktionsart nutzen Glühwürmchen und Tiefseefische, allerdings mit körpereigenen Stoffen.",
+      "category": "Popkultur"
+    },
+    {
+      "id": "pop_120",
+      "question": "Warum klingt ein Lied schneller und höher, wenn man eine alte Kassette zu schnell abspielt?",
+      "answers": [
+        {"text": "Schnelleres Band liefert mehr Schwingungen pro Sekunde, also höhere Töne", "correct": true},
+        {"text": "Die Tonköpfe erhitzen sich und verzerren den Klang", "correct": false},
+        {"text": "Das Band dehnt sich und verkürzt jede Note", "correct": false}
+      ],
+      "difficulty": "easy",
+      "fun_fact": "Tonhöhe hängt direkt von der Frequenz ab; läuft das Band schneller, steigen Tempo und Tonhöhe gemeinsam. Genau diesen Effekt nutzten Produzenten früher absichtlich, um die piepsigen Stimmen von Comic-Figuren wie den 'Chipmunks' zu erzeugen.",
+      "category": "Popkultur"
+    },
+    {
+      "id": "pop_121",
+      "question": "Warum tragen Schauspieler bei Nahaufnahmen oft mehr Make-up als nötig erscheint?",
+      "answers": [
+        {"text": "Starke Filmscheinwerfer würden Hautunreinheiten sonst überdeutlich zeigen", "correct": true},
+        {"text": "Das Make-up schützt die Haut vor der Hitze der Lampen", "correct": false},
+        {"text": "Kameras können blasse Haut sonst gar nicht scharf stellen", "correct": false}
+      ],
+      "difficulty": "easy",
+      "fun_fact": "Hochauflösende Kameras und grelles Set-Licht legen jede Pore offen, deshalb wird die Haut gleichmäßig abgedeckt. Mit dem Wechsel zu HD und 4K mussten Make-up-Abteilungen ihre Techniken sogar neu erfinden, weil alte dicke Schminke plötzlich künstlich wirkte.",
+      "category": "Popkultur"
+    },
+    {
+      "id": "pop_122",
+      "question": "Wie erzeugt eine Nebelmaschine auf der Bühne ihren dichten Nebel?",
+      "answers": [
+        {"text": "Eine Flüssigkeit wird erhitzt und verdampft zu feinem Nebel", "correct": true},
+        {"text": "Trockeneis wird zu Pulver zermahlen und verteilt", "correct": false},
+        {"text": "Wasser wird mit Ultraschall in echte Wolken verwandelt", "correct": false}
+      ],
+      "difficulty": "medium",
+      "fun_fact": "Die meisten Bühnennebelmaschinen erhitzen ein Glykol-Wasser-Gemisch, das beim Austritt schlagartig zu Nebel kondensiert. Tief am Boden kriechender Nebel braucht dagegen Trockeneis oder Kühlung, weil warmer Nebel sonst sofort nach oben steigt.",
+      "category": "Popkultur"
+    },
+    {
+      "id": "pop_123",
+      "question": "Warum hört man bei einem Konzert den Bass oft, bevor man die Bühne richtig sieht?",
+      "answers": [
+        {"text": "Tiefe Töne breiten sich besser um Hindernisse herum aus als hohe", "correct": true},
+        {"text": "Bass-Lautsprecher senden ihren Schall mit Lichtgeschwindigkeit", "correct": false},
+        {"text": "Hohe Töne werden vom Publikum komplett verschluckt", "correct": false}
+      ],
+      "difficulty": "hard",
+      "fun_fact": "Tiefe Töne haben lange Wellen, die sich um Ecken und durch Wände beugen, während hohe Töne leichter abgeschattet werden. Deshalb dringt aus einem geschlossenen Club nach draußen fast nur der dumpfe Bass — die Melodie bleibt drinnen.",
+      "category": "Popkultur"
+    },
+    {
+      "id": "pop_124",
+      "question": "Was lässt 3D-Kinobrillen ein räumliches Bild entstehen?",
+      "answers": [
+        {"text": "Jedes Auge sieht durch das Glas ein leicht anderes Bild", "correct": true},
+        {"text": "Die Brille vergrößert die Leinwand für jedes Auge unterschiedlich", "correct": false},
+        {"text": "Die Gläser erzeugen selbst zusätzliche Bildebenen", "correct": false}
+      ],
+      "difficulty": "medium",
+      "fun_fact": "Auf die Leinwand werden zwei leicht versetzte Bilder geworfen, und die Brille sorgt dafür, dass jedes Auge nur eines davon sieht — das Gehirn fügt daraus Tiefe zusammen. Ohne Brille erscheint das Bild deshalb doppelt und verschwommen.",
+      "category": "Popkultur"
+    },
+    {
+      "id": "pop_125",
+      "question": "Warum tastet die Nadel einer Vinylplatte gegen Ende eines Liedes pro Umdrehung weniger Rillenlänge ab?",
+      "answers": [
+        {"text": "Innen ist der Rillenweg kürzer, also läuft pro Umdrehung weniger Musik", "correct": true},
+        {"text": "Der Motor wird gegen Ende absichtlich gedrosselt", "correct": false},
+        {"text": "Die Nadel bremst die Platte mit zunehmender Reibung", "correct": false}
+      ],
+      "difficulty": "hard",
+      "fun_fact": "Die Platte dreht konstant, aber innen ist der Kreis kleiner, sodass die Nadel pro Sekunde weniger Rillenlänge abtastet — die Klangqualität nimmt dadurch zur Mitte hin minimal ab. Tontechniker platzieren deshalb die ruhigsten Stücke eines Albums oft am Innenrand.",
+      "category": "Popkultur"
+    },
+    {
+      "id": "pop_126",
+      "question": "Wodurch wird ein Mikrofon-Pfeifen ('Rückkopplung') auf der Bühne ausgelöst?",
+      "answers": [
+        {"text": "Das Mikro nimmt den eigenen Lautsprecher-Ton auf und verstärkt ihn endlos", "correct": true},
+        {"text": "Zwei Mikrofone stören sich gegenseitig durch ihre Funkwellen", "correct": false},
+        {"text": "Der Verstärker überhitzt und gibt einen Warnton ab", "correct": false}
+      ],
+      "difficulty": "medium",
+      "fun_fact": "Gerät Klang aus dem Lautsprecher zurück ins Mikro, entsteht eine Schleife, die sich bis zum schrillen Pfeifen aufschaukelt. Gitarristen wie Jimi Hendrix machten sich genau diesen Effekt zunutze und spielten mit kontrollierter Rückkopplung als eigenständigem Klang.",
+      "category": "Popkultur"
+    },
+    {
+      "id": "pop_127",
+      "question": "Warum erscheinen Wagenräder in alten Filmen manchmal, als drehten sie sich rückwärts?",
+      "answers": [
+        {"text": "Die Kamera nimmt nur Einzelbilder auf und 'verpasst' die echte Drehung", "correct": true},
+        {"text": "Die Speichen werden beim Filmen seitenverkehrt gespiegelt", "correct": false},
+        {"text": "Das Filmmaterial läuft an dieser Stelle kurz rückwärts", "correct": false}
+      ],
+      "difficulty": "hard",
+      "fun_fact": "Film besteht aus Einzelbildern; dreht sich ein Speichenrad zwischen zwei Bildern fast um einen Speichenabstand weiter, sieht das Auge eine scheinbare Rückwärtsbewegung — der Stroboskop-Effekt. Genau dieses Phänomen verrät, dass das menschliche Sehen Bewegung in Schnappschüssen zusammensetzt.",
+      "category": "Popkultur"
+    },
+    {
+      "id": "pop_128",
+      "question": "Warum klebt man beim Filmdreh manchmal Tennisbälle oder Punkte auf den Anzug eines Schauspielers?",
+      "answers": [
+        {"text": "Damit der Computer seine Bewegungen erfassen und auf eine Figur übertragen kann", "correct": true},
+        {"text": "Damit die Kamera ihn im Dunkeln automatisch scharf stellt", "correct": false},
+        {"text": "Damit andere Schauspieler wissen, wo sie hinschauen müssen", "correct": false}
+      ],
+      "difficulty": "easy",
+      "fun_fact": "Beim Motion Capture verfolgen Kameras die Markierungspunkte und übersetzen jede Geste in eine digitale Figur. So entstand etwa Gollum aus 'Der Herr der Ringe' — der Schauspieler spielte die ganze Rolle im Punkteanzug, bevor die Figur darübergelegt wurde.",
+      "category": "Popkultur"
+    },
+    {
+      "id": "pop_129",
+      "question": "Wie schafft es ein Bauchredner, ohne sichtbare Lippenbewegung zu sprechen?",
+      "answers": [
+        {"text": "Er vermeidet Laute, für die man die Lippen schließen muss, und ersetzt sie", "correct": true},
+        {"text": "Er spricht in Wahrheit durch eine versteckte Lautsprecher-Puppe", "correct": false},
+        {"text": "Er erzeugt den Ton durch Einatmen statt Ausatmen", "correct": false}
+      ],
+      "difficulty": "medium",
+      "fun_fact": "Laute wie B, P und M brauchen geschlossene Lippen, deshalb tauschen Bauchredner sie heimlich gegen ähnlich klingende wie D, T oder N aus. Den Eindruck, die Stimme komme von der Puppe, liefert dann unser eigenes Gehirn, das den Ton zur bewegten Quelle zieht.",
+      "category": "Popkultur"
+    },
+    {
+      "id": "pop_130",
+      "question": "Warum riecht ein neues Vinyl-Schallplattencover oder eine frische Zeitschrift so charakteristisch?",
+      "answers": [
+        {"text": "Lösungsmittel aus Druckfarben und Material verdunsten noch eine Weile", "correct": true},
+        {"text": "Verlage parfümieren das Papier gezielt für den Wiedererkennungswert", "correct": false},
+        {"text": "Das Papier nimmt den Geruch der Druckmaschine dauerhaft an", "correct": false}
+      ],
+      "difficulty": "easy",
+      "fun_fact": "Frische Druckerzeugnisse geben über Tage flüchtige Stoffe aus Farben, Klebern und Beschichtungen ab, die wir als typischen 'Neugeruch' wahrnehmen. Derselbe Mechanismus steckt hinter dem 'Neuwagengeruch' — auch der ist nur ausdünstendes Material.",
+      "category": "Popkultur"
+    },
+    {
+      "id": "pop_131",
+      "question": "Warum wirkt ein Film mit 24 Einzelbildern pro Sekunde flüssig und nicht ruckelig?",
+      "answers": [
+        {"text": "Das Auge verschmilzt schnell aufeinanderfolgende Bilder zu Bewegung", "correct": true},
+        {"text": "Die Bilder bewegen sich auf dem Filmstreifen tatsächlich von selbst", "correct": false},
+        {"text": "Der Projektor verwischt die Bilder absichtlich ineinander", "correct": false}
+      ],
+      "difficulty": "medium",
+      "fun_fact": "Folgen Bilder schnell genug aufeinander, kann das visuelle System sie nicht mehr trennen und nimmt durchgehende Bewegung wahr. Bewegungsunschärfe in jedem Einzelbild verstärkt den Effekt — komplett scharfe Einzelbilder, etwa in manchen Videospielen, wirken dagegen oft seltsam abgehackt.",
+      "category": "Popkultur"
+    },
+    {
+      "id": "pop_132",
+      "question": "Woher stammt der Name 'Lego', die dänische Spielzeugmarke?",
+      "answers": [
+        {"text": "Von 'leg godt' — dänisch für 'spiel gut'", "correct": true},
+        {"text": "Von 'lego' — lateinisch für 'ich baue'", "correct": false},
+        {"text": "Von den Initialen des Gründers Leo Gobert", "correct": false}
+      ],
+      "difficulty": "easy",
+      "fun_fact": "Gründer Ole Kirk Christiansen bildete den Namen 1934 aus 'leg godt'. Erst später bemerkte die Firma, dass 'lego' im Lateinischen tatsächlich 'ich füge zusammen' bedeuten kann — ein glücklicher Zufall.",
+      "category": "Popkultur"
+    },
+    {
+      "id": "pop_133",
+      "question": "Wie entstand der Name der Suchmaschine 'Google'?",
+      "answers": [
+        {"text": "Durch einen Tippfehler beim Wort 'Googol' (eine 1 mit 100 Nullen)", "correct": true},
+        {"text": "Als Abkürzung für 'Global Organization of Oriented Group Language'", "correct": false},
+        {"text": "Aus dem Spitznamen eines Mitgründers an der Universität", "correct": false}
+      ],
+      "difficulty": "easy",
+      "fun_fact": "Die Gründer wollten die riesige Zahl 'Googol' als Namen, doch beim Registrieren der Domain vertippte sich jemand zu 'Google'. Der Name blieb hängen und wurde Weltmarke.",
+      "category": "Popkultur"
+    },
+    {
+      "id": "pop_134",
+      "question": "Warum heißt die Programmiersprache und Kaffee-Anspielung 'Java' so?",
+      "answers": [
+        {"text": "Nach der indonesischen Kaffee-Insel, von der das Team viel trank", "correct": true},
+        {"text": "Nach den Initialen der drei Entwickler James, Arthur und Vaughan", "correct": false},
+        {"text": "Es ist eine Abkürzung für 'Just Another Virtual Architecture'", "correct": false}
+      ],
+      "difficulty": "medium",
+      "fun_fact": "Die Sprache hieß zunächst 'Oak' nach einem Baum vor dem Bürofenster, doch der Name war markenrechtlich vergeben. Das Team wählte 'Java' nach ihrem Lieblingskaffee — daher auch die Kaffeetassen-Logos.",
+      "category": "Popkultur"
+    },
+    {
+      "id": "pop_135",
+      "question": "Wie kam die Süßigkeit 'Toblerone' zu ihrer dreieckigen Form?",
+      "answers": [
+        {"text": "Inspiriert von der Bergspitze des Matterhorns", "correct": true},
+        {"text": "Damit die Schokolade in flache Briefumschläge passte", "correct": false},
+        {"text": "Um Patentstreit mit eckigen Tafeln zu vermeiden", "correct": false}
+      ],
+      "difficulty": "medium",
+      "fun_fact": "Die Schweizer Bergform gilt als offizielle Inspiration. Im Logo versteckt sich zudem ein aufrecht stehender Bär — das Wappentier der Stadt Bern, wo Toblerone hergestellt wird.",
+      "category": "Popkultur"
+    },
+    {
+      "id": "pop_136",
+      "question": "Was bedeutet das 'i' im Produktnamen 'iPod', 'iMac' und 'iPhone' ursprünglich?",
+      "answers": [
+        {"text": "Es stand zuerst für 'internet'", "correct": true},
+        {"text": "Es stand für 'individual'", "correct": false},
+        {"text": "Es war einfach der erste Buchstabe von 'innovation'", "correct": false}
+      ],
+      "difficulty": "easy",
+      "fun_fact": "Bei der iMac-Vorstellung 1998 erklärte Steve Jobs das 'i' als 'internet', nannte aber auch 'individual', 'instruct', 'inform' und 'inspire' als Nebenbedeutungen. Der Buchstabe blieb dann bei allen späteren Geräten.",
+      "category": "Popkultur"
+    },
+    {
+      "id": "pop_137",
+      "question": "Warum trägt Super Mario eigentlich eine Mütze und einen Schnurrbart?",
+      "answers": [
+        {"text": "Wegen technischer Grenzen — Haare und Mund waren in Pixeln nicht darstellbar", "correct": true},
+        {"text": "Als Hommage an einen italienischen Klempner-Film", "correct": false},
+        {"text": "Weil Nintendo eine Mützen-Marke als Sponsor hatte", "correct": false}
+      ],
+      "difficulty": "medium",
+      "fun_fact": "Designer Shigeru Miyamoto gab Mario eine Mütze, weil Haare in der niedrigen Auflösung von 1981 schwer zu animieren waren, und einen Schnurrbart, weil ein Mund kaum erkennbar gewesen wäre. Aus Not wurde ein weltbekanntes Design.",
+      "category": "Popkultur"
+    },
+    {
+      "id": "pop_138",
+      "question": "Warum heißt der Kurznachrichtendienst 'Twitter' so?",
+      "answers": [
+        {"text": "Nach dem englischen Wort für das Zwitschern von Vögeln", "correct": true},
+        {"text": "Als Abkürzung für 'Text With Instant Transmission'", "correct": false},
+        {"text": "Nach einem Café in San Francisco, in dem die Idee entstand", "correct": false}
+      ],
+      "difficulty": "easy",
+      "fun_fact": "'Twitter' bedeutet 'zwitschern' und passte zu den kurzen, beiläufigen Nachrichten. Das Team fand das Wort im Lexikon — eine frühe Alternative lautete 'Twitch', wurde aber als zu unangenehm empfunden.",
+      "category": "Popkultur"
+    },
+    {
+      "id": "pop_139",
+      "question": "Wie entstanden die berühmten Frühstücksflocken der Brüder Kellogg ursprünglich?",
+      "answers": [
+        {"text": "Als zufälliges Ergebnis, als gekochtes Getreide versehentlich altbacken und flockig wurde", "correct": true},
+        {"text": "Als Diätprodukt, das Maisstärke ersetzen sollte", "correct": false},
+        {"text": "Als Tierfutter, das Menschen versehentlich probierten", "correct": false}
+      ],
+      "difficulty": "medium",
+      "fun_fact": "Die Brüder Kellogg ließen 1894 gekochten Weizenbrei versehentlich stehen; beim Auswalzen zerfiel er in Flocken. Die Flocken wurden geröstet und zum Frühstückserfolg — die berühmten Cornflakes aus Mais entstanden erst später.",
+      "category": "Popkultur"
+    },
+    {
+      "id": "pop_140",
+      "question": "Wie kam der Schokoriegel 'Snickers' zu seinem Namen?",
+      "answers": [
+        {"text": "Er wurde nach einem Lieblingspferd der Gründerfamilie benannt", "correct": true},
+        {"text": "Vom englischen Wort 'snicker' für ein leises Kichern", "correct": false},
+        {"text": "Nach dem Erfinder Samuel Snickers", "correct": false}
+      ],
+      "difficulty": "medium",
+      "fun_fact": "Die Familie Mars benannte den Riegel 1930 nach ihrem Lieblingspferd Snickers. In Großbritannien hieß die Süßigkeit jahrzehntelang 'Marathon' und wurde erst 1990 weltweit angeglichen.",
+      "category": "Popkultur"
+    },
+    {
+      "id": "pop_141",
+      "question": "Warum tragen Klempner-Spielfigur Mario und viele frühe Comicfiguren weiße Handschuhe?",
+      "answers": [
+        {"text": "Damit sich Hände bei der Animation klar vom Körper abheben", "correct": true},
+        {"text": "Weil farbige Handschuhe teurer zu drucken waren", "correct": false},
+        {"text": "Als Hommage an Stummfilm-Pantomimen", "correct": false}
+      ],
+      "difficulty": "medium",
+      "fun_fact": "Bei frühen Schwarz-Weiß-Cartoons verschwanden dunkle Hände vor dem dunklen Körper. Weiße Handschuhe machten Gesten sichtbar und sparten Zeichenarbeit — eine Konvention, die Disney mit Micky Maus etablierte.",
+      "category": "Popkultur"
+    },
+    {
+      "id": "pop_142",
+      "question": "Wie entstand das Wort 'Podcast'?",
+      "answers": [
+        {"text": "Aus 'iPod' und 'Broadcast' zusammengesetzt", "correct": true},
+        {"text": "Aus 'Personal On-Demand' und 'Cast'", "correct": false},
+        {"text": "Aus 'Portable' und 'Audio Cast'", "correct": false}
+      ],
+      "difficulty": "easy",
+      "fun_fact": "Ein Journalist prägte den Begriff 2004 als Mischung aus Apples iPod und 'broadcast'. Ironischerweise braucht man heute keinen iPod mehr — und Apple besitzt den Namen nicht.",
+      "category": "Popkultur"
+    },
+    {
+      "id": "pop_143",
+      "question": "Warum heißt die Modemarke 'Adidas' so?",
+      "answers": [
+        {"text": "Aus dem Spitznamen und Nachnamen des Gründers Adi Dassler", "correct": true},
+        {"text": "Als Abkürzung für 'All Day I Dream About Sport'", "correct": false},
+        {"text": "Nach der griechischen Siegesgöttin Adidae", "correct": false}
+      ],
+      "difficulty": "easy",
+      "fun_fact": "Adi (Adolf) Dassler gründete die Firma 1949. Sein Bruder Rudolf gründete nach einem Zerwürfnis die Konkurrenzmarke Puma — beide Firmen sitzen bis heute im selben fränkischen Ort Herzogenaurach.",
+      "category": "Popkultur"
+    },
+    {
+      "id": "pop_144",
+      "question": "Wie entstand das berühmte Computerspiel 'Pac-Man' und sein runder Held?",
+      "answers": [
+        {"text": "Inspiriert von einer Pizza, der eine Scheibe fehlte", "correct": true},
+        {"text": "Aus einem abgewandelten Smiley-Symbol", "correct": false},
+        {"text": "Aus einem Mund-Logo eines Zahnpasta-Herstellers", "correct": false}
+      ],
+      "difficulty": "easy",
+      "fun_fact": "Schöpfer Toru Iwatani erzählte, die Form sei ihm bei einer Pizza ohne ein Stück eingefallen. Der Name kam vom japanischen 'paku-paku', dem Geräusch des Mampfens.",
+      "category": "Popkultur"
+    },
+    {
+      "id": "pop_145",
+      "question": "Woher stammt der Markenname 'Häagen-Dazs', das amerikanische Eis?",
+      "answers": [
+        {"text": "Es ist ein erfundenes Fantasiewort ohne echte Bedeutung", "correct": true},
+        {"text": "Es ist altdänisch für 'reine Sahne'", "correct": false},
+        {"text": "Es ist der Name eines Dorfes in Skandinavien", "correct": false}
+      ],
+      "difficulty": "hard",
+      "fun_fact": "Die Gründer aus New York erfanden den Namen 1960 komplett, damit er 'dänisch und edel' klingt — die Umlaute und Buchstaben ergeben in keiner skandinavischen Sprache Sinn. Diese Masche nennt man heute 'foreign branding'.",
+      "category": "Popkultur"
+    },
+    {
+      "id": "pop_146",
+      "question": "Wie kam die Süßigkeit 'Twix' ursprünglich zu ihrem Namen?",
+      "answers": [
+        {"text": "Aus 'twin' und 'biscuit/sticks' — wegen der zwei Riegel", "correct": true},
+        {"text": "Nach den Erfindern Tom und Wix", "correct": false},
+        {"text": "Aus dem lateinischen Wort für 'zweimal'", "correct": false}
+      ],
+      "difficulty": "medium",
+      "fun_fact": "Der Name spielt auf die zwei Riegel an. In den USA und Großbritannien hieß das Produkt anfangs 'Raider', in Deutschland sogar bis 1991 — danach wurde es weltweit zu 'Twix' vereinheitlicht.",
+      "category": "Popkultur"
+    },
+    {
+      "id": "pop_147",
+      "question": "Warum heißt der Streaming-Riese 'Hulu' so?",
+      "answers": [
+        {"text": "Nach einem chinesischen Wort für einen Kürbis, der wertvolle Dinge enthält", "correct": true},
+        {"text": "Es ist die Abkürzung für 'Hub of Unlimited Live Uploads'", "correct": false},
+        {"text": "Nach einem hawaiianischen Tanz", "correct": false}
+      ],
+      "difficulty": "hard",
+      "fun_fact": "Der Name geht auf ein chinesisches Sprichwort zurück, in dem ein 'hulu' (Flaschenkürbis) kostbare Dinge birgt und auch 'Aufnahme von etwas Heiligem' bedeuten kann. Die Gründer fanden den Klang einprägsam.",
+      "category": "Popkultur"
+    },
+    {
+      "id": "pop_148",
+      "question": "Wie entstand der Begriff 'Paparazzi' für aufdringliche Promi-Fotografen?",
+      "answers": [
+        {"text": "Aus dem Namen einer Filmfigur in Fellinis 'La Dolce Vita'", "correct": true},
+        {"text": "Aus dem italienischen Wort für 'Blitzlicht'", "correct": false},
+        {"text": "Aus dem Nachnamen eines berüchtigten römischen Fotografen", "correct": false}
+      ],
+      "difficulty": "medium",
+      "fun_fact": "Federico Fellinis Film von 1960 hatte einen aufdringlichen Fotografen namens Paparazzo. Der Regisseur soll den Namen wegen seines surrenden Klangs gewählt haben — der Plural 'Paparazzi' wurde zum Weltwort.",
+      "category": "Popkultur"
+    },
+    {
+      "id": "pop_149",
+      "question": "Warum heißt der beliebte 'Granny Smith'-Apfel so?",
+      "answers": [
+        {"text": "Nach Maria Ann Smith, die ihn zufällig in ihrem Garten zog", "correct": true},
+        {"text": "Nach einer Comicfigur in einer Apfelsaft-Werbung", "correct": false},
+        {"text": "Nach einem britischen Obstzüchter-Verein", "correct": false}
+      ],
+      "difficulty": "medium",
+      "fun_fact": "Die Australierin Maria Ann 'Granny' Smith entdeckte um 1868 einen Sämling, der aus weggeworfenen Apfelresten gewachsen war. Aus diesem Zufall entstand eine der weltweit meistangebauten Apfelsorten.",
+      "category": "Popkultur"
+    },
+    {
+      "id": "pop_150",
+      "question": "Wie entstand das Erfrischungsgetränk Coca-Cola ursprünglich?",
+      "answers": [
+        {"text": "Als alkoholfreier Ersatz für einen koka- und weinhaltigen Trunk", "correct": true},
+        {"text": "Als Hustensaft gegen Erkältungen", "correct": false},
+        {"text": "Als Energiegetränk für Soldaten", "correct": false}
+      ],
+      "difficulty": "easy",
+      "fun_fact": "Apotheker John Pemberton entwickelte 1886 in Atlanta eine alkoholfreie Variante seines früheren Wein-Koka-Getränks, weil ein lokales Alkoholverbot drohte. Der Sirup wurde zunächst als Stärkungsmittel in Apotheken verkauft.",
+      "category": "Popkultur"
+    },
+    {
+      "id": "pop_151",
+      "question": "Wie kam die Soße 'Worcestershire' (Worcester-Sauce) zu ihrer Existenz?",
+      "answers": [
+        {"text": "Durch einen vergessenen Bottich, dessen Inhalt monatelang im Keller reifte", "correct": true},
+        {"text": "Als Nebenprodukt einer Schokoladenfabrik", "correct": false},
+        {"text": "Als Nebenprodukt der Bierbrauerei", "correct": false}
+      ],
+      "difficulty": "hard",
+      "fun_fact": "Die Apotheker Lea und Perrins mischten in den 1830ern eine Soße, die zunächst widerlich schmeckte und im Keller landete. Erst nach etwa anderthalb Jahren Reifung schmeckte sie köstlich — und wurde zum Welt-Würzklassiker.",
+      "category": "Popkultur"
+    },
+    {
+      "id": "pop_152",
+      "question": "Wie entstand der Klebezettel 'Post-it' von 3M?",
+      "answers": [
+        {"text": "Aus einem misslungenen Versuch, einen besonders starken Kleber zu entwickeln", "correct": true},
+        {"text": "Aus Briefmarken-Kleber, der zu schwach geriet", "correct": false},
+        {"text": "Aus einem Klebeband, dem die Folie fehlte", "correct": false}
+      ],
+      "difficulty": "medium",
+      "fun_fact": "Ein 3M-Forscher schuf 1968 versehentlich einen schwachen, wiederablösbaren Kleber. Erst Jahre später kam ein Kollege auf die Idee, damit Lesezeichen im Gesangbuch zu fixieren — der Post-it war geboren.",
+      "category": "Popkultur"
+    },
+    {
+      "id": "pop_153",
+      "question": "Wie kam die Comic-Figur Donald Ducks Heimatstadt 'Entenhausen' im Deutschen zu ihrem Namen?",
+      "answers": [
+        {"text": "Übersetzerin Erika Fuchs erfand ihn frei statt das Original 'Duckburg' zu übernehmen", "correct": true},
+        {"text": "Er war im US-Original bereits 'Entenhausen' geschrieben", "correct": false},
+        {"text": "Er wurde nach einem realen bayerischen Dorf benannt", "correct": false}
+      ],
+      "difficulty": "hard",
+      "fun_fact": "Die legendäre Übersetzerin Erika Fuchs prägte das deutsche Donald-Universum stark eigenständig. Von ihr stammt auch der 'Erikativ' — verkürzte Verben wie 'seufz' oder 'grübel', die heute aus Chats nicht mehr wegzudenken sind.",
+      "category": "Popkultur"
+    },
+    {
+      "id": "pop_154",
+      "question": "Woher stammt der Name des Musikgenres 'Reggae'?",
+      "answers": [
+        {"text": "Vermutlich aus dem jamaikanischen Slang 'rege-rege' für Lumpen oder Streit", "correct": true},
+        {"text": "Er ist nach dem Erfinder Reginald 'Reggie' Brown benannt", "correct": false},
+        {"text": "Er kommt vom spanischen Wort 'regalo' für Geschenk", "correct": false}
+      ],
+      "difficulty": "medium",
+      "fun_fact": "Das Wort tauchte 1968 im Song 'Do the Reggay' von Toots and the Maytals auf und prägte das Genre. 'Rege-rege' bezeichnete im jamaikanischen Patois zerlumpte Kleidung oder einen Aufruhr.",
+      "category": "Popkultur"
+    },
+    {
+      "id": "pop_156",
+      "question": "Wie viele LEGO-Steine produziert der Konzern durchschnittlich pro Jahr?",
+      "answers": [
+        {"text": "Rund 36 Milliarden", "correct": true},
+        {"text": "Rund 5 Milliarden", "correct": false},
+        {"text": "Rund 800 Millionen", "correct": false}
+      ],
+      "difficulty": "easy",
+      "fun_fact": "LEGO stellt jährlich grob 36 Milliarden Elemente her. Würde man alle in einem Jahr produzierten Steine stapeln, käme man weit über die Höhe hinaus, die man für eine Reise zum Mond bräuchte.",
+      "category": "Popkultur"
+    },
+    {
+      "id": "pop_157",
+      "question": "Wie viele Mitspieler sind bei einem Monopoly-Brett der Standardausgabe maximal vorgesehen?",
+      "answers": [
+        {"text": "8 Spieler", "correct": true},
+        {"text": "4 Spieler", "correct": false},
+        {"text": "12 Spieler", "correct": false}
+      ],
+      "difficulty": "easy",
+      "fun_fact": "Die Standardschachtel enthält acht Spielfiguren — daher das Limit von acht Spielern. Monopoly wurde seit der Markteinführung in über 100 Ländern und mehr als 40 Sprachen verkauft.",
       "category": "Popkultur"
     }
   ]

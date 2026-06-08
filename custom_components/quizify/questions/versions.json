@@ -1,8 +1,20 @@
 {
-  "geographie": "1.0",
-  "tiere-natur": "1.0",
-  "popkultur": "1.0",
-  "geography": "1.0",
-  "animals-nature": "1.0",
-  "pop-culture": "1.0"
+  "geographie": "1.1",
+  "tiere-natur": "1.1",
+  "popkultur": "1.1",
+  "geography": "1.1",
+  "animals-nature": "1.1",
+  "pop-culture": "1.1",
+  "essen-de": "1.1",
+  "food-en": "1.1",
+  "geschichte-de": "1.1",
+  "history-en": "1.1",
+  "music-en": "1.1",
+  "musik-de": "1.1",
+  "science-en": "1.1",
+  "sport-de": "1.1",
+  "sport-en": "1.1",
+  "tech-en": "1.1",
+  "technik-de": "1.1",
+  "wissenschaft-de": "1.1"
 }

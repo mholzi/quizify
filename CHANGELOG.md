@@ -3,6 +3,21 @@
 All notable changes to Quizify are documented here. This project follows
 [Semantic Versioning](https://semver.org/).
 
+## [1.1.0] — 2026-06-08
+
+### Added
+
+- **+50 questions per category — the library grows from 1,800 to ~2,690.**
+  Every one of the 18 packs (9 themes × German/English) gained 50 fresh
+  "Unnützes Wissen" questions: surprising, counter-intuitive, weird-but-true,
+  never capital-of-X or year-of-Y lookups. Each new batch was deduplicated
+  against the existing questions in its pack, then run through a factual /
+  distractor / fun-fact review — 6 ambiguous or disputed questions were
+  dropped rather than shipped, so a few packs land at 148–149.
+- Every pack version bumped `1.0 → 1.1`, and `versions.json` now tracks all
+  18 packs (was 6) so existing installs are offered the new questions via the
+  in-app pack update-check.
+
 ## [1.0.1] — 2026-06-08
 
 ### Fixed

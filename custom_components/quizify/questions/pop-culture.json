@@ -1,7 +1,7 @@
 {
   "name": "Pop Culture",
   "language": "en",
-  "version": "1.0",
+  "version": "1.1",
   "theme": "popculture",
   "questions": [
     {
@@ -1202,6 +1202,606 @@
       ],
       "difficulty": "medium",
       "fun_fact": "Engineers Alfred Fielding and Marc Chavannes sealed two shower curtains together in 1957 hoping to sell trendy wallpaper. That flopped, a greenhouse-insulation pitch flopped too, and only when IBM needed to protect a new computer in shipping did the product find its calling.",
+      "category": "Pop Culture"
+    },
+    {
+      "id": "pop_en_108",
+      "question": "Why do CDs and DVDs read data using a laser instead of a needle like a vinyl record?",
+      "answers": [
+        {"text": "The laser reads microscopic pits without ever touching the disc", "correct": true},
+        {"text": "The laser physically burns a new groove on every play", "correct": false},
+        {"text": "The laser magnetises the surface to store sound", "correct": false}
+      ],
+      "difficulty": "easy",
+      "fun_fact": "A CD stores data as a spiral of tiny pits and flat 'lands'. The laser detects how light reflects differently off pits versus lands. Because nothing touches the surface, a CD doesn't wear out from playing the way a vinyl record does under its needle.",
+      "category": "Pop Culture"
+    },
+    {
+      "id": "pop_en_109",
+      "question": "Why does a microwave oven heat food but the plate often stays cool?",
+      "answers": [
+        {"text": "The waves excite water molecules, and most plates contain little water", "correct": true},
+        {"text": "The plate reflects all the microwaves back upward", "correct": false},
+        {"text": "The plate is coated to block heat absorption", "correct": false}
+      ],
+      "difficulty": "easy",
+      "fun_fact": "Microwaves make water molecules flip back and forth billions of times a second, and that friction is the heat. Ceramic and glass have almost no water to wobble, so they only get warm by contact with the hot food, not from the microwaves themselves.",
+      "category": "Pop Culture"
+    },
+    {
+      "id": "pop_en_110",
+      "question": "Why do glow-in-the-dark stars keep shining after you turn off the light?",
+      "answers": [
+        {"text": "They slowly release stored light energy as a delayed glow", "correct": true},
+        {"text": "They contain a tiny battery that powers a faint bulb", "correct": false},
+        {"text": "They react chemically with oxygen in the dark", "correct": false}
+      ],
+      "difficulty": "medium",
+      "fun_fact": "This is called phosphorescence. The material absorbs light and traps that energy in its atoms, then leaks it back out slowly over minutes. It's the same principle behind old watch dials, just without the radioactive paint that early ones used.",
+      "category": "Pop Culture"
+    },
+    {
+      "id": "pop_en_111",
+      "question": "Why does a fizzy drink suddenly foam over when you drop a mint candy into it?",
+      "answers": [
+        {"text": "The candy's rough surface gives trapped gas thousands of escape points", "correct": true},
+        {"text": "The mint chemically reacts with the cola to create new gas", "correct": false},
+        {"text": "The candy lowers the liquid's temperature, releasing gas", "correct": false}
+      ],
+      "difficulty": "medium",
+      "fun_fact": "The soda is packed with dissolved carbon dioxide desperate to escape. A mint's pitted, bumpy surface offers countless tiny sites where bubbles can form at once, so the gas erupts all together. It's physics, not a chemical reaction at all.",
+      "category": "Pop Culture"
+    },
+    {
+      "id": "pop_en_112",
+      "question": "Why does popcorn pop?",
+      "answers": [
+        {"text": "Water trapped inside turns to steam and bursts the hard shell", "correct": true},
+        {"text": "The sugar inside the kernel caramelises and expands", "correct": false},
+        {"text": "Air pockets in the kernel ignite from the heat", "correct": false}
+      ],
+      "difficulty": "easy",
+      "fun_fact": "Each kernel holds a droplet of water inside a starchy centre and a tough waterproof hull. Heated past boiling, the water becomes steam under pressure until the hull fails explosively, turning the starch inside out into the fluffy shape you eat.",
+      "category": "Pop Culture"
+    },
+    {
+      "id": "pop_en_113",
+      "question": "Why do helium balloons make your voice sound squeaky?",
+      "answers": [
+        {"text": "Sound travels faster through helium, raising the pitch of your voice", "correct": true},
+        {"text": "Helium shrinks your vocal cords temporarily", "correct": false},
+        {"text": "Helium makes your throat vibrate twice as fast", "correct": false}
+      ],
+      "difficulty": "medium",
+      "fun_fact": "Helium is far lighter than air, so sound waves zip through it much faster. This boosts the higher resonant tones your vocal tract amplifies, making your voice squeaky. Your vocal cords actually vibrate at the same rate as normal.",
+      "category": "Pop Culture"
+    },
+    {
+      "id": "pop_en_114",
+      "question": "Why does a stuck jar lid loosen more easily after you run it under hot water?",
+      "answers": [
+        {"text": "The metal lid expands faster than the glass jar", "correct": true},
+        {"text": "The hot water dissolves the seal between lid and jar", "correct": false},
+        {"text": "The heat softens the metal so it stretches", "correct": false}
+      ],
+      "difficulty": "medium",
+      "fun_fact": "Metal expands more than glass for the same rise in temperature. Warming the lid makes it grow slightly larger in diameter than the glass neck beneath it, loosening the grip just enough to twist it free.",
+      "category": "Pop Culture"
+    },
+    {
+      "id": "pop_en_115",
+      "question": "Why do onions make you cry when you chop them?",
+      "answers": [
+        {"text": "They release a gas that turns to mild acid on contact with your eyes", "correct": true},
+        {"text": "The smell triggers a reflex tear response in your nose", "correct": false},
+        {"text": "Tiny onion particles physically scratch the eye surface", "correct": false}
+      ],
+      "difficulty": "medium",
+      "fun_fact": "Cutting ruptures cells that mix enzymes and sulphur compounds, producing a volatile gas. When it reaches the watery film on your eyes it forms a small amount of sulfuric acid, and your tear glands flush to wash the irritant away.",
+      "category": "Pop Culture"
+    },
+    {
+      "id": "pop_en_116",
+      "question": "Why does ice float on water instead of sinking like most frozen solids?",
+      "answers": [
+        {"text": "Water expands as it freezes, making ice less dense than liquid water", "correct": true},
+        {"text": "Trapped air bubbles make every ice cube lighter than water", "correct": false},
+        {"text": "Ice is colder, and cold objects always rise in liquid", "correct": false}
+      ],
+      "difficulty": "easy",
+      "fun_fact": "Most substances shrink and get denser when they solidify, but water's molecules lock into an open, spacious crystal lattice as they freeze. That makes ice about 9% less dense than liquid water, which is why lakes freeze top-down and fish survive winter beneath.",
+      "category": "Pop Culture"
+    },
+    {
+      "id": "pop_en_117",
+      "question": "Why does cutting a chilli pepper sometimes leave a burning sensation on your fingers for hours?",
+      "answers": [
+        {"text": "Capsaicin is oily and clings to skin, triggering heat-sensing nerves", "correct": true},
+        {"text": "The pepper's acid slowly dissolves the top layer of skin", "correct": false},
+        {"text": "Pepper juice raises the actual temperature of your skin", "correct": false}
+      ],
+      "difficulty": "medium",
+      "fun_fact": "Capsaicin tricks the same nerve receptors that detect real heat, so your brain feels a burn with no actual temperature change. Because it's oil-based, water won't wash it off well, but fats like milk or oil dissolve and lift it away.",
+      "category": "Pop Culture"
+    },
+    {
+      "id": "pop_en_118",
+      "question": "Why does a hot-air balloon rise into the sky?",
+      "answers": [
+        {"text": "Heated air inside is less dense than the cooler air outside", "correct": true},
+        {"text": "The burner produces a lighter-than-air gas called balloon gas", "correct": false},
+        {"text": "The fabric repels gravity once it reaches a high temperature", "correct": false}
+      ],
+      "difficulty": "easy",
+      "fun_fact": "Heating the air inside the envelope spreads its molecules apart, making that air lighter than the same volume of cool air around it. The balloon floats up for the same reason a cork rises in water, just with air instead of liquid.",
+      "category": "Pop Culture"
+    },
+    {
+      "id": "pop_en_119",
+      "question": "Why does a struck tuning fork keep humming a steady single note?",
+      "answers": [
+        {"text": "Its two prongs vibrate at one fixed natural frequency", "correct": true},
+        {"text": "It contains a small electronic oscillator", "correct": false},
+        {"text": "The metal slowly releases stored sound it absorbed earlier", "correct": false}
+      ],
+      "difficulty": "medium",
+      "fun_fact": "A tuning fork's size and stiffness give it one dominant resonant frequency, so it rings out a pure, clean tone with almost no overtones. That purity is why musicians and instrument makers have used them as a tuning reference for over 300 years.",
+      "category": "Pop Culture"
+    },
+    {
+      "id": "pop_en_120",
+      "question": "Why does bread go stale even when you keep it sealed in a bag?",
+      "answers": [
+        {"text": "Its starch molecules slowly recrystallise and squeeze out moisture", "correct": true},
+        {"text": "The bread keeps absorbing oxygen until it dries out", "correct": false},
+        {"text": "Bacteria eat the soft centre and harden the crust", "correct": false}
+      ],
+      "difficulty": "hard",
+      "fun_fact": "Staling isn't mainly about drying out. The gelatinised starch from baking gradually reorganises into a firmer crystal structure, a process called retrogradation, pushing water out of place. Oddly, the fridge speeds this up, which is why bread goes stale faster when refrigerated.",
+      "category": "Pop Culture"
+    },
+    {
+      "id": "pop_en_121",
+      "question": "Why do your fingers wrinkle after a long bath?",
+      "answers": [
+        {"text": "Your nervous system actively shrinks blood vessels to pucker the skin", "correct": true},
+        {"text": "The skin swells as it soaks up water like a sponge", "correct": false},
+        {"text": "Soap strips away oils, causing the surface to collapse", "correct": false}
+      ],
+      "difficulty": "hard",
+      "fun_fact": "For a long time people assumed wrinkling was just swelling, but it's actually controlled by your nervous system constricting blood vessels under the skin. Researchers think the wrinkles act like rain treads, giving a better grip on wet objects.",
+      "category": "Pop Culture"
+    },
+    {
+      "id": "pop_en_122",
+      "question": "Why does a struck match suddenly burst into flame?",
+      "answers": [
+        {"text": "Friction heat ignites chemicals on the match head", "correct": true},
+        {"text": "Striking releases compressed gas stored in the wood", "correct": false},
+        {"text": "The rough strip injects a spark of electricity", "correct": false}
+      ],
+      "difficulty": "medium",
+      "fun_fact": "Dragging the head across the rough strip generates heat through friction. On safety matches, that heat converts red phosphorus on the strip into a tiny bit of white phosphorus, which ignites instantly and sets off the match head's own chemicals.",
+      "category": "Pop Culture"
+    },
+    {
+      "id": "pop_en_123",
+      "question": "Why does a rainbow always appear in a curved arc?",
+      "answers": [
+        {"text": "Raindrops bend light at one fixed angle, forming a circle of colour", "correct": true},
+        {"text": "The curve mirrors the round shape of the sun", "correct": false},
+        {"text": "Light bends around the curvature of the Earth", "correct": false}
+      ],
+      "difficulty": "hard",
+      "fun_fact": "Each raindrop sends sunlight back at about 42 degrees, so the bright band forms wherever drops sit at that angle from the anti-solar point, which traces a circle. From the ground you only see an arc, but from a plane a rainbow can appear as a full ring.",
+      "category": "Pop Culture"
+    },
+    {
+      "id": "pop_en_124",
+      "question": "Why does a struck bell or wine glass keep ringing long after you hit it?",
+      "answers": [
+        {"text": "The whole object vibrates as one and loses energy slowly to the air", "correct": true},
+        {"text": "Sound echoes back and forth inside the hollow space", "correct": false},
+        {"text": "The metal generates fresh sound as it cools down", "correct": false}
+      ],
+      "difficulty": "medium",
+      "fun_fact": "A bell or glass is a resonant body that vibrates as a single unit at its natural frequency. It only sheds energy gradually by pushing the surrounding air, so the tone rings on. Touch it and you damp the vibration, silencing it at once.",
+      "category": "Pop Culture"
+    },
+    {
+      "id": "pop_en_125",
+      "question": "Why does a non-stick frying pan stop food from sticking?",
+      "answers": [
+        {"text": "Its slippery coating barely lets other molecules bond to it", "correct": true},
+        {"text": "It stays cold in the centre so food never burns on", "correct": false},
+        {"text": "Microscopic holes blow out a constant cushion of steam", "correct": false}
+      ],
+      "difficulty": "medium",
+      "fun_fact": "The coating's molecules are remarkably unreactive, so almost nothing wants to grab hold of the surface, and even water beads off it. The same slick material is so non-stick that getting it to bond to the pan itself was the hard engineering problem.",
+      "category": "Pop Culture"
+    },
+    {
+      "id": "pop_en_126",
+      "question": "Why does the sky turn red and orange at sunset?",
+      "answers": [
+        {"text": "Low sun angle means blue light scatters away, leaving red to reach you", "correct": true},
+        {"text": "The setting sun physically changes colour as it cools", "correct": false},
+        {"text": "Dust in the upper atmosphere glows red when heated", "correct": false}
+      ],
+      "difficulty": "medium",
+      "fun_fact": "At sunset, light skims a long path through the atmosphere. Air scatters blue light in all directions, so by the time the beam reaches you, mostly red and orange remain. The same scattering is why the daytime sky overhead looks blue.",
+      "category": "Pop Culture"
+    },
+    {
+      "id": "pop_en_127",
+      "question": "Why do soap bubbles show swirling rainbow colours on their surface?",
+      "answers": [
+        {"text": "Light reflecting off the bubble's two thin surfaces interferes with itself", "correct": true},
+        {"text": "Soap contains dissolved dyes that spread across the film", "correct": false},
+        {"text": "The bubble splits white light like a tiny prism", "correct": false}
+      ],
+      "difficulty": "hard",
+      "fun_fact": "A bubble wall is incredibly thin, with light bouncing off both its inner and outer surface. The two reflections overlap and either reinforce or cancel certain colours depending on the film's thickness. As the bubble thins and drains, the colours shift and swirl.",
+      "category": "Pop Culture"
+    },
+    {
+      "id": "pop_en_128",
+      "question": "Why does cracking your knuckles make that popping sound?",
+      "answers": [
+        {"text": "A gas bubble forms in the joint fluid and collapses", "correct": true},
+        {"text": "Two bones briefly knock together inside the joint", "correct": false},
+        {"text": "A tendon snaps over the edge of the bone", "correct": false}
+      ],
+      "difficulty": "hard",
+      "fun_fact": "Pulling the joint apart drops the pressure in the fluid until a gas-filled cavity forms, and the pop comes from that bubble's rapid collapse. It takes about 20 minutes for the gas to redissolve, which is why you can't immediately crack the same knuckle twice.",
+      "category": "Pop Culture"
+    },
+    {
+      "id": "pop_en_129",
+      "question": "Why does a freshly opened bottle of perfume fill a whole room with scent?",
+      "answers": [
+        {"text": "Scent molecules evaporate and spread out to fill the space", "correct": true},
+        {"text": "Perfume gives off an invisible light that carries the smell", "correct": false},
+        {"text": "Warm air from your body sucks the scent across the room", "correct": false}
+      ],
+      "difficulty": "easy",
+      "fun_fact": "The fragrant molecules turn from liquid to vapour and then drift through the air, bumping randomly until they spread evenly through the room. This random spreading is called diffusion, and it's the same process that lets you smell coffee from another room.",
+      "category": "Pop Culture"
+    },
+    {
+      "id": "pop_en_130",
+      "question": "Why does a struck piano string keep playing its note until you lift your finger off the key?",
+      "answers": [
+        {"text": "A felt damper rests on the string and only lifts while a key is held", "correct": true},
+        {"text": "The pianist's finger sends a continuous vibration into the key", "correct": false},
+        {"text": "The string is electrically charged while the key is pressed", "correct": false}
+      ],
+      "difficulty": "hard",
+      "fun_fact": "Each note has a felt damper that normally silences the string. Pressing a key lifts both the hammer and that damper, so the string rings freely; releasing the key drops the damper back to stop the sound. The sustain pedal lifts every damper at once.",
+      "category": "Pop Culture"
+    },
+    {
+      "id": "pop_en_131",
+      "question": "Why does a cut apple turn brown after a while?",
+      "answers": [
+        {"text": "Exposed cells react with oxygen in the air", "correct": true},
+        {"text": "Light bleaches the natural colour out of the flesh", "correct": false},
+        {"text": "The apple starts to dry out and shrivel", "correct": false}
+      ],
+      "difficulty": "easy",
+      "fun_fact": "Cutting breaks cells and lets an enzyme in the apple meet oxygen, producing brown pigments much like the ones in tea. A splash of lemon juice slows it down because the acid and vitamin C interfere with that enzyme's reaction.",
+      "category": "Pop Culture"
+    },
+    {
+      "id": "pop_en_132",
+      "question": "What was the first song ever sung — and played — in space, by Gemini 6 astronauts in 1965?",
+      "answers": [
+        {"text": "'Jingle Bells'", "correct": true},
+        {"text": "'Happy Birthday to You'", "correct": false},
+        {"text": "'Twinkle, Twinkle, Little Star'", "correct": false}
+      ],
+      "difficulty": "medium",
+      "fun_fact": "In December 1965, Gemini 6 astronauts Wally Schirra and Tom Stafford pranked Mission Control by reporting a UFO, then pulled out a harmonica and sleigh bells to play 'Jingle Bells' — the first instruments and song ever performed in space.",
+      "category": "Pop Culture"
+    },
+    {
+      "id": "pop_en_133",
+      "question": "What was the smartphone game Angry Birds originally inspired by in the news at the time?",
+      "answers": [
+        {"text": "Swine flu and avian flu outbreaks", "correct": true},
+        {"text": "A famous zoo escape", "correct": false},
+        {"text": "A viral bird-watching documentary", "correct": false}
+      ],
+      "difficulty": "hard",
+      "fun_fact": "Rovio designed the pigs as the enemy after the 2009 swine flu scare, and tied it to bird flu fears — that's why birds are angry at pigs. The simple sketch of wingless, legless round birds was chosen because it was instantly recognisable as an app icon.",
+      "category": "Pop Culture"
+    },
+    {
+      "id": "pop_en_134",
+      "question": "Why is the standard 'save' icon in software a floppy disk that most young users have never seen?",
+      "answers": [
+        {"text": "It became a frozen convention before the disk went obsolete", "correct": true},
+        {"text": "Microsoft owns a trademark requiring its use", "correct": false},
+        {"text": "It was the first shape a computer mouse could draw", "correct": false}
+      ],
+      "difficulty": "easy",
+      "fun_fact": "The floppy-disk save icon became universal in 1990s software when disks were how you saved files. By the time disks vanished, the symbol was so deeply learned that replacing it would confuse users — so it survives as a 'skeuomorph' of dead technology.",
+      "category": "Pop Culture"
+    },
+    {
+      "id": "pop_en_135",
+      "question": "What does the 'M' in the MTV music channel logo officially stand for?",
+      "answers": [
+        {"text": "Music", "correct": true},
+        {"text": "Media", "correct": false},
+        {"text": "Modern", "correct": false}
+      ],
+      "difficulty": "easy",
+      "fun_fact": "MTV stands for Music Television. The very first music video it aired on 1 August 1981 was, fittingly, 'Video Killed the Radio Star' by The Buggles — a song about technology replacing an older medium.",
+      "category": "Pop Culture"
+    },
+    {
+      "id": "pop_en_136",
+      "question": "Where did the word 'paparazzi' for celebrity photographers come from?",
+      "answers": [
+        {"text": "A character's surname in a Federico Fellini film", "correct": true},
+        {"text": "An Italian word for a swarm of insects", "correct": false},
+        {"text": "The brand of a popular 1950s camera", "correct": false}
+      ],
+      "difficulty": "hard",
+      "fun_fact": "In Fellini's 1960 film 'La Dolce Vita', a pushy news photographer is named Paparazzo. The name caught on, and the plural 'paparazzi' became the global word for aggressive celebrity photographers.",
+      "category": "Pop Culture"
+    },
+    {
+      "id": "pop_en_137",
+      "question": "What was the origin of the term 'spam' for unwanted bulk email?",
+      "answers": [
+        {"text": "A repetitive Monty Python comedy sketch", "correct": true},
+        {"text": "An acronym for 'Sending Persistent Annoying Mail'", "correct": false},
+        {"text": "The name of the first email virus", "correct": false}
+      ],
+      "difficulty": "easy",
+      "fun_fact": "In a 1970 Monty Python sketch, a cafe menu features Spam in every dish and Vikings chant 'Spam, Spam, Spam' drowning out conversation. Early internet users borrowed it for messages that flood out everything else — that's why junk email is 'spam'.",
+      "category": "Pop Culture"
+    },
+    {
+      "id": "pop_en_138",
+      "question": "Why is a movie's pre-release publicity reel called a 'trailer'?",
+      "answers": [
+        {"text": "Trailers originally played after the main film, not before", "correct": true},
+        {"text": "They were towed between cinemas on a trailer", "correct": false},
+        {"text": "They trailed off mid-scene to build suspense", "correct": false}
+      ],
+      "difficulty": "easy",
+      "fun_fact": "In the 1910s, promo reels for upcoming films were spliced to play at the END of the program, trailing after the feature. Audiences tended to leave, so studios moved them to the front — but the name 'trailer' stuck even though they now come first.",
+      "category": "Pop Culture"
+    },
+    {
+      "id": "pop_en_139",
+      "question": "What everyday kitchen appliance was invented after an engineer noticed a chocolate bar melting in his pocket?",
+      "answers": [
+        {"text": "The microwave oven", "correct": true},
+        {"text": "The electric toaster", "correct": false},
+        {"text": "The blender", "correct": false}
+      ],
+      "difficulty": "easy",
+      "fun_fact": "In 1945, Raytheon engineer Percy Spencer was standing near an active radar magnetron when a peanut chocolate bar in his pocket melted. He tested popcorn and an egg next, and the microwave oven was born — the first commercial model was nearly six feet tall.",
+      "category": "Pop Culture"
+    },
+    {
+      "id": "pop_en_140",
+      "question": "Where is the name of the snack food Pringles most often said to have come from?",
+      "answers": [
+        {"text": "Pringle Drive, a street in Finneytown, Ohio", "correct": true},
+        {"text": "A crisp brand called 'Chip-Os'", "correct": false},
+        {"text": "A crisp brand called 'Stax'", "correct": false}
+      ],
+      "difficulty": "hard",
+      "fun_fact": "Procter & Gamble staff reportedly picked the name from Pringle Drive, a street in Finneytown, Ohio, simply because it sounded good — though the company has never officially confirmed the story. The uniform saddle shape exists so the crisps stack without breaking — a packaging solution, not a flavour one.",
+      "category": "Pop Culture"
+    },
+    {
+      "id": "pop_en_141",
+      "question": "What was the children's modelling toy Play-Doh originally manufactured and sold as?",
+      "answers": [
+        {"text": "A wallpaper cleaner", "correct": true},
+        {"text": "A soap substitute", "correct": false},
+        {"text": "A wall-patching putty", "correct": false}
+      ],
+      "difficulty": "easy",
+      "fun_fact": "The pliable compound was sold in the 1930s–40s to rub soot off wallpaper heated by coal stoves. When homes switched to gas heat and washable vinyl wallpaper, sales collapsed — until the maker's relative realised schoolchildren could mould it, and rebranded it as a toy in 1956.",
+      "category": "Pop Culture"
+    },
+    {
+      "id": "pop_en_142",
+      "question": "Why did the popular drink 7 Up originally have 'lithium' in some of its early formulations?",
+      "answers": [
+        {"text": "It contained lithium citrate, marketed as a mood tonic", "correct": true},
+        {"text": "Lithium was used to carbonate the water", "correct": false},
+        {"text": "It was a misprint that the company never corrected", "correct": false}
+      ],
+      "difficulty": "medium",
+      "fun_fact": "Launched in 1929 as 'Bib-Label Lithiated Lemon-Lime Soda', early 7 Up contained lithium citrate, a mood-stabilising compound, and was pitched as a hangover and mood remedy. Lithium was removed from the recipe in 1948.",
+      "category": "Pop Culture"
+    },
+    {
+      "id": "pop_en_143",
+      "question": "What gave the colour 'magenta' its name?",
+      "answers": [
+        {"text": "A bloody battle fought near the Italian town of Magenta", "correct": true},
+        {"text": "A Greek goddess of dawn", "correct": false},
+        {"text": "A type of tropical flower", "correct": false}
+      ],
+      "difficulty": "hard",
+      "fun_fact": "The vivid dye was discovered in 1859, the same year as the Battle of Magenta in northern Italy. Makers named the new colour after the battle, which had just made headlines across Europe — the town's name now lives on in every printer ink cartridge.",
+      "category": "Pop Culture"
+    },
+    {
+      "id": "pop_en_144",
+      "question": "Where does the word 'denim', the fabric jeans are made from, come from?",
+      "answers": [
+        {"text": "'De Nîmes' — a sturdy cloth from Nîmes, France", "correct": true},
+        {"text": "A Dutch word for the colour blue", "correct": false},
+        {"text": "The surname of its inventor, Mr Denham", "correct": false}
+      ],
+      "difficulty": "medium",
+      "fun_fact": "'Denim' is short for 'serge de Nîmes' — a sturdy cloth made in the city of Nîmes, France. 'Jeans' likewise comes from Genoa, Italy ('Gênes' in French), where a similar cotton fabric was made for sailors.",
+      "category": "Pop Culture"
+    },
+    {
+      "id": "pop_en_145",
+      "question": "What was the origin of the high-five gesture, according to the most-cited story?",
+      "answers": [
+        {"text": "A spontaneous moment between two baseball players in 1977", "correct": true},
+        {"text": "An ancient Roman greeting between soldiers", "correct": false},
+        {"text": "A 1960s dance move on American Bandstand", "correct": false}
+      ],
+      "difficulty": "easy",
+      "fun_fact": "The most-cited origin is Dodgers outfielders Dusty Baker and Glenn Burke on 2 October 1977. Burke raised his hand to celebrate a home run, Baker slapped it, and the gesture spread from baseball into everyday life.",
+      "category": "Pop Culture"
+    },
+    {
+      "id": "pop_en_146",
+      "question": "Why do clocks and watches in advertisements almost always show a time around 10:10?",
+      "answers": [
+        {"text": "The hands frame the logo and look like a smile", "correct": true},
+        {"text": "It is the exact time the first wristwatch was sold", "correct": false},
+        {"text": "Watchmaking law once required it for display models", "correct": false}
+      ],
+      "difficulty": "medium",
+      "fun_fact": "At roughly 10:10 the hands sit symmetrically, leave the brand name below the 12 unobscured, and form an upturned 'smile'. It's a deliberate marketing convention used by nearly every watch brand — look at any watch ad and you'll spot it.",
+      "category": "Pop Culture"
+    },
+    {
+      "id": "pop_en_147",
+      "question": "What was the original meaning of the word 'meme', decades before internet memes?",
+      "answers": [
+        {"text": "A unit of cultural information that spreads like a gene", "correct": true},
+        {"text": "A French word for an inside joke", "correct": false},
+        {"text": "An early term for a photocopied flyer", "correct": false}
+      ],
+      "difficulty": "easy",
+      "fun_fact": "Biologist Richard Dawkins coined 'meme' in his 1976 book 'The Selfish Gene' to describe ideas, tunes and fashions that replicate and spread through culture the way genes spread through bodies. The internet just gave the concept a faster vehicle.",
+      "category": "Pop Culture"
+    },
+    {
+      "id": "pop_en_148",
+      "question": "Why is the wedding-ring finger the fourth finger on the left hand in many Western traditions?",
+      "answers": [
+        {"text": "Ancient belief in a vein running directly to the heart", "correct": true},
+        {"text": "It was the only finger Roman law allowed rings on", "correct": false},
+        {"text": "It is the finger least used in farm labour", "correct": false}
+      ],
+      "difficulty": "easy",
+      "fun_fact": "The Romans believed a 'vena amoris', or vein of love, ran from the fourth finger straight to the heart. There's no such vein, but the romantic idea stuck for two thousand years and still places the ring there today.",
+      "category": "Pop Culture"
+    },
+    {
+      "id": "pop_en_149",
+      "question": "What was the toy Slinky originally being developed for when its inventor discovered it?",
+      "answers": [
+        {"text": "A spring to stabilise ship instruments at sea", "correct": true},
+        {"text": "A mattress coil for the military", "correct": false},
+        {"text": "A car suspension component", "correct": false}
+      ],
+      "difficulty": "medium",
+      "fun_fact": "Naval engineer Richard James was working on springs to keep sensitive shipboard instruments steady in 1943 when one fell off a shelf and 'walked' end over end. His wife Betty found the name 'Slinky' in a dictionary — it means sleek and sinuous.",
+      "category": "Pop Culture"
+    },
+    {
+      "id": "pop_en_150",
+      "question": "Why is the small pocket inside the right front pocket of most jeans there?",
+      "answers": [
+        {"text": "It was originally made to hold a pocket watch", "correct": true},
+        {"text": "It was designed to hold a single coin for tolls", "correct": false},
+        {"text": "It was added to reinforce the seam and serves no use", "correct": false}
+      ],
+      "difficulty": "easy",
+      "fun_fact": "That tiny pocket dates to the 1870s and was built to protect a man's pocket watch on its chain. Levi's has called it the 'watch pocket'; over the years it's also held coins, matches, and tickets, long after watches moved to the wrist.",
+      "category": "Pop Culture"
+    },
+    {
+      "id": "pop_en_151",
+      "question": "What was the original purpose of Listerine when it was first sold in the late 1800s?",
+      "answers": [
+        {"text": "A surgical antiseptic and floor cleaner", "correct": true},
+        {"text": "A cough syrup for children", "correct": false},
+        {"text": "A perfume base for soaps", "correct": false}
+      ],
+      "difficulty": "medium",
+      "fun_fact": "Listerine launched in 1879 as a surgical antiseptic and was also sold to clean floors and treat gonorrhoea. It only became a mouthwash in the 1920s when marketers popularised the medical-sounding word 'halitosis' to make people anxious about bad breath.",
+      "category": "Pop Culture"
+    },
+    {
+      "id": "pop_en_152",
+      "question": "What is the real purpose of the loud 'clap' from a film clapperboard at the start of a take?",
+      "answers": [
+        {"text": "It syncs the picture to separately recorded sound", "correct": true},
+        {"text": "It scares pigeons off outdoor sets", "correct": false},
+        {"text": "It signals the actors to begin their lines", "correct": false}
+      ],
+      "difficulty": "medium",
+      "fun_fact": "For most of film history, picture and sound were recorded on separate machines. The sharp 'clap' creates a single spike on the audio and a single frame where the sticks meet, letting editors line the two recordings up perfectly — that's its real job.",
+      "category": "Pop Culture"
+    },
+    {
+      "id": "pop_en_153",
+      "question": "What was the breakfast cereal Corn Flakes originally invented to promote?",
+      "answers": [
+        {"text": "A bland diet meant to discourage unhealthy urges", "correct": true},
+        {"text": "A cheap food for circus animals", "correct": false},
+        {"text": "A long-lasting ration for sailors", "correct": false}
+      ],
+      "difficulty": "medium",
+      "fun_fact": "John Harvey Kellogg ran a health sanitarium and believed plain food curbed harmful passions. He and his brother first stumbled on flaked cereal in 1894 while rolling out left-over boiled wheat, and went on to flake corn a few years later. His brother Will then added sugar and built the famous breakfast brand.",
+      "category": "Pop Culture"
+    },
+    {
+      "id": "pop_en_154",
+      "question": "What is the origin of the word 'OK'?",
+      "answers": [
+        {"text": "A jokey 1830s newspaper abbreviation of 'oll korrect'", "correct": true},
+        {"text": "A naval flag signal meaning 'all clear'", "correct": false},
+        {"text": "A shortening of the inventor Otto Klein's initials", "correct": false}
+      ],
+      "difficulty": "medium",
+      "fun_fact": "'OK' began as a fad in 1830s Boston newspapers for comically misspelled abbreviations — 'oll korrect' for 'all correct'. It got a huge boost from US President Martin Van Buren's 1840 campaign, nicknamed 'Old Kinderhook', and became one of the world's most recognised words.",
+      "category": "Pop Culture"
+    },
+    {
+      "id": "pop_en_155",
+      "question": "Why does the QWERTY keyboard layout scatter common letters instead of placing them in alphabetical order?",
+      "answers": [
+        {"text": "To slow typists and stop early typewriter keys jamming", "correct": true},
+        {"text": "To match the order of telegraph Morse code", "correct": false},
+        {"text": "To make the inventor's surname typeable on the top row", "correct": false}
+      ],
+      "difficulty": "medium",
+      "fun_fact": "The 1870s layout separated frequently paired letters so the mechanical typebars of early machines wouldn't clash and jam. The jamming problem vanished long ago, but the layout was too entrenched to change — and you can still spell 'TYPEWRITER' using only the top row.",
+      "category": "Pop Culture"
+    },
+    {
+      "id": "pop_en_156",
+      "question": "Roughly how many copies has the printed Harry Potter book series sold worldwide?",
+      "answers": [
+        {"text": "About 600 million", "correct": true},
+        {"text": "About 200 million", "correct": false},
+        {"text": "About 90 million", "correct": false}
+      ],
+      "difficulty": "easy",
+      "fun_fact": "That makes it the best-selling book series in history, translated into more than 80 languages — including Ancient Greek, the longest text published in that language since antiquity.",
+      "category": "Pop Culture"
+    },
+    {
+      "id": "pop_en_157",
+      "question": "Why did the very first Pong arcade machine break down during its 1972 bar test?",
+      "answers": [
+        {"text": "It was jammed completely full of coins", "correct": true},
+        {"text": "It overheated and caught fire within an hour", "correct": false},
+        {"text": "A frustrated customer kicked it over", "correct": false}
+      ],
+      "difficulty": "medium",
+      "fun_fact": "The machine at Andy Capp's Tavern stopped working because its coin box — a milk carton — overflowed. Atari realised the 'fault' was actually proof of staggering demand.",
       "category": "Pop Culture"
     }
   ]

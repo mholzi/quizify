@@ -1,25 +1,16 @@
 {
   "name": "Geschichte",
   "language": "de",
-  "version": "1.0",
+  "version": "1.1",
   "theme": "history",
   "questions": [
     {
       "id": "geschichte_de_001",
       "question": "Welcher römische Kaiser wollte angeblich sein Pferd zum Konsul ernennen?",
       "answers": [
-        {
-          "text": "Caligula",
-          "correct": true
-        },
-        {
-          "text": "Nero",
-          "correct": false
-        },
-        {
-          "text": "Tiberius",
-          "correct": false
-        }
+        {"text": "Caligula", "correct": true},
+        {"text": "Nero", "correct": false},
+        {"text": "Tiberius", "correct": false}
       ],
       "difficulty": "easy",
       "fun_fact": "Caligula liebte sein Pferd Incitatus so sehr, dass er ihm angeblich ein Marmorhaus, Diener und eine Einladung zum Konsulamt versprach. Historiker streiten, ob das Satire oder Wahnsinn war.",
@@ -29,18 +20,9 @@
       "id": "geschichte_de_002",
       "question": "Was war in Athen das Strafmaß für Sokrates' Hinrichtung?",
       "answers": [
-        {
-          "text": "Er musste den Schierlingsbecher selbst trinken",
-          "correct": true
-        },
-        {
-          "text": "Er wurde gekreuzigt",
-          "correct": false
-        },
-        {
-          "text": "Er wurde von der Klippe gestürzt",
-          "correct": false
-        }
+        {"text": "Er musste den Schierlingsbecher selbst trinken", "correct": true},
+        {"text": "Er wurde gekreuzigt", "correct": false},
+        {"text": "Er wurde von der Klippe gestürzt", "correct": false}
       ],
       "difficulty": "medium",
       "fun_fact": "Sokrates trank das Gift freiwillig und plauderte dabei mit seinen Schülern, bis die Lähmung sein Herz erreichte. Platon hielt die Szene im Dialog Phaidon fest.",
@@ -50,18 +32,9 @@
       "id": "geschichte_de_003",
       "question": "Wofür wurde im alten Ägypten Nilschlamm besonders geschätzt?",
       "answers": [
-        {
-          "text": "Als Dünger für die Felder",
-          "correct": true
-        },
-        {
-          "text": "Als Mumifizierungsmittel",
-          "correct": false
-        },
-        {
-          "text": "Als Bauzement für die Pyramiden",
-          "correct": false
-        }
+        {"text": "Als Dünger für die Felder", "correct": true},
+        {"text": "Als Mumifizierungsmittel", "correct": false},
+        {"text": "Als Bauzement für die Pyramiden", "correct": false}
       ],
       "difficulty": "easy",
       "fun_fact": "Die jährliche Nilüberschwemmung brachte fruchtbaren Schlamm und machte Ägypten zur Kornkammer der Antike. Ohne diesen Schlamm wäre das Niltal nur Wüste.",
@@ -71,18 +44,9 @@
       "id": "geschichte_de_004",
       "question": "Welche Substanz nutzten reiche Römerinnen als Make-up — mit fatalen Folgen?",
       "answers": [
-        {
-          "text": "Bleiweiß",
-          "correct": true
-        },
-        {
-          "text": "Quecksilber-Salbe",
-          "correct": false
-        },
-        {
-          "text": "Arsen-Puder",
-          "correct": false
-        }
+        {"text": "Bleiweiß", "correct": true},
+        {"text": "Quecksilber-Salbe", "correct": false},
+        {"text": "Arsen-Puder", "correct": false}
       ],
       "difficulty": "medium",
       "fun_fact": "Bleiweiß sorgte für die modische blasse Haut — und für chronische Bleivergiftung mit Haarausfall, Zahnverlust und Unfruchtbarkeit. Die Mode überlebte trotzdem Jahrhunderte.",
@@ -92,18 +56,9 @@
       "id": "geschichte_de_005",
       "question": "Was machten die alten Spartaner laut Plutarch mit Neugeborenen, die schwach wirkten?",
       "answers": [
-        {
-          "text": "Sie wurden ausgesetzt",
-          "correct": true
-        },
-        {
-          "text": "Sie wurden in Klöster gegeben",
-          "correct": false
-        },
-        {
-          "text": "Sie bekamen Sondertraining",
-          "correct": false
-        }
+        {"text": "Sie wurden ausgesetzt", "correct": true},
+        {"text": "Sie wurden in Klöster gegeben", "correct": false},
+        {"text": "Sie bekamen Sondertraining", "correct": false}
       ],
       "difficulty": "medium",
       "fun_fact": "Laut Plutarch entschied ein Ältestenrat über das Schicksal Neugeborener — schwache Kinder wurden am Berg Taygetos ausgesetzt. Archäologen zweifeln allerdings, ob das wirklich systematisch geschah.",
@@ -113,18 +68,9 @@
       "id": "geschichte_de_006",
       "question": "Wofür war der römische Vomitorium-Raum tatsächlich da?",
       "answers": [
-        {
-          "text": "Als Durchgang im Amphitheater",
-          "correct": true
-        },
-        {
-          "text": "Zum Erbrechen bei Gelagen",
-          "correct": false
-        },
-        {
-          "text": "Als Toilettenraum",
-          "correct": false
-        }
+        {"text": "Als Durchgang im Amphitheater", "correct": true},
+        {"text": "Zum Erbrechen bei Gelagen", "correct": false},
+        {"text": "Als Toilettenraum", "correct": false}
       ],
       "difficulty": "hard",
       "fun_fact": "Vomitorium kommt von vomere (ausspucken) und meint einen Gang, durch den die Zuschauermassen ins Theater 'gespuckt' wurden. Der Erbrech-Mythos entstand erst in der Neuzeit.",
@@ -134,18 +80,9 @@
       "id": "geschichte_de_007",
       "question": "Was tat Hannibal mit seinen Kriegselefanten auf dem Marsch über die Alpen?",
       "answers": [
-        {
-          "text": "Die meisten starben unterwegs",
-          "correct": true
-        },
-        {
-          "text": "Er ließ sie in Spanien zurück",
-          "correct": false
-        },
-        {
-          "text": "Sie überlebten alle und kämpften in Italien",
-          "correct": false
-        }
+        {"text": "Die meisten starben unterwegs", "correct": true},
+        {"text": "Er ließ sie in Spanien zurück", "correct": false},
+        {"text": "Sie überlebten alle und kämpften in Italien", "correct": false}
       ],
       "difficulty": "medium",
       "fun_fact": "Von 37 Elefanten überlebten nur wenige die Alpen 218 v. Chr. Der Rest erlag der Kälte, Stürzen oder Erschöpfung. Hannibals letzter Elefant hieß angeblich Surus.",
@@ -155,18 +92,9 @@
       "id": "geschichte_de_008",
       "question": "Was passierte mit der berühmten Bibliothek von Alexandria?",
       "answers": [
-        {
-          "text": "Sie verfiel über Jahrhunderte durch mehrere Brände",
-          "correct": true
-        },
-        {
-          "text": "Caesar verbrannte sie an einem Tag komplett",
-          "correct": false
-        },
-        {
-          "text": "Sie wurde 642 von Arabern niedergebrannt",
-          "correct": false
-        }
+        {"text": "Sie verfiel über Jahrhunderte durch mehrere Brände", "correct": true},
+        {"text": "Caesar verbrannte sie an einem Tag komplett", "correct": false},
+        {"text": "Sie wurde 642 von Arabern niedergebrannt", "correct": false}
       ],
       "difficulty": "hard",
       "fun_fact": "Die Bibliothek brannte mehrfach (Caesar 48 v. Chr., Aurelian 270 n. Chr., später noch öfter) und zerfiel zusätzlich durch Vernachlässigung. Es gab nie einen einzelnen 'Untergang'.",
@@ -176,18 +104,9 @@
       "id": "geschichte_de_009",
       "question": "Was war Diogenes' Wohnsitz?",
       "answers": [
-        {
-          "text": "Eine große Tonne (Pithos)",
-          "correct": true
-        },
-        {
-          "text": "Eine Höhle bei Korinth",
-          "correct": false
-        },
-        {
-          "text": "Ein Tempelvorhof in Athen",
-          "correct": false
-        }
+        {"text": "Eine große Tonne (Pithos)", "correct": true},
+        {"text": "Eine Höhle bei Korinth", "correct": false},
+        {"text": "Ein Tempelvorhof in Athen", "correct": false}
       ],
       "difficulty": "easy",
       "fun_fact": "Diogenes lebte demonstrativ in einem großen Tonkrug auf dem Marktplatz. Als Alexander der Große ihm einen Wunsch erfüllen wollte, bat er nur: 'Geh mir aus der Sonne.'",
@@ -197,18 +116,9 @@
       "id": "geschichte_de_010",
       "question": "Wie starb der Tragödiendichter Aischylos der Legende nach?",
       "answers": [
-        {
-          "text": "Eine Schildkröte fiel ihm auf den Kopf",
-          "correct": true
-        },
-        {
-          "text": "Er ertrank in der Badewanne",
-          "correct": false
-        },
-        {
-          "text": "Er erstickte an einer Olive",
-          "correct": false
-        }
+        {"text": "Eine Schildkröte fiel ihm auf den Kopf", "correct": true},
+        {"text": "Er ertrank in der Badewanne", "correct": false},
+        {"text": "Er erstickte an einer Olive", "correct": false}
       ],
       "difficulty": "medium",
       "fun_fact": "Ein Adler soll seine Glatze für einen Stein gehalten und eine Schildkröte darauf fallen gelassen haben, um den Panzer zu knacken. Plinius hielt die Geschichte für glaubwürdig.",
@@ -218,18 +128,9 @@
       "id": "geschichte_de_011",
       "question": "Was war im Mittelalter der Beruf eines 'Gongfermors'?",
       "answers": [
-        {
-          "text": "Er leerte Latrinengruben",
-          "correct": true
-        },
-        {
-          "text": "Er läutete die Kirchenglocken",
-          "correct": false
-        },
-        {
-          "text": "Er bewachte die Stadttore",
-          "correct": false
-        }
+        {"text": "Er leerte Latrinengruben", "correct": true},
+        {"text": "Er läutete die Kirchenglocken", "correct": false},
+        {"text": "Er bewachte die Stadttore", "correct": false}
       ],
       "difficulty": "hard",
       "fun_fact": "Gongfermors arbeiteten nachts, bekamen Spitzenlöhne und einen Schluck Branntwein zur Stärkung. Einer namens Richard the Raker fiel 1326 in London in seine eigene Grube und ertrank.",
@@ -239,18 +140,9 @@
       "id": "geschichte_de_012",
       "question": "Welcher Renaissance-Astronom verlor seine Nase im Duell?",
       "answers": [
-        {
-          "text": "Tycho Brahe",
-          "correct": true
-        },
-        {
-          "text": "Johannes Kepler",
-          "correct": false
-        },
-        {
-          "text": "Galileo Galilei",
-          "correct": false
-        }
+        {"text": "Tycho Brahe", "correct": true},
+        {"text": "Johannes Kepler", "correct": false},
+        {"text": "Galileo Galilei", "correct": false}
       ],
       "difficulty": "medium",
       "fun_fact": "Brahe duellierte sich 1566 mit einem Cousin um eine mathematische Formel und trug danach eine Prothese aus Messing (gelegentlich auch Silber oder Gold) auf der Nase.",
@@ -260,18 +152,9 @@
       "id": "geschichte_de_013",
       "question": "Was bewahrte Klosterbibliotheken im Mittelalter vor Bücherdieben?",
       "answers": [
-        {
-          "text": "Bücher waren mit Ketten am Pult festgeschlossen",
-          "correct": true
-        },
-        {
-          "text": "Türen wurden mit Wachsiegel verschlossen",
-          "correct": false
-        },
-        {
-          "text": "Sie waren mit Flüchen versehen, die niemand brechen wollte",
-          "correct": false
-        }
+        {"text": "Bücher waren mit Ketten am Pult festgeschlossen", "correct": true},
+        {"text": "Türen wurden mit Wachsiegel verschlossen", "correct": false},
+        {"text": "Sie waren mit Flüchen versehen, die niemand brechen wollte", "correct": false}
       ],
       "difficulty": "easy",
       "fun_fact": "Sogenannte Libri catenati hingen an Eisenketten — manche Bibliotheken wie die Hereford Cathedral Library zeigen dieses System noch heute im Originalzustand.",
@@ -281,18 +164,9 @@
       "id": "geschichte_de_014",
       "question": "Wofür diente die mittelalterliche 'Schandmaske' aus Eisen?",
       "answers": [
-        {
-          "text": "Als öffentliche Demütigung für Klatschtanten und Trunkenbolde",
-          "correct": true
-        },
-        {
-          "text": "Als Schutz vor der Pest",
-          "correct": false
-        },
-        {
-          "text": "Als Kriegsrüstung für Adlige",
-          "correct": false
-        }
+        {"text": "Als öffentliche Demütigung für Klatschtanten und Trunkenbolde", "correct": true},
+        {"text": "Als Schutz vor der Pest", "correct": false},
+        {"text": "Als Kriegsrüstung für Adlige", "correct": false}
       ],
       "difficulty": "medium",
       "fun_fact": "Die Maske hatte oft groteske Züge (Eselsohren, lange Zunge). Die Verurteilten wurden damit am Marktplatz angekettet — eine Strafe, die soziale Schande wichtiger nahm als körperlichen Schmerz.",
@@ -302,18 +176,9 @@
       "id": "geschichte_de_015",
       "question": "Wie verteidigten sich Burgbewohner gegen Belagerer, wenn die Vorräte knapp wurden?",
       "answers": [
-        {
-          "text": "Sie warfen tote Tiere oder Pestleichen über die Mauer",
-          "correct": true
-        },
-        {
-          "text": "Sie zündeten Strohpuppen mit Tierfett an",
-          "correct": false
-        },
-        {
-          "text": "Sie schickten Brieftauben mit Friedensangeboten",
-          "correct": false
-        }
+        {"text": "Sie warfen tote Tiere oder Pestleichen über die Mauer", "correct": true},
+        {"text": "Sie zündeten Strohpuppen mit Tierfett an", "correct": false},
+        {"text": "Sie schickten Brieftauben mit Friedensangeboten", "correct": false}
       ],
       "difficulty": "hard",
       "fun_fact": "Bei der Belagerung von Caffa 1346 katapultierten die Mongolen pestverseuchte Leichen in die Stadt — eine der frühesten dokumentierten Anwendungen biologischer Kriegsführung.",
@@ -323,18 +188,9 @@
       "id": "geschichte_de_016",
       "question": "Was war im Mittelalter ein häufiges Getränk auch für Kinder?",
       "answers": [
-        {
-          "text": "Dünnbier",
-          "correct": true
-        },
-        {
-          "text": "Met mit Wasser",
-          "correct": false
-        },
-        {
-          "text": "Ziegenmilch mit Honig",
-          "correct": false
-        }
+        {"text": "Dünnbier", "correct": true},
+        {"text": "Met mit Wasser", "correct": false},
+        {"text": "Ziegenmilch mit Honig", "correct": false}
       ],
       "difficulty": "medium",
       "fun_fact": "Dünnbier hatte nur 1–2 % Alkohol und war sicherer als unbehandeltes Wasser, weil es beim Brauen abgekocht wurde. Selbst Mönche tranken es zum Frühstück.",
@@ -344,18 +200,9 @@
       "id": "geschichte_de_017",
       "question": "Was tat Papst Gregor IX. 1233 gegen Katzen?",
       "answers": [
-        {
-          "text": "Er erklärte sie zu Helfern des Teufels",
-          "correct": true
-        },
-        {
-          "text": "Er ließ sie in Klöstern verbieten",
-          "correct": false
-        },
-        {
-          "text": "Er setzte ein Kopfgeld auf sie aus",
-          "correct": false
-        }
+        {"text": "Er erklärte sie zu Helfern des Teufels", "correct": true},
+        {"text": "Er ließ sie in Klöstern verbieten", "correct": false},
+        {"text": "Er setzte ein Kopfgeld auf sie aus", "correct": false}
       ],
       "difficulty": "hard",
       "fun_fact": "In seiner Bulle Vox in Rama verband Gregor IX. schwarze Katzen mit Hexerei. Manche Historiker vermuten, die nachfolgende Katzentötung habe die Pestratten-Population begünstigt — andere bezweifeln den Zusammenhang.",
@@ -365,18 +212,9 @@
       "id": "geschichte_de_018",
       "question": "Was war Leonardo da Vincis Notizbuch-Eigenheit?",
       "answers": [
-        {
-          "text": "Er schrieb spiegelverkehrt von rechts nach links",
-          "correct": true
-        },
-        {
-          "text": "Er nutzte nur lila Tinte",
-          "correct": false
-        },
-        {
-          "text": "Er verschlüsselte alles in Latein-Anagrammen",
-          "correct": false
-        }
+        {"text": "Er schrieb spiegelverkehrt von rechts nach links", "correct": true},
+        {"text": "Er nutzte nur lila Tinte", "correct": false},
+        {"text": "Er verschlüsselte alles in Latein-Anagrammen", "correct": false}
       ],
       "difficulty": "easy",
       "fun_fact": "Die Spiegelschrift war lesbar, wenn man die Seite vor einen Spiegel hielt. Ob Linkshändigkeit, Geheimhaltung oder Tintenflecken-Vermeidung der Grund waren, wird bis heute diskutiert.",
@@ -386,18 +224,9 @@
       "id": "geschichte_de_019",
       "question": "Was waren 'Klageweiber' im mittelalterlichen Trauergeschäft?",
       "answers": [
-        {
-          "text": "Professionelle Klageweiber bei Beerdigungen",
-          "correct": true
-        },
-        {
-          "text": "Nonnen, die für Verstorbene beteten",
-          "correct": false
-        },
-        {
-          "text": "Frauen, die Witwen-Trostbriefe schrieben",
-          "correct": false
-        }
+        {"text": "Professionelle Klageweiber bei Beerdigungen", "correct": true},
+        {"text": "Nonnen, die für Verstorbene beteten", "correct": false},
+        {"text": "Frauen, die Witwen-Trostbriefe schrieben", "correct": false}
       ],
       "difficulty": "medium",
       "fun_fact": "Klageweiber wurden bezahlt, damit sie laut weinten und so den Status des Verstorbenen unterstrichen. In manchen Gegenden hielt sich der Beruf bis ins 20. Jahrhundert.",
@@ -407,18 +236,9 @@
       "id": "geschichte_de_020",
       "question": "Welches Tier wurde im Mittelalter mehrfach offiziell vor Gericht gestellt?",
       "answers": [
-        {
-          "text": "Schweine",
-          "correct": true
-        },
-        {
-          "text": "Wölfe",
-          "correct": false
-        },
-        {
-          "text": "Hunde",
-          "correct": false
-        }
+        {"text": "Schweine", "correct": true},
+        {"text": "Wölfe", "correct": false},
+        {"text": "Hunde", "correct": false}
       ],
       "difficulty": "hard",
       "fun_fact": "Schweine, die Kinder verletzt oder getötet hatten, bekamen einen Anwalt und einen ordentlichen Prozess. In Falaise wurde 1386 eine Sau in Kleidung gehängt — Gerichtsprotokolle existieren noch.",
@@ -428,18 +248,9 @@
       "id": "geschichte_de_021",
       "question": "Welche Blume löste 1637 in den Niederlanden eine Spekulationsblase aus?",
       "answers": [
-        {
-          "text": "Die Tulpe",
-          "correct": true
-        },
-        {
-          "text": "Die Pfingstrose",
-          "correct": false
-        },
-        {
-          "text": "Die Hyazinthe",
-          "correct": false
-        }
+        {"text": "Die Tulpe", "correct": true},
+        {"text": "Die Pfingstrose", "correct": false},
+        {"text": "Die Hyazinthe", "correct": false}
       ],
       "difficulty": "easy",
       "fun_fact": "Auf dem Höhepunkt der Tulpenmanie kostete eine einzelne Semper Augustus-Zwiebel so viel wie ein Amsterdamer Grachtenhaus. Der Crash kam binnen Wochen.",
@@ -449,18 +260,9 @@
       "id": "geschichte_de_022",
       "question": "Was trugen echte Piraten der Karibik in Wahrheit eher selten?",
       "answers": [
-        {
-          "text": "Eine Augenklappe",
-          "correct": true
-        },
-        {
-          "text": "Pistolen",
-          "correct": false
-        },
-        {
-          "text": "Bandanas",
-          "correct": false
-        }
+        {"text": "Eine Augenklappe", "correct": true},
+        {"text": "Pistolen", "correct": false},
+        {"text": "Bandanas", "correct": false}
       ],
       "difficulty": "medium",
       "fun_fact": "Augenklappen sind in Piraten-Logbüchern kaum dokumentiert. Eine Theorie: Sie halfen, ein Auge an Dunkelheit zu gewöhnen — das ist aber Spekulation, nicht belegte Praxis.",
@@ -470,18 +272,9 @@
       "id": "geschichte_de_023",
       "question": "Was war Napoleons offizielle Körpergröße — und das Missverständnis dazu?",
       "answers": [
-        {
-          "text": "Er war mit ~1,68 m durchschnittlich groß; das 'klein' kam von französischen vs. englischen Zoll",
-          "correct": true
-        },
-        {
-          "text": "Er war nachweislich nur 1,52 m groß",
-          "correct": false
-        },
-        {
-          "text": "Er war 1,80 m und logischerweise nicht klein",
-          "correct": false
-        }
+        {"text": "Er war mit ~1,68 m durchschnittlich groß; das 'klein' kam von französischen vs. englischen Zoll", "correct": true},
+        {"text": "Er war nachweislich nur 1,52 m groß", "correct": false},
+        {"text": "Er war 1,80 m und logischerweise nicht klein", "correct": false}
       ],
       "difficulty": "hard",
       "fun_fact": "Französische Zoll waren länger als englische. 5 Fuß 2 Zoll französisch entsprachen etwa 1,68 m — für die damalige Zeit normal. Britische Propaganda machte daraus 'klein'.",
@@ -491,18 +284,9 @@
       "id": "geschichte_de_024",
       "question": "Was änderte Peter der Große 1700 am russischen Neujahr?",
       "answers": [
-        {
-          "text": "Es wurde vom 1. September auf den 1. Januar verlegt",
-          "correct": true
-        },
-        {
-          "text": "Es wurde abgeschafft und durch Ostern ersetzt",
-          "correct": false
-        },
-        {
-          "text": "Es wurde nach julianischem Schöpfungsjahr neu nummeriert",
-          "correct": false
-        }
+        {"text": "Es wurde vom 1. September auf den 1. Januar verlegt", "correct": true},
+        {"text": "Es wurde abgeschafft und durch Ostern ersetzt", "correct": false},
+        {"text": "Es wurde nach julianischem Schöpfungsjahr neu nummeriert", "correct": false}
       ],
       "difficulty": "medium",
       "fun_fact": "Peter zwang Russland zum westlichen Datum und feierte 1700 mit Feuerwerk und obligatorischen Tannenbäumen. Die orthodoxe Kirche behielt aber den alten Kalender bei.",
@@ -512,18 +296,9 @@
       "id": "geschichte_de_025",
       "question": "Was tat Marie Antoinette wirklich, als das Volk kein Brot hatte?",
       "answers": [
-        {
-          "text": "Sie sagte den Satz nie — er stammt aus Rousseaus Buch",
-          "correct": true
-        },
-        {
-          "text": "Sie sagte ihn vor dem Hofstaat in Versailles",
-          "correct": false
-        },
-        {
-          "text": "Sie schrieb ihn in einem Brief an die Mutter",
-          "correct": false
-        }
+        {"text": "Sie sagte den Satz nie — er stammt aus Rousseaus Buch", "correct": true},
+        {"text": "Sie sagte ihn vor dem Hofstaat in Versailles", "correct": false},
+        {"text": "Sie schrieb ihn in einem Brief an die Mutter", "correct": false}
       ],
       "difficulty": "medium",
       "fun_fact": "Rousseau erwähnte den Kuchen-Satz schon 1767 in seinen Bekenntnissen — Marie Antoinette war damals noch ein Kind in Wien. Die Zuschreibung war Revolutionspropaganda.",
@@ -533,18 +308,9 @@
       "id": "geschichte_de_026",
       "question": "Was war die hauptsächliche Beute der echten Piraten?",
       "answers": [
-        {
-          "text": "Stoffe, Werkzeug und Alltagsgüter",
-          "correct": true
-        },
-        {
-          "text": "Gold und Edelsteine",
-          "correct": false
-        },
-        {
-          "text": "Königliche Schätze",
-          "correct": false
-        }
+        {"text": "Stoffe, Werkzeug und Alltagsgüter", "correct": true},
+        {"text": "Gold und Edelsteine", "correct": false},
+        {"text": "Königliche Schätze", "correct": false}
       ],
       "difficulty": "medium",
       "fun_fact": "Goldschätze waren extrem selten. Captain Kidd erbeutete einmal Gold, aber die meisten Piraten freuten sich über Segeltuch, Werkzeug, Medizin und Lebensmittel.",
@@ -554,18 +320,9 @@
       "id": "geschichte_de_028",
       "question": "Was war Mozarts erster offizieller Auftritt vor Adel?",
       "answers": [
-        {
-          "text": "Mit 6 Jahren bei Kaiserin Maria Theresia in Wien",
-          "correct": true
-        },
-        {
-          "text": "Mit 12 Jahren am französischen Hof",
-          "correct": false
-        },
-        {
-          "text": "Mit 4 Jahren beim Erzbischof von Salzburg",
-          "correct": false
-        }
+        {"text": "Mit 6 Jahren bei Kaiserin Maria Theresia in Wien", "correct": true},
+        {"text": "Mit 12 Jahren am französischen Hof", "correct": false},
+        {"text": "Mit 4 Jahren beim Erzbischof von Salzburg", "correct": false}
       ],
       "difficulty": "easy",
       "fun_fact": "Wolfgang sprang Marie Antoinette (sie war 7) auf den Schoß und versprach, sie zu heiraten. Sein Vater Leopold organisierte die Tournee aus PR-Gründen quer durch Europa.",
@@ -575,18 +332,9 @@
       "id": "geschichte_de_029",
       "question": "Welches Material trug Königin Elizabeth I. auf der Haut?",
       "answers": [
-        {
-          "text": "Bleiweiß-Schminke (Venetian Ceruse)",
-          "correct": true
-        },
-        {
-          "text": "Eine Mischung aus Honig und Eigelb",
-          "correct": false
-        },
-        {
-          "text": "Reines Quecksilber als Glanzmittel",
-          "correct": false
-        }
+        {"text": "Bleiweiß-Schminke (Venetian Ceruse)", "correct": true},
+        {"text": "Eine Mischung aus Honig und Eigelb", "correct": false},
+        {"text": "Reines Quecksilber als Glanzmittel", "correct": false}
       ],
       "difficulty": "medium",
       "fun_fact": "Die bleihaltige Schminke zerstörte langfristig ihre Haut — und je schlimmer es wurde, desto dicker schmierte sie. Spätporträts zeigen das geisterhafte 'Mask of Youth'.",
@@ -596,18 +344,9 @@
       "id": "geschichte_de_030",
       "question": "Was machte James Watt nicht, obwohl es ihm gern angedichtet wird?",
       "answers": [
-        {
-          "text": "Er erfand die Dampfmaschine nicht — er verbesserte sie",
-          "correct": true
-        },
-        {
-          "text": "Er entdeckte den Wasserdampf-Druck",
-          "correct": false
-        },
-        {
-          "text": "Er war Kapitän einer Dampflokomotive",
-          "correct": false
-        }
+        {"text": "Er erfand die Dampfmaschine nicht — er verbesserte sie", "correct": true},
+        {"text": "Er entdeckte den Wasserdampf-Druck", "correct": false},
+        {"text": "Er war Kapitän einer Dampflokomotive", "correct": false}
       ],
       "difficulty": "medium",
       "fun_fact": "Thomas Newcomen baute die erste funktionierende Dampfmaschine bereits 1712. Watt fügte 1769 den entscheidenden Separatkondensator hinzu und machte sie effizient genug für die Industrie.",
@@ -617,18 +356,9 @@
       "id": "geschichte_de_031",
       "question": "Was war 'Operation Acoustic Kitty' der CIA in den 1960ern?",
       "answers": [
-        {
-          "text": "Eine verkabelte Spionage-Katze gegen die Sowjetbotschaft",
-          "correct": true
-        },
-        {
-          "text": "Ein Abhörsystem in Moskauer Telefonzellen",
-          "correct": false
-        },
-        {
-          "text": "Ein Lautsprecher-Programm gegen Kuba",
-          "correct": false
-        }
+        {"text": "Eine verkabelte Spionage-Katze gegen die Sowjetbotschaft", "correct": true},
+        {"text": "Ein Abhörsystem in Moskauer Telefonzellen", "correct": false},
+        {"text": "Ein Lautsprecher-Programm gegen Kuba", "correct": false}
       ],
       "difficulty": "hard",
       "fun_fact": "Die CIA implantierte einer Katze ein Mikrofon und eine Antenne. Beim ersten Einsatz wurde sie von einem Taxi überfahren. Das Projekt kostete angeblich 20 Millionen Dollar und wurde eingestellt.",
@@ -638,18 +368,9 @@
       "id": "geschichte_de_032",
       "question": "Was war die ungewöhnliche Tarnung im britischen Operation Mincemeat 1943?",
       "answers": [
-        {
-          "text": "Eine Leiche mit falschen Geheimdokumenten",
-          "correct": true
-        },
-        {
-          "text": "Ein U-Boot aus Pappmaché",
-          "correct": false
-        },
-        {
-          "text": "Eine ganze Flotte aus aufblasbaren Panzern",
-          "correct": false
-        }
+        {"text": "Eine Leiche mit falschen Geheimdokumenten", "correct": true},
+        {"text": "Ein U-Boot aus Pappmaché", "correct": false},
+        {"text": "Eine ganze Flotte aus aufblasbaren Panzern", "correct": false}
       ],
       "difficulty": "medium",
       "fun_fact": "Die Briten ließen die Leiche eines Obdachlosen als 'Major Martin' mit Fake-Plänen vor Spanien anschwemmen. Hitler verlegte daraufhin Truppen nach Griechenland — die Alliierten landeten ungehindert in Sizilien.",
@@ -659,18 +380,9 @@
       "id": "geschichte_de_033",
       "question": "Was war 'Project A119' der US Air Force 1958?",
       "answers": [
-        {
-          "text": "Plan, eine Atombombe auf dem Mond zu zünden",
-          "correct": true
-        },
-        {
-          "text": "Spionagesatelliten gegen China",
-          "correct": false
-        },
-        {
-          "text": "Geheime U-Boot-Flotte unter dem Arktiseis",
-          "correct": false
-        }
+        {"text": "Plan, eine Atombombe auf dem Mond zu zünden", "correct": true},
+        {"text": "Spionagesatelliten gegen China", "correct": false},
+        {"text": "Geheime U-Boot-Flotte unter dem Arktiseis", "correct": false}
       ],
       "difficulty": "hard",
       "fun_fact": "Die Air Force wollte den Sowjets eine PR-Show liefern — eine sichtbare Atomexplosion auf dem Mond. Carl Sagan arbeitete als junger Wissenschaftler mit. Der Plan wurde gekippt, weil ein wissenschaftlich genutzter Mond mehr wert war.",
@@ -680,18 +392,9 @@
       "id": "geschichte_de_034",
       "question": "Wer war die einzige Person, die je drei Mal vom Blitz getroffen wurde und überlebte?",
       "answers": [
-        {
-          "text": "Roy Sullivan, ein Parkranger — sogar 7-mal",
-          "correct": true
-        },
-        {
-          "text": "Niemand, das ist ein Mythos",
-          "correct": false
-        },
-        {
-          "text": "Ein finnischer Holzfäller, 4-mal",
-          "correct": false
-        }
+        {"text": "Roy Sullivan, ein Parkranger — sogar 7-mal", "correct": true},
+        {"text": "Niemand, das ist ein Mythos", "correct": false},
+        {"text": "Ein finnischer Holzfäller, 4-mal", "correct": false}
       ],
       "difficulty": "medium",
       "fun_fact": "Sullivan überlebte zwischen 1942 und 1977 sieben Blitzeinschläge, dokumentiert von Guinness. Er starb 1983 — an einer selbst zugefügten Schussverletzung wegen unglücklicher Liebe.",
@@ -701,18 +404,9 @@
       "id": "geschichte_de_035",
       "question": "Was geschah mit dem sowjetischen Flugzeug, das 1987 in Moskau landete?",
       "answers": [
-        {
-          "text": "Mathias Rust landete auf dem Roten Platz",
-          "correct": true
-        },
-        {
-          "text": "Es entführte sich selbst nach Stockholm",
-          "correct": false
-        },
-        {
-          "text": "Es stürzte in die Lenin-Statue",
-          "correct": false
-        }
+        {"text": "Mathias Rust landete auf dem Roten Platz", "correct": true},
+        {"text": "Es entführte sich selbst nach Stockholm", "correct": false},
+        {"text": "Es stürzte in die Lenin-Statue", "correct": false}
       ],
       "difficulty": "medium",
       "fun_fact": "Der 18-jährige Westdeutsche flog mit einer Cessna durch die sowjetische Luftabwehr und landete neben dem Kreml. Gorbatschow nutzte den Skandal, um konservative Militärchefs zu entlassen.",
@@ -722,18 +416,9 @@
       "id": "geschichte_de_036",
       "question": "Was machte die US Navy mit Delfinen im Kalten Krieg?",
       "answers": [
-        {
-          "text": "Sie trainierte sie zum Minenaufspüren und Wachschwimmen",
-          "correct": true
-        },
-        {
-          "text": "Sie züchtete sie mit Kommunikationsimplantaten",
-          "correct": false
-        },
-        {
-          "text": "Sie nutzte sie als Postboten zwischen U-Booten",
-          "correct": false
-        }
+        {"text": "Sie trainierte sie zum Minenaufspüren und Wachschwimmen", "correct": true},
+        {"text": "Sie züchtete sie mit Kommunikationsimplantaten", "correct": false},
+        {"text": "Sie nutzte sie als Postboten zwischen U-Booten", "correct": false}
       ],
       "difficulty": "easy",
       "fun_fact": "Das Marine Mammal Program existiert seit 1960 und nutzt Delfine und Seelöwen. Sie werden bis heute eingesetzt, etwa zum Schutz von Atom-U-Boot-Basen in Bangor.",
@@ -743,18 +428,9 @@
       "id": "geschichte_de_037",
       "question": "Was war besonders an der 'Großen Smogkatastrophe' 1952 in London?",
       "answers": [
-        {
-          "text": "Der Smog war so dicht, dass Menschen drinnen erstickten",
-          "correct": true
-        },
-        {
-          "text": "Er färbte sich grün durch eine Chemiefabrik-Leck",
-          "correct": false
-        },
-        {
-          "text": "Er dauerte volle 6 Monate ohne Pause",
-          "correct": false
-        }
+        {"text": "Der Smog war so dicht, dass Menschen drinnen erstickten", "correct": true},
+        {"text": "Er färbte sich grün durch eine Chemiefabrik-Leck", "correct": false},
+        {"text": "Er dauerte volle 6 Monate ohne Pause", "correct": false}
       ],
       "difficulty": "medium",
       "fun_fact": "Vom 5. bis 9. Dezember 1952 starben schätzungsweise 4.000 bis 12.000 Menschen am Smog. Das Theater musste schließen, weil Schauspieler die Bühne nicht mehr sahen.",
@@ -764,18 +440,9 @@
       "id": "geschichte_de_038",
       "question": "Was war der echte Auslöser des Hindenburg-Absturzes 1937 (nach heutiger Forschung)?",
       "answers": [
-        {
-          "text": "Vermutlich eine elektrostatische Entladung am Wasserstoff",
-          "correct": true
-        },
-        {
-          "text": "Sabotage durch einen kommunistischen Mechaniker",
-          "correct": false
-        },
-        {
-          "text": "Ein Blitz aus einem klaren Himmel",
-          "correct": false
-        }
+        {"text": "Vermutlich eine elektrostatische Entladung am Wasserstoff", "correct": true},
+        {"text": "Sabotage durch einen kommunistischen Mechaniker", "correct": false},
+        {"text": "Ein Blitz aus einem klaren Himmel", "correct": false}
       ],
       "difficulty": "hard",
       "fun_fact": "Die Hülle war mit aluminiumhaltiger Lackmischung beschichtet — ähnlich Raketenkraftstoff. Statische Aufladung beim Andocken könnte Wasserstoff entzündet haben. Die genaue Ursache ist bis heute umstritten.",
@@ -785,18 +452,9 @@
       "id": "geschichte_de_039",
       "question": "Was machte Stalin mit Fotos von gefallenen Genossen?",
       "answers": [
-        {
-          "text": "Er ließ sie aus offiziellen Fotos retuschieren",
-          "correct": true
-        },
-        {
-          "text": "Er archivierte sie alle persönlich in einem Geheim-Album",
-          "correct": false
-        },
-        {
-          "text": "Er ließ sie verbrennen vor laufender Kamera",
-          "correct": false
-        }
+        {"text": "Er ließ sie aus offiziellen Fotos retuschieren", "correct": true},
+        {"text": "Er archivierte sie alle persönlich in einem Geheim-Album", "correct": false},
+        {"text": "Er ließ sie verbrennen vor laufender Kamera", "correct": false}
       ],
       "difficulty": "easy",
       "fun_fact": "Vom NKWD-Chef Jeschow blieb nach seiner Hinrichtung nur ein leerer Fluss auf dem Foto neben Stalin. Vorher-Nachher-Bilder zeigen die sowjetische Retusche-Praxis besonders deutlich.",
@@ -806,18 +464,9 @@
       "id": "geschichte_de_040",
       "question": "Was tat Kim Jong-Il 1978 mit dem südkoreanischen Regisseur Shin Sang-ok?",
       "answers": [
-        {
-          "text": "Er ließ ihn entführen, um Filme zu produzieren",
-          "correct": true
-        },
-        {
-          "text": "Er drehte mit ihm eine Dokumentation in Pjöngjang",
-          "correct": false
-        },
-        {
-          "text": "Er finanzierte ihm ein Studio in Hongkong",
-          "correct": false
-        }
+        {"text": "Er ließ ihn entführen, um Filme zu produzieren", "correct": true},
+        {"text": "Er drehte mit ihm eine Dokumentation in Pjöngjang", "correct": false},
+        {"text": "Er finanzierte ihm ein Studio in Hongkong", "correct": false}
       ],
       "difficulty": "hard",
       "fun_fact": "Shin und seine Frau wurden in Hongkong entführt und mussten in Nordkorea Filme drehen — darunter ein Godzilla-Klon namens Pulgasari. 1986 floh er bei einem Filmfestival in Wien zur US-Botschaft.",
@@ -827,18 +476,9 @@
       "id": "geschichte_de_041",
       "question": "Wie endete der Emu-Krieg in Australien 1932?",
       "answers": [
-        {
-          "text": "Australien verlor gegen die Emus",
-          "correct": true
-        },
-        {
-          "text": "Die Emus wurden in einer Woche ausgerottet",
-          "correct": false
-        },
-        {
-          "text": "Es wurde ein Friedensvertrag mit Vogelschützern geschlossen",
-          "correct": false
-        }
+        {"text": "Australien verlor gegen die Emus", "correct": true},
+        {"text": "Die Emus wurden in einer Woche ausgerottet", "correct": false},
+        {"text": "Es wurde ein Friedensvertrag mit Vogelschützern geschlossen", "correct": false}
       ],
       "difficulty": "easy",
       "fun_fact": "Die Armee zog mit Maschinengewehren gegen 20.000 Emus los — und scheiterte. Die Vögel waren zu schnell und zu klug. Major Meredith verglich sie mit unverwundbaren Zulus.",
@@ -848,18 +488,9 @@
       "id": "geschichte_de_042",
       "question": "Wie lang dauerte der kürzeste Krieg der Geschichte?",
       "answers": [
-        {
-          "text": "Etwa 38 Minuten — Großbritannien gegen Sansibar 1896",
-          "correct": true
-        },
-        {
-          "text": "Etwa 3 Stunden — Schweden gegen Norwegen 1814",
-          "correct": false
-        },
-        {
-          "text": "Etwa 1 Tag — Honduras gegen El Salvador 1969",
-          "correct": false
-        }
+        {"text": "Etwa 38 Minuten — Großbritannien gegen Sansibar 1896", "correct": true},
+        {"text": "Etwa 3 Stunden — Schweden gegen Norwegen 1814", "correct": false},
+        {"text": "Etwa 1 Tag — Honduras gegen El Salvador 1969", "correct": false}
       ],
       "difficulty": "medium",
       "fun_fact": "Sansibar weigerte sich, einen britischen Marionettensultan zu akzeptieren. Die Royal Navy beschoss den Palast — der Sultan floh nach 38 Minuten und 500 Toten auf seiner Seite.",
@@ -869,18 +500,9 @@
       "id": "geschichte_de_043",
       "question": "Worum ging es im 'Schweinekrieg' 1859 zwischen USA und Großbritannien?",
       "answers": [
-        {
-          "text": "Ein erschossenes Schwein auf der Insel San Juan",
-          "correct": true
-        },
-        {
-          "text": "Ein Zollstreit über Schweinefleisch-Exporte",
-          "correct": false
-        },
-        {
-          "text": "Ein Schmugglerschiff voller lebender Schweine",
-          "correct": false
-        }
+        {"text": "Ein erschossenes Schwein auf der Insel San Juan", "correct": true},
+        {"text": "Ein Zollstreit über Schweinefleisch-Exporte", "correct": false},
+        {"text": "Ein Schmugglerschiff voller lebender Schweine", "correct": false}
       ],
       "difficulty": "hard",
       "fun_fact": "Ein amerikanischer Siedler erschoss ein britisches Schwein im Garten. Beide Länder schickten Soldaten — die einzige Verletzung des 'Kriegs' war eben jenes Schwein.",
@@ -890,18 +512,9 @@
       "id": "geschichte_de_045",
       "question": "Was war die 'Operation Cornflakes' der OSS 1944?",
       "answers": [
-        {
-          "text": "Gefälschte Briefe wurden in deutsche Postsäcke gemischt",
-          "correct": true
-        },
-        {
-          "text": "Frühstücksflocken wurden über Berlin abgeworfen",
-          "correct": false
-        },
-        {
-          "text": "Spionage-Mikrofilme in Cornflakes-Packungen",
-          "correct": false
-        }
+        {"text": "Gefälschte Briefe wurden in deutsche Postsäcke gemischt", "correct": true},
+        {"text": "Frühstücksflocken wurden über Berlin abgeworfen", "correct": false},
+        {"text": "Spionage-Mikrofilme in Cornflakes-Packungen", "correct": false}
       ],
       "difficulty": "hard",
       "fun_fact": "US-Bomber griffen Postzüge an, und Agenten warfen Säcke mit gefälschten Anti-Nazi-Briefen daneben. Die Reichspost lieferte sie ahnungslos aus. Eine der bizarrsten Propaganda-Operationen.",
@@ -911,18 +524,9 @@
       "id": "geschichte_de_046",
       "question": "Was war besonders am sogenannten '335-Jahres-Krieg'?",
       "answers": [
-        {
-          "text": "Es fiel kein einziger Schuss in 335 Jahren",
-          "correct": true
-        },
-        {
-          "text": "Er dauerte 335 Jahre ohne Pause",
-          "correct": false
-        },
-        {
-          "text": "Er wurde dreimal offiziell beendet und wieder erklärt",
-          "correct": false
-        }
+        {"text": "Es fiel kein einziger Schuss in 335 Jahren", "correct": true},
+        {"text": "Er dauerte 335 Jahre ohne Pause", "correct": false},
+        {"text": "Er wurde dreimal offiziell beendet und wieder erklärt", "correct": false}
       ],
       "difficulty": "medium",
       "fun_fact": "Die Scilly-Inseln und die Niederlande befanden sich theoretisch von 1651 bis 1986 im Kriegszustand, weil ein Friedensvertrag schlicht vergessen wurde. Niemand starb, niemand kämpfte.",
@@ -932,18 +536,9 @@
       "id": "geschichte_de_047",
       "question": "Was war Project Habakkuk im Zweiten Weltkrieg?",
       "answers": [
-        {
-          "text": "Ein Plan, Flugzeugträger aus Eis und Sägemehl zu bauen",
-          "correct": true
-        },
-        {
-          "text": "Eine Spionagekampagne in der Türkei",
-          "correct": false
-        },
-        {
-          "text": "Ein U-Boot mit Atomantrieb",
-          "correct": false
-        }
+        {"text": "Ein Plan, Flugzeugträger aus Eis und Sägemehl zu bauen", "correct": true},
+        {"text": "Eine Spionagekampagne in der Türkei", "correct": false},
+        {"text": "Ein U-Boot mit Atomantrieb", "correct": false}
       ],
       "difficulty": "hard",
       "fun_fact": "Pykrete (Eis + Sägemehl) war kugelsicher und schmolz sehr langsam. Ein Prototyp wurde in Kanada gebaut, aber das Projekt wurde 1943 aus Kostengründen gestoppt.",
@@ -953,18 +548,9 @@
       "id": "geschichte_de_048",
       "question": "Was war kurios am 'Pastetenkrieg' 1838 zwischen Mexiko und Frankreich?",
       "answers": [
-        {
-          "text": "Ein französischer Konditor forderte Schadenersatz für geplünderte Pasteten",
-          "correct": true
-        },
-        {
-          "text": "Beide Länder kämpften um ein Pasteten-Patent",
-          "correct": false
-        },
-        {
-          "text": "Eine Pastete vergiftete den mexikanischen Präsidenten",
-          "correct": false
-        }
+        {"text": "Ein französischer Konditor forderte Schadenersatz für geplünderte Pasteten", "correct": true},
+        {"text": "Beide Länder kämpften um ein Pasteten-Patent", "correct": false},
+        {"text": "Eine Pastete vergiftete den mexikanischen Präsidenten", "correct": false}
       ],
       "difficulty": "hard",
       "fun_fact": "Konditor Remontel reklamierte 60.000 Pesos für seinen geplünderten Laden. Frankreich nahm das zum Anlass, Veracruz zu blockieren. Mexiko musste schließlich 600.000 Pesos zahlen.",
@@ -974,18 +560,9 @@
       "id": "geschichte_de_049",
       "question": "Was war die japanische Geheim-Waffe der 'Fu-Go'-Operation im Zweiten Weltkrieg?",
       "answers": [
-        {
-          "text": "Bombenballons über den Pazifik in die USA",
-          "correct": true
-        },
-        {
-          "text": "U-Boot-Drohnen mit Brandbomben",
-          "correct": false
-        },
-        {
-          "text": "Brieftauben mit Sprengsätzen",
-          "correct": false
-        }
+        {"text": "Bombenballons über den Pazifik in die USA", "correct": true},
+        {"text": "U-Boot-Drohnen mit Brandbomben", "correct": false},
+        {"text": "Brieftauben mit Sprengsätzen", "correct": false}
       ],
       "difficulty": "medium",
       "fun_fact": "Über 9.000 Ballons mit Bomben wurden gestartet. Nur einer tötete tatsächlich Menschen — eine schwangere Frau und fünf Kinder bei einem Picknick in Oregon 1945.",
@@ -995,18 +572,9 @@
       "id": "geschichte_de_050",
       "question": "Was war 'Bat Bomb' — ein US-Militärprojekt im Zweiten Weltkrieg?",
       "answers": [
-        {
-          "text": "Bombentragende Fledermäuse gegen Japan",
-          "correct": true
-        },
-        {
-          "text": "Mit Sprengstoff bestückte Bienen-Schwärme",
-          "correct": false
-        },
-        {
-          "text": "Trainierte Affen als Spionage-Boten in Kuba",
-          "correct": false
-        }
+        {"text": "Bombentragende Fledermäuse gegen Japan", "correct": true},
+        {"text": "Mit Sprengstoff bestückte Bienen-Schwärme", "correct": false},
+        {"text": "Trainierte Affen als Spionage-Boten in Kuba", "correct": false}
       ],
       "difficulty": "hard",
       "fun_fact": "Das US-'Bat Bomb'-Projekt wollte Fledermäuse mit Napalm-Kapseln in japanische Holzhausstädte fliegen lassen. Sie zündeten versehentlich eine US-Air-Base an. Eingestellt 1944.",
@@ -1634,6 +1202,594 @@
       ],
       "difficulty": "medium",
       "fun_fact": "Lehre in Oxford ist schon ab etwa 1096 belegt, fest etabliert ab 1167 — die Universität war also rund zwei Jahrhunderte alt, bevor die Azteken ihre Hauptstadt überhaupt gründeten. Solche Chronologie-Überschneidungen wirken oft falsch, weil 'Antike' und 'Neue Welt' im Kopf zeitlich getrennt liegen.",
+      "category": "Geschichte"
+    },
+    {
+      "id": "geschichte_de_104",
+      "question": "Warum hielten sich Lederbucheinbände und Pergamente in mittelalterlichen Klöstern so gut?",
+      "answers": [
+        {"text": "Die Gerbsäure im Leder hemmte Schimmel und Insekten", "correct": true},
+        {"text": "Die Mönche tränkten sie mit Bienenwachs gegen Fäulnis", "correct": false},
+        {"text": "Die kühle Krypta-Luft konservierte sie wie ein Kühlschrank", "correct": false}
+      ],
+      "difficulty": "medium",
+      "fun_fact": "Pflanzliche Gerbstoffe (Tannine) binden Eiweiße und machen Leder für Mikroben unverdaulich — derselbe chemische Trick steckt hinter konserviertem Moorleichen-Gewebe, das jahrtausendelang erhalten bleibt.",
+      "category": "Geschichte"
+    },
+    {
+      "id": "geschichte_de_105",
+      "question": "Womit schrieben Schüler im 19. Jahrhundert auf ihren Schiefertafeln?",
+      "answers": [
+        {"text": "Mit einem Stift aus weicherem Schiefergestein", "correct": true},
+        {"text": "Mit verdünnter Tinte und winzigen Schwämmen", "correct": false},
+        {"text": "Mit gepresster Holzkohle in Lederhülsen", "correct": false}
+      ],
+      "difficulty": "easy",
+      "fun_fact": "Der Griffel war einfach weicherer Schiefer, der auf der härteren Tafel abrieb — Stein auf Stein. Weil nichts eintrocknete, konnte man sofort wieder feucht abwischen und neu beginnen.",
+      "category": "Geschichte"
+    },
+    {
+      "id": "geschichte_de_106",
+      "question": "Warum klingen alte Kirchenglocken oft tiefer, je größer sie sind?",
+      "answers": [
+        {"text": "Größere Glocken schwingen langsamer und erzeugen tiefere Töne", "correct": true},
+        {"text": "Sie enthalten mehr Blei, das den Klang dämpft", "correct": false},
+        {"text": "Ihre dickere Wand verschluckt die hohen Töne", "correct": false}
+      ],
+      "difficulty": "easy",
+      "fun_fact": "Tonhöhe hängt von der Schwingungsfrequenz ab, und große Massen schwingen träger. Glockengießer stimmten ihre Glocken nach dem Guss durch Abdrehen von Metall an der Innenwand — das senkt oder hebt den Ton gezielt.",
+      "category": "Geschichte"
+    },
+    {
+      "id": "geschichte_de_107",
+      "question": "Warum wurden in der frühen Fotografie um 1850 Porträtierte oft an Kopfstützen festgeklemmt?",
+      "answers": [
+        {"text": "Die lange Belichtungszeit verlangte minutenlanges Stillhalten", "correct": true},
+        {"text": "Die Kamera musste das Gesicht magnetisch fixieren", "correct": false},
+        {"text": "Die Chemikalien rochen so stark, dass viele ohnmächtig wurden", "correct": false}
+      ],
+      "difficulty": "medium",
+      "fun_fact": "Frühe Platten brauchten viele Sekunden bis Minuten Licht. Wer zuckte, wurde unscharf — deshalb wirken Menschen auf alten Fotos so steif und ernst. Eine versteckte Eisenklammer hielt den Hinterkopf ruhig.",
+      "category": "Geschichte"
+    },
+    {
+      "id": "geschichte_de_108",
+      "question": "Warum verfärbten sich Silbermünzen in alten Schatzfunden oft schwarz?",
+      "answers": [
+        {"text": "Silber reagiert mit Schwefel in Luft und Erde zu schwarzem Anlauf", "correct": true},
+        {"text": "Das Silber rostet wie Eisen bei Feuchtigkeit", "correct": false},
+        {"text": "Bakterien fressen die glänzende Außenschicht weg", "correct": false}
+      ],
+      "difficulty": "easy",
+      "fun_fact": "Silbersulfid bildet den dunklen Belag — derselbe Grund, warum Silberbesteck im Schrank anläuft. Numismatiker entfernen die Patina oft bewusst nicht, weil sie das Alter und die Echtheit einer Münze belegt.",
+      "category": "Geschichte"
+    },
+    {
+      "id": "geschichte_de_109",
+      "question": "Wie hielten Menschen vor dem Kühlschrank Lebensmittel im Sommer kühl?",
+      "answers": [
+        {"text": "Mit Natureis, das im Winter geschnitten und in Eishäusern gelagert wurde", "correct": true},
+        {"text": "Mit Salz, das aktiv Wärme aus der Luft zieht", "correct": false},
+        {"text": "Mit Bleibehältern, die Kälte besonders gut speichern", "correct": false}
+      ],
+      "difficulty": "easy",
+      "fun_fact": "Ein ganzer Eishandel blühte im 19. Jahrhundert: Man sägte Blöcke aus zugefrorenen Seen, packte sie in Sägemehl als Isolierung und verschiffte sie um die halbe Welt — Eis aus Neuengland erreichte sogar Indien.",
+      "category": "Geschichte"
+    },
+    {
+      "id": "geschichte_de_110",
+      "question": "Warum hält antiker römischer Beton bis heute, während moderner oft schneller zerbröselt?",
+      "answers": [
+        {"text": "Er kann mit Wasser kleine Risse selbst wieder verkitten", "correct": true},
+        {"text": "Die Römer mischten Eisenstäbe als Verstärkung hinein", "correct": false},
+        {"text": "Er wurde im Ofen bei sehr hoher Temperatur gebrannt", "correct": false}
+      ],
+      "difficulty": "hard",
+      "fun_fact": "Kleine Kalkklümpchen im Beton lösen sich bei Rissen und neuem Wasserzutritt auf und kristallisieren neu — der Beton 'heilt' selbst. Bei Meerwasserkontakt bildet sich sogar ein seltenes, festigendes Mineral.",
+      "category": "Geschichte"
+    },
+    {
+      "id": "geschichte_de_111",
+      "question": "Warum trugen Bergarbeiter und Leuchtturmwärter früher Kanarienvögel oder andere Tiere mit sich?",
+      "answers": [
+        {"text": "Kanarienvögel reagierten früher auf giftiges Grubengas als Menschen", "correct": true},
+        {"text": "Ihr Gesang half, die Atemfrequenz im Takt zu halten", "correct": false},
+        {"text": "Sie wärmten die Hände der Arbeiter in der Kälte", "correct": false}
+      ],
+      "difficulty": "easy",
+      "fun_fact": "Vögel haben einen extrem effizienten Atemkreislauf und nehmen Kohlenmonoxid schneller auf. Verstummte oder kippte der Kanarienvogel, war das das Alarmsignal zur Flucht — eine lebende Frühwarnung vor unsichtbarem Gas.",
+      "category": "Geschichte"
+    },
+    {
+      "id": "geschichte_de_112",
+      "question": "Warum waren mittelalterliche Burgtreppen in Türmen fast immer im Uhrzeigersinn nach oben gewunden?",
+      "answers": [
+        {"text": "Verteidiger oben konnten ihren Schwertarm frei führen, Angreifer nicht", "correct": true},
+        {"text": "Steinmetze konnten nur in dieser Richtung arbeiten", "correct": false},
+        {"text": "Die Sonne sollte morgens den Aufgang beleuchten", "correct": false}
+      ],
+      "difficulty": "medium",
+      "fun_fact": "Die gängige Erklärung lautet: Beim Aufwärtskämpfen behinderte die zentrale Spindel den rechten Schwertarm des Angreifers, während der oben stehende Verteidiger mehr Platz zum Ausholen hatte. Belegt ist diese Deutung allerdings nicht für jede Burg — viele Treppen wurden auch aus baulichen Gründen so gewunden.",
+      "category": "Geschichte"
+    },
+    {
+      "id": "geschichte_de_113",
+      "question": "Warum bekamen Seefahrer früher auf langen Reisen Skorbut?",
+      "answers": [
+        {"text": "Ohne frisches Obst fehlte Vitamin C für stabiles Bindegewebe", "correct": true},
+        {"text": "Das Salzwasser entzog dem Körper sein Eisen", "correct": false},
+        {"text": "Der ständige Wellengang störte die Verdauung dauerhaft", "correct": false}
+      ],
+      "difficulty": "easy",
+      "fun_fact": "Ohne Vitamin C kann der Körper kein stabiles Kollagen bilden — alte Wunden brachen wieder auf, Zähne fielen aus. Die britische Marine löste das mit Zitrussaft, weshalb britische Seeleute den Spitznamen 'Limeys' bekamen.",
+      "category": "Geschichte"
+    },
+    {
+      "id": "geschichte_de_114",
+      "question": "Warum hielten sich altägyptische Mumien tausende Jahre, ohne zu verwesen?",
+      "answers": [
+        {"text": "Natronsalz entzog dem Körper das Wasser, das Bakterien brauchen", "correct": true},
+        {"text": "Das Einbalsamierungsöl tötete alle Keime ab", "correct": false},
+        {"text": "Die luftdichten Sarkophage erstickten die Fäulnis", "correct": false}
+      ],
+      "difficulty": "easy",
+      "fun_fact": "Natron, ein natürliches Salzgemisch, trocknete den Leichnam in rund 40 Tagen komplett aus. Ohne Feuchtigkeit können Fäulnisbakterien und Enzyme nicht arbeiten — dasselbe Prinzip steckt hinter Dörrfleisch.",
+      "category": "Geschichte"
+    },
+    {
+      "id": "geschichte_de_115",
+      "question": "Warum waren mittelalterliche Ritterrüstungen trotz ihres Gewichts erstaunlich beweglich?",
+      "answers": [
+        {"text": "Das Gewicht verteilte sich über den ganzen Körper, nicht auf die Arme", "correct": true},
+        {"text": "Die Platten waren innen hohl und mit Luft gefüllt", "correct": false},
+        {"text": "Sie bestanden überwiegend aus leichtem Aluminium-Blech", "correct": false}
+      ],
+      "difficulty": "easy",
+      "fun_fact": "Eine Plattenrüstung wog rund 20 bis 25 kg, ähnlich heutiger Soldatenausrüstung, war aber über Schultern, Hüfte und Beine verteilt. Ritter konnten darin laufen, springen und sogar auf ihr Pferd steigen.",
+      "category": "Geschichte"
+    },
+    {
+      "id": "geschichte_de_116",
+      "question": "Warum brannten in alten Bergwerken Öllampen mit besonders kleiner, gekapselter Flamme?",
+      "answers": [
+        {"text": "Ein Drahtgitter verhinderte, dass die Flamme Grubengas entzündet", "correct": true},
+        {"text": "Die kleine Flamme sparte das teure Lampenöl", "correct": false},
+        {"text": "Das Gitter bündelte das Licht zu einem hellen Strahl", "correct": false}
+      ],
+      "difficulty": "hard",
+      "fun_fact": "Die Davy-Lampe nutzt, dass ein feines Metallgitter die Hitze der Flamme ableitet, bevor sie das Gas draußen entzünden kann. Schlug die Flamme plötzlich hoch und blau, warnte das vor Methan in der Luft.",
+      "category": "Geschichte"
+    },
+    {
+      "id": "geschichte_de_117",
+      "question": "Warum legte man Telegrafenkabel des 19. Jahrhunderts über tausende Kilometer Meeresboden in Guttapercha ein?",
+      "answers": [
+        {"text": "Das Naturharz isolierte die Kupferader wasserdicht im Salzwasser", "correct": true},
+        {"text": "Es machte das Kabel schwer genug, um nicht aufzutreiben", "correct": false},
+        {"text": "Es verstärkte das elektrische Signal über lange Strecken", "correct": false}
+      ],
+      "difficulty": "hard",
+      "fun_fact": "Guttapercha, ein Latex aus südostasiatischen Bäumen, wurde im Wasser hart und blieb dicht — eines der ersten Naturkunststoffe der Technik. Erst damit gelang 1866 die dauerhafte Telegrafenverbindung durch den Atlantik.",
+      "category": "Geschichte"
+    },
+    {
+      "id": "geschichte_de_118",
+      "question": "Warum hielten sich Lebensmittel in römischen Amphoren auf Schiffen monatelang frisch?",
+      "answers": [
+        {"text": "Olivenöl oben schloss Luft ab und verhinderte das Verderben", "correct": true},
+        {"text": "Der gebrannte Ton kühlte den Inhalt von selbst herunter", "correct": false},
+        {"text": "Schwefelräucherung im Ton tötete alle Keime", "correct": false}
+      ],
+      "difficulty": "medium",
+      "fun_fact": "Eine Ölschicht auf eingelegtem Gemüse oder Fisch sperrt den Luftsauerstoff aus, den Fäulnisbakterien brauchen — ein Trick, der in mediterranen Küchen bis heute lebt. Manche geborgenen Amphoren rochen nach 2000 Jahren noch nach Inhalt.",
+      "category": "Geschichte"
+    },
+    {
+      "id": "geschichte_de_119",
+      "question": "Warum konnte man mit einer alten Sonnenuhr nicht überall dieselbe Bauart verwenden?",
+      "answers": [
+        {"text": "Der Schattenstab muss im Winkel zum Breitengrad des Standorts stehen", "correct": true},
+        {"text": "In verschiedenen Ländern lief die Zeit unterschiedlich schnell", "correct": false},
+        {"text": "Das Material musste je nach Klima gewechselt werden", "correct": false}
+      ],
+      "difficulty": "medium",
+      "fun_fact": "Der Schattenwerfer muss parallel zur Erdachse zeigen, also exakt im Winkel der geografischen Breite geneigt sein. Eine Sonnenuhr aus Rom geht in Stockholm falsch, wenn man ihren Winkel nicht anpasst.",
+      "category": "Geschichte"
+    },
+    {
+      "id": "geschichte_de_120",
+      "question": "Warum wurde Brot in Notzeiten oft mit gemahlenen Eicheln gestreckt?",
+      "answers": [
+        {"text": "Eicheln liefern Stärke, müssen aber zum Entgiften gewässert werden", "correct": true},
+        {"text": "Eicheln machten das Brot von selbst haltbarer", "correct": false},
+        {"text": "Eicheln ließen den Teig schneller aufgehen", "correct": false}
+      ],
+      "difficulty": "medium",
+      "fun_fact": "Rohe Eicheln enthalten bittere, leicht giftige Tannine. Wässert man das Mehl mehrfach, werden sie ausgespült und es bleibt sättigende Stärke übrig — ein Notnahrungswissen, das in vielen Kriegswintern Leben rettete.",
+      "category": "Geschichte"
+    },
+    {
+      "id": "geschichte_de_121",
+      "question": "Warum überstanden manche Schiffswracks Jahrhunderte unter Wasser fast unversehrt?",
+      "answers": [
+        {"text": "Sauerstoffarmer Schlamm hemmt die holzzerstörenden Lebewesen", "correct": true},
+        {"text": "Das kalte Wasser versteinerte das Holz langsam", "correct": false},
+        {"text": "Salzwasser konserviert Holz wie eine Lacksicht", "correct": false}
+      ],
+      "difficulty": "medium",
+      "fun_fact": "Wo wenig Sauerstoff in den Schlick gelangt, können der Schiffsbohrwurm und Pilze das Holz nicht zersetzen. So blieb die schwedische 'Vasa' von 1628 erhalten — geborgen 1961 zu rund 95 Prozent aus Originalholz.",
+      "category": "Geschichte"
+    },
+    {
+      "id": "geschichte_de_122",
+      "question": "Warum legten Imker im alten Ägypten ihre Bienenstöcke auf Flöße und ließen sie den Nil hinauftreiben?",
+      "answers": [
+        {"text": "Sie folgten der Blüte, die flussaufwärts später einsetzte", "correct": true},
+        {"text": "Die Bewegung des Wassers beruhigte die Bienen", "correct": false},
+        {"text": "Das Flusswasser kühlte den Honig zum Festwerden", "correct": false}
+      ],
+      "difficulty": "medium",
+      "fun_fact": "Die Pflanzen blühen flussaufwärts zeitversetzt. Wandernde Bienenstöcke nutzten so eine viel längere Trachtzeit — eine frühe Form der Wanderimkerei, die moderne Imker mit Lastwagen bis heute betreiben.",
+      "category": "Geschichte"
+    },
+    {
+      "id": "geschichte_de_123",
+      "question": "Warum wurden in alten Bibliotheken viele Bücher mit der Schnittkante nach außen ins Regal gestellt?",
+      "answers": [
+        {"text": "Der Titel stand auf dem Schnitt, weil Buchrücken noch leer waren", "correct": true},
+        {"text": "So lüfteten die Seiten besser gegen Schimmel", "correct": false},
+        {"text": "Die wertvollen Rücken sollten vor Licht geschützt werden", "correct": false}
+      ],
+      "difficulty": "easy",
+      "fun_fact": "Vor dem Buchdruck-Zeitalter beschriftete man oft den Seitenschnitt statt des Rückens. Erst als gedruckte Bücher in Massen entstanden, wanderte der Titel auf den Rücken — und die Bücher drehten sich im Regal um.",
+      "category": "Geschichte"
+    },
+    {
+      "id": "geschichte_de_124",
+      "question": "Warum hielten sich Butterfunde aus irischen Mooren über tausend Jahre essbar konserviert?",
+      "answers": [
+        {"text": "Das kühle, saure und sauerstoffarme Moor stoppte das Verderben", "correct": true},
+        {"text": "Die Butter wurde stark gesalzen, bevor sie vergraben wurde", "correct": false},
+        {"text": "Die Torfsäure verwandelte sie in eine Art Wachs", "correct": false}
+      ],
+      "difficulty": "medium",
+      "fun_fact": "Moore sind kalt, sauer und nahezu sauerstofffrei — Bedingungen, unter denen Fäulnisbakterien kaum überleben. Archäologen finden bis heute Butterfässer, deren Inhalt nach über tausend Jahren noch fettig riecht.",
+      "category": "Geschichte"
+    },
+    {
+      "id": "geschichte_de_125",
+      "question": "Warum wirkten Pfeilgift-Wunden indigener Jäger trotz winziger Mengen so schnell?",
+      "answers": [
+        {"text": "Das Gift wirkte erst im Blut, nicht im Magen, und lähmte die Muskeln", "correct": true},
+        {"text": "Die Pfeilspitzen waren glühend heiß behandelt", "correct": false},
+        {"text": "Das Gift löste das Blut chemisch auf", "correct": false}
+      ],
+      "difficulty": "hard",
+      "fun_fact": "Curare blockiert die Signalübertragung von Nerv zu Muskel und führt zur Atemlähmung — aber nur über die Blutbahn. Erlegtes Wild blieb deshalb gefahrlos essbar, weil das Gift den Verdauungsweg übersteht, ohne zu wirken.",
+      "category": "Geschichte"
+    },
+    {
+      "id": "geschichte_de_126",
+      "question": "Warum trugen Apotheker und Färber früher oft dauerhaft verfärbte Hände?",
+      "answers": [
+        {"text": "Viele Farbstoffe zogen tief in die obere Hautschicht ein", "correct": true},
+        {"text": "Die Chemikalien hoben die Hautfarbe dauerhaft auf", "correct": false},
+        {"text": "Die Hitze der Färbekessel verbrannte die Haut bräunlich", "correct": false}
+      ],
+      "difficulty": "easy",
+      "fun_fact": "Farbstoffe wie Indigo oder Silbernitrat binden an Hautproteine in der obersten Schicht. Erst wenn sich die Haut von selbst erneuert, verschwindet die Färbung — derselbe Mechanismus, der auch frische Tätowierungen zunächst dunkel hält.",
+      "category": "Geschichte"
+    },
+    {
+      "id": "geschichte_de_127",
+      "question": "Warum hielten die Kuppeln großer Kathedralen ohne moderne Stahlverstärkung?",
+      "answers": [
+        {"text": "Das Mauerwerk wird durch sein Eigengewicht zusammengedrückt und stabil", "correct": true},
+        {"text": "Die Steine wurden mit Eisenketten innen verschraubt", "correct": false},
+        {"text": "Die Kuppeln waren hohl und damit nahezu schwerelos", "correct": false}
+      ],
+      "difficulty": "medium",
+      "fun_fact": "Im Rundbogen und in der Kuppel wirken die Lasten als Druckkräfte entlang der Steine, die sich gegenseitig verkeilen — Mauerwerk hält Druck hervorragend aus. Brunelleschis Florentiner Kuppel kam sogar ganz ohne Holzgerüst aus.",
+      "category": "Geschichte"
+    },
+    {
+      "id": "geschichte_de_128",
+      "question": "Woher stammt das Wort 'Salär' (Gehalt) ursprünglich?",
+      "answers": [
+        {"text": "Vom lateinischen Wort für Salz", "correct": true},
+        {"text": "Vom lateinischen Wort für Gold", "correct": false},
+        {"text": "Vom lateinischen Wort für Brot", "correct": false}
+      ],
+      "difficulty": "easy",
+      "fun_fact": "Römische Soldaten erhielten Zuwendungen rund um das wertvolle Salz (lateinisch sal). Daraus entstand 'salarium' und später unser 'Salär' und das englische 'salary' — Salz war in der Antike ein knappes Konservierungsmittel.",
+      "category": "Geschichte"
+    },
+    {
+      "id": "geschichte_de_129",
+      "question": "Was bedeutete das Wort 'Quarantäne' bei seiner Entstehung im Venedig des 14. Jahrhunderts wörtlich?",
+      "answers": [
+        {"text": "Vierzig Tage", "correct": true},
+        {"text": "Geschlossene Tür", "correct": false},
+        {"text": "Heiliger Hafen", "correct": false}
+      ],
+      "difficulty": "medium",
+      "fun_fact": "Schiffe mussten 40 Tage (italienisch 'quaranta giorni') vor der Küste warten, bevor Besatzung und Ladung an Land durften. Die Zahl 40 hatte auch religiöse Bedeutung — vorher galt eine kürzere 30-Tage-Frist namens 'trentino'.",
+      "category": "Geschichte"
+    },
+    {
+      "id": "geschichte_de_130",
+      "question": "Warum heißt es 'Boykott' — wonach ist das Wort benannt?",
+      "answers": [
+        {"text": "Nach einem geächteten Gutsverwalter namens Charles Boycott", "correct": true},
+        {"text": "Nach einem französischen Hafen, der Schiffe abwies", "correct": false},
+        {"text": "Nach einem englischen Gesetz gegen Streiks", "correct": false}
+      ],
+      "difficulty": "medium",
+      "fun_fact": "Captain Charles Boycott trieb 1880 in Irland Pachten ein und wurde von der Bevölkerung komplett gemieden — niemand arbeitete mehr für ihn. Sein Name wurde noch zu seinen Lebzeiten zum Begriff für genau diese Taktik.",
+      "category": "Geschichte"
+    },
+    {
+      "id": "geschichte_de_131",
+      "question": "Woher stammt das deutsche Wort 'sinister' (unheilvoll) sprachlich?",
+      "answers": [
+        {"text": "Vom lateinischen Wort für 'links'", "correct": true},
+        {"text": "Vom lateinischen Wort für 'Dunkelheit'", "correct": false},
+        {"text": "Vom lateinischen Wort für 'Schlange'", "correct": false}
+      ],
+      "difficulty": "hard",
+      "fun_fact": "'Sinister' bedeutet im Lateinischen schlicht 'links'. Da die linke Seite seit der Antike als unglücksbringend galt, bekam das Wort seine düstere Nebenbedeutung. Linkshänder galten lange als verdächtig — eine Vorstellung, die sich in vielen Sprachen niederschlug.",
+      "category": "Geschichte"
+    },
+    {
+      "id": "geschichte_de_132",
+      "question": "Wonach ist das belegte 'Sandwich' benannt?",
+      "answers": [
+        {"text": "Nach einem englischen Adligen, dem Earl of Sandwich", "correct": true},
+        {"text": "Nach einem niederländischen Bäcker namens Sandwich", "correct": false},
+        {"text": "Nach dem altenglischen Wort für 'belegtes Brot'", "correct": false}
+      ],
+      "difficulty": "easy",
+      "fun_fact": "John Montagu, der 4. Earl of Sandwich, wollte beim Kartenspiel nicht aufhören und ließ sich Fleisch zwischen zwei Brotscheiben reichen. Die Mitspieler bestellten 'das Gleiche wie Sandwich' — und der Name blieb hängen.",
+      "category": "Geschichte"
+    },
+    {
+      "id": "geschichte_de_133",
+      "question": "Wonach ist die Maßeinheit 'Watt' benannt — und was wird dabei oft missverstanden?",
+      "answers": [
+        {"text": "Nach James Watt — er erfand die Einheit aber nicht selbst", "correct": true},
+        {"text": "Nach einer englischen Stadt namens Watt", "correct": false},
+        {"text": "Nach dem lateinischen Wort für Kraft", "correct": false}
+      ],
+      "difficulty": "medium",
+      "fun_fact": "Die Einheit wurde 1882 zu Ehren des Ingenieurs James Watt benannt, lange nach seinem Tod. Watt selbst rechnete noch in 'Pferdestärken' — einer Einheit, die er erfand, um seine Dampfmaschinen mit Zugpferden vergleichbar zu machen.",
+      "category": "Geschichte"
+    },
+    {
+      "id": "geschichte_de_135",
+      "question": "Woher stammt der Brauch, beim Niesen 'Gesundheit' zu wünschen, der Überlieferung nach?",
+      "answers": [
+        {"text": "Aus der Zeit der Pest, als Niesen als frühes Krankheitszeichen galt", "correct": true},
+        {"text": "Aus einem mittelalterlichen Höflichkeitsgesetz für Adelige", "correct": false},
+        {"text": "Aus einem antiken Theaterbrauch gegen Lampenfieber", "correct": false}
+      ],
+      "difficulty": "medium",
+      "fun_fact": "Schon in der Antike kannte man Segenssprüche beim Niesen. Während großer Seuchen verstärkte sich der Brauch, weil Niesen als mögliches erstes Symptom gefürchtet war. Papst Gregor I. soll im 6. Jahrhundert das Segnen ausdrücklich angeordnet haben.",
+      "category": "Geschichte"
+    },
+    {
+      "id": "geschichte_de_136",
+      "question": "Warum fahren Autos in Großbritannien bis heute auf der linken Straßenseite — was war der historische Grund?",
+      "answers": [
+        {"text": "Rechtshändige Reiter und Kutscher hielten links, um die Schwerthand frei zu haben", "correct": true},
+        {"text": "Ein königliches Dekret verbot das Rechtsfahren wegen eines Unfalls", "correct": false},
+        {"text": "Die schmalen Brücken konnten nur von links befahren werden", "correct": false}
+      ],
+      "difficulty": "medium",
+      "fun_fact": "Bewaffnete Reisende ritten links, um Entgegenkommende notfalls mit der rechten Hand abwehren zu können. Napoleon machte auf dem Kontinent das Rechtsfahren populär — Großbritannien behielt aus Tradition die alte Seite bei.",
+      "category": "Geschichte"
+    },
+    {
+      "id": "geschichte_de_137",
+      "question": "Wofür wurde das @-Zeichen ursprünglich genutzt, lange bevor es in E-Mail-Adressen auftauchte?",
+      "answers": [
+        {"text": "Als kaufmännisches Zeichen für 'zum Preis von' in Handelsbüchern", "correct": true},
+        {"text": "Als lateinische Abkürzung der Mönche für 'Amen'", "correct": false},
+        {"text": "Als Zeichen der Drucker für einen Seitenumbruch", "correct": false}
+      ],
+      "difficulty": "easy",
+      "fun_fact": "Kaufleute schrieben jahrhundertelang '5 Fässer @ 3 Gulden'. 1971 wählte Programmierer Ray Tomlinson das damals selten genutzte Zeichen, um Benutzer von Rechnernamen zu trennen — weil es in keinem Namen vorkam.",
+      "category": "Geschichte"
+    },
+    {
+      "id": "geschichte_de_138",
+      "question": "Welcher Snack entstand der Legende nach 1853 aus dem Ärger eines Kochs über einen Gast, der seine Bratkartoffeln zu dick fand?",
+      "answers": [
+        {"text": "Der Kartoffelchip", "correct": true},
+        {"text": "Die Pommes frites", "correct": false},
+        {"text": "Der Kartoffelpuffer", "correct": false}
+      ],
+      "difficulty": "easy",
+      "fun_fact": "Koch George Crum soll die Kartoffeln aus Trotz hauchdünn geschnitten und kross frittiert haben, um den Gast zu ärgern — der war begeistert. Ob die Anekdote stimmt, ist umstritten, aber 'Saratoga Chips' wurden tatsächlich dort berühmt.",
+      "category": "Geschichte"
+    },
+    {
+      "id": "geschichte_de_139",
+      "question": "Warum wurde die Champagner-Flasche ursprünglich so dickwandig und schwer gebaut?",
+      "answers": [
+        {"text": "Damit sie dem Innendruck der Kohlensäure standhält und nicht explodiert", "correct": true},
+        {"text": "Damit sie den langen Transport über die Alpen übersteht", "correct": false},
+        {"text": "Damit sie als Wertanlage länger lichtgeschützt lagert", "correct": false}
+      ],
+      "difficulty": "medium",
+      "fun_fact": "Frühe Champagnerflaschen platzten in den Kellern reihenweise — Kellermeister trugen schützende Eisenmasken. Erst dickeres englisches Kohleofen-Glas und ein normierter Korkverschluss machten das Schaumweinwesen sicher.",
+      "category": "Geschichte"
+    },
+    {
+      "id": "geschichte_de_140",
+      "question": "Woher hat die Stadt Köln ihren Namen?",
+      "answers": [
+        {"text": "Vom lateinischen 'Colonia' für römische Kolonie", "correct": true},
+        {"text": "Vom keltischen Wort für 'Flussbiegung'", "correct": false},
+        {"text": "Vom Namen eines fränkischen Königs", "correct": false}
+      ],
+      "difficulty": "easy",
+      "fun_fact": "Die Römer gründeten die 'Colonia Claudia Ara Agrippinensium'. Über die Jahrhunderte schrumpfte der lange Name im Volksmund einfach auf 'Colonia' und schließlich auf 'Köln' zusammen — das Parfüm 'Eau de Cologne' trägt die lateinische Wurzel bis heute.",
+      "category": "Geschichte"
+    },
+    {
+      "id": "geschichte_de_141",
+      "question": "Wer steckte ursprünglich hinter dem 'Graham Cracker', und wozu war er gedacht?",
+      "answers": [
+        {"text": "Ein Prediger, der ihn als Mittel gegen 'unreine Gelüste' erfand", "correct": true},
+        {"text": "Ein Bäcker, der ihn nach seiner Tochter benannte", "correct": false},
+        {"text": "Ein Arzt, der ihn als Diätkost für Soldaten entwarf", "correct": false}
+      ],
+      "difficulty": "hard",
+      "fun_fact": "Reverend Sylvester Graham predigte in den 1830ern eine fade Vollkorndiät, die fleischliche Begierden zügeln sollte. Sein schlichter Keks war Teil dieser asketischen Ernährungslehre — heute steckt er ironischerweise in süßen S'mores.",
+      "category": "Geschichte"
+    },
+    {
+      "id": "geschichte_de_142",
+      "question": "Woher kommt das Wort 'Lynchjustiz'?",
+      "answers": [
+        {"text": "Vom Namen eines Mannes namens Lynch im revolutionären Amerika", "correct": true},
+        {"text": "Vom altenglischen Wort für 'Strick'", "correct": false},
+        {"text": "Vom Namen eines berüchtigten Gefängnisses", "correct": false}
+      ],
+      "difficulty": "medium",
+      "fun_fact": "Der Richter Charles Lynch verhängte während der amerikanischen Revolution Strafen ohne ordentliches Gericht. Sein Name wurde zum 'Lynch-Gesetz' — ursprünglich Auspeitschungen, später tragischerweise mit Morden ohne Urteil verbunden.",
+      "category": "Geschichte"
+    },
+    {
+      "id": "geschichte_de_143",
+      "question": "Wonach ist die Strickjacke 'Cardigan' benannt?",
+      "answers": [
+        {"text": "Nach einem Earl, dessen Soldaten solche Jacken im Krimkrieg trugen", "correct": true},
+        {"text": "Nach einer walisischen Wollfabrik namens Cardigan", "correct": false},
+        {"text": "Nach dem walisischen Wort für 'warm'", "correct": false}
+      ],
+      "difficulty": "hard",
+      "fun_fact": "Der 7. Earl of Cardigan führte 1854 die berüchtigte 'Attacke der Leichten Brigade'. Seine Offiziere trugen geknöpfte Wolljacken gegen die Kälte der Krim — das Kleidungsstück machte den Adelstitel zum Modebegriff.",
+      "category": "Geschichte"
+    },
+    {
+      "id": "geschichte_de_144",
+      "question": "Welche heute weltweite Süßigkeit wurde mit harter Hülle entwickelt, damit Soldaten Schokolade essen können, ohne dass sie in der Hand schmilzt?",
+      "answers": [
+        {"text": "M&M's (Schokolinsen mit harter Hülle)", "correct": true},
+        {"text": "Der Schokoriegel mit Karamellkern", "correct": false},
+        {"text": "Die Trinkschokolade in Pulverform", "correct": false}
+      ],
+      "difficulty": "medium",
+      "fun_fact": "Forrest Mars sah im Spanischen Bürgerkrieg Soldaten mit zuckerumhüllten Schokokugeln, die in der Hitze nicht schmolzen. Die harte Zuckerschale löste das Problem — der Slogan 'schmilzt im Mund, nicht in der Hand' kam später.",
+      "category": "Geschichte"
+    },
+    {
+      "id": "geschichte_de_145",
+      "question": "Über welche überraschende Zwischenstation kam das Wort 'Dollar' zu seinem Namen?",
+      "answers": [
+        {"text": "Vom 'Taler', geprägt im böhmischen Joachimsthal", "correct": true},
+        {"text": "Vom spanischen Wort für 'Gold'", "correct": false},
+        {"text": "Vom Namen eines amerikanischen Münzmeisters", "correct": false}
+      ],
+      "difficulty": "medium",
+      "fun_fact": "Im 16. Jahrhundert geprägte Silbermünzen aus Joachimsthal hießen 'Joachimstaler', kurz 'Taler'. Über das Niederländische ('daalder') wurde daraus 'Dollar' — eine Währung mit Wurzeln in einem böhmischen Bergtal.",
+      "category": "Geschichte"
+    },
+    {
+      "id": "geschichte_de_146",
+      "question": "Woher kommt das Wort 'Panik'?",
+      "answers": [
+        {"text": "Vom griechischen Hirtengott Pan, der plötzlichen Schrecken auslöste", "correct": true},
+        {"text": "Vom griechischen Wort für 'rennen'", "correct": false},
+        {"text": "Vom Namen einer antiken Schlacht", "correct": false}
+      ],
+      "difficulty": "medium",
+      "fun_fact": "Dem Gott Pan wurde nachgesagt, er erschrecke einsame Wanderer mit unerklärlichem Grauen in der Wildnis. Dieser 'panische' Schrecken konnte ganze Heere in die Flucht treiben — daher unser Wort für plötzliche, irrationale Angst.",
+      "category": "Geschichte"
+    },
+    {
+      "id": "geschichte_de_147",
+      "question": "Welcher frühe Kunststoff wurde erfunden, weil im 19. Jahrhundert Elfenbein für Billardkugeln knapp wurde?",
+      "answers": [
+        {"text": "Zelluloid", "correct": true},
+        {"text": "Bakelit", "correct": false},
+        {"text": "Vulkanisierter Kautschuk", "correct": false}
+      ],
+      "difficulty": "hard",
+      "fun_fact": "Ein Hersteller setzte ein Preisgeld aus, weil Elefantenstoßzähne zu teuer wurden. John Wesley Hyatt entwickelte daraufhin Zelluloid. Frühe Kugeln waren so instabil, dass sie beim harten Aufprall angeblich knallten wie kleine Explosionen.",
+      "category": "Geschichte"
+    },
+    {
+      "id": "geschichte_de_148",
+      "question": "Warum hat der Marathon ausgerechnet die krumme Länge von 42,195 km?",
+      "answers": [
+        {"text": "Die Strecke wurde 1908 verlängert, damit der Start am Schloss Windsor lag", "correct": true},
+        {"text": "Es ist die exakte Entfernung der antiken Ebene von Marathon nach Athen", "correct": false},
+        {"text": "Die Zahl entspricht der Rundenlänge des ersten olympischen Stadions", "correct": false}
+      ],
+      "difficulty": "medium",
+      "fun_fact": "Der Name geht auf die Schlacht bei Marathon zurück, doch die Distanz war lange uneinheitlich. Bei den Spielen 1908 in London verlängerte man die Strecke, damit Start und Ziel königlichen Wünschen entsprachen — die krumme Zahl wurde 1921 verbindlich.",
+      "category": "Geschichte"
+    },
+    {
+      "id": "geschichte_de_149",
+      "question": "Woher stammt der Name des Wochentags 'Donnerstag'?",
+      "answers": [
+        {"text": "Vom Donnergott Thor (Donar)", "correct": true},
+        {"text": "Vom lateinischen Wort für 'Markttag'", "correct": false},
+        {"text": "Vom germanischen Wort für 'Mitte'", "correct": false}
+      ],
+      "difficulty": "easy",
+      "fun_fact": "Der Tag war dem germanischen Donnergott Donar/Thor geweiht — im Englischen erkennbar als 'Thursday' (Thor's day). Die Römer nannten denselben Tag nach Jupiter, ihrem eigenen Donnergott ('dies Iovis', italienisch 'giovedì').",
+      "category": "Geschichte"
+    },
+    {
+      "id": "geschichte_de_150",
+      "question": "Warum trägt die Pizza Margherita ihren Namen?",
+      "answers": [
+        {"text": "Nach einer italienischen Königin, der sie 1889 gewidmet wurde", "correct": true},
+        {"text": "Nach dem Gänseblümchen, das ihr Aussehen inspirierte", "correct": false},
+        {"text": "Nach der Tochter des erfindenden Pizzabäckers", "correct": false}
+      ],
+      "difficulty": "easy",
+      "fun_fact": "Pizzabäcker Raffaele Esposito soll Königin Margherita von Savoyen eine Pizza in den Farben der italienischen Flagge serviert haben: rote Tomate, weißer Mozzarella, grünes Basilikum. Ihr Lob machte das schlichte Gericht hoffähig.",
+      "category": "Geschichte"
+    },
+    {
+      "id": "geschichte_de_151",
+      "question": "Woher stammt das Wort 'Vandalismus' für mutwillige Zerstörung?",
+      "answers": [
+        {"text": "Vom germanischen Volk der Vandalen, das 455 Rom plünderte", "correct": true},
+        {"text": "Vom lateinischen Wort für 'zerschlagen'", "correct": false},
+        {"text": "Vom Namen eines berüchtigten römischen Aufrührers", "correct": false}
+      ],
+      "difficulty": "medium",
+      "fun_fact": "Der Begriff entstand erst 1794, als ein französischer Bischof die Zerstörungswut während der Revolution mit der Plünderung Roms durch die Vandalen verglich. Historiker betonen, dass die Vandalen damals vergleichsweise diszipliniert vorgingen — ihr Ruf ist schlechter als ihre Tat.",
+      "category": "Geschichte"
+    },
+    {
+      "id": "geschichte_de_152",
+      "question": "Wer lebte zeitlich näher an uns: Kleopatra oder der Bau der Großen Pyramide von Gizeh?",
+      "answers": [
+        {"text": "Kleopatra — sie lebte näher an uns als an der Pyramide", "correct": true},
+        {"text": "Beide waren gleich weit von uns entfernt", "correct": false},
+        {"text": "Die Pyramide — Kleopatra erlebte den Bau fast noch mit", "correct": false}
+      ],
+      "difficulty": "easy",
+      "fun_fact": "Die Große Pyramide wurde um 2.560 v. Chr. errichtet, Kleopatra lebte um 30 v. Chr. Zwischen ihr und der Pyramide liegen rund 2.500 Jahre, zwischen ihr und uns nur rund 2.050. Sie hätte die Pyramide schon als uraltes Monument bestaunt.",
+      "category": "Geschichte"
+    },
+    {
+      "id": "geschichte_de_153",
+      "question": "Wie viele Menschen leben heute insgesamt im Vergleich zu allen je geborenen Menschen der Geschichte?",
+      "answers": [
+        {"text": "Etwa 7 Prozent aller je geborenen Menschen leben heute", "correct": true},
+        {"text": "Etwa die Hälfte aller je geborenen Menschen lebt heute", "correct": false},
+        {"text": "Etwa 30 Prozent aller je geborenen Menschen leben heute", "correct": false}
+      ],
+      "difficulty": "medium",
+      "fun_fact": "Demografen schätzen, dass in der gesamten Menschheitsgeschichte rund 110 Milliarden Menschen geboren wurden. Die etwa 8 Milliarden Lebenden machen davon nur rund 7 Prozent aus — die Toten sind uns also weit in der Überzahl.",
       "category": "Geschichte"
     }
   ]
