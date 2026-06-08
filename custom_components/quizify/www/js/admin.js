@@ -95,6 +95,7 @@
         lobbyPlayerChips: document.getElementById('lobby-player-chips'),
         lobbyPlayersEmpty: document.getElementById('lobby-players-empty'),
         startGameBtn: document.getElementById('start-game-btn'),
+        heroFeatureCard: document.getElementById('hero-feature-card'),
         startGameplayBtn: document.getElementById('start-gameplay-btn'),
         participateBtn: document.getElementById('participate-btn'),
         // In-game
@@ -1194,6 +1195,25 @@
 
     // Setup screen → Lobby screen (shows QR, waits for players)
     on(els.startGameBtn, 'click', function () {
+        showView('lobby');
+        initJoinUrl();
+    });
+
+    // Featured pack spotlight (hero) → one-tap launch of the World Cup pack
+    // in the admin's current language. Sets it as the active category, then
+    // follows the same path as Start Game (→ lobby / QR screen). The actual
+    // start_game payload is built later from selectedCategory/selectedLanguage.
+    on(els.heroFeatureCard, 'click', function () {
+        var pack = (selectedLanguage === 'de') ? 'weltmeisterschaft' : 'world-cup';
+        selectedCategory = pack;
+        selectedCategories = [pack];
+        // Sync chip active-state so a later "Adjust settings" visit reflects it.
+        if (els.categoryChips) {
+            els.categoryChips.querySelectorAll('.chip').forEach(function (c) {
+                c.classList.toggle('active', c.dataset.value === pack);
+            });
+        }
+        updateCategorySummary();
         showView('lobby');
         initJoinUrl();
     });
