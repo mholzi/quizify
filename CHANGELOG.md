@@ -3,6 +3,14 @@
 All notable changes to Quizify are documented here. This project follows
 [Semantic Versioning](https://semver.org/).
 
+## [1.2.5] — 2026-06-08
+
+Consolidated release of the 1.2.x line under a fresh version number for clean
+distribution. Bundles everything since 1.1.0: the World Cup packs, the
+first-screen pack picker (with World Cup as a selectable pack), host-screen
+language handling, and the self-healing asset cache-buster. See the 1.2.0–1.2.3
+entries below for the detailed history.
+
 ## [1.2.3] — 2026-06-08
 
 ### Fixed
