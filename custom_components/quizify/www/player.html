@@ -502,11 +502,23 @@
     </main>
 
     <!-- Finale Countdown Overlay (dramatic flourish before the final question) -->
+    <!-- Spotlight-Marquee look (design #193, variant A): theatre spotlight cone,
+         marquee bulb string, "Finale!" between stars, the digit in a glowing ring,
+         and a footer marquee. Decorative scaffolding only — the JS still drives
+         #finale-countdown-flourish + #finale-countdown-number exactly as before. -->
     <div id="finale-countdown-overlay" class="finale-countdown-overlay hidden" aria-hidden="true">
-        <div class="finale-countdown-content">
-            <div id="finale-countdown-flourish" class="finale-countdown-flourish" data-i18n="game.finale">Finale!</div>
-            <div id="finale-countdown-number" class="finale-countdown-number"></div>
+        <div class="finale-countdown-bulbs" aria-hidden="true">
+            <i class="finale-countdown-bulb"></i><i class="finale-countdown-bulb"></i><i class="finale-countdown-bulb"></i><i class="finale-countdown-bulb"></i><i class="finale-countdown-bulb"></i><i class="finale-countdown-bulb"></i><i class="finale-countdown-bulb"></i>
         </div>
+        <div class="finale-countdown-content">
+            <div id="finale-countdown-flourish" class="finale-countdown-flourish">
+                <span class="finale-countdown-star" aria-hidden="true">&#9733;</span><span data-i18n="game.finale">Finale!</span><span class="finale-countdown-star" aria-hidden="true">&#9733;</span>
+            </div>
+            <div class="finale-countdown-ring">
+                <div id="finale-countdown-number" class="finale-countdown-number"></div>
+            </div>
+        </div>
+        <div class="finale-countdown-marquee" aria-hidden="true">&middot; &middot; &middot;&nbsp;&nbsp;Quizify&nbsp;&nbsp;&middot; &middot; &middot;</div>
     </div>
 
     <!-- Reconnecting Overlay -->

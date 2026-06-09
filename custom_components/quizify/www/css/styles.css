@@ -4833,23 +4833,58 @@ body.is-admin .reaction-bar {
 
 /* Finale countdown overlay — a brief dramatic flourish + 3·2·1 shown on the
    big screen right before the final question is revealed. Pure tension/UX;
-   no scoring impact. Soft-Parlor styling (coral accent on dimmed parlor bg). */
+   no scoring impact. "Spotlight Marquee" look (design #193, variant A): a warm
+   theatre spotlight cone, a marquee bulb string up top, "Finale!" framed by
+   stars, the digit inside a glowing coral ring, and a footer marquee. */
 .finale-countdown-overlay {
     position: fixed;
     top: 0;
     left: 0;
     right: 0;
     bottom: 0;
-    background: rgba(31, 27, 20, 0.92);
+    /* Warm parlor backdrop + a soft spotlight glow blooming from the top. */
+    background:
+        radial-gradient(120% 90% at 50% 38%, rgba(232, 138, 127, 0.18) 0%, rgba(31, 27, 20, 0) 55%),
+        radial-gradient(140% 120% at 50% 50%, rgba(42, 36, 25, 0.96) 0%, rgba(31, 27, 20, 0.97) 45%, rgba(21, 18, 12, 0.98) 100%);
     display: flex;
+    flex-direction: column;
     align-items: center;
     justify-content: center;
     z-index: var(--z-overlay);
     backdrop-filter: blur(6px);
     -webkit-backdrop-filter: blur(6px);
+    overflow: hidden;
+}
+
+/* Spotlight cone descending from above the stage. */
+.finale-countdown-overlay::before {
+    content: "";
+    position: absolute;
+    top: -12%;
+    left: 50%;
+    transform: translateX(-50%);
+    width: min(760px, 90vw);
+    height: min(760px, 90vw);
+    background: radial-gradient(circle at 50% 30%, rgba(245, 239, 230, 0.10), rgba(245, 239, 230, 0) 60%);
+    filter: blur(8px);
+    pointer-events: none;
+}
+
+/* Faint dotted parlor texture, masked to the centre. */
+.finale-countdown-overlay::after {
+    content: "";
+    position: absolute;
+    inset: 0;
+    pointer-events: none;
+    background-image: radial-gradient(rgba(245, 239, 230, 0.04) 1px, transparent 1px);
+    background-size: 26px 26px;
+    -webkit-mask: radial-gradient(80% 70% at 50% 45%, #000 30%, transparent 80%);
+    mask: radial-gradient(80% 70% at 50% 45%, #000 30%, transparent 80%);
 }
 
 .finale-countdown-content {
+    position: relative;
+    z-index: 2;
     display: flex;
     flex-direction: column;
     align-items: center;
@@ -4858,16 +4893,73 @@ body.is-admin .reaction-bar {
     padding: var(--space-xl);
 }
 
+/* Marquee bulb string across the top. */
+.finale-countdown-bulbs {
+    position: absolute;
+    top: clamp(18px, 4vh, 36px);
+    left: 0;
+    right: 0;
+    display: flex;
+    justify-content: center;
+    gap: clamp(14px, 2vw, 22px);
+    z-index: 2;
+    pointer-events: none;
+}
+
+.finale-countdown-bulb {
+    width: 10px;
+    height: 10px;
+    border-radius: 50%;
+    background: var(--color-gold);
+    box-shadow: 0 0 14px rgba(232, 196, 127, 0.8);
+}
+
+.finale-countdown-bulb:nth-child(even) {
+    background: var(--color-accent-primary);
+    box-shadow: 0 0 14px rgba(232, 138, 127, 0.8);
+}
+
 .finale-countdown-flourish {
     font-family: var(--font-display);
     font-weight: var(--font-weight-extrabold);
     font-size: clamp(2.5rem, 12vw, 5rem);
     line-height: 1.05;
     text-transform: uppercase;
-    letter-spacing: 0.04em;
+    letter-spacing: 0.06em;
     color: var(--color-accent-primary);
-    text-shadow: 0 0 24px var(--accent-glow);
+    text-shadow: 0 0 40px rgba(232, 138, 127, 0.55), 0 4px 0 rgba(0, 0, 0, 0.25);
     animation: finale-flourish-in 0.6s cubic-bezier(0.2, 0.9, 0.3, 1.3) both;
+}
+
+/* Gold stars framing the headline. */
+.finale-countdown-star {
+    color: var(--color-gold);
+    font-size: 0.5em;
+    vertical-align: 0.55em;
+    margin: 0 0.18em;
+    text-shadow: 0 0 24px rgba(232, 196, 127, 0.7);
+}
+
+/* Glowing coral ring that holds the digit, with a dashed gold halo. */
+.finale-countdown-ring {
+    position: relative;
+    width: clamp(220px, 42vw, 300px);
+    height: clamp(220px, 42vw, 300px);
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background: radial-gradient(circle at 50% 42%, rgba(232, 138, 127, 0.16), rgba(31, 27, 20, 0) 70%);
+    border: 3px solid rgba(232, 138, 127, 0.85);
+    box-shadow: 0 0 60px rgba(232, 138, 127, 0.45), inset 0 0 50px rgba(232, 138, 127, 0.18);
+}
+
+.finale-countdown-ring::before {
+    content: "";
+    position: absolute;
+    inset: -16px;
+    border-radius: 50%;
+    border: 1px dashed rgba(232, 196, 127, 0.45);
 }
 
 .finale-countdown-number {
@@ -4876,7 +4968,24 @@ body.is-admin .reaction-bar {
     font-size: clamp(4rem, 22vw, 9rem);
     line-height: 1;
     color: var(--color-text-neon, #F5EFE6);
+    text-shadow: 0 0 36px rgba(245, 239, 230, 0.4);
     min-height: 1em;
+}
+
+/* Footer marquee. */
+.finale-countdown-marquee {
+    position: absolute;
+    bottom: clamp(20px, 4vh, 34px);
+    left: 0;
+    right: 0;
+    text-align: center;
+    z-index: 2;
+    color: rgba(245, 239, 230, 0.34);
+    font-size: clamp(12px, 1.4vw, 15px);
+    letter-spacing: 0.4em;
+    text-transform: uppercase;
+    font-weight: var(--font-weight-semibold, 600);
+    pointer-events: none;
 }
 
 /* Re-key the number's pop on each digit change via the .tick toggle. */
