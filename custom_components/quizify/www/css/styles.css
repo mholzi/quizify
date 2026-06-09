@@ -3910,11 +3910,6 @@ footer {
     text-align: center;
 }
 
-.setup-hero-emoji {
-    font-size: 3.4rem;
-    line-height: 1;
-}
-
 .setup-hero-headline {
     font-family: var(--font-display);
     font-weight: 800;
@@ -3970,68 +3965,63 @@ footer {
 /* Featured pack spotlight on the hero — one-tap launch of a highlighted
    pack. Soft Parlor card: lifted paper, hairline border, soft shadow, sun
    "New" pill, coral play affordance. The whole card is the button. */
+/* F1 "Soft Spotlight": SVG trophy in a sun-tinted badge, mono eyebrow,
+   coral-bordered card, round coral selection check. */
 .hero-feature {
     display: flex;
     align-items: center;
-    gap: var(--space-md);
+    gap: 13px;
     width: 100%;
     max-width: 360px;
     text-align: left;
     background: var(--color-bg-card);
-    border: 1px solid var(--color-border-light);
+    border: 1.5px solid var(--color-accent-primary);
     border-radius: var(--radius-xl);
-    padding: 14px 15px;
-    box-shadow: var(--shadow-lg);
+    padding: 14px;
+    box-shadow: 0 6px 16px rgba(232, 138, 127, 0.14);
     cursor: pointer;
     transition: transform 0.12s ease, box-shadow 0.12s ease;
 }
-.hero-feature:hover { transform: translateY(-2px); box-shadow: var(--shadow-xl); }
+.hero-feature:hover { transform: translateY(-2px); box-shadow: 0 10px 22px rgba(232, 138, 127, 0.2); }
 .hero-feature:active { transform: translateY(0); }
 /* Selected state — the card toggles a pack like the chips, not an instant launch. */
 .hero-feature.active {
-    border-color: var(--color-accent-primary);
-    box-shadow: 0 0 0 1.5px rgba(232, 138, 127, 0.35), var(--shadow-lg);
+    box-shadow: 0 0 0 1.5px rgba(232, 138, 127, 0.45), 0 6px 16px rgba(232, 138, 127, 0.18);
 }
-.hero-feature-icon { font-size: 2rem; line-height: 1; flex: none; }
-.hero-feature-body { display: flex; flex-direction: column; min-width: 0; }
-/* Round check on the right; filled coral only when the pack is selected. */
-.hero-feature-check {
+.hero-feature-badge {
     flex: none;
-    margin-left: auto;
-    width: 22px;
-    height: 22px;
-    border-radius: 50%;
-    border: 2px solid var(--color-border-light);
+    width: 46px;
+    height: 46px;
+    border-radius: 13px;
+    background: rgba(232, 196, 127, 0.24);
     display: flex;
     align-items: center;
     justify-content: center;
-    font-size: 0.75rem;
-    font-weight: 700;
-    color: transparent;
-    transition: background 0.12s ease, border-color 0.12s ease;
 }
-.hero-feature.active .hero-feature-check {
-    border-color: var(--color-accent-primary);
-    background: var(--color-accent-primary);
-    color: #fff;
+.hero-feature-badge svg {
+    width: 26px;
+    height: 26px;
+    fill: none;
+    stroke: #C9A24E;
+    stroke-width: 1.9;
+    stroke-linecap: round;
+    stroke-linejoin: round;
 }
-.hero-feature-top { display: flex; align-items: center; gap: 8px; }
-.hero-feature-tag {
+.hero-feature-body { display: flex; flex-direction: column; min-width: 0; }
+.hero-feature-eyebrow {
     font-family: var(--font-mono);
     font-size: 0.6rem;
     font-weight: 700;
-    letter-spacing: 0.08em;
+    letter-spacing: 0.1em;
     text-transform: uppercase;
-    background: var(--color-warning);
-    color: #5C4A16;
-    padding: 3px 8px;
-    border-radius: var(--radius-full);
+    color: var(--color-accent-primary);
 }
 .hero-feature-title {
     font-family: var(--font-display);
     font-weight: 700;
     font-size: 1.1rem;
     color: var(--color-text-heading);
+    margin-top: 1px;
 }
 .hero-feature-desc {
     font-family: var(--font-body);
@@ -4040,19 +4030,25 @@ footer {
     margin-top: 2px;
     line-height: 1.35;
 }
-.hero-feature-play {
-    display: inline-flex;
+/* Round coral selection indicator on the right; fills on active. */
+.hero-feature-check {
+    flex: none;
+    margin-left: auto;
+    width: 38px;
+    height: 38px;
+    border-radius: 50%;
+    border: 1.5px solid var(--color-accent-primary);
+    display: flex;
     align-items: center;
-    gap: 6px;
-    align-self: flex-start;
-    margin-top: 10px;
+    justify-content: center;
+    font-size: 0.85rem;
+    font-weight: 700;
+    color: var(--color-accent-primary);
+    transition: background 0.12s ease, color 0.12s ease;
+}
+.hero-feature.active .hero-feature-check {
     background: var(--color-accent-primary);
     color: #fff;
-    font-family: var(--font-body);
-    font-weight: 700;
-    font-size: 0.82rem;
-    padding: 8px 12px;
-    border-radius: var(--radius-md);
 }
 
 /* Pack picker on the hero (variant C): the featured card above, then the
@@ -4068,38 +4064,87 @@ footer {
 .hero-packs-label {
     font-family: var(--font-mono);
     font-size: 0.66rem;
-    letter-spacing: 0.05em;
+    letter-spacing: 0.08em;
     text-transform: uppercase;
     color: var(--color-text-light);
     text-align: left;
 }
+/* Categories-forward grid (Direction A): two columns of color-tinted tiles. */
 .hero-pack-chips {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 9px;
+}
+.hero-cat-tile {
+    position: relative;
     display: flex;
-    flex-wrap: wrap;
-    gap: 7px;
-}
-.hero-pack-chip {
-    display: inline-flex;
-    align-items: center;
+    flex-direction: column;
+    align-items: flex-start;
     gap: 6px;
+    text-align: left;
     background: var(--color-bg-card);
-    border: 1px solid var(--color-border-light);
-    border-radius: var(--radius-full);
-    padding: 7px 11px;
-    font-family: var(--font-body);
-    font-size: 0.8rem;
-    font-weight: 600;
-    color: var(--color-text-primary);
-    box-shadow: var(--shadow-sm);
+    border: 1.5px solid var(--color-border-light);
+    border-radius: 13px;
+    padding: 11px;
     cursor: pointer;
-    transition: border-color 0.12s ease, box-shadow 0.12s ease;
+    transition: transform 0.12s ease, border-color 0.12s ease, box-shadow 0.12s ease;
 }
-.hero-pack-chip .hpc-icon { font-size: 0.95rem; line-height: 1; }
-.hero-pack-chip:hover { border-color: var(--color-border-medium); }
-.hero-pack-chip.active {
+.hero-cat-tile:hover {
+    border-color: var(--color-border-medium);
+    transform: translateY(-1px);
+    box-shadow: 0 5px 13px rgba(42, 40, 32, 0.08);
+}
+.hero-cat-tile.active {
     border-color: var(--color-accent-primary);
-    box-shadow: 0 0 0 1.5px rgba(232, 138, 127, 0.35), var(--shadow-sm);
+    background: rgba(232, 138, 127, 0.10);
+    box-shadow: 0 4px 13px rgba(232, 138, 127, 0.16);
 }
+.hero-cat-tile.active::after {
+    content: "\2713";
+    position: absolute;
+    top: 8px;
+    right: 10px;
+    color: var(--color-accent-primary);
+    font-weight: 700;
+    font-size: 0.85rem;
+}
+.hct-icon {
+    width: 32px;
+    height: 32px;
+    border-radius: 10px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+.hct-icon svg {
+    width: 18px;
+    height: 18px;
+    fill: none;
+    stroke: currentColor;
+    stroke-width: 1.9;
+    stroke-linecap: round;
+    stroke-linejoin: round;
+}
+.hct-icon svg .d { fill: currentColor; stroke: none; }
+.hct-name {
+    font-family: var(--font-display);
+    font-weight: 700;
+    font-size: 0.82rem;
+    line-height: 1.12;
+    color: var(--color-text-heading);
+}
+.hct-count {
+    font-family: var(--font-mono);
+    font-size: 0.62rem;
+    color: var(--color-text-muted);
+    letter-spacing: 0.02em;
+}
+/* Per-theme tint: icon disc background + icon stroke color. */
+.hpt-mix   .hct-icon { background: #F1ECDC;                   color: #C99B6E; }
+.hpt-coral .hct-icon { background: rgba(232, 138, 127, 0.16); color: var(--color-accent-primary); }
+.hpt-sage  .hct-icon { background: rgba(127, 168, 151, 0.18); color: var(--color-accent-secondary); }
+.hpt-sky   .hct-icon { background: rgba(127, 168, 196, 0.18); color: var(--color-accent-blue); }
+.hpt-sun   .hct-icon { background: rgba(232, 196, 127, 0.24); color: #C9A24E; }
 
 /* Topics step relocated to the hero — keep it out of the Adjust-settings view. */
 #vF-step-topics[hidden] { display: none; }
