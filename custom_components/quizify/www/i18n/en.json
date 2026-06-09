@@ -544,5 +544,24 @@
       "accepted": "Accepted — added to community",
       "declined": "Declined"
     }
+  },
+  "lightning": {
+    "title": "Lightning Round",
+    "answered": "Locked in — next one coming!",
+    "yourScore": "Your score",
+    "endNow": "End Lightning",
+    "recapTitle": "Lightning Round Results",
+    "totals": "Totals",
+    "questionRecap": "Question-by-question",
+    "again": "Another Lightning Round",
+    "start": "Lightning Round",
+    "startHint": "5 rapid questions, ~6s each, no breaks",
+    "answeredAtEnd": "· answers revealed at the end",
+    "rightAnswers": "The right answers, question by question",
+    "correctTag": "Correct",
+    "youSaidTag": "You said",
+    "correctCount": "{n}/{total} correct",
+    "pointsThisRound": "points this round",
+    "backToResults": "Back to results"
   }
 }

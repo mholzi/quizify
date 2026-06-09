@@ -6752,3 +6752,106 @@ body:not(.is-admin) .pl-result { padding-bottom: 16px; }
 .pack-tli.a .pack-tli-stat { color: var(--color-success); }
 .pack-tli.p .pack-tli-stat { color: var(--color-warning); }
 .pack-tli.d .pack-tli-stat { color: var(--color-error); }
+
+/* ===========================================================================
+   Lightning Round (issue #42) — Calm-Card "Variant C (refined)"
+   Fast bonus mode. Question view leans on the standard question-card + answer
+   grid; this block tunes the score-line and the bespoke end-recap rows. The
+   recap is player-focused: every row shows the CORRECT answer (sage), and —
+   when the player got it wrong — their own wrong pick (brick) beneath it.
+   Mobile-first (390x844). Mobile/host verify pending (see PR note).
+   =========================================================================== */
+.lr-score-line {
+    text-align: center;
+    font-size: 0.82rem;
+    color: var(--color-text-muted);
+}
+.lr-score-line b {
+    font-family: var(--font-mono);
+    color: var(--color-text-primary);
+    margin: 0 0.25rem;
+}
+.lr-score-note { color: var(--color-text-light); }
+
+/* ---- end recap: per-question rows ---- */
+.lightning-recap-grid {
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+}
+.lr-recap-row {
+    display: flex;
+    gap: 10px;
+    align-items: flex-start;
+    background: var(--color-bg-card-alt);
+    border-radius: 13px;
+    padding: 9px 11px;
+    text-align: left;
+}
+.lr-recap-badge {
+    width: 22px;
+    height: 22px;
+    border-radius: 50%;
+    flex: none;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 0.7rem;
+    font-weight: 800;
+    color: #fff;
+    margin-top: 1px;
+}
+.lr-recap-row.ok .lr-recap-badge { background: var(--color-success); }
+.lr-recap-row.no .lr-recap-badge { background: var(--color-error); }
+.lr-recap-body { flex: 1; min-width: 0; }
+.lr-recap-q {
+    font-size: 0.8rem;
+    font-weight: 600;
+    line-height: 1.3;
+    color: var(--color-text-primary);
+    margin-bottom: 4px;
+}
+.lr-recap-qnum { font-weight: 700; color: var(--color-text-muted); margin-right: 2px; }
+.lr-recap-correct {
+    font-size: 0.78rem;
+    font-weight: 700;
+    color: var(--color-success);
+    line-height: 1.3;
+}
+.lr-recap-yours {
+    font-size: 0.72rem;
+    color: var(--color-error);
+    line-height: 1.3;
+    margin-top: 2px;
+}
+.lr-recap-tag {
+    font-weight: 600;
+    color: var(--color-text-muted);
+    font-size: 0.66rem;
+    text-transform: uppercase;
+    letter-spacing: 0.04em;
+    margin-right: 5px;
+}
+.lr-recap-yours .lr-recap-tag { color: var(--color-text-light); }
+
+/* ---- admin / TV recap: host overview, a chip per player per question ---- */
+.lr-admin-row {
+    background: var(--color-bg-card-alt);
+    border-radius: 13px;
+    padding: 9px 11px;
+    margin-bottom: 8px;
+    text-align: left;
+}
+.lr-admin-q { font-size: 0.85rem; line-height: 1.35; margin-bottom: 6px; color: var(--color-text-primary); }
+.lr-admin-qnum { font-weight: 700; color: var(--color-text-muted); }
+.lr-admin-correct { font-weight: 700; color: var(--color-success); }
+.lr-admin-chips { display: flex; flex-wrap: wrap; gap: 0.35rem; }
+.lr-admin-chip {
+    font-size: 0.72rem;
+    padding: 0.15rem 0.5rem;
+    border-radius: 999px;
+    white-space: nowrap;
+}
+.lr-admin-chip--correct { background: var(--color-success-light); color: var(--color-success); }
+.lr-admin-chip--wrong   { background: rgba(214, 106, 106, 0.18); color: var(--color-error); }
+.lr-admin-chip--miss    { background: var(--color-bg-card-alt); color: var(--color-text-light); }

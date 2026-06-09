@@ -544,5 +544,24 @@
       "accepted": "Angenommen — zur Community hinzugefügt",
       "declined": "Abgelehnt"
     }
+  },
+  "lightning": {
+    "title": "Blitzrunde",
+    "answered": "Gespeichert — die nächste Frage kommt!",
+    "yourScore": "Dein Punktestand",
+    "endNow": "Blitzrunde beenden",
+    "recapTitle": "Ergebnisse der Blitzrunde",
+    "totals": "Gesamt",
+    "questionRecap": "Frage für Frage",
+    "again": "Noch eine Blitzrunde",
+    "start": "Blitzrunde",
+    "startHint": "5 schnelle Fragen, ~6s pro Frage, ohne Pausen",
+    "answeredAtEnd": "· Auflösung am Ende",
+    "rightAnswers": "Die richtigen Antworten, Frage für Frage",
+    "correctTag": "Richtig",
+    "youSaidTag": "Deine Antwort",
+    "correctCount": "{n}/{total} richtig",
+    "pointsThisRound": "Punkte diese Runde",
+    "backToResults": "Zurück zu den Ergebnissen"
   }
 }

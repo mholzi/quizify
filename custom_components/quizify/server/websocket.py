@@ -79,6 +79,9 @@ class QuizifyWebSocketHandler:
         # admin-as-player WS closes mid-question. Cancelled by reconnect
         # or join when admin comes back within ADMIN_REDIRECT_GRACE.
         self._admin_pause_task: asyncio.Task | None = None
+        # Drives the fast lightning-round loop (issue #42). Distinct from
+        # the normal per-question tick task so the two modes can't fight.
+        self._lightning_task: asyncio.Task | None = None
         # Optional TTS announcer. Set by __init__.py / dev_server after
         # construction so the handler doesn't have to know about HA
         # services. Calling announce_milestone on None is the no-op path.
@@ -316,6 +319,21 @@ class QuizifyWebSocketHandler:
                 return
             await self._handle_kick_player(ws, data, game_state)
 
+        elif msg_type == "start_lightning":
+            if not self._is_authorized_admin(ws, is_admin, game_state):
+                await self._conn.send_error(ws, ERR_INVALID_ACTION, "Admin only")
+                return
+            await self._handle_start_lightning(ws, data, game_state)
+
+        elif msg_type == "lightning_answer":
+            await self._handle_lightning_answer(ws, data, game_state)
+
+        elif msg_type == "end_lightning":
+            if not self._is_authorized_admin(ws, is_admin, game_state):
+                await self._conn.send_error(ws, ERR_INVALID_ACTION, "Admin only")
+                return
+            await self._handle_end_lightning(ws, game_state)
+
         elif msg_type == "reconnect":
             await self._handle_reconnect(ws, data, game_state)
 
@@ -408,6 +426,11 @@ class QuizifyWebSocketHandler:
             player_obj = game_state.get_player(name)
             if player_obj and data.get("is_admin"):
                 player_obj.is_admin = True
+
+            # If a lightning round is mid-flight, register the late joiner so
+            # they can score from the next question on (issue #42).
+            if game_state.phase == GamePhase.LIGHTNING and game_state.lightning:
+                game_state.lightning.add_player(name)
 
             # Cancel any deferred admin-disconnect pause: the admin's
             # redirect from /quizify/admin to /quizify/player took the
@@ -955,6 +978,7 @@ class QuizifyWebSocketHandler:
              resurrect a cleared player under their old slot.
         """
         self._cancel_timer_tick()
+        self._cancel_lightning_loop()
         # Cancel any pending admin-disconnect timer and stale player-removal
         # tasks from the finished game.
         await self._conn.cleanup()
@@ -1032,6 +1056,197 @@ class QuizifyWebSocketHandler:
         await self._conn.broadcast({
             "type": "player_left",
             "players": serialize_player_list(game_state.get_players()),
+        })
+
+    # ------------------------------------------------------------------
+    # Lightning Round (issue #42)
+    # ------------------------------------------------------------------
+    #
+    # A self-contained fast mode: 5 questions, fixed 6s each, auto-advance
+    # on timeout OR when all connected players have answered, NO reveal
+    # between questions, flat points per correct, power-ups disabled. The
+    # mode's rules live in game/lightning.py; here we just drive the loop
+    # and fan out the question/recap payloads over the existing connection
+    # layer.
+
+    async def _handle_start_lightning(
+        self, ws: web.WebSocketResponse, data: dict, game_state: QuizifyGameState
+    ) -> None:
+        """Admin triggers a lightning round (from LOBBY or FINALE)."""
+        # Stop any normal-round timer first — the two loops are mutually
+        # exclusive.
+        self._cancel_timer_tick()
+
+        raw_category = data.get("category")
+        if isinstance(raw_category, list):
+            category = None
+            categories = raw_category or None
+        else:
+            category = raw_category or None
+            categories = None
+        difficulty = data.get("difficulty")
+        language = data.get("language")
+
+        started = game_state.start_lightning_round(
+            category=category,
+            categories=categories,
+            difficulty=difficulty,
+            language=language,
+        )
+        if not started:
+            await self._conn.send_error(
+                ws, ERR_INVALID_ACTION, "Cannot start lightning round"
+            )
+            return
+
+        # Broadcast a phase-entry state so every client switches view.
+        state = game_state.get_state_snapshot()
+        state["type"] = "game_state"
+        await self._conn.broadcast(state)
+
+        self._start_lightning_loop(game_state)
+
+    async def _handle_lightning_answer(
+        self, ws: web.WebSocketResponse, data: dict, game_state: QuizifyGameState
+    ) -> None:
+        """Record a player's answer to the current lightning question."""
+        if game_state.phase != GamePhase.LIGHTNING:
+            return  # silent — window closed
+        lr = game_state.lightning
+        if lr is None:
+            return
+        player = game_state.get_player_by_ws(ws)
+        if not player:
+            await self._conn.send_error(ws, ERR_NOT_IN_GAME, "Not in game")
+            return
+
+        shuffled_index = data.get("answer_index")
+        if not isinstance(shuffled_index, int):
+            await self._conn.send_error(ws, ERR_INVALID_ACTION, "Invalid answer index")
+            return
+
+        result = lr.record_answer(player.name, shuffled_index)
+        if result is None:
+            return  # rejected (already answered / expired) — stay silent
+        # Lightweight ack: lock the player's buttons + show right/wrong.
+        await self._conn._safe_send(ws, {
+            "type": "lightning_answer_result",
+            "correct": bool(result),
+            "index": lr.index,
+            "score": lr.scores.get(player.name, 0),
+        })
+
+    async def _handle_end_lightning(
+        self, ws: web.WebSocketResponse, game_state: QuizifyGameState
+    ) -> None:
+        """Admin ends the lightning round early → jump to the recap."""
+        self._cancel_lightning_loop()
+        if game_state.phase == GamePhase.LIGHTNING:
+            game_state.finish_lightning_round()
+            await self._broadcast_lightning_recap(game_state)
+
+    def _start_lightning_loop(self, game_state: QuizifyGameState) -> None:
+        """Drive the fast lightning loop: broadcast question, wait for the
+        fixed window or all-answered, advance with no reveal, repeat."""
+        self._cancel_lightning_loop()
+
+        async def loop() -> None:
+            try:
+                # Brief grace so clients land on the lightning view before
+                # the first question's clock starts ticking visibly.
+                await asyncio.sleep(1.0)
+                while game_state.phase == GamePhase.LIGHTNING:
+                    lr = game_state.lightning
+                    if lr is None:
+                        break
+                    await self._broadcast_lightning_question(game_state, lr)
+                    # Re-arm the question clock now (after the broadcast) so the
+                    # countdown the players see matches the server window.
+                    lr.restart_clock()
+                    # Wait out the fixed window, but cut short once every
+                    # connected player has answered.
+                    deadline = lr.seconds_per_question
+                    waited = 0.0
+                    step = 0.25
+                    while waited < deadline:
+                        # Tick the countdown to players/dashboards.
+                        await self._broadcast_lightning_tick(game_state, lr)
+                        connected = [
+                            p.name for p in game_state.get_players() if p.connected
+                        ]
+                        if lr.all_connected_answered(connected):
+                            break
+                        await asyncio.sleep(step)
+                        waited += step
+                        if game_state.phase != GamePhase.LIGHTNING:
+                            return
+                    # No reveal — score silently and arm the next question.
+                    has_more = lr.advance()
+                    if not has_more:
+                        game_state.finish_lightning_round()
+                        await self._broadcast_lightning_recap(game_state)
+                        return
+            except asyncio.CancelledError:
+                pass
+
+        self._lightning_task = asyncio.ensure_future(loop())
+
+    def _cancel_lightning_loop(self) -> None:
+        if self._lightning_task is not None:
+            self._lightning_task.cancel()
+            self._lightning_task = None
+
+    async def _broadcast_lightning_question(
+        self, game_state: QuizifyGameState, lr: Any
+    ) -> None:
+        """Send the current lightning question per-player (own shuffle) and
+        to admin/dashboard (canonical order)."""
+        q = lr.current_question
+        if q is None:
+            return
+        for player in game_state.get_players():
+            if not player.connected:
+                continue
+            await self._conn._safe_send(player.ws, {
+                "type": "lightning_question",
+                "question_text": q.question,
+                "answers": lr.shuffled_answers_for(player.name),
+                "index": lr.index,
+                "num_questions": lr.num_questions,
+                "seconds": lr.seconds_per_question,
+                "category": q.category,
+                "image_url": q.image_url,
+            })
+        await self._conn.broadcast_to_admins_and_dashboards({
+            "type": "lightning_question",
+            "question_text": q.question,
+            "answers": [a.text for a in q.answers],
+            "index": lr.index,
+            "num_questions": lr.num_questions,
+            "seconds": lr.seconds_per_question,
+            "category": q.category,
+            "image_url": q.image_url,
+        })
+
+    async def _broadcast_lightning_tick(
+        self, game_state: QuizifyGameState, lr: Any
+    ) -> None:
+        remaining = round(lr.time_remaining(), 1)
+        await self._conn.broadcast({
+            "type": "lightning_tick",
+            "remaining": remaining,
+            "index": lr.index,
+        })
+
+    async def _broadcast_lightning_recap(
+        self, game_state: QuizifyGameState
+    ) -> None:
+        lr = game_state.lightning
+        if lr is None:
+            return
+        await self._conn.broadcast({
+            "type": "lightning_recap",
+            "recap": lr.build_recap(),
         })
 
     # ------------------------------------------------------------------
@@ -1519,5 +1734,6 @@ class QuizifyWebSocketHandler:
     async def cleanup_game_tasks(self) -> None:
         """Cancel all pending tasks."""
         self._cancel_timer_tick()
+        self._cancel_lightning_loop()
         await self._conn.cleanup()
         _LOGGER.debug("Cleaned up all pending game tasks")

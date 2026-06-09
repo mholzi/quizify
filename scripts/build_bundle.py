@@ -34,6 +34,7 @@ PLAYER_MODULES = [
     "player-lobby.js",
     "player-reveal.js",
     "player-end.js",
+    "player-lightning.js",
     "player-game.js",
     "player-core.js",
 ]
