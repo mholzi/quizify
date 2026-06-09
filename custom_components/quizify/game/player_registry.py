@@ -258,12 +258,24 @@ class PlayerRegistry:
         return None
 
     def has_other_admin(self, name: str) -> bool:
-        """Return True if a player *other than* ``name`` already is admin.
+        """Return True if a *connected* player other than ``name`` is admin.
 
         Used to reject a second admin-claim: the first claimant keeps the
         crown, later claims by a different player are denied. A re-claim by
         the same player (e.g. the admin's redirect from /admin to /player
         re-joining under the same name) is idempotent and not blocked.
+
+        Crown-recovery (#207 regression of #209): a *disconnected/stale*
+        admin slot must NOT block the legitimate host's re-claim. When the
+        host's /admin -> /player redirect (or any reload) takes the
+        fresh-join path, the still-open old admin slot momentarily holds
+        the crown under a disambiguated name ("Host 2"); the strict
+        name-only check then denied the host admin, and once the stale
+        slot was pruned NOBODY held the crown — so every admin-only action
+        (reset/pause/skip/resume, which share one auth guard) was silently
+        rejected and the client swallowed the error. We therefore only let
+        a *connected* admin block the claim. A live admin still keeps the
+        crown (the #208 anti-takeover guarantee is preserved).
         """
         admin = self.get_admin()
-        return admin is not None and admin.name != name
+        return admin is not None and admin.name != name and admin.connected

@@ -305,7 +305,14 @@ class QuizifyWebSocketHandler:
             await self._handle_resume_game(ws, game_state)
 
         elif msg_type == "reset_game":
-            if not self._is_authorized_admin(ws, is_admin, game_state):
+            # Reset is the recovery escape-hatch (#207). Besides the normal
+            # admin check, allow it whenever NO connected admin currently
+            # holds the crown: in that orphaned-crown state (the legitimate
+            # host lost its admin slot to the #209 name-disambiguation race)
+            # the host has no other way back to a clean lobby. Reset is safe
+            # and idempotent — it can only return the game to its initial
+            # state, never escalate privilege — so this cannot be abused.
+            if not self._is_reset_authorized(ws, is_admin, game_state):
                 await self._conn.send_error(ws, ERR_INVALID_ACTION, "Admin only")
                 return
             await self._handle_reset_game(ws, game_state)
@@ -451,6 +458,21 @@ class QuizifyWebSocketHandler:
                         name,
                     )
                 else:
+                    # Crown-recovery (#207 regression of #209): if a *stale*
+                    # (disconnected) admin slot still lingers under a different
+                    # name — the host's old /admin slot during the
+                    # /admin -> /player redirect — demote it before crowning the
+                    # re-joining host. has_other_admin() no longer blocks on a
+                    # disconnected admin, so without this demotion two players
+                    # would briefly carry is_admin and break the #208 invariant.
+                    stale_admin = game_state.get_admin()
+                    if stale_admin is not None and stale_admin.name != name:
+                        stale_admin.is_admin = False
+                        _LOGGER.info(
+                            "Crown transferred from stale admin %s to %s",
+                            stale_admin.name,
+                            name,
+                        )
                     player_obj.is_admin = True
 
             # If a lightning round is mid-flight, register the late joiner so
@@ -1636,6 +1658,24 @@ class QuizifyWebSocketHandler:
         """Return True if the connection is authorized to perform admin actions."""
         player = game_state.get_player_by_ws(ws)
         return is_admin or bool(player and player.is_admin)
+
+    def _is_reset_authorized(
+        self, ws: web.WebSocketResponse, is_admin: bool, game_state: QuizifyGameState
+    ) -> bool:
+        """Authorize a reset_game request.
+
+        Stricter-than-nothing escape hatch (#207): a normal authorized admin
+        may always reset; additionally, ANY connected client may reset when
+        no *connected* admin currently holds the crown. The latter recovers
+        the legitimate host from the orphaned-crown state left by the #209
+        single-admin name race, where otherwise every admin-only action is
+        silently rejected. Reset only ever returns the game to its initial
+        state, so granting it in the admin-less case cannot escalate control.
+        """
+        if self._is_authorized_admin(ws, is_admin, game_state):
+            return True
+        admin = game_state.get_admin()
+        return admin is None or not admin.connected
 
     def _notify_tts_milestone(self, player_name: str, streak: int) -> None:
         """Forward a milestone hit to the TTS announcer if one is wired.

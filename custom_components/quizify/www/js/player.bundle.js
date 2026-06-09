@@ -3640,6 +3640,22 @@
                 handleGameState(msg);
                 break;
 
+            case 'game_reset':
+                // Admin wiped the whole session (issue #207). Drop our
+                // identity + session token so the now-stale token can't
+                // resurrect us, and return to the join screen explicitly.
+                // The server also closes our socket right after this, but
+                // handling the broadcast directly makes the return to the
+                // join screen deterministic instead of relying on the
+                // close + reconnect_failed race.
+                pu.clearSession();
+                state.sessionToken = null;
+                state.playerName = null;
+                state.playerId = null;
+                state.isAdmin = false;
+                pu.showView('join-view');
+                break;
+
             case 'joined':
             case 'reconnected':
                 state.playerName = msg.player_id || state.playerName;
