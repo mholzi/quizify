@@ -1,0 +1,2646 @@
+/* ==========================================
+   Player Page: END VIEW
+   ========================================== */
+
+.end-container {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: var(--space-lg);
+    padding: var(--space-md) 0 var(--space-2xl);
+}
+
+.end-header {
+    text-align: center;
+    margin-bottom: var(--space-md);
+}
+
+.end-title {
+    font-family: var(--font-display);
+    font-size: 2rem;
+    font-weight: 900;
+    color: var(--color-text-white);
+    letter-spacing: -0.02em;
+    margin-bottom: var(--space-xs);
+}
+
+.end-subtitle {
+    font-size: 0.9rem;
+    color: var(--color-text-neon-muted);
+}
+
+/* Mobile podium plank size overrides.
+   Base .podium-stand styling lives with .podium-bar above
+   (Soft Parlor shared block). Here we only re-tune heights
+   and number size for the smaller phone surface. */
+.podium-1 .podium-stand {
+    height: 140px;
+    font-size: 2.5rem;
+}
+
+.podium-2 .podium-stand {
+    height: 105px;
+    font-size: 2rem;
+}
+
+.podium-3 .podium-stand {
+    height: 75px;
+    font-size: 1.5rem;
+}
+
+.podium-rise {
+    animation: podium-rise 0.8s ease-out both;
+}
+
+/* Your personal result card */
+.your-result {
+    width: 100%;
+    background: var(--color-surface-dark);
+    border: 1px solid var(--color-border-neon);
+    border-radius: var(--radius-lg);
+    padding: var(--space-lg);
+}
+
+.your-result-header {
+    /* -20 % per Markus' live test 2026-05-29; bumped from 0.75 rem. */
+    font-size: 0.6rem;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 0.08em;
+    color: var(--color-text-neon-muted);
+    margin-bottom: var(--space-md);
+}
+
+.your-result-rank {
+    font-family: var(--font-display);
+    /* -20 % per Markus' live test 2026-05-29; bumped from 2.5 rem. */
+    font-size: 2rem;
+    font-weight: 900;
+    color: #E88A7F;
+    text-align: center;
+    margin-bottom: var(--space-xs);
+}
+
+.your-result-score {
+    /* -20 % per Markus' live test 2026-05-29; bumped from 1.1 rem. */
+    font-size: 0.88rem;
+    font-weight: 700;
+    color: var(--color-accent-secondary);
+    text-align: center;
+    text-shadow: 0 0 10px var(--color-accent-secondary);
+    margin-bottom: var(--space-md);
+}
+
+.your-result-stats {
+    display: flex;
+    justify-content: space-around;
+    gap: var(--space-md);
+    padding-top: var(--space-md);
+    border-top: 1px solid rgba(255, 255, 255, 0.06);
+}
+
+.stat {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: var(--space-xs);
+    flex: 1;
+}
+
+.stat-value {
+    /* -20 % per Markus' live test 2026-05-29; bumped from 1.25 rem. */
+    font-size: 1rem;
+    font-weight: 800;
+    color: var(--color-text-white);
+}
+
+.stat-label {
+    /* Centered + 20 % smaller per Mai-27 live-test feedback so all three
+       labels read uniformly under their stat value (was left-aligned and
+       inconsistent between Power-Ups GENUTZT and the shorter labels). */
+    font-size: 0.56rem;
+    font-weight: 500;
+    color: var(--color-text-neon-muted);
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+    text-align: center;
+    display: block;
+    width: 100%;
+}
+
+/* Superlatives */
+/* Superlatives — Trophy Tiles (Soft Parlor, approved 2026-06-07).
+   2-col grid of square cream cards, each award glyph in a rotating
+   colored disc (coral/sage/sky/sun). */
+.superlatives-container {
+    width: 100%;
+    margin-top: var(--space-lg);
+}
+
+.superlatives-header {
+    font-family: var(--font-display);
+    font-weight: 800;
+    font-size: 0.95rem;
+    letter-spacing: -0.01em;
+    color: var(--color-text-white);
+    margin-bottom: var(--space-sm);
+}
+
+.superlatives-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: var(--space-sm);
+}
+
+.superlative-card {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    text-align: center;
+    gap: 2px;
+    padding: var(--space-md) var(--space-sm);
+    background: var(--color-bg-white, #FFFFFF);
+    border-radius: var(--radius-md);
+    box-shadow: var(--shadow-sm);
+    animation: superlative-entrance 0.4s ease-out both;
+}
+
+.superlative-disc {
+    width: 38px;
+    height: 38px;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 1.15rem;
+    margin-bottom: var(--space-xs);
+}
+.sup-disc--coral { background: rgba(232, 138, 127, 0.18); }
+.sup-disc--sage  { background: rgba(127, 168, 151, 0.18); }
+.sup-disc--sky   { background: rgba(127, 168, 196, 0.18); }
+.sup-disc--sun   { background: rgba(232, 196, 127, 0.22); }
+
+.superlative-title {
+    font-family: var(--font-display);
+    font-size: 0.8rem;
+    font-weight: 700;
+    color: var(--color-text-white);
+    line-height: 1.2;
+}
+
+.superlative-player {
+    font-size: 0.8rem;
+    color: var(--color-text-white);
+}
+
+.superlative-value {
+    font-family: var(--font-mono);
+    font-size: 0.65rem;
+    color: var(--color-text-neon-muted);
+    letter-spacing: 0.02em;
+    margin-top: 2px;
+}
+
+@keyframes superlative-entrance {
+    from { opacity: 0; transform: translateY(8px) scale(0.96); }
+    to   { opacity: 1; transform: translateY(0) scale(1); }
+}
+
+/* Highlights header */
+.highlights-header {
+    font-size: 0.75rem;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 0.08em;
+    color: var(--color-text-neon-muted);
+    margin-bottom: var(--space-sm);
+}
+
+/* End view controls */
+.end-admin-controls {
+    display: flex;
+    gap: var(--space-sm);
+    width: 100%;
+}
+
+.end-admin-controls .btn {
+    flex: 1;
+}
+
+.end-player-message {
+    text-align: center;
+    color: var(--color-text-neon-muted);
+    font-size: 0.9rem;
+    padding: var(--space-md) 0;
+}
+
+.end-hint {
+    text-align: center;
+    color: var(--color-text-neon-muted);
+    font-size: 0.75rem;
+    opacity: 0.7;
+}
+
+.away-badge {
+    font-size: 0.7rem;
+    color: var(--color-text-neon-muted);
+    font-weight: 400;
+    margin-left: var(--space-xs);
+    opacity: 0.6;
+}
+
+.new-game-btn {
+    background: var(--color-accent-blue);
+    color: var(--color-text-white);
+    border: none;
+    border-radius: var(--radius-md);
+    padding: var(--space-md) var(--space-lg);
+    font-weight: var(--font-weight-semibold);
+    cursor: pointer;
+    transition: background var(--transition-fast);
+}
+
+.new-game-btn:hover:not(:disabled) {
+    background: var(--color-accent-blue-hover);
+}
+
+/* .player-rematch-btn removed in v1.1.3 — rematch flow deprecated. */
+
+/* ==========================================
+   Player Page: GAME VIEW
+   ========================================== */
+
+.game-container {
+    display: flex;
+    flex-direction: column;
+    flex: 1;
+    gap: var(--space-md);
+    padding-bottom: var(--space-md);
+}
+
+.game-header-compact {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: var(--space-sm) 0;
+    font-size: 0.8rem;
+}
+
+.game-header-left {
+    display: flex;
+    align-items: center;
+    gap: var(--space-sm);
+}
+
+.round-indicator-text {
+    font-size: 0.8rem;
+    font-weight: 600;
+    color: var(--color-accent-secondary);
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+}
+
+.last-round-banner {
+    display: inline-flex;
+    align-items: center;
+    gap: var(--space-xs);
+    padding: var(--space-xs) var(--space-sm);
+    background: rgba(232, 138, 127, 0.15);
+    border: 1px solid rgba(232, 138, 127, 0.3);
+    border-radius: var(--radius-full);
+    color: var(--color-accent-primary);
+    font-size: 0.75rem;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+    animation: pulse-bar 1s ease-in-out infinite alternate;
+}
+
+/* Question card */
+.question-card-container {
+    margin-bottom: var(--space-md);
+}
+
+.question-card {
+    background: var(--color-surface-dark);
+    border: 1px solid var(--color-border-neon);
+    border-radius: var(--radius-lg);
+    padding: var(--space-lg);
+    text-align: center;
+}
+
+.album-loading {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: var(--space-lg);
+    color: var(--color-text-neon-muted);
+    font-size: 0.85rem;
+}
+
+/* Timer */
+.timer-container {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: var(--space-sm);
+    padding: var(--space-sm) 0;
+}
+
+.timer {
+    font-size: 1.5rem;
+    font-weight: var(--font-weight-bold);
+    font-family: var(--font-mono);
+    font-variant-numeric: tabular-nums;
+    color: var(--color-text-white);
+    text-align: center;
+}
+
+.timer--warning {
+    color: var(--color-warning);
+}
+
+.timer--critical {
+    color: var(--color-error-neon);
+    text-shadow: 0 0 15px var(--color-error-neon);
+    animation: timer-pulse-intense 0.5s ease-in-out infinite;
+}
+
+/* Answer section */
+.answer-section {
+    margin-top: var(--space-md);
+}
+
+.answer-buttons {
+    display: flex;
+    flex-direction: column;
+    gap: var(--space-sm);
+}
+
+/* Answer button color variants */
+.answer-btn-a {
+    border-left: 3px solid rgba(232, 138, 127, 0.4);
+}
+
+.answer-btn-b {
+    border-left: 3px solid rgba(168, 85, 247, 0.4);
+}
+
+.answer-btn-c {
+    border-left: 3px solid rgba(232, 138, 127, 0.4);
+}
+
+/* Answer letter circle */
+.answer-letter {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    width: 28px;
+    height: 28px;
+    border-radius: var(--radius-full);
+    background: rgba(255, 255, 255, 0.08);
+    font-weight: var(--font-weight-bold);
+    font-size: 0.8rem;
+    color: var(--color-accent-secondary);
+    flex-shrink: 0;
+}
+
+/* Answer states */
+.answer-btn.is-selected,
+.is-selected {
+    border-color: var(--color-accent-primary);
+    background: rgba(232, 138, 127, 0.15);
+    box-shadow: var(--glow-primary);
+}
+
+.is-selected .answer-letter {
+    background: var(--color-accent-primary);
+    color: var(--color-text-white);
+}
+
+.answer-btn.is-correct,
+.is-correct {
+    border-color: #7FA897;
+    background: rgba(127, 168, 151, 0.14);
+    animation: glow-correct 0.6s ease;
+}
+
+.is-correct .answer-letter {
+    background: var(--color-success);
+    color: var(--color-text-white);
+}
+
+.answer-btn.is-wrong,
+.is-wrong {
+    border-color: #D66A6A;
+    background: rgba(214, 106, 106, 0.10);
+    opacity: 0.7;
+}
+
+.is-wrong .answer-letter {
+    background: var(--color-error);
+    color: var(--color-text-white);
+}
+
+.answer-btn.is-eliminated,
+.is-eliminated {
+    opacity: 0.2;
+    text-decoration: line-through;
+    pointer-events: none;
+}
+
+/* Power-up container */
+.powerup-container {
+    display: flex;
+    justify-content: center;
+    padding: var(--space-sm) 0;
+}
+
+.powerup-icon {
+    font-size: 1rem;
+}
+
+.powerup-label {
+    font-size: 0.85rem;
+    font-weight: 600;
+}
+
+/* Submitted confirmation */
+.submitted-confirmation {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: var(--space-sm);
+    padding: var(--space-md);
+    color: var(--color-success);
+    font-size: 0.95rem;
+    font-weight: 600;
+}
+
+.checkmark {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    width: 24px;
+    height: 24px;
+    border-radius: var(--radius-full);
+    background: rgba(16, 185, 129, 0.15);
+    color: var(--color-success);
+    font-size: 0.85rem;
+}
+
+/* Submission tracker */
+.submission-tracker {
+    text-align: center;
+    font-size: 0.75rem;
+    color: var(--color-text-neon-muted);
+    padding: var(--space-xs) 0;
+}
+
+.submitted-players {
+    color: var(--color-text-neon-muted);
+    font-size: 0.75rem;
+}
+
+/* Leaderboard section (in-game) */
+.leaderboard-section {
+    margin-top: var(--space-md);
+}
+
+.leaderboard-list {
+    display: flex;
+    flex-direction: column;
+}
+
+.leaderboard-entry {
+    display: flex;
+    align-items: center;
+    gap: var(--space-md);
+    padding: var(--space-sm) var(--space-md);
+    border-bottom: 1px solid rgba(255, 255, 255, 0.05);
+    font-size: 0.85rem;
+}
+
+.leaderboard-entry:last-child {
+    border-bottom: none;
+}
+
+.leaderboard-separator {
+    height: 1px;
+    background: var(--color-border-neon);
+    margin: var(--space-xs) 0;
+}
+
+/* Player indicator dot */
+.player-indicator {
+    width: 8px;
+    height: 8px;
+    border-radius: var(--radius-full);
+    background: var(--color-text-neon-muted);
+    flex-shrink: 0;
+}
+
+.player-indicator.is-submitted {
+    background: var(--color-success-neon);
+    box-shadow: 0 0 6px var(--color-success-neon);
+}
+
+.is-current-player {
+    background: rgba(232, 138, 127, 0.08);
+    border-radius: var(--radius-md);
+}
+
+/* ==========================================
+   Player Page: REVEAL VIEW
+   ========================================== */
+
+.reveal-container {
+    display: flex;
+    flex-direction: column;
+    gap: var(--space-md);
+    padding-bottom: var(--space-2xl);
+}
+
+.reveal-container--compact {
+    gap: var(--space-sm);
+}
+
+.reveal-header-compact {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: var(--space-sm) 0;
+    font-size: 0.8rem;
+}
+
+.reveal-header-left {
+    display: flex;
+    align-items: center;
+    gap: var(--space-sm);
+}
+
+/* Song hero */
+.reveal-song-hero {
+    text-align: center;
+    padding: var(--space-md) 0;
+}
+
+.reveal-song-info {
+    margin-bottom: var(--space-sm);
+}
+
+.song-title {
+    font-family: var(--font-display);
+    font-size: 1.2rem;
+    font-weight: 800;
+    color: var(--color-text-white);
+    line-height: 1.3;
+}
+
+.reveal-emotion-text {
+    font-size: 1.1rem;
+    font-weight: 700;
+    text-align: center;
+    margin-bottom: var(--space-sm);
+}
+
+/* Fun fact section */
+/* Answer distribution bars */
+.answer-distribution-section {
+    background: var(--color-surface-dark);
+    border: 1px solid var(--color-border-neon);
+    border-radius: var(--radius-lg);
+    padding: var(--space-md);
+    display: flex;
+    flex-direction: column;
+    gap: var(--space-sm);
+}
+
+.answer-bar {
+    display: flex;
+    flex-direction: column;
+    gap: 4px;
+}
+
+.answer-bar__header {
+    display: flex;
+    align-items: center;
+    gap: var(--space-xs);
+    font-size: 0.85rem;
+}
+
+.answer-bar__label {
+    font-weight: 700;
+    color: var(--color-text-muted);
+    min-width: 18px;
+}
+
+.answer-bar__text {
+    flex: 1;
+    color: var(--color-text-white);
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+}
+
+.answer-bar__pct {
+    font-weight: 700;
+    color: var(--color-text-muted);
+    min-width: 36px;
+    text-align: right;
+}
+
+.answer-bar--correct .answer-bar__label,
+.answer-bar--correct .answer-bar__pct {
+    color: var(--color-success-neon);
+}
+
+.answer-bar__track {
+    height: 8px;
+    background: #E5DFCF;
+    border-radius: var(--radius-full);
+    overflow: hidden;
+}
+
+.answer-bar__fill {
+    height: 100%;
+    background: var(--color-text-muted);
+    border-radius: var(--radius-full);
+    transition: width 0.6s ease;
+}
+
+.answer-bar--correct .answer-bar__fill {
+    background: var(--color-success-neon);
+    box-shadow: 0 0 8px var(--color-success-neon);
+}
+
+/* ============================================================
+   Answer-distribution variant F (Filling-Bar).
+   Each row IS the bar — text + percentage sit on top of a coral
+   wash that grows from the left to match vote percentage. Correct
+   row repaints sage with a ✓; the player's own row gets a "· DU"
+   tag in coral so per-player shuffle doesn't lose them.
+   Old .answer-bar styles above stay for back-compat but are unused.
+   ============================================================ */
+.ad-row {
+    position: relative;
+    min-height: 44px;
+    border: 1px solid var(--color-border-light);
+    border-radius: 8px;
+    overflow: hidden;
+    background: var(--color-bg-surface);
+    display: flex;
+    align-items: center;
+}
+.ad-row + .ad-row { margin-top: 6px; }
+
+.ad-fill {
+    position: absolute;
+    left: 0; top: 0; bottom: 0;
+    background: var(--color-accent-brand-bg);
+    transition: width 600ms ease-out;
+}
+
+.ad-content {
+    position: relative;
+    z-index: 1;
+    display: grid;
+    grid-template-columns: 26px 1fr auto;
+    align-items: center;
+    gap: 10px;
+    width: 100%;
+    padding: 8px 12px;
+}
+
+.ad-letter {
+    font-family: var(--font-mono);
+    font-weight: 700;
+    color: var(--color-text-muted);
+    font-size: 0.85rem;
+}
+
+.ad-text {
+    color: var(--color-text-primary);
+    font-size: 0.95rem;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+}
+
+.ad-pct {
+    font-family: var(--font-mono);
+    font-weight: 600;
+    color: var(--color-text-muted);
+    font-size: 0.85rem;
+}
+
+.ad-row--correct {
+    border-color: var(--color-success);
+}
+.ad-row--correct .ad-fill {
+    background: var(--color-success-light);
+}
+.ad-row--correct .ad-letter,
+.ad-row--correct .ad-text,
+.ad-row--correct .ad-pct {
+    color: var(--color-success);
+    font-weight: 700;
+}
+
+.ad-mine {
+    color: var(--color-accent-primary);
+    font-family: var(--font-mono);
+    font-size: 0.75rem;
+    font-weight: 700;
+    letter-spacing: 0.05em;
+}
+
+.fun-fact-section {
+    background: var(--color-surface-dark);
+    border: 1px solid var(--color-border-neon);
+    border-radius: var(--radius-lg);
+    padding: var(--space-md);
+}
+
+.section-content-padded {
+    padding: var(--space-sm) var(--space-md) var(--space-md);
+}
+
+/* Personal result section */
+.personal-result-section {
+    background: var(--color-surface-dark);
+    border: 1px solid var(--color-border-neon);
+    border-radius: var(--radius-lg);
+    overflow: hidden;
+}
+
+.result-content {
+    padding: var(--space-sm) var(--space-md) var(--space-md);
+}
+
+/* Guesses section */
+.guesses-section {
+    margin-top: var(--space-sm);
+}
+
+/* Confetti canvas */
+.confetti-canvas {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    pointer-events: none;
+    z-index: 9998;
+}
+
+/* Reveal admin controls */
+.reveal-admin-controls {
+    margin-top: var(--space-md);
+}
+
+.reveal-admin-buttons {
+    display: flex;
+    gap: var(--space-sm);
+}
+
+.reveal-admin-buttons .btn {
+    flex: 1;
+}
+
+.next-round-btn {
+    background: var(--color-accent-blue);
+    color: var(--color-text-white);
+    border: none;
+    border-radius: var(--radius-md);
+    padding: var(--space-md) var(--space-lg);
+    font-weight: var(--font-weight-semibold);
+    cursor: pointer;
+    transition: background var(--transition-fast);
+    width: 100%;
+}
+
+.next-round-btn:hover:not(:disabled) {
+    background: var(--color-accent-blue-hover);
+}
+
+.next-round-btn.is-final {
+    background: var(--color-accent-primary);
+}
+
+.next-round-btn.is-final:hover:not(:disabled) {
+    background: #ff4080;
+}
+
+/* Invite button in reveal */
+.invite-btn {
+    display: inline-flex;
+    align-items: center;
+    gap: var(--space-sm);
+    padding: var(--space-sm) var(--space-md);
+    background: rgba(255, 255, 255, 0.06);
+    border: 1px solid var(--color-border-neon);
+    border-radius: var(--radius-md);
+    color: var(--color-text-white);
+    font-size: 0.85rem;
+    cursor: pointer;
+    transition: all var(--transition-fast);
+    font-family: var(--font-system);
+}
+
+.invite-btn:hover {
+    background: rgba(255, 255, 255, 0.1);
+    border-color: var(--color-accent-secondary);
+}
+
+.invite-btn-icon {
+    font-size: 1rem;
+}
+
+.invite-btn-label {
+    font-weight: 500;
+}
+
+/* Round analytics */
+.round-analytics-section {
+    margin-top: var(--space-md);
+}
+
+/* Streak bonus row */
+.streak-bonus-row {
+    background: rgba(245, 158, 11, 0.06);
+    border-radius: var(--radius-sm);
+    padding: 2px var(--space-sm);
+}
+
+/* Score zero state */
+.is-score-zero {
+    opacity: 0.55;
+}
+
+/* ==========================================
+   Player Page: LOBBY VIEW (extras)
+   ========================================== */
+
+.lobby-header-compact {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: var(--space-sm) 0;
+    margin-bottom: var(--space-md);
+}
+
+.section-header--inline {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: var(--space-sm);
+    margin-bottom: var(--space-sm);
+}
+
+.stat-badge--difficulty {
+    background: rgba(168, 85, 247, 0.12);
+    border-color: rgba(168, 85, 247, 0.3);
+    color: var(--color-neon-purple);
+}
+
+/* How to play compact steps */
+.how-to-play-steps-compact {
+    list-style: none;
+    padding: 0;
+    counter-reset: step-counter;
+}
+
+.how-to-play-steps-compact li {
+    counter-increment: step-counter;
+    display: flex;
+    align-items: flex-start;
+    gap: var(--space-sm);
+    padding: var(--space-sm) 0;
+    font-size: 0.85rem;
+    color: var(--color-text-white);
+    border-bottom: 1px solid rgba(255, 255, 255, 0.05);
+}
+
+.how-to-play-steps-compact li:last-child {
+    border-bottom: none;
+}
+
+.how-to-play-steps-compact li::before {
+    content: counter(step-counter);
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    width: 22px;
+    height: 22px;
+    border-radius: var(--radius-full);
+    background: rgba(232, 138, 127, 0.12);
+    color: var(--color-accent-secondary);
+    font-size: 0.7rem;
+    font-weight: 700;
+    flex-shrink: 0;
+}
+
+.qr-hint {
+    font-size: 0.7rem;
+    color: var(--color-text-neon-muted);
+    margin-top: var(--space-xs);
+}
+
+.lobby-status-compact {
+    text-align: center;
+    padding: var(--space-md) 0;
+    color: var(--color-text-neon-muted);
+    font-size: 0.9rem;
+}
+
+/* Button variants */
+.btn-icon {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    gap: var(--space-sm);
+}
+
+.btn-large {
+    min-height: 56px;
+    font-size: var(--font-size-lg);
+    padding: var(--space-md) var(--space-xl);
+    font-weight: var(--font-weight-semibold);
+}
+
+.btn-full-width {
+    width: 100%;
+}
+
+/* ==========================================
+   Setup — variant A (Hero CTA) + B (Preset Stacks)
+   ==========================================
+   Hero state by default. "Einstellungen anpassen" link flips
+   data-mode="detail" on #setup-screen and reveals the preset cards.
+   Hero hides via the data-mode selector. "Eigene" preset reveals
+   the existing chip rows below. */
+#setup-screen[data-mode="hero"] #setup-detail { display: none; }
+#setup-screen[data-mode="detail"] #setup-hero { display: none; }
+
+.setup-hero {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    gap: var(--space-md);
+    padding: var(--space-xl) var(--space-md);
+    min-height: 60vh;
+    text-align: center;
+}
+
+.setup-hero-emoji {
+    font-size: 3.4rem;
+    line-height: 1;
+}
+
+.setup-hero-headline {
+    font-family: var(--font-display);
+    font-weight: 800;
+    font-size: clamp(1.4rem, 5vw, 2.2rem);
+    line-height: 1.15;
+    margin: 0;
+    color: var(--color-text-heading);
+}
+.setup-hero-headline .accent { color: var(--color-accent-primary); }
+
+.setup-hero-summary {
+    font-family: var(--font-mono);
+    font-size: 0.85rem;
+    color: var(--color-text-muted);
+    margin: 0;
+    max-width: 90%;
+    line-height: 1.5;
+}
+
+/* Selected-topics line on the ready screen — shown only when the host
+   picked specific packs (not Gemischt). Coral to read as a chosen accent,
+   sits just below the mono settings summary. */
+.setup-hero-topics {
+    font-family: var(--font-body);
+    font-size: 0.85rem;
+    font-weight: 600;
+    color: var(--color-accent-primary, #E88A7F);
+    margin: 6px 0 0;
+    max-width: 90%;
+    line-height: 1.4;
+}
+
+.setup-hero .btn {
+    width: 100%;
+    max-width: 360px;
+    padding: 16px;
+    font-size: 1.05rem;
+}
+
+.setup-tweak-link {
+    background: transparent;
+    border: 0;
+    color: var(--color-text-muted);
+    font-family: var(--font-body);
+    font-size: 0.85rem;
+    padding: 8px;
+    cursor: pointer;
+    text-decoration: underline dotted var(--color-text-light);
+    text-underline-offset: 4px;
+}
+.setup-tweak-link:hover { color: var(--color-text-primary); }
+
+/* Featured pack spotlight on the hero — one-tap launch of a highlighted
+   pack. Soft Parlor card: lifted paper, hairline border, soft shadow, sun
+   "New" pill, coral play affordance. The whole card is the button. */
+.hero-feature {
+    display: flex;
+    align-items: center;
+    gap: var(--space-md);
+    width: 100%;
+    max-width: 360px;
+    text-align: left;
+    background: var(--color-bg-card);
+    border: 1px solid var(--color-border-light);
+    border-radius: var(--radius-xl);
+    padding: 14px 15px;
+    box-shadow: var(--shadow-lg);
+    cursor: pointer;
+    transition: transform 0.12s ease, box-shadow 0.12s ease;
+}
+.hero-feature:hover { transform: translateY(-2px); box-shadow: var(--shadow-xl); }
+.hero-feature:active { transform: translateY(0); }
+/* Selected state — the card toggles a pack like the chips, not an instant launch. */
+.hero-feature.active {
+    border-color: var(--color-accent-primary);
+    box-shadow: 0 0 0 1.5px rgba(232, 138, 127, 0.35), var(--shadow-lg);
+}
+.hero-feature-icon { font-size: 2rem; line-height: 1; flex: none; }
+.hero-feature-body { display: flex; flex-direction: column; min-width: 0; }
+/* Round check on the right; filled coral only when the pack is selected. */
+.hero-feature-check {
+    flex: none;
+    margin-left: auto;
+    width: 22px;
+    height: 22px;
+    border-radius: 50%;
+    border: 2px solid var(--color-border-light);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 0.75rem;
+    font-weight: 700;
+    color: transparent;
+    transition: background 0.12s ease, border-color 0.12s ease;
+}
+.hero-feature.active .hero-feature-check {
+    border-color: var(--color-accent-primary);
+    background: var(--color-accent-primary);
+    color: #fff;
+}
+.hero-feature-top { display: flex; align-items: center; gap: 8px; }
+.hero-feature-tag {
+    font-family: var(--font-mono);
+    font-size: 0.6rem;
+    font-weight: 700;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    background: var(--color-warning);
+    color: #5C4A16;
+    padding: 3px 8px;
+    border-radius: var(--radius-full);
+}
+.hero-feature-title {
+    font-family: var(--font-display);
+    font-weight: 700;
+    font-size: 1.1rem;
+    color: var(--color-text-heading);
+}
+.hero-feature-desc {
+    font-family: var(--font-body);
+    font-size: 0.82rem;
+    color: var(--color-text-muted);
+    margin-top: 2px;
+    line-height: 1.35;
+}
+.hero-feature-play {
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    align-self: flex-start;
+    margin-top: 10px;
+    background: var(--color-accent-primary);
+    color: #fff;
+    font-family: var(--font-body);
+    font-weight: 700;
+    font-size: 0.82rem;
+    padding: 8px 12px;
+    border-radius: var(--radius-md);
+}
+
+/* Pack picker on the hero (variant C): the featured card above, then the
+   rest of the packs as compact chips. Selection lives here now, not in
+   "Adjust settings". Chips are generated by admin.js from #category-chips. */
+.hero-packs {
+    width: 100%;
+    max-width: 360px;
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+}
+.hero-packs-label {
+    font-family: var(--font-mono);
+    font-size: 0.66rem;
+    letter-spacing: 0.05em;
+    text-transform: uppercase;
+    color: var(--color-text-light);
+    text-align: left;
+}
+.hero-pack-chips {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 7px;
+}
+.hero-pack-chip {
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    background: var(--color-bg-card);
+    border: 1px solid var(--color-border-light);
+    border-radius: var(--radius-full);
+    padding: 7px 11px;
+    font-family: var(--font-body);
+    font-size: 0.8rem;
+    font-weight: 600;
+    color: var(--color-text-primary);
+    box-shadow: var(--shadow-sm);
+    cursor: pointer;
+    transition: border-color 0.12s ease, box-shadow 0.12s ease;
+}
+.hero-pack-chip .hpc-icon { font-size: 0.95rem; line-height: 1; }
+.hero-pack-chip:hover { border-color: var(--color-border-medium); }
+.hero-pack-chip.active {
+    border-color: var(--color-accent-primary);
+    box-shadow: 0 0 0 1.5px rgba(232, 138, 127, 0.35), var(--shadow-sm);
+}
+
+/* Topics step relocated to the hero — keep it out of the Adjust-settings view. */
+#vF-step-topics[hidden] { display: none; }
+
+/* Detail (preset stacks) */
+.setup-detail {
+    padding: var(--space-md);
+    display: flex;
+    flex-direction: column;
+    gap: var(--space-md);
+    /* v1.1.44: width:100% + box-sizing:border-box so the panel respects
+       its parent at narrow viewports. Without width:100% the flex column
+       container was sizing to max-content of its children (the preset
+       cards) and landing at 600 px even on a 390 px iPhone, forcing the
+       whole page into horizontal scroll. max-width still caps it on
+       tablet/desktop. Markus' mobile-cut-off live test 2026-05-29. */
+    width: 100%;
+    max-width: 600px;
+    margin: 0 auto;
+    box-sizing: border-box;
+}
+
+.setup-back-btn {
+    align-self: flex-start;
+    background: transparent;
+    border: 0;
+    color: var(--color-text-muted);
+    font-family: var(--font-body);
+    font-size: 0.9rem;
+    padding: 6px 10px 6px 0;
+    cursor: pointer;
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+}
+.setup-back-btn:hover { color: var(--color-text-primary); }
+
+.setup-detail-title {
+    font-family: var(--font-display);
+    font-weight: 700;
+    font-size: 1.1rem;
+    color: var(--color-text-muted);
+    margin: 0;
+}
+
+.setup-presets {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+}
+
+.preset-card {
+    display: grid;
+    grid-template-columns: 36px 1fr auto;
+    align-items: center;
+    gap: 12px;
+    padding: 14px;
+    background: var(--color-bg-card-alt);
+    border: 1px solid var(--color-border-light);
+    border-radius: 10px;
+    cursor: pointer;
+    text-align: left;
+    font-family: var(--font-body);
+    color: var(--color-text-primary);
+    transition: border-color 120ms ease-out, background 120ms ease-out;
+}
+.preset-card:hover { border-color: var(--color-border-medium); }
+.preset-card.is-active {
+    border-color: var(--color-accent-primary);
+    background: var(--color-accent-brand-bg);
+}
+
+.preset-icon { font-size: 1.4rem; line-height: 1; }
+.preset-body { display: flex; flex-direction: column; gap: 2px; }
+.preset-name { font-weight: 700; font-size: 0.95rem; }
+.preset-meta {
+    font-family: var(--font-mono);
+    font-size: 0.72rem;
+    color: var(--color-text-muted);
+}
+.preset-duration {
+    font-family: var(--font-mono);
+    font-size: 0.72rem;
+    color: var(--color-text-light);
+    align-self: center;
+}
+
+.setup-custom {
+    display: flex;
+    flex-direction: column;
+    gap: 0;
+    padding-top: var(--space-md);
+    border-top: 1px dashed var(--color-border-light);
+}
+
+/* Conversation Form (variant F). Each setting renders as a numbered
+   question step. Number badges live in the question header; chips
+   answer the question below them, indented to align with the question
+   text (skipping the badge column). */
+.vF-step {
+    display: flex;
+    flex-direction: column;
+    gap: var(--space-sm);
+    padding: var(--space-md) 0;
+    border-bottom: 1px dashed var(--color-border-light);
+}
+.vF-step:last-child { border-bottom: 0; }
+
+.vF-q {
+    font-family: var(--font-display);
+    font-weight: 700;
+    font-size: 1rem;
+    color: var(--color-text-primary);
+    display: flex;
+    align-items: center;
+    gap: 8px;
+}
+
+.vF-q .num {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    width: 22px;
+    height: 22px;
+    border-radius: 50%;
+    background: var(--color-accent-primary);
+    color: var(--color-bg-primary);
+    font-family: var(--font-mono);
+    font-weight: 700;
+    font-size: 0.75rem;
+    flex-shrink: 0;
+}
+
+.vF-answers {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 6px;
+    padding-left: 30px;  /* align with question text, skipping the badge */
+}
+
+/* ==========================================
+   Player Lobby — variant B (You + the Room) + D (Rules)
+   ==========================================
+   Hero with mega avatar + name + DU BIST DRIN tag confirms identity
+   first. Orbit chips list co-players. Rules section underneath
+   teaches first-timers without an extra tap. Pulse dot in the
+   status line keeps "we're connected" alive. */
+#lobby-view {
+    padding: var(--space-md);
+    display: flex;
+    flex-direction: column;
+    gap: var(--space-md);
+    max-width: 480px;
+    margin: 0 auto;
+}
+
+.pl-hero {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    text-align: center;
+    gap: 6px;
+    padding: var(--space-lg) var(--space-md) var(--space-md);
+}
+
+.pl-megaAvatar {
+    width: 96px;
+    height: 96px;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-family: var(--font-mono);
+    font-weight: 700;
+    font-size: 2.4rem;
+    color: var(--color-bg-primary);
+    background: var(--color-accent-primary);
+    margin-bottom: 6px;
+    transition: transform 220ms ease-out;
+}
+
+.pl-megaName {
+    font-family: var(--font-display);
+    font-weight: 800;
+    font-size: 1.6rem;
+    color: var(--color-text-heading);
+    margin: 0;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    max-width: 100%;
+}
+
+.pl-tag {
+    display: inline-block;
+    font-family: var(--font-mono);
+    font-size: 0.72rem;
+    font-weight: 700;
+    letter-spacing: 0.08em;
+    color: var(--color-accent-primary);
+    padding: 3px 10px;
+    border-radius: 999px;
+    border: 1px solid var(--color-accent-primary);
+}
+
+.pl-meta {
+    font-family: var(--font-mono);
+    font-size: 0.78rem;
+    color: var(--color-text-muted);
+    margin: 8px 0 0;
+}
+
+.pl-also {
+    text-align: center;
+    color: var(--color-text-muted);
+    font-size: 0.9rem;
+    margin: 0;
+}
+
+.pl-orbits {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    gap: 12px;
+    padding: 0 var(--space-md);
+    min-height: 60px;  /* reserve space so layout doesn't jump on first join */
+}
+
+.pl-orbit {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 4px;
+    transition: opacity 220ms ease-out;
+    position: relative;
+}
+.pl-orbit.is-away { opacity: 0.45; }
+
+.pl-orbit-av {
+    /* Lock the avatar dimensions explicitly so each orbit chip renders
+     * at the same size regardless of flex layout pressure. */
+    width: 40px;
+    height: 40px;
+    min-width: 40px;
+    min-height: 40px;
+    max-width: 40px;
+    max-height: 40px;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-family: var(--font-mono);
+    font-weight: 700;
+    font-size: 0.95rem;
+    line-height: 1;
+    color: var(--color-bg-primary);
+    flex-shrink: 0;
+}
+
+.pl-orbit-nm {
+    font-size: 0.78rem;
+    color: var(--color-text-muted);
+    max-width: 80px;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+}
+
+/* Crown over the host's avatar — small floating mark so the host
+ * stands out without crowding the dot. */
+.pl-orbit-host {
+    position: absolute;
+    top: -8px;
+    right: -2px;
+    font-size: 0.95rem;
+    line-height: 1;
+    filter: drop-shadow(0 1px 0 rgba(255, 255, 255, 0.4));
+}
+.pl-orbit.is-host .pl-orbit-av {
+    box-shadow: 0 0 0 2px var(--color-accent-primary, #E88A7F);
+}
+.pl-orbit.is-host .pl-orbit-nm {
+    color: var(--color-text-primary);
+    font-weight: 600;
+}
+
+/* Variant D — rules block below the hero+orbits. */
+.pl-rules {
+    background: var(--color-bg-surface);
+    border: 1px solid var(--color-border-light);
+    border-radius: 12px;
+    padding: var(--space-md) var(--space-md) var(--space-md) var(--space-lg);
+}
+
+.pl-rulesTitle {
+    font-family: var(--font-display);
+    font-weight: 700;
+    font-size: 1rem;
+    color: var(--color-text-heading);
+    margin: 0 0 var(--space-sm);
+    display: flex;
+    align-items: center;
+    gap: 8px;
+}
+
+.pl-rules ol {
+    list-style: none;
+    counter-reset: r;
+    padding: 0;
+    margin: 0;
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+}
+
+.pl-rules li {
+    counter-increment: r;
+    padding-left: 32px;
+    position: relative;
+    font-size: 0.9rem;
+    line-height: 1.45;
+    color: var(--color-text-primary);
+}
+.pl-rules li::before {
+    content: counter(r);
+    position: absolute;
+    left: 0; top: 0;
+    width: 22px; height: 22px;
+    border-radius: 50%;
+    background: var(--color-accent-primary);
+    color: var(--color-bg-primary);
+    font-family: var(--font-mono);
+    font-weight: 700;
+    font-size: 0.78rem;
+    display: flex; align-items: center; justify-content: center;
+}
+
+/* Status line under everything (non-admin players only). */
+.pl-status {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    align-self: center;
+    color: var(--color-text-muted);
+    font-family: var(--font-mono);
+    font-size: 0.78rem;
+    padding: var(--space-sm) 0;
+}
+.pl-pulse {
+    width: 8px;
+    height: 8px;
+    border-radius: 50%;
+    background: var(--color-success);
+    animation: pl-pulse 1.6s ease-out infinite;
+}
+@keyframes pl-pulse {
+    0%, 100% { box-shadow: 0 0 0 0 var(--color-success-light); }
+    50%      { box-shadow: 0 0 0 6px transparent; }
+}
+
+/* ==========================================
+   Lobby — variant E ("Game-Show Countdown")
+   ==========================================
+   Marquee headline → QR + roster row → URL + cast link → countdown.
+   Designed so the headline carries the energy: "Gleich geht's los…"
+   when 1+ players, "Warten auf Spieler…" before that. Countdown line
+   makes the "we need 1 more" beat readable from across the room.
+*/
+.lobby-e {
+    position: relative;
+    display: flex;
+    flex-direction: column;
+    gap: var(--space-md);
+    padding: var(--space-md);
+    max-width: 760px;
+    margin: 0 auto;
+}
+
+/* Lobby back-button — top-left ghost nav. Stays out of the marquee's
+   visual weight; small but discoverable. Sits above the marquee text. */
+.lobby-back-btn {
+    align-self: flex-start;
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    padding: 6px 12px;
+    background: var(--color-bg-surface);
+    color: var(--color-text-muted);
+    border: 1px solid var(--color-border-light);
+    border-radius: 999px;
+    font-family: var(--font-system, inherit);
+    font-size: 0.82rem;
+    font-weight: 600;
+    cursor: pointer;
+    transition: all 0.14s ease;
+    margin-bottom: 4px;
+}
+.lobby-back-btn:hover,
+.lobby-back-btn:focus {
+    color: var(--color-text-primary);
+    border-color: var(--color-border-medium);
+    background: var(--color-bg-card-alt);
+}
+
+.lobby-marquee {
+    text-align: center;
+    font-family: var(--font-display);
+    font-weight: 800;
+    font-size: clamp(1.4rem, 5vw, 2.2rem);
+    line-height: 1.1;
+    margin: 8px 0 0;
+    color: #E88A7F;
+}
+
+.lobby-e-row {
+    display: grid;
+    /* Single column on phones — the roster names need full width.
+       The 480px breakpoint below restores the side-by-side layout
+       once there's room. */
+    grid-template-columns: 1fr;
+    /* space-lg gives the just-joined player card visible breathing room
+       below the QR (#149 — live-test feedback that the card felt cramped). */
+    gap: var(--space-lg);
+    align-items: stretch;
+    background: var(--color-bg-surface);
+    border: 1px solid var(--color-border-light);
+    border-radius: 12px;
+    padding: var(--space-md);
+}
+
+.lobby-e-qr {
+    /* On phones the QR shouldn't fill the whole card — cap at 220px so
+       it's scannable from across a small room without dominating. */
+    max-width: 220px;
+    margin: 0 auto;
+}
+
+@media (min-width: 480px) {
+    .lobby-e-row {
+        grid-template-columns: minmax(160px, 200px) 1fr;
+    }
+    .lobby-e-qr {
+        max-width: none;
+        margin: 0;
+    }
+}
+
+.lobby-e-qr {
+    background: #fff;
+    border-radius: 10px;
+    /* Padding removed + line-height:0 + flex centering: prior 8px CSS
+       padding stacked on top of the QR library's own quiet zone and
+       inline-element baseline gave a visibly larger top white border
+       than bottom (Mai-27 live-test). QR is still scannable since the
+       library renders its own quiet-zone. */
+    padding: 0;
+    line-height: 0;
+    aspect-ratio: 1;
+    width: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    align-self: center;
+}
+.lobby-e-qr canvas,
+.lobby-e-qr img,
+.lobby-e-qr svg {
+    width: 100% !important;
+    height: 100% !important;
+    display: block;
+    vertical-align: top;
+}
+
+.lobby-e-roster {
+    display: flex;
+    flex-direction: column;
+    gap: 6px;
+    min-height: 0;
+    overflow-y: auto;
+}
+
+.lobby-e-rows {
+    display: flex;
+    flex-direction: column;
+    gap: 6px;
+}
+
+.lobby-e-row-card {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    /* Roomier padding + soft border/shadow so a fresh joiner reads the
+       chip as a discrete "you're in" confirmation card, not a tight
+       roster entry (#149). */
+    padding: 14px 16px;
+    background: var(--color-bg-card-alt);
+    border: 1px solid var(--color-border-light);
+    border-radius: 10px;
+    box-shadow: 0 1px 2px rgba(0, 0, 0, 0.05);
+    font-size: 1.05rem;
+    color: var(--color-text-primary);
+}
+.lobby-e-row-card .dot {
+    /* Explicit min/max so flex / line-height never squashes one chip
+     * smaller than the others (observed on the production lobby where
+     * different rows rendered at visibly different sizes). */
+    width: 36px;
+    height: 36px;
+    min-width: 36px;
+    min-height: 36px;
+    max-width: 36px;
+    max-height: 36px;
+    border-radius: 50%;
+    flex-shrink: 0;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    font-family: var(--font-mono);
+    font-weight: 700;
+    font-size: 1.05rem;
+    line-height: 1;
+    color: var(--color-bg-primary);
+}
+
+/* Host marker (crown emoji) on the admin's own player row.
+ * Subtle but distinct so the host can see at a glance which entry is them. */
+.lobby-e-row-card .host-badge {
+    flex-shrink: 0;
+    font-size: 1rem;
+    line-height: 1;
+    margin-left: var(--space-xs, 6px);
+    filter: drop-shadow(0 1px 0 rgba(255, 255, 255, 0.4));
+}
+.lobby-e-row-card.is-host {
+    /* Warm accent ring so the host row visually anchors the roster. */
+    box-shadow: inset 0 0 0 1px var(--color-accent-primary, #E88A7F);
+}
+.lobby-e-row-card.is-host .name {
+    font-weight: 600;
+}
+.lobby-e-row-card .name {
+    flex: 1;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+}
+.lobby-e-row-card .pending-tag {
+    font-family: var(--font-mono);
+    font-size: 0.65rem;
+    text-transform: uppercase;
+    color: var(--color-text-muted);
+    letter-spacing: 0.06em;
+}
+
+/* Kick button — icon-only ×, only shows on hover so it doesn't
+   distract from the player name in normal viewing. Without explicit
+   styling the browser default eats the .name's flex column at narrow
+   viewports (observed: kick = 48 px, name = 0 px). */
+.lobby-e-row-card .player-chip-kick {
+    background: transparent;
+    border: 0;
+    color: var(--color-text-muted);
+    font-size: 1.1rem;
+    line-height: 1;
+    padding: 4px 6px;
+    cursor: pointer;
+    opacity: 0;
+    transition: opacity 120ms ease-out, color 120ms ease-out;
+    border-radius: 4px;
+    flex-shrink: 0;
+}
+.lobby-e-row-card:hover .player-chip-kick,
+.lobby-e-row-card:focus-within .player-chip-kick {
+    opacity: 0.7;
+}
+.lobby-e-row-card .player-chip-kick:hover {
+    opacity: 1;
+    color: var(--color-error);
+    background: var(--color-error-bg);
+}
+
+.lobby-e-row-empty {
+    text-align: center;
+    color: var(--color-text-muted);
+    font-size: 0.85rem;
+    padding: var(--space-md) 0;
+}
+
+.lobby-e-url {
+    font-family: var(--font-mono);
+    font-size: 0.85rem;
+    color: var(--color-accent-primary);
+    text-align: center;
+    word-break: break-all;
+    margin: 0;
+}
+
+.lobby-e-cast {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    gap: 6px;
+    align-self: center;
+    color: var(--color-text-muted);
+    text-decoration: none;
+    font-size: 0.9rem;
+    padding: 6px 12px;
+    border-radius: 8px;
+    transition: background 120ms ease-out;
+}
+.lobby-e-cast:hover { background: var(--color-bg-card-alt); }
+
+.lobby-e-countdown {
+    text-align: center;
+    font-family: var(--font-mono);
+    font-size: 0.95rem;
+    color: var(--color-text-muted);
+    padding: var(--space-md) 0;
+    border-top: 1px dashed var(--color-border-light);
+    border-bottom: 1px dashed var(--color-border-light);
+}
+.lobby-e-countdown strong {
+    color: var(--color-success);
+    font-weight: 700;
+    margin: 0 4px;
+}
+.lobby-e-countdown-sep {
+    color: var(--color-border-medium);
+    margin: 0 6px;
+}
+.lobby-e-countdown.is-ready {
+    color: var(--color-success);
+}
+.lobby-e-countdown.is-ready strong { color: var(--color-accent-primary); }
+
+.lobby-e-actions {
+    display: flex;
+    flex-direction: column;
+    gap: var(--space-sm);
+    margin-top: var(--space-sm);
+}
+
+@media (min-width: 768px) {
+    .lobby-e {
+        padding: var(--space-lg);
+    }
+    .lobby-e-row {
+        grid-template-columns: minmax(200px, 280px) 1fr;
+        padding: var(--space-lg);
+        gap: var(--space-lg);
+    }
+}
+
+@media (min-width: 1280px) {
+    .lobby-marquee { font-size: 3rem; }
+    .lobby-e-countdown { font-size: 1.1rem; }
+}
+
+/* ==========================================
+   Player Page: MODALS & CONTROLS
+   ========================================== */
+
+/* Admin control bar */
+.admin-control-bar {
+    position: fixed;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    display: flex;
+    align-items: center;
+    justify-content: space-around;
+    padding: var(--space-sm) var(--space-md);
+    background: rgba(250, 246, 236, 0.96);
+    border-top: 1px solid #E5DFCF;
+    z-index: var(--z-control-bar);
+    backdrop-filter: blur(10px);
+    -webkit-backdrop-filter: blur(10px);
+}
+
+/* Reserve scroll headroom so the sticky admin-control-bar doesn't
+   cover the Nächste-Runde button (or anything else at the bottom of
+   the reveal screen). Without this, scrolling to the end of the
+   reveal lands the next-round button visually inside the bar. The
+   :has() selector is supported on every browser HA ships with. */
+body:has(.admin-control-bar:not(.hidden)) #reveal-view,
+body:has(.admin-control-bar:not(.hidden)) #game-view {
+    padding-bottom: 96px;
+}
+
+.control-btn {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 2px;
+    padding: var(--space-xs) var(--space-sm);
+    background: transparent;
+    border: none;
+    border-radius: var(--radius-md);
+    color: var(--color-text-neon-muted);
+    cursor: pointer;
+    transition: all var(--transition-fast);
+    font-family: var(--font-system);
+    min-width: 44px;
+    min-height: 44px;
+}
+
+.control-btn:hover {
+    color: var(--color-text-white);
+    background: rgba(255, 255, 255, 0.06);
+}
+
+.control-btn:active {
+    transform: scale(0.95);
+}
+
+.control-icon {
+    font-size: 1.25rem;
+}
+
+.control-label {
+    font-size: 0.6rem;
+    font-weight: 500;
+    text-transform: uppercase;
+    letter-spacing: 0.04em;
+}
+
+.control-btn--danger {
+    color: var(--color-error);
+}
+
+.control-btn--danger:hover {
+    color: var(--color-error);
+    background: rgba(239, 68, 68, 0.1);
+}
+
+/* Reaction bar */
+.reaction-bar {
+    padding: var(--space-sm) 0;
+}
+
+/* When the sticky admin bar is showing (host on reveal view), the
+   reaction emojis used to sit behind it (Mai-27 live test). Push the
+   reaction row above the ~80 px bar height so admins still see the
+   full row of buttons. Non-admins fall through to the default padding. */
+body.is-admin .reaction-bar {
+    margin-bottom: 80px;
+}
+
+.reaction-bar-container {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: var(--space-sm);
+    flex-wrap: wrap;
+}
+
+.reaction-btn {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    width: 44px;
+    height: 44px;
+    font-size: 1.5rem;
+    background: var(--color-dark-surface);
+    border: 1px solid var(--color-border-neon);
+    border-radius: var(--radius-full);
+    cursor: pointer;
+    transition: all var(--transition-fast);
+    padding: 0;
+}
+
+.reaction-btn:hover {
+    transform: scale(1.15);
+    background: rgba(255, 255, 255, 0.08);
+}
+
+.reaction-btn:active {
+    transform: scale(0.9);
+}
+
+.reaction-btn--sent {
+    animation: reaction-sent 0.4s ease-out;
+}
+
+@keyframes reaction-sent {
+    0% { transform: scale(1); }
+    50% { transform: scale(1.3); }
+    100% { transform: scale(1); }
+}
+
+/* Floating reactions */
+.reaction-container {
+    position: fixed;
+    bottom: 80px;
+    left: 0;
+    right: 0;
+    pointer-events: none;
+    z-index: 9997;
+    overflow: visible;
+}
+
+.floating-reaction {
+    position: absolute;
+    font-size: 2rem;
+    animation: float-up 2s ease-out forwards;
+    pointer-events: none;
+}
+
+@keyframes float-up {
+    0% {
+        opacity: 1;
+        transform: translateY(0) scale(1);
+    }
+    100% {
+        opacity: 0;
+        transform: translateY(-200px) scale(0.5);
+    }
+}
+
+/* Reconnecting overlay */
+.reconnecting-overlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background: rgba(31, 27, 20, 0.88);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    z-index: var(--z-overlay);
+    backdrop-filter: blur(4px);
+    -webkit-backdrop-filter: blur(4px);
+}
+
+.reconnecting-content {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: var(--space-md);
+    text-align: center;
+    padding: var(--space-xl);
+}
+
+.reconnecting-spinner {
+    width: 40px;
+    height: 40px;
+    border: 4px solid rgba(255, 255, 255, 0.1);
+    border-top-color: var(--color-accent-secondary);
+    border-radius: 50%;
+    animation: spin 1s linear infinite;
+}
+
+.reconnect-status {
+    color: var(--color-text-neon-muted);
+    font-size: 0.9rem;
+}
+
+/* Finale countdown overlay — a brief dramatic flourish + 3·2·1 shown on the
+   big screen right before the final question is revealed. Pure tension/UX;
+   no scoring impact. "Spotlight Marquee" look (design #193, variant A): a warm
+   theatre spotlight cone, a marquee bulb string up top, "Finale!" framed by
+   stars, the digit inside a glowing coral ring, and a footer marquee. */
+.finale-countdown-overlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    /* Warm parlor backdrop + a soft spotlight glow blooming from the top. */
+    background:
+        radial-gradient(120% 90% at 50% 38%, rgba(232, 138, 127, 0.18) 0%, rgba(31, 27, 20, 0) 55%),
+        radial-gradient(140% 120% at 50% 50%, rgba(42, 36, 25, 0.96) 0%, rgba(31, 27, 20, 0.97) 45%, rgba(21, 18, 12, 0.98) 100%);
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    z-index: var(--z-overlay);
+    backdrop-filter: blur(6px);
+    -webkit-backdrop-filter: blur(6px);
+    overflow: hidden;
+}
+
+/* Spotlight cone descending from above the stage. */
+.finale-countdown-overlay::before {
+    content: "";
+    position: absolute;
+    top: -12%;
+    left: 50%;
+    transform: translateX(-50%);
+    width: min(760px, 90vw);
+    height: min(760px, 90vw);
+    background: radial-gradient(circle at 50% 30%, rgba(245, 239, 230, 0.10), rgba(245, 239, 230, 0) 60%);
+    filter: blur(8px);
+    pointer-events: none;
+}
+
+/* Faint dotted parlor texture, masked to the centre. */
+.finale-countdown-overlay::after {
+    content: "";
+    position: absolute;
+    inset: 0;
+    pointer-events: none;
+    background-image: radial-gradient(rgba(245, 239, 230, 0.04) 1px, transparent 1px);
+    background-size: 26px 26px;
+    -webkit-mask: radial-gradient(80% 70% at 50% 45%, #000 30%, transparent 80%);
+    mask: radial-gradient(80% 70% at 50% 45%, #000 30%, transparent 80%);
+}
+
+.finale-countdown-content {
+    position: relative;
+    z-index: 2;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: var(--space-lg);
+    text-align: center;
+    padding: var(--space-xl);
+}
+
+/* Marquee bulb string across the top. */
+.finale-countdown-bulbs {
+    position: absolute;
+    top: clamp(18px, 4vh, 36px);
+    left: 0;
+    right: 0;
+    display: flex;
+    justify-content: center;
+    gap: clamp(14px, 2vw, 22px);
+    z-index: 2;
+    pointer-events: none;
+}
+
+.finale-countdown-bulb {
+    width: 10px;
+    height: 10px;
+    border-radius: 50%;
+    background: var(--color-gold);
+    box-shadow: 0 0 14px rgba(232, 196, 127, 0.8);
+}
+
+.finale-countdown-bulb:nth-child(even) {
+    background: var(--color-accent-primary);
+    box-shadow: 0 0 14px rgba(232, 138, 127, 0.8);
+}
+
+.finale-countdown-flourish {
+    font-family: var(--font-display);
+    font-weight: var(--font-weight-extrabold);
+    font-size: clamp(2.5rem, 12vw, 5rem);
+    line-height: 1.05;
+    text-transform: uppercase;
+    letter-spacing: 0.06em;
+    color: var(--color-accent-primary);
+    text-shadow: 0 0 40px rgba(232, 138, 127, 0.55), 0 4px 0 rgba(0, 0, 0, 0.25);
+    animation: finale-flourish-in 0.6s cubic-bezier(0.2, 0.9, 0.3, 1.3) both;
+}
+
+/* Gold stars framing the headline. */
+.finale-countdown-star {
+    color: var(--color-gold);
+    font-size: 0.5em;
+    vertical-align: 0.55em;
+    margin: 0 0.18em;
+    text-shadow: 0 0 24px rgba(232, 196, 127, 0.7);
+}
+
+/* Glowing coral ring that holds the digit, with a dashed gold halo. */
+.finale-countdown-ring {
+    position: relative;
+    width: clamp(220px, 42vw, 300px);
+    height: clamp(220px, 42vw, 300px);
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background: radial-gradient(circle at 50% 42%, rgba(232, 138, 127, 0.16), rgba(31, 27, 20, 0) 70%);
+    border: 3px solid rgba(232, 138, 127, 0.85);
+    box-shadow: 0 0 60px rgba(232, 138, 127, 0.45), inset 0 0 50px rgba(232, 138, 127, 0.18);
+}
+
+.finale-countdown-ring::before {
+    content: "";
+    position: absolute;
+    inset: -16px;
+    border-radius: 50%;
+    border: 1px dashed rgba(232, 196, 127, 0.45);
+}
+
+.finale-countdown-number {
+    font-family: var(--font-mono);
+    font-weight: var(--font-weight-bold);
+    font-size: clamp(4rem, 22vw, 9rem);
+    line-height: 1;
+    color: var(--color-text-neon, #F5EFE6);
+    text-shadow: 0 0 36px rgba(245, 239, 230, 0.4);
+    min-height: 1em;
+}
+
+/* Footer marquee. */
+.finale-countdown-marquee {
+    position: absolute;
+    bottom: clamp(20px, 4vh, 34px);
+    left: 0;
+    right: 0;
+    text-align: center;
+    z-index: 2;
+    color: rgba(245, 239, 230, 0.34);
+    font-size: clamp(12px, 1.4vw, 15px);
+    letter-spacing: 0.4em;
+    text-transform: uppercase;
+    font-weight: var(--font-weight-semibold, 600);
+    pointer-events: none;
+}
+
+/* Re-key the number's pop on each digit change via the .tick toggle. */
+.finale-countdown-number.tick {
+    animation: finale-number-pop 0.9s ease-out both;
+}
+
+@keyframes finale-flourish-in {
+    0%   { opacity: 0; transform: scale(0.6) translateY(12px); }
+    100% { opacity: 1; transform: scale(1) translateY(0); }
+}
+
+@keyframes finale-number-pop {
+    0%   { opacity: 0; transform: scale(1.6); }
+    25%  { opacity: 1; transform: scale(1); }
+    100% { opacity: 0.85; transform: scale(1); }
+}
+
+@media (prefers-reduced-motion: reduce) {
+    .finale-countdown-flourish,
+    .finale-countdown-number.tick {
+        animation: none;
+    }
+}
+
+/* Connection lost screen */
+.connection-lost-view {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    min-height: 60vh;
+}
+
+.connection-lost-container {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: var(--space-md);
+    text-align: center;
+    padding: var(--space-xl);
+}
+
+.connection-lost-icon {
+    font-size: 3rem;
+    margin-bottom: var(--space-sm);
+}
+
+.connection-lost-hint {
+    font-size: 0.8rem;
+    color: var(--color-text-neon-muted);
+    max-width: 280px;
+}
+
+/* QR Modal */
+.qr-modal {
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    z-index: var(--z-modal);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.qr-modal.hidden {
+    display: none;
+}
+
+.qr-modal-backdrop {
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background: rgba(31, 27, 20, 0.70);
+}
+
+.qr-modal-content {
+    position: relative;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: var(--space-md);
+    padding: var(--space-xl);
+    background: var(--color-surface-dark);
+    border: 1px solid var(--color-border-neon);
+    border-radius: var(--radius-xl);
+    animation: modalFadeIn var(--transition-fast);
+}
+
+.qr-modal-code {
+    padding: var(--space-md);
+    background: white;
+    border-radius: var(--radius-md);
+}
+
+.qr-modal-code img,
+.qr-modal-code canvas {
+    display: block;
+    width: 240px;
+    height: 240px;
+}
+
+.qr-modal-label {
+    color: var(--color-text-neon-muted);
+    font-size: 0.85rem;
+    text-align: center;
+}
+
+.qr-modal-close {
+    position: absolute;
+    top: var(--space-sm);
+    right: var(--space-sm);
+    background: transparent;
+    border: none;
+    color: var(--color-text-neon-muted);
+    font-size: 1.5rem;
+    cursor: pointer;
+    padding: var(--space-xs);
+    min-width: 36px;
+    min-height: 36px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border-radius: var(--radius-full);
+    transition: all var(--transition-fast);
+}
+
+.qr-modal-close:hover {
+    color: var(--color-text-white);
+    background: rgba(255, 255, 255, 0.1);
+}
+
+/* Invite Modal */
+.invite-modal {
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    z-index: var(--z-modal);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.invite-modal.hidden {
+    display: none;
+}
+
+.invite-modal-backdrop {
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background: rgba(31, 27, 20, 0.70);
+}
+
+.invite-modal-content {
+    position: relative;
+    display: flex;
+    flex-direction: column;
+    gap: var(--space-md);
+    padding: var(--space-xl);
+    background: var(--color-surface-dark);
+    border: 1px solid var(--color-border-neon);
+    border-radius: var(--radius-xl);
+    max-width: 400px;
+    width: 90%;
+    animation: modalFadeIn var(--transition-fast);
+}
+
+.invite-modal-title {
+    font-family: var(--font-display);
+    font-size: 1.25rem;
+    font-weight: 800;
+    color: var(--color-text-white);
+    text-align: center;
+}
+
+.invite-modal-hint {
+    color: var(--color-text-neon-muted);
+    font-size: 0.8rem;
+    text-align: center;
+}
+
+.invite-modal-code {
+    font-family: var(--font-display);
+    font-size: 2rem;
+    font-weight: 900;
+    color: var(--color-accent-secondary);
+    text-align: center;
+    letter-spacing: 0.1em;
+    text-shadow: 0 0 15px var(--color-accent-secondary);
+}
+
+.invite-modal-url-container {
+    display: flex;
+    align-items: center;
+    gap: var(--space-sm);
+    background: rgba(255, 255, 255, 0.05);
+    border: 1px solid var(--color-border-neon);
+    border-radius: var(--radius-md);
+    padding: var(--space-sm) var(--space-md);
+}
+
+.invite-modal-url {
+    flex: 1;
+    font-family: var(--font-mono);
+    font-size: 0.75rem;
+    color: var(--color-accent-secondary);
+    word-break: break-all;
+    user-select: all;
+}
+
+.invite-copy-btn {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    padding: var(--space-xs) var(--space-sm);
+    background: rgba(232, 138, 127, 0.1);
+    border: 1px solid rgba(232, 138, 127, 0.3);
+    border-radius: var(--radius-sm);
+    color: var(--color-accent-secondary);
+    font-size: 0.8rem;
+    cursor: pointer;
+    transition: all var(--transition-fast);
+    font-family: var(--font-system);
+    white-space: nowrap;
+    min-width: auto;
+    min-height: auto;
+}
+
+.invite-copy-btn:hover {
+    background: rgba(232, 138, 127, 0.2);
+}
+
+.invite-copy-icon {
+    font-size: 0.9rem;
+}
+
+.invite-copy-feedback {
+    font-size: 0.75rem;
+    color: var(--color-success);
+    text-align: center;
+    min-height: 1.2em;
+}
+
+.invite-modal-close {
+    position: absolute;
+    top: var(--space-sm);
+    right: var(--space-sm);
+    background: transparent;
+    border: none;
+    color: var(--color-text-neon-muted);
+    font-size: 1.5rem;
+    cursor: pointer;
+    padding: var(--space-xs);
+    min-width: 36px;
+    min-height: 36px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border-radius: var(--radius-full);
+    transition: all var(--transition-fast);
+}
+
+.invite-modal-close:hover {
+    color: var(--color-text-white);
+    background: rgba(255, 255, 255, 0.1);
+}
+
+/* Power-up target picker — freeze / steal.
+   Soft Parlor surface: cream content, coral accent on tap, no neon. */
+.powerup-target-modal {
+    position: fixed;
+    inset: 0;
+    z-index: var(--z-modal);
+    display: flex;
+    align-items: flex-end;
+    justify-content: center;
+    padding: var(--space-md);
+}
+
+.powerup-target-modal.hidden {
+    display: none;
+}
+
+.powerup-target-backdrop {
+    position: absolute;
+    inset: 0;
+    background: rgba(42, 40, 32, 0.55);
+}
+
+.powerup-target-content {
+    position: relative;
+    width: 100%;
+    max-width: 420px;
+    display: flex;
+    flex-direction: column;
+    gap: var(--space-md);
+    padding: var(--space-lg);
+    background: var(--color-bg-surface);
+    border: 1px solid var(--color-border-light);
+    border-radius: var(--radius-xl);
+    box-shadow: var(--shadow-xl);
+    animation: modalFadeIn var(--transition-fast);
+}
+
+.powerup-target-title {
+    margin: 0;
+    font-family: var(--font-display);
+    font-size: var(--font-size-xl);
+    font-weight: var(--font-weight-bold);
+    color: var(--color-text-primary);
+    text-align: center;
+}
+
+.powerup-target-hint {
+    margin: 0;
+    font-family: var(--font-body);
+    font-size: var(--font-size-base);
+    color: var(--color-text-muted);
+    text-align: center;
+}
+
+.powerup-target-list {
+    list-style: none;
+    margin: 0;
+    padding: 0;
+    display: flex;
+    flex-direction: column;
+    gap: var(--space-sm);
+    max-height: 50vh;
+    overflow-y: auto;
+}
+
+.powerup-target-list li {
+    margin: 0;
+}
+
+.powerup-target-option {
+    width: 100%;
+    min-height: 56px;
+    padding: var(--space-md);
+    display: flex;
+    align-items: center;
+    gap: var(--space-md);
+    background: var(--color-bg-card-alt);
+    border: 1px solid var(--color-border-light);
+    border-radius: var(--radius-lg);
+    font-family: var(--font-body);
+    font-size: var(--font-size-md);
+    color: var(--color-text-primary);
+    cursor: pointer;
+    text-align: left;
+    transition: background var(--transition-fast),
+                border-color var(--transition-fast),
+                transform var(--transition-fast);
+}
+
+.powerup-target-option:hover,
+.powerup-target-option:focus-visible {
+    background: var(--color-accent-brand-bg);
+    border-color: var(--color-accent-primary);
+}
+
+.powerup-target-option:active {
+    transform: scale(0.98);
+}
+
+.powerup-target-dot {
+    width: 14px;
+    height: 14px;
+    border-radius: var(--radius-full);
+    flex-shrink: 0;
+    border: 1px solid rgba(42, 40, 32, 0.12);
+}
+
+.powerup-target-name {
+    flex: 1;
+    font-weight: var(--font-weight-medium);
+}
+
+/* "answered" chip on the steal picker — appears on opponents who have
+   locked in their answer this round. Signals "good target, has points
+   worth stealing" since target.round_score is non-zero. */
+.powerup-target-submitted {
+    flex-shrink: 0;
+    font-family: var(--font-mono);
+    font-size: 0.65rem;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 0.08em;
+    color: var(--color-success, #2F7A4F);
+    background: rgba(127, 168, 151, 0.18);
+    border: 1px solid rgba(127, 168, 151, 0.32);
+    padding: 2px 8px;
+    border-radius: 999px;
+}
+
+.powerup-target-cancel {
+    align-self: stretch;
+}
+
+@media (min-width: 480px) {
+    .powerup-target-modal {
+        align-items: center;
+    }
+}
+
+/* Confirm modal */
+.confirm-modal-title {
+    font-family: var(--font-display);
+    font-size: 1.1rem;
+    font-weight: 700;
+    color: var(--color-text-white);                  /* parchment on dark surface */
+    margin-bottom: var(--space-sm);
+}
+
+.confirm-modal-message {
+    font-size: 0.9rem;
+    color: var(--color-text-neon-muted);             /* muted blue-gray on dark */
+    line-height: 1.5;
+}
+
+/* ==========================================
+   Player Page: MISC
+   ========================================== */
+
+/* WebSocket indicator */
+.ws-indicator {
+    display: inline-block;
+    width: 8px;
+    height: 8px;
+    border-radius: var(--radius-full);
+    background: var(--color-success-neon);
+    box-shadow: 0 0 6px var(--color-success-neon);
+}
+
+.ws-indicator.disconnected {
+    background: var(--color-error);
+    box-shadow: 0 0 6px var(--color-error);
+}
+

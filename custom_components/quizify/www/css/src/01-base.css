@@ -1,0 +1,330 @@
+/* ==========================================
+   Base Styles
+   ========================================== */
+
+* {
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+}
+
+html {
+    /* Root rem size. The 19.2px (16 × 1.2) experiment from 2026-05-29
+     * stacked on top of several per-element +20 % bumps and made
+     * typographic content read as oversized on phones (Markus' live
+     * test 2026-06-04, game + reveal screenshots). Reverted to the 16px
+     * baseline — every rem-based font-size shrinks back ~17 % at once,
+     * while per-element intent (e.g. the load-bearing "Richtige Antwort"
+     * surface) is preserved via its own rem bump. */
+    font-size: 16px;
+    -webkit-text-size-adjust: 100%;
+}
+
+body {
+    font-family: var(--font-system);
+    /* Soft Parlor: warm cream background with subtle radial glow hints
+       (coral top-right, sky bottom-left) to break up the flat plane. */
+    background:
+        radial-gradient(ellipse at 85% 15%, rgba(232, 138, 127, 0.08) 0%, transparent 55%),
+        radial-gradient(ellipse at 15% 85%, rgba(127, 168, 196, 0.06) 0%, transparent 55%),
+        var(--color-bg-primary);
+    color: var(--color-text-primary);
+    min-height: 100dvh;
+    line-height: 1.5;
+    overflow-x: hidden;
+    -webkit-font-smoothing: antialiased;
+}
+
+/* ==========================================
+   Brand Identity (Wordmark)
+   ========================================== */
+
+.wordmark {
+    font-family: var(--font-display);
+    font-weight: 800;
+    font-size: var(--font-size-hero);
+    letter-spacing: -0.02em;
+    line-height: 1;
+}
+
+.wordmark-quiz {
+    color: var(--color-text-primary);     /* dark ink on cream */
+}
+
+.wordmark-ify {
+    color: var(--color-accent-primary);   /* warm coral */
+}
+
+.wordmark-hero {
+    text-shadow: 0 6px 20px rgba(232, 138, 127, 0.25);
+}
+
+.logo-loading {
+    animation: logo-pulse 2s ease-in-out infinite;
+}
+
+@keyframes logo-pulse {
+    0%, 100% { opacity: 1; }
+    50% { opacity: 0.7; }
+}
+
+/* ==========================================
+   Layout
+   ========================================== */
+
+.app-container {
+    max-width: 480px;
+    margin: 0 auto;
+    padding: var(--space-md);
+    min-height: 100dvh;
+    display: flex;
+    flex-direction: column;
+}
+
+.admin-container {
+    max-width: 800px;
+    margin: 0 auto;
+    padding: var(--space-md);
+}
+
+.player-container {
+    padding: 0 var(--space-md);
+    max-width: 600px;
+    margin: 0 auto;
+}
+
+.view {
+    display: none;
+    flex-direction: column;
+    flex: 1;
+}
+
+.view.active {
+    display: flex;
+}
+
+/* ==========================================
+   Header
+   ========================================== */
+
+.header {
+    text-align: center;
+    padding: var(--space-lg) 0 var(--space-md);
+}
+
+.header .wordmark {
+    font-size: 2rem;
+}
+
+.subtitle {
+    color: var(--color-text-neon-muted);
+    font-size: 0.875rem;
+    margin-top: var(--space-xs);
+}
+
+/* Admin header */
+.admin-header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: var(--space-md);
+    padding: var(--space-md) var(--space-md) 0;
+    max-width: 600px;
+    margin: 0 auto var(--space-lg);
+}
+
+.admin-header .wordmark {
+    font-size: 1.5rem;        /* 24px \u2014 broadcast register, not hero */
+    margin: 0;
+}
+
+.admin-header-actions {
+    display: flex;
+    align-items: center;
+    gap: var(--space-xs);
+}
+
+/* Icon-only button used in the admin header (e.g. reset-game-btn). Subtle
+ * by default so it doesn't compete with the wordmark, lights up on hover. */
+.admin-header-btn {
+    background: transparent;
+    border: 1px solid var(--color-border-light);
+    border-radius: 8px;
+    color: var(--color-text-muted);
+    cursor: pointer;
+    font-size: 1.1rem;
+    line-height: 1;
+    padding: 6px 10px;
+    transition: color 120ms ease, border-color 120ms ease, background 120ms ease;
+}
+.admin-header-btn:hover,
+.admin-header-btn:focus-visible {
+    color: var(--color-accent-primary);
+    border-color: var(--color-accent-primary);
+    background: var(--color-bg-surface);
+}
+
+/* PWA Install Button — same admin-header-btn frame but coral-leaning
+   so it reads as the "do this" CTA when it surfaces (revealed by the
+   beforeinstallprompt JS handler in admin.js, or by iOS detection).
+   .hidden default keeps it out of layout until install is actually
+   possible. */
+.pwa-install-btn.admin-header-btn {
+    color: var(--color-accent-primary);
+    border-color: rgba(232, 138, 127, 0.45);
+}
+
+/* iOS Add-to-Home-Screen hint modal — backdrop + centered card,
+   shown when iOS Safari users tap the install button (where the
+   beforeinstallprompt API isn't available so we walk them through
+   the manual Share → Add to Home Screen flow). */
+.pwa-ios-hint {
+    position: fixed;
+    inset: 0;
+    background: rgba(31, 27, 20, 0.55);
+    display: flex;
+    align-items: flex-end;
+    justify-content: center;
+    z-index: 200;
+    padding: var(--space-md);
+    animation: pwa-fade-in 160ms ease-out;
+}
+.pwa-ios-hint.hidden { display: none; }
+.pwa-ios-hint-content {
+    background: var(--color-bg-card, #FFFFFF);
+    border-radius: 14px;
+    padding: var(--space-lg) var(--space-lg) calc(var(--space-lg) + env(safe-area-inset-bottom));
+    max-width: 420px;
+    width: 100%;
+    position: relative;
+    box-shadow: 0 -8px 32px rgba(31, 27, 20, 0.20);
+    line-height: 1.5;
+    color: var(--color-text-primary);
+}
+.pwa-ios-hint-content p {
+    margin: 0 0 var(--space-sm) 0;
+}
+.pwa-ios-hint-content p:last-child {
+    margin-bottom: 0;
+}
+.pwa-ios-hint-close {
+    position: absolute;
+    top: 8px;
+    right: 12px;
+    background: transparent;
+    border: 0;
+    color: var(--color-text-muted);
+    font-size: 1.5rem;
+    line-height: 1;
+    padding: 4px 8px;
+    cursor: pointer;
+}
+@keyframes pwa-fade-in {
+    from { opacity: 0; }
+    to { opacity: 1; }
+}
+@media (min-width: 480px) {
+    .pwa-ios-hint { align-items: center; }
+}
+
+/* Player header */
+.player-header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: var(--space-sm);
+    padding: 14px var(--space-md);
+    border-bottom: 1px solid var(--color-border-light);
+    position: relative;
+}
+
+.player-header .wordmark {
+    font-size: 1.55rem;
+    margin: 0;
+}
+
+/* Right-side header cluster (Variant C, issue #194). Groups the embedded
+   sound-mute toggle with the round indicator so they read as one piece of
+   furniture. Right-aligns via the header's space-between. margin-right
+   clears the absolutely-positioned connection dot in the top-right corner. */
+.player-header-round-grp {
+    display: inline-flex;
+    align-items: center;
+    gap: 10px;
+    margin-right: var(--space-lg);
+}
+
+/* Round indicator — app-bar style (variant C, Markus 2026-05-31). The
+   wordmark sits left, this counter right-aligns via space-between and
+   appears only on the reveal view (showView in player-utils.js toggles
+   the hidden attr). */
+.player-header-round {
+    display: inline-flex;
+    align-items: center;
+    gap: 7px;
+    font-family: var(--font-mono);
+    font-weight: 700;
+    font-size: 0.7rem;
+    color: var(--color-text-muted);
+    letter-spacing: 0.06em;
+    text-transform: uppercase;
+    white-space: nowrap;
+}
+.player-header-round[hidden] { display: none; }
+
+/* Sage status accent before the round label. */
+.player-header-round-dot {
+    width: 6px;
+    height: 6px;
+    border-radius: 50%;
+    background: var(--color-accent-secondary);
+}
+/* Current round number in coral; muted slash separator. */
+.player-header-round-num { color: var(--color-accent-primary); }
+.player-header-round-sep { color: var(--color-border-dark); }
+
+/* Sound cue mute toggle — Variant C (issue #194). Embedded as a subtle
+   round affordance inside the right-side header cluster, immediately before
+   the round indicator, instead of floating as its own corner icon. Quiet by
+   default (warm card-alt fill, reduced opacity); dims further when muted.
+   Behaviour + persistence unchanged (player-core.js setupSoundToggle). */
+.sound-toggle-btn {
+    flex: 0 0 auto;
+    width: 30px;
+    height: 30px;
+    min-width: 30px;
+    min-height: 30px;
+    padding: 0;
+    border: none;
+    background: var(--color-bg-card-alt);
+    font-size: 1rem;
+    line-height: 1;
+    cursor: pointer;
+    border-radius: var(--radius-full);
+    opacity: 0.8;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+}
+.sound-toggle-btn:hover { opacity: 1; }
+.sound-toggle-btn.is-muted { opacity: 0.5; }
+
+/* Connection indicator */
+.connection-indicator {
+    position: absolute;
+    top: var(--space-md);
+    right: var(--space-md);
+}
+
+.connection-dot {
+    display: inline-block;
+    width: 8px;
+    height: 8px;
+    border-radius: 50%;
+    background: var(--color-success-neon);
+}
+
+.connection-indicator--disconnected .connection-dot {
+    background: var(--color-error);
+}
+

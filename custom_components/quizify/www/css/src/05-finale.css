@@ -1,0 +1,433 @@
+/* ==========================================
+   Leaderboard (Beatify style)
+   ========================================== */
+
+.leaderboard {
+    width: 100%;
+}
+
+.leaderboard-row {
+    display: flex;
+    align-items: center;
+    gap: var(--space-md);
+    padding: var(--space-md);
+    border-bottom: 1px solid var(--color-border-neon);
+    transition: background-color 0.2s ease;
+}
+
+.leaderboard-row:last-child {
+    border-bottom: none;
+}
+
+.leaderboard-row:hover {
+    background: rgba(157, 78, 221, 0.1);
+}
+
+.leaderboard-rank {
+    width: 28px;
+    height: 28px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-weight: var(--font-weight-bold);
+    font-size: 0.85rem;
+    border-radius: var(--radius-full);
+    background: rgba(255, 255, 255, 0.08);
+    color: var(--color-text-neon-muted);
+    flex-shrink: 0;
+}
+
+.leaderboard-rank.rank-1 {
+    background: rgba(232, 196, 127, 0.36);
+    border: 1px solid rgba(232, 196, 127, 0.5);
+    color: #B08930;
+}
+
+.leaderboard-rank.rank-2 {
+    background: rgba(170, 182, 194, 0.18);
+    border: 1px solid rgba(170, 182, 194, 0.3);
+    color: #6F7C8A;
+}
+
+.leaderboard-rank.rank-3 {
+    background: rgba(205, 140, 100, 0.16);
+    border: 1px solid rgba(205, 140, 100, 0.3);
+    color: #A35A2B;
+}
+
+.leaderboard-name {
+    flex: 1;
+    font-weight: var(--font-weight-medium);
+    color: var(--color-text-white);
+}
+
+.leaderboard-score {
+    font-weight: var(--font-weight-bold);
+    font-variant-numeric: tabular-nums;
+    color: var(--color-text);
+}
+
+.leaderboard-streak {
+    font-size: 0.75rem;
+    color: var(--color-warning);
+}
+
+/* ==========================================
+   Final Leaderboard (End-of-Game Rankings)
+   ========================================== */
+
+.final-leaderboard {
+    margin-top: var(--space-lg);
+}
+
+.final-leaderboard-header {
+    font-weight: var(--font-weight-bold);
+    font-size: 1.1rem;
+    color: var(--color-text-white);
+    margin-bottom: var(--space-sm);
+}
+
+/* Leaderboard — Ranked Bars (Soft Parlor, approved 2026-06-07).
+   Each row carries a faint sage bar scaled to the player's score so
+   the gaps read at a glance. Top-3 ranks get a medal-tinted dot; the
+   current player's row gets a coral left border. */
+.final-entry {
+    display: flex;
+    align-items: center;
+    gap: var(--space-sm);
+    padding: 5px 0;
+}
+
+.final-rank {
+    width: 18px;
+    text-align: right;
+    font-family: var(--font-mono);
+    font-weight: 700;
+    font-size: 0.8rem;
+    color: var(--color-text-neon-muted);
+    flex-shrink: 0;
+}
+
+.final-track {
+    position: relative;
+    flex: 1;
+    min-width: 0;
+    height: 30px;
+    background: var(--color-bg-white, #FFFFFF);
+    border: 1px solid var(--color-border-neon, #E5DFCF);
+    border-radius: var(--radius-md, 8px);
+    overflow: hidden;
+    display: flex;
+    align-items: center;
+}
+
+.final-fill {
+    position: absolute;
+    left: 0;
+    top: 0;
+    bottom: 0;
+    background: rgba(127, 168, 151, 0.20);
+    border-radius: var(--radius-md, 8px) 0 0 var(--radius-md, 8px);
+    transition: width 0.6s ease;
+}
+
+.final-name {
+    position: relative;
+    z-index: 1;
+    flex: 1;
+    min-width: 0;
+    display: flex;
+    align-items: center;
+    gap: 6px;
+    padding-left: 10px;
+    font-weight: var(--font-weight-medium);
+    color: var(--color-text-white);
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
+
+.lb-mdot {
+    width: 9px;
+    height: 9px;
+    border-radius: 50%;
+    flex-shrink: 0;
+}
+.lb-mdot--gold   { background: #E8C47F; }
+.lb-mdot--silver { background: #AAB6C2; }
+.lb-mdot--bronze { background: #CD8C64; }
+
+.final-score {
+    width: 48px;
+    text-align: right;
+    font-family: var(--font-mono);
+    font-weight: var(--font-weight-bold);
+    font-variant-numeric: tabular-nums;
+    color: var(--color-text-white);
+    flex-shrink: 0;
+}
+
+.final-entry.is-current .final-track {
+    border-left: 3px solid var(--color-accent-primary, #E88A7F);
+}
+
+/* ==========================================
+   Podium — Soft Parlor (Variant A: Family Trophy Shelf)
+   Cream "shelf" planks (no gradients), sun-yellow top edge
+   on 1st, soft warm radial glow behind champion, numbers
+   as medals. DESIGN.md §"Podium / Finale".
+   ========================================== */
+
+.podium-section {
+    text-align: center;
+    padding: var(--space-xl) 0;
+    position: relative;
+}
+
+/* Soft warm radial glow behind the champion (coral + sun).
+   Sits behind the podium; pointer-events disabled. */
+.podium-section::before {
+    content: "";
+    position: absolute;
+    inset: 0;
+    background:
+      radial-gradient(ellipse 50% 60% at 50% 55%, rgba(232, 138, 127, 0.14), transparent 70%),
+      radial-gradient(ellipse 32% 36% at 50% 45%, rgba(232, 196, 127, 0.20), transparent 70%);
+    pointer-events: none;
+    z-index: 0;
+}
+.podium-section > * { position: relative; z-index: 1; }
+
+/* Champion title block above the podium row.
+   "Champion" in coral Cabinet Grotesk 900; name in warm ink CG 700. */
+.podium-title {
+    font-family: var(--font-display, "Cabinet Grotesk"), sans-serif;
+    font-size: clamp(2rem, 4vw, 3.5rem);
+    font-weight: 900;
+    letter-spacing: -0.02em;
+    color: var(--color-accent-primary);
+    line-height: 1;
+    margin: 0 0 var(--space-sm) 0;
+    /* No gradient text — DESIGN.md says no gradients on text. */
+    background: none;
+    -webkit-text-fill-color: var(--color-accent-primary);
+}
+
+.podium-champion-name {
+    font-family: var(--font-display, "Cabinet Grotesk"), sans-serif;
+    font-weight: 700;
+    font-size: clamp(1.25rem, 2.2vw, 1.75rem);
+    color: var(--color-text);
+    letter-spacing: -0.01em;
+    margin-bottom: var(--space-xl);
+    line-height: 1.2;
+}
+
+.podium {
+    display: grid;
+    grid-template-columns: 1fr 1.15fr 1fr;
+    align-items: end;
+    gap: var(--space-md);
+    margin: 0 auto var(--space-xl);
+    /* 90 % of the VIEWPORT (not the parent) per Markus 2026-05-29: the
+       parent container's horizontal padding was squeezing the podium
+       to ~75 % of the screen. `vw` ignores parent padding entirely; the
+       720 px cap keeps it sensible on tablets and the TV view. */
+    width: 90vw;
+    max-width: 720px;
+    padding: 0;
+    min-height: 220px;
+}
+
+.podium-place {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: var(--space-xs);
+    animation: podium-rise 0.8s ease-out both;
+}
+
+.podium-place:nth-child(1) { animation-delay: 0.2s; }
+.podium-place:nth-child(2) { animation-delay: 0.4s; }
+.podium-place:nth-child(3) { animation-delay: 0.6s; }
+
+@keyframes podium-rise {
+    from { transform: translateY(24px); opacity: 0; }
+    to { transform: translateY(0); opacity: 1; }
+}
+
+.podium-name {
+    font-family: var(--font-display, "Cabinet Grotesk"), sans-serif;
+    font-weight: 700;
+    font-size: 1.1rem;
+    color: var(--color-text);
+    max-width: 14ch;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+    text-align: center;
+}
+
+.podium-score {
+    font-family: var(--font-mono, "JetBrains Mono"), ui-monospace, monospace;
+    font-weight: 500;
+    font-size: 0.875rem;
+    color: var(--color-text-neon-muted);
+    font-variant-numeric: tabular-nums;
+    margin-bottom: var(--space-sm);
+}
+
+/* The shelf plank — used by both admin TV (.podium-bar)
+   and player mobile (.podium-stand). Solid cream surface,
+   1px hairline border, rounded top, soft shadow. Number
+   centered as the "medal". No gradient. */
+.podium-bar,
+.podium-stand {
+    width: 100%;
+    background: var(--color-surface, #FFFFFF);
+    border: 1px solid var(--color-border-soft, var(--hairline, #E5DFCF));
+    border-radius: var(--radius-md) var(--radius-md) 0 0;
+    display: flex;
+    align-items: flex-start;
+    justify-content: center;
+    padding-top: var(--space-md);
+    font-family: var(--font-mono, "JetBrains Mono"), ui-monospace, monospace;
+    font-weight: 700;
+    font-variant-numeric: tabular-nums;
+    color: var(--color-text-neon-muted);
+    box-shadow: 0 2px 8px -2px rgba(42, 40, 32, 0.10);
+    position: relative;
+}
+
+/* 1st place — tallest plank, sun-yellow top edge, warm halo cushion,
+   coral number. Per DESIGN.md: 200px tall on TV, 3px sun-yellow top. */
+.podium-bar.first,
+.podium-stand.first,
+.podium-1 .podium-stand {
+    height: 200px;
+    border-top: 3px solid var(--color-gold, #E8C47F);
+    color: var(--color-accent-primary, #E88A7F);
+    font-size: 3.5rem;
+}
+.podium-bar.first::before,
+.podium-stand.first::before,
+.podium-1 .podium-stand::before {
+    content: "";
+    position: absolute;
+    inset: -1px -1px auto -1px;
+    height: 24px;
+    background: linear-gradient(180deg, rgba(232, 196, 127, 0.35), transparent);
+    border-radius: var(--radius-md) var(--radius-md) 0 0;
+    pointer-events: none;
+}
+
+/* 2nd place — muted warm silver top edge. */
+.podium-bar.second,
+.podium-stand.second,
+.podium-2 .podium-stand {
+    height: 150px;
+    border-top: 3px solid var(--color-silver, #B8B2A0);
+    font-size: 2.75rem;
+}
+
+/* 3rd place — warm bronze top edge. */
+.podium-bar.third,
+.podium-stand.third,
+.podium-3 .podium-stand {
+    height: 100px;
+    border-top: 3px solid var(--color-bronze, #C99466);
+    font-size: 2.25rem;
+}
+
+/* Legacy .podium-avatar slot (rendered by admin.js renderPodium).
+   We keep the markup hook but hide it — the number on the plank
+   is the medal now ("numbers speak"). */
+.podium-avatar {
+    display: none;
+}
+
+/* Same for the .podium-medal div in player.html static markup. */
+.podium-medal {
+    display: none;
+}
+
+/* ==========================================
+   Awards / Superlatives (Beatify style)
+   ========================================== */
+
+.awards-section {
+    width: 100%;
+    max-width: 600px;
+    margin: var(--space-xl) auto;
+}
+
+.awards-title {
+    font-size: 1.3rem;
+    font-weight: var(--font-weight-bold);
+    text-align: center;
+    margin-bottom: var(--space-lg);
+    color: var(--color-accent-secondary);
+    letter-spacing: 0.05em;
+}
+
+.awards-grid {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    gap: var(--space-md);
+}
+
+.award-card {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    padding: var(--space-md);
+    min-width: 120px;
+    max-width: 160px;
+    background: var(--color-dark-surface);
+    border-radius: var(--radius-lg);
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    opacity: 0;
+    animation: award-enter 0.5s ease-out forwards;
+}
+
+@keyframes award-enter {
+    from {
+        opacity: 0;
+        transform: translateY(20px) scale(0.9);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0) scale(1);
+    }
+}
+
+.award-icon {
+    font-size: 2rem;
+    margin-bottom: var(--space-xs);
+}
+
+.award-name {
+    font-size: var(--font-size-xs);
+    font-weight: var(--font-weight-bold);
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+    color: var(--color-accent-secondary);
+    text-align: center;
+    margin-bottom: var(--space-xs);
+}
+
+.award-winner {
+    font-size: var(--font-size-base);
+    font-weight: var(--font-weight-bold);
+    color: var(--color-text-white);
+    text-align: center;
+    margin-bottom: var(--space-xs);
+}
+
+.award-detail {
+    font-size: var(--font-size-sm);
+    color: var(--color-text-neon-muted);
+    text-align: center;
+}
+

@@ -1,0 +1,246 @@
+/* ==========================================
+   Launcher
+   ========================================== */
+
+.launcher-content {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    gap: var(--space-xl);
+    text-align: center;
+}
+
+.launcher-title {
+    font-family: var(--font-display);
+    font-size: 48px;
+    font-weight: 900;
+    letter-spacing: -0.02em;
+}
+
+.launcher-buttons {
+    display: flex;
+    flex-direction: column;
+    gap: var(--space-md);
+    width: 100%;
+    max-width: 300px;
+}
+
+.game-status-badge {
+    display: inline-flex;
+    align-items: center;
+    gap: var(--space-sm);
+    padding: 8px 16px;
+    background: rgba(127, 168, 151, 0.14);
+    border: 1px solid rgba(127, 168, 151, 0.35);
+    border-radius: var(--radius-full);
+    font-size: 0.85rem;
+    color: #3D6B5A;
+}
+
+.game-status-badge .dot {
+    width: 8px;
+    height: 8px;
+    border-radius: 50%;
+    background: var(--color-success-neon);
+    box-shadow: 0 0 6px var(--color-success-neon);
+    animation: blink 1.5s ease-in-out infinite;
+}
+
+@keyframes blink {
+    0%, 100% { opacity: 1; }
+    50% { opacity: 0.3; }
+}
+
+/* ==========================================
+   Modal (Beatify style)
+   ========================================== */
+
+.modal {
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    z-index: var(--z-modal);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.modal.hidden {
+    display: none;
+}
+
+.modal-backdrop {
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background: rgba(31, 27, 20, 0.70);
+}
+
+.modal-content {
+    position: relative;
+    background: var(--color-dark-surface-hover);     /* surface-2 navy \u2014 not cream */
+    border: 1px solid var(--color-border-neon);      /* hairline */
+    padding: var(--space-lg);
+    border-radius: var(--radius-lg);
+    max-width: 400px;
+    width: 90%;
+    color: var(--color-text-white);                   /* parchment \u2014 not navy */
+    box-shadow: 0 16px 48px rgba(0, 0, 0, 0.6);
+    animation: modalFadeIn var(--transition-fast);
+}
+
+@keyframes modalFadeIn {
+    from { opacity: 0; transform: scale(0.95); }
+    to { opacity: 1; transform: scale(1); }
+}
+
+.modal-content h2 {
+    font-family: var(--font-display);
+    font-weight: 700;
+    margin-bottom: var(--space-sm);
+    font-size: var(--font-size-xl);
+    color: var(--color-text-white);                   /* parchment */
+    letter-spacing: -0.01em;
+}
+
+.modal-content p {
+    margin-bottom: var(--space-md);
+    color: var(--color-text-neon-muted);              /* blue-gray muted */
+}
+
+.modal-actions {
+    display: flex;
+    gap: var(--space-sm);
+    margin-top: var(--space-lg);
+}
+
+.modal-actions .btn {
+    flex: 1;
+}
+
+/* Inputs inside dark modal: lifted surface bg + parchment text + hairline border */
+.modal-content .input,
+.modal-content .name-input,
+.modal-content input[type="text"] {
+    background: var(--color-bg-primary);              /* studio navy */
+    color: var(--color-text-white);                   /* parchment */
+    border-color: var(--color-border-neon);           /* hairline */
+}
+
+.modal-content .input:focus,
+.modal-content .name-input:focus,
+.modal-content input[type="text"]:focus {
+    border-color: var(--color-accent-primary);        /* broadcast gold */
+    box-shadow: 0 0 0 3px rgba(232, 138, 127, 0.22);
+}
+
+.modal-content .input::placeholder,
+.modal-content .name-input::placeholder,
+.modal-content input[type="text"]::placeholder {
+    color: var(--color-text-neon-muted);              /* muted blue-gray */
+}
+
+/* ==========================================
+   Text glow utilities
+   ========================================== */
+
+.text-glow {
+    text-shadow: 0 0 10px var(--color-accent-primary),
+                 0 0 20px var(--color-accent-primary),
+                 0 0 30px var(--color-accent-primary);
+}
+
+.text-glow-cyan {
+    text-shadow: 0 0 10px var(--color-accent-secondary),
+                 0 0 20px var(--color-accent-secondary);
+}
+
+.text-glow-success {
+    text-shadow: 0 0 10px var(--color-success-neon),
+                 0 0 20px var(--color-success-neon);
+}
+
+/* ==========================================
+   Stat badges (Beatify pattern)
+   ========================================== */
+
+.stat-badge-bar {
+    display: flex;
+    align-items: center;
+    gap: var(--space-md);
+}
+
+.stat-badge {
+    display: flex;
+    align-items: center;
+    gap: var(--space-xs);
+    padding: var(--space-xs) var(--space-sm);
+    background: rgba(255, 255, 255, 0.05);
+    border: 1px solid var(--color-border-neon);
+    border-radius: var(--radius-md);
+    font-size: 0.875rem;
+}
+
+.stat-badge-icon {
+    font-size: 1rem;
+}
+
+.stat-badge-value {
+    font-weight: 600;
+    color: var(--color-accent-secondary);
+}
+
+/* ==========================================
+   Utilities
+   ========================================== */
+
+.hidden { display: none !important; }
+.text-center { text-align: center; }
+.text-muted { color: var(--color-text-neon-muted); }
+.mt-sm { margin-top: var(--space-sm); }
+.mt-md { margin-top: var(--space-md); }
+.mt-lg { margin-top: var(--space-lg); }
+.mb-md { margin-bottom: var(--space-md); }
+.gap-sm { gap: var(--space-sm); }
+
+.sr-only {
+    position: absolute;
+    width: 1px;
+    height: 1px;
+    padding: 0;
+    margin: -1px;
+    overflow: hidden;
+    clip: rect(0, 0, 0, 0);
+    border: 0;
+}
+
+/* Footer */
+footer {
+    margin-top: var(--space-lg);
+    text-align: center;
+    color: var(--color-text-neon-muted);
+    font-size: var(--font-size-sm);
+}
+
+/* Spinner */
+.spinner, .loading-spinner {
+    width: 40px;
+    height: 40px;
+    margin: 0 auto var(--space-md);
+    border: 4px solid rgba(255, 255, 255, 0.1);
+    border-top-color: var(--color-accent-primary);
+    border-radius: 50%;
+    animation: spin 1s linear infinite;
+}
+
+@keyframes spin {
+    0% { transform: rotate(0deg); }
+    100% { transform: rotate(360deg); }
+}
+

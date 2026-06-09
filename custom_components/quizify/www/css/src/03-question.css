@@ -1,0 +1,428 @@
+/* ==========================================
+   Timer Bar (top of screen)
+   ========================================== */
+
+.timer-bar-container {
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    height: 6px;
+    background: rgba(255, 255, 255, 0.1);
+    z-index: var(--z-control-bar);
+}
+
+.timer-bar-fill {
+    height: 100%;
+    background: linear-gradient(90deg, var(--color-accent-secondary), var(--color-accent-primary));
+    border-radius: 0 3px 3px 0;
+    transition: width 0.3s linear;
+    width: 100%;
+}
+
+.timer-bar-fill.warning {
+    background: linear-gradient(90deg, var(--color-warning), var(--color-error));
+}
+
+.timer-bar-fill.critical {
+    background: var(--color-error);
+    animation: pulse-bar 0.5s ease-in-out infinite alternate;
+}
+
+@keyframes pulse-bar {
+    from { opacity: 0.7; }
+    to { opacity: 1; }
+}
+
+.timer-text {
+    text-align: center;
+    font-size: 1.5rem;
+    font-weight: var(--font-weight-bold);
+    color: var(--color-text-white);
+    font-variant-numeric: tabular-nums;
+    margin-bottom: var(--space-sm);
+}
+
+.timer-text.warning {
+    color: var(--color-warning);
+}
+
+.timer-text.critical {
+    color: var(--color-error-neon);
+    animation: timer-pulse-intense 0.5s ease-in-out infinite;
+}
+
+@keyframes timer-pulse-intense {
+    0%, 100% { opacity: 1; transform: scale(1); }
+    50% { opacity: 0.9; transform: scale(1.05); }
+}
+
+/* ==========================================
+   Question Display
+   ========================================== */
+
+.question-area {
+    text-align: center;
+    padding: var(--space-lg) 0;
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+}
+
+.round-indicator {
+    font-size: 0.8rem;
+    font-weight: 600;
+    text-transform: uppercase;
+    letter-spacing: 0.1em;
+    color: var(--color-accent-secondary);
+    margin-bottom: var(--space-sm);
+}
+
+.question-text {
+    /* -20 % per Markus' live test 2026-05-29: previous 1.35 rem felt too
+       heavy on phones once 3-line questions started appearing. */
+    font-size: 1.08rem;
+    font-weight: var(--font-weight-bold);
+    line-height: 1.4;
+    color: var(--color-text-white);
+    padding: 0 var(--space-sm);
+}
+
+/* Issue #25 + #183 (Variant 1): question image as a fixed-height banner
+   preview with a tap-to-zoom button. Fixed height (no aspect-driven layout
+   shift between questions); object-fit:contain letterboxes both portrait and
+   landscape images. Hidden entirely when the question carries no image, so
+   the answer pills stay reachable above the fold. */
+.question-media {
+    position: relative;
+    width: 100%;
+    height: 200px;
+    margin: var(--space-sm) 0;
+    border-radius: var(--radius-md, 12px);
+    overflow: hidden;
+    background: var(--color-surface-dark);
+    border: 1px solid var(--color-border-neon);
+}
+.question-media[hidden] { display: none; }
+.question-image {
+    display: block;
+    width: 100%;
+    height: 100%;
+    object-fit: contain;
+}
+.question-image-zoom {
+    position: absolute;
+    top: 8px;
+    right: 8px;
+    width: 34px;
+    height: 34px;
+    border: none;
+    border-radius: 8px;
+    background: rgba(42, 40, 32, 0.55);
+    color: #fff;
+    font-size: 16px;
+    line-height: 1;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+.question-image-zoom:hover { background: rgba(42, 40, 32, 0.75); }
+
+/* Fullscreen zoom overlay */
+.image-zoom-overlay {
+    position: fixed;
+    inset: 0;
+    z-index: 1000;
+    background: rgba(0, 0, 0, 0.92);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: var(--space-md);
+}
+.image-zoom-overlay.hidden { display: none; }
+.image-zoom-img {
+    max-width: 100%;
+    max-height: 100%;
+    object-fit: contain;
+    border-radius: var(--radius-md, 12px);
+}
+.image-zoom-close {
+    position: absolute;
+    top: max(12px, env(safe-area-inset-top));
+    right: 12px;
+    width: 40px;
+    height: 40px;
+    border: none;
+    border-radius: 50%;
+    background: rgba(255, 255, 255, 0.15);
+    color: #fff;
+    font-size: 18px;
+    line-height: 1;
+    cursor: pointer;
+}
+
+.question-category {
+    display: inline-block;
+    font-size: 0.75rem;
+    color: var(--color-accent-secondary);
+    text-transform: uppercase;
+    letter-spacing: 0.1em;
+    margin-top: var(--space-sm);
+    padding: 2px 10px;
+    background: rgba(232, 138, 127, 0.1);
+    border: 1px solid rgba(232, 138, 127, 0.3);
+    border-radius: var(--radius-full);
+}
+
+/* ==========================================
+   Answer Buttons (Beatify-style pills)
+   ========================================== */
+
+.answers-container {
+    display: flex;
+    flex-direction: column;
+    gap: var(--space-md);
+    padding-bottom: var(--space-lg);
+}
+
+.answer-btn {
+    position: relative;
+    width: 100%;
+    min-height: 60px;
+    padding: var(--space-md) var(--space-lg);
+    background: var(--color-dark-surface);
+    border: 2px solid var(--color-border-neon);
+    border-radius: var(--radius-lg);
+    color: var(--color-text-white);
+    font-family: var(--font-system);
+    font-size: 1rem;
+    font-weight: var(--font-weight-medium);
+    text-align: left;
+    cursor: pointer;
+    transition: all var(--transition-normal);
+    -webkit-tap-highlight-color: transparent;
+    display: flex;
+    align-items: center;
+    gap: var(--space-md);
+}
+
+.answer-btn:hover:not(:disabled) {
+    border-color: var(--color-accent-primary);
+    background: rgba(232, 138, 127, 0.1);
+}
+
+.answer-btn:active:not(:disabled) {
+    transform: scale(0.98);
+}
+
+.answer-label {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    width: 32px;
+    height: 32px;
+    border-radius: var(--radius-full);
+    background: rgba(255, 255, 255, 0.08);
+    font-weight: var(--font-weight-bold);
+    font-size: 0.875rem;
+    color: var(--color-accent-secondary);
+    flex-shrink: 0;
+}
+
+.answer-text {
+    flex: 1;
+}
+
+/* Answer States */
+.answer-btn.selected {
+    border-color: var(--color-accent-primary);
+    background: rgba(232, 138, 127, 0.15);
+    box-shadow: var(--glow-primary);
+}
+
+.answer-btn.selected .answer-label {
+    background: var(--color-accent-primary);
+    color: var(--color-bg-primary);
+}
+
+.answer-btn.correct {
+    border-color: #7FA897;
+    background: rgba(127, 168, 151, 0.14);
+    animation: glow-correct 0.6s ease;
+}
+
+.answer-btn.correct .answer-label {
+    background: var(--color-success);
+    color: var(--color-bg-primary);
+}
+
+@keyframes glow-correct {
+    0% { box-shadow: 0 0 0 rgba(127, 168, 151, 0.3); }
+    50% { box-shadow: 0 0 16px rgba(127, 168, 151, 0.35); }
+    100% { box-shadow: none; }
+}
+
+.answer-btn.wrong {
+    border-color: #D66A6A;
+    background: rgba(214, 106, 106, 0.10);
+    animation: shake 0.5s ease;
+}
+
+.answer-btn.wrong .answer-label {
+    background: var(--color-error);
+    color: var(--color-text-white);
+}
+
+@keyframes shake {
+    0%, 100% { transform: translateX(0); }
+    20% { transform: translateX(-8px); }
+    40% { transform: translateX(8px); }
+    60% { transform: translateX(-4px); }
+    80% { transform: translateX(4px); }
+}
+
+.answer-btn.dimmed {
+    opacity: 0.35;
+    pointer-events: none;
+}
+
+.answer-btn:disabled {
+    cursor: not-allowed;
+    opacity: 0.5;
+}
+
+.answer-btn.eliminated {
+    opacity: 0.2;
+    text-decoration: line-through;
+    pointer-events: none;
+}
+
+/* ==========================================
+   Power-Up Button
+   ========================================== */
+
+.powerup-bar {
+    display: flex;
+    justify-content: center;
+    padding: var(--space-sm) 0 var(--space-md);
+}
+
+.powerup-btn {
+    display: inline-flex;
+    align-items: center;
+    gap: var(--space-sm);
+    padding: 10px 20px;
+    background: linear-gradient(135deg, rgba(232, 138, 127, 0.2), rgba(232, 138, 127, 0.2));
+    border: 1px solid var(--color-accent-primary);
+    border-radius: var(--radius-full);
+    color: var(--color-accent-secondary);
+    font-family: var(--font-system);
+    font-size: 0.85rem;
+    font-weight: 600;
+    cursor: pointer;
+    transition: all var(--transition-normal);
+    animation: powerup-glow 2s ease-in-out infinite alternate;
+}
+
+.powerup-btn:hover {
+    transform: scale(1.05);
+    box-shadow: var(--glow-primary);
+}
+
+.powerup-btn.used {
+    display: none;
+}
+
+@keyframes powerup-glow {
+    from { box-shadow: 0 0 5px rgba(232, 138, 127, 0.4); }
+    to { box-shadow: 0 0 15px rgba(232, 138, 127, 0.4); }
+}
+
+/* ==========================================
+   Points / Score Display
+   ========================================== */
+
+.score-display {
+    text-align: center;
+    padding: var(--space-lg) 0;
+}
+
+.points-earned {
+    font-size: 2.5rem;
+    font-weight: var(--font-weight-extrabold);
+    color: #E88A7F;
+    animation: pop-in 0.5s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+}
+
+.points-earned.zero {
+    color: var(--color-text-neon-muted);
+}
+
+@keyframes pop-in {
+    0% { transform: scale(0); opacity: 0; }
+    100% { transform: scale(1); opacity: 1; }
+}
+
+.score-detail {
+    font-size: 0.85rem;
+    color: var(--color-text-neon-muted);
+    margin-top: var(--space-xs);
+}
+
+.streak-badge {
+    display: inline-flex;
+    align-items: center;
+    gap: var(--space-xs);
+    padding: 4px 12px;
+    background: rgba(245, 158, 11, 0.15);
+    border: 1px solid rgba(245, 158, 11, 0.3);
+    border-radius: var(--radius-full);
+    color: var(--color-warning);
+    font-size: 0.8rem;
+    font-weight: 600;
+    margin-top: var(--space-sm);
+}
+
+.rank-display {
+    font-size: 0.9rem;
+    color: var(--color-text-neon-muted);
+    margin-top: var(--space-sm);
+}
+
+/* ==========================================
+   Fun Fact Card
+   ========================================== */
+
+.fun-fact-card {
+    background: linear-gradient(135deg, rgba(232, 138, 127, 0.1), rgba(232, 138, 127, 0.1));
+    border: 1px solid rgba(232, 138, 127, 0.3);
+    border-radius: var(--radius-lg);
+    padding: var(--space-lg);
+    margin-top: var(--space-lg);
+    transform: translateY(30px);
+    opacity: 0;
+    transition: all var(--transition-slow);
+}
+
+.fun-fact-card.visible {
+    transform: translateY(0);
+    opacity: 1;
+}
+
+.fun-fact-label {
+    font-size: 0.7rem;
+    font-weight: var(--font-weight-bold);
+    text-transform: uppercase;
+    letter-spacing: 0.1em;
+    color: var(--color-accent-secondary);
+    margin-bottom: var(--space-sm);
+}
+
+.fun-fact-text {
+    font-size: 0.95rem;
+    line-height: 1.6;
+    color: var(--color-text-white);
+}
+

@@ -1,0 +1,331 @@
+/* ==========================================
+   Lobby
+   ========================================== */
+
+.lobby-content {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    gap: var(--space-lg);
+    text-align: center;
+}
+
+.join-form {
+    width: 100%;
+    max-width: 400px;
+    margin: 0 auto;
+    display: flex;
+    flex-direction: column;
+    gap: var(--space-md);
+    padding: var(--space-lg);
+    text-align: center;
+}
+
+.waiting-message {
+    color: var(--color-text-neon-muted);
+    font-size: 1rem;
+    animation: fade-pulse 2s ease-in-out infinite;
+}
+
+@keyframes fade-pulse {
+    0%, 100% { opacity: 0.6; }
+    50% { opacity: 1; }
+}
+
+/* Player list */
+.player-list {
+    width: 100%;
+}
+
+.player-list-header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    margin-bottom: var(--space-md);
+}
+
+.player-count {
+    font-size: 0.85rem;
+    color: var(--color-text-neon-muted);
+}
+
+.player-chips {
+    display: flex;
+    flex-wrap: wrap;
+    gap: var(--space-sm);
+    justify-content: center;
+}
+
+.player-chip {
+    display: inline-flex;
+    align-items: center;
+    gap: var(--space-xs);
+    padding: 6px 14px;
+    background: var(--color-dark-surface);
+    border: 1px solid var(--color-border-neon);
+    border-radius: var(--radius-full);
+    font-size: 0.85rem;
+    color: var(--color-text-white);
+    animation: playerCardJoin 0.5s ease-out;
+}
+
+.player-chip .dot {
+    width: 8px;
+    height: 8px;
+    border-radius: 50%;
+    background: var(--color-success-neon);
+    box-shadow: 0 0 6px var(--color-success-neon);
+}
+
+@keyframes playerCardJoin {
+    from { opacity: 0; transform: scale(0.9); }
+    to { opacity: 1; transform: scale(1); }
+}
+
+/* Player color dot — used in lobby cards and leaderboard */
+.player-color-dot {
+    display: inline-block;
+    width: 10px;
+    height: 10px;
+    border-radius: 50%;
+    flex-shrink: 0;
+    box-shadow: 0 0 6px currentColor;
+}
+
+/* Player cards grid (Beatify pattern) */
+.player-cards-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(140px, 1fr));
+    gap: var(--space-sm);
+}
+
+.player-cards-grid .player-card {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    padding: var(--space-md);
+    min-height: 80px;
+    background: var(--color-dark-surface);
+    border: 1px solid var(--color-border-neon);
+    border-radius: var(--radius-md);
+    text-align: center;
+    transition: transform 0.2s ease, box-shadow 0.2s ease;
+}
+
+.player-cards-grid .player-card:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 4px 12px rgba(157, 78, 221, 0.2);
+}
+
+/* ==========================================
+   QR Code
+   ========================================== */
+
+.qr-section {
+    text-align: center;
+}
+
+.qr-code, .qr-container {
+    display: inline-block;
+    padding: var(--space-md);
+    background: white;
+    border-radius: var(--radius-md);
+    margin: var(--space-md) 0;
+    box-shadow: var(--shadow-md);
+}
+
+.qr-code img, .qr-code canvas,
+.qr-container img, .qr-container canvas {
+    display: block;
+    width: 180px;
+    height: 180px;
+}
+
+.qr-url {
+    font-family: var(--font-mono);
+    font-size: 0.75rem;
+    color: var(--color-accent-secondary);
+    word-break: break-all;
+}
+
+/* ==========================================
+   Self-join row (admin)
+   ========================================== */
+
+.self-join-row {
+    display: flex;
+    gap: var(--space-sm);
+    align-items: center;
+}
+
+.self-join-row input {
+    flex: 1;
+    padding: 10px 14px;
+    background: var(--color-dark-surface);
+    border: 1px solid var(--color-border-neon);
+    border-radius: var(--radius-md);
+    color: var(--color-text-white);
+    font-size: 0.95rem;
+    font-family: var(--font-system);
+}
+
+.self-join-row input:focus {
+    outline: none;
+    border-color: var(--color-accent-primary);
+    box-shadow: 0 0 0 3px rgba(232, 138, 127, 0.2);
+}
+
+.self-join-row input::placeholder {
+    color: var(--color-text-neon-muted);
+}
+
+/* ==========================================
+   Setup sections (admin lobby)
+   ========================================== */
+
+.setup-section {
+    margin-bottom: var(--space-lg);
+}
+
+.setup-label {
+    font-size: 0.8rem;
+    font-weight: 600;
+    text-transform: uppercase;
+    letter-spacing: 0.08em;
+    color: var(--color-text-neon-muted);
+    margin-bottom: var(--space-sm);
+}
+
+/* ==========================================
+   Admin question preview
+   ========================================== */
+
+.admin-question-preview {
+    background: var(--color-surface-dark);
+    border: 1px solid var(--color-border-neon);
+    border-radius: var(--radius-lg);
+    padding: var(--space-lg);
+    margin-bottom: var(--space-md);
+}
+
+.admin-correct-answer {
+    color: var(--color-success-neon);
+    font-weight: 600;
+    margin-top: var(--space-sm);
+    text-shadow: 0 0 10px var(--color-success-neon);
+}
+
+.admin-actions {
+    position: sticky;
+    bottom: 0;
+    padding: var(--space-md);
+    margin: 0 calc(-1 * var(--space-md));
+    background: linear-gradient(transparent, var(--color-bg-primary) 25%);
+    z-index: 100;
+}
+
+.admin-actions .btn {
+    flex: 1;
+}
+
+/* Admin content wrapper */
+.admin-content {
+    padding: 0 var(--space-md) calc(var(--space-md) + 80px); /* extra bottom for sticky button */
+    max-width: 600px;
+    margin: 0 auto;
+    min-height: 100vh;
+}
+
+/* Lobby Actions — Sticky bottom bar */
+.lobby-actions {
+    margin-top: var(--space-lg);
+    padding-top: var(--space-md);
+    border-top: 1px solid var(--color-border-dark);
+}
+
+.lobby-actions--sticky {
+    position: sticky;
+    bottom: 0;
+    margin: 0 calc(-1 * var(--space-md));
+    padding: var(--space-md);
+    background: linear-gradient(transparent, var(--color-bg-primary) 20%);
+    z-index: var(--z-control-bar);
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+}
+
+/* QR Section — Compact layout */
+.qr-section--compact {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    text-align: center;
+    margin-bottom: var(--space-md);
+}
+
+.qr-url-display {
+    font-family: var(--font-mono);
+    font-size: 0.75rem;
+    color: var(--color-accent-secondary);
+    word-break: break-all;
+}
+
+.qr-url-display--compact {
+    margin-top: var(--space-sm);
+}
+
+/* Dashboard link (Cast to TV) */
+.dashboard-link {
+    display: inline-flex;
+    align-items: center;
+    gap: var(--space-xs);
+    margin-top: var(--space-sm);
+    font-size: 0.8rem;
+    color: var(--color-accent-secondary);
+    text-decoration: none;
+    opacity: 0.8;
+    transition: opacity 0.2s ease;
+}
+
+.dashboard-link:hover {
+    opacity: 1;
+}
+
+.dashboard-link-arrow {
+    font-size: 0.7rem;
+}
+
+/* Lobby container — compact layout matching Beatify */
+.lobby-container--compact {
+    padding: 0;
+}
+
+.lobby-container--compact .section-collapsible {
+    background: var(--color-surface-dark);
+    border: 1px solid var(--color-border-neon);
+    border-radius: var(--radius-md);
+    margin-bottom: var(--space-md);
+    overflow: hidden;
+}
+
+/* Empty state inline */
+.empty-state-inline {
+    text-align: center;
+    padding: var(--space-md);
+    color: var(--color-text-neon-muted);
+    font-size: 0.875rem;
+}
+
+/* Form group for modal inputs */
+.form-group {
+    margin-bottom: var(--space-md);
+}
+
+.form-group .name-input {
+    width: 100%;
+}
+
