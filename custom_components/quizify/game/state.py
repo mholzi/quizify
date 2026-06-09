@@ -933,16 +933,22 @@ class QuizifyGameState:
                 own_timer.add_time(TIME_BOOST_DURATION)
 
         elif effect.type == PowerUpType.STEAL and target_id:
-            # Steal half of target's current round score (applied at reveal)
+            # Steal half of target's current round score (applied at reveal).
+            # The target was validated as an active opponent just above and
+            # use_powerup is synchronous, so this re-fetch normally succeeds —
+            # but make the invariant explicit: if the target is somehow gone,
+            # return an error rather than broadcasting a hollow STEAL effect
+            # (0 stolen points) that animates a steal that didn't happen (#167).
             target_player = self._player_registry.get_player(target_id)
             source_player = self._player_registry.get_player(player_id)
-            if target_player and source_player:
-                stolen = target_player.round_score // 2
-                target_player.round_score = max(0, target_player.round_score - stolen)
-                target_player.score = max(0, target_player.score - stolen)
-                source_player.round_score += stolen
-                source_player.score += stolen
-                effect.stolen_points = stolen
+            if not target_player or not source_player:
+                return ERR_INVALID_ACTION
+            stolen = target_player.round_score // 2
+            target_player.round_score = max(0, target_player.round_score - stolen)
+            target_player.score = max(0, target_player.score - stolen)
+            source_player.round_score += stolen
+            source_player.score += stolen
+            effect.stolen_points = stolen
 
         _LOGGER.info(
             "Power-up %s used by %s (target: %s)",

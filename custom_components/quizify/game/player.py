@@ -88,6 +88,15 @@ class PlayerSession:
     # can't farm points for everyone.
     reaction_bonuses_given: set[int] = field(default_factory=set)
 
+    # Inbound side of the same mechanic: round_number -> count of +1 bonuses
+    # this player has RECEIVED that round, capped per round. Previously stashed
+    # as a dynamic attribute by the reaction handler; promoted to a real field
+    # so reset_for_new_game() clears it. Without the reset it persisted across
+    # games and — because round numbers restart at 1 each game — a player who
+    # hit the cap in round N of the old game was wrongly blocked from receiving
+    # bonuses in round N of the new game (#167).
+    _reaction_bonuses_received: dict[int, int] = field(default_factory=dict)
+
     # Streak milestone bookkeeping. Cumulative bonus this game + count of
     # discrete milestone hits (3, 5, 10, ...). Surfaced on the finale stats
     # panel and rolled into all-time stats; reset in reset_for_new_game.
@@ -144,4 +153,5 @@ class PlayerSession:
         self.streak_milestones_hit = 0
         self.wager = None
         self.reaction_bonuses_given = set()
+        self._reaction_bonuses_received = {}
         self.reset_round()

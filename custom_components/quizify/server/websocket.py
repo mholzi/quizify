@@ -626,15 +626,13 @@ class QuizifyWebSocketHandler:
             recipient = game_state.get_player(result.player_id)
             if not recipient or recipient.name == reactor.name:
                 continue  # can't tip your own hat
-            # Lazy bookkeeping: stash the per-round inbound counter on
-            # the player object (separate from `reaction_bonuses_given`
-            # which tracks OUTGOING bonuses). Using a dict so the data
-            # doesn't have to migrate to the dataclass schema.
-            bonuses_in = getattr(recipient, "_reaction_bonuses_received", None) or {}
+            # Per-round inbound counter (separate from `reaction_bonuses_given`
+            # which tracks OUTGOING bonuses). A real PlayerSession field so it
+            # is reset per game in reset_for_new_game() (#167).
+            bonuses_in = recipient._reaction_bonuses_received
             if bonuses_in.get(round_num, 0) >= self._REACTION_BONUS_CAP_PER_ROUND:
                 continue
             bonuses_in[round_num] = bonuses_in.get(round_num, 0) + 1
-            recipient._reaction_bonuses_received = bonuses_in  # type: ignore[attr-defined]
             recipient.score += 1
             recipient.round_score += 1
             bonus_recipients.append(recipient.name)
