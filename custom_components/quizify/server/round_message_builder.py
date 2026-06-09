@@ -1,0 +1,198 @@
+"""RoundMessageBuilder — assembles the per-round client messages.
+
+Extracted from ``QuizifyWebSocketHandler`` (issue #189, part of the #184
+God-object split, following the BroadcastDispatcher seam from #187). The
+handler owns the *sending* (it is tightly coupled to the connection manager)
+and the *shuffle mutation* (side effects on game state); this builder owns the
+**pure message assembly** — turning the current game state plus the round's
+shuffles into the exact payload dicts that get sent to players, admin,
+dashboards, and the round-summary broadcast.
+
+Every method is a pure, side-effect-free computation that reads game state and
+the shared serializers and returns plain dicts (or lists of them). The wire
+shapes are byte-for-byte identical to the previous inline code in
+``_start_next_question`` and ``_broadcast_round_summary`` — same fields, same
+ordering, same serializer calls.
+"""
+
+from __future__ import annotations
+
+from typing import TYPE_CHECKING, Any
+
+from custom_components.quizify.server.serializers import (
+    serialize_leaderboard,
+    serialize_player_list,
+    serialize_question_for_admin,
+    serialize_question_for_player,
+    serialize_round_summary,
+)
+
+if TYPE_CHECKING:
+    from custom_components.quizify.game.player import PlayerSession
+    from custom_components.quizify.game.questions import Question
+    from custom_components.quizify.game.state import QuizifyGameState
+
+
+class RoundMessageBuilder:
+    """Builds the per-round question and result payloads.
+
+    Stateless: every method takes the current game state (and, where relevant,
+    the already-fetched player list / question) and returns plain payload
+    dicts. No connection access, no mutation — the handler keeps ownership of
+    both. Behaviour mirrors the previous inline assembly exactly.
+    """
+
+    def build_player_question(
+        self,
+        game_state: QuizifyGameState,
+        *,
+        question: Question,
+        player: PlayerSession,
+        is_final: bool,
+    ) -> dict[str, Any]:
+        """Build the per-player question payload (own shuffled answer order).
+
+        Mirrors the inline body of the per-player loop in
+        ``_start_next_question``: look up the player's shuffle, project the
+        answer texts in that order, and serialize. The handler decides whether
+        to send (skips disconnected players) — this method does not.
+        """
+        shuffle = game_state.get_player_shuffle(player.name)
+        shuffled_answers = [question.answers[i].text for i in shuffle]
+        return serialize_question_for_player(
+            question=question,
+            shuffled_answers=shuffled_answers,
+            round_num=game_state.round,
+            total_rounds=game_state.total_rounds,
+            timer_duration=game_state.round_duration,
+            is_final_round=is_final,
+            player_score=player.score,
+        )
+
+    def build_admin_question(
+        self,
+        game_state: QuizifyGameState,
+        *,
+        question: Question,
+    ) -> dict[str, Any]:
+        """Build the admin/dashboard question payload (with correct answer)."""
+        return serialize_question_for_admin(
+            question=question,
+            round_num=game_state.round,
+            total_rounds=game_state.total_rounds,
+            timer_duration=game_state.round_duration,
+        )
+
+    def build_game_state_with_leaderboard(
+        self,
+        game_state: QuizifyGameState,
+        *,
+        players: list[PlayerSession],
+    ) -> dict[str, Any]:
+        """Build the ``game_state`` broadcast carrying the live leaderboard.
+
+        Mirrors the trailing broadcast in ``_start_next_question`` so players
+        see rankings during the round. The caller passes the already-fetched
+        player list to avoid a redundant ``get_players`` call.
+        """
+        leaderboard = serialize_leaderboard(players)
+        return {
+            "type": "game_state",
+            "phase": game_state.phase.value,
+            "round": game_state.round,
+            "total_rounds": game_state.total_rounds,
+            "player_count": len(players),
+            "players": leaderboard,
+            "leaderboard": leaderboard,
+        }
+
+    def build_round_summary(
+        self,
+        game_state: QuizifyGameState,
+    ) -> dict[str, Any] | None:
+        """Build the full round-summary broadcast payload.
+
+        Mirrors ``_broadcast_round_summary`` exactly: resolve the correct
+        answer's shuffled + original indices, assemble the per-player
+        ``all_answers`` table, build the players list, and serialize the
+        summary. Returns ``None`` when there is no round summary yet (the
+        handler then no-ops), matching the previous early return.
+        """
+        summary = game_state.get_round_summary()
+        if not summary:
+            return None
+
+        # Find the correct answer's shuffled index (canonical) AND its
+        # original index in question.answers — dashboard needs the latter
+        # because it renders unshuffled answer tiles (per #151 audit).
+        correct_shuffled_idx = -1
+        correct_original_idx = -1
+        for a in summary.question.answers:
+            if a.correct:
+                correct_original_idx = summary.question.answers.index(a)
+                for shuffled_idx, orig_idx in enumerate(game_state.shuffle_map):
+                    if orig_idx == correct_original_idx:
+                        correct_shuffled_idx = shuffled_idx
+                        break
+                break
+
+        leaderboard = serialize_leaderboard(game_state.get_players())
+
+        # Build all_answers: what each player answered this round.
+        # answer_index is the ORIGINAL question index (not shuffled) —
+        # with per-player shuffles, a shuffled index is meaningless to
+        # any other player. The client uses answer_text for display and
+        # correct_answer_text for highlighting their own button.
+        all_answers = []
+        for player in game_state.get_players():
+            if player.submitted and player.current_answer is not None:
+                submitted_orig = player.current_answer
+                answer_text = (
+                    summary.question.answers[submitted_orig].text
+                    if 0 <= submitted_orig < len(summary.question.answers)
+                    else "?"
+                )
+                is_correct = summary.question.answers[submitted_orig].correct if submitted_orig < len(summary.question.answers) else False
+                breakdown = player.round_score_breakdown
+                all_answers.append({
+                    "player_name": player.name,
+                    "answer_index": submitted_orig,  # original index, not shuffled
+                    "answer_text": answer_text,
+                    "correct": is_correct,
+                    "points_earned": player.round_score,
+                    "speed_bonus": breakdown.get("speed_bonus", 0),
+                    "streak_bonus": breakdown.get("streak_bonus", 0),
+                    "difficulty_multiplier": breakdown.get("difficulty_multiplier", 1.0),
+                    "double_points": breakdown.get("double_points", False),
+                    "streak": player.streak,
+                })
+            else:
+                all_answers.append({
+                    "player_name": player.name,
+                    "answer_index": None,
+                    "answer_text": "—",
+                    "correct": False,
+                    "points_earned": 0,
+                    "no_answer": True,
+                })
+
+        # Build players list with is_admin so the reveal client can show
+        # the Next Round button to admin-as-player.
+        players_list = serialize_player_list(game_state.get_players())
+        last_round = game_state.round >= game_state.total_rounds
+
+        return serialize_round_summary(
+            correct_answer_index=correct_shuffled_idx,
+            correct_answer_index_original=correct_original_idx,
+            correct_answer_text=summary.correct_answer.text,
+            fun_fact=summary.fun_fact,
+            leaderboard=leaderboard,
+            round_num=game_state.round,
+            total_rounds=game_state.total_rounds,
+            all_answers=all_answers,
+            question_text=summary.question.question,
+            num_answer_options=len(game_state.shuffled_answers),
+            players=players_list,
+            last_round=last_round,
+            question_id=summary.question.id,
+        )

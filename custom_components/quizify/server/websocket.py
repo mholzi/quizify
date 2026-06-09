@@ -5,7 +5,6 @@ from __future__ import annotations
 import asyncio
 import logging
 import random
-import uuid
 from typing import TYPE_CHECKING, Any
 
 from aiohttp import WSMsgType, web
@@ -27,13 +26,11 @@ from custom_components.quizify.game.powerups import PowerUpEffect, PowerUpType
 from custom_components.quizify.game.state import AnswerResult, GamePhase, QuizifyGameState
 from custom_components.quizify.server.broadcast_dispatcher import BroadcastDispatcher
 from custom_components.quizify.server.connection import ConnectionManager
+from custom_components.quizify.server.round_message_builder import RoundMessageBuilder
 from custom_components.quizify.server.serializers import (
     serialize_finale,
     serialize_leaderboard,
     serialize_player_list,
-    serialize_question_for_admin,
-    serialize_question_for_player,
-    serialize_round_summary,
 )
 
 if TYPE_CHECKING:
@@ -99,6 +96,11 @@ class QuizifyWebSocketHandler:
             },
             default=self._dispatch_full_state,
         )
+        # Assembles the per-round question + round-summary payloads (#189).
+        # The handler keeps ownership of sending and shuffle mutation; the
+        # builder produces the exact message dicts to hand to the connection
+        # manager. Behaviour-preserving — identical wire shapes.
+        self._round_messages = RoundMessageBuilder()
 
     def _check_rate_limit(self, ws: web.WebSocketResponse) -> bool:
         """Record a message for ``ws`` and report whether it is within the
@@ -1280,29 +1282,20 @@ class QuizifyWebSocketHandler:
             game_state.set_player_shuffle(player.name, player_indices)
 
         # Send question per-player so each gets their own shuffled order.
+        # The builder assembles each payload (own shuffle); the handler still
+        # owns the send and the connected-player skip (#189).
         is_final = game_state.round == game_state.total_rounds
         for player in players_now:
             if not player.connected:
                 continue
-            shuffle = game_state.get_player_shuffle(player.name)
-            shuffled_answers = [question.answers[i].text for i in shuffle]
-            player_msg = serialize_question_for_player(
-                question=question,
-                shuffled_answers=shuffled_answers,
-                round_num=game_state.round,
-                total_rounds=game_state.total_rounds,
-                timer_duration=game_state.round_duration,
-                is_final_round=is_final,
-                player_score=player.score,
+            player_msg = self._round_messages.build_player_question(
+                game_state, question=question, player=player, is_final=is_final
             )
             await self._conn._safe_send(player.ws, player_msg)
 
         # Send question with correct answer to admin
-        admin_msg = serialize_question_for_admin(
-            question=question,
-            round_num=game_state.round,
-            total_rounds=game_state.total_rounds,
-            timer_duration=game_state.round_duration,
+        admin_msg = self._round_messages.build_admin_question(
+            game_state, question=question
         )
         # Also fan out to TV-dashboard connections so their question-view
         # populates with the same canonical-order payload. Without this the
@@ -1310,9 +1303,8 @@ class QuizifyWebSocketHandler:
         # distribution bars never attach. Admin-as-player still excluded.
         await self._conn.broadcast_to_admins_and_dashboards(admin_msg)
 
-        # Cache players and leaderboard to avoid redundant calls
+        # Cache players to avoid redundant calls
         players = game_state.get_players()
-        leaderboard = serialize_leaderboard(players)
 
         # Notify players who got a power-up this round
         for player in players:
@@ -1324,15 +1316,11 @@ class QuizifyWebSocketHandler:
                 })
 
         # Broadcast game state with leaderboard so player sees rankings during game
-        await self._conn.broadcast({
-            "type": "game_state",
-            "phase": game_state.phase.value,
-            "round": game_state.round,
-            "total_rounds": game_state.total_rounds,
-            "player_count": len(players),
-            "players": leaderboard,
-            "leaderboard": leaderboard,
-        })
+        await self._conn.broadcast(
+            self._round_messages.build_game_state_with_leaderboard(
+                game_state, players=players
+            )
+        )
 
         # Start timer tick task
         self._start_timer_tick(game_state)
@@ -1433,88 +1421,16 @@ class QuizifyWebSocketHandler:
     # ------------------------------------------------------------------
 
     async def _broadcast_round_summary(self, game_state: QuizifyGameState) -> None:
-        """Broadcast round summary to all clients."""
-        summary = game_state.get_round_summary()
-        if not summary:
+        """Broadcast round summary to all clients.
+
+        Payload assembly (correct-index resolution, the per-player answer
+        table, the summary serialization) lives in the RoundMessageBuilder
+        (#189); the handler keeps ownership of the broadcast. ``None`` means
+        there is no round summary yet — same no-op as before.
+        """
+        summary_msg = self._round_messages.build_round_summary(game_state)
+        if summary_msg is None:
             return
-
-        # Find the correct answer's shuffled index (canonical) AND its
-        # original index in question.answers — dashboard needs the latter
-        # because it renders unshuffled answer tiles (per #151 audit).
-        correct_shuffled_idx = -1
-        correct_original_idx = -1
-        for a in summary.question.answers:
-            if a.correct:
-                correct_original_idx = summary.question.answers.index(a)
-                for shuffled_idx, orig_idx in enumerate(game_state.shuffle_map):
-                    if orig_idx == correct_original_idx:
-                        correct_shuffled_idx = shuffled_idx
-                        break
-                break
-
-        leaderboard = serialize_leaderboard(game_state.get_players())
-
-        # Build all_answers: what each player answered this round.
-        # answer_index is the ORIGINAL question index (not shuffled) —
-        # with per-player shuffles, a shuffled index is meaningless to
-        # any other player. The client uses answer_text for display and
-        # correct_answer_text for highlighting their own button.
-        all_answers = []
-        for player in game_state.get_players():
-            if player.submitted and player.current_answer is not None:
-                submitted_orig = player.current_answer
-                answer_text = (
-                    summary.question.answers[submitted_orig].text
-                    if 0 <= submitted_orig < len(summary.question.answers)
-                    else "?"
-                )
-                is_correct = summary.question.answers[submitted_orig].correct if submitted_orig < len(summary.question.answers) else False
-                breakdown = player.round_score_breakdown
-                all_answers.append({
-                    "player_name": player.name,
-                    "answer_index": submitted_orig,  # original index, not shuffled
-                    "answer_text": answer_text,
-                    "correct": is_correct,
-                    "points_earned": player.round_score,
-                    "speed_bonus": breakdown.get("speed_bonus", 0),
-                    "streak_bonus": breakdown.get("streak_bonus", 0),
-                    "difficulty_multiplier": breakdown.get("difficulty_multiplier", 1.0),
-                    "double_points": breakdown.get("double_points", False),
-                    "streak": player.streak,
-                })
-            else:
-                all_answers.append({
-                    "player_name": player.name,
-                    "answer_index": None,
-                    "answer_text": "—",
-                    "correct": False,
-                    "points_earned": 0,
-                    "no_answer": True,
-                })
-
-        # Build players list with is_admin so the reveal client can show
-        # the Next Round button to admin-as-player.
-        from custom_components.quizify.server.serializers import (  # noqa: PLC0415
-            serialize_player_list,
-        )
-        players_list = serialize_player_list(game_state.get_players())
-        last_round = game_state.round >= game_state.total_rounds
-
-        summary_msg = serialize_round_summary(
-            correct_answer_index=correct_shuffled_idx,
-            correct_answer_index_original=correct_original_idx,
-            correct_answer_text=summary.correct_answer.text,
-            fun_fact=summary.fun_fact,
-            leaderboard=leaderboard,
-            round_num=game_state.round,
-            total_rounds=game_state.total_rounds,
-            all_answers=all_answers,
-            question_text=summary.question.question,
-            num_answer_options=len(game_state.shuffled_answers),
-            players=players_list,
-            last_round=last_round,
-            question_id=summary.question.id,
-        )
         await self._conn.broadcast(summary_msg)
 
     # ------------------------------------------------------------------
