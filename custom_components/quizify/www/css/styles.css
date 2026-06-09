@@ -701,6 +701,26 @@ body {
 .player-header-round-num { color: var(--color-accent-primary); }
 .player-header-round-sep { color: var(--color-border-dark); }
 
+/* Sound cue mute toggle — sits to the left of the connection dot in the
+   top-right corner of the player header. Tap target stays ≥36px. */
+.sound-toggle-btn {
+    position: absolute;
+    top: 8px;
+    right: 30px;
+    min-width: 36px;
+    min-height: 36px;
+    padding: 4px;
+    border: none;
+    background: transparent;
+    font-size: 1.1rem;
+    line-height: 1;
+    cursor: pointer;
+    border-radius: 50%;
+    opacity: 0.85;
+}
+.sound-toggle-btn:hover { opacity: 1; }
+.sound-toggle-btn.is-muted { opacity: 0.55; }
+
 /* Connection indicator */
 .connection-indicator {
     position: absolute;

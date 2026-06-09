@@ -771,12 +771,41 @@
     // Initialization
     // ============================================
 
+    // ============================================
+    // Sound Toggle (header speaker button)
+    // ============================================
+
+    function setupSoundToggle() {
+        var btn = document.getElementById('sound-toggle-btn');
+        var snd = window.QuizifyPlayerSound;
+        if (!btn) return;
+        if (!snd) { btn.classList.add('hidden'); return; }
+
+        function render() {
+            var t = (window.QuizifyI18n && window.QuizifyI18n.t) || function (k) { return k; };
+            var muted = snd.isMuted();
+            btn.textContent = muted ? '🔇' : '🔊';
+            btn.classList.toggle('is-muted', muted);
+            btn.setAttribute('aria-pressed', muted ? 'true' : 'false');
+            var label = muted ? t('game.soundUnmute') : t('game.soundMute');
+            btn.setAttribute('aria-label', label);
+            btn.setAttribute('title', label);
+        }
+
+        btn.addEventListener('click', function () {
+            snd.toggleMute();
+            render();
+        });
+        render();
+    }
+
     function init() {
         setupJoinForm();
         lobby.init(send);
         setupRetryConnection();
         setupAdminControls();
         setupReactionBar();
+        setupSoundToggle();
         pu.setupCollapsibles();
 
         // Answer button clicks

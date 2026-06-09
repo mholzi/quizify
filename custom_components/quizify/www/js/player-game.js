@@ -22,6 +22,7 @@
      */
     function startCountdown(deadline) {
         stopCountdown();
+        if (window.QuizifyPlayerSound) window.QuizifyPlayerSound.resetTick();
 
         var timerElement = document.getElementById('timer');
         if (!timerElement) return;
@@ -33,6 +34,9 @@
             var remaining = Math.max(0, Math.ceil((deadline - now) / 1000));
 
             timerElement.textContent = remaining;
+
+            // Soft tick in the last 5 seconds (one per whole second).
+            if (window.QuizifyPlayerSound) window.QuizifyPlayerSound.tickFromRemaining(remaining);
 
             if (remaining <= 5) {
                 timerElement.classList.remove('timer--warning');
@@ -79,6 +83,9 @@
         // display as a whole-second integer so the count text reads cleanly.
         var displaySeconds = Math.ceil(remaining);
         timerElement.textContent = displaySeconds;
+
+        // Soft tick in the last 5 seconds (one per whole second).
+        if (window.QuizifyPlayerSound) window.QuizifyPlayerSound.tickFromRemaining(remaining);
 
         if (remaining <= 5) {
             timerElement.classList.remove('timer--warning');

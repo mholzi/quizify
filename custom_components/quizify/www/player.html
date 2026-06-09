@@ -29,6 +29,9 @@
             <span class="player-header-round-sep" aria-hidden="true">/</span>
             <span id="header-round-total">10</span>
         </span>
+        <!-- Sound cue mute toggle. JS (player-core.js setupSoundToggle)
+             sets the icon, label and persists the preference. -->
+        <button id="sound-toggle-btn" type="button" class="sound-toggle-btn" aria-pressed="false" aria-label="Mute sound">🔊</button>
         <!-- Connection status dot — JS updates via conn-status div -->
         <div id="connection-indicator" class="connection-indicator" aria-hidden="true"></div>
     </header>
