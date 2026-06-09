@@ -18,20 +18,28 @@
 <body>
     <header class="player-header">
         <h1 class="wordmark"><span class="wordmark-quiz">Quiz</span><span class="wordmark-ify">ify</span></h1>
-        <!-- Round indicator sits inline next to the wordmark on the reveal
-             view. showView() in player-utils.js toggles `hidden` based on
-             whether reveal-view is active. Text is populated by
-             renderFinaleReveal in player-reveal.js. -->
-        <span id="player-header-round" class="player-header-round" hidden aria-live="polite">
-            <span class="player-header-round-dot" aria-hidden="true"></span>
-            <span data-i18n="game.roundLabel">Round</span>
-            <span class="player-header-round-num" id="header-round-num">1</span>
-            <span class="player-header-round-sep" aria-hidden="true">/</span>
-            <span id="header-round-total">10</span>
+        <!-- Right-side header cluster (Variant C, issue #194): the sound mute
+             toggle is embedded as a subtle affordance immediately before the
+             round indicator, reusing the existing right-aligned furniture
+             rather than floating as its own corner icon. The round indicator
+             itself still toggles `hidden` independently (player-utils.js,
+             reveal view only); the speaker stays visible at all times. -->
+        <span class="player-header-round-grp">
+            <!-- Sound cue mute toggle. JS (player-core.js setupSoundToggle)
+                 sets the icon, label and persists the preference. -->
+            <button id="sound-toggle-btn" type="button" class="sound-toggle-btn" aria-pressed="false" aria-label="Mute sound">🔊</button>
+            <!-- Round indicator sits inline next to the wordmark on the reveal
+                 view. showView() in player-utils.js toggles `hidden` based on
+                 whether reveal-view is active. Text is populated by
+                 renderFinaleReveal in player-reveal.js. -->
+            <span id="player-header-round" class="player-header-round" hidden aria-live="polite">
+                <span class="player-header-round-dot" aria-hidden="true"></span>
+                <span data-i18n="game.roundLabel">Round</span>
+                <span class="player-header-round-num" id="header-round-num">1</span>
+                <span class="player-header-round-sep" aria-hidden="true">/</span>
+                <span id="header-round-total">10</span>
+            </span>
         </span>
-        <!-- Sound cue mute toggle. JS (player-core.js setupSoundToggle)
-             sets the icon, label and persists the preference. -->
-        <button id="sound-toggle-btn" type="button" class="sound-toggle-btn" aria-pressed="false" aria-label="Mute sound">🔊</button>
         <!-- Connection status dot — JS updates via conn-status div -->
         <div id="connection-indicator" class="connection-indicator" aria-hidden="true"></div>
     </header>

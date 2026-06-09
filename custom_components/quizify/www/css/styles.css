@@ -670,16 +670,25 @@ body {
     margin: 0;
 }
 
+/* Right-side header cluster (Variant C, issue #194). Groups the embedded
+   sound-mute toggle with the round indicator so they read as one piece of
+   furniture. Right-aligns via the header's space-between. margin-right
+   clears the absolutely-positioned connection dot in the top-right corner. */
+.player-header-round-grp {
+    display: inline-flex;
+    align-items: center;
+    gap: 10px;
+    margin-right: var(--space-lg);
+}
+
 /* Round indicator — app-bar style (variant C, Markus 2026-05-31). The
    wordmark sits left, this counter right-aligns via space-between and
    appears only on the reveal view (showView in player-utils.js toggles
-   the hidden attr). margin-right clears the absolutely-positioned
-   connection dot in the top-right corner. */
+   the hidden attr). */
 .player-header-round {
     display: inline-flex;
     align-items: center;
     gap: 7px;
-    margin-right: var(--space-lg);
     font-family: var(--font-mono);
     font-weight: 700;
     font-size: 0.7rem;
@@ -701,25 +710,31 @@ body {
 .player-header-round-num { color: var(--color-accent-primary); }
 .player-header-round-sep { color: var(--color-border-dark); }
 
-/* Sound cue mute toggle — sits to the left of the connection dot in the
-   top-right corner of the player header. Tap target stays ≥36px. */
+/* Sound cue mute toggle — Variant C (issue #194). Embedded as a subtle
+   round affordance inside the right-side header cluster, immediately before
+   the round indicator, instead of floating as its own corner icon. Quiet by
+   default (warm card-alt fill, reduced opacity); dims further when muted.
+   Behaviour + persistence unchanged (player-core.js setupSoundToggle). */
 .sound-toggle-btn {
-    position: absolute;
-    top: 8px;
-    right: 30px;
-    min-width: 36px;
-    min-height: 36px;
-    padding: 4px;
+    flex: 0 0 auto;
+    width: 30px;
+    height: 30px;
+    min-width: 30px;
+    min-height: 30px;
+    padding: 0;
     border: none;
-    background: transparent;
-    font-size: 1.1rem;
+    background: var(--color-bg-card-alt);
+    font-size: 1rem;
     line-height: 1;
     cursor: pointer;
-    border-radius: 50%;
-    opacity: 0.85;
+    border-radius: var(--radius-full);
+    opacity: 0.8;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
 }
 .sound-toggle-btn:hover { opacity: 1; }
-.sound-toggle-btn.is-muted { opacity: 0.55; }
+.sound-toggle-btn.is-muted { opacity: 0.5; }
 
 /* Connection indicator */
 .connection-indicator {
