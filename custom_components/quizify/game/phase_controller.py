@@ -27,12 +27,38 @@ from __future__ import annotations
 import logging
 import time
 from collections.abc import Callable
+from dataclasses import dataclass, field
 from enum import Enum
 
 from ..const import DEFAULT_ROUND_DURATION
 from .timer import QuestionTimer
 
 _LOGGER = logging.getLogger(__name__)
+
+# Cadence of the per-question countdown broadcast, in seconds. Owned here
+# (rather than in the connection layer) so all timing constants live with the
+# timing logic. Behaviour-preserving: this is the same 0.5s the tick loop has
+# always slept between broadcasts.
+TICK_INTERVAL = 0.5
+
+
+@dataclass
+class TickResolution:
+    """Pure timing result for one broadcast iteration of the countdown loop.
+
+    Produced by :meth:`PhaseController.resolve_tick`; consumed by the
+    connection layer, which turns it into ``timer_tick`` wire messages. Holds no
+    websocket / connection state — only player names and their authoritative
+    remaining seconds, plus the value dashboards/admins show (the minimum across
+    all timed players so the shared TV countdown is consistent).
+    """
+
+    # (player_name, remaining_seconds) for every player that currently has a
+    # timer, in the order the names were supplied. Remaining is clamped at 0.
+    per_player: list[tuple[str, float]] = field(default_factory=list)
+    # Minimum remaining across ``per_player`` (0.0 when nobody has a timer) —
+    # the value broadcast to dashboards and pure-admin connections.
+    dashboard_remaining: float = 0.0
 
 
 class GamePhase(str, Enum):
@@ -138,6 +164,49 @@ class PhaseController:
     def get_timer(self, name: str) -> QuestionTimer | None:
         """Return the authoritative timer for a player, or None."""
         return self.timers.get(name)
+
+    def resolve_tick(self, player_names: list[str]) -> TickResolution:
+        """Resolve the authoritative remaining time for one countdown tick.
+
+        Reads each player's :class:`QuestionTimer` ONCE (an O(1) dict lookup
+        each) and returns the per-player remaining plus the dashboard minimum.
+        Players without a timer (not yet joined this round) are skipped. The
+        result carries no connection state — the caller decides which of these
+        players are connected and turns the numbers into ``timer_tick``
+        messages. Behaviour matches the previous inline ``tick_state``
+        comprehension exactly: same order, same ``max(0.0, …)`` clamp, same
+        ``min(..., default=0.0)`` dashboard value.
+        """
+        per_player = [
+            (name, max(0.0, timer.get_remaining()))
+            for name in player_names
+            if (timer := self.timers.get(name)) is not None
+        ]
+        dashboard_remaining = min(
+            (remaining for _, remaining in per_player), default=0.0
+        )
+        return TickResolution(
+            per_player=per_player,
+            dashboard_remaining=dashboard_remaining,
+        )
+
+    def all_timers_expired(self, player_names: list[str]) -> bool:
+        """Whether every supplied player has an expired timer.
+
+        The countdown loop's stop condition: the round ends once all
+        *connected* players' timers have run out. A player without a timer is
+        ignored (not treated as expired) — that guards the late-joiner /
+        admin-self-join window where a connected player exists before their
+        per-player timer does. Returns False when no supplied player has a timer
+        yet (nothing to expire), matching the previous inline check that
+        required at least one live timer before it could break.
+        """
+        timers = [
+            timer
+            for name in player_names
+            if (timer := self.timers.get(name)) is not None
+        ]
+        return bool(timers) and all(timer.is_expired() for timer in timers)
 
     def time_remaining_for_snapshot(self) -> float:
         """Remaining time for a mid-round joiner's state snapshot.

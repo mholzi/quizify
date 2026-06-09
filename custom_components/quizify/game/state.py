@@ -1131,6 +1131,23 @@ class QuizifyGameState:
         """
         return self._phase_controller.get_timer(player_name)
 
+    def resolve_tick(self, player_names: list[str]):
+        """Resolve one countdown-tick's per-player remaining + dashboard min.
+
+        Thin delegate to the PhaseController so all timing logic lives there
+        (#203). The WebSocket handler supplies the current player names and
+        turns the returned :class:`TickResolution` into ``timer_tick`` wire
+        messages; it owns the I/O, the controller owns the timing.
+        """
+        return self._phase_controller.resolve_tick(player_names)
+
+    def all_timers_expired(self, player_names: list[str]) -> bool:
+        """Whether every supplied player's timer has expired (#203).
+
+        The countdown loop's stop condition, delegated to the PhaseController.
+        """
+        return self._phase_controller.all_timers_expired(player_names)
+
     def get_player_powerup(self, player_name: str):
         """Get the power-up held by a player."""
         return self._powerup_manager.get_powerup(player_name)
