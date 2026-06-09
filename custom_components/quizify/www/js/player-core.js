@@ -226,7 +226,15 @@
                 break;
 
             case 'question_started':
-                handleQuestionStarted(msg);
+                // On the final round, play a brief dramatic flourish + 3·2·1
+                // countdown on the big screen BEFORE revealing the question.
+                // Pure tension/UX — works regardless of finale type. If timing
+                // data is missing or anything goes wrong, we reveal instantly.
+                if (isFinalRound(msg)) {
+                    playFinaleCountdown(function () { handleQuestionStarted(msg); });
+                } else {
+                    handleQuestionStarted(msg);
+                }
                 break;
 
             case 'timer_tick':
@@ -320,6 +328,9 @@
             _acquireWakeLock();
         } else {
             _releaseWakeLock();
+            // Drop any in-flight finale flourish when leaving an active round
+            // (pause / reveal / reset / reconnect into a non-question phase).
+            _clearFinaleCountdown();
         }
 
         // Sync UI language with the server-side game language so a
@@ -407,6 +418,81 @@
     // Question Started
     // ============================================
 
+    // ============================================
+    // Finale Countdown (dramatic flourish before the final question)
+    // ============================================
+
+    var _finaleCountdownTimers = [];
+
+    // True when this question_started marks the last round. Prefer the
+    // explicit server flag; fall back to round_num >= total_rounds so the
+    // countdown still fires even if is_final_round is ever absent.
+    function isFinalRound(msg) {
+        if (!msg) return false;
+        if (msg.is_final_round === true) return true;
+        var rn = msg.round_num;
+        var tr = msg.total_rounds;
+        return typeof rn === 'number' && typeof tr === 'number' && tr > 0 && rn >= tr;
+    }
+
+    function _clearFinaleCountdown() {
+        for (var i = 0; i < _finaleCountdownTimers.length; i++) {
+            clearTimeout(_finaleCountdownTimers[i]);
+        }
+        _finaleCountdownTimers = [];
+        var overlay = document.getElementById('finale-countdown-overlay');
+        if (overlay) {
+            overlay.classList.add('hidden');
+            overlay.setAttribute('aria-hidden', 'true');
+        }
+    }
+
+    // Show "Finale!" then 3 · 2 · 1 (~2.4s total), then run `done`. The reveal
+    // is always invoked exactly once, even if something throws — the final
+    // question must never be swallowed by this purely cosmetic flourish.
+    function playFinaleCountdown(done) {
+        var fired = false;
+        function finish() {
+            if (fired) return;
+            fired = true;
+            _clearFinaleCountdown();
+            try { done(); } catch (e) { /* reveal already in progress */ }
+        }
+
+        var overlay = document.getElementById('finale-countdown-overlay');
+        var numberEl = document.getElementById('finale-countdown-number');
+        if (!overlay || !numberEl) {
+            // No overlay element (older cached HTML) — skip straight to reveal.
+            finish();
+            return;
+        }
+
+        try {
+            _clearFinaleCountdown();
+            numberEl.textContent = '';
+            overlay.classList.remove('hidden');
+            overlay.setAttribute('aria-hidden', 'false');
+
+            // Flourish shows alone for ~0.7s, then 3 · 2 · 1 at 0.6s each.
+            var digits = [3, 2, 1];
+            digits.forEach(function (d, idx) {
+                _finaleCountdownTimers.push(setTimeout(function () {
+                    numberEl.textContent = String(d);
+                    // Re-trigger the pop animation by toggling the class.
+                    numberEl.classList.remove('tick');
+                    // Force reflow so the animation restarts on each digit.
+                    void numberEl.offsetWidth;
+                    numberEl.classList.add('tick');
+                }, 700 + idx * 600));
+            });
+
+            // After the last digit finishes, reveal the question.
+            _finaleCountdownTimers.push(setTimeout(finish, 700 + digits.length * 600));
+        } catch (e) {
+            finish();
+        }
+    }
+
     function handleQuestionStarted(msg) {
         state.currentPhase = 'QUESTION_ACTIVE';
         currentQuestion = msg;
@@ -459,6 +545,7 @@
     function handleRoundSummary(msg) {
         state.currentPhase = 'ANSWER_REVEAL';
         game.stopCountdown();
+        _clearFinaleCountdown();
         pu.showView('reveal-view');
 
         // Pass question context to reveal
@@ -512,6 +599,7 @@
     function handleFinale(msg) {
         state.currentPhase = 'FINALE';
         game.stopCountdown();
+        _clearFinaleCountdown();
         pu.showView('end-view');
 
         end.updateEndView(msg);
