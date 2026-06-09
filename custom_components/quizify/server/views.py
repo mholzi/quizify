@@ -19,6 +19,11 @@ import aiohttp
 from aiohttp import web
 
 from .context import APP_CTX_KEY
+from .pack_submission import (
+    submissions_list_view,
+    submit_config_view,
+    submit_pack_view,
+)
 from .serializers import build_game_status_response
 
 if TYPE_CHECKING:
@@ -627,6 +632,11 @@ ROUTES: list[tuple[str, str, object]] = [
     ("GET", "/api/quizify/packs/updates", pack_update_check_view),
     ("POST", "/api/quizify/flag-question", flag_question_view),
     ("GET", "/api/quizify/flags", flag_list_view),
+    # Community pack submission (#180). Inert until community_submit_url is set:
+    # the config endpoint reports enabled:false and POSTs are refused.
+    ("GET", "/api/quizify/pack-submit/config", submit_config_view),
+    ("GET", "/api/quizify/pack-submit/submissions", submissions_list_view),
+    ("POST", "/api/quizify/pack-submit", submit_pack_view),
 ]
 
 

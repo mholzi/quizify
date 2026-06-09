@@ -7,6 +7,22 @@ All notable changes to Quizify are documented here. This project follows
 
 ### Added
 
+- **Submit a community pack in-app (#180).** Hosts can now compose or paste a
+  community question pack as JSON directly in the admin setup screen, get it
+  validated field-by-field (a per-row ✓/✗ check of the pack name, language,
+  question list and every question's shape — mirroring the on-disk pack schema
+  from #179), and submit it for review. A submitted pack is handed to a small
+  worker that turns it into a GitHub issue in `mholzi/quizify`; the GitHub
+  token lives only in that worker, never in the browser or the integration.
+  Each submission's status is reconciled server-side against the GitHub issue
+  state (throttled to ~hourly): a closed-as-completed issue shows as
+  *Accepted*, a closed-as-not-planned issue as *Declined*. Error messages are
+  localized (`INVALID_FORMAT` / `RATE_LIMITED` / `GITHUB_ERROR`) with a
+  fallback to the raw worker message. The whole feature is **inert by
+  default**: a new optional "Community pack submission URL" option must be set
+  before the section appears — empty means the UI stays hidden and the
+  endpoints accept nothing. (The worker route itself is separate
+  infrastructure and is not part of this integration.)
 - **Group adaptive difficulty (#40).** A new **Auto** difficulty option that
   tunes the whole table together within a single game. The game still serves
   one shared question to everyone per round; after each round Quizify looks at

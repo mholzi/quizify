@@ -6513,3 +6513,242 @@ body:not(.is-admin) .pl-result { padding-bottom: 16px; }
 .your-result-score { font-size: 1.04rem; }
 .stat-value { font-size: 1.2rem; }
 .stat-label { font-size: 0.68rem; }
+
+/* ===========================================================================
+   Community pack submission (#180) — Variant C "Stepper"
+   Hidden by default; pack-submit.js unhides #pack-submit-section only when the
+   integration reports a configured worker URL. Lives at the bottom of the
+   setup-detail flow, near the pack picker. A guided 3-step wizard
+   (Compose → Check → Submit) with a progress rail + grouped ✓/✗ checks, plus a
+   status timeline for "My submissions".
+   =========================================================================== */
+.pack-submit-section {
+    margin-top: var(--space-xl, 32px);
+    padding-top: var(--space-lg, 24px);
+    border-top: 1px solid var(--color-border-light);
+    text-align: left;
+}
+.pack-submit-card {
+    background: var(--color-bg-surface);
+    border: 1px solid var(--color-border-light);
+    border-radius: var(--radius-xl, 14px);
+    box-shadow: var(--shadow-md);
+    padding: var(--space-lg, 24px);
+    margin-bottom: var(--space-md, 16px);
+}
+.pack-submit-heading {
+    font-size: 1.05rem;
+    color: var(--color-text-heading);
+    margin: 0 0 var(--space-xs, 4px);
+}
+.pack-submit-intro {
+    font-size: 0.8rem;
+    color: var(--color-text-muted);
+    margin: 0 0 var(--space-lg, 24px);
+}
+
+/* ---- step rail ---- */
+.pack-steps {
+    display: flex;
+    align-items: center;
+    margin-bottom: var(--space-lg, 24px);
+}
+.pack-step {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 5px;
+    flex: none;
+    width: 54px;
+}
+.pack-step-n {
+    width: 30px;
+    height: 30px;
+    border-radius: 50%;
+    display: grid;
+    place-items: center;
+    font-weight: 700;
+    font-size: 0.82rem;
+    font-family: var(--font-mono);
+}
+.pack-step.done .pack-step-n { background: var(--color-success); color: #fff; }
+.pack-step.active .pack-step-n {
+    background: var(--color-accent-primary);
+    color: #fff;
+    box-shadow: 0 0 0 4px var(--color-error-light);
+}
+.pack-step.todo .pack-step-n { background: var(--color-bg-card-alt); color: var(--color-text-light); }
+.pack-step-l {
+    font-size: 0.66rem;
+    font-weight: 600;
+    color: var(--color-text-muted);
+    text-align: center;
+}
+.pack-step.active .pack-step-l { color: var(--color-text-primary); }
+.pack-step-bar {
+    flex: 1;
+    height: 2px;
+    background: var(--color-border-light);
+    margin: 0 -6px 18px;
+}
+.pack-step-bar.fill { background: var(--color-success); }
+
+/* ---- step 1: compose ---- */
+.pack-submit-input-label {
+    display: block;
+    font-size: 0.75rem;
+    font-weight: 600;
+    color: var(--color-text-secondary);
+    margin-bottom: 6px;
+}
+.pack-submit-input {
+    width: 100%;
+    box-sizing: border-box;
+    font-family: var(--font-mono);
+    font-size: 0.8rem;
+    line-height: 1.5;
+    padding: 11px;
+    border: 1px solid var(--color-border-medium);
+    border-radius: var(--radius-md, 10px);
+    background: var(--color-bg-card-alt);
+    color: var(--color-text-primary);
+    resize: vertical;
+    margin-bottom: var(--space-md, 16px);
+}
+
+/* ---- step 2: grouped checks ---- */
+.pack-submit-result { margin-bottom: var(--space-md, 16px); }
+.pack-vgroup {
+    border: 1px solid var(--color-border-light);
+    border-radius: var(--radius-lg, 12px);
+    overflow: hidden;
+    margin-bottom: 10px;
+}
+.pack-vg-head {
+    display: flex;
+    align-items: center;
+    gap: 9px;
+    padding: 11px 14px;
+    font-size: 0.82rem;
+    font-weight: 700;
+}
+.pack-vg-ic {
+    width: 20px;
+    height: 20px;
+    border-radius: 50%;
+    display: grid;
+    place-items: center;
+    font-size: 0.75rem;
+    flex: none;
+    color: #fff;
+}
+.pack-vg-head.ok { background: var(--color-success-light); }
+.pack-vg-head.ok .pack-vg-ic { background: var(--color-success); }
+.pack-vg-head.bad { background: var(--color-error-light); }
+.pack-vg-head.bad .pack-vg-ic { background: var(--color-error); }
+.pack-vg-title { color: var(--color-text-primary); }
+.pack-vg-count {
+    margin-left: auto;
+    font-family: var(--font-mono);
+    font-size: 0.7rem;
+    color: var(--color-text-muted);
+    font-weight: 600;
+}
+.pack-vg-body { padding: 4px 14px 8px; }
+.pack-vrow {
+    display: flex;
+    align-items: baseline;
+    gap: 9px;
+    font-size: 0.82rem;
+    padding: 6px 0;
+    flex-wrap: wrap;
+}
+.pack-vrow-ic {
+    font-family: var(--font-mono);
+    font-weight: 700;
+    width: 14px;
+    flex: none;
+}
+.pack-vrow.ok .pack-vrow-ic { color: var(--color-success); }
+.pack-vrow.bad .pack-vrow-ic { color: var(--color-error); }
+.pack-vrow-f { flex: 1; color: var(--color-text-secondary); }
+.pack-vrow-d {
+    font-size: 0.7rem;
+    color: var(--color-text-light);
+    font-family: var(--font-mono);
+}
+.pack-vrow.bad .pack-vrow-d { color: var(--color-error); }
+
+/* ---- step 3: submit ---- */
+.pack-submit-confirm {
+    font-size: 0.85rem;
+    color: var(--color-text-secondary);
+    margin: 0 0 var(--space-md, 16px);
+}
+.pack-submit-status {
+    margin-top: var(--space-sm, 8px);
+    font-size: 0.85rem;
+    min-height: 1.2em;
+}
+.pack-submit-status--ok { color: var(--color-success); }
+.pack-submit-status--bad { color: var(--color-error); }
+.pack-submit-status--pending { color: var(--color-text-muted); }
+
+/* shared ghost button for "back" / secondary step actions */
+.btn-ghost {
+    background: transparent;
+    border: 1px solid var(--color-border-medium);
+    color: var(--color-text-secondary);
+    font-weight: 600;
+    margin-top: 8px;
+}
+
+/* ---- "My submissions" timeline ---- */
+.pack-submit-list-title {
+    font-size: 0.95rem;
+    font-weight: 800;
+    color: var(--color-text-heading);
+    margin-bottom: var(--space-md, 16px);
+}
+.pack-submit-timeline {
+    position: relative;
+    padding-left: 22px;
+}
+.pack-submit-timeline::before {
+    content: "";
+    position: absolute;
+    left: 6px;
+    top: 4px;
+    bottom: 4px;
+    width: 2px;
+    background: var(--color-border-light);
+}
+.pack-tli {
+    position: relative;
+    padding-bottom: 16px;
+}
+.pack-tli:last-child { padding-bottom: 0; }
+.pack-tli-node {
+    position: absolute;
+    left: -22px;
+    top: 3px;
+    width: 14px;
+    height: 14px;
+    border-radius: 50%;
+    border: 3px solid var(--color-bg-surface);
+}
+.pack-tli.a .pack-tli-node { background: var(--color-success); }
+.pack-tli.p .pack-tli-node { background: var(--color-warning); }
+.pack-tli.d .pack-tli-node { background: var(--color-error); }
+.pack-tli-t { font-size: 0.85rem; font-weight: 600; color: var(--color-text-primary); }
+.pack-tli-t a { color: inherit; }
+.pack-tli-m {
+    font-size: 0.7rem;
+    color: var(--color-text-light);
+    font-family: var(--font-mono);
+    margin-top: 1px;
+}
+.pack-tli-stat { font-size: 0.7rem; font-weight: 700; margin-top: 3px; }
+.pack-tli.a .pack-tli-stat { color: var(--color-success); }
+.pack-tli.p .pack-tli-stat { color: var(--color-warning); }
+.pack-tli.d .pack-tli-stat { color: var(--color-error); }
