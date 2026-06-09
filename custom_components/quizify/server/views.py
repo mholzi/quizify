@@ -357,7 +357,13 @@ async def featured_pack_view(request: web.Request) -> web.Response:
         raw = await ctx.runtime.run_in_executor(
             pack_path.read_text, "utf-8"
         )
-        theme = json.loads(raw).get("theme", "")
+        parsed = json.loads(raw)
+        # A pack file is expected to be a JSON object. Valid-but-non-object
+        # JSON (e.g. a list or bare string) would make ``.get`` raise
+        # AttributeError, which isn't an OSError/ValueError — guard the
+        # structure explicitly so a malformed pack degrades to the default
+        # icon instead of 500-ing the admin setup screen (#168).
+        theme = parsed.get("theme", "") if isinstance(parsed, dict) else ""
     except (OSError, ValueError):
         theme = ""
     icon = _THEME_ICONS.get(theme, "🎲")

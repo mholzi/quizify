@@ -110,14 +110,15 @@ class QuizifyWebSocketHandler:
         await self._conn.async_load_admin_token()
         is_admin = False
         if role == "admin":
-            existing_token = self._conn._admin_session_token
             if admin_token and self._conn.validate_admin_token(admin_token):
                 is_admin = True
                 _LOGGER.info("Admin reconnected with valid session token")
-            elif not existing_token:
+            elif await self._conn.try_bootstrap_admin():
                 # Bootstrap: no token has ever been issued on this HA
-                # instance. Grant once and persist so this branch is closed
-                # permanently (until admin is explicitly reset).
+                # instance. try_bootstrap_admin() grants + persists the token
+                # atomically under a lock, so exactly one of two racing
+                # first-connections wins (#168). The loser falls through to
+                # the no-token branches below and gets player role only.
                 is_admin = True
                 _LOGGER.warning(
                     "ADMIN BOOTSTRAP: granting admin to first connection "

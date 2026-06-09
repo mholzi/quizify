@@ -53,6 +53,12 @@ class ConnectionManager:
         self._admin_session_token: str | None = None
         self._admin_disconnect_task: asyncio.Task | None = None
         self._pending_removals: dict[str, asyncio.Task] = {}
+        # Serializes the admin-bootstrap decision (load + grant-once + persist)
+        # so two near-simultaneous /quizify/admin connects on a fresh install
+        # can't both pass the "no token yet" check and both be granted admin
+        # (#168: only one token persists, so the other admin would be silently
+        # locked out). See try_bootstrap_admin().
+        self._bootstrap_lock = asyncio.Lock()
 
         # Persistent storage for admin token (survives host restarts).
         self._store = TokenStore(runtime, _ADMIN_TOKEN_FILENAME)
@@ -130,6 +136,27 @@ class ConnectionManager:
         """Return True if *token* matches the current admin session token."""
         return bool(token and token == self._admin_session_token)
 
+    async def try_bootstrap_admin(self) -> bool:
+        """Atomically grant + persist the admin token on a fresh install.
+
+        Returns True only for the single connection that wins the bootstrap
+        race; every later caller sees the token already set and returns False.
+
+        The whole load → check → create → persist sequence runs under
+        ``_bootstrap_lock`` so two concurrent first-connections can't both be
+        granted admin (#168). The persist is awaited (not fire-and-forget) so
+        the token is durable before admin is granted — the second connection,
+        once it acquires the lock, reliably observes it.
+        """
+        async with self._bootstrap_lock:
+            await self.async_load_admin_token()
+            if self._admin_session_token:
+                # Someone (this run or a previous restart) already holds it.
+                return False
+            self._admin_session_token = str(uuid.uuid4())
+            await self._async_save_admin_token()
+            return True
+
     def clear_admin_token(self) -> None:
         """Explicit admin-token reset (e.g. user clicked 'Log out admin')."""
         self._admin_session_token = None
@@ -163,8 +190,27 @@ class ConnectionManager:
     # Player session tokens (with TTL)
     # ------------------------------------------------------------------
 
+    def _sweep_expired_tokens(self) -> None:
+        """Drop session tokens past their TTL.
+
+        ``get_player_for_token`` only evicts a token when it is looked up, so a
+        token that is issued and never validated again would linger forever and
+        the dict would grow unbounded over a long-lived host (#168). Sweeping
+        opportunistically on every new-token creation bounds the dict to active
+        plus recently-issued tokens, with no background task.
+        """
+        now = time.monotonic()
+        expired = [
+            t
+            for t, (_n, issued_at) in self._session_tokens.items()
+            if now - issued_at > _PLAYER_TOKEN_TTL
+        ]
+        for t in expired:
+            self._session_tokens.pop(t, None)
+
     def create_session_token(self, player_name: str) -> str:
         """Create and store a new session token for *player_name*."""
+        self._sweep_expired_tokens()
         token = str(uuid.uuid4())
         self._session_tokens[token] = (player_name, time.monotonic())
         return token
