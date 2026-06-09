@@ -32,7 +32,10 @@
 
     var MAX_RECONNECT_ATTEMPTS = 10;
     var MAX_RECONNECT_DELAY_MS = 30000;
-    var MAX_NAME_LENGTH = 20;
+    // Name limit lives in utils.js (QuizifyUtils.MAX_NAME_LENGTH) so the
+    // player flow and the admin modal share one rule. Mirror it locally
+    // for any legacy reference; validateName() delegates to the shared one.
+    var MAX_NAME_LENGTH = (window.QuizifyUtils && window.QuizifyUtils.MAX_NAME_LENGTH) || 20;
     var SESSION_STORAGE_TOKEN = 'quizify_session_token';
     var SESSION_STORAGE_NAME = 'quizify_player_name';
 
@@ -375,6 +378,13 @@
     // ============================================
 
     function validateName(name) {
+        // Delegate to the shared, i18n-aware validator (utils.js). Kept as
+        // a thin wrapper so player-core's pu.validateName() calls are
+        // unchanged. Falls back to a local check only if utils.js somehow
+        // didn't load (it's a hard dependency, loaded before this bundle).
+        if (utils && utils.validateName) {
+            return utils.validateName(name);
+        }
         var trimmed = (name || '').trim();
         if (!trimmed) {
             return { valid: false, error: 'Please enter a name' };

@@ -414,6 +414,7 @@
   "errors": {
     "NAME_TAKEN": "Name bereits vergeben",
     "NAME_INVALID": "Bitte gib einen Namen ein",
+    "NAME_TOO_LONG": "Name zu lang (max. {max} Zeichen)",
     "GAME_FULL": "Spiel ist voll",
     "GAME_NOT_STARTED": "Kein aktives Spiel",
     "GAME_ALREADY_STARTED": "Spiel läuft bereits",

@@ -1236,8 +1236,24 @@
         if (backdrop) backdrop.addEventListener('click', closeAdminJoinModal);
 
         on(els.adminNameInput, 'input', function () {
-            var name = this.value.trim();
-            if (els.adminJoinBtn) els.adminJoinBtn.disabled = !name || name.length > 20;
+            // Use the shared validator (utils.js) so the admin self-join
+            // modal enforces the exact same name rule + limit as the player
+            // join flow — no second hardcoded `length > 20` to drift.
+            var result = window.QuizifyUtils.validateName(this.value);
+            if (els.adminJoinBtn) els.adminJoinBtn.disabled = !result.valid;
+            // Surface the (now localised) error in the dedicated slot —
+            // only when the field is non-empty but invalid (i.e. too long);
+            // an empty field just disables the button without nagging.
+            var errEl = document.getElementById('admin-name-error');
+            if (errEl) {
+                if (!result.valid && this.value.trim()) {
+                    errEl.textContent = result.error;
+                    errEl.classList.remove('hidden');
+                } else {
+                    errEl.textContent = '';
+                    errEl.classList.add('hidden');
+                }
+            }
         });
 
         on(els.adminNameInput, 'keydown', function (e) {
