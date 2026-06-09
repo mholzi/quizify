@@ -364,7 +364,9 @@
     "worldCupTitle": "World Cup",
     "worldCupDesc": "100 surprising football facts",
     "worldCupPlay": "Play World Cup",
-    "orChoose": "or choose another pack"
+    "orChoose": "or choose another pack",
+    "recommended": "Recommended",
+    "chooseCategory": "Choose a category"
   },
   "wager": {
     "title": "Final Round — Wager",

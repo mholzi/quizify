@@ -5,6 +5,18 @@ All notable changes to Quizify are documented here. This project follows
 
 ## [Unreleased]
 
+### Changed
+
+- **Welcome screen redesign ("Categories-forward").** The host setup screen now
+  leads with the category picker as a two-column grid of color-tinted tiles, each
+  with an **SVG line icon** (replacing the emoji), the category name, and its
+  question count. Tiles tint by theme across the four Soft Parlor accents and show
+  a coral border + check when selected. The featured pack (World Cup / WM) gets a
+  refreshed "Soft Spotlight" card: an SVG trophy in a sun-tinted badge, an
+  "Empfohlen · Neu" eyebrow, and a round coral selection control. Selection wiring,
+  language filtering, and the start payload are unchanged — the grid is still built
+  from `#category-chips` as the single source of truth.
+
 ## [1.3.0] — 2026-06-09
 
 Feature release on top of the 1.2.7 hardening: a new Lightning Round bonus
