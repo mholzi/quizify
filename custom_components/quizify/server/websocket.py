@@ -1011,25 +1011,38 @@ class QuizifyWebSocketHandler:
         # Wipe player session tokens to prevent cross-game reuse.
         self._conn.clear_all_player_tokens()
 
-        # Close all player WSes so abandoned connections actually die.
-        # Snapshot the WS list first because closing mutates the registry
-        # indirectly via the on_disconnect handler.
+        # Snapshot the live player WSes BEFORE clearing the registry — we
+        # need them both to broadcast the reset signal and to close them
+        # afterwards. The host who pressed reset is frequently an
+        # admin-as-player (joined the lobby on the admin WS), so their own
+        # socket is in this list. That's exactly why ordering matters here
+        # (issue #207): if we close the sockets first, the broadcasts below
+        # never reach the host (or any real player) and their UI stays
+        # frozen on the now-stale lobby. So: clear state → broadcast the
+        # reset to everyone still connected → only THEN close the sockets.
         stale_wses = [p.ws for p in game_state.get_players() if p.ws is not None]
-        for pws in stale_wses:
-            try:
-                await pws.close()
-            except Exception:  # noqa: BLE001 — best-effort cleanup
-                pass
 
         # Drop every player from the registry (full wipe — not just score reset).
         game_state.clear_all_players()
         game_state.reset_to_lobby()
 
+        # Tell every currently-connected client to reset its view to the
+        # initial screen (admin → setup, players → join). This MUST run
+        # while the sockets are still open.
         await self._conn.broadcast({"type": "game_reset"})
 
         state = game_state.get_state_snapshot()
         state["type"] = "game_state"
         await self._conn.broadcast(state)
+
+        # Now close the (snapshotted) player sockets so abandoned/stale
+        # connections actually die. Real clients have already received the
+        # reset above and will reconnect into the fresh lobby on their own.
+        for pws in stale_wses:
+            try:
+                await pws.close()
+            except Exception:  # noqa: BLE001 — best-effort cleanup
+                pass
 
     # ------------------------------------------------------------------
     # Admin: kick player

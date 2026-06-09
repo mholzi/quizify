@@ -1035,6 +1035,11 @@
     function handleGameReset() {
         currentPhase = 'LOBBY';
         sessionStorage.removeItem('quizify_admin_name');
+        // The reset wiped the whole session server-side (issue #207),
+        // including the admin's own player slot. Forget any "joined as"
+        // name so the host starts from a truly clean lobby instead of
+        // showing a stale joined-confirmation chip.
+        _adminJoinedAs = null;
         _redirecting = false;
         showView('setup');
     }
