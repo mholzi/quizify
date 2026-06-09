@@ -197,7 +197,16 @@
                          data-i18n-aria-label="a11y.currentQuestionRegion"
                          aria-label="Current question">
                         <div id="question-category" class="question-category"></div>
-                        <img id="question-image" class="question-image" alt="" hidden />
+                        <!-- Issue #183 (Variant 1): image as a fixed-height
+                             banner preview with a tap-to-zoom button. The
+                             answer pills stay reachable above the fold. When
+                             the question has no image the figure is hidden and
+                             the card collapses to the text-only layout. -->
+                        <figure id="question-media" class="question-media" hidden>
+                            <img id="question-image" class="question-image" alt="" />
+                            <button id="question-image-zoom" type="button" class="question-image-zoom"
+                                    data-i18n-aria-label="game.zoomImage" aria-label="Zoom image">⤢</button>
+                        </figure>
                         <div id="question-text" class="question-text"></div>
                     </div>
                     <div id="question-loading" class="album-loading hidden">
@@ -290,6 +299,15 @@
                     </div>
                 </section>
             </div>
+        </div>
+
+        <!-- Issue #183: fullscreen image zoom overlay (tap-to-zoom from the
+             question banner). Hidden until the zoom button is pressed. -->
+        <div id="image-zoom-overlay" class="image-zoom-overlay hidden" role="dialog"
+             aria-modal="true" data-i18n-aria-label="game.zoomImage" aria-label="Zoom image">
+            <button id="image-zoom-close" type="button" class="image-zoom-close"
+                    data-i18n-aria-label="common.close" aria-label="Close">✕</button>
+            <img id="image-zoom-img" class="image-zoom-img" alt="" />
         </div>
 
         <!-- Reveal View -->

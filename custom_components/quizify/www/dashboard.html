@@ -273,19 +273,47 @@
             max-width: 24ch;
         }
 
-        /* Issue #25: optional question image, rendered above the text.
-           Capped height so a tall image can't push the answers grid
-           off-screen on a 720p TV; object-fit keeps the aspect ratio. */
+        /* Issue #183 (Variant 1 — split / side-by-side):
+           When the question has an image, .dashboard-left becomes a 2-pane
+           grid: the image is a co-equal focal point on the left, the
+           question + answer grid on the right. Nothing scrolls; both
+           portrait and landscape images letterbox via object-fit:contain
+           so there is no layout shift between questions. */
+        .dashboard-left.has-image {
+            display: grid;
+            grid-template-columns: 1.15fr 1fr;
+            gap: clamp(24px, 3vw, 44px);
+            align-items: center;
+        }
+        /* Without an image the body keeps the original single-column flow. */
+        .dashboard-question-body {
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            min-width: 0;
+        }
+
+        /* Image pane — hidden unless the question carries a valid image. */
+        .dashboard-question-media {
+            display: none;
+            align-items: center;
+            justify-content: center;
+            height: 100%;
+            min-width: 0;
+        }
+        .dashboard-left.has-image .dashboard-question-media {
+            display: flex;
+        }
         .dashboard-question-image {
             display: block;
             max-width: 100%;
-            max-height: clamp(160px, 28vh, 320px);
+            max-height: 62vh;
             width: auto;
+            height: auto;
             border-radius: 16px;
-            margin-bottom: clamp(16px, 2vw, 28px);
+            border: 1px solid var(--dash-border-neon);
             object-fit: contain;
         }
-        .dashboard-question-image[hidden] { display: none; }
 
         /* 3-column answer row (questions have exactly 3 answers) */
         .dashboard-answers {
@@ -915,6 +943,12 @@
             .dashboard-question { font-size: 28px; }
             .dashboard-answers { grid-template-columns: 1fr; }
             .dashboard-answer { font-size: 16px; padding: 14px 16px; min-height: 56px; }
+            /* Narrow screens: stack the split layout (image above Q&A). */
+            .dashboard-left.has-image {
+                grid-template-columns: 1fr;
+                gap: 16px;
+            }
+            .dashboard-left.has-image .dashboard-question-image { max-height: 32vh; }
         }
     </style>
 </head>
@@ -945,14 +979,24 @@
         <!-- QUESTION VIEW -->
         <div id="question-view" class="dashboard-view">
             <div class="dashboard-columns">
-                <div class="dashboard-left">
-                    <div id="question-category" class="dashboard-category"></div>
-                    <img id="question-image" class="dashboard-question-image" alt="" hidden />
-                    <div id="question-text" class="dashboard-question"></div>
-                    <div id="answers-grid" class="dashboard-answers"></div>
-                    <div id="fun-fact" class="dashboard-funfact">
-                        <div class="fun-fact-label" data-i18n="dashboard.didYouKnow">Did you know?</div>
-                        <div id="fun-fact-text" class="fun-fact-text"></div>
+                <div id="dashboard-left" class="dashboard-left">
+                    <!-- Issue #183 (Variant 1 — split layout): when a question
+                         carries an image the .has-image modifier turns this
+                         column into a 2-pane grid (image left, Q&A right). The
+                         image sits in #question-media; the text/answers stay in
+                         #question-body. Without an image .has-image is removed
+                         and the column collapses to the original stacked flow. -->
+                    <figure id="question-media" class="dashboard-question-media" hidden>
+                        <img id="question-image" class="dashboard-question-image" alt="" />
+                    </figure>
+                    <div id="question-body" class="dashboard-question-body">
+                        <div id="question-category" class="dashboard-category"></div>
+                        <div id="question-text" class="dashboard-question"></div>
+                        <div id="answers-grid" class="dashboard-answers"></div>
+                        <div id="fun-fact" class="dashboard-funfact">
+                            <div class="fun-fact-label" data-i18n="dashboard.didYouKnow">Did you know?</div>
+                            <div id="fun-fact-text" class="fun-fact-text"></div>
+                        </div>
                     </div>
                 </div>
                 <div class="dashboard-right">
@@ -1013,6 +1057,8 @@
             timerFill: document.getElementById('timer-fill'),
             questionCategory: document.getElementById('question-category'),
             questionImage: document.getElementById('question-image'),
+            questionMedia: document.getElementById('question-media'),
+            dashboardLeft: document.getElementById('dashboard-left'),
             questionText: document.getElementById('question-text'),
             answersGrid: document.getElementById('answers-grid'),
             leaderboard: document.getElementById('leaderboard'),
@@ -1027,20 +1073,32 @@
             if (views[name]) views[name].classList.add('active');
         }
 
-        // Issue #25: render the optional question image. Only absolute
-        // http(s) URLs are accepted (the server already sanitises, this
-        // is a defence-in-depth check). Absent/invalid → element hidden,
-        // layout collapses cleanly to the text-only question.
+        // Issue #25 + #183 (Variant 1 split layout): render the optional
+        // question image as a side-by-side focal point. Only absolute
+        // http(s) URLs are accepted (the server already sanitises; this is
+        // defence-in-depth). Absent/invalid → the image pane is hidden and
+        // .has-image is removed, so the column collapses cleanly to the
+        // original full-width text-only layout. If the image fails to load
+        // we fall back to the same text-only layout (graceful fallback).
+        function setImageLayout(on) {
+            if (els.dashboardLeft) els.dashboardLeft.classList.toggle('has-image', !!on);
+            if (els.questionMedia) els.questionMedia.hidden = !on;
+        }
         function renderQuestionImage(url) {
             var img = els.questionImage;
             if (!img) return;
             var safe = (typeof url === 'string' && /^https?:\/\//i.test(url)) ? url : '';
+            img.onerror = function() {
+                // Image failed → collapse to text-only, no broken-image icon.
+                img.removeAttribute('src');
+                setImageLayout(false);
+            };
             if (safe) {
                 img.src = safe;
-                img.hidden = false;
+                setImageLayout(true);
             } else {
                 img.removeAttribute('src');
-                img.hidden = true;
+                setImageLayout(false);
             }
         }
 

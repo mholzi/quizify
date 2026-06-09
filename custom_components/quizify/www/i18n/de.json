@@ -141,6 +141,7 @@
   },
   "game": {
     "question": "Frage",
+    "zoomImage": "Bild vergrößern",
     "soundMute": "Soundeffekte stummschalten",
     "soundUnmute": "Soundeffekte einschalten",
     "of": "von",
