@@ -22,6 +22,7 @@ from custom_components.quizify.const import (
     LOBBY_DISCONNECT_GRACE_PERIOD,
 )
 from custom_components.quizify.game.highlights import compute_superlatives
+from custom_components.quizify.game.phase_controller import TICK_INTERVAL
 from custom_components.quizify.game.powerups import PowerUpEffect, PowerUpType
 from custom_components.quizify.game.state import AnswerResult, GamePhase, QuizifyGameState
 from custom_components.quizify.server.broadcast_dispatcher import BroadcastDispatcher
@@ -1362,12 +1363,15 @@ class QuizifyWebSocketHandler:
     # ------------------------------------------------------------------
 
     def _start_timer_tick(self, game_state: QuizifyGameState) -> None:
-        """Start async task that sends timer_tick every second.
+        """Start async task that broadcasts the countdown every tick.
 
-        Reads authoritative remaining time from each player's QuestionTimer
-        instead of a local countdown, so time-boost and freeze power-ups are
-        reflected in the broadcast (#4 in logical review). Targeted ticks are
-        sent per player so each sees their own modified remaining time.
+        The *timing* — which players have a live timer, each one's
+        authoritative remaining time (so time-boost / freeze power-ups are
+        reflected, #4), the dashboard minimum and the all-expired stop
+        condition — lives in the PhaseController (#203). This loop owns only
+        the I/O: turning that timing into ``timer_tick`` wire messages for
+        players, pure-admins and dashboards, the sleep cadence and the
+        auto-evaluate when the round runs out.
         """
         self._cancel_timer_tick()
 
@@ -1375,22 +1379,14 @@ class QuizifyWebSocketHandler:
             try:
                 while game_state.phase == GamePhase.QUESTION_ACTIVE:
                     players = game_state.get_players()
-                    # Resolve each player's authoritative timer ONCE per tick.
-                    # get_player_timer is an O(1) dict lookup, but it used to be
-                    # called 3-4× per player per tick (once for the send, twice
-                    # more inside the dashboard-minimum comprehension). Compute
-                    # the (player, remaining) pairs once and reuse them for both
-                    # the per-player send and the dashboard minimum (#169). The
-                    # post-sleep expiry check below intentionally re-reads fresh
-                    # timers, since state can change during the 0.5s sleep.
-                    tick_state = [
-                        (p, max(0.0, t.get_remaining()))
-                        for p in players
-                        if (t := game_state.get_player_timer(p.name)) is not None
-                    ]
+                    by_name = {p.name: p for p in players}
+                    # Ask the timing unit for this tick's per-player remaining
+                    # plus the shared dashboard minimum (one timer read each).
+                    tick = game_state.resolve_tick([p.name for p in players])
                     # Send each connected player their authoritative remaining.
-                    for p, remaining in tick_state:
-                        if not p.connected:
+                    for name, remaining in tick.per_player:
+                        p = by_name.get(name)
+                        if p is None or not p.connected:
                             continue
                         await self._conn._safe_send(p.ws, {
                             "type": "timer_tick",
@@ -1398,7 +1394,7 @@ class QuizifyWebSocketHandler:
                         })
                     # Broadcast the minimum remaining to dashboards/admins so
                     # the TV view shows a consistent countdown.
-                    min_remaining = min((r for _, r in tick_state), default=0.0)
+                    min_remaining = tick.dashboard_remaining
                     # Broadcast to pure-admin + dashboards
                     for ws in list(self._conn._admin_connections):
                         if not ws.closed and not any(p.ws is ws for p in players):
@@ -1412,24 +1408,18 @@ class QuizifyWebSocketHandler:
                                 "type": "timer_tick",
                                 "remaining": round(min_remaining, 1),
                             })
-                    await asyncio.sleep(0.5)
+                    await asyncio.sleep(TICK_INTERVAL)
 
-                    # Stop if everyone's timer hit zero and phase is still active.
-                    # Only count CONNECTED players with a timer — a missing timer
-                    # used to be treated as "expired", which made the loop break
-                    # the instant a single late-joining player (e.g. admin's own
-                    # /quizify/player tab) connected before their per-player
-                    # timer existed, ending round 1 in ~1s. Now we require an
-                    # actual expired timer to count, and we ignore disconnected
-                    # players so they don't keep the timer alive forever.
-                    connected = [p for p in players if p.connected]
-                    if connected:
-                        timers_with_state = [
-                            game_state.get_player_timer(p.name) for p in connected
-                        ]
-                        timers_with_state = [t for t in timers_with_state if t is not None]
-                        if timers_with_state and all(t.is_expired() for t in timers_with_state):
-                            break
+                    # Stop if everyone's timer hit zero and phase is still
+                    # active. Re-read fresh timers (state can change during the
+                    # sleep) for the CONNECTED players only; the all-expired
+                    # decision itself lives in the PhaseController, which ignores
+                    # players without a timer so a late-joining connected player
+                    # (e.g. the admin's own /quizify/player tab) can't end the
+                    # round before their per-player timer exists.
+                    connected = [p.name for p in players if p.connected]
+                    if connected and game_state.all_timers_expired(connected):
+                        break
 
                 # Timer expired globally
                 if game_state.phase == GamePhase.QUESTION_ACTIVE:

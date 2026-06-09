@@ -11,14 +11,17 @@ QuizifyGameState is already covered by test_game_state / test_admin_redirect_pau
 from __future__ import annotations
 
 import sys
+import time
 from pathlib import Path
 
 _REPO_ROOT = Path(__file__).resolve().parent.parent
 sys.path.insert(0, str(_REPO_ROOT))
 
 from custom_components.quizify.game.phase_controller import (  # noqa: E402
+    TICK_INTERVAL,
     GamePhase,
     PhaseController,
+    TickResolution,
 )
 
 
@@ -153,6 +156,86 @@ class TestPauseResume:
         assert "carol" in pc.timers
         # Full duration (allow for the tiny elapsed since start()).
         assert pc.timers["carol"].get_remaining() > 29.0
+
+
+class TestResolveTick:
+    """The per-tick countdown timing (relocated from the WS layer, #203)."""
+
+    def test_tick_interval_is_half_second(self) -> None:
+        # The broadcast cadence is owned here now; behaviour-preserving 0.5s.
+        assert TICK_INTERVAL == 0.5
+
+    def test_per_player_remaining_and_dashboard_min(self) -> None:
+        pc = _make(["alice", "bob"])
+        pc.begin_round(30.0)
+        pc.enter_question_active()
+        # bob has less time → he sets the dashboard minimum.
+        pc.timers["bob"]._duration = 10.0  # type: ignore[attr-defined]
+        result = pc.resolve_tick(["alice", "bob"])
+        assert isinstance(result, TickResolution)
+        names = [n for n, _ in result.per_player]
+        assert names == ["alice", "bob"]  # order preserved
+        remaining = {n: r for n, r in result.per_player}
+        assert remaining["bob"] < remaining["alice"]
+        # Dashboard value is the minimum across timed players.
+        assert result.dashboard_remaining == min(r for _, r in result.per_player)
+
+    def test_skips_players_without_a_timer(self) -> None:
+        pc = _make(["alice"])
+        pc.begin_round(30.0)
+        pc.enter_question_active()
+        # "ghost" has no timer (not joined this round) → omitted entirely.
+        result = pc.resolve_tick(["alice", "ghost"])
+        assert [n for n, _ in result.per_player] == ["alice"]
+
+    def test_remaining_clamped_at_zero(self) -> None:
+        pc = _make(["alice"])
+        pc.begin_round(30.0)
+        pc.enter_question_active()
+        # Force the timer well past expiry.
+        pc.timers["alice"]._start_time = time.monotonic() - 100.0  # type: ignore[attr-defined]
+        result = pc.resolve_tick(["alice"])
+        assert result.per_player[0][1] == 0.0
+
+    def test_empty_when_no_players(self) -> None:
+        pc = _make()
+        result = pc.resolve_tick([])
+        assert result.per_player == []
+        assert result.dashboard_remaining == 0.0
+
+
+class TestAllTimersExpired:
+    """The countdown loop's stop condition (relocated from the WS layer, #203)."""
+
+    def test_false_while_time_remains(self) -> None:
+        pc = _make(["alice", "bob"])
+        pc.begin_round(30.0)
+        pc.enter_question_active()
+        assert pc.all_timers_expired(["alice", "bob"]) is False
+
+    def test_true_when_all_expired(self) -> None:
+        pc = _make(["alice", "bob"])
+        pc.begin_round(30.0)
+        pc.enter_question_active()
+        for t in pc.timers.values():
+            t._start_time = time.monotonic() - 100.0  # type: ignore[attr-defined]
+        assert pc.all_timers_expired(["alice", "bob"]) is True
+
+    def test_false_when_one_still_running(self) -> None:
+        pc = _make(["alice", "bob"])
+        pc.begin_round(30.0)
+        pc.enter_question_active()
+        pc.timers["alice"]._start_time = time.monotonic() - 100.0  # type: ignore[attr-defined]
+        # bob still has time → round must not end.
+        assert pc.all_timers_expired(["alice", "bob"]) is False
+
+    def test_false_when_nobody_has_a_timer_yet(self) -> None:
+        # A connected player who has no timer yet (late-joiner / admin-self-join
+        # window) must NOT end the round — guards the round-1 ~1s bug.
+        pc = _make(["alice"])
+        pc.begin_round(30.0)
+        pc.enter_question_active()
+        assert pc.all_timers_expired(["ghost"]) is False
 
 
 class TestSnapshotRemaining:
