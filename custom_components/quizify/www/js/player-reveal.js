@@ -82,9 +82,15 @@
         flashAnswerButtons(data.correct_answer, myAnswerEntry);
 
         // New result page: hero + answer strip + standings (with medals)
-        renderResultHero(myAnswerEntry || currentPlayer, data);
+        var resultPlayer = myAnswerEntry || currentPlayer;
+        renderResultHero(resultPlayer, data);
         renderAnswerStrip(myAnswerEntry, data.correct_answer);
         renderStandings(data.leaderboard || players, state.playerName);
+
+        // Audio cue on the player's own device: a chime when they got it
+        // right, a buzzer when wrong. Skipped for players who joined late /
+        // missed the round (no per-player result). Honours the mute toggle.
+        playResultCue(resultPlayer);
 
         // Admin controls — sticky bottom bar
         var adminControls = document.getElementById('reveal-admin-controls');
@@ -207,6 +213,21 @@
     // ============================================
 
     var STREAK_HERO_THRESHOLD = 2;  // streak ≥ 2 promotes to the streak headline
+
+    /**
+     * Fire the correct/wrong audio cue for this player's round result.
+     * Mirrors the verdict logic in renderResultHero (missed → no cue).
+     * @param {Object} player - this player's result entry
+     */
+    function playResultCue(player) {
+        var snd = window.QuizifyPlayerSound;
+        if (!snd || !player) return;
+        var missed = player.missed_round === true || player.no_answer === true ||
+            player.answer_index === null || player.answer_index === undefined;
+        if (missed) return;
+        if (player.correct === true) snd.playCorrect();
+        else snd.playWrong();
+    }
 
     function renderResultHero(player, data) {
         var hero = document.getElementById('reveal-hero');

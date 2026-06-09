@@ -140,6 +140,8 @@
   },
   "game": {
     "question": "Question",
+    "soundMute": "Mute sound effects",
+    "soundUnmute": "Unmute sound effects",
     "of": "of",
     "ofLabel": "of",
     "questionCounter": "Question {current} / {total}",

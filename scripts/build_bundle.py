@@ -30,6 +30,7 @@ JS_DIR = REPO / "custom_components" / "quizify" / "www" / "js"
 # stay separate because they're shared with admin/dashboard).
 PLAYER_MODULES = [
     "player-utils.js",
+    "player-sound.js",
     "player-lobby.js",
     "player-reveal.js",
     "player-end.js",
