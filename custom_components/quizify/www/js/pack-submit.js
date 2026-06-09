@@ -1,11 +1,12 @@
 /**
- * Quizify community-pack submission (#180).
+ * Quizify community-pack submission (#180) — Variant C "Stepper".
  *
- * Lets a host paste/compose a community question pack, validates it in the
- * browser against the #179 schema (per-field ✓/✗ table), and — only when the
- * integration has a worker URL configured — submits it. The submit goes to
- * Quizify's own endpoint, which proxies to the worker that holds the GitHub
- * token; the browser never talks to GitHub directly.
+ * Lets a host paste/compose a community question pack and walk a guided
+ * 3-step wizard: Compose → Check → Submit. A progress rail tracks the active
+ * step; the Check step shows grouped ✓/✗ results (pack structure + per-question
+ * checks). The submit goes to Quizify's own endpoint, which proxies to the
+ * worker that holds the GitHub token; the browser never talks to GitHub
+ * directly. "My submissions" renders as a status timeline.
  *
  * The whole section stays hidden until /api/quizify/pack-submit/config reports
  * enabled:true. Error codes (INVALID_FORMAT / RATE_LIMITED / GITHUB_ERROR /
@@ -28,6 +29,9 @@ window.QuizifyPackSubmit = (function () {
         max_bytes: 1048576
     };
 
+    // The pack that last passed validation — carried from Check to Submit.
+    var validatedPack = null;
+
     function t(key, params) {
         if (window.QuizifyI18n && typeof window.QuizifyI18n.t === 'function') {
             return window.QuizifyI18n.t(key, params);
@@ -37,100 +41,189 @@ window.QuizifyPackSubmit = (function () {
 
     function el(id) { return document.getElementById(id); }
 
+    function escapeHtml(str) {
+        return String(str).replace(/[&<>"']/g, function (c) {
+            return { '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;' }[c];
+        });
+    }
+
     /**
      * Validate a parsed pack object against the #179 schema.
-     * Returns { ok, fields: [{label, ok, detail}] } — fields drives the ✓/✗ table.
+     *
+     * Returns { ok, fields, groups }:
+     *   fields — flat [{label, ok, detail}] (kept for tests / back-compat).
+     *   groups — [{ key, title, ok, pass, total, rows:[{label, ok, detail}] }]
+     *            drives the grouped Stepper "Check" view: one "Pack structure"
+     *            group and one "Per-question checks" group.
      */
     function validatePack(pack) {
         var fields = [];
-        function add(label, ok, detail) { fields.push({ label: label, ok: ok, detail: detail || '' }); }
 
-        if (typeof pack !== 'object' || pack === null || Array.isArray(pack)) {
-            add(t('packSubmit.field.object'), false, t('packSubmit.err.notObject'));
-            return { ok: false, fields: fields };
+        // structure group rows
+        var structRows = [];
+        function struct(label, ok, detail) {
+            var row = { label: label, ok: ok, detail: detail || '' };
+            structRows.push(row);
+            fields.push(row);
+        }
+        // per-question group rows
+        var qRows = [];
+        function qcheck(label, ok, detail) {
+            var row = { label: label, ok: ok, detail: detail || '' };
+            qRows.push(row);
+            fields.push(row);
         }
 
+        function buildGroups() {
+            function grp(key, titleKey, rows) {
+                var pass = rows.filter(function (r) { return r.ok; }).length;
+                return {
+                    key: key,
+                    title: t(titleKey),
+                    ok: rows.length > 0 && pass === rows.length,
+                    pass: pass,
+                    total: rows.length,
+                    rows: rows
+                };
+            }
+            var groups = [grp('structure', 'packSubmit.group.structure', structRows)];
+            if (qRows.length) {
+                groups.push(grp('questions', 'packSubmit.group.questions', qRows));
+            }
+            return groups;
+        }
+
+        function result() {
+            var allOk = fields.length > 0 && fields.every(function (f) { return f.ok; });
+            return { ok: allOk, fields: fields, groups: buildGroups() };
+        }
+
+        if (typeof pack !== 'object' || pack === null || Array.isArray(pack)) {
+            struct(t('packSubmit.field.object'), false, t('packSubmit.err.notObject'));
+            return result();
+        }
+
+        struct(t('packSubmit.field.object'), true);
+
         var nameOk = typeof pack.name === 'string' && pack.name.trim().length > 0;
-        add(t('packSubmit.field.name'), nameOk);
+        struct(t('packSubmit.field.name'), nameOk);
 
         var langOk = typeof pack.language === 'string' && pack.language.trim().length > 0;
-        add(t('packSubmit.field.language'), langOk);
+        struct(t('packSubmit.field.language'), langOk,
+            langOk ? pack.language.trim() : '');
 
         var qs = pack.questions;
         var qsIsList = Array.isArray(qs) && qs.length > 0;
         if (!qsIsList) {
-            add(t('packSubmit.field.questions'), false, t('packSubmit.err.questionsEmpty'));
-            return { ok: false, fields: fields };
+            struct(t('packSubmit.field.questions'), false, t('packSubmit.err.questionsEmpty'));
+            return result();
         }
         var countOk = qs.length >= limits.min_questions && qs.length <= limits.max_questions;
-        add(t('packSubmit.field.questions'), countOk,
-            t('packSubmit.field.questionCount', { count: qs.length }));
+        struct(t('packSubmit.field.questions'), countOk, String(qs.length));
 
-        var allQuestionsOk = true;
+        // ---- per-question checks (two aggregate rows: unique ids; answers shape)
+        var uniqueOk = true;
+        var shapeOk = true;
+        var dupDetail = '';
+        var shapeDetail = '';
         var seen = {};
-        var problems = [];
         for (var i = 0; i < qs.length; i++) {
             var q = qs[i];
             var n = i + 1;
             if (typeof q !== 'object' || q === null) {
-                allQuestionsOk = false; problems.push('Q' + n + ': ' + t('packSubmit.err.notObject')); continue;
+                shapeOk = false; if (!shapeDetail) { shapeDetail = 'Q' + n + ': ' + t('packSubmit.err.notObject'); }
+                continue;
             }
             if (typeof q.id !== 'string' || !q.id.trim()) {
-                allQuestionsOk = false; problems.push('Q' + n + ': id');
+                uniqueOk = false; if (!dupDetail) { dupDetail = 'Q' + n + ': id'; }
             } else if (seen[q.id]) {
-                allQuestionsOk = false; problems.push('Q' + n + ': dup id ' + q.id);
+                uniqueOk = false; if (!dupDetail) { dupDetail = t('packSubmit.err.dupId', { id: q.id }); }
             } else { seen[q.id] = true; }
             if (typeof q.question !== 'string' || !q.question.trim()) {
-                allQuestionsOk = false; problems.push('Q' + n + ': question');
+                shapeOk = false; if (!shapeDetail) { shapeDetail = 'Q' + n + ': question'; }
             }
             var ans = q.answers;
             if (!Array.isArray(ans) || ans.length !== limits.answers_per_question) {
-                allQuestionsOk = false; problems.push('Q' + n + ': answers');
+                shapeOk = false; if (!shapeDetail) { shapeDetail = 'Q' + n + ': answers'; }
                 continue;
             }
             var correct = 0;
             for (var j = 0; j < ans.length; j++) {
                 var a = ans[j];
                 if (typeof a !== 'object' || a === null || typeof a.text !== 'string' || !a.text.trim()) {
-                    allQuestionsOk = false; problems.push('Q' + n + ': answer text');
+                    shapeOk = false; if (!shapeDetail) { shapeDetail = 'Q' + n + ': answer text'; }
                 }
                 if (a && a.correct === true) { correct++; }
             }
             if (correct !== 1) {
-                allQuestionsOk = false; problems.push('Q' + n + ': one correct');
+                shapeOk = false; if (!shapeDetail) { shapeDetail = 'Q' + n + ': one correct'; }
             }
         }
-        add(t('packSubmit.field.questionShape'), allQuestionsOk, problems.slice(0, 3).join('; '));
+        qcheck(t('packSubmit.field.uniqueIds'), uniqueOk, dupDetail);
+        qcheck(t('packSubmit.field.answersShape', { n: limits.answers_per_question }),
+            shapeOk, shapeDetail);
 
-        var allOk = fields.every(function (f) { return f.ok; });
-        return { ok: allOk, fields: fields };
+        return result();
     }
 
+    /** Move the wizard to step 1/2/3 — updates rail state and pane visibility. */
+    function goToStep(step) {
+        var section = el('pack-submit-section');
+        if (!section) { return; }
+        section.querySelectorAll('.pack-step').forEach(function (s) {
+            var n = parseInt(s.getAttribute('data-step'), 10);
+            s.classList.remove('done', 'active', 'todo');
+            if (n < step) { s.classList.add('done'); s.querySelector('.pack-step-n').textContent = '✓'; }
+            else if (n === step) { s.classList.add('active'); s.querySelector('.pack-step-n').textContent = String(n); }
+            else { s.classList.add('todo'); s.querySelector('.pack-step-n').textContent = String(n); }
+        });
+        section.querySelectorAll('.pack-step-bar').forEach(function (b) {
+            var n = parseInt(b.getAttribute('data-bar'), 10);
+            b.classList.toggle('fill', n < step);
+        });
+        section.querySelectorAll('.pack-step-pane').forEach(function (p) {
+            var n = parseInt(p.getAttribute('data-pane'), 10);
+            p.classList.toggle('hidden', n !== step);
+        });
+    }
+
+    /** Render grouped ✓/✗ results into the Check pane. Returns res.ok. */
     function renderResult(parsed) {
         var resultEl = el('pack-submit-result');
-        var submitBtn = el('pack-submit-btn');
+        var continueBtn = el('pack-submit-continue-btn');
         if (!resultEl) { return false; }
 
         if (parsed === null) {
-            resultEl.innerHTML = '<div class="pack-submit-row pack-submit-row--bad">' +
-                '<span class="pack-submit-mark">✗</span>' +
-                '<span>' + t('packSubmit.err.json') + '</span></div>';
-            if (submitBtn) { submitBtn.disabled = true; }
+            resultEl.innerHTML = '<div class="pack-vgroup">' +
+                '<div class="pack-vg-head bad"><span class="pack-vg-ic">✕</span>' +
+                '<span>' + escapeHtml(t('packSubmit.err.json')) + '</span></div></div>';
+            if (continueBtn) { continueBtn.disabled = true; }
             return false;
         }
 
         var res = validatePack(parsed);
         var html = '';
-        res.fields.forEach(function (f) {
-            html += '<div class="pack-submit-row ' +
-                (f.ok ? 'pack-submit-row--ok' : 'pack-submit-row--bad') + '">' +
-                '<span class="pack-submit-mark">' + (f.ok ? '✓' : '✗') + '</span>' +
-                '<span class="pack-submit-label">' + f.label + '</span>' +
-                (f.detail ? '<span class="pack-submit-detail">' + f.detail + '</span>' : '') +
-                '</div>';
+        res.groups.forEach(function (g) {
+            var cls = g.ok ? 'ok' : 'bad';
+            var mark = g.ok ? '✓' : '✕';
+            html += '<div class="pack-vgroup">' +
+                '<div class="pack-vg-head ' + cls + '">' +
+                '<span class="pack-vg-ic">' + mark + '</span>' +
+                '<span class="pack-vg-title">' + escapeHtml(g.title) + '</span>' +
+                '<span class="pack-vg-count">' + g.pass + '/' + g.total + '</span></div>' +
+                '<div class="pack-vg-body">';
+            g.rows.forEach(function (r) {
+                html += '<div class="pack-vrow ' + (r.ok ? 'ok' : 'bad') + '">' +
+                    '<span class="pack-vrow-ic">' + (r.ok ? '✓' : '✕') + '</span>' +
+                    '<span class="pack-vrow-f">' + escapeHtml(r.label) + '</span>' +
+                    (r.detail ? '<span class="pack-vrow-d">' + escapeHtml(r.detail) + '</span>' : '') +
+                    '</div>';
+            });
+            html += '</div></div>';
         });
         resultEl.innerHTML = html;
-        if (submitBtn) { submitBtn.disabled = !res.ok; }
+        if (continueBtn) { continueBtn.disabled = !res.ok; }
+        validatedPack = res.ok ? parsed : null;
         return res.ok;
     }
 
@@ -156,10 +249,16 @@ window.QuizifyPackSubmit = (function () {
         return (payload && payload.message) || fallbackMsg || t('errors.UNKNOWN');
     }
 
-    async function doSubmit() {
+    /** Step 1 → 2: parse + validate, then show the Check pane. */
+    function doCheck() {
         var parsed = parseInput();
-        if (!parsed) { renderResult(parsed === undefined ? null : parsed); return; }
-        if (!renderResult(parsed)) { return; }
+        renderResult(parsed === undefined ? null : parsed);
+        goToStep(2);
+    }
+
+    async function doSubmit() {
+        var parsed = validatedPack;
+        if (!parsed) { goToStep(2); return; }
 
         var submitBtn = el('pack-submit-btn');
         if (submitBtn) { submitBtn.disabled = true; }
@@ -184,6 +283,7 @@ window.QuizifyPackSubmit = (function () {
             setStatus(t('packSubmit.success') + link, 'ok');
             var input = el('pack-submit-input');
             if (input) { input.value = ''; }
+            validatedPack = null;
             loadSubmissions();
         } catch (err) {
             setStatus(errorText({ code: 'GITHUB_ERROR' }, String(err)), 'bad');
@@ -197,25 +297,45 @@ window.QuizifyPackSubmit = (function () {
         return translated === key ? (status || 'pending') : translated;
     }
 
+    // Maps a submission status to the timeline node class + status mark.
+    function statusMeta(status) {
+        if (status === 'accepted') { return { cls: 'a', mark: '✓' }; }
+        if (status === 'declined') { return { cls: 'd', mark: '✕' }; }
+        return { cls: 'p', mark: '●' };
+    }
+
     async function loadSubmissions() {
         var listEl = el('pack-submit-list');
+        var card = el('pack-submit-list-card');
         if (!listEl) { return; }
         try {
             var resp = await fetch(SUBMISSIONS_URL);
             if (!resp.ok) { return; }
             var data = await resp.json();
             var subs = (data && data.submissions) || [];
-            if (!subs.length) { listEl.innerHTML = ''; return; }
-            var html = '<div class="pack-submit-list-title">' + t('packSubmit.recent') + '</div>';
+            if (!subs.length) {
+                listEl.innerHTML = '';
+                if (card) { card.classList.add('hidden'); }
+                return;
+            }
+            var html = '';
             subs.slice(0, 10).forEach(function (s) {
-                var label = (s.issue_url ? '<a href="' + s.issue_url + '" target="_blank" rel="noopener">' +
-                    (s.name || '?') + '</a>' : (s.name || '?'));
-                html += '<div class="pack-submit-list-row">' +
-                    '<span class="pack-submit-list-name">' + label + '</span>' +
-                    '<span class="pack-submit-badge pack-submit-badge--' + (s.status || 'pending') + '">' +
-                    statusLabel(s.status) + '</span></div>';
+                var meta = statusMeta(s.status);
+                var name = escapeHtml(s.name || '?');
+                var title = s.issue_url
+                    ? '<a href="' + escapeHtml(s.issue_url) + '" target="_blank" rel="noopener">' + name + '</a>'
+                    : name;
+                var sub = '';
+                if (s.issue_number) { sub += '#' + escapeHtml(s.issue_number); }
+                html += '<div class="pack-tli ' + meta.cls + '">' +
+                    '<div class="pack-tli-node"></div>' +
+                    '<div class="pack-tli-t">' + title + '</div>' +
+                    (sub ? '<div class="pack-tli-m">' + sub + '</div>' : '') +
+                    '<div class="pack-tli-stat">' + meta.mark + ' ' + escapeHtml(statusLabel(s.status)) + '</div>' +
+                    '</div>';
             });
             listEl.innerHTML = html;
+            if (card) { card.classList.remove('hidden'); }
         } catch (_e) { /* best-effort */ }
     }
 
@@ -237,17 +357,29 @@ window.QuizifyPackSubmit = (function () {
             window.QuizifyI18n.initPageTranslations(section);
         }
 
+        goToStep(1);
+
         var input = el('pack-submit-input');
+        var checkBtn = el('pack-submit-check-btn');
         if (input) {
             input.addEventListener('input', function () {
-                var parsed = parseInput();
-                // undefined (empty) and null (bad JSON) both render the JSON-error
-                // hint; an object renders the per-field ✓/✗ table.
-                renderResult(parsed === undefined ? null : parsed);
+                if (checkBtn) { checkBtn.disabled = !input.value.trim(); }
+                // editing invalidates a prior pass; status clears on re-check
+                validatedPack = null;
             });
         }
+        if (checkBtn) { checkBtn.addEventListener('click', doCheck); }
+
+        var continueBtn = el('pack-submit-continue-btn');
+        if (continueBtn) { continueBtn.addEventListener('click', function () { setStatus(''); goToStep(3); }); }
+
         var submitBtn = el('pack-submit-btn');
         if (submitBtn) { submitBtn.addEventListener('click', doSubmit); }
+
+        var backBtn = el('pack-submit-back-btn');
+        if (backBtn) { backBtn.addEventListener('click', function () { goToStep(1); }); }
+        var back2Btn = el('pack-submit-back2-btn');
+        if (back2Btn) { back2Btn.addEventListener('click', function () { setStatus(''); goToStep(1); }); }
 
         loadSubmissions();
     }

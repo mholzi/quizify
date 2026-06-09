@@ -504,29 +504,44 @@
   },
   "packSubmit": {
     "heading": "Submit a community pack",
-    "intro": "Paste a community question pack as JSON. It is checked here, then submitted for review as a GitHub issue.",
+    "intro": "Three quick steps. Your pack lands as a review issue on GitHub.",
     "placeholder": "{ \"name\": \"My Pack\", \"language\": \"en\", \"questions\": [ ... ] }",
+    "inputLabel": "Your pack JSON",
+    "checkBtn": "Check pack →",
+    "continueBtn": "Continue to submit →",
+    "backBtn": "Back to edit",
+    "confirm": "Looks good. Submit this pack for review?",
     "submit": "Submit pack",
     "submitting": "Submitting…",
     "success": "Submitted — thanks! It will be reviewed shortly.",
     "failed": "Submission failed.",
-    "recent": "Your recent submissions",
+    "recent": "My submissions",
+    "step": {
+      "compose": "Compose",
+      "check": "Check",
+      "submit": "Submit"
+    },
+    "group": {
+      "structure": "Pack structure",
+      "questions": "Per-question checks"
+    },
     "field": {
-      "object": "Pack is a JSON object",
+      "object": "Valid JSON shape",
       "name": "Pack name present",
-      "language": "Language present",
-      "questions": "Questions list present",
-      "questionCount": "{count} questions",
-      "questionShape": "Every question is well-formed"
+      "language": "Language code valid",
+      "questions": "Questions non-empty",
+      "uniqueIds": "Unique question IDs",
+      "answersShape": "{n} answers + exactly 1 correct"
     },
     "err": {
       "json": "Not valid JSON — check for typos.",
       "notObject": "Must be a JSON object.",
-      "questionsEmpty": "Needs a non-empty 'questions' list."
+      "questionsEmpty": "Needs a non-empty 'questions' list.",
+      "dupId": "dup “{id}”"
     },
     "status": {
-      "pending": "Pending review",
-      "accepted": "Accepted",
+      "pending": "In review",
+      "accepted": "Accepted — added to community",
       "declined": "Declined"
     }
   }

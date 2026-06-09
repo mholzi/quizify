@@ -504,29 +504,44 @@
   },
   "packSubmit": {
     "heading": "Community-Pack einreichen",
-    "intro": "Füge ein Community-Fragenpack als JSON ein. Es wird hier geprüft und dann als GitHub-Issue zur Begutachtung eingereicht.",
+    "intro": "Drei kurze Schritte. Dein Pack landet als Review-Issue auf GitHub.",
     "placeholder": "{ \"name\": \"Mein Pack\", \"language\": \"de\", \"questions\": [ ... ] }",
+    "inputLabel": "Dein Pack als JSON",
+    "checkBtn": "Pack prüfen →",
+    "continueBtn": "Weiter zum Einreichen →",
+    "backBtn": "Zurück zum Bearbeiten",
+    "confirm": "Sieht gut aus. Dieses Pack zur Prüfung einreichen?",
     "submit": "Pack einreichen",
     "submitting": "Wird eingereicht…",
     "success": "Eingereicht — danke! Es wird in Kürze geprüft.",
     "failed": "Einreichung fehlgeschlagen.",
-    "recent": "Deine letzten Einsendungen",
+    "recent": "Meine Einsendungen",
+    "step": {
+      "compose": "Erstellen",
+      "check": "Prüfen",
+      "submit": "Einreichen"
+    },
+    "group": {
+      "structure": "Pack-Struktur",
+      "questions": "Pro-Frage-Prüfungen"
+    },
     "field": {
-      "object": "Pack ist ein JSON-Objekt",
+      "object": "Gültige JSON-Struktur",
       "name": "Pack-Name vorhanden",
-      "language": "Sprache vorhanden",
-      "questions": "Fragenliste vorhanden",
-      "questionCount": "{count} Fragen",
-      "questionShape": "Jede Frage ist korrekt aufgebaut"
+      "language": "Sprachcode gültig",
+      "questions": "Fragenliste nicht leer",
+      "uniqueIds": "Eindeutige Fragen-IDs",
+      "answersShape": "{n} Antworten + genau 1 richtig"
     },
     "err": {
       "json": "Kein gültiges JSON — auf Tippfehler prüfen.",
       "notObject": "Muss ein JSON-Objekt sein.",
-      "questionsEmpty": "Braucht eine nicht-leere 'questions'-Liste."
+      "questionsEmpty": "Braucht eine nicht-leere 'questions'-Liste.",
+      "dupId": "doppelt „{id}“"
     },
     "status": {
       "pending": "In Prüfung",
-      "accepted": "Angenommen",
+      "accepted": "Angenommen — zur Community hinzugefügt",
       "declined": "Abgelehnt"
     }
   }

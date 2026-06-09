@@ -363,27 +363,82 @@
                     <span data-i18n="setup.apply">Apply</span>
                 </button>
 
-                <!-- Community pack submission (#180). Hidden by default; the
-                     pack-submit.js module unhides it only when the integration
-                     reports a configured worker URL. Paste a pack JSON → see a
-                     per-field ✓/✗ table → submit (lands as a GitHub issue via
-                     the worker). -->
+                <!-- Community pack submission (#180), Variant C "Stepper".
+                     Hidden by default; pack-submit.js unhides it only when the
+                     integration reports a configured worker URL. A guided
+                     3-step wizard (Compose → Check → Submit) with a progress
+                     rail and grouped ✓/✗ checks, plus a status timeline for
+                     "My submissions". The pack lands as a GitHub issue via the
+                     worker. -->
                 <section id="pack-submit-section" class="pack-submit-section hidden"
                          aria-labelledby="pack-submit-heading">
-                    <h3 id="pack-submit-heading" class="pack-submit-heading"
-                        data-i18n="packSubmit.heading">Submit a community pack</h3>
-                    <p class="pack-submit-intro" data-i18n="packSubmit.intro">
-                        Paste a community question pack as JSON. It is checked here, then
-                        submitted for review as a GitHub issue.</p>
-                    <textarea id="pack-submit-input" class="pack-submit-input" rows="8"
-                              spellcheck="false"
-                              data-i18n-placeholder="packSubmit.placeholder"
-                              placeholder='{ "name": "My Pack", "language": "en", "questions": [ ... ] }'></textarea>
-                    <div id="pack-submit-result" class="pack-submit-result" aria-live="polite"></div>
-                    <button type="button" id="pack-submit-btn" class="btn btn-primary btn-block"
-                            disabled data-i18n="packSubmit.submit">Submit pack</button>
-                    <div id="pack-submit-status" class="pack-submit-status" role="status" aria-live="polite"></div>
-                    <div id="pack-submit-list" class="pack-submit-list"></div>
+                    <div class="pack-submit-card">
+                        <h3 id="pack-submit-heading" class="pack-submit-heading"
+                            data-i18n="packSubmit.heading">Submit a community pack</h3>
+                        <p class="pack-submit-intro" data-i18n="packSubmit.intro">
+                            Three quick steps. Your pack lands as a review issue on GitHub.</p>
+
+                        <!-- step rail: Compose / Check / Submit -->
+                        <div class="pack-steps" role="list">
+                            <div class="pack-step" data-step="1" role="listitem">
+                                <div class="pack-step-n">1</div>
+                                <div class="pack-step-l" data-i18n="packSubmit.step.compose">Compose</div>
+                            </div>
+                            <div class="pack-step-bar" data-bar="1"></div>
+                            <div class="pack-step" data-step="2" role="listitem">
+                                <div class="pack-step-n">2</div>
+                                <div class="pack-step-l" data-i18n="packSubmit.step.check">Check</div>
+                            </div>
+                            <div class="pack-step-bar" data-bar="2"></div>
+                            <div class="pack-step" data-step="3" role="listitem">
+                                <div class="pack-step-n">3</div>
+                                <div class="pack-step-l" data-i18n="packSubmit.step.submit">Submit</div>
+                            </div>
+                        </div>
+
+                        <!-- step 1: Compose -->
+                        <div class="pack-step-pane" data-pane="1">
+                            <label class="pack-submit-input-label" for="pack-submit-input"
+                                   data-i18n="packSubmit.inputLabel">Your pack JSON</label>
+                            <textarea id="pack-submit-input" class="pack-submit-input" rows="8"
+                                      spellcheck="false"
+                                      data-i18n-placeholder="packSubmit.placeholder"
+                                      placeholder='{ "name": "My Pack", "language": "en", "questions": [ ... ] }'></textarea>
+                            <button type="button" id="pack-submit-check-btn"
+                                    class="btn btn-primary btn-block"
+                                    disabled data-i18n="packSubmit.checkBtn">Check pack →</button>
+                        </div>
+
+                        <!-- step 2: Check (grouped ✓/✗) -->
+                        <div class="pack-step-pane hidden" data-pane="2">
+                            <div id="pack-submit-result" class="pack-submit-result" aria-live="polite"></div>
+                            <button type="button" id="pack-submit-continue-btn"
+                                    class="btn btn-primary btn-block"
+                                    disabled data-i18n="packSubmit.continueBtn">Continue to submit →</button>
+                            <button type="button" id="pack-submit-back-btn"
+                                    class="btn btn-ghost btn-block"
+                                    data-i18n="packSubmit.backBtn">Back to edit</button>
+                        </div>
+
+                        <!-- step 3: Submit -->
+                        <div class="pack-step-pane hidden" data-pane="3">
+                            <p class="pack-submit-confirm" data-i18n="packSubmit.confirm">
+                                Looks good. Submit this pack for review?</p>
+                            <button type="button" id="pack-submit-btn"
+                                    class="btn btn-primary btn-block"
+                                    data-i18n="packSubmit.submit">Submit pack</button>
+                            <button type="button" id="pack-submit-back2-btn"
+                                    class="btn btn-ghost btn-block"
+                                    data-i18n="packSubmit.backBtn">Back to edit</button>
+                            <div id="pack-submit-status" class="pack-submit-status" role="status" aria-live="polite"></div>
+                        </div>
+                    </div>
+
+                    <!-- My submissions timeline -->
+                    <div id="pack-submit-list-card" class="pack-submit-card pack-submit-list-card hidden">
+                        <div class="pack-submit-list-title" data-i18n="packSubmit.recent">My submissions</div>
+                        <div id="pack-submit-list" class="pack-submit-timeline"></div>
+                    </div>
                 </section>
             </div>
         </div>
