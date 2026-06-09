@@ -2525,6 +2525,70 @@ button, .btn {
 }
 
 /* ==========================================
+   Podium Reborn — player phone only (Variant B, approved 2026-06-09)
+   Bolder rising blocks with warm tonal gradient fills + a halo
+   rising from the champion. Scoped to #end-view so the admin / TV
+   podium (.podium-bar) keeps the Soft Parlor cream-shelf look.
+   See DESIGN.md §"Podium / Finale".
+   ========================================== */
+
+/* Warm gradient halo rising from the champion, bottom-center. */
+#end-view .podium { position: relative; }
+#end-view .podium::before {
+    content: "";
+    position: absolute;
+    left: 50%;
+    bottom: 0;
+    transform: translateX(-50%);
+    width: 66%;
+    height: 240px;
+    background: radial-gradient(70% 92% at 50% 100%,
+        rgba(232, 196, 127, 0.34),
+        rgba(232, 138, 127, 0.16) 55%,
+        transparent 80%);
+    pointer-events: none;
+    z-index: 0;
+}
+#end-view .podium-place { position: relative; z-index: 1; }
+
+/* Rising block: tonal gradient fill, white numeral centered,
+   rounded top + slight rounded foot, soft lift shadow. Overrides
+   the shared cream-shelf look for the player end screen only. */
+#end-view .podium-stand {
+    border: none;
+    border-radius: 14px 14px 6px 6px;
+    align-items: center;
+    justify-content: center;
+    padding-top: 0;
+    color: #FFFFFF;
+    box-shadow: 0 7px 18px -4px rgba(42, 40, 32, 0.22);
+}
+/* Drop the old plank halo-cushion pseudo on 1st place. */
+#end-view .podium-1 .podium-stand::before { content: none; }
+
+#end-view .podium-1 .podium-stand {
+    background: linear-gradient(180deg, #EFB6AB, var(--color-accent-primary, #E88A7F));
+    border-top: 4px solid var(--color-gold, #E8C47F);
+    color: #FFFFFF;
+}
+#end-view .podium-2 .podium-stand {
+    background: linear-gradient(180deg, #A9C4BA, var(--color-accent-secondary, #7FA897));
+    border-top: 4px solid var(--color-silver, #B8B2A0);
+    color: #FFFFFF;
+}
+#end-view .podium-3 .podium-stand {
+    background: linear-gradient(180deg, #A9C6DA, var(--color-accent-blue, #7FA8C4));
+    border-top: 4px solid var(--color-bronze, #C99466);
+    color: #FFFFFF;
+}
+
+/* Reduced motion: blocks already covered by the global rule, but
+   keep the halo static (no implicit transition). */
+@media (prefers-reduced-motion: reduce) {
+    #end-view .podium::before { transition: none; }
+}
+
+/* ==========================================
    Awards / Superlatives (Beatify style)
    ========================================== */
 
