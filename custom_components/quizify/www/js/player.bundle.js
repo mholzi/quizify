@@ -2215,6 +2215,22 @@
         if (questionText) questionText.textContent = data.question_text || '';
         if (questionCategory) questionCategory.textContent = data.category || '';
 
+        // Issue #25: optional question thumbnail on the player screen.
+        // Only absolute http(s) URLs are shown (server already sanitises;
+        // this is defence-in-depth). Absent/invalid → element stays hidden.
+        var questionImage = document.getElementById('question-image');
+        if (questionImage) {
+            var imgUrl = data.image_url;
+            var safeImg = (typeof imgUrl === 'string' && /^https?:\/\//i.test(imgUrl)) ? imgUrl : '';
+            if (safeImg) {
+                questionImage.src = safeImg;
+                questionImage.hidden = false;
+            } else {
+                questionImage.removeAttribute('src');
+                questionImage.hidden = true;
+            }
+        }
+
         // Wager round detection — set BEFORE we touch buttons so we can
         // disable them up-front, then enable once the wager is in.
         _wagerGate.active = !!data.is_final_round;

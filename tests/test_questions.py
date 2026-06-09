@@ -15,6 +15,7 @@ from custom_components.quizify.game.questions import (  # noqa: E402
     Answer,
     Question,
     QuestionBank,
+    _parse_question,
 )
 
 QUESTIONS_DIR = _REPO_ROOT / "custom_components" / "quizify" / "questions"
@@ -303,3 +304,74 @@ class TestCommunityPacks:
         loaded = qb.load_community_packs()
         assert "community-example-pack" in loaded
         assert qb.get_question_count("community-example-pack") == 3
+
+
+def _valid_question_dict(**overrides) -> dict:
+    """Return a minimal valid question dict (issue #25 image tests)."""
+    base = {
+        "id": "img_001",
+        "question": "What film is this from?",
+        "answers": [
+            {"text": "A", "correct": True},
+            {"text": "B", "correct": False},
+            {"text": "C", "correct": False},
+        ],
+    }
+    base.update(overrides)
+    return base
+
+
+class TestQuestionImage:
+    """Optional image_url field on questions (issue #25)."""
+
+    def test_image_url_defaults_to_empty(self) -> None:
+        q = Question(id="x", question="Q?", answers=[])
+        assert q.image_url == ""
+
+    def test_parse_question_without_image(self) -> None:
+        q = _parse_question(_valid_question_dict(), "Test")
+        assert q is not None
+        assert q.image_url == ""
+
+    def test_parse_question_keeps_https_url(self) -> None:
+        url = "https://example.com/poster.jpg"
+        q = _parse_question(_valid_question_dict(image_url=url), "Test")
+        assert q is not None
+        assert q.image_url == url
+
+    def test_parse_question_keeps_http_url(self) -> None:
+        url = "http://example.com/poster.jpg"
+        q = _parse_question(_valid_question_dict(image_url=url), "Test")
+        assert q is not None
+        assert q.image_url == url
+
+    def test_parse_question_strips_whitespace(self) -> None:
+        q = _parse_question(
+            _valid_question_dict(image_url="  https://example.com/p.png  "), "Test"
+        )
+        assert q is not None
+        assert q.image_url == "https://example.com/p.png"
+
+    def test_parse_question_drops_relative_path(self) -> None:
+        q = _parse_question(_valid_question_dict(image_url="/local/p.png"), "Test")
+        assert q is not None
+        assert q.image_url == ""
+
+    def test_parse_question_drops_javascript_scheme(self) -> None:
+        q = _parse_question(
+            _valid_question_dict(image_url="javascript:alert(1)"), "Test"
+        )
+        assert q is not None
+        assert q.image_url == ""
+
+    def test_parse_question_drops_data_uri(self) -> None:
+        q = _parse_question(
+            _valid_question_dict(image_url="data:image/png;base64,AAAA"), "Test"
+        )
+        assert q is not None
+        assert q.image_url == ""
+
+    def test_parse_question_drops_non_string(self) -> None:
+        q = _parse_question(_valid_question_dict(image_url=123), "Test")
+        assert q is not None
+        assert q.image_url == ""
