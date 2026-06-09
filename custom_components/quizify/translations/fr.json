@@ -22,13 +22,15 @@
                     "party_light_entities": "Lumières d'ambiance",
                     "tts_entity": "Fournisseur de synthèse vocale",
                     "media_player_entity": "Lecteur multimédia pour TTS",
-                    "lobby_music_url": "URL de la musique du salon"
+                    "lobby_music_url": "URL de la musique du salon",
+                    "community_submit_url": "URL de soumission de pack communautaire"
                 },
                 "data_description": {
                     "party_light_entities": "Lumières qui changent de couleur selon la phase de la manche (corail pendant la question, sauge pendant la révélation, soleil au final).",
                     "tts_entity": "Entité TTS (p. ex. tts.google_translate_say) pour les annonces de jalons et de résultats.",
                     "media_player_entity": "Haut-parleur sur lequel le TTS est diffusé. Obligatoire si un fournisseur TTS est défini.",
-                    "lobby_music_url": "URL facultative d'un fichier audio (p. ex. /local/quizify-lobby.mp3, depuis votre dossier config/www) joué en boucle sur le lecteur multimédia ci-dessus pendant l'attente dans le salon. Elle s'arrête au démarrage de la partie, pour ne pas chevaucher les annonces TTS qui partagent le même haut-parleur. Laissez vide pour aucune musique. Aucun fichier audio n'est fourni — utilisez le vôtre."
+                    "lobby_music_url": "URL facultative d'un fichier audio (p. ex. /local/quizify-lobby.mp3, depuis votre dossier config/www) joué en boucle sur le lecteur multimédia ci-dessus pendant l'attente dans le salon. Elle s'arrête au démarrage de la partie, pour ne pas chevaucher les annonces TTS qui partagent le même haut-parleur. Laissez vide pour aucune musique. Aucun fichier audio n'est fourni — utilisez le vôtre.",
+                    "community_submit_url": "Point de terminaison de worker facultatif qui transforme une soumission de pack communautaire faite dans l'application en une issue GitHub à examiner. Laissez vide pour masquer entièrement la fonction de soumission. Le jeton GitHub réside dans ce worker, jamais dans votre navigateur ni dans Home Assistant."
                 }
             }
         }

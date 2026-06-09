@@ -16,6 +16,7 @@ from homeassistant.core import callback
 from homeassistant.helpers import selector
 
 from .const import (
+    CONF_COMMUNITY_SUBMIT_URL,
     CONF_LOBBY_MUSIC_URL,
     CONF_MEDIA_PLAYER_ENTITY,
     CONF_PARTY_LIGHT_ENTITIES,
@@ -99,6 +100,16 @@ class QuizifyOptionsFlow(OptionsFlow):
             vol.Optional(
                 CONF_LOBBY_MUSIC_URL,
                 default=current.get(CONF_LOBBY_MUSIC_URL, ""),
+            ): selector.TextSelector(
+                selector.TextSelectorConfig(type=selector.TextSelectorType.URL),
+            ),
+            # Endpoint a composed community pack is POSTed to so it can land as
+            # a GitHub issue for review (#180). Empty = the whole in-app pack
+            # submission feature stays hidden and inert. The GitHub token lives
+            # in that worker, never in the browser or this integration.
+            vol.Optional(
+                CONF_COMMUNITY_SUBMIT_URL,
+                default=current.get(CONF_COMMUNITY_SUBMIT_URL, ""),
             ): selector.TextSelector(
                 selector.TextSelectorConfig(type=selector.TextSelectorType.URL),
             ),

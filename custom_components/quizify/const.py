@@ -60,3 +60,40 @@ CONF_MEDIA_PLAYER_ENTITY = "media_player_entity"  # str, single, domain=media_pl
 # Home Assistant's www/ folder). No audio asset ships with the integration, so
 # there is nothing to play unless the user supplies one.
 CONF_LOBBY_MUSIC_URL = "lobby_music_url"  # str, single, free-text URL
+
+# Endpoint a composed community question pack is POSTed to so it lands as a
+# GitHub issue for review (#180). Empty by default — the whole in-app pack
+# submission feature stays completely inert (UI hidden, endpoints accept
+# nothing) until the user points this at a worker URL that holds the GitHub
+# token and creates the issue. The token never lives in the browser or the
+# integration; the worker is separate infrastructure (see issue #180, step 5).
+CONF_COMMUNITY_SUBMIT_URL = "community_submit_url"  # str, single, free-text URL
+
+# ---------------------------------------------------------------------------
+# Community pack submission (#180)
+# ---------------------------------------------------------------------------
+# Validation caps for a pasted/composed community pack. Kept in sync with the
+# community-pack loader limits (game/questions.py) so a pack that validates in
+# the browser also loads once it lands on disk.
+SUBMIT_MAX_QUESTIONS = 500
+SUBMIT_MIN_QUESTIONS = 1
+SUBMIT_ANSWERS_PER_QUESTION = ANSWERS_PER_QUESTION
+SUBMIT_MAX_PACK_BYTES = 1_048_576  # 1 MiB, mirrors MAX_COMMUNITY_PACK_BYTES
+# How many submission records we keep on disk per HA instance, and how often
+# the server reconciles their status against the GitHub issue state.
+SUBMIT_MAX_RECORDS = 100
+SUBMIT_POLL_INTERVAL_SECONDS = 3600  # ~hourly, like Beatify's PlaylistRequestsView
+SUBMIT_POLL_TIMEOUT_SECONDS = 12
+SUBMIT_RECORDS_FILE = "pack_submissions.json"
+
+# Submission status values (issue-state derived; see pack_submission.py).
+SUBMIT_STATUS_PENDING = "pending"
+SUBMIT_STATUS_ACCEPTED = "accepted"  # issue closed as completed
+SUBMIT_STATUS_DECLINED = "declined"  # issue closed as not_planned
+
+# Localized error codes surfaced by the submit flow (#180). The frontend maps
+# these to i18n keys (errors.<CODE>) with a fallback to the raw worker message.
+ERR_SUBMIT_INVALID_FORMAT = "INVALID_FORMAT"
+ERR_SUBMIT_RATE_LIMITED = "RATE_LIMITED"
+ERR_SUBMIT_GITHUB_ERROR = "GITHUB_ERROR"
+ERR_SUBMIT_DISABLED = "SUBMIT_DISABLED"

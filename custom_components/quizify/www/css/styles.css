@@ -6389,3 +6389,97 @@ body:not(.is-admin) .pl-result { padding-bottom: 16px; }
 .your-result-score { font-size: 1.04rem; }
 .stat-value { font-size: 1.2rem; }
 .stat-label { font-size: 0.68rem; }
+
+/* ===========================================================================
+   Community pack submission (#180)
+   Hidden by default; pack-submit.js unhides #pack-submit-section only when the
+   integration reports a configured worker URL. Lives at the bottom of the
+   setup-detail flow, near the pack picker.
+   =========================================================================== */
+.pack-submit-section {
+    margin-top: var(--space-xl, 32px);
+    padding-top: var(--space-lg, 24px);
+    border-top: 1px solid var(--color-border-light);
+    text-align: left;
+}
+.pack-submit-heading {
+    font-size: 1.05rem;
+    color: var(--color-text-heading);
+    margin: 0 0 var(--space-xs, 4px);
+}
+.pack-submit-intro {
+    font-size: 0.85rem;
+    color: var(--color-text-muted);
+    margin: 0 0 var(--space-md, 16px);
+}
+.pack-submit-input {
+    width: 100%;
+    box-sizing: border-box;
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 0.8rem;
+    line-height: 1.4;
+    padding: var(--space-sm, 8px);
+    border: 1px solid var(--color-border-medium);
+    border-radius: 8px;
+    background: var(--color-bg-surface);
+    color: var(--color-text-primary);
+    resize: vertical;
+}
+.pack-submit-result {
+    margin: var(--space-sm, 8px) 0;
+    display: flex;
+    flex-direction: column;
+    gap: 4px;
+}
+.pack-submit-row {
+    display: flex;
+    align-items: baseline;
+    gap: 8px;
+    font-size: 0.82rem;
+    flex-wrap: wrap;
+}
+.pack-submit-mark { font-weight: 700; }
+.pack-submit-row--ok { color: var(--color-success); }
+.pack-submit-row--bad { color: var(--color-error); }
+.pack-submit-label { color: var(--color-text-secondary); }
+.pack-submit-detail {
+    color: var(--color-text-muted);
+    font-size: 0.75rem;
+    flex-basis: 100%;
+    padding-left: 24px;
+}
+.pack-submit-status {
+    margin-top: var(--space-sm, 8px);
+    font-size: 0.85rem;
+    min-height: 1.2em;
+}
+.pack-submit-status--ok { color: var(--color-success); }
+.pack-submit-status--bad { color: var(--color-error); }
+.pack-submit-status--pending { color: var(--color-text-muted); }
+.pack-submit-list { margin-top: var(--space-md, 16px); }
+.pack-submit-list-title {
+    font-size: 0.75rem;
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+    color: var(--color-text-muted);
+    margin-bottom: var(--space-xs, 4px);
+}
+.pack-submit-list-row {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    gap: 8px;
+    padding: 4px 0;
+    font-size: 0.85rem;
+    border-bottom: 1px solid var(--color-border-light);
+}
+.pack-submit-list-name { overflow: hidden; text-overflow: ellipsis; }
+.pack-submit-badge {
+    font-size: 0.72rem;
+    padding: 2px 8px;
+    border-radius: 999px;
+    white-space: nowrap;
+}
+.pack-submit-badge--pending { background: var(--color-bg-card-alt); color: var(--color-text-muted); }
+.pack-submit-badge--accepted { background: var(--color-success-light); color: var(--color-success-hover); }
+.pack-submit-badge--declined { background: var(--color-error-light); color: var(--color-error-dark); }

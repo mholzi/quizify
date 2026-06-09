@@ -73,3 +73,8 @@ class AppContext:
     # no hass. The admin page uses this as the first source for its initial
     # UI language (substituted into the ``{{HA_LANG}}`` token).
     ha_language: str | None = None
+    # Worker endpoint a composed community pack is POSTed to so it lands as a
+    # GitHub issue for review (#180). ``None``/empty keeps the whole in-app
+    # submission feature hidden and inert. Mutable so an options-flow change
+    # toggles the feature without an HA restart.
+    community_submit_url: str | None = None

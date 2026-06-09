@@ -38,6 +38,7 @@ async def async_setup_entry(hass: HomeAssistant, entry: ConfigEntry) -> bool:
 
     from .analytics import QuizifyAnalytics  # noqa: PLC0415
     from .const import (  # noqa: PLC0415
+        CONF_COMMUNITY_SUBMIT_URL,
         CONF_LOBBY_MUSIC_URL,
         CONF_MEDIA_PLAYER_ENTITY,
         CONF_PARTY_LIGHT_ENTITIES,
@@ -91,6 +92,12 @@ async def async_setup_entry(hass: HomeAssistant, entry: ConfigEntry) -> bool:
         # HA's configured language drives the admin UI's initial language
         # (Settings → General). hass.config.language is always set on HA.
         ha_language=hass.config.language,
+        # Community-pack submission stays inert until this worker URL is set
+        # (#180). Empty/unset → the in-app submit UI hides itself.
+        community_submit_url=(
+            (entry.options or {}).get(CONF_COMMUNITY_SUBMIT_URL) or ""
+        ).strip()
+        or None,
     )
 
     # Stash on hass.data so existing tooling (services.yaml, lookups in
@@ -194,6 +201,10 @@ async def async_setup_entry(hass: HomeAssistant, entry: ConfigEntry) -> bool:
     async def _update_listener(_hass: HomeAssistant, updated_entry: ConfigEntry) -> None:
         opts = updated_entry.options or {}
         game_state.lobby_music_url = (opts.get(CONF_LOBBY_MUSIC_URL) or "").strip() or None
+        # Toggle the community-pack submit feature live (#180) — no HA restart.
+        ctx.community_submit_url = (
+            opts.get(CONF_COMMUNITY_SUBMIT_URL) or ""
+        ).strip() or None
         domain_data = _hass.data.get(DOMAIN, {})
         pl: QuizifyPartyLights | None = domain_data.get("party_lights")
         tts: QuizifyTTSAnnouncer | None = domain_data.get("tts_announcer")

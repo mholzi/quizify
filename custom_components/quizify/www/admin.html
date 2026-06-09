@@ -362,6 +362,29 @@
                 <button type="button" id="setup-apply-btn" class="btn btn-primary btn-lg btn-block">
                     <span data-i18n="setup.apply">Apply</span>
                 </button>
+
+                <!-- Community pack submission (#180). Hidden by default; the
+                     pack-submit.js module unhides it only when the integration
+                     reports a configured worker URL. Paste a pack JSON → see a
+                     per-field ✓/✗ table → submit (lands as a GitHub issue via
+                     the worker). -->
+                <section id="pack-submit-section" class="pack-submit-section hidden"
+                         aria-labelledby="pack-submit-heading">
+                    <h3 id="pack-submit-heading" class="pack-submit-heading"
+                        data-i18n="packSubmit.heading">Submit a community pack</h3>
+                    <p class="pack-submit-intro" data-i18n="packSubmit.intro">
+                        Paste a community question pack as JSON. It is checked here, then
+                        submitted for review as a GitHub issue.</p>
+                    <textarea id="pack-submit-input" class="pack-submit-input" rows="8"
+                              spellcheck="false"
+                              data-i18n-placeholder="packSubmit.placeholder"
+                              placeholder='{ "name": "My Pack", "language": "en", "questions": [ ... ] }'></textarea>
+                    <div id="pack-submit-result" class="pack-submit-result" aria-live="polite"></div>
+                    <button type="button" id="pack-submit-btn" class="btn btn-primary btn-block"
+                            disabled data-i18n="packSubmit.submit">Submit pack</button>
+                    <div id="pack-submit-status" class="pack-submit-status" role="status" aria-live="polite"></div>
+                    <div id="pack-submit-list" class="pack-submit-list"></div>
+                </section>
             </div>
         </div>
 
@@ -566,6 +589,7 @@
     <script src="/quizify/static/js/utils.js?v={{ASSET_VER}}"></script>
 
     <script src="/quizify/static/js/admin.js?v={{ASSET_VER}}"></script>
+    <script src="/quizify/static/js/pack-submit.js?v={{ASSET_VER}}"></script>
     <script src="/quizify/static/js/sw-update.js?v={{ASSET_VER}}"></script>
 </body>
 </html>
