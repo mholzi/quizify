@@ -21,12 +21,14 @@
                 "data": {
                     "party_light_entities": "Luces de fiesta",
                     "tts_entity": "Proveedor de texto a voz",
-                    "media_player_entity": "Reproductor para TTS"
+                    "media_player_entity": "Reproductor para TTS",
+                    "lobby_music_url": "URL de música de la sala"
                 },
                 "data_description": {
                     "party_light_entities": "Luces que cambian de color con la fase de la ronda (coral en pregunta, salvia en revelación, sol en final).",
                     "tts_entity": "Entidad TTS (p. ej. tts.google_translate_say) para anuncios de hitos y resultados.",
-                    "media_player_entity": "Altavoz por el que se reproduce el audio TTS. Obligatorio si se configura un proveedor TTS."
+                    "media_player_entity": "Altavoz por el que se reproduce el audio TTS. Obligatorio si se configura un proveedor TTS.",
+                    "lobby_music_url": "URL opcional de un archivo de audio (p. ej. /local/quizify-lobby.mp3, desde tu carpeta config/www) que se reproduce en bucle en el reproductor multimedia de arriba mientras se espera en la sala. Se detiene al empezar la partida, para no solaparse con los anuncios TTS que comparten el mismo altavoz. Déjalo vacío para no tener música. No se incluye ningún archivo de audio: usa el tuyo."
                 }
             }
         }

@@ -3,6 +3,21 @@
 All notable changes to Quizify are documented here. This project follows
 [Semantic Versioning](https://semver.org/).
 
+## [Unreleased]
+
+### Added
+
+- **Waiting-room music (#56).** Optional ambient background audio in the
+  lobby, played through a real Home Assistant speaker. A new "Lobby music URL"
+  option lets you point Quizify at an audio file you supply yourself
+  (e.g. `/local/quizify-lobby.mp3` from your `config/www` folder); Quizify
+  loops it on the **same `media_player` entity used for TTS** while waiting for
+  players (via `media_player.play_media` + best-effort `repeat_set`). Music
+  stops automatically once the game starts, so it never overlaps in-game TTS
+  announcements that share the same speaker. The mechanism is inert by default
+  — no audio file ships with the integration, and nothing plays until both a
+  media player and a URL are configured.
+
 ## [1.2.7] — 2026-06-09
 
 Backend hardening release from the 2026-06-09 automated code review. No

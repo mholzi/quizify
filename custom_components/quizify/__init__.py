@@ -38,12 +38,14 @@ async def async_setup_entry(hass: HomeAssistant, entry: ConfigEntry) -> bool:
 
     from .analytics import QuizifyAnalytics  # noqa: PLC0415
     from .const import (  # noqa: PLC0415
+        CONF_LOBBY_MUSIC_URL,
         CONF_MEDIA_PLAYER_ENTITY,
         CONF_PARTY_LIGHT_ENTITIES,
         CONF_TTS_ENTITY,
     )
     from .game.state import QuizifyGameState  # noqa: PLC0415
     from .lights import QuizifyPartyLights  # noqa: PLC0415
+    from .lobby_music import QuizifyLobbyMusic  # noqa: PLC0415
     from .question_stats import QuestionStatsService  # noqa: PLC0415
     from .runtime import HARuntime  # noqa: PLC0415
     from .server import STATIC_URL_PREFIX, WS_PATH, WWW_DIR  # noqa: PLC0415
@@ -154,6 +156,9 @@ async def async_setup_entry(hass: HomeAssistant, entry: ConfigEntry) -> bool:
     # game state callbacks (Phase 1 plumbing) and stay silent if their
     # respective entities aren't configured.
     options = entry.options or {}
+    # Lobby music plays server-side on the configured media_player while the
+    # game waits in the lobby. Empty/unset → the playback service stays inert.
+    game_state.lobby_music_url = (options.get(CONF_LOBBY_MUSIC_URL) or "").strip() or None
     party_lights = QuizifyPartyLights(
         hass=hass,
         entity_ids=list(options.get(CONF_PARTY_LIGHT_ENTITIES) or []),
@@ -172,20 +177,33 @@ async def async_setup_entry(hass: HomeAssistant, entry: ConfigEntry) -> bool:
     # state-callback path only sees phase transitions.
     ws_handler._tts_announcer = tts_announcer
 
+    # Lobby music shares the TTS media_player entity (no separate field).
+    lobby_music = QuizifyLobbyMusic(
+        hass=hass,
+        media_player_entity_id=options.get(CONF_MEDIA_PLAYER_ENTITY) or None,
+        game_state=game_state,
+    )
+    lobby_music.attach()
+
     hass.data[DOMAIN]["party_lights"] = party_lights
     hass.data[DOMAIN]["tts_announcer"] = tts_announcer
+    hass.data[DOMAIN]["lobby_music"] = lobby_music
 
     # Re-attach on options change so toggling lights/TTS in the UI takes
     # effect without an HA restart.
     async def _update_listener(_hass: HomeAssistant, updated_entry: ConfigEntry) -> None:
         opts = updated_entry.options or {}
+        game_state.lobby_music_url = (opts.get(CONF_LOBBY_MUSIC_URL) or "").strip() or None
         domain_data = _hass.data.get(DOMAIN, {})
         pl: QuizifyPartyLights | None = domain_data.get("party_lights")
         tts: QuizifyTTSAnnouncer | None = domain_data.get("tts_announcer")
+        lm: QuizifyLobbyMusic | None = domain_data.get("lobby_music")
         if pl is not None:
             pl.detach()
         if tts is not None:
             tts.detach()
+        if lm is not None:
+            lm.detach()
         new_pl = QuizifyPartyLights(
             hass=_hass,
             entity_ids=list(opts.get(CONF_PARTY_LIGHT_ENTITIES) or []),
@@ -199,8 +217,15 @@ async def async_setup_entry(hass: HomeAssistant, entry: ConfigEntry) -> bool:
             game_state=game_state,
         )
         new_tts.attach()
+        new_lm = QuizifyLobbyMusic(
+            hass=_hass,
+            media_player_entity_id=opts.get(CONF_MEDIA_PLAYER_ENTITY) or None,
+            game_state=game_state,
+        )
+        new_lm.attach()
         domain_data["party_lights"] = new_pl
         domain_data["tts_announcer"] = new_tts
+        domain_data["lobby_music"] = new_lm
         handler = domain_data.get("ws_handler")
         if handler is not None:
             handler._tts_announcer = new_tts

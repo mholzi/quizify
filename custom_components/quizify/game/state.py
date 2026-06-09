@@ -109,6 +109,11 @@ class QuizifyGameState:
         self.difficulty: str = DIFFICULTY_DEFAULT
         self.language: str = "de"
         self.join_url: str | None = None
+        # Optional URL of an audio file looped on the configured HA
+        # media_player while waiting for players. None unless the user
+        # configures one in the options flow; a missing/empty value means
+        # "no lobby music" and the playback service stays inert.
+        self.lobby_music_url: str | None = None
 
         # Sub-managers
         self._player_registry = PlayerRegistry()

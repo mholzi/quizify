@@ -21,12 +21,14 @@
                 "data": {
                     "party_light_entities": "Sfeerverlichting",
                     "tts_entity": "Tekst-naar-spraakprovider",
-                    "media_player_entity": "Mediaspeler voor TTS"
+                    "media_player_entity": "Mediaspeler voor TTS",
+                    "lobby_music_url": "URL lobbymuziek"
                 },
                 "data_description": {
                     "party_light_entities": "Lampen die meekleuren met de rondefase (koraal bij vraag, salie bij onthulling, zon bij finale).",
                     "tts_entity": "TTS-entiteit (bv. tts.google_translate_say) voor aankondigingen van mijlpalen en uitslagen.",
-                    "media_player_entity": "Luidspreker waar de TTS wordt afgespeeld. Verplicht als er een TTS-provider is ingesteld."
+                    "media_player_entity": "Luidspreker waar de TTS wordt afgespeeld. Verplicht als er een TTS-provider is ingesteld.",
+                    "lobby_music_url": "Optionele URL van een audiobestand (bv. /local/quizify-lobby.mp3 uit je config/www-map) dat tijdens het wachten in de lobby in een lus wordt afgespeeld op de mediaspeler hierboven. Het stopt zodra het spel begint, zodat het de TTS-aankondigingen die dezelfde speaker delen niet overlapt. Laat leeg voor geen muziek. Er wordt geen audiobestand meegeleverd — gebruik je eigen bestand."
                 }
             }
         }
