@@ -344,6 +344,13 @@ class QuizifyGameState:
         """Return list of all player sessions."""
         return list(self._player_registry.players.values())
 
+    def has_other_admin(self, name: str) -> bool:
+        """Return True if a player other than ``name`` already is admin.
+
+        Enforces the single-admin invariant in the admin-claim path.
+        """
+        return self._player_registry.has_other_admin(name)
+
     # ------------------------------------------------------------------
     # Game flow
     # ------------------------------------------------------------------

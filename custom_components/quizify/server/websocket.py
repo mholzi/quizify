@@ -434,7 +434,24 @@ class QuizifyWebSocketHandler:
             # See DESIGN.md for the full rationale.
             player_obj = game_state.get_player(name)
             if player_obj and data.get("is_admin"):
-                player_obj.is_admin = True
+                # Single-admin invariant (#208): exactly one player may hold
+                # the crown per game. Only grant admin if no *other* player is
+                # already admin. A re-claim by the same name (e.g. the admin's
+                # redirect from /quizify/admin to /quizify/player re-joining
+                # under the same name) is idempotent and still granted; a
+                # claim by a *different* player while an admin exists is
+                # rejected — the original admin keeps the crown. Rejecting
+                # rather than taking over is the safer behaviour: it stops any
+                # LAN client from seizing control mid-game by sending
+                # `is_admin: true`.
+                if game_state.has_other_admin(name):
+                    _LOGGER.warning(
+                        "Admin claim rejected for %s: a different player "
+                        "already holds the single admin slot",
+                        name,
+                    )
+                else:
+                    player_obj.is_admin = True
 
             # If a lightning round is mid-flight, register the late joiner so
             # they can score from the next question on (issue #42).

@@ -244,3 +244,26 @@ class PlayerRegistry:
             _LOGGER.info("Admin set: %s", name)
             return True
         return False
+
+    def get_admin(self) -> PlayerSession | None:
+        """Return the current admin player, if any.
+
+        Enforces the single-admin invariant: there is at most one admin
+        per game. Returns the first player flagged ``is_admin`` (insertion
+        order), or ``None`` if no player currently holds the crown.
+        """
+        for player in self.players.values():
+            if player.is_admin:
+                return player
+        return None
+
+    def has_other_admin(self, name: str) -> bool:
+        """Return True if a player *other than* ``name`` already is admin.
+
+        Used to reject a second admin-claim: the first claimant keeps the
+        crown, later claims by a different player are denied. A re-claim by
+        the same player (e.g. the admin's redirect from /admin to /player
+        re-joining under the same name) is idempotent and not blocked.
+        """
+        admin = self.get_admin()
+        return admin is not None and admin.name != name
