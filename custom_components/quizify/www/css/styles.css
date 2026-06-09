@@ -4782,6 +4782,77 @@ body.is-admin .reaction-bar {
     font-size: 0.9rem;
 }
 
+/* Finale countdown overlay — a brief dramatic flourish + 3·2·1 shown on the
+   big screen right before the final question is revealed. Pure tension/UX;
+   no scoring impact. Soft-Parlor styling (coral accent on dimmed parlor bg). */
+.finale-countdown-overlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background: rgba(31, 27, 20, 0.92);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    z-index: var(--z-overlay);
+    backdrop-filter: blur(6px);
+    -webkit-backdrop-filter: blur(6px);
+}
+
+.finale-countdown-content {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: var(--space-lg);
+    text-align: center;
+    padding: var(--space-xl);
+}
+
+.finale-countdown-flourish {
+    font-family: var(--font-display);
+    font-weight: var(--font-weight-extrabold);
+    font-size: clamp(2.5rem, 12vw, 5rem);
+    line-height: 1.05;
+    text-transform: uppercase;
+    letter-spacing: 0.04em;
+    color: var(--color-accent-primary);
+    text-shadow: 0 0 24px var(--accent-glow);
+    animation: finale-flourish-in 0.6s cubic-bezier(0.2, 0.9, 0.3, 1.3) both;
+}
+
+.finale-countdown-number {
+    font-family: var(--font-mono);
+    font-weight: var(--font-weight-bold);
+    font-size: clamp(4rem, 22vw, 9rem);
+    line-height: 1;
+    color: var(--color-text-neon, #F5EFE6);
+    min-height: 1em;
+}
+
+/* Re-key the number's pop on each digit change via the .tick toggle. */
+.finale-countdown-number.tick {
+    animation: finale-number-pop 0.9s ease-out both;
+}
+
+@keyframes finale-flourish-in {
+    0%   { opacity: 0; transform: scale(0.6) translateY(12px); }
+    100% { opacity: 1; transform: scale(1) translateY(0); }
+}
+
+@keyframes finale-number-pop {
+    0%   { opacity: 0; transform: scale(1.6); }
+    25%  { opacity: 1; transform: scale(1); }
+    100% { opacity: 0.85; transform: scale(1); }
+}
+
+@media (prefers-reduced-motion: reduce) {
+    .finale-countdown-flourish,
+    .finale-countdown-number.tick {
+        animation: none;
+    }
+}
+
 /* Connection lost screen */
 .connection-lost-view {
     display: flex;
