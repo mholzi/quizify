@@ -483,6 +483,46 @@
             </div>
         </div>
 
+        <!-- Lightning Round Intro Splash (issue #201) — "Bolt Burst".
+             Shown on host/TV + player phone after the admin triggers a
+             lightning round, BEFORE the first question. The admin taps
+             Start in the footer bar to advance into the round. -->
+        <div id="lightning-splash-view" class="view hidden">
+            <div class="lr-splash-stage">
+                <div class="lr-splash-rays" aria-hidden="true"></div>
+                <div class="lr-splash-bolt"><span aria-hidden="true">⚡</span></div>
+                <div class="lr-splash-kicker" data-i18n="lightning.splashKicker">Lightning Round</div>
+                <div class="lr-splash-title" data-i18n="lightning.splashTitle">Get ready!</div>
+                <div class="lr-splash-chips">
+                    <div class="lr-splash-chip">
+                        <b id="lightning-splash-count">5</b>
+                        <small data-i18n="lightning.splashQuestions">Questions</small>
+                    </div>
+                    <div class="lr-splash-chip">
+                        <b id="lightning-splash-seconds">15s</b>
+                        <small data-i18n="lightning.splashPerQuestion">per question</small>
+                    </div>
+                    <div class="lr-splash-chip">
+                        <b data-i18n="lightning.splashEndValue">End</b>
+                        <small data-i18n="lightning.splashEndLabel">answers revealed</small>
+                    </div>
+                </div>
+            </div>
+            <!-- Player phones: waiting for host hint -->
+            <div id="lightning-splash-waithint" class="lr-splash-waithint hidden">
+                <span data-i18n="lightning.splashWaiting">Waiting for host</span>
+                <span class="dots" aria-hidden="true">●●●</span>
+            </div>
+            <!-- Admin: full-width sticky footer Start bar -->
+            <div id="lightning-splash-adminbar" class="lr-splash-adminbar hidden">
+                <div class="lr-splash-adminmeta" data-i18n="lightning.splashAdminMeta">Splash visible to all players</div>
+                <button id="lightning-splash-start-btn" class="lr-splash-startbtn" type="button">
+                    <span data-i18n="lightning.splashStart">Let's go</span>
+                    <span aria-hidden="true">⚡</span>
+                </button>
+            </div>
+        </div>
+
         <!-- Lightning Round View (issue #42) — fast question, no reveal between -->
         <div id="lightning-view" class="view hidden">
             <div class="game-container lightning-container">
@@ -509,7 +549,7 @@
 
                 <div class="timer-container">
                     <div id="lightning-timer" class="timer" role="timer" aria-live="off"
-                         data-i18n-aria-label="a11y.timeRemaining" aria-label="Time remaining">6</div>
+                         data-i18n-aria-label="a11y.timeRemaining" aria-label="Time remaining">15</div>
                 </div>
 
                 <section class="card-section answer-section">

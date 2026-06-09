@@ -166,6 +166,12 @@ class QuizifyGameState:
         # the reference + phase so the WS layer can route to it.
         self._lightning = None  # type: ignore[assignment]
 
+        # True between start_lightning_round() and begin_lightning_questions():
+        # the intro splash ("Bolt Burst", issue #201) is on screen and the
+        # first question has not been broadcast yet — the admin's Start
+        # control advances out of it.
+        self._lightning_splash_pending: bool = False
+
         # Round shuffle state (owned here, not in WS handler).
         # `shuffle_map` is the "canonical" per-round shuffle used by the
         # admin/dashboard view and as a fallback for any code path that
@@ -885,6 +891,7 @@ class QuizifyGameState:
         self._timer_override = None
         self._calibrator = None
         self._lightning = None
+        self._lightning_splash_pending = False
 
         for player in self._player_registry.players.values():
             player.reset_for_new_game()
@@ -931,8 +938,28 @@ class QuizifyGameState:
 
         self._lightning = lr
         self.phase = GamePhase.LIGHTNING
+        # Open on the intro splash (issue #201); the admin's Start control
+        # calls begin_lightning_questions() to advance into question 1.
+        self._lightning_splash_pending = True
         self._notify_state_callbacks()
         return True
+
+    def begin_lightning_questions(self) -> bool:
+        """Leave the intro splash and let the question loop start (issue #201).
+
+        Returns True if the splash was pending and is now dismissed, False
+        if there was nothing to dismiss (no active round / already started).
+        """
+        if self.phase != GamePhase.LIGHTNING or not self._lightning_splash_pending:
+            return False
+        self._lightning_splash_pending = False
+        self._notify_state_callbacks()
+        return True
+
+    @property
+    def lightning_splash_pending(self) -> bool:
+        """True while the lightning intro splash is showing (issue #201)."""
+        return self._lightning_splash_pending
 
     @property
     def lightning(self):
@@ -1219,6 +1246,9 @@ class QuizifyGameState:
                 "time_remaining": round(lr.time_remaining(), 1),
                 "seconds_per_question": lr.seconds_per_question,
                 "leaderboard": lr.leaderboard(),
+                # True while the intro splash ("Bolt Burst", #201) is still
+                # showing and the first question hasn't been broadcast.
+                "splash_pending": self._lightning_splash_pending,
             }
             if q is not None:
                 # Canonical (admin/TV) answer order; players get their own

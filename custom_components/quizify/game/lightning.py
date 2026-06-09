@@ -6,7 +6,7 @@ its own module (and the heavy lifting out of ``state.py``) so it doesn't
 collide with the normal round engine, and so the rules that make it
 distinct live in one place:
 
-* **Fixed time per question** (default 6s, 5 questions ≈ 30s). A question
+* **Fixed time per question** (default 15s, 5 questions ≈ 75s). A question
   ends on timeout OR when every connected player has answered — whichever
   comes first. There is **no reveal between questions**.
 * **Fixed points per correct** answer (``LIGHTNING_POINTS_PER_CORRECT``).
@@ -40,7 +40,7 @@ _LOGGER = logging.getLogger(__name__)
 
 # Decided rules (issue #42, greenlit 2026-06-09).
 LIGHTNING_NUM_QUESTIONS = 5
-LIGHTNING_SECONDS_PER_QUESTION = 6.0
+LIGHTNING_SECONDS_PER_QUESTION = 15.0
 LIGHTNING_POINTS_PER_CORRECT = 10
 
 

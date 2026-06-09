@@ -327,6 +327,12 @@ class QuizifyWebSocketHandler:
                 return
             await self._handle_start_lightning(ws, data, game_state)
 
+        elif msg_type == "start_lightning_questions":
+            if not self._is_authorized_admin(ws, is_admin, game_state):
+                await self._conn.send_error(ws, ERR_INVALID_ACTION, "Admin only")
+                return
+            await self._handle_start_lightning_questions(ws, game_state)
+
         elif msg_type == "lightning_answer":
             await self._handle_lightning_answer(ws, data, game_state)
 
@@ -1064,7 +1070,7 @@ class QuizifyWebSocketHandler:
     # Lightning Round (issue #42)
     # ------------------------------------------------------------------
     #
-    # A self-contained fast mode: 5 questions, fixed 6s each, auto-advance
+    # A self-contained fast mode: 5 questions, fixed 15s each, auto-advance
     # on timeout OR when all connected players have answered, NO reveal
     # between questions, flat points per correct, power-ups disabled. The
     # mode's rules live in game/lightning.py; here we just drive the loop
@@ -1106,7 +1112,33 @@ class QuizifyWebSocketHandler:
         state["type"] = "game_state"
         await self._conn.broadcast(state)
 
+        # Show the intro splash ("Bolt Burst", issue #201) on host/TV + every
+        # player phone. The question loop does NOT start yet — it waits for the
+        # admin to tap Start (start_lightning_questions).
+        await self._broadcast_lightning_splash(game_state)
+
+    async def _handle_start_lightning_questions(
+        self, ws: web.WebSocketResponse, game_state: QuizifyGameState
+    ) -> None:
+        """Admin dismisses the intro splash → run the first question (#201)."""
+        if game_state.phase != GamePhase.LIGHTNING:
+            return
+        if not game_state.begin_lightning_questions():
+            return  # splash already dismissed / nothing to do — stay silent
         self._start_lightning_loop(game_state)
+
+    async def _broadcast_lightning_splash(
+        self, game_state: QuizifyGameState
+    ) -> None:
+        """Fan out the intro-splash payload (rules preview) to all clients."""
+        lr = game_state.lightning
+        if lr is None:
+            return
+        await self._conn.broadcast({
+            "type": "lightning_splash",
+            "num_questions": lr.num_questions,
+            "seconds_per_question": lr.seconds_per_question,
+        })
 
     async def _handle_lightning_answer(
         self, ws: web.WebSocketResponse, data: dict, game_state: QuizifyGameState
@@ -1154,8 +1186,8 @@ class QuizifyWebSocketHandler:
 
         async def loop() -> None:
             try:
-                # Brief grace so clients land on the lightning view before
-                # the first question's clock starts ticking visibly.
+                # Brief grace so clients swap from the intro splash (#201) to
+                # the question view before the first clock starts ticking.
                 await asyncio.sleep(1.0)
                 while game_state.phase == GamePhase.LIGHTNING:
                     lr = game_state.lightning

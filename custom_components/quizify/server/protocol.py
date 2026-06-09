@@ -237,6 +237,7 @@ CLIENT_MESSAGE_TYPES: frozenset[str] = frozenset({
     # answers via lightning_answer (separate from submit_answer so the
     # normal-round path stays untouched).
     "start_lightning",
+    "start_lightning_questions",
     "lightning_answer",
     "end_lightning",
     # Pre-existing handlers (unreleased features wired in the WS layer).

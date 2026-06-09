@@ -120,6 +120,10 @@
         adminLightningQuestion: document.getElementById('admin-lightning-question'),
         adminLightningTimer: document.getElementById('admin-lightning-timer'),
         adminLightningEndBtn: document.getElementById('admin-lightning-end-btn'),
+        adminLightningSplash: document.getElementById('admin-lightning-splash'),
+        adminLightningSplashRules: document.getElementById('admin-lightning-splash-rules'),
+        adminLightningQuestionSection: document.getElementById('admin-lightning-question-section'),
+        adminLightningStartBtn: document.getElementById('admin-lightning-start-btn'),
         adminLightningRecapLeaderboard: document.getElementById('admin-lightning-recap-leaderboard'),
         adminLightningRecapGrid: document.getElementById('admin-lightning-recap-grid'),
         adminLightningAgainBtn: document.getElementById('admin-lightning-again-btn'),
@@ -764,6 +768,9 @@
             case 'game_reset':
                 handleGameReset();
                 break;
+            case 'lightning_splash':
+                handleAdminLightningSplash(msg);
+                break;
             case 'lightning_question':
                 handleAdminLightningQuestion(msg);
                 break;
@@ -877,7 +884,12 @@
                 // player.html above (savedName branch). (issue #42)
                 currentPhase = 'LIGHTNING';
                 showView('lightning');
-                if (msg.lightning) {
+                if (msg.lightning && msg.lightning.splash_pending) {
+                    handleAdminLightningSplash({
+                        num_questions: msg.lightning.num_questions,
+                        seconds_per_question: msg.lightning.seconds_per_question,
+                    });
+                } else if (msg.lightning) {
                     handleAdminLightningQuestion({
                         index: msg.lightning.index,
                         num_questions: msg.lightning.num_questions,
@@ -895,10 +907,40 @@
 
     // ---- Lightning Round (issue #42) ----
 
+    function _toggleAdminLightningSplash(showSplash) {
+        if (els.adminLightningSplash) els.adminLightningSplash.hidden = !showSplash;
+        if (els.adminLightningStartBtn) {
+            els.adminLightningStartBtn.hidden = !showSplash;
+            if (showSplash) els.adminLightningStartBtn.disabled = false;
+        }
+        if (els.adminLightningQuestionSection) {
+            els.adminLightningQuestionSection.hidden = showSplash;
+        }
+    }
+
+    function handleAdminLightningSplash(msg) {
+        if (_redirecting) return;
+        msg = msg || {};
+        currentPhase = 'LIGHTNING';
+        showView('lightning');
+        _toggleAdminLightningSplash(true);
+        if (els.adminLightningSplashRules) {
+            var tFn = (window.QuizifyI18n && window.QuizifyI18n.t) || function (k) { return k; };
+            var n = (typeof msg.num_questions === 'number') ? msg.num_questions : 5;
+            var s = (typeof msg.seconds_per_question === 'number')
+                ? Math.round(msg.seconds_per_question) : 15;
+            var hint = tFn('lightning.startHint');
+            els.adminLightningSplashRules.textContent =
+                (hint && hint !== 'lightning.startHint') ? hint
+                : (n + ' questions · ' + s + 's each');
+        }
+    }
+
     function handleAdminLightningQuestion(msg) {
         if (_redirecting) return;
         currentPhase = 'LIGHTNING';
         showView('lightning');
+        _toggleAdminLightningSplash(false);
         if (els.adminLightningProgress) {
             els.adminLightningProgress.textContent =
                 ((msg.index || 0) + 1) + ' / ' + (msg.num_questions || 5);
@@ -1442,6 +1484,10 @@
     // are already loaded — no extra setup. Server picks fresh questions via
     // the history-aware queue.
     on(els.lightningRoundBtn, 'click', function () { send('start_lightning', {}); });
+    on(els.adminLightningStartBtn, 'click', function () {
+        if (els.adminLightningStartBtn) els.adminLightningStartBtn.disabled = true;
+        send('start_lightning_questions', {});  // dismiss intro splash (#201)
+    });
     on(els.adminLightningEndBtn, 'click', function () { send('end_lightning', {}); });
     on(els.adminLightningAgainBtn, 'click', function () { send('start_lightning', {}); });
     on(els.adminLightningNewGameBtn, 'click', function () { send('reset_game', {}); });
