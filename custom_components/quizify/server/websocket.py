@@ -87,6 +87,35 @@ class QuizifyWebSocketHandler:
         self._RATE_LIMIT_WINDOW = 1.0  # seconds
         self._RATE_LIMIT_MAX = 15  # max messages per window
 
+    def _check_rate_limit(self, ws: web.WebSocketResponse) -> bool:
+        """Record a message for ``ws`` and report whether it is within the
+        per-connection rate limit.
+
+        Timestamps older than ``_RATE_LIMIT_WINDOW`` are pruned on every call,
+        so each connection's list stays small; the connection's entry itself
+        is dropped by :meth:`_forget_rate_limit` from ``handle()``'s ``finally``
+        on disconnect, so ``_message_timestamps`` is bounded by the number of
+        *live* connections (≤ MAX_PLAYERS + admin/dashboard), never unbounded
+        (#169). A message that exceeds the limit is NOT recorded.
+        """
+        ws_id = id(ws)
+        now = asyncio.get_event_loop().time()
+        timestamps = [
+            t
+            for t in self._message_timestamps.get(ws_id, [])
+            if now - t < self._RATE_LIMIT_WINDOW
+        ]
+        if len(timestamps) >= self._RATE_LIMIT_MAX:
+            self._message_timestamps[ws_id] = timestamps
+            return False
+        timestamps.append(now)
+        self._message_timestamps[ws_id] = timestamps
+        return True
+
+    def _forget_rate_limit(self, ws: web.WebSocketResponse) -> None:
+        """Drop a connection's rate-limit state (called on disconnect)."""
+        self._message_timestamps.pop(id(ws), None)
+
     async def handle(self, request: web.Request) -> web.WebSocketResponse:
         """Handle WebSocket connection."""
         ws = web.WebSocketResponse(heartbeat=self.HEARTBEAT_INTERVAL)
@@ -156,18 +185,12 @@ class QuizifyWebSocketHandler:
                 if msg.type == WSMsgType.TEXT:
                     # Rate limiting: record timestamp BEFORE processing so the
                     # first message is also counted (#21 in logical review).
-                    ws_id = id(ws)
-                    now = asyncio.get_event_loop().time()
-                    timestamps = self._message_timestamps.setdefault(ws_id, [])
-                    # Remove old timestamps outside window
-                    self._message_timestamps[ws_id] = [t for t in timestamps if now - t < self._RATE_LIMIT_WINDOW]
-                    if len(self._message_timestamps[ws_id]) >= self._RATE_LIMIT_MAX:
-                        _LOGGER.warning("Rate limit exceeded for WebSocket %s", ws_id)
+                    if not self._check_rate_limit(ws):
+                        _LOGGER.warning("Rate limit exceeded for WebSocket %s", id(ws))
                         await self._conn.send_error(
                             ws, ERR_INVALID_ACTION, "Rate limit exceeded"
                         )
                         continue
-                    self._message_timestamps[ws_id].append(now)
                     # Parse JSON separately so we can distinguish parse errors
                     # from handler errors (#20 in logical review).
                     try:
@@ -188,7 +211,7 @@ class QuizifyWebSocketHandler:
                     _LOGGER.error("WebSocket error: %s", ws.exception())
         finally:
             self._conn.remove_connection(ws)
-            self._message_timestamps.pop(id(ws), None)
+            self._forget_rate_limit(ws)
             await self._handle_disconnect(ws)
             _LOGGER.debug("WebSocket disconnected, total: %d", len(self._conn.connections))
 
@@ -1107,29 +1130,30 @@ class QuizifyWebSocketHandler:
             try:
                 while game_state.phase == GamePhase.QUESTION_ACTIVE:
                     players = game_state.get_players()
-                    # Send each player their authoritative remaining time.
-                    for p in players:
+                    # Resolve each player's authoritative timer ONCE per tick.
+                    # get_player_timer is an O(1) dict lookup, but it used to be
+                    # called 3-4× per player per tick (once for the send, twice
+                    # more inside the dashboard-minimum comprehension). Compute
+                    # the (player, remaining) pairs once and reuse them for both
+                    # the per-player send and the dashboard minimum (#169). The
+                    # post-sleep expiry check below intentionally re-reads fresh
+                    # timers, since state can change during the 0.5s sleep.
+                    tick_state = [
+                        (p, max(0.0, t.get_remaining()))
+                        for p in players
+                        if (t := game_state.get_player_timer(p.name)) is not None
+                    ]
+                    # Send each connected player their authoritative remaining.
+                    for p, remaining in tick_state:
                         if not p.connected:
                             continue
-                        pt = game_state.get_player_timer(p.name)
-                        if pt is None:
-                            continue
-                        remaining = max(0.0, pt.get_remaining())
                         await self._conn._safe_send(p.ws, {
                             "type": "timer_tick",
                             "remaining": round(remaining, 1),
                         })
-                    # Also broadcast the minimum remaining to dashboards/admins
-                    # so the TV view shows a consistent countdown.
-                    min_remaining = 0.0
-                    if players:
-                        remainings = [
-                            max(0.0, game_state.get_player_timer(p.name).get_remaining())
-                            for p in players
-                            if game_state.get_player_timer(p.name) is not None
-                        ]
-                        if remainings:
-                            min_remaining = min(remainings)
+                    # Broadcast the minimum remaining to dashboards/admins so
+                    # the TV view shows a consistent countdown.
+                    min_remaining = min((r for _, r in tick_state), default=0.0)
                     # Broadcast to pure-admin + dashboards
                     for ws in list(self._conn._admin_connections):
                         if not ws.closed and not any(p.ws is ws for p in players):
