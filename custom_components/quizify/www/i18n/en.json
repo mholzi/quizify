@@ -136,7 +136,8 @@
     "easy": "Easy",
     "medium": "Medium",
     "hard": "Hard",
-    "mixed": "Mixed"
+    "mixed": "Mixed",
+    "auto": "Auto"
   },
   "game": {
     "question": "Question",

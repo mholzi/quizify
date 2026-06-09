@@ -14,6 +14,8 @@ from typing import TYPE_CHECKING, Any
 
 from ..const import (
     DEFAULT_ROUND_DURATION,
+    DIFFICULTY_AUTO,
+    DIFFICULTY_AUTO_START,
     DIFFICULTY_DEFAULT,
     ERR_ALREADY_SUBMITTED,
     ERR_GAME_ALREADY_STARTED,
@@ -28,6 +30,7 @@ from .player import PlayerSession
 from .player_registry import PlayerRegistry
 from .powerups import FREEZE_DURATION, TIME_BOOST_DURATION, PowerUpEffect, PowerUpManager, PowerUpType
 from .questions import Answer, Question, QuestionBank
+from .calibration import GroupCalibrator
 from .highlights import compute_superlatives
 from .scoring import (
     BASE_POINTS,
@@ -124,6 +127,10 @@ class QuizifyGameState:
         if runtime is not None:
             history_path = runtime.data_dir / "question_history.json"
             self._question_bank.load_history(history_path)
+
+        # Group-level adaptive difficulty (#40). Only active when the host
+        # picks the "auto" difficulty mode; None for fixed easy/medium/hard.
+        self._calibrator: GroupCalibrator | None = None
 
         # Current round state
         self._current_question: Question | None = None
@@ -316,6 +323,20 @@ class QuizifyGameState:
         self.round = 0
         self._timer_override = timer_duration
 
+        # Group-level adaptive difficulty (#40). Only the explicit "auto" mode
+        # opts in; any fixed difficulty the host pinned (easy/medium/hard) is
+        # honoured verbatim and never calibrated. When auto, the queue is built
+        # across ALL difficulties (no per-difficulty filter) so we can serve the
+        # calibrated target each round.
+        if self.difficulty == DIFFICULTY_AUTO:
+            self._calibrator = GroupCalibrator(
+                start=Difficulty(DIFFICULTY_AUTO_START)
+            )
+            queue_difficulty: str | None = None
+        else:
+            self._calibrator = None
+            queue_difficulty = difficulty
+
         # Persist for "Play again — same settings" (one-tap rematch).
         # Snapshot here so a later reset_to_lobby keeps these and
         # play_again can reuse them without re-prompting the admin.
@@ -333,7 +354,7 @@ class QuizifyGameState:
         self._question_bank.reset(
             category=category,
             categories=categories,
-            difficulty=difficulty,
+            difficulty=queue_difficulty,
             language=self.language,
         )
 
@@ -395,9 +416,20 @@ class QuizifyGameState:
             self.end_game()
             return None
 
-        question = self._question_bank.get_next_question(
-            category=self.category, difficulty=self.difficulty
-        )
+        if self._calibrator is not None:
+            # Group-level adaptive ("auto") mode: serve the calibrated target
+            # difficulty for this round. The calibrator was fed each completed
+            # round's group correct-rate in _do_evaluate_round; its target only
+            # ever steps one rung at a time and stays put until enough rounds of
+            # signal have accumulated, so this is bounded and smooth.
+            target = self._calibrator.current_target
+            question = self._question_bank.get_next_question_at_difficulty(
+                target.value
+            )
+        else:
+            question = self._question_bank.get_next_question(
+                category=self.category, difficulty=self.difficulty
+            )
         if question is None:
             _LOGGER.warning("No more questions available")
             self.end_game()
@@ -670,6 +702,31 @@ class QuizifyGameState:
 
         self.phase = GamePhase.ANSWER_REVEAL
 
+        # Feed the group-level difficulty calibrator (#40). Signal = the share
+        # of *participating* players (connected, i.e. present for this round)
+        # who answered correctly. Then advance the target for the next round.
+        # No-op when not in "auto" mode. Rounds with zero participants carry no
+        # signal (the calibrator ignores total<=0).
+        if self._calibrator is not None:
+            participants = [
+                p for p in self._player_registry.players.values() if p.connected
+            ]
+            total = len(participants)
+            correct = sum(
+                1 for p in participants if player_correct.get(p.name, False)
+            )
+            self._calibrator.record_round(correct=correct, total=total)
+            new_target = self._calibrator.next_target()
+            _LOGGER.debug(
+                "Auto-difficulty: round %d group %d/%d correct, "
+                "avg=%.2f, next target=%s",
+                self.round,
+                correct,
+                total,
+                self._calibrator.average_rate() or 0.0,
+                new_target.value,
+            )
+
         # Record this round into the per-question stats. Only count
         # players who actually submitted — timeouts shouldn't blame the
         # question for the player being away. ``last_elapsed`` was
@@ -838,6 +895,7 @@ class QuizifyGameState:
         self.shuffle_map = []
         self.shuffled_answers = []
         self._timer_override = None
+        self._calibrator = None
 
         for player in self._player_registry.players.values():
             player.reset_for_new_game()
