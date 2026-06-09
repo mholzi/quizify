@@ -30,15 +30,11 @@ from .powerups import FREEZE_DURATION, TIME_BOOST_DURATION, PowerUpEffect, Power
 from .questions import Answer, Question, QuestionBank
 from .highlights import compute_superlatives
 from .scoring import (
-    BASE_POINTS,
-    MAX_SPEED_BONUS,
     calculate_podium,
-    calculate_round_score,
-    get_streak_milestone_bonus,
-    get_streak_multiplier,
 )
+from .scoring_engine import ScoringEngine
 from .timer import QuestionTimer
-from .types import DIFFICULTY_MULTIPLIERS, TIME_LIMITS, Difficulty
+from .types import TIME_LIMITS, Difficulty
 
 if TYPE_CHECKING:
     from aiohttp import web
@@ -119,6 +115,9 @@ class QuizifyGameState:
         self._player_registry = PlayerRegistry()
         self._question_bank = QuestionBank()
         self._powerup_manager = PowerUpManager()
+        # Stateless scoring engine — owns the pure points/breakdown/wager/
+        # milestone arithmetic that submit_answer applies (issue #184).
+        self._scoring_engine = ScoringEngine()
 
         # Load question history if a runtime is available (HA or standalone).
         if runtime is not None:
@@ -504,71 +503,38 @@ class QuizifyGameState:
         if player.streak > player.max_streak:
             player.max_streak = player.streak
 
-        points = calculate_round_score(
+        # Delegate the pure arithmetic (base/speed/difficulty/streak scoring,
+        # the final-round wager override, and the streak-milestone spike) to
+        # the stateless ScoringEngine (#184). It mutates nothing; this method
+        # keeps ownership of applying the result to the player. `player.streak`
+        # was already updated above, and `player.score` is still the pre-round
+        # total here — exactly the inputs the wager bets against.
+        computation = self._scoring_engine.score_submission(
             correct=correct,
             elapsed=elapsed,
-            time_limit=self._round_duration,
+            round_duration=self._round_duration,
             difficulty=diff_enum,
             streak=player.streak,
             double_points_active=double_active,
+            is_final_round=self.round == self.total_rounds,
+            wager=player.wager,
+            score_before_wager=player.score,
         )
 
-        # Calculate breakdown for client display
-        speed_bonus = 0
-        streak_bonus = 0
-        diff_mult = DIFFICULTY_MULTIPLIERS.get(diff_enum, 1.0)
-        if correct:
-            time_fraction = max(0.0, 1.0 - elapsed / self._round_duration) if self._round_duration > 0 else 0.0
-            speed_bonus = int(MAX_SPEED_BONUS * time_fraction)
-            streak_mult = get_streak_multiplier(player.streak)
-            streak_bonus = int((BASE_POINTS + speed_bonus) * diff_mult * (streak_mult - 1.0))
+        points = computation.points
+        speed_bonus = computation.speed_bonus
+        streak_bonus = computation.streak_bonus
+        diff_mult = computation.difficulty_multiplier
+        wager_used = computation.wager_used
+        milestone_bonus = computation.milestone_bonus
 
-        # Wager override (gameplay idea #3, Jeopardy-style final round).
-        # On the final round, if the player submitted a wager (0-100%
-        # of their pre-round score), it REPLACES the normal scoring:
-        # right answer adds the wager value, wrong subtracts. Speed/
-        # streak/difficulty multipliers are ignored — the wager IS the
-        # bet. We snapshot the player's score BEFORE adding points so
-        # the wager is computed against what they bet on, not the
-        # post-bet total.
-        wager_used: int | None = None
-        if (
-            self.round == self.total_rounds
-            and player.wager is not None
-        ):
-            bank = max(0, player.score)
-            wager_pts = int(bank * player.wager / 100)
-            wager_used = wager_pts
-            if correct:
-                points = wager_pts
-            else:
-                # Lose the wager — but never go below zero so a player
-                # can't be priced out of an existing rematch flow.
-                points = -min(wager_pts, bank)
-            # Clear bonuses since the wager overrides them.
-            speed_bonus = 0
-            streak_bonus = 0
-
-        # Streak milestone bonus — discrete spike awarded the round the
-        # streak EXACTLY equals a milestone value (3, 5, 10, 15, 20, 25).
-        # Wager rounds skip this so the bet stays the only thing in play.
-        milestone_bonus = 0
-        if correct and wager_used is None:
-            milestone_bonus = get_streak_milestone_bonus(player.streak)
-            if milestone_bonus:
-                points += milestone_bonus
-                player.streak_milestone_bonus_total += milestone_bonus
-                player.streak_milestones_hit += 1
+        # Tally the milestone hit (engine already folded the bonus into points).
+        if milestone_bonus:
+            player.streak_milestone_bonus_total += milestone_bonus
+            player.streak_milestones_hit += 1
 
         player.round_score = points
-        player.round_score_breakdown = {
-            "speed_bonus": speed_bonus,
-            "streak_bonus": streak_bonus,
-            "difficulty_multiplier": diff_mult,
-            "double_points": double_active,
-            "wager": wager_used,
-            "milestone_bonus": milestone_bonus,
-        }
+        player.round_score_breakdown = computation.breakdown
         player.score += points
         if player.score < 0:
             player.score = 0

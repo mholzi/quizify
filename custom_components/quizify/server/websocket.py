@@ -25,6 +25,7 @@ from custom_components.quizify.const import (
 from custom_components.quizify.game.highlights import compute_superlatives
 from custom_components.quizify.game.powerups import PowerUpEffect, PowerUpType
 from custom_components.quizify.game.state import AnswerResult, GamePhase, QuizifyGameState
+from custom_components.quizify.server.broadcast_dispatcher import BroadcastDispatcher
 from custom_components.quizify.server.connection import ConnectionManager
 from custom_components.quizify.server.serializers import (
     serialize_finale,
@@ -86,6 +87,15 @@ class QuizifyWebSocketHandler:
         self._message_timestamps: dict[int, list[float]] = {}  # ws id -> recent message timestamps
         self._RATE_LIMIT_WINDOW = 1.0  # seconds
         self._RATE_LIMIT_MAX = 15  # max messages per window
+        # Routes named state events (round_evaluated / game_ended) to the
+        # matching broadcast, falling back to a full-state push (#184).
+        self._broadcast_dispatcher = BroadcastDispatcher(
+            handlers={
+                "round_evaluated": self._dispatch_round_evaluated,
+                "game_ended": self._dispatch_game_ended,
+            },
+            default=self._dispatch_full_state,
+        )
 
     def _check_rate_limit(self, ws: web.WebSocketResponse) -> bool:
         """Record a message for ``ws`` and report whether it is within the
@@ -1478,21 +1488,28 @@ class QuizifyWebSocketHandler:
     # ------------------------------------------------------------------
 
     async def broadcast_state(self, payload: dict[str, Any] | None = None) -> None:
-        """Broadcast callback — called by game state on auto-events."""
-        if payload is not None:
-            event = payload.get("event")
-            if event == "round_evaluated":
-                game_state = self._get_game_state()
-                if game_state:
-                    await self._broadcast_round_summary(game_state)
-                return
-            if event == "game_ended":
-                game_state = self._get_game_state()
-                if game_state:
-                    await self._broadcast_finale(game_state)
-                return
+        """Broadcast callback — called by game state on auto-events.
 
-        # Default: broadcast full state
+        Routing lives in the BroadcastDispatcher (#184); the per-event message
+        building stays here. Behaviour is unchanged: each handler re-fetches the
+        current game state and no-ops if there isn't one.
+        """
+        await self._broadcast_dispatcher.dispatch(payload)
+
+    async def _dispatch_round_evaluated(self) -> None:
+        """Handler for the ``round_evaluated`` state event."""
+        game_state = self._get_game_state()
+        if game_state:
+            await self._broadcast_round_summary(game_state)
+
+    async def _dispatch_game_ended(self) -> None:
+        """Handler for the ``game_ended`` state event."""
+        game_state = self._get_game_state()
+        if game_state:
+            await self._broadcast_finale(game_state)
+
+    async def _dispatch_full_state(self) -> None:
+        """Default handler: broadcast a full game-state snapshot."""
         game_state = self._get_game_state()
         if game_state:
             state = game_state.get_state_snapshot()
