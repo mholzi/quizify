@@ -202,13 +202,15 @@ class QuizifyGameState:
             pass
 
     def _notify_state_callbacks(self) -> None:
-        """Fire all registered state observers. Swallows per-callback errors
-        so one bad sensor can't break the broadcast pipeline."""
+        """Fire all registered state observers. Keeps the broadcast pipeline
+        alive if one observer raises, but logs the full traceback so a
+        programmer error in a callback surfaces loudly instead of being
+        reduced to a one-line message."""
         for cb in list(self._state_callbacks):
             try:
                 cb()
-            except Exception as err:  # noqa: BLE001
-                _LOGGER.warning("State callback raised: %s", err)
+            except Exception:  # noqa: BLE001
+                _LOGGER.exception("State callback raised")
 
     def add_player(
         self, name: str, ws: web.WebSocketResponse
@@ -675,8 +677,8 @@ class QuizifyGameState:
                     if p.submitted
                 ]
                 self._question_stats.record_round(question.id, submitted_results)
-            except Exception as err:  # noqa: BLE001
-                _LOGGER.warning("Failed to record question stats: %s", err)
+            except Exception:  # noqa: BLE001
+                _LOGGER.exception("Failed to record question stats")
 
         _LOGGER.info("Round %d evaluated, transitioning to ANSWER_REVEAL", self.round)
         self._fire_broadcast("round_evaluated")
@@ -766,8 +768,8 @@ class QuizifyGameState:
             async def _save_qs() -> None:
                 try:
                     await self._question_stats.save_if_dirty()
-                except Exception as err:  # noqa: BLE001
-                    _LOGGER.warning("Failed to save question stats: %s", err)
+                except Exception:  # noqa: BLE001
+                    _LOGGER.exception("Failed to save question stats")
 
             if self._runtime is not None:
                 self._runtime.create_task(_save_qs())
@@ -809,8 +811,8 @@ class QuizifyGameState:
                     started_at=int(self._game_start_time) if self._game_start_time else None,
                     player_details=player_details,
                 )
-            except Exception as err:  # noqa: BLE001
-                _LOGGER.warning("Failed to record analytics: %s", err)
+            except Exception:  # noqa: BLE001
+                _LOGGER.exception("Failed to record analytics")
 
         if self._runtime is not None:
             self._runtime.create_task(_do_record())
