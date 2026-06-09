@@ -3,6 +3,8 @@
 DOMAIN = "quizify"
 
 # Game configuration
+# Limit auf 20 Spieler: Quizify ist als Party-/Wohnzimmer-Spiel gedacht. Die
+# Obergrenze hält Lobby und Rangliste auf dem TV-Bildschirm lesbar.
 MAX_PLAYERS = 20
 # Solo play is allowed: a single player can run a full game (great for practice
 # / a quick round on the couch with one phone). Comparative end-of-game awards
