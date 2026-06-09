@@ -51,6 +51,17 @@ All notable changes to Quizify are documented here. This project follows
   `data:`/`javascript:` schemes and non-strings are dropped at parse time.
   Questions without an image render exactly as before.
 
+### Changed
+
+- **Finale podium redesign on player phones ("Podium Reborn").** The end-of-game
+  ranking on each player's phone now shows the top three as bolder rising blocks
+  with a warm tonal fill (1st coral, 2nd sage, 3rd sky), white numerals, and the
+  medal accent kept on the top edge (sun-yellow / silver / bronze). A soft warm
+  halo rises from the champion's block for a more celebratory finish. Scoped to
+  the player end screen only — the admin / TV host podium keeps its cream-shelf
+  look. Picked from a four-direction design exploration; the rest of the finale
+  (your-result stats, awards, highlights timeline, full rankings) is unchanged.
+
 ## [1.2.7] — 2026-06-09
 
 Backend hardening release from the 2026-06-09 automated code review. No
