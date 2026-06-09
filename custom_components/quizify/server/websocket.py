@@ -179,8 +179,8 @@ class QuizifyWebSocketHandler:
                         continue
                     try:
                         await self._handle_message(ws, data, is_admin)
-                    except Exception as err:  # noqa: BLE001
-                        _LOGGER.warning("Failed to handle WebSocket message: %s", err)
+                    except Exception:  # noqa: BLE001
+                        _LOGGER.exception("Failed to handle WebSocket message")
                         await self._conn.send_error(
                             ws, ERR_INVALID_ACTION, "Server error processing message"
                         )
@@ -1432,8 +1432,8 @@ class QuizifyWebSocketHandler:
             return
         try:
             announcer.announce_milestone(player_name, streak)
-        except Exception as err:  # noqa: BLE001
-            _LOGGER.warning("TTS milestone announcement raised: %s", err)
+        except Exception:  # noqa: BLE001
+            _LOGGER.exception("TTS milestone announcement raised")
 
     # ------------------------------------------------------------------
     # Finale broadcast helper
