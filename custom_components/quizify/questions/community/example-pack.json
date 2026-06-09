@@ -1,0 +1,44 @@
+{
+  "name": "Example Community Pack",
+  "language": "en",
+  "version": "1.0",
+  "theme": "general",
+  "questions": [
+    {
+      "id": "example_001",
+      "question": "Which planet is known as the Red Planet?",
+      "answers": [
+        {"text": "Mars", "correct": true},
+        {"text": "Jupiter", "correct": false},
+        {"text": "Venus", "correct": false}
+      ],
+      "difficulty": "easy",
+      "fun_fact": "Mars looks red because its surface is rich in iron oxide — essentially rust.",
+      "category": "Example Community Pack"
+    },
+    {
+      "id": "example_002",
+      "question": "How many continents are there on Earth?",
+      "answers": [
+        {"text": "5", "correct": false},
+        {"text": "7", "correct": true},
+        {"text": "9", "correct": false}
+      ],
+      "difficulty": "easy",
+      "fun_fact": "The seven continents are Africa, Antarctica, Asia, Europe, North America, Oceania, and South America.",
+      "category": "Example Community Pack"
+    },
+    {
+      "id": "example_003",
+      "question": "What is the largest mammal on Earth?",
+      "answers": [
+        {"text": "African elephant", "correct": false},
+        {"text": "Blue whale", "correct": true},
+        {"text": "Giraffe", "correct": false}
+      ],
+      "difficulty": "medium",
+      "fun_fact": "A blue whale's heart alone can weigh as much as a small car.",
+      "category": "Example Community Pack"
+    }
+  ]
+}
