@@ -9,7 +9,6 @@ import secrets
 import time
 from collections.abc import Awaitable, Callable
 from dataclasses import dataclass, field
-from enum import Enum
 from typing import TYPE_CHECKING, Any
 
 from ..const import (
@@ -28,6 +27,7 @@ from ..const import (
 )
 from .player import PlayerSession
 from .player_registry import PlayerRegistry
+from .phase_controller import GamePhase, PhaseController
 from .powerups import FREEZE_DURATION, TIME_BOOST_DURATION, PowerUpEffect, PowerUpManager, PowerUpType
 from .questions import Answer, Question, QuestionBank
 from .calibration import GroupCalibrator
@@ -46,26 +46,10 @@ if TYPE_CHECKING:
 
 _LOGGER = logging.getLogger(__name__)
 
-
-class GamePhase(str, Enum):
-    """Game phase states."""
-
-    LOBBY = "LOBBY"
-    QUESTION_ACTIVE = "QUESTION_ACTIVE"
-    ANSWER_REVEAL = "ANSWER_REVEAL"
-    FINALE = "FINALE"
-    # Lightning Round (issue #42) — a self-contained fast bonus mode the
-    # host can trigger after/instead of the normal game. LIGHTNING runs the
-    # rapid 10-question loop (no inter-question reveal); LIGHTNING_RECAP is
-    # the end screen showing totals + the per-question right/wrong grid.
-    # The mode's logic lives in game/lightning.py, not in this class.
-    LIGHTNING = "LIGHTNING"
-    LIGHTNING_RECAP = "LIGHTNING_RECAP"
-    # PAUSED — admin-triggered pause during QUESTION_ACTIVE. Timer is
-    # frozen; resume returns to QUESTION_ACTIVE with the remaining time
-    # the player had before pause. Used both for explicit "Pause" button
-    # and for graceful host-disconnect handling.
-    PAUSED = "PAUSED"
+# GamePhase moved to phase_controller (issue #188) but is re-exported here so
+# the many `from .state import GamePhase` / `from .game.state import GamePhase`
+# call sites across the integration keep working unchanged.
+__all__ = ["AnswerResult", "GamePhase", "QuizifyGameState", "RoundSummary"]
 
 
 @dataclass
@@ -106,9 +90,17 @@ class QuizifyGameState:
         self._runtime = runtime
         self._entry_id = entry_id
 
+        # Phase + per-question timing state machine (issue #188). Owns the
+        # authoritative phase value, the per-player timers, round-timing
+        # bookkeeping and pause/resume. This class delegates its ``phase``,
+        # ``_timers``, ``_round_*`` and ``_paused_*`` attributes to it via the
+        # properties below so behaviour is unchanged for every caller/test.
+        self._phase_controller = PhaseController(
+            players_fn=lambda: list(self._player_registry.players)
+        )
+
         # Core state
         self.game_id: str | None = None
-        self.phase: GamePhase = GamePhase.LOBBY
         self.round: int = 0
         self.total_rounds: int = 10
         self.category: str | None = None
@@ -138,11 +130,9 @@ class QuizifyGameState:
         # picks the "auto" difficulty mode; None for fixed easy/medium/hard.
         self._calibrator: GroupCalibrator | None = None
 
-        # Current round state
+        # Current round state. Per-player timers and round-timing live in the
+        # PhaseController (exposed via the delegating properties below).
         self._current_question: Question | None = None
-        self._timers: dict[str, QuestionTimer] = {}  # player_id → timer
-        self._round_start_time: float | None = None
-        self._round_duration: float = DEFAULT_ROUND_DURATION
         self._round_summary: RoundSummary | None = None
 
         # Optional admin-chosen timer override (seconds). When set,
@@ -153,11 +143,6 @@ class QuizifyGameState:
         # Last-game settings snapshot for "Play again — same settings".
         # None until a game has been started at least once.
         self._last_settings: dict[str, Any] | None = None
-
-        # Pause bookkeeping.
-        self._paused_from: GamePhase | None = None
-        self._paused_remaining: dict[str, float] = {}
-        self._pause_reason: str | None = None
 
         # Broadcast callback — set by websocket layer
         self._broadcast_callback: Callable[[dict[str, Any]], Awaitable[None]] | None = None
@@ -190,6 +175,72 @@ class QuizifyGameState:
         self.shuffle_map: list[int] = []        # canonical: shuffled_pos -> original_index
         self.shuffled_answers: list[str] = []   # canonical answers in shuffled order
         self.player_shuffles: dict[str, list[int]] = {}  # name -> shuffled_pos -> original_index
+
+    # ------------------------------------------------------------------
+    # Phase / timing delegation (issue #188)
+    # ------------------------------------------------------------------
+    #
+    # These attributes are owned by ``self._phase_controller`` but exposed here
+    # under their original names so every caller, sensor and test that reads or
+    # writes ``state.phase`` / ``state._timers`` / ``state._round_*`` /
+    # ``state._paused_*`` keeps working with byte-for-byte identical behaviour.
+
+    @property
+    def phase(self) -> GamePhase:
+        """Current game phase — owned by the PhaseController."""
+        return self._phase_controller.phase
+
+    @phase.setter
+    def phase(self, value: GamePhase) -> None:
+        self._phase_controller.phase = value
+
+    @property
+    def _timers(self) -> dict[str, QuestionTimer]:
+        return self._phase_controller.timers
+
+    @_timers.setter
+    def _timers(self, value: dict[str, QuestionTimer]) -> None:
+        self._phase_controller.timers = value
+
+    @property
+    def _round_start_time(self) -> float | None:
+        return self._phase_controller.round_start_time
+
+    @_round_start_time.setter
+    def _round_start_time(self, value: float | None) -> None:
+        self._phase_controller.round_start_time = value
+
+    @property
+    def _round_duration(self) -> float:
+        return self._phase_controller.round_duration
+
+    @_round_duration.setter
+    def _round_duration(self, value: float) -> None:
+        self._phase_controller.round_duration = value
+
+    @property
+    def _paused_from(self) -> GamePhase | None:
+        return self._phase_controller.paused_from
+
+    @_paused_from.setter
+    def _paused_from(self, value: GamePhase | None) -> None:
+        self._phase_controller.paused_from = value
+
+    @property
+    def _paused_remaining(self) -> dict[str, float]:
+        return self._phase_controller.paused_remaining
+
+    @_paused_remaining.setter
+    def _paused_remaining(self, value: dict[str, float]) -> None:
+        self._phase_controller.paused_remaining = value
+
+    @property
+    def _pause_reason(self) -> str | None:
+        return self._phase_controller.pause_reason
+
+    @_pause_reason.setter
+    def _pause_reason(self, value: str | None) -> None:
+        self._phase_controller.pause_reason = value
 
     # ------------------------------------------------------------------
     # Player registry delegation
@@ -250,30 +301,17 @@ class QuizifyGameState:
         )
         success, _err = result
         # If the player joined mid-round, give them a timer that tracks the
-        # round's remaining time. Without this the tick loop's "all timers
-        # missing or expired → break" condition treats them as already done
-        # and the round evaluates ~1s after start when the late-joiner is
-        # the ONLY connected player (the admin-self-join + redirect flow).
-        # Late joiners can also still answer the in-flight question this way.
-        if (
-            success
-            and self.phase == GamePhase.QUESTION_ACTIVE
-            and self._round_start_time is not None
-            and name not in self._timers
-        ):
-            elapsed = time.monotonic() - self._round_start_time
-            remaining = max(0.5, self._round_duration - elapsed)
-            timer = QuestionTimer(remaining)
-            timer.start()
-            self._timers[name] = timer
+        # round's remaining time (handled by the PhaseController, which no-ops
+        # outside QUESTION_ACTIVE / when the player already has a timer).
         if success:
+            self._phase_controller.add_late_joiner_timer(name)
             self._notify_state_callbacks()
         return result
 
     def remove_player(self, name: str) -> None:
         """Remove a player from the game."""
         self._player_registry.remove_player(name)
-        self._timers.pop(name, None)
+        self._phase_controller.drop_timer(name)
         self._notify_state_callbacks()
 
     def clear_all_players(self) -> None:
@@ -285,7 +323,7 @@ class QuizifyGameState:
         explicit "wipe everyone" action.
         """
         self._player_registry.reset()
-        self._timers.clear()
+        self._phase_controller.clear_timers()
         self._notify_state_callbacks()
 
     def get_player(self, name: str) -> PlayerSession | None:
@@ -456,25 +494,21 @@ class QuizifyGameState:
         # start_game) wins over the difficulty-derived default — the
         # picker in the admin UI lets the host pick 20/30/45s up front.
         if self._timer_override is not None:
-            self._round_duration = float(self._timer_override)
+            round_duration = float(self._timer_override)
         else:
             try:
                 diff_enum = Difficulty(question.difficulty)
             except ValueError:
                 diff_enum = Difficulty.MEDIUM
-            self._round_duration = float(TIME_LIMITS.get(diff_enum, DEFAULT_ROUND_DURATION))
-        self._round_start_time = time.monotonic()
+            round_duration = float(TIME_LIMITS.get(diff_enum, DEFAULT_ROUND_DURATION))
 
         # Reset per-round state
         for player in self._player_registry.players.values():
             player.reset_round()
         self._powerup_manager.reset_round()
 
-        # Create per-player timers
-        self._timers.clear()
-        for name in self._player_registry.players:
-            self._timers[name] = QuestionTimer(self._round_duration)
-            self._timers[name].start()
+        # Stamp round timing + create+start per-player timers (PhaseController).
+        self._phase_controller.begin_round(round_duration)
 
         # Randomly assign power-ups (one per round, random player)
         connected = [p for p in self._player_registry.players.values() if p.connected]
@@ -483,7 +517,7 @@ class QuizifyGameState:
             powerup = self._powerup_manager.assign_random_powerup(lucky_player.name)
             _LOGGER.debug("Power-up %s assigned to %s", powerup.value, lucky_player.name)
 
-        self.phase = GamePhase.QUESTION_ACTIVE
+        self._phase_controller.enter_question_active()
         self._round_summary = None
 
         _LOGGER.info(
@@ -736,39 +770,15 @@ class QuizifyGameState:
 
     def pause(self, reason: str = "admin_paused") -> bool:
         """Pause the game. Returns True if pause happened, False if no-op."""
-        if self.phase != GamePhase.QUESTION_ACTIVE:
+        if not self._phase_controller.pause(reason):
             return False
-        self._paused_from = GamePhase.QUESTION_ACTIVE
-        self._pause_reason = reason
-        # Snapshot remaining time per player and freeze timers in place.
-        # On resume we'll create fresh timers with the saved remaining.
-        self._paused_remaining = {}
-        for name, timer in self._timers.items():
-            self._paused_remaining[name] = max(0.0, timer.get_remaining())
-        self._timers.clear()
-        self.phase = GamePhase.PAUSED
-        _LOGGER.info("Game paused (reason=%s)", reason)
         self._notify_state_callbacks()
         return True
 
     def resume(self) -> bool:
         """Resume a paused game. Returns True if resume happened."""
-        if self.phase != GamePhase.PAUSED:
+        if not self._phase_controller.resume():
             return False
-        # Restore timers with the remaining time they had at pause.
-        # Late-joiners during PAUSED won't be in _paused_remaining and
-        # get a fresh full-round timer here.
-        full = self._round_duration
-        for name in list(self._player_registry.players):
-            remaining = self._paused_remaining.get(name, full)
-            timer = QuestionTimer(remaining)
-            timer.start()
-            self._timers[name] = timer
-        self._paused_remaining = {}
-        self._pause_reason = None
-        self.phase = self._paused_from or GamePhase.QUESTION_ACTIVE
-        self._paused_from = None
-        _LOGGER.info("Game resumed")
         self._notify_state_callbacks()
         return True
 
@@ -866,7 +876,7 @@ class QuizifyGameState:
         self.round = 0
         self._current_question = None
         self._round_summary = None
-        self._timers.clear()
+        self._phase_controller.clear_timers()
         self._powerup_manager.reset()
         self._finale_podium = None
         self._finale_superlatives = None
@@ -1092,7 +1102,7 @@ class QuizifyGameState:
         Exposed so the WebSocket handler can broadcast per-player remaining
         time (so time-boost and freeze are visible on the player's UI, #4).
         """
-        return self._timers.get(player_name)
+        return self._phase_controller.get_timer(player_name)
 
     def get_player_powerup(self, player_name: str):
         """Get the power-up held by a player."""
@@ -1160,8 +1170,7 @@ class QuizifyGameState:
         if self.phase == GamePhase.QUESTION_ACTIVE and self._current_question:
             q = self._current_question
             # Calculate time remaining for mid-round joiners
-            elapsed = time.monotonic() - self._round_start_time if self._round_start_time else 0.0
-            remaining = max(0.0, self._round_duration - elapsed)
+            remaining = self._phase_controller.time_remaining_for_snapshot()
             snapshot["question"] = {
                 "id": q.id,
                 "text": q.question,
