@@ -14,6 +14,23 @@ _LOGGER = logging.getLogger(__name__)
 
 QUESTIONS_DIR = Path(__file__).resolve().parent.parent / "questions"
 
+# Community packs live in a dedicated subfolder so user-contributed JSON is
+# kept apart from the built-in, reviewed packs. The non-recursive ``*.json``
+# glob used for built-in discovery never reaches into this subfolder, so the
+# two namespaces stay cleanly separated.
+COMMUNITY_SUBDIR = "community"
+
+# Slugs of community packs are prefixed so they can never collide with (or
+# silently shadow) a built-in pack slug.
+COMMUNITY_SLUG_PREFIX = "community-"
+
+# Defensive caps applied to user-contributed packs only. Built-in packs are
+# reviewed by hand, but community JSON is untrusted input: a single pack must
+# not be able to exhaust memory or flood the category picker. These ceilings
+# are generous (the largest built-in pack is ~150 questions) but finite.
+MAX_COMMUNITY_PACK_BYTES = 1_048_576  # 1 MiB per pack file
+MAX_COMMUNITY_QUESTIONS = 500  # questions kept per community pack
+
 
 @dataclass
 class Answer:
@@ -156,6 +173,11 @@ class QuestionBank:
                 continue
             self.load_category(category_slug)
 
+        # User-contributed packs are loaded after the built-in packs so the
+        # collision check can see every built-in slug. Failures inside this
+        # call are self-contained (each bad pack is skipped, not raised).
+        self.load_community_packs()
+
         self._loaded = True
         return dict(self._categories)
 
@@ -164,6 +186,142 @@ class QuestionBank:
         self._loaded = False
         self._categories = {}
         return self.load_all_categories()
+
+    def load_community_packs(self) -> dict[str, list[Question]]:
+        """Discover and load user-contributed packs from the community subfolder.
+
+        Community packs are untrusted input, so loading is deliberately
+        defensive: every failure mode (missing folder, unreadable file,
+        oversized file, malformed JSON, wrong top-level shape, missing name,
+        empty/oversized question list, slug collision with a built-in pack) is
+        logged and skipped rather than raised. A single bad pack can never
+        prevent the others — or the built-in packs — from loading.
+
+        Each community pack is registered under a prefixed slug
+        (``community-<filename>``) so it can never shadow a built-in category.
+        Returns the mapping of the community packs that were loaded.
+        """
+        community_dir = self._questions_dir / COMMUNITY_SUBDIR
+        loaded: dict[str, list[Question]] = {}
+
+        if not community_dir.is_dir():
+            _LOGGER.debug("No community pack directory at %s", community_dir)
+            return loaded
+
+        for file_path in sorted(community_dir.glob("*.json")):
+            slug = f"{COMMUNITY_SLUG_PREFIX}{file_path.stem}"
+
+            if slug in self._categories:
+                _LOGGER.warning(
+                    "Skipping community pack '%s': slug '%s' already loaded",
+                    file_path.name,
+                    slug,
+                )
+                continue
+
+            try:
+                size = file_path.stat().st_size
+            except OSError as exc:
+                _LOGGER.warning("Cannot stat community pack '%s': %s", file_path, exc)
+                continue
+
+            if size > MAX_COMMUNITY_PACK_BYTES:
+                _LOGGER.warning(
+                    "Skipping community pack '%s': %d bytes exceeds limit of %d",
+                    file_path.name,
+                    size,
+                    MAX_COMMUNITY_PACK_BYTES,
+                )
+                continue
+
+            try:
+                raw = json.loads(file_path.read_text(encoding="utf-8"))
+            except (json.JSONDecodeError, UnicodeDecodeError, OSError) as exc:
+                _LOGGER.warning("Invalid community pack '%s': %s", file_path.name, exc)
+                continue
+
+            if not isinstance(raw, dict):
+                _LOGGER.warning(
+                    "Skipping community pack '%s': top-level JSON must be an object",
+                    file_path.name,
+                )
+                continue
+
+            questions_data = raw.get("questions")
+            if not isinstance(questions_data, list) or not questions_data:
+                _LOGGER.warning(
+                    "Skipping community pack '%s': 'questions' must be a non-empty list",
+                    file_path.name,
+                )
+                continue
+
+            if len(questions_data) > MAX_COMMUNITY_QUESTIONS:
+                _LOGGER.warning(
+                    "Community pack '%s': truncating %d questions to limit of %d",
+                    file_path.name,
+                    len(questions_data),
+                    MAX_COMMUNITY_QUESTIONS,
+                )
+                questions_data = questions_data[:MAX_COMMUNITY_QUESTIONS]
+
+            category_name = raw.get("name")
+            if not isinstance(category_name, str) or not category_name.strip():
+                _LOGGER.warning(
+                    "Skipping community pack '%s': missing or empty 'name'",
+                    file_path.name,
+                )
+                continue
+
+            pack_language = raw.get("language", "de")
+            if not isinstance(pack_language, str):
+                pack_language = "de"
+            pack_version = raw.get("version", "1.0")
+            if not isinstance(pack_version, (str, int, float)):
+                pack_version = "1.0"
+
+            questions: list[Question] = []
+            seen_ids: set[str] = set()
+            for entry in questions_data:
+                if not isinstance(entry, dict):
+                    continue
+                q = _parse_question(entry, category_name)
+                if q is None:
+                    continue
+                if q.id in seen_ids:
+                    _LOGGER.warning(
+                        "Community pack '%s': dropping duplicate question id '%s'",
+                        file_path.name,
+                        q.id,
+                    )
+                    continue
+                seen_ids.add(q.id)
+                q.language = pack_language
+                questions.append(q)
+
+            if not questions:
+                _LOGGER.warning(
+                    "Skipping community pack '%s': no valid questions after validation",
+                    file_path.name,
+                )
+                continue
+
+            self._categories[slug] = questions
+            self._pack_versions[slug] = {
+                "version": str(pack_version),
+                "name": category_name,
+                "language": pack_language,
+                "question_count": len(questions),
+                "community": True,
+            }
+            loaded[slug] = questions
+            _LOGGER.info(
+                "Loaded community pack '%s' (%d questions) as '%s'",
+                file_path.name,
+                len(questions),
+                slug,
+            )
+
+        return loaded
 
     def get_categories(self) -> list[str]:
         """Return list of loaded category slugs."""

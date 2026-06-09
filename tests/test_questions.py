@@ -2,6 +2,7 @@
 
 from __future__ import annotations
 
+import json
 import sys
 from pathlib import Path
 
@@ -65,7 +66,10 @@ class TestLoadCategory:
     def test_each_category_within_expected_size(self, bank: QuestionBank) -> None:
         # Themed packs run ~150 (148-150 after review deletions); the standalone
         # World Cup packs are a deliberate 100. Floor catches gross truncation.
+        # Community packs are user content with no size invariant — skip them.
         for cat in bank.get_categories():
+            if cat.startswith("community-"):
+                continue
             count = bank.get_question_count(cat)
             assert count >= 95, f"{cat} has only {count} questions (floor: 95)"
             assert count <= 150, f"{cat} has {count} questions (ceiling: 150)"
@@ -154,3 +158,148 @@ class TestQuestionIntegrity:
             questions = bank.load_category(cat)
             for q in questions:
                 assert q.difficulty in valid, f"Question {q.id} has invalid difficulty '{q.difficulty}'"
+
+
+def _make_pack(name="My Pack", language="en", version="1.0", questions=None):
+    """Build a minimal valid pack dict for community-pack tests."""
+    if questions is None:
+        questions = [
+            {
+                "id": "cq_001",
+                "question": "What is 2+2?",
+                "answers": [
+                    {"text": "4", "correct": True},
+                    {"text": "3", "correct": False},
+                    {"text": "5", "correct": False},
+                ],
+                "difficulty": "easy",
+                "fun_fact": "Basic arithmetic.",
+            }
+        ]
+    return {
+        "name": name,
+        "language": language,
+        "version": version,
+        "questions": questions,
+    }
+
+
+def _write_community_pack(community_dir: Path, filename: str, data) -> Path:
+    community_dir.mkdir(parents=True, exist_ok=True)
+    path = community_dir / filename
+    if isinstance(data, str):
+        path.write_text(data, encoding="utf-8")
+    else:
+        path.write_text(json.dumps(data), encoding="utf-8")
+    return path
+
+
+class TestCommunityPacks:
+    def test_no_community_dir_is_safe(self, tmp_path: Path) -> None:
+        qb = QuestionBank(questions_dir=tmp_path)
+        loaded = qb.load_community_packs()
+        assert loaded == {}
+
+    def test_loads_valid_pack_with_prefixed_slug(self, tmp_path: Path) -> None:
+        _write_community_pack(tmp_path / "community", "mypack.json", _make_pack())
+        qb = QuestionBank(questions_dir=tmp_path)
+        loaded = qb.load_community_packs()
+        assert "community-mypack" in loaded
+        assert qb.get_question_count("community-mypack") == 1
+        meta = qb.get_pack_versions()["community-mypack"]
+        assert meta["community"] is True
+        assert meta["name"] == "My Pack"
+        assert meta["language"] == "en"
+
+    def test_load_all_categories_picks_up_community(self, tmp_path: Path) -> None:
+        _write_community_pack(tmp_path / "community", "extra.json", _make_pack())
+        qb = QuestionBank(questions_dir=tmp_path)
+        qb.load_all_categories()
+        assert "community-extra" in qb.get_categories()
+
+    def test_invalid_json_is_skipped(self, tmp_path: Path) -> None:
+        _write_community_pack(tmp_path / "community", "broken.json", "{not valid json")
+        qb = QuestionBank(questions_dir=tmp_path)
+        loaded = qb.load_community_packs()
+        assert loaded == {}
+
+    def test_non_object_top_level_is_skipped(self, tmp_path: Path) -> None:
+        _write_community_pack(tmp_path / "community", "list.json", [1, 2, 3])
+        qb = QuestionBank(questions_dir=tmp_path)
+        assert qb.load_community_packs() == {}
+
+    def test_missing_name_is_skipped(self, tmp_path: Path) -> None:
+        pack = _make_pack()
+        del pack["name"]
+        _write_community_pack(tmp_path / "community", "noname.json", pack)
+        qb = QuestionBank(questions_dir=tmp_path)
+        assert qb.load_community_packs() == {}
+
+    def test_empty_questions_is_skipped(self, tmp_path: Path) -> None:
+        _write_community_pack(tmp_path / "community", "empty.json", _make_pack(questions=[]))
+        qb = QuestionBank(questions_dir=tmp_path)
+        assert qb.load_community_packs() == {}
+
+    def test_pack_with_only_invalid_questions_is_skipped(self, tmp_path: Path) -> None:
+        bad = _make_pack(questions=[{"id": "x", "question": "q", "answers": [{"text": "a", "correct": True}]}])
+        _write_community_pack(tmp_path / "community", "badq.json", bad)
+        qb = QuestionBank(questions_dir=tmp_path)
+        assert qb.load_community_packs() == {}
+
+    def test_individual_bad_question_dropped_others_kept(self, tmp_path: Path) -> None:
+        good = _make_pack()["questions"][0]
+        bad = {"id": "bad", "question": "q", "answers": [{"text": "a", "correct": True}]}
+        _write_community_pack(tmp_path / "community", "mixed.json", _make_pack(questions=[good, bad]))
+        qb = QuestionBank(questions_dir=tmp_path)
+        loaded = qb.load_community_packs()
+        assert qb.get_question_count("community-mixed") == 1
+
+    def test_duplicate_ids_deduplicated(self, tmp_path: Path) -> None:
+        q = _make_pack()["questions"][0]
+        _write_community_pack(tmp_path / "community", "dup.json", _make_pack(questions=[q, dict(q)]))
+        qb = QuestionBank(questions_dir=tmp_path)
+        qb.load_community_packs()
+        assert qb.get_question_count("community-dup") == 1
+
+    def test_oversized_file_is_skipped(self, tmp_path: Path) -> None:
+        from custom_components.quizify.game.questions import MAX_COMMUNITY_PACK_BYTES
+
+        community = tmp_path / "community"
+        community.mkdir(parents=True)
+        pack = _make_pack()
+        pack["padding"] = "x" * (MAX_COMMUNITY_PACK_BYTES + 10)
+        (community / "huge.json").write_text(json.dumps(pack), encoding="utf-8")
+        qb = QuestionBank(questions_dir=tmp_path)
+        assert qb.load_community_packs() == {}
+
+    def test_too_many_questions_truncated(self, tmp_path: Path) -> None:
+        from custom_components.quizify.game.questions import MAX_COMMUNITY_QUESTIONS
+
+        base = _make_pack()["questions"][0]
+        many = []
+        for i in range(MAX_COMMUNITY_QUESTIONS + 5):
+            q = dict(base)
+            q["id"] = f"cq_{i:04d}"
+            many.append(q)
+        _write_community_pack(tmp_path / "community", "many.json", _make_pack(questions=many))
+        qb = QuestionBank(questions_dir=tmp_path)
+        qb.load_community_packs()
+        assert qb.get_question_count("community-many") == MAX_COMMUNITY_QUESTIONS
+
+    def test_community_cannot_shadow_builtin(self, tmp_path: Path) -> None:
+        # Pre-load a built-in category, then a community file whose prefixed
+        # slug would collide is the only collision path; verify a same-named
+        # community slug is refused if already present.
+        _write_community_pack(tmp_path / "community", "dupe.json", _make_pack())
+        qb = QuestionBank(questions_dir=tmp_path)
+        qb.load_community_packs()
+        # Second load on the already-populated bank must not duplicate/clobber.
+        loaded_again = qb.load_community_packs()
+        assert loaded_again == {}
+        assert qb.get_question_count("community-dupe") == 1
+
+    def test_shipped_example_pack_loads(self) -> None:
+        qb = QuestionBank(questions_dir=QUESTIONS_DIR)
+        loaded = qb.load_community_packs()
+        assert "community-example-pack" in loaded
+        assert qb.get_question_count("community-example-pack") == 3
