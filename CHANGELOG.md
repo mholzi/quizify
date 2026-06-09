@@ -5,8 +5,24 @@ All notable changes to Quizify are documented here. This project follows
 
 ## [Unreleased]
 
+## [1.3.0] — 2026-06-09
+
+Feature release on top of the 1.2.7 hardening: a new Lightning Round bonus
+mode, in-app community pack submission, optional question images, group
+adaptive difficulty, lobby music, sound effects, a dramatic finale countdown,
+plus a large internal refactor of the game server and two live-test bug fixes.
+
 ### Added
 
+- **Lightning Round bonus mode (#42).** A fast bonus round the host can trigger
+  from the finale (or standalone from the lobby): an intro splash explains the
+  rules, then **5 quick questions at 15 s each** with no reveals between, and an
+  end recap that shows the **correct answer** for every question (plus your own
+  wrong pick where you missed). Admin-only trigger; players see a "waiting for
+  host" hold on the splash until the host starts.
+- **Sound effects with a mute toggle (#177).** Correct / wrong / last-5-seconds
+  audio cues on the player device, with a mute control in the player header that
+  persists across reloads.
 - **Submit a community pack in-app (#180).** Hosts can now compose or paste a
   community question pack as JSON directly in the admin setup screen, get it
   validated field-by-field (a per-row ✓/✗ check of the pack name, language,
@@ -50,6 +66,10 @@ All notable changes to Quizify are documented here. This project follows
   questions. Only absolute `http(s)` URLs are accepted; relative paths,
   `data:`/`javascript:` schemes and non-strings are dropped at parse time.
   Questions without an image render exactly as before.
+- **Dramatic finale countdown (#182).** Before the final question of a game, the
+  shared dashboard plays a short suspenseful countdown so the last round lands
+  with more weight. On any error the question still appears — the countdown
+  never blocks the game.
 
 ### Changed
 
@@ -61,6 +81,33 @@ All notable changes to Quizify are documented here. This project follows
   the player end screen only — the admin / TV host podium keeps its cream-shelf
   look. Picked from a four-direction design exploration; the rest of the finale
   (your-result stats, awards, highlights timeline, full rankings) is unchanged.
+- **Image questions side-by-side (#195).** Image questions present the picture
+  beside the question text with tap-to-zoom, instead of a small thumbnail.
+- **Finale countdown styling (#196)** refined to a "Spotlight-Marquee" look, and
+  the **sound mute control (#197)** folded into a tidy header cluster.
+
+### Fixed
+
+- **Reset now fully clears the game (#207).** Pressing reset removes all players
+  *and* the host and returns every screen to the initial setup — previously the
+  reset signal was sent after connections were already closed, so screens froze
+  in the old state.
+- **Only one host per game (#208).** A second admin claim is now rejected, so
+  two crowned hosts can no longer coexist in one lobby.
+- **i18n name validation (#171)** deduplicated into one shared rule across the
+  player and admin join paths.
+- **Surfaced swallowed errors (#170)** in broad `except` loops so failures are
+  logged instead of silently dropped.
+
+### Internal
+
+- Large game-server refactor splitting the state/websocket "god objects" into
+  focused units — ScoringEngine + BroadcastDispatcher (#187), RoundMessageBuilder
+  (#189), PhaseController (#188) and the timer-tick relocation (#203) — all
+  behaviour-preserving with regression tests (part of #184).
+- CSS split into per-screen source modules with a concat build (#185), test
+  event-loop isolation to fix cross-module pollution (#198), and perf/leak
+  invariant tests (#169).
 
 ## [1.2.7] — 2026-06-09
 
