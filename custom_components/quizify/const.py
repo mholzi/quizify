@@ -20,6 +20,14 @@ LOBBY_DISCONNECT_GRACE_PERIOD = 5  # seconds before removing disconnected player
 # Default difficulty (use Difficulty enum from game.types for type-safe comparisons)
 DIFFICULTY_DEFAULT = "medium"
 
+# Group-level adaptive difficulty (#40). When the host picks this instead of a
+# fixed easy/medium/hard, the game starts at medium and nudges the difficulty of
+# upcoming questions up/down based on the whole table's recent correct-rate.
+# Per-player adaptive difficulty is a separate, deferred feature (#186).
+DIFFICULTY_AUTO = "auto"
+# Where "auto" starts before any group signal has accumulated.
+DIFFICULTY_AUTO_START = "medium"
+
 # Error codes
 ERR_NAME_TAKEN = "NAME_TAKEN"
 ERR_NAME_INVALID = "NAME_INVALID"

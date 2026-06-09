@@ -136,7 +136,8 @@
     "easy": "Einfach",
     "medium": "Mittel",
     "hard": "Schwer",
-    "mixed": "Gemischt"
+    "mixed": "Gemischt",
+    "auto": "Automatisch"
   },
   "game": {
     "question": "Frage",

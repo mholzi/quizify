@@ -380,6 +380,56 @@ class QuestionBank:
         self._queue_index += 1
         return question
 
+    def get_next_question_at_difficulty(
+        self, target_difficulty: str
+    ) -> Question | None:
+        """Serve the next unconsumed queued question, preferring ``target_difficulty``.
+
+        Used by the group-level adaptive ("auto") difficulty mode (#40): the
+        queue is built across *all* difficulties (no per-difficulty filter), and
+        each round we pull the next question matching the calibrated target.
+
+        Selection (all over not-yet-consumed queue entries, preserving the
+        history-aware ordering established by ``_build_queue``):
+
+        1. Prefer the first question whose ``difficulty`` equals the target.
+        2. If none remain at the exact target, fall back to the nearest
+           available difficulty on the easy<->medium<->hard ladder.
+        3. If the queue is exhausted, return None.
+
+        The chosen question is removed from the remaining-queue window (so it is
+        not served twice) and the queue index advances past it.
+        """
+        remaining = self._queue[self._queue_index:]
+        if not remaining:
+            return None
+
+        ladder = ["easy", "medium", "hard"]
+        try:
+            target_idx = ladder.index(target_difficulty)
+        except ValueError:
+            target_idx = 1  # treat unknown target as medium
+
+        # Build a search order over difficulties: exact target first, then
+        # the closest rungs outward (so a missing "hard" prefers "medium"
+        # over "easy", etc.). Stable, deterministic.
+        order = sorted(
+            range(len(ladder)),
+            key=lambda i: (abs(i - target_idx), i),
+        )
+
+        for diff_idx in order:
+            diff = ladder[diff_idx]
+            for offset, q in enumerate(remaining):
+                if q.difficulty == diff:
+                    # Consume this question: pull it out of the queue so the
+                    # window shrinks and the next call sees one fewer item.
+                    abs_index = self._queue_index + offset
+                    self._queue.pop(abs_index)
+                    return q
+
+        return None
+
     def shuffle_questions(self, questions: list[Question]) -> list[Question]:
         """Return a shuffled copy of the given question list."""
         shuffled = list(questions)

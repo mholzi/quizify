@@ -7,6 +7,16 @@ All notable changes to Quizify are documented here. This project follows
 
 ### Added
 
+- **Group adaptive difficulty (#40).** A new **Auto** difficulty option that
+  tunes the whole table together within a single game. The game still serves
+  one shared question to everyone per round; after each round Quizify looks at
+  the group's overall correct-rate and nudges the difficulty of *upcoming*
+  questions up (group acing it) or down (group struggling). It is deliberately
+  conservative: it starts at medium, only steps one rung at a time, averages
+  over the last few rounds to avoid swinging on a single lucky/brutal question,
+  and stays put until enough rounds of signal exist. Fixed Easy/Medium/Hard
+  picks are untouched — calibration only runs in Auto mode. Per-player adaptive
+  difficulty (personalised question streams) is tracked separately in #186.
 - **Waiting-room music (#56).** Optional ambient background audio in the
   lobby, played through a real Home Assistant speaker. A new "Lobby music URL"
   option lets you point Quizify at an audio file you supply yourself
