@@ -1,0 +1,655 @@
+/* ==========================================
+   Buttons (matching Beatify)
+   ========================================== */
+
+button, .btn {
+    min-width: 44px;
+    min-height: 44px;
+    padding: var(--space-sm) var(--space-lg);
+    font-size: var(--font-size-md);
+    font-weight: var(--font-weight-medium);
+    border: none;
+    border-radius: var(--radius-md);
+    cursor: pointer;
+    transition: background-color var(--transition-fast), opacity var(--transition-fast), transform var(--transition-fast);
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    gap: var(--space-sm);
+    font-family: var(--font-system);
+    -webkit-tap-highlight-color: transparent;
+    user-select: none;
+}
+
+.btn:disabled {
+    opacity: 0.4;
+    cursor: not-allowed;
+}
+
+.btn-primary {
+    background: var(--color-accent-primary);
+    color: #FFFFFF;                              /* white on coral for max contrast */
+    font-family: var(--font-display);
+    font-weight: 700;
+    letter-spacing: 0.02em;
+    text-transform: none;                         /* Soft Parlor: sentence case */
+    box-shadow: var(--glow-primary);
+    border-radius: var(--radius-md);
+}
+
+.btn-primary:hover:not(:disabled) {
+    background: var(--color-accent-brand-hover);
+    transform: translateY(-1px);
+    box-shadow: 0 6px 16px rgba(232, 138, 127, 0.32);
+}
+
+.btn-secondary {
+    background: var(--color-bg-surface);
+    color: var(--color-text-primary);
+    border: 1px solid var(--color-border-light);
+    border-radius: var(--radius-md);
+    font-family: var(--font-body);
+    font-weight: 600;
+    box-shadow: var(--shadow-sm);
+}
+
+.btn-secondary:hover:not(:disabled) {
+    background: var(--color-bg-card-alt);
+    border-color: var(--color-accent-primary);
+    transform: translateY(-1px);
+}
+
+.btn-danger {
+    background: var(--color-error);
+    color: var(--color-text-white);
+}
+
+.btn-danger:hover:not(:disabled) {
+    background: var(--color-error-dark);
+}
+
+.btn-block {
+    width: 100%;
+}
+
+.btn-lg {
+    min-height: 56px;
+    font-size: var(--font-size-xl);
+    padding: var(--space-md) var(--space-xl);
+}
+
+.btn-glow {
+    transition: box-shadow var(--transition-fast), transform var(--transition-fast);
+}
+
+.btn-glow:hover:not(:disabled) {
+    box-shadow: var(--glow-primary);
+}
+
+.btn-glow:active:not(:disabled) {
+    transform: scale(0.98);
+}
+
+/* Neon primary button */
+.btn-neon {
+    background: var(--color-accent-primary);
+    color: var(--color-text-white);
+    border: none;
+    border-radius: var(--radius-md);
+    padding: var(--space-md) var(--space-lg);
+    font-weight: var(--font-weight-semibold);
+}
+
+.btn-neon:hover {
+    background: #ff4080;
+}
+
+/* ==========================================
+   Inputs
+   ========================================== */
+
+.input, .name-input {
+    width: 100%;
+    padding: 14px var(--space-md);
+    background: var(--color-dark-surface);
+    border: 2px solid var(--color-border-neon);
+    border-radius: var(--radius-md);
+    color: var(--color-text-white);
+    font-family: var(--font-system);
+    font-size: var(--font-size-lg);
+    min-height: 48px;
+    outline: none;
+    transition: border-color var(--transition-fast);
+}
+
+.input:focus, .name-input:focus {
+    border-color: var(--color-accent-primary);
+    box-shadow: 0 0 0 3px rgba(232, 138, 127, 0.2);
+}
+
+.input::placeholder, .name-input::placeholder {
+    color: var(--color-text-neon-muted);
+}
+
+.validation-msg {
+    margin-top: var(--space-sm);
+    font-size: var(--font-size-base);
+    color: var(--color-error);
+    text-align: left;
+}
+
+/* ==========================================
+   Cards (Beatify dark neon style)
+   ========================================== */
+
+.card {
+    background: var(--color-surface-dark);
+    border: 1px solid var(--color-border-neon);
+    border-radius: var(--radius-lg);
+    padding: var(--space-lg);
+    transition: transform 0.2s ease, box-shadow 0.2s ease;
+}
+
+.card:hover {
+    box-shadow: 0 4px 20px rgba(42, 40, 32, 0.10);
+}
+
+.card-header {
+    font-size: 0.75rem;
+    font-weight: 600;
+    text-transform: uppercase;
+    letter-spacing: 0.08em;
+    color: var(--color-text-neon-muted);
+    margin-bottom: var(--space-md);
+}
+
+/* Card section (Beatify pattern) */
+.card-section {
+    background: var(--color-surface-dark);
+    border: 1px solid var(--color-border-neon);
+    border-radius: var(--radius-lg);
+    padding: var(--space-sm) var(--space-md);
+    margin-bottom: var(--space-md);
+    color: var(--color-text-white);
+    transition: transform 0.2s ease, box-shadow 0.2s ease;
+}
+
+.card-section:hover {
+    box-shadow: 0 4px 20px rgba(42, 40, 32, 0.10);
+}
+
+.card-section .section-header {
+    display: flex;
+    align-items: center;
+    gap: var(--space-sm);
+    margin-bottom: var(--space-sm);
+    font-size: var(--font-size-md);
+    font-weight: var(--font-weight-semibold);
+    color: var(--color-text-white);
+}
+
+.card-section .section-icon {
+    font-size: 1.25rem;
+}
+
+/* ==========================================
+   Collapsible Sections (Beatify pattern)
+   ========================================== */
+
+.section-collapsible {
+    background: var(--color-surface-dark);
+    border: 1px solid var(--color-border-neon);
+    border-radius: var(--radius-md);
+    margin-bottom: var(--space-md);
+    overflow: hidden;
+}
+
+.section-header-collapsible {
+    display: flex;
+    align-items: center;
+    gap: var(--space-sm);
+    width: 100%;
+    padding: 14px var(--space-md);
+    background: rgba(255, 255, 255, 0.03);
+    border: none;
+    border-radius: 0;
+    color: var(--color-text-white);
+    font-size: 0.9rem;
+    font-weight: 600;
+    font-family: var(--font-display), var(--font-body);
+    cursor: pointer;
+    text-align: left;
+    transition: background 0.15s ease;
+}
+
+.section-header-collapsible:hover {
+    background: rgba(255, 255, 255, 0.06);
+}
+
+.section-header-collapsible .section-icon {
+    font-size: 1rem;
+}
+
+.section-summary {
+    margin-left: auto;
+    font-size: 0.75rem;
+    font-weight: 400;
+    color: var(--color-accent-secondary);
+    background: rgba(232, 138, 127, 0.1);
+    padding: 2px 8px;
+    border-radius: var(--radius-sm);
+}
+
+.section-toggle {
+    margin-left: var(--space-sm);
+    font-size: 0.625rem;
+    color: var(--color-text-neon-muted);
+    transition: transform 0.2s ease;
+}
+
+.section-collapsible:not(.collapsed) .section-toggle {
+    transform: rotate(180deg);
+}
+
+.section-content {
+    padding: 0 var(--space-md) var(--space-md);
+}
+
+.section-collapsible.collapsed .section-content {
+    display: none;
+}
+
+/* ==========================================
+   Chip Group (Beatify pattern)
+   ========================================== */
+
+.chip-group {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 4px;
+}
+
+.chip {
+    padding: 4px 10px;
+    font-size: 0.75rem;
+    font-weight: 500;
+    background: #F3EEDF;
+    border: 1px solid #E5DFCF;
+    border-radius: var(--radius-sm);
+    color: #6E6A5C;
+    cursor: pointer;
+    transition: all 0.15s ease;
+    font-family: var(--font-system);
+}
+
+.chip:hover {
+    background: #EDE7D4;
+    color: #2A2820;
+}
+
+.chip.active,
+.chip.chip--active {
+    background: rgba(232, 138, 127, 0.2);
+    border-color: var(--color-accent-secondary);
+    color: var(--color-accent-secondary);
+}
+
+/* Category chips - checkmark */
+#category-chips .chip.active::before {
+    content: '\2713 ';
+    font-size: 0.75rem;
+}
+
+/* Pack-Chip icon prefix (data-icon attribute on category chips).
+   Used only when the chip is rendered in its original pill form (no
+   .chip-group--cards parent). The Mixed chip in card-mode hides the
+   ✓ pseudo since the card layout draws its own check corner. */
+#category-chips:not(.chip-group--cards) .chip[data-icon]:not(.active)::before {
+    content: attr(data-icon) ' ';
+    font-size: 0.85rem;
+    margin-right: 2px;
+}
+
+/* When a theme-tab filter is active, chips not in the active theme
+   are hidden. The Mixed chip never hides — it stays as the "select
+   everything" escape hatch.
+   Specificity guard: the `.chip-group--cards .chip` rule below sets
+   `display: flex` and has the SAME specificity as this one (1 id + 2
+   classes). Without `.chip-group--cards` here, source order would let
+   the card-mode rule override `display: none` and the theme filter
+   would silently do nothing in card mode. Bumping specificity with
+   a duplicate-class trick keeps the rule single-line. */
+#category-chips .chip.hidden-by-theme.hidden-by-theme {
+    display: none;
+}
+
+/* ==========================================
+   Pack-Cards (chip-group--cards modifier)
+   ========================================== */
+/* When the chip-group has the .chip-group--cards class, each child
+   .chip is restyled as a card with icon + name + count. The existing
+   JS wiring (setupCategoryChips) still selects by .chip, so multi-
+   select, Mixed-toggle, and language filtering all keep working
+   without changes. Source: ~/.gstack/designs/pack-ui-2026-05-27/
+   phase2-themes.html (sub-pack-grid section). */
+#category-chips.chip-group--cards {
+    display: grid;
+    /* minmax(0, 1fr) lets columns shrink past their min-content width — with 12+ cards
+       and labels like "Essen & Trinken" / "Tiere & Natur", plain `1fr` would size each
+       column to the widest label and overflow the viewport on narrow phones. */
+    grid-template-columns: minmax(0, 1fr) minmax(0, 1fr);
+    gap: var(--space-sm);
+    margin-top: var(--space-sm);
+    padding-left: 0;
+}
+
+#category-chips.chip-group--cards .chip {
+    /* Reset the pill defaults */
+    padding: 12px 14px;
+    font-size: 1rem;
+    background: var(--color-bg-surface);
+    border: 1.5px solid var(--color-border-light);
+    border-radius: 14px;
+    color: var(--color-text-primary);
+    /* Card layout */
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 3px;
+    min-height: 92px;
+    text-align: left;
+    position: relative;
+    transition: all 0.14s ease;
+}
+#category-chips.chip-group--cards .chip:hover {
+    border-color: var(--color-border-medium);
+    transform: translateY(-1px);
+    box-shadow: 0 4px 12px rgba(42, 40, 32, 0.08);
+}
+#category-chips.chip-group--cards .chip.active {
+    background: var(--color-accent-brand-bg);
+    border-color: var(--color-accent-primary);
+    color: var(--color-text-primary);
+    box-shadow: 0 4px 14px rgba(232, 138, 127, 0.18);
+}
+/* Card-mode suppresses the inherited ✓-prefix; we draw our own corner check. */
+#category-chips.chip-group--cards .chip.active::before {
+    content: none;
+}
+#category-chips.chip-group--cards .chip.active::after {
+    content: '✓';
+    position: absolute;
+    top: 8px;
+    right: 10px;
+    color: var(--color-accent-primary);
+    font-weight: 700;
+    font-size: 1rem;
+}
+#category-chips.chip-group--cards .pack-card-icon {
+    font-size: 1.55rem;
+    line-height: 1;
+}
+#category-chips.chip-group--cards .pack-card-name {
+    font-family: var(--font-display, var(--font-system, inherit));
+    font-weight: 700;
+    font-size: 0.98rem;
+    line-height: 1.18;
+    /* Wrap long names like "Essen & Trinken" / "Tiere & Natur" inside the
+       fixed-width grid track instead of forcing the card wider. */
+    overflow-wrap: anywhere;
+    word-break: break-word;
+}
+#category-chips.chip-group--cards .pack-card-count {
+    font-family: var(--font-mono, ui-monospace, monospace);
+    font-size: 0.7rem;
+    color: var(--color-text-muted);
+    letter-spacing: 0.04em;
+}
+
+/* Tablet+: 3-col grid feels more balanced. */
+@media (min-width: 600px) {
+    #category-chips.chip-group--cards {
+        grid-template-columns: repeat(3, minmax(0, 1fr));
+    }
+}
+
+.question-count-summary {
+    margin-top: 10px;
+    font-family: var(--font-mono, ui-monospace, monospace);
+    font-size: 0.75rem;
+    color: var(--color-text-muted);
+    letter-spacing: 0.04em;
+}
+.question-count-summary:not(.hidden) {
+    display: block;
+}
+
+/* ==========================================
+   Phase 2: Featured-Spotlight + Theme-Tabs
+   ==========================================
+   Pack-picker scaling pattern. The flat chip-grid stays as the
+   baseline; the spotlight + theme-tabs are additive layers that
+   admin.js shows/hides based on per-language pack count:
+     - <5  packs visible: spotlight + tabs hidden, plain chips
+     - 5-9 packs:         spotlight visible, tabs hidden
+     - 10+ packs:         spotlight + tabs both visible (full Phase 2)
+   See ~/.gstack/designs/pack-ui-2026-05-27/phase2-themes.html for
+   the source mockup Markus approved on 2026-05-27. */
+
+/* div not button — but keep iOS treatment defensive in case it inherits any
+   appearance from an ancestor (some HA WebView contexts add chrome to
+   interactive elements). */
+.featured-spotlight {
+    appearance: none;
+    -webkit-appearance: none;
+    position: relative;
+    background: #E88A7F;
+    border-radius: 14px;
+    padding: 14px 16px 12px;
+    color: #FFFFFF;
+    margin-bottom: var(--space-md);
+    overflow: hidden;
+    box-shadow: 0 4px 14px rgba(232, 138, 127, 0.22);
+    cursor: pointer;
+    transition: transform 0.12s ease, box-shadow 0.12s ease;
+}
+.featured-spotlight:hover,
+.featured-spotlight:focus-within {
+    transform: translateY(-1px);
+    box-shadow: 0 6px 18px rgba(232, 138, 127, 0.28);
+}
+.featured-spotlight::before {
+    content: '\2728';
+    position: absolute;
+    top: -8px;
+    right: 10px;
+    font-size: 3.2rem;
+    opacity: 0.18;
+    pointer-events: none;
+}
+.featured-spotlight .spotlight-label {
+    font-family: var(--font-system, inherit);
+    font-size: 0.65rem;
+    text-transform: uppercase;
+    letter-spacing: 0.12em;
+    opacity: 0.92;
+    margin-bottom: 4px;
+}
+.featured-spotlight .spotlight-title {
+    font-weight: 700;
+    font-size: 1.15rem;
+    line-height: 1.15;
+    margin-bottom: 2px;
+}
+.featured-spotlight .spotlight-meta {
+    font-size: 0.8rem;
+    opacity: 0.9;
+    margin-bottom: 10px;
+}
+.featured-spotlight .spotlight-play-btn {
+    appearance: none;
+    -webkit-appearance: none;
+    background: rgba(255, 255, 255, 0.95);
+    color: #2A2820;
+    border: 0;
+    border-radius: 999px;
+    padding: 7px 16px;
+    font-weight: 700;
+    font-size: 0.85rem;
+    cursor: pointer;
+    min-width: 0;
+    min-height: 0;
+    font-family: inherit;
+}
+.featured-spotlight .spotlight-play-btn:hover {
+    background: #fff;
+}
+
+.theme-tabs {
+    display: flex;
+    gap: 6px;
+    overflow-x: auto;
+    margin-bottom: var(--space-sm);
+    padding-bottom: 2px;
+    scrollbar-width: none;
+    /* v1.1.42: scroll-indicator. With 10 themes the row overflows on
+       any phone-width viewport. The mask fades the right edge to hint
+       that more tabs exist beyond what's visible; without it the cut
+       reads as a layout bug. Markus 2026-05-29 live test. */
+    -webkit-mask-image: linear-gradient(to right, black calc(100% - 24px), transparent 100%);
+    mask-image: linear-gradient(to right, black calc(100% - 24px), transparent 100%);
+    /* Padding so the active-tab outline isn't clipped by the mask edge. */
+    padding-right: 4px;
+}
+.theme-tabs::-webkit-scrollbar {
+    display: none;
+}
+/* Reset iOS Safari's default button chrome — without these the global
+   "button, .btn" rule's min-width/min-height + iOS native pill style win,
+   and the tabs end up rendering as fat blue-text iOS buttons instead of
+   the small dark/cream pills the mockup calls for. */
+.theme-tab {
+    appearance: none;
+    -webkit-appearance: none;
+    flex: 0 0 auto;
+    background: var(--color-bg-surface);
+    border: 1.5px solid var(--color-border-light);
+    border-radius: 999px;
+    /* v1.1.42: tighter padding + slightly smaller text so more tabs fit
+       per viewport before the user has to scroll. Was 6/12 + 0.78 rem. */
+    padding: 5px 10px;
+    min-width: 0;
+    min-height: 0;
+    font-size: 0.72rem;
+    font-weight: 600;
+    color: var(--color-text-muted);
+    cursor: pointer;
+    white-space: nowrap;
+    transition: all 0.12s ease;
+    font-family: inherit;
+}
+.theme-tab:hover {
+    color: var(--color-text-primary);
+    border-color: var(--color-border-medium);
+}
+.theme-tab.active {
+    background: var(--color-text-primary);
+    color: var(--color-bg-surface);
+    border-color: var(--color-text-primary);
+}
+
+/* ==========================================
+   Setting Rows (Beatify pattern)
+   ========================================== */
+
+.setting-row {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: var(--space-xs) 0;
+    border-bottom: 1px solid rgba(255, 255, 255, 0.05);
+}
+
+.setting-row:last-child {
+    border-bottom: none;
+}
+
+/* setting-block: label on top, chips below (full width) */
+.setting-block {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+    padding: var(--space-sm) 0;
+    border-bottom: 1px solid rgba(255, 255, 255, 0.05);
+}
+
+.setting-block:last-child {
+    border-bottom: none;
+}
+
+.setting-block .setting-label {
+    font-size: 0.875rem;
+    font-weight: 600;
+    color: var(--color-text-muted, #a4a4b8);
+}
+
+.setting-block .chip-group {
+    flex-wrap: wrap;
+}
+
+.setting-label {
+    display: flex;
+    align-items: center;
+    gap: var(--space-xs);
+    font-size: 0.875rem;
+    color: var(--color-text-white);
+}
+
+.setting-icon {
+    font-size: 0.875rem;
+}
+
+/* Toggle switch (Beatify pattern) */
+.toggle-compact {
+    display: flex;
+    align-items: center;
+    cursor: pointer;
+}
+
+.toggle-compact input {
+    position: absolute;
+    opacity: 0;
+    width: 0;
+    height: 0;
+}
+
+.toggle-switch-compact {
+    width: 36px;
+    height: 20px;
+    background: rgba(255, 255, 255, 0.1);
+    border-radius: 10px;
+    position: relative;
+    transition: background 0.2s ease;
+}
+
+.toggle-switch-compact::after {
+    content: '';
+    position: absolute;
+    top: 2px;
+    left: 2px;
+    width: 16px;
+    height: 16px;
+    background: var(--color-text-neon-muted);
+    border-radius: 50%;
+    transition: all 0.2s ease;
+}
+
+.toggle-compact input:checked + .toggle-switch-compact {
+    background: rgba(232, 138, 127, 0.3);
+}
+
+.toggle-compact input:checked + .toggle-switch-compact::after {
+    left: 18px;
+    background: var(--color-accent-secondary);
+}
+
