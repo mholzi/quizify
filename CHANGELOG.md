@@ -3,6 +3,40 @@
 All notable changes to Quizify are documented here. This project follows
 [Semantic Versioning](https://semver.org/).
 
+## [1.2.7] — 2026-06-09
+
+Backend hardening release from the 2026-06-09 automated code review. No
+user-facing UI changes — concurrency and security fixes in the game server,
+each with regression tests (162 passing).
+
+### Fixed
+
+- **Reaction-bonus cross-game leak (#167).** The inbound reaction-bonus
+  counter was never cleared between games, so a player capped on reactions in
+  round N of one game could be wrongly blocked from earning the bonus in
+  round N of the next game. It now resets with every new game.
+- **STEAL on a vanished target (#167).** If the steal target left the game
+  before the power-up applied, the client still played a "successful" steal
+  animation for zero points. STEAL now returns an error instead of
+  broadcasting a hollow effect.
+- **Admin-bootstrap race (#168).** On a fresh install, two simultaneous first
+  connections could both be granted admin while only one token persisted —
+  silently locking the other admin out. Bootstrap now grants exactly one admin
+  atomically under a lock.
+- **Session-token memory growth (#168).** Issued-but-never-validated session
+  tokens were only evicted on lookup, so they could accumulate unbounded (a
+  DoS surface). Expired tokens are now swept opportunistically on issue.
+- **Malformed pack file 500 (#168).** A pack file that was valid JSON but not
+  an object (e.g. a list) crashed the admin setup screen. It now degrades
+  gracefully to the default icon.
+
+### Verified (no code change needed)
+
+- Double round-evaluation, double-submit, pending-removal-on-reset (#167) and
+  the shuffle/answer-index bound (#168) were confirmed already safe under the
+  cooperative single-threaded asyncio model and locked in with regression
+  tests against future refactors.
+
 ## [1.2.6] — 2026-06-08
 
 ### Changed
