@@ -51,6 +51,40 @@ class Question:
     fun_fact: str = ""
     category: str = ""
     language: str = "de"
+    # Optional image rendered above the question text on the dashboard /
+    # as a thumbnail on player screens. Empty string means "no image"
+    # (issue #25). Only http(s) URLs are accepted (see _sanitize_image_url);
+    # anything else is dropped at parse time so a malformed pack can't
+    # inject markup or point at a local path.
+    image_url: str = ""
+
+
+def _sanitize_image_url(raw: object, question_id: str) -> str:
+    """Return a safe http(s) image URL, or "" if absent/invalid.
+
+    Only absolute http/https URLs are allowed. A relative path, a
+    ``javascript:``/``data:`` scheme, or a non-string is dropped (and
+    logged) so a malformed or hostile pack can't break the dashboard
+    render or smuggle markup through the field.
+    """
+    if not raw:
+        return ""
+    if not isinstance(raw, str):
+        _LOGGER.warning(
+            "Question '%s': ignoring non-string image_url (%s)",
+            question_id,
+            type(raw).__name__,
+        )
+        return ""
+    url = raw.strip()
+    if url.lower().startswith(("http://", "https://")):
+        return url
+    _LOGGER.warning(
+        "Question '%s': ignoring image_url with unsupported scheme: %r",
+        question_id,
+        url[:60],
+    )
+    return ""
 
 
 def _parse_question(data: dict, category_name: str) -> Question | None:
@@ -93,6 +127,7 @@ def _parse_question(data: dict, category_name: str) -> Question | None:
         difficulty=data.get("difficulty", "medium"),
         fun_fact=data.get("fun_fact", ""),
         category=data.get("category", category_name),
+        image_url=_sanitize_image_url(data.get("image_url"), data["id"]),
     )
 
 

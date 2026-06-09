@@ -65,11 +65,16 @@ custom_components/quizify/questions/<category>.json
       ],
       "difficulty": "medium",
       "fun_fact": "Kanada hat eine Küstenlinie von über 202.000 km — das ist mehr als 5× der Erde.",
+      "image_url": "https://example.com/images/coastline.jpg",
       "source": "Wikipedia"
     }
   ]
 }
 ```
+
+`image_url` is **optional**. When set to an absolute `http(s)` URL the
+dashboard renders the image above the question text and player screens
+show a thumbnail. Relative paths and non-`http(s)` schemes are ignored.
 
 ### Categories (initial set)
 | Kategorie | Datei | Sprachen |

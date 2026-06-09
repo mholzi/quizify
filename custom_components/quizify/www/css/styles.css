@@ -1466,6 +1466,20 @@ button, .btn {
     padding: 0 var(--space-sm);
 }
 
+/* Issue #25: optional question thumbnail on the player screen. Capped
+   height so it never crowds out the answer buttons on a small phone;
+   hidden entirely when the question carries no image. */
+.question-image {
+    display: block;
+    max-width: 100%;
+    max-height: 30vh;
+    width: auto;
+    margin: var(--space-sm) auto;
+    border-radius: var(--radius-md, 12px);
+    object-fit: contain;
+}
+.question-image[hidden] { display: none; }
+
 .question-category {
     display: inline-block;
     font-size: 0.75rem;

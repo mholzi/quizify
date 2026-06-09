@@ -273,6 +273,20 @@
             max-width: 24ch;
         }
 
+        /* Issue #25: optional question image, rendered above the text.
+           Capped height so a tall image can't push the answers grid
+           off-screen on a 720p TV; object-fit keeps the aspect ratio. */
+        .dashboard-question-image {
+            display: block;
+            max-width: 100%;
+            max-height: clamp(160px, 28vh, 320px);
+            width: auto;
+            border-radius: 16px;
+            margin-bottom: clamp(16px, 2vw, 28px);
+            object-fit: contain;
+        }
+        .dashboard-question-image[hidden] { display: none; }
+
         /* 3-column answer row (questions have exactly 3 answers) */
         .dashboard-answers {
             display: grid;
@@ -933,6 +947,7 @@
             <div class="dashboard-columns">
                 <div class="dashboard-left">
                     <div id="question-category" class="dashboard-category"></div>
+                    <img id="question-image" class="dashboard-question-image" alt="" hidden />
                     <div id="question-text" class="dashboard-question"></div>
                     <div id="answers-grid" class="dashboard-answers"></div>
                     <div id="fun-fact" class="dashboard-funfact">
@@ -997,6 +1012,7 @@
             roundIndicator: document.getElementById('round-indicator'),
             timerFill: document.getElementById('timer-fill'),
             questionCategory: document.getElementById('question-category'),
+            questionImage: document.getElementById('question-image'),
             questionText: document.getElementById('question-text'),
             answersGrid: document.getElementById('answers-grid'),
             leaderboard: document.getElementById('leaderboard'),
@@ -1009,6 +1025,23 @@
         function showView(name) {
             Object.values(views).forEach(function(v) { v.classList.remove('active'); });
             if (views[name]) views[name].classList.add('active');
+        }
+
+        // Issue #25: render the optional question image. Only absolute
+        // http(s) URLs are accepted (the server already sanitises, this
+        // is a defence-in-depth check). Absent/invalid → element hidden,
+        // layout collapses cleanly to the text-only question.
+        function renderQuestionImage(url) {
+            var img = els.questionImage;
+            if (!img) return;
+            var safe = (typeof url === 'string' && /^https?:\/\//i.test(url)) ? url : '';
+            if (safe) {
+                img.src = safe;
+                img.hidden = false;
+            } else {
+                img.removeAttribute('src');
+                img.hidden = true;
+            }
         }
 
         // ---- WebSocket ----
@@ -1087,6 +1120,7 @@
                             round_num: msg.round,
                             total_rounds: msg.total_rounds,
                             category: msg.question.category,
+                            image_url: msg.question.image_url,
                         });
                     } else {
                         showView('question');
@@ -1110,6 +1144,7 @@
                 : 'Question ' + msg.round_num + ' / ' + msg.total_rounds;
             els.questionCategory.textContent = msg.category || '';
             els.questionText.textContent = msg.question_text;
+            renderQuestionImage(msg.image_url);
 
             timerDuration = msg.timer_duration || 30;
             timerRemaining = timerDuration;

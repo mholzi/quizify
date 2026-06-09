@@ -17,6 +17,13 @@ All notable changes to Quizify are documented here. This project follows
   announcements that share the same speaker. The mechanism is inert by default
   — no audio file ships with the integration, and nothing plays until both a
   media player and a URL are configured.
+- **Optional question images (#25).** Questions may now carry an optional
+  `image_url` field in their pack JSON. When present, the shared dashboard
+  renders the image above the question text and player screens show a
+  thumbnail — handy for "What film is this from?" or visual geography
+  questions. Only absolute `http(s)` URLs are accepted; relative paths,
+  `data:`/`javascript:` schemes and non-strings are dropped at parse time.
+  Questions without an image render exactly as before.
 
 ## [1.2.7] — 2026-06-09
 

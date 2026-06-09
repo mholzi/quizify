@@ -1076,6 +1076,7 @@ class QuizifyGameState:
                 "answers": [a.text for a in q.answers],
                 "difficulty": q.difficulty,
                 "category": q.category,
+                "image_url": q.image_url,
                 "time_limit": self._round_duration,
                 "time_remaining": round(remaining, 1),
             }

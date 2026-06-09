@@ -54,6 +54,7 @@ def serialize_question_for_player(
         "total_rounds": total_rounds,
         "category": question.category,
         "difficulty": question.difficulty,
+        "image_url": question.image_url,
         "is_final_round": is_final_round,
         "player_score": player_score,
     }
@@ -84,6 +85,7 @@ def serialize_question_for_admin(
         "total_rounds": total_rounds,
         "category": question.category,
         "difficulty": question.difficulty,
+        "image_url": question.image_url,
     }
 
 
