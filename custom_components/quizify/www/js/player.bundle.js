@@ -642,7 +642,7 @@
         previousPlayers = players.slice();
 
         // Admin controls
-        updateAdminControls(players, data);
+        updateAdminControls(players);
 
         // QR code / invite section
         if (data.join_url) {
@@ -667,7 +667,7 @@
         if (playersEmptyEl) playersEmptyEl.classList.toggle('hidden', players.length > 0);
 
         _renderHeroAndOrbits(players, data);
-        updateAdminControls(players, data);
+        updateAdminControls(players);
     }
 
     function handlePlayerLeft(data) {
@@ -683,7 +683,7 @@
         if (playersEmptyEl) playersEmptyEl.classList.toggle('hidden', players.length > 0);
 
         _renderHeroAndOrbits(players, data);
-        updateAdminControls(players, data);
+        updateAdminControls(players);
     }
 
     // ============================================
@@ -865,114 +865,10 @@
     }
 
     // ============================================
-    // Lobby Music (host device only)
-    // ============================================
-    //
-    // Ambient audio that loops on the HOST's phone while waiting in the
-    // lobby. Gated three ways so it is inert by default:
-    //   1. Only runs on the admin/host device (state.isAdmin) — we don't
-    //      want every guest phone blasting overlapping audio.
-    //   2. Only when the server advertised a `lobby_music_url` (i.e. the
-    //      user pointed the option at an audio file they supplied). No
-    //      audio asset ships with the integration.
-    //   3. Browser autoplay policy: playback is armed but only actually
-    //      starts after a user gesture. The host tapping the mute toggle
-    //      counts; we also opportunistically retry play() on render in
-    //      case an earlier gesture already unlocked audio.
-    //
-    // The host can mute/unmute via the toggle; the preference is remembered
-    // for the session so re-renders don't fight the user's choice.
-
-    var _musicUrl = null;        // current configured source (or null)
-    var _musicMuted = false;     // host's explicit mute choice this session
-
-    function _musicEls() {
-        return {
-            audio: document.getElementById('lobby-music-audio'),
-            toggle: document.getElementById('lobby-music-toggle'),
-            label: document.getElementById('lobby-music-toggle-label')
-        };
-    }
-
-    function _updateMusicToggleUi() {
-        var els = _musicEls();
-        if (!els.toggle || !els.label) return;
-        var t = (window.QuizifyI18n && window.QuizifyI18n.t) || function (k) { return k; };
-        var on = !_musicMuted;
-        els.label.textContent = t(on ? 'lobby.musicOn' : 'lobby.musicOff');
-        els.toggle.setAttribute('aria-pressed', on ? 'true' : 'false');
-    }
-
-    // Reflect the configured source + admin status into the audio element.
-    // Called from renderLobby/updateAdminControls. Safe to call repeatedly.
-    function _syncLobbyMusic(data, isAdmin) {
-        var els = _musicEls();
-        if (!els.audio || !els.toggle) return;
-
-        var url = (data && data.lobby_music_url) || null;
-        _musicUrl = url;
-
-        // Show the toggle only on the host device when a source exists AND we
-        // are actually in the lobby (music is a waiting-room feature only).
-        var inLobby = state.currentPhase === 'LOBBY' || state.currentPhase == null;
-        var enabled = !!(url && isAdmin && inLobby);
-        els.toggle.classList.toggle('hidden', !enabled);
-
-        if (!enabled) {
-            // Not the host, or no source — make sure nothing is playing.
-            _stopLobbyMusic();
-            return;
-        }
-
-        // Point the element at the source (only when it changed, so we
-        // don't restart playback on every state push).
-        if (els.audio.getAttribute('src') !== url) {
-            els.audio.setAttribute('src', url);
-        }
-
-        _updateMusicToggleUi();
-
-        // Try to play unless the host muted. play() may reject if no gesture
-        // has happened yet — that's fine, the toggle tap will start it.
-        if (!_musicMuted) {
-            els.audio.muted = false;
-            var p = els.audio.play();
-            if (p && typeof p.catch === 'function') {
-                p.catch(function () { /* awaiting user gesture */ });
-            }
-        }
-    }
-
-    function _stopLobbyMusic() {
-        var els = _musicEls();
-        if (els.audio) {
-            try { els.audio.pause(); } catch (e) { /* ignore */ }
-        }
-    }
-
-    function _setupLobbyMusicToggle() {
-        var els = _musicEls();
-        if (!els.toggle || !els.audio) return;
-        els.toggle.addEventListener('click', function () {
-            _musicMuted = !_musicMuted;
-            if (_musicMuted) {
-                _stopLobbyMusic();
-            } else if (_musicUrl) {
-                els.audio.muted = false;
-                var p = els.audio.play();
-                if (p && typeof p.catch === 'function') {
-                    p.catch(function () { /* unexpected — gesture present */ });
-                }
-            }
-            _updateMusicToggleUi();
-        });
-    }
-
-    // ============================================
     // Admin Controls
     // ============================================
 
-    function updateAdminControls(players, data) {
+    function updateAdminControls(players) {
         var adminControls = document.getElementById('admin-controls');
         var lobbyStatus = document.getElementById('lobby-status');
         if (!adminControls) return;
@@ -1003,20 +899,7 @@
             adminControls.classList.add('hidden');
             if (lobbyStatus) lobbyStatus.classList.remove('hidden');
         }
-
-        // Lobby music follows admin status + configured source. `data` is the
-        // game_state message; the last seen one is cached so join/leave
-        // updates (which don't carry lobby_music_url) keep the right source.
-        if (data && Object.prototype.hasOwnProperty.call(data, 'lobby_music_url')) {
-            _lastMusicData = data;
-        } else if (data) {
-            // A state push without the key means music is off — clear cache.
-            _lastMusicData = null;
-        }
-        _syncLobbyMusic(_lastMusicData, playerIsAdmin);
     }
-
-    var _lastMusicData = null;
 
     function setupAdminControls(sendFn) {
         var startBtn = document.getElementById('start-game-btn');
@@ -1040,7 +923,6 @@
         setupQRModal();
         setupInviteModal();
         setupAdminControls(sendFn);
-        _setupLobbyMusicToggle();
         pu.setupCollapsibles();
     }
 
@@ -1055,7 +937,6 @@
         handlePlayerLeft: handlePlayerLeft,
         setupInviteSection: setupInviteSection,
         updateAdminControls: updateAdminControls,
-        stopLobbyMusic: _stopLobbyMusic,
         closeInviteModal: closeInviteModal
     };
 
@@ -3340,12 +3221,6 @@
 
     function handleGameState(msg) {
         state.currentPhase = msg.phase;
-
-        // Lobby music is a waiting-room-only feature; once the game leaves
-        // the lobby, make sure any host-side audio stops.
-        if (msg.phase !== 'LOBBY' && lobby && lobby.stopLobbyMusic) {
-            lobby.stopLobbyMusic();
-        }
 
         // Wake lock: only hold during active question. Cheap battery,
         // doesn't fight the OS on lobby/reveal/finale screens where

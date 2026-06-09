@@ -28,7 +28,7 @@
                     "party_light_entities": "Lumières qui changent de couleur selon la phase de la manche (corail pendant la question, sauge pendant la révélation, soleil au final).",
                     "tts_entity": "Entité TTS (p. ex. tts.google_translate_say) pour les annonces de jalons et de résultats.",
                     "media_player_entity": "Haut-parleur sur lequel le TTS est diffusé. Obligatoire si un fournisseur TTS est défini.",
-                    "lobby_music_url": "URL facultative d'un fichier audio (p. ex. /local/quizify-lobby.mp3, depuis votre dossier config/www) que le salon de l'hôte joue en boucle pendant l'attente. Laissez vide pour aucune musique. Aucun fichier audio n'est fourni — utilisez le vôtre."
+                    "lobby_music_url": "URL facultative d'un fichier audio (p. ex. /local/quizify-lobby.mp3, depuis votre dossier config/www) joué en boucle sur le lecteur multimédia ci-dessus pendant l'attente dans le salon. Elle s'arrête au démarrage de la partie, pour ne pas chevaucher les annonces TTS qui partagent le même haut-parleur. Laissez vide pour aucune musique. Aucun fichier audio n'est fourni — utilisez le vôtre."
                 }
             }
         }

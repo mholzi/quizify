@@ -318,32 +318,88 @@ class TestPlayerRegistry:
 # ---------- Lobby music (#56) ----------
 
 
+class _FakeHass:
+    """Captures async_create_task coroutines + the service calls inside them."""
+
+    def __init__(self) -> None:
+        self.calls: list[tuple[str, str, dict]] = []
+        self.services = self  # so hass.services.async_call resolves here
+
+    async def async_call(self, domain, service, data, blocking=False):  # noqa: ANN001, ARG002
+        self.calls.append((domain, service, data))
+
+    def async_create_task(self, coro):  # noqa: ANN001
+        # Drive the coroutine to completion synchronously so we can assert
+        # the recorded service calls without an event loop.
+        try:
+            coro.send(None)
+        except StopIteration:
+            pass
+
+
 class TestLobbyMusic:
-    """Issue #56: the host's lobby can loop an ambient audio file the user
-    supplies. The mechanism must stay completely inert until a source is
-    configured — no audio asset ships with the integration."""
+    """Issue #56: lobby music plays SERVER-SIDE on the configured HA
+    media_player (the same entity used for TTS) while waiting in the lobby,
+    and stops as soon as the game starts. Inert until a URL is configured —
+    no audio asset ships with the integration."""
 
-    def test_no_music_key_by_default(self, state: QuizifyGameState) -> None:
-        # Fresh state: no source configured → snapshot must NOT advertise it,
-        # so the frontend treats the feature as off.
-        assert state.lobby_music_url is None
-        snapshot = state.get_state_snapshot()
-        assert "lobby_music_url" not in snapshot
+    def _make(self, state: QuizifyGameState, *, mp="media_player.kitchen", url=None):
+        from custom_components.quizify.lobby_music import QuizifyLobbyMusic
 
-    def test_music_url_surfaced_when_configured(
-        self, state: QuizifyGameState
-    ) -> None:
-        state.lobby_music_url = "/local/quizify-lobby.mp3"
-        snapshot = state.get_state_snapshot()
-        assert snapshot["lobby_music_url"] == "/local/quizify-lobby.mp3"
+        state.lobby_music_url = url
+        hass = _FakeHass()
+        lm = QuizifyLobbyMusic(
+            hass=hass,
+            media_player_entity_id=mp,
+            game_state=state,
+        )
+        return lm, hass
 
-    def test_empty_music_url_treated_as_off(
-        self, state: QuizifyGameState
-    ) -> None:
-        # An empty string is falsy → key omitted, feature stays off.
-        state.lobby_music_url = ""
-        snapshot = state.get_state_snapshot()
-        assert "lobby_music_url" not in snapshot
+    def test_inert_without_media_player(self, state: QuizifyGameState) -> None:
+        lm, hass = self._make(state, mp=None, url="/local/x.mp3")
+        assert lm.is_configured is False
+        state.phase = GamePhase.LOBBY
+        lm._on_state_changed()
+        assert hass.calls == []
+
+    def test_inert_without_url(self, state: QuizifyGameState) -> None:
+        lm, hass = self._make(state, url=None)
+        state.phase = GamePhase.LOBBY
+        lm._on_state_changed()
+        assert hass.calls == []
+
+    def test_plays_and_loops_in_lobby(self, state: QuizifyGameState) -> None:
+        lm, hass = self._make(state, mp="media_player.kitchen", url="/local/x.mp3")
+        state.phase = GamePhase.LOBBY
+        lm._on_state_changed()
+        services = [(d, s) for d, s, _ in hass.calls]
+        assert ("media_player", "play_media") in services
+        assert ("media_player", "repeat_set") in services
+        play = next(data for d, s, data in hass.calls if s == "play_media")
+        assert play["entity_id"] == "media_player.kitchen"
+        assert play["media_content_id"] == "/local/x.mp3"
+        assert play["media_content_type"] == "music"
+        rep = next(data for d, s, data in hass.calls if s == "repeat_set")
+        assert rep["repeat"] == "all"
+
+    def test_stops_when_game_starts(self, state: QuizifyGameState) -> None:
+        lm, hass = self._make(state, mp="media_player.kitchen", url="/local/x.mp3")
+        state.phase = GamePhase.LOBBY
+        lm._on_state_changed()
+        hass.calls.clear()
+        state.phase = GamePhase.QUESTION_ACTIVE
+        lm._on_state_changed()
+        assert [(d, s) for d, s, _ in hass.calls] == [
+            ("media_player", "media_stop")
+        ]
+
+    def test_no_duplicate_stop(self, state: QuizifyGameState) -> None:
+        lm, hass = self._make(state, mp="media_player.kitchen", url="/local/x.mp3")
+        # Never entered lobby (still default LOBBY but no play yet) — jump
+        # straight to a non-lobby phase: no stop because nothing was playing.
+        state.phase = GamePhase.QUESTION_ACTIVE
+        lm._on_state_changed()
+        assert hass.calls == []
 
 
 # ---------- Per-player shuffle ----------

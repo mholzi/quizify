@@ -28,7 +28,7 @@
                     "party_light_entities": "Lights that should glow with the round phase (coral on question, sage on reveal, sun on finale).",
                     "tts_entity": "TTS entity (e.g. tts.google_translate_say) used to announce milestones and round results.",
                     "media_player_entity": "Speaker the TTS audio plays through. Required if TTS provider is set.",
-                    "lobby_music_url": "Optional URL of an audio file (e.g. /local/quizify-lobby.mp3, served from your config/www folder) the host's lobby loops while waiting. Leave blank for no music. No audio file is included — supply your own."
+                    "lobby_music_url": "Optional URL of an audio file (e.g. /local/quizify-lobby.mp3, served from your config/www folder) looped on the media player above while waiting in the lobby. It stops when the game starts, so it never overlaps the TTS announcements that share the same speaker. Leave blank for no music. No audio file is included — supply your own."
                 }
             }
         }

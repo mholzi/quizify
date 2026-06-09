@@ -146,17 +146,6 @@
 
             <!-- Sticky Admin Actions -->
             <div id="admin-controls" class="lobby-actions lobby-actions--sticky hidden">
-                <!-- Lobby music: hidden unless the host configured an audio
-                     source (lobby_music_url). Toggling mute is also the user
-                     gesture that lets the browser start playback. The <audio>
-                     element has no src until the lobby state supplies one, so
-                     nothing ever plays by default. -->
-                <button id="lobby-music-toggle" class="btn btn-secondary btn-full-width hidden"
-                        type="button" aria-pressed="false">
-                    <span class="btn-icon" aria-hidden="true">🎵</span>
-                    <span id="lobby-music-toggle-label" data-i18n="lobby.musicOn">Music on</span>
-                </button>
-                <audio id="lobby-music-audio" loop preload="none"></audio>
                 <button id="start-game-btn" class="btn btn-primary btn-large btn-full-width">
                     <span class="btn-icon" aria-hidden="true">🎉</span>
                     <span data-i18n="lobby.startGame">Start Game</span>
