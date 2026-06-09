@@ -2410,6 +2410,63 @@
     // commit to a bet — which would defeat the Jeopardy-final tension.
     var _wagerGate = { active: false, submitted: false };
 
+    // Issue #183: render the question image banner + wire tap-to-zoom.
+    function renderQuestionImageBanner(imgUrl) {
+        var media = document.getElementById('question-media');
+        var img = document.getElementById('question-image');
+        if (!media || !img) return;
+        var safeImg = (typeof imgUrl === 'string' && /^https?:\/\//i.test(imgUrl)) ? imgUrl : '';
+        img.onerror = function() {
+            // Image failed → hide the banner, fall back to text-only.
+            img.removeAttribute('src');
+            media.hidden = true;
+        };
+        if (safeImg) {
+            img.src = safeImg;
+            media.hidden = false;
+        } else {
+            img.removeAttribute('src');
+            media.hidden = true;
+        }
+    }
+
+    // Wire the fullscreen zoom overlay once. The overlay shows the current
+    // banner image at full size; closing returns to the game view.
+    function _initImageZoom() {
+        var zoomBtn = document.getElementById('question-image-zoom');
+        var overlay = document.getElementById('image-zoom-overlay');
+        var closeBtn = document.getElementById('image-zoom-close');
+        var overlayImg = document.getElementById('image-zoom-img');
+        var bannerImg = document.getElementById('question-image');
+        if (!zoomBtn || !overlay || !overlayImg) return;
+
+        function open() {
+            if (bannerImg && bannerImg.getAttribute('src')) {
+                overlayImg.src = bannerImg.getAttribute('src');
+                overlayImg.alt = bannerImg.getAttribute('alt') || '';
+                overlay.classList.remove('hidden');
+            }
+        }
+        function close() {
+            overlay.classList.add('hidden');
+            overlayImg.removeAttribute('src');
+        }
+        zoomBtn.addEventListener('click', open);
+        if (closeBtn) closeBtn.addEventListener('click', close);
+        overlay.addEventListener('click', function(e) {
+            if (e.target === overlay) close();
+        });
+        document.addEventListener('keydown', function(e) {
+            if (e.key === 'Escape' && !overlay.classList.contains('hidden')) close();
+        });
+    }
+
+    if (document.readyState === 'loading') {
+        document.addEventListener('DOMContentLoaded', _initImageZoom);
+    } else {
+        _initImageZoom();
+    }
+
     function renderQuestion(data) {
         var questionText = document.getElementById('question-text');
         var questionCategory = document.getElementById('question-category');
@@ -2418,21 +2475,12 @@
         if (questionText) questionText.textContent = data.question_text || '';
         if (questionCategory) questionCategory.textContent = data.category || '';
 
-        // Issue #25: optional question thumbnail on the player screen.
-        // Only absolute http(s) URLs are shown (server already sanitises;
-        // this is defence-in-depth). Absent/invalid → element stays hidden.
-        var questionImage = document.getElementById('question-image');
-        if (questionImage) {
-            var imgUrl = data.image_url;
-            var safeImg = (typeof imgUrl === 'string' && /^https?:\/\//i.test(imgUrl)) ? imgUrl : '';
-            if (safeImg) {
-                questionImage.src = safeImg;
-                questionImage.hidden = false;
-            } else {
-                questionImage.removeAttribute('src');
-                questionImage.hidden = true;
-            }
-        }
+        // Issue #25 + #183 (Variant 1): question image as a fixed-height
+        // banner preview with tap-to-zoom. Only absolute http(s) URLs are
+        // shown (server already sanitises; this is defence-in-depth).
+        // Absent/invalid/load-error → the banner is hidden so the answer
+        // pills stay reachable above the fold (graceful text-only fallback).
+        renderQuestionImageBanner(data.image_url);
 
         // Wager round detection — set BEFORE we touch buttons so we can
         // disable them up-front, then enable once the wager is in.
