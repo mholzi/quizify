@@ -233,6 +233,12 @@ CLIENT_MESSAGE_TYPES: frozenset[str] = frozenset({
     "resume_game",
     "admin_skip",
     "kick_player",
+    # Lightning Round (issue #42): host starts the mode; players submit
+    # answers via lightning_answer (separate from submit_answer so the
+    # normal-round path stays untouched).
+    "start_lightning",
+    "lightning_answer",
+    "end_lightning",
     # Pre-existing handlers (unreleased features wired in the WS layer).
     # Listed here so the protocol-coverage test passes; remove once the
     # features either ship or get pulled out of the dispatch.

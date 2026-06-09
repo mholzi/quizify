@@ -449,6 +449,9 @@
                     <button id="play-again-same-btn" class="btn btn-primary btn-large btn-full-width" data-i18n="admin.playAgainSame">
                         Play again
                     </button>
+                    <button id="lightning-from-end-btn" class="btn btn-secondary btn-large btn-full-width">
+                        ⚡ <span data-i18n="lightning.start">Lightning Round</span>
+                    </button>
                     <button id="new-game-btn" class="btn btn-secondary btn-large btn-full-width" data-i18n="admin.startNewGame">
                         Start New Game
                     </button>
@@ -456,6 +459,107 @@
 
                 <!-- Player message -->
                 <div id="end-player-message" class="end-player-message hidden">
+                    <p data-i18n="leaderboard.thanksEmoji">Thanks for playing! 🎉</p>
+                    <p class="end-hint" data-i18n="leaderboard.waitForHost">Wait for the host to start a new game</p>
+                </div>
+            </div>
+        </div>
+
+        <!-- Lightning Round View (issue #42) — fast question, no reveal between -->
+        <div id="lightning-view" class="view hidden">
+            <div class="game-container lightning-container">
+                <div class="game-header-compact">
+                    <div class="game-header-left">
+                        <span class="section-icon" aria-hidden="true">⚡</span>
+                        <span class="round-indicator-text">
+                            <span data-i18n="lightning.title">Lightning Round</span>
+                        </span>
+                    </div>
+                    <div class="stat-badge-bar">
+                        <span id="lightning-progress" class="stat-badge">1 / 5</span>
+                    </div>
+                </div>
+
+                <div class="question-card-container">
+                    <div id="lightning-question-card" class="question-card"
+                         role="region" aria-live="polite" aria-atomic="true">
+                        <div id="lightning-category" class="question-category"></div>
+                        <img id="lightning-image" class="question-image" alt="" hidden />
+                        <div id="lightning-question-text" class="question-text"></div>
+                    </div>
+                </div>
+
+                <div class="timer-container">
+                    <div id="lightning-timer" class="timer" role="timer" aria-live="off"
+                         data-i18n-aria-label="a11y.timeRemaining" aria-label="Time remaining">6</div>
+                </div>
+
+                <section class="card-section answer-section">
+                    <div id="lightning-answer-buttons" class="answer-buttons">
+                        <button class="answer-btn answer-btn-a" data-lightning-answer="0">
+                            <span class="answer-letter">A</span>
+                            <span id="lightning-answer-text-0" class="answer-text"></span>
+                        </button>
+                        <button class="answer-btn answer-btn-b" data-lightning-answer="1">
+                            <span class="answer-letter">B</span>
+                            <span id="lightning-answer-text-1" class="answer-text"></span>
+                        </button>
+                        <button class="answer-btn answer-btn-c" data-lightning-answer="2">
+                            <span class="answer-letter">C</span>
+                            <span id="lightning-answer-text-2" class="answer-text"></span>
+                        </button>
+                    </div>
+                    <div id="lightning-answered" class="submitted-confirmation hidden">
+                        <span class="checkmark">✓</span>
+                        <span data-i18n="lightning.answered">Locked in — next one coming!</span>
+                    </div>
+                </section>
+
+                <p class="hint lr-score-line" id="lightning-score-line">
+                    <span data-i18n="lightning.yourScore">Your score</span>
+                    <b id="lightning-score">0</b>
+                    <span class="lr-score-note" data-i18n="lightning.answeredAtEnd">· answers revealed at the end</span>
+                </p>
+
+                <div id="lightning-admin-bar" class="admin-control-bar hidden" style="position:static;">
+                    <button id="lightning-end-btn" class="control-btn control-btn--danger" type="button">
+                        <span class="control-icon">🏁</span>
+                        <span class="control-label" data-i18n="lightning.endNow">End Lightning</span>
+                    </button>
+                </div>
+            </div>
+        </div>
+
+        <!-- Lightning Recap View (issue #42) — totals + per-question grid -->
+        <div id="lightning-recap-view" class="view hidden">
+            <div class="end-container lightning-recap-container">
+                <div class="end-header">
+                    <p class="end-subtitle">
+                        <span aria-hidden="true">⚡</span>
+                        <span data-i18n="lightning.recapTitle">Lightning Round Results</span>
+                    </p>
+                </div>
+
+                <div class="final-leaderboard">
+                    <div class="final-leaderboard-header" data-i18n="lightning.totals">Totals</div>
+                    <div id="lightning-recap-leaderboard" class="final-leaderboard-list"></div>
+                </div>
+
+                <div class="final-leaderboard">
+                    <div class="final-leaderboard-header" data-i18n="lightning.rightAnswers">The right answers, question by question</div>
+                    <div id="lightning-recap-grid" class="lightning-recap-grid"></div>
+                </div>
+
+                <div id="lightning-recap-admin" class="end-admin-controls hidden">
+                    <button id="lightning-recap-again-btn" class="btn btn-primary btn-large btn-full-width" data-i18n="lightning.again">
+                        Another Lightning Round
+                    </button>
+                    <button id="lightning-recap-newgame-btn" class="btn btn-secondary btn-large btn-full-width" data-i18n="admin.startNewGame">
+                        Start New Game
+                    </button>
+                </div>
+
+                <div id="lightning-recap-player-msg" class="end-player-message hidden">
                     <p data-i18n="leaderboard.thanksEmoji">Thanks for playing! 🎉</p>
                     <p class="end-hint" data-i18n="leaderboard.waitForHost">Wait for the host to start a new game</p>
                 </div>

@@ -578,7 +578,43 @@
             </section>
 
             <div class="admin-actions lobby-actions--sticky mt-lg">
+                <button type="button" id="lightning-round-btn" class="btn btn-secondary btn-lg btn-block">
+                    ⚡ <span data-i18n="lightning.start">Lightning Round</span>
+                </button>
                 <button type="button" id="new-game-btn" class="btn btn-primary btn-lg btn-block" data-i18n="admin.startNewGame">Start New Game</button>
+            </div>
+        </div>
+
+        <!-- Lightning Round view (issue #42) -->
+        <div id="admin-lightning-view" class="view">
+            <section class="card-section">
+                <h2 class="section-header">⚡ <span data-i18n="lightning.title">Lightning Round</span></h2>
+                <div id="admin-lightning-progress" class="round-indicator"></div>
+                <div id="admin-lightning-question" class="question-text" style="font-size:1.1rem;"></div>
+                <div id="admin-lightning-timer" class="timer-text mt-md"></div>
+            </section>
+            <div class="admin-actions lobby-actions--sticky mt-lg">
+                <button type="button" id="admin-lightning-end-btn" class="btn btn-secondary btn-lg btn-block">
+                    🏁 <span data-i18n="lightning.endNow">End Lightning</span>
+                </button>
+            </div>
+        </div>
+
+        <!-- Lightning Round recap view -->
+        <div id="admin-lightning-recap-view" class="view">
+            <section class="card-section">
+                <h2 class="section-header">⚡ <span data-i18n="lightning.recapTitle">Lightning Round Results</span></h2>
+                <div id="admin-lightning-recap-leaderboard" class="leaderboard"></div>
+            </section>
+            <section class="card-section mt-md">
+                <h2 class="section-header"><span data-i18n="lightning.questionRecap">Question-by-question</span></h2>
+                <div id="admin-lightning-recap-grid" class="lightning-recap-grid"></div>
+            </section>
+            <div class="admin-actions lobby-actions--sticky mt-lg">
+                <button type="button" id="admin-lightning-again-btn" class="btn btn-secondary btn-lg btn-block">
+                    ⚡ <span data-i18n="lightning.again">Another Lightning Round</span>
+                </button>
+                <button type="button" id="admin-lightning-newgame-btn" class="btn btn-primary btn-lg btn-block" data-i18n="admin.startNewGame">Start New Game</button>
             </div>
         </div>
 

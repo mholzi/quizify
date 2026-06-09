@@ -11,6 +11,7 @@
     var game = window.QuizifyPlayerGame;
     var reveal = window.QuizifyPlayerReveal;
     var end = window.QuizifyPlayerEnd;
+    var lightning = window.QuizifyPlayerLightning;
     var state = pu.state;
 
     // ============================================
@@ -291,6 +292,20 @@
                 // submit. Useful as a hook for analytics later.
                 break;
 
+            // ---- Lightning Round (issue #42) ----
+            case 'lightning_question':
+                if (lightning) lightning.handleLightningQuestion(msg);
+                break;
+            case 'lightning_tick':
+                if (lightning) lightning.handleLightningTick(msg);
+                break;
+            case 'lightning_answer_result':
+                if (lightning) lightning.handleLightningAnswerResult(msg);
+                break;
+            case 'lightning_recap':
+                if (lightning) lightning.handleLightningRecap(msg);
+                break;
+
             case 'error':
                 handleError(msg);
                 break;
@@ -397,6 +412,31 @@
             case 'FINALE':
             case 'END':
                 handleFinale(msg);
+                break;
+
+            case 'LIGHTNING':
+                // Reconnect / fresh snapshot landing into a live lightning
+                // round. Server pushes per-question lightning_question events
+                // for the live flow; this just gets us onto the right view
+                // with the current question if present.
+                if (lightning && msg.lightning) {
+                    var lq = msg.lightning.question;
+                    lightning.handleLightningQuestion({
+                        question_text: lq ? lq.text : '',
+                        answers: lq ? lq.answers : [],
+                        index: msg.lightning.index,
+                        num_questions: msg.lightning.num_questions,
+                        seconds: msg.lightning.time_remaining,
+                        category: lq ? lq.category : '',
+                        image_url: lq ? lq.image_url : ''
+                    });
+                } else {
+                    pu.showView('lightning-view');
+                }
+                break;
+
+            case 'LIGHTNING_RECAP':
+                if (lightning) lightning.handleLightningRecap({ recap: msg.lightning_recap });
                 break;
 
             case 'PAUSED':
@@ -895,6 +935,7 @@
         setupReactionBar();
         setupSoundToggle();
         pu.setupCollapsibles();
+        if (lightning) { lightning.setSend(send); lightning.init(); }
 
         // Answer button clicks
         var answerButtons = document.getElementById('answer-buttons');

@@ -75,6 +75,8 @@
         lobby: document.getElementById('lobby-screen'),
         game: document.getElementById('game-view'),
         finale: document.getElementById('admin-finale-view'),
+        lightning: document.getElementById('admin-lightning-view'),
+        lightningRecap: document.getElementById('admin-lightning-recap-view'),
     };
 
     const els = {
@@ -112,6 +114,16 @@
         adminFinaleLeaderboard: document.getElementById('admin-finale-leaderboard'),
         newGameBtn: document.getElementById('new-game-btn'),
         lobbyBackBtn: document.getElementById('lobby-back-btn'),
+        // Lightning Round (issue #42)
+        lightningRoundBtn: document.getElementById('lightning-round-btn'),
+        adminLightningProgress: document.getElementById('admin-lightning-progress'),
+        adminLightningQuestion: document.getElementById('admin-lightning-question'),
+        adminLightningTimer: document.getElementById('admin-lightning-timer'),
+        adminLightningEndBtn: document.getElementById('admin-lightning-end-btn'),
+        adminLightningRecapLeaderboard: document.getElementById('admin-lightning-recap-leaderboard'),
+        adminLightningRecapGrid: document.getElementById('admin-lightning-recap-grid'),
+        adminLightningAgainBtn: document.getElementById('admin-lightning-again-btn'),
+        adminLightningNewGameBtn: document.getElementById('admin-lightning-newgame-btn'),
         // Admin join modal
         adminJoinModal: document.getElementById('admin-join-modal'),
         adminNameInput: document.getElementById('admin-name-input'),
@@ -752,6 +764,17 @@
             case 'game_reset':
                 handleGameReset();
                 break;
+            case 'lightning_question':
+                handleAdminLightningQuestion(msg);
+                break;
+            case 'lightning_tick':
+                if (els.adminLightningTimer && typeof msg.remaining === 'number') {
+                    els.adminLightningTimer.textContent = Math.ceil(msg.remaining) + 's';
+                }
+                break;
+            case 'lightning_recap':
+                handleAdminLightningRecap(msg.recap || {});
+                break;
             case 'error':
                 // The initial admin_connect attempt before authentication
                 // returns "Admin only" — that's expected handshake noise,
@@ -848,7 +871,75 @@
                 // server rejected because phase was already FINALE.
                 handleFinale(msg);
                 break;
+            case 'LIGHTNING':
+                // Admin who didn't join as a player watches the lightning
+                // round here; admins-as-players were redirected to
+                // player.html above (savedName branch). (issue #42)
+                currentPhase = 'LIGHTNING';
+                showView('lightning');
+                if (msg.lightning) {
+                    handleAdminLightningQuestion({
+                        index: msg.lightning.index,
+                        num_questions: msg.lightning.num_questions,
+                        question_text: msg.lightning.question ? msg.lightning.question.text : '',
+                    });
+                }
+                break;
+            case 'LIGHTNING_RECAP':
+                currentPhase = 'LIGHTNING_RECAP';
+                showView('lightningRecap');
+                if (msg.lightning_recap) handleAdminLightningRecap(msg.lightning_recap);
+                break;
         }
+    }
+
+    // ---- Lightning Round (issue #42) ----
+
+    function handleAdminLightningQuestion(msg) {
+        if (_redirecting) return;
+        currentPhase = 'LIGHTNING';
+        showView('lightning');
+        if (els.adminLightningProgress) {
+            els.adminLightningProgress.textContent =
+                ((msg.index || 0) + 1) + ' / ' + (msg.num_questions || 5);
+        }
+        if (els.adminLightningQuestion) {
+            els.adminLightningQuestion.textContent = msg.question_text || '';
+        }
+    }
+
+    function handleAdminLightningRecap(recap) {
+        currentPhase = 'LIGHTNING_RECAP';
+        showView('lightningRecap');
+        if (els.adminLightningRecapLeaderboard) {
+            renderLeaderboard(els.adminLightningRecapLeaderboard, recap.leaderboard || []);
+        }
+        if (els.adminLightningRecapGrid) {
+            var questions = recap.questions || [];
+            els.adminLightningRecapGrid.innerHTML = questions.map(function (q, qi) {
+                var chips = Object.keys(q.results || {}).map(function (name) {
+                    var r = q.results[name];
+                    var mark = r === 'correct' ? '✓' : (r === 'wrong' ? '✗' : '–');
+                    return '<span class="lr-admin-chip lr-admin-chip--' + r + '">' +
+                        escapeHtmlAdmin(name) + ' ' + mark + '</span>';
+                }).join('');
+                return '<div class="lr-admin-row">' +
+                    '<div class="lr-admin-q"><span class="lr-admin-qnum">' + (qi + 1) +
+                    '.</span> ' + escapeHtmlAdmin(q.question_text) +
+                    ' <span class="lr-admin-correct">→ ' + escapeHtmlAdmin(q.correct_answer) +
+                    '</span></div>' +
+                    '<div class="lr-admin-chips">' + chips + '</div></div>';
+            }).join('');
+        }
+    }
+
+    function escapeHtmlAdmin(s) {
+        if (window.QuizifyUtils && window.QuizifyUtils.escapeHtml) {
+            return window.QuizifyUtils.escapeHtml(s);
+        }
+        var d = document.createElement('div');
+        d.textContent = s == null ? '' : String(s);
+        return d.innerHTML;
     }
 
     function handleQuestionStarted(msg) {
@@ -1346,6 +1437,14 @@
     });
 
     on(els.newGameBtn, 'click', function () { send('reset_game', {}); });
+
+    // Lightning Round (issue #42). Reuses the players + question bank that
+    // are already loaded — no extra setup. Server picks fresh questions via
+    // the history-aware queue.
+    on(els.lightningRoundBtn, 'click', function () { send('start_lightning', {}); });
+    on(els.adminLightningEndBtn, 'click', function () { send('end_lightning', {}); });
+    on(els.adminLightningAgainBtn, 'click', function () { send('start_lightning', {}); });
+    on(els.adminLightningNewGameBtn, 'click', function () { send('reset_game', {}); });
 
     // ---- Reset Game button (header) ----
     on(els.resetGameBtn, 'click', function () {

@@ -54,6 +54,13 @@ class GamePhase(str, Enum):
     QUESTION_ACTIVE = "QUESTION_ACTIVE"
     ANSWER_REVEAL = "ANSWER_REVEAL"
     FINALE = "FINALE"
+    # Lightning Round (issue #42) — a self-contained fast bonus mode the
+    # host can trigger after/instead of the normal game. LIGHTNING runs the
+    # rapid 10-question loop (no inter-question reveal); LIGHTNING_RECAP is
+    # the end screen showing totals + the per-question right/wrong grid.
+    # The mode's logic lives in game/lightning.py, not in this class.
+    LIGHTNING = "LIGHTNING"
+    LIGHTNING_RECAP = "LIGHTNING_RECAP"
     # PAUSED — admin-triggered pause during QUESTION_ACTIVE. Timer is
     # frozen; resume returns to QUESTION_ACTIVE with the remaining time
     # the player had before pause. Used both for explicit "Pause" button
@@ -168,6 +175,11 @@ class QuizifyGameState:
         # Cached finale data (computed once in end_game, cleared in reset_to_lobby)
         self._finale_podium: list | None = None
         self._finale_superlatives: list | None = None
+
+        # Active LightningRound (issue #42), or None when not in a lightning
+        # round. Owns its own questions/scores/recap; this class only holds
+        # the reference + phase so the WS layer can route to it.
+        self._lightning = None  # type: ignore[assignment]
 
         # Round shuffle state (owned here, not in WS handler).
         # `shuffle_map` is the "canonical" per-round shuffle used by the
@@ -862,11 +874,67 @@ class QuizifyGameState:
         self.shuffled_answers = []
         self._timer_override = None
         self._calibrator = None
+        self._lightning = None
 
         for player in self._player_registry.players.values():
             player.reset_for_new_game()
 
         self._notify_state_callbacks()
+
+    # ------------------------------------------------------------------
+    # Lightning Round (issue #42)
+    # ------------------------------------------------------------------
+    #
+    # Thin wrappers around a LightningRound instance. The mode's rules and
+    # state live in game/lightning.py; this class only owns the reference
+    # and the phase transition so the WS handler has one place to call.
+
+    def start_lightning_round(
+        self,
+        *,
+        category: str | None = None,
+        categories: list[str] | None = None,
+        difficulty: str | None = None,
+        language: str | None = None,
+    ) -> bool:
+        """Begin a lightning round, reusing the current player roster.
+
+        Returns True if it started, False if no questions were available.
+        Allowed from LOBBY (standalone lightning) or FINALE (after a game).
+        """
+        from .lightning import LightningRound  # local import — avoid cycle
+
+        if self.phase not in (GamePhase.LOBBY, GamePhase.FINALE):
+            return False
+
+        player_names = list(self._player_registry.players.keys())
+        lr = LightningRound(
+            self._question_bank,
+            player_names,
+            language=language or self.language,
+            category=category if category is not None else self.category,
+            categories=categories if categories is not None else getattr(self, "categories", None),
+            difficulty=difficulty,
+        )
+        if not lr.start():
+            return False
+
+        self._lightning = lr
+        self.phase = GamePhase.LIGHTNING
+        self._notify_state_callbacks()
+        return True
+
+    @property
+    def lightning(self):
+        """The active LightningRound, or None."""
+        return self._lightning
+
+    def finish_lightning_round(self) -> None:
+        """Transition out of an active lightning round into its recap screen."""
+        if self.phase == GamePhase.LIGHTNING:
+            self.phase = GamePhase.LIGHTNING_RECAP
+            self._question_bank.flush_shown_history()
+            self._notify_state_callbacks()
 
     # ------------------------------------------------------------------
     # Power-ups
@@ -1132,6 +1200,29 @@ class QuizifyGameState:
             awards = self._finale_superlatives if self._finale_superlatives is not None else compute_superlatives(self.get_players())
             if awards:
                 snapshot["superlatives"] = [s.to_dict() for s in awards]
+
+        if self.phase == GamePhase.LIGHTNING and self._lightning is not None:
+            lr = self._lightning
+            q = lr.current_question
+            snapshot["lightning"] = {
+                "index": lr.index,
+                "num_questions": lr.num_questions,
+                "time_remaining": round(lr.time_remaining(), 1),
+                "seconds_per_question": lr.seconds_per_question,
+                "leaderboard": lr.leaderboard(),
+            }
+            if q is not None:
+                # Canonical (admin/TV) answer order; players get their own
+                # shuffle pushed via the lightning_question event.
+                snapshot["lightning"]["question"] = {
+                    "text": q.question,
+                    "answers": [a.text for a in q.answers],
+                    "category": q.category,
+                    "image_url": q.image_url,
+                }
+
+        if self.phase == GamePhase.LIGHTNING_RECAP and self._lightning is not None:
+            snapshot["lightning_recap"] = self._lightning.build_recap()
 
         return snapshot
 
