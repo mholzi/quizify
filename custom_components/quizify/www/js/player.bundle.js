@@ -2336,6 +2336,33 @@
     var _answeredIndex = -1; // server question index we've answered
 
     // ------------------------------------------------------------------
+    // Intro splash (issue #201 — "Bolt Burst")
+    // ------------------------------------------------------------------
+
+    function handleLightningSplash(msg) {
+        msg = msg || {};
+        pu.showView('lightning-splash-view');
+
+        var countEl = document.getElementById('lightning-splash-count');
+        if (countEl && typeof msg.num_questions === 'number') {
+            countEl.textContent = msg.num_questions;
+        }
+        var secEl = document.getElementById('lightning-splash-seconds');
+        if (secEl && typeof msg.seconds_per_question === 'number') {
+            secEl.textContent = Math.round(msg.seconds_per_question) + 's';
+        }
+
+        // Admin gets the Start footer bar; players get the waiting hint.
+        var adminBar = document.getElementById('lightning-splash-adminbar');
+        var waitHint = document.getElementById('lightning-splash-waithint');
+        if (adminBar) adminBar.classList.toggle('hidden', !state.isAdmin);
+        if (waitHint) waitHint.classList.toggle('hidden', !!state.isAdmin);
+
+        var startBtn = document.getElementById('lightning-splash-start-btn');
+        if (startBtn) startBtn.disabled = false;
+    }
+
+    // ------------------------------------------------------------------
     // Question render
     // ------------------------------------------------------------------
 
@@ -2373,7 +2400,7 @@
         if (answered) answered.classList.add('hidden');
 
         var timer = document.getElementById('lightning-timer');
-        if (timer) timer.textContent = Math.ceil(msg.seconds || 6);
+        if (timer) timer.textContent = Math.ceil(msg.seconds || 15);
 
         // Admin gets an "end now" control.
         var adminBar = document.getElementById('lightning-admin-bar');
@@ -2503,6 +2530,14 @@
                 });
             })(i);
         }
+        var splashStartBtn = document.getElementById('lightning-splash-start-btn');
+        if (splashStartBtn) {
+            splashStartBtn.addEventListener('click', function () {
+                this.disabled = true;  // one-shot; avoid double-fire
+                _send('start_lightning_questions', {});
+            });
+        }
+
         var endBtn = document.getElementById('lightning-end-btn');
         if (endBtn) endBtn.addEventListener('click', function () { _send('end_lightning', {}); });
 
@@ -2515,6 +2550,7 @@
     window.QuizifyPlayerLightning = {
         setSend: setSend,
         init: init,
+        handleLightningSplash: handleLightningSplash,
         handleLightningQuestion: handleLightningQuestion,
         handleLightningTick: handleLightningTick,
         handleLightningAnswerResult: handleLightningAnswerResult,
@@ -3702,6 +3738,10 @@
                 break;
 
             // ---- Lightning Round (issue #42) ----
+            case 'lightning_splash':
+                if (lightning) lightning.handleLightningSplash(msg);
+                break;
+
             case 'lightning_question':
                 if (lightning) lightning.handleLightningQuestion(msg);
                 break;
@@ -3828,7 +3868,13 @@
                 // round. Server pushes per-question lightning_question events
                 // for the live flow; this just gets us onto the right view
                 // with the current question if present.
-                if (lightning && msg.lightning) {
+                if (lightning && msg.lightning && msg.lightning.splash_pending) {
+                    // Round armed but the intro splash (#201) is still up.
+                    lightning.handleLightningSplash({
+                        num_questions: msg.lightning.num_questions,
+                        seconds_per_question: msg.lightning.seconds_per_question
+                    });
+                } else if (lightning && msg.lightning) {
                     var lq = msg.lightning.question;
                     lightning.handleLightningQuestion({
                         question_text: lq ? lq.text : '',

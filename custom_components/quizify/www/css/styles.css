@@ -5496,6 +5496,204 @@ body.is-admin .reaction-bar {
     box-shadow: 0 0 6px var(--color-error);
 }
 
+
+/* ==========================================
+   Lightning Round Intro Splash — "Bolt Burst" (issue #201)
+   Variant A from design-issue-201. Shown on host/TV + player phone
+   after the admin triggers a lightning round, before question 1.
+   Tokens mapped to the Soft-Parlor system (no new tokens introduced).
+   ========================================== */
+#lightning-splash-view {
+    position: relative;
+    min-height: 100vh;
+    overflow: hidden;
+}
+
+.lr-splash-stage {
+    position: absolute;
+    inset: 0;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    text-align: center;
+    padding: 24px;
+    background: radial-gradient(ellipse at 50% 36%, #FFF6E2 0%, var(--color-bg-primary) 60%);
+}
+
+.lr-splash-rays {
+    position: absolute;
+    inset: 0;
+    background: repeating-conic-gradient(from 0deg at 50% 38%,
+        rgba(232, 196, 127, 0.10) 0deg 6deg, transparent 6deg 18deg);
+    -webkit-mask: radial-gradient(circle at 50% 38%, #000 0%, transparent 62%);
+            mask: radial-gradient(circle at 50% 38%, #000 0%, transparent 62%);
+    pointer-events: none;
+}
+
+.lr-splash-bolt {
+    position: relative;
+    width: 86px;
+    height: 86px;
+    border-radius: var(--radius-full);
+    background: linear-gradient(145deg, var(--color-accent-primary), var(--color-warning));
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    box-shadow: 0 12px 34px rgba(232, 138, 127, 0.40);
+    margin-bottom: 14px;
+}
+
+.lr-splash-bolt span {
+    font-size: 46px;
+    filter: drop-shadow(0 2px 2px rgba(0, 0, 0, 0.15));
+    line-height: 1;
+}
+
+.lr-splash-kicker {
+    font-family: var(--font-display);
+    font-weight: var(--font-weight-extrabold);
+    letter-spacing: 2px;
+    text-transform: uppercase;
+    color: var(--color-accent-brand-hover);
+    font-size: 14px;
+    margin-bottom: 4px;
+}
+
+.lr-splash-title {
+    font-family: var(--font-display);
+    font-weight: var(--font-weight-extrabold);
+    font-size: 42px;
+    letter-spacing: -1px;
+    color: var(--color-text-primary);
+    line-height: 1.05;
+}
+
+.lr-splash-chips {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+    margin-top: 22px;
+    width: 78%;
+    max-width: 360px;
+}
+
+.lr-splash-chip {
+    background: var(--color-bg-surface);
+    border: 1px solid var(--color-border-light);
+    border-radius: var(--radius-xl);
+    padding: 12px 16px;
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: space-between;
+    box-shadow: var(--shadow-md);
+}
+
+.lr-splash-chip b {
+    font-family: var(--font-display);
+    font-size: 22px;
+    color: var(--color-accent-brand-hover);
+    font-weight: var(--font-weight-extrabold);
+}
+
+.lr-splash-chip small {
+    font-size: 12px;
+    color: var(--color-text-muted);
+    font-weight: var(--font-weight-semibold);
+}
+
+/* Player phone: waiting-for-host hint */
+.lr-splash-waithint {
+    position: absolute;
+    left: 0;
+    right: 0;
+    bottom: 34px;
+    text-align: center;
+    color: var(--color-text-muted);
+    font-size: 14px;
+    font-weight: var(--font-weight-semibold);
+}
+
+.lr-splash-waithint .dots {
+    display: inline-block;
+    color: var(--color-accent-primary);
+}
+
+/* Admin tablet: full-width sticky footer Start bar — primary action */
+.lr-splash-adminbar {
+    position: absolute;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    padding: 18px 24px;
+    padding-bottom: calc(18px + env(safe-area-inset-bottom, 0px));
+    display: flex;
+    align-items: center;
+    gap: 16px;
+    background: var(--color-bg-surface);
+    border-top: 1px solid var(--color-border-light);
+    box-shadow: 0 -6px 20px rgba(42, 40, 32, 0.06);
+    z-index: 2;
+}
+
+.lr-splash-adminmeta {
+    font-size: 13px;
+    color: var(--color-text-muted);
+}
+
+.lr-splash-startbtn {
+    margin-left: auto;
+    background: var(--color-accent-primary);
+    color: #fff;
+    border: none;
+    border-radius: var(--radius-full);
+    padding: 15px 34px;
+    font-family: var(--font-display);
+    font-weight: var(--font-weight-extrabold);
+    font-size: 18px;
+    letter-spacing: 0.3px;
+    box-shadow: var(--glow-primary);
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    cursor: pointer;
+}
+
+.lr-splash-startbtn:disabled {
+    opacity: 0.6;
+    cursor: default;
+}
+
+/* Host / TV (dashboard) — bigger medallion + title, horizontal chips.
+   The dashboard renders the splash inside a 16:9 stage; scale up. */
+.lr-splash-stage.lr-splash-tv .lr-splash-bolt {
+    width: 120px;
+    height: 120px;
+    margin-bottom: 18px;
+}
+.lr-splash-stage.lr-splash-tv .lr-splash-bolt span { font-size: 62px; }
+.lr-splash-stage.lr-splash-tv .lr-splash-title { font-size: 64px; letter-spacing: -1.5px; }
+.lr-splash-stage.lr-splash-tv .lr-splash-kicker { font-size: 18px; letter-spacing: 3px; }
+.lr-splash-stage.lr-splash-tv .lr-splash-chips {
+    flex-direction: row;
+    gap: 14px;
+    width: auto;
+    max-width: none;
+    margin-top: 26px;
+}
+.lr-splash-stage.lr-splash-tv .lr-splash-chip {
+    flex-direction: column;
+    align-items: center;
+    gap: 2px;
+    min-width: 120px;
+    padding: 14px 18px;
+}
+.lr-splash-stage.lr-splash-tv .lr-splash-chip b { font-size: 30px; }
+
+@media (prefers-reduced-motion: reduce) {
+    .lr-splash-rays { opacity: 0.6; }
+}
 /* ==========================================
    Responsive
    ========================================== */

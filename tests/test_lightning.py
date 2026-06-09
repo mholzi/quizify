@@ -78,7 +78,7 @@ def _wrong_shuffled_index(lr: LightningRound, name: str) -> int:
 class TestLightningRules:
     def test_defaults_match_decided_spec(self) -> None:
         assert LIGHTNING_NUM_QUESTIONS == 5
-        assert LIGHTNING_SECONDS_PER_QUESTION == 6.0
+        assert LIGHTNING_SECONDS_PER_QUESTION == 15.0
         assert LIGHTNING_POINTS_PER_CORRECT == 10
 
     def test_start_builds_queue_and_arms_first(self, bank: QuestionBank) -> None:
@@ -247,6 +247,35 @@ class TestGameStateLightning:
         assert "lightning" in snap
         assert "question" in snap["lightning"]
         assert snap["lightning"]["num_questions"] >= 1
+
+    def test_splash_pending_after_start(self, state: QuizifyGameState) -> None:
+        # The intro splash (#201) is up between start and the admin's Start.
+        state.add_player("A", _fake_ws())
+        state.start_lightning_round()
+        assert state.lightning_splash_pending is True
+        snap = state.get_state_snapshot()
+        assert snap["lightning"]["splash_pending"] is True
+
+    def test_begin_questions_clears_splash(self, state: QuizifyGameState) -> None:
+        state.add_player("A", _fake_ws())
+        state.start_lightning_round()
+        assert state.begin_lightning_questions() is True
+        assert state.lightning_splash_pending is False
+        snap = state.get_state_snapshot()
+        assert snap["lightning"]["splash_pending"] is False
+
+    def test_begin_questions_idempotent(self, state: QuizifyGameState) -> None:
+        state.add_player("A", _fake_ws())
+        state.start_lightning_round()
+        assert state.begin_lightning_questions() is True
+        # Second call is a no-op (splash already dismissed).
+        assert state.begin_lightning_questions() is False
+
+    def test_begin_questions_noop_without_round(
+        self, state: QuizifyGameState
+    ) -> None:
+        # No active lightning round → nothing to dismiss.
+        assert state.begin_lightning_questions() is False
 
     def test_snapshot_exposes_recap(self, state: QuizifyGameState) -> None:
         state.add_player("A", _fake_ws())

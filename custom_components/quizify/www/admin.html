@@ -587,13 +587,24 @@
 
         <!-- Lightning Round view (issue #42) -->
         <div id="admin-lightning-view" class="view">
-            <section class="card-section">
+            <!-- Intro splash preview + Start control (issue #201). Shown
+                 while the "Bolt Burst" splash is up on host/TV + phones;
+                 hidden once the admin starts the questions. -->
+            <section id="admin-lightning-splash" class="card-section" hidden>
+                <h2 class="section-header">⚡ <span data-i18n="lightning.splashKicker">Lightning Round</span></h2>
+                <p class="hint" data-i18n="lightning.splashAdminMeta">Splash visible to all players</p>
+                <p class="mt-md" id="admin-lightning-splash-rules"></p>
+            </section>
+            <section id="admin-lightning-question-section" class="card-section">
                 <h2 class="section-header">⚡ <span data-i18n="lightning.title">Lightning Round</span></h2>
                 <div id="admin-lightning-progress" class="round-indicator"></div>
                 <div id="admin-lightning-question" class="question-text" style="font-size:1.1rem;"></div>
                 <div id="admin-lightning-timer" class="timer-text mt-md"></div>
             </section>
             <div class="admin-actions lobby-actions--sticky mt-lg">
+                <button type="button" id="admin-lightning-start-btn" class="btn btn-primary btn-lg btn-block" hidden>
+                    ⚡ <span data-i18n="lightning.splashStart">Let's go</span>
+                </button>
                 <button type="button" id="admin-lightning-end-btn" class="btn btn-secondary btn-lg btn-block">
                     🏁 <span data-i18n="lightning.endNow">End Lightning</span>
                 </button>
