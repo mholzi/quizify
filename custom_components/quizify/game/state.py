@@ -351,6 +351,10 @@ class QuizifyGameState:
         """
         return self._player_registry.has_other_admin(name)
 
+    def get_admin(self) -> PlayerSession | None:
+        """Return the current admin player (single-admin invariant), if any."""
+        return self._player_registry.get_admin()
+
     # ------------------------------------------------------------------
     # Game flow
     # ------------------------------------------------------------------
