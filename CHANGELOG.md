@@ -3,6 +3,18 @@
 All notable changes to Quizify are documented here. This project follows
 [Semantic Versioning](https://semver.org/).
 
+## [Unreleased]
+
+### Added
+
+- **Waiting-room music (#56).** Optional ambient background audio in the
+  lobby. A new "Lobby music URL" option lets you point Quizify at an audio
+  file you supply yourself (e.g. `/local/quizify-lobby.mp3` from your
+  `config/www` folder); the host device loops it while waiting for players,
+  with a mute toggle in the host's lobby controls. The mechanism is inert by
+  default — no audio file ships with the integration, and nothing plays until
+  a URL is configured. Music stops automatically once the game starts.
+
 ## [1.2.7] — 2026-06-09
 
 Backend hardening release from the 2026-06-09 automated code review. No

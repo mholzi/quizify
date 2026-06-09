@@ -313,6 +313,12 @@
     function handleGameState(msg) {
         state.currentPhase = msg.phase;
 
+        // Lobby music is a waiting-room-only feature; once the game leaves
+        // the lobby, make sure any host-side audio stops.
+        if (msg.phase !== 'LOBBY' && lobby && lobby.stopLobbyMusic) {
+            lobby.stopLobbyMusic();
+        }
+
         // Wake lock: only hold during active question. Cheap battery,
         // doesn't fight the OS on lobby/reveal/finale screens where
         // a sleeping screen costs nothing.

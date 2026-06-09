@@ -21,12 +21,14 @@
                 "data": {
                     "party_light_entities": "Party lights",
                     "tts_entity": "Text-to-speech provider",
-                    "media_player_entity": "Media player for TTS"
+                    "media_player_entity": "Media player for TTS",
+                    "lobby_music_url": "Lobby music URL"
                 },
                 "data_description": {
                     "party_light_entities": "Lights that should glow with the round phase (coral on question, sage on reveal, sun on finale).",
                     "tts_entity": "TTS entity (e.g. tts.google_translate_say) used to announce milestones and round results.",
-                    "media_player_entity": "Speaker the TTS audio plays through. Required if TTS provider is set."
+                    "media_player_entity": "Speaker the TTS audio plays through. Required if TTS provider is set.",
+                    "lobby_music_url": "Optional URL of an audio file (e.g. /local/quizify-lobby.mp3, served from your config/www folder) the host's lobby loops while waiting. Leave blank for no music. No audio file is included — supply your own."
                 }
             }
         }

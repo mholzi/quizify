@@ -46,3 +46,9 @@ QUESTIONS_DIR = "quizify/questions"
 CONF_PARTY_LIGHT_ENTITIES = "party_light_entities"  # list[str], domain=light
 CONF_TTS_ENTITY = "tts_entity"  # str, single, domain=tts
 CONF_MEDIA_PLAYER_ENTITY = "media_player_entity"  # str, single, domain=media_player
+# URL of an audio file to loop in the lobby while waiting for players. Empty by
+# default — the lobby-music mechanism stays completely inert until the user
+# points this at their own file (e.g. "/local/quizify-lobby.mp3" served from
+# Home Assistant's www/ folder). No audio asset ships with the integration, so
+# there is nothing to play unless the user supplies one.
+CONF_LOBBY_MUSIC_URL = "lobby_music_url"  # str, single, free-text URL

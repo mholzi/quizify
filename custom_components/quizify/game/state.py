@@ -109,6 +109,10 @@ class QuizifyGameState:
         self.difficulty: str = DIFFICULTY_DEFAULT
         self.language: str = "de"
         self.join_url: str | None = None
+        # Optional URL of an audio file the host's lobby loops while waiting
+        # for players. None unless the user configures one in the options flow;
+        # the frontend treats a missing/empty value as "no lobby music".
+        self.lobby_music_url: str | None = None
 
         # Sub-managers
         self._player_registry = PlayerRegistry()
@@ -1057,6 +1061,12 @@ class QuizifyGameState:
             "players": self._player_registry.get_players_state(),
             "leaderboard": self.get_leaderboard(),
         }
+
+        # Only advertise lobby music when the host configured a source. The
+        # frontend plays it on the host device during the LOBBY phase; an
+        # absent key means "feature off".
+        if self.lobby_music_url:
+            snapshot["lobby_music_url"] = self.lobby_music_url
 
         if self.phase == GamePhase.QUESTION_ACTIVE and self._current_question:
             q = self._current_question

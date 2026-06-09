@@ -38,6 +38,7 @@ async def async_setup_entry(hass: HomeAssistant, entry: ConfigEntry) -> bool:
 
     from .analytics import QuizifyAnalytics  # noqa: PLC0415
     from .const import (  # noqa: PLC0415
+        CONF_LOBBY_MUSIC_URL,
         CONF_MEDIA_PLAYER_ENTITY,
         CONF_PARTY_LIGHT_ENTITIES,
         CONF_TTS_ENTITY,
@@ -154,6 +155,9 @@ async def async_setup_entry(hass: HomeAssistant, entry: ConfigEntry) -> bool:
     # game state callbacks (Phase 1 plumbing) and stay silent if their
     # respective entities aren't configured.
     options = entry.options or {}
+    # Surface the optional lobby-music URL to the frontend via the game-state
+    # snapshot. Empty/unset → the host's lobby never tries to play anything.
+    game_state.lobby_music_url = (options.get(CONF_LOBBY_MUSIC_URL) or "").strip() or None
     party_lights = QuizifyPartyLights(
         hass=hass,
         entity_ids=list(options.get(CONF_PARTY_LIGHT_ENTITIES) or []),
@@ -179,6 +183,7 @@ async def async_setup_entry(hass: HomeAssistant, entry: ConfigEntry) -> bool:
     # effect without an HA restart.
     async def _update_listener(_hass: HomeAssistant, updated_entry: ConfigEntry) -> None:
         opts = updated_entry.options or {}
+        game_state.lobby_music_url = (opts.get(CONF_LOBBY_MUSIC_URL) or "").strip() or None
         domain_data = _hass.data.get(DOMAIN, {})
         pl: QuizifyPartyLights | None = domain_data.get("party_lights")
         tts: QuizifyTTSAnnouncer | None = domain_data.get("tts_announcer")

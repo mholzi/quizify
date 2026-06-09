@@ -315,6 +315,37 @@ class TestPlayerRegistry:
         assert "players" in snapshot or "leaderboard" in snapshot
 
 
+# ---------- Lobby music (#56) ----------
+
+
+class TestLobbyMusic:
+    """Issue #56: the host's lobby can loop an ambient audio file the user
+    supplies. The mechanism must stay completely inert until a source is
+    configured — no audio asset ships with the integration."""
+
+    def test_no_music_key_by_default(self, state: QuizifyGameState) -> None:
+        # Fresh state: no source configured → snapshot must NOT advertise it,
+        # so the frontend treats the feature as off.
+        assert state.lobby_music_url is None
+        snapshot = state.get_state_snapshot()
+        assert "lobby_music_url" not in snapshot
+
+    def test_music_url_surfaced_when_configured(
+        self, state: QuizifyGameState
+    ) -> None:
+        state.lobby_music_url = "/local/quizify-lobby.mp3"
+        snapshot = state.get_state_snapshot()
+        assert snapshot["lobby_music_url"] == "/local/quizify-lobby.mp3"
+
+    def test_empty_music_url_treated_as_off(
+        self, state: QuizifyGameState
+    ) -> None:
+        # An empty string is falsy → key omitted, feature stays off.
+        state.lobby_music_url = ""
+        snapshot = state.get_state_snapshot()
+        assert "lobby_music_url" not in snapshot
+
+
 # ---------- Per-player shuffle ----------
 
 

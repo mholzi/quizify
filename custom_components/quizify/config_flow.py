@@ -16,6 +16,7 @@ from homeassistant.core import callback
 from homeassistant.helpers import selector
 
 from .const import (
+    CONF_LOBBY_MUSIC_URL,
     CONF_MEDIA_PLAYER_ENTITY,
     CONF_PARTY_LIGHT_ENTITIES,
     CONF_TTS_ENTITY,
@@ -91,6 +92,15 @@ class QuizifyOptionsFlow(OptionsFlow):
                 default=current.get(CONF_MEDIA_PLAYER_ENTITY, ""),
             ): selector.EntitySelector(
                 selector.EntitySelectorConfig(domain="media_player"),
+            ),
+            # Optional lobby background music. Free-text URL to an audio file
+            # the user supplies themselves (e.g. "/local/quizify-lobby.mp3").
+            # Empty = lobby music stays off; the integration ships no audio.
+            vol.Optional(
+                CONF_LOBBY_MUSIC_URL,
+                default=current.get(CONF_LOBBY_MUSIC_URL, ""),
+            ): selector.TextSelector(
+                selector.TextSelectorConfig(type=selector.TextSelectorType.URL),
             ),
         })
         return self.async_show_form(step_id="init", data_schema=schema)
