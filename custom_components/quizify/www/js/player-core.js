@@ -954,6 +954,7 @@
     }
 
     function init() {
+        pu.paintUiIcons();
         setupJoinForm();
         lobby.init(send);
         setupRetryConnection();

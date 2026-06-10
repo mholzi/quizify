@@ -453,6 +453,20 @@
         }
     }
 
+    // P4 of #225: paint the static UI emoji-icon spans (admin lobby
+    // cast/join/start) with the shared Rounded Duotone set. Any element
+    // carrying both `.qz-icon` and `data-ui-icon="<name>"` gets its emoji
+    // swapped for the matching window.QuizifyIcons.uiIcon() <svg>. Existing
+    // layout classes (.btn-icon etc.) + the qz-icon--<tint> class stay put.
+    function paintUiIcons() {
+        var Icons = window.QuizifyIcons;
+        if (!Icons || !Icons.uiIcon) return;
+        document.querySelectorAll('.qz-icon[data-ui-icon]').forEach(function (slot) {
+            var svg = Icons.uiIcon(slot.getAttribute('data-ui-icon'));
+            if (svg) slot.innerHTML = svg;
+        });
+    }
+
     function setupFeaturedSpotlight() {
         if (!els.featuredSpotlight || !els.categoryChips) return;
         els.featuredSpotlight.addEventListener('click', function () {
@@ -680,6 +694,7 @@
     setupCategoryChips(els.categoryChips);
     setupThemeTabs();
     paintP1Icons();
+    paintUiIcons();
     setupFeaturedSpotlight();
     // Initial scaling pass — paints spotlight/tabs once we know the
     // visible-pack-count for the default language.

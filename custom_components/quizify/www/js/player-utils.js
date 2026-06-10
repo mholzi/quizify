@@ -298,6 +298,25 @@
         }
     }
 
+    // Paint the static UI emoji-icon spans with the shared Rounded Duotone
+    // SVG set (#225 P4). Any element carrying both `.qz-icon` and a
+    // `data-ui-icon="<name>"` gets its emoji glyph swapped for the matching
+    // window.QuizifyIcons.uiIcon() <svg>. The existing layout class
+    // (.section-icon / .control-icon / .btn-icon / .paused-icon / etc.) and
+    // the qz-icon--<tint> class stay put — we only replace innerHTML. Safe to
+    // call more than once; already-painted spans just get re-filled.
+    function paintUiIcons(root) {
+        var Icons = window.QuizifyIcons;
+        if (!Icons || !Icons.uiIcon) return;
+        var scope = root || document;
+        var slots = scope.querySelectorAll('.qz-icon[data-ui-icon]');
+        for (var i = 0; i < slots.length; i++) {
+            var name = slots[i].getAttribute('data-ui-icon');
+            var svg = Icons.uiIcon(name);
+            if (svg) slots[i].innerHTML = svg;
+        }
+    }
+
     // ============================================
     // QR Code Generation
     // ============================================
@@ -461,6 +480,7 @@
         renderLeaderboard: renderLeaderboard,
         renderPlayerCards: renderPlayerCards,
         setupCollapsibles: setupCollapsibles,
+        paintUiIcons: paintUiIcons,
         generateQR: generateQR,
         showToast: showToast,
         saveSession: saveSession,

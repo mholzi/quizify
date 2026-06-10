@@ -53,7 +53,7 @@
 
         <!-- Error: Game not found -->
         <div id="not-found-view" class="view hidden">
-            <div class="error-icon">🧠</div>
+            <div class="error-icon qz-icon qz-icon--sky" data-ui-icon="brain">🧠</div>
             <h1 data-i18n="errors.gameNotFound">Game Not Found</h1>
             <p data-i18n="errors.gameNotFoundHint">This game doesn't exist or the link is incorrect.</p>
             <p class="hint" data-i18n="errors.askHostQr">Ask the host for a new QR code.</p>
@@ -62,7 +62,7 @@
 
         <!-- Error: Game ended -->
         <div id="ended-view" class="view hidden">
-            <div class="error-icon">🎉</div>
+            <div class="error-icon qz-icon qz-icon--sun" data-ui-icon="party">🎉</div>
             <h1 data-i18n="errors.gameHasEnded">Game Has Ended</h1>
             <p data-i18n="errors.thanksForPlaying">Thanks for playing Quizify!</p>
             <p class="hint" data-i18n="errors.askHostNewGame">Ask the host to start a new game.</p>
@@ -70,7 +70,7 @@
 
         <!-- Error: Game in progress (can't join mid-round) -->
         <div id="in-progress-view" class="view hidden">
-            <div class="error-icon">⏳</div>
+            <div class="error-icon qz-icon qz-icon--mix" data-ui-icon="hourglass">⏳</div>
             <h1 data-i18n="errors.gameInProgress">Game In Progress</h1>
             <p data-i18n="errors.gameInProgressHint">The game is currently in a round. Try again in a moment.</p>
             <button id="retry-btn" class="btn btn-primary btn-glow" data-i18n="common.retry">Try Again</button>
@@ -123,7 +123,7 @@
             <!-- Variant D: rules. Always visible (was collapsible). -->
             <section class="pl-rules">
                 <h2 class="pl-rulesTitle">
-                    <span aria-hidden="true">🧠</span>
+                    <span class="qz-icon qz-icon--sky" data-ui-icon="brain" aria-hidden="true">🧠</span>
                     <span data-i18n="lobby.howToPlay">How to Play</span>
                 </h2>
                 <ol>
@@ -158,7 +158,7 @@
             <!-- Sticky Admin Actions -->
             <div id="admin-controls" class="lobby-actions lobby-actions--sticky hidden">
                 <button id="start-game-btn" class="btn btn-primary btn-large btn-full-width">
-                    <span class="btn-icon" aria-hidden="true">🎉</span>
+                    <span class="btn-icon qz-icon qz-icon--sun" data-ui-icon="party" aria-hidden="true">🎉</span>
                     <span data-i18n="lobby.startGame">Start Game</span>
                 </button>
             </div>
@@ -170,7 +170,7 @@
                 <!-- Game Header with Round Info -->
                 <div class="game-header-compact">
                     <div class="game-header-left">
-                        <span class="section-icon" aria-hidden="true">🎮</span>
+                        <span class="section-icon qz-icon qz-icon--coral" data-ui-icon="controller" aria-hidden="true">🎮</span>
                         <span id="round-indicator" class="round-indicator-text">
                             <span data-i18n="game.roundLabel">Round</span>
                             <span id="current-round">1</span>
@@ -231,7 +231,7 @@
                      Answer buttons stay disabled until the wager is submitted. -->
                 <section id="wager-panel" class="wager-panel hidden" aria-live="polite">
                     <h2 class="wager-panel-title">
-                        <span aria-hidden="true">🎰</span>
+                        <span class="qz-icon qz-icon--sky" data-ui-icon="sparkle" aria-hidden="true">🎰</span>
                         <span id="wager-panel-title">Wagerunde</span>
                     </h2>
                     <p id="wager-panel-hint" class="wager-panel-hint"></p>
@@ -252,7 +252,7 @@
                 <!-- Answer Buttons A/B/C (replaces year-selector) - card-section pattern -->
                 <section id="answers-container" class="card-section answer-section">
                     <h2 class="section-header">
-                        <span class="section-icon" aria-hidden="true">🎯</span>
+                        <span class="section-icon qz-icon qz-icon--coral" data-ui-icon="target" aria-hidden="true">🎯</span>
                         <span data-i18n="game.yourAnswer">Your Answer</span>
                     </h2>
                     <div id="answer-buttons" class="answer-buttons">
@@ -273,7 +273,7 @@
                     <!-- Power-up Button (replaces bet-toggle) -->
                     <div class="powerup-container">
                         <button id="powerup-btn" class="powerup-btn" type="button">
-                            <span class="powerup-icon">⚡</span>
+                            <span class="powerup-icon qz-icon qz-icon--sun" data-ui-icon="bolt" aria-hidden="true">⚡</span>
                             <span class="powerup-label" data-i18n="game.powerup">Power-Up</span>
                         </button>
                     </div>
@@ -287,7 +287,7 @@
                 <!-- Leaderboard - Collapsible section pattern -->
                 <section id="game-leaderboard" class="section-collapsible leaderboard-section collapsed">
                     <button type="button" class="section-header-collapsible" id="leaderboard-toggle" aria-expanded="false" aria-controls="leaderboard-content">
-                        <span class="section-icon" aria-hidden="true">🏆</span>
+                        <span class="section-icon qz-icon qz-icon--sun" data-ui-icon="trophy" aria-hidden="true">🏆</span>
                         <span data-i18n="leaderboard.title">Leaderboard</span>
                         <span class="section-summary" id="leaderboard-summary">--</span>
                         <span class="section-toggle" aria-hidden="true">▼</span>
@@ -324,7 +324,7 @@
 
                 <section id="fun-fact-container" class="pl-result-section pl-result-funfact-section hidden">
                     <div class="pl-result-sec-head">
-                        <span aria-hidden="true">💡</span>
+                        <span class="qz-icon qz-icon--sun" data-ui-icon="bulb" aria-hidden="true">💡</span>
                         <span data-i18n="reveal.funFact">Did you know?</span>
                         <button id="flag-question-btn"
                                 type="button"
@@ -340,7 +340,7 @@
 
                 <section class="pl-result-section">
                     <div class="pl-result-sec-head">
-                        <span aria-hidden="true">🏆</span>
+                        <span class="qz-icon qz-icon--sun" data-ui-icon="trophy" aria-hidden="true">🏆</span>
                         <span data-i18n="leaderboard.standings">Standings</span>
                     </div>
                     <div id="reveal-standings" class="pl-result-standings"></div>
@@ -379,7 +379,7 @@
         <!-- Paused View -->
         <div id="paused-view" class="view hidden">
             <div class="paused-container">
-                <div class="paused-icon">⏸️</div>
+                <div class="paused-icon qz-icon qz-icon--mix" data-ui-icon="pause">⏸️</div>
                 <h1 id="pause-title" data-i18n="admin.pausedTitle">Game Paused</h1>
                 <p id="pause-message" data-i18n="admin.pausedHint">The host paused the game</p>
                 <div class="paused-spinner">
@@ -490,7 +490,7 @@
         <div id="lightning-splash-view" class="view hidden">
             <div class="lr-splash-stage">
                 <div class="lr-splash-rays" aria-hidden="true"></div>
-                <div class="lr-splash-bolt"><span aria-hidden="true">⚡</span></div>
+                <div class="lr-splash-bolt"><span class="qz-icon qz-icon--sun" data-ui-icon="bolt" aria-hidden="true">⚡</span></div>
                 <div class="lr-splash-kicker" data-i18n="lightning.splashKicker">Lightning Round</div>
                 <div class="lr-splash-title" data-i18n="lightning.splashTitle">Get ready!</div>
                 <div class="lr-splash-chips">
@@ -518,7 +518,7 @@
                 <div class="lr-splash-adminmeta" data-i18n="lightning.splashAdminMeta">Splash visible to all players</div>
                 <button id="lightning-splash-start-btn" class="lr-splash-startbtn" type="button">
                     <span data-i18n="lightning.splashStart">Let's go</span>
-                    <span aria-hidden="true">⚡</span>
+                    <span class="qz-icon qz-icon--sun" data-ui-icon="bolt" aria-hidden="true">⚡</span>
                 </button>
             </div>
         </div>
@@ -528,7 +528,7 @@
             <div class="game-container lightning-container">
                 <div class="game-header-compact">
                     <div class="game-header-left">
-                        <span class="section-icon" aria-hidden="true">⚡</span>
+                        <span class="section-icon qz-icon qz-icon--sun" data-ui-icon="bolt" aria-hidden="true">⚡</span>
                         <span class="round-indicator-text">
                             <span data-i18n="lightning.title">Lightning Round</span>
                         </span>
@@ -581,7 +581,7 @@
 
                 <div id="lightning-admin-bar" class="admin-control-bar hidden" style="position:static;">
                     <button id="lightning-end-btn" class="control-btn control-btn--danger" type="button">
-                        <span class="control-icon">🏁</span>
+                        <span class="control-icon qz-icon qz-icon--coral" data-ui-icon="finish">🏁</span>
                         <span class="control-label" data-i18n="lightning.endNow">End Lightning</span>
                     </button>
                 </div>
@@ -593,7 +593,7 @@
             <div class="end-container lightning-recap-container">
                 <div class="end-header">
                     <p class="end-subtitle">
-                        <span aria-hidden="true">⚡</span>
+                        <span class="qz-icon qz-icon--sun" data-ui-icon="bolt" aria-hidden="true">⚡</span>
                         <span data-i18n="lightning.recapTitle">Lightning Round Results</span>
                     </p>
                 </div>
@@ -627,23 +627,23 @@
         <!-- Admin Control Bar - visible across PLAYING/REVEAL for admin -->
         <div id="admin-control-bar" class="admin-control-bar hidden">
             <button id="skip-question-btn" class="control-btn" type="button">
-                <span class="control-icon">⏭️</span>
+                <span class="control-icon qz-icon qz-icon--mix" data-ui-icon="skipnext">⏭️</span>
                 <span class="control-label" data-i18n="admin.skip">Skip</span>
             </button>
             <button id="pause-game-btn" class="control-btn" type="button">
-                <span class="control-icon">⏸️</span>
+                <span class="control-icon qz-icon qz-icon--mix" data-ui-icon="pause">⏸️</span>
                 <span class="control-label" data-i18n="admin.pause">Pause</span>
             </button>
             <button id="resume-game-btn" class="control-btn hidden" type="button">
-                <span class="control-icon">▶️</span>
+                <span class="control-icon qz-icon qz-icon--mix" data-ui-icon="play">▶️</span>
                 <span class="control-label" data-i18n="admin.resume">Resume</span>
             </button>
             <button id="next-round-admin-btn" class="control-btn" type="button">
-                <span class="control-icon">⏭️</span>
+                <span class="control-icon qz-icon qz-icon--mix" data-ui-icon="skipnext">⏭️</span>
                 <span class="control-label" data-i18n="admin.next">Next</span>
             </button>
             <button id="end-game-btn" class="control-btn control-btn--danger" type="button">
-                <span class="control-icon">🛑</span>
+                <span class="control-icon qz-icon qz-icon--coral" data-ui-icon="stop">🛑</span>
                 <span class="control-label" data-i18n="admin.end">End</span>
             </button>
         </div>
@@ -696,7 +696,7 @@
     <!-- Connection Lost View -->
     <div id="connection-lost-view" class="view hidden">
         <div class="connection-lost-container">
-            <div class="connection-lost-icon">📡</div>
+            <div class="connection-lost-icon qz-icon qz-icon--coral" data-ui-icon="signaloff">📡</div>
             <h1 data-i18n="errors.CONNECTION_LOST">Connection Lost</h1>
             <p data-i18n="errors.connectionLostHint">We couldn't reconnect to the game server.</p>
             <button id="retry-connection-btn" class="btn btn-primary btn-glow" data-i18n="common.retry">Try Again</button>
@@ -751,7 +751,7 @@
                 <button id="invite-copy-btn" class="invite-copy-btn" type="button"
                         data-i18n-aria-label="a11y.copyJoinLinkAria"
                         aria-label="Copy join link">
-                    <span class="invite-copy-icon">📋</span>
+                    <span class="invite-copy-icon qz-icon qz-icon--sage" data-ui-icon="copy">📋</span>
                 </button>
             </div>
             <p id="invite-copy-feedback" class="invite-copy-feedback hidden">Copied!</p>
@@ -781,6 +781,10 @@
     <!-- DO NOT REMOVE utils.js \u2014 player-utils.js depends on window.QuizifyUtils. -->
     <!-- Dropped twice before (see commits 86025d1, 055e58c). Third time's not charming. -->
     <script src="/quizify/static/js/utils.js?v={{ASSET_VER}}"></script>
+    <!-- Shared Rounded Duotone SVG icon set (window.QuizifyIcons). Loaded
+         before the bundle so player-utils.paintUiIcons() can swap the
+         static emoji-as-icon spans on init (#225 P4). -->
+    <script src="/quizify/static/js/icons.js?v={{ASSET_VER}}"></script>
     <!-- Bundle of player-utils + lobby + game + reveal + end + core
          (concatenated by scripts/build_bundle.py). Cuts the request
          waterfall from 6 sequential JS fetches to 1 \u2014 meaningful on
