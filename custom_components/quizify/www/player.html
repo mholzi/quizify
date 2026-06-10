@@ -4,6 +4,13 @@
     <meta charset="UTF-8">
     <meta name="quizify-version" content="{{VERSION}}">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+    <!-- PWA / iOS standalone metas (parity with admin.html). status-bar-style
+         "default" reserves the status-bar strip so scrolled content (e.g. the
+         end-screen podium) is not drawn under the iOS status bar (#229). -->
+    <meta name="theme-color" content="#FAF6EC">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="default">
+    <meta name="apple-mobile-web-app-title" content="Quizify">
     <title data-i18n="join.title">Quizify - Join Game</title>
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -16,6 +23,11 @@
     <!-- Soft Parlor: no confetti library. The warm reveal IS the celebration. See DESIGN.md. -->
 </head>
 <body>
+    <!-- #229: fixed cream mask over the iOS status-bar strip. In a Safari tab
+         (viewport-fit=cover, scrolled) content slides under the status bar; this
+         masks that strip so scrolled content (e.g. the end-screen podium) is not
+         drawn under the time/wifi/battery. Zero height where there's no inset. -->
+    <div class="sb-safe-mask" aria-hidden="true"></div>
     <header class="player-header">
         <h1 class="wordmark"><span class="wordmark-quiz">Quiz</span><span class="wordmark-ify">ify</span></h1>
         <!-- Right-side header cluster (Variant C, issue #194): the sound mute
