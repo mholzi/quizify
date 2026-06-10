@@ -48,9 +48,14 @@ class _ExecutorRuntime:
     def __init__(self, tmp_path: Path) -> None:
         self.data_dir = tmp_path
         self.executor_calls = 0
+        # Track scheduled fire-and-forget tasks so a test can await them
+        # to completion deterministically (instead of racing on sleep(0)).
+        self.tasks: list[asyncio.Future] = []
 
     def create_task(self, coro):
-        return asyncio.ensure_future(coro)
+        task = asyncio.ensure_future(coro)
+        self.tasks.append(task)
+        return task
 
     async def run_in_executor(self, func, *args):
         self.executor_calls += 1
@@ -151,12 +156,12 @@ async def test_end_game_schedules_offloaded_history_flush(tmp_path: Path) -> Non
     state.end_game()
     assert state.phase == GamePhase.FINALE
 
-    # Let the fire-and-forget flush task run to completion.
-    await asyncio.sleep(0)
-    for _ in range(10):
-        await asyncio.sleep(0)
-        if (tmp_path / "question_history.json").exists():
-            break
+    # Drain the fire-and-forget flush task(s) to completion. Awaiting the
+    # tracked task is deterministic: the file existing isn't enough (the
+    # executor thread may still be mid-write), so a sleep(0) poll on
+    # existence races and can read a half-written/empty file.
+    assert runtime.tasks, "end_game should have scheduled a flush task"
+    await asyncio.gather(*runtime.tasks)
 
     assert runtime.executor_calls >= 1
     written = json.loads((tmp_path / "question_history.json").read_text())
