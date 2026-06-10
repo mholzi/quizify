@@ -5,6 +5,11 @@ All notable changes to Quizify are documented here. This project follows
 
 ## [Unreleased]
 
+## [1.3.0-RC5] — 2026-06-10
+
+Fifth release candidate for 1.3.0. Finishes the emoji→SVG icon sweep and fixes a
+blank-screen edge found while live-testing P4.
+
 ### Changed
 
 - **Remaining emoji UI icons replaced with SVG line icons — P4 (#225).** The
@@ -19,6 +24,14 @@ All notable changes to Quizify are documented here. This project follows
   Language flags and the floating reaction bar emoji are intentionally retained;
   emoji embedded in translated strings (P3 #220) and the setup presets/awards
   (P2 #219) are unchanged.
+
+### Fixed
+
+- **Player no longer shows a blank screen after a failed reconnect (#227).** The
+  `reconnect_failed` handler cleared the session but never routed to a view, so a
+  dead/stale reconnect (no joinable game) left every view hidden. It now returns
+  to the join screen, and a fallback was added so an unmapped game-state phase
+  always shows a usable view instead of nothing (same class as #221).
 
 ## [1.3.0-RC4] — 2026-06-10
 
