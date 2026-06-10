@@ -3828,6 +3828,15 @@
     function handleGameState(msg) {
         state.currentPhase = msg.phase;
 
+        // Keep the in-game leaderboard panel current from ANY game_state that
+        // carries a leaderboard (the round-start refresh and the ANSWER_REVEAL
+        // broadcast both do). Without this the panel was never fed during a
+        // live question — only the reveal's own `reveal-leaderboard-list` was —
+        // so #leaderboard-list/#leaderboard-summary sat at "--" mid-round (#235).
+        if (msg.leaderboard && game && game.updateLeaderboard) {
+            game.updateLeaderboard({ leaderboard: msg.leaderboard }, 'leaderboard-list');
+        }
+
         // Wake lock: only hold during active question. Cheap battery,
         // doesn't fight the OS on lobby/reveal/finale screens where
         // a sleeping screen costs nothing.
@@ -3892,16 +3901,6 @@
                     }
                 } else {
                     pu.showView('game-view');
-                }
-
-                // Feed the in-game leaderboard panel from the game_state's
-                // leaderboard — OUTSIDE the msg.question guard, because the
-                // trailing leaderboard-refresh broadcast carries `leaderboard`
-                // but no `question` (so it lands in the else branch above).
-                // Without this the panel sat at "--" during a live question;
-                // it was only ever updated at reveal.
-                if (msg.leaderboard && game && game.updateLeaderboard) {
-                    game.updateLeaderboard({ leaderboard: msg.leaderboard }, 'leaderboard-list');
                 }
                 break;
 
