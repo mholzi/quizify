@@ -3879,15 +3879,6 @@
                         category: msg.question.category
                     });
 
-                    // Feed the in-game leaderboard panel from the game_state's
-                    // leaderboard. question_started carries no leaderboard, so
-                    // without this the panel sat at "--" during a live question
-                    // (it was only updated at reveal). The trailing game_state
-                    // broadcast after each round start does carry it.
-                    if (msg.leaderboard && game && game.updateLeaderboard) {
-                        game.updateLeaderboard({ leaderboard: msg.leaderboard }, 'leaderboard-list');
-                    }
-
                     // #14: if we're reconnecting mid-round and server thinks
                     // we've already submitted, lock the UI accordingly so we
                     // don't get ERR_ALREADY_SUBMITTED toasts on re-tap.
@@ -3901,6 +3892,16 @@
                     }
                 } else {
                     pu.showView('game-view');
+                }
+
+                // Feed the in-game leaderboard panel from the game_state's
+                // leaderboard — OUTSIDE the msg.question guard, because the
+                // trailing leaderboard-refresh broadcast carries `leaderboard`
+                // but no `question` (so it lands in the else branch above).
+                // Without this the panel sat at "--" during a live question;
+                // it was only ever updated at reveal.
+                if (msg.leaderboard && game && game.updateLeaderboard) {
+                    game.updateLeaderboard({ leaderboard: msg.leaderboard }, 'leaderboard-list');
                 }
                 break;
 
