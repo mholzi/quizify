@@ -4953,11 +4953,14 @@ footer {
     align-items: center;
     justify-content: space-around;
     padding: var(--space-sm) var(--space-md);
-    background: rgba(250, 246, 236, 0.96);
+    /* Solid cream (was 96%-opaque + blur). A `position: fixed` element with
+       `backdrop-filter` is a WebKit bug: Safari positions it relative to its
+       container instead of the viewport, so the bar rendered mid-page on iOS
+       (#232) while Chrome pinned it correctly. Dropping the (near-invisible at
+       96% opacity) blur restores a viewport-pinned bottom bar in Safari. */
+    background: #FAF6EC;
     border-top: 1px solid #E5DFCF;
     z-index: var(--z-control-bar);
-    backdrop-filter: blur(10px);
-    -webkit-backdrop-filter: blur(10px);
 }
 
 /* Reserve scroll headroom so the sticky admin-control-bar doesn't
