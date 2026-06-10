@@ -4585,6 +4585,23 @@
                 connect();
             });
         }
+
+        // Safety watchdog against a blank screen. A dead-reconnect URL
+        // (?name=X&admin=true&reconnect=1 with no live session) sends a
+        // `join` that yields no game_state, so neither the reconnect_failed
+        // handler (#227) nor the game_state default (#228) fires — the player
+        // was left on no/loading view. A few seconds after boot, if no real
+        // view has rendered (still on loading or nothing) and no game state
+        // ever arrived, fall back to the join screen so there's always a way
+        // forward instead of a blank page.
+        setTimeout(function () {
+            var visible = [].slice.call(document.querySelectorAll('.view'))
+                .find(function (e) { return e.offsetParent !== null; });
+            var stuck = !visible || visible.id === 'loading-view';
+            if (stuck && state.currentPhase == null) {
+                pu.showView('join-view');
+            }
+        }, 4000);
     }
 
     // ============================================
