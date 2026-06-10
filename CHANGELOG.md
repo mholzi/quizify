@@ -5,6 +5,19 @@ All notable changes to Quizify are documented here. This project follows
 
 ## [Unreleased]
 
+## [1.3.0-RC4] — 2026-06-10
+
+Fourth release candidate for 1.3.0. Completes the event-loop-blocking cleanup
+started in RC3.
+
+### Fixed
+
+- **Asset fingerprint no longer blocks the event loop (#213).** The cache-buster
+  `scandir` over the `www/` tree now runs in an executor thread instead of on the
+  loop (with the existing 5 s cache retained), so it can't stall the WebSocket
+  server. Pairs with the RC3 history write/read fix (#222) to close out the whole
+  blocking-I/O-on-the-loop class.
+
 ## [1.3.0-RC3] — 2026-06-10
 
 Third release candidate for 1.3.0. Fixes two issues found while live-testing RC2.
