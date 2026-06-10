@@ -39,6 +39,21 @@ body {
     padding-top: env(safe-area-inset-top, 0px);
 }
 
+/* #229: fixed cream mask over the status-bar strip. The body padding above
+   only protects unscrolled content; in a Safari tab (viewport-fit=cover)
+   scrolled content slides under the status bar, so this strip — sized to the
+   live top inset — covers it. Collapses to 0 height where there's no inset. */
+.sb-safe-mask {
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    height: env(safe-area-inset-top, 0px);
+    background: var(--color-bg-primary);
+    z-index: 1000;
+    pointer-events: none;
+}
+
 /* ==========================================
    Brand Identity (Wordmark)
    ========================================== */

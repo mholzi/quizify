@@ -23,6 +23,11 @@
     <!-- Soft Parlor: no confetti library. The warm reveal IS the celebration. See DESIGN.md. -->
 </head>
 <body>
+    <!-- #229: fixed cream mask over the iOS status-bar strip. In a Safari tab
+         (viewport-fit=cover, scrolled) content slides under the status bar; this
+         masks that strip so scrolled content (e.g. the end-screen podium) is not
+         drawn under the time/wifi/battery. Zero height where there's no inset. -->
+    <div class="sb-safe-mask" aria-hidden="true"></div>
     <header class="player-header">
         <h1 class="wordmark"><span class="wordmark-quiz">Quiz</span><span class="wordmark-ify">ify</span></h1>
         <!-- Right-side header cluster (Variant C, issue #194): the sound mute
