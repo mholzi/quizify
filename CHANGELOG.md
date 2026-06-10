@@ -5,6 +5,23 @@ All notable changes to Quizify are documented here. This project follows
 
 ## [Unreleased]
 
+## [1.3.1] — 2026-06-10
+
+Polish release on top of 1.3.0: a shared, app-wide SVG line-icon system
+replaces the last emoji used as UI icons, plus the welcome-screen redesign
+and two live-test fixes that landed after the 1.3.0 tag.
+
+### Added
+
+- **App-wide SVG line-icon system — "Rounded Duotone" (#212).** A shared icon
+  helper (`www/js/icons.js`, `window.QuizifyIcons`) is now the single source of
+  truth for the category/theme glyphs, consumed by both the admin and player
+  JS. Style chosen from a design shotgun: a 2 px round-stroked glyph over a
+  soft accent-tinted backing disc (flat tints, no gradients). First applied to
+  the detail-view pack cards and the theme filter tabs; the emoji are pulled out
+  of the `theme.*` labels so the strings hold text only. (Presets, end-game
+  awards, and reveal-feedback strings are tracked as follow-ups #219 / #220.)
+
 ### Changed
 
 - **Welcome screen redesign ("Categories-forward").** The host setup screen now
@@ -16,6 +33,16 @@ All notable changes to Quizify are documented here. This project follows
   "Empfohlen · Neu" eyebrow, and a round coral selection control. Selection wiring,
   language filtering, and the start payload are unchanged — the grid is still built
   from `#category-chips` as the single source of truth.
+
+### Fixed
+
+- **Host reset is authorized again; orphaned admin crown recovered (#207).** The
+  single-admin invariant compared only by name, so the admin-as-player redirect
+  could re-join as a second host and orphan the crown, making the legitimate
+  host's Reset (and Pause/Skip) a silent no-op. Only a connected admin now blocks
+  a re-claim, and Reset has an explicit recovery path.
+- **Safe service-worker auto-reload on idle screens (#215).** The PWA now only
+  auto-reloads on idle screens, avoiding a refresh mid-interaction.
 
 ## [1.3.0] — 2026-06-09
 
