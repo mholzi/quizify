@@ -1410,6 +1410,16 @@
             return el.innerHTML;
         }
 
+        // #215: hook for sw-update.js — is the TV/dashboard idle enough that a
+        // service-worker-triggered reload won't interrupt anything? The
+        // always-on host screen is idle only on the waiting (lobby) and finale
+        // (end) views; the question view covers live questions, the per-round
+        // reveal, and lightning, so we treat it as not-idle and never reload
+        // mid-round.
+        window.quizifyIsIdleForReload = function () {
+            return (views.question == null) || !views.question.classList.contains('active');
+        };
+
         // ---- Init ----
         if (window.QuizifyI18n && typeof window.QuizifyI18n.init === 'function') {
             window.QuizifyI18n.init(window.QuizifyI18n.getPreferredLanguage()).then(function () {

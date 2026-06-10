@@ -1116,4 +1116,23 @@
         send: send
     };
 
+    // #215: hook for sw-update.js — is the player screen idle enough that a
+    // service-worker-triggered reload won't interrupt anything? Idle = join,
+    // lobby, the per-round reveal, the lightning recap, and the finale end
+    // screen. NOT idle during a live question, a live lightning round, or a
+    // paused game (resuming reloads straight back into a question).
+    window.quizifyIsIdleForReload = function () {
+        switch (state.currentPhase) {
+            case 'QUESTION_ACTIVE':
+            case 'PLAYING':
+            case 'LIGHTNING':
+            case 'PAUSED':
+                return false;
+            default:
+                // LOBBY, ANSWER_REVEAL/REVEAL, LIGHTNING_RECAP, FINALE/END,
+                // and the pre-join state.
+                return true;
+        }
+    };
+
 })();
