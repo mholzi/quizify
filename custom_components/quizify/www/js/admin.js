@@ -246,32 +246,14 @@
     // (World Cup / Weltmeisterschaft) is excluded — it has the spotlight card.
     var _FEATURED_PACK_VALUES = ['world-cup', 'weltmeisterschaft'];
 
-    // SVG line icons keyed by the category's data-theme. Soft Parlor: stroke
-    // icons (no emoji) drawn in the tile's accent color via currentColor.
-    // Keyed by theme so both languages (Geographie / Geography) share an icon.
-    var _CATEGORY_ICON_SVG = {
-        mixed: '<rect x="4" y="4" width="16" height="16" rx="4"/><circle class="d" cx="9" cy="9" r="1.1"/><circle class="d" cx="15" cy="9" r="1.1"/><circle class="d" cx="12" cy="12" r="1.1"/><circle class="d" cx="9" cy="15" r="1.1"/><circle class="d" cx="15" cy="15" r="1.1"/>',
-        geography: '<circle cx="12" cy="12" r="9"/><path d="M3 12h18"/><path d="M12 3c3.2 2.6 3.2 15.4 0 18M12 3c-3.2 2.6-3.2 15.4 0 18"/>',
-        nature: '<path d="M5 19c0-9 7-14 15-14 0 9-7 14-15 14z"/><path d="M5 19c4.5-4.5 8-7 11-8"/>',
-        popculture: '<rect x="3" y="5" width="18" height="14" rx="2"/><path d="M3 9.5h18"/><path d="M7.5 5v4.5M12 5v4.5M16.5 5v4.5"/>',
-        sport: '<path d="M6 21V4"/><path d="M6 4h11l-2.5 3.5L17 11H6"/>',
-        music: '<path d="M9 17V5l10-2v12"/><circle cx="6.5" cy="17" r="2.5"/><circle cx="16.5" cy="15" r="2.5"/>',
-        science: '<path d="M9 3h6M10 3v6l-5 9a2 2 0 0 0 2 3h10a2 2 0 0 0 2-3l-5-9V3"/><path d="M8 15h8"/>',
-        history: '<path d="M7 4h9a2 2 0 0 1 2 2v12a2 2 0 0 0 2 2H8a2 2 0 0 1-2-2V6"/><path d="M6 6a2 2 0 0 0-2 2v1h2"/><path d="M10 9h5M10 13h5"/>',
-        food: '<path d="M7 3v18M5 3v6a2 2 0 0 0 4 0V3"/><path d="M16 3c-1.6 0-2.5 2.2-2.5 5s1 4 2.5 4 2.5-1.2 2.5-4-.9-5-2.5-5zM16 12v9"/>',
-        tech: '<path d="M9.5 18h5M11 21h2"/><path d="M12 3a6 6 0 0 0-3.8 10.6c.8.7 1.3 1.5 1.3 2.4h5c0-.9.5-1.7 1.3-2.4A6 6 0 0 0 12 3z"/>',
-        worldcup: '<path d="M7 4h10v4a5 5 0 0 1-10 0V4z"/><path d="M7 6H4v1a3.5 3.5 0 0 0 3.5 3.5M17 6h3v1a3.5 3.5 0 0 1-3.5 3.5"/><path d="M12 13v4M9 20h6M10 20a2 2 0 0 1 2-2 2 2 0 0 1 2 2"/>'
-    };
-    // Accent tint per theme, cycling the 4 Soft Parlor accents; mixed stays neutral.
-    var _CATEGORY_TINT = {
-        mixed: 'mix', geography: 'coral', nature: 'sage', popculture: 'sky',
-        sport: 'sun', music: 'coral', science: 'sage', history: 'sky',
-        food: 'sun', tech: 'coral'
-    };
+    // SVG line icons + accent tints now live in the shared module
+    // (www/js/icons.js, loaded before admin.js) so both admin and player
+    // JS reuse one glyph set (issue #212). These thin aliases keep the
+    // existing call-sites unchanged.
+    var _CATEGORY_TINT = window.QuizifyIcons.CATEGORY_TINT;
 
     function _categoryIconSvg(theme) {
-        var inner = _CATEGORY_ICON_SVG[theme] || _CATEGORY_ICON_SVG.mixed;
-        return '<svg viewBox="0 0 24 24" aria-hidden="true">' + inner + '</svg>';
+        return window.QuizifyIcons.icon(theme);
     }
 
     // Hero category grid: color-tinted SVG tiles (Direction A "Categories-
@@ -438,6 +420,37 @@
             if (!tab) return;
             applyThemeFilter(tab.dataset.theme || 'all');
         });
+    }
+
+    // P1 of #212: replace emoji UI-icons with the shared SVG line-icon set
+    // (Option 2 "Rounded Duotone"). Two surfaces:
+    //  - theme filter tabs  → fill the empty .qz-icon span per data-theme
+    //  - detail-view pack cards → swap the emoji glyph in .pack-card-icon
+    // Selection wiring is untouched — we only paint icon markup; the chip
+    // data-value/data-theme/data-lang/.active contract is preserved.
+    function paintP1Icons() {
+        var Icons = window.QuizifyIcons;
+        if (!Icons) return;
+        // Theme filter tabs: each themed tab has an empty .qz-icon span.
+        if (els.themeTabs) {
+            els.themeTabs.querySelectorAll('.theme-tab[data-theme]').forEach(function (tab) {
+                var theme = tab.dataset.theme;
+                if (!theme || theme === 'all') return;
+                var slot = tab.querySelector('.qz-icon');
+                if (slot) slot.innerHTML = Icons.icon(theme);
+            });
+        }
+        // Detail-view pack cards: swap emoji for the themed SVG. Mixed (no
+        // data-theme) falls back to the mixed glyph. The duotone backing
+        // disc + tint come from CSS keyed off the qz-icon--<tint> class.
+        if (els.categoryChips) {
+            els.categoryChips.querySelectorAll('.pack-card-icon').forEach(function (slot) {
+                var chip = slot.closest('.chip');
+                var theme = (chip && chip.dataset.theme) || 'mixed';
+                slot.classList.add('qz-icon', 'qz-icon--' + Icons.tint(theme));
+                slot.innerHTML = Icons.icon(theme);
+            });
+        }
     }
 
     function setupFeaturedSpotlight() {
@@ -666,6 +679,7 @@
 
     setupCategoryChips(els.categoryChips);
     setupThemeTabs();
+    paintP1Icons();
     setupFeaturedSpotlight();
     // Initial scaling pass — paints spotlight/tabs once we know the
     // visible-pack-count for the default language.

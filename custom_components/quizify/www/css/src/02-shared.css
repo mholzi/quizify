@@ -389,6 +389,56 @@ button, .btn {
     font-size: 1.55rem;
     line-height: 1;
 }
+/* P1 of #212: pack-card icons become shared SVG line icons (Option 2
+   "Rounded Duotone") instead of emoji. admin.js adds .qz-icon +
+   .qz-icon--<tint> to .pack-card-icon and injects the <svg>, so the
+   shared .qz-icon rules below own the disc + glyph. The font-size above
+   is moot once .qz-icon takes over (no text glyph remains). */
+#category-chips.chip-group--cards .pack-card-icon.qz-icon {
+    width: 40px;
+    height: 40px;
+}
+
+/* ---- Shared SVG icon (.qz-icon) — Option 2 "Rounded Duotone" (#212) ----
+   A soft accent-tinted rounded backing disc with a 2px round-stroked glyph,
+   matching the welcome hero's .hct-icon precedent (#211). Tints are flat
+   (DESIGN.md — no gradients). Color comes from the surrounding context via
+   currentColor; the per-tint classes set the disc background + stroke color. */
+.qz-icon {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    width: 32px;
+    height: 32px;
+    border-radius: 10px;
+    flex: 0 0 auto;
+}
+.qz-icon svg {
+    width: 60%;
+    height: 60%;
+    fill: none;
+    stroke: currentColor;
+    stroke-width: 2;
+    stroke-linecap: round;
+    stroke-linejoin: round;
+}
+.qz-icon svg .d { fill: currentColor; stroke: none; }
+/* Per-theme tint: backing disc + glyph stroke color (mirrors .hpt-* hero). */
+.qz-icon--mix   { background: #F1ECDC;                   color: #C99B6E; }
+.qz-icon--coral { background: rgba(232, 138, 127, 0.16); color: var(--color-accent-primary); }
+.qz-icon--sage  { background: rgba(127, 168, 151, 0.18); color: var(--color-accent-secondary); }
+.qz-icon--sky   { background: rgba(127, 168, 196, 0.18); color: var(--color-accent-blue); }
+.qz-icon--sun   { background: rgba(232, 196, 127, 0.24); color: #C9A24E; }
+
+/* Theme filter tabs: small duotone icon + text label, side by side. */
+.theme-tab .qz-icon {
+    width: 22px;
+    height: 22px;
+    border-radius: 7px;
+    margin-right: 5px;
+    vertical-align: middle;
+}
+.theme-tab .theme-tab-label { vertical-align: middle; }
 #category-chips.chip-group--cards .pack-card-name {
     font-family: var(--font-display, var(--font-system, inherit));
     font-weight: 700;
@@ -532,12 +582,17 @@ button, .btn {
     appearance: none;
     -webkit-appearance: none;
     flex: 0 0 auto;
+    /* Icon + label sit on one line; align-items keeps the duotone disc
+       vertically centered with the label (#212). */
+    display: inline-flex;
+    align-items: center;
     background: var(--color-bg-surface);
     border: 1.5px solid var(--color-border-light);
     border-radius: 999px;
     /* v1.1.42: tighter padding + slightly smaller text so more tabs fit
-       per viewport before the user has to scroll. Was 6/12 + 0.78 rem. */
-    padding: 5px 10px;
+       per viewport before the user has to scroll. Was 6/12 + 0.78 rem.
+       #212: a touch less left padding to make room for the icon disc. */
+    padding: 5px 11px 5px 6px;
     min-width: 0;
     min-height: 0;
     font-size: 0.72rem;
@@ -548,6 +603,10 @@ button, .btn {
     transition: all 0.12s ease;
     font-family: inherit;
 }
+/* "Alle" + any text-only tab: no icon, so restore symmetric padding. */
+.theme-tab:not(:has(.qz-icon)) {
+    padding-left: 11px;
+}
 .theme-tab:hover {
     color: var(--color-text-primary);
     border-color: var(--color-border-medium);
@@ -556,6 +615,12 @@ button, .btn {
     background: var(--color-text-primary);
     color: var(--color-bg-surface);
     border-color: var(--color-text-primary);
+}
+/* On the active (dark) pill the per-theme tinted disc would clash, so the
+   icon flips to a translucent-cream disc with a cream glyph (#212). */
+.theme-tab.active .qz-icon {
+    background: rgba(250, 246, 236, 0.18) !important;
+    color: var(--color-bg-surface) !important;
 }
 
 /* ==========================================

@@ -495,15 +495,15 @@
     "iosHintBody": "Tippe auf ⬆️ Teilen und dann \"Zum Home-Bildschirm\""
   },
   "theme": {
-    "geography": "🌍 Geo",
-    "nature": "🦋 Natur",
-    "popculture": "🎬 Pop",
-    "sport": "⚽ Sport",
-    "music": "🎵 Musik",
-    "science": "🔬 Wissen",
-    "history": "📜 Historie",
-    "food": "🍔 Essen",
-    "tech": "💡 Tech"
+    "geography": "Geo",
+    "nature": "Natur",
+    "popculture": "Pop",
+    "sport": "Sport",
+    "music": "Musik",
+    "science": "Wissen",
+    "history": "Historie",
+    "food": "Essen",
+    "tech": "Tech"
   },
   "packSubmit": {
     "heading": "Community-Pack einreichen",

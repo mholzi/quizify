@@ -495,15 +495,15 @@
     "iosHintBody": "Tap ⬆️ Share, then \"Add to Home Screen\""
   },
   "theme": {
-    "geography": "🌍 Geo",
-    "nature": "🦋 Nature",
-    "popculture": "🎬 Pop",
-    "sport": "⚽ Sport",
-    "music": "🎵 Music",
-    "science": "🔬 Science",
-    "history": "📜 History",
-    "food": "🍔 Food",
-    "tech": "💡 Tech"
+    "geography": "Geo",
+    "nature": "Nature",
+    "popculture": "Pop",
+    "sport": "Sport",
+    "music": "Music",
+    "science": "Science",
+    "history": "History",
+    "food": "Food",
+    "tech": "Tech"
   },
   "packSubmit": {
     "heading": "Submit a community pack",
