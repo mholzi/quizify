@@ -5,6 +5,21 @@ All notable changes to Quizify are documented here. This project follows
 
 ## [Unreleased]
 
+### Changed
+
+- **Remaining emoji UI icons replaced with SVG line icons — P4 (#225).** The
+  standalone emoji-as-icon surfaces missed by the original #212 P1 inventory now
+  use the shared Rounded Duotone set (`window.QuizifyIcons`): the admin lobby
+  (Cast to TV, Join as Player, Start), the player nav/section icons (controller,
+  target, brain, trophy, party, hourglass, sparkle, bulb) and error/hero states,
+  the game control bar (skip, pause, resume, end, finish) and the paused screen,
+  plus the status/utility glyphs (connection-lost antenna, invite-copy clipboard)
+  and the lightning bolt icons. A new `UI_ICON_SVG` map + `uiIcon(name)` accessor
+  back these; a `paintUiIcons()` pass swaps the `data-ui-icon` spans on init.
+  Language flags and the floating reaction bar emoji are intentionally retained;
+  emoji embedded in translated strings (P3 #220) and the setup presets/awards
+  (P2 #219) are unchanged.
+
 ## [1.3.0-RC4] — 2026-06-10
 
 Fourth release candidate for 1.3.0. Completes the event-loop-blocking cleanup

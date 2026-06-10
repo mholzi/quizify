@@ -1198,6 +1198,41 @@ button, .btn {
     vertical-align: middle;
 }
 .theme-tab .theme-tab-label { vertical-align: middle; }
+
+/* ---- #225 P4: standalone UI icons reuse .qz-icon at varied sizes ----
+   The remaining emoji-as-icon surfaces (lobby, player nav/section, game
+   control bar, status/utility) opt into the shared duotone disc via
+   data-ui-icon. Most inline icons (.section-icon / .btn-icon /
+   .pl-result-sec-head span / .wager-panel-title span / .pl-rulesTitle
+   span / .powerup-icon / .lr-splash-adminbar button span) keep the
+   default 32px disc. The control bar wants a smaller disc, and the
+   hero/error/splash states want a bigger one. */
+.control-icon.qz-icon {
+    width: 24px;
+    height: 24px;
+    border-radius: 7px;
+}
+/* Hero/full-screen states: larger duotone disc so the glyph still reads
+   as a focal point (these spans previously rendered as a 3rem emoji). */
+.error-icon.qz-icon,
+.paused-icon.qz-icon,
+.connection-lost-icon.qz-icon {
+    width: 64px;
+    height: 64px;
+    border-radius: 20px;
+    margin-bottom: var(--space-sm);
+}
+/* Lightning splash bolt: bold focal disc on the intro splash. */
+.lr-splash-bolt .qz-icon {
+    width: 72px;
+    height: 72px;
+    border-radius: 22px;
+}
+.lr-splash-stage.lr-splash-tv .lr-splash-bolt .qz-icon {
+    width: 96px;
+    height: 96px;
+    border-radius: 28px;
+}
 #category-chips.chip-group--cards .pack-card-name {
     font-family: var(--font-display, var(--font-system, inherit));
     font-weight: 700;
