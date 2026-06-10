@@ -196,16 +196,21 @@
                         <!-- Phase 2: Theme-Tabs. Always visible. Filter visible sub-pack
                              chips. The "Alle" tab keeps all chips visible (current default). -->
                         <div class="theme-tabs" id="theme-tabs" role="tablist" data-i18n-aria-label="admin.themes" aria-label="Themes">
-                            <button type="button" class="theme-tab active" data-theme="all" data-i18n="admin.themeAll">Alle</button>
-                            <button type="button" class="theme-tab" data-theme="geography" data-i18n="theme.geography">🌍 Geo</button>
-                            <button type="button" class="theme-tab" data-theme="nature" data-i18n="theme.nature">🦋 Natur</button>
-                            <button type="button" class="theme-tab" data-theme="popculture" data-i18n="theme.popculture">🎬 Pop</button>
-                            <button type="button" class="theme-tab" data-theme="sport" data-i18n="theme.sport">⚽ Sport</button>
-                            <button type="button" class="theme-tab" data-theme="music" data-i18n="theme.music">🎵 Musik</button>
-                            <button type="button" class="theme-tab" data-theme="science" data-i18n="theme.science">🔬 Wissen</button>
-                            <button type="button" class="theme-tab" data-theme="history" data-i18n="theme.history">📜 Historie</button>
-                            <button type="button" class="theme-tab" data-theme="food" data-i18n="theme.food">🍔 Essen</button>
-                            <button type="button" class="theme-tab" data-theme="tech" data-i18n="theme.tech">💡 Tech</button>
+                            <!-- "Alle" stays text-only (no theme icon). Themed tabs carry an
+                                 SVG line icon (filled by admin.js paintThemeTabIcons via the
+                                 shared QuizifyIcons set) + a text-only i18n label span. The
+                                 data-i18n attr lives on the inner .theme-tab-label so i18n's
+                                 textContent write never clobbers the sibling SVG. -->
+                            <button type="button" class="theme-tab active" data-theme="all"><span class="theme-tab-label" data-i18n="admin.themeAll">Alle</span></button>
+                            <button type="button" class="theme-tab" data-theme="geography"><span class="qz-icon qz-icon--coral"></span><span class="theme-tab-label" data-i18n="theme.geography">Geo</span></button>
+                            <button type="button" class="theme-tab" data-theme="nature"><span class="qz-icon qz-icon--sage"></span><span class="theme-tab-label" data-i18n="theme.nature">Natur</span></button>
+                            <button type="button" class="theme-tab" data-theme="popculture"><span class="qz-icon qz-icon--sky"></span><span class="theme-tab-label" data-i18n="theme.popculture">Pop</span></button>
+                            <button type="button" class="theme-tab" data-theme="sport"><span class="qz-icon qz-icon--sun"></span><span class="theme-tab-label" data-i18n="theme.sport">Sport</span></button>
+                            <button type="button" class="theme-tab" data-theme="music"><span class="qz-icon qz-icon--coral"></span><span class="theme-tab-label" data-i18n="theme.music">Musik</span></button>
+                            <button type="button" class="theme-tab" data-theme="science"><span class="qz-icon qz-icon--sage"></span><span class="theme-tab-label" data-i18n="theme.science">Wissen</span></button>
+                            <button type="button" class="theme-tab" data-theme="history"><span class="qz-icon qz-icon--sky"></span><span class="theme-tab-label" data-i18n="theme.history">Historie</span></button>
+                            <button type="button" class="theme-tab" data-theme="food"><span class="qz-icon qz-icon--sun"></span><span class="theme-tab-label" data-i18n="theme.food">Essen</span></button>
+                            <button type="button" class="theme-tab" data-theme="tech"><span class="qz-icon qz-icon--coral"></span><span class="theme-tab-label" data-i18n="theme.tech">Tech</span></button>
                         </div>
 
                         <!-- Pack-Cards (was: flat chip-row). The chip-group--cards modifier
@@ -690,6 +695,7 @@
     <script src="/quizify/static/js/vendor/qrcode.min.js?v={{ASSET_VER}}"></script>
     <script src="/quizify/static/js/i18n.js?v={{ASSET_VER}}"></script>
     <script src="/quizify/static/js/utils.js?v={{ASSET_VER}}"></script>
+    <script src="/quizify/static/js/icons.js?v={{ASSET_VER}}"></script>
 
     <script src="/quizify/static/js/admin.js?v={{ASSET_VER}}"></script>
     <script src="/quizify/static/js/pack-submit.js?v={{ASSET_VER}}"></script>
