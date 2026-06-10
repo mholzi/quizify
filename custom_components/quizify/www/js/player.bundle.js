@@ -3695,8 +3695,15 @@
                 break;
 
             case 'reconnect_failed':
+                // The stored session token no longer maps to a joinable game
+                // (game ended/reset, or token expired). Drop the stale token
+                // and route back to the join screen — without this the client
+                // is left with every view hidden → blank screen (issue #227,
+                // same family as #207/#221). Mirror the deterministic return
+                // used by game_reset above.
                 pu.clearSession();
                 state.sessionToken = null;
+                pu.showView('join-view');
                 break;
 
             case 'player_joined':
@@ -3941,6 +3948,14 @@
                 var resumeBtnP = document.getElementById('resume-game-btn');
                 if (pauseBtnP) pauseBtnP.classList.add('hidden');
                 if (resumeBtnP) resumeBtnP.classList.remove('hidden');
+                break;
+
+            default:
+                // Safety net (issue #227, same reasoning as #221): an unknown
+                // or unmapped phase must never leave the player with zero
+                // visible views (blank screen). Fall back to the lobby if we
+                // already have an identity, otherwise the join screen.
+                pu.showView(state.playerName ? 'lobby-view' : 'join-view');
                 break;
         }
     }
