@@ -175,10 +175,21 @@
     font-size: 1.15rem;
     margin-bottom: var(--space-xs);
 }
-.sup-disc--coral { background: rgba(232, 138, 127, 0.18); }
-.sup-disc--sage  { background: rgba(127, 168, 151, 0.18); }
-.sup-disc--sky   { background: rgba(127, 168, 196, 0.18); }
-.sup-disc--sun   { background: rgba(232, 196, 127, 0.22); }
+.sup-disc--coral { background: rgba(232, 138, 127, 0.18); color: var(--color-accent-primary); }
+.sup-disc--sage  { background: rgba(127, 168, 151, 0.18); color: var(--color-accent-secondary); }
+.sup-disc--sky   { background: rgba(127, 168, 196, 0.18); color: var(--color-accent-blue); }
+.sup-disc--sun   { background: rgba(232, 196, 127, 0.22); color: #C9A24E; }
+/* #219 P2: award discs holding an SVG glyph instead of an emoji. */
+.superlative-disc--svg svg {
+    width: 60%;
+    height: 60%;
+    fill: none;
+    stroke: currentColor;
+    stroke-width: 2;
+    stroke-linecap: round;
+    stroke-linejoin: round;
+}
+.superlative-disc--svg svg .d { fill: currentColor; stroke: none; }
 
 .superlative-title {
     font-family: var(--font-display);
