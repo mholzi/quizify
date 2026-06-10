@@ -5,6 +5,24 @@ All notable changes to Quizify are documented here. This project follows
 
 ## [Unreleased]
 
+## [1.3.0-RC6] — 2026-06-10
+
+Sixth release candidate for 1.3.0. Mobile polish found in live testing.
+
+### Fixed
+
+- **Start (and other primary-button) icons are legible again.** The P4 SVG
+  icons sat in a tinted disc that washed out on the coral `.btn-primary` fill
+  (notably the "Start Game" play glyph). Icons inside a filled primary button
+  now drop the disc and render white, matching the button's white label;
+  secondary / outline buttons keep their tinted discs.
+- **Top content no longer clips under the iOS status bar (#229 / #233).** On a
+  scrolled player/end screen (e.g. the podium or a question), content slid under
+  the status bar. The player header is now sticky + opaque, so scrolled content
+  is masked by the header instead of the bare status bar — works in a Safari tab
+  regardless of safe-area insets; the standalone PWA also gets the Apple status
+  metas + notch inset.
+
 ## [1.3.0-RC5] — 2026-06-10
 
 Fifth release candidate for 1.3.0. Finishes the emoji→SVG icon sweep and fixes a
