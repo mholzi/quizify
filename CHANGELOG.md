@@ -5,6 +5,19 @@ All notable changes to Quizify are documented here. This project follows
 
 ## [Unreleased]
 
+## [1.3.0-RC8] — 2026-06-10
+
+Eighth release candidate for 1.3.0.
+
+### Fixed
+
+- **Player never shows a blank screen (#237).** A dead-reconnect URL
+  (`?name=X&admin=true&reconnect=1` with no live session) sent a join that
+  yielded no `game_state`, so neither the failed-reconnect handler (#227) nor
+  the game-state fallback (#228) fired and the player was left on no view. A
+  boot watchdog now falls back to the join screen ~4s after load if no real
+  view has rendered, so the player always has a way forward.
+
 ## [1.3.0-RC7] — 2026-06-10
 
 Seventh release candidate for 1.3.0. Two gameplay/mobile fixes found in live
