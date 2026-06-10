@@ -682,8 +682,17 @@ body {
     justify-content: space-between;
     gap: var(--space-sm);
     padding: 14px var(--space-md);
+    /* #233: extra top padding for the notch / status bar in standalone mode
+       (0 in a Safari tab, where the sticky+opaque trick below does the work). */
+    padding-top: calc(14px + env(safe-area-inset-top, 0px));
     border-bottom: 1px solid var(--color-border-light);
-    position: relative;
+    /* #233: pin the header and make it opaque so scrolled content (end-screen
+       podium, question text) is masked by the header instead of sliding under
+       the iOS status bar. Works in a Safari tab regardless of env insets. */
+    position: sticky;
+    top: 0;
+    z-index: 50;
+    background: var(--color-bg-primary);
 }
 
 .player-header .wordmark {
