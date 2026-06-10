@@ -462,6 +462,10 @@ body {
     line-height: 1.5;
     overflow-x: hidden;
     -webkit-font-smoothing: antialiased;
+    /* #229: with viewport-fit=cover the webview extends under the iOS status
+       bar; inset the top so content (notably the scrolled end-screen podium)
+       clears the notch / status bar. No-op (0px) on devices without an inset. */
+    padding-top: env(safe-area-inset-top, 0px);
 }
 
 /* ==========================================
