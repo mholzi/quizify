@@ -5,6 +5,25 @@ All notable changes to Quizify are documented here. This project follows
 
 ## [Unreleased]
 
+## [1.3.0-RC7] — 2026-06-10
+
+Seventh release candidate for 1.3.0. Two gameplay/mobile fixes found in live
+testing and reproduced in a real game.
+
+### Fixed
+
+- **In-game leaderboard no longer empty during a question (#235).** The panel
+  showed "--" mid-round because the leaderboard arrives via the `game_state`
+  broadcast (at round start / reveal), not in `question_started`, and the
+  in-game panel was never fed it — only the reveal's own list was. It now
+  updates from any `game_state` that carries a leaderboard, so the standings
+  show during a live question.
+- **Admin control bar (Pause/End) pins to the bottom on iOS Safari (#232).** A
+  `position: fixed` element with `backdrop-filter` is a WebKit bug — Safari
+  positioned the bar relative to its container instead of the viewport, so it
+  floated mid-page on iPhone (Chrome was unaffected). The bar was already 96%
+  opaque, so the near-invisible blur was dropped for a solid background.
+
 ## [1.3.0-RC6] — 2026-06-10
 
 Sixth release candidate for 1.3.0. Mobile polish found in live testing.
