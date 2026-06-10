@@ -5,11 +5,12 @@ All notable changes to Quizify are documented here. This project follows
 
 ## [Unreleased]
 
-## [1.3.1] — 2026-06-10
+## [1.3.0-RC2] — 2026-06-10
 
-Polish release on top of 1.3.0: a shared, app-wide SVG line-icon system
-replaces the last emoji used as UI icons, plus the welcome-screen redesign
-and two live-test fixes that landed after the 1.3.0 tag.
+Second release candidate for 1.3.0 (the first `v1.3.0` pre-release is RC1).
+Adds a shared, app-wide SVG line-icon system that replaces the last emoji used
+as UI icons, plus the welcome-screen redesign and two live-test fixes that
+landed after the RC1 tag.
 
 ### Added
 
