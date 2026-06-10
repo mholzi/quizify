@@ -51,6 +51,23 @@
     let currentPhase = 'LOBBY';
     let playerCount = 0;
 
+    // #215: hook for sw-update.js — is the admin screen idle enough that a
+    // service-worker-triggered reload won't interrupt anything? Idle = setup /
+    // lobby, the per-round reveal, the lightning recap, and the finale end
+    // screen. NOT idle during a live question or a live lightning round, where
+    // a reload would yank the host out mid-play.
+    window.quizifyIsIdleForReload = function () {
+        switch (currentPhase) {
+            case 'QUESTION_ACTIVE':
+            case 'LIGHTNING':
+                return false;
+            default:
+                // LOBBY, ANSWER_REVEAL, LIGHTNING_RECAP, FINALE, and any
+                // setup state before a game starts.
+                return true;
+        }
+    };
+
     // ---- Simple inline timer ----
     var adminTimerEl = null;
     var adminTimerInterval = null;
