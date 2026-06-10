@@ -169,6 +169,7 @@ def main(argv: list[str] | None = None) -> int:
         await ctx.analytics.load()
         if ctx.question_stats is not None:
             await ctx.question_stats.load()
+        await ctx.game.async_load_history()
         await ctx.ws_handler._conn.async_load_admin_token()
 
     app.on_startup.append(_load_state)
