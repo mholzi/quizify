@@ -145,6 +145,33 @@ def _compute_asset_fingerprint(www_dir: Path = _WWW_DIR) -> str:
     return h.hexdigest()[:8]
 
 
+def _cached_fingerprint() -> str | None:
+    """Return the cached fingerprint if still within its TTL, else ``None``.
+
+    Cheap, non-blocking — just a monotonic-clock check against the cached
+    timestamp. Used to take the fast path without touching the filesystem.
+    """
+    if _ASSET_FP_CACHE is not None and (
+        time.monotonic_ns() - _ASSET_FP_CACHE[0] < _ASSET_FP_TTL_NS
+    ):
+        return _ASSET_FP_CACHE[1]
+    return None
+
+
+def _refresh_fingerprint() -> str:
+    """Recompute the asset fingerprint and refresh the cache.
+
+    Performs the blocking ``rglob``/``stat`` walk over the asset dirs, so it
+    must run off the event loop (see ``_get_asset_version_async``). The cache
+    write is a single tuple assignment — safe even if two threads race; the
+    loser just overwrites with an equivalent value.
+    """
+    global _ASSET_FP_CACHE
+    fingerprint = _compute_asset_fingerprint()
+    _ASSET_FP_CACHE = (time.monotonic_ns(), fingerprint)
+    return fingerprint
+
+
 def _get_asset_version(version: str) -> str:
     """Cache-buster value ``<version>-<asset_fingerprint>``.
 
@@ -152,14 +179,29 @@ def _get_asset_version(version: str) -> str:
     with assertions that look for ``?v=<version>``; the fingerprint suffix is
     what makes it move on asset changes. Fingerprint recompute is throttled to
     ``_ASSET_FP_TTL_NS``.
+
+    Synchronous variant — only safe to call off the event loop (tests, the
+    standalone dev server). The HTML serve path uses
+    ``_get_asset_version_async`` so the dir walk never blocks the loop (#213).
     """
-    global _ASSET_FP_CACHE
-    now = time.monotonic_ns()
-    if _ASSET_FP_CACHE is not None and now - _ASSET_FP_CACHE[0] < _ASSET_FP_TTL_NS:
-        fingerprint = _ASSET_FP_CACHE[1]
-    else:
-        fingerprint = _compute_asset_fingerprint()
-        _ASSET_FP_CACHE = (now, fingerprint)
+    fingerprint = _cached_fingerprint()
+    if fingerprint is None:
+        fingerprint = _refresh_fingerprint()
+    return f"{version}-{fingerprint}"
+
+
+async def _get_asset_version_async(ctx: "AppContext", version: str) -> str:
+    """Async cache-buster value, never blocking the event loop (#213).
+
+    Fast path (cache fresh): no filesystem access, returns inline. Slow path
+    (TTL expired): the blocking ``rglob``/``stat`` walk runs in an executor
+    thread via ``ctx.runtime.run_in_executor`` — the same offload pattern the
+    HTML/sw read path already uses — so a burst of page loads at game start
+    can't stall the loop.
+    """
+    fingerprint = _cached_fingerprint()
+    if fingerprint is None:
+        fingerprint = await ctx.runtime.run_in_executor(_refresh_fingerprint)
     return f"{version}-{fingerprint}"
 
 
@@ -179,7 +221,8 @@ async def _serve_html(request: web.Request, filename: str) -> web.Response:
     version = _get_live_version(ctx.version)
     html_content = await ctx.runtime.run_in_executor(html_path.read_text, "utf-8")
     html_content = _apply_version(html_content, version)
-    html_content = html_content.replace(_ASSET_VER_TOKEN, _get_asset_version(version))
+    asset_version = await _get_asset_version_async(ctx, version)
+    html_content = html_content.replace(_ASSET_VER_TOKEN, asset_version)
     html_content = html_content.replace(_HA_LANG_TOKEN, ctx.ha_language or "")
     return web.Response(
         text=html_content, content_type="text/html", headers=_NO_CACHE_HEADERS
@@ -202,7 +245,7 @@ async def sw_view(request: web.Request) -> web.Response:
     version = _get_live_version(ctx.version)
     body = await ctx.runtime.run_in_executor(sw_path.read_text, "utf-8")
     body = _apply_version(body, version)
-    body = body.replace(_ASSET_VER_TOKEN, _get_asset_version(version))
+    body = body.replace(_ASSET_VER_TOKEN, await _get_asset_version_async(ctx, version))
     return web.Response(
         text=body, content_type="application/javascript", headers=_NO_CACHE_HEADERS
     )
