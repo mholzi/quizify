@@ -1189,6 +1189,15 @@ button, .btn {
 .qz-icon--sky   { background: rgba(127, 168, 196, 0.18); color: var(--color-accent-blue); }
 .qz-icon--sun   { background: rgba(232, 196, 127, 0.24); color: #C9A24E; }
 
+/* Icons inside a filled primary (coral) button: the tinted disc washes out on
+   the coral fill (e.g. the sage play glyph on "Start Game"). Drop the disc and
+   render the glyph white so it matches the button's white label. Secondary /
+   outline buttons keep their tinted discs. (Markus 2026-06-10 live QA.) */
+.btn-primary .qz-icon {
+    background: transparent;
+    color: #fff;
+}
+
 /* Theme filter tabs: small duotone icon + text label, side by side. */
 .theme-tab .qz-icon {
     width: 22px;
