@@ -5,6 +5,23 @@ All notable changes to Quizify are documented here. This project follows
 
 ## [Unreleased]
 
+## [1.3.0-RC3] — 2026-06-10
+
+Third release candidate for 1.3.0. Fixes two issues found while live-testing RC2.
+
+### Fixed
+
+- **Lightning Round no longer renders a blank player screen (#221).** A
+  `game_state` snapshot sent during the lightning phase (e.g. the live
+  leaderboard-refresh broadcast) omitted the `lightning` sub-state, so the
+  client landed on an empty lightning view. The snapshot builder now carries the
+  same `lightning` payload the reconnect path already had (splash-pending state
+  or the current question).
+- **`end_game` no longer blocks the event loop writing `question_history.json`
+  (#222).** The history write — and the analogous history read at setup — now run
+  in an executor thread instead of on the loop, so finishing a game no longer
+  stalls the WebSocket server for all clients (same class as #213).
+
 ## [1.3.0-RC2] — 2026-06-10
 
 Second release candidate for 1.3.0 (the first `v1.3.0` pre-release is RC1).
