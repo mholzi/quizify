@@ -70,6 +70,8 @@ async def async_setup_entry(hass: HomeAssistant, entry: ConfigEntry) -> bool:
     game_state = QuizifyGameState(runtime=runtime, entry_id=entry.entry_id)
     game_state._stats_service = analytics
     game_state._question_stats = question_stats
+    # Read persisted question history off the event loop (issue #222).
+    await game_state.async_load_history()
 
     ws_handler = QuizifyWebSocketHandler(
         runtime=runtime,

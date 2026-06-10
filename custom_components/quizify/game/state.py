@@ -121,10 +121,14 @@ class QuizifyGameState:
         # milestone arithmetic that submit_answer applies (issue #184).
         self._scoring_engine = ScoringEngine()
 
-        # Load question history if a runtime is available (HA or standalone).
+        # Bind the question-history path if a runtime is available (HA or
+        # standalone). The actual disk READ is deferred to
+        # ``async_load_history`` so __init__ never blocks the event loop on
+        # the read path (issue #222); callers that don't await it (bare unit
+        # tests, standalone) simply start with an empty in-memory history.
         if runtime is not None:
             history_path = runtime.data_dir / "question_history.json"
-            self._question_bank.load_history(history_path)
+            self._question_bank.set_history_path(history_path)
 
         # Group-level adaptive difficulty (#40). Only active when the host
         # picks the "auto" difficulty mode; None for fixed easy/medium/hard.
@@ -827,8 +831,10 @@ class QuizifyGameState:
         # Record to analytics
         self._record_analytics()
 
-        # Save question history so next game prioritises least-recently-shown
-        self._question_bank.flush_shown_history()
+        # Save question history so next game prioritises least-recently-shown.
+        # The write is offloaded to an executor thread so end_game never
+        # blocks the event loop on disk I/O (issue #222).
+        self._flush_history()
 
         # Persist any per-question stats accumulated this game.
         if self._question_stats is not None:
@@ -847,6 +853,51 @@ class QuizifyGameState:
         self._fire_broadcast("game_ended")
 
         return finale_data
+
+    async def async_load_history(self) -> None:
+        """Load persisted question history off the event loop (#222).
+
+        Called once from ``async_setup_entry`` after construction. The
+        blocking ``read_text`` of ``question_history.json`` runs in an
+        executor thread. A no-op when no runtime is wired.
+        """
+        if self._runtime is None:
+            return
+        history_path = self._runtime.data_dir / "question_history.json"
+        await self._question_bank.load_history_async(history_path, self._runtime)
+
+    def _flush_history(self) -> None:
+        """Persist question history without blocking the event loop (#222).
+
+        When a runtime is available (HA or standalone), the blocking
+        ``write_text`` of ``question_history.json`` is offloaded to an
+        executor thread via a fire-and-forget task — mirroring how the
+        per-question stats are saved in ``end_game``. Without a runtime
+        (bare unit tests) it falls back to the synchronous flush so the
+        behaviour and the on-disk result are unchanged.
+        """
+        bank = self._question_bank
+        runtime = self._runtime
+
+        # No runtime, or no running event loop (bare synchronous unit tests):
+        # fall back to the synchronous write. The on-disk result is identical;
+        # there is no loop to block in that path.
+        if runtime is None:
+            bank.flush_shown_history()
+            return
+        try:
+            asyncio.get_running_loop()
+        except RuntimeError:
+            bank.flush_shown_history()
+            return
+
+        async def _do_flush() -> None:
+            try:
+                await bank.flush_shown_history_async(runtime)
+            except Exception:  # noqa: BLE001
+                _LOGGER.exception("Failed to save question history")
+
+        runtime.create_task(_do_flush())
 
     def _record_analytics(self) -> None:
         """Record game to analytics service if available."""
@@ -981,7 +1032,7 @@ class QuizifyGameState:
         """Transition out of an active lightning round into its recap screen."""
         if self.phase == GamePhase.LIGHTNING:
             self.phase = GamePhase.LIGHTNING_RECAP
-            self._question_bank.flush_shown_history()
+            self._flush_history()
             self._notify_state_callbacks()
 
     # ------------------------------------------------------------------

@@ -36,6 +36,13 @@ class _FakeRuntime:
     def __init__(self, tmp_path: Path) -> None:
         self.data_dir = tmp_path
 
+    def create_task(self, coro):
+        return asyncio.ensure_future(coro)
+
+    async def run_in_executor(self, func, *args):
+        loop = asyncio.get_running_loop()
+        return await loop.run_in_executor(None, func, *args)
+
 
 def _fake_ws() -> MagicMock:
     ws = MagicMock()

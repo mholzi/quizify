@@ -488,31 +488,80 @@ class QuestionBank:
     # Question history
     # ------------------------------------------------------------------
 
-    def load_history(self, history_path: Path) -> None:
-        """Load question history from a JSON file."""
+    def set_history_path(self, history_path: Path) -> None:
+        """Bind the history file path without touching disk (non-blocking)."""
         self._history_path = history_path
+
+    def _read_history(self) -> None:
+        """Blocking read of the history file. MUST run off the event loop."""
+        history_path = self._history_path
+        if history_path is None:
+            return
         if history_path.exists():
             try:
                 raw = json.loads(history_path.read_text(encoding="utf-8"))
                 self._history = {k: float(v) for k, v in raw.items()}
                 _LOGGER.debug("Loaded question history: %d entries", len(self._history))
-            except (json.JSONDecodeError, ValueError) as exc:
+            except (json.JSONDecodeError, ValueError, OSError) as exc:
                 _LOGGER.warning("Failed to load question history: %s", exc)
                 self._history = {}
         else:
             self._history = {}
 
-    def save_history(self) -> None:
-        """Persist question history to disk."""
+    def load_history(self, history_path: Path) -> None:
+        """Load question history from a JSON file (synchronous).
+
+        Retained for the standalone dev server and tests. On the HA event
+        loop use :meth:`load_history_async` so the ``read_text`` is offloaded
+        (issue #222 read-path).
+        """
+        self.set_history_path(history_path)
+        self._read_history()
+
+    async def load_history_async(self, history_path: Path, runtime) -> None:
+        """Bind the path and load history via the runtime's executor thread."""
+        self.set_history_path(history_path)
+        await runtime.run_in_executor(self._read_history)
+
+    def _write_history(self) -> None:
+        """Blocking write of the history file. MUST run off the event loop.
+
+        Snapshot a copy of ``self._history`` *before* dispatching this to an
+        executor thread so the serialized payload can't tear if the loop
+        thread mutates the dict (via ``record_shown``) while the write runs.
+        """
         if self._history_path is None:
             return
+        snapshot = dict(self._history)
         try:
             self._history_path.parent.mkdir(parents=True, exist_ok=True)
             self._history_path.write_text(
-                json.dumps(self._history, indent=2), encoding="utf-8"
+                json.dumps(snapshot, indent=2), encoding="utf-8"
             )
         except OSError as exc:
             _LOGGER.warning("Failed to save question history: %s", exc)
+
+    def save_history(self) -> None:
+        """Persist question history to disk (synchronous).
+
+        Retained for the standalone dev server and tests. In Home Assistant
+        this blocks the event loop — callers on the loop thread MUST use
+        :meth:`save_history_async` / :meth:`flush_shown_history_async`
+        instead (issue #222).
+        """
+        self._write_history()
+
+    async def save_history_async(self, runtime) -> None:
+        """Persist question history via the runtime's executor thread.
+
+        Mirrors the offload pattern used by ``QuestionStats`` and the
+        asset-fingerprint walk (#213): the blocking ``write_text`` never
+        runs on the event loop. ``runtime`` is a
+        :class:`~custom_components.quizify.runtime.Runtime`.
+        """
+        if self._history_path is None:
+            return
+        await runtime.run_in_executor(self._write_history)
 
     def record_shown(self, question_id: str) -> None:
         """Mark a question as shown now."""
@@ -521,9 +570,23 @@ class QuestionBank:
         self._shown_this_game.append(question_id)
 
     def flush_shown_history(self) -> None:
-        """Save history at end of game and reset the shown-this-game list."""
+        """Save history at end of game and reset the shown-this-game list.
+
+        Synchronous variant — only safe off the event loop (standalone
+        server / tests). On the HA event loop use
+        :meth:`flush_shown_history_async`.
+        """
         self._shown_this_game = []
         self.save_history()
+
+    async def flush_shown_history_async(self, runtime) -> None:
+        """Async flush: reset shown-this-game and persist via the executor.
+
+        The shown-this-game list is cleared synchronously (cheap, in-memory)
+        and only the file write is offloaded to a thread (issue #222).
+        """
+        self._shown_this_game = []
+        await self.save_history_async(runtime)
 
     def _build_queue(
         self,
