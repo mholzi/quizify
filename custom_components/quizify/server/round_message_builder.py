@@ -19,6 +19,7 @@ from __future__ import annotations
 
 from typing import TYPE_CHECKING, Any
 
+from custom_components.quizify.game.phase_controller import GamePhase
 from custom_components.quizify.server.serializers import (
     serialize_leaderboard,
     serialize_player_list,
@@ -96,7 +97,7 @@ class RoundMessageBuilder:
         player list to avoid a redundant ``get_players`` call.
         """
         leaderboard = serialize_leaderboard(players)
-        return {
+        payload: dict[str, Any] = {
             "type": "game_state",
             "phase": game_state.phase.value,
             "round": game_state.round,
@@ -105,6 +106,56 @@ class RoundMessageBuilder:
             "players": leaderboard,
             "leaderboard": leaderboard,
         }
+        # During a lightning round (#42) a leaderboard-refresh ``game_state``
+        # must carry the lightning sub-state, or the client's LIGHTNING case
+        # (player-core.js ~437) falls through to an empty ``lightning-view`` —
+        # i.e. a blank player screen (#221). Mirror the canonical shape built
+        # by ``QuizifyGameState.get_state_snapshot()`` so reconnect snapshots
+        # and live refreshes are wire-identical.
+        lightning = self._build_lightning_substate(game_state)
+        if lightning is not None:
+            payload["lightning"] = lightning
+        return payload
+
+    def _build_lightning_substate(
+        self, game_state: QuizifyGameState
+    ) -> dict[str, Any] | None:
+        """Build the ``lightning`` sub-object for a LIGHTNING ``game_state``.
+
+        Returns ``None`` outside a lightning round. The shape is byte-for-byte
+        identical to the lightning branch of
+        ``QuizifyGameState.get_state_snapshot()`` so the player client reads
+        the same keys regardless of which builder produced the message:
+
+        * ``splash_pending`` — True while the intro splash (#201) is up and no
+          question has been broadcast yet (``question`` is then omitted).
+        * ``index`` / ``num_questions`` / ``seconds_per_question`` — progress.
+        * ``time_remaining`` — seconds left on the current question.
+        * ``question`` — canonical (admin/TV) answer order; players still get
+          their own shuffle via the ``lightning_question`` event.
+        """
+        if game_state.phase != GamePhase.LIGHTNING:
+            return None
+        lr = game_state.lightning
+        if lr is None:
+            return None
+        substate: dict[str, Any] = {
+            "index": lr.index,
+            "num_questions": lr.num_questions,
+            "time_remaining": round(lr.time_remaining(), 1),
+            "seconds_per_question": lr.seconds_per_question,
+            "leaderboard": lr.leaderboard(),
+            "splash_pending": game_state.lightning_splash_pending,
+        }
+        q = lr.current_question
+        if q is not None:
+            substate["question"] = {
+                "text": q.question,
+                "answers": [a.text for a in q.answers],
+                "category": q.category,
+                "image_url": q.image_url,
+            }
+        return substate
 
     def build_round_summary(
         self,
