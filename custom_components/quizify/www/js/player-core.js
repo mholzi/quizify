@@ -1121,19 +1121,20 @@
             });
         }
 
-        // Safety watchdog against a blank screen. A dead-reconnect URL
-        // (?name=X&admin=true&reconnect=1 with no live session) sends a
-        // `join` that yields no game_state, so neither the reconnect_failed
-        // handler (#227) nor the game_state default (#228) fires — the player
-        // was left on no/loading view. A few seconds after boot, if no real
-        // view has rendered (still on loading or nothing) and no game state
-        // ever arrived, fall back to the join screen so there's always a way
-        // forward instead of a blank page.
+        // Safety watchdog against a blank screen. Several edges can leave the
+        // player with no visible view: a dead-reconnect URL
+        // (?name=X&admin=true&reconnect=1) whose join yields no game_state
+        // (neither reconnect_failed #227 nor the game_state default #228 fire),
+        // OR a reconnect into a live LIGHTNING round where the lightning view
+        // is never shown (game_state phase is set but every .view stays
+        // hidden). A few seconds after boot, if NO real view has rendered
+        // (still on loading or nothing) — regardless of phase — fall back to
+        // the join screen so there's always a way forward instead of blank.
         setTimeout(function () {
             var visible = [].slice.call(document.querySelectorAll('.view'))
                 .find(function (e) { return e.offsetParent !== null; });
             var stuck = !visible || visible.id === 'loading-view';
-            if (stuck && state.currentPhase == null) {
+            if (stuck) {
                 pu.showView('join-view');
             }
         }, 4000);
