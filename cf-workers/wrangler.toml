@@ -1,0 +1,9 @@
+# Cloudflare Worker config for the Quizify community-pack submission endpoint.
+# Deploy:  cd cf-workers && npx wrangler deploy
+# Secret:  npx wrangler secret put GITHUB_PAT   (fine-grained PAT, Issues R+W on mholzi/quizify)
+# URL:     https://quizify-api.<account>.workers.dev  (set as the integration's
+#          "Community pack submission URL" option)
+name = "quizify-api"
+main = "quizify-api.js"
+compatibility_date = "2026-06-11"
+workers_dev = true
