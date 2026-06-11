@@ -153,15 +153,17 @@
         var lb = recap.leaderboard || [];
         var lbEl = document.getElementById('lightning-recap-leaderboard');
         if (lbEl) {
-            lbEl.innerHTML = lb.map(function (p) {
-                var you = (p.name === state.playerName)
-                    ? ' <span class="you-badge">(you)</span>' : '';
-                return '<div class="final-leaderboard-row">' +
-                    '<span class="rank">#' + p.rank + '</span>' +
-                    '<span class="name">' + pu.escapeHtml(p.name) + you + '</span>' +
-                    '<span class="score">' + p.score + '</span>' +
-                    '</div>';
-            }).join('');
+            var youLabel = (t('lobby.you') && t('lobby.you') !== 'lobby.you')
+                ? t('lobby.you') : 'Du';
+            var rows = lb.map(function (p) {
+                return {
+                    rank: p.rank,
+                    name: p.name,
+                    score: p.score,
+                    isYou: p.name === state.playerName
+                };
+            });
+            pu.renderMedalStandings(lbEl, rows, { youLabel: youLabel });
         }
 
         // Per-question recap rows (Variant C refined): one row per question,

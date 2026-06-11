@@ -166,34 +166,27 @@
         var listEl = document.getElementById('final-leaderboard-list');
         if (!listEl) return;
 
-        // Ranked Bars: each row carries a faint sage bar scaled to the
-        // player's score, so the gaps between players read at a glance.
-        // Top-3 ranks get a medal-tinted dot; the current player's row gets
-        // a coral left border.
-        var maxScore = leaderboard.reduce(function (m, e) {
-            return Math.max(m, e.score || 0);
-        }, 0) || 1;
-        var MEDAL_DOTS = { 1: 'lb-mdot--gold', 2: 'lb-mdot--silver', 3: 'lb-mdot--bronze' };
+        // Shared medal-card standings (Standings A) — same treatment as the
+        // lightning recap "Totals" (#246/#248). A round medal disc carries the
+        // rank (top-3 gold/silver/bronze), the current player's row is coral-
+        // highlighted with a "DU"/"YOU" tag. Disconnected players keep an
+        // "(away)" badge appended to the name.
+        var youLabel = (_t('lobby.you') && _t('lobby.you') !== 'lobby.you')
+            ? _t('lobby.you') : 'Du';
+        var awayText = (_t('lobby.away') && _t('lobby.away') !== 'lobby.away')
+            ? _t('lobby.away') : 'away';
 
-        listEl.innerHTML = leaderboard.map(function (entry) {
-            var currentClass = entry.is_current ? 'is-current' : '';
-            var disconnectedClass = entry.connected === false ? 'final-entry--disconnected' : '';
-            var awayBadge = entry.connected === false
-                ? '<span class="away-badge">(' + pu.escapeHtml(_t('lobby.away') !== 'lobby.away' ? _t('lobby.away') : 'away') + ')</span>'
-                : '';
-            var pct = Math.max(8, Math.round(((entry.score || 0) / maxScore) * 100));
-            var medalDot = MEDAL_DOTS[entry.rank]
-                ? '<span class="lb-mdot ' + MEDAL_DOTS[entry.rank] + '"></span>'
-                : '';
-            return '<div class="final-entry ' + currentClass + ' ' + disconnectedClass + '">' +
-                '<span class="final-rank">' + entry.rank + '</span>' +
-                '<div class="final-track">' +
-                    '<div class="final-fill" style="width:' + pct + '%"></div>' +
-                    '<span class="final-name">' + medalDot + pu.escapeHtml(entry.name) + awayBadge + '</span>' +
-                '</div>' +
-                '<span class="final-score">' + entry.score + '</span>' +
-            '</div>';
-        }).join('');
+        var rows = leaderboard.map(function (entry) {
+            var name = entry.name || '';
+            if (entry.connected === false) name += ' (' + awayText + ')';
+            return {
+                rank: entry.rank,
+                name: name,
+                score: entry.score,
+                isYou: !!entry.is_current
+            };
+        });
+        pu.renderMedalStandings(listEl, rows, { youLabel: youLabel });
     }
 
     // ============================================
