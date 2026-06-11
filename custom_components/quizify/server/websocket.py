@@ -403,6 +403,37 @@ class QuizifyWebSocketHandler:
             await self._conn.send_error(ws, ERR_NAME_INVALID, "Name is required")
             return
 
+        # Defense in depth against a second self-join (#244, cousin of #207).
+        #
+        # The admin "Join as Player" flow registers the host as a player on
+        # the SAME admin WebSocket. If the host taps "Join as Player" again,
+        # the client opens the modal afresh and (with a different typed name)
+        # would otherwise create a duplicate/ghost player from the one admin
+        # session. The client now hides the button after the first join, but
+        # a crafted message must not slip past either: if THIS connection
+        # already holds a connected player under a different name, reject the
+        # duplicate join. A re-join under the SAME name is idempotent and
+        # handled by the reconnect path in PlayerRegistry.add_player, so it is
+        # explicitly allowed here (no-op rejoin / lobby refresh).
+        existing = game_state.get_player_by_ws(ws)
+        if (
+            existing is not None
+            and existing.connected
+            and existing.name.lower() != name.lower()
+        ):
+            _LOGGER.warning(
+                "Duplicate self-join rejected: connection already holds "
+                "player %s, refusing second join as %s",
+                existing.name,
+                name,
+            )
+            await self._conn.send_error(
+                ws,
+                ERR_INVALID_ACTION,
+                "Already joined as a player",
+            )
+            return
+
         # Auto-append number if name is taken
         original_name = name
         counter = 2
