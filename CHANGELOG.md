@@ -5,6 +5,32 @@ All notable changes to Quizify are documented here. This project follows
 
 ## [Unreleased]
 
+## [1.3.0-RC14] — 2026-06-11
+
+Fourteenth release candidate for 1.3.0 — the three deferred refactors from the
+code review (the follow-up issues #269/#270/#271). Non-functional; behaviour
+unchanged.
+
+### Changed
+
+- **Shared collaborator surface (#269).** Promoted the de-facto-public private
+  members (`ConnectionManager._safe_send` → `send`, plus `iter_admin_and_dashboard_ws`,
+  `revoke_token`, a `conn`/`last_settings`/`categories`/`aggregate_for_questions`
+  surface) and updated ~25 call sites, so the layering seams have a real
+  contract instead of underscore reach-ins.
+- **Dispatch table for websocket messages (#270).** Replaced the if/elif chain
+  and 13 copy-pasted admin-auth guards in `_handle_message` with a
+  `{type: (handler, admin_required)}` table and one centralized guard
+  (`reset_game` keeps its special path). Verified the admin-guard set is
+  identical, with a test that pins it.
+
+### Internal
+
+- **Home Assistant test environment (#271).** Added `homeassistant` +
+  `pytest-homeassistant-custom-component` as CI test deps so `config_flow` and
+  `binary_sensor` are now exercised in CI (previously untested). Guarded so the
+  base run without HA still works.
+
 ## [1.3.0-RC13] — 2026-06-11
 
 Thirteenth release candidate for 1.3.0 — the last two groups from the
