@@ -11,6 +11,7 @@ prove the wiring stays connected.
 from __future__ import annotations
 
 import json
+import re
 import sys
 from pathlib import Path
 from unittest.mock import AsyncMock, MagicMock
@@ -158,6 +159,12 @@ class TestAssetFingerprint:
         assert av.startswith("9.9.9-")
         assert len(av) > len("9.9.9-")
 
+    def test_asset_version_changes_on_version_bump(self) -> None:
+        """The owner's invariant: a new release number (manifest.json version)
+        MUST move the cache-buster even when no asset file changed — the
+        version prefix guarantees that independent of the fingerprint."""
+        assert _get_asset_version("1.0.0") != _get_asset_version("1.0.1")
+
 
 # ---------- Integration: real view fns + real HTML / sw.js on disk ----------
 
@@ -235,9 +242,75 @@ class TestServiceWorkerSubstitution:
         assert resp.content_type == "application/javascript"
 
     async def test_sw_js_no_cache(self) -> None:
+        """sw.js MUST be non-cacheable. An HTTP-cached sw.js carries the old
+        CACHE_VERSION forever: the browser never re-fetches it, the old SW
+        keeps running, old caches never get deleted → stale assets survive
+        every release. This is the linchpin of the 'new release number resets
+        the client cache' invariant."""
         resp = await sw_view(_fake_request("9.9.9-test"))
         cache_control = resp.headers.get("Cache-Control", "")
         assert "no-cache" in cache_control
+        assert "no-store" in cache_control
+        assert "must-revalidate" in cache_control
+
+    async def test_sw_js_substitutes_asset_ver(self) -> None:
+        """{{ASSET_VER}} must never leak into the served SW — it feeds
+        CACHE_VERSION and the precache URLs."""
+        resp = await sw_view(_fake_request("9.9.9-test"))
+        assert "{{ASSET_VER}}" not in resp.text
+        # Precache URLs carry the substituted buster.
+        assert "?v=9.9.9-test-" in resp.text
+
+    async def test_sw_precache_bypasses_http_cache(self) -> None:
+        """Install-time precache must go to the server, not the browser HTTP
+        cache. HA serves /quizify/static/* with a 31-day max-age, so a plain
+        cache.add() would seed a brand-new release's cache with month-old
+        bytes from the HTTP cache (stale from birth)."""
+        resp = await sw_view(_fake_request("9.9.9-test"))
+        assert "cache: 'reload'" in resp.text
+
+
+class TestServiceWorkerSource:
+    """Static guards on the raw www/ sources (no view involved)."""
+
+    _WWW = _REPO_ROOT / "custom_components" / "quizify" / "www"
+
+    def test_precache_assets_are_versioned_and_exist(self) -> None:
+        """Every precache entry carries the ?v={{ASSET_VER}} buster (so the
+        cache key matches what versioned pages request — caches.match is
+        exact on the query string) and points at a real file (guards list
+        drift like the old player-core.js entries after the bundle switch)."""
+        sw_src = (self._WWW / "sw.js").read_text(encoding="utf-8")
+        urls = re.findall(r"'(/quizify/static/[^']+)'", sw_src)
+        precache = [u for u in urls if "{{ASSET_VER}}" in u or "?v=" in u]
+        assert precache, "no precache URLs found in sw.js"
+        for url in precache:
+            assert url.endswith("?v={{ASSET_VER}}"), (
+                f"precache URL missing cache-buster: {url}"
+            )
+            rel = url.split("?")[0].removeprefix("/quizify/static/")
+            assert (self._WWW / rel).is_file(), (
+                f"precache URL points at missing file: {url}"
+            )
+
+    def test_html_static_asset_refs_are_versioned(self) -> None:
+        """Every /quizify/static/ reference in every served HTML page must
+        carry the ?v={{ASSET_VER}} buster — one missed reference is one
+        asset pinned in the 31-day HTTP cache across releases."""
+        for page in self._WWW.glob("*.html"):
+            src = page.read_text(encoding="utf-8")
+            refs = re.findall(r"""["'](/quizify/static/[^"']+)["']""", src)
+            for ref in refs:
+                assert "?v={{ASSET_VER}}" in ref, (
+                    f"{page.name}: unversioned static reference {ref}"
+                )
+
+    def test_sw_registration_bypasses_http_cache(self) -> None:
+        """The SW registration must opt out of the HTTP cache for the worker
+        script (updateViaCache: 'none') — older browsers honored the HTTP
+        cache for up to 24h, which kept the old CACHE_VERSION alive."""
+        src = (self._WWW / "js" / "sw-update.js").read_text(encoding="utf-8")
+        assert "updateViaCache: 'none'" in src
 
 
 @pytest.mark.asyncio
