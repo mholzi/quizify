@@ -1180,6 +1180,28 @@ class QuizifyGameState:
         """Wipe per-player shuffles. Called at round start."""
         self.player_shuffles = {}
 
+    def ensure_player_shuffle(self, player_name: str) -> list[int]:
+        """Return the player's shuffle, creating a fresh one if missing.
+
+        Late joiners and reconnecting players who arrive mid-question never
+        ran through the round-start per-player shuffle loop, so they have no
+        entry in ``player_shuffles``. Without one, a reconnect snapshot would
+        fall back to the canonical order — but ``submit_answer`` maps the
+        tapped index through ``get_player_shuffle`` (issue #253). If we then
+        also lazily create the shuffle here, the buttons the player rebuilds
+        from the snapshot match the order their submit expects. Mirrors the
+        round-start shuffle creation in ``_start_next_question``.
+        """
+        existing = self.player_shuffles.get(player_name)
+        if existing:
+            return existing
+        if not self._current_question:
+            return self.shuffle_map
+        order = list(range(len(self._current_question.answers)))
+        random.shuffle(order)
+        self.player_shuffles[player_name] = order
+        return order
+
     @property
     def round_duration(self) -> float:
         """Public accessor for current round duration."""

@@ -157,6 +157,86 @@ class RoundMessageBuilder:
             }
         return substate
 
+    def project_snapshot_for_player(
+        self,
+        game_state: QuizifyGameState,
+        *,
+        snapshot: dict[str, Any],
+        player: PlayerSession,
+    ) -> dict[str, Any]:
+        """Re-shape a canonical state snapshot for one reconnecting PLAYER.
+
+        ``QuizifyGameState.get_state_snapshot()`` is player-agnostic — it
+        emits answers in canonical order and nests the reveal under
+        ``round_summary`` (issue #253). That is correct for the admin and the
+        TV dashboard, but a player rebuilds their answer buttons from this
+        snapshot and ``submit_answer`` maps the tapped index through the
+        player's OWN shuffle. Sending canonical order would mis-score ~2/3 of
+        taps after a reload. This projects a *copy* of the snapshot into the
+        recipient's frame:
+
+        * QUESTION_ACTIVE: project ``question.answers`` through the player's
+          shuffle (created on demand for a late joiner, as round-start does),
+          and use the player's own QuestionTimer for ``time_remaining`` so a
+          pause/freeze/boost is reflected on the reconnect clock.
+        * LIGHTNING: project ``lightning.question.answers`` through the
+          player's lightning shuffle (also created on demand).
+        * ANSWER_REVEAL: replace the nested ``round_summary`` with the same
+          FLAT shape the live ``round_summary`` broadcast uses (incl.
+          ``all_answers``), which the reveal view reads as flat fields.
+
+        The caller (``_handle_join`` / ``_handle_reconnect``) knows the
+        recipient identity; admin/dashboard recipients keep the canonical
+        snapshot untouched.
+        """
+        # Shallow copy is enough: we only replace top-level keys / nested
+        # dicts we build fresh here, never mutate the caller's sub-objects.
+        out = dict(snapshot)
+
+        phase = out.get("phase")
+
+        if phase == GamePhase.QUESTION_ACTIVE.value and "question" in out:
+            question = game_state.get_current_question()
+            if question is not None:
+                shuffle = game_state.ensure_player_shuffle(player.name)
+                projected = dict(out["question"])
+                projected["answers"] = [
+                    question.answers[i].text for i in shuffle
+                ]
+                # Prefer the player's own timer so pause/freeze/boost show
+                # the right remaining time; fall back to the wall-clock value
+                # already in the snapshot when no per-player timer exists.
+                timer = game_state.get_player_timer(player.name)
+                if timer is not None:
+                    projected["time_remaining"] = round(
+                        max(0.0, timer.get_remaining()), 1
+                    )
+                out["question"] = projected
+
+        if phase == GamePhase.LIGHTNING.value and out.get("lightning"):
+            lr = game_state.lightning
+            lightning = dict(out["lightning"])
+            if lr is not None and lr.current_question is not None:
+                shuffle = lr.ensure_shuffle(player.name)
+                q = lr.current_question
+                lq = dict(lightning["question"])
+                lq["answers"] = [q.answers[i].text for i in shuffle]
+                lightning["question"] = lq
+                out["lightning"] = lightning
+
+        if phase == GamePhase.ANSWER_REVEAL.value:
+            summary = self.build_round_summary(game_state)
+            if summary is not None:
+                # Drop the player-agnostic nested copy and merge the flat
+                # round_summary fields the reveal view reads (player-reveal.js).
+                out.pop("round_summary", None)
+                merged = dict(summary)
+                # Preserve the snapshot envelope keys the flat summary lacks.
+                merged.pop("type", None)
+                out.update(merged)
+
+        return out
+
     def build_round_summary(
         self,
         game_state: QuizifyGameState,
