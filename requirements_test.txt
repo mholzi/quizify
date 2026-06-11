@@ -15,8 +15,11 @@ voluptuous
 pytest
 pytest-asyncio
 
-# HA test harness. phacc pins an exact `homeassistant` version transitively;
-# we pin it here too so CI is reproducible. Both are comfortably newer than
-# the integration's manifest minimum (HA 2024.1+).
-homeassistant==2026.6.2
-pytest-homeassistant-custom-component==0.13.338
+# HA test harness. HA >= 2026.3 requires Python 3.14.2, but CI runs 3.13 — so
+# cap HA below that and let pip resolve the matching
+# pytest-homeassistant-custom-component (it pins an exact HA transitively). The
+# pair pip lands on is the newest 3.13-compatible one — still comfortably newer
+# than the manifest minimum (HA 2024.1+). Tests use importorskip, so a missing
+# HA only skips, never fails.
+homeassistant<2026.3
+pytest-homeassistant-custom-component
