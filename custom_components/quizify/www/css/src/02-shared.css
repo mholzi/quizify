@@ -90,20 +90,6 @@ button, .btn {
     transform: scale(0.98);
 }
 
-/* Neon primary button */
-.btn-neon {
-    background: var(--color-accent-primary);
-    color: var(--color-text-white);
-    border: none;
-    border-radius: var(--radius-md);
-    padding: var(--space-md) var(--space-lg);
-    font-weight: var(--font-weight-semibold);
-}
-
-.btn-neon:hover {
-    background: #ff4080;
-}
-
 /* ==========================================
    Inputs
    ========================================== */

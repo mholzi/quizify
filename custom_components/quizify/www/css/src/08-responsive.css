@@ -450,8 +450,7 @@
   user-select: none;
   letter-spacing: 0.05em;
 }
-[data-theme="dark"] .version-badge,
-body.theme-dark .version-badge {
+[data-theme="dark"] .version-badge {
   color: rgba(255, 255, 255, 0.3);
 }
 

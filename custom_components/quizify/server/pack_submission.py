@@ -55,6 +55,7 @@ from ..const import (
     SUBMIT_STATUS_PENDING,
 )
 from .context import APP_CTX_KEY
+from .rate_limit import SlidingWindowLimiter
 
 if TYPE_CHECKING:
     from .context import AppContext
@@ -66,10 +67,13 @@ _LOGGER = logging.getLogger(__name__)
 _GITHUB_ISSUES_API = "https://api.github.com/repos/mholzi/quizify/issues"
 
 # Per-IP submit rate limit. Generous enough for a legitimate compose-and-retry
-# loop, tight enough that an inert anonymous endpoint can't be hammered.
+# loop, tight enough that an inert anonymous endpoint can't be hammered. Shares
+# the SlidingWindowLimiter helper with the WS flood guard (#260); empty buckets
+# are evicted by the limiter so the dict doesn't grow one entry per IP forever
+# (#258).
 _RATE_LIMIT_REQUESTS = 5
 _RATE_LIMIT_WINDOW = 60  # seconds
-_rate_buckets: dict[str, list[float]] = {}
+_rate_limiter = SlidingWindowLimiter(_RATE_LIMIT_REQUESTS, _RATE_LIMIT_WINDOW)
 
 # Per-records-file lock so the load-modify-save in get_with_reconcile() / add()
 # can't interleave (#256): a submit landing mid-reconcile would otherwise read a
@@ -93,19 +97,7 @@ def _store_lock(path: object) -> asyncio.Lock:
 
 def _check_rate_limit(client_ip: str) -> bool:
     """Sliding-window rate limit keyed on client IP. True = allowed."""
-    now = time.monotonic()
-    bucket = _rate_buckets.setdefault(client_ip, [])
-    cutoff = now - _RATE_LIMIT_WINDOW
-    bucket[:] = [t for t in bucket if t > cutoff]
-    if not bucket:
-        # Drop empty buckets so the dict doesn't accumulate one entry per IP
-        # that ever submitted, forever (#258). A fresh submit re-creates it.
-        del _rate_buckets[client_ip]
-        bucket = _rate_buckets.setdefault(client_ip, [])
-    if len(bucket) >= _RATE_LIMIT_REQUESTS:
-        return False
-    bucket.append(now)
-    return True
+    return _rate_limiter.check(client_ip)
 
 
 # ---------------------------------------------------------------------------

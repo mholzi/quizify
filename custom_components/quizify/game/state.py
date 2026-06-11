@@ -1278,10 +1278,6 @@ class QuizifyGameState:
         """Get the power-up held by a player."""
         return self._powerup_manager.get_powerup(player_name)
 
-    def get_phase(self) -> GamePhase:
-        """Return current game phase."""
-        return self.phase
-
     def get_current_question(self) -> Question | None:
         """Return the current question, or None."""
         return self._current_question
