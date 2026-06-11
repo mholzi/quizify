@@ -3879,8 +3879,12 @@
                     // Apply as CSS custom property on root for global use
                     document.documentElement.style.setProperty('--my-player-color', msg.color);
                 }
-                // Request full state so we switch to the correct view immediately
-                send('get_state', {});
+                // No get_state needed: the server already pushes a per-player
+                // PROJECTED game_state snapshot immediately after joined /
+                // reconnected (own shuffled answer order, own timer, flat
+                // reveal — #253). A redundant get_state would just re-deliver
+                // the same projected snapshot (#286). The handleGameState case
+                // below switches us to the correct view from that push.
                 break;
 
             case 'reconnect_failed':

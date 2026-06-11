@@ -327,6 +327,17 @@ class QuizifyWebSocketHandler:
 
         async def _get_state(ws: web.WebSocketResponse) -> None:
             state_msg = game_state.get_state_snapshot()
+            # Project into the requesting PLAYER's frame (#286): the raw
+            # snapshot carries canonical answer order, but ``submit_answer``
+            # maps the tapped index through the player's OWN shuffle — sending
+            # canonical order here mis-scores ~2/3 of taps after a mid-round
+            # reconnect (the client auto-sends get_state on every join). Pure
+            # admin/dashboard sockets (no player session) keep canonical order.
+            player = game_state.get_player_by_ws(ws)
+            if player is not None:
+                state_msg = self._round_messages.project_snapshot_for_player(
+                    game_state, snapshot=state_msg, player=player
+                )
             state_msg["type"] = "game_state"
             await self._conn.send(ws, state_msg)
 
@@ -638,6 +649,13 @@ class QuizifyWebSocketHandler:
         ):
             if game_state.resume():
                 self._start_timer_tick(game_state)
+                # Broadcast the resumed state to EVERY player (#287). Without
+                # this, the other players stay frozen on the "Host disconnected"
+                # paused-view (player-core.js only leaves it on a game_state
+                # message) while their timers tick down → scored as timeouts.
+                # Per-player PROJECTED — same mechanism as the manual-resume
+                # fix (#286) so answer buttons keep the right shuffle order.
+                await self._broadcast_state_projected(game_state)
                 _LOGGER.info("Auto-resumed after admin reconnect")
 
         # Generate a fresh token and revoke old one
@@ -1070,9 +1088,11 @@ class QuizifyWebSocketHandler:
         """Resume from PAUSED → restart timer ticks and broadcast state."""
         if not game_state.resume():
             return
-        state = game_state.get_state_snapshot()
-        state["type"] = "game_state"
-        await self._conn.broadcast(state)
+        # Fan out per-player PROJECTED snapshots (#286): the raw snapshot
+        # carries canonical answer order, so a plain broadcast here mis-scored
+        # ~2/3 of taps after resume because the players re-render their answer
+        # buttons from it while submit_answer maps through their own shuffle.
+        await self._broadcast_state_projected(game_state)
         # Restart the per-player tick loop.
         self._start_timer_tick(game_state)
 
@@ -1440,6 +1460,58 @@ class QuizifyWebSocketHandler:
             "type": "lightning_recap",
             "recap": lr.build_recap(),
         })
+
+    async def _broadcast_state_projected(
+        self,
+        game_state: QuizifyGameState,
+        *,
+        extra: dict[str, Any] | None = None,
+    ) -> None:
+        """Fan out a ``game_state`` snapshot, projected per recipient.
+
+        Each connected PLAYER gets the snapshot projected into their own frame
+        (own shuffled answer order, own timer, flat reveal) via
+        ``project_snapshot_for_player`` — the same mechanism the join/reconnect
+        path uses (#253). Sending the raw canonical snapshot to players would
+        mis-score ~2/3 of their taps because ``submit_answer`` maps the tapped
+        index through the player's OWN shuffle (#286). Pure admin/dashboard
+        sockets (no player session) get the canonical snapshot untouched.
+
+        ``extra`` merges extra top-level keys (e.g. ``pause_reason``) into every
+        message. Used by the resume path (#286 #287) so a resumed game reaches
+        every screen with correctly-ordered answer buttons.
+        """
+        base = game_state.get_state_snapshot()
+
+        # Per-player projected sends.
+        player_ws: set[Any] = set()
+        sends = []
+        for player in game_state.get_players():
+            if player.ws is None or not player.connected:
+                continue
+            player_ws.add(player.ws)
+            msg = self._round_messages.project_snapshot_for_player(
+                game_state, snapshot=base, player=player
+            )
+            msg["type"] = "game_state"
+            if extra:
+                msg.update(extra)
+            sends.append(self._conn.send(player.ws, msg))
+
+        # Raw snapshot for pure admin/dashboard sockets — but skip any socket
+        # that is also a player (admin-as-player already got its projected
+        # copy above, and must NOT see canonical order mid-question).
+        raw = dict(base)
+        raw["type"] = "game_state"
+        if extra:
+            raw.update(extra)
+        for ws, _is_admin in self._conn.iter_admin_and_dashboard_ws():
+            if ws.closed or ws in player_ws:
+                continue
+            sends.append(self._conn.send(ws, raw))
+
+        if sends:
+            await asyncio.gather(*sends)
 
     # ------------------------------------------------------------------
     # Question flow
