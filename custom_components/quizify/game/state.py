@@ -253,6 +253,15 @@ class QuizifyGameState:
     def _pause_reason(self, value: str | None) -> None:
         self._phase_controller.pause_reason = value
 
+    @property
+    def last_settings(self) -> "dict[str, Any] | None":
+        """Settings of the most recent start_game, or None if never started.
+
+        Used by the one-tap rematch path to restart with the previous game's
+        configuration instead of re-prompting the admin.
+        """
+        return self._last_settings
+
     # ------------------------------------------------------------------
     # Player registry delegation
     # ------------------------------------------------------------------

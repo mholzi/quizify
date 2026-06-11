@@ -64,7 +64,7 @@ def handler(game: QuizifyGameState) -> QuizifyWebSocketHandler:
 
 
 def _sent_types(ws: MagicMock) -> list[str]:
-    """Message ``type`` strings the server sent on *ws* (via _safe_send)."""
+    """Message ``type`` strings the server sent on *ws* (via ConnectionManager.send)."""
     return [
         call.args[0].get("type")
         for call in ws.send_json.await_args_list

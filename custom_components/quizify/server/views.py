@@ -372,16 +372,12 @@ async def featured_pack_view(request: web.Request) -> web.Response:
             chosen = None
     elif logic == "most-difficult" and ctx.question_stats is not None:
         try:
-            qstats = ctx.question_stats._data["questions"]
+            bank_categories = bank.categories
             pack_rates: dict[str, float] = {}
             for cat in lang_packs:
-                shown = 0
-                correct = 0
-                for q in bank._categories.get(cat, []):
-                    s = qstats.get(q.id)
-                    if s and s.get("shown_count", 0) >= 1:
-                        shown += s["shown_count"]
-                        correct += s.get("correct_count", 0)
+                shown, correct = ctx.question_stats.aggregate_for_questions(
+                    q.id for q in bank_categories.get(cat, [])
+                )
                 if shown >= _FEATURED_MIN_SHOWN:
                     pack_rates[cat] = correct / shown
             if pack_rates:
@@ -400,7 +396,7 @@ async def featured_pack_view(request: web.Request) -> web.Response:
     meta = lang_packs[chosen]
     # Read pack JSON once for theme (icon lookup). Cheap — packs are
     # already on disk and aiohttp's executor handles the blocking read.
-    pack_path = bank._questions_dir / f"{chosen}.json"
+    pack_path = bank.questions_dir / f"{chosen}.json"
     try:
         raw = await ctx.runtime.run_in_executor(
             pack_path.read_text, "utf-8"

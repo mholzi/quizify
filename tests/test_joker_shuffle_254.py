@@ -58,7 +58,7 @@ def _handler(state: QuizifyGameState) -> QuizifyWebSocketHandler:
     h = QuizifyWebSocketHandler(runtime=runtime, game_state_provider=lambda: state)
     h._conn = ConnectionManager(runtime, lambda: state)
     h._conn.broadcast = AsyncMock()
-    h._conn._safe_send = AsyncMock()
+    h._conn.send = AsyncMock()
     return h
 
 
@@ -106,7 +106,7 @@ async def test_joker_disables_wrong_answer_in_player_order(
     # The private send to Alice carries the button index to disable.
     private_sends = [
         c.args[1]
-        for c in h._conn._safe_send.call_args_list
+        for c in h._conn.send.call_args_list
         if len(c.args) >= 2 and c.args[1].get("powerup_type") == "joker"
     ]
     assert private_sends, "expected a private joker send to the using player"

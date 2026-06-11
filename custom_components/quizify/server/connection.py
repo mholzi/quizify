@@ -90,6 +90,25 @@ class ConnectionManager:
         """Return True if *ws* is an admin connection."""
         return ws in self._admin_connections
 
+    def has_admin_connections(self) -> bool:
+        """Return True if at least one admin connection is registered."""
+        return bool(self._admin_connections)
+
+    def iter_admin_and_dashboard_ws(
+        self,
+    ) -> "list[tuple[web.WebSocketResponse, bool]]":
+        """Yield (ws, is_admin) for every admin and dashboard connection.
+
+        Lets callers fan out to admin + TV-dashboard spectator sockets
+        without reaching into the private ``_admin_connections`` /
+        ``_dashboard_connections`` sets. ``is_admin`` lets the caller apply
+        the admin-only filter (e.g. excluding an admin who is also a player)
+        while treating dashboards unconditionally.
+        """
+        return [(ws, True) for ws in list(self._admin_connections)] + [
+            (ws, False) for ws in list(self._dashboard_connections)
+        ]
+
     # ------------------------------------------------------------------
     # Admin session token (persisted across restarts)
     # ------------------------------------------------------------------
@@ -171,6 +190,12 @@ class ConnectionManager:
         # Mark as loaded so any later async_load is a no-op (file is gone).
         self._admin_token_loaded = True
 
+    def has_pending_admin_disconnect(self) -> bool:
+        """Return True if an admin-disconnect grace-period task is running."""
+        return bool(
+            self._admin_disconnect_task and not self._admin_disconnect_task.done()
+        )
+
     def cancel_admin_disconnect(self) -> None:
         """Cancel a running admin-disconnect grace-period task."""
         if self._admin_disconnect_task and not self._admin_disconnect_task.done():
@@ -221,6 +246,10 @@ class ConnectionManager:
         """Revoke *old_token* and issue a fresh one for *player_name*."""
         self._session_tokens.pop(old_token, None)
         return self.create_session_token(player_name)
+
+    def revoke_token(self, token: str) -> None:
+        """Revoke a single session *token* (no-op if unknown)."""
+        self._session_tokens.pop(token, None)
 
     def get_player_for_token(self, token: str) -> str | None:
         """Return the player name associated with *token*, or None."""
@@ -312,12 +341,20 @@ class ConnectionManager:
         if tasks:
             await asyncio.gather(*tasks)
 
-    async def _safe_send(self, ws: web.WebSocketResponse, message: dict) -> None:
-        """Send *message* to *ws*, swallowing any send errors."""
+    async def send(self, ws: web.WebSocketResponse, message: dict) -> None:
+        """Send *message* to *ws*, swallowing any send errors.
+
+        The public single-socket send primitive. Errors are intentionally
+        swallowed (and logged) so one dead/slow client can't break a fan-out.
+        """
         try:
             await ws.send_json(message)
         except Exception as err:  # noqa: BLE001
             _LOGGER.warning("Failed to send to WebSocket: %s", err)
+
+    # Backwards-compatible alias for the former private name. Some tests still
+    # patch ``_safe_send``; keep it pointing at the public method.
+    _safe_send = send
 
     async def _safe_send_str(self, ws: web.WebSocketResponse, payload: str) -> None:
         """Send a pre-serialized JSON *payload* to *ws*, swallowing errors.
@@ -334,7 +371,7 @@ class ConnectionManager:
         self, ws: web.WebSocketResponse, code: str, message: str
     ) -> None:
         """Send a structured error message to *ws*."""
-        await self._safe_send(ws, {"type": "error", "code": code, "message": message})
+        await self.send(ws, {"type": "error", "code": code, "message": message})
 
     # ------------------------------------------------------------------
     # Cleanup
