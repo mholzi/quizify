@@ -158,6 +158,13 @@ def compute_superlatives(players: list[PlayerSession]) -> list[Superlative]:
         )
 
     # --- Comeback King: biggest score improvement second half vs first half ---
+    # Compare per-round *averages* of the two halves, not raw sums. With an odd
+    # round count the second half holds one extra round (mid = len // 2), so a
+    # player with flat per-round scores would show a positive sum-improvement
+    # and win Comeback King even though they never improved — a false positive.
+    # Averaging normalises for the uneven split, and the displayed delta is the
+    # average-based improvement projected back onto the (larger) second half so
+    # the "+N pts" copy stays meaningful. (#255.)
     best_comeback: int | None = None
     comeback_player: str | None = None
     for p in players:
@@ -167,9 +174,13 @@ def compute_superlatives(players: list[PlayerSession]) -> list[Superlative]:
         if len(scores) < 4:
             continue
         mid = len(scores) // 2
-        first_half = sum(scores[:mid])
-        second_half = sum(scores[mid:])
-        improvement = second_half - first_half
+        first_half = scores[:mid]
+        second_half = scores[mid:]
+        first_avg = sum(first_half) / len(first_half)
+        second_avg = sum(second_half) / len(second_half)
+        if second_avg <= first_avg:
+            continue
+        improvement = round((second_avg - first_avg) * len(second_half))
         if improvement > 0 and (best_comeback is None or improvement > best_comeback):
             best_comeback = improvement
             comeback_player = p.name

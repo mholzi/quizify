@@ -164,6 +164,7 @@ class QuizifyGameState:
         # Cached finale data (computed once in end_game, cleared in reset_to_lobby)
         self._finale_podium: list | None = None
         self._finale_superlatives: list | None = None
+        self._finale_data: dict[str, Any] | None = None
 
         # Active LightningRound (issue #42), or None when not in a lightning
         # round. Owns its own questions/scores/recap; this class only holds
@@ -775,6 +776,17 @@ class QuizifyGameState:
             except Exception:  # noqa: BLE001
                 _LOGGER.exception("Failed to record question stats")
 
+        # Clear the late-joiner flag now that this round (the one they
+        # joined into) has been evaluated. The flag only exists to keep a
+        # mid-round arrival from forcing the full timer on the round they
+        # entered — from their *next* round on they're a full participant
+        # and must count toward all_submitted(). Without this reset the flag
+        # persisted for the rest of the game and late joiners were scored 0
+        # (timeout) every round because all_submitted() never waited for
+        # them. (#255.)
+        for player in self._player_registry.players.values():
+            player.joined_late = False
+
         _LOGGER.info("Round %d evaluated, transitioning to ANSWER_REVEAL", self.round)
         self._fire_broadcast("round_evaluated")
 
@@ -808,7 +820,18 @@ class QuizifyGameState:
         return getattr(self, "_pause_reason", None)
 
     def end_game(self) -> dict[str, Any]:
-        """End the game and transition to FINALE."""
+        """End the game and transition to FINALE.
+
+        Idempotent: re-entry while already in FINALE returns the cached
+        finale payload without recomputing the podium/superlatives, firing
+        a second ``game_ended`` broadcast, or recording analytics again.
+        Two WS code paths (end-of-last-round + explicit end-game) could
+        otherwise reach this and double-broadcast the finale + record the
+        game twice in analytics. (#255.)
+        """
+        if self.phase == GamePhase.FINALE and self._finale_data is not None:
+            return self._finale_data
+
         self.phase = GamePhase.FINALE
         self._current_question = None
 
@@ -827,6 +850,7 @@ class QuizifyGameState:
             ],
             "total_rounds": self.round,
         }
+        self._finale_data = finale_data
 
         # Record to analytics
         self._record_analytics()
@@ -948,6 +972,7 @@ class QuizifyGameState:
         self._powerup_manager.reset()
         self._finale_podium = None
         self._finale_superlatives = None
+        self._finale_data = None
         self.shuffle_map = []
         self.shuffled_answers = []
         self._timer_override = None
@@ -1209,6 +1234,16 @@ class QuizifyGameState:
         The countdown loop's stop condition, delegated to the PhaseController.
         """
         return self._phase_controller.all_timers_expired(player_names)
+
+    def round_wall_clock_expired(self) -> bool:
+        """Whether the round wall-clock has elapsed (#255).
+
+        Fallback stop condition for the countdown loop when every player has
+        disconnected mid-question and there are no live per-player timers left
+        for ``all_timers_expired`` to break on. Delegated to the
+        PhaseController.
+        """
+        return self._phase_controller.round_wall_clock_expired()
 
     def get_player_powerup(self, player_name: str):
         """Get the power-up held by a player."""

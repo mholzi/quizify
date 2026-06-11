@@ -153,9 +153,14 @@ class TestLateJoin:
         state.start_next_question()
         state.add_player("Charlie", _fake_ws())  # late
         state.submit_answer("Alice", 0)
+        # Before the last real participant submits, the round is still open and
+        # all_submitted() excludes the late joiner (it does not block on him).
+        assert state._player_registry.all_submitted() is False
         state.submit_answer("Bob", 0)
-        # Round should be ready to evaluate even though Charlie didn't submit
-        assert state._player_registry.all_submitted() is True
+        # Once both real participants have answered the round auto-evaluates
+        # (advances past QUESTION_ACTIVE) without waiting on the late joiner —
+        # i.e. the late joiner never forced the room to run the full timer.
+        assert state.phase is not GamePhase.QUESTION_ACTIVE
 
 
 # ---------- Scoring ----------

@@ -208,6 +208,24 @@ class PhaseController:
         ]
         return bool(timers) and all(timer.is_expired() for timer in timers)
 
+    def round_wall_clock_expired(self) -> bool:
+        """Whether the round's wall-clock has run out, regardless of timers.
+
+        Fallback stop condition for the countdown loop: when every player has
+        disconnected mid-question there are no connected per-player timers left
+        to expire, so ``all_timers_expired`` (which needs at least one live
+        timer) can never break the loop and it spins until the admin force-ends
+        the game. This compares the shared round wall-clock — the same
+        ``round_duration - (now - round_start_time)`` used for snapshots — so
+        the round still evaluates (and the admin can advance) once the nominal
+        duration has elapsed even with zero connected players. (#255.)
+
+        Returns False before a round has started (no ``round_start_time``).
+        """
+        if self.round_start_time is None:
+            return False
+        return self.time_remaining_for_snapshot() <= 0.0
+
     def time_remaining_for_snapshot(self) -> float:
         """Remaining time for a mid-round joiner's state snapshot.
 
