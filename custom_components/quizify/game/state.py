@@ -1076,24 +1076,29 @@ class QuizifyGameState:
                 self._player_registry.get_player(target_id) if target_id else None
             )
             if not target_id or target_id == player_id or not target_player or not target_player.is_active:
-                # For FREEZE the random fallback should also skip already-submitted
-                # players so the pause is actually useful (otherwise freezing a
-                # locked-in opponent burns the power-up for nothing).
+                # FREEZE: skip already-submitted players so the pause is actually
+                # useful (freezing a locked-in opponent burns the power-up).
+                # STEAL: the opposite — only a SUBMITTED target has a round_score
+                # worth stealing; an unsubmitted target yields 0 stolen points
+                # and burns the power-up for nothing (#254). So require submitted.
                 opponents = [
                     name
                     for name, p in self._player_registry.players.items()
                     if name != player_id and p.is_active
                     and (held != PowerUpType.FREEZE or not p.submitted)
+                    and (held != PowerUpType.STEAL or p.submitted)
                 ]
                 if not opponents:
                     return ERR_INVALID_ACTION
                 target_id = random.choice(opponents)
 
-        # FREEZE: explicit-target submitted-check (random fallback already
-        # filters submitted players above).
-        if held == PowerUpType.FREEZE and target_id:
+        # Explicit-target submitted-check (random fallback already filters above).
+        # FREEZE rejects submitted targets; STEAL rejects un-submitted targets.
+        if target_id:
             target_check = self._player_registry.get_player(target_id)
-            if target_check and target_check.submitted:
+            if held == PowerUpType.FREEZE and target_check and target_check.submitted:
+                return ERR_INVALID_ACTION
+            if held == PowerUpType.STEAL and target_check and not target_check.submitted:
                 return ERR_INVALID_ACTION
 
         # Determine wrong answer indices for joker

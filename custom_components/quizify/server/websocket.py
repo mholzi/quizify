@@ -857,9 +857,15 @@ class QuizifyWebSocketHandler:
 
             # For joker, send the removed answer to the using player only
             if result.type == PowerUpType.JOKER and result.joker_remove_index is not None:
-                # Map original index to shuffled index for the player
+                # Map the canonical original index to THIS player's shuffled
+                # position. The buttons are rendered in the per-player shuffle
+                # order, so mapping through the canonical shuffle_map would
+                # disable the wrong button — potentially the CORRECT answer
+                # (#254). get_player_shuffle falls back to the canonical map
+                # when the player has no per-player shuffle.
+                player_shuffle = game_state.get_player_shuffle(player.name)
                 shuffled_remove_idx = None
-                for shuffled_idx, orig_idx in enumerate(game_state.shuffle_map):
+                for shuffled_idx, orig_idx in enumerate(player_shuffle):
                     if orig_idx == result.joker_remove_index:
                         shuffled_remove_idx = shuffled_idx
                         break
