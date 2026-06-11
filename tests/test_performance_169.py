@@ -5,10 +5,10 @@ non-issues under the actual execution model (single-threaded asyncio, bounded
 player count) — these tests lock in the invariants that make them safe, so a
 future refactor can't silently reintroduce a real leak/race:
 
-  1. The per-connection rate-limit map (`_message_timestamps`) is bounded:
-     each connection's entry is pruned of stale timestamps on every check and
-     removed entirely on disconnect, so the dict never grows beyond the set of
-     live connections.
+  1. The per-connection rate-limit map (the shared SlidingWindowLimiter's
+     buckets) is bounded: each connection's entry is pruned of stale timestamps
+     on every check and removed entirely on disconnect, so the dict never grows
+     beyond the set of live connections.
   2. (tick-loop) — covered by the existing timer/game-state suite; this file
      only adds the bounded-map + cache invariants. The tick loop was tidied to
      resolve each player's timer once per tick (behaviour unchanged; 162 tests
@@ -76,16 +76,17 @@ class TestRateLimitBounded:
         self, handler: QuizifyWebSocketHandler, monkeypatch: pytest.MonkeyPatch
     ) -> None:
         """After a connection is forgotten (handle()'s finally), it leaves no
-        residue in _message_timestamps — so the dict is bounded by *live*
+        residue in the rate limiter — so the dict is bounded by *live*
         connections, never unbounded (#169.1)."""
         _freeze_clock(monkeypatch)
+        buckets = handler._rate_limiter._buckets
         ws = _FakeWS()
         assert handler._check_rate_limit(ws) is True
-        assert id(ws) in handler._message_timestamps
+        assert id(ws) in buckets
 
         handler._forget_rate_limit(ws)
-        assert id(ws) not in handler._message_timestamps
-        assert handler._message_timestamps == {}
+        assert id(ws) not in buckets
+        assert buckets == {}
 
     def test_window_prunes_old_timestamps(
         self, handler: QuizifyWebSocketHandler, monkeypatch: pytest.MonkeyPatch
@@ -93,16 +94,17 @@ class TestRateLimitBounded:
         """A long-lived connection's timestamp list does not grow without
         bound — entries older than the window are dropped each call."""
         clock = _freeze_clock(monkeypatch)
+        limiter = handler._rate_limiter
         ws = _FakeWS()
         # Fill the window.
-        for _ in range(handler._RATE_LIMIT_MAX):
+        for _ in range(limiter._max):
             handler._check_rate_limit(ws)
-        assert len(handler._message_timestamps[id(ws)]) == handler._RATE_LIMIT_MAX
+        assert len(limiter._buckets[id(ws)]) == limiter._max
 
         # Jump past the window — the next check prunes everything stale.
-        clock["t"] += handler._RATE_LIMIT_WINDOW + 1
+        clock["t"] += limiter._window + 1
         handler._check_rate_limit(ws)
-        assert len(handler._message_timestamps[id(ws)]) == 1
+        assert len(limiter._buckets[id(ws)]) == 1
 
     def test_over_limit_is_rejected_and_not_recorded(
         self, handler: QuizifyWebSocketHandler, monkeypatch: pytest.MonkeyPatch
@@ -110,27 +112,29 @@ class TestRateLimitBounded:
         """Hitting the cap returns False and does not append the rejected
         message (so a flood can't inflate the list past the cap)."""
         _freeze_clock(monkeypatch)
+        limiter = handler._rate_limiter
         ws = _FakeWS()
-        for _ in range(handler._RATE_LIMIT_MAX):
+        for _ in range(limiter._max):
             assert handler._check_rate_limit(ws) is True
         # One past the cap — rejected.
         assert handler._check_rate_limit(ws) is False
         assert handler._check_rate_limit(ws) is False
-        assert len(handler._message_timestamps[id(ws)]) == handler._RATE_LIMIT_MAX
+        assert len(limiter._buckets[id(ws)]) == limiter._max
 
     def test_distinct_connections_are_independent(
         self, handler: QuizifyWebSocketHandler, monkeypatch: pytest.MonkeyPatch
     ) -> None:
         """Forgetting one connection does not affect another's state."""
         _freeze_clock(monkeypatch)
+        buckets = handler._rate_limiter._buckets
         a, b = _FakeWS(), _FakeWS()
         handler._check_rate_limit(a)
         handler._check_rate_limit(b)
-        assert len(handler._message_timestamps) == 2
+        assert len(buckets) == 2
 
         handler._forget_rate_limit(a)
-        assert id(a) not in handler._message_timestamps
-        assert id(b) in handler._message_timestamps
+        assert id(a) not in buckets
+        assert id(b) in buckets
 
 
 # ---------------------------------------------------------------------------

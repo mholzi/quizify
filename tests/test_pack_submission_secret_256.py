@@ -130,7 +130,7 @@ def _run_submit(ctx: _FakeCtx, monkeypatch: pytest.MonkeyPatch) -> Any:
     monkeypatch.setattr(ps.aiohttp, "ClientSession", _CapturingSession)
     # Reset the module-level rate-limit buckets so repeated submits in the
     # suite (same fake client IP) never trip the limiter.
-    ps._rate_buckets.clear()
+    ps._rate_limiter._buckets.clear()
     request = _FakeRequest(ctx, {"pack": _good_pack()})
 
     async def _go() -> None:

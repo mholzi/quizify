@@ -28,6 +28,7 @@ from custom_components.quizify.game.powerups import PowerUpEffect, PowerUpType
 from custom_components.quizify.game.state import AnswerResult, GamePhase, QuizifyGameState
 from custom_components.quizify.server.broadcast_dispatcher import BroadcastDispatcher
 from custom_components.quizify.server.connection import ConnectionManager
+from custom_components.quizify.server.rate_limit import SlidingWindowLimiter
 from custom_components.quizify.server.round_message_builder import RoundMessageBuilder
 from custom_components.quizify.server.serializers import (
     serialize_finale,
@@ -64,6 +65,20 @@ class QuizifyWebSocketHandler:
     # redirect-driven flash is suppressed.
     ADMIN_REDIRECT_GRACE = 4.0
 
+    # Grace before round 1's timer starts after a game/restart. The admin-as-
+    # player flow redirects the admin tab from /quizify/admin to /quizify/player
+    # after start_game; that navigation + WS reconnect + i18n init costs
+    # ~1.5-2.5s, during which the server timer is already ticking. Without this
+    # buffer the admin lands on round 1 with ~25s left on a 30s timer. Applied
+    # at both start_game (L3) and finale→new-game (L73) — identical reason.
+    START_REDIRECT_GRACE = 2.5
+
+    # Lightning round (#42/#201): the intro splash ("Bolt Burst") shows on the
+    # host/TV + every phone before question 1. LIGHTNING_SPLASH_GRACE lets
+    # clients swap from the splash to the question view before the first clock
+    # starts ticking, so the countdown the players see matches the server window.
+    LIGHTNING_SPLASH_GRACE = 1.0
+
     def __init__(
         self,
         runtime: Runtime,
@@ -85,10 +100,14 @@ class QuizifyWebSocketHandler:
         # construction so the handler doesn't have to know about HA
         # services. Calling announce_milestone on None is the no-op path.
         self._tts_announcer = None
-        # Rate limiting
-        self._message_timestamps: dict[int, list[float]] = {}  # ws id -> recent message timestamps
-        self._RATE_LIMIT_WINDOW = 1.0  # seconds
-        self._RATE_LIMIT_MAX = 15  # max messages per window
+        # Per-connection message flood guard (#169). Keyed on id(ws); the
+        # entry is dropped by _forget_rate_limit() on disconnect so the
+        # backing dict is bounded by the number of *live* connections.
+        self._rate_limiter = SlidingWindowLimiter(
+            max_requests=15,  # max messages per window
+            window=1.0,  # seconds
+            clock=lambda: asyncio.get_event_loop().time(),
+        )
         # Routes named state events (round_evaluated / game_ended) to the
         # matching broadcast, falling back to a full-state push (#184).
         self._broadcast_dispatcher = BroadcastDispatcher(
@@ -108,30 +127,19 @@ class QuizifyWebSocketHandler:
         """Record a message for ``ws`` and report whether it is within the
         per-connection rate limit.
 
-        Timestamps older than ``_RATE_LIMIT_WINDOW`` are pruned on every call,
-        so each connection's list stays small; the connection's entry itself
-        is dropped by :meth:`_forget_rate_limit` from ``handle()``'s ``finally``
-        on disconnect, so ``_message_timestamps`` is bounded by the number of
-        *live* connections (≤ MAX_PLAYERS + admin/dashboard), never unbounded
-        (#169). A message that exceeds the limit is NOT recorded.
+        Delegates to the shared :class:`SlidingWindowLimiter`: old timestamps
+        are pruned on every call so each connection's list stays small; the
+        connection's entry is dropped by :meth:`_forget_rate_limit` from
+        ``handle()``'s ``finally`` on disconnect, so the backing dict is
+        bounded by the number of *live* connections (≤ MAX_PLAYERS +
+        admin/dashboard), never unbounded (#169). A message that exceeds the
+        limit is NOT recorded.
         """
-        ws_id = id(ws)
-        now = asyncio.get_event_loop().time()
-        timestamps = [
-            t
-            for t in self._message_timestamps.get(ws_id, [])
-            if now - t < self._RATE_LIMIT_WINDOW
-        ]
-        if len(timestamps) >= self._RATE_LIMIT_MAX:
-            self._message_timestamps[ws_id] = timestamps
-            return False
-        timestamps.append(now)
-        self._message_timestamps[ws_id] = timestamps
-        return True
+        return self._rate_limiter.check(id(ws))
 
     def _forget_rate_limit(self, ws: web.WebSocketResponse) -> None:
         """Drop a connection's rate-limit state (called on disconnect)."""
-        self._message_timestamps.pop(id(ws), None)
+        self._rate_limiter.forget(id(ws))
 
     async def handle(self, request: web.Request) -> web.WebSocketResponse:
         """Handle WebSocket connection."""
@@ -550,14 +558,17 @@ class QuizifyWebSocketHandler:
                 "players": serialize_player_list(players),
             })
         else:
+            # English i18n-fallback strings only — the client localizes off
+            # the structured ``code`` via ``t('errors.<CODE>')`` and only falls
+            # back to this ``message`` if the key is missing (player-core.js).
             error_messages = {
-                ERR_NAME_TAKEN: "Name bereits vergeben",
-                ERR_NAME_INVALID: "Bitte gib einen Namen ein",
-                ERR_GAME_FULL: "Spiel ist voll",
+                ERR_NAME_TAKEN: "Name already taken",
+                ERR_NAME_INVALID: "Please enter a name",
+                ERR_GAME_FULL: "Game is full",
             }
             await self._conn.send_error(
                 ws, error_code or ERR_INVALID_ACTION,
-                error_messages.get(error_code or "", "Beitritt fehlgeschlagen"),
+                error_messages.get(error_code or "", "Failed to join"),
             )
 
     # ------------------------------------------------------------------
@@ -704,11 +715,12 @@ class QuizifyWebSocketHandler:
             # Do NOT broadcast here \u2014 that would double-fire when the timer
             # path races with all-submitted (#3 in logical review).
         elif isinstance(result, str):
+            # English i18n-fallback strings only (client localizes off ``code``).
             error_messages = {
-                ERR_ALREADY_SUBMITTED: "Bereits geantwortet",
-                ERR_ROUND_EXPIRED: "Zeit abgelaufen",
-                ERR_NOT_IN_GAME: "Nicht im Spiel",
-                ERR_GAME_NOT_STARTED: "Kein aktives Spiel",
+                ERR_ALREADY_SUBMITTED: "Already answered",
+                ERR_ROUND_EXPIRED: "Time is up",
+                ERR_NOT_IN_GAME: "Not in the game",
+                ERR_GAME_NOT_STARTED: "No active game",
             }
             await self._conn.send_error(
                 ws, result, error_messages.get(result, result)
@@ -902,7 +914,7 @@ class QuizifyWebSocketHandler:
             else:
                 await self._conn.broadcast(effect_data)
         elif isinstance(result, str):
-            await self._conn.send_error(ws, result, "Power-up nicht verfügbar")
+            await self._conn.send_error(ws, result, "Power-up not available")
 
     # ------------------------------------------------------------------
     # Admin: start game
@@ -983,7 +995,7 @@ class QuizifyWebSocketHandler:
         # who just spent time typing their name in the modal. Subsequent
         # rounds (Next Round button click) don't have this gap since the
         # admin is already on the player view.
-        await asyncio.sleep(2.5)
+        await asyncio.sleep(self.START_REDIRECT_GRACE)
 
         # Start the first question
         await self._start_next_question(game_state)
@@ -1070,9 +1082,9 @@ class QuizifyWebSocketHandler:
         except ValueError as err:
             await self._conn.send_error(ws, ERR_GAME_ALREADY_STARTED, str(err))
             return
-        # Same 2.5s grace as L3 — admin tab is still on the finale view
-        # and needs to redirect/reconnect before round 1's timer ticks.
-        await asyncio.sleep(2.5)
+        # Same redirect grace as start_game — admin tab is still on the finale
+        # view and needs to redirect/reconnect before round 1's timer ticks.
+        await asyncio.sleep(self.START_REDIRECT_GRACE)
         await self._start_next_question(game_state)
 
     async def _handle_reset_game(
@@ -1307,7 +1319,7 @@ class QuizifyWebSocketHandler:
             try:
                 # Brief grace so clients swap from the intro splash (#201) to
                 # the question view before the first clock starts ticking.
-                await asyncio.sleep(1.0)
+                await asyncio.sleep(self.LIGHTNING_SPLASH_GRACE)
                 while game_state.phase == GamePhase.LIGHTNING:
                     lr = game_state.lightning
                     if lr is None:

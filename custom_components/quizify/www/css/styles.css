@@ -877,20 +877,6 @@ button, .btn {
     transform: scale(0.98);
 }
 
-/* Neon primary button */
-.btn-neon {
-    background: var(--color-accent-primary);
-    color: var(--color-text-white);
-    border: none;
-    border-radius: var(--radius-md);
-    padding: var(--space-md) var(--space-lg);
-    font-weight: var(--font-weight-semibold);
-}
-
-.btn-neon:hover {
-    background: #ff4080;
-}
-
 /* ==========================================
    Inputs
    ========================================== */
@@ -2397,90 +2383,6 @@ button, .btn {
     margin-bottom: var(--space-sm);
 }
 
-/* Leaderboard — Ranked Bars (Soft Parlor, approved 2026-06-07).
-   Each row carries a faint sage bar scaled to the player's score so
-   the gaps read at a glance. Top-3 ranks get a medal-tinted dot; the
-   current player's row gets a coral left border. */
-.final-entry {
-    display: flex;
-    align-items: center;
-    gap: var(--space-sm);
-    padding: 5px 0;
-}
-
-.final-rank {
-    width: 18px;
-    text-align: right;
-    font-family: var(--font-mono);
-    font-weight: 700;
-    font-size: 0.8rem;
-    color: var(--color-text-neon-muted);
-    flex-shrink: 0;
-}
-
-.final-track {
-    position: relative;
-    flex: 1;
-    min-width: 0;
-    height: 30px;
-    background: var(--color-bg-white, #FFFFFF);
-    border: 1px solid var(--color-border-neon, #E5DFCF);
-    border-radius: var(--radius-md, 8px);
-    overflow: hidden;
-    display: flex;
-    align-items: center;
-}
-
-.final-fill {
-    position: absolute;
-    left: 0;
-    top: 0;
-    bottom: 0;
-    background: rgba(127, 168, 151, 0.20);
-    border-radius: var(--radius-md, 8px) 0 0 var(--radius-md, 8px);
-    transition: width 0.6s ease;
-}
-
-.final-name {
-    position: relative;
-    z-index: 1;
-    flex: 1;
-    min-width: 0;
-    display: flex;
-    align-items: center;
-    gap: 6px;
-    padding-left: 10px;
-    font-weight: var(--font-weight-medium);
-    color: var(--color-text-white);
-    white-space: nowrap;
-    overflow: hidden;
-    text-overflow: ellipsis;
-}
-
-.lb-mdot {
-    width: 9px;
-    height: 9px;
-    border-radius: 50%;
-    flex-shrink: 0;
-}
-.lb-mdot--gold   { background: #E8C47F; }
-.lb-mdot--silver { background: #AAB6C2; }
-.lb-mdot--bronze { background: #CD8C64; }
-
-.final-score {
-    width: 48px;
-    text-align: right;
-    font-family: var(--font-mono);
-    font-weight: var(--font-weight-bold);
-    font-variant-numeric: tabular-nums;
-    color: var(--color-text-white);
-    flex-shrink: 0;
-}
-
-.final-entry.is-current .final-track {
-    border-left: 3px solid var(--color-accent-primary, #E88A7F);
-}
-
 /* ==========================================
    Podium — Soft Parlor (Variant A: Family Trophy Shelf)
    Cream "shelf" planks (no gradients), sun-yellow top edge
@@ -3780,99 +3682,11 @@ footer {
     gap: var(--space-sm);
 }
 
-/* Song hero */
-.reveal-song-hero {
-    text-align: center;
-    padding: var(--space-md) 0;
-}
-
-.reveal-song-info {
-    margin-bottom: var(--space-sm);
-}
-
-.song-title {
-    font-family: var(--font-display);
-    font-size: 1.2rem;
-    font-weight: 800;
-    color: var(--color-text-white);
-    line-height: 1.3;
-}
-
 .reveal-emotion-text {
     font-size: 1.1rem;
     font-weight: 700;
     text-align: center;
     margin-bottom: var(--space-sm);
-}
-
-/* Fun fact section */
-/* Answer distribution bars */
-.answer-distribution-section {
-    background: var(--color-surface-dark);
-    border: 1px solid var(--color-border-neon);
-    border-radius: var(--radius-lg);
-    padding: var(--space-md);
-    display: flex;
-    flex-direction: column;
-    gap: var(--space-sm);
-}
-
-.answer-bar {
-    display: flex;
-    flex-direction: column;
-    gap: 4px;
-}
-
-.answer-bar__header {
-    display: flex;
-    align-items: center;
-    gap: var(--space-xs);
-    font-size: 0.85rem;
-}
-
-.answer-bar__label {
-    font-weight: 700;
-    color: var(--color-text-muted);
-    min-width: 18px;
-}
-
-.answer-bar__text {
-    flex: 1;
-    color: var(--color-text-white);
-    overflow: hidden;
-    text-overflow: ellipsis;
-    white-space: nowrap;
-}
-
-.answer-bar__pct {
-    font-weight: 700;
-    color: var(--color-text-muted);
-    min-width: 36px;
-    text-align: right;
-}
-
-.answer-bar--correct .answer-bar__label,
-.answer-bar--correct .answer-bar__pct {
-    color: var(--color-success-neon);
-}
-
-.answer-bar__track {
-    height: 8px;
-    background: #E5DFCF;
-    border-radius: var(--radius-full);
-    overflow: hidden;
-}
-
-.answer-bar__fill {
-    height: 100%;
-    background: var(--color-text-muted);
-    border-radius: var(--radius-full);
-    transition: width 0.6s ease;
-}
-
-.answer-bar--correct .answer-bar__fill {
-    background: var(--color-success-neon);
-    box-shadow: 0 0 8px var(--color-success-neon);
 }
 
 /* ============================================================
@@ -3881,7 +3695,6 @@ footer {
    wash that grows from the left to match vote percentage. Correct
    row repaints sage with a ✓; the player's own row gets a "· DU"
    tag in coral so per-player shuffle doesn't lose them.
-   Old .answer-bar styles above stay for back-compat but are unused.
    ============================================================ */
 .ad-row {
     position: relative;
@@ -3982,17 +3795,6 @@ footer {
 /* Guesses section */
 .guesses-section {
     margin-top: var(--space-sm);
-}
-
-/* Confetti canvas */
-.confetti-canvas {
-    position: fixed;
-    top: 0;
-    left: 0;
-    width: 100%;
-    height: 100%;
-    pointer-events: none;
-    z-index: 9998;
 }
 
 /* Reveal admin controls */
@@ -5878,22 +5680,6 @@ body.is-admin .reaction-bar {
    Player Page: MISC
    ========================================== */
 
-/* WebSocket indicator */
-.ws-indicator {
-    display: inline-block;
-    width: 8px;
-    height: 8px;
-    border-radius: var(--radius-full);
-    background: var(--color-success-neon);
-    box-shadow: 0 0 6px var(--color-success-neon);
-}
-
-.ws-indicator.disconnected {
-    background: var(--color-error);
-    box-shadow: 0 0 6px var(--color-error);
-}
-
-
 /* ==========================================
    Lightning Round Intro Splash — "Bolt Burst" (issue #201)
    Variant A from design-issue-201. Shown on host/TV + player phone
@@ -6596,8 +6382,7 @@ body.is-admin .reaction-bar {
   user-select: none;
   letter-spacing: 0.05em;
 }
-[data-theme="dark"] .version-badge,
-body.theme-dark .version-badge {
+[data-theme="dark"] .version-badge {
   color: rgba(255, 255, 255, 0.3);
 }
 

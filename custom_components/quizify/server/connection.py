@@ -89,10 +89,6 @@ class ConnectionManager:
         """Return True if *ws* is an admin connection."""
         return ws in self._admin_connections
 
-    def add_to_admin_connections(self, ws: web.WebSocketResponse) -> None:
-        """Add *ws* to the admin connections set."""
-        self._admin_connections.add(ws)
-
     # ------------------------------------------------------------------
     # Admin session token (persisted across restarts)
     # ------------------------------------------------------------------
@@ -157,11 +153,6 @@ class ConnectionManager:
             self._admin_session_token = str(uuid.uuid4())
             await self._async_save_admin_token()
             return True
-
-    def clear_admin_token(self) -> None:
-        """Explicit admin-token reset (e.g. user clicked 'Log out admin')."""
-        self._admin_session_token = None
-        asyncio.ensure_future(self._async_save_admin_token())
 
     async def async_clear_admin_token(self) -> None:
         """Async variant: clear in-memory token AND await the storage delete."""
@@ -261,10 +252,6 @@ class ConnectionManager:
             task.cancel()
             _LOGGER.info("Cancelled removal for reconnecting player: %s", name)
 
-    def get_pending_removals(self) -> dict[str, asyncio.Task]:
-        """Return the pending-removals mapping."""
-        return self._pending_removals
-
     # ------------------------------------------------------------------
     # Broadcast helpers
     # ------------------------------------------------------------------
@@ -284,55 +271,9 @@ class ConnectionManager:
         if tasks:
             await asyncio.gather(*tasks)
 
-    async def broadcast_to_players(self, message: dict) -> None:
-        """Broadcast to all player connections (excludes pure-admin connections).
-
-        Admin-as-player connections (present in both *connections* and
-        *_admin_connections*) also receive player messages so they see
-        questions/answers without the correct-answer flag.
-        """
-        gs = self._get_game_state()
-        gs_players = gs.get_players() if gs else []
-
-        payload = json.dumps(message)  # serialize once, send_str per client (#258)
-        tasks = []
-        for ws in list(self.connections):
-            if ws.closed:
-                continue
-            is_pure_admin = ws in self._admin_connections and not any(
-                p.ws is ws for p in gs_players
-            )
-            if not is_pure_admin:
-                tasks.append(self._safe_send_str(ws, payload))
-        if tasks:
-            await asyncio.gather(*tasks)
-
-    async def broadcast_to_admins(self, message: dict) -> None:
-        """Broadcast admin-only messages (with correct answer) to pure admin connections.
-
-        Admin-as-player connections are excluded so they don't see the
-        correct answer before submitting.
-        """
-        if not self._admin_connections:
-            return
-        gs = self._get_game_state()
-        admin_as_player_ws = set()
-        if gs:
-            for p in gs.get_players():
-                if p.is_admin and p.ws is not None:
-                    admin_as_player_ws.add(p.ws)
-        payload = json.dumps(message)  # serialize once, send_str per client (#258)
-        tasks = [
-            self._safe_send_str(ws, payload)
-            for ws in list(self._admin_connections)
-            if not ws.closed and ws not in admin_as_player_ws
-        ]
-        if tasks:
-            await asyncio.gather(*tasks)
-
     async def broadcast_to_admins_and_dashboards(self, message: dict) -> None:
-        """Same as broadcast_to_admins but also delivers to the TV-dashboard
-        spectator connections (role=dashboard).
+        """Broadcast admin-only messages (with correct answer) to pure admin
+        connections and the TV-dashboard spectator connections (role=dashboard).
 
         Dashboards need the same canonical-order question payload the admin
         sees — they render an unshuffled view of the same content. Without
