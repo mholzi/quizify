@@ -5,6 +5,41 @@ All notable changes to Quizify are documented here. This project follows
 
 ## [Unreleased]
 
+## [1.3.0-RC12] — 2026-06-11
+
+Twelfth release candidate for 1.3.0 — the actionable fixes from the 2026-06-11
+comprehensive code review (#252). 406 tests passing.
+
+### Fixed
+
+- **Reconnect/mid-round answers are scored correctly again (#253, CRITICAL).**
+  The player-agnostic state snapshot served answers in canonical order while
+  submissions are mapped through the player's own shuffle — so a player who
+  reloaded mid-question had ~2/3 of taps recorded as a *different* answer.
+  Player snapshots now project the answers through that player's shuffle (and
+  the reveal snapshot matches the live shape, and the clock follows the player's
+  timer).
+- **Power-up correctness (#254).** Joker no longer risks greying out the correct
+  answer (it now maps through the per-player shuffle); STEAL is restricted to
+  targets who have answered (no more 0-point steal that burns the power-up); the
+  freeze speed-bonus exploit is closed.
+- **Round lifecycle (#255).** Late joiners are no longer scored 0 every round
+  (`joined_late` is cleared after each round); a round where everyone
+  disconnects now evaluates instead of hanging; `end_game()` is idempotent (no
+  double finale broadcast / duplicate analytics).
+- **Community-pack worker hardening (#256).** The integration can now
+  authenticate to the worker with a shared secret (`X-Quizify-Secret` + a new
+  option), the submission store is lock-guarded, and a cross-language contract
+  test pins the pack schema so worker/integration can't drift.
+- **Frontend (#257).** The pack-update banner renders again (an out-of-scope
+  `_t` ReferenceError was swallowing it) and its pack metadata is now escaped
+  (closing a latent stored XSS); the join button no longer hangs if the socket
+  is dead at click; a power-up target-picker listener leak and a double-escaped
+  podium name are fixed.
+- **Performance (#258).** The ~2 MB question-pack load is preloaded off the event
+  loop at setup, and per-player broadcasts are gathered (one stalled client no
+  longer delays the room).
+
 ## [1.3.0-RC11] — 2026-06-11
 
 Eleventh release candidate for 1.3.0 — a batch of fixes + the final icon and
