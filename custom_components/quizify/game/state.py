@@ -748,13 +748,18 @@ class QuizifyGameState:
         self.phase = GamePhase.ANSWER_REVEAL
 
         # Feed the group-level difficulty calibrator (#40). Signal = the share
-        # of *participating* players (connected, i.e. present for this round)
-        # who answered correctly. Then advance the target for the next round.
-        # No-op when not in "auto" mode. Rounds with zero participants carry no
-        # signal (the calibrator ignores total<=0).
+        # of *participating* players who answered correctly. Then advance the
+        # target for the next round. No-op when not in "auto" mode. Rounds with
+        # zero participants carry no signal (the calibrator ignores total<=0).
+        #
+        # #302: base the signal on players who actually SUBMITTED, not merely
+        # connected. Counting every connected-but-idle tab (late joiners, AFK
+        # phones) as wrong dragged the difficulty easier — the opposite of the
+        # intended adaptation, and inconsistent with question_stats.record_round
+        # below, which deliberately excludes timeouts.
         if self._calibrator is not None:
             participants = [
-                p for p in self._player_registry.players.values() if p.connected
+                p for p in self._player_registry.players.values() if p.submitted
             ]
             total = len(participants)
             correct = sum(
