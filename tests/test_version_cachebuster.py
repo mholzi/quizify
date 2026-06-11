@@ -261,6 +261,16 @@ class TestServiceWorkerSubstitution:
         # Precache URLs carry the substituted buster.
         assert "?v=9.9.9-test-" in resp.text
 
+    async def test_sw_served_with_service_worker_allowed_header(self) -> None:
+        """Regression for #291: the SW lives at /quizify/static/sw.js but must
+        control /quizify/* (where the pages live). The browser only permits a
+        registration scope wider than the worker's own path if the response
+        carries Service-Worker-Allowed for that scope. Without this header the
+        {scope: '/quizify/'} registration is rejected and the worker controls
+        nothing (dead fetch handler, no idle auto-reload)."""
+        resp = await sw_view(_fake_request("9.9.9-test"))
+        assert resp.headers.get("Service-Worker-Allowed") == "/quizify/"
+
     async def test_sw_precache_bypasses_http_cache(self) -> None:
         """Install-time precache must go to the server, not the browser HTTP
         cache. HA serves /quizify/static/* with a 31-day max-age, so a plain
@@ -311,6 +321,14 @@ class TestServiceWorkerSource:
         cache for up to 24h, which kept the old CACHE_VERSION alive."""
         src = (self._WWW / "js" / "sw-update.js").read_text(encoding="utf-8")
         assert "updateViaCache: 'none'" in src
+
+    def test_sw_registered_with_quizify_scope(self) -> None:
+        """The SW must register with scope '/quizify/' (#291) — the default
+        scope is the worker's own dir (/quizify/static/), which controls none
+        of the actual pages. Pairs with the Service-Worker-Allowed header on
+        sw_view."""
+        src = (self._WWW / "js" / "sw-update.js").read_text(encoding="utf-8")
+        assert "scope: '/quizify/'" in src
 
 
 @pytest.mark.asyncio

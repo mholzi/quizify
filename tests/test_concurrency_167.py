@@ -173,6 +173,63 @@ class TestStealPowerup:
         assert real_get("Bob").round_score == 10
         assert real_get("Alice").round_score == 0
 
+    def test_steal_against_negative_round_score_transfers_nothing(
+        self, game: QuizifyGameState
+    ) -> None:
+        """Regression for #289: on the final round a wrong answer with a wager
+        drives round_score negative. STEAL halved that negative value, which
+        inverted the steal — the target gained points, the source lost them,
+        and (with no 0-clamp) the source total went permanently negative. A
+        negative target round_score must now yield 0 transferred and leave
+        neither player's total below zero."""
+        _start_question(game, ["Alice", "Bob"])
+        bob = game.get_player("Bob")
+        bob.submitted = True  # STEAL only targets submitted players (#254)
+        bob.round_score = -40  # wrong final-round wager
+        bob.score = 10
+        alice = game.get_player("Alice")
+        alice.round_score = 0
+        alice.score = 0
+        game._powerup_manager._inventory["Alice"] = PowerUpType.STEAL
+
+        effect = game.use_powerup("Alice", target_id="Bob")
+
+        assert not isinstance(effect, str), f"unexpected error: {effect}"
+        # Nothing is stolen from a non-positive round score (max(0, -40)//2 == 0).
+        assert effect.stolen_points == 0
+        # The steal did not invert: Bob's total is unchanged (no points flow to
+        # Alice), and Alice gains nothing.
+        assert game.get_player("Bob").score == 10
+        assert game.get_player("Alice").round_score == 0
+        assert game.get_player("Alice").score == 0
+        # Neither total goes below zero.
+        assert game.get_player("Alice").score >= 0
+        assert game.get_player("Bob").score >= 0
+
+    def test_steal_clamps_negative_source_total_at_zero(
+        self, game: QuizifyGameState
+    ) -> None:
+        """Regression for #289: the source total must be clamped at 0 after a
+        steal. If the source already sits negative (its own wrong final-round
+        wager) and the target has nothing to give, the steal must not leave the
+        source permanently negative."""
+        _start_question(game, ["Alice", "Bob"])
+        bob = game.get_player("Bob")
+        bob.submitted = True  # STEAL only targets submitted players (#254)
+        bob.round_score = -10  # nothing to steal
+        bob.score = 5
+        alice = game.get_player("Alice")
+        alice.round_score = -20  # Alice's own wrong wager
+        alice.score = -20
+        game._powerup_manager._inventory["Alice"] = PowerUpType.STEAL
+
+        effect = game.use_powerup("Alice", target_id="Bob")
+
+        assert not isinstance(effect, str), f"unexpected error: {effect}"
+        assert effect.stolen_points == 0
+        # Source total clamped at 0, never left negative.
+        assert game.get_player("Alice").score == 0
+
 
 # ---------------------------------------------------------------------------
 # #4 — reaction-bonus counters reset between games (the real residual)

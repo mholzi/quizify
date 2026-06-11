@@ -1182,11 +1182,18 @@ class QuizifyGameState:
             source_player = self._player_registry.get_player(player_id)
             if not target_player or not source_player:
                 return ERR_INVALID_ACTION
-            stolen = target_player.round_score // 2
+            # Clamp the target's round_score at 0 before halving: on the final
+            # round a wrong answer with a wager can drive round_score negative,
+            # and a negative // 2 would invert the steal (target gains, source
+            # loses). Treat a non-positive target round_score as nothing to
+            # steal (#289).
+            stolen = max(0, target_player.round_score) // 2
             target_player.round_score = max(0, target_player.round_score - stolen)
             target_player.score = max(0, target_player.score - stolen)
             source_player.round_score += stolen
-            source_player.score += stolen
+            # Clamp the source total at 0 so a steal can never leave a player
+            # with a permanently negative score (#289).
+            source_player.score = max(0, source_player.score + stolen)
             effect.stolen_points = stolen
 
         _LOGGER.info(

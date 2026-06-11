@@ -68,7 +68,13 @@
     // cache for up to 24h on the SW script; an HTTP-cached sw.js carries the
     // OLD CACHE_VERSION, so the old cache never gets invalidated and a new
     // release can't reset the client. Belt-and-braces for the same invariant.
-    navigator.serviceWorker.register('/quizify/static/sw.js', { updateViaCache: 'none' })
+    // scope: '/quizify/' — the SW lives at /quizify/static/sw.js, so the
+    // default scope would be /quizify/static/ and the worker would control
+    // nothing (the pages live at /quizify/*). Registering with the wider
+    // scope makes the fetch handler and the #215 idle auto-reload actually
+    // fire. Requires the server to send Service-Worker-Allowed: /quizify/
+    // on sw.js (see sw_view) so the wider scope is permitted (#291).
+    navigator.serviceWorker.register('/quizify/static/sw.js', { scope: '/quizify/', updateViaCache: 'none' })
         .then(function (reg) {
             // Deterministic update check on every page load — don't rely on
             // the browser's own (possibly throttled, up-to-24h) navigation

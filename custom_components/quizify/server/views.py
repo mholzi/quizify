@@ -247,8 +247,14 @@ async def sw_view(request: web.Request) -> web.Response:
     body = await ctx.runtime.run_in_executor(sw_path.read_text, "utf-8")
     body = _apply_version(body, version)
     body = body.replace(_ASSET_VER_TOKEN, await _get_asset_version_async(ctx, version))
+    # The SW is served from /quizify/static/sw.js but must control /quizify/*
+    # (the actual pages). A worker can only claim a scope above its own path
+    # if the response carries Service-Worker-Allowed for that wider scope —
+    # without it the browser rejects the {scope: '/quizify/'} registration
+    # and the worker controls nothing (#291).
+    headers = {**_NO_CACHE_HEADERS, "Service-Worker-Allowed": "/quizify/"}
     return web.Response(
-        text=body, content_type="application/javascript", headers=_NO_CACHE_HEADERS
+        text=body, content_type="application/javascript", headers=headers
     )
 
 
