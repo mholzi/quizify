@@ -388,7 +388,7 @@ class QuizifyWebSocketHandler:
                 True,
             ),
             "admin_skip": (
-                lambda ws: self._handle_next_question(ws, game_state),
+                lambda ws: self._handle_admin_skip(ws, game_state),
                 True,
             ),
             "end_game": (lambda ws: self._handle_end_game(ws, game_state), True),
@@ -1076,7 +1076,41 @@ class QuizifyWebSocketHandler:
             await self._conn.send_error(ws, ERR_INVALID_ACTION, "Cannot advance now")
             return
 
+        # #298: a stray next_round/next_question in a *real* lobby (stale admin
+        # tab, double-fire) must NOT advance — start_game doesn't change phase,
+        # so an un-started game sits in LOBBY with game_id is None. Advancing
+        # from there either ends an empty queue (FINALE with an empty podium,
+        # round=0) or starts a round with no game_id and scores never reset.
+        # The legitimate internal start→first-question path goes through
+        # _start_next_question directly (see _handle_start_game), so gating the
+        # public handler here doesn't break it.
+        if game_state.phase == GamePhase.LOBBY and game_state.game_id is None:
+            await self._conn.send_error(ws, ERR_INVALID_ACTION, "Cannot advance now")
+            return
+
         await self._start_next_question(game_state)
+
+    async def _handle_admin_skip(
+        self, ws: web.WebSocketResponse, game_state: QuizifyGameState
+    ) -> None:
+        """Handle admin skip — abandon the live question right now (#311).
+
+        ``admin_skip`` used to route to ``_handle_next_question``, which only
+        accepts LOBBY/ANSWER_REVEAL, so mid-question it was a dead no-op: a
+        broken/offensive question forced the room to wait out the timer (pause
+        can't advance either). The fix: during QUESTION_ACTIVE, evaluate the
+        round immediately — locking in whatever answers are already in and
+        transitioning to ANSWER_REVEAL — so the admin can then advance past it.
+        Outside QUESTION_ACTIVE it behaves like the normal advance.
+        """
+        if game_state.phase == GamePhase.QUESTION_ACTIVE:
+            # Stop the countdown and evaluate now. evaluate_round()'s
+            # state-machine event (_fire_broadcast("round_evaluated")) drives
+            # the summary broadcast, same as the timer-expiry auto-evaluate.
+            self._cancel_timer_tick()
+            game_state.evaluate_round()
+            return
+        await self._handle_next_question(ws, game_state)
 
     # ------------------------------------------------------------------
     # Admin: end game
