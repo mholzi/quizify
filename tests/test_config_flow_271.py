@@ -114,8 +114,12 @@ async def test_options_flow_saves_community_submit_options(
 
     # The entity-selector options reject "" — omit them (vol.Optional) and only
     # submit the text fields under test.
+    # EntitySelectors validate entity-id FORMAT (not existence), and reject "" —
+    # so give valid-format ids; the text fields are what the test asserts.
     user_input = {
         CONF_PARTY_LIGHT_ENTITIES: [],
+        CONF_TTS_ENTITY: "tts.test",
+        CONF_MEDIA_PLAYER_ENTITY: "media_player.test",
         CONF_LOBBY_MUSIC_URL: "",
         CONF_COMMUNITY_SUBMIT_URL: "https://worker.example.com/submit",
         CONF_COMMUNITY_SUBMIT_SECRET: "s3cret-token",
