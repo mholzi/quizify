@@ -692,7 +692,14 @@ async def flag_list_view(request: web.Request) -> web.Response:
         return entries
 
     entries = await ctx.runtime.run_in_executor(_read)
-    return web.json_response({"flags": entries})
+    # #305: never return the stored client IP (``remote``) to callers — the
+    # /api/quizify/* routes are added to hass.http.app.router with NO HA auth,
+    # so /flags is readable unauthenticated. The IP is still stored on disk for
+    # operator forensics; it is simply stripped from the response so an
+    # anonymous caller can't enumerate the IPs of everyone who flagged a
+    # question. Strip it defensively per entry (older entries may pre-date this).
+    sanitized = [{k: v for k, v in e.items() if k != "remote"} for e in entries]
+    return web.json_response({"flags": sanitized})
 
 
 # ---------------------------------------------------------------------------
