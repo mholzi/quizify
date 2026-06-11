@@ -1403,8 +1403,14 @@ class QuizifyWebSocketHandler:
                         return
             except asyncio.CancelledError:
                 pass
+            except Exception:  # noqa: BLE001
+                # #307: an unexpected exception here used to kill the lightning
+                # task silently, hanging the round on the current question with
+                # a frozen clock. Log it so the failure surfaces.
+                _LOGGER.exception("Lightning loop crashed")
 
         self._lightning_task = asyncio.ensure_future(loop())
+        self._lightning_task.add_done_callback(self._log_task_exception)
 
     def _cancel_lightning_loop(self) -> None:
         if self._lightning_task is not None:
@@ -1687,14 +1693,35 @@ class QuizifyWebSocketHandler:
                     game_state.evaluate_round()
             except asyncio.CancelledError:
                 pass
+            except Exception:  # noqa: BLE001
+                # #307: any other exception used to kill the tick task
+                # silently, leaving the game frozen in QUESTION_ACTIVE with a
+                # stuck countdown. Log it loudly so the failure is diagnosable
+                # instead of presenting as a mysterious hang.
+                _LOGGER.exception("Timer tick loop crashed")
 
         self._timer_tick_task = asyncio.ensure_future(tick_loop())
+        self._timer_tick_task.add_done_callback(self._log_task_exception)
 
     def _cancel_timer_tick(self) -> None:
         """Cancel the timer tick task."""
         if self._timer_tick_task is not None:
             self._timer_tick_task.cancel()
             self._timer_tick_task = None
+
+    @staticmethod
+    def _log_task_exception(task: asyncio.Task) -> None:
+        """Done-callback that surfaces a fire-and-forget task's exception (#307).
+
+        ensure_future/create_task tasks whose exception is never retrieved
+        otherwise raise "Task exception was never retrieved" at GC time (or get
+        swallowed entirely). Reuses the analytics.py logging-done-callback
+        pattern so a crashed background loop is at least loud in the log.
+        """
+        if task.cancelled():
+            return
+        if (exc := task.exception()) is not None:
+            _LOGGER.error("Unhandled exception in background task: %s", exc)
 
     # ------------------------------------------------------------------
     # Round summary broadcast
