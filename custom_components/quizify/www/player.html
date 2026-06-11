@@ -369,6 +369,15 @@
                     </button>
                 </div>
 
+                <!-- #299: non-admin escape hatch on the reveal. If the host
+                     device dies for good, a reveal nobody can advance is a
+                     dead-end. Hidden by default; revealed by player-core after
+                     ~60s with no connected admin so any client can reset the
+                     stuck game (server authorizes this per #207). -->
+                <div id="reveal-reset-controls" class="pl-result-section hidden">
+                    <button id="reveal-reset-btn" class="btn btn-primary btn-glow" type="button" data-i18n="admin.resetGame">Reset game</button>
+                </div>
+
                 <!-- Hidden helpers — legacy renderers (analytics, leaderboard,
                      all-answers) may still try to write into these IDs during
                      the transition. Keeping them as sr-only nodes prevents
@@ -397,6 +406,12 @@
                 <div class="paused-spinner">
                     <div class="spinner"></div>
                 </div>
+                <!-- #299: host-permanently-gone escape hatch. Hidden by
+                     default; revealed by player-core after ~60s of an
+                     admin_disconnected pause so any client can reset the
+                     stuck game (server authorizes this per #207). Mirrors
+                     the standard player primary button styling. -->
+                <button id="paused-reset-btn" class="btn btn-primary btn-glow hidden" type="button" data-i18n="admin.resetGame">Reset game</button>
             </div>
         </div>
 
