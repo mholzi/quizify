@@ -260,9 +260,9 @@
         var difficultyMult = player.difficulty_multiplier || 1.0;
         var breakdownBits = [];
         if (baseScore) breakdownBits.push(t('reveal.baseScore') + ' <b>' + baseScore + '</b>');
-        if (speedBonus) breakdownBits.push(t('reveal.speedBonus') + ' <b>+' + speedBonus + '</b>');
-        if (streakBonus) breakdownBits.push(t('reveal.streakBonus', { count: streak }) + ' <b>+' + streakBonus + '</b>');
-        if (difficultyMult > 1.0) breakdownBits.push(t('reveal.difficulty') + ' <b>' + difficultyMult.toFixed(1) + 'x</b>');
+        if (speedBonus) breakdownBits.push(pu.feedbackLabel('reveal.speedBonus', pu.escapeHtml(t('reveal.speedBonus'))) + ' <b>+' + speedBonus + '</b>');
+        if (streakBonus) breakdownBits.push(pu.feedbackLabel('reveal.streakBonus', pu.escapeHtml(t('reveal.streakBonus', { count: streak }))) + ' <b>+' + streakBonus + '</b>');
+        if (difficultyMult > 1.0) breakdownBits.push(pu.feedbackLabel('reveal.difficulty', pu.escapeHtml(t('reveal.difficulty'))) + ' <b>' + difficultyMult.toFixed(1) + 'x</b>');
         var breakdownHtml = breakdownBits.length
             ? '<div class="pl-result-breakdown">' + breakdownBits.join(' &middot; ') + '</div>'
             : '';
@@ -287,7 +287,7 @@
                 '<div class="pl-result-verdict">' + pu.escapeHtml(t('reveal.wrongHeadline')) + '</div>' +
                 '<div class="pl-result-sub">' + pu.escapeHtml(t('reveal.correctAnswerWas')) + ' <b>' + pu.escapeHtml(correctAnswer) + '</b></div>' +
                 '<div class="pl-result-zero">0<span class="pl-result-zero-unit">' + pu.escapeHtml(t('game.points')) + '</span></div>' +
-                (prevStreak >= 2 ? '<div class="pl-result-streak-lost">💔 ' + pu.escapeHtml(t('reveal.streakLost', { count: prevStreak })) + '</div>' : '');
+                (prevStreak >= 2 ? '<div class="pl-result-streak-lost">' + pu.feedbackLabel('reveal.streakLost', pu.escapeHtml(t('reveal.streakLost', { count: prevStreak }))) + '</div>' : '');
             return;
         }
 
@@ -296,7 +296,7 @@
             // State X — flame headline
             hero.classList.add('pl-result-hero--streak');
             hero.innerHTML =
-                '<div class="pl-result-flame" aria-hidden="true">🔥</div>' +
+                '<div class="pl-result-flame qz-icon qz-icon--sun" aria-hidden="true">' + (window.QuizifyIcons && window.QuizifyIcons.uiIcon ? window.QuizifyIcons.uiIcon('flame') : '🔥') + '</div>' +
                 '<div class="pl-result-headline">' + pu.escapeHtml(t('reveal.streakHeadline', { count: streak })) + '</div>' +
                 '<div class="pl-result-pts">+' + roundScore + '<span class="pl-result-pts-unit">' + pu.escapeHtml(t('game.points')) + '</span></div>' +
                 breakdownHtml;
@@ -514,7 +514,7 @@
         if (player.missed_round || player.no_answer || player.answer_index === null) {
             var prevStreak = player.streak || 0;
             var streakLostHtml = prevStreak > 1
-                ? '<div class="result-row"><span class="result-label">' + pu.escapeHtml(t('reveal.streakLost', { count: prevStreak })) + '</span></div>'
+                ? '<div class="result-row"><span class="result-label">' + pu.feedbackLabel('reveal.streakLost', pu.escapeHtml(t('reveal.streakLost', { count: prevStreak }))) + '</span></div>'
                 : '';
             resultContent.innerHTML =
                 '<div class="result-missed-container">' +
@@ -551,7 +551,7 @@
             if (speedBonus > 0) {
                 breakdownHtml +=
                     '<div class="result-row">' +
-                        '<span class="result-label">' + pu.escapeHtml(t('reveal.speedBonus')) + '</span>' +
+                        '<span class="result-label">' + pu.feedbackLabel('reveal.speedBonus', pu.escapeHtml(t('reveal.speedBonus'))) + '</span>' +
                         '<span class="result-value is-bonus">' + pu.escapeHtml(t('reveal.ptsBonus', { count: speedBonus })) + '</span>' +
                     '</div>';
             }
@@ -559,7 +559,7 @@
             if (difficultyMult > 1.0) {
                 breakdownHtml +=
                     '<div class="result-row">' +
-                        '<span class="result-label">' + pu.escapeHtml(t('reveal.difficulty')) + '</span>' +
+                        '<span class="result-label">' + pu.feedbackLabel('reveal.difficulty', pu.escapeHtml(t('reveal.difficulty'))) + '</span>' +
                         '<span class="result-value is-bonus">' + difficultyMult.toFixed(1) + 'x</span>' +
                     '</div>';
             }
@@ -569,13 +569,13 @@
         if (streakBonus > 0) {
             streakHtml =
                 '<div class="result-row streak-bonus-row">' +
-                    '<span class="result-label">' + pu.escapeHtml(t('reveal.streakBonus', { count: streak })) + '</span>' +
+                    '<span class="result-label">' + pu.feedbackLabel('reveal.streakBonus', pu.escapeHtml(t('reveal.streakBonus', { count: streak }))) + '</span>' +
                     '<span class="result-value is-streak">' + pu.escapeHtml(t('reveal.ptsBonus', { count: streakBonus })) + '</span>' +
                 '</div>';
         } else if (streak > 1 && isCorrect) {
             streakHtml =
                 '<div class="result-row streak-bonus-row">' +
-                    '<span class="result-label">' + pu.escapeHtml(t('reveal.streakActive', { count: streak })) + '</span>' +
+                    '<span class="result-label">' + pu.feedbackLabel('reveal.streakActive', pu.escapeHtml(t('reveal.streakActive', { count: streak }))) + '</span>' +
                 '</div>';
         }
 
@@ -587,7 +587,9 @@
             '<div class="result-row">' +
                 '<span class="result-label">' + pu.escapeHtml(t('reveal.result')) + '</span>' +
                 '<span class="result-value ' + (isCorrect ? 'is-correct' : 'is-wrong') + '">' +
-                    pu.escapeHtml(isCorrect ? t('reveal.correct') : t('reveal.wrong')) +
+                    (isCorrect
+                        ? pu.feedbackLabel('reveal.correct', pu.escapeHtml(t('reveal.correct')))
+                        : pu.feedbackLabel('reveal.wrong', pu.escapeHtml(t('reveal.wrong')))) +
                 '</span>' +
             '</div>' +
             breakdownHtml +
@@ -648,7 +650,8 @@
 
             var answerDisplay = isMissed ? '—' : pu.escapeHtml(player.answer_text || player.answer || '?');
             var resultDisplay = isMissed ? ('⏱️ ' + pu.escapeHtml(t('admin.answerNone'))) :
-                                isCorrect ? pu.escapeHtml(t('reveal.correct')) : pu.escapeHtml(t('reveal.wrong'));
+                                isCorrect ? pu.feedbackLabel('reveal.correct', pu.escapeHtml(t('reveal.correct')))
+                                          : pu.feedbackLabel('reveal.wrong', pu.escapeHtml(t('reveal.wrong')));
             var youLabel = pu.escapeHtml(t('lobby.you') || 'You');
 
             html += '<div class="result-card ' + scoreClass + (isCurrentPlayer ? ' result-card--mine' : '') + '">' +

@@ -65,7 +65,16 @@
         flame: '<path d="M12 21a5.5 5.5 0 0 0 5.5-5.5c0-3.6-3-5.4-3-8.6-2 1-2.6 3-2.6 4.6-1-.5-1.6-2-1.6-3.6-2.6 2-4.3 4.6-4.3 7.6A5.5 5.5 0 0 0 12 21z"/>',
         freeze: '<path d="M12 2.5v19M3.8 7.25l16.4 9.5M20.2 7.25l-16.4 9.5"/><path d="M12 5.6l-2 1.2M12 5.6l2 1.2M12 18.4l-2-1.2M12 18.4l2-1.2M5.6 9.2v2.3M18.4 9.2v2.3M5.6 12.5v2.3M18.4 12.5v2.3"/>',
         // Highlights tab — reuse the popculture clapperboard glyph.
-        highlights: '<rect x="3" y="5" width="18" height="14" rx="2"/><path d="M3 9.5h18"/><path d="M7.5 5v4.5M12 5v4.5M16.5 5v4.5"/>'
+        highlights: '<rect x="3" y="5" width="18" height="14" rx="2"/><path d="M3 9.5h18"/><path d="M7.5 5v4.5M12 5v4.5M16.5 5v4.5"/>',
+        // Reveal-feedback + toast glyphs (#220 P3): emoji pulled out of the
+        // translated strings and rendered as SVG beside the text. Approved by
+        // Markus (2026-06-10) — do not redraw. heartbreak's crack is a PLAIN
+        // stroked path (no .d) so it renders as a stroke, matching the preview.
+        check:      '<path d="M4.5 12.5l4.5 4.5L19.5 6.5"/>',
+        cross:      '<path d="M6.5 6.5l11 11M17.5 6.5l-11 11"/>',
+        heartbreak: '<path d="M12 20.3C6.6 16 4 13.4 4 10.1 4 7.8 5.8 6 8 6c1.3 0 2.5.6 3.3 1.6L12 8.4M12 20.3C17.4 16 20 13.4 20 10.1 20 7.8 18.2 6 16 6c-1.3 0-2.5.6-3.3 1.6L12 8.4"/><path d="M12 8.4l-1.6 3.1 2.6 1.2-1.6 3.1"/>',
+        steal:      '<path d="M3.5 10.2c2.2-1 5.2-1.6 8.5-1.6s6.3.6 8.5 1.6c-.2 3.1-1.9 5-4.8 5-1.6 0-2.5-.8-3.2-1.7h-1c-.7.9-1.6 1.7-3.2 1.7-2.9 0-4.6-1.9-4.8-5z"/><circle class="d" cx="8.3" cy="11" r="1.05"/><circle class="d" cx="15.7" cy="11" r="1.05"/>',
+        joker:      '<rect x="6.5" y="3.5" width="11" height="17" rx="2.2"/><path d="M12 7.6l1.05 2.13 2.35.34-1.7 1.66.4 2.34L12 13.27l-2.1 1.1.4-2.34-1.7-1.66 2.35-.34z" class="d"/>'
     };
 
     // Accent tint per theme, cycling the 4 Soft Parlor accents; mixed stays

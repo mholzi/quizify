@@ -358,10 +358,66 @@
     }
 
     // ============================================
+    // Feedback Icons (#220 P3)
+    // ============================================
+
+    // Maps a reveal-feedback / toast i18n key to its SVG glyph + tint. The
+    // emoji that used to live INSIDE the translated string (✅ Richtig, 🔥
+    // {count}er-Serie!, …) is pulled out into a text-only string, and the
+    // consuming JS renders the mapped glyph beside the text as a small
+    // inline .qz-icon. Tints follow the approved meaning→tint pairing
+    // (check=sage, cross/heartbreak=coral, bolt/flame/joker=sun, …).
+    var FEEDBACK_ICON = {
+        'reveal.correct':          { glyph: 'check',      tint: 'sage'  },
+        'reveal.wrong':            { glyph: 'cross',      tint: 'coral' },
+        'reveal.speedBonus':       { glyph: 'bolt',       tint: 'sun'   },
+        'reveal.difficulty':       { glyph: 'target',     tint: 'sage'  },
+        'reveal.streakBonus':      { glyph: 'flame',      tint: 'sun'   },
+        'reveal.streakActive':     { glyph: 'flame',      tint: 'sun'   },
+        'reveal.streakLost':       { glyph: 'heartbreak', tint: 'coral' },
+        'game.stoleFromYou':       { glyph: 'steal',      tint: 'sky'   },
+        'game.stoleFromOpponent':  { glyph: 'steal',      tint: 'sky'   },
+        'game.frozen':             { glyph: 'freeze',     tint: 'sky'   },
+        'game.opponentUsedJoker':  { glyph: 'joker',      tint: 'sun'   },
+        'game.streakToast3':       { glyph: 'flame',      tint: 'sun'   },
+        'game.streakToast5':       { glyph: 'flame',      tint: 'sun'   },
+        'game.streakToast7':       { glyph: 'flame',      tint: 'sun'   },
+        'powerups.stealHint':      { glyph: 'bulb',       tint: 'sun'   },
+        'leaderboard.thanksEmoji': { glyph: 'party',      tint: 'coral' },
+        'wager.bonusFromReaction': { glyph: 'party',      tint: 'coral' }
+    };
+
+    // Returns the inline <span class="qz-icon feedback-icon qz-icon--TINT">
+    // <svg>…</svg></span> markup for a feedback glyph name, or '' if the
+    // shared icon set / glyph is unavailable (so a missing glyph paints
+    // nothing rather than breaking the surrounding markup).
+    function feedbackIconHtml(glyph, tint) {
+        var Icons = window.QuizifyIcons;
+        if (!Icons || !Icons.uiIcon) return '';
+        var svg = Icons.uiIcon(glyph);
+        if (!svg) return '';
+        return '<span class="qz-icon feedback-icon qz-icon--' + (tint || 'mix') + '" aria-hidden="true">' + svg + '</span>';
+    }
+
+    // Renders the icon mapped to an i18n key, prepended to an already-built
+    // (escaped) label string. Used by the reveal chips so each feedback row
+    // shows its glyph beside the text. If the key has no mapped glyph the
+    // label is returned unchanged.
+    function feedbackLabel(key, escapedLabel) {
+        var spec = FEEDBACK_ICON[key];
+        if (!spec) return escapedLabel;
+        var iconHtml = feedbackIconHtml(spec.glyph, spec.tint);
+        return iconHtml ? (iconHtml + escapedLabel) : escapedLabel;
+    }
+
+    // ============================================
     // Toast Notification
     // ============================================
 
-    function showToast(message, duration) {
+    // showToast(message, duration[, iconKey]) — when iconKey maps to a
+    // feedback glyph (#220 P3), the toast renders that SVG icon before the
+    // text (innerHTML); otherwise it stays a plain text-only toast.
+    function showToast(message, duration, iconKey) {
         duration = duration || 3000;
         var toast = document.getElementById('error-toast');
         if (!toast) {
@@ -372,7 +428,15 @@
                 'font-size:0.85rem;z-index:9999;opacity:0;transition:opacity 0.3s;pointer-events:none;';
             document.body.appendChild(toast);
         }
-        toast.textContent = message;
+        var spec = iconKey && FEEDBACK_ICON[iconKey];
+        var iconHtml = spec ? feedbackIconHtml(spec.glyph, spec.tint) : '';
+        if (iconHtml) {
+            toast.classList.add('toast--with-icon');
+            toast.innerHTML = iconHtml + '<span class="toast-text">' + escapeHtml(message) + '</span>';
+        } else {
+            toast.classList.remove('toast--with-icon');
+            toast.textContent = message;
+        }
         toast.style.opacity = '1';
         setTimeout(function () { toast.style.opacity = '0'; }, duration);
     }
@@ -495,6 +559,8 @@
         renderPlayerCards: renderPlayerCards,
         setupCollapsibles: setupCollapsibles,
         paintUiIcons: paintUiIcons,
+        feedbackIconHtml: feedbackIconHtml,
+        feedbackLabel: feedbackLabel,
         generateQR: generateQR,
         showToast: showToast,
         saveSession: saveSession,
@@ -1411,9 +1477,9 @@
         var difficultyMult = player.difficulty_multiplier || 1.0;
         var breakdownBits = [];
         if (baseScore) breakdownBits.push(t('reveal.baseScore') + ' <b>' + baseScore + '</b>');
-        if (speedBonus) breakdownBits.push(t('reveal.speedBonus') + ' <b>+' + speedBonus + '</b>');
-        if (streakBonus) breakdownBits.push(t('reveal.streakBonus', { count: streak }) + ' <b>+' + streakBonus + '</b>');
-        if (difficultyMult > 1.0) breakdownBits.push(t('reveal.difficulty') + ' <b>' + difficultyMult.toFixed(1) + 'x</b>');
+        if (speedBonus) breakdownBits.push(pu.feedbackLabel('reveal.speedBonus', pu.escapeHtml(t('reveal.speedBonus'))) + ' <b>+' + speedBonus + '</b>');
+        if (streakBonus) breakdownBits.push(pu.feedbackLabel('reveal.streakBonus', pu.escapeHtml(t('reveal.streakBonus', { count: streak }))) + ' <b>+' + streakBonus + '</b>');
+        if (difficultyMult > 1.0) breakdownBits.push(pu.feedbackLabel('reveal.difficulty', pu.escapeHtml(t('reveal.difficulty'))) + ' <b>' + difficultyMult.toFixed(1) + 'x</b>');
         var breakdownHtml = breakdownBits.length
             ? '<div class="pl-result-breakdown">' + breakdownBits.join(' &middot; ') + '</div>'
             : '';
@@ -1438,7 +1504,7 @@
                 '<div class="pl-result-verdict">' + pu.escapeHtml(t('reveal.wrongHeadline')) + '</div>' +
                 '<div class="pl-result-sub">' + pu.escapeHtml(t('reveal.correctAnswerWas')) + ' <b>' + pu.escapeHtml(correctAnswer) + '</b></div>' +
                 '<div class="pl-result-zero">0<span class="pl-result-zero-unit">' + pu.escapeHtml(t('game.points')) + '</span></div>' +
-                (prevStreak >= 2 ? '<div class="pl-result-streak-lost">💔 ' + pu.escapeHtml(t('reveal.streakLost', { count: prevStreak })) + '</div>' : '');
+                (prevStreak >= 2 ? '<div class="pl-result-streak-lost">' + pu.feedbackLabel('reveal.streakLost', pu.escapeHtml(t('reveal.streakLost', { count: prevStreak }))) + '</div>' : '');
             return;
         }
 
@@ -1447,7 +1513,7 @@
             // State X — flame headline
             hero.classList.add('pl-result-hero--streak');
             hero.innerHTML =
-                '<div class="pl-result-flame" aria-hidden="true">🔥</div>' +
+                '<div class="pl-result-flame qz-icon qz-icon--sun" aria-hidden="true">' + (window.QuizifyIcons && window.QuizifyIcons.uiIcon ? window.QuizifyIcons.uiIcon('flame') : '🔥') + '</div>' +
                 '<div class="pl-result-headline">' + pu.escapeHtml(t('reveal.streakHeadline', { count: streak })) + '</div>' +
                 '<div class="pl-result-pts">+' + roundScore + '<span class="pl-result-pts-unit">' + pu.escapeHtml(t('game.points')) + '</span></div>' +
                 breakdownHtml;
@@ -1665,7 +1731,7 @@
         if (player.missed_round || player.no_answer || player.answer_index === null) {
             var prevStreak = player.streak || 0;
             var streakLostHtml = prevStreak > 1
-                ? '<div class="result-row"><span class="result-label">' + pu.escapeHtml(t('reveal.streakLost', { count: prevStreak })) + '</span></div>'
+                ? '<div class="result-row"><span class="result-label">' + pu.feedbackLabel('reveal.streakLost', pu.escapeHtml(t('reveal.streakLost', { count: prevStreak }))) + '</span></div>'
                 : '';
             resultContent.innerHTML =
                 '<div class="result-missed-container">' +
@@ -1702,7 +1768,7 @@
             if (speedBonus > 0) {
                 breakdownHtml +=
                     '<div class="result-row">' +
-                        '<span class="result-label">' + pu.escapeHtml(t('reveal.speedBonus')) + '</span>' +
+                        '<span class="result-label">' + pu.feedbackLabel('reveal.speedBonus', pu.escapeHtml(t('reveal.speedBonus'))) + '</span>' +
                         '<span class="result-value is-bonus">' + pu.escapeHtml(t('reveal.ptsBonus', { count: speedBonus })) + '</span>' +
                     '</div>';
             }
@@ -1710,7 +1776,7 @@
             if (difficultyMult > 1.0) {
                 breakdownHtml +=
                     '<div class="result-row">' +
-                        '<span class="result-label">' + pu.escapeHtml(t('reveal.difficulty')) + '</span>' +
+                        '<span class="result-label">' + pu.feedbackLabel('reveal.difficulty', pu.escapeHtml(t('reveal.difficulty'))) + '</span>' +
                         '<span class="result-value is-bonus">' + difficultyMult.toFixed(1) + 'x</span>' +
                     '</div>';
             }
@@ -1720,13 +1786,13 @@
         if (streakBonus > 0) {
             streakHtml =
                 '<div class="result-row streak-bonus-row">' +
-                    '<span class="result-label">' + pu.escapeHtml(t('reveal.streakBonus', { count: streak })) + '</span>' +
+                    '<span class="result-label">' + pu.feedbackLabel('reveal.streakBonus', pu.escapeHtml(t('reveal.streakBonus', { count: streak }))) + '</span>' +
                     '<span class="result-value is-streak">' + pu.escapeHtml(t('reveal.ptsBonus', { count: streakBonus })) + '</span>' +
                 '</div>';
         } else if (streak > 1 && isCorrect) {
             streakHtml =
                 '<div class="result-row streak-bonus-row">' +
-                    '<span class="result-label">' + pu.escapeHtml(t('reveal.streakActive', { count: streak })) + '</span>' +
+                    '<span class="result-label">' + pu.feedbackLabel('reveal.streakActive', pu.escapeHtml(t('reveal.streakActive', { count: streak }))) + '</span>' +
                 '</div>';
         }
 
@@ -1738,7 +1804,9 @@
             '<div class="result-row">' +
                 '<span class="result-label">' + pu.escapeHtml(t('reveal.result')) + '</span>' +
                 '<span class="result-value ' + (isCorrect ? 'is-correct' : 'is-wrong') + '">' +
-                    pu.escapeHtml(isCorrect ? t('reveal.correct') : t('reveal.wrong')) +
+                    (isCorrect
+                        ? pu.feedbackLabel('reveal.correct', pu.escapeHtml(t('reveal.correct')))
+                        : pu.feedbackLabel('reveal.wrong', pu.escapeHtml(t('reveal.wrong')))) +
                 '</span>' +
             '</div>' +
             breakdownHtml +
@@ -1799,7 +1867,8 @@
 
             var answerDisplay = isMissed ? '—' : pu.escapeHtml(player.answer_text || player.answer || '?');
             var resultDisplay = isMissed ? ('⏱️ ' + pu.escapeHtml(t('admin.answerNone'))) :
-                                isCorrect ? pu.escapeHtml(t('reveal.correct')) : pu.escapeHtml(t('reveal.wrong'));
+                                isCorrect ? pu.feedbackLabel('reveal.correct', pu.escapeHtml(t('reveal.correct')))
+                                          : pu.feedbackLabel('reveal.wrong', pu.escapeHtml(t('reveal.wrong')));
             var youLabel = pu.escapeHtml(t('lobby.you') || 'You');
 
             html += '<div class="result-card ' + scoreClass + (isCurrentPlayer ? ' result-card--mine' : '') + '">' +
@@ -3346,9 +3415,20 @@
             // earned anything to steal. FREEZE keeps the generic pickHint
             // (server v1.1.25 rejects submitted targets for FREEZE anyway).
             if (hintEl) {
-                hintEl.textContent = powerupType === 'steal'
-                    ? t('powerups.stealHint')
-                    : t('powerups.pickHint');
+                if (powerupType === 'steal') {
+                    // #220 P3: bulb icon pulled out of the i18n string, rendered
+                    // as an SVG beside the (now text-only) hint.
+                    var hintIcon = pu.feedbackIconHtml ? pu.feedbackIconHtml('bulb', 'sun') : '';
+                    if (hintIcon) {
+                        hintEl.classList.add('powerup-hint--with-icon');
+                        hintEl.innerHTML = hintIcon + '<span class="powerup-hint-text">' + pu.escapeHtml(t('powerups.stealHint')) + '</span>';
+                    } else {
+                        hintEl.textContent = t('powerups.stealHint');
+                    }
+                } else {
+                    hintEl.classList.remove('powerup-hint--with-icon');
+                    hintEl.textContent = t('powerups.pickHint');
+                }
             }
             opponents.forEach(function (opp) {
                 var li = document.createElement('li');
@@ -3762,7 +3842,7 @@
                 if (msg.correct && msg.new_streak) {
                     var streakKeys = { 3: 'game.streakToast3', 5: 'game.streakToast5', 7: 'game.streakToast7' };
                     if (streakKeys[msg.new_streak]) {
-                        pu.showToast(t(streakKeys[msg.new_streak]), 2500);
+                        pu.showToast(t(streakKeys[msg.new_streak]), 2500, streakKeys[msg.new_streak]);
                     }
                 }
                 break;
@@ -3837,7 +3917,13 @@
             var t = (window.QuizifyI18n && window.QuizifyI18n.t) || function (k) { return k; };
             var toast = document.createElement('div');
             toast.className = 'reaction-bonus-toast';
-            toast.textContent = t('wager.bonusFromReaction', { from: from });
+            var rbIcon = pu.feedbackIconHtml ? pu.feedbackIconHtml('party', 'coral') : '';
+            if (rbIcon) {
+                toast.classList.add('toast--with-icon');
+                toast.innerHTML = rbIcon + '<span class="toast-text">' + pu.escapeHtml(t('wager.bonusFromReaction', { from: from })) + '</span>';
+            } else {
+                toast.textContent = t('wager.bonusFromReaction', { from: from });
+            }
             document.body.appendChild(toast);
             setTimeout(function () { toast.remove(); }, 1600);
         }
@@ -4220,18 +4306,18 @@
             // Public broadcast — surface opponent's joker use to other
             // players (no removed-index since shuffle is per-player).
             var tJk = (window.QuizifyI18n && window.QuizifyI18n.t) || function (k) { return k; };
-            pu.showToast(tJk('game.opponentUsedJoker', { name: msg.source_player }), 2000);
+            pu.showToast(tJk('game.opponentUsedJoker', { name: msg.source_player }), 2000, 'game.opponentUsedJoker');
         } else if (msg.powerup_type === 'steal') {
             var tPwr = (window.QuizifyI18n && window.QuizifyI18n.t) || function (k) { return k; };
             var pts = msg.stolen_points || 0;
             if (msg.source_player === state.playerName) {
-                pu.showToast(tPwr('game.stoleFromOpponent', { points: pts, name: msg.target_player || tPwr('lobby.you') }), 2500);
+                pu.showToast(tPwr('game.stoleFromOpponent', { points: pts, name: msg.target_player || tPwr('lobby.you') }), 2500, 'game.stoleFromOpponent');
             } else if (msg.target_player === state.playerName) {
-                pu.showToast(tPwr('game.stoleFromYou', { name: msg.source_player || tPwr('lobby.you'), points: pts }), 2500);
+                pu.showToast(tPwr('game.stoleFromYou', { name: msg.source_player || tPwr('lobby.you'), points: pts }), 2500, 'game.stoleFromYou');
             }
         } else if (msg.powerup_type === 'freeze' && msg.target_player === state.playerName) {
             var tFrz = (window.QuizifyI18n && window.QuizifyI18n.t) || function (k) { return k; };
-            pu.showToast(tFrz('game.frozen'), 2000);
+            pu.showToast(tFrz('game.frozen'), 2000, 'game.frozen');
         }
         // Only the source's local power-up button needs clearing. Previously
         // this was unconditional — for STEAL/FREEZE that meant a third party

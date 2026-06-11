@@ -353,10 +353,66 @@
     }
 
     // ============================================
+    // Feedback Icons (#220 P3)
+    // ============================================
+
+    // Maps a reveal-feedback / toast i18n key to its SVG glyph + tint. The
+    // emoji that used to live INSIDE the translated string (✅ Richtig, 🔥
+    // {count}er-Serie!, …) is pulled out into a text-only string, and the
+    // consuming JS renders the mapped glyph beside the text as a small
+    // inline .qz-icon. Tints follow the approved meaning→tint pairing
+    // (check=sage, cross/heartbreak=coral, bolt/flame/joker=sun, …).
+    var FEEDBACK_ICON = {
+        'reveal.correct':          { glyph: 'check',      tint: 'sage'  },
+        'reveal.wrong':            { glyph: 'cross',      tint: 'coral' },
+        'reveal.speedBonus':       { glyph: 'bolt',       tint: 'sun'   },
+        'reveal.difficulty':       { glyph: 'target',     tint: 'sage'  },
+        'reveal.streakBonus':      { glyph: 'flame',      tint: 'sun'   },
+        'reveal.streakActive':     { glyph: 'flame',      tint: 'sun'   },
+        'reveal.streakLost':       { glyph: 'heartbreak', tint: 'coral' },
+        'game.stoleFromYou':       { glyph: 'steal',      tint: 'sky'   },
+        'game.stoleFromOpponent':  { glyph: 'steal',      tint: 'sky'   },
+        'game.frozen':             { glyph: 'freeze',     tint: 'sky'   },
+        'game.opponentUsedJoker':  { glyph: 'joker',      tint: 'sun'   },
+        'game.streakToast3':       { glyph: 'flame',      tint: 'sun'   },
+        'game.streakToast5':       { glyph: 'flame',      tint: 'sun'   },
+        'game.streakToast7':       { glyph: 'flame',      tint: 'sun'   },
+        'powerups.stealHint':      { glyph: 'bulb',       tint: 'sun'   },
+        'leaderboard.thanksEmoji': { glyph: 'party',      tint: 'coral' },
+        'wager.bonusFromReaction': { glyph: 'party',      tint: 'coral' }
+    };
+
+    // Returns the inline <span class="qz-icon feedback-icon qz-icon--TINT">
+    // <svg>…</svg></span> markup for a feedback glyph name, or '' if the
+    // shared icon set / glyph is unavailable (so a missing glyph paints
+    // nothing rather than breaking the surrounding markup).
+    function feedbackIconHtml(glyph, tint) {
+        var Icons = window.QuizifyIcons;
+        if (!Icons || !Icons.uiIcon) return '';
+        var svg = Icons.uiIcon(glyph);
+        if (!svg) return '';
+        return '<span class="qz-icon feedback-icon qz-icon--' + (tint || 'mix') + '" aria-hidden="true">' + svg + '</span>';
+    }
+
+    // Renders the icon mapped to an i18n key, prepended to an already-built
+    // (escaped) label string. Used by the reveal chips so each feedback row
+    // shows its glyph beside the text. If the key has no mapped glyph the
+    // label is returned unchanged.
+    function feedbackLabel(key, escapedLabel) {
+        var spec = FEEDBACK_ICON[key];
+        if (!spec) return escapedLabel;
+        var iconHtml = feedbackIconHtml(spec.glyph, spec.tint);
+        return iconHtml ? (iconHtml + escapedLabel) : escapedLabel;
+    }
+
+    // ============================================
     // Toast Notification
     // ============================================
 
-    function showToast(message, duration) {
+    // showToast(message, duration[, iconKey]) — when iconKey maps to a
+    // feedback glyph (#220 P3), the toast renders that SVG icon before the
+    // text (innerHTML); otherwise it stays a plain text-only toast.
+    function showToast(message, duration, iconKey) {
         duration = duration || 3000;
         var toast = document.getElementById('error-toast');
         if (!toast) {
@@ -367,7 +423,15 @@
                 'font-size:0.85rem;z-index:9999;opacity:0;transition:opacity 0.3s;pointer-events:none;';
             document.body.appendChild(toast);
         }
-        toast.textContent = message;
+        var spec = iconKey && FEEDBACK_ICON[iconKey];
+        var iconHtml = spec ? feedbackIconHtml(spec.glyph, spec.tint) : '';
+        if (iconHtml) {
+            toast.classList.add('toast--with-icon');
+            toast.innerHTML = iconHtml + '<span class="toast-text">' + escapeHtml(message) + '</span>';
+        } else {
+            toast.classList.remove('toast--with-icon');
+            toast.textContent = message;
+        }
         toast.style.opacity = '1';
         setTimeout(function () { toast.style.opacity = '0'; }, duration);
     }
@@ -490,6 +554,8 @@
         renderPlayerCards: renderPlayerCards,
         setupCollapsibles: setupCollapsibles,
         paintUiIcons: paintUiIcons,
+        feedbackIconHtml: feedbackIconHtml,
+        feedbackLabel: feedbackLabel,
         generateQR: generateQR,
         showToast: showToast,
         saveSession: saveSession,
