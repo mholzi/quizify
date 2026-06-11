@@ -5,6 +5,29 @@ All notable changes to Quizify are documented here. This project follows
 
 ## [Unreleased]
 
+## [1.3.0-RC9] — 2026-06-11
+
+Ninth release candidate for 1.3.0.
+
+### Changed
+
+- **SVG icons for setup presets, end-game awards, and the highlights tab — P2 (#219).**
+  The setup mode presets (Quick/Classic/Marathon/Custom), the seven end-game
+  award discs, and the highlights tab now use the shared Rounded Duotone set
+  instead of emoji. Award glyphs resolve client-side from the stable award key,
+  leaving the server unchanged. Completes the emoji→SVG icon migration except
+  for the reveal/toast strings (P3 #220).
+
+### Fixed
+
+- **Lightning round renders on admin-as-player reconnect (#239).** Reconnecting
+  into a live lightning round left the screen blank: the three lightning view
+  containers were never registered in `showView`'s list, so the function hid
+  every other view but could not un-hide the lightning one. Registering them
+  lets the lightning round actually render on reconnect (the data was already
+  carried by the #221 snapshot fix). The RC8 blank-screen watchdog remains as a
+  belt-and-braces fallback.
+
 ## [1.3.0-RC8] — 2026-06-10
 
 Eighth release candidate for 1.3.0.
