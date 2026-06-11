@@ -133,6 +133,7 @@ class TestStealPowerup:
     def test_steal_transfers_half_round_score(self, game: QuizifyGameState) -> None:
         _start_question(game, ["Alice", "Bob"])
         bob = game.get_player("Bob")
+        bob.submitted = True  # STEAL only targets submitted players (#254)
         bob.round_score = 10
         bob.score = 10
         game._powerup_manager._inventory["Alice"] = PowerUpType.STEAL
@@ -152,6 +153,7 @@ class TestStealPowerup:
         happened."""
         _start_question(game, ["Alice", "Bob"])
         bob = game.get_player("Bob")
+        bob.submitted = True  # STEAL only targets submitted players (#254)
         bob.round_score = 10
         bob.score = 10
         game._powerup_manager._inventory["Alice"] = PowerUpType.STEAL

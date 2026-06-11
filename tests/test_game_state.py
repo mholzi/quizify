@@ -638,7 +638,9 @@ class TestPowerUpTargeting:
         state.start_game(language="de", num_rounds=3, difficulty="easy")
         state.start_next_question()
         # Give Bob some round score so there's something worth stealing.
+        # STEAL only targets submitted players (#254), so mark Bob submitted.
         bob = state.get_player("Bob")
+        bob.submitted = True
         bob.round_score = 100
         bob.score = 100
         _give(state, "Alice", PowerUpType.STEAL)
@@ -749,3 +751,56 @@ class TestPowerUpTargeting:
         result = state.use_powerup("Alice", target_id="Bob")
         assert isinstance(result, str), "Freeze on submitted target should be rejected"
         assert state._powerup_manager.get_powerup("Alice") == PowerUpType.FREEZE
+
+    def test_steal_rejects_explicit_unsubmitted_target(self, state: QuizifyGameState) -> None:
+        """STEAL on a target that hasn't submitted yet steals 0 points and burns
+        the power-up. The server must reject so the inventory survives (#254)."""
+        state.add_player("Alice", _fake_ws())
+        state.add_player("Bob", _fake_ws())
+        state.start_game(language="de", num_rounds=3, difficulty="easy")
+        state.start_next_question()
+        # Bob has NOT submitted — his round_score isn't locked in yet.
+        _give(state, "Alice", PowerUpType.STEAL)
+
+        result = state.use_powerup("Alice", target_id="Bob")
+        assert isinstance(result, str), "Steal on unsubmitted target should be rejected"
+        assert state._powerup_manager.get_powerup("Alice") == PowerUpType.STEAL
+        # No points moved.
+        assert state.get_player("Bob").score == state.get_player("Bob").round_score
+
+    def test_steal_random_pick_skips_unsubmitted_targets(
+        self, state: QuizifyGameState
+    ) -> None:
+        """Random STEAL fallback must skip players who haven't submitted (they'd
+        yield 0 stolen points) and choose a submitted opponent instead (#254)."""
+        state.add_player("Alice", _fake_ws())
+        state.add_player("Bob", _fake_ws())
+        state.add_player("Carol", _fake_ws())
+        state.start_game(language="de", num_rounds=3, difficulty="easy")
+        state.start_next_question()
+        # Only Carol has locked in (and has something worth stealing).
+        carol = state.get_player("Carol")
+        carol.submitted = True
+        carol.round_score = 80
+        carol.score = 80
+        _give(state, "Alice", PowerUpType.STEAL)
+
+        effect = state.use_powerup("Alice", target_id=None)
+        assert isinstance(effect, PowerUpEffect)
+        assert effect.target_player == "Carol", "Steal fallback must skip unsubmitted Bob"
+        assert effect.stolen_points == 40
+
+    def test_steal_with_no_submitted_opponents_returns_error_and_keeps_powerup(
+        self, state: QuizifyGameState
+    ) -> None:
+        """If no opponent has submitted, STEAL has no valid target. Reject and
+        keep the power-up rather than burning it for 0 points (#254)."""
+        state.add_player("Alice", _fake_ws())
+        state.add_player("Bob", _fake_ws())
+        state.start_game(language="de", num_rounds=3, difficulty="easy")
+        state.start_next_question()
+        _give(state, "Alice", PowerUpType.STEAL)
+
+        result = state.use_powerup("Alice", target_id=None)
+        assert isinstance(result, str)
+        assert state._powerup_manager.get_powerup("Alice") == PowerUpType.STEAL

@@ -17,12 +17,14 @@ class QuestionTimer:
         self._start_time: float | None = None
         self._bonus_time: float = 0.0
         self._pause_remaining: float = 0.0
+        self._pause_started_at: float | None = None
 
     def start(self) -> None:
         """Start the countdown timer."""
         self._start_time = time.monotonic()
         self._bonus_time = 0.0
         self._pause_remaining = 0.0
+        self._pause_started_at = None
 
     def get_remaining(self) -> float:
         """Get remaining time in seconds."""
@@ -40,9 +42,13 @@ class QuestionTimer:
     def pause_for_player(self, seconds: float) -> None:
         """Add pause credit — effectively freezes the timer for the given duration.
 
-        Used by the freeze power-up to penalize an opponent.
+        Used by the freeze power-up to penalize an opponent. Records the wall-clock
+        start of the freeze so the speed-bonus calculation can credit only the
+        portion of the freeze that has actually elapsed (see get_elapsed / #254).
         """
         self._pause_remaining += seconds
+        if self._pause_started_at is None:
+            self._pause_started_at = time.monotonic()
 
     def add_time(self, seconds: float) -> None:
         """Add bonus time to the timer.
@@ -54,12 +60,21 @@ class QuestionTimer:
     def get_elapsed(self) -> float:
         """Get effective elapsed time since start — used for speed bonus calculation.
 
-        Subtracts any accumulated pause credit (e.g. from Freeze power-up) so that
-        frozen players are not penalised with a lower speed bonus.
+        Subtracts accumulated pause credit (e.g. from Freeze power-up) so that
+        frozen players are not penalised with a lower speed bonus. Crucially it
+        credits only the portion of the freeze that has ACTUALLY elapsed in
+        wall-clock time, not the full 5s up front — otherwise a frozen player who
+        answers immediately would harvest up to 5s of free speed bonus (#254).
         """
         if self._start_time is None:
             return 0.0
-        return max(0.0, time.monotonic() - self._start_time - self._pause_remaining)
+        now = time.monotonic()
+        pause_credit = self._pause_remaining
+        if self._pause_started_at is not None:
+            # Only count the freeze time that has truly passed so far.
+            elapsed_pause = now - self._pause_started_at
+            pause_credit = min(self._pause_remaining, max(0.0, elapsed_pause))
+        return max(0.0, now - self._start_time - pause_credit)
 
     def reset(self, duration: float | None = None) -> None:
         """Reset the timer, optionally with a new duration."""
@@ -68,3 +83,4 @@ class QuestionTimer:
         self._start_time = None
         self._bonus_time = 0.0
         self._pause_remaining = 0.0
+        self._pause_started_at = None
