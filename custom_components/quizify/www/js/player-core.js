@@ -271,7 +271,7 @@
                 if (msg.correct && msg.new_streak) {
                     var streakKeys = { 3: 'game.streakToast3', 5: 'game.streakToast5', 7: 'game.streakToast7' };
                     if (streakKeys[msg.new_streak]) {
-                        pu.showToast(t(streakKeys[msg.new_streak]), 2500);
+                        pu.showToast(t(streakKeys[msg.new_streak]), 2500, streakKeys[msg.new_streak]);
                     }
                 }
                 break;
@@ -346,7 +346,13 @@
             var t = (window.QuizifyI18n && window.QuizifyI18n.t) || function (k) { return k; };
             var toast = document.createElement('div');
             toast.className = 'reaction-bonus-toast';
-            toast.textContent = t('wager.bonusFromReaction', { from: from });
+            var rbIcon = pu.feedbackIconHtml ? pu.feedbackIconHtml('party', 'coral') : '';
+            if (rbIcon) {
+                toast.classList.add('toast--with-icon');
+                toast.innerHTML = rbIcon + '<span class="toast-text">' + pu.escapeHtml(t('wager.bonusFromReaction', { from: from })) + '</span>';
+            } else {
+                toast.textContent = t('wager.bonusFromReaction', { from: from });
+            }
             document.body.appendChild(toast);
             setTimeout(function () { toast.remove(); }, 1600);
         }
@@ -729,18 +735,18 @@
             // Public broadcast — surface opponent's joker use to other
             // players (no removed-index since shuffle is per-player).
             var tJk = (window.QuizifyI18n && window.QuizifyI18n.t) || function (k) { return k; };
-            pu.showToast(tJk('game.opponentUsedJoker', { name: msg.source_player }), 2000);
+            pu.showToast(tJk('game.opponentUsedJoker', { name: msg.source_player }), 2000, 'game.opponentUsedJoker');
         } else if (msg.powerup_type === 'steal') {
             var tPwr = (window.QuizifyI18n && window.QuizifyI18n.t) || function (k) { return k; };
             var pts = msg.stolen_points || 0;
             if (msg.source_player === state.playerName) {
-                pu.showToast(tPwr('game.stoleFromOpponent', { points: pts, name: msg.target_player || tPwr('lobby.you') }), 2500);
+                pu.showToast(tPwr('game.stoleFromOpponent', { points: pts, name: msg.target_player || tPwr('lobby.you') }), 2500, 'game.stoleFromOpponent');
             } else if (msg.target_player === state.playerName) {
-                pu.showToast(tPwr('game.stoleFromYou', { name: msg.source_player || tPwr('lobby.you'), points: pts }), 2500);
+                pu.showToast(tPwr('game.stoleFromYou', { name: msg.source_player || tPwr('lobby.you'), points: pts }), 2500, 'game.stoleFromYou');
             }
         } else if (msg.powerup_type === 'freeze' && msg.target_player === state.playerName) {
             var tFrz = (window.QuizifyI18n && window.QuizifyI18n.t) || function (k) { return k; };
-            pu.showToast(tFrz('game.frozen'), 2000);
+            pu.showToast(tFrz('game.frozen'), 2000, 'game.frozen');
         }
         // Only the source's local power-up button needs clearing. Previously
         // this was unconditional — for STEAL/FREEZE that meant a third party

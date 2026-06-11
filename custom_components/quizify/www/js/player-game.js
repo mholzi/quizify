@@ -736,9 +736,20 @@
             // earned anything to steal. FREEZE keeps the generic pickHint
             // (server v1.1.25 rejects submitted targets for FREEZE anyway).
             if (hintEl) {
-                hintEl.textContent = powerupType === 'steal'
-                    ? t('powerups.stealHint')
-                    : t('powerups.pickHint');
+                if (powerupType === 'steal') {
+                    // #220 P3: bulb icon pulled out of the i18n string, rendered
+                    // as an SVG beside the (now text-only) hint.
+                    var hintIcon = pu.feedbackIconHtml ? pu.feedbackIconHtml('bulb', 'sun') : '';
+                    if (hintIcon) {
+                        hintEl.classList.add('powerup-hint--with-icon');
+                        hintEl.innerHTML = hintIcon + '<span class="powerup-hint-text">' + pu.escapeHtml(t('powerups.stealHint')) + '</span>';
+                    } else {
+                        hintEl.textContent = t('powerups.stealHint');
+                    }
+                } else {
+                    hintEl.classList.remove('powerup-hint--with-icon');
+                    hintEl.textContent = t('powerups.pickHint');
+                }
             }
             opponents.forEach(function (opp) {
                 var li = document.createElement('li');
