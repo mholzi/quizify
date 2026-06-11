@@ -135,6 +135,7 @@ class LightningRound:
         # category/language — the normal game's history-aware least-recently
         # -shown ordering applies, so a lightning round after a main game
         # naturally pulls fresh questions.
+        # Cache hit — the bank is preloaded off-loop at setup (#258).
         self._bank.load_all_categories()
         self._bank.reset(
             category=self.category,

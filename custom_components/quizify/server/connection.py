@@ -2,6 +2,7 @@
 from __future__ import annotations
 
 import asyncio
+import json
 import logging
 import time
 import uuid
@@ -272,8 +273,11 @@ class ConnectionManager:
         """Broadcast *message* to all connected clients in parallel."""
         if not self.connections:
             return
+        # Serialize once, then send_str to every client (#258) — avoids
+        # re-encoding the same payload N times via per-client send_json.
+        payload = json.dumps(message)
         tasks = [
-            self._safe_send(ws, message)
+            self._safe_send_str(ws, payload)
             for ws in list(self.connections)
             if not ws.closed
         ]
@@ -290,6 +294,7 @@ class ConnectionManager:
         gs = self._get_game_state()
         gs_players = gs.get_players() if gs else []
 
+        payload = json.dumps(message)  # serialize once, send_str per client (#258)
         tasks = []
         for ws in list(self.connections):
             if ws.closed:
@@ -298,7 +303,7 @@ class ConnectionManager:
                 p.ws is ws for p in gs_players
             )
             if not is_pure_admin:
-                tasks.append(self._safe_send(ws, message))
+                tasks.append(self._safe_send_str(ws, payload))
         if tasks:
             await asyncio.gather(*tasks)
 
@@ -316,8 +321,9 @@ class ConnectionManager:
             for p in gs.get_players():
                 if p.is_admin and p.ws is not None:
                     admin_as_player_ws.add(p.ws)
+        payload = json.dumps(message)  # serialize once, send_str per client (#258)
         tasks = [
-            self._safe_send(ws, message)
+            self._safe_send_str(ws, payload)
             for ws in list(self._admin_connections)
             if not ws.closed and ws not in admin_as_player_ws
         ]
@@ -346,8 +352,9 @@ class ConnectionManager:
         targets: set[web.WebSocketResponse] = set()
         targets.update(self._admin_connections)
         targets.update(self._dashboard_connections)
+        payload = json.dumps(message)  # serialize once, send_str per client (#258)
         tasks = [
-            self._safe_send(ws, message)
+            self._safe_send_str(ws, payload)
             for ws in targets
             if not ws.closed and ws not in admin_as_player_ws
         ]
@@ -358,6 +365,17 @@ class ConnectionManager:
         """Send *message* to *ws*, swallowing any send errors."""
         try:
             await ws.send_json(message)
+        except Exception as err:  # noqa: BLE001
+            _LOGGER.warning("Failed to send to WebSocket: %s", err)
+
+    async def _safe_send_str(self, ws: web.WebSocketResponse, payload: str) -> None:
+        """Send a pre-serialized JSON *payload* to *ws*, swallowing errors.
+
+        Used by the broadcast helpers so the same fan-out message is
+        serialized once (json.dumps) rather than re-encoded per client (#258).
+        """
+        try:
+            await ws.send_str(payload)
         except Exception as err:  # noqa: BLE001
             _LOGGER.warning("Failed to send to WebSocket: %s", err)
 
