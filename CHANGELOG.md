@@ -5,6 +5,35 @@ All notable changes to Quizify are documented here. This project follows
 
 ## [Unreleased]
 
+## [1.3.0-RC11] — 2026-06-11
+
+Eleventh release candidate for 1.3.0 — a batch of fixes + the final icon and
+results-screen polish.
+
+### Fixed
+
+- **Admin can no longer double-join as a player (#244).** The "Join as Player"
+  control stayed tappable after the admin had already joined, so a fast second
+  tap created a duplicate/ghost player. The control now no-ops + disables on
+  join, and the server rejects a second self-join over the same connection
+  (defense in depth, mirroring #207).
+
+### Changed
+
+- **SVG icons for the reveal-feedback + toast strings — P3 (#220).** The last
+  emoji used as icons (✅❌ reveal chips, 🔥 streaks, 💔 streak-lost, 🥷 steal,
+  🧊 freeze, 🎴 joker, 💡 hint, 🎉 thanks, ⚡🎯 bonuses) are pulled out of the
+  translated strings and rendered as Rounded Duotone line glyphs. Completes the
+  emoji→SVG icon migration (#212); language flags + the reaction bar stay emoji
+  by design.
+- **Consistent results-screen standings + action buttons (#245, #246, #247,
+  #248).** The lightning recap and the end screen now share one medal-card
+  standings row (gold/silver/bronze rank discs, highlighted current player,
+  aligned scores, truncating long names) and one compact action-button row
+  (full-width primary over single-line secondaries) instead of bare ranking
+  text and oversized multi-line buttons. The lightning splash start bar is
+  tightened to a single-line button.
+
 ## [1.3.0-RC10] — 2026-06-11
 
 Tenth release candidate for 1.3.0.
