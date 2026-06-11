@@ -62,8 +62,21 @@
     // the network-first SW will serve. Reload once, but only while idle.
     navigator.serviceWorker.addEventListener('controllerchange', maybeReload);
 
-    navigator.serviceWorker.register('/quizify/static/sw.js')
+    // updateViaCache: 'none' — the SW script (and any future importScripts)
+    // must NEVER be satisfied from the browser HTTP cache. The server already
+    // sends no-cache headers on sw.js, but older browsers honored the HTTP
+    // cache for up to 24h on the SW script; an HTTP-cached sw.js carries the
+    // OLD CACHE_VERSION, so the old cache never gets invalidated and a new
+    // release can't reset the client. Belt-and-braces for the same invariant.
+    navigator.serviceWorker.register('/quizify/static/sw.js', { updateViaCache: 'none' })
         .then(function (reg) {
+            // Deterministic update check on every page load — don't rely on
+            // the browser's own (possibly throttled, up-to-24h) navigation
+            // check. A release bump is detected at the latest on the next
+            // page load: fresh sw.js → new CACHE_VERSION → install/activate
+            // deletes every old quizify-* cache.
+            reg.update().catch(function () { /* ignore */ });
+
             // Check for a newer SW when the host comes back to the tab. The new
             // SW installs and activates on its own (skipWaiting + clients.claim),
             // which fires controllerchange → maybeReload above.

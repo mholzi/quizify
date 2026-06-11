@@ -29,28 +29,37 @@ self.addEventListener('message', function (event) {
 });
 var MAX_CACHE_ITEMS = 60;
 
-// Critical assets to precache on install
+// Critical assets to precache on install. URLs carry the same
+// ?v={{ASSET_VER}} cache-buster the HTML pages use, so (a) the cache keys
+// match what pages actually request (caches.match is exact on the query
+// string — un-versioned precache entries were dead weight that never served
+// a versioned request) and (b) a release bump changes every URL.
 var PRECACHE_ASSETS = [
-    '/quizify/static/css/styles.css',
-    '/quizify/static/js/i18n.js',
-    '/quizify/static/js/utils.js',
-    '/quizify/static/js/admin.js',
-    '/quizify/static/js/player-utils.js',
-    '/quizify/static/js/player-core.js',
-    '/quizify/static/js/player-lobby.js',
-    '/quizify/static/js/player-game.js',
-    '/quizify/static/js/player-reveal.js',
-    '/quizify/static/js/player-end.js',
-    '/quizify/static/js/vendor/qrcode.min.js',
-    '/quizify/static/i18n/de.json',
-    '/quizify/static/i18n/en.json',
-    '/quizify/static/site.webmanifest',
-    '/quizify/static/img/icon-256.png',
-    '/quizify/static/img/icon-512.png'
+    '/quizify/static/css/styles.css?v={{ASSET_VER}}',
+    '/quizify/static/js/i18n.js?v={{ASSET_VER}}',
+    '/quizify/static/js/utils.js?v={{ASSET_VER}}',
+    '/quizify/static/js/icons.js?v={{ASSET_VER}}',
+    '/quizify/static/js/admin.js?v={{ASSET_VER}}',
+    '/quizify/static/js/pack-submit.js?v={{ASSET_VER}}',
+    '/quizify/static/js/player.bundle.js?v={{ASSET_VER}}',
+    '/quizify/static/js/sw-update.js?v={{ASSET_VER}}',
+    '/quizify/static/js/vendor/qrcode.min.js?v={{ASSET_VER}}',
+    '/quizify/static/i18n/de.json?v={{ASSET_VER}}',
+    '/quizify/static/i18n/en.json?v={{ASSET_VER}}',
+    '/quizify/static/site.webmanifest?v={{ASSET_VER}}',
+    '/quizify/static/img/icon-256.png?v={{ASSET_VER}}',
+    '/quizify/static/img/icon-512.png?v={{ASSET_VER}}'
 ];
 
 /**
- * Install event: Precache critical assets
+ * Install event: Precache critical assets.
+ *
+ * cache: 'reload' forces every precache request past the browser HTTP
+ * cache straight to the server. Without it, cache.add() uses the default
+ * cache mode, and HA serves /quizify/static/* with
+ * Cache-Control: public, max-age=2678400 (31 days) — so a brand-new
+ * release's cache got seeded with month-old bytes from the HTTP cache
+ * and the "new" install was stale from birth.
  */
 self.addEventListener('install', function(event) {
     event.waitUntil(
@@ -58,9 +67,10 @@ self.addEventListener('install', function(event) {
             .then(function(cache) {
                 return Promise.all(
                     PRECACHE_ASSETS.map(function(url) {
-                        return cache.add(url).catch(function(err) {
-                            console.warn('[SW] Failed to cache:', url, err);
-                        });
+                        return cache.add(new Request(url, { cache: 'reload' }))
+                            .catch(function(err) {
+                                console.warn('[SW] Failed to cache:', url, err);
+                            });
                     })
                 );
             })
@@ -171,10 +181,40 @@ function cacheFirst(request) {
 }
 
 /**
- * Network-First strategy
+ * Network-First strategy.
+ *
+ * Un-versioned same-origin URLs (no ?v= cache-buster) are fetched with
+ * cache: 'no-cache' so the browser revalidates with the server instead of
+ * answering from its HTTP cache. HA serves static assets with a 31-day
+ * max-age, so a plain fetch() would resolve from the HTTP cache without
+ * any network round-trip — "network-first" silently became
+ * "HTTP-cache-first" and stale assets survived release bumps.
+ * Versioned URLs (?v=<version>-<fingerprint>) keep the default cache mode:
+ * their URL changes on every release/asset change, so the HTTP cache entry
+ * is immutable-per-content and reusing it within a session is correct and
+ * fast.
+ *
+ * Offline fallback: exact cache match first; if the versioned request
+ * misses (e.g. cache holds a different ?v=), retry ignoring the query so
+ * the user gets *a* working asset offline rather than nothing.
  */
 function networkFirst(request) {
-    return fetch(request)
+    var fetchRequest = request;
+    try {
+        var reqUrl = new URL(request.url);
+        // Navigation (HTML) requests are excluded: re-wrapping a
+        // mode:'navigate' Request throws, and the HTML responses already
+        // carry server-side no-cache headers.
+        if (
+            request.mode !== 'navigate' &&
+            reqUrl.origin === location.origin &&
+            !reqUrl.searchParams.has('v')
+        ) {
+            fetchRequest = new Request(request, { cache: 'no-cache' });
+        }
+    } catch (e) { /* fall through with the original request */ }
+
+    return fetch(fetchRequest)
         .then(function(response) {
             if (response && response.ok) {
                 var clone = response.clone();
@@ -189,7 +229,13 @@ function networkFirst(request) {
             return response;
         })
         .catch(function() {
-            return caches.match(request);
+            return caches.match(request)
+                .then(function(cached) {
+                    if (cached) {
+                        return cached;
+                    }
+                    return caches.match(request, { ignoreSearch: true });
+                });
         });
 }
 
