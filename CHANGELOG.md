@@ -5,6 +5,25 @@ All notable changes to Quizify are documented here. This project follows
 
 ## [Unreleased]
 
+## [1.3.0-RC10] — 2026-06-11
+
+Tenth release candidate for 1.3.0.
+
+### Fixed
+
+- **A new release number now resets the client cache (#243).** Home Assistant
+  serves `/quizify/static/*` with a 31-day `max-age`, and the service worker
+  precached un-versioned URLs and fetched plainly in its network-first path —
+  so both answered from the browser's month-long HTTP cache instead of the
+  server, and stale JS/CSS survived release bumps ("network-first" was really
+  "HTTP-cache-first"). Precache URLs now carry the `?v=<version>` buster and use
+  `cache: 'reload'`; un-versioned same-origin requests are fetched `no-cache`;
+  the service worker registers with `updateViaCache: 'none'` and updates on
+  every load; all remaining HTML asset refs are versioned. A version bump now
+  re-fetches `sw.js`, rolls `CACHE_VERSION`, drops the old caches, and pulls
+  every asset fresh. (One manual site-data clear is needed once to retire a
+  service worker registered before this fix.)
+
 ## [1.3.0-RC9] — 2026-06-11
 
 Ninth release candidate for 1.3.0.
