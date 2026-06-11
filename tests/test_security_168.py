@@ -92,6 +92,63 @@ class TestAdminBootstrapRace:
 
 
 # ---------------------------------------------------------------------------
+# 1b. Constant-time admin-token validation (#259)
+# ---------------------------------------------------------------------------
+
+
+class TestValidateAdminToken:
+    """validate_admin_token must validate the right token via the new
+    constant-time (hmac.compare_digest) path and reject everything else."""
+
+    @pytest.mark.asyncio
+    async def test_correct_token_validates(self, conn: ConnectionManager) -> None:
+        await conn.try_bootstrap_admin()
+        token = conn._admin_session_token
+        assert conn.validate_admin_token(token) is True
+
+    @pytest.mark.asyncio
+    async def test_wrong_token_rejected(self, conn: ConnectionManager) -> None:
+        await conn.try_bootstrap_admin()
+        assert conn.validate_admin_token("not-the-token") is False
+
+    @pytest.mark.asyncio
+    async def test_empty_token_rejected(self, conn: ConnectionManager) -> None:
+        await conn.try_bootstrap_admin()
+        assert conn.validate_admin_token("") is False
+
+    def test_no_admin_token_set_rejects_everything(
+        self, conn: ConnectionManager
+    ) -> None:
+        # No token has been created yet → even a plausible value must not pass,
+        # and the guard must short-circuit before compare_digest (which would
+        # raise on a None operand).
+        assert conn._admin_session_token is None
+        assert conn.validate_admin_token("anything") is False
+        assert conn.validate_admin_token("") is False
+
+    @pytest.mark.asyncio
+    async def test_uses_constant_time_compare(
+        self, conn: ConnectionManager, monkeypatch: pytest.MonkeyPatch
+    ) -> None:
+        """The compare must route through hmac.compare_digest, not `==`,
+        so the validation has no early-exit timing oracle (#259)."""
+        import custom_components.quizify.server.connection as conn_mod
+
+        await conn.try_bootstrap_admin()
+        token = conn._admin_session_token
+        calls: list[tuple[str, str]] = []
+        real = conn_mod.hmac.compare_digest
+
+        def _spy(a, b):  # noqa: ANN001
+            calls.append((a, b))
+            return real(a, b)
+
+        monkeypatch.setattr(conn_mod.hmac, "compare_digest", _spy)
+        assert conn.validate_admin_token(token) is True
+        assert calls, "validate_admin_token did not use hmac.compare_digest"
+
+
+# ---------------------------------------------------------------------------
 # 2. Passive session-token expiry
 # ---------------------------------------------------------------------------
 
