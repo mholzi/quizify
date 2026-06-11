@@ -93,7 +93,9 @@
             var player = leaderboard.find(function (p) { return p.rank === place; });
             var nameEl = document.getElementById('podium-' + place + '-name');
             var scoreEl = document.getElementById('podium-' + place + '-score');
-            if (nameEl) nameEl.textContent = player ? pu.escapeHtml(player.name) : '---';
+            // textContent already HTML-escapes; an extra escapeHtml() here
+            // double-encodes (e.g. "Tom & Jr" → "Tom &amp;amp; Jr").
+            if (nameEl) nameEl.textContent = player ? player.name : '---';
             if (scoreEl) scoreEl.textContent = player ? player.score : '0';
         });
 
@@ -101,7 +103,8 @@
         var champEl = document.getElementById('podium-champion-name');
         if (champEl) {
             var champion = leaderboard.find(function (p) { return p.rank === 1; });
-            champEl.textContent = champion ? pu.escapeHtml(champion.name) : '---';
+            // textContent escapes already — no escapeHtml (would double-encode).
+            champEl.textContent = champion ? champion.name : '---';
         }
 
         // Animate podium rise with delays: 2nd (0s), 1st (1s), 3rd (2s)

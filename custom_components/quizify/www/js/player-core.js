@@ -47,6 +47,13 @@
     var _wsOpenTimeout = null;
 
     function connect() {
+        // Guard against reconnecting on top of a live socket — a stray
+        // connect() while state.ws is OPEN/CONNECTING would orphan the
+        // existing socket and double up message handlers.
+        if (state.ws && (state.ws.readyState === WebSocket.OPEN ||
+                         state.ws.readyState === WebSocket.CONNECTING)) {
+            return;
+        }
         state.ws = pu.createWebSocket('/api/quizify/ws', {
             onOpen: function () {
                 // Clear the connection timeout
@@ -208,6 +215,11 @@
                 state.playerName = null;
                 state.playerId = null;
                 state.isAdmin = false;
+                // Clear rank-delta memos (issue #257) so the next game's
+                // first leaderboard/reveal doesn't show phantom ▲/▼ deltas
+                // computed against the wiped game's standings.
+                if (game && game.resetRankMemo) game.resetRankMemo();
+                if (reveal && reveal.resetRankMemo) reveal.resetRankMemo();
                 pu.showView('join-view');
                 break;
 
@@ -292,10 +304,10 @@
                 handlePowerUpApplied(msg);
                 break;
 
-            case 'rematch_started':
-                state.reconnectAttempts = 0;
-                connect();
-                break;
+            // (Removed dead 'rematch_started' case: the server's
+            // _handle_play_again broadcasts a 'game_state' message, never
+            // 'rematch_started', so this branch was unreachable. The rematch
+            // flow is driven entirely by the game_state phase transition.)
 
             case 'reaction':
                 showFloatingReaction(msg.emoji, msg.player_name);
@@ -854,6 +866,12 @@
             }
             if (state.isAdmin) joinMsg.is_admin = true;
             send('join', joinMsg);
+        } else {
+            // WS not open at click time (initial connect still pending, or
+            // dropped) — kick off a (re)connect. state.playerName is now
+            // set, so the onOpen handler auto-sends the join. Without this
+            // the join button would hang on "Joining…" forever.
+            connect();
         }
     }
 

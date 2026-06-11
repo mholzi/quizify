@@ -36,6 +36,13 @@
     // ("↑1", "↓1", "—") without server help. Keyed by lowercased player name.
     var _prevRanks = null;
 
+    // Clear the rank-delta memo on game_reset (issue #257) — otherwise the
+    // first reveal of the next game computes deltas against the previous
+    // game's final ranks.
+    function resetRankMemo() {
+        _prevRanks = null;
+    }
+
     function updateRevealView(data) {
         var players = data.players || [];
         var allAnswers = data.all_answers || [];
@@ -768,6 +775,7 @@
 
     window.QuizifyPlayerReveal = {
         updateRevealView: updateRevealView,
+        resetRankMemo: resetRankMemo,
         renderFunFact: renderFunFact,
         renderRevealEmotion: renderRevealEmotion,
         renderPersonalResult: renderPersonalResult,

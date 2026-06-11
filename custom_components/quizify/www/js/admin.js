@@ -1773,8 +1773,20 @@ async function checkPackUpdates() {
         const data = await resp.json();
         if (!data.upstream_available || !data.updates || data.updates.length === 0) return;
 
+        // checkPackUpdates lives outside the admin IIFE, so the IIFE-local
+        // _t/escapeHtml helpers are out of scope here. Use the global
+        // window.t (i18n) and window.QuizifyUtils.escapeHtml instead, and
+        // escape all pack metadata before it touches innerHTML (defends
+        // against a malicious pack name/version → stored XSS).
+        const tt = (key, params) => (window.t ? window.t(key, params) : key);
+        const esc = (s) => (window.QuizifyUtils && window.QuizifyUtils.escapeHtml
+            ? window.QuizifyUtils.escapeHtml(String(s == null ? '' : s))
+            : String(s == null ? '' : s));
+
         const updates = data.updates;
-        const names = updates.map(u => u.name + ' (' + u.installed_version + ' → ' + u.upstream_version + ')').join(', ');
+        const names = updates.map(u =>
+            esc(u.name) + ' (' + esc(u.installed_version) + ' → ' + esc(u.upstream_version) + ')'
+        ).join(', ');
 
         // Build banner
         const banner = document.createElement('div');
@@ -1797,12 +1809,12 @@ async function checkPackUpdates() {
         ].join(';');
 
         const packPath = '<code style="background:#F3EEDF;padding:1px 4px;border-radius:3px;font-family:\'JetBrains Mono\',monospace;color:#2A2820">custom_components/quizify/questions/</code>';
-        const bodyText = _t('admin.packUpdateBody', { path: packPath });
-        const dismissTitle = _t('common.close');
+        const bodyText = tt('admin.packUpdateBody', { path: packPath });
+        const dismissTitle = esc(tt('common.close'));
         banner.innerHTML =
             '<span style="font-size:1.2rem;flex-shrink:0">📦</span>' +
             '<div style="flex:1">' +
-                '<strong style="color:#E88A7F;font-family:\'Cabinet Grotesk\',sans-serif;font-weight:700">' + _t('admin.packUpdateTitle') + '</strong>' +
+                '<strong style="color:#E88A7F;font-family:\'Cabinet Grotesk\',sans-serif;font-weight:700">' + esc(tt('admin.packUpdateTitle')) + '</strong>' +
                 '<div style="margin-top:3px;color:#2A2820">' + names + '</div>' +
                 '<div style="margin-top:5px;font-size:0.8rem;color:#6E6A5C">' + bodyText + '</div>' +
             '</div>' +
@@ -1815,7 +1827,10 @@ async function checkPackUpdates() {
         if (setupScreen) {
             setupScreen.insertBefore(banner, setupScreen.firstChild);
         }
-    } catch (_e) {
-        // Silently ignore — offline or HA not ready
+    } catch (e) {
+        // Offline or HA not ready — log so a real error (e.g. a future
+        // refactor reintroducing an out-of-scope reference) is visible
+        // instead of being silently swallowed.
+        console.warn('[quizify] checkPackUpdates failed:', e);
     }
 }
