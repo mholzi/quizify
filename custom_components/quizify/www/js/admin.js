@@ -9,7 +9,12 @@
     // ---- State ----
     let ws = null;
     let reconnectAttempts = 0;
-    const MAX_RECONNECT = 5;
+    // Mirror the player-side reconnect policy (player-utils.js): exponential
+    // backoff capped at 30s and a high attempt budget, not the old 5-attempt /
+    // ~15s budget. An HA restart takes 1-5 min, so the old budget left the
+    // host's admin tablet permanently dead with no recovery (#290).
+    const MAX_RECONNECT = 10;
+    const MAX_RECONNECT_DELAY_MS = 30000;
     let _redirecting = false;
     // When the admin joined themselves as a player via "Als Spieler
     // beitreten", we keep them on the admin page during LOBBY. This
@@ -829,10 +834,17 @@
         ws.onclose = function () {
             ws = null;
             if (reconnectAttempts < MAX_RECONNECT) {
-                reconnectAttempts++;
                 updateConnectionStatus('reconnecting');
-                setTimeout(connect, 1000 * reconnectAttempts);
+                // Exponential backoff, capped at 30s (mirrors player-utils.js
+                // getReconnectDelay). 1s, 2s, 4s, 8s, 16s, 30s, 30s, … keeps
+                // retrying across the full 1-5 min of an HA restart (#290).
+                var delay = Math.min(1000 * Math.pow(2, reconnectAttempts), MAX_RECONNECT_DELAY_MS);
+                reconnectAttempts++;
+                setTimeout(connect, delay);
             } else {
+                // Reached the attempt cap, but recovery is still possible — the
+                // visibilitychange listener and the manual retry affordance in
+                // updateConnectionStatus reset attempts and reconnect (#290).
                 updateConnectionStatus('disconnected');
             }
         };
@@ -1699,8 +1711,35 @@
         var glow = { connected: 'rgba(127,168,151,0.45)', reconnecting: 'rgba(232,196,127,0.45)', disconnected: 'rgba(214,106,106,0.45)' };
         var color = colors[status] || '#6E6A5C';
         var glowColor = glow[status] || 'rgba(110,106,92,0.25)';
-        indicator.innerHTML = '<span style="width:10px;height:10px;border-radius:50%;display:inline-block;background:' +
+        var dot = '<span style="width:10px;height:10px;border-radius:50%;display:inline-block;flex:none;background:' +
             color + ';box-shadow:0 0 10px ' + glowColor + ';"></span>';
+        // Visible label instead of a bare dot the host can't interpret: while
+        // reconnecting/disconnected, show the i18n connection text (and, when
+        // disconnected, a tappable retry affordance) so the host knows the
+        // tablet is trying to recover and can force it (#290). The existing
+        // connection.* keys are reused (no new i18n strings).
+        if (status === 'connected') {
+            indicator.style.cursor = '';
+            indicator.onclick = null;
+            indicator.innerHTML = dot;
+            return;
+        }
+        if (status === 'disconnected') {
+            indicator.style.cursor = 'pointer';
+            indicator.setAttribute('role', 'button');
+            indicator.onclick = function () {
+                // Manual recovery: reset the budget and reconnect immediately.
+                reconnectAttempts = 0;
+                updateConnectionStatus('reconnecting');
+                connect();
+            };
+            indicator.innerHTML = dot + '<span>' + _t('connection.retryConnection') + '</span>';
+            return;
+        }
+        // reconnecting (or any other transient state)
+        indicator.style.cursor = '';
+        indicator.onclick = null;
+        indicator.innerHTML = dot + '<span>' + _t('connection.reconnecting') + '</span>';
     }
 
     // ---- Init ----
@@ -1727,6 +1766,20 @@
 
     connect();
     updateConnectionStatus('reconnecting');
+
+    // Reconnect when the host brings the admin tablet back to the foreground.
+    // Mirrors the player view (player-core.js): the OS may have frozen/closed
+    // the socket while the tab was hidden (e.g. during an HA restart), and the
+    // attempt budget may already be exhausted — reset it and reconnect so the
+    // host doesn't return to a permanently dead tab (#290).
+    document.addEventListener('visibilitychange', function () {
+        if (document.visibilityState !== 'visible') return;
+        if (!ws || ws.readyState === WebSocket.CLOSING || ws.readyState === WebSocket.CLOSED) {
+            reconnectAttempts = 0;
+            updateConnectionStatus('reconnecting');
+            connect();
+        }
+    });
 
     // ---- Question pack update check ----
     checkPackUpdates();
