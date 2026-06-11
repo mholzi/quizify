@@ -26,6 +26,7 @@ server runs them unchanged.
 
 from __future__ import annotations
 
+import asyncio
 import json
 import logging
 import re
@@ -69,6 +70,25 @@ _GITHUB_ISSUES_API = "https://api.github.com/repos/mholzi/quizify/issues"
 _RATE_LIMIT_REQUESTS = 5
 _RATE_LIMIT_WINDOW = 60  # seconds
 _rate_buckets: dict[str, list[float]] = {}
+
+# Per-records-file lock so the load-modify-save in get_with_reconcile() / add()
+# can't interleave (#256): a submit landing mid-reconcile would otherwise read a
+# stale snapshot and clobber the other writer's record. PackSubmissionStore is
+# instantiated per-request, so the lock can't live on the instance — it's keyed
+# on the records-file path here, mirroring TokenStore._lock. asyncio.Lock is the
+# right primitive (these are coroutines on one event loop; the actual file I/O
+# runs in the executor but the read-decide-write critical section is async).
+_store_locks: dict[str, asyncio.Lock] = {}
+
+
+def _store_lock(path: object) -> asyncio.Lock:
+    """Return the shared lock for a given records-file path."""
+    key = str(path)
+    lock = _store_locks.get(key)
+    if lock is None:
+        lock = asyncio.Lock()
+        _store_locks[key] = lock
+    return lock
 
 
 def _check_rate_limit(client_ip: str) -> bool:
@@ -189,6 +209,9 @@ class PackSubmissionStore:
     def __init__(self, ctx: "AppContext") -> None:
         self._ctx = ctx
         self._path = ctx.runtime.data_dir / SUBMIT_RECORDS_FILE
+        # Shared across all stores pointing at the same file (this class is
+        # instantiated per-request) so concurrent load-modify-save can't race.
+        self._lock = _store_lock(self._path)
 
     # --- blocking helpers (run in executor) ---------------------------------
 
@@ -301,22 +324,33 @@ class PackSubmissionStore:
     # --- public async API ---------------------------------------------------
 
     async def get_with_reconcile(self) -> dict:
-        """Load records, reconcile against GitHub if the poll is due, persist."""
-        data = await self._ctx.runtime.run_in_executor(self._load)
-        if self._poll_due(data):
-            data = await self.reconcile(data)
-            await self._ctx.runtime.run_in_executor(self._save, data)
-        return data
+        """Load records, reconcile against GitHub if the poll is due, persist.
+
+        The whole load-modify-save runs under the per-file lock (#256) so a
+        concurrent ``add()`` can't slip a fresh record in between this load and
+        save — which would otherwise be silently dropped on persist.
+        """
+        async with self._lock:
+            data = await self._ctx.runtime.run_in_executor(self._load)
+            if self._poll_due(data):
+                data = await self.reconcile(data)
+                await self._ctx.runtime.run_in_executor(self._save, data)
+            return data
 
     async def add(self, record: dict) -> None:
-        """Append a submission record (newest first), capped, then persist."""
-        data = await self._ctx.runtime.run_in_executor(self._load)
-        submissions = data.get("submissions")
-        if not isinstance(submissions, list):
-            submissions = []
-        submissions.insert(0, record)
-        data["submissions"] = submissions[:SUBMIT_MAX_RECORDS]
-        await self._ctx.runtime.run_in_executor(self._save, data)
+        """Append a submission record (newest first), capped, then persist.
+
+        Held under the per-file lock (#256) so it can't interleave with a
+        reconcile's load-modify-save and lose the new record.
+        """
+        async with self._lock:
+            data = await self._ctx.runtime.run_in_executor(self._load)
+            submissions = data.get("submissions")
+            if not isinstance(submissions, list):
+                submissions = []
+            submissions.insert(0, record)
+            data["submissions"] = submissions[:SUBMIT_MAX_RECORDS]
+            await self._ctx.runtime.run_in_executor(self._save, data)
 
 
 # ---------------------------------------------------------------------------
@@ -419,11 +453,21 @@ async def submit_pack_view(request: web.Request) -> web.Response:
         )
 
     # Proxy to the worker, which holds the GitHub token and creates the issue.
+    # When a shared secret is configured, send it as the X-Quizify-Secret header
+    # so the worker can reject unauthenticated requests, closing the open-proxy
+    # hole (#256). No secret → no header, and the worker (which only enforces
+    # when its SHARED_SECRET is set) behaves exactly as before — back-compatible.
+    submit_secret = (ctx.community_submit_secret or "").strip()
+    submit_headers: dict[str, str] | None = (
+        {"X-Quizify-Secret": submit_secret} if submit_secret else None
+    )
     timeout = aiohttp.ClientTimeout(total=SUBMIT_POLL_TIMEOUT_SECONDS)
     worker_payload: dict[str, Any]
     try:
         async with aiohttp.ClientSession(timeout=timeout) as session:
-            async with session.post(submit_url, json={"pack": pack}) as resp:
+            async with session.post(
+                submit_url, json={"pack": pack}, headers=submit_headers
+            ) as resp:
                 try:
                     worker_payload = await resp.json(content_type=None)
                 except (ValueError, aiohttp.ClientError):

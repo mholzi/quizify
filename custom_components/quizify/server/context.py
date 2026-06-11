@@ -78,3 +78,9 @@ class AppContext:
     # submission feature hidden and inert. Mutable so an options-flow change
     # toggles the feature without an HA restart.
     community_submit_url: str | None = None
+    # Shared secret sent as the ``X-Quizify-Secret`` header on the worker POST
+    # (#256). When set (and the worker has a matching ``SHARED_SECRET``), it
+    # closes the open-proxy hole. ``None``/empty → header omitted, fully
+    # back-compatible. Mutable so an options-flow change applies without an HA
+    # restart, mirroring ``community_submit_url``.
+    community_submit_secret: str | None = None
