@@ -413,6 +413,20 @@ async def submit_pack_view(request: web.Request) -> web.Response:
             status=403,
         )
 
+    # Rate-limit bucket key. We use ``request.remote`` rather than parsing the
+    # ``X-Forwarded-For`` header ourselves: behind a reverse proxy, a raw
+    # forwarded header is attacker-controlled, so trusting it would let any
+    # client spoof an arbitrary IP and either evade the limit or poison another
+    # client's bucket (#259). Home Assistant already resolves the real client IP
+    # for us when it is configured with ``http.use_x_forwarded_for`` +
+    # ``trusted_proxies`` — its ``XForwardedRelaxed`` middleware rewrites
+    # ``request.remote`` to the left-most untrusted hop *before* the request
+    # reaches this handler. So ``request.remote`` is the correct, proxy-aware
+    # key when HA is configured for a proxy, and the safe direct-peer IP when it
+    # is not. Without that config behind a proxy the limit collapses to the
+    # proxy's single IP — an accepted LAN trade-off (see DESIGN.md security
+    # note); the limiter is a courtesy throttle on an already-shared-secret
+    # endpoint, not an auth boundary.
     client_ip = request.remote or "unknown"
     if not _check_rate_limit(client_ip):
         return web.json_response(

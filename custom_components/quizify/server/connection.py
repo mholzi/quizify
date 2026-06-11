@@ -2,6 +2,7 @@
 from __future__ import annotations
 
 import asyncio
+import hmac
 import json
 import logging
 import time
@@ -134,8 +135,17 @@ class ConnectionManager:
         return self._admin_session_token
 
     def validate_admin_token(self, token: str) -> bool:
-        """Return True if *token* matches the current admin session token."""
-        return bool(token and token == self._admin_session_token)
+        """Return True if *token* matches the current admin session token.
+
+        The comparison uses :func:`hmac.compare_digest` so it runs in constant
+        time and doesn't leak the token byte-by-byte through response timing
+        (#259). The empty-token / no-token-set guards short-circuit *before* the
+        compare: ``compare_digest`` requires both operands to be set strings of
+        the same type, and a None/empty admin token must never validate.
+        """
+        if not token or not self._admin_session_token:
+            return False
+        return hmac.compare_digest(token, self._admin_session_token)
 
     async def try_bootstrap_admin(self) -> bool:
         """Atomically grant + persist the admin token on a fresh install.
