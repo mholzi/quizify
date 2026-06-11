@@ -480,6 +480,39 @@
     }
 
     // ============================================
+    // Shared standings rows — medal cards (Standings A, approved 2026-06-10).
+    // One rounded row card per player: a 30px round medal disc with the rank
+    // number (top-3 tinted gold/silver/bronze, rank 4+ neutral), the name, a
+    // small coral "DU"/"YOU" tag for the current player, and a right-aligned
+    // score. Reused by the lightning recap "Totals" (#246) and the end-screen
+    // "Gesamtwertung" standings (#248) so both screens read identically.
+    //
+    // rows: [{ rank, name, score, isYou }] — already sorted by score desc.
+    // opts: { youLabel } — localized "DU"/"YOU" tag text.
+    // ============================================
+    function renderMedalStandings(target, rows, opts) {
+        var container = (typeof target === 'string')
+            ? document.getElementById(target) : target;
+        if (!container) return;
+        opts = opts || {};
+        var youLabel = opts.youLabel || 'DU';
+        var medalClass = { 1: 'mstand-disc--gold', 2: 'mstand-disc--silver', 3: 'mstand-disc--bronze' };
+
+        container.innerHTML = (rows || []).map(function (r) {
+            var rank = r.rank;
+            var discCls = 'mstand-disc' + (medalClass[rank] ? ' ' + medalClass[rank] : '');
+            var rowCls = 'mstand-row' + (r.isYou ? ' mstand-row--me' : '');
+            var youTag = r.isYou
+                ? '<span class="mstand-you">' + escapeHtml(youLabel) + '</span>' : '';
+            return '<div class="' + rowCls + '">' +
+                '<span class="' + discCls + '">' + rank + '</span>' +
+                '<span class="mstand-name">' + escapeHtml(r.name || '') + youTag + '</span>' +
+                '<span class="mstand-score">' + r.score + '</span>' +
+            '</div>';
+        }).join('');
+    }
+
+    // ============================================
     // Export
     // ============================================
 
@@ -503,7 +536,8 @@
         validateName: validateName,
         MAX_RECONNECT_ATTEMPTS: MAX_RECONNECT_ATTEMPTS,
         animateValue: animateValue,
-        showPointsPopup: showPointsPopup
+        showPointsPopup: showPointsPopup,
+        renderMedalStandings: renderMedalStandings
     };
 
 })();
@@ -2095,34 +2129,27 @@
         var listEl = document.getElementById('final-leaderboard-list');
         if (!listEl) return;
 
-        // Ranked Bars: each row carries a faint sage bar scaled to the
-        // player's score, so the gaps between players read at a glance.
-        // Top-3 ranks get a medal-tinted dot; the current player's row gets
-        // a coral left border.
-        var maxScore = leaderboard.reduce(function (m, e) {
-            return Math.max(m, e.score || 0);
-        }, 0) || 1;
-        var MEDAL_DOTS = { 1: 'lb-mdot--gold', 2: 'lb-mdot--silver', 3: 'lb-mdot--bronze' };
+        // Shared medal-card standings (Standings A) — same treatment as the
+        // lightning recap "Totals" (#246/#248). A round medal disc carries the
+        // rank (top-3 gold/silver/bronze), the current player's row is coral-
+        // highlighted with a "DU"/"YOU" tag. Disconnected players keep an
+        // "(away)" badge appended to the name.
+        var youLabel = (_t('lobby.you') && _t('lobby.you') !== 'lobby.you')
+            ? _t('lobby.you') : 'Du';
+        var awayText = (_t('lobby.away') && _t('lobby.away') !== 'lobby.away')
+            ? _t('lobby.away') : 'away';
 
-        listEl.innerHTML = leaderboard.map(function (entry) {
-            var currentClass = entry.is_current ? 'is-current' : '';
-            var disconnectedClass = entry.connected === false ? 'final-entry--disconnected' : '';
-            var awayBadge = entry.connected === false
-                ? '<span class="away-badge">(' + pu.escapeHtml(_t('lobby.away') !== 'lobby.away' ? _t('lobby.away') : 'away') + ')</span>'
-                : '';
-            var pct = Math.max(8, Math.round(((entry.score || 0) / maxScore) * 100));
-            var medalDot = MEDAL_DOTS[entry.rank]
-                ? '<span class="lb-mdot ' + MEDAL_DOTS[entry.rank] + '"></span>'
-                : '';
-            return '<div class="final-entry ' + currentClass + ' ' + disconnectedClass + '">' +
-                '<span class="final-rank">' + entry.rank + '</span>' +
-                '<div class="final-track">' +
-                    '<div class="final-fill" style="width:' + pct + '%"></div>' +
-                    '<span class="final-name">' + medalDot + pu.escapeHtml(entry.name) + awayBadge + '</span>' +
-                '</div>' +
-                '<span class="final-score">' + entry.score + '</span>' +
-            '</div>';
-        }).join('');
+        var rows = leaderboard.map(function (entry) {
+            var name = entry.name || '';
+            if (entry.connected === false) name += ' (' + awayText + ')';
+            return {
+                rank: entry.rank,
+                name: name,
+                score: entry.score,
+                isYou: !!entry.is_current
+            };
+        });
+        pu.renderMedalStandings(listEl, rows, { youLabel: youLabel });
     }
 
     // ============================================
@@ -2508,15 +2535,17 @@
         var lb = recap.leaderboard || [];
         var lbEl = document.getElementById('lightning-recap-leaderboard');
         if (lbEl) {
-            lbEl.innerHTML = lb.map(function (p) {
-                var you = (p.name === state.playerName)
-                    ? ' <span class="you-badge">(you)</span>' : '';
-                return '<div class="final-leaderboard-row">' +
-                    '<span class="rank">#' + p.rank + '</span>' +
-                    '<span class="name">' + pu.escapeHtml(p.name) + you + '</span>' +
-                    '<span class="score">' + p.score + '</span>' +
-                    '</div>';
-            }).join('');
+            var youLabel = (t('lobby.you') && t('lobby.you') !== 'lobby.you')
+                ? t('lobby.you') : 'Du';
+            var rows = lb.map(function (p) {
+                return {
+                    rank: p.rank,
+                    name: p.name,
+                    score: p.score,
+                    isYou: p.name === state.playerName
+                };
+            });
+            pu.renderMedalStandings(lbEl, rows, { youLabel: youLabel });
         }
 
         // Per-question recap rows (Variant C refined): one row per question,

@@ -475,6 +475,39 @@
     }
 
     // ============================================
+    // Shared standings rows — medal cards (Standings A, approved 2026-06-10).
+    // One rounded row card per player: a 30px round medal disc with the rank
+    // number (top-3 tinted gold/silver/bronze, rank 4+ neutral), the name, a
+    // small coral "DU"/"YOU" tag for the current player, and a right-aligned
+    // score. Reused by the lightning recap "Totals" (#246) and the end-screen
+    // "Gesamtwertung" standings (#248) so both screens read identically.
+    //
+    // rows: [{ rank, name, score, isYou }] — already sorted by score desc.
+    // opts: { youLabel } — localized "DU"/"YOU" tag text.
+    // ============================================
+    function renderMedalStandings(target, rows, opts) {
+        var container = (typeof target === 'string')
+            ? document.getElementById(target) : target;
+        if (!container) return;
+        opts = opts || {};
+        var youLabel = opts.youLabel || 'DU';
+        var medalClass = { 1: 'mstand-disc--gold', 2: 'mstand-disc--silver', 3: 'mstand-disc--bronze' };
+
+        container.innerHTML = (rows || []).map(function (r) {
+            var rank = r.rank;
+            var discCls = 'mstand-disc' + (medalClass[rank] ? ' ' + medalClass[rank] : '');
+            var rowCls = 'mstand-row' + (r.isYou ? ' mstand-row--me' : '');
+            var youTag = r.isYou
+                ? '<span class="mstand-you">' + escapeHtml(youLabel) + '</span>' : '';
+            return '<div class="' + rowCls + '">' +
+                '<span class="' + discCls + '">' + rank + '</span>' +
+                '<span class="mstand-name">' + escapeHtml(r.name || '') + youTag + '</span>' +
+                '<span class="mstand-score">' + r.score + '</span>' +
+            '</div>';
+        }).join('');
+    }
+
+    // ============================================
     // Export
     // ============================================
 
@@ -498,7 +531,8 @@
         validateName: validateName,
         MAX_RECONNECT_ATTEMPTS: MAX_RECONNECT_ATTEMPTS,
         animateValue: animateValue,
-        showPointsPopup: showPointsPopup
+        showPointsPopup: showPointsPopup,
+        renderMedalStandings: renderMedalStandings
     };
 
 })();

@@ -477,17 +477,21 @@
                     </div>
                 </div>
 
-                <!-- Admin controls (two CTAs: same settings = one tap, new = full setup) -->
+                <!-- Admin controls (Buttons A): primary full-width + a row of two
+                     single-line secondaries. Labels shortened to stay one line. -->
                 <div id="end-admin-controls" class="end-admin-controls hidden">
-                    <button id="play-again-same-btn" class="btn btn-primary btn-large btn-full-width" data-i18n="admin.playAgainSame">
+                    <button id="play-again-same-btn" class="resbtn resbtn--primary" type="button" data-i18n="admin.playAgainSame">
                         Play again
                     </button>
-                    <button id="lightning-from-end-btn" class="btn btn-secondary btn-large btn-full-width">
-                        ⚡ <span data-i18n="lightning.start">Lightning Round</span>
-                    </button>
-                    <button id="new-game-btn" class="btn btn-secondary btn-large btn-full-width" data-i18n="admin.startNewGame">
-                        Start New Game
-                    </button>
+                    <div class="resbtn-row">
+                        <button id="lightning-from-end-btn" class="resbtn resbtn--secondary" type="button">
+                            <span class="resbtn-bolt qz-icon" data-ui-icon="bolt" aria-hidden="true">⚡</span>
+                            <span data-i18n="lightning.startShort">Lightning</span>
+                        </button>
+                        <button id="new-game-btn" class="resbtn resbtn--secondary" type="button" data-i18n="admin.newGameShort">
+                            New Game
+                        </button>
+                    </div>
                 </div>
 
                 <!-- Player message -->
@@ -533,7 +537,6 @@
                 <div class="lr-splash-adminmeta" data-i18n="lightning.splashAdminMeta">Splash visible to all players</div>
                 <button id="lightning-splash-start-btn" class="lr-splash-startbtn" type="button">
                     <span data-i18n="lightning.splashStart">Let's go</span>
-                    <span class="qz-icon qz-icon--sun" data-ui-icon="bolt" aria-hidden="true">⚡</span>
                 </button>
             </div>
         </div>
@@ -624,12 +627,15 @@
                 </div>
 
                 <div id="lightning-recap-admin" class="end-admin-controls hidden">
-                    <button id="lightning-recap-again-btn" class="btn btn-primary btn-large btn-full-width" data-i18n="lightning.again">
-                        Another Lightning Round
+                    <button id="lightning-recap-again-btn" class="resbtn resbtn--primary" type="button">
+                        <span class="resbtn-bolt qz-icon" data-ui-icon="bolt" aria-hidden="true">⚡</span>
+                        <span data-i18n="lightning.againShort">Lightning again</span>
                     </button>
-                    <button id="lightning-recap-newgame-btn" class="btn btn-secondary btn-large btn-full-width" data-i18n="admin.startNewGame">
-                        Start New Game
-                    </button>
+                    <div class="resbtn-row">
+                        <button id="lightning-recap-newgame-btn" class="resbtn resbtn--secondary" type="button" data-i18n="admin.newGameShort">
+                            New Game
+                        </button>
+                    </div>
                 </div>
 
                 <div id="lightning-recap-player-msg" class="end-player-message hidden">

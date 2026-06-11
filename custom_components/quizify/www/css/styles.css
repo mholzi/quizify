@@ -3280,15 +3280,152 @@ footer {
     margin-bottom: var(--space-sm);
 }
 
-/* End view controls */
+/* End view controls — Buttons A (approved 2026-06-10): a full-width
+   primary CTA stacked over a row of single-line secondaries. Reused by
+   the end screen (#248) and the lightning recap footer (#247). */
 .end-admin-controls {
     display: flex;
-    gap: var(--space-sm);
+    flex-direction: column;
+    gap: 9px;
+    width: 100%;
+    margin-top: var(--space-lg);
+}
+
+/* Shared results-screen action buttons (Buttons A). */
+.resbtn {
+    border: 0;
+    border-radius: 13px;
+    font: 700 14px/1.1 system-ui, -apple-system, sans-serif;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    gap: 7px;
+    white-space: nowrap;
+    cursor: pointer;
+}
+
+.resbtn--primary {
+    background: var(--color-accent-primary);
+    color: #fff;
+    height: 48px;
+    width: 100%;
+    font-size: 15px;
+}
+
+.resbtn-row {
+    display: flex;
+    gap: 9px;
     width: 100%;
 }
 
-.end-admin-controls .btn {
+.resbtn--secondary {
+    height: 44px;
     flex: 1;
+    background: #fff;
+    color: #2A2820;
+    border: 1px solid #ECE4D2;
+}
+
+.resbtn:disabled {
+    opacity: 0.6;
+    cursor: default;
+}
+
+/* The ⚡ on the Lightning buttons uses the shared SVG bolt glyph (#247),
+   sized ~20px, not the emoji. */
+.resbtn-bolt {
+    width: 20px;
+    height: 20px;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    flex-shrink: 0;
+}
+.resbtn-bolt svg {
+    width: 20px;
+    height: 20px;
+    display: block;
+}
+.resbtn--primary .resbtn-bolt svg { fill: #fff; }
+.resbtn--secondary .resbtn-bolt svg { fill: var(--color-accent-primary); }
+
+/* ==========================================
+   Shared medal-card standings (Standings A, approved 2026-06-10).
+   One rounded row card per player with a round rank-medal disc, name,
+   "DU"/"YOU" tag for the current player, and a right-aligned score.
+   Reused by the lightning recap "Totals" (#246) and the end-screen
+   "Gesamtwertung" standings (#248) via the #final-leaderboard-list and
+   #lightning-recap-leaderboard containers.
+   ========================================== */
+.mstand-row {
+    display: flex;
+    align-items: center;
+    gap: 11px;
+    background: #fff;
+    border: 1px solid #ECE4D2;
+    border-radius: 13px;
+    padding: 9px 13px;
+}
+.mstand-row + .mstand-row {
+    margin-top: 8px;
+}
+.mstand-row--me {
+    border-color: #E88A7F;
+    background: #FFF6F4;
+}
+
+.mstand-disc {
+    width: 30px;
+    height: 30px;
+    border-radius: 50%;
+    flex-shrink: 0;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    font-weight: 800;
+    font-size: 13px;
+    color: #fff;
+    background: #EFE8D6;        /* rank 4+ neutral disc... */
+}
+.mstand-disc:not(.mstand-disc--gold):not(.mstand-disc--silver):not(.mstand-disc--bronze) {
+    color: var(--color-text-muted);   /* ...with muted-ink number */
+}
+.mstand-disc--gold   { background: linear-gradient(135deg, #E8C47F, #D9A441); }
+.mstand-disc--silver { background: linear-gradient(135deg, #cdd3d6, #aab4ba); }
+.mstand-disc--bronze { background: linear-gradient(135deg, #e0b08a, #c98b5e); }
+
+.mstand-name {
+    flex: 1;
+    min-width: 0;
+    font-weight: 600;
+    font-size: 14px;
+    color: #2A2820;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+    display: flex;
+    align-items: center;
+    gap: 7px;
+}
+
+.mstand-you {
+    flex-shrink: 0;
+    font-size: 10px;
+    font-weight: 800;
+    letter-spacing: 0.04em;
+    color: #fff;
+    background: var(--color-accent-primary);
+    border-radius: 6px;
+    padding: 2px 6px;
+    line-height: 1;
+}
+
+.mstand-score {
+    flex-shrink: 0;
+    font-weight: 800;
+    font-size: 15px;
+    color: #2A2820;
+    font-variant-numeric: tabular-nums;
 }
 
 .end-player-message {
@@ -5897,26 +6034,33 @@ body.is-admin .reaction-bar {
     z-index: 2;
 }
 
+/* #245 — the hint is a small caption (flex:1 so it wraps in its own
+   column), no longer fighting the start button for the bar width. */
 .lr-splash-adminmeta {
-    font-size: 13px;
+    flex: 1;
+    min-width: 0;
+    font-size: 12px;
+    line-height: 1.3;
     color: var(--color-text-muted);
 }
 
+/* #245 — right-sized single-line Start button (no oversized pill, no
+   redundant in-button bolt disc; label never wraps to "Let's / go"). */
 .lr-splash-startbtn {
-    margin-left: auto;
+    flex-shrink: 0;
     background: var(--color-accent-primary);
     color: #fff;
     border: none;
-    border-radius: var(--radius-full);
-    padding: 15px 34px;
-    font-family: var(--font-display);
-    font-weight: var(--font-weight-extrabold);
-    font-size: 18px;
-    letter-spacing: 0.3px;
+    border-radius: 13px;
+    padding: 0 26px;
+    height: 48px;
+    font: 700 15px/1.1 system-ui, -apple-system, sans-serif;
+    letter-spacing: 0.2px;
     box-shadow: var(--glow-primary);
-    display: flex;
+    display: inline-flex;
     align-items: center;
-    gap: 8px;
+    justify-content: center;
+    white-space: nowrap;
     cursor: pointer;
 }
 
