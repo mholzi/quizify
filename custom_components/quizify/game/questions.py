@@ -215,6 +215,12 @@ class QuestionBank:
             "name": category_name,
             "language": pack_language,
             "question_count": len(questions),
+            # Store the pack's theme at load time (#309) so the featured-pack
+            # view can map it to a spotlight icon without re-reading + re-parsing
+            # the pack JSON per request — and, crucially, so it resolves for
+            # community packs too (their on-disk path differs from the slug, so
+            # the old per-request re-read always missed them → 🎲 default icon).
+            "theme": raw.get("theme", "") if isinstance(raw.get("theme"), str) else "",
         }
         # Optional recurring seasonal window (#276). Parsed + validated here so
         # a malformed window is dropped at load time; the normalised MM-DD form
@@ -391,6 +397,11 @@ class QuestionBank:
                 "language": pack_language,
                 "question_count": len(questions),
                 "community": True,
+                # Theme stored at load time (#309) — community packs live at
+                # questions/community/<stem>.json under a ``community-`` slug, so
+                # the old views.py path read (questions_dir / f"{slug}.json")
+                # never found them and they always fell back to the 🎲 icon.
+                "theme": raw.get("theme", "") if isinstance(raw.get("theme"), str) else "",
             }
             community_season = _normalize_season(raw.get("season"))
             if community_season is not None:
