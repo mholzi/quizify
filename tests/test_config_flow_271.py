@@ -77,7 +77,7 @@ async def test_user_flow_single_instance_only(hass: HomeAssistant) -> None:
         DOMAIN, context={"source": config_entries.SOURCE_USER}
     )
     assert result["type"] == data_entry_flow.FlowResultType.ABORT
-    assert result["reason"] == "single_instance_allowed"
+    assert result["reason"] == "already_configured"
 
 
 async def test_options_flow_form_lists_all_options(hass: HomeAssistant) -> None:
@@ -112,10 +112,10 @@ async def test_options_flow_saves_community_submit_options(
 
     result = await hass.config_entries.options.async_init(entry.entry_id)
 
+    # The entity-selector options reject "" — omit them (vol.Optional) and only
+    # submit the text fields under test.
     user_input = {
         CONF_PARTY_LIGHT_ENTITIES: [],
-        CONF_TTS_ENTITY: "",
-        CONF_MEDIA_PLAYER_ENTITY: "",
         CONF_LOBBY_MUSIC_URL: "",
         CONF_COMMUNITY_SUBMIT_URL: "https://worker.example.com/submit",
         CONF_COMMUNITY_SUBMIT_SECRET: "s3cret-token",

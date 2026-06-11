@@ -30,17 +30,16 @@ def _fresh_event_loop():
 
 
 # pytest-homeassistant-custom-component (a CI-only test dep, #271) pulls in
-# pytest-socket, which blocks ALL socket use by default — including asyncio's
-# internal selector socketpair, which breaks the sync asyncio.run() tests. Keep
-# sockets enabled (we don't rely on network-blocking). Guarded so the base test
-# run without pytest-socket installed is unaffected.
-try:  # pragma: no cover - only active when pytest-socket is installed (CI)
+# pytest-socket, which blocks ALL socket use by default — socket *creation*
+# (asyncio's internal socketpair) AND *connect* to non-localhost. Our tests
+# don't rely on network-blocking, so mark every collected test with
+# pytest-socket's own `enable_socket` marker, which reliably overrides the
+# block per-test. Guarded so the base run without pytest-socket is unaffected.
+def pytest_collection_modifyitems(items):  # noqa: D401
+    try:
+        import pytest_socket  # noqa: F401
+    except ImportError:
+        return
     import pytest as _pytest
-    import pytest_socket as _pytest_socket
-
-    @_pytest.fixture(autouse=True)
-    def _quizify_enable_sockets():
-        _pytest_socket.enable_socket()
-        yield
-except ImportError:  # pytest-socket absent (base local run) — nothing to do
-    pass
+    for item in items:
+        item.add_marker(_pytest.mark.enable_socket)
