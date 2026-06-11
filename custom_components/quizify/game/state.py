@@ -1292,32 +1292,27 @@ class QuizifyGameState:
         return self._current_question
 
     def get_leaderboard(self) -> list[dict[str, Any]]:
-        """Return sorted leaderboard data.
+        """Return sorted leaderboard data — wire-identical to the live broadcast.
 
-        NB: ``is_admin`` is required so the client can determine whether
-        the current viewer is the admin (and thus should see the
-        "Start New Game" / "Next Round" buttons). It was missing from
-        this serializer in earlier versions and produced a chronic
-        admin-lockout in the FINALE state — when a game-state snapshot
-        was sent on reconnect the leaderboard had no admin marker, so
-        the player-end client gated the controls off. See v1.1.4 notes.
+        Delegates to :func:`serialize_leaderboard` (the same helper the live
+        ``game_state`` / ``round_summary`` broadcasts use) so the snapshot
+        leaderboard carries the FULL client contract — ``submitted``,
+        ``best_streak``, ``rounds_played``, ``powerups_used``, ``round_score``,
+        ``correct`` — not just rank/name/score/streak (#297). Without those
+        keys a reconnect-after-submit never re-locked the answer buttons
+        (player-core.js reads ``leaderboard[].submitted``) and a FINALE
+        reconnect showed 0 for BESTE SERIE / GESPIELTE RUNDEN / POWER-UPS.
+
+        ``is_admin`` is likewise required so the reconnect client can show the
+        admin "Start New Game" / "Next Round" controls; ``serialize_leaderboard``
+        emits it. (Earlier hand-rolled versions of this method dropped fields
+        and caused a chronic FINALE admin-lockout — see v1.1.4 notes.)
         """
-        players = sorted(
-            self._player_registry.players.values(),
-            key=lambda p: p.score,
-            reverse=True,
-        )
-        return [
-            {
-                "rank": i + 1,
-                "name": p.name,
-                "score": p.score,
-                "streak": p.streak,
-                "connected": p.connected,
-                "is_admin": p.is_admin,
-            }
-            for i, p in enumerate(players)
-        ]
+        # Local import keeps the game-layer free of a module-level dependency
+        # on the server layer (serializers only TYPE_CHECKING-imports game).
+        from ..server.serializers import serialize_leaderboard
+
+        return serialize_leaderboard(self.get_players())
 
     def get_round_summary(self) -> RoundSummary | None:
         """Return the last round summary."""

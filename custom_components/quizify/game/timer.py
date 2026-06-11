@@ -76,6 +76,30 @@ class QuestionTimer:
             pause_credit = min(self._pause_remaining, max(0.0, elapsed_pause))
         return max(0.0, now - self._start_time - pause_credit)
 
+    @classmethod
+    def resumed(cls, remaining: float, elapsed: float) -> "QuestionTimer":
+        """Build a running timer that reports a known *remaining* AND *elapsed*.
+
+        Used by the pause/resume path (#295). A naive ``QuestionTimer(remaining)``
+        re-``start()``ed at resume time would report ``get_elapsed() ≈ 0`` —
+        inflating the speed bonus, because scoring credits speed off elapsed.
+        This reconstructs the internal clock so that, immediately after resume:
+
+        * ``get_remaining()`` == *remaining* (the time frozen at pause), and
+        * ``get_elapsed()``  == *elapsed* (the time already spent pre-pause),
+
+        and both then advance normally as wall-clock runs. With no bonus/pause
+        credit, ``get_remaining() = _duration - (now - _start_time)`` and
+        ``get_elapsed() = now - _start_time``; setting ``_start_time = now -
+        elapsed`` and ``_duration = remaining + elapsed`` satisfies both.
+        """
+        timer = cls(duration=max(0.0, remaining) + max(0.0, elapsed))
+        timer._start_time = time.monotonic() - max(0.0, elapsed)
+        timer._bonus_time = 0.0
+        timer._pause_remaining = 0.0
+        timer._pause_started_at = None
+        return timer
+
     def reset(self, duration: float | None = None) -> None:
         """Reset the timer, optionally with a new duration."""
         if duration is not None:

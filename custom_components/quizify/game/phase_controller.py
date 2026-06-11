@@ -109,6 +109,14 @@ class PhaseController:
         self.paused_from: GamePhase | None = None
         self.paused_remaining: dict[str, float] = {}
         self.pause_reason: str | None = None
+        # Per-player elapsed at pause + the monotonic instant we paused, so
+        # resume() can preserve both the frozen remaining AND the elapsed
+        # (speed bonus) and advance the round wall-clock by the pause duration
+        # (#295). round_start_time alone is wall-clock and would otherwise keep
+        # running through the pause, desyncing it from the frozen per-player
+        # timers (a late joiner post-resume would get a ~0.5s timer, etc.).
+        self.paused_elapsed: dict[str, float] = {}
+        self.paused_at: float | None = None
 
     # ------------------------------------------------------------------
     # Timer mechanics
@@ -255,12 +263,19 @@ class PhaseController:
             return False
         self.paused_from = GamePhase.QUESTION_ACTIVE
         self.pause_reason = reason
-        # Snapshot remaining time per player and freeze timers in place.
-        # On resume we'll create fresh timers with the saved remaining.
+        # Snapshot remaining AND elapsed time per player and freeze timers in
+        # place. On resume we rebuild timers that preserve BOTH (so the speed
+        # bonus, which scores off elapsed, isn't inflated — #295/#254).
         self.paused_remaining = {}
+        self.paused_elapsed = {}
         for name, timer in self.timers.items():
             self.paused_remaining[name] = max(0.0, timer.get_remaining())
+            self.paused_elapsed[name] = max(0.0, timer.get_elapsed())
         self.timers.clear()
+        # Remember when we paused so resume() can shift the round wall-clock by
+        # the exact pause duration, keeping round_start_time in lock-step with
+        # the frozen per-player remaining (#295).
+        self.paused_at = time.monotonic()
         self.phase = GamePhase.PAUSED
         _LOGGER.info("Game paused (reason=%s)", reason)
         return True
@@ -269,16 +284,32 @@ class PhaseController:
         """Resume a paused game. Returns True if resume happened."""
         if self.phase != GamePhase.PAUSED:
             return False
-        # Restore timers with the remaining time they had at pause.
-        # Late-joiners during PAUSED won't be in paused_remaining and
-        # get a fresh full-round timer here.
+        # Advance the round wall-clock by the pause duration FIRST, so
+        # round_start_time stays in lock-step with the frozen per-player
+        # remaining (#295). Without this shift a long pause leaves
+        # round_start_time far in the past: time_remaining_for_snapshot() and
+        # round_wall_clock_expired() read stale, and a player joining
+        # post-resume gets add_late_joiner_timer ≈ 0.5s (instantly expired).
+        if self.paused_at is not None and self.round_start_time is not None:
+            self.round_start_time += time.monotonic() - self.paused_at
+        # Restore timers with the remaining time AND elapsed they had at pause
+        # (QuestionTimer.resumed preserves both, so the speed bonus measured
+        # from get_elapsed() isn't inflated — #295/#254). Late-joiners during
+        # PAUSED won't be in the snapshots and get a fresh full-round timer.
         full = self.round_duration
         for name in self._players_fn():
-            remaining = self.paused_remaining.get(name, full)
-            timer = QuestionTimer(remaining)
-            timer.start()
+            if name in self.paused_remaining:
+                timer = QuestionTimer.resumed(
+                    remaining=self.paused_remaining[name],
+                    elapsed=self.paused_elapsed.get(name, 0.0),
+                )
+            else:
+                timer = QuestionTimer(full)
+                timer.start()
             self.timers[name] = timer
         self.paused_remaining = {}
+        self.paused_elapsed = {}
+        self.paused_at = None
         self.pause_reason = None
         self.phase = self.paused_from or GamePhase.QUESTION_ACTIVE
         self.paused_from = None
