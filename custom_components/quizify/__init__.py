@@ -73,6 +73,13 @@ async def async_setup_entry(hass: HomeAssistant, entry: ConfigEntry) -> bool:
     # Read persisted question history off the event loop (issue #222).
     await game_state.async_load_history()
 
+    # Preload the ~2 MB question bank off the event loop once at setup
+    # (issue #258). load_all_categories() is idempotent (guarded by
+    # _loaded), so the later inline calls in start_game()/LightningRound
+    # .start() become guaranteed cache hits instead of synchronous disk
+    # reads on the loop. Mirrors the analytics/stats preload pattern above.
+    await runtime.run_in_executor(game_state._question_bank.load_all_categories)
+
     ws_handler = QuizifyWebSocketHandler(
         runtime=runtime,
         game_state_provider=lambda: hass.data.get(DOMAIN, {}).get("game"),

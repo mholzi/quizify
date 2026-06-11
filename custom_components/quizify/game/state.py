@@ -420,7 +420,9 @@ class QuizifyGameState:
             "timer_duration": timer_duration,
         }
 
-        # Load questions
+        # Load questions. The bank is preloaded off the event loop at
+        # async_setup_entry (#258), so this is a guaranteed cache hit (guarded
+        # by _loaded) rather than a synchronous ~2 MB disk read on the loop.
         self._question_bank.load_all_categories()
         self._question_bank.reset(
             category=category,

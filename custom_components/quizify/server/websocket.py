@@ -4,6 +4,7 @@ from __future__ import annotations
 
 import asyncio
 import logging
+import math
 import random
 from typing import TYPE_CHECKING, Any
 
@@ -1320,9 +1321,15 @@ class QuizifyWebSocketHandler:
                     deadline = lr.seconds_per_question
                     waited = 0.0
                     step = 0.25
+                    # The display shows whole seconds (1 Hz), so only push a
+                    # tick when the ceil(remaining) actually changes — no point
+                    # broadcasting at the 4 Hz poll cadence (#258).
+                    last_shown = None
                     while waited < deadline:
-                        # Tick the countdown to players/dashboards.
-                        await self._broadcast_lightning_tick(game_state, lr)
+                        shown = math.ceil(lr.time_remaining())
+                        if shown != last_shown:
+                            await self._broadcast_lightning_tick(game_state, lr)
+                            last_shown = shown
                         connected = [
                             p.name for p in game_state.get_players() if p.connected
                         ]
@@ -1356,10 +1363,12 @@ class QuizifyWebSocketHandler:
         q = lr.current_question
         if q is None:
             return
+        # Fan out the per-player lightning question in parallel (#258).
+        lightning_sends = []
         for player in game_state.get_players():
             if not player.connected:
                 continue
-            await self._conn._safe_send(player.ws, {
+            lightning_sends.append(self._conn._safe_send(player.ws, {
                 "type": "lightning_question",
                 "question_text": q.question,
                 "answers": lr.shuffled_answers_for(player.name),
@@ -1368,7 +1377,9 @@ class QuizifyWebSocketHandler:
                 "seconds": lr.seconds_per_question,
                 "category": q.category,
                 "image_url": q.image_url,
-            })
+            }))
+        if lightning_sends:
+            await asyncio.gather(*lightning_sends)
         await self._conn.broadcast_to_admins_and_dashboards({
             "type": "lightning_question",
             "question_text": q.question,
@@ -1436,13 +1447,18 @@ class QuizifyWebSocketHandler:
         # The builder assembles each payload (own shuffle); the handler still
         # owns the send and the connected-player skip (#189).
         is_final = game_state.round == game_state.total_rounds
+        # Build every per-player payload, then fan out in parallel (#258) so a
+        # single slow client can't delay the question reaching the rest.
+        question_sends = []
         for player in players_now:
             if not player.connected:
                 continue
             player_msg = self._round_messages.build_player_question(
                 game_state, question=question, player=player, is_final=is_final
             )
-            await self._conn._safe_send(player.ws, player_msg)
+            question_sends.append(self._conn._safe_send(player.ws, player_msg))
+        if question_sends:
+            await asyncio.gather(*question_sends)
 
         # Send question with correct answer to admin
         admin_msg = self._round_messages.build_admin_question(
@@ -1457,14 +1473,17 @@ class QuizifyWebSocketHandler:
         # Cache players to avoid redundant calls
         players = game_state.get_players()
 
-        # Notify players who got a power-up this round
+        # Notify players who got a power-up this round (parallel fan-out, #258).
+        powerup_sends = []
         for player in players:
             powerup = game_state.get_player_powerup(player.name)
             if powerup and player.connected:
-                await self._conn._safe_send(player.ws, {
+                powerup_sends.append(self._conn._safe_send(player.ws, {
                     "type": "powerup_assigned",
                     "powerup_type": powerup.value,
-                })
+                }))
+        if powerup_sends:
+            await asyncio.gather(*powerup_sends)
 
         # Broadcast game state with leaderboard so player sees rankings during game
         await self._conn.broadcast(
@@ -1501,31 +1520,37 @@ class QuizifyWebSocketHandler:
                     # Ask the timing unit for this tick's per-player remaining
                     # plus the shared dashboard minimum (one timer read each).
                     tick = game_state.resolve_tick([p.name for p in players])
-                    # Send each connected player their authoritative remaining.
+                    # Build the full (ws, payload) fan-out, then deliver it in
+                    # parallel via gather (#258). A single stalled client no
+                    # longer delays the whole room — _safe_send swallows errors
+                    # so a plain gather is safe.
+                    sends = []
+                    # Each connected player gets their authoritative remaining.
                     for name, remaining in tick.per_player:
                         p = by_name.get(name)
                         if p is None or not p.connected:
                             continue
-                        await self._conn._safe_send(p.ws, {
+                        sends.append(self._conn._safe_send(p.ws, {
                             "type": "timer_tick",
                             "remaining": round(remaining, 1),
-                        })
+                        }))
                     # Broadcast the minimum remaining to dashboards/admins so
                     # the TV view shows a consistent countdown.
                     min_remaining = tick.dashboard_remaining
-                    # Broadcast to pure-admin + dashboards
                     for ws in list(self._conn._admin_connections):
                         if not ws.closed and not any(p.ws is ws for p in players):
-                            await self._conn._safe_send(ws, {
+                            sends.append(self._conn._safe_send(ws, {
                                 "type": "timer_tick",
                                 "remaining": round(min_remaining, 1),
-                            })
+                            }))
                     for ws in list(self._conn._dashboard_connections):
                         if not ws.closed:
-                            await self._conn._safe_send(ws, {
+                            sends.append(self._conn._safe_send(ws, {
                                 "type": "timer_tick",
                                 "remaining": round(min_remaining, 1),
-                            })
+                            }))
+                    if sends:
+                        await asyncio.gather(*sends)
                     await asyncio.sleep(TICK_INTERVAL)
 
                     # Stop if everyone's timer hit zero and phase is still

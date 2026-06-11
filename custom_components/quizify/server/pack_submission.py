@@ -77,6 +77,11 @@ def _check_rate_limit(client_ip: str) -> bool:
     bucket = _rate_buckets.setdefault(client_ip, [])
     cutoff = now - _RATE_LIMIT_WINDOW
     bucket[:] = [t for t in bucket if t > cutoff]
+    if not bucket:
+        # Drop empty buckets so the dict doesn't accumulate one entry per IP
+        # that ever submitted, forever (#258). A fresh submit re-creates it.
+        del _rate_buckets[client_ip]
+        bucket = _rate_buckets.setdefault(client_ip, [])
     if len(bucket) >= _RATE_LIMIT_REQUESTS:
         return False
     bucket.append(now)
