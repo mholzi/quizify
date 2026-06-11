@@ -440,9 +440,12 @@ class QuizifyGameState:
             language=self.language,
         )
 
-        # Verify questions are available
+        # Verify questions are available. Raise with the dedicated
+        # ERR_NO_QUESTIONS_REMAINING code (#308) so the handler can surface the
+        # right error — an empty pack is NOT "game already started". The human
+        # message stays as the exception detail for logs.
         if not self._question_bank._queue:
-            raise ValueError("No questions available for the selected category/difficulty")
+            raise ValueError(ERR_NO_QUESTIONS_REMAINING)
 
         # Drop players who are no longer connected before resetting
         # scores. Players who disconnected during the previous game

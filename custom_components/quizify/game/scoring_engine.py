@@ -106,7 +106,15 @@ class ScoringEngine:
             double_points_active=double_points_active,
         )
 
-        # Calculate breakdown for client display.
+        # Calculate breakdown for client display. The client renders the
+        # components additively (base + speed + streak, then "× difficulty"),
+        # so the three integer parts must reconstruct ``points`` exactly —
+        # otherwise the breakdown visibly fails to add up to the awarded score
+        # (#308: "off by 1-2"). The bug was independent int() truncation:
+        # ``points`` truncates the full float once, while speed_bonus and
+        # streak_bonus each truncated separately, leaving a 1-2pt remainder
+        # unaccounted for. Fix: derive streak_bonus as the exact remainder so
+        # base + speed_bonus + streak_bonus == points (pre-milestone).
         speed_bonus = 0
         streak_bonus = 0
         diff_mult = DIFFICULTY_MULTIPLIERS.get(difficulty, 1.0)
@@ -117,8 +125,16 @@ class ScoringEngine:
                 else 0.0
             )
             speed_bonus = int(MAX_SPEED_BONUS * time_fraction)
-            streak_mult = get_streak_multiplier(streak)
-            streak_bonus = int((BASE_POINTS + speed_bonus) * diff_mult * (streak_mult - 1.0))
+            # ``points`` is the authoritative awarded score (the milestone spike
+            # is added separately below and surfaced as ``milestone_bonus``).
+            # Back streak_bonus out of it so base + speed + streak == points,
+            # making the breakdown sum exactly.
+            streak_bonus = points - BASE_POINTS - speed_bonus
+            if streak_bonus < 0:
+                # Defensive: a 0-streak hard-difficulty edge could in principle
+                # leave the speed truncation slightly above points. Never show a
+                # negative bonus; clamp and let speed absorb the difference.
+                streak_bonus = 0
 
         # Wager override (Jeopardy-style final round). On the final round, if
         # the player submitted a wager (0-100% of their pre-round score), it
@@ -129,16 +145,23 @@ class ScoringEngine:
         if is_final_round and wager is not None:
             bank = max(0, score_before_wager)
             wager_pts = int(bank * wager / 100)
-            wager_used = wager_pts
-            if correct:
-                points = wager_pts
-            else:
-                # Lose the wager — but never go below zero so a player can't be
-                # priced out of an existing rematch flow.
-                points = -min(wager_pts, bank)
-            # Clear bonuses since the wager overrides them.
-            speed_bonus = 0
-            streak_bonus = 0
+            # #308: a 0-point bank (or a 0% wager) means there's nothing to bet.
+            # The old code still REPLACED the normal scoring with wager_pts=0,
+            # so a 0-score player who happened to "wager" got 0 even for a
+            # correct answer — punished for wagering. Skip the override entirely
+            # when wager_pts == 0 and let the normal speed/streak/difficulty
+            # scoring stand (and the milestone bonus below still applies).
+            if wager_pts > 0:
+                wager_used = wager_pts
+                if correct:
+                    points = wager_pts
+                else:
+                    # Lose the wager — but never go below zero so a player can't
+                    # be priced out of an existing rematch flow.
+                    points = -min(wager_pts, bank)
+                # Clear bonuses since the wager overrides them.
+                speed_bonus = 0
+                streak_bonus = 0
 
         # Streak milestone bonus — discrete spike awarded the round the streak
         # EXACTLY equals a milestone value (3, 5, 10, 15, 20, 25). Wager rounds

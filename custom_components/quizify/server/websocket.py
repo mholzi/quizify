@@ -18,6 +18,7 @@ from custom_components.quizify.const import (
     ERR_INVALID_ACTION,
     ERR_NAME_INVALID,
     ERR_NAME_TAKEN,
+    ERR_NO_QUESTIONS_REMAINING,
     ERR_NOT_IN_GAME,
     ERR_ROUND_EXPIRED,
     LOBBY_DISCONNECT_GRACE_PERIOD,
@@ -1036,7 +1037,16 @@ class QuizifyWebSocketHandler:
                 timer_duration=timer_value,
             )
         except ValueError as err:
-            await self._conn.send_error(ws, ERR_GAME_ALREADY_STARTED, str(err))
+            # start_game raises two distinct ValueErrors: a wrong-phase
+            # "already started" and an empty-pack "no questions". Surface the
+            # right code instead of always reporting ALREADY_STARTED (#308):
+            # an empty/missing pack is a NO_QUESTIONS_REMAINING condition.
+            code = (
+                ERR_NO_QUESTIONS_REMAINING
+                if str(err) == ERR_NO_QUESTIONS_REMAINING
+                else ERR_GAME_ALREADY_STARTED
+            )
+            await self._conn.send_error(ws, code, str(err))
             return
 
         # Grace period before round 1's timer starts.
@@ -1363,6 +1373,15 @@ class QuizifyWebSocketHandler:
         """Admin ends the lightning round early → jump to the recap."""
         self._cancel_lightning_loop()
         if game_state.phase == GamePhase.LIGHTNING:
+            # Score the in-flight question's answers before tearing the round
+            # down (#308). Without lr.advance(), "End lightning" discarded every
+            # answer already tapped on the current question — the recap omitted
+            # them and players who'd answered correctly got no credit. advance()
+            # scores the current question (and arms the next, which we don't
+            # broadcast since we're finishing anyway).
+            lr = game_state.lightning
+            if lr is not None:
+                lr.advance()
             game_state.finish_lightning_round()
             await self._broadcast_lightning_recap(game_state)
 
