@@ -2136,11 +2136,28 @@
         // Trophy Tiles: 2-col grid of square cards, each with the award glyph
         // in a rotating colored disc (coral/sage/sky/sun across the palette).
         var DISC_TINTS = ['sup-disc--coral', 'sup-disc--sage', 'sup-disc--sky', 'sup-disc--sun'];
+        // award_key → shared SVG glyph (#219 P2). Renders the icon client-side
+        // from the stable key rather than the server emoji; falls back to the
+        // server emoji for any future award_key not in this map.
+        var AWARD_GLYPH = {
+            'highlights.awards.topScore': 'medal',
+            'highlights.awards.fastestFinger': 'bolt',
+            'highlights.awards.comebackKing': 'rocket',
+            'highlights.awards.hotStreak': 'flame',
+            'highlights.awards.mostAccurate': 'target',
+            'highlights.awards.buzzkill': 'freeze',
+            'highlights.awards.knowledgeExpert': 'brain'
+        };
+        var icons = window.QuizifyIcons;
         var cards = '';
         superlatives.forEach(function (award, index) {
             // Server format: {award, icon, winner, detail, award_key, detail_key, detail_params}
             // Legacy format: {title, emoji, player_name, value}
             var emoji = award.icon || award.emoji || '🏆';
+            // Resolve the SVG glyph from the award_key; fall back to the emoji.
+            var glyphName = AWARD_GLYPH[award.award_key];
+            var glyphSvg = (glyphName && icons) ? icons.uiIcon(glyphName) : '';
+            var discInner = glyphSvg || emoji;
             // Prefer i18n keys if the server sent them; fall back to English literals.
             var titleKey = award.award_key;
             var detailKey = award.detail_key;
@@ -2155,7 +2172,7 @@
 
             var tint = DISC_TINTS[index % DISC_TINTS.length];
             cards += '<div class="superlative-card" style="animation-delay: ' + (index * 0.2) + 's">' +
-                '<div class="superlative-disc ' + tint + '">' + emoji + '</div>' +
+                '<div class="superlative-disc ' + tint + (glyphSvg ? ' superlative-disc--svg' : '') + '">' + discInner + '</div>' +
                 '<div class="superlative-title">' + pu.escapeHtml(title) + '</div>' +
                 '<div class="superlative-player">' + pu.escapeHtml(player) + '</div>' +
                 '<div class="superlative-value">' + pu.escapeHtml(String(detail)) + '</div>' +

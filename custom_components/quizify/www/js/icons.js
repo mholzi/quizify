@@ -56,7 +56,16 @@
         pause: '<path d="M9 5v14M15 5v14"/>',
         stop: '<rect x="6" y="6" width="12" height="12" rx="2.5"/>',
         skipnext: '<path d="M6.5 5.5v13l8-6.5zM16.5 5.5v13"/>',
-        skipprev: '<path d="M17.5 5.5v13l-8-6.5zM7.5 5.5v13"/>'
+        skipprev: '<path d="M17.5 5.5v13l-8-6.5zM7.5 5.5v13"/>',
+        // Setup-preset + end-game-award glyphs (#219 P2). Approved by
+        // Markus (2026-06-10) — do not redraw.
+        gear: '<circle cx="12" cy="12" r="3"/><path d="M12 4.5V2.5M12 21.5v-2M4.5 12h-2M21.5 12h-2M6.5 6.5 5 5M19 19l-1.5-1.5M17.5 6.5 19 5M5 19l1.5-1.5"/>',
+        medal: '<circle cx="12" cy="14.5" r="5.5"/><path d="M9.2 9.7 6.5 3.2h3.2L12 7.5 14.3 3.2h3.2L14.8 9.7"/><path d="M12 12.2l.95 1.93 2.13.31-1.54 1.5.36 2.12L12 16.6l-1.9 1 .36-2.12-1.54-1.5 2.13-.31z" class="d"/>',
+        rocket: '<path d="M12 3c2.4 1.7 3.7 4.6 3.7 7.8 0 1.6-.4 3-1 4.2H9.3c-.6-1.2-1-2.6-1-4.2C8.3 7.6 9.6 4.7 12 3z"/><circle class="d" cx="12" cy="9.5" r="1.1"/><path d="M9 15.5l-2.2 2.2.3 2.6 2.4-1.2M15 15.5l2.2 2.2-.3 2.6-2.4-1.2"/>',
+        flame: '<path d="M12 21a5.5 5.5 0 0 0 5.5-5.5c0-3.6-3-5.4-3-8.6-2 1-2.6 3-2.6 4.6-1-.5-1.6-2-1.6-3.6-2.6 2-4.3 4.6-4.3 7.6A5.5 5.5 0 0 0 12 21z"/>',
+        freeze: '<path d="M12 2.5v19M3.8 7.25l16.4 9.5M20.2 7.25l-16.4 9.5"/><path d="M12 5.6l-2 1.2M12 5.6l2 1.2M12 18.4l-2-1.2M12 18.4l2-1.2M5.6 9.2v2.3M18.4 9.2v2.3M5.6 12.5v2.3M18.4 12.5v2.3"/>',
+        // Highlights tab — reuse the popculture clapperboard glyph.
+        highlights: '<rect x="3" y="5" width="18" height="14" rx="2"/><path d="M3 9.5h18"/><path d="M7.5 5v4.5M12 5v4.5M16.5 5v4.5"/>'
     };
 
     // Accent tint per theme, cycling the 4 Soft Parlor accents; mixed stays
