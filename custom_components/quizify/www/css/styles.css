@@ -1236,52 +1236,6 @@ button, .btn {
 }
 .theme-tab .theme-tab-label { vertical-align: middle; }
 
-/* ---- #220 P3: feedback / toast icons (emoji pulled out of i18n strings) ----
-   Small inline duotone disc rendered beside reveal-feedback chip labels and
-   inside toasts. Sized to sit alongside the text (smaller than the default
-   32px disc) and nudged for optical baseline alignment with the label run. */
-.feedback-icon.qz-icon {
-    width: 18px;
-    height: 18px;
-    border-radius: 6px;
-    margin-right: 5px;
-    vertical-align: -4px;
-}
-.feedback-icon.qz-icon svg { width: 72%; height: 72%; }
-/* Toasts (#error-toast + .reaction-bonus-toast) that carry an icon switch
-   to a flex row so the disc + text line up centered. */
-#error-toast.toast--with-icon,
-.reaction-bonus-toast.toast--with-icon {
-    display: inline-flex;
-    align-items: center;
-    gap: 6px;
-}
-.toast--with-icon .feedback-icon.qz-icon { margin-right: 0; vertical-align: middle; }
-/* On the coral error-toast fill, the tinted disc washes out — drop the disc
-   and paint the glyph white to match the white toast text. */
-#error-toast.toast--with-icon .feedback-icon.qz-icon { background: transparent; color: #fff; }
-/* STEAL power-up hint: icon + text-only hint side by side. */
-.powerup-hint--with-icon {
-    display: inline-flex;
-    align-items: center;
-    gap: 5px;
-}
-.powerup-hint--with-icon .feedback-icon.qz-icon { vertical-align: middle; }
-/* End-screen "Thanks for playing!" line: party icon + text, centered. */
-.thanks-line {
-    display: inline-flex;
-    align-items: center;
-    gap: 6px;
-    justify-content: center;
-}
-/* Streak hero focal flame: render the duotone disc at hero size (was a 40px
-   emoji), keeping the warm drop-shadow. */
-.pl-result-hero--streak .pl-result-flame.qz-icon {
-    width: 52px;
-    height: 52px;
-    border-radius: 16px;
-}
-
 /* ---- #225 P4: standalone UI icons reuse .qz-icon at varied sizes ----
    The remaining emoji-as-icon surfaces (lobby, player nav/section, game
    control bar, status/utility) opt into the shared duotone disc via
@@ -6144,7 +6098,53 @@ body.is-admin .reaction-bar {
 @media (prefers-reduced-motion: reduce) {
     .lr-splash-rays { opacity: 0.6; }
 }
-/* ==========================================
+
+
+/* ---- #220 P3: feedback / toast icons (emoji pulled out of i18n strings) ----
+   Small inline duotone disc rendered beside reveal-feedback chip labels and
+   inside toasts. Sized to sit alongside the text (smaller than the default
+   32px disc) and nudged for optical baseline alignment with the label run. */
+.feedback-icon.qz-icon {
+    width: 18px;
+    height: 18px;
+    border-radius: 6px;
+    margin-right: 5px;
+    vertical-align: -4px;
+}
+.feedback-icon.qz-icon svg { width: 72%; height: 72%; }
+/* Toasts (#error-toast + .reaction-bonus-toast) that carry an icon switch
+   to a flex row so the disc + text line up centered. */
+#error-toast.toast--with-icon,
+.reaction-bonus-toast.toast--with-icon {
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+}
+.toast--with-icon .feedback-icon.qz-icon { margin-right: 0; vertical-align: middle; }
+/* On the coral error-toast fill, the tinted disc washes out — drop the disc
+   and paint the glyph white to match the white toast text. */
+#error-toast.toast--with-icon .feedback-icon.qz-icon { background: transparent; color: #fff; }
+/* STEAL power-up hint: icon + text-only hint side by side. */
+.powerup-hint--with-icon {
+    display: inline-flex;
+    align-items: center;
+    gap: 5px;
+}
+.powerup-hint--with-icon .feedback-icon.qz-icon { vertical-align: middle; }
+/* End-screen "Thanks for playing!" line: party icon + text, centered. */
+.thanks-line {
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    justify-content: center;
+}
+/* Streak hero focal flame: render the duotone disc at hero size (was a 40px
+   emoji), keeping the warm drop-shadow. */
+.pl-result-hero--streak .pl-result-flame.qz-icon {
+    width: 52px;
+    height: 52px;
+    border-radius: 16px;
+}/* ==========================================
    Responsive
    ========================================== */
 
