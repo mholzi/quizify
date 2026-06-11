@@ -208,11 +208,11 @@ def _auth_handler(game: QuizifyGameState, tmp_path: Path) -> QuizifyWebSocketHan
     async def _noop_broadcast(message: dict) -> None:
         return None
 
-    async def _safe_send(ws, message: dict) -> None:
+    async def _send(ws, message: dict) -> None:
         sent.setdefault(id(ws), []).append(message)
 
     h._conn.broadcast = _noop_broadcast  # type: ignore[assignment]
-    h._conn._safe_send = _safe_send  # type: ignore[assignment]
+    h._conn.send = _send  # type: ignore[assignment]
     h._sent = sent  # type: ignore[attr-defined]
     return h
 

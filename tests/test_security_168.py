@@ -243,8 +243,8 @@ class TestFeaturedPackMalformed:
         bank.get_pack_versions.return_value = {
             "geographie": {"language": "de", "question_count": 5, "name": "Geo"},
         }
-        bank._questions_dir = tmp_path
-        bank._categories = {}
+        bank.questions_dir = tmp_path
+        bank.categories = {}
 
         ctx = MagicMock()
         ctx.game._question_bank = bank

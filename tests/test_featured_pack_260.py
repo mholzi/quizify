@@ -46,6 +46,14 @@ class _FakeBank:
         self._pack_versions = pack_versions
         self._categories = categories
 
+    @property
+    def categories(self) -> dict:
+        return dict(self._categories)
+
+    @property
+    def questions_dir(self) -> Path:
+        return self._questions_dir
+
     def get_pack_versions(self) -> dict:
         return dict(self._pack_versions)
 
@@ -61,6 +69,17 @@ class _FakeAnalytics:
 class _FakeQuestionStats:
     def __init__(self, questions: dict) -> None:
         self._data = {"questions": questions}
+
+    def aggregate_for_questions(self, ids) -> tuple:  # noqa: ANN001
+        questions = self._data["questions"]
+        shown = 0
+        correct = 0
+        for qid in ids:
+            s = questions.get(qid)
+            if s and s.get("shown_count", 0) >= 1:
+                shown += s["shown_count"]
+                correct += s.get("correct_count", 0)
+        return shown, correct
 
 
 class _FakeRequest:

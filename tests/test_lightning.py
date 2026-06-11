@@ -316,7 +316,7 @@ def _handler(state: QuizifyGameState) -> QuizifyWebSocketHandler:
     h._conn = ConnectionManager(runtime, lambda: state)
     h._conn.broadcast = AsyncMock()
     h._conn.broadcast_to_admins_and_dashboards = AsyncMock()
-    h._conn._safe_send = AsyncMock()
+    h._conn.send = AsyncMock()
     return h
 
 

@@ -108,6 +108,24 @@ class QuestionStatsService:
                 q["total_time_correct"] += float(elapsed)
         self._dirty = True
 
+    def aggregate_for_questions(self, ids) -> "tuple[int, int]":
+        """Sum (shown_count, correct_count) over the given question *ids*.
+
+        Public read accessor used by the featured-pack difficulty ranking so
+        callers don't reach into the internal ``_data`` store. Questions with
+        no recorded stats contribute zero. Returns ``(total_shown,
+        total_correct)``.
+        """
+        questions = self._data["questions"]
+        shown = 0
+        correct = 0
+        for qid in ids:
+            s = questions.get(qid)
+            if s and s.get("shown_count", 0) >= 1:
+                shown += s["shown_count"]
+                correct += s.get("correct_count", 0)
+        return shown, correct
+
     def get_hardest(self, limit: int = 25, min_shown: int = 3) -> list[dict[str, Any]]:
         """Questions with the LOWEST correct rate, gated by min_shown so a
         one-time miss doesn't dominate the list."""

@@ -148,6 +148,21 @@ class QuestionBank:
         # Questions shown in the current game (to record at end)
         self._shown_this_game: list[str] = []
 
+    @property
+    def categories(self) -> dict[str, list[Question]]:
+        """Loaded categories mapping slug -> questions.
+
+        A shallow copy so callers can read the per-category question lists
+        (e.g. featured-pack difficulty aggregation) without mutating the
+        bank's internal store. Use :meth:`get_categories` for just the slugs.
+        """
+        return dict(self._categories)
+
+    @property
+    def questions_dir(self) -> Path:
+        """Directory the question-pack JSON files are loaded from."""
+        return self._questions_dir
+
     def load_category(self, category: str) -> list[Question]:
         """Load questions for a single category from its JSON file."""
         file_path = self._questions_dir / f"{category}.json"

@@ -88,6 +88,10 @@ class QuizifyWebSocketHandler:
         self._runtime = runtime
         self._get_game_state = game_state_provider
         self._conn = ConnectionManager(runtime, game_state_provider)
+        # Public alias for the connection manager so collaborators (e.g.
+        # __init__.py setup/teardown) use a contract-bearing accessor instead
+        # of reaching into the private ``_conn`` attribute. Backed by
+        # ``_conn`` so test fixtures that assign ``handler._conn`` still work.
         self._timer_tick_task: asyncio.Task | None = None
         # Deferred-pause task scheduled by _handle_disconnect when the
         # admin-as-player WS closes mid-question. Cancelled by reconnect
@@ -122,6 +126,11 @@ class QuizifyWebSocketHandler:
         # builder produces the exact message dicts to hand to the connection
         # manager. Behaviour-preserving — identical wire shapes.
         self._round_messages = RoundMessageBuilder()
+
+    @property
+    def conn(self) -> ConnectionManager:
+        """The connection manager owned by this handler (public accessor)."""
+        return self._conn
 
     def _check_rate_limit(self, ws: web.WebSocketResponse) -> bool:
         """Record a message for ``ws`` and report whether it is within the
@@ -365,7 +374,7 @@ class QuizifyWebSocketHandler:
         elif msg_type == "get_state":
             state_msg = game_state.get_state_snapshot()
             state_msg["type"] = "game_state"
-            await self._conn._safe_send(ws, state_msg)
+            await self._conn.send(ws, state_msg)
 
         elif msg_type == "reaction":
             await self._handle_reaction(ws, data, game_state)
@@ -386,7 +395,7 @@ class QuizifyWebSocketHandler:
     ) -> None:
         """Send full state to admin on connect."""
         # Cancel admin disconnect task if reconnecting
-        if self._conn._admin_disconnect_task and not self._conn._admin_disconnect_task.done():
+        if self._conn.has_pending_admin_disconnect():
             self._conn.cancel_admin_disconnect()
             _LOGGER.info("Admin reconnected, cancelled disconnect timeout")
 
@@ -396,7 +405,7 @@ class QuizifyWebSocketHandler:
         state["type"] = "game_state"
         state["join_url"] = "/quizify/player"
         state["admin_session_token"] = admin_token
-        await self._conn._safe_send(ws, state)
+        await self._conn.send(ws, state)
 
     # ------------------------------------------------------------------
     # Player join
@@ -529,7 +538,7 @@ class QuizifyWebSocketHandler:
 
             # Send join confirmation with session token and assigned color
             powerup = game_state.get_player_powerup(name)
-            await self._conn._safe_send(ws, {
+            await self._conn.send(ws, {
                 "type": "joined",
                 "player_id": name,
                 "powerup": powerup.value if powerup else None,
@@ -549,7 +558,7 @@ class QuizifyWebSocketHandler:
                     game_state, snapshot=state, player=player_obj
                 )
             state["type"] = "game_state"
-            await self._conn._safe_send(ws, state)
+            await self._conn.send(ws, state)
 
             # Broadcast player list to everyone
             players = game_state.get_players()
@@ -584,14 +593,14 @@ class QuizifyWebSocketHandler:
 
         if not name:
             # Token not found — treat as unknown, client should show join form
-            await self._conn._safe_send(ws, {"type": "reconnect_failed"})
+            await self._conn.send(ws, {"type": "reconnect_failed"})
             return
 
         player = game_state.get_player(name)
         if not player:
             # Player was fully removed — token stale
-            self._conn._session_tokens.pop(token, None)
-            await self._conn._safe_send(ws, {"type": "reconnect_failed"})
+            self._conn.revoke_token(token)
+            await self._conn.send(ws, {"type": "reconnect_failed"})
             return
 
         # Restore player connection
@@ -628,7 +637,7 @@ class QuizifyWebSocketHandler:
 
         # Send reconnect success with new token
         powerup = game_state.get_player_powerup(name)
-        await self._conn._safe_send(ws, {
+        await self._conn.send(ws, {
             "type": "reconnected",
             "player_id": name,
             "session_token": new_token,
@@ -643,7 +652,7 @@ class QuizifyWebSocketHandler:
             game_state, snapshot=state, player=player
         )
         state["type"] = "game_state"
-        await self._conn._safe_send(ws, state)
+        await self._conn.send(ws, state)
 
         # Broadcast updated player list
         players = game_state.get_players()
@@ -686,7 +695,7 @@ class QuizifyWebSocketHandler:
         result = game_state.submit_answer(player.name, original_index)
 
         if isinstance(result, AnswerResult):
-            await self._conn._safe_send(ws, {
+            await self._conn.send(ws, {
                 "type": "answer_result",
                 "correct": result.correct,
                 "points_earned": result.points_earned,
@@ -853,7 +862,7 @@ class QuizifyWebSocketHandler:
             return
 
         player.wager = wager_int
-        await self._conn._safe_send(ws, {
+        await self._conn.send(ws, {
             "type": "wager_accepted",
             "wager": wager_int,
         })
@@ -894,7 +903,7 @@ class QuizifyWebSocketHandler:
                         shuffled_remove_idx = shuffled_idx
                         break
 
-                await self._conn._safe_send(ws, {
+                await self._conn.send(ws, {
                     "type": "powerup_applied",
                     "powerup_type": "joker",
                     "source_player": result.source_player,
@@ -1069,10 +1078,10 @@ class QuizifyWebSocketHandler:
         with the cached settings. If we don't have a snapshot yet (server
         never saw a start_game on this instance), fall back to reset.
         """
-        if not getattr(game_state, "_last_settings", None):
+        if not game_state.last_settings:
             await self._handle_reset_game(ws, game_state)
             return
-        settings = game_state._last_settings
+        settings = game_state.last_settings
         self._cancel_timer_tick()
         # Reset to LOBBY first so start_game's phase guard passes; keeps
         # players (reset_to_lobby leaves connected players in place).
@@ -1294,7 +1303,7 @@ class QuizifyWebSocketHandler:
         if result is None:
             return  # rejected (already answered / expired) — stay silent
         # Lightweight ack: lock the player's buttons + show right/wrong.
-        await self._conn._safe_send(ws, {
+        await self._conn.send(ws, {
             "type": "lightning_answer_result",
             "correct": bool(result),
             "index": lr.index,
@@ -1380,7 +1389,7 @@ class QuizifyWebSocketHandler:
         for player in game_state.get_players():
             if not player.connected:
                 continue
-            lightning_sends.append(self._conn._safe_send(player.ws, {
+            lightning_sends.append(self._conn.send(player.ws, {
                 "type": "lightning_question",
                 "question_text": q.question,
                 "answers": lr.shuffled_answers_for(player.name),
@@ -1468,7 +1477,7 @@ class QuizifyWebSocketHandler:
             player_msg = self._round_messages.build_player_question(
                 game_state, question=question, player=player, is_final=is_final
             )
-            question_sends.append(self._conn._safe_send(player.ws, player_msg))
+            question_sends.append(self._conn.send(player.ws, player_msg))
         if question_sends:
             await asyncio.gather(*question_sends)
 
@@ -1490,7 +1499,7 @@ class QuizifyWebSocketHandler:
         for player in players:
             powerup = game_state.get_player_powerup(player.name)
             if powerup and player.connected:
-                powerup_sends.append(self._conn._safe_send(player.ws, {
+                powerup_sends.append(self._conn.send(player.ws, {
                     "type": "powerup_assigned",
                     "powerup_type": powerup.value,
                 }))
@@ -1534,33 +1543,32 @@ class QuizifyWebSocketHandler:
                     tick = game_state.resolve_tick([p.name for p in players])
                     # Build the full (ws, payload) fan-out, then deliver it in
                     # parallel via gather (#258). A single stalled client no
-                    # longer delays the whole room — _safe_send swallows errors
-                    # so a plain gather is safe.
+                    # longer delays the whole room — ConnectionManager.send
+                    # swallows errors so a plain gather is safe.
                     sends = []
                     # Each connected player gets their authoritative remaining.
                     for name, remaining in tick.per_player:
                         p = by_name.get(name)
                         if p is None or not p.connected:
                             continue
-                        sends.append(self._conn._safe_send(p.ws, {
+                        sends.append(self._conn.send(p.ws, {
                             "type": "timer_tick",
                             "remaining": round(remaining, 1),
                         }))
                     # Broadcast the minimum remaining to dashboards/admins so
                     # the TV view shows a consistent countdown.
                     min_remaining = tick.dashboard_remaining
-                    for ws in list(self._conn._admin_connections):
-                        if not ws.closed and not any(p.ws is ws for p in players):
-                            sends.append(self._conn._safe_send(ws, {
-                                "type": "timer_tick",
-                                "remaining": round(min_remaining, 1),
-                            }))
-                    for ws in list(self._conn._dashboard_connections):
-                        if not ws.closed:
-                            sends.append(self._conn._safe_send(ws, {
-                                "type": "timer_tick",
-                                "remaining": round(min_remaining, 1),
-                            }))
+                    for ws, is_admin in self._conn.iter_admin_and_dashboard_ws():
+                        if ws.closed:
+                            continue
+                        # An admin who is also a player already got their
+                        # per-player tick above — don't double-send.
+                        if is_admin and any(p.ws is ws for p in players):
+                            continue
+                        sends.append(self._conn.send(ws, {
+                            "type": "timer_tick",
+                            "remaining": round(min_remaining, 1),
+                        }))
                     if sends:
                         await asyncio.gather(*sends)
                     await asyncio.sleep(TICK_INTERVAL)
@@ -1632,7 +1640,7 @@ class QuizifyWebSocketHandler:
         # Strictly gated on real admin connection (was: OR clause allowed
         # dashboard disconnects to trigger the timeout, see #2 in review).
         if self._conn.is_admin_connection(ws):
-            if not self._conn._admin_connections:
+            if not self._conn.has_admin_connections():
                 _LOGGER.info(
                     "Admin disconnected, keeping game alive for %ds",
                     self._conn.ADMIN_SESSION_GRACE,
