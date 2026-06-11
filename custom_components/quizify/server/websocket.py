@@ -529,8 +529,16 @@ class QuizifyWebSocketHandler:
                 "is_admin": player_obj.is_admin if player_obj else False,
             })
 
-            # Send current state to the joining player
+            # Send current state to the joining player. Project the
+            # player-agnostic snapshot into THIS player's frame (#253): own
+            # shuffle order for the answer buttons, own timer, flat reveal —
+            # otherwise a mid-round joiner mis-scores their taps and sees an
+            # empty reveal.
             state = game_state.get_state_snapshot()
+            if player_obj is not None:
+                state = self._round_messages.project_snapshot_for_player(
+                    game_state, snapshot=state, player=player_obj
+                )
             state["type"] = "game_state"
             await self._conn._safe_send(ws, state)
 
@@ -615,8 +623,13 @@ class QuizifyWebSocketHandler:
             "powerup": powerup.value if powerup else None,
         })
 
-        # Send full game state
+        # Send full game state, projected into THIS player's frame (#253):
+        # the reconnect snapshot otherwise carries canonical answer order
+        # (mis-scoring taps) and a nested round_summary the reveal can't read.
         state = game_state.get_state_snapshot()
+        state = self._round_messages.project_snapshot_for_player(
+            game_state, snapshot=state, player=player
+        )
         state["type"] = "game_state"
         await self._conn._safe_send(ws, state)
 

@@ -204,6 +204,27 @@ class LightningRound:
             return None
         return self._questions[self.index]
 
+    def ensure_shuffle(self, name: str) -> list[int]:
+        """Return this player's shuffle for the current Q, creating one if missing.
+
+        A player reconnecting mid-lightning never ran through ``_arm_current``
+        for the in-flight question, so they hold no shuffle. Without one, a
+        reconnect snapshot falls back to canonical order while
+        ``record_answer`` still maps the tapped index through this shuffle
+        (issue #253) — mis-scoring the tap. Creating the shuffle lazily here
+        keeps the snapshot answers and the submit mapping consistent.
+        """
+        q = self.current_question
+        if q is None:
+            return []
+        existing = self._shuffles.get(name)
+        if existing:
+            return existing
+        order = list(range(len(q.answers)))
+        random.shuffle(order)
+        self._shuffles[name] = order
+        return order
+
     def shuffled_answers_for(self, name: str) -> list[str]:
         """Answer texts in this player's shuffled order for the current Q."""
         q = self.current_question
