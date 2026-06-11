@@ -5,6 +5,26 @@ All notable changes to Quizify are documented here. This project follows
 
 ## [Unreleased]
 
+## [1.3.0-RC13] — 2026-06-11
+
+Thirteenth release candidate for 1.3.0 — the last two groups from the
+2026-06-11 code review (#252). 442 tests passing; the review epic is now closed.
+
+### Changed
+
+- **Security hardening + documentation (#259).** Constant-time admin-token
+  comparison (`hmac.compare_digest`), a clarified proxy-aware rate-limit, and a
+  new Security-model section in `DESIGN.md` documenting the LAN-open endpoint
+  surface and the rule that remote exposure must be fronted by Home Assistant
+  auth. Player-facing endpoints stay open by design (players have no HA login).
+- **Code quality (#260).** Pruned ~dead CSS (Beatify music-quiz leftovers, the
+  replaced ranked-bar finale, confetti/neon-button rules) and six unused server
+  methods; extracted a shared `SlidingWindowLimiter`; named the start-grace
+  constants; translated the German server fallback strings to English. Added 31
+  tests (rate limiter, token store, the non-top-score superlatives, featured-pack
+  rotation). The larger private-attribute and dispatch-table refactors are
+  tracked as follow-ups.
+
 ## [1.3.0-RC12] — 2026-06-11
 
 Twelfth release candidate for 1.3.0 — the actionable fixes from the 2026-06-11
