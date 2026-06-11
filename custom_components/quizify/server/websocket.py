@@ -244,9 +244,16 @@ class QuizifyWebSocketHandler:
                 elif msg.type == WSMsgType.ERROR:
                     _LOGGER.error("WebSocket error: %s", ws.exception())
         finally:
+            # #293: capture the admin-connection flag BEFORE remove_connection
+            # discards this ws from _admin_connections. The disconnect handler
+            # needs it to decide whether to start the admin-session grace
+            # timeout; reading is_admin_connection(ws) AFTER removal always
+            # returned False, so schedule_admin_timeout never fired (and
+            # cancel_admin_disconnect was equally dead).
+            was_admin = self._conn.is_admin_connection(ws)
             self._conn.remove_connection(ws)
             self._forget_rate_limit(ws)
-            await self._handle_disconnect(ws)
+            await self._handle_disconnect(ws, was_admin=was_admin)
             _LOGGER.debug("WebSocket disconnected, total: %d", len(self._conn.connections))
 
         return ws
@@ -1710,8 +1717,16 @@ class QuizifyWebSocketHandler:
     # Disconnect handling
     # ------------------------------------------------------------------
 
-    async def _handle_disconnect(self, ws: web.WebSocketResponse) -> None:
-        """Handle WebSocket disconnection."""
+    async def _handle_disconnect(
+        self, ws: web.WebSocketResponse, was_admin: bool | None = None
+    ) -> None:
+        """Handle WebSocket disconnection.
+
+        ``was_admin`` is the admin-connection flag captured by ``handle()``
+        BEFORE ``remove_connection`` (#293). When omitted (legacy/test callers),
+        fall back to querying the connection manager — only correct if the ws
+        hasn't been removed yet.
+        """
         game_state = self._get_game_state()
         if not game_state:
             return
@@ -1719,7 +1734,12 @@ class QuizifyWebSocketHandler:
         # Handle admin disconnect — keep game alive for grace period.
         # Strictly gated on real admin connection (was: OR clause allowed
         # dashboard disconnects to trigger the timeout, see #2 in review).
-        if self._conn.is_admin_connection(ws):
+        is_admin_ws = (
+            was_admin
+            if was_admin is not None
+            else self._conn.is_admin_connection(ws)
+        )
+        if is_admin_ws:
             if not self._conn.has_admin_connections():
                 _LOGGER.info(
                     "Admin disconnected, keeping game alive for %ds",
