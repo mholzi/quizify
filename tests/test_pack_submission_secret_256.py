@@ -212,7 +212,9 @@ def test_concurrent_adds_keep_all_records(tmp_path: Path) -> None:
             for i in range(10)
         ]
         await asyncio.gather(*(store.add(r) for r in records))
-        return await store.get_with_reconcile()
+        # _load() reads the persisted records WITHOUT the GitHub reconcile fetch
+        # (get_with_reconcile would hit the network); the lock is what's under test.
+        return store._load()
 
     data = asyncio.run(_run())
     ids = {s["id"] for s in data["submissions"]}
