@@ -5,6 +5,18 @@ All notable changes to Quizify are documented here. This project follows
 
 ## [Unreleased]
 
+### Added
+
+- **Seasonal packs with auto-surfacing (#276).** A pack may carry an optional
+  recurring `season` window (`{"start": "MM-DD", "end": "MM-DD", "label": "…"}`,
+  both bounds inclusive, wrap-around across the new year supported). While the
+  window is active *today* the Featured Spotlight pins the seasonal pack
+  (deterministic soonest-ending-first when several overlap) and the admin pack
+  picker badges it with the label (e.g. "🎄 Weihnachten"). Outside every window
+  behaviour is unchanged; packs without a `season` field are fully
+  back-compatible. The World Cup / Weltmeisterschaft packs ship a June–July
+  window as the first seasonal packs.
+
 ## [1.3.0-RC14] — 2026-06-11
 
 Fourteenth release candidate for 1.3.0 — the three deferred refactors from the

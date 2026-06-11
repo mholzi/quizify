@@ -9,6 +9,7 @@ from dataclasses import dataclass, field
 from pathlib import Path
 
 from ..const import ANSWERS_PER_QUESTION
+from .seasons import parse_season
 
 _LOGGER = logging.getLogger(__name__)
 
@@ -85,6 +86,26 @@ def _sanitize_image_url(raw: object, question_id: str) -> str:
         url[:60],
     )
     return ""
+
+
+def _normalize_season(raw: object) -> dict | None:
+    """Validate a pack's ``season`` field, returning a normalised dict or None.
+
+    Delegates parsing/validation to :func:`.seasons.parse_season` (which logs
+    and tolerates anything malformed), then re-emits the *normalised* MM-DD
+    window as a plain JSON-serialisable dict so it can be stored on the pack
+    metadata and shipped over the ``/api/quizify/packs`` endpoint unchanged.
+    Returns ``None`` when there is no (valid) season, keeping packs without the
+    field fully back-compatible.
+    """
+    season = parse_season(raw)
+    if season is None:
+        return None
+    return {
+        "start": f"{season.start[0]:02d}-{season.start[1]:02d}",
+        "end": f"{season.end[0]:02d}-{season.end[1]:02d}",
+        "label": season.label,
+    }
 
 
 def _parse_question(data: dict, category_name: str) -> Question | None:
@@ -189,12 +210,20 @@ class QuestionBank:
                 questions.append(q)
 
         self._categories[category] = questions
-        self._pack_versions[category] = {
+        meta: dict = {
             "version": pack_version,
             "name": category_name,
             "language": pack_language,
             "question_count": len(questions),
         }
+        # Optional recurring seasonal window (#276). Parsed + validated here so
+        # a malformed window is dropped at load time; the normalised MM-DD form
+        # is stored on the pack metadata (date-agnostic) and the date check
+        # happens later in the featured-pack view against the current clock.
+        season_meta = _normalize_season(raw.get("season"))
+        if season_meta is not None:
+            meta["season"] = season_meta
+        self._pack_versions[category] = meta
         _LOGGER.debug("Loaded %d questions for category '%s' (v%s)", len(questions), category, pack_version)
         return questions
 
@@ -356,13 +385,17 @@ class QuestionBank:
                 continue
 
             self._categories[slug] = questions
-            self._pack_versions[slug] = {
+            community_meta: dict = {
                 "version": str(pack_version),
                 "name": category_name,
                 "language": pack_language,
                 "question_count": len(questions),
                 "community": True,
             }
+            community_season = _normalize_season(raw.get("season"))
+            if community_season is not None:
+                community_meta["season"] = community_season
+            self._pack_versions[slug] = community_meta
             loaded[slug] = questions
             _LOGGER.info(
                 "Loaded community pack '%s' (%d questions) as '%s'",

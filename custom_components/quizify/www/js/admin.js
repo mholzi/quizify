@@ -325,6 +325,43 @@
         return key;
     }
 
+    // ---- Seasonal pack badges (#276) ----
+    // Packs may carry a recurring season window (e.g. Christmas). The
+    // /api/quizify/packs endpoint resolves which packs are in-season *today*
+    // (server-side date math) and returns is_seasonal + season_label per slug.
+    // For each in-season pack we badge its picker card with that label. Purely
+    // additive: packs that aren't seasonal are untouched, and a failed fetch
+    // just means no badges (the picker still works).
+    function _applySeasonalBadge(chip, label) {
+        if (!chip) return;
+        // Idempotent: never stack badges across re-renders / lang toggles.
+        var existing = chip.querySelector('.pack-card-season-badge');
+        if (existing) existing.remove();
+        var badge = document.createElement('span');
+        badge.className = 'pack-card-season-badge';
+        badge.textContent = label;
+        chip.appendChild(badge);
+    }
+
+    function applySeasonalBadges() {
+        if (!els.categoryChips) return;
+        fetch('/api/quizify/packs')
+            .then(function (resp) { return resp.ok ? resp.json() : null; })
+            .then(function (packs) {
+                if (!packs) return;
+                Object.keys(packs).forEach(function (slug) {
+                    var meta = packs[slug];
+                    if (!meta || !meta.is_seasonal || !meta.season_label) return;
+                    var chip = els.categoryChips.querySelector(
+                        '.chip[data-value="' + slug + '"]');
+                    _applySeasonalBadge(chip, meta.season_label);
+                });
+            })
+            .catch(function (e) {
+                console.warn('[quizify] applySeasonalBadges failed:', e);
+            });
+    }
+
     // ---- Phase 2: Pack-UI (Featured-Spotlight + Theme-Tabs) ----
     // Always-on per the approved mockup
     // (~/.gstack/designs/pack-ui-2026-05-27/phase2-themes.html). The
@@ -1693,6 +1730,9 @@
 
     // ---- Question pack update check ----
     checkPackUpdates();
+
+    // ---- Seasonal pack badges (#276) ----
+    applySeasonalBadges();
 
     // ---- PWA install button ----
     // Android Chrome / Edge / Samsung Browser: fire beforeinstallprompt

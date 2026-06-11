@@ -18,6 +18,7 @@ import time
 import aiohttp
 from aiohttp import web
 
+from ..game.seasons import is_in_season, parse_season, pick_active_season
 from .context import APP_CTX_KEY
 from .pack_submission import (
     submissions_list_view,
@@ -354,8 +355,23 @@ async def featured_pack_view(request: web.Request) -> web.Response:
     if not lang_packs:
         return web.json_response({})
 
+    # Seasonal auto-surfacing (#276) takes priority over the day-rotation:
+    # if a pack's recurring season window is active *today*, it is pinned as
+    # the Featured Spotlight regardless of most-played/most-difficult. Outside
+    # every window this is a no-op and behaviour is exactly as before.
+    today = _dt.date.today()
+    seasons = {
+        cat: parse_season(meta.get("season"))
+        for cat, meta in lang_packs.items()
+    }
+    seasonal_slug = pick_active_season(seasons, today)
+
     chosen: str | None = None
-    if logic == "most-played" and ctx.analytics is not None:
+    seasonal_active = False
+    if seasonal_slug is not None:
+        chosen = seasonal_slug
+        seasonal_active = True
+    elif logic == "most-played" and ctx.analytics is not None:
         try:
             metrics = ctx.analytics.compute_metrics("30d")
             cat_plays = {
@@ -385,13 +401,20 @@ async def featured_pack_view(request: web.Request) -> web.Response:
         except (KeyError, AttributeError, TypeError):
             chosen = None
 
-    if chosen is None:
+    if seasonal_active:
+        logic_used = "seasonal"
+    elif chosen is None:
         # Fallback: prefer Geographie/Geography if present, else first pack.
         default = _FEATURED_DEFAULT_EN if lang == "en" else _FEATURED_DEFAULT_DE
         chosen = default if default in lang_packs else next(iter(lang_packs))
         logic_used = "default"
     else:
         logic_used = logic
+
+    # The pinned pack's label (e.g. "🎄 Weihnachten") for the spotlight subtitle
+    # and the picker badge. ``season_label`` is the active label or "".
+    chosen_season = seasons.get(chosen)
+    season_label = chosen_season.label if (seasonal_active and chosen_season) else ""
 
     meta = lang_packs[chosen]
     # Read pack JSON once for theme (icon lookup). Cheap — packs are
@@ -419,6 +442,9 @@ async def featured_pack_view(request: web.Request) -> web.Response:
             "most-played": "Beliebt diese Woche",
             "most-difficult": "Härteste Herausforderung",
             "default": "Familienfreundlich",
+            # In-season packs show their own label (e.g. "🎄 Weihnachten") as
+            # the spotlight subtitle instead of a generic rotation reason.
+            "seasonal": season_label or "Saisonal",
         }[logic_used]
     else:
         unit = "questions"
@@ -426,6 +452,7 @@ async def featured_pack_view(request: web.Request) -> web.Response:
             "most-played": "Popular this week",
             "most-difficult": "Hardest challenge",
             "default": "Family-friendly",
+            "seasonal": season_label or "Seasonal",
         }[logic_used]
 
     return web.json_response({
@@ -433,6 +460,8 @@ async def featured_pack_view(request: web.Request) -> web.Response:
         "title": f"{icon} {meta.get('name', chosen)}",
         "meta": f"{count} {unit} · {sub}",
         "logic": logic_used,
+        "is_seasonal": seasonal_active,
+        "season_label": season_label,
     })
 
 
@@ -500,11 +529,33 @@ async def all_time_leaderboard_view(request: web.Request) -> web.Response:
 
 
 async def pack_versions_view(request: web.Request) -> web.Response:
-    """Return installed pack version metadata."""
+    """Return installed pack version metadata.
+
+    Seasonal packs (#276) are annotated per request with ``is_seasonal``
+    (whether the recurring window is active *today*) and ``season_label`` (the
+    label to badge, e.g. "🎄 Weihnachten") so the admin picker can render the
+    badge without re-implementing the date math client-side.
+    """
+    import datetime as _dt
+
     ctx = _get_ctx(request)
     await ctx.runtime.run_in_executor(ctx.game._question_bank.load_all_categories)
     installed = ctx.game._question_bank.get_pack_versions()
-    return web.json_response(installed)
+
+    today = _dt.date.today()
+    # ``get_pack_versions`` returns a shallow copy: the inner meta dicts are the
+    # bank's own objects. Copy each before annotating so the per-request season
+    # flags never leak into the cached pack metadata.
+    annotated = {}
+    for slug, meta in installed.items():
+        meta = dict(meta)
+        season = parse_season(meta.get("season"))
+        in_season = season is not None and is_in_season(season, today)
+        meta["is_seasonal"] = in_season
+        meta["season_label"] = season.label if (in_season and season) else ""
+        annotated[slug] = meta
+
+    return web.json_response(annotated)
 
 
 async def pack_update_check_view(request: web.Request) -> web.Response:
