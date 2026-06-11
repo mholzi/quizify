@@ -69,6 +69,15 @@ CONF_LOBBY_MUSIC_URL = "lobby_music_url"  # str, single, free-text URL
 # integration; the worker is separate infrastructure (see issue #180, step 5).
 CONF_COMMUNITY_SUBMIT_URL = "community_submit_url"  # str, single, free-text URL
 
+# Shared secret the integration sends as an ``X-Quizify-Secret`` header on every
+# pack submission (#256). When the worker has a matching ``SHARED_SECRET`` env
+# secret set it rejects any request without this header, closing the open-proxy
+# hole. Empty by default and fully back-compatible: with no secret configured
+# the header is omitted and the worker (which only enforces when *its* secret is
+# set) behaves exactly as before. Set BOTH the worker secret and this option to
+# lock the endpoint down. See cf-workers/README.md.
+CONF_COMMUNITY_SUBMIT_SECRET = "community_submit_secret"  # str, single, free-text
+
 # ---------------------------------------------------------------------------
 # Community pack submission (#180)
 # ---------------------------------------------------------------------------

@@ -38,6 +38,7 @@ async def async_setup_entry(hass: HomeAssistant, entry: ConfigEntry) -> bool:
 
     from .analytics import QuizifyAnalytics  # noqa: PLC0415
     from .const import (  # noqa: PLC0415
+        CONF_COMMUNITY_SUBMIT_SECRET,
         CONF_COMMUNITY_SUBMIT_URL,
         CONF_LOBBY_MUSIC_URL,
         CONF_MEDIA_PLAYER_ENTITY,
@@ -105,6 +106,13 @@ async def async_setup_entry(hass: HomeAssistant, entry: ConfigEntry) -> bool:
         # (#180). Empty/unset → the in-app submit UI hides itself.
         community_submit_url=(
             (entry.options or {}).get(CONF_COMMUNITY_SUBMIT_URL) or ""
+        ).strip()
+        or None,
+        # Shared secret sent as X-Quizify-Secret to the worker (#256). Empty →
+        # header omitted (back-compatible); set it alongside the worker's
+        # SHARED_SECRET to close the open-proxy hole.
+        community_submit_secret=(
+            (entry.options or {}).get(CONF_COMMUNITY_SUBMIT_SECRET) or ""
         ).strip()
         or None,
     )
@@ -213,6 +221,9 @@ async def async_setup_entry(hass: HomeAssistant, entry: ConfigEntry) -> bool:
         # Toggle the community-pack submit feature live (#180) — no HA restart.
         ctx.community_submit_url = (
             opts.get(CONF_COMMUNITY_SUBMIT_URL) or ""
+        ).strip() or None
+        ctx.community_submit_secret = (
+            opts.get(CONF_COMMUNITY_SUBMIT_SECRET) or ""
         ).strip() or None
         domain_data = _hass.data.get(DOMAIN, {})
         pl: QuizifyPartyLights | None = domain_data.get("party_lights")

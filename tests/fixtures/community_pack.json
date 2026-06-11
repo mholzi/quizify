@@ -1,0 +1,27 @@
+{
+  "name": "Contract Fixture Pack",
+  "language": "en",
+  "version": "1.0",
+  "questions": [
+    {
+      "id": "q1",
+      "question": "Which planet is known as the Red Planet?",
+      "answers": [
+        { "text": "Mars", "correct": true },
+        { "text": "Venus", "correct": false },
+        { "text": "Jupiter", "correct": false }
+      ],
+      "difficulty": "easy"
+    },
+    {
+      "id": "q2",
+      "question": "What is the chemical symbol for water?",
+      "answers": [
+        { "text": "H2O", "correct": true },
+        { "text": "CO2", "correct": false },
+        { "text": "O2", "correct": false }
+      ],
+      "difficulty": "easy"
+    }
+  ]
+}

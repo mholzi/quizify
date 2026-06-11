@@ -16,6 +16,7 @@ from homeassistant.core import callback
 from homeassistant.helpers import selector
 
 from .const import (
+    CONF_COMMUNITY_SUBMIT_SECRET,
     CONF_COMMUNITY_SUBMIT_URL,
     CONF_LOBBY_MUSIC_URL,
     CONF_MEDIA_PLAYER_ENTITY,
@@ -112,6 +113,16 @@ class QuizifyOptionsFlow(OptionsFlow):
                 default=current.get(CONF_COMMUNITY_SUBMIT_URL, ""),
             ): selector.TextSelector(
                 selector.TextSelectorConfig(type=selector.TextSelectorType.URL),
+            ),
+            # Shared secret paired with the worker's SHARED_SECRET (#256). When
+            # set, it's sent as the X-Quizify-Secret header so the worker can
+            # reject unauthenticated requests, closing the open-proxy hole.
+            # Empty = header omitted (fully back-compatible).
+            vol.Optional(
+                CONF_COMMUNITY_SUBMIT_SECRET,
+                default=current.get(CONF_COMMUNITY_SUBMIT_SECRET, ""),
+            ): selector.TextSelector(
+                selector.TextSelectorConfig(type=selector.TextSelectorType.PASSWORD),
             ),
         })
         return self.async_show_form(step_id="init", data_schema=schema)
