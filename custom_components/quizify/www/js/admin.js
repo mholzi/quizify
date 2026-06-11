@@ -1181,13 +1181,18 @@
         // different name. We don't strictly need the server state here —
         // _adminJoinedAs is set the moment we send the join message — but
         // we double-check the roster so the chip survives a reload.
-        if (els.participateBtn) {
-            var rosterHasMe = _adminJoinedAs && list.some(function (p) {
+        if (els.participateBtn && _adminJoinedAs) {
+            // #244: disable the "Join as Player" control the moment the admin
+            // has claimed a player slot — don't wait for the roster broadcast
+            // to round-trip, otherwise there's a window where a second tap
+            // creates a duplicate player. The confirmation chip ("Joined as
+            // …") still requires roster confirmation so it survives a reload.
+            els.participateBtn.disabled = true;
+            var rosterHasMe = list.some(function (p) {
                 var n = typeof p === 'string' ? p : (p && p.name);
                 return n === _adminJoinedAs;
             });
-            if (_adminJoinedAs && rosterHasMe) {
-                els.participateBtn.disabled = true;
+            if (rosterHasMe) {
                 els.participateBtn.classList.add('is-joined');
                 els.participateBtn.innerHTML =
                     '<span class="btn-icon" aria-hidden="true">✓</span>' +
@@ -1430,6 +1435,10 @@
         // actually answer questions.
         _adminJoinedAs = name;
         sessionStorage.setItem('quizify_admin_name', name);
+        // #244: disable the trigger immediately so a fast second tap (before
+        // the server's roster broadcast re-renders the lobby) can't open the
+        // modal again and create a duplicate self-join.
+        if (els.participateBtn) els.participateBtn.disabled = true;
         send('join', { name: name, is_admin: true });
         closeAdminJoinModal();
     }
@@ -1450,7 +1459,13 @@
     function setupAdminJoinModal() {
         // Participate button — opens the modal in "join" mode (game
         // is in lobby, admin choosing to play along, no fresh start).
-        on(els.participateBtn, 'click', function () { openAdminJoinModal('join'); });
+        on(els.participateBtn, 'click', function () {
+            // #244: once the admin has self-joined as a player, re-tapping
+            // must be a no-op — never open the modal again, otherwise the
+            // host can create a duplicate/ghost player from one admin session.
+            if (_adminJoinedAs) return;
+            openAdminJoinModal('join');
+        });
         on(els.adminCancelBtn, 'click', closeAdminJoinModal);
 
         var backdrop = els.adminJoinModal ? els.adminJoinModal.querySelector('.modal-backdrop') : null;
