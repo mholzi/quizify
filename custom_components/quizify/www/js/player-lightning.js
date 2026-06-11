@@ -68,7 +68,12 @@
 
         var img = document.getElementById('lightning-image');
         if (img) {
-            if (msg.image_url) { img.src = msg.image_url; img.hidden = false; }
+            // Same http(s)-only guard as player-game.js renderQuestion
+            // (issue #257) — reject javascript:/data: and other schemes
+            // before they reach img.src.
+            var safeImg = (typeof msg.image_url === 'string' && /^https?:\/\//i.test(msg.image_url))
+                ? msg.image_url : '';
+            if (safeImg) { img.src = safeImg; img.hidden = false; }
             else { img.hidden = true; img.removeAttribute('src'); }
         }
 

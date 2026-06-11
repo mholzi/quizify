@@ -1187,8 +1187,18 @@
             }
         }
 
-        var playerIsAdmin = currentPlayer && currentPlayer.is_admin === true;
-        state.isAdmin = playerIsAdmin;
+        // Only trust this roster's is_admin flag when our OWN entry is in it
+        // (issue #257). A broadcast that transiently omits us must not clobber
+        // state.isAdmin to false — otherwise the host loses admin controls on
+        // any roster snapshot that races their own (re)join. When our entry is
+        // absent we keep the prior state.isAdmin and hide the panel for now.
+        var playerIsAdmin;
+        if (currentPlayer) {
+            playerIsAdmin = currentPlayer.is_admin === true;
+            state.isAdmin = playerIsAdmin;
+        } else {
+            playerIsAdmin = false; // can't show controls without our entry
+        }
 
         if (playerIsAdmin) {
             adminControls.classList.remove('hidden');
@@ -1286,6 +1296,13 @@
     // Memo of the previous round's leaderboard so we can compute rank deltas
     // ("↑1", "↓1", "—") without server help. Keyed by lowercased player name.
     var _prevRanks = null;
+
+    // Clear the rank-delta memo on game_reset (issue #257) — otherwise the
+    // first reveal of the next game computes deltas against the previous
+    // game's final ranks.
+    function resetRankMemo() {
+        _prevRanks = null;
+    }
 
     function updateRevealView(data) {
         var players = data.players || [];
@@ -2019,6 +2036,7 @@
 
     window.QuizifyPlayerReveal = {
         updateRevealView: updateRevealView,
+        resetRankMemo: resetRankMemo,
         renderFunFact: renderFunFact,
         renderRevealEmotion: renderRevealEmotion,
         renderPersonalResult: renderPersonalResult,
@@ -2125,7 +2143,9 @@
             var player = leaderboard.find(function (p) { return p.rank === place; });
             var nameEl = document.getElementById('podium-' + place + '-name');
             var scoreEl = document.getElementById('podium-' + place + '-score');
-            if (nameEl) nameEl.textContent = player ? pu.escapeHtml(player.name) : '---';
+            // textContent already HTML-escapes; an extra escapeHtml() here
+            // double-encodes (e.g. "Tom & Jr" → "Tom &amp;amp; Jr").
+            if (nameEl) nameEl.textContent = player ? player.name : '---';
             if (scoreEl) scoreEl.textContent = player ? player.score : '0';
         });
 
@@ -2133,7 +2153,8 @@
         var champEl = document.getElementById('podium-champion-name');
         if (champEl) {
             var champion = leaderboard.find(function (p) { return p.rank === 1; });
-            champEl.textContent = champion ? pu.escapeHtml(champion.name) : '---';
+            // textContent escapes already — no escapeHtml (would double-encode).
+            champEl.textContent = champion ? champion.name : '---';
         }
 
         // Animate podium rise with delays: 2nd (0s), 1st (1s), 3rd (2s)
@@ -2519,7 +2540,12 @@
 
         var img = document.getElementById('lightning-image');
         if (img) {
-            if (msg.image_url) { img.src = msg.image_url; img.hidden = false; }
+            // Same http(s)-only guard as player-game.js renderQuestion
+            // (issue #257) — reject javascript:/data: and other schemes
+            // before they reach img.src.
+            var safeImg = (typeof msg.image_url === 'string' && /^https?:\/\//i.test(msg.image_url))
+                ? msg.image_url : '';
+            if (safeImg) { img.src = safeImg; img.hidden = false; }
             else { img.hidden = true; img.removeAttribute('src'); }
         }
 
@@ -3198,6 +3224,13 @@
      */
     var _prevLeaderboardRanks = {}; // name -> rank
 
+    // Clear the rank-delta memo (issue #257). Without this a game_reset
+    // leaves stale ranks behind, so the first leaderboard of the *next*
+    // game shows phantom ▲/▼ deltas against the previous game's standings.
+    function resetRankMemo() {
+        _prevLeaderboardRanks = {};
+    }
+
     function updateLeaderboard(data, targetListId) {
         var leaderboard = data.leaderboard || [];
         var listEl = document.getElementById(targetListId || 'leaderboard-list');
@@ -3418,6 +3451,14 @@
         var cancelBtn = document.getElementById('powerup-target-cancel');
         if (!modal || !listEl) return;
 
+        // If a previous picker is still open (double-open / re-entrant call),
+        // tear down its listeners first — otherwise the old onBackdrop/onKey
+        // handlers leak because _teardown is about to be overwritten below.
+        if (typeof modal._teardown === 'function') {
+            modal._teardown();
+            modal._teardown = null;
+        }
+
         var t = (window.QuizifyI18n && window.QuizifyI18n.t) || function (k) { return k; };
 
         // Active opponents = connected, not the local player.
@@ -3580,6 +3621,7 @@
         updateGameView: updateGameView,
         renderSubmissionTracker: renderSubmissionTracker,
         updateLeaderboard: updateLeaderboard,
+        resetRankMemo: resetRankMemo,
         renderLeaderboardEntry: renderLeaderboardEntry,
         updateLeaderboardSummary: updateLeaderboardSummary,
         renderPowerUp: renderPowerUp,
@@ -3647,6 +3689,13 @@
     var _wsOpenTimeout = null;
 
     function connect() {
+        // Guard against reconnecting on top of a live socket — a stray
+        // connect() while state.ws is OPEN/CONNECTING would orphan the
+        // existing socket and double up message handlers.
+        if (state.ws && (state.ws.readyState === WebSocket.OPEN ||
+                         state.ws.readyState === WebSocket.CONNECTING)) {
+            return;
+        }
         state.ws = pu.createWebSocket('/api/quizify/ws', {
             onOpen: function () {
                 // Clear the connection timeout
@@ -3808,6 +3857,11 @@
                 state.playerName = null;
                 state.playerId = null;
                 state.isAdmin = false;
+                // Clear rank-delta memos (issue #257) so the next game's
+                // first leaderboard/reveal doesn't show phantom ▲/▼ deltas
+                // computed against the wiped game's standings.
+                if (game && game.resetRankMemo) game.resetRankMemo();
+                if (reveal && reveal.resetRankMemo) reveal.resetRankMemo();
                 pu.showView('join-view');
                 break;
 
@@ -3892,10 +3946,10 @@
                 handlePowerUpApplied(msg);
                 break;
 
-            case 'rematch_started':
-                state.reconnectAttempts = 0;
-                connect();
-                break;
+            // (Removed dead 'rematch_started' case: the server's
+            // _handle_play_again broadcasts a 'game_state' message, never
+            // 'rematch_started', so this branch was unreachable. The rematch
+            // flow is driven entirely by the game_state phase transition.)
 
             case 'reaction':
                 showFloatingReaction(msg.emoji, msg.player_name);
@@ -4454,6 +4508,12 @@
             }
             if (state.isAdmin) joinMsg.is_admin = true;
             send('join', joinMsg);
+        } else {
+            // WS not open at click time (initial connect still pending, or
+            // dropped) — kick off a (re)connect. state.playerName is now
+            // set, so the onOpen handler auto-sends the join. Without this
+            // the join button would hang on "Joining…" forever.
+            connect();
         }
     }
 

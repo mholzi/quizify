@@ -409,8 +409,18 @@
             }
         }
 
-        var playerIsAdmin = currentPlayer && currentPlayer.is_admin === true;
-        state.isAdmin = playerIsAdmin;
+        // Only trust this roster's is_admin flag when our OWN entry is in it
+        // (issue #257). A broadcast that transiently omits us must not clobber
+        // state.isAdmin to false — otherwise the host loses admin controls on
+        // any roster snapshot that races their own (re)join. When our entry is
+        // absent we keep the prior state.isAdmin and hide the panel for now.
+        var playerIsAdmin;
+        if (currentPlayer) {
+            playerIsAdmin = currentPlayer.is_admin === true;
+            state.isAdmin = playerIsAdmin;
+        } else {
+            playerIsAdmin = false; // can't show controls without our entry
+        }
 
         if (playerIsAdmin) {
             adminControls.classList.remove('hidden');

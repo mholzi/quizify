@@ -220,7 +220,13 @@ function networkFirst(request) {
                 var clone = response.clone();
                 caches.open(CACHE_VERSION)
                     .then(function(cache) {
-                        cache.put(request, clone);
+                        return cache.put(request, clone);
+                    })
+                    .then(function() {
+                        // Keep the runtime cache bounded (issue #257) —
+                        // networkFirst put on every fetch without ever
+                        // pruning, so the cache grew unbounded.
+                        pruneCache();
                     })
                     .catch(function(err) {
                         console.warn('[SW] Cache put failed:', err);

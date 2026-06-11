@@ -490,6 +490,13 @@
      */
     var _prevLeaderboardRanks = {}; // name -> rank
 
+    // Clear the rank-delta memo (issue #257). Without this a game_reset
+    // leaves stale ranks behind, so the first leaderboard of the *next*
+    // game shows phantom ▲/▼ deltas against the previous game's standings.
+    function resetRankMemo() {
+        _prevLeaderboardRanks = {};
+    }
+
     function updateLeaderboard(data, targetListId) {
         var leaderboard = data.leaderboard || [];
         var listEl = document.getElementById(targetListId || 'leaderboard-list');
@@ -710,6 +717,14 @@
         var cancelBtn = document.getElementById('powerup-target-cancel');
         if (!modal || !listEl) return;
 
+        // If a previous picker is still open (double-open / re-entrant call),
+        // tear down its listeners first — otherwise the old onBackdrop/onKey
+        // handlers leak because _teardown is about to be overwritten below.
+        if (typeof modal._teardown === 'function') {
+            modal._teardown();
+            modal._teardown = null;
+        }
+
         var t = (window.QuizifyI18n && window.QuizifyI18n.t) || function (k) { return k; };
 
         // Active opponents = connected, not the local player.
@@ -872,6 +887,7 @@
         updateGameView: updateGameView,
         renderSubmissionTracker: renderSubmissionTracker,
         updateLeaderboard: updateLeaderboard,
+        resetRankMemo: resetRankMemo,
         renderLeaderboardEntry: renderLeaderboardEntry,
         updateLeaderboardSummary: updateLeaderboardSummary,
         renderPowerUp: renderPowerUp,
