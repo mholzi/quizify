@@ -1,0 +1,22 @@
+# Test/dev dependencies for running the Quizify test suite.
+#
+# The first block is the lightweight set the pure-Python tests need (no HA).
+# The second block pulls in Home Assistant + its custom-component test harness
+# so the HA-dependent modules (config_flow.py, binary_sensor.py) can be
+# imported and exercised under test (issue #271).
+#
+# `homeassistant` is a heavy dependency and requires Python 3.13+, so it is
+# only installed in CI's test job — never in the shipped integration. Tests
+# that need it use `pytest.importorskip("homeassistant")` and are skipped
+# (not failed) where it is absent.
+
+aiohttp
+voluptuous
+pytest
+pytest-asyncio
+
+# HA test harness. phacc pins an exact `homeassistant` version transitively;
+# we pin it here too so CI is reproducible. Both are comfortably newer than
+# the integration's manifest minimum (HA 2024.1+).
+homeassistant==2026.6.2
+pytest-homeassistant-custom-component==0.13.338
