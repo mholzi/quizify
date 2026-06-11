@@ -1212,7 +1212,13 @@
             // Render answers
             var labels = ['A', 'B', 'C', 'D'];
             currentAnswers = msg.answers || [];
-            els.answersGrid.innerHTML = currentAnswers.map(function(text, i) {
+            els.answersGrid.innerHTML = currentAnswers.map(function(answer, i) {
+                // Answer payloads arrive in two shapes: the `question_started`
+                // (admin/cast) message sends objects `{text, correct}`, while the
+                // `game_state` snapshot sends plain strings. Normalize to the
+                // displayable string so the cast/TV view never renders the raw
+                // object as "[object Object]" (issue #283).
+                var text = (answer && typeof answer === 'object') ? answer.text : answer;
                 // Distribution markup is included up-front but kept hidden via
                 // the .revealed class on the parent (issue #151). Embedding it
                 // at question-render time avoids a DOM thrash at reveal — only
