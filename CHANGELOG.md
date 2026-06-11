@@ -17,6 +17,15 @@ All notable changes to Quizify are documented here. This project follows
   back-compatible. The World Cup / Weltmeisterschaft packs ship a June–July
   window as the first seasonal packs.
 
+### Fixed
+
+- **TV-cast answer text rendered as `[object Object]` (#283).** The cast/TV
+  dashboard treated answer payloads as plain strings, but the
+  `question_started` message delivers `{text, correct}` objects, so each answer
+  card showed the literal `[object Object]`. The grid now normalizes object
+  payloads to their `.text` (strings still pass through unchanged), so the TV
+  view shows the real answer text. Player phones were unaffected.
+
 ## [1.3.0-RC14] — 2026-06-11
 
 Fourteenth release candidate for 1.3.0 — the three deferred refactors from the
