@@ -14,11 +14,16 @@
  *   Success:  200   { "issue_number": <int>, "issue_url": "<html_url>" }
  *   Error:    4xx/5xx { "code": "INVALID_FORMAT" | "GITHUB_ERROR", "message": "<text>" }
  *
- * Optional hardening: set the secret SHARED_SECRET; the integration must then
- * send a matching `X-Quizify-Secret` header (a small integration change). With
- * no SHARED_SECRET set, the endpoint is open (current behaviour) — see README.
+ * Security gate (FAIL CLOSED — #292): the secret SHARED_SECRET MUST be set and
+ * the integration MUST send a matching `X-Quizify-Secret` header. If
+ * SHARED_SECRET is unset, or the header is missing / doesn't match, the worker
+ * rejects with 401 — it never serves as an open, unauthenticated proxy that can
+ * file issues with the PAT. The comparison is constant-time
+ * (crypto.subtle.timingSafeEqual on equal-length encoded buffers).
  *
- * Deploy:  npx wrangler deploy    Secret: npx wrangler secret put GITHUB_PAT
+ * Deploy:  npx wrangler deploy
+ *   Secrets: npx wrangler secret put GITHUB_PAT
+ *            npx wrangler secret put SHARED_SECRET   (REQUIRED — fail-closed)
  */
 
 const REPO = 'mholzi/quizify';
@@ -30,14 +35,31 @@ const MIN_QUESTIONS = 1;
 const ANSWERS_PER_QUESTION = 3;
 const MAX_BYTES = 1_048_576; // 1 MiB
 
-const CORS = {
-  'Access-Control-Allow-Origin': '*',
-  'Access-Control-Allow-Methods': 'POST, OPTIONS',
-  'Access-Control-Allow-Headers': 'Content-Type, X-Quizify-Secret',
-};
+// CORS (#292): the Quizify HA integration calls this worker server-side (from
+// the HA Python backend via aiohttp — server/pack_submission.py), NOT from a
+// browser, so no cross-origin browser preflight ever happens. A wildcard
+// `Access-Control-Allow-Origin: '*'` only invited browser-based abuse without
+// benefiting the one legitimate caller. We therefore drop CORS entirely: no
+// ACAO header is emitted and OPTIONS is not treated as a CORS preflight. The
+// server-side integration is unaffected (it doesn't rely on CORS). If a browser
+// origin ever needs access, set an explicit allow-list here instead of '*'.
+const CORS = {};
 
 function jsonError(code, message, status) {
   return Response.json({ code, message }, { status, headers: CORS });
+}
+
+/** Constant-time compare of two strings (#292). Encodes both to UTF-8 bytes
+ *  and uses crypto.subtle.timingSafeEqual, which requires equal-length buffers
+ *  — so we length-guard first (a length mismatch is an immediate non-match and
+ *  the length itself is not secret). Returns false on any malformed input. */
+function timingSafeEqualStr(a, b) {
+  if (typeof a !== 'string' || typeof b !== 'string') return false;
+  const enc = new TextEncoder();
+  const bufA = enc.encode(a);
+  const bufB = enc.encode(b);
+  if (bufA.byteLength !== bufB.byteLength) return false;
+  return crypto.subtle.timingSafeEqual(bufA, bufB);
 }
 
 /** Validate the pack against the #179 schema — must match
@@ -76,11 +98,16 @@ function validatePack(pack) {
 
 /** Neutralise Markdown / mention injection in user-supplied strings going into
  *  the issue: break @mentions and #issue-refs (notification spam / fake
- *  cross-links), escape table/code controls, and collapse newlines. */
+ *  cross-links), escape table/code controls, escape Markdown link/image control
+ *  chars so a crafted submission can't plant a clickable link or inline image in
+ *  the trusted-looking auto-filed issue (#305), and collapse newlines.
+ *  Order matters: escape backslash-family controls first, THEN the link/image
+ *  set, so we don't double-escape the backslashes we inserted. */
 function esc(s) {
   return String(s == null ? '' : s)
     .replace(/[\r\n]+/g, ' ')
     .replace(/[`|\\]/g, '\\$&')
+    .replace(/[[\]()!]/g, '\\$&')
     .replace(/@/g, '@​')
     .replace(/#(?=\d)/g, '#​')
     .slice(0, 500);
@@ -113,8 +140,16 @@ async function handleSubmit(request, env) {
   if (!env.GITHUB_PAT) {
     return jsonError('GITHUB_ERROR', 'Worker is missing its GITHUB_PAT secret.', 500);
   }
-  // Optional shared-secret gate (only enforced when SHARED_SECRET is configured).
-  if (env.SHARED_SECRET && request.headers.get('X-Quizify-Secret') !== env.SHARED_SECRET) {
+  // Shared-secret gate — FAIL CLOSED (#292). Reject with 401 if SHARED_SECRET is
+  // unset (misconfigured deploy) OR the X-Quizify-Secret header is missing /
+  // doesn't match. The worker must never be an open, unauthenticated proxy that
+  // files issues with the PAT. Compare in constant time to avoid leaking the
+  // secret via timing.
+  if (!env.SHARED_SECRET) {
+    return jsonError('INVALID_FORMAT', 'Unauthorized.', 401);
+  }
+  const presented = request.headers.get('X-Quizify-Secret');
+  if (!timingSafeEqualStr(presented, env.SHARED_SECRET)) {
     return jsonError('INVALID_FORMAT', 'Unauthorized.', 401);
   }
 
@@ -151,7 +186,9 @@ async function handleSubmit(request, env) {
 
 export default {
   async fetch(request, env) {
-    if (request.method === 'OPTIONS') return new Response(null, { headers: CORS });
+    // No CORS preflight handling (#292): the integration calls server-side, so
+    // OPTIONS/preflight is never needed. Any non-POST method (incl. OPTIONS) is
+    // rejected — we don't advertise an open, method-permissive surface.
     if (request.method !== 'POST') return jsonError('INVALID_FORMAT', 'POST only.', 405);
     try {
       return await handleSubmit(request, env);
