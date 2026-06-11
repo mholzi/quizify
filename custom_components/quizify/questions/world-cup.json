@@ -3,6 +3,7 @@
   "language": "en",
   "version": "1.0",
   "theme": "worldcup",
+  "season": {"start": "06-01", "end": "07-31", "label": "⚽ World Cup season"},
   "questions": [
     {
       "id": "world_cup_en_001",
