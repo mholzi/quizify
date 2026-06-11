@@ -60,22 +60,26 @@ def builder() -> RoundMessageBuilder:
 
 def _start_round_with_shuffles(state: QuizifyGameState) -> None:
     """Drive into QUESTION_ACTIVE and seed canonical + per-player shuffles the
-    way ``_start_next_question`` does, so the snapshot/submit contract is live."""
-    import random
+    way ``_start_next_question`` does, so the snapshot/submit contract is live.
 
+    The canonical and Alice shuffles are FIXED, distinct, non-identity rotations
+    (not ``random.shuffle``) so the contract holds deterministically: a random
+    shuffle is occasionally identity or coincides with canonical, which made the
+    'raw snapshot mis-orders' guard flake ~1-in-6."""
     state.add_player("Alice", _fake_ws())
     state.add_player("Bob", _fake_ws())
     state.start_game(language="de", num_rounds=3, difficulty="easy")
     question = state.start_next_question()
     assert question is not None
+    base = list(range(len(question.answers)))
+    # Two distinct non-identity permutations (rotate by 1 vs by 2).
+    canonical = base[1:] + base[:1]
+    alice = base[2:] + base[:2]
+    assert canonical != alice and canonical != base and alice != base
     # Canonical shuffle (admin/TV + submit fallback).
-    canonical = list(range(len(question.answers)))
-    random.shuffle(canonical)
     state.set_round_shuffle(canonical, [question.answers[i].text for i in canonical])
-    # Per-player shuffles — but deliberately NOT for "Bob": he is the
-    # mid-round reconnecter who never got one, so the projection must mint it.
-    alice = list(range(len(question.answers)))
-    random.shuffle(alice)
+    # Per-player shuffle — deliberately NOT for "Bob": he is the mid-round
+    # reconnecter who never got one, so the projection must mint it.
     state.set_player_shuffle("Alice", alice)
 
 
