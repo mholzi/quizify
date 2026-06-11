@@ -995,6 +995,18 @@ class QuizifyWebSocketHandler:
         language = data.get("language", "de")
         timer_duration = data.get("timer_duration")
 
+        # Validate num_rounds the same way as timer_duration (#303): the WS
+        # value reaches start_game raw, and total_rounds drives
+        # ``self.round >= self.total_rounds``. A non-int makes that comparison
+        # raise TypeError every start_next_question (game wedged); 0/negative
+        # jumps straight to FINALE. Coerce to int + clamp to 1..50, fall back
+        # to the default of 10 on anything unparseable.
+        try:
+            num_rounds = int(num_rounds)
+        except (TypeError, ValueError):
+            num_rounds = 10
+        num_rounds = max(1, min(50, num_rounds))
+
         # category may be None (mixed), a string (single), or a list (multi)
         if isinstance(raw_category, list):
             category = None
