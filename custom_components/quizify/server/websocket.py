@@ -818,6 +818,17 @@ class QuizifyWebSocketHandler:
         if game_state.round != game_state.total_rounds:
             return  # only final round accepts a wager
 
+        # A wager only makes sense *before* the answer is locked in — the wager
+        # stakes points on getting that answer right. Once the player has
+        # submitted, accepting a new wager silently mutated the stake on an
+        # already-locked answer (and the client never learned it was a no-op).
+        # Reject explicitly so the player isn't misled. (#255.)
+        if player.submitted:
+            await self._conn.send_error(
+                ws, ERR_INVALID_ACTION, "Wager locked after answering"
+            )
+            return
+
         wager = data.get("wager")
         try:
             wager_int = int(wager)
@@ -999,8 +1010,12 @@ class QuizifyWebSocketHandler:
     ) -> None:
         """Handle admin end_game command."""
         self._cancel_timer_tick()
+        # end_game() fires the ``game_ended`` state event, which the
+        # BroadcastDispatcher routes to _broadcast_finale — that's the single
+        # finale broadcast source. Calling _broadcast_finale here too would
+        # double-broadcast the podium. (#255.) end_game() is idempotent, so a
+        # repeated admin end-game is a harmless no-op.
         game_state.end_game()
-        await self._broadcast_finale(game_state)
 
     # ------------------------------------------------------------------
     # Admin: reset game
@@ -1396,9 +1411,10 @@ class QuizifyWebSocketHandler:
 
         question = game_state.start_next_question()
         if question is None:
-            # Game ended (no more questions or round limit reached)
-            if game_state.phase == GamePhase.FINALE:
-                await self._broadcast_finale(game_state)
+            # Game ended (no more questions or round limit reached).
+            # start_next_question() already called end_game(), which fired the
+            # ``game_ended`` event → dispatcher → _broadcast_finale (the single
+            # finale broadcast source). No direct broadcast here. (#255.)
             return
 
         # Canonical shuffle — used by admin/dashboard and as a fallback.
@@ -1521,6 +1537,14 @@ class QuizifyWebSocketHandler:
                     # round before their per-player timer exists.
                     connected = [p.name for p in players if p.connected]
                     if connected and game_state.all_timers_expired(connected):
+                        break
+                    # Fallback: when every player has disconnected mid-question
+                    # there are no live timers left for all_timers_expired to
+                    # break on, so the loop would spin forever and the admin
+                    # couldn't advance. Break once the round wall-clock has run
+                    # out, so the round still auto-evaluates with zero connected
+                    # players. (#255.)
+                    if not connected and game_state.round_wall_clock_expired():
                         break
 
                 # Timer expired globally
