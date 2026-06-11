@@ -59,7 +59,16 @@
     var viewIds = [
         'loading-view', 'not-found-view', 'ended-view', 'in-progress-view',
         'join-view', 'lobby-view', 'game-view', 'reveal-view',
-        'paused-view', 'end-view', 'connection-lost-view'
+        'paused-view', 'end-view', 'connection-lost-view',
+        // Lightning Round (#42) views. These MUST be registered here or
+        // showView() can never reveal them: a view is shown by ADDING the
+        // 'active' class (`.view.active { display:flex }`), and showView only
+        // touches IDs in this list. Without them, showView('lightning-view')
+        // hides every other view but never un-hides the lightning one, so on
+        // a reconnect into a live LIGHTNING round both #lightning-view and
+        // #lightning-splash-view stay `class="view hidden"` → blank screen
+        // (#239, cousin of #221's data-path fix).
+        'lightning-splash-view', 'lightning-view', 'lightning-recap-view'
     ];
 
     function showView(viewId) {
