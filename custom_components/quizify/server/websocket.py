@@ -266,63 +266,19 @@ class QuizifyWebSocketHandler:
             await self._conn.send_error(ws, ERR_GAME_NOT_STARTED, "No active game")
             return
 
+        # ``admin_connect`` and ``reset_game`` use a different / special
+        # authorization path than the boolean ``admin_required`` table below,
+        # so they are handled out-of-band first.
         if msg_type == "admin_connect":
+            # WS-level admin only (not the player-as-admin ``_is_authorized_admin``
+            # relaxation) — an admin_connect must come from a real ?role=admin tab.
             if not is_admin:
                 await self._conn.send_error(ws, ERR_INVALID_ACTION, "Admin only")
                 return
             await self._handle_admin_connect(ws, game_state)
+            return
 
-        elif msg_type == "join":
-            await self._handle_join(ws, data, game_state)
-
-        elif msg_type == "submit_answer":
-            await self._handle_submit_answer(ws, data, game_state)
-
-        elif msg_type == "use_powerup":
-            await self._handle_use_powerup(ws, data, game_state)
-
-        elif msg_type == "start_game":
-            # Accept either WS-level admin (admin tab via ?role=admin) OR
-            # player-as-admin (a player whose session has is_admin=True from
-            # the join message). Without this, the admin-as-player flow can
-            # never advance LOBBY → QUESTION_ACTIVE because the player WS
-            # isn't tagged admin at the connect level.
-            if not self._is_authorized_admin(ws, is_admin, game_state):
-                await self._conn.send_error(ws, ERR_INVALID_ACTION, "Admin only")
-                return
-            await self._handle_start_game(ws, data, game_state)
-
-        elif msg_type in ("next_question", "next_round"):
-            if not self._is_authorized_admin(ws, is_admin, game_state):
-                await self._conn.send_error(ws, ERR_INVALID_ACTION, "Admin only")
-                return
-            await self._handle_next_question(ws, game_state)
-
-        elif msg_type == "end_game":
-            if not self._is_authorized_admin(ws, is_admin, game_state):
-                await self._conn.send_error(ws, ERR_INVALID_ACTION, "Admin only")
-                return
-            await self._handle_end_game(ws, game_state)
-
-        elif msg_type == "play_again":
-            if not self._is_authorized_admin(ws, is_admin, game_state):
-                await self._conn.send_error(ws, ERR_INVALID_ACTION, "Admin only")
-                return
-            await self._handle_play_again(ws, game_state)
-
-        elif msg_type == "pause_game":
-            if not self._is_authorized_admin(ws, is_admin, game_state):
-                await self._conn.send_error(ws, ERR_INVALID_ACTION, "Admin only")
-                return
-            await self._handle_pause_game(ws, game_state)
-
-        elif msg_type == "resume_game":
-            if not self._is_authorized_admin(ws, is_admin, game_state):
-                await self._conn.send_error(ws, ERR_INVALID_ACTION, "Admin only")
-                return
-            await self._handle_resume_game(ws, game_state)
-
-        elif msg_type == "reset_game":
+        if msg_type == "reset_game":
             # Reset is the recovery escape-hatch (#207). Besides the normal
             # admin check, allow it whenever NO connected admin currently
             # holds the crown: in that orphaned-crown state (the legitimate
@@ -334,57 +290,109 @@ class QuizifyWebSocketHandler:
                 await self._conn.send_error(ws, ERR_INVALID_ACTION, "Admin only")
                 return
             await self._handle_reset_game(ws, game_state)
+            return
 
-        elif msg_type == "admin_skip":
-            if not self._is_authorized_admin(ws, is_admin, game_state):
-                await self._conn.send_error(ws, ERR_INVALID_ACTION, "Admin only")
-                return
-            await self._handle_next_question(ws, game_state)
+        handlers = self._message_dispatch(data, game_state)
+        entry = handlers.get(msg_type)
+        if entry is None:
+            _LOGGER.warning("Unknown message type: %s", msg_type)
+            await self._conn.send_error(ws, ERR_INVALID_ACTION, "Unknown message type")
+            return
 
-        elif msg_type == "kick_player":
-            if not self._is_authorized_admin(ws, is_admin, game_state):
-                await self._conn.send_error(ws, ERR_INVALID_ACTION, "Admin only")
-                return
-            await self._handle_kick_player(ws, data, game_state)
+        handler, admin_required = entry
+        if admin_required and not self._is_authorized_admin(ws, is_admin, game_state):
+            # Centralized admin guard — same error code/message as the legacy
+            # per-type checks. ``_is_authorized_admin`` accepts either WS-level
+            # admin (admin tab via ?role=admin) OR a player whose session has
+            # is_admin=True (admin-as-player flow). Without that relaxation the
+            # admin-as-player flow could never advance LOBBY → QUESTION_ACTIVE.
+            await self._conn.send_error(ws, ERR_INVALID_ACTION, "Admin only")
+            return
 
-        elif msg_type == "start_lightning":
-            if not self._is_authorized_admin(ws, is_admin, game_state):
-                await self._conn.send_error(ws, ERR_INVALID_ACTION, "Admin only")
-                return
-            await self._handle_start_lightning(ws, data, game_state)
+        await handler(ws)
 
-        elif msg_type == "start_lightning_questions":
-            if not self._is_authorized_admin(ws, is_admin, game_state):
-                await self._conn.send_error(ws, ERR_INVALID_ACTION, "Admin only")
-                return
-            await self._handle_start_lightning_questions(ws, game_state)
+    def _message_dispatch(
+        self, data: dict, game_state: QuizifyGameState
+    ) -> dict[str, tuple[Callable[[web.WebSocketResponse], Any], bool]]:
+        """Build the message-type → (handler, admin_required) dispatch table.
 
-        elif msg_type == "lightning_answer":
-            await self._handle_lightning_answer(ws, data, game_state)
+        Each handler is normalized to a single ``(ws)`` coroutine so the
+        centralized guard in :meth:`_handle_message` can invoke them uniformly,
+        regardless of whether the underlying handler also needs ``data``. The
+        boolean is ``True`` iff the message type requires admin authorization.
 
-        elif msg_type == "end_lightning":
-            if not self._is_authorized_admin(ws, is_admin, game_state):
-                await self._conn.send_error(ws, ERR_INVALID_ACTION, "Admin only")
-                return
-            await self._handle_end_lightning(ws, game_state)
+        ``admin_connect`` and ``reset_game`` are NOT in this table — they use
+        special authorization paths and are handled separately.
+        """
 
-        elif msg_type == "reconnect":
-            await self._handle_reconnect(ws, data, game_state)
-
-        elif msg_type == "get_state":
+        async def _get_state(ws: web.WebSocketResponse) -> None:
             state_msg = game_state.get_state_snapshot()
             state_msg["type"] = "game_state"
             await self._conn.send(ws, state_msg)
 
-        elif msg_type == "reaction":
-            await self._handle_reaction(ws, data, game_state)
-
-        elif msg_type == "submit_wager":
-            await self._handle_submit_wager(ws, data, game_state)
-
-        else:
-            _LOGGER.warning("Unknown message type: %s", msg_type)
-            await self._conn.send_error(ws, ERR_INVALID_ACTION, "Unknown message type")
+        return {
+            # --- non-admin (player) message types ---
+            "join": (lambda ws: self._handle_join(ws, data, game_state), False),
+            "submit_answer": (
+                lambda ws: self._handle_submit_answer(ws, data, game_state),
+                False,
+            ),
+            "use_powerup": (
+                lambda ws: self._handle_use_powerup(ws, data, game_state),
+                False,
+            ),
+            "lightning_answer": (
+                lambda ws: self._handle_lightning_answer(ws, data, game_state),
+                False,
+            ),
+            "reconnect": (
+                lambda ws: self._handle_reconnect(ws, data, game_state),
+                False,
+            ),
+            "get_state": (_get_state, False),
+            "reaction": (lambda ws: self._handle_reaction(ws, data, game_state), False),
+            "submit_wager": (
+                lambda ws: self._handle_submit_wager(ws, data, game_state),
+                False,
+            ),
+            # --- admin-required message types ---
+            "start_game": (
+                lambda ws: self._handle_start_game(ws, data, game_state),
+                True,
+            ),
+            "next_question": (
+                lambda ws: self._handle_next_question(ws, game_state),
+                True,
+            ),
+            "next_round": (
+                lambda ws: self._handle_next_question(ws, game_state),
+                True,
+            ),
+            "admin_skip": (
+                lambda ws: self._handle_next_question(ws, game_state),
+                True,
+            ),
+            "end_game": (lambda ws: self._handle_end_game(ws, game_state), True),
+            "play_again": (lambda ws: self._handle_play_again(ws, game_state), True),
+            "pause_game": (lambda ws: self._handle_pause_game(ws, game_state), True),
+            "resume_game": (lambda ws: self._handle_resume_game(ws, game_state), True),
+            "kick_player": (
+                lambda ws: self._handle_kick_player(ws, data, game_state),
+                True,
+            ),
+            "start_lightning": (
+                lambda ws: self._handle_start_lightning(ws, data, game_state),
+                True,
+            ),
+            "start_lightning_questions": (
+                lambda ws: self._handle_start_lightning_questions(ws, game_state),
+                True,
+            ),
+            "end_lightning": (
+                lambda ws: self._handle_end_lightning(ws, game_state),
+                True,
+            ),
+        }
 
     # ------------------------------------------------------------------
     # Admin connect
