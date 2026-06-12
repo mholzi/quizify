@@ -51,8 +51,15 @@ async def async_setup_entry(hass: HomeAssistant, entry: ConfigEntry) -> bool:
     from .question_stats import QuestionStatsService  # noqa: PLC0415
     from .runtime import HARuntime  # noqa: PLC0415
     from .server import STATIC_URL_PREFIX, WS_PATH, WWW_DIR  # noqa: PLC0415
-    from .server.context import APP_CTX_KEY, AppContext  # noqa: PLC0415
-    from .server.views import register_routes  # noqa: PLC0415
+    from .server.context import (  # noqa: PLC0415
+        APP_CTX_KEY,
+        AppContext,
+        read_manifest_version,
+    )
+    from .server.views import (  # noqa: PLC0415
+        refresh_live_version,
+        register_routes,
+    )
     from .server.websocket import QuizifyWebSocketHandler  # noqa: PLC0415
     from .tts import QuizifyTTSAnnouncer  # noqa: PLC0415
 
@@ -93,12 +100,19 @@ async def async_setup_entry(hass: HomeAssistant, entry: ConfigEntry) -> bool:
     # Wire broadcast callback so game state can push events to clients.
     game_state.set_broadcast_callback(ws_handler.broadcast_state)
 
+    # Read the manifest version OFF the event loop (#343). HA's loop-watcher
+    # flags read_text() inside the loop; doing it in an executor and passing the
+    # result in explicitly (instead of relying on AppContext's synchronous
+    # default_factory) keeps the loop clean.
+    version = await hass.async_add_executor_job(read_manifest_version)
+
     ctx = AppContext(
         runtime=runtime,
         game=game_state,
         analytics=analytics,
         ws_handler=ws_handler,
         question_stats=question_stats,
+        version=version,
         # HA's configured language drives the admin UI's initial language
         # (Settings → General). hass.config.language is always set on HA.
         ha_language=hass.config.language,
@@ -143,6 +157,31 @@ async def async_setup_entry(hass: HomeAssistant, entry: ConfigEntry) -> bool:
     # for the frontend resource version stamp.
     await hass.http.async_register_static_paths(
         [StaticPathConfig(STATIC_URL_PREFIX, str(WWW_DIR), cache_headers=True)]
+    )
+
+    # Keep the live manifest version (the asset cache-buster source) fresh OFF
+    # the event loop (#343). The launcher/HTML serve path reads a pure
+    # in-memory value with zero loop I/O; a background interval re-reads
+    # manifest.json in an executor thread so a direct-rsync deploy (manifest
+    # bumped on disk without an integration reload) still busts the browser
+    # cache without a full HA restart — just without blocking the loop. Run it
+    # once now so the first serve already has the live value, then on an
+    # interval. The mtime cache makes the steady-state tick a single stat().
+    from datetime import timedelta  # noqa: PLC0415
+
+    from homeassistant.helpers.event import (  # noqa: PLC0415
+        async_track_time_interval,
+    )
+
+    await refresh_live_version(runtime)
+
+    async def _refresh_live_version_tick(_now: object) -> None:
+        await refresh_live_version(runtime)
+
+    entry.async_on_unload(
+        async_track_time_interval(
+            hass, _refresh_live_version_tick, timedelta(seconds=30)
+        )
     )
 
     # Register sidebar panel.

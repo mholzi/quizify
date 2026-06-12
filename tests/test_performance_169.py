@@ -143,6 +143,12 @@ class TestRateLimitBounded:
 
 
 class TestManifestCacheConsistent:
+    """The disk re-read now lives in ``_refresh_live_version`` (run OFF the
+    event loop, #343); ``_get_live_version`` is a pure in-memory reader. These
+    guard that the off-loop refresh still picks up an mtime change (so the
+    cache-buster updates after a direct-rsync deploy without an HA restart) and
+    that the in-memory reader returns the refreshed value with zero I/O."""
+
     def test_repeated_reads_are_consistent(
         self, tmp_path: Path, monkeypatch: pytest.MonkeyPatch
     ) -> None:
@@ -150,7 +156,10 @@ class TestManifestCacheConsistent:
         manifest.write_text('{"version": "9.9.9"}', encoding="utf-8")
         monkeypatch.setattr(views, "_MANIFEST_PATH", manifest)
         monkeypatch.setattr(views, "_MANIFEST_CACHE", None)
+        monkeypatch.setattr(views, "_LIVE_VERSION", None)
 
+        assert views._refresh_live_version() == "9.9.9"
+        # The in-memory reader now serves the refreshed value, no disk access.
         first = views._get_live_version("fallback")
         second = views._get_live_version("fallback")
         assert first == second == "9.9.9"
@@ -163,11 +172,14 @@ class TestManifestCacheConsistent:
         os.utime(manifest, ns=(1_000_000_000, 1_000_000_000))
         monkeypatch.setattr(views, "_MANIFEST_PATH", manifest)
         monkeypatch.setattr(views, "_MANIFEST_CACHE", None)
+        monkeypatch.setattr(views, "_LIVE_VERSION", None)
+        views._refresh_live_version()
         assert views._get_live_version("fb") == "1.0.0"
 
         # New content + a distinct mtime → the cache key changes → re-read.
         manifest.write_text('{"version": "2.0.0"}', encoding="utf-8")
         os.utime(manifest, ns=(2_000_000_000, 2_000_000_000))
+        views._refresh_live_version()
         assert views._get_live_version("fb") == "2.0.0"
 
     def test_missing_file_falls_back(
@@ -175,7 +187,43 @@ class TestManifestCacheConsistent:
     ) -> None:
         monkeypatch.setattr(views, "_MANIFEST_PATH", tmp_path / "nope.json")
         monkeypatch.setattr(views, "_MANIFEST_CACHE", None)
+        monkeypatch.setattr(views, "_LIVE_VERSION", None)
+        # Refresh returns None (file unreadable) and leaves the in-memory value
+        # unset, so the reader serves the supplied fallback.
+        assert views._refresh_live_version() is None
         assert views._get_live_version("the-fallback") == "the-fallback"
+
+    @pytest.mark.asyncio
+    async def test_async_refresh_runs_off_loop_and_picks_up_bump(
+        self, tmp_path: Path, monkeypatch: pytest.MonkeyPatch
+    ) -> None:
+        """``refresh_live_version`` must offload the blocking read to the
+        runtime's executor (so the loop stays clean, #343) AND pick up a bumped
+        manifest, proving the no-restart cache-buster still works."""
+        manifest = tmp_path / "manifest.json"
+        manifest.write_text('{"version": "1.0.0"}', encoding="utf-8")
+        os.utime(manifest, ns=(1_000_000_000, 1_000_000_000))
+        monkeypatch.setattr(views, "_MANIFEST_PATH", manifest)
+        monkeypatch.setattr(views, "_MANIFEST_CACHE", None)
+        monkeypatch.setattr(views, "_LIVE_VERSION", None)
+
+        ran_via_executor = {"n": 0}
+
+        async def _run_in_executor(func, *args):
+            ran_via_executor["n"] += 1
+            return func(*args)
+
+        runtime = SimpleNamespace(run_in_executor=_run_in_executor)
+
+        await views.refresh_live_version(runtime)
+        assert ran_via_executor["n"] == 1
+        assert views._get_live_version("fb") == "1.0.0"
+
+        # Simulate a direct-rsync deploy: manifest bumped on disk, no reload.
+        manifest.write_text('{"version": "1.0.1"}', encoding="utf-8")
+        os.utime(manifest, ns=(2_000_000_000, 2_000_000_000))
+        await views.refresh_live_version(runtime)
+        assert views._get_live_version("fb") == "1.0.1"
 
 
 # ---------------------------------------------------------------------------

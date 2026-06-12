@@ -43,6 +43,9 @@ from custom_components.quizify.server.context import (  # noqa: E402
     APP_CTX_KEY,
     AppContext,
 )
+from custom_components.quizify.server.views import (  # noqa: E402
+    refresh_live_version,
+)
 from custom_components.quizify.server.websocket import (  # noqa: E402
     QuizifyWebSocketHandler,
 )
@@ -171,6 +174,11 @@ def main(argv: list[str] | None = None) -> int:
             await ctx.question_stats.load()
         await ctx.game.async_load_history()
         await ctx.ws_handler._conn.async_load_admin_token()
+        # Populate the in-memory live manifest version so the HTML serve path
+        # has it without a per-request read (#343). The standalone server has
+        # no background interval, but a single refresh at startup is enough —
+        # the dev server is restarted on every code change anyway.
+        await refresh_live_version(ctx.runtime)
 
     app.on_startup.append(_load_state)
 

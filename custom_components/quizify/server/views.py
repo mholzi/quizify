@@ -32,6 +32,7 @@ from .serializers import build_game_status_response
 if TYPE_CHECKING:
     from collections.abc import Awaitable, Callable
 
+    from ..runtime import Runtime
     from .context import AppContext
 
     # aiohttp request handler shape, matching what `UrlDispatcher.add_route`
@@ -88,10 +89,59 @@ _ASSET_FP_TTL_NS = 5 * 1_000_000_000  # 5s
 _ASSET_FP_CACHE: tuple[int, str] | None = None  # (monotonic_ns, fingerprint)
 
 # mtime-keyed cache for the live manifest version. Without this the
-# integration would re-parse manifest.json on every request; with it we
+# integration would re-parse manifest.json on every refresh; with it we
 # only re-read when the file actually changed (which means a deploy
 # happened). Tuple of (mtime_ns, version).
 _MANIFEST_CACHE: tuple[int, str] | None = None
+
+# Pure in-memory "live" manifest version served on the HTML request hot path.
+# Refreshed OFF the event loop by ``refresh_live_version`` (a background
+# ``async_track_time_interval`` on the HA path, see __init__.py). The request
+# handler reads this with zero ``os.stat``/``read_text`` on the loop (#343),
+# so HA's loop-watcher no longer flags the launcher serve. ``None`` until the
+# first refresh runs — until then the request path falls back to
+# ``ctx.version`` (the value read off the loop at setup). A direct-rsync deploy
+# (manifest bumped on disk without an integration reload) is still picked up:
+# the background refresh re-reads the file on its next mtime-changed tick, so
+# the asset cache-buster updates without a full HA restart (the v1.1.43
+# mechanism), just without blocking the loop.
+_LIVE_VERSION: str | None = None
+
+
+def _refresh_live_version() -> str | None:
+    """Re-read manifest.json from disk and update the in-memory live version.
+
+    BLOCKING (``os.stat`` + ``read_text``) — must run OFF the event loop (in an
+    executor thread, or in the standalone dev server which has no HA loop, or
+    in tests). Returns the resolved version, or ``None`` if the file is missing
+    or unreadable (the caller then keeps the previous in-memory value / the
+    setup-time fallback). The mtime cache means an unchanged file is a single
+    ``stat`` with no re-parse.
+    """
+    global _MANIFEST_CACHE, _LIVE_VERSION
+    try:
+        mtime_ns = os.stat(_MANIFEST_PATH).st_mtime_ns
+        if _MANIFEST_CACHE is not None and _MANIFEST_CACHE[0] == mtime_ns:
+            _LIVE_VERSION = _MANIFEST_CACHE[1]
+            return _LIVE_VERSION
+        data = json.loads(_MANIFEST_PATH.read_text(encoding="utf-8"))
+        version = str(data["version"])
+        _MANIFEST_CACHE = (mtime_ns, version)
+        _LIVE_VERSION = version
+        return version
+    except (OSError, ValueError, KeyError) as exc:
+        _LOGGER.debug("Could not read live version from manifest: %s", exc)
+        return None
+
+
+async def refresh_live_version(runtime: Runtime) -> None:
+    """Refresh the in-memory live manifest version off the event loop.
+
+    Wired as a periodic ``async_track_time_interval`` callback on the HA path
+    (see ``async_setup_entry``) and called once at setup. Runs the blocking
+    re-read in an executor thread so the loop is never blocked (#343).
+    """
+    await runtime.run_in_executor(_refresh_live_version)
 
 
 def _get_ctx(request: web.Request) -> AppContext:
@@ -100,32 +150,17 @@ def _get_ctx(request: web.Request) -> AppContext:
 
 
 def _get_live_version(fallback: str) -> str:
-    """Read the live manifest version, busting the cache when the file changes.
+    """Return the live manifest version — pure in-memory, NO loop I/O (#343).
 
-    Why this exists: ``ctx.version`` is set at integration setup time, so a
-    direct-rsync deploy (manifest.json updated on disk without an HA
-    integration reload) would leave ``ctx.version`` stale. The HTML asset
-    URLs use ``?v={{VERSION}}`` for cache-busting; if VERSION never moves,
-    browsers serve the stale CSS/JS forever after a deploy and the user
-    has to manually clear cache. Re-reading manifest.json on mtime change
-    fixes the cache-bust round-trip end-to-end.
-
-    Falls back to ``fallback`` (typically ``ctx.version``) if the file is
-    missing or unreadable — defensive, since this code path runs on every
-    HTML request.
+    The actual disk read happens in ``_refresh_live_version`` (off the loop:
+    a background interval on the HA path, an executor refresh, or the
+    standalone dev server). This reader just returns the last-refreshed
+    in-memory value, falling back to ``fallback`` (typically ``ctx.version``,
+    the value read off the loop at setup) until the first refresh has run or
+    if the manifest was unreadable. Safe to call on the event loop on every
+    HTML request — that's the whole point of moving the read out of here.
     """
-    global _MANIFEST_CACHE
-    try:
-        mtime_ns = os.stat(_MANIFEST_PATH).st_mtime_ns
-        if _MANIFEST_CACHE is not None and _MANIFEST_CACHE[0] == mtime_ns:
-            return _MANIFEST_CACHE[1]
-        data = json.loads(_MANIFEST_PATH.read_text(encoding="utf-8"))
-        version = str(data.get("version", fallback))
-        _MANIFEST_CACHE = (mtime_ns, version)
-        return version
-    except (OSError, ValueError, KeyError) as exc:
-        _LOGGER.debug("Could not read live version from manifest: %s", exc)
-        return fallback
+    return _LIVE_VERSION if _LIVE_VERSION is not None else fallback
 
 
 def _compute_asset_fingerprint(www_dir: Path = _WWW_DIR) -> str:
