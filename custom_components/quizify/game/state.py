@@ -1494,8 +1494,14 @@ class QuizifyGameState:
         self._notify_state_callbacks()
         if self._broadcast_callback is None:
             return
-        payload = self.get_state_snapshot()
-        payload["event"] = event
+        # Named events (round_evaluated / game_ended) route to dedicated
+        # broadcast handlers that build their own messages and re-fetch the
+        # live state — they never read this payload's snapshot fields, so
+        # building a full ``get_state_snapshot()`` (O(P log P) + a heavy dict)
+        # here only to discard it is wasted work on every round/game end (#304).
+        # Pass just the event marker; the default full-state handler fetches the
+        # snapshot itself when it actually needs one.
+        payload = {"event": event}
         coro = self._broadcast_callback(payload)
         if self._runtime is not None:
             self._runtime.create_task(coro)

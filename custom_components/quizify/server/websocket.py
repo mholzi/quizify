@@ -136,6 +136,19 @@ class QuizifyWebSocketHandler:
         # builder produces the exact message dicts to hand to the connection
         # manager. Behaviour-preserving — identical wire shapes.
         self._round_messages = RoundMessageBuilder()
+        # Visual-reaction coalescing (#304). Floating-reaction broadcasts are
+        # best-effort eye-candy, but at the 20-player cap a reaction-mashing
+        # room (20×15/s inbound, each fanned out to 20 sockets) generated
+        # ~6600 outbound frames/s. Reactions are buffered here and flushed once
+        # per ~150ms window, de-duplicated per (player, emoji), so the same
+        # player hammering one emoji collapses to a single float per window
+        # while distinct reactions still get through. Wire shape is unchanged —
+        # one ``reaction`` message per distinct buffered reaction.
+        self._reaction_buffer: dict[tuple[str, str], None] = {}
+        self._reaction_flush_task: asyncio.Task | None = None
+
+    # Coalescing window for visual reactions (#304), seconds.
+    _REACTION_FLUSH_WINDOW = 0.15
 
     @property
     def conn(self) -> ConnectionManager:
@@ -812,13 +825,12 @@ class QuizifyWebSocketHandler:
         if not isinstance(emoji, str) or not (1 <= len(emoji) <= 8):
             return  # ignore malformed
 
-        # Broadcast the visual reaction unconditionally so floating
-        # animations work in any phase.
-        await self._conn.broadcast({
-            "type": "reaction",
-            "emoji": emoji,
-            "player_name": reactor.name,
-        })
+        # Buffer the visual reaction instead of broadcasting it inline (#304).
+        # A flush task drains the buffer once per ~150ms window; identical
+        # (player, emoji) pairs within a window collapse to one broadcast,
+        # which is where the amplification came from. Floating animations work
+        # in any phase, same as before — just batched.
+        self._enqueue_reaction(reactor.name, emoji)
 
         # Bonus path: only during reveal, only once per round per reactor.
         if game_state.phase != GamePhase.ANSWER_REVEAL:
@@ -860,6 +872,51 @@ class QuizifyWebSocketHandler:
                 "to_players": bonus_recipients,
                 "leaderboard": leaderboard,
             })
+
+    def _enqueue_reaction(self, player_name: str, emoji: str) -> None:
+        """Buffer a visual reaction and ensure a flush task is pending (#304).
+
+        Reactions are keyed on ``(player_name, emoji)`` so a player mashing the
+        same emoji within a flush window collapses to a single broadcast; a
+        ``dict`` preserves insertion order so distinct reactions flush in the
+        order they first arrived. The flush task is (re)started lazily and runs
+        exactly one window before draining.
+        """
+        self._reaction_buffer[(player_name, emoji)] = None
+        if self._reaction_flush_task is None or self._reaction_flush_task.done():
+            self._reaction_flush_task = self._runtime.create_task(
+                self._flush_reactions_after_window()
+            )
+
+    async def _flush_reactions_after_window(self) -> None:
+        """Wait one coalescing window, then broadcast the buffered reactions.
+
+        One ``reaction`` message per distinct buffered ``(player, emoji)`` —
+        same wire shape the client already renders, just batched so a burst of
+        spam produces a handful of frames instead of one per inbound message.
+        """
+        try:
+            await asyncio.sleep(self._REACTION_FLUSH_WINDOW)
+        except asyncio.CancelledError:
+            # Cancelled on cleanup — drop whatever was buffered (best-effort
+            # eye-candy, nothing to persist) and re-raise so the task ends.
+            self._reaction_buffer.clear()
+            raise
+        buffered = list(self._reaction_buffer)
+        self._reaction_buffer.clear()
+        for player_name, emoji in buffered:
+            await self._conn.broadcast({
+                "type": "reaction",
+                "emoji": emoji,
+                "player_name": player_name,
+            })
+
+    def _cancel_reaction_flush(self) -> None:
+        """Cancel any pending reaction-flush task (called on cleanup)."""
+        if self._reaction_flush_task is not None:
+            self._reaction_flush_task.cancel()
+            self._reaction_flush_task = None
+        self._reaction_buffer.clear()
 
     # ------------------------------------------------------------------
     # Wager (gameplay idea #3 — Jeopardy-style final round)
@@ -2072,5 +2129,6 @@ class QuizifyWebSocketHandler:
         """Cancel all pending tasks."""
         self._cancel_timer_tick()
         self._cancel_lightning_loop()
+        self._cancel_reaction_flush()
         await self._conn.cleanup()
         _LOGGER.debug("Cleaned up all pending game tasks")
