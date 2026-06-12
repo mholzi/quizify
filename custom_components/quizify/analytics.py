@@ -145,10 +145,17 @@ class QuizifyAnalytics:
 
                 await self._runtime.run_in_executor(_mkdir)
                 temp_path = self._path.with_suffix(".tmp")
-                content = json.dumps(self._data, indent=2)
+                # Serialize *inside* the executor closure (#304): a full game's
+                # analytics is ~0.5–1 MB and ``json.dumps`` previously ran on
+                # the event loop, blocking it for the whole serialize while only
+                # the write was offloaded. Snapshot the dict reference so the
+                # executor sees a consistent object; drop ``indent=2`` (the file
+                # is machine-read, never hand-edited) to roughly halve both the
+                # payload size and the serialize cost.
+                data = self._data
 
                 def _write_atomic() -> None:
-                    temp_path.write_text(content)
+                    temp_path.write_text(json.dumps(data))
                     os.replace(temp_path, self._path)
 
                 await self._runtime.run_in_executor(_write_atomic)

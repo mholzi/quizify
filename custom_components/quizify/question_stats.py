@@ -168,9 +168,12 @@ class QuestionStatsService:
                     self._path.parent.mkdir(mode=0o755, parents=True, exist_ok=True)
                 await self._runtime.run_in_executor(_mkdir)
                 temp_path = self._path.with_suffix(".tmp")
-                content = json.dumps(self._data, indent=2)
+                # Serialize inside the executor closure (#304) so the (often
+                # large) ``json.dumps`` runs off the event loop, not just the
+                # write; drop ``indent=2`` since the file is machine-read.
+                data = self._data
                 def _write() -> None:
-                    temp_path.write_text(content)
+                    temp_path.write_text(json.dumps(data))
                     os.replace(temp_path, self._path)
                 await self._runtime.run_in_executor(_write)
                 self._dirty = False
