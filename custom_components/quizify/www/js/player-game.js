@@ -266,6 +266,10 @@
         _initImageZoom();
     }
 
+    // Tracks whether the current round is an estimate question (#275) so the
+    // shared reset/submit paths know which input is live.
+    var _isEstimateRound = false;
+
     function renderQuestion(data) {
         var questionText = document.getElementById('question-text');
         var questionCategory = document.getElementById('question-category');
@@ -280,6 +284,22 @@
         // Absent/invalid/load-error → the banner is hidden so the answer
         // pills stay reachable above the fold (graceful text-only fallback).
         renderQuestionImageBanner(data.image_url);
+
+        // #275: branch on the question type. Estimate questions swap the 3-
+        // answer grid for a slider (Variant B). Toggle the two sections and
+        // render the right one. The estimate path has no wager UI.
+        _isEstimateRound = (data.question_type === 'estimate');
+        var estimateContainer = document.getElementById('estimate-container');
+        var answersContainer = document.getElementById('answers-container');
+        if (_isEstimateRound) {
+            if (estimateContainer) estimateContainer.classList.remove('hidden');
+            if (answersContainer) answersContainer.classList.add('hidden');
+            _renderWagerPanel(false, 0);
+            renderEstimateInput(data);
+            return;
+        }
+        if (estimateContainer) estimateContainer.classList.add('hidden');
+        if (answersContainer) answersContainer.classList.remove('hidden');
 
         // Wager round detection — set BEFORE we touch buttons so we can
         // disable them up-front, then enable once the wager is in.
@@ -322,6 +342,104 @@
         // Show/hide submitted confirmation
         var confirmation = document.getElementById('submitted-confirmation');
         if (confirmation) confirmation.classList.toggle('hidden', !hasSubmitted);
+    }
+
+    // ============================================
+    // Estimate question (#275, Variant B — slider)
+    // ============================================
+
+    // Current estimate range/step/unit, cached so the live value display and
+    // submit can read them without re-parsing the message.
+    var _estimate = { min: 0, max: 100, step: 1, unit: '' };
+
+    function _formatEstimateValue(val) {
+        // Drop a trailing .0 so integer guesses read cleanly; keep the unit.
+        var n = (Math.round(val * 1000) / 1000);
+        var text = (n === Math.round(n)) ? String(Math.round(n)) : String(n);
+        return _estimate.unit ? (text + ' ' + _estimate.unit) : text;
+    }
+
+    function renderEstimateInput(data) {
+        var est = data.estimate || {};
+        var min = Number(est.min);
+        var max = Number(est.max);
+        var step = Number(est.step) || 1;
+        if (!isFinite(min)) min = 0;
+        if (!isFinite(max) || max <= min) max = min + 100;
+        _estimate = { min: min, max: max, step: step, unit: est.unit || '' };
+
+        var slider = document.getElementById('estimate-slider');
+        var valueEl = document.getElementById('estimate-value');
+        var minEl = document.getElementById('estimate-scale-min');
+        var midEl = document.getElementById('estimate-scale-mid');
+        var maxEl = document.getElementById('estimate-scale-max');
+        var submitBtn = document.getElementById('estimate-submit-btn');
+        var confirmation = document.getElementById('estimate-submitted-confirmation');
+
+        var mid = min + (max - min) / 2;
+
+        if (minEl) minEl.textContent = _formatEstimateValue(min);
+        if (midEl) midEl.textContent = _formatEstimateValue(mid);
+        if (maxEl) maxEl.textContent = _formatEstimateValue(max);
+
+        if (slider) {
+            slider.min = String(min);
+            slider.max = String(max);
+            slider.step = String(step);
+            // Default to the midpoint (snapped to step) so the thumb starts
+            // centred rather than at an extreme.
+            var startVal = Math.round((mid - min) / step) * step + min;
+            slider.value = String(startVal);
+            slider.setAttribute('aria-valuemin', String(min));
+            slider.setAttribute('aria-valuemax', String(max));
+
+            function syncValue() {
+                var v = Number(slider.value);
+                if (valueEl) valueEl.textContent = _formatEstimateValue(v);
+                slider.setAttribute('aria-valuenow', String(v));
+                slider.setAttribute('aria-valuetext', _formatEstimateValue(v));
+            }
+            slider.oninput = syncValue;
+            syncValue();
+
+            // Re-apply locked state on a reconnect mid-round.
+            slider.disabled = hasSubmitted;
+        }
+
+        if (submitBtn) {
+            submitBtn.disabled = hasSubmitted;
+            submitBtn.onclick = function () {
+                var send = window.QuizifyPlayer && window.QuizifyPlayer.send;
+                if (send) handleEstimateSubmit(send);
+            };
+        }
+
+        if (confirmation) confirmation.classList.toggle('hidden', !hasSubmitted);
+    }
+
+    /**
+     * Submit the current slider value as a numeric guess (#275). Clamps to the
+     * range, disables the slider + button, shows the confirmation, and sends
+     * the same ``submit_answer`` message the MC path uses, carrying ``guess``.
+     */
+    function handleEstimateSubmit(sendFn) {
+        if (hasSubmitted) return;
+        if (isFrozen()) return;
+        var slider = document.getElementById('estimate-slider');
+        if (!slider) return;
+        var guess = Number(slider.value);
+        if (!isFinite(guess)) return;
+        // Clamp defensively (the slider already constrains this).
+        guess = Math.max(_estimate.min, Math.min(_estimate.max, guess));
+
+        hasSubmitted = true;
+        slider.disabled = true;
+        var submitBtn = document.getElementById('estimate-submit-btn');
+        if (submitBtn) submitBtn.disabled = true;
+        var confirmation = document.getElementById('estimate-submitted-confirmation');
+        if (confirmation) confirmation.classList.remove('hidden');
+
+        sendFn('submit_answer', { guess: guess });
     }
 
     function _renderWagerPanel(isFinal, currentScore) {
@@ -457,6 +575,14 @@
         }
         var confirmation = document.getElementById('submitted-confirmation');
         if (confirmation) confirmation.classList.remove('hidden');
+
+        // #275: lock the estimate slider too on a reconnect.
+        var slider = document.getElementById('estimate-slider');
+        if (slider) slider.disabled = true;
+        var estSubmitBtn = document.getElementById('estimate-submit-btn');
+        if (estSubmitBtn) estSubmitBtn.disabled = true;
+        var estConfirm = document.getElementById('estimate-submitted-confirmation');
+        if (estConfirm) estConfirm.classList.remove('hidden');
     }
 
     function resetSubmissionState() {
@@ -474,6 +600,14 @@
 
         var confirmation = document.getElementById('submitted-confirmation');
         if (confirmation) confirmation.classList.add('hidden');
+
+        // #275: reset the estimate input for the new round.
+        var slider = document.getElementById('estimate-slider');
+        if (slider) slider.disabled = false;
+        var estSubmitBtn = document.getElementById('estimate-submit-btn');
+        if (estSubmitBtn) estSubmitBtn.disabled = false;
+        var estConfirm = document.getElementById('estimate-submitted-confirmation');
+        if (estConfirm) estConfirm.classList.add('hidden');
     }
 
     // ============================================

@@ -388,6 +388,20 @@
     "locked": "Wagered: {pct}%",
     "bonusFromReaction": "+1 from {from}"
   },
+  "estimate": {
+    "badge": "Estimate question — closest guess wins",
+    "yourGuess": "Your guess",
+    "hint": "Slide to your estimate",
+    "submit": "Submit guess",
+    "sliderAria": "Your guess",
+    "you": "You",
+    "correctAnswer": "Correct answer",
+    "youWon": "You win the round",
+    "playerWon": "{name} wins the round",
+    "guessOff": "Guess {guess} · only {off} off",
+    "noGuessNote": "{count} without a guess",
+    "dashRange": "Estimate between {min} and {max}"
+  },
   "reaction": {
     "fire": "Fire reaction",
     "laugh": "Laugh reaction",

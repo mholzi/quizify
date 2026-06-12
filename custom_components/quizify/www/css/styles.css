@@ -6189,6 +6189,329 @@ body.is-admin .reaction-bar {
 @media (prefers-reduced-motion: reduce) {
     .frozen-overlay .ice-flake { animation: none; }
 }
+
+/* ============================================================
+   Estimate question — slider input (#275, Variant B)
+   Mirrors /tmp/qz275-variant-b.html with the Soft Parlor tokens.
+   ============================================================ */
+
+.estimate-section {
+    text-align: center;
+}
+
+.est-badge {
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    font-size: 0.78rem;
+    font-weight: 600;
+    color: var(--color-text-muted);
+    margin: 2px 0 18px;
+}
+.est-badge-dot {
+    width: 7px;
+    height: 7px;
+    border-radius: 50%;
+    background: var(--color-gold);
+    flex: 0 0 auto;
+}
+
+.estimate-value-wrap {
+    margin: 8px 0 4px;
+}
+.estimate-value-label {
+    display: block;
+    font-size: 0.72rem;
+    font-weight: 600;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    color: var(--color-text-muted);
+    margin-bottom: 6px;
+}
+.estimate-value {
+    display: block;
+    font-family: var(--font-mono);
+    font-weight: 700;
+    font-size: 3.4rem;
+    line-height: 1;
+    color: var(--color-text-primary);
+    letter-spacing: -0.02em;
+}
+
+.estimate-slider-wrap {
+    margin: 28px 4px 0;
+}
+.estimate-slider {
+    width: 100%;
+    height: 28px;
+    margin: 0;
+    -webkit-appearance: none;
+    appearance: none;
+    background: transparent;
+    cursor: pointer;
+}
+.estimate-slider:focus-visible {
+    outline: 2px solid var(--color-accent-primary);
+    outline-offset: 4px;
+    border-radius: var(--radius-full);
+}
+.estimate-slider::-webkit-slider-runnable-track {
+    height: 14px;
+    border-radius: var(--radius-full);
+    background: linear-gradient(90deg, var(--color-accent-secondary), var(--color-accent-primary));
+}
+.estimate-slider::-moz-range-track {
+    height: 14px;
+    border-radius: var(--radius-full);
+    background: linear-gradient(90deg, var(--color-accent-secondary), var(--color-accent-primary));
+}
+.estimate-slider::-webkit-slider-thumb {
+    -webkit-appearance: none;
+    appearance: none;
+    width: 34px;
+    height: 34px;
+    margin-top: -10px;
+    border-radius: 50%;
+    background: var(--color-bg-card);
+    border: 3px solid var(--color-accent-primary);
+    box-shadow: 0 4px 12px rgba(232, 138, 127, 0.30);
+}
+.estimate-slider::-moz-range-thumb {
+    width: 34px;
+    height: 34px;
+    border-radius: 50%;
+    background: var(--color-bg-card);
+    border: 3px solid var(--color-accent-primary);
+    box-shadow: 0 4px 12px rgba(232, 138, 127, 0.30);
+}
+.estimate-slider:disabled {
+    opacity: 0.7;
+    cursor: default;
+}
+
+.estimate-scale-row {
+    display: flex;
+    justify-content: space-between;
+    margin-top: 12px;
+    font-family: var(--font-mono);
+    font-size: 0.78rem;
+    color: var(--color-text-light);
+}
+
+.estimate-hint {
+    font-size: 0.82rem;
+    color: var(--color-text-muted);
+    margin: 18px 0 16px;
+}
+
+.estimate-submit-btn {
+    margin-top: 6px;
+}
+
+/* ============================================================
+   Estimate reveal — number line (#275)
+   Mirrors /tmp/qz275-reveal.html.
+   ============================================================ */
+
+.reveal-estimate {
+    margin: 4px 0 6px;
+}
+
+.est-truth {
+    text-align: center;
+    margin: 8px 0 6px;
+}
+.est-truth-label {
+    font-size: 0.72rem;
+    text-transform: uppercase;
+    letter-spacing: 0.1em;
+    color: var(--color-text-muted);
+    font-weight: 600;
+}
+.est-truth-value {
+    font-family: var(--font-mono);
+    font-weight: 700;
+    font-size: 2.4rem;
+    line-height: 1.1;
+    color: var(--color-accent-primary);
+}
+
+.numberline-card {
+    background: var(--color-bg-card);
+    border: 1px solid var(--color-border-light);
+    border-radius: var(--radius-xl);
+    box-shadow: var(--shadow-md);
+    padding: 54px 20px 30px;
+    margin: 12px 0 16px;
+    position: relative;
+}
+.nl-axis {
+    position: relative;
+    height: 4px;
+    background: var(--color-bg-card-alt);
+    border-radius: var(--radius-full);
+}
+.nl-tick {
+    position: absolute;
+    top: 50%;
+    transform: translate(-50%, -50%);
+}
+.nl-dot {
+    width: 14px;
+    height: 14px;
+    border-radius: 50%;
+    border: 2px solid var(--color-bg-card);
+    box-shadow: 0 1px 3px rgba(42, 40, 32, 0.25);
+}
+.nl-lbl {
+    position: absolute;
+    left: 50%;
+    transform: translateX(-50%);
+    white-space: nowrap;
+    font-size: 0.66rem;
+    font-weight: 600;
+    color: var(--color-text-muted);
+    font-family: var(--font-mono);
+}
+.nl-lbl.is-winner .nl-nm {
+    color: var(--color-accent-secondary);
+}
+.nl-lbl--above { bottom: 18px; }
+.nl-lbl--below { top: 18px; }
+.nl-nm { font-family: var(--font-body, inherit); }
+
+.nl-truth-line {
+    position: absolute;
+    top: -30px;
+    bottom: -14px;
+    width: 2px;
+    background: var(--color-accent-primary);
+    transform: translateX(-50%);
+}
+.nl-truth-flag {
+    position: absolute;
+    top: -46px;
+    transform: translateX(-50%);
+    background: var(--color-accent-primary);
+    color: #fff;
+    font-family: var(--font-mono);
+    font-weight: 700;
+    font-size: 0.7rem;
+    padding: 3px 8px;
+    border-radius: var(--radius-full);
+    white-space: nowrap;
+}
+.nl-scale-ends {
+    display: flex;
+    justify-content: space-between;
+    margin-top: 12px;
+    font-family: var(--font-mono);
+    font-size: 0.72rem;
+    color: var(--color-text-light);
+}
+
+.est-winner {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    background: rgba(127, 168, 151, 0.18);
+    border: 2px solid var(--color-accent-secondary);
+    border-radius: var(--radius-xl);
+    padding: 14px 16px;
+    margin-bottom: 14px;
+}
+.est-winner-medal { font-size: 1.6rem; }
+.est-winner-text { flex: 1; min-width: 0; }
+.est-winner-name {
+    font-family: var(--font-display);
+    font-weight: 700;
+    font-size: 1.05rem;
+    color: var(--color-text-primary);
+}
+.est-winner-sub {
+    font-size: 0.78rem;
+    color: var(--color-text-muted);
+    margin-top: 1px;
+}
+.est-winner-pts {
+    font-family: var(--font-mono);
+    font-weight: 700;
+    font-size: 1.1rem;
+    color: var(--color-accent-secondary);
+    white-space: nowrap;
+}
+
+.est-results {
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+}
+.est-results .res-row {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    background: var(--color-bg-card);
+    border: 1px solid var(--color-border-light);
+    border-radius: var(--radius-lg);
+    padding: 9px 12px;
+}
+.est-results .res-row.is-you {
+    border-color: var(--color-accent-blue);
+    background: rgba(127, 168, 196, 0.08);
+}
+.est-results .res-swatch {
+    width: 12px;
+    height: 12px;
+    border-radius: 50%;
+    flex: 0 0 auto;
+}
+.est-results .res-name {
+    font-weight: 600;
+    font-size: 0.9rem;
+    color: var(--color-text-primary);
+    flex: 1;
+    min-width: 0;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+}
+.est-results .res-you-tag {
+    font-size: 0.66rem;
+    font-weight: 700;
+    color: var(--color-accent-blue);
+    background: rgba(127, 168, 196, 0.15);
+    padding: 1px 6px;
+    border-radius: var(--radius-full);
+    margin-left: 6px;
+    letter-spacing: 0.04em;
+}
+.est-results .res-guess {
+    font-family: var(--font-mono);
+    font-weight: 600;
+    font-size: 0.9rem;
+    color: var(--color-text-primary);
+}
+.est-results .res-off {
+    font-family: var(--font-mono);
+    font-size: 0.74rem;
+    color: var(--color-text-muted);
+    min-width: 54px;
+    text-align: right;
+}
+.est-results .res-pts {
+    font-family: var(--font-mono);
+    font-weight: 700;
+    font-size: 0.82rem;
+    color: var(--color-accent-secondary);
+    min-width: 42px;
+    text-align: right;
+}
+.est-noguess {
+    text-align: center;
+    font-size: 0.76rem;
+    color: var(--color-text-light);
+    margin-top: 10px;
+}
 /* ==========================================
    Responsive
    ========================================== */

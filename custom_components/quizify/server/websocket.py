@@ -753,6 +753,31 @@ class QuizifyWebSocketHandler:
             # Silently ignore submit_answer when not in question phase
             return
 
+        # Estimate rounds (#275): the player submits a numeric ``guess`` on the
+        # same message instead of an ``answer_index``. Closeness is ranked at
+        # round evaluation, so there's no per-answer ``answer_result`` to send —
+        # an ``ack`` lets the client lock the slider on a confirmed submit.
+        current_q = game_state.get_current_question()
+        if current_q is not None and getattr(current_q, "is_estimate", False):
+            guess_raw = data.get("guess")
+            if not isinstance(guess_raw, (int, float)) or isinstance(guess_raw, bool):
+                await self._conn.send_error(ws, ERR_INVALID_ACTION, "Invalid guess")
+                return
+            err = game_state.submit_guess(player.name, float(guess_raw))
+            if err is None:
+                await self._conn.send(ws, {"type": "guess_accepted"})
+            else:
+                error_messages = {
+                    ERR_ALREADY_SUBMITTED: "Already answered",
+                    ERR_ROUND_EXPIRED: "Time is up",
+                    ERR_FROZEN: "Frozen — wait for the freeze to end",
+                    ERR_NOT_IN_GAME: "Not in the game",
+                    ERR_GAME_NOT_STARTED: "No active game",
+                    ERR_INVALID_ACTION: "Invalid action",
+                }
+                await self._conn.send_error(ws, err, error_messages.get(err, err))
+            return
+
         shuffled_index = data.get("answer_index")
         if shuffled_index is None or not isinstance(shuffled_index, int):
             await self._conn.send_error(ws, ERR_INVALID_ACTION, "Invalid answer index")

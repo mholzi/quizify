@@ -52,6 +52,9 @@ class PlayerSession:
     joined_at: float = field(default_factory=time.time)
     submitted: bool = False
     current_answer: int | None = None
+    # Estimate-question guess (#275). Holds the player's clamped numeric guess
+    # for the current estimate round, or None for MC rounds / no guess.
+    current_guess: float | None = None
     submission_time: float | None = None
     # cached at submit_answer time, read in _do_evaluate_round
     last_answer_correct: bool = False
@@ -127,6 +130,7 @@ class PlayerSession:
         """Reset round-specific state for new round."""
         self.submitted = False
         self.current_answer = None
+        self.current_guess = None
         self.submission_time = None
         self.last_answer_correct = False
         self.round_score = 0

@@ -82,6 +82,24 @@
         // Fun fact
         renderFunFact(data.fun_fact);
 
+        // #275: estimate rounds render a number-line reveal instead of the
+        // answer-tile flash + distribution + answer strip. Build it and skip
+        // the MC reveal body below.
+        var estimateEl = document.getElementById('reveal-estimate');
+        var answerStripEl = document.getElementById('reveal-answer-strip');
+        if (data.question_type === 'estimate' && data.estimate) {
+            if (estimateEl) estimateEl.classList.remove('hidden');
+            if (answerStripEl) answerStripEl.classList.add('hidden');
+            renderEstimateReveal(data);
+            renderResultHero(myAnswerEntry || currentPlayer, data);
+            renderStandings(data.leaderboard || players, state.playerName);
+            playResultCue(myAnswerEntry || currentPlayer);
+            _renderRevealAdminControls(data, currentPlayer);
+            return;
+        }
+        if (estimateEl) estimateEl.classList.add('hidden');
+        if (answerStripEl) answerStripEl.classList.remove('hidden');
+
         // Flash answer buttons correct/wrong. Per-player shuffle means the
         // server's `correct_answer_index` is in the CANONICAL shuffle and
         // doesn't match this player's button positions. flashAnswerButtons
@@ -103,6 +121,12 @@
         playResultCue(resultPlayer);
 
         // Admin controls — sticky bottom bar
+        _renderRevealAdminControls(data, currentPlayer);
+    }
+
+    // Sticky admin bar (Next Round / Final Results). Extracted so both the MC
+    // and the #275 estimate reveal paths share it.
+    function _renderRevealAdminControls(data, currentPlayer) {
         var adminControls = document.getElementById('reveal-admin-controls');
         var nextRoundBtn = document.getElementById('next-round-btn');
         var isAdmin = !!(currentPlayer && currentPlayer.is_admin);
@@ -128,6 +152,157 @@
             }
             nextRoundBtn.disabled = false;
         }
+    }
+
+    // ============================================
+    // Estimate number-line reveal (#275)
+    // ============================================
+
+    function _fmtEstimate(val, unit) {
+        if (val === null || val === undefined) return '—';
+        var n = Math.round(val * 1000) / 1000;
+        var text = (n === Math.round(n)) ? String(Math.round(n)) : String(n);
+        return unit ? (text + ' ' + unit) : text;
+    }
+
+    /**
+     * Render the horizontal number line from data.estimate: every connected
+     * player's guess as a labelled marker positioned along the visual range,
+     * the current player tagged "Du", the true value marked with a coral pin,
+     * the winner highlighted, and a ranked result list (guess · ±distance ·
+     * points). Mirrors /tmp/qz275-reveal.html.
+     */
+    function renderEstimateReveal(data) {
+        var container = document.getElementById('reveal-estimate');
+        if (!container) return;
+        var est = data.estimate || {};
+        var unit = est.unit || '';
+        var answer = Number(est.answer);
+        var guesses = (est.guesses || []).filter(function (g) { return !g.no_guess && g.guess !== null && g.guess !== undefined; });
+        var noGuessCount = (est.guesses || []).length - guesses.length;
+
+        // Visual range: zoom to the span of the actual data (all guesses +
+        // the true answer) rather than the full question min/max, so clustered
+        // guesses spread out across the axis instead of bunching in the middle
+        // (mirrors the mockup, which zoomed 100..260 around guesses of 150..240).
+        // Clamp the zoomed window to the question range so we never imply a
+        // value outside [min, max] is possible.
+        var dataVals = guesses.map(function (g) { return Number(g.guess); }).concat([answer]);
+        var lo = Math.min.apply(null, dataVals);
+        var hi = Math.max.apply(null, dataVals);
+        if (!(hi > lo)) { hi = lo + 1; }
+        var span = hi - lo;
+        // 18% padding each side gives the edge markers breathing room.
+        var pad = span * 0.18;
+        lo -= pad; hi += pad;
+        // Keep within the question's declared range.
+        if (isFinite(Number(est.min))) lo = Math.max(lo, Number(est.min) - span * 0.02);
+        if (isFinite(Number(est.max))) hi = Math.min(hi, Number(est.max) + span * 0.02);
+        span = hi - lo;
+        if (!(span > 0)) { hi = lo + 1; span = 1; }
+
+        function pct(v) {
+            return Math.max(0, Math.min(100, ((v - lo) / span) * 100));
+        }
+
+        // Winner = the (first) rank-1 guesser.
+        var winner = null;
+        guesses.forEach(function (g) {
+            if (g.rank === 1 && (winner === null || false)) {
+                if (!winner) winner = g;
+            }
+        });
+
+        var me = state.playerName;
+
+        // Build markers. Sort by guess position first, then alternate label
+        // above/below in that order so adjacent markers never share a side
+        // (reduces label overlap when guesses cluster).
+        var sortedForMarkers = guesses.slice().sort(function (a, b) {
+            return Number(a.guess) - Number(b.guess);
+        });
+        var markersHtml = '';
+        sortedForMarkers.forEach(function (g, idx) {
+            var left = pct(Number(g.guess));
+            var isWinner = g.rank === 1;
+            var isMe = g.player_name === me;
+            var labelPos = (idx % 2 === 0) ? 'below' : 'above';
+            var dotStyle = 'background:' + (g.color || 'var(--sky)') + ';';
+            if (isWinner) dotStyle += 'width:18px;height:18px;border-color:var(--gold,#E8C47F);';
+            var nameLabel = isMe ? t('estimate.you') : g.player_name;
+            var star = isWinner ? ' ★' : '';
+            markersHtml +=
+                '<div class="nl-tick" style="left:' + left.toFixed(1) + '%;">' +
+                    '<div class="nl-dot" style="' + dotStyle + '"></div>' +
+                    '<div class="nl-lbl nl-lbl--' + labelPos + (isWinner ? ' is-winner' : '') + '">' +
+                        '<span class="nl-nm">' + pu.escapeHtml(nameLabel) + star + '</span> ' +
+                        pu.escapeHtml(_fmtEstimate(Number(g.guess), '')) +
+                    '</div>' +
+                '</div>';
+        });
+
+        var truthLeft = pct(answer);
+
+        var truthHtml =
+            '<div class="nl-truth-line" style="left:' + truthLeft.toFixed(1) + '%;"></div>' +
+            '<div class="nl-truth-flag" style="left:' + truthLeft.toFixed(1) + '%;">' +
+                pu.escapeHtml(_fmtEstimate(answer, '')) + ' ✓</div>';
+
+        // Ranked result list, sorted by rank then distance.
+        var ranked = guesses.slice().sort(function (a, b) {
+            if (a.rank !== b.rank) return a.rank - b.rank;
+            return a.distance - b.distance;
+        });
+        var rowsHtml = '';
+        ranked.forEach(function (g) {
+            var isMe = g.player_name === me;
+            var swatch = '<span class="res-swatch" style="background:' + (g.color || 'var(--sky)') + '"></span>';
+            var youTag = isMe ? '<span class="res-you-tag">' + pu.escapeHtml(t('estimate.you')) + '</span>' : '';
+            rowsHtml +=
+                '<div class="res-row' + (isMe ? ' is-you' : '') + (g.rank === 1 ? ' is-winner' : '') + '">' +
+                    swatch +
+                    '<span class="res-name">' + pu.escapeHtml(g.player_name) + youTag + '</span>' +
+                    '<span class="res-guess">' + pu.escapeHtml(_fmtEstimate(Number(g.guess), '')) + '</span>' +
+                    '<span class="res-off">±' + pu.escapeHtml(_fmtEstimate(g.distance, '')) + '</span>' +
+                    '<span class="res-pts">+' + (g.points || 0) + '</span>' +
+                '</div>';
+        });
+
+        var winnerBanner = '';
+        if (winner) {
+            var winnerIsMe = winner.player_name === me;
+            var winnerName = winnerIsMe ? t('estimate.youWon') : t('estimate.playerWon', { name: winner.player_name });
+            winnerBanner =
+                '<div class="est-winner">' +
+                    '<span class="est-winner-medal" aria-hidden="true">🏆</span>' +
+                    '<div class="est-winner-text">' +
+                        '<div class="est-winner-name">' + pu.escapeHtml(winnerName) + '</div>' +
+                        '<div class="est-winner-sub">' + pu.escapeHtml(t('estimate.guessOff', { guess: _fmtEstimate(Number(winner.guess), ''), off: _fmtEstimate(winner.distance, '') })) + '</div>' +
+                    '</div>' +
+                    '<div class="est-winner-pts">+' + (winner.points || 0) + '</div>' +
+                '</div>';
+        }
+
+        var noGuessNote = '';
+        if (noGuessCount > 0) {
+            noGuessNote = '<div class="est-noguess">' + pu.escapeHtml(t('estimate.noGuessNote', { count: noGuessCount })) + '</div>';
+        }
+
+        container.innerHTML =
+            '<div class="est-truth">' +
+                '<div class="est-truth-label">' + pu.escapeHtml(t('estimate.correctAnswer')) + '</div>' +
+                '<div class="est-truth-value">' + pu.escapeHtml(_fmtEstimate(answer, unit)) + '</div>' +
+            '</div>' +
+            '<div class="numberline-card">' +
+                '<div class="nl-axis">' + markersHtml + truthHtml + '</div>' +
+                '<div class="nl-scale-ends">' +
+                    '<span>' + pu.escapeHtml(_fmtEstimate(lo, '')) + '</span>' +
+                    '<span>' + pu.escapeHtml(_fmtEstimate(hi, '')) + '</span>' +
+                '</div>' +
+            '</div>' +
+            winnerBanner +
+            '<div class="est-results">' + rowsHtml + '</div>' +
+            noGuessNote;
     }
 
     // ============================================
