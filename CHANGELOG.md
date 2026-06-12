@@ -5,8 +5,33 @@ All notable changes to Quizify are documented here. This project follows
 
 ## [Unreleased]
 
+## [1.3.0-RC15] — 2026-06-12
+
+Fifteenth release candidate for 1.3.0 — a large batch closing the entire
+28-issue / 7-lens code review (correctness, security, concurrency, performance,
+tests) plus three new player-facing features. All work landed via reviewed PRs
+with green CI (lint + drift + mypy + pytest gates) and per-change mobile verifies.
+
 ### Added
 
+- **Lightning Round is now an automatic mid-game event (#285).** Replaces the
+  host-triggered entry from #42: exactly once per game it fires on its own at a
+  uniformly random round inside the eligible window (rounds 3 … N−1; the first
+  two and the last round are blocked). Games of ≤ 3 rounds skip it entirely. A
+  new **Lightning Round** setup toggle (default ON) turns it off. The manual
+  start/end host actions and their buttons were retired, and the recap's former
+  dead-end "again" button is now "Continue game".
+- **Spanish (es) language integration (#335).** The host language picker is now
+  data-driven — it shows a flag for every language the installed packs actually
+  carry (🇩🇪 / 🇬🇧 / 🇪🇸 …) as flag-only chips — and the in-game UI ships a full
+  Spanish translation (`www/i18n/es.json`). `language: es` packs, including
+  community packs, now surface and play under the Spanish flag with no
+  workaround. The category/pack chips are generated server-side from pack
+  metadata, so adding a pack in a new language no longer needs an HTML edit.
+- **Frozen-overlay Ice Card + countdown for the Freeze lockout (#322).** The
+  player targeted by a Freeze now sees a full-card "Ice Card" overlay with an
+  animated countdown ring while locked out (respects `prefers-reduced-motion`);
+  only the target sees it, with no timer leak or stuck overlay across rounds.
 - **Seasonal packs with auto-surfacing (#276).** A pack may carry an optional
   recurring `season` window (`{"start": "MM-DD", "end": "MM-DD", "label": "…"}`,
   both bounds inclusive, wrap-around across the new year supported). While the
@@ -19,12 +44,44 @@ All notable changes to Quizify are documented here. This project follows
 
 ### Fixed
 
+- **Reconnect / resume robustness (#314).** `get_state`/`resume` now project
+  per-player snapshots and keep the pause clock sane, so reconnecting players
+  see their own correct state instead of a shared or stale one.
+- **Three P1 quick-wins (#315).** Steal direction inversion, service-worker
+  scope, and admin reconnect.
+- **Worker hardening (#292, #305).** The pack-submission worker fails closed on
+  a missing secret, tightens CORS, and escapes markdown injection.
+- **Power-up button + host-gone escape hatch (#288, #299).** The power-up button
+  now shows every round, and players get a reset escape hatch when the host
+  disappears.
+- **Backend bug-fix batch (#293, #298, #302, #303, #307, #309, #310).** A
+  consolidated round of server-side correctness fixes from the review.
+- **Reveal highlight correctness (#308, #311).** The server emits a per-player
+  correct button index so the reveal highlights the right answer for everyone,
+  and the admin skip button is no longer hidden.
+- **Freeze lockout + wager timeout (#300, #301).** A frozen player is locked out
+  for the full duration (clock keeps running); an explicit wager that times out
+  keeps its stake.
+- **Lightning recap dead-end + TV dashboard PAUSED/LIGHTNING handling (#294,
+  #296).** The TV dashboard now renders the PAUSED overlay and the
+  LIGHTNING / LIGHTNING_RECAP views (previously it stayed on the prior view).
 - **TV-cast answer text rendered as `[object Object]` (#283).** The cast/TV
-  dashboard treated answer payloads as plain strings, but the
-  `question_started` message delivers `{text, correct}` objects, so each answer
-  card showed the literal `[object Object]`. The grid now normalizes object
-  payloads to their `.text` (strings still pass through unchanged), so the TV
-  view shows the real answer text. Player phones were unaffected.
+  dashboard now normalizes `{text, correct}` answer payloads to their `.text`,
+  so the TV view shows the real answer text. Player phones were unaffected.
+
+### Performance
+
+- **Eliminate per-request wasted work (#304).** Removed redundant per-request
+  computation on hot paths.
+
+### Internal
+
+- **CI gates added (#306, #328).** Lint (ruff E501 + B/SIM/UP/C4), a
+  generated-artifact drift guard, a `mypy` type-check gate, and
+  `QUIZIFY_REQUIRE_NODE=1` enforcement now run on every PR.
+- **Code-tidy + test-coverage batch (#312, #313).** Import/type-hint cleanup, a
+  deduped service wrapper, and new coverage for `sensor.py`, `__init__.py`
+  (options-flow reattach), seasonal edges, and the worker contract.
 
 ## [1.3.0-RC14] — 2026-06-11
 
