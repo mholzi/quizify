@@ -41,7 +41,7 @@ A community pack is a single JSON object:
 |-------------|----------|--------------------------------------------------------------|
 | `name`      | yes      | Display name shown in the picker. Must be a non-empty string.|
 | `questions` | yes      | Non-empty list of question objects (see below).              |
-| `language`  | no       | `"de"` or `"en"`. Defaults to `"de"`.                        |
+| `language`  | no       | `"de"`, `"en"`, or `"es"`. Defaults to `"de"`. A `"es"` pack is selectable directly — the admin language picker and category grid are built from the languages actually present in the loaded packs (#335), so no extra setup or `language: en` workaround is needed.|
 | `version`   | no       | Free-form version string. Defaults to `"1.0"`.              |
 | `theme`     | no       | Optional theme key used for the picker icon.                 |
 
