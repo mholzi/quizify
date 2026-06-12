@@ -84,9 +84,11 @@
 
         // Flash answer buttons correct/wrong. Per-player shuffle means the
         // server's `correct_answer_index` is in the CANONICAL shuffle and
-        // doesn't match this player's button positions, so flashAnswerButtons
-        // resolves the correct *button index* locally (see its comment) —
-        // index-based to stay correct even with duplicate answer texts (#308).
+        // doesn't match this player's button positions. flashAnswerButtons
+        // prefers the per-player `correct_button_index` the server now ships
+        // in this player's all_answers entry (#308 follow-up), falling back to
+        // a local index/text heuristic — correct even with duplicate answer
+        // texts (#308).
         flashAnswerButtons(data.correct_answer, myAnswerEntry);
 
         // New result page: hero + answer strip + standings (with medals)
@@ -698,9 +700,15 @@
         // own shuffled order. The server's `correct_answer_index` is in the
         // CANONICAL shuffle (not this player's), and `all_answers[].answer_index`
         // is the ORIGINAL question index — neither maps to a button position
-        // on the client, and the reveal payload carries no per-player correct
-        // button index. So we use the index information we DO have locally:
+        // on the client. We resolve the correct button index in priority order:
         //
+        //   0. PREFERRED — `myEntry.correct_button_index`: the server now
+        //      computes the correct answer's position in THIS player's own
+        //      shuffled order (#308 follow-up) and ships it in the player's
+        //      `all_answers` entry on both the live reveal broadcast and the
+        //      reconnect snapshot. This is exact even when the player answered
+        //      wrong / didn't answer AND two answers share the same text.
+        //      Absent (older server) → fall through to the local heuristic.
         //   1. If this player answered CORRECTLY, their own submitted button
         //      position IS the correct button — exact, immune to duplicate
         //      texts. (`mySubmittedIndex` is the button position the player
@@ -709,11 +717,6 @@
         //      wrong button when it shares the correct text (the common
         //      duplicate-text collision), and on a remaining tie pick the
         //      first match.
-        //
-        // A fully robust fix (correct even when a non-answering / wrong
-        // player faces duplicate correct-texts) requires the server to send
-        // a per-player correct button index in the reveal payload — that is a
-        // server/ change, out of scope for this www-only PR.
         function _buttonAnswerText(btn) {
             var span = btn.querySelector('.answer-btn-text, .answer-text, span');
             return (span ? span.textContent : btn.textContent || '').trim();
@@ -721,7 +724,12 @@
         var correctText = (correctAnswerText || '').trim();
 
         var correctIndex = -1;
-        if (myEntry && myEntry.correct && mySubmittedIndex >= 0 && mySubmittedIndex < buttons.length) {
+        var serverBtnIdx = (myEntry && typeof myEntry.correct_button_index === 'number')
+            ? myEntry.correct_button_index : -1;
+        if (serverBtnIdx >= 0 && serverBtnIdx < buttons.length) {
+            // (0) Server told us the exact correct button in our own order.
+            correctIndex = serverBtnIdx;
+        } else if (myEntry && myEntry.correct && mySubmittedIndex >= 0 && mySubmittedIndex < buttons.length) {
             // (1) We answered right → our tapped button is the correct one.
             correctIndex = mySubmittedIndex;
         } else if (correctText) {
