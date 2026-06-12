@@ -443,83 +443,50 @@
 
         <!-- End View -->
         <div id="end-view" class="view hidden">
-            <div class="end-container">
-                <!-- Header: small eyebrow above the Champion title.
-                     "Champion" + champion name come from .podium-section. -->
-                <div class="end-header">
-                    <p class="end-subtitle" data-i18n="leaderboard.gameOver">Game Over!</p>
+            <!-- End screen — Variant D "Hybrid" (approved 2026-06-12, #338):
+                 winner hero banner + horizontal highlight chip row + ranked
+                 scoreboard with horizontal score bars and inline ⚡/🔥 badges.
+                 Replaces the old podium + your-result stat trio + superlative
+                 trophy-tile grid + vertical highlights timeline. All dynamic
+                 content is rendered by player-end.js from the live finale
+                 payload (leaderboard + superlatives) — nothing is hard-coded. -->
+            <div class="end-container end-container--d">
+                <!-- Header: "Spiel beendet! · N Runden · M Spieler" -->
+                <div class="end-header end-header--d">
+                    <div class="end-title-d" data-i18n="leaderboard.gameOver">Game Over!</div>
+                    <div class="end-subtitle-d" id="end-meta-line">&nbsp;</div>
                 </div>
 
-                <!-- Podium for top 3 — Soft Parlor (Variant A: Family Trophy Shelf) -->
-                <div class="podium-section">
-                    <h1 class="podium-title" data-i18n="leaderboard.champion">Champion</h1>
-                    <div class="podium-champion-name" id="podium-champion-name">---</div>
-                    <div class="podium">
-                        <div class="podium-place podium-2">
-                            <div class="podium-name" id="podium-2-name">---</div>
-                            <div class="podium-score" id="podium-2-score">0</div>
-                            <div class="podium-stand">2</div>
-                        </div>
-                        <div class="podium-place podium-1">
-                            <div class="podium-name" id="podium-1-name">---</div>
-                            <div class="podium-score" id="podium-1-score">0</div>
-                            <div class="podium-stand">1</div>
-                        </div>
-                        <div class="podium-place podium-3">
-                            <div class="podium-name" id="podium-3-name">---</div>
-                            <div class="podium-score" id="podium-3-score">0</div>
-                            <div class="podium-stand">3</div>
-                        </div>
-                    </div>
+                <!-- SIEGER winner hero banner — populated by renderWinnerHero. -->
+                <div class="end-hero" id="end-hero">
+                    <span class="end-hero-conf end-hero-conf--l" aria-hidden="true">🎉</span>
+                    <span class="end-hero-conf end-hero-conf--r" aria-hidden="true">✨</span>
+                    <div class="end-hero-crown" aria-hidden="true">🏆</div>
+                    <div class="end-hero-label" data-i18n="leaderboard.winnerLabel">Winner</div>
+                    <div class="end-hero-name" id="end-hero-name">---</div>
+                    <div class="end-hero-score" id="end-hero-score">&nbsp;</div>
                 </div>
 
-                <!-- Your result -->
-                <div class="your-result">
-                    <div class="your-result-header" data-i18n="reveal.yourResult">Your Result</div>
-                    <div class="your-result-rank" id="your-final-rank">#?</div>
-                    <div class="your-result-score" id="your-final-score">0 points</div>
-                    <div class="your-result-stats">
-                        <div class="stat">
-                            <span class="stat-value" id="stat-best-streak">0</span>
-                            <span class="stat-label" data-i18n="leaderboard.bestStreak">Best Streak</span>
-                        </div>
-                        <div class="stat">
-                            <span class="stat-value" id="stat-rounds">0</span>
-                            <span class="stat-label" data-i18n="leaderboard.roundsPlayed">Rounds Played</span>
-                        </div>
-                        <div class="stat">
-                            <span class="stat-value" id="stat-powerups">0</span>
-                            <span class="stat-label" data-i18n="leaderboard.powerupsUsed">Power-Ups Used</span>
-                        </div>
-                    </div>
-                </div>
-
-                <!-- Superlatives / Fun Awards -->
-                <div id="superlatives-container" class="superlatives-container hidden">
-                    <!-- Rendered by JS: award cards with emoji, title, player name, value -->
-                </div>
-
-                <!-- Highlights Reel -->
-                <div id="highlights-container" class="highlights-container hidden">
-                    <div class="highlights-header">
-                        <span class="qz-icon qz-icon--sky" data-ui-icon="highlights" aria-hidden="true">🎬</span>
-                        <span data-i18n="highlights.highlightsTab">Highlights</span>
-                    </div>
-                    <div id="highlights-list" class="highlights-list">
+                <!-- Highlights chip row — single horizontal scroll row, one chip
+                     per available highlight. Hidden when there are none. -->
+                <div id="end-highlights-section" class="end-highlights-section hidden">
+                    <div class="end-section-label" data-i18n="highlights.highlightsTab">Highlights</div>
+                    <div id="end-chiprow" class="end-chiprow">
                         <!-- Populated by JavaScript -->
                     </div>
                 </div>
 
-                <!-- Full leaderboard -->
-                <div class="final-leaderboard">
-                    <div class="final-leaderboard-header" data-i18n="leaderboard.fullRankings">Full Rankings</div>
-                    <div id="final-leaderboard-list" class="final-leaderboard-list">
+                <!-- Gesamtwertung — ranked rows with horizontal score bars,
+                     inline ⚡/🔥 badges, the current player tagged "Du". -->
+                <div class="end-scoreboard-section">
+                    <div class="end-section-label" data-i18n="leaderboard.fullRankings">Full Rankings</div>
+                    <div id="end-scoreboard" class="end-scoreboard">
                         <!-- Populated by JavaScript -->
                     </div>
                 </div>
 
-                <!-- Admin controls (Buttons A): primary full-width + a row of two
-                     single-line secondaries. Labels shortened to stay one line. -->
+                <!-- CTA stack — Nochmal spielen (play again) + Beenden (new game).
+                     Admin-only; players see the waiting message instead. -->
                 <div id="end-admin-controls" class="end-admin-controls hidden">
                     <button id="play-again-same-btn" class="resbtn resbtn--primary" type="button" data-i18n="admin.playAgainSame">
                         Play again

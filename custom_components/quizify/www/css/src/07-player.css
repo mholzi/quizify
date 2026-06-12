@@ -29,202 +29,256 @@
     color: var(--color-text-neon-muted);
 }
 
-/* Mobile podium plank size overrides.
-   Base .podium-stand styling lives with .podium-bar above
-   (Soft Parlor shared block). Here we only re-tune heights
-   and number size for the smaller phone surface. */
-.podium-1 .podium-stand {
-    height: 140px;
-    font-size: 2.5rem;
-}
+/* ==========================================
+   End screen — Variant D "Hybrid" (#338, approved 2026-06-12).
+   Winner hero banner + horizontal highlight chip row + ranked
+   scoreboard with horizontal score bars and inline ⚡/🔥 badges.
+   Replaces the old podium / your-result stat trio / superlative
+   trophy-tile grid / vertical highlights timeline (all retired).
+   Built from the real Soft Parlor tokens; matches the validated
+   390px mockup (qz338-variant-d.html), minus the bottom legend.
+   ========================================== */
 
-.podium-2 .podium-stand {
-    height: 105px;
-    font-size: 2rem;
-}
-
-.podium-3 .podium-stand {
-    height: 75px;
-    font-size: 1.5rem;
-}
-
-.podium-rise {
-    animation: podium-rise 0.8s ease-out both;
-}
-
-/* Your personal result card */
-.your-result {
+/* The Variant-D container is a left-aligned single column (the shared
+   .end-container centers its children, which would mis-place the
+   left-anchored section labels and chip row). */
+.end-container--d {
+    align-items: stretch;
+    gap: 0;
     width: 100%;
-    background: var(--color-surface-dark);
-    border: 1px solid var(--color-border-neon);
-    border-radius: var(--radius-lg);
-    padding: var(--space-lg);
 }
 
-.your-result-header {
-    /* -20 % per Markus' live test 2026-05-29; bumped from 0.75 rem. */
-    font-size: 0.6rem;
-    font-weight: 700;
-    text-transform: uppercase;
-    letter-spacing: 0.08em;
-    color: var(--color-text-neon-muted);
-    margin-bottom: var(--space-md);
+.end-header--d {
+    text-align: center;
+    margin-bottom: 16px;
 }
 
-.your-result-rank {
+.end-title-d {
     font-family: var(--font-display);
-    /* -20 % per Markus' live test 2026-05-29; bumped from 2.5 rem. */
-    font-size: 2rem;
+    font-size: 1.85rem;
     font-weight: 900;
-    color: #E88A7F;
-    text-align: center;
-    margin-bottom: var(--space-xs);
-}
-
-.your-result-score {
-    /* -20 % per Markus' live test 2026-05-29; bumped from 1.1 rem. */
-    font-size: 0.88rem;
-    font-weight: 700;
-    color: var(--color-accent-secondary);
-    text-align: center;
-    text-shadow: 0 0 10px var(--color-accent-secondary);
-    margin-bottom: var(--space-md);
-}
-
-.your-result-stats {
-    display: flex;
-    justify-content: space-around;
-    gap: var(--space-md);
-    padding-top: var(--space-md);
-    border-top: 1px solid rgba(255, 255, 255, 0.06);
-}
-
-.stat {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    gap: var(--space-xs);
-    flex: 1;
-}
-
-.stat-value {
-    /* -20 % per Markus' live test 2026-05-29; bumped from 1.25 rem. */
-    font-size: 1rem;
-    font-weight: 800;
+    letter-spacing: -0.02em;
     color: var(--color-text-white);
 }
 
-.stat-label {
-    /* Centered + 20 % smaller per Mai-27 live-test feedback so all three
-       labels read uniformly under their stat value (was left-aligned and
-       inconsistent between Power-Ups GENUTZT and the shorter labels). */
-    font-size: 0.56rem;
-    font-weight: 500;
-    color: var(--color-text-neon-muted);
-    text-transform: uppercase;
-    letter-spacing: 0.05em;
+.end-subtitle-d {
+    font-size: 0.85rem;
+    color: var(--color-text-muted);
+    margin-top: 2px;
+}
+
+/* ---- Winner hero banner (SIEGER) ---- */
+.end-hero {
+    background: linear-gradient(135deg, #FCEFE8 0%, #FFF9F0 100%);
+    border: 1px solid rgba(232, 138, 127, 0.30);
+    border-radius: 16px;
+    box-shadow: var(--shadow-lg);
+    padding: 18px 16px;
     text-align: center;
-    display: block;
-    width: 100%;
+    margin-bottom: 20px;
+    position: relative;
+    overflow: hidden;
+}
+.end-hero-conf {
+    position: absolute;
+    font-size: 13px;
+    opacity: 0.8;
+}
+.end-hero-conf--l { top: 8px; left: 20px; }
+.end-hero-conf--r { top: 12px; right: 24px; }
+.end-hero-crown { font-size: 30px; line-height: 1; }
+.end-hero-label {
+    font-size: 0.66rem;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 0.1em;
+    color: var(--color-accent-primary);
+    margin-top: 4px;
+}
+.end-hero-name {
+    font-family: var(--font-display);
+    font-size: 1.55rem;
+    font-weight: 900;
+    margin-top: 2px;
+    letter-spacing: -0.02em;
+    color: #2A2820;
+    word-break: break-word;
+}
+.end-hero-score {
+    font-family: var(--font-mono);
+    font-weight: 700;
+    font-size: 0.95rem;
+    color: var(--color-text-muted);
+    margin-top: 2px;
 }
 
-/* Superlatives */
-/* Superlatives — Trophy Tiles (Soft Parlor, approved 2026-06-07).
-   2-col grid of square cream cards, each award glyph in a rotating
-   colored disc (coral/sage/sky/sun). */
-.superlatives-container {
-    width: 100%;
-    margin-top: var(--space-lg);
-}
-
-.superlatives-header {
+/* ---- Shared section label ---- */
+.end-section-label {
     font-family: var(--font-display);
     font-weight: 800;
-    font-size: 0.95rem;
+    font-size: 0.78rem;
     letter-spacing: -0.01em;
     color: var(--color-text-white);
-    margin-bottom: var(--space-sm);
+    margin: 0 2px 9px;
 }
 
-.superlatives-grid {
-    display: grid;
-    grid-template-columns: 1fr 1fr;
-    gap: var(--space-sm);
-}
-
-.superlative-card {
+/* ---- Highlights chip row (horizontal scroll + edge mask) ---- */
+.end-highlights-section { margin-bottom: 18px; }
+.end-chiprow {
     display: flex;
-    flex-direction: column;
-    align-items: center;
-    text-align: center;
-    gap: 2px;
-    padding: var(--space-md) var(--space-sm);
-    background: var(--color-bg-white, #FFFFFF);
-    border-radius: var(--radius-md);
-    box-shadow: var(--shadow-sm);
-    animation: superlative-entrance 0.4s ease-out both;
+    gap: 9px;
+    overflow-x: auto;
+    padding: 2px 2px 8px;
+    -webkit-mask-image: linear-gradient(90deg, transparent 0, #000 12px, #000 calc(100% - 16px), transparent 100%);
+            mask-image: linear-gradient(90deg, transparent 0, #000 12px, #000 calc(100% - 16px), transparent 100%);
 }
-
-.superlative-disc {
-    width: 38px;
-    height: 38px;
+.end-chiprow::-webkit-scrollbar { display: none; }
+.rchip {
+    flex: 0 0 auto;
+    background: #fff;
+    border: 1px solid #E5DFCF;
+    border-radius: 12px;
+    box-shadow: var(--shadow-sm);
+    padding: 9px 11px;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    min-width: 122px;
+}
+.rchip-disc {
+    width: 30px;
+    height: 30px;
     border-radius: 50%;
     display: flex;
     align-items: center;
     justify-content: center;
-    font-size: 1.15rem;
-    margin-bottom: var(--space-xs);
+    font-size: 0.95rem;
+    flex-shrink: 0;
 }
-.sup-disc--coral { background: rgba(232, 138, 127, 0.18); color: var(--color-accent-primary); }
-.sup-disc--sage  { background: rgba(127, 168, 151, 0.18); color: var(--color-accent-secondary); }
-.sup-disc--sky   { background: rgba(127, 168, 196, 0.18); color: var(--color-accent-blue); }
-.sup-disc--sun   { background: rgba(232, 196, 127, 0.22); color: #C9A24E; }
-/* #219 P2: award discs holding an SVG glyph instead of an emoji. */
-.superlative-disc--svg svg {
-    width: 60%;
-    height: 60%;
-    fill: none;
-    stroke: currentColor;
-    stroke-width: 2;
-    stroke-linecap: round;
-    stroke-linejoin: round;
-}
-.superlative-disc--svg svg .d { fill: currentColor; stroke: none; }
-
-.superlative-title {
-    font-family: var(--font-display);
-    font-size: 0.8rem;
-    font-weight: 700;
-    color: var(--color-text-white);
-    line-height: 1.2;
-}
-
-.superlative-player {
-    font-size: 0.8rem;
-    color: var(--color-text-white);
-}
-
-.superlative-value {
-    font-family: var(--font-mono);
-    font-size: 0.65rem;
-    color: var(--color-text-neon-muted);
-    letter-spacing: 0.02em;
-    margin-top: 2px;
-}
-
-@keyframes superlative-entrance {
-    from { opacity: 0; transform: translateY(8px) scale(0.96); }
-    to   { opacity: 1; transform: translateY(0) scale(1); }
-}
-
-/* Highlights header */
-.highlights-header {
-    font-size: 0.75rem;
+.rchip-disc.disc-sun   { background: rgba(232, 196, 127, 0.22); color: #C9A24E; }
+.rchip-disc.disc-coral { background: rgba(232, 138, 127, 0.18); color: var(--color-accent-primary); }
+.rchip-disc.disc-sage  { background: rgba(127, 168, 151, 0.18); color: var(--color-accent-secondary); }
+.rchip-disc.disc-sky   { background: rgba(127, 168, 196, 0.18); color: var(--color-accent-blue); }
+.rchip-main { min-width: 0; }
+.rchip-title {
+    font-size: 0.66rem;
     font-weight: 700;
     text-transform: uppercase;
-    letter-spacing: 0.08em;
-    color: var(--color-text-neon-muted);
-    margin-bottom: var(--space-sm);
+    letter-spacing: 0.04em;
+    color: var(--color-text-muted);
+    line-height: 1.1;
+}
+.rchip-val {
+    font-family: var(--font-mono);
+    font-weight: 700;
+    font-size: 0.82rem;
+    color: var(--color-text-white);
+    margin-top: 2px;
+    line-height: 1.1;
+}
+.rchip-who {
+    font-size: 0.64rem;
+    color: var(--color-text-muted);
+    opacity: 0.85;
+    margin-top: 1px;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+    max-width: 130px;
+}
+
+/* ---- Gesamtwertung scoreboard with score bars ---- */
+.end-scoreboard-section { margin-top: 2px; }
+.sb-row {
+    display: flex;
+    align-items: flex-start;
+    gap: 11px;
+    background: #fff;
+    border: 1px solid #ECE4D2;
+    border-radius: 14px;
+    padding: 11px 13px;
+}
+.sb-row + .sb-row { margin-top: 9px; }
+.sb-row--me {
+    border-color: var(--color-accent-primary);
+    background: #FFF6F4;
+}
+.sb-row--away { opacity: 0.72; }
+.sb-rank {
+    width: 30px;
+    height: 30px;
+    border-radius: 50%;
+    flex-shrink: 0;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    font-weight: 800;
+    font-size: 13px;
+    color: #fff;
+    background: #EFE8D6;
+    margin-top: 1px;
+}
+.sb-rank.r-neutral { color: var(--color-text-muted); }
+.sb-rank.r-gold   { background: linear-gradient(135deg, #E8C47F, #D9A441); }
+.sb-rank.r-silver { background: linear-gradient(135deg, #cdd3d6, #aab4ba); }
+.sb-rank.r-bronze { background: linear-gradient(135deg, #e0b08a, #c98b5e); }
+.sb-body { flex: 1; min-width: 0; }
+.sb-nameline {
+    display: flex;
+    align-items: center;
+    gap: 6px;
+    flex-wrap: wrap;
+}
+.sb-name {
+    font-weight: 700;
+    font-size: 14px;
+    color: var(--color-text-white);
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+    max-width: 60%;
+}
+.sb-away {
+    font-size: 0.7rem;
+    color: var(--color-text-muted);
+    opacity: 0.7;
+}
+.sb-badge { font-size: 0.82rem; line-height: 1; }
+.sb-you {
+    flex-shrink: 0;
+    font-size: 9px;
+    font-weight: 800;
+    letter-spacing: 0.04em;
+    color: #fff;
+    background: var(--color-accent-primary);
+    border-radius: 5px;
+    padding: 2px 5px;
+    line-height: 1;
+}
+.sb-barwrap {
+    margin-top: 7px;
+    height: 9px;
+    background: #F0EADC;
+    border-radius: 6px;
+    overflow: hidden;
+}
+.sb-bar {
+    height: 100%;
+    border-radius: 6px;
+    transition: width 0.5s ease-out;
+}
+.sb-bar.bar-gold  { background: linear-gradient(90deg, #E8C47F, #D9A441); }
+.sb-bar.bar-coral { background: linear-gradient(90deg, #EDA197, #E88A7F); }
+.sb-bar.bar-sage  { background: linear-gradient(90deg, #9FC0B1, #7FA897); }
+.sb-score {
+    flex-shrink: 0;
+    font-family: var(--font-mono);
+    font-weight: 700;
+    font-size: 1rem;
+    color: var(--color-text-white);
+    font-variant-numeric: tabular-nums;
+    align-self: flex-start;
+    margin-top: 5px;
 }
 
 /* End view controls — Buttons A (approved 2026-06-10): a full-width

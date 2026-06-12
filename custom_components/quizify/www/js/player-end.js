@@ -1,6 +1,9 @@
 /**
  * Quizify Player - End Module
- * End screen: podium, superlatives, share card, full leaderboard, new-game
+ * End screen — Variant D "Hybrid" (#338): winner hero banner, horizontal
+ * highlight chip row, ranked scoreboard with score bars + inline badges,
+ * play-again / new-game controls. Renders entirely from the live finale
+ * payload (leaderboard + superlatives) — no hard-coded sample data.
  */
 
 (function () {
@@ -17,37 +20,50 @@
         return key;
     }
 
+    // _tf — translate with an English/literal fallback when the key is
+    // missing (i18n.t returns the key unchanged on a miss).
+    function _tf(key, fallback, params) {
+        var v = _t(key, params);
+        return (v === key) ? fallback : v;
+    }
+
     // ============================================
     // End View
     // ============================================
 
     /**
      * Update end view with final standings and stats
-     * @param {Object} data - State data with leaderboard and game_stats
+     * @param {Object} data - State data with leaderboard and superlatives
      */
     function updateEndView(data) {
         window.scrollTo(0, 0);
-        var leaderboard = data.leaderboard || [];
+        var leaderboard = (data.leaderboard || []).slice();
 
         leaderboard.forEach(function (entry) {
             entry.is_current = (entry.name === state.playerName);
         });
+        // Defensive: ensure rank order (server sends sorted, but be safe).
+        leaderboard.sort(function (a, b) {
+            return (a.rank || 0) - (b.rank || 0);
+        });
 
-        // Podium (positions 1, 2, 3)
-        renderFinale(leaderboard);
+        var superlatives = data.superlatives || [];
 
-        // Your result
-        var currentPlayer = leaderboard.find(function (p) { return p.is_current; });
-        renderYourResult(currentPlayer, data);
+        // 1. Header meta line: "N Runden · M Spieler"
+        renderEndHeader(leaderboard, data);
 
-        // Full leaderboard
-        renderFullLeaderboard(leaderboard);
+        // 2. Winner hero banner
+        renderWinnerHero(leaderboard);
 
-        // Superlatives
-        renderSuperlatives(data.superlatives);
+        // Build the highlight set once — shared by the chip row (3) and the
+        // inline scoreboard badges (4), keyed by winner name.
+        var highlights = buildHighlights(leaderboard, superlatives);
 
-        // Highlights
-        renderHighlights(leaderboard);
+        // 3. Highlights chip row
+        renderHighlightChips(highlights);
+
+        // 4. Gesamtwertung scoreboard with bars + inline badges
+        renderScoreboard(leaderboard, highlights);
 
         // Admin / player controls.
         //
@@ -80,255 +96,245 @@
     }
 
     // ============================================
-    // Podium / Finale
+    // Header meta line
     // ============================================
 
     /**
-     * Animate podium rise: 2nd, then 1st, then 3rd (Beatify order)
-     * @param {Array} leaderboard - Sorted leaderboard
+     * Fill the "N Runden · M Spieler" meta line under the title.
+     * Rounds come from total_rounds (or the max rounds_played fallback);
+     * players from the leaderboard length.
      */
-    function renderFinale(leaderboard) {
-        // Update podium places
-        [1, 2, 3].forEach(function (place) {
-            var player = leaderboard.find(function (p) { return p.rank === place; });
-            var nameEl = document.getElementById('podium-' + place + '-name');
-            var scoreEl = document.getElementById('podium-' + place + '-score');
-            // textContent already HTML-escapes; an extra escapeHtml() here
-            // double-encodes (e.g. "Tom & Jr" → "Tom &amp;amp; Jr").
-            if (nameEl) nameEl.textContent = player ? player.name : '---';
-            if (scoreEl) scoreEl.textContent = player ? player.score : '0';
-        });
+    function renderEndHeader(leaderboard, data) {
+        var metaEl = document.getElementById('end-meta-line');
+        if (!metaEl) return;
 
-        // Champion title block: fill the winner's name under "Champion".
-        var champEl = document.getElementById('podium-champion-name');
-        if (champEl) {
-            var champion = leaderboard.find(function (p) { return p.rank === 1; });
-            // textContent escapes already — no escapeHtml (would double-encode).
-            champEl.textContent = champion ? champion.name : '---';
+        var rounds = (data && data.total_rounds) || 0;
+        if (!rounds) {
+            // Fallback: the highest rounds_played across players.
+            leaderboard.forEach(function (p) {
+                if ((p.rounds_played || 0) > rounds) rounds = p.rounds_played;
+            });
         }
+        var players = leaderboard.length;
 
-        // Animate podium rise with delays: 2nd (0s), 1st (1s), 3rd (2s)
-        var podiumPlaces = document.querySelectorAll('.podium-place');
-        podiumPlaces.forEach(function (el) {
-            el.classList.remove('podium-rise');
-        });
-
-        // 2nd place rises first
-        var place2 = document.querySelector('.podium-2');
-        if (place2) {
-            setTimeout(function () { place2.classList.add('podium-rise'); }, 300);
+        var parts = [];
+        if (rounds) {
+            parts.push(_tf('leaderboard.roundsCount', '{count} Runden', { count: rounds }));
         }
+        parts.push(_tf('leaderboard.playersCount', '{count} Spieler', { count: players }));
+        metaEl.textContent = parts.join(' · ');
+    }
 
-        // 1st place rises second
-        var place1 = document.querySelector('.podium-1');
-        if (place1) {
-            setTimeout(function () { place1.classList.add('podium-rise'); }, 1300);
-        }
+    // ============================================
+    // Winner hero banner (SIEGER)
+    // ============================================
 
-        // 3rd place rises last
-        var place3 = document.querySelector('.podium-3');
-        if (place3) {
-            setTimeout(function () { place3.classList.add('podium-rise'); }, 2300);
+    function renderWinnerHero(leaderboard) {
+        var nameEl = document.getElementById('end-hero-name');
+        var scoreEl = document.getElementById('end-hero-score');
+        var winner = leaderboard.find(function (p) { return p.rank === 1; }) || leaderboard[0];
+        // textContent escapes already — no escapeHtml (would double-encode).
+        if (nameEl) nameEl.textContent = winner ? winner.name : '---';
+        if (scoreEl) {
+            scoreEl.textContent = winner
+                ? _t('game.pointsLabel', { count: winner.score })
+                : '';
         }
     }
 
     // ============================================
-    // Your Result
+    // Highlights — shared model
     // ============================================
 
-    /**
-     * Render personal final result
-     * @param {Object} currentPlayer - Current player leaderboard entry
-     * @param {Object} data - Full state data
-     */
-    function renderYourResult(currentPlayer, data) {
-        var rankEl = document.getElementById('your-final-rank');
-        var scoreEl = document.getElementById('your-final-score');
-        var bestStreakEl = document.getElementById('stat-best-streak');
-        var roundsEl = document.getElementById('stat-rounds');
-        var powerupsEl = document.getElementById('stat-powerups');
+    // award_key → chip disc tint class. Keeps the chip palette stable per
+    // highlight type (sun = top/score, coral = streak, sage = best round,
+    // sky = fastest) — mirrors the approved Variant-D mockup.
+    var CHIP_TINT = {
+        'topScore': 'disc-sun',          // overall winner / highest total
+        'highlights.awards.hotStreak': 'disc-coral',
+        'highlights.awards.topScore': 'disc-sage',     // best single round
+        'highlights.awards.fastestFinger': 'disc-sky',
+        'highlights.awards.comebackKing': 'disc-sage',
+        'highlights.awards.mostAccurate': 'disc-sage',
+        'highlights.awards.buzzkill': 'disc-sky',
+        'highlights.awards.knowledgeExpert': 'disc-sun'
+    };
 
-        if (currentPlayer) {
-            if (rankEl) rankEl.textContent = '#' + currentPlayer.rank;
-            if (scoreEl) scoreEl.textContent = _t('game.pointsLabel', { count: currentPlayer.score });
-            if (bestStreakEl) bestStreakEl.textContent = currentPlayer.best_streak || 0;
-            if (roundsEl) roundsEl.textContent = currentPlayer.rounds_played || 0;
-            if (powerupsEl) powerupsEl.textContent = currentPlayer.powerups_used || 0;
+    // award_key → emoji glyph for the chip disc + inline scoreboard badge.
+    var CHIP_EMOJI = {
+        'topScore': '🏅',
+        'highlights.awards.hotStreak': '🔥',
+        'highlights.awards.topScore': '🎯',
+        'highlights.awards.fastestFinger': '⚡',
+        'highlights.awards.comebackKing': '🚀',
+        'highlights.awards.mostAccurate': '🎯',
+        'highlights.awards.buzzkill': '🧊',
+        'highlights.awards.knowledgeExpert': '🧠'
+    };
+
+    /**
+     * Build the highlight list rendered by the chip row + inline badges.
+     * Source of truth is the server-computed ``superlatives`` payload (already
+     * i18n-keyed), prepended with a derived "Höchste Punktzahl" chip for the
+     * overall winner. Renders ONLY the highlights the payload provides — a
+     * missing superlative simply omits its chip.
+     *
+     * @returns {Array<{key,emoji,tint,title,value,player,badge}>}
+     */
+    function buildHighlights(leaderboard, superlatives) {
+        var out = [];
+        var seenPlayerBadge = {};
+
+        // Derived: overall highest total score (the winner).
+        var winner = leaderboard.find(function (p) { return p.rank === 1; }) || leaderboard[0];
+        if (winner && winner.score > 0) {
+            out.push({
+                key: 'topScore',
+                emoji: CHIP_EMOJI.topScore,
+                tint: CHIP_TINT.topScore,
+                title: _tf('highlights.topScore', 'Höchste Punktzahl'),
+                value: _t('highlights.scoreUnit', { count: winner.score }),
+                player: winner.name,
+                badge: '🏅'
+            });
         }
-    }
 
-    // ============================================
-    // Full Leaderboard
-    // ============================================
+        // Server-computed superlatives (fastest finger, hot streak, best round,
+        // comeback, etc.). Each carries award_key/detail_key + winner.
+        (superlatives || []).forEach(function (award) {
+            var key = award.award_key || '';
+            var emoji = CHIP_EMOJI[key] || award.icon || '🏆';
+            var tint = CHIP_TINT[key] || 'disc-sage';
 
-    /**
-     * Render numbered leaderboard with scores
-     * @param {Array} leaderboard - Full sorted leaderboard
-     */
-    function renderFullLeaderboard(leaderboard) {
-        var listEl = document.getElementById('final-leaderboard-list');
-        if (!listEl) return;
+            var title = key ? _t(key) : (award.award || '');
+            if (key && title === key) title = award.award || '';
 
-        // Shared medal-card standings (Standings A) — same treatment as the
-        // lightning recap "Totals" (#246/#248). A round medal disc carries the
-        // rank (top-3 gold/silver/bronze), the current player's row is coral-
-        // highlighted with a "DU"/"YOU" tag. Disconnected players keep an
-        // "(away)" badge appended to the name.
-        var youLabel = (_t('lobby.you') && _t('lobby.you') !== 'lobby.you')
-            ? _t('lobby.you') : 'Du';
-        var awayText = (_t('lobby.away') && _t('lobby.away') !== 'lobby.away')
-            ? _t('lobby.away') : 'away';
+            var detailKey = award.detail_key;
+            var detailParams = award.detail_params || {};
+            var value = detailKey ? _t(detailKey, detailParams) : (award.detail || '');
+            if (detailKey && value === detailKey) value = award.detail || '';
 
-        var rows = leaderboard.map(function (entry) {
-            var name = entry.name || '';
-            if (entry.connected === false) name += ' (' + awayText + ')';
-            return {
-                rank: entry.rank,
-                name: name,
-                score: entry.score,
-                isYou: !!entry.is_current
-            };
+            out.push({
+                key: key,
+                emoji: emoji,
+                tint: tint,
+                title: title,
+                value: value,
+                player: award.winner || '',
+                badge: emoji
+            });
         });
-        pu.renderMedalStandings(listEl, rows, { youLabel: youLabel });
+
+        // Resolve inline scoreboard badges: each player gets the emoji of every
+        // highlight they own (dedup per player+emoji).
+        out.forEach(function (h) {
+            if (!h.player) return;
+            var k = h.player + '|' + h.badge;
+            if (seenPlayerBadge[k]) { h._dupBadge = true; return; }
+            seenPlayerBadge[k] = true;
+        });
+
+        return out;
     }
 
     // ============================================
-    // Superlatives
+    // Highlights chip row (horizontal scroll)
     // ============================================
 
-    /**
-     * Render superlatives / fun awards with staggered entrance
-     * @param {Array|null} superlatives - Array of award objects
-     */
-    function renderSuperlatives(superlatives) {
-        var container = document.getElementById('superlatives-container');
-        if (!container) return;
+    function renderHighlightChips(highlights) {
+        var section = document.getElementById('end-highlights-section');
+        var row = document.getElementById('end-chiprow');
+        if (!section || !row) return;
 
-        if (!superlatives || superlatives.length === 0) {
-            container.classList.add('hidden');
+        if (!highlights || highlights.length === 0) {
+            section.classList.add('hidden');
+            row.innerHTML = '';
             return;
         }
 
-        // Trophy Tiles: 2-col grid of square cards, each with the award glyph
-        // in a rotating colored disc (coral/sage/sky/sun across the palette).
-        var DISC_TINTS = ['sup-disc--coral', 'sup-disc--sage', 'sup-disc--sky', 'sup-disc--sun'];
-        // award_key → shared SVG glyph (#219 P2). Renders the icon client-side
-        // from the stable key rather than the server emoji; falls back to the
-        // server emoji for any future award_key not in this map.
-        var AWARD_GLYPH = {
-            'highlights.awards.topScore': 'medal',
-            'highlights.awards.fastestFinger': 'bolt',
-            'highlights.awards.comebackKing': 'rocket',
-            'highlights.awards.hotStreak': 'flame',
-            'highlights.awards.mostAccurate': 'target',
-            'highlights.awards.buzzkill': 'freeze',
-            'highlights.awards.knowledgeExpert': 'brain'
-        };
-        var icons = window.QuizifyIcons;
-        var cards = '';
-        superlatives.forEach(function (award, index) {
-            // Server format: {award, icon, winner, detail, award_key, detail_key, detail_params}
-            // Legacy format: {title, emoji, player_name, value}
-            var emoji = award.icon || award.emoji || '🏆';
-            // Resolve the SVG glyph from the award_key; fall back to the emoji.
-            var glyphName = AWARD_GLYPH[award.award_key];
-            var glyphSvg = (glyphName && icons) ? icons.uiIcon(glyphName) : '';
-            // #312 defense-in-depth: glyphSvg is trusted local markup, but the
-            // emoji fallback is server-provided — escape it before injecting.
-            var discInner = glyphSvg || pu.escapeHtml(emoji);
-            // Prefer i18n keys if the server sent them; fall back to English literals.
-            var titleKey = award.award_key;
-            var detailKey = award.detail_key;
-            var detailParams = award.detail_params || {};
-            var title = titleKey ? _t(titleKey) : (award.award || award.title || '');
-            // If _t returned the key unchanged (missing translation), keep the
-            // English literal as a fallback so we never show "highlights.awards.x".
-            if (titleKey && title === titleKey) title = award.award || award.title || '';
-            var player = award.winner || award.player_name || '';
-            var detail = detailKey ? _t(detailKey, detailParams) : (award.detail || award.value || '');
-            if (detailKey && detail === detailKey) detail = award.detail || award.value || '';
-
-            var tint = DISC_TINTS[index % DISC_TINTS.length];
-            cards += '<div class="superlative-card" style="animation-delay: ' + (index * 0.2) + 's">' +
-                '<div class="superlative-disc ' + tint + (glyphSvg ? ' superlative-disc--svg' : '') + '">' + discInner + '</div>' +
-                '<div class="superlative-title">' + pu.escapeHtml(title) + '</div>' +
-                '<div class="superlative-player">' + pu.escapeHtml(player) + '</div>' +
-                '<div class="superlative-value">' + pu.escapeHtml(String(detail)) + '</div>' +
-            '</div>';
-        });
-
-        container.innerHTML =
-            '<div class="superlatives-header" data-i18n="leaderboard.awardsHeader">' +
-                pu.escapeHtml(_t('leaderboard.awardsHeader') !== 'leaderboard.awardsHeader' ? _t('leaderboard.awardsHeader') : 'Auszeichnungen') +
-            '</div>' +
-            '<div class="superlatives-grid">' + cards + '</div>';
-        container.classList.remove('hidden');
-    }
-
-    // ============================================
-    // Highlights
-    // ============================================
-
-    function renderHighlights(leaderboard) {
-        var container = document.getElementById('highlights-container');
-        var listEl = document.getElementById('highlights-list');
-        if (!container || !listEl) return;
-        if (!leaderboard || leaderboard.length < 2) { container.classList.add('hidden'); return; }
-
-        var highlights = [];
-
-        // Top scorer this game
-        var winner = leaderboard[0];
-        if (winner) highlights.push({
-            icon: '🥇',
-            label: _t('highlights.topScore'),
-            player: winner.name,
-            value: _t('highlights.scoreUnit', { count: winner.score }),
-        });
-
-        // Longest streak
-        var streakLeader = leaderboard.slice().sort(function(a,b){ return (b.streak||0)-(a.streak||0); })[0];
-        if (streakLeader && streakLeader.streak > 1) {
-            highlights.push({
-                icon: '🔥',
-                label: _t('highlights.bestStreak'),
-                player: streakLeader.name,
-                value: _t('highlights.streakUnit', { count: streakLeader.streak }),
-            });
-        }
-
-        // Most rounds correct (from round_history if available)
-        var mostCorrect = leaderboard.slice().sort(function(a,b){
-            var ac = (a.rounds_correct || 0); var bc = (b.rounds_correct || 0);
-            return bc - ac;
-        })[0];
-        if (mostCorrect && mostCorrect.rounds_correct > 0) {
-            highlights.push({
-                icon: '🎯',
-                label: _t('highlights.mostCorrect'),
-                player: mostCorrect.name,
-                value: _t('highlights.correctUnit', { count: mostCorrect.rounds_correct }),
-            });
-        }
-
-        if (highlights.length === 0) { container.classList.add('hidden'); return; }
-
-        // Vertical Timeline: a sage spine with a rotating-color dot per moment,
-        // each card branching to the right. Reads top-to-bottom as the story
-        // of the game.
-        var DOT_TINTS = ['hl-dot--coral', 'hl-dot--sage', 'hl-dot--sky', 'hl-dot--sun'];
-        listEl.innerHTML = highlights.map(function(h, i) {
-            var tint = DOT_TINTS[i % DOT_TINTS.length];
-            return '<div class="highlight-item" style="animation-delay:' + (i * 0.15) + 's">' +
-                '<span class="highlight-dot ' + tint + '"></span>' +
-                '<div class="highlight-card">' +
-                    '<div class="highlight-label">' + pu.escapeHtml(h.label) + '</div>' +
-                    '<div class="highlight-player">' + pu.escapeHtml(h.player) + '</div>' +
-                    '<div class="highlight-value">' + pu.escapeHtml(h.value) + '</div>' +
+        row.innerHTML = highlights.map(function (h) {
+            var who = h.player ? '<div class="rchip-who">' + pu.escapeHtml(h.player) + '</div>' : '';
+            return '<div class="rchip">' +
+                '<div class="rchip-disc ' + h.tint + '">' + pu.escapeHtml(h.emoji) + '</div>' +
+                '<div class="rchip-main">' +
+                    '<div class="rchip-title">' + pu.escapeHtml(h.title) + '</div>' +
+                    '<div class="rchip-val">' + pu.escapeHtml(String(h.value)) + '</div>' +
+                    who +
                 '</div>' +
             '</div>';
         }).join('');
-        container.classList.remove('hidden');
+        section.classList.remove('hidden');
+    }
+
+    // ============================================
+    // Gesamtwertung scoreboard (bars + inline badges)
+    // ============================================
+
+    function renderScoreboard(leaderboard, highlights) {
+        var board = document.getElementById('end-scoreboard');
+        if (!board) return;
+
+        var youLabel = _tf('lobby.you', 'Du');
+        var awayText = _tf('lobby.away', 'away');
+
+        // Map player name → ordered list of badge emojis they own. The "🏅"
+        // overall-winner badge is implicit (rank 1 row is gold) so skip it on
+        // the rows to avoid clutter; keep the earned superlative badges
+        // (⚡ fastest, 🔥 streak, 🎯 best round, etc.).
+        var badgesByPlayer = {};
+        (highlights || []).forEach(function (h) {
+            if (!h.player || h._dupBadge) return;
+            if (h.key === 'topScore') return; // implicit on the gold row
+            (badgesByPlayer[h.player] = badgesByPlayer[h.player] || []).push({
+                emoji: h.badge,
+                title: h.title
+            });
+        });
+
+        var topScore = 0;
+        leaderboard.forEach(function (p) { if ((p.score || 0) > topScore) topScore = p.score; });
+
+        var html = leaderboard.map(function (entry) {
+            var rank = entry.rank || 0;
+            var isYou = !!entry.is_current;
+            var isWinner = (rank === 1);
+            var pct = topScore > 0 ? Math.max(4, Math.round((entry.score / topScore) * 100)) : 0;
+
+            // Rank disc: gold for #1, silver for #2, neutral otherwise.
+            var discClass = 'r-neutral';
+            if (rank === 1) discClass = 'r-gold';
+            else if (rank === 2) discClass = 'r-silver';
+            else if (rank === 3) discClass = 'r-bronze';
+
+            var barClass = isYou ? 'bar-coral' : (isWinner ? 'bar-gold' : 'bar-sage');
+
+            var badges = (badgesByPlayer[entry.name] || []).map(function (b) {
+                return '<span class="sb-badge" title="' + pu.escapeHtml(b.title) + '">' +
+                    pu.escapeHtml(b.emoji) + '</span>';
+            }).join('');
+
+            var youTag = isYou
+                ? '<span class="sb-you">' + pu.escapeHtml(youLabel) + '</span>' : '';
+
+            var away = (entry.connected === false)
+                ? '<span class="sb-away">(' + pu.escapeHtml(awayText) + ')</span>' : '';
+
+            return '<div class="sb-row' + (isYou ? ' sb-row--me' : '') +
+                    (entry.connected === false ? ' sb-row--away' : '') + '">' +
+                '<div class="sb-rank ' + discClass + '">' + rank + '</div>' +
+                '<div class="sb-body">' +
+                    '<div class="sb-nameline">' +
+                        '<span class="sb-name">' + pu.escapeHtml(entry.name || '') + '</span>' +
+                        away + badges + youTag +
+                    '</div>' +
+                    '<div class="sb-barwrap"><div class="sb-bar ' + barClass +
+                        '" style="width:' + pct + '%;"></div></div>' +
+                '</div>' +
+                '<div class="sb-score">' + (entry.score || 0) + '</div>' +
+            '</div>';
+        }).join('');
+
+        board.innerHTML = html;
     }
 
     // ============================================
@@ -398,12 +404,11 @@
 
     window.QuizifyPlayerEnd = {
         updateEndView: updateEndView,
-        renderFinale: renderFinale,
-        renderYourResult: renderYourResult,
-        renderFullLeaderboard: renderFullLeaderboard,
-        renderSuperlatives: renderSuperlatives,
-        setupNewGameButton: setupNewGameButton,
-        renderHighlights: renderHighlights
+        renderWinnerHero: renderWinnerHero,
+        renderScoreboard: renderScoreboard,
+        renderHighlightChips: renderHighlightChips,
+        buildHighlights: buildHighlights,
+        setupNewGameButton: setupNewGameButton
     };
 
 })();
