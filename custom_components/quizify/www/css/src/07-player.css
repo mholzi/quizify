@@ -2990,3 +2990,120 @@ body.is-admin .reaction-bar {
     justify-content: center;
     margin-top: var(--space-md);
 }
+
+/* ==========================================
+   #322 Freeze lockout "Ice Card" overlay (Variant A)
+   Full-scrim frost backdrop + centered ice card with a live countdown
+   ring. Shown only on the FREEZE target while the server lockout runs;
+   visually + interactively blocks answer taps. Driven by player-game.js
+   (startFrozenOverlay / stopFrozenOverlay). Mirrors the finale-countdown
+   overlay family (warm parlor scrim cooled with an icy bloom).
+   ========================================== */
+.frozen-overlay {
+    position: absolute;
+    inset: 0;
+    z-index: 1100;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    /* warm parlor backdrop, cooled with an icy bloom from the centre */
+    background:
+        radial-gradient(120% 90% at 50% 42%, rgba(127, 168, 196, 0.30) 0%, rgba(31, 27, 20, 0) 55%),
+        radial-gradient(140% 120% at 50% 50%, rgba(42, 36, 25, 0.55) 0%, rgba(31, 27, 20, 0.62) 60%, rgba(21, 18, 12, 0.70) 100%);
+    backdrop-filter: blur(7px);
+    -webkit-backdrop-filter: blur(7px);
+    overflow: hidden;
+}
+.frozen-overlay.hidden { display: none; }
+/* faint frost dotting masked to the centre (mirrors finale ::after) */
+.frozen-overlay::after {
+    content: "";
+    position: absolute;
+    inset: 0;
+    pointer-events: none;
+    background-image: radial-gradient(rgba(229, 240, 247, 0.10) 1px, transparent 1px);
+    background-size: 24px 24px;
+    -webkit-mask: radial-gradient(80% 70% at 50% 45%, #000 30%, transparent 80%);
+    mask: radial-gradient(80% 70% at 50% 45%, #000 30%, transparent 80%);
+}
+
+.frozen-overlay .ice-card {
+    position: relative;
+    z-index: 2;
+    width: 300px;
+    max-width: calc(100vw - 36px);
+    padding: 34px 28px 30px;
+    text-align: center;
+    background: linear-gradient(160deg, rgba(255, 255, 255, 0.96), rgba(238, 247, 251, 0.94));
+    border: 2px solid rgba(127, 168, 196, 0.55);
+    border-radius: 22px;
+    box-shadow: var(--shadow-xl), 0 0 0 6px rgba(127, 168, 196, 0.10), 0 0 60px rgba(127, 168, 196, 0.25);
+}
+.frozen-overlay .ice-flake {
+    font-size: 40px;
+    line-height: 1;
+    margin-bottom: 10px;
+    filter: drop-shadow(0 0 14px rgba(127, 168, 196, 0.6));
+    animation: frozenFlake 4s linear infinite;
+}
+@keyframes frozenFlake { to { transform: rotate(360deg); } }
+.frozen-overlay .ice-title {
+    font-family: var(--font-display);
+    font-weight: 800;
+    font-size: 27px;
+    letter-spacing: -0.01em;
+    color: var(--color-text-primary);
+    margin-bottom: 4px;
+}
+.frozen-overlay .ice-sub {
+    font-size: 13px;
+    color: var(--color-text-muted);
+    margin-bottom: 22px;
+}
+
+/* countdown ring */
+.frozen-overlay .frozen-ring {
+    position: relative;
+    width: 128px;
+    height: 128px;
+    margin: 0 auto 18px;
+}
+.frozen-overlay .frozen-ring svg { transform: rotate(-90deg); }
+.frozen-overlay .frozen-ring-track {
+    fill: none;
+    stroke: rgba(127, 168, 196, 0.20);
+    stroke-width: 10;
+}
+.frozen-overlay .frozen-ring-prog {
+    fill: none;
+    stroke: var(--color-accent-blue);
+    stroke-width: 10;
+    stroke-linecap: round;
+    /* circumference for r=54 -> 2*pi*54 = 339.29; offset is set live by JS */
+    stroke-dasharray: 339.29;
+    stroke-dashoffset: 0;
+    transition: stroke-dashoffset 1s linear;
+}
+.frozen-overlay .frozen-ring-num {
+    position: absolute;
+    inset: 0;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-family: var(--font-mono);
+    font-weight: 700;
+    font-size: 54px;
+    color: var(--color-accent-blue);
+    font-variant-numeric: tabular-nums;
+}
+.frozen-overlay .ice-foot {
+    font-size: 12px;
+    color: var(--color-text-light);
+}
+
+/* Honor reduced-motion: drop the flake spin (the ring still depletes,
+   but its 1s transition is a functional countdown indicator, not decor). */
+@media (prefers-reduced-motion: reduce) {
+    .frozen-overlay .ice-flake { animation: none; }
+}

@@ -2861,6 +2861,100 @@
         }
     }
 
+    // ============================================
+    // Freeze lockout "Ice Card" overlay (#322, Variant A)
+    // ============================================
+
+    // Ring geometry: r=54 -> circumference 2*pi*54 ~= 339.29 (matches the
+    // stroke-dasharray in 07-player.css). The progress stroke depletes by
+    // raising stroke-dashoffset toward the full circumference as time runs.
+    var FROZEN_RING_CIRC = 2 * Math.PI * 54;
+    var frozenInterval = null;
+
+    /**
+     * Show the frozen overlay and run a per-second countdown ring for
+     * `seconds` seconds. While shown, answer taps are blocked both visually
+     * (full-scrim overlay) and interactively (handleAnswerClick early-returns
+     * when the overlay is active; server also rejects via ERR_FROZEN). The
+     * overlay auto-removes when the countdown hits 0, or when stopFrozenOverlay
+     * is called (question advances / reveal / reset). Idempotent: a fresh call
+     * tears down any in-flight timer first so we never leak intervals or stack
+     * two countdowns.
+     *
+     * @param {number} seconds - lockout duration from effect.freeze_duration
+     */
+    function startFrozenOverlay(seconds) {
+        var overlay = document.getElementById('frozen-overlay');
+        if (!overlay) return;
+
+        // Defensive: a non-positive/garbage duration shouldn't strand the
+        // player behind a permanent overlay — just don't show it.
+        var total = Math.max(0, Math.floor(Number(seconds) || 0));
+        if (total <= 0) { stopFrozenOverlay(); return; }
+
+        // Clear any previous run (e.g. a second freeze before the first
+        // elapsed) so timers don't stack.
+        if (frozenInterval) {
+            clearInterval(frozenInterval);
+            frozenInterval = null;
+        }
+
+        var numEl = document.getElementById('frozen-ring-num');
+        var progEl = document.getElementById('frozen-ring-prog');
+
+        overlay.classList.remove('hidden');
+
+        var remaining = total;
+
+        function paint() {
+            if (numEl) numEl.textContent = remaining;
+            if (progEl) {
+                // fraction elapsed -> how much of the ring is "used up"
+                var elapsedFrac = (total - remaining) / total;
+                progEl.style.strokeDashoffset = (FROZEN_RING_CIRC * elapsedFrac).toFixed(2);
+            }
+        }
+
+        // Initial frame: full ring, full number.
+        paint();
+
+        frozenInterval = setInterval(function () {
+            remaining -= 1;
+            if (remaining <= 0) {
+                remaining = 0;
+                paint();
+                stopFrozenOverlay();
+                return;
+            }
+            paint();
+        }, 1000);
+    }
+
+    /**
+     * Hide the frozen overlay and clear its countdown timer. Safe to call
+     * unconditionally (no-op if not shown) — used both by the countdown
+     * itself reaching 0 and by lifecycle teardown (new question / reveal /
+     * reset) to guarantee no stuck overlay if the question changes before
+     * the timer elapses.
+     */
+    function stopFrozenOverlay() {
+        if (frozenInterval) {
+            clearInterval(frozenInterval);
+            frozenInterval = null;
+        }
+        var overlay = document.getElementById('frozen-overlay');
+        if (overlay) overlay.classList.add('hidden');
+    }
+
+    /**
+     * @returns {boolean} true while the frozen overlay is on screen, so the
+     * answer-tap handler can hard-block submits even if a tap somehow lands.
+     */
+    function isFrozen() {
+        var overlay = document.getElementById('frozen-overlay');
+        return !!(overlay && !overlay.classList.contains('hidden'));
+    }
+
     /**
      * Update timer from server tick
      * @param {number} remaining - Remaining seconds
@@ -3104,6 +3198,11 @@
      */
     function handleAnswerClick(selectedIndex, sendFn) {
         if (hasSubmitted) return;
+        // #322: while the freeze-lockout overlay is up, hard-block submits.
+        // The full-scrim overlay already swallows taps, and the server
+        // rejects with ERR_FROZEN regardless — this is belt-and-suspenders
+        // so a stray programmatic call can't sneak an answer through.
+        if (isFrozen()) return;
         hasSubmitted = true;
         lastSubmittedIndex = selectedIndex;
 
@@ -3680,6 +3779,9 @@
     window.QuizifyPlayerGame = {
         startCountdown: startCountdown,
         stopCountdown: stopCountdown,
+        startFrozenOverlay: startFrozenOverlay,
+        stopFrozenOverlay: stopFrozenOverlay,
+        isFrozen: isFrozen,
         updateTimer: updateTimer,
         renderQuestion: renderQuestion,
         handleAnswerClick: handleAnswerClick,
@@ -3929,6 +4031,9 @@
                 // computed against the wiped game's standings.
                 if (game && game.resetRankMemo) game.resetRankMemo();
                 if (reveal && reveal.resetRankMemo) reveal.resetRankMemo();
+                // #322: kill any in-flight freeze countdown so its interval
+                // doesn't leak past a full session wipe.
+                if (game && game.stopFrozenOverlay) game.stopFrozenOverlay();
                 pu.showView('join-view');
                 break;
 
@@ -4350,6 +4455,13 @@
         game.renderQuestion(msg);
         game.resetSubmissionState();
 
+        // #322: a new question always clears any lingering freeze overlay.
+        // Guards the edge case where the lockout outlives the round (admin
+        // skip / fast round) — without this the player could land on the next
+        // question still behind the Ice Card. stopFrozenOverlay is a no-op if
+        // it isn't showing, and it clears the countdown interval (no leak).
+        game.stopFrozenOverlay();
+
         // Round indicator
         var currentRound = document.getElementById('current-round');
         var totalRounds = document.getElementById('total-rounds');
@@ -4396,6 +4508,9 @@
     function handleRoundSummary(msg) {
         state.currentPhase = 'ANSWER_REVEAL';
         game.stopCountdown();
+        // #322: reveal ends the answering window — drop the freeze overlay
+        // (and its timer) so it can never bleed onto the result screen.
+        game.stopFrozenOverlay();
         _clearFinaleCountdown();
         pu.showView('reveal-view');
 
@@ -4588,8 +4703,13 @@
                 pu.showToast(tPwr('game.stoleFromYou', { name: msg.source_player || tPwr('lobby.you'), points: pts }), 2500, 'game.stoleFromYou');
             }
         } else if (msg.powerup_type === 'freeze' && msg.target_player === state.playerName) {
-            var tFrz = (window.QuizifyI18n && window.QuizifyI18n.t) || function (k) { return k; };
-            pu.showToast(tFrz('game.frozen'), 2000, 'game.frozen');
+            // #322: full blocking "Ice Card" overlay + live countdown instead
+            // of the old 2s toast. The server carries freeze_duration only to
+            // the target (effect_data in websocket.py ~L1045). Fall back to a
+            // sane default if it's somehow missing so the overlay still tears
+            // itself down rather than hanging forever.
+            var freezeSecs = Number(msg.freeze_duration) || 5;
+            game.startFrozenOverlay(freezeSecs);
         }
         // Only the source's local power-up button needs clearing. Previously
         // this was unconditional — for STEAL/FREEZE that meant a third party
