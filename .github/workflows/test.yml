@@ -16,6 +16,15 @@ jobs:
         with:
           python-version: "3.13"
 
+      # Node is required for the worker ⇄ integration contract check
+      # (cf-workers/contract-check.mjs + `node --check`). ubuntu-latest ships
+      # node by default, but pinning it makes the gate deterministic so the
+      # QUIZIFY_REQUIRE_NODE=1 hard-fail below can never be undermined by a
+      # runner image that happens to drop node (#328).
+      - uses: actions/setup-node@v4
+        with:
+          node-version: "20"
+
       - name: Install deps
         run: |
           python -m pip install --upgrade pip
@@ -27,6 +36,11 @@ jobs:
           pip install -r requirements_test.txt
 
       - name: Run tests
+        # Enforce the worker-contract gate: a missing node here is a hard
+        # FAILURE, not a silent skip, so the cross-language check can't rot
+        # behind a perpetual skip (#313, #328).
+        env:
+          QUIZIFY_REQUIRE_NODE: "1"
         run: pytest tests/ -v
 
       - name: Byte-compile component (catches syntax errors)
