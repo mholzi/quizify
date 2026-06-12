@@ -563,6 +563,30 @@ class TestWagerRound:
         state.start_next_question()  # reset_round runs per player
         assert state.get_player("Alice").wager is None
 
+    def test_wager_timeout_keeps_stake(self, state: QuizifyGameState) -> None:
+        """Intended semantics (#301, Markus' decision): a final-round player who
+        wagers but never submits KEEPS their points — they neither win nor lose
+        the wager. This locks the documented "timeout keeps stake" behavior so a
+        future change can't silently turn the wager into a timeout penalty."""
+        state.add_player("Alice", _fake_ws())
+        state.add_player("Bob", _fake_ws())  # so the round doesn't auto-evaluate
+        state.start_game(language="de", num_rounds=2, difficulty="easy")
+        state.start_next_question()
+        state.evaluate_round()
+        self._play_first_rounds_to_set_up_score(state, "Alice", score_target=100)
+        state.start_next_question()  # final round
+        assert state.round == state.total_rounds
+        alice = state.get_player("Alice")
+        alice.wager = 100  # bet everything — but never submit
+        # Bob submits so the round can be evaluated without Alice.
+        question = state._current_question
+        correct_idx = next(i for i, a in enumerate(question.answers) if a.correct)
+        state.submit_answer("Bob", correct_idx)
+        state.evaluate_round()
+        # Alice timed out: score unchanged, no wager loss (or gain).
+        assert alice.submitted is False
+        assert alice.score == 100
+
 
 # ---------- End game ----------
 

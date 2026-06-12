@@ -372,6 +372,7 @@
   "wager": {
     "title": "Final Round — Wager",
     "hint": "Bet a chunk of your points. Right = double, wrong = lose.",
+    "timeoutNote": "The wager only counts if you answer. No answer = you keep your points (no win, no loss).",
     "bank": "Current points",
     "submit": "Lock in wager",
     "locked": "Wagered: {pct}%",

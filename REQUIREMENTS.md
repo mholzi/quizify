@@ -242,7 +242,7 @@ show a thumbnail. Relative paths and non-`http(s)` schemes are ignored.
 |---|---|---|
 | **Joker** | Eliminates one wrong answer (2 choices remain) | Who Wants to Be a Millionaire |
 | **Double Points** | This round counts double | Beatify streak bonus |
-| **Freeze** | Opponent's timer freezes for 5 seconds | Beatify (reused) |
+| **Freeze** | Opponent is locked out of answering for 5 seconds (lockout, not a pause — their clock keeps running) | Beatify (reused) |
 | **50/50** | Same as Joker — removes one wrong answer | Classic quiz |
 | **Time Boost** | Add 5 seconds to your timer | New |
 

@@ -268,11 +268,13 @@ One random player receives a random power-up at the start of each round. Use it 
 |----------|--------|
 | 🃏 **Joker** | Removes one wrong answer (33 % → 50 % chance of guessing right) |
 | ✌️ **Double Points** | This round's points count double |
-| 🥶 **Freeze** | Pauses an opponent's timer for 5 seconds |
+| 🥶 **Freeze** | Locks an opponent out of answering for 5 seconds — their clock keeps running, so they lose answer time (a real penalty, not a pause) |
 | ⏱️ **Time Boost** | Adds +5 seconds to your own timer |
 | 🥷 **Steal** | Takes 50% of a target player's current round points |
 
 Freeze and Steal require selecting a target player — only offered when 2+ players are in the game.
+
+On the **final round**, players can stake a wager (0–100 % of their points): a correct answer wins it, a wrong answer loses it. The wager only resolves if you actually answer — **timing out keeps your current points** (no win, no loss). This is intended behaviour and is shown in the wager UI so it isn't a hidden trap.
 
 ### Live Emoji Reactions (and a tiny scoring twist)
 

@@ -239,6 +239,7 @@
 
         var titleEl = document.getElementById('wager-panel-title');
         var hintEl = document.getElementById('wager-panel-hint');
+        var timeoutNoteEl = document.getElementById('wager-panel-timeout-note');
         var slider = document.getElementById('wager-slider');
         var valueEl = document.getElementById('wager-value');
         var bankEl = document.getElementById('wager-bank');
@@ -246,6 +247,10 @@
 
         if (titleEl) titleEl.textContent = t('wager.title');
         if (hintEl) hintEl.textContent = t('wager.hint');
+        // Make the "timeout keeps your points" rule explicit so it's not a
+        // hidden trap/exploit (#301): the wager only resolves if you answer;
+        // not answering keeps your current points (no win, no loss).
+        if (timeoutNoteEl) timeoutNoteEl.textContent = t('wager.timeoutNote');
         if (bankEl) bankEl.textContent = currentScore;
         if (slider) {
             slider.value = '25';  // sensible default — quarter of bank
@@ -285,6 +290,7 @@
                 panel.classList.add('wager-panel--collapsed');
                 if (titleEl) titleEl.textContent = t('wager.locked', { pct: parseInt(slider.value, 10) });
                 if (hintEl) hintEl.textContent = '';
+                if (timeoutNoteEl) timeoutNoteEl.textContent = '';
             };
         }
     }
