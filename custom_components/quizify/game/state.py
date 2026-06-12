@@ -607,13 +607,27 @@ class QuizifyGameState:
         # Stamp round timing + create+start per-player timers (PhaseController).
         self._phase_controller.begin_round(round_duration)
 
-        # Randomly assign power-ups (one per round, random player)
-        connected = [p for p in self._player_registry.players.values() if p.connected]
-        if connected:
-            lucky_player = random.choice(connected)
+        # Randomly assign a power-up to one player who has not yet received one
+        # this game (#340 — at most one power-up per player per game). The
+        # granted set persists across rounds and is cleared only on a
+        # game-level reset (start_game / reset_to_lobby). Once every connected
+        # player has had one, no power-up is granted this round.
+        eligible = [
+            p
+            for p in self._player_registry.players.values()
+            if p.connected
+            and not self._powerup_manager.was_granted_this_game(p.name)
+        ]
+        if eligible:
+            lucky_player = random.choice(eligible)
             powerup = self._powerup_manager.assign_random_powerup(lucky_player.name)
             _LOGGER.debug(
                 "Power-up %s assigned to %s", powerup.value, lucky_player.name
+            )
+        else:
+            _LOGGER.debug(
+                "No eligible players for power-up this round "
+                "(all connected players already granted)"
             )
 
         self._phase_controller.enter_question_active()

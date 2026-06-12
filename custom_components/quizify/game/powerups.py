@@ -39,20 +39,41 @@ class PowerUpManager:
         self._inventory: dict[str, PowerUpType] = {}  # player_id → held power-up
         # player_id → active this round
         self._double_points_active: dict[str, bool] = {}
+        # player_ids that have been granted a power-up this game (#340).
+        # Persists across rounds; cleared only on a game-level reset.
+        self._granted_this_game: set[str] = set()
 
     def reset(self) -> None:
-        """Clear all power-up state."""
+        """Clear all power-up state, including the per-game granted set (#340).
+
+        Called at game start / reset-to-lobby — a fresh game begins.
+        """
         self._inventory.clear()
         self._double_points_active.clear()
+        self._granted_this_game.clear()
 
     def reset_round(self) -> None:
-        """Clear per-round power-up state (double points flags)."""
+        """Clear per-round power-up state (double points flags).
+
+        Note: the per-game granted set (#340) is intentionally NOT cleared
+        here — it must persist across rounds so each player is granted at
+        most one power-up per game.
+        """
         self._double_points_active.clear()
 
+    def was_granted_this_game(self, player_id: str) -> bool:
+        """Whether the player has already been granted a power-up this game."""
+        return player_id in self._granted_this_game
+
     def assign_random_powerup(self, player_id: str) -> PowerUpType:
-        """Assign a random power-up to a player, replacing any held one."""
+        """Assign a random power-up to a player, replacing any held one.
+
+        Records the player in the per-game granted set (#340) so they are not
+        granted another power-up later in the same game.
+        """
         powerup = random.choice(list(PowerUpType))
         self._inventory[player_id] = powerup
+        self._granted_this_game.add(player_id)
         return powerup
 
     def has_powerup(self, player_id: str) -> bool:
