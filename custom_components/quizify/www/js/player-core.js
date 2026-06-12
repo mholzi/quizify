@@ -220,6 +220,9 @@
                 // computed against the wiped game's standings.
                 if (game && game.resetRankMemo) game.resetRankMemo();
                 if (reveal && reveal.resetRankMemo) reveal.resetRankMemo();
+                // #322: kill any in-flight freeze countdown so its interval
+                // doesn't leak past a full session wipe.
+                if (game && game.stopFrozenOverlay) game.stopFrozenOverlay();
                 pu.showView('join-view');
                 break;
 
@@ -641,6 +644,13 @@
         game.renderQuestion(msg);
         game.resetSubmissionState();
 
+        // #322: a new question always clears any lingering freeze overlay.
+        // Guards the edge case where the lockout outlives the round (admin
+        // skip / fast round) — without this the player could land on the next
+        // question still behind the Ice Card. stopFrozenOverlay is a no-op if
+        // it isn't showing, and it clears the countdown interval (no leak).
+        game.stopFrozenOverlay();
+
         // Round indicator
         var currentRound = document.getElementById('current-round');
         var totalRounds = document.getElementById('total-rounds');
@@ -687,6 +697,9 @@
     function handleRoundSummary(msg) {
         state.currentPhase = 'ANSWER_REVEAL';
         game.stopCountdown();
+        // #322: reveal ends the answering window — drop the freeze overlay
+        // (and its timer) so it can never bleed onto the result screen.
+        game.stopFrozenOverlay();
         _clearFinaleCountdown();
         pu.showView('reveal-view');
 
@@ -879,8 +892,13 @@
                 pu.showToast(tPwr('game.stoleFromYou', { name: msg.source_player || tPwr('lobby.you'), points: pts }), 2500, 'game.stoleFromYou');
             }
         } else if (msg.powerup_type === 'freeze' && msg.target_player === state.playerName) {
-            var tFrz = (window.QuizifyI18n && window.QuizifyI18n.t) || function (k) { return k; };
-            pu.showToast(tFrz('game.frozen'), 2000, 'game.frozen');
+            // #322: full blocking "Ice Card" overlay + live countdown instead
+            // of the old 2s toast. The server carries freeze_duration only to
+            // the target (effect_data in websocket.py ~L1045). Fall back to a
+            // sane default if it's somehow missing so the overlay still tears
+            // itself down rather than hanging forever.
+            var freezeSecs = Number(msg.freeze_duration) || 5;
+            game.startFrozenOverlay(freezeSecs);
         }
         // Only the source's local power-up button needs clearing. Previously
         // this was unconditional — for STEAL/FREEZE that meant a third party

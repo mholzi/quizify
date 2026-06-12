@@ -311,6 +311,31 @@
                         </div>
                     </div>
                 </section>
+
+                <!-- #322: Freeze lockout "Ice Card" overlay (Variant A).
+                     Shown only on the player who is the FREEZE target while
+                     the server-side lockout runs (effect carries
+                     freeze_duration). Full-scrim frost backdrop + centered
+                     ice card with a live countdown ring; blocks answer taps
+                     until the timer elapses or the question advances. Hidden
+                     by default; toggled + driven by player-game.js. -->
+                <div id="frozen-overlay" class="frozen-overlay hidden" role="alertdialog"
+                     aria-modal="true" aria-live="assertive"
+                     data-i18n-aria-label="game.frozenOverlayAria" aria-label="You are frozen">
+                    <div class="ice-card">
+                        <div class="ice-flake" aria-hidden="true">❄️</div>
+                        <div class="ice-title" data-i18n="game.frozenTitle">Frozen</div>
+                        <div class="ice-sub" data-i18n="game.frozenSub">You can't answer right now</div>
+                        <div class="frozen-ring">
+                            <svg width="128" height="128" viewBox="0 0 128 128" aria-hidden="true">
+                                <circle class="frozen-ring-track" cx="64" cy="64" r="54"></circle>
+                                <circle id="frozen-ring-prog" class="frozen-ring-prog" cx="64" cy="64" r="54"></circle>
+                            </svg>
+                            <div id="frozen-ring-num" class="frozen-ring-num">5</div>
+                        </div>
+                        <div class="ice-foot" data-i18n="game.frozenFoot">Back in a moment …</div>
+                    </div>
+                </div>
             </div>
         </div>
 
