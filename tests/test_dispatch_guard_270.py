@@ -54,9 +54,9 @@ ADMIN_REQUIRED_TYPES = {
     "pause_game",
     "resume_game",
     "kick_player",
-    "start_lightning",
-    "start_lightning_questions",
-    "end_lightning",
+    # start_lightning / start_lightning_questions / end_lightning were retired
+    # in #285 — the Lightning Round now auto-triggers mid-game, with no
+    # host-facing start/end message.
 }
 
 NON_ADMIN_TYPES = {

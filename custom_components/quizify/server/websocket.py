@@ -56,6 +56,24 @@ if TYPE_CHECKING:
 _LOGGER = logging.getLogger(__name__)
 
 
+def _coerce_toggle(value: Any, *, default: bool) -> bool:
+    """Coerce a wire toggle value to a bool (#285).
+
+    Front-end checkboxes serialize as a JSON ``bool``, but be defensive about
+    string forms ("false"/"0"/"off"/"no") and a missing key so a malformed
+    payload can't accidentally arm/disarm a setting against the default.
+    """
+    if value is None:
+        return default
+    if isinstance(value, bool):
+        return value
+    if isinstance(value, (int, float)):
+        return bool(value)
+    if isinstance(value, str):
+        return value.strip().lower() not in ("false", "0", "off", "no", "")
+    return default
+
+
 class QuizifyWebSocketHandler:
     """Handle WebSocket connections for Quizify."""
 
@@ -90,6 +108,12 @@ class QuizifyWebSocketHandler:
     # clients swap from the splash to the question view before the first clock
     # starts ticking, so the countdown the players see matches the server window.
     LIGHTNING_SPLASH_GRACE = 1.0
+
+    # Auto Lightning Round (#285): with the host-manual "Start" tap retired,
+    # the intro splash holds for this long on its own before question 1 so
+    # players get the "Lightning Round incoming!" beat to read it, then the
+    # loop auto-dismisses the splash and begins.
+    AUTO_LIGHTNING_SPLASH_HOLD = 3.0
 
     def __init__(
         self,
@@ -426,18 +450,6 @@ class QuizifyWebSocketHandler:
             "resume_game": (lambda ws: self._handle_resume_game(ws, game_state), True),
             "kick_player": (
                 lambda ws: self._handle_kick_player(ws, data, game_state),
-                True,
-            ),
-            "start_lightning": (
-                lambda ws: self._handle_start_lightning(ws, data, game_state),
-                True,
-            ),
-            "start_lightning_questions": (
-                lambda ws: self._handle_start_lightning_questions(ws, game_state),
-                True,
-            ),
-            "end_lightning": (
-                lambda ws: self._handle_end_lightning(ws, game_state),
                 True,
             ),
         }
@@ -1083,6 +1095,10 @@ class QuizifyWebSocketHandler:
         num_rounds = data.get("num_rounds", 10)
         language = data.get("language", "de")
         timer_duration = data.get("timer_duration")
+        # Auto Lightning Round toggle (#285), default ON. Coerce truthily so a
+        # missing key, a JSON bool, or a "0"/"false" string all resolve
+        # sanely; only an explicit false-y value disables it.
+        lightning_enabled = _coerce_toggle(data.get("lightning_enabled"), default=True)
 
         # Validate num_rounds the same way as timer_duration (#303): the WS
         # value reaches start_game raw, and total_rounds drives
@@ -1123,6 +1139,7 @@ class QuizifyWebSocketHandler:
                 num_rounds=num_rounds,
                 language=language,
                 timer_duration=timer_value,
+                lightning_enabled=lightning_enabled,
             )
         except ValueError as err:
             # start_game raises two distinct ValueErrors: a wrong-phase
@@ -1160,6 +1177,17 @@ class QuizifyWebSocketHandler:
         self, ws: web.WebSocketResponse, game_state: QuizifyGameState
     ) -> None:
         """Handle admin next_question command."""
+        # Auto Lightning Round recap (#285): the host's normal advance after a
+        # mid-game lightning recap resumes the paused main game. resume_after_
+        # lightning() flips LIGHTNING_RECAP→ANSWER_REVEAL and restores the
+        # round counter, so the start_next_question below lands on the
+        # originally-scheduled round.
+        if game_state.phase == GamePhase.LIGHTNING_RECAP:
+            self._cancel_lightning_loop()
+            if game_state.resume_after_lightning():
+                await self._start_next_question(game_state)
+            return
+
         if game_state.phase not in (GamePhase.LOBBY, GamePhase.ANSWER_REVEAL):
             await self._conn.send_error(ws, ERR_INVALID_ACTION, "Cannot advance now")
             return
@@ -1397,55 +1425,57 @@ class QuizifyWebSocketHandler:
     # and fan out the question/recap payloads over the existing connection
     # layer.
 
-    async def _handle_start_lightning(
-        self, ws: web.WebSocketResponse, data: dict, game_state: QuizifyGameState
-    ) -> None:
-        """Admin triggers a lightning round (from LOBBY or FINALE)."""
+    async def _start_auto_lightning(self, game_state: QuizifyGameState) -> None:
+        """Fire the auto Lightning Round mid-game (#285).
+
+        Replaces the retired host-manual ``start_lightning`` entry: there is
+        no host tap. We detour out of the current round (``auto=True``
+        remembers it), broadcast the intro splash, then the loop auto-advances
+        out of the splash after a grace and runs the fast question loop. After
+        the recap the host's normal advance resumes the main game.
+        """
         # Stop any normal-round timer first — the two loops are mutually
         # exclusive.
         self._cancel_timer_tick()
 
-        raw_category = data.get("category")
-        if isinstance(raw_category, list):
-            category = None
-            categories = raw_category or None
-        else:
-            category = raw_category or None
-            categories = None
-        difficulty = data.get("difficulty")
-        language = data.get("language")
-
         started = game_state.start_lightning_round(
-            category=category,
-            categories=categories,
-            difficulty=difficulty,
-            language=language,
+            # Reuse the running game's own pack/difficulty/language selection.
+            category=game_state.category,
+            difficulty=game_state.difficulty,
+            language=game_state.language,
+            auto=True,
         )
         if not started:
-            await self._conn.send_error(
-                ws, ERR_INVALID_ACTION, "Cannot start lightning round"
+            # No questions available for the lightning queue, or wrong phase.
+            # Fall back to the normal round so the game never wedges.
+            _LOGGER.warning(
+                "Auto lightning round could not start; continuing normal game"
             )
+            await self._continue_normal_question(game_state)
             return
 
-        # Broadcast a phase-entry state so every client switches view.
+        # Broadcast a phase-entry state so every client switches to the
+        # lightning view, then the intro splash ("Bolt Burst", #201).
         state = game_state.get_state_snapshot()
         state["type"] = "game_state"
         await self._conn.broadcast(state)
-
-        # Show the intro splash ("Bolt Burst", issue #201) on host/TV + every
-        # player phone. The question loop does NOT start yet — it waits for the
-        # admin to tap Start (start_lightning_questions).
         await self._broadcast_lightning_splash(game_state)
 
-    async def _handle_start_lightning_questions(
-        self, ws: web.WebSocketResponse, game_state: QuizifyGameState
-    ) -> None:
-        """Admin dismisses the intro splash → run the first question (#201)."""
-        if game_state.phase != GamePhase.LIGHTNING:
+        # Auto-advance: no host tap. The loop itself dismisses the splash after
+        # the grace and starts question 1.
+        self._start_lightning_loop(game_state, auto_dismiss_splash=True)
+
+    async def _continue_normal_question(self, game_state: QuizifyGameState) -> None:
+        """Start the next normal question without re-checking the LR trigger.
+
+        Used by the auto-LR fallback path (LR couldn't start) so we don't
+        recurse back into should_trigger_lightning() — the flag is already
+        burned, so this is just the plain question start.
+        """
+        question = game_state.start_next_question()
+        if question is None:
             return
-        if not game_state.begin_lightning_questions():
-            return  # splash already dismissed / nothing to do — stay silent
-        self._start_lightning_loop(game_state)
+        await self._emit_question(game_state, question)
 
     async def _broadcast_lightning_splash(
         self, game_state: QuizifyGameState
@@ -1490,31 +1520,29 @@ class QuizifyWebSocketHandler:
             "score": lr.scores.get(player.name, 0),
         })
 
-    async def _handle_end_lightning(
-        self, ws: web.WebSocketResponse, game_state: QuizifyGameState
+    def _start_lightning_loop(
+        self,
+        game_state: QuizifyGameState,
+        *,
+        auto_dismiss_splash: bool = False,
     ) -> None:
-        """Admin ends the lightning round early → jump to the recap."""
-        self._cancel_lightning_loop()
-        if game_state.phase == GamePhase.LIGHTNING:
-            # Score the in-flight question's answers before tearing the round
-            # down (#308). Without lr.advance(), "End lightning" discarded every
-            # answer already tapped on the current question — the recap omitted
-            # them and players who'd answered correctly got no credit. advance()
-            # scores the current question (and arms the next, which we don't
-            # broadcast since we're finishing anyway).
-            lr = game_state.lightning
-            if lr is not None:
-                lr.advance()
-            game_state.finish_lightning_round()
-            await self._broadcast_lightning_recap(game_state)
-
-    def _start_lightning_loop(self, game_state: QuizifyGameState) -> None:
         """Drive the fast lightning loop: broadcast question, wait for the
-        fixed window or all-answered, advance with no reveal, repeat."""
+        fixed window or all-answered, advance with no reveal, repeat.
+
+        With ``auto_dismiss_splash`` (the #285 auto flow) the loop first holds
+        the intro splash for ``AUTO_LIGHTNING_SPLASH_HOLD`` seconds and then
+        dismisses it itself — there is no host "Start" tap any more.
+        """
         self._cancel_lightning_loop()
 
         async def loop() -> None:
             try:
+                if auto_dismiss_splash:
+                    # Hold the intro splash on its own, then advance out of it.
+                    await asyncio.sleep(self.AUTO_LIGHTNING_SPLASH_HOLD)
+                    if game_state.phase != GamePhase.LIGHTNING:
+                        return
+                    game_state.begin_lightning_questions()
                 # Brief grace so clients swap from the intro splash (#201) to
                 # the question view before the first clock starts ticking.
                 await asyncio.sleep(self.LIGHTNING_SPLASH_GRACE)
@@ -1688,6 +1716,15 @@ class QuizifyWebSocketHandler:
         """Start the next question: shuffle answers, broadcast, start timer ticks."""
         self._cancel_timer_tick()
 
+        # Auto Lightning Round (#285): exactly once per game, when the game is
+        # about to enter the pre-picked target round, detour into the fast
+        # Lightning Round first. The normal round resumes after the recap (the
+        # host's next advance lands on resume_after_lightning → ANSWER_REVEAL →
+        # this same path, which by then sees _lightning_fired and proceeds).
+        if game_state.should_trigger_lightning():
+            await self._start_auto_lightning(game_state)
+            return
+
         question = game_state.start_next_question()
         if question is None:
             # Game ended (no more questions or round limit reached).
@@ -1696,6 +1733,17 @@ class QuizifyWebSocketHandler:
             # finale broadcast source). No direct broadcast here. (#255.)
             return
 
+        await self._emit_question(game_state, question)
+
+    async def _emit_question(
+        self, game_state: QuizifyGameState, question: Any
+    ) -> None:
+        """Shuffle, broadcast and arm the timer for an already-started question.
+
+        Split out from ``_start_next_question`` (#285) so the auto-LR fallback
+        path can reuse the identical emission without re-running the LR
+        trigger check.
+        """
         # Canonical shuffle — used by admin/dashboard and as a fallback.
         indices = list(range(len(question.answers)))
         random.shuffle(indices)

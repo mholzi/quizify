@@ -168,6 +168,66 @@ class TestNumRoundsValidation:
 
 
 # ---------------------------------------------------------------------------
+# #285 — Lightning toggle wired through start_game
+# ---------------------------------------------------------------------------
+
+
+class TestLightningToggleWiring:
+    @pytest.mark.asyncio
+    async def test_default_on_arms_lightning(
+        self, handler: QuizifyWebSocketHandler, game: QuizifyGameState
+    ) -> None:
+        admin = _ws()
+        game.add_player("Markus", admin)
+        game.get_player("Markus").is_admin = True
+        # No lightning_enabled key → default ON → a target is armed.
+        await handler._handle_start_game(
+            admin,
+            {"category": "geographie", "num_rounds": 10, "language": "de"},
+            game,
+        )
+        assert game.lightning_target_round is not None
+
+    @pytest.mark.asyncio
+    @pytest.mark.parametrize("falsey", [False, "false", "0", "off", 0])
+    async def test_toggle_off_disarms_lightning(
+        self,
+        handler: QuizifyWebSocketHandler,
+        game: QuizifyGameState,
+        falsey,
+    ) -> None:
+        admin = _ws()
+        game.add_player("Markus", admin)
+        game.get_player("Markus").is_admin = True
+        await handler._handle_start_game(
+            admin,
+            {
+                "category": "geographie",
+                "num_rounds": 10,
+                "language": "de",
+                "lightning_enabled": falsey,
+            },
+            game,
+        )
+        assert game.lightning_target_round is None
+
+
+def test_coerce_toggle_forms() -> None:
+    from custom_components.quizify.server.websocket import _coerce_toggle
+
+    assert _coerce_toggle(None, default=True) is True
+    assert _coerce_toggle(None, default=False) is False
+    assert _coerce_toggle(True, default=False) is True
+    assert _coerce_toggle(False, default=True) is False
+    assert _coerce_toggle(1, default=False) is True
+    assert _coerce_toggle(0, default=True) is False
+    for off in ("false", "0", "off", "no", ""):
+        assert _coerce_toggle(off, default=True) is False
+    for on in ("true", "1", "on", "yes"):
+        assert _coerce_toggle(on, default=False) is True
+
+
+# ---------------------------------------------------------------------------
 # #308 — empty-pack start error code
 # ---------------------------------------------------------------------------
 
@@ -240,41 +300,12 @@ class TestAdminSkip:
 
 
 # ---------------------------------------------------------------------------
-# #308 — admin "End lightning" scores the in-flight question
+# #308/#285 — the "End lightning" early-teardown bug is now MOOT
 # ---------------------------------------------------------------------------
-
-
-class TestEndLightningScoresInFlight:
-    @pytest.mark.asyncio
-    async def test_end_lightning_scores_current_answers(
-        self, handler: QuizifyWebSocketHandler, game: QuizifyGameState
-    ) -> None:
-        """When the admin ends the lightning round early, an already-tapped
-        correct answer on the in-flight question must still be scored (#308)
-        — previously lr.advance() was missing so those answers were discarded.
-        """
-        handler._broadcast_lightning_recap = AsyncMock()  # type: ignore[attr-defined]
-
-        player_ws = _ws()
-        game.add_player("A", player_ws)
-        assert game.start_lightning_round() is True
-        assert game.begin_lightning_questions() is True
-        lr = game.lightning
-        assert lr is not None
-
-        # Player A answers the in-flight question correctly.
-        q = lr.current_question
-        assert q is not None
-        correct_orig = next(i for i, a in enumerate(q.answers) if a.correct)
-        order = lr._shuffles["A"]
-        shuffled_idx = order.index(correct_orig)
-        assert lr.record_answer("A", shuffled_idx) is True
-        # Not yet scored — scoring happens on advance().
-        assert lr.scores["A"] == 0
-
-        await handler._handle_end_lightning(player_ws, game)
-
-        assert game.phase == GamePhase.LIGHTNING_RECAP
-        # The in-flight correct answer was scored before teardown.
-        assert lr.scores["A"] > 0
-        handler._broadcast_lightning_recap.assert_awaited()
+#
+# The host-manual ``end_lightning`` action (which used to discard the
+# in-flight question's answers, #308) was retired in #285: the Lightning Round
+# auto-triggers mid-game and always runs to completion through the loop's
+# ``advance()`` (which scores every question, including the last). There is no
+# early-end path left, so the #308 fix is moot. The loop's per-question
+# scoring is covered by the LightningRound engine tests in test_lightning.py.

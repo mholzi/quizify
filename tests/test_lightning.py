@@ -402,3 +402,56 @@ class TestLightningWsLoop:
 
         assert state.phase == GamePhase.LIGHTNING_RECAP
         assert lr.scores["A"] == LIGHTNING_POINTS_PER_CORRECT
+
+
+# ---------- WS handler: #285 auto-trigger entry + resume ----------
+
+
+class TestLightningAutoEntry:
+    @pytest.mark.asyncio
+    async def test_start_next_question_detours_into_auto_lightning(
+        self, state: QuizifyGameState
+    ) -> None:
+        """When the game is about to enter the pre-picked target round, the
+        normal advance path detours into the auto Lightning Round instead of a
+        normal question."""
+        state.add_player("A", _fake_ws())
+        h = _handler(state)
+        state.start_game(num_rounds=10, lightning_seed=42)
+        target = state.lightning_target_round
+        assert target is not None
+        # Position the game just before the target round.
+        state.round = target - 1
+        state.phase = GamePhase.ANSWER_REVEAL
+        assert state.should_trigger_lightning() is True
+
+        # The advance detours; phase becomes LIGHTNING (splash up).
+        await h._start_next_question(state)
+        assert state.phase == GamePhase.LIGHTNING
+        assert state.lightning is not None
+        assert state.in_lightning_detour is True
+        h._cancel_lightning_loop()
+
+    @pytest.mark.asyncio
+    async def test_recap_advance_resumes_main_game(
+        self, state: QuizifyGameState
+    ) -> None:
+        """The host's normal next_question after the mid-game lightning recap
+        resumes the paused main game at the originally-scheduled round."""
+        state.add_player("A", _fake_ws())
+        h = _handler(state)
+        state.start_game(num_rounds=10, lightning_seed=42)
+        target = state.lightning_target_round
+        assert target is not None
+        resume_round = target - 1
+        state.round = resume_round
+        state.phase = GamePhase.ANSWER_REVEAL
+        assert state.start_lightning_round(auto=True) is True
+        state.finish_lightning_round()
+        assert state.phase == GamePhase.LIGHTNING_RECAP
+
+        # next_question from the recap → resume + start the target round.
+        await h._handle_next_question(state.get_player("A").ws, state)
+        assert state.phase == GamePhase.QUESTION_ACTIVE
+        assert state.round == target  # the originally-scheduled round now ran
+        h._cancel_timer_tick()

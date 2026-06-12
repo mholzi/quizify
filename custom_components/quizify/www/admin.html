@@ -261,6 +261,21 @@
                              {{LANGUAGE_CHIPS}} token. -->
                         <div class="vF-answers chip-group chip-group--flags" id="language-chips" role="group" data-i18n-aria-label="admin.language" aria-label="Language">{{LANGUAGE_CHIPS}}</div>
                     </div>
+
+                    <!-- Lightning Round auto-trigger toggle (#285). Default ON.
+                         When on, a surprise fast Lightning Round fires once at a
+                         random mid-game round (3 … N-1). The value rides through
+                         start_game like every other setting (admin.js
+                         _buildStartGamePayload → lightning_enabled). Uses the
+                         shared .toggle-compact switch (Beatify pattern). -->
+                    <div class="vF-step">
+                        <div class="vF-q"><span class="num">6</span><span data-i18n="setup.eigene.q6">Lightning Round?</span></div>
+                        <label class="toggle-compact setup-lightning-toggle" for="lightning-enabled-toggle">
+                            <input type="checkbox" id="lightning-enabled-toggle" checked>
+                            <span class="toggle-switch-compact" aria-hidden="true"></span>
+                            <span class="toggle-label" data-i18n="setup.eigene.lightningHint">Surprise fast round mid-game</span>
+                        </label>
+                    </div>
                 </div>
 
                 <button type="button" id="setup-apply-btn" class="btn btn-primary btn-lg btn-block">
@@ -481,19 +496,19 @@
                 <div id="admin-finale-leaderboard" class="leaderboard"></div>
             </section>
 
+            <!-- The Lightning Round is now an automatic mid-game event (#285);
+                 the manual "⚡ Lightning Round" entry button was retired. -->
             <div class="admin-actions lobby-actions--sticky mt-lg">
-                <button type="button" id="lightning-round-btn" class="btn btn-secondary btn-lg btn-block">
-                    ⚡ <span data-i18n="lightning.start">Lightning Round</span>
-                </button>
                 <button type="button" id="new-game-btn" class="btn btn-primary btn-lg btn-block" data-i18n="admin.startNewGame">Start New Game</button>
             </div>
         </div>
 
         <!-- Lightning Round view (issue #42) -->
         <div id="admin-lightning-view" class="view">
-            <!-- Intro splash preview + Start control (issue #201). Shown
-                 while the "Bolt Burst" splash is up on host/TV + phones;
-                 hidden once the admin starts the questions. -->
+            <!-- Intro splash preview (issue #201). Shown on host/TV + phones
+                 while the "Bolt Burst" splash is up. The Lightning Round now
+                 auto-triggers and auto-advances (#285) — there is no host
+                 Start/End control here any more. -->
             <section id="admin-lightning-splash" class="card-section" hidden>
                 <h2 class="section-header">⚡ <span data-i18n="lightning.splashKicker">Lightning Round</span></h2>
                 <p class="hint" data-i18n="lightning.splashAdminMeta">Splash visible to all players</p>
@@ -505,14 +520,6 @@
                 <div id="admin-lightning-question" class="question-text" style="font-size:1.1rem;"></div>
                 <div id="admin-lightning-timer" class="timer-text mt-md"></div>
             </section>
-            <div class="admin-actions lobby-actions--sticky mt-lg">
-                <button type="button" id="admin-lightning-start-btn" class="btn btn-primary btn-lg btn-block" hidden>
-                    ⚡ <span data-i18n="lightning.splashStart">Let's go</span>
-                </button>
-                <button type="button" id="admin-lightning-end-btn" class="btn btn-secondary btn-lg btn-block">
-                    🏁 <span data-i18n="lightning.endNow">End Lightning</span>
-                </button>
-            </div>
         </div>
 
         <!-- Lightning Round recap view -->
@@ -525,11 +532,13 @@
                 <h2 class="section-header"><span data-i18n="lightning.questionRecap">Question-by-question</span></h2>
                 <div id="admin-lightning-recap-grid" class="lightning-recap-grid"></div>
             </section>
+            <!-- The Lightning Round is a mid-game detour now (#285): the recap's
+                 primary action resumes the paused main game. The old "Another
+                 Lightning Round" rematch button (a #294 dead-end) was retired. -->
             <div class="admin-actions lobby-actions--sticky mt-lg">
-                <button type="button" id="admin-lightning-again-btn" class="btn btn-secondary btn-lg btn-block">
-                    ⚡ <span data-i18n="lightning.again">Another Lightning Round</span>
+                <button type="button" id="admin-lightning-continue-btn" class="btn btn-primary btn-lg btn-block">
+                    ▶︎ <span data-i18n="lightning.continueGame">Continue game</span>
                 </button>
-                <button type="button" id="admin-lightning-newgame-btn" class="btn btn-primary btn-lg btn-block" data-i18n="admin.startNewGame">Start New Game</button>
             </div>
         </div>
 

@@ -54,6 +54,10 @@
         return 'en';
     })();
     let selectedTimer = 30;  // seconds per question (20 / 30 / 45)
+    // Auto Lightning Round toggle (#285), default ON. The surprise fast round
+    // fires once at a random mid-game round; the host opts out via the setup
+    // toggle. Read live from the checkbox at start_game time.
+    let selectedLightning = true;
 
     // Game state
     let currentPhase = 'LOBBY';
@@ -139,20 +143,18 @@
         adminFinaleLeaderboard: document.getElementById('admin-finale-leaderboard'),
         newGameBtn: document.getElementById('new-game-btn'),
         lobbyBackBtn: document.getElementById('lobby-back-btn'),
-        // Lightning Round (issue #42)
-        lightningRoundBtn: document.getElementById('lightning-round-btn'),
+        // Lightning Round (issue #42 mechanics, #285 auto-trigger). The manual
+        // start / start-questions / end / again controls were retired; only
+        // the display elements + the recap "Continue" button remain.
         adminLightningProgress: document.getElementById('admin-lightning-progress'),
         adminLightningQuestion: document.getElementById('admin-lightning-question'),
         adminLightningTimer: document.getElementById('admin-lightning-timer'),
-        adminLightningEndBtn: document.getElementById('admin-lightning-end-btn'),
         adminLightningSplash: document.getElementById('admin-lightning-splash'),
         adminLightningSplashRules: document.getElementById('admin-lightning-splash-rules'),
         adminLightningQuestionSection: document.getElementById('admin-lightning-question-section'),
-        adminLightningStartBtn: document.getElementById('admin-lightning-start-btn'),
         adminLightningRecapLeaderboard: document.getElementById('admin-lightning-recap-leaderboard'),
         adminLightningRecapGrid: document.getElementById('admin-lightning-recap-grid'),
-        adminLightningAgainBtn: document.getElementById('admin-lightning-again-btn'),
-        adminLightningNewGameBtn: document.getElementById('admin-lightning-newgame-btn'),
+        adminLightningContinueBtn: document.getElementById('admin-lightning-continue-btn'),
         // Admin join modal
         adminJoinModal: document.getElementById('admin-join-modal'),
         adminNameInput: document.getElementById('admin-name-input'),
@@ -848,6 +850,15 @@
         selectedTimer = parseInt(v, 10);
         updateSettingsSummary();
     });
+    // Lightning Round toggle (#285) — keep selectedLightning in sync with the
+    // checkbox so the start payload reflects the host's choice.
+    var lightningToggle = document.getElementById('lightning-enabled-toggle');
+    if (lightningToggle) {
+        selectedLightning = !!lightningToggle.checked;
+        on(lightningToggle, 'change', function () {
+            selectedLightning = !!lightningToggle.checked;
+        });
+    }
     setupChips(els.languageChips, function (v) {
         // Session-only switch — not persisted. On the next full-page reload
         // the UI resolves back to the Home Assistant language (#152).
@@ -1134,11 +1145,9 @@
     // ---- Lightning Round (issue #42) ----
 
     function _toggleAdminLightningSplash(showSplash) {
+        // #285: the host no longer dismisses the splash (no Start button) — it
+        // auto-advances server-side. This just swaps the splash/question panes.
         if (els.adminLightningSplash) els.adminLightningSplash.hidden = !showSplash;
-        if (els.adminLightningStartBtn) {
-            els.adminLightningStartBtn.hidden = !showSplash;
-            if (showSplash) els.adminLightningStartBtn.disabled = false;
-        }
         if (els.adminLightningQuestionSection) {
             els.adminLightningQuestionSection.hidden = showSplash;
         }
@@ -1522,12 +1531,17 @@
             : selectedCategory === 'multi'
                 ? selectedCategories
                 : selectedCategory;
+        // Read the Lightning toggle live so a last-second flip is honoured even
+        // if the change listener didn't fire (e.g. programmatic state).
+        var lightningEl = document.getElementById('lightning-enabled-toggle');
+        var lightningEnabled = lightningEl ? !!lightningEl.checked : selectedLightning;
         return {
             category: categoryPayload,
             difficulty: selectedDifficulty === 'mixed' ? null : selectedDifficulty,
             num_rounds: selectedRounds,
             language: selectedLanguage,
             timer_duration: selectedTimer,
+            lightning_enabled: lightningEnabled,
         };
     }
 
@@ -1733,17 +1747,11 @@
 
     on(els.newGameBtn, 'click', function () { send('reset_game', {}); });
 
-    // Lightning Round (issue #42). Reuses the players + question bank that
-    // are already loaded — no extra setup. Server picks fresh questions via
-    // the history-aware queue.
-    on(els.lightningRoundBtn, 'click', function () { send('start_lightning', {}); });
-    on(els.adminLightningStartBtn, 'click', function () {
-        if (els.adminLightningStartBtn) els.adminLightningStartBtn.disabled = true;
-        send('start_lightning_questions', {});  // dismiss intro splash (#201)
-    });
-    on(els.adminLightningEndBtn, 'click', function () { send('end_lightning', {}); });
-    on(els.adminLightningAgainBtn, 'click', function () { send('start_lightning', {}); });
-    on(els.adminLightningNewGameBtn, 'click', function () { send('reset_game', {}); });
+    // Lightning Round (issue #42 mechanics, #285 auto-trigger). It now fires
+    // automatically mid-game and auto-advances, so there is no manual start /
+    // end control. The recap's only action resumes the paused main game via
+    // the normal next_question advance (server: resume_after_lightning).
+    on(els.adminLightningContinueBtn, 'click', function () { send('next_question', {}); });
 
     // ---- Reset Game button (header) ----
     on(els.resetGameBtn, 'click', function () {
