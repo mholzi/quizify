@@ -196,6 +196,11 @@ class TestHtmlSubstitution:
         assert "{{VERSION}}" not in resp.text
         assert "{{ASSET_VER}}" not in resp.text
         assert "{{HA_LANG}}" not in resp.text
+        # #335: data-driven admin chip tokens must also be substituted — a raw
+        # {{LANGUAGE_CHIPS}}/{{CATEGORY_CHIPS}} reaching the browser would leave
+        # the language picker / pack grid empty.
+        assert "{{LANGUAGE_CHIPS}}" not in resp.text
+        assert "{{CATEGORY_CHIPS}}" not in resp.text
         # ?v= now carries <version>-<fingerprint>, not the bare version.
         assert "?v=9.9.9-test-" in resp.text
         # The meta tag keeps the clean semantic version.

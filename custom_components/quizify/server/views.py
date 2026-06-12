@@ -9,6 +9,7 @@ from __future__ import annotations
 
 import datetime as _dt
 import hashlib
+import html as _html
 import json
 import logging
 import os
@@ -232,9 +233,36 @@ async def _serve_html(request: web.Request, filename: str) -> web.Response:
     asset_version = await _get_asset_version_async(ctx, version)
     html_content = html_content.replace(_ASSET_VER_TOKEN, asset_version)
     html_content = html_content.replace(_HA_LANG_TOKEN, ctx.ha_language or "")
+    # Data-driven admin chips (#335): substitute the language + category chip
+    # tokens with markup derived from the loaded packs. Only admin.html carries
+    # these tokens; ``replace`` is a no-op on every other page, so the guard is
+    # just to skip the (cheap) bank read for non-admin pages.
+    if _LANGUAGE_CHIPS_TOKEN in html_content or _CATEGORY_CHIPS_TOKEN in html_content:
+        html_content = _apply_admin_chip_tokens(ctx, html_content)
     return web.Response(
         text=html_content, content_type="text/html", headers=_NO_CACHE_HEADERS
     )
+
+
+def _apply_admin_chip_tokens(ctx: AppContext, html_content: str) -> str:
+    """Substitute the {{LANGUAGE_CHIPS}} / {{CATEGORY_CHIPS}} tokens in-place.
+
+    Reads the already-loaded pack metadata (same in-memory source the
+    featured-pack endpoint uses — no blocking re-load on the HTML hot path).
+    If the bank is unavailable (standalone dev server before any game state),
+    the language token degrades to a static DE/EN pair and the category token
+    to just the Mixed tile so the page still renders something sane.
+    """
+    default_lang = _resolve_default_lang(ctx.ha_language)
+    bank = ctx.game.question_bank if ctx.game else None
+    pack_versions = bank.get_pack_versions() if bank is not None else {}
+    html_content = html_content.replace(
+        _LANGUAGE_CHIPS_TOKEN, _render_language_chips(pack_versions, default_lang)
+    )
+    html_content = html_content.replace(
+        _CATEGORY_CHIPS_TOKEN, _render_category_chips(pack_versions, default_lang)
+    )
+    return html_content
 
 
 async def sw_view(request: web.Request) -> web.Response:
@@ -319,6 +347,159 @@ _THEME_ICONS = {
     "worldcup": "🏆",
 }
 
+# ---------------------------------------------------------------------------
+# Data-driven admin chips (#335). The language selector and the category/pack
+# grid in admin.html are no longer hand-maintained HTML — they are rendered
+# server-side from the languages + packs actually loaded in the question bank,
+# so adding a new-language pack (e.g. a Spanish pack) needs zero HTML edits.
+# Two tokens in admin.html are substituted at serve time:
+#   {{LANGUAGE_CHIPS}}  → flag-only language chips (Selector B)
+#   {{CATEGORY_CHIPS}}  → the "Mixed" tile + one card per pack (Architecture A)
+# The rendered DOM preserves the exact contract admin.js depends on
+# (data-value / data-lang / data-theme / data-icon / data-count, .pack-card-*,
+# .active) so the existing selection wiring keeps working unchanged.
+# ---------------------------------------------------------------------------
+_LANGUAGE_CHIPS_TOKEN = "{{LANGUAGE_CHIPS}}"
+_CATEGORY_CHIPS_TOKEN = "{{CATEGORY_CHIPS}}"
+
+# Language code → (flag emoji, native display name). Drives the flag-only
+# language chips: the flag is the visible glyph, the name is exposed via
+# aria-label/title for accessibility. de/en/es are the known set; any other
+# language present in a pack falls back to a neutral 🌐 flag + the upper-cased
+# code so an unexpected pack language still renders a usable (if generic) chip
+# rather than crashing or vanishing.
+_LANGUAGE_META = {
+    "de": ("🇩🇪", "Deutsch"),
+    "en": ("🇬🇧", "English"),
+    "es": ("🇪🇸", "Español"),
+}
+# Deterministic ordering for the language chips. Known languages first in this
+# order; any unknown language code is appended afterwards, alphabetically.
+_LANGUAGE_ORDER = ["de", "en", "es"]
+
+# Per-language unit word for the pack-card question count ("149 Fragen" /
+# "150 questions" / "150 preguntas"). The count itself is data-driven; only
+# the trailing noun is language-specific. Unknown languages fall back to the
+# English unit.
+_COUNT_UNITS = {"de": "Fragen", "en": "questions", "es": "preguntas"}
+
+
+def _language_chip_meta(lang: str) -> tuple[str, str]:
+    """Return (flag, display-name) for a language code, with a safe fallback."""
+    return _LANGUAGE_META.get(lang, ("🌐", lang.upper()))
+
+
+def _sorted_pack_languages(pack_versions: dict[str, dict]) -> list[str]:
+    """Languages present across loaded packs, in stable display order."""
+    present = {meta.get("language", "de") for meta in pack_versions.values()}
+    known = [code for code in _LANGUAGE_ORDER if code in present]
+    extra = sorted(present - set(_LANGUAGE_ORDER))
+    return known + extra
+
+
+def _render_language_chips(pack_versions: dict[str, dict], default_lang: str) -> str:
+    """Render flag-only language chips from the languages present in packs.
+
+    Selector B (#335): each chip shows just the flag glyph; the full language
+    name lives on ``aria-label`` + ``title`` for screen readers and hover.
+    ``default_lang`` gets the ``active`` class so the initial selection matches
+    the page's resolved language. Returns the inner HTML for ``#language-chips``.
+    """
+    langs = _sorted_pack_languages(pack_versions)
+    if not langs:
+        # No packs loaded (shouldn't happen on the HA path, but be safe):
+        # fall back to the historical DE/EN pair so the selector is never empty.
+        langs = ["de", "en"]
+    # If the resolved default isn't among the present languages, fall back to
+    # the first present one so exactly one chip is active.
+    active_lang = default_lang if default_lang in langs else langs[0]
+    buttons = []
+    for code in langs:
+        flag, name = _language_chip_meta(code)
+        cls = "chip active" if code == active_lang else "chip"
+        name_esc = _html.escape(name, quote=True)
+        buttons.append(
+            f'<button type="button" class="{cls}" data-value="{_html.escape(code)}" '
+            f'aria-label="{name_esc}" title="{name_esc}">{flag}</button>'
+        )
+    return "".join(buttons)
+
+
+def _render_category_chips(pack_versions: dict[str, dict], default_lang: str) -> str:
+    """Render the Mixed tile + one pack card per loaded pack (Architecture A).
+
+    The Mixed tile carries no ``data-lang`` (always visible, "all packs") and is
+    ``active`` by default. Each pack card mirrors the old hand-written contract:
+    ``data-value`` (pack slug), ``data-lang``, ``data-theme``, ``data-icon``,
+    ``data-count`` + the ``.pack-card-icon/name/count`` spans. Names come from
+    each pack's own metadata so they are already native to the pack's language;
+    the count unit is per-language. Returns the inner HTML for ``#category-chips``.
+
+    Ordering: packs are grouped by language (display order), then by pack name
+    within a language, so the grid is stable and readable regardless of bank
+    insertion order.
+    """
+    # Mixed tile — i18n-driven label + count, no data-lang (always shown).
+    mixed = (
+        '<button type="button" class="chip active" data-value="mixed" data-icon="🎲">'
+        '<span class="pack-card-icon">🎲</span>'
+        '<span class="pack-card-name" data-i18n="admin.categoryMixed">Mixed</span>'
+        '<span class="pack-card-count" data-i18n="admin.mixedAllPacks">All packs</span>'
+        "</button>"
+    )
+
+    lang_rank = {
+        code: i for i, code in enumerate(_sorted_pack_languages(pack_versions))
+    }
+
+    def _order_key(item: tuple[str, dict]) -> tuple[int, str]:
+        slug, meta = item
+        lang = meta.get("language", "de")
+        name = str(meta.get("name", slug))
+        return (lang_rank.get(lang, len(lang_rank)), name.lower())
+
+    cards = []
+    for slug, meta in sorted(pack_versions.items(), key=_order_key):
+        lang = str(meta.get("language", "de"))
+        name = str(meta.get("name", slug))
+        theme = meta.get("theme", "") or ""
+        if not isinstance(theme, str):
+            theme = ""
+        icon = _THEME_ICONS.get(theme, "🎲")
+        count = meta.get("question_count", 0)
+        unit = _COUNT_UNITS.get(lang, _COUNT_UNITS["en"])
+        name_esc = _html.escape(name)
+        attrs = (
+            f'data-value="{_html.escape(slug, quote=True)}" '
+            f'data-lang="{_html.escape(lang, quote=True)}" '
+            f'data-theme="{_html.escape(theme, quote=True)}" '
+            f'data-icon="{icon}" data-count="{int(count)}"'
+        )
+        cards.append(
+            f'<button type="button" class="chip" {attrs}>'
+            f'<span class="pack-card-icon">{icon}</span>'
+            f'<span class="pack-card-name">{name_esc}</span>'
+            f'<span class="pack-card-count">{int(count)} {unit}</span>'
+            "</button>"
+        )
+    return mixed + "".join(cards)
+
+
+def _resolve_default_lang(ha_language: str | None) -> str:
+    """Normalise HA's configured language to the in-game UI set (de/en/es).
+
+    Mirrors the client-side ``normalize()`` in admin.js so the server-rendered
+    active chip matches the language the page will resolve to. Empty/unknown →
+    English (the historical default on the standalone dev server).
+    """
+    code = (ha_language or "").lower()
+    if code.startswith("de"):
+        return "de"
+    if code.startswith("es"):
+        return "es"
+    return "en"
+
+
 # Per Markus 2026-05-29 (msg 283): the Featured Spotlight rotates between
 # two logics, alternating by day-of-year so the same logic doesn't lock
 # in for weeks. Day 0/2/4… = Most-Played (this-week winners surface).
@@ -344,9 +525,12 @@ async def featured_pack_view(request: web.Request) -> web.Response:
     both empty (fresh install).
     """
     ctx = _get_ctx(request)
+    # #335: no longer clamp to de/en. Any language present in the loaded packs
+    # (e.g. ``es``) flows through; the ``lang_packs`` filter + the empty-set
+    # guard below already degrade cleanly to ``{}`` for a language with no
+    # packs, so the spotlight simply has nothing to feature rather than
+    # wrong-language fallback content.
     lang = (request.query.get("lang") or "de").lower()
-    if lang not in ("de", "en"):
-        lang = "de"
 
     # Even day → most-played, odd day → most-difficult.
     # tm_yday is 1-based (Jan 1 = 1), so day 1 starts with most-difficult.
@@ -447,24 +631,31 @@ async def featured_pack_view(request: web.Request) -> web.Response:
     icon = _THEME_ICONS.get(theme, "🎲")
 
     count = meta.get("question_count", 0)
-    if lang == "de":
-        unit = "Fragen"
-        sub = {
+    # Localised subtitle strings per spotlight logic. In-season packs show their
+    # own label (e.g. "🎄 Weihnachten") instead of a generic rotation reason.
+    # Unknown languages fall back to the English copy (#335).
+    sub_text = {
+        "de": {
             "most-played": "Beliebt diese Woche",
             "most-difficult": "Härteste Herausforderung",
             "default": "Familienfreundlich",
-            # In-season packs show their own label (e.g. "🎄 Weihnachten") as
-            # the spotlight subtitle instead of a generic rotation reason.
             "seasonal": season_label or "Saisonal",
-        }[logic_used]
-    else:
-        unit = "questions"
-        sub = {
+        },
+        "en": {
             "most-played": "Popular this week",
             "most-difficult": "Hardest challenge",
             "default": "Family-friendly",
             "seasonal": season_label or "Seasonal",
-        }[logic_used]
+        },
+        "es": {
+            "most-played": "Popular esta semana",
+            "most-difficult": "El reto más difícil",
+            "default": "Para toda la familia",
+            "seasonal": season_label or "De temporada",
+        },
+    }
+    unit = _COUNT_UNITS.get(lang, _COUNT_UNITS["en"])
+    sub = sub_text.get(lang, sub_text["en"])[logic_used]
 
     return web.json_response({
         "value": chosen,

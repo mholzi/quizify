@@ -39,7 +39,10 @@
     // resolves back to the HA language rather than a stale per-device choice.
     let selectedLanguage = (function () {
         function normalize(code) {
-            return String(code || '').toLowerCase().indexOf('de') === 0 ? 'de' : 'en';
+            var c = String(code || '').toLowerCase();
+            if (c.indexOf('de') === 0) return 'de';
+            if (c.indexOf('es') === 0) return 'es';
+            return 'en';
         }
         var meta = document.querySelector('meta[name="quizify-ha-lang"]');
         var haLang = meta ? meta.getAttribute('content') : '';
@@ -249,7 +252,12 @@
     // single source of truth for selection + the start payload. Building from
     // it means we never hand-maintain a second pack list. The featured pack
     // (World Cup / Weltmeisterschaft) is excluded — it has the spotlight card.
-    var _FEATURED_PACK_VALUES = ['world-cup', 'weltmeisterschaft'];
+    // #335: exclusion is now theme-driven (data-theme="worldcup") instead of a
+    // hardcoded slug list, so a World Cup pack in any language (incl. a future
+    // Spanish one) is correctly surfaced via the hero feature card, not the
+    // grid. Languages without a World Cup pack (e.g. es today) simply have
+    // nothing to exclude and the hero feature card hides itself.
+    var _FEATURED_PACK_THEME = 'worldcup';
 
     // SVG line icons + accent tints now live in the shared module
     // (www/js/icons.js, loaded before admin.js) so both admin and player
@@ -265,12 +273,31 @@
     // forward"). Built from #category-chips so it stays the single source of
     // truth for selection + the start payload. The featured pack (World Cup /
     // Weltmeisterschaft) is excluded — it has the spotlight card above.
+    // #335 (AC2): count the grid-selectable packs (excludes Mixed + the
+    // World-Cup hero pack) for the active language. When there is exactly one,
+    // "Mixed" is degenerate (it equals that single pack) so we hide the Mixed
+    // tile and auto-select the lone pack instead.
+    function _gridPackChipsForLang() {
+        if (!els.categoryChips) return [];
+        var out = [];
+        els.categoryChips.querySelectorAll('.chip[data-lang]').forEach(function (c) {
+            if (c.dataset.theme === _FEATURED_PACK_THEME) return;
+            if (c.dataset.lang === selectedLanguage) out.push(c);
+        });
+        return out;
+    }
+
     function buildHeroPackChips() {
         if (!els.heroPackChips || !els.categoryChips) return;
         els.heroPackChips.innerHTML = '';
+        var singlePack = _gridPackChipsForLang().length === 1;
         els.categoryChips.querySelectorAll('.chip').forEach(function (cat) {
             var value = cat.dataset.value;
-            if (_FEATURED_PACK_VALUES.indexOf(value) !== -1) return;
+            // World Cup packs live on the hero feature card, not the grid.
+            if (cat.dataset.theme === _FEATURED_PACK_THEME) return;
+            // AC2: with only one pack for this language, the "Mixed" tile is
+            // redundant — skip it (the lone pack auto-selects below).
+            if (value === 'mixed' && singlePack) return;
             // Language filter: Mixed (no data-lang) plus the active language.
             var lang = cat.dataset.lang;
             if (lang && lang !== selectedLanguage) return;
@@ -301,6 +328,23 @@
             });
             els.heroPackChips.appendChild(tile);
         });
+        // AC2: when the language has a single pack and Mixed is still the
+        // active selection, auto-select the lone pack so the (now hidden) Mixed
+        // tile isn't the implicit choice. Guard against the World-Cup-only edge
+        // by reusing the same grid-pack set.
+        if (singlePack && selectedCategory === 'mixed') {
+            var lone = _gridPackChipsForLang()[0];
+            if (lone) {
+                els.categoryChips.querySelectorAll('.chip').forEach(function (c) {
+                    c.classList.remove('active');
+                });
+                lone.classList.add('active');
+                selectedCategory = lone.dataset.value;
+                selectedCategories = [lone.dataset.value];
+                if (typeof updateCategorySummary === 'function') updateCategorySummary();
+                syncHeroPackChips();
+            }
+        }
         syncHeroFeatureCardState();
     }
 
@@ -312,13 +356,35 @@
         });
     }
 
+    // #335: derive the World Cup pack chip for the active language from the
+    // data-driven grid (any pack with data-theme="worldcup" + matching
+    // data-lang) instead of a hardcoded de→weltmeisterschaft / *→world-cup map.
+    // Returns null when the active language has no World Cup pack (e.g. es), so
+    // callers can hide the static hero feature card cleanly.
+    function _worldCupChipForLang() {
+        if (!els.categoryChips) return null;
+        var chips = els.categoryChips.querySelectorAll('.chip[data-theme="worldcup"]');
+        for (var i = 0; i < chips.length; i++) {
+            if (chips[i].dataset.lang === selectedLanguage) return chips[i];
+        }
+        return null;
+    }
+
     // Reflect the World Cup pack's selected state on the featured card (active
     // border + checkmark), mirroring the category chip for the active language.
+    // When the active language has no World Cup pack, hide the card entirely so
+    // a language like Spanish never shows a non-functional World Cup tile.
     function syncHeroFeatureCardState() {
         if (!els.heroFeatureCard || !els.categoryChips) return;
-        var pack = (selectedLanguage === 'de') ? 'weltmeisterschaft' : 'world-cup';
-        var cat = els.categoryChips.querySelector('.chip[data-value="' + pack + '"]');
-        var active = !!(cat && cat.classList.contains('active'));
+        var cat = _worldCupChipForLang();
+        if (!cat) {
+            els.heroFeatureCard.classList.add('hidden');
+            els.heroFeatureCard.classList.remove('active');
+            els.heroFeatureCard.setAttribute('aria-pressed', 'false');
+            return;
+        }
+        els.heroFeatureCard.classList.remove('hidden');
+        var active = cat.classList.contains('active');
         els.heroFeatureCard.classList.toggle('active', active);
         els.heroFeatureCard.setAttribute('aria-pressed', active ? 'true' : 'false');
     }
@@ -404,10 +470,23 @@
     // doesn't double-fetch. Cleared on a real page reload.
     var _featuredCache = {};
 
+    // #335: a language can have zero featured-eligible packs (e.g. a brand-new
+    // language with a single pack, or one where the backend returned {}). In
+    // that case the spotlight must hide cleanly rather than show stale or
+    // wrong-language content. _hideSpotlight collapses it out of layout; any
+    // valid paint re-shows it.
+    function _hideSpotlight() {
+        if (!els.featuredSpotlight) return;
+        els.featuredSpotlight.classList.add('hidden');
+        els.featuredSpotlight.dataset.value = '';
+    }
+
     function _paintFeatured(lang, data) {
         if (!els.featuredSpotlight) return;
+        if (!data || !data.value || !data.title) { _hideSpotlight(); return; }
+        els.featuredSpotlight.classList.remove('hidden');
         if (els.spotlightTitle) els.spotlightTitle.textContent = data.title;
-        if (els.spotlightMeta)  els.spotlightMeta.textContent  = data.meta;
+        if (els.spotlightMeta)  els.spotlightMeta.textContent  = data.meta || '';
         // Remember selection for the spotlight-click handler.
         els.featuredSpotlight.dataset.value = data.value;
     }
@@ -423,17 +502,32 @@
                 if (data && data.value && data.title) {
                     _featuredCache[lang] = data;
                     _paintFeatured(lang, data);
+                } else {
+                    // Backend has nothing to feature for this language — only
+                    // hide if the synchronous fallback didn't already paint a
+                    // valid spotlight (i.e. dataset.value is empty).
+                    if (!els.featuredSpotlight ||
+                        !els.featuredSpotlight.dataset.value) {
+                        _hideSpotlight();
+                    }
                 }
             })
-            .catch(function () { /* paint already showed fallback */ });
+            .catch(function () { /* paint already showed fallback (or hid) */ });
     }
 
     function updatePackUIScaling(lang) {
-        // Paint fallback synchronously so the spotlight is never blank,
-        // then kick off the live fetch.
+        // Paint fallback synchronously so the spotlight is never blank for a
+        // language with a known fallback (de/en). For languages without one
+        // (#335, e.g. es), hide the spotlight up-front so a prior language's
+        // content never lingers while the live fetch is in flight — the fetch
+        // either re-shows it with a real pack or leaves it hidden.
         var fallback = _featuredFallback(lang);
-        if (els.featuredSpotlight && fallback) {
-            _paintFeatured(lang, fallback);
+        if (els.featuredSpotlight) {
+            if (fallback) {
+                _paintFeatured(lang, fallback);
+            } else if (!_featuredCache[lang]) {
+                _hideSpotlight();
+            }
         }
         _fetchFeatured(lang);
         // Re-apply the "all" theme filter so a language switch clears any
@@ -1575,8 +1669,9 @@
     // picks packs (card + chips) and then taps "Start Game". Proxies to the
     // World Cup category chip so all existing selection logic runs unchanged.
     on(els.heroFeatureCard, 'click', function () {
-        var pack = (selectedLanguage === 'de') ? 'weltmeisterschaft' : 'world-cup';
-        var target = els.categoryChips && els.categoryChips.querySelector('.chip[data-value="' + pack + '"]');
+        // #335: resolve the World Cup pack for the active language from the
+        // data-driven grid rather than a hardcoded slug map.
+        var target = _worldCupChipForLang();
         if (target) target.click();
         syncHeroFeatureCardState();
         syncHeroPackChips();

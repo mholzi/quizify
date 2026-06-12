@@ -1080,6 +1080,32 @@ button, .btn {
     font-size: 0.75rem;
 }
 
+/* Flag-only language chips (#335, Selector B). The chip shows just the
+   country flag glyph (accessible name on aria-label/title), so bump the
+   glyph size and give it a square-ish tap target instead of the narrow
+   text-pill padding. Sized to stay finger-friendly and never clip on a
+   390 px phone — flags wrap to a second row via the parent flex-wrap. */
+.chip-group--flags {
+    gap: 8px;
+}
+
+.chip-group--flags .chip {
+    padding: 6px 12px;
+    font-size: 1.5rem;
+    line-height: 1;
+    min-width: 48px;
+    min-height: 40px;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+}
+
+/* No checkmark prefix on flag chips — the active border/background is the
+   selected affordance; a "✓ 🇩🇪" would crowd the small tile. */
+.chip-group--flags .chip.active::before {
+    content: none;
+}
+
 /* Pack-Chip icon prefix (data-icon attribute on category chips).
    Used only when the chip is rendered in its original pill form (no
    .chip-group--cards parent). The Mixed chip in card-mode hides the

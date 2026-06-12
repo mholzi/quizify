@@ -80,7 +80,7 @@ window.QuizifyI18n = (function() {
         return t('errors.' + code) || t('errors.UNKNOWN');
     }
 
-    var SUPPORTED_LANGUAGES = ['en', 'de'];
+    var SUPPORTED_LANGUAGES = ['en', 'de', 'es'];
 
     async function setLanguage(langCode) {
         if (SUPPORTED_LANGUAGES.indexOf(langCode) === -1) {
@@ -136,6 +136,7 @@ window.QuizifyI18n = (function() {
         var browserLang = navigator.language || navigator.userLanguage || 'en';
         var langLower = browserLang.toLowerCase();
         if (langLower.startsWith('de')) return 'de';
+        if (langLower.startsWith('es')) return 'es';
         return 'en';
     }
 
@@ -150,7 +151,10 @@ window.QuizifyI18n = (function() {
             var haLang = meta ? meta.getAttribute('content') : '';
             // Guard against an unsubstituted {{HA_LANG}} token.
             if (haLang && haLang.indexOf('{') === -1) {
-                return haLang.toLowerCase().indexOf('de') === 0 ? 'de' : 'en';
+                var hl = haLang.toLowerCase();
+                if (hl.indexOf('de') === 0) return 'de';
+                if (hl.indexOf('es') === 0) return 'es';
+                return 'en';
             }
         } catch (_e) { /* ignore */ }
         return detectBrowserLanguage();
