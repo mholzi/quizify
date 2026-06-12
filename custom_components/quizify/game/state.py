@@ -1045,11 +1045,21 @@ class QuizifyGameState:
         """Begin a lightning round, reusing the current player roster.
 
         Returns True if it started, False if no questions were available.
-        Allowed from LOBBY (standalone lightning) or FINALE (after a game).
+        Allowed from LOBBY (standalone lightning), FINALE (after a game), or
+        LIGHTNING_RECAP (the "play again" button after a lightning round —
+        issue #294; this is the same "between rounds" situation as FINALE).
+        A fresh LightningRound is built below and ``_lightning`` /
+        ``_lightning_splash_pending`` are reassigned, so re-entry from
+        LIGHTNING_RECAP starts cleanly. (#285 will later restructure
+        lightning entry; this is a minimal fix for the dead-end.)
         """
         from .lightning import LightningRound  # local import — avoid cycle
 
-        if self.phase not in (GamePhase.LOBBY, GamePhase.FINALE):
+        if self.phase not in (
+            GamePhase.LOBBY,
+            GamePhase.FINALE,
+            GamePhase.LIGHTNING_RECAP,
+        ):
             return False
 
         player_names = list(self._player_registry.players.keys())

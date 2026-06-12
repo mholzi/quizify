@@ -246,6 +246,24 @@ class TestGameStateLightning:
         state.finish_lightning_round()
         assert state.phase == GamePhase.LIGHTNING_RECAP
 
+    def test_start_again_from_recap(self, state: QuizifyGameState) -> None:
+        # Regression for #294: the recap "play again" button sends
+        # start_lightning while the phase is LIGHTNING_RECAP. Previously the
+        # guard only allowed LOBBY/FINALE, so the host got an error toast and
+        # the button was a dead-end. From RECAP it must start a fresh round.
+        state.add_player("A", _fake_ws())
+        state.start_lightning_round()
+        first_round = state.lightning
+        state.finish_lightning_round()
+        assert state.phase == GamePhase.LIGHTNING_RECAP
+
+        assert state.start_lightning_round() is True
+        assert state.phase == GamePhase.LIGHTNING
+        assert state.lightning is not None
+        # A genuinely fresh round, with the intro splash re-armed (#201).
+        assert state.lightning is not first_round
+        assert state.lightning_splash_pending is True
+
     def test_snapshot_exposes_lightning(self, state: QuizifyGameState) -> None:
         state.add_player("A", _fake_ws())
         state.start_lightning_round()
