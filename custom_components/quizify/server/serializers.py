@@ -90,15 +90,28 @@ def serialize_question_for_admin(
 
 
 def serialize_leaderboard(players: list[PlayerSession]) -> list[dict[str, Any]]:
-    """Build sorted leaderboard from player list."""
+    """Build sorted leaderboard from player list.
+
+    Ties share a rank (#308): two players on the same score get the same rank
+    and the next rank skips accordingly (standard competition ranking —
+    1,1,3,…), instead of breaking ties arbitrarily by dict/insertion order and
+    showing one of two equal players as strictly ahead.
+    """
     sorted_players = sorted(players, key=lambda p: p.score, reverse=True)
     result = []
+    prev_score: int | None = None
+    rank = 0
     for i, p in enumerate(sorted_players):
+        # Competition ranking: same score → same rank; the next distinct score
+        # jumps to position i+1.
+        if prev_score is None or p.score != prev_score:
+            rank = i + 1
+            prev_score = p.score
         breakdown = p.round_score_breakdown if hasattr(p, "round_score_breakdown") else {}
         # Determine if this player answered correctly this round
         last_result = p.round_history[-1] if p.round_history else None
         result.append({
-            "rank": i + 1,
+            "rank": rank,
             "name": p.name,
             "score": p.score,
             "streak": p.streak,
@@ -149,12 +162,19 @@ def serialize_finale(
     superlatives: list[dict[str, str]] | None = None,
 ) -> dict[str, Any]:
     """Build finale payload with podium and full leaderboard."""
+    # Shared-rank podium (#308): equal scores share a rank, same as the
+    # leaderboard, so two tied finalists aren't shown 1st/2nd arbitrarily.
+    podium_entries = []
+    _prev: int | None = None
+    _rank = 0
+    for i, p in enumerate(podium):
+        if _prev is None or p.score != _prev:
+            _rank = i + 1
+            _prev = p.score
+        podium_entries.append({"rank": _rank, "name": p.name, "score": p.score})
     result = {
         "type": "finale",
-        "podium": [
-            {"rank": i + 1, "name": p.name, "score": p.score}
-            for i, p in enumerate(podium)
-        ],
+        "podium": podium_entries,
         "leaderboard": serialize_leaderboard(all_players),
         "all_players": serialize_leaderboard(all_players),
     }

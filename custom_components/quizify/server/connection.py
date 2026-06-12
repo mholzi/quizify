@@ -19,6 +19,19 @@ if TYPE_CHECKING:
 
 _LOGGER = logging.getLogger(__name__)
 
+
+def _log_task_exception(task: "asyncio.Task") -> None:
+    """Done-callback surfacing a fire-and-forget task's exception (#307).
+
+    Without it, an exception in an ensure_future'd background task (token
+    persist, admin-timeout, player-removal) is swallowed or only warns at GC
+    time. Reuses the analytics.py logging-done-callback pattern.
+    """
+    if task.cancelled():
+        return
+    if (exc := task.exception()) is not None:
+        _LOGGER.error("Unhandled exception in background task: %s", exc)
+
 # Filename for the persisted admin session token. Tokens older than
 # _PLAYER_TOKEN_TTL are treated as expired — prevents cross-game token reuse
 # on long-lived hosts.
@@ -37,6 +50,13 @@ class ConnectionManager:
 
     ADMIN_SESSION_GRACE = 120
     PLAYER_SESSION_GRACE = 60
+
+    # Per-send wall-clock cap for a single fan-out send (#307). A half-dead
+    # phone (TCP zero-window, wifi sleep) can otherwise pin drain() up to the
+    # 30s heartbeat; without a cap a single such client stalls the whole
+    # broadcast()/per-player gather and the calling handler room-wide. 2s is
+    # comfortably above a healthy send yet bounds the worst case.
+    _SEND_TIMEOUT = 2.0
 
     def __init__(
         self,
@@ -146,7 +166,8 @@ class ConnectionManager:
             self._admin_session_token = str(uuid.uuid4())
             # Fire-and-forget persist; missing the write isn't fatal, the
             # token just won't survive the next restart.
-            asyncio.ensure_future(self._async_save_admin_token())
+            _persist = asyncio.ensure_future(self._async_save_admin_token())
+            _persist.add_done_callback(_log_task_exception)
         return self._admin_session_token
 
     def validate_admin_token(self, token: str) -> bool:
@@ -212,6 +233,7 @@ class ConnectionManager:
             await self._async_save_admin_token()
 
         self._admin_disconnect_task = asyncio.ensure_future(admin_timeout())
+        self._admin_disconnect_task.add_done_callback(_log_task_exception)
 
     # ------------------------------------------------------------------
     # Player session tokens (with TTL)
@@ -280,9 +302,30 @@ class ConnectionManager:
     def schedule_player_removal(
         self, name: str, timeout: float, remove_fn
     ) -> None:
-        """Schedule *remove_fn(name, timeout)* and track the task."""
+        """Schedule *remove_fn(name, timeout)* and track the task.
+
+        #310: entries used to be popped only on reconnect, so one completed
+        done-Task per distinct removed player name accumulated forever on a
+        long-lived host (the single never-shrinking structure in the codebase).
+        A done-callback now pops the entry once the task finishes (guarded so a
+        re-scheduled task for the same name isn't clobbered). Re-scheduling for
+        a name with a still-pending task cancels the old one first, so the
+        registry never silently leaks a task it can no longer reach.
+        """
+        existing = self._pending_removals.get(name)
+        if existing is not None and not existing.done():
+            existing.cancel()
         task = asyncio.ensure_future(remove_fn(name, timeout))
         self._pending_removals[name] = task
+
+        def _cleanup(t: asyncio.Task) -> None:
+            # Only drop the entry if it's still THIS task (a reconnect may have
+            # already replaced it via cancel_pending_removal / reschedule).
+            if self._pending_removals.get(name) is t:
+                self._pending_removals.pop(name, None)
+            _log_task_exception(t)
+
+        task.add_done_callback(_cleanup)
 
     def cancel_pending_removal(self, name: str) -> None:
         """Cancel a pending removal task for *name* (e.g. on reconnect)."""
@@ -346,9 +389,13 @@ class ConnectionManager:
 
         The public single-socket send primitive. Errors are intentionally
         swallowed (and logged) so one dead/slow client can't break a fan-out.
+        A per-send timeout (#307) bounds a half-dead client so the per-player
+        gather fan-outs (timer ticks, question sends) can't stall room-wide.
         """
         try:
-            await ws.send_json(message)
+            await asyncio.wait_for(ws.send_json(message), timeout=self._SEND_TIMEOUT)
+        except asyncio.TimeoutError:
+            _LOGGER.warning("Timed out sending to WebSocket (slow/dead client)")
         except Exception as err:  # noqa: BLE001
             _LOGGER.warning("Failed to send to WebSocket: %s", err)
 
@@ -361,9 +408,14 @@ class ConnectionManager:
 
         Used by the broadcast helpers so the same fan-out message is
         serialized once (json.dumps) rather than re-encoded per client (#258).
+        Wrapped in a per-send timeout (#307) so one stalled socket can't pin
+        the whole fan-out; a TimeoutError is swallowed like any other send
+        error so the broadcast still reaches the healthy clients.
         """
         try:
-            await ws.send_str(payload)
+            await asyncio.wait_for(ws.send_str(payload), timeout=self._SEND_TIMEOUT)
+        except asyncio.TimeoutError:
+            _LOGGER.warning("Timed out sending to WebSocket (slow/dead client)")
         except Exception as err:  # noqa: BLE001
             _LOGGER.warning("Failed to send to WebSocket: %s", err)
 

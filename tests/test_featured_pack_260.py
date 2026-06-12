@@ -55,7 +55,22 @@ class _FakeBank:
         return self._questions_dir
 
     def get_pack_versions(self) -> dict:
-        return dict(self._pack_versions)
+        # Mirror the real QuestionBank (#309): the pack's ``theme`` is captured
+        # into metadata at load time, not re-read from disk per request. If a
+        # test wrote a pack file with a theme, fold it into the metadata here so
+        # the metadata is the single source of truth the view reads.
+        out = {}
+        for slug, meta in self._pack_versions.items():
+            meta = dict(meta)
+            if "theme" not in meta:
+                pack_file = self._questions_dir / f"{slug}.json"
+                if pack_file.exists():
+                    try:
+                        meta["theme"] = json.loads(pack_file.read_text()).get("theme", "")
+                    except (ValueError, OSError):
+                        meta["theme"] = ""
+            out[slug] = meta
+        return out
 
 
 class _FakeAnalytics:

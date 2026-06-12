@@ -423,22 +423,15 @@ async def featured_pack_view(request: web.Request) -> web.Response:
     season_label = chosen_season.label if (seasonal_active and chosen_season) else ""
 
     meta = lang_packs[chosen]
-    # Read pack JSON once for theme (icon lookup). Cheap — packs are
-    # already on disk and aiohttp's executor handles the blocking read.
-    pack_path = bank.questions_dir / f"{chosen}.json"
-    try:
-        raw = await ctx.runtime.run_in_executor(
-            pack_path.read_text, "utf-8"
-        )
-        parsed = json.loads(raw)
-        # A pack file is expected to be a JSON object. Valid-but-non-object
-        # JSON (e.g. a list or bare string) would make ``.get`` raise
-        # AttributeError, which isn't an OSError/ValueError — guard the
-        # structure explicitly so a malformed pack degrades to the default
-        # icon instead of 500-ing the admin setup screen (#168).
-        theme = parsed.get("theme", "") if isinstance(parsed, dict) else ""
-    except (OSError, ValueError):
-        theme = ""
+    # Theme is captured into pack metadata at load time (#309), so read it from
+    # there instead of re-opening + re-parsing the pack JSON per request. The
+    # old per-request read used ``questions_dir / f"{chosen}.json"``, which
+    # never resolved community packs (they live at
+    # ``questions/community/<stem>.json`` under a ``community-`` slug) — so a
+    # featured seasonal/most-played community pack always got the 🎲 default
+    # icon instead of its real theme. Reading from metadata fixes that and drops
+    # a blocking file read from the hot path.
+    theme = meta.get("theme", "") or ""
     icon = _THEME_ICONS.get(theme, "🎲")
 
     count = meta.get("question_count", 0)
@@ -699,7 +692,14 @@ async def flag_list_view(request: web.Request) -> web.Response:
         return entries
 
     entries = await ctx.runtime.run_in_executor(_read)
-    return web.json_response({"flags": entries})
+    # #305: never return the stored client IP (``remote``) to callers — the
+    # /api/quizify/* routes are added to hass.http.app.router with NO HA auth,
+    # so /flags is readable unauthenticated. The IP is still stored on disk for
+    # operator forensics; it is simply stripped from the response so an
+    # anonymous caller can't enumerate the IPs of everyone who flagged a
+    # question. Strip it defensively per entry (older entries may pre-date this).
+    sanitized = [{k: v for k, v in e.items() if k != "remote"} for e in entries]
+    return web.json_response({"flags": sanitized})
 
 
 # ---------------------------------------------------------------------------

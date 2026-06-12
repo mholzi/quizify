@@ -440,9 +440,12 @@ class QuizifyGameState:
             language=self.language,
         )
 
-        # Verify questions are available
+        # Verify questions are available. Raise with the dedicated
+        # ERR_NO_QUESTIONS_REMAINING code (#308) so the handler can surface the
+        # right error — an empty pack is NOT "game already started". The human
+        # message stays as the exception detail for logs.
         if not self._question_bank._queue:
-            raise ValueError("No questions available for the selected category/difficulty")
+            raise ValueError(ERR_NO_QUESTIONS_REMAINING)
 
         # Drop players who are no longer connected before resetting
         # scores. Players who disconnected during the previous game
@@ -748,13 +751,18 @@ class QuizifyGameState:
         self.phase = GamePhase.ANSWER_REVEAL
 
         # Feed the group-level difficulty calibrator (#40). Signal = the share
-        # of *participating* players (connected, i.e. present for this round)
-        # who answered correctly. Then advance the target for the next round.
-        # No-op when not in "auto" mode. Rounds with zero participants carry no
-        # signal (the calibrator ignores total<=0).
+        # of *participating* players who answered correctly. Then advance the
+        # target for the next round. No-op when not in "auto" mode. Rounds with
+        # zero participants carry no signal (the calibrator ignores total<=0).
+        #
+        # #302: base the signal on players who actually SUBMITTED, not merely
+        # connected. Counting every connected-but-idle tab (late joiners, AFK
+        # phones) as wrong dragged the difficulty easier — the opposite of the
+        # intended adaptation, and inconsistent with question_stats.record_round
+        # below, which deliberately excludes timeouts.
         if self._calibrator is not None:
             participants = [
-                p for p in self._player_registry.players.values() if p.connected
+                p for p in self._player_registry.players.values() if p.submitted
             ]
             total = len(participants)
             correct = sum(

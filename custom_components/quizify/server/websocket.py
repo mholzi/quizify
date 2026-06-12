@@ -18,6 +18,7 @@ from custom_components.quizify.const import (
     ERR_INVALID_ACTION,
     ERR_NAME_INVALID,
     ERR_NAME_TAKEN,
+    ERR_NO_QUESTIONS_REMAINING,
     ERR_NOT_IN_GAME,
     ERR_ROUND_EXPIRED,
     LOBBY_DISCONNECT_GRACE_PERIOD,
@@ -244,9 +245,16 @@ class QuizifyWebSocketHandler:
                 elif msg.type == WSMsgType.ERROR:
                     _LOGGER.error("WebSocket error: %s", ws.exception())
         finally:
+            # #293: capture the admin-connection flag BEFORE remove_connection
+            # discards this ws from _admin_connections. The disconnect handler
+            # needs it to decide whether to start the admin-session grace
+            # timeout; reading is_admin_connection(ws) AFTER removal always
+            # returned False, so schedule_admin_timeout never fired (and
+            # cancel_admin_disconnect was equally dead).
+            was_admin = self._conn.is_admin_connection(ws)
             self._conn.remove_connection(ws)
             self._forget_rate_limit(ws)
-            await self._handle_disconnect(ws)
+            await self._handle_disconnect(ws, was_admin=was_admin)
             _LOGGER.debug("WebSocket disconnected, total: %d", len(self._conn.connections))
 
         return ws
@@ -380,7 +388,7 @@ class QuizifyWebSocketHandler:
                 True,
             ),
             "admin_skip": (
-                lambda ws: self._handle_next_question(ws, game_state),
+                lambda ws: self._handle_admin_skip(ws, game_state),
                 True,
             ),
             "end_game": (lambda ws: self._handle_end_game(ws, game_state), True),
@@ -988,6 +996,18 @@ class QuizifyWebSocketHandler:
         language = data.get("language", "de")
         timer_duration = data.get("timer_duration")
 
+        # Validate num_rounds the same way as timer_duration (#303): the WS
+        # value reaches start_game raw, and total_rounds drives
+        # ``self.round >= self.total_rounds``. A non-int makes that comparison
+        # raise TypeError every start_next_question (game wedged); 0/negative
+        # jumps straight to FINALE. Coerce to int + clamp to 1..50, fall back
+        # to the default of 10 on anything unparseable.
+        try:
+            num_rounds = int(num_rounds)
+        except (TypeError, ValueError):
+            num_rounds = 10
+        num_rounds = max(1, min(50, num_rounds))
+
         # category may be None (mixed), a string (single), or a list (multi)
         if isinstance(raw_category, list):
             category = None
@@ -1017,7 +1037,16 @@ class QuizifyWebSocketHandler:
                 timer_duration=timer_value,
             )
         except ValueError as err:
-            await self._conn.send_error(ws, ERR_GAME_ALREADY_STARTED, str(err))
+            # start_game raises two distinct ValueErrors: a wrong-phase
+            # "already started" and an empty-pack "no questions". Surface the
+            # right code instead of always reporting ALREADY_STARTED (#308):
+            # an empty/missing pack is a NO_QUESTIONS_REMAINING condition.
+            code = (
+                ERR_NO_QUESTIONS_REMAINING
+                if str(err) == ERR_NO_QUESTIONS_REMAINING
+                else ERR_GAME_ALREADY_STARTED
+            )
+            await self._conn.send_error(ws, code, str(err))
             return
 
         # Grace period before round 1's timer starts.
@@ -1047,7 +1076,41 @@ class QuizifyWebSocketHandler:
             await self._conn.send_error(ws, ERR_INVALID_ACTION, "Cannot advance now")
             return
 
+        # #298: a stray next_round/next_question in a *real* lobby (stale admin
+        # tab, double-fire) must NOT advance — start_game doesn't change phase,
+        # so an un-started game sits in LOBBY with game_id is None. Advancing
+        # from there either ends an empty queue (FINALE with an empty podium,
+        # round=0) or starts a round with no game_id and scores never reset.
+        # The legitimate internal start→first-question path goes through
+        # _start_next_question directly (see _handle_start_game), so gating the
+        # public handler here doesn't break it.
+        if game_state.phase == GamePhase.LOBBY and game_state.game_id is None:
+            await self._conn.send_error(ws, ERR_INVALID_ACTION, "Cannot advance now")
+            return
+
         await self._start_next_question(game_state)
+
+    async def _handle_admin_skip(
+        self, ws: web.WebSocketResponse, game_state: QuizifyGameState
+    ) -> None:
+        """Handle admin skip — abandon the live question right now (#311).
+
+        ``admin_skip`` used to route to ``_handle_next_question``, which only
+        accepts LOBBY/ANSWER_REVEAL, so mid-question it was a dead no-op: a
+        broken/offensive question forced the room to wait out the timer (pause
+        can't advance either). The fix: during QUESTION_ACTIVE, evaluate the
+        round immediately — locking in whatever answers are already in and
+        transitioning to ANSWER_REVEAL — so the admin can then advance past it.
+        Outside QUESTION_ACTIVE it behaves like the normal advance.
+        """
+        if game_state.phase == GamePhase.QUESTION_ACTIVE:
+            # Stop the countdown and evaluate now. evaluate_round()'s
+            # state-machine event (_fire_broadcast("round_evaluated")) drives
+            # the summary broadcast, same as the timer-expiry auto-evaluate.
+            self._cancel_timer_tick()
+            game_state.evaluate_round()
+            return
+        await self._handle_next_question(ws, game_state)
 
     # ------------------------------------------------------------------
     # Admin: end game
@@ -1344,6 +1407,15 @@ class QuizifyWebSocketHandler:
         """Admin ends the lightning round early → jump to the recap."""
         self._cancel_lightning_loop()
         if game_state.phase == GamePhase.LIGHTNING:
+            # Score the in-flight question's answers before tearing the round
+            # down (#308). Without lr.advance(), "End lightning" discarded every
+            # answer already tapped on the current question — the recap omitted
+            # them and players who'd answered correctly got no credit. advance()
+            # scores the current question (and arms the next, which we don't
+            # broadcast since we're finishing anyway).
+            lr = game_state.lightning
+            if lr is not None:
+                lr.advance()
             game_state.finish_lightning_round()
             await self._broadcast_lightning_recap(game_state)
 
@@ -1396,8 +1468,14 @@ class QuizifyWebSocketHandler:
                         return
             except asyncio.CancelledError:
                 pass
+            except Exception:  # noqa: BLE001
+                # #307: an unexpected exception here used to kill the lightning
+                # task silently, hanging the round on the current question with
+                # a frozen clock. Log it so the failure surfaces.
+                _LOGGER.exception("Lightning loop crashed")
 
         self._lightning_task = asyncio.ensure_future(loop())
+        self._lightning_task.add_done_callback(self._log_task_exception)
 
     def _cancel_lightning_loop(self) -> None:
         if self._lightning_task is not None:
@@ -1680,14 +1758,35 @@ class QuizifyWebSocketHandler:
                     game_state.evaluate_round()
             except asyncio.CancelledError:
                 pass
+            except Exception:  # noqa: BLE001
+                # #307: any other exception used to kill the tick task
+                # silently, leaving the game frozen in QUESTION_ACTIVE with a
+                # stuck countdown. Log it loudly so the failure is diagnosable
+                # instead of presenting as a mysterious hang.
+                _LOGGER.exception("Timer tick loop crashed")
 
         self._timer_tick_task = asyncio.ensure_future(tick_loop())
+        self._timer_tick_task.add_done_callback(self._log_task_exception)
 
     def _cancel_timer_tick(self) -> None:
         """Cancel the timer tick task."""
         if self._timer_tick_task is not None:
             self._timer_tick_task.cancel()
             self._timer_tick_task = None
+
+    @staticmethod
+    def _log_task_exception(task: asyncio.Task) -> None:
+        """Done-callback that surfaces a fire-and-forget task's exception (#307).
+
+        ensure_future/create_task tasks whose exception is never retrieved
+        otherwise raise "Task exception was never retrieved" at GC time (or get
+        swallowed entirely). Reuses the analytics.py logging-done-callback
+        pattern so a crashed background loop is at least loud in the log.
+        """
+        if task.cancelled():
+            return
+        if (exc := task.exception()) is not None:
+            _LOGGER.error("Unhandled exception in background task: %s", exc)
 
     # ------------------------------------------------------------------
     # Round summary broadcast
@@ -1710,8 +1809,16 @@ class QuizifyWebSocketHandler:
     # Disconnect handling
     # ------------------------------------------------------------------
 
-    async def _handle_disconnect(self, ws: web.WebSocketResponse) -> None:
-        """Handle WebSocket disconnection."""
+    async def _handle_disconnect(
+        self, ws: web.WebSocketResponse, was_admin: bool | None = None
+    ) -> None:
+        """Handle WebSocket disconnection.
+
+        ``was_admin`` is the admin-connection flag captured by ``handle()``
+        BEFORE ``remove_connection`` (#293). When omitted (legacy/test callers),
+        fall back to querying the connection manager — only correct if the ws
+        hasn't been removed yet.
+        """
         game_state = self._get_game_state()
         if not game_state:
             return
@@ -1719,7 +1826,12 @@ class QuizifyWebSocketHandler:
         # Handle admin disconnect — keep game alive for grace period.
         # Strictly gated on real admin connection (was: OR clause allowed
         # dashboard disconnects to trigger the timeout, see #2 in review).
-        if self._conn.is_admin_connection(ws):
+        is_admin_ws = (
+            was_admin
+            if was_admin is not None
+            else self._conn.is_admin_connection(ws)
+        )
+        if is_admin_ws:
             if not self._conn.has_admin_connections():
                 _LOGGER.info(
                     "Admin disconnected, keeping game alive for %ds",
