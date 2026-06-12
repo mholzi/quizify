@@ -1404,7 +1404,22 @@ class QuizifyGameState:
 
         if self.phase == GamePhase.ANSWER_REVEAL and self._round_summary:
             s = self._round_summary
+            q = s.question
+            # Canonical (question-JSON) answer order, mirroring the
+            # QUESTION_ACTIVE snapshot's ``question.answers``. A TV/dashboard
+            # that (re)connects during the reveal has no live ``question``
+            # block to render, so without these fields its question view was
+            # blank (#296). The dashboard renders the unshuffled grid and
+            # highlights ``correct_answer_index_original``.
+            correct_idx_original = next(
+                (i for i, a in enumerate(q.answers) if a.correct), -1
+            )
             snapshot["round_summary"] = {
+                "question_text": q.question,
+                "category": q.category,
+                "image_url": q.image_url,
+                "answers": [a.text for a in q.answers],
+                "correct_answer_index_original": correct_idx_original,
                 "correct_answer": s.correct_answer.text,
                 "fun_fact": s.fun_fact,
                 "results": [

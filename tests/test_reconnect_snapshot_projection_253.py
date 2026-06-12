@@ -253,6 +253,30 @@ def test_reveal_snapshot_is_flat_with_all_answers(
     assert "fun_fact" in projected
 
 
+def test_reveal_raw_snapshot_carries_question_for_dashboard(
+    state: QuizifyGameState,
+) -> None:
+    """#296: a pure dashboard socket (no player session) gets the RAW snapshot,
+    which keeps the nested ``round_summary``. Previously that blob lacked the
+    question text + answers, so a TV that (re)connected during the reveal had
+    nothing to render and showed a blank question view. The raw reveal snapshot
+    must now carry ``question_text``, the canonical ``answers`` list, and
+    ``correct_answer_index_original`` so the dashboard can rebuild the view."""
+    _start_round_with_shuffles(state)
+    question = state.get_current_question()
+    correct_idx = next(i for i, a in enumerate(question.answers) if a.correct)
+    state.submit_answer("Alice", correct_idx)
+    state.evaluate_round()
+    assert state.phase == GamePhase.ANSWER_REVEAL
+
+    rs = state.get_state_snapshot()["round_summary"]
+    assert rs["question_text"] == question.question
+    assert rs["answers"] == [a.text for a in question.answers]
+    assert rs["correct_answer_index_original"] == correct_idx
+    # The correct index points at the genuinely-correct answer.
+    assert question.answers[rs["correct_answer_index_original"]].correct is True
+
+
 # ---------------------------------------------------------------------------
 # CRITICAL — Lightning answers must match the player's lightning submit mapping
 # ---------------------------------------------------------------------------
