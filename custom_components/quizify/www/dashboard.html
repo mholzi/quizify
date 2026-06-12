@@ -1762,7 +1762,7 @@
                 // owns the left chip, award-name + winner share one line,
                 // detail wraps as a quiet sub-line.
                 card.innerHTML =
-                    '<div class="award-icon">' + s.icon + '</div>' +
+                    '<div class="award-icon">' + escapeHtml(s.icon) + '</div>' +
                     '<div class="award-text">' +
                         '<div class="award-name">' + escapeHtml(s.award) + ' · <span class="award-winner">' + escapeHtml(s.winner) + '</span></div>' +
                         '<div class="award-detail">' + escapeHtml(s.detail) + '</div>' +

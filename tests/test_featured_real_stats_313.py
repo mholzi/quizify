@@ -111,7 +111,7 @@ def _yday_with_parity(even: bool) -> tuple[int, int, int]:
 
 def _make_ctx(bank, analytics, question_stats):
     return SimpleNamespace(
-        game=SimpleNamespace(_question_bank=bank),
+        game=SimpleNamespace(question_bank=bank),
         analytics=analytics,
         question_stats=question_stats,
         runtime=SimpleNamespace(

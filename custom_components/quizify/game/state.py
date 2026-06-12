@@ -268,6 +268,15 @@ class QuizifyGameState:
         """
         return self._last_settings
 
+    @property
+    def question_bank(self) -> QuestionBank:
+        """The game's QuestionBank.
+
+        Public accessor so HTTP handlers (views.py) don't reach into the
+        private ``_question_bank`` attribute (issue #312).
+        """
+        return self._question_bank
+
     # ------------------------------------------------------------------
     # Player registry delegation
     # ------------------------------------------------------------------

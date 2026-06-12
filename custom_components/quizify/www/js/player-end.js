@@ -233,7 +233,9 @@
             // Resolve the SVG glyph from the award_key; fall back to the emoji.
             var glyphName = AWARD_GLYPH[award.award_key];
             var glyphSvg = (glyphName && icons) ? icons.uiIcon(glyphName) : '';
-            var discInner = glyphSvg || emoji;
+            // #312 defense-in-depth: glyphSvg is trusted local markup, but the
+            // emoji fallback is server-provided — escape it before injecting.
+            var discInner = glyphSvg || pu.escapeHtml(emoji);
             // Prefer i18n keys if the server sent them; fall back to English literals.
             var titleKey = award.award_key;
             var detailKey = award.detail_key;

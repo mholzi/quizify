@@ -2332,7 +2332,9 @@
             // Resolve the SVG glyph from the award_key; fall back to the emoji.
             var glyphName = AWARD_GLYPH[award.award_key];
             var glyphSvg = (glyphName && icons) ? icons.uiIcon(glyphName) : '';
-            var discInner = glyphSvg || emoji;
+            // #312 defense-in-depth: glyphSvg is trusted local markup, but the
+            // emoji fallback is server-provided — escape it before injecting.
+            var discInner = glyphSvg || pu.escapeHtml(emoji);
             // Prefer i18n keys if the server sent them; fall back to English literals.
             var titleKey = award.award_key;
             var detailKey = award.detail_key;
@@ -2605,7 +2607,12 @@
         for (var i = 0; i < 3; i++) {
             var span = document.getElementById('lightning-answer-text-' + i);
             var btn = document.querySelector('[data-lightning-answer="' + i + '"]');
-            if (span) span.textContent = answers[i] || '';
+            if (span) {
+                // #283/#312: answers may be objects ({text, ...}) or strings —
+                // normalize before rendering.
+                var a = answers[i];
+                span.textContent = ((a && typeof a === 'object') ? a.text : a) || '';
+            }
             if (btn) {
                 btn.disabled = false;
                 btn.classList.remove('answer-btn--correct', 'answer-btn--wrong', 'selected');
@@ -2985,7 +2992,12 @@
                 btn.dataset.index = String(i);
 
                 var textEl = btn.querySelector('.answer-text');
-                if (textEl) textEl.textContent = answers[i] || '';
+                if (textEl) {
+                    // #283/#312: answers may arrive as objects ({text, ...})
+                    // or plain strings — normalize before rendering.
+                    var a = answers[i];
+                    textEl.textContent = ((a && typeof a === 'object') ? a.text : a) || '';
+                }
 
                 // Re-apply selected state if player already submitted
                 if (hasSubmitted && lastSubmittedIndex === i) {

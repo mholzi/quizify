@@ -1261,9 +1261,15 @@
                 .map(function (p, idx) {
                     var name = typeof p === 'string' ? p : (p.name || p);
                     var isAdmin = typeof p === 'object' && p && p.is_admin;
-                    var color = (typeof p === 'object' && p && p.color)
-                        ? p.color
-                        : _LOBBY_COLORS[idx % _LOBBY_COLORS.length];
+                    var fallbackColor = _LOBBY_COLORS[idx % _LOBBY_COLORS.length];
+                    // #312 defense-in-depth: p.color is server-provided and is
+                    // injected into a style="background:..." attribute. Accept
+                    // only a strict #rrggbb hex; otherwise fall back to the
+                    // palette so a hostile value can't break out of the style.
+                    var rawColor = (typeof p === 'object' && p && p.color) ? p.color : '';
+                    var color = /^#[0-9a-fA-F]{6}$/.test(rawColor)
+                        ? rawColor
+                        : fallbackColor;
                     var initial = (name || '?').charAt(0).toUpperCase();
                     var kickBtn = isAdmin
                         ? ''

@@ -147,7 +147,7 @@ def test_no_packs_for_language_returns_empty(tmp_path: Path) -> None:
         {"geographie": {"language": "de", "question_count": 10, "name": "Geo"}},
         {"geographie": []},
     )
-    ctx = SimpleNamespace(game=SimpleNamespace(_question_bank=bank),
+    ctx = SimpleNamespace(game=SimpleNamespace(question_bank=bank),
                           analytics=None, question_stats=None, runtime=_FakeRuntime())
     assert _call(ctx, lang="en") == {}
 
@@ -165,7 +165,7 @@ def test_fresh_install_falls_back_to_default(tmp_path: Path, monkeypatch) -> Non
         },
         {"geographie": [], "tiere": []},
     )
-    ctx = SimpleNamespace(game=SimpleNamespace(_question_bank=bank),
+    ctx = SimpleNamespace(game=SimpleNamespace(question_bank=bank),
                           analytics=None, question_stats=None, runtime=_FakeRuntime())
     out = _call(ctx)
     assert out["value"] == "geographie"
@@ -195,7 +195,7 @@ def test_most_played_picks_top_category_on_even_day(tmp_path: Path, monkeypatch)
         {"category": "geographie", "games_played": 1},
         {"category": "tiere", "games_played": 9},  # most played → winner
     ])
-    ctx = SimpleNamespace(game=SimpleNamespace(_question_bank=bank),
+    ctx = SimpleNamespace(game=SimpleNamespace(question_bank=bank),
                           analytics=analytics, question_stats=None, runtime=_FakeRuntime())
     out = _call(ctx)
     assert out["value"] == "tiere"
@@ -226,7 +226,7 @@ def test_most_difficult_picks_lowest_correct_rate_on_odd_day(tmp_path: Path, mon
         # wissen: 3/20 correct = 0.15 → hardest → winner
         "w1": {"shown_count": 20, "correct_count": 3},
     })
-    ctx = SimpleNamespace(game=SimpleNamespace(_question_bank=bank),
+    ctx = SimpleNamespace(game=SimpleNamespace(question_bank=bank),
                           analytics=None, question_stats=qstats, runtime=_FakeRuntime())
     out = _call(ctx)
     assert out["value"] == "wissen"
@@ -245,7 +245,7 @@ def test_most_difficult_below_min_shown_falls_back(tmp_path: Path, monkeypatch) 
         {"geographie": [_FakeQuestion("g1")]},
     )
     qstats = _FakeQuestionStats({"g1": {"shown_count": 2, "correct_count": 1}})  # < 10
-    ctx = SimpleNamespace(game=SimpleNamespace(_question_bank=bank),
+    ctx = SimpleNamespace(game=SimpleNamespace(question_bank=bank),
                           analytics=None, question_stats=qstats, runtime=_FakeRuntime())
     out = _call(ctx)
     assert out["value"] == "geographie"

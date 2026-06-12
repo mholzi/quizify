@@ -79,7 +79,7 @@ async def async_setup_entry(hass: HomeAssistant, entry: ConfigEntry) -> bool:
     # _loaded), so the later inline calls in start_game()/LightningRound
     # .start() become guaranteed cache hits instead of synchronous disk
     # reads on the loop. Mirrors the analytics/stats preload pattern above.
-    await runtime.run_in_executor(game_state._question_bank.load_all_categories)
+    await runtime.run_in_executor(game_state.question_bank.load_all_categories)
 
     ws_handler = QuizifyWebSocketHandler(
         runtime=runtime,

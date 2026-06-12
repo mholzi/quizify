@@ -84,7 +84,12 @@
         for (var i = 0; i < 3; i++) {
             var span = document.getElementById('lightning-answer-text-' + i);
             var btn = document.querySelector('[data-lightning-answer="' + i + '"]');
-            if (span) span.textContent = answers[i] || '';
+            if (span) {
+                // #283/#312: answers may be objects ({text, ...}) or strings —
+                // normalize before rendering.
+                var a = answers[i];
+                span.textContent = ((a && typeof a === 'object') ? a.text : a) || '';
+            }
             if (btn) {
                 btn.disabled = false;
                 btn.classList.remove('answer-btn--correct', 'answer-btn--wrong', 'selected');

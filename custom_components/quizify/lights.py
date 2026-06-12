@@ -18,15 +18,13 @@ The service no-ops cleanly when:
 
 from __future__ import annotations
 
-import logging
 from typing import TYPE_CHECKING
 
 from .game.state import GamePhase, QuizifyGameState
+from .ha_service import fire_and_forget_service
 
 if TYPE_CHECKING:
     from homeassistant.core import HomeAssistant
-
-_LOGGER = logging.getLogger(__name__)
 
 
 # Per-phase light recipe. Colours are RGB triples matching DESIGN.md.
@@ -122,17 +120,10 @@ class QuizifyPartyLights:
         self._call("light", "turn_on", data)
 
     def _call(self, domain: str, service: str, data: dict[str, object]) -> None:
-        hass = self._hass
-        if hass is None:
-            return
-
-        async def _do_call() -> None:
-            try:
-                await hass.services.async_call(domain, service, data, blocking=False)
-            except Exception as err:  # noqa: BLE001
-                _LOGGER.warning(
-                    "Party lights %s.%s failed (entities=%s): %s",
-                    domain, service, self._entity_ids, err,
-                )
-
-        hass.async_create_task(_do_call())
+        fire_and_forget_service(
+            self._hass,
+            domain,
+            service,
+            data,
+            f"Party lights {domain}.{service} (entities={self._entity_ids})",
+        )

@@ -21,6 +21,7 @@ import time
 from typing import TYPE_CHECKING
 
 from .game.state import GamePhase, QuizifyGameState
+from .ha_service import fire_and_forget_service
 
 if TYPE_CHECKING:
     from homeassistant.core import HomeAssistant
@@ -144,28 +145,15 @@ class QuizifyTTSAnnouncer:
             return
         self._last_spoken_at = now
 
-        hass = self._hass
-        if hass is None:
-            return
-
-        async def _do_speak() -> None:
-            try:
-                await hass.services.async_call(
-                    "tts",
-                    "speak",
-                    {
-                        "entity_id": self._tts_entity_id,
-                        "media_player_entity_id": self._media_player_entity_id,
-                        "message": message,
-                    },
-                    blocking=False,
-                )
-            except Exception as err:  # noqa: BLE001
-                _LOGGER.warning(
-                    "TTS announcement failed (tts=%s, media_player=%s): %s",
-                    self._tts_entity_id,
-                    self._media_player_entity_id,
-                    err,
-                )
-
-        hass.async_create_task(_do_speak())
+        fire_and_forget_service(
+            self._hass,
+            "tts",
+            "speak",
+            {
+                "entity_id": self._tts_entity_id,
+                "media_player_entity_id": self._media_player_entity_id,
+                "message": message,
+            },
+            f"TTS announcement (tts={self._tts_entity_id}, "
+            f"media_player={self._media_player_entity_id})",
+        )
