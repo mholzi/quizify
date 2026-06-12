@@ -105,14 +105,14 @@ async def async_setup_entry(hass: HomeAssistant, entry: ConfigEntry) -> bool:
         # Community-pack submission stays inert until this worker URL is set
         # (#180). Empty/unset → the in-app submit UI hides itself.
         community_submit_url=(
-            (entry.options or {}).get(CONF_COMMUNITY_SUBMIT_URL) or ""
+            entry.options.get(CONF_COMMUNITY_SUBMIT_URL) or ""
         ).strip()
         or None,
         # Shared secret sent as X-Quizify-Secret to the worker (#256). Empty →
         # header omitted (back-compatible); set it alongside the worker's
         # SHARED_SECRET to close the open-proxy hole.
         community_submit_secret=(
-            (entry.options or {}).get(CONF_COMMUNITY_SUBMIT_SECRET) or ""
+            entry.options.get(CONF_COMMUNITY_SUBMIT_SECRET) or ""
         ).strip()
         or None,
     )
@@ -178,8 +178,9 @@ async def async_setup_entry(hass: HomeAssistant, entry: ConfigEntry) -> bool:
 
     # Wire optional HA integrations from the options flow. Both attach via
     # game state callbacks (Phase 1 plumbing) and stay silent if their
-    # respective entities aren't configured.
-    options = entry.options or {}
+    # respective entities aren't configured. (entry.options is always a
+    # MappingProxyType — never None — so no `or {}` fallback is needed.)
+    options = entry.options
     # Lobby music plays server-side on the configured media_player while the
     # game waits in the lobby. Empty/unset → the playback service stays inert.
     game_state.lobby_music_url = (
@@ -220,7 +221,7 @@ async def async_setup_entry(hass: HomeAssistant, entry: ConfigEntry) -> bool:
     async def _update_listener(
         _hass: HomeAssistant, updated_entry: ConfigEntry
     ) -> None:
-        opts = updated_entry.options or {}
+        opts = updated_entry.options  # always a MappingProxyType, never None
         game_state.lobby_music_url = (
             (opts.get(CONF_LOBBY_MUSIC_URL) or "").strip() or None
         )

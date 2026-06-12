@@ -130,7 +130,7 @@ class QuestionStatsService:
     def get_hardest(self, limit: int = 25, min_shown: int = 3) -> list[dict[str, Any]]:
         """Questions with the LOWEST correct rate, gated by min_shown so a
         one-time miss doesn't dominate the list."""
-        items = []
+        items: list[dict[str, Any]] = []
         for q in self._data["questions"].values():
             if q["shown_count"] < min_shown:
                 continue

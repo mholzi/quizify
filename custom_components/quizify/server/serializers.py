@@ -261,7 +261,7 @@ def _compute_answer_distribution(
         elif isinstance(idx, int) and 0 <= idx < num_options:
             counts[idx] += 1
 
-    distribution = []
+    distribution: list[dict[str, Any]] = []
     for i, count in enumerate(counts):
         distribution.append({
             "index": i,

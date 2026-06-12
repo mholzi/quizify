@@ -15,7 +15,7 @@ from __future__ import annotations
 
 import asyncio
 import logging
-from collections.abc import Awaitable
+from collections.abc import Coroutine
 from pathlib import Path
 from typing import TYPE_CHECKING, Any, Protocol, runtime_checkable
 
@@ -37,7 +37,7 @@ class Runtime(Protocol):
         Files live directly under this directory (no extra ``quizify/`` prefix).
         """
 
-    def create_task(self, coro: Awaitable[Any]) -> Any:
+    def create_task(self, coro: Coroutine[Any, Any, Any]) -> Any:
         """Schedule *coro* on the running event loop, fire-and-forget."""
 
     async def run_in_executor(self, func, *args) -> Any:
@@ -60,7 +60,7 @@ class HARuntime:
         """Underlying HA instance, for code paths that genuinely need it."""
         return self._hass
 
-    def create_task(self, coro: Awaitable[Any]) -> Any:
+    def create_task(self, coro: Coroutine[Any, Any, Any]) -> Any:
         return self._hass.async_create_task(coro)
 
     async def run_in_executor(self, func, *args) -> Any:
@@ -78,7 +78,7 @@ class StandaloneRuntime:
     def data_dir(self) -> Path:
         return self._data_dir
 
-    def create_task(self, coro: Awaitable[Any]) -> Any:
+    def create_task(self, coro: Coroutine[Any, Any, Any]) -> Any:
         return asyncio.ensure_future(coro)
 
     async def run_in_executor(self, func, *args) -> Any:

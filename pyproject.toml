@@ -26,3 +26,46 @@ select = [
     "UP",   # pyupgrade
     "C4",   # flake8-comprehensions
 ]
+
+# mypy configuration for the Quizify Home Assistant custom integration.
+#
+# The CI type-check gate (.github/workflows/test.yml, issue #328) runs
+# `mypy custom_components/quizify`. This is a *pragmatic* baseline gate, not
+# `--strict`: the goal is to catch real type errors (wrong types,
+# Optional-init mistakes) and keep the gate GREEN, rather than drown CI in
+# hundreds of HA-framework / untyped-def warnings that carry no runtime
+# signal. `disallow_untyped_defs` / `strict` are intentionally NOT enabled.
+#
+# `ignore_missing_imports` is scoped per-module to HA + its async/web stack
+# (homeassistant.*, aiohttp.*, voluptuous, …) whose type stubs are absent or
+# incomplete — everything else is still checked normally.
+[tool.mypy]
+python_version = "3.13"
+files = ["custom_components/quizify"]
+# The package uses absolute `custom_components.quizify.*` imports, but there is
+# no `custom_components/__init__.py` (HA loads it as a namespace path). Anchor
+# the module namespace at the repo root so mypy resolves every module under the
+# single `custom_components.quizify.*` name (avoids the "found twice under
+# different module names" clash).
+explicit_package_bases = true
+mypy_path = "."
+namespace_packages = true
+warn_redundant_casts = true
+warn_unused_ignores = true
+no_implicit_optional = true
+# Keep the baseline pragmatic — checking untyped def bodies would surface the
+# strict flood (#328). Annotated code is still fully checked.
+check_untyped_defs = false
+
+# Third-party packages without (complete) type stubs. Scoped per-module so the
+# rest of the tree keeps real import resolution. HA + aiohttp + voluptuous ship
+# either no stubs or partial ones; treating their imports as `Any` here removes
+# framework noise without weakening checks on our own code.
+[[tool.mypy.overrides]]
+module = [
+    "homeassistant.*",
+    "aiohttp.*",
+    "voluptuous.*",
+    "pytest_homeassistant_custom_component.*",
+]
+ignore_missing_imports = true

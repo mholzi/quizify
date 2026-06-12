@@ -17,6 +17,8 @@ from ..const import (
 )
 
 if TYPE_CHECKING:
+    from collections.abc import Callable
+
     from aiohttp import web
 
 from .player import PLAYER_COLORS, PlayerSession
@@ -67,7 +69,7 @@ class PlayerRegistry:
         name: str,
         ws: web.WebSocketResponse,
         phase_value: str,
-        average_score_fn: callable,
+        average_score_fn: Callable[[], int],
     ) -> tuple[bool, str | None]:
         """Add a player to the game.
 
