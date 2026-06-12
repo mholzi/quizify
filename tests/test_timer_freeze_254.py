@@ -1,11 +1,18 @@
-"""Regression tests for QuestionTimer freeze-credit accounting (#254).
+"""Regression tests for QuestionTimer freeze LOCKOUT semantics (#300).
 
-The freeze power-up adds a 5s pause credit to the target's timer. The
-speed-bonus calculation (get_elapsed) subtracts that credit so a frozen
-player isn't penalised. The bug: the FULL credit was subtracted up front,
-so a frozen player who answered immediately harvested up to 5s of free
-speed bonus. The fix credits only the portion of the freeze that has
-actually elapsed in wall-clock time.
+Freeze is now a *lockout*, not a pause+refund (Markus' decision, #300). While
+the freeze window is active the target cannot submit, but their round clock
+keeps running and the frozen seconds count as elapsed — so there is NO
+speed-bonus refund. This reverses the earlier pause + refund model (#254),
+which made freeze HELP the target (paused clock + full speed-bonus refund).
+
+These tests assert the lockout invariants directly on QuestionTimer:
+* the clock is NOT extended by a freeze,
+* elapsed (speed-bonus input) is NOT reduced by a freeze,
+* is_frozen() reports the lockout window correctly,
+* reset() clears the freeze.
+The submit-rejection side (server rejects a frozen player's submit_answer)
+lives in test_freeze_lockout_300.py.
 """
 
 from __future__ import annotations
@@ -39,43 +46,74 @@ def _timer_with_clock(monkeypatch, duration: float = 30.0) -> tuple[QuestionTime
     return timer, clock
 
 
-def test_freeze_credit_counts_only_elapsed_not_full(monkeypatch) -> None:
-    """A player frozen for 5s who answers 1s later must only get ~1s of
-    freeze credit on their speed bonus, not the full 5s (#254)."""
+def test_freeze_does_not_extend_the_clock(monkeypatch) -> None:
+    """A freeze must NOT pause/extend get_remaining — the clock keeps running
+    underneath, so the lockout costs the target real answer time (#300)."""
+    timer, clock = _timer_with_clock(monkeypatch, duration=30.0)
+    timer.start()
+    clock.advance(2.0)
+    remaining_before = timer.get_remaining()  # 28.0
+    timer.freeze(5.0)
+    clock.advance(5.0)  # the whole freeze window elapses
+
+    # Without lockout extension, 7s have passed → 23s remain. (Were this still
+    # a pause it would report 28s — the bug being fixed.)
+    assert timer.get_remaining() == 23.0
+    assert remaining_before == 28.0
+
+
+def test_freeze_gives_no_speed_bonus_refund(monkeypatch) -> None:
+    """Frozen seconds count as elapsed — get_elapsed (the speed-bonus input)
+    is NOT reduced by a freeze (#300, reverses the #254 refund)."""
     timer, clock = _timer_with_clock(monkeypatch)
     timer.start()
-    clock.advance(2.0)  # 2s real elapsed before the freeze
-    timer.pause_for_player(5.0)  # 5s freeze applied
-    clock.advance(1.0)  # player answers 1s into the freeze
+    clock.advance(2.0)
+    timer.freeze(5.0)
+    clock.advance(5.0)  # answer right after the freeze window
 
-    # Real elapsed = 3.0s; only 1.0s of the 5s freeze has truly passed.
-    # Effective elapsed for speed bonus = 3.0 - 1.0 = 2.0s.
-    assert timer.get_elapsed() == 2.0
+    # 7s of real wall-clock elapsed, no freeze credit subtracted.
+    assert timer.get_elapsed() == 7.0
 
 
-def test_freeze_credit_caps_at_full_duration(monkeypatch) -> None:
-    """Once the entire freeze window has elapsed, the full credit applies —
-    never more (no negative elapsed)."""
+def test_is_frozen_reports_lockout_window(monkeypatch) -> None:
+    """is_frozen() is true during the window and false once it passes."""
     timer, clock = _timer_with_clock(monkeypatch)
     timer.start()
+    assert timer.is_frozen() is False
+    timer.freeze(5.0)
+    assert timer.is_frozen() is True
+    clock.advance(4.9)
+    assert timer.is_frozen() is True
+    clock.advance(0.2)  # past the 5s window
+    assert timer.is_frozen() is False
+
+
+def test_frozen_remaining_counts_down(monkeypatch) -> None:
+    """frozen_remaining() reports the seconds left on the lockout, 0 when over."""
+    timer, clock = _timer_with_clock(monkeypatch)
+    timer.start()
+    assert timer.frozen_remaining() == 0.0
+    timer.freeze(5.0)
+    assert timer.frozen_remaining() == 5.0
+    clock.advance(3.0)
+    assert timer.frozen_remaining() == 2.0
+    clock.advance(5.0)
+    assert timer.frozen_remaining() == 0.0
+
+
+def test_refreeze_extends_to_later_end_only(monkeypatch) -> None:
+    """Re-freezing extends the lockout to the later end-time; a shorter
+    re-freeze never shortens an active one."""
+    timer, clock = _timer_with_clock(monkeypatch)
+    timer.start()
+    timer.freeze(5.0)
     clock.advance(1.0)
-    timer.pause_for_player(5.0)
-    clock.advance(10.0)  # well past the 5s freeze window
-
-    # Real elapsed = 11.0s; freeze credit capped at 5.0s.
-    assert timer.get_elapsed() == 6.0
-
-
-def test_no_free_speed_bonus_for_immediate_answer(monkeypatch) -> None:
-    """The exploit: answer the instant the freeze lands. Effective elapsed
-    must equal real elapsed (zero freeze credit yet)."""
-    timer, clock = _timer_with_clock(monkeypatch)
-    timer.start()
-    clock.advance(4.0)
-    timer.pause_for_player(5.0)
-    # No time advances — answer is instantaneous.
-
-    assert timer.get_elapsed() == 4.0
+    # A 1s re-freeze ends at now+1 = 4s left on the original → keep the longer.
+    timer.freeze(1.0)
+    assert timer.frozen_remaining() == 4.0
+    # A 10s re-freeze extends the window.
+    timer.freeze(10.0)
+    assert timer.frozen_remaining() == 10.0
 
 
 def test_get_elapsed_without_freeze_is_plain_elapsed(monkeypatch) -> None:
@@ -86,13 +124,14 @@ def test_get_elapsed_without_freeze_is_plain_elapsed(monkeypatch) -> None:
     assert timer.get_elapsed() == 7.0
 
 
-def test_reset_clears_freeze_credit(monkeypatch) -> None:
-    """Reset must wipe pause bookkeeping so a new round starts clean."""
+def test_reset_clears_freeze(monkeypatch) -> None:
+    """Reset must wipe the freeze so a new round starts clean."""
     timer, clock = _timer_with_clock(monkeypatch)
     timer.start()
     clock.advance(1.0)
-    timer.pause_for_player(5.0)
+    timer.freeze(5.0)
     timer.reset()
     timer.start()
+    assert timer.is_frozen() is False
     clock.advance(3.0)
     assert timer.get_elapsed() == 3.0

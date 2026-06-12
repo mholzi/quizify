@@ -12,6 +12,7 @@ from aiohttp import WSMsgType, web
 
 from custom_components.quizify.const import (
     ERR_ALREADY_SUBMITTED,
+    ERR_FROZEN,
     ERR_GAME_ALREADY_STARTED,
     ERR_GAME_FULL,
     ERR_GAME_NOT_STARTED,
@@ -25,7 +26,11 @@ from custom_components.quizify.const import (
 )
 from custom_components.quizify.game.highlights import compute_superlatives
 from custom_components.quizify.game.phase_controller import TICK_INTERVAL
-from custom_components.quizify.game.powerups import PowerUpEffect, PowerUpType
+from custom_components.quizify.game.powerups import (
+    FREEZE_DURATION,
+    PowerUpEffect,
+    PowerUpType,
+)
 from custom_components.quizify.game.state import AnswerResult, GamePhase, QuizifyGameState
 from custom_components.quizify.server.broadcast_dispatcher import BroadcastDispatcher
 from custom_components.quizify.server.connection import ConnectionManager
@@ -762,6 +767,7 @@ class QuizifyWebSocketHandler:
             error_messages = {
                 ERR_ALREADY_SUBMITTED: "Already answered",
                 ERR_ROUND_EXPIRED: "Time is up",
+                ERR_FROZEN: "Frozen — wait for the freeze to end",
                 ERR_NOT_IN_GAME: "Not in the game",
                 ERR_GAME_NOT_STARTED: "No active game",
             }
@@ -955,6 +961,12 @@ class QuizifyWebSocketHandler:
                 effect_data["stolen_points"] = result.stolen_points
                 await self._conn.broadcast(effect_data)
             else:
+                # FREEZE: tell the target how long the lockout lasts so the
+                # client can show a countdown overlay (#300). Server is the
+                # authority — it rejects submits via ERR_FROZEN regardless of
+                # what the client does with this.
+                if result.type == PowerUpType.FREEZE:
+                    effect_data["freeze_duration"] = FREEZE_DURATION
                 await self._conn.broadcast(effect_data)
         elif isinstance(result, str):
             await self._conn.send_error(ws, result, "Power-up not available")
