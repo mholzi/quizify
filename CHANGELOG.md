@@ -14,6 +14,12 @@ with green CI (lint + drift + mypy + pytest gates) and per-change mobile verifie
 
 ### Added
 
+- **Redesigned end-of-game screen (#338).** The results screen leads with a
+  "Sieger" winner banner, shows the highlights as a compact horizontal chip row
+  (replacing the vertical timeline), and renders the final standings as a
+  scoreboard with horizontal score bars (length ∝ score) plus inline ⚡/🔥
+  badges on the fastest-finger / best-streak players. The old superlative cards,
+  highlights timeline, and the separate your-result block are retired.
 - **Lightning Round is now an automatic mid-game event (#285).** Replaces the
   host-triggered entry from #42: exactly once per game it fires on its own at a
   uniformly random round inside the eligible window (rounds 3 … N−1; the first
