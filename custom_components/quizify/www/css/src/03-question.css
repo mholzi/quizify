@@ -208,9 +208,16 @@
     gap: var(--space-md);
 }
 
-.answer-btn:hover:not(:disabled) {
-    border-color: var(--color-accent-primary);
-    background: rgba(232, 138, 127, 0.1);
+/* Guard hover behind a real pointer: on touch devices (iOS Safari) the
+   :hover state sticks to the last-tapped button, and because the answer
+   buttons are reused across questions (text swapped, not recreated) the
+   tapped answer kept showing the highlight on the next question. Only apply
+   hover where the device can actually hover. */
+@media (hover: hover) {
+    .answer-btn:hover:not(:disabled) {
+        border-color: var(--color-accent-primary);
+        background: rgba(232, 138, 127, 0.1);
+    }
 }
 
 .answer-btn:active:not(:disabled) {

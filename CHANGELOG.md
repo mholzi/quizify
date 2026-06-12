@@ -44,6 +44,13 @@ with green CI (lint + drift + mypy + pytest gates) and per-change mobile verifie
 
 ### Fixed
 
+- **Answer card stayed highlighted on the next question (mobile).** On iOS the
+  `:hover` state sticks to the last-tapped element, and because the answer
+  buttons are reused across questions (their text is swapped, not recreated),
+  the previously tapped answer kept showing the "selected" highlight on the
+  following question even though nothing was pressed. The hover style is now
+  guarded behind `@media (hover: hover)` so it only applies on devices that can
+  actually hover.
 - **Reconnect / resume robustness (#314).** `get_state`/`resume` now project
   per-player snapshots and keep the pause clock sane, so reconnecting players
   see their own correct state instead of a shared or stale one.
