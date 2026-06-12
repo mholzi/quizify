@@ -5,6 +5,14 @@ All notable changes to Quizify are documented here. This project follows
 
 ## [Unreleased]
 
+### Fixed
+
+- **Blocking `manifest.json` read on the event loop (#343).** Home Assistant's
+  loop watcher flagged Quizify for reading `manifest.json` synchronously on the
+  event loop — once at setup (`server/context.py`) and on the launcher serve path
+  (`server/views.py`). The reads now happen off the loop; the asset cache-buster
+  still updates after a www-only deploy without a restart. _(In progress.)_
+
 ## [1.3.0-RC16] — 2026-06-12
 
 Sixteenth release candidate — adds the first Spanish content and a power-up
