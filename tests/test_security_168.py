@@ -247,7 +247,7 @@ class TestFeaturedPackMalformed:
         bank.categories = {}
 
         ctx = MagicMock()
-        ctx.game._question_bank = bank
+        ctx.game.question_bank = bank
         ctx.analytics = None  # force the deterministic fallback path
         ctx.question_stats = None
         ctx.runtime = _FakeRuntime(tmp_path)

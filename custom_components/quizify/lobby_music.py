@@ -22,15 +22,13 @@ The service no-ops cleanly when:
 
 from __future__ import annotations
 
-import logging
 from typing import TYPE_CHECKING
 
 from .game.state import GamePhase, QuizifyGameState
+from .ha_service import fire_and_forget_service
 
 if TYPE_CHECKING:
     from homeassistant.core import HomeAssistant
-
-_LOGGER = logging.getLogger(__name__)
 
 
 class QuizifyLobbyMusic:
@@ -119,20 +117,11 @@ class QuizifyLobbyMusic:
         )
 
     def _call(self, domain: str, service: str, data: dict[str, object]) -> None:
-        hass = self._hass
-        if hass is None:
-            return
-
-        async def _do_call() -> None:
-            try:
-                await hass.services.async_call(domain, service, data, blocking=False)
-            except Exception as err:  # noqa: BLE001
-                _LOGGER.warning(
-                    "Lobby music %s.%s failed (media_player=%s): %s",
-                    domain,
-                    service,
-                    self._media_player_entity_id,
-                    err,
-                )
-
-        hass.async_create_task(_do_call())
+        fire_and_forget_service(
+            self._hass,
+            domain,
+            service,
+            data,
+            f"Lobby music {domain}.{service} "
+            f"(media_player={self._media_player_entity_id})",
+        )

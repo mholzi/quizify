@@ -202,7 +202,12 @@
                 btn.dataset.index = String(i);
 
                 var textEl = btn.querySelector('.answer-text');
-                if (textEl) textEl.textContent = answers[i] || '';
+                if (textEl) {
+                    // #283/#312: answers may arrive as objects ({text, ...})
+                    // or plain strings — normalize before rendering.
+                    var a = answers[i];
+                    textEl.textContent = ((a && typeof a === 'object') ? a.text : a) || '';
+                }
 
                 // Re-apply selected state if player already submitted
                 if (hasSubmitted && lastSubmittedIndex === i) {

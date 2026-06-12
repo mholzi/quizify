@@ -17,6 +17,7 @@ import json
 import logging
 import os
 import time
+from collections.abc import Iterable
 from typing import TYPE_CHECKING, Any, TypedDict
 
 if TYPE_CHECKING:
@@ -108,7 +109,7 @@ class QuestionStatsService:
                 q["total_time_correct"] += float(elapsed)
         self._dirty = True
 
-    def aggregate_for_questions(self, ids) -> "tuple[int, int]":
+    def aggregate_for_questions(self, ids: Iterable[str]) -> tuple[int, int]:
         """Sum (shown_count, correct_count) over the given question *ids*.
 
         Public read accessor used by the featured-pack difficulty ranking so

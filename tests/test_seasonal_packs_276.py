@@ -300,7 +300,7 @@ def test_featured_pins_in_season_pack(tmp_path: Path, monkeypatch) -> None:  # n
             "category_stats": [{"category": "geographie", "games_played": 999}]
         }
     )
-    ctx = SimpleNamespace(game=SimpleNamespace(_question_bank=bank),
+    ctx = SimpleNamespace(game=SimpleNamespace(question_bank=bank),
                           analytics=analytics, question_stats=None, runtime=_FakeRuntime())
     out = _featured(ctx)
     assert out["value"] == "wm"
@@ -326,7 +326,7 @@ def test_featured_outside_season_is_unchanged(tmp_path: Path, monkeypatch) -> No
         },
         {"geographie": [], "wm": []},
     )
-    ctx = SimpleNamespace(game=SimpleNamespace(_question_bank=bank),
+    ctx = SimpleNamespace(game=SimpleNamespace(question_bank=bank),
                           analytics=None, question_stats=None, runtime=_FakeRuntime())
     out = _featured(ctx)
     assert out["logic"] != "seasonal"
@@ -349,7 +349,7 @@ def test_featured_wrap_around_window_pins(tmp_path: Path, monkeypatch) -> None: 
         },
         {"xmas": []},
     )
-    ctx = SimpleNamespace(game=SimpleNamespace(_question_bank=bank),
+    ctx = SimpleNamespace(game=SimpleNamespace(question_bank=bank),
                           analytics=None, question_stats=None, runtime=_FakeRuntime())
     out = _featured(ctx)
     assert out["value"] == "xmas"
@@ -370,7 +370,7 @@ def test_pack_versions_view_annotates_in_season(tmp_path: Path, monkeypatch) -> 
         },
         {"geographie": [], "wm": []},
     )
-    ctx = SimpleNamespace(game=SimpleNamespace(_question_bank=bank), runtime=_FakeRuntime())
+    ctx = SimpleNamespace(game=SimpleNamespace(question_bank=bank), runtime=_FakeRuntime())
     req = _FakeRequest(ctx, {})
     out = json.loads(asyncio.run(pack_versions_view(req)).body)
     assert out["wm"]["is_seasonal"] is True
@@ -389,6 +389,6 @@ def test_pack_versions_view_annotation_does_not_leak(tmp_path: Path, monkeypatch
         },
     }
     bank = _FakeBank(tmp_path, raw, {"wm": []})
-    ctx = SimpleNamespace(game=SimpleNamespace(_question_bank=bank), runtime=_FakeRuntime())
+    ctx = SimpleNamespace(game=SimpleNamespace(question_bank=bank), runtime=_FakeRuntime())
     asyncio.run(pack_versions_view(_FakeRequest(ctx, {})))
     assert "is_seasonal" not in raw["wm"]  # source metadata untouched

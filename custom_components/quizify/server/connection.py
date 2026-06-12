@@ -7,7 +7,7 @@ import json
 import logging
 import time
 import uuid
-from typing import TYPE_CHECKING, Callable
+from typing import TYPE_CHECKING, Awaitable, Callable
 
 from aiohttp import web
 
@@ -300,7 +300,10 @@ class ConnectionManager:
     # ------------------------------------------------------------------
 
     def schedule_player_removal(
-        self, name: str, timeout: float, remove_fn
+        self,
+        name: str,
+        timeout: float,
+        remove_fn: Callable[[str, float], Awaitable[None]],
     ) -> None:
         """Schedule *remove_fn(name, timeout)* and track the task.
 

@@ -7,6 +7,7 @@ handlers — only the static-asset registration differs (HA uses
 
 from __future__ import annotations
 
+import datetime as _dt
 import hashlib
 import json
 import logging
@@ -336,8 +337,6 @@ async def featured_pack_view(request: web.Request) -> web.Response:
     Falls back to a hardcoded default if analytics + question_stats are
     both empty (fresh install).
     """
-    import datetime as _dt
-
     ctx = _get_ctx(request)
     lang = (request.query.get("lang") or "de").lower()
     if lang not in ("de", "en"):
@@ -348,7 +347,7 @@ async def featured_pack_view(request: web.Request) -> web.Response:
     day_of_year = _dt.datetime.now().timetuple().tm_yday
     logic = "most-played" if day_of_year % 2 == 0 else "most-difficult"
 
-    bank = ctx.game._question_bank if ctx.game else None
+    bank = ctx.game.question_bank if ctx.game else None
     if bank is None:
         return web.json_response({})
 
@@ -535,11 +534,9 @@ async def pack_versions_view(request: web.Request) -> web.Response:
     label to badge, e.g. "🎄 Weihnachten") so the admin picker can render the
     badge without re-implementing the date math client-side.
     """
-    import datetime as _dt
-
     ctx = _get_ctx(request)
-    await ctx.runtime.run_in_executor(ctx.game._question_bank.load_all_categories)
-    installed = ctx.game._question_bank.get_pack_versions()
+    await ctx.runtime.run_in_executor(ctx.game.question_bank.load_all_categories)
+    installed = ctx.game.question_bank.get_pack_versions()
 
     today = _dt.date.today()
     # ``get_pack_versions`` returns a shallow copy: the inner meta dicts are the
@@ -560,8 +557,8 @@ async def pack_versions_view(request: web.Request) -> web.Response:
 async def pack_update_check_view(request: web.Request) -> web.Response:
     """Check GitHub for updated question packs."""
     ctx = _get_ctx(request)
-    await ctx.runtime.run_in_executor(ctx.game._question_bank.load_all_categories)
-    installed = ctx.game._question_bank.get_pack_versions()
+    await ctx.runtime.run_in_executor(ctx.game.question_bank.load_all_categories)
+    installed = ctx.game.question_bank.get_pack_versions()
 
     # Fetch upstream versions.json from GitHub (best-effort, 5s timeout)
     upstream: dict | None = None
@@ -620,9 +617,6 @@ async def flag_question_view(request: web.Request) -> web.Response:
     is best-effort (clients without an auth model can lie, but that's fine
     for a "raise the maintainer's attention" signal).
     """
-    import json
-    import time as _time
-
     ctx = _get_ctx(request)
     try:
         body = await request.json()
@@ -637,7 +631,7 @@ async def flag_question_view(request: web.Request) -> web.Response:
     player_name = str((body or {}).get("player_name", ""))[:50]
 
     entry = {
-        "ts": int(_time.time()),
+        "ts": int(time.time()),
         "question_id": question_id,
         "reason": reason,
         "player_name": player_name,
@@ -672,8 +666,6 @@ async def flag_list_view(request: web.Request) -> web.Response:
     is enforced here (matches the rest of the API). On HA the auth layer
     above us handles it; on standalone the home LAN is trusted.
     """
-    import json
-
     ctx = _get_ctx(request)
     flag_path = ctx.runtime.data_dir / _FLAG_FILE
 

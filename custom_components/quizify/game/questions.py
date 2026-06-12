@@ -5,11 +5,16 @@ from __future__ import annotations
 import json
 import logging
 import random
+import time
 from dataclasses import dataclass, field
 from pathlib import Path
+from typing import TYPE_CHECKING
 
 from ..const import ANSWERS_PER_QUESTION
 from .seasons import parse_season
+
+if TYPE_CHECKING:
+    from ..runtime import Runtime
 
 _LOGGER = logging.getLogger(__name__)
 
@@ -577,7 +582,7 @@ class QuestionBank:
         self.set_history_path(history_path)
         self._read_history()
 
-    async def load_history_async(self, history_path: Path, runtime) -> None:
+    async def load_history_async(self, history_path: Path, runtime: Runtime) -> None:
         """Bind the path and load history via the runtime's executor thread."""
         self.set_history_path(history_path)
         await runtime.run_in_executor(self._read_history)
@@ -610,7 +615,7 @@ class QuestionBank:
         """
         self._write_history()
 
-    async def save_history_async(self, runtime) -> None:
+    async def save_history_async(self, runtime: Runtime) -> None:
         """Persist question history via the runtime's executor thread.
 
         Mirrors the offload pattern used by ``QuestionStats`` and the
@@ -624,8 +629,7 @@ class QuestionBank:
 
     def record_shown(self, question_id: str) -> None:
         """Mark a question as shown now."""
-        import time as _time
-        self._history[question_id] = _time.time()
+        self._history[question_id] = time.time()
         self._shown_this_game.append(question_id)
 
     def flush_shown_history(self) -> None:
@@ -638,7 +642,7 @@ class QuestionBank:
         self._shown_this_game = []
         self.save_history()
 
-    async def flush_shown_history_async(self, runtime) -> None:
+    async def flush_shown_history_async(self, runtime: Runtime) -> None:
         """Async flush: reset shown-this-game and persist via the executor.
 
         The shown-this-game list is cleared synchronously (cheap, in-memory)
