@@ -1417,6 +1417,17 @@
     padding-left: 30px;  /* align with question text, skipping the badge */
 }
 
+/* Lightning Round toggle row (#285) — a .toggle-compact switch sitting in a
+   vF-step, aligned with the answer chips above it (skip the number badge). */
+.setup-lightning-toggle {
+    padding-left: 30px;
+    gap: 10px;
+}
+.setup-lightning-toggle .toggle-label {
+    font-size: 0.9rem;
+    color: var(--color-text-secondary);
+}
+
 /* ==========================================
    Player Lobby — variant B (You + the Room) + D (Rules)
    ==========================================

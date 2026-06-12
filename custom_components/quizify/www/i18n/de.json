@@ -362,7 +362,9 @@
       "q2": "Wie schwer?",
       "q3": "Wie viele Runden?",
       "q4": "Wie viel Zeit pro Frage?",
-      "q5": "In welcher Sprache?"
+      "q5": "In welcher Sprache?",
+      "q6": "Blitzrunde?",
+      "lightningHint": "Überraschungs-Schnellrunde mitten im Spiel"
     }
   },
   "featured": {
@@ -575,8 +577,11 @@
     "splashEndValue": "Ende",
     "splashEndLabel": "Auflösung",
     "splashWaiting": "Warten auf Host",
+    "splashStarting": "Startet",
     "splashAdminMeta": "Splash für alle Spieler sichtbar",
     "splashStart": "Los geht's",
+    "continueGame": "Spiel fortsetzen",
+    "recapWaitHint": "Kurz halten — der Host setzt das Spiel fort",
     "answeredAtEnd": "· Auflösung am Ende",
     "rightAnswers": "Die richtigen Antworten, Frage für Frage",
     "correctTag": "Richtig",

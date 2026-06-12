@@ -371,19 +371,8 @@
             };
         }
 
-        // Lightning Round trigger from the finale (issue #42). Sends
-        // start_lightning over the existing WS — server transitions into
-        // the LIGHTNING phase and the phase router swaps views. No
-        // navigation needed (admin is already on /quizify/player).
-        var lightningBtn = document.getElementById('lightning-from-end-btn');
-        if (lightningBtn) {
-            lightningBtn.onclick = function () {
-                var ws = state.ws;
-                if (!ws || ws.readyState !== WebSocket.OPEN) return;
-                lightningBtn.disabled = true;
-                try { ws.send(JSON.stringify({ type: 'start_lightning' })); } catch (e) { /* ignore */ }
-            };
-        }
+        // The manual Lightning Round finale trigger (issue #42) was retired in
+        // #285 — the Lightning Round is now an automatic mid-game event.
 
         if (newGameBtn) {
             newGameBtn.onclick = function () {

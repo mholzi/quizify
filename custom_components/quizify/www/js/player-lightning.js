@@ -43,14 +43,10 @@
             secEl.textContent = Math.round(msg.seconds_per_question) + 's';
         }
 
-        // Admin gets the Start footer bar; players get the waiting hint.
-        var adminBar = document.getElementById('lightning-splash-adminbar');
+        // #285: the splash auto-advances — no host Start bar. Everyone sees
+        // the "Starting…" hint while the round arms itself.
         var waitHint = document.getElementById('lightning-splash-waithint');
-        if (adminBar) adminBar.classList.toggle('hidden', !state.isAdmin);
-        if (waitHint) waitHint.classList.toggle('hidden', !!state.isAdmin);
-
-        var startBtn = document.getElementById('lightning-splash-start-btn');
-        if (startBtn) startBtn.disabled = false;
+        if (waitHint) waitHint.classList.remove('hidden');
     }
 
     // ------------------------------------------------------------------
@@ -103,9 +99,7 @@
         var timer = document.getElementById('lightning-timer');
         if (timer) timer.textContent = Math.ceil(msg.seconds || 15);
 
-        // Admin gets an "end now" control.
-        var adminBar = document.getElementById('lightning-admin-bar');
-        if (adminBar) adminBar.classList.toggle('hidden', !state.isAdmin);
+        // #285: no host "end now" control during the auto round.
 
         _answeredIndex = -1;
     }
@@ -233,21 +227,16 @@
                 });
             })(i);
         }
-        var splashStartBtn = document.getElementById('lightning-splash-start-btn');
-        if (splashStartBtn) {
-            splashStartBtn.addEventListener('click', function () {
+        // #285: the splash auto-advances and the round auto-ends — no host
+        // start/end controls. The recap's only action resumes the paused main
+        // game via the normal next_question advance.
+        var continueBtn = document.getElementById('lightning-recap-continue-btn');
+        if (continueBtn) {
+            continueBtn.addEventListener('click', function () {
                 this.disabled = true;  // one-shot; avoid double-fire
-                _send('start_lightning_questions', {});
+                _send('next_question', {});
             });
         }
-
-        var endBtn = document.getElementById('lightning-end-btn');
-        if (endBtn) endBtn.addEventListener('click', function () { _send('end_lightning', {}); });
-
-        var againBtn = document.getElementById('lightning-recap-again-btn');
-        if (againBtn) againBtn.addEventListener('click', function () { _send('start_lightning', {}); });
-        var newGameBtn = document.getElementById('lightning-recap-newgame-btn');
-        if (newGameBtn) newGameBtn.addEventListener('click', function () { _send('reset_game', {}); });
     }
 
     window.QuizifyPlayerLightning = {

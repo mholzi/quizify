@@ -232,13 +232,11 @@ CLIENT_MESSAGE_TYPES: frozenset[str] = frozenset({
     "resume_game",
     "admin_skip",
     "kick_player",
-    # Lightning Round (issue #42): host starts the mode; players submit
-    # answers via lightning_answer (separate from submit_answer so the
-    # normal-round path stays untouched).
-    "start_lightning",
-    "start_lightning_questions",
+    # Lightning Round (issue #42 mechanics, #285 auto-trigger): the round now
+    # fires automatically mid-game — there is no host start/end action any
+    # more. Players still submit via lightning_answer (separate from
+    # submit_answer so the normal-round path stays untouched).
     "lightning_answer",
-    "end_lightning",
 })
 
 

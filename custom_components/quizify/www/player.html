@@ -524,11 +524,10 @@
                     <button id="play-again-same-btn" class="resbtn resbtn--primary" type="button" data-i18n="admin.playAgainSame">
                         Play again
                     </button>
+                    <!-- The manual "⚡ Lightning" finale entry was retired in
+                         #285 — the Lightning Round is now an automatic mid-game
+                         event. -->
                     <div class="resbtn-row">
-                        <button id="lightning-from-end-btn" class="resbtn resbtn--secondary" type="button">
-                            <span class="resbtn-bolt qz-icon" data-ui-icon="bolt" aria-hidden="true">⚡</span>
-                            <span data-i18n="lightning.startShort">Lightning</span>
-                        </button>
                         <button id="new-game-btn" class="resbtn resbtn--secondary" type="button" data-i18n="admin.newGameShort">
                             New Game
                         </button>
@@ -544,9 +543,9 @@
         </div>
 
         <!-- Lightning Round Intro Splash (issue #201) — "Bolt Burst".
-             Shown on host/TV + player phone after the admin triggers a
-             lightning round, BEFORE the first question. The admin taps
-             Start in the footer bar to advance into the round. -->
+             Shown on host/TV + player phone when the Lightning Round
+             auto-triggers mid-game (#285), BEFORE the first question. It
+             auto-advances after a short hold — no host tap. -->
         <div id="lightning-splash-view" class="view hidden">
             <div class="lr-splash-stage">
                 <div class="lr-splash-rays" aria-hidden="true"></div>
@@ -568,17 +567,11 @@
                     </div>
                 </div>
             </div>
-            <!-- Player phones: waiting for host hint -->
-            <div id="lightning-splash-waithint" class="lr-splash-waithint hidden">
-                <span data-i18n="lightning.splashWaiting">Waiting for host</span>
+            <!-- Everyone (host + phones) sees the auto-start hint; the round
+                 begins on its own after a short hold (#285). -->
+            <div id="lightning-splash-waithint" class="lr-splash-waithint">
+                <span data-i18n="lightning.splashStarting">Starting</span>
                 <span class="dots" aria-hidden="true">●●●</span>
-            </div>
-            <!-- Admin: full-width sticky footer Start bar -->
-            <div id="lightning-splash-adminbar" class="lr-splash-adminbar hidden">
-                <div class="lr-splash-adminmeta" data-i18n="lightning.splashAdminMeta">Splash visible to all players</div>
-                <button id="lightning-splash-start-btn" class="lr-splash-startbtn" type="button">
-                    <span data-i18n="lightning.splashStart">Let's go</span>
-                </button>
             </div>
         </div>
 
@@ -638,12 +631,8 @@
                     <span class="lr-score-note" data-i18n="lightning.answeredAtEnd">· answers revealed at the end</span>
                 </p>
 
-                <div id="lightning-admin-bar" class="admin-control-bar hidden" style="position:static;">
-                    <button id="lightning-end-btn" class="control-btn control-btn--danger" type="button">
-                        <span class="control-icon qz-icon qz-icon--coral" data-ui-icon="finish">🏁</span>
-                        <span class="control-label" data-i18n="lightning.endNow">End Lightning</span>
-                    </button>
-                </div>
+                <!-- The host "End Lightning" control was retired in #285 — the
+                     auto round always runs its full question set, no early end. -->
             </div>
         </div>
 
@@ -667,21 +656,18 @@
                     <div id="lightning-recap-grid" class="lightning-recap-grid"></div>
                 </div>
 
+                <!-- Mid-game auto Lightning recap (#285): the host's only action
+                     is to resume the paused main game. The #294 "Lightning
+                     again" dead-end button was retired. -->
                 <div id="lightning-recap-admin" class="end-admin-controls hidden">
-                    <button id="lightning-recap-again-btn" class="resbtn resbtn--primary" type="button">
-                        <span class="resbtn-bolt qz-icon" data-ui-icon="bolt" aria-hidden="true">⚡</span>
-                        <span data-i18n="lightning.againShort">Lightning again</span>
+                    <button id="lightning-recap-continue-btn" class="resbtn resbtn--primary" type="button">
+                        <span data-i18n="lightning.continueGame">Continue game</span>
                     </button>
-                    <div class="resbtn-row">
-                        <button id="lightning-recap-newgame-btn" class="resbtn resbtn--secondary" type="button" data-i18n="admin.newGameShort">
-                            New Game
-                        </button>
-                    </div>
                 </div>
 
                 <div id="lightning-recap-player-msg" class="end-player-message hidden">
                     <p class="thanks-line"><span class="qz-icon feedback-icon qz-icon--coral" data-ui-icon="party" aria-hidden="true"></span><span data-i18n="leaderboard.thanksEmoji">Thanks for playing!</span></p>
-                    <p class="end-hint" data-i18n="leaderboard.waitForHost">Wait for the host to start a new game</p>
+                    <p class="end-hint" data-i18n="lightning.recapWaitHint">Hang tight — the host continues the game</p>
                 </div>
             </div>
         </div>

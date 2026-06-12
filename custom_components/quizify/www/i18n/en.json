@@ -362,7 +362,9 @@
       "q2": "How hard?",
       "q3": "How many rounds?",
       "q4": "How long per question?",
-      "q5": "Which language?"
+      "q5": "Which language?",
+      "q6": "Lightning Round?",
+      "lightningHint": "Surprise fast round mid-game"
     }
   },
   "featured": {
@@ -575,8 +577,11 @@
     "splashEndValue": "End",
     "splashEndLabel": "answers revealed",
     "splashWaiting": "Waiting for host",
+    "splashStarting": "Starting",
     "splashAdminMeta": "Splash visible to all players",
     "splashStart": "Let's go",
+    "continueGame": "Continue game",
+    "recapWaitHint": "Hang tight — the host continues the game",
     "answeredAtEnd": "· answers revealed at the end",
     "rightAnswers": "The right answers, question by question",
     "correctTag": "Correct",

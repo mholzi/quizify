@@ -362,7 +362,9 @@
       "q2": "¿Qué dificultad?",
       "q3": "¿Cuántas rondas?",
       "q4": "¿Cuánto tiempo por pregunta?",
-      "q5": "¿Qué idioma?"
+      "q5": "¿Qué idioma?",
+      "q6": "¿Ronda Relámpago?",
+      "lightningHint": "Ronda rápida sorpresa a mitad de la partida"
     }
   },
   "featured": {
@@ -575,8 +577,11 @@
     "splashEndValue": "Final",
     "splashEndLabel": "respuestas reveladas",
     "splashWaiting": "Esperando al anfitrión",
+    "splashStarting": "Empezando",
     "splashAdminMeta": "Pantalla visible para todos los jugadores",
     "splashStart": "¡Vamos!",
+    "continueGame": "Continuar partida",
+    "recapWaitHint": "Un momento — el anfitrión continúa la partida",
     "answeredAtEnd": "· respuestas reveladas al final",
     "rightAnswers": "Las respuestas correctas, pregunta por pregunta",
     "correctTag": "Correcto",

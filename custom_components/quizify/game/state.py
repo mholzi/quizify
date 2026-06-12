@@ -185,9 +185,30 @@ class QuizifyGameState:
 
         # True between start_lightning_round() and begin_lightning_questions():
         # the intro splash ("Bolt Burst", issue #201) is on screen and the
-        # first question has not been broadcast yet — the admin's Start
-        # control advances out of it.
+        # first question has not been broadcast yet. For the auto-triggered
+        # flow (#285) the WS loop advances out of it on a grace timer rather
+        # than a host tap.
         self._lightning_splash_pending: bool = False
+
+        # Auto-trigger bookkeeping (issue #285). The Lightning Round is no
+        # longer a host-manual mode — it fires on its own exactly once per
+        # game at a uniformly random round inside the eligible window
+        # (rounds 3 … N-1). Picked up front in start_game() so the pick is a
+        # single seedable draw the tests can pin.
+        #   * _lightning_enabled  — the settings toggle (default ON).
+        #   * _lightning_target_round — the 1-based round the LR fires BEFORE,
+        #     or None when disabled / the window is empty (short game).
+        #   * _lightning_fired — guards the once-per-game guarantee.
+        #   * _round_to_resume — while in the LIGHTNING/LIGHTNING_RECAP
+        #     detour, the normal round the game returns to afterwards.
+        self._lightning_enabled: bool = True
+        self._lightning_target_round: int | None = None
+        self._lightning_fired: bool = False
+        self._round_to_resume: int = 0
+        # Injectable RNG for the target-round pick so tests are deterministic
+        # without monkeypatching the module-global ``random``. Defaults to the
+        # shared module RNG in production.
+        self._lightning_rng: random.Random = random.Random()
 
         # Round shuffle state (owned here, not in WS handler).
         # `shuffle_map` is the "canonical" per-round shuffle used by the
@@ -403,12 +424,19 @@ class QuizifyGameState:
         num_rounds: int = 10,
         language: str | None = None,
         timer_duration: int | None = None,
+        lightning_enabled: bool = True,
+        lightning_seed: int | None = None,
     ) -> dict[str, Any]:
         """Start a new game session.
 
         Pass ``categories`` (list of slugs) for multi-category mode.
         Pass ``category`` (single slug) for single-category mode.
         Pass neither for mixed (all packs).
+
+        ``lightning_enabled`` (the settings toggle, default ON) controls
+        whether the auto Lightning Round (#285) is armed for this game.
+        ``lightning_seed`` lets tests pin the random target-round draw; it is
+        never passed in production.
 
         Returns dict with game info on success.
         Raises ValueError on invalid state.
@@ -424,6 +452,16 @@ class QuizifyGameState:
         self.total_rounds = num_rounds
         self.round = 0
         self._timer_override = timer_duration
+
+        # Arm the auto Lightning Round (#285). Pick the target round once, up
+        # front, so it is a single seedable draw — the WS round-advance path
+        # consults should_trigger_lightning() and fires when reached.
+        self._lightning_enabled = lightning_enabled
+        self._lightning_fired = False
+        self._round_to_resume = 0
+        if lightning_seed is not None:
+            self._lightning_rng = random.Random(lightning_seed)
+        self._lightning_target_round = self._pick_lightning_round(num_rounds)
 
         # Group-level adaptive difficulty (#40). Only the explicit "auto" mode
         # opts in; any fixed difficulty the host pinned (easy/medium/hard) is
@@ -449,6 +487,7 @@ class QuizifyGameState:
             "num_rounds": num_rounds,
             "language": self.language,
             "timer_duration": timer_duration,
+            "lightning_enabled": lightning_enabled,
         }
 
         # Load questions. The bank is preloaded off the event loop at
@@ -1055,6 +1094,10 @@ class QuizifyGameState:
         self._calibrator = None
         self._lightning = None
         self._lightning_splash_pending = False
+        # Auto-trigger bookkeeping (#285) — re-armed by the next start_game.
+        self._lightning_target_round = None
+        self._lightning_fired = False
+        self._round_to_resume = 0
 
         for player in self._player_registry.players.values():
             player.reset_for_new_game()
@@ -1069,6 +1112,45 @@ class QuizifyGameState:
     # state live in game/lightning.py; this class only owns the reference
     # and the phase transition so the WS handler has one place to call.
 
+    def _pick_lightning_round(self, num_rounds: int) -> int | None:
+        """Pick the round the auto Lightning Round fires before (#285).
+
+        The eligible window is rounds ``3 … num_rounds-1`` (1-based): the
+        first two rounds are blocked so the game establishes itself, and the
+        final round is blocked so the Lightning Round never replaces the
+        climactic last question. Returns a uniformly-random round in that
+        window, or ``None`` when the toggle is off OR the window is empty
+        (``num_rounds < 4`` — a short game simply skips the Lightning Round,
+        we never force one).
+        """
+        if not self._lightning_enabled:
+            return None
+        low, high = 3, num_rounds - 1
+        if high < low:
+            return None  # window empty → short game, no Lightning Round
+        return self._lightning_rng.randint(low, high)
+
+    @property
+    def lightning_target_round(self) -> int | None:
+        """The round the auto Lightning Round fires before, or None (#285)."""
+        return self._lightning_target_round
+
+    def should_trigger_lightning(self) -> bool:
+        """True iff the auto Lightning Round should fire right now (#285).
+
+        Consulted by the WS round-advance path BEFORE it starts the next
+        normal question. Fires exactly once per game, when the game is about
+        to enter the pre-picked target round (``self.round`` counts completed
+        rounds, so ``round + 1`` is the round we are about to start). Guarded
+        by ``_lightning_fired`` for the once-per-game guarantee and only from
+        a between-rounds phase.
+        """
+        if self._lightning_fired or self._lightning_target_round is None:
+            return False
+        if self.phase not in (GamePhase.LOBBY, GamePhase.ANSWER_REVEAL):
+            return False
+        return self.round + 1 == self._lightning_target_round
+
     def start_lightning_round(
         self,
         *,
@@ -1076,21 +1158,26 @@ class QuizifyGameState:
         categories: list[str] | None = None,
         difficulty: str | None = None,
         language: str | None = None,
+        auto: bool = False,
     ) -> bool:
         """Begin a lightning round, reusing the current player roster.
 
-        Returns True if it started, False if no questions were available.
-        Allowed from LOBBY (standalone lightning), FINALE (after a game), or
-        LIGHTNING_RECAP (the "play again" button after a lightning round —
-        issue #294; this is the same "between rounds" situation as FINALE).
-        A fresh LightningRound is built below and ``_lightning`` /
-        ``_lightning_splash_pending`` are reassigned, so re-entry from
-        LIGHTNING_RECAP starts cleanly. (#285 will later restructure
-        lightning entry; this is a minimal fix for the dead-end.)
+        Returns True if it started, False if no questions were available or
+        the phase is wrong.
+
+        ``auto=True`` is the #285 mid-game auto path: it remembers the
+        in-progress round so the game can resume the normal flow after the
+        recap, marks the once-per-game flag, and is allowed to fire from
+        ANSWER_REVEAL (between two normal rounds). ``auto=False`` keeps the
+        legacy entry phases (LOBBY/FINALE/LIGHTNING_RECAP) used by tests and
+        any remaining standalone callers.
         """
         from .lightning import LightningRound  # local import — avoid cycle
 
-        if self.phase not in (
+        if auto:
+            if self.phase not in (GamePhase.LOBBY, GamePhase.ANSWER_REVEAL):
+                return False
+        elif self.phase not in (
             GamePhase.LOBBY,
             GamePhase.FINALE,
             GamePhase.LIGHTNING_RECAP,
@@ -1113,10 +1200,17 @@ class QuizifyGameState:
         if not lr.start():
             return False
 
+        if auto:
+            # Remember the normal round we detoured out of so the game resumes
+            # there after the recap, and burn the once-per-game flag.
+            self._round_to_resume = self.round
+            self._lightning_fired = True
+
         self._lightning = lr
         self.phase = GamePhase.LIGHTNING
-        # Open on the intro splash (issue #201); the admin's Start control
-        # calls begin_lightning_questions() to advance into question 1.
+        # Open on the intro splash (issue #201). In the auto flow (#285) the
+        # WS loop advances out of it on a grace timer (no host tap);
+        # begin_lightning_questions() still performs the transition.
         self._lightning_splash_pending = True
         self._notify_state_callbacks()
         return True
@@ -1149,6 +1243,35 @@ class QuizifyGameState:
             self.phase = GamePhase.LIGHTNING_RECAP
             self._flush_history()
             self._notify_state_callbacks()
+
+    @property
+    def in_lightning_detour(self) -> bool:
+        """True while the auto Lightning Round is interrupting a live game (#285).
+
+        Distinguishes the mid-game auto detour (a normal game is paused in the
+        background, ``_round_to_resume`` > 0) from a standalone lightning
+        session started from the lobby. The WS layer uses this to decide
+        whether the recap's advance returns to the main game or to the lobby.
+        """
+        return self._round_to_resume > 0
+
+    def resume_after_lightning(self) -> bool:
+        """Return to the paused main game after the auto Lightning recap (#285).
+
+        Flips LIGHTNING_RECAP back to ANSWER_REVEAL and restores the round
+        counter so the next ``start_next_question`` proceeds into the
+        originally-scheduled round. Returns True if a detour was active, False
+        otherwise (a standalone lightning session has no main game to resume).
+        """
+        if self.phase != GamePhase.LIGHTNING_RECAP or not self.in_lightning_detour:
+            return False
+        self.round = self._round_to_resume
+        self._round_to_resume = 0
+        self._lightning = None
+        self._lightning_splash_pending = False
+        self.phase = GamePhase.ANSWER_REVEAL
+        self._notify_state_callbacks()
+        return True
 
     # ------------------------------------------------------------------
     # Power-ups
