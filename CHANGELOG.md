@@ -5,6 +5,21 @@ All notable changes to Quizify are documented here. This project follows
 
 ## [Unreleased]
 
+### Added
+
+- **First Spanish built-in pack — "Geografía" (#342).** A faithful native-Spanish
+  translation of the Geography pack (150 questions, `language: es`). With a
+  Spanish-language pack present, the data-driven language picker now shows the
+  🇪🇸 flag out of the box and the questions play in Spanish. Refs #335.
+
+### Changed
+
+- **Power-ups are now capped at one per player per game (#340).** Previously one
+  randomly chosen player was granted a power-up every round with no memory, so a
+  player could receive several in a game while others got none. Now the per-round
+  draw only considers players who have not yet received a power-up this game, and
+  grants nothing once everyone has had theirs.
+
 ## [1.3.0-RC15] — 2026-06-12
 
 Fifteenth release candidate for 1.3.0 — a large batch closing the entire
