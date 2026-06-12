@@ -40,9 +40,13 @@ def read_manifest_version() -> str:
     ``/api/quizify/status`` payload). Bumping ``manifest.json`` is all
     a release needs.
 
-    Synchronous on purpose: called once at app startup, before any
-    request handlers run, so there's no event-loop blocking concern.
-    Falls back to ``"unknown"`` only if the file is missing or malformed.
+    BLOCKING (``read_text``) — must NOT be called on the event loop (#343).
+    On the HA path ``async_setup_entry`` runs it via
+    ``hass.async_add_executor_job`` and passes the result into
+    ``AppContext(version=...)`` explicitly; the synchronous ``default_factory``
+    on the dataclass is only a fallback for the standalone dev server and
+    tests, which are not on HA's loop. Falls back to ``"unknown"`` only if the
+    file is missing or malformed.
     """
     try:
         data = json.loads(_MANIFEST_PATH.read_text(encoding="utf-8"))
