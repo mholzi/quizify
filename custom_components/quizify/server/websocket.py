@@ -31,7 +31,11 @@ from custom_components.quizify.game.powerups import (
     PowerUpEffect,
     PowerUpType,
 )
-from custom_components.quizify.game.state import AnswerResult, GamePhase, QuizifyGameState
+from custom_components.quizify.game.state import (
+    AnswerResult,
+    GamePhase,
+    QuizifyGameState,
+)
 from custom_components.quizify.server.broadcast_dispatcher import BroadcastDispatcher
 from custom_components.quizify.server.connection import ConnectionManager
 from custom_components.quizify.server.rate_limit import SlidingWindowLimiter
@@ -2078,7 +2082,9 @@ class QuizifyWebSocketHandler:
 
     async def _broadcast_finale(self, game_state: QuizifyGameState) -> None:
         """Build and broadcast the finale message (podium + superlatives)."""
-        from custom_components.quizify.game.scoring import calculate_podium  # noqa: PLC0415
+        from custom_components.quizify.game.scoring import (
+            calculate_podium,  # noqa: PLC0415
+        )
 
         podium = calculate_podium(game_state.get_players())
         all_players = game_state.get_players()

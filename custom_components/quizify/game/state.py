@@ -21,18 +21,23 @@ from ..const import (
     ERR_GAME_ALREADY_STARTED,
     ERR_GAME_NOT_STARTED,
     ERR_INVALID_ACTION,
-    ERR_NOT_IN_GAME,
     ERR_NO_QUESTIONS_REMAINING,
+    ERR_NOT_IN_GAME,
     ERR_ROUND_EXPIRED,
-    MIN_PLAYERS,
 )
-from .player import PlayerSession
-from .player_registry import PlayerRegistry
-from .phase_controller import GamePhase, PhaseController
-from .powerups import FREEZE_DURATION, TIME_BOOST_DURATION, PowerUpEffect, PowerUpManager, PowerUpType
-from .questions import Answer, Question, QuestionBank
 from .calibration import GroupCalibrator
 from .highlights import compute_superlatives
+from .phase_controller import GamePhase, PhaseController
+from .player import PlayerSession
+from .player_registry import PlayerRegistry
+from .powerups import (
+    FREEZE_DURATION,
+    TIME_BOOST_DURATION,
+    PowerUpEffect,
+    PowerUpManager,
+    PowerUpType,
+)
+from .questions import Answer, Question, QuestionBank
 from .scoring import (
     calculate_podium,
 )
@@ -653,7 +658,6 @@ class QuizifyGameState:
         speed_bonus = computation.speed_bonus
         streak_bonus = computation.streak_bonus
         diff_mult = computation.difficulty_multiplier
-        wager_used = computation.wager_used
         milestone_bonus = computation.milestone_bonus
 
         # Tally the milestone hit (engine already folded the bonus into points).

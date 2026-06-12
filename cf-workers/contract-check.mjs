@@ -7,7 +7,9 @@
 //   1. the shared fixture pack (tests/fixtures/community_pack.json) is ACCEPTED
 //      (validatePack returns null), exactly as the integration's
 //      server/pack_submission.py::validate_pack accepts it; and
-//   2. an obviously malformed pack is REJECTED (returns an error string).
+//   2. every malformation in the shared catalog
+//      (tests/fixtures/community_pack_malformations.json) is REJECTED (returns
+//      an error string), in lockstep with the Python validator (#313).
 //
 // Run: node cf-workers/contract-check.mjs
 // Exits 0 on success, non-zero with a message on any failure. Invoked from
@@ -24,10 +26,43 @@ const workerSrc = readFileSync(join(here, 'quizify-api.js'), 'utf8');
 const fixture = JSON.parse(
   readFileSync(join(repoRoot, 'tests', 'fixtures', 'community_pack.json'), 'utf8'),
 );
+const malformations = JSON.parse(
+  readFileSync(
+    join(repoRoot, 'tests', 'fixtures', 'community_pack_malformations.json'),
+    'utf8',
+  ),
+).malformations;
 
 function fail(msg) {
   console.error(`contract-check FAILED: ${msg}`);
   process.exit(1);
+}
+
+// Apply one shared malformation to a deep copy of the canonical pack. MUST stay
+// in lockstep with `_apply_malformation` in tests/test_worker_contract_256.py —
+// the same `kind` codes mutate the pack identically on both sides (#256/#313).
+function applyMalformation(pack, spec) {
+  const p = JSON.parse(JSON.stringify(pack));
+  switch (spec.kind) {
+    case 'truncate_first_answers':
+      p.questions[0].answers = p.questions[0].answers.slice(0, spec.n);
+      break;
+    case 'delete_field':
+      delete p[spec.field];
+      break;
+    case 'mark_second_answer_correct':
+      p.questions[0].answers[1].correct = true;
+      break;
+    case 'duplicate_first_id':
+      p.questions[1].id = p.questions[0].id;
+      break;
+    case 'blank_first_question_text':
+      p.questions[0].question = '   ';
+      break;
+    default:
+      fail(`unknown malformation kind: ${spec.kind}`);
+  }
+  return p;
 }
 
 // Pull the four schema constants out of the worker source so this check can't
@@ -61,14 +96,23 @@ if (okErr !== null) {
   fail(`worker rejected the canonical fixture pack: ${okErr}`);
 }
 
-// 2. A malformed pack must be rejected. Drop the third answer so the question
-//    no longer has exactly ANSWERS_PER_QUESTION answers.
-const malformed = JSON.parse(JSON.stringify(fixture));
-malformed.questions[0].answers = malformed.questions[0].answers.slice(0, 2);
-const badErr = validatePack(malformed);
-if (badErr === null) {
-  fail('worker accepted a malformed pack (only 2 answers) — schema too loose');
+// 2. EVERY malformation in the shared catalog must be rejected. The same
+//    catalog is replayed on the Python side (test_worker_contract_256.py), so a
+//    divergence on either side fails CI (#313).
+if (!Array.isArray(malformations) || malformations.length < 3) {
+  fail('shared malformation catalog is missing or too small');
+}
+for (const spec of malformations) {
+  const malformed = applyMalformation(fixture, spec);
+  const badErr = validatePack(malformed);
+  if (badErr === null) {
+    fail(
+      `worker ACCEPTED a malformed pack ('${spec.id}': ${spec.reason}) — schema too loose`,
+    );
+  }
 }
 
-console.log('contract-check OK: worker validatePack accepts the fixture and rejects malformed input');
+console.log(
+  `contract-check OK: worker validatePack accepts the fixture and rejects all ${malformations.length} catalogued malformations`,
+);
 process.exit(0);
