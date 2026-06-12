@@ -666,7 +666,11 @@
         var pauseBtn = document.getElementById('pause-game-btn');
         var resumeBtn = document.getElementById('resume-game-btn');
         if (nextRoundAdminBtn) nextRoundAdminBtn.classList.add('hidden');
-        if (skipBtn) skipBtn.classList.add('hidden');
+        // QUESTION_ACTIVE → the admin (admin-as-player) can skip a live or
+        // broken question. The backend (#318) now evaluates the round on
+        // admin_skip during QUESTION_ACTIVE, so this path is reachable.
+        // Stays hidden for non-admins and outside an active question.
+        if (skipBtn) skipBtn.classList.toggle('hidden', !state.isAdmin);
         // QUESTION_ACTIVE → Pause is the relevant CTA, Resume hidden.
         if (pauseBtn) pauseBtn.classList.remove('hidden');
         if (resumeBtn) resumeBtn.classList.add('hidden');
