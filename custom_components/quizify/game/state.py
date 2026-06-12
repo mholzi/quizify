@@ -8,7 +8,7 @@ import logging
 import random
 import secrets
 import time
-from collections.abc import Awaitable, Callable
+from collections.abc import Callable, Coroutine
 from dataclasses import dataclass, field
 from typing import TYPE_CHECKING, Any
 
@@ -49,7 +49,10 @@ from .types import TIME_LIMITS, Difficulty
 if TYPE_CHECKING:
     from aiohttp import web
 
+    from ..analytics import QuizifyAnalytics
+    from ..question_stats import QuestionStatsService
     from ..runtime import Runtime
+    from .lightning import LightningRound
 
 _LOGGER = logging.getLogger(__name__)
 
@@ -157,7 +160,7 @@ class QuizifyGameState:
 
         # Broadcast callback — set by websocket layer
         self._broadcast_callback: (
-            Callable[[dict[str, Any]], Awaitable[None]] | None
+            Callable[[dict[str, Any]], Coroutine[Any, Any, None]] | None
         ) = None
 
         # State-change observers (HA sensor entities subscribe here so they
@@ -165,9 +168,9 @@ class QuizifyGameState:
         self._state_callbacks: list[Callable[[], None]] = []
 
         # Analytics / stats service (injected from __init__.py)
-        self._stats_service = None
+        self._stats_service: QuizifyAnalytics | None = None
         # Per-question stats sink (optional; standalone tests skip it).
-        self._question_stats = None
+        self._question_stats: QuestionStatsService | None = None
         self._game_start_time: float | None = None
 
         # Cached finale data (computed once in end_game, cleared in reset_to_lobby)
@@ -178,7 +181,7 @@ class QuizifyGameState:
         # Active LightningRound (issue #42), or None when not in a lightning
         # round. Owns its own questions/scores/recap; this class only holds
         # the reference + phase so the WS layer can route to it.
-        self._lightning = None  # type: ignore[assignment]
+        self._lightning: LightningRound | None = None
 
         # True between start_lightning_round() and begin_lightning_questions():
         # the intro splash ("Bolt Burst", issue #201) is on screen and the
@@ -922,9 +925,14 @@ class QuizifyGameState:
 
         # Persist any per-question stats accumulated this game.
         if self._question_stats is not None:
+            # Bind to a local so the narrowed (non-None) type survives into the
+            # nested coroutine closure (mypy can't assume the attribute stays
+            # non-None across the await).
+            question_stats = self._question_stats
+
             async def _save_qs() -> None:
                 try:
-                    await self._question_stats.save_if_dirty()
+                    await question_stats.save_if_dirty()
                 except Exception:  # noqa: BLE001
                     _LOGGER.exception("Failed to save question stats")
 
@@ -988,6 +996,12 @@ class QuizifyGameState:
         if not self._stats_service or not self.game_id:
             return
 
+        # Bind the narrowed (non-None) values to locals so they survive into
+        # the nested coroutine closure below (mypy re-widens self.* across the
+        # await boundary).
+        stats_service = self._stats_service
+        game_id = self.game_id
+
         duration = int(time.time() - (self._game_start_time or time.time()))
         players = {p.name: p.score for p in self.get_players()}
         # Per-player details feed the all-time rollup (best streak, milestone
@@ -1003,8 +1017,8 @@ class QuizifyGameState:
 
         async def _do_record() -> None:
             try:
-                await self._stats_service.record_game(
-                    game_id=self.game_id,
+                await stats_service.record_game(
+                    game_id=game_id,
                     category=self.category,
                     difficulty=self.difficulty,
                     num_rounds=self.round,
@@ -1489,7 +1503,7 @@ class QuizifyGameState:
 
         if self.phase == GamePhase.LIGHTNING and self._lightning is not None:
             lr = self._lightning
-            q = lr.current_question
+            lq = lr.current_question
             snapshot["lightning"] = {
                 "index": lr.index,
                 "num_questions": lr.num_questions,
@@ -1500,14 +1514,14 @@ class QuizifyGameState:
                 # showing and the first question hasn't been broadcast.
                 "splash_pending": self._lightning_splash_pending,
             }
-            if q is not None:
+            if lq is not None:
                 # Canonical (admin/TV) answer order; players get their own
                 # shuffle pushed via the lightning_question event.
                 snapshot["lightning"]["question"] = {
-                    "text": q.question,
-                    "answers": [a.text for a in q.answers],
-                    "category": q.category,
-                    "image_url": q.image_url,
+                    "text": lq.question,
+                    "answers": [a.text for a in lq.answers],
+                    "category": lq.category,
+                    "image_url": lq.image_url,
                 }
 
         if self.phase == GamePhase.LIGHTNING_RECAP and self._lightning is not None:
@@ -1520,7 +1534,7 @@ class QuizifyGameState:
     # ------------------------------------------------------------------
 
     def set_broadcast_callback(
-        self, callback: Callable[[dict[str, Any]], Awaitable[None]]
+        self, callback: Callable[[dict[str, Any]], Coroutine[Any, Any, None]]
     ) -> None:
         """Set the callback used to broadcast state to connected clients."""
         self._broadcast_callback = callback

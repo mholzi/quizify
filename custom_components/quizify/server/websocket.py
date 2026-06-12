@@ -51,6 +51,7 @@ if TYPE_CHECKING:
     from collections.abc import Callable
 
     from ..runtime import Runtime
+    from ..tts import QuizifyTTSAnnouncer
 
 _LOGGER = logging.getLogger(__name__)
 
@@ -114,7 +115,7 @@ class QuizifyWebSocketHandler:
         # Optional TTS announcer. Set by __init__.py / dev_server after
         # construction so the handler doesn't have to know about HA
         # services. Calling announce_milestone on None is the no-op path.
-        self._tts_announcer = None
+        self._tts_announcer: QuizifyTTSAnnouncer | None = None
         # Per-connection message flood guard (#169). Keyed on id(ws); the
         # entry is dropped by _forget_rate_limit() on disconnect so the
         # backing dict is bounded by the number of *live* connections.
@@ -326,7 +327,10 @@ class QuizifyWebSocketHandler:
             return
 
         handlers = self._message_dispatch(data, game_state)
-        entry = handlers.get(msg_type)
+        # msg_type comes from untyped client JSON and may be None (no "type"
+        # field) — dict.get tolerates that and routes it to the unknown-type
+        # branch below, so the arg-type mismatch is intentional.
+        entry = handlers.get(msg_type)  # type: ignore[arg-type]
         if entry is None:
             _LOGGER.warning("Unknown message type: %s", msg_type)
             await self._conn.send_error(ws, ERR_INVALID_ACTION, "Unknown message type")
@@ -507,7 +511,7 @@ class QuizifyWebSocketHandler:
         # Auto-append number if name is taken
         original_name = name
         counter = 2
-        while game_state.get_player(name) and game_state.get_player(name).connected:
+        while (existing := game_state.get_player(name)) and existing.connected:
             name = f"{original_name} {counter}"
             counter += 1
 
@@ -959,7 +963,10 @@ class QuizifyWebSocketHandler:
 
         wager = data.get("wager")
         try:
-            wager_int = int(wager)
+            # wager is untyped client JSON (may be None / non-numeric); the
+            # except below catches TypeError/ValueError from int() — the
+            # arg-type mismatch is the intended defensive path.
+            wager_int = int(wager)  # type: ignore[arg-type]
         except (TypeError, ValueError):
             await self._conn.send_error(ws, ERR_INVALID_ACTION, "Invalid wager")
             return

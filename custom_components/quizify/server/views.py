@@ -29,7 +29,13 @@ from .pack_submission import (
 from .serializers import build_game_status_response
 
 if TYPE_CHECKING:
+    from collections.abc import Awaitable, Callable
+
     from .context import AppContext
+
+    # aiohttp request handler shape, matching what `UrlDispatcher.add_route`
+    # accepts. Used to type the ROUTES table precisely instead of `object`.
+    _RouteHandler = Callable[[web.Request], Awaitable[web.StreamResponse]]
 
 
 # GitHub raw URL for pack version manifests
@@ -416,6 +422,13 @@ async def featured_pack_view(request: web.Request) -> web.Response:
     else:
         logic_used = logic
 
+    # Invariant: every branch above resolves `chosen` to a real pack slug — the
+    # `chosen is None` fallback always assigns one, and the seasonal/logic
+    # branches only reach the final `else` when `chosen` is already set. Assert
+    # it so the downstream `seasons.get` / `lang_packs[...]` accesses are typed
+    # as `str` (mypy can't correlate the separate `seasonal_active` flag).
+    assert chosen is not None
+
     # The pinned pack's label (e.g. "🎄 Weihnachten") for the spotlight subtitle
     # and the picker badge. ``season_label`` is the active label or "".
     chosen_season = seasons.get(chosen)
@@ -702,7 +715,7 @@ async def flag_list_view(request: web.Request) -> web.Response:
 
 # Each entry is (method, path, handler). Kept as data so the HA adapter and
 # the standalone server can register the same set without duplication.
-ROUTES: list[tuple[str, str, object]] = [
+ROUTES: list[tuple[str, str, _RouteHandler]] = [
     ("GET", "/quizify/admin", admin_view),
     ("GET", "/quizify/launcher", launcher_view),
     ("GET", "/quizify/player", player_view),
