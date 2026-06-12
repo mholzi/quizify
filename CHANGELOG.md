@@ -5,13 +5,20 @@ All notable changes to Quizify are documented here. This project follows
 
 ## [Unreleased]
 
+## [1.3.0] — 2026-06-12
+
+The final 1.3.0 release — the culmination of release candidates RC1–RC16. See
+the GitHub release notes for the consolidated highlights; the RC entries below
+carry the detailed per-candidate history.
+
 ### Fixed
 
 - **Blocking `manifest.json` read on the event loop (#343).** Home Assistant's
   loop watcher flagged Quizify for reading `manifest.json` synchronously on the
   event loop — once at setup (`server/context.py`) and on the launcher serve path
-  (`server/views.py`). The reads now happen off the loop; the asset cache-buster
-  still updates after a www-only deploy without a restart. _(In progress.)_
+  (`server/views.py`). The reads now happen off the loop (an executor job at setup
+  plus a background refresh that maintains an in-memory version); the asset
+  cache-buster still updates after a www-only deploy without a restart.
 
 ## [1.3.0-RC16] — 2026-06-12
 
@@ -424,7 +431,7 @@ landed after the RC1 tag.
 - **Safe service-worker auto-reload on idle screens (#215).** The PWA now only
   auto-reloads on idle screens, avoiding a refresh mid-interaction.
 
-## [1.3.0] — 2026-06-09
+## [1.3.0-RC1] — 2026-06-09
 
 Feature release on top of the 1.2.7 hardening: a new Lightning Round bonus
 mode, in-app community pack submission, optional question images, group
