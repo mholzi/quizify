@@ -1,0 +1,32 @@
+{
+  "_comment": "Shared malformation catalog for the worker<->integration pack-validator contract (#256/#313). Each entry names a single mutation applied to the canonical community_pack.json fixture; BOTH validators (Python validate_pack and the worker's validatePack) MUST reject the mutated pack. The 'kind' is applied identically by tests/test_worker_contract_256.py and cf-workers/contract-check.mjs via _apply_malformation / applyMalformation. Keep the two implementations in lockstep.",
+  "malformations": [
+    {
+      "id": "too-few-answers",
+      "kind": "truncate_first_answers",
+      "n": 2,
+      "reason": "first question left with only 2 answers (!= ANSWERS_PER_QUESTION)"
+    },
+    {
+      "id": "missing-name",
+      "kind": "delete_field",
+      "field": "name",
+      "reason": "top-level required 'name' removed"
+    },
+    {
+      "id": "two-correct",
+      "kind": "mark_second_answer_correct",
+      "reason": "first question has two answers flagged correct (must be exactly 1)"
+    },
+    {
+      "id": "duplicate-id",
+      "kind": "duplicate_first_id",
+      "reason": "second question reuses the first question's id"
+    },
+    {
+      "id": "empty-question-text",
+      "kind": "blank_first_question_text",
+      "reason": "first question text blanked (required non-empty string)"
+    }
+  ]
+}
