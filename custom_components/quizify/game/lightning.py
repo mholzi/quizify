@@ -33,7 +33,6 @@ from dataclasses import dataclass, field
 from typing import TYPE_CHECKING, Any
 
 if TYPE_CHECKING:  # pragma: no cover - typing only
-    from .player import PlayerSession
     from .questions import Question, QuestionBank
 
 _LOGGER = logging.getLogger(__name__)

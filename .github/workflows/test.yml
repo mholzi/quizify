@@ -32,3 +32,52 @@ jobs:
       - name: Byte-compile component (catches syntax errors)
         run: |
           python -m compileall -q custom_components/quizify
+
+  lint:
+    # Ruff lint gate (issue #306). The code was ruff-annotated by discipline
+    # (# noqa markers, zero bare except) but nothing enforced it — regressions
+    # went unflagged. Config + scoped ruleset live in pyproject.toml; the
+    # selected ruleset (E4/E7/E9 + F + I) passes on current main.
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.13"
+
+      - name: Install ruff
+        run: pip install "ruff==0.15.17"
+
+      - name: Ruff lint
+        run: ruff check custom_components/
+
+  drift:
+    # Generated-artifact-drift guard (issue #306). player.bundle.js / styles.css
+    # are committed but generated from www/js/ and www/css/src/ modules. The
+    # cache-buster fingerprints whatever bytes are on disk — it cannot detect a
+    # source-module change that was never rebuilt. This job rebuilds in CI and
+    # fails if the committed artifacts are stale. (tests/ also carries a unit
+    # counterpart, test_generated_artifacts_in_sync.py, run by the pytest job.)
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.13"
+
+      - name: Rebuild generated front-end artifacts
+        run: |
+          python scripts/build_bundle.py
+          python scripts/build_css.py
+
+      - name: Fail if committed artifacts are stale
+        run: |
+          if ! git diff --exit-code -- \
+              custom_components/quizify/www/js/player.bundle.js \
+              custom_components/quizify/www/css/styles.css; then
+            echo "::error::Generated artifacts are out of sync with their source modules."
+            echo "Run: python3 scripts/build_bundle.py && python3 scripts/build_css.py, then commit."
+            exit 1
+          fi
