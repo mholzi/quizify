@@ -11,7 +11,7 @@ import json
 import logging
 import os
 import time
-from datetime import datetime, timezone
+from datetime import UTC, datetime
 from typing import TYPE_CHECKING, Any, TypedDict
 
 if TYPE_CHECKING:
@@ -352,12 +352,18 @@ class QuizifyAnalytics:
             if cat not in cat_stats:
                 cat_stats[cat] = {"games": 0, "total_score": 0, "total_players": 0}
             cat_stats[cat]["games"] += 1
-            cat_stats[cat]["total_score"] += game.get("average_score", 0) * game["player_count"]
+            cat_stats[cat]["total_score"] += (
+                game.get("average_score", 0) * game["player_count"]
+            )
             cat_stats[cat]["total_players"] += game["player_count"]
 
         category_list = []
         for cat, stats in cat_stats.items():
-            avg_score = stats["total_score"] / stats["total_players"] if stats["total_players"] > 0 else 0
+            avg_score = (
+                stats["total_score"] / stats["total_players"]
+                if stats["total_players"] > 0
+                else 0
+            )
             category_list.append({
                 "category": cat,
                 "games_played": stats["games"],
@@ -378,14 +384,18 @@ class QuizifyAnalytics:
             "recent_games": [
                 {
                     "game_id": g["game_id"],
-                    "date": datetime.fromtimestamp(g["ended_at"], tz=timezone.utc).strftime("%Y-%m-%d %H:%M"),
+                    "date": datetime.fromtimestamp(
+                        g["ended_at"], tz=UTC
+                    ).strftime("%Y-%m-%d %H:%M"),
                     "category": g.get("category", "mixed"),
                     "player_count": g["player_count"],
                     "rounds_played": g["rounds_played"],
                     "winner": g.get("winner", ""),
                     "duration": g.get("duration_seconds", 0),
                 }
-                for g in sorted(current_games, key=lambda g: g["ended_at"], reverse=True)[:20]
+                for g in sorted(
+                    current_games, key=lambda g: g["ended_at"], reverse=True
+                )[:20]
             ],
             "generated_at": now,
         }
@@ -396,7 +406,7 @@ class QuizifyAnalytics:
         """Aggregate game counts for chart visualization."""
         from datetime import timedelta  # noqa: PLC0415
 
-        now = datetime.now(timezone.utc)
+        now = datetime.now(UTC)
 
         if period == "7d":
             days = 7
@@ -404,12 +414,13 @@ class QuizifyAnalytics:
                 (now - timedelta(days=i)).strftime("%Y-%m-%d"): 0 for i in range(days)
             }
             for game in games:
-                dt = datetime.fromtimestamp(game["ended_at"], tz=timezone.utc)
+                dt = datetime.fromtimestamp(game["ended_at"], tz=UTC)
                 key = dt.strftime("%Y-%m-%d")
                 if key in buckets:
                     buckets[key] += 1
             labels = [
-                (now - timedelta(days=i)).strftime("%a") for i in range(days - 1, -1, -1)
+                (now - timedelta(days=i)).strftime("%a")
+                for i in range(days - 1, -1, -1)
             ]
             values = [
                 buckets[(now - timedelta(days=i)).strftime("%Y-%m-%d")]
@@ -422,7 +433,7 @@ class QuizifyAnalytics:
                 week_start = now - timedelta(days=now.weekday() + 7 * i)
                 week_buckets[week_start.strftime("%Y-%m-%d")] = 0
             for game in games:
-                dt = datetime.fromtimestamp(game["ended_at"], tz=timezone.utc)
+                dt = datetime.fromtimestamp(game["ended_at"], tz=UTC)
                 week_start = dt - timedelta(days=dt.weekday())
                 key = week_start.strftime("%Y-%m-%d")
                 if key in week_buckets:
@@ -433,7 +444,7 @@ class QuizifyAnalytics:
         else:
             month_buckets: dict[str, int] = {}
             for game in games:
-                dt = datetime.fromtimestamp(game["ended_at"], tz=timezone.utc)
+                dt = datetime.fromtimestamp(game["ended_at"], tz=UTC)
                 key = dt.strftime("%Y-%m")
                 month_buckets[key] = month_buckets.get(key, 0) + 1
             sorted_keys = sorted(month_buckets.keys())[-12:]

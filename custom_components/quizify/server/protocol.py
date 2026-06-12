@@ -239,11 +239,6 @@ CLIENT_MESSAGE_TYPES: frozenset[str] = frozenset({
     "start_lightning_questions",
     "lightning_answer",
     "end_lightning",
-    # Pre-existing handlers (unreleased features wired in the WS layer).
-    # Listed here so the protocol-coverage test passes; remove once the
-    # features either ship or get pulled out of the dispatch.
-    "submit_wager",
-    "reaction",
 })
 
 
@@ -271,7 +266,8 @@ TYPESCRIPT_DECLARATIONS = """
 //   | { type: 'round_summary'; correct_answer_index: number; correct_answer: string;
 //       question_id: string; fun_fact: string; leaderboard: LeaderboardEntry[];
 //       players: Player[]; round: number; total_rounds: number; last_round: boolean;
-//       all_answers: AnswerEntry[]; answer_distribution: DistEntry[]; question_text: string; }
+//       all_answers: AnswerEntry[]; answer_distribution: DistEntry[];
+//       question_text: string; }
 //   | { type: 'finale'; podium: PodiumEntry[]; leaderboard: LeaderboardEntry[];
 //       all_players: LeaderboardEntry[]; superlatives: Superlative[]; }
 //   | { type: 'game_state'; phase: GamePhase; round: number; total_rounds: number;

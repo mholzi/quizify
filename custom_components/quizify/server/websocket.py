@@ -3,6 +3,7 @@
 from __future__ import annotations
 
 import asyncio
+import contextlib
 import logging
 import math
 import random
@@ -92,7 +93,7 @@ class QuizifyWebSocketHandler:
     def __init__(
         self,
         runtime: Runtime,
-        game_state_provider: "Callable[[], QuizifyGameState | None]",
+        game_state_provider: Callable[[], QuizifyGameState | None],
     ) -> None:
         """Initialize handler."""
         self._runtime = runtime
@@ -277,7 +278,9 @@ class QuizifyWebSocketHandler:
             self._conn.remove_connection(ws)
             self._forget_rate_limit(ws)
             await self._handle_disconnect(ws, was_admin=was_admin)
-            _LOGGER.debug("WebSocket disconnected, total: %d", len(self._conn.connections))
+            _LOGGER.debug(
+                "WebSocket disconnected, total: %d", len(self._conn.connections)
+            )
 
         return ws
 
@@ -676,17 +679,17 @@ class QuizifyWebSocketHandler:
             player.is_admin
             and game_state.phase == GamePhase.PAUSED
             and game_state.get_pause_reason() == "admin_disconnected"
+            and game_state.resume()
         ):
-            if game_state.resume():
-                self._start_timer_tick(game_state)
-                # Broadcast the resumed state to EVERY player (#287). Without
-                # this, the other players stay frozen on the "Host disconnected"
-                # paused-view (player-core.js only leaves it on a game_state
-                # message) while their timers tick down → scored as timeouts.
-                # Per-player PROJECTED — same mechanism as the manual-resume
-                # fix (#286) so answer buttons keep the right shuffle order.
-                await self._broadcast_state_projected(game_state)
-                _LOGGER.info("Auto-resumed after admin reconnect")
+            self._start_timer_tick(game_state)
+            # Broadcast the resumed state to EVERY player (#287). Without
+            # this, the other players stay frozen on the "Host disconnected"
+            # paused-view (player-core.js only leaves it on a game_state
+            # message) while their timers tick down → scored as timeouts.
+            # Per-player PROJECTED — same mechanism as the manual-resume
+            # fix (#286) so answer buttons keep the right shuffle order.
+            await self._broadcast_state_projected(game_state)
+            _LOGGER.info("Auto-resumed after admin reconnect")
 
         # Generate a fresh token and revoke old one
         new_token = self._conn.rotate_session_token(token, name)
@@ -745,7 +748,9 @@ class QuizifyWebSocketHandler:
         if 0 <= shuffled_index < len(player_shuffle):
             original_index = player_shuffle[shuffled_index]
         else:
-            await self._conn.send_error(ws, ERR_INVALID_ACTION, "Answer index out of range")
+            await self._conn.send_error(
+                ws, ERR_INVALID_ACTION, "Answer index out of range"
+            )
             return
 
         result = game_state.submit_answer(player.name, original_index)
@@ -990,7 +995,10 @@ class QuizifyWebSocketHandler:
             }
 
             # For joker, send the removed answer to the using player only
-            if result.type == PowerUpType.JOKER and result.joker_remove_index is not None:
+            if (
+                result.type == PowerUpType.JOKER
+                and result.joker_remove_index is not None
+            ):
                 # Map the canonical original index to THIS player's shuffled
                 # position. The buttons are rendered in the per-player shuffle
                 # order, so mapping through the canonical shuffle_map would
@@ -1312,10 +1320,9 @@ class QuizifyWebSocketHandler:
         # connections actually die. Real clients have already received the
         # reset above and will reconnect into the fresh lobby on their own.
         for pws in stale_wses:
-            try:
+            # Best-effort cleanup — a socket that's already gone is fine.
+            with contextlib.suppress(Exception):
                 await pws.close()
-            except Exception:  # noqa: BLE001 — best-effort cleanup
-                pass
 
     # ------------------------------------------------------------------
     # Admin: kick player
@@ -1358,7 +1365,9 @@ class QuizifyWebSocketHandler:
 
         if target_ws is not None and not target_ws.closed:
             try:
-                await target_ws.send_json({"type": "kicked", "reason": "removed_by_admin"})
+                await target_ws.send_json(
+                    {"type": "kicked", "reason": "removed_by_admin"}
+                )
                 await target_ws.close()
             except Exception as err:  # noqa: BLE001
                 _LOGGER.debug("Closing kicked player WS raised: %s", err)
@@ -1683,7 +1692,9 @@ class QuizifyWebSocketHandler:
         # Canonical shuffle — used by admin/dashboard and as a fallback.
         indices = list(range(len(question.answers)))
         random.shuffle(indices)
-        game_state.set_round_shuffle(indices, [question.answers[i].text for i in indices])
+        game_state.set_round_shuffle(
+            indices, [question.answers[i].text for i in indices]
+        )
 
         # Per-player shuffles: each phone sees A/B/C in its own order
         # (anti-cheat — couch neighbours can't shout "B!"). The
@@ -1904,13 +1915,12 @@ class QuizifyWebSocketHandler:
             if was_admin is not None
             else self._conn.is_admin_connection(ws)
         )
-        if is_admin_ws:
-            if not self._conn.has_admin_connections():
-                _LOGGER.info(
-                    "Admin disconnected, keeping game alive for %ds",
-                    self._conn.ADMIN_SESSION_GRACE,
-                )
-                self._conn.schedule_admin_timeout()
+        if is_admin_ws and not self._conn.has_admin_connections():
+            _LOGGER.info(
+                "Admin disconnected, keeping game alive for %ds",
+                self._conn.ADMIN_SESSION_GRACE,
+            )
+            self._conn.schedule_admin_timeout()
 
         player = game_state.get_player_by_ws(ws)
         if not player:
@@ -1970,7 +1980,9 @@ class QuizifyWebSocketHandler:
                         "type": "player_left",
                         "players": serialize_player_list(remaining),
                     })
-                    _LOGGER.info("Removed disconnected player after grace period: %s", name)
+                    _LOGGER.info(
+                        "Removed disconnected player after grace period: %s", name
+                    )
 
         self._conn.schedule_player_removal(player.name, grace, remove_after_timeout)
 

@@ -53,17 +53,20 @@ class PlayerSession:
     submitted: bool = False
     current_answer: int | None = None
     submission_time: float | None = None
-    last_answer_correct: bool = False  # cached at submit_answer time, read in _do_evaluate_round
+    # cached at submit_answer time, read in _do_evaluate_round
+    last_answer_correct: bool = False
     # Elapsed seconds between round start and this player's submission.
     # Captured in submit_answer so per-question stats can record honest
     # times without re-deriving from speed_bonus arithmetic.
     last_elapsed: float = 0.0
     round_score: int = 0
-    round_score_breakdown: dict = field(default_factory=dict)  # speed_bonus, streak_bonus, diff_mult
+    # speed_bonus, streak_bonus, diff_mult
+    round_score_breakdown: dict = field(default_factory=dict)
     round_history: list[str] = field(default_factory=list)
 
     # Superlative tracking
-    answer_times: list[float] = field(default_factory=list)  # elapsed per correct answer
+    # elapsed per correct answer
+    answer_times: list[float] = field(default_factory=list)
     round_scores: list[int] = field(default_factory=list)  # score per round
     max_streak: int = 0
     freezes_used: int = 0

@@ -182,7 +182,9 @@ async def async_setup_entry(hass: HomeAssistant, entry: ConfigEntry) -> bool:
     options = entry.options or {}
     # Lobby music plays server-side on the configured media_player while the
     # game waits in the lobby. Empty/unset → the playback service stays inert.
-    game_state.lobby_music_url = (options.get(CONF_LOBBY_MUSIC_URL) or "").strip() or None
+    game_state.lobby_music_url = (
+        (options.get(CONF_LOBBY_MUSIC_URL) or "").strip() or None
+    )
     party_lights = QuizifyPartyLights(
         hass=hass,
         entity_ids=list(options.get(CONF_PARTY_LIGHT_ENTITIES) or []),
@@ -215,9 +217,13 @@ async def async_setup_entry(hass: HomeAssistant, entry: ConfigEntry) -> bool:
 
     # Re-attach on options change so toggling lights/TTS in the UI takes
     # effect without an HA restart.
-    async def _update_listener(_hass: HomeAssistant, updated_entry: ConfigEntry) -> None:
+    async def _update_listener(
+        _hass: HomeAssistant, updated_entry: ConfigEntry
+    ) -> None:
         opts = updated_entry.options or {}
-        game_state.lobby_music_url = (opts.get(CONF_LOBBY_MUSIC_URL) or "").strip() or None
+        game_state.lobby_music_url = (
+            (opts.get(CONF_LOBBY_MUSIC_URL) or "").strip() or None
+        )
         # Toggle the community-pack submit feature live (#180) — no HA restart.
         ctx.community_submit_url = (
             opts.get(CONF_COMMUNITY_SUBMIT_URL) or ""

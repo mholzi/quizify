@@ -307,7 +307,11 @@ class RoundMessageBuilder:
                     if 0 <= submitted_orig < len(summary.question.answers)
                     else "?"
                 )
-                is_correct = summary.question.answers[submitted_orig].correct if submitted_orig < len(summary.question.answers) else False
+                is_correct = (
+                    summary.question.answers[submitted_orig].correct
+                    if submitted_orig < len(summary.question.answers)
+                    else False
+                )
                 breakdown = player.round_score_breakdown
                 all_answers.append({
                     "player_name": player.name,
@@ -318,7 +322,9 @@ class RoundMessageBuilder:
                     "points_earned": player.round_score,
                     "speed_bonus": breakdown.get("speed_bonus", 0),
                     "streak_bonus": breakdown.get("streak_bonus", 0),
-                    "difficulty_multiplier": breakdown.get("difficulty_multiplier", 1.0),
+                    "difficulty_multiplier": breakdown.get(
+                        "difficulty_multiplier", 1.0
+                    ),
                     "double_points": breakdown.get("double_points", False),
                     "streak": player.streak,
                 })

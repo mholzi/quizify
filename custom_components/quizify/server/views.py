@@ -87,7 +87,7 @@ _ASSET_FP_CACHE: tuple[int, str] | None = None  # (monotonic_ns, fingerprint)
 _MANIFEST_CACHE: tuple[int, str] | None = None
 
 
-def _get_ctx(request: web.Request) -> "AppContext":
+def _get_ctx(request: web.Request) -> AppContext:
     """Pull the AppContext stashed on the aiohttp application."""
     return request.app[APP_CTX_KEY]
 
@@ -192,7 +192,7 @@ def _get_asset_version(version: str) -> str:
     return f"{version}-{fingerprint}"
 
 
-async def _get_asset_version_async(ctx: "AppContext", version: str) -> str:
+async def _get_asset_version_async(ctx: AppContext, version: str) -> str:
     """Async cache-buster value, never blocking the event loop (#213).
 
     Fast path (cache fresh): no filesystem access, returns inline. Slow path
@@ -564,10 +564,12 @@ async def pack_update_check_view(request: web.Request) -> web.Response:
     upstream: dict | None = None
     try:
         timeout = aiohttp.ClientTimeout(total=5)
-        async with aiohttp.ClientSession(timeout=timeout) as session:
-            async with session.get(_PACK_VERSIONS_URL) as resp:
-                if resp.status == 200:
-                    upstream = await resp.json(content_type=None)
+        async with (
+            aiohttp.ClientSession(timeout=timeout) as session,
+            session.get(_PACK_VERSIONS_URL) as resp,
+        ):
+            if resp.status == 200:
+                upstream = await resp.json(content_type=None)
     except Exception as exc:  # noqa: BLE001
         _LOGGER.warning("Pack update check failed: %s", exc)
 

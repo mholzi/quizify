@@ -23,7 +23,7 @@ _LOGGER = logging.getLogger(__name__)
 
 
 def fire_and_forget_service(
-    hass: "HomeAssistant | None",
+    hass: HomeAssistant | None,
     domain: str,
     service: str,
     data: dict[str, object],

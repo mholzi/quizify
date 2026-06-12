@@ -25,7 +25,8 @@ def build_game_status_response(
     return {
         "exists": True,
         "phase": game_state.phase.value,
-        "can_join": game_state.phase.value in ("LOBBY", "QUESTION_ACTIVE", "ANSWER_REVEAL"),
+        "can_join": game_state.phase.value
+        in ("LOBBY", "QUESTION_ACTIVE", "ANSWER_REVEAL"),
     }
 
 
@@ -107,7 +108,9 @@ def serialize_leaderboard(players: list[PlayerSession]) -> list[dict[str, Any]]:
         if prev_score is None or p.score != prev_score:
             rank = i + 1
             prev_score = p.score
-        breakdown = p.round_score_breakdown if hasattr(p, "round_score_breakdown") else {}
+        breakdown = (
+            p.round_score_breakdown if hasattr(p, "round_score_breakdown") else {}
+        )
         # Determine if this player answered correctly this round
         last_result = p.round_history[-1] if p.round_history else None
         result.append({
@@ -208,7 +211,9 @@ def serialize_round_summary(
     the same payload to avoid a dashboard-only round_summary fork.
     """
     # Compute answer distribution from all_answers
-    answer_distribution = _compute_answer_distribution(all_answers or [], num_answer_options)
+    answer_distribution = _compute_answer_distribution(
+        all_answers or [], num_answer_options
+    )
 
     return {
         "type": "round_summary",

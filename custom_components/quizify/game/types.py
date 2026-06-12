@@ -5,7 +5,7 @@ from __future__ import annotations
 from enum import Enum
 
 
-class Difficulty(str, Enum):
+class Difficulty(str, Enum):  # noqa: UP042 — StrEnum changes str()/serialization
     """Question difficulty levels."""
 
     EASY = "easy"

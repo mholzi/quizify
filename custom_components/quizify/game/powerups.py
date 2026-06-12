@@ -10,7 +10,7 @@ FREEZE_DURATION = 5.0  # seconds
 TIME_BOOST_DURATION = 5.0  # seconds
 
 
-class PowerUpType(str, Enum):
+class PowerUpType(str, Enum):  # noqa: UP042 — StrEnum changes str()/serialization
     """Available quiz power-up types."""
 
     JOKER = "joker"  # removes one wrong answer
@@ -37,7 +37,8 @@ class PowerUpManager:
     def __init__(self) -> None:
         """Initialize empty power-up state."""
         self._inventory: dict[str, PowerUpType] = {}  # player_id → held power-up
-        self._double_points_active: dict[str, bool] = {}  # player_id → active this round
+        # player_id → active this round
+        self._double_points_active: dict[str, bool] = {}
 
     def reset(self) -> None:
         """Clear all power-up state."""

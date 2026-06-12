@@ -144,7 +144,10 @@ def _parse_question(data: dict, category_name: str) -> Question | None:
         )
         return None
 
-    answers = [Answer(text=a["text"], correct=bool(a.get("correct", False))) for a in answers_raw]
+    answers = [
+        Answer(text=a["text"], correct=bool(a.get("correct", False)))
+        for a in answers_raw
+    ]
 
     return Question(
         id=data["id"],
@@ -168,7 +171,8 @@ class QuestionBank:
         self._queue: list[Question] = []
         self._queue_index: int = 0
         self._loaded: bool = False
-        # Question history: maps question_id -> unix timestamp last shown (or 0 if never)
+        # Question history: maps question_id -> unix timestamp last shown
+        # (or 0 if never)
         self._history: dict[str, float] = {}
         self._history_path: Path | None = None
         # Questions shown in the current game (to record at end)
@@ -235,7 +239,12 @@ class QuestionBank:
         if season_meta is not None:
             meta["season"] = season_meta
         self._pack_versions[category] = meta
-        _LOGGER.debug("Loaded %d questions for category '%s' (v%s)", len(questions), category, pack_version)
+        _LOGGER.debug(
+            "Loaded %d questions for category '%s' (v%s)",
+            len(questions),
+            category,
+            pack_version,
+        )
         return questions
 
     def load_all_categories(self) -> dict[str, list[Question]]:
@@ -340,7 +349,8 @@ class QuestionBank:
             questions_data = raw.get("questions")
             if not isinstance(questions_data, list) or not questions_data:
                 _LOGGER.warning(
-                    "Skipping community pack '%s': 'questions' must be a non-empty list",
+                    "Skipping community pack '%s': 'questions' must be a "
+                    "non-empty list",
                     file_path.name,
                 )
                 continue
@@ -406,7 +416,11 @@ class QuestionBank:
                 # questions/community/<stem>.json under a ``community-`` slug, so
                 # the old views.py path read (questions_dir / f"{slug}.json")
                 # never found them and they always fell back to the 🎲 icon.
-                "theme": raw.get("theme", "") if isinstance(raw.get("theme"), str) else "",
+                "theme": (
+                    raw.get("theme", "")
+                    if isinstance(raw.get("theme"), str)
+                    else ""
+                ),
             }
             community_season = _normalize_season(raw.get("season"))
             if community_season is not None:
@@ -427,7 +441,7 @@ class QuestionBank:
         return list(self._categories.keys())
 
     def get_pack_versions(self) -> dict[str, dict]:
-        """Return metadata (version, name, language, question_count) for each loaded pack."""
+        """Return metadata (version, name, language, question_count) per pack."""
         return dict(self._pack_versions)
 
     def get_next_question(
@@ -519,7 +533,7 @@ class QuestionBank:
     def get_question_count(
         self, category: str, difficulty: str | None = None
     ) -> int:
-        """Return the number of questions for a category, optionally filtered by difficulty."""
+        """Return the question count for a category, optionally by difficulty."""
         questions = self._categories.get(category, [])
         if difficulty is not None:
             return sum(1 for q in questions if q.difficulty == difficulty)

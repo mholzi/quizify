@@ -152,7 +152,9 @@ class QuestionStatsService:
 
     def get_easiest(self, limit: int = 25, min_shown: int = 3) -> list[dict[str, Any]]:
         """Inverse of get_hardest — highest correct rate."""
-        hardest = self.get_hardest(limit=len(self._data["questions"]), min_shown=min_shown)
+        hardest = self.get_hardest(
+            limit=len(self._data["questions"]), min_shown=min_shown
+        )
         hardest.sort(key=lambda x: x["correct_rate"], reverse=True)
         return hardest[:limit]
 

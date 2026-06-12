@@ -61,7 +61,7 @@ class TickResolution:
     dashboard_remaining: float = 0.0
 
 
-class GamePhase(str, Enum):
+class GamePhase(str, Enum):  # noqa: UP042 — StrEnum changes str()/serialization
     """Game phase states."""
 
     LOBBY = "LOBBY"

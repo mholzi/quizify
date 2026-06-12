@@ -41,7 +41,7 @@ class QuizifyTTSAnnouncer:
 
     def __init__(
         self,
-        hass: "HomeAssistant | None",
+        hass: HomeAssistant | None,
         tts_entity_id: str | None,
         media_player_entity_id: str | None,
         game_state: QuizifyGameState,
@@ -117,7 +117,10 @@ class QuizifyTTSAnnouncer:
         if phase == GamePhase.FINALE:
             leader = self._game.leader
             if leader is not None:
-                self._speak(f"Game over. The winner is {leader.name} with {leader.score} points!")
+                self._speak(
+                    f"Game over. The winner is {leader.name} "
+                    f"with {leader.score} points!"
+                )
             else:
                 self._speak("Game over.")
             return
@@ -140,8 +143,15 @@ class QuizifyTTSAnnouncer:
         if not self.is_configured:
             return
         now = time.monotonic()
-        if self._last_spoken_at is not None and now - self._last_spoken_at < TTS_MIN_INTERVAL:
-            _LOGGER.debug("TTS throttled (%.1fs since last): %s", now - self._last_spoken_at, message)
+        if (
+            self._last_spoken_at is not None
+            and now - self._last_spoken_at < TTS_MIN_INTERVAL
+        ):
+            _LOGGER.debug(
+                "TTS throttled (%.1fs since last): %s",
+                now - self._last_spoken_at,
+                message,
+            )
             return
         self._last_spoken_at = now
 
