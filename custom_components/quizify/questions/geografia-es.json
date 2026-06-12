@@ -1,0 +1,3158 @@
+{
+  "name": "Geografía",
+  "language": "es",
+  "version": "1.0",
+  "theme": "geography",
+  "questions": [
+    {
+      "id": "geo_es_001",
+      "question": "¿Qué país tiene más husos horarios?",
+      "answers": [
+        {
+          "text": "Francia",
+          "correct": true
+        },
+        {
+          "text": "Rusia",
+          "correct": false
+        },
+        {
+          "text": "Estados Unidos",
+          "correct": false
+        }
+      ],
+      "difficulty": "hard",
+      "fun_fact": "Francia tiene 12 husos horarios gracias a sus territorios de ultramar, más que cualquier otro país, incluso más que Rusia con 11.",
+      "category": "Geografía"
+    },
+    {
+      "id": "geo_es_002",
+      "question": "¿Qué ciudad recibe más precipitaciones: Londres o Sídney?",
+      "answers": [
+        {
+          "text": "Sídney",
+          "correct": true
+        },
+        {
+          "text": "Londres",
+          "correct": false
+        },
+        {
+          "text": "Ambas más o menos lo mismo",
+          "correct": false
+        }
+      ],
+      "difficulty": "medium",
+      "fun_fact": "Sídney recibe alrededor de 1.200 mm de lluvia al año, mientras que Londres solo unos 600 mm. La fama de Londres como ciudad lluviosa está muy exagerada.",
+      "category": "Geografía"
+    },
+    {
+      "id": "geo_es_003",
+      "question": "¿Qué país tiene más lagos del mundo?",
+      "answers": [
+        {
+          "text": "Canadá",
+          "correct": true
+        },
+        {
+          "text": "Finlandia",
+          "correct": false
+        },
+        {
+          "text": "Suecia",
+          "correct": false
+        }
+      ],
+      "difficulty": "medium",
+      "fun_fact": "Canadá alberga más del 60 % de todos los lagos del mundo, más que todos los demás países juntos.",
+      "category": "Geografía"
+    },
+    {
+      "id": "geo_es_004",
+      "question": "¿Cuál es la capital administrativa situada a mayor altitud sobre el nivel del mar?",
+      "answers": [
+        {
+          "text": "La Paz, Bolivia",
+          "correct": true
+        },
+        {
+          "text": "Quito, Ecuador",
+          "correct": false
+        },
+        {
+          "text": "Bogotá, Colombia",
+          "correct": false
+        }
+      ],
+      "difficulty": "medium",
+      "fun_fact": "La Paz, sede del gobierno de Bolivia, se encuentra a unos 3.640 metros sobre el nivel del mar. Allí el agua hierve a unos 87 °C, así que cocinar lleva bastante más tiempo.",
+      "category": "Geografía"
+    },
+    {
+      "id": "geo_es_005",
+      "question": "¿Qué país africano nunca fue colonia europea?",
+      "answers": [
+        {
+          "text": "Etiopía",
+          "correct": true
+        },
+        {
+          "text": "Ghana",
+          "correct": false
+        },
+        {
+          "text": "Marruecos",
+          "correct": false
+        }
+      ],
+      "difficulty": "easy",
+      "fun_fact": "Etiopía derrotó al ejército italiano en la batalla de Adua en 1896 y fue uno de los pocos países africanos que se mantuvo plenamente independiente durante la era colonial.",
+      "category": "Geografía"
+    },
+    {
+      "id": "geo_es_006",
+      "question": "¿Qué país superó recientemente a China como el más poblado del mundo?",
+      "answers": [
+        {
+          "text": "India",
+          "correct": true
+        },
+        {
+          "text": "Indonesia",
+          "correct": false
+        },
+        {
+          "text": "Estados Unidos",
+          "correct": false
+        }
+      ],
+      "difficulty": "medium",
+      "fun_fact": "La India superó a China en 2023 con más de 1.400 millones de personas. El estado indio de Uttar Pradesh por sí solo tiene más habitantes que Brasil.",
+      "category": "Geografía"
+    },
+    {
+      "id": "geo_es_007",
+      "question": "¿Qué río es más largo: el Nilo o el Amazonas?",
+      "answers": [
+        {
+          "text": "Es objeto de debate: ambos son más o menos iguales",
+          "correct": true
+        },
+        {
+          "text": "El Nilo, claramente",
+          "correct": false
+        },
+        {
+          "text": "El Amazonas, claramente",
+          "correct": false
+        }
+      ],
+      "difficulty": "hard",
+      "fun_fact": "Según el método de medición y la definición de la fuente, ambos han sido declarados el río más largo del mundo. Las mediciones más recientes favorecen al Amazonas; tradicionalmente el título lo tenía el Nilo.",
+      "category": "Geografía"
+    },
+    {
+      "id": "geo_es_008",
+      "question": "¿Cuál es la capital de Myanmar?",
+      "answers": [
+        {
+          "text": "Naipyidó",
+          "correct": true
+        },
+        {
+          "text": "Rangún",
+          "correct": false
+        },
+        {
+          "text": "Mandalay",
+          "correct": false
+        }
+      ],
+      "difficulty": "hard",
+      "fun_fact": "Naipyidó se convirtió en capital en 2005 y es una ciudad planificada casi desierta, con autopistas de 20 carriles prácticamente sin tráfico.",
+      "category": "Geografía"
+    },
+    {
+      "id": "geo_es_009",
+      "question": "¿Qué dos países comparten el récord de fronteras con más países (14 cada uno)?",
+      "answers": [
+        {
+          "text": "China y Rusia",
+          "correct": true
+        },
+        {
+          "text": "China e India",
+          "correct": false
+        },
+        {
+          "text": "Rusia y Kazajistán",
+          "correct": false
+        }
+      ],
+      "difficulty": "medium",
+      "fun_fact": "China y Rusia limitan cada uno con 14 países, compartiendo el récord mundial. Brasil encabeza Sudamérica con 10 vecinos.",
+      "category": "Geografía"
+    },
+    {
+      "id": "geo_es_010",
+      "question": "¿Cuál es el lago más profundo del mundo?",
+      "answers": [
+        {
+          "text": "El lago Baikal",
+          "correct": true
+        },
+        {
+          "text": "El lago Tanganica",
+          "correct": false
+        },
+        {
+          "text": "El mar Caspio",
+          "correct": false
+        }
+      ],
+      "difficulty": "easy",
+      "fun_fact": "El lago Baikal, en Siberia, tiene 1.642 metros de profundidad y contiene cerca del 20 % del agua dulce superficial no congelada del mundo.",
+      "category": "Geografía"
+    },
+    {
+      "id": "geo_es_011",
+      "question": "¿Qué país contiene el lugar más seco de la Tierra?",
+      "answers": [
+        {
+          "text": "Chile",
+          "correct": true
+        },
+        {
+          "text": "Egipto",
+          "correct": false
+        },
+        {
+          "text": "Namibia",
+          "correct": false
+        }
+      ],
+      "difficulty": "medium",
+      "fun_fact": "En algunas zonas del desierto de Atacama, en Chile, nunca se han registrado lluvias. Algunos parajes se parecen tanto a Marte que la NASA prueba allí sus róveres.",
+      "category": "Geografía"
+    },
+    {
+      "id": "geo_es_012",
+      "question": "¿Qué dos países del mundo están rodeados por completo por Italia?",
+      "answers": [
+        {
+          "text": "San Marino y Ciudad del Vaticano",
+          "correct": true
+        },
+        {
+          "text": "Mónaco y Andorra",
+          "correct": false
+        },
+        {
+          "text": "Liechtenstein y Luxemburgo",
+          "correct": false
+        }
+      ],
+      "difficulty": "hard",
+      "fun_fact": "Tanto San Marino como la Ciudad del Vaticano son enclaves completamente rodeados por Italia. Lesoto también es un país enclave, pero está dentro de Sudáfrica.",
+      "category": "Geografía"
+    },
+    {
+      "id": "geo_es_013",
+      "question": "¿Qué continente tiene más países?",
+      "answers": [
+        {
+          "text": "África",
+          "correct": true
+        },
+        {
+          "text": "Europa",
+          "correct": false
+        },
+        {
+          "text": "Asia",
+          "correct": false
+        }
+      ],
+      "difficulty": "easy",
+      "fun_fact": "África tiene 54 estados reconocidos, más que cualquier otro continente. Muchas de esas fronteras fueron trazadas por las potencias coloniales con una regla sobre el mapa.",
+      "category": "Geografía"
+    },
+    {
+      "id": "geo_es_014",
+      "question": "¿Cuál es la isla más grande del mundo que no es un continente en sí misma?",
+      "answers": [
+        {
+          "text": "Groenlandia",
+          "correct": true
+        },
+        {
+          "text": "Borneo",
+          "correct": false
+        },
+        {
+          "text": "Madagascar",
+          "correct": false
+        }
+      ],
+      "difficulty": "easy",
+      "fun_fact": "Groenlandia abarca 2,16 millones de km² pero solo tiene unos 56.000 habitantes. Pertenece políticamente a Dinamarca, pero geográficamente se encuentra en América del Norte.",
+      "category": "Geografía"
+    },
+    {
+      "id": "geo_es_015",
+      "question": "¿Cuál es el desierto más grande del mundo?",
+      "answers": [
+        {
+          "text": "La Antártida",
+          "correct": true
+        },
+        {
+          "text": "El Sáhara",
+          "correct": false
+        },
+        {
+          "text": "El Gobi",
+          "correct": false
+        }
+      ],
+      "difficulty": "medium",
+      "fun_fact": "La Antártida es técnicamente un desierto, ya que recibe menos de 250 mm de precipitación al año. Con 14 millones de km² es más grande que el Sáhara.",
+      "category": "Geografía"
+    },
+    {
+      "id": "geo_es_016",
+      "question": "¿Qué país europeo tiene la menor densidad de población?",
+      "answers": [
+        {
+          "text": "Islandia",
+          "correct": true
+        },
+        {
+          "text": "Noruega",
+          "correct": false
+        },
+        {
+          "text": "Finlandia",
+          "correct": false
+        }
+      ],
+      "difficulty": "medium",
+      "fun_fact": "Islandia tiene solo unos 3,5 habitantes por kilómetro cuadrado, una de las densidades más bajas de Europa.",
+      "category": "Geografía"
+    },
+    {
+      "id": "geo_es_017",
+      "question": "¿Qué país tiene la costa más larga del mundo?",
+      "answers": [
+        {
+          "text": "Canadá",
+          "correct": true
+        },
+        {
+          "text": "Indonesia",
+          "correct": false
+        },
+        {
+          "text": "Australia",
+          "correct": false
+        }
+      ],
+      "difficulty": "easy",
+      "fun_fact": "La costa de Canadá se extiende más de 202.000 km. Recorrerla a pie, 8 horas al día, llevaría más de 19 años.",
+      "category": "Geografía"
+    },
+    {
+      "id": "geo_es_018",
+      "question": "¿Qué montaña sigue creciendo en altura cada año?",
+      "answers": [
+        {
+          "text": "El monte Everest",
+          "correct": true
+        },
+        {
+          "text": "El Mont Blanc",
+          "correct": false
+        },
+        {
+          "text": "El Kilimanjaro",
+          "correct": false
+        }
+      ],
+      "difficulty": "easy",
+      "fun_fact": "El monte Everest crece unos 4 mm al año debido a la colisión tectónica entre las placas india y euroasiática.",
+      "category": "Geografía"
+    },
+    {
+      "id": "geo_es_019",
+      "question": "¿Qué país tiene forma de bota?",
+      "answers": [
+        {
+          "text": "Italia",
+          "correct": true
+        },
+        {
+          "text": "Portugal",
+          "correct": false
+        },
+        {
+          "text": "Croacia",
+          "correct": false
+        }
+      ],
+      "difficulty": "easy",
+      "fun_fact": "La forma de bota de Italia es tan característica que es uno de los países más reconocibles en cualquier mapamundi. Sicilia es la 'pelota' que la bota está pateando.",
+      "category": "Geografía"
+    },
+    {
+      "id": "geo_es_020",
+      "question": "¿Qué país produce más café del mundo?",
+      "answers": [
+        {
+          "text": "Brasil",
+          "correct": true
+        },
+        {
+          "text": "Colombia",
+          "correct": false
+        },
+        {
+          "text": "Vietnam",
+          "correct": false
+        }
+      ],
+      "difficulty": "easy",
+      "fun_fact": "Brasil produce alrededor de un tercio del café del mundo. En 2021, una helada inusual destruyó tantos cafetos en Brasil que los precios subieron a nivel mundial.",
+      "category": "Geografía"
+    },
+    {
+      "id": "geo_es_021",
+      "question": "¿Qué estado de Estados Unidos fue comprado a Rusia?",
+      "answers": [
+        {
+          "text": "Alaska",
+          "correct": true
+        },
+        {
+          "text": "Hawái",
+          "correct": false
+        },
+        {
+          "text": "Maine",
+          "correct": false
+        }
+      ],
+      "difficulty": "easy",
+      "fun_fact": "Estados Unidos compró Alaska a Rusia en 1867 por 7,2 millones de dólares, unos 2 centavos por hectárea. Los críticos de la época la llamaban 'la nevera de Seward'.",
+      "category": "Geografía"
+    },
+    {
+      "id": "geo_es_022",
+      "question": "¿Qué famoso observatorio marca el meridiano de Greenwich que divide los hemisferios este y oeste?",
+      "answers": [
+        {
+          "text": "El Real Observatorio de Greenwich",
+          "correct": true
+        },
+        {
+          "text": "El Observatorio de París",
+          "correct": false
+        },
+        {
+          "text": "El Observatorio del Monte Wilson",
+          "correct": false
+        }
+      ],
+      "difficulty": "medium",
+      "fun_fact": "El meridiano cero se fijó en Greenwich, Londres, en 1884. Sobre su línea de latón puedes literalmente poner un pie en el este y otro en el oeste.",
+      "category": "Geografía"
+    },
+    {
+      "id": "geo_es_023",
+      "question": "¿Qué país tiene más volcanes activos?",
+      "answers": [
+        {
+          "text": "Indonesia",
+          "correct": true
+        },
+        {
+          "text": "Japón",
+          "correct": false
+        },
+        {
+          "text": "Islandia",
+          "correct": false
+        }
+      ],
+      "difficulty": "medium",
+      "fun_fact": "Indonesia se asienta sobre el Cinturón de Fuego del Pacífico y tiene unos 130 volcanes activos. La erupción del Krakatoa en 1883 fue tan fuerte que se oyó a casi 5.000 km de distancia.",
+      "category": "Geografía"
+    },
+    {
+      "id": "geo_es_024",
+      "question": "¿Qué dos continentes separa el Bósforo?",
+      "answers": [
+        {
+          "text": "Europa y Asia",
+          "correct": true
+        },
+        {
+          "text": "Europa y África",
+          "correct": false
+        },
+        {
+          "text": "Asia y África",
+          "correct": false
+        }
+      ],
+      "difficulty": "easy",
+      "fun_fact": "Estambul es la única gran ciudad del mundo que abarca dos continentes. Millones de personas cruzan en ferri entre Europa y Asia cada día.",
+      "category": "Geografía"
+    },
+    {
+      "id": "geo_es_025",
+      "question": "¿Qué país cambió oficialmente de nombre en abril de 2018?",
+      "answers": [
+        {
+          "text": "Esuatini (antes Suazilandia)",
+          "correct": true
+        },
+        {
+          "text": "Macedonia del Norte (antes Macedonia)",
+          "correct": false
+        },
+        {
+          "text": "Chequia (antes República Checa)",
+          "correct": false
+        }
+      ],
+      "difficulty": "hard",
+      "fun_fact": "El rey Mswati III anunció el cambio en el 50.º aniversario de la independencia de Suazilandia. El nombre de Macedonia del Norte solo entró en vigor en febrero de 2019, y Chequia adoptó su nombre corto en 2016.",
+      "category": "Geografía"
+    },
+    {
+      "id": "geo_es_026",
+      "question": "¿Qué país tiene más de 17.000 islas?",
+      "answers": [
+        {
+          "text": "Indonesia",
+          "correct": true
+        },
+        {
+          "text": "Filipinas",
+          "correct": false
+        },
+        {
+          "text": "Grecia",
+          "correct": false
+        }
+      ],
+      "difficulty": "medium",
+      "fun_fact": "Indonesia está formada por más de 17.500 islas, de las cuales solo unas 6.000 están habitadas. Se extiende más de 5.000 km, tanto como de Lisboa a Moscú.",
+      "category": "Geografía"
+    },
+    {
+      "id": "geo_es_027",
+      "question": "¿Qué país europeo no tiene ninguna universidad?",
+      "answers": [
+        {
+          "text": "La Ciudad del Vaticano",
+          "correct": true
+        },
+        {
+          "text": "San Marino",
+          "correct": false
+        },
+        {
+          "text": "Liechtenstein",
+          "correct": false
+        }
+      ],
+      "difficulty": "hard",
+      "fun_fact": "La Ciudad del Vaticano cuenta con la Biblioteca Vaticana y la Pontificia Academia de las Ciencias, pero ninguna universidad en el sentido tradicional. Con unos 800 residentes, es el estado más pequeño del mundo.",
+      "category": "Geografía"
+    },
+    {
+      "id": "geo_es_028",
+      "question": "¿Qué país tiene la mayor longitud de norte a sur en su territorio continental?",
+      "answers": [
+        {
+          "text": "Chile",
+          "correct": true
+        },
+        {
+          "text": "Brasil",
+          "correct": false
+        },
+        {
+          "text": "Rusia",
+          "correct": false
+        }
+      ],
+      "difficulty": "hard",
+      "fun_fact": "Chile se extiende más de 4.300 km de norte a sur, pero su anchura media es de solo 177 km. Va desde el desierto de Atacama en el norte hasta fiordos casi antárticos en el sur.",
+      "category": "Geografía"
+    },
+    {
+      "id": "geo_es_029",
+      "question": "¿Qué ciudad europea está actualmente dividida y es capital de dos entidades políticas distintas?",
+      "answers": [
+        {
+          "text": "Nicosia",
+          "correct": true
+        },
+        {
+          "text": "Belfast",
+          "correct": false
+        },
+        {
+          "text": "Bratislava",
+          "correct": false
+        }
+      ],
+      "difficulty": "hard",
+      "fun_fact": "Nicosia, en Chipre, es la última capital dividida de Europa. La parte norte es la capital de la República Turca del Norte de Chipre; el sur es la capital de la República de Chipre.",
+      "category": "Geografía"
+    },
+    {
+      "id": "geo_es_030",
+      "question": "¿Qué país tiene más pirámides?",
+      "answers": [
+        {
+          "text": "Sudán",
+          "correct": true
+        },
+        {
+          "text": "Egipto",
+          "correct": false
+        },
+        {
+          "text": "México",
+          "correct": false
+        }
+      ],
+      "difficulty": "medium",
+      "fun_fact": "Sudán tiene más de 200 pirámides, casi el doble que Egipto. Las pirámides nubias de Meroe son más pequeñas pero mucho más numerosas, y mucho menos conocidas.",
+      "category": "Geografía"
+    },
+    {
+      "id": "geo_es_031",
+      "question": "¿Qué porcentaje de la superficie de la Tierra está cubierto por agua?",
+      "answers": [
+        {
+          "text": "Alrededor del 71 %",
+          "correct": true
+        },
+        {
+          "text": "Alrededor del 55 %",
+          "correct": false
+        },
+        {
+          "text": "Alrededor del 83 %",
+          "correct": false
+        }
+      ],
+      "difficulty": "easy",
+      "fun_fact": "Aunque el 71 % de la Tierra está cubierto de agua, más del 96 % es agua salada. Solo una mínima fracción está disponible como agua dulce potable.",
+      "category": "Geografía"
+    },
+    {
+      "id": "geo_es_032",
+      "question": "¿Cuál es el país insular más grande del mundo por superficie?",
+      "answers": [
+        {
+          "text": "Indonesia",
+          "correct": true
+        },
+        {
+          "text": "Madagascar",
+          "correct": false
+        },
+        {
+          "text": "Japón",
+          "correct": false
+        }
+      ],
+      "difficulty": "medium",
+      "fun_fact": "Indonesia abarca unos 1,9 millones de km² repartidos en más de 17.000 islas, lo que la hace más grande que cualquier país europeo salvo Rusia.",
+      "category": "Geografía"
+    },
+    {
+      "id": "geo_es_033",
+      "question": "¿Cuál es el punto más bajo de la superficie terrestre?",
+      "answers": [
+        {
+          "text": "El mar Muerto",
+          "correct": true
+        },
+        {
+          "text": "El Valle de la Muerte",
+          "correct": false
+        },
+        {
+          "text": "La depresión de Turpan",
+          "correct": false
+        }
+      ],
+      "difficulty": "easy",
+      "fun_fact": "La superficie del mar Muerto está a unos 430 metros bajo el nivel del mar y desciende un poco más cada año. Su contenido de sal es tan alto que no te puedes hundir en él.",
+      "category": "Geografía"
+    },
+    {
+      "id": "geo_es_034",
+      "question": "¿Qué país utiliza un único huso horario a pesar de abarcar cinco geográficos?",
+      "answers": [
+        {
+          "text": "China",
+          "correct": true
+        },
+        {
+          "text": "India",
+          "correct": false
+        },
+        {
+          "text": "Rusia",
+          "correct": false
+        }
+      ],
+      "difficulty": "hard",
+      "fun_fact": "Toda China funciona con UTC+8 (hora de Pekín). En la frontera con Afganistán, los relojes saltan 3,5 horas; Rusia, en cambio, usa 11 husos horarios distintos.",
+      "category": "Geografía"
+    },
+    {
+      "id": "geo_es_035",
+      "question": "¿Qué ciudad tiene la mayor población del mundo (área metropolitana)?",
+      "answers": [
+        {
+          "text": "Tokio",
+          "correct": true
+        },
+        {
+          "text": "Shanghái",
+          "correct": false
+        },
+        {
+          "text": "Delhi",
+          "correct": false
+        }
+      ],
+      "difficulty": "medium",
+      "fun_fact": "El Gran Tokio tiene más de 37 millones de habitantes, más que toda Canadá. Su red ferroviaria transporta unos 40 millones de pasajeros al día.",
+      "category": "Geografía"
+    },
+    {
+      "id": "geo_es_036",
+      "question": "¿Qué país se encuentra en los cuatro hemisferios a la vez?",
+      "answers": [
+        {
+          "text": "Kiribati",
+          "correct": true
+        },
+        {
+          "text": "Ecuador",
+          "correct": false
+        },
+        {
+          "text": "Indonesia",
+          "correct": false
+        }
+      ],
+      "difficulty": "hard",
+      "fun_fact": "El país insular de Kiribati cruza tanto el ecuador como la línea internacional de cambio de fecha, lo que lo sitúa en los hemisferios norte, sur, este y oeste.",
+      "category": "Geografía"
+    },
+    {
+      "id": "geo_es_037",
+      "question": "¿Cuál es la cordillera más larga del mundo?",
+      "answers": [
+        {
+          "text": "Los Andes",
+          "correct": true
+        },
+        {
+          "text": "El Himalaya",
+          "correct": false
+        },
+        {
+          "text": "Las Montañas Rocosas",
+          "correct": false
+        }
+      ],
+      "difficulty": "easy",
+      "fun_fact": "Los Andes se extienden más de 7.000 km a lo largo de la costa oeste de Sudamérica, atravesando siete países. La cordillera más larga en total es la dorsal mesoceánica, bajo el mar.",
+      "category": "Geografía"
+    },
+    {
+      "id": "geo_es_038",
+      "question": "¿Qué país alberga la mayor población anglófona de África?",
+      "answers": [
+        {
+          "text": "Nigeria",
+          "correct": true
+        },
+        {
+          "text": "Sudáfrica",
+          "correct": false
+        },
+        {
+          "text": "Kenia",
+          "correct": false
+        }
+      ],
+      "difficulty": "medium",
+      "fun_fact": "Nigeria tiene más de 220 millones de habitantes y el inglés es lengua oficial, usada en el gobierno, la educación y los medios. Se estima que allí hay entre 60 y 100 millones de angloparlantes.",
+      "category": "Geografía"
+    },
+    {
+      "id": "geo_es_039",
+      "question": "¿Cuál es el más pequeño de los cinco océanos del mundo por superficie?",
+      "answers": [
+        {
+          "text": "El océano Ártico",
+          "correct": true
+        },
+        {
+          "text": "El océano Índico",
+          "correct": false
+        },
+        {
+          "text": "El océano Atlántico",
+          "correct": false
+        }
+      ],
+      "difficulty": "easy",
+      "fun_fact": "El océano Ártico abarca unos 14 millones de km², aproximadamente una décima parte del tamaño del Pacífico. En invierno está casi todo congelado.",
+      "category": "Geografía"
+    },
+    {
+      "id": "geo_es_040",
+      "question": "¿Qué país europeo tiene más saunas por habitante?",
+      "answers": [
+        {
+          "text": "Finlandia",
+          "correct": true
+        },
+        {
+          "text": "Suecia",
+          "correct": false
+        },
+        {
+          "text": "Estonia",
+          "correct": false
+        }
+      ],
+      "difficulty": "medium",
+      "fun_fact": "Finlandia tiene unos 3,3 millones de saunas para 5,5 millones de personas, casi una sauna por cada dos finlandeses. Hay saunas incluso en el parlamento y en un Burger King.",
+      "category": "Geografía"
+    },
+    {
+      "id": "geo_es_041",
+      "question": "¿Qué estado federado alemán limita con más estados alemanes?",
+      "answers": [
+        {
+          "text": "Baja Sajonia",
+          "correct": true
+        },
+        {
+          "text": "Hesse",
+          "correct": false
+        },
+        {
+          "text": "Baviera",
+          "correct": false
+        }
+      ],
+      "difficulty": "medium",
+      "fun_fact": "Baja Sajonia limita con otros nueve estados alemanes: Schleswig-Holstein, Hamburgo, Bremen, Mecklemburgo-Pomerania Occidental, Brandeburgo, Sajonia-Anhalt, Turingia, Hesse y Renania del Norte-Westfalia.",
+      "category": "Geografía"
+    },
+    {
+      "id": "geo_es_042",
+      "question": "¿Qué país regaló la Estatua de la Libertad a Estados Unidos?",
+      "answers": [
+        {
+          "text": "Francia",
+          "correct": true
+        },
+        {
+          "text": "Reino Unido",
+          "correct": false
+        },
+        {
+          "text": "Países Bajos",
+          "correct": false
+        }
+      ],
+      "difficulty": "easy",
+      "fun_fact": "La Estatua de la Libertad llegó desde Francia en 1885 en 350 piezas por barco. La cabeza se exhibió durante años en exposiciones universales en París.",
+      "category": "Geografía"
+    },
+    {
+      "id": "geo_es_043",
+      "question": "¿Qué país tiene una bandera que no es rectangular?",
+      "answers": [
+        {
+          "text": "Nepal",
+          "correct": true
+        },
+        {
+          "text": "Bután",
+          "correct": false
+        },
+        {
+          "text": "Sri Lanka",
+          "correct": false
+        }
+      ],
+      "difficulty": "medium",
+      "fun_fact": "La bandera de Nepal está formada por dos triángulos superpuestos y es la única bandera nacional no rectangular del mundo. La bandera de Suiza es cuadrada, pero aun así tiene cuatro lados.",
+      "category": "Geografía"
+    },
+    {
+      "id": "geo_es_044",
+      "question": "¿Qué país no tiene capital oficial?",
+      "answers": [
+        {
+          "text": "Nauru",
+          "correct": true
+        },
+        {
+          "text": "Tuvalu",
+          "correct": false
+        },
+        {
+          "text": "Mónaco",
+          "correct": false
+        }
+      ],
+      "difficulty": "hard",
+      "fun_fact": "El país insular del Pacífico Nauru no tiene capital oficial. Las operaciones del gobierno se sitúan en el distrito de Yaren. Con 21 km², Nauru es el tercer país más pequeño del mundo.",
+      "category": "Geografía"
+    },
+    {
+      "id": "geo_es_045",
+      "question": "¿Qué capital europea se construyó sobre 14 islas?",
+      "answers": [
+        {
+          "text": "Estocolmo",
+          "correct": true
+        },
+        {
+          "text": "Helsinki",
+          "correct": false
+        },
+        {
+          "text": "Copenhague",
+          "correct": false
+        }
+      ],
+      "difficulty": "medium",
+      "fun_fact": "Estocolmo se extiende sobre 14 islas conectadas por 57 puentes. El casco antiguo, Gamla Stan, se asienta en la isla de Stadsholmen y se fundó en el siglo XIII.",
+      "category": "Geografía"
+    },
+    {
+      "id": "geo_es_046",
+      "question": "¿Qué país cambió el nombre de su capital en 2019?",
+      "answers": [
+        {
+          "text": "Kazajistán (Astaná → Nursultán → de nuevo Astaná)",
+          "correct": true
+        },
+        {
+          "text": "Turquía (Estambul → Ankara)",
+          "correct": false
+        },
+        {
+          "text": "Myanmar (Rangún → Naipyidó)",
+          "correct": false
+        }
+      ],
+      "difficulty": "medium",
+      "fun_fact": "Kazajistán rebautizó su capital como Nursultán en 2019 en honor al presidente saliente Nursultán Nazarbáyev, y luego revirtió la decisión a Astaná en 2022.",
+      "category": "Geografía"
+    },
+    {
+      "id": "geo_es_047",
+      "question": "¿Qué río atraviesa más capitales europeas?",
+      "answers": [
+        {
+          "text": "El Danubio",
+          "correct": true
+        },
+        {
+          "text": "El Rin",
+          "correct": false
+        },
+        {
+          "text": "El Elba",
+          "correct": false
+        }
+      ],
+      "difficulty": "medium",
+      "fun_fact": "El Danubio atraviesa cuatro capitales europeas: Viena, Bratislava, Budapest y Belgrado. Ningún otro río del mundo enlaza tantas capitales.",
+      "category": "Geografía"
+    },
+    {
+      "id": "geo_es_048",
+      "question": "Si viajas directamente hacia el sur desde Detroit (Michigan), ¿a qué país entras primero?",
+      "answers": [
+        {
+          "text": "Canadá",
+          "correct": true
+        },
+        {
+          "text": "México",
+          "correct": false
+        },
+        {
+          "text": "Cuba",
+          "correct": false
+        }
+      ],
+      "difficulty": "medium",
+      "fun_fact": "Windsor (Ontario) está justo al sur de Detroit porque el río Detroit se curva de modo que la orilla canadiense queda por debajo de la estadounidense, el único punto de la frontera entre EE. UU. y Canadá donde ocurre esto.",
+      "category": "Geografía"
+    },
+    {
+      "id": "geo_es_049",
+      "question": "¿El nombre de qué país africano significa 'Montañas del León'?",
+      "answers": [
+        {
+          "text": "Sierra Leona",
+          "correct": true
+        },
+        {
+          "text": "Liberia",
+          "correct": false
+        },
+        {
+          "text": "Camerún",
+          "correct": false
+        }
+      ],
+      "difficulty": "medium",
+      "fun_fact": "El explorador portugués Pedro de Sintra bautizó esta costa como 'Serra Leoa' en 1462, supuestamente porque la silueta de las montañas o el rumor de las tormentas le recordaban a leones.",
+      "category": "Geografía"
+    },
+    {
+      "id": "geo_es_050",
+      "question": "En el Trifinio de Bélgica, los Países Bajos y Alemania, ¿qué puede hacer un visitante en un solo paso?",
+      "answers": [
+        {
+          "text": "Estar en tres países a la vez",
+          "correct": true
+        },
+        {
+          "text": "Cruzar tres husos horarios a la vez",
+          "correct": false
+        },
+        {
+          "text": "Nadar en tres mares distintos",
+          "correct": false
+        }
+      ],
+      "difficulty": "easy",
+      "fun_fact": "La cima del Vaalserberg, cerca de Aquisgrán, marca el punto donde se unen las tres fronteras, y un pequeño hito de hormigón permite poner los pies en las tres naciones a la vez.",
+      "category": "Geografía"
+    },
+    {
+      "id": "geo_es_051",
+      "question": "¿Qué país africano está casi por completo rodeado por Senegal?",
+      "answers": [
+        {
+          "text": "Gambia",
+          "correct": true
+        },
+        {
+          "text": "Guinea-Bisáu",
+          "correct": false
+        },
+        {
+          "text": "Mauritania",
+          "correct": false
+        }
+      ],
+      "difficulty": "easy",
+      "fun_fact": "Gambia es una estrecha franja de tierra que sigue el río Gambia, limitada por Senegal por todos lados salvo una corta costa atlántica. Su forma viene de hasta dónde podían bombardear río arriba las cañoneras británicas en las negociaciones coloniales.",
+      "category": "Geografía"
+    },
+    {
+      "id": "geo_es_052",
+      "question": "Rusia y ¿qué otro país comparten una frontera marítima de menos de 4 km de ancho?",
+      "answers": [
+        {
+          "text": "Estados Unidos",
+          "correct": true
+        },
+        {
+          "text": "Japón",
+          "correct": false
+        },
+        {
+          "text": "Canadá",
+          "correct": false
+        }
+      ],
+      "difficulty": "medium",
+      "fun_fact": "La isla Diomede Mayor (Rusia) y la Diomede Menor (EE. UU.) están en el estrecho de Bering, a unos 3,8 km de distancia, con la línea de cambio de fecha entre ellas; los lugareños las llaman isla del Mañana e isla del Ayer.",
+      "category": "Geografía"
+    },
+    {
+      "id": "geo_es_053",
+      "question": "La localidad de Büsingen am Hochrhein es territorio alemán completamente rodeado por ¿qué país?",
+      "answers": [
+        {
+          "text": "Suiza",
+          "correct": true
+        },
+        {
+          "text": "Austria",
+          "correct": false
+        },
+        {
+          "text": "Liechtenstein",
+          "correct": false
+        }
+      ],
+      "difficulty": "hard",
+      "fun_fact": "Büsingen usa el franco suizo, tiene un código postal suizo además del alemán y su equipo de fútbol juega en la liga suiza, pero legalmente forma parte de Baden-Wurtemberg.",
+      "category": "Geografía"
+    },
+    {
+      "id": "geo_es_054",
+      "question": "¿En qué continente nace el río Nilo?",
+      "answers": [
+        {
+          "text": "África",
+          "correct": true
+        },
+        {
+          "text": "Asia",
+          "correct": false
+        },
+        {
+          "text": "Europa",
+          "correct": false
+        }
+      ],
+      "difficulty": "easy",
+      "fun_fact": "El Nilo nace de afluentes que alimentan el lago Victoria, en África oriental, y fluye hacia el norte unos 6.650 km hasta el Mediterráneo, uno de los pocos grandes ríos del mundo que fluye hacia el norte.",
+      "category": "Geografía"
+    },
+    {
+      "id": "geo_es_055",
+      "question": "¿Qué localidad fronteriza belga-neerlandesa tiene casas donde la puerta y la cocina pueden estar en países distintos?",
+      "answers": [
+        {
+          "text": "Baarle-Hertog / Baarle-Nassau",
+          "correct": true
+        },
+        {
+          "text": "Maastricht",
+          "correct": false
+        },
+        {
+          "text": "Eupen",
+          "correct": false
+        }
+      ],
+      "difficulty": "hard",
+      "fun_fact": "Baarle contiene 22 enclaves belgas dentro de los Países Bajos, algunos con contraenclaves neerlandeses dentro. Cruces blancas con las letras B y NL marcan la frontera por las calles e incluso por los pasillos.",
+      "category": "Geografía"
+    },
+    {
+      "id": "geo_es_056",
+      "question": "¿Cuál es el único mar de la Tierra que no tiene costa?",
+      "answers": [
+        {
+          "text": "El mar de los Sargazos",
+          "correct": true
+        },
+        {
+          "text": "El mar Caspio",
+          "correct": false
+        },
+        {
+          "text": "El mar del Coral",
+          "correct": false
+        }
+      ],
+      "difficulty": "medium",
+      "fun_fact": "El mar de los Sargazos, en el Atlántico Norte, está definido por corrientes oceánicas (la del Golfo, la del Atlántico Norte, la de Canarias y la ecuatorial) en vez de por tierra, y es famoso por sus masas flotantes de algas sargazo.",
+      "category": "Geografía"
+    },
+    {
+      "id": "geo_es_057",
+      "question": "¿Aproximadamente una cuarta parte del territorio de qué país está por debajo del nivel del mar?",
+      "answers": [
+        {
+          "text": "Países Bajos",
+          "correct": true
+        },
+        {
+          "text": "Bangladés",
+          "correct": false
+        },
+        {
+          "text": "Dinamarca",
+          "correct": false
+        }
+      ],
+      "difficulty": "easy",
+      "fun_fact": "Alrededor del 26 % de los Países Bajos está por debajo del nivel del mar, y más del 60 % de la población vive en zonas inundables. Siglos de pólderes, diques y bombeo (antes con molinos, ahora eléctrico) los mantienen secos.",
+      "category": "Geografía"
+    },
+    {
+      "id": "geo_es_058",
+      "question": "¿Qué es técnicamente el mar Caspio?",
+      "answers": [
+        {
+          "text": "El lago más grande de la Tierra",
+          "correct": true
+        },
+        {
+          "text": "Un brazo del mar Negro",
+          "correct": false
+        },
+        {
+          "text": "Una parte del océano Ártico",
+          "correct": false
+        }
+      ],
+      "difficulty": "medium",
+      "fun_fact": "El Caspio está totalmente rodeado de tierra y contiene unos 78.000 km³ de agua, más que todos los Grandes Lagos de Norteamérica juntos, aunque los cinco estados ribereños negociaron su estatus legal de 'mar' por los derechos petroleros.",
+      "category": "Geografía"
+    },
+    {
+      "id": "geo_es_059",
+      "question": "¿A qué país pertenece la isla de Pascua?",
+      "answers": [
+        {
+          "text": "Chile",
+          "correct": true
+        },
+        {
+          "text": "Perú",
+          "correct": false
+        },
+        {
+          "text": "Nueva Zelanda",
+          "correct": false
+        }
+      ],
+      "difficulty": "easy",
+      "fun_fact": "La isla de Pascua está a más de 3.500 km al oeste del Chile continental, lo que la convierte en una de las islas habitadas más remotas del mundo. Su vecino habitado más cercano, Pitcairn, está aún a más de 2.000 km.",
+      "category": "Geografía"
+    },
+    {
+      "id": "geo_es_060",
+      "question": "¿La cima de qué montaña es el punto de la superficie terrestre más alejado del centro de la Tierra?",
+      "answers": [
+        {
+          "text": "El Chimborazo, Ecuador",
+          "correct": true
+        },
+        {
+          "text": "El monte Everest, Nepal",
+          "correct": false
+        },
+        {
+          "text": "El Denali, Alaska",
+          "correct": false
+        }
+      ],
+      "difficulty": "hard",
+      "fun_fact": "La Tierra se ensancha en el ecuador, por lo que la cumbre del Chimborazo, de 6.263 m, está unos 2 km más lejos del centro del planeta que la del Everest, de 8.849 m, siendo así el punto de la Tierra más cercano al espacio.",
+      "category": "Geografía"
+    },
+    {
+      "id": "geo_es_061",
+      "question": "¿Qué lago africano forma la frontera de cuatro países?",
+      "answers": [
+        {
+          "text": "El lago Tanganica",
+          "correct": true
+        },
+        {
+          "text": "El lago Victoria",
+          "correct": false
+        },
+        {
+          "text": "El lago Malaui",
+          "correct": false
+        }
+      ],
+      "difficulty": "medium",
+      "fun_fact": "El lago Tanganica limita con Burundi, Tanzania, Zambia y la República Democrática del Congo. Además es el lago de agua dulce más largo del mundo, con unos 670 km de punta a punta.",
+      "category": "Geografía"
+    },
+    {
+      "id": "geo_es_062",
+      "question": "Lesoto es peculiar porque está completamente rodeado por otro país. ¿Cuál?",
+      "answers": [
+        {
+          "text": "Sudáfrica",
+          "correct": true
+        },
+        {
+          "text": "Botsuana",
+          "correct": false
+        },
+        {
+          "text": "Namibia",
+          "correct": false
+        }
+      ],
+      "difficulty": "easy",
+      "fun_fact": "Lesoto es el único estado independiente del mundo donde cada punto de su territorio se sitúa por encima de los 1.000 m, lo que le vale el apodo de 'Reino en el Cielo'. Incluso nieva de vez en cuando en invierno.",
+      "category": "Geografía"
+    },
+    {
+      "id": "geo_es_063",
+      "question": "¿Qué país africano tiene además territorio en Asia a través de la península del Sinaí?",
+      "answers": [
+        {
+          "text": "Egipto",
+          "correct": true
+        },
+        {
+          "text": "Yemen",
+          "correct": false
+        },
+        {
+          "text": "Sudán",
+          "correct": false
+        }
+      ],
+      "difficulty": "hard",
+      "fun_fact": "La península del Sinaí de Egipto se sitúa en el lado asiático del canal de Suez, mientras que El Cairo y la mayor parte del país están en África, lo que hace de Egipto el ejemplo clásico de país transcontinental afroasiático.",
+      "category": "Geografía"
+    },
+    {
+      "id": "geo_es_064",
+      "question": "¿Qué país asiático circula por el lado izquierdo de la carretera?",
+      "answers": [
+        {
+          "text": "Japón",
+          "correct": true
+        },
+        {
+          "text": "Corea del Sur",
+          "correct": false
+        },
+        {
+          "text": "Vietnam",
+          "correct": false
+        }
+      ],
+      "difficulty": "easy",
+      "fun_fact": "Japón adoptó la circulación por la izquierda en el siglo XIX, en parte por la influencia británica en sus primeros ferrocarriles. Cerca de un tercio del mundo conduce por la izquierda, en su mayoría antiguos territorios británicos.",
+      "category": "Geografía"
+    },
+    {
+      "id": "geo_es_065",
+      "question": "¿Qué mar ha ido reduciéndose drásticamente desde la década de 1960 por desvíos para riego?",
+      "answers": [
+        {
+          "text": "El mar de Aral",
+          "correct": true
+        },
+        {
+          "text": "El mar Negro",
+          "correct": false
+        },
+        {
+          "text": "El mar Blanco",
+          "correct": false
+        }
+      ],
+      "difficulty": "medium",
+      "fun_fact": "Antaño el cuarto lago más grande del mundo, el mar de Aral perdió más del 90 % de su volumen después de que los ingenieros soviéticos desviaran sus ríos hacia campos de algodón, dejando barcos pesqueros varados en un desierto de sal tóxica.",
+      "category": "Geografía"
+    },
+    {
+      "id": "geo_es_066",
+      "question": "Islandia está siendo separada por dos placas tectónicas. ¿Cuáles?",
+      "answers": [
+        {
+          "text": "La norteamericana y la euroasiática",
+          "correct": true
+        },
+        {
+          "text": "La africana y la euroasiática",
+          "correct": false
+        },
+        {
+          "text": "La del Pacífico y la norteamericana",
+          "correct": false
+        }
+      ],
+      "difficulty": "medium",
+      "fun_fact": "La dorsal mesoatlántica atraviesa Islandia de lado a lado, separando las placas unos 2 cm al año. En el parque nacional de Þingvellir los visitantes pueden caminar e incluso bucear entre los dos continentes.",
+      "category": "Geografía"
+    },
+    {
+      "id": "geo_es_067",
+      "question": "¿Cuál es el único país del mundo que lleva el nombre de una mujer?",
+      "answers": [
+        {
+          "text": "Santa Lucía",
+          "correct": true
+        },
+        {
+          "text": "San Cristóbal y Nieves",
+          "correct": false
+        },
+        {
+          "text": "Dominica",
+          "correct": false
+        }
+      ],
+      "difficulty": "hard",
+      "fun_fact": "La isla caribeña de Santa Lucía debe su nombre a Santa Lucía de Siracusa. El país tiene además la peculiaridad de haber cambiado de manos entre Francia y Gran Bretaña 14 veces.",
+      "category": "Geografía"
+    },
+    {
+      "id": "geo_es_068",
+      "question": "¿En qué dirección fluye hoy el río Amazonas?",
+      "answers": [
+        {
+          "text": "Hacia el este",
+          "correct": true
+        },
+        {
+          "text": "Hacia el oeste",
+          "correct": false
+        },
+        {
+          "text": "Hacia el sur",
+          "correct": false
+        }
+      ],
+      "difficulty": "easy",
+      "fun_fact": "El Amazonas fluye ahora hacia el este, hasta el Atlántico, pero los geólogos creen que, antes de que los Andes se elevaran hace unos 10 millones de años, corría en sentido contrario, desaguando hacia el oeste, en el Pacífico.",
+      "category": "Geografía"
+    },
+    {
+      "id": "geo_es_069",
+      "question": "¿Qué país europeo contiene la cueva más profunda de la Tierra?",
+      "answers": [
+        {
+          "text": "Georgia",
+          "correct": true
+        },
+        {
+          "text": "Eslovenia",
+          "correct": false
+        },
+        {
+          "text": "Austria",
+          "correct": false
+        }
+      ],
+      "difficulty": "hard",
+      "fun_fact": "La cueva Veryóvkina, en la región georgiana de Abjasia, se ha explorado hasta más de 2.200 m bajo la superficie, lo bastante para tragarse siete torres Eiffel apiladas.",
+      "category": "Geografía"
+    },
+    {
+      "id": "geo_es_070",
+      "question": "¿Qué isla está repartida entre tres países?",
+      "answers": [
+        {
+          "text": "Borneo",
+          "correct": true
+        },
+        {
+          "text": "Nueva Guinea",
+          "correct": false
+        },
+        {
+          "text": "La Española",
+          "correct": false
+        }
+      ],
+      "difficulty": "medium",
+      "fun_fact": "Borneo está compartida por Indonesia (Kalimantan), Malasia (Sabah y Sarawak) y el pequeño sultanato de Brunéi. Nueva Guinea, en cambio, está dividida solo entre dos países.",
+      "category": "Geografía"
+    },
+    {
+      "id": "geo_es_071",
+      "question": "¿Qué tiene de inusual el jefe de Estado de Andorra?",
+      "answers": [
+        {
+          "text": "Tiene dos jefes de Estado, uno de los cuales es el presidente de Francia",
+          "correct": true
+        },
+        {
+          "text": "Su monarca es elegido de por vida",
+          "correct": false
+        },
+        {
+          "text": "Su presidente debe hablar catalán y euskera",
+          "correct": false
+        }
+      ],
+      "difficulty": "hard",
+      "fun_fact": "Andorra es un coprincipado que data de 1278: el presidente de Francia y el obispo de Urgel, en España, ejercen conjuntamente de jefes de Estado, el único país donde un dirigente electo extranjero ocupa el máximo cargo por derecho propio.",
+      "category": "Geografía"
+    },
+    {
+      "id": "geo_es_072",
+      "question": "¿Qué masa de agua se encuentra entre Arabia Saudí y África?",
+      "answers": [
+        {
+          "text": "El mar Rojo",
+          "correct": true
+        },
+        {
+          "text": "El golfo Pérsico",
+          "correct": false
+        },
+        {
+          "text": "El mar Arábigo",
+          "correct": false
+        }
+      ],
+      "difficulty": "easy",
+      "fun_fact": "El mar Rojo se va ensanchando poco a poco a medida que las placas arábiga y africana se separan; los geólogos esperan que, con el tiempo, llegue a convertirse en un océano completo dentro de millones de años.",
+      "category": "Geografía"
+    },
+    {
+      "id": "geo_es_073",
+      "question": "¿Qué país contiene la 'Puerta del Infierno', un cráter de gas natural que arde sin parar desde 1971?",
+      "answers": [
+        {
+          "text": "Turkmenistán",
+          "correct": true
+        },
+        {
+          "text": "Azerbaiyán",
+          "correct": false
+        },
+        {
+          "text": "Irán",
+          "correct": false
+        }
+      ],
+      "difficulty": "medium",
+      "fun_fact": "Geólogos soviéticos prendieron fuego al cráter de gas de Darvaza para quemar el metano, esperando que se apagara en días. Más de 50 años después sigue brillando; el presidente de Turkmenistán ha ordenado en varias ocasiones apagarlo.",
+      "category": "Geografía"
+    },
+    {
+      "id": "geo_es_074",
+      "question": "¿Cuál es el país más grande del mundo situado por completo al sur del ecuador?",
+      "answers": [
+        {
+          "text": "Australia",
+          "correct": true
+        },
+        {
+          "text": "Argentina",
+          "correct": false
+        },
+        {
+          "text": "Sudáfrica",
+          "correct": false
+        }
+      ],
+      "difficulty": "medium",
+      "fun_fact": "Brasil es mayor en total, pero queda a caballo del ecuador. Australia abarca unos 7,7 millones de km² íntegramente en el hemisferio sur, y su extensión de este a oeste es mayor que la distancia de Londres a Moscú.",
+      "category": "Geografía"
+    },
+    {
+      "id": "geo_es_075",
+      "question": "Cabinda es un enclave rico en petróleo que pertenece a ¿qué país?",
+      "answers": [
+        {
+          "text": "Angola",
+          "correct": true
+        },
+        {
+          "text": "República del Congo",
+          "correct": false
+        },
+        {
+          "text": "Gabón",
+          "correct": false
+        }
+      ],
+      "difficulty": "hard",
+      "fun_fact": "Cabinda está separada del resto de Angola por una franja de la República Democrática del Congo que llega al Atlántico. El enclave produce la mayor parte del petróleo marítimo de Angola.",
+      "category": "Geografía"
+    },
+    {
+      "id": "geo_es_076",
+      "question": "¿Qué estrecho separa España de África en su punto más estrecho?",
+      "answers": [
+        {
+          "text": "El estrecho de Gibraltar",
+          "correct": true
+        },
+        {
+          "text": "El estrecho de Ormuz",
+          "correct": false
+        },
+        {
+          "text": "El estrecho de Malaca",
+          "correct": false
+        }
+      ],
+      "difficulty": "easy",
+      "fun_fact": "En su punto más estrecho, el estrecho de Gibraltar tiene solo unos 14 km de ancho. En un día despejado se ve fácilmente Marruecos desde el sur de España, y los ferris lo cruzan en aproximadamente una hora.",
+      "category": "Geografía"
+    },
+    {
+      "id": "geo_es_077",
+      "question": "¿Qué país tiene una parte de su territorio a la que solo se puede llegar por tierra cruzando otro país?",
+      "answers": [
+        {
+          "text": "Estados Unidos (Alaska)",
+          "correct": true
+        },
+        {
+          "text": "Alemania",
+          "correct": false
+        },
+        {
+          "text": "Francia",
+          "correct": false
+        }
+      ],
+      "difficulty": "hard",
+      "fun_fact": "Para conducir desde el territorio continental de Estados Unidos hasta Alaska hay que cruzar Canadá. Point Roberts, en el estado de Washington, es otro famoso ejemplo estadounidense: una península al sur del paralelo 49 accesible por carretera solo a través de Canadá.",
+      "category": "Geografía"
+    },
+    {
+      "id": "geo_es_078",
+      "question": "¿El casco antiguo de qué ciudad europea se asienta sobre una isla en un río rodeada de canales?",
+      "answers": [
+        {
+          "text": "Estrasburgo, Francia",
+          "correct": true
+        },
+        {
+          "text": "Lyon, Francia",
+          "correct": false
+        },
+        {
+          "text": "Amberes, Bélgica",
+          "correct": false
+        }
+      ],
+      "difficulty": "medium",
+      "fun_fact": "La Grande Île de Estrasburgo es una isla formada por dos brazos del río Ill y es Patrimonio de la Humanidad de la Unesco. El barrio de la Petite France, en su punta oeste, está lleno de casas con entramado de madera asomadas a los canales.",
+      "category": "Geografía"
+    },
+    {
+      "id": "geo_es_079",
+      "question": "¿Qué tiene de peculiar las fronteras del estado estadounidense de Michigan?",
+      "answers": [
+        {
+          "text": "Está dividido en dos penínsulas separadas",
+          "correct": true
+        },
+        {
+          "text": "Tiene más de diez 'mangos' territoriales",
+          "correct": false
+        },
+        {
+          "text": "Su frontera cruza un glaciar",
+          "correct": false
+        }
+      ],
+      "difficulty": "easy",
+      "fun_fact": "Las penínsulas Superior e Inferior de Michigan solo están conectadas por el puente de Mackinac, sobre el estrecho de Mackinac. Hasta que el puente se inauguró en 1957, las dos mitades estaban unidas únicamente por ferri.",
+      "category": "Geografía"
+    },
+    {
+      "id": "geo_es_080",
+      "question": "¿Qué río forma buena parte de la frontera natural entre Estados Unidos y México?",
+      "answers": [
+        {
+          "text": "El río Bravo (Río Grande)",
+          "correct": true
+        },
+        {
+          "text": "El Colorado",
+          "correct": false
+        },
+        {
+          "text": "El Misisipi",
+          "correct": false
+        }
+      ],
+      "difficulty": "easy",
+      "fun_fact": "El río Bravo sigue la frontera unos 2.000 km, desde El Paso hasta el golfo de México. Cuando el río cambia de curso, pequeñas porciones de tierra han pasado históricamente de un lado a otro entre los dos países.",
+      "category": "Geografía"
+    },
+    {
+      "id": "geo_es_081",
+      "question": "¿Qué país contiene el punto más occidental de la Europa continental?",
+      "answers": [
+        {
+          "text": "Portugal (punto más occidental: el cabo de Roca)",
+          "correct": true
+        },
+        {
+          "text": "Noruega",
+          "correct": false
+        },
+        {
+          "text": "Islandia",
+          "correct": false
+        }
+      ],
+      "difficulty": "medium",
+      "fun_fact": "El cabo de Roca, en Portugal, es el punto más occidental de la Europa continental. Un hito de piedra cita al poeta Camões: 'Aquí, donde la tierra se acaba y el mar comienza'.",
+      "category": "Geografía"
+    },
+    {
+      "id": "geo_es_082",
+      "question": "¿Cuál de estos países está más al norte?",
+      "answers": [
+        {
+          "text": "Islandia",
+          "correct": true
+        },
+        {
+          "text": "Estonia",
+          "correct": false
+        },
+        {
+          "text": "Escocia (Reino Unido)",
+          "correct": false
+        }
+      ],
+      "difficulty": "medium",
+      "fun_fact": "Reikiavik está a unos 64° N, más al norte que cualquier ciudad importante de Estonia o Escocia. La isla más septentrional de Islandia, Grímsey, está atravesada por el propio círculo polar ártico.",
+      "category": "Geografía"
+    },
+    {
+      "id": "geo_es_083",
+      "question": "¿Qué accidente geológico está creando lentamente el Rift de África Oriental?",
+      "answers": [
+        {
+          "text": "Un futuro océano nuevo",
+          "correct": true
+        },
+        {
+          "text": "Un Sáhara que desaparece",
+          "correct": false
+        },
+        {
+          "text": "Un segundo Nilo",
+          "correct": false
+        }
+      ],
+      "difficulty": "medium",
+      "fun_fact": "El continente africano se está partiendo a lo largo de una falla que va de la región de Afar a Mozambique. A lo largo de millones de años se espera que el Cuerno de África se aleje y forme una nueva cuenca oceánica.",
+      "category": "Geografía"
+    },
+    {
+      "id": "geo_es_084",
+      "question": "¿Qué archipiélago del Pacífico alberga la única especie de pingüino ecuatorial?",
+      "answers": [
+        {
+          "text": "Las islas Galápagos",
+          "correct": true
+        },
+        {
+          "text": "Fiyi",
+          "correct": false
+        },
+        {
+          "text": "Las islas Salomón",
+          "correct": false
+        }
+      ],
+      "difficulty": "medium",
+      "fun_fact": "El pingüino de Galápagos sobrevive en el ecuador porque las frías corrientes de Humboldt y Cromwell envuelven las islas en aguas inusualmente gélidas. Es el único pingüino que se encuentra de forma natural en el hemisferio norte.",
+      "category": "Geografía"
+    },
+    {
+      "id": "geo_es_085",
+      "question": "¿Cuál es el rasgo más llamativo del lago Chad, en el país de Chad?",
+      "answers": [
+        {
+          "text": "Ha encogido más de un 90 % desde la década de 1960",
+          "correct": true
+        },
+        {
+          "text": "Se congela por completo cada invierno",
+          "correct": false
+        },
+        {
+          "text": "Es el lago tropical más profundo del mundo",
+          "correct": false
+        }
+      ],
+      "difficulty": "hard",
+      "fun_fact": "El cambio climático y el regadío han reducido el lago Chad de unos 26.000 km² en los años 60 a menos de 1.500 km², arruinando la pesca para Chad, Níger, Nigeria y Camerún.",
+      "category": "Geografía"
+    },
+    {
+      "id": "geo_es_086",
+      "question": "¿Qué país tiene forma de un gigantesco signo de interrogación, incluida una larga y fina cola?",
+      "answers": [
+        {
+          "text": "Tailandia",
+          "correct": true
+        },
+        {
+          "text": "Vietnam",
+          "correct": false
+        },
+        {
+          "text": "Camboya",
+          "correct": false
+        }
+      ],
+      "difficulty": "easy",
+      "fun_fact": "La península sur de Tailandia se estrecha en una fina franja por la península malaya, lo que da al país su contorno característico. En su punto más estrecho, el istmo de Kra mide solo unos 44 km de ancho.",
+      "category": "Geografía"
+    },
+    {
+      "id": "geo_es_087",
+      "question": "¿Qué país alberga la mayor selva tropical del mundo?",
+      "answers": [
+        {
+          "text": "Brasil",
+          "correct": true
+        },
+        {
+          "text": "Indonesia",
+          "correct": false
+        },
+        {
+          "text": "República Democrática del Congo",
+          "correct": false
+        }
+      ],
+      "difficulty": "easy",
+      "fun_fact": "Cerca del 60 % de la selva amazónica está en Brasil, y el resto se reparte entre otros ocho países y un territorio. La selva alberga, según estimaciones, el 10 % de todas las especies conocidas de la Tierra.",
+      "category": "Geografía"
+    },
+    {
+      "id": "geo_es_088",
+      "question": "¿Cuál es el único estado de Estados Unidos cuya capital no está conectada con el resto del país por carretera?",
+      "answers": [
+        {
+          "text": "Alaska (Juneau)",
+          "correct": true
+        },
+        {
+          "text": "Hawái (Honolulu)",
+          "correct": false
+        },
+        {
+          "text": "Florida (Tallahassee)",
+          "correct": false
+        }
+      ],
+      "difficulty": "hard",
+      "fun_fact": "Juneau está rodeada de montañas, campos de hielo y océano. Las únicas formas de entrar o salir son por barco o avión; no hay ninguna carretera que la conecte con el resto de Alaska ni con los 48 estados contiguos.",
+      "category": "Geografía"
+    },
+    {
+      "id": "geo_es_089",
+      "question": "¿Qué país africano está dividido casi exactamente por la mitad por el ecuador?",
+      "answers": [
+        {
+          "text": "Gabón",
+          "correct": true
+        },
+        {
+          "text": "Kenia",
+          "correct": false
+        },
+        {
+          "text": "Uganda",
+          "correct": false
+        }
+      ],
+      "difficulty": "medium",
+      "fun_fact": "El ecuador cruza Gabón justo al norte de su capital, Libreville. Varios países africanos quedan a caballo de la línea, pero Gabón y Santo Tomé y Príncipe son los que están más centrados en ella.",
+      "category": "Geografía"
+    },
+    {
+      "id": "geo_es_090",
+      "question": "¿Qué distinción geográfica ostenta el país insular de Tuvalu, en el Pacífico?",
+      "answers": [
+        {
+          "text": "Su punto más alto está a solo unos 4,5 m sobre el nivel del mar",
+          "correct": true
+        },
+        {
+          "text": "Tiene el arrecife de coral más largo del mundo",
+          "correct": false
+        },
+        {
+          "text": "Contiene la fosa oceánica más profunda",
+          "correct": false
+        }
+      ],
+      "difficulty": "medium",
+      "fun_fact": "Tuvalu es tan bajo que las mareas vivas inundan con regularidad las calles de la capital, Funafuti. El cambio climático lo ha convertido en un símbolo frecuente de las naciones amenazadas por la subida del mar.",
+      "category": "Geografía"
+    },
+    {
+      "id": "geo_es_091",
+      "question": "¿Qué país europeo alberga la estación de tren subterránea más profunda del mundo?",
+      "answers": [
+        {
+          "text": "Ucrania",
+          "correct": true
+        },
+        {
+          "text": "Rusia",
+          "correct": false
+        },
+        {
+          "text": "Reino Unido",
+          "correct": false
+        }
+      ],
+      "difficulty": "hard",
+      "fun_fact": "La estación de metro Arsenalna, en Kiev, está a unos 105 m bajo tierra, en parte porque se excavó a través de una empinada ribera sobre el Dniéper y en parte para hacer también de refugio en la Guerra Fría.",
+      "category": "Geografía"
+    },
+    {
+      "id": "geo_es_092",
+      "question": "¿Qué capital sudamericana se asienta sobre el ecuador?",
+      "answers": [
+        {
+          "text": "Quito, Ecuador",
+          "correct": true
+        },
+        {
+          "text": "Bogotá, Colombia",
+          "correct": false
+        },
+        {
+          "text": "Lima, Perú",
+          "correct": false
+        }
+      ],
+      "difficulty": "easy",
+      "fun_fact": "Quito es la capital más cercana al ecuador, con la línea pasando justo al norte de la ciudad. Ecuador incluso debe su nombre a ella: 'Ecuador' significa, claro está, ecuador.",
+      "category": "Geografía"
+    },
+    {
+      "id": "geo_es_093",
+      "question": "¿Qué país tiene más islas que ningún otro del mundo?",
+      "answers": [
+        {
+          "text": "Suecia",
+          "correct": true
+        },
+        {
+          "text": "Noruega",
+          "correct": false
+        },
+        {
+          "text": "Indonesia",
+          "correct": false
+        }
+      ],
+      "difficulty": "hard",
+      "fun_fact": "Suecia tiene unas 267.000 islas si se cuentan los pequeños islotes, muchas más que el conocido archipiélago de Indonesia. La mayoría son rocas deshabitadas en el Báltico.",
+      "category": "Geografía"
+    },
+    {
+      "id": "geo_es_094",
+      "question": "¿Qué país tiene territorio de ultramar en Sudamérica, el Caribe, el Pacífico Y el océano Índico?",
+      "answers": [
+        {
+          "text": "Francia",
+          "correct": true
+        },
+        {
+          "text": "España",
+          "correct": false
+        },
+        {
+          "text": "Portugal",
+          "correct": false
+        }
+      ],
+      "difficulty": "medium",
+      "fun_fact": "Francia posee territorios en Sudamérica (la Guayana Francesa), el Caribe (Martinica, Guadalupe), el Pacífico (Nueva Caledonia, Polinesia Francesa), el océano Índico (Mayotte, Reunión) e incluso Norteamérica (San Pedro y Miquelón).",
+      "category": "Geografía"
+    },
+    {
+      "id": "geo_es_095",
+      "question": "¿Qué país ostenta la insólita característica de estar entero por encima de los 1.000 m de altitud?",
+      "answers": [
+        {
+          "text": "Lesoto",
+          "correct": true
+        },
+        {
+          "text": "Bután",
+          "correct": false
+        },
+        {
+          "text": "Nepal",
+          "correct": false
+        }
+      ],
+      "difficulty": "hard",
+      "fun_fact": "El punto más bajo de Lesoto, en la confluencia de los ríos Orange y Makhaleng, está a unos 1.400 m sobre el nivel del mar. Ningún otro país independiente tiene un punto más bajo tan alto.",
+      "category": "Geografía"
+    },
+    {
+      "id": "geo_es_096",
+      "question": "¿Qué lago está a caballo entre Suiza, Alemania y Austria?",
+      "answers": [
+        {
+          "text": "El lago de Constanza",
+          "correct": true
+        },
+        {
+          "text": "El lago Lemán",
+          "correct": false
+        },
+        {
+          "text": "El lago de Lugano",
+          "correct": false
+        }
+      ],
+      "difficulty": "medium",
+      "fun_fact": "El lago de Constanza no tiene una frontera formalmente definida sobre las aguas abiertas entre los tres países: nunca han firmado un tratado que fije las líneas, dejando el centro del lago como una especie de zona legal gris.",
+      "category": "Geografía"
+    },
+    {
+      "id": "geo_es_097",
+      "question": "Si navegas directamente hacia el sur desde el extremo meridional de África, ¿cuál es el primer continente que alcanzas?",
+      "answers": [
+        {
+          "text": "La Antártida",
+          "correct": true
+        },
+        {
+          "text": "Sudamérica",
+          "correct": false
+        },
+        {
+          "text": "Australia",
+          "correct": false
+        }
+      ],
+      "difficulty": "easy",
+      "fun_fact": "Desde el cabo de Buena Esperanza, la única masa de tierra directamente al sur cruzando el océano Antártico es la Antártida, a unos 4.000 km. Las latitudes intermedias se apodan los 'Cuarenta Rugientes' por sus feroces vientos del oeste.",
+      "category": "Geografía"
+    },
+    {
+      "id": "geo_es_098",
+      "question": "¿Qué ciudad está más al oeste: Reno (Nevada) o Los Ángeles (California)?",
+      "answers": [
+        {
+          "text": "Reno, Nevada",
+          "correct": true
+        },
+        {
+          "text": "Los Ángeles, California",
+          "correct": false
+        },
+        {
+          "text": "Están en la misma longitud",
+          "correct": false
+        }
+      ],
+      "difficulty": "easy",
+      "fun_fact": "Reno está a unos 119,8° O, mientras que Los Ángeles está cerca de 118,2° O, así que Reno queda unos 160 km más al oeste: la costa de California en realidad se curva de nuevo hacia el este a medida que baja hacia Los Ángeles.",
+      "category": "Geografía"
+    },
+    {
+      "id": "geo_es_099",
+      "question": "Si te encuentras en la localidad española de Llívia, estás en territorio español completamente rodeado por ¿qué país?",
+      "answers": [
+        {
+          "text": "Francia",
+          "correct": true
+        },
+        {
+          "text": "Andorra",
+          "correct": false
+        },
+        {
+          "text": "Portugal",
+          "correct": false
+        }
+      ],
+      "difficulty": "medium",
+      "fun_fact": "Llívia se convirtió en exclave español por una peculiaridad del Tratado de los Pirineos de 1659: el acuerdo cedía 'aldeas' a Francia, pero Llívia era legalmente una villa, así que España la conservó, dejándola aislada unos kilómetros dentro de Francia.",
+      "category": "Geografía"
+    },
+    {
+      "id": "geo_es_100",
+      "question": "¿Qué estado de EE. UU. contiene el punto de los 48 estados contiguos más cercano al continente africano?",
+      "answers": [
+        {
+          "text": "Maine",
+          "correct": true
+        },
+        {
+          "text": "Florida",
+          "correct": false
+        },
+        {
+          "text": "Carolina del Sur",
+          "correct": false
+        }
+      ],
+      "difficulty": "hard",
+      "fun_fact": "Quoddy Head, en el este de Maine, es el punto más oriental de los Estados Unidos contiguos, y su posición tan al noreste lo convierte en el lugar continental de EE. UU. más cercano a la costa noroeste de África, más cerca que cualquier punto de Florida, aunque Florida esté mucho más al sur.",
+      "category": "Geografía"
+    },
+    {
+      "id": "geo_es_101",
+      "question": "¿Por qué el océano es azul?",
+      "answers": [
+        {
+          "text": "El propio agua absorbe la luz roja y dispersa la azul",
+          "correct": true
+        },
+        {
+          "text": "Simplemente refleja el color del cielo",
+          "correct": false
+        },
+        {
+          "text": "Algas azules tiñen el agua en todo el planeta",
+          "correct": false
+        }
+      ],
+      "difficulty": "medium",
+      "fun_fact": "El agua pura es ligeramente azul incluso en una bañera honda. Las moléculas de agua absorben las longitudes de onda rojas, más largas, así que la luz que sobrevive para rebotar de vuelta es azul; el reflejo del cielo solo añade un poco más.",
+      "category": "Geografía"
+    },
+    {
+      "id": "geo_es_102",
+      "question": "¿Qué hace que las dunas del desierto 'canten' o retumben al moverse?",
+      "answers": [
+        {
+          "text": "Granos de arena que se deslizan vibrando al unísono",
+          "correct": true
+        },
+        {
+          "text": "El viento silbando por grietas de roca enterradas",
+          "correct": false
+        },
+        {
+          "text": "Gas subterráneo atrapado que escapa de la duna",
+          "correct": false
+        }
+      ],
+      "difficulty": "hard",
+      "fun_fact": "Cuando arena del tamaño y la sequedad justos se desliza por la cara de una duna, los granos rozan unos contra otros de forma sincronizada, produciendo un zumbido grave que puede alcanzar los 105 decibelios y oírse a kilómetros.",
+      "category": "Geografía"
+    },
+    {
+      "id": "geo_es_103",
+      "question": "¿Por qué el mar Muerto permite flotar a los bañistas con tanta facilidad?",
+      "answers": [
+        {
+          "text": "Su extremo contenido de sal hace el agua más densa que el cuerpo",
+          "correct": true
+        },
+        {
+          "text": "Burbujas de gas subterráneo empujan a los bañistas hacia arriba",
+          "correct": false
+        },
+        {
+          "text": "Su agua inusualmente fría es mucho más densa que el agua de mar templada",
+          "correct": false
+        }
+      ],
+      "difficulty": "easy",
+      "fun_fact": "El mar Muerto es unas diez veces más salado que el océano. Esa sal disuelta hace el agua más densa que un cuerpo humano, así que flotas en la superficie como un corcho en vez de nadar dentro de ella.",
+      "category": "Geografía"
+    },
+    {
+      "id": "geo_es_104",
+      "question": "¿Qué hace que los salares de Bolivia actúen como un espejo gigante tras la lluvia?",
+      "answers": [
+        {
+          "text": "Una fina lámina de agua sobre una costra de sal perfectamente plana",
+          "correct": true
+        },
+        {
+          "text": "Cristales de sal reflectantes que se pulen solos",
+          "correct": false
+        },
+        {
+          "text": "Una capa de mercurio bajo la superficie de sal",
+          "correct": false
+        }
+      ],
+      "difficulty": "easy",
+      "fun_fact": "Cuando una fina película de agua de lluvia reposa sobre el Salar de Uyuni, la sal de debajo es tan plana que el agua no tiene dónde acumularse ni ondularse, convirtiendo toda la llanura en el mayor espejo natural del mundo, que refleja el cielo.",
+      "category": "Geografía"
+    },
+    {
+      "id": "geo_es_105",
+      "question": "¿Por qué un géiser como el Old Faithful entra en erupción a chorros regulares en vez de fluir de forma constante?",
+      "answers": [
+        {
+          "text": "El agua atrapada se sobrecalienta hasta convertirse en vapor y salir disparada",
+          "correct": true
+        },
+        {
+          "text": "Una bomba subterránea enciende y apaga el agua",
+          "correct": false
+        },
+        {
+          "text": "Mareas en las profundidades exprimen el agua hacia arriba",
+          "correct": false
+        }
+      ],
+      "difficulty": "medium",
+      "fun_fact": "En el estrecho conducto de un géiser, el agua del fondo permanece líquida por encima de los 100 °C debido a la presión. Cuando por fin hierve, la repentina expansión en vapor expulsa la columna de encima; luego la cámara se rellena y el ciclo se repite.",
+      "category": "Geografía"
+    },
+    {
+      "id": "geo_es_106",
+      "question": "¿Qué hace que una selva tropical genere buena parte de su propia lluvia?",
+      "answers": [
+        {
+          "text": "Los árboles liberan vapor de agua que forma nubes y lluvia",
+          "correct": true
+        },
+        {
+          "text": "El dosel es lo bastante frío para condensar la niebla marina que pasa",
+          "correct": false
+        },
+        {
+          "text": "Los ríos se evaporan más rápido bajo la densa cubierta arbórea",
+          "correct": false
+        }
+      ],
+      "difficulty": "medium",
+      "fun_fact": "Los árboles del Amazonas bombean enormes cantidades de humedad al aire a través de sus hojas. Esta 'transpiración' siembra nubes, de modo que una sola molécula de agua puede caer como lluvia, ser liberada de nuevo por un árbol y volver a caer varias veces a lo largo de la cuenca.",
+      "category": "Geografía"
+    },
+    {
+      "id": "geo_es_107",
+      "question": "¿Por qué la nieve recién caída es de un blanco tan brillante si el hielo del que está hecha es transparente?",
+      "answers": [
+        {
+          "text": "Incontables y diminutas caras del cristal dispersan por igual todos los colores de la luz",
+          "correct": true
+        },
+        {
+          "text": "La nieve contiene polvo mineral blanco microscópico",
+          "correct": false
+        },
+        {
+          "text": "Burbujas de aire congelado brillan blancas al sol",
+          "correct": false
+        }
+      ],
+      "difficulty": "easy",
+      "fun_fact": "Un solo cristal de hielo es transparente, pero un manto de nieve es un revoltijo de millones de ellos. La luz rebota en todas esas superficies en todas direcciones y, como ningún color se absorbe más que otro, el montón parece blanco.",
+      "category": "Geografía"
+    },
+    {
+      "id": "geo_es_108",
+      "question": "¿Por qué el aire se vuelve más frío al subir una montaña, aunque estés más cerca del Sol?",
+      "answers": [
+        {
+          "text": "El aire fino de las alturas retiene menos calor y se expande al ascender",
+          "correct": true
+        },
+        {
+          "text": "Las cumbres bloquean los rayos cálidos del Sol",
+          "correct": false
+        },
+        {
+          "text": "La nieve de la cima enfría el aire de alrededor",
+          "correct": false
+        }
+      ],
+      "difficulty": "medium",
+      "fun_fact": "El aire se calienta sobre todo desde el suelo hacia arriba, no directamente por la luz del Sol. A mayor altura el aire se enrarece, y cualquier masa que asciende se expande y se enfría, bajando unos 6,5 °C por cada kilómetro de altitud.",
+      "category": "Geografía"
+    },
+    {
+      "id": "geo_es_109",
+      "question": "¿Qué hace que las auroras boreales brillen en el cielo?",
+      "answers": [
+        {
+          "text": "Partículas cargadas del Sol que chocan con átomos de la alta atmósfera",
+          "correct": true
+        },
+        {
+          "text": "La luz solar que se refracta en nubes de hielo a gran altura",
+          "correct": false
+        },
+        {
+          "text": "Reflejos de las luces de las ciudades en el casquete polar",
+          "correct": false
+        }
+      ],
+      "difficulty": "easy",
+      "fun_fact": "Los colores de la aurora revelan qué gas brilla: el oxígeno en las alturas da verde y rojo, mientras que el nitrógeno produce azules y morados. Las mismas tormentas de partículas pueden además alterar satélites y redes eléctricas.",
+      "category": "Geografía"
+    },
+    {
+      "id": "geo_es_110",
+      "question": "¿Por qué la Luna eleva las mareas oceánicas a ambos lados de la Tierra a la vez?",
+      "answers": [
+        {
+          "text": "La Luna atrae el océano cercano y el lejano se queda rezagado",
+          "correct": true
+        },
+        {
+          "text": "La luz de la Luna calienta y expande los mares de ambos lados",
+          "correct": false
+        },
+        {
+          "text": "El Sol rellena el abombamiento opuesto a la Luna",
+          "correct": false
+        }
+      ],
+      "difficulty": "hard",
+      "fun_fact": "La gravedad tira del océano del lado cercano hacia la Luna, pero la Tierra sólida es arrastrada lejos del océano del lado lejano, dejando un segundo abombamiento detrás. Por eso la mayoría de las costas tienen dos pleamares al día, no una.",
+      "category": "Geografía"
+    },
+    {
+      "id": "geo_es_111",
+      "question": "¿Por qué una playa se siente más fresca que el interior en una calurosa tarde de verano?",
+      "answers": [
+        {
+          "text": "Aire más fresco llega desde el mar a medida que el aire cálido de la tierra asciende",
+          "correct": true
+        },
+        {
+          "text": "El rocío marino enfría físicamente el aire de alrededor",
+          "correct": false
+        },
+        {
+          "text": "La arena de la costa refleja casi todo el calor del Sol",
+          "correct": false
+        }
+      ],
+      "difficulty": "easy",
+      "fun_fact": "La tierra se calienta mucho más rápido que el agua. El aire caliente sobre la tierra asciende, y el aire más fresco que reposa sobre el mar entra a ocupar su lugar, creando la refrescante brisa marina que sienten los bañistas a mediodía.",
+      "category": "Geografía"
+    },
+    {
+      "id": "geo_es_112",
+      "question": "¿Qué hace que las arenas movedizas sean tan peligrosas al pisarlas?",
+      "answers": [
+        {
+          "text": "La arena saturada de agua pierde firmeza y no soporta peso",
+          "correct": true
+        },
+        {
+          "text": "Succionan activamente los objetos hacia el centro de la Tierra",
+          "correct": false
+        },
+        {
+          "text": "Corrientes ocultas arrastran de lado lo que cae sobre ellas",
+          "correct": false
+        }
+      ],
+      "difficulty": "medium",
+      "fun_fact": "Las arenas movedizas son simplemente arena corriente cuyos granos quedan separados por agua que asciende, de modo que no soporta peso. En realidad no puedes hundirte del todo porque tu cuerpo es menos denso que la mezcla; el peligro es quedarte atrapado al subir la marea.",
+      "category": "Geografía"
+    },
+    {
+      "id": "geo_es_113",
+      "question": "¿Por qué el hielo marino, hecho de agua salada del océano, sabe solo levemente salado?",
+      "answers": [
+        {
+          "text": "La sal es expulsada a medida que el agua se congela",
+          "correct": true
+        },
+        {
+          "text": "La sal del océano se evapora antes de que se forme el hielo",
+          "correct": false
+        },
+        {
+          "text": "Solo los ríos de agua dulce se congelan en la superficie del océano",
+          "correct": false
+        }
+      ],
+      "difficulty": "hard",
+      "fun_fact": "Cuando el agua de mar se congela, la estructura cristalina del hielo rechaza la sal y la empuja a bolsas de salmuera que poco a poco se drenan. El hielo marino viejo llega a ser lo bastante dulce como para que los exploradores polares lo derritan para beber.",
+      "category": "Geografía"
+    },
+    {
+      "id": "geo_es_114",
+      "question": "¿Por qué la mayoría de los grandes desiertos del mundo se sitúan en latitudes parecidas al norte y al sur del ecuador?",
+      "answers": [
+        {
+          "text": "El aire que ascendió en el ecuador desciende allí, seco y sin lluvia",
+          "correct": true
+        },
+        {
+          "text": "Esas franjas son simplemente las más alejadas de cualquier océano",
+          "correct": false
+        },
+        {
+          "text": "El Sol se demora más sobre esas latitudes exactas",
+          "correct": false
+        }
+      ],
+      "difficulty": "hard",
+      "fun_fact": "El aire ecuatorial cálido asciende y descarga su lluvia, luego se desplaza y desciende en torno a los 30° norte y sur. El aire que baja se calienta y se reseca, y por eso los desiertos del Sáhara, de Arabia y de Australia se agrupan en esas franjas.",
+      "category": "Geografía"
+    },
+    {
+      "id": "geo_es_115",
+      "question": "¿Qué da a las capas de roca del Gran Cañón sus muchos colores distintos?",
+      "answers": [
+        {
+          "text": "Distintos minerales, en especial el hierro, en cada capa de roca",
+          "correct": true
+        },
+        {
+          "text": "La luz del sol incidiendo en las paredes a ángulos cambiantes",
+          "correct": false
+        },
+        {
+          "text": "Algas que crecen en bandas de color en los acantilados",
+          "correct": false
+        }
+      ],
+      "difficulty": "easy",
+      "fun_fact": "Cada banda marca un antiguo entorno distinto. El hierro es el principal pintor: el hierro oxidado da rojos y naranjas, mientras que las capas más verdes y grises se formaron donde había menos oxígeno, así que las paredes del cañón se leen como una línea temporal codificada por colores.",
+      "category": "Geografía"
+    },
+    {
+      "id": "geo_es_116",
+      "question": "¿Por qué un río se curva cada vez más con el tiempo en lugar de correr recto?",
+      "answers": [
+        {
+          "text": "El agua erosiona la orilla exterior y deposita arena en la interior",
+          "correct": true
+        },
+        {
+          "text": "Los ríos siempre siguen líneas magnéticas subterráneas",
+          "correct": false
+        },
+        {
+          "text": "La rotación del planeta obliga a todos los ríos a curvarse",
+          "correct": false
+        }
+      ],
+      "difficulty": "medium",
+      "fun_fact": "En una curva, el agua se mueve más rápido por el exterior y se come la orilla, mientras que se frena en el interior y deposita sedimentos. Esta acción desigual exagera la curva hasta que a veces los meandros se estrangulan y forman lagos en herradura.",
+      "category": "Geografía"
+    },
+    {
+      "id": "geo_es_117",
+      "question": "¿Por qué el aire del fondo de un valle profundo a veces es más frío de noche que en lo alto de las laderas?",
+      "answers": [
+        {
+          "text": "El aire frío y denso se desliza ladera abajo y se acumula en el fondo",
+          "correct": true
+        },
+        {
+          "text": "Los fondos de valle están siempre más cerca de hielo subterráneo",
+          "correct": false
+        },
+        {
+          "text": "La luz del sol nunca llega al fondo del valle",
+          "correct": false
+        }
+      ],
+      "difficulty": "medium",
+      "fun_fact": "En noches despejadas y en calma, el suelo enfría el aire que lo toca y, como el aire frío es más pesado, se desliza por las laderas y se acumula en el fondo del valle. Estos 'hoyos de helada' pueden estar varios grados más fríos que las laderas de arriba.",
+      "category": "Geografía"
+    },
+    {
+      "id": "geo_es_118",
+      "question": "¿Qué hace que una fuente termal sea caliente, para empezar?",
+      "answers": [
+        {
+          "text": "El agua se filtra hasta roca caliente y vuelve a subir calentada",
+          "correct": true
+        },
+        {
+          "text": "La luz del sol concentrada por las pálidas rocas de alrededor",
+          "correct": false
+        },
+        {
+          "text": "La fricción del agua al fluir por grietas estrechas",
+          "correct": false
+        }
+      ],
+      "difficulty": "easy",
+      "fun_fact": "El agua de lluvia se filtra a gran profundidad, se calienta con la roca caliente o el magma cercano y vuelve a subir por flotabilidad. En zonas volcánicas el agua puede salir casi hirviendo, y a menudo arrastra minerales disueltos que forman terrazas de colores.",
+      "category": "Geografía"
+    },
+    {
+      "id": "geo_es_119",
+      "question": "¿Por qué las nubes, llenas de toneladas de agua, flotan en vez de caer?",
+      "answers": [
+        {
+          "text": "Sus gotas son diminutas y el aire cálido ascendente las sostiene",
+          "correct": true
+        },
+        {
+          "text": "El vapor de agua es naturalmente más ligero que el aire de debajo",
+          "correct": false
+        },
+        {
+          "text": "La electricidad estática mantiene las gotas suspendidas",
+          "correct": false
+        }
+      ],
+      "difficulty": "easy",
+      "fun_fact": "El agua de una nube está fragmentada en gotas tan pequeñas que la resistencia del aire deja que caigan a paso de tortuga, y suaves corrientes ascendentes las mantienen fácilmente en el aire. Solo cuando las gotas se fusionan en gotas de lluvia se vuelven al fin lo bastante pesadas para caer.",
+      "category": "Geografía"
+    },
+    {
+      "id": "geo_es_120",
+      "question": "¿Por qué el mar parece tener un 'borde' nítido en el horizonte?",
+      "answers": [
+        {
+          "text": "La Tierra se curva y se aleja a partir de cierta distancia",
+          "correct": true
+        },
+        {
+          "text": "Un muro de aire más denso bloquea la vista más allá",
+          "correct": false
+        },
+        {
+          "text": "La luz del sol solo puede recorrer una distancia fija sobre el agua",
+          "correct": false
+        }
+      ],
+      "difficulty": "easy",
+      "fun_fact": "Como el planeta es redondo, la superficie se aleja de tu línea de visión. Para alguien de pie en la orilla, el horizonte está a solo unos 5 km; sube a un acantilado o al mástil de un barco y ese borde se aleja mucho más.",
+      "category": "Geografía"
+    },
+    {
+      "id": "geo_es_121",
+      "question": "¿Qué hace que un glaciar fluya cuesta abajo como un río extremadamente lento?",
+      "answers": [
+        {
+          "text": "Su propio peso hace que el hielo se deforme y se deslice",
+          "correct": true
+        },
+        {
+          "text": "El viento empuja el hielo de forma constante valle abajo",
+          "correct": false
+        },
+        {
+          "text": "El agua de deshielo se congela detrás y lo empuja hacia delante",
+          "correct": false
+        }
+      ],
+      "difficulty": "medium",
+      "fun_fact": "Bajo la inmensa presión de su propia masa, el hielo glaciar se comporta un poco como masilla, deformándose por dentro mientras el agua de deshielo en su base le permite deslizarse. Algunos glaciares avanzan solo unos pocos centímetros al día.",
+      "category": "Geografía"
+    },
+    {
+      "id": "geo_es_122",
+      "question": "¿Por qué una carretera plana y sin nieve a veces reluce con un 'charco' falso en un día caluroso?",
+      "answers": [
+        {
+          "text": "La luz se curva al atravesar una capa de aire caliente cerca de la superficie",
+          "correct": true
+        },
+        {
+          "text": "El calor derrite una fina película de alquitrán que refleja el cielo",
+          "correct": false
+        },
+        {
+          "text": "El vapor que sube de la carretera se condensa en un espejismo",
+          "correct": false
+        }
+      ],
+      "difficulty": "medium",
+      "fun_fact": "Una carretera abrasadora calienta el aire justo encima y la luz que pasa del aire más fresco a esa capa caliente se curva hacia arriba. Tu ojo la traza de vuelta como un trozo de cielo en el suelo, el mismo espejismo que engaña a los viajeros del desierto con lagos imaginarios.",
+      "category": "Geografía"
+    },
+    {
+      "id": "geo_es_123",
+      "question": "¿Por qué la temperatura en lo profundo de una cueva se mantiene casi igual todo el año?",
+      "answers": [
+        {
+          "text": "La gruesa roca la aísla del clima de la superficie",
+          "correct": true
+        },
+        {
+          "text": "Las cuevas se calientan con un flujo constante de agua subterránea templada",
+          "correct": false
+        },
+        {
+          "text": "El aire atrapado no se mueve, así que nunca cambia de temperatura",
+          "correct": false
+        }
+      ],
+      "difficulty": "easy",
+      "fun_fact": "La roca circundante es mala conductora y un enorme almacén de calor, así que las cuevas profundas se mantienen cerca de la temperatura media anual local sea cual sea la estación. Esa estabilidad es la razón por la que se apreciaban para almacenar alimentos y curar queso y vino.",
+      "category": "Geografía"
+    },
+    {
+      "id": "geo_es_124",
+      "question": "¿Qué hace que el agua de una laguna tropical se vea de un turquesa tan intenso?",
+      "answers": [
+        {
+          "text": "El agua poco profunda sobre arena pálida refleja hacia arriba la luz azul verdosa",
+          "correct": true
+        },
+        {
+          "text": "Minerales de cobre disueltos tiñen el agua de turquesa",
+          "correct": false
+        },
+        {
+          "text": "Una película de plancton en la superficie dispersa la luz verde",
+          "correct": false
+        }
+      ],
+      "difficulty": "medium",
+      "fun_fact": "En aguas poco profundas, el fondo de arena coralina blanca devuelve la luz del sol antes de que el agua profunda pueda absorber las longitudes de onda azul verdosas. Sobre un fondo oscuro o profundo, ese mismo mar se vería de un azul mucho más oscuro.",
+      "category": "Geografía"
+    },
+    {
+      "id": "geo_es_125",
+      "question": "El país de Ecuador toma su nombre de ¿qué?",
+      "answers": [
+        {
+          "text": "El ecuador que lo atraviesa",
+          "correct": true
+        },
+        {
+          "text": "Un rey indígena llamado Equa",
+          "correct": false
+        },
+        {
+          "text": "Una palabra española para oro",
+          "correct": false
+        }
+      ],
+      "difficulty": "easy",
+      "fun_fact": "'Ecuador' es simplemente la palabra española para la línea ecuatorial. Es el único país del mundo que lleva el nombre de una línea de latitud en lugar de una persona, lugar o accidente geográfico.",
+      "category": "Geografía"
+    },
+    {
+      "id": "geo_es_126",
+      "question": "¿Cómo recibió su nombre el océano Pacífico?",
+      "answers": [
+        {
+          "text": "Magallanes lo encontró insólitamente tranquilo y apacible",
+          "correct": true
+        },
+        {
+          "text": "Recibió el nombre de un barco español, el Pacífica",
+          "correct": false
+        },
+        {
+          "text": "Procede de una palabra polinesia que significa inmenso",
+          "correct": false
+        }
+      ],
+      "difficulty": "easy",
+      "fun_fact": "Magallanes lo llamó 'Mar Pacífico' en 1520 tras sobrevivir al tormentoso estrecho del extremo de Sudamérica y encontrar las aguas de más allá inquietantemente tranquilas. El nombre perduró pese a los muchos tifones del Pacífico.",
+      "category": "Geografía"
+    },
+    {
+      "id": "geo_es_127",
+      "question": "¿De dónde tomaron su nombre las islas Canarias?",
+      "answers": [
+        {
+          "text": "De los perros",
+          "correct": true
+        },
+        {
+          "text": "Del pájaro canario",
+          "correct": false
+        },
+        {
+          "text": "Del color amarillo canario",
+          "correct": false
+        }
+      ],
+      "difficulty": "medium",
+      "fun_fact": "El nombre procede del latín 'Canariae Insulae', que significa 'Islas de los Perros', posiblemente por los grandes perros que los romanos encontraron allí. El pájaro canario debe su nombre a las islas, y no al revés.",
+      "category": "Geografía"
+    },
+    {
+      "id": "geo_es_128",
+      "question": "¿Por qué Groenlandia se llama 'tierra verde' si es casi todo hielo?",
+      "answers": [
+        {
+          "text": "Erik el Rojo eligió el nombre para atraer colonos",
+          "correct": true
+        },
+        {
+          "text": "Su costa sur fue antaño una exuberante jungla",
+          "correct": false
+        },
+        {
+          "text": "Es una mala traducción de una antigua palabra nórdica para hielo",
+          "correct": false
+        }
+      ],
+      "difficulty": "easy",
+      "fun_fact": "Erik el Rojo, desterrado de Islandia, llamó 'Groenlandia' (tierra verde) a la helada isla hacia el año 982 precisamente porque un nombre atractivo atraería colonos. Puede que sea el primer caso documentado de marketing inmobiliario de la historia.",
+      "category": "Geografía"
+    },
+    {
+      "id": "geo_es_129",
+      "question": "El nombre 'América' honra a Américo Vespucio. ¿Qué tuvo de insólito su aplicación?",
+      "answers": [
+        {
+          "text": "Un cartógrafo lo añadió para Sudamérica sin que Vespucio lo supiera",
+          "correct": true
+        },
+        {
+          "text": "Vespucio pagó personalmente para que se le pusiera su nombre",
+          "correct": false
+        },
+        {
+          "text": "Era originalmente el nombre de su barco",
+          "correct": false
+        }
+      ],
+      "difficulty": "medium",
+      "fun_fact": "El cartógrafo alemán Martin Waldseemüller imprimió 'América' en un mapa de 1507, atribuyendo a Vespucio el haber reconocido que era un nuevo continente. Más tarde se arrepintió y quitó el nombre, pero ya había arraigado por toda Europa.",
+      "category": "Geografía"
+    },
+    {
+      "id": "geo_es_130",
+      "question": "¿Qué mar lleva el nombre de un hombre que, según la leyenda, se ahogó en él?",
+      "answers": [
+        {
+          "text": "El mar Egeo",
+          "correct": true
+        },
+        {
+          "text": "El mar Adriático",
+          "correct": false
+        },
+        {
+          "text": "El mar Jónico",
+          "correct": false
+        }
+      ],
+      "difficulty": "medium",
+      "fun_fact": "En la mitología griega, el rey Egeo se arrojó al mar al creer erróneamente que su hijo Teseo había muerto luchando contra el Minotauro, porque Teseo olvidó cambiar sus velas negras por blancas.",
+      "category": "Geografía"
+    },
+    {
+      "id": "geo_es_131",
+      "question": "El océano Índico es inusual entre los grandes océanos porque lleva el nombre de ¿qué?",
+      "answers": [
+        {
+          "text": "Un país",
+          "correct": true
+        },
+        {
+          "text": "Un punto cardinal",
+          "correct": false
+        },
+        {
+          "text": "Un antiguo dios del mar",
+          "correct": false
+        }
+      ],
+      "difficulty": "medium",
+      "fun_fact": "Es el único océano que lleva el nombre de una sola nación, la India. Los demás toman su nombre de un titán griego (Atlántico), la calma (Pacífico), el extremo norte (Ártico) y el polo sur (Antártico).",
+      "category": "Geografía"
+    },
+    {
+      "id": "geo_es_132",
+      "question": "El nombre del país 'Pakistán' se creó en 1933 ¿de qué modo?",
+      "answers": [
+        {
+          "text": "Como un acrónimo de los nombres de sus regiones",
+          "correct": true
+        },
+        {
+          "text": "Traduciendo una antigua oración en sánscrito",
+          "correct": false
+        },
+        {
+          "text": "Mediante una votación entre oficiales coloniales británicos",
+          "correct": false
+        }
+      ],
+      "difficulty": "hard",
+      "fun_fact": "Un estudiante llamado Choudhry Rahmat Ali lo acuñó a partir de Punyab, Afgania, Cachemira, Sind y Baluchistán, y además significa convenientemente 'tierra de los puros' en persa y urdu.",
+      "category": "Geografía"
+    },
+    {
+      "id": "geo_es_133",
+      "question": "¿Por qué el país africano de Camerún lleva un nombre que significa 'gambas'?",
+      "answers": [
+        {
+          "text": "Marineros portugueses hallaron un río lleno de gambas",
+          "correct": true
+        },
+        {
+          "text": "Su línea de costa tiene forma de gamba",
+          "correct": false
+        },
+        {
+          "text": "Las gambas eran su principal exportación a Europa",
+          "correct": false
+        }
+      ],
+      "difficulty": "hard",
+      "fun_fact": "En 1472, exploradores portugueses llamaron al estuario del Wouri 'Rio dos Camarões' (río de las Gambas) por los enjambres de camarones fantasma que vieron. Con el tiempo, todo el país tomó su nombre de ese río.",
+      "category": "Geografía"
+    },
+    {
+      "id": "geo_es_134",
+      "question": "Se cree que el estado de EE. UU. de Rhode Island debe su nombre a una comparación con ¿qué isla mediterránea?",
+      "answers": [
+        {
+          "text": "Rodas, en Grecia",
+          "correct": true
+        },
+        {
+          "text": "Cerdeña, en Italia",
+          "correct": false
+        },
+        {
+          "text": "Chipre",
+          "correct": false
+        }
+      ],
+      "difficulty": "hard",
+      "fun_fact": "Una de las principales teorías es que un explorador comparó una isla de la bahía de Narragansett con la isla griega de Rodas. Irónicamente, Rhode Island es el estado más pequeño de EE. UU. y su territorio principal ni siquiera es una isla.",
+      "category": "Geografía"
+    },
+    {
+      "id": "geo_es_135",
+      "question": "La palabra 'continente' procede originalmente de una expresión latina que significa ¿qué?",
+      "answers": [
+        {
+          "text": "Tierra continua",
+          "correct": true
+        },
+        {
+          "text": "Tierra de muchos pueblos",
+          "correct": false
+        },
+        {
+          "text": "Tierra más allá del mar",
+          "correct": false
+        }
+      ],
+      "difficulty": "medium",
+      "fun_fact": "Deriva de 'terra continens', que significa 'tierra continua', una extensión de suelo unida sin interrupciones. La misma raíz latina nos da la palabra cotidiana 'contener'.",
+      "category": "Geografía"
+    },
+    {
+      "id": "geo_es_136",
+      "question": "¿Cómo recibió Brasil su nombre?",
+      "answers": [
+        {
+          "text": "De un árbol de madera roja para tinte que se extraía allí",
+          "correct": true
+        },
+        {
+          "text": "De un explorador portugués llamado Brazão",
+          "correct": false
+        },
+        {
+          "text": "De una palabra nativa que significa luz del sol",
+          "correct": false
+        }
+      ],
+      "difficulty": "medium",
+      "fun_fact": "Brasil debe su nombre al palo brasil, un árbol que daba un preciado tinte rojo que fue la primera gran exportación de la colonia. El país recibió, en efecto, el nombre de una mercancía en vez de una persona o lugar.",
+      "category": "Geografía"
+    },
+    {
+      "id": "geo_es_137",
+      "question": "El estrecho de Magallanes lleva el nombre del explorador, pero ¿quién completó realmente la primera circunnavegación que él inició?",
+      "answers": [
+        {
+          "text": "Su tripulación, después de que Magallanes muriera a mitad del viaje",
+          "correct": true
+        },
+        {
+          "text": "El propio Magallanes regresó a casa sano y salvo",
+          "correct": false
+        },
+        {
+          "text": "Un capitán rival que la terminó décadas después",
+          "correct": false
+        }
+      ],
+      "difficulty": "medium",
+      "fun_fact": "Magallanes murió en Filipinas en 1521, así que nunca dio personalmente la vuelta al mundo. Su capitán Juan Sebastián Elcano trajo el último barco de vuelta en 1522, completando la primera vuelta al planeta.",
+      "category": "Geografía"
+    },
+    {
+      "id": "geo_es_138",
+      "question": "¿Por qué motivo recibió su nombre el mar Muerto?",
+      "answers": [
+        {
+          "text": "Casi nada puede vivir en sus saladas aguas",
+          "correct": true
+        },
+        {
+          "text": "Una gran batalla lo tiñó una vez de rojo con sangre",
+          "correct": false
+        },
+        {
+          "text": "Una antigua ciudad se hundió bajo él",
+          "correct": false
+        }
+      ],
+      "difficulty": "easy",
+      "fun_fact": "Su extrema salinidad, casi diez veces la del océano, mata a peces y plantas, dejando el agua 'muerta'. Solo unos pocos microbios resistentes logran sobrevivir en ella.",
+      "category": "Geografía"
+    },
+    {
+      "id": "geo_es_139",
+      "question": "El mar Caribe toma su nombre de ¿qué?",
+      "answers": [
+        {
+          "text": "El pueblo caribe que vivía en la región",
+          "correct": true
+        },
+        {
+          "text": "Una palabra española para coral",
+          "correct": false
+        },
+        {
+          "text": "El buque insignia de Cristóbal Colón",
+          "correct": false
+        }
+      ],
+      "difficulty": "medium",
+      "fun_fact": "Debe su nombre a los caribes, un pueblo indígena de las Antillas Menores. La palabra 'caníbal' también deriva de una versión española de su nombre, fruto de unos discutidos relatos de la época colonial.",
+      "category": "Geografía"
+    },
+    {
+      "id": "geo_es_140",
+      "question": "El nombre del desierto del Sáhara es llamativo porque en árabe significa básicamente ¿qué?",
+      "answers": [
+        {
+          "text": "Desierto",
+          "correct": true
+        },
+        {
+          "text": "Arena infinita",
+          "correct": false
+        },
+        {
+          "text": "Tierra de fuego",
+          "correct": false
+        }
+      ],
+      "difficulty": "medium",
+      "fun_fact": "'Sáhara' viene de la palabra árabe para desierto, así que 'desierto del Sáhara' se traduce literalmente como 'desierto del Desierto'. Redundancias parecidas aparecen en nombres como los 'pozos de alquitrán de La Brea', que significa 'los pozos de alquitrán el Alquitrán'.",
+      "category": "Geografía"
+    },
+    {
+      "id": "geo_es_141",
+      "question": "¿En honor a quién recibió su nombre Filipinas?",
+      "answers": [
+        {
+          "text": "El rey Felipe II de España",
+          "correct": true
+        },
+        {
+          "text": "El explorador Fernando de Magallanes",
+          "correct": false
+        },
+        {
+          "text": "Un santo católico llamado Felipe",
+          "correct": false
+        }
+      ],
+      "difficulty": "medium",
+      "fun_fact": "Una expedición española bautizó las islas como 'Las Islas Filipinas' en 1543 en honor al entonces príncipe heredero, el futuro Felipe II. Magallanes, que llegó primero a las islas, no tiene ningún país con su nombre.",
+      "category": "Geografía"
+    },
+    {
+      "id": "geo_es_142",
+      "question": "El canal de la Mancha, que separa Inglaterra de Francia, ¿cómo se llama en francés?",
+      "answers": [
+        {
+          "text": "La Manche, 'la manga'",
+          "correct": true
+        },
+        {
+          "text": "Le Détroit, 'el estrecho'",
+          "correct": false
+        },
+        {
+          "text": "La Mer Anglaise, 'el mar Inglés'",
+          "correct": false
+        }
+      ],
+      "difficulty": "hard",
+      "fun_fact": "El nombre francés 'La Manche' significa 'la manga', en referencia a la forma larga y estrechada del canal. Los dos países pusieron, en efecto, a la misma franja de agua nombres por dos cosas completamente distintas.",
+      "category": "Geografía"
+    },
+    {
+      "id": "geo_es_143",
+      "question": "El país de Venezuela recibió su nombre porque los primeros exploradores creyeron que un poblado a orillas de un lago se parecía a ¿qué ciudad?",
+      "answers": [
+        {
+          "text": "Venecia",
+          "correct": true
+        },
+        {
+          "text": "Génova",
+          "correct": false
+        },
+        {
+          "text": "Lisboa",
+          "correct": false
+        }
+      ],
+      "difficulty": "hard",
+      "fun_fact": "Las palafitos sobre el lago de Maracaibo recordaron a Venecia a una expedición española de 1499, así que llamaron a la tierra 'Venezuela', o 'pequeña Venecia'. Un país recibió su nombre por un parecido fugaz con una ciudad italiana de canales.",
+      "category": "Geografía"
+    },
+    {
+      "id": "geo_es_144",
+      "question": "A veces se dice que Islandia y Groenlandia 'intercambiaron' los nombres equivocados. ¿Cuál es en realidad más verde?",
+      "answers": [
+        {
+          "text": "Islandia",
+          "correct": true
+        },
+        {
+          "text": "Groenlandia",
+          "correct": false
+        },
+        {
+          "text": "Son igual de áridas",
+          "correct": false
+        }
+      ],
+      "difficulty": "easy",
+      "fun_fact": "Islandia es mucho más verde y templada de lo que sugiere su nombre, gracias a la corriente del Golfo, mientras que Groenlandia está cubierta en un 80 % por un casquete de hielo. Su denominación es una rareza de la historia, no de la geografía.",
+      "category": "Geografía"
+    },
+    {
+      "id": "geo_es_145",
+      "question": "¿De dónde sacó su nombre Wall Street, en Nueva York?",
+      "answers": [
+        {
+          "text": "De un auténtico muro defensivo construido por los colonos neerlandeses",
+          "correct": true
+        },
+        {
+          "text": "De un famoso banquero llamado Jan de Waal",
+          "correct": false
+        },
+        {
+          "text": "De los altos muros de piedra de su primer banco",
+          "correct": false
+        }
+      ],
+      "difficulty": "medium",
+      "fun_fact": "Los neerlandeses levantaron una empalizada de madera a lo largo del borde norte de su asentamiento de Nueva Ámsterdam en la década de 1650 con fines defensivos. El muro ya no existe, pero la calle que sigue su trazado conservó el nombre.",
+      "category": "Geografía"
+    },
+    {
+      "id": "geo_es_146",
+      "question": "El estrecho de Bering, entre Asia y Norteamérica, lleva el nombre de Vitus Bering, que nació en ¿qué país?",
+      "answers": [
+        {
+          "text": "Dinamarca",
+          "correct": true
+        },
+        {
+          "text": "Rusia",
+          "correct": false
+        },
+        {
+          "text": "Gran Bretaña",
+          "correct": false
+        }
+      ],
+      "difficulty": "hard",
+      "fun_fact": "Bering era un navegante nacido en Dinamarca que servía al Imperio ruso cuando cartografió el estrecho en 1728. Más tarde murió de escorbuto y por la intemperie en una isla que también lleva ahora su nombre.",
+      "category": "Geografía"
+    },
+    {
+      "id": "geo_es_147",
+      "question": "El país de Argentina toma su nombre de una palabra latina que designa ¿qué metal?",
+      "answers": [
+        {
+          "text": "La plata",
+          "correct": true
+        },
+        {
+          "text": "El oro",
+          "correct": false
+        },
+        {
+          "text": "El hierro",
+          "correct": false
+        }
+      ],
+      "difficulty": "medium",
+      "fun_fact": "'Argentina' deriva de 'argentum', el latín para plata, nacido de una antigua leyenda sobre una 'Sierra de la Plata'. El metal resultó ser allí un mito, pero el esperanzador nombre perduró.",
+      "category": "Geografía"
+    },
+    {
+      "id": "geo_es_148",
+      "question": "¿De qué toma su nombre el océano Atlántico?",
+      "answers": [
+        {
+          "text": "Atlas, un titán de la mitología griega",
+          "correct": true
+        },
+        {
+          "text": "La ciudad perdida de la Atlántida",
+          "correct": false
+        },
+        {
+          "text": "Un antiguo puerto comercial fenicio",
+          "correct": false
+        }
+      ],
+      "difficulty": "medium",
+      "fun_fact": "El nombre procede de 'mar de Atlas', en referencia al titán condenado a sostener el cielo, a quien los griegos situaban cerca de las montañas del Atlas, en el noroeste de África, al borde de su mundo conocido.",
+      "category": "Geografía"
+    },
+    {
+      "id": "geo_es_149",
+      "question": "Rusia es tan grande que cubre aproximadamente ¿qué fracción de toda la tierra firme de la Tierra?",
+      "answers": [
+        {
+          "text": "Alrededor de una novena parte",
+          "correct": true
+        },
+        {
+          "text": "Alrededor de un tercio",
+          "correct": false
+        },
+        {
+          "text": "Alrededor de una quinta parte",
+          "correct": false
+        }
+      ],
+      "difficulty": "medium",
+      "fun_fact": "Rusia abarca unos 17 millones de kilómetros cuadrados, en torno al 11 % de la superficie terrestre del planeta. Ese único país es más grande que toda la superficie del planeta enano Plutón.",
+      "category": "Geografía"
+    },
+    {
+      "id": "geo_es_150",
+      "question": "África es tan mucho más grande de lo que parece en la mayoría de los mapas que podrías meter dentro de ella a la vez Estados Unidos, China e India. ¿Verdadero o falso?",
+      "answers": [
+        {
+          "text": "Verdadero",
+          "correct": true
+        },
+        {
+          "text": "Falso: solo cabe Estados Unidos",
+          "correct": false
+        },
+        {
+          "text": "Falso: África es más pequeña que China",
+          "correct": false
+        }
+      ],
+      "difficulty": "easy",
+      "fun_fact": "África mide unos 30 millones de kilómetros cuadrados. Estados Unidos, China e India juntos cubren unos 25 millones y aún cabrían dentro de ella; la proyección de Mercator encoge mucho las regiones ecuatoriales e infla los polos.",
+      "category": "Geografía"
+    }
+  ]
+}
