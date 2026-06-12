@@ -5,6 +5,11 @@ All notable changes to Quizify are documented here. This project follows
 
 ## [Unreleased]
 
+## [1.3.0-RC16] — 2026-06-12
+
+Sixteenth release candidate — adds the first Spanish content and a power-up
+balance fix on top of RC15, from live testing feedback.
+
 ### Added
 
 - **First Spanish built-in pack — "Geografía" (#342).** A faithful native-Spanish
