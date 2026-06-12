@@ -2976,3 +2976,17 @@ body.is-admin .reaction-bar {
     height: 52px;
     border-radius: 16px;
 }
+/* ==========================================
+   #299 Host-gone reset affordance
+   Non-admin escape hatch shown on paused/reveal after the host has been
+   gone ~60s. Reuses .btn .btn-primary .btn-glow styling — just spacing.
+   ========================================== */
+#paused-reset-btn {
+    margin-top: var(--space-lg);
+}
+
+#reveal-reset-controls {
+    display: flex;
+    justify-content: center;
+    margin-top: var(--space-md);
+}

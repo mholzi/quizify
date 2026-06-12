@@ -3874,6 +3874,14 @@
                     pu.saveSession(msg.session_token, state.playerName);
                 }
                 if (msg.is_admin) state.isAdmin = true;
+                // #288: restore the assigned power-up on (re)join. The server
+                // sends the current power-up in `msg.powerup`; without this a
+                // reconnecting player whose power-up was assigned earlier never
+                // sees the button (it was wiped at the previous reveal).
+                if (msg.powerup !== undefined) {
+                    myPowerUp = msg.powerup;
+                    if (game && game.renderPowerUp) game.renderPowerUp(myPowerUp);
+                }
                 if (msg.color) {
                     state.playerColor = msg.color;
                     // Apply as CSS custom property on root for global use
@@ -3943,7 +3951,13 @@
                 break;
 
             case 'powerup_assigned':
+                // #288: render immediately. powerup_assigned arrives AFTER
+                // question_started, so handleQuestionStarted's renderPowerUp
+                // ran while myPowerUp was still null — only the final round
+                // (its flourish delays the render) ever showed the button.
+                // Set + render here so the button appears in every round.
                 myPowerUp = msg.powerup_type;
+                game.renderPowerUp(myPowerUp);
                 break;
 
             case 'powerup_applied':
@@ -4064,6 +4078,14 @@
 
         if (msg.players) lobby.handlePlayerJoined(msg);
 
+        // #299: drop the host-gone reset escape hatch whenever we leave the
+        // paused/reveal views (e.g. the host came back and resumed). The
+        // PAUSED and REVEAL cases below re-arm it if still warranted.
+        if (msg.phase !== 'PAUSED') disarmResetAffordance('paused-reset-btn');
+        if (msg.phase !== 'ANSWER_REVEAL' && msg.phase !== 'REVEAL') {
+            disarmResetAffordance('reveal-reset-btn', 'reveal-reset-controls');
+        }
+
         switch (msg.phase) {
             case 'LOBBY':
                 if (!state.playerName) {
@@ -4107,6 +4129,10 @@
             case 'REVEAL':
                 pu.showView('reveal-view');
                 reveal.updateRevealView(msg);
+                // #299: if the host has vanished, a reveal nobody can advance
+                // is a dead-end → arm the non-admin reset escape hatch.
+                maybeArmRevealReset(msg);
+                disarmResetAffordance('paused-reset-btn');
                 break;
 
             case 'FINALE':
@@ -4379,6 +4405,94 @@
         var hintKey = isDisconnect ? 'admin.pausedHostHint' : 'admin.pausedHint';
         if (titleEl) titleEl.textContent = t(titleKey);
         if (messageEl) messageEl.textContent = t(hintKey);
+
+        // #299: host-permanently-gone escape hatch. When the admin device
+        // dies for good, the server lets ANY client reset after 60s (#207),
+        // but until now no non-admin view exposed a button → the game was a
+        // dead-end. Arm a 60s timer on an admin_disconnected pause that
+        // reveals the reset button; a non-admin then has a way out. Admins
+        // already have their own resume/end bar, so skip it for them.
+        if (isDisconnect && !state.isAdmin) {
+            armResetAffordance('paused-reset-btn');
+        } else {
+            disarmResetAffordance('paused-reset-btn');
+        }
+    }
+
+    // ============================================
+    // Host-permanently-gone reset affordance (#299)
+    // ============================================
+
+    // ~60s — mirrors the server's #207 grace window before it authorizes a
+    // reset_game from any client.
+    var RESET_AFFORDANCE_DELAY_MS = 60000;
+    var _resetAffordanceTimers = {};
+
+    // wrapperId (optional) is an extra container revealed alongside the
+    // button — used by the reveal view so its bordered slot stays hidden
+    // until the timer actually fires.
+    function armResetAffordance(btnId, wrapperId) {
+        // Already armed/shown for this view — don't restart the clock (a
+        // repeated PAUSED/REVEAL push shouldn't reset the wait).
+        if (_resetAffordanceTimers[btnId]) return;
+        var btn = document.getElementById(btnId);
+        if (btn && !btn.classList.contains('hidden')) return;
+        _resetAffordanceTimers[btnId] = setTimeout(function () {
+            _resetAffordanceTimers[btnId] = null;
+            var b = document.getElementById(btnId);
+            if (b) {
+                b.disabled = false;
+                b.classList.remove('hidden');
+            }
+            if (wrapperId) {
+                var w = document.getElementById(wrapperId);
+                if (w) w.classList.remove('hidden');
+            }
+        }, RESET_AFFORDANCE_DELAY_MS);
+    }
+
+    function disarmResetAffordance(btnId, wrapperId) {
+        if (_resetAffordanceTimers[btnId]) {
+            clearTimeout(_resetAffordanceTimers[btnId]);
+            _resetAffordanceTimers[btnId] = null;
+        }
+        var btn = document.getElementById(btnId);
+        if (btn) btn.classList.add('hidden');
+        if (wrapperId) {
+            var w = document.getElementById(wrapperId);
+            if (w) w.classList.add('hidden');
+        }
+    }
+
+    // Decide whether the reveal view should arm its reset affordance. The
+    // reveal payload carries the full player list; "no connected admin"
+    // means the host can no longer advance the round → arm the escape hatch.
+    function maybeArmRevealReset(data) {
+        if (state.isAdmin) { disarmResetAffordance('reveal-reset-btn', 'reveal-reset-controls'); return; }
+        var players = (data && data.players) || [];
+        var adminConnected = players.some(function (p) {
+            return p && p.is_admin && p.connected !== false;
+        });
+        if (adminConnected) {
+            disarmResetAffordance('reveal-reset-btn', 'reveal-reset-controls');
+        } else {
+            // The wrapper (#reveal-reset-controls) is kept hidden until the
+            // timer fires — see armResetAffordance's wrapperId reveal — so a
+            // host-gone reveal doesn't show an empty bordered slot for 60s.
+            armResetAffordance('reveal-reset-btn', 'reveal-reset-controls');
+        }
+    }
+
+    function setupResetAffordance() {
+        ['paused-reset-btn', 'reveal-reset-btn'].forEach(function (id) {
+            var btn = document.getElementById(id);
+            if (btn) {
+                btn.addEventListener('click', function () {
+                    btn.disabled = true;
+                    send('reset_game', {});
+                });
+            }
+        });
     }
 
     // ============================================
@@ -4655,6 +4769,7 @@
         setupAdminControls();
         setupReactionBar();
         setupSoundToggle();
+        setupResetAffordance();
         pu.setupCollapsibles();
         if (lightning) { lightning.setSend(send); lightning.init(); }
 
