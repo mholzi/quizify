@@ -17,6 +17,7 @@ from ..const import (
     DIFFICULTY_AUTO_START,
     DIFFICULTY_DEFAULT,
     ERR_ALREADY_SUBMITTED,
+    ERR_FROZEN,
     ERR_GAME_ALREADY_STARTED,
     ERR_GAME_NOT_STARTED,
     ERR_INVALID_ACTION,
@@ -585,6 +586,19 @@ class QuizifyGameState:
         if timer and timer.is_expired():
             return ERR_ROUND_EXPIRED
 
+        # Freeze lockout (#300): a frozen target cannot submit until the freeze
+        # window expires. The round clock keeps running underneath (the freeze
+        # does NOT pause get_remaining), so the lockout costs the target real
+        # answer time. Reject the submission while still frozen; once the window
+        # passes the player may submit normally (if the timer hasn't expired).
+        if timer and timer.is_frozen():
+            _LOGGER.debug(
+                "Rejecting submit from frozen player %s (%.1fs of freeze left)",
+                player_id,
+                timer.frozen_remaining(),
+            )
+            return ERR_FROZEN
+
         # Record submission
         elapsed = timer.get_elapsed() if timer else 0.0
         player.submit_answer(answer_index, time.time())
@@ -709,6 +723,14 @@ class QuizifyGameState:
         player_correct: dict[str, bool] = {}
         for player in self._player_registry.players.values():
             if not player.submitted:
+                # Timeout: the player never submitted this round, so they score
+                # 0 for it and their streak breaks. On the FINAL round this also
+                # means any wager they set is NOT resolved — wagers only apply on
+                # submit (see scoring_engine.score_submission). A player who
+                # times out KEEPS their current points and neither wins nor loses
+                # the wager. This is the intended "timeout keeps stake" semantics
+                # (#301, Markus' decision) — documented in the wager UI copy
+                # (i18n wager.timeoutNote). Do NOT add a wager deduction here.
                 player.streak = 0
                 player.record_round_result("timeout")
                 player.round_scores.append(0)
@@ -1172,7 +1194,10 @@ class QuizifyGameState:
                 player.freezes_used += 1
             target_timer = self._timers.get(target_id)
             if target_timer:
-                target_timer.pause_for_player(FREEZE_DURATION)
+                # Lockout, not a pause (#300): the target can't submit for the
+                # freeze window, but their clock keeps running and the frozen
+                # seconds count as elapsed (no speed-bonus refund).
+                target_timer.freeze(FREEZE_DURATION)
 
         elif effect.type == PowerUpType.TIME_BOOST:
             own_timer = self._timers.get(player_id)

@@ -141,6 +141,15 @@ class ScoringEngine:
         # REPLACES the normal scoring: right answer adds the wager value, wrong
         # subtracts. Speed/streak/difficulty multipliers are ignored — the
         # wager IS the bet. We bet against the score BEFORE points were added.
+        #
+        # INTENDED SEMANTICS (#300/#301, Markus' decision — do NOT "fix"): the
+        # wager only resolves when the player actually SUBMITS. A player who
+        # times out (never submits) never reaches this method at all — they keep
+        # their current points and neither win nor lose the wager. That is by
+        # design. The timeout-keeps-stake behavior is documented in the wager UI
+        # copy (i18n key wager.timeoutNote) so it is not a hidden trap; it is NOT
+        # an exploit to be patched out. See also the timeout path in
+        # state._do_evaluate_round.
         wager_used: int | None = None
         if is_final_round and wager is not None:
             bank = max(0, score_before_wager)

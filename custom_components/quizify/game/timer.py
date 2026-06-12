@@ -8,7 +8,16 @@ import time
 class QuestionTimer:
     """Per-player countdown timer for a question round.
 
-    Supports pause (freeze power-up) and extension (time_boost power-up).
+    Supports a freeze LOCKOUT (freeze power-up) and extension (time_boost
+    power-up).
+
+    Freeze is a *lockout*, not a pause (#300, Markus' decision): while the
+    freeze window is active the target cannot submit an answer, but their
+    round clock keeps running and the frozen seconds count as elapsed (so
+    there is no speed-bonus refund). The net effect is a real ~5s penalty —
+    the target loses answer time — matching the "penalize an opponent" intent.
+    This replaces the earlier pause + refund model (which made freeze a *help*
+    to the target: paused clock + fully refunded speed bonus, #254).
     """
 
     def __init__(self, duration: float = 30.0) -> None:
@@ -16,39 +25,53 @@ class QuestionTimer:
         self._duration = duration
         self._start_time: float | None = None
         self._bonus_time: float = 0.0
-        self._pause_remaining: float = 0.0
-        self._pause_started_at: float | None = None
+        self._frozen_until: float | None = None
 
     def start(self) -> None:
         """Start the countdown timer."""
         self._start_time = time.monotonic()
         self._bonus_time = 0.0
-        self._pause_remaining = 0.0
-        self._pause_started_at = None
+        self._frozen_until = None
 
     def get_remaining(self) -> float:
-        """Get remaining time in seconds."""
+        """Get remaining time in seconds.
+
+        Freeze does NOT extend this — the clock keeps running while frozen
+        (#300), so a frozen target genuinely loses answer time.
+        """
         if self._start_time is None:
             return self._duration
         elapsed = time.monotonic() - self._start_time
         effective_duration = self._duration + self._bonus_time
-        remaining = effective_duration - elapsed + self._pause_remaining
+        remaining = effective_duration - elapsed
         return max(0.0, remaining)
 
     def is_expired(self) -> bool:
         """Check if the timer has expired."""
         return self._start_time is not None and self.get_remaining() <= 0
 
-    def pause_for_player(self, seconds: float) -> None:
-        """Add pause credit — effectively freezes the timer for the given duration.
+    def freeze(self, seconds: float) -> None:
+        """Lock the player out of submitting for ``seconds`` (freeze power-up).
 
-        Used by the freeze power-up to penalize an opponent. Records the wall-clock
-        start of the freeze so the speed-bonus calculation can credit only the
-        portion of the freeze that has actually elapsed (see get_elapsed / #254).
+        Sets a ``frozen_until`` timestamp. While ``is_frozen()`` is true the
+        server rejects the target's ``submit_answer`` (#300). The round clock
+        is NOT paused and the frozen time is NOT refunded from the speed bonus —
+        the lockout costs the target real answer time. Re-freezing extends the
+        lockout to whichever end-time is later (it never shortens an active one).
         """
-        self._pause_remaining += seconds
-        if self._pause_started_at is None:
-            self._pause_started_at = time.monotonic()
+        new_until = time.monotonic() + max(0.0, seconds)
+        if self._frozen_until is None or new_until > self._frozen_until:
+            self._frozen_until = new_until
+
+    def is_frozen(self) -> bool:
+        """True while the freeze lockout window is still active."""
+        return self._frozen_until is not None and time.monotonic() < self._frozen_until
+
+    def frozen_remaining(self) -> float:
+        """Seconds left on the freeze lockout (0.0 if not frozen)."""
+        if self._frozen_until is None:
+            return 0.0
+        return max(0.0, self._frozen_until - time.monotonic())
 
     def add_time(self, seconds: float) -> None:
         """Add bonus time to the timer.
@@ -60,21 +83,14 @@ class QuestionTimer:
     def get_elapsed(self) -> float:
         """Get effective elapsed time since start — used for speed bonus calculation.
 
-        Subtracts accumulated pause credit (e.g. from Freeze power-up) so that
-        frozen players are not penalised with a lower speed bonus. Crucially it
-        credits only the portion of the freeze that has ACTUALLY elapsed in
-        wall-clock time, not the full 5s up front — otherwise a frozen player who
-        answers immediately would harvest up to 5s of free speed bonus (#254).
+        Plain wall-clock elapsed since start. Freeze does NOT subtract a credit
+        (#300): frozen seconds count as elapsed, so a frozen player gets NO
+        speed-bonus refund. This is the deliberate penalty — it reverses the
+        earlier refund model (#254) that made freeze help the target.
         """
         if self._start_time is None:
             return 0.0
-        now = time.monotonic()
-        pause_credit = self._pause_remaining
-        if self._pause_started_at is not None:
-            # Only count the freeze time that has truly passed so far.
-            elapsed_pause = now - self._pause_started_at
-            pause_credit = min(self._pause_remaining, max(0.0, elapsed_pause))
-        return max(0.0, now - self._start_time - pause_credit)
+        return max(0.0, time.monotonic() - self._start_time)
 
     @classmethod
     def resumed(cls, remaining: float, elapsed: float) -> "QuestionTimer":
@@ -88,16 +104,15 @@ class QuestionTimer:
         * ``get_remaining()`` == *remaining* (the time frozen at pause), and
         * ``get_elapsed()``  == *elapsed* (the time already spent pre-pause),
 
-        and both then advance normally as wall-clock runs. With no bonus/pause
-        credit, ``get_remaining() = _duration - (now - _start_time)`` and
+        and both then advance normally as wall-clock runs. With no bonus,
+        ``get_remaining() = _duration - (now - _start_time)`` and
         ``get_elapsed() = now - _start_time``; setting ``_start_time = now -
         elapsed`` and ``_duration = remaining + elapsed`` satisfies both.
         """
         timer = cls(duration=max(0.0, remaining) + max(0.0, elapsed))
         timer._start_time = time.monotonic() - max(0.0, elapsed)
         timer._bonus_time = 0.0
-        timer._pause_remaining = 0.0
-        timer._pause_started_at = None
+        timer._frozen_until = None
         return timer
 
     def reset(self, duration: float | None = None) -> None:
@@ -106,5 +121,4 @@ class QuestionTimer:
             self._duration = duration
         self._start_time = None
         self._bonus_time = 0.0
-        self._pause_remaining = 0.0
-        self._pause_started_at = None
+        self._frozen_until = None
