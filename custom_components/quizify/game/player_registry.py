@@ -19,7 +19,7 @@ from ..const import (
 if TYPE_CHECKING:
     from aiohttp import web
 
-from .player import PlayerSession, PLAYER_COLORS
+from .player import PLAYER_COLORS, PlayerSession
 
 _LOGGER = logging.getLogger(__name__)
 

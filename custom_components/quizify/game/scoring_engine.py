@@ -18,7 +18,7 @@ message protocol and scoring are unchanged.
 
 from __future__ import annotations
 
-from dataclasses import dataclass, field
+from dataclasses import dataclass
 from typing import Any
 
 from .scoring import (
@@ -26,7 +26,6 @@ from .scoring import (
     MAX_SPEED_BONUS,
     calculate_round_score,
     get_streak_milestone_bonus,
-    get_streak_multiplier,
 )
 from .types import DIFFICULTY_MULTIPLIERS, Difficulty
 

@@ -6,7 +6,7 @@ from typing import TYPE_CHECKING, Any
 
 if TYPE_CHECKING:
     from custom_components.quizify.game.player import PlayerSession
-    from custom_components.quizify.game.questions import Answer, Question
+    from custom_components.quizify.game.questions import Question
     from custom_components.quizify.game.state import QuizifyGameState
 
 

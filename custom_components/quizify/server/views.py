@@ -7,14 +7,14 @@ handlers — only the static-asset registration differs (HA uses
 
 from __future__ import annotations
 
+import hashlib
+import json
 import logging
+import os
+import time
 from pathlib import Path
 from typing import TYPE_CHECKING
 
-import hashlib
-import json
-import os
-import time
 import aiohttp
 from aiohttp import web
 
