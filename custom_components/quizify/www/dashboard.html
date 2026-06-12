@@ -544,6 +544,116 @@
         }
 
         /* ===================
+           PAUSED OVERLAY (#296) — freezes the timer + dims the board.
+           Mirrors the player paused-view intent (game.paused / pausedHint)
+           on a TV-sized scrim so the room sees the game is on hold and the
+           draining timer bar is explained.
+           =================== */
+        .dashboard-paused-overlay {
+            position: fixed;
+            inset: 0;
+            z-index: 50;
+            display: none;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            gap: 18px;
+            text-align: center;
+            padding: 24px;
+            background: rgba(250, 246, 236, 0.92);  /* cream scrim */
+            backdrop-filter: blur(3px);
+        }
+        .dashboard-paused-overlay.active { display: flex; }
+        .dashboard-paused-icon {
+            font-size: clamp(48px, 7vw, 88px);
+            line-height: 1;
+            color: var(--dash-accent-primary);
+        }
+        .dashboard-paused-title {
+            font-family: 'DM Sans', sans-serif;
+            font-size: clamp(28px, 4vw, 56px);
+            font-weight: 700;
+            color: var(--dash-text-white);
+        }
+        .dashboard-paused-hint {
+            font-family: 'DM Sans', sans-serif;
+            font-size: clamp(16px, 1.8vw, 24px);
+            color: var(--dash-text-neon-muted);
+            max-width: 640px;
+        }
+
+        /* ===================
+           LIGHTNING (#296) — mirrors the question/recap vocabulary at
+           TV size. Reuses .dashboard-category / .dashboard-question /
+           .dashboard-answers / .dashboard-answer / .dashboard-leaderboard;
+           only the splash + progress + recap grid are bespoke.
+           =================== */
+        .dashboard-lightning-kicker {
+            font-family: 'JetBrains Mono', ui-monospace, monospace;
+            font-size: 12px;
+            font-weight: 500;
+            text-transform: uppercase;
+            letter-spacing: 0.2em;
+            color: var(--dash-accent-primary);
+            margin-bottom: 8px;
+        }
+        .dashboard-lightning-progress {
+            font-family: 'JetBrains Mono', ui-monospace, monospace;
+            font-size: clamp(14px, 1.4vw, 20px);
+            font-weight: 700;
+            color: var(--dash-text-neon-muted);
+            font-variant-numeric: tabular-nums;
+            margin-left: auto;
+        }
+        .dashboard-lightning-splash {
+            flex: 1;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            gap: 16px;
+            text-align: center;
+        }
+        .dashboard-lightning-splash .dashboard-lightning-title {
+            font-family: 'DM Sans', sans-serif;
+            font-size: clamp(32px, 5vw, 64px);
+            font-weight: 700;
+            color: var(--dash-text-white);
+        }
+        .dashboard-lightning-splash .dashboard-lightning-rules {
+            font-family: 'DM Sans', sans-serif;
+            font-size: clamp(16px, 1.8vw, 24px);
+            color: var(--dash-text-neon-muted);
+        }
+        .dashboard-lightning-recap-grid {
+            flex: 1;
+            overflow-y: auto;
+            display: flex;
+            flex-direction: column;
+            gap: 8px;
+            margin-top: 12px;
+        }
+        .dashboard-lightning-recap-row {
+            padding: 12px 16px;
+            border-radius: 8px;
+            background: var(--dash-surface-dark);
+            border: 1px solid var(--dash-border-neon);
+            font-family: 'DM Sans', sans-serif;
+            font-size: 0.95rem;
+            color: var(--dash-text-white);
+        }
+        .dashboard-lightning-recap-row .lr-qnum {
+            font-family: 'JetBrains Mono', ui-monospace, monospace;
+            color: var(--dash-accent-primary);
+            font-weight: 700;
+            margin-right: 6px;
+        }
+        .dashboard-lightning-recap-row .lr-correct {
+            color: var(--dash-success);
+            font-weight: 600;
+        }
+
+        /* ===================
            FINALE / PODIUM — single spotlight, no confetti
            =================== */
         .dashboard-finale {
@@ -1032,6 +1142,58 @@
                 </div>
             </div>
         </div>
+
+        <!-- LIGHTNING VIEW (#296) — mirrors the question view at TV size. -->
+        <div id="lightning-view" class="dashboard-view">
+            <div class="dashboard-columns">
+                <div class="dashboard-left">
+                    <div class="dashboard-question-body">
+                        <!-- Intro splash, shown while splash_pending. -->
+                        <div id="lightning-splash" class="dashboard-lightning-splash" hidden>
+                            <div class="dashboard-lightning-kicker" data-i18n="lightning.splashKicker">Lightning Round</div>
+                            <div class="dashboard-lightning-title" data-i18n="lightning.splashTitle">Get ready!</div>
+                            <div id="lightning-splash-rules" class="dashboard-lightning-rules" data-i18n="lightning.startHint">5 rapid questions, 15 seconds each, no breaks</div>
+                        </div>
+                        <!-- Active question. -->
+                        <div id="lightning-question-section">
+                            <div class="dashboard-category">
+                                <span data-i18n="lightning.title">Lightning Round</span>
+                                <span id="lightning-progress" class="dashboard-lightning-progress"></span>
+                            </div>
+                            <div id="lightning-question-text" class="dashboard-question"></div>
+                            <div id="lightning-answers-grid" class="dashboard-answers"></div>
+                        </div>
+                    </div>
+                </div>
+                <div class="dashboard-right">
+                    <div class="dashboard-leaderboard-title" data-i18n="dashboard.leaderboard">Leaderboard</div>
+                    <div id="lightning-leaderboard" class="dashboard-leaderboard"></div>
+                </div>
+            </div>
+        </div>
+
+        <!-- LIGHTNING RECAP VIEW (#296) — totals + per-question grid. -->
+        <div id="lightning-recap-view" class="dashboard-view">
+            <div class="dashboard-columns">
+                <div class="dashboard-left">
+                    <div class="dashboard-question-body">
+                        <div class="dashboard-category" data-i18n="lightning.questionRecap">Question-by-question</div>
+                        <div id="lightning-recap-grid" class="dashboard-lightning-recap-grid"></div>
+                    </div>
+                </div>
+                <div class="dashboard-right">
+                    <div class="dashboard-leaderboard-title" data-i18n="lightning.recapTitle">Lightning Round Results</div>
+                    <div id="lightning-recap-leaderboard" class="dashboard-leaderboard"></div>
+                </div>
+            </div>
+        </div>
+
+        <!-- PAUSED OVERLAY (#296) — scrim over whatever view is active. -->
+        <div id="paused-overlay" class="dashboard-paused-overlay">
+            <div class="dashboard-paused-icon">⏸</div>
+            <div class="dashboard-paused-title" data-i18n="game.paused">Game Paused</div>
+            <div class="dashboard-paused-hint" data-i18n="game.pausedHint">The game will resume when the host returns</div>
+        </div>
     </main>
 
     <script src="/quizify/static/js/i18n.js?v={{ASSET_VER}}"></script>
@@ -1045,12 +1207,18 @@
         var timerDuration = 30;
         var timerRemaining = 0;
         var currentAnswers = [];
+        // #296: while paused the server stops sending timer_tick, so we must
+        // also ignore the local board's last tick and never animate the bar
+        // down. This flag gates handleTimerTick so a frozen game's bar holds.
+        var isPaused = false;
 
         // ---- DOM ----
         var views = {
             waiting: document.getElementById('waiting-view'),
             question: document.getElementById('question-view'),
             finale: document.getElementById('finale-view'),
+            lightning: document.getElementById('lightning-view'),
+            lightningRecap: document.getElementById('lightning-recap-view'),
         };
         var els = {
             roundIndicator: document.getElementById('round-indicator'),
@@ -1066,11 +1234,39 @@
             funFactText: document.getElementById('fun-fact-text'),
             podium: document.getElementById('podium'),
             finaleLeaderboard: document.getElementById('finale-leaderboard'),
+            pausedOverlay: document.getElementById('paused-overlay'),
+            lightningSplash: document.getElementById('lightning-splash'),
+            lightningSplashRules: document.getElementById('lightning-splash-rules'),
+            lightningQuestionSection: document.getElementById('lightning-question-section'),
+            lightningProgress: document.getElementById('lightning-progress'),
+            lightningQuestionText: document.getElementById('lightning-question-text'),
+            lightningAnswersGrid: document.getElementById('lightning-answers-grid'),
+            lightningLeaderboard: document.getElementById('lightning-leaderboard'),
+            lightningRecapGrid: document.getElementById('lightning-recap-grid'),
+            lightningRecapLeaderboard: document.getElementById('lightning-recap-leaderboard'),
         };
+
+        // i18n helper — returns the translation or the supplied fallback when
+        // the bundle isn't loaded yet / the key is missing.
+        function t(key, fallback) {
+            if (window.QuizifyI18n && window.QuizifyI18n.t) {
+                var v = window.QuizifyI18n.t(key);
+                if (v && v !== key) return v;
+            }
+            return fallback != null ? fallback : key;
+        }
 
         function showView(name) {
             Object.values(views).forEach(function(v) { v.classList.remove('active'); });
             if (views[name]) views[name].classList.add('active');
+        }
+
+        // #296: the paused scrim sits on top of whatever view is active.
+        // Pause also freezes the timer; resume clears the flag so the next
+        // timer_tick (or question) animates the bar again.
+        function setPaused(on) {
+            isPaused = !!on;
+            if (els.pausedOverlay) els.pausedOverlay.classList.toggle('active', isPaused);
         }
 
         // Issue #25 + #183 (Variant 1 split layout): render the optional
@@ -1152,9 +1348,25 @@
                     handleFinale(msg);
                     break;
                 case 'game_reset':
+                    setPaused(false);
                     showView('waiting');
                     els.roundIndicator.textContent = '';
                     els.timerFill.style.width = '0%';
+                    break;
+                // #296: lightning round — the server broadcasts these events
+                // to dashboards just like to the admin. Mirror admin.js's
+                // handlers for the big screen.
+                case 'lightning_splash':
+                    handleLightningSplash(msg);
+                    break;
+                case 'lightning_question':
+                    handleLightningQuestion(msg);
+                    break;
+                case 'lightning_tick':
+                    handleLightningTick(msg);
+                    break;
+                case 'lightning_recap':
+                    handleLightningRecap(msg.recap || {});
                     break;
                 case 'player_joined':
                 case 'player_left':
@@ -1164,6 +1376,10 @@
 
         function handleGameState(msg) {
             if (msg.leaderboard) renderLeaderboard(els.leaderboard, msg.leaderboard);
+
+            // #296: the paused scrim is independent of the underlying view —
+            // set it on any PAUSED snapshot, clear it otherwise.
+            setPaused(msg.phase === 'PAUSED');
 
             switch (msg.phase) {
                 case 'LOBBY':
@@ -1185,11 +1401,152 @@
                     }
                     break;
                 case 'ANSWER_REVEAL':
+                    // #296: a (re)connect during the reveal has no live
+                    // question_started to render from. The snapshot's nested
+                    // round_summary now carries the question + canonical
+                    // answers + correct index, so rebuild the question view
+                    // instead of leaving it blank.
                     showView('question');
+                    if (msg.round_summary && msg.round_summary.answers) {
+                        renderRevealFromSnapshot(msg.round_summary, msg.round, msg.total_rounds);
+                    }
+                    break;
+                case 'PAUSED':
+                    // Freeze the bar where it stands; the scrim explains why.
+                    // The view behind stays whatever it was (we don't know the
+                    // pre-pause question from this snapshot, but the overlay
+                    // covers it). Keep the bar from any prior tick frozen.
+                    break;
+                case 'LIGHTNING':
+                    showView('lightning');
+                    if (msg.lightning) {
+                        if (msg.lightning.splash_pending) {
+                            handleLightningSplash({
+                                num_questions: msg.lightning.num_questions,
+                                seconds_per_question: msg.lightning.seconds_per_question,
+                            });
+                        } else {
+                            var lq = msg.lightning.question;
+                            handleLightningQuestion({
+                                question_text: lq ? lq.text : '',
+                                answers: lq ? lq.answers : [],
+                                index: msg.lightning.index,
+                                num_questions: msg.lightning.num_questions,
+                            });
+                        }
+                        if (msg.lightning.leaderboard) {
+                            renderLeaderboard(els.lightningLeaderboard, msg.lightning.leaderboard);
+                        }
+                    }
+                    break;
+                case 'LIGHTNING_RECAP':
+                    if (msg.lightning_recap) handleLightningRecap(msg.lightning_recap);
+                    else showView('lightningRecap');
                     break;
                 case 'FINALE':
                     handleFinale(msg);
                     break;
+            }
+        }
+
+        // #296: rebuild the reveal question view from the snapshot. Renders
+        // the same markup as handleQuestionStarted, then applies the correct
+        // highlight via the canonical original-order index. Reuses the live
+        // reveal classes (.correct / .wrong / .revealed) so the look matches.
+        function renderRevealFromSnapshot(rs, round, totalRounds) {
+            els.funFact.classList.remove('visible');
+            els.roundIndicator.textContent = t('dashboard.questionCounter',
+                'Question ' + round + ' / ' + totalRounds)
+                .replace('{current}', round).replace('{total}', totalRounds);
+            els.questionCategory.textContent = rs.category || '';
+            els.questionText.textContent = rs.question_text || '';
+            renderQuestionImage(rs.image_url);
+            // The reveal is over — freeze the bar full (no countdown on reveal).
+            els.timerFill.style.width = '0%';
+            els.timerFill.className = 'dashboard-timer-fill';
+
+            var labels = ['A', 'B', 'C', 'D'];
+            var answers = rs.answers || [];
+            var correctIdx = (typeof rs.correct_answer_index_original === 'number')
+                ? rs.correct_answer_index_original : -1;
+            els.answersGrid.innerHTML = answers.map(function(answer, i) {
+                var text = (answer && typeof answer === 'object') ? answer.text : answer;
+                var cls = 'dashboard-answer revealed ' + (i === correctIdx ? 'correct' : 'wrong');
+                return '<div class="' + cls + '" data-index="' + i + '">' +
+                    '<span class="answer-label">' + (labels[i] || '') + '</span>' +
+                    '<span class="answer-text">' + escapeHtml(text) + '</span>' +
+                    '</div>';
+            }).join('');
+
+            if (rs.fun_fact) {
+                els.funFactText.textContent = rs.fun_fact;
+                setTimeout(function() { els.funFact.classList.add('visible'); }, 300);
+            }
+        }
+
+        // ---- Lightning (#296) — mirrors admin.js handlers for the TV. ----
+        function handleLightningSplash(msg) {
+            showView('lightning');
+            if (els.lightningSplash) els.lightningSplash.hidden = false;
+            if (els.lightningQuestionSection) els.lightningQuestionSection.hidden = true;
+            if (els.lightningSplashRules) {
+                var n = (typeof msg.num_questions === 'number') ? msg.num_questions : 5;
+                var s = (typeof msg.seconds_per_question === 'number')
+                    ? Math.round(msg.seconds_per_question) : 15;
+                els.lightningSplashRules.textContent =
+                    t('lightning.startHint', n + ' questions · ' + s + 's each');
+            }
+        }
+
+        function handleLightningQuestion(msg) {
+            showView('lightning');
+            if (els.lightningSplash) els.lightningSplash.hidden = true;
+            if (els.lightningQuestionSection) els.lightningQuestionSection.hidden = false;
+            if (els.lightningProgress) {
+                els.lightningProgress.textContent =
+                    ((msg.index || 0) + 1) + ' / ' + (msg.num_questions || 5);
+            }
+            if (els.lightningQuestionText) {
+                els.lightningQuestionText.textContent = msg.question_text || '';
+            }
+            var labels = ['A', 'B', 'C', 'D'];
+            var answers = msg.answers || [];
+            if (els.lightningAnswersGrid) {
+                els.lightningAnswersGrid.innerHTML = answers.map(function(answer, i) {
+                    var text = (answer && typeof answer === 'object') ? answer.text : answer;
+                    return '<div class="dashboard-answer" data-index="' + i + '">' +
+                        '<span class="answer-label">' + (labels[i] || '') + '</span>' +
+                        '<span class="answer-text">' + escapeHtml(text) + '</span>' +
+                        '</div>';
+                }).join('');
+            }
+        }
+
+        function handleLightningTick(msg) {
+            // Lightning has its own clock; show it on the shared timer bar so
+            // the room sees the countdown. The server sends remaining seconds.
+            if (typeof msg.remaining !== 'number') return;
+            var total = 15;  // lightning seconds_per_question (display only)
+            var pct = Math.max(0, Math.min(100, (msg.remaining / total) * 100));
+            els.timerFill.style.width = pct + '%';
+            els.timerFill.className = 'dashboard-timer-fill';
+            if (msg.remaining <= 5) els.timerFill.classList.add('critical');
+        }
+
+        function handleLightningRecap(recap) {
+            showView('lightningRecap');
+            if (els.lightningRecapLeaderboard) {
+                renderLeaderboard(els.lightningRecapLeaderboard, recap.leaderboard || []);
+            }
+            if (els.lightningRecapGrid) {
+                var questions = recap.questions || [];
+                els.lightningRecapGrid.innerHTML = questions.map(function(q, qi) {
+                    return '<div class="dashboard-lightning-recap-row">' +
+                        '<span class="lr-qnum">' + (qi + 1) + '.</span>' +
+                        escapeHtml(q.question_text) +
+                        ' <span class="lr-correct">→ ' + escapeHtml(q.correct_answer) + '</span>' +
+                        '</div>';
+                }).join('');
             }
         }
 
@@ -1235,6 +1592,10 @@
         }
 
         function handleTimerTick(msg) {
+            // #296: ignore stray ticks while paused so the bar holds frozen.
+            // (The server already stops sending ticks on pause; this guards a
+            // late/in-flight tick that would otherwise resume the drain.)
+            if (isPaused) return;
             timerRemaining = msg.remaining;
             var pct = timerDuration > 0 ? (timerRemaining / timerDuration) * 100 : 0;
             els.timerFill.style.width = pct + '%';

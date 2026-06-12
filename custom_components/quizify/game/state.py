@@ -1045,11 +1045,21 @@ class QuizifyGameState:
         """Begin a lightning round, reusing the current player roster.
 
         Returns True if it started, False if no questions were available.
-        Allowed from LOBBY (standalone lightning) or FINALE (after a game).
+        Allowed from LOBBY (standalone lightning), FINALE (after a game), or
+        LIGHTNING_RECAP (the "play again" button after a lightning round —
+        issue #294; this is the same "between rounds" situation as FINALE).
+        A fresh LightningRound is built below and ``_lightning`` /
+        ``_lightning_splash_pending`` are reassigned, so re-entry from
+        LIGHTNING_RECAP starts cleanly. (#285 will later restructure
+        lightning entry; this is a minimal fix for the dead-end.)
         """
         from .lightning import LightningRound  # local import — avoid cycle
 
-        if self.phase not in (GamePhase.LOBBY, GamePhase.FINALE):
+        if self.phase not in (
+            GamePhase.LOBBY,
+            GamePhase.FINALE,
+            GamePhase.LIGHTNING_RECAP,
+        ):
             return False
 
         player_names = list(self._player_registry.players.keys())
@@ -1394,7 +1404,22 @@ class QuizifyGameState:
 
         if self.phase == GamePhase.ANSWER_REVEAL and self._round_summary:
             s = self._round_summary
+            q = s.question
+            # Canonical (question-JSON) answer order, mirroring the
+            # QUESTION_ACTIVE snapshot's ``question.answers``. A TV/dashboard
+            # that (re)connects during the reveal has no live ``question``
+            # block to render, so without these fields its question view was
+            # blank (#296). The dashboard renders the unshuffled grid and
+            # highlights ``correct_answer_index_original``.
+            correct_idx_original = next(
+                (i for i, a in enumerate(q.answers) if a.correct), -1
+            )
             snapshot["round_summary"] = {
+                "question_text": q.question,
+                "category": q.category,
+                "image_url": q.image_url,
+                "answers": [a.text for a in q.answers],
+                "correct_answer_index_original": correct_idx_original,
                 "correct_answer": s.correct_answer.text,
                 "fun_fact": s.fun_fact,
                 "results": [
