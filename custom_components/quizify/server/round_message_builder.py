@@ -274,6 +274,30 @@ class RoundMessageBuilder:
         # with per-player shuffles, a shuffled index is meaningless to
         # any other player. The client uses answer_text for display and
         # correct_answer_text for highlighting their own button.
+        #
+        # correct_button_index (#308): the index of the correct answer in
+        # THIS player's OWN shuffled button order. Per-player shuffles (the
+        # #253/#286 projection) mean neither the canonical
+        # ``correct_answer_index`` nor the original ``answer_index`` map to a
+        # player's button positions — and a player who answered wrong or
+        # didn't answer cannot resolve the correct button locally when two
+        # answers share the same text (the duplicate-text trap from #308).
+        # We compute it server-side: a player's shuffle is
+        # ``button_pos -> original_index``, so the correct button is the
+        # position where ``shuffle[pos] == correct_original_idx``. ``-1`` when
+        # unresolvable (no shuffle / no correct answer found); the reveal
+        # client then falls back to its #319 index/text heuristic.
+        def _correct_button_index(player_name: str) -> int:
+            if correct_original_idx < 0:
+                return -1
+            shuffle = game_state.get_player_shuffle(player_name)
+            if not shuffle:
+                return -1
+            try:
+                return shuffle.index(correct_original_idx)
+            except ValueError:
+                return -1
+
         all_answers = []
         for player in game_state.get_players():
             if player.submitted and player.current_answer is not None:
@@ -290,6 +314,7 @@ class RoundMessageBuilder:
                     "answer_index": submitted_orig,  # original index, not shuffled
                     "answer_text": answer_text,
                     "correct": is_correct,
+                    "correct_button_index": _correct_button_index(player.name),
                     "points_earned": player.round_score,
                     "speed_bonus": breakdown.get("speed_bonus", 0),
                     "streak_bonus": breakdown.get("streak_bonus", 0),
@@ -303,6 +328,7 @@ class RoundMessageBuilder:
                     "answer_index": None,
                     "answer_text": "—",
                     "correct": False,
+                    "correct_button_index": _correct_button_index(player.name),
                     "points_earned": 0,
                     "no_answer": True,
                 })
