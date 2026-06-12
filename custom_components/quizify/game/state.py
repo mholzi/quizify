@@ -3,6 +3,7 @@
 from __future__ import annotations
 
 import asyncio
+import contextlib
 import logging
 import random
 import secrets
@@ -155,7 +156,9 @@ class QuizifyGameState:
         self._last_settings: dict[str, Any] | None = None
 
         # Broadcast callback — set by websocket layer
-        self._broadcast_callback: Callable[[dict[str, Any]], Awaitable[None]] | None = None
+        self._broadcast_callback: (
+            Callable[[dict[str, Any]], Awaitable[None]] | None
+        ) = None
 
         # State-change observers (HA sensor entities subscribe here so they
         # can push updates without polling). Pure callbacks, no async.
@@ -189,9 +192,12 @@ class QuizifyGameState:
         # doesn't know a player. `player_shuffles` is per-player so two
         # phones sitting next to each other see A/B/C in different
         # orders — anti-cheat against couch-neighbour collusion.
-        self.shuffle_map: list[int] = []        # canonical: shuffled_pos -> original_index
-        self.shuffled_answers: list[str] = []   # canonical answers in shuffled order
-        self.player_shuffles: dict[str, list[int]] = {}  # name -> shuffled_pos -> original_index
+        # canonical: shuffled_pos -> original_index
+        self.shuffle_map: list[int] = []
+        # canonical answers in shuffled order
+        self.shuffled_answers: list[str] = []
+        # name -> shuffled_pos -> original_index
+        self.player_shuffles: dict[str, list[int]] = {}
 
     # ------------------------------------------------------------------
     # Phase / timing delegation (issue #188)
@@ -260,7 +266,7 @@ class QuizifyGameState:
         self._phase_controller.pause_reason = value
 
     @property
-    def last_settings(self) -> "dict[str, Any] | None":
+    def last_settings(self) -> dict[str, Any] | None:
         """Settings of the most recent start_game, or None if never started.
 
         Used by the one-tap rematch path to restart with the previous game's
@@ -305,10 +311,8 @@ class QuizifyGameState:
 
     def unregister_state_callback(self, cb: Callable[[], None]) -> None:
         """Unsubscribe a previously-registered observer."""
-        try:
+        with contextlib.suppress(ValueError):
             self._state_callbacks.remove(cb)
-        except ValueError:
-            pass
 
     def _notify_state_callbacks(self) -> None:
         """Fire all registered state observers. Keeps the broadcast pipeline
@@ -566,7 +570,9 @@ class QuizifyGameState:
         if connected:
             lucky_player = random.choice(connected)
             powerup = self._powerup_manager.assign_random_powerup(lucky_player.name)
-            _LOGGER.debug("Power-up %s assigned to %s", powerup.value, lucky_player.name)
+            _LOGGER.debug(
+                "Power-up %s assigned to %s", powerup.value, lucky_player.name
+            )
 
         self._phase_controller.enter_question_active()
         self._round_summary = None
@@ -1004,7 +1010,9 @@ class QuizifyGameState:
                     num_rounds=self.round,
                     players=players,
                     duration_seconds=duration,
-                    started_at=int(self._game_start_time) if self._game_start_time else None,
+                    started_at=(
+                        int(self._game_start_time) if self._game_start_time else None
+                    ),
                     player_details=player_details,
                 )
             except Exception:  # noqa: BLE001
@@ -1081,7 +1089,11 @@ class QuizifyGameState:
             player_names,
             language=language or self.language,
             category=category if category is not None else self.category,
-            categories=categories if categories is not None else getattr(self, "categories", None),
+            categories=(
+                categories
+                if categories is not None
+                else getattr(self, "categories", None)
+            ),
             difficulty=difficulty,
         )
         if not lr.start():
@@ -1128,7 +1140,9 @@ class QuizifyGameState:
     # Power-ups
     # ------------------------------------------------------------------
 
-    def use_powerup(self, player_id: str, target_id: str | None = None) -> PowerUpEffect | str:
+    def use_powerup(
+        self, player_id: str, target_id: str | None = None
+    ) -> PowerUpEffect | str:
         """Use the player's held power-up.
 
         Returns PowerUpEffect on success, or error code string.
@@ -1164,7 +1178,12 @@ class QuizifyGameState:
             target_player = (
                 self._player_registry.get_player(target_id) if target_id else None
             )
-            if not target_id or target_id == player_id or not target_player or not target_player.is_active:
+            if (
+                not target_id
+                or target_id == player_id
+                or not target_player
+                or not target_player.is_active
+            ):
                 # FREEZE: skip already-submitted players so the pause is actually
                 # useful (freezing a locked-in opponent burns the power-up).
                 # STEAL: the opposite — only a SUBMITTED target has a round_score
@@ -1187,7 +1206,11 @@ class QuizifyGameState:
             target_check = self._player_registry.get_player(target_id)
             if held == PowerUpType.FREEZE and target_check and target_check.submitted:
                 return ERR_INVALID_ACTION
-            if held == PowerUpType.STEAL and target_check and not target_check.submitted:
+            if (
+                held == PowerUpType.STEAL
+                and target_check
+                and not target_check.submitted
+            ):
                 return ERR_INVALID_ACTION
 
         # Determine wrong answer indices for joker
@@ -1265,7 +1288,9 @@ class QuizifyGameState:
     # State access
     # ------------------------------------------------------------------
 
-    def set_round_shuffle(self, shuffle_map: list[int], shuffled_answers: list[str]) -> None:
+    def set_round_shuffle(
+        self, shuffle_map: list[int], shuffled_answers: list[str]
+    ) -> None:
         """Store the canonical shuffle mapping for the current round."""
         self.shuffle_map = shuffle_map
         self.shuffled_answers = shuffled_answers
@@ -1454,7 +1479,11 @@ class QuizifyGameState:
                 {"name": p.name, "score": p.score, "rank": i + 1}
                 for i, p in enumerate(podium)
             ]
-            awards = self._finale_superlatives if self._finale_superlatives is not None else compute_superlatives(self.get_players())
+            awards = (
+                self._finale_superlatives
+                if self._finale_superlatives is not None
+                else compute_superlatives(self.get_players())
+            )
             if awards:
                 snapshot["superlatives"] = [s.to_dict() for s in awards]
 

@@ -93,7 +93,7 @@ class QuestionTimer:
         return max(0.0, time.monotonic() - self._start_time)
 
     @classmethod
-    def resumed(cls, remaining: float, elapsed: float) -> "QuestionTimer":
+    def resumed(cls, remaining: float, elapsed: float) -> QuestionTimer:
         """Build a running timer that reports a known *remaining* AND *elapsed*.
 
         Used by the pause/resume path (#295). A naive ``QuestionTimer(remaining)``

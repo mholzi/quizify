@@ -113,7 +113,7 @@ class LightningRound:
         self._question_start: float | None = None
 
         # scores keyed by player name; recap rows in question order.
-        self.scores: dict[str, int] = {name: 0 for name in self._players}
+        self.scores: dict[str, int] = dict.fromkeys(self._players, 0)
         self._recaps: list[LightningQuestionRecap] = []
 
         # Per-question answer matrix: index -> {player_name -> LightningAnswer}.

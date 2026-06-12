@@ -36,7 +36,7 @@ WS_PATH = "/api/quizify/ws"
 
 def build_aiohttp_app(
     ctx: AppContext,
-    ws_handler: "QuizifyWebSocketHandler",
+    ws_handler: QuizifyWebSocketHandler,
 ) -> web.Application:
     """Build a fully-wired aiohttp Application for standalone mode.
 

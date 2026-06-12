@@ -11,6 +11,7 @@ locations), and that's fine — admin bootstraps once per host.
 from __future__ import annotations
 
 import asyncio
+import contextlib
 import json
 import logging
 import os
@@ -61,10 +62,8 @@ class TokenStore:
         """Delete the storage file (idempotent)."""
         async with self._lock:
             def _rm() -> None:
-                try:
+                with contextlib.suppress(FileNotFoundError):
                     self._path.unlink()
-                except FileNotFoundError:
-                    pass
 
             try:
                 await self._runtime.run_in_executor(_rm)

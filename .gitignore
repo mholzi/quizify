@@ -8,7 +8,9 @@ docs/
 .playwright-mcp/
 
 # ---- Config & tooling ----
-pyproject.toml
+# pyproject.toml IS tracked: it holds the ruff lint-gate config the CI
+# `ruff check` job relies on (issues #306/#328). Without it committed the
+# gate would silently fall back to ruff's defaults.
 package.json
 package-lock.json
 requirements.txt

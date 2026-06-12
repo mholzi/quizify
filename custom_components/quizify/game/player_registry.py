@@ -104,7 +104,9 @@ class PlayerRegistry:
                         return False, ERR_NAME_TAKEN
                     existing_player.ws = ws
                     existing_player.connected = True
-                    _LOGGER.info("Player reconnected by name (lobby): %s", existing_name)
+                    _LOGGER.info(
+                        "Player reconnected by name (lobby): %s", existing_name
+                    )
                     return True, None
                 # Stale connected flag — the browser reloaded but
                 # _handle_disconnect hasn't fired yet, so the slot still looks
@@ -113,7 +115,8 @@ class PlayerRegistry:
                 # ghost session lingers (Beatify #646).
                 if existing_player.ws is None or existing_player.ws.closed:
                     _LOGGER.info(
-                        "Player %s: stale connected flag, old WS closed — allowing rejoin",
+                        "Player %s: stale connected flag, old WS closed — "
+                        "allowing rejoin",
                         existing_name,
                     )
                     existing_player.ws = ws
@@ -132,11 +135,20 @@ class PlayerRegistry:
         # Assign a unique color from the palette (cycle if more than palette size)
         used_colors = {p.color for p in self.players.values()}
         available = [c for c in PLAYER_COLORS if c not in used_colors]
-        color = available[0] if available else PLAYER_COLORS[len(self.players) % len(PLAYER_COLORS)]
+        color = (
+            available[0]
+            if available
+            else PLAYER_COLORS[len(self.players) % len(PLAYER_COLORS)]
+        )
 
         # Add new player
         player = PlayerSession(
-            name=name, ws=ws, score=initial_score, streak=0, joined_late=joined_late, color=color
+            name=name,
+            ws=ws,
+            score=initial_score,
+            streak=0,
+            joined_late=joined_late,
+            color=color,
         )
         self.players[name] = player
         self._sessions[player.session_id] = name

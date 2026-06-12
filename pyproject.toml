@@ -1,0 +1,28 @@
+# Ruff configuration for the Quizify Home Assistant custom integration.
+#
+# The CI lint gate (.github/workflows/test.yml, issue #306) runs
+# `ruff check custom_components/`. This file is the single source of truth for
+# the ruleset it enforces.
+#
+# Ruleset history:
+#   - Initial gate (#306): E4/E7/E9 + F + I — the safe, high-signal core.
+#   - #328: added E501 (line-length) plus B (flake8-bugbear), SIM
+#     (flake8-simplify), UP (pyupgrade) and C4 (flake8-comprehensions) after
+#     fixing every existing violation, so the gate now enforces them too.
+[tool.ruff]
+line-length = 88
+target-version = "py313"
+
+[tool.ruff.lint]
+select = [
+    "E4",   # pycodestyle — import errors
+    "E7",   # pycodestyle — statement errors
+    "E9",   # pycodestyle — runtime/syntax errors
+    "E501", # pycodestyle — line too long
+    "F",    # pyflakes
+    "I",    # isort — import ordering
+    "B",    # flake8-bugbear
+    "SIM",  # flake8-simplify
+    "UP",   # pyupgrade
+    "C4",   # flake8-comprehensions
+]

@@ -81,7 +81,9 @@ def parse_season(raw: object) -> Season | None:
     if raw is None:
         return None
     if not isinstance(raw, dict):
-        _LOGGER.warning("Ignoring 'season': expected an object, got %s", type(raw).__name__)
+        _LOGGER.warning(
+            "Ignoring 'season': expected an object, got %s", type(raw).__name__
+        )
         return None
 
     start = _parse_md(raw.get("start"))
@@ -97,7 +99,9 @@ def parse_season(raw: object) -> Season | None:
     label_raw = raw.get("label", "")
     label = label_raw.strip() if isinstance(label_raw, str) else ""
     if not label:
-        _LOGGER.warning("Season window %s–%s has no label; using a generic one", start, end)
+        _LOGGER.warning(
+            "Season window %s–%s has no label; using a generic one", start, end
+        )
         label = "Seasonal"
     label = label[:_MAX_LABEL_LEN]
 

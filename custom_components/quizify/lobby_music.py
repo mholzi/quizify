@@ -36,7 +36,7 @@ class QuizifyLobbyMusic:
 
     def __init__(
         self,
-        hass: "HomeAssistant | None",
+        hass: HomeAssistant | None,
         media_player_entity_id: str | None,
         game_state: QuizifyGameState,
     ) -> None:

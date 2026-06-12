@@ -62,7 +62,7 @@ class QuizifyPartyLights:
 
     def __init__(
         self,
-        hass: "HomeAssistant | None",
+        hass: HomeAssistant | None,
         entity_ids: list[str],
         game_state: QuizifyGameState,
     ) -> None:
@@ -109,7 +109,11 @@ class QuizifyPartyLights:
         # party glow doesn't linger after a session ends. Done by special-
         # casing LOBBY when the round just rolled back to 0 (i.e. came
         # from FINALE/reset, not a fresh boot).
-        if phase == GamePhase.LOBBY and self._game.round == 0 and self._game.game_id is None:
+        if (
+            phase == GamePhase.LOBBY
+            and self._game.round == 0
+            and self._game.game_id is None
+        ):
             self._call("light", "turn_off", {
                 "entity_id": self._entity_ids,
                 "transition": 1.5,

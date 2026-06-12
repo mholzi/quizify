@@ -31,7 +31,7 @@ import json
 import logging
 import re
 import time
-from datetime import datetime, timezone
+from datetime import UTC, datetime
 from typing import TYPE_CHECKING, Any
 
 import aiohttp
@@ -149,7 +149,9 @@ def validate_pack(pack: object) -> tuple[bool, list[str]]:
         else:
             seen_ids.add(qid)
         if not isinstance(q.get("question"), str) or not q.get("question", "").strip():
-            errors.append(f"{prefix}: 'question' is required and must be a non-empty string.")
+            errors.append(
+                f"{prefix}: 'question' is required and must be a non-empty string."
+            )
         answers = q.get("answers")
         if not isinstance(answers, list) or len(answers) != SUBMIT_ANSWERS_PER_QUESTION:
             errors.append(
@@ -167,7 +169,8 @@ def validate_pack(pack: object) -> tuple[bool, list[str]]:
                 correct_count += 1
         if correct_count != 1:
             errors.append(
-                f"{prefix}: exactly 1 answer must be marked correct (got {correct_count})."
+                f"{prefix}: exactly 1 answer must be marked correct "
+                f"(got {correct_count})."
             )
 
     return (not errors), errors[:10]
@@ -203,7 +206,7 @@ class PackSubmissionStore:
 
     _ISSUE_NUMBER_RE = re.compile(r"/issues/(\d+)(?:[#?].*)?$")
 
-    def __init__(self, ctx: "AppContext") -> None:
+    def __init__(self, ctx: AppContext) -> None:
         self._ctx = ctx
         self._path = ctx.runtime.data_dir / SUBMIT_RECORDS_FILE
         # Shared across all stores pointing at the same file (this class is
@@ -244,8 +247,8 @@ class PackSubmissionStore:
         except ValueError:
             return True
         if last.tzinfo is None:
-            last = last.replace(tzinfo=timezone.utc)
-        elapsed = (datetime.now(timezone.utc) - last).total_seconds()
+            last = last.replace(tzinfo=UTC)
+        elapsed = (datetime.now(UTC) - last).total_seconds()
         return elapsed >= SUBMIT_POLL_INTERVAL_SECONDS
 
     @staticmethod
@@ -280,7 +283,9 @@ class PackSubmissionStore:
                 issue = await resp.json()
             return issue.get("state", ""), issue.get("state_reason") or ""
         except (aiohttp.ClientError, ValueError) as err:
-            _LOGGER.debug("Pack-submission poll: issue %s failed: %s", issue_number, err)
+            _LOGGER.debug(
+                "Pack-submission poll: issue %s failed: %s", issue_number, err
+            )
             return None
 
     async def reconcile(self, data: dict) -> dict:
@@ -290,7 +295,7 @@ class PackSubmissionStore:
         pending or GitHub unreachable — so a failure backs off for the full
         interval instead of retrying on every admin-tab open.
         """
-        now = datetime.now(timezone.utc).isoformat()
+        now = datetime.now(UTC).isoformat()
         data["last_poll"] = now
 
         submissions = data.get("submissions", [])
@@ -355,7 +360,7 @@ class PackSubmissionStore:
 # ---------------------------------------------------------------------------
 
 
-def _get_ctx(request: web.Request) -> "AppContext":
+def _get_ctx(request: web.Request) -> AppContext:
     return request.app[APP_CTX_KEY]
 
 
@@ -401,7 +406,10 @@ async def submit_pack_view(request: web.Request) -> web.Response:
     submit_url = (ctx.community_submit_url or "").strip()
     if not submit_url:
         return web.json_response(
-            {"code": ERR_SUBMIT_DISABLED, "message": "Pack submission is not configured."},
+            {
+                "code": ERR_SUBMIT_DISABLED,
+                "message": "Pack submission is not configured.",
+            },
             status=403,
         )
 
@@ -422,7 +430,10 @@ async def submit_pack_view(request: web.Request) -> web.Response:
     client_ip = request.remote or "unknown"
     if not _check_rate_limit(client_ip):
         return web.json_response(
-            {"code": ERR_SUBMIT_RATE_LIMITED, "message": "Too many submissions, slow down."},
+            {
+                "code": ERR_SUBMIT_RATE_LIMITED,
+                "message": "Too many submissions, slow down.",
+            },
             status=429,
         )
 
@@ -440,7 +451,10 @@ async def submit_pack_view(request: web.Request) -> web.Response:
         encoded = json.dumps(pack).encode("utf-8")
     except (TypeError, ValueError):
         return web.json_response(
-            {"code": ERR_SUBMIT_INVALID_FORMAT, "message": "Pack is not serializable JSON."},
+            {
+                "code": ERR_SUBMIT_INVALID_FORMAT,
+                "message": "Pack is not serializable JSON.",
+            },
             status=400,
         )
     if len(encoded) > SUBMIT_MAX_PACK_BYTES:
@@ -475,32 +489,41 @@ async def submit_pack_view(request: web.Request) -> web.Response:
     timeout = aiohttp.ClientTimeout(total=SUBMIT_POLL_TIMEOUT_SECONDS)
     worker_payload: dict[str, Any]
     try:
-        async with aiohttp.ClientSession(timeout=timeout) as session:
-            async with session.post(
+        async with (
+            aiohttp.ClientSession(timeout=timeout) as session,
+            session.post(
                 submit_url, json={"pack": pack}, headers=submit_headers
-            ) as resp:
-                try:
-                    worker_payload = await resp.json(content_type=None)
-                except (ValueError, aiohttp.ClientError):
-                    worker_payload = {}
-                if resp.status >= 400:
-                    code = worker_payload.get("code") if isinstance(worker_payload, dict) else None
-                    message = (
-                        worker_payload.get("message")
-                        if isinstance(worker_payload, dict)
-                        else None
-                    )
-                    return web.json_response(
-                        {
-                            "code": code or ERR_SUBMIT_GITHUB_ERROR,
-                            "message": message or f"Worker returned HTTP {resp.status}.",
-                        },
-                        status=resp.status if resp.status in (400, 429) else 502,
-                    )
+            ) as resp,
+        ):
+            try:
+                worker_payload = await resp.json(content_type=None)
+            except (ValueError, aiohttp.ClientError):
+                worker_payload = {}
+            if resp.status >= 400:
+                code = (
+                    worker_payload.get("code")
+                    if isinstance(worker_payload, dict)
+                    else None
+                )
+                message = (
+                    worker_payload.get("message")
+                    if isinstance(worker_payload, dict)
+                    else None
+                )
+                return web.json_response(
+                    {
+                        "code": code or ERR_SUBMIT_GITHUB_ERROR,
+                        "message": message or f"Worker returned HTTP {resp.status}.",
+                    },
+                    status=resp.status if resp.status in (400, 429) else 502,
+                )
     except aiohttp.ClientError as err:
         _LOGGER.warning("Pack submission proxy failed: %s", err)
         return web.json_response(
-            {"code": ERR_SUBMIT_GITHUB_ERROR, "message": f"Could not reach the worker: {err}"},
+            {
+                "code": ERR_SUBMIT_GITHUB_ERROR,
+                "message": f"Could not reach the worker: {err}",
+            },
             status=502,
         )
 
@@ -515,11 +538,13 @@ async def submit_pack_view(request: web.Request) -> web.Response:
         "id": f"{int(time.time() * 1000)}",
         "name": str(pack.get("name", "")) if isinstance(pack, dict) else "",
         "language": str(pack.get("language", "")) if isinstance(pack, dict) else "",
-        "question_count": len(pack.get("questions", [])) if isinstance(pack, dict) else 0,
+        "question_count": (
+            len(pack.get("questions", [])) if isinstance(pack, dict) else 0
+        ),
         "issue_number": issue_number,
         "issue_url": issue_url,
         "status": SUBMIT_STATUS_PENDING,
-        "created": datetime.now(timezone.utc).isoformat(),
+        "created": datetime.now(UTC).isoformat(),
         "last_checked": None,
     }
     await PackSubmissionStore(ctx).add(record)

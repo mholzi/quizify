@@ -7,7 +7,8 @@ import json
 import logging
 import time
 import uuid
-from typing import TYPE_CHECKING, Awaitable, Callable
+from collections.abc import Awaitable, Callable
+from typing import TYPE_CHECKING
 
 from aiohttp import web
 
@@ -20,7 +21,7 @@ if TYPE_CHECKING:
 _LOGGER = logging.getLogger(__name__)
 
 
-def _log_task_exception(task: "asyncio.Task") -> None:
+def _log_task_exception(task: asyncio.Task) -> None:
     """Done-callback surfacing a fire-and-forget task's exception (#307).
 
     Without it, an exception in an ensure_future'd background task (token
@@ -116,7 +117,7 @@ class ConnectionManager:
 
     def iter_admin_and_dashboard_ws(
         self,
-    ) -> "list[tuple[web.WebSocketResponse, bool]]":
+    ) -> list[tuple[web.WebSocketResponse, bool]]:
         """Yield (ws, is_admin) for every admin and dashboard connection.
 
         Lets callers fan out to admin + TV-dashboard spectator sockets
@@ -397,7 +398,7 @@ class ConnectionManager:
         """
         try:
             await asyncio.wait_for(ws.send_json(message), timeout=self._SEND_TIMEOUT)
-        except asyncio.TimeoutError:
+        except TimeoutError:
             _LOGGER.warning("Timed out sending to WebSocket (slow/dead client)")
         except Exception as err:  # noqa: BLE001
             _LOGGER.warning("Failed to send to WebSocket: %s", err)
@@ -417,7 +418,7 @@ class ConnectionManager:
         """
         try:
             await asyncio.wait_for(ws.send_str(payload), timeout=self._SEND_TIMEOUT)
-        except asyncio.TimeoutError:
+        except TimeoutError:
             _LOGGER.warning("Timed out sending to WebSocket (slow/dead client)")
         except Exception as err:  # noqa: BLE001
             _LOGGER.warning("Failed to send to WebSocket: %s", err)

@@ -161,7 +161,7 @@ class ScoringEngine:
             # scoring stand (and the milestone bonus below still applies).
             if wager_pts > 0:
                 wager_used = wager_pts
-                if correct:
+                if correct:  # noqa: SIM108 — keep the loss-branch comment readable
                     points = wager_pts
                 else:
                     # Lose the wager — but never go below zero so a player can't
