@@ -291,7 +291,9 @@
         container.innerHTML =
             '<div class="est-truth">' +
                 '<div class="est-truth-label">' + pu.escapeHtml(t('estimate.correctAnswer')) + '</div>' +
-                '<div class="est-truth-value">' + pu.escapeHtml(_fmtEstimate(answer, unit)) + '</div>' +
+                '<div class="est-truth-value">' + pu.escapeHtml(_fmtEstimate(answer, '')) +
+                    (unit ? '<span class="est-truth-unit">' + pu.escapeHtml(unit) + '</span>' : '') +
+                '</div>' +
             '</div>' +
             '<div class="numberline-card">' +
                 '<div class="nl-axis">' + markersHtml + truthHtml + '</div>' +

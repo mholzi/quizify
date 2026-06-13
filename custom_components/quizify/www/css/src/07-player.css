@@ -3317,6 +3317,19 @@ body.is-admin .reaction-bar {
     font-size: 2.4rem;
     line-height: 1.1;
     color: var(--color-accent-primary);
+    display: flex;
+    align-items: baseline;
+    justify-content: center;
+    gap: 0.25em;
+    flex-wrap: wrap;
+}
+.est-truth-unit {
+    font-family: var(--font-sans);
+    font-size: 0.95rem;
+    font-weight: 600;
+    letter-spacing: 0.01em;
+    color: var(--color-text-muted);
+    white-space: nowrap;
 }
 
 .numberline-card {
