@@ -142,12 +142,24 @@ class LightningRound:
             difficulty=self.difficulty,
             language=self.language,
         )
-        for _ in range(self.num_questions):
+        # Lightning is fast tap-an-answer (3 options, 15s each). Estimate
+        # questions (#275) have no answer grid and the lightning view has no
+        # slider, so an estimate question would render as an empty card.
+        # Exclude them from the lightning pool — keep pulling until we have
+        # enough multiple-choice questions or the queue is exhausted. The
+        # attempt bound guards against an all-estimate pool (e.g. the user
+        # picked only the Schätzfragen/Estimation packs) so this can't spin.
+        max_attempts = self.num_questions * 20
+        attempts = 0
+        while len(self._questions) < self.num_questions and attempts < max_attempts:
+            attempts += 1
             q = self._bank.get_next_question(
                 category=self.category, difficulty=self.difficulty
             )
             if q is None:
                 break
+            if getattr(q, "is_estimate", False):
+                continue
             self._questions.append(q)
             self._bank.record_shown(q.id)
 

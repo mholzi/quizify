@@ -40,6 +40,11 @@ service-worker cache invalidates and the new frontend actually reaches users.
   dropped `question_type`, `estimate` and `image_url`. So round 1 fell back to
   the A/B/C grid (empty card in lightning) while every subsequent round rendered
   the slider correctly. The snapshot path now forwards those fields too.
+- **Estimate questions excluded from lightning rounds.** The lightning view is
+  fast tap-an-answer (3 options, 15s) and has no slider, so an estimate question
+  drawn into a lightning round rendered as an empty card. The lightning question
+  pool now skips estimate questions (with an attempt bound so an all-estimate
+  pack selection can't spin); estimation questions still appear in normal rounds.
 
 ## [1.3.0] — 2026-06-12
 
