@@ -3,7 +3,11 @@
 All notable changes to Quizify are documented here. This project follows
 [Semantic Versioning](https://semver.org/).
 
-## [Unreleased]
+## [1.3.1-RC1] — 2026-06-13
+
+First release candidate after 1.3.0. Versions the estimation question type that
+landed just after the 1.3.0 cut, and — crucially — bumps the version so the
+service-worker cache invalidates and the new frontend actually reaches users.
 
 ### Added
 
@@ -16,6 +20,18 @@ All notable changes to Quizify are documented here. This project follows
   Ships two built-in "Unnützes Wissen" estimation packs (`schaetzfragen-de`,
   `estimation-en`, 15 questions each). Multiple-choice packs are unaffected
   (`type` defaults to `multiple_choice`).
+
+### Fixed
+
+- **Estimation UI not reaching already-installed clients.** The estimation
+  question type (#275) was deployed on top of 1.3.0 without a version bump, so
+  the service-worker `CACHE_VERSION` (derived from the manifest version) never
+  changed and clients kept serving the cached pre-estimation `player.bundle.js`.
+  The symptom: estimation rounds rendered the A/B/C multiple-choice grid (and
+  an empty card in lightning rounds) instead of the slider, with the answer
+  value leaking above it. Bumping the version invalidates the service-worker
+  cache so the estimation slider/number-line UI loads. (Backend and freshly
+  loaded clients were already correct.)
 
 ## [1.3.0] — 2026-06-12
 
