@@ -32,6 +32,14 @@ service-worker cache invalidates and the new frontend actually reaches users.
   value leaking above it. Bumping the version invalidates the service-worker
   cache so the estimation slider/number-line UI loads. (Backend and freshly
   loaded clients were already correct.)
+- **First question of a game rendered the multiple-choice grid for estimate
+  rounds (and dropped the image banner).** The admin-as-player redirect (and any
+  mid-round reconnect) lands on the `game_state` snapshot rather than a
+  `question_started` event, and the snapshot render path only forwarded
+  `text`/`answers`/`timer`/`round`/`category` to the question renderer — it
+  dropped `question_type`, `estimate` and `image_url`. So round 1 fell back to
+  the A/B/C grid (empty card in lightning) while every subsequent round rendered
+  the slider correctly. The snapshot path now forwards those fields too.
 
 ## [1.3.0] — 2026-06-12
 

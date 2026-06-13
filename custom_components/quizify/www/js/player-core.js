@@ -467,7 +467,17 @@
                         timer_duration: msg.question.time_remaining || msg.question.time_limit,
                         round_num: msg.round,
                         total_rounds: msg.total_rounds,
-                        category: msg.question.category
+                        category: msg.question.category,
+                        // #275: carry the question type + estimate metadata +
+                        // image through the snapshot path too. Without these the
+                        // first question (admin-as-player redirect lands on the
+                        // game_state snapshot, not a question_started event) fell
+                        // back to the A/B/C grid — estimate rounds rendered the
+                        // multiple-choice layout, and image questions lost their
+                        // banner — until the next per-round message arrived.
+                        question_type: msg.question.question_type,
+                        estimate: msg.question.estimate,
+                        image_url: msg.question.image_url
                     });
 
                     // #14: if we're reconnecting mid-round and server thinks
