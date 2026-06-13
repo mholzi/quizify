@@ -262,6 +262,37 @@
                     </button>
                 </section>
 
+                <!-- Estimate slider (#275, Variant B). Shown instead of the
+                     A/B/C grid when question_started.question_type === 'estimate'.
+                     Big live value above the track, range labels, "Tipp abgeben". -->
+                <section id="estimate-container" class="card-section estimate-section hidden">
+                    <div class="est-badge">
+                        <span class="est-badge-dot" aria-hidden="true"></span>
+                        <span data-i18n="estimate.badge">Estimate question — closest guess wins</span>
+                    </div>
+                    <div class="estimate-value-wrap">
+                        <span class="estimate-value-label" data-i18n="estimate.yourGuess">Your guess</span>
+                        <output id="estimate-value" class="estimate-value" for="estimate-slider">0</output>
+                    </div>
+                    <div class="estimate-slider-wrap">
+                        <input type="range" id="estimate-slider" class="estimate-slider"
+                               min="0" max="100" step="1" value="50"
+                               data-i18n-aria-label="estimate.sliderAria"
+                               aria-label="Your guess" aria-valuemin="0" aria-valuemax="100" aria-valuenow="50">
+                        <div class="estimate-scale-row">
+                            <span id="estimate-scale-min" class="estimate-scale-min">0</span>
+                            <span id="estimate-scale-mid" class="estimate-scale-mid">50</span>
+                            <span id="estimate-scale-max" class="estimate-scale-max">100</span>
+                        </div>
+                    </div>
+                    <p class="estimate-hint" data-i18n="estimate.hint">Slide to your estimate</p>
+                    <button id="estimate-submit-btn" type="button" class="btn btn-primary btn-block estimate-submit-btn" data-i18n="estimate.submit">Submit guess</button>
+                    <div id="estimate-submitted-confirmation" class="submitted-confirmation hidden">
+                        <span class="checkmark">✓</span>
+                        <span data-i18n="game.submitted">Submitted!</span>
+                    </div>
+                </section>
+
                 <!-- Answer Buttons A/B/C (replaces year-selector) - card-section pattern -->
                 <section id="answers-container" class="card-section answer-section">
                     <h2 class="section-header">
@@ -357,6 +388,10 @@
                  See gstack designs/player-result-20260524/. -->
             <div class="pl-result">
                 <div id="reveal-hero" class="pl-result-hero" aria-live="polite" aria-atomic="true"></div>
+
+                <!-- Estimate number-line reveal (#275). Populated + shown by
+                     player-reveal.js only for estimate rounds; hidden for MC. -->
+                <div id="reveal-estimate" class="reveal-estimate hidden"></div>
 
                 <div id="reveal-answer-strip" class="pl-result-answer-strip"></div>
 

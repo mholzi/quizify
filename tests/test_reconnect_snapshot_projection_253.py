@@ -68,7 +68,12 @@ def _start_round_with_shuffles(state: QuizifyGameState) -> None:
     'raw snapshot mis-orders' guard flake ~1-in-6."""
     state.add_player("Alice", _fake_ws())
     state.add_player("Bob", _fake_ws())
-    state.start_game(language="de", num_rounds=3, difficulty="easy")
+    # Pin a multiple-choice category: the mixed pool now includes #275 estimate
+    # packs (no answers / no shuffle), which would make this shuffle-projection
+    # contract test non-deterministic.
+    state.start_game(
+        category="geographie", language="de", num_rounds=3, difficulty="easy"
+    )
     question = state.start_next_question()
     assert question is not None
     base = list(range(len(question.answers)))

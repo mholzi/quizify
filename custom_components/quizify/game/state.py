@@ -40,6 +40,7 @@ from .powerups import (
 )
 from .questions import Answer, Question, QuestionBank
 from .scoring import (
+    calculate_estimate_scores,
     calculate_podium,
 )
 from .scoring_engine import ScoringEngine
@@ -90,6 +91,11 @@ class RoundSummary:
     fun_fact: str
     results: list[AnswerResult] = field(default_factory=list)
     leaderboard: list[dict[str, Any]] = field(default_factory=list)
+    # Estimate-round reveal data (#275). None for multiple-choice rounds.
+    # When set, carries the true value, range/unit, and every player's guess +
+    # distance + awarded points so the number-line reveal can be rendered on
+    # both the player and TV screens. See ``build_estimate_reveal``.
+    estimate: dict[str, Any] | None = None
 
 
 class QuizifyGameState:
@@ -768,6 +774,58 @@ class QuizifyGameState:
 
         return result
 
+    def submit_guess(self, player_id: str, guess: float) -> str | None:
+        """Submit a player's numeric guess for an estimate round (#275).
+
+        Parallel to ``submit_answer`` but for ``type == "estimate"`` questions:
+        there is no per-answer correctness or immediate scoring — closeness is
+        ranked across all players at round evaluation. The guess is clamped to
+        the question's [min, max] range, recorded on the player, and the player
+        is marked submitted. Returns an error-code string on failure, or None on
+        success. The round auto-evaluates once everyone has submitted, same as
+        the MC path.
+        """
+        if self.phase != GamePhase.QUESTION_ACTIVE:
+            return ERR_GAME_NOT_STARTED
+
+        player = self._player_registry.get_player(player_id)
+        if player is None:
+            return ERR_NOT_IN_GAME
+
+        if player.submitted:
+            return ERR_ALREADY_SUBMITTED
+
+        timer = self._timers.get(player_id)
+        if timer and timer.is_expired():
+            return ERR_ROUND_EXPIRED
+        if timer and timer.is_frozen():
+            return ERR_FROZEN
+
+        question = self._current_question
+        if question is None:
+            return ERR_GAME_NOT_STARTED
+        if not question.is_estimate:
+            # Wrong message for the question type — reject so a client bug
+            # can't silently mis-submit an MC round as a guess.
+            return ERR_INVALID_ACTION
+
+        # Clamp the guess into the valid range (defence-in-depth; the slider
+        # already constrains it client-side).
+        q_min = question.estimate_min if question.estimate_min is not None else guess
+        q_max = question.estimate_max if question.estimate_max is not None else guess
+        clamped = max(q_min, min(q_max, float(guess)))
+
+        elapsed = timer.get_elapsed() if timer else 0.0
+        player.current_guess = clamped
+        player.submitted = True
+        player.submission_time = time.time()
+        player.last_elapsed = elapsed
+
+        if self._player_registry.all_submitted():
+            self.evaluate_round()
+
+        return None
+
     def evaluate_round(self) -> RoundSummary | None:
         """Manually trigger round evaluation (e.g. when timer expires)."""
         if self.phase != GamePhase.QUESTION_ACTIVE:
@@ -788,6 +846,13 @@ class QuizifyGameState:
             raise RuntimeError(
                 "_do_evaluate_round called with no active question"
             )
+
+        # Estimate rounds (#275) are scored by closeness across all players,
+        # not per-answer correctness. They build their own RoundSummary and
+        # short-circuit the MC correctness/scoring path below — but still share
+        # the downstream phase transition + broadcast (handled in the helper).
+        if question.is_estimate:
+            return self._evaluate_estimate_round(question)
 
         correct_answer = self._question_bank.get_correct_answer(question)
 
@@ -907,6 +972,205 @@ class QuizifyGameState:
         self._fire_broadcast("round_evaluated")
 
         return self._round_summary
+
+    def _evaluate_estimate_round(self, question: Question) -> RoundSummary:
+        """Evaluate an estimate round by closeness (#275).
+
+        Ranks every player who submitted a guess by absolute distance to the
+        true value, awards difficulty-scaled, rank-decayed points (closest =
+        full, exact = bonus), applies them to player scores, and builds a
+        RoundSummary whose ``estimate`` block carries the number-line reveal
+        data. Non-guessers score 0 and break their streak, same as an MC
+        timeout. Mirrors the MC path's downstream phase transition + broadcast.
+        """
+        answer_val = (
+            question.estimate_answer
+            if question.estimate_answer is not None
+            else 0.0
+        )
+        try:
+            diff_enum = Difficulty(question.difficulty)
+        except ValueError:
+            diff_enum = Difficulty.MEDIUM
+
+        guesses: dict[str, float] = {
+            p.name: p.current_guess
+            for p in self._player_registry.players.values()
+            if p.submitted and p.current_guess is not None
+        }
+        scores = calculate_estimate_scores(guesses, answer_val, diff_enum)
+
+        # Apply scoring + per-round bookkeeping to every player.
+        for player in self._player_registry.players.values():
+            entry = scores.get(player.name)
+            if entry is None:
+                # No guess this round → score 0, streak breaks (mirrors MC
+                # timeout). A player who guessed but somehow isn't in ``scores``
+                # can't happen, but this branch also covers the not-submitted
+                # case cleanly.
+                player.streak = 0
+                player.record_round_result("timeout")
+                player.round_score = 0
+                player.round_score_breakdown = {}
+                player.round_scores.append(0)
+            else:
+                points = entry["points"]
+                # Closeness scoring has no streak/speed concept; surface the
+                # estimate-specific breakdown so the reveal can show distance.
+                player.streak += 1
+                if player.streak > player.max_streak:
+                    player.max_streak = player.streak
+                player.round_score = points
+                player.round_score_breakdown = {
+                    "speed_bonus": 0,
+                    "streak_bonus": 0,
+                    "difficulty_multiplier": 1.0,
+                    "double_points": False,
+                    "estimate_distance": entry["distance"],
+                    "estimate_rank": entry["rank"],
+                    "estimate_exact": entry["exact"],
+                }
+                player.score += points
+                if player.score < 0:
+                    player.score = 0
+                if diff_enum == Difficulty.HARD:
+                    player.hard_score += points
+                player.last_answer_correct = entry["exact"]
+                player.record_round_result(
+                    "correct" if entry["exact"] else "wrong"
+                )
+                player.round_scores.append(points)
+            player.rounds_played += 1
+
+        # Build per-player results (connected only).
+        results: list[AnswerResult] = []
+        for player in self._player_registry.players.values():
+            if not player.connected:
+                continue
+            entry = scores.get(player.name)
+            results.append(
+                AnswerResult(
+                    player_id=player.name,
+                    correct=bool(entry and entry["exact"]),
+                    points_earned=player.round_score,
+                    new_streak=player.streak,
+                    new_total=player.score,
+                )
+            )
+
+        leaderboard = self.get_leaderboard()
+
+        # A synthetic "correct answer" so the rest of the pipeline (which reads
+        # ``RoundSummary.correct_answer.text``) keeps working for estimate
+        # rounds. The text is the true value with its unit.
+        answer_text = self._format_estimate_value(question, answer_val)
+        correct_answer = Answer(text=answer_text, correct=True)
+
+        estimate_block = self._build_estimate_reveal(question, answer_val, scores)
+
+        self._round_summary = RoundSummary(
+            question=question,
+            correct_answer=correct_answer,
+            fun_fact=question.fun_fact,
+            results=results,
+            leaderboard=leaderboard,
+            estimate=estimate_block,
+        )
+
+        self.phase = GamePhase.ANSWER_REVEAL
+
+        # Per-question stats: estimate rounds record an "exact-or-not" signal +
+        # elapsed so the stat pipeline stays populated. Closeness has no clean
+        # correct/wrong, so an exact hit counts as correct.
+        if self._question_stats is not None:
+            try:
+                submitted_results = [
+                    (bool(scores.get(p.name, {}).get("exact")), p.last_elapsed)
+                    for p in self._player_registry.players.values()
+                    if p.submitted
+                ]
+                self._question_stats.record_round(question.id, submitted_results)
+            except Exception:  # noqa: BLE001
+                _LOGGER.exception("Failed to record estimate question stats")
+
+        for player in self._player_registry.players.values():
+            player.joined_late = False
+
+        _LOGGER.info(
+            "Estimate round %d evaluated (answer=%s, %d guesses), "
+            "transitioning to ANSWER_REVEAL",
+            self.round,
+            answer_val,
+            len(guesses),
+        )
+        self._fire_broadcast("round_evaluated")
+
+        return self._round_summary
+
+    @staticmethod
+    def _format_estimate_value(question: Question, value: float) -> str:
+        """Format an estimate value for display (drop trailing .0, add unit)."""
+        text = str(int(value)) if value == int(value) else str(value)
+        unit = question.estimate_unit
+        return f"{text} {unit}".strip() if unit else text
+
+    def _build_estimate_reveal(
+        self,
+        question: Question,
+        answer_val: float,
+        scores: dict[str, dict],
+    ) -> dict[str, Any]:
+        """Assemble the number-line reveal block for an estimate round (#275).
+
+        Carries the true value, the slider range/unit, and every CONNECTED
+        player's guess + distance + awarded points + rank, plus the winner
+        (rank 1). Both the player reveal and the TV dashboard render the
+        number line from this. The closest player(s) are rank 1; ties share it.
+        """
+        guesses_out: list[dict[str, Any]] = []
+        winner_name = ""
+        best_rank: int | None = None
+        for player in self._player_registry.players.values():
+            if not player.connected:
+                continue
+            entry = scores.get(player.name)
+            if entry is None or player.current_guess is None:
+                guesses_out.append({
+                    "player_name": player.name,
+                    "color": player.color,
+                    "guess": None,
+                    "distance": None,
+                    "points": 0,
+                    "rank": None,
+                    "exact": False,
+                    "no_guess": True,
+                })
+                continue
+            rank = entry["rank"]
+            if best_rank is None or rank < best_rank:
+                best_rank = rank
+                winner_name = player.name
+            guesses_out.append({
+                "player_name": player.name,
+                "color": player.color,
+                "guess": player.current_guess,
+                "distance": entry["distance"],
+                "points": entry["points"],
+                "rank": rank,
+                "exact": entry["exact"],
+                "no_guess": False,
+            })
+
+        return {
+            "answer": answer_val,
+            "answer_text": self._format_estimate_value(question, answer_val),
+            "min": question.estimate_min,
+            "max": question.estimate_max,
+            "unit": question.estimate_unit,
+            "step": question.estimate_step,
+            "guesses": guesses_out,
+            "winner": winner_name,
+        }
 
     # ------------------------------------------------------------------
     # Pause / resume
@@ -1590,6 +1854,17 @@ class QuizifyGameState:
                 "time_limit": self._round_duration,
                 "time_remaining": round(remaining, 1),
             }
+            # Estimate questions (#275) carry slider metadata instead of
+            # answers so a reconnecting player rebuilds the slider, not the
+            # 3-answer grid.
+            if q.is_estimate:
+                snapshot["question"]["question_type"] = q.type
+                snapshot["question"]["estimate"] = {
+                    "min": q.estimate_min,
+                    "max": q.estimate_max,
+                    "unit": q.estimate_unit,
+                    "step": q.estimate_step,
+                }
 
         if self.phase == GamePhase.ANSWER_REVEAL and self._round_summary:
             s = self._round_summary
@@ -1622,6 +1897,11 @@ class QuizifyGameState:
                     for r in s.results
                 ],
             }
+            # Estimate reveal data (#275) so a reconnect during the reveal
+            # rebuilds the number line instead of an empty answer grid.
+            if s.estimate is not None:
+                snapshot["round_summary"]["question_type"] = q.type
+                snapshot["round_summary"]["estimate"] = s.estimate
 
         if self.phase == GamePhase.FINALE:
             # Use cached values computed once in end_game()

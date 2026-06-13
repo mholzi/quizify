@@ -253,6 +253,35 @@ class RoundMessageBuilder:
         if not summary:
             return None
 
+        question = summary.question
+
+        # Estimate rounds (#275) carry no shuffled answers and no correct-tile
+        # index — closeness is scored, and the reveal is a number line. Build a
+        # minimal summary carrying the ``estimate`` block; the player/TV reveal
+        # render the number line from it. MC fields are left at their no-op
+        # defaults (no answer grid is shown for an estimate reveal).
+        if getattr(question, "is_estimate", False):
+            leaderboard = serialize_leaderboard(game_state.get_players())
+            players_list = serialize_player_list(game_state.get_players())
+            last_round_est = game_state.round >= game_state.total_rounds
+            return serialize_round_summary(
+                correct_answer_index=-1,
+                correct_answer_index_original=-1,
+                correct_answer_text=summary.correct_answer.text,
+                fun_fact=summary.fun_fact,
+                leaderboard=leaderboard,
+                round_num=game_state.round,
+                total_rounds=game_state.total_rounds,
+                all_answers=[],
+                question_text=question.question,
+                num_answer_options=0,
+                players=players_list,
+                last_round=last_round_est,
+                question_id=question.id,
+                question_type=question.type,
+                estimate=summary.estimate,
+            )
+
         # Find the correct answer's shuffled index (canonical) AND its
         # original index in question.answers — dashboard needs the latter
         # because it renders unshuffled answer tiles (per #151 audit).

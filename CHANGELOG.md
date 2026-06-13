@@ -5,6 +5,18 @@ All notable changes to Quizify are documented here. This project follows
 
 ## [Unreleased]
 
+### Added
+
+- **Estimation / closest-guess question type (#275).** A new numeric question
+  type (`type: "estimate"`) where players slide to a guess instead of picking
+  A/B/C; scored by closeness (closest gets full points, the rest scale down by
+  rank, exact hits earn a bonus, ties share a rank, non-guessers score 0). The
+  reveal plots every player's guess on a horizontal number line with the true
+  value pinned and the winner highlighted — on both the player and TV screens.
+  Ships two built-in "Unnützes Wissen" estimation packs (`schaetzfragen-de`,
+  `estimation-en`, 15 questions each). Multiple-choice packs are unaffected
+  (`type` defaults to `multiple_choice`).
+
 ## [1.3.0] — 2026-06-12
 
 The final 1.3.0 release — the culmination of release candidates RC1–RC16. See

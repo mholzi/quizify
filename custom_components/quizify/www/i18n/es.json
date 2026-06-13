@@ -388,6 +388,20 @@
     "locked": "Apostado: {pct}%",
     "bonusFromReaction": "+1 de {from}"
   },
+  "estimate": {
+    "badge": "Pregunta de estimación — gana quien más se acerque",
+    "yourGuess": "Tu apuesta",
+    "hint": "Desliza hasta tu estimación",
+    "submit": "Enviar apuesta",
+    "sliderAria": "Tu estimación",
+    "you": "Tú",
+    "correctAnswer": "Respuesta correcta",
+    "youWon": "Ganas la ronda",
+    "playerWon": "{name} gana la ronda",
+    "guessOff": "Apuesta {guess} · solo {off} de diferencia",
+    "noGuessNote": "{count} sin apuesta",
+    "dashRange": "Estima entre {min} y {max}"
+  },
   "reaction": {
     "fire": "Reacción de fuego",
     "laugh": "Reacción de risa",

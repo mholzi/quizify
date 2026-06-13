@@ -388,6 +388,20 @@
     "locked": "Eingesetzt: {pct}%",
     "bonusFromReaction": "+1 von {from}"
   },
+  "estimate": {
+    "badge": "Schätzfrage — am nächsten dran gewinnt",
+    "yourGuess": "Dein Tipp",
+    "hint": "Schieb den Regler zu deiner Schätzung",
+    "submit": "Tipp abgeben",
+    "sliderAria": "Deine Schätzung",
+    "you": "Du",
+    "correctAnswer": "Richtige Antwort",
+    "youWon": "Du gewinnst die Runde",
+    "playerWon": "{name} gewinnt die Runde",
+    "guessOff": "Tipp {guess} · nur {off} daneben",
+    "noGuessNote": "{count} ohne Tipp",
+    "dashRange": "Schätzfrage zwischen {min} und {max}"
+  },
   "reaction": {
     "fire": "Feuer-Reaktion",
     "laugh": "Lach-Reaktion",

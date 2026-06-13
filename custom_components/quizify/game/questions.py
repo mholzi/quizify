@@ -46,9 +46,23 @@ class Answer:
     correct: bool
 
 
+# Question types (#275). The default is multiple-choice so every existing
+# pack — which carries no ``type`` field — keeps parsing exactly as before.
+QUESTION_TYPE_MULTIPLE_CHOICE = "multiple_choice"
+QUESTION_TYPE_ESTIMATE = "estimate"
+VALID_QUESTION_TYPES = (QUESTION_TYPE_MULTIPLE_CHOICE, QUESTION_TYPE_ESTIMATE)
+
+
 @dataclass
 class Question:
-    """A quiz question with multiple choice answers."""
+    """A quiz question.
+
+    Multiple-choice questions carry an ``answers`` list with exactly one
+    correct option. Estimate questions (#275, ``type == "estimate"``) carry a
+    numeric ``estimate_answer`` plus a slider ``estimate_min``/``estimate_max``
+    range (and optional ``estimate_unit``/``estimate_step``) instead, with an
+    empty ``answers`` list.
+    """
 
     id: str
     question: str
@@ -63,6 +77,22 @@ class Question:
     # anything else is dropped at parse time so a malformed pack can't
     # inject markup or point at a local path.
     image_url: str = ""
+    # Question type (#275). Defaults to multiple_choice so every pack without
+    # a ``type`` field behaves exactly as before.
+    type: str = QUESTION_TYPE_MULTIPLE_CHOICE
+    # Estimate-question fields (#275). Only meaningful when
+    # ``type == "estimate"``; None for multiple-choice questions.
+    estimate_answer: float | None = None
+    estimate_min: float | None = None
+    estimate_max: float | None = None
+    estimate_unit: str = ""
+    # Slider step. Defaults to 1 (integer guesses) when omitted.
+    estimate_step: float = 1.0
+
+    @property
+    def is_estimate(self) -> bool:
+        """True for an estimate / closest-guess question (#275)."""
+        return self.type == QUESTION_TYPE_ESTIMATE
 
 
 def _sanitize_image_url(raw: object, question_id: str) -> str:
@@ -113,10 +143,99 @@ def _normalize_season(raw: object) -> dict | None:
     }
 
 
+def _parse_estimate_question(data: dict, category_name: str) -> Question | None:
+    """Parse an ``type: "estimate"`` question (#275), or None if malformed.
+
+    An estimate question replaces the MC ``answers`` array with a numeric
+    ``answer`` and a slider ``min``/``max`` range (and optional ``unit`` /
+    ``step``). Validated defensively, matching the loader's tolerant style: a
+    non-numeric answer, a missing/invalid range, an inverted range
+    (``min >= max``), or an answer outside the range is logged and skipped
+    rather than raised.
+    """
+    answer_raw = data.get("answer")
+    min_raw = data.get("min")
+    max_raw = data.get("max")
+
+    if answer_raw is None or min_raw is None or max_raw is None:
+        _LOGGER.warning(
+            "Skipping estimate question '%s': needs numeric 'answer', "
+            "'min' and 'max'",
+            data["id"],
+        )
+        return None
+
+    try:
+        answer_val = float(answer_raw)
+        min_val = float(min_raw)
+        max_val = float(max_raw)
+    except (TypeError, ValueError):
+        _LOGGER.warning(
+            "Skipping estimate question '%s': 'answer'/'min'/'max' must be "
+            "numeric",
+            data["id"],
+        )
+        return None
+
+    if min_val >= max_val:
+        _LOGGER.warning(
+            "Skipping estimate question '%s': min (%s) must be < max (%s)",
+            data["id"],
+            min_val,
+            max_val,
+        )
+        return None
+
+    if not min_val <= answer_val <= max_val:
+        _LOGGER.warning(
+            "Skipping estimate question '%s': answer (%s) outside range "
+            "[%s, %s]",
+            data["id"],
+            answer_val,
+            min_val,
+            max_val,
+        )
+        return None
+
+    step_raw = data.get("step", 1)
+    try:
+        step_val = float(step_raw)
+    except (TypeError, ValueError):
+        step_val = 1.0
+    if step_val <= 0:
+        step_val = 1.0
+
+    unit_raw = data.get("unit", "")
+    unit_val = unit_raw if isinstance(unit_raw, str) else ""
+
+    return Question(
+        id=data["id"],
+        question=data["question"],
+        answers=[],
+        difficulty=data.get("difficulty", "medium"),
+        fun_fact=data.get("fun_fact", ""),
+        category=data.get("category", category_name),
+        image_url=_sanitize_image_url(data.get("image_url"), data["id"]),
+        type=QUESTION_TYPE_ESTIMATE,
+        estimate_answer=answer_val,
+        estimate_min=min_val,
+        estimate_max=max_val,
+        estimate_unit=unit_val,
+        estimate_step=step_val,
+    )
+
+
 def _parse_question(data: dict, category_name: str) -> Question | None:
-    """Parse a single question dict into a Question, or None on invalid data."""
-    required = ("id", "question", "answers")
-    for key in required:
+    """Parse a single question dict into a Question, or None on invalid data.
+
+    Branches on the optional ``type`` field (#275): ``"estimate"`` routes to
+    the numeric estimate parser; anything else (including the absent default)
+    is treated as a multiple-choice question and keeps the original rules
+    (exactly ``ANSWERS_PER_QUESTION`` answers, exactly one correct).
+    """
+    # ``id`` and ``question`` are required for every type; ``answers`` is only
+    # required for multiple-choice (estimate questions carry no answers array).
+    for key in ("id", "question"):
         if key not in data:
             _LOGGER.warning(
                 "Skipping question in '%s': missing field '%s'",
@@ -124,6 +243,25 @@ def _parse_question(data: dict, category_name: str) -> Question | None:
                 key,
             )
             return None
+
+    q_type = data.get("type", QUESTION_TYPE_MULTIPLE_CHOICE)
+    if q_type not in VALID_QUESTION_TYPES:
+        _LOGGER.warning(
+            "Skipping question '%s': unknown type '%s'",
+            data["id"],
+            q_type,
+        )
+        return None
+
+    if q_type == QUESTION_TYPE_ESTIMATE:
+        return _parse_estimate_question(data, category_name)
+
+    if "answers" not in data:
+        _LOGGER.warning(
+            "Skipping question '%s': missing field 'answers'",
+            data["id"],
+        )
+        return None
 
     answers_raw = data["answers"]
     if not isinstance(answers_raw, list) or len(answers_raw) != ANSWERS_PER_QUESTION:

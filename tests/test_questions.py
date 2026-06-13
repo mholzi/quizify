@@ -68,10 +68,17 @@ class TestLoadCategory:
         # Themed packs run ~150 (148-150 after review deletions); the standalone
         # World Cup packs are a deliberate 100. Floor catches gross truncation.
         # Community packs are user content with no size invariant — skip them.
+        # Estimate packs (#275) are a deliberately modest 10-20 questions —
+        # exempt them from the themed-pack floor (they have their own floor).
+        estimate_packs = {"schaetzfragen-de", "estimation-en"}
         for cat in bank.get_categories():
             if cat.startswith("community-"):
                 continue
             count = bank.get_question_count(cat)
+            if cat in estimate_packs:
+                assert count >= 10, f"{cat} has only {count} questions (floor: 10)"
+                assert count <= 20, f"{cat} has {count} questions (ceiling: 20)"
+                continue
             assert count >= 95, f"{cat} has only {count} questions (floor: 95)"
             assert count <= 150, f"{cat} has {count} questions (ceiling: 150)"
 
@@ -144,6 +151,10 @@ class TestQuestionIntegrity:
         for cat in bank.get_categories():
             questions = bank.load_category(cat)
             for q in questions:
+                # Estimate questions (#275) carry no answers; skip the MC
+                # correctness invariant for them.
+                if q.is_estimate:
+                    continue
                 correct_count = sum(1 for a in q.answers if a.correct)
                 assert correct_count == 1, f"Question {q.id} has {correct_count} correct answers"
 
@@ -151,6 +162,10 @@ class TestQuestionIntegrity:
         for cat in bank.get_categories():
             questions = bank.load_category(cat)
             for q in questions:
+                # Estimate questions (#275) have no answers array by design.
+                if q.is_estimate:
+                    assert q.answers == []
+                    continue
                 assert len(q.answers) == 3, f"Question {q.id} has {len(q.answers)} answers"
 
     def test_all_questions_have_valid_difficulty(self, bank: QuestionBank) -> None:

@@ -46,7 +46,7 @@ def serialize_question_for_player(
     the per-player current score so the wager picker can show "Wagering
     25 of 92 points" without an extra fetch.
     """
-    return {
+    payload: dict[str, Any] = {
         "type": "question_started",
         "question_text": question.question,
         "answers": shuffled_answers,
@@ -58,7 +58,19 @@ def serialize_question_for_player(
         "image_url": question.image_url,
         "is_final_round": is_final_round,
         "player_score": player_score,
+        "question_type": question.type,
     }
+    # Estimate questions (#275): ship the slider range/unit, NEVER the answer.
+    # The client renders a slider instead of the 3-answer grid.
+    if question.is_estimate:
+        payload["answers"] = []
+        payload["estimate"] = {
+            "min": question.estimate_min,
+            "max": question.estimate_max,
+            "unit": question.estimate_unit,
+            "step": question.estimate_step,
+        }
+    return payload
 
 
 def serialize_question_for_admin(
@@ -74,7 +86,7 @@ def serialize_question_for_admin(
             correct_answer = a.text
             break
 
-    return {
+    payload: dict[str, Any] = {
         "type": "question_started",
         "question_text": question.question,
         "correct_answer": correct_answer,
@@ -87,7 +99,20 @@ def serialize_question_for_admin(
         "category": question.category,
         "difficulty": question.difficulty,
         "image_url": question.image_url,
+        "question_type": question.type,
     }
+    # Estimate questions (#275): the admin/TV gets the slider range + the true
+    # value (the host screen may legitimately show the answer). The player
+    # serializer above withholds it.
+    if question.is_estimate:
+        payload["estimate"] = {
+            "min": question.estimate_min,
+            "max": question.estimate_max,
+            "unit": question.estimate_unit,
+            "step": question.estimate_step,
+            "answer": question.estimate_answer,
+        }
+    return payload
 
 
 def serialize_leaderboard(players: list[PlayerSession]) -> list[dict[str, Any]]:
@@ -200,6 +225,8 @@ def serialize_round_summary(
     last_round: bool = False,
     question_id: str = "",
     correct_answer_index_original: int = -1,
+    question_type: str = "multiple_choice",
+    estimate: dict[str, Any] | None = None,
 ) -> dict[str, Any]:
     """Build round summary broadcast payload.
 
@@ -215,7 +242,7 @@ def serialize_round_summary(
         all_answers or [], num_answer_options
     )
 
-    return {
+    summary: dict[str, Any] = {
         "type": "round_summary",
         "correct_answer_index": correct_answer_index,
         "correct_answer_index_original": correct_answer_index_original,
@@ -239,7 +266,13 @@ def serialize_round_summary(
         "all_answers": all_answers or [],
         "answer_distribution": answer_distribution,
         "question_text": question_text,
+        "question_type": question_type,
     }
+    # Estimate rounds (#275): attach the number-line reveal block so both the
+    # player reveal and the TV dashboard can plot every guess.
+    if estimate is not None:
+        summary["estimate"] = estimate
+    return summary
 
 
 def _compute_answer_distribution(

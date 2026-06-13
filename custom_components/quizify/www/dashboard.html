@@ -293,6 +293,70 @@
             min-width: 0;
         }
 
+        /* Estimate (#275): question-phase range hint + reveal number line. */
+        .dashboard-estimate.hidden { display: none; }
+        .dashboard-estimate-hint {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            font-size: 22px;
+            font-weight: 600;
+            color: var(--color-text-muted, #6E6A5C);
+            margin-top: 16px;
+        }
+        .dashboard-estimate-badge-dot {
+            width: 12px; height: 12px; border-radius: 50%;
+            background: var(--color-gold, #E8C47F);
+        }
+        .dnl-truth { text-align: center; margin: 8px 0 12px; }
+        .dnl-truth-label {
+            font-size: 16px; text-transform: uppercase; letter-spacing: 0.1em;
+            color: var(--color-text-muted, #6E6A5C); font-weight: 600;
+        }
+        .dnl-truth-value {
+            font-family: var(--font-mono, monospace); font-weight: 700;
+            font-size: 56px; line-height: 1.1; color: var(--color-accent-primary, #E88A7F);
+        }
+        .dnl-card {
+            background: var(--color-bg-card, #fff);
+            border: 1px solid var(--color-border-light, #E5DFCF);
+            border-radius: 16px; padding: 72px 32px 40px; margin: 12px 0;
+            position: relative;
+        }
+        .dnl-axis {
+            position: relative; height: 5px;
+            background: var(--color-bg-card-alt, #F3EEDF); border-radius: 9999px;
+        }
+        .dnl-tick { position: absolute; top: 50%; transform: translate(-50%, -50%); }
+        .dnl-dot {
+            width: 18px; height: 18px; border-radius: 50%;
+            border: 2px solid var(--color-bg-card, #fff);
+            box-shadow: 0 1px 4px rgba(42,40,32,0.25);
+        }
+        .dnl-lbl {
+            position: absolute; left: 50%; transform: translateX(-50%);
+            white-space: nowrap; font-size: 17px; font-weight: 600;
+            color: var(--color-text-muted, #6E6A5C); font-family: var(--font-mono, monospace);
+        }
+        .dnl-lbl.is-winner { color: var(--color-accent-secondary, #7FA897); }
+        .dnl-lbl--above { bottom: 24px; }
+        .dnl-lbl--below { top: 24px; }
+        .dnl-truth-line {
+            position: absolute; top: -40px; bottom: -18px; width: 3px;
+            background: var(--color-accent-primary, #E88A7F); transform: translateX(-50%);
+        }
+        .dnl-truth-flag {
+            position: absolute; top: -62px; transform: translateX(-50%);
+            background: var(--color-accent-primary, #E88A7F); color: #fff;
+            font-family: var(--font-mono, monospace); font-weight: 700; font-size: 18px;
+            padding: 4px 12px; border-radius: 9999px; white-space: nowrap;
+        }
+        .dnl-scale-ends {
+            display: flex; justify-content: space-between; margin-top: 16px;
+            font-family: var(--font-mono, monospace); font-size: 18px;
+            color: var(--color-text-light, #8F8A78);
+        }
+
         /* Image pane — hidden unless the question carries a valid image. */
         .dashboard-question-media {
             display: none;
@@ -1103,6 +1167,9 @@
                         <div id="question-category" class="dashboard-category"></div>
                         <div id="question-text" class="dashboard-question"></div>
                         <div id="answers-grid" class="dashboard-answers"></div>
+                        <!-- Estimate reveal number line (#275). Shown only for
+                             estimate rounds; hidden for MC. -->
+                        <div id="dashboard-estimate" class="dashboard-estimate hidden"></div>
                         <div id="fun-fact" class="dashboard-funfact">
                             <div class="fun-fact-label" data-i18n="dashboard.didYouKnow">Did you know?</div>
                             <div id="fun-fact-text" class="fun-fact-text"></div>
@@ -1229,6 +1296,7 @@
             dashboardLeft: document.getElementById('dashboard-left'),
             questionText: document.getElementById('question-text'),
             answersGrid: document.getElementById('answers-grid'),
+            dashboardEstimate: document.getElementById('dashboard-estimate'),
             leaderboard: document.getElementById('leaderboard'),
             funFact: document.getElementById('fun-fact'),
             funFactText: document.getElementById('fun-fact-text'),
@@ -1395,6 +1463,8 @@
                             total_rounds: msg.total_rounds,
                             category: msg.question.category,
                             image_url: msg.question.image_url,
+                            question_type: msg.question.question_type,
+                            estimate: msg.question.estimate,
                         });
                     } else {
                         showView('question');
@@ -1407,7 +1477,13 @@
                     // answers + correct index, so rebuild the question view
                     // instead of leaving it blank.
                     showView('question');
-                    if (msg.round_summary && msg.round_summary.answers) {
+                    // #275: estimate reveal on reconnect — render the number
+                    // line from the snapshot's estimate block.
+                    if (msg.round_summary && msg.round_summary.question_type === 'estimate' && msg.round_summary.estimate) {
+                        els.questionText.textContent = msg.round_summary.question_text || '';
+                        if (els.answersGrid) els.answersGrid.innerHTML = '';
+                        renderDashboardEstimateReveal(msg.round_summary.estimate);
+                    } else if (msg.round_summary && msg.round_summary.answers) {
                         renderRevealFromSnapshot(msg.round_summary, msg.round, msg.total_rounds);
                     }
                     break;
@@ -1566,6 +1642,28 @@
             els.timerFill.style.width = '100%';
             els.timerFill.className = 'dashboard-timer-fill';
 
+            // #275: estimate rounds show a slider range hint instead of the
+            // A/B/C grid during the question; the number line appears at reveal.
+            if (msg.question_type === 'estimate' && msg.estimate) {
+                if (els.answersGrid) els.answersGrid.innerHTML = '';
+                if (els.dashboardEstimate) {
+                    els.dashboardEstimate.classList.remove('hidden');
+                    var est = msg.estimate;
+                    var unit = est.unit || '';
+                    function fmt(v) { return unit ? (v + ' ' + unit) : v; }
+                    var rangeLabel = window.QuizifyI18n
+                        ? window.QuizifyI18n.t('estimate.dashRange', { min: fmt(est.min), max: fmt(est.max) })
+                        : 'Estimate between ' + fmt(est.min) + ' and ' + fmt(est.max);
+                    els.dashboardEstimate.innerHTML =
+                        '<div class="dashboard-estimate-hint">' +
+                            '<span class="dashboard-estimate-badge-dot" aria-hidden="true"></span>' +
+                            escapeHtml(rangeLabel) +
+                        '</div>';
+                }
+                return;
+            }
+            if (els.dashboardEstimate) els.dashboardEstimate.classList.add('hidden');
+
             // Render answers
             var labels = ['A', 'B', 'C', 'D'];
             currentAnswers = msg.answers || [];
@@ -1610,6 +1708,20 @@
 
         function handleRoundSummary(msg) {
             var summary = msg.round_summary || msg;
+
+            // #275: estimate rounds render a number line instead of the MC
+            // answer-tile highlight + distribution.
+            if (summary.question_type === 'estimate' && summary.estimate) {
+                renderDashboardEstimateReveal(summary.estimate);
+                var efact = summary.fun_fact || '';
+                if (efact) {
+                    els.funFactText.textContent = efact;
+                    setTimeout(function() { els.funFact.classList.add('visible'); }, 300);
+                }
+                var elb = summary.leaderboard || msg.leaderboard || [];
+                if (elb.length) renderLeaderboard(els.leaderboard, elb);
+                return;
+            }
 
             // Highlight correct answer.
             // We prefer the ORIGINAL-order index when the server sends it
@@ -1662,6 +1774,63 @@
             // Leaderboard
             var lb = summary.leaderboard || msg.leaderboard || [];
             if (lb.length) renderLeaderboard(els.leaderboard, lb);
+        }
+
+        // #275: TV number-line reveal — every player's guess plotted along the
+        // range, the true value pinned, the winner highlighted, ranked list.
+        function renderDashboardEstimateReveal(est) {
+            if (!els.dashboardEstimate) return;
+            els.dashboardEstimate.classList.remove('hidden');
+            if (els.answersGrid) els.answersGrid.innerHTML = '';
+
+            var unit = est.unit || '';
+            var answer = Number(est.answer);
+            var guesses = (est.guesses || []).filter(function(g) {
+                return !g.no_guess && g.guess !== null && g.guess !== undefined;
+            });
+
+            function fmt(v) {
+                if (v === null || v === undefined) return '—';
+                var n = Math.round(v * 1000) / 1000;
+                return (n === Math.round(n)) ? String(Math.round(n)) : String(n);
+            }
+
+            var dataVals = guesses.map(function(g) { return Number(g.guess); }).concat([answer]);
+            var lo = Math.min.apply(null, dataVals), hi = Math.max.apply(null, dataVals);
+            if (!(hi > lo)) hi = lo + 1;
+            var span = hi - lo, pad = span * 0.18;
+            lo -= pad; hi += pad;
+            if (isFinite(Number(est.min))) lo = Math.max(lo, Number(est.min) - span * 0.02);
+            if (isFinite(Number(est.max))) hi = Math.min(hi, Number(est.max) + span * 0.02);
+            span = hi - lo;
+            if (!(span > 0)) { hi = lo + 1; span = 1; }
+            function pct(v) { return Math.max(0, Math.min(100, ((v - lo) / span) * 100)); }
+
+            var sortedMarkers = guesses.slice().sort(function(a, b) { return Number(a.guess) - Number(b.guess); });
+            var markers = sortedMarkers.map(function(g, idx) {
+                var left = pct(Number(g.guess));
+                var isWinner = g.rank === 1;
+                var pos = (idx % 2 === 0) ? 'below' : 'above';
+                var dotStyle = 'background:' + (g.color || '#7FA8C4') + ';';
+                if (isWinner) dotStyle += 'width:20px;height:20px;border-color:#E8C47F;';
+                return '<div class="dnl-tick" style="left:' + left.toFixed(1) + '%;">' +
+                    '<div class="dnl-dot" style="' + dotStyle + '"></div>' +
+                    '<div class="dnl-lbl dnl-lbl--' + pos + (isWinner ? ' is-winner' : '') + '">' +
+                        escapeHtml(g.player_name) + (isWinner ? ' ★' : '') + ' ' + escapeHtml(fmt(Number(g.guess))) +
+                    '</div></div>';
+            }).join('');
+
+            var truthLeft = pct(answer);
+            var truth = '<div class="dnl-truth-line" style="left:' + truthLeft.toFixed(1) + '%;"></div>' +
+                '<div class="dnl-truth-flag" style="left:' + truthLeft.toFixed(1) + '%;">' + escapeHtml(fmt(answer)) + ' ✓</div>';
+
+            var truthLabel = window.QuizifyI18n ? window.QuizifyI18n.t('estimate.correctAnswer') : 'Correct answer';
+
+            els.dashboardEstimate.innerHTML =
+                '<div class="dnl-truth"><div class="dnl-truth-label">' + escapeHtml(truthLabel) + '</div>' +
+                    '<div class="dnl-truth-value">' + escapeHtml(fmt(answer)) + (unit ? ' ' + escapeHtml(unit) : '') + '</div></div>' +
+                '<div class="dnl-card"><div class="dnl-axis">' + markers + truth + '</div>' +
+                    '<div class="dnl-scale-ends"><span>' + escapeHtml(fmt(lo)) + '</span><span>' + escapeHtml(fmt(hi)) + '</span></div></div>';
         }
 
         function handleFinale(msg) {
