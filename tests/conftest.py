@@ -12,8 +12,26 @@ modules (regression seen after merging parallel feature PRs, 2026-06-09).
 from __future__ import annotations
 
 import asyncio
+import random
 
 import pytest
+
+
+@pytest.fixture(autouse=True)
+def _seed_random():
+    """Make the global ``random`` deterministic per test.
+
+    Several game mechanics draw from the module-level ``random`` (joker
+    removing a random wrong answer, freeze/steal picking a random opponent,
+    player-order shuffles, streak-eligible question selection). The tests
+    don't seed it, so a full ``pytest tests/`` run — whose collection order
+    differs from running a single class — advances the RNG to a different
+    point and intermittently flips outcomes (e.g. a joker landing a None
+    remove-index). Reseed before every test so results depend only on the
+    test, never on suite order.
+    """
+    random.seed(0)
+    yield
 
 
 @pytest.fixture(autouse=True)
