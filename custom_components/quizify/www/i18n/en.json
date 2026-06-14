@@ -368,6 +368,13 @@
       "q5": "Which language?",
       "q6": "Lightning Round?",
       "lightningHint": "Surprise fast round mid-game"
+    },
+    "tts": {
+      "title": "Quizmaster voice?",
+      "enable": "Narrate the game out loud",
+      "question": "Read out each question",
+      "reveal": "Announce the answer",
+      "standings": "Call out the new leader"
     }
   },
   "featured": {

@@ -368,6 +368,13 @@
       "q5": "In welcher Sprache?",
       "q6": "Blitzrunde?",
       "lightningHint": "Überraschungs-Schnellrunde mitten im Spiel"
+    },
+    "tts": {
+      "title": "Quizmaster-Stimme?",
+      "enable": "Spiel laut vorlesen",
+      "question": "Jede Frage vorlesen",
+      "reveal": "Die Antwort ansagen",
+      "standings": "Neue Führung ausrufen"
     }
   },
   "featured": {

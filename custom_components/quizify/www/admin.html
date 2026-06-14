@@ -276,6 +276,36 @@
                             <span class="toggle-label" data-i18n="setup.eigene.lightningHint">Surprise fast round mid-game</span>
                         </label>
                     </div>
+
+                    <!-- TTS narration toggles (#281). Master switch + per-event
+                         toggles. The values ride start_game like the lightning
+                         toggle (admin.js _readTtsConfig → _buildStartGamePayload
+                         → tts). Persisted in localStorage ("quizify_tts").
+                         No-op unless a TTS entity + media player are configured
+                         in the integration options. -->
+                    <div class="vF-step">
+                        <div class="vF-q"><span class="num">7</span><span data-i18n="setup.tts.title">Quizmaster voice?</span></div>
+                        <label class="toggle-compact setup-tts-toggle" for="tts-enable-toggle">
+                            <input type="checkbox" id="tts-enable-toggle">
+                            <span class="toggle-switch-compact" aria-hidden="true"></span>
+                            <span class="toggle-label" data-i18n="setup.tts.enable">Narrate the game out loud</span>
+                        </label>
+                        <label class="toggle-compact setup-tts-toggle" for="tts-announce-question">
+                            <input type="checkbox" id="tts-announce-question" checked>
+                            <span class="toggle-switch-compact" aria-hidden="true"></span>
+                            <span class="toggle-label" data-i18n="setup.tts.question">Read out each question</span>
+                        </label>
+                        <label class="toggle-compact setup-tts-toggle" for="tts-announce-reveal">
+                            <input type="checkbox" id="tts-announce-reveal" checked>
+                            <span class="toggle-switch-compact" aria-hidden="true"></span>
+                            <span class="toggle-label" data-i18n="setup.tts.reveal">Announce the answer</span>
+                        </label>
+                        <label class="toggle-compact setup-tts-toggle" for="tts-announce-standings">
+                            <input type="checkbox" id="tts-announce-standings" checked>
+                            <span class="toggle-switch-compact" aria-hidden="true"></span>
+                            <span class="toggle-label" data-i18n="setup.tts.standings">Call out the new leader</span>
+                        </label>
+                    </div>
                 </div>
 
                 <button type="button" id="setup-apply-btn" class="btn btn-primary btn-lg btn-block">

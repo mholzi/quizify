@@ -1179,6 +1179,23 @@ class QuizifyWebSocketHandler:
             await self._conn.send_error(ws, code, str(err))
             return
 
+        # Apply per-game TTS narration settings (#281). The toggles ride the
+        # start_game payload (like lightning_enabled), persisted in admin
+        # localStorage — not config-entry options. No-op when no announcer is
+        # wired (standalone dev server, HA without a TTS entity).
+        announcer = self._tts_announcer
+        if announcer is not None:
+            tts = data.get("tts") or {}
+            try:
+                announcer.configure(
+                    enabled=bool(tts.get("enabled")),
+                    announce_question=bool(tts.get("announce_question", True)),
+                    announce_reveal=bool(tts.get("announce_reveal", True)),
+                    announce_standings=bool(tts.get("announce_standings", True)),
+                )
+            except Exception:  # noqa: BLE001
+                _LOGGER.exception("TTS configure raised")
+
         # Grace period before round 1's timer starts.
         # The admin-as-player flow redirects the admin tab from /quizify/admin
         # to /quizify/player AFTER sending start_game. That navigation +
@@ -1813,6 +1830,12 @@ class QuizifyWebSocketHandler:
         # distribution bars never attach. Admin-as-player still excluded.
         await self._conn.broadcast_to_admins_and_dashboards(admin_msg)
 
+        # Narrate the question text at round start (#281). Guarded like the
+        # milestone hook so a bad config can't break the question fan-out.
+        self._notify_tts_question(
+            question, game_state.round, game_state.total_rounds
+        )
+
         # Cache players to avoid redundant calls
         players = game_state.get_players()
 
@@ -2168,6 +2191,36 @@ class QuizifyWebSocketHandler:
         except Exception:  # noqa: BLE001
             _LOGGER.exception("TTS milestone announcement raised")
 
+    def _notify_tts_question(
+        self, question: Any, round_no: int, total_rounds: int
+    ) -> None:
+        """Forward a question-start to the TTS announcer if one is wired (#281).
+
+        No-op when ``_tts_announcer`` is None (standalone dev server, HA setup
+        without a TTS entity). Guarded so a bad announcement can't break the
+        question fan-out.
+        """
+        announcer = self._tts_announcer
+        if announcer is None:
+            return
+        try:
+            announcer.announce_question(question, round_no, total_rounds)
+        except Exception:  # noqa: BLE001
+            _LOGGER.exception("TTS question announcement raised")
+
+    def _notify_tts_reveal(self, game_state: QuizifyGameState) -> None:
+        """Forward the reveal to the TTS announcer if one is wired (#281).
+
+        No-op when ``_tts_announcer`` is None. Guarded like the milestone hook.
+        """
+        announcer = self._tts_announcer
+        if announcer is None:
+            return
+        try:
+            announcer.announce_reveal(game_state)
+        except Exception:  # noqa: BLE001
+            _LOGGER.exception("TTS reveal announcement raised")
+
     # ------------------------------------------------------------------
     # Finale broadcast helper
     # ------------------------------------------------------------------
@@ -2202,6 +2255,9 @@ class QuizifyWebSocketHandler:
         game_state = self._get_game_state()
         if game_state:
             await self._broadcast_round_summary(game_state)
+            # Narrate the reveal (correct answer + who got it + standings) as
+            # a single combined utterance (#281), after the summary broadcast.
+            self._notify_tts_reveal(game_state)
 
     async def _dispatch_game_ended(self) -> None:
         """Handler for the ``game_ended`` state event."""

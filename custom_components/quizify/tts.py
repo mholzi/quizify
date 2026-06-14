@@ -18,8 +18,9 @@ from __future__ import annotations
 
 import logging
 import time
-from typing import TYPE_CHECKING
+from typing import TYPE_CHECKING, Any
 
+from .game import tts_phrases
 from .game.state import GamePhase, QuizifyGameState
 from .ha_service import fire_and_forget_service
 
@@ -63,6 +64,42 @@ class QuizifyTTSAnnouncer:
         # snapshot) doesn't re-trigger the same announcement.
         self._announced_milestones: set[tuple[str, int]] = set()
 
+        # Runtime narration config (#281). The master switch defaults OFF so
+        # a configured TTS entity stays silent until the host enables it in the
+        # admin setup; the per-event toggles default ON so flipping the master
+        # on narrates the full round out of the box. Configured per-game from
+        # the ``start_game`` WS payload (see ``configure``).
+        self._enabled: bool = False
+        self._announce_question: bool = True
+        self._announce_reveal: bool = True
+        self._announce_standings: bool = True
+        # Last single leader name we observed, for leader-change detection.
+        # None means "no leader yet" — used to suppress the round-1 change.
+        self._previous_leader: str | None = None
+
+    # ------------------------------------------------------------------
+    # Per-game configuration (#281)
+    # ------------------------------------------------------------------
+
+    def configure(
+        self,
+        *,
+        enabled: bool,
+        announce_question: bool,
+        announce_reveal: bool,
+        announce_standings: bool,
+    ) -> None:
+        """Apply per-game narration settings from the start_game payload.
+
+        Resets leader-change tracking so a fresh game's first scored round
+        never fires a spurious "takes the lead".
+        """
+        self._enabled = bool(enabled)
+        self._announce_question = bool(announce_question)
+        self._announce_reveal = bool(announce_reveal)
+        self._announce_standings = bool(announce_standings)
+        self._previous_leader = None
+
     @property
     def is_configured(self) -> bool:
         return (
@@ -78,10 +115,125 @@ class QuizifyTTSAnnouncer:
     def detach(self) -> None:
         self._game.unregister_state_callback(self._on_state_changed)
 
+    def _lang(self) -> str:
+        """Normalized language for spoken phrases, from the live game."""
+        return tts_phrases.normalize_language(self._game.language)
+
+    # ------------------------------------------------------------------
+    # Narration hooks (#281) — driven from the WS handler
+    # ------------------------------------------------------------------
+
+    def announce_question(
+        self, question: Any, round_no: int, total_rounds: int
+    ) -> None:
+        """Narrate the question text at round start.
+
+        Gated on the master switch AND the per-event question toggle. No-op
+        when narration is off so a configured TTS entity stays quiet.
+        """
+        if not (self._enabled and self._announce_question):
+            return
+        text = getattr(question, "question", "") or ""
+        message = tts_phrases.phrase(
+            self._lang(),
+            "question",
+            round=round_no,
+            total=total_rounds,
+            text=text,
+        )
+        self._speak(message)
+
+    def announce_reveal(self, game_state: QuizifyGameState) -> None:
+        """Narrate the reveal as ONE combined utterance (#281).
+
+        Fragments — correct answer, who-got-it, leader-change — are each gated
+        by their own per-event toggle and joined into a single sentence so the
+        audio flows the way a host would describe the round, instead of a
+        stutter of separate clips. No-op when the master switch is off.
+        """
+        if not self._enabled:
+            return
+        summary = game_state.get_round_summary()
+        if summary is None:
+            return
+        lang = self._lang()
+        frags: list[str] = []
+
+        # Correct answer.
+        if self._announce_reveal:
+            answer_text = ""
+            if summary.correct_answer is not None:
+                answer_text = summary.correct_answer.text or ""
+            if answer_text:
+                frags.append(
+                    tts_phrases.phrase(lang, "answer", answer=answer_text)
+                )
+
+        # Who got it — names of players who answered correctly, else "nobody".
+        # Gated by the same reveal toggle as the answer line.
+        if self._announce_reveal:
+            correct_names = [r.player_id for r in summary.results if r.correct]
+            if correct_names:
+                names = tts_phrases.join_names(lang, correct_names)
+                key = "got_it_single" if len(correct_names) == 1 else "got_it_multi"
+                frags.append(tts_phrases.phrase(lang, key, names=names))
+            elif summary.results:
+                # Players answered but none correctly.
+                frags.append(tts_phrases.phrase(lang, "nobody"))
+
+        # Standings — leader change / tie at the top. _previous_leader is
+        # updated regardless of the toggle so detection stays correct even if
+        # the host toggles standings off mid-game.
+        self._announce_standings_fragment(lang, summary, frags)
+
+        if frags:
+            self._speak(" ".join(frags))
+
+    def _announce_standings_fragment(
+        self, lang: str, summary: Any, frags: list[str]
+    ) -> None:
+        """Append the leader-change / tie fragment, tracking _previous_leader.
+
+        Round 1 is suppressed: the leader always "changes" from nobody on the
+        first scored round.
+        """
+        leaderboard = summary.leaderboard or []
+        # Entries are dicts (serialize_leaderboard): {name, score, rank, ...},
+        # already sorted high→low. Find the players sharing the top score.
+        top = [e for e in leaderboard if isinstance(e, dict) and "score" in e]
+        if not top:
+            return
+        top_score = top[0]["score"]
+        if not top_score:
+            # Nobody has scored yet — no standings to narrate.
+            return
+        leaders = [e["name"] for e in top if e["score"] == top_score]
+        if len(leaders) > 1:
+            if self._announce_standings:
+                frags.append(tts_phrases.phrase(lang, "tie_at_top"))
+            self._previous_leader = None
+            return
+        new_leader = leaders[0]
+        # A real change (new_leader != previous) only narrates when there WAS a
+        # previous leader (suppresses round 1) and the toggle is on. The
+        # _previous_leader update below runs regardless so detection stays
+        # correct even with the toggle off.
+        if (
+            new_leader != self._previous_leader
+            and self._previous_leader is not None
+            and self._announce_standings
+        ):
+            frags.append(
+                tts_phrases.phrase(lang, "leader_change", name=new_leader)
+            )
+        self._previous_leader = new_leader
+
     def announce_milestone(self, player_name: str, streak: int) -> None:
         """Trigger a milestone announcement. Called from the WS handler
         when it broadcasts ``streak_milestone`` so the announcement is
         tied to the actual award, not to a state-snapshot reading."""
+        if not self._enabled:
+            return
         key = (player_name, streak)
         if key in self._announced_milestones:
             return
@@ -97,6 +249,10 @@ class QuizifyTTSAnnouncer:
     # ------------------------------------------------------------------
 
     def _on_state_changed(self) -> None:
+        # Narration off → don't fire the lifecycle phrases. The phase
+        # tracking below is skipped too; configure() resets it per game.
+        if not self._enabled:
+            return
         phase = self._game.phase
         if phase == self._last_phase:
             return

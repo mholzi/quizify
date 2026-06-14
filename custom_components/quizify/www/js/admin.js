@@ -859,6 +859,10 @@
             selectedLightning = !!lightningToggle.checked;
         });
     }
+    // TTS narration toggles (#281). Master switch defaults OFF; the per-event
+    // toggles default ON. Persisted across reloads in localStorage so the host
+    // keeps their preference. The values ride start_game (_readTtsConfig).
+    _initTtsToggles();
     setupChips(els.languageChips, function (v) {
         // Session-only switch — not persisted. On the next full-page reload
         // the UI resolves back to the Home Assistant language (#152).
@@ -1525,6 +1529,70 @@
         return name;
     }
 
+    // TTS narration (#281) — localStorage-backed admin preference.
+    var TTS_STORAGE_KEY = 'quizify_tts';
+    var TTS_DEFAULTS = {
+        enabled: false,
+        announce_question: true,
+        announce_reveal: true,
+        announce_standings: true,
+    };
+    var _ttsEls = {};
+
+    function _loadTtsConfig() {
+        var cfg = {
+            enabled: TTS_DEFAULTS.enabled,
+            announce_question: TTS_DEFAULTS.announce_question,
+            announce_reveal: TTS_DEFAULTS.announce_reveal,
+            announce_standings: TTS_DEFAULTS.announce_standings,
+        };
+        try {
+            var raw = localStorage.getItem(TTS_STORAGE_KEY);
+            if (raw) {
+                var saved = JSON.parse(raw);
+                if (saved && typeof saved === 'object') {
+                    if (typeof saved.enabled === 'boolean') cfg.enabled = saved.enabled;
+                    if (typeof saved.announce_question === 'boolean') cfg.announce_question = saved.announce_question;
+                    if (typeof saved.announce_reveal === 'boolean') cfg.announce_reveal = saved.announce_reveal;
+                    if (typeof saved.announce_standings === 'boolean') cfg.announce_standings = saved.announce_standings;
+                }
+            }
+        } catch (e) { /* malformed/unavailable storage — fall back to defaults */ }
+        return cfg;
+    }
+
+    function _saveTtsConfig() {
+        try {
+            localStorage.setItem(TTS_STORAGE_KEY, JSON.stringify(_readTtsConfig()));
+        } catch (e) { /* storage unavailable — preference is session-only */ }
+    }
+
+    function _readTtsConfig() {
+        return {
+            enabled: _ttsEls.enable ? !!_ttsEls.enable.checked : TTS_DEFAULTS.enabled,
+            announce_question: _ttsEls.question ? !!_ttsEls.question.checked : TTS_DEFAULTS.announce_question,
+            announce_reveal: _ttsEls.reveal ? !!_ttsEls.reveal.checked : TTS_DEFAULTS.announce_reveal,
+            announce_standings: _ttsEls.standings ? !!_ttsEls.standings.checked : TTS_DEFAULTS.announce_standings,
+        };
+    }
+
+    function _initTtsToggles() {
+        _ttsEls = {
+            enable: document.getElementById('tts-enable-toggle'),
+            question: document.getElementById('tts-announce-question'),
+            reveal: document.getElementById('tts-announce-reveal'),
+            standings: document.getElementById('tts-announce-standings'),
+        };
+        var cfg = _loadTtsConfig();
+        if (_ttsEls.enable) _ttsEls.enable.checked = cfg.enabled;
+        if (_ttsEls.question) _ttsEls.question.checked = cfg.announce_question;
+        if (_ttsEls.reveal) _ttsEls.reveal.checked = cfg.announce_reveal;
+        if (_ttsEls.standings) _ttsEls.standings.checked = cfg.announce_standings;
+        ['enable', 'question', 'reveal', 'standings'].forEach(function (k) {
+            if (_ttsEls[k]) on(_ttsEls[k], 'change', _saveTtsConfig);
+        });
+    }
+
     function _buildStartGamePayload() {
         var categoryPayload = selectedCategory === 'mixed'
             ? null
@@ -1542,6 +1610,8 @@
             language: selectedLanguage,
             timer_duration: selectedTimer,
             lightning_enabled: lightningEnabled,
+            // TTS narration toggles (#281), read live from the inputs.
+            tts: _readTtsConfig(),
         };
     }
 
