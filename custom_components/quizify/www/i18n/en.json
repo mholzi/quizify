@@ -372,9 +372,13 @@
     "tts": {
       "title": "Quizmaster voice?",
       "enable": "Narrate the game out loud",
+      "hint": "Your HA speaker becomes the quiz master.",
       "question": "Read out each question",
+      "options": "Read out the answer options",
       "reveal": "Announce the answer",
       "standings": "Call out the new leader",
+      "join": "Welcome players as they join",
+      "countdown": "Call out the final countdown",
       "engine": "TTS engine",
       "speaker": "Speaker",
       "usedefault": "Use default",

@@ -869,8 +869,11 @@
     var TTS_DEFAULTS = {
         enabled: false,
         announce_question: true,
+        announce_options: true,
         announce_reveal: true,
         announce_standings: true,
+        announce_join: true,
+        announce_countdown: true,
         // Per-game entity overrides (#281). Empty string → fall back to the
         // integration-options default entities on the server.
         tts_entity: '',
@@ -944,6 +947,8 @@
             reconnectAttempts = 0;
             updateConnectionStatus('connected');
             send('admin_connect', {});
+            // Configure narration up-front so pre-game lobby joins narrate (#281).
+            _pushTtsConfig();
         };
 
         ws.onmessage = function (evt) {
@@ -1551,8 +1556,11 @@
         var cfg = {
             enabled: TTS_DEFAULTS.enabled,
             announce_question: TTS_DEFAULTS.announce_question,
+            announce_options: TTS_DEFAULTS.announce_options,
             announce_reveal: TTS_DEFAULTS.announce_reveal,
             announce_standings: TTS_DEFAULTS.announce_standings,
+            announce_join: TTS_DEFAULTS.announce_join,
+            announce_countdown: TTS_DEFAULTS.announce_countdown,
             tts_entity: TTS_DEFAULTS.tts_entity,
             media_player: TTS_DEFAULTS.media_player,
         };
@@ -1563,8 +1571,11 @@
                 if (saved && typeof saved === 'object') {
                     if (typeof saved.enabled === 'boolean') cfg.enabled = saved.enabled;
                     if (typeof saved.announce_question === 'boolean') cfg.announce_question = saved.announce_question;
+                    if (typeof saved.announce_options === 'boolean') cfg.announce_options = saved.announce_options;
                     if (typeof saved.announce_reveal === 'boolean') cfg.announce_reveal = saved.announce_reveal;
                     if (typeof saved.announce_standings === 'boolean') cfg.announce_standings = saved.announce_standings;
+                    if (typeof saved.announce_join === 'boolean') cfg.announce_join = saved.announce_join;
+                    if (typeof saved.announce_countdown === 'boolean') cfg.announce_countdown = saved.announce_countdown;
                     if (typeof saved.tts_entity === 'string') cfg.tts_entity = saved.tts_entity;
                     if (typeof saved.media_player === 'string') cfg.media_player = saved.media_player;
                 }
@@ -1574,17 +1585,42 @@
     }
 
     function _saveTtsConfig() {
+        var cfg = _readTtsConfig();
         try {
-            localStorage.setItem(TTS_STORAGE_KEY, JSON.stringify(_readTtsConfig()));
+            localStorage.setItem(TTS_STORAGE_KEY, JSON.stringify(cfg));
         } catch (e) { /* storage unavailable — preference is session-only */ }
+        // Push to the server too so the announcer is configured during the
+        // pre-game lobby (player-join narration fires before start_game) (#281).
+        _pushTtsConfig(cfg);
+        _syncTtsChildState();
+    }
+
+    // Send the current TTS config to the server (no-op if the socket isn't
+    // open yet — onopen re-sends after admin_connect).
+    function _pushTtsConfig(cfg) {
+        send('configure_tts', cfg || _readTtsConfig());
+    }
+
+    // Variant B (#281): dim + disable the child event toggles when the master
+    // switch is off, so the master→child hierarchy is unmistakable.
+    function _syncTtsChildState() {
+        var on = _ttsEls.enable ? !!_ttsEls.enable.checked : false;
+        var sub = document.getElementById('tts-children');
+        if (sub) sub.classList.toggle('is-disabled', !on);
+        ['question', 'options', 'reveal', 'standings', 'join', 'countdown'].forEach(function (k) {
+            if (_ttsEls[k]) _ttsEls[k].disabled = !on;
+        });
     }
 
     function _readTtsConfig() {
         return {
             enabled: _ttsEls.enable ? !!_ttsEls.enable.checked : TTS_DEFAULTS.enabled,
             announce_question: _ttsEls.question ? !!_ttsEls.question.checked : TTS_DEFAULTS.announce_question,
+            announce_options: _ttsEls.options ? !!_ttsEls.options.checked : TTS_DEFAULTS.announce_options,
             announce_reveal: _ttsEls.reveal ? !!_ttsEls.reveal.checked : TTS_DEFAULTS.announce_reveal,
             announce_standings: _ttsEls.standings ? !!_ttsEls.standings.checked : TTS_DEFAULTS.announce_standings,
+            announce_join: _ttsEls.join ? !!_ttsEls.join.checked : TTS_DEFAULTS.announce_join,
+            announce_countdown: _ttsEls.countdown ? !!_ttsEls.countdown.checked : TTS_DEFAULTS.announce_countdown,
             tts_entity: _ttsEls.engine ? _ttsEls.engine.value : TTS_DEFAULTS.tts_entity,
             media_player: _ttsEls.speaker ? _ttsEls.speaker.value : TTS_DEFAULTS.media_player,
         };
@@ -1642,19 +1678,27 @@
         _ttsEls = {
             enable: document.getElementById('tts-enable-toggle'),
             question: document.getElementById('tts-announce-question'),
+            options: document.getElementById('tts-announce-options'),
             reveal: document.getElementById('tts-announce-reveal'),
             standings: document.getElementById('tts-announce-standings'),
+            join: document.getElementById('tts-announce-join'),
+            countdown: document.getElementById('tts-announce-countdown'),
             engine: document.getElementById('tts-engine-select'),
             speaker: document.getElementById('tts-speaker-select'),
         };
         var cfg = _loadTtsConfig();
         if (_ttsEls.enable) _ttsEls.enable.checked = cfg.enabled;
         if (_ttsEls.question) _ttsEls.question.checked = cfg.announce_question;
+        if (_ttsEls.options) _ttsEls.options.checked = cfg.announce_options;
         if (_ttsEls.reveal) _ttsEls.reveal.checked = cfg.announce_reveal;
         if (_ttsEls.standings) _ttsEls.standings.checked = cfg.announce_standings;
-        ['enable', 'question', 'reveal', 'standings', 'engine', 'speaker'].forEach(function (k) {
+        if (_ttsEls.join) _ttsEls.join.checked = cfg.announce_join;
+        if (_ttsEls.countdown) _ttsEls.countdown.checked = cfg.announce_countdown;
+        ['enable', 'question', 'options', 'reveal', 'standings', 'join', 'countdown', 'engine', 'speaker'].forEach(function (k) {
             if (_ttsEls[k]) on(_ttsEls[k], 'change', _saveTtsConfig);
         });
+        // Reflect the master→child enabled/dimmed state (Variant B, #281).
+        _syncTtsChildState();
         // Fetch + populate the entity dropdowns, restoring the saved selection.
         _loadTtsEntities(cfg);
     }
