@@ -24,6 +24,7 @@ from custom_components.quizify.game.state import (  # noqa: E402
     QuizifyGameState,
 )
 from custom_components.quizify.game.powerups import PowerUpEffect, PowerUpType  # noqa: E402
+from custom_components.quizify.game.questions import Answer, Question  # noqa: E402
 
 
 class _FakeRuntime:
@@ -718,12 +719,28 @@ class TestPowerUpTargeting:
         state.add_player("Alice", _fake_ws())
         state.start_game(language="de", num_rounds=3, difficulty="easy")
         state.start_next_question()
+        # Pin a known multiple-choice question so joker always has a wrong
+        # answer to remove. start_next_question() picks randomly from the live
+        # packs, which now include estimate questions (#275) — those carry no
+        # A/B/C answers, so an unseeded RNG could otherwise land on one and
+        # leave joker_remove_index None (suite-order flake).
+        state._current_question = Question(
+            id="joker-mc",
+            question="Pick one",
+            answers=[
+                Answer(text="right", correct=True),
+                Answer(text="wrong 1", correct=False),
+                Answer(text="wrong 2", correct=False),
+                Answer(text="wrong 3", correct=False),
+            ],
+        )
         _give(state, "Alice", PowerUpType.JOKER)
 
         effect = state.use_powerup("Alice", target_id=None)
         assert isinstance(effect, PowerUpEffect)
         assert effect.type == PowerUpType.JOKER
-        assert effect.joker_remove_index is not None
+        # joker removes one of the three wrong-answer indices (1, 2, or 3).
+        assert effect.joker_remove_index in {1, 2, 3}
 
     @pytest.mark.parametrize(
         "pu_type",
