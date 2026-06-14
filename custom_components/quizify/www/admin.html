@@ -305,6 +305,23 @@
                             <span class="toggle-switch-compact" aria-hidden="true"></span>
                             <span class="toggle-label" data-i18n="setup.tts.standings">Call out the new leader</span>
                         </label>
+                        <!-- Per-game entity pickers (#281). The host can choose the
+                             TTS engine + media_player right here; populated from
+                             /api/quizify/tts-entities by admin.js, persisted in the
+                             "quizify_tts" localStorage object. Empty selection falls
+                             back to the integration-options defaults. -->
+                        <label class="setup-tts-select" for="tts-engine-select">
+                            <span class="setup-tts-select-label" data-i18n="setup.tts.engine">TTS engine</span>
+                            <select id="tts-engine-select" class="setup-select">
+                                <option value="" data-i18n="setup.tts.usedefault">Use default</option>
+                            </select>
+                        </label>
+                        <label class="setup-tts-select" for="tts-speaker-select">
+                            <span class="setup-tts-select-label" data-i18n="setup.tts.speaker">Speaker</span>
+                            <select id="tts-speaker-select" class="setup-select">
+                                <option value="" data-i18n="setup.tts.usedefault">Use default</option>
+                            </select>
+                        </label>
                     </div>
                 </div>
 

@@ -73,6 +73,13 @@ class QuizifyTTSAnnouncer:
         self._announce_question: bool = True
         self._announce_reveal: bool = True
         self._announce_standings: bool = True
+        # Per-game entity overrides (#281). The admin TTS panel can pick a TTS
+        # engine + media player directly (dropdowns backed by
+        # /api/quizify/tts-entities); those ride the start_game payload like the
+        # toggles. ``None``/empty → fall back to the construction-time
+        # config-entry values (self._tts_entity_id / self._media_player_entity_id).
+        self._tts_entity_override: str | None = None
+        self._media_player_override: str | None = None
         # Last single leader name we observed, for leader-change detection.
         # None means "no leader yet" — used to suppress the round-1 change.
         self._previous_leader: str | None = None
@@ -88,8 +95,16 @@ class QuizifyTTSAnnouncer:
         announce_question: bool,
         announce_reveal: bool,
         announce_standings: bool,
+        tts_entity: str | None = None,
+        media_player: str | None = None,
     ) -> None:
         """Apply per-game narration settings from the start_game payload.
+
+        ``tts_entity`` / ``media_player`` are the optional per-game entity
+        overrides from the admin TTS dropdowns (#281). When provided and
+        non-empty they win for this game; when empty/``None`` the announcer
+        falls back to the construction-time config-entry values. Stored
+        normalized so an empty string never masks the fallback.
 
         Resets leader-change tracking so a fresh game's first scored round
         never fires a spurious "takes the lead".
@@ -98,14 +113,26 @@ class QuizifyTTSAnnouncer:
         self._announce_question = bool(announce_question)
         self._announce_reveal = bool(announce_reveal)
         self._announce_standings = bool(announce_standings)
+        self._tts_entity_override = (tts_entity or "").strip() or None
+        self._media_player_override = (media_player or "").strip() or None
         self._previous_leader = None
+
+    @property
+    def _active_tts_entity(self) -> str | None:
+        """Per-game override if set, else the config-entry default."""
+        return self._tts_entity_override or self._tts_entity_id
+
+    @property
+    def _active_media_player(self) -> str | None:
+        """Per-game override if set, else the config-entry default."""
+        return self._media_player_override or self._media_player_entity_id
 
     @property
     def is_configured(self) -> bool:
         return (
             self._hass is not None
-            and bool(self._tts_entity_id)
-            and bool(self._media_player_entity_id)
+            and bool(self._active_tts_entity)
+            and bool(self._active_media_player)
         )
 
     def attach(self) -> None:
@@ -311,15 +338,17 @@ class QuizifyTTSAnnouncer:
             return
         self._last_spoken_at = now
 
+        tts_entity = self._active_tts_entity
+        media_player = self._active_media_player
         fire_and_forget_service(
             self._hass,
             "tts",
             "speak",
             {
-                "entity_id": self._tts_entity_id,
-                "media_player_entity_id": self._media_player_entity_id,
+                "entity_id": tts_entity,
+                "media_player_entity_id": media_player,
                 "message": message,
             },
-            f"TTS announcement (tts={self._tts_entity_id}, "
-            f"media_player={self._media_player_entity_id})",
+            f"TTS announcement (tts={tts_entity}, "
+            f"media_player={media_player})",
         )

@@ -1192,6 +1192,11 @@ class QuizifyWebSocketHandler:
                     announce_question=bool(tts.get("announce_question", True)),
                     announce_reveal=bool(tts.get("announce_reveal", True)),
                     announce_standings=bool(tts.get("announce_standings", True)),
+                    # Per-game entity overrides from the admin dropdowns (#281).
+                    # Empty/missing → the announcer falls back to the
+                    # config-entry default entities.
+                    tts_entity=tts.get("tts_entity"),
+                    media_player=tts.get("media_player"),
                 )
             except Exception:  # noqa: BLE001
                 _LOGGER.exception("TTS configure raised")

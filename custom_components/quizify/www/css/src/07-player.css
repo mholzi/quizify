@@ -1482,6 +1482,40 @@
     color: var(--color-text-secondary);
 }
 
+/* TTS engine + speaker dropdowns (#281) — sit under the narration toggles
+   in the same vF-step, aligned with them (skip the number badge). Variant A
+   flat styling: label stacked over a soft-parlor select. */
+.setup-tts-select {
+    display: flex;
+    flex-direction: column;
+    gap: 4px;
+    padding-left: 30px;
+    margin-top: 8px;
+}
+.setup-tts-select-label {
+    font-size: 0.82rem;
+    color: var(--color-text-muted);
+}
+.setup-select {
+    width: 100%;
+    padding: 8px 10px;
+    font-size: 0.9rem;
+    color: var(--color-text-primary);
+    background: var(--color-bg-card);
+    border: 1px solid var(--color-border-light);
+    border-radius: var(--radius-md);
+    appearance: none;
+    -webkit-appearance: none;
+}
+.setup-select:focus-visible {
+    outline: 2px solid var(--color-accent-primary);
+    outline-offset: 1px;
+}
+.setup-select:disabled {
+    color: var(--color-text-muted);
+    opacity: 0.7;
+}
+
 /* ==========================================
    Player Lobby — variant B (You + the Room) + D (Rules)
    ==========================================

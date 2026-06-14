@@ -374,7 +374,11 @@
       "enable": "Spiel laut vorlesen",
       "question": "Jede Frage vorlesen",
       "reveal": "Die Antwort ansagen",
-      "standings": "Neue Führung ausrufen"
+      "standings": "Neue Führung ausrufen",
+      "engine": "TTS-Stimme",
+      "speaker": "Lautsprecher",
+      "usedefault": "Standard verwenden",
+      "noentities": "Keine gefunden – in HA einrichten"
     }
   },
   "featured": {

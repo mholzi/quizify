@@ -1536,6 +1536,10 @@
         announce_question: true,
         announce_reveal: true,
         announce_standings: true,
+        // Per-game entity overrides (#281). Empty string → fall back to the
+        // integration-options default entities on the server.
+        tts_entity: '',
+        media_player: '',
     };
     var _ttsEls = {};
 
@@ -1545,6 +1549,8 @@
             announce_question: TTS_DEFAULTS.announce_question,
             announce_reveal: TTS_DEFAULTS.announce_reveal,
             announce_standings: TTS_DEFAULTS.announce_standings,
+            tts_entity: TTS_DEFAULTS.tts_entity,
+            media_player: TTS_DEFAULTS.media_player,
         };
         try {
             var raw = localStorage.getItem(TTS_STORAGE_KEY);
@@ -1555,6 +1561,8 @@
                     if (typeof saved.announce_question === 'boolean') cfg.announce_question = saved.announce_question;
                     if (typeof saved.announce_reveal === 'boolean') cfg.announce_reveal = saved.announce_reveal;
                     if (typeof saved.announce_standings === 'boolean') cfg.announce_standings = saved.announce_standings;
+                    if (typeof saved.tts_entity === 'string') cfg.tts_entity = saved.tts_entity;
+                    if (typeof saved.media_player === 'string') cfg.media_player = saved.media_player;
                 }
             }
         } catch (e) { /* malformed/unavailable storage — fall back to defaults */ }
@@ -1573,7 +1581,57 @@
             announce_question: _ttsEls.question ? !!_ttsEls.question.checked : TTS_DEFAULTS.announce_question,
             announce_reveal: _ttsEls.reveal ? !!_ttsEls.reveal.checked : TTS_DEFAULTS.announce_reveal,
             announce_standings: _ttsEls.standings ? !!_ttsEls.standings.checked : TTS_DEFAULTS.announce_standings,
+            tts_entity: _ttsEls.engine ? _ttsEls.engine.value : TTS_DEFAULTS.tts_entity,
+            media_player: _ttsEls.speaker ? _ttsEls.speaker.value : TTS_DEFAULTS.media_player,
         };
+    }
+
+    // Fill a <select> with entity options, preserving (and restoring) the saved
+    // selection. Graceful empty/error fallback: a single disabled "no entities"
+    // option so the host knows to configure entities in HA (Beatify pattern).
+    function _populateEntitySelect(sel, entities, savedValue) {
+        if (!sel) return;
+        // The leading "Use default" option is authored in admin.html; keep it
+        // and rebuild only the entity options after it.
+        while (sel.options.length > 1) sel.remove(1);
+        if (!entities || !entities.length) {
+            var none = document.createElement('option');
+            none.value = '';
+            none.disabled = true;
+            none.textContent = _t('setup.tts.noentities');
+            sel.appendChild(none);
+            sel.value = '';
+            return;
+        }
+        entities.forEach(function (ent) {
+            var opt = document.createElement('option');
+            opt.value = ent.entity_id;
+            opt.textContent = ent.friendly_name || ent.entity_id;
+            sel.appendChild(opt);
+        });
+        // Restore the saved selection if it still exists; else fall to default.
+        if (savedValue && Array.prototype.some.call(sel.options, function (o) {
+            return o.value === savedValue;
+        })) {
+            sel.value = savedValue;
+        } else {
+            sel.value = '';
+        }
+    }
+
+    function _loadTtsEntities(cfg) {
+        fetch('/api/quizify/tts-entities')
+            .then(function (resp) { return resp.ok ? resp.json() : null; })
+            .then(function (data) {
+                data = data || {};
+                _populateEntitySelect(_ttsEls.engine, data.tts, cfg.tts_entity);
+                _populateEntitySelect(_ttsEls.speaker, data.media_players, cfg.media_player);
+            })
+            .catch(function (e) {
+                console.warn('[quizify] tts-entities fetch failed:', e);
+                _populateEntitySelect(_ttsEls.engine, null, cfg.tts_entity);
+                _populateEntitySelect(_ttsEls.speaker, null, cfg.media_player);
+            });
     }
 
     function _initTtsToggles() {
@@ -1582,15 +1640,19 @@
             question: document.getElementById('tts-announce-question'),
             reveal: document.getElementById('tts-announce-reveal'),
             standings: document.getElementById('tts-announce-standings'),
+            engine: document.getElementById('tts-engine-select'),
+            speaker: document.getElementById('tts-speaker-select'),
         };
         var cfg = _loadTtsConfig();
         if (_ttsEls.enable) _ttsEls.enable.checked = cfg.enabled;
         if (_ttsEls.question) _ttsEls.question.checked = cfg.announce_question;
         if (_ttsEls.reveal) _ttsEls.reveal.checked = cfg.announce_reveal;
         if (_ttsEls.standings) _ttsEls.standings.checked = cfg.announce_standings;
-        ['enable', 'question', 'reveal', 'standings'].forEach(function (k) {
+        ['enable', 'question', 'reveal', 'standings', 'engine', 'speaker'].forEach(function (k) {
             if (_ttsEls[k]) on(_ttsEls[k], 'change', _saveTtsConfig);
         });
+        // Fetch + populate the entity dropdowns, restoring the saved selection.
+        _loadTtsEntities(cfg);
     }
 
     function _buildStartGamePayload() {

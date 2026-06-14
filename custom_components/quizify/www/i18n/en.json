@@ -374,7 +374,11 @@
       "enable": "Narrate the game out loud",
       "question": "Read out each question",
       "reveal": "Announce the answer",
-      "standings": "Call out the new leader"
+      "standings": "Call out the new leader",
+      "engine": "TTS engine",
+      "speaker": "Speaker",
+      "usedefault": "Use default",
+      "noentities": "None found — configure in HA"
     }
   },
   "featured": {

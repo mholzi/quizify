@@ -312,6 +312,141 @@ class TestStandingsFragment:
         assert hass.calls == []
 
 
+class TestEntityOverrides:
+    """Per-game entity overrides from the admin dropdowns (#281).
+
+    ``configure(tts_entity=..., media_player=...)`` lets the host pick the TTS
+    engine + speaker for this game; empty/None falls back to the
+    construction-time config-entry entities. is_configured stays true if EITHER
+    source provides both.
+    """
+
+    @pytest.mark.asyncio
+    async def test_override_used_in_service_call(self, game) -> None:
+        game.language = "en"
+        hass = _FakeHass()
+        t = _announcer(hass, game)  # config-entry: tts.cloud / media_player.kitchen
+        _configure(t)
+        t.configure(
+            enabled=True,
+            announce_question=True,
+            announce_reveal=True,
+            announce_standings=True,
+            tts_entity="tts.piper",
+            media_player="media_player.living_room",
+        )
+        t.announce_question(_question("Q?"), 1, 10)
+        await asyncio.sleep(0)
+        _, _, data = hass.calls[-1]
+        assert data["entity_id"] == "tts.piper"
+        assert data["media_player_entity_id"] == "media_player.living_room"
+
+    @pytest.mark.asyncio
+    async def test_empty_override_falls_back_to_config_entry(self, game) -> None:
+        game.language = "en"
+        hass = _FakeHass()
+        t = _announcer(hass, game)
+        # Empty strings (host left the dropdown on "Use default").
+        t.configure(
+            enabled=True,
+            announce_question=True,
+            announce_reveal=True,
+            announce_standings=True,
+            tts_entity="",
+            media_player="",
+        )
+        t.announce_question(_question("Q?"), 1, 10)
+        await asyncio.sleep(0)
+        _, _, data = hass.calls[-1]
+        assert data["entity_id"] == "tts.cloud"
+        assert data["media_player_entity_id"] == "media_player.kitchen"
+
+    @pytest.mark.asyncio
+    async def test_whitespace_override_falls_back(self, game) -> None:
+        """A whitespace-only value must not mask the config-entry fallback."""
+        game.language = "en"
+        hass = _FakeHass()
+        t = _announcer(hass, game)
+        t.configure(
+            enabled=True,
+            announce_question=True,
+            announce_reveal=True,
+            announce_standings=True,
+            tts_entity="   ",
+            media_player="   ",
+        )
+        t.announce_question(_question("Q?"), 1, 10)
+        await asyncio.sleep(0)
+        _, _, data = hass.calls[-1]
+        assert data["entity_id"] == "tts.cloud"
+        assert data["media_player_entity_id"] == "media_player.kitchen"
+
+    @pytest.mark.asyncio
+    async def test_partial_override_mixes_with_default(self, game) -> None:
+        """Override one entity, leave the other empty → mixed pair."""
+        game.language = "en"
+        hass = _FakeHass()
+        t = _announcer(hass, game)
+        t.configure(
+            enabled=True,
+            announce_question=True,
+            announce_reveal=True,
+            announce_standings=True,
+            tts_entity="tts.piper",
+            media_player="",
+        )
+        t.announce_question(_question("Q?"), 1, 10)
+        await asyncio.sleep(0)
+        _, _, data = hass.calls[-1]
+        assert data["entity_id"] == "tts.piper"
+        assert data["media_player_entity_id"] == "media_player.kitchen"
+
+    def test_is_configured_true_from_override_only(self, game) -> None:
+        """No config-entry entities, but overrides supply both → configured."""
+        hass = _FakeHass()
+        t = QuizifyTTSAnnouncer(
+            hass=hass,
+            tts_entity_id=None,
+            media_player_entity_id=None,
+            game_state=game,
+        )
+        assert t.is_configured is False
+        t.configure(
+            enabled=True,
+            announce_question=True,
+            announce_reveal=True,
+            announce_standings=True,
+            tts_entity="tts.piper",
+            media_player="media_player.living_room",
+        )
+        assert t.is_configured is True
+
+    def test_is_configured_true_from_config_entry_only(self, game) -> None:
+        """No overrides, config-entry supplies both → still configured."""
+        hass = _FakeHass()
+        t = _announcer(hass, game)
+        assert t.is_configured is True
+
+    def test_is_configured_false_when_neither_complete(self, game) -> None:
+        """Override supplies only one entity, config-entry none → not configured."""
+        hass = _FakeHass()
+        t = QuizifyTTSAnnouncer(
+            hass=hass,
+            tts_entity_id=None,
+            media_player_entity_id=None,
+            game_state=game,
+        )
+        t.configure(
+            enabled=True,
+            announce_question=True,
+            announce_reveal=True,
+            announce_standings=True,
+            tts_entity="tts.piper",
+            media_player="",
+        )
+        assert t.is_configured is False
+
+
 class TestThrottle:
     @pytest.mark.asyncio
     async def test_rapid_second_speak_suppressed(self, game) -> None:

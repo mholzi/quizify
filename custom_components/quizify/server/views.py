@@ -702,6 +702,44 @@ async def featured_pack_view(request: web.Request) -> web.Response:
     })
 
 
+async def tts_entities_view(request: web.Request) -> web.Response:
+    """List the TTS engines + media players the admin can pick for narration.
+
+    Backs the two dropdowns in the admin TTS panel (#281): instead of forcing
+    the host to type ``tts.*`` / ``media_player.*`` entity ids in the
+    integration options, the panel offers the live entities directly. The
+    chosen pair rides the start_game payload (per-game, localStorage-backed);
+    the config-entry options stay as the fallback default.
+
+    Returns ``{"tts": [...], "media_players": [...]}`` where each item is
+    ``{entity_id, friendly_name}``, sorted by friendly_name. On the standalone
+    dev server (no hass) both lists are empty — the dropdowns then show the
+    graceful "configure in HA" fallback.
+    """
+    ctx = _get_ctx(request)
+    # Only the HA runtime exposes ``hass``; the standalone dev server does not.
+    hass = getattr(ctx.runtime, "hass", None)
+    if hass is None:
+        return web.json_response({"tts": [], "media_players": []})
+
+    def _entities(domain: str) -> list[dict]:
+        items = [
+            {
+                "entity_id": state.entity_id,
+                "friendly_name": state.attributes.get(
+                    "friendly_name", state.entity_id
+                ),
+            }
+            for state in hass.states.async_all(domain)
+        ]
+        items.sort(key=lambda e: e["friendly_name"].lower())
+        return items
+
+    return web.json_response(
+        {"tts": _entities("tts"), "media_players": _entities("media_player")}
+    )
+
+
 async def analytics_data_view(request: web.Request) -> web.Response:
     """Return analytics data as JSON."""
     ctx = _get_ctx(request)
@@ -954,6 +992,7 @@ ROUTES: list[tuple[str, str, _RouteHandler]] = [
     ("GET", "/api/quizify/game-status", game_status_view),
     ("GET", "/api/quizify/status", status_view),
     ("GET", "/api/quizify/featured-pack", featured_pack_view),
+    ("GET", "/api/quizify/tts-entities", tts_entities_view),
     ("GET", "/api/quizify/analytics/data", analytics_data_view),
     ("GET", "/api/quizify/all-time", all_time_leaderboard_view),
     ("GET", "/api/quizify/question-stats", question_stats_view),
