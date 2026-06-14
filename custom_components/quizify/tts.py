@@ -35,6 +35,12 @@ _LOGGER = logging.getLogger(__name__)
 # other. 5s gives the speaker time to finish a short sentence.
 TTS_MIN_INTERVAL = 5.0
 
+# Seconds-remaining threshold for the spoken countdown warning (#281). Fires
+# once per round when the round timer first drops to/below this. Kept >
+# TTS_MIN_INTERVAL so the warning never throttles the more-important reveal
+# narration that follows a few seconds later when the round ends.
+COUNTDOWN_THRESHOLD_SECONDS = 10
+
 
 class QuizifyTTSAnnouncer:
     """Speaks game events via HA TTS. Configured per-entry; no-op when
@@ -71,8 +77,14 @@ class QuizifyTTSAnnouncer:
         # the ``start_game`` WS payload (see ``configure``).
         self._enabled: bool = False
         self._announce_question: bool = True
+        self._announce_options: bool = True
         self._announce_reveal: bool = True
         self._announce_standings: bool = True
+        self._announce_join: bool = True
+        self._announce_countdown: bool = True
+        # One-shot guard so the spoken countdown warning fires at most once per
+        # round. Reset at every question start (see ``announce_question``).
+        self._countdown_announced: bool = False
         # Per-game entity overrides (#281). The admin TTS panel can pick a TTS
         # engine + media player directly (dropdowns backed by
         # /api/quizify/tts-entities); those ride the start_game payload like the
@@ -95,6 +107,9 @@ class QuizifyTTSAnnouncer:
         announce_question: bool,
         announce_reveal: bool,
         announce_standings: bool,
+        announce_options: bool = True,
+        announce_join: bool = True,
+        announce_countdown: bool = True,
         tts_entity: str | None = None,
         media_player: str | None = None,
     ) -> None:
@@ -111,8 +126,11 @@ class QuizifyTTSAnnouncer:
         """
         self._enabled = bool(enabled)
         self._announce_question = bool(announce_question)
+        self._announce_options = bool(announce_options)
         self._announce_reveal = bool(announce_reveal)
         self._announce_standings = bool(announce_standings)
+        self._announce_join = bool(announce_join)
+        self._announce_countdown = bool(announce_countdown)
         self._tts_entity_override = (tts_entity or "").strip() or None
         self._media_player_override = (media_player or "").strip() or None
         self._previous_leader = None
@@ -151,13 +169,28 @@ class QuizifyTTSAnnouncer:
     # ------------------------------------------------------------------
 
     def announce_question(
-        self, question: Any, round_no: int, total_rounds: int
+        self,
+        question: Any,
+        round_no: int,
+        total_rounds: int,
+        options: list[str] | None = None,
     ) -> None:
-        """Narrate the question text at round start.
+        """Narrate the question text (and optionally the answer options) at
+        round start.
 
-        Gated on the master switch AND the per-event question toggle. No-op
-        when narration is off so a configured TTS entity stays quiet.
+        Gated on the master switch AND the per-event question toggle. The
+        options readout has its own toggle and is appended to the same
+        utterance so the host hears "Question 3 of 10: … Your options are …"
+        as one flowing line. ``options`` are the canonical shuffled answer
+        texts — the same order the TV grid shows — so spoken letters match the
+        screen. No-op when narration is off so a configured TTS entity stays
+        quiet.
+
+        Resets the per-round countdown guard unconditionally (even when
+        question narration is off) so the spoken time warning can fire later
+        this round regardless of the question toggle.
         """
+        self._countdown_announced = False
         if not (self._enabled and self._announce_question):
             return
         text = getattr(question, "question", "") or ""
@@ -168,6 +201,63 @@ class QuizifyTTSAnnouncer:
             total=total_rounds,
             text=text,
         )
+        options_fragment = self._build_options_fragment(options)
+        if options_fragment:
+            message = f"{message} {options_fragment}"
+        self._speak(message)
+
+    def _build_options_fragment(self, options: list[str] | None) -> str:
+        """Render the spoken answer-options list, or "" when not applicable.
+
+        Gated by the options toggle. Skipped for non-multiple-choice rounds
+        (estimate questions carry < 2 options). Each option is prefixed with
+        its on-screen letter (A, B, C, …) so the audio matches the TV grid.
+        """
+        if not self._announce_options:
+            return ""
+        texts = [t for t in (options or []) if t]
+        if len(texts) < 2:
+            return ""
+        lang = self._lang()
+        lettered = [
+            f"{chr(ord('A') + i)}, {text}" for i, text in enumerate(texts)
+        ]
+        return tts_phrases.phrase(lang, "options", options=". ".join(lettered))
+
+    def announce_join(self, player_name: str, is_admin: bool = False) -> None:
+        """Narrate a player joining the lobby (#281).
+
+        Gated on the master switch AND the per-event join toggle. The host's
+        own admin-as-player tab is skipped (``is_admin``) so the room doesn't
+        hear the host announce themselves on every game.
+        """
+        if not (self._enabled and self._announce_join):
+            return
+        if is_admin or not player_name:
+            return
+        message = tts_phrases.phrase(
+            self._lang(), "player_joined", name=player_name
+        )
+        self._speak(message)
+
+    def announce_countdown(self, seconds_remaining: float) -> None:
+        """Narrate a "time running out" warning, once per round (#281).
+
+        Driven from the timer-tick loop, which calls this every tick with the
+        room's minimum remaining time. Fires the first time that crosses to/
+        below ``COUNTDOWN_THRESHOLD_SECONDS`` and then no-ops for the rest of
+        the round (``_countdown_announced``). Gated on the master switch AND
+        the per-event countdown toggle.
+        """
+        if not (self._enabled and self._announce_countdown):
+            return
+        if self._countdown_announced:
+            return
+        if not 0 < seconds_remaining <= COUNTDOWN_THRESHOLD_SECONDS:
+            return
+        self._countdown_announced = True
+        seconds = max(1, round(seconds_remaining))
+        message = tts_phrases.phrase(self._lang(), "countdown", seconds=seconds)
         self._speak(message)
 
     def announce_reveal(self, game_state: QuizifyGameState) -> None:

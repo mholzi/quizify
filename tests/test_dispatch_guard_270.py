@@ -54,6 +54,9 @@ ADMIN_REQUIRED_TYPES = {
     "pause_game",
     "resume_game",
     "kick_player",
+    # configure_tts pushes the narration settings during the lobby so player-
+    # join announcements work before start_game (#281). Admin-only.
+    "configure_tts",
     # start_lightning / start_lightning_questions / end_lightning were retired
     # in #285 — the Lightning Round now auto-triggers mid-game, with no
     # host-facing start/end message.

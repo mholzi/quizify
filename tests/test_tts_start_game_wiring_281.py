@@ -177,6 +177,57 @@ async def test_missing_tts_block_defaults_disabled(handler, game, hass) -> None:
 
 
 @pytest.mark.asyncio
+async def test_configure_tts_applies_before_game(handler, game, hass) -> None:
+    # The lobby-time configure_tts message configures the announcer up-front so
+    # pre-game join narration works (it fires before start_game).
+    admin = _ws()
+    await handler._handle_configure_tts(
+        admin,
+        {
+            "enabled": True,
+            "announce_join": True,
+            "announce_question": False,
+        },
+        game,
+    )
+    ann = handler._tts_announcer
+    assert ann._enabled is True
+    assert ann._announce_join is True
+    assert ann._announce_question is False
+
+
+@pytest.mark.asyncio
+async def test_player_join_narrates_in_lobby(handler, game, hass) -> None:
+    game.language = "de"
+    admin = _ws()
+    # Configure narration during the lobby, like admin.js does on connect.
+    await handler._handle_configure_tts(
+        admin, {"enabled": True, "announce_join": True}, game
+    )
+    # A real player joins the lobby.
+    player_ws = _ws()
+    await handler._handle_join(player_ws, {"name": "Lisa"}, game)
+    await asyncio.sleep(0)
+
+    speak = [c for c in hass.calls if c[1] == "speak"]
+    assert len(speak) == 1
+    assert speak[0][2]["message"] == "Lisa ist dabei!"
+
+
+@pytest.mark.asyncio
+async def test_admin_join_not_narrated(handler, game, hass) -> None:
+    game.language = "de"
+    admin = _ws()
+    await handler._handle_configure_tts(
+        admin, {"enabled": True, "announce_join": True}, game
+    )
+    # The host's own admin-as-player join must stay silent.
+    await handler._handle_join(admin, {"name": "Host", "is_admin": True}, game)
+    await asyncio.sleep(0)
+    assert [c for c in hass.calls if c[1] == "speak"] == []
+
+
+@pytest.mark.asyncio
 async def test_round_evaluated_narrates_reveal(handler, game, hass) -> None:
     admin = _ws()
     game.add_player("Markus", admin)

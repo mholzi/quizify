@@ -10,8 +10,8 @@ Templates are ``str.format`` strings; placeholders like ``{name}`` are filled
 by the caller. ``{names}`` may hold a single name or several joined by
 ``join_names`` (the language's "and" word).
 
-Only the v1 ("Quizmaster core") keys live here: question-start, reveal answer,
-who-got-it, and standings/leader-change.
+Keys: question-start, answer-options readout, reveal answer, who-got-it,
+standings/leader-change, player-joined, and the time-running-out countdown.
 """
 
 from __future__ import annotations
@@ -34,21 +34,27 @@ _AND: dict[str, str] = {
 _PHRASES: dict[str, dict[str, str]] = {
     "en": {
         "question": "Question {round} of {total}: {text}",
+        "options": "Your options are: {options}.",
         "answer": "The correct answer is {answer}.",
         "got_it_single": "{names} got it right.",
         "got_it_multi": "{names} got it right.",
         "nobody": "Nobody got it this round.",
         "leader_change": "{name} takes the lead!",
         "tie_at_top": "It's a tie at the top.",
+        "player_joined": "{name} joined the game.",
+        "countdown": "{seconds} seconds left!",
     },
     "de": {
         "question": "Frage {round} von {total}: {text}",
+        "options": "Die Antwortmöglichkeiten sind: {options}.",
         "answer": "Die richtige Antwort ist {answer}.",
         "got_it_single": "{names} hatte recht.",
         "got_it_multi": "{names} hatten recht.",
         "nobody": "Diese Runde hatte niemand richtig.",
         "leader_change": "{name} übernimmt die Führung!",
         "tie_at_top": "Gleichstand an der Spitze.",
+        "player_joined": "{name} ist dabei!",
+        "countdown": "Noch {seconds} Sekunden!",
     },
 }
 
