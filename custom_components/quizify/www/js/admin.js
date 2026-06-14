@@ -862,6 +862,21 @@
     // TTS narration toggles (#281). Master switch defaults OFF; the per-event
     // toggles default ON. Persisted across reloads in localStorage so the host
     // keeps their preference. The values ride start_game (_readTtsConfig).
+    // NB: these constants must be assigned BEFORE _initTtsToggles() runs — the
+    // init call executes here at top-level, ahead of the helper block below, so
+    // a later `var TTS_DEFAULTS = …` would still read as undefined here (#281).
+    var TTS_STORAGE_KEY = 'quizify_tts';
+    var TTS_DEFAULTS = {
+        enabled: false,
+        announce_question: true,
+        announce_reveal: true,
+        announce_standings: true,
+        // Per-game entity overrides (#281). Empty string → fall back to the
+        // integration-options default entities on the server.
+        tts_entity: '',
+        media_player: '',
+    };
+    var _ttsEls = {};
     _initTtsToggles();
     setupChips(els.languageChips, function (v) {
         // Session-only switch — not persisted. On the next full-page reload
@@ -1529,19 +1544,8 @@
         return name;
     }
 
-    // TTS narration (#281) — localStorage-backed admin preference.
-    var TTS_STORAGE_KEY = 'quizify_tts';
-    var TTS_DEFAULTS = {
-        enabled: false,
-        announce_question: true,
-        announce_reveal: true,
-        announce_standings: true,
-        // Per-game entity overrides (#281). Empty string → fall back to the
-        // integration-options default entities on the server.
-        tts_entity: '',
-        media_player: '',
-    };
-    var _ttsEls = {};
+    // TTS narration (#281) state (TTS_STORAGE_KEY / TTS_DEFAULTS / _ttsEls) is
+    // declared earlier — before _initTtsToggles() runs at init.
 
     function _loadTtsConfig() {
         var cfg = {
