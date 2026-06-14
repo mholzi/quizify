@@ -4499,6 +4499,74 @@ footer {
     color: var(--color-text-secondary);
 }
 
+/* TTS narration — Variant B (#281): master switch as the header, a hairline
+   divider, then the per-event toggles nested + dimmed under it. The master row
+   reads as the heading (slightly heavier label); the children sit indented and
+   grey out + go non-interactive when the master is off (.is-disabled, toggled
+   by admin.js _syncTtsChildState). */
+.setup-tts-master .toggle-label {
+    font-weight: 600;
+    color: var(--color-text-primary);
+}
+.setup-tts-hint {
+    padding-left: 30px;
+    margin-top: 2px;
+    font-size: 0.82rem;
+    color: var(--color-text-muted);
+}
+.setup-tts-divider {
+    height: 1px;
+    background: var(--color-border-light);
+    margin: 8px 0 8px 30px;
+}
+.setup-tts-children {
+    padding-left: 12px;
+    border-left: 2px solid var(--color-border-light);
+    margin-left: 18px;
+    display: flex;
+    flex-direction: column;
+    gap: 2px;
+    transition: opacity 160ms ease;
+}
+.setup-tts-children.is-disabled {
+    opacity: 0.4;
+    pointer-events: none;
+}
+
+/* TTS engine + speaker dropdowns (#281) — sit under the narration toggles
+   in the same vF-step, aligned with them (skip the number badge). Soft-parlor
+   styling: label stacked over a select. */
+.setup-tts-select {
+    display: flex;
+    flex-direction: column;
+    gap: 4px;
+    padding-left: 30px;
+    margin-top: 8px;
+}
+.setup-tts-select-label {
+    font-size: 0.82rem;
+    color: var(--color-text-muted);
+}
+.setup-select {
+    width: 100%;
+    padding: 8px 10px;
+    font-size: 0.9rem;
+    color: var(--color-text-primary);
+    background: var(--color-bg-card);
+    border: 1px solid var(--color-border-light);
+    border-radius: var(--radius-md);
+    appearance: none;
+    -webkit-appearance: none;
+}
+.setup-select:focus-visible {
+    outline: 2px solid var(--color-accent-primary);
+    outline-offset: 1px;
+}
+.setup-select:disabled {
+    color: var(--color-text-muted);
+    opacity: 0.7;
+}
+
 /* ==========================================
    Player Lobby — variant B (You + the Room) + D (Rules)
    ==========================================

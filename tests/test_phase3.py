@@ -24,6 +24,16 @@ from custom_components.quizify.lights import QuizifyPartyLights  # noqa: E402
 from custom_components.quizify.tts import QuizifyTTSAnnouncer, TTS_MIN_INTERVAL  # noqa: E402
 
 
+def _enable(announcer: QuizifyTTSAnnouncer) -> None:
+    """Turn on TTS narration (master switch defaults OFF since #281)."""
+    announcer.configure(
+        enabled=True,
+        announce_question=True,
+        announce_reveal=True,
+        announce_standings=True,
+    )
+
+
 class _FakeHass:
     """Records service calls + create_task invocations so tests can assert."""
 
@@ -166,6 +176,7 @@ class TestTTSMilestoneAnnounce:
             media_player_entity_id="media_player.kitchen",
             game_state=game,
         )
+        _enable(t)
         t.announce_milestone("Alice", 5)
         await asyncio.sleep(0)
         assert len(hass.calls) == 1
@@ -185,6 +196,7 @@ class TestTTSMilestoneAnnounce:
             media_player_entity_id="media_player.kitchen",
             game_state=game,
         )
+        _enable(t)
         t.announce_milestone("Alice", 3)
         await asyncio.sleep(0)
         t.announce_milestone("Bob", 5)
@@ -203,6 +215,7 @@ class TestTTSMilestoneAnnounce:
             media_player_entity_id="media_player.kitchen",
             game_state=game,
         )
+        _enable(t)
         t.announce_milestone("Alice", 3)
         await asyncio.sleep(0)
         # Even after the throttle window, a repeated (player, streak) pair
@@ -221,6 +234,7 @@ class TestTTSMilestoneAnnounce:
             media_player_entity_id="media_player.kitchen",
             game_state=game,
         )
+        _enable(t)
         t.announce_milestone("Alice", 10)
         await asyncio.sleep(0)
         assert hass.calls == []
@@ -236,6 +250,7 @@ class TestTTSPhaseAnnouncements:
             media_player_entity_id="media_player.kitchen",
             game_state=game,
         )
+        _enable(t)
         t.attach()
         # Simulate "game started, round 1 active".
         game.round = 1
@@ -254,6 +269,7 @@ class TestTTSPhaseAnnouncements:
             media_player_entity_id="media_player.kitchen",
             game_state=game,
         )
+        _enable(t)
         t.attach()
         # Add a player so leader is non-None.
         ws = MagicMock()

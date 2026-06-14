@@ -3,6 +3,27 @@
 All notable changes to Quizify are documented here. This project follows
 [Semantic Versioning](https://semver.org/).
 
+## [Unreleased]
+
+### Added
+
+- **Full TTS narration — the HA speaker becomes the quiz master (#281).** An
+  optional "Quizmaster voice" mode narrates the whole game loop through the
+  configured `media_player`, so the host doesn't have to read every question
+  off the screen (a real accessibility win for hands-free / eyes-free play).
+  Narrated events, each with its own per-event toggle: the question text, the
+  answer options (lettered A/B/C to match the TV grid, skipped for estimate
+  rounds), the reveal (correct answer + who got it + standings, spoken as one
+  combined utterance), streak milestones, a player-join welcome, and a
+  once-per-round "time running out" countdown. The admin setup panel adds a
+  master switch with the per-event toggles nested + dimmed beneath it, plus
+  dropdowns to pick the TTS engine and speaker per game (falling back to the
+  integration-options defaults). All phrases are localized DE/EN with an
+  English fallback. The narration config is pushed to the server during the
+  lobby (`configure_tts`) so player-join announcements work before the game
+  starts. Off by default — a configured TTS entity stays silent until the
+  host enables it.
+
 ## [1.3.1-RC1] — 2026-06-13
 
 First release candidate after 1.3.0. Versions the estimation question type that

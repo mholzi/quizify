@@ -1,0 +1,71 @@
+<!DOCTYPE html>
+<html lang="de"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<style>
+:root{
+--bg:#FAF6EC;--surface:#FFFFFF;--card-alt:#F3EEDF;--ink:#2A2820;--muted:#6E6A5C;--light:#8F8A78;
+--border:#E5DFCF;--border-med:#D4CEBC;--coral:#E88A7F;--green:#7FA897;--blue:#7FA8C4;
+}
+*{box-sizing:border-box;margin:0;padding:0}
+body{background:var(--bg);color:var(--ink);font-family:-apple-system,"Segoe UI",Roboto,sans-serif;width:390px;padding:14px}
+.lbl{font-size:11px;letter-spacing:.08em;text-transform:uppercase;color:var(--coral);font-weight:700;margin:18px 4px 8px}
+.card{background:var(--surface);border:1px solid var(--border);border-radius:16px;padding:14px 16px;box-shadow:0 1px 2px rgba(42,40,32,.04)}
+.vF-q{display:flex;align-items:center;gap:8px;font-weight:700;font-size:15px;margin-bottom:12px}
+.num{width:22px;height:22px;border-radius:50%;background:var(--coral);color:#fff;display:flex;align-items:center;justify-content:center;font-size:12px}
+.toggle-compact{display:flex;align-items:center;gap:10px;padding:9px 0;cursor:pointer}
+.tsw{width:36px;height:20px;border-radius:10px;background:#E5DFCF;position:relative;flex:0 0 auto;transition:.2s}
+.tsw::after{content:'';position:absolute;top:2px;left:2px;width:16px;height:16px;border-radius:50%;background:var(--muted);transition:.2s}
+.on .tsw{background:rgba(232,138,127,.30)}
+.on .tsw::after{left:18px;background:var(--green)}
+.tl{font-size:14px;color:var(--ink)}
+.hr{height:1px;background:var(--border);margin:2px 0}
+.sub{padding-left:14px;border-left:2px solid var(--border)}
+.dim{opacity:.4}
+.hint{font-size:12px;color:var(--light);margin-top:2px;padding-left:46px}
+.master{font-weight:700}
+.chips{display:flex;flex-wrap:wrap;gap:8px;margin-top:10px}
+.chip{display:flex;align-items:center;gap:5px;padding:7px 12px;border-radius:999px;font-size:13px;border:1px solid var(--border-med);background:var(--card-alt);color:var(--muted)}
+.chip.sel{background:rgba(127,168,151,.18);border-color:var(--green);color:var(--ink);font-weight:600}
+.note{font-size:11px;color:var(--light);margin:6px 4px 0}
+h1{font-size:13px;color:var(--muted);margin:2px 4px 10px;font-weight:600}
+</style></head>
+<body>
+<h1>#281 TTS-Settings — Design-Shotgun (390px)</h1>
+
+<div class="lbl">Variante A · Flach (aktueller Build)</div>
+<div class="card">
+  <div class="vF-q"><span class="num">7</span><span>Quizmaster-Stimme?</span></div>
+  <label class="toggle-compact on"><span class="tsw"></span><span class="tl master">Spiel laut vorlesen</span></label>
+  <label class="toggle-compact on"><span class="tsw"></span><span class="tl">Frage vorlesen</span></label>
+  <label class="toggle-compact on"><span class="tsw"></span><span class="tl">Antwort ansagen</span></label>
+  <label class="toggle-compact on"><span class="tsw"></span><span class="tl">Neue Führung ausrufen</span></label>
+</div>
+<div class="note">4 gleichwertige Reihen. Einfach, aber keine sichtbare Master→Kind-Hierarchie; Kinder bleiben „an" auch wenn Master aus.</div>
+
+<div class="lbl">Variante B · Master + verschachtelt</div>
+<div class="card">
+  <div class="vF-q"><span class="num">7</span><span>Quizmaster-Stimme?</span></div>
+  <label class="toggle-compact on"><span class="tsw"></span><span class="tl master">Spiel laut vorlesen</span></label>
+  <div class="hint">Der HA-Lautsprecher wird zum Quizmaster.</div>
+  <div class="hr" style="margin:8px 0"></div>
+  <div class="sub">
+    <label class="toggle-compact on"><span class="tsw"></span><span class="tl">Frage vorlesen</span></label>
+    <label class="toggle-compact on"><span class="tsw"></span><span class="tl">Antwort ansagen</span></label>
+    <label class="toggle-compact on"><span class="tsw"></span><span class="tl">Neue Führung ausrufen</span></label>
+  </div>
+</div>
+<div class="note">Master als Kopf; die 3 Event-Toggles eingerückt darunter und ausgegraut/deaktiviert wenn Master aus → klare Hierarchie, „nur Fragen" leicht einstellbar.</div>
+
+<div class="lbl">Variante C · Master + Event-Chips</div>
+<div class="card">
+  <div class="vF-q"><span class="num">7</span><span>Quizmaster-Stimme?</span></div>
+  <label class="toggle-compact on"><span class="tsw"></span><span class="tl master">Spiel laut vorlesen</span></label>
+  <div class="hint">Was soll angesagt werden?</div>
+  <div class="chips">
+    <span class="chip sel">🗣️ Frage</span>
+    <span class="chip sel">🎯 Antwort</span>
+    <span class="chip sel">👑 Führung</span>
+  </div>
+</div>
+<div class="note">Master-Toggle + 3 antippbare Pills (an/aus) statt 3 Reihen. Kompakt (1 Zeile), passt zur Pack-Chip-Ästhetik; weniger vertikaler Platz.</div>
+
+</body></html>

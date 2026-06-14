@@ -368,6 +368,21 @@
       "q5": "In welcher Sprache?",
       "q6": "Blitzrunde?",
       "lightningHint": "Überraschungs-Schnellrunde mitten im Spiel"
+    },
+    "tts": {
+      "title": "Quizmaster-Stimme?",
+      "enable": "Spiel laut vorlesen",
+      "hint": "Der HA-Lautsprecher wird zum Quizmaster.",
+      "question": "Jede Frage vorlesen",
+      "options": "Antwortmöglichkeiten vorlesen",
+      "reveal": "Die Antwort ansagen",
+      "standings": "Neue Führung ausrufen",
+      "join": "Neue Spieler begrüßen",
+      "countdown": "Countdown ansagen",
+      "engine": "TTS-Stimme",
+      "speaker": "Lautsprecher",
+      "usedefault": "Standard verwenden",
+      "noentities": "Keine gefunden – in HA einrichten"
     }
   },
   "featured": {
