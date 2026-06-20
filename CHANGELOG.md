@@ -3,6 +3,19 @@
 All notable changes to Quizify are documented here. This project follows
 [Semantic Versioning](https://semver.org/).
 
+## [1.4.1] — 2026-06-20
+
+### Fixed
+
+- **"Open Quizify" now works inside the Android Home Assistant Companion App
+  (#348).** The launcher button is a plain `<a target="_blank">` link, which
+  the Android Companion's embedded WebView silently swallows — no tab opened
+  and the button appeared dead. The launcher now detects the Companion Android
+  user-agent and, in that case only, navigates the panel frame straight to
+  `/quizify/admin` instead, bypassing the dead `target="_blank"`. iOS Companion,
+  desktop and standalone browsers are unchanged and keep the native fullscreen
+  new-tab behaviour. (Ported from the matching Beatify fix.) www-only change.
+
 ## [1.4.0] — 2026-06-14
 
 ### Added
