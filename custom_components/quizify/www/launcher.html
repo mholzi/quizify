@@ -146,7 +146,9 @@
          non-null but never actually opened a tab, and the "click here"
          fallback link inside the blocked-message had target="_blank" which
          hit the same block. With <a href> the browser does its native
-         navigation — works in WebView, on iOS Safari, and on desktop. -->
+         navigation — works in WebView, on iOS Safari, and on desktop.
+         Android Companion (#348) is the exception — see the click handler
+         below; target="_blank" is silently swallowed there. -->
     <a class="btn" id="openBtn" href="/quizify/admin" target="_blank" rel="noopener">
         <span class="btn-icon">🧠</span>
         <span data-i18n="launcher.openQuizify">Open Quizify</span>
@@ -155,9 +157,41 @@
 
     <script src="/quizify/static/js/i18n.js?v={{ASSET_VER}}"></script>
     <script>
-        // i18n only — navigation is handled by the <a href>. No popup
-        // attempt, no fallback ladder. The launcher is now stateless.
+        // The launcher is a plain `<a target="_blank">`, which works
+        // everywhere EXCEPT the Android HA Companion App (#348, ported from
+        // beatify#1114). There the WebView swallows target="_blank"
+        // silently — no external tab opens, the button just does nothing.
+        // We detect the Companion Android UA and navigate `window.location`
+        // (the current iframe) to the admin URL directly, bypassing both
+        // the dead target="_blank" and HA's SPA router.
+        //
+        // Why window.location and not window.top? HA's SPA registers the
+        // panel under the `/quizify/*` path prefix. Navigating the top
+        // frame to `/quizify/admin` makes HA's router re-load the Quizify
+        // panel (which iframes `/quizify/launcher`), bouncing the user back
+        // here. Navigating the iframe itself skips HA's router — the
+        // backend serves the admin HTML straight into the panel frame.
+        // Trade-off: admin runs inside HA's chrome rather than fullscreen,
+        // but it is fully functional. iOS Companion / desktop / standalone
+        // browsers keep the native target="_blank" fullscreen behaviour.
+
+        function isAndroidCompanion() {
+            var ua = navigator.userAgent || '';
+            return /Android/i.test(ua) && /Home ?Assistant/i.test(ua);
+        }
+
         window.addEventListener('load', async function () {
+            var openBtn = document.getElementById('openBtn');
+            if (openBtn) openBtn.addEventListener('click', function (evt) {
+                // Android Companion: bypass the dead target="_blank" —
+                // navigate the current iframe so Quizify actually loads.
+                if (isAndroidCompanion()) {
+                    evt.preventDefault();
+                    window.location.href = '/quizify/admin';
+                }
+                // Every other context lets target="_blank" do its job.
+            });
+
             await QuizifyI18n.init(QuizifyI18n.getPreferredLanguage());
             QuizifyI18n.initPageTranslations();
         });
