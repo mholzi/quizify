@@ -130,38 +130,57 @@ class LightningRound:
 
         Returns False if no questions are available (caller should abort).
         """
-        # Reuse the shared QuestionBank queue, restricted to the requested
-        # category/language — the normal game's history-aware least-recently
-        # -shown ordering applies, so a lightning round after a main game
-        # naturally pulls fresh questions.
+        # Build a PRIVATE question pool for the lightning round (#350).
+        #
+        # This used to call ``self._bank.reset(...)`` + ``get_next_question()``,
+        # which rebuilt and consumed the *shared* game queue mid-game. Two
+        # bugs fell out of that: (1) it destroyed the main game's queue
+        # position/ordering, risking re-shown questions on resume, and (2)
+        # when the host picked "auto" difficulty, ``reset`` filtered on
+        # ``q.difficulty == "auto"`` — a difficulty no question carries — so
+        # the queue came back EMPTY and the fallback ended the game right at
+        # the auto-lightning round. We now pull from a private pool and never
+        # touch the bank's ``_queue``/``_queue_index``.
+        #
         # Cache hit — the bank is preloaded off-loop at setup (#258).
         self._bank.load_all_categories()
-        self._bank.reset(
+
+        # "auto" is a group-adaptive *mode*, not a per-question difficulty;
+        # no question has difficulty=="auto". Map it to None so the pool spans
+        # all difficulties instead of coming back empty.
+        difficulty = None if self.difficulty in (None, "auto") else self.difficulty
+
+        # Prefer questions the main game hasn't shown this session — the
+        # history-aware ordering (never-shown first) already does this, but
+        # excluding the shown-this-game set keeps a repeat out of the pool
+        # entirely even in small packs.
+        pool = self._bank.build_pool(
             category=self.category,
             categories=self.categories,
-            difficulty=self.difficulty,
+            difficulty=difficulty,
             language=self.language,
+            exclude_ids=self._bank.shown_this_game_ids(),
         )
+
         # Lightning is fast tap-an-answer (3 options, 15s each). Estimate
         # questions (#275) have no answer grid and the lightning view has no
-        # slider, so an estimate question would render as an empty card.
-        # Exclude them from the lightning pool — keep pulling until we have
-        # enough multiple-choice questions or the queue is exhausted. The
-        # attempt bound guards against an all-estimate pool (e.g. the user
-        # picked only the Schätzfragen/Estimation packs) so this can't spin.
-        max_attempts = self.num_questions * 20
-        attempts = 0
-        while len(self._questions) < self.num_questions and attempts < max_attempts:
-            attempts += 1
-            q = self._bank.get_next_question(
-                category=self.category, difficulty=self.difficulty
-            )
-            if q is None:
+        # slider, so an estimate question would render as an empty card —
+        # skip them. Iterating a finite pool can't spin, so no attempt bound
+        # is needed (an all-estimate pool simply yields no questions).
+        for q in pool:
+            if len(self._questions) >= self.num_questions:
                 break
             if getattr(q, "is_estimate", False):
                 continue
             self._questions.append(q)
             self._bank.record_shown(q.id)
+
+        # Claim the chosen questions out of the main game's pending queue so
+        # they aren't shown again when the normal round flow resumes (#285
+        # mid-game auto-lightning). No-op when the queue is empty (e.g. a
+        # lightning round started from the lobby).
+        if self._questions:
+            self._bank.drop_from_queue({q.id for q in self._questions})
 
         if not self._questions:
             _LOGGER.warning("Lightning round: no questions available")

@@ -803,16 +803,24 @@ class QuestionBank:
         self._shown_this_game = []
         await self.save_history_async(runtime)
 
-    def _build_queue(
+    def build_pool(
         self,
         category: str | None = None,
         difficulty: str | None = None,
         language: str | None = None,
         categories: list[str] | None = None,
-    ) -> None:
-        """Build and shuffle the internal question queue.
+        exclude_ids: set[str] | None = None,
+    ) -> list[Question]:
+        """Return a history-ordered question pool **without** mutating state.
+
+        Same filtering + never-shown-first ordering as the internal game
+        queue, but returns the list instead of assigning it to ``_queue``.
+        Used by the lightning round (#350) to build its own private queue so
+        it never disturbs the main game's ``_queue``/``_queue_index``.
 
         Priority: ``categories`` list > single ``category`` > all (mixed).
+        ``exclude_ids`` drops those question ids from the pool (e.g. questions
+        the main game already showed this session).
         """
         if categories:
             pool = [q for slug in categories for q in self._categories.get(slug, [])]
@@ -827,15 +835,51 @@ class QuestionBank:
         if language is not None:
             pool = [q for q in pool if q.language == language]
 
+        if exclude_ids:
+            pool = [q for q in pool if q.id not in exclude_ids]
+
         # Sort by history: never-shown questions first, then oldest-shown first.
         # Within each group, randomise to avoid predictable ordering.
         if self._history:
-            import random as _random
             never_shown = [q for q in pool if q.id not in self._history]
             previously_shown = [q for q in pool if q.id in self._history]
-            _random.shuffle(never_shown)
+            random.shuffle(never_shown)
             previously_shown.sort(key=lambda q: self._history.get(q.id, 0))
-            self._queue = never_shown + previously_shown
-        else:
-            self._queue = self.shuffle_questions(pool)
+            return never_shown + previously_shown
+        return self.shuffle_questions(pool)
+
+    def _build_queue(
+        self,
+        category: str | None = None,
+        difficulty: str | None = None,
+        language: str | None = None,
+        categories: list[str] | None = None,
+    ) -> None:
+        """Build and shuffle the internal question queue."""
+        self._queue = self.build_pool(category, difficulty, language, categories)
         self._queue_index = 0
+
+    def remaining_queue_ids(self) -> set[str]:
+        """Ids of questions still queued but not yet served this game.
+
+        Lets a detour (e.g. the lightning round, #350) see what the main game
+        is about to show without mutating the shared queue.
+        """
+        return {q.id for q in self._queue[self._queue_index:]}
+
+    def shown_this_game_ids(self) -> set[str]:
+        """Ids of questions already shown in the current game session."""
+        return set(self._shown_this_game)
+
+    def drop_from_queue(self, ids: set[str]) -> None:
+        """Remove not-yet-served questions from the pending queue (#350).
+
+        Lets the lightning round claim questions from the shared pool without
+        the main game re-showing them in its remaining rounds. The already
+        served prefix (and thus ``_queue_index``) is left untouched.
+        """
+        if not ids:
+            return
+        served = self._queue[: self._queue_index]
+        remaining = [q for q in self._queue[self._queue_index :] if q.id not in ids]
+        self._queue = served + remaining
