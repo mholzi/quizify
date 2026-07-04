@@ -27,6 +27,7 @@ from .pack_submission import (
     submit_config_view,
     submit_pack_view,
 )
+from .rate_limit import SlidingWindowLimiter
 from .serializers import build_game_status_response
 
 if TYPE_CHECKING:
@@ -921,6 +922,19 @@ async def pack_update_check_view(request: web.Request) -> web.Response:
 _FLAG_FILE = "flagged.jsonl"
 _FLAG_MAX_BYTES = 256 * 1024  # cap at ~256 KB to bound disk use
 _FLAG_REASON_MAX = 200
+# Cap the caller-supplied question_id (#357). Without a bound an anonymous POST
+# could append a ~1 MB entry, and the size-trim runs BEFORE the append so an
+# oversized single line would still persist. Real ids are short slugs.
+_FLAG_QUESTION_ID_MAX = 64
+# Per-IP rate limit on the unauthenticated flag POST (#357). Mirrors the
+# pack-submit guard: generous for a real "flag a few questions" burst, tight
+# enough that the endpoint can't be hammered into unbounded executor disk
+# writes. Empty buckets are evicted by the limiter so the dict stays bounded.
+_FLAG_RATE_LIMIT_REQUESTS = 5
+_FLAG_RATE_LIMIT_WINDOW = 60  # seconds
+_flag_rate_limiter = SlidingWindowLimiter(
+    _FLAG_RATE_LIMIT_REQUESTS, _FLAG_RATE_LIMIT_WINDOW
+)
 
 
 async def flag_question_view(request: web.Request) -> web.Response:
@@ -932,6 +946,12 @@ async def flag_question_view(request: web.Request) -> web.Response:
     for a "raise the maintainer's attention" signal).
     """
     ctx = _get_ctx(request)
+
+    # Per-IP rate limit (#357). Reject early — before the JSON parse and the
+    # executor disk write — so a flood can't pin the loop or grow the file.
+    if not _flag_rate_limiter.check(request.remote or ""):
+        return web.json_response({"error": "rate_limited"}, status=429)
+
     try:
         body = await request.json()
     except (ValueError, TypeError):
@@ -940,6 +960,8 @@ async def flag_question_view(request: web.Request) -> web.Response:
     question_id = (body or {}).get("question_id")
     if not isinstance(question_id, str) or not question_id:
         return web.json_response({"error": "missing_question_id"}, status=400)
+    # Bound the caller-supplied id before it is persisted (#357).
+    question_id = question_id[:_FLAG_QUESTION_ID_MAX]
 
     reason = str((body or {}).get("reason", ""))[:_FLAG_REASON_MAX]
     player_name = str((body or {}).get("player_name", ""))[:50]
