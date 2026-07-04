@@ -326,11 +326,22 @@ class _ExecRuntime:
         return func(*args)
 
 
+# #356: /flags is now admin-token gated — carry a token + validating conn.
+_FLAG_TOKEN = "test-admin-token"
+
+
+class _FlagConn:
+    def validate_admin_token(self, token: str) -> bool:
+        return token == _FLAG_TOKEN
+
+
 class _FlagRequest:
-    def __init__(self, ctx) -> None:  # noqa: ANN001
+    def __init__(self, ctx, token: str | None = _FLAG_TOKEN) -> None:  # noqa: ANN001
         from custom_components.quizify.server.context import APP_CTX_KEY
 
         self.app = {APP_CTX_KEY: ctx}
+        self.query = {"token": token} if token else {}
+        self.headers: dict[str, str] = {}
 
 
 class TestFlagListNoIpLeak:
@@ -359,7 +370,10 @@ class TestFlagListNoIpLeak:
             + "\n"
         )
 
-        ctx = SimpleNamespace(runtime=_ExecRuntime(tmp_path))
+        ctx = SimpleNamespace(
+            runtime=_ExecRuntime(tmp_path),
+            ws_handler=SimpleNamespace(conn=_FlagConn()),
+        )
         resp = await flag_list_view(_FlagRequest(ctx))  # type: ignore[arg-type]
         payload = _json.loads(resp.body)
 

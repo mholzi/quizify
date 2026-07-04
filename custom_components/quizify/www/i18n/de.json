@@ -463,6 +463,7 @@
     "back": "← Zurück",
     "loading": "Lade Auswertung…",
     "loadFailed": "Auswertung konnte nicht geladen werden.",
+    "authRequired": "Admin-Sitzung erforderlich — öffne die Auswertung über die Admin-Seite.",
     "period7d": "7T",
     "period30d": "30T",
     "period90d": "90T",

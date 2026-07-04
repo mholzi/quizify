@@ -309,7 +309,12 @@ window.QuizifyPackSubmit = (function () {
         var card = el('pack-submit-list-card');
         if (!listEl) { return; }
         try {
-            var resp = await fetch(SUBMISSIONS_URL);
+            // #356: submissions list is admin-token gated; forward the token
+            // the admin page holds.
+            var _tok = sessionStorage.getItem('quizify_admin_session_token');
+            var _url = SUBMISSIONS_URL
+                + (_tok ? '?token=' + encodeURIComponent(_tok) : '');
+            var resp = await fetch(_url);
             if (!resp.ok) { return; }
             var data = await resp.json();
             var subs = (data && data.submissions) || [];
