@@ -463,6 +463,7 @@
     "back": "← Back",
     "loading": "Loading analytics…",
     "loadFailed": "Failed to load analytics.",
+    "authRequired": "Admin session required — open Analytics from the admin page.",
     "period7d": "7d",
     "period30d": "30d",
     "period90d": "90d",

@@ -53,12 +53,26 @@ class _StandaloneRuntime:
     """No ``hass`` attribute — mirrors the dev-server runtime."""
 
 
+# #356: tts-entities is now admin-token gated. Supply a token + a matching
+# ConnectionManager stub so these endpoint tests exercise the real (200) path.
+_TOKEN = "test-admin-token"
+
+
+class _FakeConn:
+    def validate_admin_token(self, token: str) -> bool:
+        return token == _TOKEN
+
+
 class _FakeRequest:
-    def __init__(self, ctx) -> None:  # noqa: ANN001
+    def __init__(self, ctx, token: str | None = _TOKEN) -> None:  # noqa: ANN001
         self.app = {APP_CTX_KEY: ctx}
+        self.query = {"token": token} if token else {}
+        self.headers: dict[str, str] = {}
 
 
 def _call(ctx) -> dict:  # noqa: ANN001
+    if not hasattr(ctx, "ws_handler"):
+        ctx.ws_handler = SimpleNamespace(conn=_FakeConn())
     resp = asyncio.run(tts_entities_view(_FakeRequest(ctx)))  # type: ignore[arg-type]
     return json.loads(resp.body)
 

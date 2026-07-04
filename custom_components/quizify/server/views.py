@@ -149,6 +149,33 @@ def _get_ctx(request: web.Request) -> AppContext:
     return request.app[APP_CTX_KEY]
 
 
+def _is_admin_authenticated(request: web.Request) -> bool:
+    """Validate the admin session token on a host-only data request (#356).
+
+    The sensitive read endpoints (flags, all-time, analytics data, tts-entities,
+    question-stats, pack submissions) expose host-only data — player names +
+    free-text flag reasons, per-person play history, HA entity ids. They are
+    registered on ``hass.http.app.router`` with NO HA auth, so without a gate
+    any client that can reach port 8123 (including the internet on a
+    port-forwarded install) can read them. Gate them on the admin session token
+    the admin page already holds, sent as ``?token=`` or the ``X-Quizify-Token``
+    header. Same credential as the admin WebSocket — no new secret, no HA-login
+    requirement, and the unauthenticated player/dashboard flow is untouched.
+    """
+    token = request.query.get("token") or request.headers.get("X-Quizify-Token")
+    if not token:
+        return False
+    conn = getattr(getattr(_get_ctx(request), "ws_handler", None), "conn", None)
+    if conn is None:  # pragma: no cover — ws_handler is always wired in prod
+        return False
+    return conn.validate_admin_token(token)
+
+
+def _unauthorized() -> web.Response:
+    """401 for a request that failed the admin-token gate (#356)."""
+    return web.json_response({"error": "unauthorized"}, status=401)
+
+
 def _get_live_version(fallback: str) -> str:
     """Return the live manifest version — pure in-memory, NO loop I/O (#343).
 
@@ -716,6 +743,8 @@ async def tts_entities_view(request: web.Request) -> web.Response:
     dev server (no hass) both lists are empty — the dropdowns then show the
     graceful "configure in HA" fallback.
     """
+    if not _is_admin_authenticated(request):
+        return _unauthorized()
     ctx = _get_ctx(request)
     # Only the HA runtime exposes ``hass``; the standalone dev server does not.
     hass = getattr(ctx.runtime, "hass", None)
@@ -742,6 +771,8 @@ async def tts_entities_view(request: web.Request) -> web.Response:
 
 async def analytics_data_view(request: web.Request) -> web.Response:
     """Return analytics data as JSON."""
+    if not _is_admin_authenticated(request):
+        return _unauthorized()
     ctx = _get_ctx(request)
     if not ctx.analytics:
         return web.json_response({"total_games": 0})
@@ -759,6 +790,8 @@ async def question_stats_view(request: web.Request) -> web.Response:
       - ``min_shown``: minimum times a question must have been shown
         before it counts, default 3 (filters out noisy one-off misses)
     """
+    if not _is_admin_authenticated(request):
+        return _unauthorized()
     ctx = _get_ctx(request)
     if ctx.question_stats is None:
         return web.json_response({"questions": []})
@@ -788,6 +821,8 @@ async def all_time_leaderboard_view(request: web.Request) -> web.Response:
     games_played, total_score, wins, best_streak, streak_milestones_hit,
     last_played (unix seconds).
     """
+    if not _is_admin_authenticated(request):
+        return _unauthorized()
     ctx = _get_ctx(request)
     if not ctx.analytics:
         return web.json_response({"players": []})
@@ -941,10 +976,13 @@ async def flag_question_view(request: web.Request) -> web.Response:
 async def flag_list_view(request: web.Request) -> web.Response:
     """Return all flagged questions as JSON.
 
-    Used by the analytics dashboard. Not exposed to players — but no auth
-    is enforced here (matches the rest of the API). On HA the auth layer
-    above us handles it; on standalone the home LAN is trusted.
+    Used by the analytics dashboard. Host-only — gated on the admin session
+    token (#356) because the entries carry player names + free-text flag
+    reasons. The stored client IP is additionally stripped from the response
+    (#305).
     """
+    if not _is_admin_authenticated(request):
+        return _unauthorized()
     ctx = _get_ctx(request)
     flag_path = ctx.runtime.data_dir / _FLAG_FILE
 
@@ -979,6 +1017,18 @@ async def flag_list_view(request: web.Request) -> web.Response:
 
 # Each entry is (method, path, handler). Kept as data so the HA adapter and
 # the standalone server can register the same set without duplication.
+async def _gated_submissions_list_view(request: web.Request) -> web.StreamResponse:
+    """Admin-token gate (#356) in front of the imported submissions list.
+
+    The submissions list is a host-review surface (community pack proposals);
+    keep it behind the same admin session token as the other data endpoints
+    without editing the pack_submission module.
+    """
+    if not _is_admin_authenticated(request):
+        return _unauthorized()
+    return await submissions_list_view(request)
+
+
 ROUTES: list[tuple[str, str, _RouteHandler]] = [
     ("GET", "/quizify/admin", admin_view),
     ("GET", "/quizify/launcher", launcher_view),
@@ -1003,7 +1053,7 @@ ROUTES: list[tuple[str, str, _RouteHandler]] = [
     # Community pack submission (#180). Inert until community_submit_url is set:
     # the config endpoint reports enabled:false and POSTs are refused.
     ("GET", "/api/quizify/pack-submit/config", submit_config_view),
-    ("GET", "/api/quizify/pack-submit/submissions", submissions_list_view),
+    ("GET", "/api/quizify/pack-submit/submissions", _gated_submissions_list_view),
     ("POST", "/api/quizify/pack-submit", submit_pack_view),
 ]
 

@@ -341,10 +341,39 @@
             });
         });
 
+        // #356: the analytics/flags endpoints are admin-token gated. The token
+        // is the admin session token the host holds; read it from this tab's
+        // sessionStorage (set by the admin page) or from a ?token= URL param so
+        // the dashboard keeps working when opened straight from the admin panel.
+        function adminToken() {
+            try {
+                var fromUrl = new URLSearchParams(window.location.search).get('token');
+                return fromUrl
+                    || sessionStorage.getItem('quizify_admin_session_token')
+                    || '';
+            } catch (e) { return ''; }
+        }
+        function withToken(url) {
+            var tok = adminToken();
+            if (!tok) { return url; }
+            return url + (url.indexOf('?') === -1 ? '?' : '&')
+                + 'token=' + encodeURIComponent(tok);
+        }
+
         function loadData() {
-            fetch('/api/quizify/analytics/data?period=' + currentPeriod)
-                .then(function(r) { return r.json(); })
+            fetch(withToken('/api/quizify/analytics/data?period=' + currentPeriod))
+                .then(function(r) {
+                    if (r.status === 401) {
+                        var tAuth = (window.QuizifyI18n && window.QuizifyI18n.t)
+                            || function (k) { return k; };
+                        document.getElementById('loading').textContent =
+                            tAuth('analytics.authRequired');
+                        return null;
+                    }
+                    return r.json();
+                })
                 .then(function(data) {
+                    if (!data) { return; }
                     document.getElementById('loading').style.display = 'none';
 
                     if (data.total_games === 0) {
@@ -449,8 +478,8 @@
         }
 
         function loadFlags() {
-            fetch('/api/quizify/flags')
-                .then(function (r) { return r.json(); })
+            fetch(withToken('/api/quizify/flags'))
+                .then(function (r) { return r.ok ? r.json() : null; })
                 .then(function (data) {
                     var flags = (data && data.flags) || [];
                     if (!flags.length) {

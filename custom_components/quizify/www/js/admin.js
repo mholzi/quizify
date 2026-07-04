@@ -1660,7 +1660,12 @@
     }
 
     function _loadTtsEntities(cfg) {
-        fetch('/api/quizify/tts-entities')
+        // #356: the tts-entities endpoint is admin-token gated. Send the
+        // session token the admin page already holds.
+        var _tok = sessionStorage.getItem('quizify_admin_session_token');
+        var _url = '/api/quizify/tts-entities'
+            + (_tok ? '?token=' + encodeURIComponent(_tok) : '');
+        fetch(_url)
             .then(function (resp) { return resp.ok ? resp.json() : null; })
             .then(function (data) {
                 data = data || {};

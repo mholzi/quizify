@@ -448,6 +448,7 @@
     "back": "← Atrás",
     "loading": "Cargando estadísticas…",
     "loadFailed": "No se pudieron cargar las estadísticas.",
+    "authRequired": "Se requiere sesión de administrador — abre Estadísticas desde la página de administración.",
     "period7d": "7d",
     "period30d": "30d",
     "period90d": "90d",
