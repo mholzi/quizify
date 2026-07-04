@@ -455,3 +455,84 @@ class TestLightningAutoEntry:
         assert state.phase == GamePhase.QUESTION_ACTIVE
         assert state.round == target  # the originally-scheduled round now ran
         h._cancel_timer_tick()
+
+
+# ---------- Shared-queue preservation + auto difficulty (#350) ----------
+
+
+class TestLightningSharedQueue350:
+    """Regression for #350 (P0).
+
+    The lightning round used to ``reset()`` and consume the *shared* game
+    queue. That (a) filtered on ``difficulty="auto"`` — a mode, not a
+    per-question tag — yielding an EMPTY queue that ended auto-difficulty
+    games right at the lightning round, and (b) destroyed the main game's
+    queue position/ordering. The round now builds a private pool and never
+    disturbs the bank's ``_queue``/``_queue_index``.
+    """
+
+    def test_start_with_auto_difficulty_finds_questions(
+        self, bank: QuestionBank
+    ) -> None:
+        # difficulty="auto" must span all difficulties, not filter on a tag
+        # no question carries (which used to empty the queue).
+        lr = LightningRound(bank, ["A", "B"], language="de", difficulty="auto")
+        assert lr.start() is True
+        assert lr.num_questions > 0
+        assert lr.current_question is not None
+
+    def test_start_preserves_main_game_queue(self, bank: QuestionBank) -> None:
+        # Simulate a main game mid-flight: build the queue and serve 2 rounds.
+        bank.reset(language="de")
+        served_ids = set()
+        for _ in range(2):
+            q = bank.get_next_question()
+            assert q is not None
+            bank.record_shown(q.id)
+            served_ids.add(q.id)
+        index_before = bank._queue_index
+        assert index_before == 2
+
+        lr = LightningRound(bank, ["A"], language="de")
+        assert lr.start() is True
+        lightning_ids = {q.id for q in lr._questions}
+
+        # The already-served prefix (and thus the index) is untouched.
+        assert bank._queue_index == index_before
+        assert {q.id for q in bank._queue[:index_before]} == served_ids
+        # Lightning never re-shows a question the main game already served…
+        assert lightning_ids.isdisjoint(served_ids)
+        # …and its picks are claimed out of the pending queue so the resumed
+        # main game can't show them either.
+        assert lightning_ids.isdisjoint(bank.remaining_queue_ids())
+        # The main game still has fresh questions to serve.
+        nxt = bank.get_next_question()
+        assert nxt is not None
+        assert nxt.id not in lightning_ids
+
+    @pytest.mark.asyncio
+    async def test_auto_lightning_does_not_end_auto_difficulty_game(
+        self, state: QuizifyGameState
+    ) -> None:
+        # Full path: an auto-difficulty game whose auto lightning fires must
+        # enter the lightning phase with real questions — not fall through the
+        # "no questions" fallback that used to end the game.
+        state.add_player("A", _fake_ws())
+        h = _handler(state)
+        state.start_game(num_rounds=10, difficulty="auto", lightning_seed=42)
+        assert state.difficulty == "auto"
+        target = state.lightning_target_round
+        assert target is not None
+
+        state.round = target - 1
+        state.phase = GamePhase.ANSWER_REVEAL
+        await h._start_auto_lightning(state)
+        h._cancel_lightning_loop()
+
+        assert state.phase == GamePhase.LIGHTNING
+        assert state.lightning is not None
+        assert state.lightning.num_questions > 0
+        # The main game's queue survived the detour and can still serve.
+        lightning_ids = {q.id for q in state.lightning._questions}
+        assert lightning_ids.isdisjoint(state._question_bank.remaining_queue_ids())
+        assert state._question_bank.get_next_question() is not None
