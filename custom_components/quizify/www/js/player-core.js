@@ -98,7 +98,16 @@
                     if (isAdminSelfJoin) {
                         state.isAdmin = true;
                     }
-                    if (state.isAdmin) joinMsg.is_admin = true;
+                    if (state.isAdmin) {
+                        joinMsg.is_admin = true;
+                        // #358: attach the admin session token (if this tab
+                        // holds one) so the server can authorise a crown
+                        // transfer from a stale admin slot. Optional + fail-soft
+                        // — a missing token just means no auto-crown, never a
+                        // rejected join, so the DESIGN.md trust model stands.
+                        var _at = sessionStorage.getItem('quizify_admin_session_token');
+                        if (_at) joinMsg.admin_token = _at;
+                    }
                     send('join', joinMsg);
                 }
                 // else: waiting for auto-join interval or user to click join
@@ -1014,7 +1023,13 @@
             if (isAdminSelfJoin) {
                 state.isAdmin = true;
             }
-            if (state.isAdmin) joinMsg.is_admin = true;
+            if (state.isAdmin) {
+                joinMsg.is_admin = true;
+                // #358: attach the admin session token (fail-soft) so a crown
+                // transfer from a stale admin slot can be authorised.
+                var _at = sessionStorage.getItem('quizify_admin_session_token');
+                if (_at) joinMsg.admin_token = _at;
+            }
             send('join', joinMsg);
         } else {
             // WS not open at click time (initial connect still pending, or

@@ -586,15 +586,43 @@ class QuizifyWebSocketHandler:
                     # re-joining host. has_other_admin() no longer blocks on a
                     # disconnected admin, so without this demotion two players
                     # would briefly carry is_admin and break the #208 invariant.
+                    #
+                    # #358: transferring the crown from a stale admin to a
+                    # DIFFERENT name is the takeover vector. During the host's
+                    # reload / wifi blip the real admin is momentarily
+                    # disconnected (so has_other_admin() is False), and any LAN
+                    # client sending `is_admin: true` under a new name would
+                    # otherwise demote the host and seize control mid-game.
+                    # Require proof: a valid admin session token in the join.
+                    # Fail SOFT — no error, just no crown — so we don't
+                    # reintroduce the brittle token state machine DESIGN.md
+                    # warns about; the legit host still recovers via the
+                    # token-based reconnect path, which preserves is_admin on
+                    # their own slot. A first claim (no admin yet) and a
+                    # same-name reclaim stay token-free (the documented Beatify
+                    # trust trade-off).
                     stale_admin = game_state.get_admin()
                     if stale_admin is not None and stale_admin.name != name:
-                        stale_admin.is_admin = False
-                        _LOGGER.info(
-                            "Crown transferred from stale admin %s to %s",
-                            stale_admin.name,
-                            name,
-                        )
-                    player_obj.is_admin = True
+                        claim_token = data.get("admin_token")
+                        if claim_token and self._conn.validate_admin_token(
+                            claim_token
+                        ):
+                            stale_admin.is_admin = False
+                            player_obj.is_admin = True
+                            _LOGGER.info(
+                                "Crown transferred from stale admin %s to %s",
+                                stale_admin.name,
+                                name,
+                            )
+                        else:
+                            _LOGGER.warning(
+                                "Crown transfer denied for %s: no valid admin "
+                                "token; stale admin %s keeps the crown",
+                                name,
+                                stale_admin.name,
+                            )
+                    else:
+                        player_obj.is_admin = True
 
             # If a lightning round is mid-flight, register the late joiner so
             # they can score from the next question on (issue #42).
