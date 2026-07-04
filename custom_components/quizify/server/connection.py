@@ -229,6 +229,23 @@ class ConnectionManager:
 
         async def admin_timeout() -> None:
             await asyncio.sleep(self.ADMIN_SESSION_GRACE)
+            # Guard (#351): the admin tab redirecting from /quizify/admin to
+            # /quizify/player at game start closes the last admin WS and
+            # schedules this timeout — but the host is still present as an
+            # admin *player*. Clearing the token here would delete the
+            # persisted credential ~120s into every admin-as-player game and
+            # re-open the LAN bootstrap-takeover window that the persisted
+            # token (#140/#168) exists to close. If a connected player still
+            # holds the crown, keep the token.
+            game_state = self._get_game_state()
+            if game_state is not None and any(
+                p.is_admin and p.connected for p in game_state.get_players()
+            ):
+                _LOGGER.debug(
+                    "Admin grace expired but an admin player is connected; "
+                    "keeping session token"
+                )
+                return
             _LOGGER.info("Admin session grace period expired, clearing token")
             self._admin_session_token = None
             await self._async_save_admin_token()
