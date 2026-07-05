@@ -246,10 +246,15 @@
             media.hidden = true;
         };
         if (safeImg) {
+            // #467: populate a localized generic alt so the image question
+            // isn't announced as an unlabelled graphic.
+            var t = (window.QuizifyI18n && window.QuizifyI18n.t) || function (k) { return k; };
             img.src = safeImg;
+            img.alt = t('game.questionImageAlt');
             media.hidden = false;
         } else {
             img.removeAttribute('src');
+            img.alt = '';
             media.hidden = true;
         }
     }

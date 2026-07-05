@@ -1150,6 +1150,12 @@
             overflow: hidden;
             position: relative;
             z-index: 1;
+            /* #459: make the card a flex column with min-height:0 so the inner
+               .dashboard-leaderboard (flex:1; overflow-y:auto) actually scrolls
+               with 8+ players instead of clipping under overflow:hidden. */
+            display: flex;
+            flex-direction: column;
+            min-height: 0;
         }
 
         .finale-leaderboard-card .card-header {
@@ -1513,10 +1519,15 @@
                 setImageLayout(false);
             };
             if (safe) {
+                // #467: localized generic alt so the TV image question isn't
+                // an unlabelled graphic for assistive tech.
+                var t = (window.QuizifyI18n && window.QuizifyI18n.t) || function (k) { return k; };
                 img.src = safe;
+                img.alt = t('game.questionImageAlt');
                 setImageLayout(true);
             } else {
                 img.removeAttribute('src');
+                img.alt = '';
                 setImageLayout(false);
             }
         }
@@ -1886,6 +1897,14 @@
 
         function handleRoundSummary(msg) {
             var summary = msg.round_summary || msg;
+
+            // #460: reset the timer bar at reveal. A skipped/timed-out question
+            // otherwise leaves a stalled red/pulsing bar during the summary.
+            // Mirror renderRevealFromSnapshot: width 0% + clean className.
+            if (els.timerFill) {
+                els.timerFill.style.width = '0%';
+                els.timerFill.className = 'dashboard-timer-fill';
+            }
 
             // #275: estimate rounds render a number line instead of the MC
             // answer-tile highlight + distribution.

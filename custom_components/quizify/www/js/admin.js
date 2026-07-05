@@ -542,7 +542,11 @@
         if (!els.categoryChips) return;
         if (els.themeTabs) {
             els.themeTabs.querySelectorAll('.theme-tab').forEach(function (t) {
-                t.classList.toggle('active', t.dataset.theme === theme);
+                var isActive = t.dataset.theme === theme;
+                t.classList.toggle('active', isActive);
+                // #463: these filter buttons expose aria-pressed (role="group",
+                // not a tablist) so screen readers announce the active filter.
+                t.setAttribute('aria-pressed', isActive ? 'true' : 'false');
             });
         }
         els.categoryChips.querySelectorAll('.chip[data-theme]').forEach(function (chip) {

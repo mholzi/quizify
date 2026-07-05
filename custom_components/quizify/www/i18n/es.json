@@ -74,6 +74,7 @@
     "joinAsPlayer": "Unirse como jugador",
     "joinedAs": "Estás jugando como {name}",
     "startGame": "Empezar partida",
+    "openLobby": "Abrir sala →",
     "startGameHint": "Escribirás tu nombre en el siguiente paso",
     "startGameplay": "Empezar partida",
     "startGameplayHint": "Juega con todos los de la sala. Tú sigues siendo el anfitrión.",
@@ -143,6 +144,7 @@
   },
   "game": {
     "question": "Pregunta",
+    "questionImageAlt": "Imagen de la pregunta",
     "zoomImage": "Ampliar imagen",
     "soundMute": "Silenciar efectos de sonido",
     "soundUnmute": "Activar efectos de sonido",

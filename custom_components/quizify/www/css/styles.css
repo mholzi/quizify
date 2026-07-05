@@ -3663,6 +3663,9 @@ footer {
 }
 
 .submitted-players {
+    display: flex;
+    flex-wrap: wrap;
+    gap: var(--space-xs);
     color: var(--color-text-neon-muted);
     font-size: 0.75rem;
 }
@@ -3696,23 +3699,56 @@ footer {
     margin: var(--space-xs) 0;
 }
 
-/* Player indicator dot */
+/* Player submission chip (issue #458): avatar circle + name pill in a flex row.
+   Previously .player-indicator was an 8x8 dot while the JS emitted an avatar +
+   initials + name, so initials/names spilled out unstyled. */
 .player-indicator {
-    width: 8px;
-    height: 8px;
+    display: inline-flex;
+    align-items: center;
+    gap: var(--space-xs);
+    max-width: 100%;
+    padding: 2px 8px 2px 2px;
     border-radius: var(--radius-full);
-    background: var(--color-text-neon-muted);
+    background: rgba(255, 255, 255, 0.04);
+    border: 1px solid rgba(255, 255, 255, 0.08);
     flex-shrink: 0;
 }
 
-.player-indicator.is-submitted {
+.player-indicator .player-avatar {
+    width: 24px;
+    height: 24px;
+    border-radius: var(--radius-full);
+    background: var(--color-text-neon-muted);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-shrink: 0;
+}
+
+.player-indicator .player-initials {
+    font-size: 0.65rem;
+    font-weight: 600;
+    line-height: 1;
+    color: #fff;
+}
+
+.player-indicator .player-name {
+    font-size: 0.75rem;
+    line-height: 1.2;
+    color: var(--color-text-neon-muted);
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    max-width: 8rem;
+}
+
+.player-indicator.is-submitted .player-avatar {
     background: var(--color-success-neon);
     box-shadow: 0 0 6px var(--color-success-neon);
 }
 
-.is-current-player {
-    background: rgba(232, 138, 127, 0.08);
-    border-radius: var(--radius-md);
+.player-indicator.is-current-player {
+    background: rgba(232, 138, 127, 0.12);
 }
 
 /* ==========================================
@@ -6284,7 +6320,10 @@ body.is-admin .reaction-bar {
 .estimate-slider-wrap {
     margin: 28px 4px 0;
 }
-.estimate-slider {
+/* #465: #wager-slider shares the estimate-slider treatment (34px thumb,
+   gradient track, focus-visible ring) instead of a bare native range. */
+.estimate-slider,
+#wager-slider {
     width: 100%;
     height: 28px;
     margin: 0;
@@ -6293,22 +6332,26 @@ body.is-admin .reaction-bar {
     background: transparent;
     cursor: pointer;
 }
-.estimate-slider:focus-visible {
+.estimate-slider:focus-visible,
+#wager-slider:focus-visible {
     outline: 2px solid var(--color-accent-primary);
     outline-offset: 4px;
     border-radius: var(--radius-full);
 }
-.estimate-slider::-webkit-slider-runnable-track {
+.estimate-slider::-webkit-slider-runnable-track,
+#wager-slider::-webkit-slider-runnable-track {
     height: 14px;
     border-radius: var(--radius-full);
     background: linear-gradient(90deg, var(--color-accent-secondary), var(--color-accent-primary));
 }
-.estimate-slider::-moz-range-track {
+.estimate-slider::-moz-range-track,
+#wager-slider::-moz-range-track {
     height: 14px;
     border-radius: var(--radius-full);
     background: linear-gradient(90deg, var(--color-accent-secondary), var(--color-accent-primary));
 }
-.estimate-slider::-webkit-slider-thumb {
+.estimate-slider::-webkit-slider-thumb,
+#wager-slider::-webkit-slider-thumb {
     -webkit-appearance: none;
     appearance: none;
     width: 34px;
@@ -6319,7 +6362,8 @@ body.is-admin .reaction-bar {
     border: 3px solid var(--color-accent-primary);
     box-shadow: 0 4px 12px rgba(232, 138, 127, 0.30);
 }
-.estimate-slider::-moz-range-thumb {
+.estimate-slider::-moz-range-thumb,
+#wager-slider::-moz-range-thumb {
     width: 34px;
     height: 34px;
     border-radius: 50%;
@@ -6327,7 +6371,8 @@ body.is-admin .reaction-bar {
     border: 3px solid var(--color-accent-primary);
     box-shadow: 0 4px 12px rgba(232, 138, 127, 0.30);
 }
-.estimate-slider:disabled {
+.estimate-slider:disabled,
+#wager-slider:disabled {
     opacity: 0.7;
     cursor: default;
 }
