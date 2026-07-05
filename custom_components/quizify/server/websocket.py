@@ -1753,6 +1753,23 @@ class QuizifyWebSocketHandler:
             await self._conn.send_error(ws, ERR_INVALID_ACTION, "Invalid answer index")
             return
 
+        # #405: a tap fired at ~0s can land AFTER the loop's advance() has
+        # already armed the NEXT question (new clock + fresh shuffles). Without
+        # a question-index guard the stale tap is recorded against the next
+        # question through a random shuffle, and record_answer's one-per-Q rule
+        # then silently drops the player's real answer to that question. The
+        # client stamps every tap with the index it currently holds; reject the
+        # message when that no longer matches the live question. Index-less
+        # messages (older clients) are still accepted, but only while the
+        # current question's window is genuinely open — once it has expired the
+        # race window is exactly where a stale index-less tap would land wrong.
+        stamped_index = data.get("index")
+        if isinstance(stamped_index, int):
+            if stamped_index != lr.index:
+                return  # stale tap for an already-advanced question — drop it
+        elif lr.time_remaining() <= 0:
+            return  # index-less legacy tap after the window closed — drop it
+
         result = lr.record_answer(player.name, shuffled_index)
         if result is None:
             return  # rejected (already answered / expired) — stay silent

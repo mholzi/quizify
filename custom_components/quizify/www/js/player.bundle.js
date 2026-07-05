@@ -2718,7 +2718,8 @@
         return fn(key, vars);
     }
 
-    var _answeredIndex = -1; // server question index we've answered
+    var _answeredIndex = -1; // shuffled button index we've answered
+    var _questionIndex = -1; // #405: server question index of the live question
 
     // ------------------------------------------------------------------
     // Intro splash (issue #201 — "Bolt Burst")
@@ -2749,6 +2750,8 @@
 
     function handleLightningQuestion(msg) {
         pu.showView('lightning-view');
+
+        _questionIndex = (typeof msg.index === 'number') ? msg.index : -1;
 
         var prog = document.getElementById('lightning-progress');
         if (prog) prog.textContent = ((msg.index || 0) + 1) + ' / ' + (msg.num_questions || 5);
@@ -2809,7 +2812,9 @@
         // One answer per question; ignore re-taps.
         if (_answeredIndex !== -1) return;
         _answeredIndex = shuffledIndex;
-        _send('lightning_answer', { answer_index: shuffledIndex });
+        // #405: stamp the tap with the live question index so the server can
+        // drop it if the lightning loop has already advanced to the next Q.
+        _send('lightning_answer', { answer_index: shuffledIndex, index: _questionIndex });
 
         // Lock buttons + mark the chosen one. No correctness shown until
         // the recap (no reveal between questions) — except the lightweight
