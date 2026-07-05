@@ -65,13 +65,20 @@ class PowerUpManager:
         """Whether the player has already been granted a power-up this game."""
         return player_id in self._granted_this_game
 
-    def assign_random_powerup(self, player_id: str) -> PowerUpType:
+    def assign_random_powerup(
+        self, player_id: str, allowed_types: list[PowerUpType] | None = None
+    ) -> PowerUpType:
         """Assign a random power-up to a player, replacing any held one.
 
         Records the player in the per-game granted set (#340) so they are not
         granted another power-up later in the same game.
+
+        ``allowed_types`` restricts the pool the choice is drawn from — used to
+        keep estimate rounds from handing out power-ups that no-op there (#406).
+        Defaults to all types.
         """
-        powerup = random.choice(list(PowerUpType))
+        pool = allowed_types or list(PowerUpType)
+        powerup = random.choice(pool)
         self._inventory[player_id] = powerup
         self._granted_this_game.add(player_id)
         return powerup

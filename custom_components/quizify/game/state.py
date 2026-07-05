@@ -641,7 +641,17 @@ class QuizifyGameState:
         ]
         if eligible:
             lucky_player = random.choice(eligible)
-            powerup = self._powerup_manager.assign_random_powerup(lucky_player.name)
+            # On estimate rounds only hand out power-ups that actually do
+            # something there (#406): JOKER/DOUBLE_POINTS/STEAL no-op on the
+            # estimate scoring path, so restrict the pool to FREEZE/TIME_BOOST.
+            allowed_types = (
+                [PowerUpType.FREEZE, PowerUpType.TIME_BOOST]
+                if question.is_estimate
+                else None
+            )
+            powerup = self._powerup_manager.assign_random_powerup(
+                lucky_player.name, allowed_types=allowed_types
+            )
             _LOGGER.debug(
                 "Power-up %s assigned to %s", powerup.value, lucky_player.name
             )
@@ -1032,9 +1042,17 @@ class QuizifyGameState:
                 points = entry["points"]
                 # Closeness scoring has no streak/speed concept; surface the
                 # estimate-specific breakdown so the reveal can show distance.
-                player.streak += 1
-                if player.streak > player.max_streak:
-                    player.max_streak = player.streak
+                # Streak only advances on an EXACT hit — a non-exact guess is
+                # recorded as "wrong" below, so growing the streak on it would
+                # let a wrong guess step past a STREAK_MILESTONES value without
+                # ever paying the milestone (only MC awards them) (#408). Keep
+                # streak bookkeeping in agreement with the recorded correctness.
+                if entry["exact"]:
+                    player.streak += 1
+                    if player.streak > player.max_streak:
+                        player.max_streak = player.streak
+                else:
+                    player.streak = 0
                 player.round_score = points
                 player.round_score_breakdown = {
                     "speed_bonus": 0,
@@ -1585,6 +1603,22 @@ class QuizifyGameState:
             return ERR_INVALID_ACTION
 
         held = self._powerup_manager.get_powerup(player_id)
+
+        # Estimate-round no-op gate (#406). On estimate rounds the scoring path
+        # (_evaluate_estimate_round) applies points later at reveal, never reads
+        # is_double_points_active, and the question carries no MC answers. So
+        # STEAL reads a still-zero target.round_score (steals 0), DOUBLE_POINTS
+        # is silently ignored, and JOKER has an empty question.answers to prune —
+        # all three would burn the once-per-game power-up for nothing. Reject
+        # them so the inventory survives for a later MC round. FREEZE/TIME_BOOST
+        # are pure timer effects that behave identically on estimate rounds and
+        # stay usable.
+        if question.is_estimate and held in (
+            PowerUpType.JOKER,
+            PowerUpType.DOUBLE_POINTS,
+            PowerUpType.STEAL,
+        ):
+            return ERR_INVALID_ACTION
 
         # Post-submit no-op gate. Joker/Double/TimeBoost only help BEFORE
         # the source locks in their answer — activating them afterward
