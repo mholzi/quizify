@@ -10,6 +10,7 @@ from __future__ import annotations
 
 import asyncio
 import sys
+import time
 from pathlib import Path
 from unittest.mock import AsyncMock, MagicMock
 
@@ -402,6 +403,73 @@ class TestLightningWsLoop:
 
         assert state.phase == GamePhase.LIGHTNING_RECAP
         assert lr.scores["A"] == LIGHTNING_POINTS_PER_CORRECT
+
+    @pytest.mark.asyncio
+    async def test_stale_index_answer_rejected_after_advance(
+        self, state: QuizifyGameState
+    ) -> None:
+        """#405: a lightning tap stamped with the previous question's index —
+        landing after the loop's advance() armed the next Q with a fresh clock
+        and new shuffles — is dropped, so it cannot occupy the player's single
+        answer slot on the new question. The real answer to the new question,
+        correctly stamped, is then still accepted and scored."""
+        state.add_player("A", _fake_ws())
+        h = _handler(state)
+        assert state.start_lightning_round() is True
+        lr = state.lightning
+        ws = state.get_player("A").ws
+
+        # Player is on Q0 and holds that index; capture a pick for it.
+        stale_index = lr.index  # 0
+        stale_pick = _correct_shuffled_index(lr, "A")
+
+        # Timeout advance: Q1 is armed with a fresh (unexpired) clock + shuffles.
+        assert lr.advance() is True
+        assert lr.index == stale_index + 1
+        assert lr.time_remaining() > 0  # new window is genuinely open
+
+        # The stale tap (still stamped with the OLD index) must be dropped and
+        # must NOT be recorded against the new question.
+        await h._handle_lightning_answer(
+            ws, {"answer_index": stale_pick, "index": stale_index}, state
+        )
+        assert "A" not in lr._answers.get(lr.index, {})
+
+        # A's real answer to the new question (correctly stamped) is accepted.
+        real_pick = _correct_shuffled_index(lr, "A")
+        await h._handle_lightning_answer(
+            ws, {"answer_index": real_pick, "index": lr.index}, state
+        )
+        assert "A" in lr._answers[lr.index]
+        lr.advance()  # score the new question
+        assert lr.scores["A"] == LIGHTNING_POINTS_PER_CORRECT
+
+    @pytest.mark.asyncio
+    async def test_indexless_legacy_answer_gated_by_window(
+        self, state: QuizifyGameState
+    ) -> None:
+        """#405 backward compat: an index-less tap (older client) is accepted
+        while the current window is open, but dropped once it has expired — the
+        exact spot where a stale index-less tap would otherwise land wrong."""
+        state.add_player("A", _fake_ws())
+        h = _handler(state)
+        state.start_lightning_round()
+        lr = state.lightning
+        ws = state.get_player("A").ws
+
+        # Window open → index-less tap is accepted (legacy path preserved).
+        await h._handle_lightning_answer(
+            ws, {"answer_index": _correct_shuffled_index(lr, "A")}, state
+        )
+        assert "A" in lr._answers[lr.index]
+
+        # New question, then force its window closed → index-less tap dropped.
+        assert lr.advance() is True
+        lr._question_start = time.monotonic() - lr.seconds_per_question - 1.0
+        await h._handle_lightning_answer(
+            ws, {"answer_index": _correct_shuffled_index(lr, "A")}, state
+        )
+        assert "A" not in lr._answers.get(lr.index, {})
 
 
 # ---------- WS handler: #285 auto-trigger entry + resume ----------
