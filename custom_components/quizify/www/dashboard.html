@@ -492,7 +492,8 @@
             border-left: 3px solid var(--dash-accent-primary);
             border-radius: 10px;
             font-family: 'DM Sans', sans-serif;
-            font-size: 1rem;
+            /* #376: scale for TV couch legibility (viewed from 2-3m) */
+            font-size: clamp(18px, 1.8vw, 26px);
             line-height: 1.6;
             color: var(--dash-text-neon-muted);
             transform: translateY(16px);
@@ -556,7 +557,8 @@
             background: var(--dash-surface-dark);
             border: 1px solid var(--dash-border-neon);
             font-family: 'DM Sans', sans-serif;
-            font-size: 1rem;
+            /* #376: scale for TV couch legibility */
+            font-size: clamp(16px, 1.6vw, 24px);
             color: var(--dash-text-white);
             transition: border-color 120ms ease-out, background 120ms ease-out;
         }
@@ -568,7 +570,8 @@
             width: 32px;
             height: 32px;
             font-family: 'JetBrains Mono', ui-monospace, monospace;
-            font-size: 14px;
+            /* #376: scale rank badge with rows */
+            font-size: clamp(15px, 1.5vw, 22px);
             font-weight: 700;
             color: var(--dash-text-neon-muted);
             flex-shrink: 0;
@@ -590,7 +593,8 @@
 
         .dashboard-leaderboard .leaderboard-score {
             font-family: 'JetBrains Mono', ui-monospace, monospace;
-            font-size: 14px;
+            /* #376: scale for TV couch legibility */
+            font-size: clamp(16px, 1.7vw, 26px);
             font-weight: 700;
             color: var(--dash-accent-primary);
             font-variant-numeric: tabular-nums;
@@ -924,14 +928,16 @@
         }
         .podium-other-name {
             flex: 1 1 auto;
-            font-size: 14px;
+            /* #376: scale for TV couch legibility */
+            font-size: clamp(15px, 1.4vw, 20px);
             overflow: hidden;
             text-overflow: ellipsis;
             white-space: nowrap;
         }
         .podium-other-score {
             font-family: 'JetBrains Mono', ui-monospace, monospace;
-            font-size: 13px;
+            /* #376: scale for TV couch legibility */
+            font-size: clamp(14px, 1.3vw, 20px);
             color: var(--dash-accent-primary);
             font-variant-numeric: tabular-nums;
         }
@@ -955,7 +961,8 @@
 
         .podium-score {
             font-family: 'JetBrains Mono', ui-monospace, monospace;
-            font-size: 13px;
+            /* #376: scale for TV couch legibility */
+            font-size: clamp(16px, 1.8vw, 26px);
             font-weight: 700;
             color: var(--dash-accent-primary);
             font-variant-numeric: tabular-nums;
@@ -1080,7 +1087,8 @@
 
         .award-detail {
             font-family: 'DM Sans', sans-serif;
-            font-size: 0.85rem;
+            /* #376: scale for TV couch legibility */
+            font-size: clamp(15px, 1.4vw, 22px);
             color: var(--dash-text-neon-muted);
         }
 
