@@ -96,6 +96,8 @@
     "hostBadge": "Host",
     "kickPlayer": "Remove player",
     "kickConfirm": "Remove {name} from the lobby?",
+    "kickModalTitle": "Remove player?",
+    "kickConfirmBtn": "Remove",
     "continueBtn": "Continue",
     "newGame": "New Game",
     "startNewGame": "Start New Game",
@@ -404,6 +406,7 @@
     "timeoutNote": "The wager only counts if you answer. No answer = you keep your points (no win, no loss).",
     "bank": "Current points",
     "submit": "Lock in wager",
+    "sliderAria": "Wager percent",
     "valueFmt": "{pct}% ({pts} pts)",
     "locked": "Wagered: {pct}%",
     "bonusFromReaction": "+1 from {from}"

@@ -96,6 +96,8 @@
     "hostBadge": "Anfitrión",
     "kickPlayer": "Expulsar jugador",
     "kickConfirm": "¿Expulsar a {name} de la sala?",
+    "kickModalTitle": "¿Expulsar jugador?",
+    "kickConfirmBtn": "Expulsar",
     "continueBtn": "Continuar",
     "newGame": "Nueva partida",
     "startNewGame": "Empezar nueva partida",
@@ -389,6 +391,7 @@
     "timeoutNote": "La apuesta solo cuenta si respondes. Sin respuesta = conservas tus puntos (ni ganas ni pierdes).",
     "bank": "Puntos actuales",
     "submit": "Confirmar apuesta",
+    "sliderAria": "Porcentaje de apuesta",
     "valueFmt": "{pct}% ({pts} pts)",
     "locked": "Apostado: {pct}%",
     "bonusFromReaction": "+1 de {from}"

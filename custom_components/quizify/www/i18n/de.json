@@ -96,6 +96,8 @@
     "hostBadge": "Host",
     "kickPlayer": "Spieler entfernen",
     "kickConfirm": "{name} aus der Lobby entfernen?",
+    "kickModalTitle": "Spieler entfernen?",
+    "kickConfirmBtn": "Entfernen",
     "continueBtn": "Weiter",
     "newGame": "Neues Spiel",
     "startNewGame": "Neues Spiel starten",
@@ -404,6 +406,7 @@
     "timeoutNote": "Der Einsatz zählt nur, wenn du antwortest. Keine Antwort = deine Punkte bleiben (kein Gewinn, kein Verlust).",
     "bank": "Punktestand",
     "submit": "Einsatz festlegen",
+    "sliderAria": "Einsatz in Prozent",
     "valueFmt": "{pct}% ({pts} Pkt.)",
     "locked": "Eingesetzt: {pct}%",
     "bonusFromReaction": "+1 von {from}"
