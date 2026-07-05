@@ -453,7 +453,8 @@
     "questionCounter": "Frage {current} / {total}",
     "pointsShort": "Pkt.",
     "awards": "Auszeichnungen",
-    "runnersUp": "Außerdem dabei"
+    "runnersUp": "Außerdem dabei",
+    "leaderboardMore": "+{count} weitere"
   },
   "connection": {
     "connected": "Verbunden",
