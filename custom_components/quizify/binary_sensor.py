@@ -36,7 +36,8 @@ async def async_setup_entry(
 
 class QuizifyGameActiveSensor(BinarySensorEntity):
     """On while a Quizify game is mid-flight (QUESTION_ACTIVE, ANSWER_REVEAL,
-    or PAUSED). Off in LOBBY and FINALE."""
+    PAUSED, or the mid-game Lightning Round detour LIGHTNING/LIGHTNING_RECAP).
+    Off in LOBBY and FINALE."""
 
     _attr_should_poll = False
     _attr_has_entity_name = True
@@ -63,6 +64,8 @@ class QuizifyGameActiveSensor(BinarySensorEntity):
             GamePhase.QUESTION_ACTIVE,
             GamePhase.ANSWER_REVEAL,
             GamePhase.PAUSED,
+            GamePhase.LIGHTNING,
+            GamePhase.LIGHTNING_RECAP,
         )
 
     @property
