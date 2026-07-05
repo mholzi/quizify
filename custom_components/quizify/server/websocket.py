@@ -55,6 +55,35 @@ if TYPE_CHECKING:
 
 _LOGGER = logging.getLogger(__name__)
 
+# ---------------------------------------------------------------------------
+# Client → server message-type constants (#363)
+# ---------------------------------------------------------------------------
+# Single source of truth for the wire strings the dispatch table keys on, so
+# a typo is a NameError at import time instead of a silently-dead branch.
+# ``admin_connect`` and ``reset_game`` live OUTSIDE the dispatch table (special
+# authorization paths) but are named here for completeness. Keep in sync with
+# ``server/protocol.py::CLIENT_MESSAGE_TYPES``.
+MSG_ADMIN_CONNECT = "admin_connect"
+MSG_RESET_GAME = "reset_game"
+MSG_JOIN = "join"
+MSG_RECONNECT = "reconnect"
+MSG_GET_STATE = "get_state"
+MSG_SUBMIT_ANSWER = "submit_answer"
+MSG_SUBMIT_WAGER = "submit_wager"
+MSG_REACTION = "reaction"
+MSG_USE_POWERUP = "use_powerup"
+MSG_LIGHTNING_ANSWER = "lightning_answer"
+MSG_START_GAME = "start_game"
+MSG_NEXT_QUESTION = "next_question"
+MSG_NEXT_ROUND = "next_round"
+MSG_ADMIN_SKIP = "admin_skip"
+MSG_END_GAME = "end_game"
+MSG_PLAY_AGAIN = "play_again"
+MSG_PAUSE_GAME = "pause_game"
+MSG_RESUME_GAME = "resume_game"
+MSG_KICK_PLAYER = "kick_player"
+MSG_CONFIGURE_TTS = "configure_tts"
+
 
 def _coerce_toggle(value: Any, *, default: bool) -> bool:
     """Coerce a wire toggle value to a bool (#285).
@@ -327,7 +356,7 @@ class QuizifyWebSocketHandler:
         # ``admin_connect`` and ``reset_game`` use a different / special
         # authorization path than the boolean ``admin_required`` table below,
         # so they are handled out-of-band first.
-        if msg_type == "admin_connect":
+        if msg_type == MSG_ADMIN_CONNECT:
             # WS-level admin only (not the player-as-admin ``_is_authorized_admin``
             # relaxation) — an admin_connect must come from a real ?role=admin tab.
             if not is_admin:
@@ -336,7 +365,7 @@ class QuizifyWebSocketHandler:
             await self._handle_admin_connect(ws, game_state)
             return
 
-        if msg_type == "reset_game":
+        if msg_type == MSG_RESET_GAME:
             # Reset is the recovery escape-hatch (#207). Besides the normal
             # admin check, allow it whenever NO connected admin currently
             # holds the crown: in that orphaned-crown state (the legitimate
@@ -350,11 +379,10 @@ class QuizifyWebSocketHandler:
             await self._handle_reset_game(ws, game_state)
             return
 
-        handlers = self._message_dispatch(data, game_state)
         # msg_type comes from untyped client JSON and may be None (no "type"
         # field) — dict.get tolerates that and routes it to the unknown-type
         # branch below, so the arg-type mismatch is intentional.
-        entry = handlers.get(msg_type)  # type: ignore[arg-type]
+        entry = self._DISPATCH.get(msg_type)  # type: ignore[arg-type]
         if entry is None:
             _LOGGER.warning("Unknown message type: %s", msg_type)
             await self._conn.send_error(ws, ERR_INVALID_ACTION, "Unknown message type")
@@ -370,93 +398,30 @@ class QuizifyWebSocketHandler:
             await self._conn.send_error(ws, ERR_INVALID_ACTION, "Admin only")
             return
 
-        await handler(ws)
+        # Every handler in ``_DISPATCH`` is normalized to the uniform
+        # ``(self, ws, data, game_state)`` signature (arity mismatches are
+        # absorbed by the adapter lambdas), so the guarded dispatch is a single
+        # call regardless of what the underlying handler needs.
+        await handler(self, ws, data, game_state)
 
-    def _message_dispatch(
-        self, data: dict, game_state: QuizifyGameState
-    ) -> dict[str, tuple[Callable[[web.WebSocketResponse], Any], bool]]:
-        """Build the message-type → (handler, admin_required) dispatch table.
-
-        Each handler is normalized to a single ``(ws)`` coroutine so the
-        centralized guard in :meth:`_handle_message` can invoke them uniformly,
-        regardless of whether the underlying handler also needs ``data``. The
-        boolean is ``True`` iff the message type requires admin authorization.
-
-        ``admin_connect`` and ``reset_game`` are NOT in this table — they use
-        special authorization paths and are handled separately.
-        """
-
-        async def _get_state(ws: web.WebSocketResponse) -> None:
-            state_msg = game_state.get_state_snapshot()
-            # Project into the requesting PLAYER's frame (#286): the raw
-            # snapshot carries canonical answer order, but ``submit_answer``
-            # maps the tapped index through the player's OWN shuffle — sending
-            # canonical order here mis-scores ~2/3 of taps after a mid-round
-            # reconnect (the client auto-sends get_state on every join). Pure
-            # admin/dashboard sockets (no player session) keep canonical order.
-            player = game_state.get_player_by_ws(ws)
-            if player is not None:
-                state_msg = self._round_messages.project_snapshot_for_player(
-                    game_state, snapshot=state_msg, player=player
-                )
-            state_msg["type"] = "game_state"
-            await self._conn.send(ws, state_msg)
-
-        return {
-            # --- non-admin (player) message types ---
-            "join": (lambda ws: self._handle_join(ws, data, game_state), False),
-            "submit_answer": (
-                lambda ws: self._handle_submit_answer(ws, data, game_state),
-                False,
-            ),
-            "use_powerup": (
-                lambda ws: self._handle_use_powerup(ws, data, game_state),
-                False,
-            ),
-            "lightning_answer": (
-                lambda ws: self._handle_lightning_answer(ws, data, game_state),
-                False,
-            ),
-            "reconnect": (
-                lambda ws: self._handle_reconnect(ws, data, game_state),
-                False,
-            ),
-            "get_state": (_get_state, False),
-            "reaction": (lambda ws: self._handle_reaction(ws, data, game_state), False),
-            "submit_wager": (
-                lambda ws: self._handle_submit_wager(ws, data, game_state),
-                False,
-            ),
-            # --- admin-required message types ---
-            "start_game": (
-                lambda ws: self._handle_start_game(ws, data, game_state),
-                True,
-            ),
-            "next_question": (
-                lambda ws: self._handle_next_question(ws, game_state),
-                True,
-            ),
-            "next_round": (
-                lambda ws: self._handle_next_question(ws, game_state),
-                True,
-            ),
-            "admin_skip": (
-                lambda ws: self._handle_admin_skip(ws, game_state),
-                True,
-            ),
-            "end_game": (lambda ws: self._handle_end_game(ws, game_state), True),
-            "play_again": (lambda ws: self._handle_play_again(ws, game_state), True),
-            "pause_game": (lambda ws: self._handle_pause_game(ws, game_state), True),
-            "resume_game": (lambda ws: self._handle_resume_game(ws, game_state), True),
-            "kick_player": (
-                lambda ws: self._handle_kick_player(ws, data, game_state),
-                True,
-            ),
-            "configure_tts": (
-                lambda ws: self._handle_configure_tts(ws, data, game_state),
-                True,
-            ),
-        }
+    async def _handle_get_state(
+        self, ws: web.WebSocketResponse, data: dict, game_state: QuizifyGameState
+    ) -> None:
+        """Handle a ``get_state`` request (#286)."""
+        state_msg = game_state.get_state_snapshot()
+        # Project into the requesting PLAYER's frame (#286): the raw
+        # snapshot carries canonical answer order, but ``submit_answer``
+        # maps the tapped index through the player's OWN shuffle — sending
+        # canonical order here mis-scores ~2/3 of taps after a mid-round
+        # reconnect (the client auto-sends get_state on every join). Pure
+        # admin/dashboard sockets (no player session) keep canonical order.
+        player = game_state.get_player_by_ws(ws)
+        if player is not None:
+            state_msg = self._round_messages.project_snapshot_for_player(
+                game_state, snapshot=state_msg, player=player
+            )
+        state_msg["type"] = "game_state"
+        await self._conn.send(ws, state_msg)
 
     # ------------------------------------------------------------------
     # Admin connect
@@ -1400,6 +1365,9 @@ class QuizifyWebSocketHandler:
         """
         self._cancel_timer_tick()
         self._cancel_lightning_loop()
+        # Cancel the deferred admin-disconnect pause (#362) so a reset can't
+        # be undone by a pause firing right after the fresh lobby is built.
+        self._cancel_admin_pause()
         # Cancel any pending admin-disconnect timer and stale player-removal
         # tasks from the finished game.
         await self._conn.cleanup()
@@ -2180,6 +2148,9 @@ class QuizifyWebSocketHandler:
                 pass
 
         self._admin_pause_task = asyncio.ensure_future(pause_after_grace())
+        # Surface a crash in the deferred-pause loop (#362/#307) instead of
+        # letting "Task exception was never retrieved" leak at GC time.
+        self._admin_pause_task.add_done_callback(self._log_task_exception)
 
     def _cancel_admin_pause(self) -> None:
         """Cancel any pending deferred admin-disconnect pause."""
@@ -2392,5 +2363,106 @@ class QuizifyWebSocketHandler:
         self._cancel_timer_tick()
         self._cancel_lightning_loop()
         self._cancel_reaction_flush()
+        # Also cancel the deferred admin-disconnect pause (#362): a game
+        # teardown/reset that leaves it pending would fire a spurious pause
+        # (or hold a reference) after the game is already gone.
+        self._cancel_admin_pause()
         await self._conn.cleanup()
         _LOGGER.debug("Cleaned up all pending game tasks")
+
+    # ------------------------------------------------------------------
+    # Static message-dispatch table (#363)
+    # ------------------------------------------------------------------
+    # Built ONCE at class-definition time — NOT rebuilt per inbound message.
+    # Maps message-type → (handler, admin_required). Every handler is adapted
+    # to the uniform ``(self, ws, data, game_state)`` signature so the
+    # centralized guard in ``_handle_message`` invokes them identically,
+    # regardless of whether the underlying ``_handle_*`` method also needs
+    # ``data``. ``admin_connect`` / ``reset_game`` are intentionally absent —
+    # they take special authorization paths handled before this table.
+    _DISPATCH: dict[
+        str,
+        tuple[
+            Callable[
+                [QuizifyWebSocketHandler, web.WebSocketResponse, dict,
+                 QuizifyGameState],
+                Any,
+            ],
+            bool,
+        ],
+    ] = {
+        # --- non-admin (player) message types ---
+        MSG_JOIN: (
+            lambda self, ws, data, gs: self._handle_join(ws, data, gs),
+            False,
+        ),
+        MSG_SUBMIT_ANSWER: (
+            lambda self, ws, data, gs: self._handle_submit_answer(ws, data, gs),
+            False,
+        ),
+        MSG_USE_POWERUP: (
+            lambda self, ws, data, gs: self._handle_use_powerup(ws, data, gs),
+            False,
+        ),
+        MSG_LIGHTNING_ANSWER: (
+            lambda self, ws, data, gs: self._handle_lightning_answer(ws, data, gs),
+            False,
+        ),
+        MSG_RECONNECT: (
+            lambda self, ws, data, gs: self._handle_reconnect(ws, data, gs),
+            False,
+        ),
+        MSG_GET_STATE: (
+            lambda self, ws, data, gs: self._handle_get_state(ws, data, gs),
+            False,
+        ),
+        MSG_REACTION: (
+            lambda self, ws, data, gs: self._handle_reaction(ws, data, gs),
+            False,
+        ),
+        MSG_SUBMIT_WAGER: (
+            lambda self, ws, data, gs: self._handle_submit_wager(ws, data, gs),
+            False,
+        ),
+        # --- admin-required message types ---
+        MSG_START_GAME: (
+            lambda self, ws, data, gs: self._handle_start_game(ws, data, gs),
+            True,
+        ),
+        MSG_NEXT_QUESTION: (
+            lambda self, ws, data, gs: self._handle_next_question(ws, gs),
+            True,
+        ),
+        MSG_NEXT_ROUND: (
+            lambda self, ws, data, gs: self._handle_next_question(ws, gs),
+            True,
+        ),
+        MSG_ADMIN_SKIP: (
+            lambda self, ws, data, gs: self._handle_admin_skip(ws, gs),
+            True,
+        ),
+        MSG_END_GAME: (
+            lambda self, ws, data, gs: self._handle_end_game(ws, gs),
+            True,
+        ),
+        MSG_PLAY_AGAIN: (
+            lambda self, ws, data, gs: self._handle_play_again(ws, gs),
+            True,
+        ),
+        MSG_PAUSE_GAME: (
+            lambda self, ws, data, gs: self._handle_pause_game(ws, gs),
+            True,
+        ),
+        MSG_RESUME_GAME: (
+            lambda self, ws, data, gs: self._handle_resume_game(ws, gs),
+            True,
+        ),
+        MSG_KICK_PLAYER: (
+            lambda self, ws, data, gs: self._handle_kick_player(ws, data, gs),
+            True,
+        ),
+        MSG_CONFIGURE_TTS: (
+            lambda self, ws, data, gs: self._handle_configure_tts(ws, data, gs),
+            True,
+        ),
+    }
