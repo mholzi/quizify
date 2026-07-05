@@ -3665,6 +3665,7 @@ footer {
 .submitted-players {
     display: flex;
     flex-wrap: wrap;
+    justify-content: center;
     gap: var(--space-xs);
     color: var(--color-text-neon-muted);
     font-size: 0.75rem;
@@ -3709,8 +3710,11 @@ footer {
     max-width: 100%;
     padding: 2px 8px 2px 2px;
     border-radius: var(--radius-full);
-    background: rgba(255, 255, 255, 0.04);
-    border: 1px solid rgba(255, 255, 255, 0.08);
+    /* #477: ink-based alphas so the chip is visible on the cream (#FAF6EC)
+       light surface. The old white alphas (rgba(255,255,255,.04)/.08) were a
+       dark-theme carry-over and rendered near-invisible on the paper bg. */
+    background: rgba(42, 40, 32, 0.05);
+    border: 1px solid rgba(42, 40, 32, 0.14);
     flex-shrink: 0;
 }
 
@@ -3729,7 +3733,10 @@ footer {
     font-size: 0.65rem;
     font-weight: 600;
     line-height: 1;
-    color: #fff;
+    /* #477: warm ink instead of #fff. White on the sage success avatar
+       (#7FA897) was ~2.2:1; ink (#2A2820) clears 3:1 on both the sage
+       submitted fill (~6.4:1) and the muted default fill (~3.1:1). */
+    color: var(--color-text-primary);
 }
 
 .player-indicator .player-name {
@@ -3749,6 +3756,16 @@ footer {
 
 .player-indicator.is-current-player {
     background: rgba(232, 138, 127, 0.12);
+}
+
+/* #476: a dropped player's submission chip must read as distinct. player-game.js
+   already emits `player-indicator--disconnected` (player.connected === false) but
+   no rule existed, so a disconnected player looked identical to a connected one.
+   Matches the lobby's disconnected treatment: dimmed + dashed muted border. */
+.player-indicator--disconnected {
+    opacity: 0.45;
+    border-style: dashed;
+    border-color: var(--color-text-neon-muted);
 }
 
 /* ==========================================

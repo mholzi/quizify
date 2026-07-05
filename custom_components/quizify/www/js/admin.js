@@ -1436,10 +1436,8 @@
                     ev.stopPropagation();
                     var name = btn.getAttribute('data-kick-name');
                     if (!name) return;
-                    var confirmMsg = _t('admin.kickConfirm') || ('Remove ' + name + ' from the lobby?');
-                    if (window.confirm(confirmMsg.replace('{name}', name))) {
-                        send('kick_player', { player_name: name });
-                    }
+                    // #480: themed confirm modal instead of window.confirm().
+                    openKickModal(name, btn);
                 });
             });
         }
@@ -1930,24 +1928,47 @@
     }
     on(els.nextQuestionBtn, 'click', function () { _debouncedSend(els.nextQuestionBtn, 'next_question'); });
 
+    // #479: focus management for the destructive confirm dialogs. Opening one
+    // by toggling .hidden left keyboard focus behind the backdrop; on close it
+    // was never returned to the trigger. openConfirmModal moves focus to the
+    // Cancel button (safe default for a destructive action) and remembers the
+    // element that opened it; closeConfirmModal restores focus to that trigger.
+    var _confirmModalTrigger = null;
+
+    function openConfirmModal(modalId, cancelBtnId, triggerEl) {
+        var modal = document.getElementById(modalId);
+        if (!modal) return;
+        _confirmModalTrigger = triggerEl
+            || (document.activeElement && document.activeElement !== document.body
+                ? document.activeElement
+                : null);
+        modal.classList.remove('hidden');
+        var cancelBtn = document.getElementById(cancelBtnId);
+        if (cancelBtn) setTimeout(function () { cancelBtn.focus(); }, 0);
+    }
+
+    function closeConfirmModal(modalId) {
+        var modal = document.getElementById(modalId);
+        if (modal) modal.classList.add('hidden');
+        var trigger = _confirmModalTrigger;
+        _confirmModalTrigger = null;
+        if (trigger && typeof trigger.focus === 'function') trigger.focus();
+    }
+
     on(els.endGameBtn, 'click', function () {
-        var modal = document.getElementById('end-game-modal');
-        if (modal) modal.classList.remove('hidden');
+        openConfirmModal('end-game-modal', 'end-game-cancel-btn', els.endGameBtn);
     });
 
     on('end-game-confirm-btn', 'click', function () {
         send('end_game', {});
-        var modal = document.getElementById('end-game-modal');
-        if (modal) modal.classList.add('hidden');
+        closeConfirmModal('end-game-modal');
     });
     on('end-game-cancel-btn', 'click', function () {
-        var modal = document.getElementById('end-game-modal');
-        if (modal) modal.classList.add('hidden');
+        closeConfirmModal('end-game-modal');
     });
     var endBackdrop = document.querySelector('#end-game-modal .modal-backdrop');
     if (endBackdrop) on(endBackdrop, 'click', function () {
-        var modal = document.getElementById('end-game-modal');
-        if (modal) modal.classList.add('hidden');
+        closeConfirmModal('end-game-modal');
     });
 
     on(els.newGameBtn, 'click', function () { send('reset_game', {}); });
@@ -1960,31 +1981,70 @@
 
     // ---- Reset Game button (header) ----
     on(els.resetGameBtn, 'click', function () {
-        var modal = document.getElementById('reset-game-modal');
-        if (modal) modal.classList.remove('hidden');
+        openConfirmModal('reset-game-modal', 'reset-game-cancel-btn', els.resetGameBtn);
     });
     on('reset-game-confirm-btn', 'click', function () {
         send('reset_game', {});
-        var modal = document.getElementById('reset-game-modal');
-        if (modal) modal.classList.add('hidden');
+        closeConfirmModal('reset-game-modal');
     });
     on('reset-game-cancel-btn', 'click', function () {
-        var modal = document.getElementById('reset-game-modal');
-        if (modal) modal.classList.add('hidden');
+        closeConfirmModal('reset-game-modal');
     });
     var resetBackdrop = document.querySelector('#reset-game-modal .modal-backdrop');
     if (resetBackdrop) on(resetBackdrop, 'click', function () {
-        var modal = document.getElementById('reset-game-modal');
-        if (modal) modal.classList.add('hidden');
+        closeConfirmModal('reset-game-modal');
+    });
+
+    // ---- Kick player confirmation modal (#480) ----
+    // Replaces the raw window.confirm() with the themed btn-danger modal used by
+    // end/reset. The kick action itself is unchanged (send('kick_player', ...)).
+    var _pendingKickName = null;
+
+    function openKickModal(name, triggerEl) {
+        _pendingKickName = name;
+        var textEl = document.getElementById('kick-player-modal-text');
+        if (textEl) {
+            var tmpl = _t('admin.kickConfirm') || 'Remove {name} from the lobby?';
+            textEl.textContent = tmpl.replace('{name}', name);
+        }
+        var modal = document.getElementById('kick-player-modal');
+        if (!modal) {
+            // Fallback: markup missing → keep the old confirm() so kicks still work.
+            var msg = (_t('admin.kickConfirm') || ('Remove ' + name + ' from the lobby?')).replace('{name}', name);
+            if (window.confirm(msg)) send('kick_player', { player_name: name });
+            _pendingKickName = null;
+            return;
+        }
+        openConfirmModal('kick-player-modal', 'kick-player-cancel-btn', triggerEl);
+    }
+
+    on('kick-player-confirm-btn', 'click', function () {
+        if (_pendingKickName) send('kick_player', { player_name: _pendingKickName });
+        _pendingKickName = null;
+        closeConfirmModal('kick-player-modal');
+    });
+    on('kick-player-cancel-btn', 'click', function () {
+        _pendingKickName = null;
+        closeConfirmModal('kick-player-modal');
+    });
+    var kickBackdrop = document.querySelector('#kick-player-modal .modal-backdrop');
+    if (kickBackdrop) on(kickBackdrop, 'click', function () {
+        _pendingKickName = null;
+        closeConfirmModal('kick-player-modal');
     });
 
     document.addEventListener('keydown', function (e) {
         if (e.key === 'Escape') {
             closeAdminJoinModal();
-            var endModal = document.getElementById('end-game-modal');
-            if (endModal) endModal.classList.add('hidden');
-            var resetModal = document.getElementById('reset-game-modal');
-            if (resetModal) resetModal.classList.add('hidden');
+            // Restore focus to the trigger for whichever confirm dialog is open.
+            var confirmIds = ['end-game-modal', 'reset-game-modal', 'kick-player-modal'];
+            for (var i = 0; i < confirmIds.length; i++) {
+                var m = document.getElementById(confirmIds[i]);
+                if (m && !m.classList.contains('hidden')) {
+                    _pendingKickName = null;
+                    closeConfirmModal(confirmIds[i]);
+                }
+            }
         }
     });
 
