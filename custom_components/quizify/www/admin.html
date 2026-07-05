@@ -56,7 +56,7 @@
          the Share → Add to Home Screen flow that Apple requires. -->
     <div class="pwa-ios-hint hidden" id="pwa-ios-hint" role="dialog" aria-modal="true" aria-labelledby="pwa-ios-hint-title">
         <div class="pwa-ios-hint-content">
-            <button type="button" class="pwa-ios-hint-close" id="pwa-ios-hint-close" aria-label="Close">&times;</button>
+            <button type="button" class="pwa-ios-hint-close" id="pwa-ios-hint-close" data-i18n-aria-label="common.close" aria-label="Close">&times;</button>
             <p id="pwa-ios-hint-title"><strong data-i18n="pwa.iosHintTitle">Install Quizify</strong></p>
             <p data-i18n="pwa.iosHintBody">Tap <span aria-hidden="true">⬆️</span> Share, then <strong>"Add to Home Screen"</strong></p>
         </div>
@@ -109,7 +109,7 @@
                 </div>
                 <button type="button" id="start-game-btn" class="btn btn-primary btn-lg btn-block">
                     <span aria-hidden="true">▶︎</span>
-                    <span data-i18n="admin.startGame">Start Game</span>
+                    <span data-i18n="admin.openLobby">Open lobby</span>
                 </button>
                 <button type="button" id="setup-tweak-btn" class="setup-tweak-link"
                         data-i18n="setup.tweak">
@@ -195,22 +195,22 @@
 
                         <!-- Phase 2: Theme-Tabs. Always visible. Filter visible sub-pack
                              chips. The "Alle" tab keeps all chips visible (current default). -->
-                        <div class="theme-tabs" id="theme-tabs" role="tablist" data-i18n-aria-label="admin.themes" aria-label="Themes">
+                        <div class="theme-tabs" id="theme-tabs" role="group" data-i18n-aria-label="admin.themes" aria-label="Themes">
                             <!-- "Alle" stays text-only (no theme icon). Themed tabs carry an
                                  SVG line icon (filled by admin.js paintThemeTabIcons via the
                                  shared QuizifyIcons set) + a text-only i18n label span. The
                                  data-i18n attr lives on the inner .theme-tab-label so i18n's
                                  textContent write never clobbers the sibling SVG. -->
-                            <button type="button" class="theme-tab active" data-theme="all"><span class="theme-tab-label" data-i18n="admin.themeAll">Alle</span></button>
-                            <button type="button" class="theme-tab" data-theme="geography"><span class="qz-icon qz-icon--coral"></span><span class="theme-tab-label" data-i18n="theme.geography">Geo</span></button>
-                            <button type="button" class="theme-tab" data-theme="nature"><span class="qz-icon qz-icon--sage"></span><span class="theme-tab-label" data-i18n="theme.nature">Natur</span></button>
-                            <button type="button" class="theme-tab" data-theme="popculture"><span class="qz-icon qz-icon--sky"></span><span class="theme-tab-label" data-i18n="theme.popculture">Pop</span></button>
-                            <button type="button" class="theme-tab" data-theme="sport"><span class="qz-icon qz-icon--sun"></span><span class="theme-tab-label" data-i18n="theme.sport">Sport</span></button>
-                            <button type="button" class="theme-tab" data-theme="music"><span class="qz-icon qz-icon--coral"></span><span class="theme-tab-label" data-i18n="theme.music">Musik</span></button>
-                            <button type="button" class="theme-tab" data-theme="science"><span class="qz-icon qz-icon--sage"></span><span class="theme-tab-label" data-i18n="theme.science">Wissen</span></button>
-                            <button type="button" class="theme-tab" data-theme="history"><span class="qz-icon qz-icon--sky"></span><span class="theme-tab-label" data-i18n="theme.history">Historie</span></button>
-                            <button type="button" class="theme-tab" data-theme="food"><span class="qz-icon qz-icon--sun"></span><span class="theme-tab-label" data-i18n="theme.food">Essen</span></button>
-                            <button type="button" class="theme-tab" data-theme="tech"><span class="qz-icon qz-icon--coral"></span><span class="theme-tab-label" data-i18n="theme.tech">Tech</span></button>
+                            <button type="button" class="theme-tab active" data-theme="all" aria-pressed="true"><span class="theme-tab-label" data-i18n="admin.themeAll">Alle</span></button>
+                            <button type="button" class="theme-tab" aria-pressed="false" data-theme="geography"><span class="qz-icon qz-icon--coral"></span><span class="theme-tab-label" data-i18n="theme.geography">Geo</span></button>
+                            <button type="button" class="theme-tab" aria-pressed="false" data-theme="nature"><span class="qz-icon qz-icon--sage"></span><span class="theme-tab-label" data-i18n="theme.nature">Natur</span></button>
+                            <button type="button" class="theme-tab" aria-pressed="false" data-theme="popculture"><span class="qz-icon qz-icon--sky"></span><span class="theme-tab-label" data-i18n="theme.popculture">Pop</span></button>
+                            <button type="button" class="theme-tab" aria-pressed="false" data-theme="sport"><span class="qz-icon qz-icon--sun"></span><span class="theme-tab-label" data-i18n="theme.sport">Sport</span></button>
+                            <button type="button" class="theme-tab" aria-pressed="false" data-theme="music"><span class="qz-icon qz-icon--coral"></span><span class="theme-tab-label" data-i18n="theme.music">Musik</span></button>
+                            <button type="button" class="theme-tab" aria-pressed="false" data-theme="science"><span class="qz-icon qz-icon--sage"></span><span class="theme-tab-label" data-i18n="theme.science">Wissen</span></button>
+                            <button type="button" class="theme-tab" aria-pressed="false" data-theme="history"><span class="qz-icon qz-icon--sky"></span><span class="theme-tab-label" data-i18n="theme.history">Historie</span></button>
+                            <button type="button" class="theme-tab" aria-pressed="false" data-theme="food"><span class="qz-icon qz-icon--sun"></span><span class="theme-tab-label" data-i18n="theme.food">Essen</span></button>
+                            <button type="button" class="theme-tab" aria-pressed="false" data-theme="tech"><span class="qz-icon qz-icon--coral"></span><span class="theme-tab-label" data-i18n="theme.tech">Tech</span></button>
                         </div>
 
                         <!-- Pack-Cards (was: flat chip-row). The chip-group--cards modifier
@@ -644,7 +644,7 @@
             <h2 id="end-game-modal-title" data-i18n="admin.endGameConfirm">End game?</h2>
             <p data-i18n="admin.endGameWarning">All players will be disconnected.</p>
             <div class="modal-actions">
-                <button type="button" id="end-game-confirm-btn" class="btn btn-primary" data-i18n="admin.endGame">End Game</button>
+                <button type="button" id="end-game-confirm-btn" class="btn btn-danger" data-i18n="admin.endGame">End Game</button>
                 <button type="button" id="end-game-cancel-btn" class="btn btn-secondary" data-i18n="common.cancel">Cancel</button>
             </div>
         </div>
@@ -657,7 +657,7 @@
             <h2 id="reset-game-modal-title" data-i18n="admin.resetGameConfirm">Reset game?</h2>
             <p data-i18n="admin.resetGameWarning">The current round and all players will be cleared. You'll return to the setup screen.</p>
             <div class="modal-actions">
-                <button type="button" id="reset-game-confirm-btn" class="btn btn-primary" data-i18n="admin.resetGame">Reset game</button>
+                <button type="button" id="reset-game-confirm-btn" class="btn btn-danger" data-i18n="admin.resetGame">Reset game</button>
                 <button type="button" id="reset-game-cancel-btn" class="btn btn-secondary" data-i18n="common.cancel">Cancel</button>
             </div>
         </div>

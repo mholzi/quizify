@@ -74,6 +74,7 @@
     "joinAsPlayer": "Join as Player",
     "joinedAs": "You're playing as {name}",
     "startGame": "Start Game",
+    "openLobby": "Open lobby →",
     "startGameHint": "You'll enter your name in the next step",
     "startGameplay": "Start Game",
     "startGameplayHint": "Plays with everyone in the lobby. You stay as host.",
@@ -143,6 +144,7 @@
   },
   "game": {
     "question": "Question",
+    "questionImageAlt": "Question image",
     "zoomImage": "Zoom image",
     "soundMute": "Mute sound effects",
     "soundUnmute": "Unmute sound effects",
