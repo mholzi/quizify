@@ -24,7 +24,8 @@
                     "media_player_entity": "Media player for TTS",
                     "lobby_music_url": "Lobby music URL",
                     "community_submit_url": "Community pack submission URL",
-                    "community_submit_secret": "Community pack submission secret"
+                    "community_submit_secret": "Community pack submission secret",
+                    "house_events_enabled": "The House Plays Along"
                 },
                 "data_description": {
                     "party_light_entities": "Lights that should glow with the round phase (coral on question, sage on reveal, sun on finale).",
@@ -32,7 +33,8 @@
                     "media_player_entity": "Speaker the TTS audio plays through. Required if TTS provider is set.",
                     "lobby_music_url": "Optional URL of an audio file (e.g. /local/quizify-lobby.mp3, served from your config/www folder) looped on the media player above while waiting in the lobby. It stops when the game starts, so it never overlaps the TTS announcements that share the same speaker. Leave blank for no music. No audio file is included — supply your own.",
                     "community_submit_url": "Optional worker endpoint that turns an in-app community-pack submission into a GitHub issue for review. Leave blank to hide the submission feature entirely. The GitHub token lives in that worker, never in your browser or Home Assistant.",
-                    "community_submit_secret": "Optional shared secret sent to the worker as an X-Quizify-Secret header. Set this to match the worker's SHARED_SECRET to stop anyone with the URL from filing issues. Leave blank if the worker has no secret (the default)."
+                    "community_submit_secret": "Optional shared secret sent to the worker as an X-Quizify-Secret header. Set this to match the worker's SHARED_SECRET to stop anyone with the URL from filing issues. Leave blank if the worker has no secret (the default).",
+                    "house_events_enabled": "Fire quizify_* events on the Home Assistant event bus at game milestones (round start, reveal, streaks, winner) so you can drive your own automations. Off by default."
                 }
             }
         }

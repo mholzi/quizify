@@ -50,6 +50,7 @@ from custom_components.quizify.server.serializers import (
 if TYPE_CHECKING:
     from collections.abc import Callable
 
+    from ..game_events import QuizifyEventEmitter
     from ..runtime import Runtime
     from ..tts import QuizifyTTSAnnouncer
 
@@ -183,6 +184,10 @@ class QuizifyWebSocketHandler:
         # construction so the handler doesn't have to know about HA
         # services. Calling announce_milestone on None is the no-op path.
         self._tts_announcer: QuizifyTTSAnnouncer | None = None
+        # Optional HA event-bus emitter (#366). Set by __init__.py after
+        # construction so the handler stays HA-agnostic. Firing on None is the
+        # no-op path (standalone dev server).
+        self._event_emitter: QuizifyEventEmitter | None = None
         # Per-connection message flood guard (#169). Keyed on id(ws); the
         # entry is dropped by _forget_rate_limit() on disconnect so the
         # backing dict is bounded by the number of *live* connections.
@@ -1010,6 +1015,11 @@ class QuizifyWebSocketHandler:
                 # Also speak it if TTS is configured. Cheap to look up; the
                 # announcer no-ops if no TTS entity is set.
                 self._notify_tts_milestone(player.name, result.milestone_streak)
+                # Fire the HA bus event so the host can automate on a streak
+                # (#366) — same data as the streak_milestone broadcast above.
+                self._notify_house_milestone(
+                    player.name, result.milestone_streak, result.milestone_bonus
+                )
             # NB: round-summary broadcast is fired exclusively by
             # state._fire_broadcast("round_evaluated") \u2192 broadcast_state().
             # Do NOT broadcast here \u2014 that would double-fire when the timer
@@ -2220,6 +2230,11 @@ class QuizifyWebSocketHandler:
         self._notify_tts_question(
             question, game_state.round, game_state.total_rounds, shuffled_texts
         )
+        # Fire the HA bus event (round + type only; no text/answers) so the host
+        # can automate on each question start (#366).
+        self._notify_house_question(
+            question, game_state.round, game_state.total_rounds
+        )
 
         # Cache players to avoid redundant calls
         players = game_state.get_players()
@@ -2754,6 +2769,80 @@ class QuizifyWebSocketHandler:
             _LOGGER.exception("TTS reveal announcement raised")
 
     # ------------------------------------------------------------------
+    # HA event-bus forwarders (#366) — thin, no-op-guarded siblings of the
+    # _notify_tts_* hooks. The emitter fires quizify_* bus events so the host
+    # can drive automations off game milestones.
+    # ------------------------------------------------------------------
+
+    def set_event_emitter(
+        self, emitter: QuizifyEventEmitter | None
+    ) -> None:
+        """Wire (or rewire) the optional HA event emitter (#366).
+
+        Public entry point used by ``__init__.py`` at setup and on every options
+        reload, mirroring :meth:`set_tts_announcer`. ``None`` clears it, restoring
+        the no-op path.
+        """
+        self._event_emitter = emitter
+
+    def _notify_house_question(
+        self, question: Any, round_no: int, total_rounds: int
+    ) -> None:
+        """Forward a question-start to the HA event emitter if one is wired.
+
+        No-op when ``_event_emitter`` is None (standalone dev server). Guarded so
+        a bad fire can't break the question fan-out.
+        """
+        emitter = self._event_emitter
+        if emitter is None:
+            return
+        try:
+            emitter.notify_question_shown(question, round_no, total_rounds)
+        except Exception:  # noqa: BLE001
+            _LOGGER.exception("House question event raised")
+
+    def _notify_house_milestone(
+        self, player_name: str, streak: int, bonus: int
+    ) -> None:
+        """Forward a streak milestone to the HA event emitter if one is wired.
+
+        No-op when ``_event_emitter`` is None. Guarded like the question hook.
+        """
+        emitter = self._event_emitter
+        if emitter is None:
+            return
+        try:
+            emitter.notify_streak_milestone(player_name, streak, bonus)
+        except Exception:  # noqa: BLE001
+            _LOGGER.exception("House milestone event raised")
+
+    def _notify_house_reveal(self, game_state: QuizifyGameState) -> None:
+        """Forward the reveal to the HA event emitter if one is wired.
+
+        No-op when ``_event_emitter`` is None. Guarded like the question hook.
+        """
+        emitter = self._event_emitter
+        if emitter is None:
+            return
+        try:
+            emitter.notify_answer_revealed(game_state)
+        except Exception:  # noqa: BLE001
+            _LOGGER.exception("House reveal event raised")
+
+    def _notify_house_game_ended(self, game_state: QuizifyGameState) -> None:
+        """Forward game end to the HA event emitter if one is wired.
+
+        No-op when ``_event_emitter`` is None. Guarded like the question hook.
+        """
+        emitter = self._event_emitter
+        if emitter is None:
+            return
+        try:
+            emitter.notify_game_ended(game_state)
+        except Exception:  # noqa: BLE001
+            _LOGGER.exception("House game-ended event raised")
+
+    # ------------------------------------------------------------------
     # Finale broadcast helper
     # ------------------------------------------------------------------
 
@@ -2807,12 +2896,18 @@ class QuizifyWebSocketHandler:
             # Narrate the reveal (correct answer + who got it + standings) as
             # a single combined utterance (#281), after the summary broadcast.
             self._notify_tts_reveal(game_state)
+            # Fire the HA bus event with the correct answer + how many got it
+            # (#366), off the same round summary.
+            self._notify_house_reveal(game_state)
 
     async def _dispatch_game_ended(self) -> None:
         """Handler for the ``game_ended`` state event."""
         game_state = self._get_game_state()
         if game_state:
             await self._broadcast_finale(game_state)
+            # Fire the HA bus event with the final leaderboard (#366), after
+            # the finale broadcast so entity state is already settled.
+            self._notify_house_game_ended(game_state)
 
     async def _dispatch_full_state(self) -> None:
         """Default handler: broadcast a full game-state snapshot."""

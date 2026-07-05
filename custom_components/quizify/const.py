@@ -55,6 +55,12 @@ QUESTIONS_DIR = "quizify/questions"
 CONF_PARTY_LIGHT_ENTITIES = "party_light_entities"  # list[str], domain=light
 CONF_TTS_ENTITY = "tts_entity"  # str, single, domain=tts
 CONF_MEDIA_PLAYER_ENTITY = "media_player_entity"  # str, single, domain=media_player
+# Master toggle for the HA event backbone (#366, "The House Plays Along").
+# Off by default: the integration stays silent on the event bus until the host
+# opts in, so broad event-triggered automations are never surprised by a stream
+# of quizify_* events. Mirrors the opt-in posture of the TTS/lights features.
+CONF_HOUSE_EVENTS_ENABLED = "house_events_enabled"  # bool, single
+DEFAULT_HOUSE_EVENTS_ENABLED = False
 # URL of an audio file to loop in the lobby while waiting for players. Empty by
 # default — the lobby-music mechanism stays completely inert until the user
 # points this at their own file (e.g. "/local/quizify-lobby.mp3" served from

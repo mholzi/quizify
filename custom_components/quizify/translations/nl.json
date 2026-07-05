@@ -24,7 +24,8 @@
                     "media_player_entity": "Mediaspeler voor TTS",
                     "lobby_music_url": "URL lobbymuziek",
                     "community_submit_url": "URL voor inzending community-pack",
-                    "community_submit_secret": "Geheim voor inzending community-pack"
+                    "community_submit_secret": "Geheim voor inzending community-pack",
+                    "house_events_enabled": "Het huis speelt mee"
                 },
                 "data_description": {
                     "party_light_entities": "Lampen die meekleuren met de rondefase (koraal bij vraag, salie bij onthulling, zon bij finale).",
@@ -32,7 +33,8 @@
                     "media_player_entity": "Luidspreker waar de TTS wordt afgespeeld. Verplicht als er een TTS-provider is ingesteld.",
                     "lobby_music_url": "Optionele URL van een audiobestand (bv. /local/quizify-lobby.mp3 uit je config/www-map) dat tijdens het wachten in de lobby in een lus wordt afgespeeld op de mediaspeler hierboven. Het stopt zodra het spel begint, zodat het de TTS-aankondigingen die dezelfde speaker delen niet overlapt. Laat leeg voor geen muziek. Er wordt geen audiobestand meegeleverd — gebruik je eigen bestand.",
                     "community_submit_url": "Optioneel worker-eindpunt dat een in de app ingediende community-pack-inzending omzet in een GitHub-issue ter beoordeling. Laat leeg om de inzendfunctie volledig te verbergen. Het GitHub-token bevindt zich in die worker, nooit in je browser of in Home Assistant.",
-                    "community_submit_secret": "Optioneel gedeeld geheim dat als X-Quizify-Secret-header naar de worker wordt gestuurd. Stel het in zodat het overeenkomt met de SHARED_SECRET van de worker, zodat niet iedereen met de URL issues kan aanmaken. Laat leeg als de worker geen geheim heeft (standaard)."
+                    "community_submit_secret": "Optioneel gedeeld geheim dat als X-Quizify-Secret-header naar de worker wordt gestuurd. Stel het in zodat het overeenkomt met de SHARED_SECRET van de worker, zodat niet iedereen met de URL issues kan aanmaken. Laat leeg als de worker geen geheim heeft (standaard).",
+                    "house_events_enabled": "Vuurt quizify_*-events af op de Home Assistant-eventbus bij hoogtepunten van het spel (rondestart, onthulling, reeksen, winnaar) zodat je je eigen automatiseringen kunt aansturen. Standaard uit."
                 }
             }
         }
