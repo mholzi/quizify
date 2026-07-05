@@ -148,8 +148,7 @@ async def test_admin_required_type_rejected_for_non_admin(
     assert game.phase == GamePhase.LOBBY
 
     # Spy on the handler the type dispatches to so we can assert it never ran.
-    dispatch = h._message_dispatch({"type": msg_type}, game)
-    handler_fn, admin_required = dispatch[msg_type]
+    handler_fn, admin_required = h._DISPATCH[msg_type]
     assert admin_required is True, f"{msg_type} should be admin_required"
 
     await h._handle_message(rogue_ws, {"type": msg_type}, is_admin=False)
@@ -192,7 +191,7 @@ def test_dispatch_table_admin_flags_match_expected(
     a future edit that adds/removes/flips a guard fails loudly. ``reset_game``
     and ``admin_connect`` are intentionally absent (special auth paths)."""
     h = _handler(game, tmp_path)
-    table = h._message_dispatch({}, game)
+    table = h._DISPATCH
 
     actual_admin = {t for t, (_, req) in table.items() if req}
     actual_non_admin = {t for t, (_, req) in table.items() if not req}
