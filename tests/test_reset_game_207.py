@@ -301,8 +301,16 @@ async def test_host_reclaims_crown_from_stale_slot_on_rejoin(
     """#209 crown-recovery: when the host re-joins under a disambiguated
     name while the stale (disconnected) old admin slot lingers, the host
     must (re)acquire the single admin crown — and the stale slot must be
-    demoted so exactly one admin exists (single-admin invariant #208)."""
+    demoted so exactly one admin exists (single-admin invariant #208).
+
+    #358: a crown transfer to a *different* name now requires the admin
+    session token (which the real host holds and the frontend sends), so the
+    attacker path is closed. The legit host carries it here."""
     h = _auth_handler(game, tmp_path)
+    # Seed the persisted admin token directly (avoids the executor-backed
+    # store); the real host holds this and the frontend now sends it (#358).
+    token = "recovery-token"
+    h._conn._admin_session_token = token
 
     # Old admin slot (the /quizify/admin tab joined-as-player), now stale:
     old_ws = _ws()
@@ -311,11 +319,18 @@ async def test_host_reclaims_crown_from_stale_slot_on_rejoin(
     game.get_player("Host").connected = False  # admin WS closing on redirect
 
     # Host re-joins on a fresh player WS; the lingering "Host" slot forces
-    # the disambiguated "Host 2" name, carrying is_admin: true.
+    # the disambiguated "Host 2" name, carrying is_admin: true + the token.
     new_ws = _ws()
     h._conn.add_connection(new_ws, is_admin=False, is_dashboard=False)
     await h._handle_message(
-        new_ws, {"type": "join", "name": "Host 2", "is_admin": True}, is_admin=False
+        new_ws,
+        {
+            "type": "join",
+            "name": "Host 2",
+            "is_admin": True,
+            "admin_token": token,
+        },
+        is_admin=False,
     )
 
     new_player = game.get_player("Host 2")

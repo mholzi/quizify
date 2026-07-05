@@ -1787,7 +1787,13 @@
         // the server's roster broadcast re-renders the lobby) can't open the
         // modal again and create a duplicate self-join.
         if (els.participateBtn) els.participateBtn.disabled = true;
-        send('join', { name: name, is_admin: true });
+        // #358: carry the admin session token so the server can authorise a
+        // crown transfer from a stale (disconnected) admin slot — without it a
+        // LAN client could seize the crown during a host reload.
+        var _joinMsg = { name: name, is_admin: true };
+        var _adminTok = sessionStorage.getItem('quizify_admin_session_token');
+        if (_adminTok) _joinMsg.admin_token = _adminTok;
+        send('join', _joinMsg);
         closeAdminJoinModal();
     }
 
