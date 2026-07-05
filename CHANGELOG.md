@@ -3,11 +3,10 @@
 All notable changes to Quizify are documented here. This project follows
 [Semantic Versioning](https://semver.org/).
 
-## [1.5.0-RC1] — 2026-07-05
+## [1.5.0] — 2026-07-05
 
-First release candidate for 1.5.0. Completes Spanish support and bundles a
-broad correctness / security / accessibility hardening pass (38 changes merged
-since 1.4.1).
+Completes Spanish support and bundles a broad correctness / security /
+accessibility hardening pass (38 changes merged since 1.4.1).
 
 ### Added
 
