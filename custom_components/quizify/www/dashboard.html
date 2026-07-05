@@ -1124,6 +1124,22 @@
             }
             .dashboard-left.has-image .dashboard-question-image { max-height: 32vh; }
         }
+
+        /* Honor prefers-reduced-motion: the always-on TV must respect the OS
+           reduced-motion setting. dashboard.html is self-contained (no
+           styles.css), so the house-style override from css/src/00-tokens.css
+           is duplicated here to tame the continuous animations above
+           (pulse-bar, fade-pulse, spotlight-in, award-appear) (#381). */
+        @media (prefers-reduced-motion: reduce) {
+            *,
+            *::before,
+            *::after {
+                animation-duration: 0.01ms !important;
+                animation-iteration-count: 1 !important;
+                transition-duration: 0.01ms !important;
+                scroll-behavior: auto !important;
+            }
+        }
     </style>
 </head>
 <body class="dashboard-body">
