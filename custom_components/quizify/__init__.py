@@ -46,6 +46,7 @@ async def async_setup_entry(hass: HomeAssistant, entry: ConfigEntry) -> bool:
         CONF_TTS_ENTITY,
     )
     from .game.state import QuizifyGameState  # noqa: PLC0415
+    from .game_events import QuizifyEventEmitter  # noqa: PLC0415
     from .lights import QuizifyPartyLights  # noqa: PLC0415
     from .lobby_music import QuizifyLobbyMusic  # noqa: PLC0415
     from .question_stats import QuestionStatsService  # noqa: PLC0415
@@ -250,9 +251,19 @@ async def async_setup_entry(hass: HomeAssistant, entry: ConfigEntry) -> bool:
     )
     lobby_music.attach()
 
+    # HA event backbone (#366) — fires quizify_* bus events at game milestones
+    # so the host can drive their own automations. Attaches a state callback for
+    # phase-driven events; the WS handler pushes the richer per-event ones. No
+    # per-entry config to gate on (always available under HA), so it needs no
+    # options; it stays a no-op only on the standalone dev server.
+    event_emitter = QuizifyEventEmitter(hass=hass, game_state=game_state)
+    event_emitter.attach()
+    ws_handler.set_event_emitter(event_emitter)
+
     hass.data[DOMAIN]["party_lights"] = party_lights
     hass.data[DOMAIN]["tts_announcer"] = tts_announcer
     hass.data[DOMAIN]["lobby_music"] = lobby_music
+    hass.data[DOMAIN]["event_emitter"] = event_emitter
 
     # Re-attach on options change so toggling lights/TTS in the UI takes
     # effect without an HA restart.
@@ -274,17 +285,23 @@ async def async_setup_entry(hass: HomeAssistant, entry: ConfigEntry) -> bool:
         pl: QuizifyPartyLights | None = domain_data.get("party_lights")
         tts: QuizifyTTSAnnouncer | None = domain_data.get("tts_announcer")
         lm: QuizifyLobbyMusic | None = domain_data.get("lobby_music")
+        ev: QuizifyEventEmitter | None = domain_data.get("event_emitter")
         # Snapshot the old announcer's live per-game narration config BEFORE we
         # tear it down (#411). Rebuilding from the config entry resets
         # ``_enabled`` to False and drops the admin's per-game entity overrides,
         # which would silently kill narration mid-game until the next start_game.
         tts_snapshot = tts.export_runtime_config() if tts is not None else None
+        # Snapshot the emitter's phase tracking so a reload landing on round 1
+        # doesn't re-fire quizify_game_started (#366, same #411 rationale).
+        ev_snapshot = ev.export_runtime_state() if ev is not None else None
         if pl is not None:
             pl.detach()
         if tts is not None:
             tts.detach()
         if lm is not None:
             lm.detach()
+        if ev is not None:
+            ev.detach()
         new_pl = QuizifyPartyLights(
             hass=_hass,
             entity_ids=list(opts.get(CONF_PARTY_LIGHT_ENTITIES) or []),
@@ -307,12 +324,19 @@ async def async_setup_entry(hass: HomeAssistant, entry: ConfigEntry) -> bool:
             game_state=game_state,
         )
         new_lm.attach()
+        new_ev = QuizifyEventEmitter(hass=_hass, game_state=game_state)
+        # Carry the phase tracking across the reload so an in-flight game keeps
+        # its game_started dedupe (#366).
+        new_ev.restore_runtime_state(ev_snapshot)
+        new_ev.attach()
         domain_data["party_lights"] = new_pl
         domain_data["tts_announcer"] = new_tts
         domain_data["lobby_music"] = new_lm
+        domain_data["event_emitter"] = new_ev
         handler = domain_data.get("ws_handler")
         if handler is not None:
             handler.set_tts_announcer(new_tts)
+            handler.set_event_emitter(new_ev)
         _LOGGER.info("Quizify options reloaded")
 
     entry.async_on_unload(entry.add_update_listener(_update_listener))
