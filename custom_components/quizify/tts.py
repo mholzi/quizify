@@ -135,6 +135,64 @@ class QuizifyTTSAnnouncer:
         self._media_player_override = (media_player or "").strip() or None
         self._previous_leader = None
 
+    def export_runtime_config(self) -> dict[str, Any]:
+        """Snapshot the mutable per-game narration config (#411).
+
+        An options reload rebuilds this announcer from the config entry, which
+        would otherwise reset ``_enabled`` back to ``False`` and drop the admin's
+        per-game entity overrides — silently killing narration mid-game until the
+        next ``start_game``. The listener snapshots the live config here and
+        restores it onto the fresh instance via :meth:`restore_runtime_config`.
+        """
+        return {
+            "enabled": self._enabled,
+            "announce_question": self._announce_question,
+            "announce_options": self._announce_options,
+            "announce_reveal": self._announce_reveal,
+            "announce_standings": self._announce_standings,
+            "announce_join": self._announce_join,
+            "announce_countdown": self._announce_countdown,
+            "tts_entity_override": self._tts_entity_override,
+            "media_player_override": self._media_player_override,
+        }
+
+    def restore_runtime_config(self, snapshot: dict[str, Any] | None) -> None:
+        """Restore a config snapshot from :meth:`export_runtime_config` (#411).
+
+        Defensive: a falsy/empty snapshot is a no-op, and each field falls back
+        to the current value when absent, so a partial snapshot never clobbers
+        an unrelated default.
+        """
+        if not snapshot:
+            return
+        self._enabled = bool(snapshot.get("enabled", self._enabled))
+        self._announce_question = bool(
+            snapshot.get("announce_question", self._announce_question)
+        )
+        self._announce_options = bool(
+            snapshot.get("announce_options", self._announce_options)
+        )
+        self._announce_reveal = bool(
+            snapshot.get("announce_reveal", self._announce_reveal)
+        )
+        self._announce_standings = bool(
+            snapshot.get("announce_standings", self._announce_standings)
+        )
+        self._announce_join = bool(
+            snapshot.get("announce_join", self._announce_join)
+        )
+        self._announce_countdown = bool(
+            snapshot.get("announce_countdown", self._announce_countdown)
+        )
+        self._tts_entity_override = (
+            snapshot.get("tts_entity_override", self._tts_entity_override)
+            or None
+        )
+        self._media_player_override = (
+            snapshot.get("media_player_override", self._media_player_override)
+            or None
+        )
+
     @property
     def _active_tts_entity(self) -> str | None:
         """Per-game override if set, else the config-entry default."""

@@ -213,3 +213,78 @@ async def test_options_update_clears_fields_when_emptied(
     assert data["ctx"].community_submit_url is None
     # An unconfigured party-lights helper is re-attached (no entity ids given).
     assert data["party_lights"].is_configured is False
+
+
+async def test_options_reload_preserves_live_narration_config(
+    http_hass: HomeAssistant,
+) -> None:
+    """An options change mid-game must NOT silently kill narration (#411).
+
+    ``configure()`` (called from the admin start_game payload) flips the master
+    switch on and stores per-game entity overrides. Before the fix, the reload
+    rebuilt the announcer from the config entry, resetting ``_enabled`` back to
+    ``False`` — so narration went silent until the next game. The listener now
+    snapshots + restores the live runtime config onto the fresh instance.
+    """
+    hass = http_hass
+    entry = await _setup(hass)
+
+    old_tts = hass.data[DOMAIN]["tts_announcer"]
+    # Simulate a start_game turning narration ON with per-game entity overrides.
+    old_tts.configure(
+        enabled=True,
+        announce_question=True,
+        announce_reveal=False,
+        announce_standings=True,
+        announce_options=False,
+        announce_join=True,
+        announce_countdown=False,
+        tts_entity="tts.game_engine",
+        media_player="media_player.party",
+    )
+
+    # An unrelated options change (party lights) fires the reload listener.
+    hass.config_entries.async_update_entry(
+        entry, options={CONF_PARTY_LIGHT_ENTITIES: ["light.den"]}
+    )
+    await hass.async_block_till_done()
+
+    new_tts = hass.data[DOMAIN]["tts_announcer"]
+    assert new_tts is not old_tts
+    # Master switch and per-event toggles survived the reload…
+    assert new_tts._enabled is True
+    assert new_tts._announce_reveal is False
+    assert new_tts._announce_options is False
+    assert new_tts._announce_countdown is False
+    # …and so did the per-game entity overrides.
+    assert new_tts._active_tts_entity == "tts.game_engine"
+    assert new_tts._active_media_player == "media_player.party"
+
+
+async def test_options_reload_resumes_lobby_music_on_attach(
+    http_hass: HomeAssistant,
+) -> None:
+    """LOBBY music must resume after a reload while still in the lobby (#411).
+
+    The state-callback path only reacts to a phase *change*; a freshly-built
+    lobby-music instance starts with ``_last_phase=None`` and would never emit a
+    start until the phase moved away and back. ``attach()`` now evaluates the
+    current phase once, so a reload mid-lobby restarts the music immediately.
+    """
+    hass = http_hass
+    entry = await _setup(hass)
+
+    # Configure a media player + lobby URL; the game sits in LOBBY at setup.
+    hass.config_entries.async_update_entry(
+        entry,
+        options={
+            CONF_MEDIA_PLAYER_ENTITY: "media_player.living_room",
+            CONF_LOBBY_MUSIC_URL: "http://example.test/lobby.mp3",
+        },
+    )
+    await hass.async_block_till_done()
+
+    lm = hass.data[DOMAIN]["lobby_music"]
+    assert lm.is_configured is True
+    # The re-attached instance evaluated the LOBBY phase on attach and started.
+    assert lm._playing is True

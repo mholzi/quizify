@@ -57,6 +57,13 @@ class QuizifyLobbyMusic:
 
     def attach(self) -> None:
         self._game.register_state_callback(self._on_state_changed)
+        # Evaluate the current phase once on attach (#411). The state-callback
+        # path only fires on a phase *change*, so a fresh instance built by an
+        # options reload while the game already sits in the LOBBY would never
+        # start the music until the phase moved away and back. Reusing
+        # ``_on_state_changed`` (with ``_last_phase is None``) resumes LOBBY
+        # music immediately and is a safe no-op for any non-lobby phase.
+        self._on_state_changed()
 
     def detach(self) -> None:
         self._game.unregister_state_callback(self._on_state_changed)

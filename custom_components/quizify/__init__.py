@@ -274,6 +274,11 @@ async def async_setup_entry(hass: HomeAssistant, entry: ConfigEntry) -> bool:
         pl: QuizifyPartyLights | None = domain_data.get("party_lights")
         tts: QuizifyTTSAnnouncer | None = domain_data.get("tts_announcer")
         lm: QuizifyLobbyMusic | None = domain_data.get("lobby_music")
+        # Snapshot the old announcer's live per-game narration config BEFORE we
+        # tear it down (#411). Rebuilding from the config entry resets
+        # ``_enabled`` to False and drops the admin's per-game entity overrides,
+        # which would silently kill narration mid-game until the next start_game.
+        tts_snapshot = tts.export_runtime_config() if tts is not None else None
         if pl is not None:
             pl.detach()
         if tts is not None:
@@ -292,6 +297,9 @@ async def async_setup_entry(hass: HomeAssistant, entry: ConfigEntry) -> bool:
             media_player_entity_id=opts.get(CONF_MEDIA_PLAYER_ENTITY) or None,
             game_state=game_state,
         )
+        # Carry the runtime narration config across the reload so an in-flight
+        # game keeps narrating (#411).
+        new_tts.restore_runtime_config(tts_snapshot)
         new_tts.attach()
         new_lm = QuizifyLobbyMusic(
             hass=_hass,
