@@ -884,7 +884,8 @@ body.is-admin .pl-result-hero--big .pl-result-big-points { font-size: 84px; }
   position: fixed;
   left: 16px;
   right: 16px;
-  bottom: 16px;
+  /* iOS safe-area: keep the sticky Next-Round bar above the home indicator (#375). */
+  bottom: calc(16px + env(safe-area-inset-bottom, 0px));
   display: grid;
   grid-template-columns: auto 1fr;
   gap: 8px;
