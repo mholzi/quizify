@@ -1934,6 +1934,26 @@
     // Cancel button (safe default for a destructive action) and remembers the
     // element that opened it; closeConfirmModal restores focus to that trigger.
     var _confirmModalTrigger = null;
+    // #487: Tab-trap so keyboard focus stays inside the open aria-modal dialog.
+    // Without this, Tab/Shift+Tab escaped behind the backdrop. We install a
+    // keydown handler when a modal opens and remove it on close.
+    var _confirmTrapHandler = null;
+
+    function _getModalFocusable(modal) {
+        var content = modal.querySelector('.modal-content') || modal;
+        var nodes = content.querySelectorAll(
+            'button, [href], input, select, textarea, [tabindex]:not([tabindex="-1"])'
+        );
+        var out = [];
+        for (var i = 0; i < nodes.length; i++) {
+            var el = nodes[i];
+            if (!el.disabled && el.getAttribute('tabindex') !== '-1'
+                && (el.offsetWidth > 0 || el.offsetHeight > 0 || el === document.activeElement)) {
+                out.push(el);
+            }
+        }
+        return out;
+    }
 
     function openConfirmModal(modalId, cancelBtnId, triggerEl) {
         var modal = document.getElementById(modalId);
@@ -1945,11 +1965,41 @@
         modal.classList.remove('hidden');
         var cancelBtn = document.getElementById(cancelBtnId);
         if (cancelBtn) setTimeout(function () { cancelBtn.focus(); }, 0);
+
+        // Remove any stale trap before installing a fresh one.
+        if (_confirmTrapHandler) {
+            document.removeEventListener('keydown', _confirmTrapHandler, true);
+            _confirmTrapHandler = null;
+        }
+        _confirmTrapHandler = function (e) {
+            if (e.key !== 'Tab') return;
+            var focusable = _getModalFocusable(modal);
+            if (!focusable.length) return;
+            var first = focusable[0];
+            var last = focusable[focusable.length - 1];
+            var active = document.activeElement;
+            if (e.shiftKey) {
+                if (active === first || !modal.contains(active)) {
+                    e.preventDefault();
+                    last.focus();
+                }
+            } else {
+                if (active === last || !modal.contains(active)) {
+                    e.preventDefault();
+                    first.focus();
+                }
+            }
+        };
+        document.addEventListener('keydown', _confirmTrapHandler, true);
     }
 
     function closeConfirmModal(modalId) {
         var modal = document.getElementById(modalId);
         if (modal) modal.classList.add('hidden');
+        if (_confirmTrapHandler) {
+            document.removeEventListener('keydown', _confirmTrapHandler, true);
+            _confirmTrapHandler = null;
+        }
         var trigger = _confirmModalTrigger;
         _confirmModalTrigger = null;
         if (trigger && typeof trigger.focus === 'function') trigger.focus();
