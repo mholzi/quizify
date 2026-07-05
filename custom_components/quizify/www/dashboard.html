@@ -1171,6 +1171,19 @@
                     <span class="wordmark-quiz">Quiz</span><span class="wordmark-ify">ify</span>
                 </h1>
                 <p class="dashboard-waiting-text" data-i18n="dashboard.waitingForStart">Waiting for game to start…</p>
+                <!-- #374: the TV is the one screen everyone sees, so the join QR
+                     and the live "who's in" roster live here during LOBBY. The
+                     QR encodes the SAME join URL the admin QR uses
+                     (origin + /quizify/player). The <div>s below reuse the
+                     dormant .dashboard-qr-section / .dashboard-player-list /
+                     .dashboard-player-chip styles already in this file. The
+                     JS renders the QR once and refreshes the roster on every
+                     player_joined / player_left / game_state (LOBBY) message. -->
+                <div id="lobby-qr" class="dashboard-qr-section">
+                    <div id="lobby-qr-code"></div>
+                    <div class="dashboard-waiting-text" data-i18n="lobby.scanToJoin">Scan to join the game</div>
+                </div>
+                <div id="lobby-players" class="dashboard-player-list"></div>
             </div>
         </div>
 
@@ -1289,6 +1302,9 @@
 
     <script src="/quizify/static/js/i18n.js?v={{ASSET_VER}}"></script>
     <script src="/quizify/static/js/utils.js?v={{ASSET_VER}}"></script>
+    <!-- #374: QR library for the TV lobby join code (same lib admin.html uses).
+         Exposes the global QRCode used by renderLobbyQr() below. -->
+    <script src="/quizify/static/js/vendor/qrcode.min.js?v={{ASSET_VER}}"></script>
     <script>
     (function() {
         'use strict';
@@ -1312,6 +1328,9 @@
             lightningRecap: document.getElementById('lightning-recap-view'),
         };
         var els = {
+            // #374: TV lobby join QR + live player roster.
+            lobbyQrCode: document.getElementById('lobby-qr-code'),
+            lobbyPlayers: document.getElementById('lobby-players'),
             roundIndicator: document.getElementById('round-indicator'),
             timerFill: document.getElementById('timer-fill'),
             questionCategory: document.getElementById('question-category'),
@@ -1351,6 +1370,57 @@
         function showView(name) {
             Object.values(views).forEach(function(v) { v.classList.remove('active'); });
             if (views[name]) views[name].classList.add('active');
+        }
+
+        // ---- #374: TV lobby join QR + live player roster ----
+        // The join URL is derived exactly like admin.js's initJoinUrl():
+        // origin + '/quizify/player' (same origin as this dashboard). The QR
+        // is rendered once (the URL never changes for a running server) and the
+        // roster refreshes on every LOBBY snapshot / player_joined / player_left.
+        var _lobbyQrRendered = false;
+        function lobbyJoinUrl() {
+            return window.location.origin + '/quizify/player';
+        }
+        function renderLobbyQr() {
+            if (_lobbyQrRendered) return;
+            var container = els.lobbyQrCode;
+            if (!container) return;
+            container.innerHTML = '';
+            var url = lobbyJoinUrl();
+            if (typeof QRCode !== 'undefined') {
+                // Large, high-contrast code so it scans from across the room.
+                new QRCode(container, {
+                    text: url, width: 280, height: 280,
+                    colorDark: '#0b0e1a', colorLight: '#ffffff',
+                    correctLevel: QRCode.CorrectLevel.M,
+                });
+                _lobbyQrRendered = true;
+            } else {
+                // Defensive fallback if the vendor lib failed to load — show
+                // the raw URL so players can still type it in.
+                container.innerHTML = '<div style="padding:20px;word-break:break-all;' +
+                    'font-size:14px;color:#fff;">' + escapeHtml(url) + '</div>';
+            }
+        }
+        function renderLobbyPlayers(players) {
+            var container = els.lobbyPlayers;
+            if (!container) return;
+            var list = Array.isArray(players)
+                ? players
+                : (players && typeof players === 'object' ? Object.values(players) : []);
+            container.innerHTML = list.map(function(p) {
+                var name = (p && p.name != null) ? p.name : '';
+                // 👑 marks the host, mirroring player-lobby.js's is_admin chip.
+                var crown = (p && p.is_admin)
+                    ? '<span aria-hidden="true">👑</span> ' : '';
+                return '<div class="dashboard-player-chip">' + crown +
+                    '<span>' + escapeHtml(name) + '</span></div>';
+            }).join('');
+        }
+        // Called on every LOBBY snapshot: paint the QR once, refresh the roster.
+        function renderLobby(players) {
+            renderLobbyQr();
+            renderLobbyPlayers(players);
         }
 
         // #296: the paused scrim sits on top of whatever view is active.
@@ -1442,6 +1512,9 @@
                 case 'game_reset':
                     setPaused(false);
                     showView('waiting');
+                    // #374: back to the lobby — repaint QR + roster (a reset
+                    // may carry an already-trimmed player list, else empty).
+                    renderLobby(msg.players);
                     els.roundIndicator.textContent = '';
                     els.timerFill.style.width = '0%';
                     break;
@@ -1462,6 +1535,10 @@
                     break;
                 case 'player_joined':
                 case 'player_left':
+                    // #374: keep the TV lobby roster live as players come/go.
+                    // The chips live inside #waiting-view, so this is a no-op
+                    // visually once the game leaves LOBBY (that view is hidden).
+                    renderLobbyPlayers(msg.players);
                     break;
             }
         }
@@ -1476,6 +1553,8 @@
             switch (msg.phase) {
                 case 'LOBBY':
                     showView('waiting');
+                    // #374: render the join QR + live roster on the TV lobby.
+                    renderLobby(msg.players);
                     break;
                 case 'QUESTION_ACTIVE':
                     if (msg.question) {
