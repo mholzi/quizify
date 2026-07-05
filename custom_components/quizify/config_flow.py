@@ -22,6 +22,10 @@ from .const import (
     CONF_LOBBY_MUSIC_URL,
     CONF_MEDIA_PLAYER_ENTITY,
     CONF_PARTY_LIGHT_ENTITIES,
+    CONF_SFX_CORRECT_URL,
+    CONF_SFX_STREAK_URL,
+    CONF_SFX_WINNER_URL,
+    CONF_SFX_WRONG_URL,
     CONF_TTS_ENTITY,
     DEFAULT_HOUSE_EVENTS_ENABLED,
     DOMAIN,
@@ -125,6 +129,36 @@ class QuizifyOptionsFlow(OptionsFlow):
                 default=current.get(CONF_COMMUNITY_SUBMIT_SECRET, ""),
             ): selector.TextSelector(
                 selector.TextSelectorConfig(type=selector.TextSelectorType.PASSWORD),
+            ),
+            # Per-cue room-SFX override URLs (#494 Phase 3). Each is an optional
+            # free-text URL to a short one-shot sound played on the media_player
+            # above at a game milestone. Empty = fall back to the bundled CC0
+            # default at www/sfx/<cue>.mp3 (if the host installed one), else the
+            # cue stays silent. The SFX share the TTS speaker and are dropped
+            # while a TTS announcement is live.
+            vol.Optional(
+                CONF_SFX_CORRECT_URL,
+                default=current.get(CONF_SFX_CORRECT_URL, ""),
+            ): selector.TextSelector(
+                selector.TextSelectorConfig(type=selector.TextSelectorType.URL),
+            ),
+            vol.Optional(
+                CONF_SFX_WRONG_URL,
+                default=current.get(CONF_SFX_WRONG_URL, ""),
+            ): selector.TextSelector(
+                selector.TextSelectorConfig(type=selector.TextSelectorType.URL),
+            ),
+            vol.Optional(
+                CONF_SFX_STREAK_URL,
+                default=current.get(CONF_SFX_STREAK_URL, ""),
+            ): selector.TextSelector(
+                selector.TextSelectorConfig(type=selector.TextSelectorType.URL),
+            ),
+            vol.Optional(
+                CONF_SFX_WINNER_URL,
+                default=current.get(CONF_SFX_WINNER_URL, ""),
+            ): selector.TextSelector(
+                selector.TextSelectorConfig(type=selector.TextSelectorType.URL),
             ),
             # Master toggle for "The House Plays Along" (#366). Off by default:
             # the integration fires no quizify_* bus events until the host opts

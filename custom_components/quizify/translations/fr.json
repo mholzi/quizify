@@ -25,6 +25,10 @@
                     "lobby_music_url": "URL de la musique du salon",
                     "community_submit_url": "URL de soumission de pack communautaire",
                     "community_submit_secret": "Secret de soumission de pack communautaire",
+                    "sfx_correct_url": "URL du son de bonne réponse",
+                    "sfx_wrong_url": "URL du son de mauvaise réponse",
+                    "sfx_streak_url": "URL du son de série",
+                    "sfx_winner_url": "URL du son de gagnant",
                     "house_events_enabled": "La maison participe"
                 },
                 "data_description": {
@@ -34,6 +38,10 @@
                     "lobby_music_url": "URL facultative d'un fichier audio (p. ex. /local/quizify-lobby.mp3, depuis votre dossier config/www) joué en boucle sur le lecteur multimédia ci-dessus pendant l'attente dans le salon. Elle s'arrête au démarrage de la partie, pour ne pas chevaucher les annonces TTS qui partagent le même haut-parleur. Laissez vide pour aucune musique. Aucun fichier audio n'est fourni — utilisez le vôtre.",
                     "community_submit_url": "Point de terminaison de worker facultatif qui transforme une soumission de pack communautaire faite dans l'application en une issue GitHub à examiner. Laissez vide pour masquer entièrement la fonction de soumission. Le jeton GitHub réside dans ce worker, jamais dans votre navigateur ni dans Home Assistant.",
                     "community_submit_secret": "Secret partagé facultatif envoyé au worker dans l'en-tête X-Quizify-Secret. Définissez-le pour qu'il corresponde au SHARED_SECRET du worker afin d'empêcher quiconque possédant l'URL de créer des issues. Laissez vide si le worker n'a pas de secret (par défaut).",
+                    "sfx_correct_url": "URL facultative d'un son court joué lorsque la plupart des joueurs ont trouvé la bonne réponse. Laissez vide pour utiliser le son fourni par défaut (s'il est installé).",
+                    "sfx_wrong_url": "URL facultative d'un son court joué lorsque la plupart des joueurs se sont trompés. Laissez vide pour utiliser le son fourni par défaut (s'il est installé).",
+                    "sfx_streak_url": "URL facultative d'un son court joué lorsqu'un joueur atteint une série de bonnes réponses. Laissez vide pour utiliser le son fourni par défaut (s'il est installé).",
+                    "sfx_winner_url": "URL facultative d'un son court joué lorsque le gagnant est désigné. Laissez vide pour utiliser le son fourni par défaut (s'il est installé). Joué sur le haut-parleur TTS et ignoré pendant une annonce en cours.",
                     "house_events_enabled": "Déclenche des événements quizify_* sur le bus d'événements de Home Assistant aux moments forts de la partie (début de manche, révélation, séries, gagnant) pour piloter vos propres automatisations. Désactivé par défaut."
                 }
             }

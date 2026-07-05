@@ -68,6 +68,16 @@ DEFAULT_HOUSE_EVENTS_ENABLED = False
 # there is nothing to play unless the user supplies one.
 CONF_LOBBY_MUSIC_URL = "lobby_music_url"  # str, single, free-text URL
 
+# Per-cue room-SFX override URLs (#494 Phase 3, "The House Plays Along"). Each is
+# an OPTIONAL free-text URL to a short one-shot sound the integration plays on the
+# shared media_player at a game milestone. Empty => the bundled CC0 default at
+# www/sfx/<cue>.mp3 is used instead, IF present (none ship in the repo — the host
+# supplies their own). Empty AND no bundled file => that cue stays silent.
+CONF_SFX_CORRECT_URL = "sfx_correct_url"  # str, single, free-text URL
+CONF_SFX_WRONG_URL = "sfx_wrong_url"  # str, single, free-text URL
+CONF_SFX_STREAK_URL = "sfx_streak_url"  # str, single, free-text URL
+CONF_SFX_WINNER_URL = "sfx_winner_url"  # str, single, free-text URL
+
 # Endpoint a composed community question pack is POSTed to so it lands as a
 # GitHub issue for review (#180). Empty by default — the whole in-app pack
 # submission feature stays completely inert (UI hidden, endpoints accept

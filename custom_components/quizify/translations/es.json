@@ -25,6 +25,10 @@
                     "lobby_music_url": "URL de música de la sala",
                     "community_submit_url": "URL de envío de paquetes de la comunidad",
                     "community_submit_secret": "Secreto de envío de paquetes de la comunidad",
+                    "sfx_correct_url": "URL de sonido de respuesta correcta",
+                    "sfx_wrong_url": "URL de sonido de respuesta incorrecta",
+                    "sfx_streak_url": "URL de sonido de racha",
+                    "sfx_winner_url": "URL de sonido de ganador",
                     "house_events_enabled": "La casa participa"
                 },
                 "data_description": {
@@ -34,6 +38,10 @@
                     "lobby_music_url": "URL opcional de un archivo de audio (p. ej. /local/quizify-lobby.mp3, desde tu carpeta config/www) que se reproduce en bucle en el reproductor multimedia de arriba mientras se espera en la sala. Se detiene al empezar la partida, para no solaparse con los anuncios TTS que comparten el mismo altavoz. Déjalo vacío para no tener música. No se incluye ningún archivo de audio: usa el tuyo.",
                     "community_submit_url": "Endpoint opcional de un worker que convierte un envío de paquete de la comunidad hecho en la app en una incidencia de GitHub para revisión. Déjalo en blanco para ocultar por completo la función de envío. El token de GitHub reside en ese worker, nunca en tu navegador ni en Home Assistant.",
                     "community_submit_secret": "Secreto compartido opcional que se envía al worker como cabecera X-Quizify-Secret. Configúralo para que coincida con el SHARED_SECRET del worker y así evitar que cualquiera con la URL cree incidencias. Déjalo en blanco si el worker no tiene secreto (predeterminado).",
+                    "sfx_correct_url": "URL opcional de un sonido breve que se reproduce cuando la mayoría acertó la respuesta. Déjalo vacío para usar el predeterminado incluido (si está instalado).",
+                    "sfx_wrong_url": "URL opcional de un sonido breve que se reproduce cuando la mayoría falló la respuesta. Déjalo vacío para usar el predeterminado incluido (si está instalado).",
+                    "sfx_streak_url": "URL opcional de un sonido breve que se reproduce cuando un jugador logra una racha de aciertos. Déjalo vacío para usar el predeterminado incluido (si está instalado).",
+                    "sfx_winner_url": "URL opcional de un sonido breve que se reproduce cuando se decide el ganador. Déjalo vacío para usar el predeterminado incluido (si está instalado). Se reproduce en el altavoz TTS y se omite mientras hay un anuncio en curso.",
                     "house_events_enabled": "Dispara eventos quizify_* en el bus de eventos de Home Assistant en los momentos clave de la partida (inicio de ronda, revelación, rachas, ganador) para que puedas crear tus propias automatizaciones. Desactivado por defecto."
                 }
             }
