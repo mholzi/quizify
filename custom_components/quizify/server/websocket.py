@@ -588,6 +588,42 @@ class QuizifyWebSocketHandler:
                             )
                     else:
                         player_obj.is_admin = True
+            elif player_obj and player_obj.is_admin:
+                # #389 (P2 security): silent crown inheritance via a LOBBY
+                # name-rejoin. In LOBBY a disconnected player's slot can be
+                # reclaimed by simply re-typing the same name, with NO session
+                # token (PlayerRegistry.add_player, the ``phase_value ==
+                # "LOBBY"`` reconnect branch). If that slot was the host's, the
+                # reclaimer INHERITS is_admin — and because this join carries no
+                # ``is_admin: true`` claim, the #358 crown-gating block above
+                # never runs to vet it. So an attacker who just types the host's
+                # exact name in the plain player-join form, while the host is
+                # briefly disconnected in the lobby, silently seizes the crown
+                # with no token.
+                #
+                # (Reaching this branch means the join did NOT claim admin, yet
+                # the resulting slot holds is_admin — a freshly added player
+                # starts non-admin, so the crown can only have been inherited
+                # from the reclaimed slot.)
+                #
+                # Strip the inherited crown unless the joiner proves ownership
+                # with a valid admin session token — same proof and FAIL-SOFT
+                # posture as #358 (never reject the join). The legit host's
+                # admin-as-player tab always re-sends ``is_admin: true`` on join
+                # (see player-core.js), so it takes the #358 path above and is
+                # unaffected here; a token holder still keeps the crown even on
+                # this path.
+                claim_token = data.get("admin_token")
+                if not (
+                    claim_token
+                    and self._conn.validate_admin_token(claim_token)
+                ):
+                    _LOGGER.warning(
+                        "Inherited admin crown stripped for %s: LOBBY "
+                        "name-rejoin without a valid admin token (#389)",
+                        name,
+                    )
+                    player_obj.is_admin = False
 
             # If a lightning round is mid-flight, register the late joiner so
             # they can score from the next question on (issue #42).
