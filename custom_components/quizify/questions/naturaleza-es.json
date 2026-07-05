@@ -1917,18 +1917,18 @@
     },
     {
       "id": "nat_es_092",
-      "question": "¿Qué animal es el único que no puede saltar?",
+      "question": "¿Cuál de estos animales no puede saltar?",
       "answers": [
         {
           "text": "El elefante",
           "correct": true
         },
         {
-          "text": "El hipopótamo",
+          "text": "El canguro",
           "correct": false
         },
         {
-          "text": "El rinoceronte",
+          "text": "La rana",
           "correct": false
         }
       ],
@@ -2610,7 +2610,7 @@
     },
     {
       "id": "nat_es_125",
-      "question": "¿Qué animal posee el genoma con más pares de bases conocido, muy superior al humano?",
+      "question": "¿Cuál de estos animales tiene un genoma mucho más grande que el del ser humano?",
       "answers": [
         {
           "text": "El ajolote",
