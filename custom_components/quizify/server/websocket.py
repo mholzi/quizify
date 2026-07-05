@@ -1107,6 +1107,17 @@ class QuizifyWebSocketHandler:
                 "player_name": player_name,
             })
 
+        # Reactions that arrived DURING the broadcasts above were appended to
+        # the buffer, but _enqueue_reaction won't start a new flush while this
+        # task is still running (it isn't None/done yet) — so without this the
+        # tail would sit unbroadcast until some future reaction happened to
+        # arrive (#354). Re-arm the flush ourselves so the buffer always
+        # drains: one more window, then another pass. Loops until empty.
+        if self._reaction_buffer:
+            self._reaction_flush_task = self._runtime.create_task(
+                self._flush_reactions_after_window()
+            )
+
     def _cancel_reaction_flush(self) -> None:
         """Cancel any pending reaction-flush task (called on cleanup)."""
         if self._reaction_flush_task is not None:
@@ -1348,6 +1359,13 @@ class QuizifyWebSocketHandler:
         # wired (standalone dev server, HA without a TTS entity).
         self._apply_tts_config(data.get("tts") or {})
 
+        # Snapshot the game_id start_game just minted (#352). We're about to
+        # yield the loop for the grace sleep below; another admin socket can
+        # slip in a reset_game (game_id -> None) or a second start_game (new
+        # game_id) during that window. Both re-arm state under us, so we must
+        # re-validate before firing the stale continuation.
+        started_game_id = game_state.game_id
+
         # Grace period before round 1's timer starts.
         # The admin-as-player flow redirects the admin tab from /quizify/admin
         # to /quizify/player AFTER sending start_game. That navigation +
@@ -1359,6 +1377,21 @@ class QuizifyWebSocketHandler:
         # rounds (Next Round button click) don't have this gap since the
         # admin is already on the player view.
         await asyncio.sleep(self.START_REDIRECT_GRACE)
+
+        # Re-validate after waking (#352): if a concurrent reset_game or a
+        # second start_game landed during the grace window, game_id changed
+        # (or phase moved past LOBBY) — firing the first question now would
+        # push a round into a reset/zero-player lobby or double-advance and
+        # wedge the round. Bail instead; the winning command owns the game.
+        if game_state.game_id != started_game_id or game_state.phase != GamePhase.LOBBY:
+            _LOGGER.info(
+                "start_game grace continuation aborted: game changed during "
+                "grace window (game_id %s -> %s, phase %s)",
+                started_game_id,
+                game_state.game_id,
+                game_state.phase,
+            )
+            return
 
         # Start the first question
         await self._start_next_question(game_state)
@@ -1492,9 +1525,23 @@ class QuizifyWebSocketHandler:
         except ValueError as err:
             await self._conn.send_error(ws, ERR_GAME_ALREADY_STARTED, str(err))
             return
+        # Snapshot the freshly-minted game_id before the grace sleep (#352) —
+        # same concurrency guard as _handle_start_game: a reset_game or a
+        # second start/play_again from another admin socket during the grace
+        # window re-arms state, and the stale continuation must not fire.
+        started_game_id = game_state.game_id
         # Same redirect grace as start_game — admin tab is still on the finale
         # view and needs to redirect/reconnect before round 1's timer ticks.
         await asyncio.sleep(self.START_REDIRECT_GRACE)
+        if game_state.game_id != started_game_id or game_state.phase != GamePhase.LOBBY:
+            _LOGGER.info(
+                "play_again grace continuation aborted: game changed during "
+                "grace window (game_id %s -> %s, phase %s)",
+                started_game_id,
+                game_state.game_id,
+                game_state.phase,
+            )
+            return
         await self._start_next_question(game_state)
 
     async def _handle_reset_game(
