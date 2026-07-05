@@ -923,7 +923,14 @@ class QuizifyGameState:
                 # (i18n wager.timeoutNote). Do NOT add a wager deduction here.
                 player.streak = 0
                 player.record_round_result("timeout")
-                player.round_scores.append(0)
+                # Record round_score, not a literal 0 (#472). For a genuine
+                # timeout this is 0 (reset_round zeroed it and the player never
+                # submitted), but a pre-submit STEAL can have folded points into
+                # this player's round_score before they timed out. The reveal's
+                # AnswerResult below already reports points_earned=round_score,
+                # so the round_scores history and Top-Score aggregation must
+                # match — appending 0 here under-counted that stolen amount.
+                player.round_scores.append(player.round_score)
                 player_correct[player.name] = False
             else:
                 is_correct = player.last_answer_correct

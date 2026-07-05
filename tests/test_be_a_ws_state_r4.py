@@ -219,6 +219,66 @@ class TestStealRoundScoreAccumulates:
 
 
 # ---------------------------------------------------------------------------
+# #472 — a pre-submit STEAL by a player who then times out must be recorded
+#        in round_scores history (gap left by #450)
+# ---------------------------------------------------------------------------
+
+
+class TestStealThenTimeoutRecordsHistory:
+    def test_timeout_after_steal_records_stolen_round_score(
+        self, game: QuizifyGameState
+    ) -> None:
+        """A thief who steals then never submits must have the stolen amount
+        recorded in ``round_scores`` — the timeout branch used to append a
+        literal 0 while the AnswerResult reported ``points_earned=round_score``,
+        under-counting the Top-Score / history aggregation."""
+        thief_ws, victim_ws = _ws(), _ws()
+        game.add_player("Thief", thief_ws)
+        game.add_player("Victim", victim_ws)
+        game.start_game(num_rounds=3, language="de")
+        game.start_next_question()
+
+        # Victim submits correctly → has a round_score worth stealing.
+        game.submit_answer("Victim", _correct_index(game))
+        victim = game.get_player("Victim")
+        assert victim.round_score > 1
+
+        # Thief steals BEFORE answering, then never submits (timeout).
+        game._powerup_manager._inventory["Thief"] = PowerUpType.STEAL
+        effect = game.use_powerup("Thief", "Victim")
+        assert isinstance(effect, PowerUpEffect)
+        thief = game.get_player("Thief")
+        stolen = thief.round_score
+        assert stolen > 0
+        assert not thief.submitted
+
+        # Timer expires → round evaluated with the thief still unsubmitted.
+        summary = game.evaluate_round()
+        assert summary is not None
+
+        # History must carry the stolen delta, not a literal 0.
+        assert thief.round_scores[-1] == stolen
+        # And it must agree with the reveal's AnswerResult (which reports
+        # points_earned=round_score) for the same player.
+        thief_result = next(r for r in summary.results if r.player_id == "Thief")
+        assert thief_result.points_earned == stolen
+        assert thief.round_scores[-1] == thief_result.points_earned
+
+    def test_genuine_timeout_records_zero(self, game: QuizifyGameState) -> None:
+        """Sanity: a plain timeout with no pre-submit delta still records 0,
+        since reset_round zeroed round_score."""
+        game.add_player("Idle", _ws())
+        game.start_game(num_rounds=3, language="de")
+        game.start_next_question()
+
+        idle = game.get_player("Idle")
+        assert not idle.submitted
+
+        game.evaluate_round()
+        assert idle.round_scores[-1] == 0
+
+
+# ---------------------------------------------------------------------------
 # #453 — roster broadcasts coalesced through the flush window
 # ---------------------------------------------------------------------------
 

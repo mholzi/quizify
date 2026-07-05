@@ -80,7 +80,7 @@ class QuizifyAnalytics:
         # full O(n) passes over up to 1000 records. Cache value is
         # ``(fingerprint, result)`` where fingerprint = (total_games,
         # last ended_at); a mismatch (append or prune) recomputes.
-        self._metrics_cache: dict[str, tuple[tuple[int, int], dict[str, Any]]] = {}
+        self._metrics_cache: dict[str, tuple[tuple[int, int, int], dict[str, Any]]] = {}
 
     def _empty_data(self) -> AnalyticsData:
         """Return empty analytics data structure."""
@@ -342,9 +342,21 @@ class QuizifyAnalytics:
         last ended_at)`` lets repeated reads reuse the last result instead of
         re-scanning every record. ``add_game`` clears the cache; a prune shifts
         the fingerprint, so both paths recompute.
+
+        #473: the fingerprint also carries a coarse hourly wall-clock bucket
+        (``int(time.time()) // 3600``). The underlying compute is wall-clock
+        relative — the window is ``now - days*86400`` and the chart buckets are
+        relative to ``now`` — so with no new game the games-only fingerprint
+        would never change and the 7d/30d results plus chart would freeze on the
+        cache-write day (aged-out games still counted). The hourly bucket makes
+        the windowed metrics expire as wall-clock advances.
         """
         games = self._data["games"]
-        fingerprint = (len(games), games[-1]["ended_at"] if games else 0)
+        fingerprint = (
+            len(games),
+            games[-1]["ended_at"] if games else 0,
+            int(time.time()) // 3600,
+        )
         cached = self._metrics_cache.get(period)
         if cached is not None and cached[0] == fingerprint:
             return cached[1]
