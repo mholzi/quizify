@@ -54,6 +54,12 @@
         </span>
         <!-- Connection status dot — JS updates via conn-status div -->
         <div id="connection-indicator" class="connection-indicator" aria-hidden="true"></div>
+        <!-- Screen-reader announcement of the connection state (#424). The dot
+             above is aria-hidden + color-only; this polite live region speaks
+             the localized "Connected / Reconnecting / Disconnected" text so
+             AT users (and, via the glyph, color-blind users) get the state. -->
+        <div id="conn-status-announce" class="sr-only" role="status"
+             aria-live="polite" aria-atomic="true"></div>
     </header>
 
     <main class="player-container">
@@ -131,6 +137,16 @@
             <div class="pl-orbits" id="player-list" aria-live="polite">
                 <!-- Player cards rendered by JS — orbit chips for B layout. -->
             </div>
+
+            <!-- Invite players — opens the QR + copy-link sheet (#419).
+                 Visible to every player so anyone can share the join link;
+                 wired to openInviteModal() by player-lobby.setupInviteModal. -->
+            <button id="invite-players-btn" type="button"
+                    class="btn btn-secondary pl-invite-btn"
+                    data-i18n-aria-label="a11y.invitePlayersAria">
+                <span class="pl-invite-btn-icon" aria-hidden="true">🔗</span>
+                <span data-i18n="lobby.invitePlayers">Invite Players</span>
+            </button>
 
             <!-- Variant D: rules. Always visible (was collapsible). -->
             <section class="pl-rules">
@@ -812,19 +828,6 @@
             <p id="invite-copy-feedback" class="invite-copy-feedback hidden" data-i18n="lobby.copied">Copied!</p>
             <button id="invite-modal-close" class="btn btn-secondary invite-modal-close"
                     aria-label="Close invite popup" data-i18n="common.close">Close</button>
-        </div>
-    </div>
-
-    <!-- Generic Confirmation Modal -->
-    <div id="confirm-modal" class="modal hidden" role="dialog" aria-modal="true" aria-labelledby="confirm-modal-title">
-        <div class="modal-backdrop"></div>
-        <div class="modal-content">
-            <h2 id="confirm-modal-title">Confirm</h2>
-            <p id="confirm-modal-message"></p>
-            <div class="modal-actions">
-                <button id="confirm-modal-yes" class="btn btn-primary" data-i18n="common.confirm">Confirm</button>
-                <button id="confirm-modal-no" class="btn btn-secondary" data-i18n="common.cancel">Cancel</button>
-            </div>
         </div>
     </div>
 

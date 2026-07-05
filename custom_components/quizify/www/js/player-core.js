@@ -982,6 +982,16 @@
             els.joinBtn.disabled = false;
             els.joinBtn.textContent = t('join.joinButton');
             if (els.nameInput) els.nameInput.style.borderColor = '#D65858';
+            // The toast fades after a few seconds, taking the reason with it;
+            // the red border alone doesn't say *why* the join failed (#426).
+            // Persist the translated reason in the inline validation message
+            // (the input's aria-describedby target) so it stays visible and
+            // is announced to screen readers. Cleared on the next input.
+            var vmsg = document.getElementById('name-validation-msg');
+            if (vmsg) {
+                vmsg.textContent = userMsg;
+                vmsg.classList.remove('hidden');
+            }
         }
     }
 
@@ -995,6 +1005,14 @@
         els.nameInput.addEventListener('input', function () {
             var result = pu.validateName(this.value);
             els.joinBtn.disabled = !result.valid;
+            // Clear a stale join-error reason (#426) once the user edits the
+            // name again, and drop the red border set by handleError.
+            var vmsg = document.getElementById('name-validation-msg');
+            if (vmsg && vmsg.textContent) {
+                vmsg.textContent = '';
+                vmsg.classList.add('hidden');
+            }
+            this.style.borderColor = '';
         });
 
         els.joinBtn.addEventListener('click', handleJoinClick);

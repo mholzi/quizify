@@ -1698,6 +1698,20 @@
     font-weight: 600;
 }
 
+/* Invite-players button (#419) — centered, quiet secondary action
+   under the orbit row that opens the QR + copy-link sheet. */
+.pl-invite-btn {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 8px;
+    margin: var(--space-md) auto 0;
+}
+.pl-invite-btn-icon {
+    font-size: 1rem;
+    line-height: 1;
+}
+
 /* Variant D — rules block below the hero+orbits. */
 .pl-rules {
     background: var(--color-bg-surface);
@@ -1971,6 +1985,7 @@
    styling the browser default eats the .name's flex column at narrow
    viewports (observed: kick = 48 px, name = 0 px). */
 .lobby-e-row-card .player-chip-kick {
+    position: relative;
     background: transparent;
     border: 0;
     color: var(--color-text-muted);
@@ -1983,6 +1998,13 @@
     border-radius: 4px;
     flex-shrink: 0;
 }
+/* Transparent ::before extends the tap target to >=44px (WCAG 2.5.8)
+   without growing the visible glyph — the padded box is only ~28px. */
+.lobby-e-row-card .player-chip-kick::before {
+    content: '';
+    position: absolute;
+    inset: -8px;
+}
 .lobby-e-row-card:hover .player-chip-kick,
 .lobby-e-row-card:focus-within .player-chip-kick {
     opacity: 0.7;
@@ -1991,6 +2013,19 @@
     opacity: 1;
     color: var(--color-error);
     background: var(--color-error-bg);
+}
+/* On touch devices there is no hover, so opacity:0 makes the kick
+   button invisible and effectively untappable (#420). Reveal it at a
+   quiet resting opacity on coarse pointers so hosts can still remove a
+   player on a phone/tablet. */
+@media (hover: none) {
+    .lobby-e-row-card .player-chip-kick {
+        opacity: 0.45;
+    }
+    .lobby-e-row-card .player-chip-kick:active {
+        opacity: 1;
+        color: var(--color-error);
+    }
 }
 
 .lobby-e-row-empty {
@@ -2104,7 +2139,11 @@
    :has() selector is supported on every browser HA ships with. */
 body:has(.admin-control-bar:not(.hidden)) #reveal-view,
 body:has(.admin-control-bar:not(.hidden)) #game-view {
-    padding-bottom: 96px;
+    /* Add the iOS home-indicator inset on top of the 96px bar height:
+       since #375 the bar itself pads by env(safe-area-inset-bottom), so
+       it's taller than 96px on notched iPhones and would otherwise cover
+       the bottom content (#422). */
+    padding-bottom: calc(96px + env(safe-area-inset-bottom, 0px));
 }
 
 .control-btn {
@@ -2163,7 +2202,9 @@ body:has(.admin-control-bar:not(.hidden)) #game-view {
    reaction row above the ~80 px bar height so admins still see the
    full row of buttons. Non-admins fall through to the default padding. */
 body.is-admin .reaction-bar {
-    margin-bottom: 80px;
+    /* Clear the sticky admin bar plus the home-indicator inset it now
+       carries (#375) so the reaction row isn't hidden behind it (#422). */
+    margin-bottom: calc(80px + env(safe-area-inset-bottom, 0px));
 }
 
 .reaction-bar-container {
@@ -2843,21 +2884,6 @@ body.is-admin .reaction-bar {
     .powerup-target-modal {
         align-items: center;
     }
-}
-
-/* Confirm modal */
-.confirm-modal-title {
-    font-family: var(--font-display);
-    font-size: 1.1rem;
-    font-weight: 700;
-    color: var(--color-text-white);                  /* parchment on dark surface */
-    margin-bottom: var(--space-sm);
-}
-
-.confirm-modal-message {
-    font-size: 0.9rem;
-    color: var(--color-text-neon-muted);             /* muted blue-gray on dark */
-    line-height: 1.5;
 }
 
 /* ==========================================
