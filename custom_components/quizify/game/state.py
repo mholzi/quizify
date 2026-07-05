@@ -229,6 +229,21 @@ class QuizifyGameState:
         # name -> shuffled_pos -> original_index
         self.player_shuffles: dict[str, list[int]] = {}
 
+    def set_stats_services(
+        self,
+        stats_service: QuizifyAnalytics | None,
+        question_stats: QuestionStatsService | None,
+    ) -> None:
+        """Inject the analytics + per-question stats sinks.
+
+        Public wiring entry point called from ``__init__.py`` so setup no
+        longer assigns the private ``_stats_service`` / ``_question_stats``
+        attributes across the module boundary (#364). Either may be ``None``
+        (standalone tests / dev server), matching the pre-wired defaults.
+        """
+        self._stats_service = stats_service
+        self._question_stats = question_stats
+
     # ------------------------------------------------------------------
     # Phase / timing delegation (issue #188)
     # ------------------------------------------------------------------

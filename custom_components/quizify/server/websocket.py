@@ -912,14 +912,13 @@ class QuizifyWebSocketHandler:
             if not recipient or recipient.name == reactor.name:
                 continue  # can't tip your own hat
             # Per-round inbound counter (separate from `reaction_bonuses_given`
-            # which tracks OUTGOING bonuses). A real PlayerSession field so it
-            # is reset per game in reset_for_new_game() (#167).
-            bonuses_in = recipient._reaction_bonuses_received
-            if bonuses_in.get(round_num, 0) >= self._REACTION_BONUS_CAP_PER_ROUND:
-                continue
-            bonuses_in[round_num] = bonuses_in.get(round_num, 0) + 1
-            recipient.score += 1
-            recipient.round_score += 1
+            # which tracks OUTGOING bonuses). Encapsulated on PlayerSession so
+            # it is reset per game in reset_for_new_game() (#167) and the cap
+            # logic lives with the state it guards (#364).
+            if not recipient.add_reaction_bonus(
+                round_num, self._REACTION_BONUS_CAP_PER_ROUND
+            ):
+                continue  # recipient already at the per-round cap
             bonus_recipients.append(recipient.name)
 
         if bonus_recipients:
@@ -2186,6 +2185,18 @@ class QuizifyWebSocketHandler:
             return True
         admin = game_state.get_admin()
         return admin is None or not admin.connected
+
+    def set_tts_announcer(
+        self, announcer: QuizifyTTSAnnouncer | None
+    ) -> None:
+        """Wire (or rewire) the optional TTS announcer.
+
+        Public entry point used by ``__init__.py`` at setup and on every
+        options reload, so the wiring no longer pokes the private
+        ``_tts_announcer`` attribute across the module boundary (#364).
+        ``None`` clears it, restoring the no-op announcement path.
+        """
+        self._tts_announcer = announcer
 
     def _apply_tts_config(self, tts: dict[str, Any]) -> None:
         """Push a flat TTS-settings dict onto the announcer (#281).

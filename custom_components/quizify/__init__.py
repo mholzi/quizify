@@ -76,8 +76,7 @@ async def async_setup_entry(hass: HomeAssistant, entry: ConfigEntry) -> bool:
     await question_stats.load()
 
     game_state = QuizifyGameState(runtime=runtime, entry_id=entry.entry_id)
-    game_state._stats_service = analytics
-    game_state._question_stats = question_stats
+    game_state.set_stats_services(analytics, question_stats)
     # Read persisted question history off the event loop (issue #222).
     await game_state.async_load_history()
 
@@ -241,7 +240,7 @@ async def async_setup_entry(hass: HomeAssistant, entry: ConfigEntry) -> bool:
     tts_announcer.attach()
     # Let the WS handler push milestone announcements directly — the
     # state-callback path only sees phase transitions.
-    ws_handler._tts_announcer = tts_announcer
+    ws_handler.set_tts_announcer(tts_announcer)
 
     # Lobby music shares the TTS media_player entity (no separate field).
     lobby_music = QuizifyLobbyMusic(
@@ -305,7 +304,7 @@ async def async_setup_entry(hass: HomeAssistant, entry: ConfigEntry) -> bool:
         domain_data["lobby_music"] = new_lm
         handler = domain_data.get("ws_handler")
         if handler is not None:
-            handler._tts_announcer = new_tts
+            handler.set_tts_announcer(new_tts)
         _LOGGER.info("Quizify options reloaded")
 
     entry.async_on_unload(entry.add_update_listener(_update_listener))
