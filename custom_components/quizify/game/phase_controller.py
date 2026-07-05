@@ -138,8 +138,18 @@ class PhaseController:
         ):
             elapsed = time.monotonic() - self.round_start_time
             remaining = max(0.5, self.round_duration - elapsed)
-            timer = QuestionTimer(remaining)
-            timer.start()
+            # Reconstruct the timer against the SHARED round wall-clock rather
+            # than starting a fresh clock at join time (#355). A plain
+            # QuestionTimer(remaining).start() makes get_elapsed() count from
+            # JOIN, so a player joining with 5s left and answering in 2s scores
+            # time_fraction ≈ 0.93 (near-max speed bonus) — beating an on-time
+            # player answering at the same wall-clock instant (≈ 0.17). Seeding
+            # elapsed = now - round_start_time (the exact pause/resume trick)
+            # makes the late joiner's get_elapsed() identical to an on-time
+            # player's, so speed scoring is consistent. The remaining still
+            # carries the 0.5s late-join grace so they can answer the in-flight
+            # question.
+            timer = QuestionTimer.resumed(remaining=remaining, elapsed=elapsed)
             self.timers[name] = timer
 
     def drop_timer(self, name: str) -> None:
