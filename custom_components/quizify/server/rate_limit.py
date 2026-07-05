@@ -12,6 +12,15 @@ backing dict so it can't accumulate one dead entry per key seen, forever. A
 request that would exceed ``max_requests`` is rejected *without* recording its
 timestamp, so a client hammering the limit can't keep its own window pinned
 open.
+
+Per-key pruning alone still leaks: a bucket is only revisited when *that* key
+checks again, so a one-shot source (a unique client IP that hits the endpoint
+once and never returns) leaves a live bucket forever. To bound the dict by the
+number of *recently* active keys — not every key ever seen — :meth:`check` runs
+an opportunistic global sweep once the dict grows past a threshold, dropping
+every bucket whose newest timestamp is already older than the window. This
+mirrors ``connection.py``'s ``_sweep_expired_tokens`` (evict-on-write rather
+than a background task).
 """
 
 from __future__ import annotations
@@ -34,6 +43,12 @@ class SlidingWindowLimiter:
         :func:`time.monotonic`; injectable so tests can drive time directly.
     """
 
+    # Run the global sweep only once the dict has grown past this many buckets,
+    # so the common single-key path stays a cheap O(1) prune. A source that
+    # checks once and never returns leaves a stale bucket; the sweep reclaims
+    # every such bucket in one pass whenever the dict crosses the threshold.
+    _SWEEP_THRESHOLD = 128
+
     def __init__(
         self,
         max_requests: int,
@@ -45,15 +60,36 @@ class SlidingWindowLimiter:
         self._clock = clock
         self._buckets: dict[Hashable, list[float]] = {}
 
+    def _sweep(self, now: float) -> None:
+        """Drop every bucket whose newest timestamp is older than the window.
+
+        Opportunistic global reclaim (#454): per-key pruning only revisits a
+        bucket when that same key checks again, so buckets for one-shot sources
+        (a unique IP seen once) linger forever. Called from :meth:`check` once
+        the dict grows past ``_SWEEP_THRESHOLD``. Mirrors ``connection.py``'s
+        ``_sweep_expired_tokens`` — evict-on-write, no background task.
+        """
+        cutoff = now - self._window
+        stale = [
+            key
+            for key, bucket in self._buckets.items()
+            if not bucket or bucket[-1] <= cutoff
+        ]
+        for key in stale:
+            self._buckets.pop(key, None)
+
     def check(self, key: Hashable) -> bool:
         """Record a hit for ``key`` and report whether it is within the limit.
 
         Returns ``True`` if the request is allowed (and records its timestamp),
         ``False`` if it would exceed the limit (and records nothing). Empty
         buckets are evicted so the backing dict stays bounded by the number of
-        *active* keys.
+        *active* keys, and a global sweep (once the dict crosses
+        ``_SWEEP_THRESHOLD``) reclaims buckets left behind by one-shot sources.
         """
         now = self._clock()
+        if len(self._buckets) >= self._SWEEP_THRESHOLD:
+            self._sweep(now)
         cutoff = now - self._window
         bucket = [t for t in self._buckets.get(key, []) if t > cutoff]
         if not bucket:
