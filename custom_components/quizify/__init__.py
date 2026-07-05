@@ -233,6 +233,9 @@ async def async_setup_entry(hass: HomeAssistant, entry: ConfigEntry) -> bool:
         game_state=game_state,
     )
     party_lights.attach()
+    # Accent choreography (#494 Phase 2): react to the quizify_* bus events on
+    # top of the phase-driven ambient glow. No-op unless lights are configured.
+    party_lights.attach_events()
 
     tts_announcer = QuizifyTTSAnnouncer(
         hass=hass,
@@ -317,6 +320,9 @@ async def async_setup_entry(hass: HomeAssistant, entry: ConfigEntry) -> bool:
             game_state=game_state,
         )
         new_pl.attach()
+        # Re-subscribe the accent choreography (#494) symmetrically — the old
+        # pl.detach() above already dropped its listeners + cancelled any pulse.
+        new_pl.attach_events()
         new_tts = QuizifyTTSAnnouncer(
             hass=_hass,
             tts_entity_id=opts.get(CONF_TTS_ENTITY) or None,
