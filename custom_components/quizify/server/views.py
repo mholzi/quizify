@@ -20,6 +20,7 @@ from typing import TYPE_CHECKING
 import aiohttp
 from aiohttp import web
 
+from ..const import SUBMIT_POLL_INTERVAL_SECONDS
 from ..game.seasons import is_in_season, parse_season, pick_active_season
 from .context import APP_CTX_KEY
 from .pack_submission import (
@@ -46,6 +47,15 @@ _PACK_VERSIONS_URL = (
     "https://raw.githubusercontent.com/mholzi/quizify/main/"
     "custom_components/quizify/questions/versions.json"
 )
+
+# In-memory cache for the upstream versions.json (#360). The
+# ``GET /api/quizify/packs/updates`` endpoint is unauthenticated, so without a
+# throttle any client could loop it and make the HA host hammer GitHub's raw
+# endpoint on every request. Mirror pack_submission's hourly reconcile throttle
+# (SUBMIT_POLL_INTERVAL_SECONDS) and reuse the cached copy within the window.
+_UPSTREAM_CACHE_TTL_SECONDS = SUBMIT_POLL_INTERVAL_SECONDS
+# (fetched_at_monotonic, versions_dict_or_None)
+_upstream_versions_cache: tuple[float, dict | None] | None = None
 
 _LOGGER = logging.getLogger(__name__)
 
@@ -867,14 +877,12 @@ async def pack_versions_view(request: web.Request) -> web.Response:
     return web.json_response(annotated)
 
 
-async def pack_update_check_view(request: web.Request) -> web.Response:
-    """Check GitHub for updated question packs."""
-    ctx = _get_ctx(request)
-    await ctx.runtime.run_in_executor(ctx.game.question_bank.load_all_categories)
-    installed = ctx.game.question_bank.get_pack_versions()
+async def _fetch_upstream_versions() -> dict | None:
+    """Fetch versions.json from GitHub (best-effort, 5s timeout).
 
-    # Fetch upstream versions.json from GitHub (best-effort, 5s timeout)
-    upstream: dict | None = None
+    Returns the parsed manifest, or ``None`` on any non-200/error so callers
+    can fall back gracefully.
+    """
     try:
         timeout = aiohttp.ClientTimeout(total=5)
         async with (
@@ -882,9 +890,49 @@ async def pack_update_check_view(request: web.Request) -> web.Response:
             session.get(_PACK_VERSIONS_URL) as resp,
         ):
             if resp.status == 200:
-                upstream = await resp.json(content_type=None)
+                return await resp.json(content_type=None)
     except Exception as exc:  # noqa: BLE001
         _LOGGER.warning("Pack update check failed: %s", exc)
+    return None
+
+
+async def _get_upstream_versions() -> dict | None:
+    """Return the upstream versions.json, refreshing on cache-miss/TTL expiry.
+
+    Repeated calls within ``_UPSTREAM_CACHE_TTL_SECONDS`` reuse the cached copy
+    so the unauthenticated update-check endpoint can't be looped to hammer
+    GitHub (#360). Only successful fetches are cached; a failed fetch returns
+    ``None`` without poisoning the cache, so the next request retries — the same
+    best-effort behaviour as before caching.
+    """
+    global _upstream_versions_cache
+    now = time.monotonic()
+    cache = _upstream_versions_cache
+    if cache is not None and now - cache[0] < _UPSTREAM_CACHE_TTL_SECONDS:
+        return cache[1]
+
+    upstream = await _fetch_upstream_versions()
+    if upstream is not None:
+        _upstream_versions_cache = (now, upstream)
+    return upstream
+
+
+async def pack_update_check_view(request: web.Request) -> web.Response:
+    """Check GitHub for updated question packs.
+
+    The upstream versions.json fetch is cached in-memory (#360) so repeated
+    unauthenticated calls don't make the HA host hammer GitHub. The pack reload
+    is likewise skipped once the bank is already loaded.
+    """
+    ctx = _get_ctx(request)
+    bank = ctx.game.question_bank
+    # Packs are cached in memory after the first load; only pay the executor
+    # hop + disk read when they haven't been loaded yet.
+    if not bank.is_loaded:
+        await ctx.runtime.run_in_executor(bank.load_all_categories)
+    installed = bank.get_pack_versions()
+
+    upstream = await _get_upstream_versions()
 
     updates = []
     if upstream:
