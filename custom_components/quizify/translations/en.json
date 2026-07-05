@@ -25,6 +25,10 @@
                     "lobby_music_url": "Lobby music URL",
                     "community_submit_url": "Community pack submission URL",
                     "community_submit_secret": "Community pack submission secret",
+                    "sfx_correct_url": "Correct-answer sound URL",
+                    "sfx_wrong_url": "Wrong-answer sound URL",
+                    "sfx_streak_url": "Streak sound URL",
+                    "sfx_winner_url": "Winner sound URL",
                     "house_events_enabled": "The House Plays Along"
                 },
                 "data_description": {
@@ -34,6 +38,10 @@
                     "lobby_music_url": "Optional URL of an audio file (e.g. /local/quizify-lobby.mp3, served from your config/www folder) looped on the media player above while waiting in the lobby. It stops when the game starts, so it never overlaps the TTS announcements that share the same speaker. Leave blank for no music. No audio file is included — supply your own.",
                     "community_submit_url": "Optional worker endpoint that turns an in-app community-pack submission into a GitHub issue for review. Leave blank to hide the submission feature entirely. The GitHub token lives in that worker, never in your browser or Home Assistant.",
                     "community_submit_secret": "Optional shared secret sent to the worker as an X-Quizify-Secret header. Set this to match the worker's SHARED_SECRET to stop anyone with the URL from filing issues. Leave blank if the worker has no secret (the default).",
+                    "sfx_correct_url": "Optional URL to a short sound played when the crowd mostly got the answer right. Leave blank to use the bundled default (if installed).",
+                    "sfx_wrong_url": "Optional URL to a short sound played when the crowd mostly missed the answer. Leave blank to use the bundled default (if installed).",
+                    "sfx_streak_url": "Optional URL to a short sound played when a player hits an answer streak. Leave blank to use the bundled default (if installed).",
+                    "sfx_winner_url": "Optional URL to a short sound played when the winner is decided. Leave blank to use the bundled default (if installed). Plays on the TTS speaker and is skipped while an announcement is live.",
                     "house_events_enabled": "Fire quizify_* events on the Home Assistant event bus at game milestones (round start, reveal, streaks, winner) so you can drive your own automations. Off by default."
                 }
             }

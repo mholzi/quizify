@@ -25,6 +25,10 @@
                     "lobby_music_url": "Lobby-Musik-URL",
                     "community_submit_url": "URL für Community-Pack-Einsendung",
                     "community_submit_secret": "Geheimnis für Community-Pack-Einsendung",
+                    "sfx_correct_url": "Sound-URL für richtige Antwort",
+                    "sfx_wrong_url": "Sound-URL für falsche Antwort",
+                    "sfx_streak_url": "Sound-URL für Serie",
+                    "sfx_winner_url": "Sound-URL für Sieger",
                     "house_events_enabled": "Das Haus spielt mit"
                 },
                 "data_description": {
@@ -34,6 +38,10 @@
                     "lobby_music_url": "Optionale URL einer Audiodatei (z. B. /local/quizify-lobby.mp3 aus deinem config/www-Ordner), die in der Lobby über den oben gewählten Mediaplayer in Schleife läuft. Sie stoppt beim Spielstart, damit sie sich nicht mit den TTS-Ansagen über denselben Lautsprecher überlagert. Leer lassen = keine Musik. Es ist keine Audiodatei enthalten — du musst eine eigene angeben.",
                     "community_submit_url": "Optionaler Worker-Endpunkt, der eine in der App eingereichte Community-Pack-Einsendung in ein GitHub-Issue zur Begutachtung umwandelt. Leer lassen, um die Einsende-Funktion komplett auszublenden. Das GitHub-Token liegt in diesem Worker, nie im Browser oder in Home Assistant.",
                     "community_submit_secret": "Optionales gemeinsames Geheimnis, das als X-Quizify-Secret-Header an den Worker gesendet wird. Setze es passend zum SHARED_SECRET des Workers, damit nicht jeder mit der URL Issues anlegen kann. Leer lassen, wenn der Worker kein Geheimnis hat (Standard).",
+                    "sfx_correct_url": "Optionale URL zu einem kurzen Sound, der abgespielt wird, wenn die meisten die Frage richtig beantwortet haben. Leer lassen, um den mitgelieferten Standard zu verwenden (falls installiert).",
+                    "sfx_wrong_url": "Optionale URL zu einem kurzen Sound, der abgespielt wird, wenn die meisten die Frage falsch beantwortet haben. Leer lassen, um den mitgelieferten Standard zu verwenden (falls installiert).",
+                    "sfx_streak_url": "Optionale URL zu einem kurzen Sound, der abgespielt wird, wenn ein Spieler eine Antwortserie erreicht. Leer lassen, um den mitgelieferten Standard zu verwenden (falls installiert).",
+                    "sfx_winner_url": "Optionale URL zu einem kurzen Sound, der abgespielt wird, wenn der Sieger feststeht. Leer lassen, um den mitgelieferten Standard zu verwenden (falls installiert). Wird über den TTS-Lautsprecher abgespielt und übersprungen, solange eine Ansage läuft.",
                     "house_events_enabled": "Löst bei Spiel-Höhepunkten quizify_*-Events auf dem Home-Assistant-Event-Bus aus (Rundenstart, Auflösung, Serien, Sieger), damit du eigene Automationen darauf aufbauen kannst. Standardmäßig aus."
                 }
             }

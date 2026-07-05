@@ -44,6 +44,10 @@ async def async_setup_entry(hass: HomeAssistant, entry: ConfigEntry) -> bool:
         CONF_LOBBY_MUSIC_URL,
         CONF_MEDIA_PLAYER_ENTITY,
         CONF_PARTY_LIGHT_ENTITIES,
+        CONF_SFX_CORRECT_URL,
+        CONF_SFX_STREAK_URL,
+        CONF_SFX_WINNER_URL,
+        CONF_SFX_WRONG_URL,
         CONF_TTS_ENTITY,
         DEFAULT_HOUSE_EVENTS_ENABLED,
     )
@@ -64,6 +68,7 @@ async def async_setup_entry(hass: HomeAssistant, entry: ConfigEntry) -> bool:
         register_routes,
     )
     from .server.websocket import QuizifyWebSocketHandler  # noqa: PLC0415
+    from .sound_effects import QuizifySoundEffects  # noqa: PLC0415
     from .tts import QuizifyTTSAnnouncer  # noqa: PLC0415
 
     _LOGGER.debug("Setting up Quizify integration")
@@ -272,10 +277,29 @@ async def async_setup_entry(hass: HomeAssistant, entry: ConfigEntry) -> bool:
     event_emitter.attach()
     ws_handler.set_event_emitter(event_emitter)
 
+    # Room SFX (#494 Phase 3): one-shot stings on the shared media_player at game
+    # milestones, driven off the quizify_* bus events. Hybrid source — per-cue
+    # override URLs from the options flow, else the bundled CC0 default at
+    # www/sfx/<cue>.mp3 (if the host installed one). No phase callback, so only
+    # attach_events() (which also does the one-time bundled-default disk stat).
+    sound_effects = QuizifySoundEffects(
+        hass=hass,
+        media_player_entity_id=options.get(CONF_MEDIA_PLAYER_ENTITY) or None,
+        game_state=game_state,
+        cue_urls={
+            "correct": options.get(CONF_SFX_CORRECT_URL) or None,
+            "wrong": options.get(CONF_SFX_WRONG_URL) or None,
+            "streak": options.get(CONF_SFX_STREAK_URL) or None,
+            "winner": options.get(CONF_SFX_WINNER_URL) or None,
+        },
+    )
+    sound_effects.attach_events()
+
     hass.data[DOMAIN]["party_lights"] = party_lights
     hass.data[DOMAIN]["tts_announcer"] = tts_announcer
     hass.data[DOMAIN]["lobby_music"] = lobby_music
     hass.data[DOMAIN]["event_emitter"] = event_emitter
+    hass.data[DOMAIN]["sound_effects"] = sound_effects
 
     # Re-attach on options change so toggling lights/TTS in the UI takes
     # effect without an HA restart.
@@ -298,6 +322,7 @@ async def async_setup_entry(hass: HomeAssistant, entry: ConfigEntry) -> bool:
         tts: QuizifyTTSAnnouncer | None = domain_data.get("tts_announcer")
         lm: QuizifyLobbyMusic | None = domain_data.get("lobby_music")
         ev: QuizifyEventEmitter | None = domain_data.get("event_emitter")
+        sfx: QuizifySoundEffects | None = domain_data.get("sound_effects")
         # Snapshot the old announcer's live per-game narration config BEFORE we
         # tear it down (#411). Rebuilding from the config entry resets
         # ``_enabled`` to False and drops the admin's per-game entity overrides,
@@ -314,6 +339,8 @@ async def async_setup_entry(hass: HomeAssistant, entry: ConfigEntry) -> bool:
             lm.detach()
         if ev is not None:
             ev.detach()
+        if sfx is not None:
+            sfx.detach()
         new_pl = QuizifyPartyLights(
             hass=_hass,
             entity_ids=list(opts.get(CONF_PARTY_LIGHT_ENTITIES) or []),
@@ -351,10 +378,27 @@ async def async_setup_entry(hass: HomeAssistant, entry: ConfigEntry) -> bool:
         # options UI thus takes effect immediately, without an HA restart.
         new_ev.restore_runtime_state(ev_snapshot)
         new_ev.attach()
+        # Rebuild room SFX from the fresh options (new override URLs, new
+        # media_player). attach_events() re-stats the bundled defaults and
+        # re-subscribes; the old sfx.detach() above already dropped its
+        # listeners. No phase callback, so no attach()/snapshot needed.
+        new_sfx = QuizifySoundEffects(
+            hass=_hass,
+            media_player_entity_id=opts.get(CONF_MEDIA_PLAYER_ENTITY) or None,
+            game_state=game_state,
+            cue_urls={
+                "correct": opts.get(CONF_SFX_CORRECT_URL) or None,
+                "wrong": opts.get(CONF_SFX_WRONG_URL) or None,
+                "streak": opts.get(CONF_SFX_STREAK_URL) or None,
+                "winner": opts.get(CONF_SFX_WINNER_URL) or None,
+            },
+        )
+        new_sfx.attach_events()
         domain_data["party_lights"] = new_pl
         domain_data["tts_announcer"] = new_tts
         domain_data["lobby_music"] = new_lm
         domain_data["event_emitter"] = new_ev
+        domain_data["sound_effects"] = new_sfx
         handler = domain_data.get("ws_handler")
         if handler is not None:
             handler.set_tts_announcer(new_tts)
