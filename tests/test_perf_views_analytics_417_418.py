@@ -176,6 +176,44 @@ def test_compute_metrics_returns_cached_result_until_add_game(tmp_path) -> None:
     assert fresh["avg_players_per_game"] == round((99 + 3 + 3) / 3, 1)
 
 
+def test_compute_metrics_expires_on_hourly_bucket_rollover(
+    tmp_path, monkeypatch
+) -> None:
+    """#473: with no new game, advancing wall-clock past an hourly bucket
+    boundary must recompute so the windowed metrics don't freeze on the
+    cache-write hour (aged-out games would otherwise keep counting)."""
+    import custom_components.quizify.analytics as analytics_mod
+
+    analytics = _make_analytics(tmp_path)
+    analytics.schedule_save = lambda: None  # type: ignore[assignment]
+
+    # Pin the clock to a bucket boundary for deterministic arithmetic.
+    base = (int(time.time()) // 3600) * 3600
+    clock = {"now": base}
+    monkeypatch.setattr(analytics_mod.time, "time", lambda: clock["now"])
+
+    day = 86400
+    # Two games: one comfortably inside the 7d window, one that will age out
+    # of it once the clock advances by ~1 day past the 7-day cutoff.
+    fresh_game = _game("fresh", base - day)  # ~1 day old
+    edge_game = _game("edge", base - 6 * day)  # ~6 days old, inside 7d
+    analytics._data["games"] = [edge_game, fresh_game]
+
+    first = analytics.compute_metrics("7d")
+    assert first["total_games"] == 2
+    # Same hour → cached object reused (no recompute).
+    assert analytics.compute_metrics("7d") is first
+
+    # Advance the wall clock by 2 days: crosses the hourly bucket boundary AND
+    # pushes edge_game (now ~8 days old) out of the 7d window. Fingerprint's
+    # hourly bucket changes even though games (len + last ended_at) did not.
+    clock["now"] = base + 2 * day
+    fresh = analytics.compute_metrics("7d")
+
+    assert fresh is not first  # recomputed, not frozen
+    assert fresh["total_games"] == 1  # aged-out edge_game no longer counted
+
+
 def test_compute_metrics_cache_is_per_period(tmp_path) -> None:
     """Distinct periods are cached independently and stay correct."""
     analytics = _make_analytics(tmp_path)
