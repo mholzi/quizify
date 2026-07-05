@@ -781,7 +781,18 @@ class QuizifyGameState:
             player.streak_milestone_bonus_total += milestone_bonus
             player.streak_milestones_hit += 1
 
-        player.round_score = points
+        # #450: accumulate, don't assign. A STEAL (or reaction bonus) can land
+        # BEFORE the source submits, adding to round_score while round_score was
+        # zeroed by reset_round at round start. A plain `= points` here wiped
+        # those pre-submit deltas from round_score even though `score` kept
+        # them, so the reveal breakdown, round_scores history, the Top Score
+        # superlative, and a later STEAL against this player (which halves
+        # round_score) all under-counted. `+= points` folds this round's earned
+        # points on top of any pre-submit steal/bonus delta. Submit is guarded
+        # by the `player.submitted` early-return above, so this runs exactly
+        # once per round — no double-count. (The estimate path can't hit this:
+        # STEAL is rejected on estimate rounds, #406.)
+        player.round_score += points
         player.round_score_breakdown = computation.breakdown
         player.score += points
         if player.score < 0:

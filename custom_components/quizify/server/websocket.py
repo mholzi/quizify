@@ -241,6 +241,21 @@ class QuizifyWebSocketHandler:
         # union of reactors/recipients keeps first-seen order.
         self._reaction_bonus_from: dict[str, None] = {}
         self._reaction_bonus_to: dict[str, None] = {}
+        # Roster-broadcast coalescing (#453). Every join / reconnect / kick /
+        # disconnect / grace-removal used to fan a FULL serialize_player_list
+        # roster out to every socket immediately. A room-wide wifi blip (all P
+        # players reconnecting at once) turned that into O(P²) frames. The
+        # roster is now marked dirty and a single ``player_joined`` /
+        # ``player_left`` message carrying the CURRENT list is broadcast once
+        # per flush window — same wire shape, one frame per window instead of
+        # one per event. ``_roster_last_type`` records the direction of the
+        # last event in the window so the client still gets the right
+        # join/leave animation; the ``players`` list is always authoritative,
+        # re-serialized from live game state at flush time (correctness: the
+        # final roster is always sent).
+        self._roster_dirty: bool = False
+        self._roster_last_type: str = "player_joined"
+        self._roster_flush_task: asyncio.Task | None = None
 
     # Coalescing window for visual reactions (#304), seconds.
     _REACTION_FLUSH_WINDOW = 0.15
@@ -613,9 +628,19 @@ class QuizifyWebSocketHandler:
             return
 
         # Auto-append number if name is taken
+        #
+        # #448: gate on ``is_active`` (connected AND ws open), not the raw
+        # ``connected`` flag. After a reload the old slot can linger with
+        # ``connected = True`` but a CLOSED WebSocket — the "stale connected
+        # flag, old WS closed" case that PlayerRegistry.add_player treats as a
+        # legitimate rejoin/reclaim. Renaming to "Name 2" here (before
+        # add_player ever sees the original name) made that reclaim branch
+        # unreachable, spawning a duplicate ghost with score 0. Falling through
+        # on a stale slot lets add_player reclaim the original name; genuinely
+        # live duplicates (ws still open) still get the "Name 2" suffix.
         original_name = name
         counter = 2
-        while (existing := game_state.get_player(name)) and existing.connected:
+        while (existing := game_state.get_player(name)) and existing.is_active:
             name = f"{original_name} {counter}"
             counter += 1
 
@@ -789,12 +814,8 @@ class QuizifyWebSocketHandler:
             state["type"] = "game_state"
             await self._conn.send(ws, state)
 
-            # Broadcast player list to everyone
-            players = game_state.get_players()
-            await self._conn.broadcast({
-                "type": "player_joined",
-                "players": serialize_player_list(players),
-            })
+            # Broadcast player list to everyone — coalesced (#453).
+            self._mark_roster_dirty("player_joined")
 
             # Narrate the join (#281). The host's own admin-as-player tab is
             # skipped inside the announcer so the room doesn't hear the host
@@ -901,12 +922,8 @@ class QuizifyWebSocketHandler:
         state["type"] = "game_state"
         await self._conn.send(ws, state)
 
-        # Broadcast updated player list
-        players = game_state.get_players()
-        await self._conn.broadcast({
-            "type": "player_joined",
-            "players": serialize_player_list(players),
-        })
+        # Broadcast updated player list — coalesced (#453).
+        self._mark_roster_dirty("player_joined")
 
     # ------------------------------------------------------------------
     # Submit answer
@@ -1196,6 +1213,69 @@ class QuizifyWebSocketHandler:
         self._reaction_buffer.clear()
         self._reaction_bonus_from.clear()
         self._reaction_bonus_to.clear()
+
+    def _mark_roster_dirty(self, event_type: str) -> None:
+        """Flag the roster as changed and (re)arm the coalescing flush (#453).
+
+        ``event_type`` is ``"player_joined"`` or ``"player_left"`` and only
+        determines the wire ``type`` of the coalesced message (the join/leave
+        animation the client plays); the ``players`` list itself is always the
+        live roster serialized at flush time. Mixed joins+leaves in one window
+        collapse to a single frame typed by the LAST event.
+        """
+        self._roster_dirty = True
+        self._roster_last_type = event_type
+        self._ensure_roster_flush()
+
+    def _ensure_roster_flush(self) -> None:
+        """(Re)arm the roster-coalescing flush task if none is pending."""
+        if self._roster_flush_task is None or self._roster_flush_task.done():
+            # Stored on self (no GC risk), matching the timer-tick / lightning /
+            # admin-pause fire-and-forget pattern in this handler.
+            self._roster_flush_task = asyncio.ensure_future(
+                self._flush_roster_after_window()
+            )
+
+    async def _flush_roster_after_window(self) -> None:
+        """Wait one window, then broadcast ONE roster frame (#453).
+
+        Mirrors ``_flush_reactions_after_window``: coalesces a burst of roster
+        changes into a single ``player_joined`` / ``player_left`` carrying the
+        current player list. Re-arms itself if more changes landed during the
+        broadcast so the final roster always reaches every client.
+        """
+        try:
+            await asyncio.sleep(self._REACTION_FLUSH_WINDOW)
+        except asyncio.CancelledError:
+            self._roster_dirty = False
+            raise
+
+        if not self._roster_dirty:
+            return
+
+        event_type = self._roster_last_type
+        self._roster_dirty = False
+        gs = self._get_game_state()
+        if gs is not None:
+            await self._conn.broadcast({
+                "type": event_type,
+                "players": serialize_player_list(gs.get_players()),
+            })
+
+        # A roster change that landed DURING the broadcast set _roster_dirty
+        # again; _ensure_roster_flush won't start a new task while this one is
+        # running, so re-arm here to drain the tail (mirrors #354).
+        if self._roster_dirty:
+            self._roster_flush_task = asyncio.ensure_future(
+                self._flush_roster_after_window()
+            )
+
+    def _cancel_roster_flush(self) -> None:
+        """Cancel any pending roster-flush task (called on cleanup)."""
+        if self._roster_flush_task is not None:
+            self._roster_flush_task.cancel()
+            self._roster_flush_task = None
+        self._roster_dirty = False
 
     # ------------------------------------------------------------------
     # Wager (gameplay idea #3 — Jeopardy-style final round)
@@ -1738,10 +1818,8 @@ class QuizifyWebSocketHandler:
 
         _LOGGER.info("Admin kicked player: %s", target.name)
 
-        await self._conn.broadcast({
-            "type": "player_left",
-            "players": serialize_player_list(game_state.get_players()),
-        })
+        # Coalesced roster broadcast (#453).
+        self._mark_roster_dirty("player_left")
 
     # ------------------------------------------------------------------
     # Lightning Round (issue #42)
@@ -2416,12 +2494,8 @@ class QuizifyWebSocketHandler:
         ):
             self._schedule_admin_pause(player.name)
 
-        # Broadcast updated player list
-        players = game_state.get_players()
-        await self._conn.broadcast({
-            "type": "player_left",
-            "players": serialize_player_list(players),
-        })
+        # Broadcast updated player list — coalesced (#453).
+        self._mark_roster_dirty("player_left")
 
         # Schedule removal after grace period
         grace = (
@@ -2439,11 +2513,8 @@ class QuizifyWebSocketHandler:
                     gs.remove_player(name)
                     # Clean up session tokens for this player
                     self._conn.clear_player_tokens(name)
-                    remaining = gs.get_players()
-                    await self._conn.broadcast({
-                        "type": "player_left",
-                        "players": serialize_player_list(remaining),
-                    })
+                    # Coalesced roster broadcast (#453).
+                    self._mark_roster_dirty("player_left")
                     _LOGGER.info(
                         "Removed disconnected player after grace period: %s", name
                     )
@@ -2754,6 +2825,7 @@ class QuizifyWebSocketHandler:
         self._cancel_timer_tick()
         self._cancel_lightning_loop()
         self._cancel_reaction_flush()
+        self._cancel_roster_flush()
         # Also cancel the deferred admin-disconnect pause (#362): a game
         # teardown/reset that leaves it pending would fire a spurious pause
         # (or hold a reference) after the game is already gone.

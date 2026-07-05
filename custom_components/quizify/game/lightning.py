@@ -116,6 +116,16 @@ class LightningRound:
         self.scores: dict[str, int] = dict.fromkeys(self._players, 0)
         self._recaps: list[LightningQuestionRecap] = []
 
+        # Memoized end-screen payload (#455). Once the round is finished the
+        # recap is immutable, but get_state_snapshot() rebuilds it on EVERY
+        # join / reconnect / get_state while the phase is LIGHTNING_RECAP.
+        # Cache the built dict the first time build_recap() runs post-finish
+        # and reuse it thereafter. A fresh LightningRound instance (each detour
+        # makes a new one; resume/reset drop the old) starts with an empty
+        # cache, so no cross-round staleness is possible; start() also clears
+        # it defensively for a reused instance.
+        self._recap_cache: dict[str, Any] | None = None
+
         # Per-question answer matrix: index -> {player_name -> LightningAnswer}.
         self._answers: dict[int, dict[str, LightningAnswer]] = {}
         # Per-player shuffle for the CURRENT question (name -> shuffled->orig).
@@ -189,6 +199,7 @@ class LightningRound:
         self.num_questions = len(self._questions)
         self.active = True
         self.finished = False
+        self._recap_cache = None  # #455: fresh round → drop any stale recap
         self.index = 0
         self._arm_current()
         _LOGGER.info(
@@ -389,8 +400,19 @@ class LightningRound:
         ]
 
     def build_recap(self) -> dict[str, Any]:
-        """Full end-screen payload: per-player totals + per-question grid."""
-        return {
+        """Full end-screen payload: per-player totals + per-question grid.
+
+        Memoized once the round is finished (#455): the recap is immutable
+        after ``advance()`` sets ``self.finished``, so the every-join/reconnect
+        rebuild during LIGHTNING_RECAP is pure wasted work. Build once, cache,
+        and hand back the same dict thereafter. A pre-finish call (shouldn't
+        happen — build_recap is only read at LIGHTNING_RECAP) is left
+        uncached so a mid-round change can't be frozen in.
+        """
+        if self.finished and self._recap_cache is not None:
+            return self._recap_cache
+
+        recap = {
             "num_questions": self.num_questions,
             "points_per_correct": self.points_per_correct,
             "leaderboard": self.leaderboard(),
@@ -405,3 +427,7 @@ class LightningRound:
                 for r in self._recaps
             ],
         }
+
+        if self.finished:
+            self._recap_cache = recap
+        return recap
