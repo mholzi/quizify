@@ -793,10 +793,16 @@ button, .btn {
 .toggle-switch-compact {
     width: 36px;
     height: 20px;
-    background: rgba(255, 255, 255, 0.1);
+    background: rgba(42, 40, 32, 0.10);
+    border: 1px solid rgba(42, 40, 32, 0.18);
     border-radius: 10px;
     position: relative;
     transition: background 0.2s ease;
+}
+
+.toggle-compact input:focus-visible + .toggle-switch-compact {
+    outline: 2px solid var(--color-accent-primary);
+    outline-offset: 2px;
 }
 
 .toggle-switch-compact::after {
