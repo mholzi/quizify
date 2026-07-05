@@ -155,6 +155,16 @@ class QuizifyGameState:
         self._current_question: Question | None = None
         self._round_summary: RoundSummary | None = None
 
+        # Memoized round-summary message dict (#414), keyed on
+        # ``(game_id, round)``. ``RoundMessageBuilder.build_round_summary`` is
+        # recipient-independent but was recomputed on every call — once for the
+        # live broadcast and again for every join/reconnect/get_state during
+        # ANSWER_REVEAL (O(P) each, O(P²) under a reconnect storm). Build it
+        # once per round and reuse; invalidated in ``start_next_question`` and
+        # ``reset_to_lobby``.
+        self._round_summary_msg: dict[str, Any] | None = None
+        self._round_summary_msg_key: tuple[str | None, int] | None = None
+
         # Optional admin-chosen timer override (seconds). When set,
         # overrides the difficulty-derived TIME_LIMITS lookup in
         # start_next_question. Cleared on reset_to_lobby/end_game.
@@ -663,6 +673,10 @@ class QuizifyGameState:
 
         self._phase_controller.enter_question_active()
         self._round_summary = None
+        # Invalidate the memoized round-summary message (#414): a new round is
+        # live, so the previous round's cached dict must not be served.
+        self._round_summary_msg = None
+        self._round_summary_msg_key = None
 
         _LOGGER.info(
             "Round %d/%d started: %s (%.0fs)",
@@ -1394,6 +1408,10 @@ class QuizifyGameState:
         self.round = 0
         self._current_question = None
         self._round_summary = None
+        # Drop the memoized round-summary message (#414) with the rest of the
+        # round state so a fresh game never serves a stale summary.
+        self._round_summary_msg = None
+        self._round_summary_msg_key = None
         self._phase_controller.clear_timers()
         self._powerup_manager.reset()
         self._finale_podium = None
@@ -1869,6 +1887,44 @@ class QuizifyGameState:
     def get_round_summary(self) -> RoundSummary | None:
         """Return the last round summary."""
         return self._round_summary
+
+    def all_submitted(self) -> bool:
+        """Whether every active, non-late participant has submitted (#412).
+
+        Public accessor over the registry check so the WS layer can re-test the
+        all-answered condition (e.g. after the last unanswered player drops
+        mid-question) without reaching into ``_player_registry``.
+        """
+        return self._player_registry.all_submitted()
+
+    def get_cached_round_summary_msg(
+        self, key: tuple[str | None, int]
+    ) -> dict[str, Any] | None:
+        """Return the memoized round-summary message for ``key`` (#414).
+
+        ``key`` is ``(game_id, round)``. Returns ``None`` on a miss; callers
+        must build the dict and store it via ``store_round_summary_msg``. The
+        returned dict is shared — treat it read-only or ``dict()``-copy before
+        mutating.
+        """
+        if self._round_summary_msg_key == key:
+            return self._round_summary_msg
+        return None
+
+    def store_round_summary_msg(
+        self, key: tuple[str | None, int], msg: dict[str, Any]
+    ) -> None:
+        """Memoize the round-summary message ``msg`` under ``key`` (#414)."""
+        self._round_summary_msg_key = key
+        self._round_summary_msg = msg
+
+    def get_finale_podium(self) -> list | None:
+        """Return the finale podium cached by ``end_game`` (#415), or None."""
+        return self._finale_podium
+
+    def get_finale_superlatives(self) -> list | None:
+        """Return the finale superlatives cached by ``end_game`` (#415)."""
+        return self._finale_superlatives
 
     def get_state_snapshot(self) -> dict[str, Any]:
         """Build a full state snapshot for WebSocket serialization."""

@@ -236,6 +236,10 @@ class TestReactionCoalescing:
         bob_before = gs.get_player_by_ws(b).score
         await h._handle_reaction(a, {"emoji": "🎉"}, gs)
 
-        # Bonus fires synchronously inside _handle_reaction.
+        # The point award still fires synchronously inside _handle_reaction.
         assert gs.get_player_by_ws(b).score == bob_before + 1
+        # The reaction_bonus BROADCAST is now coalesced into the ~150ms flush
+        # window (#416) rather than emitted inline — drain the flush task.
+        if h._reaction_flush_task is not None:
+            await h._reaction_flush_task
         assert any(m.get("type") == "reaction_bonus" for m in sent)
