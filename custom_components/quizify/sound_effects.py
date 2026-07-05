@@ -242,9 +242,10 @@ class QuizifySoundEffects:
         cue proceeds.
         """
         hass = self._hass
-        if hass is None:
+        entity = self._media_player_entity_id
+        if hass is None or entity is None:
             return False
-        state = hass.states.get(self._media_player_entity_id)
+        state = hass.states.get(entity)
         return state is not None and state.state == "playing"
 
     def _call(self, domain: str, service: str, data: dict[str, object]) -> None:
