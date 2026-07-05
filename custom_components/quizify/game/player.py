@@ -143,6 +143,23 @@ class PlayerSession:
         """Record the result of a round ('correct', 'wrong', or 'timeout')."""
         self.round_history.append(result)
 
+    def add_reaction_bonus(self, round_num: int, cap: int) -> bool:
+        """Award a +1 reaction bonus for ``round_num``, respecting ``cap``.
+
+        Encapsulates the inbound reaction-bonus bookkeeping so the WS layer
+        no longer pokes ``_reaction_bonuses_received`` directly. Each player
+        may receive at most ``cap`` bonuses per round; once at the cap the
+        call is a no-op. Returns ``True`` when a bonus was actually granted
+        (score/round_score incremented), ``False`` when the cap blocked it.
+        """
+        received = self._reaction_bonuses_received.get(round_num, 0)
+        if received >= cap:
+            return False
+        self._reaction_bonuses_received[round_num] = received + 1
+        self.score += 1
+        self.round_score += 1
+        return True
+
     def reset_for_new_game(self) -> None:
         """Reset all game-level stats for a new game."""
         self.joined_late = False
