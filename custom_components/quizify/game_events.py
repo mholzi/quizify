@@ -70,9 +70,17 @@ class QuizifyEventEmitter:
         self,
         hass: HomeAssistant | None,
         game_state: QuizifyGameState,
+        enabled: bool = True,
     ) -> None:
         self._hass = hass
         self._game = game_state
+        # Master toggle for the whole event backbone (#366). Off => every fire
+        # is a no-op, so the integration stays silent on the bus until the host
+        # opts in via the options flow (CONF_HOUSE_EVENTS_ENABLED, default off).
+        # The constructor default is True because the sole production caller
+        # (__init__) always passes the resolved option explicitly; the product
+        # "off by default" lives at the config layer, not here.
+        self._enabled = enabled
         # Track the last phase we observed so phase-driven events fire only on
         # transitions, not on every state_callback flap. Mirrors the lights /
         # TTS observers. Survives an options reload via export/restore below.
@@ -80,10 +88,10 @@ class QuizifyEventEmitter:
 
     @property
     def is_configured(self) -> bool:
-        # There is no per-entry config to gate on (unlike lights/TTS which need
-        # entities): the event bus is always available under HA. Configured ==
-        # "we have a bus to fire on".
-        return self._hass is not None
+        # Configured == the master toggle is on AND we have a bus to fire on.
+        # Unlike lights/TTS there is no per-entry entity to gate on, but the
+        # host must still opt in via CONF_HOUSE_EVENTS_ENABLED (default off).
+        return self._enabled and self._hass is not None
 
     def attach(self) -> None:
         """Subscribe to game-state phase transitions. Idempotent."""
@@ -277,6 +285,11 @@ class QuizifyEventEmitter:
         escape onto the game loop — the same posture as
         :func:`~custom_components.quizify.ha_service.fire_and_forget_service`.
         """
+        # Single choke point for every path (phase-callback + notify_* WS
+        # forwarders): the master toggle is enforced here, so an off emitter
+        # fires nothing regardless of which milestone triggered it.
+        if not self._enabled:
+            return
         hass = self._hass
         if hass is None:
             return

@@ -40,10 +40,12 @@ async def async_setup_entry(hass: HomeAssistant, entry: ConfigEntry) -> bool:
     from .const import (  # noqa: PLC0415
         CONF_COMMUNITY_SUBMIT_SECRET,
         CONF_COMMUNITY_SUBMIT_URL,
+        CONF_HOUSE_EVENTS_ENABLED,
         CONF_LOBBY_MUSIC_URL,
         CONF_MEDIA_PLAYER_ENTITY,
         CONF_PARTY_LIGHT_ENTITIES,
         CONF_TTS_ENTITY,
+        DEFAULT_HOUSE_EVENTS_ENABLED,
     )
     from .game.state import QuizifyGameState  # noqa: PLC0415
     from .game_events import QuizifyEventEmitter  # noqa: PLC0415
@@ -253,10 +255,17 @@ async def async_setup_entry(hass: HomeAssistant, entry: ConfigEntry) -> bool:
 
     # HA event backbone (#366) — fires quizify_* bus events at game milestones
     # so the host can drive their own automations. Attaches a state callback for
-    # phase-driven events; the WS handler pushes the richer per-event ones. No
-    # per-entry config to gate on (always available under HA), so it needs no
-    # options; it stays a no-op only on the standalone dev server.
-    event_emitter = QuizifyEventEmitter(hass=hass, game_state=game_state)
+    # phase-driven events; the WS handler pushes the richer per-event ones.
+    # Gated behind the CONF_HOUSE_EVENTS_ENABLED master toggle (default off, like
+    # TTS/lights): stays a no-op until the host opts in, and always on the
+    # standalone dev server (no bus).
+    event_emitter = QuizifyEventEmitter(
+        hass=hass,
+        game_state=game_state,
+        enabled=options.get(
+            CONF_HOUSE_EVENTS_ENABLED, DEFAULT_HOUSE_EVENTS_ENABLED
+        ),
+    )
     event_emitter.attach()
     ws_handler.set_event_emitter(event_emitter)
 
@@ -324,9 +333,16 @@ async def async_setup_entry(hass: HomeAssistant, entry: ConfigEntry) -> bool:
             game_state=game_state,
         )
         new_lm.attach()
-        new_ev = QuizifyEventEmitter(hass=_hass, game_state=game_state)
+        new_ev = QuizifyEventEmitter(
+            hass=_hass,
+            game_state=game_state,
+            enabled=opts.get(
+                CONF_HOUSE_EVENTS_ENABLED, DEFAULT_HOUSE_EVENTS_ENABLED
+            ),
+        )
         # Carry the phase tracking across the reload so an in-flight game keeps
-        # its game_started dedupe (#366).
+        # its game_started dedupe (#366). Toggling the master switch in the
+        # options UI thus takes effect immediately, without an HA restart.
         new_ev.restore_runtime_state(ev_snapshot)
         new_ev.attach()
         domain_data["party_lights"] = new_pl

@@ -18,10 +18,12 @@ from homeassistant.helpers import selector
 from .const import (
     CONF_COMMUNITY_SUBMIT_SECRET,
     CONF_COMMUNITY_SUBMIT_URL,
+    CONF_HOUSE_EVENTS_ENABLED,
     CONF_LOBBY_MUSIC_URL,
     CONF_MEDIA_PLAYER_ENTITY,
     CONF_PARTY_LIGHT_ENTITIES,
     CONF_TTS_ENTITY,
+    DEFAULT_HOUSE_EVENTS_ENABLED,
     DOMAIN,
 )
 
@@ -124,5 +126,15 @@ class QuizifyOptionsFlow(OptionsFlow):
             ): selector.TextSelector(
                 selector.TextSelectorConfig(type=selector.TextSelectorType.PASSWORD),
             ),
+            # Master toggle for "The House Plays Along" (#366). Off by default:
+            # the integration fires no quizify_* bus events until the host opts
+            # in, so existing broad event automations are never surprised. This
+            # is the single gate the later light/SFX phases also ride on.
+            vol.Optional(
+                CONF_HOUSE_EVENTS_ENABLED,
+                default=current.get(
+                    CONF_HOUSE_EVENTS_ENABLED, DEFAULT_HOUSE_EVENTS_ENABLED
+                ),
+            ): selector.BooleanSelector(),
         })
         return self.async_show_form(step_id="init", data_schema=schema)

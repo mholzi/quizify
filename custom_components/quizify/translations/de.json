@@ -24,7 +24,8 @@
                     "media_player_entity": "Mediaplayer für TTS",
                     "lobby_music_url": "Lobby-Musik-URL",
                     "community_submit_url": "URL für Community-Pack-Einsendung",
-                    "community_submit_secret": "Geheimnis für Community-Pack-Einsendung"
+                    "community_submit_secret": "Geheimnis für Community-Pack-Einsendung",
+                    "house_events_enabled": "Das Haus spielt mit"
                 },
                 "data_description": {
                     "party_light_entities": "Lichter, die mit der Spielphase mitleuchten (Koralle bei Frage, Salbei bei Auflösung, Sonne im Finale).",
@@ -32,7 +33,8 @@
                     "media_player_entity": "Lautsprecher, über den die TTS-Ansage abgespielt wird. Pflicht, wenn ein TTS-Dienst gesetzt ist.",
                     "lobby_music_url": "Optionale URL einer Audiodatei (z. B. /local/quizify-lobby.mp3 aus deinem config/www-Ordner), die in der Lobby über den oben gewählten Mediaplayer in Schleife läuft. Sie stoppt beim Spielstart, damit sie sich nicht mit den TTS-Ansagen über denselben Lautsprecher überlagert. Leer lassen = keine Musik. Es ist keine Audiodatei enthalten — du musst eine eigene angeben.",
                     "community_submit_url": "Optionaler Worker-Endpunkt, der eine in der App eingereichte Community-Pack-Einsendung in ein GitHub-Issue zur Begutachtung umwandelt. Leer lassen, um die Einsende-Funktion komplett auszublenden. Das GitHub-Token liegt in diesem Worker, nie im Browser oder in Home Assistant.",
-                    "community_submit_secret": "Optionales gemeinsames Geheimnis, das als X-Quizify-Secret-Header an den Worker gesendet wird. Setze es passend zum SHARED_SECRET des Workers, damit nicht jeder mit der URL Issues anlegen kann. Leer lassen, wenn der Worker kein Geheimnis hat (Standard)."
+                    "community_submit_secret": "Optionales gemeinsames Geheimnis, das als X-Quizify-Secret-Header an den Worker gesendet wird. Setze es passend zum SHARED_SECRET des Workers, damit nicht jeder mit der URL Issues anlegen kann. Leer lassen, wenn der Worker kein Geheimnis hat (Standard).",
+                    "house_events_enabled": "Löst bei Spiel-Höhepunkten quizify_*-Events auf dem Home-Assistant-Event-Bus aus (Rundenstart, Auflösung, Serien, Sieger), damit du eigene Automationen darauf aufbauen kannst. Standardmäßig aus."
                 }
             }
         }

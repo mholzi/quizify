@@ -161,6 +161,58 @@ def test_no_hass_is_noop_everywhere():
 
 
 # ---------------------------------------------------------------------------
+# Master toggle (CONF_HOUSE_EVENTS_ENABLED, default off) — #366
+# ---------------------------------------------------------------------------
+
+
+def test_disabled_emitter_is_not_configured():
+    """enabled=False → not configured even with a real hass/bus."""
+    t = QuizifyEventEmitter(hass=_FakeHass(), game_state=_FakeGame(), enabled=False)
+    assert t.is_configured is False
+
+
+def test_disabled_emitter_fires_nothing_on_any_path():
+    """The master toggle gates every path — phase-driven and WS forwarders."""
+    hass = _FakeHass()
+    game = _FakeGame()
+    game._players = [_FakePlayer("Alice", 0)]
+    game.game_id = "g1"
+    game.leader = _FakePlayer("Alice", 100)
+    t = QuizifyEventEmitter(hass=hass, game_state=game, enabled=False)
+
+    # Phase-driven path: game start + finale/winner.
+    game.round = 1
+    game.phase = GamePhase.QUESTION_ACTIVE
+    t._on_state_changed()
+    game.phase = GamePhase.FINALE
+    t._on_state_changed()
+
+    # WS-dispatch path: every forwarder.
+    t.notify_question_shown(_question(), 1, 10)
+    t.notify_streak_milestone("Alice", 5, 50)
+    game._summary = _summary(results=[_result("Alice", True)])
+    t.notify_answer_revealed(game)
+    game._leaderboard = [{"name": "Alice", "score": 100}]
+    t.notify_game_ended(game)
+
+    assert hass.bus.fired == []
+
+
+def test_enabled_by_default_still_fires():
+    """The constructor default stays on so the default helper keeps firing;
+    product 'off by default' is enforced at the config layer, not here."""
+    hass = _FakeHass()
+    game = _FakeGame()
+    game.game_id = "g1"
+    t = QuizifyEventEmitter(hass=hass, game_state=game)  # no enabled= → default
+    assert t.is_configured is True
+    game.round = 1
+    game.phase = GamePhase.QUESTION_ACTIVE
+    t._on_state_changed()
+    assert [e for e, _ in hass.bus.fired] == [EVENT_GAME_STARTED]
+
+
+# ---------------------------------------------------------------------------
 # Phase-driven milestones (state-callback path)
 # ---------------------------------------------------------------------------
 
