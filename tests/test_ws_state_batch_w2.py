@@ -375,3 +375,49 @@ class TestReactionBonusCoalescing416:
         assert frame["to_players"] == ["Bob"]
         assert set(frame["from_players"]) == {"Alice", "Carol"}
         assert frame["leaderboard"], "coalesced bonus must carry a leaderboard"
+
+
+# ---------------------------------------------------------------------------
+# #449 — a reveal-time reaction bonus invalidates the #414 round-summary memo
+# so a join/reconnect/get_state during the same reveal sees the fresh score
+# ---------------------------------------------------------------------------
+
+
+class TestReactionBonusInvalidatesSummaryMemo449:
+    @staticmethod
+    def _bob_score(msg: dict) -> int:
+        entry = next(e for e in msg["leaderboard"] if e["name"] == "Bob")
+        return entry["score"]
+
+    @pytest.mark.asyncio
+    async def test_reveal_reaction_bonus_busts_stale_leaderboard_cache(
+        self, tmp_path: Path
+    ) -> None:
+        gs = _started_game(tmp_path, ["Bob", "Alice"])
+        q = gs.get_current_question()
+        correct = next(i for i, a in enumerate(q.answers) if a.correct)
+        gs.submit_answer("Bob", correct)
+        gs.evaluate_round()
+        assert gs.phase == GamePhase.ANSWER_REVEAL
+
+        builder = RoundMessageBuilder()
+        # First build during the reveal broadcast memoizes the PRE-bonus board.
+        pre = builder.build_round_summary(gs)
+        bob_before = self._bob_score(pre)
+
+        h = _handler(tmp_path, gs)
+        sent: list[dict] = []
+        h._conn.broadcast = lambda m: sent.append(m) or asyncio.sleep(0)  # type: ignore[assignment,return-value]
+
+        # Alice reacts → Bob gets +1 while the memo still holds the old board.
+        await h._handle_reaction(gs.get_player("Alice").ws, {"emoji": "🎉"}, gs)
+        assert gs.get_player("Bob").score == bob_before + 1
+
+        # A join/reconnect/get_state during THIS reveal rebuilds the summary.
+        # Without invalidation it would serve the cached pre-bonus board.
+        post = builder.build_round_summary(gs)
+        assert self._bob_score(post) == bob_before + 1, (
+            "reconnect during reveal must see the post-bonus leaderboard, "
+            "not the stale memoized one"
+        )
+        assert post is not pre, "memo must have been invalidated + rebuilt"

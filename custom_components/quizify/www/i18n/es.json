@@ -438,7 +438,8 @@
     "questionCounter": "Pregunta {current} / {total}",
     "pointsShort": "pts",
     "awards": "Premios",
-    "runnersUp": "También juegan"
+    "runnersUp": "También juegan",
+    "leaderboardMore": "+{count} más"
   },
   "connection": {
     "connected": "Conectado",

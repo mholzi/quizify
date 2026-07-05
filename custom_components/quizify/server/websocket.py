@@ -1081,6 +1081,14 @@ class QuizifyWebSocketHandler:
             bonus_recipients.append(recipient.name)
 
         if bonus_recipients:
+            # #449: the bonus above mutated recipient scores, but the #414
+            # round-summary memo (built for the reveal broadcast) still holds
+            # the pre-bonus leaderboard. Invalidate it so any join/reconnect/
+            # get_state during this same ANSWER_REVEAL re-serializes the fresh,
+            # post-bonus leaderboard instead of serving the stale cache.
+            invalidate = getattr(game_state, "invalidate_round_summary_msg", None)
+            if invalidate is not None:
+                invalidate()
             # #416: defer + coalesce the leaderboard broadcast into the shared
             # ~150ms flush window instead of emitting a full-leaderboard frame
             # per reactor right here. The points are already awarded above; the

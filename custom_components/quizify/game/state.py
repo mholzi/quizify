@@ -1918,6 +1918,20 @@ class QuizifyGameState:
         self._round_summary_msg_key = key
         self._round_summary_msg = msg
 
+    def invalidate_round_summary_msg(self) -> None:
+        """Drop the memoized round-summary message (#449).
+
+        The #414 memo caches the full round-summary msg (incl. the serialized
+        leaderboard) keyed on ``(game_id, round)``. A reveal-time reaction
+        bonus (#416) mutates recipient scores via ``add_reaction_bonus`` while
+        that memo is still live, so any join/reconnect/get_state during the
+        same ANSWER_REVEAL would otherwise serve a STALE pre-bonus leaderboard.
+        Call this after applying reaction bonuses so the next build
+        re-serializes the fresh scores.
+        """
+        self._round_summary_msg = None
+        self._round_summary_msg_key = None
+
     def get_finale_podium(self) -> list | None:
         """Return the finale podium cached by ``end_game`` (#415), or None."""
         return self._finale_podium
