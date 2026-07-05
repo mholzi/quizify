@@ -3,6 +3,54 @@
 All notable changes to Quizify are documented here. This project follows
 [Semantic Versioning](https://semver.org/).
 
+## [1.5.0-RC1] — 2026-07-05
+
+First release candidate for 1.5.0. Completes Spanish support and bundles a
+broad correctness / security / accessibility hardening pass (38 changes merged
+since 1.4.1).
+
+### Added
+
+- **Spanish support is now complete.** `es.json` reached full parity with
+  `en.json` — the v1.4.0 `setup.tts` narration block (13 keys) was the last
+  gap and is now translated (#373). Three new **native** (not translated)
+  Spanish question packs ship alongside the existing `geografia-es`:
+  **Naturaleza** (`nature`), **Ciencia** (`science`) and **Historia**
+  (`history`), 150 questions each, registered in `versions.json` at 1.0. All
+  450 new questions were fact-reviewed before release (5 corrections, 0
+  removals). Spanish now has 4 packs / 600 questions. Pack discovery is
+  data-driven, so no HTML changes were needed.
+
+### Security
+
+- Gate host-only `/api/quizify/*` endpoints on the admin session token so an
+  unauthenticated device can no longer read player names / entity ids (#356).
+- Stop wiping the admin token during admin-as-player games, closing a
+  same-LAN host-takeover window (#351).
+- Require the admin token for a crown transfer, and strip an inherited admin
+  crown on a token-less lobby name-rejoin (#358, #389).
+- Rate-limit and bound the unauthenticated flag POST (#357).
+- Move the admin token out of the WebSocket URL and add a per-IP WS
+  connection cap (#359, #361).
+
+### Fixed
+
+- Accessibility + UX sweep: larger TV reveal/standings text for couch
+  legibility (#376), safe-area headroom + contrast fixes on the light theme
+  (#375, #382), visible keyboard focus, screen-reader labels on the timer and
+  dialogs (#380), `prefers-reduced-motion` honoured (#381), ≥44px touch
+  targets (#379), TV lobby QR + live roster (#374), plus a batch of clipped
+  labels, off-centre toggles and dead confirm/kick modals.
+- Scoring / game-flow edge cases around Steal, estimation rounds and the
+  Lightning Round so points land correctly, and steadier reconnection /
+  roster handling (#405–#412, #448–#451, #472, #484).
+
+### Performance
+
+- Lighter hot paths — leaderboard, finale recompute, analytics memoisation,
+  roster coalescing, shared HTTP session, cached unauthenticated pack-updates
+  fetch (#360, #413–#418, #452–#457).
+
 ## [1.4.1] — 2026-06-20
 
 ### Fixed
