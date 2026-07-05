@@ -70,6 +70,11 @@ def serialize_question_for_player(
             "unit": question.estimate_unit,
             "step": question.estimate_step,
         }
+        # Estimate finals score via _evaluate_estimate_round, which never reads
+        # player.wager — a wager here can't be resolved. Never advertise the
+        # wager UI for an estimate final so the client doesn't offer a bet the
+        # server would reject. (#353.)
+        payload["is_final_round"] = False
     return payload
 
 

@@ -1137,6 +1137,19 @@ class QuizifyWebSocketHandler:
         if game_state.round != game_state.total_rounds:
             return  # only final round accepts a wager
 
+        # Estimate finals are scored via submit_guess/_evaluate_estimate_round,
+        # which NEVER read player.wager — only the MC path's ScoringEngine
+        # resolves wagers. ACKing a wager here would confirm a bet that has no
+        # effect on scoring. Reject it explicitly (and the serializer withholds
+        # the wager UI for estimate finals, so a compliant client never sends
+        # this). (#353.)
+        question = game_state.get_current_question()
+        if question is not None and question.is_estimate:
+            await self._conn.send_error(
+                ws, ERR_INVALID_ACTION, "Wager not available on estimate rounds"
+            )
+            return
+
         # A wager only makes sense *before* the answer is locked in — the wager
         # stakes points on getting that answer right. Once the player has
         # submitted, accepting a new wager silently mutated the stake on an
