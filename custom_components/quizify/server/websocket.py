@@ -108,6 +108,20 @@ class QuizifyWebSocketHandler:
 
     HEARTBEAT_INTERVAL = 30
 
+    # Per-IP WebSocket connection cap (#361). The existing flood guard is
+    # per-connection (keyed on id(ws)), so opening N sockets bypasses it
+    # entirely. This caps the number of *concurrent* sockets a single
+    # ``request.remote`` may hold. It is deliberately GENEROUS: in the common
+    # Quizify deployment every player is a distinct phone on the same wifi
+    # hitting HA directly, so each device has its own LAN IP and one device
+    # never legitimately needs anywhere near this many sockets (a page reload
+    # or reconnect briefly overlaps two, no more). The cap only bites a single
+    # host opening a flood of sockets. (If HA sits behind a reverse proxy that
+    # collapses every client to one source IP without X-Forwarded-For, raise
+    # this — but that is the uncommon setup for a local party game.) Refused
+    # connections get an HTTP 429 before the WebSocket is upgraded.
+    MAX_CONNECTIONS_PER_IP = 15
+
     # Admin-as-player redirect grace: when the admin clicks "Spiel starten"
     # from /quizify/admin, admin.js navigates the tab to /quizify/player so
     # the admin can answer questions. That navigation closes the admin's
@@ -177,6 +191,22 @@ class QuizifyWebSocketHandler:
             window=1.0,  # seconds
             clock=lambda: asyncio.get_event_loop().time(),
         )
+        # Per-IP concurrent-connection counter (#361). Incremented after a
+        # successful ws.prepare(), decremented in handle()'s finally on
+        # disconnect; a count that drops to zero is popped so the dict stays
+        # bounded by the number of *currently connected* source IPs.
+        self._ip_connections: dict[str, int] = {}
+        # Per-IP join-attempt flood guard (#361). Distinct from the
+        # per-connection message limiter above: a client that opens several
+        # sockets could otherwise fire a burst of joins, one per socket. The
+        # window is generous so a full room of players behind one NAT (each
+        # joining once, plus the odd reconnect) is never blocked; it only
+        # trips on an automated join flood.
+        self._join_limiter = SlidingWindowLimiter(
+            max_requests=30,  # max join attempts per window, per IP
+            window=60.0,  # seconds
+            clock=lambda: asyncio.get_event_loop().time(),
+        )
         # Routes named state events (round_evaluated / game_ended) to the
         # matching broadcast, falling back to a full-state push (#184).
         self._broadcast_dispatcher = BroadcastDispatcher(
@@ -228,61 +258,90 @@ class QuizifyWebSocketHandler:
         """Drop a connection's rate-limit state (called on disconnect)."""
         self._rate_limiter.forget(id(ws))
 
-    async def handle(self, request: web.Request) -> web.WebSocketResponse:
-        """Handle WebSocket connection."""
-        ws = web.WebSocketResponse(heartbeat=self.HEARTBEAT_INTERVAL)
-        await ws.prepare(request)
+    async def _grant_admin(
+        self, role: str | None, admin_token: str | None, request: web.Request
+    ) -> bool:
+        """Evaluate the admin-grant rules for a ``role=admin`` connection.
 
-        role = request.query.get("role")
-        is_dashboard = role == "dashboard"
-        admin_token = request.query.get("token")
-
-        # Admin role grant rules (#140 fix + #1 + #2 in logical review):
-        # 1. Valid session token in ?token= \u2192 always grant (reconnect path).
-        # 2. No token persisted to HA storage (fresh install / first-ever
-        #    admin) \u2192 grant once as bootstrap. Thereafter the token is
-        #    persisted via HA storage, survives restarts, and this branch
-        #    never fires again on this HA instance (close the LAN
-        #    takeover window that previously reopened on every restart).
-        # 3. Token exists but no matching token provided \u2192 reject.
-        #
+        Token-source-agnostic (#359): the token may arrive via the
+        ``X-Quizify-Token`` header, the deprecated ``?token=`` query param, or
+        a first-message ``admin_auth`` frame. FAIL SOFT — a bad/absent token
+        never rejects the socket, it only withholds the admin grant, so the
+        host can never lock itself out.
+        """
+        if role != "admin":
+            return False
         # Ensure the persisted token is loaded before evaluating rules.
         # async_load_admin_token() is idempotent and cheap after first call.
         await self._conn.async_load_admin_token()
-        is_admin = False
-        if role == "admin":
-            if admin_token and self._conn.validate_admin_token(admin_token):
-                is_admin = True
-                _LOGGER.info("Admin reconnected with valid session token")
-            elif await self._conn.try_bootstrap_admin():
-                # Bootstrap: no token has ever been issued on this HA
-                # instance. try_bootstrap_admin() grants + persists the token
-                # atomically under a lock, so exactly one of two racing
-                # first-connections wins (#168). The loser falls through to
-                # the no-token branches below and gets player role only.
-                is_admin = True
-                _LOGGER.warning(
-                    "ADMIN BOOTSTRAP: granting admin to first connection "
-                    "(ip=%s). Future restarts will require the persisted "
-                    "token. If this was NOT you, reset the integration.",
-                    request.remote,
-                )
-            elif admin_token:
-                # A token was presented but failed validation — this is the
-                # interesting signal (real intrusion attempt or stale token).
-                _LOGGER.warning(
-                    "Admin connection attempt with INVALID token rejected (ip=%s)",
-                    request.remote,
-                )
-            else:
-                # No token presented and one is already on disk — the most
-                # common cause is a fresh browser tab on the home LAN, not
-                # an attack. Log at DEBUG so it doesn't drown the real
-                # signal above. The connection still gets player role only.
-                _LOGGER.debug(
-                    "Admin connection attempt without token (ip=%s)",
-                    request.remote,
-                )
+        if admin_token and self._conn.validate_admin_token(admin_token):
+            _LOGGER.info("Admin authenticated with valid session token")
+            return True
+        if await self._conn.try_bootstrap_admin():
+            # Bootstrap: no token has ever been issued on this HA instance.
+            # try_bootstrap_admin() grants + persists the token atomically
+            # under a lock, so exactly one of two racing first-connections
+            # wins (#168). The loser gets player role only.
+            _LOGGER.warning(
+                "ADMIN BOOTSTRAP: granting admin to first connection "
+                "(ip=%s). Future restarts will require the persisted "
+                "token. If this was NOT you, reset the integration.",
+                request.remote,
+            )
+            return True
+        if admin_token:
+            # A token was presented but failed validation — this is the
+            # interesting signal (real intrusion attempt or stale token).
+            _LOGGER.warning(
+                "Admin connection attempt with INVALID token rejected (ip=%s)",
+                request.remote,
+            )
+        else:
+            # No token presented and one is already on disk — the most common
+            # cause is a fresh browser tab on the home LAN, not an attack.
+            _LOGGER.debug(
+                "Admin connection attempt without token (ip=%s)",
+                request.remote,
+            )
+        return False
+
+    async def handle(self, request: web.Request) -> web.StreamResponse:
+        """Handle WebSocket connection."""
+        remote = request.remote
+        # Per-IP connection cap (#361): refuse BEFORE upgrading the socket so
+        # a flood of sockets from one host can't exhaust resources. Checked
+        # before prepare() so we answer with a plain HTTP 429.
+        if (
+            remote is not None
+            and self._ip_connections.get(remote, 0) >= self.MAX_CONNECTIONS_PER_IP
+        ):
+            _LOGGER.warning(
+                "Refusing WebSocket from %s: per-IP connection cap (%d) reached",
+                remote,
+                self.MAX_CONNECTIONS_PER_IP,
+            )
+            return web.Response(
+                status=429, text="Too many connections from this address"
+            )
+
+        ws = web.WebSocketResponse(heartbeat=self.HEARTBEAT_INTERVAL)
+        await ws.prepare(request)
+        if remote is not None:
+            self._ip_connections[remote] = self._ip_connections.get(remote, 0) + 1
+
+        role = request.query.get("role")
+        is_dashboard = role == "dashboard"
+        # #359: prefer the token from the ``X-Quizify-Token`` header (kept out
+        # of aiohttp/reverse-proxy access logs and browser history); fall back
+        # to the deprecated ``?token=`` query param for backward compat. A
+        # browser WS handshake can't set headers, so the admin frontend also
+        # sends the token in a first-message ``admin_auth`` frame handled in
+        # the message loop below.
+        admin_token = request.headers.get("X-Quizify-Token") or request.query.get(
+            "token"
+        )
+
+        is_admin = await self._grant_admin(role, admin_token, request)
 
         self._conn.add_connection(ws, is_admin=is_admin, is_dashboard=is_dashboard)
 
@@ -312,6 +371,40 @@ class QuizifyWebSocketHandler:
                             ws, ERR_INVALID_ACTION, "Malformed message (invalid JSON)"
                         )
                         continue
+                    # First-message admin auth (#359): the token now travels in
+                    # this frame instead of the URL. Validate + upgrade the
+                    # connection to admin before any other traffic. FAIL SOFT —
+                    # a bad/absent token never closes the socket; it just stays
+                    # a plain player, so the host can never lock itself out.
+                    if data.get("type") == "admin_auth":
+                        if not is_admin and await self._grant_admin(
+                            role, data.get("token"), request
+                        ):
+                            is_admin = True
+                            self._conn.add_connection(
+                                ws, is_admin=True, is_dashboard=is_dashboard
+                            )
+                            _LOGGER.info(
+                                "Admin authenticated via admin_auth frame (ip=%s)",
+                                remote,
+                            )
+                        continue
+                    # Per-IP join flood guard (#361): keyed on the source IP so
+                    # opening extra sockets can't multiply join attempts. The
+                    # window is generous, so a full room behind one NAT (each
+                    # player joining once, plus the odd reconnect) never trips.
+                    if (
+                        data.get("type") == "join"
+                        and remote is not None
+                        and not self._join_limiter.check(remote)
+                    ):
+                        _LOGGER.warning(
+                            "Per-IP join rate limit exceeded for %s", remote
+                        )
+                        await self._conn.send_error(
+                            ws, ERR_INVALID_ACTION, "Too many join attempts"
+                        )
+                        continue
                     try:
                         await self._handle_message(ws, data, is_admin)
                     except Exception:  # noqa: BLE001
@@ -331,6 +424,15 @@ class QuizifyWebSocketHandler:
             was_admin = self._conn.is_admin_connection(ws)
             self._conn.remove_connection(ws)
             self._forget_rate_limit(ws)
+            # #361: release this connection's slot in the per-IP counter; drop
+            # the key entirely when it hits zero so the dict stays bounded by
+            # the number of *currently connected* source IPs.
+            if remote is not None:
+                remaining = self._ip_connections.get(remote, 0) - 1
+                if remaining > 0:
+                    self._ip_connections[remote] = remaining
+                else:
+                    self._ip_connections.pop(remote, None)
             await self._handle_disconnect(ws, was_admin=was_admin)
             _LOGGER.debug(
                 "WebSocket disconnected, total: %d", len(self._conn.connections)

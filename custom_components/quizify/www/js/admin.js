@@ -939,13 +939,23 @@
     function connect() {
         var proto = location.protocol === 'https:' ? 'wss:' : 'ws:';
         var savedToken = sessionStorage.getItem('quizify_admin_session_token');
+        // #359: the admin session token used to be appended to the WS URL as
+        // ?token=..., where it leaked into aiohttp / reverse-proxy access logs
+        // and browser history. It is now sent as the FIRST WebSocket frame
+        // (admin_auth) below, before admin_connect or any other traffic, so it
+        // never lands in a URL. The server still accepts ?token= as a
+        // deprecated fallback, but we no longer put it there.
         var url = proto + '//' + location.host + '/api/quizify/ws?role=admin';
-        if (savedToken) url += '&token=' + encodeURIComponent(savedToken);
         ws = new WebSocket(url);
 
         ws.onopen = function () {
             reconnectAttempts = 0;
             updateConnectionStatus('connected');
+            // Send the token out-of-URL first so the server can grant admin
+            // before admin_connect. On a fresh bootstrap there is no saved
+            // token yet — the server grants admin on the token-less handshake
+            // (bootstrap path), so skipping admin_auth here is safe.
+            if (savedToken) send('admin_auth', { token: savedToken });
             send('admin_connect', {});
             // Configure narration up-front so pre-game lobby joins narrate (#281).
             _pushTtsConfig();
