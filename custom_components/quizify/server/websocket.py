@@ -1235,6 +1235,7 @@ class QuizifyWebSocketHandler:
             self._roster_flush_task = asyncio.ensure_future(
                 self._flush_roster_after_window()
             )
+            self._roster_flush_task.add_done_callback(self._log_task_exception)
 
     async def _flush_roster_after_window(self) -> None:
         """Wait one window, then broadcast ONE roster frame (#453).
@@ -1269,6 +1270,7 @@ class QuizifyWebSocketHandler:
             self._roster_flush_task = asyncio.ensure_future(
                 self._flush_roster_after_window()
             )
+            self._roster_flush_task.add_done_callback(self._log_task_exception)
 
     def _cancel_roster_flush(self) -> None:
         """Cancel any pending roster-flush task (called on cleanup)."""

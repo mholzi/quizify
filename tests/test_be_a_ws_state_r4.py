@@ -324,6 +324,39 @@ class TestRosterCoalescing:
         assert {p["name"] for p in msg["players"]} == {"A", "B"}
 
     @pytest.mark.asyncio
+    async def test_raising_flush_is_logged_not_swallowed(
+        self,
+        handler: QuizifyWebSocketHandler,
+        game: QuizifyGameState,
+        caplog: pytest.LogCaptureFixture,
+    ) -> None:
+        """#474: the roster-flush task carries the same _log_task_exception
+        done-callback as every other fire-and-forget task here. If broadcast
+        raises inside the flush (after _roster_dirty was cleared), the crash is
+        surfaced in the log instead of only appearing at GC time."""
+        game.add_player("A", _ws())
+        handler._conn.broadcast = AsyncMock(side_effect=RuntimeError("boom"))
+
+        handler._mark_roster_dirty("player_joined")
+        task = handler._roster_flush_task
+        assert task is not None
+        # The done-callback must be attached (mirrors lightning/timer/pause).
+        assert handler._log_task_exception in [
+            cb for cb, _ctx in task._callbacks  # type: ignore[attr-defined]
+        ]
+
+        with caplog.at_level("ERROR"):
+            with pytest.raises(RuntimeError):
+                await asyncio.wait_for(asyncio.shield(task), timeout=2.0)
+            # Let the done-callback run.
+            await asyncio.sleep(0)
+
+        assert any(
+            "Unhandled exception in background task" in r.message
+            for r in caplog.records
+        )
+
+    @pytest.mark.asyncio
     async def test_join_handler_defers_roster_broadcast(
         self, handler: QuizifyWebSocketHandler, game: QuizifyGameState
     ) -> None:
