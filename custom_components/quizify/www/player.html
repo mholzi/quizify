@@ -228,7 +228,12 @@
 
                 <!-- Timer with ARIA support -->
                 <div class="timer-container">
-                    <div id="timer" class="timer" role="timer" aria-live="polite" data-i18n-aria-label="a11y.timeRemaining" aria-label="Time remaining">30</div>
+                    <div id="timer" class="timer" role="timer" aria-live="off" data-i18n-aria-label="a11y.timeRemaining" aria-label="Time remaining">30</div>
+                    <!-- Separate polite region (#380): the visible #timer changes every
+                         second, so it is aria-live="off" to stop VoiceOver reading each
+                         tick. The timer JS pushes one terse announcement here only at
+                         10s / 5s left. -->
+                    <div id="timer-sr-announce" class="sr-only" aria-live="polite" aria-atomic="true"></div>
                 </div>
 
                 <!-- Submission Tracker -->
@@ -244,7 +249,7 @@
                 <section id="wager-panel" class="wager-panel hidden" aria-live="polite">
                     <h2 class="wager-panel-title">
                         <span class="qz-icon qz-icon--sky" data-ui-icon="sparkle" aria-hidden="true">🎰</span>
-                        <span id="wager-panel-title">Wagerunde</span>
+                        <span id="wager-panel-title" data-i18n="wager.title">Wagerunde</span>
                     </h2>
                     <p id="wager-panel-hint" class="wager-panel-hint"></p>
                     <p id="wager-panel-timeout-note" class="wager-panel-hint wager-panel-timeout-note"></p>
@@ -257,7 +262,7 @@
                         <span data-i18n="wager.bank">Current points</span>:
                         <span id="wager-bank" class="wager-bank">0</span>
                     </p>
-                    <button id="wager-submit-btn" type="button" class="btn btn-primary btn-block">
+                    <button id="wager-submit-btn" type="button" class="btn btn-primary btn-block" data-i18n="wager.submit">
                         Einsetzen
                     </button>
                 </section>
@@ -804,7 +809,7 @@
                     <span class="invite-copy-icon qz-icon qz-icon--sage" data-ui-icon="copy">📋</span>
                 </button>
             </div>
-            <p id="invite-copy-feedback" class="invite-copy-feedback hidden">Copied!</p>
+            <p id="invite-copy-feedback" class="invite-copy-feedback hidden" data-i18n="lobby.copied">Copied!</p>
             <button id="invite-modal-close" class="btn btn-secondary invite-modal-close"
                     aria-label="Close invite popup" data-i18n="common.close">Close</button>
         </div>

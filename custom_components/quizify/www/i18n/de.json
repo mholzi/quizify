@@ -185,7 +185,9 @@
     "streakToast5": "5 in Folge!",
     "streakToast7": "7 in Folge! Du brennst!",
     "timerRemainingAria": "Verbleibende Zeit: {seconds} Sekunden",
-    "timerUpAria": "Zeit abgelaufen!"
+    "timerUpAria": "Zeit abgelaufen!",
+    "timerTenLeft": "Noch 10 Sekunden",
+    "timerFiveLeft": "Noch 5 Sekunden"
   },
   "powerups": {
     "joker": "Joker",
@@ -400,6 +402,7 @@
     "timeoutNote": "Der Einsatz zählt nur, wenn du antwortest. Keine Antwort = deine Punkte bleiben (kein Gewinn, kein Verlust).",
     "bank": "Punktestand",
     "submit": "Einsatz festlegen",
+    "valueFmt": "{pct}% ({pts} Pkt.)",
     "locked": "Eingesetzt: {pct}%",
     "bonusFromReaction": "+1 von {from}"
   },

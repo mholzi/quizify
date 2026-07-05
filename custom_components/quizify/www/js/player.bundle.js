@@ -2966,6 +2966,29 @@
 
     var countdownInterval = null;
 
+    // Screen-reader countdown announcements (#380). The visible #timer is
+    // aria-live="off" so VoiceOver no longer reads every tick; instead we push
+    // a single terse announcement into the separate #timer-sr-announce polite
+    // region at meaningful moments (10s / 5s left). `lastAnnouncedSecond`
+    // dedupes repeated ticks at the same whole second (server sends decimals →
+    // ceil can repeat a value) and resets whenever we're back above 10s, i.e.
+    // at the start of each new question, without any extra lifecycle wiring.
+    var lastAnnouncedSecond = null;
+
+    function announceTimeLeft(seconds) {
+        if (seconds > 10) {
+            lastAnnouncedSecond = null;
+            return;
+        }
+        if (seconds !== 10 && seconds !== 5) return;
+        if (seconds === lastAnnouncedSecond) return;
+        lastAnnouncedSecond = seconds;
+        var region = document.getElementById('timer-sr-announce');
+        if (!region) return;
+        var t = (window.QuizifyI18n && window.QuizifyI18n.t) || function (k) { return k; };
+        region.textContent = t(seconds === 10 ? 'game.timerTenLeft' : 'game.timerFiveLeft');
+    }
+
     /**
      * Start countdown timer
      * @param {number} deadline - Server deadline timestamp in milliseconds
@@ -2984,6 +3007,7 @@
             var remaining = Math.max(0, Math.ceil((deadline - now) / 1000));
 
             timerElement.textContent = remaining;
+            announceTimeLeft(remaining);
 
             // Soft tick in the last 5 seconds (one per whole second).
             if (window.QuizifyPlayerSound) window.QuizifyPlayerSound.tickFromRemaining(remaining);
@@ -3127,6 +3151,7 @@
         // display as a whole-second integer so the count text reads cleanly.
         var displaySeconds = Math.ceil(remaining);
         timerElement.textContent = displaySeconds;
+        announceTimeLeft(displaySeconds);
 
         // Soft tick in the last 5 seconds (one per whole second).
         if (window.QuizifyPlayerSound) window.QuizifyPlayerSound.tickFromRemaining(remaining);
@@ -3427,7 +3452,7 @@
         function syncValue() {
             var pct = parseInt(slider.value, 10);
             var pts = Math.floor(currentScore * pct / 100);
-            if (valueEl) valueEl.textContent = pct + '% (' + pts + ' Pkt.)';
+            if (valueEl) valueEl.textContent = t('wager.valueFmt', { pct: pct, pts: pts });
         }
         if (slider && valueEl) {
             slider.oninput = syncValue;
