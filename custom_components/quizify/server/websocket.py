@@ -231,6 +231,16 @@ class QuizifyWebSocketHandler:
         # one ``reaction`` message per distinct buffered reaction.
         self._reaction_buffer: dict[tuple[str, str], None] = {}
         self._reaction_flush_task: asyncio.Task | None = None
+        # Reveal reaction-BONUS coalescing (#416). Each distinct reactor's first
+        # reveal reaction used to broadcast its own ``reaction_bonus`` carrying a
+        # FULL serialized leaderboard (up to P×P frames in a reaction-mashing
+        # room). The point awards stay synchronous (scores + per-round caps must
+        # settle immediately), but the broadcast is deferred into the same
+        # ~150ms flush window and collapsed to ONE ``reaction_bonus`` with a
+        # single leaderboard reflecting the whole batch. Ordered dicts so the
+        # union of reactors/recipients keeps first-seen order.
+        self._reaction_bonus_from: dict[str, None] = {}
+        self._reaction_bonus_to: dict[str, None] = {}
 
     # Coalescing window for visual reactions (#304), seconds.
     _REACTION_FLUSH_WINDOW = 0.15
@@ -369,6 +379,17 @@ class QuizifyWebSocketHandler:
                     except ValueError:
                         await self._conn.send_error(
                             ws, ERR_INVALID_ACTION, "Malformed message (invalid JSON)"
+                        )
+                        continue
+                    # #410: ``msg.json()`` happily parses any valid JSON value —
+                    # ``[1,2]``, ``"x"``, ``5`` — but the ``admin_auth`` and
+                    # ``join`` guards below call ``data.get(...)``, which raises
+                    # AttributeError on a non-dict OUTSIDE the try/except around
+                    # ``_handle_message``, tearing down the connection with a
+                    # traceback. Reject anything that isn't a JSON object here.
+                    if not isinstance(data, dict):
+                        await self._conn.send_error(
+                            ws, ERR_INVALID_ACTION, "Malformed message"
                         )
                         continue
                     # First-message admin auth (#359): the token now travels in
@@ -1060,14 +1081,16 @@ class QuizifyWebSocketHandler:
             bonus_recipients.append(recipient.name)
 
         if bonus_recipients:
-            # Broadcast a leaderboard update so phones see the bonus tick.
-            leaderboard = serialize_leaderboard(game_state.get_players())
-            await self._conn.broadcast({
-                "type": "reaction_bonus",
-                "from_player": reactor.name,
-                "to_players": bonus_recipients,
-                "leaderboard": leaderboard,
-            })
+            # #416: defer + coalesce the leaderboard broadcast into the shared
+            # ~150ms flush window instead of emitting a full-leaderboard frame
+            # per reactor right here. The points are already awarded above; the
+            # flush builds one ``reaction_bonus`` reflecting the whole batch.
+            self._reaction_bonus_from[reactor.name] = None
+            for recipient_name in bonus_recipients:
+                self._reaction_bonus_to[recipient_name] = None
+            # The visual reaction above already armed the flush task, but arm it
+            # defensively so a bonus can never sit undrained.
+            self._ensure_reaction_flush()
 
     def _enqueue_reaction(self, player_name: str, emoji: str) -> None:
         """Buffer a visual reaction and ensure a flush task is pending (#304).
@@ -1079,6 +1102,15 @@ class QuizifyWebSocketHandler:
         exactly one window before draining.
         """
         self._reaction_buffer[(player_name, emoji)] = None
+        self._ensure_reaction_flush()
+
+    def _ensure_reaction_flush(self) -> None:
+        """(Re)arm the coalescing flush task if one isn't already pending.
+
+        Shared by the visual-reaction buffer (#304) and the reveal
+        reaction-bonus buffer (#416) so either kind of buffered event guarantees
+        a flush within one window.
+        """
         if self._reaction_flush_task is None or self._reaction_flush_task.done():
             self._reaction_flush_task = self._runtime.create_task(
                 self._flush_reactions_after_window()
@@ -1097,23 +1129,53 @@ class QuizifyWebSocketHandler:
             # Cancelled on cleanup — drop whatever was buffered (best-effort
             # eye-candy, nothing to persist) and re-raise so the task ends.
             self._reaction_buffer.clear()
+            self._reaction_bonus_from.clear()
+            self._reaction_bonus_to.clear()
             raise
         buffered = list(self._reaction_buffer)
         self._reaction_buffer.clear()
-        for player_name, emoji in buffered:
-            await self._conn.broadcast({
+        # Collect every broadcast for this window, then fan them all out in a
+        # single gather (#416) instead of awaiting them one at a time.
+        broadcasts = [
+            self._conn.broadcast({
                 "type": "reaction",
                 "emoji": emoji,
                 "player_name": player_name,
             })
+            for player_name, emoji in buffered
+        ]
 
-        # Reactions that arrived DURING the broadcasts above were appended to
-        # the buffer, but _enqueue_reaction won't start a new flush while this
-        # task is still running (it isn't None/done yet) — so without this the
-        # tail would sit unbroadcast until some future reaction happened to
-        # arrive (#354). Re-arm the flush ourselves so the buffer always
-        # drains: one more window, then another pass. Loops until empty.
-        if self._reaction_buffer:
+        # #416: collapse the reveal reaction-bonus events buffered this window
+        # into ONE ``reaction_bonus``. The leaderboard is serialized once, now —
+        # after every point award in the window has settled — so it reflects the
+        # whole batch. ``from_player`` keeps the existing single-name wire field
+        # (first reactor) for the client toast; ``from_players`` carries the full
+        # set for completeness.
+        if self._reaction_bonus_to:
+            from_players = list(self._reaction_bonus_from)
+            to_players = list(self._reaction_bonus_to)
+            self._reaction_bonus_from.clear()
+            self._reaction_bonus_to.clear()
+            gs = self._get_game_state()
+            if gs is not None and from_players:
+                broadcasts.append(self._conn.broadcast({
+                    "type": "reaction_bonus",
+                    "from_player": from_players[0],
+                    "from_players": from_players,
+                    "to_players": to_players,
+                    "leaderboard": serialize_leaderboard(gs.get_players()),
+                }))
+
+        if broadcasts:
+            await asyncio.gather(*broadcasts)
+
+        # Reactions/bonuses that arrived DURING the broadcasts above were
+        # appended to the buffers, but _ensure_reaction_flush won't start a new
+        # flush while this task is still running (it isn't None/done yet) — so
+        # without this the tail would sit unbroadcast until some future event
+        # happened to arrive (#354). Re-arm the flush ourselves so the buffers
+        # always drain: one more window, then another pass. Loops until empty.
+        if self._reaction_buffer or self._reaction_bonus_to:
             self._reaction_flush_task = self._runtime.create_task(
                 self._flush_reactions_after_window()
             )
@@ -1124,6 +1186,8 @@ class QuizifyWebSocketHandler:
             self._reaction_flush_task.cancel()
             self._reaction_flush_task = None
         self._reaction_buffer.clear()
+        self._reaction_bonus_from.clear()
+        self._reaction_bonus_to.clear()
 
     # ------------------------------------------------------------------
     # Wager (gameplay idea #3 — Jeopardy-style final round)
@@ -1287,6 +1351,13 @@ class QuizifyWebSocketHandler:
         # fresh settings always take effect. Mirrors _handle_play_again.
         if game_state.phase != GamePhase.LOBBY:
             self._cancel_timer_tick()
+            # #407 (follow-up to #362): cancel the lightning loop and any
+            # deferred admin-disconnect pause too, exactly like
+            # ``_handle_reset_game``. Otherwise a stale admin-pause task can
+            # pause round 1 of the NEW game, and a start during a LIGHTNING
+            # detour leaves ``_lightning_task`` broadcasting stale frames.
+            self._cancel_lightning_loop()
+            self._cancel_admin_pause()
             game_state.reset_to_lobby()
 
         raw_category = data.get("category")
@@ -1517,6 +1588,12 @@ class QuizifyWebSocketHandler:
             return
         settings = game_state.last_settings
         self._cancel_timer_tick()
+        # #407 (follow-up to #362): mirror ``_handle_reset_game`` — cancel the
+        # lightning loop and any deferred admin-disconnect pause before the new
+        # game, or a stale pause task pauses round 1 and a lingering lightning
+        # loop keeps broadcasting stale frames into the rematch.
+        self._cancel_lightning_loop()
+        self._cancel_admin_pause()
         # Reset to LOBBY first so start_game's phase guard passes; keeps
         # players (reset_to_lobby leaves connected players in place).
         game_state.reset_to_lobby()
@@ -2098,7 +2175,19 @@ class QuizifyWebSocketHandler:
         """
         self._cancel_timer_tick()
 
+        # #413: the client renders ``Math.ceil(remaining)`` WHOLE seconds, but
+        # the loop ticks every ~0.5s — so half the frames redraw the same
+        # number and are pure waste (at the 20-player cap: 20 sockets × the
+        # dead frame, every tick). Coalesce like the lightning loop already
+        # does: remember the last displayed second per recipient and only emit
+        # a ``timer_tick`` when that second actually changes. The sleep cadence
+        # is unchanged, so the countdown accuracy and the auto-evaluate timing
+        # are unaffected — only the redundant frames are dropped.
+        last_shown_by_name: dict[str, int] = {}
+        last_dashboard_shown: int | None = None
+
         async def tick_loop() -> None:
+            nonlocal last_dashboard_shown
             try:
                 while game_state.phase == GamePhase.QUESTION_ACTIVE:
                     players = game_state.get_players()
@@ -2111,31 +2200,37 @@ class QuizifyWebSocketHandler:
                     # longer delays the whole room — ConnectionManager.send
                     # swallows errors so a plain gather is safe.
                     sends = []
-                    # Each connected player gets their authoritative remaining.
+                    # Each connected player gets their authoritative remaining,
+                    # but only when their displayed second changed (#413).
                     for name, remaining in tick.per_player:
                         p = by_name.get(name)
                         if p is None or not p.connected:
                             continue
+                        shown = math.ceil(max(0.0, remaining))
+                        if last_shown_by_name.get(name) == shown:
+                            continue
+                        last_shown_by_name[name] = shown
                         sends.append(self._conn.send(p.ws, {
                             "type": "timer_tick",
                             "remaining": round(remaining, 1),
                         }))
                     # Broadcast the minimum remaining to dashboards/admins so
-                    # the TV view shows a consistent countdown.
+                    # the TV view shows a consistent countdown — again only when
+                    # its displayed second changes. Pre-serialized ONCE and fanned
+                    # out via the broadcast string path (admin-as-player already
+                    # excluded there) instead of a per-socket send_json (#413/#258).
                     min_remaining = tick.dashboard_remaining
                     # Spoken "time running out" warning (#281), once per round.
                     self._notify_tts_countdown(min_remaining)
-                    for ws, is_admin in self._conn.iter_admin_and_dashboard_ws():
-                        if ws.closed:
-                            continue
-                        # An admin who is also a player already got their
-                        # per-player tick above — don't double-send.
-                        if is_admin and any(p.ws is ws for p in players):
-                            continue
-                        sends.append(self._conn.send(ws, {
-                            "type": "timer_tick",
-                            "remaining": round(min_remaining, 1),
-                        }))
+                    dash_shown = math.ceil(max(0.0, min_remaining))
+                    if dash_shown != last_dashboard_shown:
+                        last_dashboard_shown = dash_shown
+                        sends.append(
+                            self._conn.broadcast_to_admins_and_dashboards({
+                                "type": "timer_tick",
+                                "remaining": round(min_remaining, 1),
+                            })
+                        )
                     if sends:
                         await asyncio.gather(*sends)
                     await asyncio.sleep(TICK_INTERVAL)
@@ -2218,6 +2313,30 @@ class QuizifyWebSocketHandler:
     # Disconnect handling
     # ------------------------------------------------------------------
 
+    def _maybe_evaluate_after_dropout(self, game_state: QuizifyGameState) -> bool:
+        """Auto-evaluate the live round if a dropout left everyone submitted (#412).
+
+        ``all_submitted()`` is normally only consulted inside
+        submit_answer/submit_guess. When the last unanswered player disconnects
+        (or is removed after the grace timeout) mid-question, that check never
+        re-runs, so a room where everyone else already answered would sit idle
+        until the timer expired. Re-test it here: during QUESTION_ACTIVE, if the
+        registry now reports all active participants submitted, stop the
+        countdown and evaluate. ``evaluate_round`` fires the
+        ``round_evaluated`` state event, which drives the reveal broadcast (same
+        as the timer-expiry and admin-skip paths); it is guarded against double
+        evaluation, so racing with the tick loop is safe.
+
+        Returns True when it triggered an evaluation.
+        """
+        if game_state.phase != GamePhase.QUESTION_ACTIVE:
+            return False
+        if not game_state.all_submitted():
+            return False
+        self._cancel_timer_tick()
+        game_state.evaluate_round()
+        return True
+
     async def _handle_disconnect(
         self, ws: web.WebSocketResponse, was_admin: bool | None = None
     ) -> None:
@@ -2253,6 +2372,18 @@ class QuizifyWebSocketHandler:
 
         player.connected = False
         _LOGGER.info("Player disconnected: %s", player.name)
+
+        # #412: if the last unanswered player just dropped mid-question and
+        # everyone still in the room has already submitted, nothing else would
+        # re-check ``all_submitted()`` — the room would wait out the full timer.
+        # Evaluate now (same path submit_answer/timer-expiry use) so the reveal
+        # fires immediately. Done BEFORE the admin-pause scheduling below so a
+        # completed round doesn't also arm a spurious pause.
+        if self._maybe_evaluate_after_dropout(game_state):
+            _LOGGER.info(
+                "Round auto-evaluated after last unanswered player %s dropped",
+                player.name,
+            )
 
         # Host-disconnect graceful recovery: if the admin-as-player tab
         # drops mid-question, pause the game instead of letting the timer
@@ -2308,6 +2439,15 @@ class QuizifyWebSocketHandler:
                     _LOGGER.info(
                         "Removed disconnected player after grace period: %s", name
                     )
+                    # #412: removing the last unanswered player can complete the
+                    # round — re-check all-submitted and evaluate if so, same as
+                    # the immediate-disconnect path above.
+                    if self._maybe_evaluate_after_dropout(gs):
+                        _LOGGER.info(
+                            "Round auto-evaluated after removing last "
+                            "unanswered player %s",
+                            name,
+                        )
 
         self._conn.schedule_player_removal(player.name, grace, remove_after_timeout)
 
@@ -2537,14 +2677,31 @@ class QuizifyWebSocketHandler:
     # ------------------------------------------------------------------
 
     async def _broadcast_finale(self, game_state: QuizifyGameState) -> None:
-        """Build and broadcast the finale message (podium + superlatives)."""
-        from custom_components.quizify.game.scoring import (
-            calculate_podium,  # noqa: PLC0415
-        )
+        """Build and broadcast the finale message (podium + superlatives).
 
-        podium = calculate_podium(game_state.get_players())
+        ``end_game`` already computed and cached the podium + superlatives, so
+        reuse them here instead of recomputing ``calculate_podium`` +
+        ``compute_superlatives`` from scratch (#415). Falls back to a fresh
+        compute only if this is ever reached without a populated cache (e.g. a
+        direct call in a test) so behaviour is unchanged in that edge case.
+        """
         all_players = game_state.get_players()
-        awards = [s.to_dict() for s in compute_superlatives(all_players)]
+
+        podium = game_state.get_finale_podium()
+        if podium is None:
+            from custom_components.quizify.game.scoring import (
+                calculate_podium,  # noqa: PLC0415
+            )
+
+            podium = calculate_podium(all_players)
+
+        cached_superlatives = game_state.get_finale_superlatives()
+        superlatives = (
+            cached_superlatives
+            if cached_superlatives is not None
+            else compute_superlatives(all_players)
+        )
+        awards = [s.to_dict() for s in superlatives]
         finale_msg = serialize_finale(podium, all_players, superlatives=awards)
         await self._conn.broadcast(finale_msg)
 

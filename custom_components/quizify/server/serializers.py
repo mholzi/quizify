@@ -205,11 +205,14 @@ def serialize_finale(
             _rank = i + 1
             _prev = p.score
         podium_entries.append({"rank": _rank, "name": p.name, "score": p.score})
+    # ``leaderboard`` and ``all_players`` carry the identical sorted list —
+    # serialize it once instead of twice (#415).
+    lb = serialize_leaderboard(all_players)
     result = {
         "type": "finale",
         "podium": podium_entries,
-        "leaderboard": serialize_leaderboard(all_players),
-        "all_players": serialize_leaderboard(all_players),
+        "leaderboard": lb,
+        "all_players": lb,
     }
     if superlatives:
         result["superlatives"] = superlatives

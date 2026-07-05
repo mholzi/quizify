@@ -253,6 +253,24 @@ class RoundMessageBuilder:
         if not summary:
             return None
 
+        # Memoize the built dict per round (#414). This method is
+        # recipient-independent — it is called once for the live broadcast and
+        # again for every join/reconnect/get_state projection during
+        # ANSWER_REVEAL — so recomputing it (O(P) each, O(P²) under a reconnect
+        # storm) is wasted work. Keyed on (game_id, round); invalidated by
+        # ``start_next_question``/``reset_to_lobby``. Callers treat the returned
+        # dict read-only or ``dict()``-copy it (``project_snapshot_for_player``
+        # copies before merging), so sharing the cached instance is safe. The
+        # cache accessors are resolved via getattr so lightweight test doubles
+        # that don't implement them simply skip memoization.
+        get_cached = getattr(game_state, "get_cached_round_summary_msg", None)
+        store_cached = getattr(game_state, "store_round_summary_msg", None)
+        cache_key = (getattr(game_state, "game_id", None), game_state.round)
+        if get_cached is not None:
+            cached = get_cached(cache_key)
+            if cached is not None:
+                return cached
+
         question = summary.question
 
         # Estimate rounds (#275) carry no shuffled answers and no correct-tile
@@ -264,7 +282,7 @@ class RoundMessageBuilder:
             leaderboard = serialize_leaderboard(game_state.get_players())
             players_list = serialize_player_list(game_state.get_players())
             last_round_est = game_state.round >= game_state.total_rounds
-            return serialize_round_summary(
+            est_msg = serialize_round_summary(
                 correct_answer_index=-1,
                 correct_answer_index_original=-1,
                 correct_answer_text=summary.correct_answer.text,
@@ -281,6 +299,9 @@ class RoundMessageBuilder:
                 question_type=question.type,
                 estimate=summary.estimate,
             )
+            if store_cached is not None:
+                store_cached(cache_key, est_msg)
+            return est_msg
 
         # Find the correct answer's shuffled index (canonical) AND its
         # original index in question.answers — dashboard needs the latter
@@ -373,7 +394,7 @@ class RoundMessageBuilder:
         players_list = serialize_player_list(game_state.get_players())
         last_round = game_state.round >= game_state.total_rounds
 
-        return serialize_round_summary(
+        msg = serialize_round_summary(
             correct_answer_index=correct_shuffled_idx,
             correct_answer_index_original=correct_original_idx,
             correct_answer_text=summary.correct_answer.text,
@@ -388,3 +409,6 @@ class RoundMessageBuilder:
             last_round=last_round,
             question_id=summary.question.id,
         )
+        if store_cached is not None:
+            store_cached(cache_key, msg)
+        return msg
