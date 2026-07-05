@@ -80,7 +80,7 @@ class QuizifyAnalytics:
         # full O(n) passes over up to 1000 records. Cache value is
         # ``(fingerprint, result)`` where fingerprint = (total_games,
         # last ended_at); a mismatch (append or prune) recomputes.
-        self._metrics_cache: dict[str, tuple[tuple[int, int], dict[str, Any]]] = {}
+        self._metrics_cache: dict[str, tuple[tuple[int, int, int], dict[str, Any]]] = {}
 
     def _empty_data(self) -> AnalyticsData:
         """Return empty analytics data structure."""
