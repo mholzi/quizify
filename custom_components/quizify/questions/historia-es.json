@@ -1,0 +1,3158 @@
+{
+  "name": "Historia",
+  "language": "es",
+  "version": "1.0",
+  "theme": "history",
+  "questions": [
+    {
+      "id": "his_es_001",
+      "question": "¿En qué año llegó Cristóbal Colón por primera vez a América?",
+      "answers": [
+        {
+          "text": "1492",
+          "correct": true
+        },
+        {
+          "text": "1512",
+          "correct": false
+        },
+        {
+          "text": "1453",
+          "correct": false
+        }
+      ],
+      "difficulty": "easy",
+      "fun_fact": "Colón desembarcó el 12 de octubre de 1492 en la isla de Guanahaní, en las actuales Bahamas, creyendo haber llegado a las Indias.",
+      "category": "Historia"
+    },
+    {
+      "id": "his_es_002",
+      "question": "¿Qué civilización antigua construyó las pirámides de Guiza?",
+      "answers": [
+        {
+          "text": "Los egipcios",
+          "correct": true
+        },
+        {
+          "text": "Los romanos",
+          "correct": false
+        },
+        {
+          "text": "Los griegos",
+          "correct": false
+        }
+      ],
+      "difficulty": "easy",
+      "fun_fact": "La Gran Pirámide de Guiza, construida hacia el 2560 a. C., fue la estructura más alta hecha por el hombre durante casi 4000 años.",
+      "category": "Historia"
+    },
+    {
+      "id": "his_es_003",
+      "question": "¿Qué imperio precolombino tenía su capital en Tenochtitlan?",
+      "answers": [
+        {
+          "text": "El Imperio azteca",
+          "correct": true
+        },
+        {
+          "text": "El Imperio inca",
+          "correct": false
+        },
+        {
+          "text": "La civilización maya",
+          "correct": false
+        }
+      ],
+      "difficulty": "easy",
+      "fun_fact": "Tenochtitlan fue fundada en 1325 sobre un islote del lago Texcoco; hoy sus ruinas se encuentran bajo la Ciudad de México.",
+      "category": "Historia"
+    },
+    {
+      "id": "his_es_004",
+      "question": "¿Quién fue el primer emperador del Imperio romano?",
+      "answers": [
+        {
+          "text": "Augusto",
+          "correct": true
+        },
+        {
+          "text": "Julio César",
+          "correct": false
+        },
+        {
+          "text": "Nerón",
+          "correct": false
+        }
+      ],
+      "difficulty": "medium",
+      "fun_fact": "Octavio recibió el título de Augusto en el año 27 a. C., marcando el inicio del Imperio romano tras siglos de república.",
+      "category": "Historia"
+    },
+    {
+      "id": "his_es_005",
+      "question": "¿En qué año cayó el Muro de Berlín?",
+      "answers": [
+        {
+          "text": "1989",
+          "correct": true
+        },
+        {
+          "text": "1991",
+          "correct": false
+        },
+        {
+          "text": "1985",
+          "correct": false
+        }
+      ],
+      "difficulty": "easy",
+      "fun_fact": "La caída del Muro de Berlín el 9 de noviembre de 1989 simbolizó el fin de la Guerra Fría y aceleró la reunificación alemana.",
+      "category": "Historia"
+    },
+    {
+      "id": "his_es_006",
+      "question": "¿Qué conquistador español derrotó al Imperio azteca?",
+      "answers": [
+        {
+          "text": "Hernán Cortés",
+          "correct": true
+        },
+        {
+          "text": "Francisco Pizarro",
+          "correct": false
+        },
+        {
+          "text": "Vasco Núñez de Balboa",
+          "correct": false
+        }
+      ],
+      "difficulty": "easy",
+      "fun_fact": "Hernán Cortés tomó Tenochtitlan en 1521 tras aliarse con pueblos enemigos de los aztecas, como los tlaxcaltecas.",
+      "category": "Historia"
+    },
+    {
+      "id": "his_es_007",
+      "question": "¿Qué conquistador español conquistó el Imperio inca?",
+      "answers": [
+        {
+          "text": "Francisco Pizarro",
+          "correct": true
+        },
+        {
+          "text": "Hernán Cortés",
+          "correct": false
+        },
+        {
+          "text": "Diego de Almagro",
+          "correct": false
+        }
+      ],
+      "difficulty": "medium",
+      "fun_fact": "Pizarro capturó al inca Atahualpa en Cajamarca en 1532 y lo ejecutó al año siguiente, pese al pago de un cuantioso rescate en oro.",
+      "category": "Historia"
+    },
+    {
+      "id": "his_es_008",
+      "question": "¿En qué año comenzó la Primera Guerra Mundial?",
+      "answers": [
+        {
+          "text": "1914",
+          "correct": true
+        },
+        {
+          "text": "1918",
+          "correct": false
+        },
+        {
+          "text": "1912",
+          "correct": false
+        }
+      ],
+      "difficulty": "easy",
+      "fun_fact": "La Primera Guerra Mundial estalló tras el asesinato del archiduque Francisco Fernando de Austria en Sarajevo en junio de 1914.",
+      "category": "Historia"
+    },
+    {
+      "id": "his_es_009",
+      "question": "¿En qué año terminó la Segunda Guerra Mundial?",
+      "answers": [
+        {
+          "text": "1945",
+          "correct": true
+        },
+        {
+          "text": "1943",
+          "correct": false
+        },
+        {
+          "text": "1947",
+          "correct": false
+        }
+      ],
+      "difficulty": "easy",
+      "fun_fact": "La guerra terminó en Europa en mayo de 1945 y en el Pacífico en septiembre, tras las bombas atómicas de Hiroshima y Nagasaki.",
+      "category": "Historia"
+    },
+    {
+      "id": "his_es_010",
+      "question": "¿Qué famoso general cartaginés cruzó los Alpes con elefantes?",
+      "answers": [
+        {
+          "text": "Aníbal",
+          "correct": true
+        },
+        {
+          "text": "Escipión",
+          "correct": false
+        },
+        {
+          "text": "Espartaco",
+          "correct": false
+        }
+      ],
+      "difficulty": "medium",
+      "fun_fact": "Aníbal cruzó los Alpes en el 218 a. C. durante la Segunda Guerra Púnica para atacar Roma desde el norte de Italia.",
+      "category": "Historia"
+    },
+    {
+      "id": "his_es_011",
+      "question": "¿Qué reina egipcia mantuvo relaciones con Julio César y Marco Antonio?",
+      "answers": [
+        {
+          "text": "Cleopatra",
+          "correct": true
+        },
+        {
+          "text": "Nefertiti",
+          "correct": false
+        },
+        {
+          "text": "Hatshepsut",
+          "correct": false
+        }
+      ],
+      "difficulty": "easy",
+      "fun_fact": "Cleopatra VII fue la última faraona de Egipto; con su muerte en el 30 a. C. el país quedó bajo dominio romano.",
+      "category": "Historia"
+    },
+    {
+      "id": "his_es_012",
+      "question": "¿Qué documento firmó el rey Juan de Inglaterra en 1215?",
+      "answers": [
+        {
+          "text": "La Carta Magna",
+          "correct": true
+        },
+        {
+          "text": "La Declaración de Independencia",
+          "correct": false
+        },
+        {
+          "text": "El Tratado de Versalles",
+          "correct": false
+        }
+      ],
+      "difficulty": "medium",
+      "fun_fact": "La Carta Magna limitó el poder del rey y es considerada un precedente fundamental de las libertades constitucionales modernas.",
+      "category": "Historia"
+    },
+    {
+      "id": "his_es_013",
+      "question": "¿Quiénes fueron los Reyes Católicos que financiaron el viaje de Colón?",
+      "answers": [
+        {
+          "text": "Isabel de Castilla y Fernando de Aragón",
+          "correct": true
+        },
+        {
+          "text": "Carlos I y Juana de Castilla",
+          "correct": false
+        },
+        {
+          "text": "Felipe II y María Tudor",
+          "correct": false
+        }
+      ],
+      "difficulty": "medium",
+      "fun_fact": "En 1492 los Reyes Católicos culminaron la Reconquista con la toma de Granada y patrocinaron el primer viaje de Colón.",
+      "category": "Historia"
+    },
+    {
+      "id": "his_es_014",
+      "question": "¿En qué año se produjo la Revolución francesa?",
+      "answers": [
+        {
+          "text": "1789",
+          "correct": true
+        },
+        {
+          "text": "1776",
+          "correct": false
+        },
+        {
+          "text": "1804",
+          "correct": false
+        }
+      ],
+      "difficulty": "easy",
+      "fun_fact": "La toma de la Bastilla el 14 de julio de 1789 se considera el inicio simbólico de la Revolución francesa.",
+      "category": "Historia"
+    },
+    {
+      "id": "his_es_015",
+      "question": "¿Quién lideró el Imperio francés y fue derrotado en Waterloo?",
+      "answers": [
+        {
+          "text": "Napoleón Bonaparte",
+          "correct": true
+        },
+        {
+          "text": "Luis XIV",
+          "correct": false
+        },
+        {
+          "text": "Robespierre",
+          "correct": false
+        }
+      ],
+      "difficulty": "easy",
+      "fun_fact": "La batalla de Waterloo, en 1815, marcó la derrota definitiva de Napoleón, que fue desterrado a la isla de Santa Elena.",
+      "category": "Historia"
+    },
+    {
+      "id": "his_es_016",
+      "question": "¿Qué civilización desarrolló un avanzado calendario y escritura en la selva de Mesoamérica?",
+      "answers": [
+        {
+          "text": "Los mayas",
+          "correct": true
+        },
+        {
+          "text": "Los incas",
+          "correct": false
+        },
+        {
+          "text": "Los olmecas",
+          "correct": false
+        }
+      ],
+      "difficulty": "medium",
+      "fun_fact": "Los mayas desarrollaron un sistema de escritura jeroglífica completo y calendarios de gran precisión astronómica.",
+      "category": "Historia"
+    },
+    {
+      "id": "his_es_017",
+      "question": "¿Cuál era la capital del Imperio inca?",
+      "answers": [
+        {
+          "text": "Cusco",
+          "correct": true
+        },
+        {
+          "text": "Lima",
+          "correct": false
+        },
+        {
+          "text": "Quito",
+          "correct": false
+        }
+      ],
+      "difficulty": "medium",
+      "fun_fact": "Cusco, en el actual Perú, era considerada por los incas el ombligo del mundo y centro de su vasto imperio andino.",
+      "category": "Historia"
+    },
+    {
+      "id": "his_es_018",
+      "question": "¿Qué emperador romano legalizó el cristianismo con el Edicto de Milán?",
+      "answers": [
+        {
+          "text": "Constantino",
+          "correct": true
+        },
+        {
+          "text": "Trajano",
+          "correct": false
+        },
+        {
+          "text": "Diocleciano",
+          "correct": false
+        }
+      ],
+      "difficulty": "medium",
+      "fun_fact": "El Edicto de Milán, del año 313, concedió libertad de culto a los cristianos tras siglos de persecuciones en el Imperio.",
+      "category": "Historia"
+    },
+    {
+      "id": "his_es_019",
+      "question": "¿En qué año cayó el Imperio romano de Occidente?",
+      "answers": [
+        {
+          "text": "476 d. C.",
+          "correct": true
+        },
+        {
+          "text": "410 d. C.",
+          "correct": false
+        },
+        {
+          "text": "532 d. C.",
+          "correct": false
+        }
+      ],
+      "difficulty": "hard",
+      "fun_fact": "En el 476 el caudillo germano Odoacro depuso a Rómulo Augústulo, considerado el último emperador romano de Occidente.",
+      "category": "Historia"
+    },
+    {
+      "id": "his_es_020",
+      "question": "¿Qué explorador portugués dio la primera vuelta al mundo, completada tras su muerte?",
+      "answers": [
+        {
+          "text": "Fernando de Magallanes",
+          "correct": true
+        },
+        {
+          "text": "Vasco de Gama",
+          "correct": false
+        },
+        {
+          "text": "Bartolomé Díaz",
+          "correct": false
+        }
+      ],
+      "difficulty": "medium",
+      "fun_fact": "Magallanes murió en Filipinas en 1521; Juan Sebastián Elcano completó la primera circunnavegación en 1522.",
+      "category": "Historia"
+    },
+    {
+      "id": "his_es_021",
+      "question": "¿Qué guerra enfrentó a Atenas y Esparta en la antigua Grecia?",
+      "answers": [
+        {
+          "text": "La Guerra del Peloponeso",
+          "correct": true
+        },
+        {
+          "text": "Las Guerras Púnicas",
+          "correct": false
+        },
+        {
+          "text": "Las Guerras Médicas",
+          "correct": false
+        }
+      ],
+      "difficulty": "hard",
+      "fun_fact": "La Guerra del Peloponeso (431-404 a. C.) terminó con la victoria de Esparta y el declive de la hegemonía ateniense.",
+      "category": "Historia"
+    },
+    {
+      "id": "his_es_022",
+      "question": "¿Quién fue el conquistador macedonio que creó un vasto imperio en el siglo IV a. C.?",
+      "answers": [
+        {
+          "text": "Alejandro Magno",
+          "correct": true
+        },
+        {
+          "text": "Pericles",
+          "correct": false
+        },
+        {
+          "text": "Leónidas",
+          "correct": false
+        }
+      ],
+      "difficulty": "easy",
+      "fun_fact": "Alejandro Magno llegó hasta la India y difundió la cultura helenística; murió a los 32 años en Babilonia en el 323 a. C.",
+      "category": "Historia"
+    },
+    {
+      "id": "his_es_023",
+      "question": "¿Qué rey español encargó la construcción del Monasterio de El Escorial?",
+      "answers": [
+        {
+          "text": "Felipe II",
+          "correct": true
+        },
+        {
+          "text": "Carlos III",
+          "correct": false
+        },
+        {
+          "text": "Fernando VII",
+          "correct": false
+        }
+      ],
+      "difficulty": "medium",
+      "fun_fact": "Felipe II mandó construir El Escorial en el siglo XVI como palacio, monasterio y panteón de los reyes de España.",
+      "category": "Historia"
+    },
+    {
+      "id": "his_es_024",
+      "question": "¿Qué peste diezmó a Europa en el siglo XIV?",
+      "answers": [
+        {
+          "text": "La peste negra",
+          "correct": true
+        },
+        {
+          "text": "La gripe española",
+          "correct": false
+        },
+        {
+          "text": "El cólera",
+          "correct": false
+        }
+      ],
+      "difficulty": "medium",
+      "fun_fact": "La peste negra mató entre un tercio y la mitad de la población europea entre 1347 y 1351.",
+      "category": "Historia"
+    },
+    {
+      "id": "his_es_025",
+      "question": "¿En qué año declararon su independencia las Trece Colonias de Estados Unidos?",
+      "answers": [
+        {
+          "text": "1776",
+          "correct": true
+        },
+        {
+          "text": "1789",
+          "correct": false
+        },
+        {
+          "text": "1783",
+          "correct": false
+        }
+      ],
+      "difficulty": "easy",
+      "fun_fact": "La Declaración de Independencia se firmó el 4 de julio de 1776, fecha que se celebra como fiesta nacional en EE. UU.",
+      "category": "Historia"
+    },
+    {
+      "id": "his_es_026",
+      "question": "¿Quién fue el primer presidente de los Estados Unidos?",
+      "answers": [
+        {
+          "text": "George Washington",
+          "correct": true
+        },
+        {
+          "text": "Thomas Jefferson",
+          "correct": false
+        },
+        {
+          "text": "Abraham Lincoln",
+          "correct": false
+        }
+      ],
+      "difficulty": "easy",
+      "fun_fact": "George Washington asumió la presidencia en 1789 tras liderar el ejército continental en la Guerra de Independencia.",
+      "category": "Historia"
+    },
+    {
+      "id": "his_es_027",
+      "question": "¿Qué líder de la independencia es conocido como 'El Libertador' en Sudamérica?",
+      "answers": [
+        {
+          "text": "Simón Bolívar",
+          "correct": true
+        },
+        {
+          "text": "José de San Martín",
+          "correct": false
+        },
+        {
+          "text": "Bernardo O'Higgins",
+          "correct": false
+        }
+      ],
+      "difficulty": "easy",
+      "fun_fact": "Simón Bolívar contribuyó a la independencia de Venezuela, Colombia, Ecuador, Perú y Bolivia, país que lleva su nombre.",
+      "category": "Historia"
+    },
+    {
+      "id": "his_es_028",
+      "question": "¿Qué imperio dominó gran parte del Mediterráneo oriental con capital en Constantinopla?",
+      "answers": [
+        {
+          "text": "El Imperio bizantino",
+          "correct": true
+        },
+        {
+          "text": "El Imperio otomano",
+          "correct": false
+        },
+        {
+          "text": "El Imperio persa",
+          "correct": false
+        }
+      ],
+      "difficulty": "medium",
+      "fun_fact": "El Imperio bizantino fue la continuación del Imperio romano de Oriente y sobrevivió mil años, hasta 1453.",
+      "category": "Historia"
+    },
+    {
+      "id": "his_es_029",
+      "question": "¿En qué año conquistaron los otomanos Constantinopla?",
+      "answers": [
+        {
+          "text": "1453",
+          "correct": true
+        },
+        {
+          "text": "1492",
+          "correct": false
+        },
+        {
+          "text": "1204",
+          "correct": false
+        }
+      ],
+      "difficulty": "medium",
+      "fun_fact": "La caída de Constantinopla en 1453 ante Mehmed II puso fin al Imperio bizantino y se toma como fin de la Edad Media.",
+      "category": "Historia"
+    },
+    {
+      "id": "his_es_030",
+      "question": "¿Qué artista italiano pintó la Capilla Sixtina?",
+      "answers": [
+        {
+          "text": "Miguel Ángel",
+          "correct": true
+        },
+        {
+          "text": "Leonardo da Vinci",
+          "correct": false
+        },
+        {
+          "text": "Rafael",
+          "correct": false
+        }
+      ],
+      "difficulty": "medium",
+      "fun_fact": "Miguel Ángel pintó la bóveda de la Capilla Sixtina entre 1508 y 1512, una obra cumbre del Renacimiento.",
+      "category": "Historia"
+    },
+    {
+      "id": "his_es_031",
+      "question": "¿Quién pintó 'La Mona Lisa'?",
+      "answers": [
+        {
+          "text": "Leonardo da Vinci",
+          "correct": true
+        },
+        {
+          "text": "Sandro Botticelli",
+          "correct": false
+        },
+        {
+          "text": "Tiziano",
+          "correct": false
+        }
+      ],
+      "difficulty": "easy",
+      "fun_fact": "Leonardo da Vinci pintó 'La Gioconda' hacia 1503; hoy se exhibe en el Museo del Louvre de París.",
+      "category": "Historia"
+    },
+    {
+      "id": "his_es_032",
+      "question": "¿Qué monje inició la Reforma protestante en 1517?",
+      "answers": [
+        {
+          "text": "Martín Lutero",
+          "correct": true
+        },
+        {
+          "text": "Juan Calvino",
+          "correct": false
+        },
+        {
+          "text": "Enrique VIII",
+          "correct": false
+        }
+      ],
+      "difficulty": "medium",
+      "fun_fact": "Martín Lutero clavó sus 95 tesis en Wittenberg criticando la venta de indulgencias por la Iglesia católica.",
+      "category": "Historia"
+    },
+    {
+      "id": "his_es_033",
+      "question": "¿Qué guerra civil española comenzó en 1936?",
+      "answers": [
+        {
+          "text": "La Guerra Civil española",
+          "correct": true
+        },
+        {
+          "text": "La Guerra de la Independencia",
+          "correct": false
+        },
+        {
+          "text": "Las Guerras Carlistas",
+          "correct": false
+        }
+      ],
+      "difficulty": "easy",
+      "fun_fact": "La Guerra Civil española (1936-1939) terminó con la victoria del bando de Franco, que gobernó España hasta 1975.",
+      "category": "Historia"
+    },
+    {
+      "id": "his_es_034",
+      "question": "¿Quién gobernó España como dictador entre 1939 y 1975?",
+      "answers": [
+        {
+          "text": "Francisco Franco",
+          "correct": true
+        },
+        {
+          "text": "Miguel Primo de Rivera",
+          "correct": false
+        },
+        {
+          "text": "Manuel Azaña",
+          "correct": false
+        }
+      ],
+      "difficulty": "easy",
+      "fun_fact": "Tras la muerte de Franco en 1975, España inició una transición hacia la democracia con el rey Juan Carlos I.",
+      "category": "Historia"
+    },
+    {
+      "id": "his_es_035",
+      "question": "¿En qué guerra ocurrió el desembarco de Normandía?",
+      "answers": [
+        {
+          "text": "La Segunda Guerra Mundial",
+          "correct": true
+        },
+        {
+          "text": "La Primera Guerra Mundial",
+          "correct": false
+        },
+        {
+          "text": "La Guerra de Corea",
+          "correct": false
+        }
+      ],
+      "difficulty": "easy",
+      "fun_fact": "El Día D, 6 de junio de 1944, los Aliados desembarcaron en Normandía para liberar Europa occidental de los nazis.",
+      "category": "Historia"
+    },
+    {
+      "id": "his_es_036",
+      "question": "¿Qué líder alemán encabezó el régimen nazi durante la Segunda Guerra Mundial?",
+      "answers": [
+        {
+          "text": "Adolf Hitler",
+          "correct": true
+        },
+        {
+          "text": "Otto von Bismarck",
+          "correct": false
+        },
+        {
+          "text": "Heinrich Himmler",
+          "correct": false
+        }
+      ],
+      "difficulty": "easy",
+      "fun_fact": "Hitler llegó al poder en 1933 como canciller de Alemania y se suicidó en Berlín en abril de 1945.",
+      "category": "Historia"
+    },
+    {
+      "id": "his_es_037",
+      "question": "¿Qué antiguo pueblo desarrolló la democracia en la ciudad de Atenas?",
+      "answers": [
+        {
+          "text": "Los griegos",
+          "correct": true
+        },
+        {
+          "text": "Los romanos",
+          "correct": false
+        },
+        {
+          "text": "Los fenicios",
+          "correct": false
+        }
+      ],
+      "difficulty": "easy",
+      "fun_fact": "La democracia ateniense, desarrollada en el siglo V a. C., permitía a los ciudadanos varones libres votar en la asamblea.",
+      "category": "Historia"
+    },
+    {
+      "id": "his_es_038",
+      "question": "¿Qué muralla se construyó para proteger China de invasiones del norte?",
+      "answers": [
+        {
+          "text": "La Gran Muralla China",
+          "correct": true
+        },
+        {
+          "text": "El Muro de Adriano",
+          "correct": false
+        },
+        {
+          "text": "La Línea Maginot",
+          "correct": false
+        }
+      ],
+      "difficulty": "easy",
+      "fun_fact": "La Gran Muralla China se construyó a lo largo de siglos y se extiende por miles de kilómetros a través del norte de China.",
+      "category": "Historia"
+    },
+    {
+      "id": "his_es_039",
+      "question": "¿Qué explorador portugués fue el primero en llegar a la India por mar rodeando África?",
+      "answers": [
+        {
+          "text": "Vasco de Gama",
+          "correct": true
+        },
+        {
+          "text": "Fernando de Magallanes",
+          "correct": false
+        },
+        {
+          "text": "Cristóbal Colón",
+          "correct": false
+        }
+      ],
+      "difficulty": "medium",
+      "fun_fact": "Vasco de Gama alcanzó Calicut, en la India, en 1498, abriendo la ruta marítima de las especias para Portugal.",
+      "category": "Historia"
+    },
+    {
+      "id": "his_es_040",
+      "question": "¿Qué tratado de 1494 repartió el Nuevo Mundo entre España y Portugal?",
+      "answers": [
+        {
+          "text": "El Tratado de Tordesillas",
+          "correct": true
+        },
+        {
+          "text": "La Paz de Westfalia",
+          "correct": false
+        },
+        {
+          "text": "El Tratado de Utrecht",
+          "correct": false
+        }
+      ],
+      "difficulty": "hard",
+      "fun_fact": "El Tratado de Tordesillas trazó una línea de reparto que explica por qué Brasil quedó bajo dominio portugués.",
+      "category": "Historia"
+    },
+    {
+      "id": "his_es_041",
+      "question": "¿Quién fue el líder no violento de la independencia de la India?",
+      "answers": [
+        {
+          "text": "Mahatma Gandhi",
+          "correct": true
+        },
+        {
+          "text": "Jawaharlal Nehru",
+          "correct": false
+        },
+        {
+          "text": "Nelson Mandela",
+          "correct": false
+        }
+      ],
+      "difficulty": "easy",
+      "fun_fact": "Gandhi promovió la resistencia pacífica y la desobediencia civil; la India logró su independencia del Reino Unido en 1947.",
+      "category": "Historia"
+    },
+    {
+      "id": "his_es_042",
+      "question": "¿Qué líder sudafricano luchó contra el apartheid y llegó a ser presidente?",
+      "answers": [
+        {
+          "text": "Nelson Mandela",
+          "correct": true
+        },
+        {
+          "text": "Desmond Tutu",
+          "correct": false
+        },
+        {
+          "text": "Kwame Nkrumah",
+          "correct": false
+        }
+      ],
+      "difficulty": "easy",
+      "fun_fact": "Mandela pasó 27 años en prisión y en 1994 se convirtió en el primer presidente negro de Sudáfrica.",
+      "category": "Historia"
+    },
+    {
+      "id": "his_es_043",
+      "question": "¿Qué acontecimiento marcó el inicio de la Edad Contemporánea según muchos historiadores?",
+      "answers": [
+        {
+          "text": "La Revolución francesa",
+          "correct": true
+        },
+        {
+          "text": "La caída de Constantinopla",
+          "correct": false
+        },
+        {
+          "text": "El descubrimiento de América",
+          "correct": false
+        }
+      ],
+      "difficulty": "hard",
+      "fun_fact": "La Revolución francesa de 1789 suele tomarse como frontera entre la Edad Moderna y la Edad Contemporánea.",
+      "category": "Historia"
+    },
+    {
+      "id": "his_es_044",
+      "question": "¿Qué presidente estadounidense abolió la esclavitud durante la Guerra de Secesión?",
+      "answers": [
+        {
+          "text": "Abraham Lincoln",
+          "correct": true
+        },
+        {
+          "text": "George Washington",
+          "correct": false
+        },
+        {
+          "text": "Franklin D. Roosevelt",
+          "correct": false
+        }
+      ],
+      "difficulty": "easy",
+      "fun_fact": "Lincoln emitió la Proclamación de Emancipación en 1863; la esclavitud quedó abolida con la Decimotercera Enmienda en 1865.",
+      "category": "Historia"
+    },
+    {
+      "id": "his_es_045",
+      "question": "¿En qué años tuvo lugar la Guerra de Secesión estadounidense?",
+      "answers": [
+        {
+          "text": "1861-1865",
+          "correct": true
+        },
+        {
+          "text": "1775-1783",
+          "correct": false
+        },
+        {
+          "text": "1846-1848",
+          "correct": false
+        }
+      ],
+      "difficulty": "medium",
+      "fun_fact": "La Guerra Civil de Estados Unidos enfrentó a los estados del Norte y del Sur, principalmente por la esclavitud y la unión.",
+      "category": "Historia"
+    },
+    {
+      "id": "his_es_046",
+      "question": "¿Qué imperio fue gobernado por los zares hasta 1917?",
+      "answers": [
+        {
+          "text": "El Imperio ruso",
+          "correct": true
+        },
+        {
+          "text": "El Imperio austrohúngaro",
+          "correct": false
+        },
+        {
+          "text": "El Imperio otomano",
+          "correct": false
+        }
+      ],
+      "difficulty": "medium",
+      "fun_fact": "La Revolución rusa de 1917 derrocó al zar Nicolás II y dio paso a la creación de la Unión Soviética en 1922.",
+      "category": "Historia"
+    },
+    {
+      "id": "his_es_047",
+      "question": "¿Quién lideró la Revolución bolchevique de 1917 en Rusia?",
+      "answers": [
+        {
+          "text": "Vladimir Lenin",
+          "correct": true
+        },
+        {
+          "text": "Iósif Stalin",
+          "correct": false
+        },
+        {
+          "text": "León Trotski",
+          "correct": false
+        }
+      ],
+      "difficulty": "medium",
+      "fun_fact": "Lenin encabezó a los bolcheviques en la Revolución de Octubre, que instauró el primer estado socialista del mundo.",
+      "category": "Historia"
+    },
+    {
+      "id": "his_es_048",
+      "question": "¿Qué revolucionario argentino luchó junto a Fidel Castro en Cuba?",
+      "answers": [
+        {
+          "text": "Ernesto 'Che' Guevara",
+          "correct": true
+        },
+        {
+          "text": "Emiliano Zapata",
+          "correct": false
+        },
+        {
+          "text": "Pancho Villa",
+          "correct": false
+        }
+      ],
+      "difficulty": "medium",
+      "fun_fact": "El Che Guevara participó en la Revolución cubana de 1959 y murió en Bolivia en 1967 intentando extender la guerrilla.",
+      "category": "Historia"
+    },
+    {
+      "id": "his_es_049",
+      "question": "¿En qué año triunfó la Revolución cubana liderada por Fidel Castro?",
+      "answers": [
+        {
+          "text": "1959",
+          "correct": true
+        },
+        {
+          "text": "1953",
+          "correct": false
+        },
+        {
+          "text": "1967",
+          "correct": false
+        }
+      ],
+      "difficulty": "medium",
+      "fun_fact": "El 1 de enero de 1959, Fidel Castro derrocó al dictador Fulgencio Batista tras años de lucha guerrillera en Sierra Maestra.",
+      "category": "Historia"
+    },
+    {
+      "id": "his_es_050",
+      "question": "¿Qué cura mexicano dio el 'Grito de Dolores' en 1810?",
+      "answers": [
+        {
+          "text": "Miguel Hidalgo",
+          "correct": true
+        },
+        {
+          "text": "Benito Juárez",
+          "correct": false
+        },
+        {
+          "text": "Emiliano Zapata",
+          "correct": false
+        }
+      ],
+      "difficulty": "medium",
+      "fun_fact": "El Grito de Dolores del padre Hidalgo inició la guerra de independencia de México, que culminó en 1821.",
+      "category": "Historia"
+    },
+    {
+      "id": "his_es_051",
+      "question": "¿Qué antigua ciudad romana fue sepultada por la erupción del Vesubio en el año 79?",
+      "answers": [
+        {
+          "text": "Pompeya",
+          "correct": true
+        },
+        {
+          "text": "Cartago",
+          "correct": false
+        },
+        {
+          "text": "Éfeso",
+          "correct": false
+        }
+      ],
+      "difficulty": "medium",
+      "fun_fact": "Las cenizas del Vesubio conservaron Pompeya casi intacta, ofreciendo una imagen única de la vida en la antigua Roma.",
+      "category": "Historia"
+    },
+    {
+      "id": "his_es_052",
+      "question": "¿Qué esclavo lideró una gran rebelión contra la República romana?",
+      "answers": [
+        {
+          "text": "Espartaco",
+          "correct": true
+        },
+        {
+          "text": "Aníbal",
+          "correct": false
+        },
+        {
+          "text": "Vercingétorix",
+          "correct": false
+        }
+      ],
+      "difficulty": "hard",
+      "fun_fact": "La rebelión de Espartaco entre el 73 y el 71 a. C. llegó a reunir decenas de miles de esclavos antes de ser aplastada.",
+      "category": "Historia"
+    },
+    {
+      "id": "his_es_053",
+      "question": "¿Qué dinastía construyó gran parte de la Alhambra de Granada?",
+      "answers": [
+        {
+          "text": "La dinastía nazarí",
+          "correct": true
+        },
+        {
+          "text": "La dinastía Habsburgo",
+          "correct": false
+        },
+        {
+          "text": "La dinastía Borbón",
+          "correct": false
+        }
+      ],
+      "difficulty": "hard",
+      "fun_fact": "La Alhambra fue el palacio del reino nazarí de Granada, último bastión musulmán de la península ibérica hasta 1492.",
+      "category": "Historia"
+    },
+    {
+      "id": "his_es_054",
+      "question": "¿Cómo se llama el periodo de dominio musulmán en la península ibérica?",
+      "answers": [
+        {
+          "text": "Al-Ándalus",
+          "correct": true
+        },
+        {
+          "text": "La Hispania romana",
+          "correct": false
+        },
+        {
+          "text": "El Reino visigodo",
+          "correct": false
+        }
+      ],
+      "difficulty": "medium",
+      "fun_fact": "Al-Ándalus se inició con la invasión musulmana de 711 y duró casi ocho siglos, hasta la caída de Granada en 1492.",
+      "category": "Historia"
+    },
+    {
+      "id": "his_es_055",
+      "question": "¿Qué proceso histórico buscó recuperar la península ibérica del dominio musulmán?",
+      "answers": [
+        {
+          "text": "La Reconquista",
+          "correct": true
+        },
+        {
+          "text": "Las Cruzadas",
+          "correct": false
+        },
+        {
+          "text": "La Contrarreforma",
+          "correct": false
+        }
+      ],
+      "difficulty": "medium",
+      "fun_fact": "La Reconquista se extendió durante casi ocho siglos y concluyó con la toma de Granada por los Reyes Católicos en 1492.",
+      "category": "Historia"
+    },
+    {
+      "id": "his_es_056",
+      "question": "¿Qué expediciones militares cristianas medievales buscaron controlar Tierra Santa?",
+      "answers": [
+        {
+          "text": "Las Cruzadas",
+          "correct": true
+        },
+        {
+          "text": "Las Guerras Púnicas",
+          "correct": false
+        },
+        {
+          "text": "La Guerra de los Cien Años",
+          "correct": false
+        }
+      ],
+      "difficulty": "medium",
+      "fun_fact": "La Primera Cruzada comenzó en 1096 y en 1099 los cruzados tomaron Jerusalén tras un largo asedio.",
+      "category": "Historia"
+    },
+    {
+      "id": "his_es_057",
+      "question": "¿Qué guerra entre Inglaterra y Francia duró más de un siglo?",
+      "answers": [
+        {
+          "text": "La Guerra de los Cien Años",
+          "correct": true
+        },
+        {
+          "text": "La Guerra de los Treinta Años",
+          "correct": false
+        },
+        {
+          "text": "La Guerra de las Dos Rosas",
+          "correct": false
+        }
+      ],
+      "difficulty": "hard",
+      "fun_fact": "La Guerra de los Cien Años (1337-1453) enfrentó a Inglaterra y Francia por el trono francés y territorios continentales.",
+      "category": "Historia"
+    },
+    {
+      "id": "his_es_058",
+      "question": "¿Qué joven francesa lideró tropas en la Guerra de los Cien Años y fue quemada en la hoguera?",
+      "answers": [
+        {
+          "text": "Juana de Arco",
+          "correct": true
+        },
+        {
+          "text": "María Antonieta",
+          "correct": false
+        },
+        {
+          "text": "Leonor de Aquitania",
+          "correct": false
+        }
+      ],
+      "difficulty": "medium",
+      "fun_fact": "Juana de Arco fue ejecutada en 1431 y canonizada como santa por la Iglesia católica casi cinco siglos después, en 1920.",
+      "category": "Historia"
+    },
+    {
+      "id": "his_es_059",
+      "question": "¿Qué flota española fue derrotada al intentar invadir Inglaterra en 1588?",
+      "answers": [
+        {
+          "text": "La Armada Invencible",
+          "correct": true
+        },
+        {
+          "text": "La flota de Lepanto",
+          "correct": false
+        },
+        {
+          "text": "La Grande Armée",
+          "correct": false
+        }
+      ],
+      "difficulty": "hard",
+      "fun_fact": "La Armada Invencible de Felipe II fracasó en 1588 por tormentas y por la resistencia de la flota inglesa de Isabel I.",
+      "category": "Historia"
+    },
+    {
+      "id": "his_es_060",
+      "question": "¿En qué batalla naval de 1571 fue derrotada la flota otomana por una coalición cristiana?",
+      "answers": [
+        {
+          "text": "La batalla de Lepanto",
+          "correct": true
+        },
+        {
+          "text": "La batalla de Trafalgar",
+          "correct": false
+        },
+        {
+          "text": "La batalla de Actium",
+          "correct": false
+        }
+      ],
+      "difficulty": "hard",
+      "fun_fact": "En Lepanto participó Miguel de Cervantes, autor del Quijote, que perdió el uso de la mano izquierda en el combate.",
+      "category": "Historia"
+    },
+    {
+      "id": "his_es_061",
+      "question": "¿Quién escribió 'Don Quijote de la Mancha'?",
+      "answers": [
+        {
+          "text": "Miguel de Cervantes",
+          "correct": true
+        },
+        {
+          "text": "Lope de Vega",
+          "correct": false
+        },
+        {
+          "text": "Francisco de Quevedo",
+          "correct": false
+        }
+      ],
+      "difficulty": "easy",
+      "fun_fact": "La primera parte del Quijote se publicó en 1605 y está considerada la primera novela moderna de la literatura universal.",
+      "category": "Historia"
+    },
+    {
+      "id": "his_es_062",
+      "question": "¿Qué imperio precolombino construyó la ciudadela de Machu Picchu?",
+      "answers": [
+        {
+          "text": "El Imperio inca",
+          "correct": true
+        },
+        {
+          "text": "El Imperio azteca",
+          "correct": false
+        },
+        {
+          "text": "La civilización maya",
+          "correct": false
+        }
+      ],
+      "difficulty": "easy",
+      "fun_fact": "Machu Picchu fue construida en el siglo XV en los Andes peruanos y el explorador Hiram Bingham la dio a conocer en 1911.",
+      "category": "Historia"
+    },
+    {
+      "id": "his_es_063",
+      "question": "¿Qué explorador español avistó por primera vez el océano Pacífico desde América?",
+      "answers": [
+        {
+          "text": "Vasco Núñez de Balboa",
+          "correct": true
+        },
+        {
+          "text": "Juan Ponce de León",
+          "correct": false
+        },
+        {
+          "text": "Hernando de Soto",
+          "correct": false
+        }
+      ],
+      "difficulty": "hard",
+      "fun_fact": "En 1513, Balboa cruzó el istmo de Panamá y fue el primer europeo en ver el Pacífico desde el continente americano.",
+      "category": "Historia"
+    },
+    {
+      "id": "his_es_064",
+      "question": "¿Qué rey francés fue conocido como el 'Rey Sol'?",
+      "answers": [
+        {
+          "text": "Luis XIV",
+          "correct": true
+        },
+        {
+          "text": "Luis XVI",
+          "correct": false
+        },
+        {
+          "text": "Francisco I",
+          "correct": false
+        }
+      ],
+      "difficulty": "medium",
+      "fun_fact": "Luis XIV reinó más de 70 años y construyó el suntuoso Palacio de Versalles, símbolo del absolutismo francés.",
+      "category": "Historia"
+    },
+    {
+      "id": "his_es_065",
+      "question": "¿Qué rey y reina de Francia fueron guillotinados durante la Revolución francesa?",
+      "answers": [
+        {
+          "text": "Luis XVI y María Antonieta",
+          "correct": true
+        },
+        {
+          "text": "Luis XIV y María Teresa",
+          "correct": false
+        },
+        {
+          "text": "Carlos X y María Amelia",
+          "correct": false
+        }
+      ],
+      "difficulty": "medium",
+      "fun_fact": "Luis XVI fue ejecutado en enero de 1793 y María Antonieta en octubre del mismo año, en plena Revolución francesa.",
+      "category": "Historia"
+    },
+    {
+      "id": "his_es_066",
+      "question": "¿Qué invención de Gutenberg revolucionó la difusión del conocimiento hacia 1450?",
+      "answers": [
+        {
+          "text": "La imprenta de tipos móviles",
+          "correct": true
+        },
+        {
+          "text": "El papel",
+          "correct": false
+        },
+        {
+          "text": "El telégrafo",
+          "correct": false
+        }
+      ],
+      "difficulty": "medium",
+      "fun_fact": "La imprenta de Gutenberg permitió producir libros en masa; la Biblia fue una de sus primeras obras impresas.",
+      "category": "Historia"
+    },
+    {
+      "id": "his_es_067",
+      "question": "¿En qué país comenzó la Revolución Industrial en el siglo XVIII?",
+      "answers": [
+        {
+          "text": "El Reino Unido",
+          "correct": true
+        },
+        {
+          "text": "Alemania",
+          "correct": false
+        },
+        {
+          "text": "Estados Unidos",
+          "correct": false
+        }
+      ],
+      "difficulty": "medium",
+      "fun_fact": "La Revolución Industrial arrancó en Gran Bretaña con la máquina de vapor y la mecanización de la industria textil.",
+      "category": "Historia"
+    },
+    {
+      "id": "his_es_068",
+      "question": "¿Quién perfeccionó la máquina de vapor impulsando la Revolución Industrial?",
+      "answers": [
+        {
+          "text": "James Watt",
+          "correct": true
+        },
+        {
+          "text": "Thomas Edison",
+          "correct": false
+        },
+        {
+          "text": "Alexander Graham Bell",
+          "correct": false
+        }
+      ],
+      "difficulty": "hard",
+      "fun_fact": "James Watt mejoró notablemente la eficiencia de la máquina de vapor en la década de 1760; la unidad de potencia, el vatio, lleva su nombre.",
+      "category": "Historia"
+    },
+    {
+      "id": "his_es_069",
+      "question": "¿Qué muro dividió Alemania durante la Guerra Fría?",
+      "answers": [
+        {
+          "text": "El Muro de Berlín",
+          "correct": true
+        },
+        {
+          "text": "El Telón de Acero",
+          "correct": false
+        },
+        {
+          "text": "La Línea Maginot",
+          "correct": false
+        }
+      ],
+      "difficulty": "easy",
+      "fun_fact": "El Muro de Berlín se levantó en 1961 y separó la ciudad en dos hasta su caída en 1989.",
+      "category": "Historia"
+    },
+    {
+      "id": "his_es_070",
+      "question": "¿Entre qué dos superpotencias se desarrolló la Guerra Fría?",
+      "answers": [
+        {
+          "text": "Estados Unidos y la Unión Soviética",
+          "correct": true
+        },
+        {
+          "text": "Estados Unidos y China",
+          "correct": false
+        },
+        {
+          "text": "El Reino Unido y Alemania",
+          "correct": false
+        }
+      ],
+      "difficulty": "easy",
+      "fun_fact": "La Guerra Fría fue un enfrentamiento ideológico y político sin combate directo entre ambas potencias, desde 1947 hasta 1991.",
+      "category": "Historia"
+    },
+    {
+      "id": "his_es_071",
+      "question": "¿En qué año llegó el ser humano a la Luna por primera vez?",
+      "answers": [
+        {
+          "text": "1969",
+          "correct": true
+        },
+        {
+          "text": "1961",
+          "correct": false
+        },
+        {
+          "text": "1972",
+          "correct": false
+        }
+      ],
+      "difficulty": "easy",
+      "fun_fact": "El 20 de julio de 1969, Neil Armstrong se convirtió en el primer ser humano en pisar la Luna con la misión Apolo 11.",
+      "category": "Historia"
+    },
+    {
+      "id": "his_es_072",
+      "question": "¿Quién fue el primer ser humano en viajar al espacio?",
+      "answers": [
+        {
+          "text": "Yuri Gagarin",
+          "correct": true
+        },
+        {
+          "text": "Neil Armstrong",
+          "correct": false
+        },
+        {
+          "text": "John Glenn",
+          "correct": false
+        }
+      ],
+      "difficulty": "medium",
+      "fun_fact": "El soviético Yuri Gagarin orbitó la Tierra el 12 de abril de 1961 a bordo de la nave Vostok 1.",
+      "category": "Historia"
+    },
+    {
+      "id": "his_es_073",
+      "question": "¿Qué antigua civilización mesopotámica creó el Código de Hammurabi?",
+      "answers": [
+        {
+          "text": "Babilonia",
+          "correct": true
+        },
+        {
+          "text": "Egipto",
+          "correct": false
+        },
+        {
+          "text": "Persia",
+          "correct": false
+        }
+      ],
+      "difficulty": "hard",
+      "fun_fact": "El Código de Hammurabi, del siglo XVIII a. C., es uno de los conjuntos de leyes escritas más antiguos que se conservan.",
+      "category": "Historia"
+    },
+    {
+      "id": "his_es_074",
+      "question": "¿Qué escritura desarrollaron los antiguos egipcios?",
+      "answers": [
+        {
+          "text": "Los jeroglíficos",
+          "correct": true
+        },
+        {
+          "text": "El cuneiforme",
+          "correct": false
+        },
+        {
+          "text": "El alfabeto latino",
+          "correct": false
+        }
+      ],
+      "difficulty": "easy",
+      "fun_fact": "La Piedra de Rosetta permitió a Champollion descifrar los jeroglíficos egipcios en 1822.",
+      "category": "Historia"
+    },
+    {
+      "id": "his_es_075",
+      "question": "¿Qué pueblo antiguo fue famoso por su comercio marítimo y por difundir el alfabeto?",
+      "answers": [
+        {
+          "text": "Los fenicios",
+          "correct": true
+        },
+        {
+          "text": "Los espartanos",
+          "correct": false
+        },
+        {
+          "text": "Los etruscos",
+          "correct": false
+        }
+      ],
+      "difficulty": "hard",
+      "fun_fact": "Los fenicios fundaron colonias por todo el Mediterráneo, como Cartago, y su alfabeto influyó en el griego y el latino.",
+      "category": "Historia"
+    },
+    {
+      "id": "his_es_076",
+      "question": "¿Qué general romano cruzó el Rubicón y provocó una guerra civil?",
+      "answers": [
+        {
+          "text": "Julio César",
+          "correct": true
+        },
+        {
+          "text": "Pompeyo",
+          "correct": false
+        },
+        {
+          "text": "Marco Aurelio",
+          "correct": false
+        }
+      ],
+      "difficulty": "medium",
+      "fun_fact": "Al cruzar el Rubicón en el 49 a. C., César desafió al Senado; de ahí la expresión 'la suerte está echada'.",
+      "category": "Historia"
+    },
+    {
+      "id": "his_es_077",
+      "question": "¿En qué año fue asesinado Julio César?",
+      "answers": [
+        {
+          "text": "44 a. C.",
+          "correct": true
+        },
+        {
+          "text": "27 a. C.",
+          "correct": false
+        },
+        {
+          "text": "14 d. C.",
+          "correct": false
+        }
+      ],
+      "difficulty": "hard",
+      "fun_fact": "Julio César fue apuñalado en el Senado el 15 de marzo del 44 a. C., los famosos idus de marzo.",
+      "category": "Historia"
+    },
+    {
+      "id": "his_es_078",
+      "question": "¿Qué rey visigodo se convirtió al catolicismo unificando religiosamente Hispania?",
+      "answers": [
+        {
+          "text": "Recaredo",
+          "correct": true
+        },
+        {
+          "text": "Pelayo",
+          "correct": false
+        },
+        {
+          "text": "Wamba",
+          "correct": false
+        }
+      ],
+      "difficulty": "hard",
+      "fun_fact": "El rey Recaredo se convirtió del arrianismo al catolicismo en el III Concilio de Toledo, en el año 589.",
+      "category": "Historia"
+    },
+    {
+      "id": "his_es_079",
+      "question": "¿Qué emperador unió gran parte de Europa occidental y fue coronado en el año 800?",
+      "answers": [
+        {
+          "text": "Carlomagno",
+          "correct": true
+        },
+        {
+          "text": "Otón I",
+          "correct": false
+        },
+        {
+          "text": "Federico Barbarroja",
+          "correct": false
+        }
+      ],
+      "difficulty": "medium",
+      "fun_fact": "Carlomagno fue coronado emperador por el papa León III en el año 800, reviviendo la idea de un imperio en Occidente.",
+      "category": "Historia"
+    },
+    {
+      "id": "his_es_080",
+      "question": "¿Qué sistema social medieval se basaba en la relación entre señores y vasallos?",
+      "answers": [
+        {
+          "text": "El feudalismo",
+          "correct": true
+        },
+        {
+          "text": "El capitalismo",
+          "correct": false
+        },
+        {
+          "text": "El absolutismo",
+          "correct": false
+        }
+      ],
+      "difficulty": "medium",
+      "fun_fact": "En el feudalismo, los señores concedían tierras a cambio de fidelidad y servicio militar de sus vasallos.",
+      "category": "Historia"
+    },
+    {
+      "id": "his_es_081",
+      "question": "¿Qué guerrero y estadista fundó el Imperio mongol en el siglo XIII?",
+      "answers": [
+        {
+          "text": "Gengis Kan",
+          "correct": true
+        },
+        {
+          "text": "Atila",
+          "correct": false
+        },
+        {
+          "text": "Tamerlán",
+          "correct": false
+        }
+      ],
+      "difficulty": "medium",
+      "fun_fact": "Gengis Kan unificó las tribus mongolas y creó el mayor imperio terrestre contiguo de la historia.",
+      "category": "Historia"
+    },
+    {
+      "id": "his_es_082",
+      "question": "¿Qué emperador español heredó también el trono del Sacro Imperio Romano Germánico?",
+      "answers": [
+        {
+          "text": "Carlos I de España y V de Alemania",
+          "correct": true
+        },
+        {
+          "text": "Felipe II",
+          "correct": false
+        },
+        {
+          "text": "Fernando VI",
+          "correct": false
+        }
+      ],
+      "difficulty": "hard",
+      "fun_fact": "Carlos I gobernó un vasto imperio 'donde nunca se ponía el sol' y abdicó en 1556, retirándose al monasterio de Yuste.",
+      "category": "Historia"
+    },
+    {
+      "id": "his_es_083",
+      "question": "¿Qué dinastía real gobierna España en la actualidad?",
+      "answers": [
+        {
+          "text": "Los Borbones",
+          "correct": true
+        },
+        {
+          "text": "Los Habsburgo",
+          "correct": false
+        },
+        {
+          "text": "Los Trastámara",
+          "correct": false
+        }
+      ],
+      "difficulty": "medium",
+      "fun_fact": "La dinastía de los Borbones reina en España desde Felipe V, a comienzos del siglo XVIII, con algunas interrupciones.",
+      "category": "Historia"
+    },
+    {
+      "id": "his_es_084",
+      "question": "¿Qué guerra española de principios del siglo XIX enfrentó a España contra la ocupación napoleónica?",
+      "answers": [
+        {
+          "text": "La Guerra de la Independencia",
+          "correct": true
+        },
+        {
+          "text": "La Guerra de Sucesión",
+          "correct": false
+        },
+        {
+          "text": "La Guerra Civil",
+          "correct": false
+        }
+      ],
+      "difficulty": "medium",
+      "fun_fact": "La Guerra de la Independencia española (1808-1814) inspiró a Goya obras como 'Los fusilamientos del 3 de mayo'.",
+      "category": "Historia"
+    },
+    {
+      "id": "his_es_085",
+      "question": "¿Qué pintor español retrató los horrores de la Guerra de la Independencia?",
+      "answers": [
+        {
+          "text": "Francisco de Goya",
+          "correct": true
+        },
+        {
+          "text": "Diego Velázquez",
+          "correct": false
+        },
+        {
+          "text": "El Greco",
+          "correct": false
+        }
+      ],
+      "difficulty": "medium",
+      "fun_fact": "Goya plasmó la invasión napoleónica en pinturas como 'El 2 de mayo de 1808' y 'Los fusilamientos del 3 de mayo'.",
+      "category": "Historia"
+    },
+    {
+      "id": "his_es_086",
+      "question": "¿Qué pintor español creó la obra 'Las meninas'?",
+      "answers": [
+        {
+          "text": "Diego Velázquez",
+          "correct": true
+        },
+        {
+          "text": "Bartolomé Esteban Murillo",
+          "correct": false
+        },
+        {
+          "text": "Francisco de Zurbarán",
+          "correct": false
+        }
+      ],
+      "difficulty": "medium",
+      "fun_fact": "'Las meninas', pintada por Velázquez en 1656, es una de las obras maestras del Museo del Prado en Madrid.",
+      "category": "Historia"
+    },
+    {
+      "id": "his_es_087",
+      "question": "¿Qué constitución española de 1812 es conocida popularmente como 'La Pepa'?",
+      "answers": [
+        {
+          "text": "La Constitución de Cádiz",
+          "correct": true
+        },
+        {
+          "text": "La Constitución de 1978",
+          "correct": false
+        },
+        {
+          "text": "La Constitución de 1931",
+          "correct": false
+        }
+      ],
+      "difficulty": "hard",
+      "fun_fact": "Se promulgó el 19 de marzo de 1812, día de San José, de ahí el apodo 'La Pepa'; fue una de las primeras constituciones liberales.",
+      "category": "Historia"
+    },
+    {
+      "id": "his_es_088",
+      "question": "¿En qué año se aprobó la actual Constitución democrática de España?",
+      "answers": [
+        {
+          "text": "1978",
+          "correct": true
+        },
+        {
+          "text": "1975",
+          "correct": false
+        },
+        {
+          "text": "1981",
+          "correct": false
+        }
+      ],
+      "difficulty": "medium",
+      "fun_fact": "La Constitución de 1978 consolidó la democracia tras la dictadura franquista y estableció una monarquía parlamentaria.",
+      "category": "Historia"
+    },
+    {
+      "id": "his_es_089",
+      "question": "¿Qué rey de España reinó durante la Transición a la democracia tras la muerte de Franco?",
+      "answers": [
+        {
+          "text": "Juan Carlos I",
+          "correct": true
+        },
+        {
+          "text": "Alfonso XIII",
+          "correct": false
+        },
+        {
+          "text": "Felipe VI",
+          "correct": false
+        }
+      ],
+      "difficulty": "medium",
+      "fun_fact": "Juan Carlos I fue clave en la Transición y en frenar el intento de golpe de Estado del 23 de febrero de 1981.",
+      "category": "Historia"
+    },
+    {
+      "id": "his_es_090",
+      "question": "¿Qué antigua ciudad rival de Roma fue destruida en las Guerras Púnicas?",
+      "answers": [
+        {
+          "text": "Cartago",
+          "correct": true
+        },
+        {
+          "text": "Atenas",
+          "correct": false
+        },
+        {
+          "text": "Alejandría",
+          "correct": false
+        }
+      ],
+      "difficulty": "medium",
+      "fun_fact": "Roma arrasó Cartago en el 146 a. C. al final de la Tercera Guerra Púnica, poniendo fin a su gran rival mediterráneo.",
+      "category": "Historia"
+    },
+    {
+      "id": "his_es_091",
+      "question": "¿Qué famosa batalla enfrentó a 300 espartanos contra el ejército persa?",
+      "answers": [
+        {
+          "text": "La batalla de las Termópilas",
+          "correct": true
+        },
+        {
+          "text": "La batalla de Maratón",
+          "correct": false
+        },
+        {
+          "text": "La batalla de Salamina",
+          "correct": false
+        }
+      ],
+      "difficulty": "medium",
+      "fun_fact": "En las Termópilas, en el 480 a. C., el rey Leónidas y sus espartanos resistieron heroicamente al ejército de Jerjes.",
+      "category": "Historia"
+    },
+    {
+      "id": "his_es_092",
+      "question": "¿Qué imperio construyó una red de calzadas famosas por su frase 'todos los caminos llevan a Roma'?",
+      "answers": [
+        {
+          "text": "El Imperio romano",
+          "correct": true
+        },
+        {
+          "text": "El Imperio persa",
+          "correct": false
+        },
+        {
+          "text": "El Imperio chino",
+          "correct": false
+        }
+      ],
+      "difficulty": "easy",
+      "fun_fact": "Los romanos construyeron miles de kilómetros de calzadas para comunicar y controlar su extenso imperio.",
+      "category": "Historia"
+    },
+    {
+      "id": "his_es_093",
+      "question": "¿Qué civilización es considerada la 'cultura madre' de Mesoamérica, origen de culturas posteriores?",
+      "answers": [
+        {
+          "text": "Los olmecas",
+          "correct": true
+        },
+        {
+          "text": "Los toltecas",
+          "correct": false
+        },
+        {
+          "text": "Los zapotecas",
+          "correct": false
+        }
+      ],
+      "difficulty": "hard",
+      "fun_fact": "Los olmecas florecieron hacia el 1200 a. C. y son célebres por sus colosales cabezas de piedra en el golfo de México.",
+      "category": "Historia"
+    },
+    {
+      "id": "his_es_094",
+      "question": "¿Qué emperador azteca gobernaba a la llegada de Hernán Cortés?",
+      "answers": [
+        {
+          "text": "Moctezuma II",
+          "correct": true
+        },
+        {
+          "text": "Cuauhtémoc",
+          "correct": false
+        },
+        {
+          "text": "Atahualpa",
+          "correct": false
+        }
+      ],
+      "difficulty": "medium",
+      "fun_fact": "Moctezuma II recibió a Cortés en 1519 y murió al año siguiente durante la ocupación española de Tenochtitlan.",
+      "category": "Historia"
+    },
+    {
+      "id": "his_es_095",
+      "question": "¿Qué metal precioso buscaban ansiosamente los conquistadores españoles en América?",
+      "answers": [
+        {
+          "text": "El oro",
+          "correct": true
+        },
+        {
+          "text": "El hierro",
+          "correct": false
+        },
+        {
+          "text": "El estaño",
+          "correct": false
+        }
+      ],
+      "difficulty": "easy",
+      "fun_fact": "La leyenda de 'El Dorado', una ciudad de oro, impulsó numerosas expediciones españolas por el interior de Sudamérica.",
+      "category": "Historia"
+    },
+    {
+      "id": "his_es_096",
+      "question": "¿Qué virreinato español tenía su capital en Lima?",
+      "answers": [
+        {
+          "text": "El Virreinato del Perú",
+          "correct": true
+        },
+        {
+          "text": "El Virreinato de Nueva España",
+          "correct": false
+        },
+        {
+          "text": "El Virreinato del Río de la Plata",
+          "correct": false
+        }
+      ],
+      "difficulty": "hard",
+      "fun_fact": "El Virreinato del Perú, creado en 1542, fue uno de los territorios más ricos del imperio español en América.",
+      "category": "Historia"
+    },
+    {
+      "id": "his_es_097",
+      "question": "¿Qué virreinato español tenía su capital en la Ciudad de México?",
+      "answers": [
+        {
+          "text": "El Virreinato de Nueva España",
+          "correct": true
+        },
+        {
+          "text": "El Virreinato del Perú",
+          "correct": false
+        },
+        {
+          "text": "El Virreinato de Nueva Granada",
+          "correct": false
+        }
+      ],
+      "difficulty": "hard",
+      "fun_fact": "El Virreinato de Nueva España abarcaba México, América Central y territorios que hoy pertenecen al sur de Estados Unidos.",
+      "category": "Historia"
+    },
+    {
+      "id": "his_es_098",
+      "question": "¿Qué general argentino cruzó los Andes para liberar Chile y Perú?",
+      "answers": [
+        {
+          "text": "José de San Martín",
+          "correct": true
+        },
+        {
+          "text": "Simón Bolívar",
+          "correct": false
+        },
+        {
+          "text": "Manuel Belgrano",
+          "correct": false
+        }
+      ],
+      "difficulty": "medium",
+      "fun_fact": "San Martín cruzó la cordillera de los Andes en 1817 con su Ejército de los Andes para independizar Chile del dominio español.",
+      "category": "Historia"
+    },
+    {
+      "id": "his_es_099",
+      "question": "¿Qué país sudamericano lleva el nombre de Simón Bolívar?",
+      "answers": [
+        {
+          "text": "Bolivia",
+          "correct": true
+        },
+        {
+          "text": "Colombia",
+          "correct": false
+        },
+        {
+          "text": "Venezuela",
+          "correct": false
+        }
+      ],
+      "difficulty": "easy",
+      "fun_fact": "Bolivia adoptó su nombre en honor a Simón Bolívar tras declarar su independencia en 1825.",
+      "category": "Historia"
+    },
+    {
+      "id": "his_es_100",
+      "question": "¿Qué presidente indígena mexicano promovió las Leyes de Reforma en el siglo XIX?",
+      "answers": [
+        {
+          "text": "Benito Juárez",
+          "correct": true
+        },
+        {
+          "text": "Porfirio Díaz",
+          "correct": false
+        },
+        {
+          "text": "Antonio López de Santa Anna",
+          "correct": false
+        }
+      ],
+      "difficulty": "hard",
+      "fun_fact": "Benito Juárez, de origen zapoteco, es célebre por su frase 'el respeto al derecho ajeno es la paz'.",
+      "category": "Historia"
+    },
+    {
+      "id": "his_es_101",
+      "question": "¿En qué año estalló la Revolución mexicana?",
+      "answers": [
+        {
+          "text": "En 1910",
+          "correct": true
+        },
+        {
+          "text": "En 1810",
+          "correct": false
+        },
+        {
+          "text": "En 1940",
+          "correct": false
+        }
+      ],
+      "difficulty": "easy",
+      "fun_fact": "La Revolución mexicana comenzó en 1910 contra el largo gobierno de Porfirio Díaz y transformó el país durante una década.",
+      "category": "Historia"
+    },
+    {
+      "id": "his_es_102",
+      "question": "¿Qué líder revolucionario mexicano defendió el lema 'Tierra y Libertad'?",
+      "answers": [
+        {
+          "text": "Emiliano Zapata",
+          "correct": true
+        },
+        {
+          "text": "Venustiano Carranza",
+          "correct": false
+        },
+        {
+          "text": "Francisco Madero",
+          "correct": false
+        }
+      ],
+      "difficulty": "medium",
+      "fun_fact": "Emiliano Zapata lideró a los campesinos del sur de México reclamando el reparto de tierras durante la Revolución.",
+      "category": "Historia"
+    },
+    {
+      "id": "his_es_103",
+      "question": "¿Qué tratado puso fin a la Primera Guerra Mundial en 1919?",
+      "answers": [
+        {
+          "text": "El Tratado de Versalles",
+          "correct": true
+        },
+        {
+          "text": "El Tratado de Tordesillas",
+          "correct": false
+        },
+        {
+          "text": "La Paz de Westfalia",
+          "correct": false
+        }
+      ],
+      "difficulty": "medium",
+      "fun_fact": "El Tratado de Versalles impuso duras condiciones a Alemania, que muchos consideran una de las causas de la Segunda Guerra Mundial.",
+      "category": "Historia"
+    },
+    {
+      "id": "his_es_104",
+      "question": "¿Qué organización internacional se creó en 1945 para preservar la paz mundial?",
+      "answers": [
+        {
+          "text": "La Organización de las Naciones Unidas",
+          "correct": true
+        },
+        {
+          "text": "La Sociedad de Naciones",
+          "correct": false
+        },
+        {
+          "text": "La OTAN",
+          "correct": false
+        }
+      ],
+      "difficulty": "easy",
+      "fun_fact": "La ONU se fundó tras la Segunda Guerra Mundial y hoy reúne a casi todos los países del mundo con sede en Nueva York.",
+      "category": "Historia"
+    },
+    {
+      "id": "his_es_105",
+      "question": "¿Qué país lanzó las bombas atómicas sobre Hiroshima y Nagasaki?",
+      "answers": [
+        {
+          "text": "Estados Unidos",
+          "correct": true
+        },
+        {
+          "text": "La Unión Soviética",
+          "correct": false
+        },
+        {
+          "text": "El Reino Unido",
+          "correct": false
+        }
+      ],
+      "difficulty": "easy",
+      "fun_fact": "Las bombas atómicas se lanzaron en agosto de 1945 y precipitaron la rendición de Japón, fin de la Segunda Guerra Mundial.",
+      "category": "Historia"
+    },
+    {
+      "id": "his_es_106",
+      "question": "¿Qué dictador soviético gobernó la URSS desde los años 1920 hasta 1953?",
+      "answers": [
+        {
+          "text": "Iósif Stalin",
+          "correct": true
+        },
+        {
+          "text": "Nikita Jrushchov",
+          "correct": false
+        },
+        {
+          "text": "Mijaíl Gorbachov",
+          "correct": false
+        }
+      ],
+      "difficulty": "medium",
+      "fun_fact": "Stalin industrializó la URSS a costa de millones de muertes por hambrunas, purgas y campos de trabajo forzado.",
+      "category": "Historia"
+    },
+    {
+      "id": "his_es_107",
+      "question": "¿Qué líder soviético impulsó las reformas de la 'perestroika' y la 'glásnost'?",
+      "answers": [
+        {
+          "text": "Mijaíl Gorbachov",
+          "correct": true
+        },
+        {
+          "text": "Leonid Brézhnev",
+          "correct": false
+        },
+        {
+          "text": "Boris Yeltsin",
+          "correct": false
+        }
+      ],
+      "difficulty": "hard",
+      "fun_fact": "Las reformas de Gorbachov en los años 80 contribuyeron al fin de la Guerra Fría y a la disolución de la URSS en 1991.",
+      "category": "Historia"
+    },
+    {
+      "id": "his_es_108",
+      "question": "¿En qué año se disolvió la Unión Soviética?",
+      "answers": [
+        {
+          "text": "1991",
+          "correct": true
+        },
+        {
+          "text": "1989",
+          "correct": false
+        },
+        {
+          "text": "1985",
+          "correct": false
+        }
+      ],
+      "difficulty": "medium",
+      "fun_fact": "La disolución de la URSS en diciembre de 1991 dio lugar a quince repúblicas independientes, entre ellas Rusia.",
+      "category": "Historia"
+    },
+    {
+      "id": "his_es_109",
+      "question": "¿Qué líder chino proclamó la República Popular China en 1949?",
+      "answers": [
+        {
+          "text": "Mao Zedong",
+          "correct": true
+        },
+        {
+          "text": "Deng Xiaoping",
+          "correct": false
+        },
+        {
+          "text": "Chiang Kai-shek",
+          "correct": false
+        }
+      ],
+      "difficulty": "medium",
+      "fun_fact": "Mao Zedong lideró a los comunistas a la victoria en la guerra civil china y fundó la República Popular el 1 de octubre de 1949.",
+      "category": "Historia"
+    },
+    {
+      "id": "his_es_110",
+      "question": "¿Qué científico publicó la teoría de la evolución por selección natural en 1859?",
+      "answers": [
+        {
+          "text": "Charles Darwin",
+          "correct": true
+        },
+        {
+          "text": "Gregor Mendel",
+          "correct": false
+        },
+        {
+          "text": "Louis Pasteur",
+          "correct": false
+        }
+      ],
+      "difficulty": "medium",
+      "fun_fact": "Darwin publicó 'El origen de las especies' en 1859 tras su viaje por las islas Galápagos a bordo del Beagle.",
+      "category": "Historia"
+    },
+    {
+      "id": "his_es_111",
+      "question": "¿Qué antigua ciudad griega fue famosa por su disciplina militar y sus guerreros?",
+      "answers": [
+        {
+          "text": "Esparta",
+          "correct": true
+        },
+        {
+          "text": "Corinto",
+          "correct": false
+        },
+        {
+          "text": "Tebas",
+          "correct": false
+        }
+      ],
+      "difficulty": "easy",
+      "fun_fact": "En Esparta, los niños se entrenaban desde pequeños en la agogé, un severo sistema educativo orientado a la guerra.",
+      "category": "Historia"
+    },
+    {
+      "id": "his_es_112",
+      "question": "¿Qué famoso filósofo griego fue maestro de Alejandro Magno?",
+      "answers": [
+        {
+          "text": "Aristóteles",
+          "correct": true
+        },
+        {
+          "text": "Platón",
+          "correct": false
+        },
+        {
+          "text": "Sócrates",
+          "correct": false
+        }
+      ],
+      "difficulty": "easy",
+      "fun_fact": "Aristóteles, discípulo de Platón, fundó su propia escuela, el Liceo, y fue tutor del joven Alejandro Magno.",
+      "category": "Historia"
+    },
+    {
+      "id": "his_es_113",
+      "question": "¿Qué filósofo griego fue condenado a beber cicuta en Atenas?",
+      "answers": [
+        {
+          "text": "Sócrates",
+          "correct": true
+        },
+        {
+          "text": "Pitágoras",
+          "correct": false
+        },
+        {
+          "text": "Diógenes",
+          "correct": false
+        }
+      ],
+      "difficulty": "hard",
+      "fun_fact": "Sócrates fue condenado a muerte en el 399 a. C. acusado de corromper a la juventud y no reconocer a los dioses de la ciudad.",
+      "category": "Historia"
+    },
+    {
+      "id": "his_es_114",
+      "question": "¿En qué ciudad griega se celebraron los primeros Juegos Olímpicos de la Antigüedad?",
+      "answers": [
+        {
+          "text": "Olimpia",
+          "correct": true
+        },
+        {
+          "text": "Atenas",
+          "correct": false
+        },
+        {
+          "text": "Delfos",
+          "correct": false
+        }
+      ],
+      "difficulty": "medium",
+      "fun_fact": "Los primeros Juegos Olímpicos se celebraron en Olimpia en el 776 a. C. en honor al dios Zeus.",
+      "category": "Historia"
+    },
+    {
+      "id": "his_es_115",
+      "question": "¿Qué faraona egipcia gobernó Egipto como una de sus pocas mujeres al frente del trono?",
+      "answers": [
+        {
+          "text": "Hatshepsut",
+          "correct": true
+        },
+        {
+          "text": "Cleopatra I",
+          "correct": false
+        },
+        {
+          "text": "Nefertari",
+          "correct": false
+        }
+      ],
+      "difficulty": "hard",
+      "fun_fact": "Hatshepsut gobernó Egipto en el siglo XV a. C. y a menudo se la representaba con los atributos masculinos del faraón.",
+      "category": "Historia"
+    },
+    {
+      "id": "his_es_116",
+      "question": "¿Qué río fue esencial para el desarrollo de la civilización del antiguo Egipto?",
+      "answers": [
+        {
+          "text": "El Nilo",
+          "correct": true
+        },
+        {
+          "text": "El Éufrates",
+          "correct": false
+        },
+        {
+          "text": "El Tigris",
+          "correct": false
+        }
+      ],
+      "difficulty": "easy",
+      "fun_fact": "Las crecidas anuales del Nilo fertilizaban las tierras de cultivo, lo que hizo posible la prosperidad del antiguo Egipto.",
+      "category": "Historia"
+    },
+    {
+      "id": "his_es_117",
+      "question": "¿Entre qué dos ríos surgió la civilización de Mesopotamia?",
+      "answers": [
+        {
+          "text": "El Tigris y el Éufrates",
+          "correct": true
+        },
+        {
+          "text": "El Nilo y el Congo",
+          "correct": false
+        },
+        {
+          "text": "El Indo y el Ganges",
+          "correct": false
+        }
+      ],
+      "difficulty": "medium",
+      "fun_fact": "Mesopotamia significa 'tierra entre ríos' y en ella nacieron algunas de las primeras ciudades de la humanidad.",
+      "category": "Historia"
+    },
+    {
+      "id": "his_es_118",
+      "question": "¿Qué imperio antiguo fue gobernado por Darío y Jerjes?",
+      "answers": [
+        {
+          "text": "El Imperio persa",
+          "correct": true
+        },
+        {
+          "text": "El Imperio babilónico",
+          "correct": false
+        },
+        {
+          "text": "El Imperio egipcio",
+          "correct": false
+        }
+      ],
+      "difficulty": "hard",
+      "fun_fact": "El Imperio persa aqueménida fue uno de los mayores de la Antigüedad hasta ser conquistado por Alejandro Magno.",
+      "category": "Historia"
+    },
+    {
+      "id": "his_es_119",
+      "question": "¿Qué monumento megalítico prehistórico se encuentra en el sur de Inglaterra?",
+      "answers": [
+        {
+          "text": "Stonehenge",
+          "correct": true
+        },
+        {
+          "text": "El Coliseo",
+          "correct": false
+        },
+        {
+          "text": "La Acrópolis",
+          "correct": false
+        }
+      ],
+      "difficulty": "medium",
+      "fun_fact": "Stonehenge se construyó hace unos 5000 años y su función exacta sigue siendo objeto de estudio y debate.",
+      "category": "Historia"
+    },
+    {
+      "id": "his_es_120",
+      "question": "¿Qué imperio precolombino se extendía a lo largo de la cordillera de los Andes?",
+      "answers": [
+        {
+          "text": "El Imperio inca",
+          "correct": true
+        },
+        {
+          "text": "El Imperio azteca",
+          "correct": false
+        },
+        {
+          "text": "El Imperio maya",
+          "correct": false
+        }
+      ],
+      "difficulty": "easy",
+      "fun_fact": "El Imperio inca, llamado Tahuantinsuyo, se extendía por el actual Perú, Ecuador, Bolivia, Chile y Argentina.",
+      "category": "Historia"
+    },
+    {
+      "id": "his_es_121",
+      "question": "¿Qué sistema de nudos usaban los incas para llevar registros?",
+      "answers": [
+        {
+          "text": "El quipu",
+          "correct": true
+        },
+        {
+          "text": "El ábaco",
+          "correct": false
+        },
+        {
+          "text": "El jeroglífico",
+          "correct": false
+        }
+      ],
+      "difficulty": "hard",
+      "fun_fact": "El quipu era un conjunto de cuerdas anudadas que los incas empleaban para registrar cifras y datos administrativos.",
+      "category": "Historia"
+    },
+    {
+      "id": "his_es_122",
+      "question": "¿Qué reino cristiano inició la Reconquista en el norte de la península ibérica?",
+      "answers": [
+        {
+          "text": "El Reino de Asturias",
+          "correct": true
+        },
+        {
+          "text": "El Reino de Granada",
+          "correct": false
+        },
+        {
+          "text": "El Reino de Portugal",
+          "correct": false
+        }
+      ],
+      "difficulty": "hard",
+      "fun_fact": "Se considera que la Reconquista comenzó con la victoria de Don Pelayo en Covadonga, hacia el año 722.",
+      "category": "Historia"
+    },
+    {
+      "id": "his_es_123",
+      "question": "¿Qué caballero castellano medieval es el protagonista del 'Cantar de mio Cid'?",
+      "answers": [
+        {
+          "text": "Rodrigo Díaz de Vivar",
+          "correct": true
+        },
+        {
+          "text": "Don Pelayo",
+          "correct": false
+        },
+        {
+          "text": "Guzmán el Bueno",
+          "correct": false
+        }
+      ],
+      "difficulty": "hard",
+      "fun_fact": "El Cid conquistó Valencia en 1094 y su figura es protagonista del cantar de gesta más importante de la literatura española.",
+      "category": "Historia"
+    },
+    {
+      "id": "his_es_124",
+      "question": "¿Qué periodo cultural europeo revalorizó el arte y el saber de la Antigüedad clásica?",
+      "answers": [
+        {
+          "text": "El Renacimiento",
+          "correct": true
+        },
+        {
+          "text": "El Romanticismo",
+          "correct": false
+        },
+        {
+          "text": "La Ilustración",
+          "correct": false
+        }
+      ],
+      "difficulty": "easy",
+      "fun_fact": "El Renacimiento surgió en Italia en el siglo XV y dio figuras como Leonardo da Vinci, Miguel Ángel y Rafael.",
+      "category": "Historia"
+    },
+    {
+      "id": "his_es_125",
+      "question": "¿Qué movimiento intelectual del siglo XVIII defendió la razón y el progreso?",
+      "answers": [
+        {
+          "text": "La Ilustración",
+          "correct": true
+        },
+        {
+          "text": "El Renacimiento",
+          "correct": false
+        },
+        {
+          "text": "La Reforma",
+          "correct": false
+        }
+      ],
+      "difficulty": "medium",
+      "fun_fact": "La Ilustración, con pensadores como Voltaire y Rousseau, influyó en las revoluciones francesa y estadounidense.",
+      "category": "Historia"
+    },
+    {
+      "id": "his_es_126",
+      "question": "¿Qué astrónomo defendió que la Tierra gira alrededor del Sol enfrentándose a la Iglesia?",
+      "answers": [
+        {
+          "text": "Galileo Galilei",
+          "correct": true
+        },
+        {
+          "text": "Isaac Newton",
+          "correct": false
+        },
+        {
+          "text": "Johannes Kepler",
+          "correct": false
+        }
+      ],
+      "difficulty": "medium",
+      "fun_fact": "Galileo fue procesado por la Inquisición en 1633 por defender el modelo heliocéntrico propuesto por Copérnico.",
+      "category": "Historia"
+    },
+    {
+      "id": "his_es_127",
+      "question": "¿Qué astrónomo polaco propuso el modelo heliocéntrico en el siglo XVI?",
+      "answers": [
+        {
+          "text": "Nicolás Copérnico",
+          "correct": true
+        },
+        {
+          "text": "Tycho Brahe",
+          "correct": false
+        },
+        {
+          "text": "Ptolomeo",
+          "correct": false
+        }
+      ],
+      "difficulty": "hard",
+      "fun_fact": "Copérnico publicó su obra sobre el movimiento de los planetas alrededor del Sol en 1543, el año de su muerte.",
+      "category": "Historia"
+    },
+    {
+      "id": "his_es_128",
+      "question": "¿Qué conflicto religioso y político asoló Europa central entre 1618 y 1648?",
+      "answers": [
+        {
+          "text": "La Guerra de los Treinta Años",
+          "correct": true
+        },
+        {
+          "text": "La Guerra de los Cien Años",
+          "correct": false
+        },
+        {
+          "text": "La Guerra de Sucesión española",
+          "correct": false
+        }
+      ],
+      "difficulty": "hard",
+      "fun_fact": "La Guerra de los Treinta Años terminó con la Paz de Westfalia en 1648, base del moderno sistema de estados soberanos.",
+      "category": "Historia"
+    },
+    {
+      "id": "his_es_129",
+      "question": "¿Qué reina inglesa dio nombre a una época dorada de expansión y cultura en el siglo XVI?",
+      "answers": [
+        {
+          "text": "Isabel I",
+          "correct": true
+        },
+        {
+          "text": "Victoria",
+          "correct": false
+        },
+        {
+          "text": "María I",
+          "correct": false
+        }
+      ],
+      "difficulty": "medium",
+      "fun_fact": "Durante el reinado de Isabel I florecieron autores como Shakespeare y se consolidó el poder naval de Inglaterra.",
+      "category": "Historia"
+    },
+    {
+      "id": "his_es_130",
+      "question": "¿Qué rey inglés fundó la Iglesia anglicana al romper con Roma?",
+      "answers": [
+        {
+          "text": "Enrique VIII",
+          "correct": true
+        },
+        {
+          "text": "Ricardo Corazón de León",
+          "correct": false
+        },
+        {
+          "text": "Jorge III",
+          "correct": false
+        }
+      ],
+      "difficulty": "medium",
+      "fun_fact": "Enrique VIII rompió con el papado en la década de 1530 para poder divorciarse, dando origen a la Iglesia de Inglaterra.",
+      "category": "Historia"
+    },
+    {
+      "id": "his_es_131",
+      "question": "¿Qué reina británica gobernó durante gran parte del siglo XIX en la cumbre del imperio?",
+      "answers": [
+        {
+          "text": "La reina Victoria",
+          "correct": true
+        },
+        {
+          "text": "La reina Ana",
+          "correct": false
+        },
+        {
+          "text": "La reina Isabel II",
+          "correct": false
+        }
+      ],
+      "difficulty": "medium",
+      "fun_fact": "La reina Victoria reinó más de 63 años y dio nombre a la época victoriana, apogeo del Imperio británico.",
+      "category": "Historia"
+    },
+    {
+      "id": "his_es_132",
+      "question": "¿Qué canciller unificó Alemania en 1871?",
+      "answers": [
+        {
+          "text": "Otto von Bismarck",
+          "correct": true
+        },
+        {
+          "text": "Guillermo II",
+          "correct": false
+        },
+        {
+          "text": "Konrad Adenauer",
+          "correct": false
+        }
+      ],
+      "difficulty": "hard",
+      "fun_fact": "Bismarck, apodado el 'Canciller de Hierro', logró la unificación alemana mediante una hábil política de guerras y alianzas.",
+      "category": "Historia"
+    },
+    {
+      "id": "his_es_133",
+      "question": "¿Qué líder italiano encabezó el régimen fascista en el siglo XX?",
+      "answers": [
+        {
+          "text": "Benito Mussolini",
+          "correct": true
+        },
+        {
+          "text": "Giuseppe Garibaldi",
+          "correct": false
+        },
+        {
+          "text": "Victor Manuel II",
+          "correct": false
+        }
+      ],
+      "difficulty": "easy",
+      "fun_fact": "Mussolini gobernó Italia desde 1922 y su régimen fascista sirvió de modelo a otros movimientos autoritarios europeos.",
+      "category": "Historia"
+    },
+    {
+      "id": "his_es_134",
+      "question": "¿Qué patriota lideró la unificación de Italia con sus 'Camisas Rojas'?",
+      "answers": [
+        {
+          "text": "Giuseppe Garibaldi",
+          "correct": true
+        },
+        {
+          "text": "Camillo Cavour",
+          "correct": false
+        },
+        {
+          "text": "Giuseppe Mazzini",
+          "correct": false
+        }
+      ],
+      "difficulty": "hard",
+      "fun_fact": "Garibaldi fue una figura clave del Risorgimento, el proceso que culminó en la unificación de Italia en 1861.",
+      "category": "Historia"
+    },
+    {
+      "id": "his_es_135",
+      "question": "¿Qué conflicto enfrentó a Estados Unidos con Vietnam del Norte entre los años 50 y 70?",
+      "answers": [
+        {
+          "text": "La Guerra de Vietnam",
+          "correct": true
+        },
+        {
+          "text": "La Guerra de Corea",
+          "correct": false
+        },
+        {
+          "text": "La Guerra del Golfo",
+          "correct": false
+        }
+      ],
+      "difficulty": "easy",
+      "fun_fact": "La Guerra de Vietnam terminó en 1975 con la caída de Saigón y la reunificación del país bajo el gobierno comunista.",
+      "category": "Historia"
+    },
+    {
+      "id": "his_es_136",
+      "question": "¿Qué crisis de 1962 llevó al mundo al borde de una guerra nuclear?",
+      "answers": [
+        {
+          "text": "La crisis de los misiles en Cuba",
+          "correct": true
+        },
+        {
+          "text": "La crisis del canal de Suez",
+          "correct": false
+        },
+        {
+          "text": "El bloqueo de Berlín",
+          "correct": false
+        }
+      ],
+      "difficulty": "hard",
+      "fun_fact": "La crisis de los misiles enfrentó a Kennedy y Jrushchov cuando la URSS instaló misiles nucleares en Cuba en 1962.",
+      "category": "Historia"
+    },
+    {
+      "id": "his_es_137",
+      "question": "¿Qué presidente estadounidense fue asesinado en Dallas en 1963?",
+      "answers": [
+        {
+          "text": "John F. Kennedy",
+          "correct": true
+        },
+        {
+          "text": "Franklin D. Roosevelt",
+          "correct": false
+        },
+        {
+          "text": "Richard Nixon",
+          "correct": false
+        }
+      ],
+      "difficulty": "easy",
+      "fun_fact": "John F. Kennedy fue asesinado el 22 de noviembre de 1963 mientras recorría Dallas en un coche descubierto.",
+      "category": "Historia"
+    },
+    {
+      "id": "his_es_138",
+      "question": "¿Qué líder estadounidense luchó por los derechos civiles con su discurso 'I have a dream'?",
+      "answers": [
+        {
+          "text": "Martin Luther King",
+          "correct": true
+        },
+        {
+          "text": "Malcolm X",
+          "correct": false
+        },
+        {
+          "text": "Rosa Parks",
+          "correct": false
+        }
+      ],
+      "difficulty": "easy",
+      "fun_fact": "Martin Luther King pronunció su famoso discurso en Washington en 1963 y recibió el Premio Nobel de la Paz en 1964.",
+      "category": "Historia"
+    },
+    {
+      "id": "his_es_139",
+      "question": "¿En qué año se produjeron los atentados contra las Torres Gemelas de Nueva York?",
+      "answers": [
+        {
+          "text": "2001",
+          "correct": true
+        },
+        {
+          "text": "1999",
+          "correct": false
+        },
+        {
+          "text": "2005",
+          "correct": false
+        }
+      ],
+      "difficulty": "easy",
+      "fun_fact": "Los atentados del 11 de septiembre de 2001 marcaron un antes y un después en la política internacional del siglo XXI.",
+      "category": "Historia"
+    },
+    {
+      "id": "his_es_140",
+      "question": "¿Qué moneda única europea entró en circulación física en 2002?",
+      "answers": [
+        {
+          "text": "El euro",
+          "correct": true
+        },
+        {
+          "text": "El ecu",
+          "correct": false
+        },
+        {
+          "text": "El florín",
+          "correct": false
+        }
+      ],
+      "difficulty": "medium",
+      "fun_fact": "El euro entró en circulación como billetes y monedas el 1 de enero de 2002 en doce países de la Unión Europea.",
+      "category": "Historia"
+    },
+    {
+      "id": "his_es_141",
+      "question": "¿Qué imperio precolombino practicaba sacrificios en el Templo Mayor de Tenochtitlan?",
+      "answers": [
+        {
+          "text": "El Imperio azteca",
+          "correct": true
+        },
+        {
+          "text": "El Imperio inca",
+          "correct": false
+        },
+        {
+          "text": "La cultura chavín",
+          "correct": false
+        }
+      ],
+      "difficulty": "medium",
+      "fun_fact": "El Templo Mayor era el centro religioso de Tenochtitlan, dedicado a los dioses Huitzilopochtli y Tláloc.",
+      "category": "Historia"
+    },
+    {
+      "id": "his_es_142",
+      "question": "¿Qué escritura utilizaban los sumerios de Mesopotamia?",
+      "answers": [
+        {
+          "text": "La escritura cuneiforme",
+          "correct": true
+        },
+        {
+          "text": "Los jeroglíficos",
+          "correct": false
+        },
+        {
+          "text": "El alfabeto fenicio",
+          "correct": false
+        }
+      ],
+      "difficulty": "hard",
+      "fun_fact": "La escritura cuneiforme, hecha con cuñas sobre tablillas de arcilla, es uno de los sistemas de escritura más antiguos conocidos.",
+      "category": "Historia"
+    },
+    {
+      "id": "his_es_143",
+      "question": "¿Qué gran anfiteatro romano se usaba para combates de gladiadores?",
+      "answers": [
+        {
+          "text": "El Coliseo",
+          "correct": true
+        },
+        {
+          "text": "El Partenón",
+          "correct": false
+        },
+        {
+          "text": "El Panteón",
+          "correct": false
+        }
+      ],
+      "difficulty": "easy",
+      "fun_fact": "El Coliseo de Roma, inaugurado en el año 80, podía albergar a decenas de miles de espectadores.",
+      "category": "Historia"
+    },
+    {
+      "id": "his_es_144",
+      "question": "¿Qué templo dedicado a la diosa Atenea corona la Acrópolis de Atenas?",
+      "answers": [
+        {
+          "text": "El Partenón",
+          "correct": true
+        },
+        {
+          "text": "El Coliseo",
+          "correct": false
+        },
+        {
+          "text": "El Ágora",
+          "correct": false
+        }
+      ],
+      "difficulty": "medium",
+      "fun_fact": "El Partenón se construyó en el siglo V a. C. durante la época de Pericles, apogeo de la Atenas clásica.",
+      "category": "Historia"
+    },
+    {
+      "id": "his_es_145",
+      "question": "¿Qué antigua ruta comercial conectaba China con Europa a través de Asia?",
+      "answers": [
+        {
+          "text": "La Ruta de la Seda",
+          "correct": true
+        },
+        {
+          "text": "La Ruta de las Especias",
+          "correct": false
+        },
+        {
+          "text": "El Camino Real",
+          "correct": false
+        }
+      ],
+      "difficulty": "medium",
+      "fun_fact": "Por la Ruta de la Seda circularon durante siglos mercancías, ideas y religiones entre Oriente y Occidente.",
+      "category": "Historia"
+    },
+    {
+      "id": "his_es_146",
+      "question": "¿Qué explorador italiano relató sus viajes por Asia y la corte de Kublai Kan?",
+      "answers": [
+        {
+          "text": "Marco Polo",
+          "correct": true
+        },
+        {
+          "text": "Américo Vespucio",
+          "correct": false
+        },
+        {
+          "text": "Juan Caboto",
+          "correct": false
+        }
+      ],
+      "difficulty": "easy",
+      "fun_fact": "Marco Polo viajó a China en el siglo XIII y su libro de viajes despertó en Europa gran interés por Oriente.",
+      "category": "Historia"
+    },
+    {
+      "id": "his_es_147",
+      "question": "¿De qué navegante deriva el nombre del continente americano?",
+      "answers": [
+        {
+          "text": "Américo Vespucio",
+          "correct": true
+        },
+        {
+          "text": "Cristóbal Colón",
+          "correct": false
+        },
+        {
+          "text": "Fernando de Magallanes",
+          "correct": false
+        }
+      ],
+      "difficulty": "hard",
+      "fun_fact": "El nombre 'América' proviene de Américo Vespucio, quien comprendió que las nuevas tierras eran un continente desconocido.",
+      "category": "Historia"
+    },
+    {
+      "id": "his_es_148",
+      "question": "¿Qué acontecimiento de 1929 marcó el inicio de la Gran Depresión?",
+      "answers": [
+        {
+          "text": "El crac de la Bolsa de Nueva York",
+          "correct": true
+        },
+        {
+          "text": "La caída del Muro de Berlín",
+          "correct": false
+        },
+        {
+          "text": "El estallido de la Segunda Guerra Mundial",
+          "correct": false
+        }
+      ],
+      "difficulty": "medium",
+      "fun_fact": "El desplome bursátil del 'jueves negro' de octubre de 1929 arrastró a la economía mundial a una profunda crisis.",
+      "category": "Historia"
+    },
+    {
+      "id": "his_es_149",
+      "question": "¿Qué canal marítimo inauguró Panamá en 1914 para unir dos océanos?",
+      "answers": [
+        {
+          "text": "El Canal de Panamá",
+          "correct": true
+        },
+        {
+          "text": "El Canal de Suez",
+          "correct": false
+        },
+        {
+          "text": "El Canal de Corinto",
+          "correct": false
+        }
+      ],
+      "difficulty": "medium",
+      "fun_fact": "El Canal de Panamá conecta el océano Atlántico con el Pacífico y revolucionó el comercio marítimo mundial.",
+      "category": "Historia"
+    },
+    {
+      "id": "his_es_150",
+      "question": "¿Qué canal egipcio, inaugurado en 1869, une el Mediterráneo con el mar Rojo?",
+      "answers": [
+        {
+          "text": "El Canal de Suez",
+          "correct": true
+        },
+        {
+          "text": "El Canal de Panamá",
+          "correct": false
+        },
+        {
+          "text": "El Canal de la Mancha",
+          "correct": false
+        }
+      ],
+      "difficulty": "hard",
+      "fun_fact": "El Canal de Suez acortó enormemente la ruta marítima entre Europa y Asia al evitar rodear todo el continente africano.",
+      "category": "Historia"
+    }
+  ]
+}

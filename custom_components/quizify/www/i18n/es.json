@@ -374,6 +374,21 @@
       "q5": "¿Qué idioma?",
       "q6": "¿Ronda Relámpago?",
       "lightningHint": "Ronda rápida sorpresa a mitad de la partida"
+    },
+    "tts": {
+      "title": "¿Voz del presentador?",
+      "enable": "Narrar el juego en voz alta",
+      "hint": "Tu altavoz de HA se convierte en el presentador.",
+      "question": "Leer cada pregunta",
+      "options": "Leer las opciones de respuesta",
+      "reveal": "Anunciar la respuesta",
+      "standings": "Anunciar el nuevo líder",
+      "join": "Dar la bienvenida a los jugadores",
+      "countdown": "Anunciar la cuenta atrás final",
+      "engine": "Motor de TTS",
+      "speaker": "Altavoz",
+      "usedefault": "Usar predeterminado",
+      "noentities": "Ninguno encontrado: configúralo en HA"
     }
   },
   "featured": {
