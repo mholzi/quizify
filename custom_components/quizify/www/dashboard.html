@@ -110,11 +110,13 @@
         }
 
         /* ---- Timer Bar ---- */
+        /* #427: this is the only countdown on the shared TV screen, so the bar
+           is thick enough to read from a couch (was 4px — illegible at 2-3m). */
         .dashboard-timer {
             position: relative;
-            height: 4px;
+            height: 12px;
             background: var(--dash-border-neon);
-            border-radius: 2px;
+            border-radius: 6px;
             flex-shrink: 0;
             margin-bottom: clamp(20px, 2.4vw, 32px);
             overflow: hidden;
@@ -124,7 +126,7 @@
             height: 100%;
             background: var(--dash-accent-primary);
             box-shadow: 0 0 12px var(--dash-success-glow);
-            border-radius: 2px;
+            border-radius: 6px;
             transition: width 0.8s linear;
             width: 100%;
         }
@@ -142,6 +144,38 @@
         @keyframes pulse-bar {
             from { opacity: 1; }
             to   { opacity: 0.5; }
+        }
+
+        /* #421: connection-lost pill. When ws.onclose fires mid-question the TV
+           would otherwise freeze on a stale frame with no hint that it's dead.
+           This pill (reusing the .dashboard-waiting-text house style) appears
+           top-right while the socket is down and hides again on reconnect. */
+        .dashboard-reconnect-pill {
+            position: fixed;
+            top: 16px;
+            right: 16px;
+            z-index: 100;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            padding: 8px 16px;
+            border-radius: 999px;
+            background: rgba(214, 106, 106, 0.15);
+            border: 1px solid var(--dash-error);
+            font-family: 'JetBrains Mono', ui-monospace, monospace;
+            font-size: 14px;
+            color: var(--dash-error);
+            letter-spacing: 0.12em;
+            text-transform: uppercase;
+        }
+        .dashboard-reconnect-pill[hidden] { display: none; }
+        .dashboard-reconnect-pill::before {
+            content: '';
+            width: 8px;
+            height: 8px;
+            border-radius: 50%;
+            background: var(--dash-error);
+            animation: fade-pulse 1s ease-in-out infinite;
         }
 
         /* ===================
@@ -576,6 +610,20 @@
             color: var(--dash-text-neon-muted);
             flex-shrink: 0;
             font-variant-numeric: tabular-nums;
+        }
+
+        /* #429: muted "+N more" overflow hint for the capped in-game panel. */
+        .dashboard-leaderboard .leaderboard-row.leaderboard-more {
+            background: transparent;
+            border-color: transparent;
+            justify-content: center;
+            color: var(--dash-text-neon-muted);
+            font-style: italic;
+            padding: 8px 16px;
+        }
+        .dashboard-leaderboard .leaderboard-row.leaderboard-more .leaderboard-name {
+            flex: 0 0 auto;
+            text-align: center;
         }
 
         .dashboard-leaderboard .leaderboard-rank.rank-1 { color: var(--dash-gold); }
@@ -1152,6 +1200,11 @@
 </head>
 <body class="dashboard-body">
 
+    <!-- #421: shown while the WebSocket is reconnecting (see ws.onclose). -->
+    <div id="reconnect-pill" class="dashboard-reconnect-pill" hidden>
+        <span data-i18n="dashboard.reconnecting">Reconnecting…</span>
+    </div>
+
     <main class="dashboard-container">
         <div class="dashboard-header">
             <h1 class="wordmark">
@@ -1318,6 +1371,10 @@
         // also ignore the local board's last tick and never animate the bar
         // down. This flag gates handleTimerTick so a frozen game's bar holds.
         var isPaused = false;
+        // #425: the lightning round's per-question duration. Seeded from the
+        // lightning_splash / game_state(LIGHTNING) payload's seconds_per_question
+        // so a non-15s round drives the shared timer bar with the right divisor.
+        var lightningSeconds = 15;
 
         // ---- DOM ----
         var views = {
@@ -1328,6 +1385,8 @@
             lightningRecap: document.getElementById('lightning-recap-view'),
         };
         var els = {
+            // #421: connection-lost pill toggled by ws.onclose / ws.onopen.
+            reconnectPill: document.getElementById('reconnect-pill'),
             // #374: TV lobby join QR + live player roster.
             lobbyQrCode: document.getElementById('lobby-qr-code'),
             lobbyPlayers: document.getElementById('lobby-players'),
@@ -1398,8 +1457,10 @@
             } else {
                 // Defensive fallback if the vendor lib failed to load — show
                 // the raw URL so players can still type it in.
+                // #428: the body is cream (#FAF6EC), so a white URL was invisible
+                // when the vendor lib failed. Use the dark-ink token + bigger type.
                 container.innerHTML = '<div style="padding:20px;word-break:break-all;' +
-                    'font-size:14px;color:#fff;">' + escapeHtml(url) + '</div>';
+                    'font-size:20px;color:var(--dash-text-white);">' + escapeHtml(url) + '</div>';
             }
         }
         function renderLobbyPlayers(players) {
@@ -1467,6 +1528,9 @@
             ws = new WebSocket(url);
 
             ws.onopen = function() {
+                // #421: socket is back — hide the reconnect pill. State is
+                // re-requested below, so the stale frame is replaced promptly.
+                if (els.reconnectPill) els.reconnectPill.hidden = true;
                 ws.send(JSON.stringify({ type: 'get_state' }));
             };
 
@@ -1480,6 +1544,9 @@
 
             ws.onclose = function() {
                 ws = null;
+                // #421: surface the dead socket so a mid-question freeze doesn't
+                // look like a live-but-stalled board. Hidden again in onopen.
+                if (els.reconnectPill) els.reconnectPill.hidden = false;
                 setTimeout(connect, 2000);
             };
 
@@ -1599,6 +1666,10 @@
                 case 'LIGHTNING':
                     showView('lightning');
                     if (msg.lightning) {
+                        // #425: seed the per-question duration for the timer bar.
+                        if (typeof msg.lightning.seconds_per_question === 'number') {
+                            lightningSeconds = Math.round(msg.lightning.seconds_per_question);
+                        }
                         if (msg.lightning.splash_pending) {
                             handleLightningSplash({
                                 num_questions: msg.lightning.num_questions,
@@ -1672,6 +1743,8 @@
                 var n = (typeof msg.num_questions === 'number') ? msg.num_questions : 5;
                 var s = (typeof msg.seconds_per_question === 'number')
                     ? Math.round(msg.seconds_per_question) : 15;
+                // #425: remember the round's duration for the shared timer bar.
+                lightningSeconds = s;
                 els.lightningSplashRules.textContent =
                     t('lightning.startHint', n + ' questions · ' + s + 's each');
             }
@@ -1705,7 +1778,9 @@
             // Lightning has its own clock; show it on the shared timer bar so
             // the room sees the countdown. The server sends remaining seconds.
             if (typeof msg.remaining !== 'number') return;
-            var total = 15;  // lightning seconds_per_question (display only)
+            // #425: use the round's real seconds_per_question (seeded from the
+            // splash / game_state payload) so a non-15s round scales correctly.
+            var total = lightningSeconds > 0 ? lightningSeconds : 15;
             var pct = Math.max(0, Math.min(100, (msg.remaining / total) * 100));
             els.timerFill.style.width = pct + '%';
             els.timerFill.className = 'dashboard-timer-fill';
@@ -1954,8 +2029,9 @@
         function renderLeaderboard(container, players) {
             if (!container || !players) return;
             // Show top 5 in game view, all in finale
-            var list = container === els.leaderboard ? players.slice(0, 5) : players;
-            container.innerHTML = list.map(function(p, i) {
+            var capped = container === els.leaderboard;
+            var list = capped ? players.slice(0, 5) : players;
+            var html = list.map(function(p, i) {
                 var rank = p.rank || i + 1;
                 var rankClass = rank <= 3 ? ' rank-' + rank : '';
                 return '<div class="leaderboard-row">' +
@@ -1965,6 +2041,18 @@
                     (p.streak > 1 ? '<span class="leaderboard-streak">' + p.streak + 'x</span>' : '') +
                     '</div>';
             }).join('');
+            // #429: the in-game panel caps at 5 rows — hint the hidden tail so a
+            // 6th+ player isn't silently dropped. The panel is overflow-y:auto,
+            // so the muted row is reachable if the list scrolls.
+            var hidden = capped ? (players.length - list.length) : 0;
+            if (hidden > 0) {
+                html += '<div class="leaderboard-row leaderboard-more">' +
+                    '<span class="leaderboard-name">' +
+                    t('dashboard.leaderboardMore', '+' + hidden + ' more')
+                        .replace('{count}', hidden) +
+                    '</span></div>';
+            }
+            container.innerHTML = html;
         }
 
         function renderPodium(podium) {
