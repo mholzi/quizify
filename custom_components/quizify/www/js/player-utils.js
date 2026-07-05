@@ -201,9 +201,24 @@
         var glow = { connected: 'rgba(127,168,151,0.45)', reconnecting: 'rgba(232,196,127,0.45)', disconnected: 'rgba(214,106,106,0.45)' };
         var color = colors[status] || '#6E6A5C';
         var glowColor = glow[status] || 'rgba(110,106,92,0.25)';
-        // Dot only — no text label
+        var t = (window.QuizifyI18n && window.QuizifyI18n.t) || function (k) { return k; };
+        // A bare colored dot is invisible to screen readers and ambiguous for
+        // color-blind users (#424). Not-connected states get a shape/label,
+        // not hue alone: reconnecting shows an "…" glyph, disconnected an
+        // "offline" slash glyph next to the dot.
+        var glyph = { reconnecting: '…', disconnected: '⊘' };
+        var mark = glyph[status]
+            ? '<span aria-hidden="true" style="font-size:0.85rem;line-height:1;color:' + color + ';">' + glyph[status] + '</span>'
+            : '';
         el.innerHTML = '<span style="width:10px;height:10px;border-radius:50%;display:inline-block;background:' +
-            color + ';box-shadow:0 0 10px ' + glowColor + ';"></span>';
+            color + ';box-shadow:0 0 10px ' + glowColor + ';"></span>' + mark;
+        // Announce the state to assistive tech via the polite live region.
+        var announce = document.getElementById('conn-status-announce');
+        if (announce) {
+            var msg = t('connection.' + status);
+            if (!msg || msg === 'connection.' + status) msg = status;
+            announce.textContent = msg;
+        }
     }
 
     // ============================================

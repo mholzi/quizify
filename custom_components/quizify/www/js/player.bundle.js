@@ -206,9 +206,24 @@
         var glow = { connected: 'rgba(127,168,151,0.45)', reconnecting: 'rgba(232,196,127,0.45)', disconnected: 'rgba(214,106,106,0.45)' };
         var color = colors[status] || '#6E6A5C';
         var glowColor = glow[status] || 'rgba(110,106,92,0.25)';
-        // Dot only — no text label
+        var t = (window.QuizifyI18n && window.QuizifyI18n.t) || function (k) { return k; };
+        // A bare colored dot is invisible to screen readers and ambiguous for
+        // color-blind users (#424). Not-connected states get a shape/label,
+        // not hue alone: reconnecting shows an "…" glyph, disconnected an
+        // "offline" slash glyph next to the dot.
+        var glyph = { reconnecting: '…', disconnected: '⊘' };
+        var mark = glyph[status]
+            ? '<span aria-hidden="true" style="font-size:0.85rem;line-height:1;color:' + color + ';">' + glyph[status] + '</span>'
+            : '';
         el.innerHTML = '<span style="width:10px;height:10px;border-radius:50%;display:inline-block;background:' +
-            color + ';box-shadow:0 0 10px ' + glowColor + ';"></span>';
+            color + ';box-shadow:0 0 10px ' + glowColor + ';"></span>' + mark;
+        // Announce the state to assistive tech via the polite live region.
+        var announce = document.getElementById('conn-status-announce');
+        if (announce) {
+            var msg = t('connection.' + status);
+            if (!msg || msg === 'connection.' + status) msg = status;
+            announce.textContent = msg;
+        }
     }
 
     // ============================================
@@ -5117,6 +5132,16 @@
             els.joinBtn.disabled = false;
             els.joinBtn.textContent = t('join.joinButton');
             if (els.nameInput) els.nameInput.style.borderColor = '#D65858';
+            // The toast fades after a few seconds, taking the reason with it;
+            // the red border alone doesn't say *why* the join failed (#426).
+            // Persist the translated reason in the inline validation message
+            // (the input's aria-describedby target) so it stays visible and
+            // is announced to screen readers. Cleared on the next input.
+            var vmsg = document.getElementById('name-validation-msg');
+            if (vmsg) {
+                vmsg.textContent = userMsg;
+                vmsg.classList.remove('hidden');
+            }
         }
     }
 
@@ -5130,6 +5155,14 @@
         els.nameInput.addEventListener('input', function () {
             var result = pu.validateName(this.value);
             els.joinBtn.disabled = !result.valid;
+            // Clear a stale join-error reason (#426) once the user edits the
+            // name again, and drop the red border set by handleError.
+            var vmsg = document.getElementById('name-validation-msg');
+            if (vmsg && vmsg.textContent) {
+                vmsg.textContent = '';
+                vmsg.classList.add('hidden');
+            }
+            this.style.borderColor = '';
         });
 
         els.joinBtn.addEventListener('click', handleJoinClick);

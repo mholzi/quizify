@@ -622,6 +622,7 @@ button, .btn {
     margin-bottom: 10px;
 }
 .featured-spotlight .spotlight-play-btn {
+    position: relative;
     appearance: none;
     -webkit-appearance: none;
     background: rgba(255, 255, 255, 0.95);
@@ -635,6 +636,13 @@ button, .btn {
     min-width: 0;
     min-height: 0;
     font-family: inherit;
+}
+/* Transparent ::before lifts the tap target to >=44px tall (the pill is
+   only ~31px) without changing the visible chrome (#423, WCAG 2.5.8). */
+.featured-spotlight .spotlight-play-btn::before {
+    content: '';
+    position: absolute;
+    inset: -7px;
 }
 .featured-spotlight .spotlight-play-btn:hover {
     background: #fff;
@@ -664,6 +672,7 @@ button, .btn {
    and the tabs end up rendering as fat blue-text iOS buttons instead of
    the small dark/cream pills the mockup calls for. */
 .theme-tab {
+    position: relative;
     appearance: none;
     -webkit-appearance: none;
     flex: 0 0 auto;
@@ -687,6 +696,14 @@ button, .btn {
     white-space: nowrap;
     transition: all 0.12s ease;
     font-family: inherit;
+}
+/* Transparent ::before extends the tap target to >=44px tall (the pill
+   is only ~27px) without enlarging the visible pill (#423, WCAG 2.5.8).
+   Vertical-only inset so adjacent tabs' hit areas don't overlap. */
+.theme-tab::before {
+    content: '';
+    position: absolute;
+    inset: -9px 0;
 }
 /* "Alle" + any text-only tab: no icon, so restore symmetric padding. */
 .theme-tab:not(:has(.qz-icon)) {

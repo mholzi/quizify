@@ -299,6 +299,7 @@ a:focus-visible,
    click POSTs to /api/quizify/flag-question. Sized for thumbs but
    visually quiet so it doesn't shout next to the fun fact. */
 .flag-question-btn {
+    position: relative;
     margin-left: auto;
     border: 0;
     background: transparent;
@@ -308,8 +309,17 @@ a:focus-visible,
     height: 36px;
     border-radius: 50%;
     cursor: pointer;
-    opacity: 0.45;
+    /* Raised from 0.45 so the resting affordance is discoverable (#423). */
+    opacity: 0.6;
     transition: opacity 120ms ease-out, background 120ms ease-out;
+}
+/* Transparent ::before lifts the 36px disc to a >=44px tap target
+   (#423, WCAG 2.5.8) without enlarging the visible circle. */
+.flag-question-btn::before {
+    content: '';
+    position: absolute;
+    inset: -4px;
+    border-radius: inherit;
 }
 .flag-question-btn:hover,
 .flag-question-btn:focus-visible {

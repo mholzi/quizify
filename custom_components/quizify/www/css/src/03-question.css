@@ -128,6 +128,13 @@
     align-items: center;
     justify-content: center;
 }
+/* Transparent ::before lifts the 34px button to a >=44px tap target
+   (#423, WCAG 2.5.8) without enlarging the visible chrome. */
+.question-image-zoom::before {
+    content: '';
+    position: absolute;
+    inset: -5px;
+}
 .question-image-zoom:hover { background: rgba(42, 40, 32, 0.75); }
 
 /* Fullscreen zoom overlay */
