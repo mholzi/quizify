@@ -1767,7 +1767,16 @@ class QuizifyGameState:
             # loses). Treat a non-positive target round_score as nothing to
             # steal (#289).
             stolen = max(0, target_player.round_score) // 2
-            target_player.round_score = max(0, target_player.round_score - stolen)
+            # Subtract instead of clamping to 0: `stolen` is already bounded by
+            # max(0, round_score) // 2, so the subtraction can never drive a
+            # positive round_score below 0, and a negative round_score (wrong
+            # final-round wager) yields stolen == 0, making this a true no-op.
+            # The old `max(0, round_score - stolen)` rewrote a negative
+            # round_score to 0 while stealing nothing, so at reveal
+            # _do_evaluate_round reported points_earned == 0 and history logged
+            # 0 even though the total had already dropped by the wager
+            # (reveal/history desync, #484).
+            target_player.round_score -= stolen
             target_player.score = max(0, target_player.score - stolen)
             source_player.round_score += stolen
             # Clamp the source total at 0 so a steal can never leave a player

@@ -230,6 +230,57 @@ class TestStealPowerup:
         # Source total clamped at 0, never left negative.
         assert game.get_player("Alice").score == 0
 
+    def test_steal_against_negative_wager_victim_is_a_true_noop(
+        self, game: QuizifyGameState
+    ) -> None:
+        """Regression for #484: STEAL against a wrong-final-round-wager victim
+        must be a true no-op — leave the victim's negative round_score
+        untouched, steal 0, and keep reveal/history in sync with the total.
+
+        Before the fix the STEAL branch did
+        ``round_score = max(0, round_score - stolen)``, which rewrote a
+        negative round_score to 0 while stealing nothing (score untouched).
+        At reveal ``_do_evaluate_round`` reports ``points_earned=round_score``
+        and appends ``round_score`` to the ``round_scores`` history, so both
+        logged 0 even though the total had already dropped by the wager —
+        a reveal/history-vs-total desync. Subtracting ``stolen`` (== 0 here)
+        instead leaves round_score at its true negative value."""
+        _start_question(game, ["Alice", "Bob"])
+        bob = game.get_player("Bob")
+        bob.submitted = True  # STEAL only targets submitted players (#254)
+        bob.last_answer_correct = False  # wrong final-round answer
+        # Bob started this round at 100 and lost a 40-point wager: the wager
+        # deduction already lives in BOTH round_score and the running total.
+        bob.round_score = -40
+        bob.score = 60
+        alice = game.get_player("Alice")
+        alice.round_score = 0
+        alice.score = 0
+        game._powerup_manager._inventory["Alice"] = PowerUpType.STEAL
+
+        effect = game.use_powerup("Alice", target_id="Bob")
+
+        assert not isinstance(effect, str), f"unexpected error: {effect}"
+        # Nothing to steal from a non-positive round score.
+        assert effect.stolen_points == 0
+        # True no-op: victim's negative round_score is left untouched (NOT
+        # clamped to 0), and neither total moves.
+        assert bob.round_score == -40
+        assert bob.score == 60
+        assert alice.round_score == 0
+        assert alice.score == 0
+
+        # Now reveal the round and assert reveal + history + total all agree.
+        summary = game.evaluate_round()
+        assert summary is not None
+        bob_result = next(r for r in summary.results if r.player_id == "Bob")
+        # Reveal's points_earned, the history entry, and the negative
+        # round_score all match — and equal the amount the total dropped by
+        # (100 -> 60). No 0-vs-(-40) desync.
+        assert bob_result.points_earned == -40
+        assert bob.round_scores[-1] == -40
+        assert bob_result.new_total == 60
+
 
 # ---------------------------------------------------------------------------
 # #4 — reaction-bonus counters reset between games (the real residual)
