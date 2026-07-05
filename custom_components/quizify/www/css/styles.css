@@ -3105,7 +3105,8 @@ footer {
 .end-hero-conf--r { top: 12px; right: 24px; }
 .end-hero-crown { font-size: 30px; line-height: 1; }
 .end-hero-label {
-    font-size: 0.66rem;
+    /* 12px floor so the label clears WCAG AA min-size on small phones (#382). */
+    font-size: max(0.66rem, 12px);
     font-weight: 700;
     text-transform: uppercase;
     letter-spacing: 0.1em;
@@ -3178,7 +3179,8 @@ footer {
 .rchip-disc.disc-sky   { background: rgba(127, 168, 196, 0.18); color: var(--color-accent-blue); }
 .rchip-main { min-width: 0; }
 .rchip-title {
-    font-size: 0.66rem;
+    /* 12px floor + AA-contrast muted token (#382). */
+    font-size: max(0.66rem, 12px);
     font-weight: 700;
     text-transform: uppercase;
     letter-spacing: 0.04em;
@@ -3194,9 +3196,9 @@ footer {
     line-height: 1.1;
 }
 .rchip-who {
-    font-size: 0.64rem;
+    /* 12px floor; drop opacity trick so the muted token keeps its AA contrast (#382). */
+    font-size: max(0.64rem, 12px);
     color: var(--color-text-muted);
-    opacity: 0.85;
     margin-top: 1px;
     overflow: hidden;
     text-overflow: ellipsis;
@@ -3263,7 +3265,8 @@ footer {
 .sb-badge { font-size: 0.82rem; line-height: 1; }
 .sb-you {
     flex-shrink: 0;
-    font-size: 9px;
+    /* 12px floor so the "YOU" badge label clears WCAG AA min-size (#382). */
+    font-size: 12px;
     font-weight: 800;
     letter-spacing: 0.04em;
     color: #fff;
@@ -3455,9 +3458,9 @@ footer {
 
 .end-hint {
     text-align: center;
-    color: var(--color-text-neon-muted);
-    font-size: 0.75rem;
-    opacity: 0.7;
+    /* AA-contrast muted token, no opacity trick; 12px floor (#382). */
+    color: var(--color-text-muted);
+    font-size: max(0.75rem, 12px);
 }
 
 .away-badge {
@@ -5098,6 +5101,9 @@ footer {
     align-items: center;
     justify-content: space-around;
     padding: var(--space-sm) var(--space-md);
+    /* iOS safe-area: viewport-fit=cover puts the home indicator over the
+       fixed bottom bar; pad the bottom by the inset so labels stay clear (#375). */
+    padding-bottom: calc(var(--space-sm) + env(safe-area-inset-bottom, 0px));
     /* Solid cream (was 96%-opaque + blur). A `position: fixed` element with
        `backdrop-filter` is a WebKit bug: Safari positions it relative to its
        container instead of the viewport, so the bar rendered mid-page on iOS
@@ -7479,7 +7485,8 @@ body.is-admin .pl-result-hero--big .pl-result-big-points { font-size: 84px; }
   position: fixed;
   left: 16px;
   right: 16px;
-  bottom: 16px;
+  /* iOS safe-area: keep the sticky Next-Round bar above the home indicator (#375). */
+  bottom: calc(16px + env(safe-area-inset-bottom, 0px));
   display: grid;
   grid-template-columns: auto 1fr;
   gap: 8px;
