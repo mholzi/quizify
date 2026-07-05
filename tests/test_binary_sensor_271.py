@@ -61,6 +61,10 @@ def _make_state(
         ("g1", GamePhase.QUESTION_ACTIVE, True),
         ("g1", GamePhase.ANSWER_REVEAL, True),
         ("g1", GamePhase.PAUSED, True),
+        # Mid-game Lightning Round detour (#285/#409) -> stays on so
+        # game_active automations don't toggle spuriously mid-game.
+        ("g1", GamePhase.LIGHTNING, True),
+        ("g1", GamePhase.LIGHTNING_RECAP, True),
         # Idle / boundary phases -> off.
         ("g1", GamePhase.LOBBY, False),
         ("g1", GamePhase.FINALE, False),
