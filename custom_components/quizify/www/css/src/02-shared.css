@@ -256,8 +256,15 @@ button, .btn {
 }
 
 .chip {
-    padding: 4px 10px;
-    font-size: 0.75rem;
+    /* min-height 44px keeps difficulty/rounds/timer chips finger-friendly
+       (WCAG 2.5.8 / Apple HIG >=44px) (#379). The flag-chip variant below
+       re-declares its own padding/min-height, so it is unaffected. */
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    min-height: 44px;
+    padding: 10px 14px;
+    font-size: 0.85rem;
     font-weight: 500;
     background: #F3EEDF;
     border: 1px solid #E5DFCF;

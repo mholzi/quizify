@@ -317,6 +317,7 @@ body {
    default (warm card-alt fill, reduced opacity); dims further when muted.
    Behaviour + persistence unchanged (player-core.js setupSoundToggle). */
 .sound-toggle-btn {
+    position: relative;
     flex: 0 0 auto;
     width: 30px;
     height: 30px;
@@ -333,6 +334,15 @@ body {
     display: inline-flex;
     align-items: center;
     justify-content: center;
+}
+/* Expand the tap target to >=44px (WCAG 2.5.8 / Apple HIG) without growing
+   the visible 30px disc: a transparent ::before overlay with negative inset
+   extends the hit area to 44x44 (30 + 2*7) (#379). */
+.sound-toggle-btn::before {
+    content: '';
+    position: absolute;
+    inset: -7px;
+    border-radius: inherit;
 }
 .sound-toggle-btn:hover { opacity: 1; }
 .sound-toggle-btn.is-muted { opacity: 0.5; }
