@@ -185,7 +185,9 @@
     "streakToast5": "5 in a row!",
     "streakToast7": "7 in a row! On fire!",
     "timerRemainingAria": "Time remaining: {seconds} seconds",
-    "timerUpAria": "Time is up!"
+    "timerUpAria": "Time is up!",
+    "timerTenLeft": "10 seconds left",
+    "timerFiveLeft": "5 seconds left"
   },
   "powerups": {
     "joker": "Joker",
@@ -400,6 +402,7 @@
     "timeoutNote": "The wager only counts if you answer. No answer = you keep your points (no win, no loss).",
     "bank": "Current points",
     "submit": "Lock in wager",
+    "valueFmt": "{pct}% ({pts} pts)",
     "locked": "Wagered: {pct}%",
     "bonusFromReaction": "+1 from {from}"
   },

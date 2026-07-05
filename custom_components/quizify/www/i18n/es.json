@@ -185,7 +185,9 @@
     "streakToast5": "¡5 seguidas!",
     "streakToast7": "¡7 seguidas! ¡Imparable!",
     "timerRemainingAria": "Tiempo restante: {seconds} segundos",
-    "timerUpAria": "¡Se acabó el tiempo!"
+    "timerUpAria": "¡Se acabó el tiempo!",
+    "timerTenLeft": "Quedan 10 segundos",
+    "timerFiveLeft": "Quedan 5 segundos"
   },
   "powerups": {
     "joker": "Comodín",
@@ -385,6 +387,7 @@
     "timeoutNote": "La apuesta solo cuenta si respondes. Sin respuesta = conservas tus puntos (ni ganas ni pierdes).",
     "bank": "Puntos actuales",
     "submit": "Confirmar apuesta",
+    "valueFmt": "{pct}% ({pts} pts)",
     "locked": "Apostado: {pct}%",
     "bonusFromReaction": "+1 de {from}"
   },
