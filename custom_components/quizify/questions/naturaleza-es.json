@@ -1,0 +1,3158 @@
+{
+  "name": "Naturaleza",
+  "language": "es",
+  "version": "1.0",
+  "theme": "nature",
+  "questions": [
+    {
+      "id": "nat_es_001",
+      "question": "¿Cuál es el animal terrestre más grande del mundo?",
+      "answers": [
+        {
+          "text": "El elefante africano",
+          "correct": true
+        },
+        {
+          "text": "La jirafa",
+          "correct": false
+        },
+        {
+          "text": "El rinoceronte blanco",
+          "correct": false
+        }
+      ],
+      "difficulty": "easy",
+      "fun_fact": "Un elefante africano adulto puede pesar más de 6 toneladas.",
+      "category": "Naturaleza"
+    },
+    {
+      "id": "nat_es_002",
+      "question": "¿Qué animal es conocido como el 'rey de la selva'?",
+      "answers": [
+        {
+          "text": "El tigre",
+          "correct": false
+        },
+        {
+          "text": "El león",
+          "correct": true
+        },
+        {
+          "text": "El leopardo",
+          "correct": false
+        }
+      ],
+      "difficulty": "easy",
+      "fun_fact": "En realidad los leones viven en sabanas y praderas, no en selvas.",
+      "category": "Naturaleza"
+    },
+    {
+      "id": "nat_es_003",
+      "question": "¿Cuántas patas tiene una araña?",
+      "answers": [
+        {
+          "text": "Seis",
+          "correct": false
+        },
+        {
+          "text": "Ocho",
+          "correct": true
+        },
+        {
+          "text": "Diez",
+          "correct": false
+        }
+      ],
+      "difficulty": "easy",
+      "fun_fact": "Las arañas son arácnidos, no insectos; los insectos tienen seis patas.",
+      "category": "Naturaleza"
+    },
+    {
+      "id": "nat_es_004",
+      "question": "¿Qué gas absorben las plantas del aire durante la fotosíntesis?",
+      "answers": [
+        {
+          "text": "Oxígeno",
+          "correct": false
+        },
+        {
+          "text": "Nitrógeno",
+          "correct": false
+        },
+        {
+          "text": "Dióxido de carbono",
+          "correct": true
+        }
+      ],
+      "difficulty": "easy",
+      "fun_fact": "Las plantas liberan oxígeno como subproducto de la fotosíntesis.",
+      "category": "Naturaleza"
+    },
+    {
+      "id": "nat_es_005",
+      "question": "¿Cuál es el ave más grande del mundo?",
+      "answers": [
+        {
+          "text": "El avestruz",
+          "correct": true
+        },
+        {
+          "text": "El águila real",
+          "correct": false
+        },
+        {
+          "text": "El cóndor andino",
+          "correct": false
+        }
+      ],
+      "difficulty": "easy",
+      "fun_fact": "El avestruz no puede volar, pero corre a más de 70 km/h.",
+      "category": "Naturaleza"
+    },
+    {
+      "id": "nat_es_006",
+      "question": "¿Qué animal marino es un mamífero?",
+      "answers": [
+        {
+          "text": "El tiburón",
+          "correct": false
+        },
+        {
+          "text": "La ballena",
+          "correct": true
+        },
+        {
+          "text": "El atún",
+          "correct": false
+        }
+      ],
+      "difficulty": "easy",
+      "fun_fact": "Las ballenas respiran aire por pulmones y amamantan a sus crías.",
+      "category": "Naturaleza"
+    },
+    {
+      "id": "nat_es_007",
+      "question": "¿De qué color es la clorofila que da su color a las hojas?",
+      "answers": [
+        {
+          "text": "Roja",
+          "correct": false
+        },
+        {
+          "text": "Verde",
+          "correct": true
+        },
+        {
+          "text": "Azul",
+          "correct": false
+        }
+      ],
+      "difficulty": "easy",
+      "fun_fact": "La clorofila absorbe la luz roja y azul y refleja la verde.",
+      "category": "Naturaleza"
+    },
+    {
+      "id": "nat_es_008",
+      "question": "¿Qué insecto produce miel?",
+      "answers": [
+        {
+          "text": "La avispa",
+          "correct": false
+        },
+        {
+          "text": "La hormiga",
+          "correct": false
+        },
+        {
+          "text": "La abeja",
+          "correct": true
+        }
+      ],
+      "difficulty": "easy",
+      "fun_fact": "Una abeja produce apenas una doceava parte de cucharadita de miel en toda su vida.",
+      "category": "Naturaleza"
+    },
+    {
+      "id": "nat_es_009",
+      "question": "¿Cuál es el felino más rápido del mundo?",
+      "answers": [
+        {
+          "text": "El leopardo",
+          "correct": false
+        },
+        {
+          "text": "El guepardo",
+          "correct": true
+        },
+        {
+          "text": "El jaguar",
+          "correct": false
+        }
+      ],
+      "difficulty": "easy",
+      "fun_fact": "El guepardo puede alcanzar los 100 km/h en pocos segundos.",
+      "category": "Naturaleza"
+    },
+    {
+      "id": "nat_es_010",
+      "question": "¿Qué animal es famoso por cambiar de color para camuflarse?",
+      "answers": [
+        {
+          "text": "El camaleón",
+          "correct": true
+        },
+        {
+          "text": "La rana",
+          "correct": false
+        },
+        {
+          "text": "La serpiente",
+          "correct": false
+        }
+      ],
+      "difficulty": "easy",
+      "fun_fact": "Los camaleones también cambian de color para comunicarse y regular su temperatura.",
+      "category": "Naturaleza"
+    },
+    {
+      "id": "nat_es_011",
+      "question": "¿Cuál es el planeta en el que vivimos?",
+      "answers": [
+        {
+          "text": "Marte",
+          "correct": false
+        },
+        {
+          "text": "La Tierra",
+          "correct": true
+        },
+        {
+          "text": "Venus",
+          "correct": false
+        }
+      ],
+      "difficulty": "easy",
+      "fun_fact": "La Tierra es el único planeta conocido con vida.",
+      "category": "Naturaleza"
+    },
+    {
+      "id": "nat_es_012",
+      "question": "¿Qué necesitan las plantas, además de agua y aire, para crecer?",
+      "answers": [
+        {
+          "text": "Luz solar",
+          "correct": true
+        },
+        {
+          "text": "Oscuridad total",
+          "correct": false
+        },
+        {
+          "text": "Sal",
+          "correct": false
+        }
+      ],
+      "difficulty": "easy",
+      "fun_fact": "La luz solar aporta la energía necesaria para la fotosíntesis.",
+      "category": "Naturaleza"
+    },
+    {
+      "id": "nat_es_013",
+      "question": "¿Qué animal tiene una trompa larga?",
+      "answers": [
+        {
+          "text": "El hipopótamo",
+          "correct": false
+        },
+        {
+          "text": "El elefante",
+          "correct": true
+        },
+        {
+          "text": "El búfalo",
+          "correct": false
+        }
+      ],
+      "difficulty": "easy",
+      "fun_fact": "La trompa de un elefante tiene unos 40.000 músculos.",
+      "category": "Naturaleza"
+    },
+    {
+      "id": "nat_es_014",
+      "question": "¿Cuál de estos animales es un anfibio?",
+      "answers": [
+        {
+          "text": "La rana",
+          "correct": true
+        },
+        {
+          "text": "El lagarto",
+          "correct": false
+        },
+        {
+          "text": "El pez",
+          "correct": false
+        }
+      ],
+      "difficulty": "easy",
+      "fun_fact": "Los anfibios viven parte de su vida en el agua y parte en tierra.",
+      "category": "Naturaleza"
+    },
+    {
+      "id": "nat_es_015",
+      "question": "¿Qué árbol produce bellotas?",
+      "answers": [
+        {
+          "text": "El pino",
+          "correct": false
+        },
+        {
+          "text": "El roble",
+          "correct": true
+        },
+        {
+          "text": "El abedul",
+          "correct": false
+        }
+      ],
+      "difficulty": "easy",
+      "fun_fact": "Un solo roble puede producir miles de bellotas al año.",
+      "category": "Naturaleza"
+    },
+    {
+      "id": "nat_es_016",
+      "question": "¿Qué animal es el mejor amigo del hombre?",
+      "answers": [
+        {
+          "text": "El gato",
+          "correct": false
+        },
+        {
+          "text": "El perro",
+          "correct": true
+        },
+        {
+          "text": "El caballo",
+          "correct": false
+        }
+      ],
+      "difficulty": "easy",
+      "fun_fact": "El perro fue el primer animal domesticado por el ser humano.",
+      "category": "Naturaleza"
+    },
+    {
+      "id": "nat_es_017",
+      "question": "¿Cuántas alas tiene una mariposa?",
+      "answers": [
+        {
+          "text": "Dos",
+          "correct": false
+        },
+        {
+          "text": "Cuatro",
+          "correct": true
+        },
+        {
+          "text": "Seis",
+          "correct": false
+        }
+      ],
+      "difficulty": "easy",
+      "fun_fact": "Las mariposas tienen cuatro alas cubiertas de diminutas escamas.",
+      "category": "Naturaleza"
+    },
+    {
+      "id": "nat_es_018",
+      "question": "¿Qué comen principalmente los pandas gigantes?",
+      "answers": [
+        {
+          "text": "Carne",
+          "correct": false
+        },
+        {
+          "text": "Bambú",
+          "correct": true
+        },
+        {
+          "text": "Pescado",
+          "correct": false
+        }
+      ],
+      "difficulty": "easy",
+      "fun_fact": "Un panda gigante puede comer hasta 38 kg de bambú al día.",
+      "category": "Naturaleza"
+    },
+    {
+      "id": "nat_es_019",
+      "question": "¿Qué fenómeno se produce cuando el agua cae del cielo en forma líquida?",
+      "answers": [
+        {
+          "text": "Nieve",
+          "correct": false
+        },
+        {
+          "text": "Lluvia",
+          "correct": true
+        },
+        {
+          "text": "Granizo",
+          "correct": false
+        }
+      ],
+      "difficulty": "easy",
+      "fun_fact": "La lluvia forma parte del ciclo del agua en la naturaleza.",
+      "category": "Naturaleza"
+    },
+    {
+      "id": "nat_es_020",
+      "question": "¿Cuál es el animal más alto del mundo?",
+      "answers": [
+        {
+          "text": "El elefante",
+          "correct": false
+        },
+        {
+          "text": "La jirafa",
+          "correct": true
+        },
+        {
+          "text": "El camello",
+          "correct": false
+        }
+      ],
+      "difficulty": "easy",
+      "fun_fact": "La jirafa puede medir hasta 5,5 metros de altura.",
+      "category": "Naturaleza"
+    },
+    {
+      "id": "nat_es_021",
+      "question": "¿Qué le sale a los árboles en otoño en muchos climas templados?",
+      "answers": [
+        {
+          "text": "Se les caen las hojas",
+          "correct": true
+        },
+        {
+          "text": "Les crecen raíces nuevas",
+          "correct": false
+        },
+        {
+          "text": "Cambian de tronco",
+          "correct": false
+        }
+      ],
+      "difficulty": "easy",
+      "fun_fact": "Los árboles de hoja caduca pierden las hojas para ahorrar agua en invierno.",
+      "category": "Naturaleza"
+    },
+    {
+      "id": "nat_es_022",
+      "question": "¿Qué animal pone huevos y también da leche a sus crías?",
+      "answers": [
+        {
+          "text": "El ornitorrinco",
+          "correct": true
+        },
+        {
+          "text": "El delfín",
+          "correct": false
+        },
+        {
+          "text": "El koala",
+          "correct": false
+        }
+      ],
+      "difficulty": "easy",
+      "fun_fact": "El ornitorrinco es uno de los pocos mamíferos que pone huevos.",
+      "category": "Naturaleza"
+    },
+    {
+      "id": "nat_es_023",
+      "question": "¿Cuál de estos es un reptil?",
+      "answers": [
+        {
+          "text": "La tortuga",
+          "correct": true
+        },
+        {
+          "text": "El salmón",
+          "correct": false
+        },
+        {
+          "text": "El murciélago",
+          "correct": false
+        }
+      ],
+      "difficulty": "easy",
+      "fun_fact": "Las tortugas existen desde hace más de 200 millones de años.",
+      "category": "Naturaleza"
+    },
+    {
+      "id": "nat_es_024",
+      "question": "¿Qué órgano bombea la sangre en el cuerpo humano?",
+      "answers": [
+        {
+          "text": "El hígado",
+          "correct": false
+        },
+        {
+          "text": "El corazón",
+          "correct": true
+        },
+        {
+          "text": "El pulmón",
+          "correct": false
+        }
+      ],
+      "difficulty": "easy",
+      "fun_fact": "El corazón late unas 100.000 veces al día.",
+      "category": "Naturaleza"
+    },
+    {
+      "id": "nat_es_025",
+      "question": "¿De qué se alimentan las vacas?",
+      "answers": [
+        {
+          "text": "Carne",
+          "correct": false
+        },
+        {
+          "text": "Hierba",
+          "correct": true
+        },
+        {
+          "text": "Insectos",
+          "correct": false
+        }
+      ],
+      "difficulty": "easy",
+      "fun_fact": "Las vacas tienen un estómago con cuatro compartimentos para digerir la hierba.",
+      "category": "Naturaleza"
+    },
+    {
+      "id": "nat_es_026",
+      "question": "¿Qué animal es conocido por su larga hibernación en invierno?",
+      "answers": [
+        {
+          "text": "El oso",
+          "correct": true
+        },
+        {
+          "text": "El lobo",
+          "correct": false
+        },
+        {
+          "text": "El zorro",
+          "correct": false
+        }
+      ],
+      "difficulty": "easy",
+      "fun_fact": "Durante la hibernación, el ritmo cardíaco del oso baja mucho para ahorrar energía.",
+      "category": "Naturaleza"
+    },
+    {
+      "id": "nat_es_027",
+      "question": "¿Qué parte de la planta absorbe el agua del suelo?",
+      "answers": [
+        {
+          "text": "Las flores",
+          "correct": false
+        },
+        {
+          "text": "Las hojas",
+          "correct": false
+        },
+        {
+          "text": "Las raíces",
+          "correct": true
+        }
+      ],
+      "difficulty": "easy",
+      "fun_fact": "Las raíces también anclan la planta al suelo.",
+      "category": "Naturaleza"
+    },
+    {
+      "id": "nat_es_028",
+      "question": "¿Cuál es el animal marino con ocho brazos?",
+      "answers": [
+        {
+          "text": "El calamar",
+          "correct": false
+        },
+        {
+          "text": "El pulpo",
+          "correct": true
+        },
+        {
+          "text": "La medusa",
+          "correct": false
+        }
+      ],
+      "difficulty": "easy",
+      "fun_fact": "El pulpo tiene tres corazones y sangre azul.",
+      "category": "Naturaleza"
+    },
+    {
+      "id": "nat_es_029",
+      "question": "¿Qué insecto es famoso por vivir en colonias muy organizadas y cargar objetos pesados?",
+      "answers": [
+        {
+          "text": "La mosca",
+          "correct": false
+        },
+        {
+          "text": "La hormiga",
+          "correct": true
+        },
+        {
+          "text": "El mosquito",
+          "correct": false
+        }
+      ],
+      "difficulty": "easy",
+      "fun_fact": "Una hormiga puede cargar hasta 50 veces su propio peso.",
+      "category": "Naturaleza"
+    },
+    {
+      "id": "nat_es_030",
+      "question": "¿Qué tipo de animal es el tiburón?",
+      "answers": [
+        {
+          "text": "Un mamífero",
+          "correct": false
+        },
+        {
+          "text": "Un pez",
+          "correct": true
+        },
+        {
+          "text": "Un anfibio",
+          "correct": false
+        }
+      ],
+      "difficulty": "easy",
+      "fun_fact": "El esqueleto de los tiburones está hecho de cartílago, no de hueso.",
+      "category": "Naturaleza"
+    },
+    {
+      "id": "nat_es_031",
+      "question": "¿Qué estación del año viene después del invierno?",
+      "answers": [
+        {
+          "text": "El verano",
+          "correct": false
+        },
+        {
+          "text": "La primavera",
+          "correct": true
+        },
+        {
+          "text": "El otoño",
+          "correct": false
+        }
+      ],
+      "difficulty": "easy",
+      "fun_fact": "En primavera muchas plantas florecen y los animales tienen crías.",
+      "category": "Naturaleza"
+    },
+    {
+      "id": "nat_es_032",
+      "question": "¿Cuál es el mamífero más grande del planeta?",
+      "answers": [
+        {
+          "text": "El elefante africano",
+          "correct": false
+        },
+        {
+          "text": "La ballena azul",
+          "correct": true
+        },
+        {
+          "text": "El cachalote",
+          "correct": false
+        }
+      ],
+      "difficulty": "easy",
+      "fun_fact": "La ballena azul puede medir más de 30 metros y pesar unas 150 toneladas.",
+      "category": "Naturaleza"
+    },
+    {
+      "id": "nat_es_033",
+      "question": "¿Qué animal nocturno puede girar la cabeza casi por completo?",
+      "answers": [
+        {
+          "text": "El búho",
+          "correct": true
+        },
+        {
+          "text": "El águila",
+          "correct": false
+        },
+        {
+          "text": "El loro",
+          "correct": false
+        }
+      ],
+      "difficulty": "easy",
+      "fun_fact": "Los búhos pueden girar la cabeza hasta unos 270 grados.",
+      "category": "Naturaleza"
+    },
+    {
+      "id": "nat_es_034",
+      "question": "¿Qué produce un árbol para respirar y limpiar el aire?",
+      "answers": [
+        {
+          "text": "Dióxido de carbono",
+          "correct": false
+        },
+        {
+          "text": "Oxígeno",
+          "correct": true
+        },
+        {
+          "text": "Humo",
+          "correct": false
+        }
+      ],
+      "difficulty": "easy",
+      "fun_fact": "Un árbol adulto puede liberar oxígeno suficiente para varias personas al año.",
+      "category": "Naturaleza"
+    },
+    {
+      "id": "nat_es_035",
+      "question": "¿Qué animal tiene rayas negras y blancas?",
+      "answers": [
+        {
+          "text": "El leopardo",
+          "correct": false
+        },
+        {
+          "text": "La cebra",
+          "correct": true
+        },
+        {
+          "text": "El puma",
+          "correct": false
+        }
+      ],
+      "difficulty": "easy",
+      "fun_fact": "El patrón de rayas de cada cebra es único, como una huella dactilar.",
+      "category": "Naturaleza"
+    },
+    {
+      "id": "nat_es_036",
+      "question": "¿En qué lugar viven los peces?",
+      "answers": [
+        {
+          "text": "En el agua",
+          "correct": true
+        },
+        {
+          "text": "En los árboles",
+          "correct": false
+        },
+        {
+          "text": "Bajo tierra",
+          "correct": false
+        }
+      ],
+      "difficulty": "easy",
+      "fun_fact": "Los peces obtienen oxígeno del agua a través de sus branquias.",
+      "category": "Naturaleza"
+    },
+    {
+      "id": "nat_es_037",
+      "question": "¿Qué animal es conocido por su caparazón duro donde se esconde?",
+      "answers": [
+        {
+          "text": "La tortuga",
+          "correct": true
+        },
+        {
+          "text": "El conejo",
+          "correct": false
+        },
+        {
+          "text": "El erizo",
+          "correct": false
+        }
+      ],
+      "difficulty": "easy",
+      "fun_fact": "El caparazón de la tortuga forma parte de su esqueleto.",
+      "category": "Naturaleza"
+    },
+    {
+      "id": "nat_es_038",
+      "question": "¿Qué se forma en el cielo tras la lluvia cuando sale el sol?",
+      "answers": [
+        {
+          "text": "Un arcoíris",
+          "correct": true
+        },
+        {
+          "text": "Un eclipse",
+          "correct": false
+        },
+        {
+          "text": "Una aurora",
+          "correct": false
+        }
+      ],
+      "difficulty": "easy",
+      "fun_fact": "El arcoíris se forma cuando la luz se refracta en las gotas de agua.",
+      "category": "Naturaleza"
+    },
+    {
+      "id": "nat_es_039",
+      "question": "¿Cuál de estos animales vuela?",
+      "answers": [
+        {
+          "text": "El pingüino",
+          "correct": false
+        },
+        {
+          "text": "El murciélago",
+          "correct": true
+        },
+        {
+          "text": "El avestruz",
+          "correct": false
+        }
+      ],
+      "difficulty": "easy",
+      "fun_fact": "El murciélago es el único mamífero capaz de volar de verdad.",
+      "category": "Naturaleza"
+    },
+    {
+      "id": "nat_es_040",
+      "question": "¿Qué animal es famoso por su cuello largo para comer hojas de los árboles altos?",
+      "answers": [
+        {
+          "text": "La jirafa",
+          "correct": true
+        },
+        {
+          "text": "El caballo",
+          "correct": false
+        },
+        {
+          "text": "El camello",
+          "correct": false
+        }
+      ],
+      "difficulty": "easy",
+      "fun_fact": "La lengua de la jirafa puede medir hasta 50 centímetros.",
+      "category": "Naturaleza"
+    },
+    {
+      "id": "nat_es_041",
+      "question": "¿Qué comen las mariposas adultas principalmente?",
+      "answers": [
+        {
+          "text": "Néctar de las flores",
+          "correct": true
+        },
+        {
+          "text": "Hojas",
+          "correct": false
+        },
+        {
+          "text": "Otros insectos",
+          "correct": false
+        }
+      ],
+      "difficulty": "easy",
+      "fun_fact": "Las mariposas saborean con las patas antes de posarse a comer.",
+      "category": "Naturaleza"
+    },
+    {
+      "id": "nat_es_042",
+      "question": "¿Cuál es el color del cielo despejado durante el día?",
+      "answers": [
+        {
+          "text": "Verde",
+          "correct": false
+        },
+        {
+          "text": "Azul",
+          "correct": true
+        },
+        {
+          "text": "Rojo",
+          "correct": false
+        }
+      ],
+      "difficulty": "easy",
+      "fun_fact": "El cielo se ve azul porque la atmósfera dispersa más la luz azul del Sol.",
+      "category": "Naturaleza"
+    },
+    {
+      "id": "nat_es_043",
+      "question": "¿Qué animal salta y guarda a sus crías en una bolsa?",
+      "answers": [
+        {
+          "text": "El koala",
+          "correct": false
+        },
+        {
+          "text": "El canguro",
+          "correct": true
+        },
+        {
+          "text": "El mono",
+          "correct": false
+        }
+      ],
+      "difficulty": "easy",
+      "fun_fact": "Una cría de canguro recién nacida es del tamaño de una uva.",
+      "category": "Naturaleza"
+    },
+    {
+      "id": "nat_es_044",
+      "question": "¿Qué necesitamos los seres humanos para respirar?",
+      "answers": [
+        {
+          "text": "Oxígeno",
+          "correct": true
+        },
+        {
+          "text": "Helio",
+          "correct": false
+        },
+        {
+          "text": "Dióxido de carbono",
+          "correct": false
+        }
+      ],
+      "difficulty": "easy",
+      "fun_fact": "El oxígeno que respiramos proviene en gran parte de las plantas y las algas.",
+      "category": "Naturaleza"
+    },
+    {
+      "id": "nat_es_045",
+      "question": "¿Cuál de estos es un mamífero que vive en el mar y es muy inteligente?",
+      "answers": [
+        {
+          "text": "El delfín",
+          "correct": true
+        },
+        {
+          "text": "El pulpo",
+          "correct": false
+        },
+        {
+          "text": "La sardina",
+          "correct": false
+        }
+      ],
+      "difficulty": "easy",
+      "fun_fact": "Los delfines duermen con la mitad del cerebro despierta para seguir respirando.",
+      "category": "Naturaleza"
+    },
+    {
+      "id": "nat_es_046",
+      "question": "¿Qué animal construye presas en los ríos con ramas y troncos?",
+      "answers": [
+        {
+          "text": "La nutria",
+          "correct": false
+        },
+        {
+          "text": "El castor",
+          "correct": true
+        },
+        {
+          "text": "La rata",
+          "correct": false
+        }
+      ],
+      "difficulty": "easy",
+      "fun_fact": "Las presas de los castores crean estanques que benefician a otros animales.",
+      "category": "Naturaleza"
+    },
+    {
+      "id": "nat_es_047",
+      "question": "¿Qué le pasa al agua cuando se congela?",
+      "answers": [
+        {
+          "text": "Se convierte en hielo",
+          "correct": true
+        },
+        {
+          "text": "Se convierte en vapor",
+          "correct": false
+        },
+        {
+          "text": "Desaparece",
+          "correct": false
+        }
+      ],
+      "difficulty": "easy",
+      "fun_fact": "El agua se congela a 0 grados Celsius a nivel del mar.",
+      "category": "Naturaleza"
+    },
+    {
+      "id": "nat_es_048",
+      "question": "¿Qué animal es conocido por su melena y su fuerte rugido?",
+      "answers": [
+        {
+          "text": "El león",
+          "correct": true
+        },
+        {
+          "text": "El tigre",
+          "correct": false
+        },
+        {
+          "text": "La pantera",
+          "correct": false
+        }
+      ],
+      "difficulty": "easy",
+      "fun_fact": "El rugido de un león puede oírse hasta a 8 kilómetros de distancia.",
+      "category": "Naturaleza"
+    },
+    {
+      "id": "nat_es_049",
+      "question": "¿Cuál es el órgano más grande del cuerpo humano?",
+      "answers": [
+        {
+          "text": "El hígado",
+          "correct": false
+        },
+        {
+          "text": "La piel",
+          "correct": true
+        },
+        {
+          "text": "El intestino",
+          "correct": false
+        }
+      ],
+      "difficulty": "medium",
+      "fun_fact": "La piel de un adulto puede pesar alrededor de 4 kilogramos.",
+      "category": "Naturaleza"
+    },
+    {
+      "id": "nat_es_050",
+      "question": "¿Qué proceso permite a las plantas convertir la luz en energía química?",
+      "answers": [
+        {
+          "text": "La respiración",
+          "correct": false
+        },
+        {
+          "text": "La fotosíntesis",
+          "correct": true
+        },
+        {
+          "text": "La transpiración",
+          "correct": false
+        }
+      ],
+      "difficulty": "medium",
+      "fun_fact": "La fotosíntesis produce glucosa, que la planta usa como alimento.",
+      "category": "Naturaleza"
+    },
+    {
+      "id": "nat_es_051",
+      "question": "¿Cuál es el hueso más largo del cuerpo humano?",
+      "answers": [
+        {
+          "text": "El fémur",
+          "correct": true
+        },
+        {
+          "text": "El húmero",
+          "correct": false
+        },
+        {
+          "text": "La tibia",
+          "correct": false
+        }
+      ],
+      "difficulty": "medium",
+      "fun_fact": "El fémur, en el muslo, puede soportar hasta 30 veces el peso del cuerpo.",
+      "category": "Naturaleza"
+    },
+    {
+      "id": "nat_es_052",
+      "question": "¿Qué animal tiene el corazón más grande de todo el reino animal?",
+      "answers": [
+        {
+          "text": "El elefante",
+          "correct": false
+        },
+        {
+          "text": "La ballena azul",
+          "correct": true
+        },
+        {
+          "text": "La jirafa",
+          "correct": false
+        }
+      ],
+      "difficulty": "medium",
+      "fun_fact": "El corazón de la ballena azul puede pesar unos 180 kilogramos.",
+      "category": "Naturaleza"
+    },
+    {
+      "id": "nat_es_053",
+      "question": "¿Cómo se llama el fenómeno por el que algunos animales pasan el invierno en un letargo profundo?",
+      "answers": [
+        {
+          "text": "Migración",
+          "correct": false
+        },
+        {
+          "text": "Hibernación",
+          "correct": true
+        },
+        {
+          "text": "Muda",
+          "correct": false
+        }
+      ],
+      "difficulty": "medium",
+      "fun_fact": "Durante la hibernación el metabolismo del animal se reduce drásticamente.",
+      "category": "Naturaleza"
+    },
+    {
+      "id": "nat_es_054",
+      "question": "¿Qué tipo de raíz es la de la zanahoria?",
+      "answers": [
+        {
+          "text": "Fasciculada",
+          "correct": false
+        },
+        {
+          "text": "Napiforme",
+          "correct": true
+        },
+        {
+          "text": "Aérea",
+          "correct": false
+        }
+      ],
+      "difficulty": "medium",
+      "fun_fact": "La raíz napiforme almacena nutrientes de reserva para la planta.",
+      "category": "Naturaleza"
+    },
+    {
+      "id": "nat_es_055",
+      "question": "¿Cuál es el pájaro que vuela hacia atrás?",
+      "answers": [
+        {
+          "text": "El gorrión",
+          "correct": false
+        },
+        {
+          "text": "El colibrí",
+          "correct": true
+        },
+        {
+          "text": "La golondrina",
+          "correct": false
+        }
+      ],
+      "difficulty": "medium",
+      "fun_fact": "El colibrí puede batir sus alas más de 50 veces por segundo.",
+      "category": "Naturaleza"
+    },
+    {
+      "id": "nat_es_056",
+      "question": "¿Qué gas es el más abundante en la atmósfera terrestre?",
+      "answers": [
+        {
+          "text": "Oxígeno",
+          "correct": false
+        },
+        {
+          "text": "Nitrógeno",
+          "correct": true
+        },
+        {
+          "text": "Argón",
+          "correct": false
+        }
+      ],
+      "difficulty": "medium",
+      "fun_fact": "El nitrógeno constituye cerca del 78 % del aire que respiramos.",
+      "category": "Naturaleza"
+    },
+    {
+      "id": "nat_es_057",
+      "question": "¿Cómo se llama el conjunto de seres vivos que interactúan en un mismo lugar junto con su entorno?",
+      "answers": [
+        {
+          "text": "Ecosistema",
+          "correct": true
+        },
+        {
+          "text": "Biosfera",
+          "correct": false
+        },
+        {
+          "text": "Población",
+          "correct": false
+        }
+      ],
+      "difficulty": "medium",
+      "fun_fact": "Un ecosistema incluye tanto factores vivos como el clima y el suelo.",
+      "category": "Naturaleza"
+    },
+    {
+      "id": "nat_es_058",
+      "question": "¿Qué animal es el que muda su piel de una sola pieza?",
+      "answers": [
+        {
+          "text": "La serpiente",
+          "correct": true
+        },
+        {
+          "text": "El lagarto",
+          "correct": false
+        },
+        {
+          "text": "La tortuga",
+          "correct": false
+        }
+      ],
+      "difficulty": "medium",
+      "fun_fact": "Al mudar, la serpiente incluso renueva la piel transparente de sus ojos.",
+      "category": "Naturaleza"
+    },
+    {
+      "id": "nat_es_059",
+      "question": "¿Cuántas cámaras tiene el corazón humano?",
+      "answers": [
+        {
+          "text": "Dos",
+          "correct": false
+        },
+        {
+          "text": "Cuatro",
+          "correct": true
+        },
+        {
+          "text": "Tres",
+          "correct": false
+        }
+      ],
+      "difficulty": "medium",
+      "fun_fact": "El corazón humano tiene dos aurículas y dos ventrículos.",
+      "category": "Naturaleza"
+    },
+    {
+      "id": "nat_es_060",
+      "question": "¿Qué insecto experimenta una metamorfosis completa: huevo, larva, pupa y adulto?",
+      "answers": [
+        {
+          "text": "El saltamontes",
+          "correct": false
+        },
+        {
+          "text": "La mariposa",
+          "correct": true
+        },
+        {
+          "text": "La libélula",
+          "correct": false
+        }
+      ],
+      "difficulty": "medium",
+      "fun_fact": "La fase de pupa de la mariposa se llama crisálida.",
+      "category": "Naturaleza"
+    },
+    {
+      "id": "nat_es_061",
+      "question": "¿Qué animal es el mamífero terrestre más rápido?",
+      "answers": [
+        {
+          "text": "El antílope",
+          "correct": false
+        },
+        {
+          "text": "El guepardo",
+          "correct": true
+        },
+        {
+          "text": "El caballo",
+          "correct": false
+        }
+      ],
+      "difficulty": "medium",
+      "fun_fact": "El guepardo solo puede mantener su velocidad máxima durante unos segundos.",
+      "category": "Naturaleza"
+    },
+    {
+      "id": "nat_es_062",
+      "question": "¿Qué parte de la flor produce el polen?",
+      "answers": [
+        {
+          "text": "El pistilo",
+          "correct": false
+        },
+        {
+          "text": "El estambre",
+          "correct": true
+        },
+        {
+          "text": "El pétalo",
+          "correct": false
+        }
+      ],
+      "difficulty": "medium",
+      "fun_fact": "El estambre es la parte masculina de la flor.",
+      "category": "Naturaleza"
+    },
+    {
+      "id": "nat_es_063",
+      "question": "¿Cómo se llama el desplazamiento estacional de animales de una región a otra?",
+      "answers": [
+        {
+          "text": "Migración",
+          "correct": true
+        },
+        {
+          "text": "Hibernación",
+          "correct": false
+        },
+        {
+          "text": "Depredación",
+          "correct": false
+        }
+      ],
+      "difficulty": "medium",
+      "fun_fact": "El charrán ártico realiza una de las migraciones más largas: de polo a polo.",
+      "category": "Naturaleza"
+    },
+    {
+      "id": "nat_es_064",
+      "question": "¿Qué animal es venenoso y tiene ocho patas, con un aguijón en la cola?",
+      "answers": [
+        {
+          "text": "La araña",
+          "correct": false
+        },
+        {
+          "text": "El escorpión",
+          "correct": true
+        },
+        {
+          "text": "El ciempiés",
+          "correct": false
+        }
+      ],
+      "difficulty": "medium",
+      "fun_fact": "Algunos escorpiones brillan con luz ultravioleta.",
+      "category": "Naturaleza"
+    },
+    {
+      "id": "nat_es_065",
+      "question": "¿Qué bioma se caracteriza por escasas precipitaciones y temperaturas extremas?",
+      "answers": [
+        {
+          "text": "La tundra",
+          "correct": false
+        },
+        {
+          "text": "El desierto",
+          "correct": true
+        },
+        {
+          "text": "La selva",
+          "correct": false
+        }
+      ],
+      "difficulty": "medium",
+      "fun_fact": "Algunos desiertos pueden pasar años sin recibir lluvia.",
+      "category": "Naturaleza"
+    },
+    {
+      "id": "nat_es_066",
+      "question": "¿Cuál de estas aves no puede volar?",
+      "answers": [
+        {
+          "text": "El pingüino",
+          "correct": true
+        },
+        {
+          "text": "El halcón",
+          "correct": false
+        },
+        {
+          "text": "La paloma",
+          "correct": false
+        }
+      ],
+      "difficulty": "medium",
+      "fun_fact": "Los pingüinos usan sus alas como aletas para nadar.",
+      "category": "Naturaleza"
+    },
+    {
+      "id": "nat_es_067",
+      "question": "¿Qué proceso libera energía en las células a partir del oxígeno y los nutrientes?",
+      "answers": [
+        {
+          "text": "La fotosíntesis",
+          "correct": false
+        },
+        {
+          "text": "La respiración celular",
+          "correct": true
+        },
+        {
+          "text": "La fermentación",
+          "correct": false
+        }
+      ],
+      "difficulty": "medium",
+      "fun_fact": "La respiración celular ocurre principalmente en las mitocondrias.",
+      "category": "Naturaleza"
+    },
+    {
+      "id": "nat_es_068",
+      "question": "¿Qué animal marino es capaz de regenerar sus brazos si los pierde?",
+      "answers": [
+        {
+          "text": "La estrella de mar",
+          "correct": true
+        },
+        {
+          "text": "El cangrejo",
+          "correct": false
+        },
+        {
+          "text": "La medusa",
+          "correct": false
+        }
+      ],
+      "difficulty": "medium",
+      "fun_fact": "Algunas estrellas de mar pueden regenerar un cuerpo entero a partir de un solo brazo.",
+      "category": "Naturaleza"
+    },
+    {
+      "id": "nat_es_069",
+      "question": "¿Cuál es el árbol más alto del mundo?",
+      "answers": [
+        {
+          "text": "El eucalipto",
+          "correct": false
+        },
+        {
+          "text": "La secuoya roja",
+          "correct": true
+        },
+        {
+          "text": "El baobab",
+          "correct": false
+        }
+      ],
+      "difficulty": "medium",
+      "fun_fact": "La secuoya roja de California puede superar los 100 metros de altura.",
+      "category": "Naturaleza"
+    },
+    {
+      "id": "nat_es_070",
+      "question": "¿Qué tipo de animal es la abeja?",
+      "answers": [
+        {
+          "text": "Un arácnido",
+          "correct": false
+        },
+        {
+          "text": "Un insecto",
+          "correct": true
+        },
+        {
+          "text": "Un crustáceo",
+          "correct": false
+        }
+      ],
+      "difficulty": "medium",
+      "fun_fact": "Las abejas se comunican con una 'danza' para indicar dónde hay flores.",
+      "category": "Naturaleza"
+    },
+    {
+      "id": "nat_es_071",
+      "question": "¿Qué órgano permite a los peces obtener oxígeno del agua?",
+      "answers": [
+        {
+          "text": "Los pulmones",
+          "correct": false
+        },
+        {
+          "text": "Las branquias",
+          "correct": true
+        },
+        {
+          "text": "La vejiga natatoria",
+          "correct": false
+        }
+      ],
+      "difficulty": "medium",
+      "fun_fact": "El agua pasa por las branquias, donde la sangre absorbe el oxígeno.",
+      "category": "Naturaleza"
+    },
+    {
+      "id": "nat_es_072",
+      "question": "¿Qué animal es conocido por producir seda?",
+      "answers": [
+        {
+          "text": "La araña",
+          "correct": true
+        },
+        {
+          "text": "La abeja",
+          "correct": false
+        },
+        {
+          "text": "La hormiga",
+          "correct": false
+        }
+      ],
+      "difficulty": "medium",
+      "fun_fact": "El gusano de seda, la larva de una mariposa, también produce seda para su capullo.",
+      "category": "Naturaleza"
+    },
+    {
+      "id": "nat_es_073",
+      "question": "¿Cómo se llama la capa gaseosa que protege la Tierra de los rayos ultravioleta?",
+      "answers": [
+        {
+          "text": "La ionosfera",
+          "correct": false
+        },
+        {
+          "text": "La capa de ozono",
+          "correct": true
+        },
+        {
+          "text": "La troposfera",
+          "correct": false
+        }
+      ],
+      "difficulty": "medium",
+      "fun_fact": "La capa de ozono se encuentra en la estratósfera.",
+      "category": "Naturaleza"
+    },
+    {
+      "id": "nat_es_074",
+      "question": "¿Qué mamífero pone huevos además del ornitorrinco?",
+      "answers": [
+        {
+          "text": "El equidna",
+          "correct": true
+        },
+        {
+          "text": "El armadillo",
+          "correct": false
+        },
+        {
+          "text": "El erizo",
+          "correct": false
+        }
+      ],
+      "difficulty": "medium",
+      "fun_fact": "El equidna y el ornitorrinco son los únicos mamíferos que ponen huevos, los monotremas.",
+      "category": "Naturaleza"
+    },
+    {
+      "id": "nat_es_075",
+      "question": "¿Qué se mide con la escala de Richter?",
+      "answers": [
+        {
+          "text": "La velocidad del viento",
+          "correct": false
+        },
+        {
+          "text": "La magnitud de los terremotos",
+          "correct": true
+        },
+        {
+          "text": "La cantidad de lluvia",
+          "correct": false
+        }
+      ],
+      "difficulty": "medium",
+      "fun_fact": "La escala de Richter es logarítmica: cada punto multiplica la energía liberada.",
+      "category": "Naturaleza"
+    },
+    {
+      "id": "nat_es_076",
+      "question": "¿Qué animal tiene el veneno más letal de todos los del planeta según su toxina?",
+      "answers": [
+        {
+          "text": "La cobra real",
+          "correct": false
+        },
+        {
+          "text": "La rana dardo dorada",
+          "correct": true
+        },
+        {
+          "text": "La viuda negra",
+          "correct": false
+        }
+      ],
+      "difficulty": "medium",
+      "fun_fact": "La rana dardo dorada de Colombia contiene suficiente veneno para matar a varias personas.",
+      "category": "Naturaleza"
+    },
+    {
+      "id": "nat_es_077",
+      "question": "¿Qué gas producen los seres vivos al respirar y las plantas absorben?",
+      "answers": [
+        {
+          "text": "Oxígeno",
+          "correct": false
+        },
+        {
+          "text": "Dióxido de carbono",
+          "correct": true
+        },
+        {
+          "text": "Hidrógeno",
+          "correct": false
+        }
+      ],
+      "difficulty": "medium",
+      "fun_fact": "Este intercambio de gases mantiene el equilibrio del ciclo del carbono.",
+      "category": "Naturaleza"
+    },
+    {
+      "id": "nat_es_078",
+      "question": "¿Cuál es el felino más grande del mundo?",
+      "answers": [
+        {
+          "text": "El león",
+          "correct": false
+        },
+        {
+          "text": "El tigre",
+          "correct": true
+        },
+        {
+          "text": "El jaguar",
+          "correct": false
+        }
+      ],
+      "difficulty": "medium",
+      "fun_fact": "El tigre siberiano puede pesar más de 300 kilogramos.",
+      "category": "Naturaleza"
+    },
+    {
+      "id": "nat_es_079",
+      "question": "¿Qué tipo de nube suele anunciar tormentas y tiene forma de yunque?",
+      "answers": [
+        {
+          "text": "Cirro",
+          "correct": false
+        },
+        {
+          "text": "Cumulonimbo",
+          "correct": true
+        },
+        {
+          "text": "Estrato",
+          "correct": false
+        }
+      ],
+      "difficulty": "medium",
+      "fun_fact": "Los cumulonimbos pueden alcanzar varios kilómetros de altura.",
+      "category": "Naturaleza"
+    },
+    {
+      "id": "nat_es_080",
+      "question": "¿Qué animal es un marsupial de Australia que se alimenta de hojas de eucalipto?",
+      "answers": [
+        {
+          "text": "El wombat",
+          "correct": false
+        },
+        {
+          "text": "El koala",
+          "correct": true
+        },
+        {
+          "text": "El demonio de Tasmania",
+          "correct": false
+        }
+      ],
+      "difficulty": "medium",
+      "fun_fact": "El koala duerme hasta 20 horas al día para digerir el eucalipto.",
+      "category": "Naturaleza"
+    },
+    {
+      "id": "nat_es_081",
+      "question": "¿Cómo se llama la relación en la que dos especies se benefician mutuamente?",
+      "answers": [
+        {
+          "text": "Parasitismo",
+          "correct": false
+        },
+        {
+          "text": "Mutualismo",
+          "correct": true
+        },
+        {
+          "text": "Depredación",
+          "correct": false
+        }
+      ],
+      "difficulty": "medium",
+      "fun_fact": "Un ejemplo es el pez payaso y la anémona de mar.",
+      "category": "Naturaleza"
+    },
+    {
+      "id": "nat_es_082",
+      "question": "¿Qué órgano del cuerpo humano se encarga de filtrar la sangre y producir orina?",
+      "answers": [
+        {
+          "text": "El hígado",
+          "correct": false
+        },
+        {
+          "text": "El riñón",
+          "correct": true
+        },
+        {
+          "text": "El páncreas",
+          "correct": false
+        }
+      ],
+      "difficulty": "medium",
+      "fun_fact": "Los riñones filtran alrededor de 180 litros de sangre al día.",
+      "category": "Naturaleza"
+    },
+    {
+      "id": "nat_es_083",
+      "question": "¿Qué animal es capaz de sobrevivir en el espacio, la radiación y temperaturas extremas?",
+      "answers": [
+        {
+          "text": "La cucaracha",
+          "correct": false
+        },
+        {
+          "text": "El tardígrado",
+          "correct": true
+        },
+        {
+          "text": "El escarabajo",
+          "correct": false
+        }
+      ],
+      "difficulty": "medium",
+      "fun_fact": "El tardígrado, u 'oso de agua', mide menos de un milímetro.",
+      "category": "Naturaleza"
+    },
+    {
+      "id": "nat_es_084",
+      "question": "¿Cuál es la unidad básica de la vida?",
+      "answers": [
+        {
+          "text": "El átomo",
+          "correct": false
+        },
+        {
+          "text": "La célula",
+          "correct": true
+        },
+        {
+          "text": "El tejido",
+          "correct": false
+        }
+      ],
+      "difficulty": "medium",
+      "fun_fact": "Todos los seres vivos están formados por una o más células.",
+      "category": "Naturaleza"
+    },
+    {
+      "id": "nat_es_085",
+      "question": "¿Qué animal produce el sonido más fuerte del reino animal bajo el agua?",
+      "answers": [
+        {
+          "text": "El delfín",
+          "correct": false
+        },
+        {
+          "text": "La ballena azul",
+          "correct": true
+        },
+        {
+          "text": "La foca",
+          "correct": false
+        }
+      ],
+      "difficulty": "medium",
+      "fun_fact": "Los cantos de la ballena azul pueden recorrer cientos de kilómetros en el océano.",
+      "category": "Naturaleza"
+    },
+    {
+      "id": "nat_es_086",
+      "question": "¿Qué árbol es famoso por su tronco muy grueso que almacena agua en la sabana africana?",
+      "answers": [
+        {
+          "text": "El baobab",
+          "correct": true
+        },
+        {
+          "text": "La acacia",
+          "correct": false
+        },
+        {
+          "text": "El sauce",
+          "correct": false
+        }
+      ],
+      "difficulty": "medium",
+      "fun_fact": "Un baobab puede almacenar miles de litros de agua en su tronco.",
+      "category": "Naturaleza"
+    },
+    {
+      "id": "nat_es_087",
+      "question": "¿Qué animal cambia su pelaje a blanco en invierno para camuflarse en la nieve?",
+      "answers": [
+        {
+          "text": "La liebre ártica",
+          "correct": true
+        },
+        {
+          "text": "El lobo gris",
+          "correct": false
+        },
+        {
+          "text": "El reno",
+          "correct": false
+        }
+      ],
+      "difficulty": "medium",
+      "fun_fact": "Este cambio de color estacional ayuda a la liebre a esconderse de los depredadores.",
+      "category": "Naturaleza"
+    },
+    {
+      "id": "nat_es_088",
+      "question": "¿Qué fenómeno atmosférico produce los relámpagos?",
+      "answers": [
+        {
+          "text": "La condensación",
+          "correct": false
+        },
+        {
+          "text": "La descarga eléctrica",
+          "correct": true
+        },
+        {
+          "text": "La evaporación",
+          "correct": false
+        }
+      ],
+      "difficulty": "medium",
+      "fun_fact": "Un rayo puede alcanzar temperaturas cinco veces más altas que la superficie del Sol.",
+      "category": "Naturaleza"
+    },
+    {
+      "id": "nat_es_089",
+      "question": "¿Qué grupo de animales tiene sangre fría y su temperatura depende del ambiente?",
+      "answers": [
+        {
+          "text": "Los mamíferos",
+          "correct": false
+        },
+        {
+          "text": "Los reptiles",
+          "correct": true
+        },
+        {
+          "text": "Las aves",
+          "correct": false
+        }
+      ],
+      "difficulty": "medium",
+      "fun_fact": "Por eso muchos reptiles toman el sol para calentarse.",
+      "category": "Naturaleza"
+    },
+    {
+      "id": "nat_es_090",
+      "question": "¿Cuál es el ave que realiza la migración más larga del planeta?",
+      "answers": [
+        {
+          "text": "La cigüeña",
+          "correct": false
+        },
+        {
+          "text": "El charrán ártico",
+          "correct": true
+        },
+        {
+          "text": "El águila",
+          "correct": false
+        }
+      ],
+      "difficulty": "medium",
+      "fun_fact": "El charrán ártico viaja del Ártico a la Antártida y de vuelta cada año.",
+      "category": "Naturaleza"
+    },
+    {
+      "id": "nat_es_091",
+      "question": "¿Qué parte de la planta es la encargada de la reproducción?",
+      "answers": [
+        {
+          "text": "La flor",
+          "correct": true
+        },
+        {
+          "text": "El tallo",
+          "correct": false
+        },
+        {
+          "text": "La raíz",
+          "correct": false
+        }
+      ],
+      "difficulty": "medium",
+      "fun_fact": "Tras la polinización, la flor da lugar al fruto y las semillas.",
+      "category": "Naturaleza"
+    },
+    {
+      "id": "nat_es_092",
+      "question": "¿Qué animal es el único que no puede saltar?",
+      "answers": [
+        {
+          "text": "El elefante",
+          "correct": true
+        },
+        {
+          "text": "El hipopótamo",
+          "correct": false
+        },
+        {
+          "text": "El rinoceronte",
+          "correct": false
+        }
+      ],
+      "difficulty": "medium",
+      "fun_fact": "Debido a su peso y a la estructura de sus patas, el elefante nunca despega del suelo.",
+      "category": "Naturaleza"
+    },
+    {
+      "id": "nat_es_093",
+      "question": "¿Qué tipo de dieta tiene un animal carnívoro?",
+      "answers": [
+        {
+          "text": "Se alimenta de plantas",
+          "correct": false
+        },
+        {
+          "text": "Se alimenta de otros animales",
+          "correct": true
+        },
+        {
+          "text": "Se alimenta de todo",
+          "correct": false
+        }
+      ],
+      "difficulty": "medium",
+      "fun_fact": "Los carnívoros suelen tener dientes afilados para desgarrar la carne.",
+      "category": "Naturaleza"
+    },
+    {
+      "id": "nat_es_094",
+      "question": "¿Cuál es el mamífero más pequeño del mundo?",
+      "answers": [
+        {
+          "text": "El musgaño enano",
+          "correct": true
+        },
+        {
+          "text": "El ratón común",
+          "correct": false
+        },
+        {
+          "text": "El topo",
+          "correct": false
+        }
+      ],
+      "difficulty": "medium",
+      "fun_fact": "El musgaño etrusco pesa menos de 2 gramos.",
+      "category": "Naturaleza"
+    },
+    {
+      "id": "nat_es_095",
+      "question": "¿Qué animal marino tiene la mayor cantidad de dientes en filas que se reemplazan?",
+      "answers": [
+        {
+          "text": "El tiburón",
+          "correct": true
+        },
+        {
+          "text": "La orca",
+          "correct": false
+        },
+        {
+          "text": "El pez espada",
+          "correct": false
+        }
+      ],
+      "difficulty": "medium",
+      "fun_fact": "Un tiburón puede perder y reemplazar miles de dientes a lo largo de su vida.",
+      "category": "Naturaleza"
+    },
+    {
+      "id": "nat_es_096",
+      "question": "¿Qué tipo de árbol conserva sus hojas verdes durante todo el año?",
+      "answers": [
+        {
+          "text": "Caduco",
+          "correct": false
+        },
+        {
+          "text": "Perenne",
+          "correct": true
+        },
+        {
+          "text": "Frutal",
+          "correct": false
+        }
+      ],
+      "difficulty": "medium",
+      "fun_fact": "Los pinos y abetos son ejemplos de árboles de hoja perenne.",
+      "category": "Naturaleza"
+    },
+    {
+      "id": "nat_es_097",
+      "question": "¿Qué animal es conocido por regenerar extremidades completas, incluso partes del corazón?",
+      "answers": [
+        {
+          "text": "La salamandra",
+          "correct": false
+        },
+        {
+          "text": "El ajolote",
+          "correct": true
+        },
+        {
+          "text": "El geco",
+          "correct": false
+        }
+      ],
+      "difficulty": "medium",
+      "fun_fact": "El ajolote mexicano puede regenerar patas, cola y hasta partes del cerebro.",
+      "category": "Naturaleza"
+    },
+    {
+      "id": "nat_es_098",
+      "question": "¿Cómo se llama el proceso por el que el agua líquida pasa a estado gaseoso?",
+      "answers": [
+        {
+          "text": "Condensación",
+          "correct": false
+        },
+        {
+          "text": "Evaporación",
+          "correct": true
+        },
+        {
+          "text": "Sublimación",
+          "correct": false
+        }
+      ],
+      "difficulty": "medium",
+      "fun_fact": "La evaporación es un paso clave en el ciclo del agua.",
+      "category": "Naturaleza"
+    },
+    {
+      "id": "nat_es_099",
+      "question": "¿Qué órgano controla todo el sistema nervioso del cuerpo humano?",
+      "answers": [
+        {
+          "text": "El corazón",
+          "correct": false
+        },
+        {
+          "text": "El cerebro",
+          "correct": true
+        },
+        {
+          "text": "El hígado",
+          "correct": false
+        }
+      ],
+      "difficulty": "medium",
+      "fun_fact": "El cerebro humano tiene unos 86.000 millones de neuronas.",
+      "category": "Naturaleza"
+    },
+    {
+      "id": "nat_es_100",
+      "question": "¿Qué animal utiliza la ecolocalización para orientarse en la oscuridad?",
+      "answers": [
+        {
+          "text": "El murciélago",
+          "correct": true
+        },
+        {
+          "text": "El búho",
+          "correct": false
+        },
+        {
+          "text": "El gato",
+          "correct": false
+        }
+      ],
+      "difficulty": "medium",
+      "fun_fact": "El murciélago emite sonidos y escucha su eco para 'ver' en la oscuridad.",
+      "category": "Naturaleza"
+    },
+    {
+      "id": "nat_es_101",
+      "question": "¿Qué tipo de organismo es un hongo, como el champiñón?",
+      "answers": [
+        {
+          "text": "Una planta",
+          "correct": false
+        },
+        {
+          "text": "Ni planta ni animal, un reino aparte",
+          "correct": true
+        },
+        {
+          "text": "Un animal",
+          "correct": false
+        }
+      ],
+      "difficulty": "medium",
+      "fun_fact": "Los hongos forman su propio reino y muchos se alimentan de materia en descomposición.",
+      "category": "Naturaleza"
+    },
+    {
+      "id": "nat_es_102",
+      "question": "¿Qué provoca las mareas en los océanos?",
+      "answers": [
+        {
+          "text": "El viento",
+          "correct": false
+        },
+        {
+          "text": "La gravedad de la Luna",
+          "correct": true
+        },
+        {
+          "text": "La rotación de las nubes",
+          "correct": false
+        }
+      ],
+      "difficulty": "medium",
+      "fun_fact": "El Sol también influye en las mareas, aunque menos que la Luna.",
+      "category": "Naturaleza"
+    },
+    {
+      "id": "nat_es_103",
+      "question": "¿Qué animal terrestre tiene la mordida más potente?",
+      "answers": [
+        {
+          "text": "El león",
+          "correct": false
+        },
+        {
+          "text": "El cocodrilo",
+          "correct": true
+        },
+        {
+          "text": "El tiburón",
+          "correct": false
+        }
+      ],
+      "difficulty": "medium",
+      "fun_fact": "La mordida del cocodrilo marino es una de las más fuertes jamás medidas.",
+      "category": "Naturaleza"
+    },
+    {
+      "id": "nat_es_104",
+      "question": "¿Qué insecto es fundamental para la polinización de muchos cultivos?",
+      "answers": [
+        {
+          "text": "La mosca",
+          "correct": false
+        },
+        {
+          "text": "La abeja",
+          "correct": true
+        },
+        {
+          "text": "La cucaracha",
+          "correct": false
+        }
+      ],
+      "difficulty": "medium",
+      "fun_fact": "Cerca de un tercio de los alimentos que consumimos dependen de la polinización.",
+      "category": "Naturaleza"
+    },
+    {
+      "id": "nat_es_105",
+      "question": "¿Cómo se llama la sustancia roja de la sangre que transporta oxígeno?",
+      "answers": [
+        {
+          "text": "La hemoglobina",
+          "correct": true
+        },
+        {
+          "text": "El plasma",
+          "correct": false
+        },
+        {
+          "text": "La insulina",
+          "correct": false
+        }
+      ],
+      "difficulty": "medium",
+      "fun_fact": "La hemoglobina contiene hierro, que le da su color rojo.",
+      "category": "Naturaleza"
+    },
+    {
+      "id": "nat_es_106",
+      "question": "¿Qué animal marino es en realidad una colonia de organismos que forma arrecifes?",
+      "answers": [
+        {
+          "text": "El coral",
+          "correct": true
+        },
+        {
+          "text": "La esponja",
+          "correct": false
+        },
+        {
+          "text": "La almeja",
+          "correct": false
+        }
+      ],
+      "difficulty": "medium",
+      "fun_fact": "Los arrecifes de coral albergan una cuarta parte de la vida marina.",
+      "category": "Naturaleza"
+    },
+    {
+      "id": "nat_es_107",
+      "question": "¿Qué elemento químico es esencial en la molécula de clorofila de las plantas?",
+      "answers": [
+        {
+          "text": "El hierro",
+          "correct": false
+        },
+        {
+          "text": "El magnesio",
+          "correct": true
+        },
+        {
+          "text": "El calcio",
+          "correct": false
+        }
+      ],
+      "difficulty": "medium",
+      "fun_fact": "El magnesio ocupa el centro de la molécula de clorofila.",
+      "category": "Naturaleza"
+    },
+    {
+      "id": "nat_es_108",
+      "question": "¿Qué fenómeno da lugar a las auroras boreales?",
+      "answers": [
+        {
+          "text": "La lluvia de meteoros",
+          "correct": false
+        },
+        {
+          "text": "Las partículas solares chocando con la atmósfera",
+          "correct": true
+        },
+        {
+          "text": "Los rayos de las tormentas",
+          "correct": false
+        }
+      ],
+      "difficulty": "medium",
+      "fun_fact": "El campo magnético de la Tierra guía las partículas hacia los polos.",
+      "category": "Naturaleza"
+    },
+    {
+      "id": "nat_es_109",
+      "question": "¿Qué animal es el reptil vivo más grande del mundo?",
+      "answers": [
+        {
+          "text": "La anaconda",
+          "correct": false
+        },
+        {
+          "text": "El cocodrilo marino",
+          "correct": true
+        },
+        {
+          "text": "El dragón de Komodo",
+          "correct": false
+        }
+      ],
+      "difficulty": "medium",
+      "fun_fact": "El cocodrilo marino puede superar los 6 metros de longitud.",
+      "category": "Naturaleza"
+    },
+    {
+      "id": "nat_es_110",
+      "question": "¿Qué tipo de suelo es más adecuado para retener agua para las plantas?",
+      "answers": [
+        {
+          "text": "Arenoso",
+          "correct": false
+        },
+        {
+          "text": "Arcilloso",
+          "correct": true
+        },
+        {
+          "text": "Rocoso",
+          "correct": false
+        }
+      ],
+      "difficulty": "medium",
+      "fun_fact": "El suelo arcilloso retiene el agua, aunque puede compactarse fácilmente.",
+      "category": "Naturaleza"
+    },
+    {
+      "id": "nat_es_111",
+      "question": "¿Cuál es el animal más venenoso del mar?",
+      "answers": [
+        {
+          "text": "El pulpo de anillos azules",
+          "correct": false
+        },
+        {
+          "text": "La avispa de mar (medusa)",
+          "correct": true
+        },
+        {
+          "text": "La raya",
+          "correct": false
+        }
+      ],
+      "difficulty": "medium",
+      "fun_fact": "La avispa de mar es una de las medusas más mortales que existen.",
+      "category": "Naturaleza"
+    },
+    {
+      "id": "nat_es_112",
+      "question": "¿Qué órgano almacena la bilis producida por el hígado?",
+      "answers": [
+        {
+          "text": "El bazo",
+          "correct": false
+        },
+        {
+          "text": "La vesícula biliar",
+          "correct": true
+        },
+        {
+          "text": "El apéndice",
+          "correct": false
+        }
+      ],
+      "difficulty": "medium",
+      "fun_fact": "La bilis ayuda a digerir las grasas de los alimentos.",
+      "category": "Naturaleza"
+    },
+    {
+      "id": "nat_es_113",
+      "question": "¿Qué tipo de animal es el caracol?",
+      "answers": [
+        {
+          "text": "Un insecto",
+          "correct": false
+        },
+        {
+          "text": "Un molusco",
+          "correct": true
+        },
+        {
+          "text": "Un crustáceo",
+          "correct": false
+        }
+      ],
+      "difficulty": "medium",
+      "fun_fact": "El caracol se desplaza sobre una capa de baba que reduce el rozamiento.",
+      "category": "Naturaleza"
+    },
+    {
+      "id": "nat_es_114",
+      "question": "¿Qué proceso natural convierte la roca en suelo con el paso del tiempo?",
+      "answers": [
+        {
+          "text": "La erosión y meteorización",
+          "correct": true
+        },
+        {
+          "text": "La condensación",
+          "correct": false
+        },
+        {
+          "text": "La fotosíntesis",
+          "correct": false
+        }
+      ],
+      "difficulty": "medium",
+      "fun_fact": "La meteorización puede tardar miles de años en formar suelo fértil.",
+      "category": "Naturaleza"
+    },
+    {
+      "id": "nat_es_115",
+      "question": "¿Qué estructura celular contiene el ADN en las células eucariotas?",
+      "answers": [
+        {
+          "text": "El ribosoma",
+          "correct": false
+        },
+        {
+          "text": "El núcleo",
+          "correct": true
+        },
+        {
+          "text": "La mitocondria",
+          "correct": false
+        }
+      ],
+      "difficulty": "hard",
+      "fun_fact": "El núcleo protege el material genético y coordina la actividad celular.",
+      "category": "Naturaleza"
+    },
+    {
+      "id": "nat_es_116",
+      "question": "¿Cómo se llama el bioma frío y sin árboles con suelo permanentemente helado?",
+      "answers": [
+        {
+          "text": "La taiga",
+          "correct": false
+        },
+        {
+          "text": "La tundra",
+          "correct": true
+        },
+        {
+          "text": "La estepa",
+          "correct": false
+        }
+      ],
+      "difficulty": "hard",
+      "fun_fact": "El suelo helado de la tundra se conoce como permafrost.",
+      "category": "Naturaleza"
+    },
+    {
+      "id": "nat_es_117",
+      "question": "¿Qué científico propuso la teoría de la evolución por selección natural?",
+      "answers": [
+        {
+          "text": "Gregor Mendel",
+          "correct": false
+        },
+        {
+          "text": "Charles Darwin",
+          "correct": true
+        },
+        {
+          "text": "Louis Pasteur",
+          "correct": false
+        }
+      ],
+      "difficulty": "hard",
+      "fun_fact": "Darwin publicó sus ideas en 'El origen de las especies' en 1859.",
+      "category": "Naturaleza"
+    },
+    {
+      "id": "nat_es_118",
+      "question": "¿Cómo se denomina el pigmento que da color rojo o amarillo a muchas hojas en otoño?",
+      "answers": [
+        {
+          "text": "La clorofila",
+          "correct": false
+        },
+        {
+          "text": "Los carotenoides",
+          "correct": true
+        },
+        {
+          "text": "La melanina",
+          "correct": false
+        }
+      ],
+      "difficulty": "hard",
+      "fun_fact": "Los carotenoides quedan visibles cuando la clorofila se degrada en otoño.",
+      "category": "Naturaleza"
+    },
+    {
+      "id": "nat_es_119",
+      "question": "¿Qué tipo de simbiosis forman los hongos y las algas en un liquen?",
+      "answers": [
+        {
+          "text": "Parasitismo",
+          "correct": false
+        },
+        {
+          "text": "Mutualismo",
+          "correct": true
+        },
+        {
+          "text": "Comensalismo",
+          "correct": false
+        }
+      ],
+      "difficulty": "hard",
+      "fun_fact": "El alga aporta alimento por fotosíntesis y el hongo, protección y humedad.",
+      "category": "Naturaleza"
+    },
+    {
+      "id": "nat_es_120",
+      "question": "¿Qué gas de efecto invernadero es liberado principalmente por la ganadería y los humedales?",
+      "answers": [
+        {
+          "text": "Dióxido de carbono",
+          "correct": false
+        },
+        {
+          "text": "Metano",
+          "correct": true
+        },
+        {
+          "text": "Ozono",
+          "correct": false
+        }
+      ],
+      "difficulty": "hard",
+      "fun_fact": "El metano atrapa mucho más calor que el CO2, aunque dura menos en la atmósfera.",
+      "category": "Naturaleza"
+    },
+    {
+      "id": "nat_es_121",
+      "question": "¿Cómo se llama el fenómeno por el que una especie imita a otra peligrosa para protegerse?",
+      "answers": [
+        {
+          "text": "Mimetismo batesiano",
+          "correct": true
+        },
+        {
+          "text": "Camuflaje críptico",
+          "correct": false
+        },
+        {
+          "text": "Homeostasis",
+          "correct": false
+        }
+      ],
+      "difficulty": "hard",
+      "fun_fact": "Algunas moscas inofensivas imitan los colores de las avispas para ahuyentar depredadores.",
+      "category": "Naturaleza"
+    },
+    {
+      "id": "nat_es_122",
+      "question": "¿Qué parte del cerebro coordina el equilibrio y los movimientos musculares?",
+      "answers": [
+        {
+          "text": "El bulbo raquídeo",
+          "correct": false
+        },
+        {
+          "text": "El cerebelo",
+          "correct": true
+        },
+        {
+          "text": "El hipotálamo",
+          "correct": false
+        }
+      ],
+      "difficulty": "hard",
+      "fun_fact": "El cerebelo contiene más de la mitad de todas las neuronas del cerebro.",
+      "category": "Naturaleza"
+    },
+    {
+      "id": "nat_es_123",
+      "question": "¿Cómo se llama el proceso de división celular que produce células sexuales?",
+      "answers": [
+        {
+          "text": "La mitosis",
+          "correct": false
+        },
+        {
+          "text": "La meiosis",
+          "correct": true
+        },
+        {
+          "text": "La gemación",
+          "correct": false
+        }
+      ],
+      "difficulty": "hard",
+      "fun_fact": "La meiosis reduce a la mitad el número de cromosomas en gametos.",
+      "category": "Naturaleza"
+    },
+    {
+      "id": "nat_es_124",
+      "question": "¿Qué corriente oceánica influye en el clima cálido del noroeste de Europa?",
+      "answers": [
+        {
+          "text": "La corriente de Humboldt",
+          "correct": false
+        },
+        {
+          "text": "La corriente del Golfo",
+          "correct": true
+        },
+        {
+          "text": "La corriente de California",
+          "correct": false
+        }
+      ],
+      "difficulty": "hard",
+      "fun_fact": "La corriente del Golfo transporta agua cálida desde el Caribe hacia el Atlántico Norte.",
+      "category": "Naturaleza"
+    },
+    {
+      "id": "nat_es_125",
+      "question": "¿Qué animal posee el genoma con más pares de bases conocido, muy superior al humano?",
+      "answers": [
+        {
+          "text": "El ajolote",
+          "correct": true
+        },
+        {
+          "text": "El chimpancé",
+          "correct": false
+        },
+        {
+          "text": "El ratón",
+          "correct": false
+        }
+      ],
+      "difficulty": "hard",
+      "fun_fact": "El genoma del ajolote es unas diez veces mayor que el humano.",
+      "category": "Naturaleza"
+    },
+    {
+      "id": "nat_es_126",
+      "question": "¿Cómo se llama la teoría que explica el movimiento de los continentes?",
+      "answers": [
+        {
+          "text": "La deriva genética",
+          "correct": false
+        },
+        {
+          "text": "La tectónica de placas",
+          "correct": true
+        },
+        {
+          "text": "La subducción glacial",
+          "correct": false
+        }
+      ],
+      "difficulty": "hard",
+      "fun_fact": "Alfred Wegener propuso la idea de la deriva continental a principios del siglo XX.",
+      "category": "Naturaleza"
+    },
+    {
+      "id": "nat_es_127",
+      "question": "¿Qué estructura de la planta regula la entrada de CO2 y la salida de vapor de agua?",
+      "answers": [
+        {
+          "text": "Los estomas",
+          "correct": true
+        },
+        {
+          "text": "El xilema",
+          "correct": false
+        },
+        {
+          "text": "El floema",
+          "correct": false
+        }
+      ],
+      "difficulty": "hard",
+      "fun_fact": "Los estomas se abren y cierran según la luz y la humedad disponibles.",
+      "category": "Naturaleza"
+    },
+    {
+      "id": "nat_es_128",
+      "question": "¿Qué organismo fue clave para producir el oxígeno de la atmósfera primitiva?",
+      "answers": [
+        {
+          "text": "Los helechos",
+          "correct": false
+        },
+        {
+          "text": "Las cianobacterias",
+          "correct": true
+        },
+        {
+          "text": "Los musgos",
+          "correct": false
+        }
+      ],
+      "difficulty": "hard",
+      "fun_fact": "Las cianobacterias iniciaron la 'Gran Oxidación' hace unos 2.400 millones de años.",
+      "category": "Naturaleza"
+    },
+    {
+      "id": "nat_es_129",
+      "question": "¿Cómo se llama la relación en la que una especie se beneficia y la otra no se ve afectada?",
+      "answers": [
+        {
+          "text": "Mutualismo",
+          "correct": false
+        },
+        {
+          "text": "Comensalismo",
+          "correct": true
+        },
+        {
+          "text": "Depredación",
+          "correct": false
+        }
+      ],
+      "difficulty": "hard",
+      "fun_fact": "Las rémoras que viajan pegadas a los tiburones son un ejemplo de comensalismo.",
+      "category": "Naturaleza"
+    },
+    {
+      "id": "nat_es_130",
+      "question": "¿Qué molécula transporta la energía en las células, conocida como 'moneda energética'?",
+      "answers": [
+        {
+          "text": "El ADN",
+          "correct": false
+        },
+        {
+          "text": "El ATP",
+          "correct": true
+        },
+        {
+          "text": "La glucosa",
+          "correct": false
+        }
+      ],
+      "difficulty": "hard",
+      "fun_fact": "El ATP libera energía al romperse uno de sus enlaces de fosfato.",
+      "category": "Naturaleza"
+    },
+    {
+      "id": "nat_es_131",
+      "question": "¿Qué extinción masiva acabó con los dinosaurios no aviares hace unos 66 millones de años?",
+      "answers": [
+        {
+          "text": "La extinción del Pérmico",
+          "correct": false
+        },
+        {
+          "text": "La extinción del Cretácico-Paleógeno",
+          "correct": true
+        },
+        {
+          "text": "La extinción del Ordovícico",
+          "correct": false
+        }
+      ],
+      "difficulty": "hard",
+      "fun_fact": "Se asocia al impacto de un asteroide en la actual península de Yucatán.",
+      "category": "Naturaleza"
+    },
+    {
+      "id": "nat_es_132",
+      "question": "¿Qué vaso sanguíneo lleva la sangre desde el corazón hacia el resto del cuerpo?",
+      "answers": [
+        {
+          "text": "La vena cava",
+          "correct": false
+        },
+        {
+          "text": "La arteria aorta",
+          "correct": true
+        },
+        {
+          "text": "La vena porta",
+          "correct": false
+        }
+      ],
+      "difficulty": "hard",
+      "fun_fact": "La aorta es la arteria más grande del cuerpo humano.",
+      "category": "Naturaleza"
+    },
+    {
+      "id": "nat_es_133",
+      "question": "¿Qué tipo de bioma es la selva amazónica?",
+      "answers": [
+        {
+          "text": "Bosque templado",
+          "correct": false
+        },
+        {
+          "text": "Selva tropical húmeda",
+          "correct": true
+        },
+        {
+          "text": "Sabana",
+          "correct": false
+        }
+      ],
+      "difficulty": "hard",
+      "fun_fact": "La selva amazónica alberga cerca del 10 % de las especies conocidas del planeta.",
+      "category": "Naturaleza"
+    },
+    {
+      "id": "nat_es_134",
+      "question": "¿Cómo se llama el pigmento responsable de la fotosíntesis que absorbe la luz roja y azul?",
+      "answers": [
+        {
+          "text": "La antocianina",
+          "correct": false
+        },
+        {
+          "text": "La clorofila",
+          "correct": true
+        },
+        {
+          "text": "La xantofila",
+          "correct": false
+        }
+      ],
+      "difficulty": "hard",
+      "fun_fact": "Existen varios tipos de clorofila, siendo la 'a' la más común en plantas.",
+      "category": "Naturaleza"
+    },
+    {
+      "id": "nat_es_135",
+      "question": "¿Qué grupo de animales invertebrados incluye a insectos, arácnidos y crustáceos?",
+      "answers": [
+        {
+          "text": "Los moluscos",
+          "correct": false
+        },
+        {
+          "text": "Los artrópodos",
+          "correct": true
+        },
+        {
+          "text": "Los cnidarios",
+          "correct": false
+        }
+      ],
+      "difficulty": "hard",
+      "fun_fact": "Los artrópodos son el grupo animal más numeroso de la Tierra.",
+      "category": "Naturaleza"
+    },
+    {
+      "id": "nat_es_136",
+      "question": "¿Qué proceso realizan ciertas bacterias para convertir el nitrógeno del aire en compuestos aprovechables?",
+      "answers": [
+        {
+          "text": "La fijación de nitrógeno",
+          "correct": true
+        },
+        {
+          "text": "La fotosíntesis",
+          "correct": false
+        },
+        {
+          "text": "La fermentación",
+          "correct": false
+        }
+      ],
+      "difficulty": "hard",
+      "fun_fact": "Muchas de estas bacterias viven en las raíces de las leguminosas.",
+      "category": "Naturaleza"
+    },
+    {
+      "id": "nat_es_137",
+      "question": "¿Cómo se llama la capa de la atmósfera donde ocurren la mayoría de los fenómenos meteorológicos?",
+      "answers": [
+        {
+          "text": "La estratósfera",
+          "correct": false
+        },
+        {
+          "text": "La troposfera",
+          "correct": true
+        },
+        {
+          "text": "La mesosfera",
+          "correct": false
+        }
+      ],
+      "difficulty": "hard",
+      "fun_fact": "La troposfera es la capa más cercana a la superficie terrestre.",
+      "category": "Naturaleza"
+    },
+    {
+      "id": "nat_es_138",
+      "question": "¿Qué animal presenta bioluminiscencia gracias a bacterias simbióticas en las profundidades marinas?",
+      "answers": [
+        {
+          "text": "El pez linterna",
+          "correct": true
+        },
+        {
+          "text": "El atún",
+          "correct": false
+        },
+        {
+          "text": "La caballa",
+          "correct": false
+        }
+      ],
+      "difficulty": "hard",
+      "fun_fact": "En la oscuridad del fondo marino, la luz sirve para atraer presas o comunicarse.",
+      "category": "Naturaleza"
+    },
+    {
+      "id": "nat_es_139",
+      "question": "¿Qué científico estableció las leyes de la herencia estudiando plantas de guisante?",
+      "answers": [
+        {
+          "text": "Charles Darwin",
+          "correct": false
+        },
+        {
+          "text": "Gregor Mendel",
+          "correct": true
+        },
+        {
+          "text": "Carl Linneo",
+          "correct": false
+        }
+      ],
+      "difficulty": "hard",
+      "fun_fact": "Mendel es considerado el padre de la genética moderna.",
+      "category": "Naturaleza"
+    },
+    {
+      "id": "nat_es_140",
+      "question": "¿Cómo se llama el conjunto de todos los ecosistemas de la Tierra donde existe vida?",
+      "answers": [
+        {
+          "text": "La litosfera",
+          "correct": false
+        },
+        {
+          "text": "La biosfera",
+          "correct": true
+        },
+        {
+          "text": "La hidrosfera",
+          "correct": false
+        }
+      ],
+      "difficulty": "hard",
+      "fun_fact": "La biosfera abarca desde las profundidades oceánicas hasta la atmósfera baja.",
+      "category": "Naturaleza"
+    },
+    {
+      "id": "nat_es_141",
+      "question": "¿Qué tejido vegetal transporta la savia elaborada con azúcares desde las hojas?",
+      "answers": [
+        {
+          "text": "El xilema",
+          "correct": false
+        },
+        {
+          "text": "El floema",
+          "correct": true
+        },
+        {
+          "text": "La epidermis",
+          "correct": false
+        }
+      ],
+      "difficulty": "hard",
+      "fun_fact": "El xilema, en cambio, transporta agua y minerales desde las raíces.",
+      "category": "Naturaleza"
+    },
+    {
+      "id": "nat_es_142",
+      "question": "¿Qué fenómeno climático periódico calienta las aguas del Pacífico y altera el clima global?",
+      "answers": [
+        {
+          "text": "El monzón",
+          "correct": false
+        },
+        {
+          "text": "El Niño",
+          "correct": true
+        },
+        {
+          "text": "El ciclón polar",
+          "correct": false
+        }
+      ],
+      "difficulty": "hard",
+      "fun_fact": "El Niño puede provocar sequías e inundaciones en distintas regiones del mundo.",
+      "category": "Naturaleza"
+    },
+    {
+      "id": "nat_es_143",
+      "question": "¿Qué clase de animales fueron los primeros vertebrados en colonizar la tierra firme?",
+      "answers": [
+        {
+          "text": "Los reptiles",
+          "correct": false
+        },
+        {
+          "text": "Los anfibios",
+          "correct": true
+        },
+        {
+          "text": "Las aves",
+          "correct": false
+        }
+      ],
+      "difficulty": "hard",
+      "fun_fact": "Los anfibios evolucionaron a partir de peces con aletas lobuladas.",
+      "category": "Naturaleza"
+    },
+    {
+      "id": "nat_es_144",
+      "question": "¿Cómo se denomina el número máximo de individuos que un ecosistema puede mantener?",
+      "answers": [
+        {
+          "text": "Densidad relativa",
+          "correct": false
+        },
+        {
+          "text": "Capacidad de carga",
+          "correct": true
+        },
+        {
+          "text": "Biomasa neta",
+          "correct": false
+        }
+      ],
+      "difficulty": "hard",
+      "fun_fact": "Superar la capacidad de carga suele provocar escasez de recursos y caída de la población.",
+      "category": "Naturaleza"
+    },
+    {
+      "id": "nat_es_145",
+      "question": "¿Qué órgano de las aves les ayuda a triturar los alimentos que no pueden masticar?",
+      "answers": [
+        {
+          "text": "El buche",
+          "correct": false
+        },
+        {
+          "text": "La molleja",
+          "correct": true
+        },
+        {
+          "text": "El hígado",
+          "correct": false
+        }
+      ],
+      "difficulty": "hard",
+      "fun_fact": "Muchas aves tragan pequeñas piedras que ayudan a la molleja a moler la comida.",
+      "category": "Naturaleza"
+    },
+    {
+      "id": "nat_es_146",
+      "question": "¿Qué tipo de roca se forma por el enfriamiento del magma?",
+      "answers": [
+        {
+          "text": "Sedimentaria",
+          "correct": false
+        },
+        {
+          "text": "Ígnea",
+          "correct": true
+        },
+        {
+          "text": "Metamórfica",
+          "correct": false
+        }
+      ],
+      "difficulty": "hard",
+      "fun_fact": "El granito y el basalto son ejemplos de rocas ígneas.",
+      "category": "Naturaleza"
+    },
+    {
+      "id": "nat_es_147",
+      "question": "¿Cómo se llama la fase de la mitosis en la que los cromosomas se alinean en el centro de la célula?",
+      "answers": [
+        {
+          "text": "Profase",
+          "correct": false
+        },
+        {
+          "text": "Metafase",
+          "correct": true
+        },
+        {
+          "text": "Telofase",
+          "correct": false
+        }
+      ],
+      "difficulty": "hard",
+      "fun_fact": "Tras la metafase, las cromátidas se separan hacia los polos en la anafase.",
+      "category": "Naturaleza"
+    },
+    {
+      "id": "nat_es_148",
+      "question": "¿Qué reino agrupa a organismos unicelulares como las amebas y los paramecios?",
+      "answers": [
+        {
+          "text": "Reino fungi",
+          "correct": false
+        },
+        {
+          "text": "Reino protista",
+          "correct": true
+        },
+        {
+          "text": "Reino monera",
+          "correct": false
+        }
+      ],
+      "difficulty": "hard",
+      "fun_fact": "Los protistas son en su mayoría microscópicos y muy diversos.",
+      "category": "Naturaleza"
+    },
+    {
+      "id": "nat_es_149",
+      "question": "¿Qué proceso permite a algunas plantas del desierto abrir sus estomas de noche para ahorrar agua?",
+      "answers": [
+        {
+          "text": "Fotosíntesis C3",
+          "correct": false
+        },
+        {
+          "text": "Metabolismo ácido de las crasuláceas (CAM)",
+          "correct": true
+        },
+        {
+          "text": "Respiración anaerobia",
+          "correct": false
+        }
+      ],
+      "difficulty": "hard",
+      "fun_fact": "El metabolismo CAM es típico de los cactus y otras plantas suculentas.",
+      "category": "Naturaleza"
+    },
+    {
+      "id": "nat_es_150",
+      "question": "¿Qué estructura del oído interno es responsable del sentido del equilibrio?",
+      "answers": [
+        {
+          "text": "El tímpano",
+          "correct": false
+        },
+        {
+          "text": "El sistema vestibular",
+          "correct": true
+        },
+        {
+          "text": "La cóclea",
+          "correct": false
+        }
+      ],
+      "difficulty": "hard",
+      "fun_fact": "Los canales semicirculares del sistema vestibular detectan el movimiento de la cabeza.",
+      "category": "Naturaleza"
+    }
+  ]
+}

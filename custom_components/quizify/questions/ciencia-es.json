@@ -1,0 +1,3158 @@
+{
+  "name": "Ciencia",
+  "language": "es",
+  "version": "1.0",
+  "theme": "science",
+  "questions": [
+    {
+      "id": "cie_es_001",
+      "question": "¿Qué velocidad tiene la luz en el vacío (aproximada)?",
+      "answers": [
+        {
+          "text": "300.000 km/s",
+          "correct": true
+        },
+        {
+          "text": "150.000 km/s",
+          "correct": false
+        },
+        {
+          "text": "1.000 km/s",
+          "correct": false
+        }
+      ],
+      "difficulty": "medium",
+      "fun_fact": "La velocidad de la luz es exactamente 299.792.458 metros por segundo.",
+      "category": "Ciencia"
+    },
+    {
+      "id": "cie_es_002",
+      "question": "¿Cuál es el símbolo químico del oro?",
+      "answers": [
+        {
+          "text": "Or",
+          "correct": false
+        },
+        {
+          "text": "Au",
+          "correct": true
+        },
+        {
+          "text": "Go",
+          "correct": false
+        }
+      ],
+      "difficulty": "easy",
+      "fun_fact": "El símbolo Au proviene del latín 'aurum', que significa 'brillo del amanecer'.",
+      "category": "Ciencia"
+    },
+    {
+      "id": "cie_es_003",
+      "question": "¿Qué planeta gira 'de lado', con su eje casi horizontal?",
+      "answers": [
+        {
+          "text": "Neptuno",
+          "correct": false
+        },
+        {
+          "text": "Saturno",
+          "correct": false
+        },
+        {
+          "text": "Urano",
+          "correct": true
+        }
+      ],
+      "difficulty": "hard",
+      "fun_fact": "Urano tiene una inclinación axial de unos 98 grados respecto a su órbita.",
+      "category": "Ciencia"
+    },
+    {
+      "id": "cie_es_004",
+      "question": "¿Qué tipo de energía produce el Sol?",
+      "answers": [
+        {
+          "text": "Nuclear (fusión)",
+          "correct": true
+        },
+        {
+          "text": "Química",
+          "correct": false
+        },
+        {
+          "text": "Eólica",
+          "correct": false
+        }
+      ],
+      "difficulty": "medium",
+      "fun_fact": "El Sol fusiona hidrógeno en helio, liberando enormes cantidades de energía.",
+      "category": "Ciencia"
+    },
+    {
+      "id": "cie_es_005",
+      "question": "¿Qué planeta es conocido como el planeta rojo?",
+      "answers": [
+        {
+          "text": "Júpiter",
+          "correct": false
+        },
+        {
+          "text": "Venus",
+          "correct": false
+        },
+        {
+          "text": "Marte",
+          "correct": true
+        }
+      ],
+      "difficulty": "easy",
+      "fun_fact": "Marte debe su color al óxido de hierro (herrumbre) que cubre su superficie.",
+      "category": "Ciencia"
+    },
+    {
+      "id": "cie_es_006",
+      "question": "¿Qué científico descubrió la penicilina?",
+      "answers": [
+        {
+          "text": "Robert Koch",
+          "correct": false
+        },
+        {
+          "text": "Alexander Fleming",
+          "correct": true
+        },
+        {
+          "text": "Edward Jenner",
+          "correct": false
+        }
+      ],
+      "difficulty": "medium",
+      "fun_fact": "Fleming descubrió la penicilina por accidente en 1928 al observar un moho.",
+      "category": "Ciencia"
+    },
+    {
+      "id": "cie_es_007",
+      "question": "¿Cuál es el metal más ligero conocido?",
+      "answers": [
+        {
+          "text": "Litio",
+          "correct": true
+        },
+        {
+          "text": "Aluminio",
+          "correct": false
+        },
+        {
+          "text": "Titanio",
+          "correct": false
+        }
+      ],
+      "difficulty": "hard",
+      "fun_fact": "El litio es tan ligero que flota sobre el agua y el aceite.",
+      "category": "Ciencia"
+    },
+    {
+      "id": "cie_es_008",
+      "question": "¿Cuál es el gas más abundante en la atmósfera terrestre?",
+      "answers": [
+        {
+          "text": "Oxígeno",
+          "correct": false
+        },
+        {
+          "text": "Nitrógeno",
+          "correct": true
+        },
+        {
+          "text": "Dióxido de carbono",
+          "correct": false
+        }
+      ],
+      "difficulty": "easy",
+      "fun_fact": "El nitrógeno constituye aproximadamente el 78 % del aire que respiramos.",
+      "category": "Ciencia"
+    },
+    {
+      "id": "cie_es_009",
+      "question": "¿Qué unidad mide la fuerza en el Sistema Internacional?",
+      "answers": [
+        {
+          "text": "El julio",
+          "correct": false
+        },
+        {
+          "text": "El vatio",
+          "correct": false
+        },
+        {
+          "text": "El newton",
+          "correct": true
+        }
+      ],
+      "difficulty": "medium",
+      "fun_fact": "El newton se define como la fuerza que da 1 m/s² a una masa de 1 kg.",
+      "category": "Ciencia"
+    },
+    {
+      "id": "cie_es_010",
+      "question": "¿Cuál es el elemento más abundante en la corteza terrestre?",
+      "answers": [
+        {
+          "text": "Oxígeno",
+          "correct": true
+        },
+        {
+          "text": "Silicio",
+          "correct": false
+        },
+        {
+          "text": "Hierro",
+          "correct": false
+        }
+      ],
+      "difficulty": "medium",
+      "fun_fact": "El oxígeno representa cerca del 46 % de la masa de la corteza terrestre.",
+      "category": "Ciencia"
+    },
+    {
+      "id": "cie_es_011",
+      "question": "¿Qué científico formuló la teoría de la relatividad?",
+      "answers": [
+        {
+          "text": "Isaac Newton",
+          "correct": false
+        },
+        {
+          "text": "Nikola Tesla",
+          "correct": false
+        },
+        {
+          "text": "Albert Einstein",
+          "correct": true
+        }
+      ],
+      "difficulty": "easy",
+      "fun_fact": "Einstein publicó la teoría de la relatividad especial en 1905, su 'año milagroso'.",
+      "category": "Ciencia"
+    },
+    {
+      "id": "cie_es_012",
+      "question": "¿Qué científica contribuyó con la imagen del ADN mediante rayos X?",
+      "answers": [
+        {
+          "text": "Marie Curie",
+          "correct": false
+        },
+        {
+          "text": "Rosalind Franklin",
+          "correct": true
+        },
+        {
+          "text": "Barbara McClintock",
+          "correct": false
+        }
+      ],
+      "difficulty": "hard",
+      "fun_fact": "La 'Fotografía 51' de Franklin fue clave para describir la doble hélice.",
+      "category": "Ciencia"
+    },
+    {
+      "id": "cie_es_013",
+      "question": "¿Qué gas produce el efecto invernadero más asociado al cambio climático?",
+      "answers": [
+        {
+          "text": "Dióxido de carbono",
+          "correct": true
+        },
+        {
+          "text": "Oxígeno",
+          "correct": false
+        },
+        {
+          "text": "Argón",
+          "correct": false
+        }
+      ],
+      "difficulty": "medium",
+      "fun_fact": "La concentración de CO₂ ha superado las 420 partes por millón.",
+      "category": "Ciencia"
+    },
+    {
+      "id": "cie_es_014",
+      "question": "¿Cuántos planetas tiene el sistema solar?",
+      "answers": [
+        {
+          "text": "Nueve",
+          "correct": false
+        },
+        {
+          "text": "Ocho",
+          "correct": true
+        },
+        {
+          "text": "Siete",
+          "correct": false
+        }
+      ],
+      "difficulty": "easy",
+      "fun_fact": "Plutón fue reclasificado como planeta enano en 2006, dejando ocho planetas.",
+      "category": "Ciencia"
+    },
+    {
+      "id": "cie_es_015",
+      "question": "¿Cuántos cromosomas tiene una célula humana típica?",
+      "answers": [
+        {
+          "text": "23",
+          "correct": false
+        },
+        {
+          "text": "48",
+          "correct": false
+        },
+        {
+          "text": "46",
+          "correct": true
+        }
+      ],
+      "difficulty": "medium",
+      "fun_fact": "Los humanos tenemos 23 pares de cromosomas, 46 en total.",
+      "category": "Ciencia"
+    },
+    {
+      "id": "cie_es_016",
+      "question": "¿Qué planeta tiene la mayor cantidad de lunas conocidas?",
+      "answers": [
+        {
+          "text": "Saturno",
+          "correct": true
+        },
+        {
+          "text": "Júpiter",
+          "correct": false
+        },
+        {
+          "text": "Neptuno",
+          "correct": false
+        }
+      ],
+      "difficulty": "hard",
+      "fun_fact": "Saturno superó a Júpiter con más de 140 lunas confirmadas.",
+      "category": "Ciencia"
+    },
+    {
+      "id": "cie_es_017",
+      "question": "¿Qué órgano del cuerpo humano bombea la sangre?",
+      "answers": [
+        {
+          "text": "El hígado",
+          "correct": false
+        },
+        {
+          "text": "Los pulmones",
+          "correct": false
+        },
+        {
+          "text": "El corazón",
+          "correct": true
+        }
+      ],
+      "difficulty": "easy",
+      "fun_fact": "El corazón humano late unas 100.000 veces al día.",
+      "category": "Ciencia"
+    },
+    {
+      "id": "cie_es_018",
+      "question": "¿Qué elemento químico tiene el símbolo Na?",
+      "answers": [
+        {
+          "text": "Nitrógeno",
+          "correct": false
+        },
+        {
+          "text": "Sodio",
+          "correct": true
+        },
+        {
+          "text": "Níquel",
+          "correct": false
+        }
+      ],
+      "difficulty": "medium",
+      "fun_fact": "El símbolo Na proviene del latín 'natrium'.",
+      "category": "Ciencia"
+    },
+    {
+      "id": "cie_es_019",
+      "question": "¿Qué científico desarrolló la tabla periódica moderna?",
+      "answers": [
+        {
+          "text": "Dmitri Mendeléyev",
+          "correct": true
+        },
+        {
+          "text": "John Dalton",
+          "correct": false
+        },
+        {
+          "text": "Antoine Lavoisier",
+          "correct": false
+        }
+      ],
+      "difficulty": "medium",
+      "fun_fact": "Mendeléyev dejó huecos en su tabla de 1869 prediciendo elementos aún no descubiertos.",
+      "category": "Ciencia"
+    },
+    {
+      "id": "cie_es_020",
+      "question": "¿Cuál es el símbolo químico del agua?",
+      "answers": [
+        {
+          "text": "CO₂",
+          "correct": false
+        },
+        {
+          "text": "H₂O",
+          "correct": true
+        },
+        {
+          "text": "O₂",
+          "correct": false
+        }
+      ],
+      "difficulty": "easy",
+      "fun_fact": "Cada molécula de agua tiene dos átomos de hidrógeno y uno de oxígeno.",
+      "category": "Ciencia"
+    },
+    {
+      "id": "cie_es_021",
+      "question": "¿Qué científico desarrolló la teoría atómica moderna a inicios del siglo XIX?",
+      "answers": [
+        {
+          "text": "Ernest Rutherford",
+          "correct": false
+        },
+        {
+          "text": "Niels Bohr",
+          "correct": false
+        },
+        {
+          "text": "John Dalton",
+          "correct": true
+        }
+      ],
+      "difficulty": "hard",
+      "fun_fact": "Dalton propuso en 1808 que la materia está formada por átomos indivisibles.",
+      "category": "Ciencia"
+    },
+    {
+      "id": "cie_es_022",
+      "question": "¿Qué instrumento inventó Galileo para observar el cielo?",
+      "answers": [
+        {
+          "text": "El telescopio",
+          "correct": true
+        },
+        {
+          "text": "El microscopio",
+          "correct": false
+        },
+        {
+          "text": "El barómetro",
+          "correct": false
+        }
+      ],
+      "difficulty": "medium",
+      "fun_fact": "Galileo perfeccionó el telescopio y descubrió cuatro lunas de Júpiter en 1610.",
+      "category": "Ciencia"
+    },
+    {
+      "id": "cie_es_023",
+      "question": "¿Qué fuerza nos mantiene pegados al suelo?",
+      "answers": [
+        {
+          "text": "El magnetismo",
+          "correct": false
+        },
+        {
+          "text": "La fricción",
+          "correct": false
+        },
+        {
+          "text": "La gravedad",
+          "correct": true
+        }
+      ],
+      "difficulty": "easy",
+      "fun_fact": "Isaac Newton describió la ley de gravitación universal en 1687.",
+      "category": "Ciencia"
+    },
+    {
+      "id": "cie_es_024",
+      "question": "¿Qué unidad mide la energía en el Sistema Internacional?",
+      "answers": [
+        {
+          "text": "El newton",
+          "correct": false
+        },
+        {
+          "text": "El julio",
+          "correct": true
+        },
+        {
+          "text": "El pascal",
+          "correct": false
+        }
+      ],
+      "difficulty": "medium",
+      "fun_fact": "El julio recibe su nombre del físico británico James Prescott Joule.",
+      "category": "Ciencia"
+    },
+    {
+      "id": "cie_es_025",
+      "question": "¿Qué científico describió la estructura del átomo con núcleo central?",
+      "answers": [
+        {
+          "text": "Ernest Rutherford",
+          "correct": true
+        },
+        {
+          "text": "J.J. Thomson",
+          "correct": false
+        },
+        {
+          "text": "Max Planck",
+          "correct": false
+        }
+      ],
+      "difficulty": "hard",
+      "fun_fact": "Rutherford dedujo el núcleo atómico en su experimento con láminas de oro (1911).",
+      "category": "Ciencia"
+    },
+    {
+      "id": "cie_es_026",
+      "question": "¿Cuál es la estrella más cercana a la Tierra?",
+      "answers": [
+        {
+          "text": "Sirio",
+          "correct": false
+        },
+        {
+          "text": "El Sol",
+          "correct": true
+        },
+        {
+          "text": "Alfa Centauri",
+          "correct": false
+        }
+      ],
+      "difficulty": "easy",
+      "fun_fact": "La luz del Sol tarda unos 8 minutos y 20 segundos en llegar a la Tierra.",
+      "category": "Ciencia"
+    },
+    {
+      "id": "cie_es_027",
+      "question": "¿Qué tipo de sangre es el donante universal?",
+      "answers": [
+        {
+          "text": "AB positivo",
+          "correct": false
+        },
+        {
+          "text": "A positivo",
+          "correct": false
+        },
+        {
+          "text": "O negativo",
+          "correct": true
+        }
+      ],
+      "difficulty": "medium",
+      "fun_fact": "La sangre O negativo puede transfundirse a personas de cualquier grupo sanguíneo.",
+      "category": "Ciencia"
+    },
+    {
+      "id": "cie_es_028",
+      "question": "¿Qué fenómeno provoca los arcoíris?",
+      "answers": [
+        {
+          "text": "La refracción de la luz",
+          "correct": true
+        },
+        {
+          "text": "La reflexión del sonido",
+          "correct": false
+        },
+        {
+          "text": "La ionización del aire",
+          "correct": false
+        }
+      ],
+      "difficulty": "medium",
+      "fun_fact": "La luz blanca se descompone en colores al atravesar las gotas de agua.",
+      "category": "Ciencia"
+    },
+    {
+      "id": "cie_es_029",
+      "question": "¿Qué animal es el mamífero más grande del mundo?",
+      "answers": [
+        {
+          "text": "El elefante africano",
+          "correct": false
+        },
+        {
+          "text": "El tiburón ballena",
+          "correct": false
+        },
+        {
+          "text": "La ballena azul",
+          "correct": true
+        }
+      ],
+      "difficulty": "easy",
+      "fun_fact": "La ballena azul puede medir hasta 30 metros y pesar más de 170 toneladas.",
+      "category": "Ciencia"
+    },
+    {
+      "id": "cie_es_030",
+      "question": "¿Qué parte del cerebro controla el equilibrio y la coordinación?",
+      "answers": [
+        {
+          "text": "El hipotálamo",
+          "correct": false
+        },
+        {
+          "text": "El cerebelo",
+          "correct": true
+        },
+        {
+          "text": "El bulbo raquídeo",
+          "correct": false
+        }
+      ],
+      "difficulty": "hard",
+      "fun_fact": "El cerebelo contiene más de la mitad de las neuronas del cerebro.",
+      "category": "Ciencia"
+    },
+    {
+      "id": "cie_es_031",
+      "question": "¿Qué órgano del cuerpo humano es el más grande?",
+      "answers": [
+        {
+          "text": "La piel",
+          "correct": true
+        },
+        {
+          "text": "El hígado",
+          "correct": false
+        },
+        {
+          "text": "El cerebro",
+          "correct": false
+        }
+      ],
+      "difficulty": "medium",
+      "fun_fact": "La piel de un adulto puede cubrir unos 2 metros cuadrados.",
+      "category": "Ciencia"
+    },
+    {
+      "id": "cie_es_032",
+      "question": "¿Cuál es el metal líquido a temperatura ambiente?",
+      "answers": [
+        {
+          "text": "Plomo",
+          "correct": false
+        },
+        {
+          "text": "Mercurio",
+          "correct": true
+        },
+        {
+          "text": "Hierro",
+          "correct": false
+        }
+      ],
+      "difficulty": "easy",
+      "fun_fact": "El mercurio fue el único metal usado durante siglos en los termómetros.",
+      "category": "Ciencia"
+    },
+    {
+      "id": "cie_es_033",
+      "question": "¿Qué científico creó la primera vacuna, contra la viruela?",
+      "answers": [
+        {
+          "text": "Louis Pasteur",
+          "correct": false
+        },
+        {
+          "text": "Jonas Salk",
+          "correct": false
+        },
+        {
+          "text": "Edward Jenner",
+          "correct": true
+        }
+      ],
+      "difficulty": "medium",
+      "fun_fact": "Jenner usó la viruela bovina en 1796; 'vacuna' viene del latín 'vacca'.",
+      "category": "Ciencia"
+    },
+    {
+      "id": "cie_es_034",
+      "question": "¿Cuántos grados tiene el cero absoluto en la escala Celsius?",
+      "answers": [
+        {
+          "text": "-273,15 °C",
+          "correct": true
+        },
+        {
+          "text": "0 °C",
+          "correct": false
+        },
+        {
+          "text": "-100 °C",
+          "correct": false
+        }
+      ],
+      "difficulty": "hard",
+      "fun_fact": "El cero absoluto es la temperatura más baja teóricamente posible.",
+      "category": "Ciencia"
+    },
+    {
+      "id": "cie_es_035",
+      "question": "¿Qué instrumento se usa para medir la temperatura?",
+      "answers": [
+        {
+          "text": "El barómetro",
+          "correct": false
+        },
+        {
+          "text": "El higrómetro",
+          "correct": false
+        },
+        {
+          "text": "El termómetro",
+          "correct": true
+        }
+      ],
+      "difficulty": "easy",
+      "fun_fact": "El barómetro mide la presión atmosférica, no la temperatura.",
+      "category": "Ciencia"
+    },
+    {
+      "id": "cie_es_036",
+      "question": "¿Cuál es el planeta más caliente del sistema solar?",
+      "answers": [
+        {
+          "text": "Mercurio",
+          "correct": false
+        },
+        {
+          "text": "Venus",
+          "correct": true
+        },
+        {
+          "text": "Marte",
+          "correct": false
+        }
+      ],
+      "difficulty": "medium",
+      "fun_fact": "Venus alcanza unos 465 °C por su densa atmósfera de CO₂ y efecto invernadero.",
+      "category": "Ciencia"
+    },
+    {
+      "id": "cie_es_037",
+      "question": "¿Qué mide la escala de Richter?",
+      "answers": [
+        {
+          "text": "La magnitud de los terremotos",
+          "correct": true
+        },
+        {
+          "text": "La velocidad del viento",
+          "correct": false
+        },
+        {
+          "text": "La presión del aire",
+          "correct": false
+        }
+      ],
+      "difficulty": "medium",
+      "fun_fact": "La escala de Richter fue desarrollada por Charles Richter en 1935.",
+      "category": "Ciencia"
+    },
+    {
+      "id": "cie_es_038",
+      "question": "¿Cuál es el hueso más largo del cuerpo humano?",
+      "answers": [
+        {
+          "text": "La tibia",
+          "correct": false
+        },
+        {
+          "text": "El fémur",
+          "correct": true
+        },
+        {
+          "text": "El húmero",
+          "correct": false
+        }
+      ],
+      "difficulty": "easy",
+      "fun_fact": "El fémur, en el muslo, puede soportar hasta 30 veces el peso del cuerpo.",
+      "category": "Ciencia"
+    },
+    {
+      "id": "cie_es_039",
+      "question": "¿Qué científica es pionera de la programación informática?",
+      "answers": [
+        {
+          "text": "Grace Hopper",
+          "correct": false
+        },
+        {
+          "text": "Hedy Lamarr",
+          "correct": false
+        },
+        {
+          "text": "Ada Lovelace",
+          "correct": true
+        }
+      ],
+      "difficulty": "hard",
+      "fun_fact": "Ada Lovelace escribió el primer algoritmo pensado para una máquina en 1843.",
+      "category": "Ciencia"
+    },
+    {
+      "id": "cie_es_040",
+      "question": "¿Qué gas noble se usa en los letreros luminosos rojos?",
+      "answers": [
+        {
+          "text": "Neón",
+          "correct": true
+        },
+        {
+          "text": "Helio",
+          "correct": false
+        },
+        {
+          "text": "Argón",
+          "correct": false
+        }
+      ],
+      "difficulty": "medium",
+      "fun_fact": "El neón emite una característica luz rojo-anaranjada al aplicarle electricidad.",
+      "category": "Ciencia"
+    },
+    {
+      "id": "cie_es_041",
+      "question": "¿Qué gas necesitan las plantas para la fotosíntesis?",
+      "answers": [
+        {
+          "text": "Oxígeno",
+          "correct": false
+        },
+        {
+          "text": "Nitrógeno",
+          "correct": false
+        },
+        {
+          "text": "Dióxido de carbono",
+          "correct": true
+        }
+      ],
+      "difficulty": "easy",
+      "fun_fact": "Durante la fotosíntesis las plantas absorben CO₂ y liberan oxígeno.",
+      "category": "Ciencia"
+    },
+    {
+      "id": "cie_es_042",
+      "question": "¿Cuál es la partícula de carga positiva del núcleo atómico?",
+      "answers": [
+        {
+          "text": "El electrón",
+          "correct": false
+        },
+        {
+          "text": "El protón",
+          "correct": true
+        },
+        {
+          "text": "El fotón",
+          "correct": false
+        }
+      ],
+      "difficulty": "medium",
+      "fun_fact": "El número de protones determina de qué elemento químico se trata.",
+      "category": "Ciencia"
+    },
+    {
+      "id": "cie_es_043",
+      "question": "¿Qué planeta tarda unos 165 años en dar una vuelta al Sol?",
+      "answers": [
+        {
+          "text": "Neptuno",
+          "correct": true
+        },
+        {
+          "text": "Urano",
+          "correct": false
+        },
+        {
+          "text": "Saturno",
+          "correct": false
+        }
+      ],
+      "difficulty": "hard",
+      "fun_fact": "Neptuno completó su primera órbita conocida desde su descubrimiento en 2011.",
+      "category": "Ciencia"
+    },
+    {
+      "id": "cie_es_044",
+      "question": "¿Cuál es el planeta más grande del sistema solar?",
+      "answers": [
+        {
+          "text": "Saturno",
+          "correct": false
+        },
+        {
+          "text": "Júpiter",
+          "correct": true
+        },
+        {
+          "text": "Neptuno",
+          "correct": false
+        }
+      ],
+      "difficulty": "easy",
+      "fun_fact": "Júpiter es tan grande que en su interior cabrían más de 1.300 Tierras.",
+      "category": "Ciencia"
+    },
+    {
+      "id": "cie_es_045",
+      "question": "¿Qué científico descubrió la ley de la flotabilidad?",
+      "answers": [
+        {
+          "text": "Pitágoras",
+          "correct": false
+        },
+        {
+          "text": "Aristóteles",
+          "correct": false
+        },
+        {
+          "text": "Arquímedes",
+          "correct": true
+        }
+      ],
+      "difficulty": "medium",
+      "fun_fact": "Se dice que Arquímedes gritó '¡Eureka!' al descubrir su principio en el baño.",
+      "category": "Ciencia"
+    },
+    {
+      "id": "cie_es_046",
+      "question": "¿Qué vitamina produce el cuerpo con la luz solar?",
+      "answers": [
+        {
+          "text": "Vitamina D",
+          "correct": true
+        },
+        {
+          "text": "Vitamina C",
+          "correct": false
+        },
+        {
+          "text": "Vitamina A",
+          "correct": false
+        }
+      ],
+      "difficulty": "medium",
+      "fun_fact": "La piel sintetiza vitamina D al exponerse a la radiación ultravioleta B.",
+      "category": "Ciencia"
+    },
+    {
+      "id": "cie_es_047",
+      "question": "¿Qué científica ganó dos premios Nobel en ciencias distintas?",
+      "answers": [
+        {
+          "text": "Rosalind Franklin",
+          "correct": false
+        },
+        {
+          "text": "Ada Lovelace",
+          "correct": false
+        },
+        {
+          "text": "Marie Curie",
+          "correct": true
+        }
+      ],
+      "difficulty": "easy",
+      "fun_fact": "Marie Curie ganó el Nobel de Física en 1903 y el de Química en 1911.",
+      "category": "Ciencia"
+    },
+    {
+      "id": "cie_es_048",
+      "question": "¿Qué científico descubrió la radiactividad de forma pionera?",
+      "answers": [
+        {
+          "text": "Wilhelm Röntgen",
+          "correct": false
+        },
+        {
+          "text": "Henri Becquerel",
+          "correct": true
+        },
+        {
+          "text": "Enrico Fermi",
+          "correct": false
+        }
+      ],
+      "difficulty": "hard",
+      "fun_fact": "Becquerel descubrió la radiactividad natural del uranio en 1896.",
+      "category": "Ciencia"
+    },
+    {
+      "id": "cie_es_049",
+      "question": "¿Qué unidad se usa para medir la resistencia eléctrica?",
+      "answers": [
+        {
+          "text": "El ohmio",
+          "correct": true
+        },
+        {
+          "text": "El voltio",
+          "correct": false
+        },
+        {
+          "text": "El amperio",
+          "correct": false
+        }
+      ],
+      "difficulty": "medium",
+      "fun_fact": "El ohmio recibe su nombre del físico alemán Georg Ohm.",
+      "category": "Ciencia"
+    },
+    {
+      "id": "cie_es_050",
+      "question": "¿Cuál es el símbolo químico del oxígeno?",
+      "answers": [
+        {
+          "text": "Ox",
+          "correct": false
+        },
+        {
+          "text": "O",
+          "correct": true
+        },
+        {
+          "text": "O₂",
+          "correct": false
+        }
+      ],
+      "difficulty": "easy",
+      "fun_fact": "El oxígeno fue descubierto de forma independiente por Scheele y Priestley.",
+      "category": "Ciencia"
+    },
+    {
+      "id": "cie_es_051",
+      "question": "¿Qué proceso libera energía en el interior de una estrella?",
+      "answers": [
+        {
+          "text": "La fisión nuclear",
+          "correct": false
+        },
+        {
+          "text": "La combustión",
+          "correct": false
+        },
+        {
+          "text": "La fusión nuclear",
+          "correct": true
+        }
+      ],
+      "difficulty": "medium",
+      "fun_fact": "En las estrellas, los núcleos de hidrógeno se fusionan para formar helio.",
+      "category": "Ciencia"
+    },
+    {
+      "id": "cie_es_052",
+      "question": "¿Qué científico descubrió los rayos X?",
+      "answers": [
+        {
+          "text": "Wilhelm Röntgen",
+          "correct": true
+        },
+        {
+          "text": "Marie Curie",
+          "correct": false
+        },
+        {
+          "text": "Ernest Rutherford",
+          "correct": false
+        }
+      ],
+      "difficulty": "hard",
+      "fun_fact": "Röntgen recibió el primer premio Nobel de Física en 1901 por este hallazgo.",
+      "category": "Ciencia"
+    },
+    {
+      "id": "cie_es_053",
+      "question": "¿Qué planeta es el más cercano al Sol?",
+      "answers": [
+        {
+          "text": "Venus",
+          "correct": false
+        },
+        {
+          "text": "La Tierra",
+          "correct": false
+        },
+        {
+          "text": "Mercurio",
+          "correct": true
+        }
+      ],
+      "difficulty": "easy",
+      "fun_fact": "Mercurio completa una vuelta alrededor del Sol en solo 88 días terrestres.",
+      "category": "Ciencia"
+    },
+    {
+      "id": "cie_es_054",
+      "question": "¿Cuál es el símbolo químico del potasio?",
+      "answers": [
+        {
+          "text": "Po",
+          "correct": false
+        },
+        {
+          "text": "K",
+          "correct": true
+        },
+        {
+          "text": "Pt",
+          "correct": false
+        }
+      ],
+      "difficulty": "medium",
+      "fun_fact": "El símbolo K proviene del latín 'kalium'.",
+      "category": "Ciencia"
+    },
+    {
+      "id": "cie_es_055",
+      "question": "¿Qué científico es considerado el padre de la genética?",
+      "answers": [
+        {
+          "text": "Gregor Mendel",
+          "correct": true
+        },
+        {
+          "text": "Charles Darwin",
+          "correct": false
+        },
+        {
+          "text": "James Watson",
+          "correct": false
+        }
+      ],
+      "difficulty": "medium",
+      "fun_fact": "Mendel estudió la herencia usando plantas de guisantes en el siglo XIX.",
+      "category": "Ciencia"
+    },
+    {
+      "id": "cie_es_056",
+      "question": "¿Cuántos estados de la materia son los clásicos?",
+      "answers": [
+        {
+          "text": "Dos",
+          "correct": false
+        },
+        {
+          "text": "Tres",
+          "correct": true
+        },
+        {
+          "text": "Cinco",
+          "correct": false
+        }
+      ],
+      "difficulty": "easy",
+      "fun_fact": "Sólido, líquido y gaseoso son los tres estados clásicos; el plasma es el cuarto.",
+      "category": "Ciencia"
+    },
+    {
+      "id": "cie_es_057",
+      "question": "¿Qué científico ideó la escala de temperatura absoluta?",
+      "answers": [
+        {
+          "text": "Anders Celsius",
+          "correct": false
+        },
+        {
+          "text": "Daniel Fahrenheit",
+          "correct": false
+        },
+        {
+          "text": "Lord Kelvin",
+          "correct": true
+        }
+      ],
+      "difficulty": "hard",
+      "fun_fact": "La escala Kelvin comienza en el cero absoluto, -273,15 °C.",
+      "category": "Ciencia"
+    },
+    {
+      "id": "cie_es_058",
+      "question": "¿Qué tipo de onda es el sonido?",
+      "answers": [
+        {
+          "text": "Una onda mecánica",
+          "correct": true
+        },
+        {
+          "text": "Una onda electromagnética",
+          "correct": false
+        },
+        {
+          "text": "Una onda gravitacional",
+          "correct": false
+        }
+      ],
+      "difficulty": "medium",
+      "fun_fact": "El sonido necesita un medio material para propagarse; no viaja en el vacío.",
+      "category": "Ciencia"
+    },
+    {
+      "id": "cie_es_059",
+      "question": "¿Qué parte de la célula contiene el ADN?",
+      "answers": [
+        {
+          "text": "La membrana",
+          "correct": false
+        },
+        {
+          "text": "El citoplasma",
+          "correct": false
+        },
+        {
+          "text": "El núcleo",
+          "correct": true
+        }
+      ],
+      "difficulty": "easy",
+      "fun_fact": "El ADN humano contiene unos 3.000 millones de pares de bases.",
+      "category": "Ciencia"
+    },
+    {
+      "id": "cie_es_060",
+      "question": "¿Cuál es la unidad de medida de la corriente eléctrica?",
+      "answers": [
+        {
+          "text": "El voltio",
+          "correct": false
+        },
+        {
+          "text": "El amperio",
+          "correct": true
+        },
+        {
+          "text": "El vatio",
+          "correct": false
+        }
+      ],
+      "difficulty": "medium",
+      "fun_fact": "El amperio se llama así en honor a André-Marie Ampère.",
+      "category": "Ciencia"
+    },
+    {
+      "id": "cie_es_061",
+      "question": "¿Qué científico enunció el principio de incertidumbre?",
+      "answers": [
+        {
+          "text": "Werner Heisenberg",
+          "correct": true
+        },
+        {
+          "text": "Erwin Schrödinger",
+          "correct": false
+        },
+        {
+          "text": "Paul Dirac",
+          "correct": false
+        }
+      ],
+      "difficulty": "hard",
+      "fun_fact": "El principio de Heisenberg dice que no se puede conocer a la vez posición y velocidad exactas.",
+      "category": "Ciencia"
+    },
+    {
+      "id": "cie_es_062",
+      "question": "¿Qué elemento químico tiene el número atómico 1?",
+      "answers": [
+        {
+          "text": "Helio",
+          "correct": false
+        },
+        {
+          "text": "Hidrógeno",
+          "correct": true
+        },
+        {
+          "text": "Oxígeno",
+          "correct": false
+        }
+      ],
+      "difficulty": "easy",
+      "fun_fact": "El hidrógeno es el elemento más abundante del universo.",
+      "category": "Ciencia"
+    },
+    {
+      "id": "cie_es_063",
+      "question": "¿Qué elemento químico tiene el símbolo Ag?",
+      "answers": [
+        {
+          "text": "Argón",
+          "correct": false
+        },
+        {
+          "text": "Oro",
+          "correct": false
+        },
+        {
+          "text": "Plata",
+          "correct": true
+        }
+      ],
+      "difficulty": "medium",
+      "fun_fact": "El símbolo Ag proviene del latín 'argentum'.",
+      "category": "Ciencia"
+    },
+    {
+      "id": "cie_es_064",
+      "question": "¿Qué planeta enano orbita más allá de Neptuno y fue planeta hasta 2006?",
+      "answers": [
+        {
+          "text": "Plutón",
+          "correct": true
+        },
+        {
+          "text": "Ceres",
+          "correct": false
+        },
+        {
+          "text": "Eris",
+          "correct": false
+        }
+      ],
+      "difficulty": "medium",
+      "fun_fact": "Plutón fue descubierto en 1930 por Clyde Tombaugh.",
+      "category": "Ciencia"
+    },
+    {
+      "id": "cie_es_065",
+      "question": "¿Cómo se llama la galaxia en la que vivimos?",
+      "answers": [
+        {
+          "text": "Andrómeda",
+          "correct": false
+        },
+        {
+          "text": "El Triángulo",
+          "correct": false
+        },
+        {
+          "text": "La Vía Láctea",
+          "correct": true
+        }
+      ],
+      "difficulty": "easy",
+      "fun_fact": "La Vía Láctea contiene entre 100.000 y 400.000 millones de estrellas.",
+      "category": "Ciencia"
+    },
+    {
+      "id": "cie_es_066",
+      "question": "¿Qué científico formuló las leyes del movimiento planetario?",
+      "answers": [
+        {
+          "text": "Galileo Galilei",
+          "correct": false
+        },
+        {
+          "text": "Johannes Kepler",
+          "correct": true
+        },
+        {
+          "text": "Isaac Newton",
+          "correct": false
+        }
+      ],
+      "difficulty": "hard",
+      "fun_fact": "Kepler descubrió que las órbitas de los planetas son elipses, no círculos.",
+      "category": "Ciencia"
+    },
+    {
+      "id": "cie_es_067",
+      "question": "¿Cuál es la constante que relaciona la circunferencia con su diámetro?",
+      "answers": [
+        {
+          "text": "Pi (π)",
+          "correct": true
+        },
+        {
+          "text": "El número de Euler (e)",
+          "correct": false
+        },
+        {
+          "text": "La razón áurea (φ)",
+          "correct": false
+        }
+      ],
+      "difficulty": "medium",
+      "fun_fact": "El valor de pi es aproximadamente 3,14159 y es un número irracional.",
+      "category": "Ciencia"
+    },
+    {
+      "id": "cie_es_068",
+      "question": "¿Qué científico propuso la teoría de la evolución por selección natural?",
+      "answers": [
+        {
+          "text": "Gregor Mendel",
+          "correct": false
+        },
+        {
+          "text": "Charles Darwin",
+          "correct": true
+        },
+        {
+          "text": "Louis Pasteur",
+          "correct": false
+        }
+      ],
+      "difficulty": "easy",
+      "fun_fact": "Darwin publicó 'El origen de las especies' en 1859.",
+      "category": "Ciencia"
+    },
+    {
+      "id": "cie_es_069",
+      "question": "¿Qué tipo de roca se forma al enfriarse el magma?",
+      "answers": [
+        {
+          "text": "Sedimentaria",
+          "correct": false
+        },
+        {
+          "text": "Metamórfica",
+          "correct": false
+        },
+        {
+          "text": "Ígnea",
+          "correct": true
+        }
+      ],
+      "difficulty": "medium",
+      "fun_fact": "El granito y el basalto son ejemplos de rocas ígneas.",
+      "category": "Ciencia"
+    },
+    {
+      "id": "cie_es_070",
+      "question": "¿Qué gas noble es el segundo elemento más abundante del universo?",
+      "answers": [
+        {
+          "text": "Helio",
+          "correct": true
+        },
+        {
+          "text": "Neón",
+          "correct": false
+        },
+        {
+          "text": "Kriptón",
+          "correct": false
+        }
+      ],
+      "difficulty": "hard",
+      "fun_fact": "El helio se formó en gran parte durante el Big Bang.",
+      "category": "Ciencia"
+    },
+    {
+      "id": "cie_es_071",
+      "question": "¿Cuál es el planeta con anillos más visibles?",
+      "answers": [
+        {
+          "text": "Júpiter",
+          "correct": false
+        },
+        {
+          "text": "Urano",
+          "correct": false
+        },
+        {
+          "text": "Saturno",
+          "correct": true
+        }
+      ],
+      "difficulty": "easy",
+      "fun_fact": "Los anillos de Saturno están formados principalmente por hielo y roca.",
+      "category": "Ciencia"
+    },
+    {
+      "id": "cie_es_072",
+      "question": "¿Qué unidad mide la potencia eléctrica?",
+      "answers": [
+        {
+          "text": "El julio",
+          "correct": false
+        },
+        {
+          "text": "El vatio",
+          "correct": true
+        },
+        {
+          "text": "El ohmio",
+          "correct": false
+        }
+      ],
+      "difficulty": "medium",
+      "fun_fact": "El vatio recibe su nombre del ingeniero James Watt.",
+      "category": "Ciencia"
+    },
+    {
+      "id": "cie_es_073",
+      "question": "¿Qué científico propuso el modelo heliocéntrico del sistema solar?",
+      "answers": [
+        {
+          "text": "Nicolás Copérnico",
+          "correct": true
+        },
+        {
+          "text": "Ptolomeo",
+          "correct": false
+        },
+        {
+          "text": "Tycho Brahe",
+          "correct": false
+        }
+      ],
+      "difficulty": "medium",
+      "fun_fact": "Copérnico situó al Sol en el centro en su obra publicada en 1543.",
+      "category": "Ciencia"
+    },
+    {
+      "id": "cie_es_074",
+      "question": "¿Qué órgano permite la respiración en los humanos?",
+      "answers": [
+        {
+          "text": "El estómago",
+          "correct": false
+        },
+        {
+          "text": "Los pulmones",
+          "correct": true
+        },
+        {
+          "text": "Los riñones",
+          "correct": false
+        }
+      ],
+      "difficulty": "easy",
+      "fun_fact": "Un adulto respira en reposo unas 12 a 20 veces por minuto.",
+      "category": "Ciencia"
+    },
+    {
+      "id": "cie_es_075",
+      "question": "¿Qué unidad mide la presión en el Sistema Internacional?",
+      "answers": [
+        {
+          "text": "El newton",
+          "correct": false
+        },
+        {
+          "text": "El julio",
+          "correct": false
+        },
+        {
+          "text": "El pascal",
+          "correct": true
+        }
+      ],
+      "difficulty": "hard",
+      "fun_fact": "El pascal recibe su nombre del matemático y físico Blaise Pascal.",
+      "category": "Ciencia"
+    },
+    {
+      "id": "cie_es_076",
+      "question": "¿Qué fenómeno óptico separa la luz blanca en colores con un prisma?",
+      "answers": [
+        {
+          "text": "La dispersión",
+          "correct": true
+        },
+        {
+          "text": "La difusión",
+          "correct": false
+        },
+        {
+          "text": "La polarización",
+          "correct": false
+        }
+      ],
+      "difficulty": "medium",
+      "fun_fact": "Newton demostró con un prisma que la luz blanca contiene todos los colores.",
+      "category": "Ciencia"
+    },
+    {
+      "id": "cie_es_077",
+      "question": "¿Cuál es el símbolo químico del hierro?",
+      "answers": [
+        {
+          "text": "Hi",
+          "correct": false
+        },
+        {
+          "text": "Ir",
+          "correct": false
+        },
+        {
+          "text": "Fe",
+          "correct": true
+        }
+      ],
+      "difficulty": "easy",
+      "fun_fact": "El símbolo Fe proviene del latín 'ferrum'.",
+      "category": "Ciencia"
+    },
+    {
+      "id": "cie_es_078",
+      "question": "¿Qué elemento químico tiene el símbolo Pb?",
+      "answers": [
+        {
+          "text": "Potasio",
+          "correct": false
+        },
+        {
+          "text": "Plomo",
+          "correct": true
+        },
+        {
+          "text": "Paladio",
+          "correct": false
+        }
+      ],
+      "difficulty": "medium",
+      "fun_fact": "El símbolo Pb proviene del latín 'plumbum'.",
+      "category": "Ciencia"
+    },
+    {
+      "id": "cie_es_079",
+      "question": "¿Qué científico propuso el modelo atómico con electrones en órbitas?",
+      "answers": [
+        {
+          "text": "Niels Bohr",
+          "correct": true
+        },
+        {
+          "text": "John Dalton",
+          "correct": false
+        },
+        {
+          "text": "James Chadwick",
+          "correct": false
+        }
+      ],
+      "difficulty": "hard",
+      "fun_fact": "El modelo de Bohr de 1913 explicó los niveles de energía del hidrógeno.",
+      "category": "Ciencia"
+    },
+    {
+      "id": "cie_es_080",
+      "question": "¿Qué satélite natural tiene la Tierra?",
+      "answers": [
+        {
+          "text": "Titán",
+          "correct": false
+        },
+        {
+          "text": "La Luna",
+          "correct": true
+        },
+        {
+          "text": "Fobos",
+          "correct": false
+        }
+      ],
+      "difficulty": "easy",
+      "fun_fact": "La Luna se aleja de la Tierra unos 3,8 centímetros cada año.",
+      "category": "Ciencia"
+    },
+    {
+      "id": "cie_es_081",
+      "question": "¿Qué instrumento mide la presión atmosférica?",
+      "answers": [
+        {
+          "text": "El termómetro",
+          "correct": false
+        },
+        {
+          "text": "El anemómetro",
+          "correct": false
+        },
+        {
+          "text": "El barómetro",
+          "correct": true
+        }
+      ],
+      "difficulty": "medium",
+      "fun_fact": "Evangelista Torricelli inventó el barómetro de mercurio en 1643.",
+      "category": "Ciencia"
+    },
+    {
+      "id": "cie_es_082",
+      "question": "¿Qué tipo de célula transporta el oxígeno en la sangre?",
+      "answers": [
+        {
+          "text": "Los glóbulos rojos",
+          "correct": true
+        },
+        {
+          "text": "Los glóbulos blancos",
+          "correct": false
+        },
+        {
+          "text": "Las plaquetas",
+          "correct": false
+        }
+      ],
+      "difficulty": "medium",
+      "fun_fact": "Los glóbulos rojos contienen hemoglobina, que se une al oxígeno.",
+      "category": "Ciencia"
+    },
+    {
+      "id": "cie_es_083",
+      "question": "¿Cuál es el sentido asociado a la retina?",
+      "answers": [
+        {
+          "text": "El oído",
+          "correct": false
+        },
+        {
+          "text": "El olfato",
+          "correct": false
+        },
+        {
+          "text": "La vista",
+          "correct": true
+        }
+      ],
+      "difficulty": "easy",
+      "fun_fact": "La retina contiene células llamadas conos y bastones que detectan la luz.",
+      "category": "Ciencia"
+    },
+    {
+      "id": "cie_es_084",
+      "question": "¿Cuál es la galaxia grande más cercana a la Vía Láctea?",
+      "answers": [
+        {
+          "text": "El Triángulo",
+          "correct": false
+        },
+        {
+          "text": "Andrómeda",
+          "correct": true
+        },
+        {
+          "text": "Las Nubes de Magallanes",
+          "correct": false
+        }
+      ],
+      "difficulty": "hard",
+      "fun_fact": "Andrómeda se acerca a la Vía Láctea y ambas chocarán en unos 4.500 millones de años.",
+      "category": "Ciencia"
+    },
+    {
+      "id": "cie_es_085",
+      "question": "¿Qué reacción química ocurre cuando algo se oxida con el oxígeno?",
+      "answers": [
+        {
+          "text": "La oxidación",
+          "correct": true
+        },
+        {
+          "text": "La reducción",
+          "correct": false
+        },
+        {
+          "text": "La sublimación",
+          "correct": false
+        }
+      ],
+      "difficulty": "medium",
+      "fun_fact": "El herrumbre del hierro es un ejemplo cotidiano de oxidación.",
+      "category": "Ciencia"
+    },
+    {
+      "id": "cie_es_086",
+      "question": "¿Qué científico enunció las tres leyes del movimiento?",
+      "answers": [
+        {
+          "text": "Galileo Galilei",
+          "correct": false
+        },
+        {
+          "text": "Isaac Newton",
+          "correct": true
+        },
+        {
+          "text": "Johannes Kepler",
+          "correct": false
+        }
+      ],
+      "difficulty": "easy",
+      "fun_fact": "Newton publicó sus leyes del movimiento en los 'Principia' de 1687.",
+      "category": "Ciencia"
+    },
+    {
+      "id": "cie_es_087",
+      "question": "¿Qué unidad mide la frecuencia?",
+      "answers": [
+        {
+          "text": "El decibelio",
+          "correct": false
+        },
+        {
+          "text": "El nudo",
+          "correct": false
+        },
+        {
+          "text": "El hercio",
+          "correct": true
+        }
+      ],
+      "difficulty": "medium",
+      "fun_fact": "Un hercio equivale a un ciclo por segundo; su nombre honra a Heinrich Hertz.",
+      "category": "Ciencia"
+    },
+    {
+      "id": "cie_es_088",
+      "question": "¿Qué elemento químico tiene el símbolo Sn?",
+      "answers": [
+        {
+          "text": "Estaño",
+          "correct": true
+        },
+        {
+          "text": "Azufre",
+          "correct": false
+        },
+        {
+          "text": "Selenio",
+          "correct": false
+        }
+      ],
+      "difficulty": "hard",
+      "fun_fact": "El símbolo Sn proviene del latín 'stannum'.",
+      "category": "Ciencia"
+    },
+    {
+      "id": "cie_es_089",
+      "question": "¿Qué partícula subatómica tiene carga negativa?",
+      "answers": [
+        {
+          "text": "El protón",
+          "correct": false
+        },
+        {
+          "text": "El neutrón",
+          "correct": false
+        },
+        {
+          "text": "El electrón",
+          "correct": true
+        }
+      ],
+      "difficulty": "easy",
+      "fun_fact": "El electrón fue descubierto por J.J. Thomson en 1897.",
+      "category": "Ciencia"
+    },
+    {
+      "id": "cie_es_090",
+      "question": "¿Qué tipo de energía tiene un objeto por estar en movimiento?",
+      "answers": [
+        {
+          "text": "Energía potencial",
+          "correct": false
+        },
+        {
+          "text": "Energía cinética",
+          "correct": true
+        },
+        {
+          "text": "Energía térmica",
+          "correct": false
+        }
+      ],
+      "difficulty": "medium",
+      "fun_fact": "La energía cinética depende de la masa y del cuadrado de la velocidad.",
+      "category": "Ciencia"
+    },
+    {
+      "id": "cie_es_091",
+      "question": "¿Qué gas hace que el pan y los pasteles suban al hornearse?",
+      "answers": [
+        {
+          "text": "Dióxido de carbono",
+          "correct": true
+        },
+        {
+          "text": "Oxígeno",
+          "correct": false
+        },
+        {
+          "text": "Metano",
+          "correct": false
+        }
+      ],
+      "difficulty": "medium",
+      "fun_fact": "La levadura y el bicarbonato liberan CO₂, que forma burbujas en la masa.",
+      "category": "Ciencia"
+    },
+    {
+      "id": "cie_es_092",
+      "question": "¿Cuál es la unidad básica de la vida?",
+      "answers": [
+        {
+          "text": "El átomo",
+          "correct": false
+        },
+        {
+          "text": "La célula",
+          "correct": true
+        },
+        {
+          "text": "El tejido",
+          "correct": false
+        }
+      ],
+      "difficulty": "easy",
+      "fun_fact": "El término 'célula' fue acuñado por Robert Hooke en 1665.",
+      "category": "Ciencia"
+    },
+    {
+      "id": "cie_es_093",
+      "question": "¿Qué científico desarrolló la pila eléctrica?",
+      "answers": [
+        {
+          "text": "Michael Faraday",
+          "correct": false
+        },
+        {
+          "text": "Georg Ohm",
+          "correct": false
+        },
+        {
+          "text": "Alessandro Volta",
+          "correct": true
+        }
+      ],
+      "difficulty": "hard",
+      "fun_fact": "Volta presentó su pila en 1800; el voltio lleva su nombre.",
+      "category": "Ciencia"
+    },
+    {
+      "id": "cie_es_094",
+      "question": "¿Cuál es la capa de gas que protege la Tierra de la radiación ultravioleta?",
+      "answers": [
+        {
+          "text": "La capa de ozono",
+          "correct": true
+        },
+        {
+          "text": "La troposfera",
+          "correct": false
+        },
+        {
+          "text": "La ionosfera",
+          "correct": false
+        }
+      ],
+      "difficulty": "medium",
+      "fun_fact": "La capa de ozono se encuentra en la estratosfera.",
+      "category": "Ciencia"
+    },
+    {
+      "id": "cie_es_095",
+      "question": "¿Qué proceso convierte el agua líquida en vapor?",
+      "answers": [
+        {
+          "text": "Condensación",
+          "correct": false
+        },
+        {
+          "text": "Solidificación",
+          "correct": false
+        },
+        {
+          "text": "Evaporación",
+          "correct": true
+        }
+      ],
+      "difficulty": "easy",
+      "fun_fact": "La evaporación ocurre en la superficie del líquido a cualquier temperatura.",
+      "category": "Ciencia"
+    },
+    {
+      "id": "cie_es_096",
+      "question": "¿Qué elemento químico tiene el símbolo Cu?",
+      "answers": [
+        {
+          "text": "Cobalto",
+          "correct": false
+        },
+        {
+          "text": "Cobre",
+          "correct": true
+        },
+        {
+          "text": "Curio",
+          "correct": false
+        }
+      ],
+      "difficulty": "medium",
+      "fun_fact": "El símbolo Cu proviene del latín 'cuprum', asociado a la isla de Chipre.",
+      "category": "Ciencia"
+    },
+    {
+      "id": "cie_es_097",
+      "question": "¿Qué tipo de reacción libera calor al entorno?",
+      "answers": [
+        {
+          "text": "Exotérmica",
+          "correct": true
+        },
+        {
+          "text": "Endotérmica",
+          "correct": false
+        },
+        {
+          "text": "Isotérmica",
+          "correct": false
+        }
+      ],
+      "difficulty": "hard",
+      "fun_fact": "La combustión es un ejemplo clásico de reacción exotérmica.",
+      "category": "Ciencia"
+    },
+    {
+      "id": "cie_es_098",
+      "question": "¿Cuál es la temperatura de congelación del agua a nivel del mar?",
+      "answers": [
+        {
+          "text": "10 °C",
+          "correct": false
+        },
+        {
+          "text": "0 °C",
+          "correct": true
+        },
+        {
+          "text": "-10 °C",
+          "correct": false
+        }
+      ],
+      "difficulty": "easy",
+      "fun_fact": "El agua hierve a 100 °C y se congela a 0 °C a presión atmosférica normal.",
+      "category": "Ciencia"
+    },
+    {
+      "id": "cie_es_099",
+      "question": "¿Cuál es el elemento químico más ligero de todos?",
+      "answers": [
+        {
+          "text": "Helio",
+          "correct": false
+        },
+        {
+          "text": "Litio",
+          "correct": false
+        },
+        {
+          "text": "Hidrógeno",
+          "correct": true
+        }
+      ],
+      "difficulty": "medium",
+      "fun_fact": "El hidrógeno tiene un solo protón y es el átomo más simple.",
+      "category": "Ciencia"
+    },
+    {
+      "id": "cie_es_100",
+      "question": "¿Qué mineral es el más duro según la escala de Mohs?",
+      "answers": [
+        {
+          "text": "El diamante",
+          "correct": true
+        },
+        {
+          "text": "El cuarzo",
+          "correct": false
+        },
+        {
+          "text": "El corindón",
+          "correct": false
+        }
+      ],
+      "difficulty": "medium",
+      "fun_fact": "El diamante alcanza el valor 10, el máximo de la escala de Mohs.",
+      "category": "Ciencia"
+    },
+    {
+      "id": "cie_es_101",
+      "question": "¿Qué científico formuló la ley de la gravitación universal?",
+      "answers": [
+        {
+          "text": "Albert Einstein",
+          "correct": false
+        },
+        {
+          "text": "Nikola Tesla",
+          "correct": false
+        },
+        {
+          "text": "Isaac Newton",
+          "correct": true
+        }
+      ],
+      "difficulty": "easy",
+      "fun_fact": "Cuenta la leyenda que una manzana cayendo inspiró a Newton.",
+      "category": "Ciencia"
+    },
+    {
+      "id": "cie_es_102",
+      "question": "¿Qué científico descubrió el neutrón?",
+      "answers": [
+        {
+          "text": "Ernest Rutherford",
+          "correct": false
+        },
+        {
+          "text": "James Chadwick",
+          "correct": true
+        },
+        {
+          "text": "J.J. Thomson",
+          "correct": false
+        }
+      ],
+      "difficulty": "hard",
+      "fun_fact": "Chadwick descubrió el neutrón en 1932, partícula sin carga del núcleo.",
+      "category": "Ciencia"
+    },
+    {
+      "id": "cie_es_103",
+      "question": "¿Qué órgano produce la insulina en el cuerpo humano?",
+      "answers": [
+        {
+          "text": "El páncreas",
+          "correct": true
+        },
+        {
+          "text": "El hígado",
+          "correct": false
+        },
+        {
+          "text": "La tiroides",
+          "correct": false
+        }
+      ],
+      "difficulty": "medium",
+      "fun_fact": "La falta de insulina o su mal uso causa la diabetes.",
+      "category": "Ciencia"
+    },
+    {
+      "id": "cie_es_104",
+      "question": "¿Cuál es el símbolo químico del carbono?",
+      "answers": [
+        {
+          "text": "Ca",
+          "correct": false
+        },
+        {
+          "text": "C",
+          "correct": true
+        },
+        {
+          "text": "Co",
+          "correct": false
+        }
+      ],
+      "difficulty": "easy",
+      "fun_fact": "El carbono es la base de toda la química orgánica y de la vida.",
+      "category": "Ciencia"
+    },
+    {
+      "id": "cie_es_105",
+      "question": "¿Qué unidad mide la cantidad de sustancia en química?",
+      "answers": [
+        {
+          "text": "El gramo",
+          "correct": false
+        },
+        {
+          "text": "El litro",
+          "correct": false
+        },
+        {
+          "text": "El mol",
+          "correct": true
+        }
+      ],
+      "difficulty": "medium",
+      "fun_fact": "Un mol contiene el número de Avogadro: unos 6,022 × 10²³ partículas.",
+      "category": "Ciencia"
+    },
+    {
+      "id": "cie_es_106",
+      "question": "¿Qué tipo de sangre es el receptor universal?",
+      "answers": [
+        {
+          "text": "AB positivo",
+          "correct": true
+        },
+        {
+          "text": "O negativo",
+          "correct": false
+        },
+        {
+          "text": "A negativo",
+          "correct": false
+        }
+      ],
+      "difficulty": "hard",
+      "fun_fact": "Las personas con sangre AB positivo pueden recibir de cualquier grupo.",
+      "category": "Ciencia"
+    },
+    {
+      "id": "cie_es_107",
+      "question": "¿Qué elemento químico es esencial para respirar?",
+      "answers": [
+        {
+          "text": "Helio",
+          "correct": false
+        },
+        {
+          "text": "Neón",
+          "correct": false
+        },
+        {
+          "text": "Oxígeno",
+          "correct": true
+        }
+      ],
+      "difficulty": "easy",
+      "fun_fact": "El oxígeno representa cerca del 21 % del aire atmosférico.",
+      "category": "Ciencia"
+    },
+    {
+      "id": "cie_es_108",
+      "question": "¿Qué planeta tiene una gran mancha roja que es una tormenta gigante?",
+      "answers": [
+        {
+          "text": "Marte",
+          "correct": false
+        },
+        {
+          "text": "Júpiter",
+          "correct": true
+        },
+        {
+          "text": "Saturno",
+          "correct": false
+        }
+      ],
+      "difficulty": "medium",
+      "fun_fact": "La Gran Mancha Roja de Júpiter es más grande que toda la Tierra.",
+      "category": "Ciencia"
+    },
+    {
+      "id": "cie_es_109",
+      "question": "¿Qué tipo de electricidad genera un rayo?",
+      "answers": [
+        {
+          "text": "Estática",
+          "correct": true
+        },
+        {
+          "text": "Continua de baja tensión",
+          "correct": false
+        },
+        {
+          "text": "Química",
+          "correct": false
+        }
+      ],
+      "difficulty": "medium",
+      "fun_fact": "Un rayo puede alcanzar temperaturas cinco veces mayores que la superficie del Sol.",
+      "category": "Ciencia"
+    },
+    {
+      "id": "cie_es_110",
+      "question": "¿Qué órgano filtra la sangre y produce orina?",
+      "answers": [
+        {
+          "text": "El hígado",
+          "correct": false
+        },
+        {
+          "text": "Los riñones",
+          "correct": true
+        },
+        {
+          "text": "El páncreas",
+          "correct": false
+        }
+      ],
+      "difficulty": "easy",
+      "fun_fact": "Los riñones filtran unos 180 litros de sangre al día.",
+      "category": "Ciencia"
+    },
+    {
+      "id": "cie_es_111",
+      "question": "¿Qué científico describió la circulación de la sangre?",
+      "answers": [
+        {
+          "text": "Andrés Vesalio",
+          "correct": false
+        },
+        {
+          "text": "Claudio Galeno",
+          "correct": false
+        },
+        {
+          "text": "William Harvey",
+          "correct": true
+        }
+      ],
+      "difficulty": "hard",
+      "fun_fact": "Harvey demostró en 1628 que el corazón bombea la sangre en circuito cerrado.",
+      "category": "Ciencia"
+    },
+    {
+      "id": "cie_es_112",
+      "question": "¿Qué científica descubrió los elementos polonio y radio?",
+      "answers": [
+        {
+          "text": "Marie Curie",
+          "correct": true
+        },
+        {
+          "text": "Lise Meitner",
+          "correct": false
+        },
+        {
+          "text": "Irène Joliot-Curie",
+          "correct": false
+        }
+      ],
+      "difficulty": "medium",
+      "fun_fact": "Marie Curie nombró el polonio en honor a su Polonia natal.",
+      "category": "Ciencia"
+    },
+    {
+      "id": "cie_es_113",
+      "question": "¿Qué gas se libera al respirar los seres humanos?",
+      "answers": [
+        {
+          "text": "Oxígeno",
+          "correct": false
+        },
+        {
+          "text": "Hidrógeno",
+          "correct": false
+        },
+        {
+          "text": "Dióxido de carbono",
+          "correct": true
+        }
+      ],
+      "difficulty": "easy",
+      "fun_fact": "Exhalamos CO₂ como producto de la respiración celular.",
+      "category": "Ciencia"
+    },
+    {
+      "id": "cie_es_114",
+      "question": "¿Qué proceso divide una célula en dos idénticas?",
+      "answers": [
+        {
+          "text": "La meiosis",
+          "correct": false
+        },
+        {
+          "text": "La mitosis",
+          "correct": true
+        },
+        {
+          "text": "La fecundación",
+          "correct": false
+        }
+      ],
+      "difficulty": "medium",
+      "fun_fact": "La mitosis permite el crecimiento y la reparación de los tejidos.",
+      "category": "Ciencia"
+    },
+    {
+      "id": "cie_es_115",
+      "question": "¿Cuál es el planeta menos denso del sistema solar?",
+      "answers": [
+        {
+          "text": "Saturno",
+          "correct": true
+        },
+        {
+          "text": "Júpiter",
+          "correct": false
+        },
+        {
+          "text": "Urano",
+          "correct": false
+        }
+      ],
+      "difficulty": "hard",
+      "fun_fact": "Saturno es tan poco denso que flotaría en un océano lo bastante grande.",
+      "category": "Ciencia"
+    },
+    {
+      "id": "cie_es_116",
+      "question": "¿Cuál es el símbolo químico del helio?",
+      "answers": [
+        {
+          "text": "Hi",
+          "correct": false
+        },
+        {
+          "text": "He",
+          "correct": true
+        },
+        {
+          "text": "Hl",
+          "correct": false
+        }
+      ],
+      "difficulty": "easy",
+      "fun_fact": "El helio fue detectado primero en el Sol antes que en la Tierra.",
+      "category": "Ciencia"
+    },
+    {
+      "id": "cie_es_117",
+      "question": "¿Qué tipo de energía almacena una batería cargada?",
+      "answers": [
+        {
+          "text": "Energía nuclear",
+          "correct": false
+        },
+        {
+          "text": "Energía sonora",
+          "correct": false
+        },
+        {
+          "text": "Energía química",
+          "correct": true
+        }
+      ],
+      "difficulty": "medium",
+      "fun_fact": "Al usarla, la batería convierte la energía química en energía eléctrica.",
+      "category": "Ciencia"
+    },
+    {
+      "id": "cie_es_118",
+      "question": "¿Cuál es el símbolo químico del cloro?",
+      "answers": [
+        {
+          "text": "Cl",
+          "correct": true
+        },
+        {
+          "text": "Cr",
+          "correct": false
+        },
+        {
+          "text": "Co",
+          "correct": false
+        }
+      ],
+      "difficulty": "medium",
+      "fun_fact": "El cloro se usa para desinfectar el agua potable.",
+      "category": "Ciencia"
+    },
+    {
+      "id": "cie_es_119",
+      "question": "¿Cuál es la molécula que porta la información genética?",
+      "answers": [
+        {
+          "text": "El ARN mensajero",
+          "correct": false
+        },
+        {
+          "text": "La proteína",
+          "correct": false
+        },
+        {
+          "text": "El ADN",
+          "correct": true
+        }
+      ],
+      "difficulty": "easy",
+      "fun_fact": "El ADN tiene forma de doble hélice, descrita por Watson y Crick en 1953.",
+      "category": "Ciencia"
+    },
+    {
+      "id": "cie_es_120",
+      "question": "¿Qué partícula de luz transporta energía electromagnética?",
+      "answers": [
+        {
+          "text": "El electrón",
+          "correct": false
+        },
+        {
+          "text": "El fotón",
+          "correct": true
+        },
+        {
+          "text": "El neutrino",
+          "correct": false
+        }
+      ],
+      "difficulty": "hard",
+      "fun_fact": "El fotón no tiene masa y siempre viaja a la velocidad de la luz.",
+      "category": "Ciencia"
+    },
+    {
+      "id": "cie_es_121",
+      "question": "¿Qué científico es conocido por sus experimentos con la electricidad y la cometa?",
+      "answers": [
+        {
+          "text": "Benjamin Franklin",
+          "correct": true
+        },
+        {
+          "text": "Thomas Edison",
+          "correct": false
+        },
+        {
+          "text": "Nikola Tesla",
+          "correct": false
+        }
+      ],
+      "difficulty": "medium",
+      "fun_fact": "Franklin demostró que los rayos son electricidad e inventó el pararrayos.",
+      "category": "Ciencia"
+    },
+    {
+      "id": "cie_es_122",
+      "question": "¿Cuál es el símbolo químico del calcio?",
+      "answers": [
+        {
+          "text": "Cl",
+          "correct": false
+        },
+        {
+          "text": "Ca",
+          "correct": true
+        },
+        {
+          "text": "Cu",
+          "correct": false
+        }
+      ],
+      "difficulty": "easy",
+      "fun_fact": "El calcio es esencial para huesos y dientes fuertes.",
+      "category": "Ciencia"
+    },
+    {
+      "id": "cie_es_123",
+      "question": "¿Qué órgano del cuerpo genera la bilis?",
+      "answers": [
+        {
+          "text": "El estómago",
+          "correct": false
+        },
+        {
+          "text": "El bazo",
+          "correct": false
+        },
+        {
+          "text": "El hígado",
+          "correct": true
+        }
+      ],
+      "difficulty": "medium",
+      "fun_fact": "El hígado realiza más de 500 funciones distintas en el organismo.",
+      "category": "Ciencia"
+    },
+    {
+      "id": "cie_es_124",
+      "question": "¿Qué unidad mide la temperatura en el Sistema Internacional?",
+      "answers": [
+        {
+          "text": "El kelvin",
+          "correct": true
+        },
+        {
+          "text": "El grado Celsius",
+          "correct": false
+        },
+        {
+          "text": "El grado Fahrenheit",
+          "correct": false
+        }
+      ],
+      "difficulty": "hard",
+      "fun_fact": "El kelvin es la única escala del SI y no usa el símbolo de grados.",
+      "category": "Ciencia"
+    },
+    {
+      "id": "cie_es_125",
+      "question": "¿Qué astro se encuentra en el centro del sistema solar?",
+      "answers": [
+        {
+          "text": "La Tierra",
+          "correct": false
+        },
+        {
+          "text": "Júpiter",
+          "correct": false
+        },
+        {
+          "text": "El Sol",
+          "correct": true
+        }
+      ],
+      "difficulty": "easy",
+      "fun_fact": "El Sol contiene más del 99 % de toda la masa del sistema solar.",
+      "category": "Ciencia"
+    },
+    {
+      "id": "cie_es_126",
+      "question": "¿Qué planeta es conocido como 'la estrella de la mañana'?",
+      "answers": [
+        {
+          "text": "Mercurio",
+          "correct": false
+        },
+        {
+          "text": "Venus",
+          "correct": true
+        },
+        {
+          "text": "Marte",
+          "correct": false
+        }
+      ],
+      "difficulty": "medium",
+      "fun_fact": "Venus es el objeto más brillante del cielo tras el Sol y la Luna.",
+      "category": "Ciencia"
+    },
+    {
+      "id": "cie_es_127",
+      "question": "¿Qué científico inventó la bombilla incandescente práctica?",
+      "answers": [
+        {
+          "text": "Thomas Edison",
+          "correct": true
+        },
+        {
+          "text": "Nikola Tesla",
+          "correct": false
+        },
+        {
+          "text": "Alexander Graham Bell",
+          "correct": false
+        }
+      ],
+      "difficulty": "medium",
+      "fun_fact": "Edison patentó su bombilla en 1879 tras probar miles de filamentos.",
+      "category": "Ciencia"
+    },
+    {
+      "id": "cie_es_128",
+      "question": "¿Cuál es la fuerza que se opone al movimiento entre superficies?",
+      "answers": [
+        {
+          "text": "La gravedad",
+          "correct": false
+        },
+        {
+          "text": "La fricción",
+          "correct": true
+        },
+        {
+          "text": "La inercia",
+          "correct": false
+        }
+      ],
+      "difficulty": "easy",
+      "fun_fact": "La fricción convierte parte de la energía del movimiento en calor.",
+      "category": "Ciencia"
+    },
+    {
+      "id": "cie_es_129",
+      "question": "¿Qué científico propuso la teoría de la deriva continental?",
+      "answers": [
+        {
+          "text": "Charles Lyell",
+          "correct": false
+        },
+        {
+          "text": "James Hutton",
+          "correct": false
+        },
+        {
+          "text": "Alfred Wegener",
+          "correct": true
+        }
+      ],
+      "difficulty": "hard",
+      "fun_fact": "Wegener planteó en 1912 que los continentes fueron un solo bloque, Pangea.",
+      "category": "Ciencia"
+    },
+    {
+      "id": "cie_es_130",
+      "question": "¿Qué elemento es el principal componente del diamante y el grafito?",
+      "answers": [
+        {
+          "text": "Carbono",
+          "correct": true
+        },
+        {
+          "text": "Silicio",
+          "correct": false
+        },
+        {
+          "text": "Boro",
+          "correct": false
+        }
+      ],
+      "difficulty": "medium",
+      "fun_fact": "El diamante y el grafito son formas distintas (alótropos) del mismo carbono.",
+      "category": "Ciencia"
+    },
+    {
+      "id": "cie_es_131",
+      "question": "¿Qué proceso realizan las plantas para producir su alimento?",
+      "answers": [
+        {
+          "text": "La respiración",
+          "correct": false
+        },
+        {
+          "text": "La digestión",
+          "correct": false
+        },
+        {
+          "text": "La fotosíntesis",
+          "correct": true
+        }
+      ],
+      "difficulty": "easy",
+      "fun_fact": "La fotosíntesis convierte luz, agua y CO₂ en glucosa y oxígeno.",
+      "category": "Ciencia"
+    },
+    {
+      "id": "cie_es_132",
+      "question": "¿Qué fenómeno hace que se vean las fases de la Luna?",
+      "answers": [
+        {
+          "text": "Las nubes terrestres",
+          "correct": false
+        },
+        {
+          "text": "La posición relativa Sol-Tierra-Luna",
+          "correct": true
+        },
+        {
+          "text": "La rotación de la Luna sobre sí misma",
+          "correct": false
+        }
+      ],
+      "difficulty": "medium",
+      "fun_fact": "Vemos distintas porciones iluminadas de la Luna según su posición en la órbita.",
+      "category": "Ciencia"
+    },
+    {
+      "id": "cie_es_133",
+      "question": "¿Qué molécula transporta el oxígeno dentro de los glóbulos rojos?",
+      "answers": [
+        {
+          "text": "La hemoglobina",
+          "correct": true
+        },
+        {
+          "text": "La insulina",
+          "correct": false
+        },
+        {
+          "text": "El colágeno",
+          "correct": false
+        }
+      ],
+      "difficulty": "hard",
+      "fun_fact": "La hemoglobina contiene hierro, que le da su color rojo a la sangre.",
+      "category": "Ciencia"
+    },
+    {
+      "id": "cie_es_134",
+      "question": "¿Cuál es el símbolo químico del nitrógeno?",
+      "answers": [
+        {
+          "text": "Ni",
+          "correct": false
+        },
+        {
+          "text": "N",
+          "correct": true
+        },
+        {
+          "text": "Na",
+          "correct": false
+        }
+      ],
+      "difficulty": "easy",
+      "fun_fact": "El nitrógeno líquido hierve a unos -196 °C.",
+      "category": "Ciencia"
+    },
+    {
+      "id": "cie_es_135",
+      "question": "¿Qué unidad mide el voltaje o diferencia de potencial?",
+      "answers": [
+        {
+          "text": "El amperio",
+          "correct": false
+        },
+        {
+          "text": "El ohmio",
+          "correct": false
+        },
+        {
+          "text": "El voltio",
+          "correct": true
+        }
+      ],
+      "difficulty": "medium",
+      "fun_fact": "El voltio recibe su nombre de Alessandro Volta.",
+      "category": "Ciencia"
+    },
+    {
+      "id": "cie_es_136",
+      "question": "¿Qué elemento químico tiene el número atómico 6?",
+      "answers": [
+        {
+          "text": "Carbono",
+          "correct": true
+        },
+        {
+          "text": "Oxígeno",
+          "correct": false
+        },
+        {
+          "text": "Nitrógeno",
+          "correct": false
+        }
+      ],
+      "difficulty": "medium",
+      "fun_fact": "El carbono forma la columna vertebral de las moléculas de la vida.",
+      "category": "Ciencia"
+    },
+    {
+      "id": "cie_es_137",
+      "question": "¿Qué instrumento se usa para observar objetos muy pequeños?",
+      "answers": [
+        {
+          "text": "El telescopio",
+          "correct": false
+        },
+        {
+          "text": "El periscopio",
+          "correct": false
+        },
+        {
+          "text": "El microscopio",
+          "correct": true
+        }
+      ],
+      "difficulty": "easy",
+      "fun_fact": "Antonie van Leeuwenhoek fue de los primeros en ver microorganismos con un microscopio.",
+      "category": "Ciencia"
+    },
+    {
+      "id": "cie_es_138",
+      "question": "¿Qué científico desarrolló la teoría cuántica al estudiar la radiación?",
+      "answers": [
+        {
+          "text": "Albert Einstein",
+          "correct": false
+        },
+        {
+          "text": "Max Planck",
+          "correct": true
+        },
+        {
+          "text": "Louis de Broglie",
+          "correct": false
+        }
+      ],
+      "difficulty": "hard",
+      "fun_fact": "Planck introdujo la idea de los 'cuantos' de energía en el año 1900.",
+      "category": "Ciencia"
+    },
+    {
+      "id": "cie_es_139",
+      "question": "¿Qué tipo de energía tiene un objeto elevado a cierta altura?",
+      "answers": [
+        {
+          "text": "Energía potencial gravitatoria",
+          "correct": true
+        },
+        {
+          "text": "Energía cinética",
+          "correct": false
+        },
+        {
+          "text": "Energía sonora",
+          "correct": false
+        }
+      ],
+      "difficulty": "medium",
+      "fun_fact": "Al caer, esa energía potencial se transforma en energía cinética.",
+      "category": "Ciencia"
+    },
+    {
+      "id": "cie_es_140",
+      "question": "¿Qué parte de la planta absorbe el agua del suelo?",
+      "answers": [
+        {
+          "text": "Las hojas",
+          "correct": false
+        },
+        {
+          "text": "Las raíces",
+          "correct": true
+        },
+        {
+          "text": "Las flores",
+          "correct": false
+        }
+      ],
+      "difficulty": "easy",
+      "fun_fact": "Las raíces también anclan la planta al suelo.",
+      "category": "Ciencia"
+    },
+    {
+      "id": "cie_es_141",
+      "question": "¿Qué científico es el padre de la microbiología y la pasteurización?",
+      "answers": [
+        {
+          "text": "Robert Koch",
+          "correct": false
+        },
+        {
+          "text": "Alexander Fleming",
+          "correct": false
+        },
+        {
+          "text": "Louis Pasteur",
+          "correct": true
+        }
+      ],
+      "difficulty": "medium",
+      "fun_fact": "Pasteur demostró que los microbios causan enfermedades y desarrolló vacunas.",
+      "category": "Ciencia"
+    },
+    {
+      "id": "cie_es_142",
+      "question": "¿Qué elemento químico es el más abundante en el cuerpo humano por masa?",
+      "answers": [
+        {
+          "text": "Oxígeno",
+          "correct": true
+        },
+        {
+          "text": "Carbono",
+          "correct": false
+        },
+        {
+          "text": "Hidrógeno",
+          "correct": false
+        }
+      ],
+      "difficulty": "hard",
+      "fun_fact": "El oxígeno representa cerca del 65 % de la masa del cuerpo humano.",
+      "category": "Ciencia"
+    },
+    {
+      "id": "cie_es_143",
+      "question": "¿Qué unidad se usa para medir distancias astronómicas grandes?",
+      "answers": [
+        {
+          "text": "El kilómetro",
+          "correct": false
+        },
+        {
+          "text": "La milla náutica",
+          "correct": false
+        },
+        {
+          "text": "El año luz",
+          "correct": true
+        }
+      ],
+      "difficulty": "easy",
+      "fun_fact": "Un año luz equivale a unos 9,46 billones de kilómetros.",
+      "category": "Ciencia"
+    },
+    {
+      "id": "cie_es_144",
+      "question": "¿Qué gas forma la mayor parte del Sol?",
+      "answers": [
+        {
+          "text": "Oxígeno",
+          "correct": false
+        },
+        {
+          "text": "Hidrógeno",
+          "correct": true
+        },
+        {
+          "text": "Carbono",
+          "correct": false
+        }
+      ],
+      "difficulty": "medium",
+      "fun_fact": "El Sol es aproximadamente 74 % hidrógeno por masa.",
+      "category": "Ciencia"
+    },
+    {
+      "id": "cie_es_145",
+      "question": "¿Cuál es el símbolo químico del azufre?",
+      "answers": [
+        {
+          "text": "S",
+          "correct": true
+        },
+        {
+          "text": "Az",
+          "correct": false
+        },
+        {
+          "text": "Su",
+          "correct": false
+        }
+      ],
+      "difficulty": "medium",
+      "fun_fact": "El azufre puro es un sólido amarillo conocido desde la antigüedad.",
+      "category": "Ciencia"
+    },
+    {
+      "id": "cie_es_146",
+      "question": "¿Qué órgano del cuerpo humano procesa el pensamiento y la memoria?",
+      "answers": [
+        {
+          "text": "El corazón",
+          "correct": false
+        },
+        {
+          "text": "El cerebro",
+          "correct": true
+        },
+        {
+          "text": "El estómago",
+          "correct": false
+        }
+      ],
+      "difficulty": "hard",
+      "fun_fact": "El cerebro humano tiene unos 86.000 millones de neuronas.",
+      "category": "Ciencia"
+    },
+    {
+      "id": "cie_es_147",
+      "question": "¿Qué científico descubrió que la Tierra no es el centro del universo, apoyando el heliocentrismo con su telescopio?",
+      "answers": [
+        {
+          "text": "Nicolás Copérnico",
+          "correct": false
+        },
+        {
+          "text": "Isaac Newton",
+          "correct": false
+        },
+        {
+          "text": "Galileo Galilei",
+          "correct": true
+        }
+      ],
+      "difficulty": "medium",
+      "fun_fact": "Galileo fue juzgado por la Inquisición por defender el heliocentrismo.",
+      "category": "Ciencia"
+    },
+    {
+      "id": "cie_es_148",
+      "question": "¿Qué proceso convierte el vapor de agua en líquido?",
+      "answers": [
+        {
+          "text": "La condensación",
+          "correct": true
+        },
+        {
+          "text": "La evaporación",
+          "correct": false
+        },
+        {
+          "text": "La sublimación",
+          "correct": false
+        }
+      ],
+      "difficulty": "hard",
+      "fun_fact": "El rocío de la mañana es un ejemplo de condensación.",
+      "category": "Ciencia"
+    },
+    {
+      "id": "cie_es_149",
+      "question": "¿Qué elemento químico tiene el símbolo He y llena los globos que flotan?",
+      "answers": [
+        {
+          "text": "Hidrógeno",
+          "correct": false
+        },
+        {
+          "text": "Neón",
+          "correct": false
+        },
+        {
+          "text": "Helio",
+          "correct": true
+        }
+      ],
+      "difficulty": "hard",
+      "fun_fact": "El helio es más ligero que el aire, por eso los globos suben.",
+      "category": "Ciencia"
+    },
+    {
+      "id": "cie_es_150",
+      "question": "¿Qué tipo de onda es la luz visible?",
+      "answers": [
+        {
+          "text": "Mecánica",
+          "correct": false
+        },
+        {
+          "text": "Electromagnética",
+          "correct": true
+        },
+        {
+          "text": "Sonora",
+          "correct": false
+        }
+      ],
+      "difficulty": "hard",
+      "fun_fact": "La luz visible es una pequeña parte del espectro electromagnético.",
+      "category": "Ciencia"
+    }
+  ]
+}
