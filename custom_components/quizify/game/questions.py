@@ -331,6 +331,15 @@ class QuestionBank:
         """Directory the question-pack JSON files are loaded from."""
         return self._questions_dir
 
+    @property
+    def is_loaded(self) -> bool:
+        """Whether :meth:`load_all_categories` has already populated the bank.
+
+        Lets callers skip a redundant (executor-offloaded) reload when the
+        packs are already cached in memory.
+        """
+        return self._loaded
+
     def load_category(self, category: str) -> list[Question]:
         """Load questions for a single category from its JSON file."""
         file_path = self._questions_dir / f"{category}.json"
