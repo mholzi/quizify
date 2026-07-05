@@ -85,7 +85,7 @@ def _reset_cache():
 
 
 def _install_fake_fetch(monkeypatch, payload, counter) -> None:  # noqa: ANN001
-    async def _fake_fetch():
+    async def _fake_fetch(*_args):  # noqa: ANN002 — accepts the runtime arg (#456)
         counter["n"] += 1
         return payload
 

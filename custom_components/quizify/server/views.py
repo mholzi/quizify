@@ -292,6 +292,35 @@ def _apply_version(text: str, version: str) -> str:
     return text.replace(_VERSION_TOKEN, version)
 
 
+# mtime-keyed raw-text cache for the served HTML pages + service worker (#452).
+# ``_serve_html`` / ``sw_view`` used to do a full executor ``read_text`` on EVERY
+# request (player.html is ~52 KB) even though the file only changes on a deploy.
+# Cache the RAW file text keyed by path → (mtime_ns, text) and re-read only when
+# the mtime changes — same pattern as ``_MANIFEST_CACHE``. The per-request
+# {{VERSION}} / {{ASSET_VER}} / {{HA_LANG}} / chip substitutions still run on
+# every request (their inputs change without the file mtime), so only the disk
+# read is elided; a direct-rsync deploy bumps the mtime and is picked up.
+_TEMPLATE_TEXT_CACHE: dict[str, tuple[int, str]] = {}
+
+
+def _read_template_cached(path: Path) -> str:
+    """Return the file's text, re-reading from disk only when its mtime changed.
+
+    BLOCKING (``os.stat`` + ``read_text``) — must run OFF the event loop (in an
+    executor thread or the standalone dev server). An unchanged file costs a
+    single ``stat`` with no re-read. The cache-write is a plain dict assignment;
+    a race between two threads just overwrites with an equivalent value (#452).
+    """
+    key = str(path)
+    mtime_ns = os.stat(path).st_mtime_ns
+    cached = _TEMPLATE_TEXT_CACHE.get(key)
+    if cached is not None and cached[0] == mtime_ns:
+        return cached[1]
+    text = path.read_text(encoding="utf-8")
+    _TEMPLATE_TEXT_CACHE[key] = (mtime_ns, text)
+    return text
+
+
 async def _serve_html(request: web.Request, filename: str) -> web.Response:
     """Read a file from www/, substitute {{VERSION}}, return as HTML."""
     html_path = _WWW_DIR / filename
@@ -301,7 +330,7 @@ async def _serve_html(request: web.Request, filename: str) -> web.Response:
 
     ctx = _get_ctx(request)
     version = _get_live_version(ctx.version)
-    html_content = await ctx.runtime.run_in_executor(html_path.read_text, "utf-8")
+    html_content = await ctx.runtime.run_in_executor(_read_template_cached, html_path)
     html_content = _apply_version(html_content, version)
     asset_version = await _get_asset_version_async(ctx, version)
     html_content = html_content.replace(_ASSET_VER_TOKEN, asset_version)
@@ -352,7 +381,7 @@ async def sw_view(request: web.Request) -> web.Response:
 
     ctx = _get_ctx(request)
     version = _get_live_version(ctx.version)
-    body = await ctx.runtime.run_in_executor(sw_path.read_text, "utf-8")
+    body = await ctx.runtime.run_in_executor(_read_template_cached, sw_path)
     body = _apply_version(body, version)
     body = body.replace(_ASSET_VER_TOKEN, await _get_asset_version_async(ctx, version))
     # The SW is served from /quizify/static/sw.js but must control /quizify/*
@@ -883,18 +912,17 @@ async def pack_versions_view(request: web.Request) -> web.Response:
     return web.json_response(annotated)
 
 
-async def _fetch_upstream_versions() -> dict | None:
+async def _fetch_upstream_versions(runtime: Runtime) -> dict | None:
     """Fetch versions.json from GitHub (best-effort, 5s timeout).
 
-    Returns the parsed manifest, or ``None`` on any non-200/error so callers
-    can fall back gracefully.
+    Uses the runtime's shared client session (#456) instead of building a
+    throwaway ``ClientSession`` per fetch. Returns the parsed manifest, or
+    ``None`` on any non-200/error so callers can fall back gracefully.
     """
     try:
         timeout = aiohttp.ClientTimeout(total=5)
-        async with (
-            aiohttp.ClientSession(timeout=timeout) as session,
-            session.get(_PACK_VERSIONS_URL) as resp,
-        ):
+        session = runtime.get_client_session()
+        async with session.get(_PACK_VERSIONS_URL, timeout=timeout) as resp:
             if resp.status == 200:
                 return await resp.json(content_type=None)
     except Exception as exc:  # noqa: BLE001
@@ -902,7 +930,7 @@ async def _fetch_upstream_versions() -> dict | None:
     return None
 
 
-async def _get_upstream_versions() -> dict | None:
+async def _get_upstream_versions(runtime: Runtime) -> dict | None:
     """Return the upstream versions.json, refreshing on cache-miss/TTL expiry.
 
     Repeated calls within ``_UPSTREAM_CACHE_TTL_SECONDS`` reuse the cached copy
@@ -917,7 +945,7 @@ async def _get_upstream_versions() -> dict | None:
     if cache is not None and now - cache[0] < _UPSTREAM_CACHE_TTL_SECONDS:
         return cache[1]
 
-    upstream = await _fetch_upstream_versions()
+    upstream = await _fetch_upstream_versions(runtime)
     if upstream is not None:
         _upstream_versions_cache = (now, upstream)
     return upstream
@@ -938,7 +966,7 @@ async def pack_update_check_view(request: web.Request) -> web.Response:
         await ctx.runtime.run_in_executor(bank.load_all_categories)
     installed = bank.get_pack_versions()
 
-    upstream = await _get_upstream_versions()
+    upstream = await _get_upstream_versions(ctx.runtime)
 
     updates = []
     if upstream:

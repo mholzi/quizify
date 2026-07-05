@@ -43,6 +43,12 @@ class _FakeRuntime:
         loop = asyncio.get_running_loop()
         return await loop.run_in_executor(None, func, *args)
 
+    def get_client_session(self) -> "_CapturingSession":
+        # submit_pack_view now pulls a shared session off the runtime (#456)
+        # instead of building an aiohttp.ClientSession; hand back the capturing
+        # double so the header assertions still work.
+        return _CapturingSession()
+
 
 class _FakeCtx:
     def __init__(
@@ -96,7 +102,7 @@ class _CapturingSession:
     async def __aexit__(self, *exc) -> None:
         return None
 
-    def post(self, url, json=None, headers=None):  # noqa: A002
+    def post(self, url, json=None, headers=None, timeout=None):  # noqa: A002
         type(self).captured_headers = headers
         return _FakeResponse()
 
@@ -127,7 +133,6 @@ def _good_pack() -> dict:
 def _run_submit(ctx: _FakeCtx, monkeypatch: pytest.MonkeyPatch) -> Any:
     """Drive submit_pack_view with the worker POST stubbed; return captured headers."""
     _CapturingSession.captured_headers = "<unset>"
-    monkeypatch.setattr(ps.aiohttp, "ClientSession", _CapturingSession)
     # Reset the module-level rate-limit buckets so repeated submits in the
     # suite (same fake client IP) never trip the limiter.
     ps._rate_limiter._buckets.clear()

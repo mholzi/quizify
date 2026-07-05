@@ -116,6 +116,13 @@ class PhaseController:
         # running through the pause, desyncing it from the frozen per-player
         # timers (a late joiner post-resume would get a ~0.5s timer, etc.).
         self.paused_elapsed: dict[str, float] = {}
+        # Per-player freeze-lockout remaining at pause (#451). A freeze is a
+        # submit LOCKOUT with its own end-time (QuestionTimer._frozen_until);
+        # QuestionTimer.resumed() hardcodes it to None, so without snapshotting
+        # + re-applying it a target paused mid-lockout would resume fully
+        # UNFROZEN and the server would accept a submit the client still shows
+        # as frozen. Only players actually frozen at pause get an entry.
+        self.paused_frozen: dict[str, float] = {}
         self.paused_at: float | None = None
 
     # ------------------------------------------------------------------
@@ -278,9 +285,16 @@ class PhaseController:
         # bonus, which scores off elapsed, isn't inflated — #295/#254).
         self.paused_remaining = {}
         self.paused_elapsed = {}
+        self.paused_frozen = {}
         for name, timer in self.timers.items():
             self.paused_remaining[name] = max(0.0, timer.get_remaining())
             self.paused_elapsed[name] = max(0.0, timer.get_elapsed())
+            # Preserve an active freeze lockout across the pause (#451):
+            # QuestionTimer.resumed() rebuilds a fully-unfrozen timer, so we
+            # snapshot the remaining lockout here and re-apply it in resume().
+            frozen_left = timer.frozen_remaining()
+            if frozen_left > 0.0:
+                self.paused_frozen[name] = frozen_left
         self.timers.clear()
         # Remember when we paused so resume() can shift the round wall-clock by
         # the exact pause duration, keeping round_start_time in lock-step with
@@ -313,12 +327,19 @@ class PhaseController:
                     remaining=self.paused_remaining[name],
                     elapsed=self.paused_elapsed.get(name, 0.0),
                 )
+                # Re-apply the freeze lockout that was active at pause (#451).
+                # resumed() builds an unfrozen timer, so a target frozen when
+                # the game paused would otherwise resume able to submit.
+                frozen_left = self.paused_frozen.get(name, 0.0)
+                if frozen_left > 0.0:
+                    timer.freeze(frozen_left)
             else:
                 timer = QuestionTimer(full)
                 timer.start()
             self.timers[name] = timer
         self.paused_remaining = {}
         self.paused_elapsed = {}
+        self.paused_frozen = {}
         self.paused_at = None
         self.pause_reason = None
         self.phase = self.paused_from or GamePhase.QUESTION_ACTIVE

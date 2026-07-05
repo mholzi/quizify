@@ -102,10 +102,16 @@ _CURRENT_PORT = 8080
 
 
 async def _on_cleanup(app: web.Application) -> None:
-    """Cancel pending game tasks on shutdown."""
+    """Cancel pending game tasks and close the shared client session."""
     ctx: AppContext | None = app.get(APP_CTX_KEY)
     if ctx and ctx.ws_handler:
         await ctx.ws_handler.cleanup_game_tasks()
+    # Close the lazily-created standalone client session (#456). The HA path
+    # uses HA's managed session, which HA closes itself.
+    if ctx is not None:
+        aclose = getattr(ctx.runtime, "aclose", None)
+        if aclose is not None:
+            await aclose()
 
 
 def build_app(data_dir: Path) -> web.Application:

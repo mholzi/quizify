@@ -265,13 +265,22 @@ class PackSubmissionStore:
         return None
 
     async def _fetch_issue(
-        self, session: aiohttp.ClientSession, issue_number: int
+        self,
+        session: aiohttp.ClientSession,
+        issue_number: int,
+        timeout: aiohttp.ClientTimeout,
     ) -> tuple[str, str] | None:
-        """Fetch a GitHub issue's (state, state_reason), or None on failure."""
+        """Fetch a GitHub issue's (state, state_reason), or None on failure.
+
+        ``timeout`` is passed per-request because the session is now shared
+        across the whole server (#456) rather than created with a baked-in
+        timeout for this one poll.
+        """
         try:
             async with session.get(
                 f"{_GITHUB_ISSUES_API}/{issue_number}",
                 headers={"Accept": "application/vnd.github+json"},
+                timeout=timeout,
             ) as resp:
                 if resp.status != 200:
                     _LOGGER.debug(
@@ -309,16 +318,20 @@ class PackSubmissionStore:
         if not pending:
             return data
 
+        # Reuse the runtime's shared client session (#456) instead of building a
+        # throwaway one per reconcile; the per-request timeout is passed through.
         timeout = aiohttp.ClientTimeout(total=SUBMIT_POLL_TIMEOUT_SECONDS)
+        session = self._ctx.runtime.get_client_session()
         try:
-            async with aiohttp.ClientSession(timeout=timeout) as session:
-                for sub in pending:
-                    result = await self._fetch_issue(session, sub["issue_number"])
-                    if result is None:
-                        continue
-                    state, state_reason = result
-                    sub["status"] = _issue_to_status(state, state_reason)
-                    sub["last_checked"] = now
+            for sub in pending:
+                result = await self._fetch_issue(
+                    session, sub["issue_number"], timeout
+                )
+                if result is None:
+                    continue
+                state, state_reason = result
+                sub["status"] = _issue_to_status(state, state_reason)
+                sub["last_checked"] = now
         except (aiohttp.ClientError, ValueError) as err:
             _LOGGER.debug("Pack-submission reconcile aborted: %s", err)
         return data
@@ -486,15 +499,15 @@ async def submit_pack_view(request: web.Request) -> web.Response:
     submit_headers: dict[str, str] | None = (
         {"X-Quizify-Secret": submit_secret} if submit_secret else None
     )
+    # Reuse the runtime's shared client session (#456); pass the timeout on the
+    # request rather than baking it into a per-call session.
     timeout = aiohttp.ClientTimeout(total=SUBMIT_POLL_TIMEOUT_SECONDS)
+    session = ctx.runtime.get_client_session()
     worker_payload: dict[str, Any]
     try:
-        async with (
-            aiohttp.ClientSession(timeout=timeout) as session,
-            session.post(
-                submit_url, json={"pack": pack}, headers=submit_headers
-            ) as resp,
-        ):
+        async with session.post(
+            submit_url, json={"pack": pack}, headers=submit_headers, timeout=timeout
+        ) as resp:
             try:
                 worker_payload = await resp.json(content_type=None)
             except (ValueError, aiohttp.ClientError):

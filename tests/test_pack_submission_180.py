@@ -184,6 +184,11 @@ class _FakeRuntime:
     def create_task(self, coro):  # pragma: no cover — unused here
         return asyncio.ensure_future(coro)
 
+    def get_client_session(self):  # pragma: no cover — _fetch_issue is stubbed
+        # Reconcile now pulls the shared session from the runtime (#456); the
+        # tests stub _fetch_issue so the returned value is never used.
+        return None
+
 
 class _FakeCtx:
     def __init__(self, data_dir: Path, submit_url: str | None = None) -> None:
@@ -238,7 +243,7 @@ class TestReconcile:
             ctx = _FakeCtx(tmp_path)
             store = PackSubmissionStore(ctx)
 
-            async def _fake_fetch(_session, issue_number):
+            async def _fake_fetch(_session, issue_number, *_a):
                 assert issue_number == 9
                 return "closed", "not_planned"
 

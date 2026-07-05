@@ -760,8 +760,12 @@ class QuestionBank:
         snapshot = dict(self._history)
         try:
             self._history_path.parent.mkdir(parents=True, exist_ok=True)
+            # Compact (no indent): the history map is machine-read only and
+            # grows one entry per seen question, so pretty-printing just
+            # inflates the file + write cost. Matches the compact writes in
+            # analytics.py / question_stats (#457).
             self._history_path.write_text(
-                json.dumps(snapshot, indent=2), encoding="utf-8"
+                json.dumps(snapshot), encoding="utf-8"
             )
         except OSError as exc:
             _LOGGER.warning("Failed to save question history: %s", exc)
