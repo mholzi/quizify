@@ -324,13 +324,18 @@ def _read_template_cached(path: Path) -> str:
 async def _serve_html(request: web.Request, filename: str) -> web.Response:
     """Read a file from www/, substitute {{VERSION}}, return as HTML."""
     html_path = _WWW_DIR / filename
-    if not html_path.exists():
-        _LOGGER.error("Page not found: %s", html_path)
-        return web.Response(text=f"{filename} not found", status=500)
-
     ctx = _get_ctx(request)
     version = _get_live_version(ctx.version)
-    html_content = await ctx.runtime.run_in_executor(_read_template_cached, html_path)
+    # The missing-file ``stat`` happens once, off-loop, inside
+    # ``_read_template_cached`` (which raises ``OSError`` on a missing file) —
+    # no redundant loop-thread ``path.exists()`` stat on the request path (#475).
+    try:
+        html_content = await ctx.runtime.run_in_executor(
+            _read_template_cached, html_path
+        )
+    except OSError:
+        _LOGGER.error("Page not found: %s", html_path)
+        return web.Response(text=f"{filename} not found", status=500)
     html_content = _apply_version(html_content, version)
     asset_version = await _get_asset_version_async(ctx, version)
     html_content = html_content.replace(_ASSET_VER_TOKEN, asset_version)
@@ -376,12 +381,15 @@ async def sw_view(request: web.Request) -> web.Response:
     asset caches.
     """
     sw_path = _WWW_DIR / "sw.js"
-    if not sw_path.exists():
-        return web.Response(text="sw.js not found", status=404)
-
     ctx = _get_ctx(request)
     version = _get_live_version(ctx.version)
-    body = await ctx.runtime.run_in_executor(_read_template_cached, sw_path)
+    # The missing-file ``stat`` happens once, off-loop, inside
+    # ``_read_template_cached`` (raises ``OSError``) — no loop-thread
+    # ``path.exists()`` stat on the request path (#475).
+    try:
+        body = await ctx.runtime.run_in_executor(_read_template_cached, sw_path)
+    except OSError:
+        return web.Response(text="sw.js not found", status=404)
     body = _apply_version(body, version)
     body = body.replace(_ASSET_VER_TOKEN, await _get_asset_version_async(ctx, version))
     # The SW is served from /quizify/static/sw.js but must control /quizify/*

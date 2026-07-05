@@ -20,6 +20,8 @@ import sys
 import time
 from pathlib import Path
 
+import pytest
+
 _REPO_ROOT = Path(__file__).resolve().parent.parent
 sys.path.insert(0, str(_REPO_ROOT))
 
@@ -110,6 +112,15 @@ class TestTemplateMtimeCache:
         # Re-stat returns the same mtime_ns, so the cached branch is taken.
         assert views._read_template_cached(page) == "cached"
         assert views._TEMPLATE_TEXT_CACHE[str(page)] == cached_entry
+
+    def test_missing_file_raises_oserror(self, tmp_path: Path) -> None:
+        """#475: _serve_html / sw_view dropped their loop-side path.exists()
+        stat and now rely on the off-loop stat inside _read_template_cached to
+        signal a missing file via OSError (so the view can map it to 404/500)."""
+        views._TEMPLATE_TEXT_CACHE.clear()
+        missing = tmp_path / "does-not-exist.html"
+        with pytest.raises(OSError):
+            views._read_template_cached(missing)
 
 
 # ---------------------------------------------------------------------------
