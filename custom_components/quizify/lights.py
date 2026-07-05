@@ -299,7 +299,10 @@ class QuizifyPartyLights:
         settles back onto the phase-driven glow, so the ambient recipe stays the
         single owner of the resting colour.
         """
-        recipe = _PHASE_LIGHT_RECIPES.get(self._last_phase)
+        phase = self._last_phase
+        if phase is None:
+            return
+        recipe = _PHASE_LIGHT_RECIPES.get(phase)
         if recipe is None:
             return
         self._call("light", "turn_on", {"entity_id": self._entity_ids, **recipe})
