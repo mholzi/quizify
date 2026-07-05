@@ -858,8 +858,14 @@ async def pack_versions_view(request: web.Request) -> web.Response:
     badge without re-implementing the date math client-side.
     """
     ctx = _get_ctx(request)
-    await ctx.runtime.run_in_executor(ctx.game.question_bank.load_all_categories)
-    installed = ctx.game.question_bank.get_pack_versions()
+    bank = ctx.game.question_bank
+    # Packs are cached in memory after the first load; only pay the executor
+    # hop + disk read when they haven't been loaded yet (mirrors
+    # ``pack_update_check_view``). The bank is preloaded on setup, so this GET
+    # is normally a pure in-memory read.
+    if not bank.is_loaded:
+        await ctx.runtime.run_in_executor(bank.load_all_categories)
+    installed = bank.get_pack_versions()
 
     today = _dt.date.today()
     # ``get_pack_versions`` returns a shallow copy: the inner meta dicts are the

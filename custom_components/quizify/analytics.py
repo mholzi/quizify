@@ -74,6 +74,13 @@ class QuizifyAnalytics:
         self._data: AnalyticsData = self._empty_data()
         self._games_since_prune = 0
         self._save_lock = asyncio.Lock()
+        # #418: memoize compute_metrics per period. The game history only
+        # changes at game end (add_game) or on prune, so recomputing on every
+        # GET /analytics/data + every even-day featured-pack request wastes
+        # full O(n) passes over up to 1000 records. Cache value is
+        # ``(fingerprint, result)`` where fingerprint = (total_games,
+        # last ended_at); a mismatch (append or prune) recomputes.
+        self._metrics_cache: dict[str, tuple[tuple[int, int], dict[str, Any]]] = {}
 
     def _empty_data(self) -> AnalyticsData:
         """Return empty analytics data structure."""
@@ -269,6 +276,11 @@ class QuizifyAnalytics:
         """Add game record and schedule save."""
         self._data["games"].append(record)
         self._games_since_prune += 1
+        # #418: new game → drop the memoized metrics so the next request
+        # recomputes. The fingerprint check in compute_metrics would already
+        # catch this, but clearing here keeps the cache from carrying stale
+        # per-period entries and bounds its size.
+        self._metrics_cache.clear()
 
         if self._games_since_prune >= PRUNE_INTERVAL:
             await self._prune_old_records()
@@ -323,7 +335,26 @@ class QuizifyAnalytics:
         return len(self._data["games"])
 
     def compute_metrics(self, period: str = "30d") -> dict[str, Any]:
-        """Compute dashboard metrics for a given period."""
+        """Compute dashboard metrics for a given period.
+
+        Results are memoized per ``period`` (#418): the game history only
+        changes at game end / prune, so a fingerprint of ``(total_games,
+        last ended_at)`` lets repeated reads reuse the last result instead of
+        re-scanning every record. ``add_game`` clears the cache; a prune shifts
+        the fingerprint, so both paths recompute.
+        """
+        games = self._data["games"]
+        fingerprint = (len(games), games[-1]["ended_at"] if games else 0)
+        cached = self._metrics_cache.get(period)
+        if cached is not None and cached[0] == fingerprint:
+            return cached[1]
+
+        result = self._compute_metrics_uncached(period)
+        self._metrics_cache[period] = (fingerprint, result)
+        return result
+
+    def _compute_metrics_uncached(self, period: str) -> dict[str, Any]:
+        """Compute dashboard metrics for a given period (no memoization)."""
         now = int(time.time())
         days_map = {"7d": 7, "30d": 30, "90d": 90, "all": 365 * 10}
         days = days_map.get(period, 30)

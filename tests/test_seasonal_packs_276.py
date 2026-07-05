@@ -228,6 +228,10 @@ class _FakeBank:
         self._categories = categories
 
     @property
+    def is_loaded(self) -> bool:
+        return True
+
+    @property
     def categories(self) -> dict:
         return dict(self._categories)
 
