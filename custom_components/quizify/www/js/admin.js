@@ -1984,12 +1984,30 @@
         }
     });
 
+    // The Android HA Companion WebView silently swallows target="_blank"
+    // (see launcher.html #348). Detect that context so we can navigate
+    // window.location directly instead of relying on a dead new-tab link.
+    function isAndroidCompanion() {
+        var ua = navigator.userAgent || '';
+        return /Android/i.test(ua) && /Home ?Assistant/i.test(ua);
+    }
+
     // ---- Generate join URL ----
     function initJoinUrl() {
         var joinUrl = window.location.origin + '/quizify/player';
         generateQR(joinUrl);
         if (els.dashboardLink) {
-            els.dashboardLink.href = window.location.origin + '/quizify/dashboard';
+            var dashboardUrl = window.location.origin + '/quizify/dashboard';
+            els.dashboardLink.href = dashboardUrl;
+            // Android Companion: bypass the dead target="_blank" — navigate the
+            // current frame so the dashboard ("Cast to TV") actually loads (#377).
+            // Every other context keeps the native new-tab behaviour.
+            els.dashboardLink.addEventListener('click', function (evt) {
+                if (isAndroidCompanion()) {
+                    evt.preventDefault();
+                    window.location.href = dashboardUrl;
+                }
+            });
         }
     }
 
