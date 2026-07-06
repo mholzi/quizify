@@ -3,7 +3,7 @@
 All notable changes to Quizify are documented here. This project follows
 [Semantic Versioning](https://semver.org/).
 
-## [1.6.0-RC1] — 2026-07-06
+## [1.6.0-RC2] — 2026-07-06
 
 Release candidate for 1.6.0 — "The House Plays Along". The whole smart home
 becomes part of the game show, question selection stays fresh across game
@@ -33,6 +33,15 @@ nights, and hosts can drive the game hands-free via HA services.
   be driven from Assist voice ("Hey Nabu, next question"), a Zigbee remote, a
   dashboard button or an automation. Bad-phase calls raise a clear
   `ServiceValidationError`.
+
+### Fixed
+
+- **TTS engine + speaker dropdowns showed "None found" (RC2).** The admin
+  quiz-setup dropdowns load from the admin-token-gated `tts-entities` endpoint
+  (#356) at page-init, before the admin session token arrives over the
+  WebSocket — so the first request 401'd and both dropdowns fell back to "None
+  found" even with TTS engines and media players configured. They now refetch
+  once the token lands.
 
 ## [1.5.0] — 2026-07-05
 
