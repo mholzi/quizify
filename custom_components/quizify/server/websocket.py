@@ -2325,6 +2325,9 @@ class QuizifyWebSocketHandler:
                     min_remaining = tick.dashboard_remaining
                     # Spoken "time running out" warning (#281), once per round.
                     self._notify_tts_countdown(min_remaining)
+                    # House "time running out" bus event (#280), once per round —
+                    # drives the faster countdown light pulse.
+                    self._notify_house_time_running_out(min_remaining)
                     dash_shown = math.ceil(max(0.0, min_remaining))
                     if dash_shown != last_dashboard_shown:
                         last_dashboard_shown = dash_shown
@@ -2800,6 +2803,22 @@ class QuizifyWebSocketHandler:
             emitter.notify_question_shown(question, round_no, total_rounds)
         except Exception:  # noqa: BLE001
             _LOGGER.exception("House question event raised")
+
+    def _notify_house_time_running_out(self, seconds_remaining: float) -> None:
+        """Forward the per-tick remaining time to the HA event emitter (#280).
+
+        Called every timer tick alongside :meth:`_notify_tts_countdown`; the
+        emitter fires its one-shot ``quizify_time_running_out`` event at most
+        once per round in the final seconds. No-op when ``_event_emitter`` is
+        None (standalone dev server). Guarded like the question hook.
+        """
+        emitter = self._event_emitter
+        if emitter is None:
+            return
+        try:
+            emitter.notify_time_running_out(seconds_remaining)
+        except Exception:  # noqa: BLE001
+            _LOGGER.exception("House time-running-out event raised")
 
     def _notify_house_milestone(
         self, player_name: str, streak: int, bonus: int

@@ -25,14 +25,15 @@ broadcast to every client), but nothing else identifying. These names +
 payload shapes are the stable contract the #366 automation blueprints build on,
 so treat them as an API: additive changes only.
 
-``quizify_game_started``    — {game_id, player_count, round_count}
-``quizify_question_shown``  — {round, total_rounds, question_type}
-``quizify_answer_revealed`` — {round, correct_option_index, correct_option_text,
-                               correct_count, total_players}
-``quizify_streak_milestone``— {player_name, streak, bonus}
-``quizify_finale_started``  — {}
-``quizify_winner_decided``  — {winner_name, score}
-``quizify_game_ended``      — {leaderboard: [{name, score}, ...]}
+``quizify_game_started``      — {game_id, player_count, round_count}
+``quizify_question_shown``    — {round, total_rounds, question_type}
+``quizify_time_running_out``  — {seconds_remaining}
+``quizify_answer_revealed``   — {round, correct_option_index, correct_option_text,
+                                 correct_count, total_players}
+``quizify_streak_milestone``  — {player_name, streak, bonus}
+``quizify_finale_started``    — {}
+``quizify_winner_decided``    — {winner_name, score}
+``quizify_game_ended``        — {leaderboard: [{name, score}, ...]}
 """
 
 from __future__ import annotations
@@ -50,11 +51,19 @@ _LOGGER = logging.getLogger(__name__)
 # --- Event catalog (stable names — see module docstring for payload schemas) --
 EVENT_GAME_STARTED = "quizify_game_started"
 EVENT_QUESTION_SHOWN = "quizify_question_shown"
+EVENT_TIME_RUNNING_OUT = "quizify_time_running_out"
 EVENT_ANSWER_REVEALED = "quizify_answer_revealed"
 EVENT_STREAK_MILESTONE = "quizify_streak_milestone"
 EVENT_FINALE_STARTED = "quizify_finale_started"
 EVENT_WINNER_DECIDED = "quizify_winner_decided"
 EVENT_GAME_ENDED = "quizify_game_ended"
+
+# Seconds-remaining threshold for the ``quizify_time_running_out`` event. Fires
+# once per round when the round timer first drops to/below this — the final
+# stretch that drives the faster "breathing" light pulse. Deliberately tighter
+# than the TTS spoken warning (10s, see tts.COUNTDOWN_THRESHOLD_SECONDS) so the
+# accent reads as the truly-final urgency, not the same moment as the narration.
+TIME_RUNNING_OUT_THRESHOLD_SECONDS = 5.0
 
 
 class QuizifyEventEmitter:
@@ -85,6 +94,10 @@ class QuizifyEventEmitter:
         # transitions, not on every state_callback flap. Mirrors the lights /
         # TTS observers. Survives an options reload via export/restore below.
         self._last_phase: GamePhase | None = None
+        # One-shot guard so the "time running out" event fires at most once per
+        # round. Reset at every question start (see ``notify_question_shown``),
+        # mirroring the TTS announcer's ``_countdown_announced`` pattern.
+        self._time_running_out_fired: bool = False
 
     @property
     def is_configured(self) -> bool:
@@ -197,7 +210,13 @@ class QuizifyEventEmitter:
         Reuses the ``question`` already assembled at the fan-out point; only the
         type (multiple_choice / estimate) is exposed — not the text/answers,
         which would leak the question to automations before players see it.
+
+        Resets the per-round "time running out" one-shot guard unconditionally
+        (round start is the lifecycle point the TTS announcer resets its own
+        ``_countdown_announced`` guard) so the countdown event can fire once
+        more this round.
         """
+        self._time_running_out_fired = False
         self._fire(
             EVENT_QUESTION_SHOWN,
             {
@@ -205,6 +224,28 @@ class QuizifyEventEmitter:
                 "total_rounds": total_rounds,
                 "question_type": getattr(question, "type", None),
             },
+        )
+
+    def notify_time_running_out(self, seconds_remaining: float) -> None:
+        """Fire ``quizify_time_running_out`` in the final seconds of a round.
+
+        Driven from the timer-tick loop, which calls this every tick with the
+        room's minimum remaining time — mirroring the spoken countdown warning
+        (:meth:`~custom_components.quizify.tts.QuizifyTTSAnnouncer.announce_countdown`).
+        Fires the first time that crosses to/below
+        ``TIME_RUNNING_OUT_THRESHOLD_SECONDS`` and then no-ops for the rest of
+        the round via the ``_time_running_out_fired`` one-shot guard (reset at
+        every question start), so a blueprint sees a single "hurry up" pulse in
+        the final stretch rather than a stream of ticks.
+        """
+        if self._time_running_out_fired:
+            return
+        if not 0 < seconds_remaining <= TIME_RUNNING_OUT_THRESHOLD_SECONDS:
+            return
+        self._time_running_out_fired = True
+        self._fire(
+            EVENT_TIME_RUNNING_OUT,
+            {"seconds_remaining": seconds_remaining},
         )
 
     def notify_answer_revealed(self, game_state: QuizifyGameState) -> None:

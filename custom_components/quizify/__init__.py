@@ -40,6 +40,7 @@ async def async_setup_entry(hass: HomeAssistant, entry: ConfigEntry) -> bool:
     from .const import (  # noqa: PLC0415
         CONF_COMMUNITY_SUBMIT_SECRET,
         CONF_COMMUNITY_SUBMIT_URL,
+        CONF_FINALE_SCENE,
         CONF_HOUSE_EVENTS_ENABLED,
         CONF_LOBBY_MUSIC_URL,
         CONF_MEDIA_PLAYER_ENTITY,
@@ -236,6 +237,7 @@ async def async_setup_entry(hass: HomeAssistant, entry: ConfigEntry) -> bool:
         hass=hass,
         entity_ids=list(options.get(CONF_PARTY_LIGHT_ENTITIES) or []),
         game_state=game_state,
+        finale_scene=options.get(CONF_FINALE_SCENE),
     )
     party_lights.attach()
     # Accent choreography (#494 Phase 2): react to the quizify_* bus events on
@@ -345,6 +347,7 @@ async def async_setup_entry(hass: HomeAssistant, entry: ConfigEntry) -> bool:
             hass=_hass,
             entity_ids=list(opts.get(CONF_PARTY_LIGHT_ENTITIES) or []),
             game_state=game_state,
+            finale_scene=opts.get(CONF_FINALE_SCENE),
         )
         new_pl.attach()
         # Re-subscribe the accent choreography (#494) symmetrically — the old

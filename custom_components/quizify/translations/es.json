@@ -29,7 +29,8 @@
                     "sfx_wrong_url": "URL de sonido de respuesta incorrecta",
                     "sfx_streak_url": "URL de sonido de racha",
                     "sfx_winner_url": "URL de sonido de ganador",
-                    "house_events_enabled": "La casa participa"
+                    "house_events_enabled": "La casa participa",
+                    "finale_scene": "Escena del final"
                 },
                 "data_description": {
                     "party_light_entities": "Luces que cambian de color con la fase de la ronda (coral en pregunta, salvia en revelación, sol en final).",
@@ -42,7 +43,8 @@
                     "sfx_wrong_url": "URL opcional de un sonido breve que se reproduce cuando la mayoría falló la respuesta. Déjalo vacío para usar el predeterminado incluido (si está instalado).",
                     "sfx_streak_url": "URL opcional de un sonido breve que se reproduce cuando un jugador logra una racha de aciertos. Déjalo vacío para usar el predeterminado incluido (si está instalado).",
                     "sfx_winner_url": "URL opcional de un sonido breve que se reproduce cuando se decide el ganador. Déjalo vacío para usar el predeterminado incluido (si está instalado). Se reproduce en el altavoz TTS y se omite mientras hay un anuncio en curso.",
-                    "house_events_enabled": "Dispara eventos quizify_* en el bus de eventos de Home Assistant en los momentos clave de la partida (inicio de ronda, revelación, rachas, ganador) para que puedas crear tus propias automatizaciones. Desactivado por defecto."
+                    "house_events_enabled": "Dispara eventos quizify_* en el bus de eventos de Home Assistant en los momentos clave de la partida (inicio de ronda, revelación, rachas, ganador) para que puedas crear tus propias automatizaciones. Desactivado por defecto.",
+                    "finale_scene": "Escena opcional que se activa cuando se decide el ganador, junto con el barrido de luces de victoria, para lanzar una ambientación de celebración en toda la sala. Déjalo en blanco para no usar ninguna escena."
                 }
             }
         }

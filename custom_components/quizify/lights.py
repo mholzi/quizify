@@ -36,6 +36,7 @@ from .game_events import (
     EVENT_ANSWER_REVEALED,
     EVENT_QUESTION_SHOWN,
     EVENT_STREAK_MILESTONE,
+    EVENT_TIME_RUNNING_OUT,
     EVENT_WINNER_DECIDED,
 )
 from .ha_service import fire_and_forget_service
@@ -90,6 +91,21 @@ _BASELINE = "baseline"
 # keeps whatever the QUESTION_ACTIVE recipe is showing), then settle back.
 _ACCENT_QUESTION_SHOWN: list[tuple[object, float]] = [
     ({"brightness_pct": 88, "transition": 0.2}, 0.5),
+    (_BASELINE, 0.0),
+]
+
+# time_running_out (#280): a faster "breathing" brightness pulse for the final
+# seconds of a round. Brightness ONLY (no rgb) so it breathes on whatever colour
+# the live phase recipe is showing, then settles to _BASELINE. Two quick
+# down/up beats — shorter holds than the other accents to read as urgency —
+# kept subtle (no strobing) and well under ~2s total.
+_COUNTDOWN_DOWN: dict[str, object] = {"brightness_pct": 45, "transition": 0.15}
+_COUNTDOWN_UP: dict[str, object] = {"brightness_pct": 85, "transition": 0.15}
+_ACCENT_COUNTDOWN: list[tuple[object, float]] = [
+    (_COUNTDOWN_DOWN, 0.25),
+    (_COUNTDOWN_UP, 0.25),
+    (_COUNTDOWN_DOWN, 0.25),
+    (_COUNTDOWN_UP, 0.25),
     (_BASELINE, 0.0),
 ]
 
@@ -159,6 +175,7 @@ class QuizifyPartyLights:
         hass: HomeAssistant | None,
         entity_ids: list[str],
         game_state: QuizifyGameState,
+        finale_scene: str | None = None,
     ) -> None:
         self._hass = hass
         # Normalize: strip whitespace, drop empties, dedupe while keeping order.
@@ -170,6 +187,10 @@ class QuizifyPartyLights:
                 seen.add(e)
                 cleaned.append(e)
         self._entity_ids = cleaned
+        # Optional finale scene (#280). Activated alongside the winner sweep so
+        # the host can drive a whole-room "victory" look (their own scene) on top
+        # of the party lights. Cleaned: empty/whitespace → None (no-op).
+        self._finale_scene = (finale_scene or "").strip() or None
         self._game = game_state
         self._last_phase: GamePhase | None = None
         # Accent choreography (#494). Unsub handles for the four bus listeners
@@ -188,10 +209,11 @@ class QuizifyPartyLights:
     def attach_events(self) -> None:
         """Subscribe to the ``quizify_*`` bus events for accent choreography.
 
-        Registers the four accent listeners (#494 Phase 2). Idempotent, and a
-        no-op unless configured (needs a hass bus + at least one entity). The
-        emitter (#366) only fires these when the host has opted into house
-        events, so an off toggle means the listeners simply never trigger.
+        Registers the accent listeners (#494 Phase 2 + the #280 countdown pulse).
+        Idempotent, and a no-op unless configured (needs a hass bus + at least
+        one entity). The emitter (#366) only fires these when the host has opted
+        into house events, so an off toggle means the listeners simply never
+        trigger.
         """
         if not self.is_configured or self._event_unsubs:
             return
@@ -200,6 +222,9 @@ class QuizifyPartyLights:
             return
         self._event_unsubs = [
             hass.bus.async_listen(EVENT_QUESTION_SHOWN, self._on_question_shown),
+            hass.bus.async_listen(
+                EVENT_TIME_RUNNING_OUT, self._on_time_running_out
+            ),
             hass.bus.async_listen(EVENT_ANSWER_REVEALED, self._on_answer_revealed),
             hass.bus.async_listen(EVENT_STREAK_MILESTONE, self._on_streak_milestone),
             hass.bus.async_listen(EVENT_WINNER_DECIDED, self._on_winner_decided),
@@ -268,6 +293,14 @@ class QuizifyPartyLights:
         """Brightness bump on the live coral when a question appears."""
         self._start_pulse(_ACCENT_QUESTION_SHOWN)
 
+    def _on_time_running_out(self, event: Event) -> None:  # noqa: ARG002
+        """Faster breathing brightness pulse in the final seconds of a round.
+
+        Brightness-only, so it breathes on whatever colour the live phase is
+        showing, then settles back to the baseline (#280).
+        """
+        self._start_pulse(_ACCENT_COUNTDOWN)
+
     def _on_answer_revealed(self, event: Event) -> None:
         """Green when the crowd mostly nailed it, amber when they mostly missed.
 
@@ -285,8 +318,26 @@ class QuizifyPartyLights:
         self._start_pulse(_ACCENT_STREAK)
 
     def _on_winner_decided(self, event: Event) -> None:  # noqa: ARG002
-        """Victory sweep in sun, settling to a steady celebratory glow."""
+        """Victory sweep in sun, settling to a steady celebratory glow.
+
+        When the host has configured a finale scene (#280), also fire it
+        alongside the sweep so a whole-room "victory" look layers on top of the
+        party lights. No-op when no scene is set.
+        """
         self._start_pulse(_ACCENT_WINNER)
+        self._activate_finale_scene()
+
+    def _activate_finale_scene(self) -> None:
+        """Turn on the configured finale scene, if any (#280).
+
+        Fire-and-forget via ``scene.turn_on`` through the same ``_call`` path the
+        light services use. No-op when no scene is configured or the integration
+        isn't configured (no hass / no lights), so a bare install never touches
+        an unset scene.
+        """
+        if self._finale_scene is None or not self.is_configured:
+            return
+        self._call("scene", "turn_on", {"entity_id": self._finale_scene})
 
     # ------------------------------------------------------------------
     # Accent choreography — pulse scheduling
