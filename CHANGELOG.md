@@ -3,6 +3,37 @@
 All notable changes to Quizify are documented here. This project follows
 [Semantic Versioning](https://semver.org/).
 
+## [1.6.0-RC1] — 2026-07-06
+
+Release candidate for 1.6.0 — "The House Plays Along". The whole smart home
+becomes part of the game show, question selection stays fresh across game
+nights, and hosts can drive the game hands-free via HA services.
+
+### Added
+
+- **The House Plays Along (#494)** — an immersive whole-home game-show mode,
+  off by default behind the `house_events_enabled` master toggle. Three
+  layers ride a new `quizify_*` HA event backbone that fires at every game
+  milestone: (1) the event backbone itself (#366/#495) so hosts can wire
+  their own automations; (2) "Game Show" light choreography (#496) — party
+  lights react to game beats with transient accents; (3) room sound effects
+  (#497) at reveal, streak and winner, each cue resolvable from an override
+  URL or a bundled default.
+- **Countdown pulse + finale scene (#280)** — the party lights "breathe"
+  faster in the final seconds of a question (new additive
+  `quizify_time_running_out` event), and an options-flow **finale scene
+  selector** fires a user-built `scene.*` when the winner is decided.
+- **Freshness engine (#436)** — question selection now weights against
+  recently shown questions (exponential decay + a hard-exclude window with a
+  pool-size guard) so repeat game nights feel new. New "Avoid recent repeats"
+  options toggle (on by default; off restores the previous ordering exactly).
+- **Game-control HA services (#367)** — `quizify.start_game`,
+  `quizify.next_round`, `quizify.pause`, `quizify.resume` and
+  `quizify.end_game` expose the host controls as HA services, so the game can
+  be driven from Assist voice ("Hey Nabu, next question"), a Zigbee remote, a
+  dashboard button or an automation. Bad-phase calls raise a clear
+  `ServiceValidationError`.
+
 ## [1.5.0] — 2026-07-05
 
 Completes Spanish support and bundles a broad correctness / security /
