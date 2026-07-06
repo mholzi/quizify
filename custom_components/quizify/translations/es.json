@@ -55,6 +55,26 @@
         "reset_admin_session": {
             "name": "Restablecer sesión de administrador",
             "description": "Borra el token de sesión de administrador guardado. Úsalo si no puedes acceder al panel de administración porque el token está desincronizado. La próxima conexión de administrador generará un token nuevo."
+        },
+        "start_game": {
+            "name": "Iniciar juego",
+            "description": "Inicia una nueva partida de Quizify con la configuración predeterminada. Vincúlalo a una frase de Assist, un mando Zigbee o un botón del panel para que el anfitrión pueda empezar el quiz sin el panel de administración. Solo funciona desde la sala de espera."
+        },
+        "next_round": {
+            "name": "Siguiente pregunta",
+            "description": "Avanza a la siguiente pregunta, como el botón Siguiente del administrador. Ideal en un mando o mediante Assist para que el anfitrión avance la partida desde lejos. Solo válido una vez revelada la pregunta actual."
+        },
+        "pause": {
+            "name": "Pausar juego",
+            "description": "Pausa la pregunta activa y congela el temporizador de todos los jugadores. Asígnalo a un botón de mando, un botón del panel o una frase de Assist. Solo funciona mientras hay una pregunta en curso."
+        },
+        "resume": {
+            "name": "Reanudar juego",
+            "description": "Reanuda una partida en pausa y reinicia la cuenta atrás. Solo funciona cuando la partida está en pausa."
+        },
+        "end_game": {
+            "name": "Terminar juego",
+            "description": "Termina la partida actual de inmediato y salta a la clasificación final. Vincúlalo a un botón de mando, un botón del panel o una frase de Assist. Solo funciona mientras hay una partida en curso."
         }
     }
 }

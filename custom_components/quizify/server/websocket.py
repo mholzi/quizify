@@ -1524,11 +1524,28 @@ class QuizifyWebSocketHandler:
             await self._conn.send_error(ws, code, str(err))
             return
 
+        # Socket-independent continuation (TTS config, grace, first question).
+        # Shared with the HA ``quizify.start_game`` service so the WS path and
+        # the service path drive one implementation (#367).
+        await self._after_start_game(game_state, data.get("tts") or {})
+
+    async def _after_start_game(
+        self, game_state: QuizifyGameState, tts_config: dict
+    ) -> None:
+        """Continue a just-started game: TTS config, grace, first question.
+
+        Socket-independent core split out of ``_handle_start_game`` (#367) so
+        the ``quizify.start_game`` service reuses the identical sequence without
+        synthesizing a fake admin connection. Nothing here touches a specific
+        ``ws`` — it only reads/mutates ``game_state`` and fans out over the
+        shared connection layer, exactly as the admin path did inline.
+        """
         # Apply per-game TTS narration settings (#281). The toggles ride the
         # start_game payload (like lightning_enabled), persisted in admin
         # localStorage — not config-entry options. No-op when no announcer is
-        # wired (standalone dev server, HA without a TTS entity).
-        self._apply_tts_config(data.get("tts") or {})
+        # wired (standalone dev server, HA without a TTS entity). The service
+        # path passes an empty dict (no per-game overrides).
+        self._apply_tts_config(tts_config)
 
         # Snapshot the game_id start_game just minted (#352). We're about to
         # yield the loop for the grace sleep below; another admin socket can
@@ -1567,6 +1584,27 @@ class QuizifyWebSocketHandler:
         # Start the first question
         await self._start_next_question(game_state)
 
+    async def admin_action_start_game(self, game_state: QuizifyGameState) -> None:
+        """Start a game with default settings — HA-service entry point (#367).
+
+        Callable without an admin WebSocket connection so hosts can start the
+        quiz via Assist voice, a Zigbee remote or a dashboard button. Only valid
+        from the LOBBY phase: unlike ``_handle_start_game`` (which force-resets a
+        lingering game because the admin explicitly re-picked settings in the
+        UI), the service refuses to nuke a game already in progress — a voice
+        "start the quiz" mid-round should be a clear error, not a silent wipe.
+        Raises ``ValueError`` (game already started / no questions) for the
+        caller to translate; on success runs the same continuation as the admin
+        path.
+        """
+        if game_state.phase != GamePhase.LOBBY:
+            raise ValueError(ERR_GAME_ALREADY_STARTED)
+        # Default settings: mixed packs, default difficulty, 10 rounds, HA
+        # language default. start_game() re-raises ERR_GAME_ALREADY_STARTED /
+        # ERR_NO_QUESTIONS_REMAINING which the service surfaces to the host.
+        game_state.start_game()
+        await self._after_start_game(game_state, {})
+
     # ------------------------------------------------------------------
     # Admin: next question
     # ------------------------------------------------------------------
@@ -1575,6 +1613,19 @@ class QuizifyWebSocketHandler:
         self, ws: web.WebSocketResponse, game_state: QuizifyGameState
     ) -> None:
         """Handle admin next_question command."""
+        err = await self._advance_round(game_state)
+        if err is not None:
+            await self._conn.send_error(ws, err, "Cannot advance now")
+
+    async def _advance_round(self, game_state: QuizifyGameState) -> str | None:
+        """Advance to the next question — socket-independent core (#367).
+
+        Shared by the admin ``next_question`` / ``next_round`` WS handler and
+        the ``quizify.next_round`` HA service so both drive one implementation.
+        Returns ``None`` after a successful advance, or an error-code string
+        when the current phase forbids advancing (the caller decides how to
+        surface it — a WS error frame vs a ``ServiceValidationError``).
+        """
         # Auto Lightning Round recap (#285): the host's normal advance after a
         # mid-game lightning recap resumes the paused main game. resume_after_
         # lightning() flips LIGHTNING_RECAP→ANSWER_REVEAL and restores the
@@ -1584,11 +1635,10 @@ class QuizifyWebSocketHandler:
             self._cancel_lightning_loop()
             if game_state.resume_after_lightning():
                 await self._start_next_question(game_state)
-            return
+            return None
 
         if game_state.phase not in (GamePhase.LOBBY, GamePhase.ANSWER_REVEAL):
-            await self._conn.send_error(ws, ERR_INVALID_ACTION, "Cannot advance now")
-            return
+            return ERR_INVALID_ACTION
 
         # #298: a stray next_round/next_question in a *real* lobby (stale admin
         # tab, double-fire) must NOT advance — start_game doesn't change phase,
@@ -1599,10 +1649,22 @@ class QuizifyWebSocketHandler:
         # _start_next_question directly (see _handle_start_game), so gating the
         # public handler here doesn't break it.
         if game_state.phase == GamePhase.LOBBY and game_state.game_id is None:
-            await self._conn.send_error(ws, ERR_INVALID_ACTION, "Cannot advance now")
-            return
+            return ERR_INVALID_ACTION
 
         await self._start_next_question(game_state)
+        return None
+
+    async def admin_action_next_round(self, game_state: QuizifyGameState) -> None:
+        """Advance to the next question — HA-service entry point (#367).
+
+        Mirrors the admin "Next" button (``next_round`` → ``_handle_next_
+        question``). Raises ``ValueError`` when the phase forbids advancing so
+        the service can surface a clear ``ServiceValidationError`` instead of
+        silently no-opping.
+        """
+        err = await self._advance_round(game_state)
+        if err is not None:
+            raise ValueError(err)
 
     async def _handle_admin_skip(
         self, ws: web.WebSocketResponse, game_state: QuizifyGameState
@@ -1634,6 +1696,14 @@ class QuizifyWebSocketHandler:
         self, ws: web.WebSocketResponse, game_state: QuizifyGameState
     ) -> None:
         """Handle admin end_game command."""
+        await self.admin_action_end_game(game_state)
+
+    async def admin_action_end_game(self, game_state: QuizifyGameState) -> None:
+        """End the game now — socket-independent core (#367).
+
+        Shared by the admin ``end_game`` WS handler and the ``quizify.end_game``
+        HA service.
+        """
         self._cancel_timer_tick()
         # end_game() fires the ``game_ended`` state event, which the
         # BroadcastDispatcher routes to _broadcast_finale — that's the single
@@ -1650,21 +1720,43 @@ class QuizifyWebSocketHandler:
         self, ws: web.WebSocketResponse, game_state: QuizifyGameState
     ) -> None:
         """Pause the current question. No-op if not in QUESTION_ACTIVE."""
+        # Silent no-op on a non-pausable phase — the admin UI can call this
+        # anytime. The service path (admin_action_pause) instead surfaces the
+        # False as a ServiceValidationError.
+        await self.admin_action_pause(game_state)
+
+    async def admin_action_pause(self, game_state: QuizifyGameState) -> bool:
+        """Pause the current question — socket-independent core (#367).
+
+        Returns ``True`` if the game was paused, ``False`` if the phase wasn't
+        pausable (only QUESTION_ACTIVE is). Shared by the admin ``pause_game``
+        WS handler and the ``quizify.pause`` HA service.
+        """
         if not game_state.pause(reason="admin_paused"):
-            return  # Silent no-op — UI can call this anytime
+            return False
         # Stop sending tick updates while paused.
         self._cancel_timer_tick()
         state = game_state.get_state_snapshot()
         state["type"] = "game_state"
         state["pause_reason"] = "admin_paused"
         await self._conn.broadcast(state)
+        return True
 
     async def _handle_resume_game(
         self, ws: web.WebSocketResponse, game_state: QuizifyGameState
     ) -> None:
         """Resume from PAUSED → restart timer ticks and broadcast state."""
+        await self.admin_action_resume(game_state)
+
+    async def admin_action_resume(self, game_state: QuizifyGameState) -> bool:
+        """Resume a paused game — socket-independent core (#367).
+
+        Returns ``True`` if the game was resumed, ``False`` if it wasn't paused.
+        Shared by the admin ``resume_game`` WS handler and the ``quizify.resume``
+        HA service.
+        """
         if not game_state.resume():
-            return
+            return False
         # Fan out per-player PROJECTED snapshots (#286): the raw snapshot
         # carries canonical answer order, so a plain broadcast here mis-scored
         # ~2/3 of taps after resume because the players re-render their answer
@@ -1672,6 +1764,7 @@ class QuizifyWebSocketHandler:
         await self._broadcast_state_projected(game_state)
         # Restart the per-player tick loop.
         self._start_timer_tick(game_state)
+        return True
 
     async def _handle_play_again(
         self, ws: web.WebSocketResponse, game_state: QuizifyGameState

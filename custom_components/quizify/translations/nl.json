@@ -55,6 +55,26 @@
         "reset_admin_session": {
             "name": "Admin-sessie resetten",
             "description": "Wist het opgeslagen admin-sessietoken. Gebruik dit als je geen toegang meer hebt tot het admin-paneel omdat het token niet meer synchroon loopt. De volgende admin-verbinding maakt een nieuw token aan."
+        },
+        "start_game": {
+            "name": "Spel starten",
+            "description": "Start een nieuw Quizify-spel met de standaardinstellingen. Koppel het aan een Assist-zin, een Zigbee-afstandsbediening of een dashboardknop zodat de host de quiz kan starten zonder het admin-paneel. Werkt alleen vanuit de lobby."
+        },
+        "next_round": {
+            "name": "Volgende vraag",
+            "description": "Ga naar de volgende vraag, net als de admin-knop Volgende. Handig op een afstandsbediening of via Assist zodat de host het spel van een afstand kan voortzetten. Alleen geldig zodra de huidige vraag is onthuld."
+        },
+        "pause": {
+            "name": "Spel pauzeren",
+            "description": "Pauzeert de actieve vraag en bevriest de timer van elke speler. Koppel het aan een afstandsbedieningsknop, dashboardknop of Assist-zin. Werkt alleen terwijl er een vraag loopt."
+        },
+        "resume": {
+            "name": "Spel hervatten",
+            "description": "Hervat een gepauzeerd spel en start het aftellen opnieuw. Werkt alleen wanneer het spel is gepauzeerd."
+        },
+        "end_game": {
+            "name": "Spel beëindigen",
+            "description": "Beëindigt het huidige spel direct en gaat naar het eindklassement. Koppel het aan een afstandsbedieningsknop, dashboardknop of Assist-zin. Werkt alleen terwijl er een spel loopt."
         }
     }
 }

@@ -55,6 +55,26 @@
         "reset_admin_session": {
             "name": "Reset admin session",
             "description": "Wipe the persisted admin session token. Use this if you can't access the admin panel because the saved token is out of sync. The next admin connection will bootstrap a fresh token."
+        },
+        "start_game": {
+            "name": "Start game",
+            "description": "Start a new Quizify game with the default settings. Wire it to an Assist sentence, a Zigbee remote or a dashboard button so the host can start the quiz without the admin panel. Only works from the lobby."
+        },
+        "next_round": {
+            "name": "Next question",
+            "description": "Advance to the next question, like the admin Next button. Great on a remote or via Assist so the host can move the game along from across the room. Only valid once the current question has been revealed."
+        },
+        "pause": {
+            "name": "Pause game",
+            "description": "Pause the active question and freeze every player's timer. Map it to a remote button, dashboard button or Assist sentence. Only works while a question is running."
+        },
+        "resume": {
+            "name": "Resume game",
+            "description": "Resume a paused game and restart the countdown. Only works when the game is currently paused."
+        },
+        "end_game": {
+            "name": "End game",
+            "description": "End the current game immediately and jump to the final leaderboard. Wire it to a remote button, dashboard button or Assist sentence. Only works while a game is running."
         }
     }
 }
