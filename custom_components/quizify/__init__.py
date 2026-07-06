@@ -221,6 +221,88 @@ async def async_setup_entry(hass: HomeAssistant, entry: ConfigEntry) -> bool:
     hass.services.async_register(DOMAIN, "reset_admin_session", reset_admin_session)
     _LOGGER.debug("Quizify reset_admin_session service registered")
 
+    # Game-control services (#367). Expose a safe subset of the admin game
+    # controls as HA services so hosts can drive the game via Assist voice
+    # ("Hey Nabu, next question"), a Zigbee remote, a dashboard button or an
+    # automation — instead of only the admin WebSocket UI. Each delegates to
+    # the SAME socket-independent core the admin WS handler now uses (the
+    # ``admin_action_*`` methods), so there is one implementation and the
+    # broadcast that refreshes entities + connected clients always fires.
+    from homeassistant.exceptions import (  # noqa: PLC0415
+        ServiceValidationError,
+    )
+
+    from .game.state import GamePhase  # noqa: PLC0415
+
+    def _require_runtime() -> tuple[QuizifyWebSocketHandler, QuizifyGameState]:
+        """Return (ws_handler, game_state) or raise if setup isn't complete.
+
+        Guards against a raw ``KeyError`` when a service fires before/without a
+        loaded config entry (e.g. during teardown): the host sees a clear
+        message in the HA UI / voice response instead of an opaque crash.
+        """
+        domain_data = hass.data.get(DOMAIN)
+        if not domain_data:
+            raise ServiceValidationError(
+                "Quizify is not set up. Add the Quizify integration first."
+            )
+        handler = domain_data.get("ws_handler")
+        game = domain_data.get("game")
+        if handler is None or game is None:
+            raise ServiceValidationError(
+                "Quizify is not ready yet. Try again in a moment."
+            )
+        return handler, game
+
+    async def start_game_service(call: ServiceCall) -> None:  # noqa: ARG001
+        handler, game = _require_runtime()
+        try:
+            await handler.admin_action_start_game(game)
+        except ValueError as err:
+            raise ServiceValidationError(
+                "Cannot start a new quiz right now — a game is already in "
+                "progress. End it first, then start a new one."
+            ) from err
+
+    async def next_round_service(call: ServiceCall) -> None:  # noqa: ARG001
+        handler, game = _require_runtime()
+        try:
+            await handler.admin_action_next_round(game)
+        except ValueError as err:
+            raise ServiceValidationError(
+                "Cannot advance to the next question right now. Start a game "
+                "first, or wait until the current question has been revealed."
+            ) from err
+
+    async def pause_service(call: ServiceCall) -> None:  # noqa: ARG001
+        handler, game = _require_runtime()
+        if not await handler.admin_action_pause(game):
+            raise ServiceValidationError(
+                "There is no active question to pause right now."
+            )
+
+    async def resume_service(call: ServiceCall) -> None:  # noqa: ARG001
+        handler, game = _require_runtime()
+        if not await handler.admin_action_resume(game):
+            raise ServiceValidationError(
+                "The game is not paused, so there is nothing to resume."
+            )
+
+    async def end_game_service(call: ServiceCall) -> None:  # noqa: ARG001
+        handler, game = _require_runtime()
+        if game.phase == GamePhase.LOBBY:
+            raise ServiceValidationError(
+                "No game is currently running, so there is nothing to end."
+            )
+        await handler.admin_action_end_game(game)
+
+    hass.services.async_register(DOMAIN, "start_game", start_game_service)
+    hass.services.async_register(DOMAIN, "next_round", next_round_service)
+    hass.services.async_register(DOMAIN, "pause", pause_service)
+    hass.services.async_register(DOMAIN, "resume", resume_service)
+    hass.services.async_register(DOMAIN, "end_game", end_game_service)
+    _LOGGER.debug("Quizify game-control services registered (#367)")
+
     # Forward to sensor/binary_sensor platforms so HA exposes Quizify game
     # state as entities (sensor.quizify_current_round, etc.).
     await hass.config_entries.async_forward_entry_setups(entry, PLATFORMS)

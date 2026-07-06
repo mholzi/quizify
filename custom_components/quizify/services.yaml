@@ -6,3 +6,46 @@ reset_admin_session:
     cleared, persistent storage edited externally). The next admin
     connection will bootstrap a fresh token. Only callable by HA admins.
   fields: {}
+
+start_game:
+  name: Start game
+  description: >-
+    Start a new Quizify game with the default settings (mixed packs, default
+    difficulty, 10 rounds). Wire it to an Assist sentence ("Hey Nabu, start the
+    quiz"), a Zigbee remote button or a dashboard button so the host can kick
+    off the game without reaching for the admin panel. Only works from the
+    lobby — it will not interrupt a game already in progress.
+  fields: {}
+
+next_round:
+  name: Next question
+  description: >-
+    Advance to the next question — the same action as the admin "Next" button.
+    Handy on a Zigbee remote or via Assist ("Hey Nabu, next question") so the
+    host can move the game along from across the room. Only valid once the
+    current question has been revealed (or to start the first round).
+  fields: {}
+
+pause:
+  name: Pause game
+  description: >-
+    Pause the active question, freezing every player's timer. Useful for a
+    quick break, mapped to a remote button, dashboard button or Assist
+    sentence. Only works while a question is running.
+  fields: {}
+
+resume:
+  name: Resume game
+  description: >-
+    Resume a paused game and restart the countdown. Pair it with the pause
+    service on a remote/automation. Only works when the game is currently
+    paused.
+  fields: {}
+
+end_game:
+  name: End game
+  description: >-
+    End the current game immediately and jump to the final leaderboard. Wire
+    it to a remote button, dashboard button or Assist sentence ("Hey Nabu, end
+    the quiz"). Only works while a game is running.
+  fields: {}

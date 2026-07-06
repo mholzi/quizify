@@ -55,6 +55,26 @@
         "reset_admin_session": {
             "name": "Admin-Sitzung zurücksetzen",
             "description": "Löscht das gespeicherte Admin-Session-Token. Nutze dies, wenn du nicht auf das Admin-Panel zugreifen kannst, weil das gespeicherte Token nicht mehr synchron ist. Die nächste Admin-Verbindung erzeugt ein neues Token."
+        },
+        "start_game": {
+            "name": "Spiel starten",
+            "description": "Startet ein neues Quizify-Spiel mit den Standardeinstellungen. Verknüpfe es mit einem Assist-Satz, einer Zigbee-Fernbedienung oder einem Dashboard-Button, damit der Host das Quiz ohne das Admin-Panel starten kann. Funktioniert nur in der Lobby."
+        },
+        "next_round": {
+            "name": "Nächste Frage",
+            "description": "Springt zur nächsten Frage, wie der Admin-Button \"Weiter\". Praktisch auf einer Fernbedienung oder per Assist, damit der Host das Spiel aus der Ferne weiterführen kann. Nur gültig, sobald die aktuelle Frage aufgelöst wurde."
+        },
+        "pause": {
+            "name": "Spiel pausieren",
+            "description": "Pausiert die aktive Frage und friert den Timer aller Spieler ein. Verknüpfe es mit einem Fernbedienungs-Button, Dashboard-Button oder Assist-Satz. Funktioniert nur, während eine Frage läuft."
+        },
+        "resume": {
+            "name": "Spiel fortsetzen",
+            "description": "Setzt ein pausiertes Spiel fort und startet den Countdown neu. Funktioniert nur, wenn das Spiel gerade pausiert ist."
+        },
+        "end_game": {
+            "name": "Spiel beenden",
+            "description": "Beendet das aktuelle Spiel sofort und springt zur End-Rangliste. Verknüpfe es mit einem Fernbedienungs-Button, Dashboard-Button oder Assist-Satz. Funktioniert nur, während ein Spiel läuft."
         }
     }
 }

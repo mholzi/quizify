@@ -55,6 +55,26 @@
         "reset_admin_session": {
             "name": "Réinitialiser la session admin",
             "description": "Efface le jeton de session admin persistant. À utiliser si vous ne pouvez plus accéder au panneau admin parce que le jeton est désynchronisé. La prochaine connexion admin générera un nouveau jeton."
+        },
+        "start_game": {
+            "name": "Démarrer la partie",
+            "description": "Démarre une nouvelle partie Quizify avec les réglages par défaut. Associez-le à une phrase Assist, une télécommande Zigbee ou un bouton de tableau de bord pour que l'hôte lance le quiz sans le panneau admin. Ne fonctionne que depuis le salon."
+        },
+        "next_round": {
+            "name": "Question suivante",
+            "description": "Passe à la question suivante, comme le bouton Suivant de l'admin. Pratique sur une télécommande ou via Assist pour que l'hôte fasse avancer la partie à distance. Valable uniquement une fois la question actuelle révélée."
+        },
+        "pause": {
+            "name": "Mettre en pause",
+            "description": "Met en pause la question active et gèle le minuteur de tous les joueurs. Associez-le à un bouton de télécommande, un bouton de tableau de bord ou une phrase Assist. Ne fonctionne que pendant une question en cours."
+        },
+        "resume": {
+            "name": "Reprendre la partie",
+            "description": "Reprend une partie en pause et relance le compte à rebours. Ne fonctionne que lorsque la partie est en pause."
+        },
+        "end_game": {
+            "name": "Terminer la partie",
+            "description": "Termine immédiatement la partie en cours et affiche le classement final. Associez-le à un bouton de télécommande, un bouton de tableau de bord ou une phrase Assist. Ne fonctionne que pendant une partie en cours."
         }
     }
 }
