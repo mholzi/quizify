@@ -61,6 +61,10 @@ CONF_MEDIA_PLAYER_ENTITY = "media_player_entity"  # str, single, domain=media_pl
 # of quizify_* events. Mirrors the opt-in posture of the TTS/lights features.
 CONF_HOUSE_EVENTS_ENABLED = "house_events_enabled"  # bool, single
 DEFAULT_HOUSE_EVENTS_ENABLED = False
+# Optional scene activated on the finale/winner alongside the party-light victory
+# sweep (#280, "The House Plays Along"). Empty by default — no scene is touched
+# until the host points this at one of their own HA scenes.
+CONF_FINALE_SCENE = "finale_scene"  # str, single, domain=scene
 # URL of an audio file to loop in the lobby while waiting for players. Empty by
 # default — the lobby-music mechanism stays completely inert until the user
 # points this at their own file (e.g. "/local/quizify-lobby.mp3" served from

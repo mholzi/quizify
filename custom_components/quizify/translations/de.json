@@ -29,7 +29,8 @@
                     "sfx_wrong_url": "Sound-URL für falsche Antwort",
                     "sfx_streak_url": "Sound-URL für Serie",
                     "sfx_winner_url": "Sound-URL für Sieger",
-                    "house_events_enabled": "Das Haus spielt mit"
+                    "house_events_enabled": "Das Haus spielt mit",
+                    "finale_scene": "Finale-Szene"
                 },
                 "data_description": {
                     "party_light_entities": "Lichter, die mit der Spielphase mitleuchten (Koralle bei Frage, Salbei bei Auflösung, Sonne im Finale).",
@@ -42,7 +43,8 @@
                     "sfx_wrong_url": "Optionale URL zu einem kurzen Sound, der abgespielt wird, wenn die meisten die Frage falsch beantwortet haben. Leer lassen, um den mitgelieferten Standard zu verwenden (falls installiert).",
                     "sfx_streak_url": "Optionale URL zu einem kurzen Sound, der abgespielt wird, wenn ein Spieler eine Antwortserie erreicht. Leer lassen, um den mitgelieferten Standard zu verwenden (falls installiert).",
                     "sfx_winner_url": "Optionale URL zu einem kurzen Sound, der abgespielt wird, wenn der Sieger feststeht. Leer lassen, um den mitgelieferten Standard zu verwenden (falls installiert). Wird über den TTS-Lautsprecher abgespielt und übersprungen, solange eine Ansage läuft.",
-                    "house_events_enabled": "Löst bei Spiel-Höhepunkten quizify_*-Events auf dem Home-Assistant-Event-Bus aus (Rundenstart, Auflösung, Serien, Sieger), damit du eigene Automationen darauf aufbauen kannst. Standardmäßig aus."
+                    "house_events_enabled": "Löst bei Spiel-Höhepunkten quizify_*-Events auf dem Home-Assistant-Event-Bus aus (Rundenstart, Auflösung, Serien, Sieger), damit du eigene Automationen darauf aufbauen kannst. Standardmäßig aus.",
+                    "finale_scene": "Optionale Szene, die aktiviert wird, sobald der Sieger feststeht — zusätzlich zum Sieges-Lichtschwenk der Party-Lichter, damit du einen raumweiten Feier-Look auslösen kannst. Leer lassen = keine Szene."
                 }
             }
         }

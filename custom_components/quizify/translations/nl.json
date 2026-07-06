@@ -29,7 +29,8 @@
                     "sfx_wrong_url": "Geluid-URL voor fout antwoord",
                     "sfx_streak_url": "Geluid-URL voor reeks",
                     "sfx_winner_url": "Geluid-URL voor winnaar",
-                    "house_events_enabled": "Het huis speelt mee"
+                    "house_events_enabled": "Het huis speelt mee",
+                    "finale_scene": "Finalescène"
                 },
                 "data_description": {
                     "party_light_entities": "Lampen die meekleuren met de rondefase (koraal bij vraag, salie bij onthulling, zon bij finale).",
@@ -42,7 +43,8 @@
                     "sfx_wrong_url": "Optionele URL naar een kort geluid dat wordt afgespeeld wanneer de meeste spelers het antwoord misten. Laat leeg om het meegeleverde standaardgeluid te gebruiken (indien geïnstalleerd).",
                     "sfx_streak_url": "Optionele URL naar een kort geluid dat wordt afgespeeld wanneer een speler een reeks goede antwoorden haalt. Laat leeg om het meegeleverde standaardgeluid te gebruiken (indien geïnstalleerd).",
                     "sfx_winner_url": "Optionele URL naar een kort geluid dat wordt afgespeeld wanneer de winnaar bekend is. Laat leeg om het meegeleverde standaardgeluid te gebruiken (indien geïnstalleerd). Speelt af op de TTS-speaker en wordt overgeslagen zolang er een aankondiging bezig is.",
-                    "house_events_enabled": "Vuurt quizify_*-events af op de Home Assistant-eventbus bij hoogtepunten van het spel (rondestart, onthulling, reeksen, winnaar) zodat je je eigen automatiseringen kunt aansturen. Standaard uit."
+                    "house_events_enabled": "Vuurt quizify_*-events af op de Home Assistant-eventbus bij hoogtepunten van het spel (rondestart, onthulling, reeksen, winnaar) zodat je je eigen automatiseringen kunt aansturen. Standaard uit.",
+                    "finale_scene": "Optionele scène die wordt geactiveerd zodra de winnaar bekend is, samen met de overwinnings-lichtsweep, zodat je een feestelijke sfeer in de hele kamer kunt aansturen. Laat leeg voor geen scène."
                 }
             }
         }

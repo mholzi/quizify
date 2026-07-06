@@ -18,6 +18,7 @@ from homeassistant.helpers import selector
 from .const import (
     CONF_COMMUNITY_SUBMIT_SECRET,
     CONF_COMMUNITY_SUBMIT_URL,
+    CONF_FINALE_SCENE,
     CONF_HOUSE_EVENTS_ENABLED,
     CONF_LOBBY_MUSIC_URL,
     CONF_MEDIA_PLAYER_ENTITY,
@@ -170,5 +171,14 @@ class QuizifyOptionsFlow(OptionsFlow):
                     CONF_HOUSE_EVENTS_ENABLED, DEFAULT_HOUSE_EVENTS_ENABLED
                 ),
             ): selector.BooleanSelector(),
+            # Optional scene fired on the finale/winner alongside the party-light
+            # victory sweep (#280). Empty = no scene is touched. Lets the host
+            # drive a whole-room "victory" look from one of their own HA scenes.
+            vol.Optional(
+                CONF_FINALE_SCENE,
+                default=current.get(CONF_FINALE_SCENE, ""),
+            ): selector.EntitySelector(
+                selector.EntitySelectorConfig(domain="scene"),
+            ),
         })
         return self.async_show_form(step_id="init", data_schema=schema)

@@ -29,7 +29,8 @@
                     "sfx_wrong_url": "URL du son de mauvaise réponse",
                     "sfx_streak_url": "URL du son de série",
                     "sfx_winner_url": "URL du son de gagnant",
-                    "house_events_enabled": "La maison participe"
+                    "house_events_enabled": "La maison participe",
+                    "finale_scene": "Scène de finale"
                 },
                 "data_description": {
                     "party_light_entities": "Lumières qui changent de couleur selon la phase de la manche (corail pendant la question, sauge pendant la révélation, soleil au final).",
@@ -42,7 +43,8 @@
                     "sfx_wrong_url": "URL facultative d'un son court joué lorsque la plupart des joueurs se sont trompés. Laissez vide pour utiliser le son fourni par défaut (s'il est installé).",
                     "sfx_streak_url": "URL facultative d'un son court joué lorsqu'un joueur atteint une série de bonnes réponses. Laissez vide pour utiliser le son fourni par défaut (s'il est installé).",
                     "sfx_winner_url": "URL facultative d'un son court joué lorsque le gagnant est désigné. Laissez vide pour utiliser le son fourni par défaut (s'il est installé). Joué sur le haut-parleur TTS et ignoré pendant une annonce en cours.",
-                    "house_events_enabled": "Déclenche des événements quizify_* sur le bus d'événements de Home Assistant aux moments forts de la partie (début de manche, révélation, séries, gagnant) pour piloter vos propres automatisations. Désactivé par défaut."
+                    "house_events_enabled": "Déclenche des événements quizify_* sur le bus d'événements de Home Assistant aux moments forts de la partie (début de manche, révélation, séries, gagnant) pour piloter vos propres automatisations. Désactivé par défaut.",
+                    "finale_scene": "Scène facultative activée lorsque le gagnant est désigné, en même temps que le balayage lumineux de victoire, pour déclencher une ambiance de célébration dans toute la pièce. Laissez vide pour aucune scène."
                 }
             }
         }

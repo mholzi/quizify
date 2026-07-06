@@ -27,6 +27,7 @@ from custom_components.quizify.game_events import (  # noqa: E402
     EVENT_ANSWER_REVEALED,
     EVENT_QUESTION_SHOWN,
     EVENT_STREAK_MILESTONE,
+    EVENT_TIME_RUNNING_OUT,
     EVENT_WINNER_DECIDED,
 )
 from custom_components.quizify.lights import QuizifyPartyLights  # noqa: E402
@@ -160,12 +161,13 @@ def _turn_ons(calls):
 # ---------------------------------------------------------------------------
 
 
-def test_attach_events_registers_four_listeners():
+def test_attach_events_registers_all_listeners():
     hass = _FakeHass()
     pl = _lights(hass)
     pl.attach_events()
     assert set(hass.bus.listeners) == {
         EVENT_QUESTION_SHOWN,
+        EVENT_TIME_RUNNING_OUT,
         EVENT_ANSWER_REVEALED,
         EVENT_STREAK_MILESTONE,
         EVENT_WINNER_DECIDED,
@@ -178,7 +180,7 @@ def test_attach_events_idempotent():
     pl.attach_events()
     pl.attach_events()  # second call must not double-register
     assert all(len(v) == 1 for v in hass.bus.listeners.values())
-    assert len(pl._event_unsubs) == 4
+    assert len(pl._event_unsubs) == 5
 
 
 def test_not_configured_no_hass_registers_nothing_and_noops(calls):

@@ -39,6 +39,7 @@ if str(_REPO_ROOT) not in sys.path:
 from custom_components.quizify.const import (  # noqa: E402
     CONF_COMMUNITY_SUBMIT_SECRET,
     CONF_COMMUNITY_SUBMIT_URL,
+    CONF_FINALE_SCENE,
     CONF_LOBBY_MUSIC_URL,
     CONF_MEDIA_PLAYER_ENTITY,
     CONF_PARTY_LIGHT_ENTITIES,
@@ -120,6 +121,9 @@ async def test_options_flow_saves_community_submit_options(
         CONF_PARTY_LIGHT_ENTITIES: [],
         CONF_TTS_ENTITY: "tts.test",
         CONF_MEDIA_PLAYER_ENTITY: "media_player.test",
+        # finale_scene (#280) is a single EntitySelector like tts/media_player —
+        # it too rejects "", so give a valid-format id.
+        CONF_FINALE_SCENE: "scene.test",
         CONF_LOBBY_MUSIC_URL: "",
         CONF_COMMUNITY_SUBMIT_URL: "https://worker.example.com/submit",
         CONF_COMMUNITY_SUBMIT_SECRET: "s3cret-token",
