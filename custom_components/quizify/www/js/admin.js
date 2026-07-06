@@ -884,6 +884,13 @@
         media_player: '',
     };
     var _ttsEls = {};
+    // Guard for the #281 tts-entities fetch: the endpoint is admin-token gated
+    // (#356), but the panel first loads at page-init before the admin session
+    // token arrives over the WebSocket — that first fetch 401s and the
+    // dropdowns fall back to "None found". We refetch once the token lands
+    // (handleGameState) and flip this flag on the first successful load so we
+    // never refetch again.
+    var _ttsEntitiesLoaded = false;
     _initTtsToggles();
     setupChips(els.languageChips, function (v) {
         // Session-only switch — not persisted. On the next full-page reload
@@ -1095,6 +1102,13 @@
         currentPhase = msg.phase;
         if (msg.admin_session_token) {
             sessionStorage.setItem('quizify_admin_session_token', msg.admin_session_token);
+            // The TTS entity dropdowns (#281) load at page-init, before this
+            // token exists — that first fetch of the admin-token-gated
+            // tts-entities endpoint (#356) 401s and shows "None found". Now that
+            // the token is stored, refetch once so the dropdowns populate.
+            if (!_ttsEntitiesLoaded && _ttsEls && _ttsEls.engine) {
+                _loadTtsEntities(_readTtsConfig());
+            }
         }
         if (msg.players) renderLobbyPlayers(msg.players);
 
@@ -1680,7 +1694,16 @@
         fetch(_url)
             .then(function (resp) { return resp.ok ? resp.json() : null; })
             .then(function (data) {
-                data = data || {};
+                if (!data) {
+                    // No token yet (401) or an error — leave the dropdowns on
+                    // their "None found" fallback WITHOUT marking loaded, so the
+                    // refetch in handleGameState retries once the admin token
+                    // arrives over the WebSocket.
+                    _populateEntitySelect(_ttsEls.engine, null, cfg.tts_entity);
+                    _populateEntitySelect(_ttsEls.speaker, null, cfg.media_player);
+                    return;
+                }
+                _ttsEntitiesLoaded = true;
                 _populateEntitySelect(_ttsEls.engine, data.tts, cfg.tts_entity);
                 _populateEntitySelect(_ttsEls.speaker, data.media_players, cfg.media_player);
             })
