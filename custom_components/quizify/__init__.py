@@ -38,6 +38,7 @@ async def async_setup_entry(hass: HomeAssistant, entry: ConfigEntry) -> bool:
 
     from .analytics import QuizifyAnalytics  # noqa: PLC0415
     from .const import (  # noqa: PLC0415
+        CONF_AVOID_RECENT_REPEATS,
         CONF_COMMUNITY_SUBMIT_SECRET,
         CONF_COMMUNITY_SUBMIT_URL,
         CONF_FINALE_SCENE,
@@ -50,6 +51,7 @@ async def async_setup_entry(hass: HomeAssistant, entry: ConfigEntry) -> bool:
         CONF_SFX_WINNER_URL,
         CONF_SFX_WRONG_URL,
         CONF_TTS_ENTITY,
+        DEFAULT_AVOID_RECENT_REPEATS,
         DEFAULT_HOUSE_EVENTS_ENABLED,
     )
     from .game.state import QuizifyGameState  # noqa: PLC0415
@@ -233,6 +235,13 @@ async def async_setup_entry(hass: HomeAssistant, entry: ConfigEntry) -> bool:
     game_state.lobby_music_url = (
         (options.get(CONF_LOBBY_MUSIC_URL) or "").strip() or None
     )
+    # Freshness engine (#436): thread the "avoid recent repeats" toggle onto the
+    # question bank so build_pool can hard-exclude recently shown questions
+    # (guarded) instead of merely oldest-first ordering. Default preserves the
+    # user-visible default; OFF restores the pre-#436 ordering exactly.
+    game_state.question_bank.set_avoid_recent_repeats(
+        bool(options.get(CONF_AVOID_RECENT_REPEATS, DEFAULT_AVOID_RECENT_REPEATS))
+    )
     party_lights = QuizifyPartyLights(
         hass=hass,
         entity_ids=list(options.get(CONF_PARTY_LIGHT_ENTITIES) or []),
@@ -311,6 +320,11 @@ async def async_setup_entry(hass: HomeAssistant, entry: ConfigEntry) -> bool:
         opts = updated_entry.options  # always a MappingProxyType, never None
         game_state.lobby_music_url = (
             (opts.get(CONF_LOBBY_MUSIC_URL) or "").strip() or None
+        )
+        # Freshness engine (#436) — re-apply the toggle live so flipping it in
+        # the options UI takes effect on the next game without an HA restart.
+        game_state.question_bank.set_avoid_recent_repeats(
+            bool(opts.get(CONF_AVOID_RECENT_REPEATS, DEFAULT_AVOID_RECENT_REPEATS))
         )
         # Toggle the community-pack submit feature live (#180) — no HA restart.
         ctx.community_submit_url = (

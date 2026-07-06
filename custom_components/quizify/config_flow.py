@@ -16,6 +16,7 @@ from homeassistant.core import callback
 from homeassistant.helpers import selector
 
 from .const import (
+    CONF_AVOID_RECENT_REPEATS,
     CONF_COMMUNITY_SUBMIT_SECRET,
     CONF_COMMUNITY_SUBMIT_URL,
     CONF_FINALE_SCENE,
@@ -28,6 +29,7 @@ from .const import (
     CONF_SFX_WINNER_URL,
     CONF_SFX_WRONG_URL,
     CONF_TTS_ENTITY,
+    DEFAULT_AVOID_RECENT_REPEATS,
     DEFAULT_HOUSE_EVENTS_ENABLED,
     DOMAIN,
 )
@@ -111,6 +113,16 @@ class QuizifyOptionsFlow(OptionsFlow):
             ): selector.TextSelector(
                 selector.TextSelectorConfig(type=selector.TextSelectorType.URL),
             ),
+            # Freshness engine (#436): avoid repeating questions across recent
+            # sessions. On by default — the bank hard-excludes recently shown
+            # questions (guarded so a game can always be filled) instead of just
+            # ordering them last. Turn off to restore the pre-#436 ordering.
+            vol.Optional(
+                CONF_AVOID_RECENT_REPEATS,
+                default=current.get(
+                    CONF_AVOID_RECENT_REPEATS, DEFAULT_AVOID_RECENT_REPEATS
+                ),
+            ): selector.BooleanSelector(),
             # Endpoint a composed community pack is POSTed to so it can land as
             # a GitHub issue for review (#180). Empty = the whole in-app pack
             # submission feature stays hidden and inert. The GitHub token lives
