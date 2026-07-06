@@ -72,6 +72,18 @@ CONF_FINALE_SCENE = "finale_scene"  # str, single, domain=scene
 # there is nothing to play unless the user supplies one.
 CONF_LOBBY_MUSIC_URL = "lobby_music_url"  # str, single, free-text URL
 
+# Freshness engine toggle (#436, "avoid repeating questions across recent
+# sessions"). When ON, the question bank hard-excludes questions shown within a
+# recent-repeat window from the game pool — but only while enough fresh
+# questions remain to fill a game; otherwise it degrades gracefully to a
+# freshness-decay ordering (soft-penalise) so a small/single-pack selection
+# never yields an empty or too-short pool. When OFF the bank keeps the original
+# never-shown-first / oldest-shown-first ordering unchanged. Default ON: the
+# whole point of the feature is to make repeat sessions feel fresh out of the
+# box, and the pool-size guard makes it safe even for tiny packs.
+CONF_AVOID_RECENT_REPEATS = "avoid_recent_repeats"  # bool, single
+DEFAULT_AVOID_RECENT_REPEATS = True
+
 # Per-cue room-SFX override URLs (#494 Phase 3, "The House Plays Along"). Each is
 # an OPTIONAL free-text URL to a short one-shot sound the integration plays on the
 # shared media_player at a game milestone. Empty => the bundled CC0 default at

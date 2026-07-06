@@ -4,13 +4,14 @@ from __future__ import annotations
 
 import json
 import logging
+import math
 import random
 import time
 from dataclasses import dataclass, field
 from pathlib import Path
 from typing import TYPE_CHECKING
 
-from ..const import ANSWERS_PER_QUESTION
+from ..const import ANSWERS_PER_QUESTION, DEFAULT_AVOID_RECENT_REPEATS
 from .seasons import parse_season
 
 if TYPE_CHECKING:
@@ -36,6 +37,40 @@ COMMUNITY_SLUG_PREFIX = "community-"
 # are generous (the largest built-in pack is ~150 questions) but finite.
 MAX_COMMUNITY_PACK_BYTES = 1_048_576  # 1 MiB per pack file
 MAX_COMMUNITY_QUESTIONS = 500  # questions kept per community pack
+
+# ---------------------------------------------------------------------------
+# Freshness engine (#436) — avoid repeating questions across recent sessions
+# ---------------------------------------------------------------------------
+# The bank already tracks, per question, the unix timestamp it was last shown
+# (``self._history``) and orders "never-shown first, then oldest-shown first".
+# The freshness engine refines that plain oldest-first sort into a
+# decay-weighted ordering and, when enabled, hard-excludes very recently shown
+# questions — with a pool-size guard so a game can always be filled.
+
+# Exponential-decay half-life: the age (seconds since a question was last shown)
+# at which it has recovered *half* of its freshness. A question shown long ago
+# scores close to a never-shown one; one shown moments ago scores near zero.
+# 7 days keeps a question de-prioritised for the week around a session but lets
+# it rotate back within a fortnight — a good fit for a party quiz played every
+# so often rather than continuously.
+FRESHNESS_HALFLIFE_SECONDS = 7 * 24 * 60 * 60  # 7 days
+# Decay time-constant τ derived from the half-life: weight = 1 - exp(-age / τ),
+# and at age == half-life the weight is exactly 0.5.
+FRESHNESS_DECAY_TAU_SECONDS = FRESHNESS_HALFLIFE_SECONDS / math.log(2)
+
+# Hard-exclude window: a question shown within this many seconds is dropped from
+# the pool entirely when "avoid recent repeats" is ON (subject to the guard
+# below). 6 hours spans a single party evening / multi-round sitting so the same
+# questions don't come back the same night, without permanently retiring them.
+RECENT_REPEAT_WINDOW_SECONDS = 6 * 60 * 60  # 6 hours
+
+# Pool-size guard: only hard-exclude recent questions while at least this many
+# fresh questions remain — otherwise fall back to the soft-penalised
+# (decay-ordered) full pool. Home Assistant caps a game at 50 rounds
+# (server/websocket.py), so keeping ≥ 50 fresh questions guarantees *any* game
+# can be filled regardless of the requested round count; below it, excluding
+# would risk an empty / too-short pool, so we degrade gracefully instead.
+MIN_FRESH_POOL_SIZE = 50
 
 
 @dataclass
@@ -315,6 +350,10 @@ class QuestionBank:
         self._history_path: Path | None = None
         # Questions shown in the current game (to record at end)
         self._shown_this_game: list[str] = []
+        # Freshness engine toggle (#436). Defaults to the options-flow default so
+        # a bank that is never told otherwise behaves like the user-visible
+        # default. Threaded in from the config entry via set_avoid_recent_repeats.
+        self._avoid_recent_repeats: bool = DEFAULT_AVOID_RECENT_REPEATS
 
     @property
     def categories(self) -> dict[str, list[Question]]:
@@ -717,6 +756,17 @@ class QuestionBank:
         """Bind the history file path without touching disk (non-blocking)."""
         self._history_path = history_path
 
+    def set_avoid_recent_repeats(self, enabled: bool) -> None:
+        """Enable/disable the #436 freshness engine's hard-exclude behaviour.
+
+        Threaded in from the config entry's ``avoid_recent_repeats`` option at
+        both initial setup and options reload. When OFF, :meth:`build_pool`
+        keeps the original never-shown-first / oldest-shown-first ordering; when
+        ON it applies freshness-decay ordering plus a guarded hard-exclude of
+        recently shown questions (see :meth:`build_pool`).
+        """
+        self._avoid_recent_repeats = bool(enabled)
+
     def _read_history(self) -> None:
         """Blocking read of the history file. MUST run off the event loop."""
         history_path = self._history_path
@@ -834,6 +884,14 @@ class QuestionBank:
         Priority: ``categories`` list > single ``category`` > all (mixed).
         ``exclude_ids`` drops those question ids from the pool (e.g. questions
         the main game already showed this session).
+
+        When the freshness engine is ON (#436, ``set_avoid_recent_repeats``),
+        the ordering is refined by exponential freshness-decay and questions
+        shown within :data:`RECENT_REPEAT_WINDOW_SECONDS` are hard-excluded —
+        but only while ≥ :data:`MIN_FRESH_POOL_SIZE` fresh questions remain, so
+        a game can always be filled (see :meth:`_order_pool_freshness_aware`).
+        When OFF, the original never-shown-first / oldest-shown-first ordering
+        below runs unchanged (fully back-compatible).
         """
         if categories:
             pool = [q for slug in categories for q in self._categories.get(slug, [])]
@@ -851,6 +909,9 @@ class QuestionBank:
         if exclude_ids:
             pool = [q for q in pool if q.id not in exclude_ids]
 
+        if self._avoid_recent_repeats:
+            return self._order_pool_freshness_aware(pool)
+
         # Sort by history: never-shown questions first, then oldest-shown first.
         # Within each group, randomise to avoid predictable ordering.
         if self._history:
@@ -860,6 +921,58 @@ class QuestionBank:
             previously_shown.sort(key=lambda q: self._history.get(q.id, 0))
             return never_shown + previously_shown
         return self.shuffle_questions(pool)
+
+    def _freshness_weight(self, question_id: str, now: float) -> float:
+        """Freshness score in ``[0.0, 1.0]`` — higher = fresher.
+
+        Never-shown questions score ``1.0``. A previously shown question scores
+        ``1 - exp(-age / τ)`` where ``age`` is the seconds since it was last
+        shown: near ``0.0`` right after it was shown, rising back toward ``1.0``
+        as it ages (crossing ``0.5`` at :data:`FRESHNESS_HALFLIFE_SECONDS`).
+        """
+        last_shown = self._history.get(question_id)
+        if last_shown is None:
+            return 1.0
+        age = max(0.0, now - last_shown)
+        return 1.0 - math.exp(-age / FRESHNESS_DECAY_TAU_SECONDS)
+
+    def _order_pool_freshness_aware(self, pool: list[Question]) -> list[Question]:
+        """Freshness-decay ordering + guarded hard-exclude of recent questions.
+
+        Ordering: never-shown questions first (shuffled), then previously shown
+        ordered freshest-first by :meth:`_freshness_weight` (i.e. oldest last-
+        shown first — the decay-weighted refinement of the plain oldest-first
+        sort).
+
+        Hard-exclude: questions shown within
+        :data:`RECENT_REPEAT_WINDOW_SECONDS` are dropped — but *only* while the
+        surviving pool still holds ≥ :data:`MIN_FRESH_POOL_SIZE` questions.
+        Otherwise (small / single-pack selections) we fall back to the full
+        decay-ordered pool, so the pool is never emptied or shortened below what
+        the selection can actually offer. This graceful degradation is the key
+        correctness property: a small pack always fills a game, at the cost of
+        allowing recent repeats when there is genuinely nothing fresher to show.
+        """
+        now = time.time()
+        never_shown = [q for q in pool if q.id not in self._history]
+        previously_shown = [q for q in pool if q.id in self._history]
+        random.shuffle(never_shown)
+        previously_shown.sort(
+            key=lambda q: self._freshness_weight(q.id, now), reverse=True
+        )
+
+        recent_cutoff = now - RECENT_REPEAT_WINDOW_SECONDS
+        non_recent = [
+            q for q in previously_shown
+            if self._history.get(q.id, 0.0) <= recent_cutoff
+        ]
+        # ``non_recent`` preserves ``previously_shown``'s freshest-first order.
+        kept = never_shown + non_recent
+        if len(kept) >= MIN_FRESH_POOL_SIZE:
+            return kept
+        # Not enough fresh questions to safely fill a game → soft-penalise:
+        # keep everything, just decay-ordered (recent questions sink to the end).
+        return never_shown + previously_shown
 
     def _build_queue(
         self,
