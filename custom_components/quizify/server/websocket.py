@@ -45,6 +45,7 @@ from custom_components.quizify.server.serializers import (
     serialize_finale,
     serialize_leaderboard,
     serialize_player_list,
+    snapshot_tts_entities,
 )
 
 if TYPE_CHECKING:
@@ -585,6 +586,16 @@ class QuizifyWebSocketHandler:
         state["type"] = "game_state"
         state["join_url"] = "/quizify/player"
         state["admin_session_token"] = admin_token
+        # Ride the TTS-engine + media-player lists for the narration dropdowns
+        # (#281) on this already-authenticated admin frame, so the panel never
+        # depends on the separate admin-token-gated /api/quizify/tts-entities
+        # fetch racing the token's arrival (#356/#501). ``hass`` is None on the
+        # standalone dev server → empty lists → the dropdowns' "configure in HA"
+        # fallback, exactly like the HTTP endpoint.
+        hass = getattr(self._runtime, "hass", None)
+        entities = snapshot_tts_entities(hass)
+        state["tts_entities"] = entities["tts"]
+        state["media_players"] = entities["media_players"]
         await self._conn.send(ws, state)
 
     # ------------------------------------------------------------------

@@ -1102,13 +1102,24 @@
         currentPhase = msg.phase;
         if (msg.admin_session_token) {
             sessionStorage.setItem('quizify_admin_session_token', msg.admin_session_token);
-            // The TTS entity dropdowns (#281) load at page-init, before this
-            // token exists — that first fetch of the admin-token-gated
-            // tts-entities endpoint (#356) 401s and shows "None found". Now that
-            // the token is stored, refetch once so the dropdowns populate.
-            if (!_ttsEntitiesLoaded && _ttsEls && _ttsEls.engine) {
-                _loadTtsEntities(_readTtsConfig());
-            }
+        }
+        // The admin-connect frame now carries the TTS-engine + media-player
+        // lists directly (server-side, over this already-authenticated socket),
+        // so the narration dropdowns (#281) populate WITHOUT the separate
+        // admin-token-gated /api/quizify/tts-entities fetch racing the token's
+        // arrival (#356/#501 were a fragile refetch band-aid for exactly that
+        // race). Populate straight from the payload and mark loaded. An empty
+        // array is still "present" (JS: [] is truthy), so a host with no
+        // TTS/media_player entities correctly shows "None found".
+        if ((msg.tts_entities || msg.media_players) && _ttsEls && _ttsEls.engine) {
+            var _ttsCfg = _readTtsConfig();
+            _populateEntitySelect(_ttsEls.engine, msg.tts_entities || [], _ttsCfg.tts_entity);
+            _populateEntitySelect(_ttsEls.speaker, msg.media_players || [], _ttsCfg.media_player);
+            _ttsEntitiesLoaded = true;
+        } else if (msg.admin_session_token && !_ttsEntitiesLoaded && _ttsEls && _ttsEls.engine) {
+            // Fallback for an older server that doesn't send the lists on the
+            // admin frame: now that the token is stored, refetch over HTTP once.
+            _loadTtsEntities(_readTtsConfig());
         }
         if (msg.players) renderLobbyPlayers(msg.players);
 
