@@ -3,6 +3,23 @@
 All notable changes to Quizify are documented here. This project follows
 [Semantic Versioning](https://semver.org/).
 
+## [1.6.0-RC3] — 2026-07-07
+
+Release candidate for 1.6.0 — "The House Plays Along". Fixes the admin
+narration-entity dropdowns, which stayed empty on RC2.
+
+### Fixed
+
+- **Admin TTS/media-player dropdowns empty (#502)** — the engine + speaker
+  pickers in the narration panel (#281) populated from the admin-token-gated
+  `/api/quizify/tts-entities` endpoint (#356), whose fetch fired at page-init
+  before the admin token arrived over the WebSocket, so it 401'd and the
+  dropdowns fell back to "None found" (the RC2 refetch band-aid in #501 didn't
+  reliably close the race). The admin-connect WebSocket frame — already
+  admin-authenticated — now carries the TTS-engine and media-player lists
+  directly, so the dropdowns populate from a trusted channel with no separate
+  token-gated fetch and no race. The HTTP endpoint stays as a fallback.
+
 ## [1.6.0-RC2] — 2026-07-06
 
 Release candidate for 1.6.0 — "The House Plays Along". The whole smart home
