@@ -120,9 +120,16 @@ async def _make_client(handler: QuizifyWebSocketHandler) -> TestClient:
 
 
 async def _first_game_state(ws) -> dict:  # noqa: ANN001
-    """Return the first game_state frame the server pushes."""
+    """Return the first ``game_state`` frame after an ``admin_connect`` message.
+
+    ``_handle_admin_connect`` (which carries the entity lists) fires only in
+    response to an ``admin_connect`` frame from a ?role=admin socket — the admin
+    page sends it right after connect. Each receive is bounded by a timeout so a
+    regression can never hang the whole suite.
+    """
+    await ws.send_json({"type": "admin_connect"})
     for _ in range(100):
-        msg = await ws.receive_json()
+        msg = await asyncio.wait_for(ws.receive_json(), timeout=5)
         if msg.get("type") == "game_state":
             return msg
     raise AssertionError("no game_state frame received")
