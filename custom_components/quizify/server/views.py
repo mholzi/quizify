@@ -29,7 +29,7 @@ from .pack_submission import (
     submit_pack_view,
 )
 from .rate_limit import SlidingWindowLimiter
-from .serializers import build_game_status_response
+from .serializers import build_game_status_response, snapshot_tts_entities
 
 if TYPE_CHECKING:
     from collections.abc import Awaitable, Callable
@@ -796,25 +796,7 @@ async def tts_entities_view(request: web.Request) -> web.Response:
     ctx = _get_ctx(request)
     # Only the HA runtime exposes ``hass``; the standalone dev server does not.
     hass = getattr(ctx.runtime, "hass", None)
-    if hass is None:
-        return web.json_response({"tts": [], "media_players": []})
-
-    def _entities(domain: str) -> list[dict]:
-        items = [
-            {
-                "entity_id": state.entity_id,
-                "friendly_name": state.attributes.get(
-                    "friendly_name", state.entity_id
-                ),
-            }
-            for state in hass.states.async_all(domain)
-        ]
-        items.sort(key=lambda e: e["friendly_name"].lower())
-        return items
-
-    return web.json_response(
-        {"tts": _entities("tts"), "media_players": _entities("media_player")}
-    )
+    return web.json_response(snapshot_tts_entities(hass))
 
 
 async def analytics_data_view(request: web.Request) -> web.Response:

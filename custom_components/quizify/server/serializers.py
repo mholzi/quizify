@@ -10,6 +10,42 @@ if TYPE_CHECKING:
     from custom_components.quizify.game.state import QuizifyGameState
 
 
+def snapshot_tts_entities(hass: Any) -> dict[str, list[dict[str, str]]]:
+    """List the TTS engines + media players for the admin narration dropdowns.
+
+    Backs BOTH the admin-token-gated ``/api/quizify/tts-entities`` HTTP endpoint
+    and the admin-connect WebSocket payload. Delivering the same lists over the
+    already-authenticated admin socket lets the dropdowns populate without a
+    separate token-gated fetch racing the admin token's arrival (#356 gated the
+    endpoint; the HTTP fetch first fires at page-init, before the token lands,
+    so it 401s and the dropdowns fall back to "None found"). The WS carries the
+    lists directly, so there is no race.
+
+    ``hass`` is None on the standalone dev server — both lists come back empty
+    and the dropdowns show their "configure in HA" fallback.
+
+    Returns ``{"tts": [...], "media_players": [...]}`` where each item is
+    ``{entity_id, friendly_name}``, sorted by friendly_name.
+    """
+    if hass is None:
+        return {"tts": [], "media_players": []}
+
+    def _entities(domain: str) -> list[dict[str, str]]:
+        items = [
+            {
+                "entity_id": state.entity_id,
+                "friendly_name": state.attributes.get(
+                    "friendly_name", state.entity_id
+                ),
+            }
+            for state in hass.states.async_all(domain)
+        ]
+        items.sort(key=lambda e: e["friendly_name"].lower())
+        return items
+
+    return {"tts": _entities("tts"), "media_players": _entities("media_player")}
+
+
 def build_game_status_response(
     game_state: QuizifyGameState | None,
     game_id: str | None,
