@@ -29,7 +29,11 @@ from .pack_submission import (
     submit_pack_view,
 )
 from .rate_limit import SlidingWindowLimiter
-from .serializers import build_game_status_response, snapshot_tts_entities
+from .serializers import (
+    build_game_status_response,
+    snapshot_house_entities,
+    snapshot_tts_entities,
+)
 
 if TYPE_CHECKING:
     from collections.abc import Awaitable, Callable
@@ -799,6 +803,31 @@ async def tts_entities_view(request: web.Request) -> web.Response:
     return web.json_response(snapshot_tts_entities(hass))
 
 
+async def house_entities_view(request: web.Request) -> web.Response:
+    """List the lights + media players + scenes for the "House Plays Along" panel.
+
+    Backs the entity pickers in the admin house panel (#494 Phase 4), the same
+    way ``tts_entities_view`` backs the narration dropdowns: the host picks live
+    entities instead of typing ids into the integration options, and the picks
+    ride the ``configure_house`` / ``start_game`` payload (per-game,
+    localStorage-backed). The config-entry options stay as the fallback default.
+
+    Parity endpoint only — the panel's primary source is the same list riding
+    the already-authenticated admin-connect WebSocket frame (#502), which cannot
+    race the admin token the way this token-gated fetch can.
+
+    Returns ``{"lights": [...], "media_players": [...], "scenes": [...]}`` where
+    each item is ``{entity_id, friendly_name}``, sorted by friendly_name. On the
+    standalone dev server (no hass) all three lists are empty.
+    """
+    if not _is_admin_authenticated(request):
+        return _unauthorized()
+    ctx = _get_ctx(request)
+    # Only the HA runtime exposes ``hass``; the standalone dev server does not.
+    hass = getattr(ctx.runtime, "hass", None)
+    return web.json_response(snapshot_house_entities(hass))
+
+
 async def analytics_data_view(request: web.Request) -> web.Response:
     """Return analytics data as JSON."""
     if not _is_admin_authenticated(request):
@@ -1137,6 +1166,7 @@ ROUTES: list[tuple[str, str, _RouteHandler]] = [
     ("GET", "/api/quizify/status", status_view),
     ("GET", "/api/quizify/featured-pack", featured_pack_view),
     ("GET", "/api/quizify/tts-entities", tts_entities_view),
+    ("GET", "/api/quizify/house-entities", house_entities_view),
     ("GET", "/api/quizify/analytics/data", analytics_data_view),
     ("GET", "/api/quizify/all-time", all_time_leaderboard_view),
     ("GET", "/api/quizify/question-stats", question_stats_view),

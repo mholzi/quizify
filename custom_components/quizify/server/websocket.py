@@ -45,6 +45,7 @@ from custom_components.quizify.server.serializers import (
     serialize_finale,
     serialize_leaderboard,
     serialize_player_list,
+    snapshot_house_entities,
     snapshot_tts_entities,
 )
 
@@ -52,7 +53,9 @@ if TYPE_CHECKING:
     from collections.abc import Callable
 
     from ..game_events import QuizifyEventEmitter
+    from ..lights import QuizifyPartyLights
     from ..runtime import Runtime
+    from ..sound_effects import QuizifySoundEffects
     from ..tts import QuizifyTTSAnnouncer
 
 _LOGGER = logging.getLogger(__name__)
@@ -85,6 +88,7 @@ MSG_PAUSE_GAME = "pause_game"
 MSG_RESUME_GAME = "resume_game"
 MSG_KICK_PLAYER = "kick_player"
 MSG_CONFIGURE_TTS = "configure_tts"
+MSG_CONFIGURE_HOUSE = "configure_house"
 
 
 def _coerce_toggle(value: Any, *, default: bool) -> bool:
@@ -189,6 +193,14 @@ class QuizifyWebSocketHandler:
         # construction so the handler stays HA-agnostic. Firing on None is the
         # no-op path (standalone dev server).
         self._event_emitter: QuizifyEventEmitter | None = None
+        # Optional "House Plays Along" consumers (#494 Phase 4). Set by
+        # __init__.py after construction, like the announcer/emitter above.
+        # The handler never *drives* these (party lights and SFX react to the
+        # game state / bus events on their own) — it only holds them so the
+        # admin panel's ``configure_house`` message can push runtime overrides
+        # onto them. None on the standalone dev server → configure is a no-op.
+        self._party_lights: QuizifyPartyLights | None = None
+        self._sound_effects: QuizifySoundEffects | None = None
         # Per-connection message flood guard (#169). Keyed on id(ws); the
         # entry is dropped by _forget_rate_limit() on disconnect so the
         # backing dict is bounded by the number of *live* connections.
@@ -596,6 +608,13 @@ class QuizifyWebSocketHandler:
         entities = snapshot_tts_entities(hass)
         state["tts_entities"] = entities["tts"]
         state["media_players"] = entities["media_players"]
+        # Same trick for the "House Plays Along" panel's entity pickers (#494
+        # Phase 4): lights + media players + scenes ride this authenticated
+        # frame, so the panel never races the admin token against the parallel
+        # token-gated /api/quizify/house-entities fetch. Sent as ONE nested dict
+        # (not three top-level keys) to keep the frame's namespace tidy — the
+        # panel reads state.house_entities.{lights,media_players,scenes}.
+        state["house_entities"] = snapshot_house_entities(hass)
         await self._conn.send(ws, state)
 
     # ------------------------------------------------------------------
@@ -1538,12 +1557,19 @@ class QuizifyWebSocketHandler:
         # Socket-independent continuation (TTS config, grace, first question).
         # Shared with the HA ``quizify.start_game`` service so the WS path and
         # the service path drive one implementation (#367).
-        await self._after_start_game(game_state, data.get("tts") or {})
+        await self._after_start_game(
+            game_state,
+            data.get("tts") or {},
+            house_config=data.get("house"),
+        )
 
     async def _after_start_game(
-        self, game_state: QuizifyGameState, tts_config: dict
+        self,
+        game_state: QuizifyGameState,
+        tts_config: dict,
+        house_config: dict | None = None,
     ) -> None:
-        """Continue a just-started game: TTS config, grace, first question.
+        """Continue a just-started game: TTS + house config, grace, first question.
 
         Socket-independent core split out of ``_handle_start_game`` (#367) so
         the ``quizify.start_game`` service reuses the identical sequence without
@@ -1557,6 +1583,23 @@ class QuizifyWebSocketHandler:
         # wired (standalone dev server, HA without a TTS entity). The service
         # path passes an empty dict (no per-game overrides).
         self._apply_tts_config(tts_config)
+
+        # Apply the "House Plays Along" settings the same way (#494 Phase 4) —
+        # the admin panel rides them on the start_game payload under ``house``,
+        # alongside ``tts``.
+        #
+        # Deliberately NOT symmetric with the TTS line above: an ABSENT block is
+        # skipped rather than applied as an empty dict. ``_apply_house_config``
+        # reads the master as ``bool(house.get("enabled"))`` (default off, like
+        # TTS), so feeding it ``{}`` would silently disarm lights/SFX/events that
+        # the host had switched on in the config-entry options. Two callers hit
+        # that case: ``admin_action_start_game`` (the HA-service path, which has
+        # no panel and passes nothing) and any admin client that omits the block.
+        # Skipping leaves whatever is already in force — the config-entry options
+        # plus whatever the lobby-time ``configure_house`` push installed — which
+        # is the only non-destructive reading of "no per-game override".
+        if house_config:
+            self._apply_house_config(house_config)
 
         # Snapshot the game_id start_game just minted (#352). We're about to
         # yield the loop for the grace sleep below; another admin socket can
@@ -2797,6 +2840,137 @@ class QuizifyWebSocketHandler:
         """
         self._apply_tts_config(data or {})
 
+    # ------------------------------------------------------------------
+    # "House Plays Along" runtime config (#494 Phase 4)
+    # ------------------------------------------------------------------
+
+    def set_party_lights(self, lights: QuizifyPartyLights | None) -> None:
+        """Wire (or rewire) the optional party-light choreography (#494 P4).
+
+        Public entry point used by ``__init__.py`` at setup and on every options
+        reload, mirroring :meth:`set_tts_announcer` / :meth:`set_event_emitter`.
+        The handler does not drive the lights (they react to the game state and
+        the ``quizify_*`` bus events themselves) — it holds the reference purely
+        so ``configure_house`` can push the panel's runtime overrides onto it.
+        ``None`` clears it, restoring the no-op path (standalone dev server).
+        """
+        self._party_lights = lights
+
+    def set_sound_effects(self, effects: QuizifySoundEffects | None) -> None:
+        """Wire (or rewire) the optional room-SFX player (#494 P4).
+
+        Same contract as :meth:`set_party_lights`: held only so the admin
+        panel's ``configure_house`` overrides reach it. ``None`` clears it.
+        """
+        self._sound_effects = effects
+
+    def _apply_house_config(self, house: dict[str, Any]) -> None:
+        """Push the flat "House Plays Along" settings dict onto its consumers.
+
+        Shared by ``start_game`` (config nested under ``data["house"]``) and the
+        lobby-time ``configure_house`` message (config sent flat), exactly like
+        :meth:`_apply_tts_config`. The panel persists one flat dict in
+        localStorage and pushes it verbatim; "presets" are a frontend-only
+        concept, so a ``preset`` key (if any) is simply ignored here — the
+        backend only ever sees the resolved booleans.
+
+        Fans out to all THREE consumers, because the panel presents one master
+        switch over what are internally three independent subsystems:
+          * party lights  — the 5 accent cues + the winner scene;
+          * sound effects — the 4 one-shot cues;
+          * event emitter — the ``quizify_*`` bus events the other two ride on.
+        The master ``enabled`` is a runtime override of the
+        ``CONF_HOUSE_EVENTS_ENABLED`` option and is handed to each of them, so
+        flipping it off silences the whole feature in one frame.
+
+        Defensive by design — the payload is untyped client JSON:
+          * each child toggle defaults to ON (``bool(house.get(key, True))``),
+            so a partial dict degrades to "master decides" rather than to a
+            silently half-dead panel; only the master defaults OFF;
+          * each ``configure()`` is individually guarded, so one bad entity id
+            (e.g. a stale ``light.*`` the host has since removed) can at worst
+            kill its own subsystem, never the other two — and never the frame,
+            which would drop the admin's whole message.
+        No-op per consumer when it isn't wired (standalone dev server).
+        """
+        enabled = bool(house.get("enabled"))
+
+        def _toggle(key: str) -> bool:
+            return bool(house.get(key, True))
+
+        # Entity overrides. An empty selection ("" / []) means "no override" —
+        # the consumer then falls back to its config-entry default
+        # (CONF_PARTY_LIGHT_ENTITIES / CONF_MEDIA_PLAYER_ENTITY /
+        # CONF_FINALE_SCENE). Coerced defensively: a non-list ``light_entities``
+        # from a malformed payload must not reach the light service call.
+        raw_light_entities = house.get("light_entities")
+        light_entities = (
+            [str(e) for e in raw_light_entities]
+            if isinstance(raw_light_entities, list)
+            else []
+        )
+        media_player = str(house.get("media_player") or "").strip()
+        winner_scene_entity = str(house.get("winner_scene_entity") or "").strip()
+
+        lights = self._party_lights
+        if lights is not None:
+            try:
+                lights.configure(
+                    enabled=enabled,
+                    light_question=_toggle("light_question"),
+                    light_countdown=_toggle("light_countdown"),
+                    light_reveal=_toggle("light_reveal"),
+                    light_streak=_toggle("light_streak"),
+                    light_winner=_toggle("light_winner"),
+                    winner_scene=_toggle("winner_scene"),
+                    light_entities=light_entities,
+                    winner_scene_entity=winner_scene_entity,
+                )
+            except Exception:  # noqa: BLE001
+                _LOGGER.exception("House party-lights configure raised")
+
+        effects = self._sound_effects
+        if effects is not None:
+            try:
+                effects.configure(
+                    enabled=enabled,
+                    sfx_correct=_toggle("sfx_correct"),
+                    sfx_wrong=_toggle("sfx_wrong"),
+                    sfx_streak=_toggle("sfx_streak"),
+                    sfx_winner=_toggle("sfx_winner"),
+                    media_player=media_player,
+                )
+            except Exception:  # noqa: BLE001
+                _LOGGER.exception("House sound-effects configure raised")
+
+        emitter = self._event_emitter
+        if emitter is not None:
+            try:
+                # The emitter has no per-cue toggles of its own — the bus events
+                # are the substrate the lights and SFX subscribe to, so it only
+                # honours the master switch. Leaving it armed while the master is
+                # off would keep spamming quizify_* events at the host's own
+                # automations, which is exactly what the master promises to stop.
+                emitter.configure(enabled=enabled)
+            except Exception:  # noqa: BLE001
+                _LOGGER.exception("House event-emitter configure raised")
+
+    async def _handle_configure_house(
+        self, ws: web.WebSocketResponse, data: dict, game_state: QuizifyGameState
+    ) -> None:
+        """Handle the admin ``configure_house`` message (#494 Phase 4).
+
+        Sent by admin.js on connect (right after ``admin_connect``) and whenever
+        a house toggle / entity picker changes, mirroring ``configure_tts``. The
+        on-connect push is why this must work with no game in progress: the
+        lobby-phase cues (player-join glow, lobby SFX) fire before ``start_game``
+        ever lands, so waiting for the start payload would leave them
+        misconfigured for the entire lobby. Nothing here touches ``game_state``
+        — the applier only reconfigures long-lived consumers — so the lobby path
+        is safe by construction. The payload is the flat house-settings object.
+        """
+        self._apply_house_config(data or {})
+
     def _notify_tts_milestone(self, player_name: str, streak: int) -> None:
         """Forward a milestone hit to the TTS announcer if one is wired.
 
@@ -3146,6 +3320,10 @@ class QuizifyWebSocketHandler:
         ),
         MSG_CONFIGURE_TTS: (
             lambda self, ws, data, gs: self._handle_configure_tts(ws, data, gs),
+            True,
+        ),
+        MSG_CONFIGURE_HOUSE: (
+            lambda self, ws, data, gs: self._handle_configure_house(ws, data, gs),
             True,
         ),
     }

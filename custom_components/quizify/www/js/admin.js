@@ -892,6 +892,76 @@
     // never refetch again.
     var _ttsEntitiesLoaded = false;
     _initTtsToggles();
+
+    // House Plays Along (#494), Variant D "Presets". Master switch defaults OFF
+    // (silent until the host opts in); the ten per-effect toggles default to the
+    // "game_show" preset. Persisted in localStorage, pushed to the server on
+    // every change + on ws.onopen (configure_house), and it also rides
+    // start_game (_readHouseConfig → _buildStartGamePayload → house).
+    // NB (same trap as TTS above): these constants must be assigned BEFORE
+    // _initHouseToggles() runs — the init call executes here at top-level, ahead
+    // of the helper block further down, so a later `var HOUSE_DEFAULTS = …` would
+    // hoist but still read as undefined at this point.
+    var HOUSE_STORAGE_KEY = 'quizify_house';
+    // The ten per-effect booleans, in DOM order. `preset` is frontend-only —
+    // the backend only ever receives resolved booleans.
+    var HOUSE_EFFECT_KEYS = [
+        'light_question', 'light_countdown', 'light_reveal', 'light_streak',
+        'light_winner', 'winner_scene',
+        'sfx_correct', 'sfx_wrong', 'sfx_streak', 'sfx_winner',
+    ];
+    // preset → the exact effect-toggle set it writes. `events_only` turns every
+    // effect off on purpose: the quizify_* HA events still fire, so the host can
+    // drive their own automations.
+    var HOUSE_PRESETS = {
+        cozy_glow: {
+            light_question: true, light_countdown: false, light_reveal: true,
+            light_streak: false, light_winner: true, winner_scene: true,
+            sfx_correct: false, sfx_wrong: false, sfx_streak: false, sfx_winner: false,
+        },
+        game_show: {
+            light_question: true, light_countdown: true, light_reveal: true,
+            light_streak: true, light_winner: true, winner_scene: true,
+            sfx_correct: true, sfx_wrong: true, sfx_streak: true, sfx_winner: true,
+        },
+        events_only: {
+            light_question: false, light_countdown: false, light_reveal: false,
+            light_streak: false, light_winner: false, winner_scene: false,
+            sfx_correct: false, sfx_wrong: false, sfx_streak: false, sfx_winner: false,
+        },
+    };
+    // preset id → the i18n key of the one-line hint under the segmented control.
+    var HOUSE_PRESET_HINTS = {
+        cozy_glow: 'setup.house.hintCozy',
+        game_show: 'setup.house.hintGameShow',
+        events_only: 'setup.house.hintEvents',
+        custom: 'setup.house.hintCustom',
+    };
+    var HOUSE_DEFAULTS = {
+        enabled: false,
+        preset: 'game_show',
+        light_question: true, light_countdown: true, light_reveal: true,
+        light_streak: true, light_winner: true, winner_scene: true,
+        sfx_correct: true, sfx_wrong: true, sfx_streak: true, sfx_winner: true,
+        // Per-game entity overrides. [] / '' → fall back to the config-entry
+        // values on the server; never send a placeholder string.
+        light_entities: [],
+        media_player: '',
+        winner_scene_entity: '',
+    };
+    var _houseEls = {};
+    // Currently selected preset ('cozy_glow' | 'game_show' | 'events_only' |
+    // 'custom'). 'custom' = no segment highlighted.
+    var _housePreset = HOUSE_DEFAULTS.preset;
+    // Last known-good config. The entity pickers populate asynchronously (the
+    // lists arrive on the admin-connect frame), so until they have rendered,
+    // _readHouseConfig() must fall back to the persisted entity selection
+    // instead of reporting an empty one and silently wiping it.
+    var _houseSaved = null;
+    var _houseLightsRendered = false;
+    var _houseEntitiesLoaded = false;
+    _initHouseToggles();
+
     setupChips(els.languageChips, function (v) {
         // Session-only switch — not persisted. On the next full-page reload
         // the UI resolves back to the Home Assistant language (#152).
@@ -970,6 +1040,9 @@
             send('admin_connect', {});
             // Configure narration up-front so pre-game lobby joins narrate (#281).
             _pushTtsConfig();
+            // Same for the house effects (#494) — lobby-time, so they work
+            // before start_game.
+            _pushHouseConfig();
         };
 
         ws.onmessage = function (evt) {
@@ -1120,6 +1193,14 @@
             // Fallback for an older server that doesn't send the lists on the
             // admin frame: now that the token is stored, refetch over HTTP once.
             _loadTtsEntities(_readTtsConfig());
+        }
+        // House Plays Along entity lists (#494) ride the same admin-connect
+        // frame — {lights, media_players, scenes}, each item {entity_id,
+        // friendly_name}. Same one-shot-guard + HTTP fallback as the TTS lists.
+        if (msg.house_entities && _houseEls && _houseEls.lightList) {
+            _populateHouseEntities(msg.house_entities, _readHouseConfig());
+        } else if (msg.admin_session_token && !_houseEntitiesLoaded && _houseEls && _houseEls.lightList) {
+            _loadHouseEntities(_readHouseConfig());
         }
         if (msg.players) renderLobbyPlayers(msg.players);
 
@@ -1666,7 +1747,10 @@
     // Fill a <select> with entity options, preserving (and restoring) the saved
     // selection. Graceful empty/error fallback: a single disabled "no entities"
     // option so the host knows to configure entities in HA (Beatify pattern).
-    function _populateEntitySelect(sel, entities, savedValue) {
+    // `noneKey` overrides the i18n key of that fallback option (the House panel
+    // (#494) passes its own); it defaults to the TTS key so the #281 callers
+    // keep working unchanged.
+    function _populateEntitySelect(sel, entities, savedValue, noneKey) {
         if (!sel) return;
         // The leading "Use default" option is authored in admin.html; keep it
         // and rebuild only the entity options after it.
@@ -1675,7 +1759,7 @@
             var none = document.createElement('option');
             none.value = '';
             none.disabled = true;
-            none.textContent = _t('setup.tts.noentities');
+            none.textContent = _t(noneKey || 'setup.tts.noentities');
             sel.appendChild(none);
             sel.value = '';
             return;
@@ -1754,6 +1838,325 @@
         _loadTtsEntities(cfg);
     }
 
+    // ---- House Plays Along (#494), Variant D "Presets" ----
+    // State (HOUSE_STORAGE_KEY / HOUSE_PRESETS / HOUSE_DEFAULTS / _houseEls / …)
+    // is declared earlier — before _initHouseToggles() runs at init.
+
+    function _loadHouseConfig() {
+        var cfg = {
+            enabled: HOUSE_DEFAULTS.enabled,
+            preset: HOUSE_DEFAULTS.preset,
+            light_entities: HOUSE_DEFAULTS.light_entities.slice(),
+            media_player: HOUSE_DEFAULTS.media_player,
+            winner_scene_entity: HOUSE_DEFAULTS.winner_scene_entity,
+        };
+        HOUSE_EFFECT_KEYS.forEach(function (k) { cfg[k] = HOUSE_DEFAULTS[k]; });
+        try {
+            var raw = localStorage.getItem(HOUSE_STORAGE_KEY);
+            if (raw) {
+                var saved = JSON.parse(raw);
+                if (saved && typeof saved === 'object') {
+                    if (typeof saved.enabled === 'boolean') cfg.enabled = saved.enabled;
+                    HOUSE_EFFECT_KEYS.forEach(function (k) {
+                        if (typeof saved[k] === 'boolean') cfg[k] = saved[k];
+                    });
+                    if (Array.isArray(saved.light_entities)) {
+                        cfg.light_entities = saved.light_entities.filter(function (e) {
+                            return typeof e === 'string' && e;
+                        });
+                    }
+                    if (typeof saved.media_player === 'string') cfg.media_player = saved.media_player;
+                    if (typeof saved.winner_scene_entity === 'string') {
+                        cfg.winner_scene_entity = saved.winner_scene_entity;
+                    }
+                }
+            }
+        } catch (e) { /* malformed/unavailable storage — fall back to defaults */ }
+        // The stored `preset` is never trusted: it is derived from the toggles,
+        // so a hand-edited storage entry can't show a preset that doesn't match.
+        cfg.preset = _detectHousePreset(cfg);
+        return cfg;
+    }
+
+    function _saveHouseConfig() {
+        var cfg = _readHouseConfig();
+        _houseSaved = cfg;
+        try {
+            localStorage.setItem(HOUSE_STORAGE_KEY, JSON.stringify(cfg));
+        } catch (e) { /* storage unavailable — preference is session-only */ }
+        // Push to the server too, so the effects are configured during the
+        // pre-game lobby (before start_game) (#494).
+        _pushHouseConfig(cfg);
+        _syncHouseChildState();
+    }
+
+    // Send the current house config to the server (no-op if the socket isn't
+    // open yet — onopen re-sends after admin_connect).
+    function _pushHouseConfig(cfg) {
+        send('configure_house', cfg || _readHouseConfig());
+    }
+
+    // Dim + disable everything below the master switch when it is off (same
+    // .is-disabled pattern as _syncTtsChildState): presets, the advanced
+    // section and the entity pickers.
+    function _syncHouseChildState() {
+        var on = _houseEls.enable ? !!_houseEls.enable.checked : false;
+        var sub = _houseEls.children;
+        if (sub) {
+            sub.classList.toggle('is-disabled', !on);
+            sub.querySelectorAll('input, select, button').forEach(function (el) {
+                el.disabled = !on;
+            });
+        }
+    }
+
+    // Which preset (if any) does this exact set of effect toggles match?
+    // Returns 'custom' when it matches none.
+    function _detectHousePreset(cfg) {
+        var names = Object.keys(HOUSE_PRESETS);
+        for (var i = 0; i < names.length; i++) {
+            var map = HOUSE_PRESETS[names[i]];
+            var hit = HOUSE_EFFECT_KEYS.every(function (k) {
+                return !!cfg[k] === !!map[k];
+            });
+            if (hit) return names[i];
+        }
+        return 'custom';
+    }
+
+    // Highlight the segment for `preset` ('custom' → none highlighted) and
+    // swap the one-line hint under the control. The hint keeps a live
+    // data-i18n attribute so a mid-session language switch re-translates it.
+    function _setHousePresetActive(preset) {
+        _housePreset = preset;
+        if (_houseEls.presets) {
+            _houseEls.presets.querySelectorAll('.setup-house-preset').forEach(function (btn) {
+                var isOn = btn.dataset.preset === preset;
+                btn.classList.toggle('is-active', isOn);
+                btn.setAttribute('aria-pressed', isOn ? 'true' : 'false');
+            });
+        }
+        var hintKey = HOUSE_PRESET_HINTS[preset] || HOUSE_PRESET_HINTS.custom;
+        if (_houseEls.presetHint) {
+            _houseEls.presetHint.setAttribute('data-i18n', hintKey);
+            _houseEls.presetHint.textContent = _t(hintKey);
+        }
+    }
+
+    // Tapping a preset writes the WHOLE effect-toggle set. The entity pickers
+    // are untouched — a preset only ever decides which effects fire.
+    function _applyHousePreset(preset) {
+        var map = HOUSE_PRESETS[preset];
+        if (!map) return;
+        HOUSE_EFFECT_KEYS.forEach(function (k) {
+            if (_houseEls[k]) _houseEls[k].checked = !!map[k];
+        });
+        _setHousePresetActive(preset);
+        _saveHouseConfig();
+    }
+
+    // Any manual toggle in the advanced section re-derives the preset — which
+    // is 'custom' unless the host happened to land exactly on a preset's map.
+    // We never write toggles back here, so a manual choice is never overwritten.
+    function _onHouseEffectChange() {
+        var effects = {};
+        HOUSE_EFFECT_KEYS.forEach(function (k) {
+            effects[k] = _houseEls[k] ? !!_houseEls[k].checked : !!HOUSE_DEFAULTS[k];
+        });
+        _setHousePresetActive(_detectHousePreset(effects));
+        _saveHouseConfig();
+    }
+
+    function _toggleHouseAdvanced(force) {
+        var btn = _houseEls.advBtn;
+        var panel = _houseEls.advanced;
+        if (!btn || !panel) return;
+        var open = (force === undefined)
+            ? btn.getAttribute('aria-expanded') !== 'true'
+            : !!force;
+        btn.setAttribute('aria-expanded', open ? 'true' : 'false');
+        panel.hidden = !open;
+    }
+
+    function _readHouseConfig() {
+        var saved = _houseSaved || HOUSE_DEFAULTS;
+        var cfg = {
+            enabled: _houseEls.enable ? !!_houseEls.enable.checked : HOUSE_DEFAULTS.enabled,
+            // Frontend-only — the backend ignores it.
+            preset: _housePreset,
+            // Until the pickers have been populated from the server they hold
+            // no options yet, so read through to the persisted selection rather
+            // than reporting an empty one (which would mean "use the
+            // config-entry default" and silently drop the host's choice).
+            light_entities: _houseLightsRendered
+                ? _readHouseLightEntities()
+                : (saved.light_entities || []).slice(),
+            media_player: _houseEntitiesLoaded && _houseEls.speaker
+                ? _houseEls.speaker.value
+                : saved.media_player,
+            winner_scene_entity: _houseEntitiesLoaded && _houseEls.scene
+                ? _houseEls.scene.value
+                : saved.winner_scene_entity,
+        };
+        HOUSE_EFFECT_KEYS.forEach(function (k) {
+            cfg[k] = _houseEls[k] ? !!_houseEls[k].checked : !!HOUSE_DEFAULTS[k];
+        });
+        return cfg;
+    }
+
+    function _readHouseLightEntities() {
+        var box = _houseEls.lightList;
+        if (!box) return [];
+        var out = [];
+        box.querySelectorAll('input[type="checkbox"]').forEach(function (cb) {
+            if (cb.checked) out.push(cb.value);
+        });
+        return out;
+    }
+
+    // Multi-choice light picker: a scrollable checkbox list (a native
+    // <select multiple> is miserable on a phone). Uses the shared
+    // .toggle-compact / .toggle-switch-compact switch markup so it reads as
+    // part of the same panel.
+    function _renderHouseLightList(lights, savedValue) {
+        var box = _houseEls.lightList;
+        if (!box) return;
+        var selected = savedValue || [];
+        var on_ = _houseEls.enable ? !!_houseEls.enable.checked : false;
+        box.textContent = '';
+        if (!lights || !lights.length) {
+            var empty = document.createElement('div');
+            empty.className = 'setup-house-empty';
+            empty.setAttribute('data-i18n', 'setup.house.nolights');
+            empty.textContent = _t('setup.house.nolights');
+            box.appendChild(empty);
+            // A real (if empty) list is "rendered": the host has no lights, so
+            // an empty selection is the truth. A failed fetch passes null and
+            // leaves the flag alone, so the saved selection survives.
+            _houseLightsRendered = Array.isArray(lights);
+            return;
+        }
+        lights.forEach(function (ent, i) {
+            var cbId = 'house-light-cb-' + i;
+            var label = document.createElement('label');
+            label.className = 'toggle-compact setup-house-toggle setup-house-light';
+            label.setAttribute('for', cbId);
+            var cb = document.createElement('input');
+            cb.type = 'checkbox';
+            cb.id = cbId;
+            cb.value = ent.entity_id;
+            cb.checked = selected.indexOf(ent.entity_id) !== -1;
+            cb.disabled = !on_;
+            var sw = document.createElement('span');
+            sw.className = 'toggle-switch-compact';
+            sw.setAttribute('aria-hidden', 'true');
+            var txt = document.createElement('span');
+            txt.className = 'toggle-label';
+            txt.textContent = ent.friendly_name || ent.entity_id;
+            txt.title = ent.entity_id;
+            label.appendChild(cb);
+            label.appendChild(sw);
+            label.appendChild(txt);
+            on(cb, 'change', _saveHouseConfig);
+            box.appendChild(label);
+        });
+        _houseLightsRendered = true;
+    }
+
+    // payload = {lights, media_players, scenes}, each item {entity_id,
+    // friendly_name} — straight off the admin-connect frame or the HTTP
+    // fallback endpoint.
+    function _populateHouseEntities(payload, cfg) {
+        var data = payload || {};
+        _renderHouseLightList(data.lights || [], cfg.light_entities);
+        _houseEntitiesLoaded = true;
+        _populateEntitySelect(_houseEls.speaker, data.media_players || [], cfg.media_player, 'setup.house.noentities');
+        _populateEntitySelect(_houseEls.scene, data.scenes || [], cfg.winner_scene_entity, 'setup.house.noentities');
+        _syncHouseChildState();
+    }
+
+    // HTTP fallback for an older server that doesn't put house_entities on the
+    // admin frame. Admin-token gated like /api/quizify/tts-entities (#356).
+    function _loadHouseEntities(cfg) {
+        var _tok = sessionStorage.getItem('quizify_admin_session_token');
+        var _url = '/api/quizify/house-entities'
+            + (_tok ? '?token=' + encodeURIComponent(_tok) : '');
+        fetch(_url)
+            .then(function (resp) { return resp.ok ? resp.json() : null; })
+            .then(function (data) {
+                if (!data) {
+                    // No token yet (401) or an error — show the "none found"
+                    // fallbacks WITHOUT marking loaded, so the refetch in
+                    // handleGameState retries once the admin token arrives.
+                    _renderHouseLightList(null, cfg.light_entities);
+                    _populateEntitySelect(_houseEls.speaker, null, cfg.media_player, 'setup.house.noentities');
+                    _populateEntitySelect(_houseEls.scene, null, cfg.winner_scene_entity, 'setup.house.noentities');
+                    return;
+                }
+                _populateHouseEntities(data, cfg);
+            })
+            .catch(function (e) {
+                console.warn('[quizify] house-entities fetch failed:', e);
+                _renderHouseLightList(null, cfg.light_entities);
+                _populateEntitySelect(_houseEls.speaker, null, cfg.media_player, 'setup.house.noentities');
+                _populateEntitySelect(_houseEls.scene, null, cfg.winner_scene_entity, 'setup.house.noentities');
+            });
+    }
+
+    function _initHouseToggles() {
+        _houseEls = {
+            enable: document.getElementById('house-enable-toggle'),
+            children: document.getElementById('house-children'),
+            presets: document.getElementById('house-presets'),
+            presetHint: document.getElementById('house-preset-hint'),
+            advBtn: document.getElementById('house-advanced-btn'),
+            advanced: document.getElementById('house-advanced'),
+            lightList: document.getElementById('house-light-list'),
+            speaker: document.getElementById('house-speaker-select'),
+            scene: document.getElementById('house-scene-select'),
+            light_question: document.getElementById('house-light-question'),
+            light_countdown: document.getElementById('house-light-countdown'),
+            light_reveal: document.getElementById('house-light-reveal'),
+            light_streak: document.getElementById('house-light-streak'),
+            light_winner: document.getElementById('house-light-winner'),
+            winner_scene: document.getElementById('house-winner-scene'),
+            sfx_correct: document.getElementById('house-sfx-correct'),
+            sfx_wrong: document.getElementById('house-sfx-wrong'),
+            sfx_streak: document.getElementById('house-sfx-streak'),
+            sfx_winner: document.getElementById('house-sfx-winner'),
+        };
+        if (!_houseEls.enable) return;  // panel not on this page
+        var cfg = _loadHouseConfig();
+        _houseSaved = cfg;
+        _houseEls.enable.checked = cfg.enabled;
+        HOUSE_EFFECT_KEYS.forEach(function (k) {
+            if (_houseEls[k]) _houseEls[k].checked = !!cfg[k];
+        });
+        // Restore the preset the stored toggles resolve to (else 'custom').
+        _setHousePresetActive(cfg.preset);
+
+        on(_houseEls.enable, 'change', _saveHouseConfig);
+        HOUSE_EFFECT_KEYS.forEach(function (k) {
+            if (_houseEls[k]) on(_houseEls[k], 'change', _onHouseEffectChange);
+        });
+        if (_houseEls.presets) {
+            _houseEls.presets.querySelectorAll('.setup-house-preset').forEach(function (btn) {
+                on(btn, 'click', function () { _applyHousePreset(btn.dataset.preset); });
+            });
+        }
+        if (_houseEls.advBtn) {
+            on(_houseEls.advBtn, 'click', function () { _toggleHouseAdvanced(); });
+            _toggleHouseAdvanced(false);  // collapsed by default
+        }
+        [_houseEls.speaker, _houseEls.scene].forEach(function (sel) {
+            if (sel) on(sel, 'change', _saveHouseConfig);
+        });
+        // Reflect the master→children enabled/dimmed state.
+        _syncHouseChildState();
+        // Fetch + populate the entity pickers, restoring the saved selection.
+        _loadHouseEntities(cfg);
+    }
+
     function _buildStartGamePayload() {
         var categoryPayload = selectedCategory === 'mixed'
             ? null
@@ -1773,6 +2176,8 @@
             lightning_enabled: lightningEnabled,
             // TTS narration toggles (#281), read live from the inputs.
             tts: _readTtsConfig(),
+            // House Plays Along config (#494), read live from the inputs.
+            house: _readHouseConfig(),
         };
     }
 

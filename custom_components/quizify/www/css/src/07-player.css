@@ -1607,6 +1607,202 @@
 }
 
 /* ==========================================
+   House Plays Along — Variant D "Presets" (#494)
+   ==========================================
+   Same visual language as the TTS panel above: master switch as the
+   header, hairline divider, then everything else nested behind the
+   indent rail and dimmed when the master is off (.is-disabled, toggled
+   by admin.js _syncHouseChildState). New pieces: a 3-way preset
+   segmented control, an "Advanced" disclosure holding the ten per-effect
+   toggles, and a scrollable checkbox list for the multi-choice light
+   picker. Soft Parlor tokens only — no new colours. */
+.setup-house-toggle {
+    gap: 10px;
+}
+.setup-house-toggle .toggle-label {
+    font-size: 0.9rem;
+    color: var(--color-text-secondary);
+}
+.setup-house-master .toggle-label {
+    font-size: 1rem;
+    font-weight: 600;
+    color: var(--color-text-primary);
+}
+.setup-house-hint {
+    padding-left: 30px;
+    margin-top: 2px;
+    font-size: 0.82rem;
+    color: var(--color-text-muted);
+}
+.setup-house-divider {
+    height: 1px;
+    background: var(--color-border-light);
+    margin: 8px 0 8px 30px;
+}
+.setup-house-children {
+    padding-left: 12px;
+    border-left: 2px solid var(--color-border-light);
+    margin-left: 18px;
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+    min-width: 0;
+    transition: opacity 160ms ease;
+}
+.setup-house-children.is-disabled {
+    opacity: 0.4;
+    pointer-events: none;
+}
+
+/* Preset segmented control. Equal thirds; labels wrap rather than clip so
+   the longest locale string (DE "Gemütlich") never overflows at 390px. */
+.setup-house-presets {
+    display: flex;
+    align-items: stretch;
+    gap: 4px;
+    padding: 3px;
+    background: var(--color-bg-card-alt);
+    border: 1px solid var(--color-border-light);
+    border-radius: var(--radius-md);
+}
+.setup-house-preset {
+    flex: 1 1 0;
+    min-width: 0;
+    padding: 8px 4px;
+    font-family: inherit;
+    font-size: 0.82rem;
+    font-weight: 600;
+    line-height: 1.2;
+    text-align: center;
+    color: var(--color-text-muted);
+    background: transparent;
+    border: 0;
+    border-radius: var(--radius-md);
+    cursor: pointer;
+    transition: background 160ms ease, color 160ms ease;
+}
+.setup-house-preset.is-active {
+    color: var(--color-text-primary);
+    background: var(--color-bg-card);
+    box-shadow: inset 0 0 0 1px var(--color-accent-primary);
+}
+.setup-house-preset:focus-visible {
+    outline: 2px solid var(--color-accent-primary);
+    outline-offset: 1px;
+}
+.setup-house-preset-hint {
+    font-size: 0.82rem;
+    color: var(--color-text-muted);
+}
+
+/* Advanced disclosure (collapsed by default) */
+.setup-house-adv-btn {
+    display: flex;
+    align-items: center;
+    gap: 6px;
+    align-self: flex-start;
+    padding: 4px 0;
+    font-family: inherit;
+    font-size: 0.82rem;
+    font-weight: 600;
+    color: var(--color-text-muted);
+    background: none;
+    border: 0;
+    cursor: pointer;
+}
+.setup-house-adv-btn:focus-visible {
+    outline: 2px solid var(--color-accent-primary);
+    outline-offset: 2px;
+    border-radius: var(--radius-md);
+}
+.setup-house-adv-caret {
+    width: 0;
+    height: 0;
+    border-top: 4px solid transparent;
+    border-bottom: 4px solid transparent;
+    border-left: 6px solid currentColor;
+    transition: transform 160ms ease;
+}
+.setup-house-adv-btn[aria-expanded="true"] .setup-house-adv-caret {
+    transform: rotate(90deg);
+}
+.setup-house-advanced {
+    display: flex;
+    flex-direction: column;
+    gap: 2px;
+}
+.setup-house-advanced[hidden] {
+    display: none;
+}
+.setup-house-subhead {
+    margin-top: 6px;
+    font-size: 0.72rem;
+    font-weight: 700;
+    letter-spacing: 0.06em;
+    text-transform: uppercase;
+    color: var(--color-text-muted);
+}
+.setup-house-subhead:first-child {
+    margin-top: 0;
+}
+
+/* Entity pickers. The light picker is a multi-choice checkbox list in a
+   scroll box so a house with 30 lights can't blow up the page. */
+.setup-house-select {
+    display: flex;
+    flex-direction: column;
+    gap: 4px;
+    min-width: 0;
+}
+.setup-house-select-label {
+    font-size: 0.82rem;
+    color: var(--color-text-muted);
+}
+.setup-house-fieldset {
+    display: flex;
+    flex-direction: column;
+    gap: 4px;
+    min-width: 0;
+    padding: 0;
+    margin: 0;
+    border: 0;
+}
+.setup-house-fieldset > legend {
+    padding: 0;
+    margin-bottom: 4px;
+}
+.setup-house-lightlist {
+    display: flex;
+    flex-direction: column;
+    gap: 4px;
+    max-height: 168px;
+    overflow-y: auto;
+    -webkit-overflow-scrolling: touch;
+    padding: 8px 10px;
+    background: var(--color-bg-card);
+    border: 1px solid var(--color-border-light);
+    border-radius: var(--radius-md);
+}
+/* Long friendly names must ellipsize, never widen the row (the switch is
+   flex-shrink:0 so it stays a switch). */
+.setup-house-light {
+    min-width: 0;
+}
+.setup-house-light .toggle-switch-compact {
+    flex-shrink: 0;
+}
+.setup-house-light .toggle-label {
+    min-width: 0;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+}
+.setup-house-empty {
+    font-size: 0.82rem;
+    color: var(--color-text-muted);
+}
+
+/* ==========================================
    Player Lobby — variant B (You + the Room) + D (Rules)
    ==========================================
    Hero with mega avatar + name + DU BIST DRIN tag confirms identity

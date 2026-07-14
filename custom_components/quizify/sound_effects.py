@@ -35,7 +35,7 @@ from __future__ import annotations
 import contextlib
 import logging
 from pathlib import Path
-from typing import TYPE_CHECKING
+from typing import TYPE_CHECKING, Any
 
 from .game_events import (
     EVENT_ANSWER_REVEALED,
@@ -84,6 +84,7 @@ class QuizifySoundEffects:
         media_player_entity_id: str | None,
         game_state: QuizifyGameState,
         cue_urls: dict[str, str | None],
+        enabled: bool = True,
     ) -> None:
         self._hass = hass
         self._media_player_entity_id = (media_player_entity_id or "").strip() or None
@@ -100,9 +101,124 @@ class QuizifySoundEffects:
         self._default_urls: dict[str, str] = {}
         self._event_unsubs: list[Callable[[], None]] = []
 
+        # --- "House Plays Along" runtime config (#494 Phase 4) ---------------
+        # Master switch in two layers:
+        #
+        # * ``_enabled`` — the config-entry value (CONF_HOUSE_EVENTS_ENABLED).
+        #   The constructor default is True because the sole production caller
+        #   (__init__) always passes the resolved option explicitly; the product
+        #   "off by default" lives at the config layer, not here — the same
+        #   posture QuizifyEventEmitter takes.
+        # * ``_enabled_override`` — the admin panel's runtime master. ``None``
+        #   means "the panel never touched it", so the config entry still wins.
+        #
+        # Two layers rather than one so BOTH survive an options reload: the
+        # panel's master is preserved across an unrelated options change (#411),
+        # while a host toggling CONF_HOUSE_EVENTS_ENABLED in the options UI on a
+        # never-panelled install still takes effect immediately.
+        self._enabled: bool = bool(enabled)
+        self._enabled_override: bool | None = None
+        # Per-cue toggles, all default ON so flipping the master on gives the
+        # full soundtrack out of the box (the TTS posture, #281).
+        self._cue_enabled: dict[str, bool] = dict.fromkeys(_CUE_KEYS, True)
+        # Per-game media_player override from the admin panel. ``None`` → fall
+        # back to the config-entry value. Stored normalized (empty → None) so a
+        # blank override never masks the fallback — mirrors
+        # ``tts.QuizifyTTSAnnouncer._active_media_player``.
+        self._media_player_override: str | None = None
+
+    # ------------------------------------------------------------------
+    # Per-game configuration (#494 Phase 4 — the "House Plays Along" panel)
+    # ------------------------------------------------------------------
+
+    def configure(
+        self,
+        *,
+        enabled: bool,
+        sfx_correct: bool = True,
+        sfx_wrong: bool = True,
+        sfx_streak: bool = True,
+        sfx_winner: bool = True,
+        media_player: str | None = None,
+    ) -> None:
+        """Apply the admin panel's house-SFX settings (#494 P4).
+
+        ``media_player`` is the panel's speaker picker. Non-empty → it wins for
+        this game; empty/``None`` → fall back to the config-entry value. Re-runs
+        ``attach_events`` so an override that makes the service configured for
+        the first time (no speaker in the options flow, one picked in the panel)
+        still gets its cue listeners — and its one-time bundled-default stat.
+        """
+        self._enabled_override = bool(enabled)
+        self._cue_enabled = {
+            "correct": bool(sfx_correct),
+            "wrong": bool(sfx_wrong),
+            "streak": bool(sfx_streak),
+            "winner": bool(sfx_winner),
+        }
+        self._media_player_override = (media_player or "").strip() or None
+        # Idempotent; a no-op when already attached or still unconfigured.
+        self.attach_events()
+
+    def export_runtime_config(self) -> dict[str, Any]:
+        """Snapshot the mutable per-game house-SFX config (#411 pattern).
+
+        An options reload rebuilds this instance from the config entry, which
+        would reset every cue toggle back to its default and drop the admin's
+        speaker override — silently wiping the panel's settings mid-game until
+        the next ``start_game``. ``__init__._update_listener`` snapshots the live
+        config here and restores it onto the fresh instance via
+        :meth:`restore_runtime_config`, exactly as it already does for the TTS
+        announcer (#411).
+        """
+        return {
+            "enabled_override": self._enabled_override,
+            "sfx_correct": self._cue_enabled["correct"],
+            "sfx_wrong": self._cue_enabled["wrong"],
+            "sfx_streak": self._cue_enabled["streak"],
+            "sfx_winner": self._cue_enabled["winner"],
+            "media_player_override": self._media_player_override,
+        }
+
+    def restore_runtime_config(self, snapshot: dict[str, Any] | None) -> None:
+        """Restore a snapshot from :meth:`export_runtime_config` (#411 pattern).
+
+        Defensive: a falsy/empty snapshot is a no-op, and each field falls back
+        to the current value when absent, so a partial snapshot never clobbers
+        an unrelated default. ``enabled_override`` is tri-state
+        (True/False/None) so it is NOT coerced through ``bool()`` — that would
+        turn "the panel never set a master" into a hard False.
+        """
+        if not snapshot:
+            return
+        override = snapshot.get("enabled_override", self._enabled_override)
+        self._enabled_override = None if override is None else bool(override)
+        self._cue_enabled = {
+            cue: bool(snapshot.get(f"sfx_{cue}", self._cue_enabled[cue]))
+            for cue in _CUE_KEYS
+        }
+        self._media_player_override = (
+            snapshot.get("media_player_override", self._media_player_override) or None
+        )
+
+    @property
+    def _master_enabled(self) -> bool:
+        """The effective master: panel override if set, else the config entry."""
+        if self._enabled_override is None:
+            return self._enabled
+        return self._enabled_override
+
+    @property
+    def _active_media_player(self) -> str | None:
+        """Panel override if set, else the config-entry speaker."""
+        return self._media_player_override or self._media_player_entity_id
+
     @property
     def is_configured(self) -> bool:
-        return self._hass is not None and bool(self._media_player_entity_id)
+        # Deliberately NOT gated on ``_enabled``: the master silences the cues at
+        # play time (see ``_play_cue``) rather than tearing down the listeners,
+        # so the panel can flip it back on mid-game without a re-attach.
+        return self._hass is not None and bool(self._active_media_player)
 
     def attach_events(self) -> None:
         """Subscribe to the milestone bus events and resolve bundled defaults.
@@ -207,12 +323,18 @@ class QuizifySoundEffects:
     def _play_cue(self, cue: str) -> None:
         """Resolve the source for ``cue`` and one-shot it on the media_player.
 
+        Gated on the master switch AND this cue's own panel toggle (#494 P4) —
+        the single choke point every event handler funnels through, so an off
+        cue is silent no matter which milestone triggered it.
+
         Source precedence: host override URL, else the bundled default (only if
         the file existed at attach time). No source → silent no-op. Held during
         TTS: if the shared speaker is already ``playing`` the cue is dropped so
         it never talks over a live announcement.
         """
         if not self.is_configured:
+            return
+        if not (self._master_enabled and self._cue_enabled.get(cue, True)):
             return
         url = self._cue_urls.get(cue) or self._default_urls.get(cue)
         if not url:
@@ -227,7 +349,7 @@ class QuizifySoundEffects:
             "media_player",
             "play_media",
             {
-                "entity_id": self._media_player_entity_id,
+                "entity_id": self._active_media_player,
                 "media_content_id": url,
                 "media_content_type": "music",
             },
@@ -242,7 +364,7 @@ class QuizifySoundEffects:
         cue proceeds.
         """
         hass = self._hass
-        entity = self._media_player_entity_id
+        entity = self._active_media_player
         if hass is None or entity is None:
             return False
         state = hass.states.get(entity)
@@ -255,5 +377,5 @@ class QuizifySoundEffects:
             service,
             data,
             f"Room SFX {domain}.{service} "
-            f"(media_player={self._media_player_entity_id})",
+            f"(media_player={self._active_media_player})",
         )

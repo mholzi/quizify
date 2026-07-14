@@ -346,6 +346,133 @@
                             </select>
                         </label>
                     </div>
+
+                    <!-- House Plays Along (#494), Variant D "Presets". Master
+                         switch (default OFF — silent until enabled), then a
+                         3-way preset segmented control that writes the whole
+                         effect-toggle set client-side, an "Advanced" disclosure
+                         with the ten per-effect toggles, and the entity pickers
+                         (party lights = multi-select checkbox list, speaker +
+                         winner scene = single selects).
+                         Persisted in localStorage ("quizify_house"), pushed to
+                         the server on every change and on ws.onopen
+                         (configure_house) so lobby-time effects work, and it
+                         also rides start_game (admin.js _readHouseConfig →
+                         _buildStartGamePayload → house). The `preset` key is
+                         frontend-only; the backend only ever sees resolved
+                         booleans. Empty entity pickers ([] / "") mean "fall back
+                         to the config-entry value". -->
+                    <div class="vF-step">
+                        <div class="vF-q"><span class="num">8</span><span data-i18n="setup.house.title">Does the house play along?</span></div>
+                        <label class="toggle-compact setup-house-toggle setup-house-master" for="house-enable-toggle">
+                            <input type="checkbox" id="house-enable-toggle">
+                            <span class="toggle-switch-compact" aria-hidden="true"></span>
+                            <span class="toggle-label" data-i18n="setup.house.enable">The house reacts to the game</span>
+                        </label>
+                        <div class="setup-house-hint" data-i18n="setup.house.hint">Lights and sound follow the game.</div>
+                        <div class="setup-house-divider" aria-hidden="true"></div>
+                        <div class="setup-house-children" id="house-children">
+                            <!-- Preset segmented control. Real buttons with
+                                 aria-pressed; admin.js _applyHousePreset writes
+                                 the ten effect toggles below. Touching any single
+                                 toggle drops the selection back to "custom". -->
+                            <div class="setup-house-presets" id="house-presets" role="group"
+                                 data-i18n-aria-label="setup.house.presetsLabel" aria-label="Effect preset">
+                                <button type="button" class="setup-house-preset" data-preset="cozy_glow"
+                                        aria-pressed="false" data-i18n="setup.house.presetCozy">Cozy Glow</button>
+                                <button type="button" class="setup-house-preset is-active" data-preset="game_show"
+                                        aria-pressed="true" data-i18n="setup.house.presetGameShow">Game Show</button>
+                                <button type="button" class="setup-house-preset" data-preset="events_only"
+                                        aria-pressed="false" data-i18n="setup.house.presetEvents">Events only</button>
+                            </div>
+                            <div class="setup-house-preset-hint" id="house-preset-hint"
+                                 data-i18n="setup.house.hintGameShow">Full show — lights and sound on every beat.</div>
+
+                            <!-- Advanced disclosure: the ten per-effect toggles,
+                                 grouped Lights / Sound. Collapsed by default. -->
+                            <button type="button" class="setup-house-adv-btn" id="house-advanced-btn"
+                                    aria-expanded="false" aria-controls="house-advanced">
+                                <span class="setup-house-adv-caret" aria-hidden="true"></span>
+                                <span data-i18n="setup.house.advanced">Customise single effects</span>
+                            </button>
+                            <div class="setup-house-advanced" id="house-advanced" hidden>
+                                <div class="setup-house-subhead" data-i18n="setup.house.groupLights">Lights</div>
+                                <label class="toggle-compact setup-house-toggle" for="house-light-question">
+                                    <input type="checkbox" id="house-light-question" checked>
+                                    <span class="toggle-switch-compact" aria-hidden="true"></span>
+                                    <span class="toggle-label" data-i18n="setup.house.lightQuestion">Colour shift on each question</span>
+                                </label>
+                                <label class="toggle-compact setup-house-toggle" for="house-light-countdown">
+                                    <input type="checkbox" id="house-light-countdown" checked>
+                                    <span class="toggle-switch-compact" aria-hidden="true"></span>
+                                    <span class="toggle-label" data-i18n="setup.house.lightCountdown">Pulse in the final countdown</span>
+                                </label>
+                                <label class="toggle-compact setup-house-toggle" for="house-light-reveal">
+                                    <input type="checkbox" id="house-light-reveal" checked>
+                                    <span class="toggle-switch-compact" aria-hidden="true"></span>
+                                    <span class="toggle-label" data-i18n="setup.house.lightReveal">Green or red flash on the reveal</span>
+                                </label>
+                                <label class="toggle-compact setup-house-toggle" for="house-light-streak">
+                                    <input type="checkbox" id="house-light-streak" checked>
+                                    <span class="toggle-switch-compact" aria-hidden="true"></span>
+                                    <span class="toggle-label" data-i18n="setup.house.lightStreak">Sparkle on an answer streak</span>
+                                </label>
+                                <label class="toggle-compact setup-house-toggle" for="house-light-winner">
+                                    <input type="checkbox" id="house-light-winner" checked>
+                                    <span class="toggle-switch-compact" aria-hidden="true"></span>
+                                    <span class="toggle-label" data-i18n="setup.house.lightWinner">Winner light show</span>
+                                </label>
+                                <label class="toggle-compact setup-house-toggle" for="house-winner-scene">
+                                    <input type="checkbox" id="house-winner-scene" checked>
+                                    <span class="toggle-switch-compact" aria-hidden="true"></span>
+                                    <span class="toggle-label" data-i18n="setup.house.winnerScene">Activate the winner scene</span>
+                                </label>
+                                <div class="setup-house-subhead" data-i18n="setup.house.groupSound">Sound</div>
+                                <label class="toggle-compact setup-house-toggle" for="house-sfx-correct">
+                                    <input type="checkbox" id="house-sfx-correct" checked>
+                                    <span class="toggle-switch-compact" aria-hidden="true"></span>
+                                    <span class="toggle-label" data-i18n="setup.house.sfxCorrect">Sound on a correct answer</span>
+                                </label>
+                                <label class="toggle-compact setup-house-toggle" for="house-sfx-wrong">
+                                    <input type="checkbox" id="house-sfx-wrong" checked>
+                                    <span class="toggle-switch-compact" aria-hidden="true"></span>
+                                    <span class="toggle-label" data-i18n="setup.house.sfxWrong">Sound on a wrong answer</span>
+                                </label>
+                                <label class="toggle-compact setup-house-toggle" for="house-sfx-streak">
+                                    <input type="checkbox" id="house-sfx-streak" checked>
+                                    <span class="toggle-switch-compact" aria-hidden="true"></span>
+                                    <span class="toggle-label" data-i18n="setup.house.sfxStreak">Sound on an answer streak</span>
+                                </label>
+                                <label class="toggle-compact setup-house-toggle" for="house-sfx-winner">
+                                    <input type="checkbox" id="house-sfx-winner" checked>
+                                    <span class="toggle-switch-compact" aria-hidden="true"></span>
+                                    <span class="toggle-label" data-i18n="setup.house.sfxWinner">Fanfare for the winner</span>
+                                </label>
+                            </div>
+
+                            <!-- Entity pickers. The light picker is a multi-choice,
+                                 so it is a scrollable checkbox list (a native
+                                 <select multiple> is miserable on a phone);
+                                 admin.js _renderHouseLightList fills it from the
+                                 admin-connect frame (msg.house_entities). -->
+                            <fieldset class="setup-house-fieldset">
+                                <legend class="setup-house-select-label" data-i18n="setup.house.lightsPicker">Party lights</legend>
+                                <div class="setup-house-lightlist" id="house-light-list"></div>
+                            </fieldset>
+                            <label class="setup-house-select" for="house-speaker-select">
+                                <span class="setup-house-select-label" data-i18n="setup.house.speaker">Speaker</span>
+                                <select id="house-speaker-select" class="setup-select">
+                                    <option value="" data-i18n="setup.house.usedefault">Use default</option>
+                                </select>
+                            </label>
+                            <label class="setup-house-select" for="house-scene-select">
+                                <span class="setup-house-select-label" data-i18n="setup.house.scene">Winner scene</span>
+                                <select id="house-scene-select" class="setup-select">
+                                    <option value="" data-i18n="setup.house.usedefault">Use default</option>
+                                </select>
+                            </label>
+                        </div>
+                    </div>
                 </div>
 
                 <button type="button" id="setup-apply-btn" class="btn btn-primary btn-lg btn-block">

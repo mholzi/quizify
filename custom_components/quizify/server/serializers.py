@@ -10,6 +10,28 @@ if TYPE_CHECKING:
     from custom_components.quizify.game.state import QuizifyGameState
 
 
+def _entity_options(hass: Any, domain: str) -> list[dict[str, str]]:
+    """Build the dropdown options for one entity domain.
+
+    Shared by :func:`snapshot_tts_entities` and :func:`snapshot_house_entities`
+    so both panels' dropdowns get the identical item shape and ordering:
+    ``{entity_id, friendly_name}``, sorted case-insensitively by friendly_name,
+    with the entity_id standing in when an entity carries no friendly_name.
+
+    Callers guarantee ``hass`` is not None (both snapshots short-circuit to
+    empty lists on the standalone dev server before reaching here).
+    """
+    items = [
+        {
+            "entity_id": state.entity_id,
+            "friendly_name": state.attributes.get("friendly_name", state.entity_id),
+        }
+        for state in hass.states.async_all(domain)
+    ]
+    items.sort(key=lambda e: e["friendly_name"].lower())
+    return items
+
+
 def snapshot_tts_entities(hass: Any) -> dict[str, list[dict[str, str]]]:
     """List the TTS engines + media players for the admin narration dropdowns.
 
@@ -30,20 +52,44 @@ def snapshot_tts_entities(hass: Any) -> dict[str, list[dict[str, str]]]:
     if hass is None:
         return {"tts": [], "media_players": []}
 
-    def _entities(domain: str) -> list[dict[str, str]]:
-        items = [
-            {
-                "entity_id": state.entity_id,
-                "friendly_name": state.attributes.get(
-                    "friendly_name", state.entity_id
-                ),
-            }
-            for state in hass.states.async_all(domain)
-        ]
-        items.sort(key=lambda e: e["friendly_name"].lower())
-        return items
+    return {
+        "tts": _entity_options(hass, "tts"),
+        "media_players": _entity_options(hass, "media_player"),
+    }
 
-    return {"tts": _entities("tts"), "media_players": _entities("media_player")}
+
+def snapshot_house_entities(hass: Any) -> dict[str, list[dict[str, str]]]:
+    """List the lights + media players + scenes for the "House Plays Along" panel.
+
+    Backs BOTH the admin-token-gated ``/api/quizify/house-entities`` HTTP
+    endpoint and the admin-connect WebSocket payload (#494 Phase 4). The WS
+    piggyback is the primary path for the same reason as the TTS lists (#502):
+    the token-gated fetch fires at page-init, *before* the admin token arrives
+    over the socket, so a lone HTTP path races the token and 401s — the panel's
+    entity pickers would then show "None found". The admin-connect frame is
+    already authenticated, so riding it removes the race entirely; the HTTP
+    endpoint stays for parity/refresh.
+
+    The three lists back the three per-panel entity overrides: the light
+    entities the choreography drives, the media_player the SFX cues play on,
+    and the scene fired for the winner finale. Each override is optional — an
+    empty selection falls back to the config-entry option (party lights /
+    media player / finale scene).
+
+    ``hass`` is None on the standalone dev server — all three lists come back
+    empty and the pickers show their "configure in HA" fallback.
+
+    Returns ``{"lights": [...], "media_players": [...], "scenes": [...]}`` where
+    each item is ``{entity_id, friendly_name}``, sorted by friendly_name.
+    """
+    if hass is None:
+        return {"lights": [], "media_players": [], "scenes": []}
+
+    return {
+        "lights": _entity_options(hass, "light"),
+        "media_players": _entity_options(hass, "media_player"),
+        "scenes": _entity_options(hass, "scene"),
+    }
 
 
 def build_game_status_response(

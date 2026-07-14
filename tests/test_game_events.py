@@ -408,7 +408,10 @@ def test_runtime_state_snapshot_roundtrip():
     game.phase = GamePhase.QUESTION_ACTIVE
     t._on_state_changed()  # sets _last_phase, fires game_started
     snap = t.export_runtime_state()
-    assert snap == {"last_phase": "QUESTION_ACTIVE"}
+    # ``enabled_override`` rides along since #494 P4 (the admin panel's runtime
+    # master). None here — this emitter was never configure()d by the panel, so
+    # the rebuilt instance still follows CONF_HOUSE_EVENTS_ENABLED.
+    assert snap == {"last_phase": "QUESTION_ACTIVE", "enabled_override": None}
 
     # A fresh emitter (options reload) that restores the snapshot must NOT
     # re-fire game_started when it sees the same active round again.

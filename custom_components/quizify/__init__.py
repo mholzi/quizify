@@ -23,6 +23,27 @@ _LOGGER = logging.getLogger(__name__)
 PLATFORMS: list[str] = ["sensor", "binary_sensor"]
 
 
+def _wire_house_consumers(
+    ws_handler: object, party_lights: object, sound_effects: object
+) -> None:
+    """Give the WS layer the live house-lights / house-SFX instances (#494 P4).
+
+    The admin "House Plays Along" panel pushes a resolved config dict down the
+    socket (``configure_house``, and again on ``start_game``); the WS handler
+    forwards it to these two consumers plus the event emitter. The setters are
+    optional so this module keeps working against a handler that doesn't expose
+    them yet — anything unwired simply stays on its config-entry defaults rather
+    than blowing up setup.
+    """
+    for name, consumer in (
+        ("set_party_lights", party_lights),
+        ("set_sound_effects", sound_effects),
+    ):
+        setter = getattr(ws_handler, name, None)
+        if callable(setter):
+            setter(consumer)
+
+
 async def async_setup_entry(hass: HomeAssistant, entry: ConfigEntry) -> bool:
     """Set up Quizify from a config entry.
 
@@ -324,11 +345,19 @@ async def async_setup_entry(hass: HomeAssistant, entry: ConfigEntry) -> bool:
     game_state.question_bank.set_avoid_recent_repeats(
         bool(options.get(CONF_AVOID_RECENT_REPEATS, DEFAULT_AVOID_RECENT_REPEATS))
     )
+    # The house-lights master defaults to the CONF_HOUSE_EVENTS_ENABLED option
+    # (off out of the box) — the admin "House Plays Along" panel overrides it per
+    # game via configure() (#494 P4). Only the event-driven ACCENTS are gated by
+    # it; the phase-driven ambient glow always follows the game.
+    house_enabled = bool(
+        options.get(CONF_HOUSE_EVENTS_ENABLED, DEFAULT_HOUSE_EVENTS_ENABLED)
+    )
     party_lights = QuizifyPartyLights(
         hass=hass,
         entity_ids=list(options.get(CONF_PARTY_LIGHT_ENTITIES) or []),
         game_state=game_state,
         finale_scene=options.get(CONF_FINALE_SCENE),
+        enabled=house_enabled,
     )
     party_lights.attach()
     # Accent choreography (#494 Phase 2): react to the quizify_* bus events on
@@ -363,9 +392,7 @@ async def async_setup_entry(hass: HomeAssistant, entry: ConfigEntry) -> bool:
     event_emitter = QuizifyEventEmitter(
         hass=hass,
         game_state=game_state,
-        enabled=options.get(
-            CONF_HOUSE_EVENTS_ENABLED, DEFAULT_HOUSE_EVENTS_ENABLED
-        ),
+        enabled=house_enabled,
     )
     event_emitter.attach()
     ws_handler.set_event_emitter(event_emitter)
@@ -385,8 +412,15 @@ async def async_setup_entry(hass: HomeAssistant, entry: ConfigEntry) -> bool:
             "streak": options.get(CONF_SFX_STREAK_URL) or None,
             "winner": options.get(CONF_SFX_WINNER_URL) or None,
         },
+        enabled=house_enabled,
     )
     sound_effects.attach_events()
+
+    # Hand the house consumers to the WS layer so the admin panel's
+    # ``configure_house`` message (and start_game) can drive them per game
+    # (#494 P4). Guarded: the setters live in the WS slice, so this stays inert
+    # if the handler predates them.
+    _wire_house_consumers(ws_handler, party_lights, sound_effects)
 
     hass.data[DOMAIN]["party_lights"] = party_lights
     hass.data[DOMAIN]["tts_announcer"] = tts_announcer
@@ -426,9 +460,17 @@ async def async_setup_entry(hass: HomeAssistant, entry: ConfigEntry) -> bool:
         # ``_enabled`` to False and drops the admin's per-game entity overrides,
         # which would silently kill narration mid-game until the next start_game.
         tts_snapshot = tts.export_runtime_config() if tts is not None else None
-        # Snapshot the emitter's phase tracking so a reload landing on round 1
-        # doesn't re-fire quizify_game_started (#366, same #411 rationale).
+        # Snapshot the emitter's phase tracking + master toggle so a reload
+        # landing on round 1 doesn't re-fire quizify_game_started (#366, same
+        # #411 rationale) and doesn't discard the panel's master override (#494).
         ev_snapshot = ev.export_runtime_state() if ev is not None else None
+        # Same #411 hazard for the two "House Plays Along" consumers (#494 P4):
+        # rebuilding them from the config entry resets every per-accent/per-cue
+        # toggle to its default and drops the admin panel's entity overrides,
+        # silently wiping the host's mid-game settings. Snapshot before teardown,
+        # restore onto the fresh instances below.
+        pl_snapshot = pl.export_runtime_config() if pl is not None else None
+        sfx_snapshot = sfx.export_runtime_config() if sfx is not None else None
         if pl is not None:
             pl.detach()
         if tts is not None:
@@ -439,12 +481,20 @@ async def async_setup_entry(hass: HomeAssistant, entry: ConfigEntry) -> bool:
             ev.detach()
         if sfx is not None:
             sfx.detach()
+        new_house_enabled = bool(
+            opts.get(CONF_HOUSE_EVENTS_ENABLED, DEFAULT_HOUSE_EVENTS_ENABLED)
+        )
         new_pl = QuizifyPartyLights(
             hass=_hass,
             entity_ids=list(opts.get(CONF_PARTY_LIGHT_ENTITIES) or []),
             game_state=game_state,
             finale_scene=opts.get(CONF_FINALE_SCENE),
+            enabled=new_house_enabled,
         )
+        # Carry the panel's house-lights config across the reload BEFORE
+        # attaching, so the restored entity override is already in place when
+        # attach_events() evaluates is_configured (#411 / #494 P4).
+        new_pl.restore_runtime_config(pl_snapshot)
         new_pl.attach()
         # Re-subscribe the accent choreography (#494) symmetrically — the old
         # pl.detach() above already dropped its listeners + cancelled any pulse.
@@ -468,19 +518,19 @@ async def async_setup_entry(hass: HomeAssistant, entry: ConfigEntry) -> bool:
         new_ev = QuizifyEventEmitter(
             hass=_hass,
             game_state=game_state,
-            enabled=opts.get(
-                CONF_HOUSE_EVENTS_ENABLED, DEFAULT_HOUSE_EVENTS_ENABLED
-            ),
+            enabled=new_house_enabled,
         )
-        # Carry the phase tracking across the reload so an in-flight game keeps
-        # its game_started dedupe (#366). Toggling the master switch in the
-        # options UI thus takes effect immediately, without an HA restart.
+        # Carry the phase tracking + the panel's master override across the
+        # reload so an in-flight game keeps its game_started dedupe (#366) and
+        # its house master (#494 P4). Toggling the master switch in the options
+        # UI still takes effect immediately when the panel never overrode it.
         new_ev.restore_runtime_state(ev_snapshot)
         new_ev.attach()
         # Rebuild room SFX from the fresh options (new override URLs, new
         # media_player). attach_events() re-stats the bundled defaults and
         # re-subscribes; the old sfx.detach() above already dropped its
-        # listeners. No phase callback, so no attach()/snapshot needed.
+        # listeners. No phase callback, so no attach() — but the panel's cue
+        # toggles + speaker override DO need to survive the rebuild (#494 P4).
         new_sfx = QuizifySoundEffects(
             hass=_hass,
             media_player_entity_id=opts.get(CONF_MEDIA_PLAYER_ENTITY) or None,
@@ -491,7 +541,9 @@ async def async_setup_entry(hass: HomeAssistant, entry: ConfigEntry) -> bool:
                 "streak": opts.get(CONF_SFX_STREAK_URL) or None,
                 "winner": opts.get(CONF_SFX_WINNER_URL) or None,
             },
+            enabled=new_house_enabled,
         )
+        new_sfx.restore_runtime_config(sfx_snapshot)
         new_sfx.attach_events()
         domain_data["party_lights"] = new_pl
         domain_data["tts_announcer"] = new_tts
@@ -502,6 +554,8 @@ async def async_setup_entry(hass: HomeAssistant, entry: ConfigEntry) -> bool:
         if handler is not None:
             handler.set_tts_announcer(new_tts)
             handler.set_event_emitter(new_ev)
+            # Re-point the WS layer at the fresh house consumers (#494 P4).
+            _wire_house_consumers(handler, new_pl, new_sfx)
         _LOGGER.info("Quizify options reloaded")
 
     entry.async_on_unload(entry.add_update_listener(_update_listener))

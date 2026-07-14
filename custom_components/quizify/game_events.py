@@ -90,6 +90,12 @@ class QuizifyEventEmitter:
         # (__init__) always passes the resolved option explicitly; the product
         # "off by default" lives at the config layer, not here.
         self._enabled = enabled
+        # The admin "House Plays Along" panel's runtime master (#494 P4).
+        # ``None`` means the panel never touched it, so the config-entry value
+        # above still wins — which is what keeps a host toggling
+        # CONF_HOUSE_EVENTS_ENABLED in the options UI working after a reload,
+        # while a panel-set master survives an unrelated options change (#411).
+        self._enabled_override: bool | None = None
         # Track the last phase we observed so phase-driven events fire only on
         # transitions, not on every state_callback flap. Mirrors the lights /
         # TTS observers. Survives an options reload via export/restore below.
@@ -100,11 +106,19 @@ class QuizifyEventEmitter:
         self._time_running_out_fired: bool = False
 
     @property
+    def _master_enabled(self) -> bool:
+        """The effective master: panel override if set, else the config entry."""
+        if self._enabled_override is None:
+            return self._enabled
+        return self._enabled_override
+
+    @property
     def is_configured(self) -> bool:
         # Configured == the master toggle is on AND we have a bus to fire on.
         # Unlike lights/TTS there is no per-entry entity to gate on, but the
-        # host must still opt in via CONF_HOUSE_EVENTS_ENABLED (default off).
-        return self._enabled and self._hass is not None
+        # host must still opt in via CONF_HOUSE_EVENTS_ENABLED (default off) —
+        # or via the admin panel's runtime master (#494 P4).
+        return self._master_enabled and self._hass is not None
 
     def attach(self) -> None:
         """Subscribe to game-state phase transitions. Idempotent."""
@@ -114,11 +128,31 @@ class QuizifyEventEmitter:
         self._game.unregister_state_callback(self._on_state_changed)
 
     # ------------------------------------------------------------------
+    # Per-game configuration (#494 Phase 4 — the "House Plays Along" panel)
+    # ------------------------------------------------------------------
+
+    def configure(self, enabled: bool) -> None:
+        """Override the config-entry master toggle at runtime (#494 P4).
+
+        The admin panel's master switch decides whether the house reacts at all;
+        this is how it reaches the event backbone without an options-flow round
+        trip.
+
+        There are deliberately NO per-event toggles here. The bus events are the
+        integration's public automation API (#366) — a host's own blueprints ride
+        them, and those must keep firing even when Quizify's OWN light/SFX
+        consumers are switched off. That asymmetry IS the panel's "events only"
+        preset: master on, every light/SFX toggle off → the bus stays live, the
+        house stays quiet.
+        """
+        self._enabled_override = bool(enabled)
+
+    # ------------------------------------------------------------------
     # Options-reload lifecycle (#411 pattern)
     # ------------------------------------------------------------------
 
     def export_runtime_state(self) -> dict[str, Any]:
-        """Snapshot the transient phase-tracking state (#411 pattern).
+        """Snapshot the transient phase-tracking state + master toggle (#411).
 
         An options reload rebuilds this emitter from scratch, which would reset
         ``_last_phase`` to ``None``. On its own that is mostly harmless (the
@@ -127,18 +161,30 @@ class QuizifyEventEmitter:
         ``quizify_game_started``. Snapshotting the last phase across the reload
         closes that gap, matching how the TTS announcer preserves its runtime
         config (#411).
+
+        ``enabled_override`` rides along for the same reason (#494 P4): the
+        rebuild reads the master from the config entry, which would silently
+        discard the admin panel's runtime master mid-game. Note it is the
+        OVERRIDE that is snapshotted, not the effective master — a ``None``
+        override means the panel never set one, so the rebuilt emitter correctly
+        picks up the (possibly just changed) CONF_HOUSE_EVENTS_ENABLED value
+        rather than being pinned to the old one.
         """
         return {
             "last_phase": self._last_phase.value
             if self._last_phase is not None
             else None,
+            "enabled_override": self._enabled_override,
         }
 
     def restore_runtime_state(self, snapshot: dict[str, Any] | None) -> None:
         """Restore a snapshot from :meth:`export_runtime_state` (#411 pattern).
 
-        Defensive: a falsy/empty snapshot is a no-op, and an unknown phase value
-        is ignored so a stale snapshot can never crash the rebuild.
+        Defensive: a falsy/empty snapshot is a no-op, an absent key falls back to
+        the current value, and an unknown phase value is ignored so a stale
+        snapshot can never crash the rebuild. ``enabled_override`` is tri-state
+        (True/False/None) so it is NOT coerced through ``bool()`` — that would
+        turn "the panel never set a master" into a hard False.
         """
         if not snapshot:
             return
@@ -148,6 +194,8 @@ class QuizifyEventEmitter:
                 self._last_phase = GamePhase(value)
             except ValueError:
                 _LOGGER.debug("Ignoring unknown phase in snapshot: %s", value)
+        override = snapshot.get("enabled_override", self._enabled_override)
+        self._enabled_override = None if override is None else bool(override)
 
     # ------------------------------------------------------------------
     # Phase-driven milestones (state-callback path)
@@ -328,8 +376,9 @@ class QuizifyEventEmitter:
         """
         # Single choke point for every path (phase-callback + notify_* WS
         # forwarders): the master toggle is enforced here, so an off emitter
-        # fires nothing regardless of which milestone triggered it.
-        if not self._enabled:
+        # fires nothing regardless of which milestone triggered it. Reads the
+        # EFFECTIVE master so the admin panel's runtime override lands (#494 P4).
+        if not self._master_enabled:
             return
         hass = self._hass
         if hass is None:
