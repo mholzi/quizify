@@ -29,7 +29,7 @@ from __future__ import annotations
 
 import asyncio
 import contextlib
-from typing import TYPE_CHECKING
+from typing import TYPE_CHECKING, Any
 
 from .game.state import GamePhase, QuizifyGameState
 from .game_events import (
@@ -167,6 +167,18 @@ _ACCENT_WINNER: list[tuple[object, float]] = [
 # sweep (above) is the finale's celebration instead.
 
 
+def _clean_entity_ids(entity_ids: list[str] | None) -> list[str]:
+    """Strip whitespace, drop empties, dedupe while keeping order."""
+    seen: set[str] = set()
+    cleaned: list[str] = []
+    for raw in entity_ids or []:
+        entity = (raw or "").strip()
+        if entity and entity not in seen:
+            seen.add(entity)
+            cleaned.append(entity)
+    return cleaned
+
+
 class QuizifyPartyLights:
     """Pushes phase-based light presets to HA light entities."""
 
@@ -176,17 +188,10 @@ class QuizifyPartyLights:
         entity_ids: list[str],
         game_state: QuizifyGameState,
         finale_scene: str | None = None,
+        enabled: bool = True,
     ) -> None:
         self._hass = hass
-        # Normalize: strip whitespace, drop empties, dedupe while keeping order.
-        seen: set[str] = set()
-        cleaned: list[str] = []
-        for e in entity_ids or []:
-            e = (e or "").strip()
-            if e and e not in seen:
-                seen.add(e)
-                cleaned.append(e)
-        self._entity_ids = cleaned
+        self._entity_ids = _clean_entity_ids(entity_ids)
         # Optional finale scene (#280). Activated alongside the winner sweep so
         # the host can drive a whole-room "victory" look (their own scene) on top
         # of the party lights. Cleaned: empty/whitespace → None (no-op).
@@ -199,9 +204,176 @@ class QuizifyPartyLights:
         self._event_unsubs: list[Callable[[], None]] = []
         self._pulse_task: asyncio.Task | None = None
 
+        # --- "House Plays Along" runtime config (#494 Phase 4) ---------------
+        # Master switch for the EVENT-DRIVEN ACCENTS only, in two layers:
+        #
+        # * ``_enabled`` — the config-entry value (CONF_HOUSE_EVENTS_ENABLED).
+        #   The constructor default is True because the sole production caller
+        #   (__init__) always passes the resolved option explicitly; the product
+        #   "off by default" lives at the config layer, not here — exactly the
+        #   posture QuizifyEventEmitter takes.
+        # * ``_enabled_override`` — the admin panel's runtime master. ``None``
+        #   means "the panel never touched it", so the config entry still wins.
+        #
+        # Two layers rather than one so BOTH survive an options reload: the
+        # panel's master is preserved across an unrelated options change (#411),
+        # while a host toggling CONF_HOUSE_EVENTS_ENABLED in the options UI on a
+        # never-panelled install still takes effect immediately.
+        self._enabled: bool = bool(enabled)
+        self._enabled_override: bool | None = None
+        # Per-accent toggles, all default ON so flipping the master on gives the
+        # full choreography out of the box (the TTS posture, #281).
+        self._light_question: bool = True
+        self._light_countdown: bool = True
+        self._light_reveal: bool = True
+        self._light_streak: bool = True
+        self._light_winner: bool = True
+        # Whether the winner sweep also activates the configured finale scene.
+        self._winner_scene: bool = True
+        # Per-game entity overrides from the admin panel. ``None`` → fall back to
+        # the construction-time config-entry values. Stored normalized (empty
+        # list / empty string → None) so a blank override never masks the
+        # fallback — mirrors ``tts.QuizifyTTSAnnouncer._active_tts_entity``.
+        self._entity_ids_override: list[str] | None = None
+        self._finale_scene_override: str | None = None
+
+    # ------------------------------------------------------------------
+    # Per-game configuration (#494 Phase 4 — the "House Plays Along" panel)
+    # ------------------------------------------------------------------
+
+    def configure(
+        self,
+        *,
+        enabled: bool,
+        light_question: bool = True,
+        light_countdown: bool = True,
+        light_reveal: bool = True,
+        light_streak: bool = True,
+        light_winner: bool = True,
+        winner_scene: bool = True,
+        light_entities: list[str] | None = None,
+        winner_scene_entity: str | None = None,
+    ) -> None:
+        """Apply the admin panel's house-lights settings (#494 P4).
+
+        Gates only the EVENT-DRIVEN ACCENTS. The phase-driven ambient recipes
+        (``_PHASE_LIGHT_RECIPES``) are deliberately untouched: they are the
+        resting colour of the room, owned by the game phase, not by the accent
+        choreography — turning the accents off should calm the room, not leave
+        it dark mid-question.
+
+        ``light_entities`` / ``winner_scene_entity`` are the panel's entity
+        pickers. Non-empty → they win for this game; empty/``None`` → fall back
+        to the config-entry values. Re-runs ``attach_events`` so an override that
+        makes the integration configured for the first time (no lights in the
+        options flow, lights picked in the panel) still gets its accent
+        listeners.
+        """
+        self._enabled_override = bool(enabled)
+        self._light_question = bool(light_question)
+        self._light_countdown = bool(light_countdown)
+        self._light_reveal = bool(light_reveal)
+        self._light_streak = bool(light_streak)
+        self._light_winner = bool(light_winner)
+        self._winner_scene = bool(winner_scene)
+        self._entity_ids_override = _clean_entity_ids(light_entities) or None
+        self._finale_scene_override = (winner_scene_entity or "").strip() or None
+        # Idempotent; a no-op when already attached or still unconfigured.
+        self.attach_events()
+
+    def export_runtime_config(self) -> dict[str, Any]:
+        """Snapshot the mutable per-game house-lights config (#411 pattern).
+
+        An options reload rebuilds this instance from the config entry, which
+        would reset every toggle back to its default and drop the admin's entity
+        overrides — silently wiping the panel's settings mid-game until the next
+        ``start_game``. ``__init__._update_listener`` snapshots the live config
+        here and restores it onto the fresh instance via
+        :meth:`restore_runtime_config`, exactly as it already does for the TTS
+        announcer (#411).
+
+        Note it snapshots ``_enabled_override`` — the PANEL's master — not the
+        effective one. A ``None`` override means the panel never touched the
+        master, so the rebuilt instance correctly picks up the (possibly just
+        changed) CONF_HOUSE_EVENTS_ENABLED value from the config entry instead of
+        being pinned to the old one.
+
+        ``_last_phase`` is deliberately NOT snapshotted: letting it reset to
+        ``None`` makes the next state change re-apply the ambient recipe, which
+        re-syncs the bulbs after a reload. Carrying it over would suppress that.
+        """
+        return {
+            "enabled_override": self._enabled_override,
+            "light_question": self._light_question,
+            "light_countdown": self._light_countdown,
+            "light_reveal": self._light_reveal,
+            "light_streak": self._light_streak,
+            "light_winner": self._light_winner,
+            "winner_scene": self._winner_scene,
+            "entity_ids_override": self._entity_ids_override,
+            "finale_scene_override": self._finale_scene_override,
+        }
+
+    def restore_runtime_config(self, snapshot: dict[str, Any] | None) -> None:
+        """Restore a snapshot from :meth:`export_runtime_config` (#411 pattern).
+
+        Defensive: a falsy/empty snapshot is a no-op, and each field falls back
+        to the current value when absent, so a partial snapshot never clobbers
+        an unrelated default. ``enabled_override`` is tri-state (True/False/None)
+        so it is NOT coerced through ``bool()`` — that would turn "the panel never
+        set a master" into a hard False and pin the master off.
+        """
+        if not snapshot:
+            return
+        override = snapshot.get("enabled_override", self._enabled_override)
+        self._enabled_override = None if override is None else bool(override)
+        self._light_question = bool(
+            snapshot.get("light_question", self._light_question)
+        )
+        self._light_countdown = bool(
+            snapshot.get("light_countdown", self._light_countdown)
+        )
+        self._light_reveal = bool(snapshot.get("light_reveal", self._light_reveal))
+        self._light_streak = bool(snapshot.get("light_streak", self._light_streak))
+        self._light_winner = bool(snapshot.get("light_winner", self._light_winner))
+        self._winner_scene = bool(snapshot.get("winner_scene", self._winner_scene))
+        self._entity_ids_override = (
+            _clean_entity_ids(
+                snapshot.get("entity_ids_override", self._entity_ids_override)
+            )
+            or None
+        )
+        self._finale_scene_override = (
+            snapshot.get("finale_scene_override", self._finale_scene_override) or None
+        )
+
+    # ------------------------------------------------------------------
+    # Entity resolution — override wins, else the config-entry value
+    # ------------------------------------------------------------------
+
+    @property
+    def _master_enabled(self) -> bool:
+        """The effective accent master: panel override if set, else the entry."""
+        if self._enabled_override is None:
+            return self._enabled
+        return self._enabled_override
+
+    @property
+    def _active_entity_ids(self) -> list[str]:
+        """Panel override if set, else the config-entry lights."""
+        return self._entity_ids_override or self._entity_ids
+
+    @property
+    def _active_finale_scene(self) -> str | None:
+        """Panel override if set, else the config-entry finale scene."""
+        return self._finale_scene_override or self._finale_scene
+
     @property
     def is_configured(self) -> bool:
-        return self._hass is not None and bool(self._entity_ids)
+        # Deliberately NOT gated on ``_enabled``: the master only silences the
+        # event-driven accents, while the ambient phase glow (which also checks
+        # is_configured) keeps following the game.
+        return self._hass is not None and bool(self._active_entity_ids)
 
     def attach(self) -> None:
         self._game.register_state_callback(self._on_state_changed)
@@ -268,12 +440,12 @@ class QuizifyPartyLights:
             and self._game.game_id is None
         ):
             self._call("light", "turn_off", {
-                "entity_id": self._entity_ids,
+                "entity_id": self._active_entity_ids,
                 "transition": 1.5,
             })
             return
 
-        data: dict[str, object] = {"entity_id": self._entity_ids, **recipe}
+        data: dict[str, object] = {"entity_id": self._active_entity_ids, **recipe}
         self._call("light", "turn_on", data)
 
     def _call(self, domain: str, service: str, data: dict[str, object]) -> None:
@@ -282,7 +454,7 @@ class QuizifyPartyLights:
             domain,
             service,
             data,
-            f"Party lights {domain}.{service} (entities={self._entity_ids})",
+            f"Party lights {domain}.{service} (entities={self._active_entity_ids})",
         )
 
     # ------------------------------------------------------------------
@@ -291,6 +463,8 @@ class QuizifyPartyLights:
 
     def _on_question_shown(self, event: Event) -> None:  # noqa: ARG002
         """Brightness bump on the live coral when a question appears."""
+        if not (self._master_enabled and self._light_question):
+            return
         self._start_pulse(_ACCENT_QUESTION_SHOWN)
 
     def _on_time_running_out(self, event: Event) -> None:  # noqa: ARG002
@@ -299,6 +473,8 @@ class QuizifyPartyLights:
         Brightness-only, so it breathes on whatever colour the live phase is
         showing, then settles back to the baseline (#280).
         """
+        if not (self._master_enabled and self._light_countdown):
+            return
         self._start_pulse(_ACCENT_COUNTDOWN)
 
     def _on_answer_revealed(self, event: Event) -> None:
@@ -307,6 +483,8 @@ class QuizifyPartyLights:
         Guards ``total_players == 0`` (no div-by-zero) → treated as the minority
         case (amber). A strict majority (> half) flips it green.
         """
+        if not (self._master_enabled and self._light_reveal):
+            return
         data = event.data or {}
         correct = data.get("correct_count") or 0
         total = data.get("total_players") or 0
@@ -315,6 +493,8 @@ class QuizifyPartyLights:
 
     def _on_streak_milestone(self, event: Event) -> None:  # noqa: ARG002
         """Double-pulse bright coral to celebrate a hot streak."""
+        if not (self._master_enabled and self._light_streak):
+            return
         self._start_pulse(_ACCENT_STREAK)
 
     def _on_winner_decided(self, event: Event) -> None:  # noqa: ARG002
@@ -323,21 +503,32 @@ class QuizifyPartyLights:
         When the host has configured a finale scene (#280), also fire it
         alongside the sweep so a whole-room "victory" look layers on top of the
         party lights. No-op when no scene is set.
+
+        The sweep and the scene have SEPARATE toggles (``light_winner`` /
+        ``winner_scene``): the panel lets a host keep their own hand-built
+        victory scene while switching Quizify's own bulb sweep off, and vice
+        versa. Both still sit under the master.
         """
-        self._start_pulse(_ACCENT_WINNER)
+        if not self._master_enabled:
+            return
+        if self._light_winner:
+            self._start_pulse(_ACCENT_WINNER)
         self._activate_finale_scene()
 
     def _activate_finale_scene(self) -> None:
         """Turn on the configured finale scene, if any (#280).
 
         Fire-and-forget via ``scene.turn_on`` through the same ``_call`` path the
-        light services use. No-op when no scene is configured or the integration
-        isn't configured (no hass / no lights), so a bare install never touches
-        an unset scene.
+        light services use. No-op when no scene is configured, when the panel's
+        ``winner_scene`` toggle is off, or when the integration isn't configured
+        (no hass / no lights), so a bare install never touches an unset scene.
         """
-        if self._finale_scene is None or not self.is_configured:
+        if not (self._master_enabled and self._winner_scene):
             return
-        self._call("scene", "turn_on", {"entity_id": self._finale_scene})
+        scene = self._active_finale_scene
+        if scene is None or not self.is_configured:
+            return
+        self._call("scene", "turn_on", {"entity_id": scene})
 
     # ------------------------------------------------------------------
     # Accent choreography — pulse scheduling
@@ -356,7 +547,9 @@ class QuizifyPartyLights:
         recipe = _PHASE_LIGHT_RECIPES.get(phase)
         if recipe is None:
             return
-        self._call("light", "turn_on", {"entity_id": self._entity_ids, **recipe})
+        self._call(
+            "light", "turn_on", {"entity_id": self._active_entity_ids, **recipe}
+        )
 
     def _start_pulse(self, steps: list[tuple[object, float]]) -> None:
         """Kick off a multi-step accent as a cancel-safe background task.
@@ -395,7 +588,7 @@ class QuizifyPartyLights:
                     self._call(
                         "light",
                         "turn_on",
-                        {"entity_id": self._entity_ids, **command},
+                        {"entity_id": self._active_entity_ids, **command},
                     )
                 if hold:
                     await asyncio.sleep(hold)

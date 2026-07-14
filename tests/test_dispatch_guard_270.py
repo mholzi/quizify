@@ -57,6 +57,10 @@ ADMIN_REQUIRED_TYPES = {
     # configure_tts pushes the narration settings during the lobby so player-
     # join announcements work before start_game (#281). Admin-only.
     "configure_tts",
+    # configure_house does the same for the "House Plays Along" panel (#494 P4):
+    # lights/SFX/bus-event settings pushed during the lobby. Admin-only — it
+    # reconfigures HA entities in the host's home.
+    "configure_house",
     # start_lightning / start_lightning_questions / end_lightning were retired
     # in #285 — the Lightning Round now auto-triggers mid-game, with no
     # host-facing start/end message.

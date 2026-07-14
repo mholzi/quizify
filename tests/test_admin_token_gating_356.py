@@ -66,13 +66,17 @@ def _ctx(tmp_path: Path):
     )
 
 
-# The five in-file gated handlers that gracefully handle empty deps, so a
-# passing gate lands on a normal (non-401) response.
+# The in-file gated handlers that gracefully handle empty deps, so a passing
+# gate lands on a normal (non-401) response.
 _GATED = [
     views.flag_list_view,
     views.all_time_leaderboard_view,
     views.analytics_data_view,
     views.tts_entities_view,
+    # "House Plays Along" entity pickers (#494 Phase 4) — same gate as its
+    # tts-entities sibling, since it enumerates the host's light/media/scene
+    # entities.
+    views.house_entities_view,
     views.question_stats_view,
 ]
 
