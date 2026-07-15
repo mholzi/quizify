@@ -13,8 +13,9 @@ Two sources per cue (hybrid):
   (``CONF_SFX_*_URL``). Wins when set.
 * **Bundled default** — ``www/sfx/<cue>.mp3`` served at
   ``/quizify/static/sfx/<cue>.mp3``, used only when no override is set AND the
-  file physically exists on disk. No audio ships in the repo, so the defaults
-  are inert until the host drops their own CC0 files into ``www/sfx/``.
+  file physically exists on disk. The four defaults ship with the integration
+  (synthesized originals, see ``www/sfx/README.md``); deleting one mutes that
+  cue, which is why the existence check stays.
 
 If neither an override nor an available default resolves for a cue, that cue
 no-ops silently.
