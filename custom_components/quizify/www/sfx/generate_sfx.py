@@ -51,7 +51,9 @@ def noise_hit(buf, start, dur, amp=0.25, seed=1):
 
 def write(name, buf):
     peak = max(abs(v) for v in buf) or 1.0
-    data = array.array("h", (int(max(-1.0, min(1.0, v / peak * 0.89)) * 32767) for v in buf))
+    data = array.array(
+        "h", (int(max(-1.0, min(1.0, v / peak * 0.89)) * 32767) for v in buf)
+    )
     with wave.open(name, "w") as w:
         w.setnchannels(1)
         w.setsampwidth(2)
