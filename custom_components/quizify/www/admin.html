@@ -244,9 +244,18 @@
                     <div class="vF-step">
                         <div class="vF-q"><span class="num">4</span><span data-i18n="setup.eigene.q4">How long per question?</span></div>
                         <div class="vF-answers chip-group" id="timer-chips" role="group" data-i18n-aria-label="admin.timer" aria-label="Timer">
+                            <!-- Longer options (60/90/120 s) added for #506: a host
+                                 playing with small kids reported they cannot read the
+                                 question and four answers in time even at 45 s. The
+                                 backend already accepts 5..300 s, so these need no
+                                 server change. The group flex-wraps, so the extra
+                                 chips fall to a second row on a 390 px phone. -->
                             <button type="button" class="chip" data-value="20">20 s</button>
                             <button type="button" class="chip active" data-value="30">30 s</button>
                             <button type="button" class="chip" data-value="45">45 s</button>
+                            <button type="button" class="chip" data-value="60">60 s</button>
+                            <button type="button" class="chip" data-value="90">90 s</button>
+                            <button type="button" class="chip" data-value="120">120 s</button>
                         </div>
                     </div>
 
