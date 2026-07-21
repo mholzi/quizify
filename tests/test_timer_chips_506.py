@@ -1,14 +1,14 @@
-"""Regression: the longer per-question timer options from #506.
+"""Regression: the long per-question timer option from #506.
 
 An external host (#506) plays with small kids and reported they cannot read the
 question plus four answers in time *even at 45 s* — which was the highest value
-the admin timer picker offered. The picker now also offers 60/90/120 s.
+the admin timer picker offered. The picker now also offers 180 s.
 
 The ceiling was purely a frontend one: ``_handle_start_game`` has always
 accepted 5..300 s and silently dropped anything outside that range back to the
 difficulty-derived default. So these tests guard both ends of that contract:
 
-1. the new values actually survive validation and become the round duration
+1. the new value actually survives validation and becomes the round duration
    (a value that got clamped would silently fall back to 20/15/10 s, which is
    exactly the *opposite* of what the host asked for), and
 2. every chip rendered in ``admin.html`` stays inside the backend's accepted
@@ -87,11 +87,11 @@ def _timer_chip_values() -> list[int]:
 
 
 @pytest.mark.asyncio
-@pytest.mark.parametrize("seconds", [60, 90, 120])
+@pytest.mark.parametrize("seconds", [180])
 async def test_long_timer_reaches_the_round(
     handler: QuizifyWebSocketHandler, game: QuizifyGameState, seconds: int
 ) -> None:
-    """60/90/120 s must survive validation, not fall back to the default."""
+    """180 s must survive validation, not fall back to the default."""
     admin = _ws()
     game.add_player("Markus", admin)
     game.get_player("Markus").is_admin = True
@@ -141,10 +141,10 @@ async def test_out_of_range_timer_still_falls_back(
     assert game._timer_override is None
 
 
-def test_admin_picker_offers_the_longer_options() -> None:
-    """#506: the picker must actually expose the longer values."""
+def test_admin_picker_offers_the_longer_option() -> None:
+    """#506: the picker must actually expose the long value."""
     values = _timer_chip_values()
-    assert values == [20, 30, 45, 60, 90, 120]
+    assert values == [20, 30, 45, 180]
 
 
 def test_every_timer_chip_is_accepted_by_the_backend() -> None:
