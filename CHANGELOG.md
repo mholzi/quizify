@@ -3,6 +3,49 @@
 All notable changes to Quizify are documented here. This project follows
 [Semantic Versioning](https://semver.org/).
 
+## [1.6.0-RC4] — 2026-07-21
+
+Release candidate for 1.6.0 — "The House Plays Along". Completes the house
+feature with its setup panel and the audio it was missing, and gives hosts
+playing with small children a timer they can actually read a question in.
+
+### Added
+
+- **House Plays Along setup panel (#494)** — the light choreography, room SFX
+  and event backbone from RC2 were reachable only through a single config-flow
+  boolean. The admin setup now has a panel of its own (mirroring the narration
+  panel from #281): three one-tap presets — Game Show, Cozy Glow, Events only —
+  plus an advanced section with per-effect toggles and entity pickers for the
+  party lights, the SFX speaker and the winner scene. Presets resolve to plain
+  booleans before they reach the backend, and the runtime survives an
+  options reload.
+- **The house finally makes a sound (#494)** — phase 3 shipped the sound-effect
+  consumer but no audio, so every cue silently no-op'd unless the host went
+  hunting for CC0 files. Four default cues (correct, wrong, streak, winner) now
+  ship with the integration, with the per-cue URL override still available for
+  hosts who want their own.
+- **A 180 s per-question timer (#506)** — an external host playing with small
+  children reported they cannot read a question plus four answers in time even
+  at 45 s, which was the highest the picker offered. The ceiling was purely a
+  front-end one — the backend has always accepted 5–300 s — so the picker now
+  offers 20 / 30 / 45 / 180 s.
+- **A "With kids" preset (#506)** — 5 rounds · Easy · 180 s, sitting between
+  Classic and Marathon so the cards stay ordered by session length. The timer
+  picker lives behind *Custom settings*; a host who starts from a preset card
+  would never have found the new option without this.
+
+### Internal
+
+- **Test suite: sockets are enabled explicitly (#508)** — the pytest lane went
+  red without a code change when the GitHub runner image moved from 20260705 to
+  20260714: 23 failures, all `SocketBlockedError`, in the tests that spin a real
+  aiohttp `TestServer`. Re-running the last green build on its original commit
+  reproduced it exactly, so the cause was environmental. The suite used to
+  attach pytest-socket's `enable_socket` *marker* to every collected item, which
+  only works if pytest-socket's setup hook wins an ordering race we do not
+  control. Sockets are now enabled explicitly from a `trylast` setup hook and an
+  autouse fixture.
+
 ## [1.6.0-RC3] — 2026-07-07
 
 Release candidate for 1.6.0 — "The House Plays Along". Fixes the admin
