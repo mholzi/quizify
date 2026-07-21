@@ -50,14 +50,39 @@ def _fresh_event_loop():
 # pytest-homeassistant-custom-component (a CI-only test dep, #271) pulls in
 # pytest-socket, which blocks ALL socket use by default — socket *creation*
 # (asyncio's internal socketpair) AND *connect* to non-localhost. Our tests
-# don't rely on network-blocking, so mark every collected test with
-# pytest-socket's own `enable_socket` marker, which reliably overrides the
-# block per-test. Guarded so the base run without pytest-socket is unaffected.
-def pytest_collection_modifyitems(items):  # noqa: D401
-    try:
-        import pytest_socket  # noqa: F401
-    except ImportError:
-        return
-    import pytest as _pytest
-    for item in items:
-        item.add_marker(_pytest.mark.enable_socket)
+# don't rely on network-blocking, so we re-enable sockets for every test.
+#
+# This used to attach pytest-socket's `enable_socket` MARKER to every collected
+# item. That stopped working on 2026-07-21 without a single line of our code
+# changing: re-running the last green main build (060ae50, green on 2026-07-15)
+# failed with 23 SocketBlockedError in exactly the tests that spin a real
+# aiohttp TestServer. The only environment difference was the GitHub runner
+# image (20260705.232.1 → 20260714.240.1); every relevant package version
+# (Python 3.13.14, pytest 9.0.0, pytest-socket 0.7.0, pytest-homeassistant-
+# custom-component 0.13.316, aiohttp, homeassistant) was identical.
+#
+# A marker only helps if pytest-socket's own setup hook wins the ordering race
+# against everything else that touches the guard, and that ordering is not ours
+# to control. So enable the socket explicitly instead, at the two points where
+# we *can* be last: a `trylast` setup hook (runs after every other plugin's
+# runtest_setup) and an autouse fixture (runs immediately before the test body).
+# Both are no-ops when pytest-socket is absent, so a base run without the HA
+# test harness is unaffected.
+try:  # pragma: no cover - depends on the CI-only test dependency
+    import pytest_socket
+except ImportError:  # pragma: no cover
+    pytest_socket = None
+
+
+@pytest.hookimpl(trylast=True)
+def pytest_runtest_setup(item):  # noqa: ARG001, D401
+    if pytest_socket is not None:
+        pytest_socket.enable_socket()
+
+
+@pytest.fixture(autouse=True)
+def _sockets_enabled():
+    """Re-assert socket access right before the test body runs."""
+    if pytest_socket is not None:
+        pytest_socket.enable_socket()
+    yield
