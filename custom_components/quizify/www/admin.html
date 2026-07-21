@@ -156,7 +156,11 @@
                          (~3 / ~8 / ~15 / ~20 min). -->
                     <button type="button" class="preset-card" data-preset="kinder"
                             data-rounds="5" data-difficulty="easy" data-timer="180">
-                        <span class="preset-icon qz-icon qz-icon--sage" data-ui-icon="sparkle" aria-hidden="true">🧸</span>
+                        <!-- Deliberately no data-ui-icon: _paintUiIcons() only
+                             swaps the emoji for an SVG on slots that carry one,
+                             so leaving it off keeps the teddy while the sage
+                             disc still matches the other preset icons. -->
+                        <span class="preset-icon qz-icon qz-icon--sage" aria-hidden="true">🧸</span>
                         <span class="preset-body">
                             <span class="preset-name" data-i18n="setup.preset.kidsName">With kids</span>
                             <span class="preset-meta" data-i18n="setup.preset.kidsMeta">5 rounds · Easy · 180 s</span>
