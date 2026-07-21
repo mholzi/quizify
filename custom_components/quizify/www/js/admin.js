@@ -53,7 +53,7 @@
         }
         return 'en';
     })();
-    let selectedTimer = 30;  // seconds per question (20 / 30 / 45)
+    let selectedTimer = 30;  // seconds per question (20 / 30 / 45 / 180, #506)
     // Auto Lightning Round toggle (#285), default ON. The surprise fast round
     // fires once at a random mid-game round; the host opts out via the setup
     // toggle. Read live from the checkbox at start_game time.

@@ -620,7 +620,9 @@ class QuizifyGameState:
 
         # Determine time limit. Admin-chosen timer override (set in
         # start_game) wins over the difficulty-derived default — the
-        # picker in the admin UI lets the host pick 20/30/45s up front.
+        # picker in the admin UI lets the host pick 20/30/45/180s up front
+        # (the 180 s option came from #506: reading a question plus four
+        # answers takes small kids well over 45 s).
         if self._timer_override is not None:
             round_duration = float(self._timer_override)
         else:

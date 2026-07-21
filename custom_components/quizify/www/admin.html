@@ -244,9 +244,19 @@
                     <div class="vF-step">
                         <div class="vF-q"><span class="num">4</span><span data-i18n="setup.eigene.q4">How long per question?</span></div>
                         <div class="vF-answers chip-group" id="timer-chips" role="group" data-i18n-aria-label="admin.timer" aria-label="Timer">
+                            <!-- The 180 s option was added for #506: a host playing
+                                 with small kids reported they cannot read the question
+                                 and four answers in time even at 45 s. It is a
+                                 deliberate jump rather than a 60/90/120 ladder — the
+                                 three short values stay the normal party range and
+                                 180 s is the "read it to the kids" setting. The
+                                 backend already accepts 5..300 s, so no server change
+                                 is needed, and four chips still fit one row on a
+                                 390 px phone. -->
                             <button type="button" class="chip" data-value="20">20 s</button>
                             <button type="button" class="chip active" data-value="30">30 s</button>
                             <button type="button" class="chip" data-value="45">45 s</button>
+                            <button type="button" class="chip" data-value="180">180 s</button>
                         </div>
                     </div>
 
