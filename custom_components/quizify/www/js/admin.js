@@ -739,6 +739,10 @@
     var _PRESETS = [
         { id: 'schnellrunde', rounds: 5,  difficulty: 'easy',   timer: 20, labelKey: 'setup.preset.fastName'     },
         { id: 'klassiker',    rounds: 10, difficulty: 'medium', timer: 30, labelKey: 'setup.preset.classicName'  },
+        // #506: the long-timer bundle for hosts playing with small kids. Its
+        // timer must stay one of the #timer-chips values — _applyPreset calls
+        // _activateChip, which silently highlights nothing otherwise.
+        { id: 'kinder',       rounds: 5,  difficulty: 'easy',   timer: 180, labelKey: 'setup.preset.kidsName'   },
         { id: 'marathon',     rounds: 20, difficulty: 'hard',   timer: 45, labelKey: 'setup.preset.marathonName' },
     ];
 

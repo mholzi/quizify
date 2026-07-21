@@ -360,10 +360,12 @@
       "fastName": "Ronda rápida",
       "classicName": "Clásica",
       "marathonName": "Maratón",
+      "kidsName": "Con niños",
       "customName": "Configuración personalizada",
       "fastMeta": "5 rondas · Fácil · 20 s",
       "classicMeta": "10 rondas · Media · 30 s",
       "marathonMeta": "20 rondas · Difícil · 45 s",
+      "kidsMeta": "5 rondas · Fácil · 180 s",
       "customMeta": "Elige tú la categoría, la dificultad y las rondas"
     },
     "eigene": {
