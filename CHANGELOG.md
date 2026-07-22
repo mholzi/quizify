@@ -3,6 +3,33 @@
 All notable changes to Quizify are documented here. This project follows
 [Semantic Versioning](https://semver.org/).
 
+## [1.6.0-RC6] — 2026-07-22
+
+Release candidate for 1.6.0 — "The House Plays Along". One change: mixed-
+language households get a language each, instead of the host's.
+
+### Added
+
+- **Per-player UI language picker (#492)** — flag chips above the name field
+  on the join screen let each phone pick its own chrome language, remembered
+  per device. The questions stay in the host's pack language, so this
+  translates the labels around the game rather than the game itself; the row
+  is styled as a quiet setting to match.
+
+  The chips list the languages the *interface* is translated into, which is
+  not the same set as the languages the host has *packs* for — on a
+  German-only install those differ, and the difference is exactly the person
+  this is for: the Spanish-speaking guest at a German host's party.
+
+### Fixed
+
+- **The host's language no longer overrides a player's choice (#492)** — every
+  `game_state` broadcast carried the host's game language and the player
+  applied it unconditionally, so a picker without this guard would have been
+  overwritten within milliseconds of being used. The sync now yields whenever
+  the player has chosen for themselves, and still applies for everyone who
+  hasn't.
+
 ## [1.6.0-RC5] — 2026-07-22
 
 Release candidate for 1.6.0 — "The House Plays Along". One change: the reveal
