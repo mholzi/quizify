@@ -3,6 +3,35 @@
 All notable changes to Quizify are documented here. This project follows
 [Semantic Versioning](https://semver.org/).
 
+## [1.6.0] — 2026-07-22
+
+The final 1.6.0 release — "The House Plays Along", the culmination of release
+candidates RC1–RC6. See the GitHub release notes for the consolidated
+highlights; the RC entries below carry the detailed per-candidate history.
+
+Two threads run through this release. The house joins the game: a `quizify_*`
+event backbone on the HA bus, light choreography with a countdown pulse, room
+sound effects with four bundled cues, a finale scene selector, and a setup
+panel with three one-tap presets — all off by default. And the room becomes
+playable for everyone in it: a reveal that no longer depends on colour, an
+opt-in comfort mode, a per-player interface language, and a 180-second timer
+with a "With kids" preset.
+
+Alongside those, five HA services expose the host controls to voice and
+automations, and question selection now weighs against what players have
+recently seen.
+
+### Internal
+
+- **Repository licence and HACS validation (#512).** The README had advertised
+  MIT since launch in three places, including a badge linking to a `LICENSE`
+  file that never existed — the project presented itself as MIT while carrying
+  no effective licence. The file now exists. Alongside it, the `hacs/action`
+  and `hassfest` workflows Quizify had been shipping without now run on every
+  push and nightly; the first run found both the missing licence and an
+  illegal `description` key in `manifest.json`, which hassfest rejects
+  outright. Both are fixed and all nine HACS checks pass.
+
 ## [1.6.0-RC6] — 2026-07-22
 
 Release candidate for 1.6.0 — "The House Plays Along". One change: mixed-
