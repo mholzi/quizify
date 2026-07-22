@@ -432,17 +432,12 @@
             _clearFinaleCountdown();
         }
 
-        // Sync UI language with the server-side game language so a
-        // German game shows German labels even if the player's
-        // browser is English. Only triggers a reload of translations
-        // when the language actually changes.
-        if (msg.language && window.QuizifyI18n &&
-            window.QuizifyI18n.getLanguage() !== msg.language) {
-            window.QuizifyI18n.setLanguage(msg.language).then(function () {
-                window.QuizifyI18n.initPageTranslations();
-                updatePageTitle(msg.phase, msg);
-            });
-        } else {
+        // Sync UI language with the server-side game language so a German game
+        // shows German labels even if the player's browser is English — unless
+        // this player picked a language themselves (#492). See
+        // _syncServerLanguage; it returns false when it did not take over, in
+        // which case the title still needs updating here.
+        if (!_syncServerLanguage(msg)) {
             updatePageTitle(msg.phase, msg);
         }
 
@@ -1170,6 +1165,83 @@
     var _renderSoundToggle = null;
     var _renderA11yToggle = null;
 
+    // ============================================
+    // Per-player UI language (#492)
+    // ============================================
+
+    // Set only when the player taps a flag chip. Its presence — not its value
+    // — is what marks the language as *chosen* rather than *detected*, and
+    // that distinction is the whole feature: see _syncServerLanguage below.
+    var PLAYER_LANG_KEY = 'quizify-player-lang';
+
+    function _storedPlayerLang() {
+        try {
+            return window.localStorage.getItem(PLAYER_LANG_KEY) || null;
+        } catch (e) {
+            return null;
+        }
+    }
+
+    function _markActiveLangChip() {
+        var group = document.getElementById('player-lang-chips');
+        if (!group || !window.QuizifyI18n) return;
+        var active = QuizifyI18n.getLanguage();
+        group.querySelectorAll('.chip').forEach(function (chip) {
+            chip.classList.toggle('active', chip.dataset.value === active);
+            chip.setAttribute('aria-pressed', chip.dataset.value === active ? 'true' : 'false');
+        });
+    }
+
+    // Apply the server's game language to this phone — unless the player has
+    // picked one. Before #492 this was unconditional, with the reasoning that
+    // "a German game shows German labels even if the player's browser is
+    // English". That is still the right default, but it also meant every
+    // incoming game_state would stamp over a deliberate choice within
+    // milliseconds, so a picker without this guard would look broken rather
+    // than absent.
+    function _syncServerLanguage(msg) {
+        if (!msg.language || !window.QuizifyI18n) return false;
+        if (_storedPlayerLang()) return false;
+        if (QuizifyI18n.getLanguage() === msg.language) return false;
+        QuizifyI18n.setLanguage(msg.language).then(function () {
+            QuizifyI18n.initPageTranslations();
+            _markActiveLangChip();
+            updatePageTitle(msg.phase, msg);
+        });
+        return true;
+    }
+
+    function setupLanguagePicker() {
+        var group = document.getElementById('player-lang-chips');
+        if (!group) return;
+        // An unsubstituted token means the page was served by something that
+        // doesn't know about {{UI_LANGUAGE_CHIPS}}; hide the row rather than
+        // showing the raw braces.
+        if (group.textContent.indexOf('{{') !== -1) {
+            group.classList.add('hidden');
+            return;
+        }
+        if (!group.querySelector('.chip') || !window.QuizifyI18n) {
+            group.classList.add('hidden');
+            return;
+        }
+
+        group.addEventListener('click', function (e) {
+            var chip = e.target.closest('.chip');
+            if (!chip || !chip.dataset.value) return;
+            var code = chip.dataset.value;
+            if (code === QuizifyI18n.getLanguage()) return;
+            try {
+                window.localStorage.setItem(PLAYER_LANG_KEY, code);
+            } catch (_e) { /* private mode: choice holds for this page view */ }
+            QuizifyI18n.setLanguage(code).then(function () {
+                QuizifyI18n.initPageTranslations();
+                _markActiveLangChip();
+                _flushToggleLabels();
+            });
+        });
+    }
+
     function _flushToggleLabels() {
         if (_renderSoundToggle) _renderSoundToggle();
         if (_renderA11yToggle) _renderA11yToggle();
@@ -1235,6 +1307,7 @@
         setupReactionBar();
         setupSoundToggle();
         setupA11yToggle();
+        setupLanguagePicker();
         setupResetAffordance();
         pu.setupCollapsibles();
         if (lightning) { lightning.setSend(send); lightning.init(); }
@@ -1285,10 +1358,13 @@
             state.isAdmin = true;
         }
 
-        // i18n init
+        // i18n init. A stored per-player choice (#492) wins over browser
+        // detection — init() falls back to detectBrowserLanguage() when given
+        // nothing, which is what every player without a choice still gets.
         if (window.QuizifyI18n) {
-            QuizifyI18n.init().then(function () {
+            QuizifyI18n.init(_storedPlayerLang() || undefined).then(function () {
                 QuizifyI18n.initPageTranslations();
+                _markActiveLangChip();
                 // game_state may have already arrived before i18n loaded;
                 // re-fire the title update so we don't sit on the stale
                 // "— Beitreten" forever (see updatePageTitle for the why).

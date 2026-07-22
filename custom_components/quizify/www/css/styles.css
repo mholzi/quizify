@@ -2047,6 +2047,18 @@ button, .btn {
     text-align: center;
 }
 
+/* Per-player UI-language chips on the join screen (#492). The chip visuals
+   come from .chip-group--flags in 02-shared.css; this only places the row.
+   Centred to match the form's text-align, and wrapping is inherited so a
+   fourth language drops to a second line instead of clipping on a 390 px
+   phone. Deliberately quiet: this changes the labels around the game, not
+   the language of the questions, so it should not out-shout the name field
+   it sits above. */
+.player-lang-chips {
+    justify-content: center;
+    flex-wrap: wrap;
+}
+
 .waiting-message {
     color: var(--color-text-neon-muted);
     font-size: 1rem;
