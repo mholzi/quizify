@@ -109,6 +109,19 @@
         <!-- Join form -->
         <div id="join-view" class="view hidden">
             <div class="join-form">
+                <!-- Per-player UI-language picker (#492). Flag-only Selector-B
+                     chips, same markup family as the admin language chips, but
+                     filled from {{UI_LANGUAGE_CHIPS}} (the shipped i18n
+                     bundles) rather than the host's pack languages — see
+                     views.py for why those two differ. Only the chrome
+                     switches; questions stay in the host's pack language, so
+                     the row sits above the name field as a quiet setting
+                     rather than a headline choice. No chip is active in the
+                     served HTML; player-core.js marks the right one once i18n
+                     has resolved. -->
+                <div id="player-lang-chips" class="chip-group chip-group--flags player-lang-chips"
+                     role="group" data-i18n-aria-label="join.languageAria"
+                     aria-label="Interface language">{{UI_LANGUAGE_CHIPS}}</div>
                 <p data-i18n="join.enterName">Enter your name to play</p>
                 <div class="form-group">
                     <input type="text" id="name-input" class="name-input"

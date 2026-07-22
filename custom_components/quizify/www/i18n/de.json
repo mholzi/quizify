@@ -13,7 +13,8 @@
     "enterName": "Gib deinen Namen ein, um zu spielen",
     "namePlaceholder": "Dein Name",
     "joinButton": "Beitreten",
-    "joining": "Beitreten…"
+    "joining": "Beitreten…",
+    "languageAria": "Sprache der Oberfläche"
   },
   "lobby": {
     "title": "Lobby",

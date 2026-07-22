@@ -14,6 +14,7 @@ import json
 import logging
 import os
 import time
+from functools import lru_cache
 from pathlib import Path
 from typing import TYPE_CHECKING
 
@@ -350,6 +351,14 @@ async def _serve_html(request: web.Request, filename: str) -> web.Response:
     # just to skip the (cheap) bank read for non-admin pages.
     if _LANGUAGE_CHIPS_TOKEN in html_content or _CATEGORY_CHIPS_TOKEN in html_content:
         html_content = _apply_admin_chip_tokens(ctx, html_content)
+    # The player's UI-language picker (#492). Separate guard from the admin
+    # chips above: player.html carries only this token, and resolving it needs
+    # no question-bank read at all.
+    if _UI_LANGUAGE_CHIPS_TOKEN in html_content:
+        html_content = html_content.replace(
+            _UI_LANGUAGE_CHIPS_TOKEN,
+            _render_ui_language_chips(_resolve_default_lang(ctx.ha_language)),
+        )
     return web.Response(
         text=html_content, content_type="text/html", headers=_NO_CACHE_HEADERS
     )
@@ -475,6 +484,14 @@ _THEME_ICONS = {
 # ---------------------------------------------------------------------------
 _LANGUAGE_CHIPS_TOKEN = "{{LANGUAGE_CHIPS}}"
 _CATEGORY_CHIPS_TOKEN = "{{CATEGORY_CHIPS}}"
+# The player's own UI-language picker (#492) uses its own token, because it
+# answers a different question than {{LANGUAGE_CHIPS}} above. That one lists
+# the languages the host has *packs* for; this one lists the languages the
+# *interface* is translated into. On a German-only install those sets differ,
+# and the difference is precisely the user this feature exists for: the
+# Spanish-speaking guest at a German host's party. Deriving the player picker
+# from pack languages would offer them nothing.
+_UI_LANGUAGE_CHIPS_TOKEN = "{{UI_LANGUAGE_CHIPS}}"
 
 # Language code → (flag emoji, native display name). Drives the flag-only
 # language chips: the flag is the visible glyph, the name is exposed via
@@ -534,6 +551,58 @@ def _render_language_chips(pack_versions: dict[str, dict], default_lang: str) ->
         name_esc = _html.escape(name, quote=True)
         buttons.append(
             f'<button type="button" class="{cls}" data-value="{_html.escape(code)}" '
+            f'aria-label="{name_esc}" title="{name_esc}">{flag}</button>'
+        )
+    return "".join(buttons)
+
+
+@lru_cache(maxsize=1)
+def _available_ui_languages() -> tuple[str, ...]:
+    """UI-chrome languages, from the i18n bundles actually shipped.
+
+    Read from disk rather than hard-coded so dropping in a new
+    ``www/i18n/<code>.json`` surfaces a chip with no Python edit — the same
+    data-driven move #335 made for the admin chips. Cached because this sits
+    on the HTML hot path and the bundle set cannot change without a restart.
+
+    Ordered by ``_LANGUAGE_ORDER`` first, unknown codes alphabetically after,
+    so the chip row is stable across requests.
+
+    ``tests/test_player_language_picker_492.py`` pins this set against
+    ``SUPPORTED_LANGUAGES`` in ``i18n.js``: a bundle the client would refuse to
+    load must not get a chip, and a language the client supports must not be
+    missing one.
+    """
+    i18n_dir = Path(__file__).resolve().parent.parent / "www" / "i18n"
+    try:
+        present = {p.stem for p in i18n_dir.glob("*.json")}
+    except OSError:  # pragma: no cover - unreadable www/ is a broken install
+        present = set()
+    if not present:
+        return ("en",)
+    known = [code for code in _LANGUAGE_ORDER if code in present]
+    extra = sorted(present - set(_LANGUAGE_ORDER))
+    return tuple(known + extra)
+
+
+def _render_ui_language_chips(default_lang: str) -> str:
+    """Render the player's UI-language chips (#492).
+
+    Same flag-only Selector-B markup as the admin picker so the two read as one
+    family, but sourced from the shipped i18n bundles (see
+    ``_available_ui_languages``). No chip is marked ``active`` server-side:
+    the player's stored choice lives in ``localStorage`` and only the client
+    knows it, so marking one here would paint the wrong flag active for one
+    frame on every load. ``player-core.js`` sets the active chip once i18n has
+    resolved.
+    """
+    langs = _available_ui_languages()
+    buttons = []
+    for code in langs:
+        flag, name = _language_chip_meta(code)
+        name_esc = _html.escape(name, quote=True)
+        buttons.append(
+            f'<button type="button" class="chip" data-value="{_html.escape(code)}" '
             f'aria-label="{name_esc}" title="{name_esc}">{flag}</button>'
         )
     return "".join(buttons)
