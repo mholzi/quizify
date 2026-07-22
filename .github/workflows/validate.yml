@@ -1,0 +1,53 @@
+# HACS and Home Assistant validation.
+#
+# Required for inclusion in the official HACS default repository: HACS will not
+# accept a submission unless both of these actions run and pass on the default
+# branch. Quizify has shipped for months without them, which is why it is still
+# only installable as a custom repository — see the checklist in the PR that
+# added this file.
+#
+# What each job actually checks:
+#   hacs/action      — repository shape (hacs.json, brand/icon.png, description,
+#                      topics, releases) plus that the integration is loadable
+#                      the way HACS installs it.
+#   hassfest         — manifest.json against Home Assistant's own rules
+#                      (domain/name/codeowners/documentation/issue_tracker,
+#                      dependency declarations, iot_class).
+#
+# The daily schedule is deliberate: both actions validate against *upstream*
+# rules that change without any commit on our side. A repository that passed at
+# merge time can quietly stop qualifying, and a nightly run surfaces that while
+# it is cheap to fix rather than in the middle of a submission.
+name: Validate
+
+on:
+  push:
+    branches: [main]
+  pull_request:
+    branches: [main]
+  schedule:
+    - cron: "0 3 * * *"
+  workflow_dispatch:
+
+jobs:
+  validate-hacs:
+    name: HACS validation
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+
+      - name: HACS Action
+        uses: hacs/action@main
+        with:
+          category: integration
+
+  validate-hassfest:
+    name: Hassfest validation
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+
+      - name: Hassfest
+        uses: home-assistant/actions/hassfest@master
