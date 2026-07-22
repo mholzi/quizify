@@ -23,7 +23,11 @@ python3 -c "
 import json
 with open('$MANIFEST') as f: data = json.load(f)
 data['version'] = '$NEW_VERSION'
-with open('$MANIFEST', 'w') as f: json.dump(data, f, indent=2)
+with open('$MANIFEST', 'w') as f:
+    json.dump(data, f, indent=2)
+    # json.dump writes no trailing newline, so every bump silently stripped
+    # the one the file had and left 'No newline at end of file' in the diff.
+    f.write('\n')
 print('  ✓ manifest.json')
 "
 

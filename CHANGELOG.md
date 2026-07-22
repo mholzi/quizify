@@ -3,6 +3,39 @@
 All notable changes to Quizify are documented here. This project follows
 [Semantic Versioning](https://semver.org/).
 
+## [1.6.0-RC5] — 2026-07-22
+
+Release candidate for 1.6.0 — "The House Plays Along". One change: the reveal
+stops depending on colour, and the player screen gains a comfort mode.
+
+### Added
+
+- **Accessibility mode (#372)** — an opt-in toggle beside the sound speaker in
+  the player header, persisted per phone, that enlarges the type and holds
+  motion still. `prefers-reduced-motion` was already honoured globally, so this
+  is the manual override for a phone whose owner never set the OS switch — a
+  kid's device, a guest's hand-me-down. The class is applied from the document
+  head rather than from the player bundle, because the mode changes the root
+  font size and applying it after first paint re-flows the whole screen on
+  every load.
+
+### Fixed
+
+- **The reveal no longer depends on colour alone (#372)** — DESIGN.md has
+  always required that "correct/incorrect [is] always paired with glyph
+  (★ / ×)". The TV dashboard honoured it; the player's answer buttons never
+  did — after a reveal, right and wrong differed only in border and background
+  hue, and at Soft Parlor saturations sage (#7FA897) and dusty red (#D66A6A)
+  collapse into near-identical grey-greens under red-green colour blindness. A
+  colour-blind guest could not read their own result. The buttons now carry the
+  same two glyphs the TV uses. Unconditional, not behind the new toggle: a
+  guest on a borrowed phone never finds a settings switch.
+- **Header toggles announced their translation key (#372)** — the sound and
+  accessibility buttons set `aria-label` from JS, so `initPageTranslations()`
+  never touched them, and i18n resolves after `init()` runs. A screen reader
+  read out "game dot sound mute". Both labels are now repainted once
+  translations land, mirroring the existing page-title repair.
+
 ## [1.6.0-RC4] — 2026-07-21
 
 Release candidate for 1.6.0 — "The House Plays Along". Completes the house
