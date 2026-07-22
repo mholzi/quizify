@@ -347,7 +347,9 @@
     "joinUrlAria": "URL para unirse",
     "copyJoinLinkAria": "Copiar enlace de invitación",
     "currentQuestionRegion": "Pregunta actual",
-    "currentRevealRegion": "Revelación de la ronda"
+    "currentRevealRegion": "Revelación de la ronda",
+    "modeOn": "Activar texto más grande y menos movimiento",
+    "modeOff": "Desactivar texto más grande y menos movimiento"
   },
   "setup": {
     "heroLine1": "¿Listo para una",

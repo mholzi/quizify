@@ -21,6 +21,13 @@
     <link rel="icon" href="/quizify/static/img/icon-256.png?v={{ASSET_VER}}" type="image/png">
     <link rel="manifest" href="/quizify/static/site.webmanifest?v={{ASSET_VER}}">
     <!-- Soft Parlor: no confetti library. The warm reveal IS the celebration. See DESIGN.md. -->
+    <!-- Accessibility mode (#372): applied here, before first paint, rather
+         than from player.bundle.js at the end of <body>. The mode changes the
+         root font size, so setting it later means the player watches the
+         whole screen re-flow on every load. Kept to two lines and no
+         dependencies for that reason. The key is mirrored in
+         js/player-a11y.js (see the note there). -->
+    <script>try{if(localStorage.getItem('quizify_a11y')==='1')document.documentElement.classList.add('a11y');}catch(e){}</script>
 </head>
 <body>
     <!-- #229: fixed cream mask over the iOS status-bar strip. In a Safari tab
@@ -40,6 +47,11 @@
             <!-- Sound cue mute toggle. JS (player-core.js setupSoundToggle)
                  sets the icon, label and persists the preference. -->
             <button id="sound-toggle-btn" type="button" class="sound-toggle-btn" aria-pressed="false" aria-label="Mute sound">🔊</button>
+            <!-- Accessibility mode toggle (#372). Reuses the speaker button's
+                 class so the two switches read as one row of personal
+                 settings; `a11y-toggle-btn` only carries the pressed tint.
+                 JS (player-core.js setupA11yToggle) sets label + state. -->
+            <button id="a11y-toggle-btn" type="button" class="sound-toggle-btn a11y-toggle-btn" aria-pressed="false" aria-label="Accessibility mode">🔎</button>
             <!-- Round indicator sits inline next to the wordmark on the reveal
                  view. showView() in player-utils.js toggles `hidden` based on
                  whether reveal-view is active. Text is populated by

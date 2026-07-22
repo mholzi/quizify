@@ -347,7 +347,9 @@
     "joinUrlAria": "URL zum Beitritt",
     "copyJoinLinkAria": "Beitrittslink kopieren",
     "currentQuestionRegion": "Aktuelle Frage",
-    "currentRevealRegion": "Auflösung der Runde"
+    "currentRevealRegion": "Auflösung der Runde",
+    "modeOn": "Große Schrift und ruhige Animationen einschalten",
+    "modeOff": "Große Schrift und ruhige Animationen ausschalten"
   },
   "setup": {
     "heroLine1": "Bereit für eine",
