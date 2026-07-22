@@ -1,0 +1,75 @@
+/* ==========================================
+   Accessibility mode (#372)
+   ==========================================
+
+   An opt-in comfort layer for the player screen, persisted in localStorage
+   under `quizify_a11y` and applied as the class `a11y` on <html>. Two things
+   live behind the toggle, and only two:
+
+     1. Larger text.
+     2. Motion held still.
+
+   What is deliberately NOT here:
+
+   - The correct/wrong glyphs on the answer buttons. Those are unconditional
+     and live next to the rules they fix (03-question.css). Colour-blindness
+     is not a preference a guest declares on a borrowed phone before the
+     round starts.
+   - A `prefers-reduced-motion` block. 00-tokens.css already carries a global
+     one and it is correct. The toggle exists for the other case: the phone
+     whose owner never set the OS switch — a kid's device, a guest's hand-me-
+     down — where the shake and the glow still fire. Forcing it here is the
+     manual override, not a duplicate.
+   - Confetti. There is none to disable; Soft Parlor's reveal is the
+     celebration (see the note in player.html's <head> and DESIGN.md). The
+     motion this actually stills is `shake` on a wrong answer, `glow-correct`
+     on a right one, and the timer pulse.
+
+   Scoped to <html> rather than <body> so the scale applies before any layout
+   box exists, and so a future setup screen can read it the same way.
+   ========================================== */
+
+/* Type scale, ~1.125×. Both channels have to move together: 138 rules in
+   07-player.css size themselves in `rem` (so the root percentage reaches
+   them), while the --font-size-* tokens are absolute px (so the percentage
+   does NOT). Bumping only one of the two would grow half the screen and
+   leave the other half behind, which reads as a rendering bug rather than a
+   setting. `.a11y` and `:root` have equal specificity and land on the same
+   element — this file is ordered after 00-tokens.css in build_css.py, so
+   source order decides and these win. Keep that ordering. */
+.a11y {
+    font-size: 112.5%;
+
+    --font-size-xs: 11px;
+    --font-size-sm: 14px;
+    --font-size-base: 16px;
+    --font-size-md: 18px;
+    --font-size-lg: 20px;
+    --font-size-xl: 23px;
+    --font-size-2xl: 27px;
+    --font-size-3xl: 32px;
+    --font-size-4xl: 36px;
+    /* --font-size-timer and --font-size-hero stay put: at 64/72px they are
+       already the largest things on the screen, and scaling them is what
+       pushes the question text off a 390 px viewport. */
+}
+
+/* Motion held still. Mirrors the global prefers-reduced-motion block in
+   00-tokens.css verbatim — same properties, same 0.01ms (not 0, which some
+   engines treat as "never fired" and skip transitionend for). */
+.a11y *,
+.a11y *::before,
+.a11y *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+    scroll-behavior: auto !important;
+}
+
+/* The toggle itself sits in the player header next to the sound button and
+   inherits that button's styling; only the pressed state differs, so the
+   host can see at a glance which mode the phone is in. */
+.a11y-toggle-btn.is-on {
+    background: rgba(232, 138, 127, 0.18);
+    border-color: var(--color-accent-primary);
+}

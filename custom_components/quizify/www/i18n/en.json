@@ -347,7 +347,9 @@
     "joinUrlAria": "Join URL",
     "copyJoinLinkAria": "Copy join link",
     "currentQuestionRegion": "Current question",
-    "currentRevealRegion": "Round reveal"
+    "currentRevealRegion": "Round reveal",
+    "modeOn": "Turn on larger text and calmer motion",
+    "modeOff": "Turn off larger text and calmer motion"
   },
   "setup": {
     "heroLine1": "Ready for a",

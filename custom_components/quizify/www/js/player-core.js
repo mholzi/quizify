@@ -1160,6 +1160,21 @@
     // Sound Toggle (header speaker button)
     // ============================================
 
+    // Header toggles paint their own aria-label from JS, so they are invisible
+    // to initPageTranslations() (which only walks data-i18n* attributes). i18n
+    // loads asynchronously and init() runs first, so at first paint both
+    // buttons announce the raw key — a screen reader literally says
+    // "game dot sound mute". These refs let _flushToggleLabels() repaint them
+    // once translations land, the same way _flushPendingTitle() repairs the
+    // page title. (#372)
+    var _renderSoundToggle = null;
+    var _renderA11yToggle = null;
+
+    function _flushToggleLabels() {
+        if (_renderSoundToggle) _renderSoundToggle();
+        if (_renderA11yToggle) _renderA11yToggle();
+    }
+
     function setupSoundToggle() {
         var btn = document.getElementById('sound-toggle-btn');
         var snd = window.QuizifyPlayerSound;
@@ -1181,6 +1196,33 @@
             snd.toggleMute();
             render();
         });
+        _renderSoundToggle = render;
+        render();
+    }
+
+    // Accessibility mode (#372). Mirrors setupSoundToggle above: same header
+    // furniture, same aria-pressed contract, preference owned by the module.
+    function setupA11yToggle() {
+        var btn = document.getElementById('a11y-toggle-btn');
+        var a11y = window.QuizifyA11y;
+        if (!btn) return;
+        if (!a11y) { btn.classList.add('hidden'); return; }
+
+        function render() {
+            var t = (window.QuizifyI18n && window.QuizifyI18n.t) || function (k) { return k; };
+            var on = a11y.isEnabled();
+            btn.classList.toggle('is-on', on);
+            btn.setAttribute('aria-pressed', on ? 'true' : 'false');
+            var label = on ? t('a11y.modeOff') : t('a11y.modeOn');
+            btn.setAttribute('aria-label', label);
+            btn.setAttribute('title', label);
+        }
+
+        btn.addEventListener('click', function () {
+            a11y.toggle();
+            render();
+        });
+        _renderA11yToggle = render;
         render();
     }
 
@@ -1192,6 +1234,7 @@
         setupAdminControls();
         setupReactionBar();
         setupSoundToggle();
+        setupA11yToggle();
         setupResetAffordance();
         pu.setupCollapsibles();
         if (lightning) { lightning.setSend(send); lightning.init(); }
@@ -1250,6 +1293,9 @@
                 // re-fire the title update so we don't sit on the stale
                 // "— Beitreten" forever (see updatePageTitle for the why).
                 _flushPendingTitle();
+                // Same race for the header toggles, whose accessible names are
+                // set from JS rather than data-i18n attributes (#372).
+                _flushToggleLabels();
             });
         }
 

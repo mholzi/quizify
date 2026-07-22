@@ -42,6 +42,10 @@ CSS_MODULES = [
     "06-admin.css",       # Launcher, modal, glow/badge/utility helpers
     "07-player.css",      # Player END/GAME/REVEAL/LOBBY views + setup/lobby variants + modals/misc
     "08-responsive.css",  # Responsive, reduced motion, reveal grids, result page, finale, community pack
+    # Last on purpose: 09 redefines the --font-size-* tokens from 00-tokens
+    # under .a11y. Both selectors have the same specificity and hit the same
+    # element (<html>), so only source order makes the override win (#372).
+    "09-a11y.css",        # Accessibility mode — larger type, motion held still
 ]
 
 OUT = CSS_DIR / "styles.css"
