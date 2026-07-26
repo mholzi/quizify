@@ -1,0 +1,3158 @@
+{
+  "name": "Deportes",
+  "language": "es",
+  "version": "1.0",
+  "theme": "sport",
+  "questions": [
+    {
+      "id": "dep_es_001",
+      "question": "¿Cuántos jugadores de cada equipo hay en el campo en un partido de fútbol?",
+      "answers": [
+        {
+          "text": "Once",
+          "correct": true
+        },
+        {
+          "text": "Diez",
+          "correct": false
+        },
+        {
+          "text": "Doce",
+          "correct": false
+        }
+      ],
+      "difficulty": "easy",
+      "fun_fact": "Los once incluyen al portero, el único que puede usar las manos dentro de su área.",
+      "category": "Deportes"
+    },
+    {
+      "id": "dep_es_002",
+      "question": "¿En qué año se disputó el primer Mundial de fútbol?",
+      "answers": [
+        {
+          "text": "En 1930",
+          "correct": true
+        },
+        {
+          "text": "En 1926",
+          "correct": false
+        },
+        {
+          "text": "En 1934",
+          "correct": false
+        }
+      ],
+      "difficulty": "medium",
+      "fun_fact": "Uruguay lo organizó y lo ganó, con solo trece selecciones participantes.",
+      "category": "Deportes"
+    },
+    {
+      "id": "dep_es_003",
+      "question": "¿En qué año se disputó el primer partido internacional de fútbol?",
+      "answers": [
+        {
+          "text": "En 1872",
+          "correct": true
+        },
+        {
+          "text": "En 1863",
+          "correct": false
+        },
+        {
+          "text": "En 1888",
+          "correct": false
+        }
+      ],
+      "difficulty": "hard",
+      "fun_fact": "Escocia e Inglaterra empataron a cero en Glasgow ante 4.000 espectadores.",
+      "category": "Deportes"
+    },
+    {
+      "id": "dep_es_004",
+      "question": "¿Qué parte del cuerpo no puede usar un jugador de campo en el fútbol?",
+      "answers": [
+        {
+          "text": "Las manos",
+          "correct": true
+        },
+        {
+          "text": "La cabeza",
+          "correct": false
+        },
+        {
+          "text": "El pecho",
+          "correct": false
+        }
+      ],
+      "difficulty": "easy",
+      "fun_fact": "El portero es la excepción, y solo dentro de su propia área.",
+      "category": "Deportes"
+    },
+    {
+      "id": "dep_es_005",
+      "question": "¿Qué selección ganó el primer Mundial de fútbol?",
+      "answers": [
+        {
+          "text": "Uruguay",
+          "correct": true
+        },
+        {
+          "text": "Brasil",
+          "correct": false
+        },
+        {
+          "text": "Argentina",
+          "correct": false
+        }
+      ],
+      "difficulty": "medium",
+      "fun_fact": "Venció a Argentina por 4-2 en la final de Montevideo.",
+      "category": "Deportes"
+    },
+    {
+      "id": "dep_es_006",
+      "question": "¿Qué club ganó la primera Copa de Europa, en 1956?",
+      "answers": [
+        {
+          "text": "El Real Madrid",
+          "correct": true
+        },
+        {
+          "text": "El Benfica",
+          "correct": false
+        },
+        {
+          "text": "El Milan",
+          "correct": false
+        }
+      ],
+      "difficulty": "hard",
+      "fun_fact": "Venció al Stade de Reims por 4-3 en la final de París.",
+      "category": "Deportes"
+    },
+    {
+      "id": "dep_es_007",
+      "question": "¿Cada cuántos años se celebra la Copa Mundial de la FIFA?",
+      "answers": [
+        {
+          "text": "Cada cuatro años",
+          "correct": true
+        },
+        {
+          "text": "Cada dos años",
+          "correct": false
+        },
+        {
+          "text": "Cada tres años",
+          "correct": false
+        }
+      ],
+      "difficulty": "easy",
+      "fun_fact": "El único parón fue entre 1938 y 1950, por la Segunda Guerra Mundial.",
+      "category": "Deportes"
+    },
+    {
+      "id": "dep_es_008",
+      "question": "¿Cuántos torneos de Grand Slam hay en el tenis?",
+      "answers": [
+        {
+          "text": "Cuatro",
+          "correct": true
+        },
+        {
+          "text": "Tres",
+          "correct": false
+        },
+        {
+          "text": "Cinco",
+          "correct": false
+        }
+      ],
+      "difficulty": "medium",
+      "fun_fact": "Australia, Roland Garros, Wimbledon y el Abierto de Estados Unidos.",
+      "category": "Deportes"
+    },
+    {
+      "id": "dep_es_009",
+      "question": "¿Quién fue el primer futbolista en ganar el Balón de Oro?",
+      "answers": [
+        {
+          "text": "Stanley Matthews",
+          "correct": true
+        },
+        {
+          "text": "Alfredo Di Stéfano",
+          "correct": false
+        },
+        {
+          "text": "Raymond Kopa",
+          "correct": false
+        }
+      ],
+      "difficulty": "hard",
+      "fun_fact": "Lo recibió en 1956, con 41 años y todavía en activo.",
+      "category": "Deportes"
+    },
+    {
+      "id": "dep_es_010",
+      "question": "¿Cuántos anillos tiene la bandera olímpica?",
+      "answers": [
+        {
+          "text": "Cinco",
+          "correct": true
+        },
+        {
+          "text": "Cuatro",
+          "correct": false
+        },
+        {
+          "text": "Seis",
+          "correct": false
+        }
+      ],
+      "difficulty": "easy",
+      "fun_fact": "Representan los cinco continentes habitados, entrelazados para simbolizar su encuentro.",
+      "category": "Deportes"
+    },
+    {
+      "id": "dep_es_011",
+      "question": "¿Cuál de estas competiciones no es un Grand Slam de tenis?",
+      "answers": [
+        {
+          "text": "La Copa Davis",
+          "correct": true
+        },
+        {
+          "text": "Wimbledon",
+          "correct": false
+        },
+        {
+          "text": "Roland Garros",
+          "correct": false
+        }
+      ],
+      "difficulty": "medium",
+      "fun_fact": "La Copa Davis es un torneo por equipos nacionales, no individual.",
+      "category": "Deportes"
+    },
+    {
+      "id": "dep_es_012",
+      "question": "¿En qué club brasileño jugó Pelé casi toda su carrera?",
+      "answers": [
+        {
+          "text": "En el Santos",
+          "correct": true
+        },
+        {
+          "text": "En el Flamengo",
+          "correct": false
+        },
+        {
+          "text": "En el Palmeiras",
+          "correct": false
+        }
+      ],
+      "difficulty": "hard",
+      "fun_fact": "Solo lo dejó al final, para jugar tres temporadas en el Cosmos de Nueva York.",
+      "category": "Deportes"
+    },
+    {
+      "id": "dep_es_013",
+      "question": "¿En qué deporte se golpea una pelota amarilla con una raqueta por encima de una red?",
+      "answers": [
+        {
+          "text": "Tenis",
+          "correct": true
+        },
+        {
+          "text": "Bádminton",
+          "correct": false
+        },
+        {
+          "text": "Squash",
+          "correct": false
+        }
+      ],
+      "difficulty": "easy",
+      "fun_fact": "La pelota pasó de blanca a amarilla en 1972 para que se viera mejor en televisión.",
+      "category": "Deportes"
+    },
+    {
+      "id": "dep_es_014",
+      "question": "¿Sobre qué superficie se juega Roland Garros?",
+      "answers": [
+        {
+          "text": "Tierra batida",
+          "correct": true
+        },
+        {
+          "text": "Hierba",
+          "correct": false
+        },
+        {
+          "text": "Pista dura",
+          "correct": false
+        }
+      ],
+      "difficulty": "medium",
+      "fun_fact": "La arcilla frena la pelota y alarga los peloteos, de ahí sus partidos maratonianos.",
+      "category": "Deportes"
+    },
+    {
+      "id": "dep_es_015",
+      "question": "¿Qué selección ganó el Mundial de 1950 en el llamado 'Maracanazo'?",
+      "answers": [
+        {
+          "text": "Uruguay",
+          "correct": true
+        },
+        {
+          "text": "Brasil",
+          "correct": false
+        },
+        {
+          "text": "Suecia",
+          "correct": false
+        }
+      ],
+      "difficulty": "hard",
+      "fun_fact": "Ganó 2-1 en Río ante casi 200.000 espectadores que daban por hecho el título local.",
+      "category": "Deportes"
+    },
+    {
+      "id": "dep_es_016",
+      "question": "¿Cuántos puntos vale un triple en baloncesto?",
+      "answers": [
+        {
+          "text": "Tres",
+          "correct": true
+        },
+        {
+          "text": "Dos",
+          "correct": false
+        },
+        {
+          "text": "Cuatro",
+          "correct": false
+        }
+      ],
+      "difficulty": "easy",
+      "fun_fact": "La línea de tres puntos no llegó a la NBA hasta 1979.",
+      "category": "Deportes"
+    },
+    {
+      "id": "dep_es_017",
+      "question": "¿Qué club ha ganado más Copas de Europa y Ligas de Campeones?",
+      "answers": [
+        {
+          "text": "El Real Madrid",
+          "correct": true
+        },
+        {
+          "text": "El Milan",
+          "correct": false
+        },
+        {
+          "text": "El Bayern de Múnich",
+          "correct": false
+        }
+      ],
+      "difficulty": "medium",
+      "fun_fact": "Ganó las cinco primeras ediciones seguidas, de 1956 a 1960.",
+      "category": "Deportes"
+    },
+    {
+      "id": "dep_es_018",
+      "question": "¿Quién marcó más goles en una sola Copa del Mundo?",
+      "answers": [
+        {
+          "text": "Just Fontaine",
+          "correct": true
+        },
+        {
+          "text": "Gerd Müller",
+          "correct": false
+        },
+        {
+          "text": "Ronaldo",
+          "correct": false
+        }
+      ],
+      "difficulty": "hard",
+      "fun_fact": "Trece goles en el Mundial de 1958, un récord que sigue intacto.",
+      "category": "Deportes"
+    },
+    {
+      "id": "dep_es_019",
+      "question": "¿En qué país se codificó el fútbol moderno?",
+      "answers": [
+        {
+          "text": "Inglaterra",
+          "correct": true
+        },
+        {
+          "text": "Brasil",
+          "correct": false
+        },
+        {
+          "text": "Italia",
+          "correct": false
+        }
+      ],
+      "difficulty": "easy",
+      "fun_fact": "La Football Association escribió sus primeras reglas en Londres en 1863.",
+      "category": "Deportes"
+    },
+    {
+      "id": "dep_es_020",
+      "question": "¿Cuánto pesa aproximadamente un balón de fútbol reglamentario?",
+      "answers": [
+        {
+          "text": "Unos 430 gramos",
+          "correct": true
+        },
+        {
+          "text": "Unos 250 gramos",
+          "correct": false
+        },
+        {
+          "text": "Unos 700 gramos",
+          "correct": false
+        }
+      ],
+      "difficulty": "medium",
+      "fun_fact": "La FIFA exige entre 410 y 450 gramos al inicio del partido.",
+      "category": "Deportes"
+    },
+    {
+      "id": "dep_es_021",
+      "question": "¿En qué Mundial se estrenaron las tarjetas amarilla y roja?",
+      "answers": [
+        {
+          "text": "En el de 1970",
+          "correct": true
+        },
+        {
+          "text": "En el de 1958",
+          "correct": false
+        },
+        {
+          "text": "En el de 1982",
+          "correct": false
+        }
+      ],
+      "difficulty": "hard",
+      "fun_fact": "México 1970 fue también el primero televisado en color.",
+      "category": "Deportes"
+    },
+    {
+      "id": "dep_es_022",
+      "question": "¿Cuánto dura un partido de fútbol sin contar el tiempo añadido?",
+      "answers": [
+        {
+          "text": "Noventa minutos",
+          "correct": true
+        },
+        {
+          "text": "Ochenta minutos",
+          "correct": false
+        },
+        {
+          "text": "Cien minutos",
+          "correct": false
+        }
+      ],
+      "difficulty": "easy",
+      "fun_fact": "Son dos tiempos de 45 minutos separados por el descanso.",
+      "category": "Deportes"
+    },
+    {
+      "id": "dep_es_023",
+      "question": "¿Qué atleta jamaicano batió el récord del mundo de 100 metros en 2009?",
+      "answers": [
+        {
+          "text": "Usain Bolt",
+          "correct": true
+        },
+        {
+          "text": "Yohan Blake",
+          "correct": false
+        },
+        {
+          "text": "Asafa Powell",
+          "correct": false
+        }
+      ],
+      "difficulty": "medium",
+      "fun_fact": "Corrió 9,58 segundos en Berlín, una marca que sigue en pie.",
+      "category": "Deportes"
+    },
+    {
+      "id": "dep_es_024",
+      "question": "¿Quién ideó el sistema de tarjetas del fútbol?",
+      "answers": [
+        {
+          "text": "El árbitro Ken Aston",
+          "correct": true
+        },
+        {
+          "text": "El presidente Stanley Rous",
+          "correct": false
+        },
+        {
+          "text": "El dirigente João Havelange",
+          "correct": false
+        }
+      ],
+      "difficulty": "hard",
+      "fun_fact": "Se le ocurrió al detenerse en un semáforo camino de casa.",
+      "category": "Deportes"
+    },
+    {
+      "id": "dep_es_025",
+      "question": "¿Qué deporte se practica en el Tour de Francia?",
+      "answers": [
+        {
+          "text": "Ciclismo",
+          "correct": true
+        },
+        {
+          "text": "Atletismo",
+          "correct": false
+        },
+        {
+          "text": "Motociclismo",
+          "correct": false
+        }
+      ],
+      "difficulty": "easy",
+      "fun_fact": "La carrera nació en 1903 como una idea para vender más periódicos.",
+      "category": "Deportes"
+    },
+    {
+      "id": "dep_es_026",
+      "question": "¿Cuál es el récord mundial masculino de 100 metros lisos?",
+      "answers": [
+        {
+          "text": "9,58 segundos",
+          "correct": true
+        },
+        {
+          "text": "9,72 segundos",
+          "correct": false
+        },
+        {
+          "text": "9,49 segundos",
+          "correct": false
+        }
+      ],
+      "difficulty": "medium",
+      "fun_fact": "Bolt alcanzó en esa carrera una punta de más de 44 kilómetros por hora.",
+      "category": "Deportes"
+    },
+    {
+      "id": "dep_es_027",
+      "question": "¿Cuál es el estadio de fútbol con mayor capacidad del mundo?",
+      "answers": [
+        {
+          "text": "El Rungrado Primero de Mayo, en Pionyang",
+          "correct": true
+        },
+        {
+          "text": "El Maracaná, en Río",
+          "correct": false
+        },
+        {
+          "text": "El Camp Nou, en Barcelona",
+          "correct": false
+        }
+      ],
+      "difficulty": "hard",
+      "fun_fact": "Supera los 100.000 asientos y se usa sobre todo para actos multitudinarios.",
+      "category": "Deportes"
+    },
+    {
+      "id": "dep_es_028",
+      "question": "¿Cuántos jugadores de cada equipo están en pista en el baloncesto?",
+      "answers": [
+        {
+          "text": "Cinco",
+          "correct": true
+        },
+        {
+          "text": "Seis",
+          "correct": false
+        },
+        {
+          "text": "Siete",
+          "correct": false
+        }
+      ],
+      "difficulty": "easy",
+      "fun_fact": "El resto de la plantilla espera en el banquillo, y los cambios son ilimitados.",
+      "category": "Deportes"
+    },
+    {
+      "id": "dep_es_029",
+      "question": "¿En qué ciudad española se celebraron los Juegos Olímpicos de 1992?",
+      "answers": [
+        {
+          "text": "En Barcelona",
+          "correct": true
+        },
+        {
+          "text": "En Sevilla",
+          "correct": false
+        },
+        {
+          "text": "En Madrid",
+          "correct": false
+        }
+      ],
+      "difficulty": "medium",
+      "fun_fact": "La antorcha se encendió con una flecha lanzada por el arquero Antonio Rebollo.",
+      "category": "Deportes"
+    },
+    {
+      "id": "dep_es_030",
+      "question": "¿Qué atleta ganó el maratón olímpico de 1960 corriendo descalzo?",
+      "answers": [
+        {
+          "text": "Abebe Bikila",
+          "correct": true
+        },
+        {
+          "text": "Kip Keino",
+          "correct": false
+        },
+        {
+          "text": "Emil Zátopek",
+          "correct": false
+        }
+      ],
+      "difficulty": "hard",
+      "fun_fact": "El etíope corrió por las calles de Roma sin zapatillas y batió el récord del mundo.",
+      "category": "Deportes"
+    },
+    {
+      "id": "dep_es_031",
+      "question": "¿Qué color de tarjeta significa expulsión en el fútbol?",
+      "answers": [
+        {
+          "text": "La roja",
+          "correct": true
+        },
+        {
+          "text": "La amarilla",
+          "correct": false
+        },
+        {
+          "text": "La verde",
+          "correct": false
+        }
+      ],
+      "difficulty": "easy",
+      "fun_fact": "El equipo expulsado se queda con un jugador menos el resto del partido.",
+      "category": "Deportes"
+    },
+    {
+      "id": "dep_es_032",
+      "question": "¿Qué país ha ganado más medallas olímpicas de verano en la historia?",
+      "answers": [
+        {
+          "text": "Estados Unidos",
+          "correct": true
+        },
+        {
+          "text": "La Unión Soviética",
+          "correct": false
+        },
+        {
+          "text": "China",
+          "correct": false
+        }
+      ],
+      "difficulty": "medium",
+      "fun_fact": "Supera las 2.600 medallas, más del doble que su perseguidor.",
+      "category": "Deportes"
+    },
+    {
+      "id": "dep_es_033",
+      "question": "¿Qué atleta ganó cuatro oros en los Juegos de Berlín de 1936?",
+      "answers": [
+        {
+          "text": "Jesse Owens",
+          "correct": true
+        },
+        {
+          "text": "Carl Lewis",
+          "correct": false
+        },
+        {
+          "text": "Paavo Nurmi",
+          "correct": false
+        }
+      ],
+      "difficulty": "hard",
+      "fun_fact": "Sus victorias desmintieron en la propia Alemania nazi su propaganda racial.",
+      "category": "Deportes"
+    },
+    {
+      "id": "dep_es_034",
+      "question": "¿En qué deporte destacó Michael Jordan?",
+      "answers": [
+        {
+          "text": "Baloncesto",
+          "correct": true
+        },
+        {
+          "text": "Béisbol",
+          "correct": false
+        },
+        {
+          "text": "Fútbol americano",
+          "correct": false
+        }
+      ],
+      "difficulty": "easy",
+      "fun_fact": "Se retiró brevemente en 1993 para probar suerte como jugador de béisbol.",
+      "category": "Deportes"
+    },
+    {
+      "id": "dep_es_035",
+      "question": "¿Qué significan las siglas FIFA?",
+      "answers": [
+        {
+          "text": "Federación Internacional de Fútbol Asociación",
+          "correct": true
+        },
+        {
+          "text": "Federación Ibérica de Fútbol Amateur",
+          "correct": false
+        },
+        {
+          "text": "Federación Internacional de Fútbol Amateur",
+          "correct": false
+        }
+      ],
+      "difficulty": "medium",
+      "fun_fact": "Se fundó en París en 1904 con solo siete federaciones europeas.",
+      "category": "Deportes"
+    },
+    {
+      "id": "dep_es_036",
+      "question": "¿Quién bajó por primera vez de los cuatro minutos en la milla?",
+      "answers": [
+        {
+          "text": "Roger Bannister",
+          "correct": true
+        },
+        {
+          "text": "Sebastian Coe",
+          "correct": false
+        },
+        {
+          "text": "John Landy",
+          "correct": false
+        }
+      ],
+      "difficulty": "hard",
+      "fun_fact": "Lo hizo en Oxford en 1954 con 3 minutos y 59,4 segundos.",
+      "category": "Deportes"
+    },
+    {
+      "id": "dep_es_037",
+      "question": "¿Qué torneo de tenis se juega sobre hierba en Londres?",
+      "answers": [
+        {
+          "text": "Wimbledon",
+          "correct": true
+        },
+        {
+          "text": "Roland Garros",
+          "correct": false
+        },
+        {
+          "text": "El Abierto de Australia",
+          "correct": false
+        }
+      ],
+      "difficulty": "easy",
+      "fun_fact": "Es el más antiguo del mundo: se disputa desde 1877.",
+      "category": "Deportes"
+    },
+    {
+      "id": "dep_es_038",
+      "question": "¿En qué deporte se entrega el trofeo Vince Lombardi?",
+      "answers": [
+        {
+          "text": "Fútbol americano",
+          "correct": true
+        },
+        {
+          "text": "Béisbol",
+          "correct": false
+        },
+        {
+          "text": "Baloncesto",
+          "correct": false
+        }
+      ],
+      "difficulty": "medium",
+      "fun_fact": "Lleva el nombre del entrenador que ganó las dos primeras Super Bowls.",
+      "category": "Deportes"
+    },
+    {
+      "id": "dep_es_039",
+      "question": "¿Qué gimnasta logró el primer 10 perfecto en unos Juegos Olímpicos?",
+      "answers": [
+        {
+          "text": "Nadia Comăneci",
+          "correct": true
+        },
+        {
+          "text": "Olga Korbut",
+          "correct": false
+        },
+        {
+          "text": "Larisa Latynina",
+          "correct": false
+        }
+      ],
+      "difficulty": "hard",
+      "fun_fact": "El marcador de Montreal 1976 no estaba preparado y mostró un 1,00.",
+      "category": "Deportes"
+    },
+    {
+      "id": "dep_es_040",
+      "question": "¿En cuántos cuartos se divide un partido de la NBA?",
+      "answers": [
+        {
+          "text": "Cuatro",
+          "correct": true
+        },
+        {
+          "text": "Dos",
+          "correct": false
+        },
+        {
+          "text": "Tres",
+          "correct": false
+        }
+      ],
+      "difficulty": "easy",
+      "fun_fact": "En la NBA cada cuarto dura doce minutos; en la FIBA, diez.",
+      "category": "Deportes"
+    },
+    {
+      "id": "dep_es_041",
+      "question": "¿Cómo se llama el estadio del FC Barcelona?",
+      "answers": [
+        {
+          "text": "El Camp Nou",
+          "correct": true
+        },
+        {
+          "text": "El Santiago Bernabéu",
+          "correct": false
+        },
+        {
+          "text": "Mestalla",
+          "correct": false
+        }
+      ],
+      "difficulty": "medium",
+      "fun_fact": "Su nombre significa simplemente 'campo nuevo' en catalán.",
+      "category": "Deportes"
+    },
+    {
+      "id": "dep_es_042",
+      "question": "¿Qué tenista completó el Grand Slam en un mismo año en 1969?",
+      "answers": [
+        {
+          "text": "Rod Laver",
+          "correct": true
+        },
+        {
+          "text": "Roy Emerson",
+          "correct": false
+        },
+        {
+          "text": "Ken Rosewall",
+          "correct": false
+        }
+      ],
+      "difficulty": "hard",
+      "fun_fact": "Es el único hombre que lo ha conseguido dos veces, en 1962 y 1969.",
+      "category": "Deportes"
+    },
+    {
+      "id": "dep_es_043",
+      "question": "¿Qué medalla recibe quien gana una prueba olímpica?",
+      "answers": [
+        {
+          "text": "La de oro",
+          "correct": true
+        },
+        {
+          "text": "La de plata",
+          "correct": false
+        },
+        {
+          "text": "La de bronce",
+          "correct": false
+        }
+      ],
+      "difficulty": "easy",
+      "fun_fact": "En realidad es de plata recubierta de oro desde los Juegos de 1912.",
+      "category": "Deportes"
+    },
+    {
+      "id": "dep_es_044",
+      "question": "¿Cómo se llama el estadio del Real Madrid?",
+      "answers": [
+        {
+          "text": "El Santiago Bernabéu",
+          "correct": true
+        },
+        {
+          "text": "El Camp Nou",
+          "correct": false
+        },
+        {
+          "text": "El Vicente Calderón",
+          "correct": false
+        }
+      ],
+      "difficulty": "medium",
+      "fun_fact": "Lleva el nombre del presidente que impulsó su construcción en los años cuarenta.",
+      "category": "Deportes"
+    },
+    {
+      "id": "dep_es_045",
+      "question": "¿Qué boxeador panameño fue apodado 'Manos de Piedra'?",
+      "answers": [
+        {
+          "text": "Roberto Durán",
+          "correct": true
+        },
+        {
+          "text": "Julio César Chávez",
+          "correct": false
+        },
+        {
+          "text": "Carlos Monzón",
+          "correct": false
+        }
+      ],
+      "difficulty": "hard",
+      "fun_fact": "Peleó como profesional a lo largo de cinco décadas distintas.",
+      "category": "Deportes"
+    },
+    {
+      "id": "dep_es_046",
+      "question": "¿En qué deporte se consigue un 'home run'?",
+      "answers": [
+        {
+          "text": "Béisbol",
+          "correct": true
+        },
+        {
+          "text": "Críquet",
+          "correct": false
+        },
+        {
+          "text": "Golf",
+          "correct": false
+        }
+      ],
+      "difficulty": "easy",
+      "fun_fact": "El bateador recorre las cuatro bases seguidas tras sacar la pelota del campo.",
+      "category": "Deportes"
+    },
+    {
+      "id": "dep_es_047",
+      "question": "¿Qué piloto ganó siete campeonatos de Fórmula 1 antes de 2010?",
+      "answers": [
+        {
+          "text": "Michael Schumacher",
+          "correct": true
+        },
+        {
+          "text": "Ayrton Senna",
+          "correct": false
+        },
+        {
+          "text": "Alain Prost",
+          "correct": false
+        }
+      ],
+      "difficulty": "medium",
+      "fun_fact": "Cinco de ellos fueron consecutivos con Ferrari, entre 2000 y 2004.",
+      "category": "Deportes"
+    },
+    {
+      "id": "dep_es_048",
+      "question": "¿En qué país se celebró el combate 'Rumble in the Jungle'?",
+      "answers": [
+        {
+          "text": "En Zaire",
+          "correct": true
+        },
+        {
+          "text": "En Filipinas",
+          "correct": false
+        },
+        {
+          "text": "En Estados Unidos",
+          "correct": false
+        }
+      ],
+      "difficulty": "hard",
+      "fun_fact": "Ali venció a Foreman en Kinsasa en 1974 con su táctica del 'rope-a-dope'.",
+      "category": "Deportes"
+    },
+    {
+      "id": "dep_es_049",
+      "question": "¿Qué país ha ganado más Copas del Mundo de fútbol masculinas?",
+      "answers": [
+        {
+          "text": "Brasil",
+          "correct": true
+        },
+        {
+          "text": "Alemania",
+          "correct": false
+        },
+        {
+          "text": "Italia",
+          "correct": false
+        }
+      ],
+      "difficulty": "easy",
+      "fun_fact": "Suma cinco títulos y es la única selección que ha jugado todos los Mundiales.",
+      "category": "Deportes"
+    },
+    {
+      "id": "dep_es_050",
+      "question": "¿En qué país se codificó el bádminton moderno?",
+      "answers": [
+        {
+          "text": "En Inglaterra",
+          "correct": true
+        },
+        {
+          "text": "En China",
+          "correct": false
+        },
+        {
+          "text": "En Indonesia",
+          "correct": false
+        }
+      ],
+      "difficulty": "medium",
+      "fun_fact": "Toma el nombre de Badminton House, la mansión donde se popularizó.",
+      "category": "Deportes"
+    },
+    {
+      "id": "dep_es_051",
+      "question": "¿Qué ciclista belga fue apodado 'El Caníbal'?",
+      "answers": [
+        {
+          "text": "Eddy Merckx",
+          "correct": true
+        },
+        {
+          "text": "Fausto Coppi",
+          "correct": false
+        },
+        {
+          "text": "Jacques Anquetil",
+          "correct": false
+        }
+      ],
+      "difficulty": "hard",
+      "fun_fact": "El apodo se lo puso la hija de un compañero, harta de que lo ganara todo.",
+      "category": "Deportes"
+    },
+    {
+      "id": "dep_es_052",
+      "question": "¿Qué deporte practicaba Rafael Nadal?",
+      "answers": [
+        {
+          "text": "Tenis",
+          "correct": true
+        },
+        {
+          "text": "Golf",
+          "correct": false
+        },
+        {
+          "text": "Pádel",
+          "correct": false
+        }
+      ],
+      "difficulty": "easy",
+      "fun_fact": "Ganó Roland Garros catorce veces, un récord en un solo torneo de Grand Slam.",
+      "category": "Deportes"
+    },
+    {
+      "id": "dep_es_053",
+      "question": "¿Qué deporte practican los All Blacks?",
+      "answers": [
+        {
+          "text": "Rugby",
+          "correct": true
+        },
+        {
+          "text": "Críquet",
+          "correct": false
+        },
+        {
+          "text": "Hockey",
+          "correct": false
+        }
+      ],
+      "difficulty": "medium",
+      "fun_fact": "Antes de cada partido interpretan la haka, una danza ceremonial maorí.",
+      "category": "Deportes"
+    },
+    {
+      "id": "dep_es_054",
+      "question": "¿Cuántos Tours de Francia ganó Eddy Merckx?",
+      "answers": [
+        {
+          "text": "Cinco",
+          "correct": true
+        },
+        {
+          "text": "Cuatro",
+          "correct": false
+        },
+        {
+          "text": "Siete",
+          "correct": false
+        }
+      ],
+      "difficulty": "hard",
+      "fun_fact": "Ganó además cinco Giros y una Vuelta a España.",
+      "category": "Deportes"
+    },
+    {
+      "id": "dep_es_055",
+      "question": "¿Cuál es la principal categoría del automovilismo mundial?",
+      "answers": [
+        {
+          "text": "La Fórmula 1",
+          "correct": true
+        },
+        {
+          "text": "El Rally Dakar",
+          "correct": false
+        },
+        {
+          "text": "MotoGP",
+          "correct": false
+        }
+      ],
+      "difficulty": "easy",
+      "fun_fact": "Su primer campeonato del mundo se disputó en 1950.",
+      "category": "Deportes"
+    },
+    {
+      "id": "dep_es_056",
+      "question": "¿De qué país son los All Blacks?",
+      "answers": [
+        {
+          "text": "De Nueva Zelanda",
+          "correct": true
+        },
+        {
+          "text": "De Australia",
+          "correct": false
+        },
+        {
+          "text": "De Sudáfrica",
+          "correct": false
+        }
+      ],
+      "difficulty": "medium",
+      "fun_fact": "Su porcentaje de victorias es el más alto de cualquier selección deportiva importante.",
+      "category": "Deportes"
+    },
+    {
+      "id": "dep_es_057",
+      "question": "¿En qué Juegos Olímpicos pudieron correr las mujeres el maratón por primera vez?",
+      "answers": [
+        {
+          "text": "En Los Ángeles 1984",
+          "correct": true
+        },
+        {
+          "text": "En Múnich 1972",
+          "correct": false
+        },
+        {
+          "text": "En Atlanta 1996",
+          "correct": false
+        }
+      ],
+      "difficulty": "hard",
+      "fun_fact": "Ganó la estadounidense Joan Benoit; hasta entonces se creía la distancia dañina para ellas.",
+      "category": "Deportes"
+    },
+    {
+      "id": "dep_es_058",
+      "question": "¿Cuántos jugadores de cada equipo hay en cancha en el voleibol?",
+      "answers": [
+        {
+          "text": "Seis",
+          "correct": true
+        },
+        {
+          "text": "Cinco",
+          "correct": false
+        },
+        {
+          "text": "Siete",
+          "correct": false
+        }
+      ],
+      "difficulty": "easy",
+      "fun_fact": "Rotan de posición cada vez que recuperan el saque.",
+      "category": "Deportes"
+    },
+    {
+      "id": "dep_es_059",
+      "question": "¿Cuántos hoyos tiene un campo de golf reglamentario?",
+      "answers": [
+        {
+          "text": "Dieciocho",
+          "correct": true
+        },
+        {
+          "text": "Dieciséis",
+          "correct": false
+        },
+        {
+          "text": "Veinte",
+          "correct": false
+        }
+      ],
+      "difficulty": "medium",
+      "fun_fact": "La cifra la fijó el club de St Andrews en Escocia en 1764.",
+      "category": "Deportes"
+    },
+    {
+      "id": "dep_es_060",
+      "question": "¿Qué piloto ganó el primer campeonato del mundo de Fórmula 1?",
+      "answers": [
+        {
+          "text": "Nino Farina",
+          "correct": true
+        },
+        {
+          "text": "Juan Manuel Fangio",
+          "correct": false
+        },
+        {
+          "text": "Alberto Ascari",
+          "correct": false
+        }
+      ],
+      "difficulty": "hard",
+      "fun_fact": "Fue en 1950, con Alfa Romeo y por solo tres puntos sobre Fangio.",
+      "category": "Deportes"
+    },
+    {
+      "id": "dep_es_061",
+      "question": "¿En qué deporte se juega con un balón ovalado y se marcan ensayos?",
+      "answers": [
+        {
+          "text": "Rugby",
+          "correct": true
+        },
+        {
+          "text": "Fútbol",
+          "correct": false
+        },
+        {
+          "text": "Balonmano",
+          "correct": false
+        }
+      ],
+      "difficulty": "easy",
+      "fun_fact": "El balón ovalado nació por accidente: las vejigas de cerdo infladas tenían esa forma.",
+      "category": "Deportes"
+    },
+    {
+      "id": "dep_es_062",
+      "question": "¿Qué significa hacer un 'birdie' en golf?",
+      "answers": [
+        {
+          "text": "Un golpe menos que el par",
+          "correct": true
+        },
+        {
+          "text": "Un golpe más que el par",
+          "correct": false
+        },
+        {
+          "text": "Dos golpes más que el par",
+          "correct": false
+        }
+      ],
+      "difficulty": "medium",
+      "fun_fact": "El término nació en Estados Unidos, donde 'bird' se usaba como sinónimo de excelente.",
+      "category": "Deportes"
+    },
+    {
+      "id": "dep_es_063",
+      "question": "¿Cuántos títulos mundiales de Fórmula 1 ganó Juan Manuel Fangio?",
+      "answers": [
+        {
+          "text": "Cinco",
+          "correct": true
+        },
+        {
+          "text": "Cuatro",
+          "correct": false
+        },
+        {
+          "text": "Tres",
+          "correct": false
+        }
+      ],
+      "difficulty": "hard",
+      "fun_fact": "Los consiguió con cuatro escuderías distintas, algo que nadie ha repetido.",
+      "category": "Deportes"
+    },
+    {
+      "id": "dep_es_064",
+      "question": "¿Dónde se celebraron los primeros Juegos Olímpicos modernos?",
+      "answers": [
+        {
+          "text": "En Atenas",
+          "correct": true
+        },
+        {
+          "text": "En París",
+          "correct": false
+        },
+        {
+          "text": "En Londres",
+          "correct": false
+        }
+      ],
+      "difficulty": "easy",
+      "fun_fact": "Fue en 1896, por iniciativa del barón Pierre de Coubertin.",
+      "category": "Deportes"
+    },
+    {
+      "id": "dep_es_065",
+      "question": "¿Y qué significa un 'eagle'?",
+      "answers": [
+        {
+          "text": "Dos golpes menos que el par",
+          "correct": true
+        },
+        {
+          "text": "Un golpe menos que el par",
+          "correct": false
+        },
+        {
+          "text": "Tres golpes más que el par",
+          "correct": false
+        }
+      ],
+      "difficulty": "medium",
+      "fun_fact": "Siguiendo la metáfora de las aves, tres bajo par es un 'albatros'.",
+      "category": "Deportes"
+    },
+    {
+      "id": "dep_es_066",
+      "question": "¿En qué circuito se disputa la carrera de resistencia de 24 horas más famosa?",
+      "answers": [
+        {
+          "text": "En Le Mans",
+          "correct": true
+        },
+        {
+          "text": "En Daytona",
+          "correct": false
+        },
+        {
+          "text": "En Spa-Francorchamps",
+          "correct": false
+        }
+      ],
+      "difficulty": "hard",
+      "fun_fact": "Se corre desde 1923 y los equipos alternan tres pilotos por coche.",
+      "category": "Deportes"
+    },
+    {
+      "id": "dep_es_067",
+      "question": "¿Qué hace falta para firmar un 'hat-trick' en el fútbol?",
+      "answers": [
+        {
+          "text": "Marcar tres goles en un partido",
+          "correct": true
+        },
+        {
+          "text": "Marcar dos goles seguidos",
+          "correct": false
+        },
+        {
+          "text": "Parar tres penaltis",
+          "correct": false
+        }
+      ],
+      "difficulty": "easy",
+      "fun_fact": "El nombre viene del críquet, donde el club regalaba un sombrero por la hazaña.",
+      "category": "Deportes"
+    },
+    {
+      "id": "dep_es_068",
+      "question": "¿En qué año se celebraron los primeros Juegos Paralímpicos?",
+      "answers": [
+        {
+          "text": "En 1960",
+          "correct": true
+        },
+        {
+          "text": "En 1948",
+          "correct": false
+        },
+        {
+          "text": "En 1972",
+          "correct": false
+        }
+      ],
+      "difficulty": "medium",
+      "fun_fact": "Fue en Roma, con 400 deportistas de 23 países.",
+      "category": "Deportes"
+    },
+    {
+      "id": "dep_es_069",
+      "question": "¿Qué jugador anotó 100 puntos en un solo partido de la NBA?",
+      "answers": [
+        {
+          "text": "Wilt Chamberlain",
+          "correct": true
+        },
+        {
+          "text": "Kobe Bryant",
+          "correct": false
+        },
+        {
+          "text": "Michael Jordan",
+          "correct": false
+        }
+      ],
+      "difficulty": "hard",
+      "fun_fact": "Ocurrió en 1962 y no existe grabación en vídeo del partido.",
+      "category": "Deportes"
+    },
+    {
+      "id": "dep_es_070",
+      "question": "¿Cuál es la distancia oficial de una maratón?",
+      "answers": [
+        {
+          "text": "42,195 kilómetros",
+          "correct": true
+        },
+        {
+          "text": "40 kilómetros exactos",
+          "correct": false
+        },
+        {
+          "text": "45 kilómetros",
+          "correct": false
+        }
+      ],
+      "difficulty": "easy",
+      "fun_fact": "La cifra rara se fijó en Londres 1908 para que la meta quedase frente al palco real.",
+      "category": "Deportes"
+    },
+    {
+      "id": "dep_es_071",
+      "question": "¿Qué ciclista español ganó cinco Tours de Francia consecutivos entre 1991 y 1995?",
+      "answers": [
+        {
+          "text": "Miguel Indurain",
+          "correct": true
+        },
+        {
+          "text": "Pedro Delgado",
+          "correct": false
+        },
+        {
+          "text": "Alberto Contador",
+          "correct": false
+        }
+      ],
+      "difficulty": "medium",
+      "fun_fact": "Fue el primero en encadenar cinco victorias seguidas en la carrera.",
+      "category": "Deportes"
+    },
+    {
+      "id": "dep_es_072",
+      "question": "¿Qué franquicia comparte con los Lakers el récord de títulos de la NBA?",
+      "answers": [
+        {
+          "text": "Los Boston Celtics",
+          "correct": true
+        },
+        {
+          "text": "Los Chicago Bulls",
+          "correct": false
+        },
+        {
+          "text": "Los Golden State Warriors",
+          "correct": false
+        }
+      ],
+      "difficulty": "hard",
+      "fun_fact": "Los Celtics ganaron ocho campeonatos seguidos entre 1959 y 1966.",
+      "category": "Deportes"
+    },
+    {
+      "id": "dep_es_073",
+      "question": "¿En qué deporte se juega en un 'green' y se embocan hoyos?",
+      "answers": [
+        {
+          "text": "Golf",
+          "correct": true
+        },
+        {
+          "text": "Croquet",
+          "correct": false
+        },
+        {
+          "text": "Petanca",
+          "correct": false
+        }
+      ],
+      "difficulty": "easy",
+      "fun_fact": "Un campo reglamentario tiene dieciocho hoyos.",
+      "category": "Deportes"
+    },
+    {
+      "id": "dep_es_074",
+      "question": "¿Cuántas etapas suele tener el Tour de Francia?",
+      "answers": [
+        {
+          "text": "Veintiuna",
+          "correct": true
+        },
+        {
+          "text": "Dieciocho",
+          "correct": false
+        },
+        {
+          "text": "Veinticinco",
+          "correct": false
+        }
+      ],
+      "difficulty": "medium",
+      "fun_fact": "Se reparten en tres semanas, con dos días de descanso.",
+      "category": "Deportes"
+    },
+    {
+      "id": "dep_es_075",
+      "question": "¿En qué Juegos Olímpicos se incluyó el baloncesto por primera vez como deporte oficial?",
+      "answers": [
+        {
+          "text": "En Berlín 1936",
+          "correct": true
+        },
+        {
+          "text": "En San Luis 1904",
+          "correct": false
+        },
+        {
+          "text": "En Londres 1948",
+          "correct": false
+        }
+      ],
+      "difficulty": "hard",
+      "fun_fact": "La final se jugó sobre tierra batida y bajo la lluvia: acabó 19-8.",
+      "category": "Deportes"
+    },
+    {
+      "id": "dep_es_076",
+      "question": "¿Cuántas canastas hay en una pista de baloncesto?",
+      "answers": [
+        {
+          "text": "Dos",
+          "correct": true
+        },
+        {
+          "text": "Una",
+          "correct": false
+        },
+        {
+          "text": "Cuatro",
+          "correct": false
+        }
+      ],
+      "difficulty": "easy",
+      "fun_fact": "Están a 3,05 metros del suelo, una altura que no ha cambiado desde 1891.",
+      "category": "Deportes"
+    },
+    {
+      "id": "dep_es_077",
+      "question": "¿Qué maillot lleva el mejor escalador del Tour de Francia?",
+      "answers": [
+        {
+          "text": "El de lunares rojos",
+          "correct": true
+        },
+        {
+          "text": "El verde",
+          "correct": false
+        },
+        {
+          "text": "El blanco",
+          "correct": false
+        }
+      ],
+      "difficulty": "medium",
+      "fun_fact": "Se introdujo en 1975 y lo patrocinaba una marca de chocolate.",
+      "category": "Deportes"
+    },
+    {
+      "id": "dep_es_078",
+      "question": "¿Quién inventó el baloncesto?",
+      "answers": [
+        {
+          "text": "James Naismith",
+          "correct": true
+        },
+        {
+          "text": "Walter Camp",
+          "correct": false
+        },
+        {
+          "text": "Abner Doubleday",
+          "correct": false
+        }
+      ],
+      "difficulty": "hard",
+      "fun_fact": "Lo diseñó en 1891 para que sus alumnos hicieran ejercicio bajo techo en invierno.",
+      "category": "Deportes"
+    },
+    {
+      "id": "dep_es_079",
+      "question": "¿En qué deporte se habla de un 'K.O.'?",
+      "answers": [
+        {
+          "text": "Boxeo",
+          "correct": true
+        },
+        {
+          "text": "Judo",
+          "correct": false
+        },
+        {
+          "text": "Esgrima",
+          "correct": false
+        }
+      ],
+      "difficulty": "easy",
+      "fun_fact": "Viene del inglés 'knock-out': el árbitro cuenta hasta diez y el combate acaba.",
+      "category": "Deportes"
+    },
+    {
+      "id": "dep_es_080",
+      "question": "¿Y qué maillot lleva el líder de la clasificación por puntos?",
+      "answers": [
+        {
+          "text": "El verde",
+          "correct": true
+        },
+        {
+          "text": "El amarillo",
+          "correct": false
+        },
+        {
+          "text": "El de lunares",
+          "correct": false
+        }
+      ],
+      "difficulty": "medium",
+      "fun_fact": "Premia la regularidad en las llegadas, así que suele ganarlo un esprínter.",
+      "category": "Deportes"
+    },
+    {
+      "id": "dep_es_081",
+      "question": "¿Qué se usó como canasta en el primer partido de baloncesto de la historia?",
+      "answers": [
+        {
+          "text": "Cestos de melocotones",
+          "correct": true
+        },
+        {
+          "text": "Aros de metal",
+          "correct": false
+        },
+        {
+          "text": "Barriles de madera",
+          "correct": false
+        }
+      ],
+      "difficulty": "hard",
+      "fun_fact": "Había que subirse a una escalera para recuperar el balón tras cada canasta.",
+      "category": "Deportes"
+    },
+    {
+      "id": "dep_es_082",
+      "question": "¿Qué animal se monta en la hípica?",
+      "answers": [
+        {
+          "text": "El caballo",
+          "correct": true
+        },
+        {
+          "text": "El camello",
+          "correct": false
+        },
+        {
+          "text": "El toro",
+          "correct": false
+        }
+      ],
+      "difficulty": "easy",
+      "fun_fact": "Es el único deporte olímpico en el que hombres y mujeres compiten en igualdad.",
+      "category": "Deportes"
+    },
+    {
+      "id": "dep_es_083",
+      "question": "¿En qué deporte se disputa la Copa Davis?",
+      "answers": [
+        {
+          "text": "Tenis",
+          "correct": true
+        },
+        {
+          "text": "Golf",
+          "correct": false
+        },
+        {
+          "text": "Vela",
+          "correct": false
+        }
+      ],
+      "difficulty": "medium",
+      "fun_fact": "Es una competición por equipos nacionales que se juega desde 1900.",
+      "category": "Deportes"
+    },
+    {
+      "id": "dep_es_084",
+      "question": "¿Cuántos jugadores por equipo había en aquel primer partido de baloncesto?",
+      "answers": [
+        {
+          "text": "Nueve",
+          "correct": true
+        },
+        {
+          "text": "Cinco",
+          "correct": false
+        },
+        {
+          "text": "Siete",
+          "correct": false
+        }
+      ],
+      "difficulty": "hard",
+      "fun_fact": "Naismith repartió a sus dieciocho alumnos en dos equipos iguales.",
+      "category": "Deportes"
+    },
+    {
+      "id": "dep_es_085",
+      "question": "¿Qué estilo de natación se nada boca arriba?",
+      "answers": [
+        {
+          "text": "Espalda",
+          "correct": true
+        },
+        {
+          "text": "Mariposa",
+          "correct": false
+        },
+        {
+          "text": "Braza",
+          "correct": false
+        }
+      ],
+      "difficulty": "easy",
+      "fun_fact": "Es el único estilo cuya salida se hace desde dentro del agua.",
+      "category": "Deportes"
+    },
+    {
+      "id": "dep_es_086",
+      "question": "¿Cuánto dura la prórroga completa en un partido de fútbol?",
+      "answers": [
+        {
+          "text": "Treinta minutos",
+          "correct": true
+        },
+        {
+          "text": "Veinte minutos",
+          "correct": false
+        },
+        {
+          "text": "Quince minutos",
+          "correct": false
+        }
+      ],
+      "difficulty": "medium",
+      "fun_fact": "Son dos tiempos de quince minutos, sin descanso largo entre ellos.",
+      "category": "Deportes"
+    },
+    {
+      "id": "dep_es_087",
+      "question": "¿Quién inventó el voleibol?",
+      "answers": [
+        {
+          "text": "William G. Morgan",
+          "correct": true
+        },
+        {
+          "text": "James Naismith",
+          "correct": false
+        },
+        {
+          "text": "Pierre de Coubertin",
+          "correct": false
+        }
+      ],
+      "difficulty": "hard",
+      "fun_fact": "Lo creó en 1895 como alternativa menos brusca al baloncesto.",
+      "category": "Deportes"
+    },
+    {
+      "id": "dep_es_088",
+      "question": "¿Cuántos sets debe ganar un hombre para llevarse un partido de Grand Slam?",
+      "answers": [
+        {
+          "text": "Tres",
+          "correct": true
+        },
+        {
+          "text": "Dos",
+          "correct": false
+        },
+        {
+          "text": "Cuatro",
+          "correct": false
+        }
+      ],
+      "difficulty": "easy",
+      "fun_fact": "Se juegan al mejor de cinco, un formato que solo se usa en esos cuatro torneos.",
+      "category": "Deportes"
+    },
+    {
+      "id": "dep_es_089",
+      "question": "¿Desde qué distancia se lanza un penalti en el fútbol?",
+      "answers": [
+        {
+          "text": "Desde once metros",
+          "correct": true
+        },
+        {
+          "text": "Desde nueve metros",
+          "correct": false
+        },
+        {
+          "text": "Desde trece metros",
+          "correct": false
+        }
+      ],
+      "difficulty": "medium",
+      "fun_fact": "En países de habla inglesa se le llama 'the spot', el punto.",
+      "category": "Deportes"
+    },
+    {
+      "id": "dep_es_090",
+      "question": "¿Qué selección ha ganado más Copas del Mundo de rugby?",
+      "answers": [
+        {
+          "text": "Sudáfrica",
+          "correct": true
+        },
+        {
+          "text": "Nueva Zelanda",
+          "correct": false
+        },
+        {
+          "text": "Australia",
+          "correct": false
+        }
+      ],
+      "difficulty": "hard",
+      "fun_fact": "Los Springboks levantaron el trofeo en 1995, 2007, 2019 y 2023.",
+      "category": "Deportes"
+    },
+    {
+      "id": "dep_es_091",
+      "question": "¿Qué país organizó el Mundial de fútbol de 2010?",
+      "answers": [
+        {
+          "text": "Sudáfrica",
+          "correct": true
+        },
+        {
+          "text": "Brasil",
+          "correct": false
+        },
+        {
+          "text": "Alemania",
+          "correct": false
+        }
+      ],
+      "difficulty": "easy",
+      "fun_fact": "Fue el primer Mundial disputado en suelo africano.",
+      "category": "Deportes"
+    },
+    {
+      "id": "dep_es_092",
+      "question": "¿Qué altura tiene una portería de fútbol reglamentaria?",
+      "answers": [
+        {
+          "text": "2,44 metros",
+          "correct": true
+        },
+        {
+          "text": "Dos metros",
+          "correct": false
+        },
+        {
+          "text": "Tres metros",
+          "correct": false
+        }
+      ],
+      "difficulty": "medium",
+      "fun_fact": "Equivale a ocho pies, la medida original inglesa.",
+      "category": "Deportes"
+    },
+    {
+      "id": "dep_es_093",
+      "question": "¿En qué año se disputó la primera Copa del Mundo de rugby?",
+      "answers": [
+        {
+          "text": "En 1987",
+          "correct": true
+        },
+        {
+          "text": "En 1975",
+          "correct": false
+        },
+        {
+          "text": "En 1995",
+          "correct": false
+        }
+      ],
+      "difficulty": "hard",
+      "fun_fact": "La organizaron Nueva Zelanda y Australia, y ganaron los All Blacks.",
+      "category": "Deportes"
+    },
+    {
+      "id": "dep_es_094",
+      "question": "¿En qué deporte se hace un 'mate' o 'slam dunk'?",
+      "answers": [
+        {
+          "text": "Baloncesto",
+          "correct": true
+        },
+        {
+          "text": "Voleibol",
+          "correct": false
+        },
+        {
+          "text": "Balonmano",
+          "correct": false
+        }
+      ],
+      "difficulty": "easy",
+      "fun_fact": "Estuvo prohibido en el baloncesto universitario estadounidense entre 1967 y 1976.",
+      "category": "Deportes"
+    },
+    {
+      "id": "dep_es_095",
+      "question": "¿Qué anchura tiene una portería de fútbol reglamentaria?",
+      "answers": [
+        {
+          "text": "7,32 metros",
+          "correct": true
+        },
+        {
+          "text": "Seis metros",
+          "correct": false
+        },
+        {
+          "text": "Ocho metros",
+          "correct": false
+        }
+      ],
+      "difficulty": "medium",
+      "fun_fact": "Son ocho yardas exactas: las medidas del fútbol siguen siendo imperiales.",
+      "category": "Deportes"
+    },
+    {
+      "id": "dep_es_096",
+      "question": "¿Qué nadador ganó siete oros en los Juegos de Múnich de 1972?",
+      "answers": [
+        {
+          "text": "Mark Spitz",
+          "correct": true
+        },
+        {
+          "text": "Michael Phelps",
+          "correct": false
+        },
+        {
+          "text": "Matt Biondi",
+          "correct": false
+        }
+      ],
+      "difficulty": "hard",
+      "fun_fact": "Batió el récord del mundo en las siete pruebas.",
+      "category": "Deportes"
+    },
+    {
+      "id": "dep_es_097",
+      "question": "¿Cuánto dura cada cuarto en un partido de baloncesto FIBA?",
+      "answers": [
+        {
+          "text": "Diez minutos",
+          "correct": true
+        },
+        {
+          "text": "Doce minutos",
+          "correct": false
+        },
+        {
+          "text": "Quince minutos",
+          "correct": false
+        }
+      ],
+      "difficulty": "easy",
+      "fun_fact": "La NBA juega cuartos de doce, así que sus partidos son ocho minutos más largos.",
+      "category": "Deportes"
+    },
+    {
+      "id": "dep_es_098",
+      "question": "¿Qué deporte olímpico se practica con florete, espada y sable?",
+      "answers": [
+        {
+          "text": "La esgrima",
+          "correct": true
+        },
+        {
+          "text": "El tiro",
+          "correct": false
+        },
+        {
+          "text": "El pentatlón",
+          "correct": false
+        }
+      ],
+      "difficulty": "medium",
+      "fun_fact": "Es uno de los cinco deportes presentes en todos los Juegos modernos.",
+      "category": "Deportes"
+    },
+    {
+      "id": "dep_es_099",
+      "question": "¿En qué año se celebraron los primeros Juegos Olímpicos de Invierno?",
+      "answers": [
+        {
+          "text": "En 1924",
+          "correct": true
+        },
+        {
+          "text": "En 1932",
+          "correct": false
+        },
+        {
+          "text": "En 1908",
+          "correct": false
+        }
+      ],
+      "difficulty": "hard",
+      "fun_fact": "Fue en Chamonix, Francia, y en su día se llamaron simplemente 'Semana de deportes de invierno'.",
+      "category": "Deportes"
+    },
+    {
+      "id": "dep_es_100",
+      "question": "¿Qué deporte olímpico combina esquí de fondo y tiro con carabina?",
+      "answers": [
+        {
+          "text": "El biatlón",
+          "correct": true
+        },
+        {
+          "text": "El triatlón",
+          "correct": false
+        },
+        {
+          "text": "El pentatlón",
+          "correct": false
+        }
+      ],
+      "difficulty": "easy",
+      "fun_fact": "Nació de los entrenamientos militares de los soldados escandinavos.",
+      "category": "Deportes"
+    },
+    {
+      "id": "dep_es_101",
+      "question": "¿Cuántas pruebas componen el decatlón?",
+      "answers": [
+        {
+          "text": "Diez",
+          "correct": true
+        },
+        {
+          "text": "Siete",
+          "correct": false
+        },
+        {
+          "text": "Doce",
+          "correct": false
+        }
+      ],
+      "difficulty": "medium",
+      "fun_fact": "Se disputan en dos días y su ganador recibe tradicionalmente el título de mejor atleta.",
+      "category": "Deportes"
+    },
+    {
+      "id": "dep_es_102",
+      "question": "¿Qué país ha ganado más medallas en la historia de los Juegos de Invierno?",
+      "answers": [
+        {
+          "text": "Noruega",
+          "correct": true
+        },
+        {
+          "text": "Estados Unidos",
+          "correct": false
+        },
+        {
+          "text": "Alemania",
+          "correct": false
+        }
+      ],
+      "difficulty": "hard",
+      "fun_fact": "Un país de poco más de cinco millones de habitantes lidera el medallero histórico.",
+      "category": "Deportes"
+    },
+    {
+      "id": "dep_es_103",
+      "question": "¿Cuántos jugadores de cada equipo hay en cancha en el balonmano?",
+      "answers": [
+        {
+          "text": "Siete",
+          "correct": true
+        },
+        {
+          "text": "Seis",
+          "correct": false
+        },
+        {
+          "text": "Cinco",
+          "correct": false
+        }
+      ],
+      "difficulty": "easy",
+      "fun_fact": "Seis jugadores de campo más el portero.",
+      "category": "Deportes"
+    },
+    {
+      "id": "dep_es_104",
+      "question": "¿Cuántas pruebas componen el heptatlón?",
+      "answers": [
+        {
+          "text": "Siete",
+          "correct": true
+        },
+        {
+          "text": "Cinco",
+          "correct": false
+        },
+        {
+          "text": "Diez",
+          "correct": false
+        }
+      ],
+      "difficulty": "medium",
+      "fun_fact": "Es la prueba combinada femenina equivalente al decatlón.",
+      "category": "Deportes"
+    },
+    {
+      "id": "dep_es_105",
+      "question": "¿Cuáles son las tres Grandes Vueltas del ciclismo?",
+      "answers": [
+        {
+          "text": "El Giro de Italia, el Tour de Francia y la Vuelta a España",
+          "correct": true
+        },
+        {
+          "text": "El Tour, la París-Roubaix y el Giro",
+          "correct": false
+        },
+        {
+          "text": "La Vuelta, la Milán-San Remo y el Tour",
+          "correct": false
+        }
+      ],
+      "difficulty": "hard",
+      "fun_fact": "Muy pocos ciclistas han ganado las tres a lo largo de su carrera.",
+      "category": "Deportes"
+    },
+    {
+      "id": "dep_es_106",
+      "question": "¿En qué país nació el judo?",
+      "answers": [
+        {
+          "text": "En Japón",
+          "correct": true
+        },
+        {
+          "text": "En China",
+          "correct": false
+        },
+        {
+          "text": "En Corea",
+          "correct": false
+        }
+      ],
+      "difficulty": "easy",
+      "fun_fact": "Lo creó Jigoro Kano en 1882 a partir del jujutsu tradicional.",
+      "category": "Deportes"
+    },
+    {
+      "id": "dep_es_107",
+      "question": "¿Qué nadador ganó ocho oros en unos mismos Juegos Olímpicos?",
+      "answers": [
+        {
+          "text": "Michael Phelps",
+          "correct": true
+        },
+        {
+          "text": "Mark Spitz",
+          "correct": false
+        },
+        {
+          "text": "Ian Thorpe",
+          "correct": false
+        }
+      ],
+      "difficulty": "medium",
+      "fun_fact": "Fue en Pekín 2008, superando el récord de siete que tenía Spitz.",
+      "category": "Deportes"
+    },
+    {
+      "id": "dep_es_108",
+      "question": "¿En qué año se disputó la primera edición de la Copa América de fútbol?",
+      "answers": [
+        {
+          "text": "En 1916",
+          "correct": true
+        },
+        {
+          "text": "En 1930",
+          "correct": false
+        },
+        {
+          "text": "En 1900",
+          "correct": false
+        }
+      ],
+      "difficulty": "hard",
+      "fun_fact": "Es el torneo continental de selecciones más antiguo del mundo.",
+      "category": "Deportes"
+    },
+    {
+      "id": "dep_es_109",
+      "question": "¿Cómo se llama la principal competición de clubes de fútbol de Europa?",
+      "answers": [
+        {
+          "text": "La Liga de Campeones",
+          "correct": true
+        },
+        {
+          "text": "La Europa League",
+          "correct": false
+        },
+        {
+          "text": "La Supercopa",
+          "correct": false
+        }
+      ],
+      "difficulty": "easy",
+      "fun_fact": "Hasta 1992 se llamaba simplemente Copa de Europa.",
+      "category": "Deportes"
+    },
+    {
+      "id": "dep_es_110",
+      "question": "¿Cuántos oros olímpicos ganó Michael Phelps en total?",
+      "answers": [
+        {
+          "text": "Veintitrés",
+          "correct": true
+        },
+        {
+          "text": "Dieciocho",
+          "correct": false
+        },
+        {
+          "text": "Veintiocho",
+          "correct": false
+        }
+      ],
+      "difficulty": "medium",
+      "fun_fact": "Es, con diferencia, el deportista olímpico más laureado de la historia.",
+      "category": "Deportes"
+    },
+    {
+      "id": "dep_es_111",
+      "question": "¿Qué instrumento mide los tiempos en las carreras?",
+      "answers": [
+        {
+          "text": "El cronómetro",
+          "correct": true
+        },
+        {
+          "text": "La brújula",
+          "correct": false
+        },
+        {
+          "text": "El barómetro",
+          "correct": false
+        }
+      ],
+      "difficulty": "easy",
+      "fun_fact": "Desde 1968 los Juegos Olímpicos usan cronometraje electrónico a la centésima.",
+      "category": "Deportes"
+    },
+    {
+      "id": "dep_es_112",
+      "question": "¿Cuántos equipos componen la NBA?",
+      "answers": [
+        {
+          "text": "Treinta",
+          "correct": true
+        },
+        {
+          "text": "Veintiocho",
+          "correct": false
+        },
+        {
+          "text": "Treinta y dos",
+          "correct": false
+        }
+      ],
+      "difficulty": "medium",
+      "fun_fact": "Se reparten en dos conferencias, Este y Oeste, de quince equipos cada una.",
+      "category": "Deportes"
+    },
+    {
+      "id": "dep_es_113",
+      "question": "¿Cuál es la misión del portero en el fútbol?",
+      "answers": [
+        {
+          "text": "Evitar los goles",
+          "correct": true
+        },
+        {
+          "text": "Marcar los goles",
+          "correct": false
+        },
+        {
+          "text": "Sacar de banda",
+          "correct": false
+        }
+      ],
+      "difficulty": "easy",
+      "fun_fact": "Es el único jugador obligado a vestir un color distinto al de sus compañeros.",
+      "category": "Deportes"
+    },
+    {
+      "id": "dep_es_114",
+      "question": "¿Qué significa la sigla MVP en el deporte estadounidense?",
+      "answers": [
+        {
+          "text": "Jugador Más Valioso",
+          "correct": true
+        },
+        {
+          "text": "Máximo Valor Puntuado",
+          "correct": false
+        },
+        {
+          "text": "Mejor Valor Promedio",
+          "correct": false
+        }
+      ],
+      "difficulty": "medium",
+      "fun_fact": "Del inglés 'Most Valuable Player'.",
+      "category": "Deportes"
+    },
+    {
+      "id": "dep_es_115",
+      "question": "¿En qué deporte se juega con un disco llamado 'puck'?",
+      "answers": [
+        {
+          "text": "Hockey sobre hielo",
+          "correct": true
+        },
+        {
+          "text": "Waterpolo",
+          "correct": false
+        },
+        {
+          "text": "Bádminton",
+          "correct": false
+        }
+      ],
+      "difficulty": "easy",
+      "fun_fact": "El disco se congela antes de los partidos para que rebote menos.",
+      "category": "Deportes"
+    },
+    {
+      "id": "dep_es_116",
+      "question": "¿Qué selección ganó el Mundial de fútbol de 2010?",
+      "answers": [
+        {
+          "text": "España",
+          "correct": true
+        },
+        {
+          "text": "Países Bajos",
+          "correct": false
+        },
+        {
+          "text": "Alemania",
+          "correct": false
+        }
+      ],
+      "difficulty": "medium",
+      "fun_fact": "Ganó la final en la prórroga con un gol de Andrés Iniesta.",
+      "category": "Deportes"
+    },
+    {
+      "id": "dep_es_117",
+      "question": "¿En qué país se celebraban los Juegos Olímpicos de la Antigüedad?",
+      "answers": [
+        {
+          "text": "En Grecia",
+          "correct": true
+        },
+        {
+          "text": "En Egipto",
+          "correct": false
+        },
+        {
+          "text": "En Turquía",
+          "correct": false
+        }
+      ],
+      "difficulty": "easy",
+      "fun_fact": "Se disputaban en Olimpia y llegaron a mantenerse casi doce siglos.",
+      "category": "Deportes"
+    },
+    {
+      "id": "dep_es_118",
+      "question": "¿En qué estadio se jugó la final del Mundial de 2014?",
+      "answers": [
+        {
+          "text": "En el Maracaná",
+          "correct": true
+        },
+        {
+          "text": "En el Morumbí",
+          "correct": false
+        },
+        {
+          "text": "En el Mineirão",
+          "correct": false
+        }
+      ],
+      "difficulty": "medium",
+      "fun_fact": "Alemania venció a Argentina 1-0 con un gol de Mario Götze en la prórroga.",
+      "category": "Deportes"
+    },
+    {
+      "id": "dep_es_119",
+      "question": "¿Cuántas calles tiene una piscina olímpica?",
+      "answers": [
+        {
+          "text": "Ocho",
+          "correct": true
+        },
+        {
+          "text": "Seis",
+          "correct": false
+        },
+        {
+          "text": "Diez",
+          "correct": false
+        }
+      ],
+      "difficulty": "easy",
+      "fun_fact": "Mide 50 metros de largo, de ahí el nombre de 'piscina larga'.",
+      "category": "Deportes"
+    },
+    {
+      "id": "dep_es_120",
+      "question": "¿Cuántos puntos vale un ensayo en el rugby union?",
+      "answers": [
+        {
+          "text": "Cinco",
+          "correct": true
+        },
+        {
+          "text": "Tres",
+          "correct": false
+        },
+        {
+          "text": "Siete",
+          "correct": false
+        }
+      ],
+      "difficulty": "medium",
+      "fun_fact": "Valía solo tres puntos hasta 1971; se fue subiendo para premiar el juego ofensivo.",
+      "category": "Deportes"
+    },
+    {
+      "id": "dep_es_121",
+      "question": "¿Qué deporte practicaba Muhammad Ali?",
+      "answers": [
+        {
+          "text": "Boxeo",
+          "correct": true
+        },
+        {
+          "text": "Lucha libre",
+          "correct": false
+        },
+        {
+          "text": "Kickboxing",
+          "correct": false
+        }
+      ],
+      "difficulty": "easy",
+      "fun_fact": "Ganó el oro olímpico en Roma 1960 cuando aún se llamaba Cassius Clay.",
+      "category": "Deportes"
+    },
+    {
+      "id": "dep_es_122",
+      "question": "¿Cuántos puntos vale un 'touchdown' en el fútbol americano?",
+      "answers": [
+        {
+          "text": "Seis",
+          "correct": true
+        },
+        {
+          "text": "Siete",
+          "correct": false
+        },
+        {
+          "text": "Tres",
+          "correct": false
+        }
+      ],
+      "difficulty": "medium",
+      "fun_fact": "El punto extra posterior es lo que suele redondear la jugada a siete.",
+      "category": "Deportes"
+    },
+    {
+      "id": "dep_es_123",
+      "question": "¿Cómo empieza un partido de baloncesto?",
+      "answers": [
+        {
+          "text": "Con un salto entre dos",
+          "correct": true
+        },
+        {
+          "text": "Con un saque de esquina",
+          "correct": false
+        },
+        {
+          "text": "Con un servicio",
+          "correct": false
+        }
+      ],
+      "difficulty": "easy",
+      "fun_fact": "El árbitro lanza el balón al aire entre un jugador de cada equipo.",
+      "category": "Deportes"
+    },
+    {
+      "id": "dep_es_124",
+      "question": "¿En qué consiste el fuera de juego en el fútbol?",
+      "answers": [
+        {
+          "text": "Estar por delante del penúltimo defensor al recibir el pase",
+          "correct": true
+        },
+        {
+          "text": "Entrar al área antes que el balón",
+          "correct": false
+        },
+        {
+          "text": "Sacar de banda con un solo brazo",
+          "correct": false
+        }
+      ],
+      "difficulty": "medium",
+      "fun_fact": "La regla existe desde 1863 para impedir que los delanteros esperasen junto a la portería.",
+      "category": "Deportes"
+    },
+    {
+      "id": "dep_es_125",
+      "question": "¿En qué deporte se disputa la Super Bowl?",
+      "answers": [
+        {
+          "text": "Fútbol americano",
+          "correct": true
+        },
+        {
+          "text": "Béisbol",
+          "correct": false
+        },
+        {
+          "text": "Hockey",
+          "correct": false
+        }
+      ],
+      "difficulty": "easy",
+      "fun_fact": "Su descanso musical es uno de los espectáculos más vistos del mundo.",
+      "category": "Deportes"
+    },
+    {
+      "id": "dep_es_126",
+      "question": "¿En qué deporte se canta un 'ace'?",
+      "answers": [
+        {
+          "text": "Tenis",
+          "correct": true
+        },
+        {
+          "text": "Fútbol",
+          "correct": false
+        },
+        {
+          "text": "Ciclismo",
+          "correct": false
+        }
+      ],
+      "difficulty": "medium",
+      "fun_fact": "Es el saque que el rival no llega ni a tocar.",
+      "category": "Deportes"
+    },
+    {
+      "id": "dep_es_127",
+      "question": "¿Cuánto mide una vuelta completa a una pista de atletismo estándar?",
+      "answers": [
+        {
+          "text": "400 metros",
+          "correct": true
+        },
+        {
+          "text": "300 metros",
+          "correct": false
+        },
+        {
+          "text": "500 metros",
+          "correct": false
+        }
+      ],
+      "difficulty": "easy",
+      "fun_fact": "Se mide por la calle interior; las exteriores salen escalonadas por eso.",
+      "category": "Deportes"
+    },
+    {
+      "id": "dep_es_128",
+      "question": "¿Qué significa 'deuce' o 'iguales' en el tenis?",
+      "answers": [
+        {
+          "text": "Empate a cuarenta",
+          "correct": true
+        },
+        {
+          "text": "Ventaja para el sacador",
+          "correct": false
+        },
+        {
+          "text": "Punto de partido",
+          "correct": false
+        }
+      ],
+      "difficulty": "medium",
+      "fun_fact": "A partir de ahí hay que ganar dos puntos seguidos para llevarse el juego.",
+      "category": "Deportes"
+    },
+    {
+      "id": "dep_es_129",
+      "question": "¿Cuántos jugadores de cada equipo hay en el agua en el waterpolo?",
+      "answers": [
+        {
+          "text": "Siete",
+          "correct": true
+        },
+        {
+          "text": "Seis",
+          "correct": false
+        },
+        {
+          "text": "Cinco",
+          "correct": false
+        }
+      ],
+      "difficulty": "easy",
+      "fun_fact": "No pueden hacer pie: el reglamento exige piscinas de al menos dos metros de fondo.",
+      "category": "Deportes"
+    },
+    {
+      "id": "dep_es_130",
+      "question": "¿Cuántos jugadores de un equipo defienden a la vez en el béisbol?",
+      "answers": [
+        {
+          "text": "Nueve",
+          "correct": true
+        },
+        {
+          "text": "Ocho",
+          "correct": false
+        },
+        {
+          "text": "Diez",
+          "correct": false
+        }
+      ],
+      "difficulty": "medium",
+      "fun_fact": "El lanzador y el receptor forman la llamada batería.",
+      "category": "Deportes"
+    },
+    {
+      "id": "dep_es_131",
+      "question": "¿Qué se lanza en la prueba atlética de peso?",
+      "answers": [
+        {
+          "text": "Una bola metálica",
+          "correct": true
+        },
+        {
+          "text": "Un aro",
+          "correct": false
+        },
+        {
+          "text": "Una red",
+          "correct": false
+        }
+      ],
+      "difficulty": "easy",
+      "fun_fact": "Pesa 7,26 kilos en categoría masculina, el equivalente a dieciséis libras.",
+      "category": "Deportes"
+    },
+    {
+      "id": "dep_es_132",
+      "question": "¿En qué Mundial marcó Maradona el gol de 'La Mano de Dios'?",
+      "answers": [
+        {
+          "text": "En el de 1986",
+          "correct": true
+        },
+        {
+          "text": "En el de 1982",
+          "correct": false
+        },
+        {
+          "text": "En el de 1990",
+          "correct": false
+        }
+      ],
+      "difficulty": "medium",
+      "fun_fact": "En ese mismo partido marcó también el llamado 'gol del siglo'.",
+      "category": "Deportes"
+    },
+    {
+      "id": "dep_es_133",
+      "question": "¿Contra qué selección marcó Maradona ese gol?",
+      "answers": [
+        {
+          "text": "Contra Inglaterra",
+          "correct": true
+        },
+        {
+          "text": "Contra Alemania",
+          "correct": false
+        },
+        {
+          "text": "Contra Bélgica",
+          "correct": false
+        }
+      ],
+      "difficulty": "medium",
+      "fun_fact": "Fue en cuartos de final, en el Estadio Azteca de Ciudad de México.",
+      "category": "Deportes"
+    },
+    {
+      "id": "dep_es_134",
+      "question": "¿Qué selección ganó el Mundial de 1986?",
+      "answers": [
+        {
+          "text": "Argentina",
+          "correct": true
+        },
+        {
+          "text": "Alemania",
+          "correct": false
+        },
+        {
+          "text": "Brasil",
+          "correct": false
+        }
+      ],
+      "difficulty": "medium",
+      "fun_fact": "Venció a Alemania Federal por 3-2 en la final.",
+      "category": "Deportes"
+    },
+    {
+      "id": "dep_es_135",
+      "question": "¿Qué se practica en un velódromo?",
+      "answers": [
+        {
+          "text": "Ciclismo en pista",
+          "correct": true
+        },
+        {
+          "text": "Patinaje artístico",
+          "correct": false
+        },
+        {
+          "text": "Atletismo",
+          "correct": false
+        }
+      ],
+      "difficulty": "medium",
+      "fun_fact": "Sus curvas peraltadas llegan a inclinarse más de cuarenta grados.",
+      "category": "Deportes"
+    },
+    {
+      "id": "dep_es_136",
+      "question": "¿Cuántos largos son 1.500 metros en una piscina de 50 metros?",
+      "answers": [
+        {
+          "text": "Treinta",
+          "correct": true
+        },
+        {
+          "text": "Quince",
+          "correct": false
+        },
+        {
+          "text": "Sesenta",
+          "correct": false
+        }
+      ],
+      "difficulty": "medium",
+      "fun_fact": "Es la prueba de natación más larga del programa olímpico en piscina.",
+      "category": "Deportes"
+    },
+    {
+      "id": "dep_es_137",
+      "question": "¿Qué escudería de Fórmula 1 ha ganado más títulos de constructores?",
+      "answers": [
+        {
+          "text": "Ferrari",
+          "correct": true
+        },
+        {
+          "text": "McLaren",
+          "correct": false
+        },
+        {
+          "text": "Williams",
+          "correct": false
+        }
+      ],
+      "difficulty": "medium",
+      "fun_fact": "Es además la única presente en el campeonato desde su primera temporada.",
+      "category": "Deportes"
+    },
+    {
+      "id": "dep_es_138",
+      "question": "¿Qué deporte de invierno se desliza en trineo boca abajo y de cabeza?",
+      "answers": [
+        {
+          "text": "El skeleton",
+          "correct": true
+        },
+        {
+          "text": "El luge",
+          "correct": false
+        },
+        {
+          "text": "El bobsleigh",
+          "correct": false
+        }
+      ],
+      "difficulty": "medium",
+      "fun_fact": "El nombre viene del aspecto esquelético del primer trineo metálico usado.",
+      "category": "Deportes"
+    },
+    {
+      "id": "dep_es_139",
+      "question": "¿Y cuál se desliza boca arriba y con los pies por delante?",
+      "answers": [
+        {
+          "text": "El luge",
+          "correct": true
+        },
+        {
+          "text": "El skeleton",
+          "correct": false
+        },
+        {
+          "text": "El curling",
+          "correct": false
+        }
+      ],
+      "difficulty": "medium",
+      "fun_fact": "Sus pilotos alcanzan más de 140 kilómetros por hora sin frenos.",
+      "category": "Deportes"
+    },
+    {
+      "id": "dep_es_140",
+      "question": "¿En qué deporte se barre el hielo con escobas?",
+      "answers": [
+        {
+          "text": "El curling",
+          "correct": true
+        },
+        {
+          "text": "El hockey sobre hielo",
+          "correct": false
+        },
+        {
+          "text": "El patinaje de velocidad",
+          "correct": false
+        }
+      ],
+      "difficulty": "medium",
+      "fun_fact": "El barrido derrite una capa mínima de hielo y hace que la piedra llegue más lejos.",
+      "category": "Deportes"
+    },
+    {
+      "id": "dep_es_141",
+      "question": "¿Cuál es el lema olímpico tradicional?",
+      "answers": [
+        {
+          "text": "Citius, Altius, Fortius",
+          "correct": true
+        },
+        {
+          "text": "Veni, vidi, vici",
+          "correct": false
+        },
+        {
+          "text": "Alea iacta est",
+          "correct": false
+        }
+      ],
+      "difficulty": "medium",
+      "fun_fact": "Significa 'más rápido, más alto, más fuerte'; en 2021 se le añadió 'juntos'.",
+      "category": "Deportes"
+    },
+    {
+      "id": "dep_es_142",
+      "question": "¿En qué idioma está escrito el lema olímpico?",
+      "answers": [
+        {
+          "text": "En latín",
+          "correct": true
+        },
+        {
+          "text": "En griego",
+          "correct": false
+        },
+        {
+          "text": "En francés",
+          "correct": false
+        }
+      ],
+      "difficulty": "medium",
+      "fun_fact": "La Carta Olímpica se redacta en francés e inglés, y en caso de duda manda el francés.",
+      "category": "Deportes"
+    },
+    {
+      "id": "dep_es_143",
+      "question": "¿Qué se enciende en la ceremonia inaugural de unos Juegos Olímpicos?",
+      "answers": [
+        {
+          "text": "El pebetero con la llama olímpica",
+          "correct": true
+        },
+        {
+          "text": "Una antorcha de plata",
+          "correct": false
+        },
+        {
+          "text": "Un farol votivo",
+          "correct": false
+        }
+      ],
+      "difficulty": "medium",
+      "fun_fact": "La llama se prende en Olimpia con un espejo parabólico y la luz del sol.",
+      "category": "Deportes"
+    },
+    {
+      "id": "dep_es_144",
+      "question": "¿Cada cuántos años se celebran los Juegos Olímpicos de Invierno?",
+      "answers": [
+        {
+          "text": "Cada cuatro años",
+          "correct": true
+        },
+        {
+          "text": "Cada dos años",
+          "correct": false
+        },
+        {
+          "text": "Cada tres años",
+          "correct": false
+        }
+      ],
+      "difficulty": "medium",
+      "fun_fact": "Desde 1994 se alternan con los de verano, separados por dos años.",
+      "category": "Deportes"
+    },
+    {
+      "id": "dep_es_145",
+      "question": "¿Qué selección ganó las Eurocopas de 2008 y 2012?",
+      "answers": [
+        {
+          "text": "España",
+          "correct": true
+        },
+        {
+          "text": "Italia",
+          "correct": false
+        },
+        {
+          "text": "Alemania",
+          "correct": false
+        }
+      ],
+      "difficulty": "medium",
+      "fun_fact": "Entre medias ganó también el Mundial de 2010: tres títulos seguidos.",
+      "category": "Deportes"
+    },
+    {
+      "id": "dep_es_146",
+      "question": "¿Qué es un 'grand slam' en el béisbol?",
+      "answers": [
+        {
+          "text": "Un home run con las bases llenas",
+          "correct": true
+        },
+        {
+          "text": "Una eliminación triple",
+          "correct": false
+        },
+        {
+          "text": "Un partido sin carreras",
+          "correct": false
+        }
+      ],
+      "difficulty": "medium",
+      "fun_fact": "Suma cuatro carreras de golpe, el máximo posible en una sola jugada.",
+      "category": "Deportes"
+    },
+    {
+      "id": "dep_es_147",
+      "question": "¿Cuántos atletas componen un equipo de relevos en atletismo?",
+      "answers": [
+        {
+          "text": "Cuatro",
+          "correct": true
+        },
+        {
+          "text": "Tres",
+          "correct": false
+        },
+        {
+          "text": "Cinco",
+          "correct": false
+        }
+      ],
+      "difficulty": "medium",
+      "fun_fact": "El testigo debe cambiarse dentro de una zona marcada de veinte metros.",
+      "category": "Deportes"
+    },
+    {
+      "id": "dep_es_148",
+      "question": "¿Qué deporte olímpico se disputa sobre un tatami con puntuación de ippon?",
+      "answers": [
+        {
+          "text": "El judo",
+          "correct": true
+        },
+        {
+          "text": "La esgrima",
+          "correct": false
+        },
+        {
+          "text": "El boxeo",
+          "correct": false
+        }
+      ],
+      "difficulty": "medium",
+      "fun_fact": "Un ippon concede la victoria inmediata y termina el combate.",
+      "category": "Deportes"
+    },
+    {
+      "id": "dep_es_149",
+      "question": "¿Qué significa 'set point' en el voleibol o el tenis?",
+      "answers": [
+        {
+          "text": "El punto que decide el set",
+          "correct": true
+        },
+        {
+          "text": "El primer punto del set",
+          "correct": false
+        },
+        {
+          "text": "Un punto de castigo",
+          "correct": false
+        }
+      ],
+      "difficulty": "medium",
+      "fun_fact": "Si además decide el partido, se llama 'match point'.",
+      "category": "Deportes"
+    },
+    {
+      "id": "dep_es_150",
+      "question": "¿Qué país acogió los Juegos Olímpicos de Verano de 2016?",
+      "answers": [
+        {
+          "text": "Brasil",
+          "correct": true
+        },
+        {
+          "text": "China",
+          "correct": false
+        },
+        {
+          "text": "Japón",
+          "correct": false
+        }
+      ],
+      "difficulty": "medium",
+      "fun_fact": "Río de Janeiro fue la primera ciudad sudamericana en organizarlos.",
+      "category": "Deportes"
+    }
+  ]
+}
