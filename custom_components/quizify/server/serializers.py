@@ -160,26 +160,50 @@ def serialize_question_for_player(
     return payload
 
 
+def _apply_display_order(items: list[Any], order: list[int] | None) -> list[Any]:
+    """Reorder ``items`` by ``order``, or return them untouched.
+
+    Guards a malformed/stale map (wrong length, out-of-range index) by falling
+    back to the original order — a mis-ordered answer grid is a worse failure
+    than an unshuffled one.
+    """
+    if not order or len(order) != len(items):
+        return list(items)
+    if sorted(order) != list(range(len(items))):
+        return list(items)
+    return [items[i] for i in order]
+
+
 def serialize_question_for_admin(
     question: Question,
     round_num: int,
     total_rounds: int,
     timer_duration: float,
+    display_order: list[int] | None = None,
 ) -> dict[str, Any]:
-    """Serialize a question for admin (includes correct answer)."""
+    """Serialize a question for admin (includes correct answer).
+
+    ``display_order`` is the round's canonical shuffle (``shuffle_map``). The
+    admin and the TV/cast dashboard share this payload and render the answer
+    tiles in the order they arrive, so without it the grid would sit in
+    question-JSON order — and most shipped packs put the correct answer first
+    in the file, which put it on tile A of the big screen every round (#521).
+    Passing the shuffle also lines the tiles up with ``correct_answer_index``
+    and with the option order the TTS narrator speaks.
+    """
     correct_answer = ""
     for a in question.answers:
         if a.correct:
             correct_answer = a.text
             break
 
+    ordered = _apply_display_order(question.answers, display_order)
+
     payload: dict[str, Any] = {
         "type": "question_started",
         "question_text": question.question,
         "correct_answer": correct_answer,
-        "answers": [
-            {"text": a.text, "correct": a.correct} for a in question.answers
-        ],
+        "answers": [{"text": a.text, "correct": a.correct} for a in ordered],
         "timer_duration": timer_duration,
         "round_num": round_num,
         "total_rounds": total_rounds,
@@ -317,19 +341,31 @@ def serialize_round_summary(
     correct_answer_index_original: int = -1,
     question_type: str = "multiple_choice",
     estimate: dict[str, Any] | None = None,
+    display_order: list[int] | None = None,
 ) -> dict[str, Any]:
     """Build round summary broadcast payload.
 
-    ``correct_answer_index`` is in CANONICAL-shuffle space — the per-player
-    reveal client uses it to highlight the right tile in its own shuffle.
-    ``correct_answer_index_original`` is in question-JSON-order — the TV
-    dashboard renders unshuffled answers (no per-spectator shuffle), so it
-    needs the original index to colour the correct tile. Both are sent in
-    the same payload to avoid a dashboard-only round_summary fork.
+    Three index spaces meet here, so they are named rather than implied:
+
+    * ``correct_answer_index`` — CANONICAL-shuffle space. The per-player
+      reveal client uses it to highlight the right tile in its own shuffle,
+      and since #521 the TV grid is rendered in this same order, so the
+      dashboard uses it too.
+    * ``correct_answer_index_original`` — question-JSON order. Retained for
+      clients cached from before #521, which still render an unshuffled grid.
+      New clients prefer ``correct_answer_index``.
+    * ``all_answers[].answer_index`` — question-JSON order, unchanged. The
+      player reveal maps it through its own shuffle, so moving it would break
+      that path for no gain.
+
+    ``answer_distribution`` is emitted in CANONICAL space so the #151 bars
+    attach to the tiles the dashboard actually drew.
     """
-    # Compute answer distribution from all_answers
+    # Compute answer distribution from all_answers. `answer_index` on those
+    # entries is question-JSON order; the bars hang off the canonical grid,
+    # so the mapping happens here rather than in the client.
     answer_distribution = _compute_answer_distribution(
-        all_answers or [], num_answer_options
+        all_answers or [], num_answer_options, display_order
     )
 
     summary: dict[str, Any] = {
@@ -366,23 +402,39 @@ def serialize_round_summary(
 
 
 def _compute_answer_distribution(
-    all_answers: list[dict[str, Any]], num_options: int
+    all_answers: list[dict[str, Any]],
+    num_options: int,
+    display_order: list[int] | None = None,
 ) -> list[dict[str, Any]]:
     """Compute per-option vote counts and percentages.
 
     Returns a list of dicts: [{"index": 0, "count": 3, "percent": 60}, ...]
     Includes a separate entry for no_answer (timeout) players.
+
+    ``answer_index`` on the incoming entries is question-JSON order.
+    ``display_order`` (the round's canonical shuffle) maps each vote onto the
+    tile the dashboard actually rendered (#521); without it the bars would
+    count the right votes against the wrong answers.
     """
     counts = [0] * num_options
     no_answer_count = 0
     total = len(all_answers)
+
+    # original index -> position in the rendered grid
+    to_display: dict[int, int] = {}
+    if (
+        display_order
+        and len(display_order) == num_options
+        and sorted(display_order) == list(range(num_options))
+    ):
+        to_display = {orig: pos for pos, orig in enumerate(display_order)}
 
     for entry in all_answers:
         idx = entry.get("answer_index")
         if entry.get("no_answer") or idx is None:
             no_answer_count += 1
         elif isinstance(idx, int) and 0 <= idx < num_options:
-            counts[idx] += 1
+            counts[to_display.get(idx, idx)] += 1
 
     distribution: list[dict[str, Any]] = []
     for i, count in enumerate(counts):

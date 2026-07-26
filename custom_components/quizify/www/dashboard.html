@@ -1728,8 +1728,14 @@
 
             var labels = ['A', 'B', 'C', 'D'];
             var answers = rs.answers || [];
-            var correctIdx = (typeof rs.correct_answer_index_original === 'number')
-                ? rs.correct_answer_index_original : -1;
+            // #521: the snapshot's answers ride the round shuffle, so the
+            // highlight must use the matching index. Older servers send only
+            // the question-JSON index, and their grid is unshuffled too — the
+            // fallback keeps those in step.
+            var correctIdx = (typeof rs.correct_answer_index === 'number')
+                ? rs.correct_answer_index
+                : (typeof rs.correct_answer_index_original === 'number')
+                    ? rs.correct_answer_index_original : -1;
             els.answersGrid.innerHTML = answers.map(function(answer, i) {
                 var text = (answer && typeof answer === 'object') ? answer.text : answer;
                 var cls = 'dashboard-answer revealed ' + (i === correctIdx ? 'correct' : 'wrong');
@@ -1921,16 +1927,15 @@
             }
 
             // Highlight correct answer.
-            // We prefer the ORIGINAL-order index when the server sends it
-            // (added 2026-05-29 in v1.1.47): the dashboard renders an
-            // unshuffled answer-grid, so the per-player canonical shuffle
-            // map would point at the wrong tile. Old payloads without the
-            // field fall back to the existing canonical index — that's the
-            // pre-fix behavior, only slightly wrong, so the UI doesn't
-            // break on stale clients.
-            var correctIdx = summary.correct_answer_index_original;
+            // Until #521 this preferred the ORIGINAL-order index, because the
+            // grid was drawn in question-JSON order. It now rides the round
+            // shuffle (the same order TTS speaks), so the canonical index is
+            // the one that points at the right tile. `answer_distribution`
+            // below is emitted in that same space.
+            var correctIdx = summary.correct_answer_index;
             if (correctIdx == null || correctIdx < 0) {
-                correctIdx = summary.correct_answer_index != null ? summary.correct_answer_index : -1;
+                correctIdx = summary.correct_answer_index_original != null
+                    ? summary.correct_answer_index_original : -1;
             }
             var answerEls = els.answersGrid.querySelectorAll('.dashboard-answer');
 
