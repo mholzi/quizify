@@ -3,6 +3,58 @@
 All notable changes to Quizify are documented here. This project follows
 [Semantic Versioning](https://semver.org/).
 
+## [1.6.1-RC1] — 2026-07-27
+
+Release candidate for 1.6.1 — "Tile A". Five changes since 1.6.0, one of which
+is visible from the sofa: the television had been showing the correct answer.
+
+### Fixed
+
+- **The TV/cast grid rendered answers in question-file order (#521).** Quizify
+  shuffles answers per round and again per phone, but the payload the big
+  screen renders was built straight off `question.answers`. In **16 of the 26
+  shipped packs** the correct answer sits at index 0 of every question, so on
+  those packs it was tile A for every question of every game. Nobody was
+  mis-scored — the phones always had a real per-player shuffle — but it leaked
+  to everyone watching the television. The same cause made the narrator speak
+  the round shuffle while the grid drew file order, so a spoken "B" pointed at
+  a different tile; the comment above that call had asserted the opposite. The
+  fix threads the existing `shuffle_map` through the admin/dashboard payload,
+  the reveal highlight, the #151 distribution bars and both reconnect
+  snapshots, with a fallback to file order when the map is unusable — a
+  mislabelled grid is worse than an unshuffled one. Reordering the pack JSONs
+  would have hidden the leak while leaving the narration and reconnect paths
+  broken, so the packs are untouched.
+- **The "With kids" preset left the auto Lightning Round armed (#513).** The
+  preset bundles 5 rounds / easy / 180 s because an external host reported that
+  small children cannot read a question and four answers in 45 s. It never
+  touched the lightning toggle, so those hosts got an ambush round of five
+  questions at 15 s each — the one setting they had asked for, overridden
+  mid-game. Selecting the preset now switches the Lightning Round off; the
+  other presets keep it, and re-enabling it by hand makes the run "Custom".
+- **Three incorrect fun facts in `cultura-pop-es` (#519).** Questions and
+  answers were correct; the trivia line was not (Buzz's working title under a
+  Woody question, four Marvel film series counted as five, *Jurassic Park*'s
+  six minutes of CGI described as total screen time). The fun fact is read
+  aloud after the reveal — with narration enabled the speaker states it to the
+  room as fact, so a wrong one is worse than none.
+
+### Added
+
+- **Spanish sport pack `deportes-es` (#515)** and **Spanish pop culture pack
+  `cultura-pop-es` (#517)**, 150 questions each, 48 easy / 66 medium / 36 hard.
+  Neither is a translated English pack. Spanish now has 6 packs / 900
+  questions; the library stands at 28 packs / 3,823 questions. Still missing in
+  Spanish: music, food, technology.
+
+### Internal
+
+- Test suite at **1,191 passing** (1,084 in 1.6.0). `test_tv_grid_shuffle_521.py`
+  adds eleven tests covering the payload order, narrator/grid agreement, both
+  snapshot paths, the distribution mapping and the malformed-map fallback.
+  `test_reconnect_snapshot_projection_253.py` had pinned the leaking file-order
+  contract as correct and was rewritten against the shuffled one.
+
 ## [1.6.0] — 2026-07-22
 
 The final 1.6.0 release — "The House Plays Along", the culmination of release
