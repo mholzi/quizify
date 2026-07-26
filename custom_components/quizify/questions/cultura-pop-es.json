@@ -1,0 +1,3158 @@
+{
+  "name": "Cultura Pop",
+  "language": "es",
+  "version": "1.0",
+  "theme": "popculture",
+  "questions": [
+    {
+      "id": "pop_es_001",
+      "question": "¿Qué superhéroe viste capa roja y lleva una 'S' en el pecho?",
+      "answers": [
+        {
+          "text": "Superman",
+          "correct": true
+        },
+        {
+          "text": "Batman",
+          "correct": false
+        },
+        {
+          "text": "Spider-Man",
+          "correct": false
+        }
+      ],
+      "difficulty": "easy",
+      "fun_fact": "El símbolo no es una letra: en su planeta natal es el escudo de la casa de El.",
+      "category": "Cultura Pop"
+    },
+    {
+      "id": "pop_es_002",
+      "question": "¿En qué año se separaron oficialmente The Beatles?",
+      "answers": [
+        {
+          "text": "En 1970",
+          "correct": true
+        },
+        {
+          "text": "En 1967",
+          "correct": false
+        },
+        {
+          "text": "En 1975",
+          "correct": false
+        }
+      ],
+      "difficulty": "medium",
+      "fun_fact": "Su último concierto público fue en la azotea de su discográfica, en 1969.",
+      "category": "Cultura Pop"
+    },
+    {
+      "id": "pop_es_003",
+      "question": "¿En qué año se publicó el primer cómic de Superman?",
+      "answers": [
+        {
+          "text": "En 1938",
+          "correct": true
+        },
+        {
+          "text": "En 1928",
+          "correct": false
+        },
+        {
+          "text": "En 1945",
+          "correct": false
+        }
+      ],
+      "difficulty": "hard",
+      "fun_fact": "Apareció en Action Comics número 1; un ejemplar se ha vendido por millones de dólares.",
+      "category": "Cultura Pop"
+    },
+    {
+      "id": "pop_es_004",
+      "question": "¿Cómo se llama el joven mago protagonista de la saga de J.K. Rowling?",
+      "answers": [
+        {
+          "text": "Harry Potter",
+          "correct": true
+        },
+        {
+          "text": "Ron Weasley",
+          "correct": false
+        },
+        {
+          "text": "Draco Malfoy",
+          "correct": false
+        }
+      ],
+      "difficulty": "easy",
+      "fun_fact": "El primer libro fue rechazado por doce editoriales antes de publicarse.",
+      "category": "Cultura Pop"
+    },
+    {
+      "id": "pop_es_005",
+      "question": "¿Cuál fue el primer largometraje de animación de Disney?",
+      "answers": [
+        {
+          "text": "Blancanieves y los siete enanitos",
+          "correct": true
+        },
+        {
+          "text": "Pinocho",
+          "correct": false
+        },
+        {
+          "text": "Fantasía",
+          "correct": false
+        }
+      ],
+      "difficulty": "medium",
+      "fun_fact": "En Hollywood lo llamaban 'la locura de Disney' hasta que arrasó en taquilla en 1937.",
+      "category": "Cultura Pop"
+    },
+    {
+      "id": "pop_es_006",
+      "question": "¿Y en qué año apareció Batman por primera vez?",
+      "answers": [
+        {
+          "text": "En 1939",
+          "correct": true
+        },
+        {
+          "text": "En 1938",
+          "correct": false
+        },
+        {
+          "text": "En 1941",
+          "correct": false
+        }
+      ],
+      "difficulty": "hard",
+      "fun_fact": "Debutó en Detective Comics número 27, un año después que Superman.",
+      "category": "Cultura Pop"
+    },
+    {
+      "id": "pop_es_007",
+      "question": "¿Cómo se llama la escuela de magia de esa saga?",
+      "answers": [
+        {
+          "text": "Hogwarts",
+          "correct": true
+        },
+        {
+          "text": "Beauxbatons",
+          "correct": false
+        },
+        {
+          "text": "Durmstrang",
+          "correct": false
+        }
+      ],
+      "difficulty": "easy",
+      "fun_fact": "Su lema en latín aconseja no hacer cosquillas a un dragón dormido.",
+      "category": "Cultura Pop"
+    },
+    {
+      "id": "pop_es_008",
+      "question": "¿Qué estudio creó 'Toy Story'?",
+      "answers": [
+        {
+          "text": "Pixar",
+          "correct": true
+        },
+        {
+          "text": "DreamWorks",
+          "correct": false
+        },
+        {
+          "text": "Illumination",
+          "correct": false
+        }
+      ],
+      "difficulty": "medium",
+      "fun_fact": "Antes de hacer películas vendía ordenadores gráficos y casi quiebra.",
+      "category": "Cultura Pop"
+    },
+    {
+      "id": "pop_es_009",
+      "question": "¿Quiénes crearon a Superman?",
+      "answers": [
+        {
+          "text": "Jerry Siegel y Joe Shuster",
+          "correct": true
+        },
+        {
+          "text": "Stan Lee y Jack Kirby",
+          "correct": false
+        },
+        {
+          "text": "Bob Kane y Bill Finger",
+          "correct": false
+        }
+      ],
+      "difficulty": "hard",
+      "fun_fact": "Vendieron los derechos del personaje por 130 dólares.",
+      "category": "Cultura Pop"
+    },
+    {
+      "id": "pop_es_010",
+      "question": "¿Qué banda británica formaron John, Paul, George y Ringo?",
+      "answers": [
+        {
+          "text": "The Beatles",
+          "correct": true
+        },
+        {
+          "text": "The Rolling Stones",
+          "correct": false
+        },
+        {
+          "text": "Queen",
+          "correct": false
+        }
+      ],
+      "difficulty": "easy",
+      "fun_fact": "Se separaron en 1970 tras solo ocho años publicando discos.",
+      "category": "Cultura Pop"
+    },
+    {
+      "id": "pop_es_011",
+      "question": "¿Qué película ganó el primer Óscar a la mejor película de animación?",
+      "answers": [
+        {
+          "text": "Shrek",
+          "correct": true
+        },
+        {
+          "text": "Toy Story",
+          "correct": false
+        },
+        {
+          "text": "Monstruos S.A.",
+          "correct": false
+        }
+      ],
+      "difficulty": "medium",
+      "fun_fact": "La categoría se creó en 2002, más de sesenta años después del primer largometraje animado.",
+      "category": "Cultura Pop"
+    },
+    {
+      "id": "pop_es_012",
+      "question": "¿Quién fue el cocreador de Spider-Man junto a Stan Lee?",
+      "answers": [
+        {
+          "text": "Steve Ditko",
+          "correct": true
+        },
+        {
+          "text": "Jack Kirby",
+          "correct": false
+        },
+        {
+          "text": "John Romita",
+          "correct": false
+        }
+      ],
+      "difficulty": "hard",
+      "fun_fact": "Fue él quien diseñó la máscara que cubre el rostro por completo.",
+      "category": "Cultura Pop"
+    },
+    {
+      "id": "pop_es_013",
+      "question": "¿Qué ratón es el personaje más famoso de Disney?",
+      "answers": [
+        {
+          "text": "Mickey Mouse",
+          "correct": true
+        },
+        {
+          "text": "Jerry",
+          "correct": false
+        },
+        {
+          "text": "Speedy González",
+          "correct": false
+        }
+      ],
+      "difficulty": "easy",
+      "fun_fact": "Walt Disney le puso la voz personalmente durante casi veinte años.",
+      "category": "Cultura Pop"
+    },
+    {
+      "id": "pop_es_014",
+      "question": "¿Quién dirigió 'Parque Jurásico'?",
+      "answers": [
+        {
+          "text": "Steven Spielberg",
+          "correct": true
+        },
+        {
+          "text": "George Lucas",
+          "correct": false
+        },
+        {
+          "text": "James Cameron",
+          "correct": false
+        }
+      ],
+      "difficulty": "medium",
+      "fun_fact": "La película usó menos de siete minutos de dinosaurios en pantalla en total.",
+      "category": "Cultura Pop"
+    },
+    {
+      "id": "pop_es_015",
+      "question": "¿Cuál fue la primera película sonora comercial de la historia?",
+      "answers": [
+        {
+          "text": "El cantor de jazz",
+          "correct": true
+        },
+        {
+          "text": "Luces de la ciudad",
+          "correct": false
+        },
+        {
+          "text": "Metrópolis",
+          "correct": false
+        }
+      ],
+      "difficulty": "hard",
+      "fun_fact": "Se estrenó en 1927 y apenas contenía unos minutos de diálogo sincronizado.",
+      "category": "Cultura Pop"
+    },
+    {
+      "id": "pop_es_016",
+      "question": "¿En qué película canta Elsa 'Libre soy'?",
+      "answers": [
+        {
+          "text": "Frozen",
+          "correct": true
+        },
+        {
+          "text": "Enredados",
+          "correct": false
+        },
+        {
+          "text": "Vaiana",
+          "correct": false
+        }
+      ],
+      "difficulty": "easy",
+      "fun_fact": "La canción se tradujo a más de cuarenta idiomas.",
+      "category": "Cultura Pop"
+    },
+    {
+      "id": "pop_es_017",
+      "question": "¿Quién dirigió 'Titanic' y 'Avatar'?",
+      "answers": [
+        {
+          "text": "James Cameron",
+          "correct": true
+        },
+        {
+          "text": "Ridley Scott",
+          "correct": false
+        },
+        {
+          "text": "Christopher Nolan",
+          "correct": false
+        }
+      ],
+      "difficulty": "medium",
+      "fun_fact": "Bajó personalmente al pecio del Titanic una docena de veces.",
+      "category": "Cultura Pop"
+    },
+    {
+      "id": "pop_es_018",
+      "question": "¿Qué película ganó el primer Óscar a la mejor película?",
+      "answers": [
+        {
+          "text": "Alas",
+          "correct": true
+        },
+        {
+          "text": "El cantor de jazz",
+          "correct": false
+        },
+        {
+          "text": "Amanecer",
+          "correct": false
+        }
+      ],
+      "difficulty": "hard",
+      "fun_fact": "Fue en 1929 y la ceremonia entera duró unos quince minutos.",
+      "category": "Cultura Pop"
+    },
+    {
+      "id": "pop_es_019",
+      "question": "¿Qué fontanero italiano protagoniza los videojuegos de Nintendo?",
+      "answers": [
+        {
+          "text": "Mario",
+          "correct": true
+        },
+        {
+          "text": "Sonic",
+          "correct": false
+        },
+        {
+          "text": "Kirby",
+          "correct": false
+        }
+      ],
+      "difficulty": "easy",
+      "fun_fact": "Apareció por primera vez en 1981 y entonces se llamaba simplemente 'Jumpman'.",
+      "category": "Cultura Pop"
+    },
+    {
+      "id": "pop_es_020",
+      "question": "¿Qué director español ganó el Óscar por 'Todo sobre mi madre'?",
+      "answers": [
+        {
+          "text": "Pedro Almodóvar",
+          "correct": true
+        },
+        {
+          "text": "Alejandro Amenábar",
+          "correct": false
+        },
+        {
+          "text": "Fernando Trueba",
+          "correct": false
+        }
+      ],
+      "difficulty": "medium",
+      "fun_fact": "La película es de 1999 y recogió el premio en la ceremonia del año siguiente.",
+      "category": "Cultura Pop"
+    },
+    {
+      "id": "pop_es_021",
+      "question": "¿Qué actriz acumula más Óscar a mejor actriz protagonista?",
+      "answers": [
+        {
+          "text": "Katharine Hepburn",
+          "correct": true
+        },
+        {
+          "text": "Meryl Streep",
+          "correct": false
+        },
+        {
+          "text": "Ingrid Bergman",
+          "correct": false
+        }
+      ],
+      "difficulty": "hard",
+      "fun_fact": "Ganó cuatro y no acudió a recogerlos nunca.",
+      "category": "Cultura Pop"
+    },
+    {
+      "id": "pop_es_022",
+      "question": "¿De qué colores es el traje clásico de Spider-Man?",
+      "answers": [
+        {
+          "text": "Rojo y azul",
+          "correct": true
+        },
+        {
+          "text": "Verde y negro",
+          "correct": false
+        },
+        {
+          "text": "Amarillo y gris",
+          "correct": false
+        }
+      ],
+      "difficulty": "easy",
+      "fun_fact": "Su creador eligió el rojo para que las telarañas destacaran sobre el dibujo.",
+      "category": "Cultura Pop"
+    },
+    {
+      "id": "pop_es_023",
+      "question": "¿Qué película de Alejandro Amenábar ganó el Óscar a mejor película extranjera?",
+      "answers": [
+        {
+          "text": "Mar adentro",
+          "correct": true
+        },
+        {
+          "text": "Los otros",
+          "correct": false
+        },
+        {
+          "text": "Ágora",
+          "correct": false
+        }
+      ],
+      "difficulty": "medium",
+      "fun_fact": "Javier Bardem pasaba cinco horas diarias en maquillaje para envejecer en pantalla.",
+      "category": "Cultura Pop"
+    },
+    {
+      "id": "pop_es_024",
+      "question": "¿Cuántos Óscar comparten como récord 'Ben-Hur', 'Titanic' y 'El retorno del Rey'?",
+      "answers": [
+        {
+          "text": "Once",
+          "correct": true
+        },
+        {
+          "text": "Nueve",
+          "correct": false
+        },
+        {
+          "text": "Trece",
+          "correct": false
+        }
+      ],
+      "difficulty": "hard",
+      "fun_fact": "'El retorno del Rey' es la única de las tres que ganó en todas las categorías a las que optaba.",
+      "category": "Cultura Pop"
+    },
+    {
+      "id": "pop_es_025",
+      "question": "¿Qué cantante es conocida como la 'Reina del Pop'?",
+      "answers": [
+        {
+          "text": "Madonna",
+          "correct": true
+        },
+        {
+          "text": "Cher",
+          "correct": false
+        },
+        {
+          "text": "Whitney Houston",
+          "correct": false
+        }
+      ],
+      "difficulty": "easy",
+      "fun_fact": "Es la artista femenina con más ingresos por giras de la historia.",
+      "category": "Cultura Pop"
+    },
+    {
+      "id": "pop_es_026",
+      "question": "¿Qué director mexicano ganó el Óscar por 'La forma del agua'?",
+      "answers": [
+        {
+          "text": "Guillermo del Toro",
+          "correct": true
+        },
+        {
+          "text": "Alfonso Cuarón",
+          "correct": false
+        },
+        {
+          "text": "Alejandro González Iñárritu",
+          "correct": false
+        }
+      ],
+      "difficulty": "medium",
+      "fun_fact": "Empezó su carrera como maquillador de efectos especiales.",
+      "category": "Cultura Pop"
+    },
+    {
+      "id": "pop_es_027",
+      "question": "¿Qué disco de Pink Floyd permaneció más de una década seguida en las listas de éxitos?",
+      "answers": [
+        {
+          "text": "The Dark Side of the Moon",
+          "correct": true
+        },
+        {
+          "text": "The Wall",
+          "correct": false
+        },
+        {
+          "text": "Wish You Were Here",
+          "correct": false
+        }
+      ],
+      "difficulty": "hard",
+      "fun_fact": "Estuvo más de setecientas semanas en la lista estadounidense.",
+      "category": "Cultura Pop"
+    },
+    {
+      "id": "pop_es_028",
+      "question": "¿Qué grupo interpreta 'Bohemian Rhapsody'?",
+      "answers": [
+        {
+          "text": "Queen",
+          "correct": true
+        },
+        {
+          "text": "The Who",
+          "correct": false
+        },
+        {
+          "text": "Led Zeppelin",
+          "correct": false
+        }
+      ],
+      "difficulty": "easy",
+      "fun_fact": "La discográfica no quería publicarla por larga: dura casi seis minutos.",
+      "category": "Cultura Pop"
+    },
+    {
+      "id": "pop_es_029",
+      "question": "¿Qué película de Alfonso Cuarón, rodada en blanco y negro, ganó el Óscar a mejor película extranjera?",
+      "answers": [
+        {
+          "text": "Roma",
+          "correct": true
+        },
+        {
+          "text": "Y tu mamá también",
+          "correct": false
+        },
+        {
+          "text": "Gravity",
+          "correct": false
+        }
+      ],
+      "difficulty": "medium",
+      "fun_fact": "Recrea el barrio de Ciudad de México donde el director creció.",
+      "category": "Cultura Pop"
+    },
+    {
+      "id": "pop_es_030",
+      "question": "¿Qué álbum de The Beatles lleva en la portada un paso de cebra?",
+      "answers": [
+        {
+          "text": "Abbey Road",
+          "correct": true
+        },
+        {
+          "text": "Let It Be",
+          "correct": false
+        },
+        {
+          "text": "Revolver",
+          "correct": false
+        }
+      ],
+      "difficulty": "hard",
+      "fun_fact": "La sesión de fotos duró apenas diez minutos con el tráfico cortado.",
+      "category": "Cultura Pop"
+    },
+    {
+      "id": "pop_es_031",
+      "question": "¿En qué saga de películas aparecen los Jedi y los Sith?",
+      "answers": [
+        {
+          "text": "Star Wars",
+          "correct": true
+        },
+        {
+          "text": "Star Trek",
+          "correct": false
+        },
+        {
+          "text": "Dune",
+          "correct": false
+        }
+      ],
+      "difficulty": "easy",
+      "fun_fact": "La primera entrega se estrenó en 1977 y era, en realidad, el episodio IV.",
+      "category": "Cultura Pop"
+    },
+    {
+      "id": "pop_es_032",
+      "question": "¿Qué banda irlandesa lidera Bono?",
+      "answers": [
+        {
+          "text": "U2",
+          "correct": true
+        },
+        {
+          "text": "The Cranberries",
+          "correct": false
+        },
+        {
+          "text": "Snow Patrol",
+          "correct": false
+        }
+      ],
+      "difficulty": "medium",
+      "fun_fact": "Se formaron respondiendo a un anuncio colgado en el tablón de un instituto de Dublín.",
+      "category": "Cultura Pop"
+    },
+    {
+      "id": "pop_es_033",
+      "question": "¿En qué estudio londinense grabaron The Beatles la mayoría de sus discos?",
+      "answers": [
+        {
+          "text": "En Abbey Road",
+          "correct": true
+        },
+        {
+          "text": "En Olympic",
+          "correct": false
+        },
+        {
+          "text": "En Trident",
+          "correct": false
+        }
+      ],
+      "difficulty": "hard",
+      "fun_fact": "El estudio se llamaba EMI y se rebautizó tras el éxito del disco.",
+      "category": "Cultura Pop"
+    },
+    {
+      "id": "pop_es_034",
+      "question": "¿Qué personaje amarillo y esponjoso vive en una piña bajo el mar?",
+      "answers": [
+        {
+          "text": "Bob Esponja",
+          "correct": true
+        },
+        {
+          "text": "Patricio",
+          "correct": false
+        },
+        {
+          "text": "Calamardo",
+          "correct": false
+        }
+      ],
+      "difficulty": "easy",
+      "fun_fact": "Su creador era biólogo marino antes de dedicarse a la animación.",
+      "category": "Cultura Pop"
+    },
+    {
+      "id": "pop_es_035",
+      "question": "¿En qué festival de cine se entrega la Palma de Oro?",
+      "answers": [
+        {
+          "text": "En Cannes",
+          "correct": true
+        },
+        {
+          "text": "En Venecia",
+          "correct": false
+        },
+        {
+          "text": "En Berlín",
+          "correct": false
+        }
+      ],
+      "difficulty": "medium",
+      "fun_fact": "La palmera es el símbolo de la ciudad y aparece en su escudo.",
+      "category": "Cultura Pop"
+    },
+    {
+      "id": "pop_es_036",
+      "question": "¿A qué edad murieron Jimi Hendrix, Janis Joplin, Kurt Cobain y Amy Winehouse?",
+      "answers": [
+        {
+          "text": "A los veintisiete años",
+          "correct": true
+        },
+        {
+          "text": "A los treinta años",
+          "correct": false
+        },
+        {
+          "text": "A los veinticinco años",
+          "correct": false
+        }
+      ],
+      "difficulty": "hard",
+      "fun_fact": "La coincidencia dio nombre al llamado 'Club de los 27'.",
+      "category": "Cultura Pop"
+    },
+    {
+      "id": "pop_es_037",
+      "question": "¿Qué premio de cine se entrega cada año en Hollywood con una estatuilla dorada?",
+      "answers": [
+        {
+          "text": "El Óscar",
+          "correct": true
+        },
+        {
+          "text": "El Grammy",
+          "correct": false
+        },
+        {
+          "text": "El Emmy",
+          "correct": false
+        }
+      ],
+      "difficulty": "easy",
+      "fun_fact": "La estatuilla pesa unos 3,8 kilos y es de bronce bañado en oro.",
+      "category": "Cultura Pop"
+    },
+    {
+      "id": "pop_es_038",
+      "question": "¿Y en qué festival se entrega el León de Oro?",
+      "answers": [
+        {
+          "text": "En Venecia",
+          "correct": true
+        },
+        {
+          "text": "En Cannes",
+          "correct": false
+        },
+        {
+          "text": "En San Sebastián",
+          "correct": false
+        }
+      ],
+      "difficulty": "medium",
+      "fun_fact": "Es el festival de cine más antiguo del mundo: se celebra desde 1932.",
+      "category": "Cultura Pop"
+    },
+    {
+      "id": "pop_es_039",
+      "question": "¿Qué banda grabó el álbum 'Nevermind' en 1991?",
+      "answers": [
+        {
+          "text": "Nirvana",
+          "correct": true
+        },
+        {
+          "text": "Pearl Jam",
+          "correct": false
+        },
+        {
+          "text": "Soundgarden",
+          "correct": false
+        }
+      ],
+      "difficulty": "hard",
+      "fun_fact": "Costó unos 65.000 dólares y acabó vendiendo decenas de millones de copias.",
+      "category": "Cultura Pop"
+    },
+    {
+      "id": "pop_es_040",
+      "question": "¿Qué premio se entrega a lo mejor de la música en Estados Unidos?",
+      "answers": [
+        {
+          "text": "El Grammy",
+          "correct": true
+        },
+        {
+          "text": "El Óscar",
+          "correct": false
+        },
+        {
+          "text": "El Tony",
+          "correct": false
+        }
+      ],
+      "difficulty": "easy",
+      "fun_fact": "Su estatuilla tiene forma de gramófono, de ahí el nombre.",
+      "category": "Cultura Pop"
+    },
+    {
+      "id": "pop_es_041",
+      "question": "¿Qué serie de HBO se basa en los libros de George R.R. Martin?",
+      "answers": [
+        {
+          "text": "Juego de Tronos",
+          "correct": true
+        },
+        {
+          "text": "Los Soprano",
+          "correct": false
+        },
+        {
+          "text": "True Detective",
+          "correct": false
+        }
+      ],
+      "difficulty": "medium",
+      "fun_fact": "Su final se emitió simultáneamente en casi 200 países.",
+      "category": "Cultura Pop"
+    },
+    {
+      "id": "pop_es_042",
+      "question": "¿Qué videojuego de 1985 relanzó una industria que estaba en crisis?",
+      "answers": [
+        {
+          "text": "Super Mario Bros.",
+          "correct": true
+        },
+        {
+          "text": "Pong",
+          "correct": false
+        },
+        {
+          "text": "Doom",
+          "correct": false
+        }
+      ],
+      "difficulty": "hard",
+      "fun_fact": "La crisis de 1983 había dejado los almacenes llenos de cartuchos invendibles.",
+      "category": "Cultura Pop"
+    },
+    {
+      "id": "pop_es_043",
+      "question": "¿Qué red social se hizo famosa por sus vídeos verticales muy cortos?",
+      "answers": [
+        {
+          "text": "TikTok",
+          "correct": true
+        },
+        {
+          "text": "LinkedIn",
+          "correct": false
+        },
+        {
+          "text": "Pinterest",
+          "correct": false
+        }
+      ],
+      "difficulty": "easy",
+      "fun_fact": "Nació de la fusión con una aplicación de karaoke llamada Musical.ly.",
+      "category": "Cultura Pop"
+    },
+    {
+      "id": "pop_es_044",
+      "question": "¿Cuál es el lema de la casa Stark en 'Juego de Tronos'?",
+      "answers": [
+        {
+          "text": "Se acerca el invierno",
+          "correct": true
+        },
+        {
+          "text": "Oye mi rugido",
+          "correct": false
+        },
+        {
+          "text": "Fuego y sangre",
+          "correct": false
+        }
+      ],
+      "difficulty": "medium",
+      "fun_fact": "En el norte de la ficción, un invierno puede durar años enteros.",
+      "category": "Cultura Pop"
+    },
+    {
+      "id": "pop_es_045",
+      "question": "¿Cuál fue la primera consola doméstica de la historia?",
+      "answers": [
+        {
+          "text": "La Magnavox Odyssey",
+          "correct": true
+        },
+        {
+          "text": "La Atari 2600",
+          "correct": false
+        },
+        {
+          "text": "La ColecoVision",
+          "correct": false
+        }
+      ],
+      "difficulty": "hard",
+      "fun_fact": "Salió en 1972 y no tenía sonido: se acompañaba de láminas de plástico sobre la pantalla.",
+      "category": "Cultura Pop"
+    },
+    {
+      "id": "pop_es_046",
+      "question": "¿Qué personaje de dibujos vive en Springfield y trabaja en una central nuclear?",
+      "answers": [
+        {
+          "text": "Homer Simpson",
+          "correct": true
+        },
+        {
+          "text": "Peter Griffin",
+          "correct": false
+        },
+        {
+          "text": "Pedro Picapiedra",
+          "correct": false
+        }
+      ],
+      "difficulty": "easy",
+      "fun_fact": "Su famoso '¡D'oh!' entró en el diccionario Oxford en 2001.",
+      "category": "Cultura Pop"
+    },
+    {
+      "id": "pop_es_047",
+      "question": "¿Qué saga de videojuegos japonesa se anunció con el lema '¡Hazte con todos!'?",
+      "answers": [
+        {
+          "text": "Pokémon",
+          "correct": true
+        },
+        {
+          "text": "Digimon",
+          "correct": false
+        },
+        {
+          "text": "Yu-Gi-Oh!",
+          "correct": false
+        }
+      ],
+      "difficulty": "medium",
+      "fun_fact": "Su creador se inspiró en su afición infantil a coleccionar insectos.",
+      "category": "Cultura Pop"
+    },
+    {
+      "id": "pop_es_048",
+      "question": "¿Quién diseñó el Tetris?",
+      "answers": [
+        {
+          "text": "Alexey Pajitnov",
+          "correct": true
+        },
+        {
+          "text": "Shigeru Miyamoto",
+          "correct": false
+        },
+        {
+          "text": "Hideo Kojima",
+          "correct": false
+        }
+      ],
+      "difficulty": "hard",
+      "fun_fact": "Lo programó en 1984 en la Unión Soviética y tardó años en cobrar por él.",
+      "category": "Cultura Pop"
+    },
+    {
+      "id": "pop_es_049",
+      "question": "¿Cuántos miembros tenían The Beatles?",
+      "answers": [
+        {
+          "text": "Cuatro",
+          "correct": true
+        },
+        {
+          "text": "Tres",
+          "correct": false
+        },
+        {
+          "text": "Cinco",
+          "correct": false
+        }
+      ],
+      "difficulty": "easy",
+      "fun_fact": "Antes de Ringo Starr, el batería era Pete Best.",
+      "category": "Cultura Pop"
+    },
+    {
+      "id": "pop_es_050",
+      "question": "¿Qué consola lanzó Sony en 1994?",
+      "answers": [
+        {
+          "text": "La PlayStation",
+          "correct": true
+        },
+        {
+          "text": "La Nintendo 64",
+          "correct": false
+        },
+        {
+          "text": "La Dreamcast",
+          "correct": false
+        }
+      ],
+      "difficulty": "medium",
+      "fun_fact": "Nació de un proyecto fallido de lector de CD para consolas de Nintendo.",
+      "category": "Cultura Pop"
+    },
+    {
+      "id": "pop_es_051",
+      "question": "¿Quién creó a Mario y la saga Zelda?",
+      "answers": [
+        {
+          "text": "Shigeru Miyamoto",
+          "correct": true
+        },
+        {
+          "text": "Satoru Iwata",
+          "correct": false
+        },
+        {
+          "text": "Gunpei Yokoi",
+          "correct": false
+        }
+      ],
+      "difficulty": "hard",
+      "fun_fact": "Zelda nació de sus recuerdos explorando cuevas y bosques de niño.",
+      "category": "Cultura Pop"
+    },
+    {
+      "id": "pop_es_052",
+      "question": "¿Qué animal es Simba en 'El Rey León'?",
+      "answers": [
+        {
+          "text": "Un león",
+          "correct": true
+        },
+        {
+          "text": "Un tigre",
+          "correct": false
+        },
+        {
+          "text": "Un leopardo",
+          "correct": false
+        }
+      ],
+      "difficulty": "easy",
+      "fun_fact": "Su nombre significa literalmente 'león' en suajili.",
+      "category": "Cultura Pop"
+    },
+    {
+      "id": "pop_es_053",
+      "question": "¿Qué empresa creó la Game Boy?",
+      "answers": [
+        {
+          "text": "Nintendo",
+          "correct": true
+        },
+        {
+          "text": "Sega",
+          "correct": false
+        },
+        {
+          "text": "Atari",
+          "correct": false
+        }
+      ],
+      "difficulty": "medium",
+      "fun_fact": "Su pantalla en blanco y verde consumía tan poco que aguantaba treinta horas con pilas.",
+      "category": "Cultura Pop"
+    },
+    {
+      "id": "pop_es_054",
+      "question": "¿Qué escritor creó el universo de Cthulhu?",
+      "answers": [
+        {
+          "text": "H.P. Lovecraft",
+          "correct": true
+        },
+        {
+          "text": "Edgar Allan Poe",
+          "correct": false
+        },
+        {
+          "text": "Bram Stoker",
+          "correct": false
+        }
+      ],
+      "difficulty": "hard",
+      "fun_fact": "Murió en la pobreza y su obra solo se hizo célebre décadas después.",
+      "category": "Cultura Pop"
+    },
+    {
+      "id": "pop_es_055",
+      "question": "¿Qué cantante colombiana popularizó 'Waka Waka'?",
+      "answers": [
+        {
+          "text": "Shakira",
+          "correct": true
+        },
+        {
+          "text": "Karol G",
+          "correct": false
+        },
+        {
+          "text": "Rosalía",
+          "correct": false
+        }
+      ],
+      "difficulty": "easy",
+      "fun_fact": "Fue el himno del Mundial de fútbol de 2010.",
+      "category": "Cultura Pop"
+    },
+    {
+      "id": "pop_es_056",
+      "question": "¿Cuál es el videojuego más vendido de la historia?",
+      "answers": [
+        {
+          "text": "Minecraft",
+          "correct": true
+        },
+        {
+          "text": "Tetris",
+          "correct": false
+        },
+        {
+          "text": "Grand Theft Auto V",
+          "correct": false
+        }
+      ],
+      "difficulty": "medium",
+      "fun_fact": "Lo creó un solo programador sueco antes de convertirse en un estudio.",
+      "category": "Cultura Pop"
+    },
+    {
+      "id": "pop_es_057",
+      "question": "¿Quién escribió 'Drácula'?",
+      "answers": [
+        {
+          "text": "Bram Stoker",
+          "correct": true
+        },
+        {
+          "text": "Mary Shelley",
+          "correct": false
+        },
+        {
+          "text": "Oscar Wilde",
+          "correct": false
+        }
+      ],
+      "difficulty": "hard",
+      "fun_fact": "La publicó en 1897 y nunca visitó Transilvania: se documentó en bibliotecas.",
+      "category": "Cultura Pop"
+    },
+    {
+      "id": "pop_es_058",
+      "question": "¿En qué videojuego se construyen mundos con bloques?",
+      "answers": [
+        {
+          "text": "Minecraft",
+          "correct": true
+        },
+        {
+          "text": "Fortnite",
+          "correct": false
+        },
+        {
+          "text": "Tetris",
+          "correct": false
+        }
+      ],
+      "difficulty": "easy",
+      "fun_fact": "Es el videojuego más vendido de la historia, con más de 300 millones de copias.",
+      "category": "Cultura Pop"
+    },
+    {
+      "id": "pop_es_059",
+      "question": "¿Qué grupo surcoreano batió récords mundiales con 'Dynamite'?",
+      "answers": [
+        {
+          "text": "BTS",
+          "correct": true
+        },
+        {
+          "text": "Blackpink",
+          "correct": false
+        },
+        {
+          "text": "Exo",
+          "correct": false
+        }
+      ],
+      "difficulty": "medium",
+      "fun_fact": "Fue su primera canción íntegramente en inglés.",
+      "category": "Cultura Pop"
+    },
+    {
+      "id": "pop_es_060",
+      "question": "¿Quién escribió 'Frankenstein'?",
+      "answers": [
+        {
+          "text": "Mary Shelley",
+          "correct": true
+        },
+        {
+          "text": "Bram Stoker",
+          "correct": false
+        },
+        {
+          "text": "Edgar Allan Poe",
+          "correct": false
+        }
+      ],
+      "difficulty": "hard",
+      "fun_fact": "La empezó con dieciocho años, a raíz de una apuesta entre amigos durante un verano lluvioso.",
+      "category": "Cultura Pop"
+    },
+    {
+      "id": "pop_es_061",
+      "question": "¿Qué aventurero lleva sombrero y látigo y busca reliquias arqueológicas?",
+      "answers": [
+        {
+          "text": "Indiana Jones",
+          "correct": true
+        },
+        {
+          "text": "Lara Croft",
+          "correct": false
+        },
+        {
+          "text": "Nathan Drake",
+          "correct": false
+        }
+      ],
+      "difficulty": "easy",
+      "fun_fact": "Su nombre de pila en la ficción es Henry; 'Indiana' era el perro de la familia.",
+      "category": "Cultura Pop"
+    },
+    {
+      "id": "pop_es_062",
+      "question": "¿Cuál es el álbum más vendido de la historia a nivel mundial?",
+      "answers": [
+        {
+          "text": "'Thriller', de Michael Jackson",
+          "correct": true
+        },
+        {
+          "text": "'Abbey Road', de The Beatles",
+          "correct": false
+        },
+        {
+          "text": "'Back in Black', de AC/DC",
+          "correct": false
+        }
+      ],
+      "difficulty": "medium",
+      "fun_fact": "Ronda los 70 millones de copias vendidas en todo el mundo.",
+      "category": "Cultura Pop"
+    },
+    {
+      "id": "pop_es_063",
+      "question": "¿Qué novela de George Orwell describe la vigilancia del Gran Hermano?",
+      "answers": [
+        {
+          "text": "1984",
+          "correct": true
+        },
+        {
+          "text": "Un mundo feliz",
+          "correct": false
+        },
+        {
+          "text": "Fahrenheit 451",
+          "correct": false
+        }
+      ],
+      "difficulty": "hard",
+      "fun_fact": "La escribió en 1948 e invirtió las dos últimas cifras para el título.",
+      "category": "Cultura Pop"
+    },
+    {
+      "id": "pop_es_064",
+      "question": "¿Qué compañía creó a Blancanieves y a Bambi?",
+      "answers": [
+        {
+          "text": "Disney",
+          "correct": true
+        },
+        {
+          "text": "Warner",
+          "correct": false
+        },
+        {
+          "text": "Pixar",
+          "correct": false
+        }
+      ],
+      "difficulty": "easy",
+      "fun_fact": "Blancanieves fue el primer largometraje de animación de la historia del estudio.",
+      "category": "Cultura Pop"
+    },
+    {
+      "id": "pop_es_065",
+      "question": "¿Qué cantante española saltó a la fama con 'Malamente'?",
+      "answers": [
+        {
+          "text": "Rosalía",
+          "correct": true
+        },
+        {
+          "text": "Aitana",
+          "correct": false
+        },
+        {
+          "text": "Amaia",
+          "correct": false
+        }
+      ],
+      "difficulty": "medium",
+      "fun_fact": "El tema formaba parte de un disco concebido como trabajo de fin de carrera.",
+      "category": "Cultura Pop"
+    },
+    {
+      "id": "pop_es_066",
+      "question": "¿Qué escritor mexicano escribió 'Pedro Páramo'?",
+      "answers": [
+        {
+          "text": "Juan Rulfo",
+          "correct": true
+        },
+        {
+          "text": "Carlos Fuentes",
+          "correct": false
+        },
+        {
+          "text": "Octavio Paz",
+          "correct": false
+        }
+      ],
+      "difficulty": "hard",
+      "fun_fact": "Publicó apenas dos libros y con ellos marcó a toda una generación de escritores.",
+      "category": "Cultura Pop"
+    },
+    {
+      "id": "pop_es_067",
+      "question": "¿Qué agente secreto británico responde al número 007?",
+      "answers": [
+        {
+          "text": "James Bond",
+          "correct": true
+        },
+        {
+          "text": "Jason Bourne",
+          "correct": false
+        },
+        {
+          "text": "Ethan Hunt",
+          "correct": false
+        }
+      ],
+      "difficulty": "easy",
+      "fun_fact": "Su creador, Ian Fleming, trabajó en la inteligencia naval británica.",
+      "category": "Cultura Pop"
+    },
+    {
+      "id": "pop_es_068",
+      "question": "¿Qué grupo español cantaba 'Hijo de la Luna'?",
+      "answers": [
+        {
+          "text": "Mecano",
+          "correct": true
+        },
+        {
+          "text": "Duncan Dhu",
+          "correct": false
+        },
+        {
+          "text": "La Unión",
+          "correct": false
+        }
+      ],
+      "difficulty": "medium",
+      "fun_fact": "La canción se ha versionado en más de una decena de idiomas.",
+      "category": "Cultura Pop"
+    },
+    {
+      "id": "pop_es_069",
+      "question": "¿Qué escritor argentino escribió 'Ficciones'?",
+      "answers": [
+        {
+          "text": "Jorge Luis Borges",
+          "correct": true
+        },
+        {
+          "text": "Julio Cortázar",
+          "correct": false
+        },
+        {
+          "text": "Ernesto Sabato",
+          "correct": false
+        }
+      ],
+      "difficulty": "hard",
+      "fun_fact": "Dirigió la Biblioteca Nacional argentina justo cuando se estaba quedando ciego.",
+      "category": "Cultura Pop"
+    },
+    {
+      "id": "pop_es_070",
+      "question": "¿En qué ciudad ficticia vive Batman?",
+      "answers": [
+        {
+          "text": "En Gotham",
+          "correct": true
+        },
+        {
+          "text": "En Metrópolis",
+          "correct": false
+        },
+        {
+          "text": "En Central City",
+          "correct": false
+        }
+      ],
+      "difficulty": "easy",
+      "fun_fact": "El nombre es un apodo antiguo de Nueva York.",
+      "category": "Cultura Pop"
+    },
+    {
+      "id": "pop_es_071",
+      "question": "¿Qué banda de rock argentina lideraba Gustavo Cerati?",
+      "answers": [
+        {
+          "text": "Soda Stereo",
+          "correct": true
+        },
+        {
+          "text": "Los Fabulosos Cadillacs",
+          "correct": false
+        },
+        {
+          "text": "Enanitos Verdes",
+          "correct": false
+        }
+      ],
+      "difficulty": "medium",
+      "fun_fact": "Fueron el primer grupo de rock en español en llenar estadios por toda Latinoamérica.",
+      "category": "Cultura Pop"
+    },
+    {
+      "id": "pop_es_072",
+      "question": "¿Qué novela de Julio Cortázar puede leerse en dos órdenes distintos?",
+      "answers": [
+        {
+          "text": "Rayuela",
+          "correct": true
+        },
+        {
+          "text": "Bestiario",
+          "correct": false
+        },
+        {
+          "text": "Los premios",
+          "correct": false
+        }
+      ],
+      "difficulty": "hard",
+      "fun_fact": "El propio libro incluye un tablero de dirección para el lector.",
+      "category": "Cultura Pop"
+    },
+    {
+      "id": "pop_es_073",
+      "question": "¿Y en qué ciudad vive Superman?",
+      "answers": [
+        {
+          "text": "En Metrópolis",
+          "correct": true
+        },
+        {
+          "text": "En Gotham",
+          "correct": false
+        },
+        {
+          "text": "En Star City",
+          "correct": false
+        }
+      ],
+      "difficulty": "easy",
+      "fun_fact": "Se inspira en la ciudad futurista de la película muda 'Metrópolis'.",
+      "category": "Cultura Pop"
+    },
+    {
+      "id": "pop_es_074",
+      "question": "¿Qué cantante mexicano era conocido como 'El Divo de Juárez'?",
+      "answers": [
+        {
+          "text": "Juan Gabriel",
+          "correct": true
+        },
+        {
+          "text": "Vicente Fernández",
+          "correct": false
+        },
+        {
+          "text": "José José",
+          "correct": false
+        }
+      ],
+      "difficulty": "medium",
+      "fun_fact": "Compuso más de mil ochocientas canciones a lo largo de su carrera.",
+      "category": "Cultura Pop"
+    },
+    {
+      "id": "pop_es_075",
+      "question": "¿En qué año se estrenó 'Los Simpson' como serie propia?",
+      "answers": [
+        {
+          "text": "En 1989",
+          "correct": true
+        },
+        {
+          "text": "En 1985",
+          "correct": false
+        },
+        {
+          "text": "En 1993",
+          "correct": false
+        }
+      ],
+      "difficulty": "hard",
+      "fun_fact": "Antes eran cortos de menos de dos minutos dentro de otro programa.",
+      "category": "Cultura Pop"
+    },
+    {
+      "id": "pop_es_076",
+      "question": "¿Qué juguete vaquero protagoniza 'Toy Story'?",
+      "answers": [
+        {
+          "text": "Woody",
+          "correct": true
+        },
+        {
+          "text": "Buzz Lightyear",
+          "correct": false
+        },
+        {
+          "text": "Jessie",
+          "correct": false
+        }
+      ],
+      "difficulty": "easy",
+      "fun_fact": "Iba a llamarse Lunar Larry, pero el nombre final homenajea a un actor de wésterns.",
+      "category": "Cultura Pop"
+    },
+    {
+      "id": "pop_es_077",
+      "question": "¿Qué escritor colombiano ganó el Nobel de Literatura en 1982?",
+      "answers": [
+        {
+          "text": "Gabriel García Márquez",
+          "correct": true
+        },
+        {
+          "text": "Mario Vargas Llosa",
+          "correct": false
+        },
+        {
+          "text": "Jorge Luis Borges",
+          "correct": false
+        }
+      ],
+      "difficulty": "medium",
+      "fun_fact": "Trabajó como periodista muchos años antes de vivir de la literatura.",
+      "category": "Cultura Pop"
+    },
+    {
+      "id": "pop_es_078",
+      "question": "¿Qué película de animación japonesa ganó el Óscar en 2003?",
+      "answers": [
+        {
+          "text": "El viaje de Chihiro",
+          "correct": true
+        },
+        {
+          "text": "La princesa Mononoke",
+          "correct": false
+        },
+        {
+          "text": "El castillo ambulante",
+          "correct": false
+        }
+      ],
+      "difficulty": "hard",
+      "fun_fact": "Su director no acudió a la ceremonia en protesta por la guerra de Irak.",
+      "category": "Cultura Pop"
+    },
+    {
+      "id": "pop_es_079",
+      "question": "¿Qué cantante interpretó 'Thriller'?",
+      "answers": [
+        {
+          "text": "Michael Jackson",
+          "correct": true
+        },
+        {
+          "text": "Prince",
+          "correct": false
+        },
+        {
+          "text": "Stevie Wonder",
+          "correct": false
+        }
+      ],
+      "difficulty": "easy",
+      "fun_fact": "Su videoclip de catorce minutos costó más que muchas películas de la época.",
+      "category": "Cultura Pop"
+    },
+    {
+      "id": "pop_es_080",
+      "question": "¿Cuál es la novela más célebre de Gabriel García Márquez?",
+      "answers": [
+        {
+          "text": "Cien años de soledad",
+          "correct": true
+        },
+        {
+          "text": "El amor en los tiempos del cólera",
+          "correct": false
+        },
+        {
+          "text": "Crónica de una muerte anunciada",
+          "correct": false
+        }
+      ],
+      "difficulty": "medium",
+      "fun_fact": "La escribió en dieciocho meses y tuvo que empeñar objetos de casa para terminarla.",
+      "category": "Cultura Pop"
+    },
+    {
+      "id": "pop_es_081",
+      "question": "¿Cuál es el sencillo más vendido de la historia?",
+      "answers": [
+        {
+          "text": "'White Christmas', de Bing Crosby",
+          "correct": true
+        },
+        {
+          "text": "'Bohemian Rhapsody', de Queen",
+          "correct": false
+        },
+        {
+          "text": "'Candle in the Wind', de Elton John",
+          "correct": false
+        }
+      ],
+      "difficulty": "hard",
+      "fun_fact": "Se publicó en 1942 y supera los cincuenta millones de copias.",
+      "category": "Cultura Pop"
+    },
+    {
+      "id": "pop_es_082",
+      "question": "¿Cómo se llamaba el barco de la película de 1997 con DiCaprio y Winslet?",
+      "answers": [
+        {
+          "text": "El Titanic",
+          "correct": true
+        },
+        {
+          "text": "El Poseidón",
+          "correct": false
+        },
+        {
+          "text": "El Britannic",
+          "correct": false
+        }
+      ],
+      "difficulty": "easy",
+      "fun_fact": "Fue la primera película en recaudar más de mil millones de dólares.",
+      "category": "Cultura Pop"
+    },
+    {
+      "id": "pop_es_083",
+      "question": "¿Qué escritor español escribió 'La sombra del viento'?",
+      "answers": [
+        {
+          "text": "Carlos Ruiz Zafón",
+          "correct": true
+        },
+        {
+          "text": "Arturo Pérez-Reverte",
+          "correct": false
+        },
+        {
+          "text": "Javier Marías",
+          "correct": false
+        }
+      ],
+      "difficulty": "medium",
+      "fun_fact": "La novela gira en torno a un imaginario Cementerio de los Libros Olvidados.",
+      "category": "Cultura Pop"
+    },
+    {
+      "id": "pop_es_084",
+      "question": "¿Qué trompetista grabó 'Kind of Blue', el disco de jazz más vendido?",
+      "answers": [
+        {
+          "text": "Miles Davis",
+          "correct": true
+        },
+        {
+          "text": "Louis Armstrong",
+          "correct": false
+        },
+        {
+          "text": "Dizzy Gillespie",
+          "correct": false
+        }
+      ],
+      "difficulty": "hard",
+      "fun_fact": "Se grabó casi entero a la primera toma, con los músicos leyendo esquemas escritos ese mismo día.",
+      "category": "Cultura Pop"
+    },
+    {
+      "id": "pop_es_085",
+      "question": "¿Qué instrumento tocaba Jimi Hendrix?",
+      "answers": [
+        {
+          "text": "La guitarra eléctrica",
+          "correct": true
+        },
+        {
+          "text": "La batería",
+          "correct": false
+        },
+        {
+          "text": "El saxofón",
+          "correct": false
+        }
+      ],
+      "difficulty": "easy",
+      "fun_fact": "Era zurdo y tocaba guitarras para diestros puestas del revés.",
+      "category": "Cultura Pop"
+    },
+    {
+      "id": "pop_es_086",
+      "question": "¿De qué superhéroe es alter ego Bruce Wayne?",
+      "answers": [
+        {
+          "text": "De Batman",
+          "correct": true
+        },
+        {
+          "text": "De Superman",
+          "correct": false
+        },
+        {
+          "text": "De Iron Man",
+          "correct": false
+        }
+      ],
+      "difficulty": "medium",
+      "fun_fact": "Es uno de los pocos héroes clásicos sin ningún superpoder.",
+      "category": "Cultura Pop"
+    },
+    {
+      "id": "pop_es_087",
+      "question": "¿Qué compositor italiano puso música a 'El bueno, el feo y el malo'?",
+      "answers": [
+        {
+          "text": "Ennio Morricone",
+          "correct": true
+        },
+        {
+          "text": "Nino Rota",
+          "correct": false
+        },
+        {
+          "text": "Riz Ortolani",
+          "correct": false
+        }
+      ],
+      "difficulty": "hard",
+      "fun_fact": "Iba a clase con el director del wéstern, Sergio Leone, cuando eran niños.",
+      "category": "Cultura Pop"
+    },
+    {
+      "id": "pop_es_088",
+      "question": "¿Qué serie sigue a un profesor de química que empieza a fabricar drogas?",
+      "answers": [
+        {
+          "text": "Breaking Bad",
+          "correct": true
+        },
+        {
+          "text": "The Wire",
+          "correct": false
+        },
+        {
+          "text": "Dexter",
+          "correct": false
+        }
+      ],
+      "difficulty": "easy",
+      "fun_fact": "Su creador la resumió como convertir al señor Chips en Scarface.",
+      "category": "Cultura Pop"
+    },
+    {
+      "id": "pop_es_089",
+      "question": "¿Y de qué superhéroe es alter ego Clark Kent?",
+      "answers": [
+        {
+          "text": "De Superman",
+          "correct": true
+        },
+        {
+          "text": "De Batman",
+          "correct": false
+        },
+        {
+          "text": "De Flash",
+          "correct": false
+        }
+      ],
+      "difficulty": "medium",
+      "fun_fact": "Su apellido periodístico homenajea a dos actores: Clark Gable y Kent Taylor.",
+      "category": "Cultura Pop"
+    },
+    {
+      "id": "pop_es_090",
+      "question": "¿Qué película española ganó el primer Óscar a mejor película de habla no inglesa para España?",
+      "answers": [
+        {
+          "text": "Volver a empezar",
+          "correct": true
+        },
+        {
+          "text": "Belle Époque",
+          "correct": false
+        },
+        {
+          "text": "Todo sobre mi madre",
+          "correct": false
+        }
+      ],
+      "difficulty": "hard",
+      "fun_fact": "La dirigió José Luis Garci y ganó en 1983.",
+      "category": "Cultura Pop"
+    },
+    {
+      "id": "pop_es_091",
+      "question": "¿De qué tipo es el Pokémon Pikachu?",
+      "answers": [
+        {
+          "text": "Eléctrico",
+          "correct": true
+        },
+        {
+          "text": "De fuego",
+          "correct": false
+        },
+        {
+          "text": "De agua",
+          "correct": false
+        }
+      ],
+      "difficulty": "easy",
+      "fun_fact": "Su nombre mezcla dos palabras japonesas: el chispazo y el chillido de un ratón.",
+      "category": "Cultura Pop"
+    },
+    {
+      "id": "pop_es_092",
+      "question": "¿Qué editorial creó a los X-Men y a Spider-Man?",
+      "answers": [
+        {
+          "text": "Marvel",
+          "correct": true
+        },
+        {
+          "text": "DC",
+          "correct": false
+        },
+        {
+          "text": "Image",
+          "correct": false
+        }
+      ],
+      "difficulty": "medium",
+      "fun_fact": "Antes de llamarse Marvel se llamaba Timely Comics.",
+      "category": "Cultura Pop"
+    },
+    {
+      "id": "pop_es_093",
+      "question": "¿Qué artista convirtió las latas de sopa Campbell en arte pop?",
+      "answers": [
+        {
+          "text": "Andy Warhol",
+          "correct": true
+        },
+        {
+          "text": "Roy Lichtenstein",
+          "correct": false
+        },
+        {
+          "text": "Jasper Johns",
+          "correct": false
+        }
+      ],
+      "difficulty": "hard",
+      "fun_fact": "Pintó las treinta y dos variedades que la marca vendía entonces, una por lienzo.",
+      "category": "Cultura Pop"
+    },
+    {
+      "id": "pop_es_094",
+      "question": "¿Qué grupo sueco cantaba 'Dancing Queen'?",
+      "answers": [
+        {
+          "text": "ABBA",
+          "correct": true
+        },
+        {
+          "text": "Roxette",
+          "correct": false
+        },
+        {
+          "text": "Ace of Base",
+          "correct": false
+        }
+      ],
+      "difficulty": "easy",
+      "fun_fact": "El nombre son las iniciales de sus cuatro integrantes.",
+      "category": "Cultura Pop"
+    },
+    {
+      "id": "pop_es_095",
+      "question": "¿Y qué editorial creó a Batman y a Wonder Woman?",
+      "answers": [
+        {
+          "text": "DC",
+          "correct": true
+        },
+        {
+          "text": "Marvel",
+          "correct": false
+        },
+        {
+          "text": "Dark Horse",
+          "correct": false
+        }
+      ],
+      "difficulty": "medium",
+      "fun_fact": "Las siglas vienen de 'Detective Comics', la revista donde apareció Batman.",
+      "category": "Cultura Pop"
+    },
+    {
+      "id": "pop_es_096",
+      "question": "¿Qué artista pop pintaba cuadros que imitaban viñetas de cómic con puntos de imprenta?",
+      "answers": [
+        {
+          "text": "Roy Lichtenstein",
+          "correct": true
+        },
+        {
+          "text": "Andy Warhol",
+          "correct": false
+        },
+        {
+          "text": "Keith Haring",
+          "correct": false
+        }
+      ],
+      "difficulty": "hard",
+      "fun_fact": "Los puntos imitan la trama de impresión barata de los cómics de los años sesenta.",
+      "category": "Cultura Pop"
+    },
+    {
+      "id": "pop_es_097",
+      "question": "¿Qué película de 1975 disparó el miedo del público a los tiburones?",
+      "answers": [
+        {
+          "text": "Tiburón",
+          "correct": true
+        },
+        {
+          "text": "Orca",
+          "correct": false
+        },
+        {
+          "text": "Piraña",
+          "correct": false
+        }
+      ],
+      "difficulty": "easy",
+      "fun_fact": "El tiburón mecánico se averiaba tanto que apenas se le ve: eso multiplicó la tensión.",
+      "category": "Cultura Pop"
+    },
+    {
+      "id": "pop_es_098",
+      "question": "¿Qué actor interpretó a Iron Man en el cine de Marvel?",
+      "answers": [
+        {
+          "text": "Robert Downey Jr.",
+          "correct": true
+        },
+        {
+          "text": "Chris Evans",
+          "correct": false
+        },
+        {
+          "text": "Mark Ruffalo",
+          "correct": false
+        }
+      ],
+      "difficulty": "medium",
+      "fun_fact": "El estudio dudó de su fichaje y le hizo pasar una prueba de cámara como a un desconocido.",
+      "category": "Cultura Pop"
+    },
+    {
+      "id": "pop_es_099",
+      "question": "¿En qué año se lanzó el primer iPhone?",
+      "answers": [
+        {
+          "text": "En 2007",
+          "correct": true
+        },
+        {
+          "text": "En 2005",
+          "correct": false
+        },
+        {
+          "text": "En 2010",
+          "correct": false
+        }
+      ],
+      "difficulty": "hard",
+      "fun_fact": "No permitía instalar aplicaciones de terceros: la tienda llegó un año después.",
+      "category": "Cultura Pop"
+    },
+    {
+      "id": "pop_es_100",
+      "question": "¿En qué país se rueda el cine conocido como 'Bollywood'?",
+      "answers": [
+        {
+          "text": "En la India",
+          "correct": true
+        },
+        {
+          "text": "En Pakistán",
+          "correct": false
+        },
+        {
+          "text": "En Egipto",
+          "correct": false
+        }
+      ],
+      "difficulty": "easy",
+      "fun_fact": "Produce más películas al año que ningún otro país del mundo.",
+      "category": "Cultura Pop"
+    },
+    {
+      "id": "pop_es_101",
+      "question": "¿Qué película de superhéroes fue la primera nominada al Óscar a mejor película?",
+      "answers": [
+        {
+          "text": "Black Panther",
+          "correct": true
+        },
+        {
+          "text": "Vengadores: Infinity War",
+          "correct": false
+        },
+        {
+          "text": "Deadpool",
+          "correct": false
+        }
+      ],
+      "difficulty": "medium",
+      "fun_fact": "Ganó tres estatuillas técnicas en aquella misma ceremonia.",
+      "category": "Cultura Pop"
+    },
+    {
+      "id": "pop_es_102",
+      "question": "¿Qué grupo musical protagonizó la película 'Qué noche la de aquel día'?",
+      "answers": [
+        {
+          "text": "The Beatles",
+          "correct": true
+        },
+        {
+          "text": "The Rolling Stones",
+          "correct": false
+        },
+        {
+          "text": "The Kinks",
+          "correct": false
+        }
+      ],
+      "difficulty": "hard",
+      "fun_fact": "El título en inglés salió de una frase que soltó Ringo Starr por error.",
+      "category": "Cultura Pop"
+    },
+    {
+      "id": "pop_es_103",
+      "question": "¿Quién creó al detective Sherlock Holmes?",
+      "answers": [
+        {
+          "text": "Arthur Conan Doyle",
+          "correct": true
+        },
+        {
+          "text": "Agatha Christie",
+          "correct": false
+        },
+        {
+          "text": "Edgar Allan Poe",
+          "correct": false
+        }
+      ],
+      "difficulty": "easy",
+      "fun_fact": "Intentó matarlo en 1893, pero la presión de los lectores le obligó a resucitarlo.",
+      "category": "Cultura Pop"
+    },
+    {
+      "id": "pop_es_104",
+      "question": "¿Qué estudio japonés produjo 'El viaje de Chihiro'?",
+      "answers": [
+        {
+          "text": "Studio Ghibli",
+          "correct": true
+        },
+        {
+          "text": "Toei Animation",
+          "correct": false
+        },
+        {
+          "text": "Madhouse",
+          "correct": false
+        }
+      ],
+      "difficulty": "medium",
+      "fun_fact": "El nombre viene de un viento cálido del Sáhara.",
+      "category": "Cultura Pop"
+    },
+    {
+      "id": "pop_es_105",
+      "question": "¿Qué escritora británica publicó bajo iniciales para no revelar que era mujer?",
+      "answers": [
+        {
+          "text": "J.K. Rowling",
+          "correct": true
+        },
+        {
+          "text": "Agatha Christie",
+          "correct": false
+        },
+        {
+          "text": "Virginia Woolf",
+          "correct": false
+        }
+      ],
+      "difficulty": "hard",
+      "fun_fact": "La editorial temía que los niños no leyeran un libro de aventuras firmado por una mujer.",
+      "category": "Cultura Pop"
+    },
+    {
+      "id": "pop_es_106",
+      "question": "¿Qué detective belga creó Agatha Christie?",
+      "answers": [
+        {
+          "text": "Hércules Poirot",
+          "correct": true
+        },
+        {
+          "text": "Sherlock Holmes",
+          "correct": false
+        },
+        {
+          "text": "Philip Marlowe",
+          "correct": false
+        }
+      ],
+      "difficulty": "easy",
+      "fun_fact": "Es el único personaje de ficción con obituario en primera plana del New York Times.",
+      "category": "Cultura Pop"
+    },
+    {
+      "id": "pop_es_107",
+      "question": "¿Quién dirigió 'El viaje de Chihiro'?",
+      "answers": [
+        {
+          "text": "Hayao Miyazaki",
+          "correct": true
+        },
+        {
+          "text": "Isao Takahata",
+          "correct": false
+        },
+        {
+          "text": "Makoto Shinkai",
+          "correct": false
+        }
+      ],
+      "difficulty": "medium",
+      "fun_fact": "Ha anunciado su retirada en varias ocasiones y ha vuelto todas las veces.",
+      "category": "Cultura Pop"
+    },
+    {
+      "id": "pop_es_108",
+      "question": "¿Qué película muda alemana de 1927 imaginó una ciudad futurista dividida en dos clases?",
+      "answers": [
+        {
+          "text": "Metrópolis",
+          "correct": true
+        },
+        {
+          "text": "El gabinete del doctor Caligari",
+          "correct": false
+        },
+        {
+          "text": "Nosferatu",
+          "correct": false
+        }
+      ],
+      "difficulty": "hard",
+      "fun_fact": "Su copia íntegra se dio por perdida durante ochenta años, hasta aparecer en Buenos Aires.",
+      "category": "Cultura Pop"
+    },
+    {
+      "id": "pop_es_109",
+      "question": "¿Qué plataforma de streaming produjo 'Stranger Things'?",
+      "answers": [
+        {
+          "text": "Netflix",
+          "correct": true
+        },
+        {
+          "text": "HBO",
+          "correct": false
+        },
+        {
+          "text": "Disney+",
+          "correct": false
+        }
+      ],
+      "difficulty": "easy",
+      "fun_fact": "Netflix empezó alquilando películas en DVD por correo.",
+      "category": "Cultura Pop"
+    },
+    {
+      "id": "pop_es_110",
+      "question": "¿Cómo se llamaba el personaje más famoso de Charles Chaplin?",
+      "answers": [
+        {
+          "text": "Charlot, el vagabundo",
+          "correct": true
+        },
+        {
+          "text": "El Gordo",
+          "correct": false
+        },
+        {
+          "text": "Buster",
+          "correct": false
+        }
+      ],
+      "difficulty": "medium",
+      "fun_fact": "Construyó el disfraz entero en menos de diez minutos con ropa prestada.",
+      "category": "Cultura Pop"
+    },
+    {
+      "id": "pop_es_111",
+      "question": "¿Qué género musical popularizaron artistas como Daddy Yankee y Don Omar?",
+      "answers": [
+        {
+          "text": "El reguetón",
+          "correct": true
+        },
+        {
+          "text": "El flamenco",
+          "correct": false
+        },
+        {
+          "text": "La bachata",
+          "correct": false
+        }
+      ],
+      "difficulty": "easy",
+      "fun_fact": "Nació en Panamá y Puerto Rico a partir del dancehall jamaicano.",
+      "category": "Cultura Pop"
+    },
+    {
+      "id": "pop_es_112",
+      "question": "¿Qué película de 1939 sigue a Dorothy por un camino de baldosas amarillas?",
+      "answers": [
+        {
+          "text": "El mago de Oz",
+          "correct": true
+        },
+        {
+          "text": "Lo que el viento se llevó",
+          "correct": false
+        },
+        {
+          "text": "Blancanieves",
+          "correct": false
+        }
+      ],
+      "difficulty": "medium",
+      "fun_fact": "El paso del sepia al color fue una de las mayores sorpresas visuales de su época.",
+      "category": "Cultura Pop"
+    },
+    {
+      "id": "pop_es_113",
+      "question": "¿Qué película de animación de 1995 fue la primera hecha íntegramente por ordenador?",
+      "answers": [
+        {
+          "text": "Toy Story",
+          "correct": true
+        },
+        {
+          "text": "Shrek",
+          "correct": false
+        },
+        {
+          "text": "Buscando a Nemo",
+          "correct": false
+        }
+      ],
+      "difficulty": "easy",
+      "fun_fact": "Su producción llevó cuatro años y un equipo de apenas 27 animadores.",
+      "category": "Cultura Pop"
+    },
+    {
+      "id": "pop_es_114",
+      "question": "¿Qué frase revela Darth Vader a Luke Skywalker?",
+      "answers": [
+        {
+          "text": "Que es su padre",
+          "correct": true
+        },
+        {
+          "text": "Que es su hermano",
+          "correct": false
+        },
+        {
+          "text": "Que es un clon",
+          "correct": false
+        }
+      ],
+      "difficulty": "medium",
+      "fun_fact": "El actor que interpretaba a Vader rodó otro diálogo: el giro se dobló después para evitar filtraciones.",
+      "category": "Cultura Pop"
+    },
+    {
+      "id": "pop_es_115",
+      "question": "¿Qué grupo de rock británico lidera Mick Jagger?",
+      "answers": [
+        {
+          "text": "The Rolling Stones",
+          "correct": true
+        },
+        {
+          "text": "The Beatles",
+          "correct": false
+        },
+        {
+          "text": "The Kinks",
+          "correct": false
+        }
+      ],
+      "difficulty": "easy",
+      "fun_fact": "Llevan más de sesenta años sobre los escenarios.",
+      "category": "Cultura Pop"
+    },
+    {
+      "id": "pop_es_116",
+      "question": "¿En qué película de Star Wars se produce esa revelación?",
+      "answers": [
+        {
+          "text": "En El Imperio contraataca",
+          "correct": true
+        },
+        {
+          "text": "En Una nueva esperanza",
+          "correct": false
+        },
+        {
+          "text": "En El retorno del Jedi",
+          "correct": false
+        }
+      ],
+      "difficulty": "medium",
+      "fun_fact": "Es la segunda entrega estrenada, de 1980.",
+      "category": "Cultura Pop"
+    },
+    {
+      "id": "pop_es_117",
+      "question": "¿Qué videojuego consiste en encajar piezas que van cayendo?",
+      "answers": [
+        {
+          "text": "Tetris",
+          "correct": true
+        },
+        {
+          "text": "Pac-Man",
+          "correct": false
+        },
+        {
+          "text": "Space Invaders",
+          "correct": false
+        }
+      ],
+      "difficulty": "easy",
+      "fun_fact": "Sus siete piezas se llaman tetrominós porque todas tienen cuatro cuadrados.",
+      "category": "Cultura Pop"
+    },
+    {
+      "id": "pop_es_118",
+      "question": "¿Quién creó Star Wars?",
+      "answers": [
+        {
+          "text": "George Lucas",
+          "correct": true
+        },
+        {
+          "text": "Steven Spielberg",
+          "correct": false
+        },
+        {
+          "text": "Ridley Scott",
+          "correct": false
+        }
+      ],
+      "difficulty": "medium",
+      "fun_fact": "Renunció a parte de su sueldo a cambio de los derechos de merchandising, y se hizo multimillonario.",
+      "category": "Cultura Pop"
+    },
+    {
+      "id": "pop_es_119",
+      "question": "¿De qué color es la piel de Hulk?",
+      "answers": [
+        {
+          "text": "Verde",
+          "correct": true
+        },
+        {
+          "text": "Azul",
+          "correct": false
+        },
+        {
+          "text": "Roja",
+          "correct": false
+        }
+      ],
+      "difficulty": "easy",
+      "fun_fact": "En su primera aparición era gris: el color cambió por un problema de imprenta.",
+      "category": "Cultura Pop"
+    },
+    {
+      "id": "pop_es_120",
+      "question": "¿Qué serie española sigue a la familia Alcántara desde los años sesenta?",
+      "answers": [
+        {
+          "text": "Cuéntame cómo pasó",
+          "correct": true
+        },
+        {
+          "text": "Farmacia de guardia",
+          "correct": false
+        },
+        {
+          "text": "Médico de familia",
+          "correct": false
+        }
+      ],
+      "difficulty": "medium",
+      "fun_fact": "Ha superado los cuatrocientos capítulos, una de las series más longevas de España.",
+      "category": "Cultura Pop"
+    },
+    {
+      "id": "pop_es_121",
+      "question": "¿Qué actor interpretó al capitán Jack Sparrow?",
+      "answers": [
+        {
+          "text": "Johnny Depp",
+          "correct": true
+        },
+        {
+          "text": "Orlando Bloom",
+          "correct": false
+        },
+        {
+          "text": "Brad Pitt",
+          "correct": false
+        }
+      ],
+      "difficulty": "easy",
+      "fun_fact": "Se inspiró en el guitarrista Keith Richards para construir el personaje.",
+      "category": "Cultura Pop"
+    },
+    {
+      "id": "pop_es_122",
+      "question": "¿Qué serie española sobre atracadores con monos rojos triunfó en Netflix?",
+      "answers": [
+        {
+          "text": "La casa de papel",
+          "correct": true
+        },
+        {
+          "text": "Élite",
+          "correct": false
+        },
+        {
+          "text": "Vis a vis",
+          "correct": false
+        }
+      ],
+      "difficulty": "medium",
+      "fun_fact": "Fracasó en su emisión original en abierto y renació al llegar a la plataforma.",
+      "category": "Cultura Pop"
+    },
+    {
+      "id": "pop_es_123",
+      "question": "¿Qué saga de películas transcurre en la Tierra Media?",
+      "answers": [
+        {
+          "text": "El Señor de los Anillos",
+          "correct": true
+        },
+        {
+          "text": "Las crónicas de Narnia",
+          "correct": false
+        },
+        {
+          "text": "Juego de Tronos",
+          "correct": false
+        }
+      ],
+      "difficulty": "easy",
+      "fun_fact": "Se rodó entera en Nueva Zelanda, en más de 150 localizaciones.",
+      "category": "Cultura Pop"
+    },
+    {
+      "id": "pop_es_124",
+      "question": "¿Qué máscara llevan los atracadores de esa serie?",
+      "answers": [
+        {
+          "text": "La de Salvador Dalí",
+          "correct": true
+        },
+        {
+          "text": "La de Guy Fawkes",
+          "correct": false
+        },
+        {
+          "text": "La de Picasso",
+          "correct": false
+        }
+      ],
+      "difficulty": "medium",
+      "fun_fact": "Se eligió por ser un símbolo español reconocible en todo el mundo.",
+      "category": "Cultura Pop"
+    },
+    {
+      "id": "pop_es_125",
+      "question": "¿Quién escribió 'El Señor de los Anillos'?",
+      "answers": [
+        {
+          "text": "J.R.R. Tolkien",
+          "correct": true
+        },
+        {
+          "text": "C.S. Lewis",
+          "correct": false
+        },
+        {
+          "text": "George R.R. Martin",
+          "correct": false
+        }
+      ],
+      "difficulty": "easy",
+      "fun_fact": "Era filólogo y se inventó los idiomas élficos antes que la historia.",
+      "category": "Cultura Pop"
+    },
+    {
+      "id": "pop_es_126",
+      "question": "¿Quién fue el cantante de Queen?",
+      "answers": [
+        {
+          "text": "Freddie Mercury",
+          "correct": true
+        },
+        {
+          "text": "Brian May",
+          "correct": false
+        },
+        {
+          "text": "Roger Taylor",
+          "correct": false
+        }
+      ],
+      "difficulty": "medium",
+      "fun_fact": "El guitarrista del grupo, Brian May, es además doctor en astrofísica.",
+      "category": "Cultura Pop"
+    },
+    {
+      "id": "pop_es_127",
+      "question": "¿Qué cantante británica se hizo célebre con el álbum '21'?",
+      "answers": [
+        {
+          "text": "Adele",
+          "correct": true
+        },
+        {
+          "text": "Amy Winehouse",
+          "correct": false
+        },
+        {
+          "text": "Duffy",
+          "correct": false
+        }
+      ],
+      "difficulty": "easy",
+      "fun_fact": "Los títulos de sus discos son la edad que tenía al componerlos.",
+      "category": "Cultura Pop"
+    },
+    {
+      "id": "pop_es_128",
+      "question": "¿Qué festival de música se celebró en 1969 en el estado de Nueva York?",
+      "answers": [
+        {
+          "text": "Woodstock",
+          "correct": true
+        },
+        {
+          "text": "Glastonbury",
+          "correct": false
+        },
+        {
+          "text": "Monterey",
+          "correct": false
+        }
+      ],
+      "difficulty": "medium",
+      "fun_fact": "Se esperaban 50.000 personas y acudieron más de 400.000.",
+      "category": "Cultura Pop"
+    },
+    {
+      "id": "pop_es_129",
+      "question": "¿Qué instrumento marca el ritmo en un grupo de rock, junto al bajo?",
+      "answers": [
+        {
+          "text": "La batería",
+          "correct": true
+        },
+        {
+          "text": "El arpa",
+          "correct": false
+        },
+        {
+          "text": "El clavicémbalo",
+          "correct": false
+        }
+      ],
+      "difficulty": "easy",
+      "fun_fact": "El primer kit moderno nació para que un solo músico tocara lo que antes hacían tres.",
+      "category": "Cultura Pop"
+    },
+    {
+      "id": "pop_es_130",
+      "question": "¿Qué certamen musical enfrenta cada año a países europeos?",
+      "answers": [
+        {
+          "text": "Eurovisión",
+          "correct": true
+        },
+        {
+          "text": "Los Brit Awards",
+          "correct": false
+        },
+        {
+          "text": "El Festival de Sanremo",
+          "correct": false
+        }
+      ],
+      "difficulty": "medium",
+      "fun_fact": "Se creó en 1956 para probar la emisión televisiva simultánea entre países.",
+      "category": "Cultura Pop"
+    },
+    {
+      "id": "pop_es_131",
+      "question": "¿Qué película reúne a Iron Man, Thor y el Capitán América?",
+      "answers": [
+        {
+          "text": "Los Vengadores",
+          "correct": true
+        },
+        {
+          "text": "La Liga de la Justicia",
+          "correct": false
+        },
+        {
+          "text": "Los X-Men",
+          "correct": false
+        }
+      ],
+      "difficulty": "easy",
+      "fun_fact": "Fue la primera película en juntar a protagonistas de cinco sagas distintas.",
+      "category": "Cultura Pop"
+    },
+    {
+      "id": "pop_es_132",
+      "question": "¿En qué año ganó España Eurovisión con Massiel?",
+      "answers": [
+        {
+          "text": "En 1968",
+          "correct": true
+        },
+        {
+          "text": "En 1972",
+          "correct": false
+        },
+        {
+          "text": "En 1980",
+          "correct": false
+        }
+      ],
+      "difficulty": "medium",
+      "fun_fact": "España volvió a ganar al año siguiente, en una final con cuatro países empatados.",
+      "category": "Cultura Pop"
+    },
+    {
+      "id": "pop_es_133",
+      "question": "¿Qué red social compró Facebook en 2012?",
+      "answers": [
+        {
+          "text": "Instagram",
+          "correct": true
+        },
+        {
+          "text": "Twitter",
+          "correct": false
+        },
+        {
+          "text": "Snapchat",
+          "correct": false
+        }
+      ],
+      "difficulty": "medium",
+      "fun_fact": "Pagó unos mil millones de dólares por una empresa de trece empleados.",
+      "category": "Cultura Pop"
+    },
+    {
+      "id": "pop_es_134",
+      "question": "¿Qué plataforma de vídeo compró Google en 2006?",
+      "answers": [
+        {
+          "text": "YouTube",
+          "correct": true
+        },
+        {
+          "text": "Vimeo",
+          "correct": false
+        },
+        {
+          "text": "Twitch",
+          "correct": false
+        }
+      ],
+      "difficulty": "medium",
+      "fun_fact": "La compró cuando el sitio tenía menos de dos años de vida.",
+      "category": "Cultura Pop"
+    },
+    {
+      "id": "pop_es_135",
+      "question": "¿Cuál fue el primer vídeo subido a YouTube?",
+      "answers": [
+        {
+          "text": "'Me at the zoo'",
+          "correct": true
+        },
+        {
+          "text": "'Gangnam Style'",
+          "correct": false
+        },
+        {
+          "text": "'Charlie bit my finger'",
+          "correct": false
+        }
+      ],
+      "difficulty": "medium",
+      "fun_fact": "Dura diecinueve segundos y lo grabó uno de los fundadores frente a unos elefantes.",
+      "category": "Cultura Pop"
+    },
+    {
+      "id": "pop_es_136",
+      "question": "¿Qué canción fue la primera en superar mil millones de visitas en YouTube?",
+      "answers": [
+        {
+          "text": "'Gangnam Style'",
+          "correct": true
+        },
+        {
+          "text": "'Despacito'",
+          "correct": false
+        },
+        {
+          "text": "'Baby Shark'",
+          "correct": false
+        }
+      ],
+      "difficulty": "medium",
+      "fun_fact": "Rompió el contador de la web, que no estaba preparado para tantas visitas.",
+      "category": "Cultura Pop"
+    },
+    {
+      "id": "pop_es_137",
+      "question": "¿Qué juego de mesa consiste en comprar calles y construir hoteles?",
+      "answers": [
+        {
+          "text": "El Monopoly",
+          "correct": true
+        },
+        {
+          "text": "El Risk",
+          "correct": false
+        },
+        {
+          "text": "El Cluedo",
+          "correct": false
+        }
+      ],
+      "difficulty": "medium",
+      "fun_fact": "Su antecesor se diseñó para explicar por qué concentrar la propiedad empobrece a todos.",
+      "category": "Cultura Pop"
+    },
+    {
+      "id": "pop_es_138",
+      "question": "¿Qué juego de mesa consiste en resolver un asesinato en una mansión?",
+      "answers": [
+        {
+          "text": "El Cluedo",
+          "correct": true
+        },
+        {
+          "text": "El Monopoly",
+          "correct": false
+        },
+        {
+          "text": "El Trivial",
+          "correct": false
+        }
+      ],
+      "difficulty": "medium",
+      "fun_fact": "Se inventó en Inglaterra durante los apagones de la Segunda Guerra Mundial.",
+      "category": "Cultura Pop"
+    },
+    {
+      "id": "pop_es_139",
+      "question": "¿Qué muñeca lanzó la empresa Mattel en 1959?",
+      "answers": [
+        {
+          "text": "Barbie",
+          "correct": true
+        },
+        {
+          "text": "Nancy",
+          "correct": false
+        },
+        {
+          "text": "Las Bratz",
+          "correct": false
+        }
+      ],
+      "difficulty": "medium",
+      "fun_fact": "Lleva el nombre de la hija de su creadora.",
+      "category": "Cultura Pop"
+    },
+    {
+      "id": "pop_es_140",
+      "question": "¿Qué juguete danés se basa en ladrillos que encajan entre sí?",
+      "answers": [
+        {
+          "text": "Lego",
+          "correct": true
+        },
+        {
+          "text": "Playmobil",
+          "correct": false
+        },
+        {
+          "text": "Meccano",
+          "correct": false
+        }
+      ],
+      "difficulty": "medium",
+      "fun_fact": "Dos ladrillos del mismo tamaño pueden combinarse de más de veinte formas distintas.",
+      "category": "Cultura Pop"
+    },
+    {
+      "id": "pop_es_141",
+      "question": "¿Qué significa el nombre 'Lego' en danés?",
+      "answers": [
+        {
+          "text": "'Juega bien'",
+          "correct": true
+        },
+        {
+          "text": "'Ladrillo'",
+          "correct": false
+        },
+        {
+          "text": "'Construir'",
+          "correct": false
+        }
+      ],
+      "difficulty": "medium",
+      "fun_fact": "Viene de la expresión 'leg godt'; que en latín signifique 'yo uno' fue pura casualidad.",
+      "category": "Cultura Pop"
+    },
+    {
+      "id": "pop_es_142",
+      "question": "¿Qué actor interpretó a Neo en 'Matrix'?",
+      "answers": [
+        {
+          "text": "Keanu Reeves",
+          "correct": true
+        },
+        {
+          "text": "Laurence Fishburne",
+          "correct": false
+        },
+        {
+          "text": "Hugo Weaving",
+          "correct": false
+        }
+      ],
+      "difficulty": "medium",
+      "fun_fact": "Entrenó artes marciales cuatro meses seguidos antes de empezar el rodaje.",
+      "category": "Cultura Pop"
+    },
+    {
+      "id": "pop_es_143",
+      "question": "¿Qué pastilla elige Neo en 'Matrix'?",
+      "answers": [
+        {
+          "text": "La roja",
+          "correct": true
+        },
+        {
+          "text": "La azul",
+          "correct": false
+        },
+        {
+          "text": "La verde",
+          "correct": false
+        }
+      ],
+      "difficulty": "medium",
+      "fun_fact": "La expresión 'tomar la pastilla roja' se ha convertido en sinónimo de ver la realidad.",
+      "category": "Cultura Pop"
+    },
+    {
+      "id": "pop_es_144",
+      "question": "¿Qué película de 1994 de Quentin Tarantino entrelaza varias historias criminales fuera de orden?",
+      "answers": [
+        {
+          "text": "Pulp Fiction",
+          "correct": true
+        },
+        {
+          "text": "Reservoir Dogs",
+          "correct": false
+        },
+        {
+          "text": "Jackie Brown",
+          "correct": false
+        }
+      ],
+      "difficulty": "medium",
+      "fun_fact": "Ganó la Palma de Oro en Cannes y se rodó con un presupuesto modesto.",
+      "category": "Cultura Pop"
+    },
+    {
+      "id": "pop_es_145",
+      "question": "¿Qué serie sigue a un grupo de amigos que se reúne en el café Central Perk?",
+      "answers": [
+        {
+          "text": "Friends",
+          "correct": true
+        },
+        {
+          "text": "Cómo conocí a vuestra madre",
+          "correct": false
+        },
+        {
+          "text": "Seinfeld",
+          "correct": false
+        }
+      ],
+      "difficulty": "medium",
+      "fun_fact": "El sofá naranja del café estaba en el sótano del estudio antes de convertirse en icono.",
+      "category": "Cultura Pop"
+    },
+    {
+      "id": "pop_es_146",
+      "question": "¿Cuántas temporadas tuvo 'Friends'?",
+      "answers": [
+        {
+          "text": "Diez",
+          "correct": true
+        },
+        {
+          "text": "Ocho",
+          "correct": false
+        },
+        {
+          "text": "Doce",
+          "correct": false
+        }
+      ],
+      "difficulty": "medium",
+      "fun_fact": "Sus seis protagonistas negociaron juntos el sueldo para cobrar todos lo mismo.",
+      "category": "Cultura Pop"
+    },
+    {
+      "id": "pop_es_147",
+      "question": "¿Qué cantante estadounidense regraba sus discos bajo la etiqueta 'Taylor's Version'?",
+      "answers": [
+        {
+          "text": "Taylor Swift",
+          "correct": true
+        },
+        {
+          "text": "Katy Perry",
+          "correct": false
+        },
+        {
+          "text": "Ariana Grande",
+          "correct": false
+        }
+      ],
+      "difficulty": "medium",
+      "fun_fact": "Lo hace para recuperar el control sobre las grabaciones originales de su catálogo.",
+      "category": "Cultura Pop"
+    },
+    {
+      "id": "pop_es_148",
+      "question": "¿Qué grupo británico protagonizó con Blur la rivalidad del britpop de los noventa?",
+      "answers": [
+        {
+          "text": "Oasis",
+          "correct": true
+        },
+        {
+          "text": "Pulp",
+          "correct": false
+        },
+        {
+          "text": "Suede",
+          "correct": false
+        }
+      ],
+      "difficulty": "medium",
+      "fun_fact": "En 1995 ambos publicaron sencillo el mismo día y la prensa lo llamó 'la batalla del britpop'.",
+      "category": "Cultura Pop"
+    },
+    {
+      "id": "pop_es_149",
+      "question": "¿Qué compositor puso música a 'Star Wars' y 'Tiburón'?",
+      "answers": [
+        {
+          "text": "John Williams",
+          "correct": true
+        },
+        {
+          "text": "Hans Zimmer",
+          "correct": false
+        },
+        {
+          "text": "Danny Elfman",
+          "correct": false
+        }
+      ],
+      "difficulty": "medium",
+      "fun_fact": "El tema de 'Tiburón' se sostiene sobre solo dos notas alternas.",
+      "category": "Cultura Pop"
+    },
+    {
+      "id": "pop_es_150",
+      "question": "¿Qué serie de dibujos es la de mayor duración en la televisión estadounidense?",
+      "answers": [
+        {
+          "text": "Los Simpson",
+          "correct": true
+        },
+        {
+          "text": "South Park",
+          "correct": false
+        },
+        {
+          "text": "Padre de familia",
+          "correct": false
+        }
+      ],
+      "difficulty": "medium",
+      "fun_fact": "Se emite desde 1989 y ha superado los setecientos episodios.",
+      "category": "Cultura Pop"
+    }
+  ]
+}
