@@ -129,7 +129,8 @@
                 <div class="setup-presets" id="setup-presets" role="radiogroup"
                      data-i18n-aria-label="setup.pickMode" aria-label="Pick a mode">
                     <button type="button" class="preset-card" data-preset="schnellrunde"
-                            data-rounds="5" data-difficulty="easy" data-timer="20">
+                            data-rounds="5" data-difficulty="easy" data-timer="20"
+                            data-lightning="1">
                         <span class="preset-icon qz-icon qz-icon--sun" data-ui-icon="bolt" aria-hidden="true">⚡</span>
                         <span class="preset-body">
                             <span class="preset-name" data-i18n="setup.preset.fastName">Quick round</span>
@@ -138,7 +139,8 @@
                         <span class="preset-duration">~3 min</span>
                     </button>
                     <button type="button" class="preset-card is-active" data-preset="klassiker"
-                            data-rounds="10" data-difficulty="medium" data-timer="30">
+                            data-rounds="10" data-difficulty="medium" data-timer="30"
+                            data-lightning="1">
                         <span class="preset-icon qz-icon qz-icon--sky" data-ui-icon="brain" aria-hidden="true">🧠</span>
                         <span class="preset-body">
                             <span class="preset-name" data-i18n="setup.preset.classicName">Classic</span>
@@ -154,8 +156,13 @@
                          long timer where that host actually looks. Sits before
                          Marathon so the cards stay ordered by session length
                          (~3 / ~8 / ~15 / ~20 min). -->
+                    <!-- data-lightning="0" (#513): the auto Lightning Round is
+                         5 questions at 15 s each. Leaving it armed would
+                         override the one setting this preset exists for — the
+                         long timer — for five questions mid-game. -->
                     <button type="button" class="preset-card" data-preset="kinder"
-                            data-rounds="5" data-difficulty="easy" data-timer="180">
+                            data-rounds="5" data-difficulty="easy" data-timer="180"
+                            data-lightning="0">
                         <!-- Deliberately no data-ui-icon: _paintUiIcons() only
                              swaps the emoji for an SVG on slots that carry one,
                              so leaving it off keeps the teddy while the sage
@@ -168,7 +175,8 @@
                         <span class="preset-duration">~15 min</span>
                     </button>
                     <button type="button" class="preset-card" data-preset="marathon"
-                            data-rounds="20" data-difficulty="hard" data-timer="45">
+                            data-rounds="20" data-difficulty="hard" data-timer="45"
+                            data-lightning="1">
                         <span class="preset-icon qz-icon qz-icon--sun" data-ui-icon="trophy" aria-hidden="true">🏆</span>
                         <span class="preset-body">
                             <span class="preset-name" data-i18n="setup.preset.marathonName">Marathon</span>

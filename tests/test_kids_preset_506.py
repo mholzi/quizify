@@ -102,6 +102,8 @@ def test_html_cards_and_js_presets_agree() -> None:
         assert card["rounds"] == preset["rounds"], preset_id
         assert card["difficulty"] == preset["difficulty"], preset_id
         assert card["timer"] == preset["timer"], preset_id
+        # #513 added the Lightning Round to the bundle — same drift risk.
+        assert card["lightning"] == ("1" if preset["lightning"] == "true" else "0"), preset_id
 
 
 def test_every_preset_timer_has_a_matching_chip() -> None:

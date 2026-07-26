@@ -736,14 +736,18 @@
         return names;
     }
 
+    // `lightning` mirrors data-lightning on the cards in admin.html (1/0) and
+    // arms or disarms the auto Lightning Round (#285) for the bundle.
     var _PRESETS = [
-        { id: 'schnellrunde', rounds: 5,  difficulty: 'easy',   timer: 20, labelKey: 'setup.preset.fastName'     },
-        { id: 'klassiker',    rounds: 10, difficulty: 'medium', timer: 30, labelKey: 'setup.preset.classicName'  },
+        { id: 'schnellrunde', rounds: 5,  difficulty: 'easy',   timer: 20, lightning: true,  labelKey: 'setup.preset.fastName'     },
+        { id: 'klassiker',    rounds: 10, difficulty: 'medium', timer: 30, lightning: true,  labelKey: 'setup.preset.classicName'  },
         // #506: the long-timer bundle for hosts playing with small kids. Its
         // timer must stay one of the #timer-chips values — _applyPreset calls
         // _activateChip, which silently highlights nothing otherwise.
-        { id: 'kinder',       rounds: 5,  difficulty: 'easy',   timer: 180, labelKey: 'setup.preset.kidsName'   },
-        { id: 'marathon',     rounds: 20, difficulty: 'hard',   timer: 45, labelKey: 'setup.preset.marathonName' },
+        // #513: Lightning off — 5 questions at 15 s each would undo the long
+        // timer this preset exists for, right in the middle of the game.
+        { id: 'kinder',       rounds: 5,  difficulty: 'easy',   timer: 180, lightning: false, labelKey: 'setup.preset.kidsName'   },
+        { id: 'marathon',     rounds: 20, difficulty: 'hard',   timer: 45, lightning: true,  labelKey: 'setup.preset.marathonName' },
     ];
 
     function _matchingPreset() {
@@ -755,7 +759,10 @@
         if (selectedCategory !== 'mixed') return null;
         for (var i = 0; i < _PRESETS.length; i++) {
             var p = _PRESETS[i];
-            if (p.rounds === selectedRounds && p.difficulty === selectedDifficulty && p.timer === selectedTimer) {
+            // Lightning is part of the bundle (#513) — flipping the toggle by
+            // hand makes the run "Eigene" again, same as picking own topics.
+            if (p.rounds === selectedRounds && p.difficulty === selectedDifficulty
+                && p.timer === selectedTimer && p.lightning === selectedLightning) {
                 return { id: p.id, label: _t(p.labelKey) };
             }
         }
@@ -774,7 +781,7 @@
 
     // Apply preset: write to the active-chip state AND to the typed vars
     // so the existing chip group serialization works unchanged.
-    function _applyPreset(rounds, difficulty, timer) {
+    function _applyPreset(rounds, difficulty, timer, lightning) {
         if (rounds != null) {
             selectedRounds = rounds;
             _activateChip(els.roundsChips, String(rounds));
@@ -786,6 +793,14 @@
         if (timer != null) {
             selectedTimer = timer;
             _activateChip(els.timerChips, String(timer));
+        }
+        // #513: the Lightning Round rides the bundle. Write the checkbox too,
+        // not just the variable — _buildStartGamePayload reads the DOM first,
+        // and the host opening "Eigene" must see the state that will ship.
+        if (lightning != null) {
+            selectedLightning = lightning;
+            var lightningEl = document.getElementById('lightning-enabled-toggle');
+            if (lightningEl) lightningEl.checked = lightning;
         }
         updateSettingsSummary();
     }
@@ -828,7 +843,9 @@
                 var rounds = parseInt(card.getAttribute('data-rounds'), 10);
                 var difficulty = card.getAttribute('data-difficulty');
                 var timer = parseInt(card.getAttribute('data-timer'), 10);
-                _applyPreset(rounds, difficulty, timer);
+                var lightningAttr = card.getAttribute('data-lightning');
+                var lightning = lightningAttr == null ? null : lightningAttr === '1';
+                _applyPreset(rounds, difficulty, timer, lightning);
             });
         });
     }
@@ -865,6 +882,10 @@
         selectedLightning = !!lightningToggle.checked;
         on(lightningToggle, 'change', function () {
             selectedLightning = !!lightningToggle.checked;
+            // #513: Lightning is part of a preset bundle now, so flipping it
+            // by hand has to re-run the match — otherwise a kids run with
+            // Lightning switched back on still reads "Mit Kindern".
+            updateSettingsSummary();
         });
     }
     // TTS narration toggles (#281). Master switch defaults OFF; the per-event
