@@ -1992,10 +1992,20 @@ class QuizifyGameState:
             q = self._current_question
             # Calculate time remaining for mid-round joiners
             remaining = self._phase_controller.time_remaining_for_snapshot()
+            # Canonical-shuffle order (#521), matching the live
+            # ``question_started`` payload. Emitting question-JSON order here
+            # meant a dashboard reconnecting mid-question rebuilt its grid
+            # unshuffled — and most packs keep the correct answer first in the
+            # file. ``shuffled_answers`` is empty only before the first
+            # question of a game, where the fallback is the same list anyway.
             snapshot["question"] = {
                 "id": q.id,
                 "text": q.question,
-                "answers": [a.text for a in q.answers],
+                "answers": (
+                    list(self.shuffled_answers)
+                    if len(self.shuffled_answers) == len(q.answers)
+                    else [a.text for a in q.answers]
+                ),
                 "difficulty": q.difficulty,
                 "category": q.category,
                 "image_url": q.image_url,
@@ -2017,20 +2027,38 @@ class QuizifyGameState:
         if self.phase == GamePhase.ANSWER_REVEAL and self._round_summary:
             s = self._round_summary
             q = s.question
-            # Canonical (question-JSON) answer order, mirroring the
-            # QUESTION_ACTIVE snapshot's ``question.answers``. A TV/dashboard
-            # that (re)connects during the reveal has no live ``question``
-            # block to render, so without these fields its question view was
-            # blank (#296). The dashboard renders the unshuffled grid and
-            # highlights ``correct_answer_index_original``.
+            # Round-shuffle answer order, mirroring the QUESTION_ACTIVE
+            # snapshot's ``question.answers``. A TV/dashboard that (re)connects
+            # during the reveal has no live ``question`` block to render, so
+            # without these fields its question view was blank (#296).
+            # Both the order and the highlight index moved from question-JSON
+            # order to the round shuffle in #521 — in JSON order most packs
+            # keep the correct answer first, which put it on tile A every
+            # round. ``correct_answer_index_original`` stays in the payload for
+            # clients cached from before that change.
             correct_idx_original = next(
                 (i for i, a in enumerate(q.answers) if a.correct), -1
             )
+            order = self.shuffle_map
+            if len(order) == len(q.answers) and sorted(order) == list(
+                range(len(q.answers))
+            ):
+                reveal_answers = [q.answers[i].text for i in order]
+                if correct_idx_original >= 0:
+                    correct_idx_display = order.index(correct_idx_original)
+                else:
+                    correct_idx_display = -1
+            else:
+                # No usable shuffle (pre-first-question, or a malformed map):
+                # a mis-ordered grid is worse than an unshuffled one.
+                reveal_answers = [a.text for a in q.answers]
+                correct_idx_display = correct_idx_original
             snapshot["round_summary"] = {
                 "question_text": q.question,
                 "category": q.category,
                 "image_url": q.image_url,
-                "answers": [a.text for a in q.answers],
+                "answers": reveal_answers,
+                "correct_answer_index": correct_idx_display,
                 "correct_answer_index_original": correct_idx_original,
                 "correct_answer": s.correct_answer.text,
                 "fun_fact": s.fun_fact,

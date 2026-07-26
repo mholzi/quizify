@@ -76,12 +76,18 @@ class RoundMessageBuilder:
         *,
         question: Question,
     ) -> dict[str, Any]:
-        """Build the admin/dashboard question payload (with correct answer)."""
+        """Build the admin/dashboard question payload (with correct answer).
+
+        The answer grid rides the round's canonical shuffle (#521) so the TV
+        does not sit in question-JSON order, where most packs keep the correct
+        answer first.
+        """
         return serialize_question_for_admin(
             question=question,
             round_num=game_state.round,
             total_rounds=game_state.total_rounds,
             timer_duration=game_state.round_duration,
+            display_order=game_state.shuffle_map,
         )
 
     def build_game_state_with_leaderboard(
@@ -408,6 +414,7 @@ class RoundMessageBuilder:
             players=players_list,
             last_round=last_round,
             question_id=summary.question.id,
+            display_order=game_state.shuffle_map,
         )
         if store_cached is not None:
             store_cached(cache_key, msg)

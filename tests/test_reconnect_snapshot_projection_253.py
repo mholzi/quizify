@@ -265,8 +265,14 @@ def test_reveal_raw_snapshot_carries_question_for_dashboard(
     which keeps the nested ``round_summary``. Previously that blob lacked the
     question text + answers, so a TV that (re)connected during the reveal had
     nothing to render and showed a blank question view. The raw reveal snapshot
-    must now carry ``question_text``, the canonical ``answers`` list, and
-    ``correct_answer_index_original`` so the dashboard can rebuild the view."""
+    must carry ``question_text``, the ``answers`` list and a correct index the
+    dashboard can highlight with.
+
+    #521: those answers are emitted in the ROUND-SHUFFLE order, not
+    question-JSON order — most packs keep the correct answer first in the file,
+    so a JSON-ordered grid put it on tile A every round. ``answers`` must match
+    the live ``question_started`` payload, and ``correct_answer_index`` must
+    address that same order."""
     _start_round_with_shuffles(state)
     question = state.get_current_question()
     correct_idx = next(i for i, a in enumerate(question.answers) if a.correct)
@@ -276,9 +282,16 @@ def test_reveal_raw_snapshot_carries_question_for_dashboard(
 
     rs = state.get_state_snapshot()["round_summary"]
     assert rs["question_text"] == question.question
-    assert rs["answers"] == [a.text for a in question.answers]
+    # Round-shuffle order, i.e. what the TV drew while the question was live.
+    assert rs["answers"] == [question.answers[i].text for i in state.shuffle_map]
+    # Same texts, just reordered — nothing gained or dropped in the mapping.
+    assert sorted(rs["answers"]) == sorted(a.text for a in question.answers)
+    # The highlight index addresses the shuffled grid the dashboard renders.
+    assert rs["answers"][rs["correct_answer_index"]] == (
+        question.answers[correct_idx].text
+    )
+    # The question-JSON index stays in the payload for pre-#521 clients.
     assert rs["correct_answer_index_original"] == correct_idx
-    # The correct index points at the genuinely-correct answer.
     assert question.answers[rs["correct_answer_index_original"]].correct is True
 
 
