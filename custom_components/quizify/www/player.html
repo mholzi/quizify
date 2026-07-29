@@ -567,6 +567,21 @@
                     </div>
                 </div>
 
+                <!-- Shareable result card (#369) — a score slip the player can
+                     send into a chat. Hidden until the finale payload carries a
+                     ``share`` block for this player. -->
+                <div id="end-share-section" class="end-share-section hidden">
+                    <div class="end-share-slip" id="end-share-slip">
+                        <div class="end-share-title" id="end-share-title">&nbsp;</div>
+                        <dl class="end-share-facts" id="end-share-facts"></dl>
+                        <div class="end-share-strip" id="end-share-strip" aria-hidden="true"></div>
+                    </div>
+                    <button id="end-share-btn" class="resbtn resbtn--primary end-share-btn" type="button" data-i18n="share.button">
+                        Share card
+                    </button>
+                    <div class="end-share-status" id="end-share-status" role="status" aria-live="polite"></div>
+                </div>
+
                 <!-- CTA stack — Nochmal spielen (play again) + Beenden (new game).
                      Admin-only; players see the waiting message instead. -->
                 <div id="end-admin-controls" class="end-admin-controls hidden">

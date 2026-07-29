@@ -2778,6 +2778,73 @@ button, .btn {
     text-align: center;
 }
 
+
+/* ============================================================
+   Shareable result card (#369) — Variant C "Spielkarte"
+   A score slip the player can send into a chat. Soft Parlor:
+   lifted paper, warm ink, coral CTA, no confetti.
+   ============================================================ */
+
+.end-share-section {
+    display: flex;
+    flex-direction: column;
+    gap: var(--space-sm, 8px);
+    margin-top: var(--space-lg, 20px);
+}
+
+.end-share-slip {
+    background: var(--color-bg-card);
+    border: 1px solid var(--color-border, #E7DFCE);
+    border-radius: 12px;
+    padding: 14px 16px;
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+    /* Double edge reads as a slip torn off a pad rather than another card. */
+    box-shadow: 0 2px 0 var(--color-bg-card-alt), 0 3px 10px rgba(0, 0, 0, .05);
+}
+
+.end-share-title {
+    font-family: var(--font-display, inherit);
+    font-weight: 700;
+    font-size: var(--fs-md, 17px);
+}
+
+.end-share-facts {
+    margin: 0;
+    display: grid;
+    grid-template-columns: auto 1fr;
+    gap: 4px 12px;
+    font-size: var(--fs-sm, 14px);
+}
+
+.end-share-facts dt { color: var(--color-text-muted, #6E675E); }
+
+.end-share-facts dd {
+    margin: 0;
+    text-align: right;
+    font-family: var(--font-mono, monospace);
+    font-variant-numeric: tabular-nums;
+}
+
+.end-share-strip {
+    border-top: 1px dashed var(--color-border, #E7DFCE);
+    padding-top: 8px;
+    text-align: center;
+    font-size: 17px;
+    letter-spacing: 2px;
+    /* A long game overflows on a 390px phone — scroll the strip, never the
+       page. Same rule the answer grid follows. */
+    overflow-x: auto;
+    white-space: nowrap;
+}
+
+.end-share-status {
+    text-align: center;
+    font-size: var(--fs-sm, 14px);
+    color: var(--color-text-muted, #6E675E);
+    min-height: 1.3em;
+}
 /* ==========================================
    Launcher
    ========================================== */
