@@ -295,10 +295,57 @@ def serialize_player_list(players: list[PlayerSession]) -> list[dict[str, Any]]:
     ]
 
 
+def build_share_payload(
+    all_players: list[PlayerSession],
+    packs: list[str] | None = None,
+) -> dict[str, Any]:
+    """Per-player run summary for the shareable result card (#369).
+
+    Rides the finale message only — it is sent once per game, so the per-round
+    detail costs nothing on the hot round-summary path.
+
+    ``results`` is ``PlayerSession.round_history`` verbatim: one of
+    ``correct`` / ``wrong`` / ``timeout`` per round the player took part in.
+    Late joiners have a shorter list than the game had rounds; the client
+    renders what it gets rather than padding, so a card never claims the
+    player sat through a round they missed.
+
+    Power-ups are a per-game COUNT, not a per-round marker — the game never
+    records which round a power-up was spent in. The card therefore shows
+    "N power-ups" as a line, and the round strip stays a truthful
+    correct/wrong/timeout sequence.
+    """
+    ranked = sorted(all_players, key=lambda p: p.score, reverse=True)
+    total = len(ranked)
+    entries: list[dict[str, Any]] = []
+    rank = 0
+    prev: int | None = None
+    for i, p in enumerate(ranked):
+        # Competition ranking, identical to serialize_leaderboard: equal
+        # scores share a rank so two tied players don't get 1st/2nd by
+        # sort order. A shared card must not invent a placing.
+        if prev is None or p.score != prev:
+            rank = i + 1
+            prev = p.score
+        history = list(p.round_history)
+        entries.append({
+            "name": p.name,
+            "rank": rank,
+            "total_players": total,
+            "score": p.score,
+            "rounds": len(history),
+            "correct": history.count("correct"),
+            "results": history,
+            "powerups": p.powerups_used,
+        })
+    return {"packs": list(packs or []), "players": entries}
+
+
 def serialize_finale(
     podium: list[PlayerSession],
     all_players: list[PlayerSession],
     superlatives: list[dict[str, str]] | None = None,
+    packs: list[str] | None = None,
 ) -> dict[str, Any]:
     """Build finale payload with podium and full leaderboard."""
     # Shared-rank podium (#308): equal scores share a rank, same as the
@@ -314,7 +361,7 @@ def serialize_finale(
     # ``leaderboard`` and ``all_players`` carry the identical sorted list —
     # serialize it once instead of twice (#415).
     lb = serialize_leaderboard(all_players)
-    result = {
+    result: dict[str, Any] = {
         "type": "finale",
         "podium": podium_entries,
         "leaderboard": lb,
@@ -322,6 +369,9 @@ def serialize_finale(
     }
     if superlatives:
         result["superlatives"] = superlatives
+    # Shareable result cards (#369). Always present so the client can render
+    # the share block without probing for the key.
+    result["share"] = build_share_payload(all_players, packs)
     return result
 
 

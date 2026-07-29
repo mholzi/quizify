@@ -65,6 +65,10 @@
         // 4. Gesamtwertung scoreboard with bars + inline badges
         renderScoreboard(leaderboard, highlights);
 
+        // 5. Shareable result card (#369) — the player's own run, ready to
+        // send into a chat. Renders only for the viewer's own entry.
+        renderShareCard(data.share, state.playerName);
+
         // Admin / player controls.
         //
         // Source-of-truth: trust ``state.isAdmin`` for gating the
@@ -399,11 +403,173 @@
     }
 
     // ============================================
+    // Shareable result card (#369)
+    // ============================================
+
+    // One glyph per round. ``timeout`` gets its own mark instead of being
+    // folded into ❌ — "I ran out of time" and "I answered wrong" are
+    // different stories, and the server already tells them apart.
+    var RESULT_GLYPH = { correct: '✅', wrong: '❌', timeout: '⬜' };
+
+    /**
+     * Build the text that actually leaves the phone.
+     * Kept separate from rendering so it can be unit-tested and so the
+     * clipboard fallback and navigator.share send byte-identical text.
+     */
+    function buildShareText(entry, packs) {
+        if (!entry) { return ''; }
+        var lines = [];
+        lines.push(_tf('share.line.rank', 'Quizify — {name}, {rank} of {total}', {
+            name: entry.name, rank: entry.rank, total: entry.total_players
+        }));
+        if (packs && packs.length) {
+            lines.push(_tf('share.line.packs', 'Packs: {packs}', {
+                packs: packs.join(' · ')
+            }));
+        }
+        lines.push(_tf('share.line.score', 'Correct: {correct}/{rounds} · {score} points', {
+            correct: entry.correct, rounds: entry.rounds, score: entry.score
+        }));
+        if (entry.powerups) {
+            lines.push(_tf('share.line.powerups', '⚡ {count} power-ups', {
+                count: entry.powerups
+            }));
+        }
+        var strip = (entry.results || []).map(function (r) {
+            return RESULT_GLYPH[r] || RESULT_GLYPH.wrong;
+        }).join('');
+        if (strip) { lines.push(strip); }
+        lines.push('github.com/mholzi/quizify');
+        return lines.join('\n');
+    }
+
+    function findShareEntry(share, playerName) {
+        var players = (share && share.players) || [];
+        for (var i = 0; i < players.length; i++) {
+            if (players[i].name === playerName) { return players[i]; }
+        }
+        return null;
+    }
+
+    function renderShareCard(share, playerName) {
+        var section = document.getElementById('end-share-section');
+        if (!section) { return; }
+        var entry = findShareEntry(share, playerName);
+        // No entry means this viewer is a pure dashboard/spectator socket, or
+        // the player never played a round. Nothing honest to share.
+        if (!entry || !entry.rounds) {
+            section.classList.add('hidden');
+            return;
+        }
+        section.classList.remove('hidden');
+
+        var packs = (share && share.packs) || [];
+        var titleEl = document.getElementById('end-share-title');
+        if (titleEl) {
+            titleEl.textContent = _tf('share.slipTitle', '{name} — {rank} of {total}', {
+                name: entry.name, rank: entry.rank, total: entry.total_players
+            });
+        }
+
+        var facts = document.getElementById('end-share-facts');
+        if (facts) {
+            facts.innerHTML = '';
+            var rows = [];
+            if (packs.length) {
+                rows.push([_tf('share.factPacks', 'Packs'), packs.join(' · ')]);
+            }
+            rows.push([_tf('share.factCorrect', 'Correct'), entry.correct + ' / ' + entry.rounds]);
+            rows.push([_tf('share.factScore', 'Points'), String(entry.score)]);
+            if (entry.powerups) {
+                rows.push([_tf('share.factPowerups', 'Power-ups'), String(entry.powerups)]);
+            }
+            rows.forEach(function (row) {
+                var dt = document.createElement('dt');
+                dt.textContent = row[0];
+                var dd = document.createElement('dd');
+                dd.textContent = row[1];
+                facts.appendChild(dt);
+                facts.appendChild(dd);
+            });
+        }
+
+        var stripEl = document.getElementById('end-share-strip');
+        if (stripEl) {
+            stripEl.textContent = (entry.results || []).map(function (r) {
+                return RESULT_GLYPH[r] || RESULT_GLYPH.wrong;
+            }).join('');
+        }
+
+        setupShareButton(buildShareText(entry, packs));
+    }
+
+    function setupShareButton(text) {
+        var btn = document.getElementById('end-share-btn');
+        var status = document.getElementById('end-share-status');
+        if (!btn) { return; }
+        btn.onclick = function () {
+            function done(msgKey, fallback) {
+                if (status) { status.textContent = _tf(msgKey, fallback); }
+            }
+            // navigator.share is the good path: it opens the OS sheet, which
+            // is where "send to the family chat" actually lives. It needs a
+            // user gesture and HTTPS, so the clipboard is the fallback, not
+            // an afterthought — plenty of HA installs run over plain HTTP.
+            if (navigator.share) {
+                navigator.share({ text: text }).then(function () {
+                    done('share.shared', 'Shared');
+                }).catch(function (err) {
+                    // AbortError = the user closed the sheet. Saying
+                    // "copied" there would be a lie.
+                    if (err && err.name === 'AbortError') { return; }
+                    copyToClipboard(text, done);
+                });
+                return;
+            }
+            copyToClipboard(text, done);
+        };
+    }
+
+    function copyToClipboard(text, done) {
+        if (navigator.clipboard && navigator.clipboard.writeText) {
+            navigator.clipboard.writeText(text).then(function () {
+                done('share.copied', 'Copied to clipboard');
+            }).catch(function () {
+                legacyCopy(text, done);
+            });
+            return;
+        }
+        legacyCopy(text, done);
+    }
+
+    function legacyCopy(text, done) {
+        // execCommand is deprecated but still the only path on older
+        // in-app browsers, which is exactly where party guests land.
+        try {
+            var ta = document.createElement('textarea');
+            ta.value = text;
+            ta.setAttribute('readonly', '');
+            ta.style.position = 'fixed';
+            ta.style.opacity = '0';
+            document.body.appendChild(ta);
+            ta.select();
+            var ok = document.execCommand('copy');
+            document.body.removeChild(ta);
+            done(ok ? 'share.copied' : 'share.copyFailed',
+                 ok ? 'Copied to clipboard' : 'Could not copy — select the card and copy it by hand');
+        } catch (e) {
+            done('share.copyFailed', 'Could not copy — select the card and copy it by hand');
+        }
+    }
+
+    // ============================================
     // Export
     // ============================================
 
     window.QuizifyPlayerEnd = {
         updateEndView: updateEndView,
+        buildShareText: buildShareText,
+        renderShareCard: renderShareCard,
         renderWinnerHero: renderWinnerHero,
         renderScoreboard: renderScoreboard,
         renderHighlightChips: renderHighlightChips,

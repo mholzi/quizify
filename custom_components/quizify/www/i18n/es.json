@@ -668,5 +668,22 @@
     "correctCount": "{n}/{total} correctas",
     "pointsThisRound": "puntos esta ronda",
     "backToResults": "Volver a los resultados"
+  },
+  "share": {
+    "button": "Compartir tarjeta",
+    "slipTitle": "{name} — puesto {rank} de {total}",
+    "factPacks": "Packs",
+    "factCorrect": "Aciertos",
+    "factScore": "Puntos",
+    "factPowerups": "Power-ups",
+    "line": {
+      "rank": "Quizify — {name}, puesto {rank} de {total}",
+      "packs": "Packs: {packs}",
+      "score": "Aciertos: {correct}/{rounds} · {score} puntos",
+      "powerups": "⚡ {count} power-ups"
+    },
+    "shared": "Compartido",
+    "copied": "Copiado al portapapeles",
+    "copyFailed": "No se pudo copiar — selecciona la tarjeta y cópiala a mano"
   }
 }

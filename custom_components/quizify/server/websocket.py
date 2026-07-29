@@ -3169,7 +3169,16 @@ class QuizifyWebSocketHandler:
             else compute_superlatives(all_players)
         )
         awards = [s.to_dict() for s in superlatives]
-        finale_msg = serialize_finale(podium, all_players, superlatives=awards)
+        # Pack labels for the shareable card (#369). ``categories`` is the
+        # multi-select the host picked; ``category`` is the single-pick
+        # fallback. Empty when the host played "mixed", and the card simply
+        # omits the line rather than inventing a pack name.
+        packs = list(getattr(game_state, "categories", None) or [])
+        if not packs and getattr(game_state, "category", None):
+            packs = [game_state.category]
+        finale_msg = serialize_finale(
+            podium, all_players, superlatives=awards, packs=packs
+        )
         await self._conn.broadcast(finale_msg)
 
     # ------------------------------------------------------------------
