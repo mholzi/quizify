@@ -3,6 +3,42 @@
 All notable changes to Quizify are documented here. This project follows
 [Semantic Versioning](https://semver.org/).
 
+## [1.6.1-RC2] — 2026-07-29
+
+Second release candidate for 1.6.1. One change since RC1, and it is the first
+thing Quizify has ever shipped that is aimed outward rather than at the game
+itself.
+
+### Added
+
+- **Shareable end-of-game result cards (#369).** The end screen now carries a
+  score slip — rank, packs, hit rate, points, and a strip of one glyph per
+  round — with a "Share card" button behind it. The text goes to
+  `navigator.share`, falling back to the clipboard: the OS share sheet needs
+  HTTPS and a user gesture, and plenty of Home Assistant installs run over
+  plain HTTP, so the fallback is a real path rather than a courtesy. Dismissing
+  the share sheet reports nothing, because claiming "copied" there would be
+  false.
+
+  The card is a public claim once it lands in a group chat, so it refuses to
+  flatter: a timeout keeps its own glyph instead of being folded into a wrong
+  answer, a player who joined late reports only the rounds they actually
+  played, tied players share a rank, and a player who never answered a round
+  gets no card at all. Power-ups appear as a count rather than a mark on a
+  specific round — the game does not record which round one was spent in, and
+  placing it would be invented data.
+
+  Nothing new is computed for this: `PlayerSession.round_history` has recorded
+  correct / wrong / timeout per round all along. The payload rides the finale
+  message, which is sent once per game, so the round-summary path is untouched.
+  Full de / en / es.
+
+### Internal
+
+- Test suite at **1,205 passing**. `test_share_cards_369.py` adds 14 tests that
+  pin the honesty rules above, rank ordering, pack pass-through, and that the
+  serialized results are a copy rather than live game state.
+
 ## [1.6.1-RC1] — 2026-07-27
 
 Release candidate for 1.6.1 — "Tile A". Five changes since 1.6.0, one of which
