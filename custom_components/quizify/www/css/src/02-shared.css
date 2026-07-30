@@ -781,6 +781,13 @@ button, .btn {
     display: flex;
     align-items: center;
     cursor: pointer;
+    /* #526: the gap between the switch and its label belongs here, not on each
+       panel. It used to be declared per panel (.setup-lightning-toggle,
+       .setup-house-toggle) and the TTS panel simply never got one, so step 7's
+       labels butted against their switches while steps 6 and 8 looked right.
+       The hidden <input> is absolutely positioned and out of flow, so this
+       only ever spaces the switch from the label. */
+    gap: 10px;
 }
 
 .toggle-compact input {
