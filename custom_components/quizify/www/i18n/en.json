@@ -391,7 +391,6 @@
       "join": "Welcome players as they join",
       "countdown": "Call out the final countdown",
       "engine": "TTS engine",
-      "speaker": "Speaker",
       "usedefault": "Use default",
       "noentities": "None found — configure in HA"
     },
@@ -425,7 +424,13 @@
       "scene": "Winner scene",
       "usedefault": "Use default",
       "noentities": "None found — configure in HA",
-      "nolights": "No lights found — configure in HA"
+      "nolights": "No lights found — configure in HA",
+      "speakerOverride": "Different speaker for the effects",
+      "speakerFollow": "Same as the game speaker"
+    },
+    "audio": {
+      "speaker": "Speaker",
+      "speakerHint": "Used for the narration and the sound effects."
     }
   },
   "featured": {

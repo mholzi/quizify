@@ -378,13 +378,23 @@
                                 <option value="" data-i18n="setup.tts.usedefault">Use default</option>
                             </select>
                         </label>
-                        <label class="setup-tts-select" for="tts-speaker-select">
-                            <span class="setup-tts-select-label" data-i18n="setup.tts.speaker">Speaker</span>
-                            <select id="tts-speaker-select" class="setup-select">
-                                <option value="" data-i18n="setup.tts.usedefault">Use default</option>
-                            </select>
-                        </label>
                     </div>
+                    <!-- Game-wide speaker (#525). Deliberately OUTSIDE
+                         #tts-children: that container gets .is-disabled →
+                         pointer-events:none when narration is switched off, and
+                         this speaker also carries the House Plays Along sound
+                         effects — burying it behind the narration switch would
+                         make it unreachable for a host who wants effects but no
+                         quizmaster voice. Stored as quizify_tts.media_player,
+                         which stays the single source of truth; the house panel
+                         only holds an optional override. -->
+                    <label class="setup-audio-select" for="game-speaker-select">
+                        <span class="setup-audio-select-label" data-i18n="setup.audio.speaker">Speaker</span>
+                        <select id="game-speaker-select" class="setup-select">
+                            <option value="" data-i18n="setup.tts.usedefault">Use default</option>
+                        </select>
+                    </label>
+                    <div class="setup-audio-hint" data-i18n="setup.audio.speakerHint">Used for the narration and the sound effects.</div>
 
                     <!-- House Plays Along (#494), Variant D "Presets". Master
                          switch (default OFF — silent until enabled), then a
@@ -487,6 +497,20 @@
                                     <span class="toggle-switch-compact" aria-hidden="true"></span>
                                     <span class="toggle-label" data-i18n="setup.house.sfxWinner">Fanfare for the winner</span>
                                 </label>
+                                <!-- Optional split (#525): the game asks for ONE
+                                     speaker in step 7. A host who wants the
+                                     effects somewhere else sets it here — empty
+                                     means "follow the game speaker". admin.js
+                                     opens this disclosure automatically when a
+                                     stored setup already had two different
+                                     speakers, so the split is never carried
+                                     forward invisibly. -->
+                                <label class="setup-house-select" for="house-speaker-select">
+                                    <span class="setup-house-select-label" data-i18n="setup.house.speakerOverride">Different speaker for the effects</span>
+                                    <select id="house-speaker-select" class="setup-select">
+                                        <option value="" data-i18n="setup.house.speakerFollow">Same as the game speaker</option>
+                                    </select>
+                                </label>
                             </div>
 
                             <!-- Entity pickers. The light picker is a multi-choice,
@@ -498,12 +522,6 @@
                                 <legend class="setup-house-select-label" data-i18n="setup.house.lightsPicker">Party lights</legend>
                                 <div class="setup-house-lightlist" id="house-light-list"></div>
                             </fieldset>
-                            <label class="setup-house-select" for="house-speaker-select">
-                                <span class="setup-house-select-label" data-i18n="setup.house.speaker">Speaker</span>
-                                <select id="house-speaker-select" class="setup-select">
-                                    <option value="" data-i18n="setup.house.usedefault">Use default</option>
-                                </select>
-                            </label>
                             <label class="setup-house-select" for="house-scene-select">
                                 <span class="setup-house-select-label" data-i18n="setup.house.scene">Winner scene</span>
                                 <select id="house-scene-select" class="setup-select">
