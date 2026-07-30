@@ -1585,6 +1585,28 @@
     font-size: 0.82rem;
     color: var(--color-text-muted);
 }
+
+/* Game-wide speaker (#525) — same visual language as the narration dropdowns
+   above it, but a sibling of #tts-children rather than a child, so it keeps
+   full opacity and stays clickable when the narration switch is off. It also
+   drives the House sound effects, hence the hint line underneath. */
+.setup-audio-select {
+    display: flex;
+    flex-direction: column;
+    gap: 4px;
+    padding-left: 30px;
+    margin-top: 10px;
+}
+.setup-audio-select-label {
+    font-size: 0.82rem;
+    color: var(--color-text-muted);
+}
+.setup-audio-hint {
+    padding-left: 30px;
+    margin-top: 4px;
+    font-size: 0.78rem;
+    color: var(--color-text-muted);
+}
 .setup-select {
     width: 100%;
     padding: 8px 10px;

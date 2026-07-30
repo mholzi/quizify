@@ -391,7 +391,6 @@
       "join": "Dar la bienvenida a los jugadores",
       "countdown": "Anunciar la cuenta atrás final",
       "engine": "Motor de TTS",
-      "speaker": "Altavoz",
       "usedefault": "Usar predeterminado",
       "noentities": "Ninguno encontrado: configúralo en HA"
     },
@@ -425,7 +424,13 @@
       "scene": "Escena del ganador",
       "usedefault": "Usar predeterminado",
       "noentities": "Ninguno encontrado: configúralo en HA",
-      "nolights": "No se han encontrado luces: configúralas en HA"
+      "nolights": "No se han encontrado luces: configúralas en HA",
+      "speakerOverride": "Otro altavoz para los efectos",
+      "speakerFollow": "El mismo del juego"
+    },
+    "audio": {
+      "speaker": "Altavoz",
+      "speakerHint": "Se usa para la narración y los efectos de sonido."
     }
   },
   "featured": {

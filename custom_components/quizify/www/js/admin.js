@@ -1848,7 +1848,12 @@
             join: document.getElementById('tts-announce-join'),
             countdown: document.getElementById('tts-announce-countdown'),
             engine: document.getElementById('tts-engine-select'),
-            speaker: document.getElementById('tts-speaker-select'),
+            // #525: one speaker for the whole game. The control moved out of
+            // #tts-children (that container goes pointer-events:none when
+            // narration is off, and this speaker also carries the House sound
+            // effects), but it is still stored as quizify_tts.media_player —
+            // the single source of truth both panels resolve against.
+            speaker: document.getElementById('game-speaker-select'),
         };
         var cfg = _loadTtsConfig();
         if (_ttsEls.enable) _ttsEls.enable.checked = cfg.enabled;
@@ -1901,7 +1906,16 @@
                             return typeof e === 'string' && e;
                         });
                     }
-                    if (typeof saved.media_player === 'string') cfg.media_player = saved.media_player;
+                    // #525: `media_player_override` is authoritative once it
+                    // exists. A setup written before this change only has the
+                    // legacy `media_player`, which held a resolved speaker —
+                    // read it as the candidate override and let
+                    // _migrateSpeakerSplit decide whether it means anything.
+                    if (typeof saved.media_player_override === 'string') {
+                        cfg.media_player = saved.media_player_override;
+                    } else if (typeof saved.media_player === 'string') {
+                        cfg.media_player = saved.media_player;
+                    }
                     if (typeof saved.winner_scene_entity === 'string') {
                         cfg.winner_scene_entity = saved.winner_scene_entity;
                     }
@@ -1918,7 +1932,16 @@
         var cfg = _readHouseConfig();
         _houseSaved = cfg;
         try {
-            localStorage.setItem(HOUSE_STORAGE_KEY, JSON.stringify(cfg));
+            // #525: persist the OVERRIDE, not the resolved speaker. Storing the
+            // resolved value would look like a deliberate second speaker on the
+            // next page load: change the game speaker afterwards and the two
+            // stored values diverge, so the migration would resurrect a split
+            // the host never asked for. `media_player` stays in the object for
+            // the server payload; `media_player_override` is what survives.
+            var stored = {};
+            Object.keys(cfg).forEach(function (k) { stored[k] = cfg[k]; });
+            stored.media_player_override = _rawHouseSpeakerOverride();
+            localStorage.setItem(HOUSE_STORAGE_KEY, JSON.stringify(stored));
         } catch (e) { /* storage unavailable — preference is session-only */ }
         // Push to the server too, so the effects are configured during the
         // pre-game lobby (before start_game) (#494).
@@ -2003,6 +2026,45 @@
         _saveHouseConfig();
     }
 
+    // #525: resolve the House speaker. An empty override follows the game-wide
+    // speaker (step 7); a non-empty one wins. Kept as a function rather than an
+    // inline `||` because both _readHouseConfig and the migration need the same
+    // rule, and getting the two out of step is precisely the class of bug this
+    // issue was about.
+    function _resolveHouseSpeaker(override) {
+        if (override) return override;
+        return _ttsEls && _ttsEls.speaker
+            ? _ttsEls.speaker.value
+            : (_loadTtsConfig().media_player || '');
+    }
+
+    // The RAW override, before _resolveHouseSpeaker folds in the game speaker.
+    // Restoring the picker must use this: feeding it the resolved value would
+    // pre-select the game speaker as an explicit override and turn "follow"
+    // into a split on the next save — the very divergence this issue removed.
+    function _rawHouseSpeakerOverride() {
+        if (_houseEntitiesLoaded && _houseEls.speaker) return _houseEls.speaker.value;
+        return (_houseSaved && _houseSaved.media_player) || '';
+    }
+
+    // #525 migration. Before this change the host answered the speaker question
+    // twice, so a stored setup can legitimately hold two different values.
+    // Folding the question into one control must not silently reassign one of
+    // them: an existing divergence is kept as the override AND the disclosure
+    // holding it is opened, so the split is visible rather than inherited in
+    // the dark. A stored value that merely repeats the game speaker carries no
+    // intent and is normalised to "follow".
+    function _migrateSpeakerSplit() {
+        if (!_houseEls.speaker) return;
+        var ttsSpeaker = _loadTtsConfig().media_player || '';
+        var houseSpeaker = (_houseSaved && _houseSaved.media_player) || '';
+        if (!houseSpeaker || houseSpeaker === ttsSpeaker) {
+            if (_houseSaved) _houseSaved.media_player = '';
+            return;
+        }
+        _toggleHouseAdvanced(true);
+    }
+
     function _toggleHouseAdvanced(force) {
         var btn = _houseEls.advBtn;
         var panel = _houseEls.advanced;
@@ -2027,9 +2089,15 @@
             light_entities: _houseLightsRendered
                 ? _readHouseLightEntities()
                 : (saved.light_entities || []).slice(),
-            media_player: _houseEntitiesLoaded && _houseEls.speaker
-                ? _houseEls.speaker.value
-                : saved.media_player,
+            // #525: quizify_house.media_player is now an *override*, not a
+            // second speaker question — empty means "follow the game speaker
+            // from step 7". The server keeps receiving one resolved entity id,
+            // so the wire format is unchanged; only the UI collapsed.
+            media_player: _resolveHouseSpeaker(
+                _houseEntitiesLoaded && _houseEls.speaker
+                    ? _houseEls.speaker.value
+                    : saved.media_player
+            ),
             winner_scene_entity: _houseEntitiesLoaded && _houseEls.scene
                 ? _houseEls.scene.value
                 : saved.winner_scene_entity,
@@ -2106,7 +2174,8 @@
         var data = payload || {};
         _renderHouseLightList(data.lights || [], cfg.light_entities);
         _houseEntitiesLoaded = true;
-        _populateEntitySelect(_houseEls.speaker, data.media_players || [], cfg.media_player, 'setup.house.noentities');
+        // #525: restore the raw override, never the resolved value.
+        _populateEntitySelect(_houseEls.speaker, data.media_players || [], _rawHouseSpeakerOverride(), 'setup.house.noentities');
         _populateEntitySelect(_houseEls.scene, data.scenes || [], cfg.winner_scene_entity, 'setup.house.noentities');
         _syncHouseChildState();
     }
@@ -2130,7 +2199,7 @@
                     // lights.
                     if (_houseEntitiesLoaded) return;
                     _renderHouseLightList(null, cfg.light_entities);
-                    _populateEntitySelect(_houseEls.speaker, null, cfg.media_player, 'setup.house.noentities');
+                    _populateEntitySelect(_houseEls.speaker, null, _rawHouseSpeakerOverride(), 'setup.house.noentities');
                     _populateEntitySelect(_houseEls.scene, null, cfg.winner_scene_entity, 'setup.house.noentities');
                     return;
                 }
@@ -2140,7 +2209,7 @@
                 console.warn('[quizify] house-entities fetch failed:', e);
                 if (_houseEntitiesLoaded) return;   // #524/#527, see above
                 _renderHouseLightList(null, cfg.light_entities);
-                _populateEntitySelect(_houseEls.speaker, null, cfg.media_player, 'setup.house.noentities');
+                _populateEntitySelect(_houseEls.speaker, null, _rawHouseSpeakerOverride(), 'setup.house.noentities');
                 _populateEntitySelect(_houseEls.scene, null, cfg.winner_scene_entity, 'setup.house.noentities');
             });
     }
@@ -2193,6 +2262,9 @@
         [_houseEls.speaker, _houseEls.scene].forEach(function (sel) {
             if (sel) on(sel, 'change', _saveHouseConfig);
         });
+        // #525: decide what a stored two-speaker setup means BEFORE the state
+        // sync, and open the disclosure if it holds a real divergence.
+        _migrateSpeakerSplit();
         // Reflect the master→children enabled/dimmed state.
         _syncHouseChildState();
         // NO entity fetch here — same reasoning as the TTS panel (#524/#527):

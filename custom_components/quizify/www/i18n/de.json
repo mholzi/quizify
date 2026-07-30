@@ -391,7 +391,6 @@
       "join": "Neue Spieler begrüßen",
       "countdown": "Countdown ansagen",
       "engine": "TTS-Stimme",
-      "speaker": "Lautsprecher",
       "usedefault": "Standard verwenden",
       "noentities": "Keine gefunden – in HA einrichten"
     },
@@ -425,7 +424,13 @@
       "scene": "Sieger-Szene",
       "usedefault": "Standard verwenden",
       "noentities": "Keine gefunden – in HA einrichten",
-      "nolights": "Keine Lampen gefunden – in HA einrichten"
+      "nolights": "Keine Lampen gefunden – in HA einrichten",
+      "speakerOverride": "Anderer Lautsprecher für die Effekte",
+      "speakerFollow": "Wie der Spiel-Lautsprecher"
+    },
+    "audio": {
+      "speaker": "Lautsprecher",
+      "speakerHint": "Gilt für die Ansagen und die Soundeffekte."
     }
   },
   "featured": {
