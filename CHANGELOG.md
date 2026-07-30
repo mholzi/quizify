@@ -3,6 +3,39 @@
 All notable changes to Quizify are documented here. This project follows
 [Semantic Versioning](https://semver.org/).
 
+## [1.6.1-RC3] — 2026-07-30
+
+Third release candidate for 1.6.1. One change, reported from a live host and
+traced to a race that had been hiding in plain sight since the entity pickers
+were built.
+
+### Fixed
+
+- **The setup screen's entity pickers no longer come up empty (#524, #527).**
+  On every fresh admin tab the page asked the server for its TTS engines,
+  speakers, lights and scenes *before* it had the token needed to ask — so the
+  request was refused, and the refusal then painted "None found — configure in
+  HA" over the lists the WebSocket had already delivered a moment earlier. The
+  pickers were correct, briefly, and then wiped.
+
+  Hosts reaching Home Assistant remotely hit this every time: the socket is
+  already open and answers instantly, while the doomed HTTP request takes the
+  long way round and lands last. On a local network the two arrive in either
+  order, which is why it never showed up in testing. The reporting host had two
+  TTS engines, 23 media players and 72 lights, and the screen insisted there
+  were none.
+
+  The request that cannot succeed is gone, and no failed load may overwrite a
+  successful one any more — a request that was refused learned nothing about
+  your system and has no business overruling one that did. This also restores
+  the party-light picker in "Does the house play along?", which was blanked by
+  the same mechanism.
+
+- **The narration toggles in "Quizmaster voice?" are spaced properly (#526).**
+  Their labels sat flush against their switches while the surrounding steps
+  looked right. The gap now lives on the shared toggle style instead of being
+  re-declared by each panel, which is how one panel came to be missed.
+
 ## [1.6.1-RC2] — 2026-07-29
 
 Second release candidate for 1.6.1. One change since RC1, and it is the first
