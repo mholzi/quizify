@@ -3,6 +3,33 @@
 All notable changes to Quizify are documented here. This project follows
 [Semantic Versioning](https://semver.org/).
 
+## [1.6.1-RC4] — 2026-07-30
+
+Fourth release candidate for 1.6.1. One change: the setup screen stops asking
+the same question twice.
+
+### Changed
+
+- **One speaker for the whole game (#525).** Step 7 asked for a speaker for the
+  narration and step 8 asked again for the sound effects. Both were labelled
+  "Speaker", both offered the same devices, and nothing on screen said they were
+  related — so every host paid that confusion in order that the few who want
+  their narration and their effects on different speakers could have it.
+
+  Now the game asks once. The split is still available, but it moved inside
+  step 8's "Customise single effects" panel, where an empty setting means
+  "follow the game speaker".
+
+  If you had already set two different speakers, nothing is quietly reassigned:
+  the second one is kept and that panel opens by itself the next time you load
+  the setup screen, so you can see the split and decide whether you still want
+  it. A second setting that merely repeated the first is treated as what it
+  was — not a choice — and simply follows along from now on.
+
+  The speaker control also sits outside the narration group now, so it stays
+  usable when you switch the quizmaster voice off but still want the house to
+  react.
+
 ## [1.6.1-RC3] — 2026-07-30
 
 Third release candidate for 1.6.1. One change, reported from a live host and
