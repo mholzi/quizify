@@ -1815,10 +1815,13 @@
             .then(function (resp) { return resp.ok ? resp.json() : null; })
             .then(function (data) {
                 if (!data) {
-                    // No token yet (401) or an error — leave the dropdowns on
-                    // their "None found" fallback WITHOUT marking loaded, so the
-                    // refetch in handleGameState retries once the admin token
-                    // arrives over the WebSocket.
+                    // No token yet (401) or an error. Show the "None found"
+                    // fallback WITHOUT marking loaded, so the refetch in
+                    // handleGameState retries once the admin token arrives —
+                    // but never over a list that already loaded (#524). A
+                    // request that failed learned nothing about the host's
+                    // entities and must not overwrite an answer that did.
+                    if (_ttsEntitiesLoaded) return;
                     _populateEntitySelect(_ttsEls.engine, null, cfg.tts_entity);
                     _populateEntitySelect(_ttsEls.speaker, null, cfg.media_player);
                     return;
@@ -1829,6 +1832,7 @@
             })
             .catch(function (e) {
                 console.warn('[quizify] tts-entities fetch failed:', e);
+                if (_ttsEntitiesLoaded) return;   // #524, see above
                 _populateEntitySelect(_ttsEls.engine, null, cfg.tts_entity);
                 _populateEntitySelect(_ttsEls.speaker, null, cfg.media_player);
             });
@@ -1859,8 +1863,15 @@
         });
         // Reflect the master→child enabled/dimmed state (Variant B, #281).
         _syncTtsChildState();
-        // Fetch + populate the entity dropdowns, restoring the saved selection.
-        _loadTtsEntities(cfg);
+        // NO entity fetch here (#524). The endpoint is admin-token gated and
+        // the token only arrives over the WebSocket, so a fetch at page-init
+        // can never carry one — sessionStorage is per-tab and empty on every
+        // fresh tab, making the 401 a certainty rather than a risk. Its late
+        // failure handler then repainted the "None found" fallback OVER the
+        // lists the admin-connect frame had already delivered. The lists ride
+        // that frame (#502); handleGameState populates them, and only an
+        // older server without them falls back to the HTTP fetch — by which
+        // point the token exists.
     }
 
     // ---- House Plays Along (#494), Variant D "Presets" ----
@@ -2113,6 +2124,11 @@
                     // No token yet (401) or an error — show the "none found"
                     // fallbacks WITHOUT marking loaded, so the refetch in
                     // handleGameState retries once the admin token arrives.
+                    // Never over an already-loaded list (#524/#527): a failed
+                    // fetch wiping the rendered light list is exactly how the
+                    // party-light picker came up empty on a host with 72
+                    // lights.
+                    if (_houseEntitiesLoaded) return;
                     _renderHouseLightList(null, cfg.light_entities);
                     _populateEntitySelect(_houseEls.speaker, null, cfg.media_player, 'setup.house.noentities');
                     _populateEntitySelect(_houseEls.scene, null, cfg.winner_scene_entity, 'setup.house.noentities');
@@ -2122,6 +2138,7 @@
             })
             .catch(function (e) {
                 console.warn('[quizify] house-entities fetch failed:', e);
+                if (_houseEntitiesLoaded) return;   // #524/#527, see above
                 _renderHouseLightList(null, cfg.light_entities);
                 _populateEntitySelect(_houseEls.speaker, null, cfg.media_player, 'setup.house.noentities');
                 _populateEntitySelect(_houseEls.scene, null, cfg.winner_scene_entity, 'setup.house.noentities');
@@ -2178,8 +2195,10 @@
         });
         // Reflect the master→children enabled/dimmed state.
         _syncHouseChildState();
-        // Fetch + populate the entity pickers, restoring the saved selection.
-        _loadHouseEntities(cfg);
+        // NO entity fetch here — same reasoning as the TTS panel (#524/#527):
+        // the token-gated fetch cannot succeed at page-init, and its failure
+        // handler wiped the light list the admin-connect frame had already
+        // rendered. The lists ride that frame (#502/#494 Phase 4).
     }
 
     function _buildStartGamePayload() {

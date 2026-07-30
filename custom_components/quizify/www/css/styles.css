@@ -1487,6 +1487,13 @@ button, .btn {
     display: flex;
     align-items: center;
     cursor: pointer;
+    /* #526: the gap between the switch and its label belongs here, not on each
+       panel. It used to be declared per panel (.setup-lightning-toggle,
+       .setup-house-toggle) and the TTS panel simply never got one, so step 7's
+       labels butted against their switches while steps 6 and 8 looked right.
+       The hidden <input> is absolutely positioned and out of flow, so this
+       only ever spaces the switch from the label. */
+    gap: 10px;
 }
 
 .toggle-compact input {
@@ -4623,8 +4630,7 @@ footer {
 /* Lightning Round toggle row (#285) — a .toggle-compact switch sitting in a
    vF-step, aligned with the answer chips above it (skip the number badge). */
 .setup-lightning-toggle {
-    padding-left: 30px;
-    gap: 10px;
+    padding-left: 30px;   /* gap now inherited from .toggle-compact (#526) */
 }
 .setup-lightning-toggle .toggle-label {
     font-size: 0.9rem;
@@ -4709,9 +4715,7 @@ footer {
    segmented control, an "Advanced" disclosure holding the ten per-effect
    toggles, and a scrollable checkbox list for the multi-choice light
    picker. Soft Parlor tokens only — no new colours. */
-.setup-house-toggle {
-    gap: 10px;
-}
+/* gap now inherited from .toggle-compact (#526) */
 .setup-house-toggle .toggle-label {
     font-size: 0.9rem;
     color: var(--color-text-secondary);
