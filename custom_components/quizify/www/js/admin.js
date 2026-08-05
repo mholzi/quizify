@@ -1044,7 +1044,7 @@
     // ---- WebSocket ----
     function connect() {
         var proto = location.protocol === 'https:' ? 'wss:' : 'ws:';
-        var savedToken = sessionStorage.getItem('quizify_admin_session_token');
+        var savedToken = QuizifyUtils.readAdminToken();
         // #359: the admin session token used to be appended to the WS URL as
         // ?token=..., where it leaked into aiohttp / reverse-proxy access logs
         // and browser history. It is now sent as the FIRST WebSocket frame
@@ -1199,7 +1199,7 @@
     function handleGameState(msg) {
         currentPhase = msg.phase;
         if (msg.admin_session_token) {
-            sessionStorage.setItem('quizify_admin_session_token', msg.admin_session_token);
+            QuizifyUtils.writeAdminToken(msg.admin_session_token);
         }
         // The admin-connect frame now carries the TTS-engine + media-player
         // lists directly (server-side, over this already-authenticated socket),
@@ -1808,7 +1808,7 @@
     function _loadTtsEntities(cfg) {
         // #356: the tts-entities endpoint is admin-token gated. Send the
         // session token the admin page already holds.
-        var _tok = sessionStorage.getItem('quizify_admin_session_token');
+        var _tok = QuizifyUtils.readAdminToken();
         var _url = '/api/quizify/tts-entities'
             + (_tok ? '?token=' + encodeURIComponent(_tok) : '');
         fetch(_url)
@@ -2183,7 +2183,7 @@
     // HTTP fallback for an older server that doesn't put house_entities on the
     // admin frame. Admin-token gated like /api/quizify/tts-entities (#356).
     function _loadHouseEntities(cfg) {
-        var _tok = sessionStorage.getItem('quizify_admin_session_token');
+        var _tok = QuizifyUtils.readAdminToken();
         var _url = '/api/quizify/house-entities'
             + (_tok ? '?token=' + encodeURIComponent(_tok) : '');
         fetch(_url)
@@ -2358,7 +2358,7 @@
         // crown transfer from a stale (disconnected) admin slot — without it a
         // LAN client could seize the crown during a host reload.
         var _joinMsg = { name: name, is_admin: true };
-        var _adminTok = sessionStorage.getItem('quizify_admin_session_token');
+        var _adminTok = QuizifyUtils.readAdminToken();
         if (_adminTok) _joinMsg.admin_token = _adminTok;
         send('join', _joinMsg);
         closeAdminJoinModal();

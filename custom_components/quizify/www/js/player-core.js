@@ -105,7 +105,7 @@
                         // transfer from a stale admin slot. Optional + fail-soft
                         // — a missing token just means no auto-crown, never a
                         // rejected join, so the DESIGN.md trust model stands.
-                        var _at = sessionStorage.getItem('quizify_admin_session_token');
+                        var _at = QuizifyUtils.readAdminToken();
                         if (_at) joinMsg.admin_token = _at;
                     }
                     send('join', joinMsg);
@@ -1040,7 +1040,7 @@
                 joinMsg.is_admin = true;
                 // #358: attach the admin session token (fail-soft) so a crown
                 // transfer from a stale admin slot can be authorised.
-                var _at = sessionStorage.getItem('quizify_admin_session_token');
+                var _at = QuizifyUtils.readAdminToken();
                 if (_at) joinMsg.admin_token = _at;
             }
             send('join', joinMsg);

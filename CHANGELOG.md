@@ -3,6 +3,33 @@
 All notable changes to Quizify are documented here. This project follows
 [Semantic Versioning](https://semver.org/).
 
+## [Unreleased]
+
+### Fixed
+
+- **The host could be locked out of their own admin page, permanently.** The
+  admin session token is a lasting credential — the server writes it to disk
+  and only ever issues a new one when no token exists at all. The browser,
+  though, kept its copy in `sessionStorage`, which is discarded the moment the
+  tab closes. So once a host closed the admin tab (or restarted Home Assistant
+  while it was closed), the credential was orphaned: no browser could present
+  it, and no browser could earn a replacement. Every admin tab opened after
+  that was refused, silently and for good.
+
+  What that looked like in practice was not an error message but an empty
+  setup screen: the rejected connection is the one that carries the lists of
+  TTS engines, speakers, lights and scenes, so the dropdowns in steps 7 and 8
+  stayed empty and offered nothing to choose. A host with 72 lights saw none
+  of them.
+
+  The token now lives in `localStorage`, which is the lifetime the server
+  already assumed it had. An admin tab that is still open keeps working —
+  its old per-tab token is carried over on first read, not discarded.
+
+  If you are locked out right now, the `quizify.reset_admin_session` service
+  clears the stranded token and the next admin page you open claims a fresh
+  one.
+
 ## [1.6.1-RC4] — 2026-07-30
 
 Fourth release candidate for 1.6.1. One change: the setup screen stops asking

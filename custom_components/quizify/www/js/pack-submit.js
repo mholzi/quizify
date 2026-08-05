@@ -311,7 +311,7 @@ window.QuizifyPackSubmit = (function () {
         try {
             // #356: submissions list is admin-token gated; forward the token
             // the admin page holds.
-            var _tok = sessionStorage.getItem('quizify_admin_session_token');
+            var _tok = QuizifyUtils.readAdminToken();
             var _url = SUBMISSIONS_URL
                 + (_tok ? '?token=' + encodeURIComponent(_tok) : '');
             var resp = await fetch(_url);
