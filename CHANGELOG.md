@@ -3,7 +3,11 @@
 All notable changes to Quizify are documented here. This project follows
 [Semantic Versioning](https://semver.org/).
 
-## [Unreleased]
+## [1.6.1-RC5] — 2026-08-05
+
+Fifth release candidate for 1.6.1. One fix, reported from a live host: the
+setup screen's entity dropdowns were empty, and the reason turned out to have
+nothing to do with the dropdowns.
 
 ### Fixed
 
