@@ -5,6 +5,11 @@
 # ---- Dev / build frameworks ----
 .claude/
 docs/
+# docs/ holds local working material (design shotguns, scratch), but the
+# release notes are a published artefact: they are the prose behind each
+# GitHub release and the only place that history is readable in the repo.
+# Keeping them ignored is why the directory sat with a single stale file.
+!docs/release-notes/
 .playwright-mcp/
 
 # ---- Config & tooling ----

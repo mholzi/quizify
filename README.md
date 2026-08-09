@@ -52,7 +52,7 @@ No apps to download. No accounts to create. Just scan a QR code and play.
 
 **Works on Any Screen** — Dashboard mode for the TV. Players use their phones. Admin runs the show. No extra hardware needed.
 
-**Ten Themes, Two Languages** — 2,893 questions across 20 themed packs (Geography, Pop Culture, Animals & Nature, Sport, Music, Science, History, Food & Drink, Technology, World Cup) in German and English. Mix them, filter them, swap mid-session.
+**Eleven Themes, Three Languages** — 3,823 questions across 28 themed packs (Geography, Pop Culture, Animals & Nature, Sport, Music, Science, History, Food & Drink, Technology, World Cup, Estimation) in German, English and Spanish. Mix them, filter them, swap mid-session.
 
 ---
 
@@ -318,20 +318,23 @@ Then **"Start New Game"** (same settings, same players) or **Reset Game** (fresh
 
 ## Question Packs
 
-Quizify ships with **2,893 questions across 20 themed packs in 10 themes**, in both German and English.
+Quizify ships with **3,823 questions across 28 themed packs in 11 themes**, in German, English and Spanish.
 
-| Theme | 🇩🇪 Deutsch | 🇬🇧 English |
-|-------|-------------|-------------|
-| 🌍 **Geographie / Geography** | 149 | 150 |
-| 🦋 **Tiere & Natur / Animals & Nature** | 149 | 150 |
-| 🎬 **Popkultur / Pop Culture** | 149 | 150 |
-| ⚽ **Sport** | 148 | 150 |
-| 🎵 **Musik / Music** | 150 | 150 |
-| 🔬 **Wissenschaft / Science** | 150 | 150 |
-| 📜 **Geschichte / History** | 149 | 150 |
-| 🍔 **Essen & Trinken / Food & Drink** | 150 | 150 |
-| 💡 **Technik / Technology** | 150 | 150 |
-| 🏆 **Weltmeisterschaft / World Cup** | 99 | 100 |
+| Theme | 🇩🇪 Deutsch | 🇬🇧 English | 🇪🇸 Español |
+|-------|-------------|-------------|-------------|
+| 🌍 **Geographie / Geography / Geografía** | 149 | 150 | 150 |
+| 🦋 **Tiere & Natur / Animals & Nature / Naturaleza** | 149 | 150 | 150 |
+| 🎬 **Popkultur / Pop Culture / Cultura Pop** | 149 | 150 | 150 |
+| ⚽ **Sport / Deportes** | 148 | 150 | 150 |
+| 🎵 **Musik / Music** | 150 | 150 | — |
+| 🔬 **Wissenschaft / Science / Ciencia** | 150 | 150 | 150 |
+| 📜 **Geschichte / History / Historia** | 149 | 150 | 150 |
+| 🍔 **Essen & Trinken / Food & Drink** | 150 | 150 | — |
+| 💡 **Technik / Technology** | 150 | 150 | — |
+| 🏆 **Weltmeisterschaft / World Cup** | 99 | 100 | — |
+| 🎯 **Schätzfragen / Estimation** | 15 | 15 | — |
+
+Spanish arrived in 1.3.0 and grew through 1.6.1; music, food and technology are the three themes it is still missing. The two Estimation packs hold slider questions rather than multiple choice — see [How to Play](#the-experience).
 
 Pack selection lives on the **first screen**: a featured pack card (e.g. World Cup) up top, with every other pack as a tappable chip right beneath it — tap to select or deselect, mix several, then hit **Start Game**. Game settings (difficulty, rounds, timer) stay one tap away under **Adjust settings**. **Mixed mode** drops you a random question from every selected pack, so you can stir Geography + Pop + Sport together for chaos mode.
 
@@ -368,7 +371,7 @@ Pack files live in `custom_components/quizify/questions/`. Drop a JSON file in t
 - Exactly **3 answers** per question
 - Exactly **1 correct** answer
 - Per-question fields the loader reads: `id` (required), `question` (required), `answers` (required), `difficulty` (default `medium`), `fun_fact` (optional), `category` (optional, falls back to pack name)
-- Pack-level fields: `name`, `language` (`de` / `en` — only those are wired into the language chip; other ISO codes load but won't be selectable from the UI), `theme` (one of `geography`, `nature`, `popculture`, `sport`, `music`, `science`, `history`, `food`, `tech`, `worldcup` — drives the theme-tab filter and pack-card icon), `version`
+- Pack-level fields: `name`, `language` (`de` / `en` / `es` — only those are wired into the language chip; other ISO codes load but won't be selectable from the UI), `theme` (one of `geography`, `nature`, `popculture`, `sport`, `music`, `science`, `history`, `food`, `tech`, `worldcup`, `trivia` — drives the theme-tab filter and pack-card icon), `version`
 - File goes in the `questions/` directory — picked up automatically on next game start
 
 ---
@@ -535,7 +538,7 @@ Yes — see <a href="#custom-question-packs">Custom Question Packs</a>. Drop a J
 <details>
 <summary><strong>What languages are supported?</strong></summary>
 <br>
-German (🇩🇪) and English (🇬🇧) — for both the UI and the question packs. The UI follows the game language: pick German and the entire admin + player + dashboard + analytics surface flips to German. v1.1.24 closed the last hardcoded-locale leaks.
+German (🇩🇪), English (🇬🇧) and Spanish (🇪🇸) — for both the UI and the question packs. The UI follows the game language: pick German and the entire admin + player + dashboard + analytics surface flips to German. v1.1.24 closed the last hardcoded-locale leaks; Spanish landed in v1.3.0 and reached 6 packs in v1.6.1. Spoken narration (v1.4.0) covers the same three languages.
 </details>
 
 <details>
@@ -555,6 +558,37 @@ Yes. The QR code uses whatever URL the admin's browser sees, so opening <code>/q
 <br>
 
 ## What's New
+
+Full prose notes for every release since 1.4.0 live in [`docs/release-notes/`](docs/release-notes/); the complete history is in [`CHANGELOG.md`](CHANGELOG.md).
+
+### v1.6.1 — The Room Stops Giving It Away 📺
+- **The TV stopped parking the correct answer on tile A.** The big screen drew its grid in question-file order while the phones used the round's shuffle — on 16 of the 26 shipped packs that meant tile A, every question, every game (#521). Scoring was never affected; it simply leaked to everyone watching.
+- **The setup screen, three times over** — entity pickers no longer come up empty over a remote connection (#524, #527), the admin token survives closing the tab so a host can't be locked out for good (#530), and setup asks for one speaker instead of two (#525)
+- **"With kids" no longer ambushes you** — the preset switches the auto Lightning Round off (#513)
+- **Shareable result cards** on the end screen — rank, packs, hit rate, points, one glyph per round (#369)
+- **Two new Spanish packs** — Deportes (#515) and Cultura Pop (#517), 150 questions each
+
+### v1.6.0 — The House Plays Along 🏠
+- **Whole-home game-show mode** — lights react to the game and room sound effects punctuate it, all off by default and only as far as you take it
+- **HA services for voice and automations**, a freshness engine that stops repeating the same questions, colour-independent reveal for accessibility, and per-player language
+
+### v1.5.0 — Now It's Fluent in Spanish, and a Whole Lot Sturdier 🇪🇸
+- **Four Spanish packs, 600 questions**, and a fully translated UI
+- A security and accessibility sweep across the host and player surfaces
+
+### v1.4.1 — Android Companion Launcher Fix 📱
+- "Open Quizify" works inside the Android Home Assistant Companion app, whose WebView silently swallowed the old `target="_blank"` link (#348)
+
+### v1.4.0 — The Host Finds Its Voice, and Close Enough Counts 🗣️
+- **Spoken narration** — a Home Assistant speaker reads the questions, names the options, announces the answer and welcomes players as they join (#281). Silent until you switch it on.
+- **Estimation questions** — a slider instead of four buttons, closest guess takes the points, and a number-line reveal showing everyone's guess (#275)
+
+### v1.3.0 — Lightning Strikes, and Now It Speaks Spanish ⚡
+- **Lightning Round** — a fast bonus mode nobody sees coming
+- **Spanish**, **picture questions**, **lobby music**, auto-difficulty, community pack submission, and a reworked finale
+
+### v1.2.7 — Concurrency + Security Hardening 🔒
+- Backend-only release: concurrency fixes (#167) and a security pass (#168), with 17 new tests
 
 ### v1.2.6 — World Cup Night 🏆
 - **Two new World Cup packs** (🇬🇧 World Cup · 🇩🇪 Weltmeisterschaft, ~200 questions) — surprising, weird-but-true facts about football's biggest stage, generated and reviewed for accuracy. The library is now ~2,890 questions across 20 packs.
