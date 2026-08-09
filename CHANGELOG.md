@@ -3,6 +3,33 @@
 All notable changes to Quizify are documented here. This project follows
 [Semantic Versioning](https://semver.org/).
 
+## [1.6.1] — 2026-08-09
+
+The final 1.6.1 release — "The Room Stops Giving It Away", the culmination of
+release candidates RC1–RC5. See the GitHub release notes for the consolidated
+highlights; the RC entries below carry the detailed per-candidate history.
+
+This is mostly the bill for 1.6.0. Handing the game to the whole house put
+three things in front of real guests that testing never saw: the television
+had been rendering answers in question-file order, so on 16 of the 26 shipped
+packs the correct answer sat on tile A for every question of every game
+(#521); the setup screen's entity pickers came up empty for anyone reaching
+Home Assistant remotely (#524, #527); and a host who closed their admin tab
+could be locked out of it permanently, because the browser kept a lasting
+credential in `sessionStorage` (#530). Alongside those, the "With kids" preset
+stopped leaving the auto Lightning Round armed (#513), and the setup screen
+stopped asking for a second speaker it did not need (#525).
+
+Two entries are additions rather than repairs: shareable end-of-game result
+cards on the end screen (#369), and two new Spanish packs, `deportes-es`
+(#515) and `cultura-pop-es` (#517), 150 questions each, which take Spanish to
+6 packs / 900 questions and the library to 28 packs / 3,823 questions. Three
+incorrect fun facts in the latter were corrected before release (#519).
+
+### Internal
+
+- Test suite at **1,315 passing** (1,084 in 1.6.0).
+
 ## [1.6.1-RC5] — 2026-08-05
 
 Fifth release candidate for 1.6.1. One fix, reported from a live host: the
