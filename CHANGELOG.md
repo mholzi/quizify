@@ -3,6 +3,22 @@
 All notable changes to Quizify are documented here. This project follows
 [Semantic Versioning](https://semver.org/).
 
+## [1.7.0-RC2] — 2026-08-10
+
+Second release candidate for 1.7.0. One fix, found by putting RC1's card
+through every game phase rather than by reading the code again.
+
+### Fixed
+
+- **The compact host card can end a game (#278).** Its footer shipped with the
+  join link and the status line but without the end action the spec calls for,
+  so a host could start a game and advance it through every phase yet had to
+  switch to the cockpit or the admin page to finish it. The action now sits
+  beside the join link — as text, not a second solid button, so it does not
+  compete with the primary control — and appears only where it can act: not in
+  `mode: expanded`, whose control row already carries it, and not in the lobby,
+  where there is no game to end.
+
 ## [1.7.0-RC1] — 2026-08-10
 
 First release candidate for 1.7.0. One feature, cut early so it can be tested
