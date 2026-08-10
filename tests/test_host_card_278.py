@@ -111,6 +111,28 @@ def test_token_key_is_not_named_in_the_card() -> None:
     assert "readAdminToken" in text, "the card must reuse the shared token helper"
 
 
+def test_compact_footer_offers_end_game() -> None:
+    """The compact card must be able to END a game, not only run one.
+
+    The #278 spec puts a text-weight "End game" in the compact footer beside
+    the join link. The first implementation shipped the footer without it, so
+    a host on the compact card could start and advance a game but had to
+    switch to the cockpit or the admin page to finish it — found by rendering
+    every phase against the deployed 1.7.0-RC1 build.
+    """
+    text = _card_text()
+    foot_at = text.index('<div class="foot"><a href="\' + esc(joinUrl)')
+    footer = text[foot_at : foot_at + 700]
+    assert "end_game" in footer, (
+        "the compact footer must carry the end-game action; without it the "
+        "compact card cannot finish a game at all"
+    )
+    assert "expanded" in footer, (
+        "the end-game action belongs to the compact footer only — expanded "
+        "already has it in the control row"
+    )
+
+
 def test_reset_is_confirmed() -> None:
     text = _card_text()
     reset_at = text.index("'reset_game'")

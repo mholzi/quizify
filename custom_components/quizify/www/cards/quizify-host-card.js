@@ -102,6 +102,13 @@
         '.foot{display:flex;justify-content:space-between;align-items:center;gap:8px;',
         'color:var(--secondary-text-color);font-size:.85em}',
         '.foot a{color:var(--primary-color)}',
+        '.foot .note{flex:1;text-align:center}',
+        // The compact card\'s only secondary action. Deliberately text-weight:
+        // ending a game is rare next to the primary button, and a second solid
+        // button would compete with it.
+        '.linky{border:0;background:none;padding:4px 0;cursor:pointer;font:inherit;',
+        'color:var(--secondary-text-color);text-decoration:underline}',
+        '.linky:hover{color:var(--primary-text-color)}',
         '.split{display:flex;gap:16px;align-items:flex-start;flex-wrap:wrap}',
         '.roster{flex:1 1 200px;display:flex;flex-direction:column;gap:2px;margin:0;padding:0;list-style:none}',
         '.roster li{display:flex;align-items:center;gap:8px;padding:6px 0;',
@@ -374,7 +381,15 @@
             var footNote = primary.blockedReason
                 || (this._status === 'offline' ? t.offline : '');
             html += '<div class="foot"><a href="' + esc(joinUrl) + '">' + esc(t.join) + '</a>' +
-                    '<span>' + esc(footNote) + '</span></div>';
+                    '<span class="note">' + esc(footNote) + '</span>';
+            // End game lives in the compact footer (#278 spec). Expanded already
+            // carries it in the control row, and there is nothing to end while
+            // the lobby is still open — so it appears only where it can act.
+            if (!expanded && s && s.phase && s.phase !== 'LOBBY') {
+                html += '<button class="linky" data-msg="end_game">' +
+                        esc(t.end) + '</button>';
+            }
+            html += '</div>';
 
             html += '</ha-card>';
             this.shadowRoot.innerHTML = html;
