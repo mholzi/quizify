@@ -3,6 +3,43 @@
 All notable changes to Quizify are documented here. This project follows
 [Semantic Versioning](https://semver.org/).
 
+## [1.7.0-RC1] — 2026-08-10
+
+First release candidate for 1.7.0. One feature, cut early so it can be tested
+on real hardware before the final release rather than after it.
+
+### Added
+
+- **Host controls as a Lovelace card (#278).** `custom:quizify-host-card` puts
+  start / advance / end on a dashboard, so hosting no longer means leaving the
+  dashboard for the admin page. One resource with two densities: `mode: compact`
+  (the default) is a single button that changes with the game phase, sized for
+  one thumb; `mode: expanded` adds the player roster with connection dots, the
+  join QR, round progress, and the reveal / end / reset row, for a tablet that
+  does nothing else. Placing the card twice with different modes covers the
+  "status here, controls there" case without a second resource.
+
+  It speaks the existing admin WebSocket — `admin_auth` first, then
+  `admin_connect`, rendering from `game_state` — so there is no new server
+  surface, and the phase-to-action mapping mirrors `admin.js` rather than
+  inventing transitions. Because Quizify is served from the same origin as the
+  Home Assistant frontend, the card reuses the admin token the admin page
+  already stored. That token only exists once `/quizify/admin` has been opened
+  on that browser, so a dashboard that never has shows an explicit link instead
+  of dead buttons.
+
+  The card registers itself as a Lovelace resource when Lovelace runs in storage
+  mode; anything else (YAML mode, an unexpected core shape) logs the manual
+  step instead of failing setup.
+
+### Notes
+
+- The TV card sketched in the same issue was **not** built. Its only real
+  justification was HA Cast, and `/quizify/dashboard` already serves that view.
+- Documentation was refreshed for 1.6.1 in the same window (#531): the README's
+  library figures were four minors out of date, and `docs/release-notes/` was
+  never actually tracked by git.
+
 ## [1.6.1] — 2026-08-09
 
 The final 1.6.1 release — "The Room Stops Giving It Away", the culmination of
