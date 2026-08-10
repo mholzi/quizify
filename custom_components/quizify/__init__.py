@@ -215,6 +215,13 @@ async def async_setup_entry(hass: HomeAssistant, entry: ConfigEntry) -> bool:
         )
     )
 
+    # Register the host card as a Lovelace resource (#278). Convenience only —
+    # the helper swallows every failure and logs the manual step instead, so a
+    # YAML-mode dashboard or a changed core API can't take setup down with it.
+    from .cards import async_register_card_resource  # noqa: PLC0415
+
+    await async_register_card_resource(hass, getattr(ctx, "version", None))
+
     # Register sidebar panel.
     async_register_built_in_panel(
         hass,
