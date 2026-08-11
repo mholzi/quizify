@@ -370,7 +370,7 @@ Pack files live in `custom_components/quizify/questions/`. Drop a JSON file in t
 **Rules:**
 - Exactly **3 answers** per question
 - Exactly **1 correct** answer
-- Per-question fields the loader reads: `id` (required), `question` (required), `answers` (required), `difficulty` (default `medium`), `fun_fact` (optional), `category` (optional, falls back to pack name)
+- Per-question fields the loader reads: `id` (required), `question` (required), `answers` (required), `difficulty` (default `medium`), `fun_fact` (optional), `category` (optional, falls back to pack name), `image_url` (optional — an `https://` URL, or a path under `/quizify/static/` for an image shipped with the pack; anything else is ignored)
 - Pack-level fields: `name`, `language` (`de` / `en` / `es` — only those are wired into the language chip; other ISO codes load but won't be selectable from the UI), `theme` (one of `geography`, `nature`, `popculture`, `sport`, `music`, `science`, `history`, `food`, `tech`, `worldcup`, `trivia` — drives the theme-tab filter and pack-card icon), `version`
 - File goes in the `questions/` directory — picked up automatically on next game start
 

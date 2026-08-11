@@ -372,6 +372,41 @@ class TestQuestionImage:
         assert q is not None
         assert q.image_url == ""
 
+    def test_parse_question_keeps_integration_static_path(self) -> None:
+        """#536: a pack may reference an image it ships with.
+
+        Without this the only way to ship a picture round is to point every
+        question at somebody else's server, which breaks on every install at
+        once the day that server changes a path.
+        """
+        url = "/quizify/static/img/packs/picture-round/eiffel.webp"
+        q = _parse_question(_valid_question_dict(image_url=url), "Test")
+        assert q is not None
+        assert q.image_url == url
+
+    def test_parse_question_drops_traversal_out_of_static(self) -> None:
+        """The prefix is an allowlist, not a door held open."""
+        for url in (
+            "/quizify/static/../../config/secrets.yaml",
+            "/quizify/static/img/../../../etc/passwd",
+            "/quizify/static/%2e%2e/%2e%2e/secrets.yaml",
+        ):
+            q = _parse_question(_valid_question_dict(image_url=url), "Test")
+            assert q is not None
+            assert q.image_url == "", url
+
+    def test_parse_question_drops_lookalike_prefixes(self) -> None:
+        """Only that exact prefix — not anything merely starting similarly."""
+        for url in (
+            "/quizify/staticx/p.png",
+            "/quizify/admin",
+            "//evil.example/p.png",
+            "/local/p.png",
+        ):
+            q = _parse_question(_valid_question_dict(image_url=url), "Test")
+            assert q is not None
+            assert q.image_url == "", url
+
     def test_parse_question_drops_javascript_scheme(self) -> None:
         q = _parse_question(
             _valid_question_dict(image_url="javascript:alert(1)"), "Test"
