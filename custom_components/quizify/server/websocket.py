@@ -3176,6 +3176,15 @@ class QuizifyWebSocketHandler:
         packs = list(getattr(game_state, "categories", None) or [])
         if not packs and getattr(game_state, "category", None):
             packs = [game_state.category]
+        # Slug -> display name. The card is written to be pasted into a group
+        # chat, and "picture-round-en" reads like a filename; the picker calls
+        # the same pack "Picture Round". Unknown slugs (a pack removed
+        # mid-game) fall back to the slug rather than vanishing from the line.
+        try:
+            _meta = game_state.question_bank.get_pack_versions()
+            packs = [(_meta.get(slug) or {}).get("name") or slug for slug in packs]
+        except (AttributeError, TypeError):  # pragma: no cover - defensive
+            pass
         finale_msg = serialize_finale(
             podium, all_players, superlatives=awards, packs=packs
         )
