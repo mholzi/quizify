@@ -106,9 +106,18 @@ def test_apply_preset_writes_the_checkbox_not_just_the_variable() -> None:
 
 
 def test_matching_preset_compares_lightning() -> None:
-    """Otherwise a kids run with Lightning switched back on still reads "Mit Kindern"."""
-    body = _fn_body("_matchingPreset")
+    """Otherwise a kids run with Lightning switched back on still reads "Mit Kindern".
+
+    #433 moved the field-by-field comparison out of ``_matchingPreset`` into
+    ``_sameBundle``, which both the built-in and the saved presets go through
+    — so that is where the lightning check now has to be. The invariant is
+    unchanged: lightning is part of the bundle, and flipping it by hand must
+    stop the run from matching the preset.
+    """
+    body = _fn_body("_sameBundle")
     assert "p.lightning === selectedLightning" in body
+    # …and the matcher must actually route through that helper.
+    assert "_sameBundle(" in _fn_body("_matchingPreset")
 
 
 def test_toggling_lightning_by_hand_refreshes_the_active_card() -> None:
