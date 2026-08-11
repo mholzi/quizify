@@ -2013,6 +2013,10 @@ class QuizifyGameState:
                 "difficulty": q.difficulty,
                 "category": q.category,
                 "image_url": q.image_url,
+                # #434: a dashboard that reconnects mid-question needs both the
+                # style and the remaining time below to resume the blur at the
+                # right point instead of snapping to sharp.
+                "reveal_style": q.reveal_style,
                 "time_limit": self._round_duration,
                 "time_remaining": round(remaining, 1),
             }

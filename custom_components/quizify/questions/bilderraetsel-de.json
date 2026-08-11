@@ -23,7 +23,8 @@
       ],
       "difficulty": "medium",
       "fun_fact": "Cézanne malte das Motiv fünfmal; eine Fassung gilt als eines der teuersten je verkauften Gemälde.",
-      "image_url": "/quizify/static/img/packs/picture-round/card-players.webp"
+      "image_url": "/quizify/static/img/packs/picture-round/card-players.webp",
+      "reveal_style": "progressive"
     },
     {
       "id": "pic-de-002",
@@ -44,7 +45,8 @@
       ],
       "difficulty": "medium",
       "fun_fact": "Ein Daishō ist das Paar aus langem und kurzem Schwert — das Vorrecht, beide zu tragen, hatten nur Samurai.",
-      "image_url": "/quizify/static/img/packs/picture-round/daisho-swords.webp"
+      "image_url": "/quizify/static/img/packs/picture-round/daisho-swords.webp",
+      "reveal_style": "progressive"
     },
     {
       "id": "pic-de-003",
@@ -65,7 +67,8 @@
       ],
       "difficulty": "easy",
       "fun_fact": "Der „Erdaufgang\" von Apollo 8 gilt als eines der einflussreichsten Fotos der Umweltbewegung.",
-      "image_url": "/quizify/static/img/packs/picture-round/earthrise.webp"
+      "image_url": "/quizify/static/img/packs/picture-round/earthrise.webp",
+      "reveal_style": "progressive"
     },
     {
       "id": "pic-de-004",
@@ -86,7 +89,8 @@
       ],
       "difficulty": "easy",
       "fun_fact": "Die aufgemalten Augen an der Seite sollten dem Toten erlauben, aus dem Sarg nach draußen zu blicken.",
-      "image_url": "/quizify/static/img/packs/picture-round/egyptian-coffin.webp"
+      "image_url": "/quizify/static/img/packs/picture-round/egyptian-coffin.webp",
+      "reveal_style": "progressive"
     },
     {
       "id": "pic-de-005",
@@ -107,7 +111,8 @@
       ],
       "difficulty": "hard",
       "fun_fact": "Gauguin verlegte die christliche Verkündigung nach Polynesien — Titel und Bildsprache mischen beide Welten.",
-      "image_url": "/quizify/static/img/packs/picture-round/gauguin-ia-orana-maria.webp"
+      "image_url": "/quizify/static/img/packs/picture-round/gauguin-ia-orana-maria.webp",
+      "reveal_style": "progressive"
     },
     {
       "id": "pic-de-006",
@@ -128,7 +133,8 @@
       ],
       "difficulty": "easy",
       "fun_fact": "Es ist ein Holzschnitt, kein Gemälde — gedruckt wurden zu Hokusais Zeit mehrere tausend Abzüge.",
-      "image_url": "/quizify/static/img/packs/picture-round/great-wave.webp"
+      "image_url": "/quizify/static/img/packs/picture-round/great-wave.webp",
+      "reveal_style": "progressive"
     },
     {
       "id": "pic-de-007",
@@ -149,7 +155,8 @@
       ],
       "difficulty": "medium",
       "fun_fact": "Amphoren transportierten Wein und Öl — bemalte Stücke wie dieses waren zugleich Preise bei Wettkämpfen.",
-      "image_url": "/quizify/static/img/packs/picture-round/greek-amphora.webp"
+      "image_url": "/quizify/static/img/packs/picture-round/greek-amphora.webp",
+      "reveal_style": "progressive"
     },
     {
       "id": "pic-de-008",
@@ -170,7 +177,8 @@
       ],
       "difficulty": "medium",
       "fun_fact": "Bruegels „Kornernte\" von 1565 gehört zu einer Folge von sechs Bildern über die Jahreszeiten.",
-      "image_url": "/quizify/static/img/packs/picture-round/harvesters.webp"
+      "image_url": "/quizify/static/img/packs/picture-round/harvesters.webp",
+      "reveal_style": "progressive"
     },
     {
       "id": "pic-de-009",
@@ -191,7 +199,8 @@
       ],
       "difficulty": "easy",
       "fun_fact": "Eine vollständige Plattenrüstung wog etwa 25 Kilo — verteilt auf den ganzen Körper, nicht auf den Schultern.",
-      "image_url": "/quizify/static/img/packs/picture-round/knight-armor.webp"
+      "image_url": "/quizify/static/img/packs/picture-round/knight-armor.webp",
+      "reveal_style": "progressive"
     },
     {
       "id": "pic-de-010",
@@ -212,7 +221,8 @@
       ],
       "difficulty": "hard",
       "fun_fact": "Der Skandal drehte sich um einen herabgerutschten Träger — Sargent übermalte ihn später.",
-      "image_url": "/quizify/static/img/packs/picture-round/madame-x.webp"
+      "image_url": "/quizify/static/img/packs/picture-round/madame-x.webp",
+      "reveal_style": "progressive"
     },
     {
       "id": "pic-de-011",
@@ -233,7 +243,8 @@
       ],
       "difficulty": "easy",
       "fun_fact": "Ohne Wind und Wasser bleibt der Abdruck dort vermutlich Millionen Jahre erhalten.",
-      "image_url": "/quizify/static/img/packs/picture-round/moon-footprint.webp"
+      "image_url": "/quizify/static/img/packs/picture-round/moon-footprint.webp",
+      "reveal_style": "progressive"
     },
     {
       "id": "pic-de-012",
@@ -254,7 +265,8 @@
       ],
       "difficulty": "hard",
       "fun_fact": "Die Seite stammt aus der „Sprache der Vögel\", einem persischen Gedicht über eine Vogelversammlung.",
-      "image_url": "/quizify/static/img/packs/picture-round/persian-birds-folio.webp"
+      "image_url": "/quizify/static/img/packs/picture-round/persian-birds-folio.webp",
+      "reveal_style": "progressive"
     },
     {
       "id": "pic-de-013",
@@ -275,7 +287,8 @@
       ],
       "difficulty": "hard",
       "fun_fact": "Rembrandt malte seine Frau Saskia mehrfach als Blumengöttin Flora.",
-      "image_url": "/quizify/static/img/packs/picture-round/rembrandt-flora.webp"
+      "image_url": "/quizify/static/img/packs/picture-round/rembrandt-flora.webp",
+      "reveal_style": "progressive"
     },
     {
       "id": "pic-de-014",
@@ -296,7 +309,8 @@
       ],
       "difficulty": "easy",
       "fun_fact": "Van Gogh malte über 35 Selbstporträts — meist, weil er sich kein Modell leisten konnte.",
-      "image_url": "/quizify/static/img/packs/picture-round/self-portrait-straw-hat.webp"
+      "image_url": "/quizify/static/img/packs/picture-round/self-portrait-straw-hat.webp",
+      "reveal_style": "progressive"
     },
     {
       "id": "pic-de-015",
@@ -317,7 +331,8 @@
       ],
       "difficulty": "medium",
       "fun_fact": "Gemalt wurde es 1851 in Düsseldorf — der Fluss im Hintergrund ist eigentlich der Rhein.",
-      "image_url": "/quizify/static/img/packs/picture-round/washington-crossing.webp"
+      "image_url": "/quizify/static/img/packs/picture-round/washington-crossing.webp",
+      "reveal_style": "progressive"
     },
     {
       "id": "pic-de-016",
@@ -338,7 +353,8 @@
       ],
       "difficulty": "easy",
       "fun_fact": "Van Gogh malte die Zypressen im Sommer 1889, während er in der Anstalt von Saint-Rémy lebte.",
-      "image_url": "/quizify/static/img/packs/picture-round/wheat-field-cypresses.webp"
+      "image_url": "/quizify/static/img/packs/picture-round/wheat-field-cypresses.webp",
+      "reveal_style": "progressive"
     },
     {
       "id": "pic-de-017",
@@ -359,7 +375,8 @@
       ],
       "difficulty": "medium",
       "fun_fact": "Von Vermeer sind nur etwa 35 Werke bekannt — dieses war das erste, das in eine amerikanische Sammlung kam.",
-      "image_url": "/quizify/static/img/packs/picture-round/young-woman-water-pitcher.webp"
+      "image_url": "/quizify/static/img/packs/picture-round/young-woman-water-pitcher.webp",
+      "reveal_style": "progressive"
     }
   ]
 }

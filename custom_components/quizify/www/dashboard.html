@@ -412,6 +412,26 @@
             border: 1px solid var(--dash-border-neon);
             object-fit: contain;
         }
+        /* #434 progressive reveal. The blur amount is a custom property the
+           timer writes on every tick; the transition only has to smooth the
+           step between two ticks, so it is kept just under the tick interval.
+
+           `scale` is not cosmetic: a CSS blur samples beyond the element's
+           box and would otherwise fade the picture's own edges into the page,
+           making the frame look broken rather than obscured. Scaling up and
+           clipping in the parent keeps a clean edge at every blur radius. */
+        .dashboard-question-image.progressive-reveal {
+            filter: blur(var(--reveal-blur, 0px));
+            transform: scale(1.06);
+            transition: filter 0.45s linear;
+        }
+        .dashboard-question-media { overflow: hidden; }
+        /* Reduced motion needs no rule of its own here: the global
+           `prefers-reduced-motion` block in 00-tokens.css already collapses
+           every transition-duration, which stills the tick-to-tick easing.
+           What must NOT happen is the blur being switched off with it — that
+           would hand the answer to exactly the players who asked for calmer
+           motion. `filter` is a paint, not an animation, so it survives. */
 
         /* 3-column answer row (questions have exactly 3 answers) */
         .dashboard-answers {
@@ -1510,11 +1530,52 @@
             if (els.dashboardLeft) els.dashboardLeft.classList.toggle('has-image', !!on);
             if (els.questionMedia) els.questionMedia.hidden = !on;
         }
-        function renderQuestionImage(url) {
+        // #434: progressive reveal. The picture starts blurred and sharpens as
+        // the round timer drains, so an early guess is worth more than a late
+        // one. Driven entirely off `timer_tick` — the countdown the board
+        // already receives — so the mechanic needs no message of its own.
+        //
+        // The blur is written as a CSS custom property rather than a class per
+        // step: the value has to move every tick, and 30 discrete classes would
+        // fight the transition instead of riding it.
+        var REVEAL_MAX_BLUR_PX = 28;
+        var revealActive = false;
+
+        // Blur for a given point in the round. Full at the start, zero once
+        // the clock runs out — a question nobody answered still ends up
+        // readable on the board, which is what the reveal needs anyway.
+        function setRevealBlur(remaining, duration) {
+            var img = els.questionImage;
+            if (!img || !revealActive) return;
+            var frac = (duration > 0) ? Math.max(0, Math.min(1, remaining / duration)) : 0;
+            img.style.setProperty('--reveal-blur', (REVEAL_MAX_BLUR_PX * frac).toFixed(2) + 'px');
+        }
+
+        // Drop the blur entirely. Called at reveal — and it must be called
+        // there, because the summary view keeps the question view's image
+        // element instead of re-rendering it. Without this the correct answer
+        // would appear next to a picture nobody can make out.
+        function clearRevealBlur() {
+            var img = els.questionImage;
+            revealActive = false;
+            if (!img) return;
+            img.classList.remove('progressive-reveal');
+            img.style.removeProperty('--reveal-blur');
+        }
+
+        function renderQuestionImage(url, revealStyle) {
             var img = els.questionImage;
             if (!img) return;
             var safe = (window.QuizifyUtils && window.QuizifyUtils.safeImageUrl)
                 ? window.QuizifyUtils.safeImageUrl(url) : '';
+            // Reset first: the element is reused across rounds, so a stale
+            // blur from the previous question must not survive into this one.
+            clearRevealBlur();
+            if (safe && revealStyle === 'progressive') {
+                revealActive = true;
+                img.classList.add('progressive-reveal');
+                img.style.setProperty('--reveal-blur', REVEAL_MAX_BLUR_PX + 'px');
+            }
             img.onerror = function() {
                 // Image failed → collapse to text-only, no broken-image icon.
                 img.removeAttribute('src');
@@ -1646,6 +1707,8 @@
                             total_rounds: msg.total_rounds,
                             category: msg.question.category,
                             image_url: msg.question.image_url,
+                            reveal_style: msg.question.reveal_style,
+                            time_remaining: msg.question.time_remaining,
                             question_type: msg.question.question_type,
                             estimate: msg.question.estimate,
                         });
@@ -1832,10 +1895,17 @@
                 : 'Question ' + msg.round_num + ' / ' + msg.total_rounds;
             els.questionCategory.textContent = msg.category || '';
             els.questionText.textContent = msg.question_text;
-            renderQuestionImage(msg.image_url);
+            renderQuestionImage(msg.image_url, msg.reveal_style);
 
             timerDuration = msg.timer_duration || 30;
             timerRemaining = timerDuration;
+            // #434: a board that (re)connects mid-question gets its remaining
+            // time in the snapshot, so the blur resumes where the round
+            // actually is instead of restarting from opaque.
+            setRevealBlur(
+                (typeof msg.time_remaining === 'number') ? msg.time_remaining : timerDuration,
+                timerDuration
+            );
             els.timerFill.style.width = '100%';
             els.timerFill.className = 'dashboard-timer-fill';
 
@@ -1892,6 +1962,7 @@
             // late/in-flight tick that would otherwise resume the drain.)
             if (isPaused) return;
             timerRemaining = msg.remaining;
+            setRevealBlur(timerRemaining, timerDuration);
             var pct = timerDuration > 0 ? (timerRemaining / timerDuration) * 100 : 0;
             els.timerFill.style.width = pct + '%';
 
@@ -1905,6 +1976,11 @@
 
         function handleRoundSummary(msg) {
             var summary = msg.round_summary || msg;
+
+            // #434: the summary keeps the question view's image element, so
+            // the blur has to come off here or the answer is revealed beside a
+            // picture that is still unreadable.
+            clearRevealBlur();
 
             // #460: reset the timer bar at reveal. A skipped/timed-out question
             // otherwise leaves a stalled red/pulsing bar during the summary.

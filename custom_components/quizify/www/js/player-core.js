@@ -715,6 +715,10 @@
         // (and its timer) so it can never bleed onto the result screen.
         game.stopFrozenOverlay();
         _clearFinaleCountdown();
+        // #434: the round is over, so the picture stops hiding. The reveal
+        // view reuses the banner element, so leaving the blur on would show
+        // the correct answer next to an image nobody can read.
+        if (game.clearRevealBlur) game.clearRevealBlur();
         pu.showView('reveal-view');
 
         // Pass question context to reveal
