@@ -130,13 +130,34 @@ class Question:
         return self.type == QUESTION_TYPE_ESTIMATE
 
 
-def _sanitize_image_url(raw: object, question_id: str) -> str:
-    """Return a safe http(s) image URL, or "" if absent/invalid.
+#: The one local location a pack may point at: the integration's own static
+#: mount (#536). Anything shipped with the integration lives under here, and
+#: it is served read-only, so a pack can reference its own images without
+#: depending on a third-party host that may vanish and break every install at
+#: once. This is a PREFIX ALLOWLIST, not "relative paths are fine" — see
+#: ``_sanitize_image_url``.
+LOCAL_IMAGE_PREFIX = "/quizify/static/"
 
-    Only absolute http/https URLs are allowed. A relative path, a
-    ``javascript:``/``data:`` scheme, or a non-string is dropped (and
-    logged) so a malformed or hostile pack can't break the dashboard
-    render or smuggle markup through the field.
+#: Traversal markers rejected inside an otherwise-allowed local path. The
+#: percent-encoded form is listed because the browser, not this code, is what
+#: finally resolves the path.
+_TRAVERSAL_MARKERS = ("..", "%2e%2e")
+
+
+def _sanitize_image_url(raw: object, question_id: str) -> str:
+    """Return a safe image URL, or "" if absent/invalid.
+
+    Two forms are accepted:
+
+    * an absolute ``http``/``https`` URL, and
+    * a path under :data:`LOCAL_IMAGE_PREFIX`, i.e. an image shipped inside
+      the integration (#536).
+
+    Everything else — any other relative path, ``javascript:``/``data:``, a
+    non-string — is dropped (and logged) so a malformed or hostile pack can't
+    break the dashboard render or smuggle markup through the field. The local
+    form additionally refuses traversal, so a pack cannot climb out of the
+    static mount and point at, say, a config file.
     """
     if not raw:
         return ""
@@ -149,6 +170,16 @@ def _sanitize_image_url(raw: object, question_id: str) -> str:
         return ""
     url = raw.strip()
     if url.lower().startswith(("http://", "https://")):
+        return url
+    if url.startswith(LOCAL_IMAGE_PREFIX):
+        lowered = url.lower()
+        if any(marker in lowered for marker in _TRAVERSAL_MARKERS):
+            _LOGGER.warning(
+                "Question '%s': ignoring image_url with path traversal: %r",
+                question_id,
+                url[:60],
+            )
+            return ""
         return url
     _LOGGER.warning(
         "Question '%s': ignoring image_url with unsupported scheme: %r",
