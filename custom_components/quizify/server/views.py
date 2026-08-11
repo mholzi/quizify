@@ -586,6 +586,21 @@ def _available_ui_languages() -> tuple[str, ...]:
     return tuple(known + extra)
 
 
+def prime_ui_languages() -> tuple[str, ...]:
+    """Warm :func:`_available_ui_languages` so the request path stays clean.
+
+    BLOCKING (``os.scandir`` via ``glob``) — must run OFF the event loop, i.e.
+    in an executor (``__init__.py`` does this at setup), in the standalone dev
+    server which has no HA loop, or in tests. Same treatment #343 gave the
+    manifest read; the language chips arrived later (#492) and were left on the
+    loop, where HA's watcher flagged them on the first player render (#542).
+
+    The lazy path stays intact: an un-primed process still resolves the set on
+    first use, it just does the scan wherever it happens to be called.
+    """
+    return _available_ui_languages()
+
+
 def _render_ui_language_chips(default_lang: str) -> str:
     """Render the player's UI-language chips (#492).
 
