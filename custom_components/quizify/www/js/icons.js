@@ -28,7 +28,14 @@
         history: '<path d="M7 4h9a2 2 0 0 1 2 2v12a2 2 0 0 0 2 2H8a2 2 0 0 1-2-2V6"/><path d="M6 6a2 2 0 0 0-2 2v1h2"/><path d="M10 9h5M10 13h5"/>',
         food: '<path d="M7 3v18M5 3v6a2 2 0 0 0 4 0V3"/><path d="M16 3c-1.6 0-2.5 2.2-2.5 5s1 4 2.5 4 2.5-1.2 2.5-4-.9-5-2.5-5zM16 12v9"/>',
         tech: '<path d="M9.5 18h5M11 21h2"/><path d="M12 3a6 6 0 0 0-3.8 10.6c.8.7 1.3 1.5 1.3 2.4h5c0-.9.5-1.7 1.3-2.4A6 6 0 0 0 12 3z"/>',
-        worldcup: '<path d="M7 4h10v4a5 5 0 0 1-10 0V4z"/><path d="M7 6H4v1a3.5 3.5 0 0 0 3.5 3.5M17 6h3v1a3.5 3.5 0 0 1-3.5 3.5"/><path d="M12 13v4M9 20h6M10 20a2 2 0 0 1 2-2 2 2 0 0 1 2 2"/>'
+        worldcup: '<path d="M7 4h10v4a5 5 0 0 1-10 0V4z"/><path d="M7 6H4v1a3.5 3.5 0 0 0 3.5 3.5M17 6h3v1a3.5 3.5 0 0 1-3.5 3.5"/><path d="M12 13v4M9 20h6M10 20a2 2 0 0 1 2-2 2 2 0 0 1 2 2"/>',
+        // The packs that don't fit a subject theme — picture rounds and
+        // estimation (#537, #275). Without an entry they fell through to
+        // ``mixed``, so "Bilderrätsel", "Schätzfragen" and "Gemischt" wore
+        // the same glyph, and "Mixed" means something else entirely (every
+        // pack at once). A framed picture reads for both: the estimation
+        // packs are the other kind of "look at this and judge".
+        trivia: '<rect x="3" y="5" width="18" height="14" rx="2"/><circle class="d" cx="8.5" cy="10" r="1.3"/><path d="M4 17l4.5-4.5 3 3L15 11l5 5"/>'
     };
 
     // UI line icons keyed by a semantic name (NOT a theme). Used for the
@@ -82,7 +89,7 @@
     var CATEGORY_TINT = {
         mixed: 'mix', geography: 'coral', nature: 'sage', popculture: 'sky',
         sport: 'sun', music: 'coral', science: 'sage', history: 'sky',
-        food: 'sun', tech: 'coral', worldcup: 'sun'
+        food: 'sun', tech: 'coral', worldcup: 'sun', trivia: 'sage'
     };
 
     // Returns the inner SVG markup (paths only) for a theme, or the mixed

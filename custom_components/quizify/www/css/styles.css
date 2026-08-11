@@ -1654,17 +1654,27 @@ button, .btn {
     height: 100%;
     object-fit: contain;
 }
+/* A round, light control rather than a dark grey square.
+   The button is anchored to the media box, not to the picture — with
+   ``object-fit: contain`` a portrait image leaves wide pale margins, and the
+   old dark rectangle sat in one of them looking like a piece of the layout
+   that had come loose. Light glass reads as a control on both surfaces: a
+   soft white disc on the pale backing, and still a button over a dark
+   photograph, where the shadow and ring separate it from the image. */
 .question-image-zoom {
     position: absolute;
     top: 8px;
     right: 8px;
     width: 34px;
     height: 34px;
-    border: none;
-    border-radius: 8px;
-    background: rgba(42, 40, 32, 0.55);
-    color: #fff;
-    font-size: 16px;
+    border: 1px solid rgba(42, 40, 32, 0.16);
+    border-radius: 50%;
+    background: rgba(255, 255, 255, 0.78);
+    -webkit-backdrop-filter: blur(6px);
+    backdrop-filter: blur(6px);
+    box-shadow: 0 1px 4px rgba(42, 40, 32, 0.18);
+    color: var(--color-text, #2a2820);
+    font-size: 15px;
     line-height: 1;
     cursor: pointer;
     display: flex;
@@ -1678,7 +1688,7 @@ button, .btn {
     position: absolute;
     inset: -5px;
 }
-.question-image-zoom:hover { background: rgba(42, 40, 32, 0.75); }
+.question-image-zoom:hover { background: rgba(255, 255, 255, 0.92); }
 
 /* Fullscreen zoom overlay */
 .image-zoom-overlay {

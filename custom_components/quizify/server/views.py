@@ -469,6 +469,11 @@ _THEME_ICONS = {
     "food": "🍔",
     "tech": "💡",
     "worldcup": "🏆",
+    # Picture rounds and estimation (#537, #275) ship ``theme: trivia``.
+    # Without an entry they fell back to the generic 🎲, which is also what an
+    # unknown theme gets — so a shipped pack was indistinguishable from a
+    # broken one.
+    "trivia": "🖼️",
 }
 
 # ---------------------------------------------------------------------------
