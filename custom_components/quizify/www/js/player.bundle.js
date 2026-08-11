@@ -3014,11 +3014,12 @@
 
         var img = document.getElementById('lightning-image');
         if (img) {
-            // Same http(s)-only guard as player-game.js renderQuestion
-            // (issue #257) — reject javascript:/data: and other schemes
-            // before they reach img.src.
-            var safeImg = (typeof msg.image_url === 'string' && /^https?:\/\//i.test(msg.image_url))
-                ? msg.image_url : '';
+            // Same guard as player-game.js renderQuestion (issue #257),
+            // now shared via QuizifyUtils.safeImageUrl (#540) — rejects
+            // javascript:/data: and other schemes before they reach
+            // img.src, while allowing the local static mount (#536).
+            var safeImg = (window.QuizifyUtils && window.QuizifyUtils.safeImageUrl)
+                ? window.QuizifyUtils.safeImageUrl(msg.image_url) : '';
             if (safeImg) {
                 // #467: localized generic alt for the lightning image question.
                 var t = (window.QuizifyI18n && window.QuizifyI18n.t) || function (k) { return k; };
@@ -3453,7 +3454,11 @@
         var media = document.getElementById('question-media');
         var img = document.getElementById('question-image');
         if (!media || !img) return;
-        var safeImg = (typeof imgUrl === 'string' && /^https?:\/\//i.test(imgUrl)) ? imgUrl : '';
+        // Allowed forms live in QuizifyUtils.safeImageUrl, mirroring the
+        // server's sanitizer — absolute http(s) or the integration's own
+        // static mount (#536/#540).
+        var safeImg = (window.QuizifyUtils && window.QuizifyUtils.safeImageUrl)
+            ? window.QuizifyUtils.safeImageUrl(imgUrl) : '';
         img.onerror = function() {
             // Image failed → hide the banner, fall back to text-only.
             img.removeAttribute('src');

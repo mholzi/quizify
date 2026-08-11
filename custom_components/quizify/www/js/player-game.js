@@ -239,7 +239,11 @@
         var media = document.getElementById('question-media');
         var img = document.getElementById('question-image');
         if (!media || !img) return;
-        var safeImg = (typeof imgUrl === 'string' && /^https?:\/\//i.test(imgUrl)) ? imgUrl : '';
+        // Allowed forms live in QuizifyUtils.safeImageUrl, mirroring the
+        // server's sanitizer — absolute http(s) or the integration's own
+        // static mount (#536/#540).
+        var safeImg = (window.QuizifyUtils && window.QuizifyUtils.safeImageUrl)
+            ? window.QuizifyUtils.safeImageUrl(imgUrl) : '';
         img.onerror = function() {
             // Image failed → hide the banner, fall back to text-only.
             img.removeAttribute('src');

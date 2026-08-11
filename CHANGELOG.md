@@ -3,6 +3,23 @@
 All notable changes to Quizify are documented here. This project follows
 [Semantic Versioning](https://semver.org/).
 
+## [Unreleased]
+
+### Fixed
+
+- **Picture questions rendered without the picture (#540).** Every question in
+  the packs from #537 arrived with a `/quizify/static/…` image URL that the
+  browser then discarded: the dashboard, the player and the lightning round
+  each carried their own `^https?://`-only check, so the local form #536 had
+  just taught the server to accept was dropped on the client. Both the TV and
+  the phone showed the question text with no image.
+
+  The rule now lives once, in `QuizifyUtils.safeImageUrl()`, mirroring the
+  server's `_sanitize_image_url` — absolute `http(s)`, or a path under
+  `/quizify/static/` with no traversal — and the three render sites call it.
+  Found by playing a round rather than by re-reading the server tests, which
+  were green throughout.
+
 ## [1.7.0-RC5] — 2026-08-11
 
 Fifth release candidate for 1.7.0. Content, not code.

@@ -46,6 +46,37 @@
         return { valid: true, name: trimmed };
     }
 
+    // ---- Question image URLs -------------------------------------------
+    //
+    // Mirror of the server's _sanitize_image_url (game/questions.py). Two
+    // forms are allowed: an absolute http(s) URL, and a path under the
+    // integration's own static mount (#536). Everything else — any other
+    // relative path, javascript:/data:, a non-string — renders text-only.
+    //
+    // The server already sanitises; this stays as defence-in-depth for a
+    // payload that never went through it. It lives here, in one place, so
+    // the rule can't drift per view again: the dashboard, the player and
+    // the lightning round each carried their own copy of an http(s)-only
+    // test, which silently dropped every image the packs from #537 ship
+    // (#540).
+    var LOCAL_IMAGE_PREFIX = '/quizify/static/';
+    var TRAVERSAL_MARKERS = ['..', '%2e%2e'];
+
+    function safeImageUrl(url) {
+        if (typeof url !== 'string') return '';
+        var trimmed = url.trim();
+        if (!trimmed) return '';
+        if (/^https?:\/\//i.test(trimmed)) return trimmed;
+        if (trimmed.indexOf(LOCAL_IMAGE_PREFIX) === 0) {
+            var lowered = trimmed.toLowerCase();
+            for (var i = 0; i < TRAVERSAL_MARKERS.length; i++) {
+                if (lowered.indexOf(TRAVERSAL_MARKERS[i]) !== -1) return '';
+            }
+            return trimmed;
+        }
+        return '';
+    }
+
     // ---- Admin session token -------------------------------------------
     //
     // The admin session token is a PERSISTENT credential, and every reader
@@ -89,6 +120,7 @@
 
     window.QuizifyUtils = {
         escapeHtml: escapeHtml,
+        safeImageUrl: safeImageUrl,
         validateName: validateName,
         MAX_NAME_LENGTH: MAX_NAME_LENGTH,
         readAdminToken: readAdminToken,
