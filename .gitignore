@@ -4,11 +4,18 @@
 
 # ---- Dev / build frameworks ----
 .claude/
-docs/
+docs/*
 # docs/ holds local working material (design shotguns, scratch), but the
 # release notes are a published artefact: they are the prose behind each
 # GitHub release and the only place that history is readable in the repo.
 # Keeping them ignored is why the directory sat with a single stale file.
+#
+# The pattern must be ``docs/*``, not ``docs/``: git does not descend into an
+# excluded *directory*, so a negation below it never gets evaluated. With
+# ``docs/`` the rule below looked right and did nothing — every new release
+# notes file stayed invisible to ``git add`` and only landed if someone
+# happened to force-add it (which is how v1.4–v1.6 got in, and how v1.7.0
+# nearly did not).
 !docs/release-notes/
 .playwright-mcp/
 
