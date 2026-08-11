@@ -3,6 +3,28 @@
 All notable changes to Quizify are documented here. This project follows
 [Semantic Versioning](https://semver.org/).
 
+## [1.7.0-RC3] — 2026-08-11
+
+Third release candidate for 1.7.0. One feature.
+
+### Added
+
+- **Saved game presets (#433).** Setup spans packs, difficulty, rounds, timer
+  and lightning, and most hosts reconfigure the same two or three combinations
+  every session. They can now be saved by name and re-applied with one tap,
+  from a scrollable chip row above the four built-in mode cards — which are
+  unchanged.
+
+  Presets live on the server (`presets.json`, alongside the other small state
+  files) rather than in the browser, so one saved on the living-room tablet is
+  there on the host's phone too. Reading and writing them goes through the
+  admin-token gate; a corrupt file degrades to "no presets" rather than
+  blocking setup. Up to 20 presets, names up to 40 characters.
+
+  A preset stores rounds, difficulty, timer, lightning and the pack selection —
+  deliberately not the TTS or House Plays Along settings, which belong to
+  devices rather than to the shape of an evening.
+
 ## [1.7.0-RC2] — 2026-08-10
 
 Second release candidate for 1.7.0. One fix, found by putting RC1's card
