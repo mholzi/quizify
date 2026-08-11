@@ -3427,6 +3427,9 @@
         // Soft tick in the last 5 seconds (one per whole second).
         if (window.QuizifyPlayerSound) window.QuizifyPlayerSound.tickFromRemaining(remaining);
 
+        // #434: same clock, same sharpening as the board.
+        setRevealBlur(remaining);
+
         if (remaining <= 5) {
             timerElement.classList.remove('timer--warning');
             timerElement.classList.add('timer--critical');
@@ -3455,8 +3458,45 @@
     // commit to a bet — which would defeat the Jeopardy-final tension.
     var _wagerGate = { active: false, submitted: false };
 
+    // #434: progressive reveal on the player's banner. The dashboard blurs
+    // the picture as the timer drains; the phone has to do the same, or a
+    // player simply reads the sharp copy in their hand and the mechanic on the
+    // TV is decoration.
+    var REVEAL_MAX_BLUR_PX = 14;   // smaller canvas than the TV, same feel
+    var _revealActive = false;
+    var _revealDuration = 0;
+
+    function _revealTargets() {
+        // The zoom overlay renders a SECOND <img> from the same src, so it has
+        // to carry the blur too — otherwise one tap on the magnifier defeats
+        // the whole round.
+        return [
+            document.getElementById('question-image'),
+            document.getElementById('image-zoom-img'),
+        ];
+    }
+
+    function setRevealBlur(remaining) {
+        if (!_revealActive) return;
+        var frac = (_revealDuration > 0)
+            ? Math.max(0, Math.min(1, remaining / _revealDuration)) : 0;
+        var px = (REVEAL_MAX_BLUR_PX * frac).toFixed(2) + 'px';
+        _revealTargets().forEach(function (el) {
+            if (el) el.style.setProperty('--reveal-blur', px);
+        });
+    }
+
+    function clearRevealBlur() {
+        _revealActive = false;
+        _revealTargets().forEach(function (el) {
+            if (!el) return;
+            el.classList.remove('progressive-reveal');
+            el.style.removeProperty('--reveal-blur');
+        });
+    }
+
     // Issue #183: render the question image banner + wire tap-to-zoom.
-    function renderQuestionImageBanner(imgUrl) {
+    function renderQuestionImageBanner(imgUrl, revealStyle, duration) {
         var media = document.getElementById('question-media');
         var img = document.getElementById('question-image');
         if (!media || !img) return;
@@ -3470,6 +3510,9 @@
             img.removeAttribute('src');
             media.hidden = true;
         };
+        // Reset first — the banner element is reused every round, so a blur
+        // left over from the last question must not bleed into this one.
+        clearRevealBlur();
         if (safeImg) {
             // #467: populate a localized generic alt so the image question
             // isn't announced as an unlabelled graphic.
@@ -3477,6 +3520,16 @@
             img.src = safeImg;
             img.alt = t('game.questionImageAlt');
             media.hidden = false;
+            if (revealStyle === 'progressive') {
+                _revealActive = true;
+                _revealDuration = duration || 0;
+                _revealTargets().forEach(function (el) {
+                    if (el) {
+                        el.classList.add('progressive-reveal');
+                        el.style.setProperty('--reveal-blur', REVEAL_MAX_BLUR_PX + 'px');
+                    }
+                });
+            }
         } else {
             img.removeAttribute('src');
             img.alt = '';
@@ -3538,7 +3591,7 @@
         // shown (server already sanitises; this is defence-in-depth).
         // Absent/invalid/load-error → the banner is hidden so the answer
         // pills stay reachable above the fold (graceful text-only fallback).
-        renderQuestionImageBanner(data.image_url);
+        renderQuestionImageBanner(data.image_url, data.reveal_style, data.timer_duration);
 
         // #275: branch on the question type. Estimate questions swap the 3-
         // answer grid for a slider (Variant B). Toggle the two sections and
@@ -4383,6 +4436,7 @@
         isFrozen: isFrozen,
         updateTimer: updateTimer,
         renderQuestion: renderQuestion,
+        clearRevealBlur: clearRevealBlur,
         handleAnswerClick: handleAnswerClick,
         lockSubmitted: lockSubmitted,
         resetSubmissionState: resetSubmissionState,
@@ -5125,6 +5179,10 @@
         // (and its timer) so it can never bleed onto the result screen.
         game.stopFrozenOverlay();
         _clearFinaleCountdown();
+        // #434: the round is over, so the picture stops hiding. The reveal
+        // view reuses the banner element, so leaving the blur on would show
+        // the correct answer next to an image nobody can read.
+        if (game.clearRevealBlur) game.clearRevealBlur();
         pu.showView('reveal-view');
 
         // Pass question context to reveal

@@ -1654,6 +1654,23 @@ button, .btn {
     height: 100%;
     object-fit: contain;
 }
+/* #434 progressive reveal, player side. Same mechanic as the dashboard, at a
+   smaller radius because the banner is a fraction of the size — the TV's 28px
+   on a 200px-tall banner is a grey rectangle, not a puzzle.
+
+   The zoom overlay carries the class too (see _revealTargets in
+   player-game.js): it renders a second <img> from the same src, so without
+   this a single tap on the magnifier would hand out the sharp picture. */
+.question-image.progressive-reveal,
+.image-zoom-img.progressive-reveal {
+    filter: blur(var(--reveal-blur, 0px));
+    transform: scale(1.06);
+    transition: filter 0.45s linear;
+}
+.question-media { overflow: hidden; }
+/* No reduced-motion override on purpose — see the note on the dashboard rule.
+   The global block stills the easing; the blur itself has to stay, or the
+   accessibility setting would quietly become an advantage. */
 /* A round, light control rather than a dark grey square.
    The button is anchored to the media box, not to the picture — with
    ``object-fit: contain`` a portrait image leaves wide pale margins, and the

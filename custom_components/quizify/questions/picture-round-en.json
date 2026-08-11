@@ -23,7 +23,8 @@
       ],
       "difficulty": "medium",
       "fun_fact": "Cézanne painted the subject five times; one version counts among the most expensive paintings ever sold.",
-      "image_url": "/quizify/static/img/packs/picture-round/card-players.webp"
+      "image_url": "/quizify/static/img/packs/picture-round/card-players.webp",
+      "reveal_style": "progressive"
     },
     {
       "id": "pic-en-002",
@@ -44,7 +45,8 @@
       ],
       "difficulty": "medium",
       "fun_fact": "A daishō is the pairing of long and short sword — only samurai were allowed to wear both.",
-      "image_url": "/quizify/static/img/packs/picture-round/daisho-swords.webp"
+      "image_url": "/quizify/static/img/packs/picture-round/daisho-swords.webp",
+      "reveal_style": "progressive"
     },
     {
       "id": "pic-en-003",
@@ -65,7 +67,8 @@
       ],
       "difficulty": "easy",
       "fun_fact": "Apollo 8's Earthrise is counted among the most influential photographs of the environmental movement.",
-      "image_url": "/quizify/static/img/packs/picture-round/earthrise.webp"
+      "image_url": "/quizify/static/img/packs/picture-round/earthrise.webp",
+      "reveal_style": "progressive"
     },
     {
       "id": "pic-en-004",
@@ -86,7 +89,8 @@
       ],
       "difficulty": "easy",
       "fun_fact": "The eyes painted on the side let the dead look out of the coffin.",
-      "image_url": "/quizify/static/img/packs/picture-round/egyptian-coffin.webp"
+      "image_url": "/quizify/static/img/packs/picture-round/egyptian-coffin.webp",
+      "reveal_style": "progressive"
     },
     {
       "id": "pic-en-005",
@@ -107,7 +111,8 @@
       ],
       "difficulty": "hard",
       "fun_fact": "Gauguin moved the Christian Annunciation to Polynesia — the title and imagery mix both worlds.",
-      "image_url": "/quizify/static/img/packs/picture-round/gauguin-ia-orana-maria.webp"
+      "image_url": "/quizify/static/img/packs/picture-round/gauguin-ia-orana-maria.webp",
+      "reveal_style": "progressive"
     },
     {
       "id": "pic-en-006",
@@ -128,7 +133,8 @@
       ],
       "difficulty": "easy",
       "fun_fact": "It is a woodblock print, not a painting — several thousand impressions were pulled in Hokusai's day.",
-      "image_url": "/quizify/static/img/packs/picture-round/great-wave.webp"
+      "image_url": "/quizify/static/img/packs/picture-round/great-wave.webp",
+      "reveal_style": "progressive"
     },
     {
       "id": "pic-en-007",
@@ -149,7 +155,8 @@
       ],
       "difficulty": "medium",
       "fun_fact": "Amphorae carried wine and oil — painted ones like this doubled as prizes at games.",
-      "image_url": "/quizify/static/img/packs/picture-round/greek-amphora.webp"
+      "image_url": "/quizify/static/img/packs/picture-round/greek-amphora.webp",
+      "reveal_style": "progressive"
     },
     {
       "id": "pic-en-008",
@@ -170,7 +177,8 @@
       ],
       "difficulty": "medium",
       "fun_fact": "Bruegel's Harvesters of 1565 belongs to a series of six pictures about the seasons.",
-      "image_url": "/quizify/static/img/packs/picture-round/harvesters.webp"
+      "image_url": "/quizify/static/img/packs/picture-round/harvesters.webp",
+      "reveal_style": "progressive"
     },
     {
       "id": "pic-en-009",
@@ -191,7 +199,8 @@
       ],
       "difficulty": "easy",
       "fun_fact": "A full suit of plate weighed about 25 kilos — spread over the whole body, not hanging from the shoulders.",
-      "image_url": "/quizify/static/img/packs/picture-round/knight-armor.webp"
+      "image_url": "/quizify/static/img/packs/picture-round/knight-armor.webp",
+      "reveal_style": "progressive"
     },
     {
       "id": "pic-en-010",
@@ -212,7 +221,8 @@
       ],
       "difficulty": "hard",
       "fun_fact": "The scandal was about one fallen shoulder strap — Sargent later repainted it upright.",
-      "image_url": "/quizify/static/img/packs/picture-round/madame-x.webp"
+      "image_url": "/quizify/static/img/packs/picture-round/madame-x.webp",
+      "reveal_style": "progressive"
     },
     {
       "id": "pic-en-011",
@@ -233,7 +243,8 @@
       ],
       "difficulty": "easy",
       "fun_fact": "With no wind or water, it will probably stay there for millions of years.",
-      "image_url": "/quizify/static/img/packs/picture-round/moon-footprint.webp"
+      "image_url": "/quizify/static/img/packs/picture-round/moon-footprint.webp",
+      "reveal_style": "progressive"
     },
     {
       "id": "pic-en-012",
@@ -254,7 +265,8 @@
       ],
       "difficulty": "hard",
       "fun_fact": "The page comes from the Language of the Birds, a Persian poem about an assembly of birds.",
-      "image_url": "/quizify/static/img/packs/picture-round/persian-birds-folio.webp"
+      "image_url": "/quizify/static/img/packs/picture-round/persian-birds-folio.webp",
+      "reveal_style": "progressive"
     },
     {
       "id": "pic-en-013",
@@ -275,7 +287,8 @@
       ],
       "difficulty": "hard",
       "fun_fact": "Rembrandt painted his wife Saskia as Flora, goddess of flowers, more than once.",
-      "image_url": "/quizify/static/img/packs/picture-round/rembrandt-flora.webp"
+      "image_url": "/quizify/static/img/packs/picture-round/rembrandt-flora.webp",
+      "reveal_style": "progressive"
     },
     {
       "id": "pic-en-014",
@@ -296,7 +309,8 @@
       ],
       "difficulty": "easy",
       "fun_fact": "Van Gogh painted more than 35 self-portraits — mostly because he could not afford a model.",
-      "image_url": "/quizify/static/img/packs/picture-round/self-portrait-straw-hat.webp"
+      "image_url": "/quizify/static/img/packs/picture-round/self-portrait-straw-hat.webp",
+      "reveal_style": "progressive"
     },
     {
       "id": "pic-en-015",
@@ -317,7 +331,8 @@
       ],
       "difficulty": "medium",
       "fun_fact": "It was painted in Düsseldorf in 1851 — the river in the background is really the Rhine.",
-      "image_url": "/quizify/static/img/packs/picture-round/washington-crossing.webp"
+      "image_url": "/quizify/static/img/packs/picture-round/washington-crossing.webp",
+      "reveal_style": "progressive"
     },
     {
       "id": "pic-en-016",
@@ -338,7 +353,8 @@
       ],
       "difficulty": "easy",
       "fun_fact": "Van Gogh painted the cypresses in the summer of 1889, while living at the asylum in Saint-Rémy.",
-      "image_url": "/quizify/static/img/packs/picture-round/wheat-field-cypresses.webp"
+      "image_url": "/quizify/static/img/packs/picture-round/wheat-field-cypresses.webp",
+      "reveal_style": "progressive"
     },
     {
       "id": "pic-en-017",
@@ -359,7 +375,8 @@
       ],
       "difficulty": "medium",
       "fun_fact": "Only about 35 works by Vermeer are known — this was the first to enter an American collection.",
-      "image_url": "/quizify/static/img/packs/picture-round/young-woman-water-pitcher.webp"
+      "image_url": "/quizify/static/img/packs/picture-round/young-woman-water-pitcher.webp",
+      "reveal_style": "progressive"
     }
   ]
 }

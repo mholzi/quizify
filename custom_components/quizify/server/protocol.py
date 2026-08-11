@@ -84,6 +84,9 @@ class QuestionStartedMessage:
     # Optional image URL for the question (issue #25). Empty string when
     # the question carries no image.
     image_url: str = ""
+    # How that image is uncovered (#434): "" shows it outright, "progressive"
+    # starts it blurred and sharpens it as the timer runs down.
+    reveal_style: str = ""
 
     def to_dict(self) -> dict[str, Any]:
         return asdict(self)
@@ -256,7 +259,8 @@ TYPESCRIPT_DECLARATIONS = """
 //   | { type: 'player_joined' | 'player_left'; players: Player[]; }
 //   | { type: 'question_started'; question_text: string; answers: string[];
 //       timer_duration: number; round_num: number; total_rounds: number;
-//       category: string; difficulty: string; image_url?: string; }
+//       category: string; difficulty: string; image_url?: string;
+//       reveal_style?: '' | 'progressive'; }
 //   | { type: 'timer_tick'; remaining: number; }
 //   | { type: 'answer_result'; correct: boolean; points_earned: number;
 //       speed_bonus: number; streak_bonus: number; difficulty_multiplier: number;

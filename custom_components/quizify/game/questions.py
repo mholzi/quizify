@@ -87,6 +87,14 @@ QUESTION_TYPE_MULTIPLE_CHOICE = "multiple_choice"
 QUESTION_TYPE_ESTIMATE = "estimate"
 VALID_QUESTION_TYPES = (QUESTION_TYPE_MULTIPLE_CHOICE, QUESTION_TYPE_ESTIMATE)
 
+#: Image reveal styles (#434). ``""`` shows the picture outright, the way
+#: every image question behaved before. ``"progressive"`` starts it heavily
+#: blurred and sharpens it as the round timer runs down, so guessing early is
+#: worth more than guessing late.
+REVEAL_STYLE_NONE = ""
+REVEAL_STYLE_PROGRESSIVE = "progressive"
+VALID_REVEAL_STYLES = (REVEAL_STYLE_NONE, REVEAL_STYLE_PROGRESSIVE)
+
 
 @dataclass
 class Question:
@@ -112,6 +120,11 @@ class Question:
     # anything else is dropped at parse time so a malformed pack can't
     # inject markup or point at a local path.
     image_url: str = ""
+    # How the image is revealed (#434). Empty means "show it outright", which
+    # is what every pack did before this field existed. See
+    # ``_sanitize_reveal_style`` — a style without an image is dropped, since
+    # unblurring nothing is an effect with no subject.
+    reveal_style: str = REVEAL_STYLE_NONE
     # Question type (#275). Defaults to multiple_choice so every pack without
     # a ``type`` field behaves exactly as before.
     type: str = QUESTION_TYPE_MULTIPLE_CHOICE
@@ -187,6 +200,45 @@ def _sanitize_image_url(raw: object, question_id: str) -> str:
         url[:60],
     )
     return ""
+
+
+def _sanitize_reveal_style(
+    raw: object, image_url: str, question_id: str
+) -> str:
+    """Return a valid reveal style, or "" if absent/invalid/pointless (#434).
+
+    Two things are refused, both quietly falling back to "show the image
+    outright" rather than to an error:
+
+    * an unknown style — a typo'd ``"progresive"`` must not leave the picture
+      permanently blurred, which is what an unrecognised value keyed straight
+      into a CSS class would do; and
+    * a style on a question with **no image**, because a reveal with nothing
+      to reveal is the exact trap this issue was blocked on for months.
+    """
+    if not raw:
+        return REVEAL_STYLE_NONE
+    if not isinstance(raw, str):
+        _LOGGER.warning(
+            "Question '%s': ignoring non-string reveal_style (%s)",
+            question_id,
+            type(raw).__name__,
+        )
+        return REVEAL_STYLE_NONE
+    style = raw.strip().lower()
+    if style not in VALID_REVEAL_STYLES:
+        _LOGGER.warning(
+            "Question '%s': ignoring unknown reveal_style %r", question_id, style[:40]
+        )
+        return REVEAL_STYLE_NONE
+    if not image_url:
+        _LOGGER.warning(
+            "Question '%s': reveal_style %r has no image to reveal, ignoring",
+            question_id,
+            style,
+        )
+        return REVEAL_STYLE_NONE
+    return style
 
 
 def _normalize_season(raw: object) -> dict | None:
@@ -274,6 +326,8 @@ def _parse_estimate_question(data: dict, category_name: str) -> Question | None:
     unit_raw = data.get("unit", "")
     unit_val = unit_raw if isinstance(unit_raw, str) else ""
 
+    image_url = _sanitize_image_url(data.get("image_url"), data["id"])
+
     return Question(
         id=data["id"],
         question=data["question"],
@@ -281,7 +335,10 @@ def _parse_estimate_question(data: dict, category_name: str) -> Question | None:
         difficulty=data.get("difficulty", "medium"),
         fun_fact=data.get("fun_fact", ""),
         category=data.get("category", category_name),
-        image_url=_sanitize_image_url(data.get("image_url"), data["id"]),
+        image_url=image_url,
+        reveal_style=_sanitize_reveal_style(
+            data.get("reveal_style"), image_url, data["id"]
+        ),
         type=QUESTION_TYPE_ESTIMATE,
         estimate_answer=answer_val,
         estimate_min=min_val,
@@ -353,6 +410,8 @@ def _parse_question(data: dict, category_name: str) -> Question | None:
         for a in answers_raw
     ]
 
+    image_url = _sanitize_image_url(data.get("image_url"), data["id"])
+
     return Question(
         id=data["id"],
         question=data["question"],
@@ -360,7 +419,10 @@ def _parse_question(data: dict, category_name: str) -> Question | None:
         difficulty=data.get("difficulty", "medium"),
         fun_fact=data.get("fun_fact", ""),
         category=data.get("category", category_name),
-        image_url=_sanitize_image_url(data.get("image_url"), data["id"]),
+        image_url=image_url,
+        reveal_style=_sanitize_reveal_style(
+            data.get("reveal_style"), image_url, data["id"]
+        ),
     )
 
 

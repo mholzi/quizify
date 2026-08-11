@@ -247,6 +247,7 @@ def test_malformed_shuffle_falls_back_to_json_order(bad_order) -> None:
         category = "geo"
         difficulty = "easy"
         image_url = None
+        reveal_style = ""  # #434
         type = "multiple_choice"
         is_estimate = False
         answers = [_A("a", True), _A("b", False), _A("c", False)]

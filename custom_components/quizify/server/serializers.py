@@ -138,6 +138,8 @@ def serialize_question_for_player(
         "category": question.category,
         "difficulty": question.difficulty,
         "image_url": question.image_url,
+        # #434: how the dashboard/player should uncover that image.
+        "reveal_style": question.reveal_style,
         "is_final_round": is_final_round,
         "player_score": player_score,
         "question_type": question.type,
@@ -210,6 +212,7 @@ def serialize_question_for_admin(
         "category": question.category,
         "difficulty": question.difficulty,
         "image_url": question.image_url,
+        "reveal_style": question.reveal_style,
         "question_type": question.type,
     }
     # Estimate questions (#275): the admin/TV gets the slider range + the true
