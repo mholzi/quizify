@@ -3,6 +3,26 @@
 All notable changes to Quizify are documented here. This project follows
 [Semantic Versioning](https://semver.org/).
 
+## [1.7.0-RC4] — 2026-08-11
+
+Fourth release candidate for 1.7.0. Two display fixes on RC3's saved presets,
+both found by driving the admin page on a real install rather than by the
+test suite.
+
+### Fixed
+
+- **A preset chip stayed highlighted after the settings changed (#433).** The
+  chips were drawn on load, save and apply; the mode cards were repainted on
+  every change. Two paints, one question — they are now repainted together.
+- **No mode card was highlighted while a saved preset matched (#433).** A
+  saved preset has no card of its own, and the "Eigene" fallback was skipped
+  because a match existed, so the card row showed nothing selected. A saved
+  preset now lights "Eigene", which is what it is relative to the four
+  built-in modes.
+
+Neither defect lost or mis-saved anything; the settings themselves always
+round-tripped correctly.
+
 ## [1.7.0-RC3] — 2026-08-11
 
 Third release candidate for 1.7.0. One feature.
