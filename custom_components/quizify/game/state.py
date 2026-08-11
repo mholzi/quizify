@@ -1546,7 +1546,11 @@ class QuizifyGameState:
             ),
             difficulty=difficulty,
         )
-        if not lr.start():
+        # Reserve the questions the main game still owes the host (#544). Only
+        # the auto path detours out of a running game; the lobby/finale entries
+        # have no remaining rounds to protect.
+        reserve = max(0, self.total_rounds - self.round) if auto else 0
+        if not lr.start(reserve=reserve):
             return False
 
         if auto:

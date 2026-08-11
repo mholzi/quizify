@@ -135,8 +135,15 @@ class LightningRound:
     # Setup
     # ------------------------------------------------------------------
 
-    def start(self) -> bool:
+    def start(self, *, reserve: int = 0) -> bool:
         """Build the question queue and arm the first question.
+
+        ``reserve`` is how many questions the *main* game still needs (its
+        remaining rounds). Questions the main queue is holding are only
+        claimed while more than ``reserve`` of them remain — see #544, where a
+        5-round Easy game on the 17-question picture pack (7 easy) had its
+        last five easy questions taken by this detour and ended after round 2.
+        Lightning is a bonus; it must not spend the main game's questions.
 
         Returns False if no questions are available (caller should abort).
         """
@@ -177,11 +184,24 @@ class LightningRound:
         # slider, so an estimate question would render as an empty card —
         # skip them. Iterating a finite pool can't spin, so no attempt bound
         # is needed (an all-estimate pool simply yields no questions).
+        # How much of the main game's pending queue may be spent here (#544).
+        # Questions outside that queue are free — they were never promised to
+        # a later round. ``spare`` is computed once, before anything is taken,
+        # so the budget can't drift as the loop consumes.
+        queued_ids = self._bank.remaining_queue_ids()
+        spare = max(0, len(queued_ids) - reserve)
+        claimed_from_queue = 0
+
         for q in pool:
             if len(self._questions) >= self.num_questions:
                 break
             if getattr(q, "is_estimate", False):
                 continue
+            if q.id in queued_ids:
+                if claimed_from_queue >= spare:
+                    # The main game needs this one for a later round.
+                    continue
+                claimed_from_queue += 1
             self._questions.append(q)
             self._bank.record_shown(q.id)
 
@@ -193,7 +213,18 @@ class LightningRound:
             self._bank.drop_from_queue({q.id for q in self._questions})
 
         if not self._questions:
-            _LOGGER.warning("Lightning round: no questions available")
+            if pool and spare == 0:
+                # Distinct from an empty pool: questions exist, they are just
+                # spoken for by the main game's remaining rounds (#544). The
+                # caller treats False as "skip the detour, play on".
+                _LOGGER.info(
+                    "Lightning round skipped: all %d pending questions are "
+                    "reserved for the main game's remaining %d rounds",
+                    len(queued_ids),
+                    reserve,
+                )
+            else:
+                _LOGGER.warning("Lightning round: no questions available")
             return False
 
         self.num_questions = len(self._questions)
