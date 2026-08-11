@@ -1,0 +1,365 @@
+{
+  "name": "Picture Round",
+  "language": "en",
+  "version": "1.0",
+  "theme": "trivia",
+  "questions": [
+    {
+      "id": "pic-en-001",
+      "question": "Who painted the card players?",
+      "answers": [
+        {
+          "text": "Paul Cézanne",
+          "correct": true
+        },
+        {
+          "text": "Édouard Manet",
+          "correct": false
+        },
+        {
+          "text": "Henri de Toulouse-Lautrec",
+          "correct": false
+        }
+      ],
+      "difficulty": "medium",
+      "fun_fact": "Cézanne painted the subject five times; one version counts among the most expensive paintings ever sold.",
+      "image_url": "/quizify/static/img/packs/picture-round/card-players.webp"
+    },
+    {
+      "id": "pic-en-002",
+      "question": "Which country is this pair of swords from?",
+      "answers": [
+        {
+          "text": "Japan",
+          "correct": true
+        },
+        {
+          "text": "China",
+          "correct": false
+        },
+        {
+          "text": "Korea",
+          "correct": false
+        }
+      ],
+      "difficulty": "medium",
+      "fun_fact": "A daishō is the pairing of long and short sword — only samurai were allowed to wear both.",
+      "image_url": "/quizify/static/img/packs/picture-round/daisho-swords.webp"
+    },
+    {
+      "id": "pic-en-003",
+      "question": "Where was this picture taken from?",
+      "answers": [
+        {
+          "text": "From orbit around the Moon",
+          "correct": true
+        },
+        {
+          "text": "From the surface of Mars",
+          "correct": false
+        },
+        {
+          "text": "From the International Space Station",
+          "correct": false
+        }
+      ],
+      "difficulty": "easy",
+      "fun_fact": "Apollo 8's Earthrise is counted among the most influential photographs of the environmental movement.",
+      "image_url": "/quizify/static/img/packs/picture-round/earthrise.webp"
+    },
+    {
+      "id": "pic-en-004",
+      "question": "Where is this object from?",
+      "answers": [
+        {
+          "text": "Ancient Egypt",
+          "correct": true
+        },
+        {
+          "text": "Ancient Rome",
+          "correct": false
+        },
+        {
+          "text": "The Maya period",
+          "correct": false
+        }
+      ],
+      "difficulty": "easy",
+      "fun_fact": "The eyes painted on the side let the dead look out of the coffin.",
+      "image_url": "/quizify/static/img/packs/picture-round/egyptian-coffin.webp"
+    },
+    {
+      "id": "pic-en-005",
+      "question": "On which island was this painted?",
+      "answers": [
+        {
+          "text": "Tahiti",
+          "correct": true
+        },
+        {
+          "text": "Cuba",
+          "correct": false
+        },
+        {
+          "text": "Sicily",
+          "correct": false
+        }
+      ],
+      "difficulty": "hard",
+      "fun_fact": "Gauguin moved the Christian Annunciation to Polynesia — the title and imagery mix both worlds.",
+      "image_url": "/quizify/static/img/packs/picture-round/gauguin-ia-orana-maria.webp"
+    },
+    {
+      "id": "pic-en-006",
+      "question": "Which world-famous picture is this?",
+      "answers": [
+        {
+          "text": "Under the Wave off Kanagawa",
+          "correct": true
+        },
+        {
+          "text": "Mount Fuji in a Storm",
+          "correct": false
+        },
+        {
+          "text": "Waves at Ise",
+          "correct": false
+        }
+      ],
+      "difficulty": "easy",
+      "fun_fact": "It is a woodblock print, not a painting — several thousand impressions were pulled in Hokusai's day.",
+      "image_url": "/quizify/static/img/packs/picture-round/great-wave.webp"
+    },
+    {
+      "id": "pic-en-007",
+      "question": "What is this vessel?",
+      "answers": [
+        {
+          "text": "A Greek amphora",
+          "correct": true
+        },
+        {
+          "text": "A Roman urn",
+          "correct": false
+        },
+        {
+          "text": "An Egyptian canopic jar",
+          "correct": false
+        }
+      ],
+      "difficulty": "medium",
+      "fun_fact": "Amphorae carried wine and oil — painted ones like this doubled as prizes at games.",
+      "image_url": "/quizify/static/img/packs/picture-round/greek-amphora.webp"
+    },
+    {
+      "id": "pic-en-008",
+      "question": "Which century is this painting from?",
+      "answers": [
+        {
+          "text": "16th century",
+          "correct": true
+        },
+        {
+          "text": "18th century",
+          "correct": false
+        },
+        {
+          "text": "19th century",
+          "correct": false
+        }
+      ],
+      "difficulty": "medium",
+      "fun_fact": "Bruegel's Harvesters of 1565 belongs to a series of six pictures about the seasons.",
+      "image_url": "/quizify/static/img/packs/picture-round/harvesters.webp"
+    },
+    {
+      "id": "pic-en-009",
+      "question": "What is this?",
+      "answers": [
+        {
+          "text": "European plate armour",
+          "correct": true
+        },
+        {
+          "text": "Japanese samurai armour",
+          "correct": false
+        },
+        {
+          "text": "Roman legionary kit",
+          "correct": false
+        }
+      ],
+      "difficulty": "easy",
+      "fun_fact": "A full suit of plate weighed about 25 kilos — spread over the whole body, not hanging from the shoulders.",
+      "image_url": "/quizify/static/img/packs/picture-round/knight-armor.webp"
+    },
+    {
+      "id": "pic-en-010",
+      "question": "This portrait caused a scandal in 1884. Who painted it?",
+      "answers": [
+        {
+          "text": "John Singer Sargent",
+          "correct": true
+        },
+        {
+          "text": "James McNeill Whistler",
+          "correct": false
+        },
+        {
+          "text": "Gustav Klimt",
+          "correct": false
+        }
+      ],
+      "difficulty": "hard",
+      "fun_fact": "The scandal was about one fallen shoulder strap — Sargent later repainted it upright.",
+      "image_url": "/quizify/static/img/packs/picture-round/madame-x.webp"
+    },
+    {
+      "id": "pic-en-011",
+      "question": "Where is this footprint?",
+      "answers": [
+        {
+          "text": "On the Moon",
+          "correct": true
+        },
+        {
+          "text": "In the Gobi Desert",
+          "correct": false
+        },
+        {
+          "text": "On Mars",
+          "correct": false
+        }
+      ],
+      "difficulty": "easy",
+      "fun_fact": "With no wind or water, it will probably stay there for millions of years.",
+      "image_url": "/quizify/static/img/packs/picture-round/moon-footprint.webp"
+    },
+    {
+      "id": "pic-en-012",
+      "question": "What is this page?",
+      "answers": [
+        {
+          "text": "A Persian manuscript painting",
+          "correct": true
+        },
+        {
+          "text": "A medieval stained-glass window",
+          "correct": false
+        },
+        {
+          "text": "A Chinese hanging scroll",
+          "correct": false
+        }
+      ],
+      "difficulty": "hard",
+      "fun_fact": "The page comes from the Language of the Birds, a Persian poem about an assembly of birds.",
+      "image_url": "/quizify/static/img/packs/picture-round/persian-birds-folio.webp"
+    },
+    {
+      "id": "pic-en-013",
+      "question": "Who painted this portrait?",
+      "answers": [
+        {
+          "text": "Rembrandt",
+          "correct": true
+        },
+        {
+          "text": "Peter Paul Rubens",
+          "correct": false
+        },
+        {
+          "text": "Anthony van Dyck",
+          "correct": false
+        }
+      ],
+      "difficulty": "hard",
+      "fun_fact": "Rembrandt painted his wife Saskia as Flora, goddess of flowers, more than once.",
+      "image_url": "/quizify/static/img/packs/picture-round/rembrandt-flora.webp"
+    },
+    {
+      "id": "pic-en-014",
+      "question": "Who is this?",
+      "answers": [
+        {
+          "text": "Vincent van Gogh",
+          "correct": true
+        },
+        {
+          "text": "Paul Gauguin",
+          "correct": false
+        },
+        {
+          "text": "Edgar Degas",
+          "correct": false
+        }
+      ],
+      "difficulty": "easy",
+      "fun_fact": "Van Gogh painted more than 35 self-portraits — mostly because he could not afford a model.",
+      "image_url": "/quizify/static/img/packs/picture-round/self-portrait-straw-hat.webp"
+    },
+    {
+      "id": "pic-en-015",
+      "question": "Which event does this show?",
+      "answers": [
+        {
+          "text": "Washington crossing the Delaware",
+          "correct": true
+        },
+        {
+          "text": "Napoleon crossing the Berezina",
+          "correct": false
+        },
+        {
+          "text": "Caesar crossing the Rubicon",
+          "correct": false
+        }
+      ],
+      "difficulty": "medium",
+      "fun_fact": "It was painted in Düsseldorf in 1851 — the river in the background is really the Rhine.",
+      "image_url": "/quizify/static/img/packs/picture-round/washington-crossing.webp"
+    },
+    {
+      "id": "pic-en-016",
+      "question": "Who painted this?",
+      "answers": [
+        {
+          "text": "Vincent van Gogh",
+          "correct": true
+        },
+        {
+          "text": "Claude Monet",
+          "correct": false
+        },
+        {
+          "text": "Paul Cézanne",
+          "correct": false
+        }
+      ],
+      "difficulty": "easy",
+      "fun_fact": "Van Gogh painted the cypresses in the summer of 1889, while living at the asylum in Saint-Rémy.",
+      "image_url": "/quizify/static/img/packs/picture-round/wheat-field-cypresses.webp"
+    },
+    {
+      "id": "pic-en-017",
+      "question": "Which painter made this scene?",
+      "answers": [
+        {
+          "text": "Johannes Vermeer",
+          "correct": true
+        },
+        {
+          "text": "Rembrandt",
+          "correct": false
+        },
+        {
+          "text": "Frans Hals",
+          "correct": false
+        }
+      ],
+      "difficulty": "medium",
+      "fun_fact": "Only about 35 works by Vermeer are known — this was the first to enter an American collection.",
+      "image_url": "/quizify/static/img/packs/picture-round/young-woman-water-pitcher.webp"
+    }
+  ]
+}
