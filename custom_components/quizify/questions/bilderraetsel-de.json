@@ -1,0 +1,365 @@
+{
+  "name": "Bilderrätsel",
+  "language": "de",
+  "version": "1.0",
+  "theme": "trivia",
+  "questions": [
+    {
+      "id": "pic-de-001",
+      "question": "Wer malte die Kartenspieler?",
+      "answers": [
+        {
+          "text": "Paul Cézanne",
+          "correct": true
+        },
+        {
+          "text": "Édouard Manet",
+          "correct": false
+        },
+        {
+          "text": "Henri de Toulouse-Lautrec",
+          "correct": false
+        }
+      ],
+      "difficulty": "medium",
+      "fun_fact": "Cézanne malte das Motiv fünfmal; eine Fassung gilt als eines der teuersten je verkauften Gemälde.",
+      "image_url": "/quizify/static/img/packs/picture-round/card-players.webp"
+    },
+    {
+      "id": "pic-de-002",
+      "question": "Aus welchem Land stammt dieses Schwertpaar?",
+      "answers": [
+        {
+          "text": "Japan",
+          "correct": true
+        },
+        {
+          "text": "China",
+          "correct": false
+        },
+        {
+          "text": "Korea",
+          "correct": false
+        }
+      ],
+      "difficulty": "medium",
+      "fun_fact": "Ein Daishō ist das Paar aus langem und kurzem Schwert — das Vorrecht, beide zu tragen, hatten nur Samurai.",
+      "image_url": "/quizify/static/img/packs/picture-round/daisho-swords.webp"
+    },
+    {
+      "id": "pic-de-003",
+      "question": "Von wo aus wurde dieses Bild aufgenommen?",
+      "answers": [
+        {
+          "text": "Aus einer Umlaufbahn um den Mond",
+          "correct": true
+        },
+        {
+          "text": "Von der Marsoberfläche",
+          "correct": false
+        },
+        {
+          "text": "Von der Internationalen Raumstation",
+          "correct": false
+        }
+      ],
+      "difficulty": "easy",
+      "fun_fact": "Der „Erdaufgang\" von Apollo 8 gilt als eines der einflussreichsten Fotos der Umweltbewegung.",
+      "image_url": "/quizify/static/img/packs/picture-round/earthrise.webp"
+    },
+    {
+      "id": "pic-de-004",
+      "question": "Woher stammt dieses Objekt?",
+      "answers": [
+        {
+          "text": "Aus dem alten Ägypten",
+          "correct": true
+        },
+        {
+          "text": "Aus dem alten Rom",
+          "correct": false
+        },
+        {
+          "text": "Aus der Maya-Zeit",
+          "correct": false
+        }
+      ],
+      "difficulty": "easy",
+      "fun_fact": "Die aufgemalten Augen an der Seite sollten dem Toten erlauben, aus dem Sarg nach draußen zu blicken.",
+      "image_url": "/quizify/static/img/packs/picture-round/egyptian-coffin.webp"
+    },
+    {
+      "id": "pic-de-005",
+      "question": "Auf welcher Insel entstand dieses Bild?",
+      "answers": [
+        {
+          "text": "Tahiti",
+          "correct": true
+        },
+        {
+          "text": "Kuba",
+          "correct": false
+        },
+        {
+          "text": "Sizilien",
+          "correct": false
+        }
+      ],
+      "difficulty": "hard",
+      "fun_fact": "Gauguin verlegte die christliche Verkündigung nach Polynesien — Titel und Bildsprache mischen beide Welten.",
+      "image_url": "/quizify/static/img/packs/picture-round/gauguin-ia-orana-maria.webp"
+    },
+    {
+      "id": "pic-de-006",
+      "question": "Welches weltberühmte Bild ist das?",
+      "answers": [
+        {
+          "text": "Die große Welle vor Kanagawa",
+          "correct": true
+        },
+        {
+          "text": "Der Fuji im Sturm",
+          "correct": false
+        },
+        {
+          "text": "Wellen bei Ise",
+          "correct": false
+        }
+      ],
+      "difficulty": "easy",
+      "fun_fact": "Es ist ein Holzschnitt, kein Gemälde — gedruckt wurden zu Hokusais Zeit mehrere tausend Abzüge.",
+      "image_url": "/quizify/static/img/packs/picture-round/great-wave.webp"
+    },
+    {
+      "id": "pic-de-007",
+      "question": "Was ist dieses Gefäß?",
+      "answers": [
+        {
+          "text": "Eine griechische Amphore",
+          "correct": true
+        },
+        {
+          "text": "Eine römische Urne",
+          "correct": false
+        },
+        {
+          "text": "Ein ägyptischer Kanopenkrug",
+          "correct": false
+        }
+      ],
+      "difficulty": "medium",
+      "fun_fact": "Amphoren transportierten Wein und Öl — bemalte Stücke wie dieses waren zugleich Preise bei Wettkämpfen.",
+      "image_url": "/quizify/static/img/packs/picture-round/greek-amphora.webp"
+    },
+    {
+      "id": "pic-de-008",
+      "question": "Aus welchem Jahrhundert stammt dieses Bild?",
+      "answers": [
+        {
+          "text": "16. Jahrhundert",
+          "correct": true
+        },
+        {
+          "text": "18. Jahrhundert",
+          "correct": false
+        },
+        {
+          "text": "19. Jahrhundert",
+          "correct": false
+        }
+      ],
+      "difficulty": "medium",
+      "fun_fact": "Bruegels „Kornernte\" von 1565 gehört zu einer Folge von sechs Bildern über die Jahreszeiten.",
+      "image_url": "/quizify/static/img/packs/picture-round/harvesters.webp"
+    },
+    {
+      "id": "pic-de-009",
+      "question": "Was ist hier zu sehen?",
+      "answers": [
+        {
+          "text": "Eine europäische Ritterrüstung",
+          "correct": true
+        },
+        {
+          "text": "Eine japanische Samurai-Rüstung",
+          "correct": false
+        },
+        {
+          "text": "Eine römische Legionärsausrüstung",
+          "correct": false
+        }
+      ],
+      "difficulty": "easy",
+      "fun_fact": "Eine vollständige Plattenrüstung wog etwa 25 Kilo — verteilt auf den ganzen Körper, nicht auf den Schultern.",
+      "image_url": "/quizify/static/img/packs/picture-round/knight-armor.webp"
+    },
+    {
+      "id": "pic-de-010",
+      "question": "Dieses Porträt löste 1884 einen Skandal aus. Von wem ist es?",
+      "answers": [
+        {
+          "text": "John Singer Sargent",
+          "correct": true
+        },
+        {
+          "text": "James McNeill Whistler",
+          "correct": false
+        },
+        {
+          "text": "Gustav Klimt",
+          "correct": false
+        }
+      ],
+      "difficulty": "hard",
+      "fun_fact": "Der Skandal drehte sich um einen herabgerutschten Trägen — Sargent übermalte ihn später.",
+      "image_url": "/quizify/static/img/packs/picture-round/madame-x.webp"
+    },
+    {
+      "id": "pic-de-011",
+      "question": "Wo ist dieser Abdruck?",
+      "answers": [
+        {
+          "text": "Auf dem Mond",
+          "correct": true
+        },
+        {
+          "text": "In der Wüste Gobi",
+          "correct": false
+        },
+        {
+          "text": "Auf dem Mars",
+          "correct": false
+        }
+      ],
+      "difficulty": "easy",
+      "fun_fact": "Ohne Wind und Wasser bleibt der Abdruck dort vermutlich Millionen Jahre erhalten.",
+      "image_url": "/quizify/static/img/packs/picture-round/moon-footprint.webp"
+    },
+    {
+      "id": "pic-de-012",
+      "question": "Was ist dieses Blatt?",
+      "answers": [
+        {
+          "text": "Eine persische Buchmalerei",
+          "correct": true
+        },
+        {
+          "text": "Ein mittelalterliches Kirchenfenster",
+          "correct": false
+        },
+        {
+          "text": "Ein chinesisches Rollbild",
+          "correct": false
+        }
+      ],
+      "difficulty": "hard",
+      "fun_fact": "Die Seite stammt aus der „Sprache der Vögel\", einem persischen Gedicht über eine Vogelversammlung.",
+      "image_url": "/quizify/static/img/packs/picture-round/persian-birds-folio.webp"
+    },
+    {
+      "id": "pic-de-013",
+      "question": "Wer malte dieses Porträt?",
+      "answers": [
+        {
+          "text": "Rembrandt",
+          "correct": true
+        },
+        {
+          "text": "Peter Paul Rubens",
+          "correct": false
+        },
+        {
+          "text": "Anthonis van Dyck",
+          "correct": false
+        }
+      ],
+      "difficulty": "hard",
+      "fun_fact": "Rembrandt malte seine Frau Saskia mehrfach als Blumengöttin Flora.",
+      "image_url": "/quizify/static/img/packs/picture-round/rembrandt-flora.webp"
+    },
+    {
+      "id": "pic-de-014",
+      "question": "Wer ist hier zu sehen?",
+      "answers": [
+        {
+          "text": "Vincent van Gogh",
+          "correct": true
+        },
+        {
+          "text": "Paul Gauguin",
+          "correct": false
+        },
+        {
+          "text": "Edgar Degas",
+          "correct": false
+        }
+      ],
+      "difficulty": "easy",
+      "fun_fact": "Van Gogh malte über 35 Selbstporträts — meist, weil er sich kein Modell leisten konnte.",
+      "image_url": "/quizify/static/img/packs/picture-round/self-portrait-straw-hat.webp"
+    },
+    {
+      "id": "pic-de-015",
+      "question": "Welches Ereignis zeigt dieses Bild?",
+      "answers": [
+        {
+          "text": "George Washington überquert den Delaware",
+          "correct": true
+        },
+        {
+          "text": "Napoleon überquert die Beresina",
+          "correct": false
+        },
+        {
+          "text": "Cäsar überquert den Rubikon",
+          "correct": false
+        }
+      ],
+      "difficulty": "medium",
+      "fun_fact": "Gemalt wurde es 1851 in Düsseldorf — der Fluss im Hintergrund ist eigentlich der Rhein.",
+      "image_url": "/quizify/static/img/packs/picture-round/washington-crossing.webp"
+    },
+    {
+      "id": "pic-de-016",
+      "question": "Von wem stammt dieses Bild?",
+      "answers": [
+        {
+          "text": "Vincent van Gogh",
+          "correct": true
+        },
+        {
+          "text": "Claude Monet",
+          "correct": false
+        },
+        {
+          "text": "Paul Cézanne",
+          "correct": false
+        }
+      ],
+      "difficulty": "easy",
+      "fun_fact": "Van Gogh malte die Zypressen im Sommer 1889, während er in der Anstalt von Saint-Rémy lebte.",
+      "image_url": "/quizify/static/img/packs/picture-round/wheat-field-cypresses.webp"
+    },
+    {
+      "id": "pic-de-017",
+      "question": "Von welchem Maler stammt diese Szene?",
+      "answers": [
+        {
+          "text": "Johannes Vermeer",
+          "correct": true
+        },
+        {
+          "text": "Rembrandt",
+          "correct": false
+        },
+        {
+          "text": "Frans Hals",
+          "correct": false
+        }
+      ],
+      "difficulty": "medium",
+      "fun_fact": "Von Vermeer sind nur etwa 35 Werke bekannt — dieses war das erste, das in eine amerikanische Sammlung kam.",
+      "image_url": "/quizify/static/img/packs/picture-round/young-woman-water-pitcher.webp"
+    }
+  ]
+}
