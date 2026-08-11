@@ -3,6 +3,43 @@
 All notable changes to Quizify are documented here. This project follows
 [Semantic Versioning](https://semver.org/).
 
+## [1.7.0] — 2026-08-11
+
+The final 1.7.0 release — the culmination of release candidates RC1–RC8. See
+the GitHub release notes for the consolidated highlights; the RC entries below
+carry the detailed per-candidate history.
+
+Two of the three additions are about the host rather than the players. Hosting
+no longer means leaving the dashboard for the admin page: `custom:quizify-host-card`
+puts start / advance / end on a Lovelace view in two densities (#278). And the
+setup screen no longer has to be re-done every session — packs, difficulty,
+rounds, timer and lightning can be saved by name and re-applied with one tap,
+server-side so a preset saved on the tablet is there on the phone (#433).
+
+The third is content: **Bilderrätsel / Picture Round**, 17 image questions in
+German and English (#537), the first shipped pack to use the image support
+Quizify has carried since 1.3.0 — made possible by teaching `image_url` to
+point at pictures shipped inside the integration instead of a third party's
+server (#536). Every licence was verified on the object record; two candidates
+were dropped for failing that check and four for being unrecognisable at quiz
+size, which is why the pack holds 17 questions rather than the 20 the ticket
+sketched. The library now stands at **30 packs / 3,857 questions**.
+
+Four fixes came out of playing the game on a real install rather than
+re-reading the tests, which stayed green throughout. The picture round shipped
+**invisible** — the server had learned to accept local image paths but the
+dashboard, the player and the lightning round each kept their own
+`^https?://`-only check and discarded them (#540). A 5-round Easy game on the
+new pack then **ended after round 2**, because the auto Lightning Round claimed
+the last of the easy questions out of the main queue (#544). Home Assistant's
+loop watcher was flagging a blocking directory scan on the first player render
+(#542). And the compact host card could not end a game (#278), while a preset
+chip and the mode cards could disagree about what was selected (#433).
+
+### Internal
+
+- Test suite at **1,370 passing** (1,315 in 1.6.1).
+
 ## [1.7.0-RC8] — 2026-08-11
 
 Eighth release candidate for 1.7.0. Found by playing the picture round to the
