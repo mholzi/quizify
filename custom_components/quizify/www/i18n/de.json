@@ -431,7 +431,12 @@
     "audio": {
       "speaker": "Lautsprecher",
       "speakerHint": "Gilt für die Ansagen und die Soundeffekte."
-    }
+    },
+    "myPresets": "Meine Presets",
+    "savePreset": "Aktuelles speichern",
+    "savePresetPrompt": "Name für dieses Preset:",
+    "deletePreset": "Preset löschen",
+    "deletePresetConfirm": "Preset löschen:"
   },
   "featured": {
     "tag": "Neu",

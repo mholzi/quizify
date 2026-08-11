@@ -750,20 +750,47 @@
         { id: 'marathon',     rounds: 20, difficulty: 'hard',   timer: 45, lightning: true,  labelKey: 'setup.preset.marathonName' },
     ];
 
+    // #433: the host's own saved presets, loaded from the server so a preset
+    // saved on the tablet exists on the phone too.
+    var _customPresets = [];
+    var _presetsLoaded = false;
+
+    function _sameBundle(p) {
+        // Lightning is part of the bundle (#513) — flipping the toggle by
+        // hand makes the run "Eigene" again, same as picking own topics.
+        return p.rounds === selectedRounds && p.difficulty === selectedDifficulty
+            && p.timer === selectedTimer && p.lightning === selectedLightning;
+    }
+
+    function _samePacks(packs) {
+        var mine = selectedCategories || [];
+        var theirs = packs || [];
+        if (mine.length !== theirs.length) return false;
+        var a = mine.slice().sort(), b = theirs.slice().sort();
+        for (var i = 0; i < a.length; i++) { if (a[i] !== b[i]) return false; }
+        return true;
+    }
+
     function _matchingPreset() {
-        // A preset (Schnellrunde / Klassiker / Marathon) is a full bundle that
-        // implies mixed topics. Once the host picks specific topics it is no
-        // longer that preset — it's custom (Eigene). So a non-mixed category
-        // selection never matches a preset, which stops the ready screen from
-        // mislabelling a custom topic run as "Klassiker".
-        if (selectedCategory !== 'mixed') return null;
-        for (var i = 0; i < _PRESETS.length; i++) {
-            var p = _PRESETS[i];
-            // Lightning is part of the bundle (#513) — flipping the toggle by
-            // hand makes the run "Eigene" again, same as picking own topics.
-            if (p.rounds === selectedRounds && p.difficulty === selectedDifficulty
-                && p.timer === selectedTimer && p.lightning === selectedLightning) {
-                return { id: p.id, label: _t(p.labelKey) };
+        // A built-in preset (Schnellrunde / Klassiker / Marathon) is a full
+        // bundle that implies mixed topics. Once the host picks specific
+        // topics it is no longer that preset — it's custom (Eigene). So a
+        // non-mixed category selection never matches a BUILT-IN preset, which
+        // stops the ready screen from mislabelling a custom topic run as
+        // "Klassiker".
+        if (selectedCategory === 'mixed') {
+            for (var i = 0; i < _PRESETS.length; i++) {
+                var p = _PRESETS[i];
+                if (_sameBundle(p)) return { id: p.id, label: _t(p.labelKey) };
+            }
+        }
+        // #433: saved presets CAN express a pack choice, so they are matched
+        // on packs as well — checked after the built-ins so a saved preset
+        // that happens to equal Klassiker still reads as Klassiker.
+        for (var j = 0; j < _customPresets.length; j++) {
+            var c = _customPresets[j];
+            if (_sameBundle(c) && _samePacks(c.packs)) {
+                return { id: c.id, label: c.name, custom: true };
             }
         }
         return null;
@@ -777,6 +804,142 @@
             var active = match ? (id === match.id) : (id === 'eigene');
             card.classList.toggle('is-active', active);
         });
+    }
+
+    // ── Saved presets (#433) ──────────────────────────────────────────
+    // Server-stored, so a preset saved on the living-room tablet is there on
+    // the host's phone too. The four built-in cards below are untouched by
+    // all of this; this only adds a chip row above them.
+
+    function _presetFetch(opts) {
+        // Header rather than ?token= — #359 moved the token out of URLs, and
+        // new call sites should not put it back in.
+        var tok = QuizifyUtils.readAdminToken();
+        var init = opts || {};
+        init.headers = init.headers || {};
+        if (tok) init.headers['X-Quizify-Token'] = tok;
+        return fetch('/api/quizify/presets' + (init._q || ''), init);
+    }
+
+    function _loadCustomPresets() {
+        return _presetFetch({ method: 'GET' })
+            .then(function (r) { return r.ok ? r.json() : null; })
+            .then(function (data) {
+                _customPresets = (data && data.presets) || [];
+                _renderCustomPresets();
+            })
+            .catch(function () { /* no presets is a fine steady state */ });
+    }
+
+    function _renderCustomPresets() {
+        var wrap = document.getElementById('my-presets');
+        var row = document.getElementById('my-presets-row');
+        if (!wrap || !row) return;
+
+        row.innerHTML = '';
+        var match = _matchingPreset();
+
+        _customPresets.forEach(function (p) {
+            var chip = document.createElement('button');
+            chip.type = 'button';
+            chip.className = 'preset-chip'
+                + (match && match.custom && match.id === p.id ? ' is-active' : '');
+            chip.setAttribute('data-preset-id', p.id);
+
+            var label = document.createElement('span');
+            label.textContent = p.name;
+            chip.appendChild(label);
+
+            var del = document.createElement('button');
+            del.type = 'button';
+            del.className = 'preset-chip-remove';
+            del.textContent = '×';
+            del.setAttribute('aria-label', _t('setup.deletePreset') + ' ' + p.name);
+            del.addEventListener('click', function (ev) {
+                ev.stopPropagation();   // deleting must never also select
+                _deleteCustomPreset(p);
+            });
+            chip.appendChild(del);
+
+            chip.addEventListener('click', function () { _applyCustomPreset(p); });
+            row.appendChild(chip);
+        });
+
+        var add = document.createElement('button');
+        add.type = 'button';
+        add.className = 'preset-chip preset-chip--add';
+        add.textContent = '+ ' + _t('setup.savePreset');
+        add.addEventListener('click', _saveCurrentPreset);
+        row.appendChild(add);
+
+        // Hidden entirely while nothing is saved: the label plus a lone
+        // "save" chip would be furniture explaining nothing. The save chip
+        // still needs a home, so the row shows as soon as the host has
+        // anything — and before that it lives in the Eigene panel's flow.
+        wrap.hidden = _customPresets.length === 0;
+    }
+
+    function _applyCustomPreset(p) {
+        _applyPreset(p.rounds, p.difficulty, p.timer, p.lightning);
+        _applyPacks(p.packs || []);
+        markActivePreset();
+        _renderCustomPresets();
+    }
+
+    function _applyPacks(packs) {
+        var container = document.getElementById('category-chips');
+        if (!container) return;
+        var wanted = packs.slice();
+        container.querySelectorAll('.chip').forEach(function (c) {
+            var v = c.dataset.value;
+            c.classList.toggle('active',
+                wanted.length ? wanted.indexOf(v) !== -1 : v === 'mixed');
+        });
+        selectedCategories = wanted;
+        selectedCategory = wanted.length === 0 ? 'mixed'
+            : (wanted.length === 1 ? wanted[0] : 'multi');
+        if (typeof updateCategorySummary === 'function') updateCategorySummary();
+    }
+
+    function _saveCurrentPreset() {
+        var name = window.prompt(_t('setup.savePresetPrompt'));
+        if (name === null) return;
+        name = name.trim();
+        if (!name) return;
+
+        _presetFetch({
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify({
+                name: name,
+                rounds: selectedRounds,
+                difficulty: selectedDifficulty,
+                timer: selectedTimer,
+                lightning: selectedLightning,
+                category: selectedCategory,
+                packs: selectedCategories || []
+            })
+        })
+            .then(function (r) {
+                return r.json().then(function (body) {
+                    // The server's message is written for a person ("at most
+                    // 20 presets can be saved"), so show it rather than a
+                    // generic failure the host has to guess about.
+                    if (!r.ok) throw new Error(body.error || 'save failed');
+                    return body;
+                });
+            })
+            .then(_loadCustomPresets)
+            .catch(function (err) { window.alert(err.message); });
+    }
+
+    function _deleteCustomPreset(p) {
+        if (!window.confirm(_t('setup.deletePresetConfirm') + ' „' + p.name + '"')) {
+            return;
+        }
+        _presetFetch({ method: 'DELETE', _q: '?id=' + encodeURIComponent(p.id) })
+            .then(_loadCustomPresets)
+            .catch(function () { /* stays on screen; next load reconciles */ });
     }
 
     // Apply preset: write to the active-chip state AND to the typed vars
@@ -1200,6 +1363,13 @@
         currentPhase = msg.phase;
         if (msg.admin_session_token) {
             QuizifyUtils.writeAdminToken(msg.admin_session_token);
+            // #433: load the saved presets once the token exists. Doing it on
+            // page load instead would race the token's arrival and 401 —
+            // exactly the failure #501 chased for the entity dropdowns.
+            if (!_presetsLoaded) {
+                _presetsLoaded = true;
+                _loadCustomPresets();
+            }
         }
         // The admin-connect frame now carries the TTS-engine + media-player
         // lists directly (server-side, over this already-authenticated socket),

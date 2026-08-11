@@ -29,6 +29,7 @@ from .pack_submission import (
     submit_config_view,
     submit_pack_view,
 )
+from .preset_store import PresetStore, PresetValidationError
 from .rate_limit import SlidingWindowLimiter
 from .serializers import (
     build_game_status_response,
@@ -909,6 +910,62 @@ async def analytics_data_view(request: web.Request) -> web.Response:
     return web.json_response(ctx.analytics.compute_metrics(period))
 
 
+_PRESET_STORE_KEY = "quizify_preset_store"
+
+
+def _preset_store(request: web.Request) -> PresetStore:
+    """Return the per-app preset store, creating it once.
+
+    Cached on the aiohttp application rather than rebuilt per request: the
+    store owns an ``asyncio.Lock`` that serialises read-modify-write, and a
+    fresh instance per request would lock nothing. Stashing it here (instead
+    of on ``AppContext``) keeps the HA and standalone entry points untouched.
+    """
+    store = request.app.get(_PRESET_STORE_KEY)
+    if store is None:
+        store = PresetStore(_get_ctx(request).runtime)
+        request.app[_PRESET_STORE_KEY] = store
+    return store
+
+
+async def presets_view(request: web.Request) -> web.Response:
+    """List saved game presets (#433)."""
+    if not _is_admin_authenticated(request):
+        return _unauthorized()
+    return web.json_response({"presets": await _preset_store(request).list()})
+
+
+async def preset_save_view(request: web.Request) -> web.Response:
+    """Create or update a saved preset (#433)."""
+    if not _is_admin_authenticated(request):
+        return _unauthorized()
+    try:
+        payload = await request.json()
+    except (json.JSONDecodeError, ValueError):
+        return web.json_response({"error": "invalid JSON"}, status=400)
+
+    try:
+        record = await _preset_store(request).save(payload)
+    except PresetValidationError as err:
+        # The message is authored for a caller, not a log line — the admin UI
+        # shows it verbatim, so "at most 20 presets can be saved" beats a bare
+        # 400 the host has to guess about.
+        return web.json_response({"error": str(err)}, status=400)
+    return web.json_response({"preset": record})
+
+
+async def preset_delete_view(request: web.Request) -> web.Response:
+    """Delete a saved preset by id (#433)."""
+    if not _is_admin_authenticated(request):
+        return _unauthorized()
+    preset_id = request.query.get("id", "")
+    if not preset_id:
+        return web.json_response({"error": "id is required"}, status=400)
+    if not await _preset_store(request).delete(preset_id):
+        return web.json_response({"error": "unknown preset id"}, status=404)
+    return web.json_response({"deleted": preset_id})
+
+
 async def question_stats_view(request: web.Request) -> web.Response:
     """Return per-question difficulty stats.
 
@@ -1239,6 +1296,12 @@ ROUTES: list[tuple[str, str, _RouteHandler]] = [
     ("GET", "/api/quizify/analytics/data", analytics_data_view),
     ("GET", "/api/quizify/all-time", all_time_leaderboard_view),
     ("GET", "/api/quizify/question-stats", question_stats_view),
+    # Saved game presets (#433) — all three gated on the admin token: they do
+    # not expose secrets, but they change what the next game will be, and
+    # these routes carry no HA auth.
+    ("GET", "/api/quizify/presets", presets_view),
+    ("POST", "/api/quizify/presets", preset_save_view),
+    ("DELETE", "/api/quizify/presets", preset_delete_view),
     ("GET", "/api/quizify/packs", pack_versions_view),
     ("GET", "/api/quizify/packs/updates", pack_update_check_view),
     ("POST", "/api/quizify/flag-question", flag_question_view),

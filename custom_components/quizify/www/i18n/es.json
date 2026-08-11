@@ -431,7 +431,12 @@
     "audio": {
       "speaker": "Altavoz",
       "speakerHint": "Se usa para la narración y los efectos de sonido."
-    }
+    },
+    "myPresets": "Mis ajustes",
+    "savePreset": "Guardar actual",
+    "savePresetPrompt": "Nombre para este ajuste:",
+    "deletePreset": "Eliminar ajuste",
+    "deletePresetConfirm": "¿Eliminar el ajuste:"
   },
   "featured": {
     "tag": "Nuevo",

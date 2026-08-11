@@ -126,6 +126,15 @@
 
                 <h2 class="setup-detail-title" data-i18n="setup.pickMode">Pick a mode</h2>
 
+                <!-- #433: saved presets. Hidden entirely until the host has
+                     saved one — a labelled empty row is furniture that
+                     explains nothing. Populated by admin.js from
+                     GET /api/quizify/presets. -->
+                <div class="my-presets" id="my-presets" hidden>
+                    <p class="my-presets-label" data-i18n="setup.myPresets">My presets</p>
+                    <div class="my-presets-row" id="my-presets-row"></div>
+                </div>
+
                 <div class="setup-presets" id="setup-presets" role="radiogroup"
                      data-i18n-aria-label="setup.pickMode" aria-label="Pick a mode">
                     <button type="button" class="preset-card" data-preset="schnellrunde"
