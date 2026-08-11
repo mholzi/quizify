@@ -88,6 +88,7 @@ async def async_setup_entry(hass: HomeAssistant, entry: ConfigEntry) -> bool:
         read_manifest_version,
     )
     from .server.views import (  # noqa: PLC0415
+        prime_ui_languages,
         refresh_live_version,
         register_routes,
     )
@@ -136,6 +137,13 @@ async def async_setup_entry(hass: HomeAssistant, entry: ConfigEntry) -> bool:
     # result in explicitly (instead of relying on AppContext's synchronous
     # default_factory) keeps the loop clean.
     version = await hass.async_add_executor_job(read_manifest_version)
+
+    # Same treatment for the UI-language chips (#542): the set is derived from
+    # the shipped www/i18n/*.json bundles, which means a directory scan. It is
+    # lru_cached, so leaving it lazy cost exactly one blocking scandir per HA
+    # start — on the first player render, where the loop-watcher flagged it.
+    # Priming here moves that one scan into an executor thread.
+    await hass.async_add_executor_job(prime_ui_languages)
 
     ctx = AppContext(
         runtime=runtime,
