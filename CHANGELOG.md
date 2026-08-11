@@ -3,7 +3,10 @@
 All notable changes to Quizify are documented here. This project follows
 [Semantic Versioning](https://semver.org/).
 
-## [Unreleased]
+## [1.7.0-RC6] — 2026-08-11
+
+Sixth release candidate for 1.7.0. One fix, and it is the one that makes RC5's
+headline feature actually visible.
 
 ### Fixed
 
