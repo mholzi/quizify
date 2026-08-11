@@ -3,6 +3,26 @@
 All notable changes to Quizify are documented here. This project follows
 [Semantic Versioning](https://semver.org/).
 
+## [1.7.0-RC8] — 2026-08-11
+
+Eighth release candidate for 1.7.0. Found by playing the picture round to the
+end instead of only checking that its first question rendered.
+
+### Fixed
+
+- **The auto Lightning Round could strand the main game (#544).** A 5-round
+  Easy game on the picture pack ended after round 2. The pack ships 7 easy
+  questions of 17; two rounds took two, and the lightning detour claimed the
+  remaining five out of the main queue — leaving nothing for rounds 3–5. With
+  a fixed difficulty there is no fallback rung, so the game simply ended, with
+  nothing in the UI to explain it. The "With kids" preset (5 rounds, Easy) hit
+  the same wall.
+
+  Lightning now leaves the main game the questions it still owes
+  (`total_rounds - round`) and skips itself when nothing is spare — a missing
+  bonus round is better than a game that stops three rounds early. Questions
+  the main queue is not holding stay free, so a full-size pack is unaffected.
+
 ## [1.7.0-RC7] — 2026-08-11
 
 Seventh release candidate for 1.7.0. Housekeeping, found while verifying RC6 on
