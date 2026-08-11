@@ -84,7 +84,13 @@
         // signal is now sufficient — but local state is authoritative.
         var adminControls = document.getElementById('end-admin-controls');
         var playerMessage = document.getElementById('end-player-message');
-        var amAdmin = !!state.isAdmin || !!(currentPlayer && currentPlayer.is_admin);
+        // #546: the second signal used to read a free ``currentPlayer``, which
+        // only exists as a local inside player-reveal.js / player-lobby.js —
+        // each module is its own IIFE, so this threw a ReferenceError and took
+        // the rest of this function with it, leaving BOTH blocks hidden. The
+        // viewer's own row is already marked ``is_current`` above; use that.
+        var me = leaderboard.find(function (p) { return p.is_current; });
+        var amAdmin = !!state.isAdmin || !!(me && me.is_admin);
 
         if (amAdmin) {
             if (adminControls) adminControls.classList.remove('hidden');
