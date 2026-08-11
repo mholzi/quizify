@@ -3,6 +3,31 @@
 All notable changes to Quizify are documented here. This project follows
 [Semantic Versioning](https://semver.org/).
 
+## [1.7.0-RC5] — 2026-08-11
+
+Fifth release candidate for 1.7.0. Content, not code.
+
+### Added
+
+- **A picture round (#537).** "Bilderrätsel" and "Picture Round", 17 image
+  questions in German and English behind the same pictures — paintings and
+  objects from The Met's open-access collection (CC0) and two NASA photographs
+  (public domain). Image questions have been supported since v1.3.0 and no
+  shipped pack had ever used one; this gives the feature content.
+
+  Every image's licence was verified on the object record rather than assumed
+  from the collection — two candidates were dropped for failing that check —
+  and `credits.md` next to the images records the source and how each was
+  verified. Attribution is not required by CC0 or public domain; the file
+  exists so the provenance stays checkable.
+
+- **`image_url` may point at images shipped with the integration (#536).**
+  Paths under `/quizify/static/` are accepted alongside absolute `http(s)`
+  URLs, so a pack can carry its own pictures instead of depending on a third
+  party's server. Traversal and every other form stay rejected.
+
+The library now stands at **30 packs / 3,857 questions**.
+
 ## [1.7.0-RC4] — 2026-08-11
 
 Fourth release candidate for 1.7.0. Two display fixes on RC3's saved presets,
