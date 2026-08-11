@@ -1499,9 +1499,10 @@
         }
 
         // Issue #25 + #183 (Variant 1 split layout): render the optional
-        // question image as a side-by-side focal point. Only absolute
-        // http(s) URLs are accepted (the server already sanitises; this is
-        // defence-in-depth). Absent/invalid → the image pane is hidden and
+        // question image as a side-by-side focal point. Which URLs count as
+        // safe is decided in one place, QuizifyUtils.safeImageUrl (#540) —
+        // absolute http(s), or the integration's own static mount (#536).
+        // Absent/invalid → the image pane is hidden and
         // .has-image is removed, so the column collapses cleanly to the
         // original full-width text-only layout. If the image fails to load
         // we fall back to the same text-only layout (graceful fallback).
@@ -1512,7 +1513,8 @@
         function renderQuestionImage(url) {
             var img = els.questionImage;
             if (!img) return;
-            var safe = (typeof url === 'string' && /^https?:\/\//i.test(url)) ? url : '';
+            var safe = (window.QuizifyUtils && window.QuizifyUtils.safeImageUrl)
+                ? window.QuizifyUtils.safeImageUrl(url) : '';
             img.onerror = function() {
                 // Image failed → collapse to text-only, no broken-image icon.
                 img.removeAttribute('src');
