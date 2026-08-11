@@ -25,20 +25,22 @@ were dropped for failing that check and four for being unrecognisable at quiz
 size, which is why the pack holds 17 questions rather than the 20 the ticket
 sketched. The library now stands at **30 packs / 3,857 questions**.
 
-Four fixes came out of playing the game on a real install rather than
+Every fix below came out of running the game on a real install rather than
 re-reading the tests, which stayed green throughout. The picture round shipped
 **invisible** — the server had learned to accept local image paths but the
 dashboard, the player and the lightning round each kept their own
 `^https?://`-only check and discarded them (#540). A 5-round Easy game on the
 new pack then **ended after round 2**, because the auto Lightning Round claimed
-the last of the easy questions out of the main queue (#544). Home Assistant's
-loop watcher was flagging a blocking directory scan on the first player render
-(#542). And the compact host card could not end a game (#278), while a preset
-chip and the mode cards could disagree about what was selected (#433).
+the last of the easy questions out of the main queue (#544). The end screen was
+**throwing** on its host-button gate, which left both that button and the
+"wait for the host" note hidden (#546). Home Assistant's loop watcher was
+flagging a blocking directory scan on the first player render (#542). And the
+compact host card could not end a game (#278), while a preset chip and the mode
+cards could disagree about what was selected (#433).
 
 ### Internal
 
-- Test suite at **1,370 passing** (1,315 in 1.6.1).
+- Test suite at **1,376 passing** (1,315 in 1.6.1).
 
 ## [1.7.0-RC8] — 2026-08-11
 
