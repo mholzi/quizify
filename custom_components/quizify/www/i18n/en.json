@@ -431,7 +431,12 @@
     "audio": {
       "speaker": "Speaker",
       "speakerHint": "Used for the narration and the sound effects."
-    }
+    },
+    "myPresets": "My presets",
+    "savePreset": "Save current",
+    "savePresetPrompt": "Name for this preset:",
+    "deletePreset": "Delete preset",
+    "deletePresetConfirm": "Delete preset:"
   },
   "featured": {
     "tag": "New",

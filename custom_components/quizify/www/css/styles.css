@@ -6985,6 +6985,82 @@ body.is-admin .reaction-bar {
     color: var(--color-text-light);
     margin-top: 10px;
 }
+
+/* ── Saved presets (#433) ─────────────────────────────────────────────
+   Variant A of the design shotgun: a horizontally scrollable chip row
+   ABOVE the four built-in mode cards, which stay exactly as they are.
+   The last visible chip is deliberately allowed to clip at the viewport
+   edge — that is the scroll affordance; a row that fits tidily reads as
+   "that's all there is". No arrows, no dots.                          */
+
+.my-presets {
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+    margin-bottom: 14px;
+}
+.my-presets-label {
+    font-family: var(--font-mono);
+    font-size: 0.68rem;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    color: var(--color-text-muted);
+    margin: 0;
+}
+.my-presets-row {
+    display: flex;
+    gap: 8px;
+    overflow-x: auto;
+    padding: 2px 0 4px;
+    -webkit-overflow-scrolling: touch;
+    scrollbar-width: none;
+}
+.my-presets-row::-webkit-scrollbar { display: none; }
+
+.preset-chip {
+    flex: 0 0 auto;
+    display: flex;
+    align-items: center;
+    gap: 6px;
+    /* 44px floor: these sit next to a delete affordance, and a miss there
+       is destructive rather than merely annoying. */
+    min-height: 44px;
+    padding: 10px 14px;
+    border: 1px solid var(--color-border-light);
+    border-radius: 999px;
+    background: var(--color-bg-card-alt);
+    color: var(--color-text-primary);
+    font-family: var(--font-body);
+    font-size: 0.9rem;
+    white-space: nowrap;
+    cursor: pointer;
+}
+.preset-chip.is-active {
+    background: var(--color-accent-primary);
+    border-color: var(--color-accent-primary);
+    color: var(--color-text-on-accent, #43201B);
+    font-weight: 600;
+}
+.preset-chip--add {
+    border-style: dashed;
+    color: var(--color-text-muted);
+}
+.preset-chip-remove {
+    /* Its own hit area, or deleting becomes a lottery next to selecting. */
+    min-width: 32px;
+    min-height: 32px;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    margin: -6px -8px -6px 0;
+    border: 0;
+    background: none;
+    color: inherit;
+    opacity: 0.55;
+    font-size: 0.85rem;
+    cursor: pointer;
+}
+.preset-chip-remove:hover { opacity: 1; }
 /* ==========================================
    Responsive
    ========================================== */
