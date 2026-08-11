@@ -3,6 +3,24 @@
 All notable changes to Quizify are documented here. This project follows
 [Semantic Versioning](https://semver.org/).
 
+## [1.7.0-RC7] — 2026-08-11
+
+Seventh release candidate for 1.7.0. Housekeeping, found while verifying RC6 on
+a real install.
+
+### Fixed
+
+- **Blocking `scandir` on the event loop (#542).** The player's UI-language
+  chips derive their set from the shipped `www/i18n/*.json` bundles, and that
+  directory scan ran inside the loop on the first player render after every
+  start — enough for Home Assistant's loop watcher to flag the integration and
+  ask for a bug report.
+
+  The set is `lru_cache`d, so this cost one blocking scan per HA start rather
+  than one per request. Setup now primes the cache in an executor, the same
+  treatment #343 gave this file's manifest and HTML reads; the language chips
+  arrived later (#492) and had missed the pattern.
+
 ## [1.7.0-RC6] — 2026-08-11
 
 Sixth release candidate for 1.7.0. One fix, and it is the one that makes RC5's
