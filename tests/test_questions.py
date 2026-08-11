@@ -68,14 +68,21 @@ class TestLoadCategory:
         # Themed packs run ~150 (148-150 after review deletions); the standalone
         # World Cup packs are a deliberate 100. Floor catches gross truncation.
         # Community packs are user content with no size invariant — skip them.
-        # Estimate packs (#275) are a deliberately modest 10-20 questions —
-        # exempt them from the themed-pack floor (they have their own floor).
-        estimate_packs = {"schaetzfragen-de", "estimation-en"}
+        # Some packs are deliberately small because their questions cannot be
+        # mass-produced: an estimate question (#275) needs a number somebody
+        # can check, and a picture question (#537) needs an image whose licence
+        # has been verified one file at a time. Both get a 10-20 window of
+        # their own instead of the themed-pack floor — the floor still catches
+        # gross truncation, just at a size that fits the content.
+        small_packs = {
+            "schaetzfragen-de", "estimation-en",       # estimate (#275)
+            "bilderraetsel-de", "picture-round-en",    # picture round (#537)
+        }
         for cat in bank.get_categories():
             if cat.startswith("community-"):
                 continue
             count = bank.get_question_count(cat)
-            if cat in estimate_packs:
+            if cat in small_packs:
                 assert count >= 10, f"{cat} has only {count} questions (floor: 10)"
                 assert count <= 20, f"{cat} has {count} questions (ceiling: 20)"
                 continue
