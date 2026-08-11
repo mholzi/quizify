@@ -200,6 +200,32 @@ def test_presets_load_only_once_a_token_exists() -> None:
     assert "admin_session_token" in handler
 
 
+def test_chips_repaint_whenever_the_cards_do() -> None:
+    """Found in the browser, not by the suite: a chip stayed lit after the
+    host changed a setting, because the chips were only drawn on
+    load/save/apply while the cards were repainted on every change."""
+    text = ADMIN_JS.read_text(encoding="utf-8")
+    body = text.split("function markActivePreset()")[1].split("\n    function ")[0]
+    assert "_renderCustomPresets()" in body, (
+        "the chips answer the same question as the cards and must be "
+        "repainted from the same place"
+    )
+
+
+def test_a_matching_saved_preset_lights_the_custom_card() -> None:
+    """Otherwise the whole card row shows nothing selected.
+
+    A saved preset has no card of its own, so `match.id` matches no card and
+    the "Eigene" fallback is skipped because a match exists — leaving every
+    card unhighlighted, which reads as "no mode chosen".
+    """
+    text = ADMIN_JS.read_text(encoding="utf-8")
+    body = text.split("function markActivePreset()")[1].split("\n    function ")[0]
+    assert "!match.custom" in body, (
+        "a saved-preset match must fall through to the Eigene card"
+    )
+
+
 def test_row_is_hidden_until_something_is_saved() -> None:
     assert 'id="my-presets"' in ADMIN_HTML.read_text(encoding="utf-8")
     text = ADMIN_JS.read_text(encoding="utf-8")
