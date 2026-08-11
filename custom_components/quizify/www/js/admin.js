@@ -800,10 +800,19 @@
         var match = _matchingPreset();
         document.querySelectorAll('.preset-card[data-preset]').forEach(function (card) {
             var id = card.getAttribute('data-preset');
-            // "Eigene" is active only when no real preset matches.
-            var active = match ? (id === match.id) : (id === 'eigene');
+            // "Eigene" is active when no built-in preset matches — including
+            // when a SAVED preset does (#433). A saved preset has no card of
+            // its own, so without this branch the whole card row ends up with
+            // nothing highlighted, which reads as "no mode selected".
+            var active = (match && !match.custom)
+                ? (id === match.id)
+                : (id === 'eigene');
             card.classList.toggle('is-active', active);
         });
+        // The chips answer the same question as the cards, so they have to be
+        // repainted from the same place. Rendering them only on load/save/apply
+        // left a chip lit after the host changed a setting afterwards.
+        _renderCustomPresets();
     }
 
     // ── Saved presets (#433) ──────────────────────────────────────────
@@ -882,8 +891,8 @@
     function _applyCustomPreset(p) {
         _applyPreset(p.rounds, p.difficulty, p.timer, p.lightning);
         _applyPacks(p.packs || []);
+        // markActivePreset repaints the chips too, so no separate call here.
         markActivePreset();
-        _renderCustomPresets();
     }
 
     function _applyPacks(packs) {
