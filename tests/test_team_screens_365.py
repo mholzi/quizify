@@ -31,6 +31,7 @@ JS_DIR = REPO / "custom_components" / "quizify" / "www" / "js"
 TEAM_JS = JS_DIR / "player-team.js"
 GAME_JS = JS_DIR / "player-game.js"
 BUNDLE_JS = JS_DIR / "player.bundle.js"
+LIGHTNING_JS = JS_DIR / "player-lightning.js"
 
 _HARNESS = r"""
 const fs = require('fs');
@@ -207,6 +208,79 @@ process.stdout.write(JSON.stringify(out));
 """
 
 
+_RECAP_HARNESS = r"""
+const fs = require('fs');
+
+function makeEl(id) {
+  const e = {
+    id, textContent: '', innerHTML: '', value: '', disabled: false,
+    dataset: {}, style: {}, children: [], _attrs: {}, _classes: new Set(),
+    _handlers: {},
+    classList: {
+      add(c) { e._classes.add(c); }, remove(c) { e._classes.delete(c); },
+      contains(c) { return e._classes.has(c); },
+      toggle(c, on) { on ? e._classes.add(c) : e._classes.delete(c); },
+    },
+    addEventListener() {}, appendChild() {}, remove() {},
+    setAttribute(k, v) { e._attrs[k] = v; },
+    getAttribute(k) { return e._attrs[k] === undefined ? null : e._attrs[k]; },
+    querySelector() { return null; }, querySelectorAll() { return []; },
+    focus() {}, closest() { return null; },
+  };
+  return e;
+}
+const nodes = {};
+function get(id) { if (!nodes[id]) nodes[id] = makeEl(id); return nodes[id]; }
+
+let medalRows = null;
+global.document = {
+  getElementById: get,
+  createElement: (t) => makeEl('created-' + t),
+  querySelector: () => null,
+  querySelectorAll: () => [],
+  addEventListener() {},
+  body: get('body'),
+};
+global.window = {
+  addEventListener() {},
+  QuizifyPlayerUtils: {
+    state: { playerName: 'Anna', isAdmin: false },
+    escapeHtml: (s) => String(s == null ? '' : s),
+    showView() {},
+    renderMedalStandings(el, rows) { medalRows = rows; },
+    setupCollapsibles() {},
+  },
+  QuizifyI18n: { t: (k) => k },
+};
+global.setTimeout = (f) => f && 0;
+global.clearTimeout = () => {};
+
+eval(fs.readFileSync(process.argv[2], 'utf8'));   // player-lightning.js
+eval(fs.readFileSync(process.argv[3], 'utf8'));   // player-team.js
+
+const team = global.window.QuizifyPlayerTeam;
+const lightning = global.window.QuizifyPlayerLightning;
+team.handleTeamJoined({ team: { team_id: 't1', name: 'Sofa', color: 'sage', members: ['Anna', 'Jan'] } });
+
+const out = { threw: null };
+try {
+  lightning.handleLightningRecap({ recap: {
+    leaderboard: [{ rank: 1, name: 'Sofa', score: 10 }, { rank: 2, name: 'Mira', score: 0 }],
+    questions: [{
+      question_id: 'q1', question_text: 'Why does a ball bounce?',
+      correct_answer: 'Compressed air', results: { Sofa: 'correct', Mira: 'wrong' }, chosen: {},
+    }],
+  }});
+  const html = get('lightning-recap-grid').innerHTML;
+  out.badge = /lr-recap-badge">(.)</.exec(html)[1];
+  out.isYouRow = (medalRows || []).filter((r) => r.isYou).map((r) => r.name)[0] || null;
+} catch (e) {
+  out.threw = String((e && e.stack) || e);
+}
+process.stdout.write(JSON.stringify(out));
+"""
+
+
 def _require_node() -> None:
     if shutil.which("node") is not None:
         return
@@ -339,3 +413,27 @@ def test_the_shipped_bundle_carries_the_team_module() -> None:
 
     assert "QuizifyPlayerTeam" in bundle
     assert "player-team.js" in bundle
+
+
+def test_the_lightning_recap_reads_the_teams_row(tmp_path: Path) -> None:
+    """The recap is keyed by whoever scored — the team, in team mode (#552).
+
+    Found by playing it: the round scored "Sofa", the client looked itself up
+    as "Anna", found nothing, and drew every question as a miss while the
+    standings above it showed the team's 10 points.
+    """
+    _require_node()
+    harness = tmp_path / "recap-harness.js"
+    harness.write_text(_RECAP_HARNESS, encoding="utf-8")
+    result = subprocess.run(
+        ["node", str(harness), str(LIGHTNING_JS), str(TEAM_JS)],
+        capture_output=True,
+        text=True,
+        check=False,
+    )
+    assert result.returncode == 0, f"node harness failed:\n{result.stderr}"
+    out = json.loads(result.stdout)
+
+    assert out["threw"] is None, out["threw"]
+    assert out["badge"] == "✓", "the team answered this one correctly"
+    assert out["isYouRow"] == "Sofa", "the highlighted row is the team's"

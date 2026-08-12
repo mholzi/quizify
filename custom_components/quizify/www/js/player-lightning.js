@@ -220,6 +220,19 @@
         if (playerMsg) playerMsg.classList.toggle('hidden', !!state.isAdmin);
     }
 
+    /**
+     * Whose row is "mine" in the recap (#552).
+     *
+     * In team mode the round scored the TEAM, so the recap is keyed by team
+     * name — looking myself up by player name finds nothing and every
+     * question silently renders as a miss, no matter how the team did.
+     */
+    function myEntrant() {
+        var team = window.QuizifyPlayerTeam;
+        var mine = team && team.myTeam();
+        return (mine && mine.name) || state.playerName;
+    }
+
     function renderRecap(recap) {
         var lb = recap.leaderboard || [];
         var lbEl = document.getElementById('lightning-recap-leaderboard');
@@ -231,7 +244,7 @@
                     rank: p.rank,
                     name: p.name,
                     score: p.score,
-                    isYou: p.name === state.playerName
+                    isYou: p.name === myEntrant()
                 };
             });
             pu.renderMedalStandings(lbEl, rows, { youLabel: youLabel });
@@ -242,7 +255,7 @@
         // when the player answered wrong, also shows their own wrong pick.
         var grid = document.getElementById('lightning-recap-grid');
         if (grid) {
-            var me = state.playerName;
+            var me = myEntrant();
             var questions = recap.questions || [];
             grid.innerHTML = questions.map(function (q, qi) {
                 var result = (q.results || {})[me] || 'miss';
