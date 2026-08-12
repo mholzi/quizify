@@ -44,6 +44,7 @@ from .scoring import (
     calculate_podium,
 )
 from .scoring_engine import ScoringEngine
+from .team import TeamRegistry
 from .timer import QuestionTimer
 from .types import TIME_LIMITS, Difficulty
 
@@ -131,6 +132,9 @@ class QuizifyGameState:
 
         # Sub-managers
         self._player_registry = PlayerRegistry()
+        # Teams (#365). Empty unless somebody forms one in the lobby — the mode
+        # is opt-in per game and costs nothing while unused.
+        self._team_registry = TeamRegistry()
         self._question_bank = QuestionBank()
         self._powerup_manager = PowerUpManager()
         # Stateless scoring engine — owns the pure points/breakdown/wager/
@@ -339,6 +343,61 @@ class QuizifyGameState:
         return self._question_bank
 
     # ------------------------------------------------------------------
+    # Teams (#365)
+    # ------------------------------------------------------------------
+
+    @property
+    def team_registry(self) -> TeamRegistry:
+        """The game's teams. Empty unless somebody formed one in the lobby."""
+        return self._team_registry
+
+    @property
+    def team_mode(self) -> bool:
+        """True once at least one team exists.
+
+        Deliberately derived rather than stored: there is no separate switch to
+        forget to clear, and a game where everybody left their team falls back
+        to ordinary play on its own.
+        """
+        return self._team_registry.is_active
+
+    def create_team(self, name: str, founder: str) -> dict | None:
+        """Open a team in the lobby. Returns the team's wire shape.
+
+        Lobby only — teams are fixed from the start of the game
+        (Markus, 2026-08-12), so a request arriving mid-round is refused here
+        rather than handled halfway.
+        """
+        if self.phase != GamePhase.LOBBY:
+            return None
+        if self._player_registry.get_player(founder) is None:
+            return None
+        team = self._team_registry.create(name, founder)
+        return team.to_dict()
+
+    def join_team(self, team_id: str, player_name: str) -> dict | None:
+        """Move a player into an existing team (lobby only)."""
+        if self.phase != GamePhase.LOBBY:
+            return None
+        if self._player_registry.get_player(player_name) is None:
+            return None
+        team = self._team_registry.join(team_id, player_name)
+        return team.to_dict() if team else None
+
+    def leave_team(self, player_name: str) -> bool:
+        """Leave the current team (lobby only). Empty teams dissolve."""
+        if self.phase != GamePhase.LOBBY:
+            return False
+        if self._team_registry.get_by_member(player_name) is None:
+            return False
+        self._team_registry.leave(player_name)
+        return True
+
+    def get_team_of(self, player_name: str) -> dict | None:
+        team = self._team_registry.get_by_member(player_name)
+        return team.to_dict() if team else None
+
+    # ------------------------------------------------------------------
     # Player registry delegation
     # ------------------------------------------------------------------
 
@@ -405,6 +464,9 @@ class QuizifyGameState:
     def remove_player(self, name: str) -> None:
         """Remove a player from the game."""
         self._player_registry.remove_player(name)
+        # A player who leaves also leaves their team; a team whose last member
+        # goes is dissolved rather than left standing empty (#365).
+        self._team_registry.remove_player(name)
         self._phase_controller.drop_timer(name)
         self._notify_state_callbacks()
 
@@ -417,6 +479,7 @@ class QuizifyGameState:
         explicit "wipe everyone" action.
         """
         self._player_registry.reset()
+        self._team_registry.reset()
         self._phase_controller.clear_timers()
         self._notify_state_callbacks()
 
