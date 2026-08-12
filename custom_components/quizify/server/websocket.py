@@ -23,6 +23,7 @@ from custom_components.quizify.const import (
     ERR_NO_QUESTIONS_REMAINING,
     ERR_NOT_IN_GAME,
     ERR_ROUND_EXPIRED,
+    ERR_TEAM_CLOSED,
     LOBBY_DISCONNECT_GRACE_PERIOD,
 )
 from custom_components.quizify.game.highlights import compute_superlatives
@@ -994,7 +995,7 @@ class QuizifyWebSocketHandler:
         if team is None:
             # Teams are fixed once the game starts — a latecomer plays alone.
             await self._conn.send_error(
-                ws, ERR_INVALID_ACTION, "Teams are set for this game"
+                ws, ERR_TEAM_CLOSED, "Teams are set for this game"
             )
             return
 
@@ -1015,7 +1016,7 @@ class QuizifyWebSocketHandler:
             # Either the game has started or the team dissolved while the
             # player was tapping it — the same answer either way: it is gone.
             await self._conn.send_error(
-                ws, ERR_INVALID_ACTION, "That team is no longer open"
+                ws, ERR_TEAM_CLOSED, "That team is no longer open"
             )
             return
 
@@ -1033,7 +1034,7 @@ class QuizifyWebSocketHandler:
 
         if not game_state.leave_team(player.name):
             await self._conn.send_error(
-                ws, ERR_INVALID_ACTION, "Teams are set for this game"
+                ws, ERR_TEAM_CLOSED, "Teams are set for this game"
             )
             return
 

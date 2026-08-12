@@ -2056,6 +2056,89 @@ button, .btn {
     color: var(--color-text-white);
 }
 
+
+/* ============================================
+   TEAMS (#365) — the quiet question screen
+   ============================================
+   The standing team answer shows as small member dots on the answer it sits
+   on. No banner: the variant with one was rejected because the screen is
+   already busy with the question, the timer and the power-up. The known cost
+   is accepted — someone mid-tap notices another member's change only if they
+   look. The chip above the answers says which entry in the ranking is theirs,
+   and names whoever set the answer that currently stands. */
+
+.qz-teamChip {
+    display: flex;
+    align-items: center;
+    gap: var(--space-xs);
+    margin-bottom: var(--space-sm);
+    font-size: 0.8125rem;
+    color: var(--color-text-muted);
+}
+
+.qz-teamChip-dot {
+    flex: 0 0 auto;
+    width: 12px;
+    height: 12px;
+    border-radius: 50%;
+}
+
+.qz-teamChip-name {
+    font-weight: var(--font-weight-semibold);
+    color: var(--color-text-primary);
+}
+
+.qz-teamChip-set {
+    flex: 1 1 auto;
+    min-width: 0;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+    text-align: right;
+}
+
+/* The dots ride at the right edge of the answer row. margin-left:auto keeps
+   them out of the answer text's way, and the text keeps its own ellipsis, so
+   a long answer shortens instead of pushing the dots off the screen. */
+.qz-team-dots {
+    display: flex;
+    align-items: center;
+    gap: 3px;
+    margin-left: auto;
+    flex: 0 0 auto;
+}
+
+.qz-team-dots .qz-team-dot {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 20px;
+    height: 20px;
+    border-radius: 50%;
+    color: #FFFFFF;
+    font-size: 0.6875rem;
+    font-weight: var(--font-weight-semibold);
+    line-height: 1;
+    opacity: 0.55;
+}
+
+/* Whoever set the answer that stands is the solid one. */
+.qz-team-dots .qz-team-dot.is-setter {
+    opacity: 1;
+    box-shadow: 0 0 0 2px var(--color-surface-dark);
+}
+
+.answer-btn.has-team-answer {
+    border-color: var(--color-accent-primary);
+}
+
+/* The brake after every change. It belongs to the team, so every member's
+   buttons go quiet for the same two seconds — the point is to stop two people
+   flipping the answer back and forth, not to slow one of them down. */
+.answer-btn.is-team-locked {
+    opacity: 0.75;
+    cursor: default;
+}
 /* ==========================================
    Lobby
    ========================================== */
@@ -2399,6 +2482,217 @@ button, .btn {
     width: 100%;
 }
 
+
+/* ============================================
+   TEAMS (#365) — lobby formation, route C
+   ============================================
+   The lobby asks one question first and only shows a team list to a player
+   who says "with someone". Everything below is sized for a thumb on a 390px
+   phone: the ask is two wide buttons, the list rows are full-width taps, and
+   the name field is optional — a mandatory field is exactly the hurdle route
+   C exists to avoid. */
+
+.qz-team {
+    margin: var(--space-lg) 0;
+    padding: var(--space-md);
+    background: var(--color-surface-dark);
+    border: 1px solid var(--color-border-light);
+    border-radius: var(--radius-lg);
+}
+
+.qz-team-askTitle {
+    margin: 0 0 var(--space-xs);
+    font-size: 1rem;
+    font-weight: var(--font-weight-semibold);
+    color: var(--color-text-primary);
+    text-align: center;
+}
+
+.qz-team-askHint,
+.qz-team-nameHint {
+    margin: 0 0 var(--space-md);
+    font-size: 0.8125rem;
+    line-height: 1.35;
+    color: var(--color-text-muted);
+    text-align: center;
+}
+
+.qz-team-askBtns {
+    display: flex;
+    gap: var(--space-sm);
+}
+
+.qz-team-askBtn {
+    flex: 1 1 0;
+    /* Two words plus an emoji have to survive a 390px screen without the
+       label being clipped — wrap rather than overflow. */
+    min-width: 0;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 0.4em;
+    white-space: normal;
+    text-align: center;
+}
+
+.qz-team-pickTitle {
+    margin: 0 0 var(--space-sm);
+    font-size: 0.75rem;
+    font-weight: var(--font-weight-semibold);
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    color: var(--color-text-muted);
+}
+
+.qz-team-list {
+    display: flex;
+    flex-direction: column;
+    gap: var(--space-xs);
+    margin-bottom: var(--space-sm);
+}
+
+.qz-team-item {
+    display: flex;
+    align-items: center;
+    gap: var(--space-sm);
+    width: 100%;
+    min-height: 52px;
+    padding: var(--space-sm) var(--space-md);
+    background: var(--color-bg-cream, #FBF7EE);
+    border: 1px solid var(--color-border-light);
+    border-radius: var(--radius-md);
+    color: var(--color-text-primary);
+    font-family: var(--font-system);
+    font-size: 0.9375rem;
+    text-align: left;
+    cursor: pointer;
+    -webkit-tap-highlight-color: transparent;
+}
+
+.qz-team-itemDot {
+    flex: 0 0 auto;
+    width: 14px;
+    height: 14px;
+    border-radius: 50%;
+}
+
+.qz-team-itemName {
+    font-weight: var(--font-weight-semibold);
+}
+
+.qz-team-itemMembers {
+    flex: 1 1 auto;
+    min-width: 0;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+    font-size: 0.8125rem;
+    color: var(--color-text-muted);
+}
+
+.qz-team-itemJoin {
+    flex: 0 0 auto;
+    font-size: 0.8125rem;
+    font-weight: var(--font-weight-semibold);
+    color: var(--color-accent-primary);
+}
+
+.qz-team-empty {
+    margin: 0 0 var(--space-sm);
+    font-size: 0.875rem;
+    color: var(--color-text-muted);
+    text-align: center;
+}
+
+.qz-team-openBtn {
+    width: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 0.4em;
+}
+
+.qz-team-name {
+    display: flex;
+    flex-wrap: wrap;
+    gap: var(--space-xs);
+    margin-top: var(--space-sm);
+}
+
+.qz-team-nameInput {
+    flex: 1 1 100%;
+    min-width: 0;
+    padding: var(--space-sm) var(--space-md);
+    background: var(--color-surface-dark);
+    border: 1px solid var(--color-border-medium);
+    border-radius: var(--radius-md);
+    color: var(--color-text-primary);
+    font-family: var(--font-system);
+    font-size: 1rem;
+}
+
+.qz-team-nameBtn {
+    flex: 1 1 0;
+    min-width: 0;
+}
+
+/* The team you are in. Once you have one, the list and the question are
+   gone — what is left is the only thing that still matters: who is in it. */
+.qz-team-mine {
+    display: flex;
+    align-items: center;
+    gap: var(--space-sm);
+}
+
+.qz-team-mineDot {
+    flex: 0 0 auto;
+    width: 18px;
+    height: 18px;
+    border-radius: 50%;
+}
+
+.qz-team-mineText {
+    flex: 1 1 auto;
+    min-width: 0;
+    display: flex;
+    flex-direction: column;
+}
+
+.qz-team-mineName {
+    font-size: 1rem;
+    font-weight: var(--font-weight-semibold);
+    color: var(--color-text-primary);
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+}
+
+.qz-team-mineMembers {
+    font-size: 0.8125rem;
+    color: var(--color-text-muted);
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+}
+
+.qz-team-leaveBtn {
+    flex: 0 0 auto;
+    padding: var(--space-xs) var(--space-sm);
+    background: none;
+    border: 1px solid var(--color-border-medium);
+    border-radius: var(--radius-md);
+    color: var(--color-text-muted);
+    font-family: var(--font-system);
+    font-size: 0.8125rem;
+    cursor: pointer;
+}
+
+.qz-team-note {
+    margin: var(--space-sm) 0 0;
+    font-size: 0.8125rem;
+    color: var(--color-text-muted);
+    text-align: center;
+}
 /* ==========================================
    Leaderboard (Beatify style)
    ========================================== */

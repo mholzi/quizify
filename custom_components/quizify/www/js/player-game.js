@@ -618,6 +618,19 @@
         // rejects with ERR_FROZEN regardless — this is belt-and-suspenders
         // so a stray programmatic call can't sneak an answer through.
         if (isFrozen()) return;
+
+        // Team mode (#365): a tap sets the TEAM's answer, it does not spend
+        // this player's round. Any member may change it until the clock stops,
+        // so nothing is locked and no confirmation is shown here — the server
+        // answers with `team_answer`, which paints the member dots and starts
+        // the shared lock on every member's phone at once.
+        var teamMod = window.QuizifyPlayerTeam;
+        if (teamMod && teamMod.isTeamMode()) {
+            lastSubmittedIndex = selectedIndex;
+            sendFn('submit_answer', { answer_index: selectedIndex });
+            return;
+        }
+
         hasSubmitted = true;
         lastSubmittedIndex = selectedIndex;
 
@@ -681,7 +694,7 @@
             var buttons = answerButtons.querySelectorAll('.answer-btn');
             for (var i = 0; i < buttons.length; i++) {
                 buttons[i].disabled = false;
-                buttons[i].classList.remove('is-selected', 'is-correct', 'is-wrong', 'is-eliminated', 'correct', 'wrong', 'dimmed');
+                buttons[i].classList.remove('is-selected', 'is-correct', 'is-wrong', 'is-eliminated', 'correct', 'wrong', 'dimmed', 'is-team-locked', 'has-team-answer');
             }
         }
 

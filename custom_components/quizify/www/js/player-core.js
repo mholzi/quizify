@@ -12,6 +12,7 @@
     var reveal = window.QuizifyPlayerReveal;
     var end = window.QuizifyPlayerEnd;
     var lightning = window.QuizifyPlayerLightning;
+    var team = window.QuizifyPlayerTeam;
     var state = pu.state;
 
     // ============================================
@@ -285,6 +286,25 @@
                 lobby.handlePlayerLeft(msg);
                 break;
 
+            // Teams (#365). `teams_update` is the room's view and arrives on
+            // every formation change; `team_joined` / `team_left` are the
+            // confirmations to the player who acted.
+            case 'teams_update':
+                if (team) team.handleTeamsUpdate(msg);
+                break;
+
+            case 'team_joined':
+                if (team) team.handleTeamJoined(msg);
+                break;
+
+            case 'team_left':
+                if (team) team.handleTeamLeft(msg);
+                break;
+
+            case 'team_answer':
+                if (team) team.handleTeamAnswer(msg);
+                break;
+
             case 'question_started':
                 // On the final round, play a brief dramatic flourish + 3·2·1
                 // countdown on the big screen BEFORE revealing the question.
@@ -410,6 +430,11 @@
 
     function handleGameState(msg) {
         state.currentPhase = msg.phase;
+
+        // Teams ride along on every snapshot (#365), so a phone that
+        // reconnects mid-game gets its team indicator back instead of
+        // believing it is playing alone.
+        if (team && msg.teams) team.handleTeamsUpdate(msg);
 
         // Keep the in-game leaderboard panel current from ANY game_state that
         // carries a leaderboard (the round-start refresh and the ANSWER_REVEAL
@@ -657,6 +682,8 @@
         // Render question and answers
         game.renderQuestion(msg);
         game.resetSubmissionState();
+        // The standing team answer does not carry over into the next round.
+        if (team) team.resetRound();
 
         // #322: a new question always clears any lingering freeze overlay.
         // Guards the edge case where the lockout outlives the round (admin
@@ -975,6 +1002,11 @@
             userMsg = t('errors.UNKNOWN');
         }
         pu.showToast(userMsg);
+
+        // A refused team action is not a generic failure — the lobby has an
+        // answer for it (teams are set / that team dissolved), and showing it
+        // there is what keeps the player from asking the host (#365).
+        if (msg.code === 'TEAM_CLOSED' && team) team.handleTeamError();
 
         // If the error happened during join, reset the button so the user can retry
         if (!state.playerName && els.joinBtn) {
@@ -1306,6 +1338,7 @@
         pu.paintUiIcons();
         setupJoinForm();
         lobby.init(send);
+        if (team) team.setupLobby(send);
         setupRetryConnection();
         setupAdminControls();
         setupReactionBar();
