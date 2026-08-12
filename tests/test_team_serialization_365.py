@@ -72,12 +72,29 @@ def test_tied_teams_share_a_rank() -> None:
 
 
 def test_the_ranking_is_teams_in_team_mode(state: QuizifyGameState) -> None:
+    """Members are represented by their team — and only by their team."""
+    state.create_team("Sofa", "Anna")
+    state.join_team(state.get_team_of("Anna")["team_id"], "Jan")
+    state.leave_team("Mira")  # no-op; Mira never joined one
+
+    names = [p.name for p in state.get_ranked_participants()]
+
+    assert "Anna" not in names and "Jan" not in names
+    assert names[0] == "Sofa"
+
+
+def test_a_player_in_no_team_keeps_their_own_row(state: QuizifyGameState) -> None:
+    """A lone player is a team of one, not an error state.
+
+    Found by playing it: with the teams returned alone, the one guest who
+    stayed solo vanished from the leaderboard, the TV and the podium.
+    """
     state.create_team("Sofa", "Anna")
     state.join_team(state.get_team_of("Anna")["team_id"], "Jan")
 
     names = [p.name for p in state.get_ranked_participants()]
 
-    assert names == ["Sofa"], "the ranking is about teams, not their members"
+    assert sorted(names) == ["Mira", "Sofa"]
 
 
 def test_the_ranking_is_players_without_teams(state: QuizifyGameState) -> None:
@@ -94,9 +111,10 @@ def test_the_leaderboard_follows_the_mode(state: QuizifyGameState) -> None:
     after = {row["name"] for row in state.get_leaderboard()}
 
     assert before == {"Anna", "Jan", "Mira"}
-    assert after == {"Sofa"}, (
-        "forming a team must switch the ranking over — a leaderboard mixing "
-        "teams and their own members would double-count the room"
+    assert after == {"Sofa", "Jan", "Mira"}, (
+        "Anna is now represented by her team and must not also appear as "
+        "herself — a leaderboard carrying both would double-count her. The "
+        "two who joined nothing keep their own rows."
     )
 
 

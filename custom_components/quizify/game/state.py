@@ -1072,6 +1072,7 @@ class QuizifyGameState:
                 team.last_answer_correct = result.correct
                 team.last_elapsed = elapsed
                 team.round_score = result.points_earned
+                team.round_score_breakdown = dict(player.round_score_breakdown)
                 team.round_history.append("correct" if result.correct else "wrong")
                 # Award tallies, kept in the same shape a player keeps them so
                 # the awards can be computed by the same code (#365).
@@ -2150,9 +2151,20 @@ class QuizifyGameState:
         can take this without caring which it got — that is the whole reason
         the dashboard, reveal and finale need no team-specific rendering path.
         """
-        if self.team_mode:
-            return self._team_registry.all_teams()
-        return self.get_players()
+        if not self.team_mode:
+            return self.get_players()
+        # A player who joined no team is a team of one, not an error state
+        # (Markus, 2026-08-12) — so they keep their own row next to the teams
+        # rather than dropping out of the ranking. Found by playing it: with
+        # teams returned alone, the one guest who stayed solo vanished from the
+        # leaderboard, the TV and the podium.
+        teams: list[Any] = list(self._team_registry.all_teams())
+        solo = [
+            p
+            for p in self.get_players()
+            if self._team_registry.get_by_member(p.name) is None
+        ]
+        return teams + solo
 
     def get_round_summary(self) -> RoundSummary | None:
         """Return the last round summary."""
@@ -2166,10 +2178,13 @@ class QuizifyGameState:
         mid-question) without reaching into ``_player_registry``.
         """
         if self.team_mode:
-            # Every team has put something down — waiting for individual
-            # members would never finish, since members never "submit".
-            teams = self._team_registry.all_teams()
-            return bool(teams) and all(t.current_answer is not None for t in teams)
+            # Never, in team mode (#365). The rule is "the answer standing when
+            # the clock stops is the team's answer", so the round has to run to
+            # the timer — ending it the moment every team has *an* answer would
+            # close it on the first tap and there would be nothing left to
+            # re-decide. Found by playing it: with one team the round ended
+            # before the second member had looked up.
+            return False
         return self._player_registry.all_submitted()
 
     def get_cached_round_summary_msg(

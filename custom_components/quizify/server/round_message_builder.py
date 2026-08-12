@@ -354,9 +354,52 @@ class RoundMessageBuilder:
             except ValueError:
                 return -1
 
+        # Team mode (#365): the reveal is about the team, so every member reads
+        # the same row — the answer that stood and the points it earned. Only
+        # one member is actually scored (a team scores once), so without this
+        # the other members' reveal says "no answer given" for a round their
+        # team answered. ``correct_button_index`` stays per player: it is about
+        # their own button order, not about the answer.
+        _registry = getattr(game_state, "team_registry", None)
+        team_of = getattr(_registry, "get_by_member", None)
+
+        def _team_row(player_name: str) -> dict[str, Any] | None:
+            team = team_of(player_name) if team_of is not None else None
+            if team is None:
+                return None
+            if team.current_answer is None:
+                return {
+                    "player_name": player_name,
+                    "answer_index": None,
+                    "answer_text": "—",
+                    "correct": False,
+                    "correct_button_index": _correct_button_index(player_name),
+                    "points_earned": 0,
+                    "no_answer": True,
+                }
+            answers = summary.question.answers
+            idx = team.current_answer
+            breakdown = team.round_score_breakdown or {}
+            return {
+                "player_name": player_name,
+                "answer_index": idx,
+                "answer_text": answers[idx].text if 0 <= idx < len(answers) else "?",
+                "correct": answers[idx].correct if 0 <= idx < len(answers) else False,
+                "correct_button_index": _correct_button_index(player_name),
+                "points_earned": team.round_score,
+                "speed_bonus": breakdown.get("speed_bonus", 0),
+                "streak_bonus": breakdown.get("streak_bonus", 0),
+                "difficulty_multiplier": breakdown.get("difficulty_multiplier", 1.0),
+                "double_points": breakdown.get("double_points", False),
+                "streak": team.streak,
+            }
+
         all_answers = []
         for player in game_state.get_players():
-            if player.submitted and player.current_answer is not None:
+            row = _team_row(player.name)
+            if row is not None:
+                all_answers.append(row)
+            elif player.submitted and player.current_answer is not None:
                 submitted_orig = player.current_answer
                 answer_text = (
                     summary.question.answers[submitted_orig].text

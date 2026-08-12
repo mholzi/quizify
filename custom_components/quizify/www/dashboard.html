@@ -1489,24 +1489,60 @@
                     'font-size:20px;color:var(--dash-text-white);">' + escapeHtml(url) + '</div>';
             }
         }
+        // The teams as of the last roster/snapshot (#365). Kept here rather
+        // than derived, because "who is playing with whom" is exactly what the
+        // TV lobby exists to answer — and the alternative is the room shouting
+        // it across the sofa.
+        var lobbyTeams = [];
+        var lastLobbyPlayers = [];
+
         function renderLobbyPlayers(players) {
             var container = els.lobbyPlayers;
             if (!container) return;
             var list = Array.isArray(players)
                 ? players
                 : (players && typeof players === 'object' ? Object.values(players) : []);
-            container.innerHTML = list.map(function(p) {
+
+            function chip(p) {
                 var name = (p && p.name != null) ? p.name : '';
                 // 👑 marks the host, mirroring player-lobby.js's is_admin chip.
                 var crown = (p && p.is_admin)
                     ? '<span aria-hidden="true">👑</span> ' : '';
                 return '<div class="dashboard-player-chip">' + crown +
                     '<span>' + escapeHtml(name) + '</span></div>';
+            }
+
+            if (!lobbyTeams.length) {
+                container.innerHTML = list.map(chip).join('');
+                return;
+            }
+
+            // Teamed players are shown under their team; everyone else keeps
+            // their own chip. A player in no team is a team of one, not an
+            // error state — so they are not pushed into a leftover group.
+            var inTeam = {};
+            var groups = lobbyTeams.map(function(team) {
+                var members = (team.members || []).map(function(name) {
+                    inTeam[name] = true;
+                    for (var i = 0; i < list.length; i++) {
+                        if (list[i] && list[i].name === name) return list[i];
+                    }
+                    return { name: name };
+                });
+                return '<div class="dashboard-team-group">' +
+                    '<div class="dashboard-team-name">' + escapeHtml(team.name || '') + '</div>' +
+                    '<div class="dashboard-team-members">' +
+                        members.map(chip).join('') +
+                    '</div></div>';
             }).join('');
+
+            var solo = list.filter(function(p) { return !(p && inTeam[p.name]); });
+            container.innerHTML = groups + solo.map(chip).join('');
         }
         // Called on every LOBBY snapshot: paint the QR once, refresh the roster.
         function renderLobby(players) {
             renderLobbyQr();
+            lastLobbyPlayers = players;
             renderLobbyPlayers(players);
         }
 
@@ -1679,7 +1715,15 @@
                     // #374: keep the TV lobby roster live as players come/go.
                     // The chips live inside #waiting-view, so this is a no-op
                     // visually once the game leaves LOBBY (that view is hidden).
+                    if (msg.teams) lobbyTeams = msg.teams;
+                    lastLobbyPlayers = msg.players || lastLobbyPlayers;
                     renderLobbyPlayers(msg.players);
+                    break;
+                case 'teams_update':
+                    // A team formed or dissolved (#365) without the roster
+                    // changing — the TV has to follow that on its own.
+                    lobbyTeams = msg.teams || [];
+                    renderLobbyPlayers(lastLobbyPlayers);
                     break;
             }
         }
@@ -1695,6 +1739,9 @@
                 case 'LOBBY':
                     showView('waiting');
                     // #374: render the join QR + live roster on the TV lobby.
+                    // Teams ride along on the snapshot (#365) so a TV that
+                    // connects late still shows who is playing with whom.
+                    if (msg.teams) lobbyTeams = msg.teams;
                     renderLobby(msg.players);
                     break;
                 case 'QUESTION_ACTIVE':

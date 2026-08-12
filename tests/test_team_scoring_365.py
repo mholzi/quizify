@@ -158,17 +158,21 @@ def test_the_speed_bonus_follows_the_last_tap(game: QuizifyGameState) -> None:
     assert slow_points < fast_points
 
 
-def test_the_round_closes_once_every_team_has_answered(
+def test_the_round_runs_to_the_clock_in_team_mode(
     game: QuizifyGameState,
 ) -> None:
-    """Waiting for individual members would never finish — they never submit."""
+    """A team answer is provisional, so the round may not end on the first tap.
+
+    "The answer standing when the clock stops is the team's answer" only means
+    something if the clock is what stops it. Found by playing it: with a single
+    team the round ended the instant one member tapped, and the promised
+    re-decision window never existed.
+    """
     assert game.all_submitted() is False
 
     game.submit_answer("Anna", 0)
 
-    # Mira is not in a team, so in team mode she is not what the round waits
-    # for; the teams are.
-    assert game.all_submitted() is True
+    assert game.all_submitted() is False
 
 
 def test_the_answer_and_lock_are_cleared_for_the_next_question(

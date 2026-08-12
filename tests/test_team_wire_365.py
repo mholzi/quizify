@@ -284,3 +284,46 @@ async def test_the_snapshot_always_carries_the_teams_key(
     snapshot = game.get_state_snapshot()
 
     assert snapshot["teams"] == []
+
+
+# ----------------------------------------------------------------------
+# The reveal
+# ----------------------------------------------------------------------
+
+
+@pytest.mark.asyncio
+async def test_every_member_reads_the_same_reveal(
+    h: QuizifyWebSocketHandler, game: QuizifyGameState
+) -> None:
+    """The reveal is about the team, so both members see the same round.
+
+    Found by playing it: a team scores once, so only the member whose tap
+    stood was carrying a result. The other one's reveal read "time's up — no
+    answer given" for a round their team had answered.
+    """
+    anna_ws = _seat(h, game, "Anna")
+    jan_ws = _seat(h, game, "Jan")
+    await h._handle_create_team(anna_ws, {"name": "Sofa"}, game)
+    await h._handle_join_team(
+        jan_ws, {"team_id": game.get_team_of("Anna")["team_id"]}, game
+    )
+    game.start_game(category="picture-round-en", difficulty="easy", num_rounds=2,
+                    language="en")
+    game.start_next_question()
+    game.set_player_shuffle("Anna", [0, 1, 2, 3])
+    game.set_player_shuffle("Jan", [2, 1, 0, 3])
+    await h._handle_submit_answer(anna_ws, {"answer_index": 0}, game)
+    game.evaluate_round()
+
+    summary = h._round_messages.build_round_summary(game)
+    rows = {r["player_name"]: r for r in summary["all_answers"]}
+
+    assert rows["Jan"].get("no_answer") is not True, "Jan's team did answer"
+    assert rows["Anna"]["answer_text"] == rows["Jan"]["answer_text"]
+    assert rows["Anna"]["correct"] == rows["Jan"]["correct"]
+    assert rows["Anna"]["points_earned"] == rows["Jan"]["points_earned"]
+    # The one thing that stays personal: where the correct answer sits on
+    # THIS phone's buttons. The two shuffles differ, so the values must too.
+    assert (
+        rows["Anna"]["correct_button_index"] != rows["Jan"]["correct_button_index"]
+    ), "the correct-button hint is about each player's own button order"
