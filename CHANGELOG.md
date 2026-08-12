@@ -3,6 +3,55 @@
 All notable changes to Quizify are documented here. This project follows
 [Semantic Versioning](https://semver.org/).
 
+## [1.8.0-RC1] — 2026-08-12
+
+Release candidate for 1.8.0. The entry below is the release text; the bare `v1.8.0` follows once this has been played on a real install.
+
+
+Quizify used to count people. From this release it can count sofas: two players
+who want to play together say so on their phones, and the room has one fewer
+participant and one more team (#365).
+
+Teams are formed by the players themselves, in the lobby, before the first
+question — the host assigns nobody. **A team is a participant, not a grouping**:
+it answers once, scores once, and stands in the ranking exactly where a player
+would. No per-capita division and no handicap, so four people on one sofa may
+out-score a pair; a player who joins no team keeps their own row, because a lone
+player is a team of one rather than an error state. Any member may change the
+team's answer until the clock stops, with the speed bonus keyed to the **last**
+tap and a short lock after each change so two people cannot flip it back and
+forth at the buzzer. A solo player's answer stays final the moment they tap it.
+
+The end-of-game awards go to teams — not as a rename: a team records what a
+player records, so Fastest Finger becomes the time of the tap that *stood*, and
+a team that argues to the buzzer genuinely is slower. The Lightning Round works
+the same way (#552), which is why a lightning question now runs its full window
+in team mode instead of ending when everyone has answered. The television shows
+the lobby grouped by team.
+
+Image questions may declare `reveal_style: "progressive"` (#434): the picture
+opens heavily blurred and sharpens as the timer drains, riding the countdown
+both clients already receive. Enabled on the two picture packs; every other pack
+is untouched.
+
+Three cosmetics from a full browser pass (#548): the shareable card printed the
+pack *slug* instead of its name, the four `theme: trivia` packs had no icon of
+their own, and the image zoom button was anchored to the media box rather than
+to the picture.
+
+Four defects were found by *playing* a team game on three phones and a
+television, with the suite green throughout. The round **ended on the first
+tap**, because a team holding an answer counted as done — so the re-decision the
+mode is built on never existed. The **solo guest vanished** from the leaderboard,
+the television and the podium once teams became the ranking. The **teammate's
+reveal said "no answer given"** for a round their team had answered, since only
+the member whose tap stood carried a result. And the **lightning recap showed
+nothing but misses**, because it looked the viewer up by player name while the
+round had scored the team.
+
+The suite stands at **1,386 tests**. The library is unchanged at 30 packs /
+3,857 questions.
+
 ## [1.7.0] — 2026-08-11
 
 The final 1.7.0 release — the culmination of release candidates RC1–RC8. See
