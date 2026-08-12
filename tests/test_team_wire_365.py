@@ -327,3 +327,61 @@ async def test_every_member_reads_the_same_reveal(
     assert (
         rows["Anna"]["correct_button_index"] != rows["Jan"]["correct_button_index"]
     ), "the correct-button hint is about each player's own button order"
+
+
+# ----------------------------------------------------------------------
+# The lightning round (#552)
+# ----------------------------------------------------------------------
+
+
+@pytest.mark.asyncio
+async def test_a_lightning_tap_reaches_the_team_not_the_scoreboard(
+    h: QuizifyWebSocketHandler, game: QuizifyGameState
+) -> None:
+    """Same contract as a normal round, one screen further in.
+
+    The tap sets the team's answer: no ``lightning_answer_result`` (which
+    would lock the tapper's phone and claim right/wrong), and both members
+    are told what stands — each in their own answer order.
+    """
+    anna_ws = _seat(h, game, "Anna")
+    jan_ws = _seat(h, game, "Jan")
+    await h._handle_create_team(anna_ws, {"name": "Sofa"}, game)
+    await h._handle_join_team(
+        jan_ws, {"team_id": game.get_team_of("Anna")["team_id"]}, game
+    )
+    game.start_lightning_round(category="picture-round-en", language="en")
+    game.begin_lightning_questions()
+    lr = game.lightning
+    lr._shuffles["Anna"] = [2, 0, 1]
+    lr._shuffles["Jan"] = [0, 1, 2]
+
+    await h._handle_lightning_answer(anna_ws, {"answer_index": 0}, game)
+
+    assert not _of_type(_to(h, anna_ws), "lightning_answer_result")
+    anna_msg = _of_type(_to(h, anna_ws), "lightning_team_answer")
+    jan_msg = _of_type(_to(h, jan_ws), "lightning_team_answer")
+    assert anna_msg and jan_msg, "both members see the standing answer"
+    # Canonical answer 2: Anna's position 0, Jan's position 2.
+    assert anna_msg[-1]["answer_index"] == 0
+    assert jan_msg[-1]["answer_index"] == 2
+    assert jan_msg[-1]["set_by"] == "Anna"
+    assert jan_msg[-1]["lock_seconds"] > 0
+
+
+@pytest.mark.asyncio
+async def test_a_solo_lightning_tap_is_unchanged(
+    h: QuizifyWebSocketHandler, game: QuizifyGameState
+) -> None:
+    """A player in no team still gets the ordinary ack that locks her phone."""
+    anna_ws = _seat(h, game, "Anna")
+    mira_ws = _seat(h, game, "Mira")
+    await h._handle_create_team(anna_ws, {"name": "Sofa"}, game)
+    game.start_lightning_round(category="picture-round-en", language="en")
+    game.begin_lightning_questions()
+    game.lightning._shuffles["Mira"] = [0, 1, 2]
+
+    await h._handle_lightning_answer(mira_ws, {"answer_index": 1}, game)
+
+    assert _of_type(_to(h, mira_ws), "lightning_answer_result")
+    assert not _of_type(_to(h, mira_ws), "lightning_team_answer")

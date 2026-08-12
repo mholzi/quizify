@@ -105,6 +105,7 @@
 
         var answered = document.getElementById('lightning-answered');
         if (answered) answered.classList.add('hidden');
+        if (_lightningLockTimer) { clearTimeout(_lightningLockTimer); _lightningLockTimer = null; }
 
         var timer = document.getElementById('lightning-timer');
         if (timer) timer.textContent = Math.ceil(msg.seconds || 15);
@@ -121,7 +122,24 @@
         }
     }
 
+    function inTeam() {
+        var team = window.QuizifyPlayerTeam;
+        return !!(team && team.isTeamMode());
+    }
+
     function submitAnswer(shuffledIndex) {
+        // Team mode (#552): the tap sets the TEAM's answer, which any member
+        // may still change until the clock stops. So it neither locks this
+        // phone nor counts as this player's final say — the server answers
+        // with `lightning_team_answer`, which marks what stands and applies
+        // the shared lock.
+        if (inTeam()) {
+            _send('lightning_answer', {
+                answer_index: shuffledIndex, index: _questionIndex
+            });
+            return;
+        }
+
         // One answer per question; ignore re-taps.
         if (_answeredIndex !== -1) return;
         _answeredIndex = shuffledIndex;
@@ -141,6 +159,43 @@
         }
         var answered = document.getElementById('lightning-answered');
         if (answered) answered.classList.remove('hidden');
+    }
+
+    var _lightningLockTimer = null;
+
+    /**
+     * The team's standing lightning answer (#552).
+     *
+     * ``msg.answer_index`` is already expressed in THIS phone's answer order —
+     * the server remaps it per member, because every player sees the answers
+     * shuffled differently. The lock belongs to the team, so all buttons go
+     * quiet together for the same short moment.
+     */
+    function handleLightningTeamAnswer(msg) {
+        if (typeof msg.index === 'number' && msg.index !== _questionIndex) return;
+        var btns = document.querySelectorAll('[data-lightning-answer]');
+        for (var i = 0; i < btns.length; i++) {
+            var idx = parseInt(btns[i].getAttribute('data-lightning-answer'), 10);
+            var isStanding = idx === msg.answer_index;
+            btns[i].classList.toggle('selected', isStanding);
+            btns[i].disabled = true;
+            btns[i].classList.add('is-team-locked');
+        }
+        var answered = document.getElementById('lightning-answered');
+        if (answered) {
+            var who = msg.set_by || '';
+            answered.textContent = who ? t('teams.standingAnswer', { name: who }) : '';
+            answered.classList.remove('hidden');
+        }
+        if (_lightningLockTimer) clearTimeout(_lightningLockTimer);
+        _lightningLockTimer = setTimeout(function () {
+            var list = document.querySelectorAll('[data-lightning-answer]');
+            for (var j = 0; j < list.length; j++) {
+                list[j].disabled = false;
+                list[j].classList.remove('is-team-locked');
+            }
+            _lightningLockTimer = null;
+        }, (msg.lock_seconds || 2) * 1000);
     }
 
     function handleLightningAnswerResult(msg) {
@@ -257,6 +312,7 @@
         handleLightningSplash: handleLightningSplash,
         handleLightningQuestion: handleLightningQuestion,
         handleLightningTick: handleLightningTick,
+        handleLightningTeamAnswer: handleLightningTeamAnswer,
         handleLightningAnswerResult: handleLightningAnswerResult,
         handleLightningRecap: handleLightningRecap,
         renderRecap: renderRecap

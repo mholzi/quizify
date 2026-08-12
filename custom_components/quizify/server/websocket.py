@@ -39,6 +39,9 @@ from custom_components.quizify.game.state import (
     QuizifyGameState,
     TeamAnswerAck,
 )
+from custom_components.quizify.game.team import (
+    ANSWER_CHANGE_LOCK_SECONDS as LIGHTNING_ANSWER_LOCK_SECONDS,
+)
 from custom_components.quizify.server.broadcast_dispatcher import BroadcastDispatcher
 from custom_components.quizify.server.connection import ConnectionManager
 from custom_components.quizify.server.rate_limit import SlidingWindowLimiter
@@ -2227,14 +2230,55 @@ class QuizifyWebSocketHandler:
 
         result = lr.record_answer(player.name, shuffled_index)
         if result is None:
-            return  # rejected (already answered / expired) — stay silent
+            return  # rejected (already answered / locked / expired) — stay silent
+
+        # Team mode (#552): the tap set the TEAM's answer and scored nothing
+        # yet, so it must not lock the tapper's buttons or claim right/wrong —
+        # a teammate may still change it. Every member is told what stands, in
+        # their own answer order.
+        if lr.team_mode and lr.entrant_for(player.name) != player.name:
+            await self._broadcast_lightning_team_answer(game_state, lr, player.name)
+            return
+
         # Lightweight ack: lock the player's buttons + show right/wrong.
         await self._conn.send(ws, {
             "type": "lightning_answer_result",
             "correct": bool(result),
             "index": lr.index,
-            "score": lr.scores.get(player.name, 0),
+            "score": lr.score_for(player.name),
         })
+
+    async def _broadcast_lightning_team_answer(
+        self, game_state: QuizifyGameState, lr: Any, setter: str
+    ) -> None:
+        """Show the team's standing lightning answer on every member's phone.
+
+        Mirrors the normal round's ``team_answer`` (#365): the index is
+        remapped per member, because each phone shuffles the answers for
+        itself — one number sent to the whole team would highlight the wrong
+        row for everybody but the person who tapped.
+        """
+        standing = lr.standing_answer(setter)
+        if standing is None or standing.answer_index is None:
+            return
+        members = lr.members_of(setter)
+        for name in members:
+            member = game_state.get_player(name)
+            if member is None or member.ws is None or not member.connected:
+                continue
+            order = lr.ensure_shuffle(name)
+            try:
+                shown_index = order.index(standing.answer_index)
+            except ValueError:
+                continue
+            await self._conn.send(member.ws, {
+                "type": "lightning_team_answer",
+                "index": lr.index,
+                "answer_index": shown_index,
+                "set_by": setter,
+                "members": list(members),
+                "lock_seconds": LIGHTNING_ANSWER_LOCK_SECONDS,
+            })
 
     def _start_lightning_loop(
         self,

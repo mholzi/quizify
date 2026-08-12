@@ -13,6 +13,10 @@ distinct live in one place:
   No speed bonus, no streak multiplier, no difficulty multiplier.
 * **Power-ups are disabled** — the WS layer never assigns or accepts them
   while a lightning round is active.
+* **A team answers together**, exactly as in a normal round (#552): one answer
+  and one score per team, any member may change it until the clock stops, and
+  the question therefore runs its full window instead of ending on the first
+  tap. Per-player shuffles stay per player — only the *answer* is shared.
 * **End screen** shows each player's total lightning score plus a compact
   recap of all questions: the *correct* answer per question (green), and —
   when the player got it wrong — their own wrong pick too, because there
@@ -35,6 +39,8 @@ from typing import TYPE_CHECKING, Any
 if TYPE_CHECKING:  # pragma: no cover - typing only
     from .questions import Question, QuestionBank
 
+from .team import ANSWER_CHANGE_LOCK_SECONDS
+
 _LOGGER = logging.getLogger(__name__)
 
 # Decided rules (issue #42, greenlit 2026-06-09).
@@ -45,13 +51,22 @@ LIGHTNING_POINTS_PER_CORRECT = 10
 
 @dataclass
 class LightningAnswer:
-    """One player's answer to one lightning question."""
+    """One entrant's answer to one lightning question.
 
-    #: True if the player answered correctly, False if wrong, None if they
+    An entrant is a player or, in team mode, a whole team (#552) — which is
+    why ``set_by`` exists: the team's answer belongs to the team, but the
+    other members still want to see who put it there.
+    """
+
+    #: True if the entrant answered correctly, False if wrong, None if they
     #: never answered before the question's time ran out.
     correct: bool | None = None
-    #: Original (unshuffled) answer index the player submitted, or None.
+    #: Original (unshuffled) answer index that was submitted, or None.
     answer_index: int | None = None
+    #: Member who set the answer that currently stands (team mode only).
+    set_by: str | None = None
+    #: Wall-clock of the last change, for the short re-decision lock.
+    answered_at: float | None = None
 
 
 @dataclass
@@ -95,6 +110,7 @@ class LightningRound:
         num_questions: int = LIGHTNING_NUM_QUESTIONS,
         seconds_per_question: float = LIGHTNING_SECONDS_PER_QUESTION,
         points_per_correct: int = LIGHTNING_POINTS_PER_CORRECT,
+        teams: list[dict[str, Any]] | None = None,
     ) -> None:
         self._bank = question_bank
         self._players = list(player_names)
@@ -112,8 +128,30 @@ class LightningRound:
         self.finished: bool = False
         self._question_start: float | None = None
 
-        # scores keyed by player name; recap rows in question order.
-        self.scores: dict[str, int] = dict.fromkeys(self._players, 0)
+        # Who is actually playing this round (#552). In an ordinary game the
+        # entrants ARE the players; in team mode a team is one entrant and its
+        # members map onto it. Teams are frozen in the lobby, so this mapping
+        # is built once and never changes mid-round.
+        #
+        # `teams` is a snapshot of `TeamRegistry.to_list()`; taking a snapshot
+        # rather than the registry keeps this module free of the game state.
+        self._entrant_of: dict[str, str] = {}
+        self._entrants: list[str] = []
+        for team in teams or []:
+            key = team.get("name") or team.get("team_id") or ""
+            if not key:
+                continue
+            self._entrants.append(key)
+            for member in team.get("members", []):
+                self._entrant_of[member] = key
+        self.team_mode = bool(self._entrants)
+        for name in self._players:
+            if name not in self._entrant_of:
+                self._entrants.append(name)
+
+        # scores keyed by ENTRANT (player name, or team name in team mode);
+        # recap rows in question order.
+        self.scores: dict[str, int] = dict.fromkeys(self._entrants, 0)
         self._recaps: list[LightningQuestionRecap] = []
 
         # Memoized end-screen payload (#455). Once the round is finished the
@@ -240,10 +278,36 @@ class LightningRound:
         )
         return True
 
+    def entrant_for(self, name: str) -> str:
+        """Who this player scores as: their team, or themselves."""
+        return self._entrant_of.get(name, name)
+
+    def score_for(self, name: str) -> int:
+        """This player's standing — their team's, in team mode."""
+        return self.scores.get(self.entrant_for(name), 0)
+
+    def standing_answer(self, name: str) -> LightningAnswer | None:
+        """The answer currently recorded for this player's entrant."""
+        return self._answers.get(self.index, {}).get(self.entrant_for(name))
+
+    def members_of(self, name: str) -> list[str]:
+        """Everyone who shares this player's entrant (just them, if solo)."""
+        entrant = self.entrant_for(name)
+        if entrant == name:
+            return [name]
+        return [p for p in self._players if self._entrant_of.get(p) == entrant]
+
     def add_player(self, name: str) -> None:
-        """Register a late-joining player so they can score from now on."""
+        """Register a late-joining player so they can score from now on.
+
+        They enter as their own entrant: teams are formed in the lobby and
+        frozen from the start of the game (#365), so somebody arriving during
+        a lightning round plays for themselves.
+        """
         if name not in self.scores:
             self.scores[name] = 0
+        if name not in self._entrants:
+            self._entrants.append(name)
         if name not in self._players:
             self._players.append(name)
         # Give them a shuffle for the in-flight question so they can answer
@@ -330,19 +394,39 @@ class LightningRound:
     # Answering
     # ------------------------------------------------------------------
 
-    def record_answer(self, name: str, shuffled_index: int) -> bool | None:
-        """Record a player's answer to the current question.
+    def record_answer(
+        self, name: str, shuffled_index: int, *, now: float | None = None
+    ) -> bool | None:
+        """Record an answer to the current question.
 
-        ``shuffled_index`` is the button index in the player's own shuffle.
+        ``shuffled_index`` is the button index in the *player's own* shuffle,
+        which is why the mapping happens here rather than at the call site.
+
+        In team mode the answer belongs to the team and any member may change
+        it until the clock stops (#552) — subject to the same short lock as a
+        normal round, so two members cannot flip it back and forth. A solo
+        player's answer stays final the moment they tap it.
+
         Returns True/False for correct/wrong, or None if the answer was
-        rejected (no active question, already answered, expired, bad index).
+        rejected (no active question, already answered, locked, expired, bad
+        index).
         """
         q = self.current_question
         if q is None or self.is_expired():
             return None
+        now = time.time() if now is None else now
+        entrant = self.entrant_for(name)
+        is_team = entrant != name
         bucket = self._answers.setdefault(self.index, {})
-        if name in bucket:
-            return None  # one answer per question
+        standing = bucket.get(entrant)
+        if standing is not None:
+            if not is_team:
+                return None  # one answer per question — the base rule
+            if (
+                standing.answered_at is not None
+                and (now - standing.answered_at) < ANSWER_CHANGE_LOCK_SECONDS
+            ):
+                return None  # the brake, same as a normal round
         order = self._shuffles.get(name) or list(range(len(q.answers)))
         if not 0 <= shuffled_index < len(order):
             return None
@@ -351,15 +435,27 @@ class LightningRound:
             0 <= original_index < len(q.answers)
             and q.answers[original_index].correct
         )
-        bucket[name] = LightningAnswer(correct=correct, answer_index=original_index)
+        bucket[entrant] = LightningAnswer(
+            correct=correct,
+            answer_index=original_index,
+            set_by=name,
+            answered_at=now,
+        )
         return correct
 
     def all_connected_answered(self, connected_names: list[str]) -> bool:
-        """True if every currently-connected player has answered this Q."""
-        if not connected_names:
+        """True if every currently-connected player has answered this Q.
+
+        Always False in team mode (#552). Ending the question as soon as
+        everyone has answered would close it on the *first* member's tap, and
+        the answer the team was supposed to agree on would be whatever one
+        person hit first — the same trap the normal round fell into. In team
+        mode the question runs its clock.
+        """
+        if not connected_names or self.team_mode:
             return False
         bucket = self._answers.get(self.index, {})
-        return all(name in bucket for name in connected_names)
+        return all(self.entrant_for(name) in bucket for name in connected_names)
 
     # ------------------------------------------------------------------
     # Advancing
@@ -400,7 +496,7 @@ class LightningRound:
             question_text=q.question,
             correct_answer=correct_answer,
         )
-        for name in self._players:
+        for name in self._entrants:
             ans = bucket.get(name)
             if ans is None or ans.correct is None:
                 recap.results[name] = "miss"
