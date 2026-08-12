@@ -1772,6 +1772,10 @@ class QuizifyGameState:
                 else getattr(self, "categories", None)
             ),
             difficulty=difficulty,
+            # A team answers lightning together, like a normal round (#552).
+            # The roster is a snapshot: teams are frozen from the start of the
+            # game, so the detour cannot be joined or left mid-round.
+            teams=self._team_registry.to_list(),
         )
         # Reserve the questions the main game still owes the host (#544). Only
         # the auto path detours out of a running game; the lobby/finale entries

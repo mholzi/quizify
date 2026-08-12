@@ -391,6 +391,11 @@
             case 'lightning_answer_result':
                 if (lightning) lightning.handleLightningAnswerResult(msg);
                 break;
+            case 'lightning_team_answer':
+                // The team's standing lightning answer (#552) — same idea as
+                // `team_answer` in a normal round.
+                if (lightning) lightning.handleLightningTeamAnswer(msg);
+                break;
             case 'lightning_recap':
                 if (lightning) lightning.handleLightningRecap(msg);
                 break;
