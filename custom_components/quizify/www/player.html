@@ -163,6 +163,58 @@
                 <!-- Player cards rendered by JS — orbit chips for B layout. -->
             </div>
 
+            <!-- Teams (#365) — route C: the lobby asks ONE question first, and
+                 only a player who says "with someone" ever sees a team list.
+                 A mandatory name field is exactly the hurdle route C exists to
+                 avoid, so the name input is prefilled-by-suggestion and may be
+                 left empty. Rendered by player-team.js. -->
+            <section class="qz-team" id="team-section">
+                <div class="qz-team-ask" id="team-ask">
+                    <p class="qz-team-askTitle" data-i18n="teams.askTitle">Playing alone or with someone?</p>
+                    <p class="qz-team-askHint" data-i18n="teams.askHint">A team answers together and stands in the ranking as one.</p>
+                    <div class="qz-team-askBtns">
+                        <button type="button" id="team-alone-btn" class="btn btn-secondary qz-team-askBtn">
+                            <span aria-hidden="true">🙋</span>
+                            <span data-i18n="teams.alone">Alone</span>
+                        </button>
+                        <button type="button" id="team-together-btn" class="btn btn-secondary qz-team-askBtn">
+                            <span aria-hidden="true">🛋️</span>
+                            <span data-i18n="teams.together">With someone</span>
+                        </button>
+                    </div>
+                </div>
+
+                <div class="qz-team-pick hidden" id="team-pick">
+                    <p class="qz-team-pickTitle" data-i18n="teams.existingTeams">Open teams</p>
+                    <div class="qz-team-list" id="team-list" aria-live="polite"></div>
+                    <p class="qz-team-empty hidden" id="team-empty" data-i18n="teams.noTeamsYet">No team open yet — open the first one.</p>
+                    <button type="button" id="team-open-btn" class="btn btn-primary qz-team-openBtn">
+                        <span aria-hidden="true">➕</span>
+                        <span data-i18n="teams.openTeam">Open a team</span>
+                    </button>
+                    <div class="qz-team-name hidden" id="team-name-row">
+                        <input type="text" id="team-name-input" class="qz-team-nameInput"
+                               maxlength="24" autocomplete="off"
+                               data-i18n-placeholder="teams.namePlaceholder" placeholder="e.g. Sofa"
+                               data-i18n-aria-label="teams.openTeam" aria-label="Team name">
+                        <button type="button" id="team-name-confirm" class="btn btn-primary qz-team-nameBtn" data-i18n="teams.confirmOpen">Open</button>
+                        <button type="button" id="team-name-cancel" class="btn btn-secondary qz-team-nameBtn" data-i18n="teams.cancel">Cancel</button>
+                    </div>
+                    <p class="qz-team-nameHint hidden" id="team-name-hint" data-i18n="teams.nameHint">The name is optional — leave it and we'll suggest one.</p>
+                </div>
+
+                <div class="qz-team-mine hidden" id="team-mine">
+                    <span class="qz-team-mineDot" id="team-mine-dot" aria-hidden="true"></span>
+                    <div class="qz-team-mineText">
+                        <span class="qz-team-mineName" id="team-mine-name"></span>
+                        <span class="qz-team-mineMembers" id="team-mine-members"></span>
+                    </div>
+                    <button type="button" id="team-leave-btn" class="qz-team-leaveBtn" data-i18n="teams.leaveTeam">Leave team</button>
+                </div>
+
+                <p class="qz-team-note hidden" id="team-note" aria-live="polite"></p>
+            </section>
+
             <!-- Invite players — opens the QR + copy-link sheet (#419).
                  Visible to every player so anyone can share the join link;
                  wired to openInviteModal() by player-lobby.setupInviteModal. -->
@@ -346,6 +398,15 @@
                         <span class="section-icon qz-icon qz-icon--coral" data-ui-icon="target" aria-hidden="true">🎯</span>
                         <span data-i18n="game.yourAnswer">Your Answer</span>
                     </h2>
+                    <!-- Team indicator (#365). Says which entry in the ranking
+                         is yours; the standing answer itself shows as member
+                         dots on the answer row, not as a banner — the question
+                         screen was deliberately kept quiet. -->
+                    <div class="qz-teamChip hidden" id="team-chip">
+                        <span class="qz-teamChip-dot" id="team-chip-dot" aria-hidden="true"></span>
+                        <span class="qz-teamChip-name" id="team-chip-name"></span>
+                        <span class="qz-teamChip-set" id="team-chip-set"></span>
+                    </div>
                     <div id="answer-buttons" class="answer-buttons">
                         <button class="answer-btn answer-btn-a" data-answer="A">
                             <span class="answer-letter">A</span>

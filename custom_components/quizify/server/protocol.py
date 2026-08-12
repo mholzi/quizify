@@ -240,6 +240,12 @@ CLIENT_MESSAGE_TYPES: frozenset[str] = frozenset({
     # more. Players still submit via lightning_answer (separate from
     # submit_answer so the normal-round path stays untouched).
     "lightning_answer",
+    # Teams (#365): formed by the players themselves in the lobby, so these
+    # are player messages, not host ones. The server refuses them outside the
+    # lobby — a latecomer joins alone.
+    "create_team",
+    "join_team",
+    "leave_team",
 })
 
 

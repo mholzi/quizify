@@ -33,6 +33,7 @@ PLAYER_MODULES = [
     "player-sound.js",
     "player-a11y.js",
     "player-lobby.js",
+    "player-team.js",
     "player-reveal.js",
     "player-end.js",
     "player-lightning.js",

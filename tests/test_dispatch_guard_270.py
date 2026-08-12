@@ -75,6 +75,12 @@ NON_ADMIN_TYPES = {
     "get_state",
     "reaction",
     "submit_wager",
+    # Teams (#365) are formed by the players themselves — the host does not
+    # assign anyone, so these must stay OUT of the admin partition. The lobby
+    # phase is what limits them, not the crown.
+    "create_team",
+    "join_team",
+    "leave_team",
 }
 
 

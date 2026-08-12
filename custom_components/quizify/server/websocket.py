@@ -23,6 +23,7 @@ from custom_components.quizify.const import (
     ERR_NO_QUESTIONS_REMAINING,
     ERR_NOT_IN_GAME,
     ERR_ROUND_EXPIRED,
+    ERR_TEAM_CLOSED,
     LOBBY_DISCONNECT_GRACE_PERIOD,
 )
 from custom_components.quizify.game.highlights import compute_superlatives
@@ -36,6 +37,7 @@ from custom_components.quizify.game.state import (
     AnswerResult,
     GamePhase,
     QuizifyGameState,
+    TeamAnswerAck,
 )
 from custom_components.quizify.server.broadcast_dispatcher import BroadcastDispatcher
 from custom_components.quizify.server.connection import ConnectionManager
@@ -89,6 +91,9 @@ MSG_RESUME_GAME = "resume_game"
 MSG_KICK_PLAYER = "kick_player"
 MSG_CONFIGURE_TTS = "configure_tts"
 MSG_CONFIGURE_HOUSE = "configure_house"
+MSG_CREATE_TEAM = "create_team"
+MSG_JOIN_TEAM = "join_team"
+MSG_LEAVE_TEAM = "leave_team"
 
 
 def _coerce_toggle(value: Any, *, default: bool) -> bool:
@@ -961,6 +966,122 @@ class QuizifyWebSocketHandler:
         self._mark_roster_dirty("player_joined")
 
     # ------------------------------------------------------------------
+    # Teams (#365)
+    # ------------------------------------------------------------------
+
+    async def _broadcast_teams(self, game_state: QuizifyGameState) -> None:
+        """Tell the room who is playing with whom.
+
+        Sent uncoalesced, unlike the roster: opening a team has to appear on
+        the other phones *now*, because the next thing that happens is someone
+        looking for it in the list. It is also what makes a join land on the
+        founder's screen — without it she cannot tell whether it worked.
+        """
+        await self._conn.broadcast({
+            "type": "teams_update",
+            "teams": game_state.team_registry.to_list(),
+        })
+
+    async def _handle_create_team(
+        self, ws: web.WebSocketResponse, data: dict, game_state: QuizifyGameState
+    ) -> None:
+        """Open a team and put the requesting player in it (lobby only)."""
+        player = game_state.get_player_by_ws(ws)
+        if not player:
+            await self._conn.send_error(ws, ERR_NOT_IN_GAME, "Not in game")
+            return
+
+        team = game_state.create_team(str(data.get("name", ""))[:24], player.name)
+        if team is None:
+            # Teams are fixed once the game starts — a latecomer plays alone.
+            await self._conn.send_error(
+                ws, ERR_TEAM_CLOSED, "Teams are set for this game"
+            )
+            return
+
+        await self._conn.send(ws, {"type": "team_joined", "team": team})
+        await self._broadcast_teams(game_state)
+
+    async def _handle_join_team(
+        self, ws: web.WebSocketResponse, data: dict, game_state: QuizifyGameState
+    ) -> None:
+        """Join an existing team (lobby only)."""
+        player = game_state.get_player_by_ws(ws)
+        if not player:
+            await self._conn.send_error(ws, ERR_NOT_IN_GAME, "Not in game")
+            return
+
+        team = game_state.join_team(str(data.get("team_id", "")), player.name)
+        if team is None:
+            # Either the game has started or the team dissolved while the
+            # player was tapping it — the same answer either way: it is gone.
+            await self._conn.send_error(
+                ws, ERR_TEAM_CLOSED, "That team is no longer open"
+            )
+            return
+
+        await self._conn.send(ws, {"type": "team_joined", "team": team})
+        await self._broadcast_teams(game_state)
+
+    async def _handle_leave_team(
+        self, ws: web.WebSocketResponse, data: dict, game_state: QuizifyGameState
+    ) -> None:
+        """Leave the current team (lobby only). The last one out dissolves it."""
+        player = game_state.get_player_by_ws(ws)
+        if not player:
+            await self._conn.send_error(ws, ERR_NOT_IN_GAME, "Not in game")
+            return
+
+        if not game_state.leave_team(player.name):
+            await self._conn.send_error(
+                ws, ERR_TEAM_CLOSED, "Teams are set for this game"
+            )
+            return
+
+        await self._conn.send(ws, {"type": "team_left"})
+        await self._broadcast_teams(game_state)
+
+    async def _broadcast_team_answer(
+        self,
+        game_state: QuizifyGameState,
+        ack: TeamAnswerAck,
+        *,
+        setter: str,
+    ) -> None:
+        """Show the standing answer on every member's phone (#365).
+
+        The index is remapped per member: every player sees the answers in
+        their own shuffled order (#253), so sending one number to the whole
+        team would put the dots on the wrong row for everyone but the setter.
+        """
+        team = game_state.team_registry.get(ack.team_id)
+        if team is None:
+            return
+        for name in team.members:
+            member = game_state.get_player(name)
+            if member is None or member.ws is None or not member.connected:
+                continue
+            shuffle = game_state.get_player_shuffle(name)
+            try:
+                shown_index = shuffle.index(ack.answer_index)
+            except ValueError:
+                # No shuffle stored for this member yet (they joined between
+                # the question start and this tap). Their client re-reads the
+                # answer from the next projected snapshot.
+                continue
+            await self._conn.send(member.ws, {
+                "type": "team_answer",
+                "team_id": ack.team_id,
+                "answer_index": shown_index,
+                "set_by": setter,
+                # The lock belongs to the team, not to the person who tapped:
+                # every member's buttons go quiet for the same two seconds,
+                # which is what stops the tap war rather than slowing one side.
+                "lock_seconds": ack.lock_seconds,
+                "members": list(team.members),
+            })
+
+    # ------------------------------------------------------------------
     # Submit answer
     # ------------------------------------------------------------------
 
@@ -1019,6 +1140,14 @@ class QuizifyWebSocketHandler:
             return
 
         result = game_state.submit_answer(player.name, original_index)
+
+        if isinstance(result, TeamAnswerAck):
+            # Team mode (#365): the tap set the team's answer, it did not score
+            # anything. Every member — the setter included — gets the standing
+            # answer in their own answer order, so the dots appear on the same
+            # question for all of them.
+            await self._broadcast_team_answer(game_state, result, setter=player.name)
+            return
 
         if isinstance(result, AnswerResult):
             await self._conn.send(ws, {
@@ -1228,7 +1357,7 @@ class QuizifyWebSocketHandler:
                     "from_player": from_players[0],
                     "from_players": from_players,
                     "to_players": to_players,
-                    "leaderboard": serialize_leaderboard(gs.get_players()),
+                    "leaderboard": serialize_leaderboard(gs.get_ranked_participants()),
                 }))
 
         if broadcasts:
@@ -1301,6 +1430,10 @@ class QuizifyWebSocketHandler:
             await self._conn.broadcast({
                 "type": event_type,
                 "players": serialize_player_list(gs.get_players()),
+                # A player leaving also leaves their team, and the last one out
+                # dissolves it (#365) — so the roster frame carries the teams
+                # too, or the lobby keeps showing a team nobody is in.
+                "teams": gs.team_registry.to_list(),
             })
 
         # A roster change that landed DURING the broadcast set _roster_dirty
@@ -3152,7 +3285,13 @@ class QuizifyWebSocketHandler:
         compute only if this is ever reached without a populated cache (e.g. a
         direct call in a test) so behaviour is unchanged in that edge case.
         """
-        all_players = game_state.get_players()
+        # In team mode the finale is about teams (#365): podium, leaderboard
+        # and awards all take the ranked participants, which are teams there
+        # and players otherwise. `compute_superlatives` reads the same
+        # attribute names, so the awards aggregate per team without a second
+        # implementation — an award simply belongs to "Team Sofa" instead of
+        # to Anna.
+        all_players = game_state.get_ranked_participants()
 
         podium = game_state.get_finale_podium()
         if podium is None:
@@ -3343,5 +3482,18 @@ class QuizifyWebSocketHandler:
         MSG_CONFIGURE_HOUSE: (
             lambda self, ws, data, gs: self._handle_configure_house(ws, data, gs),
             True,
+        ),
+        # --- teams (#365): player messages, refused outside the lobby ---
+        MSG_CREATE_TEAM: (
+            lambda self, ws, data, gs: self._handle_create_team(ws, data, gs),
+            False,
+        ),
+        MSG_JOIN_TEAM: (
+            lambda self, ws, data, gs: self._handle_join_team(ws, data, gs),
+            False,
+        ),
+        MSG_LEAVE_TEAM: (
+            lambda self, ws, data, gs: self._handle_leave_team(ws, data, gs),
+            False,
         ),
     }

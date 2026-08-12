@@ -513,3 +513,86 @@
     color: var(--color-text-white);
 }
 
+
+/* ============================================
+   TEAMS (#365) — the quiet question screen
+   ============================================
+   The standing team answer shows as small member dots on the answer it sits
+   on. No banner: the variant with one was rejected because the screen is
+   already busy with the question, the timer and the power-up. The known cost
+   is accepted — someone mid-tap notices another member's change only if they
+   look. The chip above the answers says which entry in the ranking is theirs,
+   and names whoever set the answer that currently stands. */
+
+.qz-teamChip {
+    display: flex;
+    align-items: center;
+    gap: var(--space-xs);
+    margin-bottom: var(--space-sm);
+    font-size: 0.8125rem;
+    color: var(--color-text-muted);
+}
+
+.qz-teamChip-dot {
+    flex: 0 0 auto;
+    width: 12px;
+    height: 12px;
+    border-radius: 50%;
+}
+
+.qz-teamChip-name {
+    font-weight: var(--font-weight-semibold);
+    color: var(--color-text-primary);
+}
+
+.qz-teamChip-set {
+    flex: 1 1 auto;
+    min-width: 0;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+    text-align: right;
+}
+
+/* The dots ride at the right edge of the answer row. margin-left:auto keeps
+   them out of the answer text's way, and the text keeps its own ellipsis, so
+   a long answer shortens instead of pushing the dots off the screen. */
+.qz-team-dots {
+    display: flex;
+    align-items: center;
+    gap: 3px;
+    margin-left: auto;
+    flex: 0 0 auto;
+}
+
+.qz-team-dots .qz-team-dot {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 20px;
+    height: 20px;
+    border-radius: 50%;
+    color: #FFFFFF;
+    font-size: 0.6875rem;
+    font-weight: var(--font-weight-semibold);
+    line-height: 1;
+    opacity: 0.55;
+}
+
+/* Whoever set the answer that stands is the solid one. */
+.qz-team-dots .qz-team-dot.is-setter {
+    opacity: 1;
+    box-shadow: 0 0 0 2px var(--color-surface-dark);
+}
+
+.answer-btn.has-team-answer {
+    border-color: var(--color-accent-primary);
+}
+
+/* The brake after every change. It belongs to the team, so every member's
+   buttons go quiet for the same two seconds — the point is to stop two people
+   flipping the answer back and forth, not to slow one of them down. */
+.answer-btn.is-team-locked {
+    opacity: 0.75;
+    cursor: default;
+}
