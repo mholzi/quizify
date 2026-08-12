@@ -52,7 +52,7 @@ No apps to download. No accounts to create. Just scan a QR code and play.
 
 **Works on Any Screen** — Dashboard mode for the TV. Players use their phones. Admin runs the show. No extra hardware needed.
 
-**Eleven Themes, Three Languages** — 3,857 questions across 30 themed packs (Geography, Pop Culture, Animals & Nature, Sport, Music, Science, History, Food & Drink, Technology, World Cup, Estimation) in German, English and Spanish. Mix them, filter them, swap mid-session.
+**Eleven Themes, Three Languages** — 3,867 questions across 30 themed packs (Geography, Pop Culture, Animals & Nature, Sport, Music, Science, History, Food & Drink, Technology, World Cup, Estimation) in German, English and Spanish. Mix them, filter them, swap mid-session.
 
 ---
 
@@ -318,7 +318,7 @@ Then **"Start New Game"** (same settings, same players) or **Reset Game** (fresh
 
 ## Question Packs
 
-Quizify ships with **3,857 questions across 30 themed packs in 11 themes**, in German, English and Spanish.
+Quizify ships with **3,867 questions across 30 themed packs in 11 themes**, in German, English and Spanish.
 
 | Theme | 🇩🇪 Deutsch | 🇬🇧 English | 🇪🇸 Español |
 |-------|-------------|-------------|-------------|

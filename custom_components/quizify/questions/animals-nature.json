@@ -1803,6 +1803,76 @@
       "difficulty": "easy",
       "fun_fact": "A blue whale's tongue alone can weigh around 2.7 tonnes — about the same as an adult elephant. Its heart is the largest of any animal, roughly the size of a small bumper car and weighing close to 200 kilograms.",
       "category": "Animals & Nature"
+    },
+    {
+      "id": "nat_en_159",
+      "question": "Which seabird is this?",
+      "answers": [
+        {"text": "Atlantic puffin", "correct": true},
+        {"text": "Razorbill", "correct": false},
+        {"text": "Northern fulmar", "correct": false}
+      ],
+      "difficulty": "easy",
+      "fun_fact": "A puffin can carry over 60 small fish crosswise in its beak — backward-facing spines on the palate hold the catch while it keeps hunting.",
+      "category": "Animals & Nature",
+      "image_url": "/quizify/static/img/packs/nature/puffin.webp",
+      "reveal_style": "progressive"
+    },
+    {
+      "id": "nat_en_160",
+      "question": "Which bird of prey is perched on this rock?",
+      "answers": [
+        {"text": "Bald eagle", "correct": true},
+        {"text": "Golden eagle", "correct": false},
+        {"text": "Osprey", "correct": false}
+      ],
+      "difficulty": "easy",
+      "fun_fact": "The white head only arrives at about five years old. Young bald eagles are entirely brown, which is why they are so often mistaken for golden eagles.",
+      "category": "Animals & Nature",
+      "image_url": "/quizify/static/img/packs/nature/bald-eagle.webp",
+      "reveal_style": "progressive"
+    },
+    {
+      "id": "nat_en_161",
+      "question": "What do these photographs from 1902 show?",
+      "answers": [
+        {"text": "Snow crystals", "correct": true},
+        {"text": "Diatoms", "correct": false},
+        {"text": "Salt crystals", "correct": false}
+      ],
+      "difficulty": "medium",
+      "fun_fact": "Wilson Bentley photographed more than 5,000 snow crystals through a microscope and never found two alike. He caught them on a black velvet board before they could melt.",
+      "category": "Animals & Nature",
+      "image_url": "/quizify/static/img/packs/nature/snowflake.webp",
+      "reveal_style": "progressive"
+    },
+    {
+      "id": "nat_en_162",
+      "question": "What is the space station looking down into here?",
+      "answers": [
+        {"text": "the eye of a hurricane", "correct": true},
+        {"text": "a volcanic crater", "correct": false},
+        {"text": "a whirlpool in sea ice", "correct": false}
+      ],
+      "difficulty": "easy",
+      "fun_fact": "Inside the eye the air is almost still and often cloudless. The damage happens in the wall around it, where the air rises fastest.",
+      "category": "Animals & Nature",
+      "image_url": "/quizify/static/img/packs/nature/hurricane-iss.webp",
+      "reveal_style": "progressive"
+    },
+    {
+      "id": "nat_en_163",
+      "question": "What is glowing green above the curve of the Earth?",
+      "answers": [
+        {"text": "an aurora", "correct": true},
+        {"text": "thunderstorm lightning", "correct": false},
+        {"text": "volcanic ash", "correct": false}
+      ],
+      "difficulty": "easy",
+      "fun_fact": "The green comes from oxygen atoms about 100 to 150 km up, struck by particles from the solar wind. Higher still, the same process glows red.",
+      "category": "Animals & Nature",
+      "image_url": "/quizify/static/img/packs/nature/aurora-iss.webp",
+      "reveal_style": "progressive"
     }
   ]
 }

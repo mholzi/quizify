@@ -86,8 +86,14 @@ class TestLoadCategory:
                 assert count >= 10, f"{cat} has only {count} questions (floor: 10)"
                 assert count <= 20, f"{cat} has {count} questions (ceiling: 20)"
                 continue
+            # 155, not 150: the five image questions of #554 are *added* to a
+            # themed pack rather than replacing written ones. Deleting five
+            # working questions to make room for a picture would be a worse
+            # trade than letting a pack run five long — the ceiling exists so
+            # packs stay comparable in length, and 3% does not threaten that.
+            # If every pack gains its five, they all move together anyway.
             assert count >= 95, f"{cat} has only {count} questions (floor: 95)"
-            assert count <= 150, f"{cat} has {count} questions (ceiling: 150)"
+            assert count <= 155, f"{cat} has {count} questions (ceiling: 155)"
 
 
 class TestValidateAnswer:
