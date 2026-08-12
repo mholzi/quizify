@@ -25,6 +25,7 @@ from ..const import (
     ERR_NO_QUESTIONS_REMAINING,
     ERR_NOT_IN_GAME,
     ERR_ROUND_EXPIRED,
+    ERR_TEAM_LOCKED,
 )
 from .calibration import GroupCalibrator
 from .highlights import compute_superlatives
@@ -44,7 +45,7 @@ from .scoring import (
     calculate_podium,
 )
 from .scoring_engine import ScoringEngine
-from .team import TeamRegistry
+from .team import ANSWER_CHANGE_LOCK_SECONDS, TeamRegistry
 from .timer import QuestionTimer
 from .types import TIME_LIMITS, Difficulty
 
@@ -61,7 +62,13 @@ _LOGGER = logging.getLogger(__name__)
 # GamePhase moved to phase_controller (issue #188) but is re-exported here so
 # the many `from .state import GamePhase` / `from .game.state import GamePhase`
 # call sites across the integration keep working unchanged.
-__all__ = ["AnswerResult", "GamePhase", "QuizifyGameState", "RoundSummary"]
+__all__ = [
+    "AnswerResult",
+    "GamePhase",
+    "QuizifyGameState",
+    "RoundSummary",
+    "TeamAnswerAck",
+]
 
 
 @dataclass
@@ -81,6 +88,22 @@ class AnswerResult:
     # render a celebratory toast instead of folding it into the breakdown.
     milestone_bonus: int = 0
     milestone_streak: int = 0  # the streak level reached, e.g. 5
+
+
+@dataclass
+class TeamAnswerAck:
+    """A tap that set the team's answer rather than scoring a player (#365).
+
+    Returned instead of :class:`AnswerResult` in team mode: nothing is scored
+    at tap time, because the answer standing when the clock stops is the one
+    that counts. ``lock_seconds`` lets the client grey the buttons for exactly
+    as long as the model will refuse the next change.
+    """
+
+    team_id: str
+    answer_index: int
+    set_by: str
+    lock_seconds: float
 
 
 @dataclass
@@ -698,6 +721,9 @@ class QuizifyGameState:
         # Reset per-round state
         for player in self._player_registry.players.values():
             player.reset_round()
+        # Teams clear their standing answer with the players (#365) — the lock
+        # must not survive into the next question either.
+        self._team_registry.reset_round()
         self._powerup_manager.reset_round()
 
         # Stamp round timing + create+start per-player timers (PhaseController).
@@ -753,12 +779,26 @@ class QuizifyGameState:
         self._notify_state_callbacks()
         return question
 
-    def submit_answer(self, player_id: str, answer_index: int) -> AnswerResult | str:
+    def submit_answer(
+        self,
+        player_id: str,
+        answer_index: int,
+        *,
+        elapsed_override: float | None = None,
+        _settling_team: bool = False,
+    ) -> AnswerResult | TeamAnswerAck | str:
         """Submit a player's answer for the current round.
 
         Returns AnswerResult on success, or an error code string.
+
+        ``_settling_team`` is the one internal caller (#365): when a round
+        closes, the team's standing answer is scored through this same path on
+        behalf of the member who set it, with ``elapsed_override`` carrying the
+        time of that member's *last* tap. The round clock has expired by then,
+        so the phase, expiry and freeze guards below are skipped for that call
+        — they exist to police live taps, and this is the settlement.
         """
-        if self.phase != GamePhase.QUESTION_ACTIVE:
+        if not _settling_team and self.phase != GamePhase.QUESTION_ACTIVE:
             return ERR_GAME_NOT_STARTED
 
         player = self._player_registry.get_player(player_id)
@@ -769,7 +809,7 @@ class QuizifyGameState:
             return ERR_ALREADY_SUBMITTED
 
         timer = self._timers.get(player_id)
-        if timer and timer.is_expired():
+        if not _settling_team and timer and timer.is_expired():
             return ERR_ROUND_EXPIRED
 
         # Freeze lockout (#300): a frozen target cannot submit until the freeze
@@ -777,7 +817,7 @@ class QuizifyGameState:
         # does NOT pause get_remaining), so the lockout costs the target real
         # answer time. Reject the submission while still frozen; once the window
         # passes the player may submit normally (if the timer hasn't expired).
-        if timer and timer.is_frozen():
+        if not _settling_team and timer and timer.is_frozen():
             _LOGGER.debug(
                 "Rejecting submit from frozen player %s (%.1fs of freeze left)",
                 player_id,
@@ -785,8 +825,32 @@ class QuizifyGameState:
             )
             return ERR_FROZEN
 
+        # Team mode (#365): the tap sets the *team's* answer instead of the
+        # player's. Nobody is marked submitted here — every member may keep
+        # changing it until the clock stops, and the answer that stands then is
+        # the one that scores, exactly once, in _do_evaluate_round.
+        team = (
+            None
+            if _settling_team
+            else self._team_registry.get_by_member(player.name)
+        )
+        if team is not None:
+            if not team.set_answer(answer_index, player.name):
+                return ERR_TEAM_LOCKED
+            self._notify_state_callbacks()
+            return TeamAnswerAck(
+                team_id=team.team_id,
+                answer_index=answer_index,
+                set_by=player.name,
+                lock_seconds=ANSWER_CHANGE_LOCK_SECONDS,
+            )
+
         # Record submission
-        elapsed = timer.get_elapsed() if timer else 0.0
+        elapsed = (
+            elapsed_override
+            if elapsed_override is not None
+            else (timer.get_elapsed() if timer else 0.0)
+        )
         player.submit_answer(answer_index, time.time())
         player.last_elapsed = elapsed
 
@@ -950,6 +1014,62 @@ class QuizifyGameState:
             return self._round_summary
         return self._do_evaluate_round()
 
+    def _settle_team_answers(self) -> None:
+        """Score each team's standing answer once, through the player path.
+
+        The member who set the answer carries it: their submission is scored
+        with the team's streak and with the elapsed time of their *last* tap,
+        and the result is written back to the team. Members who did not set it
+        are left untouched — they neither score nor count as a timeout, because
+        in team mode there is nothing individual left to reward or punish.
+
+        A team that never answered breaks its streak and records a timeout,
+        the same shape a player's missed round takes.
+        """
+        round_started = self._round_start_time or 0.0
+        for team in self._team_registry.all_teams():
+            if team.current_answer is None or team.answer_by is None:
+                team.streak = 0
+                team.round_history.append("timeout")
+                continue
+            player = self._player_registry.get_player(team.answer_by)
+            if player is None or player.submitted:
+                # The setter left the game between the tap and the buzzer. The
+                # answer still stands for the team, so hand it to any remaining
+                # member rather than dropping a round the team did answer.
+                player = next(
+                    (
+                        p
+                        for name in team.members
+                        if (p := self._player_registry.get_player(name)) is not None
+                        and not p.submitted
+                    ),
+                    None,
+                )
+            if player is None:
+                team.streak = 0
+                team.round_history.append("timeout")
+                continue
+
+            elapsed = max(0.0, (team.answered_at or round_started) - round_started)
+            # The scoring engine reads the player's streak; in team mode the
+            # streak belongs to the team, so lend it for the call and take the
+            # updated value back.
+            player.streak = team.streak
+            result = self.submit_answer(
+                player.name,
+                team.current_answer,
+                elapsed_override=elapsed,
+                _settling_team=True,
+            )
+            if isinstance(result, AnswerResult):
+                team.score += result.points_earned
+                team.streak = result.new_streak
+                team.last_answer_correct = result.correct
+                team.last_elapsed = elapsed
+                team.round_score = result.points_earned
+                team.round_history.append("correct" if result.correct else "wrong")
+
     def _do_evaluate_round(self) -> RoundSummary:
         """Internal: evaluate the round, build summary, transition to ANSWER_REVEAL."""
         question = self._current_question
@@ -968,6 +1088,13 @@ class QuizifyGameState:
         # the downstream phase transition + broadcast (handled in the helper).
         if question.is_estimate:
             return self._evaluate_estimate_round(question)
+
+        # Team mode (#365): settle each team's standing answer before the
+        # per-player pass below reads `submitted`. Exactly one member is scored
+        # per team — the one whose tap stands — so the team earns one score per
+        # round, which is what "a team behaves like a single player" means.
+        if self.team_mode:
+            self._settle_team_answers()
 
         correct_answer = self._question_bank.get_correct_answer(question)
 
@@ -1991,6 +2118,11 @@ class QuizifyGameState:
         all-answered condition (e.g. after the last unanswered player drops
         mid-question) without reaching into ``_player_registry``.
         """
+        if self.team_mode:
+            # Every team has put something down — waiting for individual
+            # members would never finish, since members never "submit".
+            teams = self._team_registry.all_teams()
+            return bool(teams) and all(t.current_answer is not None for t in teams)
         return self._player_registry.all_submitted()
 
     def get_cached_round_summary_msg(

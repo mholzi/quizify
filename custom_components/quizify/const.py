@@ -35,6 +35,10 @@ ERR_GAME_NOT_STARTED = "GAME_NOT_STARTED"
 ERR_GAME_ALREADY_STARTED = "GAME_ALREADY_STARTED"
 ERR_GAME_ENDED = "GAME_ENDED"
 ERR_ROUND_EXPIRED = "ROUND_EXPIRED"
+# Team mode (#365): a member changed the team answer moments ago and the
+# short lock has not run out. Not an error the player did anything wrong —
+# the client shows the remaining lock rather than a failure.
+ERR_TEAM_LOCKED = "TEAM_LOCKED"
 ERR_ALREADY_SUBMITTED = "ALREADY_SUBMITTED"
 ERR_FROZEN = "FROZEN"  # frozen player tried to submit during the freeze lockout (#300)
 ERR_NOT_IN_GAME = "NOT_IN_GAME"
