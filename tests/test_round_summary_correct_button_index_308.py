@@ -86,6 +86,15 @@ class _FakeGameState:
     def get_players(self) -> list[PlayerSession]:
         return list(self._players)
 
+    def get_ranked_participants(self) -> list[PlayerSession]:
+        """Mirror of the real state (#365): players unless teams are in play.
+
+        These fakes model an ordinary game, so the ranking is the players —
+        but the method has to exist, or the builder silently falls back and a
+        real object missing it would go unnoticed.
+        """
+        return list(self._players)
+
     def get_player_shuffle(self, player_name: str) -> list[int]:
         return self._player_shuffles.get(player_name) or self.shuffle_map
 

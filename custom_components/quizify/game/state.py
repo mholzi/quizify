@@ -2105,7 +2105,18 @@ class QuizifyGameState:
         # on the server layer (serializers only TYPE_CHECKING-imports game).
         from ..server.serializers import serialize_leaderboard
 
-        return serialize_leaderboard(self.get_players())
+        return serialize_leaderboard(self.get_ranked_participants())
+
+    def get_ranked_participants(self) -> list[Any]:
+        """Whoever the ranking is about: teams in team mode, else players (#365).
+
+        Both answer to the same attribute names, so every leaderboard call site
+        can take this without caring which it got — that is the whole reason
+        the dashboard, reveal and finale need no team-specific rendering path.
+        """
+        if self.team_mode:
+            return self._team_registry.all_teams()
+        return self.get_players()
 
     def get_round_summary(self) -> RoundSummary | None:
         """Return the last round summary."""

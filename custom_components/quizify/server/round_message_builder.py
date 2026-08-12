@@ -285,7 +285,7 @@ class RoundMessageBuilder:
         # render the number line from it. MC fields are left at their no-op
         # defaults (no answer grid is shown for an estimate reveal).
         if getattr(question, "is_estimate", False):
-            leaderboard = serialize_leaderboard(game_state.get_players())
+            leaderboard = serialize_leaderboard(game_state.get_ranked_participants())
             players_list = serialize_player_list(game_state.get_players())
             last_round_est = game_state.round >= game_state.total_rounds
             est_msg = serialize_round_summary(
@@ -323,7 +323,7 @@ class RoundMessageBuilder:
                         break
                 break
 
-        leaderboard = serialize_leaderboard(game_state.get_players())
+        leaderboard = serialize_leaderboard(game_state.get_ranked_participants())
 
         # Build all_answers: what each player answered this round.
         # answer_index is the ORIGINAL question index (not shuffled) —

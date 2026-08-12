@@ -68,6 +68,17 @@ class Team:
     last_answer_correct: bool = False
     last_elapsed: float = 0.0
 
+    # ---- player-shaped fields ---------------------------------------
+    # A team is fed to ``serialize_leaderboard`` in place of a player, so it
+    # answers to the same attribute names. That is the whole reason the
+    # dashboard, the reveal and the finale need no team-specific rendering
+    # path: they receive rows and cannot tell the difference (#365).
+    max_streak: int = 0
+    powerups_used: int = 0
+    submitted: bool = False
+    is_admin: bool = False
+    round_score_breakdown: dict = field(default_factory=dict)
+
     # ------------------------------------------------------------------
     # Membership
     # ------------------------------------------------------------------
@@ -137,6 +148,8 @@ class Team:
         self.round_score = 0
         self.last_answer_correct = False
         self.last_elapsed = 0.0
+        self.round_score_breakdown = {}
+        self.submitted = False
 
     def to_dict(self) -> dict:
         """Wire shape. Mirrors a player entry closely on purpose (#365)."""

@@ -1228,7 +1228,7 @@ class QuizifyWebSocketHandler:
                     "from_player": from_players[0],
                     "from_players": from_players,
                     "to_players": to_players,
-                    "leaderboard": serialize_leaderboard(gs.get_players()),
+                    "leaderboard": serialize_leaderboard(gs.get_ranked_participants()),
                 }))
 
         if broadcasts:
@@ -3152,7 +3152,13 @@ class QuizifyWebSocketHandler:
         compute only if this is ever reached without a populated cache (e.g. a
         direct call in a test) so behaviour is unchanged in that edge case.
         """
-        all_players = game_state.get_players()
+        # In team mode the finale is about teams (#365): podium, leaderboard
+        # and awards all take the ranked participants, which are teams there
+        # and players otherwise. `compute_superlatives` reads the same
+        # attribute names, so the awards aggregate per team without a second
+        # implementation — an award simply belongs to "Team Sofa" instead of
+        # to Anna.
+        all_players = game_state.get_ranked_participants()
 
         podium = game_state.get_finale_podium()
         if podium is None:
