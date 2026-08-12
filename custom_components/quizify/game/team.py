@@ -68,6 +68,21 @@ class Team:
     last_answer_correct: bool = False
     last_elapsed: float = 0.0
 
+    # ---- award statistics -------------------------------------------
+    # The end-of-game awards go to teams (Markus, 2026-08-12), and they are
+    # computed by the *same* function that computes them for players — so a
+    # team keeps the same tallies a player keeps. The per-award reading is
+    # therefore not a rename but a consequence of what gets recorded here:
+    # a team's answer time is the time of the tap that stood, its round score
+    # is the one score it earned that round, and its streak is already a team
+    # streak. ``freezes_used`` is filled from its members at award time, since
+    # power-ups are still handed to people.
+    round_scores: list[int] = field(default_factory=list)
+    answer_times: list[float] = field(default_factory=list)
+    hard_score: int = 0
+    freezes_used: int = 0
+    rounds_played: int = 0
+
     # ---- player-shaped fields ---------------------------------------
     # A team is fed to ``serialize_leaderboard`` in place of a player, so it
     # answers to the same attribute names. That is the whole reason the

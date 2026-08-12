@@ -1031,6 +1031,8 @@ class QuizifyGameState:
             if team.current_answer is None or team.answer_by is None:
                 team.streak = 0
                 team.round_history.append("timeout")
+                team.round_scores.append(0)
+                team.rounds_played += 1
                 continue
             player = self._player_registry.get_player(team.answer_by)
             if player is None or player.submitted:
@@ -1049,6 +1051,8 @@ class QuizifyGameState:
             if player is None:
                 team.streak = 0
                 team.round_history.append("timeout")
+                team.round_scores.append(0)
+                team.rounds_played += 1
                 continue
 
             elapsed = max(0.0, (team.answered_at or round_started) - round_started)
@@ -1069,6 +1073,34 @@ class QuizifyGameState:
                 team.last_elapsed = elapsed
                 team.round_score = result.points_earned
                 team.round_history.append("correct" if result.correct else "wrong")
+                # Award tallies, kept in the same shape a player keeps them so
+                # the awards can be computed by the same code (#365).
+                team.round_scores.append(result.points_earned)
+                team.rounds_played += 1
+                if result.correct:
+                    team.answer_times.append(elapsed)
+                    if (question := self._current_question) is not None and (
+                        question.difficulty == Difficulty.HARD.value
+                    ):
+                        team.hard_score += result.points_earned
+                if team.streak > team.max_streak:
+                    team.max_streak = team.streak
+
+    def _collect_team_powerup_stats(self) -> None:
+        """Roll each team's members' power-up usage up to the team (#365).
+
+        Power-ups are handed to people and spent by people; the award that
+        reads them ("Buzzkill") belongs to the team. Summing at award time
+        rather than tracking a second counter keeps one source of truth — a
+        member who left the game took their freezes with them, which is the
+        same thing that happens to their points.
+        """
+        for team in self._team_registry.all_teams():
+            team.freezes_used = sum(
+                player.freezes_used
+                for name in team.members
+                if (player := self._player_registry.get_player(name)) is not None
+            )
 
     def _do_evaluate_round(self) -> RoundSummary:
         """Internal: evaluate the round, build summary, transition to ANSWER_REVEAL."""
@@ -1472,9 +1504,13 @@ class QuizifyGameState:
         self.phase = GamePhase.FINALE
         self._current_question = None
 
-        # Cache podium and superlatives once so get_state_snapshot() can reuse them
-        self._finale_podium = calculate_podium(self.get_players())
-        self._finale_superlatives = compute_superlatives(self.get_players())
+        # Cache podium and superlatives once so get_state_snapshot() can reuse
+        # them. In team mode the participants are the teams (#365) — the podium
+        # and the awards are computed by the same code, one rung up.
+        self._collect_team_powerup_stats()
+        participants = self.get_ranked_participants()
+        self._finale_podium = calculate_podium(participants)
+        self._finale_superlatives = compute_superlatives(participants)
 
         podium = self._finale_podium
 
@@ -2196,6 +2232,11 @@ class QuizifyGameState:
             "language": self.language,
             "players": self._player_registry.get_players_state(),
             "leaderboard": self.get_leaderboard(),
+            # Always present, empty in an ordinary game (#365). A reconnecting
+            # phone has to be able to tell "no teams" from "teams not sent" —
+            # otherwise a member who drops mid-game comes back without their
+            # team indicator and believes they are playing alone.
+            "teams": self._team_registry.to_list(),
         }
 
         if self.phase == GamePhase.QUESTION_ACTIVE and self._current_question:
@@ -2295,7 +2336,9 @@ class QuizifyGameState:
 
         if self.phase == GamePhase.FINALE:
             # Use cached values computed once in end_game()
-            podium = self._finale_podium or calculate_podium(self.get_players())
+            podium = self._finale_podium or calculate_podium(
+                self.get_ranked_participants()
+            )
             snapshot["podium"] = [
                 {"name": p.name, "score": p.score, "rank": i + 1}
                 for i, p in enumerate(podium)
@@ -2303,7 +2346,7 @@ class QuizifyGameState:
             awards = (
                 self._finale_superlatives
                 if self._finale_superlatives is not None
-                else compute_superlatives(self.get_players())
+                else compute_superlatives(self.get_ranked_participants())
             )
             if awards:
                 snapshot["superlatives"] = [s.to_dict() for s in awards]
