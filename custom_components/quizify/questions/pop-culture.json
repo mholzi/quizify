@@ -1,7 +1,7 @@
 {
   "name": "Pop Culture",
   "language": "en",
-  "version": "1.1",
+  "version": "1.2",
   "theme": "popculture",
   "questions": [
     {
@@ -1873,6 +1873,66 @@
       "category": "Pop Culture",
       "image_url": "/quizify/static/img/packs/popculture/we-can-do-it.webp",
       "reveal_style": "progressive"
+    },
+    {
+      "id": "pop_en_166",
+      "question": "How many Oscars did Titanic win in 1998?",
+      "type": "estimate",
+      "answer": 11,
+      "min": 1,
+      "max": 30,
+      "unit": "Oscars",
+      "difficulty": "easy",
+      "fun_fact": "Eleven — level with Ben Hur and The Lord of the Rings: The Return of the King. Not one of them was for acting.",
+      "category": "Pop Culture"
+    },
+    {
+      "id": "pop_en_167",
+      "question": "How many episodes does the series Friends have in total?",
+      "type": "estimate",
+      "answer": 236,
+      "min": 10,
+      "max": 1000,
+      "unit": "episodes",
+      "difficulty": "medium",
+      "fun_fact": "236 episodes across ten seasons. In the final season each of the six leads earned a million dollars per episode, negotiated as a block and never individually.",
+      "category": "Pop Culture"
+    },
+    {
+      "id": "pop_en_168",
+      "question": "How many minutes long is the first Star Wars film from 1977?",
+      "type": "estimate",
+      "answer": 121,
+      "min": 30,
+      "max": 300,
+      "unit": "minutes",
+      "difficulty": "medium",
+      "fun_fact": "121 minutes. The studio thought the film unsalvageable until Marcia Lucas and two colleagues recut it — the edit won an Oscar.",
+      "category": "Pop Culture"
+    },
+    {
+      "id": "pop_en_169",
+      "question": "How old was Macaulay Culkin when Home Alone was filmed?",
+      "type": "estimate",
+      "answer": 10,
+      "min": 1,
+      "max": 40,
+      "unit": "years",
+      "difficulty": "medium",
+      "fun_fact": "Ten. The film took nearly half a billion dollars worldwide and still holds the record for the highest-grossing live-action comedy.",
+      "category": "Pop Culture"
+    },
+    {
+      "id": "pop_en_170",
+      "question": "How many minutes long is Gone with the Wind?",
+      "type": "estimate",
+      "answer": 238,
+      "min": 30,
+      "max": 500,
+      "unit": "minutes",
+      "difficulty": "hard",
+      "fun_fact": "238 minutes including overture and intermission. Adjusted for inflation it remains the highest-grossing film ever made.",
+      "category": "Pop Culture"
     }
   ]
 }
