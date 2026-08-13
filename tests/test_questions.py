@@ -50,7 +50,7 @@ class TestLoadCategory:
     def test_load_category_returns_questions(self, bank: QuestionBank) -> None:
         questions = bank.load_category("geographie")
         assert len(questions) == bank.get_question_count("geographie")
-        assert 145 <= len(questions) <= 150
+        assert 145 <= len(questions) <= 155
         assert all(isinstance(q, Question) for q in questions)
 
     def test_load_all_categories(self, bank: QuestionBank) -> None:
@@ -121,7 +121,7 @@ class TestValidateAnswer:
 class TestQuestionCount:
     def test_get_question_count(self, bank: QuestionBank) -> None:
         count = bank.get_question_count("geographie")
-        assert 145 <= count <= 150
+        assert 145 <= count <= 155
 
     def test_get_question_count_by_difficulty(self, bank: QuestionBank) -> None:
         easy = bank.get_question_count("geographie", "easy")

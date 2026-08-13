@@ -3153,6 +3153,76 @@
       "difficulty": "easy",
       "fun_fact": "Africa is about 30 million square kilometres. The USA, China, and India combined cover roughly 25 million and would still fit inside it — the Mercator projection badly shrinks equatorial regions and inflates the poles.",
       "category": "Geography"
+    },
+    {
+      "id": "geo_en_161",
+      "question": "Which national park is this hot spring in?",
+      "answers": [
+        {"text": "Yosemite", "correct": false},
+        {"text": "Yellowstone", "correct": true},
+        {"text": "Banff", "correct": false}
+      ],
+      "difficulty": "easy",
+      "fun_fact": "The colour rings of the Grand Prismatic Spring are mats of bacteria. Almost nothing survives the roughly 70 °C centre, so it stays clear and blue; the water cools towards the rim, and different microbes tint each temperature band yellow, orange and red.",
+      "category": "Geography",
+      "image_url": "/quizify/static/img/packs/geography/yellowstone-spring.webp",
+      "reveal_style": "progressive"
+    },
+    {
+      "id": "geo_en_162",
+      "question": "Which city is this statue in?",
+      "answers": [
+        {"text": "New York", "correct": true},
+        {"text": "Boston", "correct": false},
+        {"text": "Philadelphia", "correct": false}
+      ],
+      "difficulty": "easy",
+      "fun_fact": "The Statue of Liberty crossed the Atlantic from France in 1885 in 214 crates and was assembled on the island. Its copper skin is barely two millimetres thick — the iron framework inside carries the whole figure.",
+      "category": "Geography",
+      "image_url": "/quizify/static/img/packs/geography/statue-of-liberty.webp",
+      "reveal_style": "progressive"
+    },
+    {
+      "id": "geo_en_163",
+      "question": "Which strait separates Europe from Africa here?",
+      "answers": [
+        {"text": "The Bosphorus", "correct": false},
+        {"text": "The Øresund", "correct": false},
+        {"text": "The Strait of Gibraltar", "correct": true}
+      ],
+      "difficulty": "easy",
+      "fun_fact": "At its narrowest the strait is only about 14 kilometres across. The water swaps in two layers: less salty Atlantic water flows in on top, saltier Mediterranean water flows back out underneath.",
+      "category": "Geography",
+      "image_url": "/quizify/static/img/packs/geography/strait-of-gibraltar.webp",
+      "reveal_style": "progressive"
+    },
+    {
+      "id": "geo_en_164",
+      "question": "Which river is picked out here at night from space?",
+      "answers": [
+        {"text": "The Ganges", "correct": false},
+        {"text": "The Nile", "correct": true},
+        {"text": "The Danube", "correct": false}
+      ],
+      "difficulty": "medium",
+      "fun_fact": "Nearly everyone in Egypt lives on the narrow strip along the Nile and in its delta — a few percent of the country's area. That is why the band of light stops so abruptly where the desert starts.",
+      "category": "Geography",
+      "image_url": "/quizify/static/img/packs/geography/nile-delta-night.webp",
+      "reveal_style": "progressive"
+    },
+    {
+      "id": "geo_en_165",
+      "question": "Which country is this building in?",
+      "answers": [
+        {"text": "Iran", "correct": false},
+        {"text": "Uzbekistan", "correct": false},
+        {"text": "India", "correct": true}
+      ],
+      "difficulty": "easy",
+      "fun_fact": "The Taj Mahal at Agra was begun in 1632 as a tomb for Mumtaz Mahal, wife of the Mughal emperor Shah Jahan. This is a photochrom from around 1890: a black-and-white photograph whose colours were laid on by hand at the printing stage.",
+      "category": "Geography",
+      "image_url": "/quizify/static/img/packs/geography/taj-mahal.webp",
+      "reveal_style": "progressive"
     }
   ]
 }
