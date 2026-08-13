@@ -58,6 +58,7 @@ PACK_SETS = (
     ImageSet("geography", ("geographie.json", "geography.json"), 149),
     ImageSet("history", ("geschichte-de.json", "history-en.json"), 149),
     ImageSet("science", ("wissenschaft-de.json", "science-en.json"), 150),
+    ImageSet("tech", ("technik-de.json", "tech-en.json"), 150),
 )
 
 # (set, pack) for the guards that look at one pack at a time.
