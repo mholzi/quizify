@@ -1,7 +1,7 @@
 {
   "name": "Technology",
   "language": "en",
-  "version": "1.1",
+  "version": "1.2",
   "theme": "tech",
   "questions": [
     {
@@ -3223,6 +3223,66 @@
       "category": "Technology",
       "image_url": "/quizify/static/img/packs/tech/lunar-module.webp",
       "reveal_style": "progressive"
+    },
+    {
+      "id": "tech_en_166",
+      "question": "How many characters was a tweet originally limited to?",
+      "type": "estimate",
+      "answer": 140,
+      "min": 10,
+      "max": 500,
+      "unit": "characters",
+      "difficulty": "easy",
+      "fun_fact": "140, because an SMS held 160 and 20 were kept back for the sender's name — a format inherited from the years before smartphones.",
+      "category": "Technology"
+    },
+    {
+      "id": "tech_en_167",
+      "question": "How much did the first commercial mobile phone, the 1983 Motorola DynaTAC 8000X, weigh?",
+      "type": "estimate",
+      "answer": 790,
+      "min": 100,
+      "max": 3000,
+      "unit": "grams",
+      "difficulty": "medium",
+      "fun_fact": "790 grams for 30 minutes of talk time, and ten hours of charging to get it. It sold for $3,995.",
+      "category": "Technology"
+    },
+    {
+      "id": "tech_en_168",
+      "question": "How many transistors did the Intel 4004, the first microprocessor, have in 1971?",
+      "type": "estimate",
+      "answer": 2300,
+      "min": 100,
+      "max": 100000,
+      "unit": "transistors",
+      "difficulty": "hard",
+      "fun_fact": "2,300. A phone chip today carries more than ten billion — a factor of over four million in some 50 years.",
+      "category": "Technology"
+    },
+    {
+      "id": "tech_en_169",
+      "question": "How much RAM did the computer that guided Apollo 11 to the Moon have?",
+      "type": "estimate",
+      "answer": 4,
+      "min": 1,
+      "max": 1000,
+      "unit": "kilobytes",
+      "difficulty": "hard",
+      "fun_fact": "4 KB of RAM and 72 KB of hard-wired program memory, woven into magnetic cores by hand. A musical greeting card out-computes it today.",
+      "category": "Technology"
+    },
+    {
+      "id": "tech_en_170",
+      "question": "How many bits make up an IPv4 address?",
+      "type": "estimate",
+      "answer": 32,
+      "min": 4,
+      "max": 256,
+      "unit": "bits",
+      "difficulty": "medium",
+      "fun_fact": "32 bits give just under 4.3 billion addresses — unimaginably many in 1981, officially exhausted since 2011. IPv6 uses 128.",
+      "category": "Technology"
     }
   ]
 }

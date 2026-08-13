@@ -1,7 +1,7 @@
 {
   "name": "Technik",
   "language": "de",
-  "version": "1.1",
+  "version": "1.2",
   "theme": "tech",
   "questions": [
     {
@@ -1873,6 +1873,66 @@
       "category": "Technik",
       "image_url": "/quizify/static/img/packs/tech/lunar-module.webp",
       "reveal_style": "progressive"
+    },
+    {
+      "id": "technik_de_166",
+      "question": "Wie viele Zeichen durfte ein Tweet ursprünglich lang sein?",
+      "type": "estimate",
+      "answer": 140,
+      "min": 10,
+      "max": 500,
+      "unit": "Zeichen",
+      "difficulty": "easy",
+      "fun_fact": "140 Zeichen, weil eine SMS 160 lang war und 20 für den Absendernamen reserviert blieben — ein Format aus der Zeit vor den Smartphones.",
+      "category": "Technik"
+    },
+    {
+      "id": "technik_de_167",
+      "question": "Wie viel wog das erste kommerzielle Mobiltelefon, das Motorola DynaTAC 8000X von 1983?",
+      "type": "estimate",
+      "answer": 790,
+      "min": 100,
+      "max": 3000,
+      "unit": "Gramm",
+      "difficulty": "medium",
+      "fun_fact": "790 Gramm für 30 Minuten Gesprächszeit — und zehn Stunden Ladezeit dafür. Es kostete damals 3.995 Dollar.",
+      "category": "Technik"
+    },
+    {
+      "id": "technik_de_168",
+      "question": "Wie viele Transistoren hatte der Intel 4004, der erste Mikroprozessor von 1971?",
+      "type": "estimate",
+      "answer": 2300,
+      "min": 100,
+      "max": 100000,
+      "unit": "Transistoren",
+      "difficulty": "hard",
+      "fun_fact": "2.300. Ein heutiger Smartphone-Chip trägt mehr als zehn Milliarden — das ist ein Faktor von über vier Millionen in gut 50 Jahren.",
+      "category": "Technik"
+    },
+    {
+      "id": "technik_de_169",
+      "question": "Wie viel Arbeitsspeicher hatte der Bordcomputer, der Apollo 11 zum Mond navigierte?",
+      "type": "estimate",
+      "answer": 4,
+      "min": 1,
+      "max": 1000,
+      "unit": "Kilobyte",
+      "difficulty": "hard",
+      "fun_fact": "4 KB RAM und 72 KB fest verdrahteter Programmspeicher, von Hand in Ringkerne eingewebt. Jede Grußkarte mit Melodie hat heute mehr Rechenleistung.",
+      "category": "Technik"
+    },
+    {
+      "id": "technik_de_170",
+      "question": "Aus wie vielen Bits besteht eine IPv4-Adresse?",
+      "type": "estimate",
+      "answer": 32,
+      "min": 4,
+      "max": 256,
+      "unit": "Bit",
+      "difficulty": "medium",
+      "fun_fact": "32 Bit ergeben knapp 4,3 Milliarden Adressen — 1981 undenkbar viele, seit 2011 offiziell aufgebraucht. IPv6 nimmt 128 Bit.",
+      "category": "Technik"
     }
   ]
 }
