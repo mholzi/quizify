@@ -3153,6 +3153,76 @@
       "difficulty": "easy",
       "fun_fact": "Würde der Kern eines Atoms die Größe einer Erbse haben, läge die Elektronenhülle hunderte Meter entfernt. Über 99,9999 % eines Atoms sind leerer Raum — du bestehst praktisch aus Nichts, gehalten von elektrischen Kräften.",
       "category": "Wissenschaft"
+    },
+    {
+      "id": "wissenschaft_de_161",
+      "question": "Welches Verfahren machte diese Aufnahme einer Hand von 1895 möglich?",
+      "answers": [
+        {"text": "Ultraschall", "correct": false},
+        {"text": "Röntgenstrahlung", "correct": true},
+        {"text": "Magnetresonanz", "correct": false}
+      ],
+      "difficulty": "easy",
+      "fun_fact": "Wilhelm Conrad Röntgen fotografierte die Hand seiner Frau Anna Bertha — der dunkle Fleck ist ihr Ehering. Sie soll beim Anblick gesagt haben: „Ich habe meinen Tod gesehen.“ Röntgen ließ das Verfahren nie patentieren.",
+      "category": "Wissenschaft",
+      "image_url": "/quizify/static/img/packs/science/first-x-ray.webp",
+      "reveal_style": "progressive"
+    },
+    {
+      "id": "wissenschaft_de_162",
+      "question": "Welcher Physiker ist hier zu sehen?",
+      "answers": [
+        {"text": "Niels Bohr", "correct": false},
+        {"text": "Max Planck", "correct": false},
+        {"text": "Albert Einstein", "correct": true}
+      ],
+      "difficulty": "easy",
+      "fun_fact": "Den Nobelpreis bekam Einstein 1921 nicht für die Relativitätstheorie, sondern für die Erklärung des photoelektrischen Effekts — die Relativitätstheorie galt dem Komitee noch als zu unsicher.",
+      "category": "Wissenschaft",
+      "image_url": "/quizify/static/img/packs/science/einstein-portrait.webp",
+      "reveal_style": "progressive"
+    },
+    {
+      "id": "wissenschaft_de_163",
+      "question": "Welche Wissenschaftlerin ist hier zu sehen?",
+      "answers": [
+        {"text": "Marie Curie", "correct": true},
+        {"text": "Lise Meitner", "correct": false},
+        {"text": "Rosalind Franklin", "correct": false}
+      ],
+      "difficulty": "medium",
+      "fun_fact": "Marie Curie ist bis heute die einzige Person mit Nobelpreisen in zwei verschiedenen Naturwissenschaften — 1903 Physik, 1911 Chemie. Ihre Laborbücher strahlen so stark, dass sie in Bleikästen aufbewahrt werden.",
+      "category": "Wissenschaft",
+      "image_url": "/quizify/static/img/packs/science/marie-curie.webp",
+      "reveal_style": "progressive"
+    },
+    {
+      "id": "wissenschaft_de_164",
+      "question": "Welches Teleskop lieferte diese Aufnahme aus dem Adlernebel?",
+      "answers": [
+        {"text": "Das James-Webb-Teleskop", "correct": false},
+        {"text": "Das Hubble-Teleskop", "correct": true},
+        {"text": "Das Very Large Telescope", "correct": false}
+      ],
+      "difficulty": "medium",
+      "fun_fact": "Die „Säulen der Schöpfung“ sind Gas- und Staubtürme, in denen neue Sterne entstehen. Der größte ist rund vier Lichtjahre hoch — etwa die Strecke von der Sonne bis zum nächsten Stern.",
+      "category": "Wissenschaft",
+      "image_url": "/quizify/static/img/packs/science/pillars-of-creation.webp",
+      "reveal_style": "progressive"
+    },
+    {
+      "id": "wissenschaft_de_165",
+      "question": "Welches Instrument machte diese Zeichnung von 1665 möglich?",
+      "answers": [
+        {"text": "Das Fernrohr", "correct": false},
+        {"text": "Die Camera obscura", "correct": false},
+        {"text": "Das Mikroskop", "correct": true}
+      ],
+      "difficulty": "medium",
+      "fun_fact": "Robert Hookes „Micrographia“ zeigte einen Floh in einer Größe, die vorher niemand gesehen hatte. Im selben Buch prägte er für die Kammern im Kork das Wort „Zelle“ — nach den Zellen eines Klosters.",
+      "category": "Wissenschaft",
+      "image_url": "/quizify/static/img/packs/science/hooke-flea.webp",
+      "reveal_style": "progressive"
     }
   ]
 }
