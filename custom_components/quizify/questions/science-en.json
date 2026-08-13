@@ -1803,6 +1803,76 @@
       "difficulty": "hard",
       "fun_fact": "One breath holds about 25 sextillion (2.5×10²²) molecules. Statistically, with each breath you inhale a few molecules that were once breathed out by Julius Caesar, because air mixes globally over centuries.",
       "category": "Science"
+    },
+    {
+      "id": "science_en_161",
+      "question": "Which technique produced this image of a hand in 1895?",
+      "answers": [
+        {"text": "Ultrasound", "correct": false},
+        {"text": "X-rays", "correct": true},
+        {"text": "Magnetic resonance", "correct": false}
+      ],
+      "difficulty": "easy",
+      "fun_fact": "Wilhelm Conrad Röntgen photographed the hand of his wife Anna Bertha — the dark blob is her wedding ring. She is said to have replied: “I have seen my death.” Röntgen never patented the method.",
+      "category": "Science",
+      "image_url": "/quizify/static/img/packs/science/first-x-ray.webp",
+      "reveal_style": "progressive"
+    },
+    {
+      "id": "science_en_162",
+      "question": "Which physicist is shown here?",
+      "answers": [
+        {"text": "Niels Bohr", "correct": false},
+        {"text": "Max Planck", "correct": false},
+        {"text": "Albert Einstein", "correct": true}
+      ],
+      "difficulty": "easy",
+      "fun_fact": "Einstein's 1921 Nobel Prize was not for relativity but for explaining the photoelectric effect — the committee still considered relativity too uncertain.",
+      "category": "Science",
+      "image_url": "/quizify/static/img/packs/science/einstein-portrait.webp",
+      "reveal_style": "progressive"
+    },
+    {
+      "id": "science_en_163",
+      "question": "Which scientist is shown here?",
+      "answers": [
+        {"text": "Marie Curie", "correct": true},
+        {"text": "Lise Meitner", "correct": false},
+        {"text": "Rosalind Franklin", "correct": false}
+      ],
+      "difficulty": "medium",
+      "fun_fact": "Marie Curie remains the only person with Nobel Prizes in two different sciences — physics in 1903, chemistry in 1911. Her notebooks are still radioactive enough to be kept in lead boxes.",
+      "category": "Science",
+      "image_url": "/quizify/static/img/packs/science/marie-curie.webp",
+      "reveal_style": "progressive"
+    },
+    {
+      "id": "science_en_164",
+      "question": "Which telescope took this picture inside the Eagle Nebula?",
+      "answers": [
+        {"text": "The James Webb Space Telescope", "correct": false},
+        {"text": "The Hubble Space Telescope", "correct": true},
+        {"text": "The Very Large Telescope", "correct": false}
+      ],
+      "difficulty": "medium",
+      "fun_fact": "The Pillars of Creation are towers of gas and dust where new stars form. The tallest is about four light years high — roughly the distance from the Sun to the next star.",
+      "category": "Science",
+      "image_url": "/quizify/static/img/packs/science/pillars-of-creation.webp",
+      "reveal_style": "progressive"
+    },
+    {
+      "id": "science_en_165",
+      "question": "Which instrument made this 1665 drawing possible?",
+      "answers": [
+        {"text": "The telescope", "correct": false},
+        {"text": "The camera obscura", "correct": false},
+        {"text": "The microscope", "correct": true}
+      ],
+      "difficulty": "medium",
+      "fun_fact": "Robert Hooke's “Micrographia” showed a flea at a size nobody had seen before. In the same book he named the compartments he found in cork “cells”, after the rooms of a monastery.",
+      "category": "Science",
+      "image_url": "/quizify/static/img/packs/science/hooke-flea.webp",
+      "reveal_style": "progressive"
     }
   ]
 }
