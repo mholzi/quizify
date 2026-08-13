@@ -1,7 +1,7 @@
 {
   "name": "Food & Drink",
   "language": "en",
-  "version": "1.1",
+  "version": "1.2",
   "theme": "food",
   "questions": [
     {
@@ -1873,6 +1873,66 @@
       "category": "Food & Drink",
       "image_url": "/quizify/static/img/packs/food/pineapple-watercolour.webp",
       "reveal_style": "progressive"
+    },
+    {
+      "id": "food_en_166",
+      "question": "What percentage of a cucumber is water?",
+      "type": "estimate",
+      "answer": 96,
+      "min": 0,
+      "max": 100,
+      "unit": "percent",
+      "difficulty": "easy",
+      "fun_fact": "96 percent — more than a watermelon. That is also why it tastes of almost nothing until it is salted.",
+      "category": "Food & Drink"
+    },
+    {
+      "id": "food_en_167",
+      "question": "How many litres of milk go into one kilogram of hard cheese?",
+      "type": "estimate",
+      "answer": 10,
+      "min": 1,
+      "max": 50,
+      "unit": "litres",
+      "difficulty": "medium",
+      "fun_fact": "Around ten. The rest drains off as whey — a waste product for centuries, now the expensive powder in sports nutrition.",
+      "category": "Food & Drink"
+    },
+    {
+      "id": "food_en_168",
+      "question": "How many months must Parmigiano Reggiano age at minimum?",
+      "type": "estimate",
+      "answer": 12,
+      "min": 1,
+      "max": 60,
+      "unit": "months",
+      "difficulty": "medium",
+      "fun_fact": "Twelve, by protected-designation rules, after which an inspector taps every wheel with a small hammer. Fail and the wheel loses its rind branding.",
+      "category": "Food & Drink"
+    },
+    {
+      "id": "food_en_169",
+      "question": "At what temperature does table sugar start to caramelise?",
+      "type": "estimate",
+      "answer": 160,
+      "min": 0,
+      "max": 400,
+      "unit": "degrees Celsius",
+      "difficulty": "medium",
+      "fun_fact": "Around 160 °C. Below that it merely melts; above it, caramel turns bitter within seconds.",
+      "category": "Food & Drink"
+    },
+    {
+      "id": "food_en_170",
+      "question": "How many Scoville units does a jalapeño carry?",
+      "type": "estimate",
+      "answer": 5000,
+      "min": 0,
+      "max": 100000,
+      "unit": "Scoville",
+      "difficulty": "hard",
+      "fun_fact": "About 5,000. A habanero sits near 200,000 and pure capsaicin at 16 million — the scale has no upper bound and was originally judged by tongue.",
+      "category": "Food & Drink"
     }
   ]
 }

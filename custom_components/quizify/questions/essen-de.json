@@ -1,7 +1,7 @@
 {
   "name": "Essen & Trinken",
   "language": "de",
-  "version": "1.1",
+  "version": "1.2",
   "theme": "food",
   "questions": [
     {
@@ -3223,6 +3223,66 @@
       "category": "Essen & Trinken",
       "image_url": "/quizify/static/img/packs/food/pineapple-watercolour.webp",
       "reveal_style": "progressive"
+    },
+    {
+      "id": "essen_de_166",
+      "question": "Wie viel Prozent Wasser steckt in einer Salatgurke?",
+      "type": "estimate",
+      "answer": 96,
+      "min": 0,
+      "max": 100,
+      "unit": "Prozent",
+      "difficulty": "easy",
+      "fun_fact": "96 Prozent — mehr als in einer Wassermelone. Deshalb schmeckt sie auch nach fast nichts, wenn sie nicht gesalzen wird.",
+      "category": "Essen & Trinken"
+    },
+    {
+      "id": "essen_de_167",
+      "question": "Wie viele Liter Milch braucht man für ein Kilogramm Hartkäse?",
+      "type": "estimate",
+      "answer": 10,
+      "min": 1,
+      "max": 50,
+      "unit": "Liter",
+      "difficulty": "medium",
+      "fun_fact": "Rund zehn. Der Rest läuft als Molke ab — jahrhundertelang ein Abfallprodukt, heute das teure Pulver in der Sporternährung.",
+      "category": "Essen & Trinken"
+    },
+    {
+      "id": "essen_de_168",
+      "question": "Wie viele Monate muss Parmigiano Reggiano mindestens reifen?",
+      "type": "estimate",
+      "answer": 12,
+      "min": 1,
+      "max": 60,
+      "unit": "Monate",
+      "difficulty": "medium",
+      "fun_fact": "Zwölf Monate schreibt die Schutzverordnung vor, dann klopft ein Prüfer jeden Laib mit einem kleinen Hammer ab. Wer durchfällt, verliert die Rindenprägung.",
+      "category": "Essen & Trinken"
+    },
+    {
+      "id": "essen_de_169",
+      "question": "Bei wie viel Grad Celsius beginnt Haushaltszucker zu karamellisieren?",
+      "type": "estimate",
+      "answer": 160,
+      "min": 0,
+      "max": 400,
+      "unit": "Grad Celsius",
+      "difficulty": "medium",
+      "fun_fact": "Bei rund 160 °C. Darunter schmilzt er nur; darüber wird aus dem Karamell in wenigen Sekunden Bitterstoff.",
+      "category": "Essen & Trinken"
+    },
+    {
+      "id": "essen_de_170",
+      "question": "Wie viele Scoville-Einheiten hat eine Jalapeño?",
+      "type": "estimate",
+      "answer": 5000,
+      "min": 0,
+      "max": 100000,
+      "unit": "Scoville",
+      "difficulty": "hard",
+      "fun_fact": "Etwa 5.000. Die Habanero liegt bei rund 200.000, reines Capsaicin bei 16 Millionen — die Skala ist nach oben offen und wurde ursprünglich per Zunge bestimmt.",
+      "category": "Essen & Trinken"
     }
   ]
 }
