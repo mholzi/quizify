@@ -3,6 +3,68 @@
 All notable changes to Quizify are documented here. This project follows
 [Semantic Versioning](https://semver.org/).
 
+## [1.8.0-RC2] — 2026-08-13
+
+One addition changes who is playing. Until now Quizify counted people; from this release it can count sofas. Two people who want to play together say so on their phones, and from that point the room has one fewer participant and one more team.
+
+The rest is content, and it closes a gap that had been open for two releases: Quizify could show a picture and could ask you to guess a number, and almost no pack did either. Now every themed pack does both.
+
+### 👥 Team mode
+
+Players form teams themselves, in the lobby, before the first question ([#365](https://github.com/mholzi/quizify/issues/365)). The host assigns nobody. The lobby asks one question — playing alone, or with someone? — and only a player who answers "with someone" ever sees a team list. Naming a team is optional; leave the field empty and one gets suggested.
+
+**A team is a participant, not a grouping.** It answers once, scores once, and appears in the ranking exactly where a player would. There is no per-capita division and no handicap: four people on one sofa may out-score a pair, and that is the mode working as intended rather than a fairness bug. A player who joins no team keeps their own row next to the teams — a lone player is a team of one, not an error state.
+
+**Any member may change the team's answer until the clock stops.** The answer standing at the buzzer is the team's answer, and the speed bonus keys on the *last* tap, so tapping something instantly and thinking afterwards is not free. A short lock after each change stops two people flipping the answer back and forth in the final seconds. This is deliberately scoped to team mode: a solo player's answer is still final the moment they tap it.
+
+On the question screen the standing answer shows as small member dots on the answer it sits on — no banner. Disagreement shows as dots on two different rows.
+
+**The end-of-game awards go to teams.** Not as a rename — a team records what a player records, so each award gets a reading that follows from the data. Fastest Finger is the time of the tap that *stood*, which means a team that argues to the buzzer genuinely is slower. Buzzkill sums the freezes its members spent, since power-ups are still handed to people.
+
+The Lightning Round works the same way ([#552](https://github.com/mholzi/quizify/issues/552)): one answer, one score, changeable until the clock stops. The television shows the lobby grouped by team, so the room can see who is playing with whom without anyone shouting across the sofa.
+
+### 🖼️ Pictures in every pack
+
+Every themed pack now carries **five image questions** ([#554](https://github.com/mholzi/quizify/issues/554)) — 164 of them across the library, drawn from 50 pictures. Image support has existed since 1.3.0 and, until 1.7.0, no shipped pack had ever used it; even then it was two packs that are nothing *but* pictures. A picture is now something you meet in the middle of an ordinary round.
+
+Sourcing was the entire cost, and it is the reason this took a day rather than an hour. Every licence was verified on the individual file record rather than assumed from the collection — a Ginkgo photograph looked public domain in search results and was CC BY-SA on its own page. Every candidate was then looked at **at 340 px**, the real width of a card on a phone: Bingham's 1912 Machu Picchu photographs are free and, at that size, show some Andean terraces. The Enigma machine, the IBM 350 and Köhler's cacao and coffee plates were dropped for resolution alone, which is why the food pack has no chocolate picture.
+
+Two failure modes recurred often enough to name. **The picture announces its own answer** — a photochrom with `AGRA TAJ MAHAL` printed in the border, Röntgen's plate with the Würzburg stamp, a Maracanã print carrying the date of the final. Each was cropped. **Licence-clean is not ship-clean** — a "Piazilla" watermark in the most convenient Van Gogh scan, an ARQUIVO NACIONAL stamp, negative numbers 53202 and 25194 on the Agence Rol glass plates. Invisible in a thumbnail, obvious on a quiz card.
+
+Music and pop culture were predicted to be licence walls and were: free is essentially what predates the record and studio industries, so the ten pictures there run from 1665 to 1953 and their modern questions stay text. Steamboat Willie is there because it entered the US public domain in 2024 — a copyright expiry, not a trademark one, which is why the question asks about the character rather than treating the image as a logo.
+
+Image questions may also declare `reveal_style: "progressive"` ([#434](https://github.com/mholzi/quizify/issues/434)): the picture opens heavily blurred and sharpens as the round timer drains, lining the reveal up with the speed bonus the scoring already pays. Enabled on the two picture packs; every other pack behaves exactly as before.
+
+### 🎯 A number to guess in every pack
+
+Every themed pack also carries **five estimate questions** ([#566](https://github.com/mholzi/quizify/issues/566)) — 130 of them, built on 50 facts. The slider arrived in 1.4.0 and had spent two releases in two packs of its own.
+
+These were chosen by one rule, and it is worth stating because it shaped every subject: **a shipped pack cannot notice that its own answer has gone stale.** Populations drift, records fall, box office keeps counting, and nobody edits the JSON. So the obvious questions were left out on purpose — the Dead Sea's surface level is the classic geography estimate and it drops about a metre a year; "how many elements are in the periodic table" looks like a constant and gains one every decade or so.
+
+Each subject was mined for something fixed instead. Physical constants in science, one of them fixed by decree — the speed of light stopped being a measurement in 1983 and became the definition of the metre. Rules and dimensions in sport rather than records, which turns out to carry the better stories: the marathon's odd 195 metres exist because a start line moved to Windsor Castle in 1908, and a basketball hoop hangs at ten feet because that was the height of a gymnasium balcony in 1891. Historical hardware in technology, where the intuition is wrong in a consistent direction — the computer that guided Apollo 11 had 4 KB of RAM. Closed works in pop culture: a finished film has a runtime and a finished series has an episode count, and neither will ever change again.
+
+One question was rewritten before it shipped, for the same reason several pictures were cropped: John Cage's silent piece is titled *4'33"*, and that **is** the answer in minutes and seconds. It now describes the piece instead of naming it.
+
+The jalapeño is the deliberate exception to the "pick a firm number" rule. Scoville is a fuzzy scale, judged by tongue long before it was measured, and multiple choice cannot ask it honestly because any two options would both be defensible. A slider can, because closeness scoring rewards the right order of magnitude. That is a use for the mechanic 1.4.0 did not have in view.
+
+### 🌍 Spanish gets all of it
+
+A picture crosses languages unchanged, and so does a number. All six Spanish packs carry the same fifty pictures and the same fifty facts as their German and English siblings, at the cost of question text alone.
+
+The library now stands at **4,117 questions across 30 packs**, 164 of them with a picture and 160 asking for a number. The integration grows by about **4 MB of images**, which every install downloads. Nothing was deleted to make room; the themed packs simply run ten questions longer, and the ceiling moved from 155 to 160.
+
+The two estimate packs and the two picture-round packs are unchanged. Five images in a 15-question pack would be a third of it rather than a garnish, and the picture packs are already nothing but pictures.
+
+### 🧪 Under the hood
+
+The suite stands at **1,818 tests**. Two guards are new, both registries: a pack pair joins by one entry and inherits the whole checklist rather than a copy of it. The image guard covers file existence, both languages carrying the same set, no orphaned weight, and a `reveal_style` declared without an image. The estimate guard covers what can actually go wrong with a slider — an answer outside its own range is *dropped silently* by the loader, so the pack would simply be four questions long with no error anywhere.
+
+One fix worth naming. Sixteen tests read multiple-choice answers off a question drawn from all packs at once — a draw that has been able to serve an estimate question since 1.4.0. They passed because the test seed never happened to serve one, and each new pack pair moved the draw until it did. No game code changed: serving an estimate in a mixed game was always correct behaviour.
+
+### 🙏 Thank you
+
+Every defect in the 1.7.0 line came out of running the thing rather than reading it, and this candidate has not been run anywhere but a build machine. If an evening with it turns up something odd — a picture that never appears, a slider whose range feels wrong, a team score that reads strangely — that report is worth more than another pass over the code.
+
 ## [1.8.0-RC1] — 2026-08-12
 
 Release candidate for 1.8.0. The entry below is the release text; the bare `v1.8.0` follows once this has been played on a real install.
