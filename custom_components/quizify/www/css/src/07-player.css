@@ -1899,6 +1899,20 @@
     margin: 0;
 }
 
+/* All-time standing line (#371, variant A). One quiet line between the hero
+   and the companion count — deliberately smaller and dimmer than .pl-also so
+   it reads as a footnote about you, not as a second headline competing with
+   the name. No box, no card: the lobby has no vertical budget left since the
+   team block landed (#365). */
+.pl-allTime {
+    text-align: center;
+    color: var(--color-text-muted);
+    font-size: 0.8rem;
+    letter-spacing: 0.01em;
+    opacity: 0.85;
+    margin: 0 0 var(--space-xs, 0.5rem);
+}
+
 .pl-orbits {
     display: flex;
     flex-wrap: wrap;

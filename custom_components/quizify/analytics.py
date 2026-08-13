@@ -53,6 +53,16 @@ class PlayerAllTimeRecord(TypedDict):
     last_played: int  # unix seconds
 
 
+class PlayerStanding(TypedDict):
+    """One player's own all-time placing, as shown in the lobby (#371)."""
+
+    rank: int
+    total_players: int
+    wins: int
+    games_played: int
+    total_score: int
+
+
 class AnalyticsData(TypedDict):
     """Complete analytics data schema."""
 
@@ -271,6 +281,48 @@ class QuizifyAnalytics:
         records = list(self._data.get("all_time_players", {}).values())
         records.sort(key=lambda r: (r["total_score"], r["wins"]), reverse=True)
         return records[:limit] if limit else records
+
+    def get_player_standing(self, name: str) -> PlayerStanding | None:
+        """One player's own all-time standing, for the lobby line (#371).
+
+        Deliberately NOT ``get_all_time_leaderboard()`` order. That list is
+        sorted by total score (wins only break ties), which rewards playing
+        a lot rather than winning — fine for the analytics dashboard, wrong
+        for a line that is supposed to start a rivalry. Here the rank is by
+        **wins**, with total score as the tiebreak. The dashboard ordering is
+        untouched, so the two surfaces can disagree; the lobby line always
+        says what it counts ("N wins from M games") so the number is legible
+        on its own.
+
+        Competition ranking: players with identical (wins, score) share a
+        rank, same posture as the in-game leaderboard — a standing must not
+        invent a placing out of dict order.
+
+        Returns ``None`` when this name has never finished a game, so a
+        first-time guest gets no line at all rather than "1st of 1".
+        """
+        records = list(self._data.get("all_time_players", {}).values())
+        if not records:
+            return None
+
+        records.sort(key=lambda r: (r["wins"], r["total_score"]), reverse=True)
+
+        rank = 0
+        prev: tuple[int, int] | None = None
+        for i, rec in enumerate(records):
+            key = (rec["wins"], rec["total_score"])
+            if prev is None or key != prev:
+                rank = i + 1
+                prev = key
+            if rec["name"] == name:
+                return {
+                    "rank": rank,
+                    "total_players": len(records),
+                    "wins": rec["wins"],
+                    "games_played": rec["games_played"],
+                    "total_score": rec["total_score"],
+                }
+        return None
 
     async def add_game(self, record: GameRecord) -> None:
         """Add game record and schedule save."""
