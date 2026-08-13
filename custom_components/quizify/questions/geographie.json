@@ -1,7 +1,7 @@
 {
   "name": "Geographie",
   "language": "de",
-  "version": "1.1",
+  "version": "1.2",
   "theme": "geography",
   "questions": [
     {
@@ -1861,6 +1861,66 @@
       "category": "Geographie",
       "image_url": "/quizify/static/img/packs/geography/taj-mahal.webp",
       "reveal_style": "progressive"
+    },
+    {
+      "id": "geo_166",
+      "question": "Wie hoch ist der Mount Everest?",
+      "type": "estimate",
+      "answer": 8849,
+      "min": 5000,
+      "max": 12000,
+      "unit": "Meter",
+      "difficulty": "easy",
+      "fun_fact": "Die 8.849 m sind erst seit 2020 amtlich: China und Nepal hatten sich jahrzehntelang um 4 m gestritten, weil der eine die Schneekappe mitmaß und der andere nicht.",
+      "category": "Geographie"
+    },
+    {
+      "id": "geo_167",
+      "question": "Wie lang ist der Äquator?",
+      "type": "estimate",
+      "answer": 40075,
+      "min": 10000,
+      "max": 100000,
+      "unit": "Kilometer",
+      "difficulty": "easy",
+      "fun_fact": "Genau daher kommt das Meter: Es wurde ursprünglich als der zehnmillionste Teil der Strecke vom Nordpol zum Äquator festgelegt.",
+      "category": "Geographie"
+    },
+    {
+      "id": "geo_168",
+      "question": "Wie lang ist der Nil?",
+      "type": "estimate",
+      "answer": 6650,
+      "min": 1000,
+      "max": 10000,
+      "unit": "Kilometer",
+      "difficulty": "medium",
+      "fun_fact": "Ob er oder der Amazonas der längste Fluss ist, hängt davon ab, wo man die Quelle ansetzt — im Amazonasdelta streitet die Messung sich um mehrere hundert Kilometer.",
+      "category": "Geographie"
+    },
+    {
+      "id": "geo_169",
+      "question": "Über wie viele Zeitzonen erstreckt sich Russland?",
+      "type": "estimate",
+      "answer": 11,
+      "min": 1,
+      "max": 24,
+      "unit": "Zeitzonen",
+      "difficulty": "medium",
+      "fun_fact": "Wenn in Kaliningrad der Morgen beginnt, ist auf Kamtschatka schon Abend. 2010 wurden zwei Zonen gestrichen und 2014 wieder eingeführt.",
+      "category": "Geographie"
+    },
+    {
+      "id": "geo_170",
+      "question": "Wie tief ist die tiefste Stelle des Marianengrabens?",
+      "type": "estimate",
+      "answer": 10935,
+      "min": 1000,
+      "max": 15000,
+      "unit": "Meter",
+      "difficulty": "hard",
+      "fun_fact": "Der Mount Everest hätte darin Platz und läge immer noch gut zwei Kilometer unter der Wasseroberfläche.",
+      "category": "Geographie"
     }
   ]
 }

@@ -1,7 +1,7 @@
 {
   "name": "Geography",
   "language": "en",
-  "version": "1.1",
+  "version": "1.2",
   "theme": "geography",
   "questions": [
     {
@@ -3223,6 +3223,66 @@
       "category": "Geography",
       "image_url": "/quizify/static/img/packs/geography/taj-mahal.webp",
       "reveal_style": "progressive"
+    },
+    {
+      "id": "geo_en_166",
+      "question": "How high is Mount Everest?",
+      "type": "estimate",
+      "answer": 8849,
+      "min": 5000,
+      "max": 12000,
+      "unit": "metres",
+      "difficulty": "easy",
+      "fun_fact": "The 8,849 m figure has only been official since 2020: China and Nepal had argued for decades over 4 m, because one side measured the snow cap and the other did not.",
+      "category": "Geography"
+    },
+    {
+      "id": "geo_en_167",
+      "question": "How long is the equator?",
+      "type": "estimate",
+      "answer": 40075,
+      "min": 10000,
+      "max": 100000,
+      "unit": "kilometres",
+      "difficulty": "easy",
+      "fun_fact": "This is where the metre comes from: it was originally defined as one ten-millionth of the distance from the North Pole to the equator.",
+      "category": "Geography"
+    },
+    {
+      "id": "geo_en_168",
+      "question": "How long is the Nile?",
+      "type": "estimate",
+      "answer": 6650,
+      "min": 1000,
+      "max": 10000,
+      "unit": "kilometres",
+      "difficulty": "medium",
+      "fun_fact": "Whether it or the Amazon is the longest river depends on where you put the source — in the Amazon delta the measurement argues over several hundred kilometres.",
+      "category": "Geography"
+    },
+    {
+      "id": "geo_en_169",
+      "question": "How many time zones does Russia span?",
+      "type": "estimate",
+      "answer": 11,
+      "min": 1,
+      "max": 24,
+      "unit": "time zones",
+      "difficulty": "medium",
+      "fun_fact": "When morning breaks in Kaliningrad it is already evening in Kamchatka. Two zones were scrapped in 2010 and brought back in 2014.",
+      "category": "Geography"
+    },
+    {
+      "id": "geo_en_170",
+      "question": "How deep is the deepest point of the Mariana Trench?",
+      "type": "estimate",
+      "answer": 10935,
+      "min": 1000,
+      "max": 15000,
+      "unit": "metres",
+      "difficulty": "hard",
+      "fun_fact": "Mount Everest would fit inside it and still sit a good two kilometres below the surface.",
+      "category": "Geography"
     }
   ]
 }
