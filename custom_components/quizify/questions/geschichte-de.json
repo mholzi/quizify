@@ -1,7 +1,7 @@
 {
   "name": "Geschichte",
   "language": "de",
-  "version": "1.1",
+  "version": "1.2",
   "theme": "history",
   "questions": [
     {
@@ -1861,6 +1861,66 @@
       "category": "Geschichte",
       "image_url": "/quizify/static/img/packs/history/brandenburg-gate-1989.webp",
       "reveal_style": "progressive"
+    },
+    {
+      "id": "geschichte_de_166",
+      "question": "Wie viele Jahre dauerte der Hundertjährige Krieg zwischen England und Frankreich?",
+      "type": "estimate",
+      "answer": 116,
+      "min": 50,
+      "max": 200,
+      "unit": "Jahre",
+      "difficulty": "hard",
+      "fun_fact": "116 Jahre, mit langen Waffenstillständen dazwischen. Den Namen bekam er erst im 19. Jahrhundert von Historikern, die die Einzelkriege zu einem zusammenfassten.",
+      "category": "Geschichte"
+    },
+    {
+      "id": "geschichte_de_167",
+      "question": "Wie viele Jahre stand die Berliner Mauer?",
+      "type": "estimate",
+      "answer": 28,
+      "min": 1,
+      "max": 100,
+      "unit": "Jahre",
+      "difficulty": "medium",
+      "fun_fact": "Vom 13. August 1961 bis zum 9. November 1989. Seit dem Mauerfall ist sie inzwischen länger weg, als sie stand.",
+      "category": "Geschichte"
+    },
+    {
+      "id": "geschichte_de_168",
+      "question": "Wie hoch war die Cheops-Pyramide ursprünglich?",
+      "type": "estimate",
+      "answer": 146,
+      "min": 20,
+      "max": 300,
+      "unit": "Meter",
+      "difficulty": "medium",
+      "fun_fact": "Rund 3.800 Jahre lang war sie das höchste Bauwerk der Welt. Heute fehlen ihr etwa 8 Meter, weil die glatte Verkleidung als Baumaterial abgetragen wurde.",
+      "category": "Geschichte"
+    },
+    {
+      "id": "geschichte_de_169",
+      "question": "Wie lang ist die Chinesische Mauer mit allen Abschnitten?",
+      "type": "estimate",
+      "answer": 21196,
+      "min": 1000,
+      "max": 50000,
+      "unit": "Kilometer",
+      "difficulty": "hard",
+      "fun_fact": "Die 21.196 km stammen aus einer Vermessung von 2012, die erstmals alle Bauphasen mitzählte. Vom Mond aus ist sie trotzdem nicht zu sehen — sie ist lang, aber nur wenige Meter breit.",
+      "category": "Geschichte"
+    },
+    {
+      "id": "geschichte_de_170",
+      "question": "Wie viele Tage war Apollo 11 unterwegs, vom Start bis zur Wasserung?",
+      "type": "estimate",
+      "answer": 8,
+      "min": 1,
+      "max": 60,
+      "unit": "Tage",
+      "difficulty": "easy",
+      "fun_fact": "Acht Tage und drei Stunden. Auf dem Mond selbst waren Armstrong und Aldrin nur knapp 22 Stunden, davon gut zweieinhalb draußen.",
+      "category": "Geschichte"
     }
   ]
 }
