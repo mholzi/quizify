@@ -1803,6 +1803,76 @@
       "difficulty": "easy",
       "fun_fact": "Etwa 100.000 Suchanfragen pro Sekunde ergeben über 8 Milliarden pro Tag. Ein erheblicher Teil davon sind Anfragen, die Google noch nie zuvor in exakt dieser Formulierung gesehen hat — bis heute rund 15 Prozent.",
       "category": "Technik"
+    },
+    {
+      "id": "technik_de_161",
+      "question": "Was steht in diesem Raum aus den 1940er-Jahren?",
+      "answers": [
+        {"text": "Eine Telefonvermittlung", "correct": false},
+        {"text": "Einer der ersten Computer", "correct": true},
+        {"text": "Ein Rundfunkstudio", "correct": false}
+      ],
+      "difficulty": "medium",
+      "fun_fact": "Der ENIAC füllte einen Saal, wog 27 Tonnen und rechnete mit rund 18.000 Elektronenröhren. Programmiert wurde er durch Umstecken von Kabeln — die Arbeit von sechs Mathematikerinnen, die dafür Tage brauchten.",
+      "category": "Technik",
+      "image_url": "/quizify/static/img/packs/tech/eniac.webp",
+      "reveal_style": "progressive"
+    },
+    {
+      "id": "technik_de_162",
+      "question": "Welche Fertigungsmethode zeigt dieses Foto von 1913?",
+      "answers": [
+        {"text": "Das Fließband", "correct": true},
+        {"text": "Der 3D-Druck", "correct": false},
+        {"text": "Die Handmontage in Einzelfertigung", "correct": false}
+      ],
+      "difficulty": "easy",
+      "fun_fact": "Henry Fords bewegliches Band drückte die Montagezeit eines Autos von gut zwölf Stunden auf anderthalb. Erst dadurch wurde das Model T billig genug, dass seine eigenen Arbeiter es sich leisten konnten.",
+      "category": "Technik",
+      "image_url": "/quizify/static/img/packs/tech/ford-assembly-line.webp",
+      "reveal_style": "progressive"
+    },
+    {
+      "id": "technik_de_163",
+      "question": "Was war dieses Gerät von 1957?",
+      "answers": [
+        {"text": "Eine Wetterboje", "correct": false},
+        {"text": "Eine Tiefseesonde", "correct": false},
+        {"text": "Der erste künstliche Satellit", "correct": true}
+      ],
+      "difficulty": "medium",
+      "fun_fact": "Sputnik 1 war eine Aluminiumkugel von 58 Zentimetern mit vier Antennen und funkte nur ein Piepsen. Genau das genügte: Funkamateure weltweit konnten es empfangen, und der Westen hörte es als Startschuss des Wettlaufs ins All.",
+      "category": "Technik",
+      "image_url": "/quizify/static/img/packs/tech/sputnik.webp",
+      "reveal_style": "progressive"
+    },
+    {
+      "id": "technik_de_164",
+      "question": "Wozu diente dieses Stück Karton in der Datenverarbeitung?",
+      "answers": [
+        {"text": "Als Kühlkörper", "correct": false},
+        {"text": "Als Datenträger", "correct": true},
+        {"text": "Als Filter im Drucker", "correct": false}
+      ],
+      "difficulty": "medium",
+      "fun_fact": "Eine Lochkarte fasste 80 Zeichen — ein Zehntel eines Tweets. Ihre 80 Spalten stecken bis heute im Standard-Terminal, dessen Zeilen genau so breit sind.",
+      "category": "Technik",
+      "image_url": "/quizify/static/img/packs/tech/punch-card.webp",
+      "reveal_style": "progressive"
+    },
+    {
+      "id": "technik_de_165",
+      "question": "Welches Fahrzeug ist hier zu sehen?",
+      "answers": [
+        {"text": "Eine Raumstation", "correct": false},
+        {"text": "Ein Marsrover", "correct": false},
+        {"text": "Eine Mondlandefähre", "correct": true}
+      ],
+      "difficulty": "easy",
+      "fun_fact": "Die Eagle wog beim Start 15 Tonnen und ihre Außenhaut war stellenweise dünner als eine Getränkedose — sie musste nie eine Atmosphäre aushalten. Der Bordcomputer kam mit rund 64 Kilobyte Speicher aus.",
+      "category": "Technik",
+      "image_url": "/quizify/static/img/packs/tech/lunar-module.webp",
+      "reveal_style": "progressive"
     }
   ]
 }

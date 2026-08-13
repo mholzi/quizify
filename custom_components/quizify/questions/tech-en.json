@@ -3153,6 +3153,76 @@
       "difficulty": "easy",
       "fun_fact": "Despite their reputation as energy monsters, all the world's data centres together draw only about 1 to 2 percent of global electricity — though that figure is climbing fast with AI workloads.",
       "category": "Technology"
+    },
+    {
+      "id": "tech_en_161",
+      "question": "What fills this room in the 1940s?",
+      "answers": [
+        {"text": "A telephone exchange", "correct": false},
+        {"text": "One of the first computers", "correct": true},
+        {"text": "A radio studio", "correct": false}
+      ],
+      "difficulty": "medium",
+      "fun_fact": "ENIAC filled a hall, weighed 27 tons and computed with some 18,000 vacuum tubes. Programming it meant replugging cables — the work of six women mathematicians, and it took days.",
+      "category": "Technology",
+      "image_url": "/quizify/static/img/packs/tech/eniac.webp",
+      "reveal_style": "progressive"
+    },
+    {
+      "id": "tech_en_162",
+      "question": "Which production method does this 1913 photograph show?",
+      "answers": [
+        {"text": "The moving assembly line", "correct": true},
+        {"text": "3D printing", "correct": false},
+        {"text": "One-off hand assembly", "correct": false}
+      ],
+      "difficulty": "easy",
+      "fun_fact": "Henry Ford's moving belt cut the assembly time of a car from over twelve hours to about ninety minutes. That is what made the Model T cheap enough for the workers building it.",
+      "category": "Technology",
+      "image_url": "/quizify/static/img/packs/tech/ford-assembly-line.webp",
+      "reveal_style": "progressive"
+    },
+    {
+      "id": "tech_en_163",
+      "question": "What was this device from 1957?",
+      "answers": [
+        {"text": "A weather buoy", "correct": false},
+        {"text": "A deep-sea probe", "correct": false},
+        {"text": "The first artificial satellite", "correct": true}
+      ],
+      "difficulty": "medium",
+      "fun_fact": "Sputnik 1 was a 58-centimetre aluminium sphere with four antennas that transmitted nothing but a beep. That was enough: radio amateurs everywhere could hear it, and the West heard the starting gun of the space race.",
+      "category": "Technology",
+      "image_url": "/quizify/static/img/packs/tech/sputnik.webp",
+      "reveal_style": "progressive"
+    },
+    {
+      "id": "tech_en_164",
+      "question": "What was this piece of card used for in computing?",
+      "answers": [
+        {"text": "As a heat sink", "correct": false},
+        {"text": "As a data medium", "correct": true},
+        {"text": "As a printer filter", "correct": false}
+      ],
+      "difficulty": "medium",
+      "fun_fact": "A punched card held 80 characters — a tenth of a tweet. Its 80 columns still survive in the standard terminal, whose lines are exactly that wide.",
+      "category": "Technology",
+      "image_url": "/quizify/static/img/packs/tech/punch-card.webp",
+      "reveal_style": "progressive"
+    },
+    {
+      "id": "tech_en_165",
+      "question": "Which craft is shown here?",
+      "answers": [
+        {"text": "A space station", "correct": false},
+        {"text": "A Mars rover", "correct": false},
+        {"text": "A lunar module", "correct": true}
+      ],
+      "difficulty": "easy",
+      "fun_fact": "Eagle weighed 15 tons at launch and parts of its skin were thinner than a drinks can — it never had to survive an atmosphere. Its onboard computer ran on about 64 kilobytes of memory.",
+      "category": "Technology",
+      "image_url": "/quizify/static/img/packs/tech/lunar-module.webp",
+      "reveal_style": "progressive"
     }
   ]
 }
