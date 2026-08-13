@@ -1,7 +1,7 @@
 {
   "name": "Deportes",
   "language": "es",
-  "version": "1.0",
+  "version": "1.1",
   "theme": "sport",
   "questions": [
     {
@@ -3223,6 +3223,66 @@
       "category": "Deportes",
       "image_url": "/quizify/static/img/packs/sport/suzanne-lenglen.webp",
       "reveal_style": "progressive"
+    },
+    {
+      "id": "dep_es_166",
+      "question": "¿Cuántos metros tiene un maratón?",
+      "type": "estimate",
+      "answer": 42195,
+      "min": 10000,
+      "max": 100000,
+      "unit": "metros",
+      "difficulty": "easy",
+      "fun_fact": "42.195 metros. Los 195 sueltos vienen de los Juegos de Londres de 1908, cuando la salida se trasladó al castillo de Windsor para que los niños reales pudieran verla.",
+      "category": "Deportes"
+    },
+    {
+      "id": "dep_es_167",
+      "question": "¿A qué altura del suelo está un aro de baloncesto?",
+      "type": "estimate",
+      "answer": 305,
+      "min": 100,
+      "max": 600,
+      "unit": "centímetros",
+      "difficulty": "easy",
+      "fun_fact": "3,05 metros, exactamente diez pies. James Naismith clavó una cesta de melocotones a la galería del gimnasio en 1891, y esa era su altura.",
+      "category": "Deportes"
+    },
+    {
+      "id": "dep_es_168",
+      "question": "¿Cuánto pesa la bala en lanzamiento de peso masculino?",
+      "type": "estimate",
+      "answer": 7260,
+      "min": 1000,
+      "max": 20000,
+      "unit": "gramos",
+      "difficulty": "medium",
+      "fun_fact": "7,26 kg, es decir, exactamente 16 libras inglesas. La femenina pesa 4 kg.",
+      "category": "Deportes"
+    },
+    {
+      "id": "dep_es_169",
+      "question": "¿De cuántas puntadas dobles se compone la costura de una pelota de béisbol?",
+      "type": "estimate",
+      "answer": 108,
+      "min": 10,
+      "max": 500,
+      "unit": "puntadas dobles",
+      "difficulty": "hard",
+      "fun_fact": "108, todas cosidas a mano: nunca se ha construido una máquina capaz de coser una pelota de la Major League.",
+      "category": "Deportes"
+    },
+    {
+      "id": "dep_es_170",
+      "question": "¿Qué altura tiene una red de tenis en el centro?",
+      "type": "estimate",
+      "answer": 91,
+      "min": 50,
+      "max": 200,
+      "unit": "centímetros",
+      "difficulty": "medium",
+      "fun_fact": "91,4 cm en el centro y 107 cm en los postes. La comba es intencionada, y por eso pasar la bola por el medio es el golpe más seguro.",
+      "category": "Deportes"
     }
   ]
 }

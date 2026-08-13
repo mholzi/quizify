@@ -1,7 +1,7 @@
 {
   "name": "Ciencia",
   "language": "es",
-  "version": "1.0",
+  "version": "1.1",
   "theme": "science",
   "questions": [
     {
@@ -3223,6 +3223,66 @@
       "category": "Ciencia",
       "image_url": "/quizify/static/img/packs/science/hooke-flea.webp",
       "reveal_style": "progressive"
+    },
+    {
+      "id": "cie_es_166",
+      "question": "¿Cuántos kilómetros recorre la luz en un segundo?",
+      "type": "estimate",
+      "answer": 299792,
+      "min": 0,
+      "max": 500000,
+      "unit": "kilómetros",
+      "difficulty": "medium",
+      "fun_fact": "299.792,458 km/s, y ya no es una medición sino una definición: desde 1983 el metro se define a partir de esa cifra.",
+      "category": "Ciencia"
+    },
+    {
+      "id": "cie_es_167",
+      "question": "¿Cuántos cromosomas tiene una célula del cuerpo humano?",
+      "type": "estimate",
+      "answer": 46,
+      "min": 2,
+      "max": 200,
+      "unit": "cromosomas",
+      "difficulty": "easy",
+      "fun_fact": "23 pares. El helecho Ophioglossum reticulatum supera los 1.200, más que cualquier otro ser vivo conocido.",
+      "category": "Ciencia"
+    },
+    {
+      "id": "cie_es_168",
+      "question": "¿Cuántos minutos tarda la luz del Sol en llegar a la Tierra?",
+      "type": "estimate",
+      "answer": 8,
+      "min": 1,
+      "max": 60,
+      "unit": "minutos",
+      "difficulty": "medium",
+      "fun_fact": "Unos 8 minutos y 20 segundos. Esa energía ya había tardado decenas de miles de años en salir del interior del Sol hasta su superficie.",
+      "category": "Ciencia"
+    },
+    {
+      "id": "cie_es_169",
+      "question": "¿Qué temperatura tiene la superficie del Sol?",
+      "type": "estimate",
+      "answer": 5500,
+      "min": 1000,
+      "max": 20000,
+      "unit": "grados Celsius",
+      "difficulty": "medium",
+      "fun_fact": "La corona que la envuelve está mucho más caliente, por encima del millón de grados, y por qué sigue sin estar del todo resuelto.",
+      "category": "Ciencia"
+    },
+    {
+      "id": "cie_es_170",
+      "question": "¿A qué temperatura hierve el agua en la cima del Everest?",
+      "type": "estimate",
+      "answer": 70,
+      "min": 0,
+      "max": 100,
+      "unit": "grados Celsius",
+      "difficulty": "hard",
+      "fun_fact": "Alrededor de 70 °C, porque allí la presión ha caído a un tercio. Un huevo no llega a cuajar: sencillamente falta calor.",
+      "category": "Ciencia"
     }
   ]
 }

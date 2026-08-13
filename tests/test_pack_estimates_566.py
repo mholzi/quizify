@@ -51,16 +51,16 @@ class EstimateSet:
 
 
 ESTIMATE_SETS: tuple[EstimateSet, ...] = (
-    EstimateSet(theme="nature", packs=("tiere-natur", "animals-nature")),
-    EstimateSet(theme="geography", packs=("geographie", "geography")),
-    EstimateSet(theme="history", packs=("geschichte-de", "history-en")),
-    EstimateSet(theme="science", packs=("wissenschaft-de", "science-en")),
+    EstimateSet(theme="nature", packs=("tiere-natur", "animals-nature", "naturaleza-es")),
+    EstimateSet(theme="geography", packs=("geographie", "geography", "geografia-es")),
+    EstimateSet(theme="history", packs=("geschichte-de", "history-en", "historia-es")),
+    EstimateSet(theme="science", packs=("wissenschaft-de", "science-en", "ciencia-es")),
     EstimateSet(theme="technology", packs=("technik-de", "tech-en")),
     EstimateSet(theme="food", packs=("essen-de", "food-en")),
-    EstimateSet(theme="sport", packs=("sport-de", "sport-en")),
+    EstimateSet(theme="sport", packs=("sport-de", "sport-en", "deportes-es")),
     EstimateSet(theme="world-cup", packs=("weltmeisterschaft", "world-cup")),
     EstimateSet(theme="music", packs=("musik-de", "music-en")),
-    EstimateSet(theme="pop-culture", packs=("popkultur", "pop-culture")),
+    EstimateSet(theme="pop-culture", packs=("popkultur", "pop-culture", "cultura-pop-es")),
 )
 
 PACKS_WITH_ESTIMATES = [p for s in ESTIMATE_SETS for p in s.packs]

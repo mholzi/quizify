@@ -1,7 +1,7 @@
 {
   "name": "Naturaleza",
   "language": "es",
-  "version": "1.0",
+  "version": "1.1",
   "theme": "nature",
   "questions": [
     {
@@ -3223,6 +3223,66 @@
       "category": "Naturaleza",
       "image_url": "/quizify/static/img/packs/nature/aurora-iss.webp",
       "reveal_style": "progressive"
+    },
+    {
+      "id": "nat_es_166",
+      "question": "¿Cuánto mide la ballena azul más larga jamás medida con fiabilidad?",
+      "type": "estimate",
+      "answer": 33,
+      "min": 5,
+      "max": 60,
+      "unit": "metros",
+      "difficulty": "medium",
+      "fun_fact": "Solo su lengua pesa lo mismo que un elefante adulto. Las longitudes mayores que se citan de la época ballenera se calcularon a ojo en cubierta, no con cinta métrica.",
+      "category": "Naturaleza"
+    },
+    {
+      "id": "nat_es_167",
+      "question": "¿Qué velocidad máxima alcanza un guepardo en una carrera corta?",
+      "type": "estimate",
+      "answer": 120,
+      "min": 20,
+      "max": 200,
+      "unit": "km/h",
+      "difficulty": "easy",
+      "fun_fact": "Solo la mantiene unos 20 segundos antes de sobrecalentarse, y por eso la caza se decide casi siempre antes de los 300 metros.",
+      "category": "Naturaleza"
+    },
+    {
+      "id": "nat_es_168",
+      "question": "¿Cuánto dura la gestación de una elefanta?",
+      "type": "estimate",
+      "answer": 22,
+      "min": 1,
+      "max": 36,
+      "unit": "meses",
+      "difficulty": "medium",
+      "fun_fact": "Es la gestación más larga de cualquier mamífero terrestre. La cría ya pesa unos 120 kilos al nacer.",
+      "category": "Naturaleza"
+    },
+    {
+      "id": "nat_es_169",
+      "question": "¿Cuál es la profundidad de la inmersión más profunda registrada de un pingüino emperador?",
+      "type": "estimate",
+      "answer": 564,
+      "min": 50,
+      "max": 1000,
+      "unit": "metros",
+      "difficulty": "hard",
+      "fun_fact": "Ahí abajo la presión supera los 50 bar. El pingüino deja que sus pulmones colapsen y vive del oxígeno almacenado en sangre y músculos.",
+      "category": "Naturaleza"
+    },
+    {
+      "id": "nat_es_170",
+      "question": "¿Qué porcentaje de la superficie terrestre cubren los océanos?",
+      "type": "estimate",
+      "answer": 71,
+      "min": 0,
+      "max": 100,
+      "unit": "por ciento",
+      "difficulty": "easy",
+      "fun_fact": "Cartografiado en detalle hay muy poco: conocemos mejor la superficie de Marte que nuestro propio fondo marino.",
+      "category": "Naturaleza"
     }
   ]
 }
