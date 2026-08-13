@@ -7,12 +7,23 @@
  * GITHUB_PAT, turns the pack into a GitHub issue, and returns the issue number
  * + URL.
  *
- * Contract (matches server/pack_submission.py::submit_pack_view + validate_pack):
- *   Request:  POST  Content-Type: application/json   { "pack": { ... } }
- *   pack    = { name, language, questions: [ { id, question,
- *                 answers: [ {text, correct:bool} x3, exactly 1 correct ] } ] }
+ * Two payload shapes on the SAME endpoint, discriminated by the body's key:
+ *
+ *   a) submission (#180) — matches server/pack_submission.py::validate_pack
+ *      POST { "pack": { name, language, questions: [ { id, question,
+ *              answers: [ {text, correct:bool} x3, exactly 1 correct ] } ] } }
+ *      → issue labelled `community-pack`
+ *
+ *   b) request (#579) — matches server/pack_submission.py::validate_request
+ *      POST { "request": { theme, language, notes? } }
+ *      → issue labelled `pack-request`
+ *
  *   Success:  200   { "issue_number": <int>, "issue_url": "<html_url>" }
  *   Error:    4xx/5xx { "code": "INVALID_FORMAT" | "GITHUB_ERROR", "message": "<text>" }
+ *
+ * The discriminator is the body key, not a new route: the secret gate, the
+ * method guard and the PAT handling are identical for both, and a second URL
+ * would have meant a second wrangler route to keep in sync for no gain.
  *
  * Security gate (FAIL CLOSED — #292): the secret SHARED_SECRET MUST be set and
  * the integration MUST send a matching `X-Quizify-Secret` header. If
@@ -34,6 +45,11 @@ const MAX_QUESTIONS = 500;
 const MIN_QUESTIONS = 1;
 const ANSWERS_PER_QUESTION = 3;
 const MAX_BYTES = 1_048_576; // 1 MiB
+
+// Pack-request caps (#579) — mirror REQUEST_MAX_* in const.py.
+const MAX_THEME_CHARS = 80;
+const MAX_NOTES_CHARS = 500;
+const MAX_LANGUAGE_CHARS = 10;
 
 // CORS (#292): the Quizify HA integration calls this worker server-side (from
 // the HA Python backend via aiohttp — server/pack_submission.py), NOT from a
@@ -96,6 +112,23 @@ function validatePack(pack) {
   return null;
 }
 
+/** Validate a pack request (#579) — must match
+ *  server/pack_submission.py::validate_request. There is no content to check,
+ *  only three short fields, so the caps ARE the validation: theme and notes go
+ *  verbatim into an issue body. Returns an error string or null. */
+function validateRequest(req) {
+  if (!req || typeof req !== 'object' || Array.isArray(req)) return 'Top-level JSON must be an object.';
+  if (typeof req.theme !== 'string' || !req.theme.trim()) return "Field 'theme' is required.";
+  if (req.theme.length > MAX_THEME_CHARS) return `Field 'theme' exceeds ${MAX_THEME_CHARS} characters.`;
+  const lang = req.language === undefined ? 'de' : req.language;
+  if (typeof lang !== 'string' || !lang.trim()) return "Field 'language' must be a non-empty string.";
+  if (lang.length > MAX_LANGUAGE_CHARS) return `Field 'language' exceeds ${MAX_LANGUAGE_CHARS} characters.`;
+  const notes = req.notes === undefined || req.notes === null ? '' : req.notes;
+  if (typeof notes !== 'string') return "Field 'notes' must be a string when present.";
+  if (notes.length > MAX_NOTES_CHARS) return `Field 'notes' exceeds ${MAX_NOTES_CHARS} characters.`;
+  return null;
+}
+
 /** Neutralise Markdown / mention injection in user-supplied strings going into
  *  the issue: break @mentions and #issue-refs (notification spam / fake
  *  cross-links), escape table/code controls, escape Markdown link/image control
@@ -136,6 +169,39 @@ function buildIssue(pack) {
   return { title: title.slice(0, 250), body: lines.join('\n'), labels: ['community-pack'] };
 }
 
+/** Build the issue for a pack REQUEST (#579).
+ *
+ *  Note `esc()` collapses newlines, so a multi-line note arrives as one line.
+ *  That is deliberate: the notes field is a hint, not a document, and a body
+ *  that can inject Markdown structure into an auto-filed issue is worse than a
+ *  body that reads as one paragraph. */
+function buildRequestIssue(req) {
+  const theme = esc(req.theme);
+  const lang = esc(req.language || 'de');
+  const notes = esc(req.notes || '');
+  const lines = [
+    '## Pack request', '',
+    'A host asked for a pack that does not exist yet. Nothing was authored — this is a wish.', '',
+    '| Field | Value |', '|-------|-------|',
+    `| **Theme** | ${theme} |`,
+    `| **Language** | ${lang} |`,
+    `| **Notes** | ${notes || '—'} |`,
+    '',
+    '### What happens next', '',
+    '- A generated pack lands as a **pull request** for review — never a direct merge.',
+    '- Generator rules that apply (see #579): durable facts over current ones, never let the',
+    '  question title carry its own answer, and keep an estimate answer inside its min/max.',
+    '- Requests are public: the resulting pack ships to everyone or not at all.',
+    '',
+    '---', '*Auto-filed by the Quizify in-app pack request (#579).*',
+  ];
+  return {
+    title: `pack request: ${theme} (${lang})`.slice(0, 250),
+    body: lines.join('\n'),
+    labels: ['pack-request'],
+  };
+}
+
 async function handleSubmit(request, env) {
   if (!env.GITHUB_PAT) {
     return jsonError('GITHUB_ERROR', 'Worker is missing its GITHUB_PAT secret.', 500);
@@ -161,11 +227,22 @@ async function handleSubmit(request, env) {
   } catch {
     return jsonError('INVALID_FORMAT', 'Body is not valid JSON.', 400);
   }
-  const pack = body && typeof body === 'object' ? body.pack : null;
-  const err = validatePack(pack);
-  if (err) return jsonError('INVALID_FORMAT', err, 400);
 
-  const issue = buildIssue(pack);
+  // Discriminate on the body key. A body carrying `request` is a pack request
+  // (#579); anything else is treated as a submission, which keeps the old
+  // contract byte-for-byte — including the error text for a body with neither
+  // key, which still fails through validatePack as it always did.
+  let issue;
+  if (body && typeof body === 'object' && body.request !== undefined) {
+    const reqErr = validateRequest(body.request);
+    if (reqErr) return jsonError('INVALID_FORMAT', reqErr, 400);
+    issue = buildRequestIssue(body.request);
+  } else {
+    const pack = body && typeof body === 'object' ? body.pack : null;
+    const err = validatePack(pack);
+    if (err) return jsonError('INVALID_FORMAT', err, 400);
+    issue = buildIssue(pack);
+  }
   const ghRes = await fetch(GITHUB_ISSUES_API, {
     method: 'POST',
     headers: {

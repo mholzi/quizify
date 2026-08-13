@@ -1,4 +1,4 @@
-"""In-app community-pack submission (#180).
+"""In-app community-pack submission (#180) and pack requests (#579).
 
 A user composes/pastes a community question pack in the admin UI. The browser
 validates it against the same schema the on-disk loader enforces (#179), then
@@ -13,6 +13,13 @@ state** (closed-as-completed = accepted, closed-as-not_planned = declined),
 throttled to ~hourly so a busy admin tab can't hammer GitHub's
 unauthenticated, per-IP rate limit. This mirrors Beatify's
 ``PlaylistRequestsView`` (the #970 lesson: trust the issue *state*, not labels).
+
+Since #579 the same pipe carries the inverse direction: a **pack request**, in
+which the host describes a pack they want instead of authoring one. It reuses
+this module end to end — one worker, one store, one reconcile — and differs only
+in the payload (``{"request": {...}}``) and the record's ``kind``. That is the
+point: a request issue closes exactly like a submission issue, so a second
+status mechanism would have been a second thing to keep correct.
 
 The whole feature stays inert until ``community_submit_url`` is set: the config
 endpoint reports ``enabled: false`` (so the UI hides the section) and POSTs are
@@ -42,6 +49,11 @@ from ..const import (
     ERR_SUBMIT_GITHUB_ERROR,
     ERR_SUBMIT_INVALID_FORMAT,
     ERR_SUBMIT_RATE_LIMITED,
+    RECORD_KIND_REQUEST,
+    RECORD_KIND_SUBMISSION,
+    REQUEST_MAX_LANGUAGE_CHARS,
+    REQUEST_MAX_NOTES_CHARS,
+    REQUEST_MAX_THEME_CHARS,
     SUBMIT_ANSWERS_PER_QUESTION,
     SUBMIT_MAX_PACK_BYTES,
     SUBMIT_MAX_QUESTIONS,
@@ -172,6 +184,50 @@ def validate_pack(pack: object) -> tuple[bool, list[str]]:
                 f"{prefix}: exactly 1 answer must be marked correct "
                 f"(got {correct_count})."
             )
+
+    return (not errors), errors[:10]
+
+
+# ---------------------------------------------------------------------------
+# Validation — pack *request* (#579)
+# ---------------------------------------------------------------------------
+#
+# A request carries no content, so there is nothing to validate against the
+# question schema — only three short fields. The caps matter anyway: theme and
+# notes go verbatim into a GitHub issue, and an unbounded field turns the issue
+# into a wall (the worker escapes and truncates as a second line of defence).
+# Mirrored by validateRequest in cf-workers/quizify-api.js; the shared cases in
+# tests/fixtures/pack_request_cases.json keep both sides in lockstep.
+
+
+def validate_request(req: object) -> tuple[bool, list[str]]:
+    """Validate a pack request. Returns (ok, errors)."""
+    errors: list[str] = []
+
+    if not isinstance(req, dict):
+        return False, ["Top-level JSON must be an object."]
+
+    theme = req.get("theme")
+    if not isinstance(theme, str) or not theme.strip():
+        errors.append("Field 'theme' is required and must be a non-empty string.")
+    elif len(theme) > REQUEST_MAX_THEME_CHARS:
+        errors.append(f"Field 'theme' exceeds {REQUEST_MAX_THEME_CHARS} characters.")
+
+    language = req.get("language", "de")
+    if not isinstance(language, str) or not language.strip():
+        errors.append("Field 'language' must be a non-empty string.")
+    elif len(language) > REQUEST_MAX_LANGUAGE_CHARS:
+        errors.append(
+            f"Field 'language' exceeds {REQUEST_MAX_LANGUAGE_CHARS} characters."
+        )
+
+    notes = req.get("notes", "")
+    # Absent notes are fine — the field is optional. A wrong *type* is not:
+    # silently coercing it would put "None" or "[1, 2]" into the issue body.
+    if notes is not None and not isinstance(notes, str):
+        errors.append("Field 'notes' must be a string when present.")
+    elif isinstance(notes, str) and len(notes) > REQUEST_MAX_NOTES_CHARS:
+        errors.append(f"Field 'notes' exceeds {REQUEST_MAX_NOTES_CHARS} characters.")
 
     return (not errors), errors[:10]
 
@@ -377,47 +433,15 @@ def _get_ctx(request: web.Request) -> AppContext:
     return request.app[APP_CTX_KEY]
 
 
-async def submit_config_view(request: web.Request) -> web.Response:
-    """Report whether the submit feature is enabled (drives the UI's visibility).
+def _check_gates(request: web.Request, ctx: AppContext) -> web.Response | None:
+    """Shared pre-flight for both POST paths: feature enabled + rate limit.
 
-    Never leaks the worker URL to the browser — the browser POSTs to *our*
-    endpoint, which proxies to the worker server-side. Returns the validation
-    caps so the client validator stays in sync without hardcoding them.
+    Returns the error response to send, or None when the request may proceed.
+    Submissions and requests deliberately share **one** rate-limit bucket: they
+    hit the same worker, the same PAT and the same repo, so splitting the budget
+    would just hand a caller twice the issue-filing rate.
     """
-    ctx = _get_ctx(request)
-    enabled = bool((ctx.community_submit_url or "").strip())
-    return web.json_response(
-        {
-            "enabled": enabled,
-            "limits": {
-                "max_questions": SUBMIT_MAX_QUESTIONS,
-                "min_questions": SUBMIT_MIN_QUESTIONS,
-                "answers_per_question": SUBMIT_ANSWERS_PER_QUESTION,
-                "max_bytes": SUBMIT_MAX_PACK_BYTES,
-            },
-        }
-    )
-
-
-async def submissions_list_view(request: web.Request) -> web.Response:
-    """Return persisted submissions, reconciling status against GitHub if due."""
-    ctx = _get_ctx(request)
-    store = PackSubmissionStore(ctx)
-    data = await store.get_with_reconcile()
-    return web.json_response({"submissions": data.get("submissions", [])})
-
-
-async def submit_pack_view(request: web.Request) -> web.Response:
-    """Validate a composed pack and proxy it to the configured worker.
-
-    Body: ``{"pack": {...}}``. On success records the submission (so its status
-    can later be reconciled) and returns ``{ok, issue_number, issue_url}``.
-    Error responses carry a localizable ``code`` (INVALID_FORMAT / RATE_LIMITED
-    / GITHUB_ERROR / SUBMIT_DISABLED) plus a raw ``message`` fallback.
-    """
-    ctx = _get_ctx(request)
-    submit_url = (ctx.community_submit_url or "").strip()
-    if not submit_url:
+    if not (ctx.community_submit_url or "").strip():
         return web.json_response(
             {
                 "code": ERR_SUBMIT_DISABLED,
@@ -449,6 +473,126 @@ async def submit_pack_view(request: web.Request) -> web.Response:
             },
             status=429,
         )
+    return None
+
+
+async def _post_to_worker(
+    ctx: AppContext, payload: dict[str, Any]
+) -> tuple[dict[str, Any] | None, web.Response | None]:
+    """Proxy a payload to the worker. Returns (worker_payload, error_response).
+
+    Exactly one of the two is not None. The worker holds the GitHub token and
+    creates the issue; when a shared secret is configured it travels as the
+    ``X-Quizify-Secret`` header so the worker can reject unauthenticated
+    requests, closing the open-proxy hole (#256). No secret → no header, and a
+    worker without SHARED_SECRET behaves exactly as before.
+    """
+    submit_url = (ctx.community_submit_url or "").strip()
+    submit_secret = (ctx.community_submit_secret or "").strip()
+    submit_headers: dict[str, str] | None = (
+        {"X-Quizify-Secret": submit_secret} if submit_secret else None
+    )
+    # Reuse the runtime's shared client session (#456); pass the timeout on the
+    # request rather than baking it into a per-call session.
+    timeout = aiohttp.ClientTimeout(total=SUBMIT_POLL_TIMEOUT_SECONDS)
+    session = ctx.runtime.get_client_session()
+    worker_payload: dict[str, Any]
+    try:
+        async with session.post(
+            submit_url, json=payload, headers=submit_headers, timeout=timeout
+        ) as resp:
+            try:
+                worker_payload = await resp.json(content_type=None)
+            except (ValueError, aiohttp.ClientError):
+                worker_payload = {}
+            if resp.status >= 400:
+                code = (
+                    worker_payload.get("code")
+                    if isinstance(worker_payload, dict)
+                    else None
+                )
+                message = (
+                    worker_payload.get("message")
+                    if isinstance(worker_payload, dict)
+                    else None
+                )
+                return None, web.json_response(
+                    {
+                        "code": code or ERR_SUBMIT_GITHUB_ERROR,
+                        "message": message or f"Worker returned HTTP {resp.status}.",
+                    },
+                    status=resp.status if resp.status in (400, 429) else 502,
+                )
+    except aiohttp.ClientError as err:
+        _LOGGER.warning("Pack submission proxy failed: %s", err)
+        return None, web.json_response(
+            {
+                "code": ERR_SUBMIT_GITHUB_ERROR,
+                "message": f"Could not reach the worker: {err}",
+            },
+            status=502,
+        )
+
+    if not isinstance(worker_payload, dict):
+        worker_payload = {}
+    return worker_payload, None
+
+
+def _issue_refs(worker_payload: dict[str, Any]) -> tuple[int | None, str | None]:
+    """Pull (issue_number, issue_url) out of a worker response."""
+    issue_url = worker_payload.get("issue_url") or worker_payload.get("html_url")
+    issue_number = worker_payload.get("issue_number")
+    if issue_number is None:
+        issue_number = PackSubmissionStore.issue_number_from_url(issue_url)
+    return issue_number, issue_url
+
+
+async def submit_config_view(request: web.Request) -> web.Response:
+    """Report whether the submit feature is enabled (drives the UI's visibility).
+
+    Never leaks the worker URL to the browser — the browser POSTs to *our*
+    endpoint, which proxies to the worker server-side. Returns the validation
+    caps so the client validator stays in sync without hardcoding them.
+    """
+    ctx = _get_ctx(request)
+    enabled = bool((ctx.community_submit_url or "").strip())
+    return web.json_response(
+        {
+            "enabled": enabled,
+            "limits": {
+                "max_questions": SUBMIT_MAX_QUESTIONS,
+                "min_questions": SUBMIT_MIN_QUESTIONS,
+                "answers_per_question": SUBMIT_ANSWERS_PER_QUESTION,
+                "max_bytes": SUBMIT_MAX_PACK_BYTES,
+                # Request caps (#579) — same endpoint, same on/off switch, so
+                # the client learns both sets of limits in one call.
+                "max_theme_chars": REQUEST_MAX_THEME_CHARS,
+                "max_notes_chars": REQUEST_MAX_NOTES_CHARS,
+            },
+        }
+    )
+
+
+async def submissions_list_view(request: web.Request) -> web.Response:
+    """Return persisted submissions, reconciling status against GitHub if due."""
+    ctx = _get_ctx(request)
+    store = PackSubmissionStore(ctx)
+    data = await store.get_with_reconcile()
+    return web.json_response({"submissions": data.get("submissions", [])})
+
+
+async def submit_pack_view(request: web.Request) -> web.Response:
+    """Validate a composed pack and proxy it to the configured worker.
+
+    Body: ``{"pack": {...}}``. On success records the submission (so its status
+    can later be reconciled) and returns ``{ok, issue_number, issue_url}``.
+    Error responses carry a localizable ``code`` (INVALID_FORMAT / RATE_LIMITED
+    / GITHUB_ERROR / SUBMIT_DISABLED) plus a raw ``message`` fallback.
+    """
+    ctx = _get_ctx(request)
+    gate = _check_gates(request, ctx)
+    if gate is not None:
+        return gate
 
     try:
         body = await request.json()
@@ -490,70 +634,105 @@ async def submit_pack_view(request: web.Request) -> web.Response:
             status=400,
         )
 
-    # Proxy to the worker, which holds the GitHub token and creates the issue.
-    # When a shared secret is configured, send it as the X-Quizify-Secret header
-    # so the worker can reject unauthenticated requests, closing the open-proxy
-    # hole (#256). No secret → no header, and the worker (which only enforces
-    # when its SHARED_SECRET is set) behaves exactly as before — back-compatible.
-    submit_secret = (ctx.community_submit_secret or "").strip()
-    submit_headers: dict[str, str] | None = (
-        {"X-Quizify-Secret": submit_secret} if submit_secret else None
-    )
-    # Reuse the runtime's shared client session (#456); pass the timeout on the
-    # request rather than baking it into a per-call session.
-    timeout = aiohttp.ClientTimeout(total=SUBMIT_POLL_TIMEOUT_SECONDS)
-    session = ctx.runtime.get_client_session()
-    worker_payload: dict[str, Any]
-    try:
-        async with session.post(
-            submit_url, json={"pack": pack}, headers=submit_headers, timeout=timeout
-        ) as resp:
-            try:
-                worker_payload = await resp.json(content_type=None)
-            except (ValueError, aiohttp.ClientError):
-                worker_payload = {}
-            if resp.status >= 400:
-                code = (
-                    worker_payload.get("code")
-                    if isinstance(worker_payload, dict)
-                    else None
-                )
-                message = (
-                    worker_payload.get("message")
-                    if isinstance(worker_payload, dict)
-                    else None
-                )
-                return web.json_response(
-                    {
-                        "code": code or ERR_SUBMIT_GITHUB_ERROR,
-                        "message": message or f"Worker returned HTTP {resp.status}.",
-                    },
-                    status=resp.status if resp.status in (400, 429) else 502,
-                )
-    except aiohttp.ClientError as err:
-        _LOGGER.warning("Pack submission proxy failed: %s", err)
-        return web.json_response(
+    worker_payload, error = await _post_to_worker(ctx, {"pack": pack})
+    if error is not None or worker_payload is None:
+        return error or web.json_response(
             {
                 "code": ERR_SUBMIT_GITHUB_ERROR,
-                "message": f"Could not reach the worker: {err}",
+                "message": "Worker returned no payload.",
             },
             status=502,
         )
-
-    if not isinstance(worker_payload, dict):
-        worker_payload = {}
-    issue_url = worker_payload.get("issue_url") or worker_payload.get("html_url")
-    issue_number = worker_payload.get("issue_number")
-    if issue_number is None:
-        issue_number = PackSubmissionStore.issue_number_from_url(issue_url)
+    issue_number, issue_url = _issue_refs(worker_payload)
 
     record = {
         "id": f"{int(time.time() * 1000)}",
+        "kind": RECORD_KIND_SUBMISSION,
         "name": str(pack.get("name", "")) if isinstance(pack, dict) else "",
         "language": str(pack.get("language", "")) if isinstance(pack, dict) else "",
         "question_count": (
             len(pack.get("questions", [])) if isinstance(pack, dict) else 0
         ),
+        "issue_number": issue_number,
+        "issue_url": issue_url,
+        "status": SUBMIT_STATUS_PENDING,
+        "created": datetime.now(UTC).isoformat(),
+        "last_checked": None,
+    }
+    await PackSubmissionStore(ctx).add(record)
+
+    return web.json_response(
+        {"ok": True, "issue_number": issue_number, "issue_url": issue_url}
+    )
+
+
+async def request_pack_view(request: web.Request) -> web.Response:
+    """File a pack *request* — a wish, not content (#579).
+
+    Body: ``{"request": {"theme": str, "language": str, "notes": str?}}``. The
+    worker turns it into an issue labelled ``pack-request``; the record lands in
+    the same store as a submission with ``kind: "request"``, so the existing
+    reconcile and the existing timeline cover it without a second mechanism.
+
+    Requests are public by design (Markus, 2026-08-13): the resulting pack ships
+    to everyone or not at all. Nothing here writes a pack to the host's disk.
+    """
+    ctx = _get_ctx(request)
+    gate = _check_gates(request, ctx)
+    if gate is not None:
+        return gate
+
+    try:
+        body = await request.json()
+    except (ValueError, TypeError):
+        return web.json_response(
+            {"code": ERR_SUBMIT_INVALID_FORMAT, "message": "Body is not valid JSON."},
+            status=400,
+        )
+
+    req = (body or {}).get("request") if isinstance(body, dict) else None
+    ok, errors = validate_request(req)
+    if not ok:
+        return web.json_response(
+            {
+                "code": ERR_SUBMIT_INVALID_FORMAT,
+                "message": "; ".join(errors) or "Request failed validation.",
+                "errors": errors,
+            },
+            status=400,
+        )
+    # validate_request only returns ok for a dict; the cast keeps mypy happy
+    # without an assert in a request handler.
+    fields: dict[str, Any] = req if isinstance(req, dict) else {}
+
+    # Send the normalized fields, not the caller's dict: an extra key in the
+    # body must not travel to the worker and end up in the issue.
+    payload = {
+        "theme": str(fields.get("theme", "")).strip(),
+        "language": str(fields.get("language", "de")).strip() or "de",
+        "notes": str(fields.get("notes") or "").strip(),
+    }
+    worker_payload, error = await _post_to_worker(ctx, {"request": payload})
+    if error is not None or worker_payload is None:
+        return error or web.json_response(
+            {
+                "code": ERR_SUBMIT_GITHUB_ERROR,
+                "message": "Worker returned no payload.",
+            },
+            status=502,
+        )
+    issue_number, issue_url = _issue_refs(worker_payload)
+
+    record = {
+        "id": f"{int(time.time() * 1000)}",
+        "kind": RECORD_KIND_REQUEST,
+        # ``name`` carries the theme so the existing timeline renders a request
+        # with no changes; ``theme`` keeps the field addressable by its own name.
+        "name": payload["theme"],
+        "theme": payload["theme"],
+        "language": payload["language"],
+        "notes": payload["notes"],
+        "question_count": 0,
         "issue_number": issue_number,
         "issue_url": issue_url,
         "status": SUBMIT_STATUS_PENDING,

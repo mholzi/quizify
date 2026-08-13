@@ -25,6 +25,7 @@ from ..const import SUBMIT_POLL_INTERVAL_SECONDS
 from ..game.seasons import is_in_season, parse_season, pick_active_season
 from .context import APP_CTX_KEY
 from .pack_submission import (
+    request_pack_view,
     submissions_list_view,
     submit_config_view,
     submit_pack_view,
@@ -1331,6 +1332,9 @@ ROUTES: list[tuple[str, str, _RouteHandler]] = [
     ("GET", "/api/quizify/pack-submit/config", submit_config_view),
     ("GET", "/api/quizify/pack-submit/submissions", _gated_submissions_list_view),
     ("POST", "/api/quizify/pack-submit", submit_pack_view),
+    # Pack requests (#579) — the same feature switch and the same worker as the
+    # submission above, only the other direction: a wish instead of content.
+    ("POST", "/api/quizify/pack-submit/request", request_pack_view),
 ]
 
 

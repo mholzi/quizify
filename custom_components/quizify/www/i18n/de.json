@@ -641,7 +641,7 @@
     "submitting": "Wird eingereicht…",
     "success": "Eingereicht — danke! Es wird in Kürze geprüft.",
     "failed": "Einreichung fehlgeschlagen.",
-    "recent": "Meine Einsendungen",
+    "recent": "Meine Packs & Wünsche",
     "step": {
       "compose": "Erstellen",
       "check": "Prüfen",
@@ -669,6 +669,26 @@
       "pending": "In Prüfung",
       "accepted": "Angenommen — zur Community hinzugefügt",
       "declined": "Abgelehnt"
+    },
+    "mode": {
+      "submit": "Pack senden",
+      "request": "Pack wünschen"
+    },
+    "kind": {
+      "request": "Wunsch"
+    },
+    "request": {
+      "intro": "Beschreibe das Pack, das dir fehlt. Es landet als Wunsch-Issue; das fertige Pack kommt als Pull Request zurück.",
+      "themeLabel": "Thema",
+      "themePlaceholder": "Deutsche TV-Serien der 80er",
+      "languageLabel": "Sprache",
+      "notesLabel": "Noch was zu beachten? (optional)",
+      "notesPlaceholder": "Eher Sachen, die ein 50-Jähriger noch kennt.",
+      "submit": "Wunsch senden",
+      "sending": "Wird gesendet…",
+      "success": "Wunsch ist raus — danke! Du siehst ihn unten in der Liste.",
+      "failed": "Wunsch konnte nicht gesendet werden.",
+      "tooLong": "Zu lang — bitte kürzer fassen."
     }
   },
   "lightning": {

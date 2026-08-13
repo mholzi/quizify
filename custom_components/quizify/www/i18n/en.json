@@ -641,7 +641,7 @@
     "submitting": "Submitting…",
     "success": "Submitted — thanks! It will be reviewed shortly.",
     "failed": "Submission failed.",
-    "recent": "My submissions",
+    "recent": "My packs & requests",
     "step": {
       "compose": "Compose",
       "check": "Check",
@@ -669,6 +669,26 @@
       "pending": "In review",
       "accepted": "Accepted — added to community",
       "declined": "Declined"
+    },
+    "mode": {
+      "submit": "Send a pack",
+      "request": "Ask for a pack"
+    },
+    "kind": {
+      "request": "Request"
+    },
+    "request": {
+      "intro": "Describe the pack you are missing. It lands as a request issue; the finished pack comes back as a pull request.",
+      "themeLabel": "Theme",
+      "themePlaceholder": "80s German TV shows",
+      "languageLabel": "Language",
+      "notesLabel": "Anything to keep in mind? (optional)",
+      "notesPlaceholder": "Skew towards things a 50-year-old would remember.",
+      "submit": "Send request",
+      "sending": "Sending…",
+      "success": "Request sent — thanks! It shows up in the list below.",
+      "failed": "Could not send the request.",
+      "tooLong": "Too long — please shorten it."
     }
   },
   "lightning": {

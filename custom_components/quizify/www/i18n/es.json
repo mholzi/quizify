@@ -641,7 +641,7 @@
     "submitting": "Enviando…",
     "success": "Enviado — ¡gracias! Se revisará en breve.",
     "failed": "El envío ha fallado.",
-    "recent": "Mis envíos",
+    "recent": "Mis packs y peticiones",
     "step": {
       "compose": "Redactar",
       "check": "Comprobar",
@@ -669,6 +669,26 @@
       "pending": "En revisión",
       "accepted": "Aceptado — añadido a la comunidad",
       "declined": "Rechazado"
+    },
+    "mode": {
+      "submit": "Enviar un pack",
+      "request": "Pedir un pack"
+    },
+    "kind": {
+      "request": "Petición"
+    },
+    "request": {
+      "intro": "Describe el pack que te falta. Se registra como una petición; el pack terminado vuelve como pull request.",
+      "themeLabel": "Tema",
+      "themePlaceholder": "Series de televisión de los 80",
+      "languageLabel": "Idioma",
+      "notesLabel": "¿Algo a tener en cuenta? (opcional)",
+      "notesPlaceholder": "Mejor cosas que recuerde alguien de 50 años.",
+      "submit": "Enviar petición",
+      "sending": "Enviando…",
+      "success": "Petición enviada — ¡gracias! Aparece en la lista de abajo.",
+      "failed": "No se pudo enviar la petición.",
+      "tooLong": "Demasiado largo — acórtalo, por favor."
     }
   },
   "lightning": {
