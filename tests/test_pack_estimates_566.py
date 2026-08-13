@@ -56,6 +56,7 @@ ESTIMATE_SETS: tuple[EstimateSet, ...] = (
     EstimateSet(theme="history", packs=("geschichte-de", "history-en")),
     EstimateSet(theme="science", packs=("wissenschaft-de", "science-en")),
     EstimateSet(theme="technology", packs=("technik-de", "tech-en")),
+    EstimateSet(theme="food", packs=("essen-de", "food-en")),
 )
 
 PACKS_WITH_ESTIMATES = [p for s in ESTIMATE_SETS for p in s.packs]
