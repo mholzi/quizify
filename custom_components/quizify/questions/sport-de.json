@@ -1,7 +1,7 @@
 {
   "name": "Sport",
   "language": "de",
-  "version": "1.1",
+  "version": "1.2",
   "theme": "sport",
   "questions": [
     {
@@ -1849,6 +1849,66 @@
       "category": "Sport",
       "image_url": "/quizify/static/img/packs/sport/suzanne-lenglen.webp",
       "reveal_style": "progressive"
+    },
+    {
+      "id": "sport_de_166",
+      "question": "Wie viele Meter lang ist ein Marathon?",
+      "type": "estimate",
+      "answer": 42195,
+      "min": 10000,
+      "max": 100000,
+      "unit": "Meter",
+      "difficulty": "easy",
+      "fun_fact": "42.195 Meter. Die krummen 195 stammen von den Spielen 1908 in London, wo der Start ans Schloss Windsor verlegt wurde, damit die königlichen Kinder zusehen konnten.",
+      "category": "Sport"
+    },
+    {
+      "id": "sport_de_167",
+      "question": "Wie hoch hängt ein Basketballkorb über dem Boden?",
+      "type": "estimate",
+      "answer": 305,
+      "min": 100,
+      "max": 600,
+      "unit": "Zentimeter",
+      "difficulty": "easy",
+      "fun_fact": "3,05 Meter — exakt zehn Fuß. James Naismith nagelte 1891 einen Pfirsichkorb an die Empore der Turnhalle, und die hing genau so hoch.",
+      "category": "Sport"
+    },
+    {
+      "id": "sport_de_168",
+      "question": "Wie schwer ist die Kugel beim Kugelstoßen der Männer?",
+      "type": "estimate",
+      "answer": 7260,
+      "min": 1000,
+      "max": 20000,
+      "unit": "Gramm",
+      "difficulty": "medium",
+      "fun_fact": "7,26 kg, also exakt 16 englische Pfund. Bei den Frauen sind es 4 kg.",
+      "category": "Sport"
+    },
+    {
+      "id": "sport_de_169",
+      "question": "Aus wie vielen Doppelstichen besteht die Naht eines Baseballs?",
+      "type": "estimate",
+      "answer": 108,
+      "min": 10,
+      "max": 500,
+      "unit": "Doppelstiche",
+      "difficulty": "hard",
+      "fun_fact": "108, alle von Hand gesetzt — bis heute gibt es keine Maschine, die die Naht eines Major-League-Balls näht.",
+      "category": "Sport"
+    },
+    {
+      "id": "sport_de_170",
+      "question": "Wie hoch ist ein Tennisnetz in der Mitte?",
+      "type": "estimate",
+      "answer": 91,
+      "min": 50,
+      "max": 200,
+      "unit": "Zentimeter",
+      "difficulty": "medium",
+      "fun_fact": "91,4 cm in der Mitte, an den Pfosten 107 cm. Das Netz hängt also absichtlich durch — deshalb ist der Ball übers Zentrum leichter zu spielen.",
+      "category": "Sport"
     }
   ]
 }
