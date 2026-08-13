@@ -75,33 +75,11 @@ def _handler(tmp_path: Path, game: QuizifyGameState) -> QuizifyWebSocketHandler:
 
 
 
-def _multiple_choice_only(gs) -> None:
-    """Keep estimate questions out of this game's draw.
-
-    Since #566 the themed packs carry estimate questions (#275), so a mixed
-    game can legitimately serve one — and an estimate has no ``answers``.
-    The tests below exercise the multiple-choice scoring path, so they pin
-    the draw rather than depend on which question the seeded shuffle serves.
-    """
-    bank = gs._question_bank
-    draw = bank.get_next_question
-
-    def _mc(*args, **kwargs):
-        question = None
-        for _ in range(50):
-            question = draw(*args, **kwargs)
-            if question is None or question.answers:
-                return question
-        return question
-
-    bank.get_next_question = _mc
-
 def _started_game(tmp_path: Path, names: list[str]) -> QuizifyGameState:
     gs = QuizifyGameState(runtime=_Runtime(tmp_path), entry_id="t")
     for n in names:
         gs.add_player(n, _fake_ws())
     gs.start_game(language="de", num_rounds=3, lightning_enabled=False)
-    _multiple_choice_only(gs)
     gs.start_next_question()
     return gs
 
@@ -309,7 +287,6 @@ class TestRoundSummaryMemo414:
         assert gs.get_cached_round_summary_msg(key) is msg1
 
         # Next round invalidates the cache.
-        _multiple_choice_only(gs)
         gs.start_next_question()
         assert gs.get_cached_round_summary_msg(key) is None
 

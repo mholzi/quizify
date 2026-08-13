@@ -1,7 +1,7 @@
 {
   "name": "Music",
   "language": "en",
-  "version": "1.1",
+  "version": "1.2",
   "theme": "music",
   "questions": [
     {
@@ -1873,6 +1873,66 @@
       "category": "Music",
       "image_url": "/quizify/static/img/packs/music/harpsichord.webp",
       "reveal_style": "progressive"
+    },
+    {
+      "id": "music_en_166",
+      "question": "How many keys does a modern piano have?",
+      "type": "estimate",
+      "answer": 88,
+      "min": 20,
+      "max": 200,
+      "unit": "keys",
+      "difficulty": "easy",
+      "fun_fact": "52 white and 36 black. More would be possible, but past 88 the ear hears the lowest notes as rumble rather than pitch.",
+      "category": "Music"
+    },
+    {
+      "id": "music_en_167",
+      "question": "How many strings does a concert harp have?",
+      "type": "estimate",
+      "answer": 47,
+      "min": 5,
+      "max": 100,
+      "unit": "strings",
+      "difficulty": "medium",
+      "fun_fact": "47 strings and seven pedals, each retuning one note across every octave. A harpist effectively plays the key signature with their feet.",
+      "category": "Music"
+    },
+    {
+      "id": "music_en_168",
+      "question": "How many symphonies did Joseph Haydn write?",
+      "type": "estimate",
+      "answer": 104,
+      "min": 1,
+      "max": 300,
+      "unit": "symphonies",
+      "difficulty": "hard",
+      "fun_fact": "104 confirmed. Mozart managed 41 and Beethoven 9 — the count fell as the individual symphony grew longer and weightier.",
+      "category": "Music"
+    },
+    {
+      "id": "music_en_169",
+      "question": "How many seconds does John Cage's piece last in which not a single note is played?",
+      "type": "estimate",
+      "answer": 273,
+      "min": 1,
+      "max": 1000,
+      "unit": "seconds",
+      "difficulty": "medium",
+      "fun_fact": "Four minutes and 33 seconds of silence. The piece is notated, copyrighted, and has been litigated over more than once.",
+      "category": "Music"
+    },
+    {
+      "id": "music_en_170",
+      "question": "Roughly how many minutes does Beethoven's 9th Symphony run?",
+      "type": "estimate",
+      "answer": 70,
+      "min": 10,
+      "max": 180,
+      "unit": "minutes",
+      "difficulty": "medium",
+      "fun_fact": "About 70 minutes. Legend says that is exactly why a CD holds what it holds — never proven, never quite denied either.",
+      "category": "Music"
     }
   ]
 }

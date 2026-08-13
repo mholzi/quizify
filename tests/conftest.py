@@ -13,8 +13,12 @@ from __future__ import annotations
 
 import asyncio
 import random
+import sys
+from pathlib import Path
 
 import pytest
+
+sys.path.insert(0, str(Path(__file__).resolve().parent.parent))
 
 
 @pytest.fixture(autouse=True)
@@ -32,6 +36,47 @@ def _seed_random():
     """
     random.seed(0)
     yield
+
+
+@pytest.fixture(autouse=True)
+def _mixed_draw_serves_multiple_choice():
+    """Keep estimate questions out of *mixed* draws (``category=None``).
+
+    Dozens of tests start a game over all packs and then read
+    ``question.answers`` to find the correct index. An estimate question
+    (#275) has none, so those tests only ever passed because the seeded
+    shuffle above never happened to serve one — never because the assumption
+    held. Estimates have been in the mixed pool since 1.4.0, and #566 is
+    adding five to every themed pack, so each new pack pair moves the draw
+    and tips over a different handful of them.
+
+    Rather than let content changes break scoring tests, mixed draws serve
+    multiple choice here. Two things stay untouched on purpose: a draw that
+    *names* a category returns exactly what that pack holds, and the estimate
+    tests inject their question into ``_current_question`` directly, so
+    nothing that actually exercises the mechanic is hidden by this.
+    """
+    from custom_components.quizify.game.questions import QuestionBank
+
+    original = QuestionBank.get_next_question
+
+    def _mixed_draw_skips_estimates(
+        self, category=None, difficulty=None
+    ):  # noqa: ANN001, ANN202
+        question = original(self, category=category, difficulty=difficulty)
+        if category is not None:
+            return question
+        for _ in range(50):
+            if question is None or question.answers:
+                return question
+            question = original(self, category=category, difficulty=difficulty)
+        return question
+
+    QuestionBank.get_next_question = _mixed_draw_skips_estimates
+    try:
+        yield
+    finally:
+        QuestionBank.get_next_question = original
 
 
 @pytest.fixture(autouse=True)

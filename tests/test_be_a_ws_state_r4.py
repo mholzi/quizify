@@ -67,27 +67,6 @@ def _ws(closed: bool = False) -> MagicMock:
 
 
 
-def _multiple_choice_only(gs) -> None:
-    """Keep estimate questions out of this game's draw.
-
-    Since #566 the themed packs carry estimate questions (#275), so a mixed
-    game can legitimately serve one — and an estimate has no ``answers``.
-    The tests below exercise the multiple-choice scoring path, so they pin
-    the draw rather than depend on which question the seeded shuffle serves.
-    """
-    bank = gs._question_bank
-    draw = bank.get_next_question
-
-    def _mc(*args, **kwargs):
-        question = None
-        for _ in range(50):
-            question = draw(*args, **kwargs)
-            if question is None or question.answers:
-                return question
-        return question
-
-    bank.get_next_question = _mc
-
 def _correct_index(game: QuizifyGameState) -> int:
     q = game._current_question
     assert q is not None
@@ -139,7 +118,6 @@ class TestJoinReclaimStaleSlot:
         game.add_player("Alice", alice_ws)
         game.add_player("Bob", bob_ws)
         game.start_game(num_rounds=3, language="de")
-        _multiple_choice_only(game)
         game.start_next_question()
 
         # Alice answers correctly → she has a real score.
@@ -200,7 +178,6 @@ class TestStealRoundScoreAccumulates:
         game.add_player("Thief", thief_ws)
         game.add_player("Victim", victim_ws)
         game.start_game(num_rounds=3, language="de")
-        _multiple_choice_only(game)
         game.start_next_question()
 
         # Victim submits correctly → has a round_score worth stealing.
@@ -235,7 +212,6 @@ class TestStealRoundScoreAccumulates:
         a_ws = _ws()
         game.add_player("Solo", a_ws)
         game.start_game(num_rounds=3, language="de")
-        _multiple_choice_only(game)
         game.start_next_question()
 
         result = game.submit_answer("Solo", _correct_index(game))
@@ -261,7 +237,6 @@ class TestStealThenTimeoutRecordsHistory:
         game.add_player("Thief", thief_ws)
         game.add_player("Victim", victim_ws)
         game.start_game(num_rounds=3, language="de")
-        _multiple_choice_only(game)
         game.start_next_question()
 
         # Victim submits correctly → has a round_score worth stealing.
@@ -295,7 +270,6 @@ class TestStealThenTimeoutRecordsHistory:
         since reset_round zeroed round_score."""
         game.add_player("Idle", _ws())
         game.start_game(num_rounds=3, language="de")
-        _multiple_choice_only(game)
         game.start_next_question()
 
         idle = game.get_player("Idle")
