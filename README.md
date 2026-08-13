@@ -52,7 +52,7 @@ No apps to download. No accounts to create. Just scan a QR code and play.
 
 **Works on Any Screen** — Dashboard mode for the TV. Players use their phones. Admin runs the show. No extra hardware needed.
 
-**Eleven Themes, Three Languages** — 3,997 questions across 30 themed packs (Geography, Pop Culture, Animals & Nature, Sport, Music, Science, History, Food & Drink, Technology, World Cup, Estimation) in German, English and Spanish. Mix them, filter them, swap mid-session.
+**Eleven Themes, Three Languages** — 4,007 questions across 30 themed packs (Geography, Pop Culture, Animals & Nature, Sport, Music, Science, History, Food & Drink, Technology, World Cup, Estimation) in German, English and Spanish. Mix them, filter them, swap mid-session.
 
 ---
 
@@ -318,11 +318,11 @@ Then **"Start New Game"** (same settings, same players) or **Reset Game** (fresh
 
 ## Question Packs
 
-Quizify ships with **3,997 questions across 30 themed packs in 11 themes**, in German, English and Spanish.
+Quizify ships with **4,007 questions across 30 themed packs in 11 themes**, in German, English and Spanish.
 
 | Theme | 🇩🇪 Deutsch | 🇬🇧 English | 🇪🇸 Español |
 |-------|-------------|-------------|-------------|
-| 🌍 **Geographie / Geography / Geografía** | 154 | 155 | 155 |
+| 🌍 **Geographie / Geography / Geografía** | 159 | 160 | 155 |
 | 🦋 **Tiere & Natur / Animals & Nature / Naturaleza** | 159 | 160 | 155 |
 | 🎬 **Popkultur / Pop Culture / Cultura Pop** | 154 | 155 | 155 |
 | ⚽ **Sport / Deportes** | 153 | 155 | 155 |
@@ -335,7 +335,7 @@ Quizify ships with **3,997 questions across 30 themed packs in 11 themes**, in G
 | 🎯 **Schätzfragen / Estimation** | 15 | 15 | — |
 | 🖼️ **Bilderrätsel / Picture Round** | 17 | 17 | — |
 
-Spanish arrived in 1.3.0 and grew through 1.6.1; music, food and technology are the three themes it is still missing. The two Estimation packs hold slider questions rather than multiple choice — see [How to Play](#the-experience); the themed packs are gaining five slider questions of their own as well, which is why Animals & Nature runs longer than its siblings.
+Spanish arrived in 1.3.0 and grew through 1.6.1; music, food and technology are the three themes it is still missing. The two Estimation packs hold slider questions rather than multiple choice — see [How to Play](#the-experience); the themed packs are gaining five slider questions of their own as well, which is why some rows already run longer than their Spanish column.
 
 Pack selection lives on the **first screen**: a featured pack card (e.g. World Cup) up top, with every other pack as a tappable chip right beneath it — tap to select or deselect, mix several, then hit **Start Game**. Game settings (difficulty, rounds, timer) stay one tap away under **Adjust settings**. **Mixed mode** drops you a random question from every selected pack, so you can stir Geography + Pop + Sport together for chaos mode.
 
