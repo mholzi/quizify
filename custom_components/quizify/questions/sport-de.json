@@ -1779,6 +1779,76 @@
       "difficulty": "easy",
       "fun_fact": "Damit ist Badminton beim reinen Anfangstempo des Spielgeräts schneller als jeder Tennisaufschlag. Der Federball bremst allerdings extrem schnell ab — die kleinen Federn wirken wie ein Fallschirm, weshalb er beim Aufkommen viel langsamer ist.",
       "category": "Sport"
+    },
+    {
+      "id": "sport_de_161",
+      "question": "Welche Disziplin zeigt dieses Foto von den Olympischen Spielen 1936?",
+      "answers": [
+        {"text": "Weitsprung", "correct": true},
+        {"text": "Stabhochsprung", "correct": false},
+        {"text": "Hürdenlauf", "correct": false}
+      ],
+      "difficulty": "medium",
+      "fun_fact": "Jesse Owens gewann in Berlin vier Goldmedaillen. Beim Weitsprung half ihm ausgerechnet sein deutscher Konkurrent Luz Long mit einem Rat vor dem letzten Versuch — die beiden verließen das Stadion Arm in Arm.",
+      "category": "Sport",
+      "image_url": "/quizify/static/img/packs/sport/jesse-owens-1936.webp",
+      "reveal_style": "progressive"
+    },
+    {
+      "id": "sport_de_162",
+      "question": "Welcher Boxer ist hier zu sehen?",
+      "answers": [
+        {"text": "Joe Frazier", "correct": false},
+        {"text": "Muhammad Ali", "correct": true},
+        {"text": "George Foreman", "correct": false}
+      ],
+      "difficulty": "easy",
+      "fun_fact": "Ali gewann 1960 olympisches Gold, wurde dreimal Weltmeister im Schwergewicht und verlor dazwischen dreieinhalb Jahre seiner besten Zeit, weil ihm nach seiner Wehrdienstverweigerung die Lizenz entzogen wurde.",
+      "category": "Sport",
+      "image_url": "/quizify/static/img/packs/sport/muhammad-ali.webp",
+      "reveal_style": "progressive"
+    },
+    {
+      "id": "sport_de_163",
+      "question": "Welche Sportart wird auf diesem Foto von 1916 gespielt?",
+      "answers": [
+        {"text": "Cricket", "correct": false},
+        {"text": "Golf", "correct": false},
+        {"text": "Baseball", "correct": true}
+      ],
+      "difficulty": "easy",
+      "fun_fact": "Babe Ruth begann als Werfer und wurde erst danach zum berühmtesten Schlagmann des Sports. Sein Wechsel von Boston nach New York gilt bis heute als der folgenreichste Transfer der Baseballgeschichte.",
+      "category": "Sport",
+      "image_url": "/quizify/static/img/packs/sport/babe-ruth.webp",
+      "reveal_style": "progressive"
+    },
+    {
+      "id": "sport_de_164",
+      "question": "Welches Rennen hat dieser Mann 1920 gewonnen?",
+      "answers": [
+        {"text": "Die Tour de France", "correct": true},
+        {"text": "Den Berlin-Marathon", "correct": false},
+        {"text": "Das 24-Stunden-Rennen von Le Mans", "correct": false}
+      ],
+      "difficulty": "medium",
+      "fun_fact": "Philippe Thys gewann die Tour dreimal. Damals fuhren die Fahrer ohne Betreuer: Wer eine Panne hatte, musste sie selbst beheben — ein Rahmenbruch bedeutete den Gang zur nächsten Schmiede.",
+      "category": "Sport",
+      "image_url": "/quizify/static/img/packs/sport/tour-de-france-1920.webp",
+      "reveal_style": "progressive"
+    },
+    {
+      "id": "sport_de_165",
+      "question": "Welche Sportart machte diese Französin in den 1920er-Jahren populär?",
+      "answers": [
+        {"text": "Hockey", "correct": false},
+        {"text": "Badminton", "correct": false},
+        {"text": "Tennis", "correct": true}
+      ],
+      "difficulty": "medium",
+      "fun_fact": "Suzanne Lenglen verlor zwischen 1919 und 1926 genau ein Match. Sie spielte in wadenlangem Rock ohne Korsett und mit nacktem Unterarm — für das Publikum von 1920 fast so aufsehenerregend wie ihre Schläge.",
+      "category": "Sport",
+      "image_url": "/quizify/static/img/packs/sport/suzanne-lenglen.webp",
+      "reveal_style": "progressive"
     }
   ]
 }

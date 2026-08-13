@@ -1803,6 +1803,76 @@
       "difficulty": "easy",
       "fun_fact": "A Wall Street Journal study clocked the average play at around 4 seconds, with about 130 plays per game — totalling roughly 11 minutes of action inside a broadcast that runs three hours, most of which is replays and players standing around.",
       "category": "Sport"
+    },
+    {
+      "id": "sport_en_161",
+      "question": "Which event does this photograph from the 1936 Olympics show?",
+      "answers": [
+        {"text": "Long jump", "correct": true},
+        {"text": "Pole vault", "correct": false},
+        {"text": "Hurdles", "correct": false}
+      ],
+      "difficulty": "medium",
+      "fun_fact": "Jesse Owens won four gold medals in Berlin. In the long jump it was his German rival Luz Long who advised him before the final attempt — the two left the stadium arm in arm.",
+      "category": "Sport",
+      "image_url": "/quizify/static/img/packs/sport/jesse-owens-1936.webp",
+      "reveal_style": "progressive"
+    },
+    {
+      "id": "sport_en_162",
+      "question": "Which boxer is shown here?",
+      "answers": [
+        {"text": "Joe Frazier", "correct": false},
+        {"text": "Muhammad Ali", "correct": true},
+        {"text": "George Foreman", "correct": false}
+      ],
+      "difficulty": "easy",
+      "fun_fact": "Ali took Olympic gold in 1960 and the heavyweight title three times, losing three and a half years of his prime in between when his licence was withdrawn after he refused the draft.",
+      "category": "Sport",
+      "image_url": "/quizify/static/img/packs/sport/muhammad-ali.webp",
+      "reveal_style": "progressive"
+    },
+    {
+      "id": "sport_en_163",
+      "question": "Which sport is being played in this 1916 photograph?",
+      "answers": [
+        {"text": "Cricket", "correct": false},
+        {"text": "Golf", "correct": false},
+        {"text": "Baseball", "correct": true}
+      ],
+      "difficulty": "easy",
+      "fun_fact": "Babe Ruth started out as a pitcher and only then became the most famous hitter in the game. His move from Boston to New York is still called the most consequential transfer in baseball history.",
+      "category": "Sport",
+      "image_url": "/quizify/static/img/packs/sport/babe-ruth.webp",
+      "reveal_style": "progressive"
+    },
+    {
+      "id": "sport_en_164",
+      "question": "Which race did this man win in 1920?",
+      "answers": [
+        {"text": "The Tour de France", "correct": true},
+        {"text": "The Berlin Marathon", "correct": false},
+        {"text": "The Le Mans 24 Hours", "correct": false}
+      ],
+      "difficulty": "medium",
+      "fun_fact": "Philippe Thys won the Tour three times. Riders had no support crews then: a mechanical was yours to fix, and a broken frame meant a walk to the nearest forge.",
+      "category": "Sport",
+      "image_url": "/quizify/static/img/packs/sport/tour-de-france-1920.webp",
+      "reveal_style": "progressive"
+    },
+    {
+      "id": "sport_en_165",
+      "question": "Which sport did this French player make popular in the 1920s?",
+      "answers": [
+        {"text": "Hockey", "correct": false},
+        {"text": "Badminton", "correct": false},
+        {"text": "Tennis", "correct": true}
+      ],
+      "difficulty": "medium",
+      "fun_fact": "Suzanne Lenglen lost exactly one match between 1919 and 1926. She played in a calf-length skirt without a corset and with bare forearms — to a 1920 crowd nearly as startling as her strokes.",
+      "category": "Sport",
+      "image_url": "/quizify/static/img/packs/sport/suzanne-lenglen.webp",
+      "reveal_style": "progressive"
     }
   ]
 }
