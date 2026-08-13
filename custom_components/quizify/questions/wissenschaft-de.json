@@ -1,7 +1,7 @@
 {
   "name": "Wissenschaft",
   "language": "de",
-  "version": "1.1",
+  "version": "1.2",
   "theme": "science",
   "questions": [
     {
@@ -3223,6 +3223,66 @@
       "category": "Wissenschaft",
       "image_url": "/quizify/static/img/packs/science/hooke-flea.webp",
       "reveal_style": "progressive"
+    },
+    {
+      "id": "wissenschaft_de_166",
+      "question": "Wie viele Kilometer legt Licht in einer Sekunde zurück?",
+      "type": "estimate",
+      "answer": 299792,
+      "min": 0,
+      "max": 500000,
+      "unit": "Kilometer",
+      "difficulty": "medium",
+      "fun_fact": "299.792,458 km/s — und das ist keine Messung mehr, sondern eine Festlegung: Seit 1983 ist über diese Zahl das Meter definiert.",
+      "category": "Wissenschaft"
+    },
+    {
+      "id": "wissenschaft_de_167",
+      "question": "Wie viele Chromosomen hat eine menschliche Körperzelle?",
+      "type": "estimate",
+      "answer": 46,
+      "min": 2,
+      "max": 200,
+      "unit": "Chromosomen",
+      "difficulty": "easy",
+      "fun_fact": "23 Paare. Der Farn Ophioglossum reticulatum kommt auf über 1.200 — mehr als jedes andere bekannte Lebewesen.",
+      "category": "Wissenschaft"
+    },
+    {
+      "id": "wissenschaft_de_168",
+      "question": "Wie viele Minuten braucht das Sonnenlicht bis zur Erde?",
+      "type": "estimate",
+      "answer": 8,
+      "min": 1,
+      "max": 60,
+      "unit": "Minuten",
+      "difficulty": "medium",
+      "fun_fact": "Rund 8 Minuten und 20 Sekunden. Die Energie darin war vorher zehntausende Jahre unterwegs, um überhaupt aus dem Inneren der Sonne an ihre Oberfläche zu gelangen.",
+      "category": "Wissenschaft"
+    },
+    {
+      "id": "wissenschaft_de_169",
+      "question": "Wie heiß ist die Oberfläche der Sonne?",
+      "type": "estimate",
+      "answer": 5500,
+      "min": 1000,
+      "max": 20000,
+      "unit": "Grad Celsius",
+      "difficulty": "medium",
+      "fun_fact": "Die Korona darüber ist mit über einer Million Grad weit heißer als die Oberfläche — warum, ist bis heute nicht abschließend geklärt.",
+      "category": "Wissenschaft"
+    },
+    {
+      "id": "wissenschaft_de_170",
+      "question": "Bei wie viel Grad Celsius kocht Wasser auf dem Gipfel des Mount Everest?",
+      "type": "estimate",
+      "answer": 70,
+      "min": 0,
+      "max": 100,
+      "unit": "Grad Celsius",
+      "difficulty": "hard",
+      "fun_fact": "Bei rund 70 °C, weil der Luftdruck dort auf ein Drittel gesunken ist. Ein Ei wird darin nie hart — es fehlt schlicht die Temperatur.",
+      "category": "Wissenschaft"
     }
   ]
 }

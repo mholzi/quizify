@@ -1,7 +1,7 @@
 {
   "name": "Science",
   "language": "en",
-  "version": "1.1",
+  "version": "1.2",
   "theme": "science",
   "questions": [
     {
@@ -1873,6 +1873,66 @@
       "category": "Science",
       "image_url": "/quizify/static/img/packs/science/hooke-flea.webp",
       "reveal_style": "progressive"
+    },
+    {
+      "id": "science_en_166",
+      "question": "How many kilometres does light travel in one second?",
+      "type": "estimate",
+      "answer": 299792,
+      "min": 0,
+      "max": 500000,
+      "unit": "kilometres",
+      "difficulty": "medium",
+      "fun_fact": "299,792.458 km/s — and it is no longer a measurement but a definition: since 1983 the metre has been defined by that number.",
+      "category": "Science"
+    },
+    {
+      "id": "science_en_167",
+      "question": "How many chromosomes does a human body cell have?",
+      "type": "estimate",
+      "answer": 46,
+      "min": 2,
+      "max": 200,
+      "unit": "chromosomes",
+      "difficulty": "easy",
+      "fun_fact": "23 pairs. The fern Ophioglossum reticulatum carries over 1,200 — more than any other known organism.",
+      "category": "Science"
+    },
+    {
+      "id": "science_en_168",
+      "question": "How many minutes does sunlight take to reach the Earth?",
+      "type": "estimate",
+      "answer": 8,
+      "min": 1,
+      "max": 60,
+      "unit": "minutes",
+      "difficulty": "medium",
+      "fun_fact": "About 8 minutes and 20 seconds. The energy in it had already spent tens of thousands of years working its way from the Sun's core to its surface.",
+      "category": "Science"
+    },
+    {
+      "id": "science_en_169",
+      "question": "How hot is the surface of the Sun?",
+      "type": "estimate",
+      "answer": 5500,
+      "min": 1000,
+      "max": 20000,
+      "unit": "degrees Celsius",
+      "difficulty": "medium",
+      "fun_fact": "The corona above it is far hotter at over a million degrees, and why that is remains unsettled.",
+      "category": "Science"
+    },
+    {
+      "id": "science_en_170",
+      "question": "At what temperature does water boil on the summit of Mount Everest?",
+      "type": "estimate",
+      "answer": 70,
+      "min": 0,
+      "max": 100,
+      "unit": "degrees Celsius",
+      "difficulty": "hard",
+      "fun_fact": "Around 70 °C, because the air pressure up there has dropped to a third. An egg never hardens in it — the heat simply is not there.",
+      "category": "Science"
     }
   ]
 }
