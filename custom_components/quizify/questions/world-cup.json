@@ -1,7 +1,7 @@
 {
   "name": "World Cup",
   "language": "en",
-  "version": "1.0",
+  "version": "1.1",
   "theme": "worldcup",
   "season": {"start": "06-01", "end": "07-31", "label": "⚽ World Cup season"},
   "questions": [
@@ -1274,6 +1274,66 @@
       "category": "World Cup",
       "image_url": "/quizify/static/img/packs/worldcup/uruguay-1930.webp",
       "reveal_style": "progressive"
+    },
+    {
+      "id": "world_cup_en_166",
+      "question": "How old was Pelé when he won the World Cup in 1958?",
+      "type": "estimate",
+      "answer": 17,
+      "min": 10,
+      "max": 50,
+      "unit": "years",
+      "difficulty": "easy",
+      "fun_fact": "17 years and 249 days. He scored twice in the final against Sweden and is still the youngest world champion.",
+      "category": "World Cup"
+    },
+    {
+      "id": "world_cup_en_167",
+      "question": "How many teams took part in the first World Cup in Uruguay in 1930?",
+      "type": "estimate",
+      "answer": 13,
+      "min": 1,
+      "max": 50,
+      "unit": "teams",
+      "difficulty": "medium",
+      "fun_fact": "13, and nobody had to qualify — they were invited. Only four European sides made the trip, a two-week crossing by ship.",
+      "category": "World Cup"
+    },
+    {
+      "id": "world_cup_en_168",
+      "question": "How many spectators watched the deciding match at the Maracanã in 1950?",
+      "type": "estimate",
+      "answer": 200000,
+      "min": 10000,
+      "max": 300000,
+      "unit": "spectators",
+      "difficulty": "medium",
+      "fun_fact": "Around 200,000, still the largest crowd ever at a football match. Brazil lost 2-1 to Uruguay and the stadium fell silent.",
+      "category": "World Cup"
+    },
+    {
+      "id": "world_cup_en_169",
+      "question": "How many goals were scored in the highest-scoring World Cup match ever, Austria against Switzerland in 1954?",
+      "type": "estimate",
+      "answer": 12,
+      "min": 1,
+      "max": 30,
+      "unit": "goals",
+      "difficulty": "hard",
+      "fun_fact": "7-5 to Austria, in 40-degree heat in Lausanne. The Austrian goalkeeper suffered heatstroke and afterwards had no memory of playing.",
+      "category": "World Cup"
+    },
+    {
+      "id": "world_cup_en_170",
+      "question": "After how many seconds was the fastest goal in World Cup history scored?",
+      "type": "estimate",
+      "answer": 11,
+      "min": 1,
+      "max": 300,
+      "unit": "seconds",
+      "difficulty": "hard",
+      "fun_fact": "Eleven seconds, by Hakan Şükür in the 2002 third-place match. It was his only goal of the tournament.",
+      "category": "World Cup"
     }
   ]
 }
