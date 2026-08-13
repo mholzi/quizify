@@ -1803,6 +1803,76 @@
       "difficulty": "easy",
       "fun_fact": "'Thriller' is estimated to have sold around 70 million copies. At its 1980s peak it was reportedly selling about a million copies a week.",
       "category": "Music"
+    },
+    {
+      "id": "music_en_161",
+      "question": "Which composer is shown in this 1820 painting?",
+      "answers": [
+        {"text": "Johannes Brahms", "correct": false},
+        {"text": "Ludwig van Beethoven", "correct": true},
+        {"text": "Franz Schubert", "correct": false}
+      ],
+      "difficulty": "easy",
+      "fun_fact": "Beethoven sat for Joseph Stieler only a few times and worked on the Missa solemnis between sittings — the manuscript in his hand carries exactly that title.",
+      "category": "Music",
+      "image_url": "/quizify/static/img/packs/music/beethoven-portrait.webp",
+      "reveal_style": "progressive"
+    },
+    {
+      "id": "music_en_162",
+      "question": "Which Italian city did the maker of this violin work in?",
+      "answers": [
+        {"text": "Cremona", "correct": true},
+        {"text": "Naples", "correct": false},
+        {"text": "Florence", "correct": false}
+      ],
+      "difficulty": "hard",
+      "fun_fact": "Antonio Stradivari built around 1,100 instruments in Cremona, of which some 650 survive. Why they sound the way they do is still unsettled — varnish, wood density and the cold summers of those decades have all been offered as the explanation.",
+      "category": "Music",
+      "image_url": "/quizify/static/img/packs/music/stradivari-violin.webp",
+      "reveal_style": "progressive"
+    },
+    {
+      "id": "music_en_163",
+      "question": "Which device did this man present in 1877?",
+      "answers": [
+        {"text": "The gramophone", "correct": false},
+        {"text": "The radio", "correct": false},
+        {"text": "The phonograph", "correct": true}
+      ],
+      "difficulty": "medium",
+      "fun_fact": "Edison's phonograph recorded onto a cylinder wrapped in tinfoil. The first recording in history was his own recital of “Mary Had a Little Lamb” — and playing it back once already half destroyed it.",
+      "category": "Music",
+      "image_url": "/quizify/static/img/packs/music/edison-phonograph.webp",
+      "reveal_style": "progressive"
+    },
+    {
+      "id": "music_en_164",
+      "question": "What is on this sheet?",
+      "answers": [
+        {"text": "A handwritten musical score", "correct": true},
+        {"text": "A map", "correct": false},
+        {"text": "A tax register", "correct": false}
+      ],
+      "difficulty": "medium",
+      "fun_fact": "Beethoven's musical handwriting was notorious: crossed out, pasted over, pressed so hard the pen went through the paper. Copyists at times refused to work from his manuscripts.",
+      "category": "Music",
+      "image_url": "/quizify/static/img/packs/music/beethoven-manuscript.webp",
+      "reveal_style": "progressive"
+    },
+    {
+      "id": "music_en_165",
+      "question": "Which keyboard instrument is shown here?",
+      "answers": [
+        {"text": "A piano", "correct": false},
+        {"text": "A harpsichord", "correct": true},
+        {"text": "A harmonium", "correct": false}
+      ],
+      "difficulty": "medium",
+      "fun_fact": "A harpsichord plucks its strings rather than striking them, so it stays at one volume however hard you press. That is exactly what made the piano attractive from about 1700: it could finally play loud and soft.",
+      "category": "Music",
+      "image_url": "/quizify/static/img/packs/music/harpsichord.webp",
+      "reveal_style": "progressive"
     }
   ]
 }

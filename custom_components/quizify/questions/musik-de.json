@@ -1803,6 +1803,76 @@
       "difficulty": "medium",
       "fun_fact": "Eine Konzertharfe hat 47 Saiten und 7 Pedale. Über die Pedale kann die Harfenistin jede Tonstufe um einen Halbton verändern — die Füße spielen also kräftig mit.",
       "category": "Musik"
+    },
+    {
+      "id": "musik_de_161",
+      "question": "Welcher Komponist ist auf diesem Gemälde von 1820 zu sehen?",
+      "answers": [
+        {"text": "Johannes Brahms", "correct": false},
+        {"text": "Ludwig van Beethoven", "correct": true},
+        {"text": "Franz Schubert", "correct": false}
+      ],
+      "difficulty": "easy",
+      "fun_fact": "Beethoven saß Joseph Stieler nur wenige Male Modell und arbeitete während der Sitzungen an der Missa solemnis — das Notenheft in seiner Hand trägt genau diesen Titel.",
+      "category": "Musik",
+      "image_url": "/quizify/static/img/packs/music/beethoven-portrait.webp",
+      "reveal_style": "progressive"
+    },
+    {
+      "id": "musik_de_162",
+      "question": "Aus welcher italienischen Stadt stammt der Bauer dieser Geige?",
+      "answers": [
+        {"text": "Cremona", "correct": true},
+        {"text": "Neapel", "correct": false},
+        {"text": "Florenz", "correct": false}
+      ],
+      "difficulty": "hard",
+      "fun_fact": "Antonio Stradivari baute in Cremona rund 1.100 Instrumente, von denen etwa 650 erhalten sind. Warum sie so klingen, wie sie klingen, ist bis heute ungeklärt — Lack, Holzdichte und der kalte Sommer jener Jahrzehnte werden alle als Erklärung angeführt.",
+      "category": "Musik",
+      "image_url": "/quizify/static/img/packs/music/stradivari-violin.webp",
+      "reveal_style": "progressive"
+    },
+    {
+      "id": "musik_de_163",
+      "question": "Welches Gerät stellte dieser Mann 1877 vor?",
+      "answers": [
+        {"text": "Das Grammophon", "correct": false},
+        {"text": "Das Radio", "correct": false},
+        {"text": "Den Phonographen", "correct": true}
+      ],
+      "difficulty": "medium",
+      "fun_fact": "Edisons Phonograph nahm auf eine mit Stanniol umwickelte Walze auf. Die erste Aufnahme der Menschheitsgeschichte war sein eigener Vortrag von „Mary Had a Little Lamb“ — und beim ersten Abspielen war die Aufnahme schon halb zerstört.",
+      "category": "Musik",
+      "image_url": "/quizify/static/img/packs/music/edison-phonograph.webp",
+      "reveal_style": "progressive"
+    },
+    {
+      "id": "musik_de_164",
+      "question": "Was ist auf diesem Blatt zu sehen?",
+      "answers": [
+        {"text": "Eine handschriftliche Partitur", "correct": true},
+        {"text": "Eine Landkarte", "correct": false},
+        {"text": "Ein Steuerregister", "correct": false}
+      ],
+      "difficulty": "medium",
+      "fun_fact": "Beethovens Notenhandschrift war berüchtigt: gestrichen, überklebt, mit so viel Druck geschrieben, dass die Feder das Papier durchstieß. Kopisten weigerten sich zeitweise, seine Werke abzuschreiben.",
+      "category": "Musik",
+      "image_url": "/quizify/static/img/packs/music/beethoven-manuscript.webp",
+      "reveal_style": "progressive"
+    },
+    {
+      "id": "musik_de_165",
+      "question": "Welches Tasteninstrument ist hier zu sehen?",
+      "answers": [
+        {"text": "Ein Klavier", "correct": false},
+        {"text": "Ein Cembalo", "correct": true},
+        {"text": "Ein Harmonium", "correct": false}
+      ],
+      "difficulty": "medium",
+      "fun_fact": "Beim Cembalo werden die Saiten gezupft, nicht angeschlagen — deshalb bleibt es immer gleich laut, egal wie fest man drückt. Genau das machte das Klavier ab etwa 1700 attraktiv: dort ließ sich endlich laut und leise spielen.",
+      "category": "Musik",
+      "image_url": "/quizify/static/img/packs/music/harpsichord.webp",
+      "reveal_style": "progressive"
     }
   ]
 }
