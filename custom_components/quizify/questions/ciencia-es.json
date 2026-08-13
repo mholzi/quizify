@@ -3153,6 +3153,76 @@
       "difficulty": "hard",
       "fun_fact": "La luz visible es una pequeña parte del espectro electromagnético.",
       "category": "Ciencia"
+    },
+    {
+      "id": "cie_es_161",
+      "question": "¿Qué técnica hizo posible esta imagen de una mano en 1895?",
+      "answers": [
+        {"text": "La ecografía", "correct": false},
+        {"text": "Los rayos X", "correct": true},
+        {"text": "La resonancia magnética", "correct": false}
+      ],
+      "difficulty": "easy",
+      "fun_fact": "Wilhelm Conrad Röntgen fotografió la mano de su esposa Anna Bertha; la mancha oscura es su anillo de boda. Se cuenta que ella dijo: «He visto mi muerte». Röntgen nunca patentó el procedimiento.",
+      "category": "Ciencia",
+      "image_url": "/quizify/static/img/packs/science/first-x-ray.webp",
+      "reveal_style": "progressive"
+    },
+    {
+      "id": "cie_es_162",
+      "question": "¿Qué físico aparece aquí?",
+      "answers": [
+        {"text": "Niels Bohr", "correct": false},
+        {"text": "Max Planck", "correct": false},
+        {"text": "Albert Einstein", "correct": true}
+      ],
+      "difficulty": "easy",
+      "fun_fact": "El Nobel de 1921 no se lo dieron por la relatividad, sino por explicar el efecto fotoeléctrico: al comité la relatividad todavía le parecía demasiado incierta.",
+      "category": "Ciencia",
+      "image_url": "/quizify/static/img/packs/science/einstein-portrait.webp",
+      "reveal_style": "progressive"
+    },
+    {
+      "id": "cie_es_163",
+      "question": "¿Qué científica aparece aquí?",
+      "answers": [
+        {"text": "Marie Curie", "correct": true},
+        {"text": "Lise Meitner", "correct": false},
+        {"text": "Rosalind Franklin", "correct": false}
+      ],
+      "difficulty": "medium",
+      "fun_fact": "Marie Curie sigue siendo la única persona con premios Nobel en dos ciencias distintas: física en 1903 y química en 1911. Sus cuadernos de laboratorio siguen siendo tan radiactivos que se guardan en cajas de plomo.",
+      "category": "Ciencia",
+      "image_url": "/quizify/static/img/packs/science/marie-curie.webp",
+      "reveal_style": "progressive"
+    },
+    {
+      "id": "cie_es_164",
+      "question": "¿Qué telescopio tomó esta imagen dentro de la nebulosa del Águila?",
+      "answers": [
+        {"text": "El telescopio James Webb", "correct": false},
+        {"text": "El telescopio Hubble", "correct": true},
+        {"text": "El Very Large Telescope", "correct": false}
+      ],
+      "difficulty": "medium",
+      "fun_fact": "Los Pilares de la Creación son torres de gas y polvo donde nacen estrellas. El más alto mide unos cuatro años luz, más o menos la distancia del Sol a la estrella más cercana.",
+      "category": "Ciencia",
+      "image_url": "/quizify/static/img/packs/science/pillars-of-creation.webp",
+      "reveal_style": "progressive"
+    },
+    {
+      "id": "cie_es_165",
+      "question": "¿Qué instrumento hizo posible este dibujo de 1665?",
+      "answers": [
+        {"text": "El telescopio", "correct": false},
+        {"text": "La cámara oscura", "correct": false},
+        {"text": "El microscopio", "correct": true}
+      ],
+      "difficulty": "medium",
+      "fun_fact": "La «Micrographia» de Robert Hooke mostró una pulga a un tamaño que nadie había visto antes. En ese mismo libro llamó «células» a las cavidades que encontró en el corcho, por las celdas de un monasterio.",
+      "category": "Ciencia",
+      "image_url": "/quizify/static/img/packs/science/hooke-flea.webp",
+      "reveal_style": "progressive"
     }
   ]
 }

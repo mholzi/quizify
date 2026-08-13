@@ -48,3 +48,8 @@ Up to 1100 px on the long edge; three keep their native size (993–1024 px).
 WebP at quality 80, 40–108 KB each, 371 KB for the folder. Each was rendered at
 340 px — the width the card gets on a 390 px phone — and looked at before being
 kept.
+
+## Spanish
+
+The Spanish pack of this theme asks the same five pictures (#554). No new
+files, no new licence work — only question text.

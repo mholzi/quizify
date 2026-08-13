@@ -3153,6 +3153,76 @@
       "difficulty": "medium",
       "fun_fact": "Río de Janeiro fue la primera ciudad sudamericana en organizarlos.",
       "category": "Deportes"
+    },
+    {
+      "id": "dep_es_161",
+      "question": "¿Qué prueba muestra esta foto de los Juegos Olímpicos de 1936?",
+      "answers": [
+        {"text": "El salto de longitud", "correct": true},
+        {"text": "El salto con pértiga", "correct": false},
+        {"text": "Los 110 metros vallas", "correct": false}
+      ],
+      "difficulty": "medium",
+      "fun_fact": "Jesse Owens ganó cuatro medallas de oro en Berlín. En la longitud fue su rival alemán Luz Long quien le dio un consejo antes del último intento; los dos salieron del estadio del brazo.",
+      "category": "Deportes",
+      "image_url": "/quizify/static/img/packs/sport/jesse-owens-1936.webp",
+      "reveal_style": "progressive"
+    },
+    {
+      "id": "dep_es_162",
+      "question": "¿Qué boxeador aparece aquí?",
+      "answers": [
+        {"text": "Joe Frazier", "correct": false},
+        {"text": "Muhammad Ali", "correct": true},
+        {"text": "George Foreman", "correct": false}
+      ],
+      "difficulty": "easy",
+      "fun_fact": "Ali fue campeón olímpico en 1960 y tres veces campeón mundial de los pesados, y perdió por el camino tres años y medio de su mejor momento cuando le retiraron la licencia por negarse a ir a la guerra.",
+      "category": "Deportes",
+      "image_url": "/quizify/static/img/packs/sport/muhammad-ali.webp",
+      "reveal_style": "progressive"
+    },
+    {
+      "id": "dep_es_163",
+      "question": "¿Qué deporte se juega en esta foto de 1916?",
+      "answers": [
+        {"text": "El críquet", "correct": false},
+        {"text": "El golf", "correct": false},
+        {"text": "El béisbol", "correct": true}
+      ],
+      "difficulty": "easy",
+      "fun_fact": "Babe Ruth empezó como lanzador y solo después se convirtió en el bateador más famoso del deporte. Su traspaso de Boston a Nueva York sigue considerándose el más determinante de la historia del béisbol.",
+      "category": "Deportes",
+      "image_url": "/quizify/static/img/packs/sport/babe-ruth.webp",
+      "reveal_style": "progressive"
+    },
+    {
+      "id": "dep_es_164",
+      "question": "¿Qué carrera ganó este hombre en 1920?",
+      "answers": [
+        {"text": "El Tour de Francia", "correct": true},
+        {"text": "El maratón de Berlín", "correct": false},
+        {"text": "Las 24 Horas de Le Mans", "correct": false}
+      ],
+      "difficulty": "medium",
+      "fun_fact": "Philippe Thys ganó el Tour tres veces. Entonces los corredores no tenían asistencia: una avería era cosa suya, y un cuadro roto significaba caminar hasta la fragua más cercana.",
+      "category": "Deportes",
+      "image_url": "/quizify/static/img/packs/sport/tour-de-france-1920.webp",
+      "reveal_style": "progressive"
+    },
+    {
+      "id": "dep_es_165",
+      "question": "¿Qué deporte popularizó esta francesa en los años veinte?",
+      "answers": [
+        {"text": "El hockey", "correct": false},
+        {"text": "El bádminton", "correct": false},
+        {"text": "El tenis", "correct": true}
+      ],
+      "difficulty": "medium",
+      "fun_fact": "Suzanne Lenglen perdió exactamente un partido entre 1919 y 1926. Jugaba con falda hasta la pantorrilla, sin corsé y con los antebrazos al aire: para el público de 1920, casi tan llamativo como sus golpes.",
+      "category": "Deportes",
+      "image_url": "/quizify/static/img/packs/sport/suzanne-lenglen.webp",
+      "reveal_style": "progressive"
     }
   ]
 }

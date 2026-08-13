@@ -31,3 +31,8 @@ folder. Each one was rendered at 340 px — the width the card gets on a 390 px
 phone — and looked at before being kept. The two portraits and the flea
 engraving hold up plainly; the X-ray needed the crop before the hand read as a
 hand at that size; the Pillars are large enough in frame to survive it.
+
+## Spanish
+
+The Spanish pack of this theme asks the same five pictures (#554). No new
+files, no new licence work — only question text.

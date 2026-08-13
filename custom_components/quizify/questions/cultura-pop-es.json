@@ -3153,6 +3153,76 @@
       "difficulty": "medium",
       "fun_fact": "Se emite desde 1989 y ha superado los setecientos episodios.",
       "category": "Cultura Pop"
+    },
+    {
+      "id": "pop_es_161",
+      "question": "¿De qué película de 1902 procede esta imagen?",
+      "answers": [
+        {"text": "Nosferatu", "correct": false},
+        {"text": "Viaje a la Luna", "correct": true},
+        {"text": "Metrópolis", "correct": false}
+      ],
+      "difficulty": "medium",
+      "fun_fact": "Georges Méliès fue mago de escenario antes que cineasta. El cohete clavado en el ojo de la Luna es una de las imágenes más antiguas que casi todo el mundo reconoce sin haber visto la película.",
+      "category": "Cultura Pop",
+      "image_url": "/quizify/static/img/packs/popculture/voyage-dans-la-lune.webp",
+      "reveal_style": "progressive"
+    },
+    {
+      "id": "pop_es_162",
+      "question": "¿Qué estrella del cine mudo aparece aquí?",
+      "answers": [
+        {"text": "Buster Keaton", "correct": false},
+        {"text": "Harold Lloyd", "correct": false},
+        {"text": "Charlie Chaplin", "correct": true}
+      ],
+      "difficulty": "easy",
+      "fun_fact": "Chaplin inventó a Charlot en una tarde en el almacén de vestuario: pantalón ancho, chaqueta estrecha, zapatos grandes y un bastón. El personaje acabó apareciendo en más de setenta películas.",
+      "category": "Cultura Pop",
+      "image_url": "/quizify/static/img/packs/popculture/charlie-chaplin.webp",
+      "reveal_style": "progressive"
+    },
+    {
+      "id": "pop_es_163",
+      "question": "¿Qué personaje se dio a conocer en esta película de 1928?",
+      "answers": [
+        {"text": "Mickey Mouse", "correct": true},
+        {"text": "Bugs Bunny", "correct": false},
+        {"text": "El pato Donald", "correct": false}
+      ],
+      "difficulty": "easy",
+      "fun_fact": "«Steamboat Willie» no fue el primer corto de Mickey Mouse, pero sí el primero con sonido sincronizado, y por eso es el que todo el mundo conoce. En Estados Unidos es de dominio público desde 2024.",
+      "category": "Cultura Pop",
+      "image_url": "/quizify/static/img/packs/popculture/steamboat-willie.webp",
+      "reveal_style": "progressive"
+    },
+    {
+      "id": "pop_es_164",
+      "question": "¿Qué actriz aparece en esta foto promocional de 1953?",
+      "answers": [
+        {"text": "Grace Kelly", "correct": false},
+        {"text": "Marilyn Monroe", "correct": true},
+        {"text": "Rita Hayworth", "correct": false}
+      ],
+      "difficulty": "easy",
+      "fun_fact": "Solo en 1953 se estrenaron tres películas suyas. El estudio le pagaba menos que a sus compañeros de reparto masculinos, y la pelea por eso la llevó a fundar su propia productora.",
+      "category": "Cultura Pop",
+      "image_url": "/quizify/static/img/packs/popculture/marilyn-monroe.webp",
+      "reveal_style": "progressive"
+    },
+    {
+      "id": "pop_es_165",
+      "question": "¿Con qué nombre se hizo célebre la mujer de este cartel?",
+      "answers": [
+        {"text": "Lady Liberty", "correct": false},
+        {"text": "Betty Boop", "correct": false},
+        {"text": "Rosie la Remachadora", "correct": true}
+      ],
+      "difficulty": "medium",
+      "fun_fact": "El cartel estuvo colgado dos semanas de 1943 en unas pocas fábricas de Westinghouse y después desapareció durante cuarenta años. Se redescubrió en los años ochenta y se convirtió en símbolo: su fama actual no tiene nada que ver con su efecto original.",
+      "category": "Cultura Pop",
+      "image_url": "/quizify/static/img/packs/popculture/we-can-do-it.webp",
+      "reveal_style": "progressive"
     }
   ]
 }

@@ -33,3 +33,8 @@ provenance stays checkable later.
 also rendered at 340 px — the width the card actually gets on a 390 px phone —
 and looked at before being kept, because a picture that is not recognisable at
 that size is not a picture question.
+
+## Spanish
+
+The Spanish pack of this theme asks the same five pictures (#554). No new
+files, no new licence work — only question text.
