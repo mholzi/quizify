@@ -1,7 +1,7 @@
 {
   "name": "Weltmeisterschaft",
   "language": "de",
-  "version": "1.0",
+  "version": "1.1",
   "theme": "worldcup",
   "season": {"start": "06-01", "end": "07-31", "label": "⚽ WM-Saison"},
   "questions": [
@@ -1262,6 +1262,66 @@
       "category": "Weltmeisterschaft",
       "image_url": "/quizify/static/img/packs/worldcup/uruguay-1930.webp",
       "reveal_style": "progressive"
+    },
+    {
+      "id": "world_cup_de_166",
+      "question": "Wie alt war Pelé, als er 1958 Weltmeister wurde?",
+      "type": "estimate",
+      "answer": 17,
+      "min": 10,
+      "max": 50,
+      "unit": "Jahre",
+      "difficulty": "easy",
+      "fun_fact": "17 Jahre und 249 Tage. Im Finale gegen Schweden traf er zweimal — und ist bis heute der jüngste Weltmeister.",
+      "category": "Weltmeisterschaft"
+    },
+    {
+      "id": "world_cup_de_167",
+      "question": "Wie viele Mannschaften nahmen an der ersten WM 1930 in Uruguay teil?",
+      "type": "estimate",
+      "answer": 13,
+      "min": 1,
+      "max": 50,
+      "unit": "Mannschaften",
+      "difficulty": "medium",
+      "fun_fact": "13, und niemand musste sich qualifizieren — es wurde eingeladen. Aus Europa reisten nur vier Teams an, die Schiffsreise dauerte zwei Wochen.",
+      "category": "Weltmeisterschaft"
+    },
+    {
+      "id": "world_cup_de_168",
+      "question": "Wie viele Zuschauer sahen 1950 das entscheidende Spiel im Maracanã?",
+      "type": "estimate",
+      "answer": 200000,
+      "min": 10000,
+      "max": 300000,
+      "unit": "Zuschauer",
+      "difficulty": "medium",
+      "fun_fact": "Rund 200.000 — bis heute die größte Kulisse eines Fußballspiels. Brasilien verlor 1:2 gegen Uruguay, und das Stadion war anschließend still.",
+      "category": "Weltmeisterschaft"
+    },
+    {
+      "id": "world_cup_de_169",
+      "question": "Wie viele Tore fielen 1954 im höchsten WM-Spiel aller Zeiten, Österreich gegen die Schweiz?",
+      "type": "estimate",
+      "answer": 12,
+      "min": 1,
+      "max": 30,
+      "unit": "Tore",
+      "difficulty": "hard",
+      "fun_fact": "7:5 für Österreich, bei 40 Grad in Lausanne. Der österreichische Torwart erlitt einen Hitzeschlag und wusste hinterher nicht mehr, dass er gespielt hatte.",
+      "category": "Weltmeisterschaft"
+    },
+    {
+      "id": "world_cup_de_170",
+      "question": "Nach wie vielen Sekunden fiel das schnellste Tor der WM-Geschichte?",
+      "type": "estimate",
+      "answer": 11,
+      "min": 1,
+      "max": 300,
+      "unit": "Sekunden",
+      "difficulty": "hard",
+      "fun_fact": "Elf Sekunden, Hakan Şükür 2002 im Spiel um Platz drei. Es war sein einziges Tor des Turniers.",
+      "category": "Weltmeisterschaft"
     }
   ]
 }
