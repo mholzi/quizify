@@ -1192,6 +1192,76 @@
       "difficulty": "medium",
       "fun_fact": "Die Idee zu den farbigen Karten kam dem englischen Schiedsrichter Ken Aston an einer Verkehrsampel — Rot für Stopp, Gelb für Vorsicht.",
       "category": "Weltmeisterschaft"
+    },
+    {
+      "id": "world_cup_de_161",
+      "question": "Wofür wurde dieses Stadion in Montevideo 1930 gebaut?",
+      "answers": [
+        {"text": "Für die erste Fußball-Weltmeisterschaft", "correct": true},
+        {"text": "Für die Olympischen Spiele", "correct": false},
+        {"text": "Für die erste Copa América", "correct": false}
+      ],
+      "difficulty": "medium",
+      "fun_fact": "Das Estadio Centenario stand zum Turnierbeginn noch nicht fertig — Regen hatte den Bau verzögert, und die ersten Spiele mussten in kleinere Stadien der Stadt ausweichen.",
+      "category": "Weltmeisterschaft",
+      "image_url": "/quizify/static/img/packs/worldcup/centenario-1930.webp",
+      "reveal_style": "progressive"
+    },
+    {
+      "id": "world_cup_de_162",
+      "question": "Wie hieß dieser erste Weltmeisterschaftspokal?",
+      "answers": [
+        {"text": "Coupe Jules Rimet", "correct": true},
+        {"text": "Copa Libertadores", "correct": false},
+        {"text": "Coppa Italia", "correct": false}
+      ],
+      "difficulty": "medium",
+      "fun_fact": "Brasilien durfte den Pokal 1970 nach dem dritten Titel behalten. 1983 wurde er in Rio gestohlen und nie wiedergefunden; man geht davon aus, dass er eingeschmolzen wurde.",
+      "category": "Weltmeisterschaft",
+      "image_url": "/quizify/static/img/packs/worldcup/jules-rimet-trophy.webp",
+      "reveal_style": "progressive"
+    },
+    {
+      "id": "world_cup_de_163",
+      "question": "Welches Land richtete das Turnier aus, für das hier geworben wird?",
+      "answers": [
+        {"text": "Argentinien", "correct": false},
+        {"text": "Brasilien", "correct": true},
+        {"text": "Portugal", "correct": false}
+      ],
+      "difficulty": "easy",
+      "fun_fact": "Die WM 1950 kam ohne Endspiel aus: Statt eines K.-o.-Finales entschied eine Finalrunde von vier Mannschaften. Dass das letzte Spiel trotzdem zum Endspiel wurde, war Zufall des Spielplans.",
+      "category": "Weltmeisterschaft",
+      "image_url": "/quizify/static/img/packs/worldcup/world-cup-poster-1950.webp",
+      "reveal_style": "progressive"
+    },
+    {
+      "id": "world_cup_de_164",
+      "question": "Welches Ereignis von 1950 zeigt dieses Foto?",
+      "answers": [
+        {"text": "Ein Eigentor im Eröffnungsspiel", "correct": false},
+        {"text": "Ein Elfmeter im Halbfinale", "correct": false},
+        {"text": "Das entscheidende Tor im letzten WM-Spiel", "correct": true}
+      ],
+      "difficulty": "hard",
+      "fun_fact": "Alcides Ghiggia traf vor rund 200.000 Zuschauern in Rio. Er sagte später, nur drei Menschen hätten das Maracanã je zum Schweigen gebracht: Frank Sinatra, der Papst und er.",
+      "category": "Weltmeisterschaft",
+      "image_url": "/quizify/static/img/packs/worldcup/maracana-1950.webp",
+      "reveal_style": "progressive"
+    },
+    {
+      "id": "world_cup_de_165",
+      "question": "Diese Mannschaft gewann 1930 den ersten WM-Titel. Für welches Land spielte sie?",
+      "answers": [
+        {"text": "Argentinien", "correct": false},
+        {"text": "Brasilien", "correct": false},
+        {"text": "Uruguay", "correct": true}
+      ],
+      "difficulty": "medium",
+      "fun_fact": "Uruguay war Gastgeber und amtierender Olympiasieger. Weil die Anreise per Schiff mehrere Wochen dauerte, meldeten nur vier europäische Mannschaften — Frankreich, Belgien, Jugoslawien und Rumänien.",
+      "category": "Weltmeisterschaft",
+      "image_url": "/quizify/static/img/packs/worldcup/uruguay-1930.webp",
+      "reveal_style": "progressive"
     }
   ]
 }

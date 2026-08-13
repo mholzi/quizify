@@ -1204,6 +1204,76 @@
       "difficulty": "medium",
       "fun_fact": "Substitutes weren't allowed at the World Cup until 1970 — before that, an injured player either soldiered on or his team played a man down for the rest of the match.",
       "category": "World Cup"
+    },
+    {
+      "id": "world_cup_en_161",
+      "question": "What was this stadium in Montevideo built for in 1930?",
+      "answers": [
+        {"text": "The first football World Cup", "correct": true},
+        {"text": "The Olympic Games", "correct": false},
+        {"text": "The first Copa América", "correct": false}
+      ],
+      "difficulty": "medium",
+      "fun_fact": "The Estadio Centenario was not finished when the tournament began — rain had delayed the build, and the opening matches had to be played in smaller grounds around the city.",
+      "category": "World Cup",
+      "image_url": "/quizify/static/img/packs/worldcup/centenario-1930.webp",
+      "reveal_style": "progressive"
+    },
+    {
+      "id": "world_cup_en_162",
+      "question": "What was this first World Cup trophy called?",
+      "answers": [
+        {"text": "The Jules Rimet Cup", "correct": true},
+        {"text": "The Copa Libertadores", "correct": false},
+        {"text": "The Coppa Italia", "correct": false}
+      ],
+      "difficulty": "medium",
+      "fun_fact": "Brazil were allowed to keep the trophy in 1970 after a third title. It was stolen in Rio in 1983 and never recovered; it is assumed to have been melted down.",
+      "category": "World Cup",
+      "image_url": "/quizify/static/img/packs/worldcup/jules-rimet-trophy.webp",
+      "reveal_style": "progressive"
+    },
+    {
+      "id": "world_cup_en_163",
+      "question": "Which country hosted the tournament advertised here?",
+      "answers": [
+        {"text": "Argentina", "correct": false},
+        {"text": "Brazil", "correct": true},
+        {"text": "Portugal", "correct": false}
+      ],
+      "difficulty": "easy",
+      "fun_fact": "The 1950 World Cup had no final: instead of a knockout match, a four-team final group decided it. That the last game turned out to be a decider was an accident of the schedule.",
+      "category": "World Cup",
+      "image_url": "/quizify/static/img/packs/worldcup/world-cup-poster-1950.webp",
+      "reveal_style": "progressive"
+    },
+    {
+      "id": "world_cup_en_164",
+      "question": "Which moment of 1950 does this photograph show?",
+      "answers": [
+        {"text": "An own goal in the opening match", "correct": false},
+        {"text": "A penalty in the semi-final", "correct": false},
+        {"text": "The decisive goal of the last World Cup match", "correct": true}
+      ],
+      "difficulty": "hard",
+      "fun_fact": "Alcides Ghiggia scored in front of some 200,000 people in Rio. He later said only three people had ever silenced the Maracanã: Frank Sinatra, the Pope and himself.",
+      "category": "World Cup",
+      "image_url": "/quizify/static/img/packs/worldcup/maracana-1950.webp",
+      "reveal_style": "progressive"
+    },
+    {
+      "id": "world_cup_en_165",
+      "question": "This team won the first World Cup in 1930. Which country did they play for?",
+      "answers": [
+        {"text": "Argentina", "correct": false},
+        {"text": "Brazil", "correct": false},
+        {"text": "Uruguay", "correct": true}
+      ],
+      "difficulty": "medium",
+      "fun_fact": "Uruguay were hosts and reigning Olympic champions. Because the crossing took weeks by ship, only four European teams entered — France, Belgium, Yugoslavia and Romania.",
+      "category": "World Cup",
+      "image_url": "/quizify/static/img/packs/worldcup/uruguay-1930.webp",
+      "reveal_style": "progressive"
     }
   ]
 }

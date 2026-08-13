@@ -61,6 +61,7 @@ PACK_SETS = (
     ImageSet("tech", ("technik-de.json", "tech-en.json"), 150),
     ImageSet("food", ("essen-de.json", "food-en.json"), 150),
     ImageSet("sport", ("sport-de.json", "sport-en.json"), 148),
+    ImageSet("worldcup", ("weltmeisterschaft.json", "world-cup.json"), 99),
 )
 
 # (set, pack) for the guards that look at one pack at a time.
