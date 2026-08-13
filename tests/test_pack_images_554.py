@@ -38,10 +38,15 @@ EXPECTED_IMAGE_QUESTIONS = 5
 
 @dataclass(frozen=True)
 class ImageSet:
-    """One pack pair and the folder of pictures the two share."""
+    """One theme's packs and the folder of pictures they all share.
+
+    Started as a pair; the Spanish packs join their theme as a third member
+    rather than getting a folder of their own, which is the whole reason the
+    six of them cost question text and no licence work at all.
+    """
 
     folder: str
-    packs: tuple[str, str]
+    packs: tuple[str, ...]
     text_question_floor: int
 
     @property
@@ -54,16 +59,16 @@ class ImageSet:
 
 
 PACK_SETS = (
-    ImageSet("nature", ("tiere-natur.json", "animals-nature.json"), 149),
-    ImageSet("geography", ("geographie.json", "geography.json"), 149),
-    ImageSet("history", ("geschichte-de.json", "history-en.json"), 149),
-    ImageSet("science", ("wissenschaft-de.json", "science-en.json"), 150),
+    ImageSet("nature", ("tiere-natur.json", "animals-nature.json", "naturaleza-es.json"), 149),
+    ImageSet("geography", ("geographie.json", "geography.json", "geografia-es.json"), 149),
+    ImageSet("history", ("geschichte-de.json", "history-en.json", "historia-es.json"), 149),
+    ImageSet("science", ("wissenschaft-de.json", "science-en.json", "ciencia-es.json"), 150),
     ImageSet("tech", ("technik-de.json", "tech-en.json"), 150),
     ImageSet("food", ("essen-de.json", "food-en.json"), 150),
-    ImageSet("sport", ("sport-de.json", "sport-en.json"), 148),
+    ImageSet("sport", ("sport-de.json", "sport-en.json", "deportes-es.json"), 148),
     ImageSet("worldcup", ("weltmeisterschaft.json", "world-cup.json"), 99),
     ImageSet("music", ("musik-de.json", "music-en.json"), 150),
-    ImageSet("popculture", ("popkultur.json", "pop-culture.json"), 149),
+    ImageSet("popculture", ("popkultur.json", "pop-culture.json", "cultura-pop-es.json"), 149),
 )
 
 # (set, pack) for the guards that look at one pack at a time.
@@ -106,11 +111,12 @@ def test_a_reveal_style_never_stands_without_an_image(iset: ImageSet, name: str)
 
 
 @pytest.mark.parametrize("iset", PACK_SETS, ids=SET_IDS)
-def test_both_languages_use_the_same_pictures(iset: ImageSet) -> None:
+def test_every_language_uses_the_same_pictures(iset: ImageSet) -> None:
     """A picture asked in German but not in English is a silent gap — and the
-    whole reason the pair is cheaper than two packs is the shared images."""
+    whole reason a theme is cheaper than its packs counted separately is that
+    they share the images. Spanish is held to the same rule."""
     sets = [{q["image_url"] for q in _image_questions(iset, name)} for name in iset.packs]
-    assert sets[0] == sets[1]
+    assert all(s == sets[0] for s in sets), f"{iset.folder}: languages disagree on pictures"
 
 
 @pytest.mark.parametrize("iset", PACK_SETS, ids=SET_IDS)

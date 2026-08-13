@@ -3153,6 +3153,76 @@
       "difficulty": "hard",
       "fun_fact": "Los canales semicirculares del sistema vestibular detectan el movimiento de la cabeza.",
       "category": "Naturaleza"
+    },
+    {
+      "id": "nat_es_161",
+      "question": "¿Qué ave marina es esta?",
+      "answers": [
+        {"text": "El frailecillo atlántico", "correct": true},
+        {"text": "El alca común", "correct": false},
+        {"text": "El fulmar boreal", "correct": false}
+      ],
+      "difficulty": "easy",
+      "fun_fact": "Un frailecillo puede llevar más de 60 peces pequeños atravesados en el pico: unas púas en el paladar sujetan los ya capturados mientras sigue pescando.",
+      "category": "Naturaleza",
+      "image_url": "/quizify/static/img/packs/nature/puffin.webp",
+      "reveal_style": "progressive"
+    },
+    {
+      "id": "nat_es_162",
+      "question": "¿Qué ave rapaz está posada sobre la piedra?",
+      "answers": [
+        {"text": "El águila calva", "correct": true},
+        {"text": "El águila real", "correct": false},
+        {"text": "El águila pescadora", "correct": false}
+      ],
+      "difficulty": "easy",
+      "fun_fact": "La cabeza blanca no aparece hasta los cinco años. Las águilas calvas jóvenes son enteramente marrones, y por eso se las confunde a menudo con águilas reales.",
+      "category": "Naturaleza",
+      "image_url": "/quizify/static/img/packs/nature/bald-eagle.webp",
+      "reveal_style": "progressive"
+    },
+    {
+      "id": "nat_es_163",
+      "question": "¿Qué muestran estas fotografías de 1902?",
+      "answers": [
+        {"text": "Cristales de nieve", "correct": true},
+        {"text": "Diatomeas", "correct": false},
+        {"text": "Cristales de sal", "correct": false}
+      ],
+      "difficulty": "medium",
+      "fun_fact": "Wilson Bentley fotografió más de 5.000 cristales de nieve a través de un microscopio y nunca encontró dos iguales. Los recogía sobre una tabla de terciopelo negro antes de que se derritieran.",
+      "category": "Naturaleza",
+      "image_url": "/quizify/static/img/packs/nature/snowflake.webp",
+      "reveal_style": "progressive"
+    },
+    {
+      "id": "nat_es_164",
+      "question": "¿Qué está mirando la estación espacial desde arriba?",
+      "answers": [
+        {"text": "El ojo de un huracán", "correct": true},
+        {"text": "El cráter de un volcán", "correct": false},
+        {"text": "Un remolino en el hielo marino", "correct": false}
+      ],
+      "difficulty": "easy",
+      "fun_fact": "Dentro del ojo casi no hay viento y a menudo está despejado. La destrucción ocurre en la pared que lo rodea, donde el aire asciende a mayor velocidad.",
+      "category": "Naturaleza",
+      "image_url": "/quizify/static/img/packs/nature/hurricane-iss.webp",
+      "reveal_style": "progressive"
+    },
+    {
+      "id": "nat_es_165",
+      "question": "¿Qué brilla en verde sobre la curvatura de la Tierra?",
+      "answers": [
+        {"text": "Una aurora polar", "correct": true},
+        {"text": "Relámpagos de tormenta", "correct": false},
+        {"text": "Ceniza volcánica", "correct": false}
+      ],
+      "difficulty": "easy",
+      "fun_fact": "El verde se forma entre los 100 y los 150 kilómetros de altura, cuando los átomos de oxígeno reciben el impacto de partículas del viento solar. Más arriba todavía, el brillo es rojo.",
+      "category": "Naturaleza",
+      "image_url": "/quizify/static/img/packs/nature/aurora-iss.webp",
+      "reveal_style": "progressive"
     }
   ]
 }

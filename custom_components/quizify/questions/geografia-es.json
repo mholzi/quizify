@@ -3153,6 +3153,76 @@
       "difficulty": "easy",
       "fun_fact": "África mide unos 30 millones de kilómetros cuadrados. Estados Unidos, China e India juntos cubren unos 25 millones y aún cabrían dentro de ella; la proyección de Mercator encoge mucho las regiones ecuatoriales e infla los polos.",
       "category": "Geografía"
+    },
+    {
+      "id": "geo_es_161",
+      "question": "¿En qué parque nacional se encuentra esta fuente termal?",
+      "answers": [
+        {"text": "Yosemite", "correct": false},
+        {"text": "Yellowstone", "correct": true},
+        {"text": "Banff", "correct": false}
+      ],
+      "difficulty": "easy",
+      "fun_fact": "Los anillos de color de la Gran Fuente Prismática son tapetes de bacterias. En el centro, a unos 70 °C, casi ningún organismo resiste, y por eso el agua se ve limpia y azul; hacia fuera se enfría y cada temperatura tiene sus microbios, que tiñen el borde de amarillo, naranja y rojo.",
+      "category": "Geografía",
+      "image_url": "/quizify/static/img/packs/geography/yellowstone-spring.webp",
+      "reveal_style": "progressive"
+    },
+    {
+      "id": "geo_es_162",
+      "question": "¿En qué ciudad se encuentra esta estatua?",
+      "answers": [
+        {"text": "Nueva York", "correct": true},
+        {"text": "Boston", "correct": false},
+        {"text": "Filadelfia", "correct": false}
+      ],
+      "difficulty": "easy",
+      "fun_fact": "La Estatua de la Libertad cruzó el Atlántico en 1885 dentro de 214 cajas y se montó ya en la isla. Su piel de cobre tiene apenas dos milímetros de grosor: quien la sostiene es el armazón de hierro que lleva dentro.",
+      "category": "Geografía",
+      "image_url": "/quizify/static/img/packs/geography/statue-of-liberty.webp",
+      "reveal_style": "progressive"
+    },
+    {
+      "id": "geo_es_163",
+      "question": "¿Qué estrecho separa aquí Europa de África?",
+      "answers": [
+        {"text": "El Bósforo", "correct": false},
+        {"text": "El Öresund", "correct": false},
+        {"text": "El estrecho de Gibraltar", "correct": true}
+      ],
+      "difficulty": "easy",
+      "fun_fact": "En su punto más angosto hay unos 14 kilómetros entre España y Marruecos. El agua se intercambia en dos pisos: por arriba entra agua atlántica menos salada al Mediterráneo y por abajo sale la más salada.",
+      "category": "Geografía",
+      "image_url": "/quizify/static/img/packs/geography/strait-of-gibraltar.webp",
+      "reveal_style": "progressive"
+    },
+    {
+      "id": "geo_es_164",
+      "question": "¿Qué río se dibuja aquí de noche visto desde el espacio?",
+      "answers": [
+        {"text": "El Ganges", "correct": false},
+        {"text": "El Nilo", "correct": true},
+        {"text": "El Danubio", "correct": false}
+      ],
+      "difficulty": "medium",
+      "fun_fact": "Casi toda la población de Egipto vive en la franja estrecha junto al Nilo y en su delta, un porcentaje mínimo del territorio. Por eso la banda de luz se corta de golpe donde empieza el desierto.",
+      "category": "Geografía",
+      "image_url": "/quizify/static/img/packs/geography/nile-delta-night.webp",
+      "reveal_style": "progressive"
+    },
+    {
+      "id": "geo_es_165",
+      "question": "¿En qué país se encuentra este edificio?",
+      "answers": [
+        {"text": "Irán", "correct": false},
+        {"text": "Uzbekistán", "correct": false},
+        {"text": "India", "correct": true}
+      ],
+      "difficulty": "easy",
+      "fun_fact": "El Taj Mahal de Agra se empezó en 1632 como mausoleo de Mumtaz Mahal, esposa del emperador Shah Jahan. La imagen es un fotocromo de hacia 1890: una foto en blanco y negro cuyos colores se aplicaron a mano sobre varias piedras de impresión.",
+      "category": "Geografía",
+      "image_url": "/quizify/static/img/packs/geography/taj-mahal.webp",
+      "reveal_style": "progressive"
     }
   ]
 }

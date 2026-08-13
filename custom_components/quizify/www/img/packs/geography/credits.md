@@ -44,3 +44,8 @@ provenance stays checkable later.
 1100 px on the long edge, WebP at quality 72–80, 51–137 KB each, 483 KB for the
 set. Each one was rendered at 340 px — the width the card actually gets on a
 390 px phone — and looked at before being kept.
+
+## Spanish
+
+The Spanish pack of this theme asks the same five pictures (#554). No new
+files, no new licence work — only question text.

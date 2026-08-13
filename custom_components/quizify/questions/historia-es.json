@@ -3153,6 +3153,76 @@
       "difficulty": "hard",
       "fun_fact": "El Canal de Suez acortó enormemente la ruta marítima entre Europa y Asia al evitar rodear todo el continente africano.",
       "category": "Historia"
+    },
+    {
+      "id": "his_es_161",
+      "question": "¿Quién logró en 1903 el primer vuelo a motor con esta máquina?",
+      "answers": [
+        {"text": "Otto Lilienthal", "correct": false},
+        {"text": "Los hermanos Wright", "correct": true},
+        {"text": "Louis Blériot", "correct": false}
+      ],
+      "difficulty": "easy",
+      "fun_fact": "El primer vuelo, el 17 de diciembre de 1903, duró 12 segundos y cubrió 36 metros: menos que la envergadura de un Boeing 747 actual. El cuarto intento de ese mismo día llegó ya a 260 metros.",
+      "category": "Historia",
+      "image_url": "/quizify/static/img/packs/history/wright-first-flight.webp",
+      "reveal_style": "progressive"
+    },
+    {
+      "id": "his_es_162",
+      "question": "¿Qué crisis retrata esta famosa fotografía de 1936?",
+      "answers": [
+        {"text": "La Gran Depresión", "correct": true},
+        {"text": "La Primera Guerra Mundial", "correct": false},
+        {"text": "La crisis del petróleo", "correct": false}
+      ],
+      "difficulty": "medium",
+      "fun_fact": "Dorothea Lange fotografió a Florence Owens Thompson en un campamento de recolectores de guisantes en California: seis tomas en diez minutos. El gobierno mandó alimentos al campamento poco después; la familia ya se había marchado.",
+      "category": "Historia",
+      "image_url": "/quizify/static/img/packs/history/migrant-mother.webp",
+      "reveal_style": "progressive"
+    },
+    {
+      "id": "his_es_163",
+      "question": "¿Qué presidente de Estados Unidos aparece aquí?",
+      "answers": [
+        {"text": "Ulysses S. Grant", "correct": false},
+        {"text": "Andrew Jackson", "correct": false},
+        {"text": "Abraham Lincoln", "correct": true}
+      ],
+      "difficulty": "easy",
+      "fun_fact": "Alexander Gardner tomó el retrato en noviembre de 1863, pocos días antes del discurso de Gettysburg. Lincoln fue el primer presidente al que la fotografía siguió de cerca: se conservan más de 130 imágenes suyas.",
+      "category": "Historia",
+      "image_url": "/quizify/static/img/packs/history/lincoln-portrait.webp",
+      "reveal_style": "progressive"
+    },
+    {
+      "id": "his_es_164",
+      "question": "¿Qué barco zarpa aquí de Southampton el 10 de abril de 1912?",
+      "answers": [
+        {"text": "El Lusitania", "correct": false},
+        {"text": "El Titanic", "correct": true},
+        {"text": "El Britannic", "correct": false}
+      ],
+      "difficulty": "medium",
+      "fun_fact": "Cinco días después estaba en el fondo del mar. De sus cuatro chimeneas solo tres eran reales: la trasera servía para la ventilación y para el efecto que causaban cuatro.",
+      "category": "Historia",
+      "image_url": "/quizify/static/img/packs/history/titanic-southampton.webp",
+      "reveal_style": "progressive"
+    },
+    {
+      "id": "his_es_165",
+      "question": "¿Qué acontecimiento de 1989 reunió a esta multitud ante la Puerta de Brandeburgo?",
+      "answers": [
+        {"text": "El levantamiento del 17 de junio de 1953", "correct": false},
+        {"text": "El bloqueo de Berlín", "correct": false},
+        {"text": "La caída del Muro de Berlín", "correct": true}
+      ],
+      "difficulty": "easy",
+      "fun_fact": "El Muro se abrió el 9 de noviembre de 1989, pero la Puerta de Brandeburgo no lo hizo hasta el 22 de diciembre: durante seis semanas el monumento más conocido de la ciudad siguió dentro de la zona prohibida mientras al lado ya se celebraba.",
+      "category": "Historia",
+      "image_url": "/quizify/static/img/packs/history/brandenburg-gate-1989.webp",
+      "reveal_style": "progressive"
     }
   ]
 }

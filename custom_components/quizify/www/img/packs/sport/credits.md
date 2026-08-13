@@ -44,3 +44,8 @@ phone — and looked at before being kept. The two wide crowd scenes are the
 tightest call of the set: in both, the subject (a flower-covered bicycle, a
 player at full stretch on a tennis court) survives at that width, which is what
 the question rests on.
+
+## Spanish
+
+The Spanish pack of this theme asks the same five pictures (#554). No new
+files, no new licence work — only question text.
