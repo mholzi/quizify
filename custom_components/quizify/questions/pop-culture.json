@@ -1803,6 +1803,76 @@
       "difficulty": "medium",
       "fun_fact": "The machine at Andy Capp's Tavern stopped working because its coin box — a milk carton — overflowed. Atari realised the 'fault' was actually proof of staggering demand.",
       "category": "Pop Culture"
+    },
+    {
+      "id": "pop_en_161",
+      "question": "Which 1902 film does this image come from?",
+      "answers": [
+        {"text": "Nosferatu", "correct": false},
+        {"text": "A Trip to the Moon", "correct": true},
+        {"text": "Metropolis", "correct": false}
+      ],
+      "difficulty": "medium",
+      "fun_fact": "Georges Méliès was a stage magician before he made films. The rocket in the moon's eye is one of the oldest images almost everybody recognises without having seen the film.",
+      "category": "Pop Culture",
+      "image_url": "/quizify/static/img/packs/popculture/voyage-dans-la-lune.webp",
+      "reveal_style": "progressive"
+    },
+    {
+      "id": "pop_en_162",
+      "question": "Which silent film star is shown here?",
+      "answers": [
+        {"text": "Buster Keaton", "correct": false},
+        {"text": "Harold Lloyd", "correct": false},
+        {"text": "Charlie Chaplin", "correct": true}
+      ],
+      "difficulty": "easy",
+      "fun_fact": "Chaplin invented the Tramp in one afternoon in the costume department: trousers too wide, jacket too tight, shoes too big, and a cane. The character went on to appear in more than seventy films.",
+      "category": "Pop Culture",
+      "image_url": "/quizify/static/img/packs/popculture/charlie-chaplin.webp",
+      "reveal_style": "progressive"
+    },
+    {
+      "id": "pop_en_163",
+      "question": "Which character broke through in this 1928 film?",
+      "answers": [
+        {"text": "Mickey Mouse", "correct": true},
+        {"text": "Bugs Bunny", "correct": false},
+        {"text": "Donald Duck", "correct": false}
+      ],
+      "difficulty": "easy",
+      "fun_fact": "“Steamboat Willie” was not the first Mickey Mouse film, but it was the first with synchronised sound — which is why it is the one everyone knows. It entered the US public domain in 2024.",
+      "category": "Pop Culture",
+      "image_url": "/quizify/static/img/packs/popculture/steamboat-willie.webp",
+      "reveal_style": "progressive"
+    },
+    {
+      "id": "pop_en_164",
+      "question": "Which actress is in this 1953 publicity photograph?",
+      "answers": [
+        {"text": "Grace Kelly", "correct": false},
+        {"text": "Marilyn Monroe", "correct": true},
+        {"text": "Rita Hayworth", "correct": false}
+      ],
+      "difficulty": "easy",
+      "fun_fact": "Three of her films came out in 1953 alone. Her studio paid her less than her male co-stars for them; the fight over it led her to set up her own production company.",
+      "category": "Pop Culture",
+      "image_url": "/quizify/static/img/packs/popculture/marilyn-monroe.webp",
+      "reveal_style": "progressive"
+    },
+    {
+      "id": "pop_en_165",
+      "question": "What name did the woman on this poster become known by?",
+      "answers": [
+        {"text": "Lady Liberty", "correct": false},
+        {"text": "Betty Boop", "correct": false},
+        {"text": "Rosie the Riveter", "correct": true}
+      ],
+      "difficulty": "medium",
+      "fun_fact": "The poster hung in a few Westinghouse plants for two weeks in 1943 and then vanished for forty years. It was rediscovered in the 1980s and became a symbol — its fame today has nothing to do with its original effect.",
+      "category": "Pop Culture",
+      "image_url": "/quizify/static/img/packs/popculture/we-can-do-it.webp",
+      "reveal_style": "progressive"
     }
   ]
 }

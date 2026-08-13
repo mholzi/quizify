@@ -1791,6 +1791,76 @@
       "difficulty": "easy",
       "fun_fact": "Die Standardschachtel enthält acht Spielfiguren — daher das Limit von acht Spielern. Monopoly wurde seit der Markteinführung in über 100 Ländern und mehr als 40 Sprachen verkauft.",
       "category": "Popkultur"
+    },
+    {
+      "id": "pop_161",
+      "question": "Aus welchem Film von 1902 stammt dieses Motiv?",
+      "answers": [
+        {"text": "Nosferatu", "correct": false},
+        {"text": "Die Reise zum Mond", "correct": true},
+        {"text": "Metropolis", "correct": false}
+      ],
+      "difficulty": "medium",
+      "fun_fact": "Georges Méliès war Zauberkünstler, bevor er Filme drehte. Die Rakete im Auge des Mondes ist eines der ältesten Bilder, die praktisch jeder kennt, ohne den Film gesehen zu haben.",
+      "category": "Popkultur",
+      "image_url": "/quizify/static/img/packs/popculture/voyage-dans-la-lune.webp",
+      "reveal_style": "progressive"
+    },
+    {
+      "id": "pop_162",
+      "question": "Welcher Stummfilmstar ist hier zu sehen?",
+      "answers": [
+        {"text": "Buster Keaton", "correct": false},
+        {"text": "Harold Lloyd", "correct": false},
+        {"text": "Charlie Chaplin", "correct": true}
+      ],
+      "difficulty": "easy",
+      "fun_fact": "Chaplin erfand den Tramp an einem Nachmittag im Kostümfundus: zu weite Hose, zu enges Jackett, zu große Schuhe, dazu ein Stock. Die Figur trat danach in über siebzig Filmen auf.",
+      "category": "Popkultur",
+      "image_url": "/quizify/static/img/packs/popculture/charlie-chaplin.webp",
+      "reveal_style": "progressive"
+    },
+    {
+      "id": "pop_163",
+      "question": "Welche Figur hatte 1928 in diesem Film ihren Durchbruch?",
+      "answers": [
+        {"text": "Micky Maus", "correct": true},
+        {"text": "Bugs Bunny", "correct": false},
+        {"text": "Donald Duck", "correct": false}
+      ],
+      "difficulty": "easy",
+      "fun_fact": "„Steamboat Willie“ war nicht der erste Micky-Maus-Film, aber der erste mit synchronem Ton — und deshalb der, den alle kennen. In den USA ist er seit 2024 gemeinfrei.",
+      "category": "Popkultur",
+      "image_url": "/quizify/static/img/packs/popculture/steamboat-willie.webp",
+      "reveal_style": "progressive"
+    },
+    {
+      "id": "pop_164",
+      "question": "Welche Schauspielerin ist auf diesem Werbefoto von 1953 zu sehen?",
+      "answers": [
+        {"text": "Grace Kelly", "correct": false},
+        {"text": "Marilyn Monroe", "correct": true},
+        {"text": "Rita Hayworth", "correct": false}
+      ],
+      "difficulty": "easy",
+      "fun_fact": "1953 kamen drei ihrer Filme in einem Jahr heraus. Ihr Studio zahlte ihr dafür weniger als ihren männlichen Nebendarstellern — der Streit darüber führte dazu, dass sie ihre eigene Produktionsfirma gründete.",
+      "category": "Popkultur",
+      "image_url": "/quizify/static/img/packs/popculture/marilyn-monroe.webp",
+      "reveal_style": "progressive"
+    },
+    {
+      "id": "pop_165",
+      "question": "Unter welchem Namen ist die Frau auf diesem Plakat bekannt geworden?",
+      "answers": [
+        {"text": "Lady Liberty", "correct": false},
+        {"text": "Betty Boop", "correct": false},
+        {"text": "Rosie the Riveter", "correct": true}
+      ],
+      "difficulty": "medium",
+      "fun_fact": "Das Plakat hing 1943 nur zwei Wochen in einigen Westinghouse-Werken und verschwand dann für vierzig Jahre. Erst in den 1980ern wurde es wiederentdeckt und zum Symbol — die Bekanntheit von heute hat mit seiner ursprünglichen Wirkung nichts zu tun.",
+      "category": "Popkultur",
+      "image_url": "/quizify/static/img/packs/popculture/we-can-do-it.webp",
+      "reveal_style": "progressive"
     }
   ]
 }
