@@ -1,7 +1,7 @@
 {
   "name": "Geografía",
   "language": "es",
-  "version": "1.0",
+  "version": "1.1",
   "theme": "geography",
   "questions": [
     {
@@ -3223,6 +3223,66 @@
       "category": "Geografía",
       "image_url": "/quizify/static/img/packs/geography/taj-mahal.webp",
       "reveal_style": "progressive"
+    },
+    {
+      "id": "geo_es_166",
+      "question": "¿Qué altura tiene el monte Everest?",
+      "type": "estimate",
+      "answer": 8849,
+      "min": 5000,
+      "max": 12000,
+      "unit": "metros",
+      "difficulty": "easy",
+      "fun_fact": "Los 8.849 m son oficiales solo desde 2020: China y Nepal discutieron durante décadas por 4 m, porque uno medía la capa de nieve y el otro no.",
+      "category": "Geografía"
+    },
+    {
+      "id": "geo_es_167",
+      "question": "¿Cuánto mide el ecuador?",
+      "type": "estimate",
+      "answer": 40075,
+      "min": 10000,
+      "max": 100000,
+      "unit": "kilómetros",
+      "difficulty": "easy",
+      "fun_fact": "De ahí viene el metro: se definió originalmente como la diezmillonésima parte de la distancia del Polo Norte al ecuador.",
+      "category": "Geografía"
+    },
+    {
+      "id": "geo_es_168",
+      "question": "¿Cuánto mide el Nilo?",
+      "type": "estimate",
+      "answer": 6650,
+      "min": 1000,
+      "max": 10000,
+      "unit": "kilómetros",
+      "difficulty": "medium",
+      "fun_fact": "Que sea él o el Amazonas el río más largo depende de dónde se sitúe la fuente; en el delta del Amazonas la medición discute por varios cientos de kilómetros.",
+      "category": "Geografía"
+    },
+    {
+      "id": "geo_es_169",
+      "question": "¿Cuántos husos horarios abarca Rusia?",
+      "type": "estimate",
+      "answer": 11,
+      "min": 1,
+      "max": 24,
+      "unit": "husos horarios",
+      "difficulty": "medium",
+      "fun_fact": "Cuando amanece en Kaliningrado ya es de noche en Kamchatka. En 2010 se suprimieron dos husos y en 2014 volvieron.",
+      "category": "Geografía"
+    },
+    {
+      "id": "geo_es_170",
+      "question": "¿Qué profundidad tiene el punto más hondo de la fosa de las Marianas?",
+      "type": "estimate",
+      "answer": 10935,
+      "min": 1000,
+      "max": 15000,
+      "unit": "metros",
+      "difficulty": "hard",
+      "fun_fact": "El Everest cabría dentro y aún quedaría a dos kilómetros largos por debajo de la superficie.",
+      "category": "Geografía"
     }
   ]
 }

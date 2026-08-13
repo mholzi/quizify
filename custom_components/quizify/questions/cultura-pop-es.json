@@ -1,7 +1,7 @@
 {
   "name": "Cultura Pop",
   "language": "es",
-  "version": "1.0",
+  "version": "1.1",
   "theme": "popculture",
   "questions": [
     {
@@ -3223,6 +3223,66 @@
       "category": "Cultura Pop",
       "image_url": "/quizify/static/img/packs/popculture/we-can-do-it.webp",
       "reveal_style": "progressive"
+    },
+    {
+      "id": "pop_es_166",
+      "question": "¿Cuántos Óscar ganó Titanic en 1998?",
+      "type": "estimate",
+      "answer": 11,
+      "min": 1,
+      "max": 30,
+      "unit": "Óscar",
+      "difficulty": "easy",
+      "fun_fact": "Once, empatada con Ben-Hur y El Señor de los Anillos: El retorno del Rey. Ninguno fue de interpretación.",
+      "category": "Cultura Pop"
+    },
+    {
+      "id": "pop_es_167",
+      "question": "¿Cuántos episodios tiene en total la serie Friends?",
+      "type": "estimate",
+      "answer": 236,
+      "min": 10,
+      "max": 1000,
+      "unit": "episodios",
+      "difficulty": "medium",
+      "fun_fact": "236 episodios en diez temporadas. En la última, cada uno de los seis protagonistas cobró un millón de dólares por episodio, negociado en bloque y nunca por separado.",
+      "category": "Cultura Pop"
+    },
+    {
+      "id": "pop_es_168",
+      "question": "¿Cuántos minutos dura la primera película de Star Wars, de 1977?",
+      "type": "estimate",
+      "answer": 121,
+      "min": 30,
+      "max": 300,
+      "unit": "minutos",
+      "difficulty": "medium",
+      "fun_fact": "121 minutos. El estudio la daba por perdida hasta que Marcia Lucas y dos colegas la remontaron; ese montaje ganó un Óscar.",
+      "category": "Cultura Pop"
+    },
+    {
+      "id": "pop_es_169",
+      "question": "¿Qué edad tenía Macaulay Culkin durante el rodaje de Solo en casa?",
+      "type": "estimate",
+      "answer": 10,
+      "min": 1,
+      "max": 40,
+      "unit": "años",
+      "difficulty": "medium",
+      "fun_fact": "Diez. La película recaudó casi quinientos millones de dólares en todo el mundo y sigue siendo la comedia de imagen real más taquillera.",
+      "category": "Cultura Pop"
+    },
+    {
+      "id": "pop_es_170",
+      "question": "¿Cuántos minutos dura Lo que el viento se llevó?",
+      "type": "estimate",
+      "answer": 238,
+      "min": 30,
+      "max": 500,
+      "unit": "minutos",
+      "difficulty": "hard",
+      "fun_fact": "238 minutos, obertura y descanso incluidos. Ajustada a la inflación sigue siendo la película más taquillera de la historia.",
+      "category": "Cultura Pop"
     }
   ]
 }

@@ -1,7 +1,7 @@
 {
   "name": "Historia",
   "language": "es",
-  "version": "1.0",
+  "version": "1.1",
   "theme": "history",
   "questions": [
     {
@@ -3223,6 +3223,66 @@
       "category": "Historia",
       "image_url": "/quizify/static/img/packs/history/brandenburg-gate-1989.webp",
       "reveal_style": "progressive"
+    },
+    {
+      "id": "his_es_166",
+      "question": "¿Cuántos años duró la Guerra de los Cien Años entre Inglaterra y Francia?",
+      "type": "estimate",
+      "answer": 116,
+      "min": 50,
+      "max": 200,
+      "unit": "años",
+      "difficulty": "hard",
+      "fun_fact": "116 años, con largas treguas de por medio. El nombre se lo pusieron historiadores del siglo XIX que agruparon las guerras sueltas en una sola.",
+      "category": "Historia"
+    },
+    {
+      "id": "his_es_167",
+      "question": "¿Cuántos años estuvo en pie el Muro de Berlín?",
+      "type": "estimate",
+      "answer": 28,
+      "min": 1,
+      "max": 100,
+      "unit": "años",
+      "difficulty": "medium",
+      "fun_fact": "Del 13 de agosto de 1961 al 9 de noviembre de 1989. Lleva ya más tiempo derribado del que estuvo en pie.",
+      "category": "Historia"
+    },
+    {
+      "id": "his_es_168",
+      "question": "¿Qué altura tenía originalmente la Gran Pirámide de Guiza?",
+      "type": "estimate",
+      "answer": 146,
+      "min": 20,
+      "max": 300,
+      "unit": "metros",
+      "difficulty": "medium",
+      "fun_fact": "Fue la construcción más alta del mundo durante unos 3.800 años. Hoy le faltan unos 8 m porque el revestimiento liso se llevó como material de obra.",
+      "category": "Historia"
+    },
+    {
+      "id": "his_es_169",
+      "question": "¿Cuánto mide la Gran Muralla China contando todos sus tramos?",
+      "type": "estimate",
+      "answer": 21196,
+      "min": 1000,
+      "max": 50000,
+      "unit": "kilómetros",
+      "difficulty": "hard",
+      "fun_fact": "Los 21.196 km salen de un estudio de 2012, el primero que contó todas las fases de construcción. Aun así no se ve desde la Luna: es larga, pero de pocos metros de ancho.",
+      "category": "Historia"
+    },
+    {
+      "id": "his_es_170",
+      "question": "¿Cuántos días pasó el Apolo 11 fuera, del despegue al amerizaje?",
+      "type": "estimate",
+      "answer": 8,
+      "min": 1,
+      "max": 60,
+      "unit": "días",
+      "difficulty": "easy",
+      "fun_fact": "Ocho días y tres horas. Armstrong y Aldrin estuvieron en la Luna apenas 22 horas, y fuera de la nave unas dos y media.",
+      "category": "Historia"
     }
   ]
 }
