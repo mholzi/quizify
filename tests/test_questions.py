@@ -50,7 +50,7 @@ class TestLoadCategory:
     def test_load_category_returns_questions(self, bank: QuestionBank) -> None:
         questions = bank.load_category("geographie")
         assert len(questions) == bank.get_question_count("geographie")
-        assert 145 <= len(questions) <= 155
+        assert 145 <= len(questions) <= 160
         assert all(isinstance(q, Question) for q in questions)
 
     def test_load_all_categories(self, bank: QuestionBank) -> None:
@@ -86,14 +86,15 @@ class TestLoadCategory:
                 assert count >= 10, f"{cat} has only {count} questions (floor: 10)"
                 assert count <= 20, f"{cat} has {count} questions (ceiling: 20)"
                 continue
-            # 155, not 150: the five image questions of #554 are *added* to a
-            # themed pack rather than replacing written ones. Deleting five
-            # working questions to make room for a picture would be a worse
-            # trade than letting a pack run five long — the ceiling exists so
-            # packs stay comparable in length, and 3% does not threaten that.
-            # If every pack gains its five, they all move together anyway.
+            # 160, not 150: the five image questions of #554 and the five
+            # estimate questions of #566 are *added* to a themed pack rather
+            # than replacing written ones. Deleting working questions to make
+            # room would be a worse trade than letting a pack run ten long —
+            # the ceiling exists so packs stay comparable in length, and two
+            # additions of five do not threaten that. If every pack gains its
+            # ten, they all move together anyway.
             assert count >= 95, f"{cat} has only {count} questions (floor: 95)"
-            assert count <= 155, f"{cat} has {count} questions (ceiling: 155)"
+            assert count <= 160, f"{cat} has {count} questions (ceiling: 160)"
 
 
 class TestValidateAnswer:
@@ -121,7 +122,7 @@ class TestValidateAnswer:
 class TestQuestionCount:
     def test_get_question_count(self, bank: QuestionBank) -> None:
         count = bank.get_question_count("geographie")
-        assert 145 <= count <= 155
+        assert 145 <= count <= 160
 
     def test_get_question_count_by_difficulty(self, bank: QuestionBank) -> None:
         easy = bank.get_question_count("geographie", "easy")

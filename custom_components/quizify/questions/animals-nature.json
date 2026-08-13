@@ -1,7 +1,7 @@
 {
   "name": "Animals & Nature",
   "language": "en",
-  "version": "1.1",
+  "version": "1.2",
   "theme": "nature",
   "questions": [
     {
@@ -1873,6 +1873,66 @@
       "category": "Animals & Nature",
       "image_url": "/quizify/static/img/packs/nature/aurora-iss.webp",
       "reveal_style": "progressive"
+    },
+    {
+      "id": "nat_en_164",
+      "question": "How long was the longest blue whale ever reliably measured?",
+      "type": "estimate",
+      "answer": 33,
+      "min": 5,
+      "max": 60,
+      "unit": "metres",
+      "difficulty": "medium",
+      "fun_fact": "Its tongue alone weighs as much as a grown elephant. The larger lengths quoted from the whaling era were almost always eyeballed on deck rather than measured.",
+      "category": "Animals & Nature"
+    },
+    {
+      "id": "nat_en_165",
+      "question": "What is a cheetah's top speed over a short sprint?",
+      "type": "estimate",
+      "answer": 120,
+      "min": 20,
+      "max": 200,
+      "unit": "km/h",
+      "difficulty": "easy",
+      "fun_fact": "It can only hold that for about 20 seconds before overheating, which is why a hunt is usually decided inside 300 metres.",
+      "category": "Animals & Nature"
+    },
+    {
+      "id": "nat_en_166",
+      "question": "How long is an elephant pregnant?",
+      "type": "estimate",
+      "answer": 22,
+      "min": 1,
+      "max": 36,
+      "unit": "months",
+      "difficulty": "medium",
+      "fun_fact": "That is the longest gestation of any land mammal. The calf already weighs around 120 kg at birth.",
+      "category": "Animals & Nature"
+    },
+    {
+      "id": "nat_en_167",
+      "question": "How deep is the deepest recorded dive by an emperor penguin?",
+      "type": "estimate",
+      "answer": 564,
+      "min": 50,
+      "max": 1000,
+      "unit": "metres",
+      "difficulty": "hard",
+      "fun_fact": "The pressure down there is over 50 bar. The penguin lets its lungs collapse and lives off the oxygen stored in its blood and muscles.",
+      "category": "Animals & Nature"
+    },
+    {
+      "id": "nat_en_168",
+      "question": "What percentage of the Earth's surface is covered by ocean?",
+      "type": "estimate",
+      "answer": 71,
+      "min": 0,
+      "max": 100,
+      "unit": "percent",
+      "difficulty": "easy",
+      "fun_fact": "Very little of it is mapped in detail — we know the surface of Mars better than we know our own seafloor.",
+      "category": "Animals & Nature"
     }
   ]
 }

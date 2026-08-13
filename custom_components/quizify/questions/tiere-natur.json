@@ -1,7 +1,7 @@
 {
   "name": "Tiere & Natur",
   "language": "de",
-  "version": "1.1",
+  "version": "1.2",
   "theme": "nature",
   "questions": [
     {
@@ -1861,6 +1861,66 @@
       "category": "Tiere & Natur",
       "image_url": "/quizify/static/img/packs/nature/aurora-iss.webp",
       "reveal_style": "progressive"
+    },
+    {
+      "id": "nat_166",
+      "question": "Wie lang ist der längste jemals verlässlich vermessene Blauwal?",
+      "type": "estimate",
+      "answer": 33,
+      "min": 5,
+      "max": 60,
+      "unit": "Meter",
+      "difficulty": "medium",
+      "fun_fact": "Schon seine Zunge wiegt so viel wie ein ausgewachsener Elefant. Größere Längenangaben aus der Walfangzeit stammen fast immer von Schätzungen an Deck, nicht von einem Maßband.",
+      "category": "Tiere & Natur"
+    },
+    {
+      "id": "nat_167",
+      "question": "Wie schnell wird ein Gepard auf kurzer Strecke höchstens?",
+      "type": "estimate",
+      "answer": 120,
+      "min": 20,
+      "max": 200,
+      "unit": "km/h",
+      "difficulty": "easy",
+      "fun_fact": "Er hält das nur rund 20 Sekunden durch — danach droht Überhitzung. Die Jagd ist deshalb fast immer nach 300 Metern entschieden.",
+      "category": "Tiere & Natur"
+    },
+    {
+      "id": "nat_168",
+      "question": "Wie lange ist eine Elefantenkuh trächtig?",
+      "type": "estimate",
+      "answer": 22,
+      "min": 1,
+      "max": 36,
+      "unit": "Monate",
+      "difficulty": "medium",
+      "fun_fact": "Das ist die längste Tragzeit aller Landsäugetiere. Das Kalb wiegt bei der Geburt schon rund 120 Kilo.",
+      "category": "Tiere & Natur"
+    },
+    {
+      "id": "nat_169",
+      "question": "Wie tief ist der tiefste gemessene Tauchgang eines Kaiserpinguins?",
+      "type": "estimate",
+      "answer": 564,
+      "min": 50,
+      "max": 1000,
+      "unit": "Meter",
+      "difficulty": "hard",
+      "fun_fact": "In dieser Tiefe herrschen über 50 bar Druck. Der Pinguin lässt dafür seine Lungen kollabieren und zehrt vom Sauerstoff in Blut und Muskeln.",
+      "category": "Tiere & Natur"
+    },
+    {
+      "id": "nat_170",
+      "question": "Wie viel Prozent der Erdoberfläche bedecken die Ozeane?",
+      "type": "estimate",
+      "answer": 71,
+      "min": 0,
+      "max": 100,
+      "unit": "Prozent",
+      "difficulty": "easy",
+      "fun_fact": "Kartiert ist davon nur ein Bruchteil: Den Meeresboden kennen wir weniger genau als die Oberfläche des Mars.",
+      "category": "Tiere & Natur"
     }
   ]
 }
