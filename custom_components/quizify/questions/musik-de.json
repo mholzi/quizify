@@ -1,7 +1,7 @@
 {
   "name": "Musik",
   "language": "de",
-  "version": "1.1",
+  "version": "1.2",
   "theme": "music",
   "questions": [
     {
@@ -1873,6 +1873,66 @@
       "category": "Musik",
       "image_url": "/quizify/static/img/packs/music/harpsichord.webp",
       "reveal_style": "progressive"
+    },
+    {
+      "id": "musik_de_166",
+      "question": "Wie viele Tasten hat ein modernes Klavier?",
+      "type": "estimate",
+      "answer": 88,
+      "min": 20,
+      "max": 200,
+      "unit": "Tasten",
+      "difficulty": "easy",
+      "fun_fact": "52 weiße und 36 schwarze. Mehr wäre technisch möglich, aber jenseits der 88 hört das Ohr die tiefsten Töne eher als Rumpeln denn als Tonhöhe.",
+      "category": "Musik"
+    },
+    {
+      "id": "musik_de_167",
+      "question": "Wie viele Saiten hat eine Konzertharfe?",
+      "type": "estimate",
+      "answer": 47,
+      "min": 5,
+      "max": 100,
+      "unit": "Saiten",
+      "difficulty": "medium",
+      "fun_fact": "47 Saiten und sieben Pedale, von denen jedes eine Tonstufe in allen Oktaven umstimmt. Deshalb spielt eine Harfenistin mit den Füßen die Tonart.",
+      "category": "Musik"
+    },
+    {
+      "id": "musik_de_168",
+      "question": "Wie viele Sinfonien schrieb Joseph Haydn?",
+      "type": "estimate",
+      "answer": 104,
+      "min": 1,
+      "max": 300,
+      "unit": "Sinfonien",
+      "difficulty": "hard",
+      "fun_fact": "104 gesicherte. Mozart kam auf 41, Beethoven auf 9 — die Zahl sank, weil die einzelne Sinfonie immer länger und gewichtiger wurde.",
+      "category": "Musik"
+    },
+    {
+      "id": "musik_de_169",
+      "question": "Wie viele Sekunden dauert John Cages Stück, in dem kein einziger Ton gespielt wird?",
+      "type": "estimate",
+      "answer": 273,
+      "min": 1,
+      "max": 1000,
+      "unit": "Sekunden",
+      "difficulty": "medium",
+      "fun_fact": "Vier Minuten und 33 Sekunden lang bleibt das Instrument stumm. Das Stück ist notiert, urheberrechtlich geschützt und wurde schon mehrfach eingeklagt.",
+      "category": "Musik"
+    },
+    {
+      "id": "musik_de_170",
+      "question": "Wie viele Minuten dauert Beethovens 9. Sinfonie ungefähr?",
+      "type": "estimate",
+      "answer": 70,
+      "min": 10,
+      "max": 180,
+      "unit": "Minuten",
+      "difficulty": "medium",
+      "fun_fact": "Rund 70 Minuten. Der Legende nach bestimmte genau das die Spielzeit der CD — belegt ist die Geschichte nie worden, dementiert aber auch nicht.",
+      "category": "Musik"
     }
   ]
 }

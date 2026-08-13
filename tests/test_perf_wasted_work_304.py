@@ -36,27 +36,6 @@ from custom_components.quizify.server.websocket import (  # noqa: E402
 
 
 
-def _multiple_choice_only(gs) -> None:
-    """Keep estimate questions out of this game's draw.
-
-    Since #566 the themed packs carry estimate questions (#275), so a mixed
-    game can legitimately serve one — and an estimate has no ``answers``.
-    The tests below exercise the multiple-choice scoring path, so they pin
-    the draw rather than depend on which question the seeded shuffle serves.
-    """
-    bank = gs._question_bank
-    draw = bank.get_next_question
-
-    def _mc(*args, **kwargs):
-        question = None
-        for _ in range(50):
-            question = draw(*args, **kwargs)
-            if question is None or question.answers:
-                return question
-        return question
-
-    bank.get_next_question = _mc
-
 class _Runtime:
     """Minimal runtime: runs scheduled coroutines on the live loop."""
 
@@ -97,7 +76,6 @@ class TestFireBroadcastSkipsSnapshot:
         gs.add_player("Alice", _fake_ws())
         gs.add_player("Bob", _fake_ws())
         gs.start_game(language="de", num_rounds=2)
-        _multiple_choice_only(gs)
         gs.start_next_question()
 
         gs.end_game()
@@ -159,7 +137,6 @@ class TestReactionCoalescing:
         gs.add_player("Alice", ws)
         gs.add_player("Bob", _fake_ws())
         gs.start_game(language="de", num_rounds=2)
-        _multiple_choice_only(gs)
         gs.start_next_question()
 
         h = _handler(tmp_path, gs)
@@ -194,7 +171,6 @@ class TestReactionCoalescing:
         gs.add_player("Alice", a)
         gs.add_player("Bob", b)
         gs.start_game(language="de", num_rounds=2)
-        _multiple_choice_only(gs)
         gs.start_next_question()
 
         h = _handler(tmp_path, gs)
@@ -220,7 +196,6 @@ class TestReactionCoalescing:
         ws = _fake_ws()
         gs.add_player("Alice", ws)
         gs.start_game(language="de", num_rounds=2)
-        _multiple_choice_only(gs)
         gs.start_next_question()
 
         h = _handler(tmp_path, gs)
@@ -246,7 +221,6 @@ class TestReactionCoalescing:
         gs.add_player("Alice", a)
         gs.add_player("Bob", b)
         gs.start_game(language="de", num_rounds=2)
-        _multiple_choice_only(gs)
         gs.start_next_question()
 
         # Bob answers correctly; force into reveal.

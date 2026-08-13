@@ -52,7 +52,7 @@ No apps to download. No accounts to create. Just scan a QR code and play.
 
 **Works on Any Screen** — Dashboard mode for the TV. Players use their phones. Admin runs the show. No extra hardware needed.
 
-**Eleven Themes, Three Languages** — 4,067 questions across 30 themed packs (Geography, Pop Culture, Animals & Nature, Sport, Music, Science, History, Food & Drink, Technology, World Cup, Estimation) in German, English and Spanish. Mix them, filter them, swap mid-session.
+**Eleven Themes, Three Languages** — 4,077 questions across 30 themed packs (Geography, Pop Culture, Animals & Nature, Sport, Music, Science, History, Food & Drink, Technology, World Cup, Estimation) in German, English and Spanish. Mix them, filter them, swap mid-session.
 
 ---
 
@@ -318,7 +318,7 @@ Then **"Start New Game"** (same settings, same players) or **Reset Game** (fresh
 
 ## Question Packs
 
-Quizify ships with **4,067 questions across 30 themed packs in 11 themes**, in German, English and Spanish.
+Quizify ships with **4,077 questions across 30 themed packs in 11 themes**, in German, English and Spanish.
 
 | Theme | 🇩🇪 Deutsch | 🇬🇧 English | 🇪🇸 Español |
 |-------|-------------|-------------|-------------|
@@ -326,7 +326,7 @@ Quizify ships with **4,067 questions across 30 themed packs in 11 themes**, in G
 | 🦋 **Tiere & Natur / Animals & Nature / Naturaleza** | 159 | 160 | 155 |
 | 🎬 **Popkultur / Pop Culture / Cultura Pop** | 154 | 155 | 155 |
 | ⚽ **Sport / Deportes** | 158 | 160 | 155 |
-| 🎵 **Musik / Music** | 155 | 155 | — |
+| 🎵 **Musik / Music** | 160 | 160 | — |
 | 🔬 **Wissenschaft / Science / Ciencia** | 160 | 160 | 155 |
 | 📜 **Geschichte / History / Historia** | 159 | 160 | 155 |
 | 🍔 **Essen & Trinken / Food & Drink** | 160 | 160 | — |
