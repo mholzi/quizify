@@ -1791,6 +1791,76 @@
       "difficulty": "medium",
       "fun_fact": "Russland bedeckt rund ein Neuntel der gesamten Landfläche der Erde. Damit ist es flächenmäßig fast so groß wie der gesamte Zwergplanet Pluto.",
       "category": "Geographie"
+    },
+    {
+      "id": "geo_161",
+      "question": "In welchem Nationalpark liegt diese heiße Quelle?",
+      "answers": [
+        {"text": "Yosemite", "correct": false},
+        {"text": "Yellowstone", "correct": true},
+        {"text": "Banff", "correct": false}
+      ],
+      "difficulty": "easy",
+      "fun_fact": "Die Farbringe der Grand Prismatic Spring sind Bakterienmatten. In der rund 70 °C heißen Mitte hält es kaum ein Organismus aus, deshalb ist sie klar und blau; nach außen kühlt das Wasser ab, und je nach Temperatur färben unterschiedliche Mikroben den Rand gelb, orange und rot.",
+      "category": "Geographie",
+      "image_url": "/quizify/static/img/packs/geography/yellowstone-spring.webp",
+      "reveal_style": "progressive"
+    },
+    {
+      "id": "geo_162",
+      "question": "In welcher Stadt steht diese Statue?",
+      "answers": [
+        {"text": "New York", "correct": true},
+        {"text": "Boston", "correct": false},
+        {"text": "Philadelphia", "correct": false}
+      ],
+      "difficulty": "easy",
+      "fun_fact": "Die Freiheitsstatue kam 1885 in 214 Kisten aus Frankreich über den Atlantik und wurde erst auf der Insel zusammengesetzt. Ihre Kupferhaut ist nur gut zwei Millimeter dick — sie trägt sich allein über das Eisengerüst darunter.",
+      "category": "Geographie",
+      "image_url": "/quizify/static/img/packs/geography/statue-of-liberty.webp",
+      "reveal_style": "progressive"
+    },
+    {
+      "id": "geo_163",
+      "question": "Welche Meerenge trennt hier Europa von Afrika?",
+      "answers": [
+        {"text": "Bosporus", "correct": false},
+        {"text": "Öresund", "correct": false},
+        {"text": "Straße von Gibraltar", "correct": true}
+      ],
+      "difficulty": "easy",
+      "fun_fact": "An der engsten Stelle liegen nur etwa 14 Kilometer zwischen Spanien und Marokko. Das Wasser tauscht sich in zwei Stockwerken aus: oben strömt salzärmeres Atlantikwasser ins Mittelmeer, unten fließt salzigeres wieder hinaus.",
+      "category": "Geographie",
+      "image_url": "/quizify/static/img/packs/geography/strait-of-gibraltar.webp",
+      "reveal_style": "progressive"
+    },
+    {
+      "id": "geo_164",
+      "question": "Welcher Fluss zeichnet sich hier nachts aus dem All ab?",
+      "answers": [
+        {"text": "Ganges", "correct": false},
+        {"text": "Nil", "correct": true},
+        {"text": "Donau", "correct": false}
+      ],
+      "difficulty": "medium",
+      "fun_fact": "Fast die gesamte Bevölkerung Ägyptens lebt auf dem schmalen Streifen entlang des Nils und in seinem Delta — nur wenige Prozent der Landesfläche. Deshalb bricht das Lichtband so unvermittelt ab, wo die Wüste beginnt.",
+      "category": "Geographie",
+      "image_url": "/quizify/static/img/packs/geography/nile-delta-night.webp",
+      "reveal_style": "progressive"
+    },
+    {
+      "id": "geo_165",
+      "question": "In welchem Land steht dieses Bauwerk?",
+      "answers": [
+        {"text": "Iran", "correct": false},
+        {"text": "Usbekistan", "correct": false},
+        {"text": "Indien", "correct": true}
+      ],
+      "difficulty": "easy",
+      "fun_fact": "Der Taj Mahal in Agra entstand ab 1632 als Grabmal für Mumtaz Mahal, die Frau des Großmoguls Shah Jahan. Die Aufnahme ist ein Photochrom von etwa 1890: ein Schwarzweißfoto, dessen Farben beim Druck von Hand über mehrere Steinplatten gelegt wurden.",
+      "category": "Geographie",
+      "image_url": "/quizify/static/img/packs/geography/taj-mahal.webp",
+      "reveal_style": "progressive"
     }
   ]
 }
