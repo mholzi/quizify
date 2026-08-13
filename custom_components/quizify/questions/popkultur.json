@@ -1,7 +1,7 @@
 {
   "name": "Popkultur",
   "language": "de",
-  "version": "1.1",
+  "version": "1.2",
   "theme": "popculture",
   "questions": [
     {
@@ -1861,6 +1861,66 @@
       "category": "Popkultur",
       "image_url": "/quizify/static/img/packs/popculture/we-can-do-it.webp",
       "reveal_style": "progressive"
+    },
+    {
+      "id": "pop_166",
+      "question": "Wie viele Oscars gewann „Titanic“ 1998?",
+      "type": "estimate",
+      "answer": 11,
+      "min": 1,
+      "max": 30,
+      "unit": "Oscars",
+      "difficulty": "easy",
+      "fun_fact": "Elf — gleichauf mit „Ben Hur“ und „Der Herr der Ringe: Die Rückkehr des Königs“. Für keine einzige schauspielerische Leistung gab es einen.",
+      "category": "Popkultur"
+    },
+    {
+      "id": "pop_167",
+      "question": "Wie viele Folgen hat die Serie „Friends“ insgesamt?",
+      "type": "estimate",
+      "answer": 236,
+      "min": 10,
+      "max": 1000,
+      "unit": "Folgen",
+      "difficulty": "medium",
+      "fun_fact": "236 Folgen in zehn Staffeln. In der letzten Staffel bekam jeder der sechs Hauptdarsteller eine Million Dollar pro Folge — ausgehandelt als Block, nie einzeln.",
+      "category": "Popkultur"
+    },
+    {
+      "id": "pop_168",
+      "question": "Wie viele Minuten dauert der erste Star-Wars-Film von 1977?",
+      "type": "estimate",
+      "answer": 121,
+      "min": 30,
+      "max": 300,
+      "unit": "Minuten",
+      "difficulty": "medium",
+      "fun_fact": "121 Minuten. Die Studioleitung hielt den Film für unrettbar, bis Marcia Lucas und zwei Kollegen ihn neu schnitten — der Schnitt bekam einen Oscar.",
+      "category": "Popkultur"
+    },
+    {
+      "id": "pop_169",
+      "question": "Wie alt war Macaulay Culkin bei den Dreharbeiten zu „Kevin — Allein zu Haus“?",
+      "type": "estimate",
+      "answer": 10,
+      "min": 1,
+      "max": 40,
+      "unit": "Jahre",
+      "difficulty": "medium",
+      "fun_fact": "Zehn. Der Film spielte weltweit fast eine halbe Milliarde Dollar ein und steht bis heute als erfolgreichste Live-Action-Komödie in den Büchern.",
+      "category": "Popkultur"
+    },
+    {
+      "id": "pop_170",
+      "question": "Wie viele Minuten dauert „Vom Winde verweht“?",
+      "type": "estimate",
+      "answer": 238,
+      "min": 30,
+      "max": 500,
+      "unit": "Minuten",
+      "difficulty": "hard",
+      "fun_fact": "238 Minuten, inklusive Ouvertüre und Pause. Inflationsbereinigt ist er bis heute der erfolgreichste Film aller Zeiten.",
+      "category": "Popkultur"
     }
   ]
 }

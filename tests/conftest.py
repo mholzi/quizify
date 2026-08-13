@@ -55,28 +55,27 @@ def _mixed_draw_serves_multiple_choice():
     *names* a category returns exactly what that pack holds, and the estimate
     tests inject their question into ``_current_question`` directly, so
     nothing that actually exercises the mechanic is hidden by this.
+
+    The filter sits in ``_build_queue`` rather than in the draw itself,
+    because skipping at serve time means an extra draw, and an extra draw
+    advances ``_queue_index`` — which #350 asserts to the number.
     """
     from custom_components.quizify.game.questions import QuestionBank
 
-    original = QuestionBank.get_next_question
+    original = QuestionBank._build_queue
 
-    def _mixed_draw_skips_estimates(
-        self, category=None, difficulty=None
+    def _build_mixed_queue_without_estimates(
+        self, category=None, difficulty=None, language=None, categories=None
     ):  # noqa: ANN001, ANN202
-        question = original(self, category=category, difficulty=difficulty)
-        if category is not None:
-            return question
-        for _ in range(50):
-            if question is None or question.answers:
-                return question
-            question = original(self, category=category, difficulty=difficulty)
-        return question
+        original(self, category, difficulty, language, categories)
+        if category is None and not categories:
+            self._queue = [q for q in self._queue if q.answers]
 
-    QuestionBank.get_next_question = _mixed_draw_skips_estimates
+    QuestionBank._build_queue = _build_mixed_queue_without_estimates
     try:
         yield
     finally:
-        QuestionBank.get_next_question = original
+        QuestionBank._build_queue = original
 
 
 @pytest.fixture(autouse=True)
