@@ -1,7 +1,7 @@
 {
   "name": "History",
   "language": "en",
-  "version": "1.1",
+  "version": "1.2",
   "theme": "history",
   "questions": [
     {
@@ -1873,6 +1873,66 @@
       "category": "History",
       "image_url": "/quizify/static/img/packs/history/brandenburg-gate-1989.webp",
       "reveal_style": "progressive"
+    },
+    {
+      "id": "history_en_166",
+      "question": "How many years did the Hundred Years' War between England and France last?",
+      "type": "estimate",
+      "answer": 116,
+      "min": 50,
+      "max": 200,
+      "unit": "years",
+      "difficulty": "hard",
+      "fun_fact": "116 years, with long truces in between. The name was only applied in the 19th century by historians who bundled the separate wars into one.",
+      "category": "History"
+    },
+    {
+      "id": "history_en_167",
+      "question": "How many years was the Berlin Wall standing?",
+      "type": "estimate",
+      "answer": 28,
+      "min": 1,
+      "max": 100,
+      "unit": "years",
+      "difficulty": "medium",
+      "fun_fact": "From 13 August 1961 to 9 November 1989. It has now been gone for longer than it stood.",
+      "category": "History"
+    },
+    {
+      "id": "history_en_168",
+      "question": "How tall was the Great Pyramid of Giza originally?",
+      "type": "estimate",
+      "answer": 146,
+      "min": 20,
+      "max": 300,
+      "unit": "metres",
+      "difficulty": "medium",
+      "fun_fact": "It was the tallest structure in the world for some 3,800 years. It is about 8 m shorter today because the smooth casing was carried off as building material.",
+      "category": "History"
+    },
+    {
+      "id": "history_en_169",
+      "question": "How long is the Great Wall of China counting every section?",
+      "type": "estimate",
+      "answer": 21196,
+      "min": 1000,
+      "max": 50000,
+      "unit": "kilometres",
+      "difficulty": "hard",
+      "fun_fact": "The 21,196 km comes from a 2012 survey, the first to count every building phase. It still is not visible from the Moon — it is long, but only a few metres wide.",
+      "category": "History"
+    },
+    {
+      "id": "history_en_170",
+      "question": "How many days did Apollo 11 take from launch to splashdown?",
+      "type": "estimate",
+      "answer": 8,
+      "min": 1,
+      "max": 60,
+      "unit": "days",
+      "difficulty": "easy",
+      "fun_fact": "Eight days and three hours. Armstrong and Aldrin were on the Moon itself for barely 22 of them, and outside for about two and a half.",
+      "category": "History"
     }
   ]
 }
