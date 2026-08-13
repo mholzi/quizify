@@ -1791,6 +1791,76 @@
       "difficulty": "hard",
       "fun_fact": "Bei alten Kernholzbäumen ist das Holz im Inneren des Stamms totes Gewebe — nur eine dünne Schicht direkt unter der Rinde lebt und transportiert Wasser und Nährstoffe. Ein solcher massiver Baum ist also überwiegend eine tote Stütze, getragen von einer hauchdünnen lebenden Hülle. Bei jungen Bäumen oder reinen Splintholzarten lebt dagegen ein deutlich größerer Anteil.",
       "category": "Tiere & Natur"
+    },
+    {
+      "id": "nat_161",
+      "question": "Welcher Seevogel ist das?",
+      "answers": [
+        {"text": "Papageitaucher", "correct": true},
+        {"text": "Tordalk", "correct": false},
+        {"text": "Eissturmvogel", "correct": false}
+      ],
+      "difficulty": "easy",
+      "fun_fact": "Ein Papageitaucher kann über 60 kleine Fische quer im Schnabel tragen — Widerhaken am Gaumen halten die schon gefangenen fest, während er weiter jagt.",
+      "category": "Tiere & Natur",
+      "image_url": "/quizify/static/img/packs/nature/puffin.webp",
+      "reveal_style": "progressive"
+    },
+    {
+      "id": "nat_162",
+      "question": "Welcher Greifvogel sitzt hier auf dem Stein?",
+      "answers": [
+        {"text": "Weißkopfseeadler", "correct": true},
+        {"text": "Steinadler", "correct": false},
+        {"text": "Fischadler", "correct": false}
+      ],
+      "difficulty": "easy",
+      "fun_fact": "Der weiße Kopf kommt erst mit etwa fünf Jahren. Junge Weißkopfseeadler sind ganz braun und werden deshalb oft für Steinadler gehalten.",
+      "category": "Tiere & Natur",
+      "image_url": "/quizify/static/img/packs/nature/bald-eagle.webp",
+      "reveal_style": "progressive"
+    },
+    {
+      "id": "nat_163",
+      "question": "Was zeigen diese Aufnahmen von 1902?",
+      "answers": [
+        {"text": "Schneekristalle", "correct": true},
+        {"text": "Kieselalgen", "correct": false},
+        {"text": "Salzkristalle", "correct": false}
+      ],
+      "difficulty": "medium",
+      "fun_fact": "Wilson Bentley fotografierte über 5.000 Schneekristalle durch ein Mikroskop — und fand nie zwei gleiche. Er fing sie auf einem schwarzen Samtbrett auf, bevor sie schmolzen.",
+      "category": "Tiere & Natur",
+      "image_url": "/quizify/static/img/packs/nature/snowflake.webp",
+      "reveal_style": "progressive"
+    },
+    {
+      "id": "nat_164",
+      "question": "Worauf blickt die Raumstation hier hinab?",
+      "answers": [
+        {"text": "in das Auge eines Hurrikans", "correct": true},
+        {"text": "in einen Vulkankrater", "correct": false},
+        {"text": "in einen Strudel im Meereis", "correct": false}
+      ],
+      "difficulty": "easy",
+      "fun_fact": "Im Auge selbst ist es fast windstill und oft wolkenfrei — die Zerstörung passiert in der Wand ringsum, wo die Luft am schnellsten aufsteigt.",
+      "category": "Tiere & Natur",
+      "image_url": "/quizify/static/img/packs/nature/hurricane-iss.webp",
+      "reveal_style": "progressive"
+    },
+    {
+      "id": "nat_165",
+      "question": "Was leuchtet hier grün über der Erdkrümmung?",
+      "answers": [
+        {"text": "ein Polarlicht", "correct": true},
+        {"text": "Gewitterblitze", "correct": false},
+        {"text": "Vulkanasche", "correct": false}
+      ],
+      "difficulty": "easy",
+      "fun_fact": "Das Grün entsteht in etwa 100 bis 150 km Höhe, wenn Sauerstoffatome von Teilchen des Sonnenwinds getroffen werden. Rot leuchtet es noch weiter oben.",
+      "category": "Tiere & Natur",
+      "image_url": "/quizify/static/img/packs/nature/aurora-iss.webp",
+      "reveal_style": "progressive"
     }
   ]
 }
