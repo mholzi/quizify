@@ -1803,6 +1803,76 @@
       "difficulty": "medium",
       "fun_fact": "A lethal dose is roughly 10 grams, about a teaspoon of the pure powder. You'd need around 75 to 100 cups of coffee to reach that, which is why brewed coffee is safe but the raw powder is regulated.",
       "category": "Food & Drink"
+    },
+    {
+      "id": "food_en_161",
+      "question": "What is the maid pouring into the bowl in this painting?",
+      "answers": [
+        {"text": "Milk", "correct": true},
+        {"text": "Oil", "correct": false},
+        {"text": "Wine", "correct": false}
+      ],
+      "difficulty": "easy",
+      "fun_fact": "Vermeer painted the milkmaid around 1660. The bread on the table and the bowl point to a bread pudding — a dish made of leftovers, painted with a blue that cost more than gold at the time.",
+      "category": "Food & Drink",
+      "image_url": "/quizify/static/img/packs/food/milkmaid.webp",
+      "reveal_style": "progressive"
+    },
+    {
+      "id": "food_en_162",
+      "question": "What are the people in this 1885 painting eating?",
+      "answers": [
+        {"text": "Turnips", "correct": false},
+        {"text": "Beans", "correct": false},
+        {"text": "Potatoes", "correct": true}
+      ],
+      "difficulty": "medium",
+      "fun_fact": "Van Gogh wanted it visible that the hands digging the earth are the same hands reaching into the dish. His brother Theo thought the picture too dark; Van Gogh long considered it his best.",
+      "category": "Food & Drink",
+      "image_url": "/quizify/static/img/packs/food/potato-eaters.webp",
+      "reveal_style": "progressive"
+    },
+    {
+      "id": "food_en_163",
+      "question": "What is stacked on this Dutch still life from 1615?",
+      "answers": [
+        {"text": "Wheels of cheese", "correct": true},
+        {"text": "Loaves of bread", "correct": false},
+        {"text": "Blocks of butter", "correct": false}
+      ],
+      "difficulty": "medium",
+      "fun_fact": "Stacked cheese was a status symbol in the Dutch Golden Age: it showed trade, wealth and a full larder at once. The tabletop tilts towards the viewer on purpose, so that everything can be seen at the same time.",
+      "category": "Food & Drink",
+      "image_url": "/quizify/static/img/packs/food/cheese-still-life.webp",
+      "reveal_style": "progressive"
+    },
+    {
+      "id": "food_en_164",
+      "question": "Which animal is lying on the table here?",
+      "answers": [
+        {"text": "A squid", "correct": false},
+        {"text": "A lobster", "correct": true},
+        {"text": "A carp", "correct": false}
+      ],
+      "difficulty": "easy",
+      "fun_fact": "The lobster was the luxury item of these banquet still lifes — cooked red, expensive, perishable. That is exactly why it is there: the paintings show abundance and remind you it does not keep.",
+      "category": "Food & Drink",
+      "image_url": "/quizify/static/img/packs/food/lobster-still-life.webp",
+      "reveal_style": "progressive"
+    },
+    {
+      "id": "food_en_165",
+      "question": "Which fruit is cut open in this watercolour?",
+      "answers": [
+        {"text": "A mango", "correct": false},
+        {"text": "A melon", "correct": false},
+        {"text": "A pineapple", "correct": true}
+      ],
+      "difficulty": "medium",
+      "fun_fact": "A pineapple is botanically not one fruit but many small berries fused together. The plate comes from a collection of some 7,500 watercolours the US Department of Agriculture commissioned before colour photography existed.",
+      "category": "Food & Drink",
+      "image_url": "/quizify/static/img/packs/food/pineapple-watercolour.webp",
+      "reveal_style": "progressive"
     }
   ]
 }

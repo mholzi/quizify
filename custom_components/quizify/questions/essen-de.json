@@ -3153,6 +3153,76 @@
       "difficulty": "medium",
       "fun_fact": "Eine Jalapeño liegt bei rund 5.000 Scoville, eine Carolina Reaper bei über 1,5 Millionen. Das ist ein Faktor von mehr als 200 — man müsste also mehr als 200 Jalapeños auf einmal essen, um dieselbe Schärfe zu spüren.",
       "category": "Essen & Trinken"
+    },
+    {
+      "id": "essen_de_161",
+      "question": "Was gießt die Magd auf diesem Gemälde in die Schüssel?",
+      "answers": [
+        {"text": "Milch", "correct": true},
+        {"text": "Öl", "correct": false},
+        {"text": "Wein", "correct": false}
+      ],
+      "difficulty": "easy",
+      "fun_fact": "Vermeer malte die Milchmagd um 1660. Das Brot auf dem Tisch und die Schüssel deuten auf einen Brotpudding — ein Gericht aus Resten, gemalt mit einem Blau, das damals teurer war als Gold.",
+      "category": "Essen & Trinken",
+      "image_url": "/quizify/static/img/packs/food/milkmaid.webp",
+      "reveal_style": "progressive"
+    },
+    {
+      "id": "essen_de_162",
+      "question": "Welches Lebensmittel essen die Menschen auf diesem Bild von 1885?",
+      "answers": [
+        {"text": "Rüben", "correct": false},
+        {"text": "Bohnen", "correct": false},
+        {"text": "Kartoffeln", "correct": true}
+      ],
+      "difficulty": "medium",
+      "fun_fact": "Van Gogh wollte, dass man sieht: dieselben Hände, die in der Erde gegraben haben, greifen jetzt in die Schüssel. Sein Bruder Theo fand das Bild zu dunkel — Van Gogh hielt es trotzdem lange für sein bestes.",
+      "category": "Essen & Trinken",
+      "image_url": "/quizify/static/img/packs/food/potato-eaters.webp",
+      "reveal_style": "progressive"
+    },
+    {
+      "id": "essen_de_163",
+      "question": "Was stapelt sich auf diesem niederländischen Stillleben von 1615?",
+      "answers": [
+        {"text": "Käselaibe", "correct": true},
+        {"text": "Brotlaibe", "correct": false},
+        {"text": "Butterblöcke", "correct": false}
+      ],
+      "difficulty": "medium",
+      "fun_fact": "Gestapelter Käse war im goldenen Zeitalter ein Statussymbol: Er zeigte Handel, Wohlstand und Vorratshaltung auf einmal. Die Tischplatte kippt dem Betrachter absichtlich entgegen, damit alles gleichzeitig zu sehen ist.",
+      "category": "Essen & Trinken",
+      "image_url": "/quizify/static/img/packs/food/cheese-still-life.webp",
+      "reveal_style": "progressive"
+    },
+    {
+      "id": "essen_de_164",
+      "question": "Welches Tier liegt hier auf dem Tisch?",
+      "answers": [
+        {"text": "Ein Tintenfisch", "correct": false},
+        {"text": "Ein Hummer", "correct": true},
+        {"text": "Ein Karpfen", "correct": false}
+      ],
+      "difficulty": "easy",
+      "fun_fact": "Der Hummer galt in solchen Prunkstillleben als Luxus — rot gekocht, teuer, verderblich. Genau darum liegt er da: Die Bilder zeigen Überfluss und erinnern zugleich daran, dass er nicht hält.",
+      "category": "Essen & Trinken",
+      "image_url": "/quizify/static/img/packs/food/lobster-still-life.webp",
+      "reveal_style": "progressive"
+    },
+    {
+      "id": "essen_de_165",
+      "question": "Welche Frucht ist auf diesem Aquarell aufgeschnitten?",
+      "answers": [
+        {"text": "Eine Mango", "correct": false},
+        {"text": "Eine Melone", "correct": false},
+        {"text": "Eine Ananas", "correct": true}
+      ],
+      "difficulty": "medium",
+      "fun_fact": "Eine Ananas ist botanisch keine einzelne Frucht, sondern ein Verbund vieler kleiner Beeren, die zusammenwachsen. Das Blatt stammt aus einer Sammlung von rund 7.500 Aquarellen, die das US-Landwirtschaftsministerium anlegte, bevor es Farbfotografie gab.",
+      "category": "Essen & Trinken",
+      "image_url": "/quizify/static/img/packs/food/pineapple-watercolour.webp",
+      "reveal_style": "progressive"
     }
   ]
 }
