@@ -14,10 +14,10 @@ matter once a pack is mixed:
   an unblur with nothing to unblur is the trap #434 sat on;
 * the text questions around them must stay untouched.
 
-The nature pair was the pilot; geography is the second of fifteen. Rather than
-copy a hundred lines per pair, the pairs are a registry and every guard runs
-over all of them — a new pack pair is one ``ImageSet`` entry, and it inherits
-the whole checklist instead of whatever its author remembers to repeat.
+The nature pair was the pilot; geography and history followed. Rather than copy
+a hundred lines per pair, the pairs are a registry and every guard runs over all
+of them — a new pack pair is one ``ImageSet`` entry, and it inherits the whole
+checklist instead of whatever its author remembers to repeat.
 """
 
 from __future__ import annotations
@@ -56,6 +56,7 @@ class ImageSet:
 PACK_SETS = (
     ImageSet("nature", ("tiere-natur.json", "animals-nature.json"), 149),
     ImageSet("geography", ("geographie.json", "geography.json"), 149),
+    ImageSet("history", ("geschichte-de.json", "history-en.json"), 149),
 )
 
 # (set, pack) for the guards that look at one pack at a time.
