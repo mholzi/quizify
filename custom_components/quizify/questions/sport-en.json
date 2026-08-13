@@ -1,7 +1,7 @@
 {
   "name": "Sport",
   "language": "en",
-  "version": "1.1",
+  "version": "1.2",
   "theme": "sport",
   "questions": [
     {
@@ -1873,6 +1873,66 @@
       "category": "Sport",
       "image_url": "/quizify/static/img/packs/sport/suzanne-lenglen.webp",
       "reveal_style": "progressive"
+    },
+    {
+      "id": "sport_en_166",
+      "question": "How many metres long is a marathon?",
+      "type": "estimate",
+      "answer": 42195,
+      "min": 10000,
+      "max": 100000,
+      "unit": "metres",
+      "difficulty": "easy",
+      "fun_fact": "42,195 metres. The odd 195 come from the 1908 London Games, where the start was moved to Windsor Castle so the royal children could watch.",
+      "category": "Sport"
+    },
+    {
+      "id": "sport_en_167",
+      "question": "How high above the floor is a basketball hoop?",
+      "type": "estimate",
+      "answer": 305,
+      "min": 100,
+      "max": 600,
+      "unit": "centimetres",
+      "difficulty": "easy",
+      "fun_fact": "3.05 metres — exactly ten feet. James Naismith nailed a peach basket to the gymnasium balcony in 1891, and that is how high the balcony was.",
+      "category": "Sport"
+    },
+    {
+      "id": "sport_en_168",
+      "question": "How heavy is the men's shot in shot put?",
+      "type": "estimate",
+      "answer": 7260,
+      "min": 1000,
+      "max": 20000,
+      "unit": "grams",
+      "difficulty": "medium",
+      "fun_fact": "7.26 kg, which is exactly 16 pounds. The women's shot is 4 kg.",
+      "category": "Sport"
+    },
+    {
+      "id": "sport_en_169",
+      "question": "How many double stitches make up the seam of a baseball?",
+      "type": "estimate",
+      "answer": 108,
+      "min": 10,
+      "max": 500,
+      "unit": "double stitches",
+      "difficulty": "hard",
+      "fun_fact": "108, every one sewn by hand — no machine has ever been built that can stitch a Major League ball.",
+      "category": "Sport"
+    },
+    {
+      "id": "sport_en_170",
+      "question": "How high is a tennis net at its centre?",
+      "type": "estimate",
+      "answer": 91,
+      "min": 50,
+      "max": 200,
+      "unit": "centimetres",
+      "difficulty": "medium",
+      "fun_fact": "91.4 cm at the centre and 107 cm at the posts. The sag is deliberate, which is why playing over the middle is the safer shot.",
+      "category": "Sport"
     }
   ]
 }
