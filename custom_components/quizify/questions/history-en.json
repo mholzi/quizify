@@ -1803,6 +1803,76 @@
       "difficulty": "medium",
       "fun_fact": "Cleopatra lived closer in time to the Moon landing than to the construction of the pyramids. The pyramids were already ancient tourist attractions when she was queen.",
       "category": "History"
+    },
+    {
+      "id": "history_en_161",
+      "question": "Who made the first powered flight with this machine in 1903?",
+      "answers": [
+        {"text": "Otto Lilienthal", "correct": false},
+        {"text": "The Wright brothers", "correct": true},
+        {"text": "Louis Blériot", "correct": false}
+      ],
+      "difficulty": "easy",
+      "fun_fact": "The first flight on 17 December 1903 lasted 12 seconds and covered 36 metres — less than the wingspan of a modern Boeing 747. The fourth attempt that same day managed 260 metres.",
+      "category": "History",
+      "image_url": "/quizify/static/img/packs/history/wright-first-flight.webp",
+      "reveal_style": "progressive"
+    },
+    {
+      "id": "history_en_162",
+      "question": "Which crisis does this famous 1936 photograph belong to?",
+      "answers": [
+        {"text": "The Great Depression", "correct": true},
+        {"text": "The First World War", "correct": false},
+        {"text": "The oil crisis", "correct": false}
+      ],
+      "difficulty": "medium",
+      "fun_fact": "Dorothea Lange photographed Florence Owens Thompson at a pea-pickers' camp in California — six exposures in ten minutes. The government sent food to the camp afterwards; the family had already moved on.",
+      "category": "History",
+      "image_url": "/quizify/static/img/packs/history/migrant-mother.webp",
+      "reveal_style": "progressive"
+    },
+    {
+      "id": "history_en_163",
+      "question": "Which US president is shown here?",
+      "answers": [
+        {"text": "Ulysses S. Grant", "correct": false},
+        {"text": "Andrew Jackson", "correct": false},
+        {"text": "Abraham Lincoln", "correct": true}
+      ],
+      "difficulty": "easy",
+      "fun_fact": "Alexander Gardner took this portrait in November 1863, days before the Gettysburg Address. Lincoln was the first US president photography followed closely — over 130 pictures of him survive.",
+      "category": "History",
+      "image_url": "/quizify/static/img/packs/history/lincoln-portrait.webp",
+      "reveal_style": "progressive"
+    },
+    {
+      "id": "history_en_164",
+      "question": "Which ship is leaving Southampton here on 10 April 1912?",
+      "answers": [
+        {"text": "The Lusitania", "correct": false},
+        {"text": "The Titanic", "correct": true},
+        {"text": "The Britannic", "correct": false}
+      ],
+      "difficulty": "medium",
+      "fun_fact": "Five days later she was on the sea floor. Only three of the four funnels were real — the rear one served ventilation, and the impression that four funnels made.",
+      "category": "History",
+      "image_url": "/quizify/static/img/packs/history/titanic-southampton.webp",
+      "reveal_style": "progressive"
+    },
+    {
+      "id": "history_en_165",
+      "question": "Which 1989 event brought this crowd to the Brandenburg Gate?",
+      "answers": [
+        {"text": "The uprising of 17 June 1953", "correct": false},
+        {"text": "The Berlin Blockade", "correct": false},
+        {"text": "The fall of the Berlin Wall", "correct": true}
+      ],
+      "difficulty": "easy",
+      "fun_fact": "The wall opened on 9 November 1989, but the Brandenburg Gate itself only on 22 December — for six weeks the city's best-known landmark still stood in the restricted zone while the celebrating went on beside it.",
+      "category": "History",
+      "image_url": "/quizify/static/img/packs/history/brandenburg-gate-1989.webp",
+      "reveal_style": "progressive"
     }
   ]
 }

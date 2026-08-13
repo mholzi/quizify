@@ -1791,6 +1791,76 @@
       "difficulty": "medium",
       "fun_fact": "Demografen schätzen, dass in der gesamten Menschheitsgeschichte rund 110 Milliarden Menschen geboren wurden. Die etwa 8 Milliarden Lebenden machen davon nur rund 7 Prozent aus — die Toten sind uns also weit in der Überzahl.",
       "category": "Geschichte"
+    },
+    {
+      "id": "geschichte_de_161",
+      "question": "Wem gelang 1903 mit dieser Maschine der erste Motorflug?",
+      "answers": [
+        {"text": "Otto Lilienthal", "correct": false},
+        {"text": "Den Brüdern Wright", "correct": true},
+        {"text": "Louis Blériot", "correct": false}
+      ],
+      "difficulty": "easy",
+      "fun_fact": "Der erste Flug am 17. Dezember 1903 dauerte 12 Sekunden und ging 36 Meter weit — weniger als die Spannweite einer heutigen Boeing 747. Der vierte Versuch desselben Tages schaffte schon 260 Meter.",
+      "category": "Geschichte",
+      "image_url": "/quizify/static/img/packs/history/wright-first-flight.webp",
+      "reveal_style": "progressive"
+    },
+    {
+      "id": "geschichte_de_162",
+      "question": "Welche Krise prägt diese berühmte Aufnahme von 1936?",
+      "answers": [
+        {"text": "Die Weltwirtschaftskrise", "correct": true},
+        {"text": "Der Erste Weltkrieg", "correct": false},
+        {"text": "Die Ölkrise", "correct": false}
+      ],
+      "difficulty": "medium",
+      "fun_fact": "Dorothea Lange fotografierte Florence Owens Thompson in einem Erbsenpflücker-Lager in Kalifornien — sechs Aufnahmen in zehn Minuten. Die Behörden schickten daraufhin Lebensmittel ins Lager; die Familie war da längst weitergezogen.",
+      "category": "Geschichte",
+      "image_url": "/quizify/static/img/packs/history/migrant-mother.webp",
+      "reveal_style": "progressive"
+    },
+    {
+      "id": "geschichte_de_163",
+      "question": "Welcher US-Präsident ist hier zu sehen?",
+      "answers": [
+        {"text": "Ulysses S. Grant", "correct": false},
+        {"text": "Andrew Jackson", "correct": false},
+        {"text": "Abraham Lincoln", "correct": true}
+      ],
+      "difficulty": "easy",
+      "fun_fact": "Alexander Gardner nahm das Porträt im November 1863 auf, wenige Tage vor der Gettysburg-Rede. Lincoln war der erste US-Präsident, den die Fotografie ausgiebig festhielt — über 130 Aufnahmen sind erhalten.",
+      "category": "Geschichte",
+      "image_url": "/quizify/static/img/packs/history/lincoln-portrait.webp",
+      "reveal_style": "progressive"
+    },
+    {
+      "id": "geschichte_de_164",
+      "question": "Welches Schiff verlässt hier am 10. April 1912 den Hafen von Southampton?",
+      "answers": [
+        {"text": "Die Lusitania", "correct": false},
+        {"text": "Die Titanic", "correct": true},
+        {"text": "Die Britannic", "correct": false}
+      ],
+      "difficulty": "medium",
+      "fun_fact": "Fünf Tage später lag das Schiff auf dem Meeresgrund. Von den vier Schornsteinen waren nur drei echt — der hintere diente der Belüftung und dem Eindruck, den vier Schlote machen.",
+      "category": "Geschichte",
+      "image_url": "/quizify/static/img/packs/history/titanic-southampton.webp",
+      "reveal_style": "progressive"
+    },
+    {
+      "id": "geschichte_de_165",
+      "question": "Welches Ereignis brachte 1989 diese Menge ans Brandenburger Tor?",
+      "answers": [
+        {"text": "Der Aufstand vom 17. Juni 1953", "correct": false},
+        {"text": "Die Berlin-Blockade", "correct": false},
+        {"text": "Der Fall der Berliner Mauer", "correct": true}
+      ],
+      "difficulty": "easy",
+      "fun_fact": "Die Mauer öffnete am 9. November 1989, das Brandenburger Tor selbst aber erst am 22. Dezember — sechs Wochen lang stand das bekannteste Tor der Stadt noch im Sperrgebiet, während nebenan längst gefeiert wurde.",
+      "category": "Geschichte",
+      "image_url": "/quizify/static/img/packs/history/brandenburg-gate-1989.webp",
+      "reveal_style": "progressive"
     }
   ]
 }
