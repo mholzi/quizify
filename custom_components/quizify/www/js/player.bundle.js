@@ -952,6 +952,40 @@
         }).join('');
     }
 
+    /**
+     * Render this player's own all-time standing (#371, variant A).
+     *
+     * Called from player-core on `joined` / `reconnected`. The payload is
+     * per-player and arrives once — there is no roster path that could
+     * refresh it mid-lobby, and none is wanted: the numbers only change
+     * when a game ends.
+     *
+     * @param {Object|null} standing - {rank, total_players, wins, games_played}
+     *                                 or null for a player with no history.
+     */
+    function renderAllTime(standing) {
+        var el = document.getElementById('pl-alltime');
+        if (!el) return;  // legacy markup
+        if (!standing || !standing.total_players) {
+            // First-timer, or analytics not wired: show nothing at all
+            // rather than "1st of 1", which would be a hollow brag.
+            el.textContent = '';
+            el.classList.add('hidden');
+            return;
+        }
+        var t = (window.QuizifyI18n && window.QuizifyI18n.t) || function (k) { return k; };
+        // A player with games but no win yet gets their own phrasing —
+        // "0 wins" reads like a taunt on the screen you just joined.
+        var key = standing.wins > 0 ? 'lobby.allTime' : 'lobby.allTimeFirstWin';
+        el.textContent = t(key, {
+            rank: standing.rank,
+            total: standing.total_players,
+            wins: standing.wins,
+            games: standing.games_played
+        });
+        el.classList.remove('hidden');
+    }
+
     // Tiny helpers — keep scope tight.
     function _escape(s) {
         return String(s == null ? '' : s)
@@ -1334,6 +1368,7 @@
     window.QuizifyPlayerLobby = {
         init: init,
         renderLobby: renderLobby,
+        renderAllTime: renderAllTime,
         handlePlayerJoined: handlePlayerJoined,
         handlePlayerLeft: handlePlayerLeft,
         setupInviteSection: setupInviteSection,
@@ -5182,6 +5217,12 @@
                 if (msg.powerup !== undefined) {
                     myPowerUp = msg.powerup;
                     if (game && game.renderPowerUp) game.renderPowerUp(myPowerUp);
+                }
+                // #371 variant A: own all-time standing, sent once on
+                // join/reconnect. `undefined` (older server) leaves whatever
+                // is on screen; `null` (first-timer) clears the line.
+                if (msg.all_time !== undefined && lobby && lobby.renderAllTime) {
+                    lobby.renderAllTime(msg.all_time);
                 }
                 if (msg.color) {
                     state.playerColor = msg.color;

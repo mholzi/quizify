@@ -33,6 +33,8 @@
     "howToPlayStep4": "Faster correct answers earn more points!",
     "youreIn": "YOU'RE IN",
     "aloneWaiting": "Waiting on your own…",
+    "allTime": "All-time · {rank} of {total} · {wins} wins from {games} games",
+    "allTimeFirstWin": "All-time · {rank} of {total} · no win yet, {games} games",
     "alsoOne": "+ 1 more player",
     "alsoMany": "+ {count} more players",
     "inviteFriends": "Invite Friends",

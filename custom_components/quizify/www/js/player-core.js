@@ -253,6 +253,12 @@
                     myPowerUp = msg.powerup;
                     if (game && game.renderPowerUp) game.renderPowerUp(myPowerUp);
                 }
+                // #371 variant A: own all-time standing, sent once on
+                // join/reconnect. `undefined` (older server) leaves whatever
+                // is on screen; `null` (first-timer) clears the line.
+                if (msg.all_time !== undefined && lobby && lobby.renderAllTime) {
+                    lobby.renderAllTime(msg.all_time);
+                }
                 if (msg.color) {
                     state.playerColor = msg.color;
                     // Apply as CSS custom property on root for global use

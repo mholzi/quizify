@@ -33,6 +33,8 @@
     "howToPlayStep4": "¡Las respuestas correctas más rápidas ganan más puntos!",
     "youreIn": "ESTÁS DENTRO",
     "aloneWaiting": "Esperando tú solo…",
+    "allTime": "Histórico · {rank}.º de {total} · {wins} victorias en {games} partidas",
+    "allTimeFirstWin": "Histórico · {rank}.º de {total} · sin victorias aún, {games} partidas",
     "alsoOne": "+ 1 jugador más",
     "alsoMany": "+ {count} jugadores más",
     "inviteFriends": "Invitar amigos",

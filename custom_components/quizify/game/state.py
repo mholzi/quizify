@@ -281,6 +281,17 @@ class QuizifyGameState:
         self._stats_service = stats_service
         self._question_stats = question_stats
 
+    @property
+    def stats_service(self) -> QuizifyAnalytics | None:
+        """Read-only access to the injected analytics sink.
+
+        Same #364 posture as ``set_stats_services``: collaborators that need
+        to *read* all-time numbers (the lobby standing line, #371) go through
+        this property instead of reaching for ``_stats_service``. ``None``
+        wherever analytics was never wired (dev server, most tests).
+        """
+        return self._stats_service
+
     # ------------------------------------------------------------------
     # Phase / timing delegation (issue #188)
     # ------------------------------------------------------------------
