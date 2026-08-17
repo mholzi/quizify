@@ -67,7 +67,7 @@ PACK_SETS = (
     ImageSet("food", ("essen-de.json", "food-en.json"), 150),
     ImageSet("sport", ("sport-de.json", "sport-en.json", "deportes-es.json"), 148),
     ImageSet("worldcup", ("weltmeisterschaft.json", "world-cup.json"), 99),
-    ImageSet("music", ("musik-de.json", "music-en.json"), 150),
+    ImageSet("music", ("musik-de.json", "music-en.json", "musica-es.json"), 150),
     ImageSet("popculture", ("popkultur.json", "pop-culture.json", "cultura-pop-es.json"), 149),
 )
 
