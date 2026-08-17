@@ -3,7 +3,7 @@
 All notable changes to Quizify are documented here. This project follows
 [Semantic Versioning](https://semver.org/).
 
-## [1.8.0-RC2] — 2026-08-13
+## [1.8.0] — 2026-08-17
 
 One addition changes who is playing. Until now Quizify counted people; from this release it can count sofas. Two people who want to play together say so on their phones, and from that point the room has one fewer participant and one more team.
 
