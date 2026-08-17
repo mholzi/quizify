@@ -65,14 +65,15 @@ unanswerable.
 
 ## Left alone on purpose
 
-- **`com_es_167`, `169`, `170`** — the estimate questions are translations of the
-  German and English originals. The reviewer flagged two imprecisions that exist
-  identically in all three languages: sucrose caramelises (≈160 °C) *before* it
-  melts (≈186 °C), so "below that it merely melts" has the order backwards; and
-  ten litres of milk per kilo understates a long-cured cheese. Fixing them in
-  Spanish alone would leave three packs disagreeing about the same fact. **This
-  belongs in a separate change covering `essen-de`, `food-en` and `comida-es`
-  together.**
+- **`com_es_170`** — the Scoville estimate is a translation of the German and
+  English originals and stands as they do.
+- **`com_es_167` and `169` were fixed, but not here alone.** The reviewer found
+  two imprecisions that existed identically in all three languages: sucrose
+  caramelises (≈160 °C) *before* it melts (≈186 °C), so "below that it merely
+  melts" had the order backwards; and ten litres of milk per kilo understates a
+  long-aged cheese. The Spanish half is in this pack; the German and English
+  halves are in a separate PR, because correcting one language would have left
+  three packs disagreeing about the same fact.
 - **Softened rather than dropped**: the pewter-plate explanation for Europe
   fearing tomatoes, the India-voyage origin of hoppy beer, and honey found edible
   in Egyptian tombs are all repeated far more often than they are evidenced. Each
