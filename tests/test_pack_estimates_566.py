@@ -55,7 +55,7 @@ ESTIMATE_SETS: tuple[EstimateSet, ...] = (
     EstimateSet(theme="geography", packs=("geographie", "geography", "geografia-es")),
     EstimateSet(theme="history", packs=("geschichte-de", "history-en", "historia-es")),
     EstimateSet(theme="science", packs=("wissenschaft-de", "science-en", "ciencia-es")),
-    EstimateSet(theme="technology", packs=("technik-de", "tech-en")),
+    EstimateSet(theme="technology", packs=("technik-de", "tech-en", "tecnologia-es")),
     EstimateSet(theme="food", packs=("essen-de", "food-en", "comida-es")),
     EstimateSet(theme="sport", packs=("sport-de", "sport-en", "deportes-es")),
     EstimateSet(theme="world-cup", packs=("weltmeisterschaft", "world-cup")),
