@@ -3,6 +3,32 @@
 All notable changes to Quizify are documented here. This project follows
 [Semantic Versioning](https://semver.org/).
 
+## [1.9.0-RC1] — 2026-08-17
+
+A player who has been here before now sees it while waiting for the game to start.
+
+### 🏅 All-time standing on the join screen
+
+One quiet line under the lobby hero, about the joining player and nobody else (#371). It names what it counts — "N wins from M games" — so the number is legible without a legend.
+
+**The lobby ranks by wins, the analytics dashboard still ranks by score.** That is a disagreement on purpose. Score-first rewards whoever plays the most, which is the wrong statement for a line meant to start a rivalry across the sofa; the dashboard keeps score-first because that is the right statement for a season overview. A regression test pins the dashboard order so the two never drift into each other by accident.
+
+Ties share a rank, the same competition ranking the in-game leaderboard already uses.
+
+**A first-time guest sees nothing at all.** The line stays hidden until a standing arrives, so nobody reads "1st of 1" on the screen they just joined. A player with games but no win yet gets its own wording rather than a "0 wins" that reads like a taunt.
+
+The standing rides the `joined` and `reconnected` frames — not the roster broadcast, which would ship everyone's history to every phone in the room. It fails soft in all three ways it can be absent: no game state, no analytics wired, or a name with no history.
+
+German, English and Spanish.
+
+### 🧪 Under the hood
+
+Thirteen new tests, suite at **1,831**. `QuizifyGameState.stats_service` is now a public read-only property, so the lobby reads all-time numbers without reaching into a private field across a module boundary.
+
+### 🔭 Not in this candidate
+
+The finale's "new all-time high score!" callout sketched on #371 is independent of this line and was left out. The pack-request flow (#579 / PR #580) is finished and green but was not merged before this tag.
+
 ## [1.8.0] — 2026-08-17
 
 One addition changes who is playing. Until now Quizify counted people; from this release it can count sofas. Two people who want to play together say so on their phones, and from that point the room has one fewer participant and one more team.
