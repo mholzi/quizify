@@ -1,0 +1,3333 @@
+{
+  "name": "Comida y bebida",
+  "language": "es",
+  "version": "1.0",
+  "theme": "food",
+  "questions": [
+    {
+      "id": "com_es_001",
+      "question": "¿De qué planta se obtiene el azafrán?",
+      "answers": [
+        {
+          "text": "Del estigma de una flor de crocus",
+          "correct": true
+        },
+        {
+          "text": "De la raíz de una orquídea",
+          "correct": false
+        },
+        {
+          "text": "De la corteza de un arbusto",
+          "correct": false
+        }
+      ],
+      "difficulty": "medium",
+      "fun_fact": "Hacen falta unas ciento cincuenta mil flores para un kilo, y hay que recogerlas a mano y de madrugada. Por eso pesa más su precio que su peso.",
+      "category": "Comida y bebida"
+    },
+    {
+      "id": "com_es_002",
+      "question": "¿Qué parte de la planta es la canela?",
+      "answers": [
+        {
+          "text": "La corteza interior",
+          "correct": true
+        },
+        {
+          "text": "La flor seca",
+          "correct": false
+        },
+        {
+          "text": "La raíz molida",
+          "correct": false
+        }
+      ],
+      "difficulty": "medium",
+      "fun_fact": "Se cortan las ramas del árbol rebrotado, se pela la capa interna y al secarse se enrolla sola. Ese rulo no lo hace nadie: lo hace la propia corteza al perder agua.",
+      "category": "Comida y bebida"
+    },
+    {
+      "id": "com_es_003",
+      "question": "¿Qué son botánicamente los cacahuetes?",
+      "answers": [
+        {
+          "text": "Legumbres",
+          "correct": true
+        },
+        {
+          "text": "Frutos secos",
+          "correct": false
+        },
+        {
+          "text": "Semillas de cereal",
+          "correct": false
+        }
+      ],
+      "difficulty": "medium",
+      "fun_fact": "Crecen bajo tierra y son parientes de las lentejas y los guisantes. La alergia al cacahuete y la alergia a los frutos secos son, por tanto, cosas distintas.",
+      "category": "Comida y bebida"
+    },
+    {
+      "id": "com_es_004",
+      "question": "¿De qué está hecho el wasabi que se sirve en la mayoría de restaurantes fuera de Japón?",
+      "answers": [
+        {
+          "text": "De rábano picante teñido",
+          "correct": true
+        },
+        {
+          "text": "De alga fermentada",
+          "correct": false
+        },
+        {
+          "text": "De pimiento verde",
+          "correct": false
+        }
+      ],
+      "difficulty": "medium",
+      "fun_fact": "El wasabi auténtico es un rizoma caro que pierde el picante en unos quince minutos tras rallarlo. Casi todo lo que se sirve en el mundo es rábano picante con colorante.",
+      "category": "Comida y bebida"
+    },
+    {
+      "id": "com_es_005",
+      "question": "¿Qué fruta es en realidad una baya desde el punto de vista botánico?",
+      "answers": [
+        {
+          "text": "El plátano",
+          "correct": true
+        },
+        {
+          "text": "La fresa",
+          "correct": false
+        },
+        {
+          "text": "La frambuesa",
+          "correct": false
+        }
+      ],
+      "difficulty": "hard",
+      "fun_fact": "Y la fresa no lo es: sus puntitos son los frutos reales y la parte roja y jugosa es el receptáculo de la flor engordado.",
+      "category": "Comida y bebida"
+    },
+    {
+      "id": "com_es_006",
+      "question": "¿Qué exige la norma para que un aceite de oliva sea virgen extra?",
+      "answers": [
+        {
+          "text": "Obtenerse solo por medios mecánicos y sin defectos de cata",
+          "correct": true
+        },
+        {
+          "text": "Refinarse y añadirle vitaminas",
+          "correct": false
+        },
+        {
+          "text": "Filtrarse con carbón activo",
+          "correct": false
+        }
+      ],
+      "difficulty": "medium",
+      "fun_fact": "Es literalmente un zumo de fruta, sin disolventes. Además de la extracción mecánica, el virgen extra exige acidez baja y que un panel de cata no le encuentre ni un defecto; con uno solo baja a virgen.",
+      "category": "Comida y bebida"
+    },
+    {
+      "id": "com_es_007",
+      "question": "¿Qué tienen en común el brócoli, la coliflor y el repollo?",
+      "answers": [
+        {
+          "text": "Son la misma especie",
+          "correct": true
+        },
+        {
+          "text": "Son híbridos de laboratorio",
+          "correct": false
+        },
+        {
+          "text": "Pertenecen a familias distintas",
+          "correct": false
+        }
+      ],
+      "difficulty": "hard",
+      "fun_fact": "Todos proceden de la col silvestre. Siglos de selección eligieron partes distintas de la misma planta: en el brócoli y la coliflor las flores sin abrir, en el repollo las hojas.",
+      "category": "Comida y bebida"
+    },
+    {
+      "id": "com_es_008",
+      "question": "¿Qué le da el color rosado al salmón salvaje?",
+      "answers": [
+        {
+          "text": "Los crustáceos que come",
+          "correct": true
+        },
+        {
+          "text": "Su tipo de sangre",
+          "correct": false
+        },
+        {
+          "text": "La temperatura del agua",
+          "correct": false
+        }
+      ],
+      "difficulty": "medium",
+      "fun_fact": "El pigmento se llama astaxantina y viene de la dieta. En las piscifactorías se añade al pienso, y el criador elige el tono en una carta de colores.",
+      "category": "Comida y bebida"
+    },
+    {
+      "id": "com_es_009",
+      "question": "¿Qué es botánicamente el jengibre?",
+      "answers": [
+        {
+          "text": "Un tallo subterráneo",
+          "correct": true
+        },
+        {
+          "text": "Una raíz",
+          "correct": false
+        },
+        {
+          "text": "Un fruto",
+          "correct": false
+        }
+      ],
+      "difficulty": "medium",
+      "fun_fact": "Se llama rizoma: un tallo que crece horizontal bajo tierra. Lo mismo vale para la cúrcuma, que es su pariente cercano.",
+      "category": "Comida y bebida"
+    },
+    {
+      "id": "com_es_010",
+      "question": "¿Qué fruto seco se usa para hacer el mazapán tradicional?",
+      "answers": [
+        {
+          "text": "La almendra",
+          "correct": true
+        },
+        {
+          "text": "La nuez",
+          "correct": false
+        },
+        {
+          "text": "La avellana",
+          "correct": false
+        }
+      ],
+      "difficulty": "easy",
+      "fun_fact": "Almendra molida y azúcar, poco más. En Toledo la receta está protegida y prohíbe añadir harina o patata para abaratar la masa.",
+      "category": "Comida y bebida"
+    },
+    {
+      "id": "com_es_011",
+      "question": "¿Qué le pasa a la miel con el paso de los años?",
+      "answers": [
+        {
+          "text": "Cristaliza pero no se estropea",
+          "correct": true
+        },
+        {
+          "text": "Fermenta en unos meses",
+          "correct": false
+        },
+        {
+          "text": "Pierde todo el sabor",
+          "correct": false
+        }
+      ],
+      "difficulty": "easy",
+      "fun_fact": "Su bajísimo contenido en agua y su acidez impiden que crezca casi nada dentro. Se conservan tarros milenarios, aunque lo de encontrarlos comestibles en tumbas egipcias es más leyenda que hallazgo documentado.",
+      "category": "Comida y bebida"
+    },
+    {
+      "id": "com_es_012",
+      "question": "¿De qué se obtiene la vainilla natural?",
+      "answers": [
+        {
+          "text": "Del fruto de una orquídea",
+          "correct": true
+        },
+        {
+          "text": "De la corteza de un árbol tropical",
+          "correct": false
+        },
+        {
+          "text": "De una raíz andina",
+          "correct": false
+        }
+      ],
+      "difficulty": "medium",
+      "fun_fact": "Es la única orquídea que se cultiva a gran escala por su fruto, y fuera de Mesoamérica hay que polinizarla a mano flor por flor porque falta su abeja original.",
+      "category": "Comida y bebida"
+    },
+    {
+      "id": "com_es_013",
+      "question": "¿Qué verdura es en realidad una flor sin abrir?",
+      "answers": [
+        {
+          "text": "La alcachofa",
+          "correct": true
+        },
+        {
+          "text": "La zanahoria",
+          "correct": false
+        },
+        {
+          "text": "El puerro",
+          "correct": false
+        }
+      ],
+      "difficulty": "easy",
+      "fun_fact": "Si se deja en la planta, se abre en una flor morada enorme. Lo que comemos es el capullo antes de que decida florecer.",
+      "category": "Comida y bebida"
+    },
+    {
+      "id": "com_es_014",
+      "question": "¿Qué diferencia hay entre el pimentón dulce y el picante?",
+      "answers": [
+        {
+          "text": "La variedad de pimiento con la que se hace",
+          "correct": true
+        },
+        {
+          "text": "La temperatura de secado",
+          "correct": false
+        },
+        {
+          "text": "El tiempo de molienda",
+          "correct": false
+        }
+      ],
+      "difficulty": "medium",
+      "fun_fact": "En La Vera se secan al humo de leña de encina durante dos semanas, y ese humo es lo que distingue al pimentón de allí de cualquier otro.",
+      "category": "Comida y bebida"
+    },
+    {
+      "id": "com_es_015",
+      "question": "¿Qué parte del cerdo es el jamón ibérico de bellota?",
+      "answers": [
+        {
+          "text": "La pata trasera",
+          "correct": true
+        },
+        {
+          "text": "La paletilla delantera",
+          "correct": false
+        },
+        {
+          "text": "El lomo",
+          "correct": false
+        }
+      ],
+      "difficulty": "easy",
+      "fun_fact": "La delantera existe también y se llama paletilla: menos carne, más hueso y un curado más corto. No es peor jamón, es otra pieza.",
+      "category": "Comida y bebida"
+    },
+    {
+      "id": "com_es_016",
+      "question": "¿Qué es el gluten?",
+      "answers": [
+        {
+          "text": "Un conjunto de proteínas del trigo",
+          "correct": true
+        },
+        {
+          "text": "Un tipo de azúcar",
+          "correct": false
+        },
+        {
+          "text": "Una grasa vegetal",
+          "correct": false
+        }
+      ],
+      "difficulty": "medium",
+      "fun_fact": "Se forma al amasar con agua y es lo que atrapa el gas de la levadura. Sin él, la masa sube y se desinfla como un globo pinchado.",
+      "category": "Comida y bebida"
+    },
+    {
+      "id": "com_es_017",
+      "question": "¿Qué le da el picante al chile?",
+      "answers": [
+        {
+          "text": "La capsaicina",
+          "correct": true
+        },
+        {
+          "text": "El ácido cítrico",
+          "correct": false
+        },
+        {
+          "text": "La cafeína",
+          "correct": false
+        }
+      ],
+      "difficulty": "easy",
+      "fun_fact": "No es un sabor sino dolor: la molécula activa el mismo receptor que el calor. El cerebro cree literalmente que la boca se está quemando.",
+      "category": "Comida y bebida"
+    },
+    {
+      "id": "com_es_018",
+      "question": "¿Por qué las cebollas hacen llorar?",
+      "answers": [
+        {
+          "text": "Liberan un gas que irrita el ojo",
+          "correct": true
+        },
+        {
+          "text": "Sueltan polvo muy fino",
+          "correct": false
+        },
+        {
+          "text": "Emiten calor al cortarlas",
+          "correct": false
+        }
+      ],
+      "difficulty": "easy",
+      "fun_fact": "Al romper las células se forma un compuesto volátil de azufre que reacciona con la lágrima. Enfriar la cebolla antes de cortarla frena la reacción.",
+      "category": "Comida y bebida"
+    },
+    {
+      "id": "com_es_019",
+      "question": "¿Qué son las alcaparras?",
+      "answers": [
+        {
+          "text": "Capullos de flor encurtidos",
+          "correct": true
+        },
+        {
+          "text": "Semillas de un cactus",
+          "correct": false
+        },
+        {
+          "text": "Aceitunas jóvenes",
+          "correct": false
+        }
+      ],
+      "difficulty": "medium",
+      "fun_fact": "Se recogen a mano antes de que abran. Si se dejan florecer y fructificar, el resultado es el alcaparrón, más grande y con rabo.",
+      "category": "Comida y bebida"
+    },
+    {
+      "id": "com_es_020",
+      "question": "¿De qué animal procede el queso roquefort auténtico?",
+      "answers": [
+        {
+          "text": "De la oveja",
+          "correct": true
+        },
+        {
+          "text": "De la vaca",
+          "correct": false
+        },
+        {
+          "text": "De la cabra",
+          "correct": false
+        }
+      ],
+      "difficulty": "medium",
+      "fun_fact": "Y madura en unas cuevas concretas del sur de Francia, donde el moho azul crece de forma natural en las grietas de la roca.",
+      "category": "Comida y bebida"
+    },
+    {
+      "id": "com_es_021",
+      "question": "¿Qué es el tofu?",
+      "answers": [
+        {
+          "text": "Cuajada de soja prensada",
+          "correct": true
+        },
+        {
+          "text": "Harina de arroz cocida",
+          "correct": false
+        },
+        {
+          "text": "Clara de huevo fermentada",
+          "correct": false
+        }
+      ],
+      "difficulty": "easy",
+      "fun_fact": "Se hace igual que un queso fresco, con un coagulante en vez de cuajo. Su fama de insípido es exacta: absorbe el sabor de lo que se cocine con él.",
+      "category": "Comida y bebida"
+    },
+    {
+      "id": "com_es_022",
+      "question": "¿Qué fruta contiene una enzima que impide que cuaje la gelatina?",
+      "answers": [
+        {
+          "text": "La piña",
+          "correct": true
+        },
+        {
+          "text": "La manzana",
+          "correct": false
+        },
+        {
+          "text": "La pera",
+          "correct": false
+        }
+      ],
+      "difficulty": "medium",
+      "fun_fact": "La bromelina rompe las proteínas del colágeno. Basta con hervir la piña un minuto para desactivarla y que el postre cuaje sin problema.",
+      "category": "Comida y bebida"
+    },
+    {
+      "id": "com_es_023",
+      "question": "¿Qué es el ajo negro?",
+      "answers": [
+        {
+          "text": "Ajo curado con calor y humedad durante semanas",
+          "correct": true
+        },
+        {
+          "text": "Una variedad silvestre de piel oscura",
+          "correct": false
+        },
+        {
+          "text": "Ajo fermentado con koji",
+          "correct": false
+        }
+      ],
+      "difficulty": "medium",
+      "fun_fact": "No lleva fermento ni aditivo: solo tiempo, calor suave y humedad. Los azúcares y aminoácidos se oscurecen solos y el resultado sabe a regaliz y vinagre balsámico.",
+      "category": "Comida y bebida"
+    },
+    {
+      "id": "com_es_024",
+      "question": "¿Qué tipo de músculo es el solomillo de vacuno?",
+      "answers": [
+        {
+          "text": "Un músculo que casi no trabaja",
+          "correct": true
+        },
+        {
+          "text": "La parte más ejercitada",
+          "correct": false
+        },
+        {
+          "text": "La carne más cercana a la piel",
+          "correct": false
+        }
+      ],
+      "difficulty": "medium",
+      "fun_fact": "Está pegado a la columna y apenas soporta esfuerzo. Por eso es tierno y por eso también tiene menos sabor que piezas que sí trabajan.",
+      "category": "Comida y bebida"
+    },
+    {
+      "id": "com_es_025",
+      "question": "¿Qué es la quinoa botánicamente?",
+      "answers": [
+        {
+          "text": "Una semilla emparentada con la remolacha",
+          "correct": true
+        },
+        {
+          "text": "Un cereal como el trigo",
+          "correct": false
+        },
+        {
+          "text": "Una legumbre",
+          "correct": false
+        }
+      ],
+      "difficulty": "medium",
+      "fun_fact": "Se cocina como un cereal pero no lo es. Su capa exterior amarga, la saponina, protegía a la planta de los pájaros y hay que lavarla antes de cocer.",
+      "category": "Comida y bebida"
+    },
+    {
+      "id": "com_es_026",
+      "question": "¿Qué le ocurre al aguacate cuando se corta?",
+      "answers": [
+        {
+          "text": "Se oscurece al reaccionar con el aire",
+          "correct": true
+        },
+        {
+          "text": "Pierde toda su grasa",
+          "correct": false
+        },
+        {
+          "text": "Se vuelve tóxico",
+          "correct": false
+        }
+      ],
+      "difficulty": "easy",
+      "fun_fact": "Es una enzima reaccionando con el oxígeno, no una señal de que esté malo. Un chorro de limón la frena porque el ácido la desactiva.",
+      "category": "Comida y bebida"
+    },
+    {
+      "id": "com_es_027",
+      "question": "¿Qué grasa debe llevar el chocolate según la normativa europea?",
+      "answers": [
+        {
+          "text": "Manteca de cacao",
+          "correct": true
+        },
+        {
+          "text": "Leche en polvo",
+          "correct": false
+        },
+        {
+          "text": "Aceite de palma",
+          "correct": false
+        }
+      ],
+      "difficulty": "medium",
+      "fun_fact": "La normativa europea permite sustituir una parte pequeña por otras grasas, pero si se pasa de ahí ya no puede llamarse chocolate en la etiqueta.",
+      "category": "Comida y bebida"
+    },
+    {
+      "id": "com_es_028",
+      "question": "¿Qué es el umami?",
+      "answers": [
+        {
+          "text": "El quinto sabor básico",
+          "correct": true
+        },
+        {
+          "text": "Una técnica de corte japonesa",
+          "correct": false
+        },
+        {
+          "text": "Un tipo de alga",
+          "correct": false
+        }
+      ],
+      "difficulty": "medium",
+      "fun_fact": "Lo identificó un químico japonés en 1908 estudiando un caldo de alga. Occidente tardó casi un siglo en aceptarlo como sabor propio y no como una mezcla.",
+      "category": "Comida y bebida"
+    },
+    {
+      "id": "com_es_029",
+      "question": "¿Qué fruta se cosecha verde porque madura después de recogerse?",
+      "answers": [
+        {
+          "text": "El plátano",
+          "correct": true
+        },
+        {
+          "text": "La sandía",
+          "correct": false
+        },
+        {
+          "text": "La uva",
+          "correct": false
+        }
+      ],
+      "difficulty": "easy",
+      "fun_fact": "Produce su propio etileno y sigue madurando fuera de la planta. Por eso un plátano maduro acelera la maduración de lo que tenga al lado en el frutero.",
+      "category": "Comida y bebida"
+    },
+    {
+      "id": "com_es_030",
+      "question": "¿Qué es el kimchi?",
+      "answers": [
+        {
+          "text": "Col fermentada con especias",
+          "correct": true
+        },
+        {
+          "text": "Un caldo de pescado",
+          "correct": false
+        },
+        {
+          "text": "Un pan al vapor",
+          "correct": false
+        }
+      ],
+      "difficulty": "easy",
+      "fun_fact": "Cada casa coreana tenía su receta y su tinaja enterrada. Hoy existen neveras diseñadas solo para él, porque su olor impregna todo lo demás.",
+      "category": "Comida y bebida"
+    },
+    {
+      "id": "com_es_031",
+      "question": "¿Qué reacción hace que la carne se dore y huela bien al asarla?",
+      "answers": [
+        {
+          "text": "La reacción de Maillard",
+          "correct": true
+        },
+        {
+          "text": "La caramelización de los azúcares",
+          "correct": false
+        },
+        {
+          "text": "La fermentación rápida",
+          "correct": false
+        }
+      ],
+      "difficulty": "medium",
+      "fun_fact": "Necesita calor seco: mientras la superficie esté mojada no pasa de los cien grados y la carne se cuece en vez de dorarse. Por eso se seca antes de sellarla.",
+      "category": "Comida y bebida"
+    },
+    {
+      "id": "com_es_032",
+      "question": "¿Por qué se echa sal al agua de la pasta?",
+      "answers": [
+        {
+          "text": "Por sabor",
+          "correct": true
+        },
+        {
+          "text": "Para que hierva antes",
+          "correct": false
+        },
+        {
+          "text": "Para que la pasta no se pegue",
+          "correct": false
+        }
+      ],
+      "difficulty": "medium",
+      "fun_fact": "La cantidad que se usa sube el punto de ebullición apenas una fracción de grado. Sirve para sazonar por dentro, no para acelerar nada.",
+      "category": "Comida y bebida"
+    },
+    {
+      "id": "com_es_033",
+      "question": "¿Qué pasa si se abre el horno mientras sube un bizcocho?",
+      "answers": [
+        {
+          "text": "Puede bajarse de golpe",
+          "correct": true
+        },
+        {
+          "text": "Se cuece el doble de rápido",
+          "correct": false
+        },
+        {
+          "text": "Cambia de color",
+          "correct": false
+        }
+      ],
+      "difficulty": "easy",
+      "fun_fact": "La estructura aún no ha cuajado y depende del vapor caliente. Una entrada de aire frío la deja sin sostén justo cuando más lo necesita.",
+      "category": "Comida y bebida"
+    },
+    {
+      "id": "com_es_034",
+      "question": "¿Para qué sirve reposar la carne después de asarla?",
+      "answers": [
+        {
+          "text": "Para que los jugos se repartan",
+          "correct": true
+        },
+        {
+          "text": "Para que se enfríe por dentro",
+          "correct": false
+        },
+        {
+          "text": "Para que pierda grasa",
+          "correct": false
+        }
+      ],
+      "difficulty": "medium",
+      "fun_fact": "Al cortarla recién sacada, el jugo sale a la tabla en vez de quedarse. Cinco minutos de reposo cambian más el resultado que cinco grados de horno.",
+      "category": "Comida y bebida"
+    },
+    {
+      "id": "com_es_035",
+      "question": "¿Qué es el sofrito en la cocina española?",
+      "answers": [
+        {
+          "text": "La base de verduras cocinadas despacio",
+          "correct": true
+        },
+        {
+          "text": "Un rebozado ligero",
+          "correct": false
+        },
+        {
+          "text": "Una salsa fría",
+          "correct": false
+        }
+      ],
+      "difficulty": "easy",
+      "fun_fact": "Es la parte lenta de casi cualquier guiso. Lo que aporta no es un ingrediente concreto sino el tiempo: la cebolla suelta agua, se dora y sus azúcares caramelizan.",
+      "category": "Comida y bebida"
+    },
+    {
+      "id": "com_es_036",
+      "question": "¿Por qué el pan recién hecho suena hueco al golpearlo por debajo?",
+      "answers": [
+        {
+          "text": "Porque la miga ya está cocida y llena de gas",
+          "correct": true
+        },
+        {
+          "text": "Porque está frío por dentro",
+          "correct": false
+        },
+        {
+          "text": "Porque le falta sal",
+          "correct": false
+        }
+      ],
+      "difficulty": "medium",
+      "fun_fact": "Es la comprobación más antigua del oficio: si suena a macizo, aún hay masa húmeda dentro y le faltan minutos de horno.",
+      "category": "Comida y bebida"
+    },
+    {
+      "id": "com_es_037",
+      "question": "¿Qué hace el bicarbonato en una masa?",
+      "answers": [
+        {
+          "text": "Libera gas al reaccionar con un ácido",
+          "correct": true
+        },
+        {
+          "text": "Da color",
+          "correct": false
+        },
+        {
+          "text": "Endurece la masa",
+          "correct": false
+        }
+      ],
+      "difficulty": "medium",
+      "fun_fact": "Necesita algo ácido enfrente: yogur, limón o suero. Sin ese compañero levanta bastante menos y deja un regusto jabonoso.",
+      "category": "Comida y bebida"
+    },
+    {
+      "id": "com_es_038",
+      "question": "¿Qué distingue a una tortilla de patatas jugosa?",
+      "answers": [
+        {
+          "text": "El huevo no llega a cuajar del todo",
+          "correct": true
+        },
+        {
+          "text": "Se hace a fuego muy fuerte",
+          "correct": false
+        },
+        {
+          "text": "Lleva más patata que huevo",
+          "correct": false
+        }
+      ],
+      "difficulty": "easy",
+      "fun_fact": "La discusión sobre si lleva cebolla es más famosa, pero la que decide el resultado es el punto de cuajado. Un minuto de más y ya es otra tortilla.",
+      "category": "Comida y bebida"
+    },
+    {
+      "id": "com_es_039",
+      "question": "¿Qué es el punto de humo de un aceite?",
+      "answers": [
+        {
+          "text": "La temperatura a la que empieza a degradarse",
+          "correct": true
+        },
+        {
+          "text": "El momento en que hierve",
+          "correct": false
+        },
+        {
+          "text": "El punto en que se solidifica",
+          "correct": false
+        }
+      ],
+      "difficulty": "medium",
+      "fun_fact": "Pasado ese punto el aceite se descompone y aparecen sabores amargos. Cada aceite lo tiene distinto y el de oliva virgen extra lo tiene alto, en torno a los ciento noventa grados.",
+      "category": "Comida y bebida"
+    },
+    {
+      "id": "com_es_040",
+      "question": "¿Por qué se escalda la verdura antes de congelarla?",
+      "answers": [
+        {
+          "text": "Para desactivar las enzimas",
+          "correct": true
+        },
+        {
+          "text": "Para que pese menos",
+          "correct": false
+        },
+        {
+          "text": "Para quitarle el color",
+          "correct": false
+        }
+      ],
+      "difficulty": "hard",
+      "fun_fact": "Sin ese golpe de agua hirviendo las enzimas siguen trabajando en el congelador y la verdura pierde color y sabor aunque esté a veinte bajo cero.",
+      "category": "Comida y bebida"
+    },
+    {
+      "id": "com_es_041",
+      "question": "¿Qué es cocinar al baño María?",
+      "answers": [
+        {
+          "text": "Calentar un recipiente dentro de otro con agua",
+          "correct": true
+        },
+        {
+          "text": "Cocinar bajo presión",
+          "correct": false
+        },
+        {
+          "text": "Asar envuelto en sal",
+          "correct": false
+        }
+      ],
+      "difficulty": "easy",
+      "fun_fact": "El agua no pasa de cien grados, así que nada se quema. El nombre viene de una alquimista de la Antigüedad, María la Judía.",
+      "category": "Comida y bebida"
+    },
+    {
+      "id": "com_es_042",
+      "question": "¿Qué le pasa al arroz si se remueve mientras se hace un risotto?",
+      "answers": [
+        {
+          "text": "Suelta almidón y liga la salsa",
+          "correct": true
+        },
+        {
+          "text": "Se rompe en trozos",
+          "correct": false
+        },
+        {
+          "text": "Se cuece más despacio",
+          "correct": false
+        }
+      ],
+      "difficulty": "medium",
+      "fun_fact": "Es justo lo contrario de una paella, donde remover es pecado. Dos arroces, dos técnicas opuestas y la misma cazuela no sirve para ambas.",
+      "category": "Comida y bebida"
+    },
+    {
+      "id": "com_es_043",
+      "question": "¿Qué hace la levadura en el pan?",
+      "answers": [
+        {
+          "text": "Produce gas al comerse los azúcares",
+          "correct": true
+        },
+        {
+          "text": "Endurece el gluten",
+          "correct": false
+        },
+        {
+          "text": "Aporta color a la corteza",
+          "correct": false
+        }
+      ],
+      "difficulty": "easy",
+      "fun_fact": "También produce alcohol, que se evapora en el horno. Lo que huele en una panadería viene sobre todo de la corteza al tostarse, no de la fermentación.",
+      "category": "Comida y bebida"
+    },
+    {
+      "id": "com_es_044",
+      "question": "¿Qué es un roux?",
+      "answers": [
+        {
+          "text": "Harina cocinada con grasa para espesar",
+          "correct": true
+        },
+        {
+          "text": "Un caldo reducido",
+          "correct": false
+        },
+        {
+          "text": "Una masa quebrada",
+          "correct": false
+        }
+      ],
+      "difficulty": "medium",
+      "fun_fact": "Cuanto más se tuesta, más sabor y menos poder espesante. El roux oscuro de la cocina cajún espesa la mitad que el blanco de una bechamel.",
+      "category": "Comida y bebida"
+    },
+    {
+      "id": "com_es_045",
+      "question": "¿Por qué se ponen las claras a punto de nieve en un bol muy limpio?",
+      "answers": [
+        {
+          "text": "Porque cualquier grasa impide que monten",
+          "correct": true
+        },
+        {
+          "text": "Porque el metal las enfría",
+          "correct": false
+        },
+        {
+          "text": "Porque el jabón las endulza",
+          "correct": false
+        }
+      ],
+      "difficulty": "easy",
+      "fun_fact": "Basta una gota de yema para arruinarlas. La grasa se interpone entre las proteínas y las burbujas de aire que deberían sostenerse entre sí.",
+      "category": "Comida y bebida"
+    },
+    {
+      "id": "com_es_046",
+      "question": "¿A qué temperatura se cocina un huevo escalfado, frente a uno hervido?",
+      "answers": [
+        {
+          "text": "Por debajo del hervor, hacia los ochenta grados",
+          "correct": true
+        },
+        {
+          "text": "Siempre a fuego máximo",
+          "correct": false
+        },
+        {
+          "text": "A la misma temperatura, pero más tiempo",
+          "correct": false
+        }
+      ],
+      "difficulty": "medium",
+      "fun_fact": "Escalfar trabaja por debajo del punto de ebullición y sin cáscara. Si el agua borbotea, la clara se deshace en hilos antes de cuajar.",
+      "category": "Comida y bebida"
+    },
+    {
+      "id": "com_es_047",
+      "question": "¿Qué es el sous-vide?",
+      "answers": [
+        {
+          "text": "Cocinar al vacío a temperatura controlada",
+          "correct": true
+        },
+        {
+          "text": "Freír en dos tandas",
+          "correct": false
+        },
+        {
+          "text": "Marinar en vinagre",
+          "correct": false
+        }
+      ],
+      "difficulty": "medium",
+      "fun_fact": "Como no se supera nunca la temperatura objetivo, no hay forma de pasarse de punto por calor, aunque un tiempo excesivo sí deshilacha la carne. Lo que falta al final es la costra, que hay que hacer aparte.",
+      "category": "Comida y bebida"
+    },
+    {
+      "id": "com_es_048",
+      "question": "¿Por qué se deja reposar la masa de las crepes?",
+      "answers": [
+        {
+          "text": "Para que la harina se hidrate del todo",
+          "correct": true
+        },
+        {
+          "text": "Para que fermente",
+          "correct": false
+        },
+        {
+          "text": "Para que se enfríe",
+          "correct": false
+        }
+      ],
+      "difficulty": "medium",
+      "fun_fact": "Sin reposo quedan elásticas y difíciles de extender. Media hora basta para que el gluten se relaje y la masa deje de resistirse.",
+      "category": "Comida y bebida"
+    },
+    {
+      "id": "com_es_049",
+      "question": "¿Qué es el mise en place?",
+      "answers": [
+        {
+          "text": "Tener todo preparado antes de empezar",
+          "correct": true
+        },
+        {
+          "text": "Un tipo de corte fino",
+          "correct": false
+        },
+        {
+          "text": "Una salsa base",
+          "correct": false
+        }
+      ],
+      "difficulty": "easy",
+      "fun_fact": "Es lo que separa una cocina profesional de una doméstica bajo presión: nadie busca un ingrediente mientras algo está en el fuego.",
+      "category": "Comida y bebida"
+    },
+    {
+      "id": "com_es_050",
+      "question": "¿Qué hace el ácido en un marinado?",
+      "answers": [
+        {
+          "text": "Ablanda la superficie de la carne",
+          "correct": true
+        },
+        {
+          "text": "Penetra hasta el centro",
+          "correct": false
+        },
+        {
+          "text": "Elimina toda la sal",
+          "correct": false
+        }
+      ],
+      "difficulty": "medium",
+      "fun_fact": "Penetra apenas unos milímetros. Un marinado largo con mucho limón no ablanda más: deja la capa exterior harinosa.",
+      "category": "Comida y bebida"
+    },
+    {
+      "id": "com_es_051",
+      "question": "¿Qué es el punto de bola en el almíbar?",
+      "answers": [
+        {
+          "text": "Una fase concreta de concentración del azúcar",
+          "correct": true
+        },
+        {
+          "text": "El momento de añadir mantequilla",
+          "correct": false
+        },
+        {
+          "text": "La temperatura del caramelo quemado",
+          "correct": false
+        }
+      ],
+      "difficulty": "hard",
+      "fun_fact": "Antes de los termómetros de cocina se comprobaba dejando caer una gota en agua fría y viendo qué forma tomaba. Los nombres de las fases vienen de ahí.",
+      "category": "Comida y bebida"
+    },
+    {
+      "id": "com_es_052",
+      "question": "¿Por qué la fruta cortada se pone en agua con limón?",
+      "answers": [
+        {
+          "text": "Porque el ácido frena el oscurecimiento",
+          "correct": true
+        },
+        {
+          "text": "Porque el agua la endulza",
+          "correct": false
+        },
+        {
+          "text": "Porque el limón la congela",
+          "correct": false
+        }
+      ],
+      "difficulty": "easy",
+      "fun_fact": "La enzima responsable trabaja peor en medio ácido. Es el mismo motivo por el que el guacamole con lima aguanta mejor a la vista.",
+      "category": "Comida y bebida"
+    },
+    {
+      "id": "com_es_053",
+      "question": "¿Qué es una emulsión en cocina?",
+      "answers": [
+        {
+          "text": "Una mezcla de grasa y agua que normalmente no se llevan",
+          "correct": true
+        },
+        {
+          "text": "Una masa fermentada",
+          "correct": false
+        },
+        {
+          "text": "Un caldo clarificado",
+          "correct": false
+        }
+      ],
+      "difficulty": "medium",
+      "fun_fact": "La mayonesa es el ejemplo de manual: aceite y limón no se llevan bien, y la yema hace de intermediaria entre ambos.",
+      "category": "Comida y bebida"
+    },
+    {
+      "id": "com_es_054",
+      "question": "¿Qué pasa si se congela y descongela el pan varias veces?",
+      "answers": [
+        {
+          "text": "Se seca y se vuelve duro",
+          "correct": true
+        },
+        {
+          "text": "Gana humedad",
+          "correct": false
+        },
+        {
+          "text": "Se vuelve tóxico",
+          "correct": false
+        }
+      ],
+      "difficulty": "easy",
+      "fun_fact": "El almidón recristaliza con cada ciclo y el pan pierde humedad. Congelarlo ya cortado y sacar solo lo necesario evita justo eso.",
+      "category": "Comida y bebida"
+    },
+    {
+      "id": "com_es_055",
+      "question": "¿Para qué se usa tradicionalmente una olla a presión?",
+      "answers": [
+        {
+          "text": "Para cocinar más rápido a mayor temperatura",
+          "correct": true
+        },
+        {
+          "text": "Para conservar en frío",
+          "correct": false
+        },
+        {
+          "text": "Para hornear pan",
+          "correct": false
+        }
+      ],
+      "difficulty": "easy",
+      "fun_fact": "Al subir la presión, el agua hierve por encima de los cien grados. Unas legumbres que tardarían dos horas salen en veinte.",
+      "category": "Comida y bebida"
+    },
+    {
+      "id": "com_es_056",
+      "question": "¿Qué es el caramelo?",
+      "answers": [
+        {
+          "text": "Azúcar calentado hasta que se dora",
+          "correct": true
+        },
+        {
+          "text": "Azúcar mezclado con miel",
+          "correct": false
+        },
+        {
+          "text": "Azúcar con colorante",
+          "correct": false
+        }
+      ],
+      "difficulty": "easy",
+      "fun_fact": "Entre que empieza a dorarse y se quema pasan segundos, y el punto exacto depende del color, no del reloj. Por eso se hace mirando y no cronometrando.",
+      "category": "Comida y bebida"
+    },
+    {
+      "id": "com_es_057",
+      "question": "¿Qué suele provocar que se corte la mayonesa?",
+      "answers": [
+        {
+          "text": "Añadir el aceite demasiado deprisa",
+          "correct": true
+        },
+        {
+          "text": "Batir en un bol de cristal",
+          "correct": false
+        },
+        {
+          "text": "Usar huevos de tamaño grande",
+          "correct": false
+        }
+      ],
+      "difficulty": "medium",
+      "fun_fact": "La emulsión se rompe cuando el aceite entra más rápido de lo que la yema puede repartirlo. Se arregla empezando de cero con otra yema e incorporando la mezcla cortada poco a poco.",
+      "category": "Comida y bebida"
+    },
+    {
+      "id": "com_es_058",
+      "question": "¿Qué hace el chocolate al templarlo?",
+      "answers": [
+        {
+          "text": "Cristaliza de forma estable y queda brillante",
+          "correct": true
+        },
+        {
+          "text": "Pierde el azúcar",
+          "correct": false
+        },
+        {
+          "text": "Se vuelve más dulce",
+          "correct": false
+        }
+      ],
+      "difficulty": "hard",
+      "fun_fact": "La manteca de cacao puede cristalizar de varias formas y solo una da brillo y ese chasquido al partirlo. Sin templar queda mate y con vetas blancas.",
+      "category": "Comida y bebida"
+    },
+    {
+      "id": "com_es_059",
+      "question": "¿Qué es desglasar una sartén?",
+      "answers": [
+        {
+          "text": "Disolver los restos tostados con un líquido",
+          "correct": true
+        },
+        {
+          "text": "Limpiarla con sal gorda",
+          "correct": false
+        },
+        {
+          "text": "Enfriarla de golpe",
+          "correct": false
+        }
+      ],
+      "difficulty": "medium",
+      "fun_fact": "Lo pegado al fondo es sabor concentrado, no suciedad. Un chorro de vino o de caldo lo levanta y convierte la sartén en la salsa.",
+      "category": "Comida y bebida"
+    },
+    {
+      "id": "com_es_060",
+      "question": "¿Qué es la clarificación de un caldo?",
+      "answers": [
+        {
+          "text": "Retirar las impurezas para dejarlo transparente",
+          "correct": true
+        },
+        {
+          "text": "Añadirle nata para que espese",
+          "correct": false
+        },
+        {
+          "text": "Reducirlo a la mitad a fuego vivo",
+          "correct": false
+        }
+      ],
+      "difficulty": "hard",
+      "fun_fact": "La receta clásica usa clara de huevo, que al cuajar arrastra las partículas hacia arriba y forma una costra que se retira entera.",
+      "category": "Comida y bebida"
+    },
+    {
+      "id": "com_es_061",
+      "question": "¿Qué diferencia al té verde del té negro?",
+      "answers": [
+        {
+          "text": "El grado de oxidación de la hoja",
+          "correct": true
+        },
+        {
+          "text": "La planta de la que procede",
+          "correct": false
+        },
+        {
+          "text": "El país de cultivo",
+          "correct": false
+        }
+      ],
+      "difficulty": "medium",
+      "fun_fact": "Salen de la misma planta, la Camellia sinensis. Lo que cambia es cuánto se deja reaccionar la hoja con el aire antes de secarla.",
+      "category": "Comida y bebida"
+    },
+    {
+      "id": "com_es_062",
+      "question": "¿Qué es el descafeinado?",
+      "answers": [
+        {
+          "text": "Café al que se ha retirado casi toda la cafeína",
+          "correct": true
+        },
+        {
+          "text": "Café de una planta sin cafeína",
+          "correct": false
+        },
+        {
+          "text": "Café mezclado con achicoria",
+          "correct": false
+        }
+      ],
+      "difficulty": "easy",
+      "fun_fact": "No queda a cero: la norma europea permite un resto pequeño. Una taza descafeinada ronda los tres miligramos de cafeína, frente a los ochenta o noventa de un café normal.",
+      "category": "Comida y bebida"
+    },
+    {
+      "id": "com_es_063",
+      "question": "¿Qué le da las burbujas al cava y al champán?",
+      "answers": [
+        {
+          "text": "Una segunda fermentación en la botella",
+          "correct": true
+        },
+        {
+          "text": "Gas añadido a presión",
+          "correct": false
+        },
+        {
+          "text": "La agitación al servirlo",
+          "correct": false
+        }
+      ],
+      "difficulty": "medium",
+      "fun_fact": "La levadura vuelve a trabajar dentro de la botella cerrada y el gas no tiene salida. El método coincide; cambian la zona, las variedades de uva y la crianza mínima.",
+      "category": "Comida y bebida"
+    },
+    {
+      "id": "com_es_064",
+      "question": "¿De qué se hace el sake?",
+      "answers": [
+        {
+          "text": "De arroz",
+          "correct": true
+        },
+        {
+          "text": "De mijo",
+          "correct": false
+        },
+        {
+          "text": "De caña de azúcar",
+          "correct": false
+        }
+      ],
+      "difficulty": "easy",
+      "fun_fact": "Se elabora más como una cerveza que como un vino, porque hay que convertir antes el almidón en azúcar. Llamarlo vino de arroz es cómodo pero inexacto.",
+      "category": "Comida y bebida"
+    },
+    {
+      "id": "com_es_065",
+      "question": "¿Qué es el mosto?",
+      "answers": [
+        {
+          "text": "Zumo de uva antes de fermentar",
+          "correct": true
+        },
+        {
+          "text": "Vino sin alcohol",
+          "correct": false
+        },
+        {
+          "text": "Vino de la última cosecha",
+          "correct": false
+        }
+      ],
+      "difficulty": "easy",
+      "fun_fact": "En cuanto la levadura entra en acción deja de ser mosto. En España el mosto de bar es zumo de uva sin fermentar, no un vino sin alcohol.",
+      "category": "Comida y bebida"
+    },
+    {
+      "id": "com_es_066",
+      "question": "¿Qué distingue a un vino tinto de un blanco?",
+      "answers": [
+        {
+          "text": "El contacto del zumo con la piel de la uva",
+          "correct": true
+        },
+        {
+          "text": "La temperatura de fermentación",
+          "correct": false
+        },
+        {
+          "text": "El tipo de barrica",
+          "correct": false
+        }
+      ],
+      "difficulty": "medium",
+      "fun_fact": "Casi todas las uvas tienen la pulpa clara. Un tinto se hace macerando con los hollejos, y de ahí sale también buena parte de su cuerpo.",
+      "category": "Comida y bebida"
+    },
+    {
+      "id": "com_es_067",
+      "question": "¿Qué es el lúpulo en la cerveza?",
+      "answers": [
+        {
+          "text": "Una flor que aporta amargor y aroma",
+          "correct": true
+        },
+        {
+          "text": "Un tipo de levadura",
+          "correct": false
+        },
+        {
+          "text": "Un cereal tostado",
+          "correct": false
+        }
+      ],
+      "difficulty": "medium",
+      "fun_fact": "Además de sabor, actúa como conservante natural. La historia de que las cervezas muy lupuladas se inventaron para los viajes a la India es discutida: ya se exportaba cerveza antes.",
+      "category": "Comida y bebida"
+    },
+    {
+      "id": "com_es_068",
+      "question": "¿Qué le pasa al vino cuando se oxida demasiado?",
+      "answers": [
+        {
+          "text": "Sabe a manzana pasada y pierde fruta",
+          "correct": true
+        },
+        {
+          "text": "Se vuelve más dulce",
+          "correct": false
+        },
+        {
+          "text": "Aumenta su graduación",
+          "correct": false
+        }
+      ],
+      "difficulty": "medium",
+      "fun_fact": "Es lo que ocurre en una botella abierta tres días. Un jerez oloroso, en cambio, se cría de forma deliberadamente oxidativa desde el principio y ese carácter es su seña de identidad.",
+      "category": "Comida y bebida"
+    },
+    {
+      "id": "com_es_069",
+      "question": "¿Qué bebida se elabora con agave?",
+      "answers": [
+        {
+          "text": "El tequila",
+          "correct": true
+        },
+        {
+          "text": "El ron",
+          "correct": false
+        },
+        {
+          "text": "El whisky",
+          "correct": false
+        }
+      ],
+      "difficulty": "easy",
+      "fun_fact": "Solo puede llamarse tequila si se elabora en Jalisco y algunos municipios de cuatro estados vecinos, con un mínimo del cincuenta y uno por ciento de agave azul. El mezcal tiene su propia denominación, con otros estados y otros agaves.",
+      "category": "Comida y bebida"
+    },
+    {
+      "id": "com_es_070",
+      "question": "¿Qué es el proceso de destilación?",
+      "answers": [
+        {
+          "text": "Separar el alcohol del agua por evaporación",
+          "correct": true
+        },
+        {
+          "text": "Filtrar con carbón",
+          "correct": false
+        },
+        {
+          "text": "Fermentar dos veces",
+          "correct": false
+        }
+      ],
+      "difficulty": "easy",
+      "fun_fact": "El alcohol hierve antes que el agua, así que el vapor sale más cargado. Todo lo demás en un destilado es decidir qué parte de ese vapor se conserva.",
+      "category": "Comida y bebida"
+    },
+    {
+      "id": "com_es_071",
+      "question": "¿Qué diferencia al ron del whisky?",
+      "answers": [
+        {
+          "text": "La materia prima de partida",
+          "correct": true
+        },
+        {
+          "text": "El tiempo de barrica",
+          "correct": false
+        },
+        {
+          "text": "El país de origen",
+          "correct": false
+        }
+      ],
+      "difficulty": "medium",
+      "fun_fact": "Caña de azúcar frente a cereal. Curiosamente ambos maduran a menudo en la misma barrica de roble usada, que aporta buena parte del color y del aroma.",
+      "category": "Comida y bebida"
+    },
+    {
+      "id": "com_es_072",
+      "question": "¿Por qué el café instantáneo se disuelve al momento?",
+      "answers": [
+        {
+          "text": "Porque ya se ha extraído y secado",
+          "correct": true
+        },
+        {
+          "text": "Porque lleva azúcar añadido",
+          "correct": false
+        },
+        {
+          "text": "Porque está molido más fino",
+          "correct": false
+        }
+      ],
+      "difficulty": "easy",
+      "fun_fact": "Es café hecho al que se le ha quitado el agua. Al añadir agua caliente no se prepara nada: se reconstruye algo que ya estaba preparado.",
+      "category": "Comida y bebida"
+    },
+    {
+      "id": "com_es_073",
+      "question": "¿Qué es el kombucha?",
+      "answers": [
+        {
+          "text": "Té fermentado con un cultivo de bacterias y levaduras",
+          "correct": true
+        },
+        {
+          "text": "Un té helado con especias",
+          "correct": false
+        },
+        {
+          "text": "Un licor de arroz",
+          "correct": false
+        }
+      ],
+      "difficulty": "medium",
+      "fun_fact": "El cultivo forma una capa gelatinosa en la superficie que se reutiliza una y otra vez. Se pasa de casa en casa como la masa madre del pan.",
+      "category": "Comida y bebida"
+    },
+    {
+      "id": "com_es_074",
+      "question": "¿Qué determina el color de una cerveza?",
+      "answers": [
+        {
+          "text": "El tueste de la malta",
+          "correct": true
+        },
+        {
+          "text": "El agua utilizada",
+          "correct": false
+        },
+        {
+          "text": "El tiempo de fermentación",
+          "correct": false
+        }
+      ],
+      "difficulty": "medium",
+      "fun_fact": "Una cerveza negra no es necesariamente más fuerte ni más amarga. El color viene del horno donde se tostó el grano, no del alcohol.",
+      "category": "Comida y bebida"
+    },
+    {
+      "id": "com_es_075",
+      "question": "¿Qué es el vermú?",
+      "answers": [
+        {
+          "text": "Vino aromatizado con hierbas",
+          "correct": true
+        },
+        {
+          "text": "Un destilado de uva",
+          "correct": false
+        },
+        {
+          "text": "Una cerveza con especias",
+          "correct": false
+        }
+      ],
+      "difficulty": "medium",
+      "fun_fact": "Su nombre viene del alemán para ajenjo, una de las plantas del macerado. Los vinos con ajenjo anteriores eran remedios; el vermut comercial nació ya como aperitivo en el Turín del siglo XVIII.",
+      "category": "Comida y bebida"
+    },
+    {
+      "id": "com_es_076",
+      "question": "¿Por qué el agua con gas pica en la lengua?",
+      "answers": [
+        {
+          "text": "Porque el gas forma un ácido suave en la boca",
+          "correct": true
+        },
+        {
+          "text": "Porque las burbujas explotan",
+          "correct": false
+        },
+        {
+          "text": "Porque enfría los nervios",
+          "correct": false
+        }
+      ],
+      "difficulty": "hard",
+      "fun_fact": "El dióxido de carbono se convierte en ácido carbónico al contacto con la saliva, y ese ácido activa receptores de dolor leve. La sensación no la causan las burbujas al estallar.",
+      "category": "Comida y bebida"
+    },
+    {
+      "id": "com_es_077",
+      "question": "¿Qué es el espresso?",
+      "answers": [
+        {
+          "text": "Café extraído con presión en poco tiempo",
+          "correct": true
+        },
+        {
+          "text": "Café hervido dos veces",
+          "correct": false
+        },
+        {
+          "text": "Café con doble de agua",
+          "correct": false
+        }
+      ],
+      "difficulty": "easy",
+      "fun_fact": "La máquina empuja el agua a unas nueve atmósferas durante menos de treinta segundos. La crema de la superficie es espuma de gas carbónico con aceites del propio café, no leche.",
+      "category": "Comida y bebida"
+    },
+    {
+      "id": "com_es_078",
+      "question": "¿Qué se le añade al vino de Oporto para detener la fermentación?",
+      "answers": [
+        {
+          "text": "Alcohol vínico",
+          "correct": true
+        },
+        {
+          "text": "Azúcar de caña",
+          "correct": false
+        },
+        {
+          "text": "Zumo de limón",
+          "correct": false
+        }
+      ],
+      "difficulty": "medium",
+      "fun_fact": "Al subir de golpe la graduación, la levadura muere y deja azúcar sin fermentar. De ahí que sea dulce y fuerte a la vez.",
+      "category": "Comida y bebida"
+    },
+    {
+      "id": "com_es_079",
+      "question": "¿Qué es la sidra natural?",
+      "answers": [
+        {
+          "text": "Zumo de manzana fermentado sin gas añadido",
+          "correct": true
+        },
+        {
+          "text": "Zumo de manzana con azúcar",
+          "correct": false
+        },
+        {
+          "text": "Manzana destilada",
+          "correct": false
+        }
+      ],
+      "difficulty": "easy",
+      "fun_fact": "Se escancia desde alto para que se airee al caer en el vaso. Ese golpe libera el carbónico natural y despierta el aroma durante unos segundos.",
+      "category": "Comida y bebida"
+    },
+    {
+      "id": "com_es_080",
+      "question": "¿Qué bebida caliente se prepara batiendo el polvo con un utensilio de bambú?",
+      "answers": [
+        {
+          "text": "El matcha",
+          "correct": true
+        },
+        {
+          "text": "El café turco",
+          "correct": false
+        },
+        {
+          "text": "El chocolate a la taza",
+          "correct": false
+        }
+      ],
+      "difficulty": "medium",
+      "fun_fact": "El matcha no se infusiona: se bebe la hoja entera molida. Por eso aporta bastante más cafeína que un té en hebras del mismo peso.",
+      "category": "Comida y bebida"
+    },
+    {
+      "id": "com_es_081",
+      "question": "¿Qué es el terroir del que hablan los enólogos?",
+      "answers": [
+        {
+          "text": "El conjunto de suelo, clima y prácticas de un lugar",
+          "correct": true
+        },
+        {
+          "text": "El tipo de barrica",
+          "correct": false
+        },
+        {
+          "text": "La levadura empleada",
+          "correct": false
+        }
+      ],
+      "difficulty": "medium",
+      "fun_fact": "Es la idea de que un vino sabe a su sitio. Discutida durante décadas y hoy defendida también por cafeteros y chocolateros.",
+      "category": "Comida y bebida"
+    },
+    {
+      "id": "com_es_082",
+      "question": "¿Por qué se sirve el vino blanco más frío que el tinto?",
+      "answers": [
+        {
+          "text": "Porque el frío realza su acidez y frescura",
+          "correct": true
+        },
+        {
+          "text": "Porque tiene menos alcohol",
+          "correct": false
+        },
+        {
+          "text": "Porque se estropea antes",
+          "correct": false
+        }
+      ],
+      "difficulty": "medium",
+      "fun_fact": "El tinto muy frío cierra el aroma y marca los taninos. Y la temperatura ambiente de la que hablan los manuales es la de una casa sin calefacción del siglo XIX.",
+      "category": "Comida y bebida"
+    },
+    {
+      "id": "com_es_083",
+      "question": "¿Qué es la horchata valenciana?",
+      "answers": [
+        {
+          "text": "Una bebida de chufa",
+          "correct": true
+        },
+        {
+          "text": "Una bebida de almendra",
+          "correct": false
+        },
+        {
+          "text": "Una bebida de arroz",
+          "correct": false
+        }
+      ],
+      "difficulty": "easy",
+      "fun_fact": "La chufa es un tubérculo pequeño que se cultiva en la huerta de Valencia. En México, en cambio, la horchata suele ser de arroz: mismo nombre, otra planta.",
+      "category": "Comida y bebida"
+    },
+    {
+      "id": "com_es_084",
+      "question": "¿Qué le ocurre a la leche cuando se pasteuriza?",
+      "answers": [
+        {
+          "text": "Se calienta lo justo para matar patógenos",
+          "correct": true
+        },
+        {
+          "text": "Se hierve durante una hora",
+          "correct": false
+        },
+        {
+          "text": "Se congela y se descongela",
+          "correct": false
+        }
+      ],
+      "difficulty": "easy",
+      "fun_fact": "El objetivo no es esterilizar sino eliminar lo peligroso conservando el sabor. La leche UHT va mucho más allá y por eso aguanta meses sin frío.",
+      "category": "Comida y bebida"
+    },
+    {
+      "id": "com_es_085",
+      "question": "¿Qué distingue a un whisky de malta de uno de grano?",
+      "answers": [
+        {
+          "text": "La cebada malteada como único cereal",
+          "correct": true
+        },
+        {
+          "text": "El tipo de alambique empleado",
+          "correct": false
+        },
+        {
+          "text": "El país donde se destila",
+          "correct": false
+        }
+      ],
+      "difficulty": "medium",
+      "fun_fact": "Un blended mezcla ambos. Ojo con el término single malt: el single no se refiere al cereal sino a una única destilería.",
+      "category": "Comida y bebida"
+    },
+    {
+      "id": "com_es_086",
+      "question": "¿Qué es el café de especialidad?",
+      "answers": [
+        {
+          "text": "Café puntuado por encima de un umbral de calidad",
+          "correct": true
+        },
+        {
+          "text": "Café con aromas añadidos",
+          "correct": false
+        },
+        {
+          "text": "Café descafeinado de lujo",
+          "correct": false
+        }
+      ],
+      "difficulty": "medium",
+      "fun_fact": "Se cata y se puntúa sobre cien, y a partir de ochenta entra en la categoría. Es un sistema parecido al del vino, importado hace apenas dos décadas.",
+      "category": "Comida y bebida"
+    },
+    {
+      "id": "com_es_087",
+      "question": "¿Por qué la cerveza hace espuma al servirla?",
+      "answers": [
+        {
+          "text": "Por el gas que escapa arrastrando proteínas",
+          "correct": true
+        },
+        {
+          "text": "Por el jabón mal aclarado del vaso",
+          "correct": false
+        },
+        {
+          "text": "Por el color del vaso",
+          "correct": false
+        }
+      ],
+      "difficulty": "medium",
+      "fun_fact": "Sin proteínas de la malta no habría espuma estable. Un vaso mal aclarado, con restos de grasa, la deshace en segundos.",
+      "category": "Comida y bebida"
+    },
+    {
+      "id": "com_es_088",
+      "question": "¿Qué es un destilado añejado en solera?",
+      "answers": [
+        {
+          "text": "Un sistema de barricas donde se mezclan cosechas",
+          "correct": true
+        },
+        {
+          "text": "Un destilado sin barrica",
+          "correct": false
+        },
+        {
+          "text": "Un vino de una sola añada",
+          "correct": false
+        }
+      ],
+      "difficulty": "hard",
+      "fun_fact": "Se saca de la barrica de abajo y se rellena desde la de arriba, criadera a criadera. Así ninguna botella pertenece a un solo año y el estilo se mantiene constante.",
+      "category": "Comida y bebida"
+    },
+    {
+      "id": "com_es_089",
+      "question": "¿Qué bebida se asocia tradicionalmente al desayuno inglés?",
+      "answers": [
+        {
+          "text": "El té con leche",
+          "correct": true
+        },
+        {
+          "text": "El café solo",
+          "correct": false
+        },
+        {
+          "text": "El chocolate",
+          "correct": false
+        }
+      ],
+      "difficulty": "easy",
+      "fun_fact": "Añadir la leche primero o después fue durante siglos una señal de clase social. La razón original era práctica: la porcelana barata se agrietaba con el té hirviendo.",
+      "category": "Comida y bebida"
+    },
+    {
+      "id": "com_es_090",
+      "question": "¿Qué es el agua tónica?",
+      "answers": [
+        {
+          "text": "Agua con gas y quinina",
+          "correct": true
+        },
+        {
+          "text": "Agua con sal marina",
+          "correct": false
+        },
+        {
+          "text": "Agua con gas y azúcar solamente",
+          "correct": false
+        }
+      ],
+      "difficulty": "medium",
+      "fun_fact": "La quinina era un remedio contra la malaria y sabía tan mal que los oficiales británicos la mezclaban con ginebra. El combinado nació como medicina.",
+      "category": "Comida y bebida"
+    },
+    {
+      "id": "com_es_091",
+      "question": "¿Qué lleva una paella valenciana tradicional?",
+      "answers": [
+        {
+          "text": "Pollo, conejo y judías",
+          "correct": true
+        },
+        {
+          "text": "Marisco y chorizo",
+          "correct": false
+        },
+        {
+          "text": "Ternera y patatas",
+          "correct": false
+        }
+      ],
+      "difficulty": "medium",
+      "fun_fact": "El chorizo es motivo de discusión nacional recurrente. La receta tradicional valenciana no lo incluye, aunque eso no ha frenado a nadie fuera de Valencia.",
+      "category": "Comida y bebida"
+    },
+    {
+      "id": "com_es_092",
+      "question": "¿De dónde procede el gazpacho?",
+      "answers": [
+        {
+          "text": "Del sur de España",
+          "correct": true
+        },
+        {
+          "text": "De México",
+          "correct": false
+        },
+        {
+          "text": "De Portugal",
+          "correct": false
+        }
+      ],
+      "difficulty": "easy",
+      "fun_fact": "Existía antes de que llegara el tomate de América: era pan, aceite, ajo y vinagre. El color rojo que hoy lo define es un añadido relativamente tardío.",
+      "category": "Comida y bebida"
+    },
+    {
+      "id": "com_es_093",
+      "question": "¿Qué es el ceviche?",
+      "answers": [
+        {
+          "text": "Pescado crudo curado en zumo de cítrico",
+          "correct": true
+        },
+        {
+          "text": "Pescado ahumado",
+          "correct": false
+        },
+        {
+          "text": "Pescado frito en harina",
+          "correct": false
+        }
+      ],
+      "difficulty": "easy",
+      "fun_fact": "El ácido desnaturaliza las proteínas y el pescado se vuelve opaco como si estuviera cocinado. Pero no hay calor, así que la frescura del pescado lo es todo.",
+      "category": "Comida y bebida"
+    },
+    {
+      "id": "com_es_094",
+      "question": "¿Qué distingue a la pizza napolitana tradicional?",
+      "answers": [
+        {
+          "text": "Masa fina de borde alto cocida en horno de leña",
+          "correct": true
+        },
+        {
+          "text": "Masa gruesa y rectangular",
+          "correct": false
+        },
+        {
+          "text": "Doble capa de queso",
+          "correct": false
+        }
+      ],
+      "difficulty": "easy",
+      "fun_fact": "Está protegida por una especialidad tradicional europea que fija incluso el diámetro y los segundos de horno. Poco más de un minuto a casi quinientos grados.",
+      "category": "Comida y bebida"
+    },
+    {
+      "id": "com_es_095",
+      "question": "¿Qué es el sushi propiamente dicho?",
+      "answers": [
+        {
+          "text": "El arroz avinagrado",
+          "correct": true
+        },
+        {
+          "text": "El pescado crudo",
+          "correct": false
+        },
+        {
+          "text": "El alga que lo envuelve",
+          "correct": false
+        }
+      ],
+      "difficulty": "medium",
+      "fun_fact": "La palabra se refiere al arroz, no al pescado. Nació como método de conservación: el arroz fermentado protegía el pescado y luego se tiraba.",
+      "category": "Comida y bebida"
+    },
+    {
+      "id": "com_es_096",
+      "question": "¿Qué es cierto sobre el curry en la India?",
+      "answers": [
+        {
+          "text": "No existe un único curry ni un polvo estándar",
+          "correct": true
+        },
+        {
+          "text": "Se prepara siempre con leche de coco",
+          "correct": false
+        },
+        {
+          "text": "Se muele en una única mezcla nacional",
+          "correct": false
+        }
+      ],
+      "difficulty": "medium",
+      "fun_fact": "El polvo de curry es un invento británico para exportar. En la India cada plato lleva su propia mezcla, molida en casa y distinta en cada región.",
+      "category": "Comida y bebida"
+    },
+    {
+      "id": "com_es_097",
+      "question": "¿Qué es el hummus?",
+      "answers": [
+        {
+          "text": "Puré de garbanzos con sésamo",
+          "correct": true
+        },
+        {
+          "text": "Puré de berenjena",
+          "correct": false
+        },
+        {
+          "text": "Salsa de yogur y pepino",
+          "correct": false
+        }
+      ],
+      "difficulty": "easy",
+      "fun_fact": "Su nombre significa simplemente garbanzo en árabe. Quién lo inventó es una discusión que enfrenta a varios países del Mediterráneo oriental con cierta seriedad.",
+      "category": "Comida y bebida"
+    },
+    {
+      "id": "com_es_098",
+      "question": "¿Qué es el pesto genovés auténtico?",
+      "answers": [
+        {
+          "text": "Albahaca, piñones, ajo, queso y aceite majados",
+          "correct": true
+        },
+        {
+          "text": "Tomate seco con nata",
+          "correct": false
+        },
+        {
+          "text": "Nueces con mantequilla",
+          "correct": false
+        }
+      ],
+      "difficulty": "medium",
+      "fun_fact": "Se hace en mortero, no en batidora: la cuchilla calienta la albahaca y la oscurece. El nombre viene del italiano pestare, que es justamente majar.",
+      "category": "Comida y bebida"
+    },
+    {
+      "id": "com_es_099",
+      "question": "¿De qué país es originario el goulash?",
+      "answers": [
+        {
+          "text": "De Hungría",
+          "correct": true
+        },
+        {
+          "text": "De Austria",
+          "correct": false
+        },
+        {
+          "text": "De Polonia",
+          "correct": false
+        }
+      ],
+      "difficulty": "easy",
+      "fun_fact": "Empezó como comida de pastores cocinada en caldero al aire libre. El pimentón, que hoy lo define, llegó siglos después desde América vía los Balcanes.",
+      "category": "Comida y bebida"
+    },
+    {
+      "id": "com_es_100",
+      "question": "¿Qué es el mole poblano?",
+      "answers": [
+        {
+          "text": "Una salsa mexicana con chiles y chocolate",
+          "correct": true
+        },
+        {
+          "text": "Un guiso de cordero",
+          "correct": false
+        },
+        {
+          "text": "Un pan dulce",
+          "correct": false
+        }
+      ],
+      "difficulty": "medium",
+      "fun_fact": "Puede llevar más de veinte ingredientes y tarda horas. El chocolate no lo hace dulce: aporta cuerpo y amargor, como haría un caldo reducido.",
+      "category": "Comida y bebida"
+    },
+    {
+      "id": "com_es_101",
+      "question": "¿Qué es el pan de masa madre?",
+      "answers": [
+        {
+          "text": "Pan fermentado con un cultivo silvestre",
+          "correct": true
+        },
+        {
+          "text": "Pan sin levadura de ningún tipo",
+          "correct": false
+        },
+        {
+          "text": "Pan hecho con harina de centeno solamente",
+          "correct": false
+        }
+      ],
+      "difficulty": "medium",
+      "fun_fact": "El cultivo es una comunidad de levaduras y bacterias del propio ambiente. Dos masas madre de dos ciudades distintas dan panes con sabores distintos.",
+      "category": "Comida y bebida"
+    },
+    {
+      "id": "com_es_102",
+      "question": "¿Qué es el kebab en su forma original?",
+      "answers": [
+        {
+          "text": "Carne asada en brocheta",
+          "correct": true
+        },
+        {
+          "text": "Carne guisada con verduras",
+          "correct": false
+        },
+        {
+          "text": "Pan relleno de verdura",
+          "correct": false
+        }
+      ],
+      "difficulty": "easy",
+      "fun_fact": "La palabra turca designa la carne asada, y en su forma original iba ensartada en brocheta. El cono vertical que casi todo el mundo asocia al nombre es una invención del siglo XIX en Anatolia.",
+      "category": "Comida y bebida"
+    },
+    {
+      "id": "com_es_103",
+      "question": "¿Qué caracteriza al queso feta auténtico?",
+      "answers": [
+        {
+          "text": "Está hecho en Grecia con leche de oveja",
+          "correct": true
+        },
+        {
+          "text": "Es de vaca y danés",
+          "correct": false
+        },
+        {
+          "text": "Se cura dos años",
+          "correct": false
+        }
+      ],
+      "difficulty": "medium",
+      "fun_fact": "Su nombre está protegido desde 2002 y solo puede usarse para el griego. Lo que se vende como feta fuera de la Unión Europea suele ser otra cosa.",
+      "category": "Comida y bebida"
+    },
+    {
+      "id": "com_es_104",
+      "question": "¿Qué es el ramen?",
+      "answers": [
+        {
+          "text": "Un plato de fideos en caldo",
+          "correct": true
+        },
+        {
+          "text": "Un arroz frito",
+          "correct": false
+        },
+        {
+          "text": "Una sopa fría",
+          "correct": false
+        }
+      ],
+      "difficulty": "easy",
+      "fun_fact": "Llegó a Japón desde China y se japonizó por completo. Hay tiendas que hierven huesos veinticuatro horas para un caldo que se sirve en cinco minutos.",
+      "category": "Comida y bebida"
+    },
+    {
+      "id": "com_es_105",
+      "question": "¿De qué está hecha la pasta seca italiana de calidad?",
+      "answers": [
+        {
+          "text": "Sémola de trigo duro y agua",
+          "correct": true
+        },
+        {
+          "text": "Harina de trigo blando y huevo",
+          "correct": false
+        },
+        {
+          "text": "Harina de arroz",
+          "correct": false
+        }
+      ],
+      "difficulty": "medium",
+      "fun_fact": "Sin huevo. La pasta fresca al huevo es otra tradición, más del norte, y no es una versión mejor de la misma cosa.",
+      "category": "Comida y bebida"
+    },
+    {
+      "id": "com_es_106",
+      "question": "¿Qué es el biryani?",
+      "answers": [
+        {
+          "text": "Un arroz especiado cocinado por capas",
+          "correct": true
+        },
+        {
+          "text": "Un pan plano",
+          "correct": false
+        },
+        {
+          "text": "Un postre de leche",
+          "correct": false
+        }
+      ],
+      "difficulty": "medium",
+      "fun_fact": "Arroz y carne se cocinan por separado y se juntan en capas para el último golpe de vapor. Cada región de la India defiende su versión como la verdadera.",
+      "category": "Comida y bebida"
+    },
+    {
+      "id": "com_es_107",
+      "question": "¿Qué es el bacalao al pil pil?",
+      "answers": [
+        {
+          "text": "Bacalao emulsionado con su propia gelatina y aceite",
+          "correct": true
+        },
+        {
+          "text": "Bacalao rebozado",
+          "correct": false
+        },
+        {
+          "text": "Bacalao con tomate picante",
+          "correct": false
+        }
+      ],
+      "difficulty": "easy",
+      "fun_fact": "La salsa se liga moviendo la cazuela, sin añadir nada más. Lo que emulsiona es la gelatina que suelta la piel del pescado con el calor suave.",
+      "category": "Comida y bebida"
+    },
+    {
+      "id": "com_es_108",
+      "question": "¿Qué es el pho vietnamita?",
+      "answers": [
+        {
+          "text": "Una sopa de fideos de arroz con caldo especiado",
+          "correct": true
+        },
+        {
+          "text": "Un rollito frito",
+          "correct": false
+        },
+        {
+          "text": "Un arroz con leche",
+          "correct": false
+        }
+      ],
+      "difficulty": "medium",
+      "fun_fact": "El caldo hierve horas con canela, anís estrellado y jengibre tostado. Se come a cualquier hora, pero tradicionalmente es un desayuno.",
+      "category": "Comida y bebida"
+    },
+    {
+      "id": "com_es_109",
+      "question": "¿Qué distingue a una tortilla mexicana de una española?",
+      "answers": [
+        {
+          "text": "Es un pan plano de maíz o trigo",
+          "correct": true
+        },
+        {
+          "text": "Lleva huevo y patata",
+          "correct": false
+        },
+        {
+          "text": "Se sirve siempre fría",
+          "correct": false
+        }
+      ],
+      "difficulty": "easy",
+      "fun_fact": "Comparten nombre y nada más. El maíz nixtamalizado con cal, técnica prehispánica, libera nutrientes que el maíz simple no aporta.",
+      "category": "Comida y bebida"
+    },
+    {
+      "id": "com_es_110",
+      "question": "¿Qué es el borscht?",
+      "answers": [
+        {
+          "text": "Una sopa de remolacha de Europa del Este",
+          "correct": true
+        },
+        {
+          "text": "Un estofado de cordero",
+          "correct": false
+        },
+        {
+          "text": "Un pan negro",
+          "correct": false
+        }
+      ],
+      "difficulty": "medium",
+      "fun_fact": "Su color intenso viene solo de la verdura. Se sirve caliente o fría según la estación, y casi siempre con una cucharada de nata agria encima.",
+      "category": "Comida y bebida"
+    },
+    {
+      "id": "com_es_111",
+      "question": "¿Qué es el fish and chips?",
+      "answers": [
+        {
+          "text": "Pescado rebozado con patatas fritas",
+          "correct": true
+        },
+        {
+          "text": "Pescado ahumado con ensalada",
+          "correct": false
+        },
+        {
+          "text": "Pescado en salazón",
+          "correct": false
+        }
+      ],
+      "difficulty": "easy",
+      "fun_fact": "Se envolvió en papel de periódico hasta que se prohibió por la tinta. Fue de los pocos alimentos que no se racionaron en el Reino Unido durante la guerra.",
+      "category": "Comida y bebida"
+    },
+    {
+      "id": "com_es_112",
+      "question": "¿Qué es el chucrut?",
+      "answers": [
+        {
+          "text": "Col fermentada en salmuera",
+          "correct": true
+        },
+        {
+          "text": "Col cocida con vino",
+          "correct": false
+        },
+        {
+          "text": "Col en vinagre de manzana",
+          "correct": false
+        }
+      ],
+      "difficulty": "medium",
+      "fun_fact": "La fermentación láctica lo conserva sin necesidad de frío, y por eso viajó en barcos: la vitamina C que conserva evitaba el escorbuto.",
+      "category": "Comida y bebida"
+    },
+    {
+      "id": "com_es_113",
+      "question": "¿Qué es el falafel?",
+      "answers": [
+        {
+          "text": "Bolas fritas de legumbre triturada",
+          "correct": true
+        },
+        {
+          "text": "Albóndigas de cordero",
+          "correct": false
+        },
+        {
+          "text": "Croquetas de patata",
+          "correct": false
+        }
+      ],
+      "difficulty": "easy",
+      "fun_fact": "Se hace con el garbanzo o el haba en crudo y en remojo, nunca cocido. Si se usa garbanzo de bote, la masa se deshace en el aceite.",
+      "category": "Comida y bebida"
+    },
+    {
+      "id": "com_es_114",
+      "question": "¿Qué es el asado argentino?",
+      "answers": [
+        {
+          "text": "Carne a la parrilla sobre brasa",
+          "correct": true
+        },
+        {
+          "text": "Carne guisada en olla",
+          "correct": false
+        },
+        {
+          "text": "Carne curada al sol",
+          "correct": false
+        }
+      ],
+      "difficulty": "easy",
+      "fun_fact": "La discusión no es la carne sino el fuego: la leña se quema aparte y solo se pasan las brasas debajo, para que el humo no ahúme la pieza.",
+      "category": "Comida y bebida"
+    },
+    {
+      "id": "com_es_115",
+      "question": "¿Qué es el pastel de nata portugués?",
+      "answers": [
+        {
+          "text": "Un hojaldre relleno de crema quemada por encima",
+          "correct": true
+        },
+        {
+          "text": "Un bizcocho de almendra",
+          "correct": false
+        },
+        {
+          "text": "Un flan de coco",
+          "correct": false
+        }
+      ],
+      "difficulty": "easy",
+      "fun_fact": "La receta original nació en un monasterio de Lisboa que usaba clara de huevo para almidonar hábitos y tenía yemas de sobra.",
+      "category": "Comida y bebida"
+    },
+    {
+      "id": "com_es_116",
+      "question": "¿Qué es el poke hawaiano en su forma original?",
+      "answers": [
+        {
+          "text": "Pescado crudo cortado y aliñado",
+          "correct": true
+        },
+        {
+          "text": "Arroz frito con piña",
+          "correct": false
+        },
+        {
+          "text": "Cerdo asado en hoja de plátano",
+          "correct": false
+        }
+      ],
+      "difficulty": "medium",
+      "fun_fact": "Poke significa cortar en trozos. Los cuencos con veinte ingredientes que se venden hoy en medio mundo se parecen poco al aliño original de sal y alga.",
+      "category": "Comida y bebida"
+    },
+    {
+      "id": "com_es_117",
+      "question": "¿Qué es el strudel?",
+      "answers": [
+        {
+          "text": "Un pastel de masa muy fina enrollada",
+          "correct": true
+        },
+        {
+          "text": "Un pan trenzado",
+          "correct": false
+        },
+        {
+          "text": "Una tarta de queso",
+          "correct": false
+        }
+      ],
+      "difficulty": "medium",
+      "fun_fact": "La masa se estira hasta poder leer un periódico a través de ella. La receta llegó a Viena desde el este, emparentada con el baklava.",
+      "category": "Comida y bebida"
+    },
+    {
+      "id": "com_es_118",
+      "question": "¿Qué es el tajine?",
+      "answers": [
+        {
+          "text": "Un guiso cocinado en una cazuela de barro con tapa cónica",
+          "correct": true
+        },
+        {
+          "text": "Un pan relleno",
+          "correct": false
+        },
+        {
+          "text": "Una ensalada de cítricos",
+          "correct": false
+        }
+      ],
+      "difficulty": "medium",
+      "fun_fact": "La tapa devuelve el vapor condensado al guiso, así que apenas hace falta añadir líquido. Es una olla pensada para cocinar donde el agua escasea.",
+      "category": "Comida y bebida"
+    },
+    {
+      "id": "com_es_119",
+      "question": "¿Qué es el kaiseki japonés?",
+      "answers": [
+        {
+          "text": "Una comida de muchos platos pequeños por estaciones",
+          "correct": true
+        },
+        {
+          "text": "Un tipo de fideo grueso",
+          "correct": false
+        },
+        {
+          "text": "Una salsa de soja dulce",
+          "correct": false
+        }
+      ],
+      "difficulty": "hard",
+      "fun_fact": "Nació ligado a la ceremonia del té. El orden y la vajilla cambian con el mes, y servir un ingrediente fuera de temporada se considera un error, no una audacia.",
+      "category": "Comida y bebida"
+    },
+    {
+      "id": "com_es_120",
+      "question": "¿En qué se diferencia el jamón serrano del ibérico?",
+      "answers": [
+        {
+          "text": "Procede de cerdo blanco, no de raza ibérica",
+          "correct": true
+        },
+        {
+          "text": "Se cura en salazón húmeda",
+          "correct": false
+        },
+        {
+          "text": "Es siempre de paleta",
+          "correct": false
+        }
+      ],
+      "difficulty": "medium",
+      "fun_fact": "La diferencia está en la raza y la alimentación, no en la sierra. Un serrano puede curarse tanto tiempo como un ibérico y seguir sabiendo distinto.",
+      "category": "Comida y bebida"
+    },
+    {
+      "id": "com_es_121",
+      "question": "¿Por qué la sal conserva los alimentos?",
+      "answers": [
+        {
+          "text": "Porque retira el agua que necesitan los microbios",
+          "correct": true
+        },
+        {
+          "text": "Porque los enfría",
+          "correct": false
+        },
+        {
+          "text": "Porque los vuelve ácidos",
+          "correct": false
+        }
+      ],
+      "difficulty": "easy",
+      "fun_fact": "Es de los métodos más antiguos que existen y explica media historia de la navegación: sin salazón, ningún barco cruzaba un océano con comida a bordo.",
+      "category": "Comida y bebida"
+    },
+    {
+      "id": "com_es_122",
+      "question": "¿Qué es la nixtamalización?",
+      "answers": [
+        {
+          "text": "Cocer el maíz con cal antes de molerlo",
+          "correct": true
+        },
+        {
+          "text": "Fermentar el maíz",
+          "correct": false
+        },
+        {
+          "text": "Tostar el maíz en seco",
+          "correct": false
+        }
+      ],
+      "difficulty": "hard",
+      "fun_fact": "Libera la niacina, que el maíz sin tratar no cede. Donde el maíz se adoptó sin la técnica apareció la pelagra; donde se adoptó con ella, no.",
+      "category": "Comida y bebida"
+    },
+    {
+      "id": "com_es_123",
+      "question": "¿Qué le pasa a la vitamina C al cocer una verdura en mucha agua?",
+      "answers": [
+        {
+          "text": "Se disuelve y se va con el agua",
+          "correct": true
+        },
+        {
+          "text": "Se destruye por completo siempre",
+          "correct": false
+        },
+        {
+          "text": "Aumenta",
+          "correct": false
+        }
+      ],
+      "difficulty": "medium",
+      "fun_fact": "Es soluble en agua y sensible al calor. Cocer al vapor o aprovechar el caldo salva buena parte de lo que el hervido tira por el fregadero.",
+      "category": "Comida y bebida"
+    },
+    {
+      "id": "com_es_124",
+      "question": "¿Qué es la fermentación láctica?",
+      "answers": [
+        {
+          "text": "Bacterias que convierten azúcar en ácido láctico",
+          "correct": true
+        },
+        {
+          "text": "Levaduras que producen alcohol",
+          "correct": false
+        },
+        {
+          "text": "Hongos que descomponen la grasa",
+          "correct": false
+        }
+      ],
+      "difficulty": "medium",
+      "fun_fact": "Es lo que hay detrás del yogur, el chucrut y los encurtidos. El ácido baja tanto el pH que la mayoría de los microbios peligrosos ya no prosperan, aunque alguno como la listeria lo tolera mejor.",
+      "category": "Comida y bebida"
+    },
+    {
+      "id": "com_es_125",
+      "question": "¿Para qué sirve la fecha de consumo preferente frente a la de caducidad?",
+      "answers": [
+        {
+          "text": "Indica calidad, no seguridad",
+          "correct": true
+        },
+        {
+          "text": "Es la misma cosa con otro nombre",
+          "correct": false
+        },
+        {
+          "text": "Marca cuándo empieza a ser comestible",
+          "correct": false
+        }
+      ],
+      "difficulty": "medium",
+      "fun_fact": "Un paquete de arroz pasado de preferente sigue siendo seguro. Confundir ambas etiquetas es una de las causas mayores de desperdicio doméstico.",
+      "category": "Comida y bebida"
+    },
+    {
+      "id": "com_es_126",
+      "question": "¿Por qué el aceite de palma está en tantos productos industriales?",
+      "answers": [
+        {
+          "text": "Es barato y semisólido a temperatura ambiente",
+          "correct": true
+        },
+        {
+          "text": "Es el único aceite sin sabor",
+          "correct": false
+        },
+        {
+          "text": "Se puede calentar sin límite",
+          "correct": false
+        }
+      ],
+      "difficulty": "medium",
+      "fun_fact": "Su textura sustituye a la mantequilla sin necesidad de frío. Es además el cultivo oleaginoso con más rendimiento por hectárea, lo que complica el debate: producir la misma grasa con otra planta ocuparía más tierra.",
+      "category": "Comida y bebida"
+    },
+    {
+      "id": "com_es_127",
+      "question": "¿Qué producto europeo tiene denominación de origen y no puede llamarse así fuera de su zona?",
+      "answers": [
+        {
+          "text": "El queso manchego",
+          "correct": true
+        },
+        {
+          "text": "El queso de untar",
+          "correct": false
+        },
+        {
+          "text": "El queso rallado en bolsa",
+          "correct": false
+        }
+      ],
+      "difficulty": "easy",
+      "fun_fact": "El sistema protege el nombre, no la receta: se puede hacer un queso idéntico en otro sitio, pero no venderlo con ese nombre en la Unión Europea.",
+      "category": "Comida y bebida"
+    },
+    {
+      "id": "com_es_128",
+      "question": "¿Qué destruyó la cosecha de patata en la Gran Hambruna irlandesa?",
+      "answers": [
+        {
+          "text": "Un hongo que arrasó la patata",
+          "correct": true
+        },
+        {
+          "text": "Una sequía de tres años",
+          "correct": false
+        },
+        {
+          "text": "Una plaga de langostas",
+          "correct": false
+        }
+      ],
+      "difficulty": "medium",
+      "fun_fact": "El monocultivo lo agravó todo: casi toda la isla dependía de una sola variedad. Que la plaga se convirtiera en hambruna tuvo además causas políticas, porque el país siguió exportando alimentos.",
+      "category": "Comida y bebida"
+    },
+    {
+      "id": "com_es_129",
+      "question": "¿Qué especia era tan valiosa que motivó viajes de exploración?",
+      "answers": [
+        {
+          "text": "La pimienta",
+          "correct": true
+        },
+        {
+          "text": "El perejil",
+          "correct": false
+        },
+        {
+          "text": "El laurel",
+          "correct": false
+        }
+      ],
+      "difficulty": "easy",
+      "fun_fact": "Se usó como moneda y como dote. Buena parte de los viajes que acabaron dibujando el mapa del mundo buscaban una ruta más corta hacia ella.",
+      "category": "Comida y bebida"
+    },
+    {
+      "id": "com_es_130",
+      "question": "¿Qué alimento se creyó venenoso en Europa durante décadas?",
+      "answers": [
+        {
+          "text": "El tomate",
+          "correct": true
+        },
+        {
+          "text": "La cebolla",
+          "correct": false
+        },
+        {
+          "text": "La zanahoria",
+          "correct": false
+        }
+      ],
+      "difficulty": "medium",
+      "fun_fact": "Es pariente de la belladona y sus hojas sí son tóxicas, lo que bastó para la sospecha. La historia de los platos de peltre con plomo se repite mucho, pero está poco documentada.",
+      "category": "Comida y bebida"
+    },
+    {
+      "id": "com_es_131",
+      "question": "¿Qué es la dieta mediterránea según la Unesco?",
+      "answers": [
+        {
+          "text": "Un patrimonio cultural inmaterial",
+          "correct": true
+        },
+        {
+          "text": "Una pauta médica oficial",
+          "correct": false
+        },
+        {
+          "text": "Una marca comercial",
+          "correct": false
+        }
+      ],
+      "difficulty": "easy",
+      "fun_fact": "Lo que se protegió no fue una lista de alimentos sino una forma de comer: en compañía, de temporada y sin prisa. La parte más difícil de exportar.",
+      "category": "Comida y bebida"
+    },
+    {
+      "id": "com_es_132",
+      "question": "¿Qué es el escorbuto?",
+      "answers": [
+        {
+          "text": "Una enfermedad por falta de vitamina C",
+          "correct": true
+        },
+        {
+          "text": "Una intoxicación por pescado",
+          "correct": false
+        },
+        {
+          "text": "Una alergia al trigo",
+          "correct": false
+        }
+      ],
+      "difficulty": "medium",
+      "fun_fact": "Mató a más marineros que las batallas. La solución, cítricos a bordo, se descubrió, se olvidó y se volvió a descubrir varias veces.",
+      "category": "Comida y bebida"
+    },
+    {
+      "id": "com_es_133",
+      "question": "¿De dónde procede la patata?",
+      "answers": [
+        {
+          "text": "De los Andes",
+          "correct": true
+        },
+        {
+          "text": "De Irlanda",
+          "correct": false
+        },
+        {
+          "text": "Del norte de África",
+          "correct": false
+        }
+      ],
+      "difficulty": "easy",
+      "fun_fact": "En Perú y Bolivia se cultivan miles de variedades. Europa se llevó apenas un puñado, y esa falta de diversidad fue justo lo que la hizo tan vulnerable.",
+      "category": "Comida y bebida"
+    },
+    {
+      "id": "com_es_134",
+      "question": "¿Qué es el azúcar invertido?",
+      "answers": [
+        {
+          "text": "Sacarosa separada en glucosa y fructosa",
+          "correct": true
+        },
+        {
+          "text": "Azúcar sin calorías",
+          "correct": false
+        },
+        {
+          "text": "Azúcar de remolacha refinado",
+          "correct": false
+        }
+      ],
+      "difficulty": "hard",
+      "fun_fact": "Retiene humedad y no cristaliza, así que los helados quedan más cremosos y los bizcochos se secan más tarde. La miel es esencialmente azúcar invertido natural.",
+      "category": "Comida y bebida"
+    },
+    {
+      "id": "com_es_135",
+      "question": "¿Qué es el tratamiento por alta presión de los alimentos?",
+      "answers": [
+        {
+          "text": "Aplicar presión para eliminar microbios sin calor",
+          "correct": true
+        },
+        {
+          "text": "Congelar y descongelar muy rápido",
+          "correct": false
+        },
+        {
+          "text": "Filtrar el líquido con luz ultravioleta",
+          "correct": false
+        }
+      ],
+      "difficulty": "hard",
+      "fun_fact": "Permite que un zumo aguante semanas conservando el sabor del recién exprimido. El equipo cuesta cientos de miles de euros, así que las marcas pequeñas lo alquilan por horas en plantas ajenas.",
+      "category": "Comida y bebida"
+    },
+    {
+      "id": "com_es_136",
+      "question": "¿Por qué el pan se pone duro?",
+      "answers": [
+        {
+          "text": "Porque el almidón recristaliza",
+          "correct": true
+        },
+        {
+          "text": "Porque pierde toda su agua",
+          "correct": false
+        },
+        {
+          "text": "Porque absorbe olores",
+          "correct": false
+        }
+      ],
+      "difficulty": "medium",
+      "fun_fact": "Por eso un pan duro vuelve a estar tierno unos minutos en el horno: el calor deshace esos cristales. En la nevera el proceso va incluso más rápido.",
+      "category": "Comida y bebida"
+    },
+    {
+      "id": "com_es_137",
+      "question": "¿Qué es un alimento transgénico?",
+      "answers": [
+        {
+          "text": "Uno cuyo ADN se ha modificado en laboratorio",
+          "correct": true
+        },
+        {
+          "text": "Uno cultivado sin tierra",
+          "correct": false
+        },
+        {
+          "text": "Uno tratado con radiación",
+          "correct": false
+        }
+      ],
+      "difficulty": "medium",
+      "fun_fact": "La selección clásica lleva milenios cambiando el ADN de todo lo que comemos, aunque a ciegas y solo dentro de la especie. Lo propio de la transgénesis es poder introducir un gen de otra especie distinta.",
+      "category": "Comida y bebida"
+    },
+    {
+      "id": "com_es_138",
+      "question": "¿Qué hace que un huevo flote en agua?",
+      "answers": [
+        {
+          "text": "Que haya perdido humedad y tenga más aire dentro",
+          "correct": true
+        },
+        {
+          "text": "Que esté recién puesto",
+          "correct": false
+        },
+        {
+          "text": "Que sea de gallina joven",
+          "correct": false
+        }
+      ],
+      "difficulty": "medium",
+      "fun_fact": "La cáscara es porosa y con los días entra aire. Un huevo que se queda de pie en el fondo ya no es fresco pero suele ser comestible; el que flota en la superficie es el que conviene descartar.",
+      "category": "Comida y bebida"
+    },
+    {
+      "id": "com_es_139",
+      "question": "¿Qué es la intolerancia a la lactosa?",
+      "answers": [
+        {
+          "text": "Falta de la enzima que la digiere",
+          "correct": true
+        },
+        {
+          "text": "Una alergia a la proteína de la leche",
+          "correct": false
+        },
+        {
+          "text": "Un exceso de calcio",
+          "correct": false
+        }
+      ],
+      "difficulty": "medium",
+      "fun_fact": "Lo raro en términos evolutivos es lo contrario: seguir digiriéndola de adulto es una mutación reciente, y la mayoría de la humanidad no la tiene.",
+      "category": "Comida y bebida"
+    },
+    {
+      "id": "com_es_140",
+      "question": "¿Qué alimento pierde calidad si se guarda en la nevera?",
+      "answers": [
+        {
+          "text": "El tomate",
+          "correct": true
+        },
+        {
+          "text": "La leche abierta",
+          "correct": false
+        },
+        {
+          "text": "El pescado fresco",
+          "correct": false
+        }
+      ],
+      "difficulty": "medium",
+      "fun_fact": "El frío frena los aromas y le da textura harinosa. Es de los pocos casos en que la nevera empeora activamente lo que guarda.",
+      "category": "Comida y bebida"
+    },
+    {
+      "id": "com_es_141",
+      "question": "¿Qué es el ahumado en frío?",
+      "answers": [
+        {
+          "text": "Aromatizar con humo sin llegar a cocinar",
+          "correct": true
+        },
+        {
+          "text": "Congelar con humo seco",
+          "correct": false
+        },
+        {
+          "text": "Secar al sol tapado",
+          "correct": false
+        }
+      ],
+      "difficulty": "medium",
+      "fun_fact": "Se hace por debajo de los treinta grados, así que el salmón ahumado sigue crudo. La sal previa es la que hace el trabajo de conservación.",
+      "category": "Comida y bebida"
+    },
+    {
+      "id": "com_es_142",
+      "question": "¿Qué parte del coste de un plato de restaurante suele ser el producto?",
+      "answers": [
+        {
+          "text": "Alrededor de un tercio",
+          "correct": true
+        },
+        {
+          "text": "Alrededor de tres cuartas partes",
+          "correct": false
+        },
+        {
+          "text": "Prácticamente la totalidad",
+          "correct": false
+        }
+      ],
+      "difficulty": "easy",
+      "fun_fact": "El resto es personal, local, energía y desperdicio. Por eso subir la calidad de un ingrediente concreto pesa menos en la cuenta de lo que la gente supone.",
+      "category": "Comida y bebida"
+    },
+    {
+      "id": "com_es_143",
+      "question": "¿Qué es un alimento ultraprocesado?",
+      "answers": [
+        {
+          "text": "Una formulación industrial con ingredientes que no se usan en casa",
+          "correct": true
+        },
+        {
+          "text": "Cualquier alimento envasado",
+          "correct": false
+        },
+        {
+          "text": "Cualquier alimento cocinado",
+          "correct": false
+        }
+      ],
+      "difficulty": "medium",
+      "fun_fact": "La clasificación no mira las calorías sino el grado de transformación. Un pan de molde industrial y una harina son cosas distintas aunque ambos vengan en paquete.",
+      "category": "Comida y bebida"
+    },
+    {
+      "id": "com_es_144",
+      "question": "¿Qué es el desperdicio alimentario doméstico?",
+      "answers": [
+        {
+          "text": "La comida comprada que acaba en la basura sin comerse",
+          "correct": true
+        },
+        {
+          "text": "Los restos del plato en un restaurante",
+          "correct": false
+        },
+        {
+          "text": "Las pérdidas durante el transporte",
+          "correct": false
+        }
+      ],
+      "difficulty": "easy",
+      "fun_fact": "En los países ricos la mayor parte se tira en casa, no en la cadena. Y lo primero que cae suele ser fruta, verdura y pan.",
+      "category": "Comida y bebida"
+    },
+    {
+      "id": "com_es_145",
+      "question": "¿Qué es la acrilamida?",
+      "answers": [
+        {
+          "text": "Un compuesto que aparece al tostar en exceso",
+          "correct": true
+        },
+        {
+          "text": "Un conservante artificial",
+          "correct": false
+        },
+        {
+          "text": "Un tipo de fibra",
+          "correct": false
+        }
+      ],
+      "difficulty": "hard",
+      "fun_fact": "Se forma al dorar mucho patatas o pan a alta temperatura. La recomendación oficial es simple: dorado, no tostado oscuro.",
+      "category": "Comida y bebida"
+    },
+    {
+      "id": "com_es_146",
+      "question": "¿Qué se celebra en la Tomatina de Buñol?",
+      "answers": [
+        {
+          "text": "Una batalla de tomates",
+          "correct": true
+        },
+        {
+          "text": "Una cosecha de aceituna",
+          "correct": false
+        },
+        {
+          "text": "Un concurso de paellas",
+          "correct": false
+        }
+      ],
+      "difficulty": "easy",
+      "fun_fact": "Se lanzan toneladas de una variedad no comercial cultivada expresamente para eso. El ácido del tomate deja además las fachadas del pueblo relucientes.",
+      "category": "Comida y bebida"
+    },
+    {
+      "id": "com_es_147",
+      "question": "¿Qué es el aceite de oliva lampante?",
+      "answers": [
+        {
+          "text": "Un aceite no apto para consumo sin refinar",
+          "correct": true
+        },
+        {
+          "text": "El de mayor calidad",
+          "correct": false
+        },
+        {
+          "text": "Un aceite aromatizado",
+          "correct": false
+        }
+      ],
+      "difficulty": "hard",
+      "fun_fact": "Su nombre viene de que servía para las lámparas. Refinado y mezclado con virgen es lo que se vende como aceite de oliva a secas.",
+      "category": "Comida y bebida"
+    },
+    {
+      "id": "com_es_148",
+      "question": "¿Por qué el chocolate blanco no es chocolate para muchos puristas?",
+      "answers": [
+        {
+          "text": "Porque no lleva pasta de cacao",
+          "correct": true
+        },
+        {
+          "text": "Porque lleva más azúcar",
+          "correct": false
+        },
+        {
+          "text": "Porque se funde antes",
+          "correct": false
+        }
+      ],
+      "difficulty": "medium",
+      "fun_fact": "Solo lleva manteca de cacao, leche y azúcar. Tiene grasa del cacao pero nada de la parte que da color y amargor.",
+      "category": "Comida y bebida"
+    },
+    {
+      "id": "com_es_149",
+      "question": "¿Qué es la carne madurada en seco?",
+      "answers": [
+        {
+          "text": "Carne que reposa semanas en frío controlado",
+          "correct": true
+        },
+        {
+          "text": "Carne congelada y descongelada",
+          "correct": false
+        },
+        {
+          "text": "Carne salada al sol",
+          "correct": false
+        }
+      ],
+      "difficulty": "medium",
+      "fun_fact": "Pierde entre un diez y un veinte por ciento de su peso en agua, y hay que recortar además la costra exterior. Se paga, entre otras cosas, todo lo que se ha ido por el camino.",
+      "category": "Comida y bebida"
+    },
+    {
+      "id": "com_es_150",
+      "question": "¿Qué es el pan de centeno de fermentación larga?",
+      "answers": [
+        {
+          "text": "Un pan denso que aguanta días sin secarse",
+          "correct": true
+        },
+        {
+          "text": "Un pan sin gluten",
+          "correct": false
+        },
+        {
+          "text": "Un pan frito",
+          "correct": false
+        }
+      ],
+      "difficulty": "medium",
+      "fun_fact": "La acidez de la masa madre lo conserva y le da ese sabor. En el norte de Europa se corta en rebanadas finísimas justo porque llena muchísimo.",
+      "category": "Comida y bebida"
+    },
+    {
+      "id": "com_es_161",
+      "question": "¿Qué está vertiendo la criada en el cuenco de este cuadro?",
+      "answers": [
+        {
+          "text": "Leche",
+          "correct": true
+        },
+        {
+          "text": "Aceite",
+          "correct": false
+        },
+        {
+          "text": "Vino",
+          "correct": false
+        }
+      ],
+      "difficulty": "easy",
+      "fun_fact": "Vermeer pintó La lechera hacia 1660. El pan sobre la mesa y el cuenco apuntan a un budín de pan, un plato de sobras, pintado con un azul que entonces costaba más que el oro.",
+      "category": "Comida y bebida",
+      "image_url": "/quizify/static/img/packs/food/milkmaid.webp",
+      "reveal_style": "progressive"
+    },
+    {
+      "id": "com_es_162",
+      "question": "¿Qué están comiendo las personas de este cuadro de 1885?",
+      "answers": [
+        {
+          "text": "Nabos",
+          "correct": false
+        },
+        {
+          "text": "Judías",
+          "correct": false
+        },
+        {
+          "text": "Patatas",
+          "correct": true
+        }
+      ],
+      "difficulty": "medium",
+      "fun_fact": "Van Gogh quería que se viera que las mismas manos que han cavado la tierra son las que ahora se meten en la fuente. Su hermano Theo lo encontró demasiado oscuro; él lo tuvo mucho tiempo por su mejor obra.",
+      "category": "Comida y bebida",
+      "image_url": "/quizify/static/img/packs/food/potato-eaters.webp",
+      "reveal_style": "progressive"
+    },
+    {
+      "id": "com_es_163",
+      "question": "¿Qué se apila en este bodegón neerlandés de 1615?",
+      "answers": [
+        {
+          "text": "Ruedas de queso",
+          "correct": true
+        },
+        {
+          "text": "Hogazas de pan",
+          "correct": false
+        },
+        {
+          "text": "Bloques de mantequilla",
+          "correct": false
+        }
+      ],
+      "difficulty": "medium",
+      "fun_fact": "El queso apilado era un símbolo de estatus en el Siglo de Oro: mostraba comercio, riqueza y despensa llena a la vez. El tablero se inclina hacia el espectador a propósito, para que se vea todo de golpe.",
+      "category": "Comida y bebida",
+      "image_url": "/quizify/static/img/packs/food/cheese-still-life.webp",
+      "reveal_style": "progressive"
+    },
+    {
+      "id": "com_es_164",
+      "question": "¿Qué animal está tumbado aquí sobre la mesa?",
+      "answers": [
+        {
+          "text": "Un bogavante",
+          "correct": true
+        },
+        {
+          "text": "Un calamar",
+          "correct": false
+        },
+        {
+          "text": "Una carpa",
+          "correct": false
+        }
+      ],
+      "difficulty": "easy",
+      "fun_fact": "En estos bodegones de aparato el bogavante era el lujo: rojo porque está cocido, caro y perecedero. Está ahí justamente por eso, para enseñar abundancia y recordar que no dura.",
+      "category": "Comida y bebida",
+      "image_url": "/quizify/static/img/packs/food/lobster-still-life.webp",
+      "reveal_style": "progressive"
+    },
+    {
+      "id": "com_es_165",
+      "question": "¿Qué fruta aparece cortada en esta acuarela?",
+      "answers": [
+        {
+          "text": "Un mango",
+          "correct": false
+        },
+        {
+          "text": "Un melón",
+          "correct": false
+        },
+        {
+          "text": "Una piña",
+          "correct": true
+        }
+      ],
+      "difficulty": "medium",
+      "fun_fact": "Botánicamente una piña no es una fruta simple sino un conjunto de bayas pequeñas fusionadas. La lámina procede de una colección de unas siete mil quinientas acuarelas que el ministerio de agricultura estadounidense encargó cuando la fotografía en color aún no era práctica.",
+      "category": "Comida y bebida",
+      "image_url": "/quizify/static/img/packs/food/pineapple-watercolour.webp",
+      "reveal_style": "progressive"
+    },
+    {
+      "id": "com_es_166",
+      "question": "¿Qué porcentaje de un pepino es agua?",
+      "type": "estimate",
+      "answer": 96,
+      "min": 0,
+      "max": 100,
+      "unit": "por ciento",
+      "difficulty": "easy",
+      "fun_fact": "Un noventa y seis por ciento, más que una sandía. Por eso sabe a casi nada si no se sala.",
+      "category": "Comida y bebida"
+    },
+    {
+      "id": "com_es_167",
+      "question": "¿Cuántos litros de leche hacen falta para un kilo de queso curado?",
+      "type": "estimate",
+      "answer": 10,
+      "min": 1,
+      "max": 50,
+      "unit": "litros",
+      "difficulty": "medium",
+      "fun_fact": "Unos diez. El resto se va como suero, un desecho durante siglos y hoy el polvo caro de la nutrición deportiva.",
+      "category": "Comida y bebida"
+    },
+    {
+      "id": "com_es_168",
+      "question": "¿Cuántos meses debe madurar como mínimo el Parmigiano Reggiano?",
+      "type": "estimate",
+      "answer": 12,
+      "min": 1,
+      "max": 60,
+      "unit": "meses",
+      "difficulty": "medium",
+      "fun_fact": "Doce, según el reglamento de la denominación. Después un inspector golpea cada rueda con un martillo pequeño, y la que no suena bien pierde el sello.",
+      "category": "Comida y bebida"
+    },
+    {
+      "id": "com_es_169",
+      "question": "¿A qué temperatura empieza a caramelizar el azúcar de mesa?",
+      "type": "estimate",
+      "answer": 160,
+      "min": 0,
+      "max": 400,
+      "unit": "grados centígrados",
+      "difficulty": "medium",
+      "fun_fact": "Hacia los ciento sesenta grados. Por debajo solo se funde; por encima, el caramelo se vuelve amargo en cuestión de segundos.",
+      "category": "Comida y bebida"
+    },
+    {
+      "id": "com_es_170",
+      "question": "¿Cuántas unidades Scoville tiene un jalapeño?",
+      "type": "estimate",
+      "answer": 5000,
+      "min": 0,
+      "max": 100000,
+      "unit": "Scoville",
+      "difficulty": "hard",
+      "fun_fact": "Unas cinco mil. Un habanero ronda las doscientas mil y la capsaicina pura llega a dieciséis millones; la escala no tiene techo y al principio se medía con la lengua.",
+      "category": "Comida y bebida"
+    }
+  ]
+}
