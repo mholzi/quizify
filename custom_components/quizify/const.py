@@ -137,7 +137,23 @@ SUBMIT_POLL_INTERVAL_SECONDS = 3600  # ~hourly, like Beatify's PlaylistRequestsV
 SUBMIT_POLL_TIMEOUT_SECONDS = 12
 SUBMIT_RECORDS_FILE = "pack_submissions.json"
 
+# ---------------------------------------------------------------------------
+# Pack *requests* (#579) — the inverse of a submission: the host describes a
+# pack they want instead of authoring one. Caps are deliberately tiny; a
+# request is three short fields, and the generated issue must stay readable.
+REQUEST_MAX_THEME_CHARS = 80
+REQUEST_MAX_NOTES_CHARS = 500
+REQUEST_MAX_LANGUAGE_CHARS = 10
+
+# Record kinds inside pack_submissions.json. Older records predate #579 and
+# carry no ``kind`` at all — readers must treat a missing kind as a submission,
+# never as an unknown. One store, one reconcile, two kinds of record.
+RECORD_KIND_SUBMISSION = "submission"
+RECORD_KIND_REQUEST = "request"
+
 # Submission status values (issue-state derived; see pack_submission.py).
+# Requests share them: a request issue closes exactly like a submission issue,
+# which is why both kinds can live in one store with one reconcile pass.
 SUBMIT_STATUS_PENDING = "pending"
 SUBMIT_STATUS_ACCEPTED = "accepted"  # issue closed as completed
 SUBMIT_STATUS_DECLINED = "declined"  # issue closed as not_planned

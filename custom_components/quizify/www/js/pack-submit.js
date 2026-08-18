@@ -19,6 +19,7 @@ window.QuizifyPackSubmit = (function () {
 
     var CONFIG_URL = '/api/quizify/pack-submit/config';
     var SUBMIT_URL = '/api/quizify/pack-submit';
+    var REQUEST_URL = '/api/quizify/pack-submit/request';
     var SUBMISSIONS_URL = '/api/quizify/pack-submit/submissions';
 
     // Defaults; overwritten by the server's reported limits.
@@ -26,7 +27,9 @@ window.QuizifyPackSubmit = (function () {
         max_questions: 500,
         min_questions: 1,
         answers_per_question: 3,
-        max_bytes: 1048576
+        max_bytes: 1048576,
+        max_theme_chars: 80,
+        max_notes_chars: 500
     };
 
     // The pack that last passed validation — carried from Check to Submit.
@@ -291,6 +294,92 @@ window.QuizifyPackSubmit = (function () {
         }
     }
 
+    /* ---------------- request mode (#579) ---------------- */
+
+    /** Switch the card between "send a pack" and "ask for a pack". */
+    function setMode(mode) {
+        var submitPane = el('pack-submit-pane');
+        var requestPane = el('pack-request-pane');
+        var submitBtn = el('pack-mode-submit-btn');
+        var requestBtn = el('pack-mode-request-btn');
+        var isRequest = mode === 'request';
+        if (submitPane) { submitPane.classList.toggle('hidden', isRequest); }
+        if (requestPane) { requestPane.classList.toggle('hidden', !isRequest); }
+        [[submitBtn, !isRequest], [requestBtn, isRequest]].forEach(function (pair) {
+            if (!pair[0]) { return; }
+            pair[0].classList.toggle('active', pair[1]);
+            pair[0].setAttribute('aria-selected', pair[1] ? 'true' : 'false');
+        });
+    }
+
+    function setRequestStatus(msg, kind) {
+        var statusEl = el('pack-request-status');
+        if (!statusEl) { return; }
+        statusEl.textContent = msg || '';
+        statusEl.className = 'pack-submit-status' + (kind ? ' pack-submit-status--' + kind : '');
+    }
+
+    /** The send button stays disabled until there is a theme to send. */
+    function syncRequestButton() {
+        var theme = el('pack-request-theme');
+        var btn = el('pack-request-btn');
+        if (!btn) { return; }
+        btn.disabled = !(theme && theme.value.trim());
+    }
+
+    async function doRequest() {
+        var themeEl = el('pack-request-theme');
+        var langEl = el('pack-request-language');
+        var notesEl = el('pack-request-notes');
+        var btn = el('pack-request-btn');
+        var theme = themeEl ? themeEl.value.trim() : '';
+        if (!theme) { syncRequestButton(); return; }
+
+        // Client-side cap check mirrors the server so an over-long field fails
+        // here with a readable message instead of coming back as a 400.
+        if (theme.length > limits.max_theme_chars) {
+            setRequestStatus(t('packSubmit.request.tooLong'), 'bad');
+            return;
+        }
+        var notes = notesEl ? notesEl.value.trim() : '';
+        if (notes.length > limits.max_notes_chars) {
+            setRequestStatus(t('packSubmit.request.tooLong'), 'bad');
+            return;
+        }
+
+        if (btn) { btn.disabled = true; }
+        setRequestStatus(t('packSubmit.request.sending'), 'pending');
+        try {
+            var resp = await fetch(REQUEST_URL, {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify({
+                    request: {
+                        theme: theme,
+                        language: (langEl && langEl.value) || 'de',
+                        notes: notes
+                    }
+                })
+            });
+            var data = {};
+            try { data = await resp.json(); } catch (_e) { /* ignore */ }
+            if (!resp.ok || !data.ok) {
+                setRequestStatus(errorText(data, t('packSubmit.request.failed')), 'bad');
+                if (btn) { btn.disabled = false; }
+                return;
+            }
+            var link = data.issue_url ? ' (#' + (data.issue_number || '?') + ')' : '';
+            setRequestStatus(t('packSubmit.request.success') + link, 'ok');
+            if (themeEl) { themeEl.value = ''; }
+            if (notesEl) { notesEl.value = ''; }
+            syncRequestButton();
+            loadSubmissions();
+        } catch (err) {
+            setRequestStatus(errorText({ code: 'GITHUB_ERROR' }, String(err)), 'bad');
+            if (btn) { btn.disabled = false; }
+        }
+    }
+
     function statusLabel(status) {
         var key = 'packSubmit.status.' + (status || 'pending');
         var translated = t(key);
@@ -330,11 +419,16 @@ window.QuizifyPackSubmit = (function () {
                 var title = s.issue_url
                     ? '<a href="' + escapeHtml(s.issue_url) + '" target="_blank" rel="noopener">' + name + '</a>'
                     : name;
+                // Records written before #579 carry no `kind` at all — a missing
+                // kind is a submission, never an unknown.
+                var kindChip = s.kind === 'request'
+                    ? '<span class="pack-tli-kind">' + escapeHtml(t('packSubmit.kind.request')) + '</span>'
+                    : '';
                 var sub = '';
                 if (s.issue_number) { sub += '#' + escapeHtml(s.issue_number); }
                 html += '<div class="pack-tli ' + meta.cls + '">' +
                     '<div class="pack-tli-node"></div>' +
-                    '<div class="pack-tli-t">' + title + '</div>' +
+                    '<div class="pack-tli-t">' + kindChip + title + '</div>' +
                     (sub ? '<div class="pack-tli-m">' + sub + '</div>' : '') +
                     '<div class="pack-tli-stat">' + meta.mark + ' ' + escapeHtml(statusLabel(s.status)) + '</div>' +
                     '</div>';
@@ -386,12 +480,44 @@ window.QuizifyPackSubmit = (function () {
         var back2Btn = el('pack-submit-back2-btn');
         if (back2Btn) { back2Btn.addEventListener('click', function () { setStatus(''); goToStep(1); }); }
 
+        // ---- request mode (#579)
+        var modeSubmitBtn = el('pack-mode-submit-btn');
+        var modeRequestBtn = el('pack-mode-request-btn');
+        if (modeSubmitBtn) {
+            modeSubmitBtn.addEventListener('click', function () { setMode('submit'); });
+        }
+        if (modeRequestBtn) {
+            modeRequestBtn.addEventListener('click', function () { setMode('request'); });
+        }
+        setMode('submit');
+
+        var themeEl = el('pack-request-theme');
+        if (themeEl) {
+            themeEl.addEventListener('input', function () {
+                setRequestStatus('');
+                syncRequestButton();
+            });
+        }
+        var langEl = el('pack-request-language');
+        // Preselect the language the admin UI is already running in — a German
+        // host asking for a pack almost never wants an English one.
+        if (langEl && window.QuizifyI18n && typeof window.QuizifyI18n.getLanguage === 'function') {
+            var cur = window.QuizifyI18n.getLanguage();
+            if (cur && langEl.querySelector('option[value="' + cur + '"]')) {
+                langEl.value = cur;
+            }
+        }
+        var requestBtn = el('pack-request-btn');
+        if (requestBtn) { requestBtn.addEventListener('click', doRequest); }
+        syncRequestButton();
+
         loadSubmissions();
     }
 
     return {
         init: init,
-        validatePack: validatePack  // exported for tests
+        validatePack: validatePack,  // exported for tests
+        setMode: setMode             // exported for tests
     };
 })();
 

@@ -1,0 +1,142 @@
+{
+  "_comment": "Shared cases for the pack-request validator (#579). Read by BOTH tests/test_pack_request_579.py (server/pack_submission.py::validate_request) and cf-workers/contract-check.mjs (quizify-api.js::validateRequest) so the two implementations cannot drift. Caps mirror REQUEST_MAX_* in const.py: theme 80, notes 500, language 10.",
+  "valid": [
+    {
+      "id": "full",
+      "request": {
+        "theme": "80s German TV shows",
+        "language": "de",
+        "notes": "Skew towards things a 50-year-old would remember."
+      },
+      "reason": "all three fields present"
+    },
+    {
+      "id": "no-notes",
+      "request": {
+        "theme": "Belgian beer",
+        "language": "en"
+      },
+      "reason": "notes is optional"
+    },
+    {
+      "id": "notes-null",
+      "request": {
+        "theme": "Belgian beer",
+        "language": "en",
+        "notes": null
+      },
+      "reason": "an explicit null means no notes"
+    },
+    {
+      "id": "no-language",
+      "request": {
+        "theme": "Formel 1"
+      },
+      "reason": "language defaults to de"
+    },
+    {
+      "id": "theme-at-cap",
+      "request": {
+        "theme": "xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx",
+        "language": "de"
+      },
+      "reason": "exactly at the 80-char cap is still valid"
+    },
+    {
+      "id": "notes-at-cap",
+      "request": {
+        "theme": "Cheese",
+        "language": "de",
+        "notes": "yyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyy"
+      },
+      "reason": "exactly at the 500-char cap is still valid"
+    }
+  ],
+  "malformations": [
+    {
+      "id": "not-an-object",
+      "request": [
+        "theme"
+      ],
+      "reason": "array instead of object"
+    },
+    {
+      "id": "string-body",
+      "request": "Harry Potter",
+      "reason": "bare string instead of object"
+    },
+    {
+      "id": "missing-theme",
+      "request": {
+        "language": "de"
+      },
+      "reason": "theme is required"
+    },
+    {
+      "id": "empty-theme",
+      "request": {
+        "theme": "",
+        "language": "de"
+      },
+      "reason": "empty theme"
+    },
+    {
+      "id": "whitespace-theme",
+      "request": {
+        "theme": "   ",
+        "language": "de"
+      },
+      "reason": "whitespace-only theme"
+    },
+    {
+      "id": "theme-too-long",
+      "request": {
+        "theme": "xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx",
+        "language": "de"
+      },
+      "reason": "one over the 80-char cap"
+    },
+    {
+      "id": "theme-wrong-type",
+      "request": {
+        "theme": 42,
+        "language": "de"
+      },
+      "reason": "theme must be a string"
+    },
+    {
+      "id": "empty-language",
+      "request": {
+        "theme": "Cheese",
+        "language": ""
+      },
+      "reason": "language present but empty"
+    },
+    {
+      "id": "language-too-long",
+      "request": {
+        "theme": "Cheese",
+        "language": "ddddddddddd"
+      },
+      "reason": "one over the 10-char cap"
+    },
+    {
+      "id": "notes-wrong-type",
+      "request": {
+        "theme": "Cheese",
+        "language": "de",
+        "notes": 5
+      },
+      "reason": "notes must be a string when present"
+    },
+    {
+      "id": "notes-too-long",
+      "request": {
+        "theme": "Cheese",
+        "language": "de",
+        "notes": "yyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyy"
+      },
+      "reason": "one over the 500-char cap"
+    }
+  ]
+}

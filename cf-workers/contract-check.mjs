@@ -112,7 +112,64 @@ for (const spec of malformations) {
   }
 }
 
+// ---------------------------------------------------------------------------
+// 3. Pack requests (#579) — same idea, second validator.
+//
+// The request path has no fixture pack to mutate: a request is three short
+// fields, so the shared catalog carries whole request objects (valid ones and
+// malformed ones) and both sides just run their validator over them.
+// tests/test_pack_request_579.py replays the identical file against
+// server/pack_submission.py::validate_request.
+// ---------------------------------------------------------------------------
+
+const requestCases = JSON.parse(
+  readFileSync(join(repoRoot, 'tests', 'fixtures', 'pack_request_cases.json'), 'utf8'),
+);
+
+const MAX_THEME_CHARS = extractConst('MAX_THEME_CHARS');
+const MAX_NOTES_CHARS = extractConst('MAX_NOTES_CHARS');
+const MAX_LANGUAGE_CHARS = extractConst('MAX_LANGUAGE_CHARS');
+
+const reqFnMatch = workerSrc.match(/function validateRequest\(req\)\s*\{[\s\S]*?\n\}/);
+if (!reqFnMatch) fail('could not extract validateRequest from quizify-api.js');
+
+// eslint-disable-next-line no-new-func
+const makeRequestValidator = new Function(
+  'MAX_THEME_CHARS',
+  'MAX_NOTES_CHARS',
+  'MAX_LANGUAGE_CHARS',
+  `${reqFnMatch[0]}\nreturn validateRequest;`,
+);
+const validateRequest = makeRequestValidator(
+  MAX_THEME_CHARS,
+  MAX_NOTES_CHARS,
+  MAX_LANGUAGE_CHARS,
+);
+
+if (!Array.isArray(requestCases.valid) || requestCases.valid.length < 3) {
+  fail('shared request catalog has too few valid cases');
+}
+if (!Array.isArray(requestCases.malformations) || requestCases.malformations.length < 5) {
+  fail('shared request catalog has too few malformations');
+}
+for (const c of requestCases.valid) {
+  const err = validateRequest(c.request);
+  if (err !== null) {
+    fail(`worker REJECTED a valid request ('${c.id}': ${c.reason}) — ${err}`);
+  }
+}
+for (const c of requestCases.malformations) {
+  const err = validateRequest(c.request);
+  if (err === null) {
+    fail(
+      `worker ACCEPTED a malformed request ('${c.id}': ${c.reason}) — schema too loose`,
+    );
+  }
+}
+
 console.log(
-  `contract-check OK: worker validatePack accepts the fixture and rejects all ${malformations.length} catalogued malformations`,
+  `contract-check OK: validatePack accepts the fixture and rejects all ${malformations.length} ` +
+    `catalogued malformations; validateRequest accepts all ${requestCases.valid.length} valid ` +
+    `requests and rejects all ${requestCases.malformations.length} malformed ones`,
 );
 process.exit(0);

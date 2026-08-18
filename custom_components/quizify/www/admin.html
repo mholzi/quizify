@@ -560,6 +560,25 @@
                         <p class="pack-submit-intro" data-i18n="packSubmit.intro">
                             Three quick steps. Your pack lands as a review issue on GitHub.</p>
 
+                        <!-- Mode switch (#579): the same card serves two
+                             directions — send a finished pack, or ask for one
+                             that doesn't exist yet. Deliberately not a second
+                             screen: both end as an issue and both show up in
+                             the one timeline below. -->
+                        <div class="pack-mode" role="tablist"
+                             aria-label="Pack submission mode">
+                            <button type="button" id="pack-mode-submit-btn"
+                                    class="pack-mode-btn active" role="tab"
+                                    aria-selected="true" aria-controls="pack-submit-pane"
+                                    data-i18n="packSubmit.mode.submit">Send a pack</button>
+                            <button type="button" id="pack-mode-request-btn"
+                                    class="pack-mode-btn" role="tab"
+                                    aria-selected="false" aria-controls="pack-request-pane"
+                                    data-i18n="packSubmit.mode.request">Ask for a pack</button>
+                        </div>
+
+                        <div id="pack-submit-pane" role="tabpanel">
+
                         <!-- step rail: Compose / Check / Submit -->
                         <div class="pack-steps" role="list">
                             <div class="pack-step" data-step="1" role="listitem">
@@ -614,11 +633,48 @@
                                     data-i18n="packSubmit.backBtn">Back to edit</button>
                             <div id="pack-submit-status" class="pack-submit-status" role="status" aria-live="polite"></div>
                         </div>
+                        </div><!-- /#pack-submit-pane -->
+
+                        <!-- Request mode (#579): three short fields, no JSON.
+                             Requests are public — the resulting pack ships to
+                             everyone or not at all. -->
+                        <div id="pack-request-pane" class="hidden" role="tabpanel">
+                            <p class="pack-submit-intro" data-i18n="packSubmit.request.intro">
+                                Describe the pack you are missing. It lands as a request issue;
+                                the finished pack comes back as a pull request for review.</p>
+
+                            <label class="pack-submit-input-label" for="pack-request-theme"
+                                   data-i18n="packSubmit.request.themeLabel">Theme</label>
+                            <input type="text" id="pack-request-theme" class="pack-submit-input pack-request-line"
+                                   maxlength="80" autocomplete="off"
+                                   data-i18n-placeholder="packSubmit.request.themePlaceholder"
+                                   placeholder="80s German TV shows">
+
+                            <label class="pack-submit-input-label" for="pack-request-language"
+                                   data-i18n="packSubmit.request.languageLabel">Language</label>
+                            <select id="pack-request-language" class="pack-submit-input pack-request-line">
+                                <option value="de">Deutsch</option>
+                                <option value="en">English</option>
+                                <option value="es">Español</option>
+                            </select>
+
+                            <label class="pack-submit-input-label" for="pack-request-notes"
+                                   data-i18n="packSubmit.request.notesLabel">Anything to keep in mind? (optional)</label>
+                            <textarea id="pack-request-notes" class="pack-submit-input" rows="3"
+                                      maxlength="500"
+                                      data-i18n-placeholder="packSubmit.request.notesPlaceholder"
+                                      placeholder="Skew towards things a 50-year-old would remember."></textarea>
+
+                            <button type="button" id="pack-request-btn"
+                                    class="btn btn-primary btn-block" disabled
+                                    data-i18n="packSubmit.request.submit">Send request</button>
+                            <div id="pack-request-status" class="pack-submit-status" role="status" aria-live="polite"></div>
+                        </div>
                     </div>
 
                     <!-- My submissions timeline -->
                     <div id="pack-submit-list-card" class="pack-submit-card pack-submit-list-card hidden">
-                        <div class="pack-submit-list-title" data-i18n="packSubmit.recent">My submissions</div>
+                        <div class="pack-submit-list-title" data-i18n="packSubmit.recent">My packs &amp; requests</div>
                         <div id="pack-submit-list" class="pack-submit-timeline"></div>
                     </div>
                 </section>
