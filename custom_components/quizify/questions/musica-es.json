@@ -1,0 +1,3333 @@
+{
+  "name": "Música",
+  "language": "es",
+  "version": "1.0",
+  "theme": "music",
+  "questions": [
+    {
+      "id": "mus_es_001",
+      "question": "¿De qué animal procedía tradicionalmente el material de las cuerdas de tripa?",
+      "answers": [
+        {
+          "text": "Gato",
+          "correct": false
+        },
+        {
+          "text": "Oveja",
+          "correct": true
+        },
+        {
+          "text": "Caballo",
+          "correct": false
+        }
+      ],
+      "difficulty": "medium",
+      "fun_fact": "El término inglés catgut hizo creer durante siglos que venía de gatos, pero casi siempre era intestino de oveja. De dónde sale exactamente ese nombre sigue sin estar claro.",
+      "category": "Música"
+    },
+    {
+      "id": "mus_es_002",
+      "question": "¿Cuántas cuerdas tiene una guitarra clásica estándar?",
+      "answers": [
+        {
+          "text": "Seis",
+          "correct": true
+        },
+        {
+          "text": "Cuatro",
+          "correct": false
+        },
+        {
+          "text": "Ocho",
+          "correct": false
+        }
+      ],
+      "difficulty": "easy",
+      "fun_fact": "Las seis cuerdas simples se impusieron hacia finales del siglo XVIII. Antes fue habitual la guitarra de cinco órdenes dobles, que se tocaba más rasgueada que punteada.",
+      "category": "Música"
+    },
+    {
+      "id": "mus_es_003",
+      "question": "¿Qué instrumento de viento se toca soplando por un lateral y no por el extremo?",
+      "answers": [
+        {
+          "text": "La flauta travesera",
+          "correct": true
+        },
+        {
+          "text": "El clarinete",
+          "correct": false
+        },
+        {
+          "text": "El oboe",
+          "correct": false
+        }
+      ],
+      "difficulty": "easy",
+      "fun_fact": "Soplar contra un borde en vez de por una boquilla la hace notoriamente difícil al principio: el sonido nace de partir la columna de aire, no de hacer vibrar una caña.",
+      "category": "Música"
+    },
+    {
+      "id": "mus_es_004",
+      "question": "¿Qué instrumento se toca sin tocarlo?",
+      "answers": [
+        {
+          "text": "El theremín",
+          "correct": true
+        },
+        {
+          "text": "El arpa de boca",
+          "correct": false
+        },
+        {
+          "text": "La celesta",
+          "correct": false
+        }
+      ],
+      "difficulty": "medium",
+      "fun_fact": "Dos antenas miden la posición de las manos del intérprete mediante capacitancia. Lo inventó un físico soviético que investigaba sensores de proximidad, no instrumentos.",
+      "category": "Música"
+    },
+    {
+      "id": "mus_es_005",
+      "question": "¿De qué está hecho el tubo de un didgeridoo auténtico?",
+      "answers": [
+        {
+          "text": "Un tronco vaciado por termitas",
+          "correct": true
+        },
+        {
+          "text": "Bambú tallado a mano",
+          "correct": false
+        },
+        {
+          "text": "Cuero tensado",
+          "correct": false
+        }
+      ],
+      "difficulty": "medium",
+      "fun_fact": "Los aborígenes australianos buscan eucaliptos que las termitas hayan vaciado por dentro y solo cortan y limpian el resultado. El insecto hace el trabajo de torneado.",
+      "category": "Música"
+    },
+    {
+      "id": "mus_es_006",
+      "question": "¿Qué pedal del piano prolonga el sonido de todas las notas mientras se mantiene pisado?",
+      "answers": [
+        {
+          "text": "El derecho",
+          "correct": true
+        },
+        {
+          "text": "El izquierdo",
+          "correct": false
+        },
+        {
+          "text": "El central",
+          "correct": false
+        }
+      ],
+      "difficulty": "easy",
+      "fun_fact": "Levanta todos los apagadores a la vez, así que también resuenan por simpatía las cuerdas que nadie ha pulsado. Por eso el piano suena más ancho con el pedal, no solo más largo.",
+      "category": "Música"
+    },
+    {
+      "id": "mus_es_007",
+      "question": "¿Qué instrumento da la nota de afinación a la orquesta?",
+      "answers": [
+        {
+          "text": "El oboe",
+          "correct": true
+        },
+        {
+          "text": "El violín",
+          "correct": false
+        },
+        {
+          "text": "El contrabajo",
+          "correct": false
+        }
+      ],
+      "difficulty": "medium",
+      "fun_fact": "Su timbre penetrante se oye por encima del resto y su afinación es poco flexible, así que resulta más práctico que los demás se ajusten a él que al revés.",
+      "category": "Música"
+    },
+    {
+      "id": "mus_es_008",
+      "question": "¿Cuántos pedales tiene un arpa de concierto?",
+      "answers": [
+        {
+          "text": "Siete",
+          "correct": true
+        },
+        {
+          "text": "Tres",
+          "correct": false
+        },
+        {
+          "text": "Doce",
+          "correct": false
+        }
+      ],
+      "difficulty": "medium",
+      "fun_fact": "Uno por cada nota de la escala, y cada uno tiene tres posiciones. Con los pies se cambia la tonalidad entera mientras las manos siguen tocando.",
+      "category": "Música"
+    },
+    {
+      "id": "mus_es_009",
+      "question": "¿De qué está hecha por dentro la tecla de un piano de cola?",
+      "answers": [
+        {
+          "text": "De madera recubierta",
+          "correct": true
+        },
+        {
+          "text": "De metal macizo",
+          "correct": false
+        },
+        {
+          "text": "De cerámica",
+          "correct": false
+        }
+      ],
+      "difficulty": "medium",
+      "fun_fact": "La tecla es una palanca de madera con un recubrimiento y, en muchos pianos, un contrapeso de plomo incrustado. El marfil se prohibió, pero la mecánica que hay debajo apenas ha cambiado desde el siglo XIX.",
+      "category": "Música"
+    },
+    {
+      "id": "mus_es_010",
+      "question": "¿Qué instrumento de percusión afinado se toca con mazos sobre láminas de metal y tiene resonadores debajo?",
+      "answers": [
+        {
+          "text": "El vibráfono",
+          "correct": true
+        },
+        {
+          "text": "La marimba",
+          "correct": false
+        },
+        {
+          "text": "El xilófono",
+          "correct": false
+        }
+      ],
+      "difficulty": "medium",
+      "fun_fact": "Sus resonadores llevan discos giratorios accionados por un motor: al abrirse y cerrarse producen ese trémolo flotante que ningún otro instrumento de láminas tiene.",
+      "category": "Música"
+    },
+    {
+      "id": "mus_es_011",
+      "question": "¿Cuántos botones tiene la mano izquierda de un acordeón de piano grande?",
+      "answers": [
+        {
+          "text": "Ciento veinte",
+          "correct": true
+        },
+        {
+          "text": "Doce",
+          "correct": false
+        },
+        {
+          "text": "Sesenta",
+          "correct": false
+        }
+      ],
+      "difficulty": "medium",
+      "fun_fact": "Están dispuestos en el llamado sistema Stradella: dos filas dan notas sueltas y las cuatro restantes, acordes completos con una sola pulsación.",
+      "category": "Música"
+    },
+    {
+      "id": "mus_es_012",
+      "question": "¿Qué parte del violín transmite la vibración de la tapa al fondo?",
+      "answers": [
+        {
+          "text": "El alma",
+          "correct": true
+        },
+        {
+          "text": "El puente",
+          "correct": false
+        },
+        {
+          "text": "El clavijero",
+          "correct": false
+        }
+      ],
+      "difficulty": "hard",
+      "fun_fact": "Es un palito de abeto encajado a presión, sin pegamento. Moverlo un milímetro cambia el sonido del instrumento entero, y en italiano se llama anima por algo.",
+      "category": "Música"
+    },
+    {
+      "id": "mus_es_013",
+      "question": "¿Qué se le hace a la trompa para modificar el timbre y la afinación mientras se toca?",
+      "answers": [
+        {
+          "text": "Meter la mano en la campana",
+          "correct": true
+        },
+        {
+          "text": "Girar la boquilla",
+          "correct": false
+        },
+        {
+          "text": "Aflojar la campana",
+          "correct": false
+        }
+      ],
+      "difficulty": "hard",
+      "fun_fact": "La técnica es anterior a las válvulas: durante el clasicismo la mano dentro del pabellón era la única forma de conseguir notas fuera de la serie armónica.",
+      "category": "Música"
+    },
+    {
+      "id": "mus_es_014",
+      "question": "¿Qué instrumento inventó Benjamin Franklin?",
+      "answers": [
+        {
+          "text": "La armónica de cristal",
+          "correct": true
+        },
+        {
+          "text": "El banjo",
+          "correct": false
+        },
+        {
+          "text": "La armónica de boca",
+          "correct": false
+        }
+      ],
+      "difficulty": "medium",
+      "fun_fact": "Copas de cristal giratorias que suenan al rozarlas con los dedos húmedos. Mozart y Beethoven escribieron para ella, y luego cayó en el olvido casi por completo.",
+      "category": "Música"
+    },
+    {
+      "id": "mus_es_015",
+      "question": "¿Cuántos tubos puede llegar a tener un gran órgano de catedral?",
+      "answers": [
+        {
+          "text": "Varios miles",
+          "correct": true
+        },
+        {
+          "text": "Unos cien",
+          "correct": false
+        },
+        {
+          "text": "Unos veinte",
+          "correct": false
+        }
+      ],
+      "difficulty": "easy",
+      "fun_fact": "El órgano no es un instrumento de teclado con tubos, sino cientos de flautas distintas gobernadas desde un teclado. Los registros deciden cuáles suenan.",
+      "category": "Música"
+    },
+    {
+      "id": "mus_es_016",
+      "question": "¿Qué material sustituyó al marfil en las teclas blancas de los pianos actuales?",
+      "answers": [
+        {
+          "text": "El plástico",
+          "correct": true
+        },
+        {
+          "text": "El aluminio",
+          "correct": false
+        },
+        {
+          "text": "El vidrio",
+          "correct": false
+        }
+      ],
+      "difficulty": "easy",
+      "fun_fact": "Además de la prohibición del marfil, el plástico ganó por motivos prácticos: no se agrieta, no reacciona al sudor de los dedos y se fabrica igual pieza tras pieza.",
+      "category": "Música"
+    },
+    {
+      "id": "mus_es_017",
+      "question": "¿Qué instrumento de cuerda se toca con un arco pero se sujeta entre las rodillas?",
+      "answers": [
+        {
+          "text": "El violonchelo",
+          "correct": true
+        },
+        {
+          "text": "La viola",
+          "correct": false
+        },
+        {
+          "text": "El laúd",
+          "correct": false
+        }
+      ],
+      "difficulty": "easy",
+      "fun_fact": "La pica que lo apoya en el suelo es relativamente moderna: durante siglos el intérprete lo sostenía solo con las piernas, sin ningún punto de apoyo.",
+      "category": "Música"
+    },
+    {
+      "id": "mus_es_018",
+      "question": "¿Qué tiene de raro el timbre del clarinete comparado con la flauta?",
+      "answers": [
+        {
+          "text": "Sus armónicos pares son muy débiles",
+          "correct": true
+        },
+        {
+          "text": "Suena una octava más grave de lo escrito",
+          "correct": false
+        },
+        {
+          "text": "No puede tocar legato",
+          "correct": false
+        }
+      ],
+      "difficulty": "hard",
+      "fun_fact": "Se comporta como un tubo cerrado por un extremo, así que refuerza sobre todo los armónicos impares. De ahí ese color hueco y algo nasal en el registro grave.",
+      "category": "Música"
+    },
+    {
+      "id": "mus_es_019",
+      "question": "¿Cuántas cuerdas tiene un ukelele estándar?",
+      "answers": [
+        {
+          "text": "Cuatro",
+          "correct": true
+        },
+        {
+          "text": "Seis",
+          "correct": false
+        },
+        {
+          "text": "Doce",
+          "correct": false
+        }
+      ],
+      "difficulty": "easy",
+      "fun_fact": "Y no van de grave a agudo: en la afinación habitual la primera cuerda es más aguda que la segunda, algo que descoloca a cualquier guitarrista.",
+      "category": "Música"
+    },
+    {
+      "id": "mus_es_020",
+      "question": "¿Qué se toca golpeando el instrumento con las manos abiertas y no con baquetas?",
+      "answers": [
+        {
+          "text": "El cajón",
+          "correct": true
+        },
+        {
+          "text": "El timbal",
+          "correct": false
+        },
+        {
+          "text": "El bombo",
+          "correct": false
+        }
+      ],
+      "difficulty": "easy",
+      "fun_fact": "Nació en la costa peruana entre esclavos africanos a los que se prohibieron los tambores. Un cajón de fruta no parecía un instrumento y por eso sobrevivió.",
+      "category": "Música"
+    },
+    {
+      "id": "mus_es_021",
+      "question": "¿Qué instrumento debe su nombre a las palabras italianas para suave y fuerte?",
+      "answers": [
+        {
+          "text": "El piano",
+          "correct": true
+        },
+        {
+          "text": "El órgano",
+          "correct": false
+        },
+        {
+          "text": "La tuba",
+          "correct": false
+        }
+      ],
+      "difficulty": "easy",
+      "fun_fact": "Su nombre completo era pianoforte, y describía la novedad: por primera vez un teclado dejaba que la fuerza del dedo decidiera el volumen de la nota.",
+      "category": "Música"
+    },
+    {
+      "id": "mus_es_022",
+      "question": "¿Qué instrumento de metal cambia de nota deslizando en vez de con válvulas?",
+      "answers": [
+        {
+          "text": "El trombón",
+          "correct": true
+        },
+        {
+          "text": "La trompeta",
+          "correct": false
+        },
+        {
+          "text": "El fiscorno",
+          "correct": false
+        }
+      ],
+      "difficulty": "easy",
+      "fun_fact": "Por eso puede hacer glissandos continuos que ningún otro metal consigue: no salta entre notas, se desliza entre ellas.",
+      "category": "Música"
+    },
+    {
+      "id": "mus_es_023",
+      "question": "¿Cuántos músicos suele tener una orquesta sinfónica grande?",
+      "answers": [
+        {
+          "text": "Alrededor de cien",
+          "correct": true
+        },
+        {
+          "text": "Alrededor de veinte",
+          "correct": false
+        },
+        {
+          "text": "Alrededor de trescientos",
+          "correct": false
+        }
+      ],
+      "difficulty": "easy",
+      "fun_fact": "La cifra creció con el repertorio: las sinfonías de Haydn se estrenaban con unos veinticinco músicos, y un siglo después Mahler pedía escenarios que apenas caben en las salas.",
+      "category": "Música"
+    },
+    {
+      "id": "mus_es_024",
+      "question": "¿Qué se usa en el arco del violín para que agarre la cuerda?",
+      "answers": [
+        {
+          "text": "Resina de pino",
+          "correct": true
+        },
+        {
+          "text": "Aceite",
+          "correct": false
+        },
+        {
+          "text": "Cera de abeja",
+          "correct": false
+        }
+      ],
+      "difficulty": "medium",
+      "fun_fact": "Sin ella las crines resbalan y no suena prácticamente nada: el arco no frota la cuerda, la engancha y la suelta cientos de veces por segundo.",
+      "category": "Música"
+    },
+    {
+      "id": "mus_es_025",
+      "question": "¿De qué animal proceden tradicionalmente las crines del arco?",
+      "answers": [
+        {
+          "text": "Del caballo",
+          "correct": true
+        },
+        {
+          "text": "Del jabalí",
+          "correct": false
+        },
+        {
+          "text": "Del ciervo",
+          "correct": false
+        }
+      ],
+      "difficulty": "easy",
+      "fun_fact": "Se prefieren las de cola de caballos de climas fríos. Aun así, sin colofonia las crines resbalan: es la resina, más que el pelo, la que agarra la cuerda.",
+      "category": "Música"
+    },
+    {
+      "id": "mus_es_026",
+      "question": "¿Qué instrumento suele tener treinta y siete teclas y se toca soplando por un tubo?",
+      "answers": [
+        {
+          "text": "La melódica",
+          "correct": true
+        },
+        {
+          "text": "La armónica",
+          "correct": false
+        },
+        {
+          "text": "La gaita",
+          "correct": false
+        }
+      ],
+      "difficulty": "medium",
+      "fun_fact": "Es un teclado con lengüetas libres, como un acordeón portátil. Se diseñó para escuelas y acabó en discos de reggae y de jazz.",
+      "category": "Música"
+    },
+    {
+      "id": "mus_es_027",
+      "question": "¿Qué parte de la gaita mantiene el sonido continuo mientras el gaitero respira?",
+      "answers": [
+        {
+          "text": "El odre",
+          "correct": true
+        },
+        {
+          "text": "El puntero",
+          "correct": false
+        },
+        {
+          "text": "La caña",
+          "correct": false
+        }
+      ],
+      "difficulty": "medium",
+      "fun_fact": "La bolsa de aire hace de pulmón de reserva. Por eso una gaita no tiene silencios: el instrumento sigue sonando aunque el intérprete deje de soplar.",
+      "category": "Música"
+    },
+    {
+      "id": "mus_es_028",
+      "question": "¿Qué instrumento africano de láminas metálicas se toca con los pulgares?",
+      "answers": [
+        {
+          "text": "La mbira",
+          "correct": true
+        },
+        {
+          "text": "El balafón",
+          "correct": false
+        },
+        {
+          "text": "La kora",
+          "correct": false
+        }
+      ],
+      "difficulty": "hard",
+      "fun_fact": "Las láminas se afinan empujándolas hacia dentro o hacia fuera. Muchos ejemplares llevan chapas o conchas que zumban a propósito: el ruido forma parte del sonido buscado.",
+      "category": "Música"
+    },
+    {
+      "id": "mus_es_029",
+      "question": "¿Qué tiene el bandoneón que no tiene el acordeón de piano?",
+      "answers": [
+        {
+          "text": "Un botón puede dar dos notas distintas",
+          "correct": true
+        },
+        {
+          "text": "Un teclado de marfil",
+          "correct": false
+        },
+        {
+          "text": "Cuatro filas de pedales",
+          "correct": false
+        }
+      ],
+      "difficulty": "hard",
+      "fun_fact": "En muchos modelos la nota cambia según se abra o se cierre el fuelle, así que el mismo pasaje se digita distinto según la dirección. Es una de las razones de su fama de difícil.",
+      "category": "Música"
+    },
+    {
+      "id": "mus_es_030",
+      "question": "¿Qué instrumento de cuerda pulsada se asocia al blues del delta y se toca con un tubo de vidrio en un dedo?",
+      "answers": [
+        {
+          "text": "La guitarra slide",
+          "correct": true
+        },
+        {
+          "text": "El banjo",
+          "correct": false
+        },
+        {
+          "text": "La mandolina",
+          "correct": false
+        }
+      ],
+      "difficulty": "medium",
+      "fun_fact": "El cuello de una botella cortado servía igual que un tubo comprado, y de ahí viene el nombre bottleneck. Al no pisar el traste, la afinación es continua y no por semitonos.",
+      "category": "Música"
+    },
+    {
+      "id": "mus_es_031",
+      "question": "¿Qué compositor siguió escribiendo música después de quedarse sordo?",
+      "answers": [
+        {
+          "text": "Beethoven",
+          "correct": true
+        },
+        {
+          "text": "Chopin",
+          "correct": false
+        },
+        {
+          "text": "Vivaldi",
+          "correct": false
+        }
+      ],
+      "difficulty": "easy",
+      "fun_fact": "Usaba una varilla apoyada en el piano y sujeta con los dientes para percibir la vibración por el hueso. La Novena la estrenó sin oír ni la orquesta ni la ovación.",
+      "category": "Música"
+    },
+    {
+      "id": "mus_es_032",
+      "question": "¿Qué ocurre al final de la Sinfonía de los adioses de Haydn?",
+      "answers": [
+        {
+          "text": "Los músicos se marchan apagando sus velas",
+          "correct": true
+        },
+        {
+          "text": "El público debe cantar",
+          "correct": false
+        },
+        {
+          "text": "Se repite el primer movimiento",
+          "correct": false
+        }
+      ],
+      "difficulty": "medium",
+      "fun_fact": "Era una petición laboral disfrazada de música: la orquesta llevaba meses lejos de sus familias y el príncipe entendió la indirecta al día siguiente.",
+      "category": "Música"
+    },
+    {
+      "id": "mus_es_033",
+      "question": "¿Cuánto dura aproximadamente la ópera más larga de Wagner, contando los descansos?",
+      "answers": [
+        {
+          "text": "Más de cinco horas",
+          "correct": true
+        },
+        {
+          "text": "Unos cuarenta minutos",
+          "correct": false
+        },
+        {
+          "text": "Unas dos horas",
+          "correct": false
+        }
+      ],
+      "difficulty": "medium",
+      "fun_fact": "Los maestros cantores tiene unas cuatro horas y media de música; con los dos entreactos, una función pasa de las cinco horas y media. Bayreuth organiza esos descansos como comidas completas.",
+      "category": "Música"
+    },
+    {
+      "id": "mus_es_034",
+      "question": "¿Qué tenía de escandaloso el estreno de La consagración de la primavera en 1913?",
+      "answers": [
+        {
+          "text": "El público montó un tumulto en la sala",
+          "correct": true
+        },
+        {
+          "text": "Duró solo tres minutos",
+          "correct": false
+        },
+        {
+          "text": "Se tocó sin instrumentos",
+          "correct": false
+        }
+      ],
+      "difficulty": "medium",
+      "fun_fact": "Los silbidos fueron tan fuertes que los bailarines dejaron de oír la orquesta y el coreógrafo tuvo que gritarles los tiempos desde bastidores.",
+      "category": "Música"
+    },
+    {
+      "id": "mus_es_035",
+      "question": "¿Qué instrumento tocaba Mozart además del piano y con el que actuó de niño?",
+      "answers": [
+        {
+          "text": "El violín",
+          "correct": true
+        },
+        {
+          "text": "La trompeta",
+          "correct": false
+        },
+        {
+          "text": "El arpa",
+          "correct": false
+        }
+      ],
+      "difficulty": "medium",
+      "fun_fact": "Su padre era autor de un método de violín célebre en toda Europa y el niño lo tocaba en las giras, aunque donde más asombraba era al teclado.",
+      "category": "Música"
+    },
+    {
+      "id": "mus_es_036",
+      "question": "¿Qué pieza clásica se compuso para que la tocaran cañones de verdad?",
+      "answers": [
+        {
+          "text": "La obertura 1812 de Chaikovski",
+          "correct": true
+        },
+        {
+          "text": "El Bolero de Ravel",
+          "correct": false
+        },
+        {
+          "text": "Las cuatro estaciones",
+          "correct": false
+        }
+      ],
+      "difficulty": "medium",
+      "fun_fact": "La partitura pide dieciséis disparos de cañón. En interiores se sustituyen por bombo o grabaciones, porque la pólvora y los techos no se llevan bien.",
+      "category": "Música"
+    },
+    {
+      "id": "mus_es_037",
+      "question": "¿Qué compositor barroco quedó ciego y fue operado por el mismo cirujano que Bach?",
+      "answers": [
+        {
+          "text": "Händel",
+          "correct": true
+        },
+        {
+          "text": "Purcell",
+          "correct": false
+        },
+        {
+          "text": "Telemann",
+          "correct": false
+        }
+      ],
+      "difficulty": "hard",
+      "fun_fact": "John Taylor recorría Europa como oculista ambulante. Ninguno de los dos recuperó la vista y su reputación póstuma es la de un charlatán con muy buena prensa.",
+      "category": "Música"
+    },
+    {
+      "id": "mus_es_038",
+      "question": "¿Qué tiene de particular la obra 4'33'' de John Cage?",
+      "answers": [
+        {
+          "text": "No se toca ninguna nota",
+          "correct": true
+        },
+        {
+          "text": "Dura cuatro días",
+          "correct": false
+        },
+        {
+          "text": "Se toca a oscuras",
+          "correct": false
+        }
+      ],
+      "difficulty": "easy",
+      "fun_fact": "El intérprete marca los tres movimientos sin producir sonido. La obra son los ruidos de la sala, así que ninguna interpretación se parece a otra.",
+      "category": "Música"
+    },
+    {
+      "id": "mus_es_039",
+      "question": "¿Qué compositor escribió más de seiscientas obras y murió a los treinta y un años?",
+      "answers": [
+        {
+          "text": "Schubert",
+          "correct": true
+        },
+        {
+          "text": "Brahms",
+          "correct": false
+        },
+        {
+          "text": "Mendelssohn",
+          "correct": false
+        }
+      ],
+      "difficulty": "medium",
+      "fun_fact": "Solo canciones son más de seiscientas. Muchas se estrenaron en reuniones caseras entre amigos que ya se llamaban schubertiadas en vida suya.",
+      "category": "Música"
+    },
+    {
+      "id": "mus_es_040",
+      "question": "¿Qué instrumento repite el mismo ritmo de principio a fin en el Bolero de Ravel?",
+      "answers": [
+        {
+          "text": "La caja",
+          "correct": true
+        },
+        {
+          "text": "El arpa",
+          "correct": false
+        },
+        {
+          "text": "El timbal",
+          "correct": false
+        }
+      ],
+      "difficulty": "easy",
+      "fun_fact": "El mismo compás de caja suena sin parar durante toda la obra, unas ciento sesenta y nueve veces. Ravel la describió como una pieza sin música: solo orquestación.",
+      "category": "Música"
+    },
+    {
+      "id": "mus_es_041",
+      "question": "¿Qué papel de ópera de Mozart exige a la soprano las notas más agudas del repertorio?",
+      "answers": [
+        {
+          "text": "La Reina de la Noche",
+          "correct": true
+        },
+        {
+          "text": "Carmen",
+          "correct": false
+        },
+        {
+          "text": "Mimí",
+          "correct": false
+        }
+      ],
+      "difficulty": "medium",
+      "fun_fact": "Su aria sube hasta un fa sobreagudo, una nota que muy pocas sopranos sostienen con seguridad. Y hay que cantarla con potencia suficiente para pasar por encima de la orquesta entera.",
+      "category": "Música"
+    },
+    {
+      "id": "mus_es_042",
+      "question": "¿Qué compositor orquestó Cuadros de una exposición, obra escrita originalmente para piano?",
+      "answers": [
+        {
+          "text": "Ravel",
+          "correct": true
+        },
+        {
+          "text": "Debussy",
+          "correct": false
+        },
+        {
+          "text": "Stravinski",
+          "correct": false
+        }
+      ],
+      "difficulty": "hard",
+      "fun_fact": "Músorgski la escribió para piano en 1874 y Ravel la orquestó casi cincuenta años después. La versión que casi todo el mundo conoce de una obra rusa emblemática la coloreó un francés.",
+      "category": "Música"
+    },
+    {
+      "id": "mus_es_043",
+      "question": "¿Qué instrumento representa al abuelo en Pedro y el lobo?",
+      "answers": [
+        {
+          "text": "El fagot",
+          "correct": true
+        },
+        {
+          "text": "El oboe",
+          "correct": false
+        },
+        {
+          "text": "La flauta",
+          "correct": false
+        }
+      ],
+      "difficulty": "medium",
+      "fun_fact": "Prokófiev asignó un timbre a cada personaje para enseñar la orquesta a los niños. Es probablemente la clase de instrumentación más escuchada de la historia.",
+      "category": "Música"
+    },
+    {
+      "id": "mus_es_044",
+      "question": "¿Qué tenían prohibido los castrati que hizo posible su voz?",
+      "answers": [
+        {
+          "text": "Llegar a la pubertad con normalidad",
+          "correct": true
+        },
+        {
+          "text": "Aprender a leer música",
+          "correct": false
+        },
+        {
+          "text": "Actuar en teatros",
+          "correct": false
+        }
+      ],
+      "difficulty": "hard",
+      "fun_fact": "La operación mantenía la laringe infantil mientras el pecho crecía como el de un adulto, lo que producía una potencia imposible de reproducir hoy.",
+      "category": "Música"
+    },
+    {
+      "id": "mus_es_045",
+      "question": "¿Qué pasó con el Réquiem de Mozart?",
+      "answers": [
+        {
+          "text": "Lo terminó otra persona",
+          "correct": true
+        },
+        {
+          "text": "Se perdió por completo",
+          "correct": false
+        },
+        {
+          "text": "Se estrenó cincuenta años después",
+          "correct": false
+        }
+      ],
+      "difficulty": "medium",
+      "fun_fact": "Su discípulo Süssmayr completó los movimientos que faltaban imitando la letra de Mozart. Durante décadas la viuda dejó creer que la obra estaba acabada.",
+      "category": "Música"
+    },
+    {
+      "id": "mus_es_046",
+      "question": "¿Qué compositor dirigió su propia obra marcando el ritmo con un bastón contra el suelo y murió por ello?",
+      "answers": [
+        {
+          "text": "Lully",
+          "correct": true
+        },
+        {
+          "text": "Monteverdi",
+          "correct": false
+        },
+        {
+          "text": "Corelli",
+          "correct": false
+        }
+      ],
+      "difficulty": "hard",
+      "fun_fact": "Se golpeó el pie, la herida se gangrenó y él se negó a que le amputaran el dedo. La batuta moderna, mucho más ligera, llegó siglo y medio después.",
+      "category": "Música"
+    },
+    {
+      "id": "mus_es_047",
+      "question": "¿Qué instrumento se inventó pensando en las bandas militares y lleva el apellido de su creador?",
+      "answers": [
+        {
+          "text": "El saxofón",
+          "correct": true
+        },
+        {
+          "text": "El clarinete",
+          "correct": false
+        },
+        {
+          "text": "El fagot",
+          "correct": false
+        }
+      ],
+      "difficulty": "easy",
+      "fun_fact": "Adolphe Sax quería un metal con agilidad de madera. Las bandas militares francesas lo adoptaron enseguida; en la orquesta sinfónica aparece solo de vez en cuando y casi nunca como miembro fijo.",
+      "category": "Música"
+    },
+    {
+      "id": "mus_es_048",
+      "question": "¿En qué idioma se escriben tradicionalmente las indicaciones de tempo en las partituras?",
+      "answers": [
+        {
+          "text": "En italiano",
+          "correct": true
+        },
+        {
+          "text": "En latín",
+          "correct": false
+        },
+        {
+          "text": "En alemán",
+          "correct": false
+        }
+      ],
+      "difficulty": "easy",
+      "fun_fact": "Allegro, andante o presto son palabras italianas corrientes: allegro significa alegre y presto, deprisa. Lo que a un músico le suena técnico, a un italiano le suena cotidiano.",
+      "category": "Música"
+    },
+    {
+      "id": "mus_es_049",
+      "question": "¿Qué obra de Vivaldi lleva sonetos escritos junto a la partitura para explicar qué describe cada pasaje?",
+      "answers": [
+        {
+          "text": "Las cuatro estaciones",
+          "correct": true
+        },
+        {
+          "text": "El clave bien temperado",
+          "correct": false
+        },
+        {
+          "text": "La Pasión según San Mateo",
+          "correct": false
+        }
+      ],
+      "difficulty": "medium",
+      "fun_fact": "Los versos indican dónde ladra el perro, dónde cae la tormenta y dónde resbalan los pies sobre el hielo. Es música programática más de un siglo antes de que existiera el término.",
+      "category": "Música"
+    },
+    {
+      "id": "mus_es_050",
+      "question": "¿Qué familia produjo músicos profesionales durante siete generaciones seguidas?",
+      "answers": [
+        {
+          "text": "Los Bach",
+          "correct": true
+        },
+        {
+          "text": "Los Strauss",
+          "correct": false
+        },
+        {
+          "text": "Los Mozart",
+          "correct": false
+        }
+      ],
+      "difficulty": "medium",
+      "fun_fact": "En Turingia la palabra Bach llegó a usarse como sinónimo de músico. Johann Sebastian recopiló el árbol genealógico familiar él mismo, con anotaciones sobre el oficio de cada uno.",
+      "category": "Música"
+    },
+    {
+      "id": "mus_es_051",
+      "question": "¿Qué hacía especial al piano preparado que usó John Cage?",
+      "answers": [
+        {
+          "text": "Se le colocan objetos entre las cuerdas",
+          "correct": true
+        },
+        {
+          "text": "Se toca sin teclas",
+          "correct": false
+        },
+        {
+          "text": "Se afina cada semana",
+          "correct": false
+        }
+      ],
+      "difficulty": "medium",
+      "fun_fact": "Tornillos, pernos y gomas convierten un piano en una percusión entera. Nació por falta de espacio: no cabía un grupo de percusionistas en el escenario disponible.",
+      "category": "Música"
+    },
+    {
+      "id": "mus_es_052",
+      "question": "¿Qué compositor escribió una sinfonía apodada la Sorpresa por un golpe orquestal repentino?",
+      "answers": [
+        {
+          "text": "Haydn",
+          "correct": true
+        },
+        {
+          "text": "Mahler",
+          "correct": false
+        },
+        {
+          "text": "Bruckner",
+          "correct": false
+        }
+      ],
+      "difficulty": "medium",
+      "fun_fact": "El acorde llega tras un pasaje deliberadamente apacible. La anécdota de que buscaba despertar al público dormido es probablemente falsa, pero la broma musical es real.",
+      "category": "Música"
+    },
+    {
+      "id": "mus_es_053",
+      "question": "¿Qué es un contratenor?",
+      "answers": [
+        {
+          "text": "Un hombre que canta en registro agudo",
+          "correct": true
+        },
+        {
+          "text": "Un director sin orquesta",
+          "correct": false
+        },
+        {
+          "text": "Un instrumento de metal",
+          "correct": false
+        }
+      ],
+      "difficulty": "medium",
+      "fun_fact": "Usa la voz de falsete de forma cultivada y cubre papeles escritos para castrati. Su auge actual no es tradición ininterrumpida: se recuperó en el siglo XX.",
+      "category": "Música"
+    },
+    {
+      "id": "mus_es_054",
+      "question": "¿Qué compartían las compañías de ópera bufa del siglo XVIII con las series de televisión actuales?",
+      "answers": [
+        {
+          "text": "Un público fijo que reconocía a los mismos intérpretes",
+          "correct": true
+        },
+        {
+          "text": "Un guion escrito por varios autores a la vez",
+          "correct": false
+        },
+        {
+          "text": "Un estreno simultáneo en varias ciudades",
+          "correct": false
+        }
+      ],
+      "difficulty": "medium",
+      "fun_fact": "Las compañías estables producían títulos nuevos cada temporada para el mismo público, que seguía a sus cantantes de una obra a otra como hoy se sigue a un reparto.",
+      "category": "Música"
+    },
+    {
+      "id": "mus_es_055",
+      "question": "¿Qué instrumento sustituyó al clave como teclado principal a finales del siglo XVIII?",
+      "answers": [
+        {
+          "text": "El piano",
+          "correct": true
+        },
+        {
+          "text": "El órgano",
+          "correct": false
+        },
+        {
+          "text": "La celesta",
+          "correct": false
+        }
+      ],
+      "difficulty": "easy",
+      "fun_fact": "El clave pulsa la cuerda siempre con la misma fuerza; el piano la golpea. Esa diferencia mecánica es la que permitió tocar fuerte y suave con los dedos.",
+      "category": "Música"
+    },
+    {
+      "id": "mus_es_056",
+      "question": "¿Qué hizo Rossini con parte de la música de sus propias óperas?",
+      "answers": [
+        {
+          "text": "Reutilizarla en otras obras",
+          "correct": true
+        },
+        {
+          "text": "Quemarla",
+          "correct": false
+        },
+        {
+          "text": "Regalarla al público",
+          "correct": false
+        }
+      ],
+      "difficulty": "medium",
+      "fun_fact": "La obertura que hoy asociamos a El barbero de Sevilla ya había servido para dos óperas anteriores, ambas serias. El público de la época no parece haberse escandalizado.",
+      "category": "Música"
+    },
+    {
+      "id": "mus_es_057",
+      "question": "¿Qué diferencia hay entre una sinfonía y un concierto?",
+      "answers": [
+        {
+          "text": "El concierto tiene un instrumento solista",
+          "correct": true
+        },
+        {
+          "text": "La sinfonía se toca sin director",
+          "correct": false
+        },
+        {
+          "text": "El concierto siempre es más largo",
+          "correct": false
+        }
+      ],
+      "difficulty": "easy",
+      "fun_fact": "En el concierto el solista dialoga con la orquesta y suele tener una cadencia propia, un tramo en el que la orquesta calla del todo.",
+      "category": "Música"
+    },
+    {
+      "id": "mus_es_058",
+      "question": "¿Qué compositor pidió que en su Sinfonía de los mil participaran cientos de intérpretes?",
+      "answers": [
+        {
+          "text": "Mahler",
+          "correct": true
+        },
+        {
+          "text": "Chaikovski",
+          "correct": false
+        },
+        {
+          "text": "Sibelius",
+          "correct": false
+        }
+      ],
+      "difficulty": "medium",
+      "fun_fact": "El apodo lo puso un empresario, no él. En el estreno se juntaron más de mil personas entre orquesta, coros y solistas, y el título se quedó pegado para siempre.",
+      "category": "Música"
+    },
+    {
+      "id": "mus_es_059",
+      "question": "¿Qué instrumento toca el solista en el Concierto de Aranjuez?",
+      "answers": [
+        {
+          "text": "La guitarra",
+          "correct": true
+        },
+        {
+          "text": "El violín",
+          "correct": false
+        },
+        {
+          "text": "El piano",
+          "correct": false
+        }
+      ],
+      "difficulty": "easy",
+      "fun_fact": "Rodrigo era ciego desde los tres años y escribía en braille musical. Un copista transcribía después la partitura para la orquesta.",
+      "category": "Música"
+    },
+    {
+      "id": "mus_es_060",
+      "question": "¿Qué es un leitmotiv?",
+      "answers": [
+        {
+          "text": "Un tema musical asociado a un personaje o idea",
+          "correct": true
+        },
+        {
+          "text": "Un tipo de compás",
+          "correct": false
+        },
+        {
+          "text": "Una escala de siete notas",
+          "correct": false
+        }
+      ],
+      "difficulty": "medium",
+      "fun_fact": "Wagner lo usó como sistema, y el cine lo heredó entero: la música de Star Wars funciona con el mismo mecanismo que el Anillo del Nibelungo.",
+      "category": "Música"
+    },
+    {
+      "id": "mus_es_061",
+      "question": "¿Qué grupo grabó un disco cuya portada es un paso de cebra?",
+      "answers": [
+        {
+          "text": "The Beatles",
+          "correct": true
+        },
+        {
+          "text": "The Rolling Stones",
+          "correct": false
+        },
+        {
+          "text": "Pink Floyd",
+          "correct": false
+        }
+      ],
+      "difficulty": "easy",
+      "fun_fact": "La sesión duró unos diez minutos y el fotógrafo hizo seis tomas desde una escalera mientras un policía paraba el tráfico. La quinta fue la elegida.",
+      "category": "Música"
+    },
+    {
+      "id": "mus_es_062",
+      "question": "¿Qué se oye al principio de Bohemian Rhapsody?",
+      "answers": [
+        {
+          "text": "Solo voces",
+          "correct": true
+        },
+        {
+          "text": "Una guitarra eléctrica",
+          "correct": false
+        },
+        {
+          "text": "Una batería",
+          "correct": false
+        }
+      ],
+      "difficulty": "medium",
+      "fun_fact": "Las armonías se grabaron capa sobre capa hasta desgastar la cinta analógica: al trasluz estaba casi transparente de tantas pasadas.",
+      "category": "Música"
+    },
+    {
+      "id": "mus_es_063",
+      "question": "¿Qué tienen en común muchos éxitos del pop en cuanto a duración?",
+      "answers": [
+        {
+          "text": "Rondan los tres minutos",
+          "correct": true
+        },
+        {
+          "text": "Duran más de diez",
+          "correct": false
+        },
+        {
+          "text": "Duran menos de un minuto",
+          "correct": false
+        }
+      ],
+      "difficulty": "easy",
+      "fun_fact": "La medida no es artística sino física: en un disco de setenta y ocho revoluciones cabían unos tres minutos por cara, y la radio heredó ese formato.",
+      "category": "Música"
+    },
+    {
+      "id": "mus_es_064",
+      "question": "¿Qué grupo publicó un álbum cuya portada es casi enteramente negra?",
+      "answers": [
+        {
+          "text": "Metallica",
+          "correct": true
+        },
+        {
+          "text": "ABBA",
+          "correct": false
+        },
+        {
+          "text": "Queen",
+          "correct": false
+        }
+      ],
+      "difficulty": "medium",
+      "fun_fact": "Se le conoce por el color y no por su título, que en realidad es simplemente el nombre del grupo. El logotipo y una serpiente enroscada están ahí, pero apenas se distinguen sobre el fondo.",
+      "category": "Música"
+    },
+    {
+      "id": "mus_es_065",
+      "question": "¿Qué canción navideña es probablemente el sencillo más vendido de la historia?",
+      "answers": [
+        {
+          "text": "White Christmas",
+          "correct": true
+        },
+        {
+          "text": "Jingle Bells",
+          "correct": false
+        },
+        {
+          "text": "Last Christmas",
+          "correct": false
+        }
+      ],
+      "difficulty": "medium",
+      "fun_fact": "Bing Crosby tuvo que regrabarla en 1947 porque el máster original estaba tan gastado por las reediciones que ya no servía.",
+      "category": "Música"
+    },
+    {
+      "id": "mus_es_066",
+      "question": "¿Qué instrumento eléctrico se popularizó porque las guitarras acústicas no se oían en las big bands?",
+      "answers": [
+        {
+          "text": "La guitarra eléctrica",
+          "correct": true
+        },
+        {
+          "text": "El sintetizador",
+          "correct": false
+        },
+        {
+          "text": "El bajo de cinco cuerdas",
+          "correct": false
+        }
+      ],
+      "difficulty": "easy",
+      "fun_fact": "No nació buscando distorsión sino volumen: el guitarrista quería que se le oyera junto a una sección de metales. El sonido sucio llegó después, casi por accidente.",
+      "category": "Música"
+    },
+    {
+      "id": "mus_es_067",
+      "question": "¿Qué hizo famoso el sonido del Mellotron?",
+      "answers": [
+        {
+          "text": "Reproduce cintas grabadas al pulsar cada tecla",
+          "correct": true
+        },
+        {
+          "text": "Sintetiza ondas cuadradas",
+          "correct": false
+        },
+        {
+          "text": "Amplifica la voz",
+          "correct": false
+        }
+      ],
+      "difficulty": "hard",
+      "fun_fact": "Cada tecla arrastra su propio trozo de cinta con un instrumento real grabado, y la cinta dura unos ocho segundos. Si mantienes la nota, simplemente se acaba.",
+      "category": "Música"
+    },
+    {
+      "id": "mus_es_068",
+      "question": "¿Qué banda tocó un concierto en la azotea de su edificio hasta que llegó la policía?",
+      "answers": [
+        {
+          "text": "The Beatles",
+          "correct": true
+        },
+        {
+          "text": "Nirvana",
+          "correct": false
+        },
+        {
+          "text": "The Doors",
+          "correct": false
+        }
+      ],
+      "difficulty": "medium",
+      "fun_fact": "Fue su última actuación en público. Las cintas de audio incluyen a los agentes discutiendo con el equipo mientras el grupo sigue tocando.",
+      "category": "Música"
+    },
+    {
+      "id": "mus_es_069",
+      "question": "¿De qué género jamaicano surgió el toasting, la práctica de que el pinchadiscos hable sobre la base?",
+      "answers": [
+        {
+          "text": "El reggae",
+          "correct": true
+        },
+        {
+          "text": "El country",
+          "correct": false
+        },
+        {
+          "text": "El tango",
+          "correct": false
+        }
+      ],
+      "difficulty": "medium",
+      "fun_fact": "El toasting jamaicano precede al rap estadounidense y usaba las caras B instrumentales. Un sistema de sonido callejero era el escenario y el estudio a la vez.",
+      "category": "Música"
+    },
+    {
+      "id": "mus_es_070",
+      "question": "¿Qué característica define a un disco de vinilo de larga duración frente a un sencillo?",
+      "answers": [
+        {
+          "text": "Gira a treinta y tres revoluciones por minuto",
+          "correct": true
+        },
+        {
+          "text": "Es cuadrado",
+          "correct": false
+        },
+        {
+          "text": "Se toca por un solo lado",
+          "correct": false
+        }
+      ],
+      "difficulty": "easy",
+      "fun_fact": "Reducir las vueltas y estrechar el surco permitió pasar de tres minutos a más de veinte por cara, y eso hizo posible el álbum como formato artístico.",
+      "category": "Música"
+    },
+    {
+      "id": "mus_es_071",
+      "question": "¿Qué artista publicó un álbum bajo un símbolo impronunciable en vez de un nombre?",
+      "answers": [
+        {
+          "text": "Prince",
+          "correct": true
+        },
+        {
+          "text": "David Bowie",
+          "correct": false
+        },
+        {
+          "text": "Elton John",
+          "correct": false
+        }
+      ],
+      "difficulty": "medium",
+      "fun_fact": "La discográfica tuvo que enviar a la prensa un disquete con la tipografía para poder imprimirlo. Durante años se le llamó el artista antes conocido como Prince.",
+      "category": "Música"
+    },
+    {
+      "id": "mus_es_072",
+      "question": "¿Qué instrumento electrónico define el sonido del tecno de Detroit y del house de Chicago?",
+      "answers": [
+        {
+          "text": "La caja de ritmos",
+          "correct": true
+        },
+        {
+          "text": "El acordeón",
+          "correct": false
+        },
+        {
+          "text": "El clavicémbalo",
+          "correct": false
+        }
+      ],
+      "difficulty": "medium",
+      "fun_fact": "La Roland TR-808 fracasó comercialmente y se saldó barata. Precisamente por eso acabó en manos de músicos sin presupuesto que crearon géneros enteros con ella.",
+      "category": "Música"
+    },
+    {
+      "id": "mus_es_073",
+      "question": "¿Qué hizo que el sonido de la guitarra distorsionada se volviera habitual?",
+      "answers": [
+        {
+          "text": "Amplificadores forzados hasta romper",
+          "correct": true
+        },
+        {
+          "text": "Cuerdas de acero inoxidable",
+          "correct": false
+        },
+        {
+          "text": "Púas de plástico",
+          "correct": false
+        }
+      ],
+      "difficulty": "medium",
+      "fun_fact": "Al principio era una avería: altavoces rajados y válvulas saturadas. Los fabricantes tardaron años en entender que había que vender el defecto, no arreglarlo.",
+      "category": "Música"
+    },
+    {
+      "id": "mus_es_074",
+      "question": "¿Qué grupo sueco ganó Eurovisión en 1974 y vendió cientos de millones de discos?",
+      "answers": [
+        {
+          "text": "ABBA",
+          "correct": true
+        },
+        {
+          "text": "Roxette",
+          "correct": false
+        },
+        {
+          "text": "a-ha",
+          "correct": false
+        }
+      ],
+      "difficulty": "easy",
+      "fun_fact": "Ganaron con Waterloo cantando en inglés durante los pocos años en que el festival permitía elegir idioma. La obligación de cantar en una lengua propia volvió en 1977.",
+      "category": "Música"
+    },
+    {
+      "id": "mus_es_075",
+      "question": "¿Qué característica tiene el bajo en la mayoría de canciones pop, aunque casi nadie lo tararee?",
+      "answers": [
+        {
+          "text": "Sostiene la armonía y el ritmo a la vez",
+          "correct": true
+        },
+        {
+          "text": "Toca la melodía principal",
+          "correct": false
+        },
+        {
+          "text": "Solo suena en los estribillos",
+          "correct": false
+        }
+      ],
+      "difficulty": "medium",
+      "fun_fact": "Es el instrumento que más se nota cuando falta: quítalo de una mezcla y la canción no pierde melodía, pierde suelo.",
+      "category": "Música"
+    },
+    {
+      "id": "mus_es_076",
+      "question": "¿Qué canción de protesta se convirtió en himno pese a que su autor la escribió como crítica amarga?",
+      "answers": [
+        {
+          "text": "Born in the U.S.A.",
+          "correct": true
+        },
+        {
+          "text": "Yesterday",
+          "correct": false
+        },
+        {
+          "text": "Imagine",
+          "correct": false
+        }
+      ],
+      "difficulty": "medium",
+      "fun_fact": "El estribillo suena a celebración y la letra habla de un veterano de Vietnam sin trabajo. Se ha usado en mítines políticos de signo opuesto al del propio Springsteen.",
+      "category": "Música"
+    },
+    {
+      "id": "mus_es_077",
+      "question": "¿Qué instrumento tocaba Jimi Hendrix del revés respecto a su diseño?",
+      "answers": [
+        {
+          "text": "Una guitarra para diestros tocada al revés",
+          "correct": true
+        },
+        {
+          "text": "Un bajo de seis cuerdas",
+          "correct": false
+        },
+        {
+          "text": "Un banjo",
+          "correct": false
+        }
+      ],
+      "difficulty": "medium",
+      "fun_fact": "Era zurdo y le daba la vuelta a una Stratocaster diestra. Eso cambia la posición de los controles y el ángulo de la pastilla, y forma parte de su sonido.",
+      "category": "Música"
+    },
+    {
+      "id": "mus_es_078",
+      "question": "¿Qué aparato hizo posible llevar mil canciones en el bolsillo a principios de los 2000?",
+      "answers": [
+        {
+          "text": "El reproductor de MP3",
+          "correct": true
+        },
+        {
+          "text": "El casete",
+          "correct": false
+        },
+        {
+          "text": "El minidisc",
+          "correct": false
+        }
+      ],
+      "difficulty": "easy",
+      "fun_fact": "La compresión funciona tirando lo que el oído tapa: descarta información que la mayoría de la gente no percibe cuando suena junto al resto.",
+      "category": "Música"
+    },
+    {
+      "id": "mus_es_079",
+      "question": "¿Qué tiene de especial la voz de una grabación acelerada como la de Alvin y las ardillas?",
+      "answers": [
+        {
+          "text": "Se grabó lenta y se reprodujo rápido",
+          "correct": true
+        },
+        {
+          "text": "Es un sintetizador",
+          "correct": false
+        },
+        {
+          "text": "La cantó un coro infantil",
+          "correct": false
+        }
+      ],
+      "difficulty": "medium",
+      "fun_fact": "Al acelerar la cinta sube el tono y también la velocidad, así que el cantante grababa despacio y casi una octava más grave para sonar bien al doble de rapidez.",
+      "category": "Música"
+    },
+    {
+      "id": "mus_es_080",
+      "question": "¿Qué banda británica usó una caja registradora y monedas como parte de una canción?",
+      "answers": [
+        {
+          "text": "Pink Floyd",
+          "correct": true
+        },
+        {
+          "text": "The Kinks",
+          "correct": false
+        },
+        {
+          "text": "The Who",
+          "correct": false
+        }
+      ],
+      "difficulty": "medium",
+      "fun_fact": "Los sonidos se montaron en un bucle de cinta cortada y pegada a mano, con los golpes espaciados para que cuadraran en un compás de siete tiempos.",
+      "category": "Música"
+    },
+    {
+      "id": "mus_es_081",
+      "question": "¿Qué sección de la orquesta reaparece una y otra vez en el cine de terror para poner nervioso al espectador?",
+      "answers": [
+        {
+          "text": "Las cuerdas agudas",
+          "correct": true
+        },
+        {
+          "text": "La tuba",
+          "correct": false
+        },
+        {
+          "text": "El arpa",
+          "correct": false
+        }
+      ],
+      "difficulty": "medium",
+      "fun_fact": "Los glissandos chirriantes imitan un rango de frecuencias parecido al de un grito. El cuerpo reacciona antes de que el espectador entienda por qué.",
+      "category": "Música"
+    },
+    {
+      "id": "mus_es_082",
+      "question": "¿Qué es un sample en la música moderna?",
+      "answers": [
+        {
+          "text": "Un fragmento de otra grabación reutilizado",
+          "correct": true
+        },
+        {
+          "text": "Una guitarra sin trastes",
+          "correct": false
+        },
+        {
+          "text": "Un ensayo general",
+          "correct": false
+        }
+      ],
+      "difficulty": "easy",
+      "fun_fact": "Los pleitos por samples crearon jurisprudencia: hoy un compás reconocible puede costar más en derechos que grabar la canción entera desde cero.",
+      "category": "Música"
+    },
+    {
+      "id": "mus_es_083",
+      "question": "¿Qué grupo separado vendió decenas de millones de un recopilatorio treinta años después de la ruptura?",
+      "answers": [
+        {
+          "text": "The Beatles",
+          "correct": true
+        },
+        {
+          "text": "U2",
+          "correct": false
+        },
+        {
+          "text": "Coldplay",
+          "correct": false
+        }
+      ],
+      "difficulty": "medium",
+      "fun_fact": "El recopilatorio de sus números uno vendió decenas de millones treinta años después de la ruptura, sin una sola canción nueva.",
+      "category": "Música"
+    },
+    {
+      "id": "mus_es_084",
+      "question": "¿Qué se cambió en el bajo eléctrico respecto al contrabajo para hacerlo popular?",
+      "answers": [
+        {
+          "text": "Se le pusieron trastes y se hizo horizontal",
+          "correct": true
+        },
+        {
+          "text": "Se le quitaron las cuerdas graves",
+          "correct": false
+        },
+        {
+          "text": "Se toca con arco",
+          "correct": false
+        }
+      ],
+      "difficulty": "medium",
+      "fun_fact": "Fender lo llamó Precision precisamente por los trastes: por primera vez un bajista podía asegurar la afinación sin años de oído entrenado.",
+      "category": "Música"
+    },
+    {
+      "id": "mus_es_085",
+      "question": "¿Qué idioma domina las listas de éxitos mundiales aunque el número de hablantes nativos no sea el mayor?",
+      "answers": [
+        {
+          "text": "El inglés",
+          "correct": true
+        },
+        {
+          "text": "El mandarín",
+          "correct": false
+        },
+        {
+          "text": "El hindi",
+          "correct": false
+        }
+      ],
+      "difficulty": "easy",
+      "fun_fact": "La industria discográfica se concentró en países anglófonos, y desde entonces cantar en inglés es una decisión de distribución tanto como artística.",
+      "category": "Música"
+    },
+    {
+      "id": "mus_es_086",
+      "question": "¿Qué hacía el vocoder en discos de los años setenta y ochenta?",
+      "answers": [
+        {
+          "text": "Convertir la voz en un sonido robótico",
+          "correct": true
+        },
+        {
+          "text": "Doblar el volumen",
+          "correct": false
+        },
+        {
+          "text": "Afinar automáticamente",
+          "correct": false
+        }
+      ],
+      "difficulty": "hard",
+      "fun_fact": "Nació como tecnología militar para comprimir voz en comunicaciones cifradas. Su primer uso serio fue el espionaje, no la música disco.",
+      "category": "Música"
+    },
+    {
+      "id": "mus_es_087",
+      "question": "¿Qué canción de cumpleaños estuvo protegida por derechos de autor hasta bien entrado el siglo XXI?",
+      "answers": [
+        {
+          "text": "Cumpleaños feliz",
+          "correct": true
+        },
+        {
+          "text": "Noche de paz",
+          "correct": false
+        },
+        {
+          "text": "La cucaracha",
+          "correct": false
+        }
+      ],
+      "difficulty": "hard",
+      "fun_fact": "La editorial cobró licencias por la letra inglesa durante décadas, hasta que un tribunal estadounidense declaró el copyright inválido. Por eso en muchas películas se cantaba otra cosa.",
+      "category": "Música"
+    },
+    {
+      "id": "mus_es_088",
+      "question": "¿Qué efecto de estudio se logra grabando la misma voz dos veces y superponiéndola?",
+      "answers": [
+        {
+          "text": "Una doble toma que engorda la voz",
+          "correct": true
+        },
+        {
+          "text": "Un eco de tres segundos",
+          "correct": false
+        },
+        {
+          "text": "Un cambio de tonalidad",
+          "correct": false
+        }
+      ],
+      "difficulty": "medium",
+      "fun_fact": "Las diferencias mínimas entre las dos tomas son las que dan cuerpo. Un doble perfecto no sonaría más grande, sonaría exactamente igual.",
+      "category": "Música"
+    },
+    {
+      "id": "mus_es_089",
+      "question": "¿Qué instrumento hizo famoso el riff de Smoke on the Water?",
+      "answers": [
+        {
+          "text": "La guitarra eléctrica",
+          "correct": true
+        },
+        {
+          "text": "El bajo eléctrico",
+          "correct": false
+        },
+        {
+          "text": "La armónica",
+          "correct": false
+        }
+      ],
+      "difficulty": "easy",
+      "fun_fact": "Son cuatro alturas tocadas en dos cuerdas a la vez, y es probablemente lo primero que aprende cualquiera que coge una guitarra.",
+      "category": "Música"
+    },
+    {
+      "id": "mus_es_090",
+      "question": "¿Qué es un disco de oro?",
+      "answers": [
+        {
+          "text": "Una certificación por ventas",
+          "correct": true
+        },
+        {
+          "text": "Un vinilo bañado en metal",
+          "correct": false
+        },
+        {
+          "text": "Un premio del jurado",
+          "correct": false
+        }
+      ],
+      "difficulty": "easy",
+      "fun_fact": "El umbral cambia según el país y el año, así que un disco de oro español y uno estadounidense no representan ni de lejos la misma cantidad de copias.",
+      "category": "Música"
+    },
+    {
+      "id": "mus_es_091",
+      "question": "¿Por qué casi nadie reconoce su propia voz grabada?",
+      "answers": [
+        {
+          "text": "Porque al hablar la oímos también por el hueso",
+          "correct": true
+        },
+        {
+          "text": "Porque el micrófono la agudiza",
+          "correct": false
+        },
+        {
+          "text": "Porque el cerebro la borra",
+          "correct": false
+        }
+      ],
+      "difficulty": "medium",
+      "fun_fact": "Al hablar, parte del sonido llega por conducción ósea y refuerza los graves. La grabación solo recoge lo que sale por el aire, y por eso suena más fina.",
+      "category": "Música"
+    },
+    {
+      "id": "mus_es_092",
+      "question": "¿Qué órgano diminuto del oído interno convierte la vibración en señal nerviosa?",
+      "answers": [
+        {
+          "text": "La cóclea",
+          "correct": true
+        },
+        {
+          "text": "El tímpano",
+          "correct": false
+        },
+        {
+          "text": "El yunque",
+          "correct": false
+        }
+      ],
+      "difficulty": "medium",
+      "fun_fact": "Tiene forma de caracol y dentro lleva unas quince mil células ciliadas. No se regeneran: la sordera por ruido es literalmente irreversible.",
+      "category": "Música"
+    },
+    {
+      "id": "mus_es_093",
+      "question": "¿Qué es el oído absoluto?",
+      "answers": [
+        {
+          "text": "Nombrar una nota sin referencia previa",
+          "correct": true
+        },
+        {
+          "text": "Oír por encima de los veinte kilohercios",
+          "correct": false
+        },
+        {
+          "text": "Cantar sin desafinar",
+          "correct": false
+        }
+      ],
+      "difficulty": "medium",
+      "fun_fact": "Es mucho más frecuente entre personas que hablan lenguas tonales y que empezaron a estudiar música muy pronto, lo que apunta a un peso grande del aprendizaje temprano.",
+      "category": "Música"
+    },
+    {
+      "id": "mus_es_094",
+      "question": "¿Qué le pasa a la voz humana en la pubertad masculina?",
+      "answers": [
+        {
+          "text": "La laringe crece y el tono baja",
+          "correct": true
+        },
+        {
+          "text": "Pierde armónicos agudos para siempre",
+          "correct": false
+        },
+        {
+          "text": "Se vuelve más rápida",
+          "correct": false
+        }
+      ],
+      "difficulty": "easy",
+      "fun_fact": "Los pliegues vocales pueden alargarse casi un centímetro. El descontrol pasajero de la voz es el cerebro recalibrando un instrumento que ha cambiado de tamaño.",
+      "category": "Música"
+    },
+    {
+      "id": "mus_es_095",
+      "question": "¿Qué provoca la piel de gallina al escuchar cierta música?",
+      "answers": [
+        {
+          "text": "Una descarga del sistema nervioso simpático",
+          "correct": true
+        },
+        {
+          "text": "Un descenso de la temperatura corporal",
+          "correct": false
+        },
+        {
+          "text": "Un reflejo del oído medio",
+          "correct": false
+        }
+      ],
+      "difficulty": "medium",
+      "fun_fact": "Se asocia a momentos de sorpresa armónica, sobre todo cuando la música rompe una expectativa que ella misma ha creado. No todo el mundo la experimenta.",
+      "category": "Música"
+    },
+    {
+      "id": "mus_es_096",
+      "question": "¿Qué frecuencia se toma como referencia internacional para afinar el la?",
+      "answers": [
+        {
+          "text": "440 hercios",
+          "correct": true
+        },
+        {
+          "text": "220 hercios",
+          "correct": false
+        },
+        {
+          "text": "1000 hercios",
+          "correct": false
+        }
+      ],
+      "difficulty": "easy",
+      "fun_fact": "No siempre fue así: en el barroco se afinaba bastante más grave y variaba de ciudad en ciudad. Varias orquestas actuales afinan algo más agudo para brillar más.",
+      "category": "Música"
+    },
+    {
+      "id": "mus_es_097",
+      "question": "¿Qué es un acúfeno o tinnitus?",
+      "answers": [
+        {
+          "text": "Oír un pitido sin fuente externa",
+          "correct": true
+        },
+        {
+          "text": "Perder el equilibrio al cantar",
+          "correct": false
+        },
+        {
+          "text": "Oír solo por un oído",
+          "correct": false
+        }
+      ],
+      "difficulty": "easy",
+      "fun_fact": "Es uno de los riesgos laborales del músico. Muchos intérpretes de rock usan hoy tapones filtrados que bajan el volumen sin deformar el timbre.",
+      "category": "Música"
+    },
+    {
+      "id": "mus_es_098",
+      "question": "¿Qué rango de frecuencias oye aproximadamente un adulto joven sano?",
+      "answers": [
+        {
+          "text": "De veinte a veinte mil hercios",
+          "correct": true
+        },
+        {
+          "text": "De cien a mil hercios",
+          "correct": false
+        },
+        {
+          "text": "De uno a cien hercios",
+          "correct": false
+        }
+      ],
+      "difficulty": "easy",
+      "fun_fact": "El extremo agudo se pierde con la edad, y bastante pronto: hacia los cuarenta muchas personas ya no oyen los quince mil hercios que sí oye un adolescente.",
+      "category": "Música"
+    },
+    {
+      "id": "mus_es_099",
+      "question": "¿Por qué un coro suena más lleno que un solista aunque canten la misma nota al mismo volumen?",
+      "answers": [
+        {
+          "text": "Porque las pequeñas diferencias entre voces se suman",
+          "correct": true
+        },
+        {
+          "text": "Porque cantan más fuerte",
+          "correct": false
+        },
+        {
+          "text": "Porque suenan una octava más grave",
+          "correct": false
+        }
+      ],
+      "difficulty": "medium",
+      "fun_fact": "Ninguna voz está exactamente en la misma frecuencia ni empieza en el mismo instante, y ese desajuste mínimo es lo que produce la sensación de anchura.",
+      "category": "Música"
+    },
+    {
+      "id": "mus_es_100",
+      "question": "¿Qué papel tiene el diafragma al cantar?",
+      "answers": [
+        {
+          "text": "Regula la salida del aire",
+          "correct": true
+        },
+        {
+          "text": "Vibra para producir el sonido",
+          "correct": false
+        },
+        {
+          "text": "Filtra los agudos",
+          "correct": false
+        }
+      ],
+      "difficulty": "medium",
+      "fun_fact": "No produce sonido: administra el caudal. Por eso los cantantes trabajan tanto la espiración lenta, que es donde se sostiene una frase larga.",
+      "category": "Música"
+    },
+    {
+      "id": "mus_es_101",
+      "question": "¿Qué es el efecto cóctel?",
+      "answers": [
+        {
+          "text": "Poder seguir una conversación entre mucho ruido",
+          "correct": true
+        },
+        {
+          "text": "Oír peor con dos oídos que con uno",
+          "correct": false
+        },
+        {
+          "text": "Confundir voces graves y agudas",
+          "correct": false
+        }
+      ],
+      "difficulty": "medium",
+      "fun_fact": "El cerebro filtra por dirección y por timbre. Cuando eso deja de funcionar bien, un músico ya no distingue su propia línea dentro de la orquesta.",
+      "category": "Música"
+    },
+    {
+      "id": "mus_es_102",
+      "question": "¿Qué ocurre cuando dos notas casi iguales suenan a la vez?",
+      "answers": [
+        {
+          "text": "Aparece un batimiento que pulsa",
+          "correct": true
+        },
+        {
+          "text": "Se anulan por completo",
+          "correct": false
+        },
+        {
+          "text": "Suenan una octava aparte",
+          "correct": false
+        }
+      ],
+      "difficulty": "medium",
+      "fun_fact": "Los afinadores usan ese pulso: cuanto más se acercan las frecuencias, más despacio late, y cuando desaparece del todo están afinadas.",
+      "category": "Música"
+    },
+    {
+      "id": "mus_es_103",
+      "question": "¿Por qué la música alta puede dañar el oído incluso sin dolor?",
+      "answers": [
+        {
+          "text": "Porque las células ciliadas se destruyen sin avisar",
+          "correct": true
+        },
+        {
+          "text": "Porque el tímpano se estira",
+          "correct": false
+        },
+        {
+          "text": "Porque baja la presión arterial",
+          "correct": false
+        }
+      ],
+      "difficulty": "medium",
+      "fun_fact": "El daño se acumula durante años y es indoloro. Cuando aparece la pérdida ya no hay nada que reparar, solo compensar con audífonos.",
+      "category": "Música"
+    },
+    {
+      "id": "mus_es_104",
+      "question": "¿Qué relación tiene el ritmo musical con el movimiento del cuerpo?",
+      "answers": [
+        {
+          "text": "Sincroniza áreas motoras aunque no nos movamos",
+          "correct": true
+        },
+        {
+          "text": "Solo afecta al oído",
+          "correct": false
+        },
+        {
+          "text": "Reduce la frecuencia cardíaca siempre",
+          "correct": false
+        }
+      ],
+      "difficulty": "medium",
+      "fun_fact": "Escuchar un pulso activa zonas motoras del cerebro. Por eso la musicoterapia funciona en rehabilitación de la marcha tras un ictus o en el párkinson.",
+      "category": "Música"
+    },
+    {
+      "id": "mus_es_105",
+      "question": "¿Qué le pasa a la percepción del tiempo cuando escuchamos música que nos gusta?",
+      "answers": [
+        {
+          "text": "Suele parecer que pasa más rápido",
+          "correct": true
+        },
+        {
+          "text": "Se detiene por completo",
+          "correct": false
+        },
+        {
+          "text": "Se percibe más lento siempre",
+          "correct": false
+        }
+      ],
+      "difficulty": "medium",
+      "fun_fact": "Los supermercados y los gimnasios llevan décadas explotando el tempo de la música ambiental: influye en cuánto se camina, cuánto se compra y cuánto se tarda en hacerlo.",
+      "category": "Música"
+    },
+    {
+      "id": "mus_es_106",
+      "question": "¿Qué es la amusia?",
+      "answers": [
+        {
+          "text": "No poder percibir la melodía",
+          "correct": true
+        },
+        {
+          "text": "Cantar sin letra",
+          "correct": false
+        },
+        {
+          "text": "Tocar sin partitura",
+          "correct": false
+        }
+      ],
+      "difficulty": "hard",
+      "fun_fact": "Quien la tiene distingue perfectamente el habla y el ruido, pero no reconoce una canción conocida sin la letra. Afecta a un pequeño porcentaje de la población.",
+      "category": "Música"
+    },
+    {
+      "id": "mus_es_107",
+      "question": "¿Por qué la música pegadiza se queda dando vueltas en la cabeza?",
+      "answers": [
+        {
+          "text": "Porque el cerebro intenta cerrar un bucle inacabado",
+          "correct": true
+        },
+        {
+          "text": "Porque se memoriza en el oído",
+          "correct": false
+        },
+        {
+          "text": "Porque baja la atención",
+          "correct": false
+        }
+      ],
+      "difficulty": "medium",
+      "fun_fact": "Según la explicación más aceptada suelen ser fragmentos cortos y algo incompletos. Escuchar la canción entera hasta el final es de lo que mejor funciona para quitárselo.",
+      "category": "Música"
+    },
+    {
+      "id": "mus_es_108",
+      "question": "¿Qué hace un cantante cuando usa el falsete?",
+      "answers": [
+        {
+          "text": "Vibra solo el borde de las cuerdas vocales",
+          "correct": true
+        },
+        {
+          "text": "Canta por la nariz",
+          "correct": false
+        },
+        {
+          "text": "Aumenta la presión del aire al máximo",
+          "correct": false
+        }
+      ],
+      "difficulty": "hard",
+      "fun_fact": "El pliegue vocal se estira y adelgaza, y suena con menos armónicos. De ahí ese timbre transparente, incluso frágil, comparado con la voz plena.",
+      "category": "Música"
+    },
+    {
+      "id": "mus_es_109",
+      "question": "¿Qué ventaja tiene cantar en un espacio con mucha reverberación como una iglesia?",
+      "answers": [
+        {
+          "text": "La voz se sostiene y se mezcla sola",
+          "correct": true
+        },
+        {
+          "text": "Se afina automáticamente",
+          "correct": false
+        },
+        {
+          "text": "Se puede cantar más rápido sin cansarse",
+          "correct": false
+        }
+      ],
+      "difficulty": "medium",
+      "fun_fact": "El canto gregoriano encaja especialmente bien en esas acústicas: las melodías lentas y sin ritmo marcado funcionan porque el edificio hace la mitad del trabajo.",
+      "category": "Música"
+    },
+    {
+      "id": "mus_es_110",
+      "question": "¿Qué le ocurre a la afinación de un instrumento de viento cuando se calienta?",
+      "answers": [
+        {
+          "text": "Sube",
+          "correct": true
+        },
+        {
+          "text": "Baja",
+          "correct": false
+        },
+        {
+          "text": "No cambia",
+          "correct": false
+        }
+      ],
+      "difficulty": "medium",
+      "fun_fact": "El aire caliente transmite el sonido más rápido y la nota se va hacia arriba. Por eso el metal desafina al empezar un ensayo en una sala fría.",
+      "category": "Música"
+    },
+    {
+      "id": "mus_es_111",
+      "question": "¿Qué es el vibrato?",
+      "answers": [
+        {
+          "text": "Una oscilación regular de la altura de la nota",
+          "correct": true
+        },
+        {
+          "text": "Un golpe de arco seco",
+          "correct": false
+        },
+        {
+          "text": "Un silencio breve",
+          "correct": false
+        }
+      ],
+      "difficulty": "easy",
+      "fun_fact": "En la voz suele aparecer cuando la laringe trabaja sin tensión, así que un vibrato natural dice más de la técnica que del adorno.",
+      "category": "Música"
+    },
+    {
+      "id": "mus_es_112",
+      "question": "¿Por qué los bebés reaccionan a la música antes de entender palabras?",
+      "answers": [
+        {
+          "text": "Porque el oído funciona ya antes de nacer",
+          "correct": true
+        },
+        {
+          "text": "Porque imitan a los adultos",
+          "correct": false
+        },
+        {
+          "text": "Porque el ritmo baja la temperatura",
+          "correct": false
+        }
+      ],
+      "difficulty": "easy",
+      "fun_fact": "El feto percibe sonidos filtrados desde el último trimestre, sobre todo graves y ritmo. Reconoce la prosodia de la voz materna antes que ninguna palabra.",
+      "category": "Música"
+    },
+    {
+      "id": "mus_es_113",
+      "question": "¿Qué instrumento se parece más a la voz humana en cuanto a rango y expresión, según muchos compositores?",
+      "answers": [
+        {
+          "text": "El violonchelo",
+          "correct": true
+        },
+        {
+          "text": "La viola",
+          "correct": false
+        },
+        {
+          "text": "La trompa",
+          "correct": false
+        }
+      ],
+      "difficulty": "medium",
+      "fun_fact": "Su tesitura se solapa con las voces graves, tanto masculinas como femeninas, y por eso se le suele dar la melodía cuando se quiere que algo suene íntimo.",
+      "category": "Música"
+    },
+    {
+      "id": "mus_es_114",
+      "question": "¿Qué provoca escuchar música con auriculares a volumen alto durante horas?",
+      "answers": [
+        {
+          "text": "Fatiga auditiva temporal y daño acumulado",
+          "correct": true
+        },
+        {
+          "text": "Mejor afinación",
+          "correct": false
+        },
+        {
+          "text": "Más capacidad pulmonar",
+          "correct": false
+        }
+      ],
+      "difficulty": "easy",
+      "fun_fact": "La fatiga se recupera; el daño acumulado no. La regla práctica es sencilla: si tienes que levantar la voz para que te oiga alguien a un metro, está demasiado alto.",
+      "category": "Música"
+    },
+    {
+      "id": "mus_es_115",
+      "question": "¿Qué diferencia hay entre tono y timbre?",
+      "answers": [
+        {
+          "text": "El timbre es el color, el tono es la altura",
+          "correct": true
+        },
+        {
+          "text": "Son sinónimos",
+          "correct": false
+        },
+        {
+          "text": "El timbre es el volumen",
+          "correct": false
+        }
+      ],
+      "difficulty": "medium",
+      "fun_fact": "Un violín y una flauta pueden dar la misma nota exacta y aun así no confundirse: la mezcla de armónicos es lo que identifica al instrumento.",
+      "category": "Música"
+    },
+    {
+      "id": "mus_es_116",
+      "question": "¿Qué se grabó en el disco de oro que viaja a bordo de las sondas Voyager?",
+      "answers": [
+        {
+          "text": "Música de varias culturas y sonidos de la Tierra",
+          "correct": true
+        },
+        {
+          "text": "Solo silencio",
+          "correct": false
+        },
+        {
+          "text": "Un himno nacional",
+          "correct": false
+        }
+      ],
+      "difficulty": "medium",
+      "fun_fact": "Lleva desde canto pigmeo hasta Chuck Berry y Bach, con las instrucciones de reproducción grabadas en la portada. Es el objeto humano más lejano que contiene música.",
+      "category": "Música"
+    },
+    {
+      "id": "mus_es_117",
+      "question": "¿Qué formato doméstico popularizó la grabación casera de música?",
+      "answers": [
+        {
+          "text": "El casete",
+          "correct": true
+        },
+        {
+          "text": "El vinilo",
+          "correct": false
+        },
+        {
+          "text": "El disco compacto",
+          "correct": false
+        }
+      ],
+      "difficulty": "easy",
+      "fun_fact": "Philips renunció a cobrar licencias para imponerlo como estándar. Esa decisión creó de paso la cultura de la cinta recopilatoria hecha a mano.",
+      "category": "Música"
+    },
+    {
+      "id": "mus_es_118",
+      "question": "¿Qué explicación se da habitualmente a los setenta y cuatro minutos del disco compacto?",
+      "answers": [
+        {
+          "text": "Que cupiera una sinfonía completa",
+          "correct": true
+        },
+        {
+          "text": "El tamaño del láser",
+          "correct": false
+        },
+        {
+          "text": "Una norma europea",
+          "correct": false
+        }
+      ],
+      "difficulty": "medium",
+      "fun_fact": "La versión más repetida cuenta que el criterio fue la Novena de Beethoven. Uno de los ingenieros de Philips lo ha desmentido y lo atribuye al tamaño de la carcasa; el debate sigue abierto.",
+      "category": "Música"
+    },
+    {
+      "id": "mus_es_119",
+      "question": "¿Qué es el ruido rosa que usan los técnicos de sonido?",
+      "answers": [
+        {
+          "text": "Un ruido con igual energía por octava",
+          "correct": true
+        },
+        {
+          "text": "Un silencio absoluto",
+          "correct": false
+        },
+        {
+          "text": "Un tono puro de mil hercios",
+          "correct": false
+        }
+      ],
+      "difficulty": "hard",
+      "fun_fact": "Suena más equilibrado al oído que el ruido blanco, y por eso se usa para ajustar altavoces: se parece más a cómo escuchamos que a cómo mide un aparato.",
+      "category": "Música"
+    },
+    {
+      "id": "mus_es_120",
+      "question": "¿Qué hace un ingeniero de masterización al final del proceso de un disco?",
+      "answers": [
+        {
+          "text": "Ajustar el conjunto para que suene coherente",
+          "correct": true
+        },
+        {
+          "text": "Grabar la voz principal",
+          "correct": false
+        },
+        {
+          "text": "Componer los arreglos",
+          "correct": false
+        }
+      ],
+      "difficulty": "medium",
+      "fun_fact": "Es el último par de oídos antes de la fábrica. Su trabajo se nota sobre todo cuando el disco se escucha en un coche, un móvil y unos altavoces buenos.",
+      "category": "Música"
+    },
+    {
+      "id": "mus_es_121",
+      "question": "¿Qué consecuencia tuvo la llamada guerra del volumen en la industria discográfica?",
+      "answers": [
+        {
+          "text": "Discos cada vez más comprimidos y sin dinámica",
+          "correct": true
+        },
+        {
+          "text": "Conciertos más largos",
+          "correct": false
+        },
+        {
+          "text": "Auriculares más caros",
+          "correct": false
+        }
+      ],
+      "difficulty": "medium",
+      "fun_fact": "Al comprimir todo hacia arriba, la diferencia entre lo suave y lo fuerte desaparece. El disco llama la atención en la radio y cansa a los diez minutos.",
+      "category": "Música"
+    },
+    {
+      "id": "mus_es_122",
+      "question": "¿Qué había para escuchar música en movimiento antes del walkman?",
+      "answers": [
+        {
+          "text": "Sobre todo radios y casetes a pilas",
+          "correct": true
+        },
+        {
+          "text": "Un vinilo portátil",
+          "correct": false
+        },
+        {
+          "text": "Nada, no existía",
+          "correct": false
+        }
+      ],
+      "difficulty": "medium",
+      "fun_fact": "Sony vendió la idea de escuchar sin molestar a nadie. Los primeros modelos llevaban dos salidas de auriculares porque nadie creía que se escuchara a solas.",
+      "category": "Música"
+    },
+    {
+      "id": "mus_es_123",
+      "question": "¿Qué es un derecho de autor conexo o derecho de intérprete?",
+      "answers": [
+        {
+          "text": "El que corresponde a quien ejecuta la obra",
+          "correct": true
+        },
+        {
+          "text": "Un impuesto sobre las entradas",
+          "correct": false
+        },
+        {
+          "text": "Un permiso para versionar",
+          "correct": false
+        }
+      ],
+      "difficulty": "hard",
+      "fun_fact": "Por eso una misma canción genera pagos distintos a quien la escribió y a quien la grabó: en una versión cambia el intérprete que cobra, pero el autor sigue cobrando igual.",
+      "category": "Música"
+    },
+    {
+      "id": "mus_es_124",
+      "question": "¿Qué parte de una reproducción en streaming llega a un artista con contrato discográfico?",
+      "answers": [
+        {
+          "text": "Una fracción muy pequeña",
+          "correct": true
+        },
+        {
+          "text": "Prácticamente todo",
+          "correct": false
+        },
+        {
+          "text": "La mitad",
+          "correct": false
+        }
+      ],
+      "difficulty": "medium",
+      "fun_fact": "El grueso se reparte entre plataforma, discográfica y editorial antes de llegar al intérprete. Por eso el directo volvió a ser la principal fuente de ingresos.",
+      "category": "Música"
+    },
+    {
+      "id": "mus_es_125",
+      "question": "¿Qué instrumento fue el primero en sintetizar sonido de forma totalmente eléctrica en un aparato comercial?",
+      "answers": [
+        {
+          "text": "El theremín",
+          "correct": true
+        },
+        {
+          "text": "El piano eléctrico",
+          "correct": false
+        },
+        {
+          "text": "La guitarra",
+          "correct": false
+        }
+      ],
+      "difficulty": "hard",
+      "fun_fact": "Su inventor lo presentó a Lenin, que quiso aprender a tocarlo. Se fabricó bajo licencia en Estados Unidos y acabó sonando en decenas de películas de ciencia ficción.",
+      "category": "Música"
+    },
+    {
+      "id": "mus_es_126",
+      "question": "¿Qué hace un afinador automático de voz en un estudio moderno?",
+      "answers": [
+        {
+          "text": "Corrige la altura de la nota grabada",
+          "correct": true
+        },
+        {
+          "text": "Sube el volumen",
+          "correct": false
+        },
+        {
+          "text": "Añade eco",
+          "correct": false
+        }
+      ],
+      "difficulty": "easy",
+      "fun_fact": "Se diseñó para retoques inaudibles. Llevado al extremo produce ese timbre escalonado que dejó de ser un error para convertirse en un efecto buscado.",
+      "category": "Música"
+    },
+    {
+      "id": "mus_es_127",
+      "question": "¿Qué es un contrato de 360 grados en la industria musical?",
+      "answers": [
+        {
+          "text": "La discográfica participa en todos los ingresos del artista",
+          "correct": true
+        },
+        {
+          "text": "Un concierto en círculo",
+          "correct": false
+        },
+        {
+          "text": "Un disco de treinta y seis pistas",
+          "correct": false
+        }
+      ],
+      "difficulty": "medium",
+      "fun_fact": "Nació cuando la venta de discos se hundió: si el sello ya no gana con el disco, pide una parte de las giras, el merchandising y los patrocinios.",
+      "category": "Música"
+    },
+    {
+      "id": "mus_es_128",
+      "question": "¿Qué es una lista de éxitos como el Billboard Hot 100?",
+      "answers": [
+        {
+          "text": "Un ranking que mezcla ventas y reproducciones",
+          "correct": true
+        },
+        {
+          "text": "Una lista de premios",
+          "correct": false
+        },
+        {
+          "text": "Un catálogo de discográficas",
+          "correct": false
+        }
+      ],
+      "difficulty": "easy",
+      "fun_fact": "La fórmula ha cambiado muchas veces, y cada cambio reordena la historia: comparar un número uno de 1975 con uno actual es comparar dos mediciones distintas.",
+      "category": "Música"
+    },
+    {
+      "id": "mus_es_129",
+      "question": "¿Qué ocurre con los derechos de una obra cuando entra en dominio público?",
+      "answers": [
+        {
+          "text": "Cualquiera puede usarla sin pagar",
+          "correct": true
+        },
+        {
+          "text": "Se destruye la partitura",
+          "correct": false
+        },
+        {
+          "text": "Pasan al Estado para siempre",
+          "correct": false
+        }
+      ],
+      "difficulty": "medium",
+      "fun_fact": "El plazo varía por país, y por eso una misma obra puede ser libre en un sitio y estar protegida en otro. Los catálogos internacionales viven de esa diferencia.",
+      "category": "Música"
+    },
+    {
+      "id": "mus_es_130",
+      "question": "¿Qué micrófono se usa habitualmente para grabar una voz cercana en estudio?",
+      "answers": [
+        {
+          "text": "Uno de condensador",
+          "correct": true
+        },
+        {
+          "text": "Uno de contacto",
+          "correct": false
+        },
+        {
+          "text": "Uno de bobina móvil grande a un metro",
+          "correct": false
+        }
+      ],
+      "difficulty": "medium",
+      "fun_fact": "Es sensible al detalle y también a todo lo demás: aire acondicionado, tráfico y estómagos incluidos. Por eso las cabinas están tan tratadas acústicamente.",
+      "category": "Música"
+    },
+    {
+      "id": "mus_es_131",
+      "question": "¿Qué es el efecto de proximidad en un micrófono?",
+      "answers": [
+        {
+          "text": "Los graves aumentan al acercarse",
+          "correct": true
+        },
+        {
+          "text": "La voz se agudiza",
+          "correct": false
+        },
+        {
+          "text": "Aparece un eco",
+          "correct": false
+        }
+      ],
+      "difficulty": "hard",
+      "fun_fact": "Los locutores de radio lo explotan para sonar más graves de lo que son. Un cantante que se mueve sin control lo sufre como cambios de color entre frases.",
+      "category": "Música"
+    },
+    {
+      "id": "mus_es_132",
+      "question": "¿Qué se inventó antes: el fonógrafo o el teléfono?",
+      "answers": [
+        {
+          "text": "El teléfono",
+          "correct": true
+        },
+        {
+          "text": "El fonógrafo",
+          "correct": false
+        },
+        {
+          "text": "Ambos el mismo día",
+          "correct": false
+        }
+      ],
+      "difficulty": "medium",
+      "fun_fact": "El teléfono es de 1876 y el fonógrafo de 1877. Grabar sonido llegó después de transmitirlo, lo cual es bastante contraintuitivo.",
+      "category": "Música"
+    },
+    {
+      "id": "mus_es_133",
+      "question": "¿De qué material eran los primeros cilindros de grabación comerciales?",
+      "answers": [
+        {
+          "text": "Cera",
+          "correct": true
+        },
+        {
+          "text": "Vidrio",
+          "correct": false
+        },
+        {
+          "text": "Papel",
+          "correct": false
+        }
+      ],
+      "difficulty": "hard",
+      "fun_fact": "Se rayaban con cada reproducción, así que cada escucha degradaba un poco la grabación. Escuchar mucho un cilindro equivalía a borrarlo despacio.",
+      "category": "Música"
+    },
+    {
+      "id": "mus_es_134",
+      "question": "¿Qué se hace en una prueba de sonido antes de un concierto?",
+      "answers": [
+        {
+          "text": "Ajustar niveles y monitores para la sala",
+          "correct": true
+        },
+        {
+          "text": "Ensayar el repertorio completo",
+          "correct": false
+        },
+        {
+          "text": "Vender entradas",
+          "correct": false
+        }
+      ],
+      "difficulty": "easy",
+      "fun_fact": "La sala vacía suena distinta a la llena: el público absorbe agudos, así que el técnico deja margen para lo que va a cambiar cuando entre la gente.",
+      "category": "Música"
+    },
+    {
+      "id": "mus_es_135",
+      "question": "¿Para qué sirven los monitores en el escenario?",
+      "answers": [
+        {
+          "text": "Para que el músico se oiga a sí mismo",
+          "correct": true
+        },
+        {
+          "text": "Para grabar el concierto",
+          "correct": false
+        },
+        {
+          "text": "Para iluminar",
+          "correct": false
+        }
+      ],
+      "difficulty": "easy",
+      "fun_fact": "En el escenario el músico se oye a sí mismo peor que el público: está detrás de los altavoces principales, no delante. El monitor existe para corregir justo eso.",
+      "category": "Música"
+    },
+    {
+      "id": "mus_es_136",
+      "question": "¿Qué es el retorno in-ear que usan hoy casi todos los grandes conciertos?",
+      "answers": [
+        {
+          "text": "Auriculares a medida con mezcla individual",
+          "correct": true
+        },
+        {
+          "text": "Un altavoz gigante",
+          "correct": false
+        },
+        {
+          "text": "Un micrófono de repuesto",
+          "correct": false
+        }
+      ],
+      "difficulty": "medium",
+      "fun_fact": "Se moldean sobre el oído del intérprete. Además de mejorar la mezcla, bajan el volumen sobre el escenario y con ello el riesgo de sordera profesional.",
+      "category": "Música"
+    },
+    {
+      "id": "mus_es_137",
+      "question": "¿Qué hace que un estadio sea difícil para el sonido en directo?",
+      "answers": [
+        {
+          "text": "El eco tardío rebotando en las gradas",
+          "correct": true
+        },
+        {
+          "text": "La humedad del ambiente",
+          "correct": false
+        },
+        {
+          "text": "La altura sobre el mar",
+          "correct": false
+        }
+      ],
+      "difficulty": "medium",
+      "fun_fact": "Un rebote que llega con retraso suficiente ya no se percibe como color sino como una segunda copia. Por eso se usan torres de retardo repartidas por el recinto.",
+      "category": "Música"
+    },
+    {
+      "id": "mus_es_138",
+      "question": "¿Qué es un rider en una gira?",
+      "answers": [
+        {
+          "text": "El documento con las exigencias técnicas y de camerino",
+          "correct": true
+        },
+        {
+          "text": "Un tipo de amplificador",
+          "correct": false
+        },
+        {
+          "text": "El chófer del grupo",
+          "correct": false
+        }
+      ],
+      "difficulty": "medium",
+      "fun_fact": "La leyenda de los caramelos marrones de Van Halen era un truco de control: si estaban ahí, era señal de que nadie había leído el resto del documento técnico.",
+      "category": "Música"
+    },
+    {
+      "id": "mus_es_139",
+      "question": "¿Qué es la sincronización o sync en la industria musical?",
+      "answers": [
+        {
+          "text": "Licenciar una canción para imagen",
+          "correct": true
+        },
+        {
+          "text": "Afinar dos instrumentos",
+          "correct": false
+        },
+        {
+          "text": "Copiar una cinta",
+          "correct": false
+        }
+      ],
+      "difficulty": "medium",
+      "fun_fact": "Aparecer en una serie puede resucitar una canción de hace cuarenta años y llevarla al número uno, algo que ha pasado varias veces en la última década.",
+      "category": "Música"
+    },
+    {
+      "id": "mus_es_140",
+      "question": "¿Qué formato de audio comprime sin perder información?",
+      "answers": [
+        {
+          "text": "FLAC",
+          "correct": true
+        },
+        {
+          "text": "MP3",
+          "correct": false
+        },
+        {
+          "text": "AAC",
+          "correct": false
+        }
+      ],
+      "difficulty": "hard",
+      "fun_fact": "Ocupa bastante más que un MP3 y devuelve el archivo original bit a bit. La diferencia audible, en cambio, es materia de discusión eterna.",
+      "category": "Música"
+    },
+    {
+      "id": "mus_es_141",
+      "question": "¿Qué ajusta un ecualizador en una mesa de mezclas?",
+      "answers": [
+        {
+          "text": "El nivel de cada banda de frecuencia",
+          "correct": true
+        },
+        {
+          "text": "La distancia al altavoz",
+          "correct": false
+        },
+        {
+          "text": "La duración de la canción",
+          "correct": false
+        }
+      ],
+      "difficulty": "medium",
+      "fun_fact": "Se usa tanto para corregir un problema de la sala como para dar carácter. La regla habitual entre técnicos es quitar antes que añadir.",
+      "category": "Música"
+    },
+    {
+      "id": "mus_es_142",
+      "question": "¿Qué es el playback en una actuación televisiva?",
+      "answers": [
+        {
+          "text": "Cantar sobre una grabación previa",
+          "correct": true
+        },
+        {
+          "text": "Tocar sin amplificar",
+          "correct": false
+        },
+        {
+          "text": "Repetir el estribillo",
+          "correct": false
+        }
+      ],
+      "difficulty": "easy",
+      "fun_fact": "Muchos programas lo imponen por seguridad técnica. La polémica no es la técnica en sí sino no avisar al público de que la está escuchando.",
+      "category": "Música"
+    },
+    {
+      "id": "mus_es_143",
+      "question": "¿Qué gran cambio trajo la grabación multipista?",
+      "answers": [
+        {
+          "text": "Grabar cada instrumento por separado",
+          "correct": true
+        },
+        {
+          "text": "Grabar solo en directo",
+          "correct": false
+        },
+        {
+          "text": "Abaratar los vinilos",
+          "correct": false
+        }
+      ],
+      "difficulty": "medium",
+      "fun_fact": "Antes todos tocaban a la vez y un error obligaba a repetir la toma entera. Con pistas separadas el estudio pasó a ser un instrumento más.",
+      "category": "Música"
+    },
+    {
+      "id": "mus_es_144",
+      "question": "¿Qué es un bucle o loop en producción musical?",
+      "answers": [
+        {
+          "text": "Un fragmento que se repite continuamente",
+          "correct": true
+        },
+        {
+          "text": "Un fallo de sincronía",
+          "correct": false
+        },
+        {
+          "text": "Un micrófono doble",
+          "correct": false
+        }
+      ],
+      "difficulty": "easy",
+      "fun_fact": "Antes se hacía con cinta magnética empalmada en un anillo físico que daba vueltas. El nombre viene literalmente de esa forma.",
+      "category": "Música"
+    },
+    {
+      "id": "mus_es_145",
+      "question": "¿Qué recurso del sintetizador da al funk de los setenta ese sonido que casi parece hablar?",
+      "answers": [
+        {
+          "text": "El barrido de un filtro resonante",
+          "correct": true
+        },
+        {
+          "text": "El pedal de sostenido",
+          "correct": false
+        },
+        {
+          "text": "La reverberación de placa",
+          "correct": false
+        }
+      ],
+      "difficulty": "medium",
+      "fun_fact": "El barrido del filtro imita el movimiento de una vocal, y por eso ese sonido se percibe casi como una voz hablando sin palabras.",
+      "category": "Música"
+    },
+    {
+      "id": "mus_es_146",
+      "question": "¿Qué papel tuvo la radio en la difusión de la música popular del siglo XX?",
+      "answers": [
+        {
+          "text": "Convirtió el éxito local en nacional",
+          "correct": true
+        },
+        {
+          "text": "Sustituyó a los discos",
+          "correct": false
+        },
+        {
+          "text": "Solo emitía clásica",
+          "correct": false
+        }
+      ],
+      "difficulty": "easy",
+      "fun_fact": "La emisora decidía qué se escuchaba, y de ahí nacieron los pagos encubiertos a locutores que acabaron en escándalos y leyes específicas.",
+      "category": "Música"
+    },
+    {
+      "id": "mus_es_147",
+      "question": "¿Qué es el metrónomo?",
+      "answers": [
+        {
+          "text": "Un aparato que marca el pulso constante",
+          "correct": true
+        },
+        {
+          "text": "Un afinador de cuerdas",
+          "correct": false
+        },
+        {
+          "text": "Un medidor de volumen",
+          "correct": false
+        }
+      ],
+      "difficulty": "easy",
+      "fun_fact": "El de péndulo se popularizó en tiempos de Beethoven, que fue de los primeros en anotar cifras exactas de tempo en sus partituras.",
+      "category": "Música"
+    },
+    {
+      "id": "mus_es_148",
+      "question": "¿Qué significa que una canción esté en compás de tres por cuatro?",
+      "answers": [
+        {
+          "text": "Que se cuenta de tres en tres",
+          "correct": true
+        },
+        {
+          "text": "Que dura tres minutos",
+          "correct": false
+        },
+        {
+          "text": "Que la tocan tres músicos",
+          "correct": false
+        }
+      ],
+      "difficulty": "easy",
+      "fun_fact": "Es el compás del vals, y el cuerpo lo nota: la mayoría de la música bailable moderna va de cuatro en cuatro, y el tres se percibe casi como un giro.",
+      "category": "Música"
+    },
+    {
+      "id": "mus_es_149",
+      "question": "¿Qué hace el silencio en una partitura?",
+      "answers": [
+        {
+          "text": "Vale exactamente como una nota, pero sin sonido",
+          "correct": true
+        },
+        {
+          "text": "Es opcional",
+          "correct": false
+        },
+        {
+          "text": "Marca el final",
+          "correct": false
+        }
+      ],
+      "difficulty": "easy",
+      "fun_fact": "Tiene duración escrita y se cuenta igual. Un silencio mal medido descoloca a un grupo tanto como una nota equivocada.",
+      "category": "Música"
+    },
+    {
+      "id": "mus_es_150",
+      "question": "¿Qué es una versión o cover?",
+      "answers": [
+        {
+          "text": "Una interpretación nueva de una canción ajena",
+          "correct": true
+        },
+        {
+          "text": "Una copia pirata",
+          "correct": false
+        },
+        {
+          "text": "La portada del disco",
+          "correct": false
+        }
+      ],
+      "difficulty": "easy",
+      "fun_fact": "Algunas se conocen más que el original: quien escribió la canción cobra igual, pero el público suele atribuírsela a quien la hizo famosa.",
+      "category": "Música"
+    },
+    {
+      "id": "mus_es_161",
+      "question": "¿Qué compositor aparece en este cuadro de 1820?",
+      "answers": [
+        {
+          "text": "Johannes Brahms",
+          "correct": false
+        },
+        {
+          "text": "Ludwig van Beethoven",
+          "correct": true
+        },
+        {
+          "text": "Franz Schubert",
+          "correct": false
+        }
+      ],
+      "difficulty": "easy",
+      "fun_fact": "Beethoven posó pocas veces para Joseph Stieler y entre sesión y sesión seguía trabajando en la Missa solemnis: ese es exactamente el título que sostiene en la mano.",
+      "category": "Música",
+      "image_url": "/quizify/static/img/packs/music/beethoven-portrait.webp",
+      "reveal_style": "progressive"
+    },
+    {
+      "id": "mus_es_162",
+      "question": "¿En qué ciudad italiana trabajaba el constructor de este violín?",
+      "answers": [
+        {
+          "text": "Cremona",
+          "correct": true
+        },
+        {
+          "text": "Nápoles",
+          "correct": false
+        },
+        {
+          "text": "Florencia",
+          "correct": false
+        }
+      ],
+      "difficulty": "hard",
+      "fun_fact": "Antonio Stradivari construyó en Cremona alrededor de mil cien instrumentos y sobreviven unos seiscientos cincuenta. Por qué suenan así sigue sin resolverse: se ha culpado al barniz, a la densidad de la madera y a los veranos fríos de aquellas décadas.",
+      "category": "Música",
+      "image_url": "/quizify/static/img/packs/music/stradivari-violin.webp",
+      "reveal_style": "progressive"
+    },
+    {
+      "id": "mus_es_163",
+      "question": "¿Qué aparato presentó este hombre en 1877?",
+      "answers": [
+        {
+          "text": "El gramófono",
+          "correct": false
+        },
+        {
+          "text": "La radio",
+          "correct": false
+        },
+        {
+          "text": "El fonógrafo",
+          "correct": true
+        }
+      ],
+      "difficulty": "medium",
+      "fun_fact": "El fonógrafo de Edison grababa sobre un cilindro envuelto en papel de estaño. La primera grabación de la historia fue él mismo recitando una canción infantil, y reproducirla una sola vez ya la destruía a medias.",
+      "category": "Música",
+      "image_url": "/quizify/static/img/packs/music/edison-phonograph.webp",
+      "reveal_style": "progressive"
+    },
+    {
+      "id": "mus_es_164",
+      "question": "¿Qué hay en esta hoja?",
+      "answers": [
+        {
+          "text": "Una partitura manuscrita",
+          "correct": true
+        },
+        {
+          "text": "Un mapa",
+          "correct": false
+        },
+        {
+          "text": "Un registro de impuestos",
+          "correct": false
+        }
+      ],
+      "difficulty": "medium",
+      "fun_fact": "La caligrafía musical de Beethoven era famosa por lo contrario de la claridad: tachones, parches pegados encima y una pluma apretada hasta atravesar el papel. Algunos copistas se negaron a trabajar con sus manuscritos.",
+      "category": "Música",
+      "image_url": "/quizify/static/img/packs/music/beethoven-manuscript.webp",
+      "reveal_style": "progressive"
+    },
+    {
+      "id": "mus_es_165",
+      "question": "¿Qué instrumento de teclado se ve aquí?",
+      "answers": [
+        {
+          "text": "Un piano",
+          "correct": false
+        },
+        {
+          "text": "Un clave",
+          "correct": true
+        },
+        {
+          "text": "Un armonio",
+          "correct": false
+        }
+      ],
+      "difficulty": "medium",
+      "fun_fact": "El clave pulsa la cuerda en vez de golpearla, así que suena siempre al mismo volumen por mucho que se apriete la tecla. Justo eso hizo atractivo al piano hacia 1700: por fin se podía tocar fuerte y suave.",
+      "category": "Música",
+      "image_url": "/quizify/static/img/packs/music/harpsichord.webp",
+      "reveal_style": "progressive"
+    },
+    {
+      "id": "mus_es_166",
+      "question": "¿Cuántas teclas tiene un piano moderno?",
+      "type": "estimate",
+      "answer": 88,
+      "min": 20,
+      "max": 200,
+      "unit": "teclas",
+      "difficulty": "easy",
+      "fun_fact": "Cincuenta y dos blancas y treinta y seis negras. Se podrían añadir más, pero por debajo de las últimas el oído deja de percibir altura y solo oye retumbe.",
+      "category": "Música"
+    },
+    {
+      "id": "mus_es_167",
+      "question": "¿Cuántas cuerdas tiene un arpa de concierto?",
+      "type": "estimate",
+      "answer": 47,
+      "min": 5,
+      "max": 100,
+      "unit": "cuerdas",
+      "difficulty": "medium",
+      "fun_fact": "Cuarenta y siete cuerdas y siete pedales, cada uno de los cuales reafina una nota en todas las octavas. El arpista toca la tonalidad con los pies.",
+      "category": "Música"
+    },
+    {
+      "id": "mus_es_168",
+      "question": "¿Cuántas sinfonías escribió Joseph Haydn?",
+      "type": "estimate",
+      "answer": 104,
+      "min": 1,
+      "max": 300,
+      "unit": "sinfonías",
+      "difficulty": "hard",
+      "fun_fact": "Ciento cuatro confirmadas. Mozart llegó a cuarenta y una y Beethoven a nueve: la cifra bajó a medida que cada sinfonía se hacía más larga y más densa.",
+      "category": "Música"
+    },
+    {
+      "id": "mus_es_169",
+      "question": "¿Cuántos segundos dura la obra de John Cage en la que no se toca ni una sola nota?",
+      "type": "estimate",
+      "answer": 273,
+      "min": 1,
+      "max": 1000,
+      "unit": "segundos",
+      "difficulty": "medium",
+      "fun_fact": "Cuatro minutos y treinta y tres segundos sin una sola nota. La pieza está escrita y registrada, y una reclamación por plagio de silencio llegó a resolverse con un acuerdo económico.",
+      "category": "Música"
+    },
+    {
+      "id": "mus_es_170",
+      "question": "¿Cuántos minutos dura aproximadamente la Novena Sinfonía de Beethoven?",
+      "type": "estimate",
+      "answer": 70,
+      "min": 10,
+      "max": 180,
+      "unit": "minutos",
+      "difficulty": "medium",
+      "fun_fact": "Unos setenta minutos. Según la leyenda, esa es justo la razón de que un disco compacto dure lo que dura: nunca se ha demostrado, y tampoco desmentido del todo.",
+      "category": "Música"
+    }
+  ]
+}

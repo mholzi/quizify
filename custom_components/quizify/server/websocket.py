@@ -57,6 +57,7 @@ from custom_components.quizify.server.serializers import (
 if TYPE_CHECKING:
     from collections.abc import Callable
 
+    from ..analytics import PlayerStanding
     from ..game_events import QuizifyEventEmitter
     from ..lights import QuizifyPartyLights
     from ..runtime import Runtime
@@ -842,6 +843,12 @@ class QuizifyWebSocketHandler:
                 "session_token": session_token,
                 "color": player_obj.color if player_obj else "",
                 "is_admin": player_obj.is_admin if player_obj else False,
+                # All-time standing for THIS player only (#371, variant A).
+                # Rides the join frame rather than the roster broadcast: it
+                # is per-player data, it never changes mid-lobby, and putting
+                # it in the coalesced roster frame would ship everyone's
+                # history to every phone. ``None`` for a first-timer.
+                "all_time": self._all_time_standing(name),
             })
 
             # Send current state to the joining player. Project the
@@ -953,6 +960,9 @@ class QuizifyWebSocketHandler:
             "player_id": name,
             "session_token": new_token,
             "powerup": powerup.value if powerup else None,
+            # Same per-player standing as the join frame (#371) — a player who
+            # reloads their phone in the lobby must not lose the line.
+            "all_time": self._all_time_standing(name),
         })
 
         # Send full game state, projected into THIS player's frame (#253):
@@ -2963,6 +2973,21 @@ class QuizifyWebSocketHandler:
             return True
         admin = game_state.get_admin()
         return admin is None or not admin.connected
+
+    def _all_time_standing(self, name: str) -> PlayerStanding | None:
+        """This player's own all-time placing for the lobby line (#371).
+
+        FAIL-SOFT by construction: no game state, no wired analytics, or a
+        name that never finished a game all return ``None``, and the client
+        simply renders no line. A join must never fail over a decoration.
+        """
+        gs = self._get_game_state()
+        if gs is None:
+            return None
+        analytics = gs.stats_service
+        if analytics is None:
+            return None
+        return analytics.get_player_standing(name)
 
     def set_tts_announcer(
         self, announcer: QuizifyTTSAnnouncer | None

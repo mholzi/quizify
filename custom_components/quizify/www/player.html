@@ -152,6 +152,12 @@
                 </p>
             </div>
 
+            <!-- All-time standing, this player only (#371, variant A).
+                 Hidden until the server sends an `all_time` block on join —
+                 a first-time guest never sees it, so the lobby stays as
+                 uncluttered as it is today. -->
+            <p class="pl-allTime hidden" id="pl-alltime" aria-live="polite"></p>
+
             <p class="pl-also" id="pl-also">
                 <span data-i18n="lobby.aloneWaiting">Waiting on your own…</span>
             </p>

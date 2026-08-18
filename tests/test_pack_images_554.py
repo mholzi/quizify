@@ -63,11 +63,11 @@ PACK_SETS = (
     ImageSet("geography", ("geographie.json", "geography.json", "geografia-es.json"), 149),
     ImageSet("history", ("geschichte-de.json", "history-en.json", "historia-es.json"), 149),
     ImageSet("science", ("wissenschaft-de.json", "science-en.json", "ciencia-es.json"), 150),
-    ImageSet("tech", ("technik-de.json", "tech-en.json"), 150),
-    ImageSet("food", ("essen-de.json", "food-en.json"), 150),
+    ImageSet("tech", ("technik-de.json", "tech-en.json", "tecnologia-es.json"), 150),
+    ImageSet("food", ("essen-de.json", "food-en.json", "comida-es.json"), 150),
     ImageSet("sport", ("sport-de.json", "sport-en.json", "deportes-es.json"), 148),
     ImageSet("worldcup", ("weltmeisterschaft.json", "world-cup.json"), 99),
-    ImageSet("music", ("musik-de.json", "music-en.json"), 150),
+    ImageSet("music", ("musik-de.json", "music-en.json", "musica-es.json"), 150),
     ImageSet("popculture", ("popkultur.json", "pop-culture.json", "cultura-pop-es.json"), 149),
 )
 
