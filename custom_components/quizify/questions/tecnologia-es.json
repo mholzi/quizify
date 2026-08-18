@@ -1,0 +1,3333 @@
+{
+  "name": "Tecnología",
+  "language": "es",
+  "version": "1.0",
+  "theme": "tech",
+  "questions": [
+    {
+      "id": "tec_es_001",
+      "question": "¿Qué era un bug en el sentido original del término informático?",
+      "answers": [
+        {
+          "text": "Un insecto atascado en un relé",
+          "correct": true
+        },
+        {
+          "text": "Un error de sintaxis",
+          "correct": false
+        },
+        {
+          "text": "Un cable mal soldado",
+          "correct": false
+        }
+      ],
+      "difficulty": "medium",
+      "fun_fact": "En 1947 el equipo del Harvard Mark II encontró una polilla dentro de un relé y la pegó en el cuaderno de incidencias con la nota de que era el primer caso real de bug encontrado.",
+      "category": "Tecnología"
+    },
+    {
+      "id": "tec_es_002",
+      "question": "¿Quién escribió el primer algoritmo pensado para ser ejecutado por una máquina?",
+      "answers": [
+        {
+          "text": "Ada Lovelace",
+          "correct": true
+        },
+        {
+          "text": "Alan Turing",
+          "correct": false
+        },
+        {
+          "text": "John von Neumann",
+          "correct": false
+        }
+      ],
+      "difficulty": "medium",
+      "fun_fact": "Sus notas sobre la máquina analítica de Babbage incluían cómo calcular los números de Bernoulli. La máquina nunca llegó a construirse en su época.",
+      "category": "Tecnología"
+    },
+    {
+      "id": "tec_es_003",
+      "question": "¿Qué significa que un ordenador trabaje en binario?",
+      "answers": [
+        {
+          "text": "Que solo distingue dos estados",
+          "correct": true
+        },
+        {
+          "text": "Que tiene dos procesadores",
+          "correct": false
+        },
+        {
+          "text": "Que ejecuta dos programas a la vez",
+          "correct": false
+        }
+      ],
+      "difficulty": "easy",
+      "fun_fact": "No es una elección matemática sino eléctrica: distinguir entre corriente y no corriente es fiable, distinguir diez niveles distintos de voltaje no lo sería.",
+      "category": "Tecnología"
+    },
+    {
+      "id": "tec_es_004",
+      "question": "¿Cuántos bytes tiene un kilobyte según la definición clásica en informática?",
+      "answers": [
+        {
+          "text": "1024",
+          "correct": true
+        },
+        {
+          "text": "1000",
+          "correct": false
+        },
+        {
+          "text": "512",
+          "correct": false
+        }
+      ],
+      "difficulty": "medium",
+      "fun_fact": "La discrepancia con el kilo del sistema métrico da lugar a que un disco de un terabyte muestre menos capacidad de la anunciada. Ninguna de las dos cifras está mal, dependen del criterio.",
+      "category": "Tecnología"
+    },
+    {
+      "id": "tec_es_005",
+      "question": "¿Qué hace un compilador?",
+      "answers": [
+        {
+          "text": "Traduce el código a instrucciones de máquina",
+          "correct": true
+        },
+        {
+          "text": "Ejecuta el programa línea a línea",
+          "correct": false
+        },
+        {
+          "text": "Comprime los archivos",
+          "correct": false
+        }
+      ],
+      "difficulty": "medium",
+      "fun_fact": "Un intérprete hace lo segundo. La diferencia explica por qué un programa compilado arranca más rápido y uno interpretado es más fácil de depurar.",
+      "category": "Tecnología"
+    },
+    {
+      "id": "tec_es_006",
+      "question": "¿Qué fue ENIAC?",
+      "answers": [
+        {
+          "text": "Uno de los primeros ordenadores electrónicos",
+          "correct": true
+        },
+        {
+          "text": "Un satélite",
+          "correct": false
+        },
+        {
+          "text": "Un lenguaje de programación",
+          "correct": false
+        }
+      ],
+      "difficulty": "easy",
+      "fun_fact": "Ocupaba una sala entera y se programaba recableando paneles a mano. Las seis programadoras originales aparecieron durante décadas en las fotos sin que nadie las nombrara.",
+      "category": "Tecnología"
+    },
+    {
+      "id": "tec_es_007",
+      "question": "¿Qué es el código abierto?",
+      "answers": [
+        {
+          "text": "Software cuyo código fuente puede leerse y modificarse",
+          "correct": true
+        },
+        {
+          "text": "Software gratuito sin más",
+          "correct": false
+        },
+        {
+          "text": "Software sin licencia",
+          "correct": false
+        }
+      ],
+      "difficulty": "easy",
+      "fun_fact": "Gratis y abierto no son lo mismo: hay programas gratuitos con el código cerrado y programas de pago cuyo código se publica entero.",
+      "category": "Tecnología"
+    },
+    {
+      "id": "tec_es_008",
+      "question": "¿Qué es un algoritmo?",
+      "answers": [
+        {
+          "text": "Una secuencia finita de pasos para resolver un problema",
+          "correct": true
+        },
+        {
+          "text": "Un lenguaje de programación",
+          "correct": false
+        },
+        {
+          "text": "Un tipo de procesador",
+          "correct": false
+        }
+      ],
+      "difficulty": "easy",
+      "fun_fact": "La palabra viene del nombre latinizado de al-Juarismi, un matemático persa del siglo IX. Una receta de cocina cumple la definición.",
+      "category": "Tecnología"
+    },
+    {
+      "id": "tec_es_009",
+      "question": "¿Qué hace la memoria RAM cuando se apaga el ordenador?",
+      "answers": [
+        {
+          "text": "Pierde su contenido",
+          "correct": true
+        },
+        {
+          "text": "Lo guarda en el disco",
+          "correct": false
+        },
+        {
+          "text": "Lo conserva indefinidamente",
+          "correct": false
+        }
+      ],
+      "difficulty": "easy",
+      "fun_fact": "Por eso un trabajo sin guardar desaparece con un corte de luz. Existe memoria que sí retiene datos sin corriente, y es justo lo que hay dentro de un pendrive.",
+      "category": "Tecnología"
+    },
+    {
+      "id": "tec_es_010",
+      "question": "¿Qué es un lenguaje de programación de alto nivel?",
+      "answers": [
+        {
+          "text": "Uno más cercano al lenguaje humano que a la máquina",
+          "correct": true
+        },
+        {
+          "text": "Uno que solo usan los expertos",
+          "correct": false
+        },
+        {
+          "text": "Uno que ejecuta más rápido",
+          "correct": false
+        }
+      ],
+      "difficulty": "medium",
+      "fun_fact": "Cuanto más alto el nivel, más trabajo hace el compilador y menos el programador. El coste suele pagarse en control fino sobre la memoria.",
+      "category": "Tecnología"
+    },
+    {
+      "id": "tec_es_011",
+      "question": "¿Qué es la nube en informática?",
+      "answers": [
+        {
+          "text": "Ordenadores de otro que ejecutan tu trabajo",
+          "correct": true
+        },
+        {
+          "text": "Un almacenamiento sin servidores",
+          "correct": false
+        },
+        {
+          "text": "Una red inalámbrica",
+          "correct": false
+        }
+      ],
+      "difficulty": "easy",
+      "fun_fact": "No hay nada etéreo en ella: son naves llenas de servidores con refrigeración y facturas de luz. La palabra viene del dibujo de nube con que se representaba internet en los esquemas.",
+      "category": "Tecnología"
+    },
+    {
+      "id": "tec_es_012",
+      "question": "¿Qué es el código máquina?",
+      "answers": [
+        {
+          "text": "Instrucciones que el procesador ejecuta directamente",
+          "correct": true
+        },
+        {
+          "text": "Un lenguaje de programación moderno",
+          "correct": false
+        },
+        {
+          "text": "Un formato de archivo comprimido",
+          "correct": false
+        }
+      ],
+      "difficulty": "medium",
+      "fun_fact": "Es específico de cada arquitectura, y por eso un programa compilado para un procesador no funciona en otro distinto sin recompilarlo.",
+      "category": "Tecnología"
+    },
+    {
+      "id": "tec_es_013",
+      "question": "¿Qué es un sistema operativo?",
+      "answers": [
+        {
+          "text": "El programa que administra el hardware y los demás programas",
+          "correct": true
+        },
+        {
+          "text": "Un antivirus",
+          "correct": false
+        },
+        {
+          "text": "Un tipo de memoria",
+          "correct": false
+        }
+      ],
+      "difficulty": "easy",
+      "fun_fact": "Nadie lo usa directamente: su trabajo consiste en repartir procesador, memoria y disco entre todo lo demás sin que ninguno note al resto.",
+      "category": "Tecnología"
+    },
+    {
+      "id": "tec_es_014",
+      "question": "¿Qué caracteriza a un ordenador cuántico?",
+      "answers": [
+        {
+          "text": "Trabaja con estados que no son solo cero o uno",
+          "correct": true
+        },
+        {
+          "text": "Prueba todas las respuestas a la vez y elige la buena",
+          "correct": false
+        },
+        {
+          "text": "Es simplemente más rápido",
+          "correct": false
+        }
+      ],
+      "difficulty": "hard",
+      "fun_fact": "No sirve para todo: acelera problemas muy concretos, como factorizar números enormes. Para escribir un correo sería enormemente peor que un portátil.",
+      "category": "Tecnología"
+    },
+    {
+      "id": "tec_es_015",
+      "question": "¿Qué es el software libre según su definición clásica?",
+      "answers": [
+        {
+          "text": "El que garantiza cuatro libertades al usuario",
+          "correct": true
+        },
+        {
+          "text": "El que carece de dueño legal",
+          "correct": false
+        },
+        {
+          "text": "El que no cuesta dinero",
+          "correct": false
+        }
+      ],
+      "difficulty": "hard",
+      "fun_fact": "Usar, estudiar, modificar y redistribuir. La confusión viene del inglés free, que significa a la vez libre y gratuito, y por eso se acuñó la expresión libre como en libertad.",
+      "category": "Tecnología"
+    },
+    {
+      "id": "tec_es_016",
+      "question": "¿Qué hace una tarjeta gráfica además de dibujar imágenes?",
+      "answers": [
+        {
+          "text": "Cálculos masivos en paralelo",
+          "correct": true
+        },
+        {
+          "text": "Almacenar archivos",
+          "correct": false
+        },
+        {
+          "text": "Gestionar la red",
+          "correct": false
+        }
+      ],
+      "difficulty": "medium",
+      "fun_fact": "Miles de núcleos sencillos trabajando a la vez resultaron ideales para entrenar redes neuronales. La industria de la inteligencia artificial se apoya en hardware diseñado para videojuegos.",
+      "category": "Tecnología"
+    },
+    {
+      "id": "tec_es_017",
+      "question": "¿Qué es un bit?",
+      "answers": [
+        {
+          "text": "La unidad mínima de información",
+          "correct": true
+        },
+        {
+          "text": "Un byte pequeño",
+          "correct": false
+        },
+        {
+          "text": "Una velocidad de red",
+          "correct": false
+        }
+      ],
+      "difficulty": "easy",
+      "fun_fact": "Es una respuesta a una pregunta de sí o no. Ocho de ellos forman un byte, suficiente para distinguir doscientas cincuenta y seis cosas.",
+      "category": "Tecnología"
+    },
+    {
+      "id": "tec_es_018",
+      "question": "¿Qué es la obsolescencia programada?",
+      "answers": [
+        {
+          "text": "Diseñar un producto para que dure poco",
+          "correct": true
+        },
+        {
+          "text": "Actualizar el software cada año",
+          "correct": false
+        },
+        {
+          "text": "Vender modelos nuevos",
+          "correct": false
+        }
+      ],
+      "difficulty": "medium",
+      "fun_fact": "El caso más citado es el cártel de fabricantes de bombillas de los años treinta, que fijó por contrato una duración máxima de mil horas.",
+      "category": "Tecnología"
+    },
+    {
+      "id": "tec_es_019",
+      "question": "¿Qué hace un firewall?",
+      "answers": [
+        {
+          "text": "Filtra el tráfico de red según reglas",
+          "correct": true
+        },
+        {
+          "text": "Elimina virus del disco",
+          "correct": false
+        },
+        {
+          "text": "Acelera la conexión",
+          "correct": false
+        }
+      ],
+      "difficulty": "medium",
+      "fun_fact": "No distingue si algo es malicioso: solo aplica las reglas que le han dado. Un cortafuegos mal configurado deja pasar exactamente lo que le han dicho que deje pasar.",
+      "category": "Tecnología"
+    },
+    {
+      "id": "tec_es_020",
+      "question": "¿Qué es un servidor?",
+      "answers": [
+        {
+          "text": "Un ordenador que atiende peticiones de otros",
+          "correct": true
+        },
+        {
+          "text": "Un armario de cables",
+          "correct": false
+        },
+        {
+          "text": "Un programa antivirus",
+          "correct": false
+        }
+      ],
+      "difficulty": "easy",
+      "fun_fact": "Puede ser una máquina enorme o el portátil de una habitación. Servidor es un papel que se desempeña, no un tipo de aparato.",
+      "category": "Tecnología"
+    },
+    {
+      "id": "tec_es_021",
+      "question": "¿Qué es el código fuente?",
+      "answers": [
+        {
+          "text": "El programa tal como lo escribe una persona",
+          "correct": true
+        },
+        {
+          "text": "El archivo que ejecuta el usuario",
+          "correct": false
+        },
+        {
+          "text": "La documentación técnica",
+          "correct": false
+        }
+      ],
+      "difficulty": "easy",
+      "fun_fact": "Sin él, modificar un programa es como corregir un texto teniendo solo la fotocopia borrosa: técnicamente posible, prácticamente inviable.",
+      "category": "Tecnología"
+    },
+    {
+      "id": "tec_es_022",
+      "question": "¿En qué consistía el llamado efecto 2000?",
+      "answers": [
+        {
+          "text": "Años guardados con solo dos cifras",
+          "correct": true
+        },
+        {
+          "text": "Virus en los cajeros",
+          "correct": false
+        },
+        {
+          "text": "Falta de espacio en disco",
+          "correct": false
+        }
+      ],
+      "difficulty": "medium",
+      "fun_fact": "Se gastaron cientos de miles de millones en revisarlo y casi no pasó nada, lo que mucha gente interpretó como que el problema era falso. Es la paradoja de toda prevención que funciona.",
+      "category": "Tecnología"
+    },
+    {
+      "id": "tec_es_023",
+      "question": "¿Qué es un algoritmo de compresión sin pérdida?",
+      "answers": [
+        {
+          "text": "Devuelve el archivo original bit a bit",
+          "correct": true
+        },
+        {
+          "text": "Elimina detalles poco perceptibles",
+          "correct": false
+        },
+        {
+          "text": "Reduce cualquier archivo a un tamaño fijo",
+          "correct": false
+        }
+      ],
+      "difficulty": "hard",
+      "fun_fact": "El ZIP lo hace y el JPEG no. Por eso una imagen guardada muchas veces en JPEG se degrada, mientras que un ZIP abierto mil veces sigue idéntico.",
+      "category": "Tecnología"
+    },
+    {
+      "id": "tec_es_024",
+      "question": "¿Qué es la latencia en una conexión?",
+      "answers": [
+        {
+          "text": "El retardo hasta que llega la respuesta",
+          "correct": true
+        },
+        {
+          "text": "La cantidad de datos por segundo",
+          "correct": false
+        },
+        {
+          "text": "El número de dispositivos conectados",
+          "correct": false
+        }
+      ],
+      "difficulty": "medium",
+      "fun_fact": "Ancho de banda y latencia son cosas distintas: una conexión por satélite puede mover muchísimos datos y aun así resultar insoportable para una videollamada.",
+      "category": "Tecnología"
+    },
+    {
+      "id": "tec_es_025",
+      "question": "¿Qué hace el protocolo HTTPS frente a HTTP?",
+      "answers": [
+        {
+          "text": "Cifra la comunicación",
+          "correct": true
+        },
+        {
+          "text": "Acelera la carga",
+          "correct": false
+        },
+        {
+          "text": "Comprime las imágenes",
+          "correct": false
+        }
+      ],
+      "difficulty": "easy",
+      "fun_fact": "El candado del navegador dice que nadie por el camino puede leer lo que envías, no que la página sea de fiar. Una web fraudulenta también puede tener candado.",
+      "category": "Tecnología"
+    },
+    {
+      "id": "tec_es_026",
+      "question": "¿Qué es una dirección IP?",
+      "answers": [
+        {
+          "text": "El identificador de un dispositivo en una red",
+          "correct": true
+        },
+        {
+          "text": "El nombre de la wifi",
+          "correct": false
+        },
+        {
+          "text": "Un número de serie del fabricante",
+          "correct": false
+        }
+      ],
+      "difficulty": "easy",
+      "fun_fact": "La mayoría cambia cada cierto tiempo. Que un sitio vea tu IP no equivale a que sepa quién eres, aunque sí de dónde te conectas aproximadamente.",
+      "category": "Tecnología"
+    },
+    {
+      "id": "tec_es_027",
+      "question": "¿Qué hace un servidor DNS?",
+      "answers": [
+        {
+          "text": "Traduce nombres de dominio en direcciones numéricas",
+          "correct": true
+        },
+        {
+          "text": "Almacena las páginas web",
+          "correct": false
+        },
+        {
+          "text": "Cifra el tráfico",
+          "correct": false
+        }
+      ],
+      "difficulty": "medium",
+      "fun_fact": "Es la agenda de contactos de internet. Cuando cae, las páginas siguen ahí y funcionando, pero nadie sabe en qué número encontrarlas.",
+      "category": "Tecnología"
+    },
+    {
+      "id": "tec_es_028",
+      "question": "¿Qué es un centro de datos?",
+      "answers": [
+        {
+          "text": "Un edificio lleno de servidores",
+          "correct": true
+        },
+        {
+          "text": "Una base de datos grande",
+          "correct": false
+        },
+        {
+          "text": "Un archivo de copias de seguridad",
+          "correct": false
+        }
+      ],
+      "difficulty": "easy",
+      "fun_fact": "En los centros antiguos la refrigeración se llevaba casi tanta electricidad como el cálculo; en los grandes de hoy ese margen ha bajado al diez o veinte por ciento. Aun así, algunos se instalan en Islandia o directamente bajo el mar.",
+      "category": "Tecnología"
+    },
+    {
+      "id": "tec_es_029",
+      "question": "¿Qué significa que un software sea de código cerrado?",
+      "answers": [
+        {
+          "text": "Su código fuente no se publica",
+          "correct": true
+        },
+        {
+          "text": "Se vende por suscripción",
+          "correct": false
+        },
+        {
+          "text": "Solo funciona en un sistema",
+          "correct": false
+        }
+      ],
+      "difficulty": "medium",
+      "fun_fact": "Se puede usar sin poder inspeccionarlo. Eso obliga a confiar en el fabricante en cuestiones que van desde la seguridad hasta qué datos envía.",
+      "category": "Tecnología"
+    },
+    {
+      "id": "tec_es_030",
+      "question": "¿Qué es la computación en paralelo?",
+      "answers": [
+        {
+          "text": "Repartir un cálculo entre varios núcleos a la vez",
+          "correct": true
+        },
+        {
+          "text": "Hacer dos programas seguidos",
+          "correct": false
+        },
+        {
+          "text": "Duplicar la memoria",
+          "correct": false
+        }
+      ],
+      "difficulty": "medium",
+      "fun_fact": "No todo se puede repartir: hay tareas cuyo siguiente paso depende del anterior, y ahí mil núcleos no van más rápido que uno.",
+      "category": "Tecnología"
+    },
+    {
+      "id": "tec_es_031",
+      "question": "¿Qué fue Arpanet?",
+      "answers": [
+        {
+          "text": "La red precursora de internet",
+          "correct": true
+        },
+        {
+          "text": "El primer buscador",
+          "correct": false
+        },
+        {
+          "text": "Un tipo de módem",
+          "correct": false
+        }
+      ],
+      "difficulty": "medium",
+      "fun_fact": "Su primer mensaje debía decir LOGIN y el sistema se cayó tras las dos primeras letras. El mensaje inaugural de Arpanet fue, de hecho, LO.",
+      "category": "Tecnología"
+    },
+    {
+      "id": "tec_es_032",
+      "question": "¿Qué inventó Tim Berners-Lee?",
+      "answers": [
+        {
+          "text": "La World Wide Web",
+          "correct": true
+        },
+        {
+          "text": "Internet",
+          "correct": false
+        },
+        {
+          "text": "El correo electrónico",
+          "correct": false
+        }
+      ],
+      "difficulty": "medium",
+      "fun_fact": "Internet ya existía: él puso encima el sistema de páginas y enlaces. Y lo liberó sin patentarlo, decisión que probablemente valga miles de millones no cobrados.",
+      "category": "Tecnología"
+    },
+    {
+      "id": "tec_es_033",
+      "question": "¿Qué es un enlace en una página web?",
+      "answers": [
+        {
+          "text": "Una referencia que lleva a otro recurso",
+          "correct": true
+        },
+        {
+          "text": "Un archivo comprimido",
+          "correct": false
+        },
+        {
+          "text": "Una imagen incrustada",
+          "correct": false
+        }
+      ],
+      "difficulty": "easy",
+      "fun_fact": "La idea de conectar documentos entre sí es anterior a la web: se venía discutiendo desde los años sesenta con el nombre de hipertexto.",
+      "category": "Tecnología"
+    },
+    {
+      "id": "tec_es_034",
+      "question": "¿Qué símbolo eligió Ray Tomlinson para separar usuario y servidor en el correo?",
+      "answers": [
+        {
+          "text": "La arroba",
+          "correct": true
+        },
+        {
+          "text": "El guion",
+          "correct": false
+        },
+        {
+          "text": "La almohadilla",
+          "correct": false
+        }
+      ],
+      "difficulty": "medium",
+      "fun_fact": "Lo eligió porque era el único signo del teclado que no podía aparecer dentro de un nombre de usuario y que además ya significaba en, es decir, la persona en tal sitio.",
+      "category": "Tecnología"
+    },
+    {
+      "id": "tec_es_035",
+      "question": "¿Qué es el ancho de banda?",
+      "answers": [
+        {
+          "text": "La cantidad de datos que caben por segundo",
+          "correct": true
+        },
+        {
+          "text": "La distancia máxima del cable",
+          "correct": false
+        },
+        {
+          "text": "El número de antenas",
+          "correct": false
+        }
+      ],
+      "difficulty": "easy",
+      "fun_fact": "Se suele confundir con velocidad. Una conexión de mucho ancho de banda mueve más datos a la vez, no necesariamente más rápido cada uno.",
+      "category": "Tecnología"
+    },
+    {
+      "id": "tec_es_036",
+      "question": "¿Qué hace un router en casa?",
+      "answers": [
+        {
+          "text": "Encamina el tráfico entre la red local e internet",
+          "correct": true
+        },
+        {
+          "text": "Amplifica la señal del móvil",
+          "correct": false
+        },
+        {
+          "text": "Almacena las páginas visitadas",
+          "correct": false
+        }
+      ],
+      "difficulty": "easy",
+      "fun_fact": "Además hace de traductor de direcciones: todos los aparatos de la casa salen a internet compartiendo una sola dirección pública.",
+      "category": "Tecnología"
+    },
+    {
+      "id": "tec_es_037",
+      "question": "¿Qué es el wifi?",
+      "answers": [
+        {
+          "text": "Una tecnología de red inalámbrica local",
+          "correct": true
+        },
+        {
+          "text": "Un proveedor de internet",
+          "correct": false
+        },
+        {
+          "text": "Un tipo de cable",
+          "correct": false
+        }
+      ],
+      "difficulty": "easy",
+      "fun_fact": "El nombre no significa nada: una agencia de marketing lo inventó porque sonaba bien y recordaba a hi-fi. Detrás no hay ninguna sigla, solo un número de norma: IEEE 802.11.",
+      "category": "Tecnología"
+    },
+    {
+      "id": "tec_es_038",
+      "question": "¿Qué es una VPN?",
+      "answers": [
+        {
+          "text": "Un túnel cifrado hacia otra red",
+          "correct": true
+        },
+        {
+          "text": "Un antivirus de navegación",
+          "correct": false
+        },
+        {
+          "text": "Un tipo de wifi",
+          "correct": false
+        }
+      ],
+      "difficulty": "easy",
+      "fun_fact": "Cambia quién ve tu tráfico, no lo hace invisible: en vez de tu proveedor, lo ve el de la VPN. La pregunta pasa a ser en quién confías más.",
+      "category": "Tecnología"
+    },
+    {
+      "id": "tec_es_039",
+      "question": "¿Qué es el phishing?",
+      "answers": [
+        {
+          "text": "Suplantar a alguien de confianza para robar datos",
+          "correct": true
+        },
+        {
+          "text": "Un virus que cifra archivos",
+          "correct": false
+        },
+        {
+          "text": "Un fallo del navegador",
+          "correct": false
+        }
+      ],
+      "difficulty": "easy",
+      "fun_fact": "No ataca al ordenador sino a la persona. Por eso el mejor antivirus del mundo no impide que alguien escriba su contraseña donde no debe.",
+      "category": "Tecnología"
+    },
+    {
+      "id": "tec_es_040",
+      "question": "¿Qué hace el cifrado de extremo a extremo en una app de mensajería?",
+      "answers": [
+        {
+          "text": "Solo los interlocutores pueden leer el mensaje",
+          "correct": true
+        },
+        {
+          "text": "Borra los mensajes al leerlos",
+          "correct": false
+        },
+        {
+          "text": "Oculta quién habla con quién",
+          "correct": false
+        }
+      ],
+      "difficulty": "medium",
+      "fun_fact": "Protege el contenido, no los metadatos. Quién habla con quién, cuándo y cuánto suele seguir siendo visible, y eso ya dice bastante.",
+      "category": "Tecnología"
+    },
+    {
+      "id": "tec_es_041",
+      "question": "¿Qué es una cookie en un navegador?",
+      "answers": [
+        {
+          "text": "Un pequeño archivo que guarda un sitio en tu equipo",
+          "correct": true
+        },
+        {
+          "text": "Un programa espía",
+          "correct": false
+        },
+        {
+          "text": "Una imagen oculta",
+          "correct": false
+        }
+      ],
+      "difficulty": "easy",
+      "fun_fact": "Nacieron para algo tan inofensivo como recordar el contenido de un carrito de la compra entre página y página.",
+      "category": "Tecnología"
+    },
+    {
+      "id": "tec_es_042",
+      "question": "¿Qué es el ransomware?",
+      "answers": [
+        {
+          "text": "Software que cifra tus archivos y pide rescate",
+          "correct": true
+        },
+        {
+          "text": "Publicidad no deseada",
+          "correct": false
+        },
+        {
+          "text": "Un fallo de hardware",
+          "correct": false
+        }
+      ],
+      "difficulty": "medium",
+      "fun_fact": "Los pagos en criptomoneda lo volvieron un negocio industrial, con soporte técnico incluido para las víctimas que no saben comprar la moneda.",
+      "category": "Tecnología"
+    },
+    {
+      "id": "tec_es_043",
+      "question": "¿Qué prioriza la recomendación actual sobre contraseñas?",
+      "answers": [
+        {
+          "text": "La longitud por encima de las reglas de composición",
+          "correct": true
+        },
+        {
+          "text": "Cambiarlas obligatoriamente cada mes",
+          "correct": false
+        },
+        {
+          "text": "Mezclar símbolos en un mínimo de ocho caracteres",
+          "correct": false
+        }
+      ],
+      "difficulty": "medium",
+      "fun_fact": "El NIST retiró en 2017 los cambios periódicos forzosos y las reglas de mayúsculas y símbolos: empujaban a la gente hacia patrones predecibles. Lo que sí mantiene es comprobar la contraseña contra las listas de filtraciones.",
+      "category": "Tecnología"
+    },
+    {
+      "id": "tec_es_044",
+      "question": "¿Qué es la autenticación de dos factores?",
+      "answers": [
+        {
+          "text": "Añadir una segunda prueba de otro tipo además de la contraseña",
+          "correct": true
+        },
+        {
+          "text": "Usar dos contraseñas distintas",
+          "correct": false
+        },
+        {
+          "text": "Cambiar la clave cada mes",
+          "correct": false
+        }
+      ],
+      "difficulty": "easy",
+      "fun_fact": "Una contraseña robada deja de bastar. Es, con diferencia, la medida que más ataques corrientes evita por el esfuerzo que cuesta.",
+      "category": "Tecnología"
+    },
+    {
+      "id": "tec_es_045",
+      "question": "¿Qué son los metadatos de una foto?",
+      "answers": [
+        {
+          "text": "Datos sobre la foto, como fecha y lugar",
+          "correct": true
+        },
+        {
+          "text": "Los píxeles de la imagen",
+          "correct": false
+        },
+        {
+          "text": "El programa con el que se abre",
+          "correct": false
+        }
+      ],
+      "difficulty": "medium",
+      "fun_fact": "Muchas cámaras y móviles guardan la posición exacta. Compartir una foto sin limpiarla puede revelar dónde vive alguien sin que aparezca nada en la imagen.",
+      "category": "Tecnología"
+    },
+    {
+      "id": "tec_es_046",
+      "question": "¿Qué es un ataque de denegación de servicio?",
+      "answers": [
+        {
+          "text": "Saturar un servicio hasta tumbarlo",
+          "correct": true
+        },
+        {
+          "text": "Robar contraseñas de una web",
+          "correct": false
+        },
+        {
+          "text": "Modificar el contenido de una página",
+          "correct": false
+        }
+      ],
+      "difficulty": "medium",
+      "fun_fact": "No entra en ningún sitio: se limita a pedir tanto que nadie más consigue entrar. La defensa se parece más a la gestión de multitudes que a la seguridad.",
+      "category": "Tecnología"
+    },
+    {
+      "id": "tec_es_047",
+      "question": "¿Qué es el código QR?",
+      "answers": [
+        {
+          "text": "Un código de barras en dos dimensiones",
+          "correct": true
+        },
+        {
+          "text": "Un formato de imagen",
+          "correct": false
+        },
+        {
+          "text": "Un tipo de cifrado",
+          "correct": false
+        }
+      ],
+      "difficulty": "easy",
+      "fun_fact": "Lo inventó una filial de Toyota para seguir piezas en la fábrica. Tolera bastante suciedad y arañazos: parte del contenido está repetido a propósito.",
+      "category": "Tecnología"
+    },
+    {
+      "id": "tec_es_048",
+      "question": "¿Qué es el internet de las cosas?",
+      "answers": [
+        {
+          "text": "Aparatos corrientes conectados a la red",
+          "correct": true
+        },
+        {
+          "text": "Una red social de objetos",
+          "correct": false
+        },
+        {
+          "text": "Un tipo de buscador",
+          "correct": false
+        }
+      ],
+      "difficulty": "easy",
+      "fun_fact": "El problema no es conectarlos sino mantenerlos: una bombilla vive diez años y su soporte de software, a veces, dos.",
+      "category": "Tecnología"
+    },
+    {
+      "id": "tec_es_049",
+      "question": "¿Qué hace un navegador web?",
+      "answers": [
+        {
+          "text": "Interpreta el código de las páginas y las dibuja",
+          "correct": true
+        },
+        {
+          "text": "Almacena las páginas de internet",
+          "correct": false
+        },
+        {
+          "text": "Conecta el ordenador a la red",
+          "correct": false
+        }
+      ],
+      "difficulty": "easy",
+      "fun_fact": "Es de los programas más complejos que existen: tiene que ejecutar código ajeno de sitios desconocidos sin dejar que ese código toque el resto del equipo.",
+      "category": "Tecnología"
+    },
+    {
+      "id": "tec_es_050",
+      "question": "¿Qué es el streaming?",
+      "answers": [
+        {
+          "text": "Reproducir contenido mientras se descarga",
+          "correct": true
+        },
+        {
+          "text": "Descargar un archivo completo antes de verlo",
+          "correct": false
+        },
+        {
+          "text": "Grabar la pantalla",
+          "correct": false
+        }
+      ],
+      "difficulty": "easy",
+      "fun_fact": "La clave está en el búfer: unos segundos de adelanto que absorben los bajones de la conexión. Cuando ese colchón se agota, aparece la rueda.",
+      "category": "Tecnología"
+    },
+    {
+      "id": "tec_es_051",
+      "question": "¿Qué es una API?",
+      "answers": [
+        {
+          "text": "Un modo definido de que dos programas se hablen",
+          "correct": true
+        },
+        {
+          "text": "Un lenguaje de programación",
+          "correct": false
+        },
+        {
+          "text": "Un tipo de base de datos",
+          "correct": false
+        }
+      ],
+      "difficulty": "medium",
+      "fun_fact": "Es un contrato: mientras se respete, cada lado puede cambiar por dentro. Cuando una empresa cierra su API, cierra de golpe todo lo que otros habían construido encima.",
+      "category": "Tecnología"
+    },
+    {
+      "id": "tec_es_052",
+      "question": "¿Qué es la neutralidad de la red?",
+      "answers": [
+        {
+          "text": "Tratar todo el tráfico por igual",
+          "correct": true
+        },
+        {
+          "text": "Garantizar a todos la misma velocidad contratada",
+          "correct": false
+        },
+        {
+          "text": "Impedir que un país bloquee páginas",
+          "correct": false
+        }
+      ],
+      "difficulty": "hard",
+      "fun_fact": "Sin ella, un proveedor podría cobrar por que su propio servicio de vídeo vaya más fluido que el de la competencia. La discusión es sobre quién decide qué llega rápido.",
+      "category": "Tecnología"
+    },
+    {
+      "id": "tec_es_053",
+      "question": "¿Qué dice la regla clásica sobre cómo guardar las copias de seguridad?",
+      "answers": [
+        {
+          "text": "Tres copias, dos soportes, una fuera de casa",
+          "correct": true
+        },
+        {
+          "text": "Una copia en el mismo disco",
+          "correct": false
+        },
+        {
+          "text": "Dos copias en la nube",
+          "correct": false
+        }
+      ],
+      "difficulty": "medium",
+      "fun_fact": "La regla 3-2-1 existe porque los fallos llegan en grupo: el incendio, el robo o el cifrado por ransomware se llevan a la vez todo lo que esté en el mismo sitio.",
+      "category": "Tecnología"
+    },
+    {
+      "id": "tec_es_054",
+      "question": "¿Qué es un enlace roto?",
+      "answers": [
+        {
+          "text": "Uno que apunta a algo que ya no existe",
+          "correct": true
+        },
+        {
+          "text": "Un enlace que tarda mucho en cargar",
+          "correct": false
+        },
+        {
+          "text": "Un enlace sin cifrar",
+          "correct": false
+        }
+      ],
+      "difficulty": "easy",
+      "fun_fact": "La web olvida deprisa: buena parte de los enlaces de hace una década ya no llevan a ninguna parte. En inglés se le llama link rot, la caducidad de los enlaces.",
+      "category": "Tecnología"
+    },
+    {
+      "id": "tec_es_055",
+      "question": "¿Qué es el modo incógnito de un navegador?",
+      "answers": [
+        {
+          "text": "No guarda historial local",
+          "correct": true
+        },
+        {
+          "text": "Oculta tu identidad en la red",
+          "correct": false
+        },
+        {
+          "text": "Cifra la conexión",
+          "correct": false
+        }
+      ],
+      "difficulty": "medium",
+      "fun_fact": "Tu proveedor, tu empresa y la web visitada siguen viendo lo mismo de siempre. Lo único que cambia es que el equipo no recuerda nada después.",
+      "category": "Tecnología"
+    },
+    {
+      "id": "tec_es_056",
+      "question": "¿Qué es un correo con remitente falsificado?",
+      "answers": [
+        {
+          "text": "Un correo que finge venir de otra dirección",
+          "correct": true
+        },
+        {
+          "text": "Un correo sin asunto",
+          "correct": false
+        },
+        {
+          "text": "Un correo enviado dos veces",
+          "correct": false
+        }
+      ],
+      "difficulty": "medium",
+      "fun_fact": "El protocolo original del correo no comprobaba quién enviaba. Todo lo que existe hoy para verificarlo son parches añadidos décadas después.",
+      "category": "Tecnología"
+    },
+    {
+      "id": "tec_es_057",
+      "question": "¿Qué es la fibra óptica?",
+      "answers": [
+        {
+          "text": "Un cable que transmite datos con luz",
+          "correct": true
+        },
+        {
+          "text": "Un cable de cobre muy fino",
+          "correct": false
+        },
+        {
+          "text": "Una antena direccional",
+          "correct": false
+        }
+      ],
+      "difficulty": "easy",
+      "fun_fact": "Los cables submarinos que llevan casi todo el tráfico entre continentes son de este tipo. Un ancla suelta puede dejar a un país entero con la conexión a medias.",
+      "category": "Tecnología"
+    },
+    {
+      "id": "tec_es_058",
+      "question": "¿Qué diferencia al 5G de las generaciones anteriores?",
+      "answers": [
+        {
+          "text": "Más capacidad y menos retardo",
+          "correct": true
+        },
+        {
+          "text": "Más alcance por antena",
+          "correct": false
+        },
+        {
+          "text": "Menos consumo de batería",
+          "correct": false
+        }
+      ],
+      "difficulty": "medium",
+      "fun_fact": "Las frecuencias altas dan mucha velocidad y muy poco alcance, así que hacen falta bastantes más antenas. Cobertura y velocidad tiran en direcciones opuestas.",
+      "category": "Tecnología"
+    },
+    {
+      "id": "tec_es_059",
+      "question": "¿Qué es un servidor proxy?",
+      "answers": [
+        {
+          "text": "Un intermediario que pide las páginas por ti",
+          "correct": true
+        },
+        {
+          "text": "Un cortafuegos doméstico",
+          "correct": false
+        },
+        {
+          "text": "Un tipo de router",
+          "correct": false
+        }
+      ],
+      "difficulty": "medium",
+      "fun_fact": "La web ve la petición del proxy, no la tuya. Se usa tanto para saltarse bloqueos como para imponerlos, según de qué lado esté instalado.",
+      "category": "Tecnología"
+    },
+    {
+      "id": "tec_es_060",
+      "question": "¿Qué es el spam?",
+      "answers": [
+        {
+          "text": "Correo masivo no solicitado",
+          "correct": true
+        },
+        {
+          "text": "Un virus de los años noventa",
+          "correct": false
+        },
+        {
+          "text": "Un error de servidor",
+          "correct": false
+        }
+      ],
+      "difficulty": "easy",
+      "fun_fact": "El nombre viene de un sketch televisivo en el que una carta de restaurante repetía sin parar el nombre de una carne enlatada hasta ahogar la conversación.",
+      "category": "Tecnología"
+    },
+    {
+      "id": "tec_es_061",
+      "question": "¿Qué aparato doméstico se descubrió porque una barra de chocolate se derritió en el bolsillo de un ingeniero?",
+      "answers": [
+        {
+          "text": "El microondas",
+          "correct": true
+        },
+        {
+          "text": "La nevera",
+          "correct": false
+        },
+        {
+          "text": "La tostadora",
+          "correct": false
+        }
+      ],
+      "difficulty": "medium",
+      "fun_fact": "Percy Spencer trabajaba con un magnetrón de radar. Lo siguiente que probó fueron granos de maíz, así que las primeras palomitas de microondas son de 1945.",
+      "category": "Tecnología"
+    },
+    {
+      "id": "tec_es_062",
+      "question": "¿Qué hace realmente un microondas para calentar la comida?",
+      "answers": [
+        {
+          "text": "Agita las moléculas de agua",
+          "correct": true
+        },
+        {
+          "text": "Calienta el aire del interior",
+          "correct": false
+        },
+        {
+          "text": "Emite rayos infrarrojos",
+          "correct": false
+        }
+      ],
+      "difficulty": "medium",
+      "fun_fact": "Por eso un plato seco apenas se calienta. Las ondas solo penetran uno o dos centímetros: el resto del calor llega hacia dentro por conducción, y de ahí que convenga remover a mitad.",
+      "category": "Tecnología"
+    },
+    {
+      "id": "tec_es_063",
+      "question": "¿Qué tecnología usa la pantalla táctil de un móvil actual?",
+      "answers": [
+        {
+          "text": "Detecta cambios en un campo eléctrico",
+          "correct": true
+        },
+        {
+          "text": "Mide la presión del dedo",
+          "correct": false
+        },
+        {
+          "text": "Usa sensores de infrarrojos",
+          "correct": false
+        }
+      ],
+      "difficulty": "medium",
+      "fun_fact": "Es capacitiva, y de ahí que no funcione con guantes normales: hace falta algo que conduzca. Los guantes táctiles llevan hilo conductor en las puntas.",
+      "category": "Tecnología"
+    },
+    {
+      "id": "tec_es_064",
+      "question": "¿Qué mide un acelerómetro de móvil?",
+      "answers": [
+        {
+          "text": "Los cambios de movimiento del aparato",
+          "correct": true
+        },
+        {
+          "text": "La temperatura ambiente",
+          "correct": false
+        },
+        {
+          "text": "La distancia recorrida",
+          "correct": false
+        }
+      ],
+      "difficulty": "medium",
+      "fun_fact": "Es lo que hace girar la pantalla al ladear el teléfono. También es lo que permite a una aplicación contar pasos sin usar el GPS.",
+      "category": "Tecnología"
+    },
+    {
+      "id": "tec_es_065",
+      "question": "¿Cómo sabe un GPS dónde estás?",
+      "answers": [
+        {
+          "text": "Comparando el tiempo que tardan varias señales de satélite",
+          "correct": true
+        },
+        {
+          "text": "Preguntando a la antena de móvil",
+          "correct": false
+        },
+        {
+          "text": "Midiendo el campo magnético",
+          "correct": false
+        }
+      ],
+      "difficulty": "medium",
+      "fun_fact": "Necesita al menos cuatro satélites y relojes atómicos tan precisos que hay que corregir el efecto de la relatividad, o la posición se iría kilómetros al día.",
+      "category": "Tecnología"
+    },
+    {
+      "id": "tec_es_066",
+      "question": "¿Qué es un LED?",
+      "answers": [
+        {
+          "text": "Un diodo que emite luz",
+          "correct": true
+        },
+        {
+          "text": "Un filamento de bajo consumo",
+          "correct": false
+        },
+        {
+          "text": "Un tipo de espejo",
+          "correct": false
+        }
+      ],
+      "difficulty": "easy",
+      "fun_fact": "Convierte en luz una parte mucho mayor de la electricidad que la bombilla incandescente, que se iba casi entera en calentar el filamento. Calor sigue habiendo, y por eso las lámparas potentes llevan disipador.",
+      "category": "Tecnología"
+    },
+    {
+      "id": "tec_es_067",
+      "question": "¿Qué diferencia hay entre una pantalla OLED y una LCD?",
+      "answers": [
+        {
+          "text": "En la OLED cada píxel emite su propia luz",
+          "correct": true
+        },
+        {
+          "text": "La OLED es siempre más grande",
+          "correct": false
+        },
+        {
+          "text": "La LCD no tiene píxeles",
+          "correct": false
+        }
+      ],
+      "difficulty": "medium",
+      "fun_fact": "Por eso el negro de una OLED es negro de verdad: el píxel se apaga. En una LCD siempre hay una lámpara detrás intentando no notarse.",
+      "category": "Tecnología"
+    },
+    {
+      "id": "tec_es_068",
+      "question": "¿Qué hace un condensador en un circuito?",
+      "answers": [
+        {
+          "text": "Almacena carga y la suelta rápido",
+          "correct": true
+        },
+        {
+          "text": "Mantiene la corriente estable aunque cambie la tensión",
+          "correct": false
+        },
+        {
+          "text": "Convierte corriente alterna en continua",
+          "correct": false
+        }
+      ],
+      "difficulty": "hard",
+      "fun_fact": "El flash de una cámara funciona así: la pila carga el condensador despacio y este entrega toda la energía de golpe en una milésima de segundo.",
+      "category": "Tecnología"
+    },
+    {
+      "id": "tec_es_069",
+      "question": "¿Qué es un transistor?",
+      "answers": [
+        {
+          "text": "Un interruptor sin partes móviles",
+          "correct": true
+        },
+        {
+          "text": "Un tipo de batería",
+          "correct": false
+        },
+        {
+          "text": "Un cable superconductor",
+          "correct": false
+        }
+      ],
+      "difficulty": "easy",
+      "fun_fact": "Es la pieza básica de toda la electrónica moderna. Un procesador actual contiene decenas de miles de millones, cada uno más pequeño que un virus.",
+      "category": "Tecnología"
+    },
+    {
+      "id": "tec_es_070",
+      "question": "¿Por qué las baterías de litio pierden capacidad con los años?",
+      "answers": [
+        {
+          "text": "Por reacciones químicas irreversibles en su interior",
+          "correct": true
+        },
+        {
+          "text": "Porque se les gasta el metal",
+          "correct": false
+        },
+        {
+          "text": "Porque acumulan memoria de carga",
+          "correct": false
+        }
+      ],
+      "difficulty": "medium",
+      "fun_fact": "El efecto memoria era de otra química, la de níquel. En una de litio, cargarla siempre al cien por cien y dejarla vacía es lo que más la envejece.",
+      "category": "Tecnología"
+    },
+    {
+      "id": "tec_es_071",
+      "question": "¿Qué hace un panel solar fotovoltaico?",
+      "answers": [
+        {
+          "text": "Convierte luz en electricidad directamente",
+          "correct": true
+        },
+        {
+          "text": "Calienta agua con el sol",
+          "correct": false
+        },
+        {
+          "text": "Almacena calor en sales",
+          "correct": false
+        }
+      ],
+      "difficulty": "easy",
+      "fun_fact": "No necesita calor: rinde algo mejor cuando hace frío. Lo que le importa es la luz, no la temperatura.",
+      "category": "Tecnología"
+    },
+    {
+      "id": "tec_es_072",
+      "question": "¿Qué es un dron en su forma más común?",
+      "answers": [
+        {
+          "text": "Un aparato volador sin piloto a bordo",
+          "correct": true
+        },
+        {
+          "text": "Un robot terrestre",
+          "correct": false
+        },
+        {
+          "text": "Un satélite pequeño",
+          "correct": false
+        }
+      ],
+      "difficulty": "easy",
+      "fun_fact": "Los de cuatro hélices no llevan piezas para inclinar las palas: giran y se mueven variando la velocidad de cada motor, algo imposible sin electrónica que corrija cien veces por segundo.",
+      "category": "Tecnología"
+    },
+    {
+      "id": "tec_es_073",
+      "question": "¿Qué hace una impresora 3D por deposición?",
+      "answers": [
+        {
+          "text": "Deposita material capa a capa",
+          "correct": true
+        },
+        {
+          "text": "Talla una pieza de un bloque",
+          "correct": false
+        },
+        {
+          "text": "Moldea con presión",
+          "correct": false
+        }
+      ],
+      "difficulty": "easy",
+      "fun_fact": "Por eso los voladizos necesitan soportes: no se puede depositar plástico sobre el aire. Buena parte del diseño para impresión consiste en evitar precisamente eso.",
+      "category": "Tecnología"
+    },
+    {
+      "id": "tec_es_074",
+      "question": "¿Qué es la realidad aumentada?",
+      "answers": [
+        {
+          "text": "Superponer información sobre el mundo real",
+          "correct": true
+        },
+        {
+          "text": "Un mundo virtual completo",
+          "correct": false
+        },
+        {
+          "text": "Una pantalla de alta resolución",
+          "correct": false
+        }
+      ],
+      "difficulty": "easy",
+      "fun_fact": "La diferencia con la realidad virtual es si sigues viendo la habitación. Lo primero necesita entender el entorno; lo segundo puede ignorarlo.",
+      "category": "Tecnología"
+    },
+    {
+      "id": "tec_es_075",
+      "question": "¿Cómo detecta un lector de huella de móvil el dedo?",
+      "answers": [
+        {
+          "text": "Mide diferencias eléctricas o rebota ultrasonidos",
+          "correct": true
+        },
+        {
+          "text": "Mide la fuerza con la que se aprieta",
+          "correct": false
+        },
+        {
+          "text": "Mide la temperatura de la piel",
+          "correct": false
+        }
+      ],
+      "difficulty": "medium",
+      "fun_fact": "No guarda la huella como imagen sino un modelo matemático del que no se puede reconstruir el dedo. Y vive en un chip aparte que el sistema no puede leer.",
+      "category": "Tecnología"
+    },
+    {
+      "id": "tec_es_076",
+      "question": "¿Qué es la carga inalámbrica de un móvil?",
+      "answers": [
+        {
+          "text": "Transferencia de energía por inducción magnética",
+          "correct": true
+        },
+        {
+          "text": "Transmisión por wifi",
+          "correct": false
+        },
+        {
+          "text": "Carga por radiofrecuencia a distancia",
+          "correct": false
+        }
+      ],
+      "difficulty": "medium",
+      "fun_fact": "Solo funciona a unos milímetros y pierde bastante energía por el camino en forma de calor. La comodidad se paga en eficiencia.",
+      "category": "Tecnología"
+    },
+    {
+      "id": "tec_es_077",
+      "question": "¿Qué es el bluetooth?",
+      "answers": [
+        {
+          "text": "Un enlace inalámbrico de corto alcance",
+          "correct": true
+        },
+        {
+          "text": "Una red de datos móvil",
+          "correct": false
+        },
+        {
+          "text": "Un tipo de wifi",
+          "correct": false
+        }
+      ],
+      "difficulty": "easy",
+      "fun_fact": "Lleva el apodo de un rey danés que unificó tribus, y su logotipo son sus iniciales en runas. El nombre iba a ser provisional y se quedó.",
+      "category": "Tecnología"
+    },
+    {
+      "id": "tec_es_078",
+      "question": "¿Qué hace la cancelación activa de ruido en unos auriculares?",
+      "answers": [
+        {
+          "text": "Emite un sonido inverso al ruido",
+          "correct": true
+        },
+        {
+          "text": "Aísla el oído con espuma",
+          "correct": false
+        },
+        {
+          "text": "Sube la música por encima del ruido",
+          "correct": false
+        }
+      ],
+      "difficulty": "medium",
+      "fun_fact": "Funciona mucho mejor con ruidos constantes y graves, como el motor de un avión, que con voces. Una conversación es demasiado irregular para anticiparla.",
+      "category": "Tecnología"
+    },
+    {
+      "id": "tec_es_079",
+      "question": "¿Qué es un sensor de imagen en una cámara digital?",
+      "answers": [
+        {
+          "text": "Un chip que convierte luz en señal eléctrica",
+          "correct": true
+        },
+        {
+          "text": "Un espejo motorizado",
+          "correct": false
+        },
+        {
+          "text": "Una lente electrónica",
+          "correct": false
+        }
+      ],
+      "difficulty": "easy",
+      "fun_fact": "A igual número de píxeles, cuanto mayor es el sensor más luz recoge cada uno. Por eso una cámara con menos megapíxeles y sensor grande suele ganar de noche a un móvil con muchos más.",
+      "category": "Tecnología"
+    },
+    {
+      "id": "tec_es_080",
+      "question": "¿Qué es un código de barras?",
+      "answers": [
+        {
+          "text": "Un patrón que codifica un número",
+          "correct": true
+        },
+        {
+          "text": "Un sello de garantía del fabricante",
+          "correct": false
+        },
+        {
+          "text": "Un chip diminuto",
+          "correct": false
+        }
+      ],
+      "difficulty": "easy",
+      "fun_fact": "No contiene el precio ni el nombre: solo un número que la caja consulta en su base de datos. Por eso cambiar precios no obliga a reetiquetar nada.",
+      "category": "Tecnología"
+    },
+    {
+      "id": "tec_es_081",
+      "question": "¿Qué hace un chip RFID como el de una tarjeta de transporte?",
+      "answers": [
+        {
+          "text": "Se alimenta del campo del lector",
+          "correct": true
+        },
+        {
+          "text": "Lleva una pila diminuta",
+          "correct": false
+        },
+        {
+          "text": "Se conecta por bluetooth",
+          "correct": false
+        }
+      ],
+      "difficulty": "hard",
+      "fun_fact": "La antena del lector le entrega la energía justa para responder, así que una tarjeta olvidada diez años en un cajón sigue funcionando. El mismo principio mueve las etiquetas antirrobo de las tiendas.",
+      "category": "Tecnología"
+    },
+    {
+      "id": "tec_es_082",
+      "question": "¿Qué es una pantalla de tinta electrónica?",
+      "answers": [
+        {
+          "text": "Partículas que se ordenan y se quedan quietas",
+          "correct": true
+        },
+        {
+          "text": "Una pantalla LCD de bajo brillo",
+          "correct": false
+        },
+        {
+          "text": "Un papel tratado químicamente",
+          "correct": false
+        }
+      ],
+      "difficulty": "medium",
+      "fun_fact": "Solo consume al cambiar de página. Un libro electrónico apagado puede mostrar una imagen durante meses sin gastar nada.",
+      "category": "Tecnología"
+    },
+    {
+      "id": "tec_es_083",
+      "question": "¿Qué detecta un termostato inteligente además de la temperatura?",
+      "answers": [
+        {
+          "text": "Suele detectar presencia y hábitos",
+          "correct": true
+        },
+        {
+          "text": "La humedad del suelo",
+          "correct": false
+        },
+        {
+          "text": "El consumo de agua",
+          "correct": false
+        }
+      ],
+      "difficulty": "medium",
+      "fun_fact": "Su ahorro no viene de calentar mejor sino de no calentar cuando no hay nadie. Es una decisión de horario disfrazada de tecnología.",
+      "category": "Tecnología"
+    },
+    {
+      "id": "tec_es_084",
+      "question": "¿Qué es el estándar USB-C?",
+      "answers": [
+        {
+          "text": "Un conector reversible con muchos usos posibles",
+          "correct": true
+        },
+        {
+          "text": "Un tipo de cable de carga rápida",
+          "correct": false
+        },
+        {
+          "text": "Un protocolo de vídeo",
+          "correct": false
+        }
+      ],
+      "difficulty": "medium",
+      "fun_fact": "El conector es el mismo pero los cables no: dos que parecen idénticos pueden diferir en si pasan vídeo, en cuánta potencia aguantan y en la velocidad de datos.",
+      "category": "Tecnología"
+    },
+    {
+      "id": "tec_es_085",
+      "question": "¿Qué hace un aspirador robot para no perderse?",
+      "answers": [
+        {
+          "text": "Construye un mapa de la casa",
+          "correct": true
+        },
+        {
+          "text": "Sigue las paredes al azar",
+          "correct": false
+        },
+        {
+          "text": "Usa la señal wifi",
+          "correct": false
+        }
+      ],
+      "difficulty": "medium",
+      "fun_fact": "Los primeros iban rebotando sin plan y por eso tardaban tanto. El salto no fue en aspiración sino en saber dónde había estado ya.",
+      "category": "Tecnología"
+    },
+    {
+      "id": "tec_es_086",
+      "question": "¿Qué es una batería de estado sólido?",
+      "answers": [
+        {
+          "text": "Una que sustituye el electrolito líquido por uno sólido",
+          "correct": true
+        },
+        {
+          "text": "Una batería sin litio",
+          "correct": false
+        },
+        {
+          "text": "Una batería recargable por luz",
+          "correct": false
+        }
+      ],
+      "difficulty": "hard",
+      "fun_fact": "Promete más densidad y menos riesgo de incendio. Lleva prometiéndolo bastante más de una década, que es el rasgo más constante de esta tecnología.",
+      "category": "Tecnología"
+    },
+    {
+      "id": "tec_es_087",
+      "question": "¿Qué hace un altavoz inteligente mientras espera?",
+      "answers": [
+        {
+          "text": "Escucha localmente la palabra de activación",
+          "correct": true
+        },
+        {
+          "text": "Graba todo y lo envía",
+          "correct": false
+        },
+        {
+          "text": "Se apaga por completo",
+          "correct": false
+        }
+      ],
+      "difficulty": "medium",
+      "fun_fact": "El reconocimiento de esa palabra ocurre en el aparato; solo después empieza el envío. La discusión no es si escucha, sino qué considera que ha oído.",
+      "category": "Tecnología"
+    },
+    {
+      "id": "tec_es_088",
+      "question": "¿Qué es la resolución 4K?",
+      "answers": [
+        {
+          "text": "Unos cuatro mil píxeles de ancho",
+          "correct": true
+        },
+        {
+          "text": "Cuatro veces más brillo",
+          "correct": false
+        },
+        {
+          "text": "Cuatro capas de color",
+          "correct": false
+        }
+      ],
+      "difficulty": "easy",
+      "fun_fact": "A partir de cierta distancia el ojo ya no distingue esos píxeles. En un salón normal, el tamaño de la pantalla influye más que su resolución.",
+      "category": "Tecnología"
+    },
+    {
+      "id": "tec_es_089",
+      "question": "¿Qué es un firmware?",
+      "answers": [
+        {
+          "text": "El software grabado dentro de un aparato",
+          "correct": true
+        },
+        {
+          "text": "Un antivirus de fábrica",
+          "correct": false
+        },
+        {
+          "text": "Un tipo de disco duro",
+          "correct": false
+        }
+      ],
+      "difficulty": "medium",
+      "fun_fact": "Está a medio camino entre hardware y programa, y es lo que casi nadie actualiza. Un router con firmware de hace ocho años es un problema de seguridad con luces.",
+      "category": "Tecnología"
+    },
+    {
+      "id": "tec_es_090",
+      "question": "¿Qué diferencia hay entre un disco duro y un SSD?",
+      "answers": [
+        {
+          "text": "El SSD no tiene partes móviles",
+          "correct": true
+        },
+        {
+          "text": "El SSD siempre tiene más capacidad",
+          "correct": false
+        },
+        {
+          "text": "El disco duro no se puede formatear",
+          "correct": false
+        }
+      ],
+      "difficulty": "easy",
+      "fun_fact": "El disco mecánico gira a miles de vueltas por minuto con un cabezal que vuela a unos pocos nanómetros de la superficie. Que eso funcionara durante décadas es lo verdaderamente asombroso.",
+      "category": "Tecnología"
+    },
+    {
+      "id": "tec_es_091",
+      "question": "¿Qué mantiene un avión en el aire?",
+      "answers": [
+        {
+          "text": "La diferencia de presión sobre el ala",
+          "correct": true
+        },
+        {
+          "text": "El empuje de los motores hacia arriba",
+          "correct": false
+        },
+        {
+          "text": "El aire caliente del fuselaje",
+          "correct": false
+        }
+      ],
+      "difficulty": "medium",
+      "fun_fact": "Los motores no lo sostienen: lo empujan hacia delante para que el ala trabaje. Un avión sin motores planea, no se cae en vertical.",
+      "category": "Tecnología"
+    },
+    {
+      "id": "tec_es_092",
+      "question": "¿Por qué las alas de los aviones modernos llevan la punta doblada hacia arriba?",
+      "answers": [
+        {
+          "text": "Para reducir los remolinos del extremo",
+          "correct": true
+        },
+        {
+          "text": "Para caber en las puertas de embarque",
+          "correct": false
+        },
+        {
+          "text": "Para llevar más combustible",
+          "correct": false
+        }
+      ],
+      "difficulty": "medium",
+      "fun_fact": "Esos torbellinos son resistencia pura. Recortarlos ahorra un porcentaje pequeño de combustible que, multiplicado por una flota entera, es enorme.",
+      "category": "Tecnología"
+    },
+    {
+      "id": "tec_es_093",
+      "question": "¿Qué hace la caja negra de un avión?",
+      "answers": [
+        {
+          "text": "Registra datos de vuelo y voz de cabina",
+          "correct": true
+        },
+        {
+          "text": "Controla el piloto automático",
+          "correct": false
+        },
+        {
+          "text": "Emite la señal de radar",
+          "correct": false
+        }
+      ],
+      "difficulty": "easy",
+      "fun_fact": "Y no es negra sino naranja intenso, para encontrarla entre restos. El nombre se impuso igual, contra la evidencia.",
+      "category": "Tecnología"
+    },
+    {
+      "id": "tec_es_094",
+      "question": "¿Qué es un cohete de varias etapas?",
+      "answers": [
+        {
+          "text": "Uno que se desprende de la parte ya vacía",
+          "correct": true
+        },
+        {
+          "text": "Uno con varios motores a la vez",
+          "correct": false
+        },
+        {
+          "text": "Uno que despega en dos tandas",
+          "correct": false
+        }
+      ],
+      "difficulty": "medium",
+      "fun_fact": "Cargar un depósito vacío cuesta combustible. Tirarlo por el camino es la forma práctica de que la última parte llegue a órbita con algo dentro.",
+      "category": "Tecnología"
+    },
+    {
+      "id": "tec_es_095",
+      "question": "¿Por qué es tan difícil aterrizar un cohete de vuelta?",
+      "answers": [
+        {
+          "text": "Porque llega casi vacío y le sobra empuje",
+          "correct": true
+        },
+        {
+          "text": "Porque los motores no se pueden reencender en vuelo",
+          "correct": false
+        },
+        {
+          "text": "Porque el guiado se apaga al separarse la etapa",
+          "correct": false
+        }
+      ],
+      "difficulty": "hard",
+      "fun_fact": "Con los depósitos casi vacíos, incluso un solo motor al mínimo empuja más de lo que pesa. No puede quedarse suspendido: tiene que llegar al suelo justo al frenar del todo.",
+      "category": "Tecnología"
+    },
+    {
+      "id": "tec_es_096",
+      "question": "¿Qué es la órbita geoestacionaria?",
+      "answers": [
+        {
+          "text": "Una órbita en la que el satélite parece quieto sobre un punto",
+          "correct": true
+        },
+        {
+          "text": "La órbita más baja posible",
+          "correct": false
+        },
+        {
+          "text": "Una órbita alrededor de la Luna",
+          "correct": false
+        }
+      ],
+      "difficulty": "medium",
+      "fun_fact": "Está a unos treinta y seis mil kilómetros y solo funciona sobre el ecuador. Por eso una antena parabólica se orienta una vez y ya no vuelve a moverse.",
+      "category": "Tecnología"
+    },
+    {
+      "id": "tec_es_097",
+      "question": "¿Qué es la basura espacial?",
+      "answers": [
+        {
+          "text": "Restos de misiones que siguen en órbita",
+          "correct": true
+        },
+        {
+          "text": "Meteoritos capturados",
+          "correct": false
+        },
+        {
+          "text": "Residuos que caen a la Tierra",
+          "correct": false
+        }
+      ],
+      "difficulty": "easy",
+      "fun_fact": "Un tornillo a esa velocidad tiene la energía de una granada. El riesgo no es el tamaño sino los kilómetros por segundo.",
+      "category": "Tecnología"
+    },
+    {
+      "id": "tec_es_098",
+      "question": "¿Qué propulsa a un cohete en el vacío, donde no hay aire contra el que empujar?",
+      "answers": [
+        {
+          "text": "La expulsión de masa a gran velocidad",
+          "correct": true
+        },
+        {
+          "text": "El aire comprimido de los depósitos",
+          "correct": false
+        },
+        {
+          "text": "La presión del vacío exterior",
+          "correct": false
+        }
+      ],
+      "difficulty": "medium",
+      "fun_fact": "Es el principio de acción y reacción. La idea de que un cohete necesita empujar contra algo fue una objeción publicada en serio contra Goddard en 1920.",
+      "category": "Tecnología"
+    },
+    {
+      "id": "tec_es_099",
+      "question": "¿Qué hace un motor eléctrico de coche mejor que uno de gasolina?",
+      "answers": [
+        {
+          "text": "Entrega toda la fuerza desde parado",
+          "correct": true
+        },
+        {
+          "text": "Pesa siempre menos",
+          "correct": false
+        },
+        {
+          "text": "Necesita más marchas",
+          "correct": false
+        }
+      ],
+      "difficulty": "medium",
+      "fun_fact": "Por eso casi ninguno lleva caja de cambios. El motor de combustión necesita marchas justamente porque solo rinde en una franja estrecha de revoluciones.",
+      "category": "Tecnología"
+    },
+    {
+      "id": "tec_es_100",
+      "question": "¿Qué es el frenado regenerativo?",
+      "answers": [
+        {
+          "text": "Usar el motor como generador al frenar",
+          "correct": true
+        },
+        {
+          "text": "Frenar con aire comprimido",
+          "correct": false
+        },
+        {
+          "text": "Enfriar los discos con agua",
+          "correct": false
+        }
+      ],
+      "difficulty": "medium",
+      "fun_fact": "Recupera parte de la energía que un freno normal convertiría en calor. En ciudad, con muchas paradas, es donde más se nota.",
+      "category": "Tecnología"
+    },
+    {
+      "id": "tec_es_101",
+      "question": "¿Qué es un tren de levitación magnética?",
+      "answers": [
+        {
+          "text": "Uno que flota sobre el raíl sin tocarlo",
+          "correct": true
+        },
+        {
+          "text": "Uno que va sobre colchón de aire",
+          "correct": false
+        },
+        {
+          "text": "Uno con ruedas magnéticas",
+          "correct": false
+        }
+      ],
+      "difficulty": "medium",
+      "fun_fact": "Sin rozamiento de rodadura, el límite pasa a ser el aire. Lo caro no es el tren sino la vía, que tiene que llevar bobinas y electroimanes en todo su recorrido.",
+      "category": "Tecnología"
+    },
+    {
+      "id": "tec_es_102",
+      "question": "¿Para qué sirve un contrapeso en una grúa torre?",
+      "answers": [
+        {
+          "text": "Para equilibrar la carga del otro brazo",
+          "correct": true
+        },
+        {
+          "text": "Para tensar el cable de izado",
+          "correct": false
+        },
+        {
+          "text": "Para frenar el giro",
+          "correct": false
+        }
+      ],
+      "difficulty": "easy",
+      "fun_fact": "La estructura no sostiene el peso a pulso: lo compensa. En la mayoría de las grúas torre el contrapeso son bloques fijos calculados para la carga máxima.",
+      "category": "Tecnología"
+    },
+    {
+      "id": "tec_es_103",
+      "question": "¿Por qué los puentes largos llevan juntas de dilatación?",
+      "answers": [
+        {
+          "text": "Porque el material cambia de tamaño con la temperatura",
+          "correct": true
+        },
+        {
+          "text": "Para amortiguar el viento",
+          "correct": false
+        },
+        {
+          "text": "Para permitir el paso de cables",
+          "correct": false
+        }
+      ],
+      "difficulty": "medium",
+      "fun_fact": "Un puente de acero de un kilómetro puede crecer más de medio metro entre el invierno y el verano. Sin sitio para moverse, se rompería solo.",
+      "category": "Tecnología"
+    },
+    {
+      "id": "tec_es_104",
+      "question": "¿Qué es el hormigón armado?",
+      "answers": [
+        {
+          "text": "Hormigón con barras de acero dentro",
+          "correct": true
+        },
+        {
+          "text": "Hormigón de secado rápido",
+          "correct": false
+        },
+        {
+          "text": "Hormigón con fibra de vidrio",
+          "correct": false
+        }
+      ],
+      "difficulty": "easy",
+      "fun_fact": "El hormigón aguanta muy bien la compresión y fatal la tracción; el acero, al revés. Juntos cubren lo que cada uno no puede.",
+      "category": "Tecnología"
+    },
+    {
+      "id": "tec_es_105",
+      "question": "¿Por qué se construyen los rascacielos con un núcleo central rígido?",
+      "answers": [
+        {
+          "text": "Para resistir el viento y los terremotos",
+          "correct": true
+        },
+        {
+          "text": "Para alojar los ascensores solamente",
+          "correct": false
+        },
+        {
+          "text": "Para repartir el peso del tejado",
+          "correct": false
+        }
+      ],
+      "difficulty": "medium",
+      "fun_fact": "El enemigo de un edificio alto no es su peso sino el balanceo. Algunos llevan además un péndulo enorme arriba que se mueve a contratiempo.",
+      "category": "Tecnología"
+    },
+    {
+      "id": "tec_es_106",
+      "question": "¿Qué es una esclusa de canal?",
+      "answers": [
+        {
+          "text": "Una cámara que sube o baja barcos entre niveles",
+          "correct": true
+        },
+        {
+          "text": "Un dique de contención",
+          "correct": false
+        },
+        {
+          "text": "Una compuerta contra mareas",
+          "correct": false
+        }
+      ],
+      "difficulty": "medium",
+      "fun_fact": "Las clásicas se llenan y se vacían solo por gravedad, sin bombas. El Canal de Panamá funciona con el agua de un lago situado por encima.",
+      "category": "Tecnología"
+    },
+    {
+      "id": "tec_es_107",
+      "question": "¿Qué mide un anemómetro?",
+      "answers": [
+        {
+          "text": "La velocidad del viento",
+          "correct": true
+        },
+        {
+          "text": "La presión del aire",
+          "correct": false
+        },
+        {
+          "text": "La humedad",
+          "correct": false
+        }
+      ],
+      "difficulty": "easy",
+      "fun_fact": "Los de cazoletas giran siempre en el mismo sentido, venga el viento de donde venga. Por eso hace falta una veleta aparte para saber la dirección.",
+      "category": "Tecnología"
+    },
+    {
+      "id": "tec_es_108",
+      "question": "¿Qué hace un airbag en milisegundos?",
+      "answers": [
+        {
+          "text": "Se infla con un gas generado por una reacción química",
+          "correct": true
+        },
+        {
+          "text": "Se llena con aire comprimido",
+          "correct": false
+        },
+        {
+          "text": "Se despliega con un muelle",
+          "correct": false
+        }
+      ],
+      "difficulty": "medium",
+      "fun_fact": "Una carga sólida se quema en unos treinta milisegundos. La bolsa ya está llena cuando la persona llega a ella.",
+      "category": "Tecnología"
+    },
+    {
+      "id": "tec_es_109",
+      "question": "¿Qué es el ABS de un coche?",
+      "answers": [
+        {
+          "text": "Un sistema que evita que las ruedas se bloqueen",
+          "correct": true
+        },
+        {
+          "text": "Un tipo de neumático",
+          "correct": false
+        },
+        {
+          "text": "Un freno de emergencia adicional",
+          "correct": false
+        }
+      ],
+      "difficulty": "easy",
+      "fun_fact": "Una rueda bloqueada resbala y deja de obedecer al volante. El ABS suelta y aprieta muchas veces por segundo para no perder esa capacidad de girar.",
+      "category": "Tecnología"
+    },
+    {
+      "id": "tec_es_110",
+      "question": "¿Qué diferencia a un motor diésel de uno de gasolina?",
+      "answers": [
+        {
+          "text": "El diésel enciende por compresión, sin bujía",
+          "correct": true
+        },
+        {
+          "text": "El diésel usa más bujías",
+          "correct": false
+        },
+        {
+          "text": "El diésel no tiene pistones",
+          "correct": false
+        }
+      ],
+      "difficulty": "medium",
+      "fun_fact": "Comprime tanto el aire que el gasóleo arde al inyectarse. Por eso un diésel viejo puede seguir en marcha aunque se le quite la corriente.",
+      "category": "Tecnología"
+    },
+    {
+      "id": "tec_es_111",
+      "question": "¿Qué es un ascensor de contrapeso?",
+      "answers": [
+        {
+          "text": "Lleva un peso que compensa la cabina",
+          "correct": true
+        },
+        {
+          "text": "Sube por presión hidráulica",
+          "correct": false
+        },
+        {
+          "text": "Funciona con imanes",
+          "correct": false
+        }
+      ],
+      "difficulty": "medium",
+      "fun_fact": "El motor solo mueve la diferencia entre cabina y contrapeso, no la cabina entera. Por eso un ascensor consume mucho menos de lo que su tamaño sugiere.",
+      "category": "Tecnología"
+    },
+    {
+      "id": "tec_es_112",
+      "question": "¿Qué hace un pararrayos?",
+      "answers": [
+        {
+          "text": "Ofrece un camino controlado a la descarga",
+          "correct": true
+        },
+        {
+          "text": "Impide que caiga el rayo",
+          "correct": false
+        },
+        {
+          "text": "Neutraliza la carga de la nube",
+          "correct": false
+        }
+      ],
+      "difficulty": "medium",
+      "fun_fact": "No evita el impacto: lo invita a llegar donde no hace daño. Franklin lo propuso cuando la explicación aceptada del rayo aún era religiosa.",
+      "category": "Tecnología"
+    },
+    {
+      "id": "tec_es_113",
+      "question": "¿Por qué un barco de acero flota?",
+      "answers": [
+        {
+          "text": "Porque desplaza más agua de la que pesa",
+          "correct": true
+        },
+        {
+          "text": "Porque el acero es ligero",
+          "correct": false
+        },
+        {
+          "text": "Porque va lleno de aire comprimido",
+          "correct": false
+        }
+      ],
+      "difficulty": "easy",
+      "fun_fact": "Lo que cuenta es la densidad media del conjunto, casco y aire incluidos. El mismo acero fundido en bloque se hunde sin discusión.",
+      "category": "Tecnología"
+    },
+    {
+      "id": "tec_es_114",
+      "question": "¿Qué puede hacer un submarino de propulsión nuclear que otros no?",
+      "answers": [
+        {
+          "text": "Permanecer meses sumergido sin repostar",
+          "correct": true
+        },
+        {
+          "text": "Bajar al fondo de cualquier fosa",
+          "correct": false
+        },
+        {
+          "text": "Navegar sin tripulación",
+          "correct": false
+        }
+      ],
+      "difficulty": "medium",
+      "fun_fact": "El límite deja de ser el combustible y pasa a ser la comida y la gente. La autonomía teórica es de años.",
+      "category": "Tecnología"
+    },
+    {
+      "id": "tec_es_115",
+      "question": "¿Qué es la fatiga de materiales?",
+      "answers": [
+        {
+          "text": "Rotura por cargas repetidas por debajo del límite elástico",
+          "correct": true
+        },
+        {
+          "text": "Deformación por exceso de peso",
+          "correct": false
+        },
+        {
+          "text": "Corrosión por humedad",
+          "correct": false
+        }
+      ],
+      "difficulty": "hard",
+      "fun_fact": "Explica accidentes que parecían imposibles: la pieza aguantaba de sobra cada vez, pero no cien mil veces. Los primeros aviones a reacción comerciales lo aprendieron de la peor manera.",
+      "category": "Tecnología"
+    },
+    {
+      "id": "tec_es_116",
+      "question": "¿Qué es un rodamiento?",
+      "answers": [
+        {
+          "text": "Un elemento que reduce el rozamiento entre piezas que giran",
+          "correct": true
+        },
+        {
+          "text": "Un tipo de engranaje",
+          "correct": false
+        },
+        {
+          "text": "Un sistema de frenado",
+          "correct": false
+        }
+      ],
+      "difficulty": "medium",
+      "fun_fact": "Convierte el rozamiento de deslizamiento en rodadura, que es mucho menor. Es una de esas piezas invisibles sin las cuales no gira prácticamente nada.",
+      "category": "Tecnología"
+    },
+    {
+      "id": "tec_es_117",
+      "question": "¿Qué mide un caudalímetro?",
+      "answers": [
+        {
+          "text": "La cantidad de fluido que pasa por unidad de tiempo",
+          "correct": true
+        },
+        {
+          "text": "La presión de una tubería",
+          "correct": false
+        },
+        {
+          "text": "La temperatura del agua",
+          "correct": false
+        }
+      ],
+      "difficulty": "medium",
+      "fun_fact": "El contador de agua de casa es uno. Muchos siguen siendo mecánicos: una turbinita que gira y cuenta vueltas.",
+      "category": "Tecnología"
+    },
+    {
+      "id": "tec_es_118",
+      "question": "¿Cuál es la función principal del balasto de piedra bajo las vías?",
+      "answers": [
+        {
+          "text": "Reparte la carga y amortigua",
+          "correct": true
+        },
+        {
+          "text": "Marca el ancho de vía",
+          "correct": false
+        },
+        {
+          "text": "Facilita el drenaje solamente",
+          "correct": false
+        }
+      ],
+      "difficulty": "medium",
+      "fun_fact": "Las piedras se traban entre sí y absorben el golpe de cada eje. La vía sobre losa de hormigón cuesta bastante más de construir, pero después pide mucho menos mantenimiento.",
+      "category": "Tecnología"
+    },
+    {
+      "id": "tec_es_119",
+      "question": "¿Qué es la soldadura por puntos que usan las fábricas de coches?",
+      "answers": [
+        {
+          "text": "Fundir dos chapas con una descarga eléctrica",
+          "correct": true
+        },
+        {
+          "text": "Unirlas con un arco de electrodo continuo",
+          "correct": false
+        },
+        {
+          "text": "Presionarlas hasta que el metal se une en frío",
+          "correct": false
+        }
+      ],
+      "difficulty": "hard",
+      "fun_fact": "Una carrocería lleva miles de puntos y cada uno tarda menos de un segundo. Es la razón de que un coche se monte en horas y no en días.",
+      "category": "Tecnología"
+    },
+    {
+      "id": "tec_es_120",
+      "question": "¿Qué es un exoesqueleto en ingeniería?",
+      "answers": [
+        {
+          "text": "Una estructura vestible que asiste el movimiento",
+          "correct": true
+        },
+        {
+          "text": "Un robot autónomo",
+          "correct": false
+        },
+        {
+          "text": "Un chaleco de protección",
+          "correct": false
+        }
+      ],
+      "difficulty": "medium",
+      "fun_fact": "Los que ya funcionan en almacenes no dan fuerza sobrehumana: sostienen los brazos levantados durante horas, que es donde de verdad se lesiona la gente.",
+      "category": "Tecnología"
+    },
+    {
+      "id": "tec_es_121",
+      "question": "¿Qué formato de vídeo doméstico perdió la batalla frente al VHS?",
+      "answers": [
+        {
+          "text": "El Betamax",
+          "correct": true
+        },
+        {
+          "text": "El DVD",
+          "correct": false
+        },
+        {
+          "text": "El Video 2000",
+          "correct": false
+        }
+      ],
+      "difficulty": "medium",
+      "fun_fact": "Tenía cintas más cortas y defensores convencidos de que se veía mejor. Ganó el que dejaba grabar una película entera sin cambiar de cinta.",
+      "category": "Tecnología"
+    },
+    {
+      "id": "tec_es_122",
+      "question": "¿Qué hacía especial al teclado QWERTY cuando se diseñó?",
+      "answers": [
+        {
+          "text": "Separaba las letras que más se atascaban",
+          "correct": true
+        },
+        {
+          "text": "Aceleraba la escritura",
+          "correct": false
+        },
+        {
+          "text": "Agrupaba las vocales",
+          "correct": false
+        }
+      ],
+      "difficulty": "medium",
+      "fun_fact": "Se pensó para máquinas mecánicas con barras que chocaban entre sí. La disposición sobrevivió al problema que venía a resolver por más de un siglo.",
+      "category": "Tecnología"
+    },
+    {
+      "id": "tec_es_123",
+      "question": "¿Qué se transmitía por el telégrafo antes del teléfono?",
+      "answers": [
+        {
+          "text": "Pulsos codificados en puntos y rayas",
+          "correct": true
+        },
+        {
+          "text": "Voz por cable",
+          "correct": false
+        },
+        {
+          "text": "Imágenes fijas",
+          "correct": false
+        }
+      ],
+      "difficulty": "easy",
+      "fun_fact": "Un operador experto hacía unas treinta palabras por minuto. A diferencia del telégrafo óptico anterior, funcionaba de noche y con niebla, y eso fue lo que lo cambió todo.",
+      "category": "Tecnología"
+    },
+    {
+      "id": "tec_es_124",
+      "question": "¿Qué fue el disquete?",
+      "answers": [
+        {
+          "text": "Un disco magnético flexible dentro de una funda",
+          "correct": true
+        },
+        {
+          "text": "Un disco óptico pequeño",
+          "correct": false
+        },
+        {
+          "text": "Una cinta en cartucho",
+          "correct": false
+        }
+      ],
+      "difficulty": "easy",
+      "fun_fact": "El icono de guardar de medio mundo sigue siendo un objeto que la mayoría de quienes lo pulsan no ha tenido nunca en la mano.",
+      "category": "Tecnología"
+    },
+    {
+      "id": "tec_es_125",
+      "question": "¿Qué hizo el módem para conectar ordenadores por teléfono?",
+      "answers": [
+        {
+          "text": "Convertir datos en sonidos y al revés",
+          "correct": true
+        },
+        {
+          "text": "Digitalizar la línea telefónica",
+          "correct": false
+        },
+        {
+          "text": "Amplificar la señal eléctrica",
+          "correct": false
+        }
+      ],
+      "difficulty": "medium",
+      "fun_fact": "Ese chirrido al conectar era literalmente los dos aparatos negociando a qué velocidad podían hablar sin equivocarse.",
+      "category": "Tecnología"
+    },
+    {
+      "id": "tec_es_126",
+      "question": "¿Qué limitaba a un mensaje SMS a ciento sesenta caracteres?",
+      "answers": [
+        {
+          "text": "El espacio libre en un canal de señalización",
+          "correct": true
+        },
+        {
+          "text": "Una decisión comercial",
+          "correct": false
+        },
+        {
+          "text": "La memoria del teléfono",
+          "correct": false
+        }
+      ],
+      "difficulty": "hard",
+      "fun_fact": "Viajaba en un hueco que ya existía para el control de la red. Se aprovechó algo que estaba desperdiciado, y de ahí salió la mensajería moderna.",
+      "category": "Tecnología"
+    },
+    {
+      "id": "tec_es_127",
+      "question": "¿Qué tenía de nuevo el primer iPhone frente a los móviles de 2007?",
+      "answers": [
+        {
+          "text": "Pantalla táctil sin teclado ni lápiz",
+          "correct": true
+        },
+        {
+          "text": "Cámara frontal",
+          "correct": false
+        },
+        {
+          "text": "Conexión a internet",
+          "correct": false
+        }
+      ],
+      "difficulty": "medium",
+      "fun_fact": "Ni fue el primero con pantalla táctil ni con navegador. Lo que cambió fue apostar a que el dedo bastaba, y quitar el teclado físico por completo.",
+      "category": "Tecnología"
+    },
+    {
+      "id": "tec_es_128",
+      "question": "¿Qué era un tubo de vacío en la electrónica antigua?",
+      "answers": [
+        {
+          "text": "Una válvula que amplifica o conmuta señales",
+          "correct": true
+        },
+        {
+          "text": "Un tipo de bombilla",
+          "correct": false
+        },
+        {
+          "text": "Un condensador de cristal",
+          "correct": false
+        }
+      ],
+      "difficulty": "medium",
+      "fun_fact": "Los primeros ordenadores llevaban miles y se fundían constantemente. El transistor no los mejoró: los hizo innecesarios.",
+      "category": "Tecnología"
+    },
+    {
+      "id": "tec_es_129",
+      "question": "¿Qué fue el Concorde?",
+      "answers": [
+        {
+          "text": "Un avión de pasajeros supersónico",
+          "correct": true
+        },
+        {
+          "text": "El primer avión de fuselaje ancho",
+          "correct": false
+        },
+        {
+          "text": "El primer avión con piloto automático",
+          "correct": false
+        }
+      ],
+      "difficulty": "easy",
+      "fun_fact": "Cruzaba el Atlántico en menos de tres horas y media, y su cabina era más estrecha que la de un avión de pasillo único. Lo mató la economía, no la técnica.",
+      "category": "Tecnología"
+    },
+    {
+      "id": "tec_es_130",
+      "question": "¿Qué permitió el motor de vapor en la revolución industrial?",
+      "answers": [
+        {
+          "text": "Poner energía donde no había ríos",
+          "correct": true
+        },
+        {
+          "text": "Sustituir el carbón por leña",
+          "correct": false
+        },
+        {
+          "text": "Fabricar acero por primera vez",
+          "correct": false
+        }
+      ],
+      "difficulty": "medium",
+      "fun_fact": "Antes la fábrica tenía que ir donde estuviera la corriente de agua. Después la fábrica pudo instalarse donde conviniera, y las ciudades cambiaron de forma.",
+      "category": "Tecnología"
+    },
+    {
+      "id": "tec_es_131",
+      "question": "¿Qué fue la imprenta de tipos móviles de Gutenberg?",
+      "answers": [
+        {
+          "text": "Un sistema para componer páginas con letras reutilizables",
+          "correct": true
+        },
+        {
+          "text": "La primera máquina de escribir",
+          "correct": false
+        },
+        {
+          "text": "Un método de grabado en cobre",
+          "correct": false
+        }
+      ],
+      "difficulty": "easy",
+      "fun_fact": "La novedad no fue imprimir sino poder deshacer la página y reutilizar cada letra. Las fundía en una aleación de plomo, estaño y antimonio que enfriaba deprisa y aguantaba la prensa.",
+      "category": "Tecnología"
+    },
+    {
+      "id": "tec_es_132",
+      "question": "¿Qué hacía una tarjeta perforada?",
+      "answers": [
+        {
+          "text": "Guardar datos como agujeros en una posición",
+          "correct": true
+        },
+        {
+          "text": "Programar solo relojes",
+          "correct": false
+        },
+        {
+          "text": "Filtrar la corriente",
+          "correct": false
+        }
+      ],
+      "difficulty": "easy",
+      "fun_fact": "Se usaron primero en telares para tejer dibujos y acabaron dando forma a la informática. Un programa era literalmente una caja pesada de cartulinas ordenadas.",
+      "category": "Tecnología"
+    },
+    {
+      "id": "tec_es_133",
+      "question": "¿Qué fue Sputnik 1 en 1957?",
+      "answers": [
+        {
+          "text": "El primer satélite artificial",
+          "correct": true
+        },
+        {
+          "text": "La primera sonda a Marte",
+          "correct": false
+        },
+        {
+          "text": "El primer vuelo tripulado",
+          "correct": false
+        }
+      ],
+      "difficulty": "easy",
+      "fun_fact": "Solo emitía un pitido, pero cualquiera con una radio de onda corta podía oírlo pasar. Ese pitido reordenó los presupuestos científicos de medio mundo.",
+      "category": "Tecnología"
+    },
+    {
+      "id": "tec_es_134",
+      "question": "¿Qué se le atribuye a Nikola Tesla frente a Edison?",
+      "answers": [
+        {
+          "text": "La defensa de la corriente alterna",
+          "correct": true
+        },
+        {
+          "text": "La invención de la bombilla",
+          "correct": false
+        },
+        {
+          "text": "El primer motor de gasolina",
+          "correct": false
+        }
+      ],
+      "difficulty": "medium",
+      "fun_fact": "La alterna ganó porque se transforma con facilidad y viaja lejos sin perderse. La continua no volvió hasta que la electrónica la necesitó de nuevo dentro de los aparatos.",
+      "category": "Tecnología"
+    },
+    {
+      "id": "tec_es_135",
+      "question": "¿Qué es la ley de Moore?",
+      "answers": [
+        {
+          "text": "La observación de que los transistores por chip se duplican periódicamente",
+          "correct": true
+        },
+        {
+          "text": "La regla de que el software se vuelve lento al mismo ritmo que el hardware mejora",
+          "correct": false
+        },
+        {
+          "text": "Una ley física sobre el límite de la miniaturización",
+          "correct": false
+        }
+      ],
+      "difficulty": "hard",
+      "fun_fact": "No es una ley natural sino una previsión que la industria convirtió en objetivo. Se cumplió durante décadas en parte porque todos planificaron para cumplirla.",
+      "category": "Tecnología"
+    },
+    {
+      "id": "tec_es_136",
+      "question": "¿Qué fue el Apollo Guidance Computer?",
+      "answers": [
+        {
+          "text": "El ordenador que guio las misiones lunares",
+          "correct": true
+        },
+        {
+          "text": "Un simulador de entrenamiento",
+          "correct": false
+        },
+        {
+          "text": "El sistema de radar de la NASA",
+          "correct": false
+        }
+      ],
+      "difficulty": "easy",
+      "fun_fact": "Su memoria de programa se tejía a mano, hilo por hilo, alrededor de anillos magnéticos. En la NASA la llamaban memoria LOL, por las little old ladies que la tejían.",
+      "category": "Tecnología"
+    },
+    {
+      "id": "tec_es_137",
+      "question": "¿Qué sustituyó al negativo con la llegada de la fotografía digital?",
+      "answers": [
+        {
+          "text": "El archivo como original",
+          "correct": true
+        },
+        {
+          "text": "El papel fotográfico",
+          "correct": false
+        },
+        {
+          "text": "La diapositiva",
+          "correct": false
+        }
+      ],
+      "difficulty": "easy",
+      "fun_fact": "Kodak construyó la primera cámara digital en 1975 y guardó el invento en un cajón para no dañar su negocio de carrete. Acabó quebrando de todos modos.",
+      "category": "Tecnología"
+    },
+    {
+      "id": "tec_es_138",
+      "question": "¿Qué caracterizaba al Minitel francés antes de la web?",
+      "answers": [
+        {
+          "text": "Terminales en casa conectados a servicios en red",
+          "correct": true
+        },
+        {
+          "text": "Un canal de televisión interactivo",
+          "correct": false
+        },
+        {
+          "text": "Un teléfono con pantalla",
+          "correct": false
+        }
+      ],
+      "difficulty": "hard",
+      "fun_fact": "Francia repartió millones de terminales gratis en los años ochenta y tuvo comercio electrónico y mensajería una década antes que casi nadie.",
+      "category": "Tecnología"
+    },
+    {
+      "id": "tec_es_139",
+      "question": "¿Qué es la primera regla del diseño de interfaces según Jakob Nielsen?",
+      "answers": [
+        {
+          "text": "Mantener informado al usuario de lo que ocurre",
+          "correct": true
+        },
+        {
+          "text": "Usar el mínimo de colores",
+          "correct": false
+        },
+        {
+          "text": "Poner todo en una sola pantalla",
+          "correct": false
+        }
+      ],
+      "difficulty": "hard",
+      "fun_fact": "Una barra de progreso mentirosa se percibe mejor que ninguna. Lo que desespera no es esperar sino no saber si algo sigue funcionando.",
+      "category": "Tecnología"
+    },
+    {
+      "id": "tec_es_140",
+      "question": "¿Qué es el software como servicio?",
+      "answers": [
+        {
+          "text": "Programas que se usan por suscripción en la red",
+          "correct": true
+        },
+        {
+          "text": "Programas que se instalan una vez",
+          "correct": false
+        },
+        {
+          "text": "Programas gratuitos con publicidad",
+          "correct": false
+        }
+      ],
+      "difficulty": "medium",
+      "fun_fact": "Cambia quién posee la herramienta. Cuando el proveedor cierra o sube el precio, el usuario no se queda con una versión antigua: se queda sin nada.",
+      "category": "Tecnología"
+    },
+    {
+      "id": "tec_es_141",
+      "question": "¿Qué es una licencia copyleft?",
+      "answers": [
+        {
+          "text": "Obliga a que las obras derivadas mantengan la misma licencia",
+          "correct": true
+        },
+        {
+          "text": "Prohíbe cualquier copia",
+          "correct": false
+        },
+        {
+          "text": "Cede la obra al dominio público",
+          "correct": false
+        }
+      ],
+      "difficulty": "hard",
+      "fun_fact": "Usa el derecho de autor contra sí mismo: en vez de reservar derechos, los impone hacia abajo. Es la razón de que buena parte del núcleo Linux siga siendo libre.",
+      "category": "Tecnología"
+    },
+    {
+      "id": "tec_es_142",
+      "question": "¿Qué es un formato de archivo abierto?",
+      "answers": [
+        {
+          "text": "Uno cuya especificación es pública",
+          "correct": true
+        },
+        {
+          "text": "Uno que abre cualquier programa",
+          "correct": false
+        },
+        {
+          "text": "Uno sin compresión",
+          "correct": false
+        }
+      ],
+      "difficulty": "medium",
+      "fun_fact": "Importa sobre todo a largo plazo: los archivos de un formato cerrado y abandonado pueden volverse ilegibles aunque el disco esté perfecto.",
+      "category": "Tecnología"
+    },
+    {
+      "id": "tec_es_143",
+      "question": "¿Qué es la brecha digital?",
+      "answers": [
+        {
+          "text": "La desigualdad de acceso y uso de la tecnología",
+          "correct": true
+        },
+        {
+          "text": "La diferencia entre analógico y digital",
+          "correct": false
+        },
+        {
+          "text": "El retraso entre versiones",
+          "correct": false
+        }
+      ],
+      "difficulty": "medium",
+      "fun_fact": "No es solo tener conexión: saber usarla, tener un aparato decente y tiempo para aprender pesan tanto como la línea.",
+      "category": "Tecnología"
+    },
+    {
+      "id": "tec_es_144",
+      "question": "¿Qué es un estándar abierto en tecnología?",
+      "answers": [
+        {
+          "text": "Una especificación que cualquiera puede implementar",
+          "correct": true
+        },
+        {
+          "text": "Un producto sin patentes",
+          "correct": false
+        },
+        {
+          "text": "Un programa gratuito",
+          "correct": false
+        }
+      ],
+      "difficulty": "medium",
+      "fun_fact": "El correo electrónico funciona entre cualquier proveedor porque su formato es un estándar abierto. La mensajería instantánea, que no lo es, sigue partida en islas.",
+      "category": "Tecnología"
+    },
+    {
+      "id": "tec_es_145",
+      "question": "¿Qué hace un servidor de correo con un mensaje que no puede entregar?",
+      "answers": [
+        {
+          "text": "Devuelve un aviso al remitente",
+          "correct": true
+        },
+        {
+          "text": "Lo borra en silencio",
+          "correct": false
+        },
+        {
+          "text": "Lo reenvía a otro destinatario",
+          "correct": false
+        }
+      ],
+      "difficulty": "easy",
+      "fun_fact": "Ese rebote es una de las piezas más antiguas del sistema. También es lo que los spammers falsifican para inundar buzones ajenos.",
+      "category": "Tecnología"
+    },
+    {
+      "id": "tec_es_146",
+      "question": "¿Qué hace siempre un algoritmo de recomendación con lo que muestra?",
+      "answers": [
+        {
+          "text": "Lo ordena según algún criterio",
+          "correct": true
+        },
+        {
+          "text": "Lo muestra sin ningún orden",
+          "correct": false
+        },
+        {
+          "text": "Lo ordena solo por fecha",
+          "correct": false
+        }
+      ],
+      "difficulty": "medium",
+      "fun_fact": "No existe la lista sin criterio: incluso el orden cronológico es una decisión. La pregunta útil no es si ordena, sino según qué y a favor de quién.",
+      "category": "Tecnología"
+    },
+    {
+      "id": "tec_es_147",
+      "question": "¿Qué es el efecto de red?",
+      "answers": [
+        {
+          "text": "Un servicio vale más cuanta más gente lo usa",
+          "correct": true
+        },
+        {
+          "text": "Una caída en cadena de servidores",
+          "correct": false
+        },
+        {
+          "text": "La velocidad compartida entre usuarios",
+          "correct": false
+        }
+      ],
+      "difficulty": "medium",
+      "fun_fact": "Explica por qué es tan difícil cambiar de red social: la calidad importa menos que dónde está la gente a la que quieres escribir.",
+      "category": "Tecnología"
+    },
+    {
+      "id": "tec_es_148",
+      "question": "¿Qué es la huella de carbono de un centro de datos?",
+      "answers": [
+        {
+          "text": "Las emisiones asociadas a su energía y construcción",
+          "correct": true
+        },
+        {
+          "text": "El calor que expulsa al aire",
+          "correct": false
+        },
+        {
+          "text": "El espacio físico que ocupa",
+          "correct": false
+        }
+      ],
+      "difficulty": "medium",
+      "fun_fact": "Los grandes operadores compran energía renovable, pero la cuenta cambia según si se mide la media anual o la hora concreta en que se consume.",
+      "category": "Tecnología"
+    },
+    {
+      "id": "tec_es_149",
+      "question": "¿Qué es el derecho a reparar?",
+      "answers": [
+        {
+          "text": "La posibilidad de arreglar un aparato sin depender del fabricante",
+          "correct": true
+        },
+        {
+          "text": "Devolver un producto defectuoso",
+          "correct": false
+        },
+        {
+          "text": "Ampliar la garantía",
+          "correct": false
+        }
+      ],
+      "difficulty": "medium",
+      "fun_fact": "Se pelea por cosas concretas: piezas a la venta, manuales publicados y tornillos normales en vez de formatos que solo tiene el servicio oficial.",
+      "category": "Tecnología"
+    },
+    {
+      "id": "tec_es_150",
+      "question": "¿Qué se guarda en un archivo de registro o log?",
+      "answers": [
+        {
+          "text": "Lo que ha ido ocurriendo, con marca de tiempo",
+          "correct": true
+        },
+        {
+          "text": "La configuración del programa",
+          "correct": false
+        },
+        {
+          "text": "La copia de seguridad",
+          "correct": false
+        }
+      ],
+      "difficulty": "easy",
+      "fun_fact": "Es lo primero que se mira cuando algo falla y lo primero que nadie mira cuando todo va bien. También es donde acaban filtrándose datos que no debían quedar escritos.",
+      "category": "Tecnología"
+    },
+    {
+      "id": "tec_es_161",
+      "question": "¿Qué llenaba esta sala en los años cuarenta?",
+      "answers": [
+        {
+          "text": "Una centralita telefónica",
+          "correct": false
+        },
+        {
+          "text": "Uno de los primeros ordenadores",
+          "correct": true
+        },
+        {
+          "text": "Un estudio de radio",
+          "correct": false
+        }
+      ],
+      "difficulty": "medium",
+      "fun_fact": "El ENIAC pesaba unas veintisiete toneladas y se programaba recableando paneles a mano. Las seis mujeres que lo programaron aparecieron en las fotos durante décadas sin que nadie las nombrara.",
+      "category": "Tecnología",
+      "image_url": "/quizify/static/img/packs/tech/eniac.webp",
+      "reveal_style": "progressive"
+    },
+    {
+      "id": "tec_es_162",
+      "question": "¿Qué método de producción muestra esta fotografía de 1913?",
+      "answers": [
+        {
+          "text": "La cadena de montaje móvil",
+          "correct": true
+        },
+        {
+          "text": "La estampación en caliente de la carrocería",
+          "correct": false
+        },
+        {
+          "text": "El ensamblaje manual pieza a pieza",
+          "correct": false
+        }
+      ],
+      "difficulty": "easy",
+      "fun_fact": "Ford bajó el tiempo de montaje de un chasis de doce horas a poco más de hora y media. El precio del coche cayó tanto que sus propios obreros pudieron comprarlo.",
+      "category": "Tecnología",
+      "image_url": "/quizify/static/img/packs/tech/ford-assembly-line.webp",
+      "reveal_style": "progressive"
+    },
+    {
+      "id": "tec_es_163",
+      "question": "¿Qué era este aparato de 1957?",
+      "answers": [
+        {
+          "text": "Una boya meteorológica",
+          "correct": false
+        },
+        {
+          "text": "Una sonda submarina",
+          "correct": false
+        },
+        {
+          "text": "El primer satélite artificial",
+          "correct": true
+        }
+      ],
+      "difficulty": "medium",
+      "fun_fact": "Sputnik 1 era una esfera de aluminio de menos de sesenta centímetros que solo emitía un pitido. Cualquiera con una radio de onda corta podía oírlo pasar sobre su casa.",
+      "category": "Tecnología",
+      "image_url": "/quizify/static/img/packs/tech/sputnik.webp",
+      "reveal_style": "progressive"
+    },
+    {
+      "id": "tec_es_164",
+      "question": "¿Para qué servía esta cartulina en informática?",
+      "answers": [
+        {
+          "text": "Como disipador de calor",
+          "correct": false
+        },
+        {
+          "text": "Como soporte de datos",
+          "correct": true
+        },
+        {
+          "text": "Como filtro de impresora",
+          "correct": false
+        }
+      ],
+      "difficulty": "medium",
+      "fun_fact": "Cada tarjeta guardaba unos ochenta caracteres. Un programa era una caja pesada de cartulinas ordenadas, y dejarla caer significaba perder el orden y el trabajo.",
+      "category": "Tecnología",
+      "image_url": "/quizify/static/img/packs/tech/punch-card.webp",
+      "reveal_style": "progressive"
+    },
+    {
+      "id": "tec_es_165",
+      "question": "¿Qué nave se ve aquí?",
+      "answers": [
+        {
+          "text": "Una estación espacial",
+          "correct": false
+        },
+        {
+          "text": "Un vehículo de exploración marciana",
+          "correct": false
+        },
+        {
+          "text": "Un módulo lunar",
+          "correct": true
+        }
+      ],
+      "difficulty": "easy",
+      "fun_fact": "Su piel exterior era en algunos puntos más fina que un par de hojas de papel de aluminio. No tenía que resistir viento ni reentrada: solo el vacío y la gravedad de la Luna.",
+      "category": "Tecnología",
+      "image_url": "/quizify/static/img/packs/tech/lunar-module.webp",
+      "reveal_style": "progressive"
+    },
+    {
+      "id": "tec_es_166",
+      "question": "¿A cuántos caracteres estaba limitado originalmente un tuit?",
+      "type": "estimate",
+      "answer": 140,
+      "min": 10,
+      "max": 500,
+      "unit": "caracteres",
+      "difficulty": "easy",
+      "fun_fact": "Ciento cuarenta, porque un SMS admitía ciento sesenta y se reservaron veinte para el nombre del remitente. Un formato heredado de los años anteriores a los teléfonos inteligentes.",
+      "category": "Tecnología"
+    },
+    {
+      "id": "tec_es_167",
+      "question": "¿Cuánto pesaba el primer móvil comercial, el Motorola DynaTAC 8000X de 1983?",
+      "type": "estimate",
+      "answer": 790,
+      "min": 100,
+      "max": 3000,
+      "unit": "gramos",
+      "difficulty": "medium",
+      "fun_fact": "Setecientos noventa gramos para media hora de conversación, y diez horas de carga para conseguirla. Costaba 3.995 dólares de la época.",
+      "category": "Tecnología"
+    },
+    {
+      "id": "tec_es_168",
+      "question": "¿Cuántos transistores tenía el Intel 4004, el primer microprocesador, en 1971?",
+      "type": "estimate",
+      "answer": 2300,
+      "min": 100,
+      "max": 100000,
+      "unit": "transistores",
+      "difficulty": "hard",
+      "fun_fact": "Dos mil trescientos. El chip de un móvil actual pasa de diez mil millones: un factor de más de cuatro millones en unos cincuenta años.",
+      "category": "Tecnología"
+    },
+    {
+      "id": "tec_es_169",
+      "question": "¿Cuánta memoria RAM tenía el ordenador que guio al Apolo 11 hasta la Luna?",
+      "type": "estimate",
+      "answer": 4,
+      "min": 1,
+      "max": 1000,
+      "unit": "kilobytes",
+      "difficulty": "hard",
+      "fun_fact": "Cuatro kilobytes de RAM y setenta y dos de programa fijo, tejido a mano alrededor de núcleos magnéticos. Una felicitación musical de las que suenan al abrirlas calcula más.",
+      "category": "Tecnología"
+    },
+    {
+      "id": "tec_es_170",
+      "question": "¿De cuántos bits se compone una dirección IPv4?",
+      "type": "estimate",
+      "answer": 32,
+      "min": 4,
+      "max": 256,
+      "unit": "bits",
+      "difficulty": "medium",
+      "fun_fact": "Treinta y dos bits dan algo menos de cuatro mil trescientos millones de direcciones: inimaginables en 1981 y oficialmente agotadas desde 2011. IPv6 usa ciento veintiocho.",
+      "category": "Tecnología"
+    }
+  ]
+}
