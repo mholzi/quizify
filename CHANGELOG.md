@@ -3,6 +3,32 @@
 All notable changes to Quizify are documented here. This project follows
 [Semantic Versioning](https://semver.org/).
 
+## [1.9.0] — 2026-08-20
+
+One line in the lobby, a shelf that finally reads the same in three languages, and a way to ask for what is missing.
+
+### 🏅 All-time standing on the join screen
+
+A player who has been here before now sees it while waiting for the game to start: one quiet line under the lobby hero, about the joining player and nobody else ([#371](https://github.com/mholzi/quizify/issues/371)). It names what it counts — "N wins from M games" — so the number is legible without a legend.
+
+**The lobby ranks by wins, the analytics dashboard still ranks by score.** That is a disagreement on purpose. Score-first rewards whoever plays the most, which is the wrong statement for a line meant to start a rivalry across the sofa; the dashboard keeps score-first because that is the right statement for a season overview. A regression test pins the dashboard order so the two never drift into each other by accident.
+
+Ties share a rank, the same competition ranking the in-game leaderboard already uses. A first-time guest sees nothing at all — the line stays hidden until a standing arrives, so nobody reads "1st of 1" on the screen they just joined. A player with games but no win yet gets its own wording rather than a "0 wins" that reads like a taunt.
+
+The standing rides the `joined` and `reconnected` frames, not the roster broadcast, which would ship everyone's history to every phone in the room.
+
+### 🇪🇸 Spanish is finished
+
+Music, food and technology were the last three subjects that existed in German and English but not in Spanish. `musica-es`, `comida-es` and `tecnologia-es` close that gap ([#581](https://github.com/mholzi/quizify/pull/581), [#582](https://github.com/mholzi/quizify/pull/582), [#585](https://github.com/mholzi/quizify/pull/585)) — 160 questions each, picture and estimate rounds included, mirrored on their English siblings rather than translated word for word.
+
+The library now stands at **4,597 questions across 33 packs**, and every themed pack exists in all three languages.
+
+Building them turned up nine outright errors in the new material and about sixty weaker questions, all fixed before merge. Two of the corrections were not in the new packs at all: a shared estimate fact claimed sugar melts before it browns (it is the other way round, ~186 °C versus ~160 °C), and the ten-litres-of-milk-per-kilo rule of thumb undersells a long-aged hard cheese. Both facts are shared by the German, English and Spanish food packs, so they were fixed in all three ([#583](https://github.com/mholzi/quizify/pull/583)) instead of quietly in one.
+
+### 📬 Ask for a pack instead of writing one
+
+If a subject is missing, the host can now request it from inside the app ([#579](https://github.com/mholzi/quizify/issues/579) / [#580](https://github.com/mholzi/quizify/pull/580)) — one endpoint, one store, one rate limit. There is no private path: every request is public, which is the point. Writing a pack by hand stays possible and unchanged.
+
 ## [1.9.0-RC1] — 2026-08-17
 
 A player who has been here before now sees it while waiting for the game to start.
