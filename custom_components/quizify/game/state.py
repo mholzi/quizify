@@ -2118,6 +2118,15 @@ class QuizifyGameState:
         """
         return self._phase_controller.all_timers_expired(player_names)
 
+    def has_live_timers(self, player_names: list[str]) -> bool:
+        """Whether any supplied player still holds a per-player timer (#586).
+
+        Pairs with ``round_wall_clock_expired`` in the countdown loop: the
+        wall-clock fallback applies exactly when no supplied player has a
+        timer. Delegated to the PhaseController.
+        """
+        return self._phase_controller.has_live_timers(player_names)
+
     def round_wall_clock_expired(self) -> bool:
         """Whether the round wall-clock has elapsed (#255).
 

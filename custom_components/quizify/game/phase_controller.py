@@ -233,6 +233,17 @@ class PhaseController:
         ]
         return bool(timers) and all(timer.is_expired() for timer in timers)
 
+    def has_live_timers(self, player_names: list[str]) -> bool:
+        """Whether any of *player_names* currently holds a per-player timer.
+
+        The countdown loop pairs this with ``round_wall_clock_expired`` to
+        decide whether the wall-clock fallback applies. ``all_timers_expired``
+        can only break the loop once at least one supplied player has a timer,
+        so the loop needs a way to recognise the opposite state — connected
+        players, no timers — and fall back to the shared round clock (#586).
+        """
+        return any(self.timers.get(name) is not None for name in player_names)
+
     def round_wall_clock_expired(self) -> bool:
         """Whether the round's wall-clock has run out, regardless of timers.
 

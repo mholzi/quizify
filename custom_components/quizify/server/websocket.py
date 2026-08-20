@@ -2685,13 +2685,18 @@ class QuizifyWebSocketHandler:
                     connected = [p.name for p in players if p.connected]
                     if connected and game_state.all_timers_expired(connected):
                         break
-                    # Fallback: when every player has disconnected mid-question
-                    # there are no live timers left for all_timers_expired to
-                    # break on, so the loop would spin forever and the admin
-                    # couldn't advance. Break once the round wall-clock has run
-                    # out, so the round still auto-evaluates with zero connected
-                    # players. (#255.)
-                    if not connected and game_state.round_wall_clock_expired():
+                    # Fallback: all_timers_expired needs at least one live
+                    # timer to break on, so the loop hangs in every state where
+                    # the connected players have none. That covers the original
+                    # case — everyone disconnected mid-question (#255) — and
+                    # the one it missed: connected players who never got a
+                    # timer, where NEITHER condition could fire and the loop
+                    # spun forever with the countdown frozen at 0 (#586).
+                    # Keying the fallback on "no live timers" instead of "no
+                    # connected players" covers both with one condition.
+                    if not game_state.has_live_timers(
+                        connected
+                    ) and game_state.round_wall_clock_expired():
                         break
 
                 # Timer expired globally
