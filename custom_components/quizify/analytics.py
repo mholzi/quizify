@@ -184,7 +184,18 @@ class QuizifyAnalytics:
         task.add_done_callback(self._handle_save_error)
 
     def _handle_save_error(self, task: asyncio.Task) -> None:
-        """Log exceptions from fire-and-forget save tasks."""
+        """Log exceptions from fire-and-forget save tasks.
+
+        A cancelled task is not an error and must be checked first: calling
+        ``task.exception()`` on one re-raises the ``CancelledError`` right
+        inside this callback, where nobody is waiting for it. That happens on
+        every HA shutdown that catches a save in flight — rare enough to have
+        gone unnoticed until the question-stats flush (#588) started awaiting
+        during ``EVENT_HOMEASSISTANT_STOP`` and gave the loop the chance to
+        cancel this task while the shutdown was still running.
+        """
+        if task.cancelled():
+            return
         if (exc := task.exception()) is not None:
             _LOGGER.error("Unhandled error in analytics save task: %s", exc)
 

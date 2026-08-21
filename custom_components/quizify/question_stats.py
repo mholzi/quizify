@@ -46,12 +46,18 @@ class QuestionStatsData(TypedDict):
 class QuestionStatsService:
     """Async JSON store for per-question aggregate stats."""
 
+    #: Seconds between the last recorded round and the debounced write. Long
+    #: enough that a normal round cadence coalesces into one write, short
+    #: enough that walking away mid-game costs at most this much (#588).
+    SAVE_DEBOUNCE_SECONDS = 5.0
+
     def __init__(self, runtime: Runtime) -> None:
         self._runtime = runtime
         self._path = runtime.data_dir / "question_stats.json"
         self._data: QuestionStatsData = {"version": 1, "questions": {}}
         self._save_lock = asyncio.Lock()
         self._dirty = False
+        self._save_timer: asyncio.Future[None] | None = None
 
     async def load(self) -> None:
         try:
@@ -108,6 +114,7 @@ class QuestionStatsService:
                 q["correct_count"] += 1
                 q["total_time_correct"] += float(elapsed)
         self._dirty = True
+        self._schedule_save()
 
     def aggregate_for_questions(self, ids: Iterable[str]) -> tuple[int, int]:
         """Sum (shown_count, correct_count) over the given question *ids*.
@@ -182,3 +189,51 @@ class QuestionStatsService:
                 self._dirty = False
             except OSError as err:
                 _LOGGER.error("Failed to save question stats: %s", err)
+
+    def _schedule_save(self) -> None:
+        """(Re-)arm the debounced write after a recorded round (#588).
+
+        ``end_game()`` used to be the only caller of :meth:`save_if_dirty`, so
+        a game that was abandoned — tab closed, HA restarted, integration
+        reloaded — threw away every round it had accumulated. Rearming a short
+        timer here means an interrupted evening still leaves its rounds on
+        disk, while a game played to the end still writes exactly once at the
+        end (the timer coalesces the rounds in between).
+
+        No-op without a running event loop: ``record_round`` is a plain
+        synchronous call and is exercised that way in tests, where scheduling a
+        task would raise. Those callers keep the previous behaviour and persist
+        through :meth:`save_if_dirty` / :meth:`async_flush`.
+        """
+        try:
+            asyncio.get_running_loop()
+        except RuntimeError:
+            return
+        timer = self._save_timer
+        if timer is not None and not timer.done():
+            timer.cancel()
+        self._save_timer = self._runtime.create_task(self._debounced_save())
+
+    async def _debounced_save(self) -> None:
+        """Wait out the quiet period, then persist."""
+        try:
+            await asyncio.sleep(self.SAVE_DEBOUNCE_SECONDS)
+        except asyncio.CancelledError:
+            # Superseded by a later round, or cancelled by async_flush() —
+            # which persists itself. Nothing to do.
+            return
+        await self.save_if_dirty()
+
+    async def async_flush(self) -> None:
+        """Persist right now, cancelling any armed debounce (#588).
+
+        Called on config-entry unload and on ``EVENT_HOMEASSISTANT_STOP`` so a
+        restart, a reload or an integration update cannot drop the rounds that
+        are still only in memory. Safe to call when nothing is pending:
+        :meth:`save_if_dirty` is a no-op then.
+        """
+        timer = self._save_timer
+        self._save_timer = None
+        if timer is not None and not timer.done():
+            timer.cancel()
+        await self.save_if_dirty()

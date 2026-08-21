@@ -108,6 +108,23 @@ async def async_setup_entry(hass: HomeAssistant, entry: ConfigEntry) -> bool:
     question_stats = QuestionStatsService(runtime)
     await question_stats.load()
 
+    # Persist accumulated rounds when HA shuts down (#588). Without this the
+    # only write path was end_game(), so a restart during a game — or after a
+    # game the host simply walked away from — silently dropped every round it
+    # had collected. async_flush() cancels the pending debounce and writes.
+    from homeassistant.const import (  # noqa: PLC0415
+        EVENT_HOMEASSISTANT_STOP,
+    )
+
+    async def _flush_question_stats(_event: object) -> None:
+        await question_stats.async_flush()
+
+    entry.async_on_unload(
+        hass.bus.async_listen_once(
+            EVENT_HOMEASSISTANT_STOP, _flush_question_stats
+        )
+    )
+
     game_state = QuizifyGameState(runtime=runtime, entry_id=entry.entry_id)
     game_state.set_stats_services(analytics, question_stats)
     # Read persisted question history off the event loop (issue #222).
@@ -591,6 +608,17 @@ async def async_unload_entry(hass: HomeAssistant, entry: ConfigEntry) -> bool:
 
     domain_data = hass.data.get(DOMAIN)
     if domain_data:
+        # Write out the per-question stats before anything is torn down
+        # (#588). A reload or an integration update goes through here, and
+        # whatever rounds are still only in memory would otherwise be lost.
+        ctx = domain_data.get("ctx")
+        question_stats = getattr(ctx, "question_stats", None)
+        if question_stats is not None:
+            try:
+                await question_stats.async_flush()
+            except Exception:  # noqa: BLE001
+                _LOGGER.exception("Failed to flush question stats on unload")
+
         ws_handler = domain_data.get("ws_handler")
         if ws_handler:
             await ws_handler.cleanup_game_tasks()
