@@ -87,6 +87,15 @@ h2{font-family:var(--disp);font-weight:800;font-size:clamp(1.6rem,3.5vw,2.3rem);
 .packs th{font-family:var(--mono);font-size:.7rem;letter-spacing:.05em;text-transform:uppercase;color:var(--muted)}
 .packs td.n{font-family:var(--mono);text-align:right;color:var(--muted)}
 .packs tr:last-child td{border-bottom:none}
+/* Die dritte Sprachspalte (ES) sprengt auf dem Handy den Container: Tabelle 426px in 344px.
+   Deshalb schmalere Zellen und, falls es dann noch nicht reicht, seitliches Scrollen —
+   overflow:hidden haette die Spalte stattdessen lautlos abgeschnitten. */
+@media(max-width:560px){
+  .packs{overflow-x:auto}
+  .packs th,.packs td{padding:9px 5px;font-size:.8rem}
+  .packs th:first-child,.packs td:first-child{padding-left:10px}
+  .packs td.n{white-space:nowrap}
+}
 
 /* install */
 .install ol{counter-reset:s;list-style:none;margin-top:26px;display:flex;flex-direction:column;gap:14px}
