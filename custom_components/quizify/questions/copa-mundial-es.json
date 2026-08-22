@@ -1,0 +1,2309 @@
+{
+  "name": "Copa Mundial",
+  "language": "es",
+  "version": "1.0",
+  "theme": "worldcup",
+  "season": {
+    "start": "06-01",
+    "end": "07-31",
+    "label": "⚽ Temporada del Mundial"
+  },
+  "questions": [
+    {
+      "id": "copa_mundial_es_001",
+      "question": "¿En qué Mundial se fijaron por primera vez los dorsales a una lista de convocados?",
+      "answers": [
+        {
+          "text": "1954 en Suiza",
+          "correct": true
+        },
+        {
+          "text": "1930 en Uruguay",
+          "correct": false
+        },
+        {
+          "text": "1970 en México",
+          "correct": false
+        }
+      ],
+      "difficulty": "medium",
+      "fun_fact": "Hasta entonces los números se repartían partido a partido, así que un jugador podía llevar uno distinto cada día; ni siquiera el portero llevaba siempre el 1.",
+      "category": "Copa Mundial"
+    },
+    {
+      "id": "copa_mundial_es_002",
+      "question": "El primer Mundial, en 1930, no tuvo fase de clasificación. ¿Cómo entraban las selecciones?",
+      "answers": [
+        {
+          "text": "Por invitación",
+          "correct": true
+        },
+        {
+          "text": "Ganando una eliminatoria regional",
+          "correct": false
+        },
+        {
+          "text": "Pagando una cuota de inscripción",
+          "correct": false
+        }
+      ],
+      "difficulty": "easy",
+      "fun_fact": "La FIFA invitó a todo el mundo, pero la travesía en barco hasta Montevideo espantó a Europa: solo cruzaron cuatro selecciones.",
+      "category": "Copa Mundial"
+    },
+    {
+      "id": "copa_mundial_es_003",
+      "question": "¿Qué país organizó un Mundial masculino sin haberse clasificado nunca antes sobre el campo?",
+      "answers": [
+        {
+          "text": "Catar (2022)",
+          "correct": true
+        },
+        {
+          "text": "Japón (2002)",
+          "correct": false
+        },
+        {
+          "text": "Sudáfrica (2010)",
+          "correct": false
+        }
+      ],
+      "difficulty": "medium",
+      "fun_fact": "Fue su debut absoluto, con la plaza automática que da ser anfitrión, y perdió los tres partidos del grupo.",
+      "category": "Copa Mundial"
+    },
+    {
+      "id": "copa_mundial_es_004",
+      "question": "En 1950 el campeón se decidió sin una final oficial. ¿Qué formato lo sustituyó?",
+      "answers": [
+        {
+          "text": "Un cuadrangular final todos contra todos",
+          "correct": true
+        },
+        {
+          "text": "Un sorteo entre los dos mejores",
+          "correct": false
+        },
+        {
+          "text": "Una tanda de penaltis",
+          "correct": false
+        }
+      ],
+      "difficulty": "medium",
+      "fun_fact": "Que el último partido, Uruguay contra Brasil, valiera el título fue una casualidad del calendario.",
+      "category": "Copa Mundial"
+    },
+    {
+      "id": "copa_mundial_es_005",
+      "question": "Después de un partido de 1982 que olía a pacto, la FIFA cambió una regla para siempre. ¿Cuál?",
+      "answers": [
+        {
+          "text": "La última jornada de grupos se juega a la misma hora",
+          "correct": true
+        },
+        {
+          "text": "Los primeros de grupo se sortean",
+          "correct": false
+        },
+        {
+          "text": "Se prohibieron los empates en la fase de grupos",
+          "correct": false
+        }
+      ],
+      "difficulty": "hard",
+      "fun_fact": "Alemania Federal y Austria firmaron un resultado que dejaba fuera a Argelia. Desde entonces nadie sabe, mientras juega, qué resultado le conviene.",
+      "category": "Copa Mundial"
+    },
+    {
+      "id": "copa_mundial_es_006",
+      "question": "¿Por qué en la final de 1930 se jugó con dos balones distintos, uno por parte?",
+      "answers": [
+        {
+          "text": "Cada finalista exigió el suyo",
+          "correct": true
+        },
+        {
+          "text": "El primero se reventó en el descanso",
+          "correct": false
+        },
+        {
+          "text": "La lluvia estropeó el original",
+          "correct": false
+        }
+      ],
+      "difficulty": "medium",
+      "fun_fact": "Con el balón argentino el marcador fue 2-1 para Argentina; con el uruguayo, 4-2 para Uruguay.",
+      "category": "Copa Mundial"
+    },
+    {
+      "id": "copa_mundial_es_007",
+      "question": "¿Cuál fue el primer Mundial televisado en directo?",
+      "answers": [
+        {
+          "text": "1954 en Suiza",
+          "correct": true
+        },
+        {
+          "text": "1966 en Inglaterra",
+          "correct": false
+        },
+        {
+          "text": "1970 en México",
+          "correct": false
+        }
+      ],
+      "difficulty": "medium",
+      "fun_fact": "Llegó a un puñado de países europeos con televisor. En 1970 la señal ya viajaba en color y por satélite.",
+      "category": "Copa Mundial"
+    },
+    {
+      "id": "copa_mundial_es_008",
+      "question": "México 1970 estrenó algo que hoy usa casi cualquier deporte. ¿Qué fue?",
+      "answers": [
+        {
+          "text": "Las tarjetas amarilla y roja",
+          "correct": true
+        },
+        {
+          "text": "Las cámaras en la línea de gol",
+          "correct": false
+        },
+        {
+          "text": "El banquillo numerado",
+          "correct": false
+        }
+      ],
+      "difficulty": "easy",
+      "fun_fact": "La idea se le ocurrió a un árbitro parado delante de un semáforo, camino de casa.",
+      "category": "Copa Mundial"
+    },
+    {
+      "id": "copa_mundial_es_009",
+      "question": "¿En qué Mundial se permitieron por primera vez los cambios por decisión del entrenador?",
+      "answers": [
+        {
+          "text": "1970 en México",
+          "correct": true
+        },
+        {
+          "text": "1958 en Suecia",
+          "correct": false
+        },
+        {
+          "text": "1934 en Italia",
+          "correct": false
+        }
+      ],
+      "difficulty": "medium",
+      "fun_fact": "Antes, el lesionado dejaba a su equipo con uno menos; si era el portero, otro compañero se ponía los guantes.",
+      "category": "Copa Mundial"
+    },
+    {
+      "id": "copa_mundial_es_010",
+      "question": "En 1938 el campeón vigente estrenó un privilegio. ¿Cuál?",
+      "answers": [
+        {
+          "text": "Clasificación automática para el siguiente Mundial",
+          "correct": true
+        },
+        {
+          "text": "Dos países compartieron la sede",
+          "correct": false
+        },
+        {
+          "text": "El trofeo se envió por correo al ganador",
+          "correct": false
+        }
+      ],
+      "difficulty": "hard",
+      "fun_fact": "El privilegio duró hasta 2006; desde entonces el campeón vuelve a jugarse la clasificación como los demás.",
+      "category": "Copa Mundial"
+    },
+    {
+      "id": "copa_mundial_es_011",
+      "question": "¿Qué le ocurrió al trofeo Jules Rimet en 1966, meses antes del torneo?",
+      "answers": [
+        {
+          "text": "Lo robaron y lo encontró un perro",
+          "correct": true
+        },
+        {
+          "text": "Lo fundieron por error",
+          "correct": false
+        },
+        {
+          "text": "Se hundió con un carguero",
+          "correct": false
+        }
+      ],
+      "difficulty": "easy",
+      "fun_fact": "Un collie llamado Pickles lo halló envuelto en papel de periódico debajo de un seto en el sur de Londres.",
+      "category": "Copa Mundial"
+    },
+    {
+      "id": "copa_mundial_es_012",
+      "question": "El Mundial de 1986 acabó en México porque otro país renunció. ¿Cuál?",
+      "answers": [
+        {
+          "text": "Colombia",
+          "correct": true
+        },
+        {
+          "text": "Brasil",
+          "correct": false
+        },
+        {
+          "text": "Argentina",
+          "correct": false
+        }
+      ],
+      "difficulty": "hard",
+      "fun_fact": "Colombia alegó motivos económicos y México tomó el relevo, pese al terremoto que sufrió meses antes del torneo.",
+      "category": "Copa Mundial"
+    },
+    {
+      "id": "copa_mundial_es_013",
+      "question": "¿Qué cambió la FIFA en 1994 sobre el valor de una victoria?",
+      "answers": [
+        {
+          "text": "Pasó de dos puntos a tres",
+          "correct": true
+        },
+        {
+          "text": "Pasó de tres puntos a cuatro",
+          "correct": false
+        },
+        {
+          "text": "Pasó de un punto a dos",
+          "correct": false
+        }
+      ],
+      "difficulty": "easy",
+      "fun_fact": "La idea era premiar al que ataca y quitarle interés al empate pactado. Hoy es la norma en todo el fútbol.",
+      "category": "Copa Mundial"
+    },
+    {
+      "id": "copa_mundial_es_014",
+      "question": "¿Cuál fue el primer Mundial organizado por dos países a la vez?",
+      "answers": [
+        {
+          "text": "2002, Corea del Sur y Japón",
+          "correct": true
+        },
+        {
+          "text": "1990, Italia y Suiza",
+          "correct": false
+        },
+        {
+          "text": "1974, las dos Alemanias",
+          "correct": false
+        }
+      ],
+      "difficulty": "easy",
+      "fun_fact": "Como no hubo acuerdo sobre el orden de los nombres, la FIFA lo resolvió por orden alfabético.",
+      "category": "Copa Mundial"
+    },
+    {
+      "id": "copa_mundial_es_015",
+      "question": "Antes de que existieran los penaltis, ¿cómo se desempataban las eliminatorias?",
+      "answers": [
+        {
+          "text": "Repitiendo el partido o echándolo a suertes",
+          "correct": true
+        },
+        {
+          "text": "Contando los córners",
+          "correct": false
+        },
+        {
+          "text": "Por la posición en la fase de grupos",
+          "correct": false
+        }
+      ],
+      "difficulty": "medium",
+      "fun_fact": "Italia llegó a una final europea en 1968 gracias a un sorteo. La primera tanda mundialista se lanzó en 1982.",
+      "category": "Copa Mundial"
+    },
+    {
+      "id": "copa_mundial_es_016",
+      "question": "En 1974 apareció un trofeo nuevo. ¿Por qué?",
+      "answers": [
+        {
+          "text": "Brasil se quedó el anterior para siempre",
+          "correct": true
+        },
+        {
+          "text": "El anterior se había dañado",
+          "correct": false
+        },
+        {
+          "text": "La FIFA prohibió los trofeos de oro",
+          "correct": false
+        }
+      ],
+      "difficulty": "medium",
+      "fun_fact": "Jules Rimet había decretado que quien ganara tres veces se lo quedaría, y Brasil lo consiguió en 1970.",
+      "category": "Copa Mundial"
+    },
+    {
+      "id": "copa_mundial_es_017",
+      "question": "En 1938 una selección llegó a cuartos de final sin jugar. ¿Cómo?",
+      "answers": [
+        {
+          "text": "Su rival se retiró antes del partido",
+          "correct": true
+        },
+        {
+          "text": "Le tocó un bye por sorteo",
+          "correct": false
+        },
+        {
+          "text": "Una tormenta anuló el encuentro",
+          "correct": false
+        }
+      ],
+      "difficulty": "hard",
+      "fun_fact": "Austria había dejado de existir como selección tras la anexión; Suecia pasó de ronda sin tocar el balón.",
+      "category": "Copa Mundial"
+    },
+    {
+      "id": "copa_mundial_es_018",
+      "question": "¿Qué se les prohibió a los porteros a partir de los años noventa?",
+      "answers": [
+        {
+          "text": "Coger con las manos la cesión de un compañero",
+          "correct": true
+        },
+        {
+          "text": "Salir del área",
+          "correct": false
+        },
+        {
+          "text": "Sacar ellos mismos de puerta",
+          "correct": false
+        }
+      ],
+      "difficulty": "easy",
+      "fun_fact": "Se aprobó tras el Mundial de 1990, criticado por lento: los porteros mataban el tiempo con el balón entre las manos.",
+      "category": "Copa Mundial"
+    },
+    {
+      "id": "copa_mundial_es_019",
+      "question": "La primera mascota mundialista, en 1966, ¿qué era?",
+      "answers": [
+        {
+          "text": "Un león llamado World Cup Willie",
+          "correct": true
+        },
+        {
+          "text": "Un gallo llamado Footix",
+          "correct": false
+        },
+        {
+          "text": "Una naranja llamada Naranjito",
+          "correct": false
+        }
+      ],
+      "difficulty": "easy",
+      "fun_fact": "Inauguró la tradición de las mascotas y hasta tuvo su propia canción.",
+      "category": "Copa Mundial"
+    },
+    {
+      "id": "copa_mundial_es_020",
+      "question": "¿Qué Mundial pasó de 16 a 24 selecciones?",
+      "answers": [
+        {
+          "text": "1982 en España",
+          "correct": true
+        },
+        {
+          "text": "1974 en Alemania Federal",
+          "correct": false
+        },
+        {
+          "text": "1994 en Estados Unidos",
+          "correct": false
+        }
+      ],
+      "difficulty": "easy",
+      "fun_fact": "La ampliación abrió la puerta a debutantes de África y Asia: aquel año Argelia y Camerún tumbaron a gigantes europeos.",
+      "category": "Copa Mundial"
+    },
+    {
+      "id": "copa_mundial_es_021",
+      "question": "¿Quién marcó el único gol de la final de 2014 saliendo desde el banquillo?",
+      "answers": [
+        {
+          "text": "Mario Götze",
+          "correct": true
+        },
+        {
+          "text": "Thomas Müller",
+          "correct": false
+        },
+        {
+          "text": "André Schürrle",
+          "correct": false
+        }
+      ],
+      "difficulty": "easy",
+      "fun_fact": "Fue la primera final decidida por un suplente y el primer título europeo conquistado en suelo sudamericano.",
+      "category": "Copa Mundial"
+    },
+    {
+      "id": "copa_mundial_es_022",
+      "question": "¿Quién marcó el primer triplete en una final de un Mundial masculino?",
+      "answers": [
+        {
+          "text": "Geoff Hurst",
+          "correct": true
+        },
+        {
+          "text": "Pelé",
+          "correct": false
+        },
+        {
+          "text": "Zinedine Zidane",
+          "correct": false
+        }
+      ],
+      "difficulty": "easy",
+      "fun_fact": "Tardó cincuenta y seis años en repetirse: Kylian Mbappé lo logró en 2022 y aun así acabó subcampeón.",
+      "category": "Copa Mundial"
+    },
+    {
+      "id": "copa_mundial_es_023",
+      "question": "¿Qué jugador fue expulsado en una final por un cabezazo en el pecho a un rival?",
+      "answers": [
+        {
+          "text": "Zinedine Zidane",
+          "correct": true
+        },
+        {
+          "text": "Marco Materazzi",
+          "correct": false
+        },
+        {
+          "text": "Luís Figo",
+          "correct": false
+        }
+      ],
+      "difficulty": "easy",
+      "fun_fact": "Aun así se llevó el Balón de Oro del torneo: fue elegido mejor jugador del Mundial que terminó con esa roja.",
+      "category": "Copa Mundial"
+    },
+    {
+      "id": "copa_mundial_es_024",
+      "question": "El portero mexicano Antonio Carbajal fue el primero en conseguir algo en los Mundiales. ¿Qué?",
+      "answers": [
+        {
+          "text": "Jugar cinco torneos distintos",
+          "correct": true
+        },
+        {
+          "text": "Parar tres penaltis en un partido",
+          "correct": false
+        },
+        {
+          "text": "Ser capitán de tres selecciones",
+          "correct": false
+        }
+      ],
+      "difficulty": "easy",
+      "fun_fact": "Jugó de 1950 a 1966. Hasta 1998 nadie lo igualó: el segundo fue Lothar Matthäus.",
+      "category": "Copa Mundial"
+    },
+    {
+      "id": "copa_mundial_es_025",
+      "question": "Cristiano Ronaldo fue el primer futbolista en marcar en ¿cuántos Mundiales distintos?",
+      "answers": [
+        {
+          "text": "Cinco",
+          "correct": true
+        },
+        {
+          "text": "Tres",
+          "correct": false
+        },
+        {
+          "text": "Siete",
+          "correct": false
+        }
+      ],
+      "difficulty": "easy",
+      "fun_fact": "Marcó en 2006, 2010, 2014, 2018 y 2022. Lionel Messi igualó la marca poco después.",
+      "category": "Copa Mundial"
+    },
+    {
+      "id": "copa_mundial_es_026",
+      "question": "Kylian Mbappé marcó tres goles en la final de 2022 y aun así perdió. ¿Ante quién?",
+      "answers": [
+        {
+          "text": "Argentina",
+          "correct": true
+        },
+        {
+          "text": "Brasil",
+          "correct": false
+        },
+        {
+          "text": "Croacia",
+          "correct": false
+        }
+      ],
+      "difficulty": "easy",
+      "fun_fact": "El partido acabó 3-3 y Argentina ganó en los penaltis; Mbappé fue el primero en marcar un triplete en una final y quedar subcampeón.",
+      "category": "Copa Mundial"
+    },
+    {
+      "id": "copa_mundial_es_027",
+      "question": "¿Quién levantó la Copa como capitán y volvió a ganarla como seleccionador?",
+      "answers": [
+        {
+          "text": "Franz Beckenbauer",
+          "correct": true
+        },
+        {
+          "text": "Diego Maradona",
+          "correct": false
+        },
+        {
+          "text": "Bobby Moore",
+          "correct": false
+        }
+      ],
+      "difficulty": "easy",
+      "fun_fact": "Capitán de Alemania Federal en 1974 y entrenador campeón en 1990.",
+      "category": "Copa Mundial"
+    },
+    {
+      "id": "copa_mundial_es_028",
+      "question": "¿Quién es el jugador más joven que ha marcado en una final de un Mundial?",
+      "answers": [
+        {
+          "text": "Pelé",
+          "correct": true
+        },
+        {
+          "text": "Kylian Mbappé",
+          "correct": false
+        },
+        {
+          "text": "Michael Owen",
+          "correct": false
+        }
+      ],
+      "difficulty": "easy",
+      "fun_fact": "Marcó dos goles en la final de 1958 con 17 años. Cuentan que se desmayó al oír el pitido final.",
+      "category": "Copa Mundial"
+    },
+    {
+      "id": "copa_mundial_es_029",
+      "question": "¿Qué portero es el único que ha ganado el Balón de Oro de un Mundial?",
+      "answers": [
+        {
+          "text": "Oliver Kahn",
+          "correct": true
+        },
+        {
+          "text": "Gianluigi Buffon",
+          "correct": false
+        },
+        {
+          "text": "Iker Casillas",
+          "correct": false
+        }
+      ],
+      "difficulty": "medium",
+      "fun_fact": "Lo ganó en 2002 pese a un blocaje fallido en la final que le regaló a Brasil el primer gol.",
+      "category": "Copa Mundial"
+    },
+    {
+      "id": "copa_mundial_es_030",
+      "question": "¿Quién tiene el récord de goles en un solo Mundial?",
+      "answers": [
+        {
+          "text": "Just Fontaine",
+          "correct": true
+        },
+        {
+          "text": "Gerd Müller",
+          "correct": false
+        },
+        {
+          "text": "Ronaldo",
+          "correct": false
+        }
+      ],
+      "difficulty": "medium",
+      "fun_fact": "Trece en 1958. Cuenta la leyenda que jugó el torneo con unas botas prestadas porque las suyas se rompieron antes de empezar.",
+      "category": "Copa Mundial"
+    },
+    {
+      "id": "copa_mundial_es_031",
+      "question": "¿Qué delantero brasileño marcó en dos finales consecutivas, las de 1958 y 1962?",
+      "answers": [
+        {
+          "text": "Vavá",
+          "correct": true
+        },
+        {
+          "text": "Pelé",
+          "correct": false
+        },
+        {
+          "text": "Garrincha",
+          "correct": false
+        }
+      ],
+      "difficulty": "medium",
+      "fun_fact": "Fue el primero en marcar en dos finales seguidas; en la de 1958 hizo dos goles.",
+      "category": "Copa Mundial"
+    },
+    {
+      "id": "copa_mundial_es_032",
+      "question": "¿Qué delantero marcó cinco goles en un mismo partido de un Mundial?",
+      "answers": [
+        {
+          "text": "Oleg Salenko",
+          "correct": true
+        },
+        {
+          "text": "Gabriel Batistuta",
+          "correct": false
+        },
+        {
+          "text": "Hristo Stoichkov",
+          "correct": false
+        }
+      ],
+      "difficulty": "medium",
+      "fun_fact": "Se los hizo a Camerún en 1994. Rusia quedó eliminada igualmente en la fase de grupos y él no volvió a jugar un Mundial.",
+      "category": "Copa Mundial"
+    },
+    {
+      "id": "copa_mundial_es_033",
+      "question": "¿Quién firmó el triplete más joven de la historia de los Mundiales?",
+      "answers": [
+        {
+          "text": "Pelé",
+          "correct": true
+        },
+        {
+          "text": "Michael Owen",
+          "correct": false
+        },
+        {
+          "text": "Kylian Mbappé",
+          "correct": false
+        }
+      ],
+      "difficulty": "medium",
+      "fun_fact": "Tres goles a Francia en la semifinal de 1958, con 17 años. La marca sigue en pie.",
+      "category": "Copa Mundial"
+    },
+    {
+      "id": "copa_mundial_es_034",
+      "question": "¿Quién ganó el Mundial como jugador y volvió a ganarlo como seleccionador del mismo país?",
+      "answers": [
+        {
+          "text": "Mário Zagallo",
+          "correct": true
+        },
+        {
+          "text": "Johan Cruyff",
+          "correct": false
+        },
+        {
+          "text": "Bobby Charlton",
+          "correct": false
+        }
+      ],
+      "difficulty": "medium",
+      "fun_fact": "Campeón con Brasil como jugador en 1958 y 1962 y como entrenador en 1970; en 1994 estaba en el cuerpo técnico.",
+      "category": "Copa Mundial"
+    },
+    {
+      "id": "copa_mundial_es_035",
+      "question": "¿Cómo celebraba sus goles Roger Milla en 1990?",
+      "answers": [
+        {
+          "text": "Bailando junto al banderín de córner",
+          "correct": true
+        },
+        {
+          "text": "Saludando al árbitro",
+          "correct": false
+        },
+        {
+          "text": "Quitándose las botas",
+          "correct": false
+        }
+      ],
+      "difficulty": "medium",
+      "fun_fact": "Tenía 38 años y había vuelto de su retirada tras una llamada personal del presidente de Camerún.",
+      "category": "Copa Mundial"
+    },
+    {
+      "id": "copa_mundial_es_036",
+      "question": "¿Qué consiguió Jairzinho en 1970 que nadie ha repetido en un torneo ganado?",
+      "answers": [
+        {
+          "text": "Marcar en todos los partidos",
+          "correct": true
+        },
+        {
+          "text": "Parar un penalti siendo jugador de campo",
+          "correct": false
+        },
+        {
+          "text": "Jugar noventa minutos sin tocar el balón",
+          "correct": false
+        }
+      ],
+      "difficulty": "hard",
+      "fun_fact": "Seis partidos, seis con gol, final incluida.",
+      "category": "Copa Mundial"
+    },
+    {
+      "id": "copa_mundial_es_037",
+      "question": "¿Qué defensa neerlandés marcó en su propia portería y en la contraria en el mismo partido de 1978?",
+      "answers": [
+        {
+          "text": "Ernie Brandts",
+          "correct": true
+        },
+        {
+          "text": "Ruud Krol",
+          "correct": false
+        },
+        {
+          "text": "Wim Suurbier",
+          "correct": false
+        }
+      ],
+      "difficulty": "hard",
+      "fun_fact": "Ocurrió ante Italia. Países Bajos ganó el partido y se metió en la final.",
+      "category": "Copa Mundial"
+    },
+    {
+      "id": "copa_mundial_es_038",
+      "question": "¿Qué jugador marcó en dos finales separadas por ocho años?",
+      "answers": [
+        {
+          "text": "Paul Breitner",
+          "correct": true
+        },
+        {
+          "text": "Franz Beckenbauer",
+          "correct": false
+        },
+        {
+          "text": "Karl-Heinz Rummenigge",
+          "correct": false
+        }
+      ],
+      "difficulty": "medium",
+      "fun_fact": "De penalti en la final ganada de 1974 y otra vez en la perdida de 1982.",
+      "category": "Copa Mundial"
+    },
+    {
+      "id": "copa_mundial_es_039",
+      "question": "¿Quién marcó el primer gol de la historia de los Mundiales?",
+      "answers": [
+        {
+          "text": "Lucien Laurent",
+          "correct": true
+        },
+        {
+          "text": "Guillermo Stábile",
+          "correct": false
+        },
+        {
+          "text": "Héctor Castro",
+          "correct": false
+        }
+      ],
+      "difficulty": "hard",
+      "fun_fact": "No se conserva ninguna película de aquel gol de 1930, y él siempre recordaba el frío que hacía en Montevideo.",
+      "category": "Copa Mundial"
+    },
+    {
+      "id": "copa_mundial_es_040",
+      "question": "En 1950 Estados Unidos dio una de las mayores sorpresas del fútbol ante Inglaterra. ¿Con qué resultado?",
+      "answers": [
+        {
+          "text": "1-0",
+          "correct": true
+        },
+        {
+          "text": "4-2",
+          "correct": false
+        },
+        {
+          "text": "2-2",
+          "correct": false
+        }
+      ],
+      "difficulty": "medium",
+      "fun_fact": "Aquel equipo lo formaban aficionados con oficio, entre ellos un lavaplatos y un cartero. Algún diario británico dio por hecho que el resultado era una errata.",
+      "category": "Copa Mundial"
+    },
+    {
+      "id": "copa_mundial_es_041",
+      "question": "En 1986 Maradona marcó a Inglaterra dos goles opuestos en cuatro minutos. ¿Cuáles?",
+      "answers": [
+        {
+          "text": "Uno con la mano y otro tras una carrera en solitario",
+          "correct": true
+        },
+        {
+          "text": "Dos penaltis",
+          "correct": false
+        },
+        {
+          "text": "Dos cabezazos a la salida de un córner",
+          "correct": false
+        }
+      ],
+      "difficulty": "easy",
+      "fun_fact": "Él llamó al primero «la mano de Dios»; el segundo fue elegido gol del siglo por los votantes de la FIFA.",
+      "category": "Copa Mundial"
+    },
+    {
+      "id": "copa_mundial_es_042",
+      "question": "En 1998 Zinedine Zidane fue expulsado ante Arabia Saudí por...",
+      "answers": [
+        {
+          "text": "Pisar a un rival en el suelo",
+          "correct": true
+        },
+        {
+          "text": "Golpear al árbitro",
+          "correct": false
+        },
+        {
+          "text": "Quitarse la camiseta en señal de protesta",
+          "correct": false
+        }
+      ],
+      "difficulty": "hard",
+      "fun_fact": "Cumplió dos partidos de sanción y volvió para marcar dos goles de cabeza en la final ante Brasil.",
+      "category": "Copa Mundial"
+    },
+    {
+      "id": "copa_mundial_es_043",
+      "question": "En los cuartos de final de 2010, Luis Suárez dejó a Ghana fuera haciendo ¿qué sobre la línea de gol?",
+      "answers": [
+        {
+          "text": "Sacar el balón con las manos",
+          "correct": true
+        },
+        {
+          "text": "Atraparlo como un portero",
+          "correct": false
+        },
+        {
+          "text": "Cabecearlo contra su propio larguero",
+          "correct": false
+        }
+      ],
+      "difficulty": "easy",
+      "fun_fact": "Lo expulsaron, pero Ghana falló el penalti y perdió después la tanda: la mano le salió a cuenta.",
+      "category": "Copa Mundial"
+    },
+    {
+      "id": "copa_mundial_es_044",
+      "question": "En 2006 el árbitro Graham Poll le mostró a un mismo jugador croata ¿cuántas tarjetas amarillas?",
+      "answers": [
+        {
+          "text": "Tres",
+          "correct": true
+        },
+        {
+          "text": "Cuatro",
+          "correct": false
+        },
+        {
+          "text": "Dos en un minuto",
+          "correct": false
+        }
+      ],
+      "difficulty": "hard",
+      "fun_fact": "No volvió a arbitrar un Mundial.",
+      "category": "Copa Mundial"
+    },
+    {
+      "id": "copa_mundial_es_045",
+      "question": "En 1990 Camerún ganó el partido inaugural a la campeona Argentina terminando con ¿cuántos jugadores?",
+      "answers": [
+        {
+          "text": "Nueve",
+          "correct": true
+        },
+        {
+          "text": "Once",
+          "correct": false
+        },
+        {
+          "text": "Diez",
+          "correct": false
+        }
+      ],
+      "difficulty": "easy",
+      "fun_fact": "Ganó 1-0 pese a las dos expulsiones.",
+      "category": "Copa Mundial"
+    },
+    {
+      "id": "copa_mundial_es_046",
+      "question": "En 1974 el zaireño Mwepu Ilunga hizo algo desconcertante en una falta. ¿Qué?",
+      "answers": [
+        {
+          "text": "Salió de la barrera y despejó el balón antes del lanzamiento",
+          "correct": true
+        },
+        {
+          "text": "Se sentó en el suelo dentro de la barrera",
+          "correct": false
+        },
+        {
+          "text": "Cogió el balón y se lo entregó al árbitro",
+          "correct": false
+        }
+      ],
+      "difficulty": "medium",
+      "fun_fact": "Años después explicó que conocía perfectamente las reglas y que perdía tiempo a propósito.",
+      "category": "Copa Mundial"
+    },
+    {
+      "id": "copa_mundial_es_047",
+      "question": "En 1970 el portero inglés Gordon Banks se perdió los cuartos de final por...",
+      "answers": [
+        {
+          "text": "Una indigestión",
+          "correct": true
+        },
+        {
+          "text": "Un accidente de coche camino del estadio",
+          "correct": false
+        },
+        {
+          "text": "Perder el pasaporte",
+          "correct": false
+        }
+      ],
+      "difficulty": "medium",
+      "fun_fact": "Inglaterra ganaba 2-0 con el suplente en la portería y acabó perdiendo 3-2 en la prórroga.",
+      "category": "Copa Mundial"
+    },
+    {
+      "id": "copa_mundial_es_048",
+      "question": "En 1994 el colombiano Andrés Escobar marcó en propia puerta ante Estados Unidos. ¿Qué ocurrió después?",
+      "answers": [
+        {
+          "text": "Lo asesinaron pocos días después de volver a casa",
+          "correct": true
+        },
+        {
+          "text": "Lo sancionaron de por vida",
+          "correct": false
+        },
+        {
+          "text": "Se retiró del fútbol de inmediato",
+          "correct": false
+        }
+      ],
+      "difficulty": "medium",
+      "fun_fact": "El autogol contribuyó a la eliminación de Colombia y lo mataron a tiros al poco de regresar el equipo.",
+      "category": "Copa Mundial"
+    },
+    {
+      "id": "copa_mundial_es_049",
+      "question": "El Brasil-Checoslovaquia de cuartos de 1938 fue tan violento que acabó con ¿cuántas expulsiones?",
+      "answers": [
+        {
+          "text": "Tres",
+          "correct": true
+        },
+        {
+          "text": "Ninguna",
+          "correct": false
+        },
+        {
+          "text": "Seis",
+          "correct": false
+        }
+      ],
+      "difficulty": "hard",
+      "fun_fact": "Se le conoce como «la batalla de Burdeos»: dos checoslovacos salieron con un brazo y una pierna rotos.",
+      "category": "Copa Mundial"
+    },
+    {
+      "id": "copa_mundial_es_050",
+      "question": "La final de 2010 entre España y Países Bajos batió un récord. ¿Cuál?",
+      "answers": [
+        {
+          "text": "El de tarjetas amarillas en una final",
+          "correct": true
+        },
+        {
+          "text": "El de goles en una final",
+          "correct": false
+        },
+        {
+          "text": "El de la tanda de penaltis más larga",
+          "correct": false
+        }
+      ],
+      "difficulty": "medium",
+      "fun_fact": "El árbitro Howard Webb repartió catorce tarjetas, una de ellas roja, en una final recordada por una patada voladora al pecho de Xabi Alonso.",
+      "category": "Copa Mundial"
+    },
+    {
+      "id": "copa_mundial_es_051",
+      "question": "En la semifinal de 1982, Francia ganaba 3-1 a Alemania Federal en la prórroga. ¿Cómo terminó?",
+      "answers": [
+        {
+          "text": "En los penaltis, tras el 3-3",
+          "correct": true
+        },
+        {
+          "text": "Con un cuarto gol alemán en el último minuto",
+          "correct": false
+        },
+        {
+          "text": "Con un gol anulado a Francia",
+          "correct": false
+        }
+      ],
+      "difficulty": "medium",
+      "fun_fact": "Antes, el portero Schumacher había derribado a Battiston con tal violencia que le costó dos dientes, y no se pitó ni falta.",
+      "category": "Copa Mundial"
+    },
+    {
+      "id": "copa_mundial_es_052",
+      "question": "La final de 2018 entre Francia y Croacia tuvo una primicia. ¿Cuál?",
+      "answers": [
+        {
+          "text": "El primer gol en propia puerta en una final",
+          "correct": true
+        },
+        {
+          "text": "La primera final decidida en los penaltis",
+          "correct": false
+        },
+        {
+          "text": "La primera final bajo techo",
+          "correct": false
+        }
+      ],
+      "difficulty": "easy",
+      "fun_fact": "También se señaló el primer penalti por videoarbitraje en una final.",
+      "category": "Copa Mundial"
+    },
+    {
+      "id": "copa_mundial_es_053",
+      "question": "En 1998 David Beckham fue expulsado ante Argentina por...",
+      "answers": [
+        {
+          "text": "Dar una patada desde el suelo a un rival",
+          "correct": true
+        },
+        {
+          "text": "Simular un penalti",
+          "correct": false
+        },
+        {
+          "text": "Discutir un saque de banda",
+          "correct": false
+        }
+      ],
+      "difficulty": "easy",
+      "fun_fact": "Inglaterra cayó en los penaltis y él tardó años en recuperar el cariño de su país.",
+      "category": "Copa Mundial"
+    },
+    {
+      "id": "copa_mundial_es_054",
+      "question": "En 1974 el primer gol de un partido llegó de penalti antes de que un equipo tocara el balón. ¿Cuál lo encajó?",
+      "answers": [
+        {
+          "text": "Alemania Federal, ante Países Bajos",
+          "correct": true
+        },
+        {
+          "text": "Brasil, ante Yugoslavia",
+          "correct": false
+        },
+        {
+          "text": "Italia, ante Polonia",
+          "correct": false
+        }
+      ],
+      "difficulty": "hard",
+      "fun_fact": "Los neerlandeses encadenaron dieciséis pases desde el saque inicial hasta que los derribaron en el área. Ningún alemán había tocado el balón.",
+      "category": "Copa Mundial"
+    },
+    {
+      "id": "copa_mundial_es_055",
+      "question": "¿Qué anfitrión cayó en la fase de grupos de su propio Mundial en 2010?",
+      "answers": [
+        {
+          "text": "Sudáfrica",
+          "correct": true
+        },
+        {
+          "text": "Francia",
+          "correct": false
+        },
+        {
+          "text": "México",
+          "correct": false
+        }
+      ],
+      "difficulty": "easy",
+      "fun_fact": "Sigue siendo el único anfitrión que no ha superado la primera fase.",
+      "category": "Copa Mundial"
+    },
+    {
+      "id": "copa_mundial_es_056",
+      "question": "¿Quién eliminó a Alemania, campeona vigente, en la fase de grupos de 2018?",
+      "answers": [
+        {
+          "text": "Corea del Sur",
+          "correct": true
+        },
+        {
+          "text": "Suecia",
+          "correct": false
+        },
+        {
+          "text": "Suiza",
+          "correct": false
+        }
+      ],
+      "difficulty": "easy",
+      "fun_fact": "Fue la eliminación más temprana de Alemania en ochenta años, y los coreanos tampoco pasaron de ronda.",
+      "category": "Copa Mundial"
+    },
+    {
+      "id": "copa_mundial_es_057",
+      "question": "¿Qué selección ganó a Francia, campeona vigente, en el partido inaugural de 2002?",
+      "answers": [
+        {
+          "text": "Senegal",
+          "correct": true
+        },
+        {
+          "text": "Camerún",
+          "correct": false
+        },
+        {
+          "text": "Nigeria",
+          "correct": false
+        }
+      ],
+      "difficulty": "medium",
+      "fun_fact": "Muchos de aquellos senegaleses se habían criado en Francia. Los franceses se fueron en la primera fase sin marcar un solo gol.",
+      "category": "Copa Mundial"
+    },
+    {
+      "id": "copa_mundial_es_058",
+      "question": "¿Qué campeón vigente se negó a jugar el Mundial siguiente, en 1934?",
+      "answers": [
+        {
+          "text": "Uruguay",
+          "correct": true
+        },
+        {
+          "text": "Italia",
+          "correct": false
+        },
+        {
+          "text": "Argentina",
+          "correct": false
+        }
+      ],
+      "difficulty": "hard",
+      "fun_fact": "Se lo tomó como respuesta al desprecio europeo de 1930. Es el único campeón que no ha defendido su título.",
+      "category": "Copa Mundial"
+    },
+    {
+      "id": "copa_mundial_es_059",
+      "question": "¿Qué anfitrión llegó a semifinales en 2002 compartiendo la sede con Japón?",
+      "answers": [
+        {
+          "text": "Corea del Sur",
+          "correct": true
+        },
+        {
+          "text": "China",
+          "correct": false
+        },
+        {
+          "text": "Australia",
+          "correct": false
+        }
+      ],
+      "difficulty": "easy",
+      "fun_fact": "Eliminó a Italia y a España camino de un cuarto puesto, su mejor resultado.",
+      "category": "Copa Mundial"
+    },
+    {
+      "id": "copa_mundial_es_060",
+      "question": "¿Qué país ha estado en todos los Mundiales masculinos?",
+      "answers": [
+        {
+          "text": "Brasil",
+          "correct": true
+        },
+        {
+          "text": "Alemania",
+          "correct": false
+        },
+        {
+          "text": "Italia",
+          "correct": false
+        }
+      ],
+      "difficulty": "easy",
+      "fun_fact": "Alemania e Italia han faltado alguna vez; Brasil no se ha perdido ninguno desde 1930.",
+      "category": "Copa Mundial"
+    },
+    {
+      "id": "copa_mundial_es_061",
+      "question": "¿Qué tetracampeón se quedó fuera del Mundial de 2018?",
+      "answers": [
+        {
+          "text": "Italia",
+          "correct": true
+        },
+        {
+          "text": "España",
+          "correct": false
+        },
+        {
+          "text": "Inglaterra",
+          "correct": false
+        }
+      ],
+      "difficulty": "medium",
+      "fun_fact": "Rompió una racha de catorce participaciones seguidas: no faltaba desde hacía sesenta años.",
+      "category": "Copa Mundial"
+    },
+    {
+      "id": "copa_mundial_es_062",
+      "question": "¿Qué selección caribeña se clasificó para el Mundial de 1998?",
+      "answers": [
+        {
+          "text": "Jamaica",
+          "correct": true
+        },
+        {
+          "text": "Cuba",
+          "correct": false
+        },
+        {
+          "text": "Haití",
+          "correct": false
+        }
+      ],
+      "difficulty": "medium",
+      "fun_fact": "Los «Reggae Boyz» fueron el primer país caribeño de habla inglesa en llegar a un Mundial, y ganaron a Japón.",
+      "category": "Copa Mundial"
+    },
+    {
+      "id": "copa_mundial_es_063",
+      "question": "¿Qué selección africana llegó a cuartos de final en 1990 empujada por un delantero de 38 años?",
+      "answers": [
+        {
+          "text": "Camerún",
+          "correct": true
+        },
+        {
+          "text": "Egipto",
+          "correct": false
+        },
+        {
+          "text": "Marruecos",
+          "correct": false
+        }
+      ],
+      "difficulty": "medium",
+      "fun_fact": "Roger Milla volvió de su retirada y marcó cuatro goles en el torneo.",
+      "category": "Copa Mundial"
+    },
+    {
+      "id": "copa_mundial_es_064",
+      "question": "¿Qué país, con menos de 350.000 habitantes, se clasificó para el Mundial de 2018?",
+      "answers": [
+        {
+          "text": "Islandia",
+          "correct": true
+        },
+        {
+          "text": "Montenegro",
+          "correct": false
+        },
+        {
+          "text": "Luxemburgo",
+          "correct": false
+        }
+      ],
+      "difficulty": "easy",
+      "fun_fact": "Su seleccionador compaginó durante años el banquillo con la consulta dental, y varios jugadores tenían un empleo normal.",
+      "category": "Copa Mundial"
+    },
+    {
+      "id": "copa_mundial_es_065",
+      "question": "En 1966 una selección disputó su único Mundial y eliminó a Italia. ¿Cuál?",
+      "answers": [
+        {
+          "text": "Corea del Norte",
+          "correct": true
+        },
+        {
+          "text": "Bulgaria",
+          "correct": false
+        },
+        {
+          "text": "Rumanía",
+          "correct": false
+        }
+      ],
+      "difficulty": "hard",
+      "fun_fact": "En cuartos llegó a ganar 3-0 a Portugal antes de que Eusébio marcara cuatro goles y le diera la vuelta al partido.",
+      "category": "Copa Mundial"
+    },
+    {
+      "id": "copa_mundial_es_066",
+      "question": "¿Qué selección africana llegó por primera vez a unas semifinales, en 2022?",
+      "answers": [
+        {
+          "text": "Marruecos",
+          "correct": true
+        },
+        {
+          "text": "Ghana",
+          "correct": false
+        },
+        {
+          "text": "Nigeria",
+          "correct": false
+        }
+      ],
+      "difficulty": "easy",
+      "fun_fact": "Eliminó a España y a Portugal. Fue la primera vez para un país africano y también para un país árabe.",
+      "category": "Copa Mundial"
+    },
+    {
+      "id": "copa_mundial_es_067",
+      "question": "¿Qué país volvió a un Mundial en 2006 después de 32 años sin clasificarse?",
+      "answers": [
+        {
+          "text": "Australia",
+          "correct": true
+        },
+        {
+          "text": "Angola",
+          "correct": false
+        },
+        {
+          "text": "Ucrania",
+          "correct": false
+        }
+      ],
+      "difficulty": "medium",
+      "fun_fact": "Poco después dejó Oceanía por la confederación asiática, donde clasificarse resultaba menos improbable.",
+      "category": "Copa Mundial"
+    },
+    {
+      "id": "copa_mundial_es_068",
+      "question": "¿Qué país jugó su primera final en 2018 tras eliminar a Inglaterra en semifinales?",
+      "answers": [
+        {
+          "text": "Croacia",
+          "correct": true
+        },
+        {
+          "text": "Bélgica",
+          "correct": false
+        },
+        {
+          "text": "Rusia",
+          "correct": false
+        }
+      ],
+      "difficulty": "easy",
+      "fun_fact": "Jugó tres eliminatorias seguidas con prórroga: casi un partido entero de más antes de la final.",
+      "category": "Copa Mundial"
+    },
+    {
+      "id": "copa_mundial_es_069",
+      "question": "¿Qué selección terminó invicta el Mundial de 2010 y aun así no pasó de la fase de grupos?",
+      "answers": [
+        {
+          "text": "Nueva Zelanda",
+          "correct": true
+        },
+        {
+          "text": "Suiza",
+          "correct": false
+        },
+        {
+          "text": "Eslovenia",
+          "correct": false
+        }
+      ],
+      "difficulty": "medium",
+      "fun_fact": "Tres empates: se adelantó a la campeona Italia a los siete minutos y rescató a Eslovaquia en el descuento.",
+      "category": "Copa Mundial"
+    },
+    {
+      "id": "copa_mundial_es_070",
+      "question": "¿Qué ocurre con el trofeo de oro que levanta el campeón?",
+      "answers": [
+        {
+          "text": "Lo devuelve y se queda una réplica",
+          "correct": true
+        },
+        {
+          "text": "Se lo queda para siempre",
+          "correct": false
+        },
+        {
+          "text": "Se funde y se refunde tras cada torneo",
+          "correct": false
+        }
+      ],
+      "difficulty": "easy",
+      "fun_fact": "Desde 1974 el trofeo es propiedad de la FIFA: el campeón se lleva a casa una réplica de bronce bañada en oro.",
+      "category": "Copa Mundial"
+    },
+    {
+      "id": "copa_mundial_es_071",
+      "question": "¿Hasta qué año queda sitio para grabar campeones en la base del trofeo actual?",
+      "answers": [
+        {
+          "text": "2038",
+          "correct": true
+        },
+        {
+          "text": "2026",
+          "correct": false
+        },
+        {
+          "text": "2050",
+          "correct": false
+        }
+      ],
+      "difficulty": "medium",
+      "fun_fact": "Caben diecisiete placas. Cuando se llene la última habrá que rediseñar la base o encargar un trofeo nuevo.",
+      "category": "Copa Mundial"
+    },
+    {
+      "id": "copa_mundial_es_072",
+      "question": "Aunque lo parezca, el trofeo del Mundial no es macizo. ¿Por qué?",
+      "answers": [
+        {
+          "text": "La parte superior es hueca para que se pueda levantar",
+          "correct": true
+        },
+        {
+          "text": "Es oro de 18 quilates de arriba abajo",
+          "correct": false
+        },
+        {
+          "text": "Las figuras son latón dorado, no oro",
+          "correct": false
+        }
+      ],
+      "difficulty": "medium",
+      "fun_fact": "Pesa unos 6,1 kilos. Macizo rondaría los 70 u 80: nadie lo levantaría con una mano.",
+      "category": "Copa Mundial"
+    },
+    {
+      "id": "copa_mundial_es_073",
+      "question": "Durante la Segunda Guerra Mundial, el primer trofeo pasó una temporada en una caja de zapatos debajo de una cama. ¿De quién?",
+      "answers": [
+        {
+          "text": "De un dirigente italiano de la FIFA",
+          "correct": true
+        },
+        {
+          "text": "De un empleado de la federación brasileña",
+          "correct": false
+        },
+        {
+          "text": "De un guardia de seguridad suizo",
+          "correct": false
+        }
+      ],
+      "difficulty": "medium",
+      "fun_fact": "Ottorino Barassi lo sacó de la caja fuerte de un banco y lo escondió en su casa de Roma para que no lo requisaran.",
+      "category": "Copa Mundial"
+    },
+    {
+      "id": "copa_mundial_es_074",
+      "question": "El Jules Rimet acabó en manos de Brasil para siempre. ¿Qué fue de él?",
+      "answers": [
+        {
+          "text": "Lo robaron en 1983 y nunca apareció",
+          "correct": true
+        },
+        {
+          "text": "Se expone hoy en un museo de Río",
+          "correct": false
+        },
+        {
+          "text": "Volvió a la FIFA tras un pleito",
+          "correct": false
+        }
+      ],
+      "difficulty": "medium",
+      "fun_fact": "Desapareció de la sede de la federación brasileña y se da por hecho que lo fundieron.",
+      "category": "Copa Mundial"
+    },
+    {
+      "id": "copa_mundial_es_075",
+      "question": "Durante buena parte de la historia del Mundial, ¿quién ponía el balón?",
+      "answers": [
+        {
+          "text": "El fabricante que eligiera el país anfitrión",
+          "correct": true
+        },
+        {
+          "text": "Adidas, desde el primer torneo",
+          "correct": false
+        },
+        {
+          "text": "La propia FIFA, que los fabricaba en Suiza",
+          "correct": false
+        }
+      ],
+      "difficulty": "medium",
+      "fun_fact": "Adidas es proveedor exclusivo desde 1970. Antes lo ponía la sede, y en 1930 los finalistas ni siquiera se pusieron de acuerdo.",
+      "category": "Copa Mundial"
+    },
+    {
+      "id": "copa_mundial_es_076",
+      "question": "El Jabulani de 2010 se hizo famoso entre los jugadores por una razón. ¿Cuál?",
+      "answers": [
+        {
+          "text": "Su trayectoria imprevisible en el aire",
+          "correct": true
+        },
+        {
+          "text": "Su peso excesivo",
+          "correct": false
+        },
+        {
+          "text": "Que se desinflaba en pleno partido",
+          "correct": false
+        }
+      ],
+      "difficulty": "easy",
+      "fun_fact": "La superficie demasiado lisa provocaba un efecto de nudillo; la NASA llegó a estudiar su aerodinámica.",
+      "category": "Copa Mundial"
+    },
+    {
+      "id": "copa_mundial_es_077",
+      "question": "El balón de 2022 llevaba dentro algo que ningún balón había llevado antes. ¿Qué?",
+      "answers": [
+        {
+          "text": "Un sensor de movimiento que enviaba datos 500 veces por segundo",
+          "correct": true
+        },
+        {
+          "text": "Un GPS antirrobo",
+          "correct": false
+        },
+        {
+          "text": "Una cámara diminuta entre las costuras",
+          "correct": false
+        }
+      ],
+      "difficulty": "medium",
+      "fun_fact": "Servía para fijar el instante exacto del golpeo y afinar así los fueras de juego.",
+      "category": "Copa Mundial"
+    },
+    {
+      "id": "copa_mundial_es_078",
+      "question": "La mascota de México 1986 era un jalapeño. ¿Qué llevaba puesto?",
+      "answers": [
+        {
+          "text": "Bigote y sombrero",
+          "correct": true
+        },
+        {
+          "text": "Un color que cambiaba con el calor",
+          "correct": false
+        },
+        {
+          "text": "Nada: fue la primera mascota sin cara",
+          "correct": false
+        }
+      ],
+      "difficulty": "easy",
+      "fun_fact": "Se llamaba Pique, por «picante».",
+      "category": "Copa Mundial"
+    },
+    {
+      "id": "copa_mundial_es_079",
+      "question": "En 2010 el sonido del Mundial fue uno muy concreto. ¿Cuál?",
+      "answers": [
+        {
+          "text": "El zumbido de las vuvuzelas",
+          "correct": true
+        },
+        {
+          "text": "Un silbido sincronizado entre gol y gol",
+          "correct": false
+        },
+        {
+          "text": "Un redoble continuo de tambores",
+          "correct": false
+        }
+      ],
+      "difficulty": "easy",
+      "fun_fact": "Ciento veinte decibelios constantes. Las televisiones tuvieron que inventar filtros de audio y algunos jugadores decían no oír a sus compañeros.",
+      "category": "Copa Mundial"
+    },
+    {
+      "id": "copa_mundial_es_080",
+      "question": "¿Qué árbitro perdió el control de la «batalla de Santiago» de 1962 entre Chile e Italia?",
+      "answers": [
+        {
+          "text": "El inglés Ken Aston",
+          "correct": true
+        },
+        {
+          "text": "Un dirigente de la FIFA que abandonó el partido",
+          "correct": false
+        },
+        {
+          "text": "Un árbitro chileno sancionado después de por vida",
+          "correct": false
+        }
+      ],
+      "difficulty": "hard",
+      "fun_fact": "Necesitó a la policía para sacar del campo a dos italianos. De aquella tarde salió, años después, la idea de las tarjetas.",
+      "category": "Copa Mundial"
+    },
+    {
+      "id": "copa_mundial_es_081",
+      "question": "¿Qué objeto cotidiano inspiró las tarjetas amarilla y roja?",
+      "answers": [
+        {
+          "text": "Un semáforo",
+          "correct": true
+        },
+        {
+          "text": "Una baraja de póquer",
+          "correct": false
+        },
+        {
+          "text": "Los banderines de las esquinas de un ring",
+          "correct": false
+        }
+      ],
+      "difficulty": "easy",
+      "fun_fact": "Amarillo para avisar, rojo para parar. Se estrenaron en el Mundial de 1970.",
+      "category": "Copa Mundial"
+    },
+    {
+      "id": "copa_mundial_es_082",
+      "question": "La regla del «gol de oro», que acababa el partido con el primer tanto de la prórroga, se usó en ¿cuántos Mundiales?",
+      "answers": [
+        {
+          "text": "Solo en dos",
+          "correct": true
+        },
+        {
+          "text": "Sigue vigente hoy",
+          "correct": false
+        },
+        {
+          "text": "Durante más de cuarenta años",
+          "correct": false
+        }
+      ],
+      "difficulty": "medium",
+      "fun_fact": "En 1998 y 2002. Se suprimió en 2004 porque volvía a los equipos aún más prudentes de lo que ya eran.",
+      "category": "Copa Mundial"
+    },
+    {
+      "id": "copa_mundial_es_083",
+      "question": "En el primer partido de la historia de los Mundiales, ¿qué llamaría hoy la atención del árbitro?",
+      "answers": [
+        {
+          "text": "Iba con chaqueta y corbata, no con equipación",
+          "correct": true
+        },
+        {
+          "text": "No había árbitro, solo los dos capitanes",
+          "correct": false
+        },
+        {
+          "text": "El árbitro jugaba como un futbolista más",
+          "correct": false
+        }
+      ],
+      "difficulty": "hard",
+      "fun_fact": "Los uniformes arbitrales tal y como los conocemos llegaron mucho después.",
+      "category": "Copa Mundial"
+    },
+    {
+      "id": "copa_mundial_es_084",
+      "question": "¿Cuántos cambios podía hacer un equipo en los primeros Mundiales?",
+      "answers": [
+        {
+          "text": "Ninguno: no se permitían",
+          "correct": true
+        },
+        {
+          "text": "Exactamente uno por partido",
+          "correct": false
+        },
+        {
+          "text": "Los que quisiera, como en un amistoso",
+          "correct": false
+        }
+      ],
+      "difficulty": "medium",
+      "fun_fact": "Hasta 1970 el lesionado aguantaba como podía o su equipo jugaba con uno menos el resto del partido.",
+      "category": "Copa Mundial"
+    },
+    {
+      "id": "copa_mundial_es_085",
+      "question": "¿Qué selección ganó el Mundial de 1978 como anfitriona?",
+      "answers": [
+        {
+          "text": "Argentina",
+          "correct": true
+        },
+        {
+          "text": "Brasil",
+          "correct": false
+        },
+        {
+          "text": "Países Bajos",
+          "correct": false
+        }
+      ],
+      "difficulty": "easy",
+      "fun_fact": "Ganó la final 3-1 en la prórroga ante Países Bajos, que perdía así su segunda final consecutiva.",
+      "category": "Copa Mundial"
+    },
+    {
+      "id": "copa_mundial_es_086",
+      "question": "¿Qué selección ganó su primer Mundial en 2010?",
+      "answers": [
+        {
+          "text": "España",
+          "correct": true
+        },
+        {
+          "text": "Países Bajos",
+          "correct": false
+        },
+        {
+          "text": "Alemania",
+          "correct": false
+        }
+      ],
+      "difficulty": "easy",
+      "fun_fact": "Un gol de Iniesta en la prórroga. España había perdido su primer partido del torneo ante Suiza.",
+      "category": "Copa Mundial"
+    },
+    {
+      "id": "copa_mundial_es_087",
+      "question": "¿Qué país organizó el Mundial de 1962?",
+      "answers": [
+        {
+          "text": "Chile",
+          "correct": true
+        },
+        {
+          "text": "Perú",
+          "correct": false
+        },
+        {
+          "text": "Colombia",
+          "correct": false
+        }
+      ],
+      "difficulty": "medium",
+      "fun_fact": "Se jugó dos años después del terremoto de Valdivia, el más fuerte jamás registrado, y el país reconstruyó estadios a contrarreloj.",
+      "category": "Copa Mundial"
+    },
+    {
+      "id": "copa_mundial_es_088",
+      "question": "¿Qué selección centroamericana llegó a cuartos de final en 2014 sin perder un partido en los noventa minutos?",
+      "answers": [
+        {
+          "text": "Costa Rica",
+          "correct": true
+        },
+        {
+          "text": "Honduras",
+          "correct": false
+        },
+        {
+          "text": "Panamá",
+          "correct": false
+        }
+      ],
+      "difficulty": "medium",
+      "fun_fact": "Dejó atrás a Uruguay, Italia e Inglaterra en el grupo y cayó ante Países Bajos en los penaltis.",
+      "category": "Copa Mundial"
+    },
+    {
+      "id": "copa_mundial_es_089",
+      "question": "¿Qué selección ganó los Mundiales de 1934 y 1938?",
+      "answers": [
+        {
+          "text": "Italia",
+          "correct": true
+        },
+        {
+          "text": "Brasil",
+          "correct": false
+        },
+        {
+          "text": "Uruguay",
+          "correct": false
+        }
+      ],
+      "difficulty": "easy",
+      "fun_fact": "Es, junto a Brasil en 1958 y 1962, la única que ha ganado dos Mundiales seguidos.",
+      "category": "Copa Mundial"
+    },
+    {
+      "id": "copa_mundial_es_090",
+      "question": "¿Cómo se conoce la derrota de Brasil ante Uruguay en 1950?",
+      "answers": [
+        {
+          "text": "El Maracanazo",
+          "correct": true
+        },
+        {
+          "text": "El Mineirazo",
+          "correct": false
+        },
+        {
+          "text": "La batalla de Río",
+          "correct": false
+        }
+      ],
+      "difficulty": "easy",
+      "fun_fact": "La palabra pasó al lenguaje común: hoy se usa para cualquier derrota inesperada jugando en casa.",
+      "category": "Copa Mundial"
+    },
+    {
+      "id": "copa_mundial_es_091",
+      "question": "¿Qué nombre recibió el 7-1 de Alemania a Brasil en 2014?",
+      "answers": [
+        {
+          "text": "El Mineirazo",
+          "correct": true
+        },
+        {
+          "text": "El Maracanazo",
+          "correct": false
+        },
+        {
+          "text": "El Estadiazo",
+          "correct": false
+        }
+      ],
+      "difficulty": "medium",
+      "fun_fact": "Se jugó en el Mineirão de Belo Horizonte. Alemania marcó cuatro goles en seis minutos.",
+      "category": "Copa Mundial"
+    },
+    {
+      "id": "copa_mundial_es_092",
+      "question": "¿Qué estadio ha albergado dos finales de un Mundial?",
+      "answers": [
+        {
+          "text": "El Estadio Azteca",
+          "correct": true
+        },
+        {
+          "text": "El Maracaná",
+          "correct": false
+        },
+        {
+          "text": "Wembley",
+          "correct": false
+        }
+      ],
+      "difficulty": "easy",
+      "fun_fact": "Las de 1970 y 1986, las dos en Ciudad de México.",
+      "category": "Copa Mundial"
+    },
+    {
+      "id": "copa_mundial_es_093",
+      "question": "¿Qué selección ganó el Mundial de 2022?",
+      "answers": [
+        {
+          "text": "Argentina",
+          "correct": true
+        },
+        {
+          "text": "Francia",
+          "correct": false
+        },
+        {
+          "text": "Croacia",
+          "correct": false
+        }
+      ],
+      "difficulty": "easy",
+      "fun_fact": "Ganó en los penaltis tras un 3-3 en el que Messi marcó dos veces.",
+      "category": "Copa Mundial"
+    },
+    {
+      "id": "copa_mundial_es_094",
+      "question": "¿Qué jugador colombiano marcó el gol elegido mejor del Mundial de 2014?",
+      "answers": [
+        {
+          "text": "James Rodríguez",
+          "correct": true
+        },
+        {
+          "text": "Radamel Falcao",
+          "correct": false
+        },
+        {
+          "text": "Juan Cuadrado",
+          "correct": false
+        }
+      ],
+      "difficulty": "medium",
+      "fun_fact": "Un control con el pecho de espaldas y una volea desde fuera del área, ante Uruguay.",
+      "category": "Copa Mundial"
+    },
+    {
+      "id": "copa_mundial_es_095",
+      "question": "¿Tras cuántos años volvió Perú a un Mundial en 2018?",
+      "answers": [
+        {
+          "text": "36 años",
+          "correct": true
+        },
+        {
+          "text": "12 años",
+          "correct": false
+        },
+        {
+          "text": "24 años",
+          "correct": false
+        }
+      ],
+      "difficulty": "medium",
+      "fun_fact": "Su participación anterior había sido en España 1982.",
+      "category": "Copa Mundial"
+    },
+    {
+      "id": "copa_mundial_es_096",
+      "question": "¿Qué selección ganó el Mundial de 1966?",
+      "answers": [
+        {
+          "text": "Inglaterra",
+          "correct": true
+        },
+        {
+          "text": "Alemania Federal",
+          "correct": false
+        },
+        {
+          "text": "Portugal",
+          "correct": false
+        }
+      ],
+      "difficulty": "medium",
+      "fun_fact": "Su único título, con el 3-2 de la prórroga que todavía se discute: el balón no cruzó entero la línea en ninguna repetición conocida.",
+      "category": "Copa Mundial"
+    },
+    {
+      "id": "copa_mundial_es_097",
+      "question": "¿Qué país organizó el primer Mundial después de haber ganado el torneo olímpico de fútbol en 1924 y 1928?",
+      "answers": [
+        {
+          "text": "Uruguay",
+          "correct": true
+        },
+        {
+          "text": "Italia",
+          "correct": false
+        },
+        {
+          "text": "Hungría",
+          "correct": false
+        }
+      ],
+      "difficulty": "hard",
+      "fun_fact": "Aquellos dos oros pesaron en la decisión de la FIFA, y las estrellas de su escudo cuentan también esos títulos.",
+      "category": "Copa Mundial"
+    },
+    {
+      "id": "copa_mundial_es_098",
+      "question": "¿En qué Mundial se estrenó el videoarbitraje?",
+      "answers": [
+        {
+          "text": "2018 en Rusia",
+          "correct": true
+        },
+        {
+          "text": "2014 en Brasil",
+          "correct": false
+        },
+        {
+          "text": "2022 en Catar",
+          "correct": false
+        }
+      ],
+      "difficulty": "medium",
+      "fun_fact": "El primer penalti señalado con su ayuda llegó en el Francia-Australia de la primera jornada.",
+      "category": "Copa Mundial"
+    },
+    {
+      "id": "copa_mundial_es_099",
+      "question": "¿Qué selección ha perdido tres finales sin ganar ninguna?",
+      "answers": [
+        {
+          "text": "Países Bajos",
+          "correct": true
+        },
+        {
+          "text": "Hungría",
+          "correct": false
+        },
+        {
+          "text": "Suecia",
+          "correct": false
+        }
+      ],
+      "difficulty": "easy",
+      "fun_fact": "1974, 1978 y 2010. Las dos primeras las perdió contra el anfitrión.",
+      "category": "Copa Mundial"
+    },
+    {
+      "id": "copa_mundial_es_100",
+      "question": "¿En qué Mundial se usó por primera vez la tecnología en la línea de gol?",
+      "answers": [
+        {
+          "text": "2014 en Brasil",
+          "correct": true
+        },
+        {
+          "text": "2010 en Sudáfrica",
+          "correct": false
+        },
+        {
+          "text": "2018 en Rusia",
+          "correct": false
+        }
+      ],
+      "difficulty": "medium",
+      "fun_fact": "Llegó después del gol no concedido a Frank Lampard en 2010, que se vio en todo el mundo menos desde el banderín del juez de línea.",
+      "category": "Copa Mundial"
+    },
+    {
+      "id": "copa_mundial_es_101",
+      "question": "¿Qué selección jugó la final de 1954 después de haber perdido 8-3 contra ese mismo rival en la fase de grupos?",
+      "answers": [
+        {
+          "text": "Alemania Federal",
+          "correct": true
+        },
+        {
+          "text": "Hungría",
+          "correct": false
+        },
+        {
+          "text": "Austria",
+          "correct": false
+        }
+      ],
+      "difficulty": "hard",
+      "fun_fact": "Ganó la final 3-2 a una Hungría que llevaba cuatro años invicta. Se le llama «el milagro de Berna».",
+      "category": "Copa Mundial"
+    },
+    {
+      "id": "copa_mundial_es_102",
+      "question": "¿Para qué se construyó este estadio de Montevideo en 1930?",
+      "answers": [
+        {
+          "text": "Para el primer Mundial de fútbol",
+          "correct": true
+        },
+        {
+          "text": "Para los Juegos Olímpicos",
+          "correct": false
+        },
+        {
+          "text": "Para la primera Copa América",
+          "correct": false
+        }
+      ],
+      "difficulty": "medium",
+      "fun_fact": "El Centenario no estaba terminado cuando empezó el torneo: la lluvia retrasó la obra y los primeros partidos se jugaron en canchas más pequeñas de la ciudad.",
+      "category": "Copa Mundial",
+      "image_url": "/quizify/static/img/packs/worldcup/centenario-1930.webp",
+      "reveal_style": "progressive"
+    },
+    {
+      "id": "copa_mundial_es_103",
+      "question": "¿Cómo se llamaba este primer trofeo del Mundial?",
+      "answers": [
+        {
+          "text": "La Copa Jules Rimet",
+          "correct": true
+        },
+        {
+          "text": "La Copa Libertadores",
+          "correct": false
+        },
+        {
+          "text": "La Coppa Italia",
+          "correct": false
+        }
+      ],
+      "difficulty": "medium",
+      "fun_fact": "Brasil se lo quedó en 1970 tras su tercer título. Lo robaron en Río en 1983 y nunca apareció; se da por hecho que lo fundieron.",
+      "category": "Copa Mundial",
+      "image_url": "/quizify/static/img/packs/worldcup/jules-rimet-trophy.webp",
+      "reveal_style": "progressive"
+    },
+    {
+      "id": "copa_mundial_es_104",
+      "question": "¿Qué país organizó el torneo que anuncia este cartel?",
+      "answers": [
+        {
+          "text": "Brasil",
+          "correct": true
+        },
+        {
+          "text": "Argentina",
+          "correct": false
+        },
+        {
+          "text": "Portugal",
+          "correct": false
+        }
+      ],
+      "difficulty": "easy",
+      "fun_fact": "El Mundial de 1950 no tuvo final: lo decidió un cuadrangular, y que el último partido valiera el título fue casualidad del calendario.",
+      "category": "Copa Mundial",
+      "image_url": "/quizify/static/img/packs/worldcup/world-cup-poster-1950.webp",
+      "reveal_style": "progressive"
+    },
+    {
+      "id": "copa_mundial_es_105",
+      "question": "¿Qué momento de 1950 muestra esta fotografía?",
+      "answers": [
+        {
+          "text": "El gol decisivo del último partido del Mundial",
+          "correct": true
+        },
+        {
+          "text": "Un gol en propia puerta en el partido inaugural",
+          "correct": false
+        },
+        {
+          "text": "Un penalti en la semifinal",
+          "correct": false
+        }
+      ],
+      "difficulty": "hard",
+      "fun_fact": "Alcides Ghiggia marcó ante unas 200.000 personas. Años después decía que solo tres personas habían conseguido callar el Maracaná: Frank Sinatra, el Papa y él.",
+      "category": "Copa Mundial",
+      "image_url": "/quizify/static/img/packs/worldcup/maracana-1950.webp",
+      "reveal_style": "progressive"
+    },
+    {
+      "id": "copa_mundial_es_106",
+      "question": "Este equipo ganó el primer Mundial, en 1930. ¿De qué país era?",
+      "answers": [
+        {
+          "text": "Uruguay",
+          "correct": true
+        },
+        {
+          "text": "Argentina",
+          "correct": false
+        },
+        {
+          "text": "Brasil",
+          "correct": false
+        }
+      ],
+      "difficulty": "medium",
+      "fun_fact": "Era el anfitrión y el campeón olímpico vigente. Como la travesía duraba semanas en barco, solo se inscribieron cuatro selecciones europeas.",
+      "category": "Copa Mundial",
+      "image_url": "/quizify/static/img/packs/worldcup/uruguay-1930.webp",
+      "reveal_style": "progressive"
+    },
+    {
+      "id": "copa_mundial_es_107",
+      "question": "¿Cuántos años tenía Pelé cuando ganó el Mundial de 1958?",
+      "type": "estimate",
+      "answer": 17,
+      "min": 10,
+      "max": 50,
+      "unit": "años",
+      "difficulty": "easy",
+      "fun_fact": "Diecisiete años y 249 días. Marcó dos goles en la final ante Suecia y sigue siendo el campeón del mundo más joven.",
+      "category": "Copa Mundial"
+    },
+    {
+      "id": "copa_mundial_es_108",
+      "question": "¿Cuántas selecciones participaron en el primer Mundial, el de Uruguay 1930?",
+      "type": "estimate",
+      "answer": 13,
+      "min": 1,
+      "max": 50,
+      "unit": "selecciones",
+      "difficulty": "medium",
+      "fun_fact": "Trece, y ninguna tuvo que clasificarse: todas fueron invitadas. Solo cuatro europeas se subieron al barco.",
+      "category": "Copa Mundial"
+    },
+    {
+      "id": "copa_mundial_es_109",
+      "question": "¿Cuántos espectadores presenciaron el partido decisivo en el Maracaná en 1950?",
+      "type": "estimate",
+      "answer": 200000,
+      "min": 10000,
+      "max": 300000,
+      "unit": "espectadores",
+      "difficulty": "medium",
+      "fun_fact": "Unos 200.000, la mayor asistencia registrada en un partido de fútbol. Brasil perdió 2-1 y el estadio enmudeció.",
+      "category": "Copa Mundial"
+    },
+    {
+      "id": "copa_mundial_es_110",
+      "question": "¿Cuántos goles se marcaron en el partido más goleador de la historia de los Mundiales, el Austria-Suiza de 1954?",
+      "type": "estimate",
+      "answer": 12,
+      "min": 1,
+      "max": 30,
+      "unit": "goles",
+      "difficulty": "hard",
+      "fun_fact": "7-5 para Austria, con cuarenta grados en Lausana. El portero austriaco sufrió una insolación y después no recordaba haber jugado.",
+      "category": "Copa Mundial"
+    },
+    {
+      "id": "copa_mundial_es_111",
+      "question": "¿A los cuántos segundos se marcó el gol más rápido de la historia de los Mundiales?",
+      "type": "estimate",
+      "answer": 11,
+      "min": 1,
+      "max": 300,
+      "unit": "segundos",
+      "difficulty": "hard",
+      "fun_fact": "A los once segundos, obra de Hakan Şükür en el partido por el tercer puesto de 2002. Fue su único gol del torneo.",
+      "category": "Copa Mundial"
+    }
+  ]
+}
