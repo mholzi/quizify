@@ -1,7 +1,7 @@
 {
   "name": "Deportes",
   "language": "es",
-  "version": "1.1",
+  "version": "1.2",
   "theme": "sport",
   "questions": [
     {
@@ -2694,23 +2694,23 @@
     },
     {
       "id": "dep_es_129",
-      "question": "¿Cuántos jugadores de cada equipo hay en el agua en el waterpolo?",
+      "question": "¿Cuánto dura cada periodo en un partido olímpico de waterpolo?",
       "answers": [
         {
-          "text": "Siete",
+          "text": "Ocho minutos",
           "correct": true
         },
         {
-          "text": "Seis",
+          "text": "Seis minutos",
           "correct": false
         },
         {
-          "text": "Cinco",
+          "text": "Doce minutos",
           "correct": false
         }
       ],
-      "difficulty": "easy",
-      "fun_fact": "No pueden hacer pie: el reglamento exige piscinas de al menos dos metros de fondo.",
+      "difficulty": "medium",
+      "fun_fact": "Cuatro periodos de ocho minutos de juego efectivo. Nadie hace pie: el reglamento exige al menos dos metros de profundidad.",
       "category": "Deportes"
     },
     {
@@ -3158,9 +3158,18 @@
       "id": "dep_es_161",
       "question": "¿Qué prueba muestra esta foto de los Juegos Olímpicos de 1936?",
       "answers": [
-        {"text": "El salto de longitud", "correct": true},
-        {"text": "El salto con pértiga", "correct": false},
-        {"text": "Los 110 metros vallas", "correct": false}
+        {
+          "text": "El salto de longitud",
+          "correct": true
+        },
+        {
+          "text": "El salto con pértiga",
+          "correct": false
+        },
+        {
+          "text": "Los 110 metros vallas",
+          "correct": false
+        }
       ],
       "difficulty": "medium",
       "fun_fact": "Jesse Owens ganó cuatro medallas de oro en Berlín. En la longitud fue su rival alemán Luz Long quien le dio un consejo antes del último intento; los dos salieron del estadio del brazo.",
@@ -3172,9 +3181,18 @@
       "id": "dep_es_162",
       "question": "¿Qué boxeador aparece aquí?",
       "answers": [
-        {"text": "Joe Frazier", "correct": false},
-        {"text": "Muhammad Ali", "correct": true},
-        {"text": "George Foreman", "correct": false}
+        {
+          "text": "Joe Frazier",
+          "correct": false
+        },
+        {
+          "text": "Muhammad Ali",
+          "correct": true
+        },
+        {
+          "text": "George Foreman",
+          "correct": false
+        }
       ],
       "difficulty": "easy",
       "fun_fact": "Ali fue campeón olímpico en 1960 y tres veces campeón mundial de los pesados, y perdió por el camino tres años y medio de su mejor momento cuando le retiraron la licencia por negarse a ir a la guerra.",
@@ -3186,9 +3204,18 @@
       "id": "dep_es_163",
       "question": "¿Qué deporte se juega en esta foto de 1916?",
       "answers": [
-        {"text": "El críquet", "correct": false},
-        {"text": "El golf", "correct": false},
-        {"text": "El béisbol", "correct": true}
+        {
+          "text": "El críquet",
+          "correct": false
+        },
+        {
+          "text": "El golf",
+          "correct": false
+        },
+        {
+          "text": "El béisbol",
+          "correct": true
+        }
       ],
       "difficulty": "easy",
       "fun_fact": "Babe Ruth empezó como lanzador y solo después se convirtió en el bateador más famoso del deporte. Su traspaso de Boston a Nueva York sigue considerándose el más determinante de la historia del béisbol.",
@@ -3200,9 +3227,18 @@
       "id": "dep_es_164",
       "question": "¿Qué carrera ganó este hombre en 1920?",
       "answers": [
-        {"text": "El Tour de Francia", "correct": true},
-        {"text": "El maratón de Berlín", "correct": false},
-        {"text": "Las 24 Horas de Le Mans", "correct": false}
+        {
+          "text": "El Tour de Francia",
+          "correct": true
+        },
+        {
+          "text": "El maratón de Berlín",
+          "correct": false
+        },
+        {
+          "text": "Las 24 Horas de Le Mans",
+          "correct": false
+        }
       ],
       "difficulty": "medium",
       "fun_fact": "Philippe Thys ganó el Tour tres veces. Entonces los corredores no tenían asistencia: una avería era cosa suya, y un cuadro roto significaba caminar hasta la fragua más cercana.",
@@ -3214,9 +3250,18 @@
       "id": "dep_es_165",
       "question": "¿Qué deporte popularizó esta francesa en los años veinte?",
       "answers": [
-        {"text": "El hockey", "correct": false},
-        {"text": "El bádminton", "correct": false},
-        {"text": "El tenis", "correct": true}
+        {
+          "text": "El hockey",
+          "correct": false
+        },
+        {
+          "text": "El bádminton",
+          "correct": false
+        },
+        {
+          "text": "El tenis",
+          "correct": true
+        }
       ],
       "difficulty": "medium",
       "fun_fact": "Suzanne Lenglen perdió exactamente un partido entre 1919 y 1926. Jugaba con falda hasta la pantorrilla, sin corsé y con los antebrazos al aire: para el público de 1920, casi tan llamativo como sus golpes.",
