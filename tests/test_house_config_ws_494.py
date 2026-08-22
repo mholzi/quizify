@@ -323,7 +323,7 @@ def test_unwired_consumers_are_a_noop(handler) -> None:
 @pytest.mark.asyncio
 async def test_configure_house_is_admin_gated(handler, game) -> None:
     """A non-admin socket must never reconfigure the host's lights: the frame is
-    rejected with "Admin only" and no consumer is touched."""
+    rejected with ``ADMIN_REQUIRED`` and no consumer is touched."""
     admin_ws = _ws()
     handler._conn.add_connection(admin_ws, is_admin=True, is_dashboard=False)
     game.add_player("Host", admin_ws)
@@ -340,7 +340,7 @@ async def test_configure_house_is_admin_gated(handler, game) -> None:
     )
 
     handler._conn.send_error.assert_awaited()
-    assert handler._conn.send_error.await_args.args[2] == "Admin only"
+    assert handler._conn.send_error.await_args.args[1] == "ADMIN_REQUIRED"
     handler._party_lights.configure.assert_not_called()
     handler._sound_effects.configure.assert_not_called()
     handler._event_emitter.configure.assert_not_called()

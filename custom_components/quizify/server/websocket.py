@@ -17,6 +17,7 @@ from custom_components.quizify.const import (
     ERR_GAME_ALREADY_STARTED,
     ERR_GAME_FULL,
     ERR_GAME_NOT_STARTED,
+    ERR_ADMIN_REQUIRED,
     ERR_INVALID_ACTION,
     ERR_NAME_INVALID,
     ERR_NAME_TAKEN,
@@ -539,7 +540,9 @@ class QuizifyWebSocketHandler:
             # and idempotent — it can only return the game to its initial
             # state, never escalate privilege — so this cannot be abused.
             if not self._is_reset_authorized(ws, is_admin, game_state):
-                await self._conn.send_error(ws, ERR_INVALID_ACTION, "Admin only")
+                await self._conn.send_error(
+                    ws, ERR_ADMIN_REQUIRED, "This connection is not the host"
+                )
                 return
             await self._handle_reset_game(ws, game_state)
             return
@@ -560,7 +563,14 @@ class QuizifyWebSocketHandler:
             # admin (admin tab via ?role=admin) OR a player whose session has
             # is_admin=True (admin-as-player flow). Without that relaxation the
             # admin-as-player flow could never advance LOBBY → QUESTION_ACTIVE.
-            await self._conn.send_error(ws, ERR_INVALID_ACTION, "Admin only")
+            _LOGGER.warning(
+                "Refused admin command %s from a connection without the admin "
+                "role — the client is told, not just ignored (#586)",
+                msg_type,
+            )
+            await self._conn.send_error(
+                ws, ERR_ADMIN_REQUIRED, "This connection is not the host"
+            )
             return
 
         # Every handler in ``_DISPATCH`` is normalized to the uniform

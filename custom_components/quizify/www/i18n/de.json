@@ -604,7 +604,8 @@
     "INVALID_FORMAT": "Das Pack-Format ist ungültig. Prüfe die markierten Felder.",
     "RATE_LIMITED": "Zu viele Einsendungen. Bitte kurz warten und erneut versuchen.",
     "GITHUB_ERROR": "Der Einsende-Dienst ist gerade nicht erreichbar. Später erneut versuchen.",
-    "SUBMIT_DISABLED": "Pack-Einsendung ist nicht konfiguriert."
+    "SUBMIT_DISABLED": "Pack-Einsendung ist nicht konfiguriert.",
+    "ADMIN_REQUIRED": "Dieses Fenster ist nicht der Host — der Befehl wurde abgelehnt. Öffne das Admin-Fenster erneut über Home Assistant."
   },
   "page": {
     "titleAdmin": "Quizify — Admin",

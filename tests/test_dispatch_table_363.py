@@ -13,7 +13,7 @@ This must be strictly behaviour-preserving. These tests pin:
   3. ``admin_connect`` / ``reset_game`` are NOT in the table (special paths).
   4. An unknown type is rejected with "Unknown message type" and reaches no
      handler.
-  5. Admin-required types are rejected with "Admin only" for a non-admin
+  5. Admin-required types are rejected with ``ADMIN_REQUIRED`` for a non-admin
      connection and never reach their handler.
 """
 
@@ -209,5 +209,5 @@ async def test_admin_required_rejected_without_admin(
     await h._handle_message(rogue_ws, {"type": msg_type}, is_admin=False)
 
     errs = h._errors.get(id(rogue_ws), [])  # type: ignore[attr-defined]
-    assert errs and errs[-1]["message"] == "Admin only"
+    assert errs and errs[-1]["code"] == "ADMIN_REQUIRED"
     assert all(spy.await_count == 0 for spy in spies.values())

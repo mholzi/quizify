@@ -604,7 +604,8 @@
     "INVALID_FORMAT": "El formato del paquete no es válido. Revisa los campos resaltados.",
     "RATE_LIMITED": "Demasiados envíos. Espera un momento e inténtalo de nuevo.",
     "GITHUB_ERROR": "El servicio de envío no está disponible ahora mismo. Inténtalo más tarde.",
-    "SUBMIT_DISABLED": "El envío de paquetes no está configurado."
+    "SUBMIT_DISABLED": "El envío de paquetes no está configurado.",
+    "ADMIN_REQUIRED": "Esta ventana no es la del anfitrión: el comando fue rechazado. Vuelve a abrir la ventana de administración desde Home Assistant."
   },
   "page": {
     "titleAdmin": "Quizify — Administración",
