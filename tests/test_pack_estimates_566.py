@@ -60,7 +60,7 @@ ESTIMATE_SETS: tuple[EstimateSet, ...] = (
     EstimateSet(theme="technology", packs=("technik-de", "tech-en", "tecnologia-es")),
     EstimateSet(theme="food", packs=("essen-de", "food-en", "comida-es")),
     EstimateSet(theme="sport", packs=("sport-de", "sport-en", "deportes-es")),
-    EstimateSet(theme="world-cup", packs=("weltmeisterschaft", "world-cup")),
+    EstimateSet(theme="world-cup", packs=("weltmeisterschaft", "world-cup", "copa-mundial-es")),
     EstimateSet(theme="music", packs=("musik-de", "music-en", "musica-es")),
     EstimateSet(theme="pop-culture", packs=("popkultur", "pop-culture", "cultura-pop-es")),
 )
