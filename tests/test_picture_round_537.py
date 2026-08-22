@@ -19,7 +19,7 @@ QUESTIONS = COMPONENT / "questions"
 IMAGES = COMPONENT / "www" / "img" / "packs" / "picture-round"
 PREFIX = "/quizify/static/img/packs/picture-round/"
 
-PACKS = ("bilderraetsel-de.json", "picture-round-en.json")
+PACKS = ("bilderraetsel-de.json", "picture-round-en.json", "imagenes-es.json")
 
 
 def _pack(name: str) -> dict:
@@ -51,10 +51,20 @@ def test_pack_shape_matches_every_other_pack(name: str) -> None:
         assert question["fun_fact"].strip(), f"{question['id']}: fun_fact is empty"
 
 
-def test_both_languages_cover_the_same_images() -> None:
-    """A picture available in one language only would be a silent gap."""
-    urls = [{q["image_url"] for q in _pack(name)["questions"]} for name in PACKS]
-    assert urls[0] == urls[1]
+def test_every_language_covers_the_same_images() -> None:
+    """A picture available in one language only would be a silent gap.
+
+    Written over all shipped picture packs rather than a pair: the third one
+    (``imagenes-es``) would otherwise have been free to drift, because a
+    comparison of the first two still passed.
+    """
+    urls = {name: {q["image_url"] for q in _pack(name)["questions"]} for name in PACKS}
+    reference = urls[PACKS[0]]
+    for name, seen in urls.items():
+        assert seen == reference, (
+            f"{name} does not cover the same images as {PACKS[0]}: "
+            f"missing {sorted(reference - seen)}, extra {sorted(seen - reference)}"
+        )
 
 
 def test_no_image_is_shipped_without_a_question() -> None:
