@@ -2,6 +2,7 @@
 
 from __future__ import annotations
 
+import json
 import sys
 from pathlib import Path
 from unittest.mock import MagicMock
@@ -11,6 +12,8 @@ import pytest
 _REPO_ROOT = Path(__file__).resolve().parent.parent
 if str(_REPO_ROOT) not in sys.path:
     sys.path.insert(0, str(_REPO_ROOT))
+
+QUESTIONS_DIR = _REPO_ROOT / "custom_components" / "quizify" / "questions"
 
 from custom_components.quizify.const import ERR_ALREADY_SUBMITTED  # noqa: E402
 from custom_components.quizify.game.phase_controller import (  # noqa: E402
@@ -153,13 +156,29 @@ class TestMultipleChoiceUnaffected:
 class TestEstimatePackLoads:
     def test_builtin_estimate_packs_load(self) -> None:
         bank = QuestionBank()
-        for slug in ("schaetzfragen-de", "estimation-en"):
+        for slug in ("schaetzfragen-de", "estimation-en", "estimacion-es"):
             qs = bank.load_category(slug)
             assert 10 <= len(qs) <= 20
             assert all(q.is_estimate for q in qs)
             for q in qs:
                 assert q.estimate_min < q.estimate_max
                 assert q.estimate_min <= q.estimate_answer <= q.estimate_max
+
+    def test_no_estimate_question_is_dropped_on_load(self) -> None:
+        """An answer outside min/max is discarded without a word by
+        ``_parse_estimate_question`` — the pack simply loads one question
+        shorter. The window above cannot see that (14 of 15 is still inside
+        10-20), so compare against the file instead."""
+        bank = QuestionBank()
+        for slug in ("schaetzfragen-de", "estimation-en", "estimacion-es"):
+            path = QUESTIONS_DIR / f"{slug}.json"
+            on_disk = len(json.loads(path.read_text(encoding="utf-8"))["questions"])
+            loaded = len(bank.load_category(slug))
+            assert loaded == on_disk, (
+                f"{slug}: {on_disk} questions in the file, {loaded} survived the "
+                "parser — one was silently dropped, most likely an answer "
+                "outside its min/max range"
+            )
 
 
 # ---------------------------------------------------------------------------
