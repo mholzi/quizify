@@ -45,7 +45,7 @@ from .scoring import (
     calculate_podium,
 )
 from .scoring_engine import ScoringEngine
-from .team import ANSWER_CHANGE_LOCK_SECONDS, TeamRegistry
+from .team import ANSWER_CHANGE_LOCK_SECONDS, Team, TeamRegistry
 from .timer import QuestionTimer
 from .types import TIME_LIMITS, Difficulty
 
@@ -959,7 +959,16 @@ class QuizifyGameState:
         # Route through the guarded `evaluate_round()` (not directly to
         # `_do_evaluate_round`) so the `_round_summary is not None` check
         # closes the race with the timer-expiry path. (#143 in code review.)
-        if self._player_registry.all_submitted():
+        #
+        # NOT during team settlement (#601). `_settle_team_answers` calls this
+        # method once per team while the round is already being evaluated, and
+        # `_round_summary` is not set until that evaluation finishes — so the
+        # guard inside `evaluate_round()` is still open and the round would
+        # re-enter `_do_evaluate_round` from the middle of its own settlement
+        # loop. Measured consequence: a team scored twice for one round and
+        # its history grew three entries. The settlement caller evaluates the
+        # round itself; it never needs this path.
+        if not _settling_team and self._player_registry.all_submitted():
             self.evaluate_round()
 
         return result
@@ -1005,13 +1014,32 @@ class QuizifyGameState:
         q_max = question.estimate_max if question.estimate_max is not None else guess
         clamped = max(q_min, min(q_max, float(guess)))
 
+        # Team mode (#602): the guess belongs to the *team*, exactly as a tap
+        # does on a multiple-choice round. Nobody is marked submitted here —
+        # every member may keep re-guessing until the clock stops, and the
+        # number standing then is the one that scores, once, in
+        # `_settle_team_guesses`. Before this, estimate rounds ignored teams
+        # completely: the points landed on the member's individual score,
+        # which is invisible in team mode, and the team finished on zero.
+        team = self._team_registry.get_by_member(player.name)
+        if team is not None:
+            if not team.set_guess(clamped, player.name):
+                return ERR_TEAM_LOCKED
+            self._notify_state_callbacks()
+            return None
+
         elapsed = timer.get_elapsed() if timer else 0.0
         player.current_guess = clamped
         player.submitted = True
         player.submission_time = time.time()
         player.last_elapsed = elapsed
 
-        if self._player_registry.all_submitted():
+        # `state.all_submitted()`, not the registry directly (#602): the public
+        # accessor is the one that knows a team round always runs to the clock.
+        # Reaching past it ended estimate rounds on the first guess from each
+        # member, so the "the answer standing at the buzzer counts" rule did
+        # not apply to estimates either.
+        if self.all_submitted():
             self.evaluate_round()
 
         return None
@@ -1024,6 +1052,37 @@ class QuizifyGameState:
         if self._round_summary is not None:
             return self._round_summary
         return self._do_evaluate_round()
+
+    def _pick_team_carrier(
+        self, team: Team, setter: str | None
+    ) -> PlayerSession | None:
+        """The member who carries a team's response into the scoring path.
+
+        Normally the member who set it. If they left between the tap and the
+        buzzer the response still stands for the team, so it is handed to
+        another member rather than dropping a round the team did answer.
+
+        Connected members are preferred over disconnected ones (#601). The
+        earlier version took the first member who had not submitted, which
+        could be someone whose phone had simply locked — and during the
+        re-entrant evaluation that bug allowed, handing the answer to that
+        member scored the same round a second time.
+        """
+        player = self._player_registry.get_player(setter) if setter else None
+        if player is not None and not player.submitted:
+            return player
+        candidates = [
+            p
+            for name in team.members
+            if (p := self._player_registry.get_player(name)) is not None
+            and not p.submitted
+        ]
+        if not candidates:
+            return None
+        # Fall back to a disconnected member only when nobody is left online:
+        # the team did answer, and losing the round because every phone went
+        # dark would punish the wrong thing.
+        return next((p for p in candidates if p.connected), candidates[0])
 
     def _settle_team_answers(self) -> None:
         """Score each team's standing answer once, through the player path.
@@ -1045,20 +1104,7 @@ class QuizifyGameState:
                 team.round_scores.append(0)
                 team.rounds_played += 1
                 continue
-            player = self._player_registry.get_player(team.answer_by)
-            if player is None or player.submitted:
-                # The setter left the game between the tap and the buzzer. The
-                # answer still stands for the team, so hand it to any remaining
-                # member rather than dropping a round the team did answer.
-                player = next(
-                    (
-                        p
-                        for name in team.members
-                        if (p := self._player_registry.get_player(name)) is not None
-                        and not p.submitted
-                    ),
-                    None,
-                )
+            player = self._pick_team_carrier(team, team.answer_by)
             if player is None:
                 team.streak = 0
                 team.round_history.append("timeout")
@@ -1097,6 +1143,88 @@ class QuizifyGameState:
                         team.hard_score += result.points_earned
                 if team.streak > team.max_streak:
                     team.max_streak = team.streak
+
+    def _settle_team_guesses(self) -> dict[str, str]:
+        """Hand each team's standing guess to the member who set it (#602).
+
+        The estimate path ranks *participants* by closeness to the true value.
+        In team mode the participant is the team — so rather than teach
+        ``calculate_estimate_scores`` about teams, the team's guess is carried
+        into the ranking by one of its members, the same shape
+        ``_settle_team_answers`` uses for multiple choice. The ranking then
+        contains one entry per team plus any solo players, and the scoring
+        function needs no change at all.
+
+        Returns ``{team_id: carrier_name}`` so the results can be copied back
+        onto the teams once the per-player pass has run.
+        """
+        round_started = self._round_start_time or 0.0
+        carriers: dict[str, str] = {}
+        for team in self._team_registry.all_teams():
+            if team.current_guess is None or team.guess_by is None:
+                continue
+            player = self._pick_team_carrier(team, team.guess_by)
+            if player is None:
+                continue
+            player.current_guess = team.current_guess
+            player.submitted = True
+            player.submission_time = time.time()
+            player.last_elapsed = max(
+                0.0, (team.guessed_at or round_started) - round_started
+            )
+            carriers[team.team_id] = player.name
+        return carriers
+
+    def _apply_estimate_results_to_teams(
+        self, carriers: dict[str, str], scores: dict[str, dict]
+    ) -> None:
+        """Copy each carrier's estimate result onto their team (#602).
+
+        The mirror of the bookkeeping block in ``_settle_team_answers``: the
+        team takes the points, the streak, the history entry and the award
+        tallies, in the same shape a player keeps them, so the awards can be
+        computed by the same code. A team that never guessed records a
+        timeout, which is what a missed round looks like everywhere else.
+        """
+        for team in self._team_registry.all_teams():
+            carrier_name = carriers.get(team.team_id)
+            player = (
+                self._player_registry.get_player(carrier_name)
+                if carrier_name
+                else None
+            )
+            entry = scores.get(carrier_name) if carrier_name else None
+            if player is None or entry is None:
+                team.streak = 0
+                team.round_history.append("timeout")
+                team.round_scores.append(0)
+                team.rounds_played += 1
+                continue
+
+            points = player.round_score
+            exact = bool(entry["exact"])
+            team.score += points
+            if team.score < 0:
+                team.score = 0
+            # Streak only advances on an exact hit, matching the per-player
+            # rule (#408) — a near miss is recorded as "wrong", and growing a
+            # streak on it would step past a milestone that was never paid.
+            team.streak = team.streak + 1 if exact else 0
+            if team.streak > team.max_streak:
+                team.max_streak = team.streak
+            team.last_answer_correct = exact
+            team.last_elapsed = player.last_elapsed
+            team.round_score = points
+            team.round_score_breakdown = dict(player.round_score_breakdown)
+            team.round_history.append("correct" if exact else "wrong")
+            team.round_scores.append(points)
+            team.rounds_played += 1
+            if exact:
+                team.answer_times.append(player.last_elapsed)
+                if (question := self._current_question) is not None and (
+                    question.difficulty == Difficulty.HARD.value
+                ):
+                    team.hard_score += points
 
     def _collect_team_powerup_stats(self) -> None:
         """Roll each team's members' power-up usage up to the team (#365).
@@ -1286,6 +1414,11 @@ class QuizifyGameState:
         except ValueError:
             diff_enum = Difficulty.MEDIUM
 
+        # Team mode (#602): settle each team's standing guess onto a member
+        # before the ranking is built, so the ranking sees one entry per team
+        # (plus any solo players) instead of every individual member.
+        carriers = self._settle_team_guesses() if self.team_mode else {}
+
         guesses: dict[str, float] = {
             p.name: p.current_guess
             for p in self._player_registry.players.values()
@@ -1342,6 +1475,9 @@ class QuizifyGameState:
                 )
                 player.round_scores.append(points)
             player.rounds_played += 1
+
+        if self.team_mode:
+            self._apply_estimate_results_to_teams(carriers, scores)
 
         # Build per-player results (connected only).
         results: list[AnswerResult] = []

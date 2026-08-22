@@ -53,9 +53,18 @@ class Team:
     current_answer: int | None = None
     #: Member who set the answer that currently stands.
     answer_by: str | None = None
-    #: Wall-clock of the last change, used for the lock and for the speed
-    #: bonus — the bonus keys on the *last* tap, so thinking is not free.
+    #: ``time.monotonic()`` of the last change, used for the lock and for the
+    #: speed bonus — the bonus keys on the *last* tap, so thinking is not free.
+    #: MUST stay on the same clock as ``PhaseController.round_start_time``
+    #: (#600): the speed bonus is ``answered_at - round_start_time``, and a
+    #: wall clock here made that difference the seconds since 1970.
     answered_at: float | None = None
+    #: The team's standing guess for an estimate round, and who set it (#602).
+    #: Same rules as ``current_answer``: any member may change it until the
+    #: clock stops, the last change counts, and the change lock applies.
+    current_guess: float | None = None
+    guess_by: str | None = None
+    guessed_at: float | None = None
     #: How often the answer changed this round. Kept for diagnostics; the
     #: reveal screen deliberately does not show it (Markus, 2026-08-12).
     change_count: int = 0
@@ -124,14 +133,14 @@ class Team:
         """False while the post-change lock is still running."""
         if self.answered_at is None:
             return True
-        now = time.time() if now is None else now
+        now = time.monotonic() if now is None else now
         return (now - self.answered_at) >= ANSWER_CHANGE_LOCK_SECONDS
 
     def lock_remaining(self, now: float | None = None) -> float:
         """Seconds left on the lock, 0 when the answer may be changed."""
         if self.answered_at is None:
             return 0.0
-        now = time.time() if now is None else now
+        now = time.monotonic() if now is None else now
         return max(0.0, ANSWER_CHANGE_LOCK_SECONDS - (now - self.answered_at))
 
     def set_answer(
@@ -142,7 +151,7 @@ class Team:
         Re-tapping the answer that already stands is accepted as a no-op: a
         member confirming the current choice should never be told to wait.
         """
-        now = time.time() if now is None else now
+        now = time.monotonic() if now is None else now
         if self.current_answer == answer_index and self.answer_by is not None:
             return True
         if not self.can_change_answer(now):
@@ -154,11 +163,41 @@ class Team:
         self.answered_at = now
         return True
 
+    def set_guess(
+        self, guess: float, by_player: str, now: float | None = None
+    ) -> bool:
+        """Set the team's guess for an estimate round (#602).
+
+        The mirror of ``set_answer``: any member may re-guess until the clock
+        stops, the last guess is the one that scores, and the same lock stops
+        two members from flipping the number back and forth. Returns False
+        while the lock is running.
+
+        The lock reads ``answered_at``, which both setters share — a team has
+        one standing response per round whatever its shape, so a guess and an
+        answer must not be able to dodge each other's brake.
+        """
+        now = time.monotonic() if now is None else now
+        if self.current_guess == guess and self.guess_by is not None:
+            return True
+        if not self.can_change_answer(now):
+            return False
+        if self.current_guess is not None:
+            self.change_count += 1
+        self.current_guess = guess
+        self.guess_by = by_player
+        self.guessed_at = now
+        self.answered_at = now
+        return True
+
     def reset_round(self) -> None:
         """Clear the per-round answer state before the next question."""
         self.current_answer = None
         self.answer_by = None
         self.answered_at = None
+        self.current_guess = None
+        self.guess_by = None
+        self.guessed_at = None
         self.change_count = 0
         self.round_score = 0
         self.last_answer_correct = False

@@ -81,7 +81,7 @@ def test_a_tap_sets_the_team_answer_and_scores_nobody_yet(
 
 def test_a_teammate_can_overwrite_the_answer(game: QuizifyGameState) -> None:
     game.submit_answer("Anna", 0)
-    _team(game).answered_at = time.time() - 5  # let the lock run out
+    _team(game).answered_at = time.monotonic() - 5  # let the lock run out
 
     assert isinstance(game.submit_answer("Jan", 2), TeamAnswerAck)
     assert _team(game).current_answer == 2
@@ -144,13 +144,13 @@ def test_the_speed_bonus_follows_the_last_tap(game: QuizifyGameState) -> None:
     correct = _correct_index(game)
     game.submit_answer("Anna", correct)
     team = _team(game)
-    team.answered_at = (game._round_start_time or time.time()) + 0.1
+    team.answered_at = (game._round_start_time or time.monotonic()) + 0.1
     game.evaluate_round()
     fast_points = team.score
 
     game.start_next_question()
     game.submit_answer("Anna", _correct_index(game))
-    team.answered_at = (game._round_start_time or time.time()) + 15.0
+    team.answered_at = (game._round_start_time or time.monotonic()) + 15.0
     before = team.score
     game.evaluate_round()
     slow_points = team.score - before
