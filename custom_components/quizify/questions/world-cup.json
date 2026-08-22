@@ -1,17 +1,30 @@
 {
   "name": "World Cup",
   "language": "en",
-  "version": "1.1",
+  "version": "1.2",
   "theme": "worldcup",
-  "season": {"start": "06-01", "end": "07-31", "label": "⚽ World Cup season"},
+  "season": {
+    "start": "06-01",
+    "end": "07-31",
+    "label": "⚽ World Cup season"
+  },
   "questions": [
     {
       "id": "world_cup_en_001",
       "question": "At which World Cup were the players' shirt numbers permanently fixed to a squad list for the first time?",
       "answers": [
-        {"text": "1954 in Switzerland", "correct": true},
-        {"text": "1930 in Uruguay", "correct": false},
-        {"text": "1970 in Mexico", "correct": false}
+        {
+          "text": "1954 in Switzerland",
+          "correct": true
+        },
+        {
+          "text": "1930 in Uruguay",
+          "correct": false
+        },
+        {
+          "text": "1970 in Mexico",
+          "correct": false
+        }
       ],
       "difficulty": "medium",
       "fun_fact": "Before 1954, numbers were often handed out match by match, so a player could wear different numbers in different games — and goalkeepers didn't even reliably wear number 1.",
@@ -21,9 +34,18 @@
       "id": "world_cup_en_002",
       "question": "The very first World Cup in 1930 had no qualifying tournament. How did teams get in?",
       "answers": [
-        {"text": "They were simply invited", "correct": true},
-        {"text": "They won a regional playoff", "correct": false},
-        {"text": "They paid an entry fee", "correct": false}
+        {
+          "text": "They were simply invited",
+          "correct": true
+        },
+        {
+          "text": "They won a regional playoff",
+          "correct": false
+        },
+        {
+          "text": "They paid an entry fee",
+          "correct": false
+        }
       ],
       "difficulty": "easy",
       "fun_fact": "FIFA invited everyone, but the long boat trip to Uruguay scared off most of Europe — only four European teams made the crossing, and France's squad shared the voyage with Brazil and Romania.",
@@ -33,9 +55,18 @@
       "id": "world_cup_en_003",
       "question": "Which country has hosted the men's World Cup despite never qualifying for one on the pitch beforehand?",
       "answers": [
-        {"text": "Qatar (2022)", "correct": true},
-        {"text": "Japan (2002)", "correct": false},
-        {"text": "South Africa (2010)", "correct": false}
+        {
+          "text": "Qatar (2022)",
+          "correct": true
+        },
+        {
+          "text": "Japan (2002)",
+          "correct": false
+        },
+        {
+          "text": "South Africa (2010)",
+          "correct": false
+        }
       ],
       "difficulty": "medium",
       "fun_fact": "Qatar's 2022 appearance was its tournament debut, granted automatically as host — and the team lost all three group games, the first host ever eliminated after just two matches.",
@@ -45,9 +76,18 @@
       "id": "world_cup_en_004",
       "question": "In 1950, the World Cup was decided without a single official final match. How was the winner determined instead?",
       "answers": [
-        {"text": "A final round-robin group", "correct": true},
-        {"text": "A coin toss between finalists", "correct": false},
-        {"text": "A penalty shootout series", "correct": false}
+        {
+          "text": "A final round-robin group",
+          "correct": true
+        },
+        {
+          "text": "A coin toss between finalists",
+          "correct": false
+        },
+        {
+          "text": "A penalty shootout series",
+          "correct": false
+        }
       ],
       "difficulty": "medium",
       "fun_fact": "The decisive game between Uruguay and Brazil happened to be the last group fixture, so the 'Maracanazo' felt like a final — but technically the trophy was won on points, not in a knockout.",
@@ -57,9 +97,18 @@
       "id": "world_cup_en_005",
       "question": "At the 1982 World Cup, a notorious match led FIFA to change a scheduling rule forever. What was the fix?",
       "answers": [
-        {"text": "Final group games kick off simultaneously", "correct": true},
-        {"text": "Group winners are seeded by lottery", "correct": false},
-        {"text": "Draws were banned in group play", "correct": false}
+        {
+          "text": "Final group games kick off simultaneously",
+          "correct": true
+        },
+        {
+          "text": "Group winners are seeded by lottery",
+          "correct": false
+        },
+        {
+          "text": "Draws were banned in group play",
+          "correct": false
+        }
       ],
       "difficulty": "hard",
       "fun_fact": "After West Germany and Austria played out a result that conveniently knocked Algeria out, FIFA mandated that the last two group matches start at the same time so neither side knows what result it needs.",
@@ -69,9 +118,18 @@
       "id": "world_cup_en_006",
       "question": "Why did the 1930 World Cup final use two different match balls — one per half?",
       "answers": [
-        {"text": "Each finalist insisted on its own ball", "correct": true},
-        {"text": "The first ball burst at halftime", "correct": false},
-        {"text": "Rain ruined the original ball", "correct": false}
+        {
+          "text": "Each finalist insisted on its own ball",
+          "correct": true
+        },
+        {
+          "text": "The first ball burst at halftime",
+          "correct": false
+        },
+        {
+          "text": "Rain ruined the original ball",
+          "correct": false
+        }
       ],
       "difficulty": "medium",
       "fun_fact": "Argentina supplied the ball for the first half and led 2-1; Uruguay used theirs in the second half and won 4-2 — fueling a long-running joke about whose ball was 'luckier.'",
@@ -81,9 +139,18 @@
       "id": "world_cup_en_007",
       "question": "Which World Cup was the first to be broadcast live on television?",
       "answers": [
-        {"text": "1954 in Switzerland", "correct": true},
-        {"text": "1966 in England", "correct": false},
-        {"text": "1970 in Mexico", "correct": false}
+        {
+          "text": "1954 in Switzerland",
+          "correct": true
+        },
+        {
+          "text": "1966 in England",
+          "correct": false
+        },
+        {
+          "text": "1970 in Mexico",
+          "correct": false
+        }
       ],
       "difficulty": "medium",
       "fun_fact": "The 1954 broadcast reached only a handful of European countries with TV sets, but it set the template — by 1970 the World Cup was beamed in color and across continents via satellite.",
@@ -93,9 +160,18 @@
       "id": "world_cup_en_008",
       "question": "Mexico 1970 introduced an innovation now standard in every sport. What was it?",
       "answers": [
-        {"text": "Yellow and red cards", "correct": true},
-        {"text": "Goal-line cameras", "correct": false},
-        {"text": "Numbered substitutes' bench", "correct": false}
+        {
+          "text": "Yellow and red cards",
+          "correct": true
+        },
+        {
+          "text": "Goal-line cameras",
+          "correct": false
+        },
+        {
+          "text": "Numbered substitutes' bench",
+          "correct": false
+        }
       ],
       "difficulty": "easy",
       "fun_fact": "A referee dreamed up the color-card idea after a language mix-up in 1966 — he reportedly got the inspiration from traffic lights while driving home.",
@@ -105,9 +181,18 @@
       "id": "world_cup_en_009",
       "question": "Substitutions as we know them were not allowed at the World Cup until surprisingly late. At which tournament were tactical substitutions first generally permitted?",
       "answers": [
-        {"text": "1970 in Mexico", "correct": true},
-        {"text": "1958 in Sweden", "correct": false},
-        {"text": "1934 in Italy", "correct": false}
+        {
+          "text": "1970 in Mexico",
+          "correct": true
+        },
+        {
+          "text": "1958 in Sweden",
+          "correct": false
+        },
+        {
+          "text": "1934 in Italy",
+          "correct": false
+        }
       ],
       "difficulty": "medium",
       "fun_fact": "Before 1970, an injured player simply left his team a man down for the rest of the match — even goalkeepers who got hurt had to be replaced by an outfield teammate in the gloves.",
@@ -117,9 +202,18 @@
       "id": "world_cup_en_010",
       "question": "The 1938 World Cup featured a defending champion that didn't have to qualify but also barely existed as a unit. Which oddity occurred?",
       "answers": [
-        {"text": "Defending champ Italy got an automatic spot for the first time", "correct": true},
-        {"text": "Two host nations shared the tournament", "correct": false},
-        {"text": "The trophy was sent by mail to the winner", "correct": false}
+        {
+          "text": "Defending champ Italy got an automatic spot for the first time",
+          "correct": true
+        },
+        {
+          "text": "Two host nations shared the tournament",
+          "correct": false
+        },
+        {
+          "text": "The trophy was sent by mail to the winner",
+          "correct": false
+        }
       ],
       "difficulty": "hard",
       "fun_fact": "1938 was the first time the reigning champion (and the host) earned automatic qualification — a privilege champions kept until 2006, when titleholders had to qualify again.",
@@ -129,9 +223,18 @@
       "id": "world_cup_en_011",
       "question": "What unusual thing happened to the original World Cup trophy in 1966, months before the tournament?",
       "answers": [
-        {"text": "It was stolen and found by a dog", "correct": true},
-        {"text": "It was melted down by mistake", "correct": false},
-        {"text": "It sank with a cargo ship", "correct": false}
+        {
+          "text": "It was stolen and found by a dog",
+          "correct": true
+        },
+        {
+          "text": "It was melted down by mistake",
+          "correct": false
+        },
+        {
+          "text": "It sank with a cargo ship",
+          "correct": false
+        }
       ],
       "difficulty": "easy",
       "fun_fact": "The Jules Rimet trophy vanished from a London exhibition, then a dog named Pickles sniffed it out wrapped in newspaper under a hedge — the pup became a national celebrity.",
@@ -141,9 +244,18 @@
       "id": "world_cup_en_012",
       "question": "The 1986 World Cup in Mexico had a strange backstory: it was originally awarded to a different country. Which one pulled out?",
       "answers": [
-        {"text": "Colombia", "correct": true},
-        {"text": "Brazil", "correct": false},
-        {"text": "Argentina", "correct": false}
+        {
+          "text": "Colombia",
+          "correct": true
+        },
+        {
+          "text": "Brazil",
+          "correct": false
+        },
+        {
+          "text": "Argentina",
+          "correct": false
+        }
       ],
       "difficulty": "hard",
       "fun_fact": "Colombia withdrew citing economic strain, and Mexico stepped in — becoming the first nation to host the men's World Cup twice, despite a major earthquake striking months before kickoff.",
@@ -153,9 +265,18 @@
       "id": "world_cup_en_013",
       "question": "At the 1994 World Cup, FIFA changed how many points a win was worth. What was the change?",
       "answers": [
-        {"text": "From two points to three", "correct": true},
-        {"text": "From three points to four", "correct": false},
-        {"text": "From one point to two", "correct": false}
+        {
+          "text": "From two points to three",
+          "correct": true
+        },
+        {
+          "text": "From three points to four",
+          "correct": false
+        },
+        {
+          "text": "From one point to two",
+          "correct": false
+        }
       ],
       "difficulty": "easy",
       "fun_fact": "The three-points-for-a-win rule was meant to reward attacking play and discourage cagey draws — it worked so well it's now universal across world football.",
@@ -165,9 +286,18 @@
       "id": "world_cup_en_014",
       "question": "Which World Cup was the first held entirely in two co-hosting countries?",
       "answers": [
-        {"text": "2002 in South Korea and Japan", "correct": true},
-        {"text": "1990 in Italy and Switzerland", "correct": false},
-        {"text": "1974 in West and East Germany", "correct": false}
+        {
+          "text": "2002 in South Korea and Japan",
+          "correct": true
+        },
+        {
+          "text": "1990 in Italy and Switzerland",
+          "correct": false
+        },
+        {
+          "text": "1974 in West and East Germany",
+          "correct": false
+        }
       ],
       "difficulty": "easy",
       "fun_fact": "The two co-hosts couldn't even agree on the official name order, so FIFA settled it alphabetically — which is why it's 'Korea/Japan' and not 'Japan/Korea.'",
@@ -177,9 +307,18 @@
       "id": "world_cup_en_015",
       "question": "Penalty shootouts didn't always exist at the World Cup. How were drawn knockout games settled before they were introduced?",
       "answers": [
-        {"text": "By replaying the match or drawing lots", "correct": true},
-        {"text": "By counting corner kicks", "correct": false},
-        {"text": "By the higher group-stage finish", "correct": false}
+        {
+          "text": "By replaying the match or drawing lots",
+          "correct": true
+        },
+        {
+          "text": "By counting corner kicks",
+          "correct": false
+        },
+        {
+          "text": "By the higher group-stage finish",
+          "correct": false
+        }
       ],
       "difficulty": "medium",
       "fun_fact": "Italy reached the 1968 European final by a literal coin toss, which embarrassed officials into adopting shootouts — the World Cup's first one came in 1982.",
@@ -189,9 +328,18 @@
       "id": "world_cup_en_016",
       "question": "The 1974 World Cup introduced a second, smaller trophy because of a permanent decision about the first. What was it?",
       "answers": [
-        {"text": "Brazil kept the old trophy forever after three wins", "correct": true},
-        {"text": "The old trophy was retired due to damage", "correct": false},
-        {"text": "FIFA banned gold trophies for cost reasons", "correct": false}
+        {
+          "text": "Brazil kept the old trophy forever after three wins",
+          "correct": true
+        },
+        {
+          "text": "The old trophy was retired due to damage",
+          "correct": false
+        },
+        {
+          "text": "FIFA banned gold trophies for cost reasons",
+          "correct": false
+        }
       ],
       "difficulty": "medium",
       "fun_fact": "Jules Rimet had decreed any nation winning three times would keep the cup outright; Brazil did so in 1970, prompting the brand-new FIFA World Cup Trophy that's still used today.",
@@ -201,9 +349,18 @@
       "id": "world_cup_en_017",
       "question": "At the 1938 World Cup, one nation reached the quarterfinals without playing a single match. How?",
       "answers": [
-        {"text": "Their opponent withdrew before the game", "correct": true},
-        {"text": "They were given a bye by lottery", "correct": false},
-        {"text": "A storm cancelled their fixture", "correct": false}
+        {
+          "text": "Their opponent withdrew before the game",
+          "correct": true
+        },
+        {
+          "text": "They were given a bye by lottery",
+          "correct": false
+        },
+        {
+          "text": "A storm cancelled their fixture",
+          "correct": false
+        }
       ],
       "difficulty": "hard",
       "fun_fact": "Sweden advanced when Austria withdrew after being annexed by Germany — its players were absorbed into the German squad, an early case of politics reshaping the bracket.",
@@ -213,9 +370,18 @@
       "id": "world_cup_en_018",
       "question": "Goalkeepers gained a famous restriction at the 1994 World Cup era. What were they newly banned from doing?",
       "answers": [
-        {"text": "Handling a deliberate back-pass", "correct": true},
-        {"text": "Leaving the penalty area", "correct": false},
-        {"text": "Taking goal kicks themselves", "correct": false}
+        {
+          "text": "Handling a deliberate back-pass",
+          "correct": true
+        },
+        {
+          "text": "Leaving the penalty area",
+          "correct": false
+        },
+        {
+          "text": "Taking goal kicks themselves",
+          "correct": false
+        }
       ],
       "difficulty": "easy",
       "fun_fact": "The back-pass rule was rushed in after the 1990 tournament was criticized as too defensive, with keepers killing time by holding the ball — it forced a faster, more open game.",
@@ -225,9 +391,18 @@
       "id": "world_cup_en_019",
       "question": "The first World Cup mascot appeared in 1966. What was it?",
       "answers": [
-        {"text": "A lion named World Cup Willie", "correct": true},
-        {"text": "A rooster named Footix", "correct": false},
-        {"text": "An orange named Naranjito", "correct": false}
+        {
+          "text": "A lion named World Cup Willie",
+          "correct": true
+        },
+        {
+          "text": "A rooster named Footix",
+          "correct": false
+        },
+        {
+          "text": "An orange named Naranjito",
+          "correct": false
+        }
       ],
       "difficulty": "easy",
       "fun_fact": "World Cup Willie kicked off the entire tradition of tournament mascots and even got his own pop song — every cartoon mascot since traces back to that English lion.",
@@ -237,9 +412,18 @@
       "id": "world_cup_en_020",
       "question": "Which World Cup first expanded the field from 16 to 24 teams?",
       "answers": [
-        {"text": "1982 in Spain", "correct": true},
-        {"text": "1974 in West Germany", "correct": false},
-        {"text": "1994 in the USA", "correct": false}
+        {
+          "text": "1982 in Spain",
+          "correct": true
+        },
+        {
+          "text": "1974 in West Germany",
+          "correct": false
+        },
+        {
+          "text": "1994 in the USA",
+          "correct": false
+        }
       ],
       "difficulty": "easy",
       "fun_fact": "The jump from 16 to 24 teams in 1982 opened the door for debutants from Africa, Asia and beyond — Algeria and Cameroon both stunned European giants that year.",
@@ -249,9 +433,18 @@
       "id": "world_cup_en_021",
       "question": "Which player scored the only goal of the 2014 World Cup final, coming off the bench to do it?",
       "answers": [
-        {"text": "Mario Götze", "correct": true},
-        {"text": "Thomas Müller", "correct": false},
-        {"text": "André Schürrle", "correct": false}
+        {
+          "text": "Mario Götze",
+          "correct": true
+        },
+        {
+          "text": "Thomas Müller",
+          "correct": false
+        },
+        {
+          "text": "André Schürrle",
+          "correct": false
+        }
       ],
       "difficulty": "easy",
       "fun_fact": "It was the first World Cup final ever decided by a substitute's goal, and it made Germany the first European team to win the tournament on South American soil.",
@@ -261,9 +454,18 @@
       "id": "world_cup_en_022",
       "question": "Which player scored a hat-trick in a men's World Cup final?",
       "answers": [
-        {"text": "Geoff Hurst", "correct": true},
-        {"text": "Pelé", "correct": false},
-        {"text": "Zinedine Zidane", "correct": false}
+        {
+          "text": "Geoff Hurst",
+          "correct": true
+        },
+        {
+          "text": "Pelé",
+          "correct": false
+        },
+        {
+          "text": "Zinedine Zidane",
+          "correct": false
+        }
       ],
       "difficulty": "easy",
       "fun_fact": "Hurst's three goals in the 1966 final remain the only hat-trick in any men's World Cup final, though Kylian Mbappé scored one in 2022 and still finished a runner-up.",
@@ -273,9 +475,18 @@
       "id": "world_cup_en_023",
       "question": "Which player was sent off in a World Cup final for a headbutt to the chest?",
       "answers": [
-        {"text": "Zinedine Zidane", "correct": true},
-        {"text": "Marco Materazzi", "correct": false},
-        {"text": "Luís Figo", "correct": false}
+        {
+          "text": "Zinedine Zidane",
+          "correct": true
+        },
+        {
+          "text": "Marco Materazzi",
+          "correct": false
+        },
+        {
+          "text": "Luís Figo",
+          "correct": false
+        }
       ],
       "difficulty": "easy",
       "fun_fact": "Zidane was voted the tournament's best player and collected the Golden Ball award even though his last act on a pitch was that red card in the 2006 final.",
@@ -285,9 +496,18 @@
       "id": "world_cup_en_024",
       "question": "Mexican goalkeeper Antonio Carbajal was the first man to do what at the World Cup?",
       "answers": [
-        {"text": "Play in five different tournaments", "correct": true},
-        {"text": "Save three penalties in one match", "correct": false},
-        {"text": "Captain three different nations", "correct": false}
+        {
+          "text": "Play in five different tournaments",
+          "correct": true
+        },
+        {
+          "text": "Save three penalties in one match",
+          "correct": false
+        },
+        {
+          "text": "Captain three different nations",
+          "correct": false
+        }
       ],
       "difficulty": "easy",
       "fun_fact": "Carbajal appeared at five World Cups between 1950 and 1966; it took until 1998 for Lothar Matthäus to become the second man to reach five.",
@@ -297,9 +517,18 @@
       "id": "world_cup_en_025",
       "question": "Cristiano Ronaldo was the first male player to score at how many separate World Cup tournaments?",
       "answers": [
-        {"text": "Five", "correct": true},
-        {"text": "Three", "correct": false},
-        {"text": "Seven", "correct": false}
+        {
+          "text": "Five",
+          "correct": true
+        },
+        {
+          "text": "Three",
+          "correct": false
+        },
+        {
+          "text": "Seven",
+          "correct": false
+        }
       ],
       "difficulty": "easy",
       "fun_fact": "He scored in 2006, 2010, 2014, 2018 and 2022; Lionel Messi has since matched the feat of scoring at five different World Cups.",
@@ -309,9 +538,18 @@
       "id": "world_cup_en_026",
       "question": "Kylian Mbappé scored a hat-trick in the 2022 World Cup final and still lost. Which team beat his France?",
       "answers": [
-        {"text": "Argentina", "correct": true},
-        {"text": "Brazil", "correct": false},
-        {"text": "Croatia", "correct": false}
+        {
+          "text": "Argentina",
+          "correct": true
+        },
+        {
+          "text": "Brazil",
+          "correct": false
+        },
+        {
+          "text": "Croatia",
+          "correct": false
+        }
       ],
       "difficulty": "easy",
       "fun_fact": "Argentina won the final on penalties, meaning Mbappé became the first man to score a final hat-trick and still end up a runner-up.",
@@ -321,9 +559,18 @@
       "id": "world_cup_en_027",
       "question": "Which player both lifted the World Cup as captain and later won it as a head coach?",
       "answers": [
-        {"text": "Franz Beckenbauer", "correct": true},
-        {"text": "Diego Maradona", "correct": false},
-        {"text": "Bobby Moore", "correct": false}
+        {
+          "text": "Franz Beckenbauer",
+          "correct": true
+        },
+        {
+          "text": "Diego Maradona",
+          "correct": false
+        },
+        {
+          "text": "Bobby Moore",
+          "correct": false
+        }
       ],
       "difficulty": "easy",
       "fun_fact": "Beckenbauer captained West Germany to victory in 1974 and coached them to the title in 1990; only Mário Zagallo and Didier Deschamps have otherwise won as both player and coach.",
@@ -333,21 +580,39 @@
       "id": "world_cup_en_028",
       "question": "Who is the youngest player ever to score in a men's World Cup final?",
       "answers": [
-        {"text": "Pelé", "correct": true},
-        {"text": "Kylian Mbappé", "correct": false},
-        {"text": "Michael Owen", "correct": false}
+        {
+          "text": "Pelé",
+          "correct": true
+        },
+        {
+          "text": "Kylian Mbappé",
+          "correct": false
+        },
+        {
+          "text": "Michael Owen",
+          "correct": false
+        }
       ],
       "difficulty": "easy",
-      "fun_fact": "Pelé scored twice in the 1958 final at just 17 years old; he reportedly fainted after the final whistle and had to be revived by teammates.",
+      "fun_fact": "He scored twice in the 1958 final and, by his own account, fainted at the final whistle.",
       "category": "World Cup"
     },
     {
       "id": "world_cup_en_029",
       "question": "Who is the only goalkeeper ever to win the Golden Ball as the best player of a World Cup?",
       "answers": [
-        {"text": "Oliver Kahn", "correct": true},
-        {"text": "Gianluigi Buffon", "correct": false},
-        {"text": "Iker Casillas", "correct": false}
+        {
+          "text": "Oliver Kahn",
+          "correct": true
+        },
+        {
+          "text": "Gianluigi Buffon",
+          "correct": false
+        },
+        {
+          "text": "Iker Casillas",
+          "correct": false
+        }
       ],
       "difficulty": "medium",
       "fun_fact": "Kahn won the 2002 award despite spilling a shot in the final that handed Brazil the opening goal in their 2-0 win — the only major error he made all tournament.",
@@ -357,9 +622,18 @@
       "id": "world_cup_en_030",
       "question": "Who holds the record for the most goals scored in a single World Cup tournament?",
       "answers": [
-        {"text": "Just Fontaine", "correct": true},
-        {"text": "Gerd Müller", "correct": false},
-        {"text": "Ronaldo", "correct": false}
+        {
+          "text": "Just Fontaine",
+          "correct": true
+        },
+        {
+          "text": "Gerd Müller",
+          "correct": false
+        },
+        {
+          "text": "Ronaldo",
+          "correct": false
+        }
       ],
       "difficulty": "medium",
       "fun_fact": "Fontaine scored 13 in 1958 — and according to legend played the tournament in borrowed boots after his own pair fell apart beforehand.",
@@ -367,47 +641,83 @@
     },
     {
       "id": "world_cup_en_031",
-      "question": "Who scored the fastest goal in World Cup history, inside the first 11 seconds of a match?",
+      "question": "Who scored the fastest goal in World Cup history?",
       "answers": [
-        {"text": "Hakan Şükür", "correct": true},
-        {"text": "Cuauhtémoc Blanco", "correct": false},
-        {"text": "Clint Dempsey", "correct": false}
+        {
+          "text": "Hakan Şükür",
+          "correct": true
+        },
+        {
+          "text": "Cuauhtémoc Blanco",
+          "correct": false
+        },
+        {
+          "text": "Clint Dempsey",
+          "correct": false
+        }
       ],
       "difficulty": "medium",
-      "fun_fact": "Turkey's Şükür scored after 10.8 seconds against South Korea in 2002, in the third-place play-off — it was the only goal he scored all tournament.",
+      "fun_fact": "Turkey's Şükür scored against South Korea in 2002, in the third-place play-off. It was the only goal he scored all tournament.",
       "category": "World Cup"
     },
     {
       "id": "world_cup_en_032",
       "question": "Which striker scored five goals in a single World Cup match, the most ever in one game?",
       "answers": [
-        {"text": "Oleg Salenko", "correct": true},
-        {"text": "Gabriel Batistuta", "correct": false},
-        {"text": "Hristo Stoichkov", "correct": false}
+        {
+          "text": "Oleg Salenko",
+          "correct": true
+        },
+        {
+          "text": "Gabriel Batistuta",
+          "correct": false
+        },
+        {
+          "text": "Hristo Stoichkov",
+          "correct": false
+        }
       ],
       "difficulty": "medium",
       "fun_fact": "Russia's Salenko hit five against Cameroon in 1994, yet Russia were knocked out in the group stage and he never played another World Cup match.",
       "category": "World Cup"
     },
     {
-      "id": "world_cup_en_033",
-      "question": "Which teenager became the youngest player ever to score a hat-trick at a World Cup?",
+      "id": "world_cup_en_171",
+      "question": "Which country hosted the 1962 World Cup, two years after the strongest earthquake ever recorded?",
       "answers": [
-        {"text": "Pelé", "correct": true},
-        {"text": "Michael Owen", "correct": false},
-        {"text": "Kylian Mbappé", "correct": false}
+        {
+          "text": "Chile",
+          "correct": true
+        },
+        {
+          "text": "Peru",
+          "correct": false
+        },
+        {
+          "text": "Colombia",
+          "correct": false
+        }
       ],
       "difficulty": "medium",
-      "fun_fact": "Pelé was 17 when he scored three against France in the 1958 semi-final, a youngest-hat-trick record that has stood ever since.",
+      "fun_fact": "The Valdivia earthquake of 1960 had destroyed much of the country, and stadiums were rebuilt against the clock to keep the tournament.",
       "category": "World Cup"
     },
     {
       "id": "world_cup_en_034",
       "question": "Which player won the World Cup as a player and then won it again as the head coach of the same nation?",
       "answers": [
-        {"text": "Mário Zagallo", "correct": true},
-        {"text": "Johan Cruyff", "correct": false},
-        {"text": "Bobby Charlton", "correct": false}
+        {
+          "text": "Mário Zagallo",
+          "correct": true
+        },
+        {
+          "text": "Johan Cruyff",
+          "correct": false
+        },
+        {
+          "text": "Bobby Charlton",
+          "correct": false
+        }
       ],
       "difficulty": "medium",
       "fun_fact": "Zagallo won as a Brazil player in 1958 and 1962 and as coach in 1970; he was also a backroom figure in the 1994 win, giving him four titles in different roles.",
@@ -417,9 +727,18 @@
       "id": "world_cup_en_035",
       "question": "At the 1990 World Cup, Cameroon's Roger Milla famously celebrated his goals by doing what at the corner flag?",
       "answers": [
-        {"text": "Dancing", "correct": true},
-        {"text": "Saluting the referee", "correct": false},
-        {"text": "Removing his boots", "correct": false}
+        {
+          "text": "Dancing",
+          "correct": true
+        },
+        {
+          "text": "Saluting the referee",
+          "correct": false
+        },
+        {
+          "text": "Removing his boots",
+          "correct": false
+        }
       ],
       "difficulty": "medium",
       "fun_fact": "Milla was 38 in 1990 and came out of international retirement after a personal phone call from Cameroon's president; four years later he became the oldest goalscorer in World Cup history.",
@@ -429,9 +748,18 @@
       "id": "world_cup_en_036",
       "question": "Jairzinho achieved a feat at the 1970 World Cup that no other player has matched in a title-winning run. What was it?",
       "answers": [
-        {"text": "He scored in every match of the tournament", "correct": true},
-        {"text": "He saved a penalty as an outfield player", "correct": false},
-        {"text": "He played all 90 minutes without touching the ball", "correct": false}
+        {
+          "text": "He scored in every match of the tournament",
+          "correct": true
+        },
+        {
+          "text": "He saved a penalty as an outfield player",
+          "correct": false
+        },
+        {
+          "text": "He played all 90 minutes without touching the ball",
+          "correct": false
+        }
       ],
       "difficulty": "hard",
       "fun_fact": "Jairzinho scored in all six of Brazil's games in 1970, including the final — no other player has scored in every match of a World Cup they went on to win.",
@@ -441,9 +769,18 @@
       "id": "world_cup_en_037",
       "question": "Which Dutch defender scored an own goal AND a normal goal in the same 1978 World Cup match?",
       "answers": [
-        {"text": "Ernie Brandts", "correct": true},
-        {"text": "Ruud Krol", "correct": false},
-        {"text": "Wim Suurbier", "correct": false}
+        {
+          "text": "Ernie Brandts",
+          "correct": true
+        },
+        {
+          "text": "Ruud Krol",
+          "correct": false
+        },
+        {
+          "text": "Wim Suurbier",
+          "correct": false
+        }
       ],
       "difficulty": "hard",
       "fun_fact": "Brandts put through his own net against Italy, then equalised at the correct end in the same game; the Netherlands won and reached the final.",
@@ -453,57 +790,102 @@
       "id": "world_cup_en_038",
       "question": "Which player scored in two different World Cup finals, eight years apart?",
       "answers": [
-        {"text": "Paul Breitner", "correct": true},
-        {"text": "Franz Beckenbauer", "correct": false},
-        {"text": "Karl-Heinz Rummenigge", "correct": false}
+        {
+          "text": "Paul Breitner",
+          "correct": true
+        },
+        {
+          "text": "Franz Beckenbauer",
+          "correct": false
+        },
+        {
+          "text": "Karl-Heinz Rummenigge",
+          "correct": false
+        }
       ],
       "difficulty": "medium",
       "fun_fact": "Breitner converted a penalty in West Germany's 1974 final win and scored again in the 1982 final loss — one of only three men to score in two separate finals, alongside Pelé and Vavá.",
       "category": "World Cup"
     },
     {
-      "id": "world_cup_en_039",
-      "question": "Which West Germany player scored in two different World Cup finals, eight years apart?",
+      "id": "world_cup_en_172",
+      "question": "Which stadium has hosted two World Cup finals?",
       "answers": [
-        {"text": "Paul Breitner", "correct": true},
-        {"text": "Franz Beckenbauer", "correct": false},
-        {"text": "Karl-Heinz Rummenigge", "correct": false}
+        {
+          "text": "The Estadio Azteca",
+          "correct": true
+        },
+        {
+          "text": "The Maracanã",
+          "correct": false
+        },
+        {
+          "text": "Wembley",
+          "correct": false
+        }
       ],
-      "difficulty": "medium",
-      "fun_fact": "Breitner converted a penalty in the 1974 final, which West Germany won, then scored again in the 1982 final, which they lost. He is one of only five men to score in two different World Cup finals, alongside Vavá, Pelé, Zinedine Zidane and Kylian Mbappé.",
+      "difficulty": "easy",
+      "fun_fact": "1970 and 1986, both in Mexico City. The Maracanã has hosted one final, in 2014; the deciding match of 1950 was not officially one.",
       "category": "World Cup"
     },
     {
       "id": "world_cup_en_040",
       "question": "Which player scored the very first goal in World Cup history at the 1930 tournament?",
       "answers": [
-        {"text": "Lucien Laurent", "correct": true},
-        {"text": "Guillermo Stábile", "correct": false},
-        {"text": "Héctor Castro", "correct": false}
+        {
+          "text": "Lucien Laurent",
+          "correct": true
+        },
+        {
+          "text": "Guillermo Stábile",
+          "correct": false
+        },
+        {
+          "text": "Héctor Castro",
+          "correct": false
+        }
       ],
       "difficulty": "hard",
       "fun_fact": "Frenchman Laurent later said no film of his historic 1930 goal survives, and that it was bitterly cold during the match in Montevideo's Southern Hemisphere winter.",
       "category": "World Cup"
     },
     {
-      "id": "world_cup_en_041",
-      "question": "At the 1994 World Cup, Russia's Oleg Salenko set a record by scoring how many goals in a single match against Cameroon?",
+      "id": "world_cup_en_173",
+      "question": "Which team reached the 2014 quarter-finals without losing a match in normal time?",
       "answers": [
-        {"text": "Five goals", "correct": true},
-        {"text": "Three goals", "correct": false},
-        {"text": "Seven goals", "correct": false}
+        {
+          "text": "Costa Rica",
+          "correct": true
+        },
+        {
+          "text": "Honduras",
+          "correct": false
+        },
+        {
+          "text": "Panama",
+          "correct": false
+        }
       ],
       "difficulty": "medium",
-      "fun_fact": "Despite that five-goal haul, Russia were already eliminated and went home in the group stage — and Salenko never scored for the national team again.",
+      "fun_fact": "It finished ahead of Uruguay, Italy and England in the group and went out to the Netherlands on penalties.",
       "category": "World Cup"
     },
     {
       "id": "world_cup_en_042",
       "question": "In the 1950 World Cup, the United States stunned England in a famous upset. What was the score?",
       "answers": [
-        {"text": "USA won 1–0", "correct": true},
-        {"text": "USA won 4–2", "correct": false},
-        {"text": "The match ended 2–2", "correct": false}
+        {
+          "text": "USA won 1–0",
+          "correct": true
+        },
+        {
+          "text": "USA won 4–2",
+          "correct": false
+        },
+        {
+          "text": "The match ended 2–2",
+          "correct": false
+        }
       ],
       "difficulty": "medium",
       "fun_fact": "The result was so improbable that some British newspapers reportedly assumed it was a typo and printed it as a 10–1 England win instead.",
@@ -513,9 +895,18 @@
       "id": "world_cup_en_043",
       "question": "At the 1986 World Cup, Diego Maradona scored two goals against England within four minutes that could not have been more different. What were they?",
       "answers": [
-        {"text": "An illegal handball, then a brilliant solo run", "correct": true},
-        {"text": "Two penalties", "correct": false},
-        {"text": "Two headers from corners", "correct": false}
+        {
+          "text": "An illegal handball, then a brilliant solo run",
+          "correct": true
+        },
+        {
+          "text": "Two penalties",
+          "correct": false
+        },
+        {
+          "text": "Two headers from corners",
+          "correct": false
+        }
       ],
       "difficulty": "easy",
       "fun_fact": "Maradona later called the handball goal the \"Hand of God,\" while the solo effort was voted Goal of the Century by FIFA voters.",
@@ -525,9 +916,18 @@
       "id": "world_cup_en_044",
       "question": "In the 1998 World Cup, France beat Saudi Arabia, but their star Zinedine Zidane was sent off for what?",
       "answers": [
-        {"text": "Stamping on an opponent", "correct": true},
-        {"text": "Punching the referee", "correct": false},
-        {"text": "Removing his shirt to protest", "correct": false}
+        {
+          "text": "Stamping on an opponent",
+          "correct": true
+        },
+        {
+          "text": "Punching the referee",
+          "correct": false
+        },
+        {
+          "text": "Removing his shirt to protest",
+          "correct": false
+        }
       ],
       "difficulty": "hard",
       "fun_fact": "Zidane served a two-match ban but returned to score twice in the final against Brazil, both with his head.",
@@ -537,9 +937,18 @@
       "id": "world_cup_en_045",
       "question": "During a 2010 World Cup quarterfinal, Uruguay's Luis Suárez kept Ghana out of the semifinals by doing what on the goal line?",
       "answers": [
-        {"text": "Punching the ball away with his hands", "correct": true},
-        {"text": "Catching it like a goalkeeper for a throw", "correct": false},
-        {"text": "Heading it onto his own crossbar", "correct": false}
+        {
+          "text": "Punching the ball away with his hands",
+          "correct": true
+        },
+        {
+          "text": "Catching it like a goalkeeper for a throw",
+          "correct": false
+        },
+        {
+          "text": "Heading it onto his own crossbar",
+          "correct": false
+        }
       ],
       "difficulty": "easy",
       "fun_fact": "Suárez was sent off, but Ghana missed the resulting penalty and then lost the shootout — so his deliberate handball arguably worked.",
@@ -549,57 +958,102 @@
       "id": "world_cup_en_046",
       "question": "In a 1982 World Cup match, West Germany and Austria were accused of arranging a result that conveniently knocked Algeria out. What was the suspicious score?",
       "answers": [
-        {"text": "West Germany 1–0", "correct": true},
-        {"text": "A 0–0 draw", "correct": false},
-        {"text": "West Germany 3–2", "correct": false}
+        {
+          "text": "West Germany 1–0",
+          "correct": true
+        },
+        {
+          "text": "A 0–0 draw",
+          "correct": false
+        },
+        {
+          "text": "West Germany 3–2",
+          "correct": false
+        }
       ],
       "difficulty": "medium",
       "fun_fact": "The \"Disgrace of Gijón\" led FIFA to make the final group matches kick off simultaneously at all future World Cups.",
       "category": "World Cup"
     },
     {
-      "id": "world_cup_en_047",
-      "question": "At the 2006 World Cup final, Zinedine Zidane was sent off in extra time of his last-ever match for doing what to Marco Materazzi?",
+      "id": "world_cup_en_174",
+      "question": "Which country returned to the World Cup in 2018 after a 36-year absence?",
       "answers": [
-        {"text": "Headbutting him in the chest", "correct": true},
-        {"text": "Kicking him in the face", "correct": false},
-        {"text": "Spitting at him", "correct": false}
+        {
+          "text": "Peru",
+          "correct": true
+        },
+        {
+          "text": "Bolivia",
+          "correct": false
+        },
+        {
+          "text": "Ecuador",
+          "correct": false
+        }
       ],
-      "difficulty": "easy",
-      "fun_fact": "France lost the final on penalties, and Zidane still won the tournament's Golden Ball award for best player despite the red card.",
+      "difficulty": "medium",
+      "fun_fact": "Its previous appearance had been at Spain 1982.",
       "category": "World Cup"
     },
     {
       "id": "world_cup_en_048",
       "question": "In a 2006 World Cup match, referee Graham Poll showed the same Croatian player how many yellow cards before sending him off?",
       "answers": [
-        {"text": "Three yellows", "correct": true},
-        {"text": "Four yellows", "correct": false},
-        {"text": "Two yellows in one minute", "correct": false}
+        {
+          "text": "Three yellows",
+          "correct": true
+        },
+        {
+          "text": "Four yellows",
+          "correct": false
+        },
+        {
+          "text": "Two yellows in one minute",
+          "correct": false
+        }
       ],
       "difficulty": "hard",
       "fun_fact": "Josip Šimunić's name was misheard as sounding Australian, contributing to Poll forgetting he'd already booked him; the referee never officiated at a World Cup again.",
       "category": "World Cup"
     },
     {
-      "id": "world_cup_en_049",
-      "question": "At the 1966 World Cup, the trophy was stolen before the tournament and later recovered. Who found it?",
+      "id": "world_cup_en_175",
+      "question": "Which team played the 1954 final after losing 8-3 to that same opponent in the group stage?",
       "answers": [
-        {"text": "A dog named Pickles", "correct": true},
-        {"text": "A retired police detective", "correct": false},
-        {"text": "A London taxi driver", "correct": false}
+        {
+          "text": "West Germany",
+          "correct": true
+        },
+        {
+          "text": "Hungary",
+          "correct": false
+        },
+        {
+          "text": "Austria",
+          "correct": false
+        }
       ],
-      "difficulty": "easy",
-      "fun_fact": "Pickles sniffed the trophy out wrapped in newspaper under a hedge, and his owner received a reward larger than the winning England players' bonuses.",
+      "difficulty": "hard",
+      "fun_fact": "It won the final 3-2 against a Hungary side unbeaten for four years. The game is remembered as the Miracle of Bern.",
       "category": "World Cup"
     },
     {
       "id": "world_cup_en_050",
       "question": "In the 1990 World Cup, Cameroon shocked defending champions Argentina in the opening match while finishing the game with how many men?",
       "answers": [
-        {"text": "Nine men, after two red cards", "correct": true},
-        {"text": "A full eleven", "correct": false},
-        {"text": "Ten men, after one red card", "correct": false}
+        {
+          "text": "Nine men, after two red cards",
+          "correct": true
+        },
+        {
+          "text": "A full eleven",
+          "correct": false
+        },
+        {
+          "text": "Ten men, after one red card",
+          "correct": false
+        }
       ],
       "difficulty": "easy",
       "fun_fact": "Cameroon won 1–0 despite the two dismissals, and 38-year-old Roger Milla's dancing celebrations later that tournament made him a global sensation.",
@@ -609,9 +1063,18 @@
       "id": "world_cup_en_051",
       "question": "At the 1974 World Cup, Zaire's Mwepu Ilunga did something baffling at a free kick that confused everyone. What?",
       "answers": [
-        {"text": "He ran out and booted the ball away before it was taken", "correct": true},
-        {"text": "He sat down in the defensive wall", "correct": false},
-        {"text": "He picked the ball up and handed it to the referee", "correct": false}
+        {
+          "text": "He ran out and booted the ball away before it was taken",
+          "correct": true
+        },
+        {
+          "text": "He sat down in the defensive wall",
+          "correct": false
+        },
+        {
+          "text": "He picked the ball up and handed it to the referee",
+          "correct": false
+        }
       ],
       "difficulty": "medium",
       "fun_fact": "Ilunga later said he understood the rules perfectly and was deliberately wasting time after the team had been threatened by their own dictator over results.",
@@ -621,9 +1084,18 @@
       "id": "world_cup_en_052",
       "question": "In the 1970 World Cup, England's first-choice goalkeeper Gordon Banks famously missed the quarterfinal against West Germany because of what?",
       "answers": [
-        {"text": "A stomach illness", "correct": true},
-        {"text": "A car accident en route", "correct": false},
-        {"text": "A lost passport", "correct": false}
+        {
+          "text": "A stomach illness",
+          "correct": true
+        },
+        {
+          "text": "A car accident en route",
+          "correct": false
+        },
+        {
+          "text": "A lost passport",
+          "correct": false
+        }
       ],
       "difficulty": "medium",
       "fun_fact": "England led 2–0 with deputy Peter Bonetti in goal but lost 3–2 in extra time; conspiracy theories about Banks's sudden illness persist to this day.",
@@ -633,9 +1105,18 @@
       "id": "world_cup_en_053",
       "question": "At the 1994 World Cup, Colombia's Andrés Escobar scored an own goal against the USA that had a tragic aftermath. What happened to him?",
       "answers": [
-        {"text": "He was murdered days after returning home", "correct": true},
-        {"text": "He was banned from football for life", "correct": false},
-        {"text": "He retired immediately from the sport", "correct": false}
+        {
+          "text": "He was murdered days after returning home",
+          "correct": true
+        },
+        {
+          "text": "He was banned from football for life",
+          "correct": false
+        },
+        {
+          "text": "He retired immediately from the sport",
+          "correct": false
+        }
       ],
       "difficulty": "medium",
       "fun_fact": "The own goal contributed to Colombia's shock elimination, and Escobar was shot in his home country shortly after the team flew back.",
@@ -645,9 +1126,18 @@
       "id": "world_cup_en_054",
       "question": "In a 1938 World Cup quarterfinal between Brazil and Czechoslovakia, the match was so violent that how many players were sent off?",
       "answers": [
-        {"text": "Three players", "correct": true},
-        {"text": "None — it was a clean game", "correct": false},
-        {"text": "Six players", "correct": false}
+        {
+          "text": "Three players",
+          "correct": true
+        },
+        {
+          "text": "None — it was a clean game",
+          "correct": false
+        },
+        {
+          "text": "Six players",
+          "correct": false
+        }
       ],
       "difficulty": "hard",
       "fun_fact": "The game became known as the \"Battle of Bordeaux,\" and it left two Czechoslovak players with a broken arm and a broken leg.",
@@ -657,9 +1147,18 @@
       "id": "world_cup_en_055",
       "question": "At the 2010 World Cup, the final between Spain and the Netherlands set a record for what?",
       "answers": [
-        {"text": "The most yellow cards in a World Cup final", "correct": true},
-        {"text": "The most goals in a World Cup final", "correct": false},
-        {"text": "The longest penalty shootout ever", "correct": false}
+        {
+          "text": "The most yellow cards in a World Cup final",
+          "correct": true
+        },
+        {
+          "text": "The most goals in a World Cup final",
+          "correct": false
+        },
+        {
+          "text": "The longest penalty shootout ever",
+          "correct": false
+        }
       ],
       "difficulty": "medium",
       "fun_fact": "English referee Howard Webb handed out 14 cards, including a red, in a final famous for a Dutch player's flying kung-fu kick to a Spaniard's chest.",
@@ -669,9 +1168,18 @@
       "id": "world_cup_en_056",
       "question": "In the 1982 World Cup semifinal, France led West Germany 3–1 in extra time but lost. How did the match end?",
       "answers": [
-        {"text": "On penalties, after West Germany clawed it back to 3–3", "correct": true},
-        {"text": "West Germany scored a last-minute fourth in extra time", "correct": false},
-        {"text": "France conceded after a disallowed goal of their own", "correct": false}
+        {
+          "text": "On penalties, after West Germany clawed it back to 3–3",
+          "correct": true
+        },
+        {
+          "text": "West Germany scored a last-minute fourth in extra time",
+          "correct": false
+        },
+        {
+          "text": "France conceded after a disallowed goal of their own",
+          "correct": false
+        }
       ],
       "difficulty": "medium",
       "fun_fact": "Earlier in the game German keeper Harald Schumacher flattened a French player so brutally the Frenchman lost teeth, yet no foul was given.",
@@ -681,33 +1189,60 @@
       "id": "world_cup_en_057",
       "question": "At the 2018 World Cup, the final between France and Croatia featured which unusual first?",
       "answers": [
-        {"text": "The first own goal scored in a World Cup final", "correct": true},
-        {"text": "The first final decided by penalties", "correct": false},
-        {"text": "The first final played indoors", "correct": false}
+        {
+          "text": "The first own goal scored in a World Cup final",
+          "correct": true
+        },
+        {
+          "text": "The first final decided by penalties",
+          "correct": false
+        },
+        {
+          "text": "The first final played indoors",
+          "correct": false
+        }
       ],
       "difficulty": "easy",
       "fun_fact": "The match also saw the first VAR-awarded penalty in a final, plus a pitch invasion by protesters during the second half.",
       "category": "World Cup"
     },
     {
-      "id": "world_cup_en_058",
-      "question": "In the 1958 World Cup, a 17-year-old made history in the final. Who was he and what did he do?",
+      "id": "world_cup_en_176",
+      "question": "Which Colombian scored the goal that won the FIFA Puskás Award after the 2014 World Cup?",
       "answers": [
-        {"text": "Pelé, who scored twice in the final", "correct": true},
-        {"text": "Garrincha, who was sent off", "correct": false},
-        {"text": "Just Fontaine, who missed a penalty", "correct": false}
+        {
+          "text": "James Rodríguez",
+          "correct": true
+        },
+        {
+          "text": "Radamel Falcao",
+          "correct": false
+        },
+        {
+          "text": "Juan Cuadrado",
+          "correct": false
+        }
       ],
-      "difficulty": "easy",
-      "fun_fact": "Pelé remains the youngest player ever to score in a World Cup final, and he reportedly fainted on the pitch after the final whistle.",
+      "difficulty": "medium",
+      "fun_fact": "A chest control with his back to goal and a volley from outside the box, against Uruguay.",
       "category": "World Cup"
     },
     {
       "id": "world_cup_en_059",
       "question": "At the 1998 World Cup, England's David Beckham was sent off against Argentina for what?",
       "answers": [
-        {"text": "Flicking a petulant kick at an opponent while lying down", "correct": true},
-        {"text": "Diving to win a penalty", "correct": false},
-        {"text": "Arguing with the referee over a throw-in", "correct": false}
+        {
+          "text": "Flicking a petulant kick at an opponent while lying down",
+          "correct": true
+        },
+        {
+          "text": "Diving to win a penalty",
+          "correct": false
+        },
+        {
+          "text": "Arguing with the referee over a throw-in",
+          "correct": false
+        }
       ],
       "difficulty": "easy",
       "fun_fact": "England lost on penalties, and Beckham was so vilified at home that one pub reportedly hung his effigy outside before he later rehabilitated his reputation.",
@@ -717,9 +1252,18 @@
       "id": "world_cup_en_060",
       "question": "In the 1974 World Cup, the very first goal was scored from the penalty spot before which team had even touched the ball?",
       "answers": [
-        {"text": "West Germany conceded to the Netherlands", "correct": true},
-        {"text": "Brazil conceded to Yugoslavia", "correct": false},
-        {"text": "Italy conceded to Poland", "correct": false}
+        {
+          "text": "West Germany conceded to the Netherlands",
+          "correct": true
+        },
+        {
+          "text": "Brazil conceded to Yugoslavia",
+          "correct": false
+        },
+        {
+          "text": "Italy conceded to Poland",
+          "correct": false
+        }
       ],
       "difficulty": "hard",
       "fun_fact": "The Dutch passed the ball among themselves 16 times straight from kickoff before being fouled in the box — no German player had touched it yet.",
@@ -729,9 +1273,18 @@
       "id": "world_cup_en_061",
       "question": "Which host nation was eliminated in the group stage of its own World Cup in 2010?",
       "answers": [
-        {"text": "South Africa", "correct": true},
-        {"text": "France", "correct": false},
-        {"text": "Mexico", "correct": false}
+        {
+          "text": "South Africa",
+          "correct": true
+        },
+        {
+          "text": "France",
+          "correct": false
+        },
+        {
+          "text": "Mexico",
+          "correct": false
+        }
       ],
       "difficulty": "easy",
       "fun_fact": "South Africa remains the only host nation ever to fail to reach the knockout rounds of a men's World Cup.",
@@ -741,9 +1294,18 @@
       "id": "world_cup_en_062",
       "question": "Which country knocked defending champions Germany out in the 2018 group stage?",
       "answers": [
-        {"text": "South Korea", "correct": true},
-        {"text": "Sweden", "correct": false},
-        {"text": "Switzerland", "correct": false}
+        {
+          "text": "South Korea",
+          "correct": true
+        },
+        {
+          "text": "Sweden",
+          "correct": false
+        },
+        {
+          "text": "Switzerland",
+          "correct": false
+        }
       ],
       "difficulty": "easy",
       "fun_fact": "It was Germany's earliest exit in 80 years, and South Korea didn't even advance themselves despite winning that match.",
@@ -753,9 +1315,18 @@
       "id": "world_cup_en_063",
       "question": "Which team beat reigning champions France in the opening match of the 2002 World Cup?",
       "answers": [
-        {"text": "Senegal", "correct": true},
-        {"text": "Cameroon", "correct": false},
-        {"text": "Nigeria", "correct": false}
+        {
+          "text": "Senegal",
+          "correct": true
+        },
+        {
+          "text": "Cameroon",
+          "correct": false
+        },
+        {
+          "text": "Nigeria",
+          "correct": false
+        }
       ],
       "difficulty": "medium",
       "fun_fact": "Many of Senegal's players had grown up in France; France then went out in the group stage without scoring a single goal.",
@@ -765,9 +1336,18 @@
       "id": "world_cup_en_064",
       "question": "Which reigning champion boycotted the very next World Cup, in 1934, in protest?",
       "answers": [
-        {"text": "Uruguay", "correct": true},
-        {"text": "Italy", "correct": false},
-        {"text": "Argentina", "correct": false}
+        {
+          "text": "Uruguay",
+          "correct": true
+        },
+        {
+          "text": "Italy",
+          "correct": false
+        },
+        {
+          "text": "Argentina",
+          "correct": false
+        }
       ],
       "difficulty": "hard",
       "fun_fact": "Uruguay was angry that European nations had snubbed its 1930 tournament, and remains the only champion ever to skip defending its title.",
@@ -777,33 +1357,60 @@
       "id": "world_cup_en_065",
       "question": "Which nation reached the World Cup semi-finals in 2002 while co-hosting with Japan?",
       "answers": [
-        {"text": "South Korea", "correct": true},
-        {"text": "China", "correct": false},
-        {"text": "Australia", "correct": false}
+        {
+          "text": "South Korea",
+          "correct": true
+        },
+        {
+          "text": "China",
+          "correct": false
+        },
+        {
+          "text": "Australia",
+          "correct": false
+        }
       ],
       "difficulty": "easy",
       "fun_fact": "South Korea beat both Italy and Spain in the knockout rounds on the way to fourth place, their best-ever finish.",
       "category": "World Cup"
     },
     {
-      "id": "world_cup_en_066",
-      "question": "Which country won the very first World Cup in 1930 without playing any qualifying match?",
+      "id": "world_cup_en_177",
+      "question": "Which country has lost three World Cup finals without winning any?",
       "answers": [
-        {"text": "Uruguay", "correct": true},
-        {"text": "Argentina", "correct": false},
-        {"text": "Brazil", "correct": false}
+        {
+          "text": "The Netherlands",
+          "correct": true
+        },
+        {
+          "text": "Hungary",
+          "correct": false
+        },
+        {
+          "text": "Sweden",
+          "correct": false
+        }
       ],
       "difficulty": "easy",
-      "fun_fact": "No qualifiers existed in 1930 — teams were simply invited, and several European sides refused the long boat trip across the Atlantic.",
+      "fun_fact": "1974, 1978 and 2010. The first two were lost to the host nation.",
       "category": "World Cup"
     },
     {
       "id": "world_cup_en_067",
       "question": "Which nation famously beat England 1-0 at the 1950 World Cup in one of the sport's biggest upsets?",
       "answers": [
-        {"text": "United States", "correct": true},
-        {"text": "Canada", "correct": false},
-        {"text": "Mexico", "correct": false}
+        {
+          "text": "United States",
+          "correct": true
+        },
+        {
+          "text": "Canada",
+          "correct": false
+        },
+        {
+          "text": "Mexico",
+          "correct": false
+        }
       ],
       "difficulty": "medium",
       "fun_fact": "The US side were part-timers including a dishwasher and a postman; some British papers assumed the 1-0 score was a typo for 10-0.",
@@ -813,9 +1420,18 @@
       "id": "world_cup_en_068",
       "question": "Which country has appeared at every single men's World Cup ever held?",
       "answers": [
-        {"text": "Brazil", "correct": true},
-        {"text": "Germany", "correct": false},
-        {"text": "Italy", "correct": false}
+        {
+          "text": "Brazil",
+          "correct": true
+        },
+        {
+          "text": "Germany",
+          "correct": false
+        },
+        {
+          "text": "Italy",
+          "correct": false
+        }
       ],
       "difficulty": "easy",
       "fun_fact": "Italy and Germany have each missed at least one tournament, but Brazil has played in all of them since 1930.",
@@ -825,9 +1441,18 @@
       "id": "world_cup_en_069",
       "question": "Which four-time champion failed to qualify for the 2018 World Cup entirely?",
       "answers": [
-        {"text": "Italy", "correct": true},
-        {"text": "Spain", "correct": false},
-        {"text": "England", "correct": false}
+        {
+          "text": "Italy",
+          "correct": true
+        },
+        {
+          "text": "Spain",
+          "correct": false
+        },
+        {
+          "text": "England",
+          "correct": false
+        }
       ],
       "difficulty": "medium",
       "fun_fact": "It was the first time in 60 years Italy missed a World Cup, ending a streak of 14 consecutive appearances.",
@@ -837,9 +1462,18 @@
       "id": "world_cup_en_070",
       "question": "Which Caribbean nation, ranked among the world's lowest, qualified for the 1998 World Cup?",
       "answers": [
-        {"text": "Jamaica", "correct": true},
-        {"text": "Cuba", "correct": false},
-        {"text": "Haiti", "correct": false}
+        {
+          "text": "Jamaica",
+          "correct": true
+        },
+        {
+          "text": "Cuba",
+          "correct": false
+        },
+        {
+          "text": "Haiti",
+          "correct": false
+        }
       ],
       "difficulty": "medium",
       "fun_fact": "Jamaica's 'Reggae Boyz' became the first English-speaking Caribbean nation to reach a World Cup, and beat Japan in the group stage.",
@@ -849,9 +1483,18 @@
       "id": "world_cup_en_071",
       "question": "Which nation reached the 1990 World Cup quarter-finals, sparked by a 38-year-old striker?",
       "answers": [
-        {"text": "Cameroon", "correct": true},
-        {"text": "Egypt", "correct": false},
-        {"text": "Morocco", "correct": false}
+        {
+          "text": "Cameroon",
+          "correct": true
+        },
+        {
+          "text": "Egypt",
+          "correct": false
+        },
+        {
+          "text": "Morocco",
+          "correct": false
+        }
       ],
       "difficulty": "medium",
       "fun_fact": "Roger Milla came out of retirement to score four goals, and Cameroon beat reigning champions Argentina in the opener despite finishing with nine men.",
@@ -861,9 +1504,18 @@
       "id": "world_cup_en_072",
       "question": "Which nation, with a population under 350,000, became the smallest country ever to qualify for a men's World Cup in 2018?",
       "answers": [
-        {"text": "Iceland", "correct": true},
-        {"text": "Montenegro", "correct": false},
-        {"text": "Luxembourg", "correct": false}
+        {
+          "text": "Iceland",
+          "correct": true
+        },
+        {
+          "text": "Montenegro",
+          "correct": false
+        },
+        {
+          "text": "Luxembourg",
+          "correct": false
+        }
       ],
       "difficulty": "easy",
       "fun_fact": "Iceland's part-time setup once featured a national coach who also worked as a dentist and several players holding ordinary day jobs.",
@@ -873,57 +1525,102 @@
       "id": "world_cup_en_073",
       "question": "In 1966, which team made its only-ever World Cup appearance and stunned Italy to reach the quarter-finals?",
       "answers": [
-        {"text": "North Korea", "correct": true},
-        {"text": "Bulgaria", "correct": false},
-        {"text": "Romania", "correct": false}
+        {
+          "text": "North Korea",
+          "correct": true
+        },
+        {
+          "text": "Bulgaria",
+          "correct": false
+        },
+        {
+          "text": "Romania",
+          "correct": false
+        }
       ],
       "difficulty": "hard",
       "fun_fact": "North Korea led Portugal 3-0 in the quarter-final before Eusébio scored four goals to turn the match around.",
       "category": "World Cup"
     },
     {
-      "id": "world_cup_en_074",
-      "question": "In the infamous 1982 'Disgrace of Gijón', which two teams played out a result that conveniently eliminated Algeria?",
+      "id": "world_cup_en_178",
+      "question": "At which World Cup was goal-line technology used for the first time?",
       "answers": [
-        {"text": "West Germany and Austria", "correct": true},
-        {"text": "Spain and Portugal", "correct": false},
-        {"text": "Belgium and Netherlands", "correct": false}
+        {
+          "text": "2014 in Brazil",
+          "correct": true
+        },
+        {
+          "text": "2010 in South Africa",
+          "correct": false
+        },
+        {
+          "text": "2018 in Russia",
+          "correct": false
+        }
       ],
-      "difficulty": "hard",
-      "fun_fact": "After the scandal FIFA made all final group matches kick off simultaneously, a rule that still stands today.",
+      "difficulty": "medium",
+      "fun_fact": "It arrived after the goal not given to Frank Lampard in 2010, which everyone in the ground could see except the linesman.",
       "category": "World Cup"
     },
     {
       "id": "world_cup_en_075",
       "question": "Which African nation reached the World Cup semi-finals for the first time in history in 2022?",
       "answers": [
-        {"text": "Morocco", "correct": true},
-        {"text": "Ghana", "correct": false},
-        {"text": "Nigeria", "correct": false}
+        {
+          "text": "Morocco",
+          "correct": true
+        },
+        {
+          "text": "Ghana",
+          "correct": false
+        },
+        {
+          "text": "Nigeria",
+          "correct": false
+        }
       ],
       "difficulty": "easy",
       "fun_fact": "Morocco knocked out both Spain and Portugal, becoming the first African and first Arab nation to reach a men's World Cup semi-final.",
       "category": "World Cup"
     },
     {
-      "id": "world_cup_en_076",
-      "question": "Which team scored the fastest goal in World Cup history, after just 11 seconds, in 2002?",
+      "id": "world_cup_en_179",
+      "question": "Which country won the World Cup in both 1934 and 1938?",
       "answers": [
-        {"text": "Turkey", "correct": true},
-        {"text": "Brazil", "correct": false},
-        {"text": "Italy", "correct": false}
+        {
+          "text": "Italy",
+          "correct": true
+        },
+        {
+          "text": "Brazil",
+          "correct": false
+        },
+        {
+          "text": "Uruguay",
+          "correct": false
+        }
       ],
-      "difficulty": "hard",
-      "fun_fact": "Hakan Şükür's strike against South Korea came in the third-place play-off, which Turkey won to claim their best-ever finish.",
+      "difficulty": "easy",
+      "fun_fact": "Only Brazil, in 1958 and 1962, has since managed two in a row.",
       "category": "World Cup"
     },
     {
       "id": "world_cup_en_077",
       "question": "Which nation endured a 32-year gap between World Cup appearances before returning in 2006?",
       "answers": [
-        {"text": "Australia", "correct": true},
-        {"text": "Angola", "correct": false},
-        {"text": "Ukraine", "correct": false}
+        {
+          "text": "Australia",
+          "correct": true
+        },
+        {
+          "text": "Angola",
+          "correct": false
+        },
+        {
+          "text": "Ukraine",
+          "correct": false
+        }
       ],
       "difficulty": "medium",
       "fun_fact": "Australia hadn't appeared since 1974; soon afterwards they left Oceania to join the Asian confederation, making qualification far easier.",
@@ -933,9 +1630,18 @@
       "id": "world_cup_en_078",
       "question": "Which country reached its first-ever World Cup final in 2018, beating England in the semi-final?",
       "answers": [
-        {"text": "Croatia", "correct": true},
-        {"text": "Belgium", "correct": false},
-        {"text": "Russia", "correct": false}
+        {
+          "text": "Croatia",
+          "correct": true
+        },
+        {
+          "text": "Belgium",
+          "correct": false
+        },
+        {
+          "text": "Russia",
+          "correct": false
+        }
       ],
       "difficulty": "easy",
       "fun_fact": "Croatia played three straight knockout matches that went to extra time, racking up nearly a full extra match before even reaching the final.",
@@ -945,21 +1651,39 @@
       "id": "world_cup_en_079",
       "question": "Which nation was the only team at the 2010 World Cup to finish undefeated, yet still failed to advance?",
       "answers": [
-        {"text": "New Zealand", "correct": true},
-        {"text": "Switzerland", "correct": false},
-        {"text": "Slovenia", "correct": false}
+        {
+          "text": "New Zealand",
+          "correct": true
+        },
+        {
+          "text": "Switzerland",
+          "correct": false
+        },
+        {
+          "text": "Slovenia",
+          "correct": false
+        }
       ],
       "difficulty": "medium",
-      "fun_fact": "New Zealand drew all three group games, including a stoppage-time equaliser against reigning champions Italy, but were knocked out on points.",
+      "fun_fact": "New Zealand drew all three group games. It led reigning champions Italy through Shane Smeltz in the 7th minute before conceding a penalty, and rescued a point against Slovakia in stoppage time.",
       "category": "World Cup"
     },
     {
       "id": "world_cup_en_080",
       "question": "Which country was awarded a World Cup win by forfeit in 1938 because its opponent simply never showed up?",
       "answers": [
-        {"text": "Sweden", "correct": true},
-        {"text": "Hungary", "correct": false},
-        {"text": "Switzerland", "correct": false}
+        {
+          "text": "Sweden",
+          "correct": true
+        },
+        {
+          "text": "Hungary",
+          "correct": false
+        },
+        {
+          "text": "Switzerland",
+          "correct": false
+        }
       ],
       "difficulty": "medium",
       "fun_fact": "Austria had been annexed by Germany and ceased to exist as a team, so Sweden advanced without kicking a ball in the round.",
@@ -969,9 +1693,18 @@
       "id": "world_cup_en_081",
       "question": "What happens to the original solid-gold FIFA World Cup trophy that the winning team holds up?",
       "answers": [
-        {"text": "The team gives it back; they only keep a replica", "correct": true},
-        {"text": "The team keeps it forever as a permanent prize", "correct": false},
-        {"text": "It is melted down and recast after each tournament", "correct": false}
+        {
+          "text": "The team gives it back; they only keep a replica",
+          "correct": true
+        },
+        {
+          "text": "The team keeps it forever as a permanent prize",
+          "correct": false
+        },
+        {
+          "text": "It is melted down and recast after each tournament",
+          "correct": false
+        }
       ],
       "difficulty": "easy",
       "fun_fact": "Since 1974 the trophy has stayed FIFA property — winners get a gold-plated bronze replica to take home, and the real cup goes straight back into FIFA's possession.",
@@ -981,9 +1714,18 @@
       "id": "world_cup_en_082",
       "question": "There is no room left to engrave new winners on the base of the current World Cup trophy after which year?",
       "answers": [
-        {"text": "2038", "correct": true},
-        {"text": "2026", "correct": false},
-        {"text": "2050", "correct": false}
+        {
+          "text": "2038",
+          "correct": true
+        },
+        {
+          "text": "2026",
+          "correct": false
+        },
+        {
+          "text": "2050",
+          "correct": false
+        }
       ],
       "difficulty": "medium",
       "fun_fact": "The trophy's base has space for only 17 winners' name plates; once 2038 fills the last slot, FIFA will need a redesigned base or a new trophy.",
@@ -993,9 +1735,18 @@
       "id": "world_cup_en_083",
       "question": "Although it looks like a solid gold statuette, what is actually true of the FIFA World Cup trophy's construction?",
       "answers": [
-        {"text": "Its upper portion is hollow to keep the weight manageable", "correct": true},
-        {"text": "It is solid 18-carat gold all the way through", "correct": false},
-        {"text": "The figures are gold-plated brass, not real gold", "correct": false}
+        {
+          "text": "Its upper portion is hollow to keep the weight manageable",
+          "correct": true
+        },
+        {
+          "text": "It is solid 18-carat gold all the way through",
+          "correct": false
+        },
+        {
+          "text": "The figures are gold-plated brass, not real gold",
+          "correct": false
+        }
       ],
       "difficulty": "medium",
       "fun_fact": "The trophy is about 6.1 kg of 18-carat gold — if it were solid all the way through it would weigh roughly 70–80 kg, so the upper portion is hollow.",
@@ -1005,33 +1756,60 @@
       "id": "world_cup_en_084",
       "question": "The very first World Cup trophy was once hidden under a bed in a shoebox to keep it safe during World War II. Who hid it there?",
       "answers": [
-        {"text": "An Italian FIFA official", "correct": true},
-        {"text": "A Brazilian football federation clerk", "correct": false},
-        {"text": "A Swiss bank security guard", "correct": false}
+        {
+          "text": "An Italian FIFA official",
+          "correct": true
+        },
+        {
+          "text": "A Brazilian football federation clerk",
+          "correct": false
+        },
+        {
+          "text": "A Swiss bank security guard",
+          "correct": false
+        }
       ],
       "difficulty": "medium",
       "fun_fact": "Ottorino Barassi smuggled the Jules Rimet trophy out of a bank vault and kept it in a shoebox under his bed in Rome so occupying troops couldn't seize it.",
       "category": "World Cup"
     },
     {
-      "id": "world_cup_en_085",
-      "question": "In 1966, the stolen Jules Rimet World Cup trophy was famously found by a dog. What was the dog's name?",
+      "id": "world_cup_en_180",
+      "question": "Which host nation won the 1978 final after extra time?",
       "answers": [
-        {"text": "Pickles", "correct": true},
-        {"text": "Rufus", "correct": false},
-        {"text": "Bobby", "correct": false}
+        {
+          "text": "Argentina",
+          "correct": true
+        },
+        {
+          "text": "Brazil",
+          "correct": false
+        },
+        {
+          "text": "The Netherlands",
+          "correct": false
+        }
       ],
       "difficulty": "easy",
-      "fun_fact": "A collie named Pickles sniffed out the trophy wrapped in newspaper under a hedge in south London a week after it was stolen, days before the 1966 tournament.",
+      "fun_fact": "It won 3-1 against the Netherlands, who were losing a second final in a row after 1974.",
       "category": "World Cup"
     },
     {
       "id": "world_cup_en_086",
       "question": "The original Jules Rimet trophy was permanently given to Brazil after they won it a third time. What happened to it afterward?",
       "answers": [
-        {"text": "It was stolen again in 1983 and never recovered", "correct": true},
-        {"text": "It is on display in a museum in Rio today", "correct": false},
-        {"text": "It was returned to FIFA after a legal dispute", "correct": false}
+        {
+          "text": "It was stolen again in 1983 and never recovered",
+          "correct": true
+        },
+        {
+          "text": "It is on display in a museum in Rio today",
+          "correct": false
+        },
+        {
+          "text": "It was returned to FIFA after a legal dispute",
+          "correct": false
+        }
       ],
       "difficulty": "medium",
       "fun_fact": "Brazil kept it permanently after their 1970 win, but it was stolen from the federation's headquarters in 1983 and is widely believed to have been melted down.",
@@ -1041,33 +1819,60 @@
       "id": "world_cup_en_087",
       "question": "For most of World Cup history, who supplied the official match ball?",
       "answers": [
-        {"text": "Whichever host nation's manufacturer was chosen", "correct": true},
-        {"text": "Adidas, from the very first tournament onward", "correct": false},
-        {"text": "FIFA manufactured the balls itself in Switzerland", "correct": false}
+        {
+          "text": "Whichever host nation's manufacturer was chosen",
+          "correct": true
+        },
+        {
+          "text": "Adidas, from the very first tournament onward",
+          "correct": false
+        },
+        {
+          "text": "FIFA manufactured the balls itself in Switzerland",
+          "correct": false
+        }
       ],
       "difficulty": "medium",
       "fun_fact": "Adidas only became the exclusive ball supplier in 1970; before that, host countries supplied balls — and in the 1930 final the two teams even argued over whose ball to use.",
       "category": "World Cup"
     },
     {
-      "id": "world_cup_en_088",
-      "question": "In the 1930 World Cup final, Argentina and Uruguay couldn't agree on the ball, so how was it resolved?",
+      "id": "world_cup_en_181",
+      "question": "Which goalkeeper captained his country to the World Cup title in 2010?",
       "answers": [
-        {"text": "They used a different ball in each half", "correct": true},
-        {"text": "A coin toss decided the single ball used", "correct": false},
-        {"text": "The referee brought his own neutral ball", "correct": false}
+        {
+          "text": "Iker Casillas",
+          "correct": true
+        },
+        {
+          "text": "Gianluigi Buffon",
+          "correct": false
+        },
+        {
+          "text": "Manuel Neuer",
+          "correct": false
+        }
       ],
-      "difficulty": "hard",
-      "fun_fact": "Argentina's ball was used in the first half (they led 2–1) and Uruguay's in the second — Uruguay then came back to win 4–2, fueling 'ball superstition' jokes for decades.",
+      "difficulty": "medium",
+      "fun_fact": "He saved a one-on-one from Arjen Robben in the final with his outstretched boot, minutes before Spain scored.",
       "category": "World Cup"
     },
     {
       "id": "world_cup_en_089",
       "question": "The 2010 World Cup ball, the Jabulani, became infamous among players for what reason?",
       "answers": [
-        {"text": "It moved unpredictably in the air, frustrating goalkeepers", "correct": true},
-        {"text": "It was too heavy and caused players' injuries", "correct": false},
-        {"text": "It deflated repeatedly during matches", "correct": false}
+        {
+          "text": "It moved unpredictably in the air, frustrating goalkeepers",
+          "correct": true
+        },
+        {
+          "text": "It was too heavy and caused players' injuries",
+          "correct": false
+        },
+        {
+          "text": "It deflated repeatedly during matches",
+          "correct": false
+        }
       ],
       "difficulty": "easy",
       "fun_fact": "Its ultra-smooth surface caused erratic 'knuckleball' flight; goalkeepers hated it so much that NASA later studied its aerodynamics to explain the swerve.",
@@ -1077,9 +1882,18 @@
       "id": "world_cup_en_090",
       "question": "The 2022 World Cup ball contained something no previous match ball had. What was it?",
       "answers": [
-        {"text": "A motion sensor sending data 500 times per second", "correct": true},
-        {"text": "A built-in GPS tracker for anti-theft", "correct": false},
-        {"text": "A small camera in the panel seams", "correct": false}
+        {
+          "text": "A motion sensor sending data 500 times per second",
+          "correct": true
+        },
+        {
+          "text": "A built-in GPS tracker for anti-theft",
+          "correct": false
+        },
+        {
+          "text": "A small camera in the panel seams",
+          "correct": false
+        }
       ],
       "difficulty": "medium",
       "fun_fact": "The Al Rihla ball held a sensor that helped detect exact kick moments for offside calls — it was central to disallowing a Cristiano Ronaldo 'goal' he claimed to have headed.",
@@ -1089,9 +1903,18 @@
       "id": "world_cup_en_091",
       "question": "At the 1986 World Cup, the mascot was a jalapeño pepper. What was its most unusual feature?",
       "answers": [
-        {"text": "It had a moustache and sombrero", "correct": true},
-        {"text": "It could change color in the heat", "correct": false},
-        {"text": "It was the first mascot with no face", "correct": false}
+        {
+          "text": "It had a moustache and sombrero",
+          "correct": true
+        },
+        {
+          "text": "It could change color in the heat",
+          "correct": false
+        },
+        {
+          "text": "It was the first mascot with no face",
+          "correct": false
+        }
       ],
       "difficulty": "easy",
       "fun_fact": "Named 'Pique' (a pun on picante), the chili-pepper mascot leaned hard into Mexican stereotype iconography that would raise eyebrows today.",
@@ -1101,9 +1924,18 @@
       "id": "world_cup_en_092",
       "question": "The 1966 England World Cup mascot 'World Cup Willie' is credited as a historical first. What was it?",
       "answers": [
-        {"text": "The first official World Cup mascot ever", "correct": true},
-        {"text": "The first mascot to be an animal", "correct": false},
-        {"text": "The first mascot voiced by a celebrity", "correct": false}
+        {
+          "text": "The first official World Cup mascot ever",
+          "correct": true
+        },
+        {
+          "text": "The first mascot to be an animal",
+          "correct": false
+        },
+        {
+          "text": "The first mascot voiced by a celebrity",
+          "correct": false
+        }
       ],
       "difficulty": "easy",
       "fun_fact": "World Cup Willie, a lion in a Union Jack shirt, was the first World Cup mascot — and arguably the first major sporting mascot, predating most Olympic ones.",
@@ -1113,9 +1945,18 @@
       "id": "world_cup_en_093",
       "question": "The 2010 World Cup in South Africa was the first tournament where the host's home crowd became famous for what sound?",
       "answers": [
-        {"text": "The drone of plastic vuvuzela horns", "correct": true},
-        {"text": "Synchronized whistling between goals", "correct": false},
-        {"text": "A continuous war-drum rhythm", "correct": false}
+        {
+          "text": "The drone of plastic vuvuzela horns",
+          "correct": true
+        },
+        {
+          "text": "Synchronized whistling between goals",
+          "correct": false
+        },
+        {
+          "text": "A continuous war-drum rhythm",
+          "correct": false
+        }
       ],
       "difficulty": "easy",
       "fun_fact": "The vuvuzela's constant 120-decibel hum was so disruptive that broadcasters developed audio filters and some players said they couldn't hear teammates on the pitch.",
@@ -1125,9 +1966,18 @@
       "id": "world_cup_en_094",
       "question": "Which referee lost control of the brutal 1962 'Battle of Santiago' between Chile and Italy, an experience that later inspired a famous invention?",
       "answers": [
-        {"text": "English referee Ken Aston", "correct": true},
-        {"text": "A FIFA official who abandoned the game early", "correct": false},
-        {"text": "A local Chilean referee later banned for life", "correct": false}
+        {
+          "text": "English referee Ken Aston",
+          "correct": true
+        },
+        {
+          "text": "A FIFA official who abandoned the game early",
+          "correct": false
+        },
+        {
+          "text": "A local Chilean referee later banned for life",
+          "correct": false
+        }
       ],
       "difficulty": "hard",
       "fun_fact": "Aston needed police help to get two Italians off the pitch during the chaos — and the experience later inspired him to invent the yellow and red card system after stopping at a traffic light.",
@@ -1137,45 +1987,81 @@
       "id": "world_cup_en_095",
       "question": "What everyday object inspired the invention of yellow and red cards in football?",
       "answers": [
-        {"text": "Traffic lights", "correct": true},
-        {"text": "Playing cards from a poker game", "correct": false},
-        {"text": "Colored boxing-ring corner flags", "correct": false}
+        {
+          "text": "Traffic lights",
+          "correct": true
+        },
+        {
+          "text": "Playing cards from a poker game",
+          "correct": false
+        },
+        {
+          "text": "Colored boxing-ring corner flags",
+          "correct": false
+        }
       ],
       "difficulty": "easy",
       "fun_fact": "Referee Ken Aston conceived the cards while stopped at a traffic light — yellow for caution, red for stop — and they debuted at the 1970 World Cup.",
       "category": "World Cup"
     },
     {
-      "id": "world_cup_en_096",
-      "question": "At the 2006 World Cup, a referee accidentally did what to one player in a single match?",
+      "id": "world_cup_en_182",
+      "question": "Which was the first World Cup held outside Europe and South America?",
       "answers": [
-        {"text": "Showed him three yellow cards before sending him off", "correct": true},
-        {"text": "Sent off the wrong player entirely", "correct": false},
-        {"text": "Awarded a goal the player never scored", "correct": false}
+        {
+          "text": "1970 in Mexico",
+          "correct": true
+        },
+        {
+          "text": "1994 in the USA",
+          "correct": false
+        },
+        {
+          "text": "2002 in South Korea and Japan",
+          "correct": false
+        }
       ],
-      "difficulty": "hard",
-      "fun_fact": "Graham Poll booked Croatia's Josip Šimunić three times before realizing the error — he gave a second yellow, missed that it warranted a red, then a third before sending him off.",
+      "difficulty": "medium",
+      "fun_fact": "The first eight tournaments alternated between the two continents; Mexico broke the pattern in 1970.",
       "category": "World Cup"
     },
     {
-      "id": "world_cup_en_097",
-      "question": "Before penalty shootouts existed, how were drawn World Cup knockout matches sometimes decided?",
+      "id": "world_cup_en_183",
+      "question": "Which was the first World Cup contested by 32 teams?",
       "answers": [
-        {"text": "By the toss of a coin", "correct": true},
-        {"text": "By total corners taken in the match", "correct": false},
-        {"text": "By a free-kick accuracy contest", "correct": false}
+        {
+          "text": "1998 in France",
+          "correct": true
+        },
+        {
+          "text": "1994 in the USA",
+          "correct": false
+        },
+        {
+          "text": "2002 in South Korea and Japan",
+          "correct": false
+        }
       ],
       "difficulty": "medium",
-      "fun_fact": "A coin toss decided some tied matches — Italy reached the 1968 European final this way after a goalless semi-final — and FIFA only introduced penalty shootouts to the World Cup in 1978 (first used 1982).",
+      "fun_fact": "The field had grown from 16 to 24 in 1982 and stayed at 32 until the 2026 expansion to 48.",
       "category": "World Cup"
     },
     {
       "id": "world_cup_en_098",
       "question": "The 'golden goal' rule, where the first goal in extra time ended the match, was used at how many World Cups?",
       "answers": [
-        {"text": "Only two tournaments before being scrapped", "correct": true},
-        {"text": "It is still in use today", "correct": false},
-        {"text": "For over 40 years until the 1990s", "correct": false}
+        {
+          "text": "Only two tournaments before being scrapped",
+          "correct": true
+        },
+        {
+          "text": "It is still in use today",
+          "correct": false
+        },
+        {
+          "text": "For over 40 years until the 1990s",
+          "correct": false
+        }
       ],
       "difficulty": "medium",
       "fun_fact": "Golden goal applied at only two World Cups, 1998 and 2002, and was abolished by 2004 because it made teams play too defensively, fearing one mistake.",
@@ -1185,33 +2071,60 @@
       "id": "world_cup_en_099",
       "question": "In the very first World Cup match in 1930, what unusual thing was true of the referee compared to today?",
       "answers": [
-        {"text": "Referees wore ordinary jackets and ties, not kit", "correct": true},
-        {"text": "There was no referee, only the two captains", "correct": false},
-        {"text": "The referee played as an extra outfield player", "correct": false}
+        {
+          "text": "Referees wore ordinary jackets and ties, not kit",
+          "correct": true
+        },
+        {
+          "text": "There was no referee, only the two captains",
+          "correct": false
+        },
+        {
+          "text": "The referee played as an extra outfield player",
+          "correct": false
+        }
       ],
       "difficulty": "hard",
       "fun_fact": "Early World Cup referees officiated in formal attire — jackets, long trousers and sometimes ties — and standardized referee uniforms only came much later.",
       "category": "World Cup"
     },
     {
-      "id": "world_cup_en_100",
-      "question": "The number of substitutions a team is allowed in a World Cup match was, for many early tournaments, set at what?",
+      "id": "world_cup_en_184",
+      "question": "Who was the first player ever sent off in a World Cup final?",
       "answers": [
-        {"text": "Zero — no substitutions were permitted at all", "correct": true},
-        {"text": "Exactly one per match", "correct": false},
-        {"text": "Unlimited, as in friendlies", "correct": false}
+        {
+          "text": "Pedro Monzón",
+          "correct": true
+        },
+        {
+          "text": "Zinedine Zidane",
+          "correct": false
+        },
+        {
+          "text": "Marco Materazzi",
+          "correct": false
+        }
       ],
-      "difficulty": "medium",
-      "fun_fact": "Substitutes weren't allowed at the World Cup until 1970 — before that, an injured player either soldiered on or his team played a man down for the rest of the match.",
+      "difficulty": "hard",
+      "fun_fact": "Argentina's Monzón was dismissed in the 1990 final, and a teammate followed him before the final whistle.",
       "category": "World Cup"
     },
     {
       "id": "world_cup_en_161",
       "question": "What was this stadium in Montevideo built for in 1930?",
       "answers": [
-        {"text": "The first football World Cup", "correct": true},
-        {"text": "The Olympic Games", "correct": false},
-        {"text": "The first Copa América", "correct": false}
+        {
+          "text": "The first football World Cup",
+          "correct": true
+        },
+        {
+          "text": "The Olympic Games",
+          "correct": false
+        },
+        {
+          "text": "The first Copa América",
+          "correct": false
+        }
       ],
       "difficulty": "medium",
       "fun_fact": "The Estadio Centenario was not finished when the tournament began — rain had delayed the build, and the opening matches had to be played in smaller grounds around the city.",
@@ -1223,12 +2136,21 @@
       "id": "world_cup_en_162",
       "question": "What was this first World Cup trophy called?",
       "answers": [
-        {"text": "The Jules Rimet Cup", "correct": true},
-        {"text": "The Copa Libertadores", "correct": false},
-        {"text": "The Coppa Italia", "correct": false}
+        {
+          "text": "The Jules Rimet Cup",
+          "correct": true
+        },
+        {
+          "text": "The Copa Libertadores",
+          "correct": false
+        },
+        {
+          "text": "The Coppa Italia",
+          "correct": false
+        }
       ],
       "difficulty": "medium",
-      "fun_fact": "Brazil were allowed to keep the trophy in 1970 after a third title. It was stolen in Rio in 1983 and never recovered; it is assumed to have been melted down.",
+      "fun_fact": "Brazil were allowed to keep the trophy for good in 1970, after a third title.",
       "category": "World Cup",
       "image_url": "/quizify/static/img/packs/worldcup/jules-rimet-trophy.webp",
       "reveal_style": "progressive"
@@ -1237,9 +2159,18 @@
       "id": "world_cup_en_163",
       "question": "Which country hosted the tournament advertised here?",
       "answers": [
-        {"text": "Argentina", "correct": false},
-        {"text": "Brazil", "correct": true},
-        {"text": "Portugal", "correct": false}
+        {
+          "text": "Argentina",
+          "correct": false
+        },
+        {
+          "text": "Brazil",
+          "correct": true
+        },
+        {
+          "text": "Portugal",
+          "correct": false
+        }
       ],
       "difficulty": "easy",
       "fun_fact": "The 1950 World Cup had no final: instead of a knockout match, a four-team final group decided it. That the last game turned out to be a decider was an accident of the schedule.",
@@ -1251,9 +2182,18 @@
       "id": "world_cup_en_164",
       "question": "Which moment of 1950 does this photograph show?",
       "answers": [
-        {"text": "An own goal in the opening match", "correct": false},
-        {"text": "A penalty in the semi-final", "correct": false},
-        {"text": "The decisive goal of the last World Cup match", "correct": true}
+        {
+          "text": "An own goal in the opening match",
+          "correct": false
+        },
+        {
+          "text": "A penalty in the semi-final",
+          "correct": false
+        },
+        {
+          "text": "The decisive goal of the last World Cup match",
+          "correct": true
+        }
       ],
       "difficulty": "hard",
       "fun_fact": "Alcides Ghiggia scored in front of some 200,000 people in Rio. He later said only three people had ever silenced the Maracanã: Frank Sinatra, the Pope and himself.",
@@ -1265,9 +2205,18 @@
       "id": "world_cup_en_165",
       "question": "This team won the first World Cup in 1930. Which country did they play for?",
       "answers": [
-        {"text": "Argentina", "correct": false},
-        {"text": "Brazil", "correct": false},
-        {"text": "Uruguay", "correct": true}
+        {
+          "text": "Argentina",
+          "correct": false
+        },
+        {
+          "text": "Brazil",
+          "correct": false
+        },
+        {
+          "text": "Uruguay",
+          "correct": true
+        }
       ],
       "difficulty": "medium",
       "fun_fact": "Uruguay were hosts and reigning Olympic champions. Because the crossing took weeks by ship, only four European teams entered — France, Belgium, Yugoslavia and Romania.",
