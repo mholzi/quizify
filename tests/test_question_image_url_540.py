@@ -178,7 +178,7 @@ def test_picture_packs_ship_urls_the_client_accepts() -> None:
     _require_node()
     questions_dir = REPO / "custom_components" / "quizify" / "questions"
     urls: list[str] = []
-    for pack in ("bilderraetsel-de.json", "picture-round-en.json"):
+    for pack in ("bilderraetsel-de.json", "picture-round-en.json", "imagenes-es.json"):
         data = json.loads((questions_dir / pack).read_text(encoding="utf-8"))
         questions = data["questions"] if isinstance(data, dict) else data
         urls.extend(q["image_url"] for q in questions if q.get("image_url"))

@@ -52,7 +52,7 @@ No apps to download. No accounts to create. Just scan a QR code and play.
 
 **Works on Any Screen** — Dashboard mode for the TV. Players use their phones. Admin runs the show. No extra hardware needed.
 
-**Eleven Themes, Three Languages** — 4,597 questions across 33 themed packs (Geography, Pop Culture, Animals & Nature, Sport, Music, Science, History, Food & Drink, Technology, World Cup, Estimation) in German, English and Spanish. Mix them, filter them, swap mid-session.
+**Twelve Themes, Three Languages** — 4,614 questions across 34 themed packs (Geography, Pop Culture, Animals & Nature, Sport, Music, Science, History, Food & Drink, Technology, World Cup, Estimation, Picture Round) in German, English and Spanish. Mix them, filter them, swap mid-session.
 
 ---
 
@@ -318,7 +318,7 @@ Then **"Start New Game"** (same settings, same players) or **Reset Game** (fresh
 
 ## Question Packs
 
-Quizify ships with **4,597 questions across 33 themed packs in 11 themes**, in German, English and Spanish.
+Quizify ships with **4,614 questions across 34 themed packs in 12 themes**, in German, English and Spanish.
 
 | Theme | 🇩🇪 Deutsch | 🇬🇧 English | 🇪🇸 Español |
 |-------|-------------|-------------|-------------|
@@ -326,16 +326,16 @@ Quizify ships with **4,597 questions across 33 themed packs in 11 themes**, in G
 | 🦋 **Tiere & Natur / Animals & Nature / Naturaleza** | 159 | 160 | 160 |
 | 🎬 **Popkultur / Pop Culture / Cultura Pop** | 159 | 160 | 160 |
 | ⚽ **Sport / Deportes** | 158 | 160 | 160 |
-| 🎵 **Musik / Music** | 160 | 160 | — |
+| 🎵 **Musik / Music / Música** | 160 | 160 | 160 |
 | 🔬 **Wissenschaft / Science / Ciencia** | 160 | 160 | 160 |
 | 📜 **Geschichte / History / Historia** | 159 | 160 | 160 |
-| 🍔 **Essen & Trinken / Food & Drink** | 160 | 160 | — |
-| 💡 **Technik / Technology** | 160 | 160 | — |
+| 🍔 **Essen & Trinken / Food & Drink / Comida** | 160 | 160 | 160 |
+| 💡 **Technik / Technology / Tecnología** | 160 | 160 | 160 |
 | 🏆 **Weltmeisterschaft / World Cup** | 109 | 110 | — |
 | 🎯 **Schätzfragen / Estimation** | 15 | 15 | — |
-| 🖼️ **Bilderrätsel / Picture Round** | 17 | 17 | — |
+| 🖼️ **Bilderrätsel / Picture Round / Ronda de Imágenes** | 17 | 17 | 17 |
 
-Spanish arrived in 1.3.0 and grew through 1.6.1; music, food and technology are the three themes it is still missing. The two Estimation packs hold slider questions rather than multiple choice — see [How to Play](#the-experience); every themed pack now carries five slider questions of its own (#566) on top of its written ones.
+Spanish arrived in 1.3.0 and reached every written theme in 1.9.0; the World Cup and Estimation packs are the two it is still missing. The two Estimation packs hold slider questions rather than multiple choice — see [How to Play](#the-experience); every themed pack now carries five slider questions of its own (#566) on top of its written ones.
 
 Pack selection lives on the **first screen**: a featured pack card (e.g. World Cup) up top, with every other pack as a tappable chip right beneath it — tap to select or deselect, mix several, then hit **Start Game**. Game settings (difficulty, rounds, timer) stay one tap away under **Adjust settings**. **Mixed mode** drops you a random question from every selected pack, so you can stir Geography + Pop + Sport together for chaos mode.
 

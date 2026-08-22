@@ -1,0 +1,382 @@
+{
+  "name": "Ronda de Imágenes",
+  "language": "es",
+  "version": "1.0",
+  "theme": "trivia",
+  "questions": [
+    {
+      "id": "pic-es-001",
+      "question": "¿Quién pintó Los jugadores de cartas?",
+      "answers": [
+        {
+          "text": "Paul Cézanne",
+          "correct": true
+        },
+        {
+          "text": "Édouard Manet",
+          "correct": false
+        },
+        {
+          "text": "Henri de Toulouse-Lautrec",
+          "correct": false
+        }
+      ],
+      "difficulty": "medium",
+      "fun_fact": "Cézanne repitió el motivo cinco veces; una de esas versiones figura entre los cuadros más caros que se han vendido nunca.",
+      "image_url": "/quizify/static/img/packs/picture-round/card-players.webp",
+      "reveal_style": "progressive"
+    },
+    {
+      "id": "pic-es-002",
+      "question": "¿De qué país procede esta pareja de espadas?",
+      "answers": [
+        {
+          "text": "Japón",
+          "correct": true
+        },
+        {
+          "text": "China",
+          "correct": false
+        },
+        {
+          "text": "Corea",
+          "correct": false
+        }
+      ],
+      "difficulty": "medium",
+      "fun_fact": "Un daishō es la pareja de sable largo y corto: llevar los dos a la vez era un privilegio reservado a los samuráis.",
+      "image_url": "/quizify/static/img/packs/picture-round/daisho-swords.webp",
+      "reveal_style": "progressive"
+    },
+    {
+      "id": "pic-es-003",
+      "question": "¿Desde dónde se tomó esta fotografía?",
+      "answers": [
+        {
+          "text": "Desde una órbita alrededor de la Luna",
+          "correct": true
+        },
+        {
+          "text": "Desde la superficie de Marte",
+          "correct": false
+        },
+        {
+          "text": "Desde la Estación Espacial Internacional",
+          "correct": false
+        }
+      ],
+      "difficulty": "easy",
+      "fun_fact": "La «salida de la Tierra» del Apolo 8 se cuenta entre las fotografías que más empujaron al movimiento ecologista.",
+      "image_url": "/quizify/static/img/packs/picture-round/earthrise.webp",
+      "reveal_style": "progressive"
+    },
+    {
+      "id": "pic-es-004",
+      "question": "¿De dónde procede este objeto?",
+      "answers": [
+        {
+          "text": "Del Antiguo Egipto",
+          "correct": true
+        },
+        {
+          "text": "De la Antigua Roma",
+          "correct": false
+        },
+        {
+          "text": "De la época maya",
+          "correct": false
+        }
+      ],
+      "difficulty": "easy",
+      "fun_fact": "Los ojos pintados en el costado servían para que el difunto pudiera mirar hacia fuera del sarcófago.",
+      "image_url": "/quizify/static/img/packs/picture-round/egyptian-coffin.webp",
+      "reveal_style": "progressive"
+    },
+    {
+      "id": "pic-es-005",
+      "question": "¿En qué isla se pintó este cuadro?",
+      "answers": [
+        {
+          "text": "Tahití",
+          "correct": true
+        },
+        {
+          "text": "Cuba",
+          "correct": false
+        },
+        {
+          "text": "Sicilia",
+          "correct": false
+        }
+      ],
+      "difficulty": "hard",
+      "fun_fact": "Gauguin trasladó la Anunciación cristiana a la Polinesia: el título y las figuras mezclan los dos mundos.",
+      "image_url": "/quizify/static/img/packs/picture-round/gauguin-ia-orana-maria.webp",
+      "reveal_style": "progressive"
+    },
+    {
+      "id": "pic-es-006",
+      "question": "¿Qué imagen mundialmente conocida es esta?",
+      "answers": [
+        {
+          "text": "La gran ola de Kanagawa",
+          "correct": true
+        },
+        {
+          "text": "El monte Fuji en la tormenta",
+          "correct": false
+        },
+        {
+          "text": "Olas en Ise",
+          "correct": false
+        }
+      ],
+      "difficulty": "easy",
+      "fun_fact": "No es una pintura, sino una estampa xilográfica: en tiempos de Hokusai se tiraron varios miles de ejemplares.",
+      "image_url": "/quizify/static/img/packs/picture-round/great-wave.webp",
+      "reveal_style": "progressive"
+    },
+    {
+      "id": "pic-es-007",
+      "question": "¿Qué recipiente es este?",
+      "answers": [
+        {
+          "text": "Un ánfora griega",
+          "correct": true
+        },
+        {
+          "text": "Una urna romana",
+          "correct": false
+        },
+        {
+          "text": "Un vaso canopo egipcio",
+          "correct": false
+        }
+      ],
+      "difficulty": "medium",
+      "fun_fact": "Las ánforas transportaban vino y aceite; las decoradas como esta se entregaban además como premio en los juegos.",
+      "image_url": "/quizify/static/img/packs/picture-round/greek-amphora.webp",
+      "reveal_style": "progressive"
+    },
+    {
+      "id": "pic-es-008",
+      "question": "¿De qué siglo es esta pintura?",
+      "answers": [
+        {
+          "text": "Siglo XVI",
+          "correct": true
+        },
+        {
+          "text": "Siglo XVIII",
+          "correct": false
+        },
+        {
+          "text": "Siglo XIX",
+          "correct": false
+        }
+      ],
+      "difficulty": "medium",
+      "fun_fact": "Los segadores, que Bruegel pintó en 1565, forma parte de una serie de seis cuadros sobre las estaciones del año.",
+      "image_url": "/quizify/static/img/packs/picture-round/harvesters.webp",
+      "reveal_style": "progressive"
+    },
+    {
+      "id": "pic-es-009",
+      "question": "¿Qué es esto?",
+      "answers": [
+        {
+          "text": "Una armadura de placas europea",
+          "correct": true
+        },
+        {
+          "text": "Una armadura de samurái japonesa",
+          "correct": false
+        },
+        {
+          "text": "El equipo de un legionario romano",
+          "correct": false
+        }
+      ],
+      "difficulty": "easy",
+      "fun_fact": "Una armadura completa pesaba unos 25 kilos, repartidos por todo el cuerpo en lugar de colgar de los hombros.",
+      "image_url": "/quizify/static/img/packs/picture-round/knight-armor.webp",
+      "reveal_style": "progressive"
+    },
+    {
+      "id": "pic-es-010",
+      "question": "Este retrato provocó un escándalo en 1884. ¿Quién lo pintó?",
+      "answers": [
+        {
+          "text": "John Singer Sargent",
+          "correct": true
+        },
+        {
+          "text": "James McNeill Whistler",
+          "correct": false
+        },
+        {
+          "text": "Gustav Klimt",
+          "correct": false
+        }
+      ],
+      "difficulty": "hard",
+      "fun_fact": "Todo el escándalo giró en torno a un tirante caído; Sargent acabó repintándolo en su sitio.",
+      "image_url": "/quizify/static/img/packs/picture-round/madame-x.webp",
+      "reveal_style": "progressive"
+    },
+    {
+      "id": "pic-es-011",
+      "question": "¿Dónde está esta huella?",
+      "answers": [
+        {
+          "text": "En la Luna",
+          "correct": true
+        },
+        {
+          "text": "En el desierto de Gobi",
+          "correct": false
+        },
+        {
+          "text": "En Marte",
+          "correct": false
+        }
+      ],
+      "difficulty": "easy",
+      "fun_fact": "Sin viento ni agua que la borren, es probable que siga ahí dentro de millones de años.",
+      "image_url": "/quizify/static/img/packs/picture-round/moon-footprint.webp",
+      "reveal_style": "progressive"
+    },
+    {
+      "id": "pic-es-012",
+      "question": "¿Qué es esta página?",
+      "answers": [
+        {
+          "text": "Una miniatura de un manuscrito persa",
+          "correct": true
+        },
+        {
+          "text": "Una vidriera medieval",
+          "correct": false
+        },
+        {
+          "text": "Un rollo chino colgante",
+          "correct": false
+        }
+      ],
+      "difficulty": "hard",
+      "fun_fact": "La hoja procede del Lenguaje de los pájaros, un poema persa en el que las aves se reúnen en asamblea.",
+      "image_url": "/quizify/static/img/packs/picture-round/persian-birds-folio.webp",
+      "reveal_style": "progressive"
+    },
+    {
+      "id": "pic-es-013",
+      "question": "¿Quién pintó este retrato?",
+      "answers": [
+        {
+          "text": "Rembrandt",
+          "correct": true
+        },
+        {
+          "text": "Peter Paul Rubens",
+          "correct": false
+        },
+        {
+          "text": "Anthony van Dyck",
+          "correct": false
+        }
+      ],
+      "difficulty": "hard",
+      "fun_fact": "Rembrandt retrató más de una vez a su mujer, Saskia, en el papel de Flora, la diosa de las flores.",
+      "image_url": "/quizify/static/img/packs/picture-round/rembrandt-flora.webp",
+      "reveal_style": "progressive"
+    },
+    {
+      "id": "pic-es-014",
+      "question": "¿Quién aparece en este retrato?",
+      "answers": [
+        {
+          "text": "Vincent van Gogh",
+          "correct": true
+        },
+        {
+          "text": "Paul Gauguin",
+          "correct": false
+        },
+        {
+          "text": "Edgar Degas",
+          "correct": false
+        }
+      ],
+      "difficulty": "easy",
+      "fun_fact": "Van Gogh se pintó a sí mismo más de 35 veces, sobre todo porque no le llegaba el dinero para pagar a un modelo.",
+      "image_url": "/quizify/static/img/packs/picture-round/self-portrait-straw-hat.webp",
+      "reveal_style": "progressive"
+    },
+    {
+      "id": "pic-es-015",
+      "question": "¿Qué acontecimiento representa esta escena?",
+      "answers": [
+        {
+          "text": "Washington cruzando el Delaware",
+          "correct": true
+        },
+        {
+          "text": "Napoleón cruzando el Berézina",
+          "correct": false
+        },
+        {
+          "text": "César cruzando el Rubicón",
+          "correct": false
+        }
+      ],
+      "difficulty": "medium",
+      "fun_fact": "Se pintó en Düsseldorf en 1851, así que el río del fondo es en realidad el Rin.",
+      "image_url": "/quizify/static/img/packs/picture-round/washington-crossing.webp",
+      "reveal_style": "progressive"
+    },
+    {
+      "id": "pic-es-016",
+      "question": "¿Quién pintó este cuadro?",
+      "answers": [
+        {
+          "text": "Vincent van Gogh",
+          "correct": true
+        },
+        {
+          "text": "Claude Monet",
+          "correct": false
+        },
+        {
+          "text": "Paul Cézanne",
+          "correct": false
+        }
+      ],
+      "difficulty": "easy",
+      "fun_fact": "Van Gogh pintó los cipreses en el verano de 1889, mientras vivía internado en Saint-Rémy.",
+      "image_url": "/quizify/static/img/packs/picture-round/wheat-field-cypresses.webp",
+      "reveal_style": "progressive"
+    },
+    {
+      "id": "pic-es-017",
+      "question": "¿De qué pintor es esta escena?",
+      "answers": [
+        {
+          "text": "Johannes Vermeer",
+          "correct": true
+        },
+        {
+          "text": "Rembrandt",
+          "correct": false
+        },
+        {
+          "text": "Frans Hals",
+          "correct": false
+        }
+      ],
+      "difficulty": "medium",
+      "fun_fact": "De Vermeer solo se conocen unas 35 obras; esta fue la primera que llegó a una colección estadounidense.",
+      "image_url": "/quizify/static/img/packs/picture-round/young-woman-water-pitcher.webp",
+      "reveal_style": "progressive"
+    }
+  ]
+}

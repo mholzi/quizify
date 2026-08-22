@@ -77,6 +77,7 @@ class TestLoadCategory:
         small_packs = {
             "schaetzfragen-de", "estimation-en",       # estimate (#275)
             "bilderraetsel-de", "picture-round-en",    # picture round (#537)
+            "imagenes-es",                             # picture round (es)
         }
         for cat in bank.get_categories():
             if cat.startswith("community-"):
