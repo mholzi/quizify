@@ -3,7 +3,14 @@
 # ===========================================
 
 # ---- Dev / build frameworks ----
-.claude/
+.claude/*
+# …except the stats skill. The report it produces is quoted in the chat and in
+# the wiki, and two bugs in it shipped unnoticed because the file was invisible
+# to every diff. Only this one skill is un-ignored; logs and the other skills
+# stay out.
+!.claude/skills/
+.claude/skills/*
+!.claude/skills/quizify-stats/
 docs/*
 # docs/ holds local working material (design shotguns, scratch), but the
 # release notes are a published artefact: they are the prose behind each
