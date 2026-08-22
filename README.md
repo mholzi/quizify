@@ -8,7 +8,7 @@
 
 Turn any gathering into a trivia battle. Players scan, questions fly, everyone competes. No app needed.
 
-[![Home Assistant](https://img.shields.io/badge/Home%20Assistant-2024.1+-41BDF5?style=for-the-badge&logo=homeassistant&logoColor=white)](https://www.home-assistant.io/)
+[![Home Assistant](https://img.shields.io/badge/Home%20Assistant-2024.12+-41BDF5?style=for-the-badge&logo=homeassistant&logoColor=white)](https://www.home-assistant.io/)
 [![Version](https://img.shields.io/github/v/release/mholzi/quizify?style=for-the-badge&color=ff00ff&label=Version)](https://github.com/mholzi/quizify/releases)
 [![License](https://img.shields.io/badge/License-MIT-green?style=for-the-badge)](LICENSE)
 
@@ -443,7 +443,7 @@ That's it. No mDNS, no broadcast, no additional ports.
 ## Technical Details
 
 ### Requirements
-- **Home Assistant** 2024.1+
+- **Home Assistant** 2024.12+
 - **HACS** (recommended) or manual installation
 - A device with a browser for the admin / TV view; phones for players
 
