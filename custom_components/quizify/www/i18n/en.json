@@ -604,7 +604,8 @@
     "INVALID_FORMAT": "The pack format is invalid. Check the highlighted fields.",
     "RATE_LIMITED": "Too many submissions. Please wait a moment and try again.",
     "GITHUB_ERROR": "Submission service is unavailable right now. Try again later.",
-    "SUBMIT_DISABLED": "Pack submission is not configured."
+    "SUBMIT_DISABLED": "Pack submission is not configured.",
+    "ADMIN_REQUIRED": "This window is not the host — the command was refused. Reopen the admin window from Home Assistant."
   },
   "page": {
     "titleAdmin": "Quizify — Admin",

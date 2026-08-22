@@ -1337,7 +1337,10 @@
             case 'error':
                 // The initial admin_connect attempt before authentication
                 // returns "Admin only" — that's expected handshake noise,
-                // not an error worth showing in the console.
+                // not an error worth showing in the console. A REFUSED
+                // command arrives as ADMIN_REQUIRED instead and is always
+                // shown: swallowing it is what made Skip/Pause/Stop look
+                // dead in #586.
                 if (!(msg.code === 'INVALID_ACTION' && msg.message === 'Admin only')) {
                     console.warn('[Quizify Admin] Error:', msg.code, msg.message);
                 }

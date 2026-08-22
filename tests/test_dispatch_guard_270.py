@@ -12,9 +12,9 @@ fails loudly:
 
   1. Every admin-required type, when sent by a non-admin connection while
      a legitimate admin holds the crown, is rejected with the EXACT
-     "Admin only" error and never reaches its handler.
+     refusal (code ``ADMIN_REQUIRED``) and never reaches its handler.
   2. A representative non-admin type (``submit_answer``) is NOT gated —
-     a non-admin connection reaches its handler with no "Admin only"
+     a non-admin connection reaches its handler with no refusal
      rejection.
   3. The admin-required set in the live dispatch table matches the pinned
      expectation exactly (catches accidental add/remove/flip).
@@ -152,7 +152,7 @@ async def test_admin_required_type_rejected_for_non_admin(
 ) -> None:
     """Each admin-required type, sent by a non-admin connection while a
     legitimate admin holds the crown, MUST be rejected with the exact
-    "Admin only" error and must not mutate game state behind the guard."""
+    refusal and must not mutate game state behind the guard."""
     h = _handler(game, tmp_path)
     rogue_ws = _seed_with_admin(h, game)
     assert game.phase == GamePhase.LOBBY
@@ -165,7 +165,7 @@ async def test_admin_required_type_rejected_for_non_admin(
 
     errs = h._errors.get(id(rogue_ws), [])  # type: ignore[attr-defined]
     assert errs, f"{msg_type} from non-admin produced no error"
-    assert errs[-1]["message"] == "Admin only", (
+    assert errs[-1]["code"] == "ADMIN_REQUIRED", (
         f"{msg_type} rejected with wrong message: {errs[-1]}"
     )
     # The guard fired before the game advanced out of LOBBY.
@@ -177,7 +177,7 @@ async def test_non_admin_type_not_gated(
     game: QuizifyGameState, tmp_path: Path
 ) -> None:
     """A representative non-admin type (``submit_answer``) must NOT be
-    gated: a non-admin connection reaches the handler with no "Admin only"
+    gated: a non-admin connection reaches the handler with no refusal
     rejection (the centralized guard must not over-reach)."""
     h = _handler(game, tmp_path)
     rogue_ws = _seed_with_admin(h, game)
@@ -189,7 +189,7 @@ async def test_non_admin_type_not_gated(
     )
 
     errs = h._errors.get(id(rogue_ws), [])  # type: ignore[attr-defined]
-    assert all(e["message"] != "Admin only" for e in errs), (
+    assert all(e["code"] != "ADMIN_REQUIRED" for e in errs), (
         f"submit_answer was wrongly admin-gated: {errs}"
     )
 

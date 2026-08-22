@@ -184,7 +184,7 @@ async def test_reset_during_active_game_delivers_to_all_players(
 # auth guard in ``_handle_message`` — which is exactly where the reopened
 # bug lived. Pressing reset routed through ``reset_game`` → the guard
 # rejected the legitimate host → the client silently swallowed the
-# "Admin only" error → nothing happened server-side ("no reset processing
+# refusal → nothing happened server-side ("no reset processing
 # at all"). Root cause: the #209 single-admin invariant compared admin
 # slots by NAME only, so when the host's /admin → /player redirect
 # re-joined under a disambiguated name ("Host 2") while the stale "Host"
@@ -238,7 +238,7 @@ async def test_legit_admin_reset_authorized_and_clears(
 
     assert game.phase == GamePhase.LOBBY
     assert game.get_players() == []
-    # No "Admin only" rejection was sent to the host.
+    # No refusal was sent to the host.
     sent = h._sent  # type: ignore[attr-defined]
     errs = [m for m in sent.get(id(admin_ws), []) if m.get("type") == "error"]
     assert errs == []
@@ -288,7 +288,7 @@ async def test_non_admin_reset_rejected_while_live_admin_present(
 
     sent = h._sent  # type: ignore[attr-defined]
     errs = [m for m in sent.get(id(rogue_ws), []) if m.get("type") == "error"]
-    assert errs and errs[0]["message"] == "Admin only"
+    assert errs and errs[0]["code"] == "ADMIN_REQUIRED"
     # Game untouched: both players still present, crown still on the host.
     assert len(game.get_players()) == 2
     assert game.get_admin() is not None and game.get_admin().name == "Host"

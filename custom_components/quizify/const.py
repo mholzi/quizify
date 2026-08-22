@@ -48,6 +48,12 @@ ERR_ALREADY_SUBMITTED = "ALREADY_SUBMITTED"
 ERR_FROZEN = "FROZEN"  # frozen player tried to submit during the freeze lockout (#300)
 ERR_NOT_IN_GAME = "NOT_IN_GAME"
 ERR_INVALID_ACTION = "INVALID_ACTION"
+#: A command was understood but refused because the connection does not hold
+#: the admin role (#586). Distinct from ERR_INVALID_ACTION on purpose: the
+#: admin UI suppresses the "Admin only" INVALID_ACTION that the pre-auth
+#: ``admin_connect`` handshake produces, and that filter used to swallow every
+#: refused Skip/Pause/Stop with it — the buttons looked dead.
+ERR_ADMIN_REQUIRED = "ADMIN_REQUIRED"
 ERR_GAME_FULL = "GAME_FULL"
 ERR_NO_QUESTIONS_REMAINING = "NO_QUESTIONS_REMAINING"
 
