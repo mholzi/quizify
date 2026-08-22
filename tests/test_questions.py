@@ -76,6 +76,7 @@ class TestLoadCategory:
         # gross truncation, just at a size that fits the content.
         small_packs = {
             "schaetzfragen-de", "estimation-en",       # estimate (#275)
+            "estimacion-es",                           # estimate (es)
             "bilderraetsel-de", "picture-round-en",    # picture round (#537)
             "imagenes-es",                             # picture round (es)
         }
