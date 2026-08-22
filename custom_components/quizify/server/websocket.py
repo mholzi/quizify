@@ -12,12 +12,12 @@ from typing import TYPE_CHECKING, Any
 from aiohttp import WSMsgType, web
 
 from custom_components.quizify.const import (
+    ERR_ADMIN_REQUIRED,
     ERR_ALREADY_SUBMITTED,
     ERR_FROZEN,
     ERR_GAME_ALREADY_STARTED,
     ERR_GAME_FULL,
     ERR_GAME_NOT_STARTED,
-    ERR_ADMIN_REQUIRED,
     ERR_INVALID_ACTION,
     ERR_NAME_INVALID,
     ERR_NAME_TAKEN,
