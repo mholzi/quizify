@@ -1,17 +1,30 @@
 {
   "name": "Weltmeisterschaft",
   "language": "de",
-  "version": "1.1",
+  "version": "1.2",
   "theme": "worldcup",
-  "season": {"start": "06-01", "end": "07-31", "label": "⚽ WM-Saison"},
+  "season": {
+    "start": "06-01",
+    "end": "07-31",
+    "label": "⚽ WM-Saison"
+  },
   "questions": [
     {
       "id": "world_cup_de_001",
       "question": "Bei welcher Weltmeisterschaft mussten sich einige Teams ihren Platz nicht erspielen, sondern wurden vom Gastgeber per Einladung dazugebeten?",
       "answers": [
-        {"text": "Bei der allerersten WM 1930 in Uruguay", "correct": true},
-        {"text": "Bei der WM 1950 in Brasilien", "correct": false},
-        {"text": "Bei der WM 1934 in Italien", "correct": false}
+        {
+          "text": "Bei der allerersten WM 1930 in Uruguay",
+          "correct": true
+        },
+        {
+          "text": "Bei der WM 1950 in Brasilien",
+          "correct": false
+        },
+        {
+          "text": "Bei der WM 1934 in Italien",
+          "correct": false
+        }
       ],
       "difficulty": "easy",
       "fun_fact": "Weil die Anreise per Schiff nach Südamerika wochenlang dauerte, sagten viele europäische Verbände ab — am Ende reisten nur vier europäische Mannschaften an.",
@@ -21,9 +34,18 @@
       "id": "world_cup_de_003",
       "question": "Was war an der Weltmeisterschaft 1950 in Brasilien organisatorisch höchst ungewöhnlich?",
       "answers": [
-        {"text": "Es gab kein echtes Endspiel, sondern eine Finalrunde mit mehreren Mannschaften", "correct": true},
-        {"text": "Alle Spiele fanden in einem einzigen Stadion statt", "correct": false},
-        {"text": "Es gab erstmals ein Elfmeterschießen im Finale", "correct": false}
+        {
+          "text": "Es gab kein echtes Endspiel, sondern eine Finalrunde mit mehreren Mannschaften",
+          "correct": true
+        },
+        {
+          "text": "Alle Spiele fanden in einem einzigen Stadion statt",
+          "correct": false
+        },
+        {
+          "text": "Es gab erstmals ein Elfmeterschießen im Finale",
+          "correct": false
+        }
       ],
       "difficulty": "medium",
       "fun_fact": "Das letzte Spiel dieser Finalrunde wurde im Maracanã vor weit über 100.000 Zuschauern ausgetragen und ging als Schock für die Gastgeber in die Geschichte ein.",
@@ -33,9 +55,18 @@
       "id": "world_cup_de_004",
       "question": "Wie viele Mannschaften nahmen am allerersten WM-Turnier 1930 teil?",
       "answers": [
-        {"text": "13 Mannschaften", "correct": true},
-        {"text": "24 Mannschaften", "correct": false},
-        {"text": "32 Mannschaften", "correct": false}
+        {
+          "text": "13 Mannschaften",
+          "correct": true
+        },
+        {
+          "text": "24 Mannschaften",
+          "correct": false
+        },
+        {
+          "text": "32 Mannschaften",
+          "correct": false
+        }
       ],
       "difficulty": "easy",
       "fun_fact": "Es gab 1930 keine Qualifikation — man konnte einfach zusagen. Trotzdem kamen nur 13 Teams zusammen, weil die Reise nach Südamerika so beschwerlich war.",
@@ -45,9 +76,18 @@
       "id": "world_cup_de_005",
       "question": "Welches Land richtete eine Fußball-WM aus, obwohl es sich sportlich nie dafür qualifiziert hätte?",
       "answers": [
-        {"text": "Katar 2022", "correct": true},
-        {"text": "Südafrika 2010", "correct": false},
-        {"text": "Japan 2002", "correct": false}
+        {
+          "text": "Katar 2022",
+          "correct": true
+        },
+        {
+          "text": "Südafrika 2010",
+          "correct": false
+        },
+        {
+          "text": "Japan 2002",
+          "correct": false
+        }
       ],
       "difficulty": "easy",
       "fun_fact": "Als Gastgeber war Katar automatisch dabei — es war die erste Teilnahme des Landes an einer WM-Endrunde überhaupt.",
@@ -57,9 +97,18 @@
       "id": "world_cup_de_006",
       "question": "Wann fand die erste und bislang einzige Winter-Weltmeisterschaft der Männer statt?",
       "answers": [
-        {"text": "2022 in Katar", "correct": true},
-        {"text": "2018 in Russland", "correct": false},
-        {"text": "2014 in Brasilien", "correct": false}
+        {
+          "text": "2022 in Katar",
+          "correct": true
+        },
+        {
+          "text": "2018 in Russland",
+          "correct": false
+        },
+        {
+          "text": "2014 in Brasilien",
+          "correct": false
+        }
       ],
       "difficulty": "easy",
       "fun_fact": "Wegen der Sommerhitze auf der Arabischen Halbinsel wurde das Turnier in den November und Dezember verlegt — mitten in die laufenden europäischen Ligasaisons.",
@@ -69,9 +118,18 @@
       "id": "world_cup_de_007",
       "question": "Welche WM wurde von zwei Ländern gemeinsam ausgerichtet — das erste Mal in der Turniergeschichte?",
       "answers": [
-        {"text": "2002 in Südkorea und Japan", "correct": true},
-        {"text": "1990 in Italien und Frankreich", "correct": false},
-        {"text": "1974 in West- und Ostdeutschland", "correct": false}
+        {
+          "text": "2002 in Südkorea und Japan",
+          "correct": true
+        },
+        {
+          "text": "1990 in Italien und Frankreich",
+          "correct": false
+        },
+        {
+          "text": "1974 in West- und Ostdeutschland",
+          "correct": false
+        }
       ],
       "difficulty": "medium",
       "fun_fact": "Die beiden Gastgeber konnten sich nicht auf eine Reihenfolge im Namen einigen — am Ende setzte die FIFA Korea vor Japan, was diplomatisch heikel war.",
@@ -81,9 +139,18 @@
       "id": "world_cup_de_008",
       "question": "Welches Detail machte die WM-Auslosung 1938 besonders kurios?",
       "answers": [
-        {"text": "Titelverteidiger und Gastgeber waren beide automatisch gesetzt", "correct": true},
-        {"text": "Die Gruppen wurden per Münzwurf bestimmt", "correct": false},
-        {"text": "Es nahmen nur europäische Mannschaften teil", "correct": false}
+        {
+          "text": "Titelverteidiger und Gastgeber waren beide automatisch gesetzt",
+          "correct": true
+        },
+        {
+          "text": "Die Gruppen wurden per Münzwurf bestimmt",
+          "correct": false
+        },
+        {
+          "text": "Es nahmen nur europäische Mannschaften teil",
+          "correct": false
+        }
       ],
       "difficulty": "hard",
       "fun_fact": "1938 wurde zum ersten Mal die Regel eingeführt, dass der amtierende Weltmeister automatisch qualifiziert ist — eine Regelung, die später wieder abgeschafft wurde.",
@@ -93,9 +160,18 @@
       "id": "world_cup_de_009",
       "question": "Welches Turnierformat verwendete die WM 1950 ausnahmsweise, das es vorher und nachher nie wieder gab?",
       "answers": [
-        {"text": "Eine abschließende Gruppenphase statt eines K.o.-Finales", "correct": true},
-        {"text": "Ein doppeltes Finale mit Hin- und Rückspiel", "correct": false},
-        {"text": "Ein Turnier komplett ohne Gruppenphase", "correct": false}
+        {
+          "text": "Eine abschließende Gruppenphase statt eines K.o.-Finales",
+          "correct": true
+        },
+        {
+          "text": "Ein doppeltes Finale mit Hin- und Rückspiel",
+          "correct": false
+        },
+        {
+          "text": "Ein Turnier komplett ohne Gruppenphase",
+          "correct": false
+        }
       ],
       "difficulty": "hard",
       "fun_fact": "Hätte Brasilien im letzten Spiel nur ein Unentschieden geholt, wäre es Weltmeister geworden — es verlor jedoch gegen Uruguay und brach damit ein ganzes Land.",
@@ -105,9 +181,18 @@
       "id": "world_cup_de_010",
       "question": "Welche Mannschaft wurde jemals Weltmeister, ohne im Turnier ein einziges Spiel zu bestreiten?",
       "answers": [
-        {"text": "Keine – jeder Weltmeister musste seine Partien tatsächlich austragen", "correct": true},
-        {"text": "Indien gewann 1950 kampflos, weil mehrere Gegner zurückzogen", "correct": false},
-        {"text": "Österreich erbte 1938 den Titel nach dem 'Anschluss'", "correct": false}
+        {
+          "text": "Keine – jeder Weltmeister musste seine Partien tatsächlich austragen",
+          "correct": true
+        },
+        {
+          "text": "Indien gewann 1950 kampflos, weil mehrere Gegner zurückzogen",
+          "correct": false
+        },
+        {
+          "text": "Österreich erbte 1938 den Titel nach dem 'Anschluss'",
+          "correct": false
+        }
       ],
       "difficulty": "hard",
       "fun_fact": "Beim olympischen Fußball gab es früher kampflose Siege durch Rückzüge des Gegners, doch bei einer FIFA-WM musste jeder Champion seine Spiele wirklich gewinnen.",
@@ -117,9 +202,18 @@
       "id": "world_cup_de_011",
       "question": "Warum sagte Indien seine Teilnahme an der WM 1950 ab — entgegen einer beliebten Legende?",
       "answers": [
-        {"text": "Vor allem wegen Reisekosten und Terminproblemen, nicht wegen eines Barfuß-Verbots", "correct": true},
-        {"text": "Weil die FIFA das Spielen ohne Schuhe verbot", "correct": false},
-        {"text": "Weil das Land politisch boykottiert wurde", "correct": false}
+        {
+          "text": "Vor allem wegen Reisekosten und Terminproblemen, nicht wegen eines Barfuß-Verbots",
+          "correct": true
+        },
+        {
+          "text": "Weil die FIFA das Spielen ohne Schuhe verbot",
+          "correct": false
+        },
+        {
+          "text": "Weil das Land politisch boykottiert wurde",
+          "correct": false
+        }
       ],
       "difficulty": "medium",
       "fun_fact": "Die hartnäckige Geschichte, Indien habe barfuß spielen wollen und sei deshalb ausgeschlossen worden, gilt heute als stark übertrieben bis falsch.",
@@ -129,9 +223,18 @@
       "id": "world_cup_de_012",
       "question": "Bei welcher WM wurde erstmals ein Maskottchen eingesetzt?",
       "answers": [
-        {"text": "1966 in England mit dem Löwen 'World Cup Willie'", "correct": true},
-        {"text": "1974 in Deutschland mit den Figuren 'Tip und Tap'", "correct": false},
-        {"text": "1970 in Mexiko mit dem Jungen 'Juanito'", "correct": false}
+        {
+          "text": "1966 in England mit dem Löwen 'World Cup Willie'",
+          "correct": true
+        },
+        {
+          "text": "1974 in Deutschland mit den Figuren 'Tip und Tap'",
+          "correct": false
+        },
+        {
+          "text": "1970 in Mexiko mit dem Jungen 'Juanito'",
+          "correct": false
+        }
       ],
       "difficulty": "medium",
       "fun_fact": "World Cup Willie war eines der ersten Sport-Maskottchen der Welt überhaupt und löste einen regelrechten Merchandising-Boom aus.",
@@ -141,9 +244,18 @@
       "id": "world_cup_de_013",
       "question": "Welche technische Neuerung wurde bei der WM 1970 in Mexiko zum ersten Mal in einem WM-Spiel eingeführt?",
       "answers": [
-        {"text": "Gelbe und rote Karten", "correct": true},
-        {"text": "Der Videobeweis", "correct": false},
-        {"text": "Die Torlinientechnik", "correct": false}
+        {
+          "text": "Gelbe und rote Karten",
+          "correct": true
+        },
+        {
+          "text": "Der Videobeweis",
+          "correct": false
+        },
+        {
+          "text": "Die Torlinientechnik",
+          "correct": false
+        }
       ],
       "difficulty": "easy",
       "fun_fact": "Die Idee zu den farbigen Karten kam einem Schiedsrichter im Straßenverkehr — Ampeln inspirierten das System aus Gelb für Verwarnung und Rot für Platzverweis.",
@@ -153,9 +265,18 @@
       "id": "world_cup_de_014",
       "question": "Was war an der WM 1970 in Mexiko aus Sicht der Fernsehzuschauer eine Premiere?",
       "answers": [
-        {"text": "Es war die erste WM, die in Farbe übertragen wurde", "correct": true},
-        {"text": "Es war die erste WM mit Live-Kommentar", "correct": false},
-        {"text": "Es war die erste WM mit Zeitlupenwiederholungen", "correct": false}
+        {
+          "text": "Es war die erste WM, die in Farbe übertragen wurde",
+          "correct": true
+        },
+        {
+          "text": "Es war die erste WM mit Live-Kommentar",
+          "correct": false
+        },
+        {
+          "text": "Es war die erste WM mit Zeitlupenwiederholungen",
+          "correct": false
+        }
       ],
       "difficulty": "medium",
       "fun_fact": "Wegen der Höhenlage und der Mittagshitze wurden viele Spiele zur besten Sendezeit für das europäische Publikum angesetzt — sehr zum Leidwesen der Spieler.",
@@ -165,9 +286,18 @@
       "id": "world_cup_de_015",
       "question": "Welche WM-Endrunde wurde erstmals mit 32 Mannschaften ausgetragen?",
       "answers": [
-        {"text": "1998 in Frankreich", "correct": true},
-        {"text": "1994 in den USA", "correct": false},
-        {"text": "2002 in Korea und Japan", "correct": false}
+        {
+          "text": "1998 in Frankreich",
+          "correct": true
+        },
+        {
+          "text": "1994 in den USA",
+          "correct": false
+        },
+        {
+          "text": "2002 in Korea und Japan",
+          "correct": false
+        }
       ],
       "difficulty": "medium",
       "fun_fact": "Davor spielten lange Zeit nur 24 Teams. Das Feld von 32 hielt sich zwei Jahrzehnte, bevor es für 2026 auf 48 Mannschaften erweitert wurde.",
@@ -177,9 +307,18 @@
       "id": "world_cup_de_016",
       "question": "Welche WM-Endrunde fand zum ersten Mal auf afrikanischem Boden statt?",
       "answers": [
-        {"text": "Südafrika 2010", "correct": true},
-        {"text": "Marokko 1998", "correct": false},
-        {"text": "Ägypten 2006", "correct": false}
+        {
+          "text": "Südafrika 2010",
+          "correct": true
+        },
+        {
+          "text": "Marokko 1998",
+          "correct": false
+        },
+        {
+          "text": "Ägypten 2006",
+          "correct": false
+        }
       ],
       "difficulty": "easy",
       "fun_fact": "Erst 80 Jahre nach der ersten WM kam das Turnier auf den afrikanischen Kontinent — bis dahin waren stets nur Europa und Amerika Gastgeber gewesen.",
@@ -189,9 +328,18 @@
       "id": "world_cup_de_017",
       "question": "Welche WM gilt bis heute beim durchschnittlichen Stadionbesuch pro Spiel als eine der bestbesuchten?",
       "answers": [
-        {"text": "USA 1994", "correct": true},
-        {"text": "Brasilien 2014", "correct": false},
-        {"text": "Deutschland 2006", "correct": false}
+        {
+          "text": "USA 1994",
+          "correct": true
+        },
+        {
+          "text": "Brasilien 2014",
+          "correct": false
+        },
+        {
+          "text": "Deutschland 2006",
+          "correct": false
+        }
       ],
       "difficulty": "easy",
       "fun_fact": "Die riesigen American-Football-Stadien boten enorme Kapazitäten — ein struktureller Vorteil, den kleinere Fußballarenen anderswo nicht hatten.",
@@ -201,9 +349,18 @@
       "id": "world_cup_de_018",
       "question": "Was geschah bei der WM 1986, nachdem das ursprünglich vorgesehene Gastgeberland kurzfristig absagte?",
       "answers": [
-        {"text": "Mexiko sprang ein und wurde zum zweiten Mal Gastgeber", "correct": true},
-        {"text": "Das Turnier wurde um ein Jahr verschoben", "correct": false},
-        {"text": "Es wurde erstmals auf zwei Kontinente verteilt", "correct": false}
+        {
+          "text": "Mexiko sprang ein und wurde zum zweiten Mal Gastgeber",
+          "correct": true
+        },
+        {
+          "text": "Das Turnier wurde um ein Jahr verschoben",
+          "correct": false
+        },
+        {
+          "text": "Es wurde erstmals auf zwei Kontinente verteilt",
+          "correct": false
+        }
       ],
       "difficulty": "medium",
       "fun_fact": "Ursprünglich war Kolumbien vorgesehen, das aus wirtschaftlichen Gründen zurücktrat. So wurde Mexiko 1986 das erste Land, das zweimal eine Männer-WM ausrichtete.",
@@ -213,9 +370,18 @@
       "id": "world_cup_de_019",
       "question": "Welche WM-Endrunde kam mit nur 13 Spielen aus — weniger als ein Drittel heutiger Turniere?",
       "answers": [
-        {"text": "Die erste WM 1930", "correct": true},
-        {"text": "Die WM 1934", "correct": false},
-        {"text": "Die WM 1938", "correct": false}
+        {
+          "text": "Die erste WM 1930",
+          "correct": true
+        },
+        {
+          "text": "Die WM 1934",
+          "correct": false
+        },
+        {
+          "text": "Die WM 1938",
+          "correct": false
+        }
       ],
       "difficulty": "easy",
       "fun_fact": "Bei modernen Turnieren werden über 60 Partien ausgetragen — ab 2026 mit 48 Teams sogar über 100.",
@@ -225,9 +391,18 @@
       "id": "world_cup_de_020",
       "question": "Welches Land qualifizierte sich für die WM 1938, trat dann aber gar nicht erst an, weil es politisch von der Landkarte verschwand?",
       "answers": [
-        {"text": "Österreich", "correct": true},
-        {"text": "Die Tschechoslowakei", "correct": false},
-        {"text": "Jugoslawien", "correct": false}
+        {
+          "text": "Österreich",
+          "correct": true
+        },
+        {
+          "text": "Die Tschechoslowakei",
+          "correct": false
+        },
+        {
+          "text": "Jugoslawien",
+          "correct": false
+        }
       ],
       "difficulty": "hard",
       "fun_fact": "Durch den Anschluss an das Deutsche Reich existierte die österreichische Nationalmannschaft nicht mehr; einige ihrer Spieler liefen stattdessen für Deutschland auf.",
@@ -237,9 +412,18 @@
       "id": "world_cup_de_021",
       "question": "Welcher Spieler erzielte beim allerersten WM-Spiel 1930 das erste Tor der WM-Geschichte?",
       "answers": [
-        {"text": "Der Franzose Lucien Laurent", "correct": true},
-        {"text": "Der Uruguayer Héctor Castro", "correct": false},
-        {"text": "Der Argentinier Guillermo Stábile", "correct": false}
+        {
+          "text": "Der Franzose Lucien Laurent",
+          "correct": true
+        },
+        {
+          "text": "Der Uruguayer Héctor Castro",
+          "correct": false
+        },
+        {
+          "text": "Der Argentinier Guillermo Stábile",
+          "correct": false
+        }
       ],
       "difficulty": "easy",
       "fun_fact": "Laurent arbeitete hauptberuflich in einer Automobilfabrik und musste sich für die WM in Uruguay unbezahlten Urlaub nehmen.",
@@ -249,9 +433,18 @@
       "id": "world_cup_de_022",
       "question": "Welcher Torhüter erzielte bei einer WM ein Tor?",
       "answers": [
-        {"text": "Der Paraguayer José Luis Chilavert hätte es fast – doch der Erste war ein anderer Keeper", "correct": false},
-        {"text": "Kein Torhüter hat je bei einer WM getroffen", "correct": true},
-        {"text": "Der Brasilianer Rogério Ceni", "correct": false}
+        {
+          "text": "Der Paraguayer José Luis Chilavert hätte es fast – doch der Erste war ein anderer Keeper",
+          "correct": false
+        },
+        {
+          "text": "Kein Torhüter hat je bei einer WM getroffen",
+          "correct": true
+        },
+        {
+          "text": "Der Brasilianer Rogério Ceni",
+          "correct": false
+        }
       ],
       "difficulty": "medium",
       "fun_fact": "Obwohl mehrere Keeper wie Chilavert oder Rogério Ceni im Verein regelmäßig per Freistoß und Elfmeter trafen, gelang bei einer WM-Endrunde noch keinem Torhüter ein Treffer.",
@@ -261,9 +454,18 @@
       "id": "world_cup_de_023",
       "question": "Wie alt war Pelé, als er beim WM-Finale 1958 zwei Tore schoss und Weltmeister wurde?",
       "answers": [
-        {"text": "17 Jahre", "correct": true},
-        {"text": "21 Jahre", "correct": false},
-        {"text": "19 Jahre", "correct": false}
+        {
+          "text": "17 Jahre",
+          "correct": true
+        },
+        {
+          "text": "21 Jahre",
+          "correct": false
+        },
+        {
+          "text": "19 Jahre",
+          "correct": false
+        }
       ],
       "difficulty": "easy",
       "fun_fact": "Pelé ist bis heute der jüngste Spieler, der je in einem WM-Finale getroffen hat – nach dem zweiten Tor brach er auf dem Rasen in Tränen aus.",
@@ -273,9 +475,18 @@
       "id": "world_cup_de_024",
       "question": "Welcher Spieler schoss das schnellste Tor der WM-Geschichte – schon nach rund elf Sekunden?",
       "answers": [
-        {"text": "Der Türke Hakan Şükür 2002", "correct": true},
-        {"text": "Der Engländer Bryan Robson 1982", "correct": false},
-        {"text": "Der Deutsche Thomas Müller 2010", "correct": false}
+        {
+          "text": "Der Türke Hakan Şükür 2002",
+          "correct": true
+        },
+        {
+          "text": "Der Engländer Bryan Robson 1982",
+          "correct": false
+        },
+        {
+          "text": "Der Deutsche Thomas Müller 2010",
+          "correct": false
+        }
       ],
       "difficulty": "medium",
       "fun_fact": "Şükür traf bereits nach etwa elf Sekunden im Spiel um Platz drei gegen Südkorea – es blieb sein einziges Tor bei dieser Weltmeisterschaft.",
@@ -285,9 +496,18 @@
       "id": "world_cup_de_025",
       "question": "Welcher deutsche Spieler ist mit 16 Treffern alleiniger WM-Rekordtorschütze unter den Deutschen?",
       "answers": [
-        {"text": "Miroslav Klose", "correct": true},
-        {"text": "Gerd Müller", "correct": false},
-        {"text": "Jürgen Klinsmann", "correct": false}
+        {
+          "text": "Miroslav Klose",
+          "correct": true
+        },
+        {
+          "text": "Gerd Müller",
+          "correct": false
+        },
+        {
+          "text": "Jürgen Klinsmann",
+          "correct": false
+        }
       ],
       "difficulty": "easy",
       "fun_fact": "Klose ist zugleich der erfolgreichste WM-Torschütze aller Zeiten und stand bei vier verschiedenen Weltmeisterschaften jeweils auf der Torschützenliste.",
@@ -297,9 +517,18 @@
       "id": "world_cup_de_026",
       "question": "Welcher Spieler erzielte als bislang Einziger drei Tore in einem WM-Finale?",
       "answers": [
-        {"text": "Der Engländer Geoff Hurst 1966", "correct": true},
-        {"text": "Der Brasilianer Vavá 1958", "correct": false},
-        {"text": "Der Argentinier Mario Kempes 1978", "correct": false}
+        {
+          "text": "Der Engländer Geoff Hurst 1966",
+          "correct": true
+        },
+        {
+          "text": "Der Brasilianer Vavá 1958",
+          "correct": false
+        },
+        {
+          "text": "Der Argentinier Mario Kempes 1978",
+          "correct": false
+        }
       ],
       "difficulty": "medium",
       "fun_fact": "Hursts zweiter Treffer – der Ball sprang von der Unterkante der Latte herunter – gilt bis heute als eines der umstrittensten Tore der Fußballgeschichte.",
@@ -309,9 +538,18 @@
       "id": "world_cup_de_027",
       "question": "Welcher Spieler wurde 1930 mit acht Treffern erster WM-Torschützenkönig der Geschichte?",
       "answers": [
-        {"text": "Der Argentinier Guillermo Stábile", "correct": true},
-        {"text": "Der Uruguayer Pedro Cea", "correct": false},
-        {"text": "Der US-Amerikaner Bert Patenaude", "correct": false}
+        {
+          "text": "Der Argentinier Guillermo Stábile",
+          "correct": true
+        },
+        {
+          "text": "Der Uruguayer Pedro Cea",
+          "correct": false
+        },
+        {
+          "text": "Der US-Amerikaner Bert Patenaude",
+          "correct": false
+        }
       ],
       "difficulty": "hard",
       "fun_fact": "Stábile bestritt vor der WM noch nie ein Länderspiel für Argentinien und rückte nur wegen einer Verletzung des Kapitäns in die Startelf.",
@@ -321,9 +559,18 @@
       "id": "world_cup_de_028",
       "question": "Welcher Spieler erzielte beim legendären 7:1 Deutschlands gegen Brasilien 2014 mit seinem Tor seinen WM-Rekord?",
       "answers": [
-        {"text": "Miroslav Klose – sein 16. und letztes WM-Tor", "correct": true},
-        {"text": "Thomas Müller – sein 10. WM-Tor", "correct": false},
-        {"text": "Toni Kroos – sein erstes WM-Tor", "correct": false}
+        {
+          "text": "Miroslav Klose – sein 16. und letztes WM-Tor",
+          "correct": true
+        },
+        {
+          "text": "Thomas Müller – sein 10. WM-Tor",
+          "correct": false
+        },
+        {
+          "text": "Toni Kroos – sein erstes WM-Tor",
+          "correct": false
+        }
       ],
       "difficulty": "medium",
       "fun_fact": "Mit diesem Treffer überholte Klose den Brasilianer Ronaldo – ausgerechnet im Halbfinale gegen Brasilien und im Land des bisherigen Rekordhalters.",
@@ -333,9 +580,18 @@
       "id": "world_cup_de_029",
       "question": "Welcher Spieler erzielte als bislang Einziger in einem einzigen WM-Spiel fünf Tore?",
       "answers": [
-        {"text": "Der Russe Oleg Salenko 1994", "correct": true},
-        {"text": "Der Ungar Sándor Kocsis 1954", "correct": false},
-        {"text": "Der Brasilianer Ronaldo 2002", "correct": false}
+        {
+          "text": "Der Russe Oleg Salenko 1994",
+          "correct": true
+        },
+        {
+          "text": "Der Ungar Sándor Kocsis 1954",
+          "correct": false
+        },
+        {
+          "text": "Der Brasilianer Ronaldo 2002",
+          "correct": false
+        }
       ],
       "difficulty": "hard",
       "fun_fact": "Salenko traf beim 6:1 gegen Kamerun fünfmal, schied mit Russland aber trotzdem in der Vorrunde aus und wurde dennoch Torschützenkönig des Turniers.",
@@ -345,9 +601,18 @@
       "id": "world_cup_de_030",
       "question": "Welcher Spieler traf bei vier aufeinanderfolgenden Weltmeisterschaften?",
       "answers": [
-        {"text": "Der Brasilianer Pelé", "correct": true},
-        {"text": "Der Argentinier Diego Maradona", "correct": false},
-        {"text": "Der Italiener Paolo Rossi", "correct": false}
+        {
+          "text": "Der Brasilianer Pelé",
+          "correct": true
+        },
+        {
+          "text": "Der Argentinier Diego Maradona",
+          "correct": false
+        },
+        {
+          "text": "Der Italiener Paolo Rossi",
+          "correct": false
+        }
       ],
       "difficulty": "medium",
       "fun_fact": "Pelé traf 1958, 1962, 1966 und 1970 – obwohl ihn 1962 eine frühe Verletzung und 1966 brutale Fouls viele Spiele kosteten, blieb er bei jedem dieser vier Turniere auf der Torschützenliste.",
@@ -357,9 +622,18 @@
       "id": "world_cup_de_031",
       "question": "Welcher Spieler schoss bei der WM 1994 ein folgenschweres Eigentor und wurde nach seiner Heimkehr erschossen?",
       "answers": [
-        {"text": "Der Kolumbianer Andrés Escobar", "correct": true},
-        {"text": "Der Mexikaner Marcelino Bernal", "correct": false},
-        {"text": "Der Bolivianer Marco Etcheverry", "correct": false}
+        {
+          "text": "Der Kolumbianer Andrés Escobar",
+          "correct": true
+        },
+        {
+          "text": "Der Mexikaner Marcelino Bernal",
+          "correct": false
+        },
+        {
+          "text": "Der Bolivianer Marco Etcheverry",
+          "correct": false
+        }
       ],
       "difficulty": "medium",
       "fun_fact": "Escobars Eigentor gegen die USA besiegelte Kolumbiens Vorrunden-Aus; wenige Tage nach der Heimkehr wurde er in Medellín erschossen.",
@@ -369,9 +643,18 @@
       "id": "world_cup_de_032",
       "question": "Welcher Spieler erzielte 1966 für Nordkorea das Tor zur sensationellen 3:0-Führung gegen Portugal – ehe Eusébio das Spiel drehte?",
       "answers": [
-        {"text": "Der Nordkoreaner Yang Sung-kook", "correct": true},
-        {"text": "Der Nordkoreaner Li Chan-myung", "correct": false},
-        {"text": "Der Nordkoreaner Pak Doo-ik", "correct": false}
+        {
+          "text": "Der Nordkoreaner Yang Sung-kook",
+          "correct": true
+        },
+        {
+          "text": "Der Nordkoreaner Li Chan-myung",
+          "correct": false
+        },
+        {
+          "text": "Der Nordkoreaner Pak Doo-ik",
+          "correct": false
+        }
       ],
       "difficulty": "hard",
       "fun_fact": "Nordkorea führte im Viertelfinale früh 3:0, verlor aber noch 3:5 – Eusébio allein erzielte vier Tore beim portugiesischen Comeback. Pak Doo-ik hatte zuvor das berühmte 1:0 gegen Italien geschossen.",
@@ -381,9 +664,18 @@
       "id": "world_cup_de_033",
       "question": "Welcher Spieler beendete sein letztes WM-Spiel mit einem Kopfstoß gegen einen Gegner und der Roten Karte?",
       "answers": [
-        {"text": "Der Franzose Zinédine Zidane 2006", "correct": true},
-        {"text": "Der Niederländer Marco van Basten 1994", "correct": false},
-        {"text": "Der Italiener Roberto Baggio 1994", "correct": false}
+        {
+          "text": "Der Franzose Zinédine Zidane 2006",
+          "correct": true
+        },
+        {
+          "text": "Der Niederländer Marco van Basten 1994",
+          "correct": false
+        },
+        {
+          "text": "Der Italiener Roberto Baggio 1994",
+          "correct": false
+        }
       ],
       "difficulty": "easy",
       "fun_fact": "Zidane hatte im selben Finale per Elfmeter getroffen – sein Karriereende war damit zugleich ein Tor und ein Platzverweis im selben Spiel.",
@@ -393,9 +685,18 @@
       "id": "world_cup_de_034",
       "question": "Welcher Spieler erzielte 1986 sowohl die 'Hand Gottes' als auch das später zum 'Tor des Jahrhunderts' gewählte Solo – im selben Spiel?",
       "answers": [
-        {"text": "Der Argentinier Diego Maradona", "correct": true},
-        {"text": "Der Argentinier Jorge Valdano", "correct": false},
-        {"text": "Der Argentinier Jorge Burruchaga", "correct": false}
+        {
+          "text": "Der Argentinier Diego Maradona",
+          "correct": true
+        },
+        {
+          "text": "Der Argentinier Jorge Valdano",
+          "correct": false
+        },
+        {
+          "text": "Der Argentinier Jorge Burruchaga",
+          "correct": false
+        }
       ],
       "difficulty": "easy",
       "fun_fact": "Beide Treffer fielen im Viertelfinale gegen England binnen vier Minuten – erst das Handtor, dann der Lauf über den halben Platz.",
@@ -405,9 +706,18 @@
       "id": "world_cup_de_035",
       "question": "Welcher Spieler schoss bei einer WM ein Tor und wurde später im selben Turnier wegen eines Bisses gesperrt?",
       "answers": [
-        {"text": "Der Uruguayer Luis Suárez 2014", "correct": true},
-        {"text": "Der Italiener Mario Balotelli 2014", "correct": false},
-        {"text": "Der Niederländer Arjen Robben 2014", "correct": false}
+        {
+          "text": "Der Uruguayer Luis Suárez 2014",
+          "correct": true
+        },
+        {
+          "text": "Der Italiener Mario Balotelli 2014",
+          "correct": false
+        },
+        {
+          "text": "Der Niederländer Arjen Robben 2014",
+          "correct": false
+        }
       ],
       "difficulty": "easy",
       "fun_fact": "Suárez hatte zuvor beide Tore beim Sieg gegen England erzielt, biss dann aber Italiens Giorgio Chiellini und wurde für vier Monate gesperrt.",
@@ -417,9 +727,18 @@
       "id": "world_cup_de_036",
       "question": "Welcher Spieler ist der jüngste Torschütze der WM-Geschichte?",
       "answers": [
-        {"text": "Der Brasilianer Pelé 1958", "correct": true},
-        {"text": "Der Mexikaner Manuel Rosas 1930", "correct": false},
-        {"text": "Der Argentinier Lionel Messi 2006", "correct": false}
+        {
+          "text": "Der Brasilianer Pelé 1958",
+          "correct": true
+        },
+        {
+          "text": "Der Mexikaner Manuel Rosas 1930",
+          "correct": false
+        },
+        {
+          "text": "Der Argentinier Lionel Messi 2006",
+          "correct": false
+        }
       ],
       "difficulty": "easy",
       "fun_fact": "Pelé war beim Viertelfinaltor gegen Wales 17 Jahre und 239 Tage alt – ein Rekord, der seit über 60 Jahren Bestand hat.",
@@ -429,9 +748,18 @@
       "id": "world_cup_de_037",
       "question": "Welcher Spieler verschoss 1994 im Finale den entscheidenden Elfmeter, obwohl er das Turnier nahezu im Alleingang dorthin geführt hatte?",
       "answers": [
-        {"text": "Der Italiener Roberto Baggio", "correct": true},
-        {"text": "Der Italiener Franco Baresi", "correct": false},
-        {"text": "Der Brasilianer Romário", "correct": false}
+        {
+          "text": "Der Italiener Roberto Baggio",
+          "correct": true
+        },
+        {
+          "text": "Der Italiener Franco Baresi",
+          "correct": false
+        },
+        {
+          "text": "Der Brasilianer Romário",
+          "correct": false
+        }
       ],
       "difficulty": "easy",
       "fun_fact": "Baggio hatte zuvor fünf Tore in der K.-o.-Runde erzielt und Italien fast allein ins Finale geschossen – dann jagte er den Ball über das Tor.",
@@ -441,9 +769,18 @@
       "id": "world_cup_de_038",
       "question": "Welcher Spieler erzielte den ersten lupenreinen Hattrick der WM-Geschichte?",
       "answers": [
-        {"text": "Der US-Amerikaner Bert Patenaude 1930", "correct": true},
-        {"text": "Der Argentinier Guillermo Stábile 1930", "correct": false},
-        {"text": "Der Ungar Sándor Kocsis 1954", "correct": false}
+        {
+          "text": "Der US-Amerikaner Bert Patenaude 1930",
+          "correct": true
+        },
+        {
+          "text": "Der Argentinier Guillermo Stábile 1930",
+          "correct": false
+        },
+        {
+          "text": "Der Ungar Sándor Kocsis 1954",
+          "correct": false
+        }
       ],
       "difficulty": "hard",
       "fun_fact": "Die FIFA erkannte Patenaudes Hattrick offiziell erst 2006 an – über 75 Jahre nach dem Spiel gegen Paraguay.",
@@ -453,9 +790,18 @@
       "id": "world_cup_de_039",
       "question": "Welcher Spieler traf bei der WM 1970 in jedem einzelnen Spiel, das sein Team bestritt?",
       "answers": [
-        {"text": "Der Brasilianer Jairzinho", "correct": true},
-        {"text": "Der Brasilianer Tostão", "correct": false},
-        {"text": "Der Brasilianer Rivelino", "correct": false}
+        {
+          "text": "Der Brasilianer Jairzinho",
+          "correct": true
+        },
+        {
+          "text": "Der Brasilianer Tostão",
+          "correct": false
+        },
+        {
+          "text": "Der Brasilianer Rivelino",
+          "correct": false
+        }
       ],
       "difficulty": "medium",
       "fun_fact": "Jairzinho traf in allen sechs Spielen Brasiliens inklusive Finale – über ein ganzes Turnier mit sechs Partien bis zum Titel ist diese Serie bis heute unerreicht.",
@@ -465,9 +811,18 @@
       "id": "world_cup_de_040",
       "question": "Welcher Spieler gewann 1982 den Goldenen Schuh, obwohl er nur drei Spiele für seine entscheidenden Tore brauchte und davor torlos blieb?",
       "answers": [
-        {"text": "Der Italiener Paolo Rossi", "correct": true},
-        {"text": "Der Deutsche Karl-Heinz Rummenigge", "correct": false},
-        {"text": "Der Pole Zbigniew Boniek", "correct": false}
+        {
+          "text": "Der Italiener Paolo Rossi",
+          "correct": true
+        },
+        {
+          "text": "Der Deutsche Karl-Heinz Rummenigge",
+          "correct": false
+        },
+        {
+          "text": "Der Pole Zbigniew Boniek",
+          "correct": false
+        }
       ],
       "difficulty": "medium",
       "fun_fact": "Rossi kam frisch aus einer zweijährigen Sperre wegen eines Wettskandals und blieb die ganze Vorrunde torlos, ehe er sechs Tore am Stück erzielte.",
@@ -477,9 +832,18 @@
       "id": "world_cup_de_041",
       "question": "Bei der WM 1966 verschwand der Pokal (Jules Rimet) vor dem Turnier in England spurlos. Wer fand ihn schließlich wieder?",
       "answers": [
-        {"text": "Ein Hund namens Pickles in einem Vorgarten", "correct": true},
-        {"text": "Ein Müllmann auf einer Deponie", "correct": false},
-        {"text": "Ein Polizist bei einer Verkehrskontrolle", "correct": false}
+        {
+          "text": "Ein Hund namens Pickles in einem Vorgarten",
+          "correct": true
+        },
+        {
+          "text": "Ein Müllmann auf einer Deponie",
+          "correct": false
+        },
+        {
+          "text": "Ein Polizist bei einer Verkehrskontrolle",
+          "correct": false
+        }
       ],
       "difficulty": "easy",
       "fun_fact": "Pickles bekam für seinen Fund eine Belohnung und wurde landesweit gefeiert; sein Halsband ist bis heute in einem Museum ausgestellt.",
@@ -489,9 +853,18 @@
       "id": "world_cup_de_042",
       "question": "Im WM-Finale 2006 wurde Zinédine Zidane vom Platz gestellt. Was tat er, das zum Platzverweis führte?",
       "answers": [
-        {"text": "Er rammte Marco Materazzi den Kopf in die Brust", "correct": true},
-        {"text": "Er trat einem Gegner ins Gesicht", "correct": false},
-        {"text": "Er bespuckte den Schiedsrichter", "correct": false}
+        {
+          "text": "Er rammte Marco Materazzi den Kopf in die Brust",
+          "correct": true
+        },
+        {
+          "text": "Er trat einem Gegner ins Gesicht",
+          "correct": false
+        },
+        {
+          "text": "Er bespuckte den Schiedsrichter",
+          "correct": false
+        }
       ],
       "difficulty": "easy",
       "fun_fact": "Der Schiedsrichter hatte den Stoß gar nicht direkt gesehen; erst nach Rücksprache mit seinem Team erfolgte die Rote Karte — Videobeweis gab es damals noch nicht.",
@@ -501,9 +874,18 @@
       "id": "world_cup_de_043",
       "question": "Bei der WM 1950 gewann eine Mannschaft sensationell gegen England, obwohl ihre Spieler teils nur Halbprofis waren. Welches Land war das?",
       "answers": [
-        {"text": "USA", "correct": true},
-        {"text": "Kanada", "correct": false},
-        {"text": "Irland", "correct": false}
+        {
+          "text": "USA",
+          "correct": true
+        },
+        {
+          "text": "Kanada",
+          "correct": false
+        },
+        {
+          "text": "Irland",
+          "correct": false
+        }
       ],
       "difficulty": "easy",
       "fun_fact": "Das 1:0 gilt bis heute als eine der größten Überraschungen der WM-Geschichte; eine englische Zeitung hielt das Ergebnis angeblich für einen Tippfehler und druckte 10:1 für England.",
@@ -513,9 +895,18 @@
       "id": "world_cup_de_044",
       "question": "Welches Tier wurde bei der WM 2010 durch das angeblich korrekte Vorhersagen von Spielergebnissen weltberühmt?",
       "answers": [
-        {"text": "Ein Tintenfisch (Krake) namens Paul", "correct": true},
-        {"text": "Ein Papagei namens Lola", "correct": false},
-        {"text": "Eine Schildkröte namens Big Head", "correct": false}
+        {
+          "text": "Ein Tintenfisch (Krake) namens Paul",
+          "correct": true
+        },
+        {
+          "text": "Ein Papagei namens Lola",
+          "correct": false
+        },
+        {
+          "text": "Eine Schildkröte namens Big Head",
+          "correct": false
+        }
       ],
       "difficulty": "easy",
       "fun_fact": "Paul lebte in einem Aquarium in Oberhausen und wählte zwischen zwei Futterboxen mit den Flaggen der Teams; er lag bei allen acht getippten Spielen richtig.",
@@ -525,9 +916,18 @@
       "id": "world_cup_de_045",
       "question": "Bei der WM 1986 erzielte Diego Maradona gegen England ein irreguläres Tor. Wie wurde es bekannt?",
       "answers": [
-        {"text": "Als die 'Hand Gottes'", "correct": true},
-        {"text": "Als das 'Phantomtor'", "correct": false},
-        {"text": "Als der 'Engelsschuss'", "correct": false}
+        {
+          "text": "Als die 'Hand Gottes'",
+          "correct": true
+        },
+        {
+          "text": "Als das 'Phantomtor'",
+          "correct": false
+        },
+        {
+          "text": "Als der 'Engelsschuss'",
+          "correct": false
+        }
       ],
       "difficulty": "easy",
       "fun_fact": "Im selben Spiel erzielte Maradona wenige Minuten später ein reguläres Tor nach einem Alleingang über den halben Platz, das später zum 'Tor des Jahrhunderts' gewählt wurde.",
@@ -537,9 +937,18 @@
       "id": "world_cup_de_046",
       "question": "Im WM-Finale 1994 zwischen Brasilien und Italien fiel die Entscheidung erstmals auf eine bestimmte Weise. Wie?",
       "answers": [
-        {"text": "Durch Elfmeterschießen", "correct": true},
-        {"text": "Durch ein Golden Goal in der Verlängerung", "correct": false},
-        {"text": "Durch Münzwurf", "correct": false}
+        {
+          "text": "Durch Elfmeterschießen",
+          "correct": true
+        },
+        {
+          "text": "Durch ein Golden Goal in der Verlängerung",
+          "correct": false
+        },
+        {
+          "text": "Durch Münzwurf",
+          "correct": false
+        }
       ],
       "difficulty": "easy",
       "fun_fact": "Roberto Baggio, einer der besten Spieler des Turniers, schoss den entscheidenden Elfmeter über das Tor — eines der berühmtesten Fehlschüsse der Fußballgeschichte.",
@@ -549,9 +958,18 @@
       "id": "world_cup_de_047",
       "question": "Bei der WM 1982 spielten Deutschland und Österreich das sogenannte 'Nichtangriffspakt'-Spiel. Was war daran skandalös?",
       "answers": [
-        {"text": "Beide Teams schoben den Ball kampflos hin und her, weil das Ergebnis beide weiterbrachte", "correct": true},
-        {"text": "Beide Teams traten absichtlich nur mit der zweiten Mannschaft an", "correct": false},
-        {"text": "Beide Mannschaften verließen aus Protest den Platz", "correct": false}
+        {
+          "text": "Beide Teams schoben den Ball kampflos hin und her, weil das Ergebnis beide weiterbrachte",
+          "correct": true
+        },
+        {
+          "text": "Beide Teams traten absichtlich nur mit der zweiten Mannschaft an",
+          "correct": false
+        },
+        {
+          "text": "Beide Mannschaften verließen aus Protest den Platz",
+          "correct": false
+        }
       ],
       "difficulty": "easy",
       "fun_fact": "Das Spiel von Gijón führte dazu, dass die FIFA fortan die letzten Gruppenspiele zeitgleich anpfeifen ließ, um solche Absprachen zu verhindern.",
@@ -561,9 +979,18 @@
       "id": "world_cup_de_048",
       "question": "Welche Nation gewann ihr WM-Eröffnungsspiel 1990 sensationell gegen den amtierenden Weltmeister Argentinien?",
       "answers": [
-        {"text": "Kamerun", "correct": true},
-        {"text": "Nigeria", "correct": false},
-        {"text": "Marokko", "correct": false}
+        {
+          "text": "Kamerun",
+          "correct": true
+        },
+        {
+          "text": "Nigeria",
+          "correct": false
+        },
+        {
+          "text": "Marokko",
+          "correct": false
+        }
       ],
       "difficulty": "easy",
       "fun_fact": "Kamerun gewann 1:0, obwohl die Mannschaft im Laufe des Spiels zwei Spieler durch Rote Karten verlor und am Ende nur zu neunt auf dem Platz stand.",
@@ -573,9 +1000,18 @@
       "id": "world_cup_de_049",
       "question": "Bei der WM 1978 verzögerte Argentinien im Finale gegen die Niederlande absichtlich den Anpfiff. Womit beschwerten sich die Gastgeber über einen Gegenspieler?",
       "answers": [
-        {"text": "Mit einem Gipsverband am Arm eines niederländischen Spielers", "correct": true},
-        {"text": "Mit angeblich zu langen Stollen unter den Schuhen", "correct": false},
-        {"text": "Mit der Farbe der gegnerischen Trikots", "correct": false}
+        {
+          "text": "Mit einem Gipsverband am Arm eines niederländischen Spielers",
+          "correct": true
+        },
+        {
+          "text": "Mit angeblich zu langen Stollen unter den Schuhen",
+          "correct": false
+        },
+        {
+          "text": "Mit der Farbe der gegnerischen Trikots",
+          "correct": false
+        }
       ],
       "difficulty": "medium",
       "fun_fact": "Die Niederländer ließen sich provozieren, und das Aufwärmen sowie der Protest verzögerten das Finale spürbar; die psychologische Störung gilt bis heute als Teil der argentinischen Taktik.",
@@ -585,9 +1021,18 @@
       "id": "world_cup_de_050",
       "question": "Bei der WM 1998 verschwand Brasiliens Star Ronaldo vor dem Finale fast von der Aufstellung und wirkte beim Spiel benommen. Was war passiert?",
       "answers": [
-        {"text": "Er hatte Stunden zuvor einen Krampfanfall erlitten", "correct": true},
-        {"text": "Er hatte sich beim Aufwärmen das Knie verdreht", "correct": false},
-        {"text": "Er hatte eine Lebensmittelvergiftung", "correct": false}
+        {
+          "text": "Er hatte Stunden zuvor einen Krampfanfall erlitten",
+          "correct": true
+        },
+        {
+          "text": "Er hatte sich beim Aufwärmen das Knie verdreht",
+          "correct": false
+        },
+        {
+          "text": "Er hatte eine Lebensmittelvergiftung",
+          "correct": false
+        }
       ],
       "difficulty": "medium",
       "fun_fact": "Ronaldo stand zunächst nicht auf dem Mannschaftsbogen, wurde dann kurzfristig doch aufgestellt; Brasilien verlor das Finale gegen Frankreich mit 0:3.",
@@ -597,9 +1042,18 @@
       "id": "world_cup_de_051",
       "question": "Welches Spiel der WM 1954 ging als 'Wunder von Bern' in die Geschichte ein, weil der klare Favorit verlor?",
       "answers": [
-        {"text": "Das Finale Deutschland gegen Ungarn", "correct": true},
-        {"text": "Das Halbfinale Deutschland gegen Österreich", "correct": false},
-        {"text": "Das Finale Deutschland gegen Brasilien", "correct": false}
+        {
+          "text": "Das Finale Deutschland gegen Ungarn",
+          "correct": true
+        },
+        {
+          "text": "Das Halbfinale Deutschland gegen Österreich",
+          "correct": false
+        },
+        {
+          "text": "Das Finale Deutschland gegen Brasilien",
+          "correct": false
+        }
       ],
       "difficulty": "medium",
       "fun_fact": "Ungarn hatte Deutschland in der Gruppenphase desselben Turniers noch mit 8:3 deutlich geschlagen und war seit Jahren ungeschlagen — im Finale unterlag es dennoch mit 2:3.",
@@ -609,9 +1063,18 @@
       "id": "world_cup_de_052",
       "question": "Bei der WM 1974 traf erstmals auch ein zweites deutsches Team auf die Bundesrepublik. Wer gewann dieses besondere Gruppenspiel?",
       "answers": [
-        {"text": "Die DDR", "correct": true},
-        {"text": "Die Bundesrepublik", "correct": false},
-        {"text": "Es endete unentschieden", "correct": false}
+        {
+          "text": "Die DDR",
+          "correct": true
+        },
+        {
+          "text": "Die Bundesrepublik",
+          "correct": false
+        },
+        {
+          "text": "Es endete unentschieden",
+          "correct": false
+        }
       ],
       "difficulty": "medium",
       "fun_fact": "Die DDR gewann 1:0 durch ein Tor von Jürgen Sparwasser; ironischerweise wurde die Bundesrepublik trotz dieser Niederlage am Ende des Turniers Weltmeister.",
@@ -621,9 +1084,18 @@
       "id": "world_cup_de_053",
       "question": "Im WM-Halbfinale 1982 zwischen Frankreich und Deutschland kam es zu einem brutalen Foul. Was geschah mit dem Franzosen Patrick Battiston?",
       "answers": [
-        {"text": "Torwart Schumacher rammte ihn um, Battiston verlor Zähne und das Bewusstsein", "correct": true},
-        {"text": "Er brach sich nach einem Zweikampf beide Beine", "correct": false},
-        {"text": "Er wurde von einem Gegenspieler gebissen", "correct": false}
+        {
+          "text": "Torwart Schumacher rammte ihn um, Battiston verlor Zähne und das Bewusstsein",
+          "correct": true
+        },
+        {
+          "text": "Er brach sich nach einem Zweikampf beide Beine",
+          "correct": false
+        },
+        {
+          "text": "Er wurde von einem Gegenspieler gebissen",
+          "correct": false
+        }
       ],
       "difficulty": "medium",
       "fun_fact": "Trotz der Schwere des Zusammenpralls zeigte der Schiedsrichter weder Foul noch Karte und entschied sogar auf Abstoß für Deutschland.",
@@ -633,9 +1105,18 @@
       "id": "world_cup_de_054",
       "question": "Bei der WM 1962 in Chile gab es ein Gruppenspiel, das wegen seiner Gewalt als 'Schlacht von Santiago' bekannt wurde. Welche Teams standen sich gegenüber?",
       "answers": [
-        {"text": "Chile und Italien", "correct": true},
-        {"text": "Brasilien und Spanien", "correct": false},
-        {"text": "Argentinien und England", "correct": false}
+        {
+          "text": "Chile und Italien",
+          "correct": true
+        },
+        {
+          "text": "Brasilien und Spanien",
+          "correct": false
+        },
+        {
+          "text": "Argentinien und England",
+          "correct": false
+        }
       ],
       "difficulty": "medium",
       "fun_fact": "Die Polizei musste mehrfach auf den Platz, um Spieler zu trennen; ein italienischer Spieler wurde des Feldes verwiesen, weigerte sich aber zunächst, den Platz zu verlassen.",
@@ -645,9 +1126,18 @@
       "id": "world_cup_de_055",
       "question": "Welches Team gewann bei der WM 1982 sein Spiel gegen Kuwait, das durch einen kuriosen Spielabbruch-Versuch eines Prinzen überschattet wurde?",
       "answers": [
-        {"text": "Frankreich", "correct": true},
-        {"text": "Brasilien", "correct": false},
-        {"text": "Italien", "correct": false}
+        {
+          "text": "Frankreich",
+          "correct": true
+        },
+        {
+          "text": "Brasilien",
+          "correct": false
+        },
+        {
+          "text": "Italien",
+          "correct": false
+        }
       ],
       "difficulty": "medium",
       "fun_fact": "Beim 4:1 kam ein kuwaitischer Prinz aus Protest gegen ein Tor auf den Platz; der Schiedsrichter annullierte den Treffer daraufhin tatsächlich, ließ das Spiel aber zu Ende spielen.",
@@ -657,9 +1147,18 @@
       "id": "world_cup_de_056",
       "question": "Für die WM 1938 hatte sich eine Nation qualifiziert, die schon vor dem Turnier nicht mehr als eigenständiger Staat existierte. Welche?",
       "answers": [
-        {"text": "Österreich", "correct": true},
-        {"text": "Polen", "correct": false},
-        {"text": "Tschechoslowakei", "correct": false}
+        {
+          "text": "Österreich",
+          "correct": true
+        },
+        {
+          "text": "Polen",
+          "correct": false
+        },
+        {
+          "text": "Tschechoslowakei",
+          "correct": false
+        }
       ],
       "difficulty": "medium",
       "fun_fact": "Österreich hatte sich qualifiziert, wurde aber nach dem 'Anschluss' an das Deutsche Reich aufgelöst und zog zurück; einige österreichische Spieler liefen daraufhin für die deutsche Mannschaft auf.",
@@ -669,9 +1168,18 @@
       "id": "world_cup_de_057",
       "question": "Bei der WM 1930 in Uruguay gab es im Finale einen ungewöhnlichen Streit über die Spielausrüstung. Worum ging es?",
       "answers": [
-        {"text": "Welcher Ball verwendet wird — am Ende spielte man je Halbzeit mit einem anderen", "correct": true},
-        {"text": "Ob mit Stollenschuhen gespielt werden darf", "correct": false},
-        {"text": "Welche Trikotfarbe die Gastgeber tragen müssen", "correct": false}
+        {
+          "text": "Welcher Ball verwendet wird — am Ende spielte man je Halbzeit mit einem anderen",
+          "correct": true
+        },
+        {
+          "text": "Ob mit Stollenschuhen gespielt werden darf",
+          "correct": false
+        },
+        {
+          "text": "Welche Trikotfarbe die Gastgeber tragen müssen",
+          "correct": false
+        }
       ],
       "difficulty": "hard",
       "fun_fact": "Argentinien stellte den Ball der ersten Halbzeit, Uruguay den der zweiten; nach Halbzeit eins führte Argentinien, doch Uruguay drehte das Spiel mit 'seinem' Ball und gewann 4:2.",
@@ -681,9 +1189,18 @@
       "id": "world_cup_de_058",
       "question": "Bei der WM 1938 gewann Brasilien ein Spiel, in dem ein Spieler angeblich barfuß weiterspielte. Was war der Grund?",
       "answers": [
-        {"text": "Sein Schuh war im Zweikampf zerrissen und er spielte ohne weiter", "correct": true},
-        {"text": "Er hatte aus Aberglauben absichtlich keine Schuhe angezogen", "correct": false},
-        {"text": "Die Schiedsrichter hatten ihm die Schuhe wegen Regelverstoßes abgenommen", "correct": false}
+        {
+          "text": "Sein Schuh war im Zweikampf zerrissen und er spielte ohne weiter",
+          "correct": true
+        },
+        {
+          "text": "Er hatte aus Aberglauben absichtlich keine Schuhe angezogen",
+          "correct": false
+        },
+        {
+          "text": "Die Schiedsrichter hatten ihm die Schuhe wegen Regelverstoßes abgenommen",
+          "correct": false
+        }
       ],
       "difficulty": "hard",
       "fun_fact": "In dieser Ära waren Ausrüstungsschäden bei den robusten Lederschuhen keine Seltenheit, doch das Weiterspielen ohne Schuh über längere Zeit blieb eine kuriose Ausnahme.",
@@ -693,9 +1210,18 @@
       "id": "world_cup_de_059",
       "question": "Bei der WM 1974 musste ein Spiel zwischen Deutschland und Polen wegen extremer Wetterbedingungen fast verschoben werden. Was machte den Platz nahezu unbespielbar?",
       "answers": [
-        {"text": "Ein Wolkenbruch setzte den Rasen unter Wasser", "correct": true},
-        {"text": "Dichter Nebel nahm die Sicht", "correct": false},
-        {"text": "Der Rasen war über Nacht gefroren", "correct": false}
+        {
+          "text": "Ein Wolkenbruch setzte den Rasen unter Wasser",
+          "correct": true
+        },
+        {
+          "text": "Dichter Nebel nahm die Sicht",
+          "correct": false
+        },
+        {
+          "text": "Der Rasen war über Nacht gefroren",
+          "correct": false
+        }
       ],
       "difficulty": "hard",
       "fun_fact": "Die Feuerwehr pumpte vor dem Anpfiff Wasser vom Platz; das Spiel ging als 'Wasserschlacht von Frankfurt' in die Geschichte ein, Deutschland gewann 1:0 und zog ins Finale ein.",
@@ -705,33 +1231,60 @@
       "id": "world_cup_de_060",
       "question": "Bei der WM 1950 gab es kein klassisches Endspiel — der Titel wurde stattdessen wie entschieden?",
       "answers": [
-        {"text": "Durch eine Finalrunde, deren letztes Spiel zufällig zum Endspiel wurde", "correct": true},
-        {"text": "Durch das beste Torverhältnis aller Teilnehmer", "correct": false},
-        {"text": "Durch eine Abstimmung der teilnehmenden Verbände", "correct": false}
+        {
+          "text": "Durch eine Finalrunde, deren letztes Spiel zufällig zum Endspiel wurde",
+          "correct": true
+        },
+        {
+          "text": "Durch das beste Torverhältnis aller Teilnehmer",
+          "correct": false
+        },
+        {
+          "text": "Durch eine Abstimmung der teilnehmenden Verbände",
+          "correct": false
+        }
       ],
       "difficulty": "hard",
       "fun_fact": "Das letzte Spiel der Finalgruppe zwischen Uruguay und Brasilien entschied faktisch über den Titel; Uruguays Sieg vor rund 200.000 Zuschauern in Rio ging als 'Maracanaço' in die Geschichte ein.",
       "category": "Weltmeisterschaft"
     },
     {
-      "id": "world_cup_de_061",
-      "question": "Welches Land gewann 1950 das WM-Spiel gegen England mit 1:0 – obwohl seine Spieler als blutige Außenseiter galten?",
+      "id": "world_cup_de_171",
+      "question": "Welches Stadion hat zwei WM-Endspiele ausgetragen?",
       "answers": [
-        {"text": "USA", "correct": true},
-        {"text": "Kanada", "correct": false},
-        {"text": "Norwegen", "correct": false}
+        {
+          "text": "Das Aztekenstadion",
+          "correct": true
+        },
+        {
+          "text": "Das Maracanã",
+          "correct": false
+        },
+        {
+          "text": "Wembley",
+          "correct": false
+        }
       ],
-      "difficulty": "medium",
-      "fun_fact": "Das Ergebnis galt in England zunächst als Druckfehler – manche Zeitungen vermuteten, England habe in Wahrheit 10:1 gewonnen.",
+      "difficulty": "easy",
+      "fun_fact": "1970 und 1986, beide in Mexiko-Stadt. Im Maracanã fand erst 2014 ein offizielles Endspiel statt – das Entscheidungsspiel von 1950 war keines.",
       "category": "Weltmeisterschaft"
     },
     {
       "id": "world_cup_de_062",
       "question": "Welche Nationalmannschaft schied bei der WM 2002 als amtierender Weltmeister sieglos und ohne ein einziges erzieltes Tor schon in der Vorrunde aus?",
       "answers": [
-        {"text": "Frankreich", "correct": true},
-        {"text": "Italien", "correct": false},
-        {"text": "Spanien", "correct": false}
+        {
+          "text": "Frankreich",
+          "correct": true
+        },
+        {
+          "text": "Italien",
+          "correct": false
+        },
+        {
+          "text": "Spanien",
+          "correct": false
+        }
       ],
       "difficulty": "easy",
       "fun_fact": "Frankreich war 1998 Weltmeister und 2000 Europameister geworden – und reiste 2002 mit drei Niederlagen und null Toren wieder ab.",
@@ -741,9 +1294,18 @@
       "id": "world_cup_de_063",
       "question": "Welches Land qualifizierte sich 2018 zum ersten Mal überhaupt für eine Fußball-WM und steht damit für einen echten Premieren-Auftritt?",
       "answers": [
-        {"text": "Island", "correct": true},
-        {"text": "Norwegen", "correct": false},
-        {"text": "Finnland", "correct": false}
+        {
+          "text": "Island",
+          "correct": true
+        },
+        {
+          "text": "Norwegen",
+          "correct": false
+        },
+        {
+          "text": "Finnland",
+          "correct": false
+        }
       ],
       "difficulty": "easy",
       "fun_fact": "Island ist mit damals rund 340.000 Einwohnern das kleinste Land, das sich je für eine Männer-WM qualifiziert hat.",
@@ -753,9 +1315,18 @@
       "id": "world_cup_de_064",
       "question": "Welche Mannschaft stürmte bei ihrer allerersten WM-Teilnahme 2002 sensationell bis ins Viertelfinale?",
       "answers": [
-        {"text": "Senegal", "correct": true},
-        {"text": "Nigeria", "correct": false},
-        {"text": "Tunesien", "correct": false}
+        {
+          "text": "Senegal",
+          "correct": true
+        },
+        {
+          "text": "Nigeria",
+          "correct": false
+        },
+        {
+          "text": "Tunesien",
+          "correct": false
+        }
       ],
       "difficulty": "medium",
       "fun_fact": "Senegal schlug im Eröffnungsspiel ausgerechnet den amtierenden Weltmeister Frankreich, die frühere Kolonialmacht, mit 1:0.",
@@ -765,9 +1336,18 @@
       "id": "world_cup_de_065",
       "question": "Welches Team erreichte 1966 als asiatische Außenseiter-Mannschaft das Viertelfinale und führte dort gegen Portugal zwischenzeitlich mit 3:0?",
       "answers": [
-        {"text": "Nordkorea", "correct": true},
-        {"text": "Südkorea", "correct": false},
-        {"text": "Japan", "correct": false}
+        {
+          "text": "Nordkorea",
+          "correct": true
+        },
+        {
+          "text": "Südkorea",
+          "correct": false
+        },
+        {
+          "text": "Japan",
+          "correct": false
+        }
       ],
       "difficulty": "hard",
       "fun_fact": "Portugal drehte das Spiel dank vier Toren von Eusébio noch zum 5:3 – Nordkoreas Lauf endete dramatisch.",
@@ -777,9 +1357,18 @@
       "id": "world_cup_de_066",
       "question": "Welche Mannschaft verlor 1930 das allererste WM-Finale, ohne zuvor ein einziges Qualifikationsspiel bestreiten zu müssen?",
       "answers": [
-        {"text": "Argentinien", "correct": true},
-        {"text": "Brasilien", "correct": false},
-        {"text": "Italien", "correct": false}
+        {
+          "text": "Argentinien",
+          "correct": true
+        },
+        {
+          "text": "Brasilien",
+          "correct": false
+        },
+        {
+          "text": "Italien",
+          "correct": false
+        }
       ],
       "difficulty": "medium",
       "fun_fact": "Bei der ersten WM 1930 gab es gar keine Qualifikation – alle 13 Teilnehmer wurden schlicht eingeladen. Argentinien unterlag im Finale Gastgeber Uruguay mit 2:4.",
@@ -789,9 +1378,18 @@
       "id": "world_cup_de_067",
       "question": "Welches Gastgeberland schied bei seiner eigenen WM 2010 als erster Gastgeber der Geschichte schon in der Vorrunde aus?",
       "answers": [
-        {"text": "Südafrika", "correct": true},
-        {"text": "Japan", "correct": false},
-        {"text": "Mexiko", "correct": false}
+        {
+          "text": "Südafrika",
+          "correct": true
+        },
+        {
+          "text": "Japan",
+          "correct": false
+        },
+        {
+          "text": "Mexiko",
+          "correct": false
+        }
       ],
       "difficulty": "easy",
       "fun_fact": "Südafrika blieb lange ein Sonderfall – erst Katar als Gastgeber 2022 scheiterte ebenfalls in der eigenen Vorrunde.",
@@ -801,9 +1399,18 @@
       "id": "world_cup_de_068",
       "question": "Welche traditionsreiche Fußballnation verpasste die WM 1994 – und beendete damit eine Serie von zuvor zahlreichen Endrundenteilnahmen?",
       "answers": [
-        {"text": "England", "correct": true},
-        {"text": "Brasilien", "correct": false},
-        {"text": "Deutschland", "correct": false}
+        {
+          "text": "England",
+          "correct": true
+        },
+        {
+          "text": "Brasilien",
+          "correct": false
+        },
+        {
+          "text": "Deutschland",
+          "correct": false
+        }
       ],
       "difficulty": "medium",
       "fun_fact": "England scheiterte in der Qualifikation unter anderem an Auswärtsniederlagen gegen die Niederlande und Norwegen (jeweils 0:2).",
@@ -813,9 +1420,18 @@
       "id": "world_cup_de_069",
       "question": "Welche Nationalmannschaft gewann die WM 1934 und 1938 in Folge – und ist damit eines von nur wenigen Teams mit zwei Titeln hintereinander?",
       "answers": [
-        {"text": "Italien", "correct": true},
-        {"text": "Uruguay", "correct": false},
-        {"text": "Österreich", "correct": false}
+        {
+          "text": "Italien",
+          "correct": true
+        },
+        {
+          "text": "Uruguay",
+          "correct": false
+        },
+        {
+          "text": "Österreich",
+          "correct": false
+        }
       ],
       "difficulty": "easy",
       "fun_fact": "Wegen des Zweiten Weltkriegs trug Italien den Titel danach ganze 16 Jahre, bis zur nächsten ausgetragenen WM 1950.",
@@ -825,9 +1441,18 @@
       "id": "world_cup_de_070",
       "question": "Welche Mannschaft zog 2010 erstmals und bis heute einmalig als erstes Team vom afrikanischen Kontinent ins WM-Halbfinale ein? Achtung – Trickfrage zur Geografie.",
       "answers": [
-        {"text": "Keine afrikanische – es war Uruguay gegen Ghana", "correct": true},
-        {"text": "Ghana", "correct": false},
-        {"text": "Kamerun", "correct": false}
+        {
+          "text": "Keine afrikanische – es war Uruguay gegen Ghana",
+          "correct": true
+        },
+        {
+          "text": "Ghana",
+          "correct": false
+        },
+        {
+          "text": "Kamerun",
+          "correct": false
+        }
       ],
       "difficulty": "hard",
       "fun_fact": "Ghana scheiterte 2010 im Viertelfinale an Uruguay erst im Elfmeterschießen, nachdem Suárez einen Ball auf der Linie mit der Hand geklärt hatte – ein afrikanisches Halbfinale gab es bei den Männern noch nie.",
@@ -837,9 +1462,18 @@
       "id": "world_cup_de_071",
       "question": "Welches Land qualifizierte sich für die WM 1938, ohne ein einziges Spiel zu spielen, weil sein einziger Qualifikationsgegner kurzfristig zurückzog?",
       "answers": [
-        {"text": "Schweden", "correct": false},
-        {"text": "Frankreich", "correct": false},
-        {"text": "Niederländisch-Indien (heute Indonesien)", "correct": true}
+        {
+          "text": "Schweden",
+          "correct": false
+        },
+        {
+          "text": "Frankreich",
+          "correct": false
+        },
+        {
+          "text": "Niederländisch-Indien (heute Indonesien)",
+          "correct": true
+        }
       ],
       "difficulty": "hard",
       "fun_fact": "Niederländisch-Indien wurde so das erste asiatische Team bei einer WM – und verlor sein einziges Spiel mit 0:6 gegen Ungarn.",
@@ -849,9 +1483,18 @@
       "id": "world_cup_de_072",
       "question": "Welche Nationalmannschaft verlor 1950 das entscheidende Endrundenspiel im eigenen, übervollen Maracanã – ein Trauma, das bis heute einen eigenen Namen trägt?",
       "answers": [
-        {"text": "Brasilien", "correct": true},
-        {"text": "Argentinien", "correct": false},
-        {"text": "Uruguay", "correct": false}
+        {
+          "text": "Brasilien",
+          "correct": true
+        },
+        {
+          "text": "Argentinien",
+          "correct": false
+        },
+        {
+          "text": "Uruguay",
+          "correct": false
+        }
       ],
       "difficulty": "easy",
       "fun_fact": "Die Niederlage gegen Uruguay heißt in Brasilien bis heute 'Maracanaço' und gilt als nationale Tragödie.",
@@ -861,9 +1504,18 @@
       "id": "world_cup_de_073",
       "question": "Welches Land nahm zwischen 1958 und 2022 an JEDER einzelnen Fußball-WM teil – als einzige Nation überhaupt?",
       "answers": [
-        {"text": "Brasilien", "correct": true},
-        {"text": "Deutschland", "correct": false},
-        {"text": "Italien", "correct": false}
+        {
+          "text": "Brasilien",
+          "correct": true
+        },
+        {
+          "text": "Deutschland",
+          "correct": false
+        },
+        {
+          "text": "Italien",
+          "correct": false
+        }
       ],
       "difficulty": "easy",
       "fun_fact": "Italien, immerhin viermaliger Weltmeister, verpasste sowohl die WM 2018 als auch 2022 komplett.",
@@ -873,9 +1525,18 @@
       "id": "world_cup_de_074",
       "question": "Welche Mannschaft führte im WM-Achtelfinale 1994 gegen den späteren Finalisten Italien und galt dank eines spektakulären Stürmers als große Überraschung Afrikas?",
       "answers": [
-        {"text": "Nigeria", "correct": true},
-        {"text": "Marokko", "correct": false},
-        {"text": "Algerien", "correct": false}
+        {
+          "text": "Nigeria",
+          "correct": true
+        },
+        {
+          "text": "Marokko",
+          "correct": false
+        },
+        {
+          "text": "Algerien",
+          "correct": false
+        }
       ],
       "difficulty": "medium",
       "fun_fact": "Nigeria führte gegen Italien bis zur 88. Minute mit 1:0, ehe Roberto Baggio das Spiel noch drehte; Italien zog ins Finale ein, unterlag dort aber Brasilien.",
@@ -885,9 +1546,18 @@
       "id": "world_cup_de_075",
       "question": "Welches Land erreichte 2018 das WM-Finale, obwohl es ein Land mit weniger als fünf Millionen Einwohnern ist?",
       "answers": [
-        {"text": "Kroatien", "correct": true},
-        {"text": "Belgien", "correct": false},
-        {"text": "Uruguay", "correct": false}
+        {
+          "text": "Kroatien",
+          "correct": true
+        },
+        {
+          "text": "Belgien",
+          "correct": false
+        },
+        {
+          "text": "Uruguay",
+          "correct": false
+        }
       ],
       "difficulty": "medium",
       "fun_fact": "Kroatien musste auf dem Weg ins Finale gleich drei K.o.-Spiele in Folge über die volle Verlängerung gehen.",
@@ -897,9 +1567,18 @@
       "id": "world_cup_de_076",
       "question": "Welche europäische Nation gewann bei ihrer allerersten WM-Teilnahme 1934 prompt den Titel?",
       "answers": [
-        {"text": "Italien", "correct": true},
-        {"text": "Spanien", "correct": false},
-        {"text": "Tschechoslowakei", "correct": false}
+        {
+          "text": "Italien",
+          "correct": true
+        },
+        {
+          "text": "Spanien",
+          "correct": false
+        },
+        {
+          "text": "Tschechoslowakei",
+          "correct": false
+        }
       ],
       "difficulty": "medium",
       "fun_fact": "Italien debütierte 1934 bei einer WM, weil es 1930 nicht nach Uruguay gereist war – und wurde im eigenen Land prompt Weltmeister.",
@@ -909,33 +1588,60 @@
       "id": "world_cup_de_077",
       "question": "Welche Nationalmannschaft schied bei der WM 2014 als Gruppensieger der Vorrunde aus und scheiterte erst im Elfmeterschießen – nachdem ihr Torwart als Außenseiter brillierte?",
       "answers": [
-        {"text": "Costa Rica", "correct": true},
-        {"text": "Honduras", "correct": false},
-        {"text": "Ecuador", "correct": false}
+        {
+          "text": "Costa Rica",
+          "correct": true
+        },
+        {
+          "text": "Honduras",
+          "correct": false
+        },
+        {
+          "text": "Ecuador",
+          "correct": false
+        }
       ],
       "difficulty": "medium",
       "fun_fact": "Costa Rica gewann 2014 eine 'Todesgruppe' mit Italien, England und Uruguay – drei früheren Weltmeistern.",
       "category": "Weltmeisterschaft"
     },
     {
-      "id": "world_cup_de_078",
-      "question": "Welches Team besiegte 1990 im Eröffnungsspiel sensationell den amtierenden Weltmeister Argentinien mit 1:0?",
+      "id": "world_cup_de_172",
+      "question": "Bei welcher WM kam erstmals die Torlinientechnik zum Einsatz?",
       "answers": [
-        {"text": "Kamerun", "correct": true},
-        {"text": "Ägypten", "correct": false},
-        {"text": "Kolumbien", "correct": false}
+        {
+          "text": "2014 in Brasilien",
+          "correct": true
+        },
+        {
+          "text": "2010 in Südafrika",
+          "correct": false
+        },
+        {
+          "text": "2018 in Russland",
+          "correct": false
+        }
       ],
-      "difficulty": "easy",
-      "fun_fact": "Kamerun zog danach als erste afrikanische Mannschaft bis ins WM-Viertelfinale ein – angeführt vom damals schon 38-jährigen Roger Milla.",
+      "difficulty": "medium",
+      "fun_fact": "Sie kam nach dem nicht gegebenen Tor von Frank Lampard 2010, das alle im Stadion sahen außer dem Schiedsrichtergespann.",
       "category": "Weltmeisterschaft"
     },
     {
       "id": "world_cup_de_079",
       "question": "Welche Mannschaft gewann die WM 2010 als erstes europäisches Team außerhalb Europas?",
       "answers": [
-        {"text": "Spanien", "correct": true},
-        {"text": "Niederlande", "correct": false},
-        {"text": "Deutschland", "correct": false}
+        {
+          "text": "Spanien",
+          "correct": true
+        },
+        {
+          "text": "Niederlande",
+          "correct": false
+        },
+        {
+          "text": "Deutschland",
+          "correct": false
+        }
       ],
       "difficulty": "medium",
       "fun_fact": "Spanien wurde 2010 Weltmeister, obwohl es sein allererstes Turnierspiel gegen die Schweiz mit 0:1 verloren hatte.",
@@ -945,9 +1651,18 @@
       "id": "world_cup_de_080",
       "question": "Welche Nationalmannschaft kehrte 2018 nach 36 Jahren Wartezeit zu einer WM-Endrunde zurück?",
       "answers": [
-        {"text": "Peru", "correct": true},
-        {"text": "Bolivien", "correct": false},
-        {"text": "Venezuela", "correct": false}
+        {
+          "text": "Peru",
+          "correct": true
+        },
+        {
+          "text": "Bolivien",
+          "correct": false
+        },
+        {
+          "text": "Venezuela",
+          "correct": false
+        }
       ],
       "difficulty": "easy",
       "fun_fact": "Perus letzte WM-Teilnahme davor lag 1982 – die Rückkehr 2018 bejubelten Fans als Ende einer 36-jährigen Durststrecke.",
@@ -957,9 +1672,18 @@
       "id": "world_cup_de_081",
       "question": "Aus welchem Material besteht der heutige WM-Pokal der FIFA, den der Sieger erhält?",
       "answers": [
-        {"text": "Massives 18-karätiges Gold mit zwei Lagen Malachit am Sockel", "correct": true},
-        {"text": "Vergoldetes Silber mit einem Diamantbesatz", "correct": false},
-        {"text": "Bronze mit einer dünnen Goldauflage", "correct": false}
+        {
+          "text": "Massives 18-karätiges Gold mit zwei Lagen Malachit am Sockel",
+          "correct": true
+        },
+        {
+          "text": "Vergoldetes Silber mit einem Diamantbesatz",
+          "correct": false
+        },
+        {
+          "text": "Bronze mit einer dünnen Goldauflage",
+          "correct": false
+        }
       ],
       "difficulty": "easy",
       "fun_fact": "Der rund 6,1 Kilogramm schwere Pokal besteht aus 18-karätigem Gold; an seinem Sockel sind zwei Ringe aus grünem Malachit eingelassen.",
@@ -969,9 +1693,18 @@
       "id": "world_cup_de_082",
       "question": "Was passiert mit dem heutigen WM-Pokal nach der Siegerehrung?",
       "answers": [
-        {"text": "Der Weltmeister muss ihn zurückgeben und erhält eine vergoldete Replik", "correct": true},
-        {"text": "Der Verband darf ihn vier Jahre lang behalten", "correct": false},
-        {"text": "Er wird im Stadion des Siegerlandes ausgestellt", "correct": false}
+        {
+          "text": "Der Weltmeister muss ihn zurückgeben und erhält eine vergoldete Replik",
+          "correct": true
+        },
+        {
+          "text": "Der Verband darf ihn vier Jahre lang behalten",
+          "correct": false
+        },
+        {
+          "text": "Er wird im Stadion des Siegerlandes ausgestellt",
+          "correct": false
+        }
       ],
       "difficulty": "easy",
       "fun_fact": "Seit 1974 ist es Regel, dass nur die FIFA das Original behält — kein Land darf den aktuellen Pokal dauerhaft besitzen.",
@@ -981,9 +1714,18 @@
       "id": "world_cup_de_083",
       "question": "Wie hieß das erste offizielle WM-Maskottchen der FIFA, das 1966 in England auftrat?",
       "answers": [
-        {"text": "Ein Löwe namens World Cup Willie", "correct": true},
-        {"text": "Ein Bulldogge namens Winston", "correct": false},
-        {"text": "Ein Fuchs namens Reddy", "correct": false}
+        {
+          "text": "Ein Löwe namens World Cup Willie",
+          "correct": true
+        },
+        {
+          "text": "Ein Bulldogge namens Winston",
+          "correct": false
+        },
+        {
+          "text": "Ein Fuchs namens Reddy",
+          "correct": false
+        }
       ],
       "difficulty": "medium",
       "fun_fact": "World Cup Willie war das erste Maskottchen überhaupt bei einer Sport-Großveranstaltung und löste damit einen weltweiten Trend aus.",
@@ -993,9 +1735,18 @@
       "id": "world_cup_de_084",
       "question": "Was geschah 1966 in England mit dem WM-Pokal kurz vor dem Turnier?",
       "answers": [
-        {"text": "Er wurde gestohlen und von einem Hund namens Pickles wiedergefunden", "correct": true},
-        {"text": "Er fiel bei einem Empfang zu Boden und musste repariert werden", "correct": false},
-        {"text": "Er wurde versehentlich an das falsche Stadion geliefert", "correct": false}
+        {
+          "text": "Er wurde gestohlen und von einem Hund namens Pickles wiedergefunden",
+          "correct": true
+        },
+        {
+          "text": "Er fiel bei einem Empfang zu Boden und musste repariert werden",
+          "correct": false
+        },
+        {
+          "text": "Er wurde versehentlich an das falsche Stadion geliefert",
+          "correct": false
+        }
       ],
       "difficulty": "easy",
       "fun_fact": "Pickles erschnüffelte den in Zeitungspapier gewickelten Pokal unter einer Hecke — der Hund wurde daraufhin landesweit zum gefeierten Helden.",
@@ -1005,9 +1756,18 @@
       "id": "world_cup_de_085",
       "question": "Der erste WM-Pokal von 1930 trug ursprünglich welchen Namen?",
       "answers": [
-        {"text": "Coupe du Monde, später nach Jules Rimet benannt", "correct": true},
-        {"text": "Coupe Victoire", "correct": false},
-        {"text": "Trophée de la Paix", "correct": false}
+        {
+          "text": "Coupe du Monde, später nach Jules Rimet benannt",
+          "correct": true
+        },
+        {
+          "text": "Coupe Victoire",
+          "correct": false
+        },
+        {
+          "text": "Trophée de la Paix",
+          "correct": false
+        }
       ],
       "difficulty": "medium",
       "fun_fact": "Der Pokal stellte die griechische Siegesgöttin Nike dar und wurde erst 1946 zu Ehren des FIFA-Präsidenten in Coupe Jules Rimet umbenannt.",
@@ -1017,9 +1777,18 @@
       "id": "world_cup_de_086",
       "question": "Wie wurde im Endspiel von 1930 entschieden, mit welchem Spielball gespielt wird, weil beide Finalisten ihren eigenen Ball wollten?",
       "answers": [
-        {"text": "Jede Halbzeit wurde mit dem Ball eines der beiden Teams gespielt", "correct": true},
-        {"text": "Ein Münzwurf bestimmte einen Ball für das ganze Spiel", "correct": false},
-        {"text": "Der Schiedsrichter brachte einen neutralen dritten Ball mit", "correct": false}
+        {
+          "text": "Jede Halbzeit wurde mit dem Ball eines der beiden Teams gespielt",
+          "correct": true
+        },
+        {
+          "text": "Ein Münzwurf bestimmte einen Ball für das ganze Spiel",
+          "correct": false
+        },
+        {
+          "text": "Der Schiedsrichter brachte einen neutralen dritten Ball mit",
+          "correct": false
+        }
       ],
       "difficulty": "medium",
       "fun_fact": "Argentinien führte zur Pause mit seinem eigenen Ball 2:1, doch mit dem uruguayischen Ball in der zweiten Hälfte drehte Gastgeber Uruguay das Spiel.",
@@ -1029,9 +1798,18 @@
       "id": "world_cup_de_087",
       "question": "Was ist beim WM-Pokal-Sockel eingraviert, das ein praktisches Limit für die Zukunft setzt?",
       "answers": [
-        {"text": "Die Namen aller Sieger, doch der Platz reicht nur bis zum Jahr 2038", "correct": true},
-        {"text": "Die Unterschrift des Designers auf jedem Sieger-Feld", "correct": false},
-        {"text": "Eine Liste aller Austragungsländer seit 1930", "correct": false}
+        {
+          "text": "Die Namen aller Sieger, doch der Platz reicht nur bis zum Jahr 2038",
+          "correct": true
+        },
+        {
+          "text": "Die Unterschrift des Designers auf jedem Sieger-Feld",
+          "correct": false
+        },
+        {
+          "text": "Eine Liste aller Austragungsländer seit 1930",
+          "correct": false
+        }
       ],
       "difficulty": "hard",
       "fun_fact": "Auf der Unterseite ist Platz für 17 Sieger-Gravuren — danach muss die FIFA sich etwas Neues überlegen oder den Sockel ersetzen.",
@@ -1041,9 +1819,18 @@
       "id": "world_cup_de_088",
       "question": "Warum durfte Brasilien den Coupe Jules Rimet ab 1970 für immer behalten?",
       "answers": [
-        {"text": "Weil es als erstes Land den Titel zum dritten Mal gewann", "correct": true},
-        {"text": "Weil es das Turnier dreimal ausrichtete", "correct": false},
-        {"text": "Weil es nie ein WM-Spiel verlor", "correct": false}
+        {
+          "text": "Weil es als erstes Land den Titel zum dritten Mal gewann",
+          "correct": true
+        },
+        {
+          "text": "Weil es das Turnier dreimal ausrichtete",
+          "correct": false
+        },
+        {
+          "text": "Weil es nie ein WM-Spiel verlor",
+          "correct": false
+        }
       ],
       "difficulty": "medium",
       "fun_fact": "Eine Regel sah vor, dass der erste dreimalige Weltmeister den Pokal dauerhaft erhält — die kostbare Trophäe wurde Brasilien 1983 jedoch gestohlen und nie wiedergefunden.",
@@ -1053,9 +1840,18 @@
       "id": "world_cup_de_089",
       "question": "Welche Maskottchen vertraten die Bundesrepublik Deutschland bei der WM 1974?",
       "answers": [
-        {"text": "Zwei Jungen namens Tip und Tap", "correct": true},
-        {"text": "Ein Adler namens Fritz", "correct": false},
-        {"text": "Ein Bär namens Bruno", "correct": false}
+        {
+          "text": "Zwei Jungen namens Tip und Tap",
+          "correct": true
+        },
+        {
+          "text": "Ein Adler namens Fritz",
+          "correct": false
+        },
+        {
+          "text": "Ein Bär namens Bruno",
+          "correct": false
+        }
       ],
       "difficulty": "medium",
       "fun_fact": "Tip und Tap waren keine Tiere, sondern zwei Jungen in Trikots mit den Buchstaben WM und 74 — eine Seltenheit unter den meist tierischen Maskottchen.",
@@ -1065,9 +1861,18 @@
       "id": "world_cup_de_090",
       "question": "Was geschah während des Zweiten Weltkriegs mit dem nach Jules Rimet benannten WM-Pokal?",
       "answers": [
-        {"text": "Ein Funktionär versteckte ihn in einem Schuhkarton unter dem Bett", "correct": true},
-        {"text": "Jules Rimet vergrub ihn persönlich in seinem Garten", "correct": false},
-        {"text": "Er wurde in einem Schweizer Banktresor eingelagert", "correct": false}
+        {
+          "text": "Ein Funktionär versteckte ihn in einem Schuhkarton unter dem Bett",
+          "correct": true
+        },
+        {
+          "text": "Jules Rimet vergrub ihn persönlich in seinem Garten",
+          "correct": false
+        },
+        {
+          "text": "Er wurde in einem Schweizer Banktresor eingelagert",
+          "correct": false
+        }
       ],
       "difficulty": "hard",
       "fun_fact": "Der italienische FIFA-Vizepräsident Ottorino Barassi schmuggelte den Pokal aus einer Bank und bewahrte ihn in einem Schuhkarton unter seinem Bett vor dem Zugriff der Besatzungstruppen.",
@@ -1077,9 +1882,18 @@
       "id": "world_cup_de_091",
       "question": "Wie viele Spieler darf eine Mannschaft heute laut Regel gleichzeitig auf dem Feld haben, bevor das Spiel unterbrochen werden muss?",
       "answers": [
-        {"text": "Elf, mehr führt zur Unterbrechung", "correct": true},
-        {"text": "Zehn Feldspieler ohne den Torwart", "correct": false},
-        {"text": "Zwölf einschließlich eines Reservemannes", "correct": false}
+        {
+          "text": "Elf, mehr führt zur Unterbrechung",
+          "correct": true
+        },
+        {
+          "text": "Zehn Feldspieler ohne den Torwart",
+          "correct": false
+        },
+        {
+          "text": "Zwölf einschließlich eines Reservemannes",
+          "correct": false
+        }
       ],
       "difficulty": "easy",
       "fun_fact": "Sinkt ein Team durch Platzverweise unter sieben Spieler, wird die Partie sofort abgebrochen und gewertet — sieben ist die absolute Untergrenze.",
@@ -1089,9 +1903,18 @@
       "id": "world_cup_de_092",
       "question": "Welche Farbe hatte der offizielle Spielball bei den frühen Weltmeisterschaften überwiegend?",
       "answers": [
-        {"text": "Braun, aus naturbelassenem Leder", "correct": true},
-        {"text": "Weiß mit roten Streifen", "correct": false},
-        {"text": "Schwarz mit weißen Feldern", "correct": false}
+        {
+          "text": "Braun, aus naturbelassenem Leder",
+          "correct": true
+        },
+        {
+          "text": "Weiß mit roten Streifen",
+          "correct": false
+        },
+        {
+          "text": "Schwarz mit weißen Feldern",
+          "correct": false
+        }
       ],
       "difficulty": "easy",
       "fun_fact": "Das klassische Schwarz-Weiß-Muster kam erst 1970 auf, damit der Ball im Schwarz-Weiß-Fernsehen besser zu sehen war.",
@@ -1101,9 +1924,18 @@
       "id": "world_cup_de_093",
       "question": "Warum trug der WM-Spielball von 1970 das berühmte Muster aus schwarzen und weißen Flächen?",
       "answers": [
-        {"text": "Damit er im Schwarz-Weiß-Fernsehen besser sichtbar war", "correct": true},
-        {"text": "Weil die Gastgebernation diese Farben bevorzugte", "correct": false},
-        {"text": "Weil schwarze Flächen die Flugbahn stabilisierten", "correct": false}
+        {
+          "text": "Damit er im Schwarz-Weiß-Fernsehen besser sichtbar war",
+          "correct": true
+        },
+        {
+          "text": "Weil die Gastgebernation diese Farben bevorzugte",
+          "correct": false
+        },
+        {
+          "text": "Weil schwarze Flächen die Flugbahn stabilisierten",
+          "correct": false
+        }
       ],
       "difficulty": "easy",
       "fun_fact": "Der Ball hieß Telstar — benannt nach einem Kommunikationssatelliten, dessen Aussehen ihn inspirierte.",
@@ -1113,9 +1945,18 @@
       "id": "world_cup_de_094",
       "question": "Was durfte ein Spieler bei den ersten Weltmeisterschaften nach einer Auswechslung, das heute verboten ist?",
       "answers": [
-        {"text": "Nichts — Auswechslungen waren damals gar nicht erlaubt", "correct": true},
-        {"text": "Mehrfach ein- und wieder ausgewechselt werden", "correct": false},
-        {"text": "In der Halbzeit das Trikot mit dem Gegner tauschen", "correct": false}
+        {
+          "text": "Nichts — Auswechslungen waren damals gar nicht erlaubt",
+          "correct": true
+        },
+        {
+          "text": "Mehrfach ein- und wieder ausgewechselt werden",
+          "correct": false
+        },
+        {
+          "text": "In der Halbzeit das Trikot mit dem Gegner tauschen",
+          "correct": false
+        }
       ],
       "difficulty": "medium",
       "fun_fact": "Erst ab der WM 1970 waren Auswechslungen überhaupt zugelassen — zuvor musste ein verletzter Spieler weiterhumpeln oder das Team spielte in Unterzahl.",
@@ -1125,9 +1966,18 @@
       "id": "world_cup_de_095",
       "question": "Welche besondere Aufgabe übernahm der Schiedsrichter beim ersten WM-Finale 1930 zusätzlich zur Spielleitung?",
       "answers": [
-        {"text": "Er trug Anzug und Krawatte statt einer Schiedsrichterkleidung", "correct": true},
-        {"text": "Er zählte die Tore mit einem Handzähler", "correct": false},
-        {"text": "Er verlas vor dem Anpfiff die Aufstellungen ins Mikrofon", "correct": false}
+        {
+          "text": "Er trug Anzug und Krawatte statt einer Schiedsrichterkleidung",
+          "correct": true
+        },
+        {
+          "text": "Er zählte die Tore mit einem Handzähler",
+          "correct": false
+        },
+        {
+          "text": "Er verlas vor dem Anpfiff die Aufstellungen ins Mikrofon",
+          "correct": false
+        }
       ],
       "difficulty": "hard",
       "fun_fact": "Einheitliche Schiedsrichtertrikots wurden erst später üblich — der Belgier John Langenus leitete das Finale 1930 in Sakko und mit Krawatte.",
@@ -1137,9 +1987,18 @@
       "id": "world_cup_de_096",
       "question": "Was änderte sich 1994 bei der WM-Punktevergabe für einen Sieg in der Gruppenphase?",
       "answers": [
-        {"text": "Ein Sieg brachte erstmals drei statt zwei Punkte", "correct": true},
-        {"text": "Unentschieden wurden abgeschafft", "correct": false},
-        {"text": "Auswärtstore zählten doppelt", "correct": false}
+        {
+          "text": "Ein Sieg brachte erstmals drei statt zwei Punkte",
+          "correct": true
+        },
+        {
+          "text": "Unentschieden wurden abgeschafft",
+          "correct": false
+        },
+        {
+          "text": "Auswärtstore zählten doppelt",
+          "correct": false
+        }
       ],
       "difficulty": "easy",
       "fun_fact": "Die Drei-Punkte-Regel sollte Mannschaften zu mehr Offensive ermutigen, weil ein Sieg nun deutlich wertvoller war als zwei Unentschieden.",
@@ -1149,9 +2008,18 @@
       "id": "world_cup_de_097",
       "question": "Wie hieß das Maskottchen der WM 1986 in Mexiko, das eine ungewöhnliche Form hatte?",
       "answers": [
-        {"text": "Eine Chilischote namens Pique", "correct": true},
-        {"text": "Ein Sombrero namens Juan", "correct": false},
-        {"text": "Ein Kaktus namens Pancho", "correct": false}
+        {
+          "text": "Eine Chilischote namens Pique",
+          "correct": true
+        },
+        {
+          "text": "Ein Sombrero namens Juan",
+          "correct": false
+        },
+        {
+          "text": "Ein Kaktus namens Pancho",
+          "correct": false
+        }
       ],
       "difficulty": "hard",
       "fun_fact": "Pique war eine vermenschlichte Jalapeño mit Schnurrbart und Sombrero — sein Name spielt auf die scharfe Paprikasauce Picante an.",
@@ -1161,9 +2029,18 @@
       "id": "world_cup_de_098",
       "question": "Was wurde bei der WM 2010 erstmals offiziell eingesetzt, blieb aber wegen seines Lärms umstritten?",
       "answers": [
-        {"text": "Die Vuvuzela-Tröten auf den Rängen", "correct": true},
-        {"text": "Elektronische Anzeigetafeln für die Nachspielzeit", "correct": false},
-        {"text": "Funkverbindungen zwischen den Schiedsrichtern", "correct": false}
+        {
+          "text": "Die Vuvuzela-Tröten auf den Rängen",
+          "correct": true
+        },
+        {
+          "text": "Elektronische Anzeigetafeln für die Nachspielzeit",
+          "correct": false
+        },
+        {
+          "text": "Funkverbindungen zwischen den Schiedsrichtern",
+          "correct": false
+        }
       ],
       "difficulty": "easy",
       "fun_fact": "Der Dauerton der Vuvuzelas erreichte Lautstärken, bei denen TV-Sender eigens Filter entwickelten, um das Brummen aus der Übertragung zu dämpfen.",
@@ -1173,9 +2050,18 @@
       "id": "world_cup_de_099",
       "question": "Was ist beim heutigen WM-Pokal-Design das auffällige Motiv, das die beiden Figuren bilden?",
       "answers": [
-        {"text": "Zwei Menschen, die gemeinsam die Erdkugel emporhalten", "correct": true},
-        {"text": "Zwei gekreuzte Fußballschuhe über einem Ball", "correct": false},
-        {"text": "Zwei Adler mit ausgebreiteten Schwingen", "correct": false}
+        {
+          "text": "Zwei Menschen, die gemeinsam die Erdkugel emporhalten",
+          "correct": true
+        },
+        {
+          "text": "Zwei gekreuzte Fußballschuhe über einem Ball",
+          "correct": false
+        },
+        {
+          "text": "Zwei Adler mit ausgebreiteten Schwingen",
+          "correct": false
+        }
       ],
       "difficulty": "medium",
       "fun_fact": "Der Entwurf stammt vom italienischen Künstler Silvio Gazzaniga, der den Moment des Triumphs als emporschießende Figuren darstellen wollte.",
@@ -1185,9 +2071,18 @@
       "id": "world_cup_de_100",
       "question": "Was war an Gelben und Roten Karten bemerkenswert, als sie bei der WM eingeführt wurden?",
       "answers": [
-        {"text": "Gelbe und Rote Karten gab es bei der WM 1970 zum ersten Mal", "correct": true},
-        {"text": "Sie waren anfangs orange statt gelb und rot", "correct": false},
-        {"text": "Nur der Kapitän durfte verwarnt werden", "correct": false}
+        {
+          "text": "Gelbe und Rote Karten gab es bei der WM 1970 zum ersten Mal",
+          "correct": true
+        },
+        {
+          "text": "Sie waren anfangs orange statt gelb und rot",
+          "correct": false
+        },
+        {
+          "text": "Nur der Kapitän durfte verwarnt werden",
+          "correct": false
+        }
       ],
       "difficulty": "medium",
       "fun_fact": "Die Idee zu den farbigen Karten kam dem englischen Schiedsrichter Ken Aston an einer Verkehrsampel — Rot für Stopp, Gelb für Vorsicht.",
@@ -1197,9 +2092,18 @@
       "id": "world_cup_de_161",
       "question": "Wofür wurde dieses Stadion in Montevideo 1930 gebaut?",
       "answers": [
-        {"text": "Für die erste Fußball-Weltmeisterschaft", "correct": true},
-        {"text": "Für die Olympischen Spiele", "correct": false},
-        {"text": "Für die erste Copa América", "correct": false}
+        {
+          "text": "Für die erste Fußball-Weltmeisterschaft",
+          "correct": true
+        },
+        {
+          "text": "Für die Olympischen Spiele",
+          "correct": false
+        },
+        {
+          "text": "Für die erste Copa América",
+          "correct": false
+        }
       ],
       "difficulty": "medium",
       "fun_fact": "Das Estadio Centenario stand zum Turnierbeginn noch nicht fertig — Regen hatte den Bau verzögert, und die ersten Spiele mussten in kleinere Stadien der Stadt ausweichen.",
@@ -1211,9 +2115,18 @@
       "id": "world_cup_de_162",
       "question": "Wie hieß dieser erste Weltmeisterschaftspokal?",
       "answers": [
-        {"text": "Coupe Jules Rimet", "correct": true},
-        {"text": "Copa Libertadores", "correct": false},
-        {"text": "Coppa Italia", "correct": false}
+        {
+          "text": "Coupe Jules Rimet",
+          "correct": true
+        },
+        {
+          "text": "Copa Libertadores",
+          "correct": false
+        },
+        {
+          "text": "Coppa Italia",
+          "correct": false
+        }
       ],
       "difficulty": "medium",
       "fun_fact": "Brasilien durfte den Pokal 1970 nach dem dritten Titel behalten. 1983 wurde er in Rio gestohlen und nie wiedergefunden; man geht davon aus, dass er eingeschmolzen wurde.",
@@ -1225,9 +2138,18 @@
       "id": "world_cup_de_163",
       "question": "Welches Land richtete das Turnier aus, für das hier geworben wird?",
       "answers": [
-        {"text": "Argentinien", "correct": false},
-        {"text": "Brasilien", "correct": true},
-        {"text": "Portugal", "correct": false}
+        {
+          "text": "Argentinien",
+          "correct": false
+        },
+        {
+          "text": "Brasilien",
+          "correct": true
+        },
+        {
+          "text": "Portugal",
+          "correct": false
+        }
       ],
       "difficulty": "easy",
       "fun_fact": "Die WM 1950 kam ohne Endspiel aus: Statt eines K.-o.-Finales entschied eine Finalrunde von vier Mannschaften. Dass das letzte Spiel trotzdem zum Endspiel wurde, war Zufall des Spielplans.",
@@ -1239,9 +2161,18 @@
       "id": "world_cup_de_164",
       "question": "Welches Ereignis von 1950 zeigt dieses Foto?",
       "answers": [
-        {"text": "Ein Eigentor im Eröffnungsspiel", "correct": false},
-        {"text": "Ein Elfmeter im Halbfinale", "correct": false},
-        {"text": "Das entscheidende Tor im letzten WM-Spiel", "correct": true}
+        {
+          "text": "Ein Eigentor im Eröffnungsspiel",
+          "correct": false
+        },
+        {
+          "text": "Ein Elfmeter im Halbfinale",
+          "correct": false
+        },
+        {
+          "text": "Das entscheidende Tor im letzten WM-Spiel",
+          "correct": true
+        }
       ],
       "difficulty": "hard",
       "fun_fact": "Alcides Ghiggia traf vor rund 200.000 Zuschauern in Rio. Er sagte später, nur drei Menschen hätten das Maracanã je zum Schweigen gebracht: Frank Sinatra, der Papst und er.",
@@ -1253,9 +2184,18 @@
       "id": "world_cup_de_165",
       "question": "Diese Mannschaft gewann 1930 den ersten WM-Titel. Für welches Land spielte sie?",
       "answers": [
-        {"text": "Argentinien", "correct": false},
-        {"text": "Brasilien", "correct": false},
-        {"text": "Uruguay", "correct": true}
+        {
+          "text": "Argentinien",
+          "correct": false
+        },
+        {
+          "text": "Brasilien",
+          "correct": false
+        },
+        {
+          "text": "Uruguay",
+          "correct": true
+        }
       ],
       "difficulty": "medium",
       "fun_fact": "Uruguay war Gastgeber und amtierender Olympiasieger. Weil die Anreise per Schiff mehrere Wochen dauerte, meldeten nur vier europäische Mannschaften — Frankreich, Belgien, Jugoslawien und Rumänien.",
