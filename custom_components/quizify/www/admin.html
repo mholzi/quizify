@@ -111,10 +111,23 @@
                     <span aria-hidden="true">▶︎</span>
                     <span data-i18n="admin.openLobby">Open lobby</span>
                 </button>
-                <button type="button" id="setup-tweak-btn" class="setup-tweak-link"
-                        data-i18n="setup.tweak">
-                    Adjust settings…
-                </button>
+                <!-- #627: the analytics page is fully built and had zero
+                     inbound links from anywhere — a host could only reach their
+                     own play history by guessing the URL. Both links sit on one
+                     row: they are equally secondary, and the setup screen has no
+                     vertical room to spare (a second row pushes the primary
+                     action off a 390px viewport). -->
+                <div class="setup-links-row">
+                    <button type="button" id="setup-tweak-btn" class="setup-tweak-link"
+                            data-i18n="setup.tweak">
+                        Adjust settings…
+                    </button>
+                    <span class="setup-links-sep" aria-hidden="true">·</span>
+                    <button type="button" id="setup-stats-btn" class="setup-tweak-link"
+                            data-i18n="setup.stats">
+                        Stats
+                    </button>
+                </div>
             </div>
 
             <!-- DETAIL (variant B + Eigene/expanded chips) -->

@@ -1250,6 +1250,22 @@
 }
 .setup-tweak-link:hover { color: var(--color-text-primary); }
 
+/* #627: "Adjust settings" and "Stats" share one row. Two rows would push the
+   primary action off a 390px viewport, which is the thing the host actually
+   came for. */
+.setup-links-row {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 6px;
+    flex-wrap: wrap;
+}
+
+.setup-links-sep {
+    color: var(--color-text-light);
+    font-size: 0.85rem;
+}
+
 /* Featured pack spotlight on the hero — one-tap launch of a highlighted
    pack. Soft Parlor card: lifted paper, hairline border, soft shadow, sun
    "New" pill, coral play affordance. The whole card is the button. */
