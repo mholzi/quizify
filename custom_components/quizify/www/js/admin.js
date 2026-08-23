@@ -1845,6 +1845,14 @@
         var container = document.getElementById('qr-container');
         if (!container) return;
         container.innerHTML = '';
+        // #620: the address in plain text next to the code, always — not only
+        // in the branch below where the QR library itself is missing. The
+        // failure this covers is a phone that cannot reach the address, and
+        // the code renders perfectly in that case.
+        var urlEl = document.getElementById('admin-join-url');
+        // location.host, not a scheme-stripping regex — see the note in
+        // dashboard.html's renderLobbyQr and the #540 guard.
+        if (urlEl) urlEl.textContent = window.location.host + '/quizify/player';
         if (typeof QRCode !== 'undefined') {
             _qrInstance = new QRCode(container, {
                 text: url, width: 180, height: 180,

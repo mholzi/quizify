@@ -43,6 +43,8 @@
     "joinGameQr": "Spiel beitreten – QR-Code",
     "scanQrHint": "Teile den QR-Code oder die URL oben",
     "scanToJoin": "Scannen, um beizutreten",
+    "orTypeUrl": "Oder im Browser eingeben",
+    "sameWifiHint": "Gleiches WLAN wie dieser Bildschirm",
     "startGame": "Spiel starten",
     "copied": "Kopiert!",
     "away": "abwesend",
