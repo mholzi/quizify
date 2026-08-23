@@ -638,6 +638,13 @@
                     </div>
                 </div>
 
+                <!-- #624: the season standing, in the same shape the lobby
+                     uses. It arrives AFTER the finale (analytics is recorded in
+                     a detached task), so this stays hidden until the
+                     all_time_update message lands — an empty slot is better
+                     than a rank that predates the game just played. -->
+                <p class="pl-allTime hidden" id="end-alltime" aria-live="polite"></p>
+
                 <!-- Shareable result card (#369) — a score slip the player can
                      send into a chat. Hidden until the finale payload carries a
                      ``share`` block for this player. -->

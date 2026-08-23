@@ -1789,6 +1789,16 @@ class QuizifyGameState:
                 )
             except Exception:  # noqa: BLE001
                 _LOGGER.exception("Failed to record analytics")
+                return
+            # #624: only NOW does the all-time table include the game that just
+            # finished. The finale is broadcast long before this — deliberately,
+            # so a slow disk never delays the end screen — so a standing sent
+            # with the finale would be the one from BEFORE this game and would
+            # contradict the podium the player is looking at.
+            #
+            # Hence a second, later event. A player who has already closed the
+            # tab simply never receives it, which is the correct outcome.
+            self._fire_broadcast("analytics_recorded")
 
         if self._runtime is not None:
             self._runtime.create_task(_do_record())
