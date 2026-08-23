@@ -671,6 +671,36 @@ async def async_unload_entry(hass: HomeAssistant, entry: ConfigEntry) -> bool:
         if ws_handler:
             await ws_handler.cleanup_game_tasks()
 
+        # Unsubscribe the five house consumers (#605), same sequence as
+        # ``_update_listener`` uses on an options change.
+        #
+        # Popping ``hass.data`` below does NOT unsubscribe anything: the party
+        # lights hold five ``hass.bus.async_listen`` handles and the sound
+        # effects three, and those live on the bus, not in the dict. The lights'
+        # pulse task is cancelled inside ``detach()`` too. Without this, every
+        # reload left the previous instances subscribed, so one ``quizify_*``
+        # event fired ``light.turn_on`` / ``media_player.play_media`` once per
+        # past reload — and after *removing* the integration they kept reacting
+        # until Home Assistant restarted.
+        #
+        # Each detach is guarded on its own: a consumer that raises must not
+        # stop the other four from unsubscribing, or a single bad teardown
+        # leaves exactly the leak this fixes.
+        for key in (
+            "party_lights",
+            "tts_announcer",
+            "lobby_music",
+            "event_emitter",
+            "sound_effects",
+        ):
+            consumer = domain_data.get(key)
+            if consumer is None:
+                continue
+            try:
+                consumer.detach()
+            except Exception:  # noqa: BLE001
+                _LOGGER.exception("Failed to detach %s on unload", key)
+
     try:
         async_remove_panel(hass, "quizify")
         _LOGGER.debug("Quizify sidebar panel removed")
