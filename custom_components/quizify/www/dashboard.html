@@ -122,6 +122,19 @@
             overflow: hidden;
         }
 
+        .dashboard-answer-progress {
+            font-size: clamp(0.9rem, 1.4vw, 1.15rem);
+            color: var(--dash-text-muted);
+            text-align: right;
+            margin-bottom: 6px;
+            flex-shrink: 0;
+            font-variant-numeric: tabular-nums;
+        }
+
+        .dashboard-answer-progress.is-complete {
+            color: var(--dash-accent-primary);
+        }
+
         .dashboard-timer-fill {
             height: 100%;
             background: var(--dash-accent-primary);
@@ -1239,6 +1252,11 @@
             <div id="round-indicator" class="dashboard-round"></div>
         </div>
 
+        <!-- #619: how many of the room have answered. Sits above the bar
+             rather than inside it: the bar is 12px so a couch can read it,
+             and text inside would fight the fill for those pixels. -->
+        <div id="answer-progress" class="dashboard-answer-progress hidden"></div>
+
         <div id="timer-bar" class="dashboard-timer">
             <div id="timer-fill" class="dashboard-timer-fill" style="width:0%"></div>
         </div>
@@ -1418,6 +1436,7 @@
             lobbyPlayers: document.getElementById('lobby-players'),
             roundIndicator: document.getElementById('round-indicator'),
             timerFill: document.getElementById('timer-fill'),
+            answerProgress: document.getElementById('answer-progress'),
             questionCategory: document.getElementById('question-category'),
             questionImage: document.getElementById('question-image'),
             questionMedia: document.getElementById('question-media'),
@@ -1670,6 +1689,13 @@
                     handleGameState(msg);
                     break;
                 case 'question_started':
+                    // Clear last round's count before the new one arrives —
+                    // otherwise the TV shows "5/5" over a fresh question.
+                    if (els.answerProgress) {
+                        els.answerProgress.textContent = '';
+                        els.answerProgress.classList.add('hidden');
+                        els.answerProgress.classList.remove('is-complete');
+                    }
                     handleQuestionStarted(msg);
                     break;
                 case 'timer_tick':
@@ -1680,7 +1706,13 @@
                     handleRoundSummary(msg);
                     break;
                 case 'leaderboard_update':
+                    // Kept: nothing has ever sent this (#619 found zero
+                    // senders), but a live TV cached from an older build may
+                    // still be listening, and the handler costs nothing.
                     if (msg.leaderboard) renderLeaderboard(els.leaderboard, msg.leaderboard);
+                    break;
+                case 'answer_progress':
+                    handleAnswerProgress(msg);
                     break;
                 case 'finale':
                 case 'game_ended':
@@ -2001,6 +2033,19 @@
                     '</div>' +
                     '</div>';
             }).join('');
+        }
+
+        function handleAnswerProgress(msg) {
+            if (!els.answerProgress) return;
+            var total = msg.total || 0;
+            if (!total) {
+                els.answerProgress.classList.add('hidden');
+                return;
+            }
+            var submitted = msg.submitted || 0;
+            els.answerProgress.textContent = submitted + '/' + total;
+            els.answerProgress.classList.remove('hidden');
+            els.answerProgress.classList.toggle('is-complete', submitted === total);
         }
 
         function handleTimerTick(msg) {

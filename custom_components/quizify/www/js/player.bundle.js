@@ -5322,6 +5322,14 @@
                 game.updateTimer(msg.remaining);
                 break;
 
+            // #619: who the room is still waiting for. renderSubmissionTracker
+            // has existed since the tracker markup landed; its only caller was
+            // updateGameView(), which nothing ever invoked, so the row stayed
+            // empty for every game ever played.
+            case 'answer_progress':
+                game.renderSubmissionTracker(msg.players);
+                break;
+
             case 'answer_result':
                 game.handleAnswerResult(msg);
                 // Streak milestone toast
