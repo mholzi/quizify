@@ -29,6 +29,7 @@ from custom_components.quizify.const import (
 )
 from custom_components.quizify.game.highlights import compute_superlatives
 from custom_components.quizify.game.phase_controller import TICK_INTERVAL
+from custom_components.quizify.game.player_registry import sanitize_player_name
 from custom_components.quizify.game.powerups import (
     FREEZE_DURATION,
     PowerUpEffect,
@@ -645,7 +646,14 @@ class QuizifyWebSocketHandler:
         self, ws: web.WebSocketResponse, data: dict, game_state: QuizifyGameState
     ) -> None:
         """Handle player join."""
-        name = data.get("name", "").strip()
+        # Canonicalize ONCE, here, before anything is keyed on the name (#603).
+        # The registry sanitizes on store; using the raw name afterwards meant
+        # the session token was issued under a name the registry did not have
+        # and every later `get_player(name)` missed. That silently cost the
+        # host the crown and, after a wifi blip, made the player's score
+        # unreachable — for any name holding a zero-width joiner, i.e. most
+        # multi-codepoint emoji, and for a stray double space.
+        name = sanitize_player_name(data.get("name", ""))
 
         if not name:
             await self._conn.send_error(ws, ERR_NAME_INVALID, "Name is required")
@@ -693,9 +701,23 @@ class QuizifyWebSocketHandler:
         # unreachable, spawning a duplicate ghost with score 0. Falling through
         # on a stale slot lets add_player reclaim the original name; genuinely
         # live duplicates (ws still open) still get the "Name 2" suffix.
+        #
+        # ``existing.ws is not ws`` (#603): once the name is canonicalized, an
+        # idempotent rejoin from the SAME connection — a lobby refresh, the
+        # admin's redirect from /quizify/admin to /quizify/player — matches an
+        # active slot that IS this connection. Renaming it to "Name 2" would
+        # spawn a score-0 duplicate of the player who is already sitting there.
+        # Before canonicalization this never surfaced, because the raw name
+        # differed from the stored one and the duplicate-self-join guard above
+        # rejected the rejoin outright instead. Both behaviours were wrong; a
+        # rejoin under the same name from the same socket is a no-op reclaim.
         original_name = name
         counter = 2
-        while (existing := game_state.get_player(name)) and existing.is_active:
+        while (
+            (existing := game_state.get_player(name))
+            and existing.is_active
+            and existing.ws is not ws
+        ):
             name = f"{original_name} {counter}"
             counter += 1
 

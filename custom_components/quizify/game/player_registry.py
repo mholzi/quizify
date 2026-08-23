@@ -26,7 +26,7 @@ from .player import PLAYER_COLORS, PlayerSession
 _LOGGER = logging.getLogger(__name__)
 
 
-def _sanitize_name(raw: str) -> str:
+def sanitize_player_name(raw: str) -> str:
     """Normalize and strip unsafe characters from a player name.
 
     Defends against impersonation via:
@@ -37,6 +37,11 @@ def _sanitize_name(raw: str) -> str:
     - Trailing/leading whitespace
 
     (#15 in logical review.)
+
+    Public because the join handler has to canonicalize the name *before* it
+    builds anything keyed on it (#603). Running this in two places is fine —
+    it is idempotent — but deciding the canonical name in two places is not,
+    which is exactly the bug #603 describes.
     """
     # NFKC normalizes compatibility-equivalent characters.
     n = unicodedata.normalize("NFKC", raw or "").strip()
@@ -77,7 +82,12 @@ class PlayerRegistry:
             (success, error_code) - error_code is None on success
         """
         # Validate + sanitize name (Unicode NFKC, strip control/format chars).
-        name = _sanitize_name(name)
+        # Idempotent safety net. Since #603 the join handler canonicalizes the
+        # name before it gets here, so this normally changes nothing — but
+        # add_player is also reachable from other paths, and a registry that
+        # trusts its caller to have sanitized is a registry that stores an
+        # unsanitized name the first time someone forgets.
+        name = sanitize_player_name(name)
         if not name or len(name) < MIN_NAME_LENGTH:
             return False, ERR_NAME_INVALID
         if len(name) > MAX_NAME_LENGTH:
