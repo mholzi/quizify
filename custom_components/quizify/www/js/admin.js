@@ -3172,8 +3172,8 @@
         }
     });
 
-    // ---- Question pack update check ----
-    checkPackUpdates();
+    // ---- New packs that arrived with the last update (#649) ----
+    showPackNews();
 
     // ---- Seasonal pack badges (#276) ----
     applySeasonalBadges();
@@ -3246,35 +3246,51 @@
 })();
 
 /**
- * Fetch /api/quizify/packs/updates and show a banner if any packs have updates.
- * Runs once on page load; silently does nothing if the request fails or GitHub
- * is unreachable (e.g. fully offline HA setup).
+ * Show a banner listing packs that arrived with the update the host just
+ * installed (#649).
+ *
+ * Packs ship inside the integration, so by the time this runs the new packs
+ * are already on disk and playable — the banner is an announcement, not a
+ * task. Nothing is fetched from GitHub and the host is never asked to copy
+ * files by hand.
+ *
+ * Runs once on page load; silently does nothing if the request fails.
  */
-async function checkPackUpdates() {
+async function showPackNews() {
     try {
-        const resp = await fetch('/api/quizify/packs/updates');
+        // Wait for the language bundle before rendering (#648). This banner is
+        // built as one shot of markup and is not re-rendered on its own, so
+        // without the await it races the i18n fetch and whichever finishes
+        // first decides whether the host reads a sentence or a translation
+        // key. init() returns the in-flight promise when the page has already
+        // started loading a language, so this does not kick off a second load.
+        if (window.QuizifyI18n) {
+            try { await window.QuizifyI18n.init(); } catch (_e) { /* fall through untranslated */ }
+        }
+
+        const resp = await fetch('/api/quizify/packs/news');
         if (!resp.ok) return;
         const data = await resp.json();
-        if (!data.upstream_available || !data.updates || data.updates.length === 0) return;
+        const packs = (data && data.new_packs) || [];
+        if (packs.length === 0) return;
 
-        // checkPackUpdates lives outside the admin IIFE, so the IIFE-local
+        // showPackNews lives outside the admin IIFE, so the IIFE-local
         // _t/escapeHtml helpers are out of scope here. Use the global
         // window.t (i18n) and window.QuizifyUtils.escapeHtml instead, and
         // escape all pack metadata before it touches innerHTML (defends
-        // against a malicious pack name/version → stored XSS).
+        // against a malicious pack name → stored XSS).
         const tt = (key, params) => (window.t ? window.t(key, params) : key);
         const esc = (s) => (window.QuizifyUtils && window.QuizifyUtils.escapeHtml
             ? window.QuizifyUtils.escapeHtml(String(s == null ? '' : s))
             : String(s == null ? '' : s));
 
-        const updates = data.updates;
-        const names = updates.map(u =>
-            esc(u.name) + ' (' + esc(u.installed_version) + ' → ' + esc(u.upstream_version) + ')'
+        const names = packs.map(p =>
+            esc(p.name) + ' (' + esc(p.question_count) + ')'
         ).join(', ');
 
         // Build banner
         const banner = document.createElement('div');
-        banner.id = 'pack-update-banner';
+        banner.id = 'pack-news-banner';
         // Soft Parlor: white surface + coral left-accent + warm ink text on cream-ground page
         banner.style.cssText = [
             'background:#FFFFFF',
@@ -3292,19 +3308,36 @@ async function checkPackUpdates() {
             'position:relative',
         ].join(';');
 
-        const packPath = '<code style="background:#F3EEDF;padding:1px 4px;border-radius:3px;font-family:\'JetBrains Mono\',monospace;color:#2A2820">custom_components/quizify/questions/</code>';
-        const bodyText = tt('admin.packUpdateBody', { path: packPath });
-        const dismissTitle = esc(tt('common.close'));
+        // data-i18n on the two static strings so a language switch re-runs
+        // initPageTranslations over them like every other element on the page.
         banner.innerHTML =
-            '<span style="font-size:1.2rem;flex-shrink:0">📦</span>' +
+            '<span style="font-size:1.2rem;flex-shrink:0">🎁</span>' +
             '<div style="flex:1">' +
-                '<strong style="color:#E88A7F;font-family:\'Cabinet Grotesk\',sans-serif;font-weight:700">' + esc(tt('admin.packUpdateTitle')) + '</strong>' +
+                '<strong data-i18n="admin.packNewsTitle" style="color:#E88A7F;font-family:\'Cabinet Grotesk\',sans-serif;font-weight:700">' + esc(tt('admin.packNewsTitle')) + '</strong>' +
                 '<div style="margin-top:3px;color:#2A2820">' + names + '</div>' +
-                '<div style="margin-top:5px;font-size:0.8rem;color:#6E6A5C">' + bodyText + '</div>' +
+                '<div data-i18n="admin.packNewsBody" style="margin-top:5px;font-size:0.8rem;color:#6E6A5C">' + esc(tt('admin.packNewsBody')) + '</div>' +
             '</div>' +
-            '<button onclick="document.getElementById(\'pack-update-banner\').remove()" ' +
+            '<button type="button" id="pack-news-dismiss" ' +
                 'style="background:none;border:none;color:#6E6A5C;cursor:pointer;font-size:1rem;padding:0;flex-shrink:0" ' +
-                'title="' + dismissTitle + '">✕</button>';
+                'data-i18n-title="common.close" title="' + esc(tt('common.close')) + '">✕</button>';
+
+        // Dismissing is persisted server-side: the packs stay announced across
+        // reloads until the host actually acknowledges them, and stay gone
+        // afterwards. The banner is removed either way — a failed POST should
+        // not leave the host clicking a ✕ that does nothing.
+        const dismiss = banner.querySelector('#pack-news-dismiss');
+        if (dismiss) {
+            dismiss.addEventListener('click', function () {
+                banner.remove();
+                const headers = {};
+                const tok = window.QuizifyUtils && window.QuizifyUtils.readAdminToken
+                    ? window.QuizifyUtils.readAdminToken()
+                    : null;
+                if (tok) headers['X-Quizify-Token'] = tok;
+                fetch('/api/quizify/packs/news/dismiss', { method: 'POST', headers: headers })
+                    .catch(function (e) { console.warn('[quizify] pack news dismiss failed:', e); });
+            });
+        }
 
         // Insert at top of setup screen, before first section
         const setupScreen = document.getElementById('setup-screen');
@@ -3315,6 +3348,6 @@ async function checkPackUpdates() {
         // Offline or HA not ready — log so a real error (e.g. a future
         // refactor reintroducing an out-of-scope reference) is visible
         // instead of being silently swallowed.
-        console.warn('[quizify] checkPackUpdates failed:', e);
+        console.warn('[quizify] showPackNews failed:', e);
     }
 }

@@ -159,8 +159,8 @@
     "summaryRoundsUnit": "Runden",
     "settingsSummary": "{difficulty} • {rounds} {roundsUnit} • {timer}s",
     "categoriesCountPlural": "{count} Kategorien",
-    "packUpdateTitle": "Fragenpaket-Updates verfügbar",
-    "packUpdateBody": "Aktualisiere deine Pakete, indem du die JSON-Dateien in {path} ersetzt und Home Assistant neu startest."
+    "packNewsTitle": "Neu in diesem Update",
+    "packNewsBody": "Schon installiert — such es dir in der Kategorie-Liste aus und leg los."
   },
   "categories": {
     "mixed": "Gemischt",
