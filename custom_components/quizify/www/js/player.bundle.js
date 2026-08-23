@@ -4768,24 +4768,54 @@
      * Handle power-up button visibility
      * @param {string|null} powerupType - Power-up type or null
      */
-    var POWERUP_LABELS = {
-        joker: '🃏 Joker',
-        double_points: '✨ Double',
-        freeze: '🧊 Freeze',
-        time_boost: '⏰ +5s',
-        steal: '🥷 Steal',
+    // Emoji only (#623). The words used to live here too — hardcoded English,
+    // shown to every player in every language, while `powerups.joker` and its
+    // four siblings sat translated in all three bundles and unused.
+    var POWERUP_ICONS = {
+        joker: '🃏',
+        double_points: '✨',
+        freeze: '🧊',
+        time_boost: '⏰',
+        steal: '🥷',
+    };
+
+    // What each one actually does, keyed to the i18n hints (#623).
+    //
+    // The wording was taken from the game code, not from the issue: `steal`
+    // takes half of the target's ROUND score (state.py), not half their total.
+    // "Half their points" is the plausible phrasing and it is wrong — and a
+    // wrong explanation is worse than none, because a player acts on it.
+    var POWERUP_HINTS = {
+        joker: 'powerups.jokerHint',
+        double_points: 'powerups.doublePointsHint',
+        freeze: 'powerups.freezeHint',
+        time_boost: 'powerups.timeBoostHint',
+        steal: 'powerups.stealHint2',
     };
 
     function renderPowerUp(powerupType) {
         var powerupBtn = document.getElementById('powerup-btn');
         if (!powerupBtn) return;
+        var t = (window.QuizifyI18n && window.QuizifyI18n.t) || function (k) { return k; };
+        var hintEl = document.getElementById('powerup-hint');
 
         if (powerupType) {
             powerupBtn.classList.remove('hidden', 'used');
             var label = powerupBtn.querySelector('.powerup-label') || powerupBtn;
-            label.textContent = POWERUP_LABELS[powerupType] || powerupType;
+            var icon = POWERUP_ICONS[powerupType] || '';
+            var name = t('powerups.' + powerupType);
+            label.textContent = icon ? icon + ' ' + name : name;
+
+            if (hintEl) {
+                var hintKey = POWERUP_HINTS[powerupType];
+                // An unknown type keeps the button and drops the line rather
+                // than printing a raw i18n key under it.
+                hintEl.textContent = hintKey ? t(hintKey) : '';
+                hintEl.classList.toggle('hidden', !hintKey);
+            }
         } else {
             powerupBtn.classList.add('hidden');
+            if (hintEl) hintEl.classList.add('hidden');
         }
     }
 
