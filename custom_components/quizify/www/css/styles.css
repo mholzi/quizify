@@ -4037,7 +4037,19 @@ footer {
 .timer--critical {
     color: var(--color-error-neon);
     text-shadow: 0 0 15px var(--color-error-neon);
-    animation: timer-pulse-intense 0.5s ease-in-out infinite;
+}
+
+/* One pulse per digit, restarted by the same tick that writes the number
+   (#650). Deliberately not `infinite`: an endless 0.5s loop beats twice per
+   second against a digit that changes once, and its phase is set by whenever
+   the critical class happened to be added — so it can never land on the
+   change, and setInterval drift pushes the two further apart as the question
+   runs. The audible tick rides the same interval as the digit, which is what
+   made the mismatch read as broken: sound and animation disagreed about when
+   a second was. Kept under a second so each pulse finishes before the next
+   digit arrives. */
+.timer--tick {
+    animation: timer-pulse-intense 0.4s ease-in-out;
 }
 
 /* Answer section */

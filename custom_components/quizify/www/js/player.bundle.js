@@ -3782,6 +3782,25 @@
     }
 
     /**
+     * Restart the timer's one-shot pulse so it begins with the digit (#650).
+     *
+     * The animation used to be `infinite` in CSS, which left it free-running
+     * at its own rate and phase while the number changed once a second — two
+     * clocks that could never agree. Retriggering it here binds the pulse to
+     * the tick that writes the digit, so they start together every second and
+     * cannot drift apart.
+     *
+     * The reflow between remove and add is required, not defensive: without
+     * it the browser coalesces both class changes into no change at all and
+     * the running animation simply continues.
+     */
+    function pulseTimer(el) {
+        el.classList.remove('timer--tick');
+        void el.offsetWidth;
+        el.classList.add('timer--tick');
+    }
+
+    /**
      * Start countdown timer
      * @param {number} deadline - Server deadline timestamp in milliseconds
      */
@@ -3792,7 +3811,7 @@
         var timerElement = document.getElementById('timer');
         if (!timerElement) return;
 
-        timerElement.classList.remove('timer--warning', 'timer--critical');
+        timerElement.classList.remove('timer--warning', 'timer--critical', 'timer--tick');
 
         function updateCountdown() {
             var now = Date.now();
@@ -3807,11 +3826,12 @@
             if (remaining <= 5) {
                 timerElement.classList.remove('timer--warning');
                 timerElement.classList.add('timer--critical');
+                pulseTimer(timerElement);
             } else if (remaining <= 10) {
-                timerElement.classList.remove('timer--critical');
+                timerElement.classList.remove('timer--critical', 'timer--tick');
                 timerElement.classList.add('timer--warning');
             } else {
-                timerElement.classList.remove('timer--warning', 'timer--critical');
+                timerElement.classList.remove('timer--warning', 'timer--critical', 'timer--tick');
             }
 
             var t = (window.QuizifyI18n && window.QuizifyI18n.t) || function (k) { return k; };
