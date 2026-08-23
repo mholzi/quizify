@@ -3285,6 +3285,26 @@ button, .btn {
     background: rgba(31, 27, 20, 0.70);
 }
 
+/* #622: the dashboard address inside the "open on the TV" sheet. Big enough
+   to read off a phone while typing it on a TV remote, and selectable — the
+   host may want to copy it rather than retype it. */
+.cast-tv-url {
+    margin: var(--space-sm) 0 var(--space-md);
+    padding: var(--space-sm);
+    border-radius: 8px;
+    background: rgba(255, 255, 255, 0.06);
+    font-size: 0.95rem;
+    font-weight: 600;
+    /* `break-all` split mid-token and left a single stranded character on its
+       own line — bad for something a host reads out or types on a TV remote.
+       `anywhere` still wraps a long address, but prefers the slashes. */
+    overflow-wrap: anywhere;
+    word-break: normal;
+    line-height: 1.4;
+    text-align: center;
+    user-select: all;
+}
+
 .modal-content {
     position: relative;
     background: var(--color-dark-surface-hover);     /* surface-2 navy \u2014 not cream */

@@ -728,7 +728,7 @@
 
                 <a href="#" id="dashboard-link" class="lobby-e-cast" target="_blank">
                     <span class="qz-icon qz-icon--sky" data-ui-icon="tv" aria-hidden="true">📺</span>
-                    <span data-i18n="dashboard.castToTv">Cast to TV</span>
+                    <span data-i18n="dashboard.castToTv">Open on the TV</span>
                     <span aria-hidden="true">→</span>
                 </a>
 
@@ -930,6 +930,24 @@
             <div class="modal-actions">
                 <button type="button" id="kick-player-confirm-btn" class="btn btn-danger" data-i18n="admin.kickConfirmBtn">Remove</button>
                 <button type="button" id="kick-player-cancel-btn" class="btn btn-secondary" data-i18n="common.cancel">Cancel</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- #622: "Cast to TV" never cast anything — it opened /quizify/dashboard
+         in a tab on the host's own phone. Renaming the button stops the false
+         promise; this sheet answers the question the button raises, namely how
+         the address is supposed to reach the television. The direct open stays
+         for a host who IS on the TV device. -->
+    <div id="cast-tv-modal" class="modal hidden" role="dialog" aria-modal="true" aria-labelledby="cast-tv-modal-title">
+        <div class="modal-backdrop"></div>
+        <div class="modal-content">
+            <h2 id="cast-tv-modal-title" data-i18n="dashboard.castModalTitle">Get Quizify onto the TV</h2>
+            <p data-i18n="dashboard.castModalBody">Open this address in the browser on your TV.</p>
+            <div id="cast-tv-url" class="cast-tv-url"></div>
+            <div class="modal-actions">
+                <button type="button" id="cast-tv-open-btn" class="btn btn-secondary" data-i18n="dashboard.castOpenHere">Open here instead</button>
+                <button type="button" id="cast-tv-cancel-btn" class="btn btn-secondary" data-i18n="common.cancel">Cancel</button>
             </div>
         </div>
     </div>

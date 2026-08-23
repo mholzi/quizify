@@ -529,7 +529,10 @@
   "dashboard": {
     "waitingForStart": "Waiting for game to start…",
     "leaderboard": "Leaderboard",
-    "castToTv": "Cast to TV",
+    "castToTv": "Open on the TV",
+    "castModalTitle": "Get Quizify onto the TV",
+    "castModalBody": "Open this address in the browser on your TV.",
+    "castOpenHere": "Open here instead",
     "didYouKnow": "Did you know?",
     "result": "Result",
     "questionCounter": "Question {current} / {total}",

@@ -529,7 +529,10 @@
   "dashboard": {
     "waitingForStart": "Esperando a que empiece la partida…",
     "leaderboard": "Clasificación",
-    "castToTv": "Enviar a la TV",
+    "castToTv": "Abrir en la tele",
+    "castModalTitle": "Llevar Quizify a la tele",
+    "castModalBody": "Abre esta dirección en el navegador de tu televisor.",
+    "castOpenHere": "Abrir aquí",
     "didYouKnow": "¿Sabías que...?",
     "result": "Resultado",
     "questionCounter": "Pregunta {current} / {total}",
