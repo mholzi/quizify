@@ -229,6 +229,42 @@ def serialize_question_for_admin(
     return payload
 
 
+def strip_answer_for_dashboard(payload: dict[str, Any]) -> dict[str, Any]:
+    """Return the admin question payload with every trace of the answer removed.
+
+    The TV connects as ``role=dashboard``, which takes no token at all (#604),
+    so whatever this payload carries is readable by anyone who can reach the
+    integration while the question is still running. The per-player answer
+    shuffle exists to make copying hard; shipping the answer to an
+    unauthenticated role walks around it with one query parameter.
+
+    The answer hides in three places, and missing any one of them leaves the
+    hole open:
+
+    * ``correct_answer`` — the plain text,
+    * ``correct`` on every option — a boolean that names the right tile,
+    * ``estimate.answer`` — the true value on estimate rounds (#275).
+
+    Everything the TV actually renders survives: the canonical shuffled order
+    from #521, the option texts, and the shape ``{"text": …}`` that
+    ``dashboard.html`` reads. It never looks at ``correct`` before the reveal —
+    the reveal runs off ``round_summary``'s ``correct_answer_index`` — so this
+    costs the big screen nothing.
+    """
+    stripped = dict(payload)
+    stripped.pop("correct_answer", None)
+    stripped["answers"] = [
+        {"text": a["text"]} if isinstance(a, dict) else {"text": a}
+        for a in payload.get("answers", [])
+    ]
+    estimate = payload.get("estimate")
+    if isinstance(estimate, dict):
+        stripped["estimate"] = {
+            k: v for k, v in estimate.items() if k != "answer"
+        }
+    return stripped
+
+
 def serialize_leaderboard(players: list[PlayerSession]) -> list[dict[str, Any]]:
     """Build sorted leaderboard from player list.
 
