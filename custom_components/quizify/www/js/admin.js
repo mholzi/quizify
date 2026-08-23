@@ -1591,18 +1591,35 @@
         if (els.endGameBtn) els.endGameBtn.classList.add('hidden');
     }
 
-    // handleRoundSummary / showReveal / renderAnswerDistribution lived
-    // here in v1.1.15 and earlier to populate the admin-only reveal
-    // view. The host always redirects to /quizify/player on game start,
-    // so they were never actually run for HACS users. Removed with
-    // the #admin-reveal-view markup in v1.1.16.
-    function handleRoundSummary(/* msg */) {
+    // The full admin reveal view (showReveal / renderAnswerDistribution) was
+    // removed in v1.1.16 because "the host always redirects to
+    // /quizify/player on game start" — true then, but the lobby has since
+    // grown a "start without joining" path (doStartGameNoJoin), and that host
+    // stays here. For them this used to render nothing at all: both controls
+    // are hidden at question start and nothing un-hid them, so the reveal was
+    // a dead screen and the guests' only way on was the 60-second "host gone"
+    // reset, which wipes the game (#618).
+    //
+    // This deliberately does NOT rebuild the old reveal view. The player tab
+    // still owns the rich reveal; the admin tab needs the answer and a way
+    // forward, and nothing more.
+    function handleRoundSummary(msg) {
         if (_redirecting) return;
         currentPhase = 'ANSWER_REVEAL';
         adminTimer.stop();
-        // The player tab owns the reveal UI; nothing for the admin tab
-        // to render. Keeping this stub so the WS message router still
-        // has a target (avoids "undefined" route errors).
+
+        if (els.adminCorrect && msg && msg.correct_answer) {
+            els.adminCorrect.textContent = _t('admin.correctLabel', {
+                answer: msg.correct_answer,
+            });
+            els.adminCorrect.style.display = '';
+        }
+        // Only "End Game" on the last round: "Next Question" there would
+        // promise a round that does not exist.
+        if (els.nextQuestionBtn && !(msg && msg.last_round)) {
+            els.nextQuestionBtn.classList.remove('hidden');
+        }
+        if (els.endGameBtn) els.endGameBtn.classList.remove('hidden');
     }
 
     function handleFinale(msg) {
