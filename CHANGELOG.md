@@ -3,6 +3,24 @@
 All notable changes to Quizify are documented here. This project follows
 [Semantic Versioning](https://semver.org/).
 
+## [1.10.0-RC2] — 2026-08-23
+
+Two things found while playing RC1 on a live Home Assistant.
+
+### 🆕 The setup screen announces new packs instead of asking for handiwork
+
+It used to offer version updates for packs you already had, and tell you to replace JSON files by hand. Packs ship inside the integration, so that update had already arrived — following the instruction only moved you away from the release you were running. Now it tells you what came **with** the update you installed: *"New in this update: World Cup (100)"*. A fresh install is not greeted with a list of "new" packs, and what arrived while you were away is still there when you next open the page.
+
+The banner also showed raw text like `admin.packUpdateTitle` instead of a sentence. That is gone.
+
+### ⏱️ The countdown pulses on the second
+
+In the last five seconds the number beat twice per second against a digit that changes once, drifting further apart as the question ran — while the audible tick stayed with the digit. Sound and animation now agree about when a second is.
+
+### ⚠️ Not yet verified on hardware
+
+RC1 has been installed and played. These two fixes have not — they are what that play-through found.
+
 ## [1.10.0-RC1] — 2026-08-23
 
 ### 🇪🇸 Spanish is complete
