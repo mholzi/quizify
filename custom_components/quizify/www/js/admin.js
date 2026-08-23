@@ -2759,6 +2759,7 @@
     on(els.startGameBtn, 'click', function () {
         showView('lobby');
         initJoinUrl();
+        initStatsLink();
     });
 
     // Featured pack spotlight (hero) → SELECT/DESELECT the World Cup pack, the
@@ -2993,6 +2994,25 @@
     }
 
     // ---- Generate join URL ----
+    function initStatsLink() {
+        var btn = document.getElementById('setup-stats-btn');
+        if (!btn) return;
+        btn.addEventListener('click', function () {
+            // Deliberately NO ?token= (#359, #608): analytics.html reads the
+            // admin token from localStorage via QuizifyUtils.readAdminToken()
+            // and only falls back to the URL param. Appending it here would put
+            // a full-control credential back into browser history for no gain.
+            var url = window.location.origin + '/quizify/analytics';
+            // Android Companion swallows target="_blank" (#348/#377), so
+            // navigate the frame there instead of opening a tab.
+            if (isAndroidCompanion()) {
+                window.location.href = url;
+            } else {
+                window.open(url, '_blank');
+            }
+        });
+    }
+
     function initJoinUrl() {
         var joinUrl = window.location.origin + '/quizify/player';
         generateQR(joinUrl);
