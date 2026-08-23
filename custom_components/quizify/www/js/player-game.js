@@ -946,7 +946,15 @@
         var rankClass = rank <= 3 ? ' rank-' + rank : '';
         var currentClass = entry.is_current ? ' is-current' : '';
         var disconnectedClass = entry.connected === false ? ' is-disconnected' : '';
-        var youBadge = entry.is_current ? '<span class="you-badge">(you)</span>' : '';
+        // #625: `lobby.you` ships in all three bundles; this spot rendered a
+        // literal English "(you)" on every phone for the whole game. Same
+        // local-`t` shape the rest of this file uses — there is no module-wide
+        // helper here, so a bare `_t` would be a ReferenceError that takes the
+        // whole leaderboard render down with it.
+        var t = (window.QuizifyI18n && window.QuizifyI18n.t) || function (k) { return k; };
+        var youBadge = entry.is_current
+            ? '<span class="you-badge">(' + t('lobby.you') + ')</span>'
+            : '';
         var streakBadge = entry.streak > 1
             ? '<span class="leaderboard-streak">' + entry.streak + 'x</span>'
             : '';

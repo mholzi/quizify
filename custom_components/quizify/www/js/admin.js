@@ -651,7 +651,10 @@
                     var chip = els.categoryChips.querySelector('.chip[data-value="' + val + '"]');
                     if (chip) total += parseInt(chip.dataset.count || '0', 10);
                 });
-                countEl.textContent = selectedCategories.length + ' Packs · ' + total + ' Fragen';
+                countEl.textContent = _t('admin.packsAndQuestions', {
+                    packs: selectedCategories.length,
+                    questions: total,
+                });
                 countEl.classList.remove('hidden');
             }
         } else {
@@ -660,7 +663,9 @@
             if (countEl) {
                 var count = activeChip ? parseInt(activeChip.dataset.count || '0', 10) : 0;
                 if (count > 0) {
-                    countEl.textContent = count + ' Fragen';
+                    countEl.textContent = _t('admin.questionsOnly', {
+                        questions: count,
+                    });
                     countEl.classList.remove('hidden');
                 } else {
                     countEl.classList.add('hidden');
@@ -694,7 +699,12 @@
         var diffLabel = (els.difficultyChips && els.difficultyChips.querySelector('.chip.active'))
             ? els.difficultyChips.querySelector('.chip.active').textContent.trim()
             : _t('difficulties.medium');
-        var langFlag = selectedLanguage === 'en' ? '🇬🇧' : '🇩🇪';
+        // Map, not a ternary (#625): "English or else German" flew a German
+        // flag over every Spanish game. An unknown code falls back to the
+        // globe rather than to some language's flag — wrong-but-plausible is
+        // worse here than visibly neutral.
+        var LANG_FLAGS = { en: '🇬🇧', de: '🇩🇪', es: '🇪🇸' };
+        var langFlag = LANG_FLAGS[selectedLanguage] || '🌐';
         var parts = [];
         if (preset) parts.push(preset.label);
         parts.push(selectedRounds + ' ' + _t('admin.summaryRoundsUnit'));

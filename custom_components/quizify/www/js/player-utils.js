@@ -43,6 +43,13 @@
     // HTML Escaping
     // ============================================
 
+    // One place for the "translate or fall back to the key" shape this file
+    // uses; three copies of the same line invite the fourth to be forgotten.
+    function _tt(key) {
+        var fn = window.QuizifyI18n && window.QuizifyI18n.t;
+        return fn ? fn(key) : key;
+    }
+
     function escapeHtml(text) {
         return utils.escapeHtml(text);
     }
@@ -249,8 +256,12 @@
             .map(function (p, i) {
                 var rank = p.rank || i + 1;
                 var rankClass = rank <= 3 ? ' rank-' + rank : '';
+                // #625: the audit named only player-game.js, but the same
+                // literal sits twice more in this file. `lobby.you` exists in
+                // all three bundles.
                 var youBadge = (myName && p.name === myName)
-                    ? '<span class="you-badge">(you)</span>' : '';
+                    ? '<span class="you-badge">(' + _tt('lobby.you') + ')</span>'
+                    : '';
                 return '<div class="leaderboard-row">' +
                     '<span class="leaderboard-rank' + rankClass + '">' + rank + '</span>' +
                     '<span class="leaderboard-name">' + escapeHtml(p.name) + youBadge + '</span>' +
@@ -283,8 +294,14 @@
                     (isYou ? ' player-card--you' : '') +
                     (isDisconnected ? ' player-card--disconnected' : '');
                 var colorStyle = color ? ' style="--player-color:' + color + ';border-left:4px solid ' + color + ';"' : '';
-                var awayBadge = isDisconnected ? '<span class="away-badge">(away)</span>' : '';
-                var youBadge = isYou ? '<span class="you-badge">(you)</span>' : '';
+                // `(away)` was hardcoded English too, and `lobby.away` was
+                // already sitting there unused.
+                var awayBadge = isDisconnected
+                    ? '<span class="away-badge">(' + _tt('lobby.away') + ')</span>'
+                    : '';
+                var youBadge = isYou
+                    ? '<span class="you-badge">(' + _tt('lobby.you') + ')</span>'
+                    : '';
                 return '<div class="' + classes + '"' + colorStyle + ' data-player="' + escapeHtml(name) + '">' +
                     '<span class="player-color-dot" style="background:' + (color || '#888') + '"></span>' +
                     '<span class="player-name">' + escapeHtml(name) + youBadge + awayBadge + '</span>' +
