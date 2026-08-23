@@ -18,12 +18,11 @@ from functools import lru_cache
 from pathlib import Path
 from typing import TYPE_CHECKING
 
-import aiohttp
 from aiohttp import web
 
-from ..const import SUBMIT_POLL_INTERVAL_SECONDS
 from ..game.seasons import is_in_season, parse_season, pick_active_season
 from .context import APP_CTX_KEY
+from .pack_news import PackNewsStore
 from .pack_submission import (
     request_pack_view,
     submissions_list_view,
@@ -48,21 +47,6 @@ if TYPE_CHECKING:
     # accepts. Used to type the ROUTES table precisely instead of `object`.
     _RouteHandler = Callable[[web.Request], Awaitable[web.StreamResponse]]
 
-
-# GitHub raw URL for pack version manifests
-_PACK_VERSIONS_URL = (
-    "https://raw.githubusercontent.com/mholzi/quizify/main/"
-    "custom_components/quizify/questions/versions.json"
-)
-
-# In-memory cache for the upstream versions.json (#360). The
-# ``GET /api/quizify/packs/updates`` endpoint is unauthenticated, so without a
-# throttle any client could loop it and make the HA host hammer GitHub's raw
-# endpoint on every request. Mirror pack_submission's hourly reconcile throttle
-# (SUBMIT_POLL_INTERVAL_SECONDS) and reuse the cached copy within the window.
-_UPSTREAM_CACHE_TTL_SECONDS = SUBMIT_POLL_INTERVAL_SECONDS
-# (fetched_at_monotonic, versions_dict_or_None)
-_upstream_versions_cache: tuple[float, dict | None] | None = None
 
 _LOGGER = logging.getLogger(__name__)
 
@@ -932,6 +916,21 @@ async def analytics_data_view(request: web.Request) -> web.Response:
 
 
 _PRESET_STORE_KEY = "quizify_preset_store"
+_PACK_NEWS_STORE_KEY = "quizify_pack_news_store"
+
+
+def _pack_news_store(request: web.Request) -> PackNewsStore:
+    """Return the per-app pack-news store, creating it once.
+
+    Cached on the application for the same reason as the preset store: the
+    store serialises its read-modify-write behind an ``asyncio.Lock``, and a
+    fresh instance per request would lock nothing.
+    """
+    store = request.app.get(_PACK_NEWS_STORE_KEY)
+    if store is None:
+        store = PackNewsStore(_get_ctx(request).runtime)
+        request.app[_PACK_NEWS_STORE_KEY] = store
+    return store
 
 
 def _preset_store(request: web.Request) -> PresetStore:
@@ -1056,7 +1055,7 @@ async def pack_versions_view(request: web.Request) -> web.Response:
     bank = ctx.game.question_bank
     # Packs are cached in memory after the first load; only pay the executor
     # hop + disk read when they haven't been loaded yet (mirrors
-    # ``pack_update_check_view``). The bank is preloaded on setup, so this GET
+    # ``pack_news_view``). The bank is preloaded on setup, so this GET
     # is normally a pure in-memory read.
     if not bank.is_loaded:
         await ctx.runtime.run_in_executor(bank.load_all_categories)
@@ -1078,51 +1077,20 @@ async def pack_versions_view(request: web.Request) -> web.Response:
     return web.json_response(annotated)
 
 
-async def _fetch_upstream_versions(runtime: Runtime) -> dict | None:
-    """Fetch versions.json from GitHub (best-effort, 5s timeout).
+async def pack_news_view(request: web.Request) -> web.Response:
+    """Report packs that arrived with an update the host has already installed.
 
-    Uses the runtime's shared client session (#456) instead of building a
-    throwaway ``ClientSession`` per fetch. Returns the parsed manifest, or
-    ``None`` on any non-200/error so callers can fall back gracefully.
-    """
-    try:
-        timeout = aiohttp.ClientTimeout(total=5)
-        session = runtime.get_client_session()
-        async with session.get(_PACK_VERSIONS_URL, timeout=timeout) as resp:
-            if resp.status == 200:
-                return await resp.json(content_type=None)
-    except Exception as exc:  # noqa: BLE001
-        _LOGGER.warning("Pack update check failed: %s", exc)
-    return None
+    Packs live inside the integration, so a new pack is already on disk by the
+    time this is asked — there is nothing to fetch and nothing for the host to
+    copy. The endpoint therefore only compares what is installed now against
+    what this host has been shown before (``PackNewsStore``), and never talks
+    to GitHub.
 
+    Community packs are filtered out: the host put those there themselves, and
+    telling someone about a file they just added is noise, not news.
 
-async def _get_upstream_versions(runtime: Runtime) -> dict | None:
-    """Return the upstream versions.json, refreshing on cache-miss/TTL expiry.
-
-    Repeated calls within ``_UPSTREAM_CACHE_TTL_SECONDS`` reuse the cached copy
-    so the unauthenticated update-check endpoint can't be looped to hammer
-    GitHub (#360). Only successful fetches are cached; a failed fetch returns
-    ``None`` without poisoning the cache, so the next request retries — the same
-    best-effort behaviour as before caching.
-    """
-    global _upstream_versions_cache
-    now = time.monotonic()
-    cache = _upstream_versions_cache
-    if cache is not None and now - cache[0] < _UPSTREAM_CACHE_TTL_SECONDS:
-        return cache[1]
-
-    upstream = await _fetch_upstream_versions(runtime)
-    if upstream is not None:
-        _upstream_versions_cache = (now, upstream)
-    return upstream
-
-
-async def pack_update_check_view(request: web.Request) -> web.Response:
-    """Check GitHub for updated question packs.
-
-    The upstream versions.json fetch is cached in-memory (#360) so repeated
-    unauthenticated calls don't make the HA host hammer GitHub. The pack reload
-    is likewise skipped once the bank is already loaded.
+    Unauthenticated, like the pack list beside it — the answer is a list of
+    pack names, which the setup screen shows to anyone who can open it anyway.
     """
     ctx = _get_ctx(request)
     bank = ctx.game.question_bank
@@ -1132,30 +1100,35 @@ async def pack_update_check_view(request: web.Request) -> web.Response:
         await ctx.runtime.run_in_executor(bank.load_all_categories)
     installed = bank.get_pack_versions()
 
-    upstream = await _get_upstream_versions(ctx.runtime)
+    shipped = {
+        slug for slug, meta in installed.items() if not meta.get("community")
+    }
+    pending = await _pack_news_store(request).sync(shipped)
 
-    updates = []
-    if upstream:
-        for slug, meta in installed.items():
-            upstream_version = upstream.get(slug)
-            if upstream_version and upstream_version != meta["version"]:
-                updates.append(
-                    {
-                        "slug": slug,
-                        "name": meta["name"],
-                        "installed_version": meta["version"],
-                        "upstream_version": upstream_version,
-                    }
-                )
-
-    return web.json_response(
+    new_packs = [
         {
-            "installed": installed,
-            "upstream": upstream,
-            "updates": updates,
-            "upstream_available": upstream is not None,
+            "slug": slug,
+            "name": installed[slug].get("name", slug),
+            "question_count": installed[slug].get("question_count", 0),
+            "language": installed[slug].get("language", ""),
         }
-    )
+        for slug in pending
+        if slug in installed
+    ]
+
+    return web.json_response({"new_packs": new_packs})
+
+
+async def pack_news_dismiss_view(request: web.Request) -> web.Response:
+    """Forget the pending arrivals — the host closed the banner.
+
+    Gated on the admin token: dismissing is a write, and a guest with the
+    join link should not be able to clear a banner the host has not read.
+    """
+    if not _is_admin_authenticated(request):
+        return _unauthorized()
+    await _pack_news_store(request).dismiss()
+    return web.json_response({"ok": True})
 
 
 # ---------------------------------------------------------------------------
@@ -1324,7 +1297,9 @@ ROUTES: list[tuple[str, str, _RouteHandler]] = [
     ("POST", "/api/quizify/presets", preset_save_view),
     ("DELETE", "/api/quizify/presets", preset_delete_view),
     ("GET", "/api/quizify/packs", pack_versions_view),
-    ("GET", "/api/quizify/packs/updates", pack_update_check_view),
+    # #649: what arrived with the last update, not what could be updated.
+    ("GET", "/api/quizify/packs/news", pack_news_view),
+    ("POST", "/api/quizify/packs/news/dismiss", pack_news_dismiss_view),
     ("POST", "/api/quizify/flag-question", flag_question_view),
     ("GET", "/api/quizify/flags", flag_list_view),
     # Community pack submission (#180). Inert until community_submit_url is set:

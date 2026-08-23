@@ -159,8 +159,8 @@
     "summaryRoundsUnit": "Rondas",
     "settingsSummary": "{difficulty} • {rounds} {roundsUnit} • {timer}s",
     "categoriesCountPlural": "{count} categorías",
-    "packUpdateTitle": "Hay actualizaciones de paquetes de preguntas",
-    "packUpdateBody": "Actualiza tus paquetes reemplazando los archivos JSON en {path} y reiniciando Home Assistant."
+    "packNewsTitle": "Novedades de esta actualización",
+    "packNewsBody": "Ya está instalado: elígelo en la lista de categorías y a jugar."
   },
   "categories": {
     "mixed": "Mixto",

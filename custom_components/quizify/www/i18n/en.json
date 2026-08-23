@@ -159,8 +159,8 @@
     "summaryRoundsUnit": "Rounds",
     "settingsSummary": "{difficulty} • {rounds} {roundsUnit} • {timer}s",
     "categoriesCountPlural": "{count} Categories",
-    "packUpdateTitle": "Question pack updates available",
-    "packUpdateBody": "Update your packs by replacing the JSON files in {path} and restarting Home Assistant."
+    "packNewsTitle": "New in this update",
+    "packNewsBody": "Already installed — pick it from the category list to play it."
   },
   "categories": {
     "mixed": "Mixed",
