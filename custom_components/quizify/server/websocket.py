@@ -49,6 +49,7 @@ from custom_components.quizify.server.connection import ConnectionManager
 from custom_components.quizify.server.rate_limit import SlidingWindowLimiter
 from custom_components.quizify.server.round_message_builder import RoundMessageBuilder
 from custom_components.quizify.server.serializers import (
+    serialize_answer_progress,
     serialize_finale,
     serialize_leaderboard,
     serialize_player_list,
@@ -286,6 +287,12 @@ class QuizifyWebSocketHandler:
         self._roster_dirty: bool = False
         self._roster_last_type: str = "player_joined"
         self._roster_flush_task: asyncio.Task | None = None
+        # #619: answer-progress rides its own coalescing window, same shape as
+        # the roster one (#453). A broadcast per accepted answer would be the
+        # O(N²) fan-out that #453 removed, re-introduced on a hotter path — a
+        # room of eight taps eight times per round, not once per game.
+        self._progress_dirty = False
+        self._progress_flush_task: asyncio.Task | None = None
 
     # Coalescing window for visual reactions (#304), seconds.
     _REACTION_FLUSH_WINDOW = 0.15
@@ -1193,9 +1200,13 @@ class QuizifyWebSocketHandler:
             # answer in their own answer order, so the dots appear on the same
             # question for all of them.
             await self._broadcast_team_answer(game_state, result, setter=player.name)
+            self._mark_progress_dirty()
             return
 
         if isinstance(result, AnswerResult):
+            # #619: the room can see who it is waiting for. Coalesced, so a
+            # simultaneous tap-storm is one frame, not one per tap.
+            self._mark_progress_dirty()
             await self._conn.send(ws, {
                 "type": "answer_result",
                 "correct": result.correct,
@@ -1490,6 +1501,53 @@ class QuizifyWebSocketHandler:
                 self._flush_roster_after_window()
             )
             self._roster_flush_task.add_done_callback(self._log_task_exception)
+
+    def _mark_progress_dirty(self) -> None:
+        """Flag answer-progress as changed and (re)arm its coalescing flush."""
+        self._progress_dirty = True
+        if self._progress_flush_task is None or self._progress_flush_task.done():
+            self._progress_flush_task = asyncio.ensure_future(
+                self._flush_progress_after_window()
+            )
+            self._progress_flush_task.add_done_callback(self._log_task_exception)
+
+    async def _flush_progress_after_window(self) -> None:
+        """Wait one window, then broadcast ONE answer-progress frame (#619).
+
+        Mirrors ``_flush_roster_after_window`` down to the tail re-arm: taps
+        that land during the broadcast set the flag again, and no new task can
+        start while this one runs.
+
+        The list is serialized at flush time, not at tap time, so the frame
+        always carries the room as it is when it goes out rather than as it was
+        when the first tap of the window arrived.
+        """
+        try:
+            await asyncio.sleep(self._REACTION_FLUSH_WINDOW)
+        except asyncio.CancelledError:
+            self._progress_dirty = False
+            raise
+
+        if not self._progress_dirty:
+            return
+
+        self._progress_dirty = False
+        gs = self._get_game_state()
+        if gs is not None:
+            await self._conn.broadcast(serialize_answer_progress(gs.get_players()))
+
+        if self._progress_dirty:
+            self._progress_flush_task = asyncio.ensure_future(
+                self._flush_progress_after_window()
+            )
+            self._progress_flush_task.add_done_callback(self._log_task_exception)
+
+    def _cancel_progress_flush(self) -> None:
+        """Cancel any pending answer-progress flush (called on cleanup)."""
+        if self._progress_flush_task is not None:
+            self._progress_flush_task.cancel()
+            self._progress_flush_task = None
+        self._progress_dirty = False
 
     def _cancel_roster_flush(self) -> None:
         """Cancel any pending roster-flush task (called on cleanup)."""
@@ -3488,6 +3546,7 @@ class QuizifyWebSocketHandler:
         self._cancel_lightning_loop()
         self._cancel_reaction_flush()
         self._cancel_roster_flush()
+        self._cancel_progress_flush()
         # Also cancel the deferred admin-disconnect pause (#362): a game
         # teardown/reset that leaves it pending would fire a spurious pause
         # (or hold a reference) after the game is already gone.

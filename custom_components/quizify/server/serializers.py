@@ -334,6 +334,33 @@ def serialize_player_list(players: list[PlayerSession]) -> list[dict[str, Any]]:
     ]
 
 
+def serialize_answer_progress(players: list[PlayerSession]) -> dict[str, Any]:
+    """Who has answered this round, in the shape the phone tracker expects (#619).
+
+    Deliberately its own payload rather than a field on ``serialize_player_list``:
+    that list rides every join/leave frame, and per-round answer state has no
+    business in a roster message that also reaches the lobby.
+
+    The field names are not a free choice — ``renderSubmissionTracker`` was
+    written long before anything sent it data and already reads ``name``,
+    ``submitted`` and ``connected`` off each entry. The issue proposed a plain
+    list of names; that renderer could not have drawn it.
+
+    Scores are omitted on purpose. This goes out mid-question, and a live score
+    beside each name would leak who just answered correctly.
+    """
+    entries = [
+        {"name": p.name, "submitted": p.submitted, "connected": p.connected}
+        for p in players
+    ]
+    return {
+        "type": "answer_progress",
+        "players": entries,
+        "submitted": sum(1 for e in entries if e["submitted"]),
+        "total": len(entries),
+    }
+
+
 def build_share_payload(
     all_players: list[PlayerSession],
     packs: list[str] | None = None,

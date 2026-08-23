@@ -794,6 +794,34 @@
     box-shadow: 0 0 6px var(--color-success-neon);
 }
 
+/* #619: `renderSubmissionTracker` has always toggled `all-submitted` on the
+   tracker, and no rule ever read it — so the one moment the row is worth
+   looking at, when the last phone has tapped, looked exactly like every other
+   moment. A short lift and a warm tint, not a flash: this sits directly above
+   the answer buttons while the reveal is about to land. */
+.submission-tracker.all-submitted .submitted-players {
+    animation: submission-complete 420ms ease-out;
+}
+
+.submission-tracker.all-submitted .player-indicator {
+    border-color: var(--color-success-neon);
+    background: rgba(127, 168, 151, 0.14);
+}
+
+@keyframes submission-complete {
+    0%   { transform: translateY(0); }
+    45%  { transform: translateY(-3px); }
+    100% { transform: translateY(0); }
+}
+
+/* Anyone who asked the OS for less motion gets the colour change and no
+   movement — the state still reads, it just stops moving. */
+@media (prefers-reduced-motion: reduce) {
+    .submission-tracker.all-submitted .submitted-players {
+        animation: none;
+    }
+}
+
 .player-indicator.is-current-player {
     background: rgba(232, 138, 127, 0.12);
 }
