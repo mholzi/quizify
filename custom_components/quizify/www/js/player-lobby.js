@@ -477,8 +477,13 @@
             startBtn.addEventListener('click', function () {
                 if (!state.ws || state.ws.readyState !== WebSocket.OPEN) return;
 
+                // #625: was a hardcoded "Starting...". `admin.starting` exists
+                // in all three bundles. Local `t` per this file's convention.
+                var t = (window.QuizifyI18n && window.QuizifyI18n.t)
+                    || function (k) { return k; };
                 startBtn.disabled = true;
-                startBtn.innerHTML = '<span class="btn-icon" aria-hidden="true">🎉</span><span>Starting...</span>';
+                startBtn.innerHTML = '<span class="btn-icon" aria-hidden="true">🎉</span><span>'
+                    + t('admin.starting') + '</span>';
 
                 sendFn('start_game', {});
             });

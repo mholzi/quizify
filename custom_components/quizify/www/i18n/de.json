@@ -86,6 +86,8 @@
     "category": "Kategorie",
     "categoryMixed": "Gemischt",
     "mixedAllPacks": "Alle Packs",
+    "packsAndQuestions": "{packs} Packs · {questions} Fragen",
+    "questionsOnly": "{questions} Fragen",
     "spotlightFeatured": "⭐ Empfohlen",
     "spotlightPlay": "▶︎ Sofort spielen",
     "themes": "Themen",

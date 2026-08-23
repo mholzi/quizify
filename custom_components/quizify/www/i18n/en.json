@@ -86,6 +86,8 @@
     "category": "Category",
     "categoryMixed": "Mixed",
     "mixedAllPacks": "All packs",
+    "packsAndQuestions": "{packs} packs · {questions} questions",
+    "questionsOnly": "{questions} questions",
     "spotlightFeatured": "⭐ Featured",
     "spotlightPlay": "▶︎ Play now",
     "themes": "Themes",
