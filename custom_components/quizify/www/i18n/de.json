@@ -470,6 +470,13 @@
     "myPresets": "Meine Presets",
     "savePreset": "Aktuelles speichern",
     "savePresetPrompt": "Name für dieses Preset:",
+    "savePresetTitle": "Vorlage speichern",
+    "savePresetBody": "Runden, Schwierigkeit, Timer und Pack-Auswahl werden unter diesem Namen gesichert.",
+    "savePresetPlaceholder": "Name der Vorlage",
+    "savePresetBtn": "Speichern",
+    "deletePresetTitle": "Vorlage löschen?",
+    "deletePresetBody": "„{name}“ wird dauerhaft entfernt.",
+    "deletePresetBtn": "Löschen",
     "deletePreset": "Preset löschen",
     "deletePresetConfirm": "Preset löschen:"
   },

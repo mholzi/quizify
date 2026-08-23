@@ -876,7 +876,7 @@
             del.setAttribute('aria-label', _t('setup.deletePreset') + ' ' + p.name);
             del.addEventListener('click', function (ev) {
                 ev.stopPropagation();   // deleting must never also select
-                _deleteCustomPreset(p);
+                _deleteCustomPreset(p, del);
             });
             chip.appendChild(del);
 
@@ -888,7 +888,11 @@
         add.type = 'button';
         add.className = 'preset-chip preset-chip--add';
         add.textContent = '+ ' + _t('setup.savePreset');
-        add.addEventListener('click', _saveCurrentPreset);
+        // Pass the button, not the event: addEventListener hands the handler an
+        // Event, and openConfirmModal stores its argument to restore focus on
+        // close (#479). An Event there has no .focus() and the restore silently
+        // does nothing — the keyboard user lands back at the top of the page.
+        add.addEventListener('click', function () { _saveCurrentPreset(add); });
         row.appendChild(add);
 
         // Hidden entirely while nothing is saved: the label plus a lone
@@ -920,12 +924,56 @@
         if (typeof updateCategorySummary === 'function') updateCategorySummary();
     }
 
-    function _saveCurrentPreset() {
-        var name = window.prompt(_t('setup.savePresetPrompt'));
-        if (name === null) return;
-        name = name.trim();
-        if (!name) return;
+    function _saveCurrentPreset(triggerEl) {
+        // #626: themed modal instead of window.prompt. The dialog stays open on
+        // a server refusal so the typed name survives — an alert() throws it
+        // away and the host retypes from memory.
+        var modal = document.getElementById('save-preset-modal');
+        var input = document.getElementById('save-preset-input');
+        var errorEl = document.getElementById('save-preset-error');
+        if (!modal || !input) {
+            // Markup drift must not cost the host the feature entirely.
+            var fallbackName = window.prompt(_t('setup.savePresetPrompt'));
+            if (fallbackName === null) return;
+            fallbackName = fallbackName.trim();
+            if (fallbackName) _postPreset(fallbackName, null, null);
+            return;
+        }
 
+        input.value = '';
+        if (errorEl) {
+            errorEl.textContent = '';
+            errorEl.classList.add('hidden');
+        }
+
+        var confirmBtn = document.getElementById('save-preset-confirm-btn');
+        if (confirmBtn && !confirmBtn._presetWired) {
+            confirmBtn._presetWired = true;
+            confirmBtn.addEventListener('click', function () {
+                var name = (input.value || '').trim();
+                if (!name) {
+                    input.focus();
+                    return;
+                }
+                _postPreset(name, errorEl, 'save-preset-modal');
+            });
+        }
+        if (!input._presetWired) {
+            input._presetWired = true;
+            // Enter submits: this dialog has one field and one obvious action.
+            input.addEventListener('keydown', function (e) {
+                if (e.key === 'Enter' && confirmBtn) {
+                    e.preventDefault();
+                    confirmBtn.click();
+                }
+            });
+        }
+
+        openConfirmModal('save-preset-modal', 'save-preset-cancel-btn', triggerEl);
+        setTimeout(function () { input.focus(); }, 0);
+    }
+
+    function _postPreset(name, errorEl, modalId) {
         _presetFetch({
             method: 'POST',
             headers: { 'Content-Type': 'application/json' },
@@ -948,17 +996,55 @@
                     return body;
                 });
             })
+            .then(function (body) {
+                if (modalId) closeConfirmModal(modalId);
+                return body;
+            })
             .then(_loadCustomPresets)
-            .catch(function (err) { window.alert(err.message); });
+            .catch(function (err) {
+                // Stay open, show why, keep the name. Falls back to the toast
+                // when the modal is not the surface in play.
+                if (errorEl) {
+                    errorEl.textContent = err.message;
+                    errorEl.classList.remove('hidden');
+                } else {
+                    showErrorToast(err.message);
+                }
+            });
     }
 
-    function _deleteCustomPreset(p) {
-        if (!window.confirm(_t('setup.deletePresetConfirm') + ' „' + p.name + '"')) {
+    function _deleteCustomPreset(p, triggerEl) {
+        // #626: the themed danger modal, the same one kicks have used since
+        // #480. The name goes in the sentence — "delete preset?" alone makes
+        // the host guess which one they tapped.
+        var modal = document.getElementById('delete-preset-modal');
+        var textEl = document.getElementById('delete-preset-modal-text');
+        var confirmBtn = document.getElementById('delete-preset-confirm-btn');
+
+        function doDelete() {
+            _presetFetch({ method: 'DELETE', _q: '?id=' + encodeURIComponent(p.id) })
+                .then(_loadCustomPresets)
+                .catch(function () { /* stays on screen; next load reconciles */ });
+        }
+
+        if (!modal || !confirmBtn) {
+            if (window.confirm(_t('setup.deletePresetConfirm') + ' „' + p.name + '"')) {
+                doDelete();
+            }
             return;
         }
-        _presetFetch({ method: 'DELETE', _q: '?id=' + encodeURIComponent(p.id) })
-            .then(_loadCustomPresets)
-            .catch(function () { /* stays on screen; next load reconciles */ });
+
+        if (textEl) {
+            var tmpl = _t('setup.deletePresetBody') || '"{name}" will be removed for good.';
+            textEl.textContent = tmpl.replace('{name}', p.name);
+        }
+        // Re-wired per open: the closure carries THIS preset, and a stale
+        // listener from a previous open would delete the wrong one.
+        confirmBtn.onclick = function () {
+            closeConfirmModal('delete-preset-modal');
+            doDelete();
+        };
+        openConfirmModal('delete-preset-modal', 'delete-preset-cancel-btn', triggerEl);
     }
 
     // Apply preset: write to the active-chip state AND to the typed vars

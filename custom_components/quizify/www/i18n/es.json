@@ -470,6 +470,13 @@
     "myPresets": "Mis ajustes",
     "savePreset": "Guardar actual",
     "savePresetPrompt": "Nombre para este ajuste:",
+    "savePresetTitle": "Guardar ajuste",
+    "savePresetBody": "Se guardarán las rondas, la dificultad, el temporizador y los paquetes elegidos con este nombre.",
+    "savePresetPlaceholder": "Nombre del ajuste",
+    "savePresetBtn": "Guardar",
+    "deletePresetTitle": "¿Eliminar el ajuste?",
+    "deletePresetBody": "«{name}» se eliminará definitivamente.",
+    "deletePresetBtn": "Eliminar",
     "deletePreset": "Eliminar ajuste",
     "deletePresetConfirm": "¿Eliminar el ajuste:"
   },
