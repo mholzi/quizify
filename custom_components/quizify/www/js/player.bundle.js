@@ -1357,12 +1357,21 @@
         var startBtn = document.getElementById('start-game-btn');
         if (startBtn) {
             startBtn.addEventListener('click', function () {
-                if (!state.ws || state.ws.readyState !== WebSocket.OPEN) return;
-
                 // #625: was a hardcoded "Starting...". `admin.starting` exists
                 // in all three bundles. Local `t` per this file's convention.
                 var t = (window.QuizifyI18n && window.QuizifyI18n.t)
                     || function (k) { return k; };
+                // #621: this guard used to `return` in silence, so the host
+                // tapping Start during a reconnect saw the button do nothing
+                // at all — indistinguishable from a broken button.
+                if (!state.ws || state.ws.readyState !== WebSocket.OPEN) {
+                    var pu = window.QuizifyPlayerUtils;
+                    if (pu && pu.showToast) {
+                        pu.showToast(t('connection.reconnecting'), 2500);
+                    }
+                    return;
+                }
+
                 startBtn.disabled = true;
                 startBtn.innerHTML = '<span class="btn-icon" aria-hidden="true">🎉</span><span>'
                     + t('admin.starting') + '</span>';
@@ -5030,10 +5039,22 @@
     // Send Helper
     // ============================================
 
+    // Returns whether the message actually went out (#621).
+    //
+    // The phone had the same silent drop as the admin page, and here it is
+    // worse: a guest taps an answer while the socket is down, the tile lights
+    // up, and the round closes without them. Nothing on screen ever said so.
     function send(type, payload) {
         if (state.ws && state.ws.readyState === WebSocket.OPEN) {
             state.ws.send(JSON.stringify(Object.assign({ type: type }, payload || {})));
+            return true;
         }
+        var t = (window.QuizifyI18n && window.QuizifyI18n.t) || function (k) { return k; };
+        if (pu && pu.showToast) pu.showToast(t('connection.reconnecting'), 2500);
+        if (window.console && console.warn) {
+            console.warn('[quizify] command not sent, socket not open:', type);
+        }
+        return false;
     }
 
     // ============================================

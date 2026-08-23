@@ -35,10 +35,22 @@
     // Send Helper
     // ============================================
 
+    // Returns whether the message actually went out (#621).
+    //
+    // The phone had the same silent drop as the admin page, and here it is
+    // worse: a guest taps an answer while the socket is down, the tile lights
+    // up, and the round closes without them. Nothing on screen ever said so.
     function send(type, payload) {
         if (state.ws && state.ws.readyState === WebSocket.OPEN) {
             state.ws.send(JSON.stringify(Object.assign({ type: type }, payload || {})));
+            return true;
         }
+        var t = (window.QuizifyI18n && window.QuizifyI18n.t) || function (k) { return k; };
+        if (pu && pu.showToast) pu.showToast(t('connection.reconnecting'), 2500);
+        if (window.console && console.warn) {
+            console.warn('[quizify] command not sent, socket not open:', type);
+        }
+        return false;
     }
 
     // ============================================

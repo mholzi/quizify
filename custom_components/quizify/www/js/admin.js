@@ -1282,9 +1282,31 @@
         ws.onerror = function () { if (ws) ws.close(); };
     }
 
+    // Returns whether the message actually went out (#621).
+    //
+    // This used to be the same three lines without the `else`: on a closed
+    // socket the command vanished with no toast, no log, nothing. #599 made
+    // *refused* commands visible; an *undelivered* one looks identical from the
+    // host's chair, so half the picture in #586 stayed dark.
+    //
+    // The boolean matters as much as the toast: callers were disabling their
+    // button for 1.5s afterwards, which is a success animation for something
+    // that never happened.
     function send(type, payload) {
         if (ws && ws.readyState === WebSocket.OPEN) {
             ws.send(JSON.stringify(Object.assign({ type: type }, payload)));
+            return true;
+        }
+        _LOG_UNDELIVERED(type);
+        showErrorToast(_t('connection.reconnecting'));
+        return false;
+    }
+
+    function _LOG_UNDELIVERED(type) {
+        // console, not _LOGGER — this is the browser. Kept separate so the
+        // toast text and the diagnostic can diverge without touching send().
+        if (window.console && console.warn) {
+            console.warn('[quizify] command not sent, socket not open:', type);
         }
     }
 
@@ -2694,7 +2716,13 @@
     function _debouncedSend(btn, msgType) {
         if (!btn || btn.disabled) return;
         btn.disabled = true;
-        send(msgType, {});
+        // #621: only hold the button if the command actually left. Disabling
+        // for 1.5s after an undelivered send tells the host "received, working
+        // on it" — the one thing that did not happen.
+        if (!send(msgType, {})) {
+            btn.disabled = false;
+            return;
+        }
         // Re-enable after 1.5s as a safety net (in case server doesn't respond).
         setTimeout(function () { btn.disabled = false; }, 1500);
     }
