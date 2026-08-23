@@ -934,6 +934,46 @@
         </div>
     </div>
 
+    <!-- #626: saving a preset used window.prompt, its failures window.alert,
+         and deleting it window.confirm. The kick flow dropped window.confirm
+         for exactly this reason in #480 — same file, a few hundred lines
+         further down. Embedded WebViews render or suppress those dialogs
+         inconsistently, and the Android Companion has already produced two
+         such surprises (#348, #377). -->
+    <div id="save-preset-modal" class="modal hidden" role="dialog" aria-modal="true" aria-labelledby="save-preset-modal-title">
+        <div class="modal-backdrop"></div>
+        <div class="modal-content">
+            <h2 id="save-preset-modal-title" data-i18n="setup.savePresetTitle">Save preset</h2>
+            <p data-i18n="setup.savePresetBody">Rounds, difficulty, timer and pack selection are stored under this name.</p>
+            <div class="form-group">
+                <input type="text" id="save-preset-input" class="name-input"
+                       data-i18n-placeholder="setup.savePresetPlaceholder"
+                       placeholder="Preset name" maxlength="30"
+                       autocomplete="off" autocapitalize="sentences">
+                <!-- The server writes its refusals for a person ("at most 20
+                     presets can be saved"), so they land here instead of in an
+                     alert — which keeps the typed name on screen to correct. -->
+                <p id="save-preset-error" class="validation-msg hidden" role="alert"></p>
+            </div>
+            <div class="modal-actions">
+                <button type="button" id="save-preset-confirm-btn" class="btn btn-primary" data-i18n="setup.savePresetBtn">Save</button>
+                <button type="button" id="save-preset-cancel-btn" class="btn btn-secondary" data-i18n="common.cancel">Cancel</button>
+            </div>
+        </div>
+    </div>
+
+    <div id="delete-preset-modal" class="modal hidden" role="dialog" aria-modal="true" aria-labelledby="delete-preset-modal-title">
+        <div class="modal-backdrop"></div>
+        <div class="modal-content">
+            <h2 id="delete-preset-modal-title" data-i18n="setup.deletePresetTitle">Delete preset?</h2>
+            <p id="delete-preset-modal-text" data-i18n="setup.deletePresetBody">This preset will be removed for good.</p>
+            <div class="modal-actions">
+                <button type="button" id="delete-preset-confirm-btn" class="btn btn-danger" data-i18n="setup.deletePresetBtn">Delete</button>
+                <button type="button" id="delete-preset-cancel-btn" class="btn btn-secondary" data-i18n="common.cancel">Cancel</button>
+            </div>
+        </div>
+    </div>
+
     <!-- #622: "Cast to TV" never cast anything — it opened /quizify/dashboard
          in a tab on the host's own phone. Renaming the button stops the false
          promise; this sheet answers the question the button raises, namely how

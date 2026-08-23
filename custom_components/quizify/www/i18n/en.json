@@ -470,6 +470,13 @@
     "myPresets": "My presets",
     "savePreset": "Save current",
     "savePresetPrompt": "Name for this preset:",
+    "savePresetTitle": "Save preset",
+    "savePresetBody": "Rounds, difficulty, timer and pack selection are stored under this name.",
+    "savePresetPlaceholder": "Preset name",
+    "savePresetBtn": "Save",
+    "deletePresetTitle": "Delete preset?",
+    "deletePresetBody": "\"{name}\" will be removed for good.",
+    "deletePresetBtn": "Delete",
     "deletePreset": "Delete preset",
     "deletePresetConfirm": "Delete preset:"
   },
