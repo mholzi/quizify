@@ -830,14 +830,24 @@
     // the host's phone too. The four built-in cards below are untouched by
     // all of this; this only adds a chip row above them.
 
-    function _presetFetch(opts) {
-        // Header rather than ?token= — #359 moved the token out of URLs, and
-        // new call sites should not put it back in.
+    // #608: one place that turns "I hold the admin token" into a request.
+    //
+    // The token used to ride along as ?token=, which put a replayable
+    // full-control credential into aiohttp's access log and every reverse proxy
+    // in front of HA — the leak #359 removed. The rule was even written down,
+    // three lines above one of the four sites that broke it, which is why this
+    // is now a function rather than a comment.
+    function _adminFetch(url, opts) {
         var tok = QuizifyUtils.readAdminToken();
         var init = opts || {};
         init.headers = init.headers || {};
         if (tok) init.headers['X-Quizify-Token'] = tok;
-        return fetch('/api/quizify/presets' + (init._q || ''), init);
+        return fetch(url, init);
+    }
+
+    function _presetFetch(opts) {
+        var init = opts || {};
+        return _adminFetch('/api/quizify/presets' + (init._q || ''), init);
     }
 
     function _loadCustomPresets() {
@@ -2133,10 +2143,7 @@
     function _loadTtsEntities(cfg) {
         // #356: the tts-entities endpoint is admin-token gated. Send the
         // session token the admin page already holds.
-        var _tok = QuizifyUtils.readAdminToken();
-        var _url = '/api/quizify/tts-entities'
-            + (_tok ? '?token=' + encodeURIComponent(_tok) : '');
-        fetch(_url)
+        _adminFetch('/api/quizify/tts-entities')
             .then(function (resp) { return resp.ok ? resp.json() : null; })
             .then(function (data) {
                 if (!data) {
@@ -2508,10 +2515,7 @@
     // HTTP fallback for an older server that doesn't put house_entities on the
     // admin frame. Admin-token gated like /api/quizify/tts-entities (#356).
     function _loadHouseEntities(cfg) {
-        var _tok = QuizifyUtils.readAdminToken();
-        var _url = '/api/quizify/house-entities'
-            + (_tok ? '?token=' + encodeURIComponent(_tok) : '');
-        fetch(_url)
+        _adminFetch('/api/quizify/house-entities')
             .then(function (resp) { return resp.ok ? resp.json() : null; })
             .then(function (data) {
                 if (!data) {

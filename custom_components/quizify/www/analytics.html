@@ -345,27 +345,28 @@
         });
 
         // #356: the analytics/flags endpoints are admin-token gated. The token
-        // is the admin session token the host holds; read it through
-        // QuizifyUtils (durable localStorage, with the legacy per-tab value as
-        // a migration fallback) or from a ?token= URL param so the dashboard
-        // keeps working when opened straight from the admin panel.
+        // is the admin session token the host holds, read through QuizifyUtils
+        // (durable localStorage since #530, with the legacy per-tab value as a
+        // migration fallback).
+        //
+        // #608: the ?token= URL param is gone, in both directions. Reading it
+        // meant the credential sat in this page's address bar and therefore in
+        // browser history; sending it put it in aiohttp's access log and every
+        // reverse proxy in front of HA. Since #530 localStorage always has it,
+        // so the param bought nothing — the link from the admin page (#627)
+        // deliberately carries no token and the page authenticates anyway.
         function adminToken() {
             try {
-                var fromUrl = new URLSearchParams(window.location.search).get('token');
-                return fromUrl
-                    || (window.QuizifyUtils && QuizifyUtils.readAdminToken())
-                    || '';
+                return (window.QuizifyUtils && QuizifyUtils.readAdminToken()) || '';
             } catch (e) { return ''; }
         }
-        function withToken(url) {
+        function adminInit() {
             var tok = adminToken();
-            if (!tok) { return url; }
-            return url + (url.indexOf('?') === -1 ? '?' : '&')
-                + 'token=' + encodeURIComponent(tok);
+            return tok ? { headers: { 'X-Quizify-Token': tok } } : {};
         }
 
         function loadData() {
-            fetch(withToken('/api/quizify/analytics/data?period=' + currentPeriod))
+            fetch('/api/quizify/analytics/data?period=' + currentPeriod, adminInit())
                 .then(function(r) {
                     if (r.status === 401) {
                         var tAuth = (window.QuizifyI18n && window.QuizifyI18n.t)
@@ -482,7 +483,7 @@
         }
 
         function loadFlags() {
-            fetch(withToken('/api/quizify/flags'))
+            fetch('/api/quizify/flags', adminInit())
                 .then(function (r) { return r.ok ? r.json() : null; })
                 .then(function (data) {
                     var flags = (data && data.flags) || [];
