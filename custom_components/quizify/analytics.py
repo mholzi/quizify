@@ -63,6 +63,13 @@ class PlayerStanding(TypedDict):
     total_score: int
 
 
+class EveningTally(TypedDict):
+    """Tonight's running score across several games (#612)."""
+
+    games: int
+    leaders: list[dict[str, Any]]
+
+
 class AnalyticsData(TypedDict):
     """Complete analytics data schema."""
 
@@ -380,6 +387,62 @@ class QuizifyAnalytics:
                 original_count,
                 len(games),
             )
+
+    # More than this between two games and they belong to different evenings
+    # (#612). A calendar day was the obvious alternative and is worse: it cuts
+    # every party that runs past midnight, which is exactly the party this line
+    # exists for — at 00:05 the TV would say "tonight: 1 game" after the fourth.
+    EVENING_GAP_SECONDS = 6 * 60 * 60
+
+    def get_evening_tally(self, now: float | None = None) -> EveningTally | None:
+        """Wins per player for the current sitting, most recent games backwards.
+
+        Walks back from the latest game while consecutive games sit closer
+        together than ``EVENING_GAP_SECONDS``, so "tonight" means the session in
+        progress rather than a date.
+
+        Returns ``None`` for a single game: "tonight: Anna 1 win" after the only
+        game of the evening restates the podium directly above it. The line is
+        worth showing from the second game on, which is also when the rivalry it
+        is meant to feed starts existing.
+        """
+        games = self._data.get("games", [])
+        if len(games) < 2:
+            return None
+
+        ordered = sorted(games, key=lambda g: g["ended_at"], reverse=True)
+        reference = ordered[0]["ended_at"] if now is None else now
+        # A stale last game means no evening in progress at all.
+        if reference - ordered[0]["ended_at"] > self.EVENING_GAP_SECONDS:
+            return None
+
+        session: list[GameRecord] = [ordered[0]]
+        for game in ordered[1:]:
+            if session[-1]["ended_at"] - game["ended_at"] > self.EVENING_GAP_SECONDS:
+                break
+            session.append(game)
+
+        if len(session) < 2:
+            return None
+
+        wins: dict[str, int] = {}
+        for game in session:
+            winner = game.get("winner")
+            # A game can end with no winner (everyone left, a reset); it still
+            # counts towards the evening's game total but crowns nobody.
+            if winner:
+                wins[winner] = wins.get(winner, 0) + 1
+
+        if not wins:
+            return None
+        # Sort the tuples, then shape them: keying a dict[str, Any] sort on its
+        # own values needs casts that hide what the ordering actually is.
+        # Most wins first, then name, so a tie reads the same on every render.
+        ranked = sorted(wins.items(), key=lambda item: (-item[1], item[0]))
+        leaders: list[dict[str, Any]] = [
+            {"name": name, "wins": count} for name, count in ranked
+        ]
+        return {"games": len(session), "leaders": leaders}
 
     def get_games(
         self, start_date: int | None = None, end_date: int | None = None
