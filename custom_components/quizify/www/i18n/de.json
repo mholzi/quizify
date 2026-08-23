@@ -529,7 +529,10 @@
   "dashboard": {
     "waitingForStart": "Warte auf Spielstart…",
     "leaderboard": "Rangliste",
-    "castToTv": "Auf den TV streamen",
+    "castToTv": "Auf dem Fernseher öffnen",
+    "castModalTitle": "Quizify auf den Fernseher holen",
+    "castModalBody": "Öffne diese Adresse im Browser deines Fernsehers.",
+    "castOpenHere": "Hier öffnen",
     "didYouKnow": "Wusstest du?",
     "result": "Ergebnis",
     "questionCounter": "Frage {current} / {total}",

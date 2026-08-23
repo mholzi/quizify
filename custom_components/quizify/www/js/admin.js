@@ -2913,16 +2913,55 @@
         if (els.dashboardLink) {
             var dashboardUrl = window.location.origin + '/quizify/dashboard';
             els.dashboardLink.href = dashboardUrl;
-            // Android Companion: bypass the dead target="_blank" — navigate the
-            // current frame so the dashboard ("Cast to TV") actually loads (#377).
-            // Every other context keeps the native new-tab behaviour.
+            // #622: the button never cast anything — it opened this URL in a
+            // tab on the host's own phone. A first-time host tapped it, got the
+            // TV view at 390px in their hand, and no hint how it reaches the
+            // television. (The one external bug report we have, #586, said
+            // exactly this and it was filed as an unexplained symptom.)
+            //
+            // Tapping now explains the actual mechanic and offers the address
+            // to type on the TV. The direct open survives as the secondary
+            // action, for a host who IS sitting at the TV device.
             els.dashboardLink.addEventListener('click', function (evt) {
+                evt.preventDefault();
+                openCastModal(dashboardUrl, els.dashboardLink);
+            });
+        }
+    }
+
+    function openCastModal(dashboardUrl, triggerEl) {
+        var urlEl = document.getElementById('cast-tv-url');
+        // location.host, not a scheme regex — see the #540 guard note in
+        // generateQR. Same reason, same shape.
+        if (urlEl) urlEl.textContent = window.location.host + '/quizify/dashboard';
+
+        var openBtn = document.getElementById('cast-tv-open-btn');
+        if (openBtn && !openBtn._castWired) {
+            openBtn._castWired = true;
+            openBtn.addEventListener('click', function () {
+                closeConfirmModal('cast-tv-modal');
+                // Android Companion swallows target="_blank" (#377), so
+                // navigate the frame there instead of opening a tab.
                 if (isAndroidCompanion()) {
-                    evt.preventDefault();
                     window.location.href = dashboardUrl;
+                } else {
+                    window.open(dashboardUrl, '_blank');
                 }
             });
         }
+
+        var modal = document.getElementById('cast-tv-modal');
+        if (!modal) {
+            // Markup missing → fall back to the old behaviour rather than
+            // leaving the host with a button that does nothing at all.
+            if (isAndroidCompanion()) {
+                window.location.href = dashboardUrl;
+            } else {
+                window.open(dashboardUrl, '_blank');
+            }
+            return;
+        }
+        openConfirmModal('cast-tv-modal', 'cast-tv-cancel-btn', triggerEl);
     }
 
     // ---- Error toast ----
