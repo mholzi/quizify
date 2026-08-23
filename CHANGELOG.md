@@ -3,6 +3,42 @@
 All notable changes to Quizify are documented here. This project follows
 [Semantic Versioning](https://semver.org/).
 
+## [1.10.0-RC1] — 2026-08-23
+
+### 🇪🇸 Spanish is complete
+
+`imagenes-es`, `estimacion-es` and `copa-mundial-es` fill the last three gaps — a picture round, an estimation pack and the World Cup. Every themed pack now exists in all three languages.
+
+**4,740 questions across 36 packs, twelve per language.**
+
+### 👀 See who the room is waiting for
+
+While a question runs, every phone shows a row of players, one chip each, filling in as answers land. The TV shows the count next to the timer.
+
+### 🏅 The season follows you to the end screen
+
+Your all-time standing now appears after the game, not only in the lobby before it — the moment it is actually interesting.
+
+### 🍻 Tonight's score on the TV
+
+Play more than one game and the TV keeps the evening's tally: "Tonight: Anna 2 wins, Ben 1". An evening is a run of games less than six hours apart, so a party past midnight stays one evening.
+
+### ⚡ Power-ups explain themselves
+
+Every power-up now says what it does, in your language, right under the button. Joker removes one wrong answer, Steal takes half of what someone scored this round — no more guessing mid-question.
+
+### 📺 Getting onto the TV, and onto the guests' phones
+
+The lobby shows the join address as text under the QR code, plus "same Wi-Fi as this screen" — for the guest whose phone is on mobile data. "Cast to TV" is now "Open on the TV" and tells you the address to type on the television, which is what it always actually did.
+
+### 🗂️ Host conveniences
+
+Your play history is reachable from the setup screen instead of by guessing the URL. Saving and deleting your own presets happens in the app instead of in grey system dialogs. A host who starts a game without joining now has Next Question and End Game at every reveal.
+
+### ⚠️ Not yet verified on hardware
+
+Nothing here has run on a live Home Assistant yet. A deploy and a play-through come before this becomes a release rather than a release candidate.
+
 ## [1.9.0] — 2026-08-20
 
 One line in the lobby, a shelf that finally reads the same in three languages, and a way to ask for what is missing.
