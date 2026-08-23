@@ -704,8 +704,17 @@
                 </h2>
 
                 <div class="lobby-e-row">
-                    <div class="lobby-e-qr" id="qr-container" role="img"
-                         data-i18n-aria-label="a11y.qrCodeRegion" aria-label="QR Code"></div>
+                    <div class="lobby-e-qr-col">
+                        <div class="lobby-e-qr" id="qr-container" role="img"
+                             data-i18n-aria-label="a11y.qrCodeRegion" aria-label="QR Code"></div>
+                        <!-- #620: same escape hatch as the TV lobby. The host
+                             reads this one aloud when a guest's phone cannot
+                             reach the address the QR encodes. -->
+                        <div class="lobby-e-join-fallback">
+                            <div id="admin-join-url" class="lobby-e-join-url"></div>
+                            <div class="lobby-e-join-hint" data-i18n="lobby.sameWifiHint">Same Wi-Fi as this screen</div>
+                        </div>
+                    </div>
                     <div class="lobby-e-roster" aria-live="polite"
                          data-i18n-aria-label="a11y.playerListRegion" aria-label="Player list">
                         <div id="lobby-player-chips" class="lobby-e-rows">

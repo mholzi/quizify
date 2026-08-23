@@ -122,6 +122,38 @@
             overflow: hidden;
         }
 
+        /* #620: readable from the couch but clearly secondary to the QR —
+           this is the escape hatch, not the main route. */
+        .dashboard-join-fallback {
+            margin-top: 14px;
+            text-align: center;
+        }
+
+        .dashboard-join-or {
+            font-size: clamp(0.8rem, 1.1vw, 1rem);
+            color: var(--dash-text-muted);
+            margin-bottom: 4px;
+        }
+
+        .dashboard-join-url {
+            /* Sized from the render, not from a guess: at 1.6rem the address
+               was the loudest thing in the block and out-shouted the QR it is
+               meant to back up. This still reads from a couch — it has to,
+               someone is typing it from three metres away — without becoming
+               the primary route. */
+            font-size: clamp(1rem, 1.5vw, 1.35rem);
+            font-weight: 600;
+            color: var(--dash-text-white);
+            word-break: break-all;
+            line-height: 1.25;
+        }
+
+        .dashboard-join-hint {
+            font-size: clamp(0.8rem, 1.1vw, 1rem);
+            color: var(--dash-text-muted);
+            margin-top: 4px;
+        }
+
         .dashboard-answer-progress {
             font-size: clamp(0.9rem, 1.4vw, 1.15rem);
             color: var(--dash-text-muted);
@@ -1279,6 +1311,17 @@
                 <div id="lobby-qr" class="dashboard-qr-section">
                     <div id="lobby-qr-code"></div>
                     <div class="dashboard-waiting-text" data-i18n="lobby.scanToJoin">Scan to join the game</div>
+                    <!-- #620: the URL in plain sight, not only when the QR
+                         library fails to load. A guest on cellular data or on
+                         the guest network scans, lands on an unreachable LAN
+                         address and gets a spinner — and that is the one
+                         failure the join page can never explain, because the
+                         join page is what failed to load. -->
+                    <div class="dashboard-join-fallback">
+                        <div class="dashboard-join-or" data-i18n="lobby.orTypeUrl">Or type it into a browser</div>
+                        <div id="lobby-join-url" class="dashboard-join-url"></div>
+                        <div class="dashboard-join-hint" data-i18n="lobby.sameWifiHint">Same Wi-Fi as this screen</div>
+                    </div>
                 </div>
                 <div id="lobby-players" class="dashboard-player-list"></div>
             </div>
@@ -1433,6 +1476,7 @@
             reconnectPill: document.getElementById('reconnect-pill'),
             // #374: TV lobby join QR + live player roster.
             lobbyQrCode: document.getElementById('lobby-qr-code'),
+            lobbyJoinUrlEl: document.getElementById('lobby-join-url'),
             lobbyPlayers: document.getElementById('lobby-players'),
             roundIndicator: document.getElementById('round-indicator'),
             timerFill: document.getElementById('timer-fill'),
@@ -1491,6 +1535,17 @@
             if (!container) return;
             container.innerHTML = '';
             var url = lobbyJoinUrl();
+            // Written whether or not the QR renders: the text is the fallback
+            // for an unreachable address, which the QR itself cannot signal.
+            //
+            // Composed from location.host rather than stripped off `url` with a
+            // scheme regex. #540's guard bans that shape in render sites, and
+            // rightly so even here where it would only be cosmetic: a reader
+            // cannot tell a display strip from the scheme test that caused #540.
+            if (els.lobbyJoinUrlEl) {
+                els.lobbyJoinUrlEl.textContent =
+                    window.location.host + '/quizify/player';
+            }
             if (typeof QRCode !== 'undefined') {
                 // Large, high-contrast code so it scans from across the room.
                 new QRCode(container, {
