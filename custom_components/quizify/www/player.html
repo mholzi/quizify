@@ -434,6 +434,10 @@
                             <span class="powerup-icon qz-icon qz-icon--sun" data-ui-icon="bolt" aria-hidden="true">⚡</span>
                             <span class="powerup-label" data-i18n="game.powerup">Power-Up</span>
                         </button>
+                        <!-- #623: what the power-up does, filled by renderPowerUp.
+                             Not aria-hidden — a screen reader user has even less
+                             chance of guessing than a sighted one. -->
+                        <div id="powerup-hint" class="powerup-explainer hidden"></div>
                     </div>
 
                     <div id="submitted-confirmation" class="submitted-confirmation hidden">

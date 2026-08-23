@@ -4126,8 +4126,26 @@ footer {
 /* Power-up container */
 .powerup-container {
     display: flex;
+    /* #623: the explainer stacks under the button. Column + gap rather than a
+       margin on the line — a margin here collapses against the container
+       padding and the spacing changes depending on whether the line is shown. */
+    flex-direction: column;
+    align-items: center;
+    gap: 4px;
     justify-content: center;
     padding: var(--space-sm) 0;
+}
+
+/* #623: one muted line saying what the power-up does.
+   Chosen over the three alternatives in the design round because it is the
+   only one that looks the same at every text length — the five explanations
+   range from "+5 more seconds" to a full sentence about round scores. */
+.powerup-explainer {
+    font-size: 0.72rem;
+    line-height: 1.3;
+    color: var(--color-text-neon-muted);
+    text-align: center;
+    max-width: 17rem;
 }
 
 .powerup-icon {
