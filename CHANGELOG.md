@@ -3,7 +3,7 @@
 All notable changes to Quizify are documented here. This project follows
 [Semantic Versioning](https://semver.org/).
 
-## [1.10.0-RC1] — unreleased
+## [1.10.0-RC1] — 2026-08-23
 
 ### 🇪🇸 Spanish is complete
 
