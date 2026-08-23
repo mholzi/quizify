@@ -63,6 +63,16 @@ class PlayerStanding(TypedDict):
     total_score: int
 
 
+class HeadToHead(TypedDict):
+    """The duel between two returning players, for the TV lobby (#613)."""
+
+    left: str
+    right: str
+    left_wins: int
+    right_wins: int
+    games: int
+
+
 class EveningTally(TypedDict):
     """Tonight's running score across several games (#612)."""
 
@@ -387,6 +397,54 @@ class QuizifyAnalytics:
                 original_count,
                 len(games),
             )
+
+    def get_head_to_head(self, present: list[str]) -> HeadToHead | None:
+        """The duel between the two present players who have met most often.
+
+        "Met" means both appeared in the same recorded game; the winner of that
+        meeting is whoever scored higher, which is not the same as the game's
+        overall winner — a duel is between these two, not against the room.
+
+        Scope is the detailed game history, which prunes at RETENTION_DAYS /
+        MAX_DETAILED_RECORDS. So this is honestly "recent", not all-time, and
+        the caller labels it accordingly. A pairwise rollup in the unpruned map
+        would extend it, at a cost that grows quadratically with players — not
+        worth it for a lobby line.
+
+        Returns ``None`` unless a pair has met at least twice: a single shared
+        game makes a "1–0" that reads like a record and is a coincidence.
+        """
+        names = [n for n in dict.fromkeys(present) if n]
+        if len(names) < 2:
+            return None
+
+        best: HeadToHead | None = None
+        for i, left in enumerate(names):
+            for right in names[i + 1 :]:
+                left_wins = right_wins = met = 0
+                for game in self._data.get("games", []):
+                    scores = game.get("player_scores") or {}
+                    if left not in scores or right not in scores:
+                        continue
+                    met += 1
+                    if scores[left] > scores[right]:
+                        left_wins += 1
+                    elif scores[right] > scores[left]:
+                        right_wins += 1
+                    # A draw counts as a meeting and goes to nobody.
+                if met < 2:
+                    continue
+                # Most-met pair wins; ties fall to the alphabetically first
+                # pair so the TV does not flicker between equals on rejoin.
+                if best is None or met > best["games"]:
+                    best = {
+                        "left": left,
+                        "right": right,
+                        "left_wins": left_wins,
+                        "right_wins": right_wins,
+                        "games": met,
+                    }
+        return best
 
     # More than this between two games and they belong to different evenings
     # (#612). A calendar day was the obvious alternative and is worse: it cuts

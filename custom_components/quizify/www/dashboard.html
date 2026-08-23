@@ -154,6 +154,29 @@
             margin-top: 4px;
         }
 
+        .dashboard-h2h {
+            margin-top: 14px;
+            text-align: center;
+            font-size: clamp(1rem, 1.7vw, 1.35rem);
+            color: var(--dash-text-white);
+            font-variant-numeric: tabular-nums;
+        }
+
+        .dashboard-h2h .h2h-label {
+            display: block;
+            font-size: 0.72em;
+            letter-spacing: 0.1em;
+            text-transform: uppercase;
+            color: var(--dash-text-muted);
+            margin-bottom: 3px;
+        }
+
+        .dashboard-h2h .h2h-scope {
+            font-size: 0.68em;
+            color: var(--dash-text-muted);
+            margin-left: 8px;
+        }
+
         .dashboard-evening-tally {
             font-size: clamp(1rem, 1.7vw, 1.4rem);
             color: var(--dash-text-white);
@@ -1344,6 +1367,11 @@
                     </div>
                 </div>
                 <div id="lobby-players" class="dashboard-player-list"></div>
+                <!-- #613: the duel between the two present regulars. Lobby only,
+                     TV only — #371 sends each player their OWN standing, and
+                     putting two people's record in front of the room is a
+                     deliberate reversal of that, not an extension. -->
+                <div id="lobby-h2h" class="dashboard-h2h hidden"></div>
             </div>
         </div>
 
@@ -1502,6 +1530,7 @@
             timerFill: document.getElementById('timer-fill'),
             answerProgress: document.getElementById('answer-progress'),
             eveningTally: document.getElementById('evening-tally'),
+            lobbyH2h: document.getElementById('lobby-h2h'),
             questionCategory: document.getElementById('question-category'),
             questionImage: document.getElementById('question-image'),
             questionMedia: document.getElementById('question-media'),
@@ -1795,6 +1824,9 @@
                     break;
                 case 'evening_tally':
                     handleEveningTally(msg);
+                    break;
+                case 'head_to_head':
+                    handleHeadToHead(msg);
                     break;
                 case 'finale':
                 case 'game_ended':
@@ -2169,6 +2201,25 @@
                     '</div>' +
                     '</div>';
             }).join('');
+        }
+
+        function handleHeadToHead(msg) {
+            if (!els.lobbyH2h) return;
+            if (!msg || !msg.left || !msg.right) {
+                els.lobbyH2h.classList.add('hidden');
+                return;
+            }
+            var t = (window.QuizifyI18n && window.QuizifyI18n.t)
+                || function (k) { return k; };
+            // "last 90 days" is stated, not implied: the detailed history
+            // prunes at RETENTION_DAYS, so calling this an all-time record
+            // would be a claim the data cannot support.
+            els.lobbyH2h.innerHTML =
+                '<span class="h2h-label">' + escapeHtml(t('dashboard.h2hLabel')) + '</span>'
+                + escapeHtml(msg.left) + ' ' + msg.left_wins
+                + ' – ' + msg.right_wins + ' ' + escapeHtml(msg.right)
+                + '<span class="h2h-scope">' + escapeHtml(t('dashboard.h2hRecent')) + '</span>';
+            els.lobbyH2h.classList.remove('hidden');
         }
 
         function handleEveningTally(msg) {

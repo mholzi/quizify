@@ -558,6 +558,8 @@
     "runnersUp": "Also playing",
     "leaderboardMore": "+{count} more",
     "tonightLabel": "Tonight",
+    "h2hLabel": "Head to head",
+    "h2hRecent": "last 90 days",
     "tonightGames": "{games} games",
     "tonightWins": "{wins} wins",
     "tonightWinsOne": "1 win"

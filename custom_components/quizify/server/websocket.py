@@ -1509,6 +1509,7 @@ class QuizifyWebSocketHandler:
                 # too, or the lobby keeps showing a team nobody is in.
                 "teams": gs.team_registry.to_list(),
             })
+            await self._send_head_to_head(gs)
 
         # A roster change that landed DURING the broadcast set _roster_dirty
         # again; _ensure_roster_flush won't start a new task while this one is
@@ -1565,6 +1566,33 @@ class QuizifyWebSocketHandler:
             self._progress_flush_task.cancel()
             self._progress_flush_task = None
         self._progress_dirty = False
+
+    async def _send_head_to_head(self, game_state: QuizifyGameState) -> None:
+        """Show the TV the duel between the two present regulars (#613).
+
+        Lobby only: a rivalry line belongs before the game, and mid-game it
+        would compete with the question for the same screen.
+
+        To the TV and admin, never to the phones — this is a deliberate
+        reversal of #371, which sends each player only their OWN standing.
+        Putting two people's record in front of the room is a different call,
+        made knowingly, and the phones stay out of it.
+        """
+        if game_state.phase != GamePhase.LOBBY:
+            return
+        analytics = game_state.stats_service
+        if analytics is None:
+            return
+        duel = analytics.get_head_to_head(
+            [p.name for p in game_state.get_players()]
+        )
+        if duel is None:
+            # Fewer than two present, or no pair has met twice. Silence beats a
+            # "1-0" that reads like a record and is a coincidence.
+            return
+        await self._conn.broadcast_to_admins_and_dashboards(
+            {"type": "head_to_head", **duel}
+        )
 
     def _cancel_roster_flush(self) -> None:
         """Cancel any pending roster-flush task (called on cleanup)."""
