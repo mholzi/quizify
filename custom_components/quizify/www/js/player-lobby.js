@@ -98,8 +98,10 @@
      * @param {Object|null} standing - {rank, total_players, wins, games_played}
      *                                 or null for a player with no history.
      */
-    function renderAllTime(standing) {
-        var el = document.getElementById('pl-alltime');
+    // #624: `elementId` lets the same line render on the end screen too. It
+    // defaults to the lobby element, so every existing caller is unchanged.
+    function renderAllTime(standing, elementId) {
+        var el = document.getElementById(elementId || 'pl-alltime');
         if (!el) return;  // legacy markup
         if (!standing || !standing.total_players) {
             // First-timer, or analytics not wired: show nothing at all

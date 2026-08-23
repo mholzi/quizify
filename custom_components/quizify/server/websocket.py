@@ -244,6 +244,7 @@ class QuizifyWebSocketHandler:
             handlers={
                 "round_evaluated": self._dispatch_round_evaluated,
                 "game_ended": self._dispatch_game_ended,
+                "analytics_recorded": self._dispatch_all_time_standings,
             },
             default=self._dispatch_full_state,
         )
@@ -3073,6 +3074,38 @@ class QuizifyWebSocketHandler:
             return True
         admin = game_state.get_admin()
         return admin is None or not admin.connected
+
+    async def _dispatch_all_time_standings(self) -> None:
+        """Send each player their own season standing, after the game landed.
+
+        Fired by ``analytics_recorded`` (#624), not with the finale: the record
+        is written in a detached task so a slow disk cannot delay the end
+        screen, which means the finale goes out while the all-time table still
+        describes the state BEFORE this game. A standing sent then would
+        contradict the podium the player is looking at.
+
+        Per-player rather than a broadcast, because the interesting number is
+        the player's own rank. Fail-soft throughout: no analytics, an unknown
+        name or a closed socket each just means no line, exactly as on join.
+        """
+        game_state = self._get_game_state()
+        if game_state is None:
+            return
+        sends = []
+        for player in game_state.get_players():
+            if player.ws is None or player.ws.closed:
+                continue
+            standing = self._all_time_standing(player.name)
+            if standing is None:
+                continue
+            sends.append(
+                self._conn.send(
+                    player.ws,
+                    {"type": "all_time_update", "all_time": standing},
+                )
+            )
+        if sends:
+            await asyncio.gather(*sends)
 
     def _all_time_standing(self, name: str) -> PlayerStanding | None:
         """This player's own all-time placing for the lobby line (#371).

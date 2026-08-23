@@ -267,7 +267,10 @@ class TestFrontendWiring:
 
     def test_bundle_renders_and_core_calls_it(self) -> None:
         bundle = (WWW / "js" / "player.bundle.js").read_text("utf-8")
-        assert "function renderAllTime(standing)" in bundle
+        # #624 widened the signature with an optional target element so the same
+        # line can render on the end screen. The lobby call site is unchanged
+        # and still passes one argument — that is what this guard is for.
+        assert "function renderAllTime(standing" in bundle
         assert "renderAllTime: renderAllTime" in bundle
         assert "lobby.renderAllTime(msg.all_time)" in bundle
         # Zero-win phrasing exists rather than rendering "0 wins".

@@ -343,6 +343,15 @@
             // has existed since the tracker markup landed; its only caller was
             // updateGameView(), which nothing ever invoked, so the row stayed
             // empty for every game ever played.
+            // #624: the season standing, sent once the finished game has
+            // actually been written to analytics — which happens after the
+            // finale, not with it.
+            case 'all_time_update':
+                if (msg.all_time !== undefined && lobby && lobby.renderAllTime) {
+                    lobby.renderAllTime(msg.all_time, 'end-alltime');
+                }
+                break;
+
             case 'answer_progress':
                 game.renderSubmissionTracker(msg.players);
                 break;

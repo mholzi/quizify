@@ -980,8 +980,10 @@
      * @param {Object|null} standing - {rank, total_players, wins, games_played}
      *                                 or null for a player with no history.
      */
-    function renderAllTime(standing) {
-        var el = document.getElementById('pl-alltime');
+    // #624: `elementId` lets the same line render on the end screen too. It
+    // defaults to the lobby element, so every existing caller is unchanged.
+    function renderAllTime(standing, elementId) {
+        var el = document.getElementById(elementId || 'pl-alltime');
         if (!el) return;  // legacy markup
         if (!standing || !standing.total_players) {
             // First-timer, or analytics not wired: show nothing at all
@@ -5377,6 +5379,15 @@
             // has existed since the tracker markup landed; its only caller was
             // updateGameView(), which nothing ever invoked, so the row stayed
             // empty for every game ever played.
+            // #624: the season standing, sent once the finished game has
+            // actually been written to analytics — which happens after the
+            // finale, not with it.
+            case 'all_time_update':
+                if (msg.all_time !== undefined && lobby && lobby.renderAllTime) {
+                    lobby.renderAllTime(msg.all_time, 'end-alltime');
+                }
+                break;
+
             case 'answer_progress':
                 game.renderSubmissionTracker(msg.players);
                 break;
