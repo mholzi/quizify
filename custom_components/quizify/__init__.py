@@ -22,6 +22,38 @@ _LOGGER = logging.getLogger(__name__)
 
 PLATFORMS: list[str] = ["sensor", "binary_sensor"]
 
+# Marks that this HA process has already put Quizify's routes on the aiohttp
+# router. Deliberately NOT stored under hass.data[DOMAIN]: that key is popped on
+# unload, while the routes stay on the router forever (see #606 and the comment
+# in async_setup_entry).
+ROUTES_REGISTERED_KEY = f"{DOMAIN}_routes_registered"
+
+
+def _ws_dispatch(hass: HomeAssistant):
+    """Return a WebSocket route handler that resolves the live handler per call.
+
+    The route object is created once and outlives every reload, so it must not
+    close over a handler instance — that is precisely the bug in #606. It looks
+    the current handler up in ``hass.data`` at call time instead, the same shape
+    the ``game_state_provider`` lambda already uses for the game.
+
+    While the integration is unloaded, ``hass.data[DOMAIN]`` is gone and the
+    route answers 503 rather than raising: the path stays registered whether or
+    not Quizify is set up, so "not set up right now" is a normal state and needs
+    an honest status code.
+    """
+
+    async def dispatch(request):
+        from aiohttp import web  # noqa: PLC0415
+
+        handler = (hass.data.get(DOMAIN) or {}).get("ws_handler")
+        if handler is None:
+            _LOGGER.debug("WebSocket request while Quizify is not set up")
+            return web.Response(status=503, text="Quizify is not set up")
+        return await handler.handle(request)
+
+    return dispatch
+
 
 def _wire_house_consumers(
     ws_handler: object, party_lights: object, sound_effects: object
@@ -202,18 +234,34 @@ async def async_setup_entry(hass: HomeAssistant, entry: ConfigEntry) -> bool:
     # request handlers in server.views can read it via request.app.
     hass.http.app[APP_CTX_KEY] = ctx
 
-    # Register routes directly on HA's aiohttp router (no HomeAssistantView
-    # needed — the handlers don't require HA auth).
-    register_routes(hass.http.app.router)
-
-    # Register WebSocket endpoint.
-    hass.http.app.router.add_get(WS_PATH, ws_handler.handle)
-
-    # Register static file paths via HA's helper so it does the right thing
-    # for the frontend resource version stamp.
-    await hass.http.async_register_static_paths(
-        [StaticPathConfig(STATIC_URL_PREFIX, str(WWW_DIR), cache_headers=True)]
-    )
+    # Routes are registered ONCE per HA process, not once per setup (#606).
+    #
+    # aiohttp normally freezes its router at startup and a second add_get()
+    # would raise — but HA deliberately un-freezes it
+    # (homeassistant/components/http/__init__.py: `self.app._router.freeze =
+    # lambda: None`), so a duplicate registration silently succeeds instead.
+    # UrlDispatcher.resolve() then matches in *registration order*, which means
+    # the handler bound during the FIRST setup keeps serving forever. After a
+    # reload — the Integrations "Reload" button, and every HACS update — new
+    # sockets reached the previous QuizifyWebSocketHandler while the game
+    # broadcast callback pointed at the new one, whose connection manager holds
+    # zero sockets. Every state broadcast went nowhere and the game looked hung.
+    #
+    # The plain HTTP views survived that because they read APP_CTX_KEY per
+    # request (refreshed just above), which is exactly what made the failure
+    # look like a game bug rather than a routing bug.
+    if not hass.data.get(ROUTES_REGISTERED_KEY):
+        register_routes(hass.http.app.router)
+        hass.http.app.router.add_get(WS_PATH, _ws_dispatch(hass))
+        await hass.http.async_register_static_paths(
+            [StaticPathConfig(STATIC_URL_PREFIX, str(WWW_DIR), cache_headers=True)]
+        )
+        hass.data[ROUTES_REGISTERED_KEY] = True
+        _LOGGER.debug("Quizify routes registered (once per HA process)")
+    else:
+        _LOGGER.debug(
+            "Quizify routes already registered; reusing them with the new handler"
+        )
 
     # Keep the live manifest version (the asset cache-buster source) fresh OFF
     # the event loop (#343). The launcher/HTML serve path reads a pure
