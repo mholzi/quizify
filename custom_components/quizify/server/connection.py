@@ -374,9 +374,10 @@ class ConnectionManager:
         if tasks:
             await asyncio.gather(*tasks)
 
-    async def broadcast_to_admins_and_dashboards(self, message: dict) -> None:
-        """Broadcast admin-only messages (with correct answer) to pure admin
-        connections and the TV-dashboard spectator connections (role=dashboard).
+    async def broadcast_to_admins_and_dashboards(
+        self, message: dict, *, dashboard_message: dict | None = None
+    ) -> None:
+        """Broadcast to pure admin connections and the TV-dashboard spectators.
 
         Dashboards need the same canonical-order question payload the admin
         sees — they render an unshuffled view of the same content. Without
@@ -384,6 +385,13 @@ class ConnectionManager:
         the v1.1.47 #151 answer-distribution chart has nothing to attach to.
         Admin-as-player connections are still excluded so a player who is
         also admin doesn't see the correct answer before submitting.
+
+        ``dashboard_message`` sends the two groups *different* payloads (#604).
+        ``role=dashboard`` requires no token, so anything sent to dashboards is
+        readable by anyone who can reach the integration: the question fan-out
+        passes an answer-stripped copy here while admins keep the full one.
+        Callers whose payload holds no answer at all (timer ticks, the lightning
+        question, which sends option texts only) can keep passing one message.
         """
         if not self._admin_connections and not self._dashboard_connections:
             return
@@ -393,15 +401,27 @@ class ConnectionManager:
             for p in gs.get_players():
                 if p.is_admin and p.ws is not None:
                     admin_as_player_ws.add(p.ws)
-        targets: set[web.WebSocketResponse] = set()
-        targets.update(self._admin_connections)
-        targets.update(self._dashboard_connections)
         payload = json.dumps(message)  # serialize once, send_str per client (#258)
-        tasks = [
-            self._safe_send_str(ws, payload)
-            for ws in targets
-            if not ws.closed and ws not in admin_as_player_ws
-        ]
+        # Dashboards only get their own payload when the caller supplied one;
+        # otherwise both groups keep sharing the single message as before.
+        dash_payload = (
+            json.dumps(dashboard_message) if dashboard_message is not None else payload
+        )
+        tasks = []
+        seen: set[web.WebSocketResponse] = set()
+        # Admins first, so a socket that is registered as both admin and
+        # dashboard is served the full payload exactly once: it authenticated,
+        # so it is entitled to the answer, and it must not also receive the
+        # stripped copy and overwrite the grid it just rendered.
+        for group, group_payload in (
+            (self._admin_connections, payload),
+            (self._dashboard_connections, dash_payload),
+        ):
+            for ws in group:
+                if ws.closed or ws in admin_as_player_ws or ws in seen:
+                    continue
+                seen.add(ws)
+                tasks.append(self._safe_send_str(ws, group_payload))
         if tasks:
             await asyncio.gather(*tasks)
 

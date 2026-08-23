@@ -53,6 +53,7 @@ from custom_components.quizify.server.serializers import (
     serialize_player_list,
     snapshot_house_entities,
     snapshot_tts_entities,
+    strip_answer_for_dashboard,
 )
 
 if TYPE_CHECKING:
@@ -2565,7 +2566,11 @@ class QuizifyWebSocketHandler:
         # populates with the same canonical-order payload. Without this the
         # dashboard's answer-grid stays empty and the v1.1.47 #151 answer-
         # distribution bars never attach. Admin-as-player still excluded.
-        await self._conn.broadcast_to_admins_and_dashboards(admin_msg)
+        # The TV connects without a token (#604), so it gets the same payload
+        # with the answer taken out — see strip_answer_for_dashboard.
+        await self._conn.broadcast_to_admins_and_dashboards(
+            admin_msg, dashboard_message=strip_answer_for_dashboard(admin_msg)
+        )
 
         # Narrate the question text (+ options) at round start (#281). The
         # canonical shuffled order matches the TV grid so spoken letters line
