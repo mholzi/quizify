@@ -154,6 +154,20 @@
             margin-top: 4px;
         }
 
+        .dashboard-evening-tally {
+            font-size: clamp(1rem, 1.7vw, 1.4rem);
+            color: var(--dash-text-white);
+            text-align: center;
+            margin-bottom: 10px;
+            flex-shrink: 0;
+            font-variant-numeric: tabular-nums;
+        }
+
+        .dashboard-evening-tally .tally-label {
+            color: var(--dash-text-muted);
+            margin-right: 8px;
+        }
+
         .dashboard-answer-progress {
             font-size: clamp(0.9rem, 1.4vw, 1.15rem);
             color: var(--dash-text-muted);
@@ -1289,6 +1303,12 @@
              and text inside would fight the fill for those pixels. -->
         <div id="answer-progress" class="dashboard-answer-progress hidden"></div>
 
+        <!-- #612: tonight's running score across several games. Arrives via
+             evening_tally after the finished game is recorded, and stays hidden
+             for a single-game evening — restating the podium above it would add
+             nothing. -->
+        <div id="evening-tally" class="dashboard-evening-tally hidden"></div>
+
         <div id="timer-bar" class="dashboard-timer">
             <div id="timer-fill" class="dashboard-timer-fill" style="width:0%"></div>
         </div>
@@ -1481,6 +1501,7 @@
             roundIndicator: document.getElementById('round-indicator'),
             timerFill: document.getElementById('timer-fill'),
             answerProgress: document.getElementById('answer-progress'),
+            eveningTally: document.getElementById('evening-tally'),
             questionCategory: document.getElementById('question-category'),
             questionImage: document.getElementById('question-image'),
             questionMedia: document.getElementById('question-media'),
@@ -1768,6 +1789,9 @@
                     break;
                 case 'answer_progress':
                     handleAnswerProgress(msg);
+                    break;
+                case 'evening_tally':
+                    handleEveningTally(msg);
                     break;
                 case 'finale':
                 case 'game_ended':
@@ -2088,6 +2112,32 @@
                     '</div>' +
                     '</div>';
             }).join('');
+        }
+
+        function handleEveningTally(msg) {
+            if (!els.eveningTally) return;
+            var leaders = (msg && msg.leaders) || [];
+            if (!leaders.length) {
+                els.eveningTally.classList.add('hidden');
+                return;
+            }
+            var t = (window.QuizifyI18n && window.QuizifyI18n.t)
+                || function (k) { return k; };
+            // Three names is what reads from a couch; a fourth turns the line
+            // into a table nobody parses mid-celebration.
+            var parts = leaders.slice(0, 3).map(function (entry) {
+                var wins = entry.wins === 1
+                    ? t('dashboard.tonightWinsOne')
+                    : t('dashboard.tonightWins', { wins: entry.wins });
+                return escapeHtml(entry.name) + ' ' + wins;
+            });
+            // parts[] is already escaped per entry — escaping the joined
+            // string again would turn a name like "Jan & Anna" into
+            // "Jan &amp;amp; Anna" on screen.
+            els.eveningTally.innerHTML =
+                '<span class="tally-label">' + escapeHtml(t('dashboard.tonightLabel'))
+                + '</span>' + parts.join(' · ');
+            els.eveningTally.classList.remove('hidden');
         }
 
         function handleAnswerProgress(msg) {

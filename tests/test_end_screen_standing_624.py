@@ -63,9 +63,14 @@ def test_the_event_fires_only_after_the_record_succeeds() -> None:
 
 
 def test_the_dispatcher_is_registered_for_that_event() -> None:
+    """#612 added a second follow-up on the same event, so both now hang off a
+    combined handler — one event, one handler, rather than two registrations
+    whose order would be an accident of dict insertion."""
     source = (_CC / "server" / "websocket.py").read_text("utf-8")
 
-    assert '"analytics_recorded": self._dispatch_all_time_standings' in source
+    assert '"analytics_recorded": self._dispatch_analytics_followups' in source
+    followups = source.split("async def _dispatch_analytics_followups", 1)[1][:600]
+    assert "self._dispatch_all_time_standings()" in followups
 
 
 def test_each_player_gets_their_own_standing() -> None:

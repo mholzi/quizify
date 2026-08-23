@@ -244,7 +244,7 @@ class QuizifyWebSocketHandler:
             handlers={
                 "round_evaluated": self._dispatch_round_evaluated,
                 "game_ended": self._dispatch_game_ended,
-                "analytics_recorded": self._dispatch_all_time_standings,
+                "analytics_recorded": self._dispatch_analytics_followups,
             },
             default=self._dispatch_full_state,
         )
@@ -3074,6 +3074,41 @@ class QuizifyWebSocketHandler:
             return True
         admin = game_state.get_admin()
         return admin is None or not admin.connected
+
+    async def _dispatch_analytics_followups(self) -> None:
+        """Everything that can only be true once the game is recorded (#624, #612).
+
+        One handler because one event: the season standing per player and the
+        evening tally for the room both become correct at the same instant, and
+        registering two handlers for the same event would make their order an
+        accident of dict insertion.
+        """
+        await self._dispatch_all_time_standings()
+        await self._dispatch_evening_tally()
+
+    async def _dispatch_evening_tally(self) -> None:
+        """Broadcast tonight's running score to the TV (#612).
+
+        Rides the same ``analytics_recorded`` event as the season standing: the
+        game that just finished is only part of the tally once it is written.
+
+        Broadcast rather than per-player — unlike the season standing, this is
+        the room's number, and the TV is the screen it belongs on.
+        """
+        gs = self._get_game_state()
+        if gs is None:
+            return
+        analytics = gs.stats_service
+        if analytics is None:
+            return
+        tally = analytics.get_evening_tally()
+        if tally is None:
+            # One game so far, or no sitting in progress. Saying nothing beats
+            # restating the podium that is already on screen.
+            return
+        await self._conn.broadcast_to_admins_and_dashboards(
+            {"type": "evening_tally", **tally}
+        )
 
     async def _dispatch_all_time_standings(self) -> None:
         """Send each player their own season standing, after the game landed.

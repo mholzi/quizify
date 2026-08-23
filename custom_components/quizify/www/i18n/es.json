@@ -552,7 +552,11 @@
     "pointsShort": "pts",
     "awards": "Premios",
     "runnersUp": "También juegan",
-    "leaderboardMore": "+{count} más"
+    "leaderboardMore": "+{count} más",
+    "tonightLabel": "Esta noche",
+    "tonightGames": "{games} partidas",
+    "tonightWins": "{wins} victorias",
+    "tonightWinsOne": "1 victoria"
   },
   "connection": {
     "connected": "Conectado",
