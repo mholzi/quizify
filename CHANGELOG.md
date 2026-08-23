@@ -3,25 +3,7 @@
 All notable changes to Quizify are documented here. This project follows
 [Semantic Versioning](https://semver.org/).
 
-## [1.10.0-RC2] — 2026-08-23
-
-Two things found while playing RC1 on a live Home Assistant.
-
-### 🆕 The setup screen announces new packs instead of asking for handiwork
-
-It used to offer version updates for packs you already had, and tell you to replace JSON files by hand. Packs ship inside the integration, so that update had already arrived — following the instruction only moved you away from the release you were running. Now it tells you what came **with** the update you installed: *"New in this update: World Cup (100)"*. A fresh install is not greeted with a list of "new" packs, and what arrived while you were away is still there when you next open the page.
-
-The banner also showed raw text like `admin.packUpdateTitle` instead of a sentence. That is gone.
-
-### ⏱️ The countdown pulses on the second
-
-In the last five seconds the number beat twice per second against a digit that changes once, drifting further apart as the question ran — while the audible tick stayed with the digit. Sound and animation now agree about when a second is.
-
-### ⚠️ Not yet verified on hardware
-
-RC1 has been installed and played. These two fixes have not — they are what that play-through found.
-
-## [1.10.0-RC1] — 2026-08-23
+## [1.10.0] — 2026-08-23
 
 ### 🇪🇸 Spanish is complete
 
@@ -49,13 +31,17 @@ Every power-up now says what it does, in your language, right under the button. 
 
 The lobby shows the join address as text under the QR code, plus "same Wi-Fi as this screen" — for the guest whose phone is on mobile data. "Cast to TV" is now "Open on the TV" and tells you the address to type on the television, which is what it always actually did.
 
+### 🆕 New packs are announced, not homework
+
+The setup screen used to offer version updates for packs you already had and ask you to replace JSON files by hand. Packs ship inside the integration, so that update had already arrived. Now it simply tells you what came with it: *"New in this update: World Cup (100)"*.
+
+### ⏱️ The countdown pulses on the second
+
+In the last five seconds the number beat twice per second against a digit that changes once. Sound and animation now agree about when a second is.
+
 ### 🗂️ Host conveniences
 
-Your play history is reachable from the setup screen instead of by guessing the URL. Saving and deleting your own presets happens in the app instead of in grey system dialogs. A host who starts a game without joining now has Next Question and End Game at every reveal.
-
-### ⚠️ Not yet verified on hardware
-
-Nothing here has run on a live Home Assistant yet. A deploy and a play-through come before this becomes a release rather than a release candidate.
+Your play history is reachable from the setup screen instead of by guessing the URL. Saving and deleting your own presets happens in the app instead of in grey system dialogs. A host who starts a game without joining now has Next Question and End Game at every reveal. A tap that cannot reach the server says so instead of vanishing.
 
 ## [1.9.0] — 2026-08-20
 
