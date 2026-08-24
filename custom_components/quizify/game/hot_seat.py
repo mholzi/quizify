@@ -305,16 +305,18 @@ class HotSeatRound:
 
     def reveal(self) -> list[dict]:
         """Every bid, for the simultaneous TV reveal — highest first."""
-        rows = [
+        ordered = sorted(
+            self.bids.values(),
+            key=lambda b: (-b.pct, self.scores.get(b.name, 0), b.name),
+        )
+        return [
             {
                 "name": b.name,
                 "pct": b.pct,
                 "points": stake_of(self.scores.get(b.name, 0), b.pct),
             }
-            for b in self.bids.values()
+            for b in ordered
         ]
-        rows.sort(key=lambda r: (-r["pct"], self.scores.get(r["name"], 0), r["name"]))
-        return rows
 
     # ------------------------------------------------------------------
     # Spectator bets

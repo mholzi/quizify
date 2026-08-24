@@ -55,6 +55,7 @@ if TYPE_CHECKING:
     from ..analytics import QuizifyAnalytics
     from ..question_stats import QuestionStatsService
     from ..runtime import Runtime
+    from .hot_seat import HotSeatRound
     from .lightning import LightningRound
 
 _LOGGER = logging.getLogger(__name__)
@@ -256,7 +257,7 @@ class QuizifyGameState:
         # Hot Seat auction (#616) — the second self-contained detour, armed
         # exactly like the Lightning Round above and deliberately never in the
         # same round as it (see _pick_hot_seat_round).
-        self._hot_seat = None
+        self._hot_seat: HotSeatRound | None = None
         self._hot_seat_enabled: bool = True
         self._hot_seat_target_round: int | None = None
         self._hot_seat_fired: bool = False

@@ -2912,9 +2912,10 @@ class QuizifyWebSocketHandler:
         # earlier — never the same round, the draw excludes it. A failed start
         # (too few players, no spare question) falls through to the normal
         # question so the game can never wedge on a skipped bonus.
-        if game_state.should_trigger_hot_seat():
-            if await self._start_hot_seat(game_state):
-                return
+        if game_state.should_trigger_hot_seat() and await self._start_hot_seat(
+            game_state
+        ):
+            return
 
         question = game_state.start_next_question()
         if question is None:
