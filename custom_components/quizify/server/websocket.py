@@ -28,6 +28,7 @@ from custom_components.quizify.const import (
     LOBBY_DISCONNECT_GRACE_PERIOD,
 )
 from custom_components.quizify.game.highlights import compute_superlatives
+from custom_components.quizify.game.hot_seat import stake_of as hot_seat_stake
 from custom_components.quizify.game.phase_controller import TICK_INTERVAL
 from custom_components.quizify.game.player_registry import sanitize_player_name
 from custom_components.quizify.game.powerups import (
@@ -88,6 +89,9 @@ MSG_SUBMIT_WAGER = "submit_wager"
 MSG_REACTION = "reaction"
 MSG_USE_POWERUP = "use_powerup"
 MSG_LIGHTNING_ANSWER = "lightning_answer"
+MSG_HOT_SEAT_BID = "hot_seat_bid"
+MSG_HOT_SEAT_BET = "hot_seat_bet"
+MSG_HOT_SEAT_ANSWER = "hot_seat_answer"
 MSG_START_GAME = "start_game"
 MSG_NEXT_QUESTION = "next_question"
 MSG_NEXT_ROUND = "next_round"
@@ -177,6 +181,12 @@ class QuizifyWebSocketHandler:
     # loop auto-dismisses the splash and begins.
     AUTO_LIGHTNING_SPLASH_HOLD = 3.0
 
+    # Hot Seat auction (#616): the sealed bids land together on the TV.
+    # This hold is the beat between the reveal and the question — without
+    # it the room never sees who paid what before the chair starts
+    # answering, which is the whole moment the auction buys.
+    HOT_SEAT_REVEAL_HOLD = 4.0
+
     def __init__(
         self,
         runtime: Runtime,
@@ -198,6 +208,7 @@ class QuizifyWebSocketHandler:
         # Drives the fast lightning-round loop (issue #42). Distinct from
         # the normal per-question tick task so the two modes can't fight.
         self._lightning_task: asyncio.Task | None = None
+        self._hot_seat_task: asyncio.Task | None = None
         # Optional TTS announcer. Set by __init__.py / dev_server after
         # construction so the handler doesn't have to know about HA
         # services. Calling announce_milestone on None is the no-op path.
@@ -1737,6 +1748,8 @@ class QuizifyWebSocketHandler:
         # missing key, a JSON bool, or a "0"/"false" string all resolve
         # sanely; only an explicit false-y value disables it.
         lightning_enabled = _coerce_toggle(data.get("lightning_enabled"), default=True)
+        # Hot Seat auction toggle (#616), same coercion, same default.
+        hot_seat_enabled = _coerce_toggle(data.get("hot_seat_enabled"), default=True)
 
         # Validate num_rounds the same way as timer_duration (#303): the WS
         # value reaches start_game raw, and total_rounds drives
@@ -1778,6 +1791,7 @@ class QuizifyWebSocketHandler:
                 language=language,
                 timer_duration=timer_value,
                 lightning_enabled=lightning_enabled,
+                hot_seat_enabled=hot_seat_enabled,
             )
         except ValueError as err:
             # start_game raises two distinct ValueErrors: a wrong-phase
@@ -1926,6 +1940,14 @@ class QuizifyWebSocketHandler:
         if game_state.phase == GamePhase.LIGHTNING_RECAP:
             self._cancel_lightning_loop()
             if game_state.resume_after_lightning():
+                await self._start_next_question(game_state)
+            return None
+
+        # Hot Seat reveal (#616): the host's advance settles the detour and
+        # returns to the round the auction interrupted.
+        if game_state.phase == GamePhase.HOT_SEAT_REVEAL:
+            self._cancel_hot_seat_loop()
+            if game_state.resume_after_hot_seat():
                 await self._start_next_question(game_state)
             return None
 
@@ -2461,6 +2483,305 @@ class QuizifyWebSocketHandler:
             self._lightning_task.cancel()
             self._lightning_task = None
 
+    # ------------------------------------------------------------------
+    # Hot Seat auction (issue #616)
+    # ------------------------------------------------------------------
+
+    def _cancel_hot_seat_loop(self) -> None:
+        if self._hot_seat_task is not None:
+            self._hot_seat_task.cancel()
+            self._hot_seat_task = None
+
+    async def _handle_hot_seat_bid(
+        self, ws: web.WebSocketResponse, data: dict, game_state: QuizifyGameState
+    ) -> None:
+        """Accept one sealed bid for the chair (#616).
+
+        The bid is a PERCENT of the bidder's own score, exactly like a finale
+        wager — bidding absolute points would hand every auction to whoever is
+        already ahead, which is the opposite of what this mode is for.
+        """
+        player = game_state.get_player_by_ws(ws)
+        if not player:
+            await self._conn.send_error(ws, ERR_NOT_IN_GAME, "Not in game")
+            return
+        if game_state.phase != GamePhase.HOT_SEAT_AUCTION:
+            return  # silent: the window is shut
+        hs = game_state.hot_seat
+        if hs is None:
+            return
+
+        try:
+            pct = int(data.get("bid"))  # type: ignore[arg-type]
+        except (TypeError, ValueError):
+            await self._conn.send_error(ws, ERR_INVALID_ACTION, "Invalid bid")
+            return
+        if not 0 <= pct <= 100:
+            await self._conn.send_error(ws, ERR_INVALID_ACTION, "Bid must be 0-100")
+            return
+        if not hs.record_bid(player.name, pct):
+            await self._conn.send_error(ws, ERR_INVALID_ACTION, "Bid already placed")
+            return
+
+        await self._conn.send(ws, {
+            "type": "hot_seat_bid_accepted",
+            "bid": pct,
+            "points": hot_seat_stake(hs.scores.get(player.name, 0), pct),
+        })
+        # Blind auction: the room learns how many have bid, never how much.
+        await self._conn.broadcast({
+            "type": "hot_seat_bid_count",
+            "count": len(hs.bids),
+            "total": len(hs.scores),
+        })
+
+    async def _handle_hot_seat_bet(
+        self, ws: web.WebSocketResponse, data: dict, game_state: QuizifyGameState
+    ) -> None:
+        """Accept a spectator's optional stake on the seat holder (#616)."""
+        player = game_state.get_player_by_ws(ws)
+        if not player:
+            await self._conn.send_error(ws, ERR_NOT_IN_GAME, "Not in game")
+            return
+        if game_state.phase != GamePhase.HOT_SEAT:
+            return  # silent: betting window shut
+        hs = game_state.hot_seat
+        if hs is None:
+            return
+        if player.name == hs.winner:
+            # Refused rather than ignored: betting against yourself and then
+            # answering wrongly on purpose turns a question you cannot answer
+            # into a profit.
+            await self._conn.send_error(
+                ws, ERR_INVALID_ACTION, "The hot seat does not bet"
+            )
+            return
+
+        side = data.get("side")
+        try:
+            pct = int(data.get("bet"))  # type: ignore[arg-type]
+        except (TypeError, ValueError):
+            await self._conn.send_error(ws, ERR_INVALID_ACTION, "Invalid bet")
+            return
+        if not 0 <= pct <= 100:
+            await self._conn.send_error(ws, ERR_INVALID_ACTION, "Bet must be 0-100")
+            return
+        if not hs.record_bet(player.name, side, pct):
+            await self._conn.send_error(ws, ERR_INVALID_ACTION, "Bet not accepted")
+            return
+
+        await self._conn.send(ws, {
+            "type": "hot_seat_bet_accepted",
+            "side": side,
+            "bet": pct,
+            "points": hot_seat_stake(hs.scores.get(player.name, 0), pct),
+        })
+
+    async def _handle_hot_seat_answer(
+        self, ws: web.WebSocketResponse, data: dict, game_state: QuizifyGameState
+    ) -> None:
+        """Record the seat holder's single answer (#616)."""
+        player = game_state.get_player_by_ws(ws)
+        if not player:
+            await self._conn.send_error(ws, ERR_NOT_IN_GAME, "Not in game")
+            return
+        if game_state.phase != GamePhase.HOT_SEAT:
+            return
+        hs = game_state.hot_seat
+        if hs is None or player.name != hs.winner:
+            return
+
+        try:
+            idx = int(data.get("answer"))  # type: ignore[arg-type]
+        except (TypeError, ValueError):
+            await self._conn.send_error(ws, ERR_INVALID_ACTION, "Invalid answer")
+            return
+        result = hs.record_answer(player.name, idx)
+        if result is None:
+            return
+        await self._conn.send(ws, {"type": "hot_seat_answer_accepted"})
+
+    async def _start_hot_seat(self, game_state: QuizifyGameState) -> bool:
+        """Open the auction and drive it to the reveal. False means "skipped".
+
+        A False here is ordinary — too few players, or every remaining
+        question is spoken for by the main game (#544) — and the caller falls
+        through to the normal round rather than ending it.
+        """
+        self._cancel_timer_tick()
+        if not game_state.start_hot_seat_auction():
+            _LOGGER.info("Hot seat auction skipped; continuing normal game")
+            return False
+
+        hs = game_state.hot_seat
+        if hs is None:
+            return False
+
+        state = game_state.get_state_snapshot()
+        state["type"] = "game_state"
+        await self._conn.broadcast(state)
+        await self._conn.broadcast({
+            "type": "hot_seat_auction",
+            "seconds": hs.auction_seconds,
+            "players": len(hs.scores),
+        })
+        # Each player needs their own number: a percentage is only meaningful
+        # next to the points it costs *them*.
+        sends = []
+        for player in game_state.get_players():
+            if not player.connected or player.ws is None:
+                continue
+            sends.append(self._conn.send(player.ws, {
+                "type": "hot_seat_auction_you",
+                "score": player.score,
+                "seconds": hs.auction_seconds,
+            }))
+        if sends:
+            await asyncio.gather(*sends, return_exceptions=True)
+
+        self._start_hot_seat_loop(game_state)
+        return True
+
+    def _start_hot_seat_loop(self, game_state: QuizifyGameState) -> None:
+        """Drive auction → reveal → question → settlement (#616)."""
+        self._cancel_hot_seat_loop()
+
+        async def loop() -> None:
+            try:
+                hs = game_state.hot_seat
+                if hs is None:
+                    return
+
+                # --- bidding window -----------------------------------
+                last_shown = None
+                while not hs.is_expired():
+                    if game_state.phase != GamePhase.HOT_SEAT_AUCTION:
+                        return
+                    shown = math.ceil(hs.time_remaining())
+                    if shown != last_shown:
+                        await self._conn.broadcast({
+                            "type": "hot_seat_tick",
+                            "phase": "auction",
+                            "remaining": shown,
+                        })
+                        last_shown = shown
+                    connected = [
+                        p.name for p in game_state.get_players() if p.connected
+                    ]
+                    if hs.all_bid(connected):
+                        break
+                    await asyncio.sleep(0.25)
+
+                winner = game_state.close_hot_seat_auction()
+                if winner is None:
+                    # Nobody wanted the chair. Not a failure — just a round
+                    # that does not happen. Fall back to the normal question
+                    # so the game keeps moving.
+                    await self._conn.broadcast({"type": "hot_seat_no_bids"})
+                    game_state.abort_hot_seat()
+                    await self._continue_normal_question(game_state)
+                    return
+
+                # --- simultaneous reveal ------------------------------
+                await self._conn.broadcast({
+                    "type": "hot_seat_awarded",
+                    "winner": winner,
+                    "pct": hs.winning_pct,
+                    "stake": hs.winning_stake,
+                    "bids": hs.reveal(),
+                })
+                await asyncio.sleep(self.HOT_SEAT_REVEAL_HOLD)
+                if game_state.phase != GamePhase.HOT_SEAT:
+                    return
+
+                # --- the question -------------------------------------
+                await self._broadcast_hot_seat_question(game_state, hs)
+                hs.start_answer_clock()
+                last_shown = None
+                while not hs.is_expired():
+                    if game_state.phase != GamePhase.HOT_SEAT:
+                        return
+                    shown = math.ceil(hs.time_remaining())
+                    if shown != last_shown:
+                        await self._conn.broadcast({
+                            "type": "hot_seat_tick",
+                            "phase": "question",
+                            "remaining": shown,
+                        })
+                        last_shown = shown
+                    if hs.answered is not None:
+                        break
+                    await asyncio.sleep(0.25)
+
+                # Settle even when nothing was answered: the chair was bought
+                # either way (#653). This is the one place the mode parts ways
+                # with the finale's forgiving timeout.
+                game_state.finish_hot_seat()
+                await self._conn.broadcast({
+                    "type": "hot_seat_result",
+                    **hs.summary(),
+                    "scores": {
+                        p.name: p.score for p in game_state.get_players()
+                    },
+                })
+            except asyncio.CancelledError:
+                pass
+            except Exception:  # noqa: BLE001
+                _LOGGER.exception("Hot seat loop crashed")
+
+        self._hot_seat_task = asyncio.ensure_future(loop())
+        self._hot_seat_task.add_done_callback(self._log_task_exception)
+
+    async def _broadcast_hot_seat_question(
+        self, game_state: QuizifyGameState, hs: Any
+    ) -> None:
+        """Send the question: shuffled to the seat holder, canonical to the room.
+
+        The spectators get the question text and the betting controls but no
+        answer buttons — they are not answering it, they are staking on
+        whoever is.
+        """
+        q = hs.question
+        if q is None:
+            return
+        payload = {
+            "type": "hot_seat_question",
+            "question": q.question,
+            "difficulty": q.difficulty,
+            "image_url": getattr(q, "image_url", "") or "",
+            "seconds": hs.answer_seconds,
+            "winner": hs.winner,
+        }
+        sends = []
+        for player in game_state.get_players():
+            if not player.connected or player.ws is None:
+                continue
+            if player.name == hs.winner:
+                sends.append(self._conn.send(player.ws, {
+                    **payload,
+                    "answers": hs.shuffled_answers(),
+                    "you_are_seated": True,
+                }))
+            else:
+                sends.append(self._conn.send(player.ws, {
+                    **payload,
+                    "answers": [],
+                    "you_are_seated": False,
+                    "score": player.score,
+                }))
+        if sends:
+            await asyncio.gather(*sends, return_exceptions=True)
+        # The room watches the same board the seat holder does, so the TV gets
+        # the *shuffled* order rather than the canonical one — which also keeps
+        # #521 shut, where JSON order put the correct tile first in half the
+        # packs. Admins additionally get the correct index; dashboards take no
+        # token (#604) and must not learn it before the reveal.
+        tv_payload = {**payload, "answers": hs.shuffled_answers()}
+        await self._conn.broadcast_to_admins_and_dashboards(
+            {**tv_payload, "correct_index": hs.correct_index},
+            dashboard_message=tv_payload,
+        )
+
     async def _broadcast_lightning_question(
         self, game_state: QuizifyGameState, lr: Any
     ) -> None:
@@ -2586,6 +2907,14 @@ class QuizifyWebSocketHandler:
         if game_state.should_trigger_lightning():
             await self._start_auto_lightning(game_state)
             return
+
+        # Hot Seat auction (#616): the same detour shape, one round later or
+        # earlier — never the same round, the draw excludes it. A failed start
+        # (too few players, no spare question) falls through to the normal
+        # question so the game can never wedge on a skipped bonus.
+        if game_state.should_trigger_hot_seat():
+            if await self._start_hot_seat(game_state):
+                return
 
         question = game_state.start_next_question()
         if question is None:
@@ -3674,6 +4003,18 @@ class QuizifyWebSocketHandler:
         ),
         MSG_SUBMIT_WAGER: (
             lambda self, ws, data, gs: self._handle_submit_wager(ws, data, gs),
+            False,
+        ),
+        MSG_HOT_SEAT_BID: (
+            lambda self, ws, data, gs: self._handle_hot_seat_bid(ws, data, gs),
+            False,
+        ),
+        MSG_HOT_SEAT_BET: (
+            lambda self, ws, data, gs: self._handle_hot_seat_bet(ws, data, gs),
+            False,
+        ),
+        MSG_HOT_SEAT_ANSWER: (
+            lambda self, ws, data, gs: self._handle_hot_seat_answer(ws, data, gs),
             False,
         ),
         # --- admin-required message types ---

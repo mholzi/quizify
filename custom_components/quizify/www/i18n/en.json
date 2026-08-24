@@ -767,5 +767,26 @@
     "shared": "Shared",
     "copied": "Copied to clipboard",
     "copyFailed": "Could not copy — select the card and copy it by hand"
+  },
+  "hotSeat": {
+    "auctionTitle": "The chair goes to the highest bid",
+    "auctionHint": "Stake part of your points. Whoever stakes most plays alone.",
+    "sliderAria": "Bid in percent",
+    "bidSubmit": "Place bid",
+    "bidPlaced": "Bid: {pct}% ({pts} pts)",
+    "bidCount": "{count} of {total} have bid",
+    "sealed": "Bids stay hidden until everyone has placed one.",
+    "won": "The chair is yours — for {pct}% ({pts} pts).",
+    "lost": "{name} took the chair for {pct}% ({pts} pts).",
+    "noBids": "Nobody bid — carrying on as usual.",
+    "seatedHint": "You answer alone. Right wins your stake; wrong or no answer loses it.",
+    "betTitle": "Bet on {name}",
+    "betSliderAria": "Bet in percent",
+    "betWill": "They'll get it",
+    "betWont": "They won't",
+    "betOptional": "Betting is optional.",
+    "betPlaced": "Staked: {pct}% on {side}",
+    "noBet": "The player in the chair does not bet.",
+    "timeoutNote": "No answer costs the stake just like a wrong one."
   }
 }
