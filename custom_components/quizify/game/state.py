@@ -44,7 +44,7 @@ from .scoring import (
     calculate_estimate_scores,
     calculate_podium,
 )
-from .scoring_engine import ScoringEngine
+from .scoring_engine import ScoringEngine, wager_loss
 from .team import ANSWER_CHANGE_LOCK_SECONDS, Team, TeamRegistry
 from .timer import QuestionTimer
 from .types import TIME_LIMITS, Difficulty
@@ -1299,14 +1299,24 @@ class QuizifyGameState:
         for player in self._player_registry.players.values():
             if not player.submitted:
                 # Timeout: the player never submitted this round, so they score
-                # 0 for it and their streak breaks. On the FINAL round this also
-                # means any wager they set is NOT resolved — wagers only apply on
-                # submit (see scoring_engine.score_submission). A player who
-                # times out KEEPS their current points and neither wins nor loses
-                # the wager. This is the intended "timeout keeps stake" semantics
-                # (#301, Markus' decision) — documented in the wager UI copy
-                # (i18n wager.timeoutNote). Do NOT add a wager deduction here.
+                # 0 for it and their streak breaks.
+                #
+                # On the FINAL round the wager is resolved anyway, as a loss
+                # (#653). This reverses #301, where a timeout left the stake
+                # untouched so a sleeping phone cost nothing. The Hot Seat
+                # auction (#616) cannot inherit that rule — there the stake buys
+                # the right to answer alone, so sitting the question out would
+                # mean taking the round for free — and two settlement rules side
+                # by side would be worse than either. Both are strict now.
                 player.streak = 0
+                if self.round == self.total_rounds:
+                    loss = wager_loss(player.score, player.wager)
+                    if loss:
+                        # round_score, not a literal -loss: a pre-submit STEAL
+                        # (#472) may already have folded points in here, and the
+                        # reveal reports points_earned=round_score.
+                        player.round_score -= loss
+                        player.score = max(0, player.score - loss)
                 player.record_round_result("timeout")
                 # Record round_score, not a literal 0 (#472). For a genuine
                 # timeout this is 0 (reset_round zeroed it and the player never

@@ -30,6 +30,23 @@ from .scoring import (
 from .types import DIFFICULTY_MULTIPLIERS, Difficulty
 
 
+def wager_loss(score_before_wager: int, wager: int | None) -> int:
+    """Points a lost wager costs, given the bank it was staked against.
+
+    Extracted so the submit path (the override below) and the timeout path in
+    ``state._do_evaluate_round`` cannot drift apart: before #653 only the
+    former existed, and a second hand-rolled conversion is exactly how the two
+    would end up disagreeing about what 50 % means.
+
+    Returns 0 when there is nothing at stake — a zero bank or a 0 % wager —
+    which keeps #308 intact: nobody is punished for betting nothing.
+    """
+    if wager is None:
+        return 0
+    bank = max(0, score_before_wager)
+    return min(int(bank * max(0, min(100, wager)) / 100), bank)
+
+
 @dataclass
 class ScoreComputation:
     """The result of scoring a single submitted answer.
@@ -141,14 +158,18 @@ class ScoringEngine:
         # subtracts. Speed/streak/difficulty multipliers are ignored — the
         # wager IS the bet. We bet against the score BEFORE points were added.
         #
-        # INTENDED SEMANTICS (#300/#301, Markus' decision — do NOT "fix"): the
-        # wager only resolves when the player actually SUBMITS. A player who
-        # times out (never submits) never reaches this method at all — they keep
-        # their current points and neither win nor lose the wager. That is by
-        # design. The timeout-keeps-stake behavior is documented in the wager UI
-        # copy (i18n key wager.timeoutNote) so it is not a hidden trap; it is NOT
-        # an exploit to be patched out. See also the timeout path in
-        # state._do_evaluate_round.
+        # SEMANTICS (#301, reversed by #653): the wager resolves whether or not
+        # the player submits. A player who times out never reaches this method —
+        # the loss is applied on the timeout path in ``state._do_evaluate_round``
+        # via ``wager_loss`` below, which shares this exact conversion.
+        #
+        # This used to be the opposite ("timeout keeps stake", #300/#301) so a
+        # sleeping phone never cost points. The Hot Seat auction (#616) could not
+        # inherit that: there the stake buys the right to answer alone, so
+        # "wager, then let the clock run out" would mean taking the round and
+        # paying nothing — which is what any locked screen does on its own.
+        # Rather than run a forgiving rule in the finale and a strict one in the
+        # auction, both are strict. One rule, one explanation.
         wager_used: int | None = None
         if is_final_round and wager is not None:
             bank = max(0, score_before_wager)

@@ -15,6 +15,14 @@ Right answer wins your stake, wrong answer loses it — and so does no answer at
 
 Betting is optional, the player in the chair may not bet, and the auction is off in the kids preset.
 
+### 🎲 An unanswered wager now loses the stake
+
+The same rule reaches back into the final round. Staking points and then letting the clock run out used to cost nothing — no win, no loss. From now on it costs the stake, exactly like a wrong answer.
+
+That forgiveness was deliberate, so a phone locking mid-question never cost anyone points. It goes because the auction above cannot inherit it: a stake that buys the right to answer would be free to anyone who simply sat the question out. One rule for both is easier to play than two that have to be told apart.
+
+The line on your phone that used to promise the opposite has been rewritten in all three languages.
+
 ## [1.10.0] — 2026-08-23
 
 ### 🇪🇸 Spanish is complete

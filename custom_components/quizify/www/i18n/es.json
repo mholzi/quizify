@@ -493,7 +493,7 @@
   "wager": {
     "title": "Ronda final — Apuesta",
     "hint": "Apuesta una parte de tus puntos. Acierto = doble, fallo = pierdes.",
-    "timeoutNote": "La apuesta solo cuenta si respondes. Sin respuesta = conservas tus puntos (ni ganas ni pierdes).",
+    "timeoutNote": "La apuesta cuenta siempre, también si no respondes. No responder te cuesta la apuesta igual que fallar.",
     "bank": "Puntos actuales",
     "submit": "Confirmar apuesta",
     "sliderAria": "Porcentaje de apuesta",

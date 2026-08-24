@@ -493,7 +493,7 @@
   "wager": {
     "title": "Letzte Runde — Wagerunde",
     "hint": "Setze einen Teil deiner Punkte. Richtig = gewinnen, falsch = verlieren.",
-    "timeoutNote": "Der Einsatz zählt nur, wenn du antwortest. Keine Antwort = deine Punkte bleiben (kein Gewinn, kein Verlust).",
+    "timeoutNote": "Der Einsatz zählt immer — auch wenn du nicht antwortest. Keine Antwort kostet dich den Einsatz genauso wie eine falsche.",
     "bank": "Punktestand",
     "submit": "Einsatz festlegen",
     "sliderAria": "Einsatz in Prozent",

@@ -564,11 +564,14 @@ class TestWagerRound:
         state.start_next_question()  # reset_round runs per player
         assert state.get_player("Alice").wager is None
 
-    def test_wager_timeout_keeps_stake(self, state: QuizifyGameState) -> None:
-        """Intended semantics (#301, Markus' decision): a final-round player who
-        wagers but never submits KEEPS their points — they neither win nor lose
-        the wager. This locks the documented "timeout keeps stake" behavior so a
-        future change can't silently turn the wager into a timeout penalty."""
+    def test_wager_timeout_loses_stake(self, state: QuizifyGameState) -> None:
+        """Reversed by #653: a final-round player who wagers and never submits
+        LOSES the stake, exactly as if they had answered wrongly.
+
+        This was the opposite until now (#301), so that a sleeping phone cost
+        nothing. The Hot Seat auction (#616) could not inherit that rule — a
+        stake that buys the right to answer would be free to anyone who simply
+        sat the question out — and two settlement rules were worse than one."""
         state.add_player("Alice", _fake_ws())
         state.add_player("Bob", _fake_ws())  # so the round doesn't auto-evaluate
         state.start_game(language="de", num_rounds=2, difficulty="easy")
@@ -584,9 +587,9 @@ class TestWagerRound:
         correct_idx = next(i for i, a in enumerate(question.answers) if a.correct)
         state.submit_answer("Bob", correct_idx)
         state.evaluate_round()
-        # Alice timed out: score unchanged, no wager loss (or gain).
+        # Alice timed out on a 100% wager: the whole bank is gone.
         assert alice.submitted is False
-        assert alice.score == 100
+        assert alice.score == 0
 
 
 # ---------- End game ----------
