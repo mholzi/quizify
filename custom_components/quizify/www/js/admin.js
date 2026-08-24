@@ -58,6 +58,7 @@
     // fires once at a random mid-game round; the host opts out via the setup
     // toggle. Read live from the checkbox at start_game time.
     let selectedLightning = true;
+    let selectedHotSeat = true;
 
     // Game state
     let currentPhase = 'LOBBY';
@@ -749,15 +750,18 @@
     // `lightning` mirrors data-lightning on the cards in admin.html (1/0) and
     // arms or disarms the auto Lightning Round (#285) for the bundle.
     var _PRESETS = [
-        { id: 'schnellrunde', rounds: 5,  difficulty: 'easy',   timer: 20, lightning: true,  labelKey: 'setup.preset.fastName'     },
-        { id: 'klassiker',    rounds: 10, difficulty: 'medium', timer: 30, lightning: true,  labelKey: 'setup.preset.classicName'  },
+        { id: 'schnellrunde', rounds: 5,  difficulty: 'easy',   timer: 20, lightning: true,  hotSeat: true,  labelKey: 'setup.preset.fastName'     },
+        { id: 'klassiker',    rounds: 10, difficulty: 'medium', timer: 30, lightning: true,  hotSeat: true,  labelKey: 'setup.preset.classicName'  },
         // #506: the long-timer bundle for hosts playing with small kids. Its
         // timer must stay one of the #timer-chips values — _applyPreset calls
         // _activateChip, which silently highlights nothing otherwise.
         // #513: Lightning off — 5 questions at 15 s each would undo the long
         // timer this preset exists for, right in the middle of the game.
-        { id: 'kinder',       rounds: 5,  difficulty: 'easy',   timer: 180, lightning: false, labelKey: 'setup.preset.kidsName'   },
-        { id: 'marathon',     rounds: 20, difficulty: 'hard',   timer: 45, lightning: true,  labelKey: 'setup.preset.marathonName' },
+        // #616: Hot Seat off for the same family of reasons as Lightning —
+        // the auction is built on losing points, which is the mechanic
+        // children like least about the game.
+        { id: 'kinder',       rounds: 5,  difficulty: 'easy',   timer: 180, lightning: false, hotSeat: false, labelKey: 'setup.preset.kidsName'   },
+        { id: 'marathon',     rounds: 20, difficulty: 'hard',   timer: 45, lightning: true,  hotSeat: true,  labelKey: 'setup.preset.marathonName' },
     ];
 
     // #433: the host's own saved presets, loaded from the server so a preset
@@ -769,7 +773,10 @@
         // Lightning is part of the bundle (#513) — flipping the toggle by
         // hand makes the run "Eigene" again, same as picking own topics.
         return p.rounds === selectedRounds && p.difficulty === selectedDifficulty
-            && p.timer === selectedTimer && p.lightning === selectedLightning;
+            && p.timer === selectedTimer && p.lightning === selectedLightning
+            // #616: the Hot Seat rides the bundle for the same reason — a kids
+            // run with the auction switched back on is no longer "Mit Kindern".
+            && p.hotSeat === selectedHotSeat;
     }
 
     function _samePacks(packs) {
@@ -913,7 +920,13 @@
     }
 
     function _applyCustomPreset(p) {
-        _applyPreset(p.rounds, p.difficulty, p.timer, p.lightning);
+        // The built-in presets above use hotSeat; a preset that came back from
+        // the server carries hot_seat, because that is the wire name the store
+        // persists. Read both rather than renaming one of them: the JS side
+        // stays camelCase and the payload stays snake_case, and the boundary
+        // is the one place that has to know.
+        var hotSeat = p.hotSeat != null ? p.hotSeat : p.hot_seat;
+        _applyPreset(p.rounds, p.difficulty, p.timer, p.lightning, hotSeat);
         _applyPacks(p.packs || []);
         // markActivePreset repaints the chips too, so no separate call here.
         markActivePreset();
@@ -993,6 +1006,7 @@
                 difficulty: selectedDifficulty,
                 timer: selectedTimer,
                 lightning: selectedLightning,
+                hot_seat: selectedHotSeat,
                 category: selectedCategory,
                 packs: selectedCategories || []
             })
@@ -1059,7 +1073,7 @@
 
     // Apply preset: write to the active-chip state AND to the typed vars
     // so the existing chip group serialization works unchanged.
-    function _applyPreset(rounds, difficulty, timer, lightning) {
+    function _applyPreset(rounds, difficulty, timer, lightning, hotSeat) {
         if (rounds != null) {
             selectedRounds = rounds;
             _activateChip(els.roundsChips, String(rounds));
@@ -1079,6 +1093,13 @@
             selectedLightning = lightning;
             var lightningEl = document.getElementById('lightning-enabled-toggle');
             if (lightningEl) lightningEl.checked = lightning;
+        }
+        // #616: same treatment — write the checkbox, not only the variable,
+        // because _buildStartGamePayload reads the DOM first.
+        if (hotSeat != null) {
+            selectedHotSeat = hotSeat;
+            var hotSeatEl = document.getElementById('hot-seat-enabled-toggle');
+            if (hotSeatEl) hotSeatEl.checked = hotSeat;
         }
         updateSettingsSummary();
     }
@@ -1123,7 +1144,9 @@
                 var timer = parseInt(card.getAttribute('data-timer'), 10);
                 var lightningAttr = card.getAttribute('data-lightning');
                 var lightning = lightningAttr == null ? null : lightningAttr === '1';
-                _applyPreset(rounds, difficulty, timer, lightning);
+                var hotSeatAttr = card.getAttribute('data-hot-seat');
+                var hotSeat = hotSeatAttr == null ? null : hotSeatAttr === '1';
+                _applyPreset(rounds, difficulty, timer, lightning, hotSeat);
             });
         });
     }
@@ -1163,6 +1186,15 @@
             // #513: Lightning is part of a preset bundle now, so flipping it
             // by hand has to re-run the match — otherwise a kids run with
             // Lightning switched back on still reads "Mit Kindern".
+            updateSettingsSummary();
+        });
+    }
+    // Hot Seat auction toggle (#616) — same sync, same bundle-rematch.
+    var hotSeatToggle = document.getElementById('hot-seat-enabled-toggle');
+    if (hotSeatToggle) {
+        selectedHotSeat = !!hotSeatToggle.checked;
+        on(hotSeatToggle, 'change', function () {
+            selectedHotSeat = !!hotSeatToggle.checked;
             updateSettingsSummary();
         });
     }
@@ -2612,6 +2644,9 @@
         // if the change listener didn't fire (e.g. programmatic state).
         var lightningEl = document.getElementById('lightning-enabled-toggle');
         var lightningEnabled = lightningEl ? !!lightningEl.checked : selectedLightning;
+        // Same live read for the Hot Seat auction (#616).
+        var hotSeatEl = document.getElementById('hot-seat-enabled-toggle');
+        var hotSeatEnabled = hotSeatEl ? !!hotSeatEl.checked : selectedHotSeat;
         return {
             category: categoryPayload,
             difficulty: selectedDifficulty === 'mixed' ? null : selectedDifficulty,
@@ -2619,6 +2654,7 @@
             language: selectedLanguage,
             timer_duration: selectedTimer,
             lightning_enabled: lightningEnabled,
+            hot_seat_enabled: hotSeatEnabled,
             // TTS narration toggles (#281), read live from the inputs.
             tts: _readTtsConfig(),
             // House Plays Along config (#494), read live from the inputs.

@@ -225,6 +225,11 @@ CLIENT_MESSAGE_TYPES: frozenset[str] = frozenset({
     "submit_wager",  # gameplay idea #3: final-round Jeopardy wager
     "reaction",      # gameplay idea #11: reveal-time appreciation bonus
     "use_powerup",
+    # Hot Seat auction (#616): sealed bid for the chair, optional spectator
+    # stake on the outcome, and the seat holder's single answer.
+    "hot_seat_bid",
+    "hot_seat_bet",
+    "hot_seat_answer",
     "start_game",
     "next_question",
     "next_round",

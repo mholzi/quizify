@@ -767,5 +767,26 @@
     "shared": "Geteilt",
     "copied": "In die Zwischenablage kopiert",
     "copyFailed": "Kopieren ging nicht — markier die Karte und kopier sie von Hand"
+  },
+  "hotSeat": {
+    "auctionTitle": "Der Stuhl wird versteigert",
+    "auctionHint": "Setze einen Teil deiner Punkte. Wer am meisten setzt, spielt allein.",
+    "sliderAria": "Gebot in Prozent",
+    "bidSubmit": "Gebot abgeben",
+    "bidPlaced": "Geboten: {pct}% ({pts} Pkt.)",
+    "bidCount": "{count} von {total} haben geboten",
+    "sealed": "Die Gebote bleiben verdeckt, bis alle abgegeben haben.",
+    "won": "Du hast den Stuhl — für {pct}% ({pts} Pkt.).",
+    "lost": "{name} hat den Stuhl für {pct}% ({pts} Pkt.).",
+    "noBids": "Niemand hat geboten — es geht normal weiter.",
+    "seatedHint": "Du antwortest allein. Richtig = Einsatz gewinnen, falsch oder gar nicht = Einsatz weg.",
+    "betTitle": "Wette auf {name}",
+    "betSliderAria": "Wetteinsatz in Prozent",
+    "betWill": "Schafft es",
+    "betWont": "Schafft es nicht",
+    "betOptional": "Mitwetten ist freiwillig.",
+    "betPlaced": "Gesetzt: {pct}% auf {side}",
+    "noBet": "Der Spieler im Stuhl wettet nicht.",
+    "timeoutNote": "Keine Antwort kostet den Einsatz genauso wie eine falsche."
   }
 }

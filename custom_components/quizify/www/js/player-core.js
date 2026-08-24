@@ -12,6 +12,7 @@
     var reveal = window.QuizifyPlayerReveal;
     var end = window.QuizifyPlayerEnd;
     var lightning = window.QuizifyPlayerLightning;
+    var hotSeat = window.QuizifyPlayerHotSeat;
     var team = window.QuizifyPlayerTeam;
     var state = pu.state;
 
@@ -410,6 +411,42 @@
                 // Server confirmed our final-round wager. Nothing to
                 // do — the local UI already collapsed the panel on
                 // submit. Useful as a hook for analytics later.
+                break;
+
+            // ---- Hot Seat auction (issue #616) ----
+            case 'hot_seat_auction_you':
+                if (hotSeat) hotSeat.handleAuctionYou(msg);
+                break;
+
+            case 'hot_seat_bid_count':
+                if (hotSeat) hotSeat.handleBidCount(msg);
+                break;
+
+            case 'hot_seat_bid_accepted':
+            case 'hot_seat_bet_accepted':
+            case 'hot_seat_answer_accepted':
+                // Server confirmed. The panel already locked itself on tap —
+                // this is the acknowledgement, not the state change.
+                break;
+
+            case 'hot_seat_awarded':
+                if (hotSeat) hotSeat.handleAwarded(msg);
+                break;
+
+            case 'hot_seat_no_bids':
+                if (hotSeat) hotSeat.handleNoBids();
+                break;
+
+            case 'hot_seat_question':
+                if (hotSeat) hotSeat.handleQuestion(msg);
+                break;
+
+            case 'hot_seat_tick':
+                if (hotSeat) hotSeat.handleTick(msg);
+                break;
+
+            case 'hot_seat_result':
+                if (hotSeat) hotSeat.handleResult(msg);
                 break;
 
             // ---- Lightning Round (issue #42) ----

@@ -55,6 +55,7 @@ if TYPE_CHECKING:
     from ..analytics import QuizifyAnalytics
     from ..question_stats import QuestionStatsService
     from ..runtime import Runtime
+    from .hot_seat import HotSeatRound
     from .lightning import LightningRound
 
 _LOGGER = logging.getLogger(__name__)
@@ -252,6 +253,16 @@ class QuizifyGameState:
         # without monkeypatching the module-global ``random``. Defaults to the
         # shared module RNG in production.
         self._lightning_rng: random.Random = random.Random()
+
+        # Hot Seat auction (#616) — the second self-contained detour, armed
+        # exactly like the Lightning Round above and deliberately never in the
+        # same round as it (see _pick_hot_seat_round).
+        self._hot_seat: HotSeatRound | None = None
+        self._hot_seat_enabled: bool = True
+        self._hot_seat_target_round: int | None = None
+        self._hot_seat_fired: bool = False
+        self._hot_seat_round_to_resume: int = 0
+        self._hot_seat_rng: random.Random = random.Random()
 
         # Round shuffle state (owned here, not in WS handler).
         # `shuffle_map` is the "canonical" per-round shuffle used by the
@@ -554,6 +565,8 @@ class QuizifyGameState:
         timer_duration: int | None = None,
         lightning_enabled: bool = True,
         lightning_seed: int | None = None,
+        hot_seat_enabled: bool = True,
+        hot_seat_seed: int | None = None,
     ) -> dict[str, Any]:
         """Start a new game session.
 
@@ -590,6 +603,14 @@ class QuizifyGameState:
         if lightning_seed is not None:
             self._lightning_rng = random.Random(lightning_seed)
         self._lightning_target_round = self._pick_lightning_round(num_rounds)
+
+        # Arm the Hot Seat auction (#616), same shape, same draw-once rule.
+        self._hot_seat_enabled = hot_seat_enabled
+        self._hot_seat_fired = False
+        self._hot_seat_round_to_resume = 0
+        if hot_seat_seed is not None:
+            self._hot_seat_rng = random.Random(hot_seat_seed)
+        self._hot_seat_target_round = self._pick_hot_seat_round(num_rounds)
 
         # Group-level adaptive difficulty (#40). Only the explicit "auto" mode
         # opts in; any fixed difficulty the host pinned (easy/medium/hard) is
@@ -1841,6 +1862,10 @@ class QuizifyGameState:
         self._lightning_target_round = None
         self._lightning_fired = False
         self._round_to_resume = 0
+        self._hot_seat = None
+        self._hot_seat_target_round = None
+        self._hot_seat_fired = False
+        self._hot_seat_round_to_resume = 0
 
         for player in self._player_registry.players.values():
             player.reset_for_new_game()
@@ -2023,6 +2048,170 @@ class QuizifyGameState:
         self.phase = GamePhase.ANSWER_REVEAL
         self._notify_state_callbacks()
         return True
+
+    # ------------------------------------------------------------------
+    # Hot Seat auction (issue #616)
+    # ------------------------------------------------------------------
+    #
+    # Thin wrappers around a HotSeatRound, mirroring the Lightning block
+    # above: the rules live in game/hot_seat.py, this class owns only the
+    # reference and the phase transitions so the WS handler has one caller.
+
+    def _pick_hot_seat_round(self, num_rounds: int) -> int | None:
+        """Pick the round the Hot Seat auction fires before (#616).
+
+        Same window as the Lightning Round — rounds ``3 … num_rounds-1`` — for
+        the same two reasons: the game should establish itself first, and the
+        last question stays the climax rather than being replaced by a detour.
+
+        The draw additionally avoids the Lightning target. Two detours in one
+        round would mean the second fires immediately after the first's recap,
+        with no normal question between them; the round would read as broken
+        even though both modes behaved correctly.
+        """
+        if not self._hot_seat_enabled:
+            return None
+        low, high = 3, num_rounds - 1
+        if high < low:
+            return None  # window empty → short game, no auction
+        candidates = [
+            r for r in range(low, high + 1) if r != self._lightning_target_round
+        ]
+        if not candidates:
+            # A 4-round game has a one-round window that Lightning already
+            # owns. Lightning was armed first, so it keeps it.
+            return None
+        return candidates[self._hot_seat_rng.randrange(len(candidates))]
+
+    @property
+    def hot_seat_target_round(self) -> int | None:
+        """The round the Hot Seat auction fires before, or None (#616)."""
+        return self._hot_seat_target_round
+
+    @property
+    def hot_seat(self):
+        """The active HotSeatRound, or None."""
+        return self._hot_seat
+
+    @property
+    def in_hot_seat_detour(self) -> bool:
+        """True while the auction is interrupting a live game (#616)."""
+        return self._hot_seat_round_to_resume > 0
+
+    def should_trigger_hot_seat(self) -> bool:
+        """True iff the Hot Seat auction should fire right now (#616).
+
+        Consulted by the WS round-advance path before it starts the next
+        normal question, exactly like ``should_trigger_lightning``. Fires once
+        per game, only from a between-rounds phase.
+        """
+        if self._hot_seat_fired or self._hot_seat_target_round is None:
+            return False
+        if self.phase not in (GamePhase.LOBBY, GamePhase.ANSWER_REVEAL):
+            return False
+        return self.round + 1 == self._hot_seat_target_round
+
+    def start_hot_seat_auction(self) -> bool:
+        """Open the sealed bidding window. False means "skip, play on".
+
+        False is a normal outcome, not an error: too few players to hold an
+        auction, or no question the main game can spare (#544). Either way the
+        once-per-game flag is burned so the attempt is not retried every round.
+        """
+        from .hot_seat import HotSeatRound  # local import — avoid cycle
+
+        if self.phase not in (GamePhase.LOBBY, GamePhase.ANSWER_REVEAL):
+            return False
+
+        scores = {
+            name: p.score for name, p in self._player_registry.players.items()
+        }
+        hs = HotSeatRound(
+            self._question_bank,
+            scores,
+            language=self.language,
+            category=self.category,
+            categories=getattr(self, "categories", None),
+            difficulty=self.difficulty,
+        )
+        # Same reservation rule as Lightning (#544): never spend a question the
+        # main game still owes a later round.
+        reserve = max(0, self.total_rounds - self.round)
+        self._hot_seat_fired = True
+        if not hs.start(reserve=reserve):
+            return False
+
+        self._hot_seat = hs
+        self._hot_seat_round_to_resume = self.round
+        self.phase = GamePhase.HOT_SEAT_AUCTION
+        self._notify_state_callbacks()
+        return True
+
+    def close_hot_seat_auction(self) -> str | None:
+        """Award the chair and move into the question. Returns the winner.
+
+        None means nobody bid above zero — the driver treats that as "no
+        auction happened" and resumes the normal round, because a chair
+        nobody wanted is not a round worth playing.
+        """
+        if self.phase != GamePhase.HOT_SEAT_AUCTION or self._hot_seat is None:
+            return None
+        winner = self._hot_seat.resolve_auction()
+        if winner is None:
+            return None
+        self.phase = GamePhase.HOT_SEAT
+        self._notify_state_callbacks()
+        return winner
+
+    def finish_hot_seat(self) -> dict[str, int]:
+        """Settle the round and move to the reveal. Returns the point deltas.
+
+        Applying the deltas is this method's job rather than the caller's, so
+        an unanswered question cannot quietly skip settlement — that is the
+        exact failure this mode had to design against (#653).
+        """
+        if self._hot_seat is None:
+            return {}
+        deltas = self._hot_seat.settle()
+        for name, delta in deltas.items():
+            player = self._player_registry.players.get(name)
+            if player is None:
+                continue
+            player.score += delta
+            if player.score < 0:
+                player.score = 0
+        if self.phase == GamePhase.HOT_SEAT:
+            self.phase = GamePhase.HOT_SEAT_REVEAL
+            self._flush_history()
+            self._notify_state_callbacks()
+        return deltas
+
+    def resume_after_hot_seat(self) -> bool:
+        """Return to the paused main game after the reveal (#616).
+
+        Mirrors ``resume_after_lightning``: flips back to ANSWER_REVEAL and
+        restores the round counter so the next advance lands on the
+        originally-scheduled round.
+        """
+        if self.phase != GamePhase.HOT_SEAT_REVEAL or not self.in_hot_seat_detour:
+            return False
+        self.round = self._hot_seat_round_to_resume
+        self._hot_seat_round_to_resume = 0
+        self._hot_seat = None
+        self.phase = GamePhase.ANSWER_REVEAL
+        self._notify_state_callbacks()
+        return True
+
+    def abort_hot_seat(self) -> None:
+        """Drop an auction that found no bidder and return to the main game."""
+        if self._hot_seat is None:
+            return
+        self.round = self._hot_seat_round_to_resume or self.round
+        self._hot_seat_round_to_resume = 0
+        self._hot_seat = None
+        if self.phase in (GamePhase.HOT_SEAT_AUCTION, GamePhase.HOT_SEAT):
+            self.phase = GamePhase.ANSWER_REVEAL
+        self._notify_state_callbacks()
 
     # ------------------------------------------------------------------
     # Power-ups

@@ -767,5 +767,26 @@
     "shared": "Compartido",
     "copied": "Copiado al portapapeles",
     "copyFailed": "No se pudo copiar — selecciona la tarjeta y cópiala a mano"
+  },
+  "hotSeat": {
+    "auctionTitle": "La silla se subasta",
+    "auctionHint": "Apuesta parte de tus puntos. Quien más apueste juega solo.",
+    "sliderAria": "Puja en porcentaje",
+    "bidSubmit": "Pujar",
+    "bidPlaced": "Puja: {pct}% ({pts} pts)",
+    "bidCount": "{count} de {total} han pujado",
+    "sealed": "Las pujas quedan ocultas hasta que todos hayan pujado.",
+    "won": "La silla es tuya — por {pct}% ({pts} pts).",
+    "lost": "{name} se llevó la silla por {pct}% ({pts} pts).",
+    "noBids": "Nadie pujó — seguimos con normalidad.",
+    "seatedHint": "Respondes solo. Acertar gana tu apuesta; fallar o no responder la pierde.",
+    "betTitle": "Apuesta por {name}",
+    "betSliderAria": "Apuesta en porcentaje",
+    "betWill": "Lo consigue",
+    "betWont": "No lo consigue",
+    "betOptional": "Apostar es opcional.",
+    "betPlaced": "Apostado: {pct}% a {side}",
+    "noBet": "Quien está en la silla no apuesta.",
+    "timeoutNote": "No responder cuesta la apuesta igual que fallar."
   }
 }

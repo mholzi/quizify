@@ -367,6 +367,52 @@
                     </button>
                 </section>
 
+                <!-- Hot Seat auction (#616). Three states in one section:
+                     bidding (sealed, everyone), the seat holder's answer grid,
+                     and the spectator bet. The bid slider is a PERCENT for the
+                     same reason the wager one is — see game/hot_seat.py. -->
+                <section id="hotseat-panel" class="wager-panel hidden" aria-live="polite">
+                    <h2 class="wager-panel-title">
+                        <span class="qz-icon qz-icon--sky" data-ui-icon="sparkle" aria-hidden="true">🪑</span>
+                        <span id="hotseat-title" data-i18n="hotSeat.auctionTitle">Der Stuhl wird versteigert</span>
+                    </h2>
+                    <p id="hotseat-hint" class="wager-panel-hint"></p>
+
+                    <!-- Bidding -->
+                    <div id="hotseat-bid-stage">
+                        <div class="wager-slider-row">
+                            <input type="range" id="hotseat-slider" min="0" max="100" step="5" value="25"
+                                   data-i18n-aria-label="hotSeat.sliderAria"
+                                   aria-label="Gebot in Prozent">
+                            <output id="hotseat-value" class="wager-value" for="hotseat-slider">25%</output>
+                        </div>
+                        <p class="wager-bank-line">
+                            <span data-i18n="wager.bank">Punktestand</span>
+                            <span id="hotseat-bank" class="wager-bank">0</span>
+                        </p>
+                        <button id="hotseat-bid-btn" type="button" class="btn btn-primary btn-block"
+                                data-i18n="hotSeat.bidSubmit">Gebot abgeben</button>
+                        <p id="hotseat-bid-count" class="wager-panel-hint"></p>
+                    </div>
+
+                    <!-- Spectator bet -->
+                    <div id="hotseat-bet-stage" class="hidden">
+                        <div class="wager-slider-row">
+                            <input type="range" id="hotseat-bet-slider" min="0" max="100" step="5" value="20"
+                                   data-i18n-aria-label="hotSeat.betSliderAria"
+                                   aria-label="Wetteinsatz in Prozent">
+                            <output id="hotseat-bet-value" class="wager-value" for="hotseat-bet-slider">20%</output>
+                        </div>
+                        <div class="hotseat-bet-buttons">
+                            <button id="hotseat-bet-will" type="button" class="btn btn-primary"
+                                    data-i18n="hotSeat.betWill">Schafft es</button>
+                            <button id="hotseat-bet-wont" type="button" class="btn btn-secondary"
+                                    data-i18n="hotSeat.betWont">Schafft es nicht</button>
+                        </div>
+                        <p class="wager-panel-hint" data-i18n="hotSeat.betOptional">Mitwetten ist freiwillig.</p>
+                    </div>
+                </section>
+
                 <!-- Estimate slider (#275, Variant B). Shown instead of the
                      A/B/C grid when question_started.question_type === 'estimate'.
                      Big live value above the track, range labels, "Tipp abgeben". -->

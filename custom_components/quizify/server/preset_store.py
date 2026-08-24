@@ -1,7 +1,8 @@
 """Atomic JSON-on-disk store for saved game presets (#433).
 
 A host reconfigures the same two or three setups every session — packs,
-difficulty, rounds, timer, lightning. This keeps named copies of them so the
+difficulty, rounds, timer, lightning, hot seat. This keeps named copies of
+them so the
 setup screen collapses to one tap.
 
 The presets live on the **server**, not in the browser: a preset saved on the
@@ -164,6 +165,13 @@ def _validate(payload: dict[str, Any]) -> dict[str, Any]:
 
     if payload.get("lightning") is not None:
         record["lightning"] = bool(payload["lightning"])
+
+    # #616: the Hot Seat auction rides the bundle exactly like Lightning. Left
+    # out, a saved preset would drop the setting silently and come back with
+    # the default — the host would switch the auction off, save, reload, and
+    # find it on again with nothing to explain why.
+    if payload.get("hot_seat") is not None:
+        record["hot_seat"] = bool(payload["hot_seat"])
 
     packs = payload.get("packs")
     if isinstance(packs, list):

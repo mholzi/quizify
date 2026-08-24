@@ -5,11 +5,21 @@ All notable changes to Quizify are documented here. This project follows
 
 ## [Unreleased]
 
+### 🪑 The hot seat goes to the highest bidder
+
+Once per game, at a round nobody sees coming, the chair is auctioned. Everyone bids in secret, the highest bid takes the seat and answers one question alone, and the rest of the room may stake points on whether they get it.
+
+A bid is a **share of your own points**, not a number of them. That one choice is what makes the mode work: bid in points and whoever is already ahead wins every auction, so the chair would go to the player who needs it least. In percent everyone can commit everything, and the seat is cheapest for whoever is last.
+
+Right answer wins your stake, wrong answer loses it — and so does no answer at all. Winning the auction means paying for it.
+
+Betting is optional, the player in the chair may not bet, and the auction is off in the kids preset.
+
 ### 🎲 An unanswered wager now loses the stake
 
-Until now, staking points in the final round and then letting the clock run out cost nothing — no win, no loss. From now on it costs the stake, exactly like a wrong answer.
+The same rule reaches back into the final round. Staking points and then letting the clock run out used to cost nothing — no win, no loss. From now on it costs the stake, exactly like a wrong answer.
 
-The rule that changed was there on purpose, so that a phone locking mid-question never cost anyone points. It is going because the Hot Seat auction stakes points to buy the right to answer, and there "bid, then say nothing" would mean taking the round for free. Two settlement rules — forgiving in the finale, strict in the auction — would have been worse than one.
+That forgiveness was deliberate, so a phone locking mid-question never cost anyone points. It goes because the auction above cannot inherit it: a stake that buys the right to answer would be free to anyone who simply sat the question out. One rule for both is easier to play than two that have to be told apart.
 
 The line on your phone that used to promise the opposite has been rewritten in all three languages.
 
