@@ -75,6 +75,15 @@ class GamePhase(str, Enum):  # noqa: UP042 — StrEnum changes str()/serializati
     # The mode's logic lives in game/lightning.py, not in this class.
     LIGHTNING = "LIGHTNING"
     LIGHTNING_RECAP = "LIGHTNING_RECAP"
+    # Hot Seat auction (issue #616) — a second self-contained detour. The
+    # chair is bought, not assigned: HOT_SEAT_AUCTION is the sealed bidding
+    # window, HOT_SEAT is the single question the winner answers alone while
+    # everyone else may stake on the outcome, and HOT_SEAT_REVEAL shows the
+    # bids, the answer and the point swings. The rules live in
+    # game/hot_seat.py, not in this class.
+    HOT_SEAT_AUCTION = "HOT_SEAT_AUCTION"
+    HOT_SEAT = "HOT_SEAT"
+    HOT_SEAT_REVEAL = "HOT_SEAT_REVEAL"
     # PAUSED — admin-triggered pause during QUESTION_ACTIVE. Timer is
     # frozen; resume returns to QUESTION_ACTIVE with the remaining time
     # the player had before pause. Used both for explicit "Pause" button

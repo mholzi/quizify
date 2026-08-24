@@ -3,6 +3,18 @@
 All notable changes to Quizify are documented here. This project follows
 [Semantic Versioning](https://semver.org/).
 
+## [Unreleased]
+
+### 🪑 The hot seat goes to the highest bidder
+
+Once per game, at a round nobody sees coming, the chair is auctioned. Everyone bids in secret, the highest bid takes the seat and answers one question alone, and the rest of the room may stake points on whether they get it.
+
+A bid is a **share of your own points**, not a number of them. That one choice is what makes the mode work: bid in points and whoever is already ahead wins every auction, so the chair would go to the player who needs it least. In percent everyone can commit everything, and the seat is cheapest for whoever is last.
+
+Right answer wins your stake, wrong answer loses it — and so does no answer at all. Winning the auction means paying for it.
+
+Betting is optional, the player in the chair may not bet, and the auction is off in the kids preset.
+
 ## [1.10.0] — 2026-08-23
 
 ### 🇪🇸 Spanish is complete

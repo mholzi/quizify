@@ -81,6 +81,12 @@ NON_ADMIN_TYPES = {
     "create_team",
     "join_team",
     "leave_team",
+    # Hot Seat auction (#616): bidding for the chair, staking on the outcome
+    # and the seat holder's answer are all player actions. The host neither
+    # runs the auction nor picks who sits — that is the point of the mode.
+    "hot_seat_bid",
+    "hot_seat_bet",
+    "hot_seat_answer",
 }
 
 

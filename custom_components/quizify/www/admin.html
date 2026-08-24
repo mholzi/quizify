@@ -152,7 +152,7 @@
                      data-i18n-aria-label="setup.pickMode" aria-label="Pick a mode">
                     <button type="button" class="preset-card" data-preset="schnellrunde"
                             data-rounds="5" data-difficulty="easy" data-timer="20"
-                            data-lightning="1">
+                            data-hot-seat="1" data-lightning="1">
                         <span class="preset-icon qz-icon qz-icon--sun" data-ui-icon="bolt" aria-hidden="true">⚡</span>
                         <span class="preset-body">
                             <span class="preset-name" data-i18n="setup.preset.fastName">Quick round</span>
@@ -162,7 +162,7 @@
                     </button>
                     <button type="button" class="preset-card is-active" data-preset="klassiker"
                             data-rounds="10" data-difficulty="medium" data-timer="30"
-                            data-lightning="1">
+                            data-hot-seat="1" data-lightning="1">
                         <span class="preset-icon qz-icon qz-icon--sky" data-ui-icon="brain" aria-hidden="true">🧠</span>
                         <span class="preset-body">
                             <span class="preset-name" data-i18n="setup.preset.classicName">Classic</span>
@@ -184,7 +184,7 @@
                          long timer — for five questions mid-game. -->
                     <button type="button" class="preset-card" data-preset="kinder"
                             data-rounds="5" data-difficulty="easy" data-timer="180"
-                            data-lightning="0">
+                            data-hot-seat="0" data-lightning="0">
                         <!-- Deliberately no data-ui-icon: _paintUiIcons() only
                              swaps the emoji for an SVG on slots that carry one,
                              so leaving it off keeps the teddy while the sage
@@ -198,7 +198,7 @@
                     </button>
                     <button type="button" class="preset-card" data-preset="marathon"
                             data-rounds="20" data-difficulty="hard" data-timer="45"
-                            data-lightning="1">
+                            data-hot-seat="1" data-lightning="1">
                         <span class="preset-icon qz-icon qz-icon--sun" data-ui-icon="trophy" aria-hidden="true">🏆</span>
                         <span class="preset-body">
                             <span class="preset-name" data-i18n="setup.preset.marathonName">Marathon</span>
@@ -335,6 +335,20 @@
                             <input type="checkbox" id="lightning-enabled-toggle" checked>
                             <span class="toggle-switch-compact" aria-hidden="true"></span>
                             <span class="toggle-label" data-i18n="setup.eigene.lightningHint">Surprise fast round mid-game</span>
+                        </label>
+                    </div>
+
+                    <!-- Hot Seat auction (#616). Same shape as the Lightning
+                         toggle above and armed the same way: one draw at
+                         start_game, a random mid-game round, never the round
+                         Lightning already owns. Off in the kids preset —
+                         losing points is the part children like least. -->
+                    <div class="vF-step">
+                        <div class="vF-q"><span class="num">7</span><span data-i18n="setup.eigene.q7">Hot Seat?</span></div>
+                        <label class="toggle-compact setup-lightning-toggle" for="hot-seat-enabled-toggle">
+                            <input type="checkbox" id="hot-seat-enabled-toggle" checked>
+                            <span class="toggle-switch-compact" aria-hidden="true"></span>
+                            <span class="toggle-label" data-i18n="setup.eigene.hotSeatHint">Der Stuhl wird versteigert, einer spielt allein</span>
                         </label>
                     </div>
 
