@@ -58,6 +58,7 @@ FAMILY = {
     "difficulty": "easy",
     "timer": 180,
     "lightning": False,
+    "hot_seat": False,
     "category": "multi",
     "packs": ["geographie", "tiere-natur"],
 }
@@ -76,6 +77,10 @@ def test_round_trip_survives_a_reload(tmp_path: Path) -> None:
         assert [p["name"] for p in again] == ["Familienabend"]
         assert again[0]["packs"] == ["geographie", "tiere-natur"]
         assert again[0]["lightning"] is False
+        # #616: the auction toggle has to survive the round trip too. Without
+        # this the host would switch it off, save, reload, and find it on again
+        # with nothing on screen to explain why.
+        assert again[0]["hot_seat"] is False
 
     asyncio.run(go())
 

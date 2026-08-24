@@ -920,7 +920,13 @@
     }
 
     function _applyCustomPreset(p) {
-        _applyPreset(p.rounds, p.difficulty, p.timer, p.lightning, p.hotSeat);
+        // The built-in presets above use hotSeat; a preset that came back from
+        // the server carries hot_seat, because that is the wire name the store
+        // persists. Read both rather than renaming one of them: the JS side
+        // stays camelCase and the payload stays snake_case, and the boundary
+        // is the one place that has to know.
+        var hotSeat = p.hotSeat != null ? p.hotSeat : p.hot_seat;
+        _applyPreset(p.rounds, p.difficulty, p.timer, p.lightning, hotSeat);
         _applyPacks(p.packs || []);
         // markActivePreset repaints the chips too, so no separate call here.
         markActivePreset();
