@@ -3,6 +3,16 @@
 All notable changes to Quizify are documented here. This project follows
 [Semantic Versioning](https://semver.org/).
 
+## [Unreleased]
+
+### 🎲 An unanswered wager now loses the stake
+
+Until now, staking points in the final round and then letting the clock run out cost nothing — no win, no loss. From now on it costs the stake, exactly like a wrong answer.
+
+The rule that changed was there on purpose, so that a phone locking mid-question never cost anyone points. It is going because the Hot Seat auction stakes points to buy the right to answer, and there "bid, then say nothing" would mean taking the round for free. Two settlement rules — forgiving in the finale, strict in the auction — would have been worse than one.
+
+The line on your phone that used to promise the opposite has been rewritten in all three languages.
+
 ## [1.10.0] — 2026-08-23
 
 ### 🇪🇸 Spanish is complete

@@ -4313,9 +4313,9 @@
 
         if (titleEl) titleEl.textContent = t('wager.title');
         if (hintEl) hintEl.textContent = t('wager.hint');
-        // Make the "timeout keeps your points" rule explicit so it's not a
-        // hidden trap/exploit (#301): the wager only resolves if you answer;
-        // not answering keeps your current points (no win, no loss).
+        // Say plainly that silence costs the same as a wrong answer (#653).
+        // This line used to promise the opposite (#301) — a stale reassurance
+        // is worse than none, because the player acts on it.
         if (timeoutNoteEl) timeoutNoteEl.textContent = t('wager.timeoutNote');
         if (bankEl) bankEl.textContent = currentScore;
         if (slider) {
