@@ -257,10 +257,20 @@ a:focus-visible,
     font-weight: 600;
     color: var(--color-text-primary);
 }
+/* Collapsed = the reminder that rides along with the question. #656 made it
+   a certainty on every MC final (before, only a player who had bet during the
+   question saw it), so it has to earn its vertical space on a 390x844 phone:
+   at the old card metrics it pushed the third answer below the fold on the
+   one round where the answer matters most. Same card, tighter. */
 .wager-panel--collapsed {
-    padding: var(--space-sm) var(--space-md);
+    padding: var(--space-xs) var(--space-md);
+    margin-bottom: var(--space-sm);
     background: var(--color-accent-brand-bg);
     box-shadow: none;
+}
+.wager-panel--collapsed .wager-panel-title {
+    margin: 0;
+    font-size: 0.95rem;
 }
 .wager-panel--collapsed .wager-panel-hint,
 .wager-panel--collapsed .wager-slider-row,

@@ -3037,10 +3037,21 @@ class QuizifyWebSocketHandler:
         self._wager_window_task = asyncio.create_task(window())
 
     def _cancel_wager_window(self) -> None:
-        """Cancel the pending betting-window deadline, if any."""
-        if self._wager_window_task and not self._wager_window_task.done():
-            self._wager_window_task.cancel()
+        """Cancel the pending betting-window deadline, if any.
+
+        Never cancels the *calling* task. ``_close_wager_window`` clears the
+        deadline before doing its work, and the deadline itself is one of its
+        two callers — so a blind ``cancel()`` here kills the very coroutine
+        that is closing the window, and the CancelledError lands on the first
+        await inside ``_emit_question``. The question then never goes out and
+        the final round hangs on the betting screen with a countdown reading
+        zero. Found on the live server, not by a unit test; there is one for
+        it now.
+        """
+        task = self._wager_window_task
         self._wager_window_task = None
+        if task is not None and not task.done() and task is not asyncio.current_task():
+            task.cancel()
 
     async def _close_wager_window(self, game_state: QuizifyGameState) -> None:
         """Close the betting window: arm the timers, then send the question.

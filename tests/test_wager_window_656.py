@@ -18,6 +18,7 @@ deadline passes. Only then is the question sent and the round clock armed.
 
 from __future__ import annotations
 
+import asyncio
 import re
 import sys
 from pathlib import Path
@@ -337,6 +338,36 @@ class TestHandler:
         questions = [m for m in conn.sent if m.get("type") == "question_started"]
         assert len(questions) == 2  # one per player, own shuffle
         assert questions[0]["timer_duration"] == 30
+
+    @pytest.mark.asyncio
+    async def test_deadline_closes_the_window_and_sends_the_question(
+        self, tmp_path: Path, monkeypatch: pytest.MonkeyPatch
+    ) -> None:
+        """The deadline is the guarantee that a table which never bets still
+        gets its question.
+
+        It caught a real failure on the live server: ``_close_wager_window``
+        clears the deadline first, and the deadline task is one of its two
+        callers — so cancelling blindly killed the coroutine mid-close and the
+        final round sat on the betting screen forever with the countdown at
+        zero. Every unit test passed, because they all closed the window from
+        the *other* trigger.
+        """
+        from custom_components.quizify.server import websocket as ws_mod  # noqa: PLC0415
+
+        monkeypatch.setattr(ws_mod, "WAGER_WINDOW_DURATION", 0.05)
+        state = _game(tmp_path, rounds=1)
+        question = state.start_next_question()
+        handler, conn = _handler()
+
+        await handler._open_wager_window(state, question)
+        assert state.phase is GamePhase.WAGER_ACTIVE
+        await asyncio.sleep(0.3)
+
+        assert state.phase is GamePhase.QUESTION_ACTIVE
+        assert [m for m in conn.sent if m.get("type") == "question_started"]
+        # Nobody bet — that is allowed, and costs nothing.
+        assert state.get_player("Anna").wager is None
 
     @pytest.mark.asyncio
     async def test_host_skip_closes_the_window(self, tmp_path: Path) -> None:
