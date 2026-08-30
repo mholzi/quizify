@@ -3,7 +3,7 @@
 All notable changes to Quizify are documented here. This project follows
 [Semantic Versioning](https://semver.org/).
 
-## [Unreleased]
+## [1.11.0] — 2026-08-30
 
 ### 🪑 The hot seat goes to the highest bidder
 
