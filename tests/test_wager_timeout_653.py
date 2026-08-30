@@ -47,6 +47,10 @@ def _to_final_round(gs: QuizifyGameState, *, rounds: int = 2) -> None:
         gs.start_next_question()
         gs.evaluate_round()
     gs.start_next_question()
+    # #656: the final round now opens with the betting window. These tests set
+    # ``player.wager`` directly — they exercise the settlement, not the window
+    # — so close it here and let the round run.
+    gs.arm_round_timers()
     assert gs.round == gs.total_rounds
 
 

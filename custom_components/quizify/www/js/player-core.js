@@ -192,6 +192,11 @@
             case 'LOBBY':
                 title = state.playerName ? t('page.titleLobby') : t('page.titleJoin');
                 break;
+            case 'WAGER_ACTIVE':
+                // #656: without this the betting window fell to the default
+                // and the tab said "Join" mid-game.
+                title = t('page.titleWager');
+                break;
             case 'QUESTION_ACTIVE':
             case 'PLAYING':
                 title = t('page.titleQuestion', { current: (msg && msg.round) || 1 });
@@ -322,6 +327,13 @@
 
             case 'team_answer':
                 if (team) team.handleTeamAnswer(msg);
+                break;
+
+            case 'wager_window':
+                // #656: the final round's betting window. Arrives BEFORE the
+                // question — that is the whole fix — so there is no flourish
+                // to play here; the 3·2·1 still runs on question_started.
+                handleWagerWindow(msg);
                 break;
 
             case 'question_started':
@@ -563,6 +575,27 @@
                 }
                 break;
 
+            case 'WAGER_ACTIVE':
+                // #656: reconnect (or first snapshot) landing in the betting
+                // window. The snapshot carries category and the room's
+                // remaining seconds — never the question text, so a phone that
+                // drops mid-window cannot come back knowing what it is
+                // betting on. The bank comes from the leaderboard, which the
+                // snapshot already carries.
+                if (msg.wager) {
+                    handleWagerWindow({
+                        round_num: msg.round,
+                        total_rounds: msg.total_rounds,
+                        category: msg.wager.category,
+                        difficulty: msg.wager.difficulty,
+                        window_duration: msg.wager.window_remaining,
+                        player_score: _myScore(msg)
+                    });
+                } else {
+                    pu.showView('game-view');
+                }
+                break;
+
             case 'QUESTION_ACTIVE':
             case 'PLAYING':
                 if (msg.question) {
@@ -748,6 +781,64 @@
         } catch (e) {
             finish();
         }
+    }
+
+    /**
+     * This player's score out of a game_state snapshot's leaderboard (#656).
+     * The wager slider bets against it, so a reconnect that guessed wrong
+     * would show the player a bank they do not have.
+     */
+    function _myScore(msg) {
+        var board = msg.leaderboard || msg.players || [];
+        for (var i = 0; i < board.length; i++) {
+            if (board[i] && board[i].name === state.playerName) {
+                return board[i].score || 0;
+            }
+        }
+        return 0;
+    }
+
+    /**
+     * The final round's betting window (#656).
+     *
+     * Same view as the question, minus the question: category, bank, slider,
+     * and the window's own countdown. Nothing here starts the answer clock —
+     * that begins with the question_started that follows.
+     */
+    function handleWagerWindow(msg) {
+        state.currentPhase = 'WAGER_ACTIVE';
+        pu.showView('game-view');
+        game.resetSubmissionState();
+        game.stopFrozenOverlay();
+        if (team) team.resetRound();
+
+        var currentRound = document.getElementById('current-round');
+        var totalRounds = document.getElementById('total-rounds');
+        if (currentRound) currentRound.textContent = msg.round_num || 1;
+        if (totalRounds) totalRounds.textContent = msg.total_rounds || 10;
+
+        var banner = document.getElementById('last-round-banner');
+        if (banner) banner.classList.remove('hidden');
+
+        // Admin control bar: End + Skip, no Pause. Pausing a window that has
+        // no timer does nothing (the backend refuses it), and Skip is the one
+        // useful host action here — it closes the window and asks the
+        // question instead of waiting the deadline out.
+        var adminBar = document.getElementById('admin-control-bar');
+        if (adminBar) adminBar.classList.toggle('hidden', !state.isAdmin);
+        var nextRoundAdminBtn = document.getElementById('next-round-admin-btn');
+        var skipBtn = document.getElementById('skip-question-btn');
+        var pauseBtn = document.getElementById('pause-game-btn');
+        var resumeBtn = document.getElementById('resume-game-btn');
+        if (nextRoundAdminBtn) nextRoundAdminBtn.classList.add('hidden');
+        if (skipBtn) skipBtn.classList.toggle('hidden', !state.isAdmin);
+        if (pauseBtn) pauseBtn.classList.add('hidden');
+        if (resumeBtn) resumeBtn.classList.add('hidden');
+
+        var reactionBar = document.getElementById('reaction-bar');
+        if (reactionBar) reactionBar.classList.add('hidden');
+
+        game.renderWagerWindow(msg);
     }
 
     function handleQuestionStarted(msg) {

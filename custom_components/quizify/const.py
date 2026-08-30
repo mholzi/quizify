@@ -13,6 +13,14 @@ MIN_PLAYERS = 1
 # just show the personal stats card.
 MIN_PLAYERS_FOR_AWARDS = 2
 DEFAULT_ROUND_DURATION = 30  # seconds
+# How long the final round's betting window stays open before the question is
+# revealed and the round clock starts (#656). Until v1.10.0 the wager UI was
+# rendered from ``question_started`` — so the answer clock was already draining
+# while the table discussed its bet, and the question was readable while
+# betting, which made a high wager risk-free. The window is its own phase now:
+# category only, no answer timer. It closes early as soon as every connected
+# player has locked a bet, so a quick table never waits out the full 20s.
+WAGER_WINDOW_DURATION = 20  # seconds
 MAX_NAME_LENGTH = 20
 MIN_NAME_LENGTH = 1
 LOBBY_DISCONNECT_GRACE_PERIOD = 5  # seconds before removing disconnected player

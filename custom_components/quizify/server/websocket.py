@@ -26,6 +26,7 @@ from custom_components.quizify.const import (
     ERR_ROUND_EXPIRED,
     ERR_TEAM_CLOSED,
     LOBBY_DISCONNECT_GRACE_PERIOD,
+    WAGER_WINDOW_DURATION,
 )
 from custom_components.quizify.game.highlights import compute_superlatives
 from custom_components.quizify.game.hot_seat import stake_of as hot_seat_stake
@@ -201,6 +202,10 @@ class QuizifyWebSocketHandler:
         # of reaching into the private ``_conn`` attribute. Backed by
         # ``_conn`` so test fixtures that assign ``handler._conn`` still work.
         self._timer_tick_task: asyncio.Task | None = None
+        # Closes the final round's betting window at its deadline (#656).
+        # Cancelled together with the tick task, so every path that stops a
+        # round (reset, end, skip, next question) stops this too.
+        self._wager_window_task: asyncio.Task | None = None
         # Deferred-pause task scheduled by _handle_disconnect when the
         # admin-as-player WS closes mid-question. Cancelled by reconnect
         # or join when admin comes back within ADMIN_REDIRECT_GRACE.
@@ -1575,19 +1580,22 @@ class QuizifyWebSocketHandler:
     async def _handle_submit_wager(
         self, ws: web.WebSocketResponse, data: dict, game_state: QuizifyGameState
     ) -> None:
-        """Accept a player's wager for the final round. Only valid when
-        we're on the last round and still in QUESTION_ACTIVE. The wager
-        is a PERCENT (0-100) of the player's current score — server
-        translates to absolute points at evaluation time so the
-        percentage stays meaningful even after a late-arriving reaction
-        bonus shifts scores."""
+        """Accept a player's wager for the final round. Only valid while the
+        betting window is open (WAGER_ACTIVE). The wager is a PERCENT (0-100)
+        of the player's current score — server translates to absolute points
+        at evaluation time so the percentage stays meaningful even after a
+        late-arriving reaction bonus shifts scores.
+
+        Until #656 this accepted wagers during QUESTION_ACTIVE, i.e. with the
+        question already on screen: a player who knew the answer could stake
+        everything at no risk. The phase check below is the fix — once the
+        question is out, the betting is over.
+        """
         player = game_state.get_player_by_ws(ws)
         if not player:
             await self._conn.send_error(ws, ERR_NOT_IN_GAME, "Not in game")
             return
 
-        if game_state.phase != GamePhase.QUESTION_ACTIVE:
-            return  # silent: wager window closed
         if game_state.round != game_state.total_rounds:
             return  # only final round accepts a wager
 
@@ -1597,12 +1605,20 @@ class QuizifyWebSocketHandler:
         # effect on scoring. Reject it explicitly (and the serializer withholds
         # the wager UI for estimate finals, so a compliant client never sends
         # this). (#353.)
+        #
+        # Checked BEFORE the phase gate on purpose: an estimate final never
+        # opens a betting window (#656), so the phase check below would
+        # otherwise swallow this case silently and #353's explicit rejection
+        # would quietly stop existing.
         question = game_state.get_current_question()
         if question is not None and question.is_estimate:
             await self._conn.send_error(
                 ws, ERR_INVALID_ACTION, "Wager not available on estimate rounds"
             )
             return
+
+        if game_state.phase != GamePhase.WAGER_ACTIVE:
+            return  # silent: betting window not open (or already closed)
 
         # A wager only makes sense *before* the answer is locked in — the wager
         # stakes points on getting that answer right. Once the player has
@@ -1633,6 +1649,14 @@ class QuizifyWebSocketHandler:
             "type": "wager_accepted",
             "wager": wager_int,
         })
+        # Host/TV tally — how many bets are in, never how big they are (#656).
+        await self._conn.broadcast_to_admins_and_dashboards(
+            self._round_messages.build_wager_progress(game_state)
+        )
+        # Everyone in: close early rather than making a decided table sit out
+        # the rest of the deadline.
+        if not game_state.players_missing_wager():
+            await self._close_wager_window(game_state)
 
     async def _handle_use_powerup(
         self, ws: web.WebSocketResponse, data: dict, game_state: QuizifyGameState
@@ -1993,6 +2017,12 @@ class QuizifyWebSocketHandler:
         transitioning to ANSWER_REVEAL — so the admin can then advance past it.
         Outside QUESTION_ACTIVE it behaves like the normal advance.
         """
+        if game_state.phase == GamePhase.WAGER_ACTIVE:
+            # #656: mid-window, skip means "stop waiting for bets" — the
+            # question has not been asked yet, so there is nothing to abandon.
+            # Close the window and ask it; anyone who has not bet has no bet.
+            await self._close_wager_window(game_state)
+            return
         if game_state.phase == GamePhase.QUESTION_ACTIVE:
             # Stop the countdown and evaluate now. evaluate_round()'s
             # state-machine event (_fire_broadcast("round_evaluated")) drives
@@ -2301,7 +2331,7 @@ class QuizifyWebSocketHandler:
         question = game_state.start_next_question()
         if question is None:
             return
-        await self._emit_question(game_state, question)
+        await self._deliver_question(game_state, question)
 
     async def _broadcast_lightning_splash(
         self, game_state: QuizifyGameState
@@ -2925,6 +2955,116 @@ class QuizifyWebSocketHandler:
             # finale broadcast source). No direct broadcast here. (#255.)
             return
 
+        await self._deliver_question(game_state, question)
+
+    async def _deliver_question(
+        self, game_state: QuizifyGameState, question: Any
+    ) -> None:
+        """Send a freshly-started question — or open its betting window (#656).
+
+        On an MC final ``start_next_question`` parks the state machine in
+        WAGER_ACTIVE instead of QUESTION_ACTIVE: bets first, question after.
+        Every path that starts a question goes through here, so none of them
+        can emit a question into a phase that has no timers — which would
+        exit the tick loop on its first iteration and hang the round.
+        """
+        if game_state.phase == GamePhase.WAGER_ACTIVE:
+            await self._open_wager_window(game_state, question)
+            return
+        await self._emit_question(game_state, question)
+
+    async def _open_wager_window(
+        self, game_state: QuizifyGameState, question: Any
+    ) -> None:
+        """Announce the betting window and arm its deadline (#656).
+
+        Sends every phone its own bank, gives the host/TV the lock-in tally,
+        and starts the one task that guarantees the window ends — with or
+        without the players.
+        """
+        players = game_state.get_players()
+        sends = [
+            self._conn.send(
+                player.ws,
+                self._round_messages.build_wager_window(
+                    game_state,
+                    question=question,
+                    player=player,
+                    window_duration=WAGER_WINDOW_DURATION,
+                ),
+            )
+            for player in players
+            if player.connected
+        ]
+        if sends:
+            await asyncio.gather(*sends)
+
+        await self._conn.broadcast_to_admins_and_dashboards(
+            self._round_messages.build_wager_progress(
+                game_state, window_duration=WAGER_WINDOW_DURATION
+            )
+        )
+        # Phase broadcast last: the phones already hold the window payload, so
+        # a client driving off the phase alone (reconnect path) lands on a view
+        # it can render rather than an empty one.
+        await self._conn.broadcast(
+            self._round_messages.build_game_state_with_leaderboard(
+                game_state, players=players
+            )
+        )
+        self._start_wager_window(game_state)
+
+    def _start_wager_window(self, game_state: QuizifyGameState) -> None:
+        """Arm the task that closes the betting window at the deadline (#656).
+
+        The deadline is what keeps the final round from hanging on a player
+        who never bets — an AFK phone, or a room that all walked out. It is
+        the same class of hang as #586, so it gets an unconditional timer
+        rather than a condition that depends on clients behaving.
+        """
+        self._cancel_wager_window()
+
+        async def window() -> None:
+            try:
+                await asyncio.sleep(WAGER_WINDOW_DURATION)
+            except asyncio.CancelledError:
+                return
+            try:
+                await self._close_wager_window(game_state)
+            except Exception:  # noqa: BLE001 — a stuck window strands the game
+                _LOGGER.exception("Wager window failed to close")
+
+        self._wager_window_task = asyncio.create_task(window())
+
+    def _cancel_wager_window(self) -> None:
+        """Cancel the pending betting-window deadline, if any.
+
+        Never cancels the *calling* task. ``_close_wager_window`` clears the
+        deadline before doing its work, and the deadline itself is one of its
+        two callers — so a blind ``cancel()`` here kills the very coroutine
+        that is closing the window, and the CancelledError lands on the first
+        await inside ``_emit_question``. The question then never goes out and
+        the final round hangs on the betting screen with a countdown reading
+        zero. Found on the live server, not by a unit test; there is one for
+        it now.
+        """
+        task = self._wager_window_task
+        self._wager_window_task = None
+        if task is not None and not task.done() and task is not asyncio.current_task():
+            task.cancel()
+
+    async def _close_wager_window(self, game_state: QuizifyGameState) -> None:
+        """Close the betting window: arm the timers, then send the question.
+
+        ``arm_round_timers`` returns False when the window is already shut,
+        which is what makes the two closing triggers safe to race — the last
+        player locking in, and the deadline. Whoever arrives second finds the
+        phase already flipped and returns without re-emitting the question.
+        """
+        self._cancel_wager_window()
+        question = game_state.get_current_question()
+        if question is None or not game_state.arm_round_timers():
+            return
         await self._emit_question(game_state, question)
 
     async def _emit_question(
@@ -3144,10 +3284,18 @@ class QuizifyWebSocketHandler:
         self._timer_tick_task.add_done_callback(self._log_task_exception)
 
     def _cancel_timer_tick(self) -> None:
-        """Cancel the timer tick task."""
+        """Cancel the timer tick task — and the betting window with it.
+
+        The two are the same thing from the caller's side: the round's
+        background clock. Cancelling both here rather than at each of the
+        eight ``_cancel_timer_tick`` call sites (reset, end game, skip,
+        pause, disconnect, next question, …) is what guarantees no path can
+        leave a window armed over a round that has already moved on (#656).
+        """
         if self._timer_tick_task is not None:
             self._timer_tick_task.cancel()
             self._timer_tick_task = None
+        self._cancel_wager_window()
 
     @staticmethod
     def _log_task_exception(task: asyncio.Task) -> None:

@@ -107,8 +107,38 @@ def build_game_status_response(
     return {
         "exists": True,
         "phase": game_state.phase.value,
+        # WAGER_ACTIVE joins like a live round (#656) — the betting window is
+        # part of the final round, and locking newcomers out of it would put a
+        # dead spot in the one place a late guest is most likely to arrive.
         "can_join": game_state.phase.value
-        in ("LOBBY", "QUESTION_ACTIVE", "ANSWER_REVEAL"),
+        in ("LOBBY", "WAGER_ACTIVE", "QUESTION_ACTIVE", "ANSWER_REVEAL"),
+    }
+
+
+def serialize_wager_window(
+    question: Question,
+    round_num: int,
+    total_rounds: int,
+    window_duration: float,
+    player_score: int,
+) -> dict[str, Any]:
+    """Serialize the final round's betting window (#656).
+
+    Deliberately withholds ``question_text`` and ``answers``: the bet is
+    placed on the category alone, the way a Jeopardy final is. Sending the
+    text here would reproduce the bug this window exists to fix — with the
+    question in hand, a player who knows the answer stakes everything at no
+    risk. The text only leaves the server with ``question_started``, after
+    the window has closed.
+    """
+    return {
+        "type": "wager_window",
+        "round_num": round_num,
+        "total_rounds": total_rounds,
+        "category": question.category,
+        "difficulty": question.difficulty,
+        "window_duration": window_duration,
+        "player_score": player_score,
     }
 
 

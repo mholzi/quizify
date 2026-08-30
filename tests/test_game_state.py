@@ -228,6 +228,9 @@ class TestScoring:
 
         for _ in range(3):
             state.start_next_question()
+            # No-op except on the final round, which now opens in the betting
+            # window and needs the clock started before anyone can answer (#656).
+            state.arm_round_timers()
             correct = next(
                 i for i, a in enumerate(state._current_question.answers) if a.correct
             )
@@ -504,6 +507,9 @@ class TestWagerRound:
         # Wager 50% (= 50 points). Correct answer should add 50 → 150.
         alice = state.get_player("Alice")
         alice.wager = 50
+        # #656: the final round opens in the betting window, not on the
+        # question. Arming closes the window — bet locked, clock starts.
+        state.arm_round_timers()
         question = state._current_question
         correct_idx = next(i for i, a in enumerate(question.answers) if a.correct)
         state.submit_answer("Alice", correct_idx)
@@ -518,6 +524,7 @@ class TestWagerRound:
         state.start_next_question()
         alice = state.get_player("Alice")
         alice.wager = 30  # 30 pts at stake
+        state.arm_round_timers()  # #656: close the betting window
         question = state._current_question
         wrong_idx = next(i for i, a in enumerate(question.answers) if not a.correct)
         state.submit_answer("Alice", wrong_idx)
@@ -533,6 +540,7 @@ class TestWagerRound:
         state.start_next_question()
         alice = state.get_player("Alice")
         alice.wager = 100  # 10 pts at stake
+        state.arm_round_timers()  # #656: close the betting window
         question = state._current_question
         wrong_idx = next(i for i, a in enumerate(question.answers) if not a.correct)
         state.submit_answer("Alice", wrong_idx)
@@ -582,6 +590,7 @@ class TestWagerRound:
         assert state.round == state.total_rounds
         alice = state.get_player("Alice")
         alice.wager = 100  # bet everything — but never submit
+        state.arm_round_timers()  # #656: close the betting window
         # Bob submits so the round can be evaluated without Alice.
         question = state._current_question
         correct_idx = next(i for i, a in enumerate(question.answers) if a.correct)
@@ -609,6 +618,7 @@ class TestEndGame:
         state.start_game(language="de", num_rounds=2)
         for _ in range(2):
             state.start_next_question()
+            state.arm_round_timers()  # #656: no-op except on the final round
             state.evaluate_round()
         # Next request for a question after round 2 must end the game.
         result = state.start_next_question()

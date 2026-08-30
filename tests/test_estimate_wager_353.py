@@ -84,12 +84,19 @@ class _Conn:
     def __init__(self) -> None:
         self.sent: list[dict] = []
         self.errors: list[tuple] = []
+        self.to_hosts: list[dict] = []
 
     async def send(self, ws, message):  # noqa: ANN001
         self.sent.append(message)
 
     async def send_error(self, ws, code, msg):  # noqa: ANN001
         self.errors.append((code, msg))
+
+    async def broadcast_to_admins_and_dashboards(  # noqa: ANN001
+        self, message, dashboard_message=None
+    ):
+        # #656: an accepted wager updates the host/TV lock-in tally.
+        self.to_hosts.append(message)
 
 
 def _final_round_state(
@@ -102,6 +109,12 @@ def _final_round_state(
     state.start_game(language="de", num_rounds=1, timer_duration=30)
     state.start_next_question()
     state._current_question = question
+    # #656: put the state in the phase the real flow would reach for THIS
+    # question. start_next_question ran against the pack's own (MC) question
+    # and opened a betting window; an estimate final never opens one, so arm
+    # the round straight away when we swap an estimate question in.
+    if question.is_estimate:
+        state.arm_round_timers()
     for p in state._player_registry.players.values():
         p.reset_round()
     return state
@@ -112,9 +125,15 @@ def _make_handler():
         QuizifyWebSocketHandler,
     )
 
+    from custom_components.quizify.server.round_message_builder import (  # noqa: PLC0415
+        RoundMessageBuilder,
+    )
+
     handler = QuizifyWebSocketHandler.__new__(QuizifyWebSocketHandler)
     conn = _Conn()
     handler._conn = conn
+    # #656: accepting a wager now also builds the host/TV progress payload.
+    handler._round_messages = RoundMessageBuilder()
     return handler, conn
 
 
@@ -176,7 +195,9 @@ class TestWagerHandler:
         """An MC final wager keeps working exactly as before: ACKed with
         ``wager_accepted`` and stored on the player."""
         state = _final_round_state(tmp_path, _mc_question())
-        assert state.phase is GamePhase.QUESTION_ACTIVE
+        # #656: an MC final sits in the betting window — that is where a
+        # wager is now accepted, and the only place it is.
+        assert state.phase is GamePhase.WAGER_ACTIVE
         assert state.round == state.total_rounds
 
         handler, conn = _make_handler()

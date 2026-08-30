@@ -492,13 +492,17 @@
   },
   "wager": {
     "title": "Letzte Runde — Wagerunde",
-    "hint": "Setze einen Teil deiner Punkte. Richtig = gewinnen, falsch = verlieren.",
+    "hint": "Du siehst nur die Kategorie. Setze einen Teil deiner Punkte — richtig = gewinnen, falsch = verlieren.",
     "timeoutNote": "Der Einsatz zählt immer — auch wenn du nicht antwortest. Keine Antwort kostet dich den Einsatz genauso wie eine falsche.",
     "bank": "Punktestand",
     "submit": "Einsatz festlegen",
     "sliderAria": "Einsatz in Prozent",
     "valueFmt": "{pct}% ({pts} Pkt.)",
     "locked": "Eingesetzt: {pct}%",
+    "questionPending": "Die Frage kommt, sobald die Einsätze stehen.",
+    "waitingForOthers": "Einsatz steht. Warte auf die anderen …",
+    "hostWindowTitle": "Einsätze werden gesetzt",
+    "hostProgress": "{locked} von {total} haben gesetzt",
     "bonusFromReaction": "+1 von {from}"
   },
   "estimate": {
@@ -636,6 +640,7 @@
     "titleJoin": "Quizify — Beitreten",
     "titleLobby": "Quizify — Lobby",
     "titleQuestion": "Quizify — Frage {current}",
+    "titleWager": "Quizify — Einsätze",
     "titleReveal": "Quizify — Auflösung",
     "titleFinale": "Quizify — Endergebnis"
   },

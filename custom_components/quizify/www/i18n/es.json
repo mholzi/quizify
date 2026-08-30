@@ -492,13 +492,17 @@
   },
   "wager": {
     "title": "Ronda final — Apuesta",
-    "hint": "Apuesta una parte de tus puntos. Acierto = doble, fallo = pierdes.",
+    "hint": "Solo ves la categoría. Apuesta una parte de tus puntos: acierto = ganas, fallo = pierdes.",
     "timeoutNote": "La apuesta cuenta siempre, también si no respondes. No responder te cuesta la apuesta igual que fallar.",
     "bank": "Puntos actuales",
     "submit": "Confirmar apuesta",
     "sliderAria": "Porcentaje de apuesta",
     "valueFmt": "{pct}% ({pts} pts)",
     "locked": "Apostado: {pct}%",
+    "questionPending": "La pregunta llega en cuanto estén las apuestas.",
+    "waitingForOthers": "Apuesta confirmada. Esperando a los demás …",
+    "hostWindowTitle": "Se están haciendo las apuestas",
+    "hostProgress": "{locked} de {total} han apostado",
     "bonusFromReaction": "+1 de {from}"
   },
   "estimate": {
@@ -636,6 +640,7 @@
     "titleJoin": "Quizify — Unirse a la partida",
     "titleLobby": "Quizify — Sala de espera",
     "titleQuestion": "Quizify — Pregunta {current}",
+    "titleWager": "Quizify — Apuestas",
     "titleReveal": "Quizify — Revelación",
     "titleFinale": "Quizify — Resultados finales"
   },

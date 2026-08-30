@@ -4304,11 +4304,14 @@
      * Render question text and answer buttons
      * @param {Object} data - Question data with text, answers, category
      */
-    // Wager gate (gameplay idea #3). On the final round we block the
-    // answer buttons until the player submits a wager. Without this
-    // gate the player could just tap their answer instantly and never
-    // commit to a bet — which would defeat the Jeopardy-final tension.
-    var _wagerGate = { active: false, submitted: false };
+    // Wager state (gameplay idea #3, reworked by #656). The bet used to be
+    // placed on the question screen, with the answer buttons disabled until it
+    // was in — which meant the answer clock was already draining while the
+    // table argued about the stake, and the question could be read before
+    // betting. Betting is its own phase now (``wager_window``), so nothing
+    // here gates the answer buttons; this only remembers what was locked in,
+    // so the question screen can show it back.
+    var _wagerState = { active: false, submitted: false, pct: 0, round: 0 };
 
     // #434: progressive reveal on the player's banner. The dashboard blurs
     // the picture as the timer drains; the phone has to do the same, or a
@@ -4454,18 +4457,18 @@
         if (_isEstimateRound) {
             if (estimateContainer) estimateContainer.classList.remove('hidden');
             if (answersContainer) answersContainer.classList.add('hidden');
-            _renderWagerPanel(false, 0);
+            _showWagerBadge(false);
             renderEstimateInput(data);
             return;
         }
         if (estimateContainer) estimateContainer.classList.add('hidden');
         if (answersContainer) answersContainer.classList.remove('hidden');
 
-        // Wager round detection — set BEFORE we touch buttons so we can
-        // disable them up-front, then enable once the wager is in.
-        _wagerGate.active = !!data.is_final_round;
-        _wagerGate.submitted = false;
-        _renderWagerPanel(data.is_final_round, data.player_score || 0);
+        // #656: the bet was placed and closed before this message existed, so
+        // the panel is only a reminder here. Deliberately no button gating —
+        // gating on "has wagered" would lock a player who let the window lapse
+        // out of answering at all.
+        _showWagerBadge(!!data.is_final_round);
 
         if (answerButtons) {
             var answers = data.answers || [];
@@ -4492,8 +4495,7 @@
                     btn.disabled = true;
                     btn.classList.remove('is-selected', 'is-correct', 'is-wrong', 'is-eliminated', 'hidden');
                 } else {
-                    // Wager round: keep buttons disabled until wager submitted.
-                    btn.disabled = _wagerGate.active && !_wagerGate.submitted;
+                    btn.disabled = false;
                     btn.classList.remove('is-selected', 'is-correct', 'is-wrong', 'is-eliminated', 'hidden');
                 }
             }
@@ -4602,17 +4604,85 @@
         sendFn('submit_answer', { guess: guess });
     }
 
-    function _renderWagerPanel(isFinal, currentScore) {
+    /**
+     * Render the final round's betting window (#656).
+     *
+     * The screen deliberately has no question on it: category, bank, slider.
+     * Betting on a question you can already read is not betting, and the
+     * countdown here is the *window's*, not the answer clock — that one does
+     * not start until this screen goes away.
+     *
+     * @param {Object} data - wager_window payload (category, player_score,
+     *                        window_duration, round_num)
+     */
+    function renderWagerWindow(data) {
         var panel = document.getElementById('wager-panel');
         if (!panel) return;
 
         var t = (window.QuizifyI18n && window.QuizifyI18n.t) || function (k) { return k; };
+        var round = data.round_num || 0;
 
-        if (!isFinal) {
+        // A reconnect snapshot can arrive right behind the live message.
+        // Re-rendering then would snap the slider back to 25% under the
+        // player's thumb, or re-open a bet they had already locked in.
+        if (_wagerState.active && _wagerState.round === round) return;
+        _wagerState = { active: true, submitted: false, pct: 0, round: round };
+
+        // Clear the question furniture: no text, no image, no answers. The
+        // category is the only clue the bet is placed on.
+        var categoryEl = document.getElementById('question-category');
+        var questionText = document.getElementById('question-text');
+        var media = document.getElementById('question-media');
+        var answersContainer = document.getElementById('answers-container');
+        var estimateContainer = document.getElementById('estimate-container');
+        var tracker = document.getElementById('submission-tracker');
+        var confirmation = document.getElementById('submitted-confirmation');
+        if (categoryEl) categoryEl.textContent = data.category || '';
+        if (questionText) questionText.textContent = t('wager.questionPending');
+        if (media) media.hidden = true;
+        if (answersContainer) answersContainer.classList.add('hidden');
+        if (estimateContainer) estimateContainer.classList.add('hidden');
+        if (tracker) tracker.classList.add('hidden');
+        if (confirmation) confirmation.classList.add('hidden');
+
+        // The window's own countdown. Reuses the round timer element, which is
+        // free: no answer clock is running yet, which is the entire point.
+        var seconds = data.window_duration || 0;
+        if (seconds > 0) startCountdown(Date.now() + seconds * 1000);
+
+        panel.classList.remove('hidden', 'wager-panel--collapsed');
+        _paintWagerPanel(data.player_score || 0);
+    }
+
+    /**
+     * Put the game screen back together after the window closes (#656).
+     * Called from renderQuestion, which then fills in the real question.
+     */
+    function _showWagerBadge(isFinal) {
+        var panel = document.getElementById('wager-panel');
+        var tracker = document.getElementById('submission-tracker');
+        if (tracker) tracker.classList.remove('hidden');
+        _wagerState.active = false;
+        if (!panel) return;
+        // A bet from an earlier game (rematch keeps this module alive) must
+        // not surface as a badge on an ordinary round.
+        if (!isFinal || !_wagerState.submitted) {
+            // No bet placed — nothing to remind anybody of.
             panel.classList.add('hidden');
             return;
         }
+        var t = (window.QuizifyI18n && window.QuizifyI18n.t) || function (k) { return k; };
         panel.classList.remove('hidden');
+        panel.classList.add('wager-panel--collapsed');
+        var titleEl = document.getElementById('wager-panel-title');
+        if (titleEl) titleEl.textContent = t('wager.locked', { pct: _wagerState.pct });
+    }
+
+    function _paintWagerPanel(currentScore) {
+        var panel = document.getElementById('wager-panel');
+        if (!panel) return;
+
+        var t = (window.QuizifyI18n && window.QuizifyI18n.t) || function (k) { return k; };
 
         var titleEl = document.getElementById('wager-panel-title');
         var hintEl = document.getElementById('wager-panel-hint');
@@ -4648,25 +4718,21 @@
             submitBtn.disabled = false;
             submitBtn.textContent = t('wager.submit');
             submitBtn.onclick = function () {
-                if (_wagerGate.submitted) return;
-                _wagerGate.submitted = true;
+                if (_wagerState.submitted) return;
+                var pct = parseInt(slider.value, 10);
+                _wagerState.submitted = true;
+                _wagerState.pct = pct;
                 submitBtn.disabled = true;
                 if (slider) slider.disabled = true;
                 // Send via the player-core send() function.
                 var send = window.QuizifyPlayer && window.QuizifyPlayer.send;
-                if (send) send('submit_wager', { wager: parseInt(slider.value, 10) });
-                // Unlock answer buttons.
-                var answerButtons = document.getElementById('answer-buttons');
-                if (answerButtons) {
-                    answerButtons.querySelectorAll('.answer-btn').forEach(function (b) {
-                        b.disabled = false;
-                    });
-                }
-                // Collapse the panel into a smaller "wager: 25%" badge so
-                // the player remembers what they bet during the question.
+                if (send) send('submit_wager', { wager: pct });
+                // Collapse into a "wager: 25%" badge. The player now waits for
+                // the rest of the room — the question arrives on its own once
+                // the window closes, so there is nothing else to do here.
                 panel.classList.add('wager-panel--collapsed');
-                if (titleEl) titleEl.textContent = t('wager.locked', { pct: parseInt(slider.value, 10) });
-                if (hintEl) hintEl.textContent = '';
+                if (titleEl) titleEl.textContent = t('wager.locked', { pct: pct });
+                if (hintEl) hintEl.textContent = t('wager.waitingForOthers');
                 if (timeoutNoteEl) timeoutNoteEl.textContent = '';
             };
         }
@@ -5339,6 +5405,7 @@
         isFrozen: isFrozen,
         updateTimer: updateTimer,
         renderQuestion: renderQuestion,
+        renderWagerWindow: renderWagerWindow,
         clearRevealBlur: clearRevealBlur,
         handleAnswerClick: handleAnswerClick,
         lockSubmitted: lockSubmitted,
@@ -5559,6 +5626,11 @@
             case 'LOBBY':
                 title = state.playerName ? t('page.titleLobby') : t('page.titleJoin');
                 break;
+            case 'WAGER_ACTIVE':
+                // #656: without this the betting window fell to the default
+                // and the tab said "Join" mid-game.
+                title = t('page.titleWager');
+                break;
             case 'QUESTION_ACTIVE':
             case 'PLAYING':
                 title = t('page.titleQuestion', { current: (msg && msg.round) || 1 });
@@ -5689,6 +5761,13 @@
 
             case 'team_answer':
                 if (team) team.handleTeamAnswer(msg);
+                break;
+
+            case 'wager_window':
+                // #656: the final round's betting window. Arrives BEFORE the
+                // question — that is the whole fix — so there is no flourish
+                // to play here; the 3·2·1 still runs on question_started.
+                handleWagerWindow(msg);
                 break;
 
             case 'question_started':
@@ -5930,6 +6009,27 @@
                 }
                 break;
 
+            case 'WAGER_ACTIVE':
+                // #656: reconnect (or first snapshot) landing in the betting
+                // window. The snapshot carries category and the room's
+                // remaining seconds — never the question text, so a phone that
+                // drops mid-window cannot come back knowing what it is
+                // betting on. The bank comes from the leaderboard, which the
+                // snapshot already carries.
+                if (msg.wager) {
+                    handleWagerWindow({
+                        round_num: msg.round,
+                        total_rounds: msg.total_rounds,
+                        category: msg.wager.category,
+                        difficulty: msg.wager.difficulty,
+                        window_duration: msg.wager.window_remaining,
+                        player_score: _myScore(msg)
+                    });
+                } else {
+                    pu.showView('game-view');
+                }
+                break;
+
             case 'QUESTION_ACTIVE':
             case 'PLAYING':
                 if (msg.question) {
@@ -6115,6 +6215,64 @@
         } catch (e) {
             finish();
         }
+    }
+
+    /**
+     * This player's score out of a game_state snapshot's leaderboard (#656).
+     * The wager slider bets against it, so a reconnect that guessed wrong
+     * would show the player a bank they do not have.
+     */
+    function _myScore(msg) {
+        var board = msg.leaderboard || msg.players || [];
+        for (var i = 0; i < board.length; i++) {
+            if (board[i] && board[i].name === state.playerName) {
+                return board[i].score || 0;
+            }
+        }
+        return 0;
+    }
+
+    /**
+     * The final round's betting window (#656).
+     *
+     * Same view as the question, minus the question: category, bank, slider,
+     * and the window's own countdown. Nothing here starts the answer clock —
+     * that begins with the question_started that follows.
+     */
+    function handleWagerWindow(msg) {
+        state.currentPhase = 'WAGER_ACTIVE';
+        pu.showView('game-view');
+        game.resetSubmissionState();
+        game.stopFrozenOverlay();
+        if (team) team.resetRound();
+
+        var currentRound = document.getElementById('current-round');
+        var totalRounds = document.getElementById('total-rounds');
+        if (currentRound) currentRound.textContent = msg.round_num || 1;
+        if (totalRounds) totalRounds.textContent = msg.total_rounds || 10;
+
+        var banner = document.getElementById('last-round-banner');
+        if (banner) banner.classList.remove('hidden');
+
+        // Admin control bar: End + Skip, no Pause. Pausing a window that has
+        // no timer does nothing (the backend refuses it), and Skip is the one
+        // useful host action here — it closes the window and asks the
+        // question instead of waiting the deadline out.
+        var adminBar = document.getElementById('admin-control-bar');
+        if (adminBar) adminBar.classList.toggle('hidden', !state.isAdmin);
+        var nextRoundAdminBtn = document.getElementById('next-round-admin-btn');
+        var skipBtn = document.getElementById('skip-question-btn');
+        var pauseBtn = document.getElementById('pause-game-btn');
+        var resumeBtn = document.getElementById('resume-game-btn');
+        if (nextRoundAdminBtn) nextRoundAdminBtn.classList.add('hidden');
+        if (skipBtn) skipBtn.classList.toggle('hidden', !state.isAdmin);
+        if (pauseBtn) pauseBtn.classList.add('hidden');
+        if (resumeBtn) resumeBtn.classList.add('hidden');
+
+        var reactionBar = document.getElementById('reaction-bar');
+        if (reactionBar) reactionBar.classList.add('hidden');
+
+        game.renderWagerWindow(msg);
     }
 
     function handleQuestionStarted(msg) {

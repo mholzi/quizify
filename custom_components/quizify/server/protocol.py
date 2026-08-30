@@ -64,6 +64,49 @@ class PlayerListMessage:
 
 
 @dataclass
+class WagerWindowMessage:
+    """The final round's betting window (#656), sent per-player.
+
+    Per-player because ``player_score`` is the bank the slider bets against.
+    Note what is NOT here: ``question_text`` and ``answers``. The bet is
+    placed on the category alone — the question follows in a separate
+    ``question_started`` once the window closes, and only then does a clock
+    start.
+    """
+
+    type: Literal["wager_window"]
+    round_num: int
+    total_rounds: int
+    category: str
+    difficulty: str
+    window_duration: float
+    player_score: int
+
+    def to_dict(self) -> dict[str, Any]:
+        return asdict(self)
+
+
+@dataclass
+class WagerProgressMessage:
+    """Host/TV view of the betting window (#656).
+
+    Carries the tally and who the room is waiting for — never the amounts.
+    ``window_duration`` is present only on the opening message; the refreshes
+    sent as bets arrive omit it so the TV countdown is not restarted.
+    """
+
+    type: Literal["wager_progress"]
+    round_num: int
+    total_rounds: int
+    locked_in: int
+    player_count: int
+    waiting_on: list[str]
+
+    def to_dict(self) -> dict[str, Any]:
+        return asdict(self)
+
+
+@dataclass
 class QuestionStartedMessage:
     """One round's question, sent per-player so each phone gets its own
     shuffled A/B/C order (anti-cheat against couch-neighbour collusion).
@@ -268,6 +311,12 @@ TYPESCRIPT_DECLARATIONS = """
 //   | { type: 'joined' | 'reconnected'; player_id: string; session_token: string;
 //       color: string; is_admin: boolean; powerup: string | null; }
 //   | { type: 'player_joined' | 'player_left'; players: Player[]; }
+//   | { type: 'wager_window'; round_num: number; total_rounds: number;
+//       category: string; difficulty: string; window_duration: number;
+//       player_score: number; }
+//   | { type: 'wager_progress'; round_num: number; total_rounds: number;
+//       locked_in: number; player_count: number; waiting_on: string[];
+//       window_duration?: number; category?: string; difficulty?: string; }
 //   | { type: 'question_started'; question_text: string; answers: string[];
 //       timer_duration: number; round_num: number; total_rounds: number;
 //       category: string; difficulty: string; image_url?: string;

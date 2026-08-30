@@ -249,10 +249,17 @@ class TestWagerAfterAnswerRejected:
     async def test_wager_rejected_when_already_submitted(
         self, tmp_path: Path
     ) -> None:
-        """A wager arriving after the player has locked in their answer is
-        rejected with an error rather than silently mutating the stake."""
+        """A wager arriving after the player has locked in their answer never
+        reaches the stake.
+
+        #255 guarded this with an explicit error, because back then the wager
+        UI lived *inside* the live question. #656 moved betting into its own
+        phase that closes before the question is sent, so the same attempt is
+        now refused one step earlier — by the phase gate, silently. What #255
+        actually protects is unchanged and asserted below: the stake on an
+        already-locked answer cannot be mutated.
+        """
         from custom_components.quizify.server.websocket import (  # noqa: PLC0415
-            ERR_INVALID_ACTION,
             QuizifyWebSocketHandler,
         )
 
@@ -265,6 +272,9 @@ class TestWagerAfterAnswerRejected:
         # Final round (round == total_rounds) so the wager path is reachable.
         gs.start_game(language="de", num_rounds=1)
         gs.start_next_question()
+        # #656: the final round opens in the betting window. Close it so the
+        # question is live and Alice can lock in an answer.
+        assert gs.arm_round_timers() is True
         gs.submit_answer("Alice", 0)
         assert gs.get_player("Alice").submitted is True
         assert gs.phase is GamePhase.QUESTION_ACTIVE
@@ -281,7 +291,7 @@ class TestWagerAfterAnswerRejected:
 
         await handler._handle_submit_wager(ws, {"wager": 50}, gs)
 
-        assert len(sent_errors) == 1
-        assert sent_errors[0][0] == ERR_INVALID_ACTION
-        # The stale wager was not applied.
+        # The stale wager was not applied — the point of #255.
         assert gs.get_player("Alice").wager in (None, 0)
+        # Refused by the closed window, so no error frame is produced.
+        assert sent_errors == []

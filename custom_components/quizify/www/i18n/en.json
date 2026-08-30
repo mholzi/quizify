@@ -492,13 +492,17 @@
   },
   "wager": {
     "title": "Final Round — Wager",
-    "hint": "Bet a chunk of your points. Right = double, wrong = lose.",
+    "hint": "You only see the category. Bet a chunk of your points — right = win, wrong = lose.",
     "timeoutNote": "The wager always counts — including if you never answer. No answer costs you the stake just like a wrong one.",
     "bank": "Current points",
     "submit": "Lock in wager",
     "sliderAria": "Wager percent",
     "valueFmt": "{pct}% ({pts} pts)",
     "locked": "Wagered: {pct}%",
+    "questionPending": "The question follows once the bets are in.",
+    "waitingForOthers": "Bet locked. Waiting for the others …",
+    "hostWindowTitle": "Placing bets",
+    "hostProgress": "{locked} of {total} have bet",
     "bonusFromReaction": "+1 from {from}"
   },
   "estimate": {
@@ -636,6 +640,7 @@
     "titleJoin": "Quizify — Join Game",
     "titleLobby": "Quizify — Lobby",
     "titleQuestion": "Quizify — Question {current}",
+    "titleWager": "Quizify — Wagers",
     "titleReveal": "Quizify — Reveal",
     "titleFinale": "Quizify — Final Results"
   },
