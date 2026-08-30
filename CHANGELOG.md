@@ -23,6 +23,14 @@ That forgiveness was deliberate, so a phone locking mid-question never cost anyo
 
 The line on your phone that used to promise the opposite has been rewritten in all three languages.
 
+### 🎰 Bet on the category, not on the question in front of you
+
+The final round used to show the question and start its thirty-second clock in the same breath as it asked for your wager. Every second spent deciding was a second taken from answering — and with the rule above, running out of time now forfeits the stake as well.
+
+Betting is its own step now. You get the category and your current points; no question text, no answers, no timer. It closes as soon as everyone has locked in, or after twenty seconds, and only then does the question appear with its full time. The television shows how many bets are in, never how large they are.
+
+It also closes something nobody reported: the question used to be readable while you were betting, so a player who knew the answer could stake everything at no risk. The wager is placed on the category alone now, the way a Jeopardy final is.
+
 ## [1.10.0] — 2026-08-23
 
 ### 🇪🇸 Spanish is complete
