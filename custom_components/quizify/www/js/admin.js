@@ -1463,6 +1463,9 @@
             case 'player_left':
                 if (msg.players) renderLobbyPlayers(msg.players);
                 break;
+            case 'wager_progress':
+                handleWagerProgress(msg);
+                break;
             case 'question_started':
                 handleQuestionStarted(msg);
                 break;
@@ -1728,6 +1731,41 @@
         var d = document.createElement('div');
         d.textContent = s == null ? '' : String(s);
         return d.innerHTML;
+    }
+
+    /**
+     * The final round's betting window (#656).
+     *
+     * The host screen shows the same thing the phones do — category, and how
+     * many bets are in. Never the amounts: a tally the TV gave away would not
+     * be a bet. The opening message carries ``window_duration`` and starts the
+     * countdown; the refreshes that arrive with each bet leave it out, so the
+     * clock keeps running instead of restarting on every tap.
+     */
+    function handleWagerProgress(msg) {
+        if (_redirecting) return;
+        currentPhase = 'WAGER_ACTIVE';
+        showView('game');
+
+        els.adminRound.textContent = _t('admin.questionCounter', {
+            current: msg.round_num,
+            total: msg.total_rounds,
+        });
+        els.adminQuestion.textContent =
+            _t('wager.hostWindowTitle') + ' — ' +
+            _t('wager.hostProgress', {
+                locked: msg.locked_in,
+                total: msg.player_count,
+            });
+        if (els.adminCorrect) {
+            els.adminCorrect.textContent = '';
+            els.adminCorrect.style.display = 'none';
+        }
+        if (typeof msg.window_duration === 'number') {
+            adminTimer.start(msg.window_duration);
+        }
+        if (els.nextQuestionBtn) els.nextQuestionBtn.classList.add('hidden');
+        if (els.endGameBtn) els.endGameBtn.classList.add('hidden');
     }
 
     function handleQuestionStarted(msg) {

@@ -26,6 +26,7 @@ from custom_components.quizify.server.serializers import (
     serialize_question_for_admin,
     serialize_question_for_player,
     serialize_round_summary,
+    serialize_wager_window,
 )
 
 if TYPE_CHECKING:
@@ -42,6 +43,58 @@ class RoundMessageBuilder:
     dicts. No connection access, no mutation — the handler keeps ownership of
     both. Behaviour mirrors the previous inline assembly exactly.
     """
+
+    def build_wager_window(
+        self,
+        game_state: QuizifyGameState,
+        *,
+        question: Question,
+        player: PlayerSession,
+        window_duration: float,
+    ) -> dict[str, Any]:
+        """Build one player's betting-window payload (#656).
+
+        Per-player because the bank shown on the slider is that player's own
+        score. Carries no question text — see ``serialize_wager_window``.
+        """
+        return serialize_wager_window(
+            question=question,
+            round_num=game_state.round,
+            total_rounds=game_state.total_rounds,
+            window_duration=window_duration,
+            player_score=player.score,
+        )
+
+    def build_wager_progress(
+        self,
+        game_state: QuizifyGameState,
+        *,
+        window_duration: float | None = None,
+    ) -> dict[str, Any]:
+        """Build the host/TV view of the betting window (#656).
+
+        Counts locked-in bets and names who the room is still waiting for —
+        never the amounts. A bet the TV gave away would not be a bet. The
+        optional ``window_duration`` marks the opening message; refreshes sent
+        on each incoming wager leave it out so the TV countdown, already
+        running, is not restarted.
+        """
+        players = [p for p in game_state.get_players() if p.connected]
+        waiting = game_state.players_missing_wager()
+        payload: dict[str, Any] = {
+            "type": "wager_progress",
+            "round_num": game_state.round,
+            "total_rounds": game_state.total_rounds,
+            "locked_in": len(players) - len(waiting),
+            "player_count": len(players),
+            "waiting_on": waiting,
+        }
+        if window_duration is not None:
+            question = game_state.get_current_question()
+            payload["window_duration"] = window_duration
+            payload["category"] = question.category if question else ""
+            payload["difficulty"] = question.difficulty if question else ""
+        return payload
 
     def build_player_question(
         self,

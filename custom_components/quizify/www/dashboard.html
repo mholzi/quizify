@@ -1764,6 +1764,9 @@
                 case 'game_state':
                     handleGameState(msg);
                     break;
+                case 'wager_progress':
+                    handleWagerProgress(msg);
+                    break;
                 case 'question_started':
                     // Clear last round's count before the new one arrives —
                     // otherwise the TV shows "5/5" over a fresh question.
@@ -1854,6 +1857,23 @@
                     // connects late still shows who is playing with whom.
                     if (msg.teams) lobbyTeams = msg.teams;
                     renderLobby(msg.players);
+                    break;
+                case 'WAGER_ACTIVE':
+                    // #656: a TV that (re)connects mid-window. The snapshot
+                    // has the category and the room's remaining seconds; the
+                    // tally arrives with the next bet.
+                    if (msg.wager) {
+                        handleWagerProgress({
+                            round_num: msg.round,
+                            total_rounds: msg.total_rounds,
+                            category: msg.wager.category,
+                            locked_in: msg.wager.locked_in,
+                            player_count: msg.wager.player_count,
+                            window_duration: msg.wager.window_remaining,
+                        });
+                    } else {
+                        showView('question');
+                    }
                     break;
                 case 'QUESTION_ACTIVE':
                     if (msg.question) {
@@ -2041,6 +2061,43 @@
                         ' <span class="lr-correct">→ ' + escapeHtml(q.correct_answer) + '</span>' +
                         '</div>';
                 }).join('');
+            }
+        }
+
+        /**
+         * The final round's betting window (#656).
+         *
+         * The TV shows the category and the lock-in tally, and nothing else:
+         * no question (it has not been sent) and no amounts (a bet the room
+         * can read off the screen is not a bet). Its bar counts the window
+         * down, not the answer clock — that one has not started yet.
+         */
+        function handleWagerProgress(msg) {
+            showView('question');
+            els.funFact.classList.remove('visible');
+
+            els.roundIndicator.textContent = window.QuizifyI18n
+                ? window.QuizifyI18n.t('dashboard.questionCounter', { current: msg.round_num, total: msg.total_rounds })
+                : 'Question ' + msg.round_num + ' / ' + msg.total_rounds;
+            els.questionCategory.textContent = msg.category || '';
+            var title = window.QuizifyI18n
+                ? window.QuizifyI18n.t('wager.hostWindowTitle') : 'Placing bets';
+            var progress = window.QuizifyI18n
+                ? window.QuizifyI18n.t('wager.hostProgress', { locked: msg.locked_in, total: msg.player_count })
+                : msg.locked_in + ' / ' + msg.player_count;
+            els.questionText.textContent = title + ' — ' + progress;
+            renderQuestionImage('', '');
+            if (els.answersGrid) els.answersGrid.innerHTML = '';
+            if (els.dashboardEstimate) els.dashboardEstimate.classList.add('hidden');
+
+            // Only the opening message carries the duration. Restarting the
+            // bar on every incoming bet would make the window look longer the
+            // more people play.
+            if (typeof msg.window_duration === 'number') {
+                timerDuration = msg.window_duration;
+                timerRemaining = timerDuration;
+                els.timerFill.style.width = '100%';
+                els.timerFill.className = 'dashboard-timer-fill';
             }
         }
 

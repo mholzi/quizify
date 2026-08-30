@@ -26,6 +26,7 @@ from ..const import (
     ERR_NOT_IN_GAME,
     ERR_ROUND_EXPIRED,
     ERR_TEAM_LOCKED,
+    WAGER_WINDOW_DURATION,
 )
 from .calibration import GroupCalibrator
 from .highlights import compute_superlatives
@@ -758,8 +759,18 @@ class QuizifyGameState:
         self._team_registry.reset_round()
         self._powerup_manager.reset_round()
 
-        # Stamp round timing + create+start per-player timers (PhaseController).
-        self._phase_controller.begin_round(round_duration)
+        # #656: the final round opens with a betting window instead of the
+        # question. Hold the round back — no start stamp, no timers — so the
+        # answer clock cannot drain while the table is still deciding what to
+        # stake. ``arm_round_timers`` starts the round once the window closes.
+        needs_wager_window = self._needs_wager_window(question)
+        if needs_wager_window:
+            self._phase_controller.begin_wager_window(
+                round_duration, WAGER_WINDOW_DURATION
+            )
+        else:
+            # Stamp round timing + create+start per-player timers.
+            self._phase_controller.begin_round(round_duration)
 
         # Randomly assign a power-up to one player who has not yet received one
         # this game (#340 — at most one power-up per player per game). The
@@ -794,7 +805,10 @@ class QuizifyGameState:
                 "(all connected players already granted)"
             )
 
-        self._phase_controller.enter_question_active()
+        if not needs_wager_window:
+            # begin_wager_window already put us in WAGER_ACTIVE; flipping to
+            # QUESTION_ACTIVE here would advertise a round that has no timers.
+            self._phase_controller.enter_question_active()
         self._round_summary = None
         # Invalidate the memoized round-summary message (#414): a new round is
         # live, so the previous round's cached dict must not be served.
@@ -2486,6 +2500,54 @@ class QuizifyGameState:
         """Get the power-up held by a player."""
         return self._powerup_manager.get_powerup(player_name)
 
+    def _needs_wager_window(self, question: Question) -> bool:
+        """Whether this round opens with a betting window (#656).
+
+        Mirrors exactly the rule the player payload advertises the wager UI
+        by: the last round, and never an estimate final. Estimate rounds score
+        through ``_evaluate_estimate_round``, which never reads
+        ``player.wager`` (#353) — opening a window there would collect bets
+        nothing settles.
+        """
+        return self.round == self.total_rounds and not question.is_estimate
+
+    def arm_round_timers(self) -> bool:
+        """Close the betting window and start the round proper (#656).
+
+        Stamps the round start, builds the per-player timers and flips to
+        QUESTION_ACTIVE. Returns False when no window is open, which is what
+        makes the window's two triggers safe to race: the last player locking
+        in and the deadline elapsing can arrive in either order, and whichever
+        loses the race does nothing instead of restarting the round with a
+        fresh set of timers.
+        """
+        if self.phase != GamePhase.WAGER_ACTIVE:
+            return False
+        self._phase_controller.begin_round(self._phase_controller.round_duration)
+        self._phase_controller.enter_question_active()
+        self._notify_state_callbacks()
+        return True
+
+    def wager_window_remaining(self) -> float:
+        """Seconds left in the betting window (0.0 outside WAGER_ACTIVE)."""
+        if self.phase != GamePhase.WAGER_ACTIVE:
+            return 0.0
+        return self._phase_controller.wager_window_remaining()
+
+    def players_missing_wager(self) -> list[str]:
+        """Connected players who have not locked a bet yet (#656).
+
+        The window closes early once this is empty, so a table that decides
+        fast is not held for the full 20 seconds. Disconnected players are
+        excluded — waiting on a phone that has left the room would strand the
+        window until the deadline for everybody else.
+        """
+        return [
+            p.name
+            for p in self._player_registry.players.values()
+            if p.connected and p.wager is None
+        ]
+
     def get_current_question(self) -> Question | None:
         """Return the current question, or None."""
         return self._current_question
@@ -2622,6 +2684,26 @@ class QuizifyGameState:
             # team indicator and believes they are playing alone.
             "teams": self._team_registry.to_list(),
         }
+
+        if self.phase == GamePhase.WAGER_ACTIVE and self._current_question:
+            q = self._current_question
+            # #656: the betting window carries category and difficulty and
+            # NOTHING else. A phone that reconnects here must not be handed
+            # the question text — that text has not been sent to anyone yet,
+            # and a player who could read it while betting would be betting
+            # on a certainty. The remaining seconds are the room's, not a
+            # fresh window, so a reconnect can't buy extra thinking time.
+            connected = [p for p in self.get_players() if p.connected]
+            snapshot["wager"] = {
+                "category": q.category,
+                "difficulty": q.difficulty,
+                "window_remaining": round(self.wager_window_remaining(), 1),
+                "window_duration": self._phase_controller.wager_window_duration,
+                # The tally, so a TV reconnecting mid-window shows the bets
+                # already in rather than restarting the count at zero.
+                "locked_in": len(connected) - len(self.players_missing_wager()),
+                "player_count": len(connected),
+            }
 
         if self.phase == GamePhase.QUESTION_ACTIVE and self._current_question:
             q = self._current_question

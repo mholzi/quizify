@@ -30,7 +30,7 @@ from collections.abc import Callable
 from dataclasses import dataclass, field
 from enum import Enum
 
-from ..const import DEFAULT_ROUND_DURATION
+from ..const import DEFAULT_ROUND_DURATION, WAGER_WINDOW_DURATION
 from .timer import QuestionTimer
 
 _LOGGER = logging.getLogger(__name__)
@@ -65,6 +65,17 @@ class GamePhase(str, Enum):  # noqa: UP042 — StrEnum changes str()/serializati
     """Game phase states."""
 
     LOBBY = "LOBBY"
+    # WAGER_ACTIVE (#656) — the final round's betting window. The question is
+    # loaded, but its text has not been sent and no timer is running: players
+    # see the category and place their bet on that alone, Jeopardy-style.
+    # Closing the window arms the timers and flips to QUESTION_ACTIVE.
+    #
+    # It is a real phase rather than a flag on QUESTION_ACTIVE because
+    # everything that reads QUESTION_ACTIVE would be wrong here: the tick
+    # loop's "connected players, no timers" fallback (#586) would end the
+    # round instantly, and the reconnect snapshot would hand out the very
+    # question text the window exists to withhold.
+    WAGER_ACTIVE = "WAGER_ACTIVE"
     QUESTION_ACTIVE = "QUESTION_ACTIVE"
     ANSWER_REVEAL = "ANSWER_REVEAL"
     FINALE = "FINALE"
@@ -113,6 +124,12 @@ class PhaseController:
         self.timers: dict[str, QuestionTimer] = {}  # player_id → timer
         self.round_start_time: float | None = None
         self.round_duration: float = DEFAULT_ROUND_DURATION
+
+        # Final-round betting window (#656). Its own clock, deliberately kept
+        # apart from the round timing above: the round has not started while
+        # this one runs. None outside WAGER_ACTIVE.
+        self.wager_window_start: float | None = None
+        self.wager_window_duration: float = WAGER_WINDOW_DURATION
 
         # Pause bookkeeping.
         self.paused_from: GamePhase | None = None
@@ -191,8 +208,43 @@ class PhaseController:
             timer.start()
             self.timers[name] = timer
 
+    def begin_wager_window(
+        self, round_duration: float, window_duration: float
+    ) -> None:
+        """Open the final round's betting window (#656).
+
+        Records the duration the round *will* run for without stamping
+        ``round_start_time`` or building a single timer — nothing is counting
+        down towards the answer yet. That is the whole point: the window has
+        its own clock (``wager_window_remaining``), and the round proper only
+        starts when the caller follows up with ``begin_round``.
+
+        Leaving ``round_start_time`` at None also keeps
+        ``round_wall_clock_expired`` False for the duration of the window, so
+        no fallback can evaluate a round that has not started.
+        """
+        self.round_duration = round_duration
+        self.round_start_time = None
+        self.timers.clear()
+        self.wager_window_duration = window_duration
+        self.wager_window_start = time.monotonic()
+        self.phase = GamePhase.WAGER_ACTIVE
+
+    def wager_window_remaining(self) -> float:
+        """Seconds left in the betting window, clamped at zero.
+
+        Feeds the reconnect snapshot so a phone that drops mid-window comes
+        back to the countdown the rest of the room is watching, rather than a
+        fresh 20 seconds.
+        """
+        if self.wager_window_start is None:
+            return 0.0
+        elapsed = time.monotonic() - self.wager_window_start
+        return max(0.0, self.wager_window_duration - elapsed)
+
     def enter_question_active(self) -> None:
         """Flip the phase to QUESTION_ACTIVE."""
+        self.wager_window_start = None
         self.phase = GamePhase.QUESTION_ACTIVE
 
     def get_timer(self, name: str) -> QuestionTimer | None:
