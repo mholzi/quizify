@@ -590,6 +590,7 @@ class TestWagerRound:
         assert state.round == state.total_rounds
         alice = state.get_player("Alice")
         alice.wager = 100  # bet everything — but never submit
+        state.arm_round_timers()  # #656: close the betting window
         # Bob submits so the round can be evaluated without Alice.
         question = state._current_question
         correct_idx = next(i for i, a in enumerate(question.answers) if a.correct)
