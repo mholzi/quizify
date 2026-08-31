@@ -159,3 +159,27 @@ def test_the_names_are_escaped() -> None:
 
     assert "escapeHtml(msg.left)" in body
     assert "escapeHtml(msg.right)" in body
+
+
+def test_the_lobby_is_compacted_on_short_screens() -> None:
+    """A television does not scroll, so a lobby taller than the screen simply
+    loses its bottom.
+
+    Measured with three players in the lobby: the column was already 732px on
+    a 1280x720 screen *before* this feature — the roster chips were clipped by
+    12px and nobody had noticed — and the duel line lands at 829px, entirely
+    off the picture. 1366x768 fails the same way. Only 1080p had the room.
+
+    The rule below compacts the lobby on short viewports instead of shrinking
+    it everywhere, because the QR still has to scan from across the room on a
+    screen that does have the height. Without it the feature is invisible on
+    every 720p television, and invisible in the worst way: nothing looks
+    broken.
+    """
+    html = (_WWW / "dashboard.html").read_text("utf-8")
+
+    assert "@media (max-height: 850px)" in html
+    rule = html.split("@media (max-height: 850px)", 1)[1].split("\n        }\n", 1)[0]
+    # The QR is the one block big enough to buy back the missing height.
+    assert "#lobby-qr" in rule
+    assert "180px" in rule

@@ -329,6 +329,44 @@
             max-width: 800px;
         }
 
+        /* A television does not scroll, so anything below the fold is simply
+           not in the picture. Measured on a 1280x720 screen with three players
+           in the lobby: the column was ALREADY 732px tall before the duel line
+           existed — the roster chips were clipped by 12px — and the duel adds
+           another ~97px, putting it entirely off-screen. 1366x768 fails the
+           same way; only 1080p had the room.
+
+           So this compacts the lobby on short screens rather than shrinking it
+           everywhere: at 1080p the QR stays the size it was, because it has to
+           scan from a sofa across the room. */
+        @media (max-height: 850px) {
+            #lobby-qr.dashboard-qr-section {
+                gap: 8px;
+            }
+
+            /* The vendor library renders a fixed 280px canvas; scaling it here
+               keeps the code sharp (it is drawn at 280 and displayed smaller)
+               while giving the column back 100px. */
+            #lobby-qr .dashboard-qr-section canvas,
+            #lobby-qr canvas,
+            #lobby-qr img {
+                width: 180px;
+                height: 180px;
+            }
+
+            #lobby-view .dashboard-waiting-text {
+                margin: 0;
+            }
+
+            #lobby-view .dashboard-join-fallback {
+                margin-top: 2px;
+            }
+
+            .dashboard-h2h {
+                margin-top: 8px;
+            }
+        }
+
         .dashboard-player-chip {
             display: flex;
             align-items: center;
