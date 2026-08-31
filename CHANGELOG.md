@@ -3,6 +3,18 @@
 All notable changes to Quizify are documented here. This project follows
 [Semantic Versioning](https://semver.org/).
 
+## [Unreleased]
+
+### 🥊 The duel between two regulars
+
+The lobby now names the two people in the room who have played together most often and shows their record: Anna 3 – 2 Ben, last 90 days. The end screen shows it again afterwards, with the game everyone just watched counted in.
+
+A meeting goes to whoever scored higher of those two. A draw counts as a meeting and goes to nobody, and nothing appears until a pair has played twice. Only the shared screens show it; your phone still shows your own standing and nothing else.
+
+### 📺 The lobby fits on the television again
+
+At 1280×720 and 1366×768 the lobby was taller than the picture, and a television does not scroll, so the player names at the bottom were cut off. The new line did not cause this. Short screens now get a smaller join code and tighter spacing; at 1080p nothing changes.
+
 ## [1.11.0] — 2026-08-30
 
 ### 🪑 The hot seat goes to the highest bidder
