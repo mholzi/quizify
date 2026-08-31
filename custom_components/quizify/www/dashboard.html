@@ -171,6 +171,17 @@
             margin-bottom: 3px;
         }
 
+        /* On the end screen the line sits under the leaderboard card in the
+           right column, so it needs its own separation — in the lobby the
+           column gap already provides it. Kept small: the podium is the
+           headline there, this is a footnote to it. */
+        .dashboard-h2h--end {
+            margin-top: 10px;
+            padding-top: 10px;
+            border-top: 1px solid var(--dash-border-neon);
+            font-size: clamp(0.9rem, 1.3vw, 1.1rem);
+        }
+
         .dashboard-h2h .h2h-scope {
             font-size: 0.68em;
             color: var(--dash-text-muted);
@@ -1469,6 +1480,12 @@
                         <div class="card-header" data-i18n="dashboard.leaderboard">Leaderboard</div>
                         <div id="finale-leaderboard" class="dashboard-leaderboard"></div>
                     </div>
+                    <!-- #613: the duel again, now including the game that just
+                         ended. It arrives on analytics_recorded rather than
+                         with the finale, because only then is that game part
+                         of the record — sent with the finale it would state
+                         the standing from before the game everyone watched. -->
+                    <div id="end-h2h" class="dashboard-h2h dashboard-h2h--end hidden"></div>
                 </div>
             </div>
         </div>
@@ -1569,6 +1586,7 @@
             answerProgress: document.getElementById('answer-progress'),
             eveningTally: document.getElementById('evening-tally'),
             lobbyH2h: document.getElementById('lobby-h2h'),
+            endH2h: document.getElementById('end-h2h'),
             questionCategory: document.getElementById('question-category'),
             questionImage: document.getElementById('question-image'),
             questionMedia: document.getElementById('question-media'),
@@ -2242,9 +2260,13 @@
         }
 
         function handleHeadToHead(msg) {
-            if (!els.lobbyH2h) return;
+            // #613: the same line in two places. `at` picks the target — the
+            // lobby before the game, the end screen after it, where the score
+            // already includes the game just played.
+            var target = (msg && msg.at === 'finale') ? els.endH2h : els.lobbyH2h;
+            if (!target) return;
             if (!msg || !msg.left || !msg.right) {
-                els.lobbyH2h.classList.add('hidden');
+                target.classList.add('hidden');
                 return;
             }
             var t = (window.QuizifyI18n && window.QuizifyI18n.t)
@@ -2252,12 +2274,12 @@
             // "last 90 days" is stated, not implied: the detailed history
             // prunes at RETENTION_DAYS, so calling this an all-time record
             // would be a claim the data cannot support.
-            els.lobbyH2h.innerHTML =
+            target.innerHTML =
                 '<span class="h2h-label">' + escapeHtml(t('dashboard.h2hLabel')) + '</span>'
                 + escapeHtml(msg.left) + ' ' + msg.left_wins
                 + ' – ' + msg.right_wins + ' ' + escapeHtml(msg.right)
                 + '<span class="h2h-scope">' + escapeHtml(t('dashboard.h2hRecent')) + '</span>';
-            els.lobbyH2h.classList.remove('hidden');
+            target.classList.remove('hidden');
         }
 
         function handleEveningTally(msg) {
@@ -2458,6 +2480,14 @@
 
         function handleFinale(msg) {
             showView('finale');
+
+            // #613: clear last game's duel before this game's arrives on
+            // analytics_recorded, a beat later. Leaving it up would show the
+            // PREVIOUS game's standing under this game's podium.
+            if (els.endH2h) {
+                els.endH2h.classList.add('hidden');
+                els.endH2h.innerHTML = '';
+            }
 
             var podium = msg.podium || [];
             renderPodium(podium);

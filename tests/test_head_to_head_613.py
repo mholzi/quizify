@@ -126,18 +126,62 @@ def test_a_lobby_of_one_has_no_duel() -> None:
     assert _Analytics([_game({"Anna": 1, "Ben": 2})]).duel(["Anna"]) is None
 
 
+def _fn_body(source: str, name: str) -> str:
+    """The source of one method, docstring stripped.
+
+    Cuts at the next `async def` / `def` at method indentation. The earlier
+    version of this helper split on `"\n    def "` alone, which stopped
+    working the moment the next sibling was `async` — the slice then ran on
+    through several methods and the assertions below started passing on code
+    they were not looking at.
+    """
+    body = source.split(f"async def {name}", 1)[1]
+    for marker in ("\n    async def ", "\n    def "):
+        body = body.split(marker, 1)[0]
+    return re.sub(r'""".*?"""', "", body, flags=re.S)
+
+
 def test_it_is_sent_in_the_lobby_only_and_never_to_phones() -> None:
     """The reversal of #371 is bounded: the room sees it, the phones do not."""
     source = (_CC / "server" / "websocket.py").read_text("utf-8")
-    body = source.split("async def _send_head_to_head", 1)[1].split(
-        "\n    def ", 1
-    )[0]
-    body = re.sub(r'""".*?"""', "", body, flags=re.S)
 
-    assert "phase != GamePhase.LOBBY" in body
-    assert "broadcast_to_admins_and_dashboards" in body
+    assert "phase != GamePhase.LOBBY" in _fn_body(source, "_send_head_to_head")
+
+    # Both placements go out through the one shared sender, so they cannot
+    # drift apart in who they reach.
+    shared = _fn_body(source, "_broadcast_head_to_head")
+    assert "broadcast_to_admins_and_dashboards" in shared
     # A plain broadcast would reach every phone — the thing #371 avoided.
-    assert "self._conn.broadcast(" not in body
+    assert "self._conn.broadcast(" not in shared
+
+
+def test_the_end_screen_duel_waits_for_the_game_to_be_recorded() -> None:
+    """Sent with the finale it would state the standing from BEFORE the game
+    the room just watched — the one number they can see is wrong.
+
+    So it rides ``analytics_recorded`` like the season standing (#624) and the
+    evening tally (#612), which become true at the same instant.
+    """
+    source = (_CC / "server" / "websocket.py").read_text("utf-8")
+
+    followups = _fn_body(source, "_dispatch_analytics_followups")
+    assert "_dispatch_end_head_to_head" in followups
+
+    end = _fn_body(source, "_dispatch_end_head_to_head")
+    assert "GamePhase.FINALE" in end
+    assert 'at="finale"' in end
+
+    html = (_WWW / "dashboard.html").read_text("utf-8")
+    assert 'id="end-h2h"' in html
+    # One renderer, two targets — picked by `at`, so the two lines cannot
+    # disagree about what the score is.
+    render = html.split("function handleHeadToHead(", 1)[1].split("\n        }", 1)[0]
+    assert "msg.at === 'finale'" in render
+    assert "els.endH2h" in render
+    # The previous game's duel must not sit under this game's podium while the
+    # new one is still being written.
+    finale = html.split("function handleFinale(", 1)[1].split("\n        }", 1)[0]
+    assert "els.endH2h" in finale
 
 
 def test_the_tv_states_the_ninety_day_scope() -> None:

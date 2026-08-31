@@ -1580,6 +1580,36 @@ class QuizifyWebSocketHandler:
         """
         if game_state.phase != GamePhase.LOBBY:
             return
+        await self._broadcast_head_to_head(game_state, at="lobby")
+
+    async def _dispatch_end_head_to_head(self) -> None:
+        """The duel again on the end screen, once the game is recorded (#613).
+
+        Rides ``analytics_recorded`` rather than the finale, and that is the
+        whole point: the game everyone just watched is part of the record only
+        after it is written. Sent with the finale, this line would state the
+        standing from BEFORE that game — the one number the room can see is
+        wrong, because they just played it.
+
+        It is also the better place for the line. In the lobby the duel shows
+        a score from past evenings that surprises nobody; here it is the
+        result of the evening in progress.
+        """
+        game_state = self._get_game_state()
+        if game_state is None or game_state.phase != GamePhase.FINALE:
+            return
+        await self._broadcast_head_to_head(game_state, at="finale")
+
+    async def _broadcast_head_to_head(
+        self, game_state: QuizifyGameState, *, at: str
+    ) -> None:
+        """Compute the duel and put it on the TV. Shared by both placements.
+
+        ``at`` tells the dashboard which line to fill; the payload is
+        otherwise identical, so the two placements cannot drift apart in what
+        they claim. Never a plain broadcast — that would reach every phone and
+        undo #371 everywhere.
+        """
         analytics = game_state.stats_service
         if analytics is None:
             return
@@ -1591,7 +1621,7 @@ class QuizifyWebSocketHandler:
             # "1-0" that reads like a record and is a coincidence.
             return
         await self._conn.broadcast_to_admins_and_dashboards(
-            {"type": "head_to_head", **duel}
+            {"type": "head_to_head", "at": at, **duel}
         )
 
     def _cancel_roster_flush(self) -> None:
@@ -3582,15 +3612,16 @@ class QuizifyWebSocketHandler:
         return admin is None or not admin.connected
 
     async def _dispatch_analytics_followups(self) -> None:
-        """Everything that can only be true once the game is recorded (#624, #612).
+        """Everything true only once the game is recorded (#624, #612, #613).
 
-        One handler because one event: the season standing per player and the
-        evening tally for the room both become correct at the same instant, and
-        registering two handlers for the same event would make their order an
-        accident of dict insertion.
+        One handler because one event: the season standing per player, the
+        evening tally for the room and the end-screen duel all become correct
+        at the same instant, and registering three handlers for the same event
+        would make their order an accident of dict insertion.
         """
         await self._dispatch_all_time_standings()
         await self._dispatch_evening_tally()
+        await self._dispatch_end_head_to_head()
 
     async def _dispatch_evening_tally(self) -> None:
         """Broadcast tonight's running score to the TV (#612).
