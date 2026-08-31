@@ -154,6 +154,40 @@
             margin-top: 4px;
         }
 
+        .dashboard-h2h {
+            margin-top: 14px;
+            text-align: center;
+            font-size: clamp(1rem, 1.7vw, 1.35rem);
+            color: var(--dash-text-white);
+            font-variant-numeric: tabular-nums;
+        }
+
+        .dashboard-h2h .h2h-label {
+            display: block;
+            font-size: 0.72em;
+            letter-spacing: 0.1em;
+            text-transform: uppercase;
+            color: var(--dash-text-muted);
+            margin-bottom: 3px;
+        }
+
+        /* On the end screen the line sits under the leaderboard card in the
+           right column, so it needs its own separation — in the lobby the
+           column gap already provides it. Kept small: the podium is the
+           headline there, this is a footnote to it. */
+        .dashboard-h2h--end {
+            margin-top: 10px;
+            padding-top: 10px;
+            border-top: 1px solid var(--dash-border-neon);
+            font-size: clamp(0.9rem, 1.3vw, 1.1rem);
+        }
+
+        .dashboard-h2h .h2h-scope {
+            font-size: 0.68em;
+            color: var(--dash-text-muted);
+            margin-left: 8px;
+        }
+
         .dashboard-evening-tally {
             font-size: clamp(1rem, 1.7vw, 1.4rem);
             color: var(--dash-text-white);
@@ -304,6 +338,44 @@
             gap: 10px;
             justify-content: center;
             max-width: 800px;
+        }
+
+        /* A television does not scroll, so anything below the fold is simply
+           not in the picture. Measured on a 1280x720 screen with three players
+           in the lobby: the column was ALREADY 732px tall before the duel line
+           existed — the roster chips were clipped by 12px — and the duel adds
+           another ~97px, putting it entirely off-screen. 1366x768 fails the
+           same way; only 1080p had the room.
+
+           So this compacts the lobby on short screens rather than shrinking it
+           everywhere: at 1080p the QR stays the size it was, because it has to
+           scan from a sofa across the room. */
+        @media (max-height: 850px) {
+            #lobby-qr.dashboard-qr-section {
+                gap: 8px;
+            }
+
+            /* The vendor library renders a fixed 280px canvas; scaling it here
+               keeps the code sharp (it is drawn at 280 and displayed smaller)
+               while giving the column back 100px. */
+            #lobby-qr .dashboard-qr-section canvas,
+            #lobby-qr canvas,
+            #lobby-qr img {
+                width: 180px;
+                height: 180px;
+            }
+
+            #lobby-view .dashboard-waiting-text {
+                margin: 0;
+            }
+
+            #lobby-view .dashboard-join-fallback {
+                margin-top: 2px;
+            }
+
+            .dashboard-h2h {
+                margin-top: 8px;
+            }
         }
 
         .dashboard-player-chip {
@@ -1344,6 +1416,11 @@
                     </div>
                 </div>
                 <div id="lobby-players" class="dashboard-player-list"></div>
+                <!-- #613: the duel between the two present regulars. Lobby only,
+                     TV only — #371 sends each player their OWN standing, and
+                     putting two people's record in front of the room is a
+                     deliberate reversal of that, not an extension. -->
+                <div id="lobby-h2h" class="dashboard-h2h hidden"></div>
             </div>
         </div>
 
@@ -1403,6 +1480,12 @@
                         <div class="card-header" data-i18n="dashboard.leaderboard">Leaderboard</div>
                         <div id="finale-leaderboard" class="dashboard-leaderboard"></div>
                     </div>
+                    <!-- #613: the duel again, now including the game that just
+                         ended. It arrives on analytics_recorded rather than
+                         with the finale, because only then is that game part
+                         of the record — sent with the finale it would state
+                         the standing from before the game everyone watched. -->
+                    <div id="end-h2h" class="dashboard-h2h dashboard-h2h--end hidden"></div>
                 </div>
             </div>
         </div>
@@ -1502,6 +1585,8 @@
             timerFill: document.getElementById('timer-fill'),
             answerProgress: document.getElementById('answer-progress'),
             eveningTally: document.getElementById('evening-tally'),
+            lobbyH2h: document.getElementById('lobby-h2h'),
+            endH2h: document.getElementById('end-h2h'),
             questionCategory: document.getElementById('question-category'),
             questionImage: document.getElementById('question-image'),
             questionMedia: document.getElementById('question-media'),
@@ -1795,6 +1880,9 @@
                     break;
                 case 'evening_tally':
                     handleEveningTally(msg);
+                    break;
+                case 'head_to_head':
+                    handleHeadToHead(msg);
                     break;
                 case 'finale':
                 case 'game_ended':
@@ -2171,6 +2259,29 @@
             }).join('');
         }
 
+        function handleHeadToHead(msg) {
+            // #613: the same line in two places. `at` picks the target — the
+            // lobby before the game, the end screen after it, where the score
+            // already includes the game just played.
+            var target = (msg && msg.at === 'finale') ? els.endH2h : els.lobbyH2h;
+            if (!target) return;
+            if (!msg || !msg.left || !msg.right) {
+                target.classList.add('hidden');
+                return;
+            }
+            var t = (window.QuizifyI18n && window.QuizifyI18n.t)
+                || function (k) { return k; };
+            // "last 90 days" is stated, not implied: the detailed history
+            // prunes at RETENTION_DAYS, so calling this an all-time record
+            // would be a claim the data cannot support.
+            target.innerHTML =
+                '<span class="h2h-label">' + escapeHtml(t('dashboard.h2hLabel')) + '</span>'
+                + escapeHtml(msg.left) + ' ' + msg.left_wins
+                + ' – ' + msg.right_wins + ' ' + escapeHtml(msg.right)
+                + '<span class="h2h-scope">' + escapeHtml(t('dashboard.h2hRecent')) + '</span>';
+            target.classList.remove('hidden');
+        }
+
         function handleEveningTally(msg) {
             if (!els.eveningTally) return;
             var leaders = (msg && msg.leaders) || [];
@@ -2369,6 +2480,14 @@
 
         function handleFinale(msg) {
             showView('finale');
+
+            // #613: clear last game's duel before this game's arrives on
+            // analytics_recorded, a beat later. Leaving it up would show the
+            // PREVIOUS game's standing under this game's podium.
+            if (els.endH2h) {
+                els.endH2h.classList.add('hidden');
+                els.endH2h.innerHTML = '';
+            }
 
             var podium = msg.podium || [];
             renderPodium(podium);

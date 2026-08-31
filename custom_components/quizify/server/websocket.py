@@ -1509,6 +1509,7 @@ class QuizifyWebSocketHandler:
                 # too, or the lobby keeps showing a team nobody is in.
                 "teams": gs.team_registry.to_list(),
             })
+            await self._send_head_to_head(gs)
 
         # A roster change that landed DURING the broadcast set _roster_dirty
         # again; _ensure_roster_flush won't start a new task while this one is
@@ -1565,6 +1566,63 @@ class QuizifyWebSocketHandler:
             self._progress_flush_task.cancel()
             self._progress_flush_task = None
         self._progress_dirty = False
+
+    async def _send_head_to_head(self, game_state: QuizifyGameState) -> None:
+        """Show the TV the duel between the two present regulars (#613).
+
+        Lobby only: a rivalry line belongs before the game, and mid-game it
+        would compete with the question for the same screen.
+
+        To the TV and admin, never to the phones — this is a deliberate
+        reversal of #371, which sends each player only their OWN standing.
+        Putting two people's record in front of the room is a different call,
+        made knowingly, and the phones stay out of it.
+        """
+        if game_state.phase != GamePhase.LOBBY:
+            return
+        await self._broadcast_head_to_head(game_state, at="lobby")
+
+    async def _dispatch_end_head_to_head(self) -> None:
+        """The duel again on the end screen, once the game is recorded (#613).
+
+        Rides ``analytics_recorded`` rather than the finale, and that is the
+        whole point: the game everyone just watched is part of the record only
+        after it is written. Sent with the finale, this line would state the
+        standing from BEFORE that game — the one number the room can see is
+        wrong, because they just played it.
+
+        It is also the better place for the line. In the lobby the duel shows
+        a score from past evenings that surprises nobody; here it is the
+        result of the evening in progress.
+        """
+        game_state = self._get_game_state()
+        if game_state is None or game_state.phase != GamePhase.FINALE:
+            return
+        await self._broadcast_head_to_head(game_state, at="finale")
+
+    async def _broadcast_head_to_head(
+        self, game_state: QuizifyGameState, *, at: str
+    ) -> None:
+        """Compute the duel and put it on the TV. Shared by both placements.
+
+        ``at`` tells the dashboard which line to fill; the payload is
+        otherwise identical, so the two placements cannot drift apart in what
+        they claim. Never a plain broadcast — that would reach every phone and
+        undo #371 everywhere.
+        """
+        analytics = game_state.stats_service
+        if analytics is None:
+            return
+        duel = analytics.get_head_to_head(
+            [p.name for p in game_state.get_players()]
+        )
+        if duel is None:
+            # Fewer than two present, or no pair has met twice. Silence beats a
+            # "1-0" that reads like a record and is a coincidence.
+            return
+        await self._conn.broadcast_to_admins_and_dashboards(
+            {"type": "head_to_head", "at": at, **duel}
+        )
 
     def _cancel_roster_flush(self) -> None:
         """Cancel any pending roster-flush task (called on cleanup)."""
@@ -3554,15 +3612,16 @@ class QuizifyWebSocketHandler:
         return admin is None or not admin.connected
 
     async def _dispatch_analytics_followups(self) -> None:
-        """Everything that can only be true once the game is recorded (#624, #612).
+        """Everything true only once the game is recorded (#624, #612, #613).
 
-        One handler because one event: the season standing per player and the
-        evening tally for the room both become correct at the same instant, and
-        registering two handlers for the same event would make their order an
-        accident of dict insertion.
+        One handler because one event: the season standing per player, the
+        evening tally for the room and the end-screen duel all become correct
+        at the same instant, and registering three handlers for the same event
+        would make their order an accident of dict insertion.
         """
         await self._dispatch_all_time_standings()
         await self._dispatch_evening_tally()
+        await self._dispatch_end_head_to_head()
 
     async def _dispatch_evening_tally(self) -> None:
         """Broadcast tonight's running score to the TV (#612).

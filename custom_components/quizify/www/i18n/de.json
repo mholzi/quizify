@@ -558,6 +558,8 @@
     "runnersUp": "Außerdem dabei",
     "leaderboardMore": "+{count} weitere",
     "tonightLabel": "Heute Abend",
+    "h2hLabel": "Duell",
+    "h2hRecent": "letzte 90 Tage",
     "tonightGames": "{games} Spiele",
     "tonightWins": "{wins} Siege",
     "tonightWinsOne": "1 Sieg"
