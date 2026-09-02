@@ -293,7 +293,87 @@
         if (fn) fn(msg.remaining);
     }
 
+    /**
+     * Rebuild the panel from a state snapshot (#664).
+     *
+     * The live flow is driven entirely by one-shot events, which a reload
+     * misses for good — they are never re-sent. This maps the snapshot's
+     * hot_seat block onto the same handlers the live events call, so a phone
+     * that reconnects mid-detour lands where it left off instead of on the
+     * lobby. It matters most for the seat holder: they cannot answer a
+     * question they cannot see, and an unanswered question costs the stake.
+     */
+    function restoreFromSnapshot(hs) {
+        if (!hs) return;
+        var stage = hs.stage;
+
+        if (stage === 'auction') {
+            handleAuctionYou({ score: hs.own_bank });
+            handleBidCount({ count: hs.bid_count, total: hs.bidder_count });
+            if (hs.you_bid != null) {
+                // Already bid before the reload. The server rejects a second
+                // bid anyway, so a live-looking slider would only invite a tap
+                // that silently does nothing.
+                lockBidUi(hs.you_bid);
+            }
+            return;
+        }
+
+        if (stage === 'awarded' || stage === 'result') {
+            handleAwarded({
+                winner: hs.winner,
+                pct: hs.pct,
+                stake: hs.stake,
+                bids: hs.bids || []
+            });
+            return;
+        }
+
+        if (stage === 'question') {
+            handleAwarded({
+                winner: hs.winner,
+                pct: hs.pct,
+                stake: hs.stake,
+                bids: hs.bids || []
+            });
+            handleQuestion({
+                you_are_seated: !!hs.you_are_seated,
+                answers: (hs.question && hs.question.answers) || [],
+                winner: hs.winner,
+                score: hs.own_bank
+            });
+            if (hs.you_bet) lockBetUi(hs.you_bet);
+        }
+    }
+
+    function lockBidUi(pct) {
+        _state.bidPlaced = true;
+        var slider = el('hotseat-slider');
+        var btn = el('hotseat-bid-btn');
+        if (slider) slider.disabled = true;
+        if (btn) btn.disabled = true;
+        var hint = el('hotseat-hint');
+        if (hint) {
+            hint.textContent = t('hotSeat.bidPlaced', {
+                pct: pct,
+                pts: Math.floor((_state.score || 0) * pct / 100)
+            });
+        }
+    }
+
+    function lockBetUi(bet) {
+        _state.betPlaced = true;
+        var hint = el('hotseat-hint');
+        if (hint) {
+            hint.textContent = t('hotSeat.betPlaced', {
+                pct: bet.pct,
+                side: bet.side
+            });
+        }
+    }
+
     window.QuizifyPlayerHotSeat = {
+        restoreFromSnapshot: restoreFromSnapshot,
         handleAuctionYou: handleAuctionYou,
         handleBidCount: handleBidCount,
         handleAwarded: handleAwarded,

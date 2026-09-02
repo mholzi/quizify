@@ -681,6 +681,19 @@
                 if (lightning) lightning.handleLightningRecap({ recap: msg.lightning_recap });
                 break;
 
+            case 'HOT_SEAT_AUCTION':
+            case 'HOT_SEAT':
+            case 'HOT_SEAT_REVEAL':
+                // #664: the detour is driven by one-shot events, so a reload
+                // used to fall through to the default case and land on the
+                // lobby with the auction still running. For the seat holder
+                // that was expensive: an unanswered question forfeits the
+                // stake (#653), and they could not answer what they could not
+                // see.
+                pu.showView('game-view');
+                if (hotSeat && msg.hot_seat) hotSeat.restoreFromSnapshot(msg.hot_seat);
+                break;
+
             case 'PAUSED':
                 pu.showView('paused-view');
                 updatePausedView(msg);
@@ -1704,6 +1717,8 @@
             case 'QUESTION_ACTIVE':
             case 'PLAYING':
             case 'LIGHTNING':
+            case 'HOT_SEAT_AUCTION':
+            case 'HOT_SEAT':
             case 'PAUSED':
                 return false;
             default:

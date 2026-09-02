@@ -1865,6 +1865,32 @@
                 case 'timer_tick':
                     handleTimerTick(msg);
                     break;
+                // #664: the Hot Seat detour (#616) never reached this screen.
+                // The room ran an auction on their phones while the TV kept
+                // the previous round's reveal frozen on it — which does not
+                // read as "something else is happening", it reads as a crash.
+                case 'hot_seat_auction':
+                    // The payload carries seconds + player count, not the
+                    // round numbers — the frame keeps whatever the last round
+                    // put in the indicator.
+                    handleHotSeatAuction({ seconds: msg.seconds });
+                    handleHotSeatBidCount({ count: 0, total: msg.players || 0 });
+                    break;
+                case 'hot_seat_bid_count':
+                    handleHotSeatBidCount(msg);
+                    break;
+                case 'hot_seat_awarded':
+                    handleHotSeatAwarded(msg);
+                    break;
+                case 'hot_seat_question':
+                    handleHotSeatQuestion(msg);
+                    break;
+                case 'hot_seat_no_bids':
+                    handleHotSeatNoBids();
+                    break;
+                case 'hot_seat_tick':
+                    handleTimerTick({ remaining: msg.remaining });
+                    break;
                 case 'round_summary':
                 case 'round_evaluated':
                     handleRoundSummary(msg);
@@ -1997,6 +2023,19 @@
                         renderDashboardEstimateReveal(msg.round_summary.estimate);
                     } else if (msg.round_summary && msg.round_summary.answers) {
                         renderRevealFromSnapshot(msg.round_summary, msg.round, msg.total_rounds);
+                    }
+                    break;
+                case 'HOT_SEAT_AUCTION':
+                case 'HOT_SEAT':
+                case 'HOT_SEAT_REVEAL':
+                    // A TV that (re)connects mid-detour. Same reasoning as
+                    // WAGER_ACTIVE above: the snapshot carries the stage and
+                    // the seconds, and everything else arrives with the next
+                    // message.
+                    if (msg.hot_seat) {
+                        renderHotSeatFromSnapshot(msg.hot_seat, msg.round, msg.total_rounds);
+                    } else {
+                        showView('question');
                     }
                     break;
                 case 'PAUSED':
@@ -2187,6 +2226,118 @@
                 els.timerFill.style.width = '100%';
                 els.timerFill.className = 'dashboard-timer-fill';
             }
+        }
+
+        /* ------------------------------------------------------------
+         * Hot Seat on the television (#664).
+         *
+         * Deliberately rendered into the existing question view rather than
+         * a view of its own, exactly like the betting window: the room is
+         * looking at the same frame, and one auction line replacing the
+         * question text is all the detour needs to stop looking broken.
+         * ---------------------------------------------------------- */
+        function hotSeatT(key, vars, fallback) {
+            return (window.QuizifyI18n && window.QuizifyI18n.t)
+                ? window.QuizifyI18n.t(key, vars)
+                : fallback;
+        }
+
+        function hotSeatFrame(round, total) {
+            showView('question');
+            els.funFact.classList.remove('visible');
+            if (els.roundIndicator && typeof round === 'number') {
+                els.roundIndicator.textContent = hotSeatT(
+                    'dashboard.questionCounter', { current: round, total: total },
+                    'Question ' + round + ' / ' + total
+                );
+            }
+            renderQuestionImage('', '');
+            if (els.answersGrid) els.answersGrid.innerHTML = '';
+            if (els.dashboardEstimate) els.dashboardEstimate.classList.add('hidden');
+        }
+
+        function handleHotSeatAuction(msg) {
+            hotSeatFrame(msg.round_num, msg.total_rounds);
+            els.questionCategory.textContent = '';
+            els.questionText.textContent = hotSeatT(
+                'hotSeat.auctionTitle', null, 'The chair goes to the highest bid'
+            );
+            if (typeof msg.seconds === 'number') {
+                timerDuration = msg.seconds;
+                timerRemaining = timerDuration;
+                els.timerFill.style.width = '100%';
+                els.timerFill.className = 'dashboard-timer-fill';
+            }
+        }
+
+        function handleHotSeatBidCount(msg) {
+            // The count, never the amounts — the auction is sealed, and the
+            // screen everyone can see is the last place to leak it.
+            if (!els.answerProgress) return;
+            els.answerProgress.textContent = hotSeatT(
+                'hotSeat.bidCount', { count: msg.count || 0, total: msg.total || 0 },
+                (msg.count || 0) + ' / ' + (msg.total || 0)
+            );
+            els.answerProgress.classList.remove('hidden');
+        }
+
+        function handleHotSeatAwarded(msg) {
+            hotSeatFrame();
+            els.questionCategory.textContent = '';
+            els.questionText.textContent = hotSeatT(
+                'hotSeat.lost', { name: msg.winner, pct: msg.pct, pts: msg.stake },
+                msg.winner + ' — ' + msg.pct + '%'
+            );
+            if (els.answerProgress) els.answerProgress.classList.add('hidden');
+        }
+
+        function handleHotSeatQuestion(msg) {
+            // ``question`` is the field name on the wire (see
+            // _broadcast_hot_seat_question); the snapshot path passes the
+            // same shape so both routes land here identically.
+            handleQuestionStarted({
+                question_text: msg.question || '',
+                answers: msg.answers || [],
+                timer_duration: msg.seconds,
+                round_num: msg.round_num,
+                total_rounds: msg.total_rounds,
+                category: msg.category || '',
+                image_url: msg.image_url || ''
+            });
+        }
+
+        function handleHotSeatNoBids() {
+            hotSeatFrame();
+            els.questionCategory.textContent = '';
+            els.questionText.textContent = hotSeatT(
+                'hotSeat.noBids', null, 'Nobody bid — carrying on as usual.'
+            );
+            if (els.answerProgress) els.answerProgress.classList.add('hidden');
+        }
+
+        function renderHotSeatFromSnapshot(hs, round, total) {
+            if (hs.stage === 'auction') {
+                handleHotSeatAuction({
+                    round_num: round, total_rounds: total, seconds: hs.time_remaining
+                });
+                handleHotSeatBidCount({ count: hs.bid_count, total: hs.bidder_count });
+                return;
+            }
+            if (hs.stage === 'question' && hs.question) {
+                handleHotSeatQuestion({
+                    question: hs.question.text,
+                    answers: hs.question.answers || [],
+                    seconds: hs.time_remaining,
+                    round_num: round,
+                    total_rounds: total,
+                    category: hs.question.category,
+                    image_url: hs.question.image_url
+                });
+                return;
+            }
+            handleHotSeatAwarded({
+                winner: hs.winner, pct: hs.pct, stake: hs.stake
+            });
         }
 
         function handleQuestionStarted(msg) {
