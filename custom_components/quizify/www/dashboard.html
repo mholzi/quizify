@@ -292,7 +292,12 @@
         .dashboard-loading-text,
         .dashboard-waiting-text {
             font-family: 'JetBrains Mono', ui-monospace, monospace;
-            font-size: 14px;
+            /* #667: 14px is a phone size. This is the primary instruction on
+               the lobby screen ("Scan to join the game"), read from a sofa.
+               Same clamp the couch-legibility pass (#376) gave the rest of
+               this screen; the join-URL fallback (#620) was already sized for
+               three metres and the caption above it was not. */
+            font-size: clamp(16px, 1.6vw, 22px);
             color: var(--dash-text-neon-muted);
             letter-spacing: 0.12em;
             text-transform: uppercase;
@@ -387,11 +392,15 @@
             border: 1px solid var(--dash-border-neon);
             border-radius: 9999px;
             font-family: 'JetBrains Mono', ui-monospace, monospace;
-            font-size: 12px;
+            /* #667: this chip carries a guest's name — the thing they look up
+               at the television to check after scanning. At 12px uppercase it
+               was roughly a third of what #376 deemed readable across a room.
+               The uppercase goes with it: capitals cost legibility at
+               distance and buy nothing here. */
+            font-size: clamp(15px, 1.4vw, 20px);
             color: var(--dash-text-white);
             font-weight: 500;
-            letter-spacing: 0.12em;
-            text-transform: uppercase;
+            letter-spacing: 0.08em;
         }
 
         /* ===================
