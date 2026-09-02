@@ -692,6 +692,12 @@
         }
         .dashboard-answer-bar {
             flex: 1 1 auto;
+            /* The percentage next to it claims up to 72px of a chart whose
+               floor #665 set to 80px, which left the bar 2.6px at 1920x1080 —
+               a sliver, not a bar. The bar is the half of this chart you read
+               from the couch, so it states its own floor and the container's
+               min-content follows it up. */
+            min-width: clamp(56px, 5vw, 90px);
             height: clamp(10px, 1vw, 14px);
             background: #E5DFCF;
             border-radius: 999px;
