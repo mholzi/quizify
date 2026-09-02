@@ -2843,6 +2843,71 @@ class QuizifyGameState:
         if self.phase == GamePhase.LIGHTNING_RECAP and self._lightning is not None:
             snapshot["lightning_recap"] = self._lightning.build_recap()
 
+        # #664: the Hot Seat detour belongs in the contract like every other
+        # phase. Without this block a reconnecting phone got a snapshot naming
+        # a HOT_SEAT phase and no hot-seat data, fell through the client's
+        # default case onto the lobby, and — if it belonged to the seat holder
+        # — could never get back to the question, which #653 then charges as a
+        # lost stake. The TV had the same hole, with the previous round's
+        # reveal frozen on it for the whole detour.
+        if (
+            self.phase
+            in (
+                GamePhase.HOT_SEAT_AUCTION,
+                GamePhase.HOT_SEAT,
+                GamePhase.HOT_SEAT_REVEAL,
+            )
+            and self._hot_seat is not None
+        ):
+            hs = self._hot_seat
+            if self.phase == GamePhase.HOT_SEAT_AUCTION:
+                stage = "auction"
+            elif self.phase == GamePhase.HOT_SEAT_REVEAL:
+                stage = "result"
+            else:
+                # There is deliberately no separate "the bids are landing"
+                # stage. ``resolve_auction`` starts the answer clock at the
+                # moment the chair is awarded, so the live flow's four-second
+                # bid reveal is already being paid for out of the seat
+                # holder's window. Someone who reconnects during that hold is
+                # better served by the question than by a reveal they are
+                # being charged for — and worse, without a question to look
+                # at they would burn the clock reading a scoreboard.
+                stage = "question"
+            block: dict[str, Any] = {
+                "stage": stage,
+                "time_remaining": round(hs.time_remaining(), 1),
+                "auction_seconds": hs.auction_seconds,
+                "answer_seconds": hs.answer_seconds,
+                # The banks the bids are percentages of — a snapshot taken when
+                # the auction opened, not the live scores.
+                "banks": dict(hs.scores),
+                # Count only. The auction is sealed until it closes, and a
+                # reconnect must not be a way to read it early.
+                "bid_count": len(hs.bids),
+                "bidder_count": len(hs.scores),
+                "winner": hs.winner,
+            }
+            if hs.winner is not None:
+                block["pct"] = hs.winning_pct
+                block["stake"] = hs.winning_stake
+                block["bids"] = hs.reveal()
+            # The question is withheld during the auction on purpose: bidding
+            # is meant to be a bet on yourself, not on a question you have
+            # already read.
+            if stage in ("question", "result") and hs.question is not None:
+                block["question"] = {
+                    "text": hs.question.question,
+                    # Canonical order — admin and TV. The seat holder's own
+                    # shuffle is projected in round_message_builder.
+                    "answers": [a.text for a in hs.question.answers],
+                    "category": hs.question.category,
+                    "image_url": hs.question.image_url,
+                }
+            if stage == "result":
+                block["summary"] = hs.summary()
+            snapshot["hot_seat"] = block
+
         return snapshot
 
     # ------------------------------------------------------------------

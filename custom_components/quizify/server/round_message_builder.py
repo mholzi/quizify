@@ -283,6 +283,34 @@ class RoundMessageBuilder:
                 lightning["question"] = lq
                 out["lightning"] = lightning
 
+        if out.get("hot_seat"):
+            # #664: the canonical block is built for the admin and the TV. A
+            # player must see the question in THEIR shuffle if they hold the
+            # chair, and must not see answer buttons at all if they do not —
+            # spectators stake on the seat holder, they do not answer.
+            hs = game_state.hot_seat
+            block = dict(out["hot_seat"])
+            block["own_bank"] = block.get("banks", {}).get(player.name, 0)
+            block.pop("banks", None)
+            if hs is not None:
+                bid = hs.bids.get(player.name)
+                block["you_bid"] = bid.pct if bid is not None else None
+                bet = hs.bets.get(player.name)
+                block["you_bet"] = (
+                    {"side": bet.side, "pct": bet.pct} if bet is not None else None
+                )
+                block["you_are_seated"] = (
+                    hs.winner is not None and hs.winner == player.name
+                )
+                if block.get("question") is not None:
+                    question = dict(block["question"])
+                    if block["you_are_seated"]:
+                        question["answers"] = hs.shuffled_answers()
+                    else:
+                        question.pop("answers", None)
+                    block["question"] = question
+            out["hot_seat"] = block
+
         if phase == GamePhase.ANSWER_REVEAL.value:
             summary = self.build_round_summary(game_state)
             if summary is not None:
