@@ -381,6 +381,57 @@
             .dashboard-h2h {
                 margin-top: 8px;
             }
+
+            /* #680: at 1280x720 the question view needs 799px of a 549.8px
+               column. The single biggest item is the answer grid, and three
+               columns are why: a ~221px tile cannot hold an answer and its
+               chart side by side, so both wrap and the row grows to 200.8px.
+               Two columns give each tile ~341px, the chart stays on the
+               answer's line, and the grid drops from 383.5px to about 246.
+
+               Two columns also suit four answers better than 3+1 does. The
+               type is deliberately left alone: #376 sized it for a room, and
+               shrinking it here would trade a legibility decision for
+               vertical space that this rule already finds elsewhere. */
+            #question-view .dashboard-answers {
+                grid-template-columns: 1fr 1fr;
+            }
+
+            /* Margins and padding, not sizes — no legibility is spent here.
+               The tiles carry the reveal's remaining 36.5px: their vertical
+               padding resolves to 23px at this width, and the reveal has two
+               rows of them. */
+            #question-view .dashboard-answer {
+                padding-top: 12px;
+                padding-bottom: 12px;
+            }
+
+            #question-view .dashboard-answers {
+                gap: 12px;
+            }
+
+            #question-view .dashboard-category {
+                margin-bottom: 8px;
+            }
+
+            #question-view .dashboard-question {
+                margin-bottom: 20px;
+            }
+
+            /* The fun fact is not merely tight at this height — it is
+               unreachable. Measured at 1280x720 on `main`, with the reveal
+               showing and `.visible` set, its top edge lands at 726.5px of a
+               720px viewport: entirely below the fold, before and after this
+               rule. All it does there is hold 83.6px of column and push the
+               last answer row towards the same fold.
+
+               So it stops holding the space at this height. That is not a fix
+               for the fun fact — a 720p room still never sees it, which is
+               #685 — but an answer that clips is worse than a fun fact that
+               was already gone. */
+            #question-view .dashboard-funfact {
+                display: none;
+            }
         }
 
         .dashboard-player-chip {
@@ -418,7 +469,20 @@
             flex: 6;
             display: flex;
             flex-direction: column;
+            /* #680: `safe` is the whole point. Plain `center` splits any
+               overflow across both ends, so content too tall for the column
+               climbs *upward* into the fixed header — at 1280x720 the category
+               label sat 93.9px behind the timer bar. `safe` falls back to
+               flex-start the moment it does not fit, so the overflow can only
+               go down, where it is at least still reading order.
+
+               Declared twice on purpose: a browser that does not know the
+               `safe` keyword drops the whole declaration, and the initial
+               value is `flex-start`, not `center` — so without the plain
+               `center` above it, an old renderer would top-align every
+               question instead of falling back to today's behaviour. */
             justify-content: center;
+            justify-content: safe center;  /* the fallback above is deliberate */
             min-width: 0;
         }
 

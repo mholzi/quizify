@@ -11,6 +11,7 @@ silently regress them back to a bare small px/rem.
 
 from __future__ import annotations
 
+import re
 from pathlib import Path
 
 REPO = Path(__file__).resolve().parent.parent
@@ -18,11 +19,27 @@ DASHBOARD = REPO / "custom_components" / "quizify" / "www" / "dashboard.html"
 
 
 def _rule(css: str, selector: str) -> str:
-    """Return the declaration block for the first rule matching ``selector``."""
-    idx = css.index(selector)
-    start = css.index("{", idx)
-    end = css.index("}", start)
-    return css[start + 1 : end]
+    """Declaration block of the first rule whose selector list *starts* with
+    ``selector``.
+
+    The anchor matters. A plain ``css.index(selector)`` matches the selector
+    anywhere, including as the tail of a more specific one: #680 added
+    ``#question-view .dashboard-funfact { display: none }`` inside a media
+    query that sits earlier in the file, and this helper happily returned that
+    block instead of the base rule — reporting that ``.dashboard-funfact`` had
+    lost the font-size it still has. The base rule is the one that carries the
+    #376 sizes, so the selector list has to match exactly — not start with
+    the name (that finds ``.dashboard-funfact.visible``) and not merely
+    contain it (that finds the media-query override). Comments go first for
+    the same reason: they carry no braces, so a selector list read raw arrives
+    with the paragraph above it attached.
+    """
+    css = re.sub(r"/\*.*?\*/", "", css, flags=re.DOTALL)
+    for match in re.finditer(r"(?:^|[{};])\s*([^{};]*?)\s*\{", css, re.MULTILINE):
+        if match.group(1).strip() == selector.rstrip(" {").strip():
+            start = css.index("{", match.end() - 1)
+            return css[start + 1 : css.index("}", start)]
+    raise AssertionError(f"no rule found for {selector}")
 
 
 # Selectors that must scale for TV couch legibility (#376).
