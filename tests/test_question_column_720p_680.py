@@ -93,9 +93,21 @@ def test_short_screens_spend_spacing_not_type() -> None:
     assert "font-size" not in question_view, question_view
 
 
-def test_the_unreachable_fun_fact_stops_holding_the_column() -> None:
+def test_the_fun_fact_does_not_weigh_on_this_column_at_all() -> None:
     """At 1280x720 the fun fact's top edge measured 726.5px of a 720px
-    viewport — below the fold before this change and after it. All it did there
-    was push the last answer row towards the same fold."""
-    short = _balanced(_css(), "@media (max-height: 850px)")
-    assert "display: none" in _rule(short, "#question-view .dashboard-funfact")
+    viewport — below the fold before this change and after it — while still
+    holding 83.6px of column and pushing the last answer row towards the same
+    fold. This issue took the space back by hiding it; #685 then moved it to
+    the right column, which removes the cause instead of the symptom.
+
+    Either way the property that matters here is the same: nothing that the
+    left column cannot show may take height from the answers.
+    """
+    html = DASHBOARD.read_text(encoding="utf-8")
+    start = html.index("<!-- QUESTION VIEW -->")
+    view = html[start : html.index("<!-- FINALE VIEW -->", start)]
+    left = view.index('id="dashboard-left"')
+    right = view.index('class="dashboard-right"')
+    fact = view.index('id="fun-fact"')
+    assert left < right, "the left column is expected to come first"
+    assert fact > right, "the fun fact is back inside the column that overflows"
