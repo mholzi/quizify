@@ -632,17 +632,25 @@
         .dashboard-answer.correct {
             border-color: var(--dash-success);
             background: rgba(127, 168, 151, 0.10);
-            position: relative;
         }
 
+        /* #678: the star is a flex item, not an absolutely positioned corner.
+           Pinned at `right: 16px` it was painted on top of the distribution
+           percentage — 3px into it at 1920x1080, 10.5px at 1024x640, because
+           the star's offset is fixed while the tile's padding is a clamp. In
+           flow it cannot collide with anything, at any width.
+
+           `order: 1` puts it directly after the answer text and before the
+           chart, so it reads as "Konrad Adenauer ★" and stays on the text's
+           line when the chart wraps to its own (#665). As the last item it
+           would instead be stranded on a third line. */
         .dashboard-answer.correct::after {
             content: "★";
-            position: absolute;
-            right: 16px;
-            top: 50%;
-            transform: translateY(-50%);
+            order: 1;
             color: var(--dash-success);
             font-size: 16px;
+            line-height: 1;
+            flex-shrink: 0;
         }
 
         /* #666: dim the wrong answer's *text*, not the tile. Opacity
@@ -683,6 +691,7 @@
         }
         .dashboard-answer.revealed .dashboard-answer-distribution {
             display: flex;
+            order: 2;  /* #678: after the correct tile's star, never before it */
             flex: 1 1 auto;
             animation: dashboard-distribution-in 220ms ease-out 320ms both;
         }
