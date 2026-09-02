@@ -628,8 +628,16 @@
             font-size: 16px;
         }
 
-        .dashboard-answer.wrong {
-            opacity: 0.32;
+        /* #666: dim the wrong answer's *text*, not the tile. Opacity
+           multiplies down the subtree, so a rule on `.dashboard-answer.wrong`
+           took the distribution bar and its percentage with it — the one
+           number the room is arguing about, rendered at a third of its
+           contrast from across the room. The muted bar fill already ranks the
+           wrong answers below the correct one; the bar and the percent stay at
+           full opacity here on purpose. */
+        .dashboard-answer.wrong .answer-label,
+        .dashboard-answer.wrong .answer-text {
+            opacity: 0.45;
         }
 
         /* Answer-distribution chart (issue #151) — hidden during question,
