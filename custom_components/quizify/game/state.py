@@ -2126,6 +2126,17 @@ class QuizifyGameState:
         """
         if self._hot_seat_fired or self._hot_seat_target_round is None:
             return False
+        # #669: never in team mode. Bids are a percentage of the bidder's own
+        # score, which in team mode is the same shadow value #668 is about —
+        # zero for everyone but the round's carrier, and a zero stake is
+        # rejected outright, so most of the room cannot bid at all. Worse, the
+        # settlement writes its deltas to ``player.score`` while the
+        # leaderboard, podium and awards all read ``get_ranked_participants()``
+        # (teams): the detour would stop the game for a minute and put its
+        # result nowhere anyone can see. Lightning got proper team support in
+        # #552; until the auction does too, it stays out.
+        if self.team_mode:
+            return False
         if self.phase not in (GamePhase.LOBBY, GamePhase.ANSWER_REVEAL):
             return False
         return self.round + 1 == self._hot_seat_target_round
@@ -2513,7 +2524,18 @@ class QuizifyGameState:
         through ``_evaluate_estimate_round``, which never reads
         ``player.wager`` (#353) — opening a window there would collect bets
         nothing settles.
+
+        Team mode is excluded for the same reason (#668). There ``player.score``
+        is a by-product: the carrier of a given round — whoever's tap stands at
+        settle — receives the team's points personally and everyone else stays
+        at zero. The window advertised each member "your bank: X" against that
+        meaningless number, and settlement read only the carrier's bet, staked
+        against the carrier's shadow score rather than the team score on the
+        television. A bet nobody can read and most people cannot influence is
+        worse than no bet; a team-level wager is a feature, not a fix.
         """
+        if self.team_mode:
+            return False
         return self.round == self.total_rounds and not question.is_estimate
 
     def arm_round_timers(self) -> bool:
