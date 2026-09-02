@@ -303,12 +303,15 @@ class RoundMessageBuilder:
                     hs.winner is not None and hs.winner == player.name
                 )
                 if block.get("question") is not None:
-                    question = dict(block["question"])
+                    # Named apart from the ``question`` above on purpose: that
+                    # one is a Question, this one is the wire dict, and mypy
+                    # rightly refuses to let one name mean both.
+                    hs_question = dict(block["question"])
                     if block["you_are_seated"]:
-                        question["answers"] = hs.shuffled_answers()
+                        hs_question["answers"] = hs.shuffled_answers()
                     else:
-                        question.pop("answers", None)
-                    block["question"] = question
+                        hs_question.pop("answers", None)
+                    block["question"] = hs_question
             out["hot_seat"] = block
 
         if phase == GamePhase.ANSWER_REVEAL.value:
