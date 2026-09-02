@@ -88,11 +88,29 @@ def test_distribution_children_keep_full_contrast() -> None:
         assert "opacity" not in _rule(css, selector), selector
 
 
-def test_distribution_container_opacity_is_only_the_reveal_fade() -> None:
-    """``.dashboard-answer-distribution`` does start at ``opacity: 0`` — that is
-    the fade-in, and ``.revealed`` takes it back to 1. Both halves must stay,
-    or the chart never appears (or never hides)."""
+def _balanced(css: str, header: str) -> str:
+    """Body of an at-rule, read with a brace counter (it nests)."""
+    start = css.index(header)
+    start = css.index("{", start)
+    depth, j = 0, start
+    while True:
+        if css[j] == "{":
+            depth += 1
+        elif css[j] == "}":
+            depth -= 1
+            if depth == 0:
+                return css[start + 1 : j]
+        j += 1
+
+
+def test_the_chart_ends_at_full_opacity_once_it_is_shown() -> None:
+    """#665 replaced the opacity fade with a keyframe animation, because a
+    transition cannot run across the `display` change it introduced. What this
+    issue cares about is unchanged: once the chart is on screen, nothing holds
+    it below full contrast."""
     css = _css()
-    assert "opacity: 0;" in _rule(css, ".dashboard-answer-distribution")
-    revealed = _rule(css, ".dashboard-answer.revealed .dashboard-answer-distribution")
-    assert "opacity: 1;" in revealed
+    frames = _balanced(css, "@keyframes dashboard-distribution-in")
+    assert re.search(r"to\s*\{[^}]*opacity:\s*1", frames), frames
+    # And the tile it sits in must not scale that back down again.
+    for block in _rules_for(css, ".dashboard-answer.wrong"):
+        assert "opacity" not in block

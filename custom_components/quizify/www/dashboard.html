@@ -582,6 +582,11 @@
 
         .dashboard-answer {
             display: flex;
+            /* #665: the chart drops to its own line when the answer text needs
+               the first one. Wrapping is also what keeps the tile from forcing
+               its grid track wide: a wrapping flex container's min-content is
+               the widest single item, not the sum of all of them. */
+            flex-wrap: wrap;
             align-items: center;
             gap: clamp(14px, 1.6vw, 20px);
             padding: clamp(16px, 1.8vw, 24px) clamp(18px, 2vw, 28px);
@@ -594,6 +599,18 @@
             color: var(--dash-text-white);
             transition: border-color 120ms ease-out, background 120ms ease-out, box-shadow 320ms ease-out;
             min-height: 80px;
+        }
+
+        /* #665: the answer text takes essentially all of the tile's spare
+           width, and the chart takes the rest of its own line. The lopsided
+           grow factor is the whole mechanism, not a stray number: both items
+           can grow, so on a shared line the 100:1 split leaves the chart at
+           its `min-width` floor and gives the text everything else, while on a
+           wrapped line the chart is alone and fills it. Equal grow factors put
+           a 158 px bar next to a two-line answer at 1920x1080; no grow at all
+           leaves a 10 px stub of a bar on the wrapped line at 1280x720. */
+        .dashboard-answer .answer-text {
+            flex-grow: 100;
         }
 
         .dashboard-answer .answer-label {
@@ -640,23 +657,38 @@
             opacity: 0.45;
         }
 
-        /* Answer-distribution chart (issue #151) — hidden during question,
+        /* Answer-distribution chart (issue #151) — absent during the question,
            fades in + animates the bars at reveal time. TV viewing distance
-           means: thick bars, large percent text, no precision noise. The
-           bar is sized to claim ~30 % of the answer-row width so the
-           answer text still owns the card. */
+           means: thick bars, large percent text, no precision noise.
+
+           #665: `display: none` until `.revealed`, not `opacity: 0`. The bar
+           was sized to claim ~30 % of the answer *row* — true when the answers
+           were one full-width row, wrong since the grid became three columns
+           (`.dashboard-answers`). An invisible 140 px reservation in a ~170 px
+           tile is more than the tile holds: at 1280x720 the grid overflowed its
+           column by 330 px and every answer wrapped to two or three lines
+           beside an empty right half. Hidden means hidden — it must cost no
+           layout while nobody can see it.
+
+           The fade survives the display switch as an animation: a transition
+           cannot run across `display`, `animation` starts when the element
+           appears. `both` holds opacity 0 through the 320 ms delay, so the
+           chart still lands after the correct/wrong colour. */
         .dashboard-answer-distribution {
-            display: flex;
+            display: none;
             align-items: center;
             gap: clamp(10px, 1vw, 14px);
-            margin-left: auto;
-            opacity: 0;
-            transition: opacity 220ms ease-out 320ms;  /* fade in after correct/wrong colour lands */
-            min-width: clamp(140px, 22%, 280px);
+            min-width: clamp(80px, 30%, 200px);
             flex-shrink: 0;
         }
         .dashboard-answer.revealed .dashboard-answer-distribution {
-            opacity: 1;
+            display: flex;
+            flex: 1 1 auto;
+            animation: dashboard-distribution-in 220ms ease-out 320ms both;
+        }
+        @keyframes dashboard-distribution-in {
+            from { opacity: 0; }
+            to   { opacity: 1; }
         }
         .dashboard-answer-bar {
             flex: 1 1 auto;
