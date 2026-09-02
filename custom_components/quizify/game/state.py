@@ -638,6 +638,11 @@ class QuizifyGameState:
             "language": self.language,
             "timer_duration": timer_duration,
             "lightning_enabled": lightning_enabled,
+            # #670: hot_seat_enabled belongs here for the same reason
+            # lightning_enabled does. Without it the one-tap rematch falls
+            # back to start_game's default (True) and hands a kids' game the
+            # auction its preset had switched off.
+            "hot_seat_enabled": hot_seat_enabled,
         }
 
         # Load questions. The bank is preloaded off the event loop at

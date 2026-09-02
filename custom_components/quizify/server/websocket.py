@@ -1810,6 +1810,13 @@ class QuizifyWebSocketHandler:
         # 2026-05-31: picked Geographie/DE but kept seeing the previous English
         # mixed game. Reset to LOBBY first (keeps connected players) so the
         # fresh settings always take effect. Mirrors _handle_play_again.
+        # #671: unconditional, unlike the block below. A hot-seat loop has no
+        # business surviving into a new game whatever phase we start from, and
+        # "there cannot be one in LOBBY" is the same assumption that let this
+        # task outlive four teardown paths in the first place. Cancelling a
+        # task that isn't there costs nothing.
+        self._cancel_hot_seat_loop()
+
         if game_state.phase != GamePhase.LOBBY:
             self._cancel_timer_tick()
             # #407 (follow-up to #362): cancel the lightning loop and any
@@ -2188,6 +2195,7 @@ class QuizifyWebSocketHandler:
         # game, or a stale pause task pauses round 1 and a lingering lightning
         # loop keeps broadcasting stale frames into the rematch.
         self._cancel_lightning_loop()
+        self._cancel_hot_seat_loop()
         self._cancel_admin_pause()
         # Reset to LOBBY first so start_game's phase guard passes; keeps
         # players (reset_to_lobby leaves connected players in place).
@@ -2234,6 +2242,7 @@ class QuizifyWebSocketHandler:
         """
         self._cancel_timer_tick()
         self._cancel_lightning_loop()
+        self._cancel_hot_seat_loop()
         # Cancel the deferred admin-disconnect pause (#362) so a reset can't
         # be undone by a pause firing right after the fresh lobby is built.
         self._cancel_admin_pause()
@@ -2760,6 +2769,13 @@ class QuizifyWebSocketHandler:
                         break
                     await asyncio.sleep(0.25)
 
+                # #671: the loop above only checks the phase INSIDE the wait.
+                # Leaving it (expired, or everyone bid) and acting without a
+                # re-check lets a reset that landed in the last poll interval
+                # be followed by a ghost round in the fresh lobby.
+                if game_state.phase != GamePhase.HOT_SEAT_AUCTION:
+                    return
+
                 winner = game_state.close_hot_seat_auction()
                 if winner is None:
                     # Nobody wanted the chair. Not a failure — just a round
@@ -2800,6 +2816,12 @@ class QuizifyWebSocketHandler:
                     if hs.answered is not None:
                         break
                     await asyncio.sleep(0.25)
+
+                # #671: same re-check as after the auction wait — a teardown
+                # that lands in the last poll interval must not be followed by
+                # a settlement against a game that no longer exists.
+                if game_state.phase != GamePhase.HOT_SEAT:
+                    return
 
                 # Settle even when nothing was answered: the chair was bought
                 # either way (#653). This is the one place the mode parts ways
@@ -4149,6 +4171,7 @@ class QuizifyWebSocketHandler:
         """Cancel all pending tasks."""
         self._cancel_timer_tick()
         self._cancel_lightning_loop()
+        self._cancel_hot_seat_loop()
         self._cancel_reaction_flush()
         self._cancel_roster_flush()
         self._cancel_progress_flush()
