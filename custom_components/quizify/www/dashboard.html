@@ -418,19 +418,13 @@
                 margin-bottom: 20px;
             }
 
-            /* The fun fact is not merely tight at this height — it is
-               unreachable. Measured at 1280x720 on `main`, with the reveal
-               showing and `.visible` set, its top edge lands at 726.5px of a
-               720px viewport: entirely below the fold, before and after this
-               rule. All it does there is hold 83.6px of column and push the
-               last answer row towards the same fold.
-
-               So it stops holding the space at this height. That is not a fix
-               for the fun fact — a 720p room still never sees it, which is
-               #685 — but an answer that clips is worse than a fun fact that
-               was already gone. */
+            /* #680 hid this at short heights, because under the answers it
+               was unreachable anyway (top edge at 726.5px of a 720px
+               viewport) and only pushed the last answer row towards the fold.
+               #685 moved it to the right column, where it costs the answers
+               nothing — so it is shown again here, just tighter. */
             #question-view .dashboard-funfact {
-                display: none;
+                margin-top: 16px;
             }
         }
 
@@ -799,6 +793,11 @@
         /* Fun fact on reveal */
         .dashboard-funfact {
             margin-top: clamp(24px, 3vw, 36px);
+            /* #685: it shares the right column with a scrolling leaderboard.
+               Without this the flex layout would shrink the fact instead of
+               the list, which is the wrong way round — the list already knows
+               how to give. */
+            flex-shrink: 0;
             padding: 20px 24px;
             background: var(--dash-surface-dark);
             border: 1px solid var(--dash-border-neon);
@@ -1572,15 +1571,23 @@
                         <!-- Estimate reveal number line (#275). Shown only for
                              estimate rounds; hidden for MC. -->
                         <div id="dashboard-estimate" class="dashboard-estimate hidden"></div>
-                        <div id="fun-fact" class="dashboard-funfact">
-                            <div class="fun-fact-label" data-i18n="dashboard.didYouKnow">Did you know?</div>
-                            <div id="fun-fact-text" class="fun-fact-text"></div>
-                        </div>
                     </div>
                 </div>
                 <div class="dashboard-right">
                     <div class="dashboard-leaderboard-title" data-i18n="dashboard.leaderboard">Leaderboard</div>
                     <div id="leaderboard" class="dashboard-leaderboard"></div>
+                    <!-- #685: the fun fact lives here, not under the answers.
+                         Last in the left column it never fit a 720p screen —
+                         its top edge measured 726.5px of a 720px viewport, so
+                         a 720p room had never seen one. This column stands
+                         empty beside the question and has the height. The
+                         leaderboard above it already scrolls (`flex: 1;
+                         overflow-y: auto`), so it yields the space rather than
+                         the fact being pushed off again. -->
+                    <div id="fun-fact" class="dashboard-funfact">
+                        <div class="fun-fact-label" data-i18n="dashboard.didYouKnow">Did you know?</div>
+                        <div id="fun-fact-text" class="fun-fact-text"></div>
+                    </div>
                 </div>
             </div>
         </div>
