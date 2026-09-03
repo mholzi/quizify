@@ -6455,6 +6455,17 @@
         if (currentRound) currentRound.textContent = msg.round_num || 1;
         if (totalRounds) totalRounds.textContent = msg.total_rounds || 10;
 
+        // #706: the wager window raises the "Final Round!" pill and the only
+        // line that lowered it again lives in updateGameView, which nothing
+        // has called since #619. Play again keeps the phones on this page, so
+        // round 1 of game 2 — and every round after it — wore the pill until
+        // somebody reloaded. Taken down here for any round that is not the
+        // last; raising it stays with the wager window, as before.
+        if (!isFinalRound(msg)) {
+            var lastRoundBanner = document.getElementById('last-round-banner');
+            if (lastRoundBanner) lastRoundBanner.classList.add('hidden');
+        }
+
         // Timer
         if (msg.timer_duration) {
             var deadline = Date.now() + (msg.timer_duration * 1000);

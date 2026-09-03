@@ -1857,6 +1857,18 @@
         function showView(name) {
             Object.values(views).forEach(function(v) { v.classList.remove('active'); });
             if (views[name]) views[name].classList.add('active');
+            // #706: the tally sits in the header, outside every view, and only
+            // question_started ever took it down. The reveal, the lightning
+            // round, the finale and game_reset all left "3/3" in coral on the
+            // board — through the next lobby, where it hung above the QR code.
+            // Every view change away from the question clears it, so a new
+            // path cannot forget again. The hot-seat frame shows the question
+            // view and sets its own tally afterwards, so it is unaffected.
+            if (name !== 'question' && els.answerProgress) {
+                els.answerProgress.textContent = '';
+                els.answerProgress.classList.add('hidden');
+                els.answerProgress.classList.remove('is-complete');
+            }
         }
 
         // ---- #374: TV lobby join QR + live player roster ----
