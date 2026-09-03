@@ -38,6 +38,11 @@
             --dash-surface-2: #F3EEDF;               /* cream tint */               /* modals, hover */
             --dash-border-neon: #E5DFCF;             /* warm hairline */             /* hairline */
             --dash-text-neon-muted: #6E6A5C;         /* warm olive-gray */         /* cool blue-gray */
+            /* #705: eight declarations on this page ask for --dash-text-muted,
+               which was never defined — the palette only had the -neon- name.
+               Every one of them was invalidated, so the secondary lines were
+               inheriting full-strength ink instead of the muted olive-gray. */
+            --dash-text-muted: #6E6A5C;              /* warm olive-gray */
             --dash-text-white: #2A2820;              /* dark ink on cream */              /* warm parchment, NOT white */
             --dash-success: #7FA897;                 /* sage for correct */                 /* correct = gold */
             --dash-success-glow: rgba(127, 168, 151, 0.35);
