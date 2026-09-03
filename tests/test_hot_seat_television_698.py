@@ -20,7 +20,11 @@ from __future__ import annotations
 
 import json
 import re
+import shutil
+import subprocess
 from pathlib import Path
+
+import pytest
 
 REPO = Path(__file__).resolve().parent.parent
 WEBSOCKET = REPO / "custom_components" / "quizify" / "server" / "websocket.py"
@@ -87,3 +91,51 @@ def test_the_outcome_distinguishes_a_wrong_answer_from_a_timeout() -> None:
             assert re.search(r"\{name\}", hot_seat[key]), (
                 f"{locale}.json hotSeat.{key} does not name the player"
             )
+
+
+def _outcome_decision_source() -> str:
+    """The three lines of handleHotSeatResult that choose the outcome string."""
+    html = DASHBOARD.read_text(encoding="utf-8")
+    start = html.index("var noAnswer =", html.index("function handleHotSeatResult("))
+    end = html.index(";", html.index("var key =", start)) + 1
+    return html[start:end]
+
+
+def test_the_timeout_branch_does_not_test_a_bare_falsy_value() -> None:
+    """``answered`` is tri-state — true / false / null.
+
+    The first version keyed the timeout on ``!msg.answered``, and JavaScript
+    treats ``false`` and ``null`` alike, so a wrong answer rendered as "ran
+    out of time" and hotSeat.resultWrong was unreachable. Silence and a wrong
+    guess mean opposite things about the room; this pins the distinction to
+    the only check that can tell them apart.
+    """
+    source = _outcome_decision_source()
+    assert "!msg.answered" not in source, (
+        "a bare falsy check collapses a wrong answer into the timeout branch"
+    )
+    assert "msg.answered === null" in source
+
+
+@pytest.mark.skipif(shutil.which("node") is None, reason="node not installed")
+def test_each_outcome_picks_its_own_string() -> None:
+    """Run the real decision, once per server state."""
+    script = (
+        "function pick(msg) {\n" + _outcome_decision_source() + "\nreturn key; }\n"
+        "console.log(JSON.stringify({"
+        "right: pick({answered: true}),"
+        "wrong: pick({answered: false}),"
+        "silent: pick({answered: null}),"
+        "missing: pick({})"
+        "}));"
+    )
+    out = subprocess.run(
+        ["node", "-e", script], capture_output=True, text=True, check=True
+    ).stdout
+    assert json.loads(out) == {
+        "right": "hotSeat.resultRight",
+        "wrong": "hotSeat.resultWrong",
+        "silent": "hotSeat.resultTimeout",
+        # A server that omits the field is as silent as an explicit null.
+        "missing": "hotSeat.resultTimeout",
+    }

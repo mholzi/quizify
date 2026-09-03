@@ -2549,9 +2549,15 @@
             // which is the only thing everyone was watching for.
             hotSeatFrame(msg.round_num, msg.total_rounds);
             els.questionCategory.textContent = '';
-            var right = msg.answered && msg.answer_index === msg.correct_index;
+            // ``answered`` is tri-state on the server: true = right,
+            // false = wrong, null = never answered. A bare falsy check
+            // collapses the last two, so a wrong answer read "ran out of
+            // time" — the one distinction this screen exists to make, since
+            // #653 made both cost the same points.
+            var noAnswer = msg.answered === null || msg.answered === undefined;
+            var right = msg.answered === true;
             var delta = (msg.deltas && msg.deltas[msg.winner]) || 0;
-            var key = !msg.answered
+            var key = noAnswer
                 ? 'hotSeat.resultTimeout'
                 : (right ? 'hotSeat.resultRight' : 'hotSeat.resultWrong');
             var fallback = msg.winner + (right ? ' +' : ' ') + delta;
