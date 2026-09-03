@@ -3,6 +3,37 @@
 All notable changes to Quizify are documented here. This project follows
 [Semantic Versioning](https://semver.org/).
 
+## [1.13.0] — 2026-09-03
+
+Quizify puts the question on the biggest screen in the room. This release is about
+everything that screen was quietly leaving out.
+
+### 📺 Three screens that never fitted a television
+
+The question view, the lightning round and the end screen all ran past the bottom of a
+720p picture — the last answers, the percentages, the leaderboard and the head-to-head line
+were simply not in it. All three fit now, at 1280×720, 1366×768 and 1920×1080. On short
+screens the question is sized by height rather than width, the answers take one column
+instead of three, and the awards give way to the ranking. At 1080p nothing changes.
+
+### 🎬 The reveal stops hiding its own numbers
+
+Wrong answers were dimmed as whole tiles, and the distribution chart sits inside those
+tiles — so the percentage that says half the room fell for the same one came out at a third
+of its contrast. The bar beside it reserved space while invisible, the star was painted over
+the number, and the fun fact has moved to where a 720p room can see it.
+
+### 🪑 The hot seat inherits what Lightning already knew
+
+A reload froze the television, the auction's loop outlived its round, and "play again"
+switched the auction back on by itself. In team mode both the auction and the final wager
+staked a share of a personal score that teams do not keep; both are off for teams now.
+
+---
+
+The first Quizify release since 1.7.0 that was played on a Home Assistant rather than
+measured in a browser — and two of the fixes above exist only because that happened.
+
 ## [1.13.0-RC3] — 2026-09-03
 
 ### ⚡ The lightning round did not fit either
