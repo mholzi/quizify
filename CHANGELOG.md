@@ -3,6 +3,47 @@
 All notable changes to Quizify are documented here. This project follows
 [Semantic Versioning](https://semver.org/).
 
+## [1.14.0] — 2026-09-04
+
+Every fix in this release ended somebody's evening: a game that would not start, a pause
+that would not end, a chair nobody could get out of.
+
+### 🚪 Two ways the game refused to start
+
+Over Nabu Casa every phone reaches Home Assistant through the same loopback address, so the
+per-address connection cap counted a whole room as one device: at roughly thirteen remote
+players the room was full and the next phone sat in "reconnecting…" forever. And one
+malformed file in the community folder took the whole integration down at setup — "Failed
+to set up", every page and socket gone, because a guest's pack wrote its answers as plain
+strings.
+
+### ⏸️ A pause that did not end
+
+Someone joining while the game was paused was handed a fresh full clock, and the round waits
+for the last timer — so the whole room sat at 0:00 for up to half a minute. A guest who
+reloaded during a host-gone pause was told the host would be back and lost the sixty-second
+reset button, on exactly the phones that had just reconnected.
+
+### 🪑 The hot seat gives the room back
+
+The seat winner could not answer anything for the rest of the game, the round wedged for a
+host who plays along, the admin page had no idea the detour existed, and the television
+read "Question undefined" and then never showed who won the chair. In team mode Steal could
+never be used and Double Points was consumed without doubling anything.
+
+### 🎛️ The surfaces around the game
+
+The host's Stats link was dead until the lobby had been opened, the in-game timer was
+written into a six-pixel bar, "Final Round!" never came down again, and the television
+carried the previous question's answer tally into the next lobby. The analytics page was
+painted in a palette that no longer exists — no bars, no borders — and four strings the
+room actually reads were still phone-sized.
+
+---
+
+Also in this release: four issues that were closed as completed but never built now say
+`not planned`, so the tracker means what it says.
+
 ## [1.13.0] — 2026-09-03
 
 Quizify puts the question on the biggest screen in the room. This release is about
