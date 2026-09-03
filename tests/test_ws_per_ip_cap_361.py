@@ -80,6 +80,9 @@ class TestPerIpConnectionCap:
         refused with HTTP 429 (before the socket is upgraded); the earlier
         sockets stay open."""
         handler.MAX_CONNECTIONS_PER_IP = 3  # keep the test fast
+        # The TestClient connects from 127.0.0.1, which since #701 gets the
+        # larger loopback cap; lower it too so this still exercises the cap.
+        handler.MAX_CONNECTIONS_PER_LOOPBACK = 3
         client = await _make_client(handler)
         opened = []
         try:
