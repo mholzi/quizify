@@ -1164,6 +1164,29 @@
             overflow: hidden;
         }
 
+        /* #692: on a 720p television the right column ran 9 elements past the
+           bottom edge — the leaderboard rows and the head-to-head line, which
+           is the whole headline of v1.12.0, were simply not in the picture.
+           Measured: the two award cards came to 337.1px of a 517.8px column,
+           and the leaderboard began at 624px.
+
+           The awards lose their detail line here, and nothing else changes.
+           That line is the footnote ("25 pts in round 6") under a heading that
+           already carries the point ("TOP SCORE · ANNA"), so it is the one
+           thing on this screen that can go without taking a fact with it.
+
+           Capping the awards box instead was measured and rejected: it clips a
+           card halfway, which is the same defect this issue is about, one box
+           further in. Dropping a whole line beats cutting one.
+
+           After: awards 171.9px, every leaderboard row in the picture, nothing
+           below the fold at 1280x720 or 1366x768. 1080p keeps the detail. */
+        @media (max-height: 850px) {
+            .dashboard-finale--split .award-detail {
+                display: none;
+            }
+        }
+
         .dashboard-finale::before {
             /* Single spotlight from above — replaces confetti */
             content: "";
