@@ -335,7 +335,7 @@ Quizify ships with **4,740 questions across 36 themed packs in 12 themes**, in G
 | 🎯 **Schätzfragen / Estimation / Estimación** | 15 | 15 | 15 |
 | 🖼️ **Bilderrätsel / Picture Round / Ronda de Imágenes** | 17 | 17 | 17 |
 
-Spanish arrived in 1.3.0 and reached every written theme in 1.9.0; the World Cup and Estimation packs are the two it is still missing. The two Estimation packs hold slider questions rather than multiple choice — see [How to Play](#the-experience); every themed pack now carries five slider questions of its own (#566) on top of its written ones.
+Spanish arrived in 1.3.0, reached every written theme in 1.9.0 and was completed in 1.10.0 — every row in the table above ships in all three languages, World Cup, Estimation and Picture Round included. The Estimation packs hold slider questions rather than multiple choice — see [How to Play](#the-experience); every themed pack now carries five slider questions of its own (#566) on top of its written ones.
 
 Pack selection lives on the **first screen**: a featured pack card (e.g. World Cup) up top, with every other pack as a tappable chip right beneath it — tap to select or deselect, mix several, then hit **Start Game**. Game settings (difficulty, rounds, timer) stay one tap away under **Adjust settings**. **Mixed mode** drops you a random question from every selected pack, so you can stir Geography + Pop + Sport together for chaos mode.
 
@@ -385,10 +385,11 @@ Quizify speaks your guests' language.
 
 - **🇩🇪 Deutsch** — Vollständige Unterstützung
 - **🇬🇧 English** — Full support
+- **🇪🇸 Español** — Compatibilidad completa
 
-The UI follows the game language (since v1.1.24) — pick German in the pack-picker and the entire admin / player / dashboard surface switches to German labels, tooltips, error messages, fun-fact labels, and end-game awards. Switch to English and the whole thing flips.
+The UI follows the game language (since v1.1.24) — pick German in the pack-picker and the entire admin / player / dashboard surface switches to German labels, tooltips, error messages, fun-fact labels, and end-game awards. Switch to English or Spanish and the whole thing flips.
 
-390 i18n keys, full parity between locales, validated in CI.
+666 i18n keys, full parity between all three locales, validated in CI.
 
 ---
 
