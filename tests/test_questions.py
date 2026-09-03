@@ -330,6 +330,82 @@ class TestCommunityPacks:
         assert loaded_again == {}
         assert qb.get_question_count("community-dupe") == 1
 
+    def test_string_answers_do_not_crash_the_loader(self, tmp_path: Path) -> None:
+        """#700: ``"answers": ["A", "B", "C"]`` used to raise AttributeError.
+
+        The exception escaped load_community_packs into async_setup_entry, so a
+        single guest file turned "Failed to set up" — the whole integration —
+        into the price of a typo.
+        """
+        bad = {"id": "bad", "question": "q", "answers": ["A", "B", "C"]}
+        _write_community_pack(
+            tmp_path / "community", "strings.json", _make_pack(questions=[bad])
+        )
+        qb = QuestionBank(questions_dir=tmp_path)
+        assert qb.load_community_packs() == {}
+
+    def test_answer_without_text_does_not_crash(self, tmp_path: Path) -> None:
+        """#700: ``[{"correct": true}]`` used to raise KeyError on ``a["text"]``."""
+        bad = {
+            "id": "bad",
+            "question": "q",
+            "answers": [{"correct": True}, {"text": "b"}, {"text": "c"}],
+        }
+        _write_community_pack(
+            tmp_path / "community", "notext.json", _make_pack(questions=[bad])
+        )
+        qb = QuestionBank(questions_dir=tmp_path)
+        assert qb.load_community_packs() == {}
+
+    def test_empty_answer_text_is_rejected(self, tmp_path: Path) -> None:
+        """#700: a blank string is as unplayable as a missing one."""
+        bad = {
+            "id": "bad",
+            "question": "q",
+            "answers": [{"text": "  ", "correct": True}, {"text": "b"}, {"text": "c"}],
+        }
+        _write_community_pack(
+            tmp_path / "community", "blank.json", _make_pack(questions=[bad])
+        )
+        qb = QuestionBank(questions_dir=tmp_path)
+        assert qb.load_community_packs() == {}
+
+    def test_malformed_answers_drop_only_that_question(self, tmp_path: Path) -> None:
+        """#700: the README's promise — skipped and logged, not fatal."""
+        good = _make_pack()["questions"][0]
+        bad = {"id": "bad", "question": "q", "answers": ["A", "B", "C"]}
+        _write_community_pack(
+            tmp_path / "community", "mixed700.json", _make_pack(questions=[good, bad])
+        )
+        qb = QuestionBank(questions_dir=tmp_path)
+        loaded = qb.load_community_packs()
+        assert "community-mixed700" in loaded
+        assert qb.get_question_count("community-mixed700") == 1
+
+    def test_parser_exception_is_contained(self, tmp_path: Path, monkeypatch) -> None:
+        """#700: even an unforeseen parser error may not abort the load."""
+        import custom_components.quizify.game.questions as questions_module
+
+        real = questions_module._parse_question
+        calls = {"n": 0}
+
+        def exploding(entry, category_name):
+            calls["n"] += 1
+            if calls["n"] == 1:
+                raise RuntimeError("unforeseen field assumption")
+            return real(entry, category_name)
+
+        monkeypatch.setattr(questions_module, "_parse_question", exploding)
+        q = _make_pack()["questions"][0]
+        second = dict(q, id="cq_002")
+        _write_community_pack(
+            tmp_path / "community", "boom.json", _make_pack(questions=[q, second])
+        )
+        qb = QuestionBank(questions_dir=tmp_path)
+        loaded = qb.load_community_packs()
+        assert "community-boom" in loaded
+        assert qb.get_question_count("community-boom") == 1
+
     def test_shipped_example_pack_loads(self) -> None:
         qb = QuestionBank(questions_dir=QUESTIONS_DIR)
         loaded = qb.load_community_packs()

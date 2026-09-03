@@ -169,21 +169,31 @@ class PhaseController:
             and self.round_start_time is not None
             and name not in self.timers
         ):
-            elapsed = time.monotonic() - self.round_start_time
-            remaining = max(0.5, self.round_duration - elapsed)
-            # Reconstruct the timer against the SHARED round wall-clock rather
-            # than starting a fresh clock at join time (#355). A plain
-            # QuestionTimer(remaining).start() makes get_elapsed() count from
-            # JOIN, so a player joining with 5s left and answering in 2s scores
-            # time_fraction ≈ 0.93 (near-max speed bonus) — beating an on-time
-            # player answering at the same wall-clock instant (≈ 0.17). Seeding
-            # elapsed = now - round_start_time (the exact pause/resume trick)
-            # makes the late joiner's get_elapsed() identical to an on-time
-            # player's, so speed scoring is consistent. The remaining still
-            # carries the 0.5s late-join grace so they can answer the in-flight
-            # question.
-            timer = QuestionTimer.resumed(remaining=remaining, elapsed=elapsed)
-            self.timers[name] = timer
+            timer = self._late_joiner_timer()
+            if timer is not None:
+                self.timers[name] = timer
+
+    def _late_joiner_timer(self) -> QuestionTimer | None:
+        """Build a timer on the round's SHARED wall-clock (#355, #702).
+
+        Used for anyone who was not present when the round began: someone who
+        joins mid-question, and (since #702) someone who joins while the game
+        is paused. Returns None when there is no round to hang a clock on.
+
+        A plain ``QuestionTimer(remaining).start()`` would make get_elapsed()
+        count from JOIN, so a player joining with 5s left and answering in 2s
+        scores time_fraction ≈ 0.93 (near-max speed bonus) — beating an on-time
+        player answering at the same wall-clock instant (≈ 0.17). Seeding
+        elapsed = now - round_start_time (the exact pause/resume trick) makes
+        the late joiner's get_elapsed() identical to an on-time player's, so
+        speed scoring is consistent. The remaining carries a 0.5s floor as the
+        late-join grace, so they can still answer the in-flight question.
+        """
+        if self.round_start_time is None:
+            return None
+        elapsed = time.monotonic() - self.round_start_time
+        remaining = max(0.5, self.round_duration - elapsed)
+        return QuestionTimer.resumed(remaining=remaining, elapsed=elapsed)
 
     def drop_timer(self, name: str) -> None:
         """Drop a single player's timer (player removed)."""
@@ -390,8 +400,9 @@ class PhaseController:
             self.round_start_time += time.monotonic() - self.paused_at
         # Restore timers with the remaining time AND elapsed they had at pause
         # (QuestionTimer.resumed preserves both, so the speed bonus measured
-        # from get_elapsed() isn't inflated — #295/#254). Late-joiners during
-        # PAUSED won't be in the snapshots and get a fresh full-round timer.
+        # from get_elapsed() isn't inflated — #295/#254). Someone who joined
+        # while the game was paused is in no snapshot and gets the round's
+        # shared remaining instead (#702).
         full = self.round_duration
         for name in self._players_fn():
             if name in self.paused_remaining:
@@ -406,8 +417,18 @@ class PhaseController:
                 if frozen_left > 0.0:
                     timer.freeze(frozen_left)
             else:
-                timer = QuestionTimer(full)
-                timer.start()
+                # Joined during the pause (#702). A fresh full clock made the
+                # newcomer outlast everybody else — the tick loop only ends
+                # once every connected timer has expired, and all_submitted()
+                # ignores late joiners, so the whole room sat at 0:00 waiting
+                # for one phone that had up to a full round left. The mid-
+                # question join path already hands out the shared remaining;
+                # this is the same rule for the paused path.
+                late = self._late_joiner_timer()
+                if late is None:  # no round wall-clock to hang it on
+                    late = QuestionTimer(full)
+                    late.start()
+                timer = late
             self.timers[name] = timer
         self.paused_remaining = {}
         self.paused_elapsed = {}

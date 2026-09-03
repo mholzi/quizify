@@ -692,6 +692,24 @@
                 // see.
                 pu.showView('game-view');
                 if (hotSeat && msg.hot_seat) hotSeat.restoreFromSnapshot(msg.hot_seat);
+                // #697: the detour is entered from ANSWER_REVEAL, which hides
+                // the control bar, and nothing here brought it back. A host
+                // who plays along — the default, since the admin tab redirects
+                // to this page on start — had no Next, no Skip and no End for
+                // the rest of the game: HOT_SEAT_REVEAL is left only by an
+                // explicit next_round. End and Skip stay; Pause does not,
+                // because the detour owns its own clock.
+                var adminBarHS = document.getElementById('admin-control-bar');
+                if (adminBarHS) adminBarHS.classList.toggle('hidden', !state.isAdmin);
+                var nextRoundHS = document.getElementById('next-round-admin-btn');
+                var skipHS = document.getElementById('skip-question-btn');
+                var pauseHS = document.getElementById('pause-game-btn');
+                var resumeHS = document.getElementById('resume-game-btn');
+                var inReveal = msg.phase === 'HOT_SEAT_REVEAL';
+                if (nextRoundHS) nextRoundHS.classList.toggle('hidden', !inReveal);
+                if (skipHS) skipHS.classList.toggle('hidden', inReveal);
+                if (pauseHS) pauseHS.classList.add('hidden');
+                if (resumeHS) resumeHS.classList.add('hidden');
                 break;
 
             case 'PAUSED':
@@ -1537,9 +1555,16 @@
                 var btn = e.target.closest('.answer-btn');
                 if (!btn || btn.disabled) return;
                 var index = parseInt(btn.dataset.index, 10);
-                if (!isNaN(index)) {
-                    game.handleAnswerClick(index, send);
+                if (isNaN(index)) return;
+                // #696: while the seat holder is answering, the same grid
+                // means hot_seat_answer. This used to be an inline onclick on
+                // replacement buttons, which shadowed this handler and left
+                // the grid unusable for every later round.
+                if (hotSeat && hotSeat.handleSeatAnswerClick &&
+                    hotSeat.handleSeatAnswerClick(index)) {
+                    return;
                 }
+                game.handleAnswerClick(index, send);
             });
         }
 
