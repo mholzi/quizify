@@ -85,3 +85,36 @@ def test_the_head_to_head_line_is_the_last_block_in_the_column() -> None:
     start = html.index('<div class="dashboard-finale-right">')
     right = html[start : html.index("</div>", html.index('id="end-h2h"'))]
     assert right.index('class="finale-leaderboard-card"') < right.index('id="end-h2h"')
+
+
+def test_the_leaderboard_outranks_the_awards() -> None:
+    """Markus, 03.09.2026, after a three-player game on a 720p television.
+
+    #694 freed the space and the awards took it: the leaderboard card was
+    squeezed to 25.7px, "Leaderboard" was cut in half, and not one player row
+    was on screen while both award cards sat above it in full. 1080p failed the
+    same way, so this is a player-count problem and not a screen-height one —
+    which is why the rule is not inside a media query.
+
+    The order is now fixed in CSS: the leaderboard reserves room for a header
+    and three rows, and the awards are the block that gives way.
+    """
+    css = _css()
+
+    def declarations(selector: str) -> str:
+        """Every rule for this selector, joined — CSS cascades, so a single
+        `re.search` would read the first of them and miss the one that wins."""
+        pattern = re.escape(selector) + r"\s*\{([^}]*)\}"
+        found = re.findall(pattern, css)
+        assert found, f"no rule found for {selector}"
+        return "\n".join(found)
+
+    card = declarations(".dashboard-finale--split .finale-leaderboard-card")
+    floor = re.search(r"min-height:\s*(\d+)px", card)
+    assert floor and int(floor.group(1)) >= 200, (
+        f"the leaderboard needs a floor that holds three rows: {card}"
+    )
+
+    awards = declarations(".dashboard-finale--split .awards-section")
+    assert "flex: 1 1 auto" in awards, awards
+    assert "min-height: 0" in awards, awards
