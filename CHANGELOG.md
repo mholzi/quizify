@@ -3,6 +3,28 @@
 All notable changes to Quizify are documented here. This project follows
 [Semantic Versioning](https://semver.org/).
 
+## [1.13.0-RC1] — 2026-09-03
+
+### 🎬 The reveal stops hiding its own numbers
+
+Wrong answers were dimmed as whole tiles — and the distribution chart sits inside those tiles, so the percentage that says *54 % of us fell for the same one* came out at a third of its contrast. That number only ever appears on a wrong answer. It is the point of the chart.
+
+The bar beside it reserved 140 px of every tile while invisible, which is why answers wrapped into narrow ribbons beside an empty half; at 1280×720 the answer grid spilled 330 px across the leaderboard. And the star marking the correct answer was pinned to the tile's corner, painted on top of that same percentage.
+
+### 📺 The question screen fits a 720p television
+
+It never did. The left column needed 823 px of the 550 px it has, and the overflow came out of *both* ends, so the category label sat behind the timer bar. Short screens now use two answer columns instead of three; at 1080p nothing changes.
+
+The fun fact moves under the leaderboard. It used to begin 6 px below the bottom edge of the picture — nobody with a 720p television has ever seen one.
+
+### 🪑 The hot seat inherits what Lightning already knew
+
+Five defects of one shape: Lightning solved each of these once, and the hot seat was built without inheriting any of it. A reload froze the television (#664). Its background loop outlived the round that started it (#671). "Play again — same settings" switched the auction back on by itself (#670).
+
+In team mode, the auction and the final wager both staked a percentage of a personal score that teams do not keep (#668, #669). Both are switched off for teams now rather than made to look plausible — team play for either is a feature, and Lightning got its team support deliberately.
+
+**Why a release candidate.** None of this has run on a Home Assistant. Every measurement above came from the page rendered in a browser at 1920×1080 and 1280×720 — real pixels, but not a real television, and not a hot seat played by real people.
+
 ## [1.12.0] — 2026-08-31
 
 ### 🥊 The duel between two regulars
