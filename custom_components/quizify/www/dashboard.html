@@ -2121,6 +2121,9 @@
                 case 'hot_seat_no_bids':
                     handleHotSeatNoBids();
                     break;
+                case 'hot_seat_result':
+                    handleHotSeatResult(msg);
+                    break;
                 case 'hot_seat_tick':
                     handleTimerTick({ remaining: msg.remaining });
                     break;
@@ -2537,6 +2540,32 @@
                 category: msg.category || '',
                 image_url: msg.image_url || ''
             });
+        }
+
+        function handleHotSeatResult(msg) {
+            // #698: the settlement had no consumer on any surface. The board
+            // stayed on the question with the bar at zero until the host
+            // advanced, so the room never learned whether the chair paid off —
+            // which is the only thing everyone was watching for.
+            hotSeatFrame(msg.round_num, msg.total_rounds);
+            els.questionCategory.textContent = '';
+            // ``answered`` is tri-state on the server: true = right,
+            // false = wrong, null = never answered. A bare falsy check
+            // collapses the last two, so a wrong answer read "ran out of
+            // time" — the one distinction this screen exists to make, since
+            // #653 made both cost the same points.
+            var noAnswer = msg.answered === null || msg.answered === undefined;
+            var right = msg.answered === true;
+            var delta = (msg.deltas && msg.deltas[msg.winner]) || 0;
+            var key = noAnswer
+                ? 'hotSeat.resultTimeout'
+                : (right ? 'hotSeat.resultRight' : 'hotSeat.resultWrong');
+            var fallback = msg.winner + (right ? ' +' : ' ') + delta;
+            els.questionText.textContent = hotSeatT(
+                key, { name: msg.winner, pts: Math.abs(delta) }, fallback
+            );
+            if (els.answerProgress) els.answerProgress.classList.add('hidden');
+            if (els.timerFill) els.timerFill.style.width = '0%';
         }
 
         function handleHotSeatNoBids() {

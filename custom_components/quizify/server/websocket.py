@@ -2770,6 +2770,12 @@ class QuizifyWebSocketHandler:
             "type": "hot_seat_auction",
             "seconds": hs.auction_seconds,
             "players": len(hs.scores),
+            # #698: the television's round indicator is interpolated from
+            # these two. Without them the auction kept the previous round's
+            # number and the question that follows printed the literal string
+            # "undefined" for the whole answer window.
+            "round_num": game_state.round,
+            "total_rounds": game_state.total_rounds,
         })
         # Each player needs their own number: a percentage is only meaningful
         # next to the points it costs *them*.
@@ -2878,6 +2884,8 @@ class QuizifyWebSocketHandler:
                 game_state.finish_hot_seat()
                 await self._conn.broadcast({
                     "type": "hot_seat_result",
+                    "round_num": game_state.round,
+                    "total_rounds": game_state.total_rounds,
                     **hs.summary(),
                     "scores": {
                         p.name: p.score for p in game_state.get_players()
@@ -2907,6 +2915,9 @@ class QuizifyWebSocketHandler:
             "type": "hot_seat_question",
             "question": q.question,
             "difficulty": q.difficulty,
+            # #698: see the auction broadcast — the TV interpolates both.
+            "round_num": game_state.round,
+            "total_rounds": game_state.total_rounds,
             "image_url": getattr(q, "image_url", "") or "",
             "seconds": hs.answer_seconds,
             "winner": hs.winner,
