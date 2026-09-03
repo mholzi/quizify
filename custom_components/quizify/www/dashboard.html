@@ -389,12 +389,23 @@
                Two columns give each tile ~341px, the chart stays on the
                answer's line, and the grid drops from 383.5px to about 246.
 
-               Two columns also suit four answers better than 3+1 does. The
-               type is deliberately left alone: #376 sized it for a room, and
-               shrinking it here would trade a legibility decision for
-               vertical space that this rule already finds elsewhere. */
+               Two columns also suit four answers better than 3+1 does.
+
+               Played on a real 720p television on 03.09.2026: two columns are
+               a step in the right direction that stops one short. A 343px tile
+               still wraps a long answer onto three lines and puts the chart
+               under it — 241.7px per tile, measured live. One column gives the
+               tile the full 699px, the answer sits on two lines, the chart
+               stays on the second, and the tile drops to 125px. Measured
+               against the heaviest question the library actually ships
+               (108 characters, 325 characters of answers, longest 121):
+               519.5px of 573px available, nothing below the fold.
+
+               The four-answer argument above does not apply to this library:
+               all 4.545 multiple-choice questions carry exactly three
+               answers. */
             #question-view .dashboard-answers {
-                grid-template-columns: 1fr 1fr;
+                grid-template-columns: 1fr;
             }
 
             /* Margins and padding, not sizes — no legibility is spent here.
@@ -414,8 +425,27 @@
                 margin-bottom: 8px;
             }
 
+            /* Played on a 720p television on 03.09.2026, and the two rules
+               above were not enough. A 150-character question rendered 6.5
+               lines at 53.8px; the body came to 837.3px of 579.9px available
+               and put 20 elements below the fold — the third answer tile
+               entirely off-screen, percentages included. The same view with a
+               102-character question measures 473.6px and fits, which is why
+               #686 passed: it was measured against one question, not against
+               the longest one. The library runs to 173 characters, p99 137.
+
+               The cause is a mismatch of axes: the type is sized by *width*
+               (4.2vw), and width is the one thing a 1280x720 television has
+               enough of. On a short screen it is sized by the budget that is
+               actually scarce. #376's sizes stay untouched at 1080p and above,
+               and the floor here is 28px — below that the room stops reading
+               it, and clipping the answers would be the better trade. */
             #question-view .dashboard-question {
-                margin-bottom: 20px;
+                font-size: clamp(28px, 4.4vh, 44px);
+                /* 24ch of a smaller type hands the saved lines straight back:
+                   the column is 699px wide, so let the type use it. */
+                max-width: none;
+                margin-bottom: 16px;
             }
 
             /* #680 hid this at short heights, because under the answers it
