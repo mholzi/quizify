@@ -2935,6 +2935,16 @@ class QuizifyGameState:
                 block["summary"] = hs.summary()
             snapshot["hot_seat"] = block
 
+        if self.phase == GamePhase.PAUSED:
+            # #703: the reason used to be attached by the two pause
+            # *broadcasts* only, so any phone that reconnected (or joined, or
+            # asked for state) during a pause got a snapshot without it. The
+            # client derives both the title and the 60s reset affordance from
+            # this field, so a guest who reloaded during a host-gone pause was
+            # told "the host will resume" and lost the only way out (#299) —
+            # on exactly the phones that had just reconnected.
+            snapshot["pause_reason"] = self.get_pause_reason()
+
         return snapshot
 
     # ------------------------------------------------------------------

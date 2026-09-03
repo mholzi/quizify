@@ -2193,9 +2193,10 @@ class QuizifyWebSocketHandler:
             return False
         # Stop sending tick updates while paused.
         self._cancel_timer_tick()
+        # pause_reason rides along in the snapshot itself since #703, so it
+        # is identical here and on every reconnect.
         state = game_state.get_state_snapshot()
         state["type"] = "game_state"
-        state["pause_reason"] = "admin_paused"
         await self._conn.broadcast(state)
         return True
 
@@ -3630,7 +3631,6 @@ class QuizifyWebSocketHandler:
                 self._cancel_timer_tick()
                 state = gs.get_state_snapshot()
                 state["type"] = "game_state"
-                state["pause_reason"] = "admin_disconnected"
                 await self._conn.broadcast(state)
                 _LOGGER.info(
                     "Paused game after admin %s failed to reconnect within %.1fs",
