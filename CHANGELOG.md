@@ -3,6 +3,24 @@
 All notable changes to Quizify are documented here. This project follows
 [Semantic Versioning](https://semver.org/).
 
+## [1.13.0-RC3] — 2026-09-03
+
+### ⚡ The lightning round did not fit either
+
+RC2 sized the question and dropped the answers to one column on short screens — and scoped both rules to the question view. The lightning round is the same layout under a different id, and got neither. Played on a television it was worse than the question view ever was: the answers stayed in three 221px columns, each tile 213px tall, and the grid ended 938px down a 720px picture. Twelve elements below the fold, in the phase where the clock is fifteen seconds.
+
+Both views are named on every short-screen rule now. Grid bottom 603px at 1280×720, 631px at 1366×768, nothing below the fold, 1080p unchanged.
+
+A second defect in the same view came out of the same screenshot: the "Get ready!" splash stayed on screen over the running question. The code has always set `hidden` on it — and `hidden` is a UA rule that a class setting `display` beats, so the assignment did nothing at all. A test now checks that trap across every element the dashboard hides by attribute. (#691, #693)
+
+### 🏆 The end screen was hiding the duel
+
+On a 720p television the end of a game showed the podium and two award cards. The leaderboard rows and the head-to-head line — the headline of 1.12.0 — were nine elements below the bottom edge, and had been on every short television since that feature shipped.
+
+Nothing here was too tall; the column simply stacked more than the screen has room for. On short screens the awards now drop their detail line and nothing else changes: that line is the footnote under a heading that already carries the point. Awards 337px → 172px, every leaderboard row in the picture, the head-to-head line at 609–666px of 720. 1080p keeps the detail. (#692, #694)
+
+**Both were found by playing, not by reading.** RC2 was the first build in a month to run on a Home Assistant; these two are what the first two games on it turned up.
+
 ## [1.13.0-RC2] — 2026-09-03
 
 ### 📺 A long question no longer hides the answers
