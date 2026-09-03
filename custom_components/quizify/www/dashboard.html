@@ -1178,7 +1178,32 @@
             min-width: 0;
             width: 100%;
         }
+        /* The leaderboard comes before the awards, decided by Markus on
+           03.09.2026 after a three-player game on a 720p television showed
+           what the old order costs: the card was squeezed to 25.7px, the word
+           "Leaderboard" was cut in half and not one player row was on screen,
+           while both award cards sat above it in full. 1080p failed the same
+           way — this is a player-count problem, not a screen-height one, so
+           the rule is not inside a media query.
+
+           The arithmetic at 1280x720: the right column has 434px and two 16px
+           gaps; the head-to-head line takes 56.9px; a card header is 45.5px
+           and a row 58.6px, so three rows need 221.3px. That leaves ~124px of
+           awards, which is one card — and one award plus a readable ranking
+           beats two awards and no ranking.
+
+           The awards are the block that gives way now. With more players the
+           leaderboard keeps its three rows and scrolls the rest inside its own
+           list, which already carries overflow: auto. */
         .dashboard-finale--split .finale-leaderboard-card {
+            flex: 0 1 auto;
+            /* Header 45.5px, plus the list's own 8px padding, three 58.6px
+               rows and two 4px gaps between them — 245.3px, measured on the
+               television rather than derived from the stylesheet. */
+            min-height: 246px;
+            overflow: hidden;
+        }
+        .dashboard-finale--split .awards-section {
             flex: 1 1 auto;
             min-height: 0;
             overflow: hidden;
