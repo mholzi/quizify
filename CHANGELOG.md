@@ -3,6 +3,24 @@
 All notable changes to Quizify are documented here. This project follows
 [Semantic Versioning](https://semver.org/).
 
+## [1.13.0-RC2] — 2026-09-03
+
+### 📺 A long question no longer hides the answers
+
+RC1 was measured in a browser. Played on an actual Home Assistant, round one served a 150-character question and the answers were not on the screen: the question body came to 837 px of the 580 px a 720p television has, twenty elements sat below the fold, and the third answer tile and all three percentages were outside the picture.
+
+The two rules RC1 added both work — they were measured against a 102-character question, which fits in 474 px. The library ships questions up to 173 characters.
+
+So the question is now sized by the axis that is scarce. `4.2vw` sizes it by *width*, and width is the one thing a 1280×720 television has enough of; on short screens it scales with height instead, with a floor, and 1080p keeps the sizes #376 chose for a room. The answers drop to a single column: two columns still wrapped a long answer onto three lines and pushed the chart underneath, 242 px per tile. The full column width takes that to 125 px and keeps the chart on the answer's line.
+
+Measured after, against the heaviest question the library actually ships: 520 px of 573 px at 720p, 527 of 599 at 1366×768, nothing below the fold at any resolution. (#688, #689)
+
+### 📖 The README stopped underselling the library
+
+Three claims had gone stale, all in the same direction. Spanish was described as still missing the World Cup and Estimation packs — both shipped in 1.10.0, and the table directly above the sentence already listed them. The i18n key count said 390 where the bundles carry 666. The language list named German and English, though Spanish has been a full UI language since 1.5.0. (#690)
+
+**What changed since RC1.** This candidate is the first Quizify build verified on a real Home Assistant since 1.7.0 — deployed, restarted, and played through admin, phone and television. The hot seat is still unverified: it fires once per game at random, and the test game ran two rounds.
+
 ## [1.13.0-RC1] — 2026-09-03
 
 ### 🎬 The reveal stops hiding its own numbers
