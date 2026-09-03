@@ -79,3 +79,61 @@ def test_readme_names_every_shipped_theme() -> None:
             f"Theme {theme!r} ships but is missing from the README's list of "
             "valid `theme` values, so a pack author cannot discover it."
         )
+
+
+def test_readme_quotes_the_real_i18n_key_count() -> None:
+    """The README said "390 i18n keys" while the bundles carried 666.
+
+    Nothing failed when keys were added, because the existing tests here count
+    packs and questions. The number is quoted to readers who are deciding
+    whether the integration speaks their language, so it is worth a guard of
+    its own.
+    """
+    i18n = REPO / "custom_components" / "quizify" / "www" / "i18n"
+
+    def leaves(node: object) -> int:
+        if isinstance(node, dict):
+            return sum(leaves(v) for v in node.values())
+        return 1
+
+    counts = {
+        path.stem: leaves(json.loads(path.read_text(encoding="utf-8")))
+        for path in sorted(i18n.glob("*.json"))
+    }
+    assert counts, "no i18n bundles found"
+    assert len(set(counts.values())) == 1, f"bundles are out of parity: {counts}"
+
+    keys = next(iter(counts.values()))
+    readme = README.read_text(encoding="utf-8")
+    assert f"{keys} i18n keys" in readme, (
+        f"README does not quote the real i18n key count ({keys}); "
+        f"bundles: {counts}"
+    )
+
+
+def test_readme_does_not_claim_a_gap_that_has_been_closed() -> None:
+    """Until 1.10.0 the README could truthfully say Spanish was missing two
+    packs. It shipped them and the sentence stayed, so the store text told
+    every reader the library was incomplete for two weeks.
+
+    The mechanical form of that claim: if every shipped language covers the
+    same themes, no language is missing anything, and the README may not say
+    otherwise.
+    """
+    by_language: dict[str, set[str]] = {}
+    for pack in _shipped_packs():
+        language = pack.get("language")
+        theme = pack.get("theme")
+        if language and theme:
+            by_language.setdefault(language, set()).add(theme)
+
+    assert by_language, "no themed packs found"
+    if len({frozenset(themes) for themes in by_language.values()}) != 1:
+        return  # a real gap exists; the README is allowed to describe it
+
+    readme = README.read_text(encoding="utf-8").lower()
+    for claim in ("is still missing", "are still missing", "still missing"):
+        assert claim not in readme, (
+            f"every language now covers the same themes, but the README still "
+            f"says {claim!r}"
+        )
