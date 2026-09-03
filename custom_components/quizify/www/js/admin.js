@@ -93,20 +93,66 @@
     };
 
     // ---- Simple inline timer ----
-    var adminTimerEl = null;
+    // #706: the seconds used to be written into #admin-timer-bar, which is the
+    // 6px .timer-bar-container — so the text wiped .timer-bar-fill and spilled
+    // out of a strip six pixels tall, while the element built for it
+    // (#admin-timer-bar-text, 1.5rem bold tabular with warning/critical
+    // states) was never written at all. The text goes to the text node, the
+    // bar keeps its fill, and the fill now actually empties: start() has
+    // always been handed the duration and never used it.
+    var adminTimerTextEl = null;
+    var adminTimerFillEl = null;
+    var adminTimerDuration = 0;
     var adminTimerInterval = null;
+
+    function _adminTimerText() {
+        if (!adminTimerTextEl) {
+            adminTimerTextEl = document.getElementById('admin-timer-bar-text');
+        }
+        return adminTimerTextEl;
+    }
+
+    function _adminTimerFill() {
+        if (!adminTimerFillEl) {
+            var bar = document.getElementById('admin-timer-bar');
+            adminTimerFillEl = bar ? bar.querySelector('.timer-bar-fill') : null;
+        }
+        return adminTimerFillEl;
+    }
+
     var adminTimer = {
         start: function(duration) {
-            adminTimerEl = document.getElementById('admin-timer-bar');
+            adminTimerDuration = typeof duration === 'number' && duration > 0
+                ? duration
+                : 0;
             clearInterval(adminTimerInterval);
+            var fill = _adminTimerFill();
+            if (fill) fill.style.width = '100%';
         },
         update: function(remaining) {
-            if (!adminTimerEl) adminTimerEl = document.getElementById('admin-timer-bar');
-            if (adminTimerEl) adminTimerEl.textContent = Math.ceil(remaining) + 's';
+            var left = Math.max(0, remaining);
+            var textEl = _adminTimerText();
+            if (textEl) {
+                textEl.textContent = Math.ceil(left) + 's';
+                // The same thresholds the player's clock uses, so host and
+                // room turn red at the same moment.
+                textEl.classList.toggle('critical', left <= 5);
+                textEl.classList.toggle('warning', left > 5 && left <= 10);
+            }
+            var fill = _adminTimerFill();
+            if (fill && adminTimerDuration > 0) {
+                fill.style.width = (100 * left / adminTimerDuration) + '%';
+            }
         },
         stop: function() {
             clearInterval(adminTimerInterval);
-            if (adminTimerEl) adminTimerEl.textContent = '';
+            var textEl = _adminTimerText();
+            if (textEl) {
+                textEl.textContent = '';
+                textEl.classList.remove('warning', 'critical');
+            }
+            var fill = _adminTimerFill();
+            if (fill) fill.style.width = '0%';
         }
     };
 
@@ -1941,7 +1987,13 @@
         }
         if (countdownEl) {
             countdownEl.classList.toggle('is-ready', isReady);
-            countdownEl.classList.toggle('hidden', isReady);
+            // #706: at LOBBY_MIN_PLAYERS = 1 the only state that shows this
+            // line is the empty lobby, where it reads "Ready at 1 players ·
+            // still need 1 more" — a plural for one and a countdown for a
+            // threshold nobody is waiting on. The marquee already says the
+            // room is waiting. Kept in the markup for a higher threshold.
+            var worthShowing = LOBBY_MIN_PLAYERS > 1 && !isReady;
+            countdownEl.classList.toggle('hidden', !worthShowing);
         }
 
         if (els.startGameplayBtn) {
@@ -2893,7 +2945,6 @@
     on(els.startGameBtn, 'click', function () {
         showView('lobby');
         initJoinUrl();
-        initStatsLink();
     });
 
     // Featured pack spotlight (hero) → SELECT/DESELECT the World Cup pack, the
@@ -3128,9 +3179,18 @@
     }
 
     // ---- Generate join URL ----
+    var _statsLinkBound = false;
+
     function initStatsLink() {
+        // #706: this used to be called from the "Open lobby" handler alone, so
+        // the Stats button on the setup screen did nothing until the host had
+        // opened the lobby once — and every further trip through the lobby
+        // added another listener, so one tap opened one tab per visit. Bound
+        // once, at load, for a button that is visible from the first paint.
+        if (_statsLinkBound) return;
         var btn = document.getElementById('setup-stats-btn');
         if (!btn) return;
+        _statsLinkBound = true;
         btn.addEventListener('click', function () {
             // Deliberately NO ?token= (#359, #608): analytics.html reads the
             // admin token from localStorage via QuizifyUtils.readAdminToken()
@@ -3284,6 +3344,10 @@
         updateSettingsSummary();
         updateCategorySummary();
     }
+
+    // #706: the Stats button sits on the setup screen, so it is bound here
+    // rather than on the way into the lobby.
+    initStatsLink();
 
     connect();
     updateConnectionStatus('reconnecting');
