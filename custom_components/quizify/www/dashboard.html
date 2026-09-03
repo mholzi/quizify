@@ -404,7 +404,8 @@
                The four-answer argument above does not apply to this library:
                all 4.545 multiple-choice questions carry exactly three
                answers. */
-            #question-view .dashboard-answers {
+            #question-view .dashboard-answers,
+            #lightning-view .dashboard-answers {
                 grid-template-columns: 1fr;
             }
 
@@ -412,16 +413,19 @@
                The tiles carry the reveal's remaining 36.5px: their vertical
                padding resolves to 23px at this width, and the reveal has two
                rows of them. */
-            #question-view .dashboard-answer {
+            #question-view .dashboard-answer,
+            #lightning-view .dashboard-answer {
                 padding-top: 12px;
                 padding-bottom: 12px;
             }
 
-            #question-view .dashboard-answers {
+            #question-view .dashboard-answers,
+            #lightning-view .dashboard-answers {
                 gap: 12px;
             }
 
-            #question-view .dashboard-category {
+            #question-view .dashboard-category,
+            #lightning-view .dashboard-category {
                 margin-bottom: 8px;
             }
 
@@ -439,8 +443,19 @@
                enough of. On a short screen it is sized by the budget that is
                actually scarce. #376's sizes stay untouched at 1080p and above,
                and the floor here is 28px — below that the room stops reading
-               it, and clipping the answers would be the better trade. */
-            #question-view .dashboard-question {
+               it, and clipping the answers would be the better trade.
+
+               #691: the lightning view is the same layout under a different id,
+               and scoping these rules to #question-view left it broken while
+               the view beside it was fixed. Played on a 720p television its
+               answer grid ended 938px down a 720px picture — worse than the
+               question view ever was, in the phase where the clock is fifteen
+               seconds. Both views are named on every rule now; the finale is
+               NOT covered here, because it carries neither .dashboard-question
+               nor .dashboard-answers and overflows for a different reason
+               (#692). */
+            #question-view .dashboard-question,
+            #lightning-view .dashboard-question {
                 font-size: clamp(28px, 4.4vh, 44px);
                 /* 24ch of a smaller type hands the saved lines straight back:
                    the column is 699px wide, so let the type use it. */
@@ -1029,6 +1044,11 @@
             font-variant-numeric: tabular-nums;
             margin-left: auto;
         }
+        /* #691: `hidden` is a UA rule, so a class that sets display wins over
+           it and the attribute silently does nothing — the splash stayed on
+           screen over the running question for the whole round. Same guard as
+           .dashboard-reconnect-pill above, which learned this first. */
+        .dashboard-lightning-splash[hidden] { display: none; }
         .dashboard-lightning-splash {
             flex: 1;
             display: flex;
