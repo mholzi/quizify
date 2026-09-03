@@ -794,6 +794,9 @@
     "betOptional": "Mitwetten ist freiwillig.",
     "betPlaced": "Gesetzt: {pct}% auf {side}",
     "noBet": "Der Spieler im Stuhl wettet nicht.",
-    "timeoutNote": "Keine Antwort kostet den Einsatz genauso wie eine falsche."
+    "timeoutNote": "Keine Antwort kostet den Einsatz genauso wie eine falsche.",
+    "resultRight": "{name} hat sie gewusst — +{pts} Punkte",
+    "resultWrong": "{name} lag daneben — −{pts} Punkte",
+    "resultTimeout": "{name} war zu langsam — −{pts} Punkte"
   }
 }

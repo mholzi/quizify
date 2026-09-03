@@ -794,6 +794,9 @@
     "betOptional": "Apostar es opcional.",
     "betPlaced": "Apostado: {pct}% a {side}",
     "noBet": "Quien está en la silla no apuesta.",
-    "timeoutNote": "No responder cuesta la apuesta igual que fallar."
+    "timeoutNote": "No responder cuesta la apuesta igual que fallar.",
+    "resultRight": "{name} acertó — +{pts} puntos",
+    "resultWrong": "{name} falló — −{pts} puntos",
+    "resultTimeout": "A {name} se le acabó el tiempo — −{pts} puntos"
   }
 }
