@@ -3,6 +3,30 @@
 All notable changes to Quizify are documented here. This project follows
 [Semantic Versioning](https://semver.org/).
 
+## [1.14.0] — 2026-09-04
+
+Every fix in this release ended somebody's evening.
+
+### 🚪 The game would not start
+
+Over Nabu Casa a whole room counted as one device, so it filled at thirteen players. And a
+single malformed community pack took the integration down at setup.
+
+### ⏸️ The pause would not end
+
+A guest who joined during a pause got a fresh full clock, and the room waited at 0:00. One
+who reloaded during a host-gone pause lost the reset button.
+
+### 🪑 The hot seat let nobody out
+
+The seat winner could not answer again all game, the round wedged for a host who plays
+along, and the television never showed who won the chair.
+
+### 🎛️ And around the game
+
+A dead Stats link, a timer inside a six-pixel bar, a "Final Round!" pill that stayed up, an
+analytics page with no bars, and four television strings still sized for a phone.
+
 ## [1.13.0] — 2026-09-03
 
 Quizify puts the question on the biggest screen in the room. This release is about
