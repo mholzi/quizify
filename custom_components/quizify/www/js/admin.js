@@ -73,10 +73,21 @@
         switch (currentPhase) {
             case 'QUESTION_ACTIVE':
             case 'LIGHTNING':
+            // #699: a reload during any of these lands on #setup-screen,
+            // which is the default active view and which handleRoundSummary
+            // never leaves. From there the only visible way on is Start —
+            // and Start resets a non-LOBBY game, so a service-worker update
+            // mid-reveal could quietly wipe every score.
+            case 'ANSWER_REVEAL':
+            case 'WAGER_ACTIVE':
+            case 'LIGHTNING_RECAP':
+            case 'HOT_SEAT_AUCTION':
+            case 'HOT_SEAT':
+            case 'HOT_SEAT_REVEAL':
+            case 'PAUSED':
                 return false;
             default:
-                // LOBBY, ANSWER_REVEAL, LIGHTNING_RECAP, FINALE, and any
-                // setup state before a game starts.
+                // LOBBY, FINALE, and any setup state before a game starts.
                 return true;
         }
     };
@@ -1621,6 +1632,20 @@
                 // player.html. The old #admin-reveal-view was removed
                 // in v1.1.16.
                 break;
+            case 'WAGER_ACTIVE':
+            case 'HOT_SEAT_AUCTION':
+            case 'HOT_SEAT':
+            case 'HOT_SEAT_REVEAL':
+                // #699: this switch had no case for any of them, so a host who
+                // started without joining kept looking at the previous
+                // question, "Correct: …" and an enabled Next Question that
+                // answers ERR_INVALID_ACTION for the ~90 seconds the detour
+                // lasts. Show what phase the room is in, and only offer Next
+                // where the server actually accepts it.
+                showView('game');
+                setDetourNotice(msg.phase);
+                if (msg.leaderboard) renderLeaderboard(els.gameLeaderboard, msg.leaderboard);
+                break;
             case 'FINALE':
                 // Land directly on finale view so the admin sees the
                 // result and the "Neues Spiel starten" button without
@@ -1742,6 +1767,37 @@
      * countdown; the refreshes that arrive with each bet leave it out, so the
      * clock keeps running instead of restarting on every tap.
      */
+    /**
+     * Tell the host which detour the room is in (#699).
+     *
+     * The admin tab has no view of its own for the auction, the seat holder's
+     * question or the wager window, and it used to keep showing the previous
+     * round with a live Next Question that the server refuses. This replaces
+     * the stale text and only offers Next where next_round is accepted —
+     * HOT_SEAT_REVEAL, which is the one phase the server leaves on it.
+     */
+    function setDetourNotice(phase) {
+        var keys = {
+            WAGER_ACTIVE: ['wager.hostWindowTitle', 'Final round — players are betting'],
+            HOT_SEAT_AUCTION: ['hotSeat.auctionTitle', 'The chair goes to the highest bid'],
+            HOT_SEAT: ['hotSeat.seatedHint', 'The seat holder is answering'],
+            HOT_SEAT_REVEAL: ['hotSeat.sealed', 'Hot seat settled']
+        };
+        var entry = keys[phase];
+        if (els.adminQuestion && entry) {
+            els.adminQuestion.textContent = _t(entry[0]) || entry[1];
+        }
+        if (els.adminCorrect) {
+            els.adminCorrect.textContent = '';
+            els.adminCorrect.style.display = 'none';
+        }
+        var advanceable = (phase === 'HOT_SEAT_REVEAL');
+        if (els.nextQuestionBtn) {
+            els.nextQuestionBtn.classList.toggle('hidden', !advanceable);
+        }
+        if (els.endGameBtn) els.endGameBtn.classList.remove('hidden');
+    }
+
     function handleWagerProgress(msg) {
         if (_redirecting) return;
         currentPhase = 'WAGER_ACTIVE';
