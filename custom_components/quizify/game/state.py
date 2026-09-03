@@ -798,6 +798,20 @@ class QuizifyGameState:
                 if question.is_estimate
                 else None
             )
+            # STEAL cannot resolve in team mode (#704). It needs a target whose
+            # answer is already ``submitted``, and the team branch of
+            # submit_answer deliberately marks nobody submitted until
+            # settlement — every member may keep changing the team's answer
+            # until the buzzer. So the condition is never true while the
+            # power-up is usable and every attempt returned
+            # ERR_INVALID_ACTION ("Power-up not available"). Stealing from
+            # another *team* after settlement would be a different mechanic,
+            # not a fix, so team mode simply does not deal it — the same call
+            # #668 made for the wager window rather than showing a control
+            # that cannot work.
+            if self.team_mode:
+                pool = allowed_types or list(PowerUpType)
+                allowed_types = [t for t in pool if t is not PowerUpType.STEAL]
             powerup = self._powerup_manager.assign_random_powerup(
                 lucky_player.name, allowed_types=allowed_types
             )
@@ -922,6 +936,19 @@ class QuizifyGameState:
             diff_enum = Difficulty.MEDIUM
 
         double_active = self._powerup_manager.is_double_points_active(player_id)
+        if _settling_team and not double_active:
+            # Team mode (#704): the carrier is whoever's tap stands at the
+            # buzzer, which is rarely the member who spent DOUBLE_POINTS. The
+            # activator's power-up was consumed and nothing doubled — no badge,
+            # no effect. The team answers as one, so it scores as one: the
+            # multiplier applies when ANY member of the carrier's team has it
+            # active this round.
+            settling_team = self._team_registry.get_by_member(player.name)
+            if settling_team is not None:
+                double_active = any(
+                    self._powerup_manager.is_double_points_active(member)
+                    for member in settling_team.members
+                )
 
         if correct:
             player.streak += 1
