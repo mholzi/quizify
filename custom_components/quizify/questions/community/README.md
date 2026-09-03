@@ -67,6 +67,8 @@ a pack is **rejected or trimmed** when:
 - `name` is missing/empty, or `questions` is missing/empty;
 - a question does not have exactly 3 answers with exactly 1 correct answer
   (such questions are skipped individually);
+- an answer is not an object with non-empty `text` — `"answers": ["A", "B", "C"]`
+  and `{"correct": true}` without `text` are both skipped, not fatal;
 - more than **500 questions** are present (the list is truncated);
 - the slug collides with an already-loaded pack.
 
