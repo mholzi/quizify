@@ -396,6 +396,25 @@ def _parse_question(data: dict, category_name: str) -> Question | None:
         )
         return None
 
+    # Every answer must be an object with non-empty ``text`` (#700). Community
+    # packs come off disk unvalidated, so a bare string ("A") or a text-less
+    # object ({"correct": true}) used to raise out of the loader and take
+    # async_setup_entry down with it. Mirrors pack_submission's rules.
+    for a in answers_raw:
+        if not isinstance(a, dict):
+            _LOGGER.warning(
+                "Skipping question '%s': every answer must be an object, got %s",
+                data["id"],
+                type(a).__name__,
+            )
+            return None
+        if not isinstance(a.get("text"), str) or not a["text"].strip():
+            _LOGGER.warning(
+                "Skipping question '%s': every answer needs a non-empty 'text'",
+                data["id"],
+            )
+            return None
+
     correct_count = sum(1 for a in answers_raw if a.get("correct"))
     if correct_count != 1:
         _LOGGER.warning(
@@ -663,7 +682,19 @@ class QuestionBank:
             for entry in questions_data:
                 if not isinstance(entry, dict):
                     continue
-                q = _parse_question(entry, category_name)
+                # Second line of defence (#700): the parser is meant to return
+                # None on bad input, but a future field assumption must not be
+                # able to abort setup over a guest's JSON file.
+                try:
+                    q = _parse_question(entry, category_name)
+                except Exception:  # noqa: BLE001 - untrusted file, never fatal
+                    _LOGGER.warning(
+                        "Community pack '%s': dropping a question that could "
+                        "not be parsed",
+                        file_path.name,
+                        exc_info=True,
+                    )
+                    continue
                 if q is None:
                     continue
                 if q.id in seen_ids:
