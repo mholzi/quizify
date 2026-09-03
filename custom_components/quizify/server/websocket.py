@@ -4,6 +4,7 @@ from __future__ import annotations
 
 import asyncio
 import contextlib
+import ipaddress
 import logging
 import math
 import random
@@ -26,6 +27,7 @@ from custom_components.quizify.const import (
     ERR_ROUND_EXPIRED,
     ERR_TEAM_CLOSED,
     LOBBY_DISCONNECT_GRACE_PERIOD,
+    MAX_PLAYERS,
     WAGER_WINDOW_DURATION,
 )
 from custom_components.quizify.game.highlights import compute_superlatives
@@ -146,6 +148,17 @@ class QuizifyWebSocketHandler:
     # connections get an HTTP 429 before the WebSocket is upgraded.
     MAX_CONNECTIONS_PER_IP = 15
 
+    # Loopback exception to the cap above (#701). Over Nabu Casa every remote
+    # client reaches HA through snitun on 127.0.0.1, and HA's forwarded-header
+    # middleware deliberately ignores X-Forwarded-For for cloud requests — so
+    # every phone, the television and the admin share one source IP and the
+    # generous-looking 15 became "the room is full at thirteen players". A
+    # loopback address is never a stranger's flood (it is either the cloud
+    # tunnel or something already running on this host), so the cap there only
+    # needs to bound resources: a full room, plus the reload overlap of every
+    # phone at once, plus the television and the admin.
+    MAX_CONNECTIONS_PER_LOOPBACK = MAX_PLAYERS * 2 + 5
+
     # Admin-as-player redirect grace: when the admin clicks "Spiel starten"
     # from /quizify/admin, admin.js navigates the tab to /quizify/player so
     # the admin can answer questions. That navigation closes the admin's
@@ -252,6 +265,14 @@ class QuizifyWebSocketHandler:
         self._join_limiter = SlidingWindowLimiter(
             max_requests=30,  # max join attempts per window, per IP
             window=60.0,  # seconds
+            clock=lambda: asyncio.get_event_loop().time(),
+        )
+        # The same key collapse hits the join guard over Nabu Casa (#701):
+        # 30 attempts a minute is a whole room's worth of joins plus barely
+        # any reconnects. Loopback therefore gets its own, room-sized budget.
+        self._loopback_join_limiter = SlidingWindowLimiter(
+            max_requests=MAX_PLAYERS * 5,
+            window=60.0,
             clock=lambda: asyncio.get_event_loop().time(),
         )
         # Routes named state events (round_evaluated / game_ended) to the
@@ -384,20 +405,47 @@ class QuizifyWebSocketHandler:
             )
         return False
 
+    @staticmethod
+    def _is_loopback(remote: str) -> bool:
+        """True when ``remote`` is a loopback address (#701).
+
+        Nabu Casa hands cloud connections to HA over 127.0.0.1, so this is
+        the shape every remote player arrives in. A hostname or anything
+        unparseable is treated as a normal remote address.
+        """
+        try:
+            return ipaddress.ip_address(remote.split("%", 1)[0]).is_loopback
+        except ValueError:
+            return False
+
+    def _connection_cap(self, remote: str) -> int:
+        """Concurrent-socket cap that applies to ``remote`` (#361, #701)."""
+        if self._is_loopback(remote):
+            return self.MAX_CONNECTIONS_PER_LOOPBACK
+        return self.MAX_CONNECTIONS_PER_IP
+
+    def _join_limiter_for(self, remote: str) -> SlidingWindowLimiter:
+        """Join-flood limiter that applies to ``remote`` (#361, #701)."""
+        if self._is_loopback(remote):
+            return self._loopback_join_limiter
+        return self._join_limiter
+
     async def handle(self, request: web.Request) -> web.StreamResponse:
         """Handle WebSocket connection."""
         remote = request.remote
         # Per-IP connection cap (#361): refuse BEFORE upgrading the socket so
         # a flood of sockets from one host can't exhaust resources. Checked
-        # before prepare() so we answer with a plain HTTP 429.
+        # before prepare() so we answer with a plain HTTP 429. Loopback gets
+        # the room-sized cap instead (#701) — over Nabu Casa it carries every
+        # player at once rather than a single host.
         if (
             remote is not None
-            and self._ip_connections.get(remote, 0) >= self.MAX_CONNECTIONS_PER_IP
+            and self._ip_connections.get(remote, 0) >= self._connection_cap(remote)
         ):
             _LOGGER.warning(
                 "Refusing WebSocket from %s: per-IP connection cap (%d) reached",
                 remote,
-                self.MAX_CONNECTIONS_PER_IP,
+                self._connection_cap(remote),
             )
             return web.Response(
                 status=429, text="Too many connections from this address"
@@ -486,7 +534,7 @@ class QuizifyWebSocketHandler:
                     if (
                         data.get("type") == "join"
                         and remote is not None
-                        and not self._join_limiter.check(remote)
+                        and not self._join_limiter_for(remote).check(remote)
                     ):
                         _LOGGER.warning(
                             "Per-IP join rate limit exceeded for %s", remote
