@@ -104,7 +104,10 @@
 
         .dashboard-round {
             font-family: 'JetBrains Mono', ui-monospace, monospace;
-            font-size: 12px;
+            /* #707: 12px was a phone label. It carries "Question 4 / 10" —
+               where the room is in the game — so it scales with the rest of
+               the board (#376). */
+            font-size: clamp(14px, 1.2vw, 20px);
             color: var(--dash-accent-primary);
             font-weight: 500;
             letter-spacing: 0.2em;
@@ -261,7 +264,9 @@
             background: rgba(214, 106, 106, 0.15);
             border: 1px solid var(--dash-error);
             font-family: 'JetBrains Mono', ui-monospace, monospace;
-            font-size: 14px;
+            /* #707: the one signal that the board has gone dead — it has to be
+               readable from wherever the room noticed the freeze. */
+            font-size: clamp(15px, 1.2vw, 20px);
             color: var(--dash-error);
             letter-spacing: 0.12em;
             text-transform: uppercase;
@@ -1088,7 +1093,11 @@
             background: var(--dash-surface-dark);
             border: 1px solid var(--dash-border-neon);
             font-family: 'DM Sans', sans-serif;
-            font-size: 0.95rem;
+            /* #707: the recap is the only moment the room ever sees the
+               lightning answers — the phone says so explicitly ("answers
+               revealed at the end"). Sized like the leaderboard rows it sits
+               among, not like the phone it was copied from. */
+            font-size: clamp(16px, 1.6vw, 24px);
             color: var(--dash-text-white);
         }
         .dashboard-lightning-recap-row .lr-qnum {
@@ -1378,10 +1387,15 @@
 
         .podium-name {
             font-family: 'DM Sans', sans-serif;
-            font-size: 1.1rem;
+            /* #707: the winner's name was 17.6px while the leaderboard rows
+               beside it are clamp(16px, 1.6vw, 24px) — the name of the person
+               who won read smaller than the list of everyone else. Scaled with
+               the score under it, and the truncation width scales too: 160px
+               cut ordinary names off at the finale. */
+            font-size: clamp(18px, 1.8vw, 28px);
             font-weight: 600;
             color: var(--dash-text-white);
-            max-width: 160px;
+            max-width: clamp(160px, 16vw, 300px);
             overflow: hidden;
             text-overflow: ellipsis;
             white-space: nowrap;
