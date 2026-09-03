@@ -7,31 +7,25 @@ All notable changes to Quizify are documented here. This project follows
 
 Every fix in this release ended somebody's evening.
 
-### 🚪 Two ways the game refused to start
+### 🚪 The game would not start
 
-Over Nabu Casa every phone arrives on the same loopback address, so the connection cap
-counted a whole room as one device and the room filled at thirteen players. And one
-malformed file in the community folder took the integration down at setup: "Failed to set
-up", every page gone, because a guest's pack wrote its answers as plain strings.
+Over Nabu Casa a whole room counted as one device, so it filled at thirteen players. And a
+single malformed community pack took the integration down at setup.
 
-### ⏸️ A pause that did not end
+### ⏸️ The pause would not end
 
-Anyone joining during a pause was handed a fresh full clock, and the round waits for the
-last timer — so the room sat at 0:00 for up to half a minute. A guest who reloaded during a
-host-gone pause was told the host would be back, and lost the reset button that was the way
-out.
+A guest who joined during a pause got a fresh full clock, and the room waited at 0:00. One
+who reloaded during a host-gone pause lost the reset button.
 
-### 🪑 The hot seat gives the room back
+### 🪑 The hot seat let nobody out
 
-The seat winner could not answer anything for the rest of the game, the round wedged for a
-host who plays along, and the television read "Question undefined" before never showing who
-won the chair. In team mode Steal was unusable and Double Points doubled nothing.
+The seat winner could not answer again all game, the round wedged for a host who plays
+along, and the television never showed who won the chair.
 
-### 🎛️ The surfaces around the game
+### 🎛️ And around the game
 
-A dead Stats link, a timer written into a six-pixel bar, a "Final Round!" pill that never
-came down, an answer tally that followed the room into the next lobby, an analytics page
-with no bars or borders, and four television strings still sized for a phone.
+A dead Stats link, a timer inside a six-pixel bar, a "Final Round!" pill that stayed up, an
+analytics page with no bars, and four television strings still sized for a phone.
 
 ## [1.13.0] — 2026-09-03
 
