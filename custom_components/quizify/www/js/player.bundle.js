@@ -3795,6 +3795,7 @@
         _state.bidPlaced = false;
         _state.seated = false;
         _state.betPlaced = false;
+        _state.seatAnswering = false;
         _state.winner = null;
         hide();
     }
@@ -3929,6 +3930,15 @@
         if (!p) return;
         p.classList.remove('hidden');
 
+        // #698: the detour used to play out under the *previous* round's
+        // question and its green/red reveal colouring, because the snapshot
+        // that opens the view clears neither and this handler never rendered
+        // msg.question — which the server sends to every phone, seated or not.
+        var qText = el('question-text');
+        if (qText && msg.question) qText.textContent = msg.question;
+        var qCat = el('question-category');
+        if (qCat) qCat.textContent = '';
+
         if (msg.you_are_seated) {
             // The seat holder answers through the normal answer grid, so the
             // panel steps out of the way and only keeps the reminder that a
@@ -3948,23 +3958,56 @@
     }
 
     function renderSeatAnswers(answers) {
+        // #696: this used to replace the container's innerHTML with bare
+        // buttons. The markup it destroyed is the markup renderQuestion fills
+        // — that function reuses the existing .answer-btn elements and only
+        // writes their .answer-text child, so once they were gone the seat
+        // winner saw the hot seat's answers under every question for the rest
+        // of the game and could not answer any of them. The grid is filled the
+        // same way here, and left intact.
         var host = el('answer-buttons');
         if (!host) return;
-        host.innerHTML = '';
-        answers.forEach(function (text, i) {
-            var b = document.createElement('button');
-            b.type = 'button';
-            b.className = 'answer-btn';
-            b.textContent = text;
-            b.onclick = function () {
-                host.querySelectorAll('.answer-btn').forEach(function (x) {
-                    x.disabled = true;
-                });
-                b.classList.add('answer-btn--selected');
-                send('hot_seat_answer', { answer: i });
-            };
-            host.appendChild(b);
-        });
+        var buttons = host.querySelectorAll('.answer-btn');
+        for (var i = 0; i < buttons.length; i++) {
+            var btn = buttons[i];
+            var text = answers[i];
+            btn.dataset.index = String(i);
+            btn.disabled = false;
+            btn.classList.remove(
+                'is-selected', 'is-correct', 'is-wrong', 'is-eliminated', 'hidden'
+            );
+            var textEl = btn.querySelector('.answer-text');
+            if (textEl) {
+                textEl.textContent =
+                    ((text && typeof text === 'object') ? text.text : text) || '';
+            }
+            if (i >= answers.length) btn.classList.add('hidden');
+        }
+        _state.seatAnswering = true;
+    }
+
+    /**
+     * Route a tap on the shared answer grid (#696).
+     *
+     * The delegated handler in player-core owns every click on
+     * ``#answer-buttons``. While the seat holder is answering, the tap means
+     * ``hot_seat_answer`` and not ``submit_answer``; an inline onclick used to
+     * do this, and it shadowed the delegated handler badly enough that the
+     * normal path stopped working afterwards.
+     */
+    function handleSeatAnswerClick(index) {
+        if (!_state.seatAnswering) return false;
+        var host = el('answer-buttons');
+        if (host) {
+            var buttons = host.querySelectorAll('.answer-btn');
+            for (var i = 0; i < buttons.length; i++) {
+                buttons[i].disabled = true;
+                if (i === index) buttons[i].classList.add('is-selected');
+            }
+        }
+        _state.seatAnswering = false;
+        send('hot_seat_answer', { answer: index });
+        return true;
     }
 
     function showBetStage(winner) {
@@ -4121,6 +4164,7 @@
         handleAwarded: handleAwarded,
         handleNoBids: handleNoBids,
         handleQuestion: handleQuestion,
+        handleSeatAnswerClick: handleSeatAnswerClick,
         handleResult: handleResult,
         handleTick: handleTick,
         reset: reset
@@ -6206,6 +6250,24 @@
                 // see.
                 pu.showView('game-view');
                 if (hotSeat && msg.hot_seat) hotSeat.restoreFromSnapshot(msg.hot_seat);
+                // #697: the detour is entered from ANSWER_REVEAL, which hides
+                // the control bar, and nothing here brought it back. A host
+                // who plays along — the default, since the admin tab redirects
+                // to this page on start — had no Next, no Skip and no End for
+                // the rest of the game: HOT_SEAT_REVEAL is left only by an
+                // explicit next_round. End and Skip stay; Pause does not,
+                // because the detour owns its own clock.
+                var adminBarHS = document.getElementById('admin-control-bar');
+                if (adminBarHS) adminBarHS.classList.toggle('hidden', !state.isAdmin);
+                var nextRoundHS = document.getElementById('next-round-admin-btn');
+                var skipHS = document.getElementById('skip-question-btn');
+                var pauseHS = document.getElementById('pause-game-btn');
+                var resumeHS = document.getElementById('resume-game-btn');
+                var inReveal = msg.phase === 'HOT_SEAT_REVEAL';
+                if (nextRoundHS) nextRoundHS.classList.toggle('hidden', !inReveal);
+                if (skipHS) skipHS.classList.toggle('hidden', inReveal);
+                if (pauseHS) pauseHS.classList.add('hidden');
+                if (resumeHS) resumeHS.classList.add('hidden');
                 break;
 
             case 'PAUSED':
@@ -7051,9 +7113,16 @@
                 var btn = e.target.closest('.answer-btn');
                 if (!btn || btn.disabled) return;
                 var index = parseInt(btn.dataset.index, 10);
-                if (!isNaN(index)) {
-                    game.handleAnswerClick(index, send);
+                if (isNaN(index)) return;
+                // #696: while the seat holder is answering, the same grid
+                // means hot_seat_answer. This used to be an inline onclick on
+                // replacement buttons, which shadowed this handler and left
+                // the grid unusable for every later round.
+                if (hotSeat && hotSeat.handleSeatAnswerClick &&
+                    hotSeat.handleSeatAnswerClick(index)) {
+                    return;
                 }
+                game.handleAnswerClick(index, send);
             });
         }
 
