@@ -26,19 +26,19 @@
         .period-btn {
             padding: 8px 16px;
             background: var(--color-bg-surface);
-            border: 1px solid var(--color-border);
+            border: 1px solid var(--color-border-light);
             border-radius: var(--radius-full);
-            font-family: var(--font-main);
+            font-family: var(--font-body);
             font-size: 0.85rem;
-            color: var(--color-text);
+            color: var(--color-text-primary);
             cursor: pointer;
             transition: all var(--transition-fast);
         }
 
         .period-btn.active {
-            background: rgba(108, 92, 231, 0.2);
-            border-color: var(--color-accent);
-            color: var(--color-accent-bright);
+            background: var(--color-accent-brand-bg);
+            border-color: var(--color-accent-primary);
+            color: var(--color-accent-brand-hover);
         }
 
         .stats-grid {
@@ -50,7 +50,7 @@
 
         .stat-card {
             background: var(--color-bg-card);
-            border: 1px solid var(--color-border);
+            border: 1px solid var(--color-border-light);
             border-radius: var(--radius-lg);
             padding: var(--space-lg);
             text-align: center;
@@ -59,7 +59,7 @@
         .stat-value {
             font-size: 1.8rem;
             font-weight: 800;
-            color: var(--color-accent-bright);
+            color: var(--color-accent-brand-hover);
             font-variant-numeric: tabular-nums;
         }
 
@@ -93,7 +93,7 @@
         .games-table td {
             padding: var(--space-sm) var(--space-md);
             text-align: left;
-            border-bottom: 1px solid var(--color-border);
+            border-bottom: 1px solid var(--color-border-light);
             font-size: 0.85rem;
         }
 
@@ -106,12 +106,12 @@
         }
 
         .games-table td {
-            color: var(--color-text);
+            color: var(--color-text-primary);
         }
 
         .chart-container {
             background: var(--color-bg-card);
-            border: 1px solid var(--color-border);
+            border: 1px solid var(--color-border-light);
             border-radius: var(--radius-lg);
             padding: var(--space-lg);
             height: 200px;
@@ -132,7 +132,11 @@
         .chart-bar {
             width: 100%;
             max-width: 40px;
-            background: linear-gradient(180deg, var(--color-accent), var(--color-electric));
+            background: linear-gradient(
+                180deg,
+                var(--color-accent-primary),
+                var(--color-accent-brand-hover)
+            );
             border-radius: 4px 4px 0 0;
             min-height: 2px;
             transition: height var(--transition-normal);
@@ -140,7 +144,7 @@
 
         .chart-label {
             font-size: 0.65rem;
-            color: var(--color-text-dim);
+            color: var(--color-text-muted);
             margin-top: var(--space-xs);
         }
 
@@ -155,7 +159,7 @@
             align-items: center;
             gap: var(--space-md);
             padding: var(--space-md);
-            border-bottom: 1px solid var(--color-border);
+            border-bottom: 1px solid var(--color-border-light);
         }
 
         .top-player-row:last-child {
@@ -181,7 +185,7 @@
         .top-player-rank.rank-3 { background: var(--color-bronze); color: white; }
 
         .top-player-name { flex: 1; font-weight: 500; }
-        .top-player-score { font-weight: 700; color: var(--color-accent-bright); font-variant-numeric: tabular-nums; }
+        .top-player-score { font-weight: 700; color: var(--color-accent-brand-hover); font-variant-numeric: tabular-nums; }
 
         .empty-state {
             text-align: center;
@@ -192,15 +196,15 @@
         .loading-state {
             text-align: center;
             padding: var(--space-2xl);
-            color: var(--color-text-dim);
+            color: var(--color-text-muted);
         }
 
         .back-link {
             display: inline-flex;
             align-items: center;
             gap: var(--space-sm);
-            color: var(--color-accent-bright);
-            text-decoration: none;
+            color: var(--color-accent-brand-hover);
+            text-decoration: underline;
             font-size: 0.85rem;
             margin-bottom: var(--space-lg);
         }
