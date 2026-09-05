@@ -281,6 +281,18 @@ class QuizifyGameState:
         self._hot_seat_round_to_resume: int = 0
         self._hot_seat_rng: random.Random = random.Random()
 
+        # The two settings toggles a host had no way to reach (#742), armed
+        # like the two above: default ON, so a game that says nothing about
+        # them plays exactly as it did before.
+        #   * _powerups_enabled — deal a power-up each round (#340), or don't.
+        #   * _wager_enabled — open the last round's betting window (#656),
+        #     or play the final question straight.
+        # Unlike Lightning and Hot Seat these are not one-shot detours, so
+        # there is no target round to draw and no ``_fired`` guard: each is
+        # read where the mechanic happens, every round.
+        self._powerups_enabled: bool = True
+        self._wager_enabled: bool = True
+
         # Round shuffle state (owned here, not in WS handler).
         # `shuffle_map` is the "canonical" per-round shuffle used by the
         # admin/dashboard view and as a fallback for any code path that
@@ -584,6 +596,8 @@ class QuizifyGameState:
         lightning_seed: int | None = None,
         hot_seat_enabled: bool = True,
         hot_seat_seed: int | None = None,
+        powerups_enabled: bool = True,
+        wager_enabled: bool = True,
     ) -> dict[str, Any]:
         """Start a new game session.
 
@@ -595,6 +609,14 @@ class QuizifyGameState:
         whether the auto Lightning Round (#285) is armed for this game.
         ``lightning_seed`` lets tests pin the random target-round draw; it is
         never passed in production.
+
+        ``powerups_enabled`` and ``wager_enabled`` (#742) are the same kind of
+        settings toggle, also default ON: off, no power-up is dealt at the top
+        of a round and the last round opens without a betting window. Both
+        exist because the *With kids* preset already turns off Lightning and
+        Hot Seat for the reason "losing points is the mechanic children like
+        least", and Steal, Freeze and a stake that can wipe a child's score
+        were still in the game.
 
         Returns dict with game info on success.
         Raises ValueError on invalid state.
@@ -629,6 +651,11 @@ class QuizifyGameState:
             self._hot_seat_rng = random.Random(hot_seat_seed)
         self._hot_seat_target_round = self._pick_hot_seat_round(num_rounds)
 
+        # Power-ups and the final-round wager (#742). Nothing to arm — they
+        # are read at the point of use every round.
+        self._powerups_enabled = powerups_enabled
+        self._wager_enabled = wager_enabled
+
         # Group-level adaptive difficulty (#40). Only the explicit "auto" mode
         # opts in; any fixed difficulty the host pinned (easy/medium/hard) is
         # honoured verbatim and never calibrated. When auto, the queue is built
@@ -659,6 +686,11 @@ class QuizifyGameState:
             # back to start_game's default (True) and hands a kids' game the
             # auction its preset had switched off.
             "hot_seat_enabled": hot_seat_enabled,
+            # #742: here for exactly the reason #670 put hot_seat_enabled here.
+            # A rematch that quietly re-deals Steal and re-opens the betting
+            # window is the same bug in a third and fourth mechanic.
+            "powerups_enabled": powerups_enabled,
+            "wager_enabled": wager_enabled,
         }
 
         # Load questions. The bank is preloaded off the event loop at
@@ -798,13 +830,24 @@ class QuizifyGameState:
         # granted set persists across rounds and is cleared only on a
         # game-level reset (start_game / reset_to_lobby). Once every connected
         # player has had one, no power-up is granted this round.
-        eligible = [
-            p
-            for p in self._player_registry.players.values()
-            if p.connected
-            and not self._powerup_manager.was_granted_this_game(p.name)
-        ]
-        if eligible:
+        # #742: ...unless the host switched the mechanic off. Guarded here
+        # rather than inside the manager so nothing is granted, consumed or
+        # remembered — a disabled game must leave ``was_granted_this_game``
+        # untouched, or a rematch that turns power-ups back on would find every
+        # player already "granted" and deal nobody anything.
+        eligible = (
+            [
+                p
+                for p in self._player_registry.players.values()
+                if p.connected
+                and not self._powerup_manager.was_granted_this_game(p.name)
+            ]
+            if self._powerups_enabled
+            else []
+        )
+        if not self._powerups_enabled:
+            _LOGGER.debug("Power-ups disabled for this game (#742)")
+        elif eligible:
             lucky_player = random.choice(eligible)
             # On estimate rounds only hand out power-ups that actually do
             # something there (#406): JOKER/DOUBLE_POINTS/STEAL no-op on the
@@ -2613,10 +2656,28 @@ class QuizifyGameState:
         against the carrier's shadow score rather than the team score on the
         television. A bet nobody can read and most people cannot influence is
         worse than no bet; a team-level wager is a feature, not a fix.
+
+        #742 adds a third exclusion, of a different kind: a host's choice
+        rather than a mechanic that cannot settle. A table playing with
+        children switches the betting window off, and the final question is
+        played straight instead of one where "no answer costs you the stake".
         """
+        if not self._wager_enabled:
+            return False
         if self.team_mode:
             return False
         return self.round == self.total_rounds and not question.is_estimate
+
+    @property
+    def wager_enabled(self) -> bool:
+        """Whether the final round opens a betting window (#742).
+
+        Public because the round fan-out decides ``is_final_round`` — the flag
+        that makes the client render the wager UI — and that must agree with
+        ``_needs_wager_window`` exactly. A phone offered a bet the server never
+        opens a window for is worse than no bet at all.
+        """
+        return self._wager_enabled
 
     def arm_round_timers(self) -> bool:
         """Close the betting window and start the round proper (#656).

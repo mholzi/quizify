@@ -2009,6 +2009,10 @@ class QuizifyWebSocketHandler:
         lightning_enabled = _coerce_toggle(data.get("lightning_enabled"), default=True)
         # Hot Seat auction toggle (#616), same coercion, same default.
         hot_seat_enabled = _coerce_toggle(data.get("hot_seat_enabled"), default=True)
+        # Power-ups and the final-round wager (#742), same coercion, same
+        # default. A host who wants a plain round can now have one.
+        powerups_enabled = _coerce_toggle(data.get("powerups_enabled"), default=True)
+        wager_enabled = _coerce_toggle(data.get("wager_enabled"), default=True)
 
         # Validate num_rounds the same way as timer_duration (#303): the WS
         # value reaches start_game raw, and total_rounds drives
@@ -2051,6 +2055,8 @@ class QuizifyWebSocketHandler:
                 timer_duration=timer_value,
                 lightning_enabled=lightning_enabled,
                 hot_seat_enabled=hot_seat_enabled,
+                powerups_enabled=powerups_enabled,
+                wager_enabled=wager_enabled,
             )
         except ValueError as err:
             # start_game raises two distinct ValueErrors: a wrong-phase
@@ -3380,7 +3386,14 @@ class QuizifyWebSocketHandler:
         # Send question per-player so each gets their own shuffled order.
         # The builder assembles each payload (own shuffle); the handler still
         # owns the send and the connected-player skip (#189).
-        is_final = game_state.round == game_state.total_rounds
+        # #742: this flag is what makes the phone render the wager UI, so it
+        # has to agree with ``_needs_wager_window`` — with the toggle off the
+        # server opens no window, and a client offered a bet it cannot place
+        # would sit on a slider nothing accepts.
+        is_final = (
+            game_state.wager_enabled
+            and game_state.round == game_state.total_rounds
+        )
         # Build every per-player payload, then fan out in parallel (#258) so a
         # single slow client can't delay the question reaching the rest.
         question_sends = []

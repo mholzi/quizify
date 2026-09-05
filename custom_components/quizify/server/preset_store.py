@@ -1,8 +1,8 @@
 """Atomic JSON-on-disk store for saved game presets (#433).
 
 A host reconfigures the same two or three setups every session — packs,
-difficulty, rounds, timer, lightning, hot seat. This keeps named copies of
-them so the
+difficulty, rounds, timer, lightning, hot seat, power-ups, wager. This keeps
+named copies of them so the
 setup screen collapses to one tap.
 
 The presets live on the **server**, not in the browser: a preset saved on the
@@ -172,6 +172,16 @@ def _validate(payload: dict[str, Any]) -> dict[str, Any]:
     # find it on again with nothing to explain why.
     if payload.get("hot_seat") is not None:
         record["hot_seat"] = bool(payload["hot_seat"])
+
+    # #742: power-ups and the final-round wager ride the bundle for the same
+    # reason. These two are the ones the *With kids* preset most needs to
+    # carry — a preset that forgets them hands a children's game Steal, Freeze
+    # and a last question that can wipe a score.
+    if payload.get("powerups") is not None:
+        record["powerups"] = bool(payload["powerups"])
+
+    if payload.get("wager") is not None:
+        record["wager"] = bool(payload["wager"])
 
     packs = payload.get("packs")
     if isinstance(packs, list):

@@ -59,6 +59,11 @@
     // toggle. Read live from the checkbox at start_game time.
     let selectedLightning = true;
     let selectedHotSeat = true;
+    // Power-ups (#340) and the final-round wager (#656), reachable by the host
+    // since #742. Same shape as the two above: default ON, read live from the
+    // checkbox at start_game time.
+    let selectedPowerups = true;
+    let selectedWager = true;
 
     // Game state
     let currentPhase = 'LOBBY';
@@ -811,8 +816,8 @@
     // `lightning` mirrors data-lightning on the cards in admin.html (1/0) and
     // arms or disarms the auto Lightning Round (#285) for the bundle.
     var _PRESETS = [
-        { id: 'schnellrunde', rounds: 5,  difficulty: 'easy',   timer: 20, lightning: true,  hotSeat: true,  labelKey: 'setup.preset.fastName'     },
-        { id: 'klassiker',    rounds: 10, difficulty: 'medium', timer: 30, lightning: true,  hotSeat: true,  labelKey: 'setup.preset.classicName'  },
+        { id: 'schnellrunde', rounds: 5,  difficulty: 'easy',   timer: 20, lightning: true,  hotSeat: true,  powerups: true,  wager: true,  labelKey: 'setup.preset.fastName'     },
+        { id: 'klassiker',    rounds: 10, difficulty: 'medium', timer: 30, lightning: true,  hotSeat: true,  powerups: true,  wager: true,  labelKey: 'setup.preset.classicName'  },
         // #506: the long-timer bundle for hosts playing with small kids. Its
         // timer must stay one of the #timer-chips values — _applyPreset calls
         // _activateChip, which silently highlights nothing otherwise.
@@ -821,8 +826,12 @@
         // #616: Hot Seat off for the same family of reasons as Lightning —
         // the auction is built on losing points, which is the mechanic
         // children like least about the game.
-        { id: 'kinder',       rounds: 5,  difficulty: 'easy',   timer: 180, lightning: false, hotSeat: false, labelKey: 'setup.preset.kidsName'   },
-        { id: 'marathon',     rounds: 20, difficulty: 'hard',   timer: 45, lightning: true,  hotSeat: true,  labelKey: 'setup.preset.marathonName' },
+        // #742: power-ups and the final-round wager off, which is the same
+        // call a third and fourth time. Steal and Freeze take points off
+        // another child, and the last question staked "no answer costs you the
+        // stake" against a score a seven-year-old spent the evening building.
+        { id: 'kinder',       rounds: 5,  difficulty: 'easy',   timer: 180, lightning: false, hotSeat: false, powerups: false, wager: false, labelKey: 'setup.preset.kidsName'   },
+        { id: 'marathon',     rounds: 20, difficulty: 'hard',   timer: 45, lightning: true,  hotSeat: true,  powerups: true,  wager: true,  labelKey: 'setup.preset.marathonName' },
     ];
 
     // #433: the host's own saved presets, loaded from the server so a preset
@@ -837,7 +846,10 @@
             && p.timer === selectedTimer && p.lightning === selectedLightning
             // #616: the Hot Seat rides the bundle for the same reason — a kids
             // run with the auction switched back on is no longer "Mit Kindern".
-            && p.hotSeat === selectedHotSeat;
+            && p.hotSeat === selectedHotSeat
+            // #742: and neither is one with Steal and the final bet back on.
+            && p.powerups === selectedPowerups
+            && p.wager === selectedWager;
     }
 
     function _samePacks(packs) {
@@ -987,7 +999,12 @@
         // stays camelCase and the payload stays snake_case, and the boundary
         // is the one place that has to know.
         var hotSeat = p.hotSeat != null ? p.hotSeat : p.hot_seat;
-        _applyPreset(p.rounds, p.difficulty, p.timer, p.lightning, hotSeat);
+        // #742: powerups/wager need no such translation — the JS name and the
+        // wire name are already the same word.
+        _applyPreset(
+            p.rounds, p.difficulty, p.timer, p.lightning, hotSeat,
+            p.powerups, p.wager
+        );
         _applyPacks(p.packs || []);
         // markActivePreset repaints the chips too, so no separate call here.
         markActivePreset();
@@ -1068,6 +1085,8 @@
                 timer: selectedTimer,
                 lightning: selectedLightning,
                 hot_seat: selectedHotSeat,
+                powerups: selectedPowerups,
+                wager: selectedWager,
                 category: selectedCategory,
                 packs: selectedCategories || []
             })
@@ -1134,7 +1153,7 @@
 
     // Apply preset: write to the active-chip state AND to the typed vars
     // so the existing chip group serialization works unchanged.
-    function _applyPreset(rounds, difficulty, timer, lightning, hotSeat) {
+    function _applyPreset(rounds, difficulty, timer, lightning, hotSeat, powerups, wager) {
         if (rounds != null) {
             selectedRounds = rounds;
             _activateChip(els.roundsChips, String(rounds));
@@ -1161,6 +1180,19 @@
             selectedHotSeat = hotSeat;
             var hotSeatEl = document.getElementById('hot-seat-enabled-toggle');
             if (hotSeatEl) hotSeatEl.checked = hotSeat;
+        }
+        // #742: the same again for both new toggles — the checkbox is what
+        // _buildStartGamePayload reads, so writing only the variable would
+        // ship the DOM's stale value.
+        if (powerups != null) {
+            selectedPowerups = powerups;
+            var powerupsEl = document.getElementById('powerups-enabled-toggle');
+            if (powerupsEl) powerupsEl.checked = powerups;
+        }
+        if (wager != null) {
+            selectedWager = wager;
+            var wagerEl = document.getElementById('wager-enabled-toggle');
+            if (wagerEl) wagerEl.checked = wager;
         }
         updateSettingsSummary();
     }
@@ -1207,7 +1239,13 @@
                 var lightning = lightningAttr == null ? null : lightningAttr === '1';
                 var hotSeatAttr = card.getAttribute('data-hot-seat');
                 var hotSeat = hotSeatAttr == null ? null : hotSeatAttr === '1';
-                _applyPreset(rounds, difficulty, timer, lightning, hotSeat);
+                var powerupsAttr = card.getAttribute('data-powerups');
+                var powerups = powerupsAttr == null ? null : powerupsAttr === '1';
+                var wagerAttr = card.getAttribute('data-wager');
+                var wager = wagerAttr == null ? null : wagerAttr === '1';
+                _applyPreset(
+                    rounds, difficulty, timer, lightning, hotSeat, powerups, wager
+                );
             });
         });
     }
@@ -1256,6 +1294,24 @@
         selectedHotSeat = !!hotSeatToggle.checked;
         on(hotSeatToggle, 'change', function () {
             selectedHotSeat = !!hotSeatToggle.checked;
+            updateSettingsSummary();
+        });
+    }
+    // Power-ups and the final-round wager (#742) — same sync, same
+    // bundle-rematch as the two toggles above.
+    var powerupsToggle = document.getElementById('powerups-enabled-toggle');
+    if (powerupsToggle) {
+        selectedPowerups = !!powerupsToggle.checked;
+        on(powerupsToggle, 'change', function () {
+            selectedPowerups = !!powerupsToggle.checked;
+            updateSettingsSummary();
+        });
+    }
+    var wagerToggle = document.getElementById('wager-enabled-toggle');
+    if (wagerToggle) {
+        selectedWager = !!wagerToggle.checked;
+        on(wagerToggle, 'change', function () {
+            selectedWager = !!wagerToggle.checked;
             updateSettingsSummary();
         });
     }
@@ -2976,6 +3032,11 @@
         // Same live read for the Hot Seat auction (#616).
         var hotSeatEl = document.getElementById('hot-seat-enabled-toggle');
         var hotSeatEnabled = hotSeatEl ? !!hotSeatEl.checked : selectedHotSeat;
+        // Same live read for power-ups and the final-round wager (#742).
+        var powerupsEl = document.getElementById('powerups-enabled-toggle');
+        var powerupsEnabled = powerupsEl ? !!powerupsEl.checked : selectedPowerups;
+        var wagerEl = document.getElementById('wager-enabled-toggle');
+        var wagerEnabled = wagerEl ? !!wagerEl.checked : selectedWager;
         return {
             category: categoryPayload,
             difficulty: selectedDifficulty === 'mixed' ? null : selectedDifficulty,
@@ -2984,6 +3045,8 @@
             timer_duration: selectedTimer,
             lightning_enabled: lightningEnabled,
             hot_seat_enabled: hotSeatEnabled,
+            powerups_enabled: powerupsEnabled,
+            wager_enabled: wagerEnabled,
             // TTS narration toggles (#281), read live from the inputs.
             tts: _readTtsConfig(),
             // House Plays Along config (#494), read live from the inputs.

@@ -427,7 +427,11 @@
       "q6": "¿Ronda Relámpago?",
       "lightningHint": "Ronda rápida sorpresa a mitad de la partida",
       "q7": "¿Silla caliente?",
-      "hotSeatHint": "La silla se subasta y una sola persona responde"
+      "hotSeatHint": "La silla se subasta y una sola persona responde",
+      "q8": "¿Comodines?",
+      "powerupsHint": "Se reparten Comodín, Robar, Congelar y compañía",
+      "q9": "¿Apuesta en la última ronda?",
+      "wagerHint": "Apostar puntos en la pregunta final"
     },
     "tts": {
       "title": "¿Voz del presentador?",

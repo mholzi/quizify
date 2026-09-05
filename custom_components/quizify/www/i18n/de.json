@@ -427,7 +427,11 @@
       "q6": "Blitzrunde?",
       "lightningHint": "Überraschungs-Schnellrunde mitten im Spiel",
       "q7": "Heißer Stuhl?",
-      "hotSeatHint": "Der Stuhl wird versteigert, einer antwortet allein"
+      "hotSeatHint": "Der Stuhl wird versteigert, einer antwortet allein",
+      "q8": "Power-Ups?",
+      "powerupsHint": "Joker, Klauen, Einfrieren und Co. werden verteilt",
+      "q9": "Einsatz in der letzten Runde?",
+      "wagerHint": "Punkte auf die letzte Frage setzen"
     },
     "tts": {
       "title": "Quizmaster-Stimme?",

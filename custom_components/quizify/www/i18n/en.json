@@ -427,7 +427,11 @@
       "q6": "Lightning Round?",
       "lightningHint": "Surprise fast round mid-game",
       "q7": "Hot Seat?",
-      "hotSeatHint": "The chair is auctioned, one player answers alone"
+      "hotSeatHint": "The chair is auctioned, one player answers alone",
+      "q8": "Power-ups?",
+      "powerupsHint": "Joker, Steal, Freeze and friends are dealt out",
+      "q9": "Bet on the last round?",
+      "wagerHint": "Stake points on the final question"
     },
     "tts": {
       "title": "Quizmaster voice?",
