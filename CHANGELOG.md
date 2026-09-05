@@ -29,6 +29,13 @@ loses the question, and Spanish evenings are narrated in Spanish.
 Two teams of the same name are two teams, a guest who joins between rounds is not a
 timeout, and no lightning question is scored after the finale.
 
+### 🔤 The fonts come from your own house
+
+Every page fetched its typefaces from Google and Fontshare on load — against the README's
+own promise, and a white join screen for as long as a slow guest network took to answer.
+They ship inside the integration now. The display face changes with it: Cabinet Grotesk's
+licence forbids bundling, so headlines are set in DM Sans.
+
 ## [1.14.0-RC1] — 2026-09-03
 
 Every fix in this release ended somebody's evening.
