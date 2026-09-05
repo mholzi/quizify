@@ -3,9 +3,27 @@
 All notable changes to Quizify are documented here. This project follows
 [Semantic Versioning](https://semver.org/).
 
-## [1.15.0-RC1] — 2026-09-05
+## [1.15.0-RC2] — 2026-09-05
 
-Twenty-four entries, chosen in one sitting and built in one.
+Twenty-four entries, chosen in one sitting and built in one — then played, which
+found four more.
+
+### 📺 The room could not read its own result screen
+
+A whole game on real hardware showed the end screen clipping its awards at every
+television resolution: at 720p "FASTEST FINGER ·" broke mid-word and the second
+award was not on screen at all. The cause was never the television's own
+arithmetic — it was a phone stylesheet's `max-width: 160px` reaching the
+television and turning a wide pill into a narrow oval. The leaderboard's last row
+and the title's descenders came free with it, and the header no longer claims a
+sixth question after the fifth.
+
+### 🗣 And an English game spoke German on the phones
+
+Pick English, and every phone showed a German frame around English questions.
+The lobby genuinely told them German: only starting a game ever wrote the host's
+choice, so a phone joining before that was stamped with the default. The choice
+now reaches the lobby, and a change of flag reaches phones already waiting.
 
 ### 🔒 The house was open
 
