@@ -1706,7 +1706,10 @@
                 // lasts. Show what phase the room is in, and only offer Next
                 // where the server actually accepts it.
                 showView('game');
-                setDetourNotice(msg.phase);
+                // #732: the seat holder's name so the notice can name who the
+                // room is watching, instead of the second-person hint written
+                // for that player's own phone.
+                setDetourNotice(msg.phase, msg.hot_seat && msg.hot_seat.winner);
                 if (msg.leaderboard) renderLeaderboard(els.gameLeaderboard, msg.leaderboard);
                 break;
             case 'FINALE':
@@ -1842,17 +1845,41 @@
      * round with a live Next Question that the server refuses. This replaces
      * the stale text and only offers Next where next_round is accepted —
      * HOT_SEAT_REVEAL, which is the one phase the server leaves on it.
+     *
+     * #732: the host reads host strings. #699 reached for keys that read well
+     * in English and happened to exist, and two of them were written for
+     * somebody else's screen — `hotSeat.seatedHint` addresses the phone of the
+     * person in the chair ("You answer alone; right wins your stake…"), and
+     * `hotSeat.sealed` belongs to the auction, so at the *result* stage, next
+     * to an enabled Next Question, the host was told the bids were still
+     * hidden. The English fallbacks beside those keys said the right thing and
+     * never rendered: `_t()` hands back a translation whenever the key exists,
+     * so a wrong-but-present key always wins. ``seatHolder`` is the winner's
+     * name out of the snapshot's ``hot_seat`` block, which is populated for
+     * both HOT_SEAT and HOT_SEAT_REVEAL — the detour is only entered once the
+     * chair has actually been won.
      */
-    function setDetourNotice(phase) {
+    function setDetourNotice(phase, seatHolder) {
+        var name = seatHolder ? String(seatHolder) : '';
         var keys = {
-            WAGER_ACTIVE: ['wager.hostWindowTitle', 'Final round — players are betting'],
-            HOT_SEAT_AUCTION: ['hotSeat.auctionTitle', 'The chair goes to the highest bid'],
-            HOT_SEAT: ['hotSeat.seatedHint', 'The seat holder is answering'],
-            HOT_SEAT_REVEAL: ['hotSeat.sealed', 'Hot seat settled']
+            WAGER_ACTIVE: ['wager.hostWindowTitle', null, 'Final round — players are betting'],
+            HOT_SEAT_AUCTION: ['hotSeat.auctionTitle', null, 'The chair goes to the highest bid'],
+            HOT_SEAT: name
+                ? ['hotSeat.hostSeated', { name: name },
+                   name + ' has the chair and is answering alone']
+                : ['hotSeat.hostSeatedUnknown', null,
+                   'Whoever won the chair is answering alone'],
+            HOT_SEAT_REVEAL: ['hotSeat.hostSettled', null,
+                              'The chair is settled — Next Question continues the game']
         };
         var entry = keys[phase];
         if (els.adminQuestion && entry) {
-            els.adminQuestion.textContent = _t(entry[0]) || entry[1];
+            // _t() returns the key itself when no bundle is loaded, so the
+            // fallback has to be chosen on that rather than on falsiness —
+            // otherwise the host reads "hotSeat.hostSeated".
+            var text = _t(entry[0], entry[1]);
+            els.adminQuestion.textContent =
+                (text && text !== entry[0]) ? text : entry[2];
         }
         if (els.adminCorrect) {
             els.adminCorrect.textContent = '';
