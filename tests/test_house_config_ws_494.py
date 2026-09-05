@@ -291,7 +291,11 @@ def test_malformed_types_are_coerced_not_raised(handler) -> None:
     # A non-list light_entities is dropped rather than smuggled into a light
     # service call (where a bare string would iterate into characters).
     assert lights_kw["light_entities"] == []
-    assert lights_kw["winner_scene_entity"] == "42"
+    # ``42`` used to be coerced to the string "42" and forwarded to scene.turn_on.
+    # Since #724 the overrides are domain-checked, so a value that names no scene
+    # is dropped to "" — the consumer falls back to the config-entry default.
+    # Still coerced, still not raised: only the destination changed.
+    assert lights_kw["winner_scene_entity"] == ""
     assert handler._sound_effects.configure.call_args.kwargs["media_player"] == ""
 
 
