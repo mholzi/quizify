@@ -80,7 +80,9 @@ jobs:
         # Which release this leg actually resolved to is the one fact a reader
         # of a red log needs first, and the unpinned leg cannot be read off the
         # requirements file.
-        run: python -c "import homeassistant; print('Home Assistant', homeassistant.__version__)"
+        # `homeassistant.const`, not `homeassistant` — the package itself has
+        # never carried a `__version__`.
+        run: python -c "from homeassistant.const import __version__; print('Home Assistant', __version__)"
 
       - name: Run tests
         # Enforce the worker-contract gate: a missing node here is a hard
