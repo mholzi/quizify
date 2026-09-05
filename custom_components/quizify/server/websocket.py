@@ -1402,20 +1402,18 @@ class QuizifyWebSocketHandler:
                 "milestone_bonus": result.milestone_bonus,
                 "milestone_streak": result.milestone_streak,
             })
-            # Broadcast a celebration event whenever a milestone hits so
-            # the TV/admin view can flash and other players see the moment.
+            # A milestone is announced out loud and on the HA bus — not over
+            # the socket (#750). There used to be a ``streak_milestone``
+            # broadcast here "so the TV/admin view can flash", but no surface
+            # ever grew that flash, and the phone toast has always been driven
+            # off ``new_streak`` in the answer_result above. A message with no
+            # reader is worse than no message: it reads like a contract.
             if result.milestone_bonus:
-                await self._conn.broadcast({
-                    "type": "streak_milestone",
-                    "player_name": player.name,
-                    "streak": result.milestone_streak,
-                    "bonus": result.milestone_bonus,
-                })
-                # Also speak it if TTS is configured. Cheap to look up; the
+                # Speak it if TTS is configured. Cheap to look up; the
                 # announcer no-ops if no TTS entity is set.
                 self._notify_tts_milestone(player.name, result.milestone_streak)
                 # Fire the HA bus event so the host can automate on a streak
-                # (#366) — same data as the streak_milestone broadcast above.
+                # (#366).
                 self._notify_house_milestone(
                     player.name, result.milestone_streak, result.milestone_bonus
                 )
@@ -2488,8 +2486,11 @@ class QuizifyWebSocketHandler:
             await self._conn.send_error(ws, ERR_INVALID_ACTION, "Cannot kick the admin")
             return
 
-        # Close the target's WS politely so their client gets the signal and
-        # can show "you were removed" instead of looking offline. We don't
+        # Tell the target first, then close. The message is what puts the
+        # "you were removed" screen on their phone (#750) — the close alone
+        # is indistinguishable from a flat battery or a dead wifi hop, and
+        # for two years that is exactly what a removed guest saw. Order
+        # matters: send before close, or the client never reads it. We don't
         # rely on the closed event reaching us — remove_player flushes state
         # immediately and the WS cleanup path is idempotent.
         target_ws = target.ws

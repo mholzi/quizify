@@ -67,6 +67,10 @@
         'loading-view', 'not-found-view', 'ended-view', 'in-progress-view',
         'join-view', 'lobby-view', 'game-view', 'reveal-view',
         'paused-view', 'end-view', 'connection-lost-view',
+        // #750: the host-removed screen. Same registration rule as the
+        // lightning views below — omit it here and showView('kicked-view')
+        // hides everything and reveals nothing.
+        'kicked-view',
         // Lightning Round (#42) views. These MUST be registered here or
         // showView() can never reveal them: a view is shown by ADDING the
         // 'active' class (`.view.active { display:flex }`), and showView only
@@ -620,6 +624,9 @@
         formatTime: formatTime,
         createWebSocket: createWebSocket,
         updateConnectionIndicator: updateConnectionIndicator,
+        // #750: the kicked screen has to take the reconnect overlay
+        // down itself — nothing else will, since we never reconnect.
+        hideReconnectingOverlay: hideReconnectingOverlay,
         renderLeaderboard: renderLeaderboard,
         renderPlayerCards: renderPlayerCards,
         setupCollapsibles: setupCollapsibles,
@@ -4697,12 +4704,14 @@
             slider.oninput = syncValue;
             syncValue();
 
-            // Re-apply locked state on a reconnect mid-round.
-            slider.disabled = hasSubmitted;
+            // Re-apply locked state on a reconnect mid-round. `_guessPending`
+            // rides along (#750) so a re-render while a guess is in flight
+            // can't hand the slider back mid-ack.
+            slider.disabled = hasSubmitted || _guessPending;
         }
 
         if (submitBtn) {
-            submitBtn.disabled = hasSubmitted;
+            submitBtn.disabled = hasSubmitted || _guessPending;
             submitBtn.onclick = function () {
                 var send = window.QuizifyPlayer && window.QuizifyPlayer.send;
                 if (send) handleEstimateSubmit(send);
@@ -4712,13 +4721,43 @@
         if (confirmation) confirmation.classList.toggle('hidden', !hasSubmitted);
     }
 
+    // #750: a guess is in flight — sent, not yet acknowledged. The estimate
+    // round is the one path with no per-answer ``answer_result``, so the
+    // server's ``guess_accepted`` is the only confirmation that exists.
+    var _guessPending = false;
+
+    // Codes where handing the slider back makes sense: the guess bounced for
+    // a reason a second attempt can clear. ALREADY_SUBMITTED / ROUND_EXPIRED /
+    // NOT_IN_GAME are final for this round — unlocking there would only buy
+    // the player a second refusal.
+    var GUESS_RETRYABLE_CODES = { INVALID_ACTION: true, FROZEN: true };
+
+    function _setEstimateLocked(locked) {
+        var slider = document.getElementById('estimate-slider');
+        if (slider) slider.disabled = locked;
+        var submitBtn = document.getElementById('estimate-submit-btn');
+        if (submitBtn) submitBtn.disabled = locked;
+    }
+
+    function _showEstimateConfirmation(show) {
+        var confirmation = document.getElementById('estimate-submitted-confirmation');
+        if (confirmation) confirmation.classList.toggle('hidden', !show);
+    }
+
     /**
      * Submit the current slider value as a numeric guess (#275). Clamps to the
-     * range, disables the slider + button, shows the confirmation, and sends
-     * the same ``submit_answer`` message the MC path uses, carrying ``guess``.
+     * range, greys the slider + button so a second tap can't double-submit,
+     * and sends the same ``submit_answer`` message the MC path uses, carrying
+     * ``guess``.
+     *
+     * What it deliberately does NOT do any more (#750) is claim success. The
+     * "Submitted!" tick and the real ``hasSubmitted`` lock wait for the
+     * server's ``guess_accepted``; before that the round could still be over,
+     * the player frozen, or the socket dead — and the old optimistic version
+     * showed a confirmed tick in every one of those cases.
      */
     function handleEstimateSubmit(sendFn) {
-        if (hasSubmitted) return;
+        if (hasSubmitted || _guessPending) return;
         if (isFrozen()) return;
         var slider = document.getElementById('estimate-slider');
         if (!slider) return;
@@ -4727,14 +4766,45 @@
         // Clamp defensively (the slider already constrains this).
         guess = Math.max(_estimate.min, Math.min(_estimate.max, guess));
 
-        hasSubmitted = true;
-        slider.disabled = true;
-        var submitBtn = document.getElementById('estimate-submit-btn');
-        if (submitBtn) submitBtn.disabled = true;
-        var confirmation = document.getElementById('estimate-submitted-confirmation');
-        if (confirmation) confirmation.classList.remove('hidden');
+        _guessPending = true;
+        _setEstimateLocked(true);
 
-        sendFn('submit_answer', { guess: guess });
+        // sendFn returns false when the socket is down (#621) — it already
+        // toasts. Give the slider straight back rather than waiting for an
+        // ack that was never asked for.
+        if (sendFn('submit_answer', { guess: guess }) === false) {
+            _guessPending = false;
+            _setEstimateLocked(false);
+        }
+    }
+
+    /**
+     * The server took the guess (``guess_accepted``, #750). Now — and only
+     * now — the round is spent for this player.
+     */
+    function confirmGuess() {
+        if (!_guessPending) return;
+        _guessPending = false;
+        hasSubmitted = true;
+        _setEstimateLocked(true);
+        _showEstimateConfirmation(true);
+    }
+
+    /**
+     * The server refused the guess. Unlock only for the codes a retry can
+     * survive; everything else stays locked with the error toast as the
+     * explanation.
+     */
+    function releaseGuess(code) {
+        if (!_guessPending) return;
+        if (!GUESS_RETRYABLE_CODES[code]) return;
+        _guessPending = false;
+        _setEstimateLocked(false);
+        _showEstimateConfirmation(false);
+    }
+
+    function isGuessPending() {
+        return _guessPending;
     }
 
     /**
@@ -4938,6 +5008,9 @@
      */
     function lockSubmitted() {
         hasSubmitted = true;
+        // #750: whatever was in flight is moot — the server has just told us
+        // where we stand.
+        _guessPending = false;
         var answerButtons = document.getElementById('answer-buttons');
         if (answerButtons) {
             var buttons = answerButtons.querySelectorAll('.answer-btn');
@@ -4960,6 +5033,10 @@
     function resetSubmissionState() {
         hasSubmitted = false;
         lastSubmittedIndex = -1;
+        // #750: a new round, so no guess is outstanding. Without this a guess
+        // sent just before the round flipped would leave the next round's
+        // slider believing it was still waiting on an ack.
+        _guessPending = false;
 
         var answerButtons = document.getElementById('answer-buttons');
         if (answerButtons) {
@@ -5541,6 +5618,9 @@
         renderWagerWindow: renderWagerWindow,
         clearRevealBlur: clearRevealBlur,
         handleAnswerClick: handleAnswerClick,
+        confirmGuess: confirmGuess,
+        releaseGuess: releaseGuess,
+        isGuessPending: isGuessPending,
         lockSubmitted: lockSubmitted,
         resetSubmissionState: resetSubmissionState,
         updateGameView: updateGameView,
@@ -5821,6 +5901,27 @@
                 pu.showView('join-view');
                 break;
 
+            case 'kicked':
+                // #750: the host removed us from the lobby. The server sends
+                // this and then closes the socket, so the ONLY difference
+                // between being removed and losing wifi is this message —
+                // without handling it the phone just went quiet.
+                //
+                // Clearing playerName first also disarms the reconnect ladder
+                // in createWebSocket's onclose (it only retries while a name
+                // is set), so we don't spend five backoff rounds climbing
+                // back into a lobby we were just thrown out of.
+                pu.clearSession();
+                state.sessionToken = null;
+                state.playerName = null;
+                state.playerId = null;
+                state.isAdmin = false;
+                if (game && game.stopFrozenOverlay) game.stopFrozenOverlay();
+                if (pu.hideReconnectingOverlay) pu.hideReconnectingOverlay();
+                pu.updateConnectionIndicator('disconnected');
+                pu.showView('kicked-view');
+                break;
+
             case 'joined':
             case 'reconnected':
                 state.playerName = msg.player_id || state.playerName;
@@ -6049,6 +6150,16 @@
                 break;
             case 'lightning_recap':
                 if (lightning) lightning.handleLightningRecap(msg);
+                break;
+
+            case 'guess_accepted':
+                // #275/#750: an estimate round has no per-answer
+                // answer_result, so this ack is the only word the server ever
+                // says about the guess. The slider greys out on tap to stop a
+                // double submit, but the "Submitted!" tick waits for this —
+                // otherwise a rejected guess left a confirmed-looking screen
+                // over a round the player was never in.
+                if (game && game.confirmGuess) game.confirmGuess();
                 break;
 
             case 'error':
@@ -6780,6 +6891,13 @@
         }
         pu.showToast(userMsg);
 
+        // #750: an estimate guess that was refused must give the slider back.
+        // Only for the codes where a second try can actually succeed —
+        // ALREADY_SUBMITTED / ROUND_EXPIRED / NOT_IN_GAME mean the round is
+        // gone for us, and re-enabling there would just invite a second
+        // refusal.
+        if (game && game.releaseGuess) game.releaseGuess(msg.code);
+
         // A refused team action is not a generic failure — the lobby has an
         // answer for it (teams are set / that team dissolved), and showing it
         // there is what keeps the player from asking the host (#365).
@@ -7269,6 +7387,18 @@
             retryBtn.addEventListener('click', function () {
                 pu.showView('loading-view');
                 connect();
+            });
+        }
+
+        // #750: back to a usable join screen after a kick. A full reload, not
+        // showView('join-view') — the server closed our socket, so the join
+        // button on a re-shown form would have nothing to send on. The query
+        // string is dropped on purpose: a leftover ?name=/?reconnect=1 would
+        // aim the fresh page straight back at the identity we just discarded.
+        var kickedRejoinBtn = document.getElementById('kicked-rejoin-btn');
+        if (kickedRejoinBtn) {
+            kickedRejoinBtn.addEventListener('click', function () {
+                location.href = location.pathname;
             });
         }
 

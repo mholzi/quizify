@@ -254,6 +254,27 @@
                 pu.showView('join-view');
                 break;
 
+            case 'kicked':
+                // #750: the host removed us from the lobby. The server sends
+                // this and then closes the socket, so the ONLY difference
+                // between being removed and losing wifi is this message —
+                // without handling it the phone just went quiet.
+                //
+                // Clearing playerName first also disarms the reconnect ladder
+                // in createWebSocket's onclose (it only retries while a name
+                // is set), so we don't spend five backoff rounds climbing
+                // back into a lobby we were just thrown out of.
+                pu.clearSession();
+                state.sessionToken = null;
+                state.playerName = null;
+                state.playerId = null;
+                state.isAdmin = false;
+                if (game && game.stopFrozenOverlay) game.stopFrozenOverlay();
+                if (pu.hideReconnectingOverlay) pu.hideReconnectingOverlay();
+                pu.updateConnectionIndicator('disconnected');
+                pu.showView('kicked-view');
+                break;
+
             case 'joined':
             case 'reconnected':
                 state.playerName = msg.player_id || state.playerName;
@@ -482,6 +503,16 @@
                 break;
             case 'lightning_recap':
                 if (lightning) lightning.handleLightningRecap(msg);
+                break;
+
+            case 'guess_accepted':
+                // #275/#750: an estimate round has no per-answer
+                // answer_result, so this ack is the only word the server ever
+                // says about the guess. The slider greys out on tap to stop a
+                // double submit, but the "Submitted!" tick waits for this —
+                // otherwise a rejected guess left a confirmed-looking screen
+                // over a round the player was never in.
+                if (game && game.confirmGuess) game.confirmGuess();
                 break;
 
             case 'error':
@@ -1213,6 +1244,13 @@
         }
         pu.showToast(userMsg);
 
+        // #750: an estimate guess that was refused must give the slider back.
+        // Only for the codes where a second try can actually succeed —
+        // ALREADY_SUBMITTED / ROUND_EXPIRED / NOT_IN_GAME mean the round is
+        // gone for us, and re-enabling there would just invite a second
+        // refusal.
+        if (game && game.releaseGuess) game.releaseGuess(msg.code);
+
         // A refused team action is not a generic failure — the lobby has an
         // answer for it (teams are set / that team dissolved), and showing it
         // there is what keeps the player from asking the host (#365).
@@ -1702,6 +1740,18 @@
             retryBtn.addEventListener('click', function () {
                 pu.showView('loading-view');
                 connect();
+            });
+        }
+
+        // #750: back to a usable join screen after a kick. A full reload, not
+        // showView('join-view') — the server closed our socket, so the join
+        // button on a re-shown form would have nothing to send on. The query
+        // string is dropped on purpose: a leftover ?name=/?reconnect=1 would
+        // aim the fresh page straight back at the identity we just discarded.
+        var kickedRejoinBtn = document.getElementById('kicked-rejoin-btn');
+        if (kickedRejoinBtn) {
+            kickedRejoinBtn.addEventListener('click', function () {
+                location.href = location.pathname;
             });
         }
 

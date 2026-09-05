@@ -62,6 +62,10 @@
         'loading-view', 'not-found-view', 'ended-view', 'in-progress-view',
         'join-view', 'lobby-view', 'game-view', 'reveal-view',
         'paused-view', 'end-view', 'connection-lost-view',
+        // #750: the host-removed screen. Same registration rule as the
+        // lightning views below — omit it here and showView('kicked-view')
+        // hides everything and reveals nothing.
+        'kicked-view',
         // Lightning Round (#42) views. These MUST be registered here or
         // showView() can never reveal them: a view is shown by ADDING the
         // 'active' class (`.view.active { display:flex }`), and showView only
@@ -615,6 +619,9 @@
         formatTime: formatTime,
         createWebSocket: createWebSocket,
         updateConnectionIndicator: updateConnectionIndicator,
+        // #750: the kicked screen has to take the reconnect overlay
+        // down itself — nothing else will, since we never reconnect.
+        hideReconnectingOverlay: hideReconnectingOverlay,
         renderLeaderboard: renderLeaderboard,
         renderPlayerCards: renderPlayerCards,
         setupCollapsibles: setupCollapsibles,
