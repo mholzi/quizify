@@ -1778,12 +1778,16 @@
         }
         if (els.adminLightningRecapGrid) {
             var questions = recap.questions || [];
+            // The results are keyed by entrant — a team's key is its id since
+            // #728, so the chip label comes from the names map. Falling back
+            // to the key keeps solo players (whose key IS their name) right.
+            var names = recap.names || {};
             els.adminLightningRecapGrid.innerHTML = questions.map(function (q, qi) {
-                var chips = Object.keys(q.results || {}).map(function (name) {
-                    var r = q.results[name];
+                var chips = Object.keys(q.results || {}).map(function (entrant) {
+                    var r = q.results[entrant];
                     var mark = r === 'correct' ? '✓' : (r === 'wrong' ? '✗' : '–');
                     return '<span class="lr-admin-chip lr-admin-chip--' + r + '">' +
-                        escapeHtmlAdmin(name) + ' ' + mark + '</span>';
+                        escapeHtmlAdmin(names[entrant] || entrant) + ' ' + mark + '</span>';
                 }).join('');
                 return '<div class="lr-admin-row">' +
                     '<div class="lr-admin-q"><span class="lr-admin-qnum">' + (qi + 1) +

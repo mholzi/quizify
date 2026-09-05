@@ -66,7 +66,10 @@ def test_a_team_scores_once_not_once_per_member(bank: QuestionBank) -> None:
     assert lr.record_answer("Anna", _correct_button(lr, "Anna"), now=100.0) is True
     lr.advance()
 
-    assert lr.scores["Sofa"] == lr.points_per_correct
+    # Keyed by team id since #728 — the name is what the room reads, not
+    # what the bookkeeping is indexed by.
+    assert lr.scores["t1"] == lr.points_per_correct
+    assert lr.display_name("t1") == "Sofa"
     assert "Anna" not in lr.scores and "Jan" not in lr.scores, (
         "members are represented by their team, not next to it"
     )
@@ -90,7 +93,7 @@ def test_a_teammate_can_change_the_answer(bank: QuestionBank) -> None:
     assert lr.record_answer("Jan", _correct_button(lr, "Jan"), now=later) is True
     lr.advance()
 
-    assert lr.scores["Sofa"] == lr.points_per_correct, "the last tap counts"
+    assert lr.scores["t1"] == lr.points_per_correct, "the last tap counts"
 
 
 def test_the_lock_refuses_an_instant_second_change(bank: QuestionBank) -> None:
@@ -101,7 +104,7 @@ def test_the_lock_refuses_an_instant_second_change(bank: QuestionBank) -> None:
     assert lr.record_answer("Jan", _correct_button(lr, "Jan"), now=100.5) is None
     lr.advance()
 
-    assert lr.scores["Sofa"] == 0, "the locked-out change must not apply"
+    assert lr.scores["t1"] == 0, "the locked-out change must not apply"
 
 
 def test_a_solo_players_answer_is_still_final(bank: QuestionBank) -> None:
@@ -153,9 +156,12 @@ def test_the_recap_and_standings_name_the_team(bank: QuestionBank) -> None:
 
     recap = lr.build_recap()
     names = {row["name"] for row in recap["leaderboard"]}
-    assert names == {"Sofa", "Mira"}
+    assert names == {"Sofa", "Mira"}, "the standings print the team's NAME"
     first = recap["questions"][0]["results"]
-    assert first["Sofa"] == "correct"
+    # ...while the grid is keyed by entrant (#728), with the map that turns
+    # a key back into the name the host screen chips out.
+    assert first["t1"] == "correct"
+    assert recap["names"]["t1"] == "Sofa"
     assert first["Mira"] == "wrong"
     assert "Anna" not in first and "Jan" not in first
 

@@ -223,14 +223,19 @@
     /**
      * Whose row is "mine" in the recap (#552).
      *
-     * In team mode the round scored the TEAM, so the recap is keyed by team
-     * name — looking myself up by player name finds nothing and every
+     * In team mode the round scored the TEAM, so the recap is keyed by the
+     * team — looking myself up by player name finds nothing and every
      * question silently renders as a miss, no matter how the team did.
+     *
+     * The key is the team ID since #728: two teams may carry the same name,
+     * and by name they shared one recap row and one score. The name is still
+     * what gets drawn — it arrives in `recap.names` and in each leaderboard
+     * row — but it is no longer what anything is looked up by.
      */
     function myEntrant() {
         var team = window.QuizifyPlayerTeam;
         var mine = team && team.myTeam();
-        return (mine && mine.name) || state.playerName;
+        return (mine && (mine.team_id || mine.name)) || state.playerName;
     }
 
     function renderRecap(recap) {
@@ -239,12 +244,16 @@
         if (lbEl) {
             var youLabel = (t('lobby.you') && t('lobby.you') !== 'lobby.you')
                 ? t('lobby.you') : 'Du';
+            var meRow = myEntrant();
             var rows = lb.map(function (p) {
                 return {
                     rank: p.rank,
                     name: p.name,
                     score: p.score,
-                    isYou: p.name === myEntrant()
+                    // Match on the entrant key, not the printed name — two
+                    // teams may share a name (#728), and only one of them
+                    // is mine.
+                    isYou: (p.entrant_id || p.name) === meRow
                 };
             });
             pu.renderMedalStandings(lbEl, rows, { youLabel: youLabel });
