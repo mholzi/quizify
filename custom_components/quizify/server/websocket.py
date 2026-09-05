@@ -3975,6 +3975,7 @@ class QuizifyWebSocketHandler:
                 announce_standings=bool(tts.get("announce_standings", True)),
                 announce_join=bool(tts.get("announce_join", True)),
                 announce_countdown=bool(tts.get("announce_countdown", True)),
+                announce_milestone=bool(tts.get("announce_milestone", True)),
                 # Per-game entity overrides from the admin dropdowns (#281).
                 # Empty/missing → the announcer falls back to the config-entry
                 # default entities.

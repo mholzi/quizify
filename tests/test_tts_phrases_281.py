@@ -74,9 +74,10 @@ class TestPhraseRendering:
 
 class TestFallbacks:
     def test_unknown_language_falls_back_to_english(self) -> None:
-        # Spanish is not translated here → English template.
+        # French is not translated here → English template. (Spanish was an
+        # untranslated language until #745; it is a first-class one now.)
         assert tts_phrases.phrase(
-            "es", "nobody"
+            "fr", "nobody"
         ) == "Nobody got it this round."
 
     def test_unknown_key_within_known_language_uses_english(self) -> None:
@@ -118,9 +119,11 @@ class TestNormalizeLanguage:
     def test_known_languages_pass_through(self) -> None:
         assert tts_phrases.normalize_language("de") == "de"
         assert tts_phrases.normalize_language("en") == "en"
+        # Spanish joined the shipped set in #745.
+        assert tts_phrases.normalize_language("es") == "es"
 
     def test_unknown_and_none_default_to_english(self) -> None:
-        assert tts_phrases.normalize_language("es") == "en"
+        assert tts_phrases.normalize_language("fr") == "en"
         assert tts_phrases.normalize_language(None) == "en"
         assert tts_phrases.normalize_language("") == "en"
 

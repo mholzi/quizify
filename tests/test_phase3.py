@@ -183,7 +183,9 @@ class TestTTSMilestoneAnnounce:
         domain, service, data = hass.calls[0]
         assert (domain, service) == ("tts", "speak")
         assert "Alice" in data["message"]
-        assert "5-streak" in data["message"]
+        # The game defaults to German, so the streak line is German too — it
+        # used to be a hardcoded English f-string spoken into every game (#745).
+        assert data["message"] == "Alice hat 5 in Folge richtig!"
         assert data["entity_id"] == "tts.cloud"
         assert data["media_player_entity_id"] == "media_player.kitchen"
 
@@ -258,7 +260,8 @@ class TestTTSPhaseAnnouncements:
         game._notify_state_callbacks()
         await asyncio.sleep(0)
         assert len(hass.calls) == 1
-        assert "starting" in hass.calls[0][2]["message"].lower()
+        # German game → German opener (#745).
+        assert hass.calls[0][2]["message"] == "Quizify geht los. Viel Glück!"
 
     @pytest.mark.asyncio
     async def test_finale_announces_winner(self, game) -> None:

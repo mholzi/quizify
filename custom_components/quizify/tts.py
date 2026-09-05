@@ -41,6 +41,24 @@ TTS_MIN_INTERVAL = 5.0
 # narration that follows a few seconds later when the round ends.
 COUNTDOWN_THRESHOLD_SECONDS = 10
 
+# Key under which HA stores the ``tts`` entity component in ``hass.data``
+# (``homeassistant.components.tts.const.DATA_COMPONENT`` is ``HassKey("tts")``,
+# a plain ``str`` subclass). Read by entity id rather than imported so this
+# module keeps its "no runtime HA import" shape (#745).
+_TTS_ENTITY_COMPONENT_KEY = "tts"
+
+# Regional tag preferred when an engine advertises only regional variants of a
+# language we speak ("de" → "de-DE"). Engines differ: google_translate lists
+# bare ``de``, HA Cloud lists ``de-DE``, and ``tts.speak`` matches by strict
+# membership — so a blind ``language: "de"`` would raise on Cloud and the room
+# would hear nothing. Anything not listed here falls back to the
+# alphabetically first matching tag, so the pick is always deterministic.
+_PREFERRED_REGIONAL_TAG = {
+    "de": "de-DE",
+    "en": "en-US",
+    "es": "es-ES",
+}
+
 
 class QuizifyTTSAnnouncer:
     """Speaks game events via HA TTS. Configured per-entry; no-op when
@@ -82,6 +100,7 @@ class QuizifyTTSAnnouncer:
         self._announce_standings: bool = True
         self._announce_join: bool = True
         self._announce_countdown: bool = True
+        self._announce_milestone: bool = True
         # One-shot guard so the spoken countdown warning fires at most once per
         # round. Reset at every question start (see ``announce_question``).
         self._countdown_announced: bool = False
@@ -110,6 +129,7 @@ class QuizifyTTSAnnouncer:
         announce_options: bool = True,
         announce_join: bool = True,
         announce_countdown: bool = True,
+        announce_milestone: bool = True,
         tts_entity: str | None = None,
         media_player: str | None = None,
     ) -> None:
@@ -131,6 +151,7 @@ class QuizifyTTSAnnouncer:
         self._announce_standings = bool(announce_standings)
         self._announce_join = bool(announce_join)
         self._announce_countdown = bool(announce_countdown)
+        self._announce_milestone = bool(announce_milestone)
         self._tts_entity_override = (tts_entity or "").strip() or None
         self._media_player_override = (media_player or "").strip() or None
         self._previous_leader = None
@@ -152,6 +173,7 @@ class QuizifyTTSAnnouncer:
             "announce_standings": self._announce_standings,
             "announce_join": self._announce_join,
             "announce_countdown": self._announce_countdown,
+            "announce_milestone": self._announce_milestone,
             "tts_entity_override": self._tts_entity_override,
             "media_player_override": self._media_player_override,
         }
@@ -183,6 +205,9 @@ class QuizifyTTSAnnouncer:
         )
         self._announce_countdown = bool(
             snapshot.get("announce_countdown", self._announce_countdown)
+        )
+        self._announce_milestone = bool(
+            snapshot.get("announce_milestone", self._announce_milestone)
         )
         self._tts_entity_override = (
             snapshot.get("tts_entity_override", self._tts_entity_override)
@@ -221,6 +246,65 @@ class QuizifyTTSAnnouncer:
     def _lang(self) -> str:
         """Normalized language for spoken phrases, from the live game."""
         return tts_phrases.normalize_language(self._game.language)
+
+    def _engine_supported_languages(self) -> list[str] | None:
+        """Language tags the active TTS entity advertises, or ``None``.
+
+        ``supported_languages`` lives on the entity object (HA keeps TTS
+        entities in an ``EntityComponent`` under ``hass.data["tts"]``); it is
+        deliberately not published in the entity's state attributes, so there
+        is no cheaper way to read it. ``None`` means "could not find out" —
+        the standalone dev server, a legacy non-entity provider, or a future
+        HA that moves the component — and the caller then omits the language
+        rather than guessing.
+        """
+        hass = self._hass
+        entity_id = self._active_tts_entity
+        if hass is None or not entity_id:
+            return None
+        try:
+            component = hass.data[_TTS_ENTITY_COMPONENT_KEY]
+            entity = component.get_entity(entity_id)
+            languages = list(entity.supported_languages)
+        except Exception:  # noqa: BLE001
+            return None
+        return [str(tag) for tag in languages] or None
+
+    def _speech_language(self) -> str | None:
+        """The tag to hand ``tts.speak``, or ``None`` to let the engine pick.
+
+        Without this the engine always spoke in its own default language, so a
+        Spanish game read Spanish sentences with a German voice (#745). The
+        tag is resolved against what the engine actually supports: an exact
+        match wins, then the preferred regional variant, then the first
+        regional variant in alphabetical order. When the engine speaks none of
+        it — or we could not read its list at all — the language is left out
+        and the engine keeps its default, exactly as before.
+        """
+        lang = self._lang()
+        supported = self._engine_supported_languages()
+        if not supported:
+            return None
+        for tag in supported:
+            if tag.lower() == lang:
+                return tag
+        regional = sorted(
+            tag
+            for tag in supported
+            if tag.lower().replace("_", "-").split("-")[0] == lang
+        )
+        if not regional:
+            _LOGGER.debug(
+                "TTS entity %s does not speak %s — using its default language",
+                self._active_tts_entity,
+                lang,
+            )
+            return None
+        preferred = _PREFERRED_REGIONAL_TAG.get(lang)
+        for tag in regional:
+            if preferred and tag.lower() == preferred.lower():
+                return tag
+        return regional[0]
 
     # ------------------------------------------------------------------
     # Narration hooks (#281) — driven from the WS handler
@@ -406,18 +490,24 @@ class QuizifyTTSAnnouncer:
     def announce_milestone(self, player_name: str, streak: int) -> None:
         """Trigger a milestone announcement. Called from the WS handler
         when it broadcasts ``streak_milestone`` so the announcement is
-        tied to the actual award, not to a state-snapshot reading."""
-        if not self._enabled:
+        tied to the actual award, not to a state-snapshot reading.
+
+        Localized and toggleable since #745: the line used to be a hardcoded
+        English f-string spoken into German games, and it was the one
+        announcement without a per-event switch of its own.
+        """
+        if not (self._enabled and self._announce_milestone):
             return
         key = (player_name, streak)
         if key in self._announced_milestones:
             return
         self._announced_milestones.add(key)
-        if streak >= 10:
-            phrase = f"{player_name} is on fire — {streak} in a row!"
-        else:
-            phrase = f"{player_name} hit a {streak}-streak!"
-        self._speak(phrase)
+        phrase_key = "milestone_fire" if streak >= 10 else "milestone_streak"
+        self._speak(
+            tts_phrases.phrase(
+                self._lang(), phrase_key, name=player_name, streak=streak
+            )
+        )
 
     # ------------------------------------------------------------------
     # State change handler
@@ -441,7 +531,7 @@ class QuizifyTTSAnnouncer:
             and self._game.round == 1
         ):
             self._announced_milestones.clear()
-            self._speak("Quizify starting. Good luck!")
+            self._speak(tts_phrases.phrase(self._lang(), "game_start"))
             return
 
         # ANSWER_REVEAL on the last round transitions through FINALE.
@@ -449,11 +539,15 @@ class QuizifyTTSAnnouncer:
             leader = self._game.leader
             if leader is not None:
                 self._speak(
-                    f"Game over. The winner is {leader.name} "
-                    f"with {leader.score} points!"
+                    tts_phrases.phrase(
+                        self._lang(),
+                        "game_over_winner",
+                        name=leader.name,
+                        score=leader.score,
+                    )
                 )
             else:
-                self._speak("Game over.")
+                self._speak(tts_phrases.phrase(self._lang(), "game_over"))
             return
 
         # "Final round!" announcement when entering the last round.
@@ -462,7 +556,7 @@ class QuizifyTTSAnnouncer:
             and self._game.round == self._game.total_rounds
             and self._game.total_rounds > 1
         ):
-            self._speak("Final round!")
+            self._speak(tts_phrases.phrase(self._lang(), "final_round"))
 
     # ------------------------------------------------------------------
     # Internal
@@ -488,15 +582,22 @@ class QuizifyTTSAnnouncer:
 
         tts_entity = self._active_tts_entity
         media_player = self._active_media_player
+        data: dict[str, object] = {
+            "entity_id": tts_entity,
+            "media_player_entity_id": media_player,
+            "message": message,
+        }
+        # Speak the game's language, not the engine's default (#745). Omitted
+        # when the engine does not advertise it — ``tts.speak`` raises on an
+        # unsupported tag, and silence is worse than the wrong accent.
+        language = self._speech_language()
+        if language:
+            data["language"] = language
         fire_and_forget_service(
             self._hass,
             "tts",
             "speak",
-            {
-                "entity_id": tts_entity,
-                "media_player_entity_id": media_player,
-                "message": message,
-            },
+            data,
             f"TTS announcement (tts={tts_entity}, "
-            f"media_player={media_player})",
+            f"media_player={media_player}, language={language})",
         )
