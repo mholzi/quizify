@@ -401,6 +401,10 @@ CLIENT_MESSAGE_TYPES: frozenset[str] = OUT_OF_BAND_CLIENT_TYPES | frozenset({
     # both reach Home Assistant service calls with host-supplied entity ids.
     "configure_tts",
     "configure_house",
+    # The host's language pick, pushed while the lobby is still open (#776).
+    # Without it GameState.language stays "de" until start_game and every
+    # phone that joins an English game is stamped German on arrival.
+    "set_language",
     # Lightning Round (issue #42 mechanics, #285 auto-trigger): the round now
     # fires automatically mid-game — there is no host start/end action any
     # more. Players still submit via lightning_answer (separate from

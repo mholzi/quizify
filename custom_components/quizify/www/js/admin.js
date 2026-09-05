@@ -1415,10 +1415,20 @@
     var _houseEntitiesLoaded = false;
     _initHouseToggles();
 
+    // Tell the server which language the lobby is being run in (#776). No-op
+    // if the socket isn't open yet — ws.onopen re-sends after admin_connect,
+    // the same contract _pushTtsConfig / _pushHouseConfig work under.
+    function _pushLanguage() {
+        send('set_language', { language: selectedLanguage });
+    }
+
     setupChips(els.languageChips, function (v) {
         // Session-only switch — not persisted. On the next full-page reload
         // the UI resolves back to the Home Assistant language (#152).
         selectedLanguage = v;
+        // Carry the pick to the game right away so phones already sitting in
+        // the lobby re-render, instead of finding out at start_game (#776).
+        _pushLanguage();
         // Show/hide category chips based on selected language
         if (els.categoryChips) {
             var chips = els.categoryChips.querySelectorAll('.chip[data-lang]');
@@ -1496,6 +1506,12 @@
             // Same for the house effects (#494) — lobby-time, so they work
             // before start_game.
             _pushHouseConfig();
+            // And the language (#776): the game keeps its own `language`, and
+            // until start_game lands it is the constructor default "de". Every
+            // phone joining an English lobby was handed a German frame. Push
+            // the pick now so the lobby the players see matches the one the
+            // host is looking at.
+            _pushLanguage();
         };
 
         ws.onmessage = function (evt) {

@@ -111,6 +111,7 @@ MSG_RESUME_GAME = "resume_game"
 MSG_KICK_PLAYER = "kick_player"
 MSG_CONFIGURE_TTS = "configure_tts"
 MSG_CONFIGURE_HOUSE = "configure_house"
+MSG_SET_LANGUAGE = "set_language"
 
 # Admin messages that require WS-level admin (a real ?role=admin tab) rather
 # than the admin-as-player relaxation ``_is_authorized_admin`` allows. These
@@ -4173,6 +4174,43 @@ class QuizifyWebSocketHandler:
         """
         self._apply_house_config(data or {})
 
+    async def _handle_set_language(
+        self, ws: web.WebSocketResponse, data: dict, game_state: QuizifyGameState
+    ) -> None:
+        """Handle the admin ``set_language`` message (#776).
+
+        The host's language pick used to reach the game only in the
+        ``start_game`` payload, so for the whole life of the lobby
+        ``GameState.language`` sat at its constructor default ``"de"``. Every
+        phone that joined an English game was handed a German frame by
+        ``_syncServerLanguage`` in player-core.js — the German lobby, then the
+        German chrome around the first English question, because the correction
+        only arrived with ``start_game``.
+
+        Sent by admin.js on connect (right after ``admin_connect``) and whenever
+        the language chip changes, exactly like ``configure_house`` (#494). Two
+        consequences follow, and both are the point: a phone joining an English
+        lobby sees English on its first painted frame, and flipping the chip
+        while people are already sitting in the lobby re-renders their screens
+        because we re-broadcast the state.
+
+        Only accepted in LOBBY. Mid-game this would swap the chrome under the
+        players without swapping the questions, which is worse than the bug.
+        The value is not checked against a bundle list here for the same reason
+        ``start_game`` doesn't check it: the client's ``QuizifyI18n.setLanguage``
+        already clamps an unknown code to English, and a second, stricter gate
+        on this path only invites the two to drift apart.
+        """
+        language = data.get("language")
+        if not isinstance(language, str) or not language:
+            return
+        if game_state.phase != GamePhase.LOBBY:
+            return
+        if language == game_state.language:
+            return
+        game_state.language = language
+        await self._broadcast_state_projected(game_state)
+
     def _notify_tts_milestone(self, player_name: str, streak: int) -> None:
         """Forward a milestone hit to the TTS announcer if one is wired.
 
@@ -4561,6 +4599,10 @@ class QuizifyWebSocketHandler:
         ),
         MSG_CONFIGURE_HOUSE: (
             lambda self, ws, data, gs: self._handle_configure_house(ws, data, gs),
+            True,
+        ),
+        MSG_SET_LANGUAGE: (
+            lambda self, ws, data, gs: self._handle_set_language(ws, data, gs),
             True,
         ),
         # --- teams (#365): player messages, refused outside the lobby ---

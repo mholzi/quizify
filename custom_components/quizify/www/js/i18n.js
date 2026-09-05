@@ -110,12 +110,31 @@ window.QuizifyI18n = (function() {
         console.warn('[i18n] no translation for ' + attr + '="' + key + '" — element left untranslated');
     }
 
+    // #776: a data-i18n key that needs {placeholders} used to be untranslatable
+    // by the page sweep — the only way to fill one was a one-off t(key, params)
+    // call writing textContent, and a line written that way is frozen in
+    // whichever bundle happened to be loaded at that instant (see
+    // renderAllTime in player-lobby.js: the phone joined in English, the game
+    // language arrived a heartbeat later, and the standing stayed English on a
+    // German screen). Carrying the params on the element as JSON lets the sweep
+    // re-render the line in the new language with no help from the caller.
+    function _readI18nParams(el) {
+        var raw = el.getAttribute('data-i18n-params');
+        if (!raw) return null;
+        try {
+            var parsed = JSON.parse(raw);
+            return (parsed && typeof parsed === 'object') ? parsed : null;
+        } catch (_e) {
+            return null;  // malformed attribute: translate without params
+        }
+    }
+
     function initPageTranslations(root) {
         var scope = root || document;
         scope.querySelectorAll('[data-i18n]').forEach(function(el) {
             var key = el.getAttribute('data-i18n');
             if (key) {
-                var translated = t(key);
+                var translated = t(key, _readI18nParams(el));
                 if (translated !== key) el.textContent = translated;
                 else warnMissingKey('data-i18n', key);
             }

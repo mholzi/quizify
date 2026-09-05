@@ -61,6 +61,11 @@ ADMIN_REQUIRED_TYPES = {
     # lights/SFX/bus-event settings pushed during the lobby. Admin-only — it
     # reconfigures HA entities in the host's home.
     "configure_house",
+    # set_language carries the host's language pick into the still-open lobby
+    # (#776), so a phone joining an English game is not stamped German on
+    # arrival. Admin-only: it rewrites the language every phone in the room
+    # renders in.
+    "set_language",
     # start_lightning / start_lightning_questions / end_lightning were retired
     # in #285 — the Lightning Round now auto-triggers mid-game, with no
     # host-facing start/end message.

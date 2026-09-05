@@ -130,12 +130,27 @@
     gap: 9px;
     overflow-x: auto;
     padding: 2px 2px 8px;
-    -webkit-mask-image: linear-gradient(90deg, transparent 0, #000 12px, #000 calc(100% - 16px), transparent 100%);
-            mask-image: linear-gradient(90deg, transparent 0, #000 12px, #000 calc(100% - 16px), transparent 100%);
+    scrollbar-width: none;
+    /* #778: the row overflows by nearly a second screenful at 390px, and the
+       original 16px fade was too short to read as one — a white card fading
+       into a cream page over 16px is invisible, so "FASTEST FINGER / avg 1.5s
+       per correct" just ended flush at the screen edge and looked like broken
+       text. Widened to 40px, which is the .theme-tabs treatment (24px over a
+       dark pill on cream) scaled to this row's much lower contrast. The
+       leading 12px fade is gone: at scrollLeft 0 — where the row spends most
+       of its life — it only nibbled the first chip's left border for no
+       information gained. When the chips do fit, the faded strip is empty
+       page background and the mask shows nothing at all. */
+    -webkit-mask-image: linear-gradient(to right, #000 calc(100% - 40px), transparent 100%);
+            mask-image: linear-gradient(to right, #000 calc(100% - 40px), transparent 100%);
+    /* Snap so a swipe lands on a chip edge rather than mid-card, which is the
+       other half of "this is a strip, not a cut-off paragraph". */
+    scroll-snap-type: x proximity;
 }
 .end-chiprow::-webkit-scrollbar { display: none; }
 .rchip {
     flex: 0 0 auto;
+    scroll-snap-align: start;
     background: #fff;
     border: 1px solid #E5DFCF;
     border-radius: 12px;
