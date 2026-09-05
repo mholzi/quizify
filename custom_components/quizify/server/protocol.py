@@ -183,7 +183,6 @@ SERVER_FRAMES: dict[str, FrameSpec] = {
         note="Estimate-round ack so the client can lock its slider.",
     ),
     "answer_progress": _spec("submitted", "total", "players"),
-    "streak_milestone": _spec("player_name", "streak", "bonus"),
     "round_summary": _spec(
         "correct_answer_index",
         "correct_answer_index_original",
