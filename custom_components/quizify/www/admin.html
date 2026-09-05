@@ -152,7 +152,8 @@
                      data-i18n-aria-label="setup.pickMode" aria-label="Pick a mode">
                     <button type="button" class="preset-card" data-preset="schnellrunde"
                             data-rounds="5" data-difficulty="easy" data-timer="20"
-                            data-hot-seat="1" data-lightning="1">
+                            data-hot-seat="1" data-lightning="1"
+                            data-powerups="1" data-wager="1">
                         <span class="preset-icon qz-icon qz-icon--sun" data-ui-icon="bolt" aria-hidden="true">⚡</span>
                         <span class="preset-body">
                             <span class="preset-name" data-i18n="setup.preset.fastName">Quick round</span>
@@ -162,7 +163,8 @@
                     </button>
                     <button type="button" class="preset-card is-active" data-preset="klassiker"
                             data-rounds="10" data-difficulty="medium" data-timer="30"
-                            data-hot-seat="1" data-lightning="1">
+                            data-hot-seat="1" data-lightning="1"
+                            data-powerups="1" data-wager="1">
                         <span class="preset-icon qz-icon qz-icon--sky" data-ui-icon="brain" aria-hidden="true">🧠</span>
                         <span class="preset-body">
                             <span class="preset-name" data-i18n="setup.preset.classicName">Classic</span>
@@ -184,7 +186,8 @@
                          long timer — for five questions mid-game. -->
                     <button type="button" class="preset-card" data-preset="kinder"
                             data-rounds="5" data-difficulty="easy" data-timer="180"
-                            data-hot-seat="0" data-lightning="0">
+                            data-hot-seat="0" data-lightning="0"
+                            data-powerups="0" data-wager="0">
                         <!-- Deliberately no data-ui-icon: _paintUiIcons() only
                              swaps the emoji for an SVG on slots that carry one,
                              so leaving it off keeps the teddy while the sage
@@ -198,7 +201,8 @@
                     </button>
                     <button type="button" class="preset-card" data-preset="marathon"
                             data-rounds="20" data-difficulty="hard" data-timer="45"
-                            data-hot-seat="1" data-lightning="1">
+                            data-hot-seat="1" data-lightning="1"
+                            data-powerups="1" data-wager="1">
                         <span class="preset-icon qz-icon qz-icon--sun" data-ui-icon="trophy" aria-hidden="true">🏆</span>
                         <span class="preset-body">
                             <span class="preset-name" data-i18n="setup.preset.marathonName">Marathon</span>
@@ -352,6 +356,32 @@
                         </label>
                     </div>
 
+                    <!-- Power-ups (#742). Same shape as the two toggles above,
+                         same default ON. Off, no power-up is dealt at the top
+                         of a round — the kids preset switches it off because
+                         Steal and Freeze are the same "losing points" mechanic
+                         Lightning and Hot Seat were turned off for. -->
+                    <div class="vF-step">
+                        <div class="vF-q"><span class="num">8</span><span data-i18n="setup.eigene.q8">Power-ups?</span></div>
+                        <label class="toggle-compact setup-lightning-toggle" for="powerups-enabled-toggle">
+                            <input type="checkbox" id="powerups-enabled-toggle" checked>
+                            <span class="toggle-switch-compact" aria-hidden="true"></span>
+                            <span class="toggle-label" data-i18n="setup.eigene.powerupsHint">Joker, Steal, Freeze and friends are dealt out</span>
+                        </label>
+                    </div>
+
+                    <!-- Final-round wager (#742/#656). Off, the last question
+                         is played straight instead of one where "no answer
+                         costs you the stake" can wipe a child's score. -->
+                    <div class="vF-step">
+                        <div class="vF-q"><span class="num">9</span><span data-i18n="setup.eigene.q9">Bet on the last round?</span></div>
+                        <label class="toggle-compact setup-lightning-toggle" for="wager-enabled-toggle">
+                            <input type="checkbox" id="wager-enabled-toggle" checked>
+                            <span class="toggle-switch-compact" aria-hidden="true"></span>
+                            <span class="toggle-label" data-i18n="setup.eigene.wagerHint">Stake points on the final question</span>
+                        </label>
+                    </div>
+
                     <!-- TTS narration toggles (#281). Master switch + per-event
                          toggles. The values ride start_game like the lightning
                          toggle (admin.js _readTtsConfig → _buildStartGamePayload
@@ -363,7 +393,7 @@
                          nested + dimmed/disabled under it. admin.js'
                          _syncTtsChildState toggles the .is-disabled state. -->
                     <div class="vF-step">
-                        <div class="vF-q"><span class="num">8</span><span data-i18n="setup.tts.title">Quizmaster voice?</span></div>
+                        <div class="vF-q"><span class="num">10</span><span data-i18n="setup.tts.title">Quizmaster voice?</span></div>
                         <label class="toggle-compact setup-tts-toggle setup-tts-master" for="tts-enable-toggle">
                             <input type="checkbox" id="tts-enable-toggle">
                             <span class="toggle-switch-compact" aria-hidden="true"></span>
@@ -453,7 +483,7 @@
                          booleans. Empty entity pickers ([] / "") mean "fall back
                          to the config-entry value". -->
                     <div class="vF-step">
-                        <div class="vF-q"><span class="num">9</span><span data-i18n="setup.house.title">Does the house play along?</span></div>
+                        <div class="vF-q"><span class="num">11</span><span data-i18n="setup.house.title">Does the house play along?</span></div>
                         <label class="toggle-compact setup-house-toggle setup-house-master" for="house-enable-toggle">
                             <input type="checkbox" id="house-enable-toggle">
                             <span class="toggle-switch-compact" aria-hidden="true"></span>
