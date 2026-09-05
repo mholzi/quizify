@@ -426,6 +426,7 @@
       "standings": "Anunciar el nuevo líder",
       "join": "Dar la bienvenida a los jugadores",
       "countdown": "Anunciar la cuenta atrás final",
+      "milestone": "Anunciar las rachas de aciertos",
       "engine": "Motor de TTS",
       "usedefault": "Usar predeterminado",
       "noentities": "Ninguno encontrado: configúralo en HA"

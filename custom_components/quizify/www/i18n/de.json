@@ -426,6 +426,7 @@
       "standings": "Neue Führung ausrufen",
       "join": "Neue Spieler begrüßen",
       "countdown": "Countdown ansagen",
+      "milestone": "Antwortserien ausrufen",
       "engine": "TTS-Stimme",
       "usedefault": "Standard verwenden",
       "noentities": "Keine gefunden – in HA einrichten"

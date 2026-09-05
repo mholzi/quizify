@@ -1270,6 +1270,7 @@
         announce_standings: true,
         announce_join: true,
         announce_countdown: true,
+        announce_milestone: true,
         // Per-game entity overrides (#281). Empty string → fall back to the
         // integration-options default entities on the server.
         tts_entity: '',
@@ -2217,6 +2218,7 @@
             announce_standings: TTS_DEFAULTS.announce_standings,
             announce_join: TTS_DEFAULTS.announce_join,
             announce_countdown: TTS_DEFAULTS.announce_countdown,
+            announce_milestone: TTS_DEFAULTS.announce_milestone,
             tts_entity: TTS_DEFAULTS.tts_entity,
             media_player: TTS_DEFAULTS.media_player,
         };
@@ -2232,6 +2234,7 @@
                     if (typeof saved.announce_standings === 'boolean') cfg.announce_standings = saved.announce_standings;
                     if (typeof saved.announce_join === 'boolean') cfg.announce_join = saved.announce_join;
                     if (typeof saved.announce_countdown === 'boolean') cfg.announce_countdown = saved.announce_countdown;
+                    if (typeof saved.announce_milestone === 'boolean') cfg.announce_milestone = saved.announce_milestone;
                     if (typeof saved.tts_entity === 'string') cfg.tts_entity = saved.tts_entity;
                     if (typeof saved.media_player === 'string') cfg.media_player = saved.media_player;
                 }
@@ -2277,6 +2280,7 @@
             announce_standings: _ttsEls.standings ? !!_ttsEls.standings.checked : TTS_DEFAULTS.announce_standings,
             announce_join: _ttsEls.join ? !!_ttsEls.join.checked : TTS_DEFAULTS.announce_join,
             announce_countdown: _ttsEls.countdown ? !!_ttsEls.countdown.checked : TTS_DEFAULTS.announce_countdown,
+            announce_milestone: _ttsEls.milestone ? !!_ttsEls.milestone.checked : TTS_DEFAULTS.announce_milestone,
             tts_entity: _ttsEls.engine ? _ttsEls.engine.value : TTS_DEFAULTS.tts_entity,
             media_player: _ttsEls.speaker ? _ttsEls.speaker.value : TTS_DEFAULTS.media_player,
         };
@@ -2357,6 +2361,7 @@
             standings: document.getElementById('tts-announce-standings'),
             join: document.getElementById('tts-announce-join'),
             countdown: document.getElementById('tts-announce-countdown'),
+            milestone: document.getElementById('tts-announce-milestone'),
             engine: document.getElementById('tts-engine-select'),
             // #525: one speaker for the whole game. The control moved out of
             // #tts-children (that container goes pointer-events:none when
@@ -2373,7 +2378,8 @@
         if (_ttsEls.standings) _ttsEls.standings.checked = cfg.announce_standings;
         if (_ttsEls.join) _ttsEls.join.checked = cfg.announce_join;
         if (_ttsEls.countdown) _ttsEls.countdown.checked = cfg.announce_countdown;
-        ['enable', 'question', 'options', 'reveal', 'standings', 'join', 'countdown', 'engine', 'speaker'].forEach(function (k) {
+        if (_ttsEls.milestone) _ttsEls.milestone.checked = cfg.announce_milestone;
+        ['enable', 'question', 'options', 'reveal', 'standings', 'join', 'countdown', 'milestone', 'engine', 'speaker'].forEach(function (k) {
             if (_ttsEls[k]) on(_ttsEls[k], 'change', _saveTtsConfig);
         });
         // Reflect the master→child enabled/dimmed state (Variant B, #281).
