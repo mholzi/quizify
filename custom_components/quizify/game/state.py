@@ -1151,6 +1151,77 @@ class QuizifyGameState:
         # dark would punish the wrong thing.
         return next((p for p in candidates if p.connected), candidates[0])
 
+    def _record_team_timeout(self, team: Team) -> None:
+        """Book a round the team never answered (#748).
+
+        The shape a missed round takes everywhere else: streak broken, a
+        ``timeout`` history entry, a zero in the round-score history, and the
+        round still counted as played so the per-round averages divide by the
+        right number. Shared by both settlement paths so a fourth copy cannot
+        drift the way the scoring blocks did.
+        """
+        team.streak = 0
+        team.round_history.append("timeout")
+        team.round_scores.append(0)
+        team.rounds_played += 1
+
+    def _credit_team_round(
+        self,
+        team: Team,
+        points: int,
+        correct: bool,
+        elapsed: float,
+        breakdown: dict[str, Any],
+    ) -> None:
+        """Book one scored round onto a team — the only place that does (#748).
+
+        Multiple choice and estimate used to keep a copy of this each, the
+        second documented as "the mirror of" the first. They drifted anyway:
+        the estimate copy floored the running total at zero and the
+        multiple-choice copy did not, so whether a team could end a round below
+        zero depended on the question type. One function now, so the next
+        divergence has to be written on purpose.
+
+        **The floor is the right side of that disagreement.** Every individual
+        score in this file is floored at zero — a submitted answer
+        (``submit_answer``), an estimate result, a final-round timeout, a
+        STEAL, a Hot Seat settlement — and ``ScoringEngine`` bounds the wager
+        loss itself at ``-min(wager_pts, bank)`` so a bet cannot price a player
+        out of an existing rematch flow. Teams are not a separate ranking:
+        ``get_ranked_participants`` returns teams and solo players in one list,
+        which the dashboard, the reveal and the finale draw with the same code
+        that has never been handed a negative number (``player-end.js`` sizes
+        every bar as ``score / topScore``). A table where the team reads -30
+        and the guest who stayed solo reads 0 for the same lost bet is the bug;
+        the floor is not.
+
+        The streak rule is shared for the same reason — it was already
+        identical on both sides. ``submit_answer`` advances the carrier's lent
+        streak on a correct answer and zeroes it otherwise, and the estimate
+        path spells out the same rule against ``exact`` (#408).
+        """
+        team.score += points
+        if team.score < 0:
+            team.score = 0
+        team.streak = team.streak + 1 if correct else 0
+        if team.streak > team.max_streak:
+            team.max_streak = team.streak
+        team.last_answer_correct = correct
+        team.last_elapsed = elapsed
+        team.round_score = points
+        team.round_score_breakdown = dict(breakdown)
+        # Award tallies, kept in the same shape a player keeps them so the
+        # awards can be computed by the same code (#365).
+        team.round_history.append("correct" if correct else "wrong")
+        team.round_scores.append(points)
+        team.rounds_played += 1
+        if correct:
+            team.answer_times.append(elapsed)
+            if (question := self._current_question) is not None and (
+                question.difficulty == Difficulty.HARD.value
+            ):
+                team.hard_score += points
+
     def _settle_team_answers(self) -> None:
         """Score each team's standing answer once, through the player path.
 
@@ -1166,17 +1237,11 @@ class QuizifyGameState:
         round_started = self._round_start_time or 0.0
         for team in self._team_registry.all_teams():
             if team.current_answer is None or team.answer_by is None:
-                team.streak = 0
-                team.round_history.append("timeout")
-                team.round_scores.append(0)
-                team.rounds_played += 1
+                self._record_team_timeout(team)
                 continue
             player = self._pick_team_carrier(team, team.answer_by)
             if player is None:
-                team.streak = 0
-                team.round_history.append("timeout")
-                team.round_scores.append(0)
-                team.rounds_played += 1
+                self._record_team_timeout(team)
                 continue
 
             elapsed = max(0.0, (team.answered_at or round_started) - round_started)
@@ -1191,25 +1256,13 @@ class QuizifyGameState:
                 _settling_team=True,
             )
             if isinstance(result, AnswerResult):
-                team.score += result.points_earned
-                team.streak = result.new_streak
-                team.last_answer_correct = result.correct
-                team.last_elapsed = elapsed
-                team.round_score = result.points_earned
-                team.round_score_breakdown = dict(player.round_score_breakdown)
-                team.round_history.append("correct" if result.correct else "wrong")
-                # Award tallies, kept in the same shape a player keeps them so
-                # the awards can be computed by the same code (#365).
-                team.round_scores.append(result.points_earned)
-                team.rounds_played += 1
-                if result.correct:
-                    team.answer_times.append(elapsed)
-                    if (question := self._current_question) is not None and (
-                        question.difficulty == Difficulty.HARD.value
-                    ):
-                        team.hard_score += result.points_earned
-                if team.streak > team.max_streak:
-                    team.max_streak = team.streak
+                self._credit_team_round(
+                    team,
+                    result.points_earned,
+                    result.correct,
+                    elapsed,
+                    player.round_score_breakdown,
+                )
 
     def _settle_team_guesses(self) -> dict[str, str]:
         """Hand each team's standing guess to the member who set it (#602).
@@ -1247,11 +1300,12 @@ class QuizifyGameState:
     ) -> None:
         """Copy each carrier's estimate result onto their team (#602).
 
-        The mirror of the bookkeeping block in ``_settle_team_answers``: the
-        team takes the points, the streak, the history entry and the award
-        tallies, in the same shape a player keeps them, so the awards can be
-        computed by the same code. A team that never guessed records a
-        timeout, which is what a missed round looks like everywhere else.
+        Which member carried the guess is this method's only concern; the
+        bookkeeping itself belongs to ``_credit_team_round``, shared with
+        ``_settle_team_answers`` (#748). This used to be a hand-kept "mirror"
+        of that block, and it had already drifted — only this copy floored the
+        team total at zero. A team that never guessed records a timeout, which
+        is what a missed round looks like everywhere else.
         """
         for team in self._team_registry.all_teams():
             carrier_name = carriers.get(team.team_id)
@@ -1262,36 +1316,19 @@ class QuizifyGameState:
             )
             entry = scores.get(carrier_name) if carrier_name else None
             if player is None or entry is None:
-                team.streak = 0
-                team.round_history.append("timeout")
-                team.round_scores.append(0)
-                team.rounds_played += 1
+                self._record_team_timeout(team)
                 continue
 
-            points = player.round_score
-            exact = bool(entry["exact"])
-            team.score += points
-            if team.score < 0:
-                team.score = 0
-            # Streak only advances on an exact hit, matching the per-player
-            # rule (#408) — a near miss is recorded as "wrong", and growing a
-            # streak on it would step past a milestone that was never paid.
-            team.streak = team.streak + 1 if exact else 0
-            if team.streak > team.max_streak:
-                team.max_streak = team.streak
-            team.last_answer_correct = exact
-            team.last_elapsed = player.last_elapsed
-            team.round_score = points
-            team.round_score_breakdown = dict(player.round_score_breakdown)
-            team.round_history.append("correct" if exact else "wrong")
-            team.round_scores.append(points)
-            team.rounds_played += 1
-            if exact:
-                team.answer_times.append(player.last_elapsed)
-                if (question := self._current_question) is not None and (
-                    question.difficulty == Difficulty.HARD.value
-                ):
-                    team.hard_score += points
+            # "Correct" on an estimate round means an EXACT hit — a near miss
+            # is recorded as "wrong", so the shared streak rule cannot grow a
+            # streak past a milestone that was never paid (#408).
+            self._credit_team_round(
+                team,
+                player.round_score,
+                bool(entry["exact"]),
+                player.last_elapsed,
+                player.round_score_breakdown,
+            )
 
     def _collect_team_powerup_stats(self) -> None:
         """Roll each team's members' power-up usage up to the team (#365).
