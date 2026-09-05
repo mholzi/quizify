@@ -14,7 +14,18 @@
     "namePlaceholder": "Dein Name",
     "joinButton": "Beitreten",
     "joining": "Beitreten…",
-    "languageAria": "Sprache der Oberfläche"
+    "languageAria": "Sprache der Oberfläche",
+    "refused": {
+      "NAME_TAKEN": "Unter diesem Namen spielt schon jemand. Nimm einen anderen — häng eine Zahl oder deinen Anfangsbuchstaben an — und tippe wieder auf Beitreten.",
+      "NAME_INVALID": "Dieser Name geht nicht. Nutze 1 bis 20 Zeichen und tippe dann wieder auf Beitreten.",
+      "GAME_FULL": "Das Spiel ist voll — mehr als 20 Mitspieler gehen nicht. Bitte den Host, Platz zu machen, oder schau am Fernseher zu.",
+      "GAME_ENDED": "Dieses Spiel ist schon zu Ende. Bitte den Host, ein neues zu starten, und scanne dann den QR-Code noch einmal.",
+      "ALREADY_JOINED": "Du bist auf diesem Gerät schon im Spiel. Geh zurück zu dem Tab, mit dem du beigetreten bist, statt einen zweiten zu öffnen.",
+      "JOIN_RATE_LIMITED": "Zu viele Beitritts-Versuche aus deinem Netz. Warte etwa eine Minute und tippe dann wieder auf Beitreten.",
+      "NO_CONNECTION": "Wir erreichen das Spiel nicht. Prüf, ob du im selben WLAN wie der Host bist, und tippe auf Erneut verbinden — wenn es weiter nicht klappt, bitte den Host um einen neuen QR-Code.",
+      "INVALID_ACTION": "Der Beitritt konnte nicht verarbeitet werden. Tippe noch einmal auf Beitreten — wenn es weiter nicht klappt, bitte den Host um einen neuen QR-Code.",
+      "UNKNOWN": "Wir konnten dich nicht ins Spiel holen. Tippe noch einmal auf Beitreten — wenn es weiter nicht klappt, bitte den Host um einen neuen QR-Code."
+    }
   },
   "lobby": {
     "title": "Lobby",
@@ -644,7 +655,9 @@
     "RATE_LIMITED": "Zu viele Einsendungen. Bitte kurz warten und erneut versuchen.",
     "GITHUB_ERROR": "Der Einsende-Dienst ist gerade nicht erreichbar. Später erneut versuchen.",
     "SUBMIT_DISABLED": "Pack-Einsendung ist nicht konfiguriert.",
-    "ADMIN_REQUIRED": "Dieses Fenster ist nicht der Host — der Befehl wurde abgelehnt. Öffne das Admin-Fenster erneut über Home Assistant."
+    "ADMIN_REQUIRED": "Dieses Fenster ist nicht der Host — der Befehl wurde abgelehnt. Öffne das Admin-Fenster erneut über Home Assistant.",
+    "ALREADY_JOINED": "Bereits beigetreten",
+    "JOIN_RATE_LIMITED": "Zu viele Beitritts-Versuche"
   },
   "page": {
     "titleAdmin": "Quizify — Admin",

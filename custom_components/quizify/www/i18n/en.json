@@ -14,7 +14,18 @@
     "namePlaceholder": "Your name",
     "joinButton": "Join Game",
     "joining": "Joining…",
-    "languageAria": "Interface language"
+    "languageAria": "Interface language",
+    "refused": {
+      "NAME_TAKEN": "Someone is already playing under that name. Pick another one — add a number or your last initial — and tap Join Game again.",
+      "NAME_INVALID": "That name won't work. Use 1 to 20 characters, then tap Join Game again.",
+      "GAME_FULL": "The game is full — 20 players is the limit. Ask the host to make room, or watch along on the TV.",
+      "GAME_ENDED": "This game has already finished. Ask the host to start a new one, then scan the QR code again.",
+      "ALREADY_JOINED": "You are already in this game on this device. Go back to the tab you joined from instead of opening a second one.",
+      "JOIN_RATE_LIMITED": "Too many join attempts from your network. Wait about a minute, then tap Join Game again.",
+      "NO_CONNECTION": "We can't reach the game. Check that you are on the same Wi-Fi as the host and tap Retry connection — if it keeps failing, ask the host for a fresh QR code.",
+      "INVALID_ACTION": "The game couldn't process your join. Tap Join Game again — if it keeps failing, ask the host for a fresh QR code.",
+      "UNKNOWN": "We couldn't get you into the game. Tap Join Game again — if it keeps failing, ask the host for a fresh QR code."
+    }
   },
   "lobby": {
     "title": "Lobby",
@@ -644,7 +655,9 @@
     "RATE_LIMITED": "Too many submissions. Please wait a moment and try again.",
     "GITHUB_ERROR": "Submission service is unavailable right now. Try again later.",
     "SUBMIT_DISABLED": "Pack submission is not configured.",
-    "ADMIN_REQUIRED": "This window is not the host — the command was refused. Reopen the admin window from Home Assistant."
+    "ADMIN_REQUIRED": "This window is not the host — the command was refused. Reopen the admin window from Home Assistant.",
+    "ALREADY_JOINED": "Already joined",
+    "JOIN_RATE_LIMITED": "Too many join attempts"
   },
   "page": {
     "titleAdmin": "Quizify — Admin",

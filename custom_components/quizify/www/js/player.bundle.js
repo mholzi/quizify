@@ -21,6 +21,12 @@
         ws: null,
         playerName: null,
         playerId: null,
+        // #729: true from the moment a join is sent (or queued behind a
+        // pending connect) until the server answers `joined` / `error`.
+        // The join-error reset used to key on `!playerName`, which
+        // handleJoinClick had already filled in — so the guard was dead for
+        // every refusal and the button sat on "Joining…" forever.
+        joinPending: false,
         sessionToken: null,
         isAdmin: false,
         currentView: null,
@@ -635,6 +641,10 @@
         feedbackLabel: feedbackLabel,
         generateQR: generateQR,
         showToast: showToast,
+        // #729: a join refused mid-reconnect has to pull the guest out from
+        // under the reconnecting overlay, or the reason lands on a screen
+        // nobody can see.
+        hideReconnectingOverlay: hideReconnectingOverlay,
         saveSession: saveSession,
         getSession: getSession,
         clearSession: clearSession,
@@ -5856,6 +5866,10 @@
                         var _at = QuizifyUtils.readAdminToken();
                         if (_at) joinMsg.admin_token = _at;
                     }
+                    // #729: arm the answer timeout for this auto-join too —
+                    // a refusal here (a stale name taken mid-game) has to
+                    // reach the guest, not vanish into the reconnect loop.
+                    beginJoinPending();
                     send('join', joinMsg);
                 }
                 // else: waiting for auto-join interval or user to click join
@@ -5972,6 +5986,7 @@
                 // handling the broadcast directly makes the return to the
                 // join screen deterministic instead of relying on the
                 // close + reconnect_failed race.
+                endJoinPending();
                 pu.clearSession();
                 state.sessionToken = null;
                 state.playerName = null;
@@ -6011,6 +6026,7 @@
 
             case 'joined':
             case 'reconnected':
+                endJoinPending();
                 state.playerName = msg.player_id || state.playerName;
                 state.playerId = msg.player_id;
                 if (msg.session_token) {
@@ -7000,8 +7016,23 @@
         //   t('errors.<CODE>') returns the localized string OR the key
         //   itself if missing. We treat key-as-result as "no translation"
         //   and fall back to server message, then to errors.UNKNOWN.
-        var t = (window.QuizifyI18n && window.QuizifyI18n.t) || function (k) { return k; };
-        var key = 'errors.' + (msg.code || 'UNKNOWN');
+        var t = _t();
+        var code = msg.code || 'UNKNOWN';
+
+        // #729: a join is in flight — the error is a refusal, and the join
+        // form owns it. This used to be gated on `!state.playerName`, which
+        // handleJoinClick sets BEFORE the join goes out, so the branch was
+        // dead for every single refusal: the guest was left with a disabled
+        // button reading "Joining…", no reason and no way back.
+        // The old `!state.playerName` condition is kept as a second trigger —
+        // it still catches an error that lands on the join form outside a
+        // tracked join — but `joinPending` is the one that actually fires.
+        if (state.joinPending || (!state.playerName && els.joinBtn)) {
+            pu.showToast(showJoinRefusal(code, msg.message));
+            return;
+        }
+
+        var key = 'errors.' + code;
         var translated = t(key);
         var userMsg;
         if (translated && translated !== key) {
@@ -7024,23 +7055,99 @@
         // answer for it (teams are set / that team dissolved), and showing it
         // there is what keeps the player from asking the host (#365).
         if (msg.code === 'TEAM_CLOSED' && team) team.handleTeamError();
+    }
 
-        // If the error happened during join, reset the button so the user can retry
-        if (!state.playerName && els.joinBtn) {
-            els.joinBtn.disabled = false;
-            els.joinBtn.textContent = t('join.joinButton');
-            if (els.nameInput) els.nameInput.style.borderColor = '#D65858';
-            // The toast fades after a few seconds, taking the reason with it;
-            // the red border alone doesn't say *why* the join failed (#426).
-            // Persist the translated reason in the inline validation message
-            // (the input's aria-describedby target) so it stays visible and
-            // is announced to screen readers. Cleared on the next input.
-            var vmsg = document.getElementById('name-validation-msg');
-            if (vmsg) {
-                vmsg.textContent = userMsg;
-                vmsg.classList.remove('hidden');
-            }
+    // ============================================
+    // Join Refusals (#729)
+    // ============================================
+
+    // How long a join may sit unanswered before we tell the guest something
+    // is wrong. A refusal comes back in milliseconds; this only fires when
+    // nothing comes back at all — the per-IP connection cap answers the
+    // upgrade with a plain HTTP 429 (server/websocket.py), so the socket
+    // never opens and no `error` frame is ever sent. Before #729 that left
+    // the button on "Joining…" with nothing else on screen.
+    var JOIN_ANSWER_TIMEOUT_MS = 10000;
+    var _joinTimeout = null;
+
+    // Refusals that invalidate the name we hold. Without clearing it, the
+    // reconnect loop in player-utils keeps firing (it is gated on
+    // state.playerName) and re-sends the very name the server just refused,
+    // so the guest watches a silent retry storm instead of a join form.
+    var JOIN_REFUSALS_CLEARING_NAME = [
+        'NAME_TAKEN', 'NAME_INVALID', 'GAME_FULL', 'GAME_ENDED', 'ALREADY_JOINED'
+    ];
+
+    function _t() {
+        return (window.QuizifyI18n && window.QuizifyI18n.t) || function (k) { return k; };
+    }
+
+    // Prefer the join-specific wording (`join.refused.<CODE>`), which tells
+    // the guest what to DO. `errors.<CODE>` is the terse label used for
+    // in-game toasts ("Name already taken") and is only a fallback here.
+    function joinRefusalText(code, serverMessage) {
+        var t = _t();
+        var candidates = ['join.refused.' + code, 'errors.' + code];
+        for (var i = 0; i < candidates.length; i++) {
+            var value = t(candidates[i]);
+            if (value && value !== candidates[i]) return value;
         }
+        if (serverMessage) return serverMessage;
+        return t('join.refused.UNKNOWN');
+    }
+
+    function beginJoinPending() {
+        state.joinPending = true;
+        if (_joinTimeout) clearTimeout(_joinTimeout);
+        _joinTimeout = setTimeout(function () {
+            _joinTimeout = null;
+            if (state.joinPending) showJoinRefusal('NO_CONNECTION', null);
+        }, JOIN_ANSWER_TIMEOUT_MS);
+    }
+
+    function endJoinPending() {
+        state.joinPending = false;
+        if (_joinTimeout) { clearTimeout(_joinTimeout); _joinTimeout = null; }
+    }
+
+    // Put the join form back in a usable state AND leave the reason on
+    // screen. The toast alone fades after three seconds and takes the reason
+    // with it (#426); the button alone says nothing at all (#729).
+    // Returns the text shown so the caller can reuse it for the toast.
+    function showJoinRefusal(code, serverMessage) {
+        endJoinPending();
+        var t = _t();
+        var text = joinRefusalText(code, serverMessage);
+
+        if (JOIN_REFUSALS_CLEARING_NAME.indexOf(code) !== -1) {
+            state.playerName = null;
+            state.playerId = null;
+            state.sessionToken = null;
+            pu.clearSession();
+            // A refusal can arrive on an auto-rejoin, with the guest sitting
+            // behind the reconnecting overlay or on the lobby. Put them back
+            // on the form the message belongs to.
+            if (pu.hideReconnectingOverlay) pu.hideReconnectingOverlay();
+            state.isReconnecting = false;
+            state.reconnectAttempts = 0;
+            pu.showView('join-view');
+        }
+
+        if (els.joinBtn) {
+            els.joinBtn.disabled = false;
+            els.joinBtn.textContent = code === 'NO_CONNECTION'
+                ? t('connection.retryConnection')
+                : t('join.joinButton');
+        }
+        if (els.nameInput) els.nameInput.style.borderColor = '#D65858';
+        // The input's aria-describedby target: persistent and announced to
+        // screen readers, cleared on the next keystroke (setupJoinForm).
+        var vmsg = document.getElementById('name-validation-msg');
+        if (vmsg) {
+            vmsg.textContent = text;
+            vmsg.classList.remove('hidden');
+        }
+        return text;
     }
 
     // ============================================
@@ -7076,6 +7183,13 @@
         var result = pu.validateName(els.nameInput.value);
         if (!result.valid) return;
 
+        // Setting the name here is load-bearing: the onOpen handler below
+        // auto-sends the join off state.playerName when the socket wasn't
+        // open at click time, and player-utils gates its whole reconnect
+        // loop on it. So the ordering stays; what changes (#729) is that the
+        // refusal path no longer *infers* "we are joining" from the absence
+        // of a name — beginJoinPending() says so outright.
+        beginJoinPending();
         state.playerName = result.name;
         els.joinBtn.disabled = true;
         els.joinBtn.textContent = t('join.joining');
@@ -7450,6 +7564,15 @@
         // Fallback: if WS hasn't opened after 10s, re-enable join button with error hint
         _wsOpenTimeout = setTimeout(function () {
             if (!state.ws || state.ws.readyState !== WebSocket.OPEN) {
+                // #729: say WHY, persistently. The per-IP connection cap
+                // refuses the upgrade with an HTTP 429 the WebSocket API
+                // never surfaces, so a relabelled button was the guest's
+                // only clue that anything had gone wrong.
+                var vmsgConn = document.getElementById('name-validation-msg');
+                if (vmsgConn) {
+                    vmsgConn.textContent = joinRefusalText('NO_CONNECTION', null);
+                    vmsgConn.classList.remove('hidden');
+                }
                 if (els.joinBtn) {
                     var tRetry = (window.QuizifyI18n && window.QuizifyI18n.t) || function (k) { return k; };
                     els.joinBtn.disabled = false;

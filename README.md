@@ -391,7 +391,7 @@ Quizify speaks your guests' language.
 
 The UI follows the game language (since v1.1.24) — pick German in the pack-picker and the entire admin / player / dashboard surface switches to German labels, tooltips, error messages, fun-fact labels, and end-game awards. Switch to English or Spanish and the whole thing flips.
 
-681 i18n keys, full parity between all three locales, validated in CI.
+692 i18n keys, full parity between all three locales, validated in CI.
 
 ---
 
