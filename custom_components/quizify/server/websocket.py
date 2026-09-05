@@ -106,9 +106,53 @@ MSG_RESUME_GAME = "resume_game"
 MSG_KICK_PLAYER = "kick_player"
 MSG_CONFIGURE_TTS = "configure_tts"
 MSG_CONFIGURE_HOUSE = "configure_house"
+
+# Admin messages that require WS-level admin (a real ?role=admin tab) rather
+# than the admin-as-player relaxation ``_is_authorized_admin`` allows. These
+# two reach Home Assistant service calls with host-supplied entity ids (#724).
+_WS_ADMIN_ONLY = frozenset({MSG_CONFIGURE_TTS, MSG_CONFIGURE_HOUSE})
 MSG_CREATE_TEAM = "create_team"
 MSG_JOIN_TEAM = "join_team"
 MSG_LEAVE_TEAM = "leave_team"
+
+
+def _in_domain(entity_id: str, domain: str) -> bool:
+    """True when ``entity_id`` names an entity of ``domain``.
+
+    The house config arrives as untyped client JSON and its ids are handed
+    straight to ``light.turn_on`` / ``scene.turn_on`` / ``media_player.play_media``.
+    A domain check is the cheap half of #724: even an authorized host should not
+    be able to aim the party lights at ``lock.front_door`` by editing the frame.
+    """
+    return entity_id.startswith(f"{domain}.")
+
+
+def _entities_in_domain(entity_ids: list[str], domain: str, field: str) -> list[str]:
+    """Keep only the ids of ``domain``, logging what was dropped (#724)."""
+    kept = [e for e in entity_ids if _in_domain(e, domain)]
+    dropped = [e for e in entity_ids if not _in_domain(e, domain)]
+    if dropped:
+        _LOGGER.warning(
+            "House config: ignored %d %s entry/entries outside the %s domain: %s",
+            len(dropped),
+            field,
+            domain,
+            ", ".join(dropped),
+        )
+    return kept
+
+
+def _entity_in_domain(entity_id: str, domain: str, field: str) -> str:
+    """Keep ``entity_id`` only if it is of ``domain``, else "" (#724)."""
+    if not entity_id or _in_domain(entity_id, domain):
+        return entity_id
+    _LOGGER.warning(
+        "House config: ignored %s %r - not a %s entity",
+        field,
+        entity_id,
+        domain,
+    )
+    return ""
 
 
 def _coerce_toggle(value: Any, *, default: bool) -> bool:
@@ -631,6 +675,40 @@ class QuizifyWebSocketHandler:
             return
 
         handler, admin_required = entry
+
+        # #724: two admin messages need WS-level admin, not the
+        # admin-as-player relaxation. ``configure_house`` and ``configure_tts``
+        # forward host-supplied entity ids into light.turn_on, scene.turn_on,
+        # media_player.play_media and tts.speak - Home Assistant service calls
+        # against the whole house. The ``is_admin: true`` join claim (#208) was
+        # accepted as "claim the single admin slot of the quiz"; it was never
+        # meant to reach HA services, and a host who runs the game from the
+        # ?role=admin tab leaves that player slot free all evening for any
+        # guest to take. Same bar as ``admin_connect`` above.
+        # Same bar, same reason, different carrier: the ``tts`` and ``house``
+        # blocks ride the start payload straight into ``_apply_tts_config`` /
+        # ``_apply_house_config``. A player-admin may still start the game (that
+        # IS the #208 flow) — the room's lights, speakers and scenes just stay on
+        # whatever the host configured. Stripped here rather than in the handler
+        # so the authoritative ``is_admin`` decides, not a second lookup.
+        if msg_type == MSG_START_GAME and not is_admin:
+            if data.get("tts") or data.get("house"):
+                _LOGGER.warning(
+                    "Dropped the tts/house blocks of start_game from a "
+                    "connection without the WS admin role (#724)"
+                )
+            data = {k: v for k, v in data.items() if k not in ("tts", "house")}
+
+        if msg_type in _WS_ADMIN_ONLY and not is_admin:
+            _LOGGER.warning(
+                "Refused %s from a connection without the WS admin role (#724)",
+                msg_type,
+            )
+            await self._conn.send_error(
+                ws, ERR_ADMIN_REQUIRED, "This connection is not the host"
+            )
+            return
+
         if admin_required and not self._is_authorized_admin(ws, is_admin, game_state):
             # Centralized admin guard — same error code/message as the legacy
             # per-type checks. ``_is_authorized_admin`` accepts either WS-level
@@ -3810,8 +3888,16 @@ class QuizifyWebSocketHandler:
                 # Per-game entity overrides from the admin dropdowns (#281).
                 # Empty/missing → the announcer falls back to the config-entry
                 # default entities.
-                tts_entity=tts.get("tts_entity"),
-                media_player=tts.get("media_player"),
+                tts_entity=_entity_in_domain(
+                    str(tts.get("tts_entity") or "").strip(), "tts", "tts_entity"
+                )
+                or None,
+                media_player=_entity_in_domain(
+                    str(tts.get("media_player") or "").strip(),
+                    "media_player",
+                    "media_player",
+                )
+                or None,
             )
         except Exception:  # noqa: BLE001
             _LOGGER.exception("TTS configure raised")
@@ -3899,6 +3985,17 @@ class QuizifyWebSocketHandler:
         )
         media_player = str(house.get("media_player") or "").strip()
         winner_scene_entity = str(house.get("winner_scene_entity") or "").strip()
+
+        # Domain allowlist (#724). Each override is forwarded to exactly one
+        # service - light.turn_on, scene.turn_on, media_player.play_media - so
+        # an id from any other domain is never a legitimate value here. Dropped
+        # rather than rejected: one bad picker entry must not disarm the whole
+        # house block, which is the same defensive stance as the guards below.
+        light_entities = _entities_in_domain(light_entities, "light", "light_entities")
+        media_player = _entity_in_domain(media_player, "media_player", "media_player")
+        winner_scene_entity = _entity_in_domain(
+            winner_scene_entity, "scene", "winner_scene_entity"
+        )
 
         lights = self._party_lights
         if lights is not None:
