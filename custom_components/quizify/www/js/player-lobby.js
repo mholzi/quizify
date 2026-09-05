@@ -107,20 +107,49 @@
             // First-timer, or analytics not wired: show nothing at all
             // rather than "1st of 1", which would be a hollow brag.
             el.textContent = '';
+            el.removeAttribute('data-i18n');
+            el.removeAttribute('data-i18n-params');
             el.classList.add('hidden');
             return;
         }
         var t = (window.QuizifyI18n && window.QuizifyI18n.t) || function (k) { return k; };
-        // A player with games but no win yet gets their own phrasing —
-        // "0 wins" reads like a taunt on the screen you just joined.
-        var key = standing.wins > 0 ? 'lobby.allTime' : 'lobby.allTimeFirstWin';
-        el.textContent = t(key, {
+        var key = _allTimeKey(standing);
+        var params = {
             rank: standing.rank,
             total: standing.total_players,
             wins: standing.wins,
             games: standing.games_played
-        });
+        };
+        // #776: this line is written on `joined`, which lands BEFORE the first
+        // game_state frame — i.e. before the phone learns the game language.
+        // Without a data-i18n attribute the later initPageTranslations() sweep
+        // walks straight past it and the standing stays in the join-screen
+        // language while everything around it switches. Same shape as #648;
+        // the params ride along as JSON so the sweep can re-interpolate them.
+        el.setAttribute('data-i18n', key);
+        el.setAttribute('data-i18n-params', JSON.stringify(params));
+        el.textContent = t(key, params);
         el.classList.remove('hidden');
+    }
+
+    /**
+     * Pick the all-time sentence that matches the counts (#776).
+     *
+     * Five flat keys instead of a pluralisation engine, the same `…One`
+     * convention `lobby.alsoOne` / `highlights.tonightWinsOne` already use.
+     * Only three of the four (wins × games) combinations are reachable in the
+     * has-won branch: you cannot have two wins from one game, so a single game
+     * always means a single win.
+     */
+    function _allTimeKey(standing) {
+        var oneGame = standing.games_played === 1;
+        if (!standing.wins) {
+            // A player with games but no win yet gets their own phrasing —
+            // "0 wins" reads like a taunt on the screen you just joined.
+            return oneGame ? 'lobby.allTimeFirstWinOneGame' : 'lobby.allTimeFirstWin';
+        }
+        if (oneGame) return 'lobby.allTimeOneWinOneGame';
+        return standing.wins === 1 ? 'lobby.allTimeOneWin' : 'lobby.allTime';
     }
 
     // Tiny helpers — keep scope tight.
