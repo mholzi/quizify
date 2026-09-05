@@ -39,19 +39,27 @@ Three voices. Display is warm and geometric, body is modern and quiet, mono carr
 
 | Role | Font | Source | Weight | Rationale |
 |------|------|--------|--------|-----------|
-| **Display / Questions / Titles** | Cabinet Grotesk | Fontshare | 500 / 700 / 800 | Warm geometric sans with a hand-drawn feel at heavier weights. Reads friendly without tipping into childish. |
-| **UI / Answers / Body** | DM Sans | Google Fonts | 400 / 500 / 600 / 700 | Clean modern sans. Pairs with Cabinet Grotesk without competing. |
-| **Scores / Timers / Meta** | JetBrains Mono | Google Fonts | 400 / 500 / 700 | Tabular numerals native — earns its keep on live score ticks. |
+| **Display / Questions / Titles** | DM Sans | bundled, SIL OFL 1.1 | 700 / 800 / 900 | Carries the display role at its heavy weights. Was Cabinet Grotesk — see the note below. |
+| **UI / Answers / Body** | DM Sans | bundled, SIL OFL 1.1 | 400 / 500 / 600 / 700 | Clean modern sans. One family across both roles, separated by weight. |
+| **Scores / Timers / Meta** | JetBrains Mono | bundled, SIL OFL 1.1 | 400 / 500 / 700 | Tabular numerals native — earns its keep on live score ticks. |
+
+**Why Cabinet Grotesk is gone (#738).** It is Indian Type Foundry's, under the ITF Free Font License — free to use, but the font files may not be redistributed, which is what shipping them in an MIT repo would be. Loading it from Fontshare on every page was the other half of the problem: it sent every guest's IP to a third party and blocked the first paint. So the face is dropped rather than fetched. The screens that visibly change are the ones that lean on display type: TV wordmark and question headline, podium and champion block, pack card titles, admin pack-news heading.
 
 ### Loading
 
+The faces are served from the integration itself — `www/fonts/`, declared with
+`@font-face` in `css/src/00-tokens.css`. No third-party host is contacted on
+any page (#737, #738). `font-display: swap` on every face, so text paints in
+the fallback immediately and never sits invisible.
+
 ```html
-<link rel="preconnect" href="https://fonts.googleapis.com">
-<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link rel="preconnect" href="https://api.fontshare.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=DM+Sans:ital,opsz,wght@0,9..40,400;0,9..40,500;0,9..40,600;0,9..40,700;1,9..40,400&family=JetBrains+Mono:wght@400;500;700&display=swap" rel="stylesheet">
-<link href="https://api.fontshare.com/v2/css?f[]=cabinet-grotesk@500,700,800,900&display=swap" rel="stylesheet">
+<!-- Every page: preload the two faces every screen needs, so they download
+     alongside styles.css instead of after it. No blocking stylesheet link. -->
+<link rel="preload" as="font" type="font/woff2" href="/quizify/static/fonts/dm-sans-latin.woff2" crossorigin>
+<link rel="preload" as="font" type="font/woff2" href="/quizify/static/fonts/jetbrains-mono-latin.woff2" crossorigin>
 ```
+
+Licence texts and the full file list live in [`www/fonts/README.md`](custom_components/quizify/www/fonts/README.md).
 
 ### Scale
 
@@ -191,9 +199,9 @@ Warm, soft, welcoming. Easings are longer than Broadcast Living Room, transforms
 
 ### TV Host (signature surface)
 
-- **Top-left:** Quizify wordmark in Cabinet Grotesk 800, `ify` in coral. Round indicator below in JetBrains Mono in a soft sun-yellow pill.
+- **Top-left:** Quizify wordmark in display 800, `ify` in coral. Round indicator below in JetBrains Mono in a soft sun-yellow pill.
 - **Top-right:** Countdown timer — JetBrains Mono 28 px in coral, in a soft white-bg rounded pill with 12 px drop shadow.
-- **Center-upper:** Question in Cabinet Grotesk 700, `clamp(28px, 4.2vw, 56px)`, warm ink, centered, max 22 ch for reading rhythm.
+- **Center-upper:** Question in display 700, `clamp(28px, 4.2vw, 56px)`, warm ink, centered, max 22 ch for reading rhythm.
 - **Center-lower:** 3-column answer row. Each tile: white surface, 1 px soft-cream border, big circled letter in a colored pill (coral / sage / sky), answer text in DM Sans 500 warm ink. Correct reveal: sage halo + ★ glyph + gentle scale tick. Layered soft drop shadow.
 - **Bottom rail:** centered player strip with colored dot + name (DM Sans 600 warm ink) + score (mono coral tabular). Leader has a ★ glyph. No rail separator — the page's warm breathing does the work.
 
@@ -201,14 +209,14 @@ Warm, soft, welcoming. Easings are longer than Broadcast Living Room, transforms
 
 - **Topbar:** Round counter (mono 10 px eyebrow) + timer pill (mono 16 px coral in a white pill).
 - **Label:** "Pick one" eyebrow in mono coral.
-- **Question:** Cabinet Grotesk 700 22 px, warm ink.
+- **Question:** display 700 22 px, warm ink.
 - **Answers:** Stacked vertically. Each 56 px min tap target. White bg, soft cream border, colored letter pill on the left, DM Sans 500 text. Picked: coral outlined + coral-tint bg. Correct: sage outlined + sage-tint bg + ★. Wrong pick: warm-red outlined + ×.
 - **Footer:** Player name (DM Sans 600 warm ink) + current score (mono coral tabular).
 
 ### Podium / Finale
 
 - **Eyebrow:** "Final Results · [Pack] · [N] Runden" in mono muted olive.
-- **Title:** **"Champion"** (singular) in Cabinet Grotesk 900, warm coral, with a soft warm drop shadow. Champion name below in Cabinet Grotesk 700, warm ink.
+- **Title:** **"Champion"** (singular) in display 900, warm coral, with a soft warm drop shadow. Champion name below in display 700, warm ink.
 - **Podium:** 3-column grid, 2nd–1st–3rd. No trophy emojis — numbers speak. Two surface treatments:
   - **Player phone ("Podium Reborn", approved 2026-06-09):** bolder rising blocks with a warm *tonal* gradient fill (light tint → base hue, same color — 1st coral, 2nd sage, 3rd sky), white numerals centered, 14 px rounded top + 6 px foot, soft lift shadow. Top edge keeps the medal accent: 1st sun-yellow, 2nd silver, 3rd bronze. A warm radial halo (sun + coral) rises from the champion's foot. Tonal gradients here are a deliberate, user-approved exception to the general no-gradient rule; they stay single-hue and muted.
   - **Admin / TV (host screen):** cream "shelf" planks (no gradient) — 1st 200 px with a 3 px sun-yellow top border and a soft warm-gradient halo above, 2nd silver top border, 3rd bronze. The coral/silver/bronze numeral is the medal.
@@ -216,10 +224,10 @@ Warm, soft, welcoming. Easings are longer than Broadcast Living Room, transforms
 
 ### Admin / Host Console
 
-- **Header:** Cabinet Grotesk 800 wordmark with coral `ify`. Mono "LIVE" badge right-aligned, with a sage dot (calm, not urgent).
-- **Section title:** Cabinet Grotesk 600 22 px.
+- **Header:** display 800 wordmark with coral `ify`. Mono "LIVE" badge right-aligned, with a sage dot (calm, not urgent).
+- **Section title:** display 600 22 px.
 - **Section card:** white surface, 1 px soft-cream border, 10 px radius, soft drop shadow.
-- **Card (current question):** white surface, mono eyebrow in coral, Cabinet Grotesk 700 18 px question, warm ink.
+- **Card (current question):** white surface, mono eyebrow in coral, display 700 18 px question, warm ink.
 - **Timer bar:** 4 px coral fill over cream hairline track.
 - **Leaderboard:** mono 10 px uppercase muted headers, each row: mono rank (coral for 1st, silver/bronze for 2/3), DM Sans 500 name, mono streak (sun), mono coral tabular score.
 - **Primary CTA:** solid coral button, DM Sans 700 in white, soft coral shadow. Sentence-case, not ALL CAPS.
@@ -227,8 +235,8 @@ Warm, soft, welcoming. Easings are longer than Broadcast Living Room, transforms
 
 ### Welcome / Setup (host) — "Categories-forward" (approved 2026-06-09)
 
-- **Featured pack ("Soft Spotlight"):** white card with a coral hairline border. SVG line trophy in a sun-tinted rounded badge, mono "Empfohlen · Neu" eyebrow in coral, Cabinet Grotesk 700 title, muted desc, and a round coral selection indicator on the right (outline → filled coral check when the pack is selected). The whole card toggles the pack; Start is separate.
-- **Category picker:** two-column grid of selectable tiles. Each tile: an **SVG line icon** (never emoji) in a theme-tinted rounded disc, Cabinet Grotesk 700 name, mono question count. Icon disc tint + icon stroke cycle the four accents by theme (coral / sage / sky / sun; "Gemischt" stays neutral clay). Default = white + cream hairline; hover = lifts; selected = coral border + coral-wash + corner check.
+- **Featured pack ("Soft Spotlight"):** white card with a coral hairline border. SVG line trophy in a sun-tinted rounded badge, mono "Empfohlen · Neu" eyebrow in coral, display 700 title, muted desc, and a round coral selection indicator on the right (outline → filled coral check when the pack is selected). The whole card toggles the pack; Start is separate.
+- **Category picker:** two-column grid of selectable tiles. Each tile: an **SVG line icon** (never emoji) in a theme-tinted rounded disc, display 700 name, mono question count. Icon disc tint + icon stroke cycle the four accents by theme (coral / sage / sky / sun; "Gemischt" stays neutral clay). Default = white + cream hairline; hover = lifts; selected = coral border + coral-wash + corner check.
 - **Icons are keyed by `data-theme`** so both languages share one glyph set (globe, leaf, clapperboard, music note, flag, flask, scroll, fork, bulb, dice, trophy). Tints are flat (no gradients).
 
 ### Icon system — "Rounded Duotone" (approved 2026-06-10, #212)
@@ -252,7 +260,7 @@ Warm, soft, welcoming. Easings are longer than Broadcast Living Room, transforms
 
 ## Assets & Logo
 
-- Quizify wordmark uses Cabinet Grotesk 800 for "Quiz" and Cabinet Grotesk 800 for `ify` in coral.
+- Quizify wordmark uses display 800 for "Quiz" and display 800 for `ify` in coral.
 - No mascot, no secondary brand character. The typography + palette IS the branding.
 
 ## Security model (LAN-first; remote exposure caveats)
@@ -319,6 +327,7 @@ config.
 | 2026-04-24 | Coral `#E88A7F` as primary accent | Warm, hospitable, non-gendered, works on both dark hair and light hair avatars. Differentiated from category norms (Jackbox primary = purple, Kahoot = hot pink). |
 | 2026-04-24 | Cream `#FAF6EC` as primary background | Explicit break from Broadcast Living Room's dark navy. Soft Parlor is light-primary. Warm paper reads as "home", not "studio". |
 | 2026-04-24 | Cabinet Grotesk + DM Sans + JetBrains Mono | Typography stack pivots away from Unbounded (too broadcast). Cabinet Grotesk has the warm-geometric feel Soft Parlor requires. |
+| 2026-09-05 | Display face drops to DM Sans; all faces bundled | Cabinet Grotesk's ITF Free Font License forbids redistributing the files, so it cannot ship in an MIT repo, and fetching it from Fontshare leaked every guest's IP and blocked the first paint (#737, #738). DM Sans at 700-900 takes the display role. |
 | 2026-04-24 | No confetti on finale (carried forward, 3rd time confirmed) | Restraint has been the consistent preference across three directions. |
 | 2026-06-09 | Welcome/setup hero → "Categories-forward" (SVG-icon tinted category tiles + F1 featured spotlight) | Design-shotgun explored category-pill directions, then full welcome-screen directions; user picked A (categories-forward) with SVG icons (no emoji) and the F1 "Soft Spotlight" featured card. Category icons are now SVG line glyphs keyed by theme, in per-theme accent-tinted discs. |
 | 2026-06-10 | App-wide icon system → **"Rounded Duotone" SVG line icons** (#212) | Follow-up to #211's hero icons: the rest of the app still used emoji as UI icons (inconsistent per-OS, off-palette, clash with the SVG hero). A shared icon helper (`www/js/icons.js`, `window.QuizifyIcons`) now serves the theme glyph set to both admin and player JS. Style = Option 2 from the #212 shotgun: 2px rounded strokes over a soft accent-tinted backing disc (warmer than Option 1 hairline, softer than Option 3 geometric-bold). P1 surfaces (pack cards + theme tabs) shipped first; emoji pulled out of `theme.*` i18n strings (text-only). P2 (presets/awards) + P3 (reveal-feedback strings) descoped to follow-ups. |

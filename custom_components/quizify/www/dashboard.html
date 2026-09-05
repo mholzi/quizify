@@ -7,12 +7,12 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
     <title>Quizify — Dashboard</title>
 
-    <!-- Soft Parlor fonts: Cabinet Grotesk (display) + DM Sans (body) + JetBrains Mono (numeric) -->
-    <link rel="preconnect" href="https://fonts.googleapis.com">
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=DM+Sans:ital,opsz,wght@0,9..40,400;0,9..40,500;0,9..40,600;0,9..40,700;1,9..40,400&family=JetBrains+Mono:wght@400;500;700&display=swap" rel="stylesheet">
-    <link rel="preconnect" href="https://api.fontshare.com" crossorigin>
-    <link href="https://api.fontshare.com/v2/css?f[]=cabinet-grotesk@500,700,800,900&display=swap" rel="stylesheet">
+    <!-- Fonts are self-hosted under /quizify/static/fonts/ (#737, #738): no
+         third-party request on load, nothing foreign blocking the first paint.
+         Preload the two faces every screen uses so they download alongside the
+         stylesheet instead of after it. -->
+    <link rel="preload" as="font" type="font/woff2" href="/quizify/static/fonts/dm-sans-latin.woff2" crossorigin>
+    <link rel="preload" as="font" type="font/woff2" href="/quizify/static/fonts/jetbrains-mono-latin.woff2" crossorigin>
 
     <link rel="stylesheet" href="/quizify/static/css/styles.css?v={{ASSET_VER}}">
     <link rel="icon" href="/quizify/static/img/icon-256.png?v={{ASSET_VER}}" type="image/png">
@@ -83,7 +83,7 @@
 
         /* ---- Wordmark ---- */
         .wordmark {
-            font-family: 'Cabinet Grotesk', sans-serif;
+            font-family: 'DM Sans', sans-serif;
             font-size: clamp(24px, 2.4vw, 34px);
             font-weight: 900;
             letter-spacing: -0.02em;
@@ -320,7 +320,7 @@
         }
 
         .dashboard-no-game-title {
-            font-family: 'Cabinet Grotesk', sans-serif;
+            font-family: 'DM Sans', sans-serif;
             font-size: 1.5rem;
             font-weight: 700;
             color: var(--dash-text-white);
@@ -550,7 +550,7 @@
         }
 
         .dashboard-question {
-            font-family: 'Cabinet Grotesk', sans-serif;
+            font-family: 'DM Sans', sans-serif;
             font-size: clamp(32px, 4.2vw, 56px);
             font-weight: 700;
             line-height: 1.1;
@@ -1425,7 +1425,7 @@
         }
 
         .podium-title {
-            font-family: 'Cabinet Grotesk', sans-serif;
+            font-family: 'DM Sans', sans-serif;
             /* clamp top dropped 72 → 48 so 'Result' is still TV-legible
                but stops dominating the awards-row vertical budget. */
             font-size: clamp(28px, 3.6vw, 48px);
@@ -1566,7 +1566,7 @@
             display: flex;
             align-items: center;
             justify-content: center;
-            font-family: 'Cabinet Grotesk', sans-serif;
+            font-family: 'DM Sans', sans-serif;
             font-size: 2rem;
             font-weight: 900;
             border-radius: 0;

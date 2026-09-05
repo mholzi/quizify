@@ -115,9 +115,9 @@
 .podium-section > * { position: relative; z-index: 1; }
 
 /* Champion title block above the podium row.
-   "Champion" in coral Cabinet Grotesk 900; name in warm ink CG 700. */
+   "Champion" in coral display face at 900; name in warm ink at 700. */
 .podium-title {
-    font-family: var(--font-display, "Cabinet Grotesk"), sans-serif;
+    font-family: var(--font-display), sans-serif;
     font-size: clamp(2rem, 4vw, 3.5rem);
     font-weight: 900;
     letter-spacing: -0.02em;
@@ -130,7 +130,7 @@
 }
 
 .podium-champion-name {
-    font-family: var(--font-display, "Cabinet Grotesk"), sans-serif;
+    font-family: var(--font-display), sans-serif;
     font-weight: 700;
     font-size: clamp(1.25rem, 2.2vw, 1.75rem);
     color: var(--color-text);
@@ -173,7 +173,7 @@
 }
 
 .podium-name {
-    font-family: var(--font-display, "Cabinet Grotesk"), sans-serif;
+    font-family: var(--font-display), sans-serif;
     font-weight: 700;
     font-size: 1.1rem;
     color: var(--color-text);

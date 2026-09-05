@@ -17,12 +17,12 @@
     <link rel="apple-touch-icon" href="/quizify/static/img/icon-256.png?v={{ASSET_VER}}">
     <meta name="mobile-web-app-capable" content="yes">
     <link rel="icon" href="/quizify/static/img/icon-256.png?v={{ASSET_VER}}" type="image/png">
-    <!-- Preconnect for faster font loading -->
-    <link rel="preconnect" href="https://fonts.googleapis.com">
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=DM+Sans:ital,opsz,wght@0,9..40,400;0,9..40,500;0,9..40,600;0,9..40,700;1,9..40,400&family=JetBrains+Mono:wght@400;500;700&display=swap" rel="stylesheet">
-    <link rel="preconnect" href="https://api.fontshare.com" crossorigin>
-    <link href="https://api.fontshare.com/v2/css?f[]=cabinet-grotesk@500,700,800,900&display=swap" rel="stylesheet">
+    <!-- Fonts are self-hosted under /quizify/static/fonts/ (#737, #738): no
+         third-party request on load, nothing foreign blocking the first paint.
+         Preload the two faces every screen uses so they download alongside the
+         stylesheet instead of after it. -->
+    <link rel="preload" as="font" type="font/woff2" href="/quizify/static/fonts/dm-sans-latin.woff2" crossorigin>
+    <link rel="preload" as="font" type="font/woff2" href="/quizify/static/fonts/jetbrains-mono-latin.woff2" crossorigin>
     <link rel="stylesheet" href="/quizify/static/css/styles.css?v={{ASSET_VER}}">
 </head>
 <body>

@@ -12,9 +12,14 @@ Key constants (do not deviate without explicit user approval):
 - Primary accent: warm coral `#E88A7F` (hospitable, non-gendered, differentiated from category)
 - Secondary accents: sage `#7FA897`, sky `#7FA8C4`, sun `#E8C47F` — used as a cohesive palette at equal muted saturation
 - Background: cream paper `#FAF6EC` (NOT pure white, NOT dark — Soft Parlor is light-primary)
-- Display type: Cabinet Grotesk (warm geometric, Fontshare) — never Unbounded, never Fraunces, never Inter
+- Display type: DM Sans at 700-900 — never Unbounded, never Fraunces, never Inter.
+  (Was Cabinet Grotesk; dropped in #738 because the ITF Free Font License forbids
+  redistributing the files and fetching them from Fontshare leaked every guest's IP.)
 - Body/UI type: DM Sans — never Inter, Roboto, Open Sans, Poppins, system-ui
 - Mono type: JetBrains Mono — for all scores, timers, metadata
+- All faces are bundled in `www/fonts/` and served locally. Never add a font
+  `<link>` or `@import` pointing at a CDN — it breaks the no-data-leaves-your-network
+  promise and blocks the first paint.
 - Primary text: warm ink `#2A2820`, NOT pure black
 - Light is the primary mode (dark mode available for late-night play)
 - Never use: dark backgrounds on primary surfaces, neon colors, confetti, bubbly 20px+ radii, cartoon mascots, gradient CTAs, CRT/scanline/phosphor decoration
