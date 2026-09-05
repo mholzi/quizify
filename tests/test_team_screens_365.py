@@ -265,10 +265,14 @@ team.handleTeamJoined({ team: { team_id: 't1', name: 'Sofa', color: 'sage', memb
 const out = { threw: null };
 try {
   lightning.handleLightningRecap({ recap: {
-    leaderboard: [{ rank: 1, name: 'Sofa', score: 10 }, { rank: 2, name: 'Mira', score: 0 }],
+    leaderboard: [
+      { rank: 1, entrant_id: 't1', name: 'Sofa', score: 10 },
+      { rank: 2, entrant_id: 'Mira', name: 'Mira', score: 0 },
+    ],
+    names: { t1: 'Sofa', Mira: 'Mira' },
     questions: [{
       question_id: 'q1', question_text: 'Why does a ball bounce?',
-      correct_answer: 'Compressed air', results: { Sofa: 'correct', Mira: 'wrong' }, chosen: {},
+      correct_answer: 'Compressed air', results: { t1: 'correct', Mira: 'wrong' }, chosen: {},
     }],
   }});
   const html = get('lightning-recap-grid').innerHTML;
@@ -421,6 +425,11 @@ def test_the_lightning_recap_reads_the_teams_row(tmp_path: Path) -> None:
     Found by playing it: the round scored "Sofa", the client looked itself up
     as "Anna", found nothing, and drew every question as a miss while the
     standings above it showed the team's 10 points.
+
+    Since #728 the key is the team ID rather than its name — two teams may be
+    called the same thing — so the payload here carries ids and the ``names``
+    map beside them. What the row *shows* is unchanged, and that is what the
+    assertions below still check.
     """
     _require_node()
     harness = tmp_path / "recap-harness.js"

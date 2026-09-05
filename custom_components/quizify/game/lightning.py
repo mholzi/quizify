@@ -76,9 +76,9 @@ class LightningQuestionRecap:
     question_id: str
     question_text: str
     correct_answer: str
-    #: player_name -> "correct" | "wrong" | "miss"
+    #: entrant key (player name, or team id) -> "correct" | "wrong" | "miss"
     results: dict[str, str] = field(default_factory=dict)
-    #: player_name -> the answer text they picked (only kept when wrong, so
+    #: entrant key -> the answer text they picked (only kept when wrong, so
     #: the recap can show "You said X" beside the correct answer).
     chosen: dict[str, str] = field(default_factory=dict)
 
@@ -135,21 +135,34 @@ class LightningRound:
         #
         # `teams` is a snapshot of `TeamRegistry.to_list()`; taking a snapshot
         # rather than the registry keeps this module free of the game state.
+        #
+        # The key is the TEAM ID, not the team name (#728). Nothing stops two
+        # teams from carrying the same name — ``TeamRegistry.create`` takes the
+        # name as typed, and its empty-name fallback hands out the same
+        # suggestion again once a team has dissolved. Keyed by name, two
+        # "Sofa"s collapsed into one entrant: one team's tap overwrote the
+        # other's answer, and a single correct answer paid 20 instead of 10,
+        # because ``_entrants`` held the key twice while ``scores`` held it
+        # once. The name lives beside the key in ``_entrant_names`` — it is
+        # what the phones and the TV render, so no id ever reaches a screen.
         self._entrant_of: dict[str, str] = {}
         self._entrants: list[str] = []
+        self._entrant_names: dict[str, str] = {}
         for team in teams or []:
-            key = team.get("name") or team.get("team_id") or ""
-            if not key:
+            key = team.get("team_id") or team.get("name") or ""
+            if not key or key in self._entrant_names:
                 continue
             self._entrants.append(key)
+            self._entrant_names[key] = team.get("name") or key
             for member in team.get("members", []):
                 self._entrant_of[member] = key
         self.team_mode = bool(self._entrants)
         for name in self._players:
-            if name not in self._entrant_of:
+            if name not in self._entrant_of and name not in self._entrant_names:
                 self._entrants.append(name)
+                self._entrant_names[name] = name
 
-        # scores keyed by ENTRANT (player name, or team name in team mode);
+        # scores keyed by ENTRANT (player name, or team id in team mode);
         # recap rows in question order.
         self.scores: dict[str, int] = dict.fromkeys(self._entrants, 0)
         self._recaps: list[LightningQuestionRecap] = []
@@ -279,8 +292,21 @@ class LightningRound:
         return True
 
     def entrant_for(self, name: str) -> str:
-        """Who this player scores as: their team, or themselves."""
+        """Who this player scores as: their team's id, or their own name."""
         return self._entrant_of.get(name, name)
+
+    def display_name(self, entrant: str) -> str:
+        """The name the room reads for an entrant key (#728).
+
+        Entrants are keyed by team id so two teams called the same thing stay
+        two entrants. Every frame a phone or the TV renders resolves the key
+        through here, so what people see is still the team's name.
+        """
+        return self._entrant_names.get(entrant, entrant)
+
+    def display_name_for_player(self, name: str) -> str:
+        """The name this player scores under: their team's, or their own."""
+        return self.display_name(self.entrant_for(name))
 
     def score_for(self, name: str) -> int:
         """This player's standing — their team's, in team mode."""
@@ -308,6 +334,7 @@ class LightningRound:
             self.scores[name] = 0
         if name not in self._entrants:
             self._entrants.append(name)
+        self._entrant_names.setdefault(name, name)
         if name not in self._players:
             self._players.append(name)
         # Give them a shuffle for the in-flight question so they can answer
@@ -496,20 +523,22 @@ class LightningRound:
             question_text=q.question,
             correct_answer=correct_answer,
         )
-        for name in self._entrants:
-            ans = bucket.get(name)
+        for entrant in self._entrants:
+            ans = bucket.get(entrant)
             if ans is None or ans.correct is None:
-                recap.results[name] = "miss"
+                recap.results[entrant] = "miss"
             elif ans.correct:
-                recap.results[name] = "correct"
-                self.scores[name] = self.scores.get(name, 0) + self.points_per_correct
+                recap.results[entrant] = "correct"
+                self.scores[entrant] = (
+                    self.scores.get(entrant, 0) + self.points_per_correct
+                )
             else:
-                recap.results[name] = "wrong"
+                recap.results[entrant] = "wrong"
                 if (
                     ans.answer_index is not None
                     and 0 <= ans.answer_index < len(q.answers)
                 ):
-                    recap.chosen[name] = q.answers[ans.answer_index].text
+                    recap.chosen[entrant] = q.answers[ans.answer_index].text
         self._recaps.append(recap)
 
     # ------------------------------------------------------------------
@@ -517,13 +546,23 @@ class LightningRound:
     # ------------------------------------------------------------------
 
     def leaderboard(self) -> list[dict[str, Any]]:
-        """Lightning-only leaderboard, sorted high→low."""
+        """Lightning-only leaderboard, sorted high→low.
+
+        ``entrant_id`` is the key the recap grid is indexed by; ``name`` is
+        what the row prints. Two teams sharing a name are two rows (#728) —
+        which is the point: they are two teams.
+        """
         ranked = sorted(
             self.scores.items(), key=lambda kv: kv[1], reverse=True
         )
         return [
-            {"rank": i + 1, "name": name, "score": score}
-            for i, (name, score) in enumerate(ranked)
+            {
+                "rank": i + 1,
+                "entrant_id": entrant,
+                "name": self.display_name(entrant),
+                "score": score,
+            }
+            for i, (entrant, score) in enumerate(ranked)
         ]
 
     def build_recap(self) -> dict[str, Any]:
@@ -543,6 +582,10 @@ class LightningRound:
             "num_questions": self.num_questions,
             "points_per_correct": self.points_per_correct,
             "leaderboard": self.leaderboard(),
+            # entrant key -> the name to print for it (#728). ``results`` and
+            # ``chosen`` are keyed by entrant, and a team's key is its id;
+            # without this map the host screen would chip out raw ids.
+            "names": {e: self.display_name(e) for e in self._entrants},
             "questions": [
                 {
                     "question_id": r.question_id,
