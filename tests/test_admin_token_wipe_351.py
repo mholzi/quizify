@@ -17,6 +17,14 @@ Two-layer fix:
      timeout when the (re)connecting player holds the crown.
   2. ``admin_timeout()`` refuses to clear the token while a *connected* admin
      player still holds the crown (belt-and-suspenders).
+
+Superseded in part by #725: layer 2 is gone because the wipe it guarded is
+gone — grace expiry no longer touches the credential at all, for any player
+constellation. The cases below that used to assert "cleared" now assert the
+token survives; see ``test_admin_token_survives_grace_725.py`` for the reasoning
+and for the LAN-takeover property itself. Layer 1 still matters: cancelling the
+timer keeps ``has_pending_admin_disconnect()`` honest and stops the deferred
+admin pause.
 """
 
 from __future__ import annotations
@@ -78,7 +86,7 @@ async def _run_admin_timeout(conn: ConnectionManager) -> None:
 
 
 # ---------------------------------------------------------------------------
-# Layer 2 — admin_timeout() guard
+# Layer 2 — admin_timeout() no longer wipes the token at all (#725)
 # ---------------------------------------------------------------------------
 
 
@@ -100,32 +108,35 @@ class TestAdminTimeoutGuard:
         assert conn._admin_session_token == token
 
     @pytest.mark.asyncio
-    async def test_clears_token_when_no_admin_player(self, tmp_path: Path) -> None:
-        # Host truly left (no admin among the players) → original behaviour:
-        # the token is cleared so a fresh bootstrap can happen.
+    async def test_keeps_token_when_no_admin_player(self, tmp_path: Path) -> None:
+        # Host truly left (no admin among the players). This used to clear the
+        # token "so a fresh bootstrap can happen" — which is precisely the LAN
+        # takeover of #725. It is kept now; the reset is the HA service.
         gs = _FakeGameState([_FakePlayer(is_admin=False, connected=True)])
         conn = ConnectionManager(_FakeRuntime(tmp_path), lambda: gs)
         await conn.try_bootstrap_admin()
-        assert conn._admin_session_token is not None
+        token = conn._admin_session_token
+        assert token is not None
 
         await _run_admin_timeout(conn)
 
-        assert conn._admin_session_token is None
+        assert conn._admin_session_token == token
 
     @pytest.mark.asyncio
-    async def test_clears_token_when_admin_player_disconnected(
+    async def test_keeps_token_when_admin_player_disconnected(
         self, tmp_path: Path
     ) -> None:
         # The admin player exists but is no longer connected (host closed the
-        # tab and never came back) → clear, matching the prior semantics.
+        # tab and never came back) → still kept (#725).
         gs = _FakeGameState([_FakePlayer(is_admin=True, connected=False)])
         conn = ConnectionManager(_FakeRuntime(tmp_path), lambda: gs)
         await conn.try_bootstrap_admin()
-        assert conn._admin_session_token is not None
+        token = conn._admin_session_token
+        assert token is not None
 
         await _run_admin_timeout(conn)
 
-        assert conn._admin_session_token is None
+        assert conn._admin_session_token == token
 
 
 # ---------------------------------------------------------------------------

@@ -225,30 +225,36 @@ class ConnectionManager:
             self._admin_disconnect_task = None
 
     def schedule_admin_timeout(self) -> None:
-        """Start the admin-session grace period; clears the token on expiry."""
+        """Start the admin-session grace period after the last admin socket left.
+
+        The task is the "no admin socket is attached right now" marker that
+        :meth:`has_pending_admin_disconnect` reports and that a returning admin
+        cancels (``_handle_admin_connect`` / ``_handle_join`` /
+        ``_handle_reconnect``). Expiry keeps the game alive; it no longer
+        touches the credential.
+
+        #725: expiry used to null the token and delete ``admin_token.json``.
+        That handed the *next* ``?role=admin`` connection from any LAN address
+        a free bootstrap into full admin — the very takeover the persisted
+        token (#140/#168) exists to prevent, and the gate behind every
+        host-only HTTP endpoint (analytics, all-time leaderboard, flags with
+        player names and free text, question stats, presets, TTS/house entity
+        lists — see ``views._is_admin_authenticated``). A host closing the tab
+        for two minutes is not a reason to drop the credential. Recovery has a
+        deliberate, HA-authenticated path instead: the
+        ``quizify.reset_admin_session`` service.
+
+        The #351 admin-as-player guard is gone with the wipe it guarded: there
+        is nothing left to guard against.
+        """
 
         async def admin_timeout() -> None:
             await asyncio.sleep(self.ADMIN_SESSION_GRACE)
-            # Guard (#351): the admin tab redirecting from /quizify/admin to
-            # /quizify/player at game start closes the last admin WS and
-            # schedules this timeout — but the host is still present as an
-            # admin *player*. Clearing the token here would delete the
-            # persisted credential ~120s into every admin-as-player game and
-            # re-open the LAN bootstrap-takeover window that the persisted
-            # token (#140/#168) exists to close. If a connected player still
-            # holds the crown, keep the token.
-            game_state = self._get_game_state()
-            if game_state is not None and any(
-                p.is_admin and p.connected for p in game_state.get_players()
-            ):
-                _LOGGER.debug(
-                    "Admin grace expired but an admin player is connected; "
-                    "keeping session token"
-                )
-                return
-            _LOGGER.info("Admin session grace period expired, clearing token")
-            self._admin_session_token = None
-            await self._async_save_admin_token()
+            _LOGGER.info(
+                "Admin session grace period expired; keeping the persisted "
+                "token (call the quizify.reset_admin_session service to clear "
+                "it deliberately)"
+            )
 
         self._admin_disconnect_task = asyncio.ensure_future(admin_timeout())
         self._admin_disconnect_task.add_done_callback(_log_task_exception)
