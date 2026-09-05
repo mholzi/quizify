@@ -403,6 +403,14 @@
 
             case 'round_summary':
                 handleRoundSummary(msg);
+                // #736: the reveal is the one stretch of the round with an idle
+                // network, and the server has told us which picture comes next.
+                // Warm it here so `question_started` finds it in cache instead
+                // of starting a 21-client burst with the countdown running.
+                if (msg.next_image_url && window.QuizifyPlayerGame
+                    && QuizifyPlayerGame.preloadNextImage) {
+                    QuizifyPlayerGame.preloadNextImage(msg.next_image_url);
+                }
                 break;
 
             case 'finale':

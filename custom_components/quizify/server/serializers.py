@@ -488,6 +488,7 @@ def serialize_round_summary(
     question_type: str = "multiple_choice",
     estimate: dict[str, Any] | None = None,
     display_order: list[int] | None = None,
+    next_image_url: str | None = None,
 ) -> dict[str, Any]:
     """Build round summary broadcast payload.
 
@@ -506,6 +507,14 @@ def serialize_round_summary(
 
     ``answer_distribution`` is emitted in CANONICAL space so the #151 bars
     attach to the tiles the dashboard actually drew.
+
+    ``next_image_url`` is the picture the NEXT round will show (#736), so
+    clients can warm it while the reveal is on screen instead of after
+    ``question_started``, with the countdown already running. It is a *hint*
+    and nothing more: the key is omitted when there is nothing to warm, and a
+    client that ignores it behaves exactly as before. Critically it is not the
+    round's own image — a client must never render it, only fetch it, or a
+    progressive-reveal question (#434) would be given away a round early.
     """
     # Compute answer distribution from all_answers. `answer_index` on those
     # entries is question-JSON order; the bars hang off the canonical grid,
@@ -544,6 +553,11 @@ def serialize_round_summary(
     # player reveal and the TV dashboard can plot every guess.
     if estimate is not None:
         summary["estimate"] = estimate
+    # #736: only present when there is something to warm. Absent beats a null
+    # here — every existing payload assertion in the suite stays exact, and a
+    # client can test one thing (`if (msg.next_image_url)`) rather than two.
+    if next_image_url:
+        summary["next_image_url"] = next_image_url
     return summary
 
 

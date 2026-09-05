@@ -4565,6 +4565,43 @@
         }
     }
 
+    // Issue #736: warm the NEXT round's picture while the reveal is on screen.
+    //
+    // Without this the first byte of the image is requested by
+    // renderQuestionImageBanner above, i.e. after `question_started` — and
+    // player-core stamps the countdown deadline from `timer_duration` in the
+    // same message, so the clock is already draining while up to twenty-one
+    // clients pull the same ~99 KB (worst case 331 KB) file off Home Assistant
+    // at once. The reveal is dead air on the network, and the hint rides
+    // `round_summary`, so the fetch moves there.
+    //
+    // The reference is kept on purpose: a detached Image with no live
+    // reference is collectable, and some browsers abandon its request.
+    var _preloadedImage = null;
+
+    function preloadNextImage(imgUrl) {
+        // Same sanitizer as the banner — a hint from the wire gets no more
+        // trust than the round's own image_url (#536/#540).
+        var safeImg = (window.QuizifyUtils && window.QuizifyUtils.safeImageUrl)
+            ? window.QuizifyUtils.safeImageUrl(imgUrl) : '';
+        if (!safeImg) return;
+        // DETACHED on purpose, and never `#question-image`. The reveal view
+        // keeps the question view's banner element rather than re-rendering it,
+        // so warming that element would paint the NEXT question over the
+        // current reveal — and on a progressive-reveal round (#434) it would
+        // hand out the unblurred picture a whole round early, since the blur is
+        // applied by renderQuestionImageBanner and nothing has run it yet.
+        // A `new Image()` never enters the document, so there is nothing to
+        // show and nothing to blur: it only fills the HTTP cache.
+        var img = new Image();
+        img.decoding = 'async';
+        // Failure is a non-event: the banner will request it again next round
+        // and run its own onerror fallback.
+        img.onerror = function () { _preloadedImage = null; };
+        img.src = safeImg;
+        _preloadedImage = img;
+    }
+
     // Wire the fullscreen zoom overlay once. The overlay shows the current
     // banner image at full size; closing returns to the game view.
     function _initImageZoom() {
@@ -5666,6 +5703,7 @@
         renderQuestion: renderQuestion,
         renderWagerWindow: renderWagerWindow,
         clearRevealBlur: clearRevealBlur,
+        preloadNextImage: preloadNextImage,
         handleAnswerClick: handleAnswerClick,
         confirmGuess: confirmGuess,
         releaseGuess: releaseGuess,
@@ -6099,6 +6137,14 @@
 
             case 'round_summary':
                 handleRoundSummary(msg);
+                // #736: the reveal is the one stretch of the round with an idle
+                // network, and the server has told us which picture comes next.
+                // Warm it here so `question_started` finds it in cache instead
+                // of starting a 21-client burst with the countdown running.
+                if (msg.next_image_url && window.QuizifyPlayerGame
+                    && QuizifyPlayerGame.preloadNextImage) {
+                    QuizifyPlayerGame.preloadNextImage(msg.next_image_url);
+                }
                 break;
 
             case 'finale':
