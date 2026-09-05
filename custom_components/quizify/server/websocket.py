@@ -245,6 +245,45 @@ class QuizifyWebSocketHandler:
     # answering, which is the whole moment the auction buys.
     HOT_SEAT_REVEAL_HOLD = 4.0
 
+    # ------------------------------------------------------------------
+    # Task ownership registry (#746)
+    # ------------------------------------------------------------------
+    # Five round-scoped tasks used to be cancelled by hand at ~20 call sites,
+    # and the resulting matrix was asymmetric: reset/play_again/start_game/
+    # cleanup cancelled four, _advance_round two, and end_game exactly one —
+    # so a lightning question was still scored after the finale had been
+    # broadcast. That was the fifth repeat of one shape (#362, #407, #656,
+    # #671): a new task is added, and one teardown path is forgotten.
+    #
+    # These two tuples are the single source of truth for "who owns what".
+    # ``_cancel_round_tasks()`` walks the first, ``cleanup_game_tasks()``
+    # walks both, and every teardown path goes through one of those two
+    # instead of listing cancellers itself. A task added to __init__ but to
+    # neither tuple fails ``tests/test_round_task_teardown_746.py`` — the
+    # registry is checked against the annotated ``asyncio.Task | None``
+    # attributes, so "forgot a call site" is no longer expressible.
+    #
+    # Round-scoped: anything that drives, times, or interrupts THE CURRENT
+    # ROUND. It must not survive a round ending, a game ending, or a reset.
+    _ROUND_SCOPED_TASKS: tuple[tuple[str, str], ...] = (
+        ("_timer_tick_task", "_cancel_timer_tick"),
+        ("_wager_window_task", "_cancel_wager_window"),
+        ("_lightning_task", "_cancel_lightning_loop"),
+        ("_hot_seat_task", "_cancel_hot_seat_loop"),
+        ("_admin_pause_task", "_cancel_admin_pause"),
+    )
+
+    # Deliberately NOT round-scoped: broadcast coalescers. They batch frames
+    # over a few hundred milliseconds and are keyed to nothing in the round,
+    # so a round boundary is not a reason to drop a pending flush. Only the
+    # full ``cleanup_game_tasks()`` (integration unload / dev-server shutdown)
+    # stops them.
+    _CONNECTION_SCOPED_TASKS: tuple[tuple[str, str], ...] = (
+        ("_reaction_flush_task", "_cancel_reaction_flush"),
+        ("_roster_flush_task", "_cancel_roster_flush"),
+        ("_progress_flush_task", "_cancel_progress_flush"),
+    )
+
     def __init__(
         self,
         runtime: Runtime,
@@ -1937,22 +1976,16 @@ class QuizifyWebSocketHandler:
         # 2026-05-31: picked Geographie/DE but kept seeing the previous English
         # mixed game. Reset to LOBBY first (keeps connected players) so the
         # fresh settings always take effect. Mirrors _handle_play_again.
-        # #671: unconditional, unlike the block below. A hot-seat loop has no
-        # business surviving into a new game whatever phase we start from, and
-        # "there cannot be one in LOBBY" is the same assumption that let this
-        # task outlive four teardown paths in the first place. Cancelling a
-        # task that isn't there costs nothing.
-        self._cancel_hot_seat_loop()
+        # #671, generalized in #746: unconditional, and the whole set. No
+        # round-scoped task has any business surviving into a new game
+        # whatever phase we start from, and "there cannot be one in LOBBY" is
+        # the same assumption that let the hot-seat task outlive four teardown
+        # paths in the first place. Cancelling a task that isn't there costs
+        # nothing; the reset_to_lobby below stays phase-gated because it
+        # touches state, not tasks.
+        self._cancel_round_tasks()
 
         if game_state.phase != GamePhase.LOBBY:
-            self._cancel_timer_tick()
-            # #407 (follow-up to #362): cancel the lightning loop and any
-            # deferred admin-disconnect pause too, exactly like
-            # ``_handle_reset_game``. Otherwise a stale admin-pause task can
-            # pause round 1 of the NEW game, and a start during a LIGHTNING
-            # detour leaves ``_lightning_task`` broadcasting stale frames.
-            self._cancel_lightning_loop()
-            self._cancel_admin_pause()
             game_state.reset_to_lobby()
 
         raw_category = data.get("category")
@@ -2154,6 +2187,10 @@ class QuizifyWebSocketHandler:
         # round counter, so the start_next_question below lands on the
         # originally-scheduled round.
         if game_state.phase == GamePhase.LIGHTNING_RECAP:
+            # DELIBERATE SUBSET (#746): not ``_cancel_round_tasks()``. The
+            # game is not ending here — the host is settling one detour and
+            # resuming the round it interrupted. Killing the admin-pause task
+            # would swallow a genuine host disconnect that is still pending.
             self._cancel_lightning_loop()
             if game_state.resume_after_lightning():
                 await self._start_next_question(game_state)
@@ -2162,6 +2199,8 @@ class QuizifyWebSocketHandler:
         # Hot Seat reveal (#616): the host's advance settles the detour and
         # returns to the round the auction interrupted.
         if game_state.phase == GamePhase.HOT_SEAT_REVEAL:
+            # DELIBERATE SUBSET (#746), same reasoning as the branch above:
+            # one detour settles, the game carries on.
             self._cancel_hot_seat_loop()
             if game_state.resume_after_hot_seat():
                 await self._start_next_question(game_state)
@@ -2219,6 +2258,8 @@ class QuizifyWebSocketHandler:
             # Stop the countdown and evaluate now. evaluate_round()'s
             # state-machine event (_fire_broadcast("round_evaluated")) drives
             # the summary broadcast, same as the timer-expiry auto-evaluate.
+            # DELIBERATE SUBSET (#746): a skip cuts the QUESTION short, it
+            # does not end the round or the game. Only the clock stops.
             self._cancel_timer_tick()
             game_state.evaluate_round()
             return
@@ -2240,7 +2281,14 @@ class QuizifyWebSocketHandler:
         Shared by the admin ``end_game`` WS handler and the ``quizify.end_game``
         HA service.
         """
-        self._cancel_timer_tick()
+        # #746: this used to cancel the tick and nothing else. ``end_game()``
+        # has no phase guard, so the admin can end the game mid-detour — and a
+        # surviving lightning loop then ran ``lr.advance()`` after the finale
+        # had already been broadcast and the analytics recorded, changing the
+        # scoreboard after the end screen was up. The hot-seat loop and the
+        # deferred admin pause were free to outlive the finale for the same
+        # reason. The game is over: every round-scoped task goes.
+        self._cancel_round_tasks()
         # end_game() fires the ``game_ended`` state event, which the
         # BroadcastDispatcher routes to _broadcast_finale — that's the single
         # finale broadcast source. Calling _broadcast_finale here too would
@@ -2271,6 +2319,8 @@ class QuizifyWebSocketHandler:
         if not game_state.pause(reason="admin_paused"):
             return False
         # Stop sending tick updates while paused.
+        # DELIBERATE SUBSET (#746): a pause freezes the clock and nothing
+        # else — the round is still live and resume() restarts it.
         self._cancel_timer_tick()
         # pause_reason rides along in the snapshot itself since #703, so it
         # is identical here and on every reconnect.
@@ -2317,14 +2367,11 @@ class QuizifyWebSocketHandler:
             await self._handle_reset_game(ws, game_state)
             return
         settings = game_state.last_settings
-        self._cancel_timer_tick()
-        # #407 (follow-up to #362): mirror ``_handle_reset_game`` — cancel the
-        # lightning loop and any deferred admin-disconnect pause before the new
-        # game, or a stale pause task pauses round 1 and a lingering lightning
-        # loop keeps broadcasting stale frames into the rematch.
-        self._cancel_lightning_loop()
-        self._cancel_hot_seat_loop()
-        self._cancel_admin_pause()
+        # #407 (follow-up to #362), via the #746 registry: nothing from the
+        # finished game may run into the rematch — a stale pause task would
+        # pause round 1, a lingering lightning loop would broadcast stale
+        # frames over it.
+        self._cancel_round_tasks()
         # Reset to LOBBY first so start_game's phase guard passes; keeps
         # players (reset_to_lobby leaves connected players in place).
         game_state.reset_to_lobby()
@@ -2368,12 +2415,10 @@ class QuizifyWebSocketHandler:
           3. Wipe per-player session tokens so the reconnect path can't
              resurrect a cleared player under their old slot.
         """
-        self._cancel_timer_tick()
-        self._cancel_lightning_loop()
-        self._cancel_hot_seat_loop()
-        # Cancel the deferred admin-disconnect pause (#362) so a reset can't
-        # be undone by a pause firing right after the fresh lobby is built.
-        self._cancel_admin_pause()
+        # #362 + #746: every round-scoped task, in one call. A deferred
+        # admin-disconnect pause surviving this would undo the reset the
+        # moment it fires into the fresh lobby.
+        self._cancel_round_tasks()
         # Cancel any pending admin-disconnect timer and stale player-removal
         # tasks from the finished game.
         await self._conn.cleanup()
@@ -2686,6 +2731,14 @@ class QuizifyWebSocketHandler:
                         waited += step
                         if game_state.phase != GamePhase.LIGHTNING:
                             return
+                    # #746, the re-check the hot-seat loop got in #671 and
+                    # this one did not: the wait above only tests the phase
+                    # AFTER a sleep, so the all-answered ``break`` leaves it
+                    # untested. An end_game landing in that gap was still
+                    # followed by ``lr.advance()`` — a lightning question
+                    # scored, and a recap frame broadcast, after the finale.
+                    if game_state.phase != GamePhase.LIGHTNING:
+                        return
                     # No reveal — score silently and arm the next question.
                     has_more = lr.advance()
                     if not has_more:
@@ -3516,6 +3569,34 @@ class QuizifyWebSocketHandler:
             self._timer_tick_task = None
         self._cancel_wager_window()
 
+    def _cancel_task_group(self, group: tuple[tuple[str, str], ...]) -> None:
+        """Run every canceller in one of the registries above (#746).
+
+        Cancellers are idempotent and safe on a task that was never started,
+        so a group can always be run whole. That is the point: the caller
+        says *which scope* it is tearing down, never *which tasks*.
+        """
+        for _attr, canceller in group:
+            cancel: Callable[[], None] = getattr(self, canceller)
+            cancel()
+
+    def _cancel_round_tasks(self) -> None:
+        """Tear down EVERY round-scoped task (#746).
+
+        The one place that owns "the round is over": end game, reset,
+        play again, start game, and the full cleanup all route through here
+        rather than listing cancellers themselves. A sixth task added to
+        ``_ROUND_SCOPED_TASKS`` is therefore stopped by all of them at once.
+
+        Paths that deliberately stop only PART of a round — ``_advance_round``
+        settling one detour, ``admin_action_pause`` freezing the clock while
+        the round stays alive, ``_handle_admin_skip`` cutting a question short
+        — keep calling the individual cancellers, with a comment saying why.
+        A deliberate subset should read as one; only a *complete* teardown
+        belongs here.
+        """
+        self._cancel_task_group(self._ROUND_SCOPED_TASKS)
+
     @staticmethod
     def _log_task_exception(task: asyncio.Task) -> None:
         """Done-callback that surfaces a fire-and-forget task's exception (#307).
@@ -4333,17 +4414,14 @@ class QuizifyWebSocketHandler:
             await self._conn.broadcast(state)
 
     async def cleanup_game_tasks(self) -> None:
-        """Cancel all pending tasks."""
-        self._cancel_timer_tick()
-        self._cancel_lightning_loop()
-        self._cancel_hot_seat_loop()
-        self._cancel_reaction_flush()
-        self._cancel_roster_flush()
-        self._cancel_progress_flush()
-        # Also cancel the deferred admin-disconnect pause (#362): a game
-        # teardown/reset that leaves it pending would fire a spurious pause
-        # (or hold a reference) after the game is already gone.
-        self._cancel_admin_pause()
+        """Cancel all pending tasks — both registries (#746).
+
+        The widest teardown there is (integration unload, dev-server
+        shutdown), so it takes the round-scoped tasks *and* the broadcast
+        coalescers that a round boundary deliberately leaves alone.
+        """
+        self._cancel_round_tasks()
+        self._cancel_task_group(self._CONNECTION_SCOPED_TASKS)
         await self._conn.cleanup()
         _LOGGER.debug("Cleaned up all pending game tasks")
 
