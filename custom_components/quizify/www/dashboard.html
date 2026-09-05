@@ -1625,9 +1625,13 @@
 </head>
 <body class="dashboard-body">
 
-    <!-- #421: shown while the WebSocket is reconnecting (see ws.onclose). -->
+    <!-- #421: shown while the WebSocket is reconnecting (see ws.onclose).
+         #734: the key is connection.reconnecting — the bundles have never
+         carried a dashboard.reconnecting, and initPageTranslations skips an
+         element whose key does not resolve, so the pill stayed English on a
+         German or Spanish television. -->
     <div id="reconnect-pill" class="dashboard-reconnect-pill" hidden>
-        <span data-i18n="dashboard.reconnecting">Reconnecting…</span>
+        <span data-i18n="connection.reconnecting">Reconnecting…</span>
     </div>
 
     <main class="dashboard-container">
@@ -3046,6 +3050,17 @@
                 }).join('');
         }
 
+        // #733: resolve an i18n key, falling back to the server's English
+        // string. QuizifyI18n.t() hands back the key itself when nothing
+        // matches, which is exactly how a missing key reaches the screen
+        // unnoticed — treat that as "no translation" and use the fallback.
+        function translateOrFallback(key, params, fallback) {
+            if (!key || !window.QuizifyI18n) return fallback || '';
+            var translated = window.QuizifyI18n.t(key, params || undefined);
+            if (!translated || translated === key) return fallback || '';
+            return translated;
+        }
+
         function renderAwards(superlatives) {
             var section = document.getElementById('awards-section');
             if (!section || !superlatives || !superlatives.length) {
@@ -3064,11 +3079,21 @@
                 // Compact pill layout (Markus 2026-05-29 msg 323): icon
                 // owns the left chip, award-name + winner share one line,
                 // detail wraps as a quiet sub-line.
+                //
+                // #733: the payload carries award_key / detail_key /
+                // detail_params next to the English award/detail strings.
+                // Rendering the English ones put "Fastest Finger · avg 4.2s
+                // per correct answer" under a German "Auszeichnungen"
+                // heading while the guests' phones — which have always used
+                // the keys (js/player-end.js) — showed the German wording
+                // for the same award.
+                var awardName = translateOrFallback(s.award_key, null, s.award);
+                var awardDetail = translateOrFallback(s.detail_key, s.detail_params, s.detail);
                 card.innerHTML =
                     '<div class="award-icon">' + escapeHtml(s.icon) + '</div>' +
                     '<div class="award-text">' +
-                        '<div class="award-name">' + escapeHtml(s.award) + ' · <span class="award-winner">' + escapeHtml(s.winner) + '</span></div>' +
-                        '<div class="award-detail">' + escapeHtml(s.detail) + '</div>' +
+                        '<div class="award-name">' + escapeHtml(awardName) + ' · <span class="award-winner">' + escapeHtml(s.winner) + '</span></div>' +
+                        '<div class="award-detail">' + escapeHtml(awardDetail) + '</div>' +
                     '</div>';
                 grid.appendChild(card);
             });
