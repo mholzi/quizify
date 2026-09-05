@@ -931,10 +931,10 @@ class QuizifyWebSocketHandler:
             # redirect from /quizify/admin to /quizify/player took the
             # fresh-join path (no session token) instead of the
             # reconnect path. Same desired outcome — game keeps running.
-            # Also cancel the admin-session-token timeout (#351): the closed
-            # admin WS scheduled it, but the host is right here as a player —
-            # letting it fire would wipe the persisted token mid-game and
-            # re-open the LAN admin-takeover window.
+            # Also clear the admin-disconnect grace armed by the closed admin
+            # WS: the host is right here as a player, so nothing is "away".
+            # (It no longer wipes the token on expiry — #725 — but leaving it
+            # armed would keep has_pending_admin_disconnect() lying.)
             if player_obj and player_obj.is_admin:
                 self._cancel_admin_pause()
                 self._conn.cancel_admin_disconnect()
@@ -1027,8 +1027,9 @@ class QuizifyWebSocketHandler:
         # Without this, the pause would fire ~4s after the redirect
         # completes — the user would see the question briefly, then
         # the paused-view, defeating the whole grace-period fix.
-        # Also cancel the admin-session-token timeout (#351) so the host
-        # returning as a player never lets the persisted token get wiped.
+        # Also clear the admin-disconnect grace (#351) so the returning host
+        # isn't still counted as away. Since #725 the grace no longer wipes
+        # the persisted token, only reports "no admin socket attached".
         if player.is_admin:
             self._cancel_admin_pause()
             self._conn.cancel_admin_disconnect()
