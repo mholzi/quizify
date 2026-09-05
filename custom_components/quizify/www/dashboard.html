@@ -1395,6 +1395,103 @@
             }
         }
 
+        /* #775: the awards column clipped at every television resolution, and
+           the cause was never in the vertical arithmetic above — it came from
+           the shared styles.css. That sheet's `.award-card`, written for the
+           phone's end view (css/src/05-finale.css), caps the card at
+           `max-width: 160px`, and dashboard.html has loaded styles.css since
+           the day the file was created. The split layout's own override sets
+           `min-width: 0; width: 100%` but never `max-width`, so what this file
+           calls a horizontal pill was really a 160px oval: every award broke
+           one word per line ("avg 1.5s / per / correct / answer") and 247px of
+           text sat inside a 98px box.
+
+           So the answer to "did #694 miss the awards, or did something grow
+           since": neither. #694/#695 measured the awards at the width the oval
+           forced and budgeted around it. The cap was there the whole time and
+           was never the thing they removed.
+
+           Releasing the cap lets each award use the two lines it was designed
+           for, and the room that frees is what the leaderboard and the title
+           below were being squeezed out of. */
+        #finale-view .dashboard-finale--split .awards-grid {
+            /* Column direction plus `flex-wrap: wrap` means a list taller than
+               the box wraps into a SECOND column instead of staying a list.
+               There is only ever one column here. */
+            flex-wrap: nowrap;
+        }
+        #finale-view .dashboard-finale--split .award-card {
+            max-width: none;
+            width: 100%;
+            min-width: 0;
+            flex-direction: row;
+        }
+
+        /* #775: the same sheet also spends the column's height on margins this
+           layout never asked for — `.awards-section { margin: var(--space-xl)
+           auto }` is 32px above and 32px below, `.awards-title { margin-bottom:
+           var(--space-lg) }` another 24px, so 88px of the 518px right column at
+           1280x720 went to whitespace between blocks that already space
+           themselves with `gap`. That is most of what was still hanging over
+           the bottom edge after the width cap came off.
+
+           The `text-align: center` those rules carry is a phone decision too: a
+           centred name over a centred detail line looks deliberate in a 160px
+           oval and ragged in a 700px pill, and `.award-card` here already says
+           `text-align: left`. */
+        #finale-view .awards-section,
+        #finale-view .awards-title,
+        #finale-view .award-icon,
+        #finale-view .award-name,
+        #finale-view .award-winner,
+        #finale-view .award-detail {
+            margin: 0;
+        }
+        #finale-view .award-name,
+        #finale-view .award-winner,
+        #finale-view .award-detail {
+            text-align: left;
+        }
+
+        /* #775: which block gives way when the column is short was decided by
+           flex-shrink arithmetic, and flex shrinks proportionally to size — so
+           the leaderboard, being the tallest item, kept the most and the awards
+           box was squeezed to 93px around 183px of cards. Eight players and two
+           awards left both cards cut through the middle.
+
+           Made explicit instead: the awards are exactly as tall as the cards
+           they hold and never give way, the leaderboard card is the only thing
+           that shrinks — down to its three-row floor, scrolling the remaining
+           players inside its own list — and the duel line is pinned to the
+           bottom edge with an auto margin so the column still reads as full.
+           Which award is the *last* one shown is then a question of how many
+           fit, and fitAwards() answers it by counting whole cards rather than
+           by clipping one. */
+        .dashboard-finale--split .awards-section {
+            flex: 0 0 auto;
+        }
+        .dashboard-finale--split .dashboard-h2h--end {
+            margin-top: auto;
+        }
+        /* #691 again: `hidden` is a UA rule, and .award-card sets display,
+           so the attribute does nothing on its own. fitAwards() relies on it. */
+        .award-card[hidden] { display: none; }
+
+        /* #775: the title overflowed by 9-10px at all three resolutions, for
+           two reasons that compound. css/src/08-responsive.css carries
+           `#finale-view .podium-title { font-size: clamp(2.4rem, 4.8vw, 4.2rem) }`
+           — an id selector, so it has been quietly beating the 48px cap that
+           #694 set below for exactly this budget, and the television has been
+           drawing "Result" at 67px all along. On top of that `line-height: 1`
+           makes the content box shorter than the font's own line box, so the
+           descenders fall outside it. Reclaiming the intended cap (scoped by
+           id, so the responsive sheet no longer wins) and giving the line real
+           height settles both. */
+        #finale-view .podium-title {
+            font-size: clamp(28px, 3.6vw, 48px);
+            line-height: 1.3;
+        }
+
         .dashboard-finale::before {
             /* Single spotlight from above — replaces confetti */
             content: "";
@@ -3074,6 +3171,11 @@
                 + ' – ' + msg.right_wins + ' ' + escapeHtml(msg.right)
                 + '<span class="h2h-scope">' + escapeHtml(t('dashboard.h2hRecent')) + '</span>';
             target.classList.remove('hidden');
+            // #775: on the end screen this line takes a slice of the column the
+            // awards were already sized against — it arrives a beat later, on
+            // analytics_recorded. Re-fit rather than let it push a card out of
+            // the picture.
+            if (target === els.endH2h) fitAwards();
         }
 
         function handleEveningTally(msg) {
@@ -3277,6 +3379,15 @@
             currentPhase = 'FINALE';
             showView('finale');
 
+            // #777: the counter belongs to the questions, not to the result.
+            // Left alone it kept saying "Question 5 / 5" under an empty
+            // progress bar — the two contradicted each other on the same
+            // screen and it read as if a sixth question were coming. The
+            // result screen already names itself ("Result"), so the header
+            // line goes quiet, exactly as it does on game_reset.
+            if (els.roundIndicator) els.roundIndicator.textContent = '';
+            els.timerFill.style.width = '0%';
+
             // #613: clear last game's duel before this game's arrives on
             // analytics_recorded, a beat later. Leaving it up would show the
             // PREVIOUS game's standing under this game's podium.
@@ -3425,6 +3536,92 @@
                     '</div>';
                 grid.appendChild(card);
             });
+
+            fitAwards();
+        }
+
+        /* #775: the height the finale leaderboard is guaranteed — its header
+           plus three rows (#695) — read off the card that is on screen rather
+           than carried as a constant. Every hand-derived pixel figure in this
+           file went stale the moment a font or a padding moved; this one
+           cannot. */
+        function leaderboardFloorPx() {
+            var card = document.querySelector('.finale-leaderboard-card');
+            var list = card && card.querySelector('.dashboard-leaderboard');
+            if (!card || !list) return 0;
+            var header = card.querySelector('.card-header');
+            var cs = getComputedStyle(list);
+            var rows = [].slice.call(list.children);
+            var keep = Math.min(3, rows.length);
+            var rowsPx = 0;
+            for (var i = 0; i < keep; i++) rowsPx += rows[i].offsetHeight;
+            if (keep > 1) rowsPx += (parseFloat(cs.rowGap) || 0) * (keep - 1);
+            return (header ? header.offsetHeight : 0)
+                + rowsPx
+                + (parseFloat(cs.paddingTop) || 0) + (parseFloat(cs.paddingBottom) || 0)
+                + (card.offsetHeight - card.clientHeight);  // the card's borders
+        }
+
+        /* #775: the right-hand column of the result screen is exactly as tall
+           as the television, and three blocks want that height — the awards,
+           the final leaderboard and the duel line. Every previous attempt
+           divided it with a budget derived by hand (#692, #694, #695), and each
+           one held only for the player count and the screen it was measured on;
+           the moment a line moved, the block that lost was cut through the
+           middle.
+
+           The awards are the block that can be shortened without losing a fact:
+           every award is also on every player's phone (js/player-end.js). So
+           the board shows as many WHOLE award cards as the leftover height
+           holds and drops the rest. Nothing is ever cut in half again, at any
+           resolution, player count or award count — and no number in this file
+           has to be re-derived when a line is added.
+
+           Re-run whenever the column's budget moves: the duel line arrives a
+           beat after the finale (analytics_recorded), and a television can be
+           resized. */
+        function fitAwards() {
+            var section = document.getElementById('awards-section');
+            var column = document.querySelector('.dashboard-finale-right');
+            if (!section || !column || section.classList.contains('hidden')) return;
+            var grid = section.querySelector('.awards-grid');
+            var title = section.querySelector('.awards-title');
+            if (!grid) return;
+
+            // Everything back in flow first — the budget may have grown since
+            // the last run (the window got taller, the duel line never came).
+            var cards = [].slice.call(grid.querySelectorAll('.award-card'));
+            cards.forEach(function(card) { card.hidden = false; });
+
+            var colGap = parseFloat(getComputedStyle(column).rowGap) || 0;
+            var secGap = parseFloat(getComputedStyle(section).rowGap) || 0;
+            var h2hVisible = els.endH2h && !els.endH2h.classList.contains('hidden');
+            var budget = column.clientHeight
+                - leaderboardFloorPx() - colGap
+                - (h2hVisible ? els.endH2h.offsetHeight + colGap : 0);
+
+            // The section grows into slack, so its own height says nothing
+            // about what it needs — ask its children.
+            function needed() {
+                return (title ? title.offsetHeight + secGap : 0) + grid.offsetHeight;
+            }
+
+            // Never drop the last one: one award the room can read beats an
+            // empty strip where two were earned.
+            var i;
+            for (i = cards.length - 1; i > 0 && needed() > budget; i--) {
+                cards[i].hidden = true;
+            }
+
+            // The budget is arithmetic and arithmetic can be wrong — a font
+            // that measures differently, a duel line that wraps to two rows.
+            // So the last word goes to the column itself: while anything still
+            // hangs past its bottom edge, one more award steps back. This is
+            // the rule that makes "nothing is ever cut in half" true rather
+            // than merely intended.
+            for (i = cards.length - 1; i > 0 && column.scrollHeight > column.clientHeight; i--) {
+                cards[i].hidden = true;
+            }
         }
 
         function escapeHtml(text) {
@@ -3449,6 +3646,25 @@
                 window.QuizifyI18n.initPageTranslations(document);
             });
         }
+        // #775: a television that changes resolution, a browser window resized
+        // while the result is up, or a font that finishes loading a beat late
+        // all change the column the awards were fitted to. Watch the column
+        // itself rather than the window: it is the box the budget is measured
+        // against, and it changes in cases no resize event accompanies.
+        // Hiding a card changes the awards' height, not the column's, so this
+        // does not feed itself.
+        var fitAwardsTimer = null;
+        function scheduleFitAwards() {
+            clearTimeout(fitAwardsTimer);
+            fitAwardsTimer = setTimeout(fitAwards, 100);
+        }
+        var finaleColumn = document.querySelector('.dashboard-finale-right');
+        if (finaleColumn && typeof ResizeObserver === 'function') {
+            new ResizeObserver(scheduleFitAwards).observe(finaleColumn);
+        } else {
+            window.addEventListener('resize', scheduleFitAwards);
+        }
+
         connect();
     })();
     </script>
