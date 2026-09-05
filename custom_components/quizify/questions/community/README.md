@@ -1,9 +1,41 @@
 # Community Question Packs
 
-This folder holds **user-contributed** question packs. Any `*.json` file you
-drop in here is discovered automatically the next time Quizify loads its
-question bank (a Home Assistant restart, or an in-app pack reload). They appear
-in the category picker alongside the built-in packs.
+> **⚠️ Do not drop your own packs in this folder.** It lives inside
+> `custom_components/quizify/`, which HACS **replaces wholesale on every
+> update** — anything you put here is deleted the next time Quizify updates.
+> This folder now only carries `example-pack.json`, shipped with the
+> integration as a reference.
+
+## Where your packs go
+
+Put your own packs in your **Home Assistant config directory**:
+
+```
+<config>/quizify/packs/my-pack.json
+```
+
+(the same `<config>` that holds `configuration.yaml`; on Home Assistant OS that
+is `/config`, so `/config/quizify/packs/`). Quizify creates the folder on
+startup. It is outside `custom_components/`, so updates never touch it.
+
+**If you already had packs in this folder**, you do not have to do anything:
+on the next start Quizify **moves** every `*.json` it finds here (except the
+shipped `example-pack.json`) into `<config>/quizify/packs/` and logs the move.
+If a file of the same name is already there, your copy in `<config>` wins and
+the old file is left alone rather than overwritten.
+
+## Loading a pack without restarting
+
+After adding, editing or removing a pack, call the
+
+```
+quizify.reload_packs
+```
+
+service (Developer Tools → Actions → "Quizify: Reload question packs"), then
+reload the admin page. The pack shows up in the category picker alongside the
+built-in ones. The service only works from the lobby — a running game keeps the
+packs it started with. A Home Assistant restart works too, of course.
 
 Community packs are kept separate from the built-in, hand-reviewed packs so
 that user content is clearly namespaced and can be validated independently.
@@ -80,3 +112,10 @@ shadow a built-in pack.
 To share a pack with the wider community, open a pull request adding your
 `*.json` file to this folder. Keep it focused (one theme per pack) and run the
 question bank tests before submitting.
+
+**Maintainer note:** a pack merged into this folder ships with the release, so
+add its filename to `SHIPPED_COMMUNITY_PACKS` in
+`custom_components/quizify/game/questions.py`. Otherwise the first-run
+migration treats it as host data and moves it into every user's
+`<config>/quizify/packs/`, where the next update would re-create it here and
+the two copies would fight over the same slug.

@@ -75,6 +75,10 @@
         "end_game": {
             "name": "Spiel beenden",
             "description": "Beendet das aktuelle Spiel sofort und springt zur End-Rangliste. Verknüpfe es mit einem Fernbedienungs-Button, Dashboard-Button oder Assist-Satz. Funktioniert nur, während ein Spiel läuft."
+        },
+        "reload_packs": {
+            "name": "Fragenpakete neu laden",
+            "description": "Liest alle Fragenpakete neu von der Festplatte, inklusive der Community-Pakete im Ordner quizify/packs deines Home-Assistant-Konfigurationsverzeichnisses. Nutze es, nachdem du ein Paket hinzugefügt, geändert oder gelöscht hast, damit es ohne Neustart von Home Assistant in der Auswahl auftaucht. Funktioniert nur in der Lobby."
         }
     }
 }

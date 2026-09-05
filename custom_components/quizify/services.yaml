@@ -49,3 +49,13 @@ end_game:
     it to a remote button, dashboard button or Assist sentence ("Hey Nabu, end
     the quiz"). Only works while a game is running.
   fields: {}
+
+reload_packs:
+  name: Reload question packs
+  description: >-
+    Re-read every question pack from disk, including the community packs you
+    dropped into the "quizify/packs" folder of your Home Assistant config
+    directory. Use it after adding, editing or removing a pack so it shows up
+    in the picker without restarting Home Assistant. Only works from the
+    lobby — a running game keeps the packs it started with.
+  fields: {}

@@ -75,6 +75,10 @@
         "end_game": {
             "name": "Spel beëindigen",
             "description": "Beëindigt het huidige spel direct en gaat naar het eindklassement. Koppel het aan een afstandsbedieningsknop, dashboardknop of Assist-zin. Werkt alleen terwijl er een spel loopt."
+        },
+        "reload_packs": {
+            "name": "Vragenpakketten herladen",
+            "description": "Leest alle vragenpakketten opnieuw van schijf, inclusief de community-pakketten in de map quizify/packs van je Home Assistant-configuratiemap. Gebruik het nadat je een pakket hebt toegevoegd, gewijzigd of verwijderd, zodat het in de kiezer verschijnt zonder Home Assistant te herstarten. Werkt alleen vanuit de lobby."
         }
     }
 }

@@ -75,6 +75,10 @@
         "end_game": {
             "name": "End game",
             "description": "End the current game immediately and jump to the final leaderboard. Wire it to a remote button, dashboard button or Assist sentence. Only works while a game is running."
+        },
+        "reload_packs": {
+            "name": "Reload question packs",
+            "description": "Re-read every question pack from disk, including the community packs in the quizify/packs folder of your Home Assistant config directory. Use it after adding, editing or removing a pack so it shows up in the picker without restarting Home Assistant. Only works from the lobby."
         }
     }
 }

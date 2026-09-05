@@ -75,6 +75,10 @@
         "end_game": {
             "name": "Terminer la partie",
             "description": "Termine immédiatement la partie en cours et affiche le classement final. Associez-le à un bouton de télécommande, un bouton de tableau de bord ou une phrase Assist. Ne fonctionne que pendant une partie en cours."
+        },
+        "reload_packs": {
+            "name": "Recharger les paquets de questions",
+            "description": "Relit tous les paquets de questions depuis le disque, y compris les paquets communautaires du dossier quizify/packs de votre répertoire de configuration Home Assistant. À utiliser après avoir ajouté, modifié ou supprimé un paquet pour qu'il apparaisse dans le sélecteur sans redémarrer Home Assistant. Ne fonctionne que depuis le salon."
         }
     }
 }

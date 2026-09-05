@@ -6,6 +6,7 @@ import json
 import logging
 import math
 import random
+import shutil
 import time
 from dataclasses import dataclass, field
 from pathlib import Path
@@ -25,7 +26,26 @@ QUESTIONS_DIR = Path(__file__).resolve().parent.parent / "questions"
 # kept apart from the built-in, reviewed packs. The non-recursive ``*.json``
 # glob used for built-in discovery never reaches into this subfolder, so the
 # two namespaces stay cleanly separated.
+#
+# NOTE (#743): this folder is *inside* the integration directory, which HACS
+# replaces wholesale on every update. It is where the shipped example pack
+# lives and where hosts used to drop their own packs — and where those packs
+# were silently deleted by the next update. The host-owned drop-in location is
+# now ``<config>/quizify/packs`` (see ``COMMUNITY_PACKS_DIRNAME``); this folder
+# remains a read-only scan root for the shipped example and for any pack a
+# migration could not move.
 COMMUNITY_SUBDIR = "community"
+
+# Host-owned drop-in folder, relative to the runtime data dir
+# (``<config>/quizify`` under Home Assistant). Outside ``custom_components``,
+# so a HACS update cannot touch it (#743).
+COMMUNITY_PACKS_DIRNAME = "packs"
+
+# Files shipped inside ``questions/community`` by the integration itself. They
+# are part of the release artefact, not host data, so the #743 migration leaves
+# them where they are — moving them would copy repo content into the host's
+# config directory and re-create it on every update.
+SHIPPED_COMMUNITY_PACKS = frozenset({"example-pack.json"})
 
 # Slugs of community packs are prefixed so they can never collide with (or
 # silently shadow) a built-in pack slug.
@@ -448,9 +468,24 @@ def _parse_question(data: dict, category_name: str) -> Question | None:
 class QuestionBank:
     """Manages loading and serving questions from JSON files."""
 
-    def __init__(self, questions_dir: Path | None = None) -> None:
-        """Initialize the question bank."""
+    def __init__(
+        self,
+        questions_dir: Path | None = None,
+        community_dir: Path | None = None,
+    ) -> None:
+        """Initialize the question bank.
+
+        *questions_dir* holds the built-in packs shipped with the integration.
+        *community_dir* is the host-owned drop-in folder outside the
+        integration directory (``<config>/quizify/packs`` under Home
+        Assistant, #743). When it is ``None`` — bare unit tests, or any caller
+        without a runtime — only the in-integration community folder is
+        scanned and no migration is attempted.
+        """
         self._questions_dir = questions_dir or QUESTIONS_DIR
+        self._community_dir = (
+            Path(community_dir) if community_dir is not None else None
+        )
         self._categories: dict[str, list[Question]] = {}
         self._pack_versions: dict[str, dict] = {}
         self._queue: list[Question] = []
@@ -481,6 +516,25 @@ class QuestionBank:
     def questions_dir(self) -> Path:
         """Directory the question-pack JSON files are loaded from."""
         return self._questions_dir
+
+    @property
+    def community_dir(self) -> Path | None:
+        """Host-owned drop-in folder for community packs, if one is bound.
+
+        Lives outside the integration directory so a HACS update cannot delete
+        what the host put there (#743). ``None`` when the bank was created
+        without a runtime.
+        """
+        return self._community_dir
+
+    @property
+    def legacy_community_dir(self) -> Path:
+        """The pre-#743 community folder inside the integration directory.
+
+        Still scanned (it carries the shipped example pack), but no longer the
+        place hosts are told to drop their own files.
+        """
+        return self._questions_dir / COMMUNITY_SUBDIR
 
     @property
     def is_loaded(self) -> bool:
@@ -545,14 +599,21 @@ class QuestionBank:
         )
         return questions
 
-    def load_all_categories(self) -> dict[str, list[Question]]:
+    def load_all_categories(self, force: bool = False) -> dict[str, list[Question]]:
         """Discover and load all category JSON files.
 
         Subsequent calls return the cached result without re-reading from disk.
-        Call reload_categories() to force a fresh load.
+        Pass ``force=True`` (or call :meth:`reload_categories`) to re-read from
+        disk regardless of the cache. The ``force`` flag exists so the reload
+        path cannot be defeated by the ``_loaded`` short-circuit — the flag is
+        checked here, not by the caller, so a concurrent load that re-sets
+        ``_loaded`` in between cannot turn a requested reload into a no-op.
         """
-        if self._loaded:
+        if self._loaded and not force:
             return dict(self._categories)
+
+        if force:
+            self._reset_loaded_state()
 
         if not self._questions_dir.is_dir():
             _LOGGER.warning("Questions directory not found: %s", self._questions_dir)
@@ -578,14 +639,135 @@ class QuestionBank:
         self._loaded = True
         return dict(self._categories)
 
-    def reload_categories(self) -> dict[str, list[Question]]:
-        """Clear the cache and reload all categories from disk."""
+    def _reset_loaded_state(self) -> None:
+        """Drop every cached artefact of a previous load.
+
+        ``_pack_versions`` matters as much as ``_categories``: the admin
+        category chips and the ``/api/quizify/packs`` endpoint are rendered
+        from it, so a reload that only cleared the questions would keep
+        showing a chip for a pack the host had just deleted. The queue is
+        dropped too — it holds ``Question`` objects from the previous load.
+        """
         self._loaded = False
         self._categories = {}
-        return self.load_all_categories()
+        self._pack_versions = {}
+        self._queue = []
+        self._queue_index = 0
+
+    def reload_categories(self) -> dict[str, list[Question]]:
+        """Clear the cache and reload all categories from disk.
+
+        Blocking disk I/O — call it from an executor, never on the event loop.
+        Exposed to hosts as the ``quizify.reload_packs`` service (#743) so a
+        newly dropped pack can be picked up without restarting Home Assistant.
+        """
+        return self.load_all_categories(force=True)
+
+    def _community_scan_roots(self) -> list[Path]:
+        """Directories scanned for community packs, in precedence order.
+
+        The host-owned folder outside the integration comes first so that when
+        the same filename exists in both places the host's copy wins — the
+        in-integration copy is then skipped by the slug-collision check.
+        """
+        roots: list[Path] = []
+        if self._community_dir is not None:
+            roots.append(self._community_dir)
+        legacy = self.legacy_community_dir
+        if legacy not in roots:
+            roots.append(legacy)
+        return roots
+
+    def _ensure_community_dir(self) -> None:
+        """Create the host-owned drop-in folder so it is there to be found.
+
+        The README tells hosts to drop packs into ``<config>/quizify/packs``;
+        a folder that only appears once somebody guesses the path right is a
+        worse instruction than one that is simply there. Best-effort: a
+        read-only config dir logs and moves on, and every scan root is
+        ``is_dir()``-guarded anyway.
+        """
+        if self._community_dir is None:
+            return
+        try:
+            self._community_dir.mkdir(parents=True, exist_ok=True)
+        except OSError as exc:
+            _LOGGER.debug(
+                "Could not create community pack directory %s: %s",
+                self._community_dir,
+                exc,
+            )
+
+    def _migrate_legacy_community_packs(self) -> None:
+        """Move host-dropped packs out of the doomed in-integration folder.
+
+        Before #743 the only documented drop-in location was
+        ``custom_components/quizify/questions/community`` — inside the
+        directory HACS replaces wholesale on every update, so each update
+        deleted the host's own packs without a word. On every load we move any
+        leftover ``*.json`` there into the host-owned folder, so a host who
+        already had packs in the old place keeps them instead of losing them
+        at the next update.
+
+        Deliberately conservative: files shipped by the integration itself
+        (:data:`SHIPPED_COMMUNITY_PACKS`) are left alone, an existing file of
+        the same name in the target is never overwritten, and any OS error is
+        logged and swallowed — a pack that could not be moved is still loaded
+        from the legacy folder by :meth:`load_community_packs`, so a failed
+        migration degrades to the old behaviour rather than losing a pack.
+        """
+        if self._community_dir is None:
+            return
+
+        legacy = self.legacy_community_dir
+        if not legacy.is_dir() or legacy == self._community_dir:
+            return
+
+        for file_path in sorted(legacy.glob("*.json")):
+            if file_path.name in SHIPPED_COMMUNITY_PACKS:
+                continue
+
+            target = self._community_dir / file_path.name
+            if target.exists():
+                _LOGGER.warning(
+                    "Community pack '%s' also exists in %s — leaving the old "
+                    "copy in place; the file in %s is the one that loads",
+                    file_path.name,
+                    self._community_dir,
+                    self._community_dir,
+                )
+                continue
+
+            try:
+                self._community_dir.mkdir(parents=True, exist_ok=True)
+                shutil.move(str(file_path), str(target))
+            except OSError as exc:
+                _LOGGER.warning(
+                    "Could not move community pack '%s' to %s: %s. It is still "
+                    "loaded from %s, but a HACS update will delete it — move "
+                    "it by hand.",
+                    file_path.name,
+                    self._community_dir,
+                    exc,
+                    legacy,
+                )
+                continue
+
+            _LOGGER.warning(
+                "Moved community pack '%s' from %s to %s so a HACS update "
+                "cannot delete it (#743)",
+                file_path.name,
+                legacy,
+                self._community_dir,
+            )
 
     def load_community_packs(self) -> dict[str, list[Question]]:
-        """Discover and load user-contributed packs from the community subfolder.
+        """Discover and load user-contributed packs from every scan root.
+
+        Two roots are scanned (#743): the host-owned drop-in folder outside
+        the integration directory first, then the in-integration
+        ``questions/community`` folder that ships the example pack. Leftover
+        host packs in the second are migrated into the first before scanning.
 
         Community packs are untrusted input, so loading is deliberately
         defensive: every failure mode (missing folder, unreadable file,
@@ -598,7 +780,16 @@ class QuestionBank:
         (``community-<filename>``) so it can never shadow a built-in category.
         Returns the mapping of the community packs that were loaded.
         """
-        community_dir = self._questions_dir / COMMUNITY_SUBDIR
+        self._ensure_community_dir()
+        self._migrate_legacy_community_packs()
+
+        loaded: dict[str, list[Question]] = {}
+        for root in self._community_scan_roots():
+            loaded.update(self._load_community_dir(root))
+        return loaded
+
+    def _load_community_dir(self, community_dir: Path) -> dict[str, list[Question]]:
+        """Load every community pack found in a single scan root."""
         loaded: dict[str, list[Question]] = {}
 
         if not community_dir.is_dir():
@@ -610,8 +801,10 @@ class QuestionBank:
 
             if slug in self._categories:
                 _LOGGER.warning(
-                    "Skipping community pack '%s': slug '%s' already loaded",
+                    "Skipping community pack '%s' in %s: slug '%s' already "
+                    "loaded",
                     file_path.name,
+                    community_dir,
                     slug,
                 )
                 continue
@@ -722,10 +915,12 @@ class QuestionBank:
                 "language": pack_language,
                 "question_count": len(questions),
                 "community": True,
-                # Theme stored at load time (#309) — community packs live at
-                # questions/community/<stem>.json under a ``community-`` slug, so
-                # the old views.py path read (questions_dir / f"{slug}.json")
-                # never found them and they always fell back to the 🎲 icon.
+                # Theme stored at load time (#309) — community packs live in a
+                # separate folder under a ``community-`` slug, so the old
+                # views.py path read (questions_dir / f"{slug}.json") never
+                # found them and they always fell back to the 🎲 icon. Since
+                # #743 they may live outside the integration entirely, which
+                # makes reconstructing a path from the slug wronger still.
                 "theme": (
                     raw.get("theme", "")
                     if isinstance(raw.get("theme"), str)
