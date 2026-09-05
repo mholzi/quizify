@@ -565,7 +565,9 @@
     "h2hRecent": "last 90 days",
     "tonightGames": "{games} games",
     "tonightWins": "{wins} wins",
-    "tonightWinsOne": "1 win"
+    "tonightWinsOne": "1 win",
+    "powerupFreeze": "{source} froze {target}",
+    "powerupSteal": "{source} stole {points} points from {target}"
   },
   "connection": {
     "connected": "Connected",

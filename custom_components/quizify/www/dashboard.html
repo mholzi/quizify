@@ -1016,6 +1016,131 @@
             letter-spacing: 0.04em;
         }
 
+        /* #741: what a steal actually cost, on the two rows it moved. The
+           strip above says what happened; the rows say what it was worth —
+           the leaderboard is where the change is. */
+        .dashboard-leaderboard .leaderboard-delta {
+            font-family: 'JetBrains Mono', ui-monospace, monospace;
+            font-size: clamp(14px, 1.3vw, 20px);
+            font-weight: 700;
+            padding: 2px 8px;
+            border-radius: 4px;
+            font-variant-numeric: tabular-nums;
+        }
+        .dashboard-leaderboard .leaderboard-delta.is-up {
+            color: var(--dash-success);
+            background: rgba(127, 168, 151, 0.16);
+        }
+        .dashboard-leaderboard .leaderboard-delta.is-down {
+            color: var(--dash-error);
+            background: rgba(214, 106, 106, 0.14);
+        }
+
+        /* ===================
+           POWER-UP BANNER STRIP (#741) — the room's only account of a power-up
+           that landed on somebody *else*. Fixed to the top edge, so it takes
+           the round-indicator line for its four seconds and leaves the
+           question text alone. Two at once stack rather than replacing one
+           another: the container is a column and each strip carries its own
+           timer, so the one appended first is also the first to leave.
+
+           It carries a sentence, not a symbol. An icon on a leaderboard row
+           assumes the viewer knows what the icon means, and the room does not.
+           =================== */
+        .dashboard-powerup-banners {
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            z-index: 45;
+            display: flex;
+            flex-direction: column;
+            gap: 2px;
+            pointer-events: none;
+        }
+
+        .dashboard-powerup-banner {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: clamp(12px, 1.4vw, 24px);
+            padding: clamp(12px, 1.4vw, 22px) clamp(24px, 3vw, 48px);
+            /* Soft Parlor is a cream board, so the strip is its inverse: the
+               ink token as the ground, cream type on it. A cream strip on a
+               cream board would need a hairline to exist at all, and a
+               hairline is not something you read from a sofa. */
+            background: var(--dash-text-white);
+            color: var(--dash-bg-primary);
+            font-family: 'DM Sans', sans-serif;
+            /* #376/#707: content the room reads, not an eyebrow label. */
+            font-size: clamp(20px, 2.2vw, 38px);
+            font-weight: 600;
+            line-height: 1.2;
+            text-align: center;
+            box-shadow: 0 6px 24px rgba(42, 40, 32, 0.22);
+            animation: dashboard-powerup-in 260ms cubic-bezier(0.2, 0.8, 0.3, 1) both;
+        }
+
+        .dashboard-powerup-banner.is-leaving {
+            animation: dashboard-powerup-out 260ms ease-in both;
+        }
+
+        .dashboard-powerup-icon {
+            font-size: clamp(24px, 2.6vw, 44px);
+            line-height: 1;
+            flex-shrink: 0;
+        }
+
+        .dashboard-powerup-name {
+            color: var(--dash-gold);
+            font-weight: 700;
+        }
+
+        .dashboard-powerup-points {
+            font-family: 'JetBrains Mono', ui-monospace, monospace;
+            color: var(--dash-gold);
+            font-weight: 700;
+            font-variant-numeric: tabular-nums;
+        }
+
+        @keyframes dashboard-powerup-in {
+            from { transform: translateY(-100%); opacity: 0; }
+            to   { transform: translateY(0);     opacity: 1; }
+        }
+
+        @keyframes dashboard-powerup-out {
+            from { transform: translateY(0);     opacity: 1; }
+            to   { transform: translateY(-100%); opacity: 0; }
+        }
+
+        /* ===================
+           REVEAL REACTIONS (#741) — the emoji every phone already rains, on
+           the one screen the whole room is looking at. Reveal only: over a
+           live question the movement would compete with reading the answers.
+           =================== */
+        .dashboard-reaction-layer {
+            position: fixed;
+            inset: 0;
+            z-index: 30;
+            pointer-events: none;
+            overflow: hidden;
+        }
+
+        .dashboard-floating-reaction {
+            position: absolute;
+            bottom: 0;
+            font-size: clamp(40px, 4vw, 72px);
+            line-height: 1;
+            animation: dashboard-reaction-rise 3s ease-out forwards;
+            will-change: transform, opacity;
+        }
+
+        @keyframes dashboard-reaction-rise {
+            0%   { transform: translateY(0)     scale(0.6); opacity: 0; }
+            12%  { transform: translateY(-8vh)  scale(1);   opacity: 1; }
+            100% { transform: translateY(-78vh) scale(1.1); opacity: 0; }
+        }
+
         /* ===================
            PAUSED OVERLAY (#296) — freezes the timer + dims the board.
            Mirrors the player paused-view intent (game.paused / pausedHint)
@@ -1634,6 +1759,13 @@
         <span data-i18n="connection.reconnecting">Reconnecting…</span>
     </div>
 
+    <!-- #741: the power-up strip and the reveal reactions. Both sit outside
+         <main> on purpose — the strip owns the top edge for four seconds and
+         the reaction layer owns the whole screen, and neither may join the
+         column layout that the question and the leaderboard share. -->
+    <div id="powerup-banners" class="dashboard-powerup-banners" role="status" aria-live="polite"></div>
+    <div id="reaction-layer" class="dashboard-reaction-layer" aria-hidden="true"></div>
+
     <main class="dashboard-container">
         <div class="dashboard-header">
             <h1 class="wordmark">
@@ -1845,6 +1977,11 @@
         // lightning_splash / game_state(LIGHTNING) payload's seconds_per_question
         // so a non-15s round drives the shared timer bar with the right divisor.
         var lightningSeconds = 15;
+        // #741: which phase the board believes it is in. The reveal is the
+        // only phase reactions are allowed over, and nothing on this page
+        // tracked the phase before — handleGameState read msg.phase and threw
+        // it away. Mirrors admin.js's currentPhase, set from the same events.
+        var currentPhase = 'LOBBY';
 
         // ---- DOM ----
         var views = {
@@ -1862,6 +1999,9 @@
             lobbyJoinUrlEl: document.getElementById('lobby-join-url'),
             lobbyPlayers: document.getElementById('lobby-players'),
             roundIndicator: document.getElementById('round-indicator'),
+            // #741: power-up strip stack + floating-reaction layer.
+            powerupBanners: document.getElementById('powerup-banners'),
+            reactionLayer: document.getElementById('reaction-layer'),
             timerFill: document.getElementById('timer-fill'),
             answerProgress: document.getElementById('answer-progress'),
             eveningTally: document.getElementById('evening-tally'),
@@ -2210,6 +2350,7 @@
                     handleFinale(msg);
                     break;
                 case 'game_reset':
+                    currentPhase = 'LOBBY';
                     setPaused(false);
                     showView('waiting');
                     // #374: back to the lobby — repaint QR + roster (a reset
@@ -2248,10 +2389,151 @@
                     lobbyTeams = msg.teams || [];
                     renderLobbyPlayers(lastLobbyPlayers);
                     break;
+                // #741: both of these are full broadcasts — the television
+                // socket has always received them and had nowhere to put
+                // them. Anna froze Ben and the board showed nothing; the
+                // room watched points move with no account of why.
+                case 'powerup_applied':
+                    handlePowerUpApplied(msg);
+                    break;
+                case 'reaction':
+                    showDashboardReaction(msg.emoji);
+                    break;
+                case 'reaction_bonus':
+                    handleReactionBonus(msg);
+                    break;
             }
         }
 
+        // ============================================
+        // #741 — power-ups and reactions on the big screen
+        // ============================================
+
+        // Only the power-ups that land on somebody *else* go on the board.
+        // JOKER, DOUBLE_POINTS and TIME_BOOST change nothing but the user's
+        // own turn: putting them up would mean something is on screen almost
+        // constantly, and then none of it means anything.
+        var POWERUP_BANNER_MS = 4000;
+        var POWERUP_BANNER_EXIT_MS = 260;
+        var BOARD_POWERUPS = {
+            freeze: {
+                icon: '\uD83E\uDDCA',
+                key: 'dashboard.powerupFreeze',
+                fallback: '{source} froze {target}'
+            },
+            steal: {
+                icon: '\uD83E\uDD77',
+                key: 'dashboard.powerupSteal',
+                fallback: '{source} stole {points} points from {target}'
+            }
+        };
+
+        // Fills a whole-sentence template. The placeholders are substituted
+        // here rather than through i18n.t(key, vars) for two reasons: the
+        // names and the point count are marked up (gold, tabular), and German
+        // and Spanish put them in a different order than English — so the unit
+        // that gets translated has to be the whole sentence, never fragments
+        // concatenated in English order.
+        function powerUpSentenceHtml(spec, vars) {
+            return t(spec.key, spec.fallback).replace(/\{(\w+)\}/g, function (_m, name) {
+                var value = vars[name];
+                if (value == null) return '';
+                var cls = name === 'points'
+                    ? 'dashboard-powerup-points'
+                    : 'dashboard-powerup-name';
+                return '<span class="' + cls + '">' + escapeHtml(String(value)) + '</span>';
+            });
+        }
+
+        function handlePowerUpApplied(msg) {
+            var spec = BOARD_POWERUPS[msg.powerup_type];
+            if (!spec) return;
+            var source = msg.source_player || '';
+            var target = msg.target_player || '';
+            // Both names or no sentence — "Anna froze" is worse than silence.
+            if (!source || !target) return;
+            var points = Math.abs(Number(msg.stolen_points) || 0);
+            showPowerUpBanner(spec, { source: source, target: target, points: points });
+            if (msg.powerup_type === 'steal' && points > 0) {
+                showScoreDeltas([
+                    { name: source, points: points },
+                    { name: target, points: -points }
+                ]);
+            }
+        }
+
+        function showPowerUpBanner(spec, vars) {
+            if (!els.powerupBanners) return;
+            var el = document.createElement('div');
+            el.className = 'dashboard-powerup-banner';
+            el.innerHTML =
+                '<span class="dashboard-powerup-icon" aria-hidden="true">' + spec.icon + '</span>' +
+                '<span class="dashboard-powerup-text">' + powerUpSentenceHtml(spec, vars) + '</span>';
+            els.powerupBanners.appendChild(el);
+            // Each strip owns its own timer, so a second one arriving mid-stand
+            // stacks underneath and the older one still leaves first.
+            setTimeout(function () {
+                el.classList.add('is-leaving');
+                setTimeout(function () {
+                    if (el.parentNode) el.parentNode.removeChild(el);
+                }, POWERUP_BANNER_EXIT_MS);
+            }, POWERUP_BANNER_MS);
+        }
+
+        // Transient +/- chips on the two rows a steal moved. Held in state
+        // rather than poked into the DOM, because game_state repaints the
+        // leaderboard every few seconds and would wipe them mid-stand.
+        var SCORE_DELTA_MS = 4000;
+        var scoreDeltas = {};
+        var scoreDeltaTimer = null;
+        var lastLeaderboardPlayers = null;
+
+        function showScoreDeltas(deltas) {
+            deltas.forEach(function (d) {
+                if (d.name) scoreDeltas[d.name] = d.points;
+            });
+            if (lastLeaderboardPlayers) renderLeaderboard(els.leaderboard, lastLeaderboardPlayers);
+            if (scoreDeltaTimer) clearTimeout(scoreDeltaTimer);
+            scoreDeltaTimer = setTimeout(function () {
+                scoreDeltas = {};
+                scoreDeltaTimer = null;
+                if (lastLeaderboardPlayers) renderLeaderboard(els.leaderboard, lastLeaderboardPlayers);
+            }, SCORE_DELTA_MS);
+        }
+
+        function scoreDeltaHtml(name) {
+            var delta = scoreDeltas[name];
+            if (!delta) return '';
+            return '<span class="leaderboard-delta ' + (delta < 0 ? 'is-down' : 'is-up') + '">' +
+                (delta < 0 ? '\u2212' : '+') + Math.abs(delta) + '</span>';
+        }
+
+        function showDashboardReaction(emoji) {
+            // Reveal only. Over a live question the movement competes with
+            // reading the answers, which is the one thing the board is for.
+            if (currentPhase !== 'ANSWER_REVEAL') return;
+            if (!els.reactionLayer || !emoji) return;
+            // No throttle of our own: the server already collapses the buffer
+            // to one frame per distinct player+emoji per flush window.
+            var el = document.createElement('div');
+            el.className = 'dashboard-floating-reaction';
+            el.textContent = emoji;
+            el.style.left = (6 + Math.random() * 84) + '%';
+            els.reactionLayer.appendChild(el);
+            setTimeout(function () {
+                if (el.parentNode) el.parentNode.removeChild(el);
+            }, 3200);
+        }
+
+        function handleReactionBonus(msg) {
+            // The +1s are already awarded and already on the server's
+            // leaderboard — render it now instead of letting the number lag
+            // the animation until the next game_state frame arrives.
+            if (msg.leaderboard) renderLeaderboard(els.leaderboard, msg.leaderboard);
+        }
+
         function handleGameState(msg) {
+            if (msg.phase) currentPhase = msg.phase;
             if (msg.leaderboard) renderLeaderboard(els.leaderboard, msg.leaderboard);
 
             // #296: the paused scrim is independent of the underlying view —
@@ -2418,6 +2700,7 @@
 
         // ---- Lightning (#296) — mirrors admin.js handlers for the TV. ----
         function handleLightningSplash(msg) {
+            currentPhase = 'LIGHTNING';
             showView('lightning');
             if (els.lightningSplash) els.lightningSplash.hidden = false;
             if (els.lightningQuestionSection) els.lightningQuestionSection.hidden = true;
@@ -2433,6 +2716,7 @@
         }
 
         function handleLightningQuestion(msg) {
+            currentPhase = 'LIGHTNING';
             showView('lightning');
             if (els.lightningSplash) els.lightningSplash.hidden = true;
             if (els.lightningQuestionSection) els.lightningQuestionSection.hidden = false;
@@ -2470,6 +2754,7 @@
         }
 
         function handleLightningRecap(recap) {
+            currentPhase = 'LIGHTNING_RECAP';
             showView('lightningRecap');
             if (els.lightningRecapLeaderboard) {
                 renderLeaderboard(els.lightningRecapLeaderboard, recap.leaderboard || []);
@@ -2495,6 +2780,7 @@
          * down, not the answer clock — that one has not started yet.
          */
         function handleWagerProgress(msg) {
+            currentPhase = 'WAGER_ACTIVE';
             showView('question');
             els.funFact.classList.remove('visible');
 
@@ -2552,6 +2838,7 @@
         }
 
         function handleHotSeatAuction(msg) {
+            currentPhase = 'HOT_SEAT_AUCTION';
             hotSeatFrame(msg.round_num, msg.total_rounds);
             els.questionCategory.textContent = '';
             els.questionText.textContent = hotSeatT(
@@ -2587,6 +2874,7 @@
         }
 
         function handleHotSeatQuestion(msg) {
+            currentPhase = 'HOT_SEAT';
             // ``question`` is the field name on the wire (see
             // _broadcast_hot_seat_question); the snapshot path passes the
             // same shape so both routes land here identically.
@@ -2602,6 +2890,7 @@
         }
 
         function handleHotSeatResult(msg) {
+            currentPhase = 'HOT_SEAT_REVEAL';
             // #698: the settlement had no consumer on any surface. The board
             // stayed on the question with the bar at zero until the host
             // advanced, so the room never learned whether the chair paid off —
@@ -2662,6 +2951,7 @@
         }
 
         function handleQuestionStarted(msg) {
+            currentPhase = 'QUESTION_ACTIVE';
             showView('question');
             els.funFact.classList.remove('visible');
 
@@ -2812,6 +3102,7 @@
         }
 
         function handleRoundSummary(msg) {
+            currentPhase = 'ANSWER_REVEAL';
             var summary = msg.round_summary || msg;
 
             // #434: the summary keeps the question view's image element, so
@@ -2951,6 +3242,7 @@
         }
 
         function handleFinale(msg) {
+            currentPhase = 'FINALE';
             showView('finale');
 
             // #613: clear last game's duel before this game's arrives on
@@ -2975,6 +3267,9 @@
         // ---- Renderers ----
         function renderLeaderboard(container, players) {
             if (!container || !players) return;
+            // #741: remembered so an expiring steal chip can repaint the same
+            // rows without waiting for the next frame from the server.
+            if (container === els.leaderboard) lastLeaderboardPlayers = players;
             // Show top 5 in game view, all in finale
             var capped = container === els.leaderboard;
             var list = capped ? players.slice(0, 5) : players;
@@ -2985,6 +3280,7 @@
                     '<span class="leaderboard-rank' + rankClass + '">' + rank + '</span>' +
                     '<span class="leaderboard-name">' + escapeHtml(p.name) + '</span>' +
                     '<span class="leaderboard-score">' + p.score + '</span>' +
+                    scoreDeltaHtml(p.name) +
                     (p.streak > 1 ? '<span class="leaderboard-streak">' + p.streak + 'x</span>' : '') +
                     '</div>';
             }).join('');
