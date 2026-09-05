@@ -95,6 +95,21 @@ window.QuizifyI18n = (function() {
         return currentLanguage;
     }
 
+    // #734: a data-i18n key that no bundle carries used to fail in complete
+    // silence — t() returns the key, initPageTranslations leaves the element
+    // alone, and the English markup ships to a German television. The pill
+    // pointed at "dashboard.reconnecting" for months without a single
+    // complaint from the code. Say it out loud; the real net is
+    // tests/test_television_speaks_the_room_language_733_734.py, which fails
+    // the build before it reaches a living room.
+    var warnedMissingKeys = {};
+
+    function warnMissingKey(attr, key) {
+        if (warnedMissingKeys[key]) return;
+        warnedMissingKeys[key] = true;
+        console.warn('[i18n] no translation for ' + attr + '="' + key + '" — element left untranslated');
+    }
+
     function initPageTranslations(root) {
         var scope = root || document;
         scope.querySelectorAll('[data-i18n]').forEach(function(el) {
@@ -102,6 +117,7 @@ window.QuizifyI18n = (function() {
             if (key) {
                 var translated = t(key);
                 if (translated !== key) el.textContent = translated;
+                else warnMissingKey('data-i18n', key);
             }
         });
         scope.querySelectorAll('[data-i18n-placeholder]').forEach(function(el) {
@@ -109,6 +125,7 @@ window.QuizifyI18n = (function() {
             if (key) {
                 var translated = t(key);
                 if (translated !== key) el.placeholder = translated;
+                else warnMissingKey('data-i18n-placeholder', key);
             }
         });
         scope.querySelectorAll('[data-i18n-title]').forEach(function(el) {
@@ -116,6 +133,7 @@ window.QuizifyI18n = (function() {
             if (key) {
                 var translated = t(key);
                 if (translated !== key) el.title = translated;
+                else warnMissingKey('data-i18n-title', key);
             }
         });
         scope.querySelectorAll('[data-i18n-aria-label]').forEach(function(el) {
@@ -123,6 +141,7 @@ window.QuizifyI18n = (function() {
             if (key) {
                 var translated = t(key);
                 if (translated !== key) el.setAttribute('aria-label', translated);
+                else warnMissingKey('data-i18n-aria-label', key);
             }
         });
         // Sync <html lang> with the active language so screen readers

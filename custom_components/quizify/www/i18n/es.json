@@ -414,7 +414,9 @@
       "q4": "¿Cuánto tiempo por pregunta?",
       "q5": "¿Qué idioma?",
       "q6": "¿Ronda Relámpago?",
-      "lightningHint": "Ronda rápida sorpresa a mitad de la partida"
+      "lightningHint": "Ronda rápida sorpresa a mitad de la partida",
+      "q7": "¿Silla caliente?",
+      "hotSeatHint": "La silla se subasta y una sola persona responde"
     },
     "tts": {
       "title": "¿Voz del presentador?",
