@@ -6,9 +6,79 @@
    Design System Tokens — Soft Parlor
    ========================================== */
 
-/* Typography — Cabinet Grotesk (display) + DM Sans (body/UI) + JetBrains Mono (numeric) */
-@import url('https://fonts.googleapis.com/css2?family=DM+Sans:ital,opsz,wght@0,9..40,400;0,9..40,500;0,9..40,600;0,9..40,700;1,9..40,400&family=JetBrains+Mono:wght@400;500;600;700&display=swap');
-@import url('https://api.fontshare.com/v2/css?f[]=cabinet-grotesk@500,700,800,900&display=swap');
+/* Typography — DM Sans (display + body/UI) + JetBrains Mono (numeric).
+
+   Self-hosted under www/fonts/ (#737, #738). No page contacts a font CDN
+   any more: no guest phone leaks its IP and user agent to a third party on
+   join, nothing blocks the first paint waiting on a foreign host, and an
+   offline install renders in the same faces as an online one.
+
+   The .woff2 files are Google Fonts' own latin / latin-ext subsets copied
+   verbatim (no further subsetting). DM Sans and JetBrains Mono are SIL
+   OFL 1.1; the licence texts sit next to the files in www/fonts/.
+
+   The former display face is deliberately NOT here. Its licence (Indian
+   Type Foundry's Free Font License) forbids redistributing the font files,
+   so it cannot ship inside an MIT repo. The display role falls to DM Sans
+   at 700-900. See DESIGN.md and www/fonts/README.md.
+
+   font-display: swap on every face: text paints immediately in the
+   fallback and re-flows when the face lands. It is never invisible. */
+
+/* DM Sans — variable wght 100..1000, roman */
+@font-face {
+    font-family: 'DM Sans';
+    font-style: normal;
+    font-weight: 100 1000;
+    font-display: swap;
+    src: url('/quizify/static/fonts/dm-sans-latin.woff2') format('woff2');
+    unicode-range: U+0000-00FF, U+0131, U+0152-0153, U+02BB-02BC, U+02C6, U+02DA, U+02DC, U+0304, U+0308, U+0329, U+2000-206F, U+20AC, U+2122, U+2191, U+2193, U+2212, U+2215, U+FEFF, U+FFFD;
+}
+@font-face {
+    font-family: 'DM Sans';
+    font-style: normal;
+    font-weight: 100 1000;
+    font-display: swap;
+    src: url('/quizify/static/fonts/dm-sans-latin-ext.woff2') format('woff2');
+    unicode-range: U+0100-02BA, U+02BD-02C5, U+02C7-02CC, U+02CE-02D7, U+02DD-02FF, U+0304, U+0308, U+0329, U+1D00-1DBF, U+1E00-1E9F, U+1EF2-1EFF, U+2020, U+20A0-20AB, U+20AD-20C0, U+2113, U+2C60-2C7F, U+A720-A7FF;
+}
+
+/* DM Sans italic — 400 only, the single weight the CDN build ever loaded.
+   Bold italic keeps being synthesised, exactly as before. */
+@font-face {
+    font-family: 'DM Sans';
+    font-style: italic;
+    font-weight: 400;
+    font-display: swap;
+    src: url('/quizify/static/fonts/dm-sans-italic-latin.woff2') format('woff2');
+    unicode-range: U+0000-00FF, U+0131, U+0152-0153, U+02BB-02BC, U+02C6, U+02DA, U+02DC, U+0304, U+0308, U+0329, U+2000-206F, U+20AC, U+2122, U+2191, U+2193, U+2212, U+2215, U+FEFF, U+FFFD;
+}
+@font-face {
+    font-family: 'DM Sans';
+    font-style: italic;
+    font-weight: 400;
+    font-display: swap;
+    src: url('/quizify/static/fonts/dm-sans-italic-latin-ext.woff2') format('woff2');
+    unicode-range: U+0100-02BA, U+02BD-02C5, U+02C7-02CC, U+02CE-02D7, U+02DD-02FF, U+0304, U+0308, U+0329, U+1D00-1DBF, U+1E00-1E9F, U+1EF2-1EFF, U+2020, U+20A0-20AB, U+20AD-20C0, U+2113, U+2C60-2C7F, U+A720-A7FF;
+}
+
+/* JetBrains Mono — variable wght 400..700, the range the CDN build used */
+@font-face {
+    font-family: 'JetBrains Mono';
+    font-style: normal;
+    font-weight: 400 700;
+    font-display: swap;
+    src: url('/quizify/static/fonts/jetbrains-mono-latin.woff2') format('woff2');
+    unicode-range: U+0000-00FF, U+0131, U+0152-0153, U+02BB-02BC, U+02C6, U+02DA, U+02DC, U+0304, U+0308, U+0329, U+2000-206F, U+20AC, U+2122, U+2191, U+2193, U+2212, U+2215, U+FEFF, U+FFFD;
+}
+@font-face {
+    font-family: 'JetBrains Mono';
+    font-style: normal;
+    font-weight: 400 700;
+    font-display: swap;
+    src: url('/quizify/static/fonts/jetbrains-mono-latin-ext.woff2') format('woff2');
+    unicode-range: U+0100-02BA, U+02BD-02C5, U+02C7-02CC, U+02CE-02D7, U+02DD-02FF, U+0304, U+0308, U+0329, U+1D00-1DBF, U+1E00-1E9F, U+1EF2-1EFF, U+2020, U+20A0-20AB, U+20AD-20C0, U+2113, U+2C60-2C7F, U+A720-A7FF;
+}
 
 :root {
     /* ---- Color: Soft Parlor ---- */
@@ -93,7 +163,11 @@
     --space-2xl: 48px;
 
     /* ---- Typography: parlor register ---- */
-    --font-display: 'Cabinet Grotesk', 'DM Sans', system-ui, sans-serif;
+    /* The display face used to come from a font CDN. Its licence forbids
+       redistributing the files, so it cannot ship in an MIT repo (#738);
+       DM Sans at 700-900 carries the display role instead. Details and
+       licence texts: www/fonts/README.md. */
+    --font-display: 'DM Sans', system-ui, -apple-system, BlinkMacSystemFont, sans-serif;
     --font-body: 'DM Sans', system-ui, sans-serif;
     --font-system: 'DM Sans', system-ui, -apple-system, BlinkMacSystemFont, sans-serif;
     --font-mono: 'JetBrains Mono', ui-monospace, SFMono-Regular, monospace;

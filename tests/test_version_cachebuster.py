@@ -294,7 +294,14 @@ class TestServiceWorkerSource:
         """Every precache entry carries the ?v={{ASSET_VER}} buster (so the
         cache key matches what versioned pages request — caches.match is
         exact on the query string) and points at a real file (guards list
-        drift like the old player-core.js entries after the bundle switch)."""
+        drift like the old player-core.js entries after the bundle switch).
+
+        Fonts are the one exception, and deliberately so (#737, #738): the
+        @font-face rules live in the *static* styles.css, which is never
+        templated, so the browser asks for the file plain. A versioned
+        precache entry would be a cache key nothing ever requests. They are
+        safe unbusted because a font file's bytes never change under a given
+        name — a new face means a new filename."""
         sw_src = (self._WWW / "sw.js").read_text(encoding="utf-8")
         urls = re.findall(r"'(/quizify/static/[^']+)'", sw_src)
         precache = [u for u in urls if "{{ASSET_VER}}" in u or "?v=" in u]
@@ -308,14 +315,43 @@ class TestServiceWorkerSource:
                 f"precache URL points at missing file: {url}"
             )
 
+        # Trailing "/" is the routing prefix in the fetch handler, not an entry.
+        fonts = [
+            u
+            for u in urls
+            if u.startswith("/quizify/static/fonts/") and not u.endswith("/")
+        ]
+        assert fonts, "sw.js precaches no font — an offline install has no face"
+        for url in fonts:
+            assert "?" not in url, (
+                f"font precache URL must match what the CSS requests, plain: {url}"
+            )
+            rel = url.removeprefix("/quizify/static/")
+            assert (self._WWW / rel).is_file(), (
+                f"font precache URL points at missing file: {url}"
+            )
+
     def test_html_static_asset_refs_are_versioned(self) -> None:
         """Every /quizify/static/ reference in every served HTML page must
         carry the ?v={{ASSET_VER}} buster — one missed reference is one
-        asset pinned in the 31-day HTTP cache across releases."""
+        asset pinned in the 31-day HTTP cache across releases.
+
+        Except fonts (#737, #738). Those are referenced from the static
+        styles.css too, which gets no {{ASSET_VER}} substitution, so a
+        versioned <link rel="preload"> would preload a URL the stylesheet
+        never asks for — two downloads instead of one. Being pinned in the
+        HTTP cache is the desired behaviour for a font: the bytes for a given
+        filename are immutable, and a new face gets a new filename."""
         for page in self._WWW.glob("*.html"):
             src = page.read_text(encoding="utf-8")
             refs = re.findall(r"""["'](/quizify/static/[^"']+)["']""", src)
             for ref in refs:
+                if ref.startswith("/quizify/static/fonts/"):
+                    assert "?" not in ref, (
+                        f"{page.name}: font reference must stay unbusted so it "
+                        f"matches the stylesheet's request: {ref}"
+                    )
+                    continue
                 assert "?v={{ASSET_VER}}" in ref, (
                     f"{page.name}: unversioned static reference {ref}"
                 )

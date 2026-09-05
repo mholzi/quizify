@@ -3753,7 +3753,7 @@ async function showPackNews() {
         banner.innerHTML =
             '<span style="font-size:1.2rem;flex-shrink:0">🎁</span>' +
             '<div style="flex:1">' +
-                '<strong data-i18n="admin.packNewsTitle" style="color:#E88A7F;font-family:\'Cabinet Grotesk\',sans-serif;font-weight:700">' + esc(tt('admin.packNewsTitle')) + '</strong>' +
+                '<strong data-i18n="admin.packNewsTitle" style="color:#E88A7F;font-family:\'DM Sans\',sans-serif;font-weight:700">' + esc(tt('admin.packNewsTitle')) + '</strong>' +
                 '<div style="margin-top:3px;color:#2A2820">' + names + '</div>' +
                 '<div data-i18n="admin.packNewsBody" style="margin-top:5px;font-size:0.8rem;color:#6E6A5C">' + esc(tt('admin.packNewsBody')) + '</div>' +
             '</div>' +

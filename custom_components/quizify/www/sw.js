@@ -2,8 +2,8 @@
  * Quizify Service Worker
  *
  * Network-first for everything served by the integration (HTML + CSS + JS),
- * with cache as offline fallback. Cache-first only for cross-origin font
- * assets (Google Fonts, Fontshare) which version themselves via URL.
+ * with cache as offline fallback. Cache-first only for the self-hosted font
+ * files, whose bytes never change under a given filename (#737, #738).
  *
  * Why network-first for static assets: cache-first served stale CSS / JS
  * after every Quizify update because the SW returned the cached old
@@ -48,7 +48,12 @@ var PRECACHE_ASSETS = [
     '/quizify/static/i18n/en.json?v={{ASSET_VER}}',
     '/quizify/static/site.webmanifest?v={{ASSET_VER}}',
     '/quizify/static/img/icon-256.png?v={{ASSET_VER}}',
-    '/quizify/static/img/icon-512.png?v={{ASSET_VER}}'
+    '/quizify/static/img/icon-512.png?v={{ASSET_VER}}',
+    // Fonts carry no ?v= — the CSS asks for them plain, and caches.match
+    // is exact on the query string. A font file's bytes never change
+    // under a given name, so there is nothing to bust.
+    '/quizify/static/fonts/dm-sans-latin.woff2',
+    '/quizify/static/fonts/jetbrains-mono-latin.woff2'
 ];
 
 /**
@@ -125,13 +130,8 @@ self.addEventListener('fetch', function(event) {
         return;
     }
 
-    // Google Fonts: Cache-First
-    if (url.hostname.includes('googleapis.com') || url.hostname.includes('gstatic.com')) {
-        event.respondWith(cacheFirst(event.request));
-        return;
-    }
-
-    // Skip requests to other origins
+    // Skip requests to other origins. Nothing the game loads is
+    // cross-origin any more — the fonts moved in-tree (#737, #738).
     if (url.origin !== location.origin) {
         return;
     }
@@ -140,6 +140,14 @@ self.addEventListener('fetch', function(event) {
     var accept = event.request.headers.get('accept') || '';
     if (accept.includes('text/html') || url.pathname.endsWith('.html')) {
         event.respondWith(networkFirst(event.request));
+        return;
+    }
+
+    // Fonts: Cache-First. Unlike CSS / JS they are content-stable — a new
+    // face means a new filename — so there is no stale-asset trap here, and
+    // skipping the round trip is exactly what keeps the first paint quick.
+    if (url.pathname.startsWith('/quizify/static/fonts/')) {
+        event.respondWith(cacheFirst(event.request));
         return;
     }
 

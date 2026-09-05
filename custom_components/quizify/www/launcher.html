@@ -8,12 +8,50 @@
     <meta name="quizify-ha-lang" content="{{HA_LANG}}">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title data-i18n="launcher.title">Quizify</title>
-    <link rel="preconnect" href="https://fonts.googleapis.com">
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=DM+Sans:ital,opsz,wght@0,9..40,400;0,9..40,500;0,9..40,600;0,9..40,700;1,9..40,400&family=JetBrains+Mono:wght@400;500;700&display=swap" rel="stylesheet">
-    <link rel="preconnect" href="https://api.fontshare.com" crossorigin>
-    <link href="https://api.fontshare.com/v2/css?f[]=cabinet-grotesk@500,700,800,900&display=swap" rel="stylesheet">
+    <!-- Fonts are self-hosted under /quizify/static/fonts/ (#737, #738): no
+         third-party request on load, nothing foreign blocking the first paint.
+         Preload the two faces every screen uses so they download alongside the
+         stylesheet instead of after it. -->
+    <link rel="preload" as="font" type="font/woff2" href="/quizify/static/fonts/dm-sans-latin.woff2" crossorigin>
+    <link rel="preload" as="font" type="font/woff2" href="/quizify/static/fonts/jetbrains-mono-latin.woff2" crossorigin>
     <style>
+        /* The launcher is self-contained — it does not pull styles.css — so it
+           carries its own @font-face declarations for the self-hosted faces
+           (#737, #738). Same files the other screens use, so the browser cache
+           is shared. font-display: swap keeps text visible while they load. */
+        @font-face {
+            font-family: 'DM Sans';
+            font-style: normal;
+            font-weight: 100 1000;
+            font-display: swap;
+            src: url('/quizify/static/fonts/dm-sans-latin.woff2') format('woff2');
+            unicode-range: U+0000-00FF, U+0131, U+0152-0153, U+02BB-02BC, U+02C6, U+02DA, U+02DC, U+0304, U+0308, U+0329, U+2000-206F, U+20AC, U+2122, U+2191, U+2193, U+2212, U+2215, U+FEFF, U+FFFD;
+        }
+        @font-face {
+            font-family: 'DM Sans';
+            font-style: normal;
+            font-weight: 100 1000;
+            font-display: swap;
+            src: url('/quizify/static/fonts/dm-sans-latin-ext.woff2') format('woff2');
+            unicode-range: U+0100-02BA, U+02BD-02C5, U+02C7-02CC, U+02CE-02D7, U+02DD-02FF, U+0304, U+0308, U+0329, U+1D00-1DBF, U+1E00-1E9F, U+1EF2-1EFF, U+2020, U+20A0-20AB, U+20AD-20C0, U+2113, U+2C60-2C7F, U+A720-A7FF;
+        }
+        @font-face {
+            font-family: 'JetBrains Mono';
+            font-style: normal;
+            font-weight: 400 700;
+            font-display: swap;
+            src: url('/quizify/static/fonts/jetbrains-mono-latin.woff2') format('woff2');
+            unicode-range: U+0000-00FF, U+0131, U+0152-0153, U+02BB-02BC, U+02C6, U+02DA, U+02DC, U+0304, U+0308, U+0329, U+2000-206F, U+20AC, U+2122, U+2191, U+2193, U+2212, U+2215, U+FEFF, U+FFFD;
+        }
+        @font-face {
+            font-family: 'JetBrains Mono';
+            font-style: normal;
+            font-weight: 400 700;
+            font-display: swap;
+            src: url('/quizify/static/fonts/jetbrains-mono-latin-ext.woff2') format('woff2');
+            unicode-range: U+0100-02BA, U+02BD-02C5, U+02C7-02CC, U+02CE-02D7, U+02DD-02FF, U+0304, U+0308, U+0329, U+1D00-1DBF, U+1E00-1E9F, U+1EF2-1EFF, U+2020, U+20A0-20AB, U+20AD-20C0, U+2113, U+2C60-2C7F, U+A720-A7FF;
+        }
+
         :root {
             /* Soft Parlor launcher tokens */
             --color-bg-primary: #FAF6EC;
@@ -48,7 +86,7 @@
         }
 
         .logo {
-            font-family: 'Cabinet Grotesk', system-ui, sans-serif;
+            font-family: 'DM Sans', system-ui, sans-serif;
             font-size: 48px;
             font-weight: 800;
             letter-spacing: -0.02em;
@@ -81,7 +119,7 @@
             color: #FFFFFF;
             text-decoration: none;
             border-radius: 10px;
-            font-family: 'Cabinet Grotesk', system-ui, sans-serif;
+            font-family: 'DM Sans', system-ui, sans-serif;
             font-size: 15px;
             font-weight: 700;
             text-transform: none;

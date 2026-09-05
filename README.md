@@ -722,6 +722,12 @@ Quick start: Fork → Branch → PR. See [open issues](https://github.com/mholzi
 
 MIT License. See [LICENSE](LICENSE) for details.
 
+**Bundled fonts.** Quizify ships DM Sans and JetBrains Mono in
+`custom_components/quizify/www/fonts/`, both under the SIL Open Font License 1.1, with
+the licence texts alongside them. They are served from your own Home Assistant — no page
+contacts Google Fonts or Fontshare, which is what makes "no data leaves your network"
+true for guests as well as for you. See [`www/fonts/README.md`](custom_components/quizify/www/fonts/README.md).
+
 ---
 
 <br>
