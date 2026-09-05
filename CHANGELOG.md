@@ -3,6 +3,32 @@
 All notable changes to Quizify are documented here. This project follows
 [Semantic Versioning](https://semver.org/).
 
+## [1.15.0-RC1] — 2026-09-05
+
+Twenty-four entries, chosen in one sitting and built in one.
+
+### 🔒 The house was open
+
+A guest could claim the free admin slot and drive the host's lights, speakers and scenes
+with no Home Assistant credential. Two minutes after the host closed their tab the
+persisted token was deleted, and any device on the network could take over.
+
+### 📺 The room can see what happens
+
+Power-ups and reactions reach the television at last: a sentence, not a symbol. The end
+screen's awards, the reconnect pill and the estimate reveal all speak the room's language
+and its size.
+
+### 🧾 Nothing disappears any more
+
+Your own question packs survive an update. A removed player is told so. A reload no longer
+loses the question, and Spanish evenings are narrated in Spanish.
+
+### 🎯 And the scores are right
+
+Two teams of the same name are two teams, a guest who joins between rounds is not a
+timeout, and no lightning question is scored after the finale.
+
 ## [1.14.0-RC1] — 2026-09-03
 
 Every fix in this release ended somebody's evening.
