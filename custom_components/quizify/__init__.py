@@ -397,12 +397,41 @@ async def async_setup_entry(hass: HomeAssistant, entry: ConfigEntry) -> bool:
             )
         await handler.admin_action_end_game(game)
 
+    async def reload_packs_service(call: ServiceCall) -> None:  # noqa: ARG001
+        """Re-read the question packs from disk (#743).
+
+        The host-owned drop-in folder is ``<config>/quizify/packs``; a pack
+        added there used to need a full Home Assistant restart, because
+        ``reload_categories`` had no caller and no service. Reloading is
+        refused outside the lobby: the running game's queue was built from the
+        packs as they were, and swapping the bank underneath it would leave
+        the round the players are answering pointing at questions that are no
+        longer loaded.
+        """
+        _handler, game = _require_runtime()
+        if game.phase != GamePhase.LOBBY:
+            raise ServiceValidationError(
+                "Packs can only be reloaded from the lobby. End the running "
+                "game first, then reload."
+            )
+        # Blocking disk I/O (glob + JSON parse of every pack) — off the loop.
+        categories = await runtime.run_in_executor(
+            game.question_bank.reload_categories
+        )
+        _LOGGER.info(
+            "Quizify packs reloaded via service: %d packs available",
+            len(categories),
+        )
+
     hass.services.async_register(DOMAIN, "start_game", start_game_service)
     hass.services.async_register(DOMAIN, "next_round", next_round_service)
     hass.services.async_register(DOMAIN, "pause", pause_service)
     hass.services.async_register(DOMAIN, "resume", resume_service)
     hass.services.async_register(DOMAIN, "end_game", end_game_service)
     _LOGGER.debug("Quizify game-control services registered (#367)")
+
+    hass.services.async_register(DOMAIN, "reload_packs", reload_packs_service)
+    _LOGGER.debug("Quizify reload_packs service registered (#743)")
 
     # Forward to sensor/binary_sensor platforms so HA exposes Quizify game
     # state as entities (sensor.quizify_current_round, etc.).

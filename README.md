@@ -343,7 +343,9 @@ All packs follow an "Unnützes Wissen" editorial line — surprising, counter-in
 
 ### Custom Question Packs
 
-Pack files live in `custom_components/quizify/questions/`. Drop a JSON file in there, restart Home Assistant, and it appears in the picker on the next game start.
+Your own packs go in your **Home Assistant config directory**, at `<config>/quizify/packs/` — the same `<config>` that holds `configuration.yaml` (`/config/quizify/packs/` on Home Assistant OS). Quizify creates the folder on startup. Drop a JSON file in there and call the `quizify.reload_packs` action (Developer Tools → Actions → "Quizify: Reload question packs"), then reload the admin page — the pack appears in the picker. No restart needed; a restart works too.
+
+> **Why not `custom_components/quizify/questions/`?** HACS replaces that whole directory on every update, so a pack kept in there is deleted the next time Quizify updates. If you already have packs in `custom_components/quizify/questions/community/`, Quizify **moves them to `<config>/quizify/packs/` on the next start** so they survive from now on.
 
 ```json
 {
@@ -373,7 +375,7 @@ Pack files live in `custom_components/quizify/questions/`. Drop a JSON file in t
 - Exactly **1 correct** answer
 - Per-question fields the loader reads: `id` (required), `question` (required), `answers` (required), `difficulty` (default `medium`), `fun_fact` (optional), `category` (optional, falls back to pack name), `image_url` (optional — an `https://` URL, or a path under `/quizify/static/` for an image shipped with the pack; anything else is ignored)
 - Pack-level fields: `name`, `language` (`de` / `en` / `es` — only those are wired into the language chip; other ISO codes load but won't be selectable from the UI), `theme` (one of `geography`, `nature`, `popculture`, `sport`, `music`, `science`, `history`, `food`, `tech`, `worldcup`, `trivia` — drives the theme-tab filter and pack-card icon), `version`
-- File goes in the `questions/` directory — picked up automatically on next game start
+- File goes in `<config>/quizify/packs/` — picked up on the next `quizify.reload_packs` call, or the next restart
 
 ---
 

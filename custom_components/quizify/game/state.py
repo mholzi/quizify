@@ -40,7 +40,12 @@ from .powerups import (
     PowerUpManager,
     PowerUpType,
 )
-from .questions import Answer, Question, QuestionBank
+from .questions import (
+    COMMUNITY_PACKS_DIRNAME,
+    Answer,
+    Question,
+    QuestionBank,
+)
 from .scoring import (
     calculate_estimate_scores,
     calculate_podium,
@@ -160,7 +165,18 @@ class QuizifyGameState:
         # Teams (#365). Empty unless somebody forms one in the lobby — the mode
         # is opt-in per game and costs nothing while unused.
         self._team_registry = TeamRegistry()
-        self._question_bank = QuestionBank()
+        # Community packs the host drops in live outside the integration
+        # directory (#743), under the runtime data dir — HACS replaces
+        # ``custom_components/quizify`` wholesale on every update, so anything
+        # kept inside it is deleted without a word. Without a runtime (bare
+        # unit tests) the bank falls back to the in-integration folder only.
+        self._question_bank = QuestionBank(
+            community_dir=(
+                runtime.data_dir / COMMUNITY_PACKS_DIRNAME
+                if runtime is not None
+                else None
+            )
+        )
         self._powerup_manager = PowerUpManager()
         # Stateless scoring engine — owns the pure points/breakdown/wager/
         # milestone arithmetic that submit_answer applies (issue #184).

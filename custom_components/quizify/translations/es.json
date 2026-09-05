@@ -75,6 +75,10 @@
         "end_game": {
             "name": "Terminar juego",
             "description": "Termina la partida actual de inmediato y salta a la clasificación final. Vincúlalo a un botón de mando, un botón del panel o una frase de Assist. Solo funciona mientras hay una partida en curso."
+        },
+        "reload_packs": {
+            "name": "Recargar paquetes de preguntas",
+            "description": "Vuelve a leer del disco todos los paquetes de preguntas, incluidos los paquetes de la comunidad que están en la carpeta quizify/packs de tu directorio de configuración de Home Assistant. Úsalo después de añadir, editar o borrar un paquete para que aparezca en el selector sin reiniciar Home Assistant. Solo funciona desde la sala de espera."
         }
     }
 }
