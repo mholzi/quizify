@@ -1,25 +1,37 @@
-# Test/dev dependencies for running the Quizify test suite.
+# Test/dev dependencies for running the Quizify test suite against the Home
+# Assistant release users are actually on today.
 #
 # The first block is the lightweight set the pure-Python tests need (no HA).
 # The second block pulls in Home Assistant + its custom-component test harness
 # so the HA-dependent modules (config_flow.py, binary_sensor.py) can be
 # imported and exercised under test (issue #271).
 #
-# `homeassistant` is a heavy dependency and requires Python 3.13+, so it is
-# only installed in CI's test job — never in the shipped integration. Tests
-# that need it use `pytest.importorskip("homeassistant")` and are skipped
-# (not failed) where it is absent.
+# `homeassistant` is a heavy dependency and tracks a recent Python (2026.3+
+# requires 3.14.2), so it is only installed in CI's test jobs — never in the
+# shipped integration. Tests that need it use
+# `pytest.importorskip("homeassistant")` and are skipped (not failed) where it
+# is absent.
+#
+# The declared floor — Home Assistant 2024.12.0, per hacs.json and README:447 —
+# is covered by the separate `requirements_test_ha_floor.txt` and the
+# `pytest-ha-floor` CI job. Between them the two files bracket the whole
+# supported range.
 
 aiohttp
 voluptuous
 pytest
 pytest-asyncio
 
-# HA test harness. HA >= 2026.3 requires Python 3.14.2, but CI runs 3.13 — so
-# cap HA below that and let pip resolve the matching
-# pytest-homeassistant-custom-component (it pins an exact HA transitively). The
-# pair pip lands on is the newest 3.13-compatible one — still comfortably newer
-# than the manifest minimum (HA 2024.1+). Tests use importorskip, so a missing
-# HA only skips, never fails.
-homeassistant<2026.3
+# HA test harness, deliberately UNPINNED (#740).
+#
+# pytest-homeassistant-custom-component pins one exact `homeassistant` release
+# transitively, so whatever pip lands on here IS the Home Assistant version
+# this job tests. Leaving it open means the job follows core upstream by
+# itself: a deprecation or a removal in a new release breaks CI on the next PR
+# instead of surfacing in a user's issue months later.
+#
+# That is the whole point. This line used to read `homeassistant<2026.3`, and
+# the cap quietly froze the suite on 2026.2 for seven months while core reached
+# 2026.9. If a core release does break the build, do not re-add a cap: fix the
+# incompatibility, or pin *and* open an issue to remove the pin again.
 pytest-homeassistant-custom-component

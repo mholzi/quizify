@@ -1,0 +1,22 @@
+# Test dependencies for the declared MINIMUM Home Assistant version (#740).
+#
+# hacs.json and README:447 promise Home Assistant 2024.12+, and
+# tests/test_declared_ha_floor_607.py pins why (ConfigFlowResult,
+# StaticPathConfig, the automatic OptionsFlow.config_entry property). Until
+# this file existed nothing exercised that promise — a floor is a claim about
+# code that runs, not a number in a manifest.
+#
+# Unlike requirements_test.txt this IS pinned exactly, and should be: the floor
+# is a fixed point by definition. It moves when hacs.json moves, and
+# test_declared_ha_floor_607.py is the argument for moving it.
+#
+# pytest-homeassistant-custom-component 0.13.195 pins homeassistant==2024.12.5
+# — the last 2024.12 patch — and with it the contemporaneous pytest 8.3.3 /
+# pytest-asyncio 0.24.0. Runs on Python 3.13 (HA 2024.12 supports 3.12+).
+
+aiohttp
+voluptuous
+pytest
+pytest-asyncio
+
+pytest-homeassistant-custom-component==0.13.195

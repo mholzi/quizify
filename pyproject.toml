@@ -40,7 +40,14 @@ select = [
 # (homeassistant.*, aiohttp.*, voluptuous, …) whose type stubs are absent or
 # incomplete — everything else is still checked normally.
 [tool.mypy]
-python_version = "3.13"
+# Tracks the Python that the Home Assistant release under test runs on, not the
+# oldest one the integration supports: mypy has to *parse* the framework it is
+# checking against, and HA >= 2026.3 uses 3.14-only syntax (parenthesis-free
+# `except` groups in `config_entries.py`), which a lower setting rejects
+# outright — "errors prevented further checking" (#740). Our own code staying
+# runnable on the declared floor's Python is covered by the floor pytest job,
+# which byte-compiles `custom_components/quizify` under 3.13.
+python_version = "3.14"
 files = ["custom_components/quizify"]
 # The package uses absolute `custom_components.quizify.*` imports, but there is
 # no `custom_components/__init__.py` (HA loads it as a namespace path). Anchor
