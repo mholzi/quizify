@@ -98,6 +98,18 @@
             <p class="hint" data-i18n="errors.askHostNewGame">Ask the host to start a new game.</p>
         </div>
 
+        <!-- Removed by the host (#750). Not an error screen in the network
+             sense — the socket did exactly what it was told — so it says who
+             did it and what to do next, instead of offering a "Try Again"
+             that would silently re-enter a lobby the host just cleared. -->
+        <div id="kicked-view" class="view hidden">
+            <div class="error-icon qz-icon qz-icon--coral" data-ui-icon="stop">🚫</div>
+            <h1 data-i18n="errors.removedTitle">You were removed</h1>
+            <p data-i18n="errors.removedHint">The host removed you from the game.</p>
+            <p class="hint" data-i18n="errors.removedRejoinHint">Ask the host to let you back in, then join again.</p>
+            <button id="kicked-rejoin-btn" class="btn btn-primary btn-glow" data-i18n="errors.removedRejoin">Back to join screen</button>
+        </div>
+
         <!-- Error: Game in progress (can't join mid-round) -->
         <div id="in-progress-view" class="view hidden">
             <div class="error-icon qz-icon qz-icon--mix" data-ui-icon="hourglass">⏳</div>

@@ -527,12 +527,14 @@
             slider.oninput = syncValue;
             syncValue();
 
-            // Re-apply locked state on a reconnect mid-round.
-            slider.disabled = hasSubmitted;
+            // Re-apply locked state on a reconnect mid-round. `_guessPending`
+            // rides along (#750) so a re-render while a guess is in flight
+            // can't hand the slider back mid-ack.
+            slider.disabled = hasSubmitted || _guessPending;
         }
 
         if (submitBtn) {
-            submitBtn.disabled = hasSubmitted;
+            submitBtn.disabled = hasSubmitted || _guessPending;
             submitBtn.onclick = function () {
                 var send = window.QuizifyPlayer && window.QuizifyPlayer.send;
                 if (send) handleEstimateSubmit(send);
@@ -542,13 +544,43 @@
         if (confirmation) confirmation.classList.toggle('hidden', !hasSubmitted);
     }
 
+    // #750: a guess is in flight — sent, not yet acknowledged. The estimate
+    // round is the one path with no per-answer ``answer_result``, so the
+    // server's ``guess_accepted`` is the only confirmation that exists.
+    var _guessPending = false;
+
+    // Codes where handing the slider back makes sense: the guess bounced for
+    // a reason a second attempt can clear. ALREADY_SUBMITTED / ROUND_EXPIRED /
+    // NOT_IN_GAME are final for this round — unlocking there would only buy
+    // the player a second refusal.
+    var GUESS_RETRYABLE_CODES = { INVALID_ACTION: true, FROZEN: true };
+
+    function _setEstimateLocked(locked) {
+        var slider = document.getElementById('estimate-slider');
+        if (slider) slider.disabled = locked;
+        var submitBtn = document.getElementById('estimate-submit-btn');
+        if (submitBtn) submitBtn.disabled = locked;
+    }
+
+    function _showEstimateConfirmation(show) {
+        var confirmation = document.getElementById('estimate-submitted-confirmation');
+        if (confirmation) confirmation.classList.toggle('hidden', !show);
+    }
+
     /**
      * Submit the current slider value as a numeric guess (#275). Clamps to the
-     * range, disables the slider + button, shows the confirmation, and sends
-     * the same ``submit_answer`` message the MC path uses, carrying ``guess``.
+     * range, greys the slider + button so a second tap can't double-submit,
+     * and sends the same ``submit_answer`` message the MC path uses, carrying
+     * ``guess``.
+     *
+     * What it deliberately does NOT do any more (#750) is claim success. The
+     * "Submitted!" tick and the real ``hasSubmitted`` lock wait for the
+     * server's ``guess_accepted``; before that the round could still be over,
+     * the player frozen, or the socket dead — and the old optimistic version
+     * showed a confirmed tick in every one of those cases.
      */
     function handleEstimateSubmit(sendFn) {
-        if (hasSubmitted) return;
+        if (hasSubmitted || _guessPending) return;
         if (isFrozen()) return;
         var slider = document.getElementById('estimate-slider');
         if (!slider) return;
@@ -557,14 +589,45 @@
         // Clamp defensively (the slider already constrains this).
         guess = Math.max(_estimate.min, Math.min(_estimate.max, guess));
 
-        hasSubmitted = true;
-        slider.disabled = true;
-        var submitBtn = document.getElementById('estimate-submit-btn');
-        if (submitBtn) submitBtn.disabled = true;
-        var confirmation = document.getElementById('estimate-submitted-confirmation');
-        if (confirmation) confirmation.classList.remove('hidden');
+        _guessPending = true;
+        _setEstimateLocked(true);
 
-        sendFn('submit_answer', { guess: guess });
+        // sendFn returns false when the socket is down (#621) — it already
+        // toasts. Give the slider straight back rather than waiting for an
+        // ack that was never asked for.
+        if (sendFn('submit_answer', { guess: guess }) === false) {
+            _guessPending = false;
+            _setEstimateLocked(false);
+        }
+    }
+
+    /**
+     * The server took the guess (``guess_accepted``, #750). Now — and only
+     * now — the round is spent for this player.
+     */
+    function confirmGuess() {
+        if (!_guessPending) return;
+        _guessPending = false;
+        hasSubmitted = true;
+        _setEstimateLocked(true);
+        _showEstimateConfirmation(true);
+    }
+
+    /**
+     * The server refused the guess. Unlock only for the codes a retry can
+     * survive; everything else stays locked with the error toast as the
+     * explanation.
+     */
+    function releaseGuess(code) {
+        if (!_guessPending) return;
+        if (!GUESS_RETRYABLE_CODES[code]) return;
+        _guessPending = false;
+        _setEstimateLocked(false);
+        _showEstimateConfirmation(false);
+    }
+
+    function isGuessPending() {
+        return _guessPending;
     }
 
     /**
@@ -768,6 +831,9 @@
      */
     function lockSubmitted() {
         hasSubmitted = true;
+        // #750: whatever was in flight is moot — the server has just told us
+        // where we stand.
+        _guessPending = false;
         var answerButtons = document.getElementById('answer-buttons');
         if (answerButtons) {
             var buttons = answerButtons.querySelectorAll('.answer-btn');
@@ -790,6 +856,10 @@
     function resetSubmissionState() {
         hasSubmitted = false;
         lastSubmittedIndex = -1;
+        // #750: a new round, so no guess is outstanding. Without this a guess
+        // sent just before the round flipped would leave the next round's
+        // slider believing it was still waiting on an ack.
+        _guessPending = false;
 
         var answerButtons = document.getElementById('answer-buttons');
         if (answerButtons) {
@@ -1371,6 +1441,9 @@
         renderWagerWindow: renderWagerWindow,
         clearRevealBlur: clearRevealBlur,
         handleAnswerClick: handleAnswerClick,
+        confirmGuess: confirmGuess,
+        releaseGuess: releaseGuess,
+        isGuessPending: isGuessPending,
         lockSubmitted: lockSubmitted,
         resetSubmissionState: resetSubmissionState,
         updateGameView: updateGameView,
