@@ -193,6 +193,10 @@
         adminQuestion: document.getElementById('admin-question'),
         adminCorrect: document.getElementById('admin-correct'),
         gameLeaderboard: document.getElementById('game-leaderboard'),
+        // #741: the same power-up strip the television got, on the screen
+        // where the host notices why the points jumped.
+        powerupBanners: document.getElementById('powerup-banners'),
+        reactionLayer: document.getElementById('reaction-layer'),
         nextQuestionBtn: document.getElementById('next-question-btn'),
         endGameBtn: document.getElementById('end-game-btn'),
         resetGameBtn: document.getElementById('reset-game-btn'),
@@ -1555,6 +1559,18 @@
             case 'lightning_recap':
                 handleAdminLightningRecap(msg.recap || {});
                 break;
+            // #741: full broadcasts the host page received and dropped. A
+            // steal moved the leaderboard in front of the host with no
+            // account of why, and the reveal's reactions were phone-private.
+            case 'powerup_applied':
+                handlePowerUpApplied(msg);
+                break;
+            case 'reaction':
+                showAdminReaction(msg.emoji);
+                break;
+            case 'reaction_bonus':
+                handleReactionBonus(msg);
+                break;
             case 'error':
                 // The initial admin_connect attempt before authentication
                 // returns "Admin only" — that's expected handshake noise,
@@ -2084,8 +2100,137 @@
         }
     }
 
+    // ============================================
+    // #741 — power-ups and reactions on the host screen
+    // ============================================
+
+    // Same strip, same rules as the television (dashboard.html): only the
+    // power-ups that land on somebody *else*. JOKER, DOUBLE_POINTS and
+    // TIME_BOOST touch nothing but the user's own turn, so showing them would
+    // put something on screen almost constantly and none of it would mean
+    // anything.
+    var POWERUP_BANNER_MS = 4000;
+    var POWERUP_BANNER_EXIT_MS = 260;
+    var SCORE_DELTA_MS = 4000;
+    var BOARD_POWERUPS = {
+        freeze: {
+            icon: '\uD83E\uDDCA',
+            key: 'dashboard.powerupFreeze',
+            fallback: '{source} froze {target}'
+        },
+        steal: {
+            icon: '\uD83E\uDD77',
+            key: 'dashboard.powerupSteal',
+            fallback: '{source} stole {points} points from {target}'
+        }
+    };
+
+    var _scoreDeltas = {};
+    var _scoreDeltaTimer = null;
+    var _lastGameLeaderboard = null;
+
+    // Whole-sentence template, filled here rather than through _t(key, vars):
+    // the names and the point count are marked up, and German and Spanish
+    // order them differently from English — so the translated unit has to be
+    // the entire sentence, never fragments concatenated in English order.
+    function powerUpSentenceHtml(spec, vars) {
+        var template = _t(spec.key);
+        if (!template || template === spec.key) template = spec.fallback;
+        return template.replace(/\{(\w+)\}/g, function (_m, name) {
+            var value = vars[name];
+            if (value == null) return '';
+            var cls = name === 'points' ? 'powerup-banner-points' : 'powerup-banner-name';
+            return '<span class="' + cls + '">' + escapeHtml(String(value)) + '</span>';
+        });
+    }
+
+    function handlePowerUpApplied(msg) {
+        var spec = BOARD_POWERUPS[msg.powerup_type];
+        if (!spec) return;
+        var source = msg.source_player || '';
+        var target = msg.target_player || '';
+        // Both names or no sentence — "Anna froze" is worse than silence.
+        if (!source || !target) return;
+        var points = Math.abs(Number(msg.stolen_points) || 0);
+        showPowerUpBanner(spec, { source: source, target: target, points: points });
+        if (msg.powerup_type === 'steal' && points > 0) {
+            showScoreDeltas([
+                { name: source, points: points },
+                { name: target, points: -points }
+            ]);
+        }
+    }
+
+    function showPowerUpBanner(spec, vars) {
+        if (!els.powerupBanners) return;
+        var el = document.createElement('div');
+        el.className = 'powerup-banner';
+        el.innerHTML =
+            '<span class="powerup-banner-icon" aria-hidden="true">' + spec.icon + '</span>' +
+            '<span class="powerup-banner-text">' + powerUpSentenceHtml(spec, vars) + '</span>';
+        els.powerupBanners.appendChild(el);
+        // Each strip carries its own timer, so a second one arriving mid-stand
+        // stacks underneath and the older one still leaves first.
+        setTimeout(function () {
+            el.classList.add('is-leaving');
+            setTimeout(function () {
+                if (el.parentNode) el.parentNode.removeChild(el);
+            }, POWERUP_BANNER_EXIT_MS);
+        }, POWERUP_BANNER_MS);
+    }
+
+    // Transient +/- chips on the two rows a steal moved. Kept in state because
+    // game_state repaints the leaderboard every few seconds and would
+    // otherwise wipe them mid-stand.
+    function showScoreDeltas(deltas) {
+        deltas.forEach(function (d) {
+            if (d.name) _scoreDeltas[d.name] = d.points;
+        });
+        if (_lastGameLeaderboard) renderLeaderboard(els.gameLeaderboard, _lastGameLeaderboard);
+        if (_scoreDeltaTimer) clearTimeout(_scoreDeltaTimer);
+        _scoreDeltaTimer = setTimeout(function () {
+            _scoreDeltas = {};
+            _scoreDeltaTimer = null;
+            if (_lastGameLeaderboard) renderLeaderboard(els.gameLeaderboard, _lastGameLeaderboard);
+        }, SCORE_DELTA_MS);
+    }
+
+    function scoreDeltaHtml(name) {
+        var delta = _scoreDeltas[name];
+        if (!delta) return '';
+        return '<span class="leaderboard-delta ' + (delta < 0 ? 'is-down' : 'is-up') + '">' +
+            (delta < 0 ? '\u2212' : '+') + Math.abs(delta) + '</span>';
+    }
+
+    function showAdminReaction(emoji) {
+        // Reveal only, same rule as the television: over a live question the
+        // movement competes with reading. The server already collapses the
+        // buffer to one frame per distinct player+emoji per flush window, so
+        // there is nothing left to throttle here.
+        if (currentPhase !== 'ANSWER_REVEAL') return;
+        if (!els.reactionLayer || !emoji) return;
+        var el = document.createElement('div');
+        el.className = 'floating-reaction-board';
+        el.textContent = emoji;
+        el.style.left = (6 + Math.random() * 84) + '%';
+        els.reactionLayer.appendChild(el);
+        setTimeout(function () {
+            if (el.parentNode) el.parentNode.removeChild(el);
+        }, 3200);
+    }
+
+    function handleReactionBonus(msg) {
+        // The +1s are already awarded and already in this payload's
+        // leaderboard — render it now instead of letting the number lag the
+        // animation until the next game_state frame.
+        if (msg.leaderboard) renderLeaderboard(els.gameLeaderboard, msg.leaderboard);
+    }
+
     function renderLeaderboard(container, players) {
         if (!container) return;
+        // #741: remembered so an expiring steal chip can repaint the same rows
+        // without waiting for the next frame from the server.
+        if (container === els.gameLeaderboard) _lastGameLeaderboard = players;
         container.innerHTML = players
             .map(function (p, i) {
                 var rank = p.rank || i + 1;
@@ -2094,6 +2239,7 @@
                     '<span class="leaderboard-rank' + rankClass + '">' + rank + '</span>' +
                     '<span class="leaderboard-name">' + escapeHtml(p.name) + '</span>' +
                     '<span class="leaderboard-score">' + p.score + '</span>' +
+                    scoreDeltaHtml(p.name) +
                     (p.streak > 1 ? '<span class="leaderboard-streak">' + p.streak + 'x</span>' : '') +
                     '</div>';
             })

@@ -264,3 +264,119 @@ footer {
     100% { transform: rotate(360deg); }
 }
 
+
+/* ===================================================================
+   POWER-UP BANNER STRIP + REVEAL REACTIONS (#741)
+   The host page was missing the same two cases the television was: a
+   steal moved the leaderboard in front of the host with no account of
+   why. Same strip, same rules — see dashboard.html for the television
+   twin; the tokens differ only because this page uses the shared
+   --color-* set instead of the board's --dash-* set.
+   =================================================================== */
+.powerup-banners {
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    z-index: 1200;
+    display: flex;
+    flex-direction: column;
+    gap: 2px;
+    pointer-events: none;
+}
+
+.powerup-banner {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: var(--space-sm, 12px);
+    padding: 14px 24px;
+    /* Soft Parlor is a cream page, so the strip is its inverse: the ink
+       token as the ground, cream type on it. A cream strip on a cream
+       page would need a hairline to exist at all. */
+    background: var(--color-text-primary);
+    color: var(--color-bg-primary);
+    font-size: clamp(16px, 2vw, 22px);
+    font-weight: 600;
+    line-height: 1.25;
+    text-align: center;
+    box-shadow: 0 6px 24px rgba(42, 40, 32, 0.22);
+    animation: powerup-banner-in 260ms cubic-bezier(0.2, 0.8, 0.3, 1) both;
+}
+
+.powerup-banner.is-leaving {
+    animation: powerup-banner-out 260ms ease-in both;
+}
+
+.powerup-banner-icon {
+    font-size: clamp(20px, 2.4vw, 28px);
+    line-height: 1;
+    flex-shrink: 0;
+}
+
+.powerup-banner-name {
+    color: var(--color-gold);
+    font-weight: 700;
+}
+
+.powerup-banner-points {
+    font-family: 'JetBrains Mono', ui-monospace, monospace;
+    color: var(--color-gold);
+    font-weight: 700;
+    font-variant-numeric: tabular-nums;
+}
+
+@keyframes powerup-banner-in {
+    from { transform: translateY(-100%); opacity: 0; }
+    to   { transform: translateY(0);     opacity: 1; }
+}
+
+@keyframes powerup-banner-out {
+    from { transform: translateY(0);     opacity: 1; }
+    to   { transform: translateY(-100%); opacity: 0; }
+}
+
+/* What a steal cost, on the two rows it moved. */
+.leaderboard-delta {
+    font-family: 'JetBrains Mono', ui-monospace, monospace;
+    font-size: 0.85em;
+    font-weight: 700;
+    padding: 2px 8px;
+    border-radius: 4px;
+    font-variant-numeric: tabular-nums;
+}
+
+.leaderboard-delta.is-up {
+    color: var(--color-success);
+    background: var(--color-success-light);
+}
+
+.leaderboard-delta.is-down {
+    color: var(--color-error);
+    background: var(--color-error-light);
+}
+
+/* Reveal reactions. Reveal only — over a live question the movement
+   would compete with reading the answers. */
+.reaction-layer-board {
+    position: fixed;
+    inset: 0;
+    z-index: 1100;
+    pointer-events: none;
+    overflow: hidden;
+}
+
+.floating-reaction-board {
+    position: absolute;
+    bottom: 0;
+    font-size: clamp(32px, 4vw, 56px);
+    line-height: 1;
+    animation: floating-reaction-board-rise 3s ease-out forwards;
+    will-change: transform, opacity;
+}
+
+@keyframes floating-reaction-board-rise {
+    0%   { transform: translateY(0)     scale(0.6); opacity: 0; }
+    12%  { transform: translateY(-8vh)  scale(1);   opacity: 1; }
+    100% { transform: translateY(-78vh) scale(1.1); opacity: 0; }
+}
