@@ -102,6 +102,36 @@ class GamePhase(str, Enum):  # noqa: UP042 — StrEnum changes str()/serializati
     PAUSED = "PAUSED"
 
 
+# Phases in which a main-round question is genuinely in flight, i.e. the answer
+# clock for the current round is running (or frozen mid-run). Someone joining
+# during one of these cannot possibly answer that question in time, so they are
+# flagged ``joined_late`` and excluded from ``all_submitted()`` until the round
+# they walked into has been evaluated.
+#
+# This is deliberately an allowlist rather than "everything except LOBBY"
+# (#727): every phase NOT named here is a between-rounds phase where the next
+# question has not started yet, and a joiner there gets a full timer from
+# ``begin_round`` like everybody else.
+#
+#   * ANSWER_REVEAL — the previous round is already scored.
+#   * WAGER_ACTIVE (#656) — the final round's betting window. No timer runs;
+#     ``begin_round`` builds one for every player present when the window
+#     closes, this joiner included.
+#   * LIGHTNING / LIGHTNING_RECAP (#42) and HOT_SEAT_AUCTION / HOT_SEAT /
+#     HOT_SEAT_REVEAL (#616) — self-contained detours with their own rosters
+#     and scoring. Neither reads ``joined_late``, and the main round they hand
+#     back to has not begun.
+#   * FINALE — the game is over. The flag would only survive into a
+#     "play again" round.
+#
+# PAUSED belongs here because ``PhaseController.pause`` only ever enters it
+# from QUESTION_ACTIVE: a paused game is a live question with its clocks
+# frozen, and ``resume`` hands the joiner the round's shared remaining (#702).
+MID_QUESTION_PHASES: frozenset[str] = frozenset(
+    {GamePhase.QUESTION_ACTIVE.value, GamePhase.PAUSED.value}
+)
+
+
 class PhaseController:
     """Owns the game phase + per-question timer mechanics.
 

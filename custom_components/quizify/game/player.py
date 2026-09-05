@@ -48,6 +48,10 @@ class PlayerSession:
     connected: bool = True
     is_admin: bool = False
     color: str = ""  # assigned on join from PLAYER_COLORS palette
+    # True only while a question this player walked in on is still
+    # unevaluated (join during QUESTION_ACTIVE / PAUSED — see
+    # MID_QUESTION_PHASES). NOT "joined after the lobby": a join between
+    # rounds leaves this False so the next round waits for them (#727).
     joined_late: bool = False
     joined_at: float = field(default_factory=time.time)
     submitted: bool = False

@@ -21,6 +21,7 @@ if TYPE_CHECKING:
 
     from aiohttp import web
 
+from .phase_controller import MID_QUESTION_PHASES
 from .player import PLAYER_COLORS, PlayerSession
 
 _LOGGER = logging.getLogger(__name__)
@@ -140,9 +141,26 @@ class PlayerRegistry:
         if len(self.players) >= MAX_PLAYERS:
             return False, ERR_GAME_FULL
 
-        # Determine if late joiner
-        joined_late = phase_value != "LOBBY"
-        initial_score = average_score_fn() if joined_late else 0
+        # Two different questions hide behind the word "late", and #727 was
+        # them sharing a single flag:
+        #
+        #   * Did this player miss rounds that are already on the board? Anyone
+        #     joining after the LOBBY did, and they are seeded with the room's
+        #     average so they do not start stranded at zero.
+        #   * Is a question in flight *right now* that they cannot answer in
+        #     time? Only then may ``all_submitted()`` skip them and
+        #     ``_do_evaluate_round`` record them as a timeout.
+        #
+        # Answering the second question with "any phase but LOBBY" meant a
+        # player who joined during ANSWER_REVEAL (or the wager window, or a
+        # Lightning/Hot Seat detour) stayed flagged into the NEXT round: they
+        # saw the question and their own running clock, the other players'
+        # answers closed the round without waiting for them, and they were
+        # scored as a timeout — a later tap getting ERR_ROUND_EXPIRED. See
+        # ``MID_QUESTION_PHASES`` for which phases count and why.
+        joined_after_lobby = phase_value != "LOBBY"
+        joined_late = phase_value in MID_QUESTION_PHASES
+        initial_score = average_score_fn() if joined_after_lobby else 0
 
         # Assign a unique color from the palette (cycle if more than palette size)
         used_colors = {p.color for p in self.players.values()}
@@ -166,9 +184,10 @@ class PlayerRegistry:
         self._sessions[player.session_id] = name
 
         _LOGGER.info(
-            "Player joined: %s (total: %d, late: %s)",
+            "Player joined: %s (total: %d, phase: %s, mid-question: %s)",
             name,
             len(self.players),
+            phase_value,
             joined_late,
         )
         return True, None
@@ -227,10 +246,13 @@ class PlayerRegistry:
         _handle_disconnect hasn't fired yet) can't block early reveal for
         the whole room.
 
-        Late-joiners (who entered the game mid-round) are excluded \u2014
+        Late-joiners (who entered the game mid-question) are excluded:
         otherwise a new player arriving after most answers are in would
         force the round to run the full timer duration even though all the
-        actual participants are done.
+        actual participants are done. Only a join into a question that is
+        already running counts (see ``MID_QUESTION_PHASES``); somebody who
+        joined between two rounds is a full participant in the next one
+        and must be waited for (#727).
         """
         participants = [
             p for p in self.players.values()
