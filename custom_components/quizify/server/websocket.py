@@ -3767,6 +3767,14 @@ class QuizifyWebSocketHandler:
         """
         if self._is_authorized_admin(ws, is_admin, game_state):
             return True
+        # #726: a live ``?role=admin`` socket IS a connected admin, even when it
+        # holds no player slot. ``get_admin()`` below only ever looks at the
+        # player registry, so a host who runs the game from /quizify/admin
+        # without joining leaves it ``None`` for the whole evening — and the
+        # escape hatch then reads as "nobody is hosting" while somebody is.
+        # That handed every guest a working reset_game mid-game.
+        if self._conn.has_admin_connections():
+            return False
         admin = game_state.get_admin()
         return admin is None or not admin.connected
 
