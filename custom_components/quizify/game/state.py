@@ -2659,6 +2659,50 @@ class QuizifyGameState:
         """Return the current question, or None."""
         return self._current_question
 
+    def peek_next_image_url(self) -> str | None:
+        """The image the *next* round will show, or None (#736).
+
+        Rides the ``round_summary`` broadcast so every client can warm the
+        picture during the reveal instead of fetching it after
+        ``question_started``, when the countdown deadline is already stamped
+        and up to twenty-one clients pull the same file at once.
+
+        Returns None — no hint, clients preload nothing — in the three cases
+        where the queue head is not what the next round will actually serve:
+
+        * **No next round.** On the last round the game goes to the finale.
+        * **Adaptive difficulty (#40).** ``get_next_question_at_difficulty``
+          picks by calibrated target out of the whole remaining window, so the
+          head is a guess. Warming the wrong file spends the bandwidth this
+          change exists to save.
+        * **A pending detour.** A Lightning Round (#285) or a Hot Seat auction
+          (#616) fires *before* the next queued question and draws from its own
+          pool, so the reveal is followed by the detour rather than by the head.
+
+        A question with no picture yields None too, which is the common case —
+        the hint key is simply absent from the payload then.
+        """
+        if self.round >= self.total_rounds:
+            return None
+        if self._calibrator is not None:
+            return None
+        next_round = self.round + 1
+        if next_round == self._lightning_target_round and not self._lightning_fired:
+            return None
+        if (
+            next_round == self._hot_seat_target_round
+            and not self._hot_seat_fired
+            and not self.team_mode
+        ):
+            # Mirrors ``should_trigger_hot_seat``: the auction is armed in team
+            # mode but never fires there (#669), so the queued question really
+            # is next and the hint stands.
+            return None
+        question = self._question_bank.peek_next_question()
+        if question is None:
+            return None
+        return question.image_url or None
+
     def get_leaderboard(self) -> list[dict[str, Any]]:
         """Return sorted leaderboard data — wire-identical to the live broadcast.
 

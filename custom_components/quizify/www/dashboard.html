@@ -2243,6 +2243,34 @@
             }
         }
 
+        // Issue #736: warm the NEXT round's picture during the reveal.
+        //
+        // renderQuestionImage above only ever runs on `question_started`, by
+        // which point player-core has already stamped the countdown deadline —
+        // so the image downloads while the clock drains, and every phone in the
+        // room is pulling the same file at the same instant. `round_summary`
+        // carries the hint; the reveal is when nothing else is on the wire.
+        //
+        // Held in a variable because a detached Image with no live reference
+        // can be collected mid-request in some browsers.
+        var preloadedImage = null;
+
+        function preloadNextImage(url) {
+            var safe = (window.QuizifyUtils && window.QuizifyUtils.safeImageUrl)
+                ? window.QuizifyUtils.safeImageUrl(url) : '';
+            if (!safe) return;
+            // DETACHED, never els.questionImage. That element still holds the
+            // round being revealed, so writing to it would swap the picture the
+            // room is looking at for the next one — and a progressive-reveal
+            // question (#434) would arrive unblurred, because the blur is added
+            // by renderQuestionImage and that has not run yet.
+            var img = new Image();
+            img.decoding = 'async';
+            img.onerror = function () { preloadedImage = null; };
+            img.src = safe;
+            preloadedImage = img;
+        }
+
         // ---- WebSocket ----
         function connect() {
             var proto = location.protocol === 'https:' ? 'wss:' : 'ws:';
@@ -2329,6 +2357,10 @@
                 case 'round_summary':
                 case 'round_evaluated':
                     handleRoundSummary(msg);
+                    // #736: same preload as the phones. The TV is the 21st
+                    // client in the burst and the only one showing the picture
+                    // full-screen, so it has the most to lose from a late one.
+                    preloadNextImage(msg.next_image_url);
                     break;
                 case 'leaderboard_update':
                     // Kept: nothing has ever sent this (#619 found zero

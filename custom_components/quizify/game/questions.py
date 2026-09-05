@@ -963,6 +963,24 @@ class QuestionBank:
         self._queue_index += 1
         return question
 
+    def peek_next_question(self) -> Question | None:
+        """The question ``get_next_question`` will serve next, without taking it.
+
+        Read-only twin of the method above: same entry, no ``_queue_index``
+        advance and no lazy ``_build_queue`` (an empty queue means the game has
+        not started, and building one here would hand the *real* draw a
+        different order). Used by the image preload hint (#736), which needs to
+        know the next picture one round early.
+
+        NB: this is only the truthful answer for the plain draw. The adaptive
+        ("auto") mode serves through ``get_next_question_at_difficulty``, which
+        picks a *matching* entry out of the remaining window rather than the
+        head — the caller is responsible for not asking there.
+        """
+        if self._queue_index >= len(self._queue):
+            return None
+        return self._queue[self._queue_index]
+
     def get_next_question_at_difficulty(
         self, target_difficulty: str
     ) -> Question | None:

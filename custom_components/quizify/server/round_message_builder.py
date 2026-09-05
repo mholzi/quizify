@@ -363,6 +363,13 @@ class RoundMessageBuilder:
 
         question = summary.question
 
+        # #736: the picture the next round will show, so clients can warm it
+        # during the reveal. Resolved through getattr so the lightweight game
+        # doubles several tests use — which implement only what they exercise —
+        # keep working; they simply get no hint.
+        peek_next_image = getattr(game_state, "peek_next_image_url", None)
+        next_image_url = peek_next_image() if peek_next_image is not None else None
+
         # Estimate rounds (#275) carry no shuffled answers and no correct-tile
         # index — closeness is scored, and the reveal is a number line. Build a
         # minimal summary carrying the ``estimate`` block; the player/TV reveal
@@ -388,6 +395,7 @@ class RoundMessageBuilder:
                 question_id=question.id,
                 question_type=question.type,
                 estimate=summary.estimate,
+                next_image_url=next_image_url,
             )
             if store_cached is not None:
                 store_cached(cache_key, est_msg)
@@ -542,6 +550,7 @@ class RoundMessageBuilder:
             last_round=last_round,
             question_id=summary.question.id,
             display_order=game_state.shuffle_map,
+            next_image_url=next_image_url,
         )
         if store_cached is not None:
             store_cached(cache_key, msg)
