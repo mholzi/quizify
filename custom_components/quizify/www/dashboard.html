@@ -586,7 +586,11 @@
             display: flex;
             align-items: center;
             gap: 10px;
-            font-size: 22px;
+            /* #735: the estimate reveal was not in the #707 pass and kept its
+               phone sizes. This carries the range the room is guessing inside
+               ("Schätzfrage zwischen 10 und 500"), so it takes the step #707
+               gave the podium name — the largest of the four it settled. */
+            font-size: clamp(18px, 1.8vw, 28px);
             font-weight: 600;
             color: var(--color-text-muted, #6E6A5C);
             margin-top: 16px;
@@ -597,7 +601,10 @@
         }
         .dnl-truth { text-align: center; margin: 8px 0 12px; }
         .dnl-truth-label {
-            font-size: 16px; text-transform: uppercase; letter-spacing: 0.1em;
+            /* #735: an eyebrow naming the block below it ("RICHTIGE ANTWORT"),
+               so it takes the same step as the round indicator in #707. */
+            font-size: clamp(14px, 1.2vw, 20px);
+            text-transform: uppercase; letter-spacing: 0.1em;
             color: var(--color-text-muted, #6E6A5C); font-weight: 600;
         }
         .dnl-truth-value {
@@ -622,12 +629,20 @@
         }
         .dnl-lbl {
             position: absolute; left: 50%; transform: translateX(-50%);
-            white-space: nowrap; font-size: 17px; font-weight: 600;
+            white-space: nowrap;
+            /* #735: who guessed what is the thing the room leans forward for,
+               and it was 17px on a 1920px screen. It is a name plus a number
+               in a row, exactly what the leaderboard and the lightning recap
+               carry, so it takes their step (#376/#707). */
+            font-size: clamp(16px, 1.6vw, 24px);
+            font-weight: 600;
             color: var(--color-text-muted, #6E6A5C); font-family: var(--font-mono, monospace);
         }
         .dnl-lbl.is-winner { color: var(--color-accent-secondary, #7FA897); }
-        .dnl-lbl--above { bottom: 24px; }
-        .dnl-lbl--below { top: 24px; }
+        /* #735: in em, so the clearance from the dot grows with the label
+           instead of the type creeping towards the axis as it scales. */
+        .dnl-lbl--above { bottom: 1.4em; }
+        .dnl-lbl--below { top: 1.4em; }
         .dnl-truth-line {
             position: absolute; top: -40px; bottom: -18px; width: 3px;
             background: var(--color-accent-primary, #E88A7F); transform: translateX(-50%);
@@ -635,12 +650,21 @@
         .dnl-truth-flag {
             position: absolute; top: -62px; transform: translateX(-50%);
             background: var(--color-accent-primary, #E88A7F); color: #fff;
-            font-family: var(--font-mono, monospace); font-weight: 700; font-size: 18px;
+            font-family: var(--font-mono, monospace); font-weight: 700;
+            /* #735: the true value sitting on the line, next to the guesses it
+               is being compared against — the same step as the guesses. */
+            font-size: clamp(16px, 1.6vw, 24px);
             padding: 4px 12px; border-radius: 9999px; white-space: nowrap;
         }
         .dnl-scale-ends {
-            display: flex; justify-content: space-between; margin-top: 16px;
-            font-family: var(--font-mono, monospace); font-size: 18px;
+            display: flex; justify-content: space-between;
+            /* #735: the below-labels hang out of the axis box into this band,
+               and at 16px they already grazed the endpoints. In em the gap
+               grows with the labels instead of being overrun by them. */
+            margin-top: 2.4em;
+            font-family: var(--font-mono, monospace);
+            /* #735: the two numbers that tell the room what the line spans. */
+            font-size: clamp(16px, 1.6vw, 24px);
             color: var(--color-text-light, #8F8A78);
         }
 
