@@ -12,6 +12,8 @@ modules (regression seen after merging parallel feature PRs, 2026-06-09).
 from __future__ import annotations
 
 import asyncio
+import contextlib
+import inspect
 import random
 import sys
 from pathlib import Path
@@ -19,6 +21,38 @@ from pathlib import Path
 import pytest
 
 sys.path.insert(0, str(Path(__file__).resolve().parent.parent))
+
+
+@pytest.fixture(scope="session", autouse=True)
+def _warm_the_dns_resolver():
+    """Spawn aiohttp's resolver thread before anyone is counting (#740).
+
+    When ``aiodns`` is installed — Home Assistant depends on it —
+    ``aiohttp.resolver.DefaultResolver`` is ``AsyncResolver``, and the first
+    one ever constructed leaves behind a permanent pycares daemon thread named
+    ``_run_safe_shutdown_loop``. Whichever test happens to open the first
+    ``TestClient`` therefore appears to leak a thread.
+
+    Today's harness allow-lists that name explicitly; the
+    pytest-homeassistant-custom-component that ships with the declared HA floor
+    (2024.12) predates the allow-list and fails the test instead. Creating the
+    resolver once, at session start, puts the thread in place before any test's
+    "threads before" snapshot is taken — which is also simply more honest than
+    charging it to an arbitrary test.
+    """
+    with contextlib.suppress(Exception):  # pragma: no cover - env dependent
+        from aiohttp.resolver import DefaultResolver
+
+        async def _warm() -> None:
+            resolver = DefaultResolver()
+            try:
+                await resolver.resolve("127.0.0.1", 80)
+            finally:
+                await resolver.close()
+
+        asyncio.run(_warm())
+    asyncio.set_event_loop(asyncio.new_event_loop())
+    yield
 
 
 @pytest.fixture(autouse=True)
@@ -79,7 +113,22 @@ def _mixed_draw_serves_multiple_choice():
 
 
 @pytest.fixture(autouse=True)
-def _fresh_event_loop():
+def _fresh_event_loop(request):
+    """Give every *synchronous* test a fresh, open loop.
+
+    Only synchronous tests. An ``async def`` test is driven by pytest-asyncio,
+    which owns the loop it runs on and hands the same loop to the harness
+    fixtures (``hass``, ``http_hass``) that ran during setup. Installing a
+    different loop here used to be invisible because pytest-asyncio 1.x sets
+    its own loop back afterwards — but on the pytest-asyncio 0.24 that ships
+    with the declared HA floor (2024.12) it wins, and the test body then awaits
+    on a loop the fixture's executor futures were never attached to:
+    42 tests died with "attached to a different loop" (#740). Leaving async
+    tests alone is correct on every version: their loop is not ours to swap.
+    """
+    if inspect.iscoroutinefunction(request.function):
+        yield
+        return
     loop = asyncio.new_event_loop()
     asyncio.set_event_loop(loop)
     try:
@@ -89,6 +138,66 @@ def _fresh_event_loop():
             loop.close()
         finally:
             asyncio.set_event_loop(asyncio.new_event_loop())
+
+
+_COMPONENT_ROOT = str(Path(__file__).resolve().parent.parent / "custom_components")
+
+
+def _is_component_task(task: asyncio.Task) -> bool:
+    """True when the task is running one of *our* coroutines."""
+    code = getattr(task.get_coro(), "cr_code", None)
+    return code is not None and code.co_filename.startswith(_COMPONENT_ROOT)
+
+
+@pytest.fixture(autouse=True)
+def _cancel_component_background_tasks():
+    """Run the teardown these unit tests never had (#740).
+
+    Eight places in the integration arm a background timer — the roster,
+    progress and reaction debounces, the round-timer tick, the wager window,
+    the disconnect grace, the admin-session grace, the question-stats save.
+    Every one of them is cancelled in production: by ``_cancel_roster_flush``,
+    by ``_handle_disconnect``, by ``async_flush`` on config-entry unload. The
+    tests below construct the handler bare, trigger the timer and end — nobody
+    unloads anything, so the task is simply left pending.
+
+    That went unnoticed for as long as it did because the old
+    ``_fresh_event_loop`` above swapped the loop before
+    pytest-homeassistant-custom-component's ``verify_cleanup`` looked at it, so
+    the check counted tasks on an empty loop. With the swap gone it sees the
+    real one and fails 78 tests. This fixture supplies the missing unload:
+    cancel what our own modules left running, and only that. Tasks belonging to
+    Home Assistant, aiohttp or the harness are untouched, so ``verify_cleanup``
+    still gates everything it was there to gate — including the integration's
+    real unload path, which ``test_unload_detaches_consumers_605``,
+    ``test_ws_route_survives_reload_606`` and ``test_question_stats_flush_588``
+    assert directly.
+    """
+    yield
+    try:
+        loop = asyncio.get_event_loop()
+    except RuntimeError:  # pragma: no cover - no loop left to clean
+        return
+    if not all(
+        callable(getattr(loop, name, None))
+        for name in ("is_closed", "is_running", "run_until_complete")
+    ):
+        # A test replaced ``asyncio.get_event_loop`` with a stub clock
+        # (test_performance_169) and monkeypatch has not undone it yet. There
+        # is no loop to inspect, and nothing of ours was scheduled on one.
+        return
+    if loop.is_closed() or loop.is_running():
+        return
+    pending = [
+        task
+        for task in asyncio.all_tasks(loop)
+        if not task.done() and _is_component_task(task)
+    ]
+    if not pending:
+        return
+    for task in pending:
+        task.cancel()
+    loop.run_until_complete(asyncio.gather(*pending, return_exceptions=True))
 
 
 # pytest-homeassistant-custom-component (a CI-only test dep, #271) pulls in

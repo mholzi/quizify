@@ -8,13 +8,54 @@ on:
 
 jobs:
   pytest:
+    # Two points, both ends of the range this project promises to support
+    # (issue #740):
+    #
+    #   pytest          — today's Home Assistant, on the Python it requires.
+    #                     `requirements_test.txt` leaves the harness unpinned,
+    #                     so this leg follows core upstream on its own. It is
+    #                     the check that used to be frozen: a `homeassistant
+    #                     <2026.3` cap held it on 2026.2 for seven months while
+    #                     core reached 2026.9, which meant every removal after
+    #                     2026.2 reached a user before it reached CI.
+    #   pytest-ha-floor — the 2024.12.0 minimum that hacs.json and README:447
+    #                     advertise, pinned exactly in
+    #                     requirements_test_ha_floor.txt.
+    #
+    # Deliberately NOT a fan-out over every release in between. Each leg costs
+    # ~3 minutes on every PR, and an API this integration uses is either
+    # present across the whole range or it breaks at one end — the ends are
+    # where the evidence is. A third point would have to earn its wall-clock by
+    # naming a failure the ends miss.
+    #
+    # `name:` is set per entry rather than left to GitHub, which would rename
+    # this check to `pytest (3.14, …)` and silently orphan the required check
+    # the repo merges on. The modern leg keeps the name `pytest`; the floor is
+    # additive.
+    name: ${{ matrix.name }}
     runs-on: ubuntu-latest
+    strategy:
+      # Report both ends. The interesting failure is usually "one end broke,
+      # the other didn't", and fail-fast throws away exactly that half.
+      fail-fast: false
+      matrix:
+        include:
+          - name: pytest
+            # Home Assistant 2026.3+ requires Python 3.14.2. When core moves
+            # its floor again this job fails loudly on the next PR — bump it
+            # here rather than capping HA back down.
+            python-version: "3.14"
+            requirements: requirements_test.txt
+          - name: pytest-ha-floor
+            # HA 2024.12 supports 3.12+; 3.13 is the newest it runs on.
+            python-version: "3.13"
+            requirements: requirements_test_ha_floor.txt
     steps:
       - uses: actions/checkout@v4
 
       - uses: actions/setup-python@v5
         with:
-          python-version: "3.13"
+          python-version: ${{ matrix.python-version }}
 
       # Node is required for the worker ⇄ integration contract check
       # (cf-workers/contract-check.mjs + `node --check`). ubuntu-latest ships
@@ -33,7 +74,13 @@ jobs:
           # so the HA-dependent modules (config_flow, binary_sensor) are
           # importable and their tests actually run here (issue #271). HA is a
           # heavy dep, kept scoped to this test job only.
-          pip install -r requirements_test.txt
+          pip install -r ${{ matrix.requirements }}
+
+      - name: Show the Home Assistant version under test
+        # Which release this leg actually resolved to is the one fact a reader
+        # of a red log needs first, and the unpinned leg cannot be read off the
+        # requirements file.
+        run: python -c "import homeassistant; print('Home Assistant', homeassistant.__version__)"
 
       - name: Run tests
         # Enforce the worker-contract gate: a missing node here is a hard
@@ -44,6 +91,9 @@ jobs:
         run: pytest tests/ -v
 
       - name: Byte-compile component (catches syntax errors)
+        # Runs on both legs on purpose: this is what keeps the shipped code
+        # parseable by the floor's Python, which mypy no longer checks (it now
+        # tracks the Python current HA needs — see pyproject.toml).
         run: |
           python -m compileall -q custom_components/quizify
 
@@ -80,15 +130,23 @@ jobs:
 
       - uses: actions/setup-python@v5
         with:
-          python-version: "3.13"
+          # Matches the `pytest` leg: current HA needs 3.14.2.
+          python-version: "3.14"
 
       - name: Install mypy + runtime/framework deps
         run: |
           python -m pip install --upgrade pip
           # HA (+ its transitive aiohttp/voluptuous) so framework imports
-          # resolve; capped < 2026.3 to stay on the 3.13-compatible line, same
-          # constraint the test job uses. mypy pinned for a deterministic gate.
-          pip install "homeassistant<2026.3" "mypy==1.13.0"
+          # resolve. UNCAPPED since #740 — a type-check against a Home
+          # Assistant nobody runs any more checks types nobody has. mypy stays
+          # pinned for a deterministic gate; 1.13.0 was from November 2024 and
+          # could not parse the 3.14 syntax current HA ships.
+          #
+          # There is no floor counterpart to this job. A type error that shows
+          # up only against HA 2024.12 would have to come from a signature core
+          # changed since — which the floor pytest leg catches at runtime, for
+          # less wall-clock than a second full mypy install.
+          pip install homeassistant "mypy==2.3.1"
 
       - name: mypy type-check
         run: mypy
