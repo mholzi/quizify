@@ -379,14 +379,47 @@
                 stake: hs.stake,
                 bids: hs.bids || []
             });
-            handleQuestion({
-                you_are_seated: !!hs.you_are_seated,
-                answers: (hs.question && hs.question.answers) || [],
-                winner: hs.winner,
-                score: hs.own_bank
-            });
+            handleQuestion(questionMessageFromSnapshot(hs));
             if (hs.you_bet) lockBetUi(hs.you_bet);
         }
+    }
+
+    /**
+     * A snapshot's ``hot_seat`` block, in the shape ``hot_seat_question`` has
+     * (#730).
+     *
+     * The hand-written list this replaces forgot the question itself. The
+     * snapshot has carried ``hot_seat.question.text`` since #664 and the live
+     * handler has rendered it since #698 — but the restore path named four
+     * fields and ``question`` was not one of them, so the seat holder whose
+     * phone locked came back to three answer buttons under a blank question
+     * (fresh page) or the previous round's (in-tab reconnect), with the clock
+     * running and an unanswered question costing the whole stake (#653).
+     *
+     * Forwarding the frame is what stops that happening a third time: every
+     * key the server puts in the question block rides along, and only the
+     * fields that live outside it, or that a restore must recompute, are named
+     * here. See tests/test_snapshot_restore_parity_730_731.py.
+     */
+    function questionMessageFromSnapshot(hs) {
+        var q = hs.question || {};
+        var msg = {};
+        for (var k in q) {
+            if (Object.prototype.hasOwnProperty.call(q, k)) msg[k] = q[k];
+        }
+        // The live event's name for the same string — and the field #730 is
+        // about.
+        msg.question = q.text;
+        msg.answers = q.answers || [];
+        // Block-level, not question-level.
+        msg.winner = hs.winner;
+        msg.you_are_seated = !!hs.you_are_seated;
+        // The live payload sends the full answer window; a phone rejoining
+        // mid-window gets what the room has left of it, never a fresh one.
+        msg.seconds = hs.time_remaining;
+        // The bank the bets are percentages of, as of the auction.
+        msg.score = hs.own_bank;
+        return msg;
     }
 
     function lockBidUi(pct) {

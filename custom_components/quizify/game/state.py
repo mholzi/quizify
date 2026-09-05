@@ -2837,6 +2837,12 @@ class QuizifyGameState:
                 # style and the remaining time below to resume the blur at the
                 # right point instead of snapping to sharp.
                 "reveal_style": q.reveal_style,
+                # #730/#731: unconditionally, not only for estimates. The live
+                # ``question_started`` always carries the type, so a snapshot
+                # that only carries it sometimes is a field the restore path
+                # cannot forward without knowing which case it is in — exactly
+                # the asymmetry the parity test now forbids.
+                "question_type": q.type,
                 "time_limit": self._round_duration,
                 "time_remaining": round(remaining, 1),
             }
@@ -2844,7 +2850,6 @@ class QuizifyGameState:
             # answers so a reconnecting player rebuilds the slider, not the
             # 3-answer grid.
             if q.is_estimate:
-                snapshot["question"]["question_type"] = q.type
                 snapshot["question"]["estimate"] = {
                     "min": q.estimate_min,
                     "max": q.estimate_max,
@@ -3009,6 +3014,11 @@ class QuizifyGameState:
                     # shuffle is projected in round_message_builder.
                     "answers": [a.text for a in hs.question.answers],
                     "category": hs.question.category,
+                    # #730: the live ``hot_seat_question`` sends this to every
+                    # phone already, so withholding it here bought no secrecy
+                    # — it only left the restore path with one more field it
+                    # could never forward.
+                    "difficulty": hs.question.difficulty,
                     "image_url": hs.question.image_url,
                 }
             if stage == "result":

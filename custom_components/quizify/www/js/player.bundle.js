@@ -4130,14 +4130,47 @@
                 stake: hs.stake,
                 bids: hs.bids || []
             });
-            handleQuestion({
-                you_are_seated: !!hs.you_are_seated,
-                answers: (hs.question && hs.question.answers) || [],
-                winner: hs.winner,
-                score: hs.own_bank
-            });
+            handleQuestion(questionMessageFromSnapshot(hs));
             if (hs.you_bet) lockBetUi(hs.you_bet);
         }
+    }
+
+    /**
+     * A snapshot's ``hot_seat`` block, in the shape ``hot_seat_question`` has
+     * (#730).
+     *
+     * The hand-written list this replaces forgot the question itself. The
+     * snapshot has carried ``hot_seat.question.text`` since #664 and the live
+     * handler has rendered it since #698 — but the restore path named four
+     * fields and ``question`` was not one of them, so the seat holder whose
+     * phone locked came back to three answer buttons under a blank question
+     * (fresh page) or the previous round's (in-tab reconnect), with the clock
+     * running and an unanswered question costing the whole stake (#653).
+     *
+     * Forwarding the frame is what stops that happening a third time: every
+     * key the server puts in the question block rides along, and only the
+     * fields that live outside it, or that a restore must recompute, are named
+     * here. See tests/test_snapshot_restore_parity_730_731.py.
+     */
+    function questionMessageFromSnapshot(hs) {
+        var q = hs.question || {};
+        var msg = {};
+        for (var k in q) {
+            if (Object.prototype.hasOwnProperty.call(q, k)) msg[k] = q[k];
+        }
+        // The live event's name for the same string — and the field #730 is
+        // about.
+        msg.question = q.text;
+        msg.answers = q.answers || [];
+        // Block-level, not question-level.
+        msg.winner = hs.winner;
+        msg.you_are_seated = !!hs.you_are_seated;
+        // The live payload sends the full answer window; a phone rejoining
+        // mid-window gets what the room has left of it, never a fresh one.
+        msg.seconds = hs.time_remaining;
+        // The bank the bets are percentages of, as of the auction.
+        msg.score = hs.own_bank;
+        return msg;
     }
 
     function lockBidUi(pct) {
@@ -4579,7 +4612,23 @@
         // shown (server already sanitises; this is defence-in-depth).
         // Absent/invalid/load-error → the banner is hidden so the answer
         // pills stay reachable above the fold (graceful text-only fallback).
-        renderQuestionImageBanner(data.image_url, data.reveal_style, data.timer_duration);
+        // #731: the blur is a fraction of the round, not of what is left of
+        // it. On the live path the two are the same number, so timer_duration
+        // was fine; on a restore it is the remaining seconds, which would draw
+        // full blur at the moment the phone comes back and then sharpen twice
+        // as fast. reveal_duration is the full round, set by the restore path.
+        renderQuestionImageBanner(
+            data.image_url, data.reveal_style,
+            data.reveal_duration || data.timer_duration
+        );
+        // Paint the blur at the position the round is actually at, rather than
+        // waiting up to a second for the first timer tick to correct it — on a
+        // restore that first frame would otherwise be the wrong picture. Guarded
+        // because renderQuestion is reached from paths that carry no clock, and
+        // a non-number here would compute a NaN blur radius.
+        if (typeof data.timer_duration === 'number') {
+            setRevealBlur(data.timer_duration);
+        }
 
         // #275: branch on the question type. Estimate questions swap the 3-
         // answer grid for a slider (Variant B). Toggle the two sections and
@@ -6166,25 +6215,7 @@
             case 'QUESTION_ACTIVE':
             case 'PLAYING':
                 if (msg.question) {
-                    handleQuestionStarted({
-                        question_text: msg.question.text,
-                        answers: msg.question.answers,
-                        // Use time_remaining for mid-round joiners, fall back to time_limit
-                        timer_duration: msg.question.time_remaining || msg.question.time_limit,
-                        round_num: msg.round,
-                        total_rounds: msg.total_rounds,
-                        category: msg.question.category,
-                        // #275: carry the question type + estimate metadata +
-                        // image through the snapshot path too. Without these the
-                        // first question (admin-as-player redirect lands on the
-                        // game_state snapshot, not a question_started event) fell
-                        // back to the A/B/C grid — estimate rounds rendered the
-                        // multiple-choice layout, and image questions lost their
-                        // banner — until the next per-round message arrived.
-                        question_type: msg.question.question_type,
-                        estimate: msg.question.estimate,
-                        image_url: msg.question.image_url
-                    });
+                    handleQuestionStarted(questionStartedFromSnapshot(msg));
 
                     // #14: if we're reconnecting mid-round and server thinks
                     // we've already submitted, lock the UI accordingly so we
@@ -6394,6 +6425,51 @@
             }
         }
         return 0;
+    }
+
+    /**
+     * A snapshot's ``question`` block, in the shape ``question_started`` has
+     * (#730/#731).
+     *
+     * This used to be an object literal that re-listed, by hand, every field
+     * worth forwarding — so every field added to the live payload had to be
+     * remembered a second time here, and twice it was not. #275 caught
+     * question_type / estimate / image_url only after estimate rounds had been
+     * rendering as an A/B/C grid, and reveal_style (#434) was never carried at
+     * all: a phone that reloaded during a progressive-reveal question got the
+     * picture sharp and could read the answer off it (#731).
+     *
+     * So it forwards the frame instead of re-listing it. Every key the server
+     * puts in ``snapshot.question`` rides along untouched, and only the fields
+     * that genuinely differ between "the round just started" and "the round is
+     * half over and this phone just came back" are named below. Adding a field
+     * to the live path now carries it here for free — and
+     * tests/test_snapshot_restore_parity_730_731.py fails if the snapshot ever
+     * stops carrying one of them.
+     */
+    function questionStartedFromSnapshot(msg) {
+        var q = msg.question || {};
+        var live = {};
+        for (var k in q) {
+            if (Object.prototype.hasOwnProperty.call(q, k)) live[k] = q[k];
+        }
+        // The live event's name for the same string.
+        live.question_text = q.text;
+        // The clock is the one thing a restore must NOT copy: the round is
+        // already running, so the countdown gets what is left of it rather
+        // than a fresh full round. time_limit is the fallback for a snapshot
+        // taken before the phase controller has a deadline.
+        live.timer_duration = q.time_remaining || q.time_limit;
+        // ...but the progressive blur is a fraction of the WHOLE round
+        // (remaining / duration). Handed time_remaining it would compute 1.0
+        // and restart the blur at maximum instead of resuming it two thirds
+        // of the way through — which is a different bug, not a fix (#731).
+        live.reveal_duration = q.time_limit || q.time_remaining;
+        // Not in the question block: the snapshot carries these one level up.
+        live.round_num = msg.round;
+        live.total_rounds = msg.total_rounds;
+        live.player_score = _myScore(msg);
+        return live;
     }
 
     /**

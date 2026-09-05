@@ -599,25 +599,7 @@
             case 'QUESTION_ACTIVE':
             case 'PLAYING':
                 if (msg.question) {
-                    handleQuestionStarted({
-                        question_text: msg.question.text,
-                        answers: msg.question.answers,
-                        // Use time_remaining for mid-round joiners, fall back to time_limit
-                        timer_duration: msg.question.time_remaining || msg.question.time_limit,
-                        round_num: msg.round,
-                        total_rounds: msg.total_rounds,
-                        category: msg.question.category,
-                        // #275: carry the question type + estimate metadata +
-                        // image through the snapshot path too. Without these the
-                        // first question (admin-as-player redirect lands on the
-                        // game_state snapshot, not a question_started event) fell
-                        // back to the A/B/C grid — estimate rounds rendered the
-                        // multiple-choice layout, and image questions lost their
-                        // banner — until the next per-round message arrived.
-                        question_type: msg.question.question_type,
-                        estimate: msg.question.estimate,
-                        image_url: msg.question.image_url
-                    });
+                    handleQuestionStarted(questionStartedFromSnapshot(msg));
 
                     // #14: if we're reconnecting mid-round and server thinks
                     // we've already submitted, lock the UI accordingly so we
@@ -827,6 +809,51 @@
             }
         }
         return 0;
+    }
+
+    /**
+     * A snapshot's ``question`` block, in the shape ``question_started`` has
+     * (#730/#731).
+     *
+     * This used to be an object literal that re-listed, by hand, every field
+     * worth forwarding — so every field added to the live payload had to be
+     * remembered a second time here, and twice it was not. #275 caught
+     * question_type / estimate / image_url only after estimate rounds had been
+     * rendering as an A/B/C grid, and reveal_style (#434) was never carried at
+     * all: a phone that reloaded during a progressive-reveal question got the
+     * picture sharp and could read the answer off it (#731).
+     *
+     * So it forwards the frame instead of re-listing it. Every key the server
+     * puts in ``snapshot.question`` rides along untouched, and only the fields
+     * that genuinely differ between "the round just started" and "the round is
+     * half over and this phone just came back" are named below. Adding a field
+     * to the live path now carries it here for free — and
+     * tests/test_snapshot_restore_parity_730_731.py fails if the snapshot ever
+     * stops carrying one of them.
+     */
+    function questionStartedFromSnapshot(msg) {
+        var q = msg.question || {};
+        var live = {};
+        for (var k in q) {
+            if (Object.prototype.hasOwnProperty.call(q, k)) live[k] = q[k];
+        }
+        // The live event's name for the same string.
+        live.question_text = q.text;
+        // The clock is the one thing a restore must NOT copy: the round is
+        // already running, so the countdown gets what is left of it rather
+        // than a fresh full round. time_limit is the fallback for a snapshot
+        // taken before the phase controller has a deadline.
+        live.timer_duration = q.time_remaining || q.time_limit;
+        // ...but the progressive blur is a fraction of the WHOLE round
+        // (remaining / duration). Handed time_remaining it would compute 1.0
+        // and restart the blur at maximum instead of resuming it two thirds
+        // of the way through — which is a different bug, not a fix (#731).
+        live.reveal_duration = q.time_limit || q.time_remaining;
+        // Not in the question block: the snapshot carries these one level up.
+        live.round_num = msg.round;
+        live.total_rounds = msg.total_rounds;
+        live.player_score = _myScore(msg);
+        return live;
     }
 
     /**

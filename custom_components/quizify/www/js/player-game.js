@@ -393,7 +393,23 @@
         // shown (server already sanitises; this is defence-in-depth).
         // Absent/invalid/load-error → the banner is hidden so the answer
         // pills stay reachable above the fold (graceful text-only fallback).
-        renderQuestionImageBanner(data.image_url, data.reveal_style, data.timer_duration);
+        // #731: the blur is a fraction of the round, not of what is left of
+        // it. On the live path the two are the same number, so timer_duration
+        // was fine; on a restore it is the remaining seconds, which would draw
+        // full blur at the moment the phone comes back and then sharpen twice
+        // as fast. reveal_duration is the full round, set by the restore path.
+        renderQuestionImageBanner(
+            data.image_url, data.reveal_style,
+            data.reveal_duration || data.timer_duration
+        );
+        // Paint the blur at the position the round is actually at, rather than
+        // waiting up to a second for the first timer tick to correct it — on a
+        // restore that first frame would otherwise be the wrong picture. Guarded
+        // because renderQuestion is reached from paths that carry no clock, and
+        // a non-number here would compute a NaN blur radius.
+        if (typeof data.timer_duration === 'number') {
+            setRevealBlur(data.timer_duration);
+        }
 
         // #275: branch on the question type. Estimate questions swap the 3-
         // answer grid for a slider (Variant B). Toggle the two sections and
