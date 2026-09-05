@@ -80,8 +80,10 @@ _LOGGER = logging.getLogger(__name__)
 # Single source of truth for the wire strings the dispatch table keys on, so
 # a typo is a NameError at import time instead of a silently-dead branch.
 # ``admin_connect`` and ``reset_game`` live OUTSIDE the dispatch table (special
-# authorization paths) but are named here for completeness. Keep in sync with
-# ``server/protocol.py::CLIENT_MESSAGE_TYPES``.
+# authorization paths) but are named here for completeness.
+# ``server/protocol.py::CLIENT_MESSAGE_TYPES`` declares the same set for the
+# client side; ``tests/test_protocol.py`` compares it against ``_DISPATCH``
+# below, so the two cannot drift apart unnoticed (#749).
 MSG_ADMIN_CONNECT = "admin_connect"
 MSG_RESET_GAME = "reset_game"
 MSG_JOIN = "join"
