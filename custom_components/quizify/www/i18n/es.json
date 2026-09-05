@@ -14,7 +14,18 @@
     "namePlaceholder": "Tu nombre",
     "joinButton": "Unirse al juego",
     "joining": "Uniéndose…",
-    "languageAria": "Idioma de la interfaz"
+    "languageAria": "Idioma de la interfaz",
+    "refused": {
+      "NAME_TAKEN": "Ya hay alguien jugando con ese nombre. Elige otro — añade un número o tu inicial — y pulsa Unirse al juego otra vez.",
+      "NAME_INVALID": "Ese nombre no vale. Usa de 1 a 20 caracteres y pulsa Unirse al juego otra vez.",
+      "GAME_FULL": "La partida está llena: el límite son 20 jugadores. Pide al anfitrión que haga sitio, o mira la partida en la tele.",
+      "GAME_ENDED": "Esta partida ya ha terminado. Pide al anfitrión que empiece una nueva y vuelve a escanear el código QR.",
+      "ALREADY_JOINED": "Ya estás en esta partida desde este dispositivo. Vuelve a la pestaña con la que te uniste en vez de abrir una segunda.",
+      "JOIN_RATE_LIMITED": "Demasiados intentos de unirse desde tu red. Espera un minuto y pulsa Unirse al juego otra vez.",
+      "NO_CONNECTION": "No podemos conectar con la partida. Comprueba que estás en la misma wifi que el anfitrión y pulsa Reintentar conexión; si sigue fallando, pide al anfitrión un código QR nuevo.",
+      "INVALID_ACTION": "No se ha podido procesar tu entrada. Pulsa Unirse al juego otra vez; si sigue fallando, pide al anfitrión un código QR nuevo.",
+      "UNKNOWN": "No hemos podido meterte en la partida. Pulsa Unirse al juego otra vez; si sigue fallando, pide al anfitrión un código QR nuevo."
+    }
   },
   "lobby": {
     "title": "Sala de espera",
@@ -644,7 +655,9 @@
     "RATE_LIMITED": "Demasiados envíos. Espera un momento e inténtalo de nuevo.",
     "GITHUB_ERROR": "El servicio de envío no está disponible ahora mismo. Inténtalo más tarde.",
     "SUBMIT_DISABLED": "El envío de paquetes no está configurado.",
-    "ADMIN_REQUIRED": "Esta ventana no es la del anfitrión: el comando fue rechazado. Vuelve a abrir la ventana de administración desde Home Assistant."
+    "ADMIN_REQUIRED": "Esta ventana no es la del anfitrión: el comando fue rechazado. Vuelve a abrir la ventana de administración desde Home Assistant.",
+    "ALREADY_JOINED": "Ya te has unido",
+    "JOIN_RATE_LIMITED": "Demasiados intentos de unirse"
   },
   "page": {
     "titleAdmin": "Quizify — Administración",

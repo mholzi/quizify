@@ -64,6 +64,15 @@ ERR_INVALID_ACTION = "INVALID_ACTION"
 ERR_ADMIN_REQUIRED = "ADMIN_REQUIRED"
 ERR_GAME_FULL = "GAME_FULL"
 ERR_NO_QUESTIONS_REMAINING = "NO_QUESTIONS_REMAINING"
+#: This connection already holds a connected player under a different name
+#: (#244, #729). Split out of ERR_INVALID_ACTION so the join form can say
+#: "you are already in this game" instead of "Invalid action" — the guest is
+#: not doing anything wrong and has nothing to retype.
+ERR_ALREADY_JOINED = "ALREADY_JOINED"
+#: The per-IP join-flood limiter refused the join (#361, #729). Split out of
+#: ERR_INVALID_ACTION so a whole room behind one NAT that trips the window is
+#: told to wait, rather than being shown a generic failure it cannot act on.
+ERR_JOIN_RATE_LIMITED = "JOIN_RATE_LIMITED"
 
 # Question structure
 ANSWERS_PER_QUESTION = 3

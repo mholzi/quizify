@@ -16,6 +16,12 @@
         ws: null,
         playerName: null,
         playerId: null,
+        // #729: true from the moment a join is sent (or queued behind a
+        // pending connect) until the server answers `joined` / `error`.
+        // The join-error reset used to key on `!playerName`, which
+        // handleJoinClick had already filled in — so the guard was dead for
+        // every refusal and the button sat on "Joining…" forever.
+        joinPending: false,
         sessionToken: null,
         isAdmin: false,
         currentView: null,
@@ -630,6 +636,10 @@
         feedbackLabel: feedbackLabel,
         generateQR: generateQR,
         showToast: showToast,
+        // #729: a join refused mid-reconnect has to pull the guest out from
+        // under the reconnecting overlay, or the reason lands on a screen
+        // nobody can see.
+        hideReconnectingOverlay: hideReconnectingOverlay,
         saveSession: saveSession,
         getSession: getSession,
         clearSession: clearSession,

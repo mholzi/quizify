@@ -14,12 +14,15 @@ from aiohttp import WSMsgType, web
 
 from custom_components.quizify.const import (
     ERR_ADMIN_REQUIRED,
+    ERR_ALREADY_JOINED,
     ERR_ALREADY_SUBMITTED,
     ERR_FROZEN,
     ERR_GAME_ALREADY_STARTED,
+    ERR_GAME_ENDED,
     ERR_GAME_FULL,
     ERR_GAME_NOT_STARTED,
     ERR_INVALID_ACTION,
+    ERR_JOIN_RATE_LIMITED,
     ERR_NAME_INVALID,
     ERR_NAME_TAKEN,
     ERR_NO_QUESTIONS_REMAINING,
@@ -625,7 +628,7 @@ class QuizifyWebSocketHandler:
                             "Per-IP join rate limit exceeded for %s", remote
                         )
                         await self._conn.send_error(
-                            ws, ERR_INVALID_ACTION, "Too many join attempts"
+                            ws, ERR_JOIN_RATE_LIMITED, "Too many join attempts"
                         )
                         continue
                     try:
@@ -876,7 +879,7 @@ class QuizifyWebSocketHandler:
             )
             await self._conn.send_error(
                 ws,
-                ERR_INVALID_ACTION,
+                ERR_ALREADY_JOINED,
                 "Already joined as a player",
             )
             return
@@ -1100,12 +1103,19 @@ class QuizifyWebSocketHandler:
             )
         else:
             # English i18n-fallback strings only — the client localizes off
-            # the structured ``code`` via ``t('errors.<CODE>')`` and only falls
-            # back to this ``message`` if the key is missing (player-core.js).
+            # the structured ``code`` via ``t('join.refused.<CODE>')`` and only
+            # falls back to this ``message`` if the key is missing
+            # (player-core.js).
+            #
+            # #729: every code ``add_player`` can return must appear here.
+            # ``ERR_GAME_ENDED`` did not, so a guest who scanned a QR code from
+            # a finished game got the bare "Failed to join" — no hint that the
+            # game was over and the host had to start a new one.
             error_messages = {
                 ERR_NAME_TAKEN: "Name already taken",
                 ERR_NAME_INVALID: "Please enter a name",
                 ERR_GAME_FULL: "Game is full",
+                ERR_GAME_ENDED: "This game has already finished",
             }
             await self._conn.send_error(
                 ws, error_code or ERR_INVALID_ACTION,
