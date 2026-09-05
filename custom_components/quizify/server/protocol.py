@@ -1,266 +1,379 @@
-"""Single source of truth for the Quizify WebSocket protocol.
+"""The Quizify WebSocket wire contract — declared here, checked by CI.
 
-Every message that crosses the WS boundary has a typed dataclass here.
-Server code that builds payloads should construct one of these and call
-``.to_dict()`` instead of writing a raw dict literal. That way:
+Every frame the server sends is a plain dict literal built where the event
+happens (``websocket.py``, ``serializers.py``, ``round_message_builder.py``,
+``connection.py``). This module does not build them and is not imported by
+them: it *declares* their field sets, and ``tests/test_protocol.py`` reads the
+real literals out of the source with ``ast`` and fails when a build site and
+the declaration disagree.
 
-* New required fields can't be silently dropped (the dataclass requires
-  them in the constructor).
-* Clients reading the field can grep this file and find every message
-  shape in one place — no more "where does ``best_streak`` come from?".
-* The frontend JS keeps using plain objects, but the TypeScript-style
-  comments below document the shape so a future ``.d.ts`` generator
-  has somewhere to read from.
+That is the whole point of the file. Adding a key to a frame without adding it
+here is a red test, not a silent divergence — which is what happened to
+``all_time`` on ``joined`` and ``teams`` on the roster frame (#749).
 
-This file is intentionally dependency-free: only stdlib, only
-dataclasses. It is imported by ``serializers.py`` and friends; cycles
-would be expensive here, so don't import from those modules back into
-this one.
+What is NOT covered, so nobody reads more into a green run than is there:
+
+* Only dict literals inside ``custom_components/quizify/`` that carry a
+  literal ``"type"`` key, plus the ``d["k"] = v`` lines that add to the same
+  local afterwards. A frame assembled some other way is invisible here.
+  ``game_state`` is the live example: the snapshot in
+  ``game/state.py::get_state_snapshot`` gets its ``type`` stamped on by the
+  caller, so the entry below describes only the leaderboard-refresh literal in
+  ``round_message_builder.py``.
+* Field *names*, not value types. Nothing here catches an int that turned into
+  a string.
+* Frames marked ``dynamic_keys`` merge a dict with ``**`` at the build site;
+  only the keys spelled out in the literal can be checked.
+
+The client→server direction is a flat set of type strings
+(``CLIENT_MESSAGE_TYPES``); the same test pins it against the handler's real
+``_DISPATCH`` table instead of grepping for a source pattern.
+
+Dependency-free on purpose: stdlib only, no imports from the modules it
+describes.
 """
 
 from __future__ import annotations
 
-from dataclasses import asdict, dataclass, field
-from typing import Any, Literal
+from dataclasses import dataclass, field
 
 # ---------------------------------------------------------------------------
-# Server → Client message shapes
+# Server → Client frames
 # ---------------------------------------------------------------------------
 
 
-@dataclass
-class JoinedMessage:
-    """Confirms a player joined or reconnected.
+@dataclass(frozen=True)
+class FrameSpec:
+    """The declared shape of one server → client frame.
 
-    Sent unicast to the player whose WS just authenticated.
-    Frontend dispatch: handleMessage 'joined' / 'reconnected'.
+    ``required`` keys must be present at EVERY site that builds the frame;
+    ``optional`` keys may be present at some and absent at others (a
+    conditional ``payload["x"] = …`` after the literal, or a second builder
+    that carries fewer fields). ``"type"`` itself is implied and is never
+    listed.
     """
 
-    type: Literal["joined", "reconnected"]
-    player_id: str  # canonical player name
-    session_token: str  # opaque, used to resume after WS drop
-    color: str  # CSS hex, e.g. "#E88A7F"
-    is_admin: bool
-    powerup: str | None = None  # currently held power-up type or None
-
-    def to_dict(self) -> dict[str, Any]:
-        return asdict(self)
+    required: frozenset[str]
+    optional: frozenset[str] = field(default_factory=frozenset)
+    #: True when the literal is merged with ``**something`` — the rest of the
+    #: payload is a runtime dict and cannot be checked from the source.
+    dynamic_keys: bool = False
+    note: str = ""
 
 
-@dataclass
-class PlayerListMessage:
-    """Broadcast when the lobby roster changes.
-
-    The client uses this to render the lobby/in-game player chips.
-    Each entry includes ``is_admin`` so the host can show admin controls
-    in the player UI after admin-self-join.
-    """
-
-    type: Literal["player_joined", "player_left"]
-    players: list[dict[str, Any]]
-
-    def to_dict(self) -> dict[str, Any]:
-        return asdict(self)
+def _spec(
+    *required: str,
+    optional: tuple[str, ...] = (),
+    dynamic_keys: bool = False,
+    note: str = "",
+) -> FrameSpec:
+    return FrameSpec(
+        required=frozenset(required),
+        optional=frozenset(optional),
+        dynamic_keys=dynamic_keys,
+        note=note,
+    )
 
 
-@dataclass
-class WagerWindowMessage:
-    """The final round's betting window (#656), sent per-player.
-
-    Per-player because ``player_score`` is the bank the slider bets against.
-    Note what is NOT here: ``question_text`` and ``answers``. The bet is
-    placed on the category alone — the question follows in a separate
-    ``question_started`` once the window closes, and only then does a clock
-    start.
-    """
-
-    type: Literal["wager_window"]
-    round_num: int
-    total_rounds: int
-    category: str
-    difficulty: str
-    window_duration: float
-    player_score: int
-
-    def to_dict(self) -> dict[str, Any]:
-        return asdict(self)
-
-
-@dataclass
-class WagerProgressMessage:
-    """Host/TV view of the betting window (#656).
-
-    Carries the tally and who the room is waiting for — never the amounts.
-    ``window_duration`` is present only on the opening message; the refreshes
-    sent as bets arrive omit it so the TV countdown is not restarted.
-    """
-
-    type: Literal["wager_progress"]
-    round_num: int
-    total_rounds: int
-    locked_in: int
-    player_count: int
-    waiting_on: list[str]
-
-    def to_dict(self) -> dict[str, Any]:
-        return asdict(self)
-
-
-@dataclass
-class QuestionStartedMessage:
-    """One round's question, sent per-player so each phone gets its own
-    shuffled A/B/C order (anti-cheat against couch-neighbour collusion).
-
-    ``answers`` is the SHUFFLED list — the client renders these as
-    buttons in order. The server tracks the per-player shuffle map so
-    it can translate the player's submitted index back to the original.
-    """
-
-    type: Literal["question_started"]
-    question_text: str
-    answers: list[str]
-    timer_duration: float
-    round_num: int
-    total_rounds: int
-    category: str
-    difficulty: str
-    # Optional image URL for the question (issue #25). Empty string when
-    # the question carries no image.
-    image_url: str = ""
-    # How that image is uncovered (#434): "" shows it outright, "progressive"
-    # starts it blurred and sharpens it as the timer runs down.
-    reveal_style: str = ""
-
-    def to_dict(self) -> dict[str, Any]:
-        return asdict(self)
-
-
-@dataclass
-class TimerTickMessage:
-    """Sub-second timer update sent per-player.
-
-    Per-player because freeze and time-boost power-ups can change one
-    player's remaining time without changing others'.
-    """
-
-    type: Literal["timer_tick"]
-    remaining: float  # seconds, rounded to 1 decimal
-
-    def to_dict(self) -> dict[str, Any]:
-        return asdict(self)
-
-
-@dataclass
-class AnswerResultMessage:
-    """Unicast reply after a player submits an answer.
-
-    The client uses this to lock the buttons and start the local "I
-    answered" feedback. The full breakdown (speed/streak/difficulty)
-    is also computed here so the reveal screen has data even if the
-    player disconnects before round end.
-    """
-
-    type: Literal["answer_result"]
-    correct: bool
-    points_earned: int
-    speed_bonus: int
-    streak_bonus: int
-    difficulty_multiplier: float
-    new_streak: int = 0
-
-    def to_dict(self) -> dict[str, Any]:
-        return asdict(self)
-
-
-@dataclass
-class RoundSummaryMessage:
-    """Broadcast at end-of-round. Carries the canonical (admin-view)
-    correct answer + distribution; per-player customisation happens in
-    the client which already has its own shuffled buttons.
-
-    ``question_id`` is required by the 🚩 flag-question button — without
-    it, players can't report ambiguous or wrong questions back to the
-    pack maintainer.
-    """
-
-    type: Literal["round_summary"]
-    correct_answer_index: int  # in the CANONICAL shuffle (admin's view)
-    correct_answer: str  # the answer text — clients match on this
-    question_id: str
-    fun_fact: str
-    leaderboard: list[dict[str, Any]]
-    players: list[dict[str, Any]]
-    round: int
-    total_rounds: int
-    last_round: bool
-    all_answers: list[dict[str, Any]]
-    answer_distribution: list[dict[str, Any]]
-    question_text: str
-
-    def to_dict(self) -> dict[str, Any]:
-        return asdict(self)
-
-
-@dataclass
-class FinaleMessage:
-    """Broadcast when the game ends — podium + full leaderboard + superlatives."""
-
-    type: Literal["finale"]
-    podium: list[dict[str, Any]]  # [{rank, name, score}, ...]
-    leaderboard: list[dict[str, Any]]  # full sorted board
-    all_players: list[dict[str, Any]]  # alias of leaderboard (back-compat)
-    superlatives: list[dict[str, Any]] = field(default_factory=list)
-
-    def to_dict(self) -> dict[str, Any]:
-        # asdict on dataclass-with-default-factory works but drops empty
-        # lists/dicts here is intentional — clients tolerate missing keys.
-        return asdict(self)
-
-
-@dataclass
-class GameStateMessage:
-    """Full snapshot — sent to a freshly-connecting client so it can
-    jump to the right view without waiting for the next round event."""
-
-    type: Literal["game_state"]
-    phase: str  # GamePhase enum value
-    round: int
-    total_rounds: int
-    players: list[dict[str, Any]]
-    leaderboard: list[dict[str, Any]] = field(default_factory=list)
-    question: dict[str, Any] | None = None
-    pause_reason: str | None = None  # only set when phase == PAUSED
-
-    def to_dict(self) -> dict[str, Any]:
-        return asdict(self)
-
-
-@dataclass
-class ErrorMessage:
-    """Generic error reply. ``code`` is one of the ERR_* const strings
-    in const.py; client looks up a localized message by code."""
-
-    type: Literal["error"]
-    code: str
-    message: str  # human-readable English fallback
-
-    def to_dict(self) -> dict[str, Any]:
-        return asdict(self)
+SERVER_FRAMES: dict[str, FrameSpec] = {
+    # --- join / reconnect -------------------------------------------------
+    "joined": _spec(
+        "player_id",
+        "session_token",
+        "color",
+        "is_admin",
+        "powerup",
+        "all_time",
+        note=(
+            "Unicast to the player whose WS just authenticated. ``all_time`` "
+            "is that one player's standing (#371) and rides this frame rather "
+            "than the roster broadcast, which would ship everyone's history to "
+            "every phone; ``None`` for a first-timer."
+        ),
+    ),
+    "reconnected": _spec(
+        "player_id",
+        "session_token",
+        "powerup",
+        "all_time",
+        note=(
+            "The resume twin of ``joined`` — and deliberately NOT the same "
+            "shape: colour and admin flag are already on the client that is "
+            "reconnecting, so they are not resent."
+        ),
+    ),
+    "reconnect_failed": _spec(
+        note="Unknown or expired session token; the client falls back to join.",
+    ),
+    # --- lobby roster -----------------------------------------------------
+    "player_joined": _spec(
+        "players",
+        "teams",
+        note=(
+            "Roster broadcast, coalesced over one window (#453) so a burst of "
+            "joins is one frame. ``teams`` rides along because a player "
+            "leaving also leaves their team and the last one out dissolves it "
+            "(#365) — without it the lobby keeps showing a team nobody is in."
+        ),
+    ),
+    "player_left": _spec(
+        "players",
+        "teams",
+        note="Same builder and shape as ``player_joined``; only the animation differs.",
+    ),
+    "kicked": _spec(
+        "reason",
+        note="Unicast to the removed player before their socket is closed.",
+    ),
+    "game_reset": _spec(note="Broadcast when the host resets the game."),
+    # --- teams (#365) -----------------------------------------------------
+    "teams_update": _spec("teams"),
+    "team_joined": _spec("team"),
+    "team_left": _spec(),
+    "team_answer": _spec(
+        "team_id",
+        "answer_index",
+        "members",
+        "set_by",
+        "lock_seconds",
+    ),
+    # --- question / round -------------------------------------------------
+    "question_started": _spec(
+        "question_text",
+        "answers",
+        "timer_duration",
+        "round_num",
+        "total_rounds",
+        "category",
+        "difficulty",
+        "image_url",
+        "reveal_style",
+        "question_type",
+        optional=(
+            # serialize_question_for_player only
+            "player_score",
+            "is_final_round",
+            # serialize_question_for_admin only — the TV may show the answer
+            "correct_answer",
+            "estimate",
+        ),
+        note=(
+            "Two builders: the per-player one (own shuffled ``answers``, so "
+            "couch neighbours can't copy an index) and the admin/TV one, which "
+            "adds ``correct_answer`` and drops the per-player fields. Anything "
+            "only one of them sends is optional here."
+        ),
+    ),
+    "timer_tick": _spec(
+        "remaining",
+        note="Per-player: freeze and time-boost change one player's clock only.",
+    ),
+    "answer_result": _spec(
+        "correct",
+        "points_earned",
+        "speed_bonus",
+        "streak_bonus",
+        "difficulty_multiplier",
+        "new_streak",
+        "new_total",
+        "milestone_bonus",
+        "milestone_streak",
+    ),
+    "guess_accepted": _spec(
+        note="Estimate-round ack so the client can lock its slider.",
+    ),
+    "answer_progress": _spec("submitted", "total", "players"),
+    "streak_milestone": _spec("player_name", "streak", "bonus"),
+    "round_summary": _spec(
+        "correct_answer_index",
+        "correct_answer_index_original",
+        "correct_answer",
+        "question_id",
+        "question_text",
+        "question_type",
+        "fun_fact",
+        "leaderboard",
+        "players",
+        "round",
+        "total_rounds",
+        "last_round",
+        "all_answers",
+        "answer_distribution",
+        optional=("estimate",),
+        note=(
+            "Three index spaces meet here — see the docstring on "
+            "``serialize_round_summary``. ``question_id`` is what the 🚩 flag "
+            "button POSTs back. ``estimate`` only on estimate rounds (#275)."
+        ),
+    ),
+    "finale": _spec(
+        "podium",
+        "leaderboard",
+        "all_players",
+        optional=("superlatives", "share"),
+        note=(
+            "``all_players`` is the same list object as ``leaderboard`` (#415); "
+            "``superlatives`` is omitted when empty rather than sent as []."
+        ),
+    ),
+    "evening_tally": _spec(
+        dynamic_keys=True,
+        note="The tally dict is spread into the frame (#612).",
+    ),
+    "head_to_head": _spec(
+        "at",
+        dynamic_keys=True,
+        note="The duel dict is spread into the frame (#613).",
+    ),
+    "all_time_update": _spec("all_time"),
+    "game_state": _spec(
+        "phase",
+        "round",
+        "total_rounds",
+        "players",
+        "leaderboard",
+        "player_count",
+        optional=("lightning",),
+        note=(
+            "Declared for the leaderboard-refresh literal in "
+            "``round_message_builder``. The full snapshot sent on connect and "
+            "reconnect is built in ``game/state.py::get_state_snapshot`` and "
+            "typed by its caller, so it is outside what this file can check."
+        ),
+    ),
+    # --- wager (#656) -----------------------------------------------------
+    "wager_window": _spec(
+        "round_num",
+        "total_rounds",
+        "category",
+        "difficulty",
+        "window_duration",
+        "player_score",
+        note=(
+            "Per-player, because ``player_score`` is the bank the slider bets "
+            "against. No question text: the bet is placed on the category "
+            "alone, and the question follows in its own ``question_started``."
+        ),
+    ),
+    "wager_progress": _spec(
+        "round_num",
+        "total_rounds",
+        "locked_in",
+        "player_count",
+        "waiting_on",
+        optional=("window_duration", "category", "difficulty"),
+        note=(
+            "Host/TV view: the tally and who the room waits for, never the "
+            "amounts. The three optional fields mark the OPENING message; the "
+            "refreshes sent as bets arrive omit them so the TV countdown is "
+            "not restarted."
+        ),
+    ),
+    "wager_accepted": _spec("wager"),
+    # --- power-ups --------------------------------------------------------
+    "powerup_assigned": _spec("powerup_type"),
+    "powerup_applied": _spec(
+        "powerup_type",
+        "source_player",
+        optional=(
+            "target_player",
+            "joker_remove_index",
+            "freeze_duration",
+            "stolen_points",
+        ),
+        note=(
+            "One type string, three build sites: only the fields that power-up "
+            "actually carries are sent, so everything past the source player "
+            "is optional."
+        ),
+    ),
+    # --- reactions --------------------------------------------------------
+    "reaction": _spec("player_name", "emoji"),
+    "reaction_bonus": _spec(
+        "from_player",
+        "from_players",
+        "to_players",
+        "leaderboard",
+    ),
+    # --- lightning round (#42, #285) --------------------------------------
+    "lightning_splash": _spec("num_questions", "seconds_per_question"),
+    "lightning_question": _spec(
+        "index",
+        "num_questions",
+        "question_text",
+        "answers",
+        "category",
+        "image_url",
+        "seconds",
+    ),
+    "lightning_tick": _spec("index", "remaining"),
+    "lightning_answer_result": _spec("index", "correct", "score"),
+    "lightning_team_answer": _spec(
+        "index",
+        "answer_index",
+        "members",
+        "set_by",
+        "lock_seconds",
+    ),
+    "lightning_recap": _spec("recap"),
+    # --- hot seat (#616) --------------------------------------------------
+    "hot_seat_auction": _spec("round_num", "total_rounds", "seconds", "players"),
+    "hot_seat_auction_you": _spec("seconds", "score"),
+    "hot_seat_bid_accepted": _spec("bid", "points"),
+    "hot_seat_bid_count": _spec("count", "total"),
+    "hot_seat_bet_accepted": _spec("bet", "side", "points"),
+    "hot_seat_no_bids": _spec(),
+    "hot_seat_awarded": _spec("winner", "bids", "stake", "pct"),
+    "hot_seat_question": _spec(
+        "round_num",
+        "total_rounds",
+        "winner",
+        "question",
+        "difficulty",
+        "image_url",
+        "seconds",
+    ),
+    "hot_seat_answer_accepted": _spec(),
+    "hot_seat_tick": _spec("phase", "remaining"),
+    "hot_seat_result": _spec(
+        "round_num",
+        "total_rounds",
+        "scores",
+        dynamic_keys=True,
+        note="The settlement dict is spread into the frame.",
+    ),
+    # --- errors -----------------------------------------------------------
+    "error": _spec(
+        "code",
+        "message",
+        note=(
+            "``code`` is one of the ERR_* constants in const.py; the client "
+            "looks up a localized string by code and uses ``message`` — plain "
+            "English — only as a fallback."
+        ),
+    ),
+}
 
 
 # ---------------------------------------------------------------------------
-# Client → Server message keys (no dataclasses — the server validates
-# field by field in _handle_*). Listed here so a future schema-aware
-# router can swap in a real validator.
+# Client → Server message types
 # ---------------------------------------------------------------------------
 
-#: Every message type the server's _handle_message dispatch accepts.
-#: Kept as a frozenset so tests can assert dispatch coverage. NOTE:
-#: "reaction" is BOTH a client→server message (player taps an emoji
-#: button → server may award a +1 bonus during reveal) AND a server→
-#: client broadcast (every other client sees the floating animation).
-CLIENT_MESSAGE_TYPES: frozenset[str] = frozenset({
-    "admin_connect",
+#: Types that never reach ``QuizifyWebSocketHandler._DISPATCH``: they are
+#: handled before it, on their own authorization paths.
+OUT_OF_BAND_CLIENT_TYPES: frozenset[str] = frozenset({
+    "admin_connect",  # first frame of an ?role=admin socket
+    "admin_auth",     # token frame that grants that socket the admin role
+    "reset_game",     # allowed from a non-admin socket in specific states
+})
+
+#: Every message type the server accepts from a client. The dispatched ones
+#: must equal ``_DISPATCH.keys()`` exactly — the test imports the handler and
+#: compares, so a type added to one side and not the other is a red run.
+#: NOTE: "reaction" travels in BOTH directions — a player taps an emoji
+#: (client→server, may earn a +1 during reveal) and every other client sees
+#: the floating animation (server→client).
+CLIENT_MESSAGE_TYPES: frozenset[str] = OUT_OF_BAND_CLIENT_TYPES | frozenset({
     "join",
     "reconnect",
     "get_state",
@@ -277,12 +390,15 @@ CLIENT_MESSAGE_TYPES: frozenset[str] = frozenset({
     "next_question",
     "next_round",
     "end_game",
-    "reset_game",
     "play_again",
     "pause_game",
     "resume_game",
     "admin_skip",
     "kick_player",
+    # Host configuration (#494, #281), gated on WS-level admin (#724) because
+    # both reach Home Assistant service calls with host-supplied entity ids.
+    "configure_tts",
+    "configure_house",
     # Lightning Round (issue #42 mechanics, #285 auto-trigger): the round now
     # fires automatically mid-game — there is no host start/end action any
     # more. Players still submit via lightning_answer (separate from
@@ -295,45 +411,3 @@ CLIENT_MESSAGE_TYPES: frozenset[str] = frozenset({
     "join_team",
     "leave_team",
 })
-
-
-# ---------------------------------------------------------------------------
-# Equivalent TypeScript declarations — kept hand-maintained as a comment
-# block so a future generator has the right starting point. Update both
-# sides when the dataclasses above change.
-# ---------------------------------------------------------------------------
-
-TYPESCRIPT_DECLARATIONS = """
-// Hand-maintained mirror of server/protocol.py. Update both when the
-// shape changes — there is no codegen yet.
-//
-// type WsServerMessage =
-//   | { type: 'joined' | 'reconnected'; player_id: string; session_token: string;
-//       color: string; is_admin: boolean; powerup: string | null; }
-//   | { type: 'player_joined' | 'player_left'; players: Player[]; }
-//   | { type: 'wager_window'; round_num: number; total_rounds: number;
-//       category: string; difficulty: string; window_duration: number;
-//       player_score: number; }
-//   | { type: 'wager_progress'; round_num: number; total_rounds: number;
-//       locked_in: number; player_count: number; waiting_on: string[];
-//       window_duration?: number; category?: string; difficulty?: string; }
-//   | { type: 'question_started'; question_text: string; answers: string[];
-//       timer_duration: number; round_num: number; total_rounds: number;
-//       category: string; difficulty: string; image_url?: string;
-//       reveal_style?: '' | 'progressive'; }
-//   | { type: 'timer_tick'; remaining: number; }
-//   | { type: 'answer_result'; correct: boolean; points_earned: number;
-//       speed_bonus: number; streak_bonus: number; difficulty_multiplier: number;
-//       new_streak: number; }
-//   | { type: 'round_summary'; correct_answer_index: number; correct_answer: string;
-//       question_id: string; fun_fact: string; leaderboard: LeaderboardEntry[];
-//       players: Player[]; round: number; total_rounds: number; last_round: boolean;
-//       all_answers: AnswerEntry[]; answer_distribution: DistEntry[];
-//       question_text: string; }
-//   | { type: 'finale'; podium: PodiumEntry[]; leaderboard: LeaderboardEntry[];
-//       all_players: LeaderboardEntry[]; superlatives: Superlative[]; }
-//   | { type: 'game_state'; phase: GamePhase; round: number; total_rounds: number;
-//       players: Player[]; leaderboard?: LeaderboardEntry[]; question?: QuestionState;
-//       pause_reason?: 'admin_paused' | 'admin_disconnected'; }
-//   | { type: 'error'; code: string; message: string; };
-"""
