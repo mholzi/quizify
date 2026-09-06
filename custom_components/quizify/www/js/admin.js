@@ -1209,6 +1209,10 @@
             var wagerEl = document.getElementById('wager-enabled-toggle');
             if (wagerEl) wagerEl.checked = wager;
         }
+        // #851: a preset is the other way the difficulty changes, and the one
+        // the live test used — "Schnellrunde" sets easy without the chip
+        // handler ever running.
+        _pushDifficulty();
         updateSettingsSummary();
     }
 
@@ -1280,6 +1284,10 @@
     buildHeroPackChips();
     setupChips(els.difficultyChips, function (v) {
         selectedDifficulty = v;
+        // Carry the pick to the game right away so the lobby the guests are
+        // sitting in re-renders, instead of showing the last game's until
+        // start_game (#851).
+        _pushDifficulty();
         updateSettingsSummary();
     });
     setupChips(els.roundsChips, function (v) {
@@ -1437,6 +1445,17 @@
         send('set_language', { language: selectedLanguage });
     }
 
+    // The same for the difficulty (#851). `GameState.difficulty` is written by
+    // start_game and by nothing else, so the lobby snapshot every phone and
+    // the television render described the PREVIOUS game — the constructor
+    // default on the first game of the evening, the last game's pick after
+    // that. Pushing the chip the moment it changes is what #776 did for the
+    // language, for the same reason and with the same no-op-if-closed
+    // contract.
+    function _pushDifficulty() {
+        send('set_difficulty', { difficulty: selectedDifficulty });
+    }
+
     setupChips(els.languageChips, function (v) {
         // Session-only switch — not persisted. On the next full-page reload
         // the UI resolves back to the Home Assistant language (#152).
@@ -1525,6 +1544,10 @@
                 // the pick now so the lobby the players see matches the one the
                 // host is looking at.
                 _pushLanguage();
+                // And the difficulty (#851), which sat at the previous game's
+                // value for the same reason and reached the phones the same
+                // way — only at start_game.
+                _pushDifficulty();
             },
             onMessage: handleMessage,
             onClose: function () {
@@ -2244,6 +2267,17 @@
                 answer: msg.correct_answer,
             });
             els.adminCorrect.style.display = '';
+        }
+        // #849: the round the host is revealing has already been scored, and
+        // this frame carries the standings that came out of it — the
+        // television renders exactly this field at exactly this moment. The
+        // host page did not, so it kept the previous round's board until the
+        // next `question_started` arrived: the one screen reading the scores
+        // out to the room was the one screen a round behind. Same class as
+        // #833 one surface over — the settlement had happened, only the board
+        // had not been told.
+        if (msg && msg.leaderboard) {
+            renderLeaderboard(els.gameLeaderboard, msg.leaderboard);
         }
         // The last round advances like any other: `next_question` from
         // ANSWER_REVEAL resolves to the finale server-side (#255), which is

@@ -12,6 +12,7 @@ from typing import TYPE_CHECKING, Any
 from aiohttp import WSMsgType, web
 
 from custom_components.quizify.const import (
+    DIFFICULTY_AUTO,
     ERR_ADMIN_REQUIRED,
     ERR_ALREADY_JOINED,
     ERR_GAME_ALREADY_STARTED,
@@ -51,6 +52,7 @@ from custom_components.quizify.game.team import (
     ANSWER_CHANGE_LOCK_SECONDS as LIGHTNING_ANSWER_LOCK_SECONDS,
 )
 from custom_components.quizify.game.team import Team
+from custom_components.quizify.game.types import Difficulty
 from custom_components.quizify.server.broadcast_dispatcher import BroadcastDispatcher
 from custom_components.quizify.server.connection import ConnectionManager
 from custom_components.quizify.server.origin import reject_cross_origin
@@ -114,6 +116,13 @@ MSG_KICK_PLAYER = "kick_player"
 MSG_CONFIGURE_TTS = "configure_tts"
 MSG_CONFIGURE_HOUSE = "configure_house"
 MSG_SET_LANGUAGE = "set_language"
+MSG_SET_DIFFICULTY = "set_difficulty"
+
+# What ``set_difficulty`` accepts (#851): the four chips the setup screen
+# offers. Anything else is a client that has drifted from the markup, and the
+# lobby is better off keeping the value it has than painting a label nothing
+# can translate.
+_LOBBY_DIFFICULTIES = frozenset({d.value for d in Difficulty} | {DIFFICULTY_AUTO})
 
 # Admin messages that require WS-level admin (a real ?role=admin tab) rather
 # than the admin-as-player relaxation ``_is_authorized_admin`` allows. These
@@ -4374,6 +4383,39 @@ class QuizifyWebSocketHandler:
         game_state.language = language
         await self._broadcast_state_projected(game_state)
 
+    async def _handle_set_difficulty(
+        self, ws: web.WebSocketResponse, data: dict, game_state: QuizifyGameState
+    ) -> None:
+        """Handle the admin ``set_difficulty`` message (#851).
+
+        The same hole ``set_language`` closed in #776, one field over.
+        ``GameState.difficulty`` is written by ``start_game`` and nowhere else,
+        so for the whole life of the lobby it described the game BEFORE this
+        one — the constructor default on the first game of the evening, the
+        previous game's pick after that. The state snapshot carries that field
+        to every phone and to the television, so a lobby the host had set to
+        *Einfach* told the guests *Medium*, and the value was not wrong by a
+        rendering: it was the last game's, faithfully rendered.
+
+        Sent by admin.js on connect (right after ``admin_connect``), whenever
+        the difficulty chip changes, and whenever a preset sets it — the same
+        three moments ``set_language`` is sent at.
+
+        Only accepted in LOBBY, and only for the four values the setup screen
+        offers. Mid-game this would relabel a running game underneath the
+        players; and ``start_game`` writes the field again from its own
+        payload, so nothing here can survive into the game itself.
+        """
+        difficulty = data.get("difficulty")
+        if not isinstance(difficulty, str) or difficulty not in _LOBBY_DIFFICULTIES:
+            return
+        if game_state.phase != GamePhase.LOBBY:
+            return
+        if difficulty == game_state.difficulty:
+            return
+        game_state.difficulty = difficulty
+        await self._broadcast_state_projected(game_state)
+
     # ------------------------------------------------------------------
     # Milestone fan-out (#789)
     # ------------------------------------------------------------------
@@ -4842,6 +4884,10 @@ class QuizifyWebSocketHandler:
         ),
         MSG_SET_LANGUAGE: (
             lambda self, ws, data, gs: self._handle_set_language(ws, data, gs),
+            True,
+        ),
+        MSG_SET_DIFFICULTY: (
+            lambda self, ws, data, gs: self._handle_set_difficulty(ws, data, gs),
             True,
         ),
         # --- teams (#365): player messages, refused outside the lobby ---

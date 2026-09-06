@@ -511,6 +511,15 @@
                 break;
 
             case 'hot_seat_question':
+                // #852: a question starting empties the timer's polite region,
+                // and this is the one question that never goes through
+                // startCountdown — the chair's clock arrives as
+                // `hot_seat_tick`. Without this the auction's last sentence
+                // ("10 seconds left") is still standing when the seat question
+                // opens with a full clock. Cleared here rather than inside the
+                // Hot Seat module because it is the timer's region, and every
+                // other question clears it from the same layer.
+                if (game && game.clearTimeAnnouncement) game.clearTimeAnnouncement();
                 if (hotSeat) hotSeat.handleQuestion(msg);
                 break;
 

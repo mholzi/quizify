@@ -210,6 +210,11 @@
      */
     function renderLobby(data) {
         var players = data.players || [];
+        // Resolved here rather than off the `window.t` global the rest of this
+        // function used, so the lobby renders the same way every other block
+        // in this file does — and so it still renders when i18n has not
+        // published that global yet.
+        var t = (window.QuizifyI18n && window.QuizifyI18n.t) || function (k) { return k; };
 
         // Player count badge
         var countBadgeEl = document.getElementById('player-count-badge');
@@ -218,12 +223,21 @@
         // Difficulty badge — was rendering as an empty pill because no
         // code wrote into it. Map server difficulty value to a localised
         // label via i18n + a small icon.
+        //
+        // #851: built out of a data-i18n span, not one composed string, for
+        // the reason #776/#809 keep proving — a textContent write freezes the
+        // word in whichever bundle happened to be loaded when the frame
+        // arrived, and leaves the initPageTranslations sweep nothing to find.
+        // The phone follows the room's language, so the badge in a German
+        // lobby read the English "Medium". Only the icon is written as text:
+        // an emoji is the same in every language.
         var diffBadgeEl = document.getElementById('lobby-difficulty-badge');
         if (diffBadgeEl) {
             var diffIcons = { 'easy': '🌱', 'medium': '🎯', 'hard': '🔥' };
             var diff = data.difficulty || data.game_difficulty || '';
             if (diff && diffIcons[diff]) {
-                diffBadgeEl.textContent = diffIcons[diff] + ' ' + t('difficulties.' + diff);
+                diffBadgeEl.innerHTML = diffIcons[diff] + ' '
+                    + _i18nSpan('difficulties.' + diff, t);
                 diffBadgeEl.classList.remove('hidden');
             } else {
                 // No difficulty info yet — hide the empty pill instead of

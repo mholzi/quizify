@@ -27,7 +27,15 @@
 
     function announceTimeLeft(seconds) {
         if (seconds > 10) {
-            lastAnnouncedSecond = null;
+            // #852: above ten seconds there is nothing true to say, so the
+            // region must be empty rather than merely un-rewritten. Resetting
+            // only the dedupe left the previous clock's last sentence
+            // standing for every path that keeps ticking without going
+            // through stopCountdown — the Hot Seat's seat question is one
+            // (the auction's countdown had just crossed ten seconds, and the
+            // chair's question opened under "10 seconds left" with 24 on the
+            // visible clock).
+            clearTimeAnnouncement();
             return;
         }
         if (seconds !== 10 && seconds !== 5) return;
