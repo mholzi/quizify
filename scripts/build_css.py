@@ -23,6 +23,10 @@ import hashlib
 import sys
 from pathlib import Path
 
+sys.path.insert(0, str(Path(__file__).resolve().parent))
+
+from asset_gzip import write_gzip_sibling  # noqa: E402
+
 REPO = Path(__file__).resolve().parent.parent
 CSS_DIR = REPO / "custom_components" / "quizify" / "www" / "css"
 SRC_DIR = CSS_DIR / "src"
@@ -70,6 +74,12 @@ def build_css() -> Path:
 
     digest = hashlib.sha1(text.encode("utf-8")).hexdigest()[:10]
     print(f"Wrote {OUT.relative_to(REPO)} ({len(text):,} bytes, sha1:{digest})")
+
+    # Same reason as in build_bundle.py: the .gz sibling wins over this file
+    # when a browser sends Accept-Encoding, so it is part of the build, not an
+    # optional extra step (#792).
+    gz = write_gzip_sibling(OUT)
+    print(f"Wrote {gz.relative_to(REPO)} ({gz.stat().st_size:,} bytes)")
     return OUT
 
 

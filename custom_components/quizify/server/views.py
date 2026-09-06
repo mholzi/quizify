@@ -84,6 +84,11 @@ _HA_LANG_TOKEN = "{{HA_LANG}}"
 # kept serving stale assets.
 _ASSET_VER_TOKEN = "{{ASSET_VER}}"
 
+# sw.js only. The service worker precaches the fallback bundle (en.json) plus
+# the language this install actually renders in, instead of every bundle that
+# ships (#791).
+_DEFAULT_LANG_TOKEN = "{{DEFAULT_LANG}}"
+
 # Subdirs under www/ that hold the ?v=-busted assets.
 _ASSET_SUBDIRS = ("css", "js", "i18n")
 
@@ -380,6 +385,9 @@ async def sw_view(request: web.Request) -> web.Response:
     wins over the raw file on disk. Served with no-cache headers so
     browsers always revalidate — a stale SW can't keep serving stale
     asset caches.
+
+    Also substitutes {{DEFAULT_LANG}} so the precache carries the one i18n
+    bundle this install renders in rather than all of them (#791).
     """
     sw_path = _WWW_DIR / "sw.js"
     ctx = _get_ctx(request)
@@ -393,6 +401,7 @@ async def sw_view(request: web.Request) -> web.Response:
         return web.Response(text="sw.js not found", status=404)
     body = _apply_version(body, version)
     body = body.replace(_ASSET_VER_TOKEN, await _get_asset_version_async(ctx, version))
+    body = body.replace(_DEFAULT_LANG_TOKEN, _resolve_default_lang(ctx.ha_language))
     # The SW is served from /quizify/static/sw.js but must control /quizify/*
     # (the actual pages). A worker can only claim a scope above its own path
     # if the response carries Service-Worker-Allowed for that wider scope —

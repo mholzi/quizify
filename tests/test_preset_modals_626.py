@@ -19,8 +19,9 @@ the typed name stays on screen to be corrected rather than retyped from memory.
 from __future__ import annotations
 
 import json
-import re
 from pathlib import Path
+
+from tests.conftest import without_comments as _without_comments
 
 _REPO_ROOT = Path(__file__).resolve().parent.parent
 _WWW = _REPO_ROOT / "custom_components" / "quizify" / "www"
@@ -36,18 +37,6 @@ NEW_KEYS = (
     "deletePresetBody",
     "deletePresetBtn",
 )
-
-
-def _without_comments(source: str) -> str:
-    """Drop JS comments before asserting on code.
-
-    Third time this trap has been hit today (#625, #622, here): a fix explains
-    itself in a comment that quotes the very thing it removed, and a raw text
-    search then reads the explanation as the code. Assertions look at
-    declarations, never at prose.
-    """
-    source = re.sub(r"/\*.*?\*/", "", source, flags=re.S)
-    return re.sub(r"^\s*//.*$", "", source, flags=re.M)
 
 
 def _function_body(source: str, signature: str) -> str:

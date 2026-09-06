@@ -14,6 +14,14 @@ These tests reconstruct the expected artifact **in memory** (no disk write)
 and assert it is byte-identical to the committed file. They are the unit
 counterpart to the CI ``drift`` job (rebuild + ``git diff --exit-code``);
 either one fails fast on stale artifacts.
+
+Since #792 the same guard covers the pre-compressed ``.gz`` siblings, and there
+it is doing more than tidiness. aiohttp's ``FileResponse`` serves ``<file>.gz``
+*in place of* ``<file>`` whenever the sibling exists and the client sent
+``Accept-Encoding: gzip`` — so a sibling that was not regenerated does not merely
+go stale, it **wins over the fresh source** and the release ships the old code
+with nothing in any log to say so. A ``.gz`` with no source, likewise, is a file
+that can only ever be served by mistake.
 """
 
 from __future__ import annotations
@@ -75,3 +83,92 @@ def test_styles_css_in_sync() -> None:
         "styles.css is stale — a www/css/src/*.css module changed but the "
         "stylesheet was not rebuilt. Run: python3 scripts/build_css.py"
     )
+
+
+# --- #792: the pre-compressed siblings aiohttp prefers over the source ---
+
+
+def test_gzip_siblings_are_in_sync() -> None:
+    """Recompress every declared target and compare bytes.
+
+    The output is deterministic by construction (``mtime=0``, no filename in the
+    header), so "the bytes differ" can only mean "the source changed and the
+    sibling did not".
+    """
+    ag = _load_script("asset_gzip")
+
+    stale: list[str] = []
+    for rel in ag.GZIP_TARGETS:
+        source = ag.WWW / rel
+        assert source.is_file(), f"gzip target has no source: {rel}"
+        sibling = ag.gzip_path(source)
+        assert sibling.is_file(), (
+            f"{rel}.gz is missing — aiohttp would serve the uncompressed file, "
+            "which is only a lost 4x, but the drift guard is the point. "
+            "Run: python3 scripts/build_gzip.py"
+        )
+        if sibling.read_bytes() != ag.gzip_bytes(source.read_bytes()):
+            stale.append(rel)
+
+    assert not stale, (
+        f"stale .gz siblings: {stale}. aiohttp serves the sibling INSTEAD of the "
+        "source, so these ship the previous version's bytes to every browser "
+        "that sends Accept-Encoding. Run: python3 scripts/build_gzip.py"
+    )
+
+
+def test_no_orphan_gzip_siblings() -> None:
+    """A ``.gz`` nobody generates is a file that can only be served by mistake.
+
+    Two ways this bites: a target dropped from ``GZIP_TARGETS`` while its
+    sibling stays behind (now frozen forever), and a ``.gz`` next to something
+    that is *not* served from disk — ``sw.js`` and the HTML pages go out through
+    ``server/views.py``, templated, so a sibling there would be an un-templated
+    copy waiting for a routing change to surface it.
+    """
+    ag = _load_script("asset_gzip")
+
+    expected = {ag.gzip_path(ag.WWW / rel) for rel in ag.GZIP_TARGETS}
+    found = {p for p in ag.WWW.rglob("*.gz") if p.is_file()}
+    orphans = sorted(str(p.relative_to(ag.WWW)) for p in found - expected)
+    assert not orphans, (
+        f"orphan .gz siblings under www/: {orphans}. Either add the source to "
+        "GZIP_TARGETS in scripts/asset_gzip.py or delete the sibling."
+    )
+
+
+def test_the_generated_artifacts_carry_their_own_siblings() -> None:
+    """build_bundle.py / build_css.py must write the .gz, not leave it to CI.
+
+    Running one build script and committing is the normal path; if the sibling
+    only appeared from a separate script, that path would ship a stale one.
+    """
+    for name in ("build_bundle", "build_css"):
+        src = (SCRIPTS / f"{name}.py").read_text("utf-8")
+        assert "write_gzip_sibling" in src, (
+            f"scripts/{name}.py writes its artifact but not the .gz sibling that "
+            "aiohttp will serve instead of it (#792)"
+        )
+
+
+def test_html_and_the_service_worker_are_not_pre_compressed() -> None:
+    """They are never served from disk, so a sibling could only ever be wrong.
+
+    ``server/views.py`` reads them, substitutes ``{{VERSION}}`` /
+    ``{{ASSET_VER}}`` / ``{{DEFAULT_LANG}}`` and answers with a ``web.Response``;
+    its routes are registered ahead of the static handler. A ``.gz`` here would
+    hold an un-templated copy.
+    """
+    ag = _load_script("asset_gzip")
+    for rel in ag.GZIP_TARGETS:
+        assert not rel.endswith(".html"), f"{rel} is templated, not served from disk"
+        assert not rel.endswith("sw.js"), f"{rel} is templated, not served from disk"
+
+
+def test_incompressible_binaries_are_left_alone() -> None:
+    """woff2 and png come out *bigger*; a sibling would be a slower download."""
+    ag = _load_script("asset_gzip")
+    for rel in ag.GZIP_TARGETS:
+        assert not rel.endswith((".woff2", ".png", ".jpg", ".webp")), (
+            f"{rel} is already compressed — gzipping it adds bytes"
+        )
