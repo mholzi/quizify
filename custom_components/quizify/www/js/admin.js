@@ -2034,9 +2034,24 @@
             });
             els.adminCorrect.style.display = '';
         }
-        // Only "End Game" on the last round: "Next Question" there would
-        // promise a round that does not exist.
-        if (els.nextQuestionBtn && !(msg && msg.last_round)) {
+        // The last round advances like any other: `next_question` from
+        // ANSWER_REVEAL resolves to the finale server-side (#255), which is
+        // exactly what the phone's admin bar offers as "Final Results"
+        // (player-reveal.js). Hiding the button here left the admin-tab host
+        // with only the red End Game and its disconnect warning — warned off
+        // the one step the room was waiting for (#806). So relabel it
+        // instead of hiding it, and set data-i18n too so a mid-game language
+        // switch re-translates the new label rather than the old one.
+        if (els.nextQuestionBtn) {
+            var lastRound = !!(msg && msg.last_round);
+            var nextKey = lastRound ? 'reveal.finalResults' : 'admin.nextQuestion';
+            var nextFallback = lastRound ? 'Final Results' : 'Next Question';
+            // _t() returns the key itself when no bundle is loaded, so the
+            // fallback is chosen on that rather than on falsiness.
+            var nextText = _t(nextKey);
+            els.nextQuestionBtn.setAttribute('data-i18n', nextKey);
+            els.nextQuestionBtn.textContent =
+                (nextText && nextText !== nextKey) ? nextText : nextFallback;
             els.nextQuestionBtn.classList.remove('hidden');
         }
         if (els.endGameBtn) els.endGameBtn.classList.remove('hidden');
