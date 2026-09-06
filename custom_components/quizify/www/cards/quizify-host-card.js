@@ -36,25 +36,62 @@
     var MAX_RECONNECT = 10;
 
     /*
-     * Phase -> primary action. Phase strings are GamePhase in game/state.py;
-     * every message here is one admin.js already sends for the same phase. The
-     * card must not invent transitions — an unknown phase falls through to a
-     * disabled button rather than guessing.
+     * Phase -> primary action. Phase strings are GamePhase in
+     * game/phase_controller.py; every message here is one admin.js already
+     * sends for the same phase. The card must not invent transitions.
+     *
+     * EVERY phase gets an entry, including the ones the host cannot act on
+     * (#801). An absent phase used to fall through to a disabled button
+     * reading 'Connecting…', so a host on a wall tablet watched a lie for the
+     * whole wager window and the whole Hot Seat auction while the game was
+     * running perfectly well. A phase with `msg: null` is the honest version
+     * of the same button: still disabled, but it says what the room is doing.
+     * tests/test_host_card_278.py asserts the map covers GamePhase, so the
+     * next phase added to the game cannot silently reintroduce 'Connecting…'.
+     *
+     * What each `msg` costs on the server (server/websocket.py):
+     *   admin_skip  — WAGER_ACTIVE closes the betting window and asks the
+     *                 question; QUESTION_ACTIVE evaluates the round now.
+     *                 Anywhere else it falls through to _handle_next_question.
+     *   next_question — accepted in LOBBY (started), ANSWER_REVEAL,
+     *                 LIGHTNING_RECAP and HOT_SEAT_REVEAL; refused with
+     *                 ERR_INVALID_ACTION everywhere else.
      */
     var PHASE_ACTIONS = {
         LOBBY: { labelKey: 'start', msg: 'start_game' },
+        // #656: the question has not been asked yet, so "skip" here means
+        // stop waiting for bets — anyone who has not bet has no bet.
+        WAGER_ACTIVE: { labelKey: 'closeBets', msg: 'admin_skip' },
         QUESTION_ACTIVE: { labelKey: 'skip', msg: 'admin_skip' },
         ANSWER_REVEAL: { labelKey: 'next', msg: 'next_question' },
         PAUSED: { labelKey: 'resume', msg: 'resume_game' },
         FINALE: { labelKey: 'again', msg: 'play_again' },
-        LIGHTNING: { labelKey: 'skip', msg: 'admin_skip' },
-        LIGHTNING_RECAP: { labelKey: 'next', msg: 'next_question' }
+        // The lightning loop is server-driven and has no host step: admin_skip
+        // reaches _handle_next_question, which refuses LIGHTNING with
+        // ERR_INVALID_ACTION. Say so rather than offering a button that errors.
+        LIGHTNING: { labelKey: 'lightningRunning', msg: null },
+        LIGHTNING_RECAP: { labelKey: 'next', msg: 'next_question' },
+        // #616: the auction and the seat question run themselves to a close;
+        // only the reveal hands the game back to the host.
+        HOT_SEAT_AUCTION: { labelKey: 'auctionRunning', msg: null },
+        HOT_SEAT: { labelKey: 'seatAnswering', msg: null },
+        HOT_SEAT_REVEAL: { labelKey: 'next', msg: 'next_question' }
     };
+
+    /*
+     * Phases in which the expanded card's extra 'Reveal' button (admin_skip)
+     * actually does something. Outside these two the server answers it with
+     * ERR_INVALID_ACTION, so the button is hidden rather than shown dead
+     * (#801) — during the Hot Seat auction it was pure noise.
+     */
+    var SKIPPABLE_PHASES = { QUESTION_ACTIVE: true, WAGER_ACTIVE: true };
 
     var LABELS = {
         en: {
             title: 'Quizify', start: 'Start game', skip: 'Skip to answer',
             next: 'Next question', resume: 'Resume', again: 'Play again',
+            closeBets: 'Close betting', lightningRunning: 'Lightning round running',
+            auctionRunning: 'Bidding for the hot seat', seatAnswering: 'The hot seat is answering',
             reveal: 'Reveal', end: 'End game', reset: 'Reset', kick: 'Kick',
             players: 'players', round: 'Round', join: 'Join',
             waiting: 'Waiting for players', connecting: 'Connecting…',
@@ -65,6 +102,8 @@
         de: {
             title: 'Quizify', start: 'Spiel starten', skip: 'Zur Auflösung',
             next: 'Nächste Frage', resume: 'Weiter', again: 'Nochmal spielen',
+            closeBets: 'Wetten schließen', lightningRunning: 'Blitzrunde läuft',
+            auctionRunning: 'Gebote für den Hot Seat', seatAnswering: 'Der Hot Seat antwortet',
             reveal: 'Auflösen', end: 'Spiel beenden', reset: 'Zurücksetzen', kick: 'Rauswerfen',
             players: 'Spieler', round: 'Runde', join: 'Beitreten',
             waiting: 'Warte auf Spieler', connecting: 'Verbinde…',
@@ -75,6 +114,8 @@
         es: {
             title: 'Quizify', start: 'Empezar partida', skip: 'Ir a la respuesta',
             next: 'Siguiente pregunta', resume: 'Continuar', again: 'Jugar otra vez',
+            closeBets: 'Cerrar apuestas', lightningRunning: 'Ronda relámpago en curso',
+            auctionRunning: 'Pujas por la silla caliente', seatAnswering: 'La silla caliente responde',
             reveal: 'Revelar', end: 'Terminar partida', reset: 'Reiniciar', kick: 'Expulsar',
             players: 'jugadores', round: 'Ronda', join: 'Unirse',
             waiting: 'Esperando jugadores', connecting: 'Conectando…',
@@ -324,6 +365,17 @@
 
         // ---- Rendering ---------------------------------------------------
 
+        /*
+         * The one morphing button.
+         *
+         * Three outcomes, and the middle one is the point of #801:
+         *   - a known phase with a message  -> live button
+         *   - a known phase without one     -> disabled button naming the
+         *     phase ("Bidding for the hot seat"), because the game is running
+         *     and the host is simply not the one who advances it
+         *   - genuinely no state yet        -> 'Connecting…', which is now
+         *     only ever true when it is true
+         */
         _primary() {
             var phase = this._state && this._state.phase;
             var action = PHASE_ACTIONS[phase] || null;
@@ -331,10 +383,11 @@
             // An empty lobby has nothing to start; say why rather than letting
             // the host tap a button that refuses.
             var blocked = phase === 'LOBBY' && players.length === 0;
+            var msg = (action && action.msg) || null;
             return {
                 label: action ? this._t[action.labelKey] : this._t.connecting,
-                msg: action ? action.msg : null,
-                disabled: !action || blocked || this._status !== 'online',
+                msg: msg,
+                disabled: !msg || blocked || this._status !== 'online',
                 blockedReason: blocked ? this._t.waiting : null
             };
         }
@@ -395,11 +448,15 @@
                     esc(primary.label) + '</button>';
 
             if (expanded) {
-                html += '<div class="row">' +
-                    // Reveal is admin_skip: it cuts the timer short and shows the
-                    // answer, which is what admin.js does behind the same label.
-                    '<button data-msg="admin_skip">' + esc(t.reveal) + '</button>' +
-                    '<button data-msg="end_game">' + esc(t.end) + '</button>' +
+                html += '<div class="row">';
+                // Reveal is admin_skip: it cuts the timer short and shows the
+                // answer, which is what admin.js does behind the same label.
+                // Only two phases accept it (#801) — elsewhere the server
+                // answers ERR_INVALID_ACTION, so the button is not offered.
+                if (s && SKIPPABLE_PHASES[s.phase]) {
+                    html += '<button data-msg="admin_skip">' + esc(t.reveal) + '</button>';
+                }
+                html += '<button data-msg="end_game">' + esc(t.end) + '</button>' +
                     '<button data-reset="1">' + esc(t.reset) + '</button>' +
                     '</div>';
             }
