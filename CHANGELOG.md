@@ -3,6 +3,32 @@
 All notable changes to Quizify are documented here. This project follows
 [Semantic Versioning](https://semver.org/).
 
+## [1.16.0-RC3] — 2026-09-06
+
+The second candidate was played too. It found three ways an evening could end
+early, and all three are fixed.
+
+### 🚪 The room could get locked
+
+A host who runs the game from the admin page and closes the tab could not come
+back — reopening it showed the setup screen, because the one phase a host-less
+room parks in was the one phase that had no landing. The guests could not rescue
+the room either: the frame that tells them the host is gone was sent from a task
+the server had already cancelled, and it carried a name nothing on the phone was
+listening for.
+
+### 🪑 And the chair could not answer
+
+On a picture or estimate round, the seat holder was shown an empty question: the
+answer grid was being filled inside a section the round had hidden. The stake
+went to a timeout every time.
+
+### 📺 Three screens showing the game before this one
+
+The host's leaderboard was a round behind at every reveal, the television kept
+the last game's fun fact into the next one, and the lobby showed the previous
+game's difficulty — the same shape as the language bug, and fixed the same way.
+
 ## [1.16.0-RC2] — 2026-09-06
 
 Six games on a real television found nine things RC1 got wrong. All nine are here.
