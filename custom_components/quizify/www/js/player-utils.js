@@ -481,6 +481,23 @@
         setTimeout(function () { toast.style.opacity = '0'; }, duration);
     }
 
+    /**
+     * Drop the toast on the floor (#838).
+     *
+     * showToast only fades the element out; the node keeps the text, and the
+     * node is fixed to the page rather than to a view, so a reset that fired
+     * inside a toast's own duration carried "3 in a row!" onto the join
+     * screen. Emptying it as well as hiding it also takes it out of the
+     * accessibility tree, where a faded-out toast is still a readable line.
+     */
+    function clearToast() {
+        var toast = document.getElementById('error-toast');
+        if (!toast) return;
+        toast.style.opacity = '0';
+        toast.classList.remove('toast--with-icon');
+        toast.textContent = '';
+    }
+
     // ============================================
     // Session Storage Helpers
     // ============================================
@@ -630,6 +647,7 @@
         feedbackLabel: feedbackLabel,
         generateQR: generateQR,
         showToast: showToast,
+        clearToast: clearToast,
         // #729: a join refused mid-reconnect has to pull the guest out from
         // under the reconnecting overlay, or the reason lands on a screen
         // nobody can see.

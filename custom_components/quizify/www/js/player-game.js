@@ -36,7 +36,33 @@
         var region = document.getElementById('timer-sr-announce');
         if (!region) return;
         var t = (window.QuizifyI18n && window.QuizifyI18n.t) || function (k) { return k; };
-        region.textContent = t(seconds === 10 ? 'game.timerTenLeft' : 'game.timerFiveLeft');
+        var key = seconds === 10 ? 'game.timerTenLeft' : 'game.timerFiveLeft';
+        // #839: carry the key, not only the rendered sentence. The phone
+        // follows the room's language (#809 / _syncServerLanguage), and every
+        // other translated node is re-rendered by the initPageTranslations
+        // sweep because it has a data-i18n attribute to be found by. Without
+        // one this region kept the language it was written in — a German game
+        // whose players had just finished an English one was reading
+        // "5 seconds left" into VoiceOver.
+        region.setAttribute('data-i18n', key);
+        region.textContent = t(key);
+    }
+
+    /**
+     * Empty the polite region (#839).
+     *
+     * It is a sentence, not a counter: nothing overwrites it until the timer
+     * next crosses 10s or 5s, so between questions it kept telling anyone who
+     * came back to the page that five seconds were left while the visible
+     * clock read 43. Removing the attribute as well as the text stops the
+     * next language sweep from writing the sentence back.
+     */
+    function clearTimeAnnouncement() {
+        lastAnnouncedSecond = null;
+        var region = document.getElementById('timer-sr-announce');
+        if (!region) return;
+        region.removeAttribute('data-i18n');
+        region.textContent = '';
     }
 
     /**
@@ -113,6 +139,11 @@
             clearInterval(countdownInterval);
             countdownInterval = null;
         }
+        // #839: this is every end of a question — the reveal, the finale, the
+        // clock reaching zero — and it is also startCountdown's own first
+        // statement, so a question STARTING clears the previous question's
+        // announcement through here too. One place, four exits.
+        clearTimeAnnouncement();
     }
 
     // ============================================
@@ -1463,6 +1494,7 @@
     window.QuizifyPlayerGame = {
         startCountdown: startCountdown,
         stopCountdown: stopCountdown,
+        clearTimeAnnouncement: clearTimeAnnouncement,
         startFrozenOverlay: startFrozenOverlay,
         stopFrozenOverlay: stopFrozenOverlay,
         isFrozen: isFrozen,
