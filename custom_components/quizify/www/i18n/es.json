@@ -364,12 +364,12 @@
       "lightningHint": "Ronda rápida sorpresa a mitad de la partida",
       "q7": "¿Silla caliente?",
       "hotSeatHint": "La silla se subasta y una sola persona responde",
-      "hotSeatTeamNote": "No en modo por equipos \u2014 los invitados han formado equipos, as\u00ed que la subasta se queda fuera.",
+      "hotSeatTeamNote": "Con equipos: cada equipo puja una vez, y quien puja ocupa la silla por \u00e9l.",
       "q8": "¿Comodines?",
       "powerupsHint": "Se reparten Comodín, Robar, Congelar y compañía",
       "q9": "¿Apuesta en la última ronda?",
       "wagerHint": "Apostar puntos en la pregunta final",
-      "wagerTeamNote": "No en modo por equipos \u2014 los invitados han formado equipos, la \u00faltima pregunta se juega sin apuesta."
+      "wagerTeamNote": "Con equipos: la apuesta es del equipo y se hace sobre su puntuaci\u00f3n."
     },
     "tts": {
       "title": "¿Voz del presentador?",

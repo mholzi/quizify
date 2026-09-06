@@ -2298,13 +2298,17 @@
     }
 
     /**
-     * Explain the two settings teams change, before Start (#804).
+     * Explain what teams do to the two settings, before Start (#804).
      *
      * The Hot Seat and the final wager are chosen on the setup screen; the
      * teams are formed by the guests in the lobby, i.e. afterwards. So a host
      * who ticked both had no way to learn from the host screen that the room
-     * had since split into teams, nor what that does to the two toggles. The
-     * note lives on the setup rows because that is where the promise was
+     * had since split into teams, nor what that does to the two toggles —
+     * which for the whole of #668/#669 was "switches them off", and is now
+     * "the team bids and bets as one". Either way the host should read it
+     * before Start rather than infer it from what does or does not happen.
+     *
+     * The note lives on the setup rows because that is where the promise was
      * made, and the lobby's "Settings" button leads straight back to it.
      */
     function applyTeamModeSetupNotes() {
