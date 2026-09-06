@@ -364,10 +364,12 @@
       "lightningHint": "Überraschungs-Schnellrunde mitten im Spiel",
       "q7": "Heißer Stuhl?",
       "hotSeatHint": "Der Stuhl wird versteigert, einer antwortet allein",
+      "hotSeatTeamNote": "Nicht im Team-Modus \u2014 die G\u00e4ste haben Teams gebildet, die Versteigerung bleibt diese Runde drau\u00dfen.",
       "q8": "Power-Ups?",
       "powerupsHint": "Joker, Klauen, Einfrieren und Co. werden verteilt",
       "q9": "Einsatz in der letzten Runde?",
-      "wagerHint": "Punkte auf die letzte Frage setzen"
+      "wagerHint": "Punkte auf die letzte Frage setzen",
+      "wagerTeamNote": "Nicht im Team-Modus \u2014 die G\u00e4ste haben Teams gebildet, die letzte Frage l\u00e4uft ohne Einsatz."
     },
     "tts": {
       "title": "Quizmaster-Stimme?",
