@@ -1497,6 +1497,11 @@
         isFrozen: isFrozen,
         updateTimer: updateTimer,
         renderQuestion: renderQuestion,
+        // #802: the Hot Seat panel paints its own question into the shared
+        // game view and needs the same banner. Exported rather than copied so
+        // the sanitizer, the alt text and the progressive-reveal reset stay in
+        // one place.
+        renderQuestionImageBanner: renderQuestionImageBanner,
         renderWagerWindow: renderWagerWindow,
         clearRevealBlur: clearRevealBlur,
         preloadNextImage: preloadNextImage,

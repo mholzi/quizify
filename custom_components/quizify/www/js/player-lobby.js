@@ -49,25 +49,51 @@
         }
 
         // Meta line under the hero: difficulty + round count if known.
+        //
+        // #809: built out of data-i18n spans, not one composed string. The
+        // first game_state after `joined` runs the async setLanguage and then,
+        // synchronously, repaints this line — so a textContent write froze it
+        // in the bundle that was still loaded, and the later
+        // initPageTranslations() sweep found no attribute to re-render. The
+        // words each live in their own span with their own key; only the round
+        // NUMBER is written as text, because a number is the same in every
+        // language. Same shape as the renderAllTime fix below (#776).
         if (metaEl) {
             var bits = [];
             var diffIcons = { 'easy': '🌱', 'medium': '🎯', 'hard': '🔥' };
             var diff = data && (data.difficulty || data.game_difficulty);
-            if (diff && diffIcons[diff]) bits.push(diffIcons[diff] + ' ' + t('difficulties.' + diff));
+            if (diff && diffIcons[diff]) {
+                bits.push(diffIcons[diff] + ' ' + _i18nSpan('difficulties.' + diff, t));
+            }
             var total = data && (data.total_rounds || data.num_rounds);
-            if (total) bits.push(total + ' ' + t('admin.summaryRoundsUnit'));
-            metaEl.textContent = bits.length ? bits.join(' · ') : t('lobby.gameLobby');
+            if (total) {
+                bits.push(_escape(String(total)) + ' '
+                    + _i18nSpan('admin.summaryRoundsUnit', t));
+            }
+            metaEl.innerHTML = bits.length
+                ? bits.join(' · ')
+                : _i18nSpan('lobby.gameLobby', t);
         }
 
-        // Companion line.
+        // Companion line — #809, same cause, one string. This one takes a
+        // {count}, so the params ride along as JSON the way #776 taught the
+        // sweep to read them.
         if (alsoEl) {
-            if (others.length === 0) {
-                alsoEl.textContent = t('lobby.aloneWaiting');
-            } else if (others.length === 1) {
-                alsoEl.textContent = t('lobby.alsoOne');
-            } else {
-                alsoEl.textContent = t('lobby.alsoMany', { count: others.length });
+            var alsoKey = 'lobby.aloneWaiting';
+            var alsoParams = null;
+            if (others.length === 1) {
+                alsoKey = 'lobby.alsoOne';
+            } else if (others.length > 1) {
+                alsoKey = 'lobby.alsoMany';
+                alsoParams = { count: others.length };
             }
+            alsoEl.setAttribute('data-i18n', alsoKey);
+            if (alsoParams) {
+                alsoEl.setAttribute('data-i18n-params', JSON.stringify(alsoParams));
+            } else {
+                alsoEl.removeAttribute('data-i18n-params');
+            }
+            alsoEl.textContent = t(alsoKey, alsoParams);
         }
 
         // Orbit chips — one per OTHER player. Uses the same color the
@@ -150,6 +176,17 @@
         }
         if (oneGame) return 'lobby.allTimeOneWinOneGame';
         return standing.wins === 1 ? 'lobby.allTimeOneWin' : 'lobby.allTime';
+    }
+
+    /**
+     * One translated word, wrapped so the sweep can find it again (#809).
+     *
+     * initPageTranslations() re-renders every element carrying `data-i18n`, so
+     * a line assembled from these spans survives a language change that lands
+     * after it was painted — which a single textContent write does not.
+     */
+    function _i18nSpan(key, t) {
+        return '<span data-i18n="' + _escape(key) + '">' + _escape(t(key)) + '</span>';
     }
 
     // Tiny helpers — keep scope tight.

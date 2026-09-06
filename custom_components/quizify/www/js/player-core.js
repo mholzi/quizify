@@ -331,10 +331,19 @@
 
             case 'player_joined':
                 lobby.handlePlayerJoined(msg);
+                _rememberRoster(msg);
+                refreshStageReset();
                 break;
 
             case 'player_left':
                 lobby.handlePlayerLeft(msg);
+                // #803: this is the frame that says the host's phone just
+                // died. Nothing else follows it while the room waits on a
+                // results screen — no game_state, no tick — so re-deciding
+                // the escape hatch here is what catches a host who drops
+                // DURING a waiting stage rather than before it.
+                _rememberRoster(msg);
+                refreshStageReset();
                 break;
 
             // Teams (#365). `teams_update` is the room's view and arrives on
@@ -494,6 +503,11 @@
 
             case 'hot_seat_result':
                 if (hotSeat) hotSeat.handleResult(msg);
+                // #803: the settlement leaves the room on HOT_SEAT_REVEAL,
+                // which only a host tap leaves. If the host was the seat
+                // holder and their phone died, the clock settles the stake
+                // (#653) and stops here — with no way out for anyone.
+                setResetStage('HOT_SEAT_REVEAL');
                 break;
 
             // ---- Lightning Round (issue #42) ----
@@ -517,6 +531,9 @@
                 break;
             case 'lightning_recap':
                 if (lightning) lightning.handleLightningRecap(msg);
+                // #803: the recap waits for the host's "Continue game" and
+                // nothing else. Same dead-end as the reveal, same hatch.
+                setResetStage('LIGHTNING_RECAP');
                 break;
 
             case 'guess_accepted':
@@ -602,13 +619,13 @@
 
         if (msg.players) lobby.handlePlayerJoined(msg);
 
-        // #299: drop the host-gone reset escape hatch whenever we leave the
-        // paused/reveal views (e.g. the host came back and resumed). The
-        // PAUSED and REVEAL cases below re-arm it if still warranted.
+        // #299/#803: the host-gone reset escape hatch. A snapshot always
+        // carries the roster, so this is the authoritative reading; leaving a
+        // waiting stage drops the hatch (e.g. the host came back and resumed),
+        // and entering one re-arms it if the host is still missing.
         if (msg.phase !== 'PAUSED') disarmResetAffordance('paused-reset-btn');
-        if (msg.phase !== 'ANSWER_REVEAL' && msg.phase !== 'REVEAL') {
-            disarmResetAffordance('reveal-reset-btn', 'reveal-reset-controls');
-        }
+        _rememberRoster(msg);
+        setResetStage(STAGE_RESET_AFFORDANCES[msg.phase] ? msg.phase : null);
 
         switch (msg.phase) {
             case 'LOBBY':
@@ -666,9 +683,8 @@
             case 'REVEAL':
                 pu.showView('reveal-view');
                 reveal.updateRevealView(msg);
-                // #299: if the host has vanished, a reveal nobody can advance
-                // is a dead-end → arm the non-admin reset escape hatch.
-                maybeArmRevealReset(msg);
+                // The hatch itself is armed by setResetStage above, which
+                // reads this same phase off the snapshot.
                 disarmResetAffordance('paused-reset-btn');
                 break;
 
@@ -1080,8 +1096,20 @@
 
     function handleFinale(msg) {
         state.currentPhase = 'FINALE';
+        // #782: updatePageTitle has always known the FINALE case, but the two
+        // paths that reach the end screen — the live `finale` event and a
+        // FINALE game_state — both routed straight here, so nothing ever
+        // called it. The tab kept "Quizify — Question 5" while the screen said
+        // Game Over, which is the one place the phone still claimed a game was
+        // running: it is what a player reads in the tab strip and in the app
+        // switcher.
+        updatePageTitle('FINALE', msg);
         game.stopCountdown();
         _clearFinaleCountdown();
+        // #803: the game is over — the end screen has its own New game button,
+        // and a hatch armed on the stage we just left must not surface here a
+        // minute later.
+        setResetStage(null);
         pu.showView('end-view');
 
         end.updateEndView(msg);
@@ -1166,27 +1194,96 @@
         }
     }
 
-    // Decide whether the reveal view should arm its reset affordance. The
-    // reveal payload carries the full player list; "no connected admin"
-    // means the host can no longer advance the round → arm the escape hatch.
-    function maybeArmRevealReset(data) {
-        if (state.isAdmin) { disarmResetAffordance('reveal-reset-btn', 'reveal-reset-controls'); return; }
-        var players = (data && data.players) || [];
-        var adminConnected = players.some(function (p) {
+    // ------------------------------------------------------------------
+    // Between-round stages that wait for a host tap (#299, #803)
+    // ------------------------------------------------------------------
+    //
+    // Each of these phases ends only when the host advances it: the reveal and
+    // the two detour results are all left by `next_question`. If the host's
+    // phone dies while one is on screen, nothing on the wire will ever move
+    // again — the server's grace pause refuses every phase but QUESTION_ACTIVE
+    // — so every one of them needs the #207 escape hatch.
+    //
+    // #299 gave it to the reveal only. The lightning recap and the Hot Seat
+    // result arrived later and inherited the hole: the server would have
+    // accepted `reset_game` from any of the guests sitting there, but no view
+    // offered it, so a whole room sat on a results screen forever. Listing the
+    // stages in one table is what stops the next between-round phase
+    // inheriting it a third time.
+    var STAGE_RESET_AFFORDANCES = {
+        'ANSWER_REVEAL': ['reveal-reset-btn', 'reveal-reset-controls'],
+        'REVEAL': ['reveal-reset-btn', 'reveal-reset-controls'],
+        'LIGHTNING_RECAP': ['lightning-recap-reset-btn', 'lightning-recap-reset-controls'],
+        'HOT_SEAT_REVEAL': ['hotseat-reset-btn', 'hotseat-reset-controls']
+    };
+
+    // The roster from the most recent frame that carried one.
+    //
+    // "Is a host still connected" is the whole decision, and the events that
+    // OPEN two of these stages — `lightning_recap`, `hot_seat_result` — carry
+    // no player list at all, while the frame that says the host just vanished
+    // (`player_left`) carries nothing else. Remembering the last roster lets
+    // both kinds of frame ask the same question.
+    var _lastRoster = [];
+
+    // Which stage the phone is sitting on, or null. Deliberately not
+    // state.currentPhase: the two detour results are announced by one-shot
+    // events that must not be allowed to rewrite the phase everything else
+    // reads.
+    var _resetStage = null;
+
+    function _rememberRoster(msg) {
+        if (msg && Array.isArray(msg.players)) _lastRoster = msg.players;
+    }
+
+    function _hostIsConnected() {
+        return _lastRoster.some(function (p) {
             return p && p.is_admin && p.connected !== false;
         });
-        if (adminConnected) {
-            disarmResetAffordance('reveal-reset-btn', 'reveal-reset-controls');
+    }
+
+    // Enter (or leave) a waiting stage. Leaving takes the escape hatch with
+    // it — a hatch left armed across a phase change would pop up 60s later on
+    // a screen where it means nothing.
+    function setResetStage(stage) {
+        _resetStage = stage || null;
+        var mine = _resetStage ? STAGE_RESET_AFFORDANCES[_resetStage][0] : null;
+        Object.keys(STAGE_RESET_AFFORDANCES).forEach(function (key) {
+            var ids = STAGE_RESET_AFFORDANCES[key];
+            // ANSWER_REVEAL and REVEAL are two names for one control, so
+            // compare the button, not the phase — otherwise the alias would
+            // disarm the stage we are standing on.
+            if (ids[0] === mine) return;
+            disarmResetAffordance(ids[0], ids[1]);
+        });
+        refreshStageReset();
+    }
+
+    // Re-decide the current stage's hatch against the latest roster. Called
+    // again on every roster frame, so a host who dies *during* the stage is
+    // caught, not just one who was already gone when it opened.
+    function refreshStageReset() {
+        var ids = _resetStage && STAGE_RESET_AFFORDANCES[_resetStage];
+        if (!ids) return;
+        // The admin has their own bar with Next Round on every one of these
+        // screens; a reset button next to it is an invitation to a misfire.
+        if (state.isAdmin || _hostIsConnected()) {
+            disarmResetAffordance(ids[0], ids[1]);
         } else {
-            // The wrapper (#reveal-reset-controls) is kept hidden until the
-            // timer fires — see armResetAffordance's wrapperId reveal — so a
-            // host-gone reveal doesn't show an empty bordered slot for 60s.
-            armResetAffordance('reveal-reset-btn', 'reveal-reset-controls');
+            // The wrapper is kept hidden until the timer fires — see
+            // armResetAffordance's wrapperId reveal — so a host-gone stage
+            // doesn't show an empty bordered slot for 60s.
+            armResetAffordance(ids[0], ids[1]);
         }
     }
 
     function setupResetAffordance() {
-        ['paused-reset-btn', 'reveal-reset-btn'].forEach(function (id) {
+        [
+            'paused-reset-btn',
+            'reveal-reset-btn',
+            'lightning-recap-reset-btn',
+            'hotseat-reset-btn'
+        ].forEach(function (id) {
             var btn = document.getElementById(id);
             if (btn) {
                 btn.addEventListener('click', function () {

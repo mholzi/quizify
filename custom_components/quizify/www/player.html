@@ -171,9 +171,11 @@
                  uncluttered as it is today. -->
             <p class="pl-allTime hidden" id="pl-alltime" aria-live="polite"></p>
 
-            <p class="pl-also" id="pl-also">
-                <span data-i18n="lobby.aloneWaiting">Waiting on your own…</span>
-            </p>
+            <!-- #809: the key sits on the <p> itself, because that is where
+                 _renderHeroAndOrbits writes it. A key on an inner span would
+                 be destroyed by the first repaint and the sweep would have
+                 nothing left to re-translate on a late language switch. -->
+            <p class="pl-also" id="pl-also" data-i18n="lobby.aloneWaiting">Waiting on your own…</p>
 
             <!-- Orbit row: every other player (not you) rendered as a
                  small dot+name chip. player-lobby.js renders into here
@@ -426,6 +428,18 @@
                     </div>
                 </section>
 
+                <!-- #803: non-admin escape hatch on the Hot Seat result. The
+                     settlement leaves the room in HOT_SEAT_REVEAL, which only
+                     a host tap leaves — and if the host WAS the seat holder
+                     and their phone died, the clock settles the stake (#653)
+                     and stops right here. Sits outside #hotseat-panel because
+                     the panel tears itself down on the result; hidden by
+                     default, revealed by player-core after ~60s with no
+                     connected admin (server authorizes the reset per #207). -->
+                <div id="hotseat-reset-controls" class="card-section hidden">
+                    <button id="hotseat-reset-btn" class="btn btn-primary btn-glow hidden" type="button" data-i18n="admin.resetGame">Reset game</button>
+                </div>
+
                 <!-- Estimate slider (#275, Variant B). Shown instead of the
                      A/B/C grid when question_started.question_type === 'estimate'.
                      Big live value above the track, range labels, "Tipp abgeben". -->
@@ -613,7 +627,7 @@
                      ~60s with no connected admin so any client can reset the
                      stuck game (server authorizes this per #207). -->
                 <div id="reveal-reset-controls" class="pl-result-section hidden">
-                    <button id="reveal-reset-btn" class="btn btn-primary btn-glow" type="button" data-i18n="admin.resetGame">Reset game</button>
+                    <button id="reveal-reset-btn" class="btn btn-primary btn-glow hidden" type="button" data-i18n="admin.resetGame">Reset game</button>
                 </div>
 
                 <!-- Hidden helpers — legacy renderers (analytics, leaderboard,
@@ -868,6 +882,17 @@
                 <div id="lightning-recap-player-msg" class="end-player-message hidden">
                     <p class="thanks-line"><span class="qz-icon feedback-icon qz-icon--coral" data-ui-icon="party" aria-hidden="true"></span><span data-i18n="leaderboard.thanksEmoji">Thanks for playing!</span></p>
                     <p class="end-hint" data-i18n="lightning.recapWaitHint">Hang tight — the host continues the game</p>
+                </div>
+
+                <!-- #803: non-admin escape hatch on the lightning recap. The
+                     recap is left by the host's "Continue game" and by nothing
+                     else, so a host device that dies here strands every guest
+                     on a results screen. Hidden by default; revealed by
+                     player-core after ~60s with no connected admin, the same
+                     mechanism the reveal has had since #299 (server authorizes
+                     the reset per #207). -->
+                <div id="lightning-recap-reset-controls" class="end-admin-controls hidden">
+                    <button id="lightning-recap-reset-btn" class="btn btn-primary btn-glow hidden" type="button" data-i18n="admin.resetGame">Reset game</button>
                 </div>
             </div>
         </div>
