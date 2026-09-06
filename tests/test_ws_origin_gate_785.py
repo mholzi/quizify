@@ -36,6 +36,9 @@ from custom_components.quizify.game.state import QuizifyGameState  # noqa: E402
 from custom_components.quizify.server import WS_PATH, views  # noqa: E402
 from custom_components.quizify.server.connection import ConnectionManager  # noqa: E402
 from custom_components.quizify.server.context import APP_CTX_KEY  # noqa: E402
+from custom_components.quizify.server.flag_store import (  # noqa: E402
+    FILENAME as FLAG_FILE,
+)
 from custom_components.quizify.server.origin import (  # noqa: E402
     allowed_origin_hosts,
     is_origin_allowed,
@@ -282,7 +285,7 @@ class TestUnauthenticatedPostGate:
             tmp_path, {"Origin": EVIL, "Content-Type": "application/json"}
         )
         assert resp.status == 403
-        assert not (tmp_path / views._FLAG_FILE).exists(), (
+        assert not (tmp_path / FLAG_FILE).exists(), (
             "the cross-site POST still appended to flagged.jsonl"
         )
 
@@ -292,7 +295,7 @@ class TestUnauthenticatedPostGate:
             tmp_path, {"Content-Type": "application/x-www-form-urlencoded"}
         )
         assert resp.status == 415
-        assert not (tmp_path / views._FLAG_FILE).exists()
+        assert not (tmp_path / FLAG_FILE).exists()
 
     def test_a_missing_content_type_is_refused(self, tmp_path: Path) -> None:
         resp = _flag(tmp_path, {})
@@ -307,4 +310,4 @@ class TestUnauthenticatedPostGate:
             },
         )
         assert resp.status == 200
-        assert (tmp_path / views._FLAG_FILE).exists()
+        assert (tmp_path / FLAG_FILE).exists()
