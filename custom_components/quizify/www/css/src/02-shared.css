@@ -497,11 +497,6 @@ button, .btn {
     height: 72px;
     border-radius: 22px;
 }
-.lr-splash-stage.lr-splash-tv .lr-splash-bolt .qz-icon {
-    width: 96px;
-    height: 96px;
-    border-radius: 28px;
-}
 #category-chips.chip-group--cards .pack-card-name {
     font-family: var(--font-display, var(--font-system, inherit));
     font-weight: 700;
@@ -723,57 +718,6 @@ button, .btn {
 .theme-tab.active .qz-icon {
     background: rgba(250, 246, 236, 0.18) !important;
     color: var(--color-bg-surface) !important;
-}
-
-/* ==========================================
-   Setting Rows (Beatify pattern)
-   ========================================== */
-
-.setting-row {
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
-    padding: var(--space-xs) 0;
-    border-bottom: 1px solid rgba(255, 255, 255, 0.05);
-}
-
-.setting-row:last-child {
-    border-bottom: none;
-}
-
-/* setting-block: label on top, chips below (full width) */
-.setting-block {
-    display: flex;
-    flex-direction: column;
-    gap: 10px;
-    padding: var(--space-sm) 0;
-    border-bottom: 1px solid rgba(255, 255, 255, 0.05);
-}
-
-.setting-block:last-child {
-    border-bottom: none;
-}
-
-.setting-block .setting-label {
-    font-size: 0.875rem;
-    font-weight: 600;
-    color: var(--color-text-muted, #a4a4b8);
-}
-
-.setting-block .chip-group {
-    flex-wrap: wrap;
-}
-
-.setting-label {
-    display: flex;
-    align-items: center;
-    gap: var(--space-xs);
-    font-size: 0.875rem;
-    color: var(--color-text-white);
-}
-
-.setting-icon {
-    font-size: 0.875rem;
 }
 
 /* Toggle switch (Beatify pattern) */

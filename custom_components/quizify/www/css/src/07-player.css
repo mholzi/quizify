@@ -15,15 +15,6 @@
     margin-bottom: var(--space-md);
 }
 
-.end-title {
-    font-family: var(--font-display);
-    font-size: 2rem;
-    font-weight: 900;
-    color: var(--color-text-white);
-    letter-spacing: -0.02em;
-    margin-bottom: var(--space-xs);
-}
-
 .end-subtitle {
     font-size: 0.9rem;
     color: var(--color-text-neon-muted);
@@ -349,24 +340,6 @@
     opacity: 0.6;
     cursor: default;
 }
-
-/* The ⚡ on the Lightning buttons uses the shared SVG bolt glyph (#247),
-   sized ~20px, not the emoji. */
-.resbtn-bolt {
-    width: 20px;
-    height: 20px;
-    display: inline-flex;
-    align-items: center;
-    justify-content: center;
-    flex-shrink: 0;
-}
-.resbtn-bolt svg {
-    width: 20px;
-    height: 20px;
-    display: block;
-}
-.resbtn--primary .resbtn-bolt svg { fill: #fff; }
-.resbtn--secondary .resbtn-bolt svg { fill: var(--color-accent-primary); }
 
 /* ==========================================
    Shared medal-card standings (Standings A, approved 2026-06-10).
@@ -885,31 +858,6 @@
    Player Page: REVEAL VIEW
    ========================================== */
 
-.reveal-container {
-    display: flex;
-    flex-direction: column;
-    gap: var(--space-md);
-    padding-bottom: var(--space-2xl);
-}
-
-.reveal-container--compact {
-    gap: var(--space-sm);
-}
-
-.reveal-header-compact {
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
-    padding: var(--space-sm) 0;
-    font-size: 0.8rem;
-}
-
-.reveal-header-left {
-    display: flex;
-    align-items: center;
-    gap: var(--space-sm);
-}
-
 .reveal-emotion-text {
     font-size: 1.1rem;
     font-weight: 700;
@@ -917,126 +865,15 @@
     margin-bottom: var(--space-sm);
 }
 
-/* ============================================================
-   Answer-distribution variant F (Filling-Bar).
-   Each row IS the bar — text + percentage sit on top of a coral
-   wash that grows from the left to match vote percentage. Correct
-   row repaints sage with a ✓; the player's own row gets a "· DU"
-   tag in coral so per-player shuffle doesn't lose them.
-   ============================================================ */
-.ad-row {
-    position: relative;
-    min-height: 44px;
-    border: 1px solid var(--color-border-light);
-    border-radius: 8px;
-    overflow: hidden;
-    background: var(--color-bg-surface);
-    display: flex;
-    align-items: center;
-}
-.ad-row + .ad-row { margin-top: 6px; }
-
-.ad-fill {
-    position: absolute;
-    left: 0; top: 0; bottom: 0;
-    background: var(--color-accent-brand-bg);
-    transition: width 600ms ease-out;
-}
-
-.ad-content {
-    position: relative;
-    z-index: 1;
-    display: grid;
-    grid-template-columns: 26px 1fr auto;
-    align-items: center;
-    gap: 10px;
-    width: 100%;
-    padding: 8px 12px;
-}
-
-.ad-letter {
-    font-family: var(--font-mono);
-    font-weight: 700;
-    color: var(--color-text-muted);
-    font-size: 0.85rem;
-}
-
-.ad-text {
-    color: var(--color-text-primary);
-    font-size: 0.95rem;
-    overflow: hidden;
-    text-overflow: ellipsis;
-    white-space: nowrap;
-}
-
-.ad-pct {
-    font-family: var(--font-mono);
-    font-weight: 600;
-    color: var(--color-text-muted);
-    font-size: 0.85rem;
-}
-
-.ad-row--correct {
-    border-color: var(--color-success);
-}
-.ad-row--correct .ad-fill {
-    background: var(--color-success-light);
-}
-.ad-row--correct .ad-letter,
-.ad-row--correct .ad-text,
-.ad-row--correct .ad-pct {
-    color: var(--color-success);
-    font-weight: 700;
-}
-
-.ad-mine {
-    color: var(--color-accent-primary);
-    font-family: var(--font-mono);
-    font-size: 0.75rem;
-    font-weight: 700;
-    letter-spacing: 0.05em;
-}
-
-.fun-fact-section {
-    background: var(--color-surface-dark);
-    border: 1px solid var(--color-border-neon);
-    border-radius: var(--radius-lg);
-    padding: var(--space-md);
-}
-
-.section-content-padded {
-    padding: var(--space-sm) var(--space-md) var(--space-md);
-}
-
 /* Personal result section */
-.personal-result-section {
-    background: var(--color-surface-dark);
-    border: 1px solid var(--color-border-neon);
-    border-radius: var(--radius-lg);
-    overflow: hidden;
-}
 
 .result-content {
     padding: var(--space-sm) var(--space-md) var(--space-md);
 }
 
-/* Guesses section */
-.guesses-section {
-    margin-top: var(--space-sm);
-}
-
 /* Reveal admin controls */
 .reveal-admin-controls {
     margin-top: var(--space-md);
-}
-
-.reveal-admin-buttons {
-    display: flex;
-    gap: var(--space-sm);
-}
-
-.reveal-admin-buttons .btn {
-    flex: 1;
 }
 
 .next-round-btn {
@@ -1063,40 +900,6 @@
     background: #ff4080;
 }
 
-/* Invite button in reveal */
-.invite-btn {
-    display: inline-flex;
-    align-items: center;
-    gap: var(--space-sm);
-    padding: var(--space-sm) var(--space-md);
-    background: rgba(255, 255, 255, 0.06);
-    border: 1px solid var(--color-border-neon);
-    border-radius: var(--radius-md);
-    color: var(--color-text-white);
-    font-size: 0.85rem;
-    cursor: pointer;
-    transition: all var(--transition-fast);
-    font-family: var(--font-system);
-}
-
-.invite-btn:hover {
-    background: rgba(255, 255, 255, 0.1);
-    border-color: var(--color-accent-secondary);
-}
-
-.invite-btn-icon {
-    font-size: 1rem;
-}
-
-.invite-btn-label {
-    font-weight: 500;
-}
-
-/* Round analytics */
-.round-analytics-section {
-    margin-top: var(--space-md);
-}
-
 /* Streak bonus row */
 .streak-bonus-row {
     background: rgba(245, 158, 11, 0.06);
@@ -1113,14 +916,6 @@
    Player Page: LOBBY VIEW (extras)
    ========================================== */
 
-.lobby-header-compact {
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
-    padding: var(--space-sm) 0;
-    margin-bottom: var(--space-md);
-}
-
 .section-header--inline {
     display: flex;
     align-items: center;
@@ -1133,56 +928,6 @@
     background: rgba(168, 85, 247, 0.12);
     border-color: rgba(168, 85, 247, 0.3);
     color: var(--color-neon-purple);
-}
-
-/* How to play compact steps */
-.how-to-play-steps-compact {
-    list-style: none;
-    padding: 0;
-    counter-reset: step-counter;
-}
-
-.how-to-play-steps-compact li {
-    counter-increment: step-counter;
-    display: flex;
-    align-items: flex-start;
-    gap: var(--space-sm);
-    padding: var(--space-sm) 0;
-    font-size: 0.85rem;
-    color: var(--color-text-white);
-    border-bottom: 1px solid rgba(255, 255, 255, 0.05);
-}
-
-.how-to-play-steps-compact li:last-child {
-    border-bottom: none;
-}
-
-.how-to-play-steps-compact li::before {
-    content: counter(step-counter);
-    display: inline-flex;
-    align-items: center;
-    justify-content: center;
-    width: 22px;
-    height: 22px;
-    border-radius: var(--radius-full);
-    background: rgba(232, 138, 127, 0.12);
-    color: var(--color-accent-secondary);
-    font-size: 0.7rem;
-    font-weight: 700;
-    flex-shrink: 0;
-}
-
-.qr-hint {
-    font-size: 0.7rem;
-    color: var(--color-text-neon-muted);
-    margin-top: var(--space-xs);
-}
-
-.lobby-status-compact {
-    text-align: center;
-    padding: var(--space-md) 0;
-    color: var(--color-text-neon-muted);
-    font-size: 0.9rem;
 }
 
 /* Button variants */
@@ -2366,13 +2111,6 @@
     text-overflow: ellipsis;
     white-space: nowrap;
 }
-.lobby-e-row-card .pending-tag {
-    font-family: var(--font-mono);
-    font-size: 0.65rem;
-    text-transform: uppercase;
-    color: var(--color-text-muted);
-    letter-spacing: 0.06em;
-}
 
 /* Kick button — icon-only ×, only shows on hover so it doesn't
    distract from the player name in normal viewing. Without explicit
@@ -2427,15 +2165,6 @@
     color: var(--color-text-muted);
     font-size: 0.85rem;
     padding: var(--space-md) 0;
-}
-
-.lobby-e-url {
-    font-family: var(--font-mono);
-    font-size: 0.85rem;
-    color: var(--color-accent-primary);
-    text-align: center;
-    word-break: break-all;
-    margin: 0;
 }
 
 .lobby-e-cast {
@@ -3407,83 +3136,8 @@ body.is-admin .reaction-bar {
     color: var(--color-accent-primary);
 }
 
-/* Admin tablet: full-width sticky footer Start bar — primary action */
-.lr-splash-adminbar {
-    position: absolute;
-    left: 0;
-    right: 0;
-    bottom: 0;
-    padding: 18px 24px;
-    padding-bottom: calc(18px + env(safe-area-inset-bottom, 0px));
-    display: flex;
-    align-items: center;
-    gap: 16px;
-    background: var(--color-bg-surface);
-    border-top: 1px solid var(--color-border-light);
-    box-shadow: 0 -6px 20px rgba(42, 40, 32, 0.06);
-    z-index: 2;
-}
-
-/* #245 — the hint is a small caption (flex:1 so it wraps in its own
-   column), no longer fighting the start button for the bar width. */
-.lr-splash-adminmeta {
-    flex: 1;
-    min-width: 0;
-    font-size: 12px;
-    line-height: 1.3;
-    color: var(--color-text-muted);
-}
-
-/* #245 — right-sized single-line Start button (no oversized pill, no
-   redundant in-button bolt disc; label never wraps to "Let's / go"). */
-.lr-splash-startbtn {
-    flex-shrink: 0;
-    background: var(--color-accent-primary);
-    color: #fff;
-    border: none;
-    border-radius: 13px;
-    padding: 0 26px;
-    height: 48px;
-    font: 700 15px/1.1 system-ui, -apple-system, sans-serif;
-    letter-spacing: 0.2px;
-    box-shadow: var(--glow-primary);
-    display: inline-flex;
-    align-items: center;
-    justify-content: center;
-    white-space: nowrap;
-    cursor: pointer;
-}
-
-.lr-splash-startbtn:disabled {
-    opacity: 0.6;
-    cursor: default;
-}
-
 /* Host / TV (dashboard) — bigger medallion + title, horizontal chips.
    The dashboard renders the splash inside a 16:9 stage; scale up. */
-.lr-splash-stage.lr-splash-tv .lr-splash-bolt {
-    width: 120px;
-    height: 120px;
-    margin-bottom: 18px;
-}
-.lr-splash-stage.lr-splash-tv .lr-splash-bolt span { font-size: 62px; }
-.lr-splash-stage.lr-splash-tv .lr-splash-title { font-size: 64px; letter-spacing: -1.5px; }
-.lr-splash-stage.lr-splash-tv .lr-splash-kicker { font-size: 18px; letter-spacing: 3px; }
-.lr-splash-stage.lr-splash-tv .lr-splash-chips {
-    flex-direction: row;
-    gap: 14px;
-    width: auto;
-    max-width: none;
-    margin-top: 26px;
-}
-.lr-splash-stage.lr-splash-tv .lr-splash-chip {
-    flex-direction: column;
-    align-items: center;
-    gap: 2px;
-    min-width: 120px;
-    padding: 14px 18px;
-}
-.lr-splash-stage.lr-splash-tv .lr-splash-chip b { font-size: 30px; }
 
 @media (prefers-reduced-motion: reduce) {
     .lr-splash-rays { opacity: 0.6; }

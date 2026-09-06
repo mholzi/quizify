@@ -315,68 +315,6 @@
      * Render fun fact slide-in card
      * @param {string|null} text - Fun fact text
      */
-    function renderAnswerDistribution(distribution, correctIndex, allAnswers, myAnswerEntry) {
-        var container = document.getElementById('answer-distribution');
-        if (!container) return;
-        if (!distribution || distribution.length === 0) {
-            container.classList.add('hidden');
-            return;
-        }
-
-        // Build answer text map from allAnswers (keyed by ORIGINAL index, not
-        // shuffled — per-player shuffle made shuffled index meaningless across
-        // viewers, so we standardized on original at the server side).
-        var answerTexts = {};
-        if (allAnswers && allAnswers.length > 0) {
-            allAnswers.forEach(function(a) {
-                if (a.answer_index !== null && a.answer_index !== undefined && a.answer_text) {
-                    answerTexts[a.answer_index] = a.answer_text;
-                }
-            });
-        }
-
-        // The player's own pick — used to render the "· DU" tag on their row
-        // so they can find themselves even though their A/B/C buttons were in
-        // a different order than the canonical distribution.
-        var myIndex = (myAnswerEntry && typeof myAnswerEntry.answer_index === 'number')
-            ? myAnswerEntry.answer_index
-            : null;
-        var youLabel = (typeof t === 'function' && t('lobby.you') !== 'lobby.you')
-            ? t('lobby.you')
-            : 'DU';
-
-        var optionLabels = ['A', 'B', 'C', 'D'];
-
-        // Variant F (Filling-Bar): each row IS the bar. Text + percentage sit
-        // over a coral wash that grows from the left to the vote percentage.
-        // Correct row paints sage with a ✓; the player's row appends "· DU"
-        // in coral so finding yourself stays trivial under per-player shuffle.
-        container.innerHTML = distribution
-            .filter(function(d) { return !d.no_answer; })
-            .map(function(d) {
-                var isCorrect = d.index === correctIndex;
-                var isMine = myIndex !== null && d.index === myIndex;
-                var label = optionLabels[d.index] || String(d.index + 1);
-                var text = answerTexts[d.index] || '';
-                var pct = d.percent || 0;
-                var classes = ['ad-row'];
-                if (isCorrect) classes.push('ad-row--correct');
-                if (isMine) classes.push('ad-row--mine');
-                return '<div class="' + classes.join(' ') + '">' +
-                    '<div class="ad-fill" style="width:' + pct + '%"></div>' +
-                    '<div class="ad-content">' +
-                        '<span class="ad-letter">' + label + (isCorrect ? ' ✓' : '') + '</span>' +
-                        '<span class="ad-text">' +
-                            pu.escapeHtml(text) +
-                            (isMine ? '<span class="ad-mine"> · ' + pu.escapeHtml(youLabel) + '</span>' : '') +
-                        '</span>' +
-                        '<span class="ad-pct">' + pct + '%</span>' +
-                    '</div>' +
-                '</div>';
-            }).join('');
-        container.classList.remove('hidden');
-    }
-
     function renderFunFact(text) {
         var container = document.getElementById('fun-fact-container');
         var funFactEl = document.getElementById('fun-fact');

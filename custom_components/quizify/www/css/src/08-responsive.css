@@ -3,13 +3,6 @@
    ========================================== */
 
 @media (min-width: 768px) {
-    .app-container {
-        max-width: 560px;
-    }
-
-    .admin-container {
-        max-width: 800px;
-    }
 
     .question-text {
         font-size: 1.6rem;
@@ -98,13 +91,6 @@
 /* ==========================================
    Reveal: All Answers Grid
    ========================================== */
-
-.reveal-results-grid {
-    display: flex;
-    flex-direction: column;
-    gap: 8px;
-    padding: var(--space-sm) 0;
-}
 
 .result-card {
     display: grid;
@@ -254,35 +240,6 @@
   gap: var(--space-sm);
 }
 
-.admin-answer-btn {
-  padding: var(--space-sm) var(--space-md);
-  background: var(--color-surface);
-  border: 2px solid var(--color-border);
-  border-radius: var(--radius-md);
-  color: var(--color-text);
-  font-size: 0.95rem;
-  font-weight: 600;
-  cursor: pointer;
-  transition: background 0.15s, border-color 0.15s;
-  text-align: center;
-}
-
-.admin-answer-btn:hover:not(:disabled) {
-  background: rgba(232, 138, 127, 0.12);
-  border-color: #E88A7F;
-}
-
-.admin-answer-btn.selected {
-  background: rgba(232, 138, 127, 0.18);
-  border-color: #E88A7F;
-  color: #E88A7F;
-}
-
-.admin-answer-btn:disabled {
-  opacity: 0.5;
-  cursor: not-allowed;
-}
-
 .admin-answer-status {
   font-size: 0.85rem;
   color: var(--color-text-muted, #a4a4b8);
@@ -290,9 +247,6 @@
 }
 
 /* ── Admin reveal: Beatify-style player result cards ── */
-.reveal-results-grid {
-  width: 100%;
-}
 
 .results-cards-scroll {
   display: flex;
@@ -368,13 +322,6 @@
   grid-template-rows: auto auto;
 }
 
-.result-card .card-bonus {
-  grid-column: 1;
-  font-size: 0.75rem;
-  color: #E88A7F;
-  margin-top: 2px;
-}
-
 /* ── Reveal emotion (Beatify-style) ── */
 .reveal-emotion-inline {
   font-size: 1.35rem;
@@ -405,27 +352,6 @@
 }
 
 /* Correct answer hero — large glowing display */
-.reveal-year-section {
-  text-align: center;
-  padding: var(--space-md, 12px) 0;
-}
-
-.correct-year-label {
-  font-size: 0.7rem;
-  text-transform: uppercase;
-  letter-spacing: 0.08em;
-  color: #a4a4b8;
-  margin-bottom: 4px;
-}
-
-.correct-year {
-  font-size: 2.25rem;
-  font-weight: 900;
-  color: #7FA897;
-  letter-spacing: -0.02em;
-  word-break: break-word;
-  line-height: 1.15;
-}
 
 @keyframes reveal-emotion-entrance {
   0%   { opacity: 0; transform: scale(0.8); }
@@ -493,61 +419,6 @@
 /* The finale "Highlights — Vertical Timeline" treatment was retired with
    the Variant-D end-screen redesign (#338). Highlights now render as a
    horizontal chip row (.end-chiprow / .rchip in 07-player.css). */
-
-/* ---- Answer distribution chart (#66) ---- */
-.distribution-chart {
-  display: flex;
-  flex-direction: column;
-  gap: 8px;
-  margin-top: 8px;
-}
-
-.dist-row {
-  display: grid;
-  grid-template-columns: 1fr 2fr auto;
-  align-items: center;
-  gap: 8px;
-}
-
-.dist-label {
-  font-size: 0.8rem;
-  color: #6E6A5C;
-  white-space: nowrap;
-  overflow: hidden;
-  text-overflow: ellipsis;
-  display: flex;
-  align-items: center;
-  gap: 4px;
-}
-
-.dist-correct-icon {
-  color: #E88A7F;
-  font-weight: 900;
-  font-size: 0.85rem;
-  flex-shrink: 0;
-}
-
-.dist-bar-wrap {
-  background: #E5DFCF;
-  border-radius: 4px;
-  height: 18px;
-  overflow: hidden;
-}
-
-.dist-bar {
-  height: 100%;
-  border-radius: 4px;
-  transition: width 0.5s ease;
-  min-width: 4px;
-}
-
-.dist-meta {
-  font-size: 0.75rem;
-  color: #a4a4b8;
-  white-space: nowrap;
-  text-align: right;
-  min-width: 52px;
-}
 
 /* =============================================================
    Player result page (Soft Parlor redesign, 2026-05-24)
