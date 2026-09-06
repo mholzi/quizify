@@ -1796,17 +1796,15 @@
     },
     {
       "id": "sport_de_162",
-      "question": "Welcher Boxer ist hier zu sehen?",
+      "question": "Welcher Boxer verweigerte 1967 den Wehrdienst und verlor dafür dreieinhalb Jahre seiner Karriere?",
       "answers": [
         {"text": "Joe Frazier", "correct": false},
         {"text": "Muhammad Ali", "correct": true},
         {"text": "George Foreman", "correct": false}
       ],
       "difficulty": "easy",
-      "fun_fact": "Ali gewann 1960 olympisches Gold, wurde dreimal Weltmeister im Schwergewicht und verlor dazwischen dreieinhalb Jahre seiner besten Zeit, weil ihm nach seiner Wehrdienstverweigerung die Lizenz entzogen wurde.",
-      "category": "Sport",
-      "image_url": "/quizify/static/img/packs/sport/muhammad-ali.webp",
-      "reveal_style": "progressive"
+      "fun_fact": "Ali gewann 1960 in Rom olympisches Gold und wurde dreimal Weltmeister im Schwergewicht. Der Oberste Gerichtshof der USA hob seine Verurteilung 1971 auf.",
+      "category": "Sport"
     },
     {
       "id": "sport_de_163",

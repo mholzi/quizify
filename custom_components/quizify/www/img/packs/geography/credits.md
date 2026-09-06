@@ -1,20 +1,17 @@
 # Geography — image credits
 
-Every image here is public domain or CC0. The licence was checked on the **file
-record** through the Wikimedia API, not inferred from the search that found it —
-the same rule the nature set was assembled under, and for the same reason: a
-search for freely licensed pictures happily returns CC BY-SA files.
+Every row records the **licence template on the Commons file record** — the
+template, not the phrase a search result showed. The policy those templates are
+checked against is in [`../LICENSING.md`](../LICENSING.md), and
+`tests/test_pack_image_licences_795.py` enforces it row by row.
 
-No attribution is legally required for any of these. This file exists so the
-provenance stays checkable later.
-
-| File | Subject | Creator / agency | Source | Licence | Verified by |
-|---|---|---|---|---|---|
-| `yellowstone-spring.webp` | Grand Prismatic Spring, Yellowstone, from the air | Jim Peaco, National Park Service | [Wikimedia Commons](https://commons.wikimedia.org/wiki/File:Grand_prismatic_spring.jpg) | Public domain (PD-USGov) | `extmetadata.LicenseShortName == "Public domain"` on the file record |
-| `statue-of-liberty.webp` | Statue of Liberty and Liberty Island, 2017 | Carol M. Highsmith, Library of Congress | [Wikimedia Commons](https://commons.wikimedia.org/wiki/File:HIghsmith_2017_LOC_Statue_of_Liberty_NY_Harbor.jpg) | CC0 (public-domain dedication) | same |
-| `strait-of-gibraltar.webp` | The Strait of Gibraltar from the ISS, 2024 | NASA Johnson Space Center (iss071e414110) | [Wikimedia Commons](https://commons.wikimedia.org/wiki/File:The_Strait_of_Gibraltar_(iss071e414110).jpg) | Public domain (PD-NASA) | same |
-| `nile-delta-night.webp` | The Nile and its delta at night from the ISS, 2010 | ISS Expedition 25 crew (NASA) | [Wikimedia Commons](https://commons.wikimedia.org/wiki/File:Nile_River_Delta_at_Night_cropped.JPG) | Public domain (PD-NASA) | same |
-| `taj-mahal.webp` | Taj Mahal, Agra — photochrom, c. 1890 | Library of Congress (PPOC), [LCCN 95505064](https://lccn.loc.gov/95505064) | [Wikimedia Commons](https://commons.wikimedia.org/wiki/File:Agra,_Taj_Mahal_LCCN95505064.jpg) | Public domain (PD-old) | same |
+| File | Subject | Creator / agency | Source | Licence | Commons template | Verified by |
+|---|---|---|---|---|---|---|
+| `yellowstone-spring.webp` | Grand Prismatic Spring, Yellowstone, from the air | Jim Peaco, National Park Service | [Wikimedia Commons](https://commons.wikimedia.org/wiki/File:Grand_prismatic_spring.jpg) | Public domain (PD-USGov) | `PD-USGov-NPS` | `extmetadata.LicenseShortName == "Public domain"` on the file record |
+| `statue-of-liberty.webp` | Statue of Liberty and Liberty Island, 2017 | Carol M. Highsmith, Library of Congress | [Wikimedia Commons](https://commons.wikimedia.org/wiki/File:HIghsmith_2017_LOC_Statue_of_Liberty_NY_Harbor.jpg) | CC0 (public-domain dedication) | `cc-zero` | same |
+| `strait-of-gibraltar.webp` | The Strait of Gibraltar from the ISS, 2024 | NASA Johnson Space Center (iss071e414110) | [Wikimedia Commons](https://commons.wikimedia.org/wiki/File:The_Strait_of_Gibraltar_(iss071e414110).jpg) | Public domain (PD-NASA) | `PD-USGov-NASA` | same |
+| `nile-delta-night.webp` | The Nile and its delta at night from the ISS, 2010 | ISS Expedition 25 crew (NASA) | [Wikimedia Commons](https://commons.wikimedia.org/wiki/File:Nile_River_Delta_at_Night_cropped.JPG) | Public domain (PD-NASA) | `PD-USGov-NASA` | same |
+| `taj-mahal.webp` | Taj Mahal, Agra — photochrom, c. 1890 | Library of Congress (PPOC), [LCCN 95505064](https://lccn.loc.gov/95505064) | [Wikimedia Commons](https://commons.wikimedia.org/wiki/File:Agra,_Taj_Mahal_LCCN95505064.jpg) | Public domain (PD-old) | `PD-old-70-1923` | same |
 
 ## Edited, and why
 

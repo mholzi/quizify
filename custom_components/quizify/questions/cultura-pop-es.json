@@ -3184,44 +3184,42 @@
     },
     {
       "id": "pop_es_163",
-      "question": "¿Qué personaje se dio a conocer en esta película de 1928?",
+      "question": "¿Qué personaje se dio a conocer en la película «Steamboat Willie» de 1928?",
       "answers": [
         {"text": "Mickey Mouse", "correct": true},
         {"text": "Bugs Bunny", "correct": false},
         {"text": "El pato Donald", "correct": false}
       ],
       "difficulty": "easy",
-      "fun_fact": "«Steamboat Willie» no fue el primer corto de Mickey Mouse, pero sí el primero con sonido sincronizado, y por eso es el que todo el mundo conoce. En Estados Unidos es de dominio público desde 2024.",
-      "category": "Cultura Pop",
-      "image_url": "/quizify/static/img/packs/popculture/steamboat-willie.webp",
-      "reveal_style": "progressive"
+      "fun_fact": "«Steamboat Willie» no fue el primer corto de Mickey Mouse, pero sí el primero con sonido sincronizado, y por eso es el que todo el mundo conoce.",
+      "category": "Cultura Pop"
     },
     {
       "id": "pop_es_164",
-      "question": "¿Qué actriz aparece en esta foto promocional de 1953?",
+      "question": "¿De qué película de 1922 es este vampiro?",
       "answers": [
-        {"text": "Grace Kelly", "correct": false},
-        {"text": "Marilyn Monroe", "correct": true},
-        {"text": "Rita Hayworth", "correct": false}
+        {"text": "Drácula", "correct": false},
+        {"text": "Nosferatu", "correct": true},
+        {"text": "El Golem", "correct": false}
       ],
       "difficulty": "easy",
-      "fun_fact": "Solo en 1953 se estrenaron tres películas suyas. El estudio le pagaba menos que a sus compañeros de reparto masculinos, y la pelea por eso la llevó a fundar su propia productora.",
+      "fun_fact": "La productora rodó el «Drácula» de Bram Stoker sin comprar los derechos y cambió los nombres. La viuda de Stoker demandó, un tribunal ordenó destruir las copias y la película sobrevive solo porque algunas ya habían salido de Alemania.",
       "category": "Cultura Pop",
-      "image_url": "/quizify/static/img/packs/popculture/marilyn-monroe.webp",
+      "image_url": "/quizify/static/img/packs/popculture/nosferatu.webp",
       "reveal_style": "progressive"
     },
     {
       "id": "pop_es_165",
-      "question": "¿Con qué nombre se hizo célebre la mujer de este cartel?",
+      "question": "¿A qué movimiento cinematográfico pertenece este cartel de 1920?",
       "answers": [
-        {"text": "Lady Liberty", "correct": false},
-        {"text": "Betty Boop", "correct": false},
-        {"text": "Rosie la Remachadora", "correct": true}
+        {"text": "Neorrealismo italiano", "correct": false},
+        {"text": "Nouvelle vague", "correct": false},
+        {"text": "Expresionismo alemán", "correct": true}
       ],
       "difficulty": "medium",
-      "fun_fact": "El cartel estuvo colgado dos semanas de 1943 en unas pocas fábricas de Westinghouse y después desapareció durante cuarenta años. Se redescubrió en los años ochenta y se convirtió en símbolo: su fama actual no tiene nada que ver con su efecto original.",
+      "fun_fact": "«El gabinete del doctor Caligari» se rodó en decorados pintados: las paredes torcidas, las casas inclinadas e incluso las sombras del suelo estaban pintadas, no iluminadas.",
       "category": "Cultura Pop",
-      "image_url": "/quizify/static/img/packs/popculture/we-can-do-it.webp",
+      "image_url": "/quizify/static/img/packs/popculture/caligari-poster.webp",
       "reveal_style": "progressive"
     },
     {

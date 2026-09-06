@@ -1820,17 +1820,15 @@
     },
     {
       "id": "sport_en_162",
-      "question": "Which boxer is shown here?",
+      "question": "Which boxer refused the draft in 1967 and lost three and a half years of his career for it?",
       "answers": [
         {"text": "Joe Frazier", "correct": false},
         {"text": "Muhammad Ali", "correct": true},
         {"text": "George Foreman", "correct": false}
       ],
       "difficulty": "easy",
-      "fun_fact": "Ali took Olympic gold in 1960 and the heavyweight title three times, losing three and a half years of his prime in between when his licence was withdrawn after he refused the draft.",
-      "category": "Sport",
-      "image_url": "/quizify/static/img/packs/sport/muhammad-ali.webp",
-      "reveal_style": "progressive"
+      "fun_fact": "Ali took Olympic gold in Rome in 1960 and the heavyweight title three times. The US Supreme Court overturned his conviction in 1971.",
+      "category": "Sport"
     },
     {
       "id": "sport_en_163",

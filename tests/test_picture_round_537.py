@@ -13,6 +13,8 @@ from pathlib import Path
 
 import pytest
 
+from tests.test_pack_image_licences_795 import parse_credits
+
 REPO = Path(__file__).resolve().parent.parent
 COMPONENT = REPO / "custom_components" / "quizify"
 QUESTIONS = COMPONENT / "questions"
@@ -75,13 +77,17 @@ def test_no_image_is_shipped_without_a_question() -> None:
 
 
 def test_every_image_is_credited() -> None:
-    """Not a licence requirement — CC0 and public domain ask for nothing. It is
-    what keeps the provenance checkable when someone asks in a year."""
-    credits = (IMAGES / "credits.md").read_text(encoding="utf-8")
+    """Every picture has a row, and every row names a licence template.
+
+    This used to assert that the strings "CC0" and "Public domain" appeared
+    somewhere in the file — a check that a whole table of CC BY rows would have
+    passed as long as one row was CC0 (#795). What the templates mean is
+    checked per row in test_pack_image_licences_795.py.
+    """
+    rows = {row.image: row for row in parse_credits(IMAGES / "credits.md")}
     for image in sorted(IMAGES.glob("*.webp")):
-        assert image.name in credits, f"{image.name} is not recorded in credits.md"
-    for term in ("CC0", "Public domain"):
-        assert term in credits
+        assert image.name in rows, f"{image.name} is not recorded in credits.md"
+        assert rows[image.name].templates, f"{image.name} has no licence template recorded"
 
 
 def test_packs_are_registered_in_versions_json() -> None:

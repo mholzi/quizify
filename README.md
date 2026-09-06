@@ -727,6 +727,18 @@ the licence texts alongside them. They are served from your own Home Assistant �
 contacts Google Fonts or Fontshare, which is what makes "no data leaves your network"
 true for guests as well as for you. See [`www/fonts/README.md`](custom_components/quizify/www/fonts/README.md).
 
+**Bundled pack images.** MIT covers the code. It does not cover the pictures in
+`custom_components/quizify/www/img/packs/` — each one keeps the licence it came with, and
+its provenance is recorded row by row in that folder's `credits.md`, including the licence
+template on the source file record. The policy, and the test that enforces it, are in
+[`www/img/packs/LICENSING.md`](custom_components/quizify/www/img/packs/LICENSING.md).
+
+Two things there are worth knowing before you redistribute a fork. The `PD-USGov` and NASA
+rows are public domain by 17 U.S.C. §105, which is a statement about United States law and
+has no effect elsewhere; the project accepts that deliberately and says so. And a handful
+of rows, marked ⚠️ in their `credits.md`, rest on a licence that stops at a border and are
+queued for replacement rather than being described as free.
+
 ---
 
 <br>
