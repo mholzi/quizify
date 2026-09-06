@@ -232,8 +232,24 @@
         // Announce the state to assistive tech via the polite live region.
         var announce = document.getElementById('conn-status-announce');
         if (announce) {
-            var msg = t('connection.' + status);
-            if (!msg || msg === 'connection.' + status) msg = status;
+            var key = 'connection.' + status;
+            var msg = t(key);
+            var translated = !!msg && msg !== key;
+            // #783: the line is written once, on connect, and a language
+            // change that lands afterwards re-renders every visible label but
+            // used to walk straight past this one — it carried no data-i18n,
+            // so initPageTranslations() could not see it. It is .sr-only, so
+            // the mismatch reached nobody except the people who depend on it:
+            // a screen-reader user in an English game heard "Verbunden". Same
+            // shape as the renderAllTime half of #776.
+            if (translated) {
+                announce.setAttribute('data-i18n', key);
+            } else {
+                // An unknown status has no key to re-render from; leaving a
+                // stale one would make the sweep announce the wrong state.
+                announce.removeAttribute('data-i18n');
+                msg = status;
+            }
             announce.textContent = msg;
         }
     }

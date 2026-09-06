@@ -38,6 +38,25 @@
         return document.getElementById(id);
     }
 
+    /**
+     * Paint (or clear) the shared question banner (#802).
+     *
+     * The detour borrows ``#question-media`` from the normal round, and only
+     * ``question_started`` ever wrote to it — so the seat holder answered
+     * "Which animal is this?" under the PREVIOUS round's picture, or under
+     * nothing at all, while the television showed the right one. An empty URL
+     * hides the banner, which is what the auction wants: bidding is a bet on
+     * yourself, not on a picture you have already seen.
+     */
+    function paintQuestionImage(imgUrl) {
+        var fn = window.QuizifyPlayerGame
+            && window.QuizifyPlayerGame.renderQuestionImageBanner;
+        // No reveal style and no duration: the hot seat has no progressive
+        // reveal, and passing the answer clock would blur a picture nobody
+        // asked to have blurred.
+        if (fn) fn(imgUrl || '', null, 0);
+    }
+
     function panel() {
         return el('hotseat-panel');
     }
@@ -70,6 +89,13 @@
         _state.seated = false;
         _state.betPlaced = false;
         _state.score = msg.score || 0;
+
+        // #802: the auction opens over whatever the last round left behind.
+        // Clearing it here is the same move the wager window makes for the
+        // same reason — the picture on screen belongs to a question that is
+        // over, and here it would also be a free hint about a chair that is
+        // still being bid on.
+        paintQuestionImage('');
 
         p.classList.remove('hidden');
         p.classList.remove('wager-panel--collapsed');
@@ -200,6 +226,11 @@
         if (qText && msg.question) qText.textContent = msg.question;
         var qCat = el('question-category');
         if (qCat) qCat.textContent = '';
+        // #802: the same hole one field over. The server sends image_url to
+        // every phone — seated or betting — and nothing here read it, so a
+        // picture question in the chair was answered blind while the previous
+        // round's photo sat above it.
+        paintQuestionImage(msg.image_url);
 
         if (msg.you_are_seated) {
             // The seat holder answers through the normal answer grid, so the
