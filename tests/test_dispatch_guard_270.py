@@ -66,6 +66,10 @@ ADMIN_REQUIRED_TYPES = {
     # arrival. Admin-only: it rewrites the language every phone in the room
     # renders in.
     "set_language",
+    # set_difficulty is the same message one field over (#851): the lobby's
+    # difficulty came from the previous game until start_game landed. Admin-
+    # only for the same reason — it relabels the game every phone renders.
+    "set_difficulty",
     # start_lightning / start_lightning_questions / end_lightning were retired
     # in #285 — the Lightning Round now auto-triggers mid-game, with no
     # host-facing start/end message.

@@ -439,6 +439,11 @@ CLIENT_MESSAGE_TYPES: frozenset[str] = OUT_OF_BAND_CLIENT_TYPES | frozenset({
     # Without it GameState.language stays "de" until start_game and every
     # phone that joins an English game is stamped German on arrival.
     "set_language",
+    # The host's difficulty pick, pushed the same way and for the same reason
+    # (#851). GameState.difficulty is written by start_game and by nothing
+    # else, so the lobby snapshot described the PREVIOUS game — a room set to
+    # Easy told the phones Medium.
+    "set_difficulty",
     # Lightning Round (issue #42 mechanics, #285 auto-trigger): the round now
     # fires automatically mid-game — there is no host start/end action any
     # more. Players still submit via lightning_answer (separate from
