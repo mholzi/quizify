@@ -354,6 +354,13 @@
                             <span class="toggle-switch-compact" aria-hidden="true"></span>
                             <span class="toggle-label" data-i18n="setup.eigene.hotSeatHint">The chair is auctioned, one player answers alone</span>
                         </label>
+                        <!-- #804: teams are formed in the lobby, i.e. AFTER
+                             this screen. Shown by admin.js the moment a team
+                             exists, so the host learns what teams do to this
+                             setting before Start rather than from the silence
+                             where the auction used to be. -->
+                        <p class="vF-team-note hidden" id="hot-seat-team-note"
+                           data-i18n="setup.eigene.hotSeatTeamNote">With teams: each team bids once, and whoever bids takes the chair for them.</p>
                     </div>
 
                     <!-- Power-ups (#742). Same shape as the two toggles above,
@@ -380,6 +387,9 @@
                             <span class="toggle-switch-compact" aria-hidden="true"></span>
                             <span class="toggle-label" data-i18n="setup.eigene.wagerHint">Stake points on the final question</span>
                         </label>
+                        <!-- #804, twin of the Hot Seat note above. -->
+                        <p class="vF-team-note hidden" id="wager-team-note"
+                           data-i18n="setup.eigene.wagerTeamNote">With teams: the bet is the team's, staked on the team score.</p>
                     </div>
 
                     <!-- TTS narration toggles (#281). Master switch + per-event

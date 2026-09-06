@@ -364,10 +364,12 @@
       "lightningHint": "Ronda rápida sorpresa a mitad de la partida",
       "q7": "¿Silla caliente?",
       "hotSeatHint": "La silla se subasta y una sola persona responde",
+      "hotSeatTeamNote": "Con equipos: cada equipo puja una vez, y quien puja ocupa la silla por \u00e9l.",
       "q8": "¿Comodines?",
       "powerupsHint": "Se reparten Comodín, Robar, Congelar y compañía",
       "q9": "¿Apuesta en la última ronda?",
-      "wagerHint": "Apostar puntos en la pregunta final"
+      "wagerHint": "Apostar puntos en la pregunta final",
+      "wagerTeamNote": "Con equipos: la apuesta es del equipo y se hace sobre su puntuaci\u00f3n."
     },
     "tts": {
       "title": "¿Voz del presentador?",
@@ -735,6 +737,7 @@
     "betWont": "No lo consigue",
     "betOptional": "Apostar es opcional.",
     "betPlaced": "Apostado: {pct}% a {side}",
+    "teamSeated": "{name} ocupa la silla por vuestro equipo \u2014 vuestro equipo no apuesta.",
     "timeoutNote": "No responder cuesta la apuesta igual que fallar.",
     "resultRight": "{name} acertó — +{pts} puntos",
     "resultWrong": "{name} falló — −{pts} puntos",

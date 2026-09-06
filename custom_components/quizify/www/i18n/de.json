@@ -364,10 +364,12 @@
       "lightningHint": "Überraschungs-Schnellrunde mitten im Spiel",
       "q7": "Heißer Stuhl?",
       "hotSeatHint": "Der Stuhl wird versteigert, einer antwortet allein",
+      "hotSeatTeamNote": "Mit Teams: jedes Team bietet einmal, und wer bietet, setzt sich f\u00fcr das Team in den Stuhl.",
       "q8": "Power-Ups?",
       "powerupsHint": "Joker, Klauen, Einfrieren und Co. werden verteilt",
       "q9": "Einsatz in der letzten Runde?",
-      "wagerHint": "Punkte auf die letzte Frage setzen"
+      "wagerHint": "Punkte auf die letzte Frage setzen",
+      "wagerTeamNote": "Mit Teams: der Einsatz geh\u00f6rt dem Team und geht auf den Teampunktestand."
     },
     "tts": {
       "title": "Quizmaster-Stimme?",
@@ -735,6 +737,7 @@
     "betWont": "Schafft es nicht",
     "betOptional": "Mitwetten ist freiwillig.",
     "betPlaced": "Gesetzt: {pct}% auf {side}",
+    "teamSeated": "{name} sitzt f\u00fcr euer Team im Stuhl \u2014 euer Team wettet nicht.",
     "timeoutNote": "Keine Antwort kostet den Einsatz genauso wie eine falsche.",
     "resultRight": "{name} hat sie gewusst — +{pts} Punkte",
     "resultWrong": "{name} lag daneben — −{pts} Punkte",

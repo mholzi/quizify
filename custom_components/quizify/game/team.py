@@ -69,6 +69,14 @@ class Team:
     #: reveal screen deliberately does not show it (Markus, 2026-08-12).
     change_count: int = 0
 
+    #: The team's stake on the final question, as a PERCENT of its score
+    #: (#804). Any member may set it and the last one counts, the same rule
+    #: the standing answer follows — but unlike the answer it is not settled
+    #: by a carrier: the bet belongs to the team, is staked against the score
+    #: the television shows, and is paid into the same row. Reset each round
+    #: alongside the answer, mirroring ``PlayerSession.wager``.
+    wager: int | None = None
+
     # ---- scoring ----------------------------------------------------
     score: int = 0
     streak: int = 0
@@ -209,6 +217,7 @@ class Team:
         self.guess_by = None
         self.guessed_at = None
         self.change_count = 0
+        self.wager = None
         self.round_score = 0
         self.last_answer_correct = False
         self.last_elapsed = 0.0

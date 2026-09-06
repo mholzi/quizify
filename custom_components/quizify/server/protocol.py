@@ -325,15 +325,28 @@ SERVER_FRAMES: dict[str, FrameSpec] = {
     "hot_seat_bid_count": _spec("count", "total"),
     "hot_seat_bet_accepted": _spec("bet", "side", "points"),
     "hot_seat_no_bids": _spec(),
-    "hot_seat_awarded": _spec("winner", "bids", "stake", "pct"),
+    "hot_seat_awarded": _spec(
+        "winner",
+        "entrant",
+        "bids",
+        "stake",
+        "pct",
+        note=(
+            "``winner`` is the PERSON in the chair; ``entrant`` is who pays — "
+            "their team's name in team mode, the same person again otherwise "
+            "(#804)."
+        ),
+    ),
     "hot_seat_question": _spec(
         "round_num",
         "total_rounds",
         "winner",
+        "entrant",
         "question",
         "difficulty",
         "image_url",
         "seconds",
+        optional=("answers", "you_are_seated", "you_are_seat_team", "score"),
     ),
     "hot_seat_answer_accepted": _spec(),
     "hot_seat_tick": _spec("phase", "remaining"),

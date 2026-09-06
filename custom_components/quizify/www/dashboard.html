@@ -3053,9 +3053,14 @@
         function handleHotSeatAwarded(msg) {
             hotSeatFrame();
             els.questionCategory.textContent = '';
+            // #804: ``winner`` is the person taking the chair, ``entrant`` is
+            // who pays for it — their team in team mode, the same person again
+            // otherwise. The room needs to read the payer, because that is the
+            // row the points move on.
+            var payer = msg.entrant || msg.winner;
             els.questionText.textContent = hotSeatT(
-                'hotSeat.lost', { name: msg.winner, pct: msg.pct, pts: msg.stake },
-                msg.winner + ' — ' + msg.pct + '%'
+                'hotSeat.lost', { name: payer, pct: msg.pct, pts: msg.stake },
+                payer + ' — ' + msg.pct + '%'
             );
             if (els.answerProgress) els.answerProgress.classList.add('hidden');
         }
@@ -3091,13 +3096,19 @@
             // #653 made both cost the same points.
             var noAnswer = msg.answered === null || msg.answered === undefined;
             var right = msg.answered === true;
-            var delta = (msg.deltas && msg.deltas[msg.winner]) || 0;
+            // #804: ``deltas`` is keyed by entrant, and a team's key is its id
+            // — which no screen can construct. ``winner_delta`` is the seat
+            // entrant's own settlement, so the board never has to index it.
+            var payer = msg.entrant || msg.winner;
+            var delta = (msg.winner_delta != null)
+                ? msg.winner_delta
+                : ((msg.deltas && msg.deltas[msg.winner]) || 0);
             var key = noAnswer
                 ? 'hotSeat.resultTimeout'
                 : (right ? 'hotSeat.resultRight' : 'hotSeat.resultWrong');
-            var fallback = msg.winner + (right ? ' +' : ' ') + delta;
+            var fallback = payer + (right ? ' +' : ' ') + delta;
             els.questionText.textContent = hotSeatT(
-                key, { name: msg.winner, pts: Math.abs(delta) }, fallback
+                key, { name: payer, pts: Math.abs(delta) }, fallback
             );
             if (els.answerProgress) els.answerProgress.classList.add('hidden');
             if (els.timerFill) els.timerFill.style.width = '0%';
@@ -3133,7 +3144,11 @@
                 return;
             }
             handleHotSeatAwarded({
-                winner: hs.winner, pct: hs.pct, stake: hs.stake
+                // #804: the snapshot carries both, so a television that
+                // reconnects mid-detour names the payer the same way the live
+                // frame did.
+                winner: hs.winner, entrant: hs.entrant,
+                pct: hs.pct, stake: hs.stake
             });
         }
 

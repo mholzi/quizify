@@ -1329,6 +1329,17 @@
 }
 .vF-step:last-child { border-bottom: 0; }
 
+/* Team-mode footnote under a setup toggle (#804). Shown by admin.js only once
+   a team exists, so a setting chosen before the lobby can still explain what
+   the room has since done to it. */
+.vF-team-note {
+    margin: 0;
+    padding-left: 2px;
+    font-size: 0.85rem;
+    line-height: 1.35;
+    color: var(--color-text-secondary);
+}
+
 .vF-q {
     font-family: var(--font-display);
     font-weight: 700;
@@ -2050,6 +2061,46 @@
     display: flex;
     flex-direction: column;
     gap: 6px;
+}
+
+/* Teams on the host lobby (#804). The television has grouped its lobby by
+   team since #365; the host screen showed a flat name list, so the person
+   running the evening was the only one who could not see the room had split.
+   A team reads as a titled block of ordinary roster cards — same cards, so
+   the kick button and the host crown keep working inside a group. */
+.lobby-e-team {
+    display: flex;
+    flex-direction: column;
+    gap: 6px;
+    padding: 10px;
+    border: 1px dashed var(--color-border-light);
+    border-radius: 12px;
+    background: var(--color-bg-card, transparent);
+}
+.lobby-e-team + .lobby-e-team,
+.lobby-e-team + .lobby-e-row-card {
+    margin-top: 6px;
+}
+.lobby-e-team-name {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    font-family: var(--font-display);
+    font-weight: 700;
+    font-size: 0.95rem;
+    color: var(--color-text-secondary);
+    text-transform: uppercase;
+    letter-spacing: 0.04em;
+}
+.lobby-e-team-size {
+    font-family: var(--font-mono);
+    font-weight: 700;
+    font-size: 0.8rem;
+    letter-spacing: 0;
+    padding: 1px 7px;
+    border-radius: 999px;
+    background: var(--color-bg-card-alt);
+    border: 1px solid var(--color-border-light);
 }
 
 .lobby-e-row-card {

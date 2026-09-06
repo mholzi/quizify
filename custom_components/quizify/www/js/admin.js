@@ -1595,7 +1595,18 @@
                 break;
             case 'player_joined':
             case 'player_left':
+                // #804: the roster frame carries the teams (#365) — a player
+                // leaving also leaves their team, and the last one out
+                // dissolves it. Adopt them before repainting, or the host
+                // screen keeps grouping people under a team nobody is in.
+                if (msg.teams) _lobbyTeams = msg.teams;
                 if (msg.players) renderLobbyPlayers(msg.players);
+                break;
+            case 'teams_update':
+                // A team formed or dissolved without the roster changing
+                // (#365/#804) — the host screen has to follow that on its own,
+                // exactly as the television does.
+                setLobbyTeams(msg.teams);
                 break;
             case 'wager_progress':
                 handleWagerProgress(msg);
@@ -1718,6 +1729,9 @@
         } else if (msg.admin_session_token && !_houseEntitiesLoaded && _houseEls && _houseEls.lightList) {
             _loadHouseEntities(_readHouseConfig());
         }
+        // #804: teams ride the snapshot (#365), so a host screen that connects
+        // late — or reloads mid-lobby — still shows who is playing with whom.
+        if (msg.teams) _lobbyTeams = msg.teams;
         if (msg.players) renderLobbyPlayers(msg.players);
 
         // If game is running and we have a stored name, redirect to player.html
@@ -2097,8 +2111,39 @@
     // start…" and to gate the Start Game button.
     var LOBBY_MIN_PLAYERS = 1;
 
+    // The teams as of the last roster / snapshot / teams_update (#804). The
+    // television has grouped its lobby by team since #365; the host screen
+    // showed a flat name list, so the one person running the evening was the
+    // only one in the room who could not see that the game is in team mode —
+    // and therefore could not see why the Hot Seat and the final wager behave
+    // differently. Kept beside the roster rather than derived from it, exactly
+    // as dashboard.html does: a team can form or dissolve without the roster
+    // changing at all.
+    var _lobbyTeams = [];
+    var _lastLobbyPlayers = [];
+
+    /** True once at least one team exists — the server's ``team_mode``. */
+    function isTeamMode() {
+        return _lobbyTeams.length > 0;
+    }
+
+    /**
+     * Adopt the teams carried by a roster/snapshot frame, then repaint (#804).
+     *
+     * ``player_joined`` / ``player_left`` / ``game_state`` all carry ``teams``
+     * (a player leaving also leaves their team, #365), and ``teams_update``
+     * fires when a team forms or dissolves with no roster change at all.
+     */
+    function setLobbyTeams(teams) {
+        _lobbyTeams = Array.isArray(teams) ? teams : [];
+        renderLobbyPlayers(_lastLobbyPlayers);
+    }
+
     function renderLobbyPlayers(players) {
-        var list = Array.isArray(players) ? players : Object.values(players);
+        var list = Array.isArray(players)
+            ? players
+            : (players && typeof players === 'object' ? Object.values(players) : []);
+        _lastLobbyPlayers = list;
         playerCount = list.length;
         if (els.lobbyPlayerCount) els.lobbyPlayerCount.textContent = playerCount;
 
@@ -2169,8 +2214,7 @@
                 + '" aria-label="'
                 + escapeHtml(_t('admin.hostBadge') || 'Host')
                 + '">👑</span>';
-            els.lobbyPlayerChips.innerHTML = list
-                .map(function (p, idx) {
+            var card = function (p, idx) {
                     var name = typeof p === 'string' ? p : (p.name || p);
                     var isAdmin = typeof p === 'object' && p && p.is_admin;
                     var fallbackColor = _LOBBY_COLORS[idx % _LOBBY_COLORS.length];
@@ -2198,8 +2242,46 @@
                         + (isAdmin ? hostBadge : '')
                         + kickBtn
                         + '</div>';
-                })
-                .join('');
+            };
+
+            if (!isTeamMode()) {
+                els.lobbyPlayerChips.innerHTML = list.map(card).join('');
+            } else {
+                // Same grouping the television has used since #365: every team
+                // as a titled block of its members, and anyone who joined no
+                // team keeps their own row underneath. A player in no team is
+                // a team of one, not an error state — so they are not swept
+                // into a leftover group.
+                var inTeam = {};
+                var seq = 0;
+                var groups = _lobbyTeams.map(function (team) {
+                    var members = (team.members || []).map(function (memberName) {
+                        inTeam[memberName] = true;
+                        for (var i = 0; i < list.length; i++) {
+                            var candidate = list[i];
+                            var candidateName = typeof candidate === 'string'
+                                ? candidate
+                                : (candidate && candidate.name);
+                            if (candidateName === memberName) return candidate;
+                        }
+                        return { name: memberName };
+                    });
+                    return '<div class="lobby-e-team">'
+                        + '<div class="lobby-e-team-name">'
+                        + escapeHtml(team.name || '')
+                        + '<span class="lobby-e-team-size">'
+                        + members.length
+                        + '</span></div>'
+                        + members.map(function (m) { return card(m, seq++); }).join('')
+                        + '</div>';
+                }).join('');
+                var solo = list.filter(function (p) {
+                    var n = typeof p === 'string' ? p : (p && p.name);
+                    return !inTeam[n];
+                });
+                els.lobbyPlayerChips.innerHTML =
+                    groups + solo.map(function (p) { return card(p, seq++); }).join('');
+            }
             // Single delegated click handler — re-attaching per render is fine
             // because innerHTML wipes the previous listeners with the nodes.
             els.lobbyPlayerChips.querySelectorAll('.player-chip-kick').forEach(function (btn) {
@@ -2212,6 +2294,29 @@
                 });
             });
         }
+        applyTeamModeSetupNotes();
+    }
+
+    /**
+     * Explain what teams do to the two settings, before Start (#804).
+     *
+     * The Hot Seat and the final wager are chosen on the setup screen; the
+     * teams are formed by the guests in the lobby, i.e. afterwards. So a host
+     * who ticked both had no way to learn from the host screen that the room
+     * had since split into teams, nor what that does to the two toggles —
+     * which for the whole of #668/#669 was "switches them off", and is now
+     * "the team bids and bets as one". Either way the host should read it
+     * before Start rather than infer it from what does or does not happen.
+     *
+     * The note lives on the setup rows because that is where the promise was
+     * made, and the lobby's "Settings" button leads straight back to it.
+     */
+    function applyTeamModeSetupNotes() {
+        var on = isTeamMode();
+        ['hot-seat-team-note', 'wager-team-note'].forEach(function (id) {
+            var node = document.getElementById(id);
+            if (node) node.classList.toggle('hidden', !on);
+        });
     }
 
     // ============================================

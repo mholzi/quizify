@@ -921,6 +921,8 @@ class QuizifyGameState:
         *,
         elapsed_override: float | None = None,
         _settling_team: bool = False,
+        _team_wager: int | None = None,
+        _team_bank: int | None = None,
     ) -> AnswerResult | TeamAnswerAck | str:
         """Submit a player's answer for the current round.
 
@@ -932,6 +934,13 @@ class QuizifyGameState:
         time of that member's *last* tap. The round clock has expired by then,
         so the phase, expiry and freeze guards below are skipped for that call
         — they exist to police live taps, and this is the settlement.
+
+        ``_team_wager`` / ``_team_bank`` ride along for the same reason
+        ``player.streak`` is lent below (#804): on the final round the bet
+        belongs to the team and is staked against the team's score, not
+        against the carrier's shadow total. Passing them in keeps
+        ``ScoringEngine`` ignorant of teams — it is handed the bet and the
+        bank, and never asks whose they are.
         """
         if not _settling_team and self.phase != GamePhase.QUESTION_ACTIVE:
             return ERR_GAME_NOT_STARTED
@@ -1043,8 +1052,12 @@ class QuizifyGameState:
             streak=player.streak,
             double_points_active=double_active,
             is_final_round=self.round == self.total_rounds,
-            wager=player.wager,
-            score_before_wager=player.score,
+            wager=_team_wager if _settling_team else player.wager,
+            score_before_wager=(
+                _team_bank
+                if _settling_team and _team_bank is not None
+                else player.score
+            ),
         )
 
         points = computation.points
@@ -1225,14 +1238,28 @@ class QuizifyGameState:
         """Book a round the team never answered (#748).
 
         The shape a missed round takes everywhere else: streak broken, a
-        ``timeout`` history entry, a zero in the round-score history, and the
-        round still counted as played so the per-round averages divide by the
-        right number. Shared by both settlement paths so a fourth copy cannot
-        drift the way the scoring blocks did.
+        ``timeout`` history entry, the round's score in the round-score
+        history, and the round still counted as played so the per-round
+        averages divide by the right number. Shared by both settlement paths
+        so a fourth copy cannot drift the way the scoring blocks did.
+
+        On the final round a standing bet is resolved here as a loss (#653,
+        #804) — the twin of the per-player timeout branch in
+        ``_do_evaluate_round``. A team that placed a bet and then let the clock
+        run out pays it, because "bet, then sit still" must not be the cheapest
+        way through the last question. The history records ``round_score``
+        rather than a literal zero for the same reason the player path does
+        (#472): a pre-settlement reaction bonus (#800) or this very loss has
+        already moved it.
         """
         team.streak = 0
+        if self.round == self.total_rounds:
+            loss = wager_loss(team.score, team.wager)
+            if loss:
+                team.round_score -= loss
+                team.score = max(0, team.score - loss)
         team.round_history.append("timeout")
-        team.round_scores.append(0)
+        team.round_scores.append(team.round_score)
         team.rounds_played += 1
 
     def _credit_team_round(
@@ -1324,6 +1351,11 @@ class QuizifyGameState:
                 team.current_answer,
                 elapsed_override=elapsed,
                 _settling_team=True,
+                # The final-round bet is the team's, staked against the team's
+                # score (#804). Lent for the call the same way the streak is,
+                # so the scoring engine keeps one wager rule for everybody.
+                _team_wager=team.wager,
+                _team_bank=team.score,
             )
             if isinstance(result, AnswerResult):
                 self._credit_team_round(
@@ -2290,17 +2322,13 @@ class QuizifyGameState:
         """
         if self._hot_seat_fired or self._hot_seat_target_round is None:
             return False
-        # #669: never in team mode. Bids are a percentage of the bidder's own
-        # score, which in team mode is the same shadow value #668 is about —
-        # zero for everyone but the round's carrier, and a zero stake is
-        # rejected outright, so most of the room cannot bid at all. Worse, the
-        # settlement writes its deltas to ``player.score`` while the
-        # leaderboard, podium and awards all read ``get_ranked_participants()``
-        # (teams): the detour would stop the game for a minute and put its
-        # result nowhere anyone can see. Lightning got proper team support in
-        # #552; until the auction does too, it stays out.
-        if self.team_mode:
-            return False
+        # #669 gated this off in team mode, because bids were a percentage of
+        # the bidder's own ``player.score`` — the shadow value #668 is about,
+        # zero for everyone but the round's carrier — and the settlement wrote
+        # its deltas there too, while the leaderboard, podium and awards all
+        # read ``get_ranked_participants()``. #804 removes the gate by fixing
+        # both ends: the auction now bids and settles per ENTRANT, so a team
+        # stakes the score the television shows and is paid into the same row.
         if self.phase not in (GamePhase.LOBBY, GamePhase.ANSWER_REVEAL):
             return False
         return self.round + 1 == self._hot_seat_target_round
@@ -2317,8 +2345,14 @@ class QuizifyGameState:
         if self.phase not in (GamePhase.LOBBY, GamePhase.ANSWER_REVEAL):
             return False
 
+        # Keyed by ENTRANT (#804): a team id in team mode, a player name
+        # otherwise. ``get_ranked_participants`` is the same list the
+        # leaderboard, the podium and the awards read, so the banks the bids
+        # are shares of are the numbers on the television — and the deltas
+        # ``finish_hot_seat`` writes back land on the same rows.
         scores = {
-            name: p.score for name, p in self._player_registry.players.items()
+            self._entrant_key(participant): participant.score
+            for participant in self.get_ranked_participants()
         }
         hs = HotSeatRound(
             self._question_bank,
@@ -2327,6 +2361,7 @@ class QuizifyGameState:
             category=self.category,
             categories=getattr(self, "categories", None),
             difficulty=self.difficulty,
+            teams=self._team_registry.to_list(),
         )
         # Same reservation rule as Lightning (#544): never spend a question the
         # main game still owes a later round.
@@ -2367,13 +2402,16 @@ class QuizifyGameState:
         if self._hot_seat is None:
             return {}
         deltas = self._hot_seat.settle()
-        for name, delta in deltas.items():
-            player = self._player_registry.players.get(name)
-            if player is None:
+        for entrant, delta in deltas.items():
+            # The key is an entrant, so the payout follows whoever the ranking
+            # is about (#804): the team, or the player who joined none. The
+            # floor at zero is the rule every other score in this file keeps.
+            participant = self._participant_by_entrant(entrant)
+            if participant is None:
                 continue
-            player.score += delta
-            if player.score < 0:
-                player.score = 0
+            participant.score += delta
+            if participant.score < 0:
+                participant.score = 0
         if self.phase == GamePhase.HOT_SEAT:
             self.phase = GamePhase.HOT_SEAT_REVEAL
             self._flush_history()
@@ -2689,23 +2727,21 @@ class QuizifyGameState:
         ``player.wager`` (#353) — opening a window there would collect bets
         nothing settles.
 
-        Team mode is excluded for the same reason (#668). There ``player.score``
-        is a by-product: the carrier of a given round — whoever's tap stands at
-        settle — receives the team's points personally and everyone else stays
-        at zero. The window advertised each member "your bank: X" against that
-        meaningless number, and settlement read only the carrier's bet, staked
-        against the carrier's shadow score rather than the team score on the
-        television. A bet nobody can read and most people cannot influence is
-        worse than no bet; a team-level wager is a feature, not a fix.
+        Team mode used to be excluded for a third reason (#668): there
+        ``player.score`` is a by-product — the carrier of a given round
+        receives the team's points personally and everyone else stays at zero
+        — so the window advertised each member "your bank: X" against a
+        meaningless number and settled only the carrier's bet against the
+        carrier's shadow score. #804 fixes the mechanic instead of gating it:
+        the bet now belongs to the team, is staked against the team score the
+        television shows, and any member may place it.
 
-        #742 adds a third exclusion, of a different kind: a host's choice
+        #742 adds a second exclusion, of a different kind: a host's choice
         rather than a mechanic that cannot settle. A table playing with
         children switches the betting window off, and the final question is
         played straight instead of one where "no answer costs you the stake".
         """
         if not self._wager_enabled:
-            return False
-        if self.team_mode:
             return False
         return self.round == self.total_rounds and not question.is_estimate
 
@@ -2744,18 +2780,68 @@ class QuizifyGameState:
         return self._phase_controller.wager_window_remaining()
 
     def players_missing_wager(self) -> list[str]:
-        """Connected players who have not locked a bet yet (#656).
+        """Connected participants who have not locked a bet yet (#656).
 
         The window closes early once this is empty, so a table that decides
         fast is not held for the full 20 seconds. Disconnected players are
         excluded — waiting on a phone that has left the room would strand the
         window until the deadline for everybody else.
+
+        In team mode the answer is a team's name, not a member's (#804): one
+        bet is placed per team, so waiting on each member in turn would hold
+        the window open for people who have nothing left to do — and the host
+        screen would name three players for one outstanding decision.
         """
-        return [
-            p.name
-            for p in self._player_registry.players.values()
-            if p.connected and p.wager is None
-        ]
+        if not self.team_mode:
+            return [
+                p.name
+                for p in self._player_registry.players.values()
+                if p.connected and p.wager is None
+            ]
+        connected = {
+            p.name for p in self._player_registry.players.values() if p.connected
+        }
+        waiting: list[str] = []
+        for participant in self.get_ranked_participants():
+            if participant.wager is not None:
+                continue
+            members = getattr(participant, "members", None) or [participant.name]
+            if any(m in connected for m in members):
+                waiting.append(participant.name)
+        return waiting
+
+    def record_wager(self, player_name: str, pct: int) -> bool:
+        """Stake ``pct`` for whoever this player bets as (#804).
+
+        Their team in team mode, themselves otherwise — the same row
+        ``get_ranked_participant_for`` resolves for every other payout. Any
+        member may set the team's bet and the last one counts, exactly like
+        the standing answer; there is no change lock, because the window is a
+        single decision the whole team can see the tally of, not a tap race in
+        the last seconds of a question.
+
+        Returns False for a name that is not in the game.
+        """
+        participant = self.get_ranked_participant_for(player_name)
+        if participant is None:
+            return False
+        participant.wager = pct
+        return True
+
+    def wager_is_locked(self, player_name: str) -> bool:
+        """True once the bet's answer is already committed (#255/#804).
+
+        A wager only makes sense *before* the answer is in — it stakes points
+        on getting that answer right. For a solo player that is their own
+        submission; for a team it is the standing answer, since no member is
+        ever marked ``submitted`` in team mode (#365).
+        """
+        participant = self.get_ranked_participant_for(player_name)
+        if participant is None:
+            return False
+        if self.team_mode and hasattr(participant, "current_answer"):
+            return participant.current_answer is not None
+        return bool(participant.submitted)
 
     def get_current_question(self) -> Question | None:
         """Return the current question, or None."""
@@ -2791,14 +2877,7 @@ class QuizifyGameState:
         next_round = self.round + 1
         if next_round == self._lightning_target_round and not self._lightning_fired:
             return None
-        if (
-            next_round == self._hot_seat_target_round
-            and not self._hot_seat_fired
-            and not self.team_mode
-        ):
-            # Mirrors ``should_trigger_hot_seat``: the auction is armed in team
-            # mode but never fires there (#669), so the queued question really
-            # is next and the hint stands.
+        if next_round == self._hot_seat_target_round and not self._hot_seat_fired:
             return None
         question = self._question_bank.peek_next_question()
         if question is None:
@@ -2849,6 +2928,48 @@ class QuizifyGameState:
             if self._team_registry.get_by_member(p.name) is None
         ]
         return teams + solo
+
+    def _entrant_key(self, participant: Any) -> str:
+        """The key a participant bids, bets and settles under (#804).
+
+        A team's id, a solo player's name. Ids rather than names because
+        nothing stops two teams from carrying the same one (#728/#759) — keyed
+        by name they would collapse into a single entrant, one team's bid
+        overwriting the other's and one settlement paying both.
+        """
+        return getattr(participant, "team_id", None) or participant.name
+
+    def _participant_by_entrant(self, entrant: str) -> Any | None:
+        """The team or player an entrant key names, or None (#804).
+
+        The inverse of ``_entrant_key``, and the reason a Hot Seat settlement
+        can land on the leaderboard in team mode: the deltas come back keyed by
+        entrant and are resolved here rather than being written blindly to
+        ``player.score``, which is what put #669's payouts nowhere visible.
+        """
+        team = self._team_registry.get(entrant)
+        if team is not None:
+            return team
+        player = self._player_registry.get_player(entrant)
+        if player is None:
+            return None
+        # A player who is IN a team is not an entrant of their own; their key
+        # never appears in a settlement, and honouring it here would pay a
+        # shadow score.
+        if self._team_registry.get_by_member(entrant) is not None:
+            return None
+        return player
+
+    def entrant_key_for_player(self, player_name: str) -> str:
+        """The entrant a given player acts as — their team's id, or their name.
+
+        The public form of ``_entrant_key``, used by the WebSocket layer to
+        look a player's bid, bet or bank out of a ``HotSeatRound`` (#804).
+        """
+        participant = self.get_ranked_participant_for(player_name)
+        if participant is None:
+            return player_name
+        return self._entrant_key(participant)
 
     def get_ranked_participant_for(self, player_name: str) -> Any | None:
         """The row on the leaderboard that a given player's points land in.
@@ -3156,13 +3277,19 @@ class QuizifyGameState:
                 "auction_seconds": hs.auction_seconds,
                 "answer_seconds": hs.answer_seconds,
                 # The banks the bids are percentages of — a snapshot taken when
-                # the auction opened, not the live scores.
+                # the auction opened, not the live scores. Keyed by ENTRANT
+                # (#804), which is what the per-player projection in
+                # ``round_message_builder`` reads it by; it never leaves the
+                # server in this shape.
                 "banks": dict(hs.scores),
                 # Count only. The auction is sealed until it closes, and a
                 # reconnect must not be a way to read it early.
                 "bid_count": len(hs.bids),
                 "bidder_count": len(hs.scores),
-                "winner": hs.winner,
+                # The person in the chair, matching the live ``hot_seat_awarded``
+                # frame so the phone's restore path and the live path agree.
+                "winner": hs.seat_holder,
+                "entrant": hs.winner_name,
             }
             if hs.winner is not None:
                 block["pct"] = hs.winning_pct

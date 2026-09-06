@@ -166,8 +166,12 @@
             });
             if (hint) hint.textContent = t('hotSeat.seatedHint');
         } else {
+            // #804: ``winner`` is the person in the chair, ``entrant`` is who
+            // pays — their team in team mode, the same person again otherwise.
+            // The room is told the payer, because that is the row the points
+            // move on.
             if (title) title.textContent = t('hotSeat.lost', {
-                name: msg.winner, pct: msg.pct, pts: msg.stake
+                name: msg.entrant || msg.winner, pct: msg.pct, pts: msg.stake
             });
             if (hint) hint.textContent = '';
         }
@@ -212,6 +216,25 @@
         }
 
         _state.score = typeof msg.score === 'number' ? msg.score : _state.score;
+
+        // #804: a teammate of the seat holder is neither seated nor a
+        // spectator. They stake the purse the chair already staked, so the
+        // server refuses their bet — showing them the slider anyway would be
+        // a control that silently does nothing.
+        if (msg.you_are_seat_team) {
+            var betStage = el('hotseat-bet-stage');
+            if (betStage) betStage.classList.add('hidden');
+            var teamTitle = el('hotseat-title');
+            if (teamTitle) {
+                teamTitle.textContent = t('hotSeat.teamSeated', {
+                    name: msg.winner
+                });
+            }
+            var teamHint = el('hotseat-hint');
+            if (teamHint) teamHint.textContent = '';
+            return;
+        }
+
         showBetStage(msg.winner);
     }
 

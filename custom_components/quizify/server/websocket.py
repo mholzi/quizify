@@ -1992,11 +1992,13 @@ class QuizifyWebSocketHandler:
             return  # silent: betting window not open (or already closed)
 
         # A wager only makes sense *before* the answer is locked in — the wager
-        # stakes points on getting that answer right. Once the player has
-        # submitted, accepting a new wager silently mutated the stake on an
+        # stakes points on getting that answer right. Once the answer has been
+        # committed, accepting a new wager silently mutated the stake on an
         # already-locked answer (and the client never learned it was a no-op).
-        # Reject explicitly so the player isn't misled. (#255.)
-        if player.submitted:
+        # Reject explicitly so the player isn't misled. (#255.) In team mode
+        # the commitment is the team's standing answer, since no member is
+        # ever marked ``submitted`` there (#365/#804).
+        if game_state.wager_is_locked(player.name):
             await self._conn.send_error(
                 ws, ERR_INVALID_ACTION, "Wager locked after answering"
             )
@@ -2015,7 +2017,9 @@ class QuizifyWebSocketHandler:
             await self._conn.send_error(ws, ERR_INVALID_ACTION, "Wager must be 0-100")
             return
 
-        player.wager = wager_int
+        # In team mode the bet belongs to the team and is staked against the
+        # team's score (#804); any member may place it and the last one counts.
+        game_state.record_wager(player.name, wager_int)
         await self._conn.send(ws, {
             "type": "wager_accepted",
             "wager": wager_int,
@@ -2982,6 +2986,9 @@ class QuizifyWebSocketHandler:
         The bid is a PERCENT of the bidder's own score, exactly like a finale
         wager — bidding absolute points would hand every auction to whoever is
         already ahead, which is the opposite of what this mode is for.
+
+        In team mode the bidder is the team (#804): one bid, staked against
+        the team's score, and the member who places it takes the chair.
         """
         player = game_state.get_player_by_ws(ws)
         if not player:
@@ -3008,7 +3015,9 @@ class QuizifyWebSocketHandler:
         await self._conn.send(ws, {
             "type": "hot_seat_bid_accepted",
             "bid": pct,
-            "points": hot_seat_stake(hs.scores.get(player.name, 0), pct),
+            "points": hot_seat_stake(
+                hs.scores.get(hs.entrant_for(player.name), 0), pct
+            ),
         })
         # Blind auction: the room learns how many have bid, never how much.
         await self._conn.broadcast({
@@ -3030,10 +3039,12 @@ class QuizifyWebSocketHandler:
         hs = game_state.hot_seat
         if hs is None:
             return
-        if player.name == hs.winner:
+        if hs.is_on_seat_team(player.name):
             # Refused rather than ignored: betting against yourself and then
             # answering wrongly on purpose turns a question you cannot answer
-            # into a profit.
+            # into a profit. In team mode the refusal covers the seat holder's
+            # whole team (#804) — they stake the same purse, so the hedge is
+            # available to any of them.
             await self._conn.send_error(
                 ws, ERR_INVALID_ACTION, "The hot seat does not bet"
             )
@@ -3056,7 +3067,9 @@ class QuizifyWebSocketHandler:
             "type": "hot_seat_bet_accepted",
             "side": side,
             "bet": pct,
-            "points": hot_seat_stake(hs.scores.get(player.name, 0), pct),
+            "points": hot_seat_stake(
+                hs.scores.get(hs.entrant_for(player.name), 0), pct
+            ),
         })
 
     async def _handle_hot_seat_answer(
@@ -3070,7 +3083,9 @@ class QuizifyWebSocketHandler:
         if game_state.phase != GamePhase.HOT_SEAT:
             return
         hs = game_state.hot_seat
-        if hs is None or player.name != hs.winner:
+        # The chair holds a person: in team mode the member who placed the
+        # team's bid, not the team that pays for it (#804).
+        if hs is None or player.name != hs.seat_holder:
             return
 
         try:
@@ -3114,14 +3129,16 @@ class QuizifyWebSocketHandler:
             "total_rounds": game_state.total_rounds,
         })
         # Each player needs their own number: a percentage is only meaningful
-        # next to the points it costs *them*.
+        # next to the points it costs *them*. In team mode that is the team's
+        # score (#804) — ``player.score`` there is the shadow value #669 gated
+        # the mode off for, and a slider priced against it costs nothing.
         sends = []
         for player in game_state.get_players():
             if not player.connected or player.ws is None:
                 continue
             sends.append(self._conn.send(player.ws, {
                 "type": "hot_seat_auction_you",
-                "score": player.score,
+                "score": hs.scores.get(hs.entrant_for(player.name), 0),
                 "seconds": hs.auction_seconds,
             }))
         if sends:
@@ -3180,7 +3197,11 @@ class QuizifyWebSocketHandler:
                 # --- simultaneous reveal ------------------------------
                 await self._conn.broadcast({
                     "type": "hot_seat_awarded",
-                    "winner": winner,
+                    # The PERSON taking the chair. Outside team mode that is
+                    # also the entrant, so this field keeps its old meaning for
+                    # every client; ``entrant`` names who pays (#804).
+                    "winner": hs.seat_holder,
+                    "entrant": hs.winner_name,
                     "pct": hs.winning_pct,
                     "stake": hs.winning_stake,
                     "bids": hs.reveal(),
@@ -3223,8 +3244,12 @@ class QuizifyWebSocketHandler:
                     "round_num": game_state.round,
                     "total_rounds": game_state.total_rounds,
                     **hs.summary(),
+                    # The rows the room can see (#804): teams in team mode,
+                    # players otherwise. Keyed by ``player.name`` this reported
+                    # the shadow scores the settlement no longer writes to.
                     "scores": {
-                        p.name: p.score for p in game_state.get_players()
+                        participant.name: participant.score
+                        for participant in game_state.get_ranked_participants()
                     },
                 })
             except asyncio.CancelledError:
@@ -3256,13 +3281,14 @@ class QuizifyWebSocketHandler:
             "total_rounds": game_state.total_rounds,
             "image_url": getattr(q, "image_url", "") or "",
             "seconds": hs.answer_seconds,
-            "winner": hs.winner,
+            "winner": hs.seat_holder,
+            "entrant": hs.winner_name,
         }
         sends = []
         for player in game_state.get_players():
             if not player.connected or player.ws is None:
                 continue
-            if player.name == hs.winner:
+            if player.name == hs.seat_holder:
                 sends.append(self._conn.send(player.ws, {
                     **payload,
                     "answers": hs.shuffled_answers(),
@@ -3273,7 +3299,11 @@ class QuizifyWebSocketHandler:
                     **payload,
                     "answers": [],
                     "you_are_seated": False,
-                    "score": player.score,
+                    # A teammate of the seat holder may not bet: they stake the
+                    # purse the chair already staked (#804). Told here so the
+                    # phone shows why instead of a slider nothing accepts.
+                    "you_are_seat_team": hs.is_on_seat_team(player.name),
+                    "score": hs.scores.get(hs.entrant_for(player.name), 0),
                 }))
         if sends:
             await asyncio.gather(*sends, return_exceptions=True)

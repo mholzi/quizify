@@ -77,6 +77,18 @@ class _FakeGameState:
         """
         return list(self._players)
 
+    def get_ranked_participant_for(self, player_name: str) -> PlayerSession | None:
+        """The row a player's points land in (#365/#804).
+
+        Themselves here, since these fakes model an ordinary game — but the
+        method has to exist: the builder prices the wager slider against it,
+        and in team mode that is the team's score rather than the member's
+        shadow total.
+        """
+        return next(
+            (p for p in self._players if p.name == player_name), None
+        )
+
     def get_player_shuffle(self, player_name: str) -> list[int]:
         return self._player_shuffles.get(player_name) or self.shuffle_map
 

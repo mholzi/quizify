@@ -54,15 +54,21 @@ class RoundMessageBuilder:
     ) -> dict[str, Any]:
         """Build one player's betting-window payload (#656).
 
-        Per-player because the bank shown on the slider is that player's own
-        score. Carries no question text — see ``serialize_wager_window``.
+        Per-player because the bank shown on the slider is the score the bet is
+        staked against — their own, or their team's in team mode (#804). It has
+        to be the participant's, not ``player.score``: in team mode the latter
+        is the shadow number #668 was filed about, so the slider used to price
+        the bet against something no screen shows and nothing settles.
+
+        Carries no question text — see ``serialize_wager_window``.
         """
+        participant = game_state.get_ranked_participant_for(player.name) or player
         return serialize_wager_window(
             question=question,
             round_num=game_state.round,
             total_rounds=game_state.total_rounds,
             window_duration=window_duration,
-            player_score=player.score,
+            player_score=participant.score,
         )
 
     def build_wager_progress(
@@ -79,14 +85,27 @@ class RoundMessageBuilder:
         on each incoming wager leave it out so the TV countdown, already
         running, is not restarted.
         """
-        players = [p for p in game_state.get_players() if p.connected]
+        # Counted in PARTICIPANTS (#804): one bet per team, so a tally over
+        # people would read "1 of 5 in" for a room where every team has
+        # decided, and would never reach the count that closes the window.
+        connected = {p.name for p in game_state.get_players() if p.connected}
+        entrants = [
+            participant
+            for participant in game_state.get_ranked_participants()
+            if any(
+                member in connected
+                for member in (
+                    getattr(participant, "members", None) or [participant.name]
+                )
+            )
+        ]
         waiting = game_state.players_missing_wager()
         payload: dict[str, Any] = {
             "type": "wager_progress",
             "round_num": game_state.round,
             "total_rounds": game_state.total_rounds,
-            "locked_in": len(players) - len(waiting),
-            "player_count": len(players),
+            "locked_in": len(entrants) - len(waiting),
+            "player_count": len(entrants),
             "waiting_on": waiting,
         }
         if window_duration is not None:
@@ -113,6 +132,10 @@ class RoundMessageBuilder:
         """
         shuffle = game_state.get_player_shuffle(player.name)
         shuffled_answers = [question.answers[i].text for i in shuffle]
+        # The wager picker prices the bet against this number, so in team mode
+        # it has to be the team's score (#804) — the same one the wager window
+        # already showed a moment earlier.
+        participant = game_state.get_ranked_participant_for(player.name) or player
         return serialize_question_for_player(
             question=question,
             shuffled_answers=shuffled_answers,
@@ -120,7 +143,7 @@ class RoundMessageBuilder:
             total_rounds=game_state.total_rounds,
             timer_duration=game_state.round_duration,
             is_final_round=is_final,
-            player_score=player.score,
+            player_score=participant.score,
         )
 
     def build_admin_question(
@@ -290,17 +313,36 @@ class RoundMessageBuilder:
             # spectators stake on the seat holder, they do not answer.
             hs = game_state.hot_seat
             block = dict(out["hot_seat"])
-            block["own_bank"] = block.get("banks", {}).get(player.name, 0)
+            # Keyed by ENTRANT (#804): the player's own name outside team mode,
+            # their team's id inside it. Read by player name in team mode this
+            # returned 0 for everybody, which is the shadow bank #669 gated the
+            # whole mode off for.
+            entrant = (
+                hs.entrant_for(player.name)
+                if hs is not None
+                else game_state.entrant_key_for_player(player.name)
+            )
+            block["own_bank"] = block.get("banks", {}).get(entrant, 0)
             block.pop("banks", None)
             if hs is not None:
-                bid = hs.bids.get(player.name)
+                bid = hs.bids.get(entrant)
                 block["you_bid"] = bid.pct if bid is not None else None
-                bet = hs.bets.get(player.name)
+                bet = hs.bets.get(entrant)
                 block["you_bet"] = (
                     {"side": bet.side, "pct": bet.pct} if bet is not None else None
                 )
+                # The chair holds a PERSON. In team mode that is the member who
+                # placed the team's bid, so this compares against the seat
+                # holder and not against the entrant that pays for it.
                 block["you_are_seated"] = (
-                    hs.winner is not None and hs.winner == player.name
+                    hs.seat_holder is not None and hs.seat_holder == player.name
+                )
+                # A teammate of the seat holder is neither seated nor a
+                # spectator: they share the purse the chair already staked, so
+                # they may not bet (#804). The phone needs to be told, or it
+                # offers a slider the server refuses.
+                block["you_are_seat_team"] = (
+                    not block["you_are_seated"] and hs.is_on_seat_team(player.name)
                 )
                 if block.get("question") is not None:
                     # Named apart from the ``question`` above on purpose: that
