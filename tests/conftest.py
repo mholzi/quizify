@@ -15,6 +15,7 @@ import asyncio
 import contextlib
 import inspect
 import random
+import re
 import sys
 from pathlib import Path
 
@@ -239,3 +240,46 @@ def _sockets_enabled():
     if pytest_socket is not None:
         pytest_socket.enable_socket()
     yield
+
+
+# ---------------------------------------------------------------------------
+# Shared source-slicing helper (#811)
+#
+# Several tests assert on the *code* inside www/*.js, www/*.html or a Python
+# module. A fix that explains itself in a comment then quotes the very thing it
+# removed, and a raw text search reads the explanation as the code — the trap
+# hit in #622, #625, #626 and, from the other side, in #811: a slice anchored on
+# `ws.onclose` landed on a CSS comment 2150 lines above the handler, so the
+# assertion was satisfied by the guarded line existing *anywhere* on the page.
+#
+# The helper lived twice (test_end_screen_standing_624.py,
+# test_preset_modals_626.py). It lives here now so the next source-slicing test
+# does not re-implement it a third time.
+# ---------------------------------------------------------------------------
+
+_BLOCK_COMMENT = re.compile(r"/\*.*?\*/", re.S)
+_LINE_COMMENT = re.compile(r"^\s*//.*$", re.M)
+_HTML_COMMENT = re.compile(r"<!--.*?-->", re.S)
+
+
+def without_comments(source: str) -> str:
+    """Strip comments so assertions look at declarations, never at prose.
+
+    Handles the three comment syntaxes that appear in the files these tests
+    slice: ``/* … */`` (CSS and JS), a whole-line ``//`` (JS), and
+    ``<!-- … -->`` (HTML). The line-comment pattern is anchored at the start of
+    a line on purpose — a bare ``re.sub("//.*")`` would eat the rest of any line
+    containing a URL.
+
+    Deliberately not a parser. It is enough to keep a comment from standing in
+    for the code it describes, which is the only failure mode it exists for.
+    """
+    source = _BLOCK_COMMENT.sub("", source)
+    source = _HTML_COMMENT.sub("", source)
+    return _LINE_COMMENT.sub("", source)
+
+
+# Import it as ``from tests.conftest import without_comments`` — pytest 9 loads
+# this file as the module ``tests.conftest``, and the ``sys.path`` insert above
+# puts the repo root in front, so that spelling resolves under both the current
+# pytest and the older one on the HA-floor leg.

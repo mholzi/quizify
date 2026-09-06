@@ -276,13 +276,25 @@ class TestServiceWorkerSubstitution:
         resp = await sw_view(_fake_request("9.9.9-test"))
         assert resp.headers.get("Service-Worker-Allowed") == "/quizify/"
 
-    async def test_sw_precache_bypasses_http_cache(self) -> None:
-        """Install-time precache must go to the server, not the browser HTTP
-        cache. HA serves /quizify/static/* with a 31-day max-age, so a plain
-        cache.add() would seed a brand-new release's cache with month-old
-        bytes from the HTTP cache (stale from birth)."""
+    async def test_unversioned_precache_bypasses_http_cache(self) -> None:
+        """Un-versioned precache entries must go to the server, not the browser
+        HTTP cache. HA serves /quizify/static/* with a 31-day max-age, so a
+        plain cache.add() would seed a brand-new release's cache with month-old
+        bytes from the HTTP cache (stale from birth).
+
+        Since #791 this is the *fallback* branch and covers the fonts only:
+        a `?v=<version>-<fingerprint>` URL is immutable per content, so reusing
+        the entry the page just filled is correct — and reloading it was a
+        guaranteed second download of the 330 KB bundle. See
+        tests/test_sw_precache_split_791.py for that half."""
         resp = await sw_view(_fake_request("9.9.9-test"))
         assert "cache: 'reload'" in resp.text
+
+    async def test_sw_js_substitutes_default_lang(self) -> None:
+        """The precache carries one i18n bundle, so it has to know which (#791)."""
+        resp = await sw_view(_fake_request("9.9.9-test"))
+        assert "{{DEFAULT_LANG}}" not in resp.text
+        assert "var DEFAULT_LANG = '" in resp.text
 
 
 class TestServiceWorkerSource:

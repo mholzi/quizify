@@ -23,14 +23,11 @@ from __future__ import annotations
 import re
 from pathlib import Path
 
+from tests.conftest import without_comments as _without_comments
+
 _REPO_ROOT = Path(__file__).resolve().parent.parent
 _CC = _REPO_ROOT / "custom_components" / "quizify"
 _WWW = _CC / "www"
-
-
-def _without_comments(source: str) -> str:
-    source = re.sub(r"/\*.*?\*/", "", source, flags=re.S)
-    return re.sub(r"^\s*//.*$", "", source, flags=re.M)
 
 
 def _py_function(source: str, signature: str) -> str:

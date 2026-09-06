@@ -21,6 +21,10 @@ import hashlib
 import sys
 from pathlib import Path
 
+sys.path.insert(0, str(Path(__file__).resolve().parent))
+
+from asset_gzip import write_gzip_sibling  # noqa: E402
+
 REPO = Path(__file__).resolve().parent.parent
 JS_DIR = REPO / "custom_components" / "quizify" / "www" / "js"
 
@@ -64,6 +68,12 @@ def build_bundle() -> Path:
 
     digest = hashlib.sha1(text.encode("utf-8")).hexdigest()[:10]
     print(f"Wrote {BUNDLE.relative_to(REPO)} ({len(text):,} bytes, sha1:{digest})")
+
+    # aiohttp serves <file>.gz in place of <file> whenever it exists, so the
+    # sibling has to be rewritten in the same breath as the bundle — a stale one
+    # would be served instead of this fresh output, silently (#792).
+    gz = write_gzip_sibling(BUNDLE)
+    print(f"Wrote {gz.relative_to(REPO)} ({gz.stat().st_size:,} bytes)")
     return BUNDLE
 
 

@@ -18,6 +18,8 @@ from __future__ import annotations
 import re
 from pathlib import Path
 
+from tests.conftest import without_comments
+
 REPO = Path(__file__).resolve().parent.parent
 DASHBOARD = REPO / "custom_components" / "quizify" / "www" / "dashboard.html"
 
@@ -41,13 +43,77 @@ def test_reconnect_pill_element_present() -> None:
     assert ".dashboard-reconnect-pill" in html
 
 
+def _onclose_handler(html: str) -> str:
+    """The body of ``ws.onclose``, and nothing else (#811).
+
+    Anchored on the *assignment*, not the identifier, and on comment-free
+    source. ``html.index("ws.onclose")`` used to land on the CSS comment at
+    line 250 ("When ws.onclose fires mid-question…"), and the matching
+    ``html.index("ws.onerror")`` on the handler at line 2400 — a 2150-line
+    region covering most of the page, including ``ws.onopen``.
+    """
+    start = html.index("ws.onclose = function")
+    end = html.index("ws.onerror", start)
+    return html[start:end]
+
+
 def test_reconnect_pill_toggled_in_ws_handlers() -> None:
-    html = _text()
+    html = without_comments(_text())
     # onclose shows the pill, onopen hides it.
     assert "els.reconnectPill.hidden = false" in html
     assert "els.reconnectPill.hidden = true" in html
-    onclose = html[html.index("ws.onclose") : html.index("ws.onerror")]
-    assert "els.reconnectPill.hidden = false" in onclose
+    assert "els.reconnectPill.hidden = false" in _onclose_handler(html)
+
+
+def test_the_onclose_region_is_the_handler_and_not_half_the_page() -> None:
+    """The slice has to be small enough for the assertion above to mean anything.
+
+    ``ws.onopen`` sits *above* ``ws.onclose`` in the file, so the old
+    comment-anchored region swallowed it whole: both branches of the pill were
+    inside the "onclose" slice, and the test could not tell them apart.
+    """
+    region = _onclose_handler(without_comments(_text()))
+
+    assert region.count("\n") < 30, (
+        f"the onclose slice is {region.count(chr(10))} lines — it is supposed "
+        "to be one handler (#811)"
+    )
+    assert "ws.onopen" not in region
+    assert "els.reconnectPill.hidden = true" not in region, (
+        "the hide branch belongs to ws.onopen; if it is inside this region the "
+        "anchor drifted again"
+    )
+
+
+def test_the_old_anchor_could_not_see_a_misplaced_pill() -> None:
+    """Proof that the old slicing was blind, not merely imprecise (#811).
+
+    Move the show-the-pill line out of ``ws.onclose`` and into ``ws.onopen``
+    — the exact regression the test exists to catch. The old anchor keeps
+    passing on that mutated page; the assignment anchor fails, which is what a
+    guard is for.
+    """
+    html = _text()
+    show = "if (els.reconnectPill) els.reconnectPill.hidden = false;"
+    assert html.count(show) == 1, "expected exactly one show-the-pill line"
+
+    # Delete it from onclose, re-insert it into onopen.
+    moved = html.replace(show, "/* moved away */", 1)
+    open_marker = "ws.onopen = function() {"
+    assert open_marker in moved
+    moved = moved.replace(open_marker, open_marker + "\n                " + show, 1)
+
+    old_region = moved[moved.index("ws.onclose") : moved.index("ws.onerror")]
+    assert "els.reconnectPill.hidden = false" in old_region, (
+        "the comment anchor is supposed to stay green on the broken page — "
+        "that is the bug being fixed"
+    )
+
+    new_region = _onclose_handler(without_comments(moved))
+    assert "els.reconnectPill.hidden = false" not in new_region, (
+        "the assignment anchor must notice that the pill is no longer shown "
+        "from ws.onclose"
+    )
 
 
 # ---- #425: lightning uses real seconds_per_question ----

@@ -76,10 +76,13 @@ Quizify has ~70% of Beatify's capabilities. The remaining 30% falls into 3 categ
 - **Fix:** Adapt `game/share.py` for quiz results. Generate per-player result card (✅❌ per round).
 - **Effort:** 4h
 
-### 7.6 Asset Minification
+### 7.6 Asset Minification — done differently (#792)
 - **Problem:** Only source JS/CSS, no minified versions. Slower load times.
-- **Fix:** Add build step (esbuild or terser) to generate `.min.js` / `.min.css`. Or manual minify key files.
-- **Effort:** 2h setup + ongoing
+- **What shipped:** pre-compressed `.gz` siblings instead of minification.
+  aiohttp serves `<file>.gz` in place of `<file>` on its own, so `scripts/build_gzip.py`
+  (stdlib `gzip`, no npm) buys 3.7-4x with no server change and no toolchain.
+  Minifying on top would add maybe another 15% for a build dependency.
+- **Effort:** done
 
 ### 7.7 Error Handling & Validation
 - **Problem:** Edge cases not handled: game starts with 0 questions, player joins mid-game, WS message with missing fields.

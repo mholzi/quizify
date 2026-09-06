@@ -160,6 +160,14 @@ jobs:
     # source-module change that was never rebuilt. This job rebuilds in CI and
     # fails if the committed artifacts are stale. (tests/ also carries a unit
     # counterpart, test_generated_artifacts_in_sync.py, run by the pytest job.)
+    #
+    # Since #792 the same guard covers the pre-compressed .gz siblings, and there
+    # it is load-bearing rather than tidy: aiohttp's FileResponse serves
+    # <file>.gz INSTEAD of <file> whenever the sibling exists and the client sent
+    # Accept-Encoding: gzip. A sibling nobody regenerated therefore beats the
+    # fresh source — the release ships and the old bytes run, with nothing in any
+    # log to say so. The gzip output is byte-reproducible (mtime=0, no filename
+    # in the header), so a diff here can only mean "not rebuilt".
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
@@ -172,13 +180,25 @@ jobs:
         run: |
           python scripts/build_bundle.py
           python scripts/build_css.py
+          python scripts/build_gzip.py
 
       - name: Fail if committed artifacts are stale
         run: |
-          if ! git diff --exit-code -- \
-              custom_components/quizify/www/js/player.bundle.js \
-              custom_components/quizify/www/css/styles.css; then
+          if ! git diff --exit-code -- custom_components/quizify/www; then
             echo "::error::Generated artifacts are out of sync with their source modules."
-            echo "Run: python3 scripts/build_bundle.py && python3 scripts/build_css.py, then commit."
+            echo "Run: python3 scripts/build_bundle.py && python3 scripts/build_css.py && python3 scripts/build_gzip.py, then commit."
+            exit 1
+          fi
+
+      # A NEW .gz that was never committed does not show up in `git diff` — it is
+      # untracked. Without this check, adding an asset to GZIP_TARGETS and
+      # forgetting to `git add` the sibling passes CI and then ships a release
+      # whose sibling exists only on the author's machine.
+      - name: Fail if a generated sibling was never committed
+        run: |
+          untracked="$(git ls-files --others --exclude-standard -- custom_components/quizify/www)"
+          if [ -n "$untracked" ]; then
+            echo "::error::Generated files under www/ are not committed:"
+            echo "$untracked"
             exit 1
           fi

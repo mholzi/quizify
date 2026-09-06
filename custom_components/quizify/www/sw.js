@@ -29,26 +29,48 @@ self.addEventListener('message', function (event) {
 });
 var MAX_CACHE_ITEMS = 60;
 
-// Critical assets to precache on install. URLs carry the same
-// ?v={{ASSET_VER}} cache-buster the HTML pages use, so (a) the cache keys
-// match what pages actually request (caches.match is exact on the query
-// string — un-versioned precache entries were dead weight that never served
-// a versioned request) and (b) a release bump changes every URL.
-var PRECACHE_ASSETS = [
+// ---------------------------------------------------------------------------
+// Precache (#791)
+//
+// This used to be ONE list for all three surfaces: a player phone precached
+// admin.js (183 KB) and pack-submit.js (22 KB) it never executes, both icon
+// PNGs and both i18n bundles — 1,148,049 bytes for every phone that joins.
+// With thirteen phones plus the TV that is a ~25 MB burst off the HA box over
+// party Wi-Fi during the join minute, exactly when the host needs the lobby to
+// fill.
+//
+// So: a core list every surface really loads, plus a per-page extra resolved
+// from the window clients at install time. Nothing is lost when the surface
+// cannot be determined — the fetch handler is network-first and caches at
+// runtime, so a missing precache entry costs a round trip on first use, never
+// correctness.
+//
+// URLs carry the same ?v={{ASSET_VER}} cache-buster the HTML pages use, so
+// (a) the cache keys match what pages actually request (caches.match is exact
+// on the query string — un-versioned precache entries were dead weight that
+// never served a versioned request) and (b) a release bump changes every URL.
+// ---------------------------------------------------------------------------
+
+// Substituted by server/views.py::sw_view from HA's configured language,
+// normalised to the shipped UI set (de/en/es).
+var DEFAULT_LANG = '{{DEFAULT_LANG}}';
+
+// Loaded by admin.html, player.html AND dashboard.html.
+var PRECACHE_CORE = [
     '/quizify/static/css/styles.css?v={{ASSET_VER}}',
     '/quizify/static/js/i18n.js?v={{ASSET_VER}}',
     '/quizify/static/js/utils.js?v={{ASSET_VER}}',
-    '/quizify/static/js/icons.js?v={{ASSET_VER}}',
-    '/quizify/static/js/admin.js?v={{ASSET_VER}}',
-    '/quizify/static/js/pack-submit.js?v={{ASSET_VER}}',
-    '/quizify/static/js/player.bundle.js?v={{ASSET_VER}}',
     '/quizify/static/js/sw-update.js?v={{ASSET_VER}}',
     '/quizify/static/js/vendor/qrcode.min.js?v={{ASSET_VER}}',
-    '/quizify/static/i18n/de.json?v={{ASSET_VER}}',
+    // en.json is not optional: i18n.js loads it as the fallback dictionary
+    // whatever the active language is. The active bundle is appended below
+    // when it is not English.
     '/quizify/static/i18n/en.json?v={{ASSET_VER}}',
     '/quizify/static/site.webmanifest?v={{ASSET_VER}}',
+    // icon-256 is the favicon on all three pages. icon-512 (107 KB) is
+    // referenced only from the webmanifest, i.e. at install/splash time, so it
+    // is left to the runtime cache instead of being pushed to every phone.
     '/quizify/static/img/icon-256.png?v={{ASSET_VER}}',
-    '/quizify/static/img/icon-512.png?v={{ASSET_VER}}',
     // Fonts carry no ?v= — the CSS asks for them plain, and caches.match
     // is exact on the query string. A font file's bytes never change
     // under a given name, so there is nothing to bust.
@@ -56,28 +78,127 @@ var PRECACHE_ASSETS = [
     '/quizify/static/fonts/jetbrains-mono-latin.woff2'
 ];
 
+// Extras per surface, keyed by the page path under /quizify/.
+var PRECACHE_BY_PAGE = {
+    player: [
+        '/quizify/static/js/icons.js?v={{ASSET_VER}}',
+        '/quizify/static/js/player.bundle.js?v={{ASSET_VER}}'
+    ],
+    admin: [
+        '/quizify/static/js/icons.js?v={{ASSET_VER}}',
+        '/quizify/static/js/admin.js?v={{ASSET_VER}}',
+        '/quizify/static/js/pack-submit.js?v={{ASSET_VER}}'
+    ],
+    // The TV loads i18n.js / utils.js / qrcode from the core list and keeps the
+    // rest of its code inline in dashboard.html.
+    dashboard: []
+};
+
 /**
- * Install event: Precache critical assets.
+ * Map a client URL to one of the keys in PRECACHE_BY_PAGE, or null.
  *
- * cache: 'reload' forces every precache request past the browser HTTP
- * cache straight to the server. Without it, cache.add() uses the default
- * cache mode, and HA serves /quizify/static/* with
- * Cache-Control: public, max-age=2678400 (31 days) — so a brand-new
- * release's cache got seeded with month-old bytes from the HTTP cache
- * and the "new" install was stale from birth.
+ * The three surfaces are served from fixed paths (/quizify/player,
+ * /quizify/admin, /quizify/dashboard — see server/views.py ROUTES), so this is
+ * a lookup, not a guess. /quizify/launcher and /quizify/analytics resolve to
+ * null on purpose: everything they load is already in the core list.
+ */
+function pageForClientUrl(url) {
+    var path;
+    try {
+        path = new URL(url).pathname;
+    } catch (e) {
+        return null;
+    }
+    if (path.charAt(path.length - 1) === '/') {
+        path = path.slice(0, -1);
+    }
+    var name = path.slice(path.lastIndexOf('/') + 1);
+    return Object.prototype.hasOwnProperty.call(PRECACHE_BY_PAGE, name) ? name : null;
+}
+
+/**
+ * The URLs to precache for the surfaces currently open.
+ *
+ * Union over the open windows, so a host with the admin page and the TV
+ * dashboard on one device still gets both. No recognised window (the update
+ * ran with nothing open) falls back to the core list alone — never to
+ * "everything", which is the bug this replaces.
+ */
+function precacheListForClientUrls(urls) {
+    var out = PRECACHE_CORE.slice();
+    if (DEFAULT_LANG && DEFAULT_LANG !== 'en' && /^[a-z]{2}$/.test(DEFAULT_LANG)) {
+        out.push('/quizify/static/i18n/' + DEFAULT_LANG + '.json?v={{ASSET_VER}}');
+    }
+    var seen = {};
+    (urls || []).forEach(function (url) {
+        var page = pageForClientUrl(url);
+        if (!page || seen[page]) {
+            return;
+        }
+        seen[page] = true;
+        PRECACHE_BY_PAGE[page].forEach(function (asset) {
+            if (out.indexOf(asset) === -1) {
+                out.push(asset);
+            }
+        });
+    });
+    return out;
+}
+
+/**
+ * Build the install-time Request for one precache URL.
+ *
+ * Versioned URLs (?v=<version>-<fingerprint>) are immutable per content: that
+ * exact URL can only ever mean those exact bytes, so the HTTP cache entry the
+ * page just filled is by definition the right answer. A plain Request reuses
+ * it instead of pulling the same 330 KB bundle down a second time — which is
+ * what `cache: 'reload'` did on every first visit and after every release.
+ *
+ * Un-versioned URLs (the fonts) keep `cache: 'reload'`: HA serves
+ * /quizify/static/* with Cache-Control: public, max-age=2678400 (31 days), so
+ * without it a fresh cache could be seeded from a month-old HTTP cache entry
+ * and be stale from birth.
+ */
+function precacheRequest(url) {
+    if (url.indexOf('?v=') !== -1) {
+        return new Request(url);
+    }
+    return new Request(url, { cache: 'reload' });
+}
+
+/**
+ * Install event: Precache the assets this device's surface actually loads.
+ *
+ * includeUncontrolled is what makes matchAll see the page that just registered
+ * us — during install this worker controls nothing yet, so without it the list
+ * is always empty and every device would fall back to the core list.
  */
 self.addEventListener('install', function(event) {
+    var windows;
+    try {
+        windows = self.clients.matchAll({ type: 'window', includeUncontrolled: true });
+    } catch (e) {
+        // A worker with no clients API at all: precache the core list rather
+        // than nothing.
+        windows = Promise.resolve([]);
+    }
     event.waitUntil(
-        caches.open(CACHE_VERSION)
-            .then(function(cache) {
-                return Promise.all(
-                    PRECACHE_ASSETS.map(function(url) {
-                        return cache.add(new Request(url, { cache: 'reload' }))
-                            .catch(function(err) {
-                                console.warn('[SW] Failed to cache:', url, err);
-                            });
-                    })
+        windows
+            .catch(function() { return []; })
+            .then(function(clients) {
+                var urls = precacheListForClientUrls(
+                    clients.map(function(client) { return client.url; })
                 );
+                return caches.open(CACHE_VERSION).then(function(cache) {
+                    return Promise.all(
+                        urls.map(function(url) {
+                            return cache.add(precacheRequest(url))
+                                .catch(function(err) {
+                                    console.warn('[SW] Failed to cache:', url, err);
+                                });
+                        })
+                    );
+                });
             })
             .then(function() {
                 return self.skipWaiting();
