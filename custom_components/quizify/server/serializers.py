@@ -851,6 +851,7 @@ def serialize_round_summary(
     estimate: dict[str, Any] | None = None,
     display_order: list[int] | None = None,
     next_image_url: str | None = None,
+    entrant_of: dict[str, str] | None = None,
 ) -> dict[str, Any]:
     """Build round summary broadcast payload.
 
@@ -868,7 +869,10 @@ def serialize_round_summary(
       that path for no gain.
 
     ``answer_distribution`` is emitted in CANONICAL space so the #151 bars
-    attach to the tiles the dashboard actually drew.
+    attach to the tiles the dashboard actually drew, and — given
+    ``entrant_of``, a player-name → team-id map — it counts one vote per
+    entrant rather than one per head (#853). ``all_answers`` itself stays
+    per player: the phone reveal reads its own row out of it.
 
     ``next_image_url`` is the picture the NEXT round will show (#736), so
     clients can warm it while the reveal is on screen instead of after
@@ -882,7 +886,7 @@ def serialize_round_summary(
     # entries is question-JSON order; the bars hang off the canonical grid,
     # so the mapping happens here rather than in the client.
     answer_distribution = _compute_answer_distribution(
-        all_answers or [], num_answer_options, display_order
+        all_answers or [], num_answer_options, display_order, entrant_of
     )
 
     summary: dict[str, Any] = {
@@ -923,10 +927,37 @@ def serialize_round_summary(
     return summary
 
 
+def _dedupe_by_entrant(
+    all_answers: list[dict[str, Any]],
+    entrant_of: dict[str, str] | None,
+) -> list[dict[str, Any]]:
+    """One row per entrant, in the order the rows arrived (#853).
+
+    ``all_answers`` is per PLAYER and has to stay that way — the phone reveal
+    reads its own row out of it for the answer it gave, the points it earned
+    and its own ``correct_button_index``. In team mode every member carries
+    the same team row (#365), so counting the list counts heads.
+    """
+    if not entrant_of:
+        return all_answers
+    seen: set[str] = set()
+    rows: list[dict[str, Any]] = []
+    for entry in all_answers:
+        name = entry.get("player_name")
+        key = entrant_of.get(name, name) if isinstance(name, str) else None
+        if key is not None:
+            if key in seen:
+                continue
+            seen.add(key)
+        rows.append(entry)
+    return rows
+
+
 def _compute_answer_distribution(
     all_answers: list[dict[str, Any]],
     num_options: int,
     display_order: list[int] | None = None,
+    entrant_of: dict[str, str] | None = None,
 ) -> list[dict[str, Any]]:
     """Compute per-option vote counts and percentages.
 
@@ -937,10 +968,20 @@ def _compute_answer_distribution(
     ``display_order`` (the round's canonical shuffle) maps each vote onto the
     tile the dashboard actually rendered (#521); without it the bars would
     count the right votes against the wrong answers.
+
+    ``entrant_of`` maps a player's name onto the thing that actually answers —
+    their team's id in team mode, their own name otherwise (#853). A team has
+    exactly one answer (#365) but a row per member, so without this a team of
+    two was two votes: Sofa on Argentina and Dan alone on Brazil read 67/33 on
+    the television instead of the 50/50 that happened, and a large team's pick
+    dominated a chart the room reads as "what did we all choose". It is also
+    what the counter above the bars has counted since #835 — one entrant, one
+    vote — so the two numbers on that screen now agree.
     """
+    rows = _dedupe_by_entrant(all_answers, entrant_of)
     counts = [0] * num_options
     no_answer_count = 0
-    total = len(all_answers)
+    total = len(rows)
 
     # original index -> position in the rendered grid
     to_display: dict[int, int] = {}
@@ -951,7 +992,7 @@ def _compute_answer_distribution(
     ):
         to_display = {orig: pos for pos, orig in enumerate(display_order)}
 
-    for entry in all_answers:
+    for entry in rows:
         idx = entry.get("answer_index")
         if entry.get("no_answer") or idx is None:
             no_answer_count += 1
