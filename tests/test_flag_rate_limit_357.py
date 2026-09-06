@@ -24,6 +24,7 @@ sys.path.insert(0, str(_REPO_ROOT))
 
 from custom_components.quizify.server import views  # noqa: E402
 from custom_components.quizify.server.context import APP_CTX_KEY  # noqa: E402
+from custom_components.quizify.server.flag_store import FILENAME  # noqa: E402
 
 
 class _Runtime:
@@ -57,7 +58,7 @@ def test_valid_flag_persists(tmp_path: Path) -> None:
     views._flag_rate_limiter.forget(ip)
     resp = asyncio.run(_post(_ctx(tmp_path), ip, {"question_id": "geo_037"}))
     assert resp.status == 200
-    lines = (tmp_path / views._FLAG_FILE).read_text("utf-8").splitlines()
+    lines = (tmp_path / FILENAME).read_text("utf-8").splitlines()
     assert json.loads(lines[0])["question_id"] == "geo_037"
 
 
@@ -105,7 +106,7 @@ def test_question_id_is_capped_at_64_chars(tmp_path: Path) -> None:
         _post(_ctx(tmp_path), ip, {"question_id": "x" * 5000})
     )
     assert resp.status == 200
-    entry = json.loads((tmp_path / views._FLAG_FILE).read_text("utf-8").splitlines()[0])
+    entry = json.loads((tmp_path / FILENAME).read_text("utf-8").splitlines()[0])
     assert entry["question_id"] == "x" * 64
 
 
@@ -120,5 +121,5 @@ def test_over_limit_does_not_write(tmp_path: Path) -> None:
         await _post(ctx, ip, {"question_id": "OVERFLOW"})
 
     asyncio.run(run())
-    body = (tmp_path / views._FLAG_FILE).read_text("utf-8")
+    body = (tmp_path / FILENAME).read_text("utf-8")
     assert "OVERFLOW" not in body  # the rejected POST wrote nothing

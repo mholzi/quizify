@@ -13,6 +13,7 @@ from pathlib import Path
 from typing import TYPE_CHECKING
 
 from ..const import ANSWERS_PER_QUESTION, DEFAULT_AVOID_RECENT_REPEATS
+from ..storage import read_json, write_json
 from .seasons import parse_season
 
 if TYPE_CHECKING:
@@ -1105,20 +1106,27 @@ class QuestionBank:
         self._avoid_recent_repeats = bool(enabled)
 
     def _read_history(self) -> None:
-        """Blocking read of the history file. MUST run off the event loop."""
+        """Blocking read of the history file. MUST run off the event loop.
+
+        Parsing and the corrupt-file policy come from
+        :mod:`custom_components.quizify.storage` (#790) — the primitives
+        rather than :class:`~custom_components.quizify.storage.JsonFile`,
+        because this method is itself the blocking half of the pair and is
+        also called synchronously by the standalone dev server, which has no
+        runtime to offload through.
+        """
         history_path = self._history_path
         if history_path is None:
             return
-        if history_path.exists():
-            try:
-                raw = json.loads(history_path.read_text(encoding="utf-8"))
-                self._history = {k: float(v) for k, v in raw.items()}
-                _LOGGER.debug("Loaded question history: %d entries", len(self._history))
-            except (json.JSONDecodeError, ValueError, OSError) as exc:
-                _LOGGER.warning("Failed to load question history: %s", exc)
-                self._history = {}
-        else:
+        raw = read_json(history_path, {}, label="Question history")
+        try:
+            self._history = {k: float(v) for k, v in raw.items()}
+        except (AttributeError, TypeError, ValueError) as exc:
+            _LOGGER.warning("Question history has an unusable shape: %s", exc)
             self._history = {}
+            return
+        if self._history:
+            _LOGGER.debug("Loaded question history: %d entries", len(self._history))
 
     def load_history(self, history_path: Path) -> None:
         """Load question history from a JSON file (synchronous).
@@ -1145,17 +1153,11 @@ class QuestionBank:
         if self._history_path is None:
             return
         snapshot = dict(self._history)
-        try:
-            self._history_path.parent.mkdir(parents=True, exist_ok=True)
-            # Compact (no indent): the history map is machine-read only and
-            # grows one entry per seen question, so pretty-printing just
-            # inflates the file + write cost. Matches the compact writes in
-            # analytics.py / question_stats (#457).
-            self._history_path.write_text(
-                json.dumps(snapshot), encoding="utf-8"
-            )
-        except OSError as exc:
-            _LOGGER.warning("Failed to save question history: %s", exc)
+        # Compact (no indent) and atomic tmp-then-replace, both inherited from
+        # the shared writer (#790). Before that, this was the one store in the
+        # integration writing straight over the live file: a crash mid-write
+        # left a half-serialised history that the next start could not parse.
+        write_json(self._history_path, snapshot, label="Question history")
 
     def save_history(self) -> None:
         """Persist question history to disk (synchronous).

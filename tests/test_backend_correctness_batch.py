@@ -350,10 +350,8 @@ class TestFlagListNoIpLeak:
         import json as _json
         from types import SimpleNamespace
 
-        from custom_components.quizify.server.views import (
-            _FLAG_FILE,
-            flag_list_view,
-        )
+        from custom_components.quizify.server.flag_store import FILENAME as _FLAG_FILE
+        from custom_components.quizify.server.views import flag_list_view
 
         # Write a flag entry that includes a stored client IP (as flag_view does).
         flag_path = tmp_path / _FLAG_FILE
