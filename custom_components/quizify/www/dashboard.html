@@ -537,7 +537,13 @@
 
         .dashboard-category {
             font-family: 'JetBrains Mono', ui-monospace, monospace;
-            font-size: 12px;
+            /* #808: 12px was a phone size on a television, and through the
+               final round's betting window this element is not an eyebrow at
+               all — `handleWagerProgress` replaces the question with the
+               lock-in tally and the category is the only clue the room's bet
+               is placed on. #707 gave the same step to `.dashboard-round`;
+               #707's list of four did not include this one. */
+            font-size: clamp(14px, 1.2vw, 20px);
             color: var(--dash-accent-primary);
             text-transform: uppercase;
             letter-spacing: 0.2em;
@@ -1188,7 +1194,9 @@
            =================== */
         .dashboard-lightning-kicker {
             font-family: 'JetBrains Mono', ui-monospace, monospace;
-            font-size: 12px;
+            /* #808: the splash headline's kicker carried the same fixed 12px
+               as `.dashboard-category`. */
+            font-size: clamp(14px, 1.2vw, 20px);
             font-weight: 500;
             text-transform: uppercase;
             letter-spacing: 0.2em;
@@ -2153,6 +2161,19 @@
                 els.answerProgress.classList.add('hidden');
                 els.answerProgress.classList.remove('is-complete');
             }
+            // #807: the same shape, one line further down. `#evening-tally`
+            // also sits in the header outside every view and
+            // `handleEveningTally` was its only writer — it hid itself only
+            // when a payload arrived with no leaders, and the server sends it
+            // once per finished game from the second game of a sitting. So
+            // from game three the room read "Tonight · Anna 2 wins · Ben 1
+            // win" above the QR code in the lobby and above the timer bar on
+            // every question and reveal, out of the 549.8px the 720p left
+            // column has (#680/#688 measured that budget without it). The
+            // finale is the screen #612 asked for; nothing else needs it.
+            if (name !== 'finale' && els.eveningTally) {
+                els.eveningTally.classList.add('hidden');
+            }
         }
 
         // ---- #374: TV lobby join QR + live player roster ----
@@ -2487,6 +2508,11 @@
                     renderLobby(msg.players);
                     els.roundIndicator.textContent = '';
                     els.timerFill.style.width = '0%';
+                    // #807: showView('waiting') above already took the tally
+                    // down, but the markup would still be there for the next
+                    // finale to flash before its own payload lands. A reset
+                    // starts an evening over on this board.
+                    if (els.eveningTally) els.eveningTally.textContent = '';
                     break;
                 // #296: lightning round — the server broadcasts these events
                 // to dashboards just like to the admin. Mirror admin.js's
@@ -2661,7 +2687,31 @@
             if (msg.leaderboard) renderLeaderboard(els.leaderboard, msg.leaderboard);
         }
 
+        // #805: the game's language, not the television's. The board was
+        // initialised once from the Home Assistant language and never looked
+        // at `msg.language` again — although the server puts it in every
+        // snapshot for exactly this, and both the phones
+        // (`player-core.js` `_syncServerLanguage`) and the host page follow
+        // it. A German HA running an English game framed English questions
+        // in German on the one screen the whole room reads, while every
+        // guest's phone had already switched.
+        //
+        // There is no per-device override to protect here: unlike the phone
+        // (#492) a television has no language picker, so the HA language is
+        // only the pre-game default. Elements the JS writes from keys
+        // re-render on the next message; the sweep repaints the static
+        // `data-i18n` labels ("Leaderboard", "Did you know?", "Awards").
+        function syncServerLanguage(msg) {
+            if (!msg || !msg.language || !window.QuizifyI18n) return false;
+            if (QuizifyI18n.getLanguage() === msg.language) return false;
+            QuizifyI18n.setLanguage(msg.language).then(function () {
+                QuizifyI18n.initPageTranslations(document);
+            });
+            return true;
+        }
+
         function handleGameState(msg) {
+            syncServerLanguage(msg);
             if (msg.phase) currentPhase = msg.phase;
             if (msg.leaderboard) renderLeaderboard(els.leaderboard, msg.leaderboard);
 
@@ -2922,7 +2972,15 @@
             var progress = window.QuizifyI18n
                 ? window.QuizifyI18n.t('wager.hostProgress', { locked: msg.locked_in, total: msg.player_count })
                 : msg.locked_in + ' / ' + msg.player_count;
-            els.questionText.textContent = title + ' — ' + progress;
+            // #808: the room's stake is decided off the category and nothing
+            // else — no question has been sent. Leading the question slot with
+            // it puts that one fact in question-size type instead of leaving
+            // it to the eyebrow above, which a three-metre couch reads last.
+            // The lock-in count stays: the room still has to see who it is
+            // waiting for.
+            els.questionText.textContent = msg.category
+                ? title + ' · ' + msg.category + ' — ' + progress
+                : title + ' — ' + progress;
             renderQuestionImage('', '');
             if (els.answersGrid) els.answersGrid.innerHTML = '';
             if (els.dashboardEstimate) els.dashboardEstimate.classList.add('hidden');
