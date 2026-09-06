@@ -449,12 +449,20 @@ def test_only_the_stage_on_screen_offers_a_reset() -> None:
 def test_the_server_would_have_accepted_the_reset_all_along() -> None:
     """The hole was only ever on the phone: ``_is_reset_authorized`` lets any
     connected client reset once no connected admin holds the crown, which is
-    exactly the state these two screens were stuck in."""
-    source = (_CC / "server" / "websocket.py").read_text("utf-8")
-    body = source.split("def _is_reset_authorized(", 1)[1]
-    body = body.split("\n    async def", 1)[0]
+    exactly the state these two screens were stuck in.
 
-    assert "return admin is None or not admin.connected" in body
+    #842 moved the condition into ``_host_connected`` and put it on the wire so
+    the phone stops guessing at it; ``not _host_connected(...)`` is the same
+    sentence, which is the point of naming it once.
+    """
+    source = (_CC / "server" / "websocket.py").read_text("utf-8")
+    decision = source.split("def _is_reset_authorized(", 1)[1]
+    decision = decision.split("\n    def ", 1)[0]
+    assert "return not self._host_connected(game_state)" in decision
+
+    body = source.split("def _host_connected(", 1)[1]
+    body = body.split("\n    def ", 1)[0]
+    assert "return admin is not None and admin.connected" in body
 
 
 def test_nothing_else_can_leave_these_two_phases() -> None:

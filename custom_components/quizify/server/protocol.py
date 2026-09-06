@@ -127,6 +127,20 @@ SERVER_FRAMES: dict[str, FrameSpec] = {
         note="Unicast to the removed player before their socket is closed.",
     ),
     "game_reset": _spec(note="Broadcast when the host resets the game."),
+    "host_presence": _spec(
+        "connected",
+        note=(
+            "Whether anybody is hosting the room right now (#842) — a live "
+            "``?role=admin`` socket or a connected player holding the crown, "
+            "which is exactly the condition ``_is_reset_authorized`` turns on. "
+            "Broadcast on every change, because an admin-only host is "
+            "otherwise invisible on the wire in both directions: they own no "
+            "player row to appear in a roster, and closing the tab produces no "
+            "frame at all. The phone's host-gone escape hatch read that "
+            "silence as a death and armed while the host was hosting (#834). "
+            "The same value rides every snapshot as ``host_connected``."
+        ),
+    ),
     # --- teams (#365) -----------------------------------------------------
     "teams_update": _spec("teams"),
     "team_joined": _spec("team"),

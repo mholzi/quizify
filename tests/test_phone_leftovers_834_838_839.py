@@ -9,9 +9,11 @@ connected ``is_admin`` row and read "no" as "the host is dead" — but a host wh
 runs the evening from ``/quizify/admin`` without joining as a player is in no
 roster at all, so every roster all evening answered "no". That is the same
 blind spot #726 closed on the server (``_is_reset_authorized`` now refuses a
-guest reset while a live ``?role=admin`` socket exists); the phone has no
-equivalent signal, so the honest reading is a third answer, "unknown", and
-unknown must not arm anything.
+guest reset while a live ``?role=admin`` socket exists). The phone now gets
+that same answer from the server (#842, ``host_presence`` / ``host_connected``)
+and reads it first; where a server does not send it, the roster reading is the
+fallback, and it grew a third answer — "unknown" — so a roster that names no
+host at all no longer reads as a death.
 
 **#838 — the reaction bar rode the reset onto the join screen.** ``#reaction-bar``,
 ``#admin-control-bar`` and the toast are fixed to the page, not to a view, so
@@ -129,6 +131,7 @@ function reset() {{
     }});
     _lastRoster = [];
     _hostSeenInRoster = false;
+    _hostConnectedFlag = null;
     _resetStage = null;
 }}
 
@@ -187,6 +190,67 @@ _rememberRoster({{ players: [{{ name: 'Anna' }}] }});
 refreshStageReset();
 out.recapAfterHostRemoved = visible('lightning-recap-reset-controls');
 
+// ---- #842: the server now says it outright. -------------------------------
+
+// The live test's own room: an admin-only host, so no roster all evening
+// names one — and the tab is closed, which nothing but the flag can say.
+reset();
+_rememberRoster({{ players: GUESTS_ONLY }});
+_rememberHostFlag({{ host_connected: false }});
+setResetStage('LIGHTNING_RECAP');
+tick();
+out.flagSaysGoneNoHostRow = visible('lightning-recap-reset-controls');
+
+// The same room with the host at the admin page. This is #834's screenshot.
+reset();
+_rememberRoster({{ players: GUESTS_ONLY }});
+_rememberHostFlag({{ host_connected: true }});
+setResetStage('HOT_SEAT_REVEAL');
+tick();
+out.flagSaysHereNoHostRow = visible('hotseat-reset-controls');
+
+// The host closes the tab while the recap is on screen: one frame, nothing
+// else, exactly as an admin-only host's departure arrives.
+reset();
+_rememberRoster({{ players: GUESTS_ONLY }});
+_rememberHostFlag({{ host_connected: true }});
+setResetStage('LIGHTNING_RECAP');
+tick();
+out.beforeHostClosedTheTab = visible('lightning-recap-reset-controls');
+_rememberHostFlag({{ host_connected: false }});
+refreshStageReset();
+tick();
+out.afterHostClosedTheTab = visible('lightning-recap-reset-controls');
+
+// …and comes back before the timer fires. The hatch never appears.
+reset();
+_rememberRoster({{ players: GUESTS_ONLY }});
+_rememberHostFlag({{ host_connected: false }});
+setResetStage('LIGHTNING_RECAP');
+_rememberHostFlag({{ host_connected: true }});
+refreshStageReset();
+tick();
+out.hostCameBack = visible('lightning-recap-reset-controls');
+
+// The flag outranks the roster: an admin tab is live, so the server would
+// refuse the reset however dead the host's PLAYER row looks.
+reset();
+_rememberRoster({{ players: HOST_GONE }});
+_rememberHostFlag({{ host_connected: true }});
+setResetStage('LIGHTNING_RECAP');
+tick();
+out.flagOutranksTheRoster = visible('lightning-recap-reset-controls');
+
+// A frame without the key changes nothing — the leaderboard-refresh
+// game_state is built by another builder and carries no host key.
+reset();
+_rememberRoster({{ players: GUESTS_ONLY }});
+_rememberHostFlag({{ host_connected: false }});
+_rememberHostFlag({{ phase: 'LIGHTNING_RECAP' }});
+setResetStage('LIGHTNING_RECAP');
+tick();
+out.frameWithoutTheKey = visible('lightning-recap-reset-controls');
+
 console.log(JSON.stringify(out));
 """
 
@@ -239,6 +303,51 @@ def test_the_hatch_stays_armed_once_the_dead_host_leaves_the_roster() -> None:
     assert _hatch()["recapAfterHostRemoved"] is True
 
 
+@_NEEDS_NODE
+def test_the_flag_arms_the_hatch_for_a_host_who_was_never_a_player() -> None:
+    """#842, and the capability #834 alone would have cost: the live test's own
+    room. An admin-only host closed the tab on the Hot Seat result and a guest
+    pulled the whole room out — nothing in any roster could say so."""
+    result = _hatch()
+
+    assert result["flagSaysGoneNoHostRow"] is True
+    assert result["beforeHostClosedTheTab"] is False
+    assert result["afterHostClosedTheTab"] is True
+
+
+@_NEEDS_NODE
+def test_the_flag_keeps_it_hidden_while_that_same_host_is_present() -> None:
+    """The #834 screenshot, decided by the server instead of guessed at."""
+    result = _hatch()
+
+    assert result["flagSaysHereNoHostRow"] is False
+    assert result["hostCameBack"] is False
+
+
+@_NEEDS_NODE
+def test_the_flag_outranks_the_roster() -> None:
+    """`not host_connected` is exactly `_is_reset_authorized`'s guest clause, so
+    a phone that armed against a live admin socket would offer a button the
+    server refuses."""
+    assert _hatch()["flagOutranksTheRoster"] is False
+
+
+@_NEEDS_NODE
+def test_a_frame_without_the_key_does_not_wipe_the_answer() -> None:
+    """The leaderboard-refresh `game_state` (#221) comes from a different
+    builder and carries no host key at all."""
+    assert _hatch()["frameWithoutTheKey"] is True
+
+
+def test_the_roster_reading_stays_as_the_fallback() -> None:
+    """A phone on this version against a server on the last one still behaves
+    the way it did — every roster case above runs with no flag set."""
+    source = _without_comments(_CORE.read_text("utf-8"))
+
+    assert "if (_hostConnectedFlag !== null) {" in source
+    assert "typeof msg.host_connected === 'boolean'" in source
+
+
 def test_the_three_way_reading_is_what_the_hatch_asks_for() -> None:
     """Guards the shape, not just the behaviour: a later edit that goes back to
     a boolean would pass every case above that happens to name a host."""
@@ -274,6 +383,7 @@ var game = {{ clearTimeAnnouncement: function () {{ cleared++; }} }};
 
 var _lastRoster = [{{ name: 'Host', is_admin: true, connected: false }}];
 var _hostSeenInRoster = true;
+var _hostConnectedFlag = true;
 var stages = [];
 function setResetStage(stage) {{ stages.push(stage); }}
 
@@ -298,7 +408,8 @@ console.log(JSON.stringify({{
     announcementsCleared: cleared,
     stages: stages,
     roster: _lastRoster.length,
-    hostSeen: _hostSeenInRoster
+    hostSeen: _hostSeenInRoster,
+    hostFlag: _hostConnectedFlag
 }}));
 """
 
@@ -357,7 +468,25 @@ def test_the_wiped_game_takes_its_hatch_and_its_roster_with_it() -> None:
     assert result["stages"] == [None]
     assert result["roster"] == 0
     assert result["hostSeen"] is False
+    assert result["hostFlag"] is None
     assert result["announcementsCleared"] == 1
+
+
+def test_the_phone_re_decides_the_hatch_on_the_host_presence_frame() -> None:
+    """The frame is the whole point of #842: it is the only thing that ever
+    reports an admin-only host arriving or leaving."""
+    source = _without_comments(_CORE.read_text("utf-8"))
+    body = source.split("case 'host_presence':", 1)[1].split("break;", 1)[0]
+
+    assert "_rememberHostFlag(msg)" in body
+    assert "refreshStageReset()" in body
+
+
+def test_the_snapshot_carries_the_flag_to_a_phone_that_missed_the_frame() -> None:
+    source = _without_comments(_CORE.read_text("utf-8"))
+    body = source.split("function handleGameState(msg)", 1)[1][:2500]
+
+    assert "_rememberHostFlag(msg)" in body
 
 
 def test_both_ways_out_of_a_game_run_the_teardown() -> None:

@@ -433,6 +433,10 @@ class QuizifyWebSocketHandler:
         # admin-as-player WS closes mid-question. Cancelled by reconnect
         # or join when admin comes back within ADMIN_REDIRECT_GRACE.
         self._admin_pause_task: asyncio.Task | None = None
+        # Last value of the host-presence flag actually put on the wire (#842),
+        # so the announcer broadcasts transitions rather than every socket
+        # event. None until the first announcement.
+        self._host_presence_sent: bool | None = None
         # Drives the fast lightning-round loop (issue #42). Distinct from
         # the normal per-question tick task so the two modes can't fight.
         self._lightning_task: asyncio.Task | None = None
@@ -702,6 +706,13 @@ class QuizifyWebSocketHandler:
             len(self._conn.connections),
         )
 
+        # #842: a host arriving is the one half of the signal the room was
+        # never sent. Announced here rather than in ``admin_connect`` because
+        # the socket is already counted by ``has_admin_connections()``, which
+        # is what the flag reports.
+        if is_admin:
+            await self._announce_host_presence()
+
         try:
             async for msg in ws:
                 if msg.type == WSMsgType.TEXT:
@@ -756,6 +767,9 @@ class QuizifyWebSocketHandler:
                                 "Admin authenticated via admin_auth frame (ip=%s)",
                                 remote,
                             )
+                            # #359 upgrades this socket to admin after the
+                            # fact, so the room only learns a host is here now.
+                            await self._announce_host_presence()
                         continue
                     # Per-IP join flood guard (#361): keyed on the source IP so
                     # opening extra sockets can't multiply join attempts. The
@@ -921,7 +935,7 @@ class QuizifyWebSocketHandler:
         self, ws: web.WebSocketResponse, data: dict, game_state: QuizifyGameState
     ) -> None:
         """Handle a ``get_state`` request (#286)."""
-        state_msg = serialize_state_snapshot(game_state)
+        state_msg = self._snapshot(game_state)
         # Project into the requesting PLAYER's frame (#286): the raw
         # snapshot carries canonical answer order, but ``submit_answer``
         # maps the tapped index through the player's OWN shuffle — sending
@@ -951,7 +965,7 @@ class QuizifyWebSocketHandler:
 
         admin_token = self._conn.get_or_create_admin_token()
 
-        state = serialize_state_snapshot(game_state)
+        state = self._snapshot(game_state)
         state["type"] = "game_state"
         state["join_url"] = "/quizify/player"
         state["admin_session_token"] = admin_token
@@ -1202,6 +1216,8 @@ class QuizifyWebSocketHandler:
             if player_obj and player_obj.is_admin:
                 self._cancel_admin_pause()
                 self._conn.cancel_admin_disconnect()
+                # #842: the host is back on the wire as a player.
+                await self._announce_host_presence()
 
             # Send join confirmation with session token and assigned color
             powerup = game_state.get_player_powerup(name)
@@ -1225,7 +1241,7 @@ class QuizifyWebSocketHandler:
             # shuffle order for the answer buttons, own timer, flat reveal —
             # otherwise a mid-round joiner mis-scores their taps and sees an
             # empty reveal.
-            state = serialize_state_snapshot(game_state)
+            state = self._snapshot(game_state)
             if player_obj is not None:
                 state = self._round_messages.project_snapshot_for_player(
                     game_state, snapshot=state, player=player_obj
@@ -1304,6 +1320,8 @@ class QuizifyWebSocketHandler:
         if player.is_admin:
             self._cancel_admin_pause()
             self._conn.cancel_admin_disconnect()
+            # #842: same host, resumed rather than freshly joined.
+            await self._announce_host_presence()
 
         _LOGGER.info("Player session-reconnected: %s", name)
 
@@ -1345,7 +1363,7 @@ class QuizifyWebSocketHandler:
         # Send full game state, projected into THIS player's frame (#253):
         # the reconnect snapshot otherwise carries canonical answer order
         # (mis-scoring taps) and a nested round_summary the reveal can't read.
-        state = serialize_state_snapshot(game_state)
+        state = self._snapshot(game_state)
         state = self._round_messages.project_snapshot_for_player(
             game_state, snapshot=state, player=player
         )
@@ -2543,7 +2561,7 @@ class QuizifyWebSocketHandler:
         self._cancel_timer_tick()
         # pause_reason rides along in the snapshot itself since #703, so it
         # is identical here and on every reconnect.
-        state = serialize_state_snapshot(game_state)
+        state = self._snapshot(game_state)
         state["type"] = "game_state"
         await self._conn.broadcast(state)
         return True
@@ -2664,7 +2682,7 @@ class QuizifyWebSocketHandler:
         # while the sockets are still open.
         await self._conn.broadcast({"type": "game_reset"})
 
-        state = serialize_state_snapshot(game_state)
+        state = self._snapshot(game_state)
         state["type"] = "game_state"
         await self._conn.broadcast(state)
 
@@ -2774,7 +2792,7 @@ class QuizifyWebSocketHandler:
 
         # Broadcast a phase-entry state so every client switches to the
         # lightning view, then the intro splash ("Bolt Burst", #201).
-        state = serialize_state_snapshot(game_state)
+        state = self._snapshot(game_state)
         state["type"] = "game_state"
         await self._conn.broadcast(state)
         await self._broadcast_lightning_splash(game_state)
@@ -3086,7 +3104,7 @@ class QuizifyWebSocketHandler:
         if hs is None:
             return False
 
-        state = serialize_state_snapshot(game_state)
+        state = self._snapshot(game_state)
         state["type"] = "game_state"
         await self._conn.broadcast(state)
         await self._conn.broadcast({
@@ -3330,7 +3348,7 @@ class QuizifyWebSocketHandler:
         message. Used by the resume path (#286 #287) so a resumed game reaches
         every screen with correctly-ordered answer buttons.
         """
-        base = serialize_state_snapshot(game_state)
+        base = self._snapshot(game_state)
 
         # Per-player projected sends.
         player_ws: set[Any] = set()
@@ -3788,6 +3806,13 @@ class QuizifyWebSocketHandler:
                 self._conn.ADMIN_SESSION_GRACE,
             )
             self._conn.schedule_admin_timeout()
+            # #842: the other half. An admin-only host closing the tab is
+            # otherwise silent — no player row to mark, no roster frame, and
+            # the grace pause refuses every phase but QUESTION_ACTIVE — so
+            # this is the only thing that ever tells the phones. The announcer
+            # re-reads ``_host_connected``, so a host who is also a connected
+            # player keeps the flag true.
+            await self._announce_host_presence()
 
         player = game_state.get_player_by_ws(ws)
         if not player:
@@ -3795,6 +3820,11 @@ class QuizifyWebSocketHandler:
 
         player.connected = False
         _LOGGER.info("Player disconnected: %s", player.name)
+
+        # #842: in the #208 flow the crown lives on a player row, so this is
+        # the host leaving even though no admin socket was involved.
+        if player.is_admin:
+            await self._announce_host_presence()
 
         # #412: if the last unanswered player just dropped mid-question and
         # everyone still in the room has already submitted, nothing else would
@@ -3904,7 +3934,7 @@ class QuizifyWebSocketHandler:
                 if not gs.pause(reason="admin_disconnected"):
                     return
                 self._cancel_timer_tick()
-                state = serialize_state_snapshot(gs)
+                state = self._snapshot(gs)
                 state["type"] = "game_state"
                 await self._conn.broadcast(state)
                 _LOGGER.info(
@@ -3953,16 +3983,72 @@ class QuizifyWebSocketHandler:
         """
         if self._is_authorized_admin(ws, is_admin, game_state):
             return True
-        # #726: a live ``?role=admin`` socket IS a connected admin, even when it
-        # holds no player slot. ``get_admin()`` below only ever looks at the
-        # player registry, so a host who runs the game from /quizify/admin
-        # without joining leaves it ``None`` for the whole evening — and the
-        # escape hatch then reads as "nobody is hosting" while somebody is.
-        # That handed every guest a working reset_game mid-game.
+        return not self._host_connected(game_state)
+
+    def _host_connected(self, game_state: QuizifyGameState) -> bool:
+        """Whether anybody is hosting this room right now (#842).
+
+        The exact condition the escape hatch turns on, named once and then
+        broadcast, because the phones could not work it out for themselves.
+
+        Two ways to be hosting, and #726 is the reason both are here: a live
+        ``?role=admin`` socket IS a connected admin even when it holds no
+        player slot, while ``get_admin()`` only ever looks at the player
+        registry — so a host who runs the evening from /quizify/admin without
+        joining leaves it ``None`` all night, and reading that alone as
+        "nobody is hosting" handed every guest a working ``reset_game``
+        mid-game.
+
+        The mirror image is #834: the phone had only the roster to read, the
+        same registry that is empty in that flow, so the #299/#803 escape hatch
+        armed on every guest phone while the host sat looking at the same
+        recap. Nothing on the wire distinguished a host at the admin page from
+        one whose tab had been closed for twenty minutes — an admin-only host
+        broadcasts nothing when they arrive or leave, and the grace pause
+        refuses every phase but QUESTION_ACTIVE. This is that missing signal.
+
+        ``not _host_connected(...)`` is exactly "any client may reset", so the
+        flag the phone reads and the rule the server enforces cannot drift.
+        """
         if self._conn.has_admin_connections():
-            return False
+            return True
         admin = game_state.get_admin()
-        return admin is None or not admin.connected
+        return admin is not None and admin.connected
+
+    def _snapshot(self, game_state: QuizifyGameState) -> dict:
+        """``serialize_state_snapshot`` plus the host-presence flag (#842).
+
+        The snapshot is the frame a client is handed on join, on reconnect and
+        on ``get_state``, so it is where a phone that was not listening when
+        the host arrived or left picks the answer up. The live
+        ``host_presence`` broadcast carries every change after that.
+
+        Kept here rather than in the serializer because the answer is a
+        property of the *connections*, not of the game: ``serializers.py`` has
+        no connection manager, and forty tests build snapshots without one.
+        """
+        state = serialize_state_snapshot(game_state)
+        state["host_connected"] = self._host_connected(game_state)
+        return state
+
+    async def _announce_host_presence(self) -> None:
+        """Broadcast the host-presence flag when, and only when, it changes.
+
+        Called wherever an admin socket is added or dropped and wherever the
+        host's own player row changes connection state. Broadcast rather than
+        unicast: every phone in the room needs it, and the two screens that do
+        not (the host page knows, the television does not care) ignore it.
+        """
+        game_state = self._get_game_state()
+        if game_state is None:
+            return
+        connected = self._host_connected(game_state)
+        if connected == self._host_presence_sent:
+            return
+        self._host_presence_sent = connected
+        await self._conn.broadcast(
+            {"type": "host_presence", "connected": connected}
+        )
 
     async def _dispatch_analytics_followups(self) -> None:
         """Everything true only once the game is recorded (#624, #612, #613).
@@ -4627,7 +4713,7 @@ class QuizifyWebSocketHandler:
         """Default handler: broadcast a full game-state snapshot."""
         game_state = self._get_game_state()
         if game_state:
-            state = serialize_state_snapshot(game_state)
+            state = self._snapshot(game_state)
             state["type"] = "game_state"
             await self._conn.broadcast(state)
 

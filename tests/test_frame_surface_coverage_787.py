@@ -214,6 +214,20 @@ COVERAGE: dict[str, Coverage] = {
     "player_joined": _c("broadcast", "tv", "host", "phone"),
     "player_left": _c("broadcast", "tv", "host", "phone"),
     "game_reset": _c("broadcast", "tv", "host", "phone"),
+    "host_presence": _c(
+        "broadcast",
+        "phone",
+        ignored={
+            "tv": (
+                "the television shows the room, not who is driving it; the"
+                " host leaving changes nothing it draws"
+            ),
+            "host": (
+                "the host page IS the presence this frame reports — it would"
+                " only ever be told about itself"
+            ),
+        },
+    ),
     "teams_update": _c("broadcast", "tv", "host", "phone"),
     "team_joined": _c(
         "unicast",

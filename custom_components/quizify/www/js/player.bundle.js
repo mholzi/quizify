@@ -6186,6 +6186,16 @@
                 pu.showView('join-view');
                 break;
 
+            case 'host_presence':
+                // #842: the frame that exists so this phone does not have to
+                // guess. An admin-only host arriving or leaving produces
+                // nothing else — no roster row, no pause, no phase change —
+                // and guessing from the roster is what armed the escape hatch
+                // under a host who was sitting right there (#834).
+                _rememberHostFlag(msg);
+                refreshStageReset();
+                break;
+
             case 'player_joined':
                 lobby.handlePlayerJoined(msg);
                 _rememberRoster(msg);
@@ -6481,6 +6491,10 @@
         // waiting stage drops the hatch (e.g. the host came back and resumed),
         // and entering one re-arms it if the host is still missing.
         if (msg.phase !== 'PAUSED') disarmResetAffordance('paused-reset-btn');
+        // #842: a snapshot is what a phone gets on join, on reconnect and on
+        // get_state, so it is where one that was not listening when the host
+        // arrived or left catches up.
+        _rememberHostFlag(msg);
         _rememberRoster(msg);
         setResetStage(STAGE_RESET_AFFORDANCES[msg.phase] ? msg.phase : null);
 
@@ -6973,6 +6987,7 @@
         setResetStage(null);
         _lastRoster = [];
         _hostSeenInRoster = false;
+        _hostConnectedFlag = null;
     }
 
     // ============================================
@@ -7111,6 +7126,17 @@
     // both kinds of frame ask the same question.
     var _lastRoster = [];
 
+    // What the SERVER says about the host (#842), or null when it has not
+    // said anything: an older integration that does not send the flag, or a
+    // phone that has not received a frame carrying it yet. The roster reading
+    // below is the fallback for exactly that case, so a phone from this
+    // version and a server from the last one still behave the way they did.
+    //
+    // When it IS present it wins outright, because it is the only reading that
+    // can see a host at /quizify/admin who never joined as a player — the
+    // room's most common shape, and the one the roster is blind to.
+    var _hostConnectedFlag = null;
+
     // Whether any roster this game has ever named the host (#834). A host who
     // runs the evening from /quizify/admin without ever taking a player slot
     // is in no roster at all, so their absence from one proves nothing; a host
@@ -7124,6 +7150,16 @@
     // events that must not be allowed to rewrite the phase everything else
     // reads.
     var _resetStage = null;
+
+    // Any frame may carry the flag; only a frame that actually does may
+    // change it. The leaderboard-refresh `game_state` (#221) is built by a
+    // different builder and carries no host key at all, so testing for the
+    // key rather than its truthiness is what stops it wiping the answer.
+    function _rememberHostFlag(msg) {
+        if (msg && typeof msg.host_connected === 'boolean') {
+            _hostConnectedFlag = msg.host_connected;
+        }
+    }
 
     function _rememberRoster(msg) {
         if (!msg || !Array.isArray(msg.players)) return;
@@ -7146,6 +7182,9 @@
     //
     // Returns 'connected' | 'gone' | 'unknown'.
     function _hostPresence() {
+        if (_hostConnectedFlag !== null) {
+            return _hostConnectedFlag ? 'connected' : 'gone';
+        }
         var named = false;
         for (var i = 0; i < _lastRoster.length; i++) {
             var p = _lastRoster[i];
