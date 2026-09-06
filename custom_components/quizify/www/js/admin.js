@@ -1830,11 +1830,42 @@
                 if (msg.leaderboard) renderLeaderboard(els.gameLeaderboard, msg.leaderboard);
                 break;
             case 'ANSWER_REVEAL':
-                // No-op on the admin tab: the production flow always
-                // redirects the host to /quizify/player on game start,
-                // so the per-round reveal is owned by .pl-result in
-                // player.html. The old #admin-reveal-view was removed
-                // in v1.1.16.
+                // #846: this was a no-op, on the premise that "the production
+                // flow always redirects the host to /quizify/player on game
+                // start". That stopped being true when the lobby grew
+                // start-without-joining (doStartGameNoJoin) — the same premise
+                // #618 had to undo for the LIVE reveal, which is where
+                // handleRoundSummary came from. The snapshot path kept it, and
+                // a snapshot is what a host page gets when it reopens.
+                //
+                // So a host whose tab closed mid-game came back to the SETUP
+                // screen while the room sat on round 7, and the room stays on
+                // the reveal until somebody presses Next — which means every
+                // reconnect lands here, every time. Worse, the setup screen is
+                // live: Start Game from it silently destroys the running game.
+                // Land on the game view and render the reveal the snapshot
+                // already carries (server/serializers.py: round_summary).
+                var reveal = msg.round_summary || {};
+                showView('game');
+                if (els.adminRound) {
+                    els.adminRound.textContent = _t('admin.questionCounter', {
+                        current: msg.round,
+                        total: msg.total_rounds,
+                    });
+                }
+                if (els.adminQuestion) {
+                    els.adminQuestion.textContent = reveal.question_text || '';
+                }
+                setDetourDetail('');
+                // The live frame's own renderer, so the reconnected host page
+                // and the one that never left cannot drift. last_round is the
+                // one field the snapshot does not carry; it is derivable, and
+                // only decides the button's label.
+                handleRoundSummary({
+                    correct_answer: reveal.correct_answer,
+                    last_round: msg.round >= msg.total_rounds,
+                });
+                if (msg.leaderboard) renderLeaderboard(els.gameLeaderboard, msg.leaderboard);
                 break;
             case 'WAGER_ACTIVE':
             case 'HOT_SEAT_AUCTION':
@@ -1884,6 +1915,16 @@
                 currentPhase = 'LIGHTNING_RECAP';
                 showView('lightningRecap');
                 if (msg.lightning_recap) handleAdminLightningRecap(msg.lightning_recap);
+                break;
+            default:
+                // #846, generalized. Every phase above earns its landing by
+                // being listed; the cost of not being listed was the setup
+                // screen — offered, mid-game, with a Start Game that wipes the
+                // room. PAUSED is the one that reaches this today. Whatever
+                // arrives here, the room is playing, so the host page belongs
+                // on the game view and not on an invitation to start over.
+                showView('game');
+                if (msg.leaderboard) renderLeaderboard(els.gameLeaderboard, msg.leaderboard);
                 break;
         }
     }

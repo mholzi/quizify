@@ -231,6 +231,21 @@
         // picture question in the chair was answered blind while the previous
         // round's photo sat above it.
         paintQuestionImage(msg.image_url);
+        // #847: the third leftover of the same family as #698 and #802, and
+        // the expensive one. ``renderQuestion`` swaps the two input sections
+        // per round type (#275): an estimate round hides #answers-container
+        // and shows the slider. The auction fires between rounds and
+        // ``hot_seat.py`` only keeps estimates out of the CHAIR's question,
+        // not out of the rounds it interrupts — so the detour regularly opens
+        // on top of a slider, and nothing here ever swapped the sections back.
+        // On the live test the seat holder read the chair's question above the
+        // previous round's slider, still showing their own submitted guess,
+        // with no answers anywhere; the clock ran out and the settlement took
+        // 60 points off them for a question they were never shown the answers
+        // to. The slider belongs to a round that is over for everyone in the
+        // room, seated or betting, so it goes away for everyone.
+        var estimateSection = el('estimate-container');
+        if (estimateSection) estimateSection.classList.add('hidden');
 
         if (msg.you_are_seated) {
             // The seat holder answers through the normal answer grid, so the
@@ -270,6 +285,11 @@
     }
 
     function renderSeatAnswers(answers) {
+        // #847: the grid has to be back on screen before it is worth
+        // filling. See ``handleQuestion`` for what hid it.
+        var answersSection = el('answers-container');
+        if (answersSection) answersSection.classList.remove('hidden');
+
         // #696: this used to replace the container's innerHTML with bare
         // buttons. The markup it destroyed is the markup renderQuestion fills
         // — that function reuses the existing .answer-btn elements and only
