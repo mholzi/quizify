@@ -3,6 +3,37 @@
 All notable changes to Quizify are documented here. This project follows
 [Semantic Versioning](https://semver.org/).
 
+## [1.16.0-RC1] — 2026-09-06
+
+Thirty-four entries, chosen in one sitting and built in one — and the biggest of
+them were the ones nobody had asked for.
+
+### 🔒 The door was open, and the pictures were not ours
+
+A page open in any browser on the network could reach the game's socket and, in
+the right moment, claim the host's seat — lights, speakers and scenes with it.
+And a photograph of the Jules Rimet trophy had been shipping in every install
+under a licence that requires a credit it never carried; three more pictures were
+free in the United States only, two of them tagged on their own source page as
+protected in Germany. Four questions are text now, two carry different pictures,
+and the check that missed all of it no longer greps for a phrase.
+
+### 📺 Three screens that were quietly three products
+
+The television never followed the game's language, so a German house running an
+English quiz framed English questions in German. The phone kept a picture from
+the round before. The host's page had no way forward on the last round but a red
+button that warned of something it does not do. And the escape hatch for a host
+whose phone dies turned out never to have been armed at all.
+
+### 🏗 And underneath
+
+Every game mode now owns its own loop instead of writing one into the socket
+handler, the three surfaces share one client and one set of renderers, and a new
+guard fails the build when a frame reaches a screen that has no case for it. Team
+mode gets its own Hot Seat auction and final wager. A phone's first load went from
+1.98 MB to 314 KB.
+
 ## [1.15.0] — 2026-09-06
 
 Twenty-four entries, chosen in one sitting and built in one — then played, which
