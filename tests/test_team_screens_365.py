@@ -30,6 +30,10 @@ REPO = Path(__file__).resolve().parent.parent
 JS_DIR = REPO / "custom_components" / "quizify" / "www" / "js"
 TEAM_JS = JS_DIR / "player-team.js"
 GAME_JS = JS_DIR / "player-game.js"
+# #787: player-game.js builds its progressive-reveal helper out of the
+# shared module the page loads first, so the harness has to load it too —
+# the browser does.
+RENDER_SHARED_JS = JS_DIR / "render-shared.js"
 BUNDLE_JS = JS_DIR / "player.bundle.js"
 LIGHTNING_JS = JS_DIR / "player-lightning.js"
 
@@ -116,6 +120,7 @@ global.setTimeout = (f, ms) => { global.__timers.push({ fn: f, ms: ms }); return
 global.clearTimeout = () => {};
 global.__timers = [];
 
+eval(fs.readFileSync(process.argv[5], 'utf8'));   // render-shared.js
 eval(fs.readFileSync(process.argv[2], 'utf8'));   // player-team.js
 eval(fs.readFileSync(process.argv[3], 'utf8'));   // player-game.js
 
@@ -299,7 +304,7 @@ def _run(tmp_path: Path, scenario: str) -> dict:
     harness = tmp_path / "team-harness.js"
     harness.write_text(_HARNESS, encoding="utf-8")
     result = subprocess.run(
-        ["node", str(harness), str(TEAM_JS), str(GAME_JS), scenario],
+        ["node", str(harness), str(TEAM_JS), str(GAME_JS), scenario, str(RENDER_SHARED_JS)],
         capture_output=True,
         text=True,
         check=False,

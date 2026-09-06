@@ -1041,6 +1041,10 @@
     <!-- DO NOT REMOVE utils.js \u2014 player-utils.js depends on window.QuizifyUtils. -->
     <!-- Dropped twice before (see commits 86025d1, 055e58c). Third time's not charming. -->
     <script src="/quizify/static/js/utils.js?v={{ASSET_VER}}"></script>
+    <!-- #787: the socket lifecycle and the renderers all three surfaces share.
+         Must load after utils.js (escapeHtml, safeImageUrl) and before any
+         page script that uses QuizifyClientCore / QuizifyRenderShared. -->
+    <script src="/quizify/static/js/common.bundle.js?v={{ASSET_VER}}"></script>
     <!-- Shared Rounded Duotone SVG icon set (window.QuizifyIcons). Loaded
          before the bundle so player-utils.paintUiIcons() can swap the
          static emoji-as-icon spans on init (#225 P4). -->

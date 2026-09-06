@@ -47,6 +47,7 @@ WWW = REPO / "custom_components" / "quizify" / "www"
 GZIP_TARGETS: tuple[str, ...] = (
     "css/styles.css",
     "js/player.bundle.js",
+    "js/common.bundle.js",
     "js/admin.js",
     "js/pack-submit.js",
     "js/i18n.js",

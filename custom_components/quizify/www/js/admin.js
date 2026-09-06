@@ -1481,7 +1481,6 @@
 
     // ---- WebSocket ----
     function connect() {
-        var proto = location.protocol === 'https:' ? 'wss:' : 'ws:';
         var savedToken = QuizifyUtils.readAdminToken();
         // #359: the admin session token used to be appended to the WS URL as
         // ?token=..., where it leaked into aiohttp / reverse-proxy access logs
@@ -1489,59 +1488,51 @@
         // (admin_auth) below, before admin_connect or any other traffic, so it
         // never lands in a URL. The server still accepts ?token= as a
         // deprecated fallback, but we no longer put it there.
-        var url = proto + '//' + location.host + '/api/quizify/ws?role=admin';
-        ws = new WebSocket(url);
-
-        ws.onopen = function () {
-            reconnectAttempts = 0;
-            updateConnectionStatus('connected');
-            // Send the token out-of-URL first so the server can grant admin
-            // before admin_connect. On a fresh bootstrap there is no saved
-            // token yet — the server grants admin on the token-less handshake
-            // (bootstrap path), so skipping admin_auth here is safe.
-            if (savedToken) send('admin_auth', { token: savedToken });
-            send('admin_connect', {});
-            // Configure narration up-front so pre-game lobby joins narrate (#281).
-            _pushTtsConfig();
-            // Same for the house effects (#494) — lobby-time, so they work
-            // before start_game.
-            _pushHouseConfig();
-            // And the language (#776): the game keeps its own `language`, and
-            // until start_game lands it is the constructor default "de". Every
-            // phone joining an English lobby was handed a German frame. Push
-            // the pick now so the lobby the players see matches the one the
-            // host is looking at.
-            _pushLanguage();
-        };
-
-        ws.onmessage = function (evt) {
-            try {
-                var msg = JSON.parse(evt.data);
-                handleMessage(msg);
-            } catch (e) {
-                console.error('[Quizify Admin] Bad message:', e);
+        ws = window.QuizifyClientCore.createSocket('/api/quizify/ws?role=admin', {
+            logPrefix: '[Quizify Admin]',
+            onOpen: function () {
+                reconnectAttempts = 0;
+                updateConnectionStatus('connected');
+                // Send the token out-of-URL first so the server can grant admin
+                // before admin_connect. On a fresh bootstrap there is no saved
+                // token yet — the server grants admin on the token-less handshake
+                // (bootstrap path), so skipping admin_auth here is safe.
+                if (savedToken) send('admin_auth', { token: savedToken });
+                send('admin_connect', {});
+                // Configure narration up-front so pre-game lobby joins narrate (#281).
+                _pushTtsConfig();
+                // Same for the house effects (#494) — lobby-time, so they work
+                // before start_game.
+                _pushHouseConfig();
+                // And the language (#776): the game keeps its own `language`, and
+                // until start_game lands it is the constructor default "de". Every
+                // phone joining an English lobby was handed a German frame. Push
+                // the pick now so the lobby the players see matches the one the
+                // host is looking at.
+                _pushLanguage();
+            },
+            onMessage: handleMessage,
+            onClose: function () {
+                ws = null;
+                if (reconnectAttempts < MAX_RECONNECT) {
+                    updateConnectionStatus('reconnecting');
+                    // Exponential backoff, capped at 30s — the same curve the
+                    // phone uses, which is why it lives in the shared core
+                    // since #787. 1s, 2s, 4s, 8s, 16s, 30s, 30s, … keeps
+                    // retrying across the full 1-5 min of an HA restart (#290).
+                    var delay = window.QuizifyClientCore.backoffDelay(
+                        reconnectAttempts, MAX_RECONNECT_DELAY_MS
+                    );
+                    reconnectAttempts++;
+                    setTimeout(connect, delay);
+                } else {
+                    // Reached the attempt cap, but recovery is still possible — the
+                    // visibilitychange listener and the manual retry affordance in
+                    // updateConnectionStatus reset attempts and reconnect (#290).
+                    updateConnectionStatus('disconnected');
+                }
             }
-        };
-
-        ws.onclose = function () {
-            ws = null;
-            if (reconnectAttempts < MAX_RECONNECT) {
-                updateConnectionStatus('reconnecting');
-                // Exponential backoff, capped at 30s (mirrors player-utils.js
-                // getReconnectDelay). 1s, 2s, 4s, 8s, 16s, 30s, 30s, … keeps
-                // retrying across the full 1-5 min of an HA restart (#290).
-                var delay = Math.min(1000 * Math.pow(2, reconnectAttempts), MAX_RECONNECT_DELAY_MS);
-                reconnectAttempts++;
-                setTimeout(connect, delay);
-            } else {
-                // Reached the attempt cap, but recovery is still possible — the
-                // visibilitychange listener and the manual retry affordance in
-                // updateConnectionStatus reset attempts and reconnect (#290).
-                updateConnectionStatus('disconnected');
-            }
-        };
-
-        ws.onerror = function () { if (ws) ws.close(); };
+        });
     }
 
     // Returns whether the message actually went out (#621).
@@ -1583,11 +1574,11 @@
                 // instead of doing a fresh join (which would race against
                 // the admin WS still being marked connected and fail with
                 // "Name bereits vergeben").
+                // #787: through QuizifyClientCore, which owns the two key
+                // names. Spelled out here as literals, a rename on the phone
+                // would have broken this redirect with nothing to catch it.
                 if (msg.session_token && _adminJoinedAs) {
-                    try {
-                        sessionStorage.setItem('quizify_session_token', msg.session_token);
-                        sessionStorage.setItem('quizify_player_name', _adminJoinedAs);
-                    } catch (e) { /* storage unavailable */ }
+                    window.QuizifyClientCore.saveSession(msg.session_token, _adminJoinedAs);
                 }
                 break;
             case 'game_state':
@@ -2331,54 +2322,25 @@
     var POWERUP_BANNER_MS = 4000;
     var POWERUP_BANNER_EXIT_MS = 260;
     var SCORE_DELTA_MS = 4000;
-    var BOARD_POWERUPS = {
-        freeze: {
-            icon: '\uD83E\uDDCA',
-            key: 'dashboard.powerupFreeze',
-            fallback: '{source} froze {target}'
-        },
-        steal: {
-            icon: '\uD83E\uDD77',
-            key: 'dashboard.powerupSteal',
-            fallback: '{source} stole {points} points from {target}'
-        }
+    // The specs, the sentence and the reading of `powerup_applied` are the
+    // television's too, to the character — shared since #787. Only the two
+    // span class names are the host page's own.
+    var BOARD_POWERUPS = window.QuizifyRenderShared.POWERUP_SPECS;
+    var POWERUP_CLASSES = {
+        name: 'powerup-banner-name',
+        points: 'powerup-banner-points'
     };
 
-    var _scoreDeltas = {};
-    var _scoreDeltaTimer = null;
     var _lastGameLeaderboard = null;
 
-    // Whole-sentence template, filled here rather than through _t(key, vars):
-    // the names and the point count are marked up, and German and Spanish
-    // order them differently from English — so the translated unit has to be
-    // the entire sentence, never fragments concatenated in English order.
     function powerUpSentenceHtml(spec, vars) {
-        var template = _t(spec.key);
-        if (!template || template === spec.key) template = spec.fallback;
-        return template.replace(/\{(\w+)\}/g, function (_m, name) {
-            var value = vars[name];
-            if (value == null) return '';
-            var cls = name === 'points' ? 'powerup-banner-points' : 'powerup-banner-name';
-            return '<span class="' + cls + '">' + escapeHtml(String(value)) + '</span>';
-        });
+        return window.QuizifyRenderShared.powerUpSentenceHtml(spec, vars, POWERUP_CLASSES);
     }
 
-    function handlePowerUpApplied(msg) {
-        var spec = BOARD_POWERUPS[msg.powerup_type];
-        if (!spec) return;
-        var source = msg.source_player || '';
-        var target = msg.target_player || '';
-        // Both names or no sentence — "Anna froze" is worse than silence.
-        if (!source || !target) return;
-        var points = Math.abs(Number(msg.stolen_points) || 0);
-        showPowerUpBanner(spec, { source: source, target: target, points: points });
-        if (msg.powerup_type === 'steal' && points > 0) {
-            showScoreDeltas([
-                { name: source, points: points },
-                { name: target, points: -points }
-            ]);
-        }
-    }
+    var handlePowerUpApplied = window.QuizifyRenderShared.createPowerUpApplied({
+        showBanner: function (spec, vars) { showPowerUpBanner(spec, vars); },
+        showScoreDeltas: function (list) { showScoreDeltas(list); }
+    });
 
     function showPowerUpBanner(spec, vars) {
         if (!els.powerupBanners) return;
@@ -2400,25 +2362,22 @@
 
     // Transient +/- chips on the two rows a steal moved. Kept in state because
     // game_state repaints the leaderboard every few seconds and would
-    // otherwise wipe them mid-stand.
-    function showScoreDeltas(deltas) {
-        deltas.forEach(function (d) {
-            if (d.name) _scoreDeltas[d.name] = d.points;
-        });
-        if (_lastGameLeaderboard) renderLeaderboard(els.gameLeaderboard, _lastGameLeaderboard);
-        if (_scoreDeltaTimer) clearTimeout(_scoreDeltaTimer);
-        _scoreDeltaTimer = setTimeout(function () {
-            _scoreDeltas = {};
-            _scoreDeltaTimer = null;
+    // otherwise wipe them mid-stand. The store, the hold and the chip markup
+    // are the television's too, so both come from QuizifyRenderShared since
+    // #787; the repaint is this page's own panel.
+    var _scoreDeltas = window.QuizifyRenderShared.createScoreDeltas({
+        holdMs: SCORE_DELTA_MS,
+        repaint: function () {
             if (_lastGameLeaderboard) renderLeaderboard(els.gameLeaderboard, _lastGameLeaderboard);
-        }, SCORE_DELTA_MS);
+        }
+    });
+
+    function showScoreDeltas(deltas) {
+        _scoreDeltas.show(deltas);
     }
 
     function scoreDeltaHtml(name) {
-        var delta = _scoreDeltas[name];
-        if (!delta) return '';
-        return '<span class="leaderboard-delta ' + (delta < 0 ? 'is-down' : 'is-up') + '">' +
-            (delta < 0 ? '\u2212' : '+') + Math.abs(delta) + '</span>';
+        return _scoreDeltas.html(name);
     }
 
     function showAdminReaction(emoji) {
@@ -2450,19 +2409,11 @@
         // #741: remembered so an expiring steal chip can repaint the same rows
         // without waiting for the next frame from the server.
         if (container === els.gameLeaderboard) _lastGameLeaderboard = players;
-        container.innerHTML = players
-            .map(function (p, i) {
-                var rank = p.rank || i + 1;
-                var rankClass = rank <= 3 ? ' rank-' + rank : '';
-                return '<div class="leaderboard-row">' +
-                    '<span class="leaderboard-rank' + rankClass + '">' + rank + '</span>' +
-                    '<span class="leaderboard-name">' + escapeHtml(p.name) + '</span>' +
-                    '<span class="leaderboard-score">' + p.score + '</span>' +
-                    scoreDeltaHtml(p.name) +
-                    (p.streak > 1 ? '<span class="leaderboard-streak">' + p.streak + 'x</span>' : '') +
-                    '</div>';
-            })
-            .join('');
+        // Same row on all three surfaces (#787); the steal chip is the only
+        // thing this page hangs off it.
+        container.innerHTML = window.QuizifyRenderShared.leaderboardRowsHtml(players, {
+            afterScore: function (p) { return scoreDeltaHtml(p.name); }
+        });
     }
 
     function renderPodium(container, podium) {

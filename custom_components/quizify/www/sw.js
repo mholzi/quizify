@@ -60,6 +60,9 @@ var PRECACHE_CORE = [
     '/quizify/static/css/styles.css?v={{ASSET_VER}}',
     '/quizify/static/js/i18n.js?v={{ASSET_VER}}',
     '/quizify/static/js/utils.js?v={{ASSET_VER}}',
+    // #787: the shared socket core + renderers. Core, not per-page —
+    // all three surfaces load it, ahead of their own script.
+    '/quizify/static/js/common.bundle.js?v={{ASSET_VER}}',
     '/quizify/static/js/sw-update.js?v={{ASSET_VER}}',
     '/quizify/static/js/vendor/qrcode.min.js?v={{ASSET_VER}}',
     // en.json is not optional: i18n.js loads it as the fallback dictionary
@@ -89,8 +92,8 @@ var PRECACHE_BY_PAGE = {
         '/quizify/static/js/admin.js?v={{ASSET_VER}}',
         '/quizify/static/js/pack-submit.js?v={{ASSET_VER}}'
     ],
-    // The TV loads i18n.js / utils.js / qrcode from the core list and keeps the
-    // rest of its code inline in dashboard.html.
+    // The TV loads i18n.js / utils.js / common.bundle.js / qrcode from the core
+    // list and keeps the rest of its code inline in dashboard.html.
     dashboard: []
 };
 

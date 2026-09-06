@@ -1,0 +1,318 @@
+/**
+ * Quizify — renderers the three surfaces genuinely share (#787).
+ *
+ * The television, the host page and the phone each carried their own copy of
+ * the same handful of renderers: a leaderboard row, the +/- chip a steal
+ * leaves behind, the power-up sentence, the progressive blur, the preload of
+ * the next round's picture. Twenty function names were duplicated between the
+ * dashboard and the player alone. Every one of those pairs is a place where a
+ * fix lands on one screen and not the other, which is how #741 (the TV never
+ * showed power-ups) and #733/#734 (TV-only i18n gaps) happened.
+ *
+ * The rule for what belongs here: the *markup and the arithmetic* are shared,
+ * the *element references and the class names are not*. So every function
+ * takes what differs as an argument and returns identical output for identical
+ * input. Nothing here reads `els`, holds a surface's state, or knows which
+ * page it is on.
+ *
+ * Loaded from `common.bundle.js`, after `utils.js` (for `escapeHtml`).
+ */
+
+(function () {
+    'use strict';
+
+    // Same escape as utils.js, resolved at call time rather than load time so
+    // the module order can never make this silently stop escaping. The inline
+    // copy is the fallback for a page that has not loaded utils.js — it is
+    // deliberately identical, not "close enough".
+    function _esc(value) {
+        var u = window.QuizifyUtils;
+        if (u && u.escapeHtml) return u.escapeHtml(value);
+        if (value == null) return '';
+        return String(value)
+            .replace(/&/g, '&amp;')
+            .replace(/</g, '&lt;')
+            .replace(/>/g, '&gt;')
+            .replace(/"/g, '&quot;')
+            .replace(/'/g, '&#39;');
+    }
+
+    /** Translate, or fall back to the caller's English when the key is unset. */
+    function _t(key, fallback) {
+        var i18n = window.QuizifyI18n;
+        if (i18n && typeof i18n.t === 'function') {
+            var value = i18n.t(key);
+            if (value && value !== key) return value;
+        }
+        return fallback != null ? fallback : key;
+    }
+
+    // ============================================
+    // Leaderboard rows
+    // ============================================
+
+    /**
+     * The rows, as HTML. Every surface prints the same four spans in the same
+     * order; what differs is what each hangs off them —
+     *
+     *   opts.nameSuffix(p) — the phone's "(you)" badge.
+     *   opts.afterScore(p) — the board's +/- steal chip.
+     *
+     * Both default to nothing, which is exactly what the third surface wants.
+     * Capping (the TV shows five in-game) and the "+N more" tail stay with the
+     * caller: they are that panel's layout, not the row's shape.
+     */
+    function leaderboardRowsHtml(players, opts) {
+        opts = opts || {};
+        var nameSuffix = opts.nameSuffix;
+        var afterScore = opts.afterScore;
+        return players
+            .map(function (p, i) {
+                var rank = p.rank || i + 1;
+                var rankClass = rank <= 3 ? ' rank-' + rank : '';
+                return '<div class="leaderboard-row">' +
+                    '<span class="leaderboard-rank' + rankClass + '">' + rank + '</span>' +
+                    '<span class="leaderboard-name">' + _esc(p.name) +
+                        (nameSuffix ? nameSuffix(p) : '') + '</span>' +
+                    '<span class="leaderboard-score">' + p.score + '</span>' +
+                    (afterScore ? afterScore(p) : '') +
+                    (p.streak > 1 ? '<span class="leaderboard-streak">' + p.streak + 'x</span>' : '') +
+                    '</div>';
+            })
+            .join('');
+    }
+
+    // ============================================
+    // Score deltas — the transient +/- chip after a steal
+    // ============================================
+
+    var SCORE_DELTA_MS = 4000;
+
+    /**
+     * Held in a closure rather than poked into the DOM, because `game_state`
+     * repaints the leaderboard every few seconds and would wipe the chips
+     * mid-stand. `repaint` is how the owner redraws its own leaderboard.
+     */
+    function createScoreDeltas(opts) {
+        opts = opts || {};
+        var holdMs = opts.holdMs != null ? opts.holdMs : SCORE_DELTA_MS;
+        var repaint = opts.repaint || function () {};
+        var deltas = {};
+        var timer = null;
+
+        function show(list) {
+            list.forEach(function (d) {
+                if (d.name) deltas[d.name] = d.points;
+            });
+            repaint();
+            if (timer) clearTimeout(timer);
+            timer = setTimeout(function () {
+                deltas = {};
+                timer = null;
+                repaint();
+            }, holdMs);
+        }
+
+        function html(name) {
+            var delta = deltas[name];
+            if (!delta) return '';
+            return '<span class="leaderboard-delta ' + (delta < 0 ? 'is-down' : 'is-up') + '">' +
+                (delta < 0 ? '\u2212' : '+') + Math.abs(delta) + '</span>';
+        }
+
+        return { show: show, html: html };
+    }
+
+    // ============================================
+    // Power-ups
+    // ============================================
+
+    var POWERUP_SPECS = {
+        freeze: {
+            icon: '\uD83E\uDDCA',
+            key: 'dashboard.powerupFreeze',
+            fallback: '{source} froze {target}'
+        },
+        steal: {
+            icon: '\uD83E\uDD77',
+            key: 'dashboard.powerupSteal',
+            fallback: '{source} stole {points} points from {target}'
+        }
+    };
+
+    /**
+     * Fills a whole-sentence template. The placeholders are substituted here
+     * rather than through `i18n.t(key, vars)` for two reasons: the names and
+     * the point count are marked up (gold, tabular), and German and Spanish
+     * put them in a different order than English — so the unit that gets
+     * translated has to be the whole sentence, never fragments concatenated in
+     * English order.
+     *
+     * `classes` names the two spans, because the board and the host page style
+     * them differently (`dashboard-powerup-name` vs `powerup-banner-name`).
+     */
+    function powerUpSentenceHtml(spec, vars, classes) {
+        classes = classes || {};
+        var nameClass = classes.name || 'powerup-banner-name';
+        var pointsClass = classes.points || 'powerup-banner-points';
+        return _t(spec.key, spec.fallback).replace(/\{(\w+)\}/g, function (_m, name) {
+            var value = vars[name];
+            if (value == null) return '';
+            var cls = name === 'points' ? pointsClass : nameClass;
+            return '<span class="' + cls + '">' + _esc(String(value)) + '</span>';
+        });
+    }
+
+    /**
+     * The `powerup_applied` reading both boards do, byte for byte: look the
+     * spec up, refuse to print half a sentence, and let a steal move the two
+     * rows it moved.
+     *
+     *   opts.showBanner(spec, vars)  — paint the strip.
+     *   opts.showScoreDeltas(list)   — optional; only a steal has points.
+     */
+    function createPowerUpApplied(opts) {
+        var showBanner = opts.showBanner;
+        var showScoreDeltas = opts.showScoreDeltas;
+        return function handlePowerUpApplied(msg) {
+            var spec = POWERUP_SPECS[msg.powerup_type];
+            if (!spec) return;
+            var source = msg.source_player || '';
+            var target = msg.target_player || '';
+            // Both names or no sentence — "Anna froze" is worse than silence.
+            if (!source || !target) return;
+            var points = Math.abs(Number(msg.stolen_points) || 0);
+            showBanner(spec, { source: source, target: target, points: points });
+            if (msg.powerup_type === 'steal' && points > 0 && showScoreDeltas) {
+                showScoreDeltas([
+                    { name: source, points: points },
+                    { name: target, points: -points }
+                ]);
+            }
+        };
+    }
+
+    // ============================================
+    // Progressive image reveal (#434)
+    // ============================================
+
+    /**
+     * The picture starts blurred and sharpens as the round timer drains, so an
+     * early guess is worth more than a late one. Driven entirely off the
+     * countdown both surfaces already receive, so the mechanic needs no
+     * message of its own.
+     *
+     * The blur is a CSS custom property rather than a class per step: the
+     * value has to move every tick, and thirty discrete classes would fight
+     * the transition instead of riding it.
+     *
+     *   opts.targets()  — the elements to blur, looked up per call. The phone
+     *                     returns two (the banner and the zoom overlay renders
+     *                     a second <img> from the same src, so one tap on the
+     *                     magnifier would otherwise defeat the round); the TV
+     *                     returns one. Nulls are skipped.
+     *   opts.maxBlurPx  — 28 on the television, 14 on the smaller canvas.
+     */
+    function createProgressiveReveal(opts) {
+        var targets = opts.targets;
+        var maxBlurPx = opts.maxBlurPx;
+        var active = false;
+        var armedDuration = 0;
+
+        function each(fn) {
+            (targets() || []).forEach(function (el) {
+                if (el) fn(el);
+            });
+        }
+
+        return {
+            isActive: function () { return active; },
+
+            /** Start blurred. `duration` is remembered for callers that do
+             *  not pass one back on every tick. */
+            arm: function (duration) {
+                active = true;
+                armedDuration = duration || 0;
+                each(function (el) {
+                    el.classList.add('progressive-reveal');
+                    el.style.setProperty('--reveal-blur', maxBlurPx + 'px');
+                });
+            },
+
+            /** Blur for a point in the round. Full at the start, zero once the
+             *  clock runs out — a question nobody answered still ends up
+             *  readable, which is what the reveal needs anyway. */
+            set: function (remaining, duration) {
+                if (!active) return;
+                var d = (duration === undefined) ? armedDuration : duration;
+                var frac = (d > 0) ? Math.max(0, Math.min(1, remaining / d)) : 0;
+                var px = (maxBlurPx * frac).toFixed(2) + 'px';
+                each(function (el) {
+                    el.style.setProperty('--reveal-blur', px);
+                });
+            },
+
+            /** Drop the blur entirely. Must be called at reveal: both surfaces
+             *  keep the question view's image element instead of re-rendering
+             *  it, so without this the correct answer would appear next to a
+             *  picture nobody can make out. */
+            clear: function () {
+                active = false;
+                each(function (el) {
+                    el.classList.remove('progressive-reveal');
+                    el.style.removeProperty('--reveal-blur');
+                });
+            }
+        };
+    }
+
+    // ============================================
+    // Next-round image preload (#736)
+    // ============================================
+
+    // The reference is kept on purpose: a detached Image with no live
+    // reference is collectable, and some browsers abandon its request.
+    var _preloadedImage = null;
+
+    /**
+     * Warm the NEXT round's picture during the reveal, when nothing else is on
+     * the wire. Without it the fetch starts on `question_started` — by which
+     * point the countdown deadline is already stamped — and every client in
+     * the room pulls the same file at the same instant.
+     *
+     * DETACHED on purpose, and never the on-screen banner: that element still
+     * holds the round being revealed, so writing to it would swap the picture
+     * the room is looking at for the next one — and on a progressive-reveal
+     * round (#434) it would hand out the unblurred picture a round early,
+     * because the blur is applied when the banner renders and that has not run
+     * yet. A `new Image()` never enters the document: it only fills the HTTP
+     * cache.
+     *
+     * The hint from the wire gets no more trust than the round's own
+     * `image_url` (#536/#540) — same sanitizer.
+     */
+    function preloadNextImage(url) {
+        var safe = (window.QuizifyUtils && window.QuizifyUtils.safeImageUrl)
+            ? window.QuizifyUtils.safeImageUrl(url) : '';
+        if (!safe) return null;
+        var img = new Image();
+        img.decoding = 'async';
+        // Failure is a non-event: the banner requests it again next round and
+        // runs its own onerror fallback.
+        img.onerror = function () { _preloadedImage = null; };
+        img.src = safe;
+        _preloadedImage = img;
+        return img;
+    }
+
+    window.QuizifyRenderShared = {
+        SCORE_DELTA_MS: SCORE_DELTA_MS,
+        POWERUP_SPECS: POWERUP_SPECS,
+        leaderboardRowsHtml: leaderboardRowsHtml,
+        createScoreDeltas: createScoreDeltas,
+        powerUpSentenceHtml: powerUpSentenceHtml,
+        createPowerUpApplied: createPowerUpApplied,
+        createProgressiveReveal: createProgressiveReveal,
+        preloadNextImage: preloadNextImage
+    };
+})();

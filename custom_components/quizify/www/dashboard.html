@@ -2062,6 +2062,10 @@
 
     <script src="/quizify/static/js/i18n.js?v={{ASSET_VER}}"></script>
     <script src="/quizify/static/js/utils.js?v={{ASSET_VER}}"></script>
+    <!-- #787: the socket lifecycle and the renderers all three surfaces share.
+         Must load after utils.js (escapeHtml, safeImageUrl) and before any
+         page script that uses QuizifyClientCore / QuizifyRenderShared. -->
+    <script src="/quizify/static/js/common.bundle.js?v={{ASSET_VER}}"></script>
     <!-- #374: QR library for the TV lobby join code (same lib admin.html uses).
          Exposes the global QRCode used by renderLobbyQr() below. -->
     <script src="/quizify/static/js/vendor/qrcode.min.js?v={{ASSET_VER}}"></script>
@@ -2296,37 +2300,22 @@
             if (els.dashboardLeft) els.dashboardLeft.classList.toggle('has-image', !!on);
             if (els.questionMedia) els.questionMedia.hidden = !on;
         }
-        // #434: progressive reveal. The picture starts blurred and sharpens as
-        // the round timer drains, so an early guess is worth more than a late
-        // one. Driven entirely off `timer_tick` — the countdown the board
-        // already receives — so the mechanic needs no message of its own.
-        //
-        // The blur is written as a CSS custom property rather than a class per
-        // step: the value has to move every tick, and 30 discrete classes would
-        // fight the transition instead of riding it.
+        // #434: progressive reveal. Shared with the phone since #787 — the
+        // arithmetic and the CSS custom property are identical on both, only
+        // the canvas size and the element list differ, so both live in
+        // QuizifyRenderShared.createProgressiveReveal and this passes its own.
         var REVEAL_MAX_BLUR_PX = 28;
-        var revealActive = false;
+        var reveal = window.QuizifyRenderShared.createProgressiveReveal({
+            maxBlurPx: REVEAL_MAX_BLUR_PX,
+            targets: function () { return [els.questionImage]; }
+        });
 
-        // Blur for a given point in the round. Full at the start, zero once
-        // the clock runs out — a question nobody answered still ends up
-        // readable on the board, which is what the reveal needs anyway.
         function setRevealBlur(remaining, duration) {
-            var img = els.questionImage;
-            if (!img || !revealActive) return;
-            var frac = (duration > 0) ? Math.max(0, Math.min(1, remaining / duration)) : 0;
-            img.style.setProperty('--reveal-blur', (REVEAL_MAX_BLUR_PX * frac).toFixed(2) + 'px');
+            reveal.set(remaining, duration);
         }
 
-        // Drop the blur entirely. Called at reveal — and it must be called
-        // there, because the summary view keeps the question view's image
-        // element instead of re-rendering it. Without this the correct answer
-        // would appear next to a picture nobody can make out.
         function clearRevealBlur() {
-            var img = els.questionImage;
-            revealActive = false;
-            if (!img) return;
-            img.classList.remove('progressive-reveal');
-            img.style.removeProperty('--reveal-blur');
+            reveal.clear();
         }
 
         function renderQuestionImage(url, revealStyle) {
@@ -2338,9 +2327,7 @@
             // blur from the previous question must not survive into this one.
             clearRevealBlur();
             if (safe && revealStyle === 'progressive') {
-                revealActive = true;
-                img.classList.add('progressive-reveal');
-                img.style.setProperty('--reveal-blur', REVEAL_MAX_BLUR_PX + 'px');
+                reveal.arm();
             }
             img.onerror = function() {
                 // Image failed → collapse to text-only, no broken-image icon.
@@ -2369,56 +2356,40 @@
         // room is pulling the same file at the same instant. `round_summary`
         // carries the hint; the reveal is when nothing else is on the wire.
         //
-        // Held in a variable because a detached Image with no live reference
-        // can be collected mid-request in some browsers.
-        var preloadedImage = null;
-
+        // Shared with the phone since #787: the sanitizer, the detached
+        // `new Image()` and the reason it must never be els.questionImage are
+        // the same argument on both surfaces.
         function preloadNextImage(url) {
-            var safe = (window.QuizifyUtils && window.QuizifyUtils.safeImageUrl)
-                ? window.QuizifyUtils.safeImageUrl(url) : '';
-            if (!safe) return;
-            // DETACHED, never els.questionImage. That element still holds the
-            // round being revealed, so writing to it would swap the picture the
-            // room is looking at for the next one — and a progressive-reveal
-            // question (#434) would arrive unblurred, because the blur is added
-            // by renderQuestionImage and that has not run yet.
-            var img = new Image();
-            img.decoding = 'async';
-            img.onerror = function () { preloadedImage = null; };
-            img.src = safe;
-            preloadedImage = img;
+            window.QuizifyRenderShared.preloadNextImage(url);
         }
 
         // ---- WebSocket ----
+        // The URL rule, the parse-and-dispatch and the close-on-error live in
+        // QuizifyClientCore (#787) — the same three the host page and the
+        // phone use. The retry POLICY stays here on purpose: a television
+        // retries forever on a flat two seconds, because there is nobody
+        // standing at it to press anything and the room notices a dark board
+        // long before it notices a missing frame.
+        var DASHBOARD_RETRY_MS = 2000;
+
         function connect() {
-            var proto = location.protocol === 'https:' ? 'wss:' : 'ws:';
-            var url = proto + '//' + location.host + '/api/quizify/ws?role=dashboard';
-            ws = new WebSocket(url);
-
-            ws.onopen = function() {
-                // #421: socket is back — hide the reconnect pill. State is
-                // re-requested below, so the stale frame is replaced promptly.
-                if (els.reconnectPill) els.reconnectPill.hidden = true;
-                ws.send(JSON.stringify({ type: 'get_state' }));
-            };
-
-            ws.onmessage = function(evt) {
-                try {
-                    handleMessage(JSON.parse(evt.data));
-                } catch(e) {
-                    console.error('[Dashboard] Bad message:', e);
+            ws = window.QuizifyClientCore.createSocket('/api/quizify/ws?role=dashboard', {
+                logPrefix: '[Dashboard]',
+                onOpen: function () {
+                    // #421: socket is back — hide the reconnect pill. State is
+                    // re-requested below, so the stale frame is replaced promptly.
+                    if (els.reconnectPill) els.reconnectPill.hidden = true;
+                    ws.send(JSON.stringify({ type: 'get_state' }));
+                },
+                onMessage: handleMessage,
+                onClose: function () {
+                    ws = null;
+                    // #421: surface the dead socket so a mid-question freeze doesn't
+                    // look like a live-but-stalled board. Hidden again in onopen.
+                    if (els.reconnectPill) els.reconnectPill.hidden = false;
+                    setTimeout(connect, DASHBOARD_RETRY_MS);
                 }
-            };
-
-            ws.onclose = function() {
-                ws = null;
-                // #421: surface the dead socket so a mid-question freeze doesn't
-                // look like a live-but-stalled board. Hidden again in onopen.
-                if (els.reconnectPill) els.reconnectPill.hidden = false;
-                setTimeout(connect, 2000);
-            };
-
-            ws.onerror = function() { if (ws) ws.close(); };
+            });
         }
 
         // ---- Message handler ----
@@ -2570,52 +2541,23 @@
         // constantly, and then none of it means anything.
         var POWERUP_BANNER_MS = 4000;
         var POWERUP_BANNER_EXIT_MS = 260;
-        var BOARD_POWERUPS = {
-            freeze: {
-                icon: '\uD83E\uDDCA',
-                key: 'dashboard.powerupFreeze',
-                fallback: '{source} froze {target}'
-            },
-            steal: {
-                icon: '\uD83E\uDD77',
-                key: 'dashboard.powerupSteal',
-                fallback: '{source} stole {points} points from {target}'
-            }
+        // The specs, the sentence and the reading of `powerup_applied` are
+        // the host page's too, to the character — shared since #787. Only the
+        // two span class names are the board's own.
+        var BOARD_POWERUPS = window.QuizifyRenderShared.POWERUP_SPECS;
+        var POWERUP_CLASSES = {
+            name: 'dashboard-powerup-name',
+            points: 'dashboard-powerup-points'
         };
 
-        // Fills a whole-sentence template. The placeholders are substituted
-        // here rather than through i18n.t(key, vars) for two reasons: the
-        // names and the point count are marked up (gold, tabular), and German
-        // and Spanish put them in a different order than English — so the unit
-        // that gets translated has to be the whole sentence, never fragments
-        // concatenated in English order.
         function powerUpSentenceHtml(spec, vars) {
-            return t(spec.key, spec.fallback).replace(/\{(\w+)\}/g, function (_m, name) {
-                var value = vars[name];
-                if (value == null) return '';
-                var cls = name === 'points'
-                    ? 'dashboard-powerup-points'
-                    : 'dashboard-powerup-name';
-                return '<span class="' + cls + '">' + escapeHtml(String(value)) + '</span>';
-            });
+            return window.QuizifyRenderShared.powerUpSentenceHtml(spec, vars, POWERUP_CLASSES);
         }
 
-        function handlePowerUpApplied(msg) {
-            var spec = BOARD_POWERUPS[msg.powerup_type];
-            if (!spec) return;
-            var source = msg.source_player || '';
-            var target = msg.target_player || '';
-            // Both names or no sentence — "Anna froze" is worse than silence.
-            if (!source || !target) return;
-            var points = Math.abs(Number(msg.stolen_points) || 0);
-            showPowerUpBanner(spec, { source: source, target: target, points: points });
-            if (msg.powerup_type === 'steal' && points > 0) {
-                showScoreDeltas([
-                    { name: source, points: points },
-                    { name: target, points: -points }
-                ]);
-            }
-        }
+        var handlePowerUpApplied = window.QuizifyRenderShared.createPowerUpApplied({
+            showBanner: function (spec, vars) { showPowerUpBanner(spec, vars); },
+            showScoreDeltas: function (list) { showScoreDeltas(list); }
+        });
 
         function showPowerUpBanner(spec, vars) {
             if (!els.powerupBanners) return;
@@ -2637,30 +2579,23 @@
 
         // Transient +/- chips on the two rows a steal moved. Held in state
         // rather than poked into the DOM, because game_state repaints the
-        // leaderboard every few seconds and would wipe them mid-stand.
-        var SCORE_DELTA_MS = 4000;
-        var scoreDeltas = {};
-        var scoreDeltaTimer = null;
+        // leaderboard every few seconds and would wipe them mid-stand. The
+        // store, the hold and the chip markup are the host page's too, so
+        // both come from QuizifyRenderShared since #787; the repaint is this
+        // board's own panel.
         var lastLeaderboardPlayers = null;
+        var _scoreDeltas = window.QuizifyRenderShared.createScoreDeltas({
+            repaint: function () {
+                if (lastLeaderboardPlayers) renderLeaderboard(els.leaderboard, lastLeaderboardPlayers);
+            }
+        });
 
         function showScoreDeltas(deltas) {
-            deltas.forEach(function (d) {
-                if (d.name) scoreDeltas[d.name] = d.points;
-            });
-            if (lastLeaderboardPlayers) renderLeaderboard(els.leaderboard, lastLeaderboardPlayers);
-            if (scoreDeltaTimer) clearTimeout(scoreDeltaTimer);
-            scoreDeltaTimer = setTimeout(function () {
-                scoreDeltas = {};
-                scoreDeltaTimer = null;
-                if (lastLeaderboardPlayers) renderLeaderboard(els.leaderboard, lastLeaderboardPlayers);
-            }, SCORE_DELTA_MS);
+            _scoreDeltas.show(deltas);
         }
 
         function scoreDeltaHtml(name) {
-            var delta = scoreDeltas[name];
-            if (!delta) return '';
-            return '<span class="leaderboard-delta ' + (delta < 0 ? 'is-down' : 'is-up') + '">' +
-                (delta < 0 ? '\u2212' : '+') + Math.abs(delta) + '</span>';
+            return _scoreDeltas.html(name);
         }
 
         function showDashboardReaction(emoji) {
@@ -3489,17 +3424,12 @@
             // Show top 5 in game view, all in finale
             var capped = container === els.leaderboard;
             var list = capped ? players.slice(0, 5) : players;
-            var html = list.map(function(p, i) {
-                var rank = p.rank || i + 1;
-                var rankClass = rank <= 3 ? ' rank-' + rank : '';
-                return '<div class="leaderboard-row">' +
-                    '<span class="leaderboard-rank' + rankClass + '">' + rank + '</span>' +
-                    '<span class="leaderboard-name">' + escapeHtml(p.name) + '</span>' +
-                    '<span class="leaderboard-score">' + p.score + '</span>' +
-                    scoreDeltaHtml(p.name) +
-                    (p.streak > 1 ? '<span class="leaderboard-streak">' + p.streak + 'x</span>' : '') +
-                    '</div>';
-            }).join('');
+            // The row itself is the same on all three surfaces (#787); the cap
+            // and the "+N more" tail below are this panel's layout, not the
+            // row's shape, so they stay here.
+            var html = window.QuizifyRenderShared.leaderboardRowsHtml(list, {
+                afterScore: function (p) { return scoreDeltaHtml(p.name); }
+            });
             // #429: the in-game panel caps at 5 rows — hint the hidden tail so a
             // 6th+ player isn't silently dropped. The panel is overflow-y:auto,
             // so the muted row is reachable if the list scrolls.

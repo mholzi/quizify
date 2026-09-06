@@ -40,6 +40,10 @@ _REPO = Path(__file__).resolve().parent.parent
 _WWW = _REPO / "custom_components" / "quizify" / "www"
 _DASHBOARD = _WWW / "dashboard.html"
 _ADMIN_JS = _WWW / "js" / "admin.js"
+# #787: the specs table and the sentence builder used to sit twice, once in
+# each board. They are one function now; a board "has" them by reaching for
+# the shared module, so the checks below read the pair together.
+_RENDER_SHARED = _WWW / "js" / "render-shared.js"
 _ADMIN_HTML = _WWW / "admin.html"
 _ADMIN_CSS = _WWW / "css" / "src" / "06-admin.css"
 _I18N = _WWW / "i18n"
@@ -78,10 +82,12 @@ def test_only_the_power_ups_that_hit_someone_else_reach_the_screen(name: str) ->
     they are deliberately absent from the table that drives the strip.
     """
     source = BOARDS[name].read_text(encoding="utf-8")
-    match = re.search(r"var BOARD_POWERUPS = \{(.*?)\n    \};", source, re.S)
-    if match is None:
-        match = re.search(r"var BOARD_POWERUPS = \{(.*?)\n        \};", source, re.S)
-    assert match, f"{name} has no BOARD_POWERUPS table"
+    assert "QuizifyRenderShared.POWERUP_SPECS" in source, (
+        f"{name} does not reach for the shared power-up table (#787)"
+    )
+    shared = _RENDER_SHARED.read_text(encoding="utf-8")
+    match = re.search(r"var POWERUP_SPECS = \{(.*?)\n    \};", shared, re.S)
+    assert match, "render-shared.js has no POWERUP_SPECS table"
     table = match.group(1)
     assert "freeze:" in table, f"{name} does not put a freeze on the screen"
     assert "steal:" in table, f"{name} does not put a steal on the screen"
@@ -99,8 +105,12 @@ def test_the_strip_shows_a_sentence_and_not_only_a_symbol(name: str) -> None:
     assert "function powerUpSentenceHtml(" in source, (
         f"{name} builds no sentence for the strip"
     )
-    assert "dashboard.powerupFreeze" in source and "dashboard.powerupSteal" in source, (
-        f"{name} does not reach for the translated sentences"
+    shared = _RENDER_SHARED.read_text(encoding="utf-8")
+    assert "dashboard.powerupFreeze" in shared and "dashboard.powerupSteal" in shared, (
+        "the shared power-up specs do not reach for the translated sentences"
+    )
+    assert "QuizifyRenderShared.powerUpSentenceHtml(" in source, (
+        f"{name} builds its own sentence instead of the shared one (#787)"
     )
 
 

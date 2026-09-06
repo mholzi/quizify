@@ -264,9 +264,11 @@
     // the picture as the timer drains; the phone has to do the same, or a
     // player simply reads the sharp copy in their hand and the mechanic on the
     // TV is decoration.
+    // Shared with the television since #787: the arithmetic and the CSS custom
+    // property are identical on both, only the canvas size and the element
+    // list differ, so both come from
+    // QuizifyRenderShared.createProgressiveReveal and the phone passes its own.
     var REVEAL_MAX_BLUR_PX = 14;   // smaller canvas than the TV, same feel
-    var _revealActive = false;
-    var _revealDuration = 0;
 
     function _revealTargets() {
         // The zoom overlay renders a SECOND <img> from the same src, so it has
@@ -278,23 +280,17 @@
         ];
     }
 
+    var _reveal = window.QuizifyRenderShared.createProgressiveReveal({
+        maxBlurPx: REVEAL_MAX_BLUR_PX,
+        targets: _revealTargets
+    });
+
     function setRevealBlur(remaining) {
-        if (!_revealActive) return;
-        var frac = (_revealDuration > 0)
-            ? Math.max(0, Math.min(1, remaining / _revealDuration)) : 0;
-        var px = (REVEAL_MAX_BLUR_PX * frac).toFixed(2) + 'px';
-        _revealTargets().forEach(function (el) {
-            if (el) el.style.setProperty('--reveal-blur', px);
-        });
+        _reveal.set(remaining);
     }
 
     function clearRevealBlur() {
-        _revealActive = false;
-        _revealTargets().forEach(function (el) {
-            if (!el) return;
-            el.classList.remove('progressive-reveal');
-            el.style.removeProperty('--reveal-blur');
-        });
+        _reveal.clear();
     }
 
     // Issue #183: render the question image banner + wire tap-to-zoom.
@@ -323,14 +319,7 @@
             img.alt = t('game.questionImageAlt');
             media.hidden = false;
             if (revealStyle === 'progressive') {
-                _revealActive = true;
-                _revealDuration = duration || 0;
-                _revealTargets().forEach(function (el) {
-                    if (el) {
-                        el.classList.add('progressive-reveal');
-                        el.style.setProperty('--reveal-blur', REVEAL_MAX_BLUR_PX + 'px');
-                    }
-                });
+                _reveal.arm(duration);
             }
         } else {
             img.removeAttribute('src');
@@ -351,29 +340,11 @@
     //
     // The reference is kept on purpose: a detached Image with no live
     // reference is collectable, and some browsers abandon its request.
-    var _preloadedImage = null;
-
+    // Shared with the television since #787: the sanitizer, the detached
+    // `new Image()` and the reason it must never be `#question-image` are the
+    // same argument on both surfaces.
     function preloadNextImage(imgUrl) {
-        // Same sanitizer as the banner — a hint from the wire gets no more
-        // trust than the round's own image_url (#536/#540).
-        var safeImg = (window.QuizifyUtils && window.QuizifyUtils.safeImageUrl)
-            ? window.QuizifyUtils.safeImageUrl(imgUrl) : '';
-        if (!safeImg) return;
-        // DETACHED on purpose, and never `#question-image`. The reveal view
-        // keeps the question view's banner element rather than re-rendering it,
-        // so warming that element would paint the NEXT question over the
-        // current reveal — and on a progressive-reveal round (#434) it would
-        // hand out the unblurred picture a whole round early, since the blur is
-        // applied by renderQuestionImageBanner and nothing has run it yet.
-        // A `new Image()` never enters the document, so there is nothing to
-        // show and nothing to blur: it only fills the HTTP cache.
-        var img = new Image();
-        img.decoding = 'async';
-        // Failure is a non-event: the banner will request it again next round
-        // and run its own onerror fallback.
-        img.onerror = function () { _preloadedImage = null; };
-        img.src = safeImg;
-        _preloadedImage = img;
+        window.QuizifyRenderShared.preloadNextImage(imgUrl);
     }
 
     // Wire the fullscreen zoom overlay once. The overlay shows the current

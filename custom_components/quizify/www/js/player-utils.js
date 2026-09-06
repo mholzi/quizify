@@ -42,8 +42,8 @@
     // player flow and the admin modal share one rule. Mirror it locally
     // for any legacy reference; validateName() delegates to the shared one.
     var MAX_NAME_LENGTH = (window.QuizifyUtils && window.QuizifyUtils.MAX_NAME_LENGTH) || 20;
-    var SESSION_STORAGE_TOKEN = 'quizify_session_token';
-    var SESSION_STORAGE_NAME = 'quizify_player_name';
+    // The two session-storage key names live in QuizifyClientCore since #787
+    // — the host page writes them too, and one owner is the point.
 
     // ============================================
     // HTML Escaping
@@ -143,62 +143,56 @@
     // WebSocket Factory
     // ============================================
 
+    // The URL rule, the parse-and-dispatch and the close-on-error are the
+    // television's and the host page's too, so they come from
+    // QuizifyClientCore since #787. What stays here is everything the phone
+    // does *about* a dropped socket — the overlay, the indicator, the
+    // intentional-leave escape and the connection-lost view — because none of
+    // that exists on the other two surfaces.
     function createWebSocket(path, handlers) {
-        var proto = location.protocol === 'https:' ? 'wss:' : 'ws:';
-        var url = proto + '//' + location.host + path;
-
-        var ws = new WebSocket(url);
-
-        ws.onopen = function () {
-            state.reconnectAttempts = 0;
-            state.isReconnecting = false;
-            hideReconnectingOverlay();
-            updateConnectionIndicator('connected');
-            if (handlers.onOpen) handlers.onOpen(ws);
-        };
-
-        ws.onmessage = function (evt) {
-            try {
-                var msg = JSON.parse(evt.data);
-                if (handlers.onMessage) handlers.onMessage(msg);
-            } catch (e) {
-                console.error('[Quizify] Bad message:', e);
-            }
-        };
-
-        ws.onclose = function () {
-            if (state.intentionalLeave) {
-                state.intentionalLeave = false;
-                return;
-            }
-            if (state.playerName && state.reconnectAttempts < MAX_RECONNECT_ATTEMPTS) {
-                state.isReconnecting = true;
-                state.reconnectAttempts++;
-                showReconnectingOverlay();
-                updateConnectionIndicator('reconnecting');
-                var delay = getReconnectDelay();
-                console.log('[Quizify] WS closed. Reconnecting in ' + delay + 'ms (attempt ' + state.reconnectAttempts + ')');
-                setTimeout(function () {
-                    if (handlers.onReconnect) handlers.onReconnect();
-                }, delay);
-            } else if (state.reconnectAttempts >= MAX_RECONNECT_ATTEMPTS) {
+        var ws = window.QuizifyClientCore.createSocket(path, {
+            logPrefix: '[Quizify]',
+            onOpen: function () {
+                state.reconnectAttempts = 0;
                 state.isReconnecting = false;
                 hideReconnectingOverlay();
-                updateConnectionIndicator('disconnected');
-                showView('connection-lost-view');
+                updateConnectionIndicator('connected');
+                if (handlers.onOpen) handlers.onOpen(ws);
+            },
+            onMessage: function (msg) {
+                if (handlers.onMessage) handlers.onMessage(msg);
+            },
+            onClose: function () {
+                if (state.intentionalLeave) {
+                    state.intentionalLeave = false;
+                    return;
+                }
+                if (state.playerName && state.reconnectAttempts < MAX_RECONNECT_ATTEMPTS) {
+                    state.isReconnecting = true;
+                    state.reconnectAttempts++;
+                    showReconnectingOverlay();
+                    updateConnectionIndicator('reconnecting');
+                    var delay = getReconnectDelay();
+                    console.log('[Quizify] WS closed. Reconnecting in ' + delay + 'ms (attempt ' + state.reconnectAttempts + ')');
+                    setTimeout(function () {
+                        if (handlers.onReconnect) handlers.onReconnect();
+                    }, delay);
+                } else if (state.reconnectAttempts >= MAX_RECONNECT_ATTEMPTS) {
+                    state.isReconnecting = false;
+                    hideReconnectingOverlay();
+                    updateConnectionIndicator('disconnected');
+                    showView('connection-lost-view');
+                }
+                if (handlers.onClose) handlers.onClose();
             }
-            if (handlers.onClose) handlers.onClose();
-        };
-
-        ws.onerror = function () {
-            if (ws) ws.close();
-        };
-
+        });
         return ws;
     }
 
     function getReconnectDelay() {
-        return Math.min(1000 * Math.pow(2, state.reconnectAttempts), MAX_RECONNECT_DELAY_MS);
+        return window.QuizifyClientCore.backoffDelay(
+            state.reconnectAttempts, MAX_RECONNECT_DELAY_MS
+        );
     }
 
     // ============================================
@@ -278,24 +272,17 @@
             : containerId;
         if (!container) return;
 
-        container.innerHTML = players
-            .map(function (p, i) {
-                var rank = p.rank || i + 1;
-                var rankClass = rank <= 3 ? ' rank-' + rank : '';
-                // #625: the audit named only player-game.js, but the same
-                // literal sits twice more in this file. `lobby.you` exists in
-                // all three bundles.
-                var youBadge = (myName && p.name === myName)
+        // Same row on all three surfaces (#787); the "(you)" badge is the only
+        // thing the phone hangs off it.
+        // #625: the audit named only player-game.js, but the same literal sat
+        // twice more in this file. `lobby.you` exists in all three bundles.
+        container.innerHTML = window.QuizifyRenderShared.leaderboardRowsHtml(players, {
+            nameSuffix: function (p) {
+                return (myName && p.name === myName)
                     ? '<span class="you-badge">(' + _tt('lobby.you') + ')</span>'
                     : '';
-                return '<div class="leaderboard-row">' +
-                    '<span class="leaderboard-rank' + rankClass + '">' + rank + '</span>' +
-                    '<span class="leaderboard-name">' + escapeHtml(p.name) + youBadge + '</span>' +
-                    '<span class="leaderboard-score">' + p.score + '</span>' +
-                    (p.streak > 1 ? '<span class="leaderboard-streak">' + p.streak + 'x</span>' : '') +
-                    '</div>';
-            })
-            .join('');
+            }
+        });
     }
 
     // ============================================
@@ -498,29 +485,20 @@
     // Session Storage Helpers
     // ============================================
 
+    // #787: the host page writes the same two keys when it joins as a player,
+    // so the redirect to /quizify/player resumes instead of racing a fresh
+    // join. One owner for the key names — QuizifyClientCore — or the two
+    // spellings drift and the redirect silently starts over.
     function saveSession(token, name) {
-        try {
-            sessionStorage.setItem(SESSION_STORAGE_TOKEN, token);
-            sessionStorage.setItem(SESSION_STORAGE_NAME, name);
-        } catch (e) { /* storage unavailable */ }
+        window.QuizifyClientCore.saveSession(token, name);
     }
 
     function getSession() {
-        try {
-            return {
-                token: sessionStorage.getItem(SESSION_STORAGE_TOKEN),
-                name: sessionStorage.getItem(SESSION_STORAGE_NAME)
-            };
-        } catch (e) {
-            return { token: null, name: null };
-        }
+        return window.QuizifyClientCore.getSession();
     }
 
     function clearSession() {
-        try {
-            sessionStorage.removeItem(SESSION_STORAGE_TOKEN);
-            sessionStorage.removeItem(SESSION_STORAGE_NAME);
-        } catch (e) { /* storage unavailable */ }
+        window.QuizifyClientCore.clearSession();
     }
 
     // ============================================
