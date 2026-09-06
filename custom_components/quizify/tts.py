@@ -23,6 +23,7 @@ from typing import TYPE_CHECKING, Any
 from .game import tts_phrases
 from .game.state import GamePhase, QuizifyGameState
 from .ha_service import fire_and_forget_service
+from .house_settings import HouseSettings
 
 if TYPE_CHECKING:
     from homeassistant.core import HomeAssistant
@@ -67,13 +68,24 @@ class QuizifyTTSAnnouncer:
     def __init__(
         self,
         hass: HomeAssistant | None,
-        tts_entity_id: str | None,
-        media_player_entity_id: str | None,
         game_state: QuizifyGameState,
+        tts_entity_id: str | None = None,
+        media_player_entity_id: str | None = None,
+        settings: HouseSettings | None = None,
     ) -> None:
+        """Build the announcer.
+
+        ``settings`` is the shared :class:`HouseSettings` (#789): the config-entry
+        TTS engine and speaker are read through it, so an options reload updates
+        them in place rather than rebuilding this object and resetting the live
+        narration config (which is exactly what #411 was). The two explicit id
+        arguments are the standalone form used by the dev server and the unit
+        tests; they seed a private settings object that behaves identically.
+        """
         self._hass = hass
-        self._tts_entity_id = tts_entity_id
-        self._media_player_entity_id = media_player_entity_id
+        self._settings = settings or HouseSettings(
+            tts_entity=tts_entity_id, media_player=media_player_entity_id
+        )
         self._game = game_state
         # None means "never spoken yet" so the first call always passes
         # the throttle. (Initializing to 0.0 would block when
@@ -156,67 +168,22 @@ class QuizifyTTSAnnouncer:
         self._media_player_override = (media_player or "").strip() or None
         self._previous_leader = None
 
-    def export_runtime_config(self) -> dict[str, Any]:
-        """Snapshot the mutable per-game narration config (#411).
+    # There is deliberately no export/restore_runtime_config pair any more
+    # (#789). It existed only because an options reload rebuilt this announcer
+    # from the config entry, resetting ``_enabled`` back to ``False`` and
+    # dropping the per-game entity overrides — the #411 bug. The reload now
+    # refreshes the shared :class:`HouseSettings` in place and leaves this
+    # instance (and everything ``configure`` set on it) alone.
 
-        An options reload rebuilds this announcer from the config entry, which
-        would otherwise reset ``_enabled`` back to ``False`` and drop the admin's
-        per-game entity overrides — silently killing narration mid-game until the
-        next ``start_game``. The listener snapshots the live config here and
-        restores it onto the fresh instance via :meth:`restore_runtime_config`.
-        """
-        return {
-            "enabled": self._enabled,
-            "announce_question": self._announce_question,
-            "announce_options": self._announce_options,
-            "announce_reveal": self._announce_reveal,
-            "announce_standings": self._announce_standings,
-            "announce_join": self._announce_join,
-            "announce_countdown": self._announce_countdown,
-            "announce_milestone": self._announce_milestone,
-            "tts_entity_override": self._tts_entity_override,
-            "media_player_override": self._media_player_override,
-        }
+    @property
+    def _tts_entity_id(self) -> str | None:
+        """The config-entry TTS engine, read live off the settings."""
+        return self._settings.tts_entity
 
-    def restore_runtime_config(self, snapshot: dict[str, Any] | None) -> None:
-        """Restore a config snapshot from :meth:`export_runtime_config` (#411).
-
-        Defensive: a falsy/empty snapshot is a no-op, and each field falls back
-        to the current value when absent, so a partial snapshot never clobbers
-        an unrelated default.
-        """
-        if not snapshot:
-            return
-        self._enabled = bool(snapshot.get("enabled", self._enabled))
-        self._announce_question = bool(
-            snapshot.get("announce_question", self._announce_question)
-        )
-        self._announce_options = bool(
-            snapshot.get("announce_options", self._announce_options)
-        )
-        self._announce_reveal = bool(
-            snapshot.get("announce_reveal", self._announce_reveal)
-        )
-        self._announce_standings = bool(
-            snapshot.get("announce_standings", self._announce_standings)
-        )
-        self._announce_join = bool(
-            snapshot.get("announce_join", self._announce_join)
-        )
-        self._announce_countdown = bool(
-            snapshot.get("announce_countdown", self._announce_countdown)
-        )
-        self._announce_milestone = bool(
-            snapshot.get("announce_milestone", self._announce_milestone)
-        )
-        self._tts_entity_override = (
-            snapshot.get("tts_entity_override", self._tts_entity_override)
-            or None
-        )
-        self._media_player_override = (
-            snapshot.get("media_player_override", self._media_player_override)
-            or None
-        )
+    @property
+    def _media_player_entity_id(self) -> str | None:
+        """The config-entry speaker, read live off the settings."""
+        return self._settings.media_player
 
     @property
     def _active_tts_entity(self) -> str | None:

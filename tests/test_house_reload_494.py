@@ -192,12 +192,14 @@ async def test_reload_preserves_house_panel_config(http_hass: HomeAssistant) -> 
     new_sfx = hass.data[DOMAIN]["sound_effects"]
     new_ev = hass.data[DOMAIN]["event_emitter"]
 
-    # Fresh instances (a real rebuild, not a lucky reuse) …
-    assert new_pl is not old_pl
-    assert new_sfx is not old_sfx
-    assert new_ev is not old_ev
+    # The SAME instances (#789): the reload refreshes the shared config-entry
+    # settings they read rather than rebuilding them, which is what makes the
+    # panel config below survive without a snapshot protocol.
+    assert new_pl is old_pl
+    assert new_sfx is old_sfx
+    assert new_ev is old_ev
 
-    # … whose panel config survived intact.
+    # Their panel config is intact.
     assert new_pl._master_enabled is True
     assert new_pl._light_question is False
     assert new_pl._light_streak is False
@@ -219,10 +221,10 @@ async def test_reload_preserves_house_panel_config(http_hass: HomeAssistant) -> 
     assert new_ev._master_enabled is True
     assert new_ev.is_configured is True
 
-    # The WS handler is re-pointed at the FRESH consumers, mirroring how it is
-    # re-pointed at the new TTS announcer. Without this, the next
-    # ``configure_house`` frame from the panel would reconfigure the orphaned
-    # pre-reload instances and the host's toggles would appear to do nothing.
+    # The WS handler still points at the live consumers. It used to have to be
+    # re-pointed after every reload — miss that, and the next ``configure_house``
+    # frame reconfigured the orphaned pre-reload instances while the host's
+    # toggles appeared to do nothing. There is nothing to re-point any more.
     handler = hass.data[DOMAIN]["ws_handler"]
     assert handler._party_lights is new_pl
     assert handler._sound_effects is new_sfx

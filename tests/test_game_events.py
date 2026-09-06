@@ -37,6 +37,7 @@ from custom_components.quizify.game_events import (  # noqa: E402
     EVENT_WINNER_DECIDED,
     QuizifyEventEmitter,
 )
+from custom_components.quizify.house_settings import HouseSettings  # noqa: E402
 
 
 class _FakeBus:
@@ -401,38 +402,55 @@ def test_attach_detach_registers_callback():
     assert t._on_state_changed not in game.callbacks
 
 
-def test_runtime_state_snapshot_roundtrip():
+def test_options_reload_does_not_re_fire_game_started():
+    """An options reload must not replay ``quizify_game_started`` (#411/#789).
+
+    The emitter used to be rebuilt from the config entry on every options
+    change, which reset ``_last_phase`` — so a reload landing exactly on the
+    first active round could fire the start event a second time. It carried an
+    ``export/restore_runtime_state`` pair purely to close that gap. The emitter
+    now survives the reload (only the settings it reads are refreshed), so the
+    phase tracking is simply never lost.
+    """
+    hass = _FakeHass()
     game = _FakeGame()
-    t = _emitter(_FakeHass(), game)
+    settings = HouseSettings(house_enabled=True)
+    t = QuizifyEventEmitter(hass=hass, game_state=game, settings=settings)
     game.round = 1
     game.phase = GamePhase.QUESTION_ACTIVE
     t._on_state_changed()  # sets _last_phase, fires game_started
-    snap = t.export_runtime_state()
-    # ``enabled_override`` rides along since #494 P4 (the admin panel's runtime
-    # master). None here — this emitter was never configure()d by the panel, so
-    # the rebuilt instance still follows CONF_HOUSE_EVENTS_ENABLED.
-    assert snap == {"last_phase": "QUESTION_ACTIVE", "enabled_override": None}
+    assert [e for e, _ in hass.bus.fired] == ["quizify_game_started"]
 
-    # A fresh emitter (options reload) that restores the snapshot must NOT
-    # re-fire game_started when it sees the same active round again.
-    hass2 = _FakeHass()
-    game2 = _FakeGame()
-    game2.round = 1
-    game2.phase = GamePhase.QUESTION_ACTIVE
-    t2 = QuizifyEventEmitter(hass=hass2, game_state=game2)
-    t2.restore_runtime_state(snap)
-    t2._on_state_changed()
-    assert hass2.bus.fired == []
+    # The options reload: the shared settings are updated in place.
+    hass.bus.fired.clear()
+    settings.update_from_options({"house_events_enabled": True})
+
+    t._on_state_changed()
+    assert hass.bus.fired == []
 
 
-def test_restore_ignores_empty_and_bad_snapshot():
-    t = _emitter(_FakeHass(), _FakeGame())
-    t.restore_runtime_state(None)
-    assert t._last_phase is None
-    t.restore_runtime_state({})
-    assert t._last_phase is None
-    t.restore_runtime_state({"last_phase": "NOT_A_PHASE"})
-    assert t._last_phase is None
+def test_options_reload_keeps_the_panel_master():
+    """A panel master set mid-game outlives an options change, and an untouched
+    one leaves the config-entry switch in charge (#494 P4 / #789)."""
+    settings = HouseSettings(house_enabled=False)
+    t = QuizifyEventEmitter(
+        hass=_FakeHass(), game_state=_FakeGame(), settings=settings
+    )
+    assert t._master_enabled is False
+
+    t.configure(enabled=True)  # the panel turns the house on mid-game
+    settings.update_from_options({})  # an unrelated options change
+    assert t._master_enabled is True
+    assert t._enabled_override is True
+
+    # A never-panelled emitter follows the options switch immediately.
+    fresh_settings = HouseSettings(house_enabled=False)
+    fresh = QuizifyEventEmitter(
+        hass=_FakeHass(), game_state=_FakeGame(), settings=fresh_settings
+    )
+    assert fresh._enabled_override is None
+    fresh_settings.update_from_options({"house_events_enabled": True})
+    assert fresh._master_enabled is True
 
 
 @pytest.mark.parametrize(

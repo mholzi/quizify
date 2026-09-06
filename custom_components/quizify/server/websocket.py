@@ -179,6 +179,114 @@ def _coerce_toggle(value: Any, *, default: bool) -> bool:
     return default
 
 
+# --- socket-less start_game settings (#744) ----------------------------------
+#
+# The keyword arguments ``QuizifyGameState.start_game`` accepts and that a
+# service call / preset / last-used snapshot may fill in. The two seed
+# arguments are deliberately absent: they exist for tests to pin the random
+# draws and must never be reachable from a host-facing surface.
+_START_GAME_FIELDS = frozenset(
+    {
+        "category",
+        "categories",
+        "difficulty",
+        "num_rounds",
+        "language",
+        "timer_duration",
+        "lightning_enabled",
+        "hot_seat_enabled",
+        "powerups_enabled",
+        "wager_enabled",
+    }
+)
+
+# The admin UI's sentinel for "no pick" in the pack and difficulty choosers. It
+# is stored verbatim in a saved preset and typed verbatim into a service call,
+# and ``start_game`` spells the same thing ``None``.
+_MIXED = "mixed"
+
+#: Saved-preset field name -> ``start_game`` keyword. ``packs`` and ``category``
+#: are handled separately because they resolve to two different keywords.
+_PRESET_FIELD_MAP = {
+    "rounds": "num_rounds",
+    "timer": "timer_duration",
+    "difficulty": "difficulty",
+    "lightning": "lightning_enabled",
+    "hot_seat": "hot_seat_enabled",
+    "powerups": "powerups_enabled",
+    "wager": "wager_enabled",
+}
+
+
+def _coerce_category(raw: Any) -> dict[str, Any]:
+    """Resolve a pack selection to ``category`` / ``categories`` kwargs.
+
+    Accepts the three shapes every Quizify surface already uses: a list of
+    slugs (multi-pack), a single slug, or the ``"mixed"`` sentinel / empty value
+    meaning "all packs". Always returns BOTH keys so a narrower pick from a
+    later layer fully replaces a broader one instead of merging with it.
+    """
+    if isinstance(raw, (list, tuple)):
+        slugs = [str(s).strip() for s in raw if str(s).strip()]
+        if slugs:
+            return {"category": None, "categories": slugs}
+        return {"category": None, "categories": None}
+    value = str(raw or "").strip()
+    if not value or value == _MIXED:
+        return {"category": None, "categories": None}
+    return {"category": value, "categories": None}
+
+
+def _preset_to_start_settings(preset: dict[str, Any]) -> dict[str, Any]:
+    """Translate a saved preset record into ``start_game`` keywords (#744).
+
+    Presets are stored in the admin UI's vocabulary (``rounds``, ``timer``,
+    ``packs``, ``hot_seat``); this is the one place that knows the mapping.
+    Fields the preset does not carry are left out entirely so the layer below
+    keeps owning them.
+    """
+    settings: dict[str, Any] = {}
+    if "packs" in preset:
+        settings.update(_coerce_category(preset.get("packs")))
+    elif "category" in preset:
+        settings.update(_coerce_category(preset.get("category")))
+    for field, keyword in _PRESET_FIELD_MAP.items():
+        if preset.get(field) is None:
+            continue
+        value = preset[field]
+        if keyword == "difficulty":
+            settings["difficulty"] = (
+                None if str(value).strip() in ("", _MIXED) else str(value).strip()
+            )
+        elif keyword in ("num_rounds", "timer_duration"):
+            try:
+                settings[keyword] = int(value)
+            except (TypeError, ValueError):
+                continue
+        else:
+            settings[keyword] = bool(value)
+    return settings
+
+
+def _overrides_to_start_settings(overrides: dict[str, Any]) -> dict[str, Any]:
+    """Translate the explicit ``quizify.start_game`` fields into keywords.
+
+    The service schema has already coerced and range-checked the numbers, so
+    this only has to resolve the pack selection and the ``"mixed"`` difficulty
+    sentinel. Absent fields stay absent.
+    """
+    settings: dict[str, Any] = {}
+    if "category" in overrides:
+        settings.update(_coerce_category(overrides["category"]))
+    if "difficulty" in overrides:
+        raw = str(overrides["difficulty"] or "").strip()
+        settings["difficulty"] = None if raw in ("", _MIXED) else raw
+    for key in ("num_rounds", "language", "timer_duration"):
+        if overrides.get(key) is not None:
+            settings[key] = overrides[key]
+    return settings
+
+
 class QuizifyWebSocketHandler:
     """Handle WebSocket connections for Quizify."""
 
@@ -1422,12 +1530,9 @@ class QuizifyWebSocketHandler:
             # off ``new_streak`` in the answer_result above. A message with no
             # reader is worse than no message: it reads like a contract.
             if result.milestone_bonus:
-                # Speak it if TTS is configured. Cheap to look up; the
-                # announcer no-ops if no TTS entity is set.
-                self._notify_tts_milestone(player.name, result.milestone_streak)
-                # Fire the HA bus event so the host can automate on a streak
-                # (#366).
-                self._notify_house_milestone(
+                # ONE milestone from the dispatch point (#789); the fan-out to
+                # the announcer and the HA bus lives in _notify_milestone.
+                self._notify_milestone(
                     player.name, result.milestone_streak, result.milestone_bonus
                 )
             # NB: round-summary broadcast is fired exclusively by
@@ -2077,14 +2182,14 @@ class QuizifyWebSocketHandler:
         # the service path drive one implementation (#367).
         await self._after_start_game(
             game_state,
-            data.get("tts") or {},
+            data.get("tts"),
             house_config=data.get("house"),
         )
 
     async def _after_start_game(
         self,
         game_state: QuizifyGameState,
-        tts_config: dict,
+        tts_config: dict | None = None,
         house_config: dict | None = None,
     ) -> None:
         """Continue a just-started game: TTS + house config, grace, first question.
@@ -2098,24 +2203,24 @@ class QuizifyWebSocketHandler:
         # Apply per-game TTS narration settings (#281). The toggles ride the
         # start_game payload (like lightning_enabled), persisted in admin
         # localStorage — not config-entry options. No-op when no announcer is
-        # wired (standalone dev server, HA without a TTS entity). The service
-        # path passes an empty dict (no per-game overrides).
-        self._apply_tts_config(tts_config)
+        # wired (standalone dev server, HA without a TTS entity).
+        #
+        # An ABSENT block is SKIPPED, exactly like the house block below (#744).
+        # ``_apply_tts_config`` reads the master as ``bool(tts.get("enabled"))``,
+        # so feeding it ``{}`` turns narration OFF — which is what starting the
+        # game by voice or from the Lovelace card used to do: the host set the
+        # narrator up in the lobby over ``configure_tts``, said "Hey Nabu, start
+        # the quiz", and the quizmaster went silent for the whole game. Skipping
+        # leaves whatever the lobby-time push installed, which is the only
+        # non-destructive reading of "no per-game override".
+        if tts_config:
+            self._apply_tts_config(tts_config)
 
         # Apply the "House Plays Along" settings the same way (#494 Phase 4) —
         # the admin panel rides them on the start_game payload under ``house``,
-        # alongside ``tts``.
-        #
-        # Deliberately NOT symmetric with the TTS line above: an ABSENT block is
-        # skipped rather than applied as an empty dict. ``_apply_house_config``
-        # reads the master as ``bool(house.get("enabled"))`` (default off, like
-        # TTS), so feeding it ``{}`` would silently disarm lights/SFX/events that
-        # the host had switched on in the config-entry options. Two callers hit
-        # that case: ``admin_action_start_game`` (the HA-service path, which has
-        # no panel and passes nothing) and any admin client that omits the block.
-        # Skipping leaves whatever is already in force — the config-entry options
-        # plus whatever the lobby-time ``configure_house`` push installed — which
-        # is the only non-destructive reading of "no per-game override".
+        # alongside ``tts``. Same absent-means-leave-alone rule, for the same
+        # reason: ``{}`` would silently disarm lights/SFX/events that the host
+        # had switched on in the config-entry options.
         if house_config:
             self._apply_house_config(house_config)
 
@@ -2156,8 +2261,13 @@ class QuizifyWebSocketHandler:
         # Start the first question
         await self._start_next_question(game_state)
 
-    async def admin_action_start_game(self, game_state: QuizifyGameState) -> None:
-        """Start a game with default settings — HA-service entry point (#367).
+    async def admin_action_start_game(
+        self,
+        game_state: QuizifyGameState,
+        preset: dict[str, Any] | None = None,
+        overrides: dict[str, Any] | None = None,
+    ) -> None:
+        """Start a game from outside the socket — HA-service entry point (#367).
 
         Callable without an admin WebSocket connection so hosts can start the
         quiz via Assist voice, a Zigbee remote or a dashboard button. Only valid
@@ -2168,14 +2278,57 @@ class QuizifyWebSocketHandler:
         Raises ``ValueError`` (game already started / no questions) for the
         caller to translate; on success runs the same continuation as the admin
         path.
+
+        ``preset`` is a record from :class:`~server.preset_store.PresetStore`
+        and ``overrides`` the explicit service fields; both are optional and
+        both are resolved by :meth:`resolve_start_settings` on top of the host's
+        last-used settings (#744). It used to call the bare
+        ``game_state.start_game()`` and hand the host the factory game — mixed
+        packs, medium, 10 rounds, German — no matter what they had set up.
         """
         if game_state.phase != GamePhase.LOBBY:
             raise ValueError(ERR_GAME_ALREADY_STARTED)
-        # Default settings: mixed packs, default difficulty, 10 rounds, HA
-        # language default. start_game() re-raises ERR_GAME_ALREADY_STARTED /
+        settings = self.resolve_start_settings(game_state, preset, overrides)
+        # start_game() re-raises ERR_GAME_ALREADY_STARTED /
         # ERR_NO_QUESTIONS_REMAINING which the service surfaces to the host.
-        game_state.start_game()
-        await self._after_start_game(game_state, {})
+        game_state.start_game(**settings)
+        # No ``tts`` block: the narration config the host set up in the lobby
+        # over ``configure_tts`` is left exactly as it is (#744).
+        await self._after_start_game(game_state)
+
+    @staticmethod
+    def resolve_start_settings(
+        game_state: QuizifyGameState,
+        preset: dict[str, Any] | None = None,
+        overrides: dict[str, Any] | None = None,
+    ) -> dict[str, Any]:
+        """Resolve the ``start_game`` kwargs for a socket-less start (#744).
+
+        Four layers, each beating the one before it:
+
+        1. ``start_game``'s own defaults — nothing is passed for a field no
+           layer below mentions, so the game-state defaults keep owning them;
+        2. the host's **last-used settings** (``game_state.last_settings``, the
+           same snapshot the one-tap rematch replays). This is what makes "Hey
+           Nabu, start the quiz" replay the evening the host actually set up
+           rather than the factory one;
+        3. a **saved preset**, matched by name in the service layer;
+        4. the **explicit service fields**.
+
+        Kept static and pure so the layering can be unit-tested without a
+        handler, a socket or a Home Assistant instance.
+        """
+        settings: dict[str, Any] = dict(game_state.last_settings or {})
+        # A preset never carries a language: it is a shape-of-the-evening, and
+        # the language belongs to the room. Left to layer 2/4.
+        if preset:
+            settings.update(_preset_to_start_settings(preset))
+        if overrides:
+            settings.update(_overrides_to_start_settings(overrides))
+        # ``last_settings`` is written by start_game itself and can carry keys a
+        # future version adds; filter to what start_game actually accepts so a
+        # stale snapshot can never raise TypeError on the host's voice command.
+        return {k: v for k, v in settings.items() if k in _START_GAME_FIELDS}
 
     # ------------------------------------------------------------------
     # Admin: next question
@@ -3422,17 +3575,11 @@ class QuizifyWebSocketHandler:
             admin_msg, dashboard_message=strip_answer_for_dashboard(admin_msg)
         )
 
-        # Narrate the question text (+ options) at round start (#281). The
-        # canonical shuffled order matches the TV grid so spoken letters line
-        # up. Guarded like the milestone hook so a bad config can't break the
-        # question fan-out.
-        self._notify_tts_question(
+        # ONE question milestone from the dispatch point (#789): narration
+        # (#281, with the canonical shuffled order so spoken letters match the
+        # TV grid) plus the HA bus event (#366) fan out inside _notify_question.
+        self._notify_question(
             question, game_state.round, game_state.total_rounds, shuffled_texts
-        )
-        # Fire the HA bus event (round + type only; no text/answers) so the host
-        # can automate on each question start (#366).
-        self._notify_house_question(
-            question, game_state.round, game_state.total_rounds
         )
 
         # Cache players to avoid redundant calls
@@ -3522,11 +3669,11 @@ class QuizifyWebSocketHandler:
                     # out via the broadcast string path (admin-as-player already
                     # excluded there) instead of a per-socket send_json (#413/#258).
                     min_remaining = tick.dashboard_remaining
-                    # Spoken "time running out" warning (#281), once per round.
-                    self._notify_tts_countdown(min_remaining)
-                    # House "time running out" bus event (#280), once per round —
-                    # drives the faster countdown light pulse.
-                    self._notify_house_time_running_out(min_remaining)
+                    # ONE countdown milestone per tick (#789): the spoken
+                    # warning (#281) and the bus event that drives the faster
+                    # light pulse (#280) fan out inside _notify_countdown, each
+                    # with its own once-per-round guard.
+                    self._notify_countdown(min_remaining)
                     dash_shown = math.ceil(max(0.0, min_remaining))
                     if dash_shown != last_dashboard_shown:
                         last_dashboard_shown = dash_shown
@@ -4211,6 +4358,61 @@ class QuizifyWebSocketHandler:
         game_state.language = language
         await self._broadcast_state_projected(game_state)
 
+    # ------------------------------------------------------------------
+    # Milestone fan-out (#789)
+    # ------------------------------------------------------------------
+    #
+    # Four game moments — question shown, countdown, reveal, streak milestone —
+    # are interesting to BOTH the narrator and the HA event bus. Each dispatch
+    # point used to carry a twin call, one to a ``_notify_tts_*`` hook and one to
+    # its ``_notify_house_*`` sibling, so adding a consumer meant editing every
+    # site. The dispatch points now fire ONE milestone and the fan-out lives
+    # here, in the four methods below.
+    #
+    # The narrator is deliberately NOT wired up as a subscriber of
+    # ``QuizifyEventEmitter``, which is the shape the lights and the SFX use.
+    # The emitter's fires are gated on the house master (``CONF_HOUSE_EVENTS_
+    # ENABLED``, off out of the box), while narration has its own independent
+    # master in the TTS panel — routing speech through the bus would silence the
+    # quizmaster on every install that has narration on and house events off.
+
+    def _notify_milestone(self, player_name: str, streak: int, bonus: int) -> None:
+        """Announce a streak milestone and put it on the HA bus (#789)."""
+        self._notify_tts_milestone(player_name, streak)
+        self._notify_house_milestone(player_name, streak, bonus)
+
+    def _notify_question(
+        self,
+        question: Any,
+        round_no: int,
+        total_rounds: int,
+        options: list[str] | None = None,
+    ) -> None:
+        """Announce a question start and put it on the HA bus (#789).
+
+        The announcer gets the shuffled option texts (so spoken letters match
+        the TV grid); the bus event deliberately gets only the round and the
+        question type, never the text or answers, which would leak the question
+        to automations before the players see it.
+        """
+        self._notify_tts_question(question, round_no, total_rounds, options)
+        self._notify_house_question(question, round_no, total_rounds)
+
+    def _notify_countdown(self, seconds_remaining: float) -> None:
+        """Push the per-tick remaining time to both consumers (#789).
+
+        Called every timer tick. Each side keeps its own once-per-round guard
+        and its own threshold — the spoken warning at 10s, the light pulse at
+        5s — so this stays a plain fan-out.
+        """
+        self._notify_tts_countdown(seconds_remaining)
+        self._notify_house_time_running_out(seconds_remaining)
+
+    def _notify_reveal(self, game_state: QuizifyGameState) -> None:
+        """Announce the reveal and put it on the HA bus (#789)."""
+        self._notify_tts_reveal(game_state)
+        self._notify_house_reveal(game_state)
+
     def _notify_tts_milestone(self, player_name: str, streak: int) -> None:
         """Forward a milestone hit to the TTS announcer if one is wired.
 
@@ -4454,12 +4656,11 @@ class QuizifyWebSocketHandler:
         game_state = self._get_game_state()
         if game_state:
             await self._broadcast_round_summary(game_state)
-            # Narrate the reveal (correct answer + who got it + standings) as
-            # a single combined utterance (#281), after the summary broadcast.
-            self._notify_tts_reveal(game_state)
-            # Fire the HA bus event with the correct answer + how many got it
-            # (#366), off the same round summary.
-            self._notify_house_reveal(game_state)
+            # ONE reveal milestone (#789), after the summary broadcast: the
+            # combined spoken utterance (#281) and the bus event carrying the
+            # correct answer + how many got it (#366) fan out inside
+            # _notify_reveal, both off the same round summary.
+            self._notify_reveal(game_state)
 
     async def _dispatch_game_ended(self) -> None:
         """Handler for the ``game_ended`` state event."""

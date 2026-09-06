@@ -31,6 +31,7 @@ from custom_components.quizify.game.state import (  # noqa: E402
     GamePhase,
     QuizifyGameState,
 )
+from custom_components.quizify.house_settings import HouseSettings  # noqa: E402
 from custom_components.quizify.lobby_music import QuizifyLobbyMusic  # noqa: E402
 from custom_components.quizify.tts import QuizifyTTSAnnouncer  # noqa: E402
 
@@ -63,33 +64,22 @@ def game(tmp_path):
     return QuizifyGameState(runtime=_FakeRuntime(tmp_path), entry_id="t")
 
 
-def _reload_announcer(
-    old: QuizifyTTSAnnouncer, hass, game
-) -> QuizifyTTSAnnouncer:
-    """Mimic the __init__ listener: snapshot old → rebuild → restore."""
-    snapshot = old.export_runtime_config()
-    old.detach()
-    new = QuizifyTTSAnnouncer(
-        hass=hass,
-        tts_entity_id="tts.cloud",
-        media_player_entity_id="media_player.kitchen",
-        game_state=game,
-    )
-    new.restore_runtime_config(snapshot)
-    new.attach()
-    return new
-
-
 def test_reload_preserves_enabled_and_overrides(game):
+    """The #411 regression guard, against the #789 mechanism.
+
+    The listener used to snapshot the announcer, tear it down, rebuild it from
+    the config entry and restore the snapshot. It now refreshes the shared
+    settings in place and leaves the announcer alone — so the master switch and
+    the per-game entity overrides survive by construction, and the NEW
+    config-entry entities are visible to the same live instance.
+    """
     hass = _FakeHass()
-    old = QuizifyTTSAnnouncer(
-        hass=hass,
-        tts_entity_id="tts.cloud",
-        media_player_entity_id="media_player.kitchen",
-        game_state=game,
+    settings = HouseSettings(
+        tts_entity="tts.cloud", media_player="media_player.kitchen"
     )
-    old.attach()
-    old.configure(
+    announcer = QuizifyTTSAnnouncer(hass=hass, game_state=game, settings=settings)
+    announcer.attach()
+    announcer.configure(
         enabled=True,
         announce_question=True,
         announce_reveal=False,
@@ -101,34 +91,49 @@ def test_reload_preserves_enabled_and_overrides(game):
         media_player="media_player.party",
     )
 
-    new = _reload_announcer(old, hass, game)
-
-    assert new is not old
-    assert new._enabled is True
-    assert new._announce_reveal is False
-    assert new._announce_options is False
-    assert new._announce_countdown is False
-    assert new._active_tts_entity == "tts.game_engine"
-    assert new._active_media_player == "media_player.party"
-
-
-def test_restore_runtime_config_is_defensive(game):
-    hass = _FakeHass()
-    tts = QuizifyTTSAnnouncer(
-        hass=hass,
-        tts_entity_id="tts.cloud",
-        media_player_entity_id="media_player.kitchen",
-        game_state=game,
+    # The options reload: only the config-entry defaults are rewritten.
+    settings.update_from_options(
+        {
+            "tts_entity": "tts.cloud_new",
+            "media_player_entity": "media_player.kitchen_new",
+        }
     )
-    tts._enabled = True
-    # An empty / None snapshot must never clobber the current config.
-    tts.restore_runtime_config(None)
-    tts.restore_runtime_config({})
-    assert tts._enabled is True
-    # A partial snapshot only touches the keys it carries.
-    tts.restore_runtime_config({"announce_join": False})
-    assert tts._enabled is True
-    assert tts._announce_join is False
+
+    assert announcer._enabled is True
+    assert announcer._announce_reveal is False
+    assert announcer._announce_options is False
+    assert announcer._announce_countdown is False
+    # The panel's per-game overrides still win…
+    assert announcer._active_tts_entity == "tts.game_engine"
+    assert announcer._active_media_player == "media_player.party"
+    # …over the freshly-read config-entry values underneath them.
+    assert announcer._tts_entity_id == "tts.cloud_new"
+    assert announcer._media_player_entity_id == "media_player.kitchen_new"
+
+
+def test_reload_lands_new_entities_when_the_panel_set_no_override(game):
+    """The counter-case: with no per-game override, the options change is what
+    the announcer speaks through."""
+    hass = _FakeHass()
+    settings = HouseSettings(
+        tts_entity="tts.cloud", media_player="media_player.kitchen"
+    )
+    announcer = QuizifyTTSAnnouncer(hass=hass, game_state=game, settings=settings)
+    announcer.configure(
+        enabled=True,
+        announce_question=True,
+        announce_reveal=True,
+        announce_standings=True,
+    )
+    assert announcer._active_tts_entity == "tts.cloud"
+
+    settings.update_from_options(
+        {"tts_entity": "tts.piper", "media_player_entity": "media_player.den"}
+    )
+
+    assert announcer._active_tts_entity == "tts.piper"
+    assert announcer._active_media_player == "media_player.den"
+    assert announcer._enabled is True  # narration was NOT silently killed
 
 
 async def test_lobby_music_resumes_on_attach_in_lobby(game):

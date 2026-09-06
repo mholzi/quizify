@@ -190,8 +190,11 @@
         }
 
         set hass(hass) {
-            // Only the display language is taken from hass; the game state comes
-            // from Quizify's own socket, which is the authority on the game.
+            // The game state comes from Quizify's own socket, which is the
+            // authority on the game. hass is kept for exactly two things: the
+            // display language, and calling the quizify.start_game SERVICE
+            // (#744) — see _startGame.
+            this._hass = hass;
             var lang = (hass && (hass.language || (hass.locale && hass.locale.language))) || 'en';
             lang = String(lang).slice(0, 2);
             if (LABELS[lang] && lang !== this._lang) {
@@ -293,6 +296,30 @@
             var payload = data || {};
             payload.type = type;
             this._ws.send(JSON.stringify(payload));
+        }
+
+        /*
+         * Starting goes through the quizify.start_game SERVICE, not the socket
+         * (#744).
+         *
+         * The card has no setup screen, so its start_game frame carried no
+         * settings at all — and the admin path reads an absent field and an
+         * explicit null the same way, so the server could only answer it with
+         * the factory game: mixed packs, medium, 10 rounds, German, narrator
+         * off. The service is the surface that knows what "no settings given"
+         * means: it replays the host's last game. Falls back to the socket when
+         * hass is not available (the card can be rendered outside a Lovelace
+         * view), so the button is never dead.
+         */
+        _startGame() {
+            var hass = this._hass;
+            if (hass && typeof hass.callService === 'function') {
+                try {
+                    hass.callService('quizify', 'start_game', {});
+                    return;
+                } catch (e) { /* fall through to the socket */ }
+            }
+            this._send('start_game');
         }
 
         // ---- Rendering ---------------------------------------------------
@@ -397,17 +424,24 @@
             if (expanded) this._drawQr(joinUrl);
         }
 
+        // One place decides socket vs service, so every button reaches start_game
+        // the same way no matter which control fired it (#744).
+        _dispatch(msg) {
+            if (msg === 'start_game') { this._startGame(); return; }
+            this._send(msg);
+        }
+
         _bind(primary) {
             var self = this;
             var t = this._t;
             var btn = this.shadowRoot.getElementById('primary');
             if (btn && primary.msg) {
-                btn.addEventListener('click', function () { self._send(primary.msg); });
+                btn.addEventListener('click', function () { self._dispatch(primary.msg); });
             }
             var others = this.shadowRoot.querySelectorAll('[data-msg]');
             for (var i = 0; i < others.length; i++) {
                 (function (el) {
-                    el.addEventListener('click', function () { self._send(el.dataset.msg); });
+                    el.addEventListener('click', function () { self._dispatch(el.dataset.msg); });
                 })(others[i]);
             }
             var reset = this.shadowRoot.querySelector('[data-reset]');

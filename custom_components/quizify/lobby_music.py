@@ -26,6 +26,7 @@ from typing import TYPE_CHECKING
 
 from .game.state import GamePhase, QuizifyGameState
 from .ha_service import fire_and_forget_service
+from .house_settings import HouseSettings
 
 if TYPE_CHECKING:
     from homeassistant.core import HomeAssistant
@@ -37,16 +38,36 @@ class QuizifyLobbyMusic:
     def __init__(
         self,
         hass: HomeAssistant | None,
-        media_player_entity_id: str | None,
         game_state: QuizifyGameState,
+        media_player_entity_id: str | None = None,
+        settings: HouseSettings | None = None,
     ) -> None:
+        """Build the lobby-music player.
+
+        ``settings`` is the shared :class:`HouseSettings` (#789): the speaker is
+        read through it, so an options reload updates it in place rather than
+        rebuilding this object. ``media_player_entity_id`` is the standalone form
+        used by the dev server and the unit tests.
+        """
         self._hass = hass
-        self._media_player_entity_id = (media_player_entity_id or "").strip() or None
+        self._settings = settings or HouseSettings(
+            media_player=(media_player_entity_id or "").strip() or None
+        )
         self._game = game_state
         self._last_phase: GamePhase | None = None
         # Track whether we currently believe music is playing so we only
-        # issue one stop on leaving the lobby (not on every state push).
+        # issue one stop on leaving the lobby (not on every state push), and on
+        # WHICH speaker — the configured entity can change under us now that an
+        # options reload updates the settings in place instead of rebuilding
+        # this object (#789), and the stop has to reach the speaker that is
+        # actually playing, not the one just configured.
         self._playing = False
+        self._playing_entity: str | None = None
+
+    @property
+    def _media_player_entity_id(self) -> str | None:
+        """The config-entry speaker, read live off the settings."""
+        return self._settings.media_player
 
     @property
     def is_configured(self) -> bool:
@@ -63,6 +84,22 @@ class QuizifyLobbyMusic:
         # start the music until the phase moved away and back. Reusing
         # ``_on_state_changed`` (with ``_last_phase is None``) resumes LOBBY
         # music immediately and is a safe no-op for any non-lobby phase.
+        self._on_state_changed()
+
+    def refresh_from_settings(self) -> None:
+        """Re-evaluate after the config entry's options changed (#789).
+
+        The old reload path stopped this player, threw it away and attached a
+        fresh one, whose ``attach()`` re-evaluated the current phase and so
+        resumed LOBBY music under the new speaker/URL (#411). The instance now
+        survives the reload, so the same stop-then-re-evaluate has to be done
+        explicitly — otherwise a host who changes the speaker mid-lobby keeps
+        hearing the old one, and a host who sets the URL for the first time
+        hears nothing until the phase moves away and back.
+        """
+        if self._playing:
+            self._stop()
+        self._last_phase = None
         self._on_state_changed()
 
     def detach(self) -> None:
@@ -94,6 +131,7 @@ class QuizifyLobbyMusic:
         if not url:
             return
         self._playing = True
+        self._playing_entity = self._media_player_entity_id
         # play_media starts the file; repeat_set with "all" loops it. The
         # repeat call is best-effort — players that don't support repeat
         # just ignore it (single play-through).
@@ -116,11 +154,13 @@ class QuizifyLobbyMusic:
         )
 
     def _stop(self) -> None:
+        entity_id = self._playing_entity or self._media_player_entity_id
         self._playing = False
+        self._playing_entity = None
         self._call(
             "media_player",
             "media_stop",
-            {"entity_id": self._media_player_entity_id},
+            {"entity_id": entity_id},
         )
 
     def _call(self, domain: str, service: str, data: dict[str, object]) -> None:
