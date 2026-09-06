@@ -841,6 +841,11 @@
                     <span id="admin-round" class="round-indicator"></span>
                 </h2>
                 <div id="admin-question" class="question-text" style="font-size:1.1rem;"></div>
+                <!-- The detour's second line (#832): how many have bid, what the
+                     chair cost, how the stake settled. Kept apart from
+                     #admin-correct, which is the green "Correct: …" slot — a
+                     lost stake printed in success green would read as a win. -->
+                <div id="admin-detour-note" style="font-size:0.9rem;opacity:0.75;margin-top:0.25rem;display:none;"></div>
                 <!-- Correct answer is only shown after reveal, not during active question -->
                 <div id="admin-correct" class="admin-correct-answer" style="display:none;"></div>
             </section>

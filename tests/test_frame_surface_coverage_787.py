@@ -379,20 +379,23 @@ COVERAGE: dict[str, Coverage] = {
     ),
     # --- hot seat ---------------------------------------------------------
     #
-    # This block is #699 in one column. Seven broadcasts, and the host page has
-    # a case for none of them — which is also #664 (the TV froze) read from the
-    # other side: the mode was built phone-first and the other surfaces were
-    # each discovered separately, months apart.
+    # This block used to be #699 in one column: seven broadcasts, and the host
+    # page had a case for none of them — which is also #664 (the TV froze)
+    # read from the other side, the mode having been built phone-first and the
+    # other surfaces discovered separately, months apart. #832 closed the
+    # column: the detour announces its phase changes with these frames and
+    # sends one snapshot at the start, so a host page that read the snapshot
+    # alone was right for four seconds and stale for the rest of the round.
     "hot_seat_auction": _c(
         "broadcast",
         "tv",
+        "host",
         ignored={
             "phone": (
                 "the phone is served the unicast hot_seat_auction_you, which"
                 " carries its own bank"
             )
         },
-        gaps={"host": "#699 — the host page has no case for any hot_seat_* frame"},
     ),
     "hot_seat_auction_you": _c(
         "unicast",
@@ -413,12 +416,7 @@ COVERAGE: dict[str, Coverage] = {
             "host": "a blind auction; the count is the public half",
         },
     ),
-    "hot_seat_bid_count": _c(
-        "broadcast",
-        "tv",
-        "phone",
-        gaps={"host": "#699 — the host page has no case for any hot_seat_* frame"},
-    ),
+    "hot_seat_bid_count": _c("broadcast", "tv", "phone", "host"),
     "hot_seat_bet_accepted": _c(
         "unicast",
         "phone",
@@ -427,24 +425,9 @@ COVERAGE: dict[str, Coverage] = {
             "host": "one spectator's own stake on the seat holder",
         },
     ),
-    "hot_seat_no_bids": _c(
-        "broadcast",
-        "tv",
-        "phone",
-        gaps={"host": "#699 — the host page has no case for any hot_seat_* frame"},
-    ),
-    "hot_seat_awarded": _c(
-        "broadcast",
-        "tv",
-        "phone",
-        gaps={"host": "#699 — the host page has no case for any hot_seat_* frame"},
-    ),
-    "hot_seat_question": _c(
-        "broadcast",
-        "tv",
-        "phone",
-        gaps={"host": "#699 — the host page has no case for any hot_seat_* frame"},
-    ),
+    "hot_seat_no_bids": _c("broadcast", "tv", "phone", "host"),
+    "hot_seat_awarded": _c("broadcast", "tv", "phone", "host"),
+    "hot_seat_question": _c("broadcast", "tv", "phone", "host"),
     "hot_seat_answer_accepted": _c(
         "unicast",
         "phone",
@@ -453,18 +436,8 @@ COVERAGE: dict[str, Coverage] = {
             "host": "an ack for the one person in the chair",
         },
     ),
-    "hot_seat_tick": _c(
-        "broadcast",
-        "tv",
-        "phone",
-        gaps={"host": "#699 — the host page has no case for any hot_seat_* frame"},
-    ),
-    "hot_seat_result": _c(
-        "broadcast",
-        "tv",
-        "phone",
-        gaps={"host": "#699 — the host page has no case for any hot_seat_* frame"},
-    ),
+    "hot_seat_tick": _c("broadcast", "tv", "phone", "host"),
+    "hot_seat_result": _c("broadcast", "tv", "phone", "host"),
     # --- errors -----------------------------------------------------------
     "error": _c(
         "unicast",
@@ -625,17 +598,24 @@ def test_every_legacy_alias_is_still_referenced_somewhere() -> None:
 def test_the_gap_list_is_what_the_issue_said_it_was() -> None:
     """A floor under the record, so nobody quietly empties it to go green.
 
-    #787 counted the drift before any of this was written. If the count here
-    ever reaches zero the right move is to delete this test with the last gap,
-    not to weaken it.
+    #787 counted the drift before any of this was written, and #830 wrote out
+    what was left of it for the host page: seven ``hot_seat_*`` broadcasts plus
+    ``answer_progress``, ``evening_tally`` and ``head_to_head``. The seven are
+    gone — #832 wired the host page to the detour it had only ever seen in a
+    snapshot, and each entry came out with the handler that closed it, which is
+    the only way this list is allowed to shrink.
+
+    The other three are named rather than counted, because a count says nothing
+    about which one somebody deleted. When the last of them is wired, this test
+    goes with it rather than being weakened.
     """
     gaps = {
         (frame, surface)
         for frame, entry in COVERAGE.items()
         for surface in entry.gaps
     }
-    hot_seat = {f for f, s in gaps if s == "host" and f.startswith("hot_seat_")}
-    assert len(hot_seat) == 7, (
-        "#699 is seven hot_seat_* broadcasts the host page does not handle; "
-        f"this file now records {len(hot_seat)}"
+    host = {frame for frame, surface in gaps if surface == "host"}
+    assert host == {"answer_progress", "evening_tally", "head_to_head"}, (
+        "#830 records three frames the host page still drops; this file now "
+        f"records {sorted(host)}"
     )
