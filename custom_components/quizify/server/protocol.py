@@ -17,7 +17,8 @@ What is NOT covered, so nobody reads more into a green run than is there:
   literal ``"type"`` key, plus the ``d["k"] = v`` lines that add to the same
   local afterwards. A frame assembled some other way is invisible here.
   ``game_state`` is the live example: the snapshot in
-  ``game/state.py::get_state_snapshot`` gets its ``type`` stamped on by the
+  ``server/serializers.py::serialize_state_snapshot`` gets its ``type``
+  stamped on by the
   caller, so the entry below describes only the leaderboard-refresh literal in
   ``round_message_builder.py``.
 * Field *names*, not value types. Nothing here catches an int that turned into
@@ -239,7 +240,8 @@ SERVER_FRAMES: dict[str, FrameSpec] = {
         note=(
             "Declared for the leaderboard-refresh literal in "
             "``round_message_builder``. The full snapshot sent on connect and "
-            "reconnect is built in ``game/state.py::get_state_snapshot`` and "
+            "reconnect is built in "
+            "``server/serializers.py::serialize_state_snapshot`` and "
             "typed by its caller, so it is outside what this file can check."
         ),
     ),

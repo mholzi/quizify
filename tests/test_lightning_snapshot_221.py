@@ -7,7 +7,7 @@ with **no** ``lightning`` sub-object. When such a message arrived while the
 phase was LIGHTNING, the player client's LIGHTNING case (player-core.js ~437)
 found no ``msg.lightning`` and fell through to an empty ``lightning-view`` —
 a blank screen. The fix makes the builder carry the same ``lightning``
-sub-state that ``QuizifyGameState.get_state_snapshot()`` already produced, so
+sub-state that ``serialize_state_snapshot(QuizifyGameState)`` already produced, so
 reconnect snapshots and live refreshes are wire-identical.
 
 These tests assert the builder's ``game_state`` payload includes a non-empty
@@ -32,6 +32,9 @@ from custom_components.quizify.game.state import (  # noqa: E402
 )
 from custom_components.quizify.server.round_message_builder import (  # noqa: E402
     RoundMessageBuilder,
+)
+from custom_components.quizify.server.serializers import (  # noqa: E402
+    serialize_state_snapshot,
 )
 
 
@@ -119,7 +122,7 @@ def test_lightning_substate_matches_snapshot_shape(
     assert state.start_lightning_round() is True
     assert state.begin_lightning_questions() is True
 
-    snap = state.get_state_snapshot()
+    snap = serialize_state_snapshot(state)
     payload = builder.build_game_state_with_leaderboard(
         state, players=state.get_players()
     )

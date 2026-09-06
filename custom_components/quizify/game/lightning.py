@@ -168,7 +168,7 @@ class LightningRound:
         self._recaps: list[LightningQuestionRecap] = []
 
         # Memoized end-screen payload (#455). Once the round is finished the
-        # recap is immutable, but get_state_snapshot() rebuilds it on EVERY
+        # recap is immutable, but the state snapshot rebuilds it on EVERY
         # join / reconnect / get_state while the phase is LIGHTNING_RECAP.
         # Cache the built dict the first time build_recap() runs post-finish
         # and reuse it thereafter. A fresh LightningRound instance (each detour

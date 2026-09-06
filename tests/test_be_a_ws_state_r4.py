@@ -14,7 +14,7 @@ server/websocket.py + game/state.py + game/lightning.py surface:
 * #453 — every join/leave broadcast a full roster to every socket (O(N²) on a
          room-wide blip). Now coalesced through a ~150ms flush window into one
          ``player_joined`` / ``player_left`` per window.
-* #455 — get_state_snapshot rebuilt the immutable lightning recap on every
+* #455 — serialize_state_snapshot rebuilt the immutable lightning recap on every
          join/reconnect during LIGHTNING_RECAP. Now memoized behind
          ``LightningRound.finished``.
 """
@@ -42,6 +42,9 @@ from custom_components.quizify.game.state import (  # noqa: E402
     QuizifyGameState,
 )
 from custom_components.quizify.server.connection import ConnectionManager  # noqa: E402
+from custom_components.quizify.server.serializers import (  # noqa: E402
+    serialize_state_snapshot,
+)
 from custom_components.quizify.server.websocket import (  # noqa: E402
     QuizifyWebSocketHandler,
 )
@@ -453,7 +456,7 @@ class TestLightningRecapCache:
         assert lr._recap_cache is None
 
     def test_snapshot_reuses_cached_recap(self, tmp_path: Path) -> None:
-        """get_state_snapshot at LIGHTNING_RECAP reuses the cached recap dict
+        """serialize_state_snapshot at LIGHTNING_RECAP reuses the cached recap dict
         rather than rebuilding it each call."""
         state = QuizifyGameState(runtime=_FakeRuntime(tmp_path), entry_id="test")
         state.add_player("A", _ws())
@@ -465,6 +468,6 @@ class TestLightningRecapCache:
         state._lightning = lr
         state.phase = GamePhase.LIGHTNING_RECAP
 
-        snap1 = state.get_state_snapshot()
-        snap2 = state.get_state_snapshot()
+        snap1 = serialize_state_snapshot(state)
+        snap2 = serialize_state_snapshot(state)
         assert snap1["lightning_recap"] is snap2["lightning_recap"]

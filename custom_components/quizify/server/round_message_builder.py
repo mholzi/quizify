@@ -192,7 +192,7 @@ class RoundMessageBuilder:
         # must carry the lightning sub-state, or the client's LIGHTNING case
         # (player-core.js ~437) falls through to an empty ``lightning-view`` —
         # i.e. a blank player screen (#221). Mirror the canonical shape built
-        # by ``QuizifyGameState.get_state_snapshot()`` so reconnect snapshots
+        # by ``serialize_state_snapshot()`` so reconnect snapshots
         # and live refreshes are wire-identical.
         lightning = self._build_lightning_substate(game_state)
         if lightning is not None:
@@ -206,7 +206,7 @@ class RoundMessageBuilder:
 
         Returns ``None`` outside a lightning round. The shape is byte-for-byte
         identical to the lightning branch of
-        ``QuizifyGameState.get_state_snapshot()`` so the player client reads
+        ``serialize_state_snapshot()`` so the player client reads
         the same keys regardless of which builder produced the message:
 
         * ``splash_pending`` — True while the intro splash (#201) is up and no
@@ -248,7 +248,7 @@ class RoundMessageBuilder:
     ) -> dict[str, Any]:
         """Re-shape a canonical state snapshot for one reconnecting PLAYER.
 
-        ``QuizifyGameState.get_state_snapshot()`` is player-agnostic — it
+        ``serialize_state_snapshot()`` is player-agnostic — it
         emits answers in canonical order and nests the reveal under
         ``round_summary`` (issue #253). That is correct for the admin and the
         TV dashboard, but a player rebuilds their answer buttons from this

@@ -28,6 +28,9 @@ from custom_components.quizify.game.lightning import (  # noqa: E402
 from custom_components.quizify.game.questions import QuestionBank  # noqa: E402
 from custom_components.quizify.game.state import GamePhase, QuizifyGameState  # noqa: E402
 from custom_components.quizify.server.connection import ConnectionManager  # noqa: E402
+from custom_components.quizify.server.serializers import (  # noqa: E402
+    serialize_state_snapshot,
+)
 from custom_components.quizify.server.websocket import (  # noqa: E402
     QuizifyWebSocketHandler,
 )
@@ -268,7 +271,7 @@ class TestGameStateLightning:
     def test_snapshot_exposes_lightning(self, state: QuizifyGameState) -> None:
         state.add_player("A", _fake_ws())
         state.start_lightning_round()
-        snap = state.get_state_snapshot()
+        snap = serialize_state_snapshot(state)
         assert snap["phase"] == "LIGHTNING"
         assert "lightning" in snap
         assert "question" in snap["lightning"]
@@ -279,7 +282,7 @@ class TestGameStateLightning:
         state.add_player("A", _fake_ws())
         state.start_lightning_round()
         assert state.lightning_splash_pending is True
-        snap = state.get_state_snapshot()
+        snap = serialize_state_snapshot(state)
         assert snap["lightning"]["splash_pending"] is True
 
     def test_begin_questions_clears_splash(self, state: QuizifyGameState) -> None:
@@ -287,7 +290,7 @@ class TestGameStateLightning:
         state.start_lightning_round()
         assert state.begin_lightning_questions() is True
         assert state.lightning_splash_pending is False
-        snap = state.get_state_snapshot()
+        snap = serialize_state_snapshot(state)
         assert snap["lightning"]["splash_pending"] is False
 
     def test_begin_questions_idempotent(self, state: QuizifyGameState) -> None:
@@ -307,7 +310,7 @@ class TestGameStateLightning:
         state.add_player("A", _fake_ws())
         state.start_lightning_round()
         state.finish_lightning_round()
-        snap = state.get_state_snapshot()
+        snap = serialize_state_snapshot(state)
         assert snap["phase"] == "LIGHTNING_RECAP"
         assert "lightning_recap" in snap
 

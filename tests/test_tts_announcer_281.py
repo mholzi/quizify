@@ -101,11 +101,23 @@ def _result(name, correct, points=100):
     )
 
 
+class _Standing:
+    """One row of ``RoundSummary.leaderboard``.
+
+    Participants, not wire rows, since #747 — the narrator reads ``name`` and
+    ``score`` off whichever object the ranking is about (a team in team mode,
+    a player otherwise).
+    """
+
+    def __init__(self, name, score):  # noqa: ANN001
+        self.name = name
+        self.score = score
+
+
 def _lb(*pairs):
-    """Build a sorted-by-score leaderboard of {name, score, rank} dicts."""
+    """Build the standings for a round, highest score first."""
     ranked = sorted(pairs, key=lambda p: p[1], reverse=True)
-    return [{"name": n, "score": s, "rank": i + 1}
-            for i, (n, s) in enumerate(ranked)]
+    return [_Standing(n, s) for n, s in ranked]
 
 
 def _last_message(hass):

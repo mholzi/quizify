@@ -66,7 +66,7 @@ class _FakeGame:
 
     Avoids spinning a full QuizifyGameState (which needs websockets to add
     players) — the emitter only touches phase / round / game_id / total_rounds
-    / get_players / leader / get_round_summary / get_leaderboard.
+    / get_players / leader / get_round_summary / get_standings.
     """
 
     def __init__(self) -> None:
@@ -77,7 +77,8 @@ class _FakeGame:
         self._players: list[_FakePlayer] = []
         self.leader: _FakePlayer | None = None
         self._summary: RoundSummary | None = None
-        self._leaderboard: list[dict] = []
+        # Standings are participants, not wire rows, since #747.
+        self._leaderboard: list[_FakePlayer] = []
         # register/unregister are exercised by attach()/detach().
         self.callbacks: list = []
 
@@ -94,7 +95,7 @@ class _FakeGame:
     def get_round_summary(self):
         return self._summary
 
-    def get_leaderboard(self):
+    def get_standings(self):
         return list(self._leaderboard)
 
 
@@ -156,7 +157,7 @@ def test_no_hass_is_noop_everywhere():
     t.notify_streak_milestone("Alice", 5, 50)
     game._summary = _summary(results=[_result("Alice", True)])
     t.notify_answer_revealed(game)
-    game._leaderboard = [{"name": "Alice", "score": 100}]
+    game._leaderboard = [_FakePlayer("Alice", 100)]
     t.notify_game_ended(game)
     # No bus at all → nothing to assert but that it didn't raise.
 
@@ -193,7 +194,7 @@ def test_disabled_emitter_fires_nothing_on_any_path():
     t.notify_streak_milestone("Alice", 5, 50)
     game._summary = _summary(results=[_result("Alice", True)])
     t.notify_answer_revealed(game)
-    game._leaderboard = [{"name": "Alice", "score": 100}]
+    game._leaderboard = [_FakePlayer("Alice", 100)]
     t.notify_game_ended(game)
 
     assert hass.bus.fired == []
@@ -370,12 +371,9 @@ def test_streak_milestone_payload():
 def test_game_ended_leaderboard_trimmed():
     hass = _FakeHass()
     game = _FakeGame()
-    # The real serialize_leaderboard carries many keys; the event keeps only
-    # name+score.
-    game._leaderboard = [
-        {"name": "Bob", "score": 420, "rank": 1, "streak": 3, "submitted": True},
-        {"name": "Alice", "score": 300, "rank": 2, "streak": 0},
-    ]
+    # A participant carries far more than the bus needs (streak, submitted,
+    # power-ups, …); the event keeps only name+score.
+    game._leaderboard = [_FakePlayer("Bob", 420), _FakePlayer("Alice", 300)]
     t = _emitter(hass, game)
     t.notify_game_ended(game)
     event, data = hass.bus.fired[0]

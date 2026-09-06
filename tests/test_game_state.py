@@ -25,6 +25,9 @@ from custom_components.quizify.game.state import (  # noqa: E402
 )
 from custom_components.quizify.game.powerups import PowerUpEffect, PowerUpType  # noqa: E402
 from custom_components.quizify.game.questions import Answer, Question  # noqa: E402
+from custom_components.quizify.server.serializers import (  # noqa: E402
+    serialize_state_snapshot,
+)
 
 
 class _FakeRuntime:
@@ -309,13 +312,13 @@ class TestPlayerRegistry:
         state.remove_player("Alice")
         assert state.get_player_timer("Alice") is None
 
-    def test_get_state_snapshot_has_required_keys(
+    def test_serialize_state_snapshot_has_required_keys(
         self, state: QuizifyGameState
     ) -> None:
         state.add_player("Alice", _fake_ws())
         state.start_game(language="de", num_rounds=3)
         state.start_next_question()
-        snapshot = state.get_state_snapshot()
+        snapshot = serialize_state_snapshot(state)
         # Keys the client relies on — if any of these vanish, the UI
         # silently breaks (which is how the C3 finale-stats bug shipped).
         assert "phase" in snapshot

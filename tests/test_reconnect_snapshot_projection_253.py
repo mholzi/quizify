@@ -1,6 +1,6 @@
 """Regression tests for issue #253 — reconnect/mid-join snapshot vs per-player state.
 
-The player-agnostic ``get_state_snapshot()`` disagreed with the per-player live
+The player-agnostic ``serialize_state_snapshot()`` disagreed with the per-player live
 game on the scoring-critical path:
 
 * QUESTION_ACTIVE / LIGHTNING: the snapshot emitted answers in CANONICAL order,
@@ -33,6 +33,9 @@ from custom_components.quizify.game.state import (  # noqa: E402
 )
 from custom_components.quizify.server.round_message_builder import (  # noqa: E402
     RoundMessageBuilder,
+)
+from custom_components.quizify.server.serializers import (  # noqa: E402
+    serialize_state_snapshot,
 )
 
 
@@ -108,7 +111,7 @@ def test_question_snapshot_answers_match_player_submit_mapping(
     question = state.get_current_question()
     player = state.get_player("Alice")
 
-    snapshot = state.get_state_snapshot()
+    snapshot = serialize_state_snapshot(state)
     projected = builder.project_snapshot_for_player(
         state, snapshot=snapshot, player=player
     )
@@ -138,7 +141,7 @@ def test_canonical_snapshot_still_mis_orders_for_a_player(
     canonical — which is the case the projection exists to fix."""
     _start_round_with_shuffles(state)
     question = state.get_current_question()
-    raw = state.get_state_snapshot()
+    raw = serialize_state_snapshot(state)
 
     canonical_answers = raw["question"]["answers"]
     shuffle = state.get_player_shuffle("Alice")
@@ -158,7 +161,7 @@ def test_late_joiner_gets_a_minted_shuffle_on_reconnect(
     bob = state.get_player("Bob")
     assert "Bob" not in state.player_shuffles  # no shuffle before projection
 
-    snapshot = state.get_state_snapshot()
+    snapshot = serialize_state_snapshot(state)
     projected = builder.project_snapshot_for_player(
         state, snapshot=snapshot, player=bob
     )
@@ -176,7 +179,7 @@ def test_projection_does_not_mutate_canonical_snapshot(
     """Admin/dashboard recipients still get canonical order — the projection
     works on a copy and leaves the source snapshot intact."""
     _start_round_with_shuffles(state)
-    snapshot = state.get_state_snapshot()
+    snapshot = serialize_state_snapshot(state)
     canonical_before = list(snapshot["question"]["answers"])
 
     builder.project_snapshot_for_player(
@@ -204,7 +207,7 @@ def test_question_snapshot_time_remaining_uses_player_timer(
     assert timer is not None
     timer.add_time(15.0)  # time_boost power-up: extends only Alice's clock
 
-    snapshot = state.get_state_snapshot()
+    snapshot = serialize_state_snapshot(state)
     canonical_remaining = snapshot["question"]["time_remaining"]
     projected = builder.project_snapshot_for_player(
         state, snapshot=snapshot, player=alice
@@ -233,7 +236,7 @@ def test_reveal_snapshot_is_flat_with_all_answers(
     state.evaluate_round()
     assert state.phase == GamePhase.ANSWER_REVEAL
 
-    snapshot = state.get_state_snapshot()
+    snapshot = serialize_state_snapshot(state)
     # The raw snapshot nests under round_summary (the bug).
     assert "round_summary" in snapshot
 
@@ -280,7 +283,7 @@ def test_reveal_raw_snapshot_carries_question_for_dashboard(
     state.evaluate_round()
     assert state.phase == GamePhase.ANSWER_REVEAL
 
-    rs = state.get_state_snapshot()["round_summary"]
+    rs = serialize_state_snapshot(state)["round_summary"]
     assert rs["question_text"] == question.question
     # Round-shuffle order, i.e. what the TV drew while the question was live.
     assert rs["answers"] == [question.answers[i].text for i in state.shuffle_map]
@@ -315,7 +318,7 @@ def test_lightning_snapshot_answers_match_player_shuffle(
     assert q is not None
     alice = state.get_player("Alice")
 
-    snapshot = state.get_state_snapshot()
+    snapshot = serialize_state_snapshot(state)
     projected = builder.project_snapshot_for_player(
         state, snapshot=snapshot, player=alice
     )
@@ -351,7 +354,7 @@ def test_lightning_late_joiner_gets_minted_shuffle(
     lr._shuffles.pop("Zoe", None)
     assert "Zoe" not in lr._shuffles
 
-    snapshot = state.get_state_snapshot()
+    snapshot = serialize_state_snapshot(state)
     projected = builder.project_snapshot_for_player(
         state, snapshot=snapshot, player=state.get_player("Zoe")
     )

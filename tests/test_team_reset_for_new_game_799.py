@@ -168,7 +168,7 @@ def test_the_rematch_leaderboard_is_flat(tmp_path: Path) -> None:
         hot_seat_enabled=False,
     )
 
-    scores = {row["name"]: row["score"] for row in game.get_leaderboard()}
+    scores = {p.name: p.score for p in game.get_standings()}
     assert set(scores) == {"Sofa", "Cara"}
     assert all(v == 0 for v in scores.values()), scores
 
@@ -225,4 +225,4 @@ def test_a_team_whose_members_all_went_dark_is_dissolved(
 
     names = [t.name for t in game.team_registry.all_teams()]
     assert names == ["Cara"], names
-    assert [row["name"] for row in game.get_leaderboard()] == ["Cara"]
+    assert [p.name for p in game.get_standings()] == ["Cara"]

@@ -37,6 +37,7 @@ from custom_components.quizify.server.round_message_builder import (  # noqa: E4
 from custom_components.quizify.server.serializers import (  # noqa: E402
     _compute_answer_distribution,
     serialize_question_for_admin,
+    serialize_state_snapshot,
 )
 
 
@@ -153,7 +154,7 @@ def test_active_question_snapshot_matches_the_live_grid(
     must land on the same order the live payload used."""
     question = _start_round(state)
     live = builder.build_admin_question(state, question=question)
-    snap = state.get_state_snapshot()["question"]
+    snap = serialize_state_snapshot(state)["question"]
     assert snap["answers"] == [a["text"] for a in live["answers"]]
 
 
@@ -168,7 +169,7 @@ def test_reveal_snapshot_index_addresses_its_own_answers(
     state.evaluate_round()
     assert state.phase == GamePhase.ANSWER_REVEAL
 
-    rs = state.get_state_snapshot()["round_summary"]
+    rs = serialize_state_snapshot(state)["round_summary"]
     assert rs["answers"][rs["correct_answer_index"]] == (
         question.answers[correct_idx].text
     )

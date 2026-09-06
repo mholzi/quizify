@@ -48,6 +48,9 @@ from custom_components.quizify.game.state import (  # noqa: E402
 )
 from custom_components.quizify.server import protocol  # noqa: E402
 from custom_components.quizify.server.connection import ConnectionManager  # noqa: E402
+from custom_components.quizify.server.serializers import (  # noqa: E402
+    serialize_state_snapshot,
+)
 from custom_components.quizify.server.websocket import (  # noqa: E402
     MSG_SET_LANGUAGE,
     QuizifyWebSocketHandler,
@@ -156,12 +159,12 @@ async def test_the_host_language_reaches_the_lobby_snapshot(handler, game) -> No
     """This is the whole issue: before the fix the snapshot said "de" until
     start_game, so the joining phone's very first frame stamped it German."""
     assert game.phase == GamePhase.LOBBY
-    assert game.get_state_snapshot()["language"] == "de"
+    assert serialize_state_snapshot(game)["language"] == "de"
 
     await handler._handle_set_language(_ws(), {"language": "en"}, game)
 
     assert game.language == "en"
-    assert game.get_state_snapshot()["language"] == "en"
+    assert serialize_state_snapshot(game)["language"] == "en"
 
 
 @pytest.mark.asyncio

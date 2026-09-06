@@ -43,6 +43,7 @@ from custom_components.quizify.server.round_message_builder import (  # noqa: E4
     RoundMessageBuilder,
 )
 from custom_components.quizify.server.serializers import (  # noqa: E402
+    serialize_state_snapshot,
     serialize_wager_window,
 )
 
@@ -256,7 +257,7 @@ class TestPayloadWithholdsTheQuestion:
         state.start_next_question()
         question_text = state.get_current_question().question
 
-        snapshot = state.get_state_snapshot()
+        snapshot = serialize_state_snapshot(state)
 
         assert snapshot["phase"] == "WAGER_ACTIVE"
         assert "question" not in snapshot

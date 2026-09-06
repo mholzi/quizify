@@ -105,10 +105,10 @@ def test_the_ranking_is_players_without_teams(state: QuizifyGameState) -> None:
 
 
 def test_the_leaderboard_follows_the_mode(state: QuizifyGameState) -> None:
-    before = {row["name"] for row in state.get_leaderboard()}
+    before = {p.name for p in state.get_standings()}
     state.create_team("Sofa", "Anna")
 
-    after = {row["name"] for row in state.get_leaderboard()}
+    after = {p.name for p in state.get_standings()}
 
     assert before == {"Anna", "Jan", "Mira"}
     assert after == {"Sofa", "Jan", "Mira"}, (

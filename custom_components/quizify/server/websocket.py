@@ -6,7 +6,6 @@ import asyncio
 import contextlib
 import ipaddress
 import logging
-import math
 import random
 from typing import TYPE_CHECKING, Any
 
@@ -26,6 +25,12 @@ from custom_components.quizify.const import (
     LOBBY_DISCONNECT_GRACE_PERIOD,
     MAX_PLAYERS,
     WAGER_WINDOW_DURATION,
+)
+from custom_components.quizify.game.drivers import (
+    HotSeatDriver,
+    LightningDriver,
+    NormalRoundDriver,
+    WagerWindowDriver,
 )
 from custom_components.quizify.game.highlights import compute_superlatives
 from custom_components.quizify.game.hot_seat import stake_of as hot_seat_stake
@@ -56,6 +61,7 @@ from custom_components.quizify.server.serializers import (
     serialize_finale,
     serialize_leaderboard,
     serialize_player_list,
+    serialize_state_snapshot,
     snapshot_house_entities,
     snapshot_tts_entities,
     strip_answer_for_dashboard,
@@ -915,7 +921,7 @@ class QuizifyWebSocketHandler:
         self, ws: web.WebSocketResponse, data: dict, game_state: QuizifyGameState
     ) -> None:
         """Handle a ``get_state`` request (#286)."""
-        state_msg = game_state.get_state_snapshot()
+        state_msg = serialize_state_snapshot(game_state)
         # Project into the requesting PLAYER's frame (#286): the raw
         # snapshot carries canonical answer order, but ``submit_answer``
         # maps the tapped index through the player's OWN shuffle — sending
@@ -945,7 +951,7 @@ class QuizifyWebSocketHandler:
 
         admin_token = self._conn.get_or_create_admin_token()
 
-        state = game_state.get_state_snapshot()
+        state = serialize_state_snapshot(game_state)
         state["type"] = "game_state"
         state["join_url"] = "/quizify/player"
         state["admin_session_token"] = admin_token
@@ -1219,7 +1225,7 @@ class QuizifyWebSocketHandler:
             # shuffle order for the answer buttons, own timer, flat reveal —
             # otherwise a mid-round joiner mis-scores their taps and sees an
             # empty reveal.
-            state = game_state.get_state_snapshot()
+            state = serialize_state_snapshot(game_state)
             if player_obj is not None:
                 state = self._round_messages.project_snapshot_for_player(
                     game_state, snapshot=state, player=player_obj
@@ -1339,7 +1345,7 @@ class QuizifyWebSocketHandler:
         # Send full game state, projected into THIS player's frame (#253):
         # the reconnect snapshot otherwise carries canonical answer order
         # (mis-scoring taps) and a nested round_summary the reveal can't read.
-        state = game_state.get_state_snapshot()
+        state = serialize_state_snapshot(game_state)
         state = self._round_messages.project_snapshot_for_player(
             game_state, snapshot=state, player=player
         )
@@ -2529,7 +2535,7 @@ class QuizifyWebSocketHandler:
         self._cancel_timer_tick()
         # pause_reason rides along in the snapshot itself since #703, so it
         # is identical here and on every reconnect.
-        state = game_state.get_state_snapshot()
+        state = serialize_state_snapshot(game_state)
         state["type"] = "game_state"
         await self._conn.broadcast(state)
         return True
@@ -2650,7 +2656,7 @@ class QuizifyWebSocketHandler:
         # while the sockets are still open.
         await self._conn.broadcast({"type": "game_reset"})
 
-        state = game_state.get_state_snapshot()
+        state = serialize_state_snapshot(game_state)
         state["type"] = "game_state"
         await self._conn.broadcast(state)
 
@@ -2760,7 +2766,7 @@ class QuizifyWebSocketHandler:
 
         # Broadcast a phase-entry state so every client switches to the
         # lightning view, then the intro splash ("Bolt Burst", #201).
-        state = game_state.get_state_snapshot()
+        state = serialize_state_snapshot(game_state)
         state["type"] = "game_state"
         await self._conn.broadcast(state)
         await self._broadcast_lightning_splash(game_state)
@@ -2888,81 +2894,39 @@ class QuizifyWebSocketHandler:
         *,
         auto_dismiss_splash: bool = False,
     ) -> None:
-        """Drive the fast lightning loop: broadcast question, wait for the
-        fixed window or all-answered, advance with no reveal, repeat.
+        """Arm the Lightning Round driver (#42/#788).
 
-        With ``auto_dismiss_splash`` (the #285 auto flow) the loop first holds
-        the intro splash for ``AUTO_LIGHTNING_SPLASH_HOLD`` seconds and then
-        dismisses it itself — there is no host "Start" tap any more.
+        The loop itself — the fixed window, the all-answered short-circuit, the
+        phase re-checks and the recap — lives in
+        :class:`~custom_components.quizify.game.drivers.LightningDriver`. What
+        stays here is the task: creating it, parking it on the attribute the
+        #746 registry tears down, and surfacing its exceptions.
         """
         self._cancel_lightning_loop()
-
-        async def loop() -> None:
-            try:
-                if auto_dismiss_splash:
-                    # Hold the intro splash on its own, then advance out of it.
-                    await asyncio.sleep(self.AUTO_LIGHTNING_SPLASH_HOLD)
-                    if game_state.phase != GamePhase.LIGHTNING:
-                        return
-                    game_state.begin_lightning_questions()
-                # Brief grace so clients swap from the intro splash (#201) to
-                # the question view before the first clock starts ticking.
-                await asyncio.sleep(self.LIGHTNING_SPLASH_GRACE)
-                while game_state.phase == GamePhase.LIGHTNING:
-                    lr = game_state.lightning
-                    if lr is None:
-                        break
-                    await self._broadcast_lightning_question(game_state, lr)
-                    # Re-arm the question clock now (after the broadcast) so the
-                    # countdown the players see matches the server window.
-                    lr.restart_clock()
-                    # Wait out the fixed window, but cut short once every
-                    # connected player has answered.
-                    deadline = lr.seconds_per_question
-                    waited = 0.0
-                    step = 0.25
-                    # The display shows whole seconds (1 Hz), so only push a
-                    # tick when the ceil(remaining) actually changes — no point
-                    # broadcasting at the 4 Hz poll cadence (#258).
-                    last_shown = None
-                    while waited < deadline:
-                        shown = math.ceil(lr.time_remaining())
-                        if shown != last_shown:
-                            await self._broadcast_lightning_tick(game_state, lr)
-                            last_shown = shown
-                        connected = [
-                            p.name for p in game_state.get_players() if p.connected
-                        ]
-                        if lr.all_connected_answered(connected):
-                            break
-                        await asyncio.sleep(step)
-                        waited += step
-                        if game_state.phase != GamePhase.LIGHTNING:
-                            return
-                    # #746, the re-check the hot-seat loop got in #671 and
-                    # this one did not: the wait above only tests the phase
-                    # AFTER a sleep, so the all-answered ``break`` leaves it
-                    # untested. An end_game landing in that gap was still
-                    # followed by ``lr.advance()`` — a lightning question
-                    # scored, and a recap frame broadcast, after the finale.
-                    if game_state.phase != GamePhase.LIGHTNING:
-                        return
-                    # No reveal — score silently and arm the next question.
-                    has_more = lr.advance()
-                    if not has_more:
-                        game_state.finish_lightning_round()
-                        await self._broadcast_lightning_recap(game_state)
-                        return
-            except asyncio.CancelledError:
-                pass
-            except Exception:  # noqa: BLE001
-                # #307: an unexpected exception here used to kill the lightning
-                # task silently, hanging the round on the current question with
-                # a frozen clock. Log it so the failure surfaces.
-                _LOGGER.exception("Lightning loop crashed")
-
-        self._lightning_task = asyncio.ensure_future(loop())
+        driver = LightningDriver(
+            self,
+            splash_grace=self.LIGHTNING_SPLASH_GRACE,
+            splash_hold=self.AUTO_LIGHTNING_SPLASH_HOLD,
+        )
+        self._lightning_task = asyncio.ensure_future(
+            driver.run(game_state, auto_dismiss_splash=auto_dismiss_splash)
+        )
         self._lightning_task.add_done_callback(self._log_task_exception)
+
+    # -- LightningBroadcaster (game/drivers/protocols.py) ---------------
+
+    async def send_lightning_question(
+        self, game_state: QuizifyGameState, lr: Any
+    ) -> None:
+        await self._broadcast_lightning_question(game_state, lr)
+
+    async def send_lightning_tick(
+        self, game_state: QuizifyGameState, lr: Any
+    ) -> None:
+        await self._broadcast_lightning_tick(game_state, lr)
+
+    async def send_lightning_recap(self, game_state: QuizifyGameState) -> None:
+        await self._broadcast_lightning_recap(game_state)
 
     def _cancel_lightning_loop(self) -> None:
         if self._lightning_task is not None:
@@ -3114,7 +3078,7 @@ class QuizifyWebSocketHandler:
         if hs is None:
             return False
 
-        state = game_state.get_state_snapshot()
+        state = serialize_state_snapshot(game_state)
         state["type"] = "game_state"
         await self._conn.broadcast(state)
         await self._conn.broadcast({
@@ -3148,117 +3112,70 @@ class QuizifyWebSocketHandler:
         return True
 
     def _start_hot_seat_loop(self, game_state: QuizifyGameState) -> None:
-        """Drive auction → reveal → question → settlement (#616)."""
+        """Arm the Hot Seat driver (#616/#788).
+
+        Auction → reveal → question → settlement is
+        :class:`~custom_components.quizify.game.drivers.HotSeatDriver`; the task
+        and the #746 attribute stay here.
+        """
         self._cancel_hot_seat_loop()
-
-        async def loop() -> None:
-            try:
-                hs = game_state.hot_seat
-                if hs is None:
-                    return
-
-                # --- bidding window -----------------------------------
-                last_shown = None
-                while not hs.is_expired():
-                    if game_state.phase != GamePhase.HOT_SEAT_AUCTION:
-                        return
-                    shown = math.ceil(hs.time_remaining())
-                    if shown != last_shown:
-                        await self._conn.broadcast({
-                            "type": "hot_seat_tick",
-                            "phase": "auction",
-                            "remaining": shown,
-                        })
-                        last_shown = shown
-                    connected = [
-                        p.name for p in game_state.get_players() if p.connected
-                    ]
-                    if hs.all_bid(connected):
-                        break
-                    await asyncio.sleep(0.25)
-
-                # #671: the loop above only checks the phase INSIDE the wait.
-                # Leaving it (expired, or everyone bid) and acting without a
-                # re-check lets a reset that landed in the last poll interval
-                # be followed by a ghost round in the fresh lobby.
-                if game_state.phase != GamePhase.HOT_SEAT_AUCTION:
-                    return
-
-                winner = game_state.close_hot_seat_auction()
-                if winner is None:
-                    # Nobody wanted the chair. Not a failure — just a round
-                    # that does not happen. Fall back to the normal question
-                    # so the game keeps moving.
-                    await self._conn.broadcast({"type": "hot_seat_no_bids"})
-                    game_state.abort_hot_seat()
-                    await self._continue_normal_question(game_state)
-                    return
-
-                # --- simultaneous reveal ------------------------------
-                await self._conn.broadcast({
-                    "type": "hot_seat_awarded",
-                    # The PERSON taking the chair. Outside team mode that is
-                    # also the entrant, so this field keeps its old meaning for
-                    # every client; ``entrant`` names who pays (#804).
-                    "winner": hs.seat_holder,
-                    "entrant": hs.winner_name,
-                    "pct": hs.winning_pct,
-                    "stake": hs.winning_stake,
-                    "bids": hs.reveal(),
-                })
-                await asyncio.sleep(self.HOT_SEAT_REVEAL_HOLD)
-                if game_state.phase != GamePhase.HOT_SEAT:
-                    return
-
-                # --- the question -------------------------------------
-                await self._broadcast_hot_seat_question(game_state, hs)
-                hs.start_answer_clock()
-                last_shown = None
-                while not hs.is_expired():
-                    if game_state.phase != GamePhase.HOT_SEAT:
-                        return
-                    shown = math.ceil(hs.time_remaining())
-                    if shown != last_shown:
-                        await self._conn.broadcast({
-                            "type": "hot_seat_tick",
-                            "phase": "question",
-                            "remaining": shown,
-                        })
-                        last_shown = shown
-                    if hs.answered is not None:
-                        break
-                    await asyncio.sleep(0.25)
-
-                # #671: same re-check as after the auction wait — a teardown
-                # that lands in the last poll interval must not be followed by
-                # a settlement against a game that no longer exists.
-                if game_state.phase != GamePhase.HOT_SEAT:
-                    return
-
-                # Settle even when nothing was answered: the chair was bought
-                # either way (#653). This is the one place the mode parts ways
-                # with the finale's forgiving timeout.
-                game_state.finish_hot_seat()
-                await self._conn.broadcast({
-                    "type": "hot_seat_result",
-                    "round_num": game_state.round,
-                    "total_rounds": game_state.total_rounds,
-                    **hs.summary(),
-                    # The rows the room can see (#804): teams in team mode,
-                    # players otherwise. Keyed by ``player.name`` this reported
-                    # the shadow scores the settlement no longer writes to.
-                    "scores": {
-                        participant.name: participant.score
-                        for participant in game_state.get_ranked_participants()
-                    },
-                })
-            except asyncio.CancelledError:
-                pass
-            except Exception:  # noqa: BLE001
-                _LOGGER.exception("Hot seat loop crashed")
-
-        self._hot_seat_task = asyncio.ensure_future(loop())
+        driver = HotSeatDriver(
+            self, milestones=self, reveal_hold=self.HOT_SEAT_REVEAL_HOLD
+        )
+        self._hot_seat_task = asyncio.ensure_future(driver.run(game_state))
         self._hot_seat_task.add_done_callback(self._log_task_exception)
+
+    # -- HotSeatBroadcaster (game/drivers/protocols.py) -----------------
+
+    async def send_hot_seat_tick(self, stage: str, remaining: int) -> None:
+        await self._conn.broadcast({
+            "type": "hot_seat_tick",
+            "phase": stage,
+            "remaining": remaining,
+        })
+
+    async def send_hot_seat_no_bids(self) -> None:
+        await self._conn.broadcast({"type": "hot_seat_no_bids"})
+
+    async def send_hot_seat_awarded(
+        self, game_state: QuizifyGameState, hs: Any
+    ) -> None:
+        await self._conn.broadcast({
+            "type": "hot_seat_awarded",
+            # The PERSON taking the chair. Outside team mode that is also the
+            # entrant, so this field keeps its old meaning for every client;
+            # ``entrant`` names who pays (#804).
+            "winner": hs.seat_holder,
+            "entrant": hs.winner_name,
+            "pct": hs.winning_pct,
+            "stake": hs.winning_stake,
+            "bids": hs.reveal(),
+        })
+
+    async def send_hot_seat_question(
+        self, game_state: QuizifyGameState, hs: Any
+    ) -> None:
+        await self._broadcast_hot_seat_question(game_state, hs)
+
+    async def send_hot_seat_result(
+        self, game_state: QuizifyGameState, hs: Any
+    ) -> None:
+        await self._conn.broadcast({
+            "type": "hot_seat_result",
+            "round_num": game_state.round,
+            "total_rounds": game_state.total_rounds,
+            **hs.summary(),
+            # The rows the room can see (#804): teams in team mode, players
+            # otherwise. Keyed by ``player.name`` this reported the shadow
+            # scores the settlement no longer writes to.
+            "scores": {
+                participant.name: participant.score
+                for participant in game_state.get_ranked_participants()
+            },
+        })
+
+    async def resume_normal_question(self, game_state: QuizifyGameState) -> None:
+        await self._continue_normal_question(game_state)
 
     async def _broadcast_hot_seat_question(
         self, game_state: QuizifyGameState, hs: Any
@@ -3395,7 +3312,7 @@ class QuizifyWebSocketHandler:
         message. Used by the resume path (#286 #287) so a resumed game reaches
         every screen with correctly-ordered answer buttons.
         """
-        base = game_state.get_state_snapshot()
+        base = serialize_state_snapshot(game_state)
 
         # Per-player projected sends.
         player_ws: set[Any] = set()
@@ -3523,24 +3440,20 @@ class QuizifyWebSocketHandler:
     def _start_wager_window(self, game_state: QuizifyGameState) -> None:
         """Arm the task that closes the betting window at the deadline (#656).
 
-        The deadline is what keeps the final round from hanging on a player
-        who never bets — an AFK phone, or a room that all walked out. It is
-        the same class of hang as #586, so it gets an unconditional timer
-        rather than a condition that depends on clients behaving.
+        The deadline is what keeps the final round from hanging on a player who
+        never bets — an AFK phone, or a room that all walked out. It is the
+        same class of hang as #586, so it gets an unconditional timer rather
+        than a condition that depends on clients behaving. The wait itself is
+        :class:`~custom_components.quizify.game.drivers.WagerWindowDriver`.
         """
         self._cancel_wager_window()
+        driver = WagerWindowDriver(self, duration=WAGER_WINDOW_DURATION)
+        self._wager_window_task = asyncio.create_task(driver.run(game_state))
 
-        async def window() -> None:
-            try:
-                await asyncio.sleep(WAGER_WINDOW_DURATION)
-            except asyncio.CancelledError:
-                return
-            try:
-                await self._close_wager_window(game_state)
-            except Exception:  # noqa: BLE001 — a stuck window strands the game
-                _LOGGER.exception("Wager window failed to close")
+    # -- WagerBroadcaster (game/drivers/protocols.py) -------------------
 
-        self._wager_window_task = asyncio.create_task(window())
+    async def close_wager_window(self, game_state: QuizifyGameState) -> None:
+        await self._close_wager_window(game_state)
 
     def _cancel_wager_window(self) -> None:
         """Cancel the pending betting-window deadline, if any.
@@ -3673,122 +3586,60 @@ class QuizifyWebSocketHandler:
     # ------------------------------------------------------------------
 
     def _start_timer_tick(self, game_state: QuizifyGameState) -> None:
-        """Start async task that broadcasts the countdown every tick.
+        """Arm the normal round's countdown driver (#203/#413/#788).
 
-        The *timing* — which players have a live timer, each one's
-        authoritative remaining time (so time-boost / freeze power-ups are
-        reflected, #4), the dashboard minimum and the all-expired stop
-        condition — lives in the PhaseController (#203). This loop owns only
-        the I/O: turning that timing into ``timer_tick`` wire messages for
-        players, pure-admins and dashboards, the sleep cadence and the
-        auto-evaluate when the round runs out.
+        The cadence, the per-recipient coalescing, the two stop conditions and
+        the auto-evaluate live in
+        :class:`~custom_components.quizify.game.drivers.NormalRoundDriver`. This
+        loop owns only the task and the wire messages it asks for.
         """
         self._cancel_timer_tick()
-
-        # #413: the client renders ``Math.ceil(remaining)`` WHOLE seconds, but
-        # the loop ticks every ~0.5s — so half the frames redraw the same
-        # number and are pure waste (at the 20-player cap: 20 sockets × the
-        # dead frame, every tick). Coalesce like the lightning loop already
-        # does: remember the last displayed second per recipient and only emit
-        # a ``timer_tick`` when that second actually changes. The sleep cadence
-        # is unchanged, so the countdown accuracy and the auto-evaluate timing
-        # are unaffected — only the redundant frames are dropped.
-        last_shown_by_name: dict[str, int] = {}
-        last_dashboard_shown: int | None = None
-
-        async def tick_loop() -> None:
-            nonlocal last_dashboard_shown
-            try:
-                while game_state.phase == GamePhase.QUESTION_ACTIVE:
-                    players = game_state.get_players()
-                    by_name = {p.name: p for p in players}
-                    # Ask the timing unit for this tick's per-player remaining
-                    # plus the shared dashboard minimum (one timer read each).
-                    tick = game_state.resolve_tick([p.name for p in players])
-                    # Build the full (ws, payload) fan-out, then deliver it in
-                    # parallel via gather (#258). A single stalled client no
-                    # longer delays the whole room — ConnectionManager.send
-                    # swallows errors so a plain gather is safe.
-                    sends = []
-                    # Each connected player gets their authoritative remaining,
-                    # but only when their displayed second changed (#413).
-                    for name, remaining in tick.per_player:
-                        p = by_name.get(name)
-                        if p is None or not p.connected:
-                            continue
-                        shown = math.ceil(max(0.0, remaining))
-                        if last_shown_by_name.get(name) == shown:
-                            continue
-                        last_shown_by_name[name] = shown
-                        sends.append(self._conn.send(p.ws, {
-                            "type": "timer_tick",
-                            "remaining": round(remaining, 1),
-                        }))
-                    # Broadcast the minimum remaining to dashboards/admins so
-                    # the TV view shows a consistent countdown — again only when
-                    # its displayed second changes. Pre-serialized ONCE and fanned
-                    # out via the broadcast string path (admin-as-player already
-                    # excluded there) instead of a per-socket send_json (#413/#258).
-                    min_remaining = tick.dashboard_remaining
-                    # ONE countdown milestone per tick (#789): the spoken
-                    # warning (#281) and the bus event that drives the faster
-                    # light pulse (#280) fan out inside _notify_countdown, each
-                    # with its own once-per-round guard.
-                    self._notify_countdown(min_remaining)
-                    dash_shown = math.ceil(max(0.0, min_remaining))
-                    if dash_shown != last_dashboard_shown:
-                        last_dashboard_shown = dash_shown
-                        sends.append(
-                            self._conn.broadcast_to_admins_and_dashboards({
-                                "type": "timer_tick",
-                                "remaining": round(min_remaining, 1),
-                            })
-                        )
-                    if sends:
-                        await asyncio.gather(*sends)
-                    await asyncio.sleep(TICK_INTERVAL)
-
-                    # Stop if everyone's timer hit zero and phase is still
-                    # active. Re-read fresh timers (state can change during the
-                    # sleep) for the CONNECTED players only; the all-expired
-                    # decision itself lives in the PhaseController, which ignores
-                    # players without a timer so a late-joining connected player
-                    # (e.g. the admin's own /quizify/player tab) can't end the
-                    # round before their per-player timer exists.
-                    connected = [p.name for p in players if p.connected]
-                    if connected and game_state.all_timers_expired(connected):
-                        break
-                    # Fallback: all_timers_expired needs at least one live
-                    # timer to break on, so the loop hangs in every state where
-                    # the connected players have none. That covers the original
-                    # case — everyone disconnected mid-question (#255) — and
-                    # the one it missed: connected players who never got a
-                    # timer, where NEITHER condition could fire and the loop
-                    # spun forever with the countdown frozen at 0 (#586).
-                    # Keying the fallback on "no live timers" instead of "no
-                    # connected players" covers both with one condition.
-                    if not game_state.has_live_timers(
-                        connected
-                    ) and game_state.round_wall_clock_expired():
-                        break
-
-                # Timer expired globally
-                if game_state.phase == GamePhase.QUESTION_ACTIVE:
-                    # Auto-evaluate round. The state machine's
-                    # _fire_broadcast("round_evaluated") handles the summary
-                    # broadcast \u2014 do NOT broadcast here (#3 in review).
-                    game_state.evaluate_round()
-            except asyncio.CancelledError:
-                pass
-            except Exception:  # noqa: BLE001
-                # #307: any other exception used to kill the tick task
-                # silently, leaving the game frozen in QUESTION_ACTIVE with a
-                # stuck countdown. Log it loudly so the failure is diagnosable
-                # instead of presenting as a mysterious hang.
-                _LOGGER.exception("Timer tick loop crashed")
-
-        self._timer_tick_task = asyncio.ensure_future(tick_loop())
+        # ``TICK_INTERVAL`` is read here rather than defaulted inside the
+        # driver so the module-level name stays the single knob a test (or a
+        # future runtime setting) can turn.
+        driver = NormalRoundDriver(
+            self, milestones=self, tick_interval=TICK_INTERVAL
+        )
+        self._timer_tick_task = asyncio.ensure_future(driver.run(game_state))
         self._timer_tick_task.add_done_callback(self._log_task_exception)
+
+    # -- RoundBroadcaster (game/drivers/protocols.py) -------------------
+
+    async def send_timer_tick(
+        self,
+        game_state: QuizifyGameState,
+        remaining_by_player: dict[str, float],
+        dashboard_remaining: float | None,
+    ) -> None:
+        """Turn one driver tick into ``timer_tick`` frames.
+
+        The driver has already dropped every recipient whose displayed second
+        did not change (#413) and every disconnected player, so this only has
+        to address what is left. Built as one fan-out and delivered in parallel
+        (#258) so a single stalled client can't delay the room; the dashboard
+        copy is pre-serialized ONCE and goes out over the broadcast string path
+        (admin-as-player is already excluded there).
+        """
+        sends = []
+        if remaining_by_player:
+            by_name = {p.name: p for p in game_state.get_players()}
+            for name, remaining in remaining_by_player.items():
+                player = by_name.get(name)
+                if player is None:
+                    continue
+                sends.append(self._conn.send(player.ws, {
+                    "type": "timer_tick",
+                    "remaining": round(remaining, 1),
+                }))
+        if dashboard_remaining is not None:
+            sends.append(
+                self._conn.broadcast_to_admins_and_dashboards({
+                    "type": "timer_tick",
+                    "remaining": round(dashboard_remaining, 1),
+                })
+            )
+        if sends:
+            await asyncio.gather(*sends)
 
     def _cancel_timer_tick(self) -> None:
         """Cancel the timer tick task — and the betting window with it.
@@ -4035,7 +3886,7 @@ class QuizifyWebSocketHandler:
                 if not gs.pause(reason="admin_disconnected"):
                     return
                 self._cancel_timer_tick()
-                state = gs.get_state_snapshot()
+                state = serialize_state_snapshot(gs)
                 state["type"] = "game_state"
                 await self._conn.broadcast(state)
                 _LOGGER.info(
@@ -4474,6 +4325,28 @@ class QuizifyWebSocketHandler:
         self._notify_tts_reveal(game_state)
         self._notify_house_reveal(game_state)
 
+    # -- MilestoneSink (game/drivers/protocols.py) ----------------------
+    #
+    # The three beats a mode driver reports. Before #788 the fan-out above was
+    # reachable from the normal-round path only, which is exactly why the house
+    # sat out the detour modes (#708); a driver holding this contract can walk
+    # the same path without knowing who is listening.
+
+    def question_shown(
+        self,
+        question: Any,
+        round_no: int,
+        total_rounds: int,
+        options: list[str] | None = None,
+    ) -> None:
+        self._notify_question(question, round_no, total_rounds, options)
+
+    def time_running_out(self, seconds_remaining: float) -> None:
+        self._notify_countdown(seconds_remaining)
+
+    def reveal(self, game_state: QuizifyGameState) -> None:
+        self._notify_reveal(game_state)
+
     def _notify_tts_milestone(self, player_name: str, streak: int) -> None:
         """Forward a milestone hit to the TTS announcer if one is wired.
 
@@ -4736,7 +4609,7 @@ class QuizifyWebSocketHandler:
         """Default handler: broadcast a full game-state snapshot."""
         game_state = self._get_game_state()
         if game_state:
-            state = game_state.get_state_snapshot()
+            state = serialize_state_snapshot(game_state)
             state["type"] = "game_state"
             await self._conn.broadcast(state)
 
