@@ -177,15 +177,28 @@ class RoundMessageBuilder:
         Mirrors the trailing broadcast in ``_start_next_question`` so players
         see rankings during the round. The caller passes the already-fetched
         player list to avoid a redundant ``get_players`` call.
+
+        #835: the ``leaderboard`` is built from
+        ``get_ranked_participants()`` — the rows the room can see — the way
+        ``serialize_state_snapshot`` and every reveal-path builder already do
+        it. This was the one leaderboard in the codebase still serialized
+        straight off the player list, and it is the one the television shows
+        *during* a question: so in team mode the board listed four individuals
+        on 0 while the question was live and three teams the moment the reveal
+        landed, flipping identity twice a round. Outside team mode the two
+        lists are the same object's contents and nothing changes.
+
+        ``players`` stays player-derived, mirroring the canonical snapshot
+        where ``players`` is a roster and ``leaderboard`` is the ranking.
         """
-        leaderboard = serialize_leaderboard(players)
+        leaderboard = serialize_leaderboard(game_state.get_ranked_participants())
         payload: dict[str, Any] = {
             "type": "game_state",
             "phase": game_state.phase.value,
             "round": game_state.round,
             "total_rounds": game_state.total_rounds,
             "player_count": len(players),
-            "players": leaderboard,
+            "players": serialize_leaderboard(players),
             "leaderboard": leaderboard,
         }
         # During a lightning round (#42) a leaderboard-refresh ``game_state``

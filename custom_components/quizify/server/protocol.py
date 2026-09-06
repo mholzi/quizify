@@ -356,8 +356,13 @@ SERVER_FRAMES: dict[str, FrameSpec] = {
         "round_num",
         "total_rounds",
         "scores",
+        "leaderboard",
         dynamic_keys=True,
-        note="The settlement dict is spread into the frame.",
+        note=(
+            "The settlement dict is spread into the frame. ``leaderboard`` is "
+            "the post-settlement standing in the ordinary row shape (#833) — "
+            "``scores`` is a name→number map no board can build rows from."
+        ),
     ),
     # --- errors -----------------------------------------------------------
     "error": _spec(
