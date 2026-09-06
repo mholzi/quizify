@@ -85,7 +85,10 @@ def _nabu_casa_host(hass: Any) -> str | None:
 
     Imported lazily and defensively: ``homeassistant.components.cloud`` is not
     present on every install, and ``async_remote_ui_url`` raises when the
-    instance is not connected to the cloud.
+    instance is not connected to the cloud. ``cloud`` is declared in
+    ``manifest.json`` as an **after_dependency** (not a dependency) for exactly
+    that reason — Quizify works fine without it, it only wants the remote UI
+    host to be knowable when it does exist. hassfest requires the declaration.
     """
     try:
         from homeassistant.components.cloud import (  # noqa: PLC0415
