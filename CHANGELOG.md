@@ -3,6 +3,31 @@
 All notable changes to Quizify are documented here. This project follows
 [Semantic Versioning](https://semver.org/).
 
+## [1.16.0-RC2] — 2026-09-06
+
+Six games on a real television found nine things RC1 got wrong. All nine are here.
+
+### 🪑 The evening could end at the hot seat
+
+With Hot Seat on — the default — a host running the game from the admin page was
+left, once the chair was settled, with a red **End Game** and no way forward. The
+server was ready to go on; only the page had not noticed. It had been listening
+for a full snapshot while the game announced the moment as a single event.
+
+### 🧭 And the phones could not tell a host from a ghost
+
+A host who never joins as a player owns no row in any roster, so a closed tab and
+a host sitting right there looked identical on the wire. The phones read that
+silence as death and offered every guest a reset button mid-game. The server
+always knew the answer — it now says so, and the escape hatch for a room whose
+host really has gone still works.
+
+### 📺 The television
+
+The leaderboard now moves when a hot-seat stake settles, the team question
+counts teams instead of heads, the lobby fits 720p again, and the lightning panel
+says which score it is showing.
+
 ## [1.16.0-RC1] — 2026-09-06
 
 Thirty-four entries, chosen in one sitting and built in one — and the biggest of
