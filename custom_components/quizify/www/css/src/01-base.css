@@ -74,14 +74,6 @@ body {
     color: var(--color-accent-primary);   /* warm coral */
 }
 
-.wordmark-hero {
-    text-shadow: 0 6px 20px rgba(232, 138, 127, 0.25);
-}
-
-.logo-loading {
-    animation: logo-pulse 2s ease-in-out infinite;
-}
-
 @keyframes logo-pulse {
     0%, 100% { opacity: 1; }
     50% { opacity: 0.7; }
@@ -90,21 +82,6 @@ body {
 /* ==========================================
    Layout
    ========================================== */
-
-.app-container {
-    max-width: 480px;
-    margin: 0 auto;
-    padding: var(--space-md);
-    min-height: 100dvh;
-    display: flex;
-    flex-direction: column;
-}
-
-.admin-container {
-    max-width: 800px;
-    margin: 0 auto;
-    padding: var(--space-md);
-}
 
 .player-container {
     padding: 0 var(--space-md);

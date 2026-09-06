@@ -496,14 +496,6 @@ body {
     color: var(--color-accent-primary);   /* warm coral */
 }
 
-.wordmark-hero {
-    text-shadow: 0 6px 20px rgba(232, 138, 127, 0.25);
-}
-
-.logo-loading {
-    animation: logo-pulse 2s ease-in-out infinite;
-}
-
 @keyframes logo-pulse {
     0%, 100% { opacity: 1; }
     50% { opacity: 0.7; }
@@ -512,21 +504,6 @@ body {
 /* ==========================================
    Layout
    ========================================== */
-
-.app-container {
-    max-width: 480px;
-    margin: 0 auto;
-    padding: var(--space-md);
-    min-height: 100dvh;
-    display: flex;
-    flex-direction: column;
-}
-
-.admin-container {
-    max-width: 800px;
-    margin: 0 auto;
-    padding: var(--space-md);
-}
 
 .player-container {
     padding: 0 var(--space-md);
@@ -1287,11 +1264,6 @@ button, .btn {
     height: 72px;
     border-radius: 22px;
 }
-.lr-splash-stage.lr-splash-tv .lr-splash-bolt .qz-icon {
-    width: 96px;
-    height: 96px;
-    border-radius: 28px;
-}
 #category-chips.chip-group--cards .pack-card-name {
     font-family: var(--font-display, var(--font-system, inherit));
     font-weight: 700;
@@ -1515,57 +1487,6 @@ button, .btn {
     color: var(--color-bg-surface) !important;
 }
 
-/* ==========================================
-   Setting Rows (Beatify pattern)
-   ========================================== */
-
-.setting-row {
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
-    padding: var(--space-xs) 0;
-    border-bottom: 1px solid rgba(255, 255, 255, 0.05);
-}
-
-.setting-row:last-child {
-    border-bottom: none;
-}
-
-/* setting-block: label on top, chips below (full width) */
-.setting-block {
-    display: flex;
-    flex-direction: column;
-    gap: 10px;
-    padding: var(--space-sm) 0;
-    border-bottom: 1px solid rgba(255, 255, 255, 0.05);
-}
-
-.setting-block:last-child {
-    border-bottom: none;
-}
-
-.setting-block .setting-label {
-    font-size: 0.875rem;
-    font-weight: 600;
-    color: var(--color-text-muted, #a4a4b8);
-}
-
-.setting-block .chip-group {
-    flex-wrap: wrap;
-}
-
-.setting-label {
-    display: flex;
-    align-items: center;
-    gap: var(--space-xs);
-    font-size: 0.875rem;
-    color: var(--color-text-white);
-}
-
-.setting-icon {
-    font-size: 0.875rem;
-}
-
 /* Toggle switch (Beatify pattern) */
 .toggle-compact {
     display: flex;
@@ -1687,15 +1608,6 @@ button, .btn {
 /* ==========================================
    Question Display
    ========================================== */
-
-.question-area {
-    text-align: center;
-    padding: var(--space-lg) 0;
-    flex: 1;
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
-}
 
 .round-indicator {
     font-size: 0.8rem;
@@ -2007,21 +1919,9 @@ button, .btn {
     opacity: 0.5;
 }
 
-.answer-btn.eliminated {
-    opacity: 0.2;
-    text-decoration: line-through;
-    pointer-events: none;
-}
-
 /* ==========================================
    Power-Up Button
    ========================================== */
-
-.powerup-bar {
-    display: flex;
-    justify-content: center;
-    padding: var(--space-sm) 0 var(--space-md);
-}
 
 .powerup-btn {
     display: inline-flex;
@@ -2058,72 +1958,14 @@ button, .btn {
    Points / Score Display
    ========================================== */
 
-.score-display {
-    text-align: center;
-    padding: var(--space-lg) 0;
-}
-
-.points-earned {
-    font-size: 2.5rem;
-    font-weight: var(--font-weight-extrabold);
-    color: #E88A7F;
-    animation: pop-in 0.5s cubic-bezier(0.175, 0.885, 0.32, 1.275);
-}
-
-.points-earned.zero {
-    color: var(--color-text-neon-muted);
-}
-
 @keyframes pop-in {
     0% { transform: scale(0); opacity: 0; }
     100% { transform: scale(1); opacity: 1; }
 }
 
-.score-detail {
-    font-size: 0.85rem;
-    color: var(--color-text-neon-muted);
-    margin-top: var(--space-xs);
-}
-
-.streak-badge {
-    display: inline-flex;
-    align-items: center;
-    gap: var(--space-xs);
-    padding: 4px 12px;
-    background: rgba(245, 158, 11, 0.15);
-    border: 1px solid rgba(245, 158, 11, 0.3);
-    border-radius: var(--radius-full);
-    color: var(--color-warning);
-    font-size: 0.8rem;
-    font-weight: 600;
-    margin-top: var(--space-sm);
-}
-
-.rank-display {
-    font-size: 0.9rem;
-    color: var(--color-text-neon-muted);
-    margin-top: var(--space-sm);
-}
-
 /* ==========================================
    Fun Fact Card
    ========================================== */
-
-.fun-fact-card {
-    background: linear-gradient(135deg, rgba(232, 138, 127, 0.1), rgba(232, 138, 127, 0.1));
-    border: 1px solid rgba(232, 138, 127, 0.3);
-    border-radius: var(--radius-lg);
-    padding: var(--space-lg);
-    margin-top: var(--space-lg);
-    transform: translateY(30px);
-    opacity: 0;
-    transition: all var(--transition-slow);
-}
-
-.fun-fact-card.visible {
-    transform: translateY(0);
-    opacity: 1;
-}
 
 .fun-fact-label {
     font-size: 0.7rem;
@@ -2227,16 +2069,6 @@ button, .btn {
    Lobby
    ========================================== */
 
-.lobby-content {
-    flex: 1;
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    justify-content: center;
-    gap: var(--space-lg);
-    text-align: center;
-}
-
 .join-form {
     width: 100%;
     max-width: 400px;
@@ -2260,12 +2092,6 @@ button, .btn {
     flex-wrap: wrap;
 }
 
-.waiting-message {
-    color: var(--color-text-neon-muted);
-    font-size: 1rem;
-    animation: fade-pulse 2s ease-in-out infinite;
-}
-
 @keyframes fade-pulse {
     0%, 100% { opacity: 0.6; }
     50% { opacity: 1; }
@@ -2276,44 +2102,9 @@ button, .btn {
     width: 100%;
 }
 
-.player-list-header {
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
-    margin-bottom: var(--space-md);
-}
-
 .player-count {
     font-size: 0.85rem;
     color: var(--color-text-neon-muted);
-}
-
-.player-chips {
-    display: flex;
-    flex-wrap: wrap;
-    gap: var(--space-sm);
-    justify-content: center;
-}
-
-.player-chip {
-    display: inline-flex;
-    align-items: center;
-    gap: var(--space-xs);
-    padding: 6px 14px;
-    background: var(--color-dark-surface);
-    border: 1px solid var(--color-border-neon);
-    border-radius: var(--radius-full);
-    font-size: 0.85rem;
-    color: var(--color-text-white);
-    animation: playerCardJoin 0.5s ease-out;
-}
-
-.player-chip .dot {
-    width: 8px;
-    height: 8px;
-    border-radius: 50%;
-    background: var(--color-success-neon);
-    box-shadow: 0 0 6px var(--color-success-neon);
 }
 
 @keyframes playerCardJoin {
@@ -2331,39 +2122,9 @@ button, .btn {
     box-shadow: 0 0 6px currentColor;
 }
 
-/* Player cards grid (Beatify pattern) */
-.player-cards-grid {
-    display: grid;
-    grid-template-columns: repeat(auto-fill, minmax(140px, 1fr));
-    gap: var(--space-sm);
-}
-
-.player-cards-grid .player-card {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    justify-content: center;
-    padding: var(--space-md);
-    min-height: 80px;
-    background: var(--color-dark-surface);
-    border: 1px solid var(--color-border-neon);
-    border-radius: var(--radius-md);
-    text-align: center;
-    transition: transform 0.2s ease, box-shadow 0.2s ease;
-}
-
-.player-cards-grid .player-card:hover {
-    transform: translateY(-2px);
-    box-shadow: 0 4px 12px rgba(157, 78, 221, 0.2);
-}
-
 /* ==========================================
    QR Code
    ========================================== */
-
-.qr-section {
-    text-align: center;
-}
 
 .qr-code, .qr-container {
     display: inline-block;
@@ -2381,72 +2142,9 @@ button, .btn {
     height: 180px;
 }
 
-.qr-url {
-    font-family: var(--font-mono);
-    font-size: 0.75rem;
-    color: var(--color-accent-secondary);
-    word-break: break-all;
-}
-
-/* ==========================================
-   Self-join row (admin)
-   ========================================== */
-
-.self-join-row {
-    display: flex;
-    gap: var(--space-sm);
-    align-items: center;
-}
-
-.self-join-row input {
-    flex: 1;
-    padding: 10px 14px;
-    background: var(--color-dark-surface);
-    border: 1px solid var(--color-border-neon);
-    border-radius: var(--radius-md);
-    color: var(--color-text-white);
-    font-size: 0.95rem;
-    font-family: var(--font-system);
-}
-
-.self-join-row input:focus {
-    outline: none;
-    border-color: var(--color-accent-primary);
-    box-shadow: 0 0 0 3px rgba(232, 138, 127, 0.2);
-}
-
-.self-join-row input::placeholder {
-    color: var(--color-text-neon-muted);
-}
-
-/* ==========================================
-   Setup sections (admin lobby)
-   ========================================== */
-
-.setup-section {
-    margin-bottom: var(--space-lg);
-}
-
-.setup-label {
-    font-size: 0.8rem;
-    font-weight: 600;
-    text-transform: uppercase;
-    letter-spacing: 0.08em;
-    color: var(--color-text-neon-muted);
-    margin-bottom: var(--space-sm);
-}
-
 /* ==========================================
    Admin question preview
    ========================================== */
-
-.admin-question-preview {
-    background: var(--color-surface-dark);
-    border: 1px solid var(--color-border-neon);
-    border-radius: var(--radius-lg);
-    padding: var(--space-lg);
-    margin-bottom: var(--space-md);
-}
 
 .admin-correct-answer {
     color: var(--color-success-neon);
@@ -2495,26 +2193,6 @@ button, .btn {
     gap: 10px;
 }
 
-/* QR Section — Compact layout */
-.qr-section--compact {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    text-align: center;
-    margin-bottom: var(--space-md);
-}
-
-.qr-url-display {
-    font-family: var(--font-mono);
-    font-size: 0.75rem;
-    color: var(--color-accent-secondary);
-    word-break: break-all;
-}
-
-.qr-url-display--compact {
-    margin-top: var(--space-sm);
-}
-
 /* Dashboard link (Cast to TV) */
 .dashboard-link {
     display: inline-flex;
@@ -2530,31 +2208,6 @@ button, .btn {
 
 .dashboard-link:hover {
     opacity: 1;
-}
-
-.dashboard-link-arrow {
-    font-size: 0.7rem;
-}
-
-/* Lobby container — compact layout matching Beatify */
-.lobby-container--compact {
-    padding: 0;
-}
-
-.lobby-container--compact .section-collapsible {
-    background: var(--color-surface-dark);
-    border: 1px solid var(--color-border-neon);
-    border-radius: var(--radius-md);
-    margin-bottom: var(--space-md);
-    overflow: hidden;
-}
-
-/* Empty state inline */
-.empty-state-inline {
-    text-align: center;
-    padding: var(--space-md);
-    color: var(--color-text-neon-muted);
-    font-size: 0.875rem;
 }
 
 /* Form group for modal inputs */
@@ -3069,11 +2722,6 @@ button, .btn {
     display: none;
 }
 
-/* Same for the .podium-medal div in player.html static markup. */
-.podium-medal {
-    display: none;
-}
-
 /* ==========================================
    Podium Reborn — player phone only (Variant B, approved 2026-06-09)
    Bolder rising blocks with warm tonal gradient fills + a halo
@@ -3100,37 +2748,6 @@ button, .btn {
     z-index: 0;
 }
 #end-view .podium-place { position: relative; z-index: 1; }
-
-/* Rising block: tonal gradient fill, white numeral centered,
-   rounded top + slight rounded foot, soft lift shadow. Overrides
-   the shared cream-shelf look for the player end screen only. */
-#end-view .podium-stand {
-    border: none;
-    border-radius: 14px 14px 6px 6px;
-    align-items: center;
-    justify-content: center;
-    padding-top: 0;
-    color: #FFFFFF;
-    box-shadow: 0 7px 18px -4px rgba(42, 40, 32, 0.22);
-}
-/* Drop the old plank halo-cushion pseudo on 1st place. */
-#end-view .podium-1 .podium-stand::before { content: none; }
-
-#end-view .podium-1 .podium-stand {
-    background: linear-gradient(180deg, #EFB6AB, var(--color-accent-primary, #E88A7F));
-    border-top: 4px solid var(--color-gold, #E8C47F);
-    color: #FFFFFF;
-}
-#end-view .podium-2 .podium-stand {
-    background: linear-gradient(180deg, #A9C4BA, var(--color-accent-secondary, #7FA897));
-    border-top: 4px solid var(--color-silver, #B8B2A0);
-    color: #FFFFFF;
-}
-#end-view .podium-3 .podium-stand {
-    background: linear-gradient(180deg, #A9C6DA, var(--color-accent-blue, #7FA8C4));
-    border-top: 4px solid var(--color-bronze, #C99466);
-    color: #FFFFFF;
-}
 
 /* Reduced motion: blocks already covered by the global rule, but
    keep the halo static (no implicit transition). */
@@ -3289,52 +2906,6 @@ button, .btn {
    Launcher
    ========================================== */
 
-.launcher-content {
-    flex: 1;
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    justify-content: center;
-    gap: var(--space-xl);
-    text-align: center;
-}
-
-.launcher-title {
-    font-family: var(--font-display);
-    font-size: 48px;
-    font-weight: 900;
-    letter-spacing: -0.02em;
-}
-
-.launcher-buttons {
-    display: flex;
-    flex-direction: column;
-    gap: var(--space-md);
-    width: 100%;
-    max-width: 300px;
-}
-
-.game-status-badge {
-    display: inline-flex;
-    align-items: center;
-    gap: var(--space-sm);
-    padding: 8px 16px;
-    background: rgba(127, 168, 151, 0.14);
-    border: 1px solid rgba(127, 168, 151, 0.35);
-    border-radius: var(--radius-full);
-    font-size: 0.85rem;
-    color: #3D6B5A;
-}
-
-.game-status-badge .dot {
-    width: 8px;
-    height: 8px;
-    border-radius: 50%;
-    background: var(--color-success-neon);
-    box-shadow: 0 0 6px var(--color-success-neon);
-    animation: blink 1.5s ease-in-out infinite;
-}
-
 @keyframes blink {
     0%, 100% { opacity: 1; }
     50% { opacity: 0.3; }
@@ -3454,26 +3025,6 @@ button, .btn {
 }
 
 /* ==========================================
-   Text glow utilities
-   ========================================== */
-
-.text-glow {
-    text-shadow: 0 0 10px var(--color-accent-primary),
-                 0 0 20px var(--color-accent-primary),
-                 0 0 30px var(--color-accent-primary);
-}
-
-.text-glow-cyan {
-    text-shadow: 0 0 10px var(--color-accent-secondary),
-                 0 0 20px var(--color-accent-secondary);
-}
-
-.text-glow-success {
-    text-shadow: 0 0 10px var(--color-success-neon),
-                 0 0 20px var(--color-success-neon);
-}
-
-/* ==========================================
    Stat badges (Beatify pattern)
    ========================================== */
 
@@ -3494,27 +3045,14 @@ button, .btn {
     font-size: 0.875rem;
 }
 
-.stat-badge-icon {
-    font-size: 1rem;
-}
-
-.stat-badge-value {
-    font-weight: 600;
-    color: var(--color-accent-secondary);
-}
-
 /* ==========================================
    Utilities
    ========================================== */
 
 .hidden { display: none !important; }
-.text-center { text-align: center; }
-.text-muted { color: var(--color-text-neon-muted); }
 .mt-sm { margin-top: var(--space-sm); }
 .mt-md { margin-top: var(--space-md); }
 .mt-lg { margin-top: var(--space-lg); }
-.mb-md { margin-bottom: var(--space-md); }
-.gap-sm { gap: var(--space-sm); }
 
 .sr-only {
     position: absolute;
@@ -3682,15 +3220,6 @@ footer {
 .end-header {
     text-align: center;
     margin-bottom: var(--space-md);
-}
-
-.end-title {
-    font-family: var(--font-display);
-    font-size: 2rem;
-    font-weight: 900;
-    color: var(--color-text-white);
-    letter-spacing: -0.02em;
-    margin-bottom: var(--space-xs);
 }
 
 .end-subtitle {
@@ -4018,24 +3547,6 @@ footer {
     opacity: 0.6;
     cursor: default;
 }
-
-/* The ⚡ on the Lightning buttons uses the shared SVG bolt glyph (#247),
-   sized ~20px, not the emoji. */
-.resbtn-bolt {
-    width: 20px;
-    height: 20px;
-    display: inline-flex;
-    align-items: center;
-    justify-content: center;
-    flex-shrink: 0;
-}
-.resbtn-bolt svg {
-    width: 20px;
-    height: 20px;
-    display: block;
-}
-.resbtn--primary .resbtn-bolt svg { fill: #fff; }
-.resbtn--secondary .resbtn-bolt svg { fill: var(--color-accent-primary); }
 
 /* ==========================================
    Shared medal-card standings (Standings A, approved 2026-06-10).
@@ -4554,31 +4065,6 @@ footer {
    Player Page: REVEAL VIEW
    ========================================== */
 
-.reveal-container {
-    display: flex;
-    flex-direction: column;
-    gap: var(--space-md);
-    padding-bottom: var(--space-2xl);
-}
-
-.reveal-container--compact {
-    gap: var(--space-sm);
-}
-
-.reveal-header-compact {
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
-    padding: var(--space-sm) 0;
-    font-size: 0.8rem;
-}
-
-.reveal-header-left {
-    display: flex;
-    align-items: center;
-    gap: var(--space-sm);
-}
-
 .reveal-emotion-text {
     font-size: 1.1rem;
     font-weight: 700;
@@ -4586,126 +4072,15 @@ footer {
     margin-bottom: var(--space-sm);
 }
 
-/* ============================================================
-   Answer-distribution variant F (Filling-Bar).
-   Each row IS the bar — text + percentage sit on top of a coral
-   wash that grows from the left to match vote percentage. Correct
-   row repaints sage with a ✓; the player's own row gets a "· DU"
-   tag in coral so per-player shuffle doesn't lose them.
-   ============================================================ */
-.ad-row {
-    position: relative;
-    min-height: 44px;
-    border: 1px solid var(--color-border-light);
-    border-radius: 8px;
-    overflow: hidden;
-    background: var(--color-bg-surface);
-    display: flex;
-    align-items: center;
-}
-.ad-row + .ad-row { margin-top: 6px; }
-
-.ad-fill {
-    position: absolute;
-    left: 0; top: 0; bottom: 0;
-    background: var(--color-accent-brand-bg);
-    transition: width 600ms ease-out;
-}
-
-.ad-content {
-    position: relative;
-    z-index: 1;
-    display: grid;
-    grid-template-columns: 26px 1fr auto;
-    align-items: center;
-    gap: 10px;
-    width: 100%;
-    padding: 8px 12px;
-}
-
-.ad-letter {
-    font-family: var(--font-mono);
-    font-weight: 700;
-    color: var(--color-text-muted);
-    font-size: 0.85rem;
-}
-
-.ad-text {
-    color: var(--color-text-primary);
-    font-size: 0.95rem;
-    overflow: hidden;
-    text-overflow: ellipsis;
-    white-space: nowrap;
-}
-
-.ad-pct {
-    font-family: var(--font-mono);
-    font-weight: 600;
-    color: var(--color-text-muted);
-    font-size: 0.85rem;
-}
-
-.ad-row--correct {
-    border-color: var(--color-success);
-}
-.ad-row--correct .ad-fill {
-    background: var(--color-success-light);
-}
-.ad-row--correct .ad-letter,
-.ad-row--correct .ad-text,
-.ad-row--correct .ad-pct {
-    color: var(--color-success);
-    font-weight: 700;
-}
-
-.ad-mine {
-    color: var(--color-accent-primary);
-    font-family: var(--font-mono);
-    font-size: 0.75rem;
-    font-weight: 700;
-    letter-spacing: 0.05em;
-}
-
-.fun-fact-section {
-    background: var(--color-surface-dark);
-    border: 1px solid var(--color-border-neon);
-    border-radius: var(--radius-lg);
-    padding: var(--space-md);
-}
-
-.section-content-padded {
-    padding: var(--space-sm) var(--space-md) var(--space-md);
-}
-
 /* Personal result section */
-.personal-result-section {
-    background: var(--color-surface-dark);
-    border: 1px solid var(--color-border-neon);
-    border-radius: var(--radius-lg);
-    overflow: hidden;
-}
 
 .result-content {
     padding: var(--space-sm) var(--space-md) var(--space-md);
 }
 
-/* Guesses section */
-.guesses-section {
-    margin-top: var(--space-sm);
-}
-
 /* Reveal admin controls */
 .reveal-admin-controls {
     margin-top: var(--space-md);
-}
-
-.reveal-admin-buttons {
-    display: flex;
-    gap: var(--space-sm);
-}
-
-.reveal-admin-buttons .btn {
-    flex: 1;
 }
 
 .next-round-btn {
@@ -4732,40 +4107,6 @@ footer {
     background: #ff4080;
 }
 
-/* Invite button in reveal */
-.invite-btn {
-    display: inline-flex;
-    align-items: center;
-    gap: var(--space-sm);
-    padding: var(--space-sm) var(--space-md);
-    background: rgba(255, 255, 255, 0.06);
-    border: 1px solid var(--color-border-neon);
-    border-radius: var(--radius-md);
-    color: var(--color-text-white);
-    font-size: 0.85rem;
-    cursor: pointer;
-    transition: all var(--transition-fast);
-    font-family: var(--font-system);
-}
-
-.invite-btn:hover {
-    background: rgba(255, 255, 255, 0.1);
-    border-color: var(--color-accent-secondary);
-}
-
-.invite-btn-icon {
-    font-size: 1rem;
-}
-
-.invite-btn-label {
-    font-weight: 500;
-}
-
-/* Round analytics */
-.round-analytics-section {
-    margin-top: var(--space-md);
-}
-
 /* Streak bonus row */
 .streak-bonus-row {
     background: rgba(245, 158, 11, 0.06);
@@ -4782,14 +4123,6 @@ footer {
    Player Page: LOBBY VIEW (extras)
    ========================================== */
 
-.lobby-header-compact {
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
-    padding: var(--space-sm) 0;
-    margin-bottom: var(--space-md);
-}
-
 .section-header--inline {
     display: flex;
     align-items: center;
@@ -4802,56 +4135,6 @@ footer {
     background: rgba(168, 85, 247, 0.12);
     border-color: rgba(168, 85, 247, 0.3);
     color: var(--color-neon-purple);
-}
-
-/* How to play compact steps */
-.how-to-play-steps-compact {
-    list-style: none;
-    padding: 0;
-    counter-reset: step-counter;
-}
-
-.how-to-play-steps-compact li {
-    counter-increment: step-counter;
-    display: flex;
-    align-items: flex-start;
-    gap: var(--space-sm);
-    padding: var(--space-sm) 0;
-    font-size: 0.85rem;
-    color: var(--color-text-white);
-    border-bottom: 1px solid rgba(255, 255, 255, 0.05);
-}
-
-.how-to-play-steps-compact li:last-child {
-    border-bottom: none;
-}
-
-.how-to-play-steps-compact li::before {
-    content: counter(step-counter);
-    display: inline-flex;
-    align-items: center;
-    justify-content: center;
-    width: 22px;
-    height: 22px;
-    border-radius: var(--radius-full);
-    background: rgba(232, 138, 127, 0.12);
-    color: var(--color-accent-secondary);
-    font-size: 0.7rem;
-    font-weight: 700;
-    flex-shrink: 0;
-}
-
-.qr-hint {
-    font-size: 0.7rem;
-    color: var(--color-text-neon-muted);
-    margin-top: var(--space-xs);
-}
-
-.lobby-status-compact {
-    text-align: center;
-    padding: var(--space-md) 0;
-    color: var(--color-text-neon-muted);
-    font-size: 0.9rem;
 }
 
 /* Button variants */
@@ -6035,13 +5318,6 @@ footer {
     text-overflow: ellipsis;
     white-space: nowrap;
 }
-.lobby-e-row-card .pending-tag {
-    font-family: var(--font-mono);
-    font-size: 0.65rem;
-    text-transform: uppercase;
-    color: var(--color-text-muted);
-    letter-spacing: 0.06em;
-}
 
 /* Kick button — icon-only ×, only shows on hover so it doesn't
    distract from the player name in normal viewing. Without explicit
@@ -6096,15 +5372,6 @@ footer {
     color: var(--color-text-muted);
     font-size: 0.85rem;
     padding: var(--space-md) 0;
-}
-
-.lobby-e-url {
-    font-family: var(--font-mono);
-    font-size: 0.85rem;
-    color: var(--color-accent-primary);
-    text-align: center;
-    word-break: break-all;
-    margin: 0;
 }
 
 .lobby-e-cast {
@@ -7076,83 +6343,8 @@ body.is-admin .reaction-bar {
     color: var(--color-accent-primary);
 }
 
-/* Admin tablet: full-width sticky footer Start bar — primary action */
-.lr-splash-adminbar {
-    position: absolute;
-    left: 0;
-    right: 0;
-    bottom: 0;
-    padding: 18px 24px;
-    padding-bottom: calc(18px + env(safe-area-inset-bottom, 0px));
-    display: flex;
-    align-items: center;
-    gap: 16px;
-    background: var(--color-bg-surface);
-    border-top: 1px solid var(--color-border-light);
-    box-shadow: 0 -6px 20px rgba(42, 40, 32, 0.06);
-    z-index: 2;
-}
-
-/* #245 — the hint is a small caption (flex:1 so it wraps in its own
-   column), no longer fighting the start button for the bar width. */
-.lr-splash-adminmeta {
-    flex: 1;
-    min-width: 0;
-    font-size: 12px;
-    line-height: 1.3;
-    color: var(--color-text-muted);
-}
-
-/* #245 — right-sized single-line Start button (no oversized pill, no
-   redundant in-button bolt disc; label never wraps to "Let's / go"). */
-.lr-splash-startbtn {
-    flex-shrink: 0;
-    background: var(--color-accent-primary);
-    color: #fff;
-    border: none;
-    border-radius: 13px;
-    padding: 0 26px;
-    height: 48px;
-    font: 700 15px/1.1 system-ui, -apple-system, sans-serif;
-    letter-spacing: 0.2px;
-    box-shadow: var(--glow-primary);
-    display: inline-flex;
-    align-items: center;
-    justify-content: center;
-    white-space: nowrap;
-    cursor: pointer;
-}
-
-.lr-splash-startbtn:disabled {
-    opacity: 0.6;
-    cursor: default;
-}
-
 /* Host / TV (dashboard) — bigger medallion + title, horizontal chips.
    The dashboard renders the splash inside a 16:9 stage; scale up. */
-.lr-splash-stage.lr-splash-tv .lr-splash-bolt {
-    width: 120px;
-    height: 120px;
-    margin-bottom: 18px;
-}
-.lr-splash-stage.lr-splash-tv .lr-splash-bolt span { font-size: 62px; }
-.lr-splash-stage.lr-splash-tv .lr-splash-title { font-size: 64px; letter-spacing: -1.5px; }
-.lr-splash-stage.lr-splash-tv .lr-splash-kicker { font-size: 18px; letter-spacing: 3px; }
-.lr-splash-stage.lr-splash-tv .lr-splash-chips {
-    flex-direction: row;
-    gap: 14px;
-    width: auto;
-    max-width: none;
-    margin-top: 26px;
-}
-.lr-splash-stage.lr-splash-tv .lr-splash-chip {
-    flex-direction: column;
-    align-items: center;
-    gap: 2px;
-    min-width: 120px;
-    padding: 14px 18px;
-}
-.lr-splash-stage.lr-splash-tv .lr-splash-chip b { font-size: 30px; }
 
 @media (prefers-reduced-motion: reduce) {
     .lr-splash-rays { opacity: 0.6; }
@@ -7761,13 +6953,6 @@ body.is-admin .reaction-bar {
    ========================================== */
 
 @media (min-width: 768px) {
-    .app-container {
-        max-width: 560px;
-    }
-
-    .admin-container {
-        max-width: 800px;
-    }
 
     .question-text {
         font-size: 1.6rem;
@@ -7856,13 +7041,6 @@ body.is-admin .reaction-bar {
 /* ==========================================
    Reveal: All Answers Grid
    ========================================== */
-
-.reveal-results-grid {
-    display: flex;
-    flex-direction: column;
-    gap: 8px;
-    padding: var(--space-sm) 0;
-}
 
 .result-card {
     display: grid;
@@ -8012,35 +7190,6 @@ body.is-admin .reaction-bar {
   gap: var(--space-sm);
 }
 
-.admin-answer-btn {
-  padding: var(--space-sm) var(--space-md);
-  background: var(--color-surface);
-  border: 2px solid var(--color-border);
-  border-radius: var(--radius-md);
-  color: var(--color-text);
-  font-size: 0.95rem;
-  font-weight: 600;
-  cursor: pointer;
-  transition: background 0.15s, border-color 0.15s;
-  text-align: center;
-}
-
-.admin-answer-btn:hover:not(:disabled) {
-  background: rgba(232, 138, 127, 0.12);
-  border-color: #E88A7F;
-}
-
-.admin-answer-btn.selected {
-  background: rgba(232, 138, 127, 0.18);
-  border-color: #E88A7F;
-  color: #E88A7F;
-}
-
-.admin-answer-btn:disabled {
-  opacity: 0.5;
-  cursor: not-allowed;
-}
-
 .admin-answer-status {
   font-size: 0.85rem;
   color: var(--color-text-muted, #a4a4b8);
@@ -8048,9 +7197,6 @@ body.is-admin .reaction-bar {
 }
 
 /* ── Admin reveal: Beatify-style player result cards ── */
-.reveal-results-grid {
-  width: 100%;
-}
 
 .results-cards-scroll {
   display: flex;
@@ -8126,13 +7272,6 @@ body.is-admin .reaction-bar {
   grid-template-rows: auto auto;
 }
 
-.result-card .card-bonus {
-  grid-column: 1;
-  font-size: 0.75rem;
-  color: #E88A7F;
-  margin-top: 2px;
-}
-
 /* ── Reveal emotion (Beatify-style) ── */
 .reveal-emotion-inline {
   font-size: 1.35rem;
@@ -8163,27 +7302,6 @@ body.is-admin .reaction-bar {
 }
 
 /* Correct answer hero — large glowing display */
-.reveal-year-section {
-  text-align: center;
-  padding: var(--space-md, 12px) 0;
-}
-
-.correct-year-label {
-  font-size: 0.7rem;
-  text-transform: uppercase;
-  letter-spacing: 0.08em;
-  color: #a4a4b8;
-  margin-bottom: 4px;
-}
-
-.correct-year {
-  font-size: 2.25rem;
-  font-weight: 900;
-  color: #7FA897;
-  letter-spacing: -0.02em;
-  word-break: break-word;
-  line-height: 1.15;
-}
 
 @keyframes reveal-emotion-entrance {
   0%   { opacity: 0; transform: scale(0.8); }
@@ -8251,61 +7369,6 @@ body.is-admin .reaction-bar {
 /* The finale "Highlights — Vertical Timeline" treatment was retired with
    the Variant-D end-screen redesign (#338). Highlights now render as a
    horizontal chip row (.end-chiprow / .rchip in 07-player.css). */
-
-/* ---- Answer distribution chart (#66) ---- */
-.distribution-chart {
-  display: flex;
-  flex-direction: column;
-  gap: 8px;
-  margin-top: 8px;
-}
-
-.dist-row {
-  display: grid;
-  grid-template-columns: 1fr 2fr auto;
-  align-items: center;
-  gap: 8px;
-}
-
-.dist-label {
-  font-size: 0.8rem;
-  color: #6E6A5C;
-  white-space: nowrap;
-  overflow: hidden;
-  text-overflow: ellipsis;
-  display: flex;
-  align-items: center;
-  gap: 4px;
-}
-
-.dist-correct-icon {
-  color: #E88A7F;
-  font-weight: 900;
-  font-size: 0.85rem;
-  flex-shrink: 0;
-}
-
-.dist-bar-wrap {
-  background: #E5DFCF;
-  border-radius: 4px;
-  height: 18px;
-  overflow: hidden;
-}
-
-.dist-bar {
-  height: 100%;
-  border-radius: 4px;
-  transition: width 0.5s ease;
-  min-width: 4px;
-}
-
-.dist-meta {
-  font-size: 0.75rem;
-  color: #a4a4b8;
-  white-space: nowrap;
-  text-align: right;
-  min-width: 52px;
-}
 
 /* =============================================================
    Player result page (Soft Parlor redesign, 2026-05-24)

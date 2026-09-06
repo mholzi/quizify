@@ -262,11 +262,6 @@
     display: none;
 }
 
-/* Same for the .podium-medal div in player.html static markup. */
-.podium-medal {
-    display: none;
-}
-
 /* ==========================================
    Podium Reborn — player phone only (Variant B, approved 2026-06-09)
    Bolder rising blocks with warm tonal gradient fills + a halo
@@ -293,37 +288,6 @@
     z-index: 0;
 }
 #end-view .podium-place { position: relative; z-index: 1; }
-
-/* Rising block: tonal gradient fill, white numeral centered,
-   rounded top + slight rounded foot, soft lift shadow. Overrides
-   the shared cream-shelf look for the player end screen only. */
-#end-view .podium-stand {
-    border: none;
-    border-radius: 14px 14px 6px 6px;
-    align-items: center;
-    justify-content: center;
-    padding-top: 0;
-    color: #FFFFFF;
-    box-shadow: 0 7px 18px -4px rgba(42, 40, 32, 0.22);
-}
-/* Drop the old plank halo-cushion pseudo on 1st place. */
-#end-view .podium-1 .podium-stand::before { content: none; }
-
-#end-view .podium-1 .podium-stand {
-    background: linear-gradient(180deg, #EFB6AB, var(--color-accent-primary, #E88A7F));
-    border-top: 4px solid var(--color-gold, #E8C47F);
-    color: #FFFFFF;
-}
-#end-view .podium-2 .podium-stand {
-    background: linear-gradient(180deg, #A9C4BA, var(--color-accent-secondary, #7FA897));
-    border-top: 4px solid var(--color-silver, #B8B2A0);
-    color: #FFFFFF;
-}
-#end-view .podium-3 .podium-stand {
-    background: linear-gradient(180deg, #A9C6DA, var(--color-accent-blue, #7FA8C4));
-    border-top: 4px solid var(--color-bronze, #C99466);
-    color: #FFFFFF;
-}
 
 /* Reduced motion: blocks already covered by the global rule, but
    keep the halo static (no implicit transition). */

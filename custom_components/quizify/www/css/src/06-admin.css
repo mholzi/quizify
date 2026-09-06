@@ -2,52 +2,6 @@
    Launcher
    ========================================== */
 
-.launcher-content {
-    flex: 1;
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    justify-content: center;
-    gap: var(--space-xl);
-    text-align: center;
-}
-
-.launcher-title {
-    font-family: var(--font-display);
-    font-size: 48px;
-    font-weight: 900;
-    letter-spacing: -0.02em;
-}
-
-.launcher-buttons {
-    display: flex;
-    flex-direction: column;
-    gap: var(--space-md);
-    width: 100%;
-    max-width: 300px;
-}
-
-.game-status-badge {
-    display: inline-flex;
-    align-items: center;
-    gap: var(--space-sm);
-    padding: 8px 16px;
-    background: rgba(127, 168, 151, 0.14);
-    border: 1px solid rgba(127, 168, 151, 0.35);
-    border-radius: var(--radius-full);
-    font-size: 0.85rem;
-    color: #3D6B5A;
-}
-
-.game-status-badge .dot {
-    width: 8px;
-    height: 8px;
-    border-radius: 50%;
-    background: var(--color-success-neon);
-    box-shadow: 0 0 6px var(--color-success-neon);
-    animation: blink 1.5s ease-in-out infinite;
-}
-
 @keyframes blink {
     0%, 100% { opacity: 1; }
     50% { opacity: 0.3; }
@@ -167,26 +121,6 @@
 }
 
 /* ==========================================
-   Text glow utilities
-   ========================================== */
-
-.text-glow {
-    text-shadow: 0 0 10px var(--color-accent-primary),
-                 0 0 20px var(--color-accent-primary),
-                 0 0 30px var(--color-accent-primary);
-}
-
-.text-glow-cyan {
-    text-shadow: 0 0 10px var(--color-accent-secondary),
-                 0 0 20px var(--color-accent-secondary);
-}
-
-.text-glow-success {
-    text-shadow: 0 0 10px var(--color-success-neon),
-                 0 0 20px var(--color-success-neon);
-}
-
-/* ==========================================
    Stat badges (Beatify pattern)
    ========================================== */
 
@@ -207,27 +141,14 @@
     font-size: 0.875rem;
 }
 
-.stat-badge-icon {
-    font-size: 1rem;
-}
-
-.stat-badge-value {
-    font-weight: 600;
-    color: var(--color-accent-secondary);
-}
-
 /* ==========================================
    Utilities
    ========================================== */
 
 .hidden { display: none !important; }
-.text-center { text-align: center; }
-.text-muted { color: var(--color-text-neon-muted); }
 .mt-sm { margin-top: var(--space-sm); }
 .mt-md { margin-top: var(--space-md); }
 .mt-lg { margin-top: var(--space-lg); }
-.mb-md { margin-bottom: var(--space-md); }
-.gap-sm { gap: var(--space-sm); }
 
 .sr-only {
     position: absolute;
