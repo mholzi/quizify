@@ -122,8 +122,23 @@ def test_the_notice_is_told_who_holds_the_chair() -> None:
 
 def test_the_english_fallback_can_actually_be_reached() -> None:
     """`_t()` returns the key itself with no bundle loaded, so `|| fallback`
-    never fired — the host would have read "hotSeat.hostSeated"."""
+    never fired — the host would have read "hotSeat.hostSeated".
+
+    #832 gave the comparison a name (`_tOr`) because the Hot Seat's live
+    handlers need the same three lines six more times, so this now checks the
+    two halves it is made of: the notice resolves its strings through the
+    helper, and the helper picks the fallback on key-identity rather than on
+    falsiness.
+    """
     body = _notice_body()
-    assert re.search(r"!==\s*entry\[0\]", body), (
+    assert "_tOr(entry[0]" in body, (
+        "the host notice no longer resolves its strings through _tOr; "
+        f"whatever it does instead has to reach the fallback: {body}"
+    )
+
+    source = _admin()
+    helper = source[source.index("function _tOr(") :]
+    helper = helper[: helper.index("\n    }")]
+    assert re.search(r"!==\s*key", helper), (
         "the fallback is still selected on falsiness, which _t() never returns"
     )

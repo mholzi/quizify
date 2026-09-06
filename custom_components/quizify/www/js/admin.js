@@ -196,6 +196,9 @@
         // In-game
         adminRound: document.getElementById('admin-round'),
         adminQuestion: document.getElementById('admin-question'),
+        // #832: the Hot Seat's second line — bid count, price of the chair,
+        // settlement. Not #admin-correct, which is styled as a success.
+        adminDetourNote: document.getElementById('admin-detour-note'),
         adminCorrect: document.getElementById('admin-correct'),
         gameLeaderboard: document.getElementById('game-leaderboard'),
         // #741: the same power-up strip the television got, on the screen
@@ -463,6 +466,18 @@
             return window.QuizifyI18n.t(key, params);
         }
         return key;
+    }
+
+    /**
+     * ``_t`` with a written-out English fallback.
+     *
+     * ``_t()`` hands back the key itself when no bundle is loaded, so the
+     * fallback has to be chosen on that rather than on falsiness — otherwise
+     * the host reads "hotSeat.hostSeated" off the screen (#732).
+     */
+    function _tOr(key, params, fallback) {
+        var text = _t(key, params);
+        return (text && text !== key) ? text : fallback;
     }
 
     // ---- Seasonal pack badges (#276) ----
@@ -1645,6 +1660,32 @@
             case 'reaction_bonus':
                 handleReactionBonus(msg);
                 break;
+            // #832/#830: the Hot Seat detour is announced by these broadcasts
+            // and by one snapshot at its start. The host page read the
+            // snapshot only, so it stayed on the auction notice for the whole
+            // detour and offered no Next Question at the end — see the block
+            // above handleHotSeatAuction.
+            case 'hot_seat_auction':
+                handleHotSeatAuction(msg);
+                break;
+            case 'hot_seat_bid_count':
+                handleHotSeatBidCount(msg);
+                break;
+            case 'hot_seat_no_bids':
+                handleHotSeatNoBids();
+                break;
+            case 'hot_seat_awarded':
+                handleHotSeatAwarded(msg);
+                break;
+            case 'hot_seat_question':
+                handleHotSeatQuestion(msg);
+                break;
+            case 'hot_seat_tick':
+                handleHotSeatTick(msg);
+                break;
+            case 'hot_seat_result':
+                handleHotSeatResult(msg);
+                break;
             case 'error':
                 // The initial admin_connect attempt before authentication
                 // returns "Admin only" — that's expected handshake noise,
@@ -1951,22 +1992,184 @@
         };
         var entry = keys[phase];
         if (els.adminQuestion && entry) {
-            // _t() returns the key itself when no bundle is loaded, so the
-            // fallback has to be chosen on that rather than on falsiness —
-            // otherwise the host reads "hotSeat.hostSeated".
-            var text = _t(entry[0], entry[1]);
-            els.adminQuestion.textContent =
-                (text && text !== entry[0]) ? text : entry[2];
+            // _tOr, not `|| entry[2]`: _t() returns the key itself when no
+            // bundle is loaded, so a falsy check never reaches the fallback
+            // and the host reads "hotSeat.hostSeated" off the screen.
+            els.adminQuestion.textContent = _tOr(entry[0], entry[1], entry[2]);
         }
         if (els.adminCorrect) {
             els.adminCorrect.textContent = '';
             els.adminCorrect.style.display = 'none';
         }
+        // Each stage of the detour writes its own second line afterwards; a
+        // stale one (the bid count, once the auction is over) would be worse
+        // than none.
+        setDetourDetail('');
         var advanceable = (phase === 'HOT_SEAT_REVEAL');
         if (els.nextQuestionBtn) {
             els.nextQuestionBtn.classList.toggle('hidden', !advanceable);
         }
         if (els.endGameBtn) els.endGameBtn.classList.remove('hidden');
+    }
+
+    /** The detour's second line, under the notice. '' hides it. */
+    function setDetourDetail(text) {
+        if (!els.adminDetourNote) return;
+        els.adminDetourNote.textContent = text || '';
+        els.adminDetourNote.style.display = text ? '' : 'none';
+    }
+
+    // ---- Hot Seat, live (#832 / #830) ----------------------------------
+    //
+    // The detour's phase changes are announced by one-shot broadcasts, not by
+    // snapshots. The server sends a full `game_state` when the auction opens
+    // and not again until the round after it; the chair being won, the seat
+    // question and the settlement each arrive as a `hot_seat_*` frame alone.
+    // #699 taught `handleGameState` about the three phases, so the host page
+    // was right for exactly as long as the snapshot was — it then sat on "The
+    // chair goes to the highest bid" for the rest of the detour, and at the
+    // end offered no Next Question although HOT_SEAT_REVEAL accepts
+    // next_question. Only a reload, which pulls a fresh snapshot, said so
+    // (#832, found on hardware during the v1.16.0-RC1 live test).
+    //
+    // So the host page follows the events as well as the snapshot. Both
+    // routes land in `setDetourNotice`, which stays the single place that
+    // decides what the notice says and whether Next Question is offered.
+
+    function _setDetourRound(msg) {
+        if (!els.adminRound || typeof msg.round_num !== 'number') return;
+        els.adminRound.textContent = _t('admin.questionCounter', {
+            current: msg.round_num,
+            total: msg.total_rounds,
+        });
+    }
+
+    /** The auction opened: the notice, the round it belongs to, the clock. */
+    function handleHotSeatAuction(msg) {
+        if (_redirecting) return;
+        currentPhase = 'HOT_SEAT_AUCTION';
+        showView('game');
+        _setDetourRound(msg);
+        setDetourNotice('HOT_SEAT_AUCTION');
+        if (typeof msg.seconds === 'number') adminTimer.start(msg.seconds);
+    }
+
+    /**
+     * How many have bid — never how much.
+     *
+     * A blind auction, so the count is the public half (the amounts stay with
+     * the bidder until the reveal). It is also the only thing that moves on
+     * the host's screen while the room bids: without it the auction looks
+     * identical to a frozen page for the whole window.
+     */
+    function handleHotSeatBidCount(msg) {
+        if (_redirecting) return;
+        setDetourDetail(_tOr(
+            'hotSeat.bidCount',
+            { count: msg.count || 0, total: msg.total || 0 },
+            (msg.count || 0) + ' / ' + (msg.total || 0)
+        ));
+    }
+
+    /** Nobody bid. Not a failure — a round that does not happen. */
+    function handleHotSeatNoBids() {
+        if (_redirecting) return;
+        showView('game');
+        if (els.adminQuestion) {
+            els.adminQuestion.textContent = _tOr(
+                'hotSeat.noBids', null, 'Nobody bid — carrying on as usual.'
+            );
+        }
+        setDetourDetail('');
+        // The server resumes the normal question straight after this, and
+        // question_started repaints the screen; until it lands there is
+        // nothing here for the host to advance.
+        if (els.nextQuestionBtn) els.nextQuestionBtn.classList.add('hidden');
+    }
+
+    /** The chair has been won. */
+    function handleHotSeatAwarded(msg) {
+        if (_redirecting) return;
+        currentPhase = 'HOT_SEAT';
+        showView('game');
+        // #804: `winner` is the PERSON in the chair, `entrant` is who pays —
+        // their team in team mode. The notice names the person the room is
+        // about to watch; the price is charged to the entrant.
+        setDetourNotice('HOT_SEAT', msg.winner);
+        var payer = msg.entrant || msg.winner;
+        setDetourDetail(_tOr(
+            'hotSeat.lost',
+            { name: payer, pct: msg.pct, pts: msg.stake },
+            payer + ' — ' + msg.pct + '%'
+        ));
+    }
+
+    /**
+     * The seat holder's question, on the host's screen too.
+     *
+     * The host is running the evening: they read the room, and for ninety
+     * seconds the only question in play was one they could not see. The
+     * answers are deliberately not here — the server sends them to the seat
+     * holder alone, and the host page is not a player.
+     */
+    function handleHotSeatQuestion(msg) {
+        if (_redirecting) return;
+        currentPhase = 'HOT_SEAT';
+        showView('game');
+        _setDetourRound(msg);
+        if (els.adminQuestion) els.adminQuestion.textContent = msg.question || '';
+        // The second line is left exactly as the award set it: what the chair
+        // cost is what this answer is about to win or lose.
+        if (typeof msg.seconds === 'number') adminTimer.start(msg.seconds);
+    }
+
+    /** Both windows tick over the same bar the normal round uses. */
+    function handleHotSeatTick(msg) {
+        if (_redirecting) return;
+        if (typeof msg.remaining === 'number') adminTimer.update(msg.remaining);
+    }
+
+    /**
+     * The settlement — and the reason for #832.
+     *
+     * This is the frame that moves the game into HOT_SEAT_REVEAL, the one
+     * phase of the detour where the server accepts `next_question`. Without a
+     * case here the host was left with the reset icon and End Game: both
+     * throw away the rest of the evening.
+     */
+    function handleHotSeatResult(msg) {
+        if (_redirecting) return;
+        currentPhase = 'HOT_SEAT_REVEAL';
+        showView('game');
+        adminTimer.stop();
+        _setDetourRound(msg);
+        setDetourNotice('HOT_SEAT_REVEAL', msg.winner);
+        // `answered` is tri-state on the server: true = right, false = wrong,
+        // null = never answered. A bare falsy check collapses the last two,
+        // and since #653 an unanswered chair costs the same as a wrong one —
+        // so the host would be told the room ran out of time when somebody
+        // had actually guessed.
+        var noAnswer = msg.answered === null || msg.answered === undefined;
+        var payer = msg.entrant || msg.winner;
+        // #804: a team's key in `deltas` is its id, which no screen can
+        // construct — `winner_delta` is the seat entrant's own settlement.
+        var delta = (msg.winner_delta != null) ? msg.winner_delta : 0;
+        var key = noAnswer
+            ? 'hotSeat.resultTimeout'
+            : (msg.answered === true ? 'hotSeat.resultRight' : 'hotSeat.resultWrong');
+        setDetourDetail(_tOr(
+            key, { name: payer, pts: Math.abs(delta) },
+            payer + ' ' + (delta > 0 ? '+' : '') + delta
+        ));
+        // The stake has just moved the standings the host is looking at. The
+        // frame carries them keyed by name, ranked — a leaderboard that still
+        // shows the pre-settlement scores next to "the chair is settled" is
+        // the same lie the notice was.
+        if (msg.scores) {
+            renderLeaderboard(els.gameLeaderboard, Object.keys(msg.scores)
+                .map(function (name) { return { name: name, score: msg.scores[name] }; })
+                .sort(function (a, b) { return b.score - a.score; }));
+        }
     }
 
     function handleWagerProgress(msg) {
@@ -2010,6 +2213,9 @@
             els.adminCorrect.textContent = '';
             els.adminCorrect.style.display = 'none';
         }
+        // The normal game is back; whatever the Hot Seat left under the
+        // question belongs to a round that is over (#832).
+        setDetourDetail('');
 
         adminTimer.start(msg.timer_duration);
         if (els.nextQuestionBtn) els.nextQuestionBtn.classList.add('hidden');
