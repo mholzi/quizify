@@ -39,8 +39,14 @@
         window.scrollTo(0, 0);
         var leaderboard = (data.leaderboard || []).slice();
 
+        // Match on the entrant id, not the printed name (#759): two teams may
+        // carry the same name, and by name the "(du)" badge lit up on both of
+        // them. The name is still what the row prints.
+        var team = window.QuizifyPlayerTeam;
+        var mine = team && team.myTeam && team.myTeam();
+        var me = (mine && (mine.team_id || mine.name)) || state.playerName;
         leaderboard.forEach(function (entry) {
-            entry.is_current = (entry.name === state.playerName);
+            entry.is_current = ((entry.entrant_id || entry.name) === me);
         });
         // Defensive: ensure rank order (server sends sorted, but be safe).
         leaderboard.sort(function (a, b) {

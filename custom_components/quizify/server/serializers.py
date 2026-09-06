@@ -320,6 +320,15 @@ def serialize_leaderboard(players: list[PlayerSession]) -> list[dict[str, Any]]:
         last_result = p.round_history[-1] if p.round_history else None
         result.append({
             "rank": rank,
+            # Stable identity of the row, beside the name that gets printed
+            # (#759, the same shape #728 gave the lightning leaderboard). Two
+            # teams may legitimately carry the same name — the name is free
+            # text on purpose — and by name they were one row to every client
+            # that looked one up: the "you" highlight lit both, the FLIP
+            # animation and the rank-delta memo collapsed them into one.
+            # A player's own name is already unique per game, so for a player
+            # the entrant id is simply their name.
+            "entrant_id": getattr(p, "team_id", None) or p.name,
             "name": p.name,
             "score": p.score,
             "streak": p.streak,
