@@ -256,6 +256,9 @@
                 // #322: kill any in-flight freeze countdown so its interval
                 // doesn't leak past a full session wipe.
                 if (game && game.stopFrozenOverlay) game.stopFrozenOverlay();
+                // #838: the join screen is not a game screen. Everything the
+                // game hung outside the view stack goes with the game.
+                clearGameChrome();
                 pu.showView('join-view');
                 break;
 
@@ -277,6 +280,10 @@
                 if (game && game.stopFrozenOverlay) game.stopFrozenOverlay();
                 if (pu.hideReconnectingOverlay) pu.hideReconnectingOverlay();
                 pu.updateConnectionIndicator('disconnected');
+                // #838: same leftovers, same screen furniture — the reaction
+                // bar and the last toast are fixed to the page, not to the
+                // view we are leaving.
+                clearGameChrome();
                 pu.showView('kicked-view');
                 break;
 
@@ -1091,6 +1098,34 @@
     }
 
     // ============================================
+    // Leaving the game view for good (#838)
+    // ============================================
+
+    // The reaction bar, the admin bar and the toast are fixed to the page and
+    // sit OUTSIDE the view stack, so showView() cannot take them with it. A
+    // reset therefore returned the phone to the join screen with five live
+    // reaction buttons under the Join button, the last in-game toast ("3 in a
+    // row!", "Time expired") still on screen, and — invisible but read aloud —
+    // the timer's polite region still holding "5 seconds left" (#839).
+    //
+    // handleFinale has always torn the first two down by hand; this is that
+    // teardown in one place, for every exit that is not the finale.
+    function clearGameChrome() {
+        var reactionBar = document.getElementById('reaction-bar');
+        if (reactionBar) reactionBar.classList.add('hidden');
+        var adminBar = document.getElementById('admin-control-bar');
+        if (adminBar) adminBar.classList.add('hidden');
+        if (pu.clearToast) pu.clearToast();
+        if (game && game.clearTimeAnnouncement) game.clearTimeAnnouncement();
+        // The game is over for this phone: a hatch armed on the screen we just
+        // left must not fire a minute later on the join screen, and the roster
+        // it was judged against belongs to a game that no longer exists.
+        setResetStage(null);
+        _lastRoster = [];
+        _hostSeenInRoster = false;
+    }
+
+    // ============================================
     // Finale
     // ============================================
 
@@ -1226,6 +1261,14 @@
     // both kinds of frame ask the same question.
     var _lastRoster = [];
 
+    // Whether any roster this game has ever named the host (#834). A host who
+    // runs the evening from /quizify/admin without ever taking a player slot
+    // is in no roster at all, so their absence from one proves nothing; a host
+    // who WAS a player and has since been dropped by the disconnect grace
+    // period is absent from the same roster and proves everything. This flag
+    // is the only thing that tells the two apart. Cleared with the game.
+    var _hostSeenInRoster = false;
+
     // Which stage the phone is sitting on, or null. Deliberately not
     // state.currentPhase: the two detour results are announced by one-shot
     // events that must not be allowed to rewrite the phase everything else
@@ -1233,13 +1276,38 @@
     var _resetStage = null;
 
     function _rememberRoster(msg) {
-        if (msg && Array.isArray(msg.players)) _lastRoster = msg.players;
+        if (!msg || !Array.isArray(msg.players)) return;
+        _lastRoster = msg.players;
+        if (_lastRoster.some(function (p) { return p && p.is_admin; })) {
+            _hostSeenInRoster = true;
+        }
     }
 
-    function _hostIsConnected() {
-        return _lastRoster.some(function (p) {
-            return p && p.is_admin && p.connected !== false;
-        });
+    // Three answers, not two (#834). "No connected host in this roster" and
+    // "the host is gone" are different statements, and reading the first as
+    // the second is what put a red Reset button on every guest phone during
+    // the lightning recap while the host sat looking at that same recap: the
+    // host was hosting from /quizify/admin without joining as a player, so no
+    // roster all evening carried an `is_admin` row and the hatch read the
+    // silence as a death. It is the same blind spot #726 closed on the server,
+    // where a live `?role=admin` socket now refuses a guest `reset_game` —
+    // the phone has no equivalent signal on the wire, so the honest answer
+    // here is 'unknown', and 'unknown' never arms anything.
+    //
+    // Returns 'connected' | 'gone' | 'unknown'.
+    function _hostPresence() {
+        var named = false;
+        for (var i = 0; i < _lastRoster.length; i++) {
+            var p = _lastRoster[i];
+            if (!p || !p.is_admin) continue;
+            named = true;
+            if (p.connected !== false) return 'connected';
+        }
+        // A host row that has vanished from the roster entirely is the removal
+        // that follows the disconnect grace period, not a host who never was a
+        // player — so a host we have seen once stays "gone" rather than
+        // decaying into "unknown" and taking the armed hatch with it.
+        return (named || _hostSeenInRoster) ? 'gone' : 'unknown';
     }
 
     // Enter (or leave) a waiting stage. Leaving takes the escape hatch with
@@ -1267,7 +1335,9 @@
         if (!ids) return;
         // The admin has their own bar with Next Round on every one of these
         // screens; a reset button next to it is an invitation to a misfire.
-        if (state.isAdmin || _hostIsConnected()) {
+        // Everything else needs POSITIVE evidence that the host is gone
+        // (#834) — an unknown host is treated exactly like a present one.
+        if (state.isAdmin || _hostPresence() !== 'gone') {
             disarmResetAffordance(ids[0], ids[1]);
         } else {
             // The wrapper is kept hidden until the timer fires — see
