@@ -68,19 +68,19 @@ def test_the_reveal_brings_both_controls_back() -> None:
     assert "endGameBtn.classList.remove('hidden')" in body
 
 
-def test_the_last_round_offers_only_end_game() -> None:
-    """"Next Question" on the final round would promise a round that does not
-    exist. End Game stays unconditional — it is the way out of every reveal."""
+def test_the_last_round_still_offers_the_forward_button() -> None:
+    """This used to hide Next Question on the last round (#806), leaving the
+    admin-tab host only the red End Game. See
+    ``tests/test_last_round_host_controls_806.py`` for the full argument; kept
+    here so the #618 file cannot quietly grow the old gate back."""
     body = _function_body(_ADMIN_JS.read_text("utf-8"), "function handleRoundSummary(")
 
-    next_line = next(
+    hide_lines = [
         line
         for line in body.splitlines()
-        if "nextQuestionBtn" in line and "remove" not in line
-    )
-    assert "last_round" in next_line, (
-        "Next Question must be gated on last_round"
-    )
+        if "nextQuestionBtn" in line and "add('hidden')" in line
+    ]
+    assert not hide_lines, "Next Question must never be hidden at the reveal"
     end_lines = [line for line in body.splitlines() if "endGameBtn" in line]
     assert not any("last_round" in line for line in end_lines), (
         "End Game must stay available on the last round"

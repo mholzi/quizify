@@ -134,7 +134,7 @@
     "nextRound": "Next Round",
     "endGame": "End Game",
     "endGameConfirm": "End game?",
-    "endGameWarning": "All players will be disconnected.",
+    "endGameWarning": "The quiz ends here. Everyone jumps straight to the final results, and any remaining questions are skipped.",
     "resetGame": "Reset game",
     "resetGameConfirm": "Reset game?",
     "resetGameWarning": "The current round and all players will be cleared. You'll return to the setup screen.",

@@ -134,7 +134,7 @@
     "nextRound": "Siguiente ronda",
     "endGame": "Terminar partida",
     "endGameConfirm": "¿Terminar la partida?",
-    "endGameWarning": "Se desconectará a todos los jugadores.",
+    "endGameWarning": "El juego termina aquí. Todos pasan directamente a los resultados finales y las preguntas restantes se omiten.",
     "resetGame": "Reiniciar partida",
     "resetGameConfirm": "¿Reiniciar la partida?",
     "resetGameWarning": "Se borrarán la ronda actual y todos los jugadores. Volverás a la pantalla de configuración.",

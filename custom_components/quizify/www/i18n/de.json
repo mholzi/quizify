@@ -134,7 +134,7 @@
     "nextRound": "Nächste Runde",
     "endGame": "Spiel beenden",
     "endGameConfirm": "Spiel beenden?",
-    "endGameWarning": "Alle Spieler werden getrennt.",
+    "endGameWarning": "Das Quiz endet hier. Alle springen direkt zum Endergebnis, übrige Fragen entfallen.",
     "resetGame": "Spiel zurücksetzen",
     "resetGameConfirm": "Spiel zurücksetzen?",
     "resetGameWarning": "Die aktuelle Runde und alle Spieler werden gelöscht. Du landest wieder im Setup-Bildschirm.",
