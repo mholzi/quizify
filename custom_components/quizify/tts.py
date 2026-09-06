@@ -423,17 +423,21 @@ class QuizifyTTSAnnouncer:
         Round 1 is suppressed: the leader always "changes" from nobody on the
         first scored round.
         """
-        leaderboard = summary.leaderboard or []
-        # Entries are dicts (serialize_leaderboard): {name, score, rank, ...},
-        # already sorted high→low. Find the players sharing the top score.
-        top = [e for e in leaderboard if isinstance(e, dict) and "score" in e]
+        # The standings the round closed on: participants (teams in team mode,
+        # players otherwise), already sorted high→low. Domain objects since
+        # #747 — the narrator wants two attributes, not a wire row.
+        top = [
+            e
+            for e in (summary.leaderboard or [])
+            if getattr(e, "score", None) is not None
+        ]
         if not top:
             return
-        top_score = top[0]["score"]
+        top_score = top[0].score
         if not top_score:
             # Nobody has scored yet — no standings to narrate.
             return
-        leaders = [e["name"] for e in top if e["score"] == top_score]
+        leaders = [e.name for e in top if e.score == top_score]
         if len(leaders) > 1:
             if self._announce_standings:
                 frags.append(tts_phrases.phrase(lang, "tie_at_top"))

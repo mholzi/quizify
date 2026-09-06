@@ -31,6 +31,7 @@ from custom_components.quizify.game.state import QuizifyGameState
 from custom_components.quizify.server.round_message_builder import (
     RoundMessageBuilder,
 )
+from custom_components.quizify.server.serializers import serialize_state_snapshot
 
 
 def _ws() -> MagicMock:
@@ -59,7 +60,7 @@ def game(tmp_path: Path) -> QuizifyGameState:
 
 
 def _snapshot(game: QuizifyGameState) -> dict:
-    return game.get_state_snapshot()
+    return serialize_state_snapshot(game)
 
 
 def _for_player(game: QuizifyGameState, name: str) -> dict:

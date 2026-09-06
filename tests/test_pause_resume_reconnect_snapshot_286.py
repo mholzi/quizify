@@ -47,6 +47,9 @@ from custom_components.quizify.server.connection import (  # noqa: E402
 from custom_components.quizify.server.round_message_builder import (  # noqa: E402
     RoundMessageBuilder,
 )
+from custom_components.quizify.server.serializers import (  # noqa: E402
+    serialize_state_snapshot,
+)
 from custom_components.quizify.server.websocket import (  # noqa: E402
     QuizifyWebSocketHandler,
 )
@@ -154,7 +157,7 @@ async def test_get_state_reply_projects_for_player(
 
     # The reply must match the canonical-projection a join would have produced.
     join_projected = RoundMessageBuilder().project_snapshot_for_player(
-        game, snapshot=game.get_state_snapshot(), player=alice
+        game, snapshot=serialize_state_snapshot(game), player=alice
     )
     assert visible == join_projected["question"]["answers"]
 
@@ -184,7 +187,7 @@ async def test_get_state_reply_stays_canonical_for_admin_dashboard(
     state_msgs = [m for m in msgs if m.get("type") == "game_state"]
     assert state_msgs
     visible = state_msgs[-1]["question"]["answers"]
-    canonical = game.get_state_snapshot()["question"]["answers"]
+    canonical = serialize_state_snapshot(game)["question"]["answers"]
     assert visible == canonical
 
 
@@ -361,7 +364,7 @@ def test_resume_preserves_per_player_elapsed_so_speed_bonus_not_inflated(
 def test_snapshot_leaderboard_carries_client_contract_fields(
     game: QuizifyGameState,
 ) -> None:
-    """``get_state_snapshot`` leaderboard must be wire-identical to the live
+    """``serialize_state_snapshot`` leaderboard must be wire-identical to the live
     ``serialize_leaderboard`` broadcast — carrying ``submitted``, ``best_streak``,
     ``rounds_played``, ``powerups_used``, ``round_score`` — so reconnect-after-
     submit re-locks and FINALE reconnect shows real stats."""
@@ -370,7 +373,7 @@ def test_snapshot_leaderboard_carries_client_contract_fields(
     correct_idx = next(i for i, a in enumerate(question.answers) if a.correct)
     game.submit_answer("Alice", correct_idx)
 
-    leaderboard = game.get_state_snapshot()["leaderboard"]
+    leaderboard = serialize_state_snapshot(game)["leaderboard"]
     assert leaderboard
     required = {
         "submitted",

@@ -117,8 +117,12 @@ def test_the_restore_path_forwards_the_image_too() -> None:
     assert "for (var k in q)" in body
     assert "msg[k] = q[k]" in body
 
-    state_source = (_CC / "game" / "state.py").read_text("utf-8")
-    hot_seat_block = state_source.split('block["question"] = {', 1)[1].split("}", 1)[0]
+    # The snapshot builder moved to the server layer in #747; the hot-seat
+    # question block it writes is unchanged.
+    snapshot_source = (_CC / "server" / "serializers.py").read_text("utf-8")
+    hot_seat_block = snapshot_source.split('block["question"] = {', 1)[1].split(
+        "}", 1
+    )[0]
     assert '"image_url"' in hot_seat_block
 
 

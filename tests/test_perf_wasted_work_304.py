@@ -4,7 +4,7 @@ Pins the behaviour of three local perf fixes so a future edit can't silently
 regress them:
 
   1. ``QuizifyGameState._fire_broadcast`` must NOT build a full
-     ``get_state_snapshot()`` for named events (``round_evaluated`` /
+     ``serialize_state_snapshot()`` for named events (``round_evaluated`` /
      ``game_ended``) — those route to handlers that build their own messages,
      so the snapshot was always discarded. The broadcast payload now carries
      only ``{"event": ...}``.
@@ -30,6 +30,7 @@ from custom_components.quizify.game.state import (  # noqa: E402
     GamePhase,
     QuizifyGameState,
 )
+from custom_components.quizify.server import serializers  # noqa: E402
 from custom_components.quizify.server.websocket import (  # noqa: E402
     QuizifyWebSocketHandler,
 )
@@ -90,11 +91,16 @@ class TestFireBroadcastSkipsSnapshot:
         assert set(payload.keys()) == {"event"}
 
     @pytest.mark.asyncio
-    async def test_get_state_snapshot_not_called_by_fire_broadcast(
-        self, tmp_path: Path
+    async def test_state_snapshot_not_built_by_fire_broadcast(
+        self, tmp_path: Path, monkeypatch: pytest.MonkeyPatch
     ) -> None:
-        """``_fire_broadcast`` must not invoke ``get_state_snapshot`` for a
-        named event (it's the expensive call we eliminated)."""
+        """``_fire_broadcast`` must not build a state snapshot for a named
+        event (it's the expensive call we eliminated).
+
+        The builder moved out of the domain object in #747, so the counter now
+        wraps the module function rather than a method — same claim, one layer
+        further out: nothing on the ``_fire_broadcast`` path may reach it.
+        """
         gs = QuizifyGameState(runtime=_Runtime(tmp_path), entry_id="t")
 
         async def _noop(payload: dict) -> None:
@@ -103,13 +109,13 @@ class TestFireBroadcastSkipsSnapshot:
         gs.set_broadcast_callback(_noop)
 
         calls = {"n": 0}
-        original = gs.get_state_snapshot
+        original = serializers.serialize_state_snapshot
 
-        def _counting():  # noqa: ANN202
+        def _counting(game_state):  # noqa: ANN001, ANN202
             calls["n"] += 1
-            return original()
+            return original(game_state)
 
-        gs.get_state_snapshot = _counting  # type: ignore[assignment]
+        monkeypatch.setattr(serializers, "serialize_state_snapshot", _counting)
         gs._fire_broadcast("round_evaluated")
         await asyncio.sleep(0)
         assert calls["n"] == 0

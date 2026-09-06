@@ -322,12 +322,13 @@ class QuizifyEventEmitter:
         Emitted from the ``game_ended`` dispatch point (richer than the FINALE
         phase transition, which only knows the single leader). The leaderboard
         is trimmed to ``{name, score}`` per entry — the stable, PII-minimal
-        subset a blueprint needs — not the full wire contract.
+        subset a blueprint needs — not the full wire contract. Built from the
+        standings (domain objects) rather than the client rows since #747, so
+        the bus payload no longer depends on the WebSocket wire format.
         """
         leaderboard = [
-            {"name": entry.get("name"), "score": entry.get("score")}
-            for entry in game_state.get_leaderboard()
-            if isinstance(entry, dict)
+            {"name": participant.name, "score": participant.score}
+            for participant in game_state.get_standings()
         ]
         self._fire(EVENT_GAME_ENDED, {"leaderboard": leaderboard})
 

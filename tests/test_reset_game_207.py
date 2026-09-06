@@ -32,6 +32,9 @@ from custom_components.quizify.game.state import (  # noqa: E402
     QuizifyGameState,
 )
 from custom_components.quizify.server.connection import ConnectionManager  # noqa: E402
+from custom_components.quizify.server.serializers import (  # noqa: E402
+    serialize_state_snapshot,
+)
 from custom_components.quizify.server.websocket import (  # noqa: E402
     QuizifyWebSocketHandler,
 )
@@ -107,7 +110,7 @@ async def test_reset_clears_players_admin_and_phase(
     assert game.get_players() == []
     assert game.get_player("Admin") is None
 
-    snapshot = game.get_state_snapshot()
+    snapshot = serialize_state_snapshot(game)
     assert snapshot["phase"] == "LOBBY"
     assert snapshot["players"] == []
 

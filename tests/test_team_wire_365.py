@@ -29,6 +29,9 @@ from custom_components.quizify.game.state import (  # noqa: E402
     QuizifyGameState,
 )
 from custom_components.quizify.server.connection import ConnectionManager  # noqa: E402
+from custom_components.quizify.server.serializers import (  # noqa: E402
+    serialize_state_snapshot,
+)
 from custom_components.quizify.server.websocket import (  # noqa: E402
     QuizifyWebSocketHandler,
 )
@@ -281,7 +284,7 @@ async def test_the_snapshot_always_carries_the_teams_key(
     game: QuizifyGameState,
 ) -> None:
     """A reconnecting phone must tell "no teams" from "teams not sent"."""
-    snapshot = game.get_state_snapshot()
+    snapshot = serialize_state_snapshot(game)
 
     assert snapshot["teams"] == []
 

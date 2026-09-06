@@ -39,6 +39,7 @@ import pytest
 from custom_components.quizify.game.hot_seat import HotSeatRound, stake_of
 from custom_components.quizify.game.phase_controller import GamePhase
 from custom_components.quizify.game.state import QuizifyGameState
+from custom_components.quizify.server.serializers import serialize_state_snapshot
 
 
 def _ws() -> MagicMock:
@@ -513,7 +514,7 @@ def _project(st: QuizifyGameState, name: str) -> dict:
 
     return RoundMessageBuilder().project_snapshot_for_player(
         st,
-        snapshot=st.get_state_snapshot(),
+        snapshot=serialize_state_snapshot(st),
         player=st.get_player(name),
     )["hot_seat"]
 

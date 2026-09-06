@@ -89,12 +89,18 @@ def _clamp_bounds(rule: str, selector: str) -> tuple[float, float]:
 
 
 def test_a_snapshot_carries_the_game_language() -> None:
-    """The fix reads a field; this pins that the server still sends it."""
-    state = (
-        _REPO_ROOT / "custom_components" / "quizify" / "game" / "state.py"
+    """The fix reads a field; this pins that the server still sends it.
+
+    The builder moved to ``server/serializers.py`` in #747, so this reads it
+    where it lives now.
+    """
+    serializers = (
+        _REPO_ROOT / "custom_components" / "quizify" / "server" / "serializers.py"
     ).read_text(encoding="utf-8")
-    snapshot = state.split("def get_state_snapshot(", 1)[1].split("\n    def ", 1)[0]
-    assert '"language": self.language' in snapshot
+    snapshot = serializers.split("def serialize_state_snapshot(", 1)[1].split(
+        "\ndef ", 1
+    )[0]
+    assert '"language": game_state.language' in snapshot
 
 
 def test_every_snapshot_reaches_the_language_sync() -> None:

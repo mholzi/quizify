@@ -61,6 +61,7 @@ from custom_components.quizify.server.serializers import (
     serialize_finale,
     serialize_leaderboard,
     serialize_player_list,
+    serialize_state_snapshot,
     snapshot_house_entities,
     snapshot_tts_entities,
     strip_answer_for_dashboard,
@@ -920,7 +921,7 @@ class QuizifyWebSocketHandler:
         self, ws: web.WebSocketResponse, data: dict, game_state: QuizifyGameState
     ) -> None:
         """Handle a ``get_state`` request (#286)."""
-        state_msg = game_state.get_state_snapshot()
+        state_msg = serialize_state_snapshot(game_state)
         # Project into the requesting PLAYER's frame (#286): the raw
         # snapshot carries canonical answer order, but ``submit_answer``
         # maps the tapped index through the player's OWN shuffle — sending
@@ -950,7 +951,7 @@ class QuizifyWebSocketHandler:
 
         admin_token = self._conn.get_or_create_admin_token()
 
-        state = game_state.get_state_snapshot()
+        state = serialize_state_snapshot(game_state)
         state["type"] = "game_state"
         state["join_url"] = "/quizify/player"
         state["admin_session_token"] = admin_token
@@ -1224,7 +1225,7 @@ class QuizifyWebSocketHandler:
             # shuffle order for the answer buttons, own timer, flat reveal —
             # otherwise a mid-round joiner mis-scores their taps and sees an
             # empty reveal.
-            state = game_state.get_state_snapshot()
+            state = serialize_state_snapshot(game_state)
             if player_obj is not None:
                 state = self._round_messages.project_snapshot_for_player(
                     game_state, snapshot=state, player=player_obj
@@ -1344,7 +1345,7 @@ class QuizifyWebSocketHandler:
         # Send full game state, projected into THIS player's frame (#253):
         # the reconnect snapshot otherwise carries canonical answer order
         # (mis-scoring taps) and a nested round_summary the reveal can't read.
-        state = game_state.get_state_snapshot()
+        state = serialize_state_snapshot(game_state)
         state = self._round_messages.project_snapshot_for_player(
             game_state, snapshot=state, player=player
         )
@@ -2534,7 +2535,7 @@ class QuizifyWebSocketHandler:
         self._cancel_timer_tick()
         # pause_reason rides along in the snapshot itself since #703, so it
         # is identical here and on every reconnect.
-        state = game_state.get_state_snapshot()
+        state = serialize_state_snapshot(game_state)
         state["type"] = "game_state"
         await self._conn.broadcast(state)
         return True
@@ -2655,7 +2656,7 @@ class QuizifyWebSocketHandler:
         # while the sockets are still open.
         await self._conn.broadcast({"type": "game_reset"})
 
-        state = game_state.get_state_snapshot()
+        state = serialize_state_snapshot(game_state)
         state["type"] = "game_state"
         await self._conn.broadcast(state)
 
@@ -2765,7 +2766,7 @@ class QuizifyWebSocketHandler:
 
         # Broadcast a phase-entry state so every client switches to the
         # lightning view, then the intro splash ("Bolt Burst", #201).
-        state = game_state.get_state_snapshot()
+        state = serialize_state_snapshot(game_state)
         state["type"] = "game_state"
         await self._conn.broadcast(state)
         await self._broadcast_lightning_splash(game_state)
@@ -3077,7 +3078,7 @@ class QuizifyWebSocketHandler:
         if hs is None:
             return False
 
-        state = game_state.get_state_snapshot()
+        state = serialize_state_snapshot(game_state)
         state["type"] = "game_state"
         await self._conn.broadcast(state)
         await self._conn.broadcast({
@@ -3311,7 +3312,7 @@ class QuizifyWebSocketHandler:
         message. Used by the resume path (#286 #287) so a resumed game reaches
         every screen with correctly-ordered answer buttons.
         """
-        base = game_state.get_state_snapshot()
+        base = serialize_state_snapshot(game_state)
 
         # Per-player projected sends.
         player_ws: set[Any] = set()
@@ -3885,7 +3886,7 @@ class QuizifyWebSocketHandler:
                 if not gs.pause(reason="admin_disconnected"):
                     return
                 self._cancel_timer_tick()
-                state = gs.get_state_snapshot()
+                state = serialize_state_snapshot(gs)
                 state["type"] = "game_state"
                 await self._conn.broadcast(state)
                 _LOGGER.info(
@@ -4608,7 +4609,7 @@ class QuizifyWebSocketHandler:
         """Default handler: broadcast a full game-state snapshot."""
         game_state = self._get_game_state()
         if game_state:
-            state = game_state.get_state_snapshot()
+            state = serialize_state_snapshot(game_state)
             state["type"] = "game_state"
             await self._conn.broadcast(state)
 

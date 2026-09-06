@@ -40,6 +40,9 @@ from custom_components.quizify.game.state import (  # noqa: E402
     GamePhase,
     QuizifyGameState,
 )
+from custom_components.quizify.server.serializers import (  # noqa: E402
+    serialize_state_snapshot,
+)
 
 _WWW_JS = _REPO_ROOT / "custom_components" / "quizify" / "www" / "js"
 _LIGHTNING_VIEW_IDS = (
@@ -99,7 +102,7 @@ def test_reconnect_snapshot_carries_lightning_substate(tmp_path: Path) -> None:
     """The reconnect snapshot must hand the (now revealable) client its data.
 
     Mirrors the #221 contract from the snapshot side: a player reconnecting
-    into a live LIGHTNING round gets ``get_state_snapshot()``, which must
+    into a live LIGHTNING round gets ``serialize_state_snapshot()``, which must
     include the ``lightning`` sub-state the client's LIGHTNING case reads to
     pick splash vs question — otherwise even a fixed showView() has nothing
     to render.
@@ -110,7 +113,7 @@ def test_reconnect_snapshot_carries_lightning_substate(tmp_path: Path) -> None:
     assert state.begin_lightning_questions() is True
     assert state.phase == GamePhase.LIGHTNING
 
-    snap = state.get_state_snapshot()
+    snap = serialize_state_snapshot(state)
 
     assert snap["phase"] == "LIGHTNING"
     assert "lightning" in snap

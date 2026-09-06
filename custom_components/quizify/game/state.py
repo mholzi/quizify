@@ -122,7 +122,11 @@ class RoundSummary:
     correct_answer: Answer
     fun_fact: str
     results: list[AnswerResult] = field(default_factory=list)
-    leaderboard: list[dict[str, Any]] = field(default_factory=list)
+    #: The standings after this round, in rank order — TEAMS in team mode,
+    #: players otherwise. Domain objects, not wire rows (#747): the only
+    #: consumer inside the process is the narrator, and every client-facing
+    #: leaderboard is serialized at the edge by ``serialize_leaderboard``.
+    leaderboard: list[Any] = field(default_factory=list)
     # Estimate-round reveal data (#275). None for multiple-choice rounds.
     # When set, carries the true value, range/unit, and every player's guess +
     # distance + awarded points so the number-line reveal can be rendered on
@@ -1572,7 +1576,7 @@ class QuizifyGameState:
                 )
             )
 
-        leaderboard = self.get_leaderboard()
+        leaderboard = self.get_standings()
 
         self._round_summary = RoundSummary(
             question=question,
@@ -1893,7 +1897,7 @@ class QuizifyGameState:
         self.phase = GamePhase.FINALE
         self._current_question = None
 
-        # Cache podium and superlatives once so get_state_snapshot() can reuse
+        # Cache podium and superlatives once so the state snapshot can reuse
         # them. In team mode the participants are the teams (#365) — the podium
         # and the awards are computed by the same code, one rung up.
         self._collect_team_powerup_stats()
@@ -1905,7 +1909,10 @@ class QuizifyGameState:
 
         finale_data = {
             "phase": GamePhase.FINALE.value,
-            "leaderboard": self.get_leaderboard(),
+            # Domain objects (#747). ``end_game``'s return never reaches a
+            # client — it is the idempotency cache — so it holds the standings
+            # rather than a second, drift-prone copy of the wire format.
+            "leaderboard": self.get_standings(),
             "podium": [
                 {"name": p.name, "score": p.score, "rank": i + 1}
                 for i, p in enumerate(podium)
@@ -2884,28 +2891,20 @@ class QuizifyGameState:
             return None
         return question.image_url or None
 
-    def get_leaderboard(self) -> list[dict[str, Any]]:
-        """Return sorted leaderboard data — wire-identical to the live broadcast.
+    def get_standings(self) -> list[Any]:
+        """The participants in rank order, highest score first.
 
-        Delegates to :func:`serialize_leaderboard` (the same helper the live
-        ``game_state`` / ``round_summary`` broadcasts use) so the snapshot
-        leaderboard carries the FULL client contract — ``submitted``,
-        ``best_streak``, ``rounds_played``, ``powerups_used``, ``round_score``,
-        ``correct`` — not just rank/name/score/streak (#297). Without those
-        keys a reconnect-after-submit never re-locked the answer buttons
-        (player-core.js reads ``leaderboard[].submitted``) and a FINALE
-        reconnect showed 0 for BESTE SERIE / GESPIELTE RUNDEN / POWER-UPS.
-
-        ``is_admin`` is likewise required so the reconnect client can show the
-        admin "Start New Game" / "Next Round" controls; ``serialize_leaderboard``
-        emits it. (Earlier hand-rolled versions of this method dropped fields
-        and caused a chronic FINALE admin-lockout — see v1.1.4 notes.)
+        Domain objects, deliberately. Until #747 this method returned the
+        client wire rows instead, by reaching into ``server.serializers`` from
+        a function-local import — the game layer building the server layer's
+        format, which is exactly the drift that cost #297, #434, #521 and #253.
+        Every client-facing leaderboard is now serialized at the edge with
+        :func:`~custom_components.quizify.server.serializers.serialize_leaderboard`,
+        which is also where the tie-sharing rank (#308) lives.
         """
-        # Local import keeps the game-layer free of a module-level dependency
-        # on the server layer (serializers only TYPE_CHECKING-imports game).
-        from ..server.serializers import serialize_leaderboard
-
-        return serialize_leaderboard(self.get_ranked_participants())
+        return sorted(
+            self.get_ranked_participants(), key=lambda p: p.score, reverse=True
+        )
 
     def get_ranked_participants(self) -> list[Any]:
         """Whoever the ranking is about: teams in team mode, else players (#365).
@@ -2993,6 +2992,27 @@ class QuizifyGameState:
         """Return the last round summary."""
         return self._round_summary
 
+    def get_players_state(self) -> list[dict[str, Any]]:
+        """The roster rows, as the registry keeps them.
+
+        A read-only accessor so the snapshot serializer (#747) does not have to
+        reach into ``_player_registry``.
+        """
+        return self._player_registry.get_players_state()
+
+    @property
+    def wager_window_duration(self) -> float:
+        """How long a betting window stays open (#656)."""
+        return self._phase_controller.wager_window_duration
+
+    def question_time_remaining_for_snapshot(self) -> float:
+        """Seconds left on the current question, for a mid-round joiner.
+
+        Deliberately not the per-player remaining: someone who has no timer yet
+        needs the room's clock, not their own missing one.
+        """
+        return self._phase_controller.time_remaining_for_snapshot()
+
     def all_submitted(self) -> bool:
         """Whether every active, non-late participant has submitted (#412).
 
@@ -3053,281 +3073,6 @@ class QuizifyGameState:
         """Return the finale superlatives cached by ``end_game`` (#415)."""
         return self._finale_superlatives
 
-    def get_state_snapshot(self) -> dict[str, Any]:
-        """Build a full state snapshot for WebSocket serialization."""
-        snapshot: dict[str, Any] = {
-            "phase": self.phase.value,
-            "game_id": self.game_id,
-            "round": self.round,
-            "total_rounds": self.total_rounds,
-            "category": self.category,
-            "difficulty": self.difficulty,
-            # The player client uses this to sync its UI locale with the
-            # game language (player-core.js handleGameState). Without it
-            # the UI stayed at the browser locale (e.g., German chrome
-            # over English questions if the host picked EN but the guest's
-            # phone is DE). Live-test Mai-27.
-            "language": self.language,
-            "players": self._player_registry.get_players_state(),
-            "leaderboard": self.get_leaderboard(),
-            # Always present, empty in an ordinary game (#365). A reconnecting
-            # phone has to be able to tell "no teams" from "teams not sent" —
-            # otherwise a member who drops mid-game comes back without their
-            # team indicator and believes they are playing alone.
-            "teams": self._team_registry.to_list(),
-        }
-
-        if self.phase == GamePhase.WAGER_ACTIVE and self._current_question:
-            q = self._current_question
-            # #656: the betting window carries category and difficulty and
-            # NOTHING else. A phone that reconnects here must not be handed
-            # the question text — that text has not been sent to anyone yet,
-            # and a player who could read it while betting would be betting
-            # on a certainty. The remaining seconds are the room's, not a
-            # fresh window, so a reconnect can't buy extra thinking time.
-            connected = [p for p in self.get_players() if p.connected]
-            snapshot["wager"] = {
-                "category": q.category,
-                "difficulty": q.difficulty,
-                "window_remaining": round(self.wager_window_remaining(), 1),
-                "window_duration": self._phase_controller.wager_window_duration,
-                # The tally, so a TV reconnecting mid-window shows the bets
-                # already in rather than restarting the count at zero.
-                "locked_in": len(connected) - len(self.players_missing_wager()),
-                "player_count": len(connected),
-            }
-
-        if self.phase == GamePhase.QUESTION_ACTIVE and self._current_question:
-            q = self._current_question
-            # Calculate time remaining for mid-round joiners
-            remaining = self._phase_controller.time_remaining_for_snapshot()
-            # Canonical-shuffle order (#521), matching the live
-            # ``question_started`` payload. Emitting question-JSON order here
-            # meant a dashboard reconnecting mid-question rebuilt its grid
-            # unshuffled — and most packs keep the correct answer first in the
-            # file. ``shuffled_answers`` is empty only before the first
-            # question of a game, where the fallback is the same list anyway.
-            snapshot["question"] = {
-                "id": q.id,
-                "text": q.question,
-                "answers": (
-                    list(self.shuffled_answers)
-                    if len(self.shuffled_answers) == len(q.answers)
-                    else [a.text for a in q.answers]
-                ),
-                "difficulty": q.difficulty,
-                "category": q.category,
-                "image_url": q.image_url,
-                # #434: a dashboard that reconnects mid-question needs both the
-                # style and the remaining time below to resume the blur at the
-                # right point instead of snapping to sharp.
-                "reveal_style": q.reveal_style,
-                # #730/#731: unconditionally, not only for estimates. The live
-                # ``question_started`` always carries the type, so a snapshot
-                # that only carries it sometimes is a field the restore path
-                # cannot forward without knowing which case it is in — exactly
-                # the asymmetry the parity test now forbids.
-                "question_type": q.type,
-                "time_limit": self._round_duration,
-                "time_remaining": round(remaining, 1),
-            }
-            # Estimate questions (#275) carry slider metadata instead of
-            # answers so a reconnecting player rebuilds the slider, not the
-            # 3-answer grid.
-            if q.is_estimate:
-                snapshot["question"]["estimate"] = {
-                    "min": q.estimate_min,
-                    "max": q.estimate_max,
-                    "unit": q.estimate_unit,
-                    "step": q.estimate_step,
-                }
-
-        if self.phase == GamePhase.ANSWER_REVEAL and self._round_summary:
-            s = self._round_summary
-            q = s.question
-            # Round-shuffle answer order, mirroring the QUESTION_ACTIVE
-            # snapshot's ``question.answers``. A TV/dashboard that (re)connects
-            # during the reveal has no live ``question`` block to render, so
-            # without these fields its question view was blank (#296).
-            # Both the order and the highlight index moved from question-JSON
-            # order to the round shuffle in #521 — in JSON order most packs
-            # keep the correct answer first, which put it on tile A every
-            # round. ``correct_answer_index_original`` stays in the payload for
-            # clients cached from before that change.
-            correct_idx_original = next(
-                (i for i, a in enumerate(q.answers) if a.correct), -1
-            )
-            order = self.shuffle_map
-            if len(order) == len(q.answers) and sorted(order) == list(
-                range(len(q.answers))
-            ):
-                reveal_answers = [q.answers[i].text for i in order]
-                if correct_idx_original >= 0:
-                    correct_idx_display = order.index(correct_idx_original)
-                else:
-                    correct_idx_display = -1
-            else:
-                # No usable shuffle (pre-first-question, or a malformed map):
-                # a mis-ordered grid is worse than an unshuffled one.
-                reveal_answers = [a.text for a in q.answers]
-                correct_idx_display = correct_idx_original
-            snapshot["round_summary"] = {
-                "question_text": q.question,
-                "category": q.category,
-                "image_url": q.image_url,
-                "answers": reveal_answers,
-                "correct_answer_index": correct_idx_display,
-                "correct_answer_index_original": correct_idx_original,
-                "correct_answer": s.correct_answer.text,
-                "fun_fact": s.fun_fact,
-                "results": [
-                    {
-                        "player_id": r.player_id,
-                        "correct": r.correct,
-                        "points_earned": r.points_earned,
-                        "new_streak": r.new_streak,
-                        "new_total": r.new_total,
-                    }
-                    for r in s.results
-                ],
-            }
-            # Estimate reveal data (#275) so a reconnect during the reveal
-            # rebuilds the number line instead of an empty answer grid.
-            if s.estimate is not None:
-                snapshot["round_summary"]["question_type"] = q.type
-                snapshot["round_summary"]["estimate"] = s.estimate
-
-        if self.phase == GamePhase.FINALE:
-            # Use cached values computed once in end_game()
-            podium = self._finale_podium or calculate_podium(
-                self.get_ranked_participants()
-            )
-            snapshot["podium"] = [
-                {"name": p.name, "score": p.score, "rank": i + 1}
-                for i, p in enumerate(podium)
-            ]
-            awards = (
-                self._finale_superlatives
-                if self._finale_superlatives is not None
-                else compute_superlatives(self.get_ranked_participants())
-            )
-            if awards:
-                snapshot["superlatives"] = [s.to_dict() for s in awards]
-
-        if self.phase == GamePhase.LIGHTNING and self._lightning is not None:
-            lr = self._lightning
-            lq = lr.current_question
-            snapshot["lightning"] = {
-                "index": lr.index,
-                "num_questions": lr.num_questions,
-                "time_remaining": round(lr.time_remaining(), 1),
-                "seconds_per_question": lr.seconds_per_question,
-                "leaderboard": lr.leaderboard(),
-                # True while the intro splash ("Bolt Burst", #201) is still
-                # showing and the first question hasn't been broadcast.
-                "splash_pending": self._lightning_splash_pending,
-            }
-            if lq is not None:
-                # Canonical (admin/TV) answer order; players get their own
-                # shuffle pushed via the lightning_question event.
-                snapshot["lightning"]["question"] = {
-                    "text": lq.question,
-                    "answers": [a.text for a in lq.answers],
-                    "category": lq.category,
-                    "image_url": lq.image_url,
-                }
-
-        if self.phase == GamePhase.LIGHTNING_RECAP and self._lightning is not None:
-            snapshot["lightning_recap"] = self._lightning.build_recap()
-
-        # #664: the Hot Seat detour belongs in the contract like every other
-        # phase. Without this block a reconnecting phone got a snapshot naming
-        # a HOT_SEAT phase and no hot-seat data, fell through the client's
-        # default case onto the lobby, and — if it belonged to the seat holder
-        # — could never get back to the question, which #653 then charges as a
-        # lost stake. The TV had the same hole, with the previous round's
-        # reveal frozen on it for the whole detour.
-        if (
-            self.phase
-            in (
-                GamePhase.HOT_SEAT_AUCTION,
-                GamePhase.HOT_SEAT,
-                GamePhase.HOT_SEAT_REVEAL,
-            )
-            and self._hot_seat is not None
-        ):
-            hs = self._hot_seat
-            if self.phase == GamePhase.HOT_SEAT_AUCTION:
-                stage = "auction"
-            elif self.phase == GamePhase.HOT_SEAT_REVEAL:
-                stage = "result"
-            else:
-                # There is deliberately no separate "the bids are landing"
-                # stage. ``resolve_auction`` starts the answer clock at the
-                # moment the chair is awarded, so the live flow's four-second
-                # bid reveal is already being paid for out of the seat
-                # holder's window. Someone who reconnects during that hold is
-                # better served by the question than by a reveal they are
-                # being charged for — and worse, without a question to look
-                # at they would burn the clock reading a scoreboard.
-                stage = "question"
-            block: dict[str, Any] = {
-                "stage": stage,
-                "time_remaining": round(hs.time_remaining(), 1),
-                "auction_seconds": hs.auction_seconds,
-                "answer_seconds": hs.answer_seconds,
-                # The banks the bids are percentages of — a snapshot taken when
-                # the auction opened, not the live scores. Keyed by ENTRANT
-                # (#804), which is what the per-player projection in
-                # ``round_message_builder`` reads it by; it never leaves the
-                # server in this shape.
-                "banks": dict(hs.scores),
-                # Count only. The auction is sealed until it closes, and a
-                # reconnect must not be a way to read it early.
-                "bid_count": len(hs.bids),
-                "bidder_count": len(hs.scores),
-                # The person in the chair, matching the live ``hot_seat_awarded``
-                # frame so the phone's restore path and the live path agree.
-                "winner": hs.seat_holder,
-                "entrant": hs.winner_name,
-            }
-            if hs.winner is not None:
-                block["pct"] = hs.winning_pct
-                block["stake"] = hs.winning_stake
-                block["bids"] = hs.reveal()
-            # The question is withheld during the auction on purpose: bidding
-            # is meant to be a bet on yourself, not on a question you have
-            # already read.
-            if stage in ("question", "result") and hs.question is not None:
-                block["question"] = {
-                    "text": hs.question.question,
-                    # Canonical order — admin and TV. The seat holder's own
-                    # shuffle is projected in round_message_builder.
-                    "answers": [a.text for a in hs.question.answers],
-                    "category": hs.question.category,
-                    # #730: the live ``hot_seat_question`` sends this to every
-                    # phone already, so withholding it here bought no secrecy
-                    # — it only left the restore path with one more field it
-                    # could never forward.
-                    "difficulty": hs.question.difficulty,
-                    "image_url": hs.question.image_url,
-                }
-            if stage == "result":
-                block["summary"] = hs.summary()
-            snapshot["hot_seat"] = block
-
-        if self.phase == GamePhase.PAUSED:
-            # #703: the reason used to be attached by the two pause
-            # *broadcasts* only, so any phone that reconnected (or joined, or
-            # asked for state) during a pause got a snapshot without it. The
-            # client derives both the title and the 60s reset affordance from
-            # this field, so a guest who reloaded during a host-gone pause was
-            # told "the host will resume" and lost the only way out (#299) —
-            # on exactly the phones that had just reconnected.
-            snapshot["pause_reason"] = self.get_pause_reason()
-
-        return snapshot
-
     # ------------------------------------------------------------------
     # Broadcast / event dispatch
     # ------------------------------------------------------------------
@@ -3348,7 +3093,7 @@ class QuizifyGameState:
         # Named events (round_evaluated / game_ended) route to dedicated
         # broadcast handlers that build their own messages and re-fetch the
         # live state — they never read this payload's snapshot fields, so
-        # building a full ``get_state_snapshot()`` (O(P log P) + a heavy dict)
+        # building a full state snapshot (O(P log P) + a heavy dict)
         # here only to discard it is wasted work on every round/game end (#304).
         # Pass just the event marker; the default full-state handler fetches the
         # snapshot itself when it actually needs one.

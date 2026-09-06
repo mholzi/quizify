@@ -55,8 +55,10 @@ from custom_components.quizify.game.state import (  # noqa: E402
 from custom_components.quizify.server.round_message_builder import (  # noqa: E402
     RoundMessageBuilder,
 )
-from custom_components.quizify.server.serializers import (  # noqa: E402
+from custom_components.quizify.server.serializers import (
+    # noqa: E402,
     serialize_question_for_player,
+    serialize_state_snapshot,
 )
 
 JS = _REPO / "custom_components" / "quizify" / "www" / "js"
@@ -310,14 +312,14 @@ def test_every_live_question_field_reaches_the_snapshot(
         timer_duration=30.0,
         player_score=0,
     )
-    snapshot_question = state.get_state_snapshot()["question"]
+    snapshot_question = serialize_state_snapshot(state)["question"]
 
     missing = set(live) - set(snapshot_question)
     assert missing == set(QUESTION_SOURCED_ELSEWHERE), (
         "question_started and the snapshot have drifted apart. Fields the live "
         f"path sends and the snapshot does not carry: "
         f"{sorted(missing - set(QUESTION_SOURCED_ELSEWHERE))}. Either add them "
-        "to the snapshot in get_state_snapshot(), or add them to "
+        "to the snapshot in serialize_state_snapshot(), or add them to "
         "QUESTION_SOURCED_ELSEWHERE with the reason a restore sources them "
         "elsewhere. Fields listed as exceptions that the live path no longer "
         f"sends: {sorted(set(QUESTION_SOURCED_ELSEWHERE) - missing)}."
@@ -334,7 +336,7 @@ def test_the_question_type_is_in_the_snapshot_for_every_question(
     is in, which is how the hand-written list justified itself.
     """
     state = _game_in_question_active(tmp_path, "geographie")
-    assert state.get_state_snapshot()["question"]["question_type"] == "multiple_choice"
+    assert serialize_state_snapshot(state)["question"]["question_type"] == "multiple_choice"
 
 
 def _hot_seat_in_question_stage(tmp_path: Path) -> QuizifyGameState:
@@ -373,7 +375,7 @@ def test_every_live_hot_seat_question_field_reaches_the_snapshot(
 ) -> None:
     state = _hot_seat_in_question_stage(tmp_path)
     projected = RoundMessageBuilder().project_snapshot_for_player(
-        state, snapshot=state.get_state_snapshot(), player=state.get_player("Anna")
+        state, snapshot=serialize_state_snapshot(state), player=state.get_player("Anna")
     )
     block = projected["hot_seat"]
     assert block["stage"] == "question"
@@ -387,7 +389,7 @@ def test_every_live_hot_seat_question_field_reaches_the_snapshot(
         "hot_seat_question and the snapshot's hot_seat block have drifted "
         f"apart. Sent live, absent from the snapshot: "
         f"{sorted(missing - set(HOT_SEAT_SOURCED_ELSEWHERE))}. Carry them in "
-        "get_state_snapshot(), or name them in HOT_SEAT_SOURCED_ELSEWHERE. "
+        "serialize_state_snapshot(), or name them in HOT_SEAT_SOURCED_ELSEWHERE. "
         f"Listed but no longer sent: "
         f"{sorted(set(HOT_SEAT_SOURCED_ELSEWHERE) - missing)}."
     )
@@ -411,6 +413,6 @@ def test_the_auction_snapshot_still_withholds_the_question(tmp_path: Path) -> No
     state.phase = GamePhase.ANSWER_REVEAL
     assert state.start_hot_seat_auction()
 
-    block = state.get_state_snapshot()["hot_seat"]
+    block = serialize_state_snapshot(state)["hot_seat"]
     assert block["stage"] == "auction"
     assert "question" not in block
