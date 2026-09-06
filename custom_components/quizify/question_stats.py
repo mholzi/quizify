@@ -13,12 +13,12 @@ level stats grow with the pack catalogue, not with games played.
 from __future__ import annotations
 
 import asyncio
-import json
 import logging
-import os
 import time
 from collections.abc import Iterable
 from typing import TYPE_CHECKING, Any, TypedDict
+
+from .storage import JsonFile
 
 if TYPE_CHECKING:
     from .runtime import Runtime
@@ -54,28 +54,41 @@ class QuestionStatsService:
     def __init__(self, runtime: Runtime) -> None:
         self._runtime = runtime
         self._path = runtime.data_dir / "question_stats.json"
+        self._file = JsonFile(runtime, self._path, label="Question stats file")
         self._data: QuestionStatsData = {"version": 1, "questions": {}}
         self._save_lock = asyncio.Lock()
         self._dirty = False
         self._save_timer: asyncio.Future[None] | None = None
 
     async def load(self) -> None:
+        """Read the stats file, degrading a broken one to an empty record.
+
+        Parse failures are handled by the shared store (#790, #700); what is
+        left here is the lenient *migration* — a file of the right syntax but
+        the wrong shape (a bare list, a missing ``questions`` key) must not
+        take setup down either.
+        """
+        raw = await self._file.load(None)
+        if raw is None:
+            return
         try:
-            if self._path.exists():
-                content = await self._runtime.run_in_executor(self._path.read_text)
-                raw = json.loads(content)
-                # Lenient migration: tolerate missing keys.
-                self._data = {
-                    "version": int(raw.get("version", 1)),
-                    "questions": raw.get("questions") or {},
-                }
-                _LOGGER.debug(
-                    "Loaded question stats: %d questions tracked",
-                    len(self._data["questions"]),
-                )
-        except (json.JSONDecodeError, KeyError, TypeError) as err:
+            if not isinstance(raw, dict):
+                raise TypeError(f"expected an object, got {type(raw).__name__}")
+            questions = raw.get("questions") or {}
+            if not isinstance(questions, dict):
+                raise TypeError("'questions' is not an object")
+            self._data = {
+                "version": int(raw.get("version", 1)),
+                "questions": questions,
+            }
+        except (KeyError, TypeError, ValueError) as err:
             _LOGGER.warning("Question stats file corrupted, recreating: %s", err)
             self._data = {"version": 1, "questions": {}}
+            return
+        _LOGGER.debug(
+            "Loaded question stats: %d questions tracked",
+            len(self._data["questions"]),
+        )
 
     def record_round(
         self,
@@ -173,22 +186,10 @@ class QuestionStatsService:
         if not self._dirty:
             return
         async with self._save_lock:
-            try:
-                def _mkdir() -> None:
-                    self._path.parent.mkdir(mode=0o755, parents=True, exist_ok=True)
-                await self._runtime.run_in_executor(_mkdir)
-                temp_path = self._path.with_suffix(".tmp")
-                # Serialize inside the executor closure (#304) so the (often
-                # large) ``json.dumps`` runs off the event loop, not just the
-                # write; drop ``indent=2`` since the file is machine-read.
-                data = self._data
-                def _write() -> None:
-                    temp_path.write_text(json.dumps(data))
-                    os.replace(temp_path, self._path)
-                await self._runtime.run_in_executor(_write)
+            # The serialize runs inside the executor (#304) so the (often
+            # large) ``json.dumps`` is off the event loop, not just the write.
+            if await self._file.save(self._data):
                 self._dirty = False
-            except OSError as err:
-                _LOGGER.error("Failed to save question stats: %s", err)
 
     def _schedule_save(self) -> None:
         """(Re-)arm the debounced write after a recorded round (#588).

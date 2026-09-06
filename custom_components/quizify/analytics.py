@@ -7,12 +7,12 @@ enabling historical analysis through the analytics dashboard.
 from __future__ import annotations
 
 import asyncio
-import json
 import logging
-import os
 import time
 from datetime import UTC, datetime
 from typing import TYPE_CHECKING, Any, TypedDict
+
+from .storage import JsonFile
 
 if TYPE_CHECKING:
     from .runtime import Runtime
@@ -98,6 +98,7 @@ class QuizifyAnalytics:
         """Initialize analytics storage."""
         self._runtime = runtime
         self._path = runtime.data_dir / "analytics.json"
+        self._file = JsonFile(runtime, self._path, label="Analytics file")
         self._data: AnalyticsData = self._empty_data()
         self._games_since_prune = 0
         self._save_lock = asyncio.Lock()
@@ -150,50 +151,44 @@ class QuizifyAnalytics:
         return data  # type: ignore[return-value]
 
     async def load(self) -> None:
-        """Load analytics data from file."""
+        """Load analytics data from file.
+
+        A file that will not parse is not a reason to fail setup (#700): the
+        shared store degrades it to ``None`` with a warning and we start from
+        an empty record, rewriting the file so the next run is clean again.
+        """
+        existed = await self._file.exists()
+        raw = await self._file.load(None)
+        if raw is None:
+            self._data = self._empty_data()
+            if existed:
+                # The file was there but unusable — replace it.
+                await self._save()
+            return
         try:
-            if self._path.exists():
-                content = await self._runtime.run_in_executor(self._path.read_text)
-                raw = json.loads(content)
-                self._data = self._migrate(raw)
-                _LOGGER.debug(
-                    "Loaded analytics: %d games, %d all-time players",
-                    len(self._data.get("games", [])),
-                    len(self._data.get("all_time_players", {})),
-                )
-                await self._prune_old_records()
-            else:
-                self._data = self._empty_data()
-        except (json.JSONDecodeError, KeyError, TypeError) as err:
+            self._data = self._migrate(raw)
+        except (KeyError, TypeError, AttributeError) as err:
             _LOGGER.warning("Analytics file corrupted, recreating: %s", err)
             self._data = self._empty_data()
             await self._save()
+            return
+        _LOGGER.debug(
+            "Loaded analytics: %d games, %d all-time players",
+            len(self._data.get("games", [])),
+            len(self._data.get("all_time_players", {})),
+        )
+        await self._prune_old_records()
 
     async def _save(self) -> None:
-        """Persist analytics data with atomic write."""
+        """Persist analytics data with atomic write.
+
+        The serialize runs inside the executor (#304): a full game's analytics
+        is ~0.5–1 MB and ``json.dumps`` on the event loop would block every
+        connected phone for its duration. Snapshot the dict reference first so
+        the executor sees one consistent object.
+        """
         async with self._save_lock:
-            try:
-                def _mkdir() -> None:
-                    self._path.parent.mkdir(mode=0o755, parents=True, exist_ok=True)
-
-                await self._runtime.run_in_executor(_mkdir)
-                temp_path = self._path.with_suffix(".tmp")
-                # Serialize *inside* the executor closure (#304): a full game's
-                # analytics is ~0.5–1 MB and ``json.dumps`` previously ran on
-                # the event loop, blocking it for the whole serialize while only
-                # the write was offloaded. Snapshot the dict reference so the
-                # executor sees a consistent object; drop ``indent=2`` (the file
-                # is machine-read, never hand-edited) to roughly halve both the
-                # payload size and the serialize cost.
-                data = self._data
-
-                def _write_atomic() -> None:
-                    temp_path.write_text(json.dumps(data))
-                    os.replace(temp_path, self._path)
-
-                await self._runtime.run_in_executor(_write_atomic)
-            except OSError as err:
-                _LOGGER.error("Failed to save analytics: %s", err)
+            await self._file.save(self._data)
 
     def schedule_save(self) -> None:
         """Schedule non-blocking save."""

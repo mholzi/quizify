@@ -9,24 +9,22 @@ The presets live on the **server**, not in the browser: a preset saved on the
 living-room tablet has to exist on the host's phone too, and a browser-local
 store fails that the first time a second device is used.
 
-Written in the shape of :mod:`server.token_store` — same executor-offloaded,
-atomic write-then-replace, same tolerance for a corrupt file (a broken presets
-file must never stop the game from starting; it degrades to "no presets").
+Persistence goes through :class:`custom_components.quizify.storage.JsonFile`
+(#790) — same executor-offloaded, atomic write-then-replace as every other
+store, and the same tolerance for a corrupt file (a broken presets file must
+never stop the game from starting; it degrades to "no presets").
 """
 
 from __future__ import annotations
 
 import asyncio
-import json
-import logging
-import os
 import secrets
 from typing import TYPE_CHECKING, Any
 
+from ..storage import JsonFile
+
 if TYPE_CHECKING:
     from ..runtime import Runtime
-
-_LOGGER = logging.getLogger(__name__)
 
 #: Hard caps. A JSON file that grows without limit is a slow leak, and the
 #: chip row stops being one-tap long before twenty entries.
@@ -50,8 +48,9 @@ class PresetStore:
     """Named game setups, persisted as one small JSON file."""
 
     def __init__(self, runtime: Runtime, filename: str = "presets.json") -> None:
-        self._runtime = runtime
-        self._path = runtime.data_dir / filename
+        self._file = JsonFile(
+            runtime, runtime.data_dir / filename, label="Preset store"
+        )
         self._lock = asyncio.Lock()
 
     # ------------------------------------------------------------------
@@ -59,30 +58,14 @@ class PresetStore:
     # ------------------------------------------------------------------
 
     async def _read(self) -> list[dict[str, Any]]:
-        if not self._path.exists():
-            return []
-        try:
-            content = await self._runtime.run_in_executor(self._path.read_text)
-            data = json.loads(content)
-        except (OSError, json.JSONDecodeError) as err:
-            _LOGGER.warning("Preset store corrupt or unreadable: %s", err)
-            return []
+        data = await self._file.load({})
         presets = data.get("presets") if isinstance(data, dict) else None
-        return [p for p in presets if isinstance(p, dict)] if presets else []
+        if not isinstance(presets, list):
+            return []
+        return [p for p in presets if isinstance(p, dict)]
 
     async def _write(self, presets: list[dict[str, Any]]) -> None:
-        tmp = self._path.with_suffix(".tmp")
-        content = json.dumps({"version": SCHEMA_VERSION, "presets": presets})
-
-        def _do() -> None:
-            self._path.parent.mkdir(parents=True, exist_ok=True)
-            tmp.write_text(content)
-            os.replace(tmp, self._path)
-
-        try:
-            await self._runtime.run_in_executor(_do)
-        except OSError as err:
-            _LOGGER.warning("Failed to persist presets: %s", err)
+        await self._file.save({"version": SCHEMA_VERSION, "presets": presets})
 
     # ------------------------------------------------------------------
     # API

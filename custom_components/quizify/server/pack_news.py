@@ -27,15 +27,12 @@ they already know.
 from __future__ import annotations
 
 import asyncio
-import json
-import logging
-import os
 from typing import TYPE_CHECKING
+
+from ..storage import JsonFile
 
 if TYPE_CHECKING:
     from ..runtime import Runtime
-
-_LOGGER = logging.getLogger(__name__)
 
 _SCHEMA_VERSION = 1
 
@@ -44,8 +41,9 @@ class PackNewsStore:
     """Atomic JSON file remembering which packs the host has already seen."""
 
     def __init__(self, runtime: Runtime, filename: str = "pack_news.json") -> None:
-        self._runtime = runtime
-        self._path = runtime.data_dir / filename
+        self._file = JsonFile(
+            runtime, runtime.data_dir / filename, label="Pack news store"
+        )
         self._lock = asyncio.Lock()
 
     async def _read(self) -> dict:
@@ -54,31 +52,16 @@ class PackNewsStore:
         A corrupt file is treated as a first run rather than an error: the
         worst case is one suppressed banner, and refusing to serve the admin
         page over an unreadable bookkeeping file would be the larger failure.
+        That is the shared ``warn_and_default`` policy of
+        :mod:`custom_components.quizify.storage`; the only thing left to do
+        here is reject a well-formed file of the wrong *shape*.
         """
-        if not self._path.exists():
-            return {}
-        try:
-            content = await self._runtime.run_in_executor(self._path.read_text)
-            data = json.loads(content)
-        except (OSError, json.JSONDecodeError) as err:
-            _LOGGER.warning("Pack news store corrupt or unreadable: %s", err)
-            return {}
+        data = await self._file.load({})
         return data if isinstance(data, dict) else {}
 
     async def _write(self, data: dict) -> None:
         """Atomically persist *data* as JSON (best-effort)."""
-        tmp = self._path.with_suffix(".tmp")
-        content = json.dumps(data)
-
-        def _do_write() -> None:
-            self._path.parent.mkdir(parents=True, exist_ok=True)
-            tmp.write_text(content)
-            os.replace(tmp, self._path)
-
-        try:
-            await self._runtime.run_in_executor(_do_write)
-        except OSError as err:
-            _LOGGER.warning("Failed to persist pack news: %s", err)
+        await self._file.save(data)
 
     async def sync(self, installed: set[str]) -> list[str]:
         """Fold the currently installed packs into the record; return pending.

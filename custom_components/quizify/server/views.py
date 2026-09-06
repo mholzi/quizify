@@ -22,6 +22,7 @@ from aiohttp import web
 
 from ..game.seasons import is_in_season, parse_season, pick_active_season
 from .context import APP_CTX_KEY
+from .flag_store import FlagStore
 from .pack_news import PackNewsStore
 from .pack_submission import (
     request_pack_view,
@@ -1145,18 +1146,28 @@ async def pack_news_dismiss_view(request: web.Request) -> web.Response:
 # Question flagging
 # ---------------------------------------------------------------------------
 #
-# Append-only JSONL log of player-flagged questions. Lives next to the
-# other dev/HA state in the runtime's data_dir. Each line is one report;
-# the pack maintainer can `jq` through it to find ambiguous or wrong
-# questions surfaced by real play.
+# The log itself lives in :mod:`server.flag_store` (#790) — file layout, the
+# size cap, the field bounds and the IP stripping are all its business. What
+# stays here is the HTTP shape: the rate limit, the request parsing and the
+# admin gate on the read.
 
-_FLAG_FILE = "flagged.jsonl"
-_FLAG_MAX_BYTES = 256 * 1024  # cap at ~256 KB to bound disk use
-_FLAG_REASON_MAX = 200
-# Cap the caller-supplied question_id (#357). Without a bound an anonymous POST
-# could append a ~1 MB entry, and the size-trim runs BEFORE the append so an
-# oversized single line would still persist. Real ids are short slugs.
-_FLAG_QUESTION_ID_MAX = 64
+_FLAG_STORE_KEY = "quizify_flag_store"
+
+
+def _flag_store(request: web.Request) -> FlagStore:
+    """Return the per-app flag log, creating it once.
+
+    Cached on the application like the preset and pack-news stores so the two
+    views share one object. The bounds on the stored fields (#357) and the
+    size cap now live in :mod:`server.flag_store`, not here.
+    """
+    store = request.app.get(_FLAG_STORE_KEY)
+    if store is None:
+        store = FlagStore(_get_ctx(request).runtime)
+        request.app[_FLAG_STORE_KEY] = store
+    return store
+
+
 # Per-IP rate limit on the unauthenticated flag POST (#357). Mirrors the
 # pack-submit guard: generous for a real "flag a few questions" burst, tight
 # enough that the endpoint can't be hammered into unbounded executor disk
@@ -1176,8 +1187,6 @@ async def flag_question_view(request: web.Request) -> web.Response:
     is best-effort (clients without an auth model can lie, but that's fine
     for a "raise the maintainer's attention" signal).
     """
-    ctx = _get_ctx(request)
-
     # Per-IP rate limit (#357). Reject early — before the JSON parse and the
     # executor disk write — so a flood can't pin the loop or grow the file.
     if not _flag_rate_limiter.check(request.remote or ""):
@@ -1191,38 +1200,16 @@ async def flag_question_view(request: web.Request) -> web.Response:
     question_id = (body or {}).get("question_id")
     if not isinstance(question_id, str) or not question_id:
         return web.json_response({"error": "missing_question_id"}, status=400)
-    # Bound the caller-supplied id before it is persisted (#357).
-    question_id = question_id[:_FLAG_QUESTION_ID_MAX]
 
-    reason = str((body or {}).get("reason", ""))[:_FLAG_REASON_MAX]
-    player_name = str((body or {}).get("player_name", ""))[:50]
-
-    entry = {
-        "ts": int(time.time()),
-        "question_id": question_id,
-        "reason": reason,
-        "player_name": player_name,
-        "remote": request.remote or "",
-    }
-
-    flag_path = ctx.runtime.data_dir / _FLAG_FILE
-
-    def _append() -> None:
-        flag_path.parent.mkdir(parents=True, exist_ok=True)
-        # Refuse to grow unbounded — drop oldest half if we hit the cap.
-        # JSONL is append-friendly, this is a rare event, so a copy-trim
-        # is acceptable. Keeps the cap from being silently bypassed.
-        if flag_path.exists() and flag_path.stat().st_size >= _FLAG_MAX_BYTES:
-            try:
-                lines = flag_path.read_text("utf-8").splitlines()
-                flag_path.write_text("\n".join(lines[len(lines) // 2:]) + "\n", "utf-8")
-            except OSError:
-                pass
-        with flag_path.open("a", encoding="utf-8") as f:
-            f.write(json.dumps(entry, ensure_ascii=False) + "\n")
-
-    await ctx.runtime.run_in_executor(_append)
-    _LOGGER.info("Question flagged: %s (reason=%r)", question_id, reason[:40])
+    entry = await _flag_store(request).add(
+        question_id,
+        reason=str((body or {}).get("reason", "")),
+        player_name=str((body or {}).get("player_name", "")),
+        remote=request.remote or "",
+    )
+    _LOGGER.info(
+        "Question flagged: %s (reason=%r)", entry["question_id"], entry["reason"][:40]
+    )
     return web.json_response({"ok": True})
 
 
@@ -1236,32 +1223,9 @@ async def flag_list_view(request: web.Request) -> web.Response:
     """
     if not _is_admin_authenticated(request):
         return _unauthorized()
-    ctx = _get_ctx(request)
-    flag_path = ctx.runtime.data_dir / _FLAG_FILE
-
-    def _read() -> list[dict]:
-        if not flag_path.exists():
-            return []
-        entries: list[dict] = []
-        for line in flag_path.read_text("utf-8").splitlines():
-            line = line.strip()
-            if not line:
-                continue
-            try:
-                entries.append(json.loads(line))
-            except ValueError:
-                continue
-        return entries
-
-    entries = await ctx.runtime.run_in_executor(_read)
-    # #305: never return the stored client IP (``remote``) to callers — the
-    # /api/quizify/* routes are added to hass.http.app.router with NO HA auth,
-    # so /flags is readable unauthenticated. The IP is still stored on disk for
-    # operator forensics; it is simply stripped from the response so an
-    # anonymous caller can't enumerate the IPs of everyone who flagged a
-    # question. Strip it defensively per entry (older entries may pre-date this).
-    sanitized = [{k: v for k, v in e.items() if k != "remote"} for e in entries]
-    return web.json_response({"flags": sanitized})
+    # The store strips the stored client IP (#305) — the /api/quizify/* routes
+    # are registered with NO HA auth, so a response is a publication.
+    return web.json_response({"flags": await _flag_store(request).list()})
 
 
 # ---------------------------------------------------------------------------
