@@ -1871,7 +1871,15 @@ class QuizifyWebSocketHandler:
         self._progress_dirty = False
         gs = self._get_game_state()
         if gs is not None:
-            await self._conn.broadcast(serialize_answer_progress(gs.get_players()))
+            # #835: the rows the room can see, not the head count. In team
+            # mode the counter has to count teams out of teams — no member is
+            # ever marked submitted, so counting people left the television on
+            # 0/N for the whole round.
+            await self._conn.broadcast(
+                serialize_answer_progress(
+                    gs.get_players(), gs.get_ranked_participants()
+                )
+            )
 
         if self._progress_dirty:
             self._progress_flush_task = asyncio.ensure_future(
@@ -3172,6 +3180,16 @@ class QuizifyWebSocketHandler:
                 participant.name: participant.score
                 for participant in game_state.get_ranked_participants()
             },
+            # #833: the standings AFTER the settlement, in the shape every
+            # board already renders. ``scores`` above is a name→number map —
+            # no rank, no entrant id, nothing a leaderboard row is built from —
+            # so the one screen the whole room reads had no way to repaint and
+            # kept showing the player who had just lost everything in first
+            # place. ``finish_hot_seat`` has already applied the deltas by the
+            # time this runs, so these are the real numbers.
+            "leaderboard": serialize_leaderboard(
+                game_state.get_ranked_participants()
+            ),
         })
 
     async def resume_normal_question(self, game_state: QuizifyGameState) -> None:

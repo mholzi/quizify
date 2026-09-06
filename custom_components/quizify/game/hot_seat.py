@@ -574,6 +574,16 @@ class HotSeatRound:
             "winner_delta": deltas.get(self.winner, 0) if self.winner else 0,
             "answered": self.answered,
             "correct_index": self.correct_index,
+            # The answer itself, spelled out (#833). ``correct_index`` is a
+            # CANONICAL index and the television is shown the SHUFFLED order,
+            # so an index is the one thing that screen cannot use — and with
+            # nothing else to render it stood empty but for the settlement
+            # line while the room waited for the host.
+            "correct_answer": (
+                self.question.answers[self.correct_index].text
+                if self.question is not None and self.correct_index is not None
+                else ""
+            ),
             "answer_index": self.answer_index,
             "bids": self.reveal(),
             "bets": [

@@ -380,12 +380,28 @@
                 height: 180px;
             }
 
-            #lobby-view .dashboard-waiting-text {
+            /* #836: these two were written for ``#lobby-view`` — which is the
+               PHONE's lobby (``css/src/07-player.css``). The television's is
+               ``#waiting-view``, so neither rule has ever matched anything on
+               this page and the compaction they were part of never happened
+               here. Measured at 1280x720: the lobby column was 733.1px in a
+               720px viewport with ``body { overflow: hidden }``, cutting the
+               head-to-head line in half. */
+            #waiting-view .dashboard-waiting-text {
                 margin: 0;
             }
 
-            #lobby-view .dashboard-join-fallback {
+            #waiting-view .dashboard-join-fallback {
                 margin-top: 2px;
+            }
+
+            /* The column's own 24px rhythm is the other half of the overflow:
+               four children means three gaps, and 72px of air is a 1080p
+               proportion on a screen with 549.8px of budget. Halved rather
+               than removed — the QR block has to stay separable from the
+               roster under it from three metres away. */
+            #waiting-view .dashboard-waiting {
+                gap: 12px;
             }
 
             .dashboard-h2h {
@@ -2030,7 +2046,14 @@
                     </div>
                 </div>
                 <div class="dashboard-right">
-                    <div class="dashboard-leaderboard-title" data-i18n="dashboard.leaderboard">Leaderboard</div>
+                    <!-- #837: this panel carries the LIGHTNING-only running
+                         score — everyone starts it on zero — but it sits where
+                         the game leaderboard sits, in the same card, under the
+                         same heading. For the ~90s the round lasts the room
+                         was told the leader was last on nothing. The recap
+                         panel below already says what it is showing; this one
+                         now does too. -->
+                    <div class="dashboard-leaderboard-title" data-i18n="lightning.liveScoreTitle">Lightning Round · this round only</div>
                     <div id="lightning-leaderboard" class="dashboard-leaderboard"></div>
                 </div>
             </div>
@@ -3045,6 +3068,26 @@
             els.questionText.textContent = hotSeatT(
                 key, { name: payer, pts: Math.abs(delta) }, fallback
             );
+            // #833: the chair is the biggest single points swing in the game,
+            // and the board beside the headline was still showing the previous
+            // standing — the player who had just lost everything, first. The
+            // settlement is applied server-side before this frame is built, so
+            // these are the numbers the host page shows after a reload.
+            if (msg.leaderboard) renderLeaderboard(els.leaderboard, msg.leaderboard);
+            // #833: and the answer, so the left column is not one line over a
+            // blank screen while the room waits for the host. Rendered as the
+            // reveal's own correct tile rather than a new kind of element —
+            // the room has been reading that shape all game. The letter label
+            // is left off on purpose: the tile is alone, so "B" would name a
+            // position in a grid that is no longer on screen.
+            if (els.answersGrid) {
+                els.answersGrid.innerHTML = msg.correct_answer
+                    ? '<div class="dashboard-answer revealed correct">' +
+                          '<span class="answer-text">' +
+                          escapeHtml(msg.correct_answer) + '</span>' +
+                      '</div>'
+                    : '';
+            }
             if (els.answerProgress) els.answerProgress.classList.add('hidden');
             if (els.timerFill) els.timerFill.style.width = '0%';
         }

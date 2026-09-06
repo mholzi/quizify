@@ -682,7 +682,27 @@ def serialize_player_list(players: list[PlayerSession]) -> list[dict[str, Any]]:
     ]
 
 
-def serialize_answer_progress(players: list[PlayerSession]) -> dict[str, Any]:
+def _entrant_has_answered(entrant: Any) -> bool:
+    """Whether one leaderboard row has a response standing this round (#835).
+
+    A player is ``submitted`` the moment they tap — the tap is final. A team
+    never is: ``submit_answer``'s team branch deliberately marks nobody
+    submitted, because every member may keep changing the team's answer until
+    the clock stops (#365). So a team has answered when it has a standing
+    answer or guess, which is exactly the thing that will score.
+    """
+    if getattr(entrant, "team_id", None) is not None:
+        return (
+            getattr(entrant, "current_answer", None) is not None
+            or getattr(entrant, "current_guess", None) is not None
+        )
+    return bool(entrant.submitted)
+
+
+def serialize_answer_progress(
+    players: list[PlayerSession],
+    entrants: list[Any] | None = None,
+) -> dict[str, Any]:
     """Who has answered this round, in the shape the phone tracker expects (#619).
 
     Deliberately its own payload rather than a field on ``serialize_player_list``:
@@ -694,12 +714,36 @@ def serialize_answer_progress(players: list[PlayerSession]) -> dict[str, Any]:
     ``submitted`` and ``connected`` off each entry. The issue proposed a plain
     list of names; that renderer could not have drawn it.
 
+    ``entrants`` is ``game_state.get_ranked_participants()`` — the rows the
+    room can see, teams in team mode and players otherwise (#835). Counting
+    people in team mode got the counter wrong twice over: nobody is ever
+    marked submitted in a team game, so the television read ``0/4`` for the
+    whole round, and the ``4`` was the head count rather than the number of
+    things that have to answer. Omitted, this falls back to ``players``, which
+    outside team mode is the same list.
+
     Scores are omitted on purpose. This goes out mid-question, and a live score
     beside each name would leak who just answered correctly.
     """
+    rows: list[Any] = players if entrants is None else entrants
+    connected_by_name = {p.name: p.connected for p in players}
+
+    def _connected(row: Any) -> bool:
+        members = getattr(row, "members", None)
+        if members is None:
+            return bool(row.connected)
+        # A team is present while any of it is: the tracker greys out a row
+        # the room should stop waiting for, and a team with one phone still
+        # awake is not that.
+        return any(connected_by_name.get(m, False) for m in members)
+
     entries = [
-        {"name": p.name, "submitted": p.submitted, "connected": p.connected}
-        for p in players
+        {
+            "name": r.name,
+            "submitted": _entrant_has_answered(r),
+            "connected": _connected(r),
+        }
+        for r in rows
     ]
     return {
         "type": "answer_progress",
