@@ -285,6 +285,11 @@ class TestBuilderWiring:
 PLAYER_GAME = WWW / "js" / "player-game.js"
 PLAYER_CORE = WWW / "js" / "player-core.js"
 DASHBOARD = WWW / "dashboard.html"
+# #787: the phone and the television used to carry a copy of the preload
+# each. There is one implementation now, and each surface delegates to it —
+# so the rules below are checked once, at the place they now live, and each
+# surface is checked for reaching it.
+RENDER_SHARED = WWW / "js" / "render-shared.js"
 
 
 class TestClientsPreload:
@@ -305,6 +310,14 @@ class TestClientsPreload:
         assert "preloadNextImage(msg.next_image_url)" in src
 
     @pytest.mark.parametrize("path", [PLAYER_GAME, DASHBOARD])
+    def test_each_surface_routes_through_the_shared_preload(self, path: Path) -> None:
+        """One implementation, or the rules below hold on only one screen."""
+        body = _function_body(path.read_text("utf-8"), "preloadNextImage")
+        assert "QuizifyRenderShared.preloadNextImage(" in body, (
+            "this surface preloads on its own again (#787)"
+        )
+
+    @pytest.mark.parametrize("path", [RENDER_SHARED])
     def test_preload_uses_a_detached_image(self, path: Path) -> None:
         """The one rule that keeps a progressive-reveal round honest (#434).
 
@@ -325,13 +338,13 @@ class TestClientsPreload:
         assert "question-image" not in code
         assert "image-zoom-img" not in code
 
-    @pytest.mark.parametrize("path", [PLAYER_GAME, DASHBOARD])
+    @pytest.mark.parametrize("path", [RENDER_SHARED])
     def test_preload_sanitizes_the_url(self, path: Path) -> None:
         """A hint off the wire gets no more trust than image_url (#536/#540)."""
         body = _function_body(path.read_text("utf-8"), "preloadNextImage")
         assert "safeImageUrl" in body
 
-    @pytest.mark.parametrize("path", [PLAYER_GAME, DASHBOARD])
+    @pytest.mark.parametrize("path", [RENDER_SHARED])
     def test_preload_keeps_a_reference_to_the_image(self, path: Path) -> None:
         """A detached Image with no live reference can be collected mid-request.
 

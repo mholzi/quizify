@@ -44,17 +44,28 @@ def test_reconnect_pill_element_present() -> None:
 
 
 def _onclose_handler(html: str) -> str:
-    """The body of ``ws.onclose``, and nothing else (#811).
+    """The body of the close handler, and nothing else (#811).
 
-    Anchored on the *assignment*, not the identifier, and on comment-free
+    Anchored on the *declaration*, not the identifier, and on comment-free
     source. ``html.index("ws.onclose")`` used to land on the CSS comment at
-    line 250 ("When ws.onclose fires mid-question…"), and the matching
-    ``html.index("ws.onerror")`` on the handler at line 2400 — a 2150-line
-    region covering most of the page, including ``ws.onopen``.
+    line 250 ("When ws.onclose fires mid-question…") — a region covering most
+    of the page, including the open handler.
+
+    Since #787 the socket is opened through ``QuizifyClientCore``, so the
+    handler is an ``onClose:`` entry in an options object rather than a
+    ``ws.onclose =`` assignment. The slice is taken by brace balance, which is
+    tighter than the old end-anchor was.
     """
-    start = html.index("ws.onclose = function")
-    end = html.index("ws.onerror", start)
-    return html[start:end]
+    start = html.index("onClose: function")
+    depth = 0
+    for i in range(html.index("{", start), len(html)):
+        if html[i] == "{":
+            depth += 1
+        elif html[i] == "}":
+            depth -= 1
+            if depth == 0:
+                return html[start : i + 1]
+    raise AssertionError("unbalanced onClose handler")
 
 
 def test_reconnect_pill_toggled_in_ws_handlers() -> None:
@@ -68,7 +79,7 @@ def test_reconnect_pill_toggled_in_ws_handlers() -> None:
 def test_the_onclose_region_is_the_handler_and_not_half_the_page() -> None:
     """The slice has to be small enough for the assertion above to mean anything.
 
-    ``ws.onopen`` sits *above* ``ws.onclose`` in the file, so the old
+    The open handler sits *above* the close handler in the file, so the old
     comment-anchored region swallowed it whole: both branches of the pill were
     inside the "onclose" slice, and the test could not tell them apart.
     """
@@ -78,7 +89,7 @@ def test_the_onclose_region_is_the_handler_and_not_half_the_page() -> None:
         f"the onclose slice is {region.count(chr(10))} lines — it is supposed "
         "to be one handler (#811)"
     )
-    assert "ws.onopen" not in region
+    assert "onOpen" not in region
     assert "els.reconnectPill.hidden = true" not in region, (
         "the hide branch belongs to ws.onopen; if it is inside this region the "
         "anchor drifted again"
@@ -97,13 +108,18 @@ def test_the_old_anchor_could_not_see_a_misplaced_pill() -> None:
     show = "if (els.reconnectPill) els.reconnectPill.hidden = false;"
     assert html.count(show) == 1, "expected exactly one show-the-pill line"
 
-    # Delete it from onclose, re-insert it into onopen.
+    # Delete it from the close handler, re-insert it into the open one.
     moved = html.replace(show, "/* moved away */", 1)
-    open_marker = "ws.onopen = function() {"
+    open_marker = "onOpen: function () {"
     assert open_marker in moved
-    moved = moved.replace(open_marker, open_marker + "\n                " + show, 1)
+    moved = moved.replace(open_marker, open_marker + "\n                    " + show, 1)
 
-    old_region = moved[moved.index("ws.onclose") : moved.index("ws.onerror")]
+    # The naive anchor: the first mention of the identifier anywhere in the
+    # file, prose included. That is the CSS comment near the top, and the
+    # region runs past both handlers.
+    old_region = moved[
+        moved.index("ws.onclose") : moved.index("function handleMessage(msg)")
+    ]
     assert "els.reconnectPill.hidden = false" in old_region, (
         "the comment anchor is supposed to stay green on the broken page — "
         "that is the bug being fixed"

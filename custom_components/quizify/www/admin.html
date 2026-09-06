@@ -1079,6 +1079,10 @@
     <script src="/quizify/static/js/vendor/qrcode.min.js?v={{ASSET_VER}}"></script>
     <script src="/quizify/static/js/i18n.js?v={{ASSET_VER}}"></script>
     <script src="/quizify/static/js/utils.js?v={{ASSET_VER}}"></script>
+    <!-- #787: the socket lifecycle and the renderers all three surfaces share.
+         Must load after utils.js (escapeHtml, safeImageUrl) and before any
+         page script that uses QuizifyClientCore / QuizifyRenderShared. -->
+    <script src="/quizify/static/js/common.bundle.js?v={{ASSET_VER}}"></script>
     <script src="/quizify/static/js/icons.js?v={{ASSET_VER}}"></script>
 
     <script src="/quizify/static/js/admin.js?v={{ASSET_VER}}"></script>

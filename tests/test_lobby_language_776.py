@@ -256,7 +256,10 @@ def test_the_admin_pushes_the_language_on_connect() -> None:
     push only on chip-change would leave a host who never touches the chip
     (because HA is already English) serving a German lobby."""
     source = _without_comments((_JS / "admin.js").read_text("utf-8"))
-    onopen = source.split("ws.onopen = function ()", 1)[1].split("ws.onmessage", 1)[0]
+    # #787: the socket is opened through QuizifyClientCore now, so the
+    # on-open work is an `onOpen:` callback in its options object rather
+    # than an `ws.onopen =` assignment. Same handler, same slice.
+    onopen = source.split("onOpen: function ()", 1)[1].split("onMessage:", 1)[0]
 
     assert "_pushLanguage()" in onopen
     assert "send('set_language'" in source
