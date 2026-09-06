@@ -40,6 +40,11 @@ class _Req:
         self.app = {APP_CTX_KEY: ctx}
         self.remote = remote
         self._body = body
+        self.host = "homeassistant.local:8123"
+        # #785: the view now requires a declared JSON body (and refuses a
+        # cross-site Origin). A same-origin caller sends both; this fake is
+        # the app's own page, so no Origin at all is the honest shape here.
+        self.headers = {"Content-Type": "application/json"}
 
     async def json(self) -> dict:
         return self._body

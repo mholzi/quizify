@@ -41,6 +41,7 @@ sys.path.insert(0, str(_REPO_ROOT))
 from custom_components.quizify.const import (  # noqa: E402
     ERR_GAME_ENDED,
     ERR_INVALID_ACTION,
+    ERROR_FALLBACK_TEXT,
 )
 
 #: Spelled out rather than imported from const: these are wire values the
@@ -121,10 +122,15 @@ def _handler(game: QuizifyGameState, tmp_path: Path):
     handler._get_game_state = lambda: game  # type: ignore[assignment]
     sent: list[dict] = []
 
-    async def _send_error(ws, code, message) -> None:
-        sent.append({"code": code, "message": message})
+    # Capture one layer lower than ``send_error`` (#812): the fallback text is
+    # no longer passed in by the handler, it is filled in by ``send_error``
+    # itself from ``ERROR_FALLBACK_TEXT``. Stubbing ``send_error`` would step
+    # over the very defaulting these tests are here to check.
+    async def _send(ws, payload) -> None:
+        if payload.get("type") == "error":
+            sent.append(payload)
 
-    handler._conn.send_error = _send_error  # type: ignore[assignment]
+    handler._conn.send = _send  # type: ignore[assignment]
     handler._conn.broadcast = AsyncMock()  # type: ignore[assignment]
     return handler, sent
 
@@ -254,25 +260,46 @@ def test_the_three_languages_stay_in_key_parity() -> None:
 
 
 def test_every_registry_refusal_is_named_on_the_wire() -> None:
-    """The join handler's fallback map must cover all of ``add_player``.
+    """The shared fallback map must cover all of ``add_player``.
 
     ``ERR_GAME_ENDED`` was missing, so a guest scanning the QR code of a
     finished game got the bare "Failed to join".
+
+    #812: this used to locate "the join map" as the *first*
+    ``error_messages = {`` in ``websocket.py`` — correct only as long as
+    ``_handle_join`` happened to be defined before the two submit handlers. A
+    map added to an earlier handler would have silently redirected the test.
+    There is now one module-level map, so the test names it directly.
     """
     registry = REGISTRY_PY.read_text(encoding="utf-8")
     add_player = registry[registry.index("def add_player(") : registry.index(
         "def get_player("
     )]
-    refusals = set(re.findall(r"return False, (ERR_\w+)", add_player))
-    assert refusals, "could not find any refusal in PlayerRegistry.add_player"
+    refusal_names = set(re.findall(r"return False, (ERR_\w+)", add_player))
+    assert refusal_names, "could not find any refusal in PlayerRegistry.add_player"
 
-    handler = WEBSOCKET_PY.read_text(encoding="utf-8")
-    error_map = handler[handler.index("error_messages = {") :][:600]
-    for code in sorted(refusals):
-        assert code in error_map, (
-            f"{code} can refuse a join but has no message in the join "
-            "handler's fallback map — the guest gets 'Failed to join'"
+    import custom_components.quizify.const as const  # noqa: PLC0415
+
+    for name in sorted(refusal_names):
+        code = getattr(const, name)
+        assert code in ERROR_FALLBACK_TEXT, (
+            f"{name} can refuse a join but has no entry in "
+            "ERROR_FALLBACK_TEXT — the guest gets the bare code"
         )
+        assert ERROR_FALLBACK_TEXT[code].strip(), f"{name} maps to empty text"
+
+
+def test_no_handler_keeps_a_private_copy_of_the_map() -> None:
+    """The three hand-copied ``error_messages`` dicts are gone (#812).
+
+    They had already drifted from each other and from ``en.json``; a fourth
+    copy would drift the same way.
+    """
+    handler = WEBSOCKET_PY.read_text(encoding="utf-8")
+    assert "error_messages = {" not in handler, (
+        "websocket.py declares a local error-message map again — the fallback "
+        "text belongs in const.ERROR_FALLBACK_TEXT (#812)"
+    )
 
 
 @pytest.mark.asyncio

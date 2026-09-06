@@ -69,6 +69,9 @@ class _FakeRequest:
         self.app = {ps.APP_CTX_KEY: ctx}
         self.remote = "1.2.3.4"
         self._body = body
+        self.host = "homeassistant.local:8123"
+        # #785: the POST views require a declared JSON body.
+        self.headers = {"Content-Type": "application/json"}
 
     async def json(self) -> dict:
         return self._body
