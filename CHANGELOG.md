@@ -3,7 +3,7 @@
 All notable changes to Quizify are documented here. This project follows
 [Semantic Versioning](https://semver.org/).
 
-## [1.15.0-RC2] — 2026-09-05
+## [1.15.0] — 2026-09-06
 
 Twenty-four entries, chosen in one sitting and built in one — then played, which
 found four more.
