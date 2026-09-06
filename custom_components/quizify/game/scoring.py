@@ -116,6 +116,30 @@ ESTIMATE_MIN_POINTS = 5
 # Flat bonus for landing exactly on the true value.
 ESTIMATE_EXACT_BONUS = 25
 
+# How close a guess has to land, as a fraction of the question's slider span,
+# to count as "the group got this one" for the auto-difficulty calibrator
+# (#810). Deliberately NOT the exact-hit test: distance == 0 on a slider that
+# runs 0…1000 is a coin-flip event, so feeding `exact` to the calibrator would
+# make every estimate round a unanimous "make it easier" vote and walk an
+# auto-mode game down to EASY and hold it there — a worse bug than the missing
+# feed. A tenth of the span is the same shape of judgement the reveal already
+# draws on the number line: inside the band you were in the neighbourhood.
+ESTIMATE_CALIBRATION_BAND = 0.10
+
+
+def estimate_within_calibration_band(
+    distance: float, span: float | None
+) -> bool:
+    """Whether a guess ``distance`` from the truth counts as correct (#810).
+
+    ``span`` is the question's ``estimate_max - estimate_min``. Without a
+    usable span (a malformed question that slipped past the parser) there is
+    no scale to judge closeness against, so only an exact hit counts.
+    """
+    if span is None or span <= 0:
+        return distance == 0
+    return distance <= span * ESTIMATE_CALIBRATION_BAND
+
 
 def calculate_estimate_scores(
     guesses: dict[str, float],

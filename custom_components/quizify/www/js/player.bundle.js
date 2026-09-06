@@ -2900,8 +2900,14 @@
         window.scrollTo(0, 0);
         var leaderboard = (data.leaderboard || []).slice();
 
+        // Match on the entrant id, not the printed name (#759): two teams may
+        // carry the same name, and by name the "(du)" badge lit up on both of
+        // them. The name is still what the row prints.
+        var team = window.QuizifyPlayerTeam;
+        var mine = team && team.myTeam && team.myTeam();
+        var me = (mine && (mine.team_id || mine.name)) || state.playerName;
         leaderboard.forEach(function (entry) {
-            entry.is_current = (entry.name === state.playerName);
+            entry.is_current = ((entry.entrant_id || entry.name) === me);
         });
         // Defensive: ensure rank order (server sends sorted, but be safe).
         leaderboard.sort(function (a, b) {
@@ -5306,7 +5312,26 @@
      * @param {Object} data - State data containing leaderboard
      * @param {string} targetListId - ID of list container
      */
-    var _prevLeaderboardRanks = {}; // name -> rank
+    var _prevLeaderboardRanks = {}; // entrant id -> rank
+
+    /**
+     * The leaderboard row that is mine: my team's when I'm in one, my own
+     * otherwise. Mirrors player-lightning.js's myEntrant() — see #728 there
+     * and #759 here: two teams may carry the same name, so matching rows by
+     * the printed name lit up the "you" badge on both of them, collapsed them
+     * into one entry in the rank-delta memo and made the FLIP animation swap
+     * their positions at random.
+     */
+    function myEntrant() {
+        var team = window.QuizifyPlayerTeam;
+        var mine = team && team.myTeam && team.myTeam();
+        return (mine && (mine.team_id || mine.name)) || state.playerName;
+    }
+
+    /** The stable key of one leaderboard row; falls back to the name. */
+    function entrantKey(entry) {
+        return entry.entrant_id || entry.name;
+    }
 
     // Clear the rank-delta memo (issue #257). Without this a game_reset
     // leaves stale ranks behind, so the first leaderboard of the *next*
@@ -5320,10 +5345,11 @@
         var listEl = document.getElementById(targetListId || 'leaderboard-list');
         if (!listEl) return;
 
+        var me = myEntrant();
         leaderboard.forEach(function (entry) {
-            entry.is_current = (entry.name === state.playerName);
+            entry.is_current = (entrantKey(entry) === me);
             // Calculate rank delta vs previous
-            var prevRank = _prevLeaderboardRanks[entry.name];
+            var prevRank = _prevLeaderboardRanks[entrantKey(entry)];
             if (prevRank !== undefined && prevRank !== entry.rank) {
                 entry.rank_delta = prevRank - entry.rank; // positive = moved up
             } else {
@@ -5331,12 +5357,14 @@
             }
         });
 
-        var displayList = compressLeaderboard(leaderboard, state.playerName);
+        var displayList = compressLeaderboard(leaderboard, me);
 
         // FLIP animation: record old positions before DOM update
         var oldPositions = {};
-        listEl.querySelectorAll('.leaderboard-entry[data-name]').forEach(function(el) {
-            oldPositions[el.dataset.name] = el.getBoundingClientRect().top;
+        // Keyed by the entrant id, not the name (#759): two same-named teams
+        // shared one slot here and the FLIP animation flung them at each other.
+        listEl.querySelectorAll('.leaderboard-entry[data-entrant]').forEach(function(el) {
+            oldPositions[el.dataset.entrant] = el.getBoundingClientRect().top;
         });
 
         var html = '';
@@ -5349,11 +5377,11 @@
         // FLIP: animate from old positions to new
         var prefersReduced = window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches;
         if (!prefersReduced && Object.keys(oldPositions).length > 0) {
-            listEl.querySelectorAll('.leaderboard-entry[data-name]').forEach(function(el) {
-                var name = el.dataset.name;
-                if (oldPositions[name] !== undefined) {
+            listEl.querySelectorAll('.leaderboard-entry[data-entrant]').forEach(function(el) {
+                var key = el.dataset.entrant;
+                if (oldPositions[key] !== undefined) {
                     var newTop = el.getBoundingClientRect().top;
-                    var delta = oldPositions[name] - newTop;
+                    var delta = oldPositions[key] - newTop;
                     if (Math.abs(delta) > 2) {
                         el.style.transform = 'translateY(' + delta + 'px)';
                         el.style.transition = 'none';
@@ -5368,7 +5396,7 @@
 
         // Store current ranks for next update
         leaderboard.forEach(function(entry) {
-            _prevLeaderboardRanks[entry.name] = entry.rank;
+            _prevLeaderboardRanks[entrantKey(entry)] = entry.rank;
         });
 
         if (leaderboard.length > 8) {
@@ -5381,7 +5409,7 @@
     /**
      * Compress leaderboard for display when >10 players
      */
-    function compressLeaderboard(players, currentPlayerName) {
+    function compressLeaderboard(players, currentEntrant) {
         if (players.length <= 10) return players;
 
         var top5 = players.slice(0, 5);
@@ -5389,7 +5417,7 @@
         var currentIdx = -1;
 
         for (var i = 0; i < players.length; i++) {
-            if (players[i].name === currentPlayerName) {
+            if (entrantKey(players[i]) === currentEntrant) {
                 currentIdx = i;
                 break;
             }
@@ -5443,7 +5471,7 @@
             ? '<span class="player-color-dot" style="background:' + entry.color + '"></span>'
             : '';
         var colorBorder = entry.color ? ' style="border-left:3px solid ' + entry.color + '"' : '';
-        return '<div class="leaderboard-entry' + currentClass + disconnectedClass + '"' + colorBorder + ' data-name="' + pu.escapeHtml(entry.name) + '">' +
+        return '<div class="leaderboard-entry' + currentClass + disconnectedClass + '"' + colorBorder + ' data-entrant="' + pu.escapeHtml(entrantKey(entry)) + '">' +
             '<span class="entry-rank' + rankClass + '">' + rank + '</span>' +
             colorDot +
             '<span class="entry-name">' + pu.escapeHtml(entry.name) + youBadge + '</span>' +

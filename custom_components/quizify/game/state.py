@@ -49,6 +49,7 @@ from .questions import (
 from .scoring import (
     calculate_estimate_scores,
     calculate_podium,
+    estimate_within_calibration_band,
 )
 from .scoring_engine import ScoringEngine, wager_loss
 from .team import ANSWER_CHANGE_LOCK_SECONDS, Team, TeamRegistry
@@ -724,11 +725,21 @@ class QuizifyGameState:
             if not player.connected
         ]
         for name in stale_names:
-            self._player_registry.remove_player(name)
+            # Through the game-level remove_player, not the registry's (#799):
+            # the registry only knows the roster, so a direct call dropped the
+            # player but left their name in ``Team.members``. A team whose
+            # members had all gone dark therefore survived as a zombie row that
+            # timed out every round and could never be dissolved.
+            self.remove_player(name)
 
         # Reset player scores
         for player in self._player_registry.players.values():
             player.reset_for_new_game()
+
+        # Reset team scores (#799). Teams deliberately outlive reset_to_lobby
+        # so the one-tap rematch keeps the room — but their tallies must not,
+        # or game 2 opens on game 1's leaderboard.
+        self._team_registry.reset_for_new_game()
 
         # Reset power-ups
         self._powerup_manager.reset()
@@ -1418,9 +1429,10 @@ class QuizifyGameState:
             )
 
         # Estimate rounds (#275) are scored by closeness across all players,
-        # not per-answer correctness. They build their own RoundSummary and
-        # short-circuit the MC correctness/scoring path below — but still share
-        # the downstream phase transition + broadcast (handled in the helper).
+        # not per-answer correctness, so they short-circuit the MC
+        # correctness/scoring path below. Both paths end in ``_close_round``,
+        # which owns the summary, the phase transition, the calibrator feed,
+        # the stats and the broadcast (#810).
         if question.is_estimate:
             return self._evaluate_estimate_round(question)
 
@@ -1479,7 +1491,41 @@ class QuizifyGameState:
             # average is that they've experienced a scored round.
             player.rounds_played += 1
 
-        # Build per-player results
+        return self._close_round(question, correct_answer, player_correct)
+
+    def _close_round(
+        self,
+        question: Question,
+        correct_answer: Answer,
+        correctness: dict[str, bool],
+        *,
+        estimate: dict[str, Any] | None = None,
+        calibration_correctness: dict[str, bool] | None = None,
+    ) -> RoundSummary:
+        """The tail every round evaluator shares (#810).
+
+        Both evaluators used to carry their own copy of this sequence, and the
+        copies had drifted: the estimate path never fed the ``GroupCalibrator``,
+        so since #566 (every pack carries estimate questions) an auto-mode room
+        contributed no signal on those rounds at all. One helper, two callers,
+        no second chance to drift.
+
+        Each caller does its own scoring and hands over:
+
+        * ``correctness`` — participant name -> did they get it right. Drives
+          the per-player ``AnswerResult`` the reveal renders and the
+          per-question stats. For estimate rounds this is the exact-hit test,
+          unchanged.
+        * ``calibration_correctness`` — the same shape, but for the
+          auto-difficulty signal, defaulting to ``correctness``. The estimate
+          path passes a *different* dict on purpose; see
+          ``estimate_within_calibration_band``.
+        * ``estimate`` — the number-line reveal block, MC rounds pass None.
+        """
+        if calibration_correctness is None:
+            calibration_correctness = correctness
+
+        # Build per-player results (connected only).
         results: list[AnswerResult] = []
         for player in self._player_registry.players.values():
             if not player.connected:
@@ -1487,7 +1533,7 @@ class QuizifyGameState:
             results.append(
                 AnswerResult(
                     player_id=player.name,
-                    correct=player_correct.get(player.name, False),
+                    correct=correctness.get(player.name, False),
                     points_earned=player.round_score,
                     new_streak=player.streak,
                     new_total=player.score,
@@ -1502,6 +1548,7 @@ class QuizifyGameState:
             fun_fact=question.fun_fact,
             results=results,
             leaderboard=leaderboard,
+            estimate=estimate,
         )
 
         self.phase = GamePhase.ANSWER_REVEAL
@@ -1522,7 +1569,9 @@ class QuizifyGameState:
             ]
             total = len(participants)
             correct = sum(
-                1 for p in participants if player_correct.get(p.name, False)
+                1
+                for p in participants
+                if calibration_correctness.get(p.name, False)
             )
             self._calibrator.record_round(correct=correct, total=total)
             new_target = self._calibrator.next_target()
@@ -1543,7 +1592,7 @@ class QuizifyGameState:
         if self._question_stats is not None:
             try:
                 submitted_results = [
-                    (player_correct.get(p.name, False), p.last_elapsed)
+                    (correctness.get(p.name, False), p.last_elapsed)
                     for p in self._player_registry.players.values()
                     if p.submitted
                 ]
@@ -1575,7 +1624,9 @@ class QuizifyGameState:
         full, exact = bonus), applies them to player scores, and builds a
         RoundSummary whose ``estimate`` block carries the number-line reveal
         data. Non-guessers score 0 and break their streak, same as an MC
-        timeout. Mirrors the MC path's downstream phase transition + broadcast.
+        timeout. The round-closing tail (summary, phase, calibrator, stats,
+        broadcast) is ``_close_round``, shared with the MC path — this method
+        does the scoring and nothing else (#810).
         """
         answer_val = (
             question.estimate_answer
@@ -1652,24 +1703,6 @@ class QuizifyGameState:
         if self.team_mode:
             self._apply_estimate_results_to_teams(carriers, scores)
 
-        # Build per-player results (connected only).
-        results: list[AnswerResult] = []
-        for player in self._player_registry.players.values():
-            if not player.connected:
-                continue
-            entry = scores.get(player.name)
-            results.append(
-                AnswerResult(
-                    player_id=player.name,
-                    correct=bool(entry and entry["exact"]),
-                    points_earned=player.round_score,
-                    new_streak=player.streak,
-                    new_total=player.score,
-                )
-            )
-
-        leaderboard = self.get_leaderboard()
-
         # A synthetic "correct answer" so the rest of the pipeline (which reads
         # ``RoundSummary.correct_answer.text``) keeps working for estimate
         # rounds. The text is the true value with its unit.
@@ -1678,33 +1711,31 @@ class QuizifyGameState:
 
         estimate_block = self._build_estimate_reveal(question, answer_val, scores)
 
-        self._round_summary = RoundSummary(
-            question=question,
-            correct_answer=correct_answer,
-            fun_fact=question.fun_fact,
-            results=results,
-            leaderboard=leaderboard,
-            estimate=estimate_block,
+        # Two correctness readings, on purpose (#810).
+        #
+        # ``exact`` is what the reveal and the per-question stats have always
+        # meant by correct on an estimate round, and stays that way: the number
+        # line either landed on the value or it did not.
+        #
+        # The auto-difficulty calibrator needs a different reading. Distance
+        # zero on a slider is close to unattainable, so feeding it ``exact``
+        # would score every estimate round 0/N and march an auto-mode game down
+        # to EASY — the reason the calibrator feed was better off missing than
+        # naively copied. It gets "did the guess land inside the band" instead,
+        # which is the judgement the reveal's number line already invites.
+        exact_correct = {
+            name: bool(entry["exact"]) for name, entry in scores.items()
+        }
+        span = (
+            question.estimate_max - question.estimate_min
+            if question.estimate_max is not None
+            and question.estimate_min is not None
+            else None
         )
-
-        self.phase = GamePhase.ANSWER_REVEAL
-
-        # Per-question stats: estimate rounds record an "exact-or-not" signal +
-        # elapsed so the stat pipeline stays populated. Closeness has no clean
-        # correct/wrong, so an exact hit counts as correct.
-        if self._question_stats is not None:
-            try:
-                submitted_results = [
-                    (bool(scores.get(p.name, {}).get("exact")), p.last_elapsed)
-                    for p in self._player_registry.players.values()
-                    if p.submitted
-                ]
-                self._question_stats.record_round(question.id, submitted_results)
-            except Exception:  # noqa: BLE001
-                _LOGGER.exception("Failed to record estimate question stats")
-
-        for player in self._player_registry.players.values():
-            player.joined_late = False
+        close_correct = {
+            name: estimate_within_calibration_band(entry["distance"], span)
+            for name, entry in scores.items()
+        }
 
         _LOGGER.info(
             "Estimate round %d evaluated (answer=%s, %d guesses), "
@@ -1713,9 +1744,14 @@ class QuizifyGameState:
             answer_val,
             len(guesses),
         )
-        self._fire_broadcast("round_evaluated")
 
-        return self._round_summary
+        return self._close_round(
+            question,
+            correct_answer,
+            exact_correct,
+            estimate=estimate_block,
+            calibration_correctness=close_correct,
+        )
 
     @staticmethod
     def _format_estimate_value(question: Question, value: float) -> str:
@@ -2011,6 +2047,11 @@ class QuizifyGameState:
 
         for player in self._player_registry.players.values():
             player.reset_for_new_game()
+
+        # Same reason as in start_game (#799): the FINALE's "Play again" lands
+        # here, and a leaderboard that still reads Sofa 120 / Cara 0 before the
+        # first question of the rematch is the bug this closes.
+        self._team_registry.reset_for_new_game()
 
         self._notify_state_callbacks()
 
@@ -2808,6 +2849,24 @@ class QuizifyGameState:
             if self._team_registry.get_by_member(p.name) is None
         ]
         return teams + solo
+
+    def get_ranked_participant_for(self, player_name: str) -> Any | None:
+        """The row on the leaderboard that a given player's points land in.
+
+        Their team in team mode, themselves otherwise — and themselves in team
+        mode too when they joined no team, since a solo player keeps their own
+        row (see ``get_ranked_participants``). Returns None for a name that is
+        not in the game.
+
+        Exists because anything that awards points to "whoever answered" has to
+        award them to the participant the room can actually see. The reveal
+        reaction bonus did not, and paid a team member's shadow score (#800).
+        """
+        if self.team_mode:
+            team = self._team_registry.get_by_member(player_name)
+            if team is not None:
+                return team
+        return self._player_registry.get_player(player_name)
 
     def get_round_summary(self) -> RoundSummary | None:
         """Return the last round summary."""

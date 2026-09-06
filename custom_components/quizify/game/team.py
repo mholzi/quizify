@@ -103,6 +103,16 @@ class Team:
     is_admin: bool = False
     round_score_breakdown: dict = field(default_factory=dict)
 
+    #: round_number -> count of +1 reveal reaction bonuses this team has
+    #: RECEIVED that round, capped per round (#800). The team is the ranked
+    #: participant, so in team mode the bonus has to land here — crediting the
+    #: one member who happened to carry the answer moved a shadow score nobody
+    #: can see. Mirrors ``PlayerSession._reaction_bonuses_received`` field for
+    #: field, including being cleared by ``reset_for_new_game``: round numbers
+    #: restart at 1 each game, so a team at the cap in round N of the old game
+    #: would otherwise be blocked in round N of the new one (#167).
+    _reaction_bonuses_received: dict[int, int] = field(default_factory=dict)
+
     # ------------------------------------------------------------------
     # Membership
     # ------------------------------------------------------------------
@@ -205,6 +215,48 @@ class Team:
         self.round_score_breakdown = {}
         self.submitted = False
 
+    def add_reaction_bonus(self, round_num: int, cap: int) -> bool:
+        """Award a +1 reveal reaction bonus for ``round_num``, respecting ``cap``.
+
+        The team-side twin of ``PlayerSession.add_reaction_bonus`` (#800). A
+        team may receive at most ``cap`` bonuses per round; once at the cap the
+        call is a no-op. Returns ``True`` when a bonus was actually granted.
+        """
+        received = self._reaction_bonuses_received.get(round_num, 0)
+        if received >= cap:
+            return False
+        self._reaction_bonuses_received[round_num] = received + 1
+        self.score += 1
+        self.round_score += 1
+        return True
+
+    # ------------------------------------------------------------------
+    # Game lifecycle
+    # ------------------------------------------------------------------
+
+    def reset_for_new_game(self) -> None:
+        """Clear every game-level tally so a rematch starts this team at zero.
+
+        The twin of ``PlayerSession.reset_for_new_game`` (#799). Teams survive
+        ``reset_to_lobby`` on purpose — the one-tap rematch keeps the room
+        exactly as it stands — but until this existed nothing but the explicit
+        reset-game button cleared their scores, so game 2 opened with game 1's
+        leaderboard, awards counted the old rounds and the streak bonus carried
+        over.
+        """
+        self.score = 0
+        self.streak = 0
+        self.max_streak = 0
+        self.round_history = []
+        self.round_scores = []
+        self.answer_times = []
+        self.hard_score = 0
+        self.freezes_used = 0
+        self.powerups_used = 0
+        self.rounds_played = 0
+        self._reaction_bonuses_received = {}
+        self.reset_round()
+
     def to_dict(self) -> dict:
         """Wire shape. Mirrors a player entry closely on purpose (#365)."""
         return {
@@ -301,6 +353,16 @@ class TeamRegistry:
     def reset_round(self) -> None:
         for team in self._teams.values():
             team.reset_round()
+
+    def reset_for_new_game(self) -> None:
+        """Zero every team's game-level tallies, keeping the teams themselves.
+
+        The registry-level counterpart to the per-player loop in
+        ``start_game`` / ``reset_to_lobby`` (#799). Membership is untouched:
+        the rematch is meant to keep the room, only the scoreboard restarts.
+        """
+        for team in self._teams.values():
+            team.reset_for_new_game()
 
     def to_list(self) -> list[dict]:
         return [t.to_dict() for t in self._teams.values()]

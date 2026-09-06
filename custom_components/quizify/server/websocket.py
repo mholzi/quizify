@@ -45,6 +45,7 @@ from custom_components.quizify.game.state import (
 from custom_components.quizify.game.team import (
     ANSWER_CHANGE_LOCK_SECONDS as LIGHTNING_ANSWER_LOCK_SECONDS,
 )
+from custom_components.quizify.game.team import Team
 from custom_components.quizify.server.broadcast_dispatcher import BroadcastDispatcher
 from custom_components.quizify.server.connection import ConnectionManager
 from custom_components.quizify.server.origin import reject_cross_origin
@@ -1613,24 +1614,44 @@ class QuizifyWebSocketHandler:
             return  # already granted a bonus this round
         reactor.reaction_bonuses_given.add(round_num)
 
-        # Award +1 to each player who answered correctly this round,
-        # respecting the per-round incoming cap.
+        # Award +1 for each correct answer this round, respecting the per-round
+        # incoming cap.
+        #
+        # #800: the points go to the *ranked participant*, not to the name on
+        # the AnswerResult. In team mode the results are still per player — the
+        # member whose tap carried the team's answer is the "correct" one — so
+        # crediting them moved a shadow score (#668/#669) that no screen shows,
+        # while the leaderboard this very broadcast carries never budged. The
+        # recipient is therefore the team when there is one, and the player
+        # only when they are solo.
+        reactor_participant = game_state.get_ranked_participant_for(reactor.name)
         bonus_recipients: list[str] = []
+        credited: list[Any] = []
         for result in summary.results:
             if not result.correct:
                 continue
-            recipient = game_state.get_player(result.player_id)
-            if not recipient or recipient.name == reactor.name:
-                continue  # can't tip your own hat
+            recipient = game_state.get_ranked_participant_for(result.player_id)
+            if recipient is None or recipient is reactor_participant:
+                continue  # can't tip your own hat — nor your own team's
+            if any(recipient is seen for seen in credited):
+                continue  # one team, several correct members → one bonus
+            credited.append(recipient)
             # Per-round inbound counter (separate from `reaction_bonuses_given`
-            # which tracks OUTGOING bonuses). Encapsulated on PlayerSession so
+            # which tracks OUTGOING bonuses). Encapsulated on the participant so
             # it is reset per game in reset_for_new_game() (#167) and the cap
             # logic lives with the state it guards (#364).
             if not recipient.add_reaction_bonus(
                 round_num, self._REACTION_BONUS_CAP_PER_ROUND
             ):
                 continue  # recipient already at the per-round cap
-            bonus_recipients.append(recipient.name)
+            # ``to_players`` stays a list of PLAYER names: it is what each
+            # phone matches itself against to raise the "+1 from X" toast. A
+            # credited team hands over its whole roster, so every member is
+            # told about the point their team just earned.
+            if isinstance(recipient, Team):
+                bonus_recipients.extend(recipient.members)
+            else:
+                bonus_recipients.append(recipient.name)
 
         if bonus_recipients:
             # #449: the bonus above mutated recipient scores, but the #414
