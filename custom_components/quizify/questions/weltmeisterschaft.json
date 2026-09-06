@@ -2113,7 +2113,7 @@
     },
     {
       "id": "world_cup_de_162",
-      "question": "Wie hieß dieser erste Weltmeisterschaftspokal?",
+      "question": "Wie hieß der erste Weltmeisterschaftspokal?",
       "answers": [
         {
           "text": "Coupe Jules Rimet",
@@ -2130,9 +2130,7 @@
       ],
       "difficulty": "medium",
       "fun_fact": "Brasilien durfte den Pokal 1970 nach dem dritten Titel behalten. 1983 wurde er in Rio gestohlen und nie wiedergefunden; man geht davon aus, dass er eingeschmolzen wurde.",
-      "category": "Weltmeisterschaft",
-      "image_url": "/quizify/static/img/packs/worldcup/jules-rimet-trophy.webp",
-      "reveal_style": "progressive"
+      "category": "Weltmeisterschaft"
     },
     {
       "id": "world_cup_de_163",

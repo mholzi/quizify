@@ -28,12 +28,12 @@ from pathlib import Path
 
 import pytest
 
+from tests.test_pack_image_licences_795 import parse_credits
+
 REPO = Path(__file__).resolve().parent.parent
 COMPONENT = REPO / "custom_components" / "quizify"
 QUESTIONS = COMPONENT / "questions"
 IMAGES = COMPONENT / "www" / "img" / "packs"
-
-EXPECTED_IMAGE_QUESTIONS = 5
 
 
 @dataclass(frozen=True)
@@ -48,6 +48,7 @@ class ImageSet:
     folder: str
     packs: tuple[str, ...]
     text_question_floor: int
+    image_questions: int = 5
 
     @property
     def image_dir(self) -> Path:
@@ -65,10 +66,25 @@ PACK_SETS = (
     ImageSet("science", ("wissenschaft-de.json", "science-en.json", "ciencia-es.json"), 150),
     ImageSet("tech", ("technik-de.json", "tech-en.json", "tecnologia-es.json"), 150),
     ImageSet("food", ("essen-de.json", "food-en.json", "comida-es.json"), 150),
-    ImageSet("sport", ("sport-de.json", "sport-en.json", "deportes-es.json"), 148),
-    ImageSet("worldcup", ("weltmeisterschaft.json", "world-cup.json", "copa-mundial-es.json"), 99),
+    # Three sets carry four rather than five. A picture whose licence stops at
+    # a border cannot ship (#793, #794, #739), and where no worldwide-public-
+    # domain replacement was found the question stayed and lost its picture —
+    # which is what #739 asked for. The count is per set so that a picture
+    # going missing for any other reason still fails.
+    ImageSet("sport", ("sport-de.json", "sport-en.json", "deportes-es.json"), 148, 4),
+    ImageSet(
+        "worldcup",
+        ("weltmeisterschaft.json", "world-cup.json", "copa-mundial-es.json"),
+        99,
+        4,
+    ),
     ImageSet("music", ("musik-de.json", "music-en.json", "musica-es.json"), 150),
-    ImageSet("popculture", ("popkultur.json", "pop-culture.json", "cultura-pop-es.json"), 149),
+    ImageSet(
+        "popculture",
+        ("popkultur.json", "pop-culture.json", "cultura-pop-es.json"),
+        149,
+        4,
+    ),
 )
 
 # (set, pack) for the guards that look at one pack at a time.
@@ -89,9 +105,10 @@ def _image_questions(iset: ImageSet, name: str) -> list[dict]:
 
 
 @pytest.mark.parametrize("iset,name", PACKS, ids=PACK_IDS)
-def test_the_pack_carries_five_image_questions(iset: ImageSet, name: str) -> None:
-    """The ask was five per pack — count it rather than trust the diff."""
-    assert len(_image_questions(iset, name)) == EXPECTED_IMAGE_QUESTIONS
+def test_the_pack_carries_its_image_questions(iset: ImageSet, name: str) -> None:
+    """The ask was five per pack — count it rather than trust the diff. Three
+    sets are down to four; see the registry for why."""
+    assert len(_image_questions(iset, name)) == iset.image_questions
 
 
 @pytest.mark.parametrize("iset,name", PACKS, ids=PACK_IDS)
@@ -129,16 +146,18 @@ def test_no_image_is_shipped_without_a_question(iset: ImageSet) -> None:
 
 @pytest.mark.parametrize("iset", PACK_SETS, ids=SET_IDS)
 def test_every_image_is_credited_with_a_verifiable_source(iset: ImageSet) -> None:
-    """Not a licence requirement — public domain asks for nothing. It is what
-    keeps the provenance checkable when somebody asks in a year."""
-    credits = (iset.image_dir / "credits.md").read_text(encoding="utf-8")
+    """Every picture has a row, and every row names a licence template.
+
+    This used to assert that the strings "Public domain" and "file record"
+    appeared *somewhere* in the file, which is how five images that were public
+    domain in the United States only got through it (#795). What the templates
+    mean is now checked per row in test_pack_image_licences_795.py; what is
+    checked here is the link between the folder and the table.
+    """
+    rows = {row.image: row for row in parse_credits(iset.image_dir / "credits.md")}
     for image in sorted(iset.image_dir.glob("*.webp")):
-        assert image.name in credits, f"{image.name} is not recorded in credits.md"
-    assert "Public domain" in credits
-    # The licence has to have been checked on the file record itself — the
-    # search that finds an image says nothing about how it is licensed, which
-    # is how a CC BY-SA photograph nearly ended up in the nature set.
-    assert "file record" in credits
+        assert image.name in rows, f"{image.name} is not recorded in credits.md"
+        assert rows[image.name].templates, f"{image.name} has no licence template recorded"
 
 
 @pytest.mark.parametrize("iset,name", PACKS, ids=PACK_IDS)

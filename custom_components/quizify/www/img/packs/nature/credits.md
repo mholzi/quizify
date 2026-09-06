@@ -1,21 +1,22 @@
 # Animals & Nature — image credits
 
-Every image here is public domain. The licence was checked on the **file
-record** through the Wikimedia API, not inferred from the search that found it
-or from the category it sits in — a search for "public domain" happily returns
-CC BY-SA files, and one candidate was dropped for exactly that reason while
-this set was assembled.
+Every row records the **licence template on the Commons file record** — the
+template, not the phrase a search result showed. The policy those templates are
+checked against is in [`../LICENSING.md`](../LICENSING.md), and
+`tests/test_pack_image_licences_795.py` enforces it row by row.
 
-No attribution is legally required for any of these. This file exists so the
-provenance stays checkable later.
+⚠️ marks a row whose template is **not** worldwide safe. It is quarantined in
+that test and tracked by
+[#817](https://github.com/mholzi/quizify/issues/817); it has to be replaced or
+removed, not re-worded.
 
-| File | Subject | Creator / agency | Source | Licence | Verified by |
-|---|---|---|---|---|---|
-| `puffin.webp` | Atlantic puffin carrying fish | U.S. Fish and Wildlife Service | [Wikimedia Commons](https://commons.wikimedia.org/wiki/File:Atlantic_Puffin_(8574372061).jpg) | Public domain (PD-USGov) | `extmetadata.LicenseShortName == "Public domain"` on the file record |
-| `bald-eagle.webp` | Bald eagle at Ottawa National Wildlife Refuge | U.S. Fish and Wildlife Service | [Wikimedia Commons](https://commons.wikimedia.org/wiki/File:Usfws-bald-eagle-ottawa-refuge.jpg) | Public domain (PD-USGov) | same |
-| `snowflake.webp` | Plate of snow-crystal photomicrographs, c. 1902 | Wilson A. Bentley | [Wikimedia Commons](https://commons.wikimedia.org/wiki/File:SnowflakesWilsonBentley.jpg) | Public domain (PD-old) | same |
-| `hurricane-iss.webp` | The eye of Hurricane Florence from the ISS, 2018 | NASA | [Wikimedia Commons](https://commons.wikimedia.org/wiki/File:Staring_Down_Hurricane_Florence.jpg) | Public domain (PD-NASA) | same |
-| `aurora-iss.webp` | Aurora australis above Antarctica from the ISS | NASA | [Wikimedia Commons](https://commons.wikimedia.org/wiki/File:ISS-52_Aurora_australis_above_Antarctica.jpg) | Public domain (PD-NASA) | same |
+| File | Subject | Creator / agency | Source | Licence | Commons template | Verified by |
+|---|---|---|---|---|---|---|
+| `puffin.webp` ⚠️ | Atlantic puffin carrying fish | U.S. Fish and Wildlife Service | [Wikimedia Commons](https://commons.wikimedia.org/wiki/File:Atlantic_Puffin_(8574372061).jpg) | Public domain (PD-USGov) | `PD-USGov-FWS`, `CC-BY-2.0` | `extmetadata.LicenseShortName == "Public domain"` on the file record |
+| `bald-eagle.webp` | Bald eagle at Ottawa National Wildlife Refuge | U.S. Fish and Wildlife Service | [Wikimedia Commons](https://commons.wikimedia.org/wiki/File:Usfws-bald-eagle-ottawa-refuge.jpg) | Public domain (PD-USGov) | `PD-USGov`, `PD-author` | same |
+| `snowflake.webp` | Plate of snow-crystal photomicrographs, c. 1902 | Wilson A. Bentley | [Wikimedia Commons](https://commons.wikimedia.org/wiki/File:SnowflakesWilsonBentley.jpg) | Public domain (PD-old) | `PD-old-auto-1923` | same |
+| `hurricane-iss.webp` | The eye of Hurricane Florence from the ISS, 2018 | NASA | [Wikimedia Commons](https://commons.wikimedia.org/wiki/File:Staring_Down_Hurricane_Florence.jpg) | Public domain (PD-NASA) | `NASA` | same |
+| `aurora-iss.webp` | Aurora australis above Antarctica from the ISS | NASA | [Wikimedia Commons](https://commons.wikimedia.org/wiki/File:ISS-52_Aurora_australis_above_Antarctica.jpg) | Public domain (PD-NASA) | `PD-USGov-NASA-AP` | same |
 
 ## Dropped, and why
 

@@ -1,19 +1,17 @@
 # Music — image credits
 
-Every image here is public domain or CC0, which asks for nothing either. The
-licence was checked on the **file record** through the Wikimedia API, not
-inferred from the search that found it or from the category it sits in.
+Every row records the **licence template on the Commons file record** — the
+template, not the phrase a search result showed. The policy those templates are
+checked against is in [`../LICENSING.md`](../LICENSING.md), and
+`tests/test_pack_image_licences_795.py` enforces it row by row.
 
-No attribution is legally required for any of these. This file exists so the
-provenance stays checkable later.
-
-| File | Subject | Creator / holder | Source | Licence | Verified by |
-|---|---|---|---|---|---|
-| `beethoven-portrait.webp` | Joseph Karl Stieler, *Beethoven with the Missa solemnis*, 1820 | Joseph Karl Stieler | [Wikimedia Commons](https://commons.wikimedia.org/wiki/File:Beethoven.jpg) | Public domain (PD-old) | `extmetadata.LicenseShortName == "Public domain"` on the file record |
-| `stradivari-violin.webp` | "The Antonius" violin, Antonio Stradivari, 1711 (Metropolitan Museum) | Metropolitan Museum of Art | [Wikimedia Commons](https://commons.wikimedia.org/wiki/File:%22The_Antonius%22_Violin_MET_DP105130.jpg) | CC0 (Met open access) | `LicenseShortName == "CC0"` |
-| `edison-phonograph.webp` | Thomas Edison with his phonograph, 1878 | Levin C. Handy / Brady-Handy collection | [Wikimedia Commons](https://commons.wikimedia.org/wiki/File:Edison_and_phonograph_edit1.jpg) | Public domain | same as above |
-| `beethoven-manuscript.webp` | Autograph of Beethoven's String Quartet no. 13, third movement | Ludwig van Beethoven | [Wikimedia Commons](https://commons.wikimedia.org/wiki/File:Beethoven_-_Autograph_of_the_Quartet_no._13,_III,_71-72.jpg) | Public domain (PD-old) | same |
-| `harpsichord.webp` | Italian harpsichord with painted lid (Metropolitan Museum) | Metropolitan Museum of Art | [Wikimedia Commons](https://commons.wikimedia.org/wiki/File:Harpsichord_MET_MUS961B.jpg) | CC0 (Met open access) | same |
+| File | Subject | Creator / holder | Source | Licence | Commons template | Verified by |
+|---|---|---|---|---|---|---|
+| `beethoven-portrait.webp` | Joseph Karl Stieler, *Beethoven with the Missa solemnis*, 1820 | Joseph Karl Stieler | [Wikimedia Commons](https://commons.wikimedia.org/wiki/File:Beethoven.jpg) | Public domain (PD-old) | `PD-Art`, `PD-old-100-expired` | `extmetadata.LicenseShortName == "Public domain"` on the file record |
+| `stradivari-violin.webp` | "The Antonius" violin, Antonio Stradivari, 1711 (Metropolitan Museum) | Metropolitan Museum of Art | [Wikimedia Commons](https://commons.wikimedia.org/wiki/File:%22The_Antonius%22_Violin_MET_DP105130.jpg) | CC0 (Met open access) | `Cc-zero` | `LicenseShortName == "CC0"` |
+| `edison-phonograph.webp` | Thomas Edison with his phonograph, 1878 | Levin C. Handy / Brady-Handy collection | [Wikimedia Commons](https://commons.wikimedia.org/wiki/File:Edison_and_phonograph_edit1.jpg) | Public domain | `PD-old` | same as above |
+| `beethoven-manuscript.webp` | Autograph of Beethoven's String Quartet no. 13, third movement | Ludwig van Beethoven | [Wikimedia Commons](https://commons.wikimedia.org/wiki/File:Beethoven_-_Autograph_of_the_Quartet_no._13,_III,_71-72.jpg) | Public domain (PD-old) | `PD-Art`, `PD-old-auto-expired` | same |
+| `harpsichord.webp` | Italian harpsichord with painted lid (Metropolitan Museum) | Metropolitan Museum of Art | [Wikimedia Commons](https://commons.wikimedia.org/wiki/File:Harpsichord_MET_MUS961B.jpg) | CC0 (Met open access) | `Cc-zero` | same |
 
 ## Why none of this is recorded music
 

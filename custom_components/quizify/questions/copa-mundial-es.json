@@ -2155,7 +2155,7 @@
     },
     {
       "id": "copa_mundial_es_103",
-      "question": "¿Cómo se llamaba este primer trofeo del Mundial?",
+      "question": "¿Cómo se llamaba el primer trofeo del Mundial?",
       "answers": [
         {
           "text": "La Copa Jules Rimet",
@@ -2172,9 +2172,7 @@
       ],
       "difficulty": "medium",
       "fun_fact": "Brasil se lo quedó en 1970 tras su tercer título. Lo robaron en Río en 1983 y nunca apareció; se da por hecho que lo fundieron.",
-      "category": "Copa Mundial",
-      "image_url": "/quizify/static/img/packs/worldcup/jules-rimet-trophy.webp",
-      "reveal_style": "progressive"
+      "category": "Copa Mundial"
     },
     {
       "id": "copa_mundial_es_104",

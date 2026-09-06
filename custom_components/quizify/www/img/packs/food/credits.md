@@ -1,20 +1,17 @@
 # Food & Drink — image credits
 
-Every image here is public domain or released under CC0, which asks for nothing
-either. The licence was checked on the **file record** through the Wikimedia
-API, not inferred from the search that found it or from the category it sits
-in.
+Every row records the **licence template on the Commons file record** — the
+template, not the phrase a search result showed. The policy those templates are
+checked against is in [`../LICENSING.md`](../LICENSING.md), and
+`tests/test_pack_image_licences_795.py` enforces it row by row.
 
-No attribution is legally required for any of these. This file exists so the
-provenance stays checkable later.
-
-| File | Subject | Creator / holder | Source | Licence | Verified by |
-|---|---|---|---|---|---|
-| `milkmaid.webp` | Johannes Vermeer, *The Milkmaid*, c. 1660 (Rijksmuseum) | Johannes Vermeer | [Wikimedia Commons](https://commons.wikimedia.org/wiki/File:Johannes_Vermeer_-_Het_melkmeisje_-_Google_Art_Project.jpg) | Public domain (PD-old) | `extmetadata.LicenseShortName == "Public domain"` on the file record |
-| `potato-eaters.webp` | Vincent van Gogh, *The Potato Eaters*, 1885 | Vincent van Gogh | [Wikimedia Commons](https://commons.wikimedia.org/wiki/File:Van-willem-vincent-gogh-die-kartoffelesser-03850.jpg) | Public domain (PD-old) | same |
-| `cheese-still-life.webp` | Floris Claesz. van Dijck, *Still Life with Cheeses*, c. 1615 (Rijksmuseum) | Floris Claesz. van Dijck | [Wikimedia Commons](https://commons.wikimedia.org/wiki/File:Floris_Claesz._van_Dijck_-_Stilleven_met_kazen_-_SK-A-4821_-_Rijksmuseum.jpg) | Public domain (PD-old) | same |
-| `lobster-still-life.webp` | *Still Life with Lobster and Fruit* (Metropolitan Museum of Art) | Abraham van Beyeren | [Wikimedia Commons](https://commons.wikimedia.org/wiki/File:Still_Life_with_Lobster_and_Fruit_MET_DP143207.jpg) | CC0 (Met open access) | `LicenseShortName == "CC0"` on the file record |
-| `pineapple-watercolour.webp` | USDA pomological watercolour of a pineapple | US Department of Agriculture, National Agricultural Library | [Wikimedia Commons](https://commons.wikimedia.org/wiki/File:Pomological_Watercolor_POM00007370.jpg) | Public domain (PD-USGov) | `LicenseShortName == "Public domain"` |
+| File | Subject | Creator / holder | Source | Licence | Commons template | Verified by |
+|---|---|---|---|---|---|---|
+| `milkmaid.webp` | Johannes Vermeer, *The Milkmaid*, c. 1660 (Rijksmuseum) | Johannes Vermeer | [Wikimedia Commons](https://commons.wikimedia.org/wiki/File:Johannes_Vermeer_-_Het_melkmeisje_-_Google_Art_Project.jpg) | Public domain (PD-old) | `PD-Art`, `PD-old-100-expired` | `extmetadata.LicenseShortName == "Public domain"` on the file record |
+| `potato-eaters.webp` | Vincent van Gogh, *The Potato Eaters*, 1885 | Vincent van Gogh | [Wikimedia Commons](https://commons.wikimedia.org/wiki/File:Van-willem-vincent-gogh-die-kartoffelesser-03850.jpg) | Public domain (PD-old) | `PD-Art`, `PD-old-100-1923` | same |
+| `cheese-still-life.webp` | Floris Claesz. van Dijck, *Still Life with Cheeses*, c. 1615 (Rijksmuseum) | Floris Claesz. van Dijck | [Wikimedia Commons](https://commons.wikimedia.org/wiki/File:Floris_Claesz._van_Dijck_-_Stilleven_met_kazen_-_SK-A-4821_-_Rijksmuseum.jpg) | Public domain (PD-old) | `PD-Art`, `PD-old-auto-1923` | same |
+| `lobster-still-life.webp` | *Still Life with Lobster and Fruit* (Metropolitan Museum of Art) | Abraham van Beyeren | [Wikimedia Commons](https://commons.wikimedia.org/wiki/File:Still_Life_with_Lobster_and_Fruit_MET_DP143207.jpg) | CC0 (Met open access) | `Cc-zero` | `LicenseShortName == "CC0"` on the file record |
+| `pineapple-watercolour.webp` | USDA pomological watercolour of a pineapple | US Department of Agriculture, National Agricultural Library | [Wikimedia Commons](https://commons.wikimedia.org/wiki/File:Pomological_Watercolor_POM00007370.jpg) | Public domain (PD-USGov) | `PD-USGov-USDA-NAL-Pomological-Watercolors` | `LicenseShortName == "Public domain"` |
 
 ## Dropped, and why
 

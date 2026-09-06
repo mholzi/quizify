@@ -1822,44 +1822,42 @@
     },
     {
       "id": "pop_163",
-      "question": "Welche Figur hatte 1928 in diesem Film ihren Durchbruch?",
+      "question": "Welche Figur hatte 1928 im Film „Steamboat Willie“ ihren Durchbruch?",
       "answers": [
         {"text": "Micky Maus", "correct": true},
         {"text": "Bugs Bunny", "correct": false},
         {"text": "Donald Duck", "correct": false}
       ],
       "difficulty": "easy",
-      "fun_fact": "„Steamboat Willie“ war nicht der erste Micky-Maus-Film, aber der erste mit synchronem Ton — und deshalb der, den alle kennen. In den USA ist er seit 2024 gemeinfrei.",
-      "category": "Popkultur",
-      "image_url": "/quizify/static/img/packs/popculture/steamboat-willie.webp",
-      "reveal_style": "progressive"
+      "fun_fact": "„Steamboat Willie“ war nicht der erste Micky-Maus-Film, aber der erste mit synchronem Ton — und deshalb der, den alle kennen.",
+      "category": "Popkultur"
     },
     {
       "id": "pop_164",
-      "question": "Welche Schauspielerin ist auf diesem Werbefoto von 1953 zu sehen?",
+      "question": "Aus welchem Film von 1922 stammt dieser Vampir?",
       "answers": [
-        {"text": "Grace Kelly", "correct": false},
-        {"text": "Marilyn Monroe", "correct": true},
-        {"text": "Rita Hayworth", "correct": false}
+        {"text": "Dracula", "correct": false},
+        {"text": "Nosferatu", "correct": true},
+        {"text": "Der Golem", "correct": false}
       ],
       "difficulty": "easy",
-      "fun_fact": "1953 kamen drei ihrer Filme in einem Jahr heraus. Ihr Studio zahlte ihr dafür weniger als ihren männlichen Nebendarstellern — der Streit darüber führte dazu, dass sie ihre eigene Produktionsfirma gründete.",
+      "fun_fact": "Die Produktionsfirma verfilmte Bram Stokers „Dracula“ ohne die Rechte und änderte einfach die Namen. Stokers Witwe klagte, ein Gericht ließ die Kopien vernichten — der Film existiert nur noch, weil Kopien schon im Ausland waren.",
       "category": "Popkultur",
-      "image_url": "/quizify/static/img/packs/popculture/marilyn-monroe.webp",
+      "image_url": "/quizify/static/img/packs/popculture/nosferatu.webp",
       "reveal_style": "progressive"
     },
     {
       "id": "pop_165",
-      "question": "Unter welchem Namen ist die Frau auf diesem Plakat bekannt geworden?",
+      "question": "Zu welcher Filmströmung gehört dieses Plakat von 1920?",
       "answers": [
-        {"text": "Lady Liberty", "correct": false},
-        {"text": "Betty Boop", "correct": false},
-        {"text": "Rosie the Riveter", "correct": true}
+        {"text": "Italienischer Neorealismus", "correct": false},
+        {"text": "Nouvelle Vague", "correct": false},
+        {"text": "Deutscher Expressionismus", "correct": true}
       ],
       "difficulty": "medium",
-      "fun_fact": "Das Plakat hing 1943 nur zwei Wochen in einigen Westinghouse-Werken und verschwand dann für vierzig Jahre. Erst in den 1980ern wurde es wiederentdeckt und zum Symbol — die Bekanntheit von heute hat mit seiner ursprünglichen Wirkung nichts zu tun.",
+      "fun_fact": "„Das Cabinet des Dr. Caligari“ wurde in gemalten Kulissen gedreht: die schiefen Wände, die kippenden Häuser und sogar die Schatten auf dem Boden waren gemalt, nicht beleuchtet.",
       "category": "Popkultur",
-      "image_url": "/quizify/static/img/packs/popculture/we-can-do-it.webp",
+      "image_url": "/quizify/static/img/packs/popculture/caligari-poster.webp",
       "reveal_style": "progressive"
     },
     {

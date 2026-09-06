@@ -2134,7 +2134,7 @@
     },
     {
       "id": "world_cup_en_162",
-      "question": "What was this first World Cup trophy called?",
+      "question": "What was the first World Cup trophy called?",
       "answers": [
         {
           "text": "The Jules Rimet Cup",
@@ -2151,9 +2151,7 @@
       ],
       "difficulty": "medium",
       "fun_fact": "Brazil were allowed to keep the trophy for good in 1970, after a third title.",
-      "category": "World Cup",
-      "image_url": "/quizify/static/img/packs/worldcup/jules-rimet-trophy.webp",
-      "reveal_style": "progressive"
+      "category": "World Cup"
     },
     {
       "id": "world_cup_en_163",

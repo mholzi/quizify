@@ -1834,44 +1834,42 @@
     },
     {
       "id": "pop_en_163",
-      "question": "Which character broke through in this 1928 film?",
+      "question": "Which character broke through in the 1928 film “Steamboat Willie”?",
       "answers": [
         {"text": "Mickey Mouse", "correct": true},
         {"text": "Bugs Bunny", "correct": false},
         {"text": "Donald Duck", "correct": false}
       ],
       "difficulty": "easy",
-      "fun_fact": "“Steamboat Willie” was not the first Mickey Mouse film, but it was the first with synchronised sound — which is why it is the one everyone knows. It entered the US public domain in 2024.",
-      "category": "Pop Culture",
-      "image_url": "/quizify/static/img/packs/popculture/steamboat-willie.webp",
-      "reveal_style": "progressive"
+      "fun_fact": "“Steamboat Willie” was not the first Mickey Mouse film, but it was the first with synchronised sound — which is why it is the one everyone knows.",
+      "category": "Pop Culture"
     },
     {
       "id": "pop_en_164",
-      "question": "Which actress is in this 1953 publicity photograph?",
+      "question": "Which 1922 film is this vampire from?",
       "answers": [
-        {"text": "Grace Kelly", "correct": false},
-        {"text": "Marilyn Monroe", "correct": true},
-        {"text": "Rita Hayworth", "correct": false}
+        {"text": "Dracula", "correct": false},
+        {"text": "Nosferatu", "correct": true},
+        {"text": "The Golem", "correct": false}
       ],
       "difficulty": "easy",
-      "fun_fact": "Three of her films came out in 1953 alone. Her studio paid her less than her male co-stars for them; the fight over it led her to set up her own production company.",
+      "fun_fact": "The studio filmed Bram Stoker’s “Dracula” without buying the rights and changed the names. Stoker’s widow sued, a court ordered the copies destroyed, and the film survives only because prints had already left Germany.",
       "category": "Pop Culture",
-      "image_url": "/quizify/static/img/packs/popculture/marilyn-monroe.webp",
+      "image_url": "/quizify/static/img/packs/popculture/nosferatu.webp",
       "reveal_style": "progressive"
     },
     {
       "id": "pop_en_165",
-      "question": "What name did the woman on this poster become known by?",
+      "question": "Which film movement does this 1920 poster belong to?",
       "answers": [
-        {"text": "Lady Liberty", "correct": false},
-        {"text": "Betty Boop", "correct": false},
-        {"text": "Rosie the Riveter", "correct": true}
+        {"text": "Italian neorealism", "correct": false},
+        {"text": "The French New Wave", "correct": false},
+        {"text": "German expressionism", "correct": true}
       ],
       "difficulty": "medium",
-      "fun_fact": "The poster hung in a few Westinghouse plants for two weeks in 1943 and then vanished for forty years. It was rediscovered in the 1980s and became a symbol — its fame today has nothing to do with its original effect.",
+      "fun_fact": "“Das Cabinet des Dr. Caligari” was shot on painted sets: the crooked walls, the leaning houses and even the shadows on the floor were painted rather than lit.",
       "category": "Pop Culture",
-      "image_url": "/quizify/static/img/packs/popculture/we-can-do-it.webp",
+      "image_url": "/quizify/static/img/packs/popculture/caligari-poster.webp",
       "reveal_style": "progressive"
     },
     {

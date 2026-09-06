@@ -3179,7 +3179,7 @@
     },
     {
       "id": "dep_es_162",
-      "question": "¿Qué boxeador aparece aquí?",
+      "question": "¿Qué boxeador se negó a ir a la guerra en 1967 y perdió por ello tres años y medio de carrera?",
       "answers": [
         {
           "text": "Joe Frazier",
@@ -3195,10 +3195,8 @@
         }
       ],
       "difficulty": "easy",
-      "fun_fact": "Ali fue campeón olímpico en 1960 y tres veces campeón mundial de los pesados, y perdió por el camino tres años y medio de su mejor momento cuando le retiraron la licencia por negarse a ir a la guerra.",
-      "category": "Deportes",
-      "image_url": "/quizify/static/img/packs/sport/muhammad-ali.webp",
-      "reveal_style": "progressive"
+      "fun_fact": "Ali fue campeón olímpico en Roma en 1960 y tres veces campeón mundial de los pesados. El Tribunal Supremo de Estados Unidos anuló su condena en 1971.",
+      "category": "Deportes"
     },
     {
       "id": "dep_es_163",
