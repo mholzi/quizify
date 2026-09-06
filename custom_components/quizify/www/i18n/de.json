@@ -737,6 +737,7 @@
     "betWont": "Schafft es nicht",
     "betOptional": "Mitwetten ist freiwillig.",
     "betPlaced": "Gesetzt: {pct}% auf {side}",
+    "teamSeated": "{name} sitzt f\u00fcr euer Team im Stuhl \u2014 euer Team wettet nicht.",
     "timeoutNote": "Keine Antwort kostet den Einsatz genauso wie eine falsche.",
     "resultRight": "{name} hat sie gewusst — +{pts} Punkte",
     "resultWrong": "{name} lag daneben — −{pts} Punkte",

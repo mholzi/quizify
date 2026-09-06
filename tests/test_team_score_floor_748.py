@@ -59,6 +59,11 @@ def _game(tmp_path: Path, category: str, rounds: int = 1) -> QuizifyGameState:
         category=category, difficulty="easy", num_rounds=rounds, language="en"
     )
     st.start_next_question()
+    # A one-round game IS a final round, and since #804 a final round in team
+    # mode opens the betting window before the question — so the state machine
+    # parks in WAGER_ACTIVE. Close it the way the WS layer does when the
+    # deadline passes; these tests are about settlement, not about the window.
+    st.arm_round_timers()
     return st
 
 
@@ -79,19 +84,24 @@ def _wrong_index(game: QuizifyGameState) -> int:
 def test_a_lost_wager_cannot_push_a_team_below_zero(tmp_path: Path) -> None:
     """The multiple-choice path had no floor, so the team ended at -140.
 
-    ``_settle_team_answers`` lends the carrier the team's *streak* but not its
-    *score*, so the engine bounds the loss by the carrier's own shadow bank
-    while the subtraction lands on the team's. Give the carrier a bank the team
-    does not have and the team goes negative — which is exactly what the
-    estimate path had already refused to do.
+    The original defect: ``_settle_team_answers`` lent the carrier the team's
+    *streak* but not its *score*, so the engine bounded the loss by the
+    carrier's own shadow bank while the subtraction landed on the team's. Give
+    the carrier a bank the team does not have and the team went negative —
+    which is exactly what the estimate path had already refused to do.
+
+    #804 removes the mismatch at its source: the bet is the team's, staked
+    against the team's score, so the bank the engine bounds by and the score
+    the loss lands on are now the same number. The floor is pinned anyway —
+    it is the property, not the arithmetic that reaches it.
     """
     game = _game(tmp_path, "picture-round-en")
     team = _team(game)
     carrier = game.get_player("Anna")
 
     team.score = 60
-    carrier.score = 200  # bigger shadow bank than the team's real one
-    carrier.wager = 100  # bet the lot on the final round
+    team.wager = 100  # bet the lot on the final round
+    carrier.score = 200  # a shadow bank the settlement must not read
 
     game.submit_answer("Anna", _wrong_index(game))
     game.evaluate_round()

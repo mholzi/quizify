@@ -737,6 +737,7 @@
     "betWont": "No lo consigue",
     "betOptional": "Apostar es opcional.",
     "betPlaced": "Apostado: {pct}% a {side}",
+    "teamSeated": "{name} ocupa la silla por vuestro equipo \u2014 vuestro equipo no apuesta.",
     "timeoutNote": "No responder cuesta la apuesta igual que fallar.",
     "resultRight": "{name} acertó — +{pts} puntos",
     "resultWrong": "{name} falló — −{pts} puntos",

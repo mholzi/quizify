@@ -737,6 +737,7 @@
     "betWont": "They won't",
     "betOptional": "Betting is optional.",
     "betPlaced": "Staked: {pct}% on {side}",
+    "teamSeated": "{name} has the chair for your team \u2014 your team does not bet.",
     "timeoutNote": "No answer costs the stake just like a wrong one.",
     "resultRight": "{name} answered it — +{pts} points",
     "resultWrong": "{name} got it wrong — −{pts} points",
