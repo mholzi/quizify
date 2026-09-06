@@ -1,6 +1,9 @@
 {
   "domain": "quizify",
   "name": "Quizify",
+  "after_dependencies": [
+    "cloud"
+  ],
   "codeowners": [
     "@mholzi"
   ],

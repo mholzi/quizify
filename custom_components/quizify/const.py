@@ -74,6 +74,45 @@ ERR_ALREADY_JOINED = "ALREADY_JOINED"
 #: told to wait, rather than being shown a generic failure it cannot act on.
 ERR_JOIN_RATE_LIMITED = "JOIN_RATE_LIMITED"
 
+#: English fallback text for every error code above (#812).
+#:
+#: The phone localizes off the structured ``code`` (``t('errors.<CODE>')``) and
+#: only shows this ``message`` when its bundle has no key for the code — a
+#: stale service worker, a language file that has not caught up yet. It used to
+#: be hand-copied into three local ``error_messages`` dicts inside
+#: ``server/websocket.py``, which had already drifted apart from each other and
+#: from ``www/i18n/en.json`` (one map said "Time is up" where the client shows
+#: "Time expired", and only one of the two submit maps carried
+#: ``ERR_INVALID_ACTION`` at all). #729 was exactly that failure mode: a code
+#: missing from one of the copies.
+#:
+#: One map, next to the codes it names, and ``ConnectionManager.send_error``
+#: reads it whenever a caller passes no message. The wording tracks the
+#: ``errors`` block of ``www/i18n/en.json`` — ``tests/test_error_fallback_text_812.py``
+#: pins that agreement, so the two can no longer drift.
+ERROR_FALLBACK_TEXT: dict[str, str] = {
+    ERR_NAME_TAKEN: "Name already taken",
+    ERR_NAME_INVALID: "Please enter a name",
+    ERR_GAME_NOT_STARTED: "No active game",
+    ERR_GAME_ALREADY_STARTED: "Game already running",
+    ERR_GAME_ENDED: "Game ended",
+    ERR_ROUND_EXPIRED: "Time expired",
+    ERR_TEAM_LOCKED: "The team answer just changed — wait a moment",
+    ERR_TEAM_CLOSED: "Teams are set for this game — you play on your own.",
+    ERR_ALREADY_SUBMITTED: "Already answered",
+    ERR_FROZEN: "Frozen — wait for the freeze to end",
+    ERR_NOT_IN_GAME: "Not in game",
+    ERR_INVALID_ACTION: "Invalid action",
+    ERR_ADMIN_REQUIRED: (
+        "This window is not the host — the command was refused. "
+        "Reopen the admin window from Home Assistant."
+    ),
+    ERR_GAME_FULL: "Game is full",
+    ERR_NO_QUESTIONS_REMAINING: "No questions remaining",
+    ERR_ALREADY_JOINED: "Already joined",
+    ERR_JOIN_RATE_LIMITED: "Too many join attempts",
+}
+
 # Question structure
 ANSWERS_PER_QUESTION = 3
 

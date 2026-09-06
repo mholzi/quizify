@@ -67,6 +67,7 @@ from ..const import (
     SUBMIT_STATUS_PENDING,
 )
 from .context import APP_CTX_KEY
+from .origin import check_unauthenticated_post
 from .rate_limit import SlidingWindowLimiter
 
 if TYPE_CHECKING:
@@ -441,6 +442,15 @@ def _check_gates(request: web.Request, ctx: AppContext) -> web.Response | None:
     hit the same worker, the same PAT and the same repo, so splitting the budget
     would just hand a caller twice the issue-filing rate.
     """
+    # CSRF gate (#785). Both routes are registered with no HA auth and file a
+    # GitHub issue through the host's worker secret, so a cross-site page must
+    # not be able to reach them: refuse a foreign Origin, and require an
+    # explicit ``application/json`` body so a browser cannot get here as a CORS
+    # simple request.
+    refusal = check_unauthenticated_post(request, ctx.runtime)
+    if refusal is not None:
+        return refusal
+
     if not (ctx.community_submit_url or "").strip():
         return web.json_response(
             {

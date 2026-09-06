@@ -15,19 +15,13 @@ from aiohttp import WSMsgType, web
 from custom_components.quizify.const import (
     ERR_ADMIN_REQUIRED,
     ERR_ALREADY_JOINED,
-    ERR_ALREADY_SUBMITTED,
-    ERR_FROZEN,
     ERR_GAME_ALREADY_STARTED,
-    ERR_GAME_ENDED,
-    ERR_GAME_FULL,
     ERR_GAME_NOT_STARTED,
     ERR_INVALID_ACTION,
     ERR_JOIN_RATE_LIMITED,
     ERR_NAME_INVALID,
-    ERR_NAME_TAKEN,
     ERR_NO_QUESTIONS_REMAINING,
     ERR_NOT_IN_GAME,
-    ERR_ROUND_EXPIRED,
     ERR_TEAM_CLOSED,
     LOBBY_DISCONNECT_GRACE_PERIOD,
     MAX_PLAYERS,
@@ -53,6 +47,7 @@ from custom_components.quizify.game.team import (
 )
 from custom_components.quizify.server.broadcast_dispatcher import BroadcastDispatcher
 from custom_components.quizify.server.connection import ConnectionManager
+from custom_components.quizify.server.origin import reject_cross_origin
 from custom_components.quizify.server.rate_limit import SlidingWindowLimiter
 from custom_components.quizify.server.round_message_builder import RoundMessageBuilder
 from custom_components.quizify.server.serializers import (
@@ -305,6 +300,17 @@ class QuizifyWebSocketHandler:
     # this — but that is the uncommon setup for a local party game.) Refused
     # connections get an HTTP 429 before the WebSocket is upgraded.
     MAX_CONNECTIONS_PER_IP = 15
+
+    # Largest WebSocket frame we will buffer, let alone parse (#786). Without
+    # it aiohttp's 4 MiB default applies to every unauthenticated player and
+    # dashboard socket, and the flood guard below counts *frames*, not bytes:
+    # 15 frames/s x 4 MiB is 60 MiB of JSON per second per socket, each
+    # ``msg.json()`` of which runs synchronously on Home Assistant's shared
+    # event loop. Real Quizify frames are a few hundred bytes; the largest
+    # legitimate one is ``start_game`` with its tts/house blocks, comfortably
+    # under a kilobyte. aiohttp closes an oversized frame with 1009 before the
+    # payload is buffered or parsed.
+    MAX_MSG_SIZE = 16 * 1024
 
     # Loopback exception to the cap above (#701). Over Nabu Casa every remote
     # client reaches HA through snitun on 127.0.0.1, and HA's forwarded-header
@@ -648,7 +654,21 @@ class QuizifyWebSocketHandler:
                 status=429, text="Too many connections from this address"
             )
 
-        ws = web.WebSocketResponse(heartbeat=self.HEARTBEAT_INTERVAL)
+        # Same-origin gate (#785): browsers do NOT apply CORS to a WebSocket
+        # handshake, so without this any page open in a player's (or the
+        # host's) browser could open this socket from their own address —
+        # inheriting the per-IP allowances and, inside the admin-bootstrap
+        # window, the admin role and its session token. Checked before
+        # prepare() so a cross-site handshake is answered with a plain HTTP
+        # 403 and never upgraded. A request with no Origin still passes: the
+        # dev server, the tests and non-browser clients send none, and a
+        # browser cannot be made to omit it.
+        if reject_cross_origin(request, self._runtime, "WebSocket handshake"):
+            return web.Response(status=403, text="Cross-origin request refused")
+
+        ws = web.WebSocketResponse(
+            heartbeat=self.HEARTBEAT_INTERVAL, max_msg_size=self.MAX_MSG_SIZE
+        )
         await ws.prepare(request)
         if remote is not None:
             self._ip_connections[remote] = self._ip_connections.get(remote, 0) + 1
@@ -690,7 +710,13 @@ class QuizifyWebSocketHandler:
                     # from handler errors (#20 in logical review).
                     try:
                         data = msg.json()
-                    except ValueError:
+                    except (ValueError, RecursionError):
+                        # RecursionError (#786): a deeply nested frame blows
+                        # the interpreter's stack inside ``json.loads``. It is
+                        # not a ValueError, so it used to escape the read loop
+                        # and tear the connection down with a traceback
+                        # instead of the structured error every other
+                        # malformed frame gets.
                         await self._conn.send_error(
                             ws, ERR_INVALID_ACTION, "Malformed message (invalid JSON)"
                         )
@@ -1211,25 +1237,25 @@ class QuizifyWebSocketHandler:
                 name, bool(player_obj.is_admin) if player_obj else False
             )
         else:
-            # English i18n-fallback strings only — the client localizes off
-            # the structured ``code`` via ``t('join.refused.<CODE>')`` and only
-            # falls back to this ``message`` if the key is missing
-            # (player-core.js).
+            # The client localizes off the structured ``code`` via
+            # ``t('join.refused.<CODE>')``; the wire ``message`` is only the
+            # English fallback for a bundle that has no key for the code.
             #
-            # #729: every code ``add_player`` can return must appear here.
-            # ``ERR_GAME_ENDED`` did not, so a guest who scanned a QR code from
-            # a finished game got the bare "Failed to join" — no hint that the
-            # game was over and the host had to start a new one.
-            error_messages = {
-                ERR_NAME_TAKEN: "Name already taken",
-                ERR_NAME_INVALID: "Please enter a name",
-                ERR_GAME_FULL: "Game is full",
-                ERR_GAME_ENDED: "This game has already finished",
-            }
-            await self._conn.send_error(
-                ws, error_code or ERR_INVALID_ACTION,
-                error_messages.get(error_code or "", "Failed to join"),
-            )
+            # #729: every code ``add_player`` can return must have a fallback.
+            # ``ERR_GAME_ENDED`` had none, so a guest who scanned a QR code
+            # from a finished game got the bare "Failed to join" — no hint that
+            # the game was over and the host had to start a new one. #812
+            # moved that map to ``ERROR_FALLBACK_TEXT`` in const.py, where the
+            # coverage is asserted against ``add_player`` itself rather than
+            # against whichever local dict happened to come first in this file.
+            if error_code:
+                await self._conn.send_error(ws, error_code)
+            else:
+                # A refusal with no code at all: nothing to localize, so say
+                # the one thing that is certainly true.
+                await self._conn.send_error(
+                    ws, ERR_INVALID_ACTION, "Failed to join"
+                )
 
     # ------------------------------------------------------------------
     # Player reconnect (session-based)
@@ -1469,15 +1495,8 @@ class QuizifyWebSocketHandler:
             if err is None:
                 await self._conn.send(ws, {"type": "guess_accepted"})
             else:
-                error_messages = {
-                    ERR_ALREADY_SUBMITTED: "Already answered",
-                    ERR_ROUND_EXPIRED: "Time is up",
-                    ERR_FROZEN: "Frozen — wait for the freeze to end",
-                    ERR_NOT_IN_GAME: "Not in the game",
-                    ERR_GAME_NOT_STARTED: "No active game",
-                    ERR_INVALID_ACTION: "Invalid action",
-                }
-                await self._conn.send_error(ws, err, error_messages.get(err, err))
+                # Fallback text comes from ERROR_FALLBACK_TEXT (#812).
+                await self._conn.send_error(ws, err)
             return
 
         shuffled_index = data.get("answer_index")
@@ -1540,17 +1559,8 @@ class QuizifyWebSocketHandler:
             # Do NOT broadcast here \u2014 that would double-fire when the timer
             # path races with all-submitted (#3 in logical review).
         elif isinstance(result, str):
-            # English i18n-fallback strings only (client localizes off ``code``).
-            error_messages = {
-                ERR_ALREADY_SUBMITTED: "Already answered",
-                ERR_ROUND_EXPIRED: "Time is up",
-                ERR_FROZEN: "Frozen — wait for the freeze to end",
-                ERR_NOT_IN_GAME: "Not in the game",
-                ERR_GAME_NOT_STARTED: "No active game",
-            }
-            await self._conn.send_error(
-                ws, result, error_messages.get(result, result)
-            )
+            # Fallback text comes from ERROR_FALLBACK_TEXT (#812).
+            await self._conn.send_error(ws, result)
 
     # ------------------------------------------------------------------
     # Power-ups

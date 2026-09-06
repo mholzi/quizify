@@ -12,6 +12,7 @@ from typing import TYPE_CHECKING
 
 from aiohttp import web
 
+from ..const import ERROR_FALLBACK_TEXT
 from .token_store import TokenStore
 
 if TYPE_CHECKING:
@@ -467,9 +468,21 @@ class ConnectionManager:
             _LOGGER.warning("Failed to send to WebSocket: %s", err)
 
     async def send_error(
-        self, ws: web.WebSocketResponse, code: str, message: str
+        self, ws: web.WebSocketResponse, code: str, message: str | None = None
     ) -> None:
-        """Send a structured error message to *ws*."""
+        """Send a structured error message to *ws*.
+
+        *message* is the English fallback the phone shows only when its i18n
+        bundle has no ``errors.<code>`` key. Omit it and the shared
+        :data:`~custom_components.quizify.const.ERROR_FALLBACK_TEXT` map
+        supplies it (#812) — that map replaced three hand-copied dicts in
+        ``websocket.py`` that had already drifted apart. Pass one explicitly
+        only where the situation says more than the code does (e.g. *which*
+        team closed, *which* field was malformed). An unknown code falls back
+        to the code itself, as the old local maps did.
+        """
+        if message is None:
+            message = ERROR_FALLBACK_TEXT.get(code, code)
         await self.send(ws, {"type": "error", "code": code, "message": message})
 
     # ------------------------------------------------------------------

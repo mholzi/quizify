@@ -23,6 +23,7 @@ from aiohttp import web
 from ..game.seasons import is_in_season, parse_season, pick_active_season
 from .context import APP_CTX_KEY
 from .flag_store import FlagStore
+from .origin import check_unauthenticated_post
 from .pack_news import PackNewsStore
 from .pack_submission import (
     request_pack_view,
@@ -1187,6 +1188,16 @@ async def flag_question_view(request: web.Request) -> web.Response:
     is best-effort (clients without an auth model can lie, but that's fine
     for a "raise the maintainer's attention" signal).
     """
+    ctx = _get_ctx(request)
+
+    # CSRF gate (#785). The route carries no HA auth and appends to
+    # ``flagged.jsonl``, so a cross-site page must not be able to reach it:
+    # refuse a foreign Origin, and require an explicit ``application/json``
+    # body so a browser cannot post here as a CORS simple request.
+    refusal = check_unauthenticated_post(request, ctx.runtime)
+    if refusal is not None:
+        return refusal
+
     # Per-IP rate limit (#357). Reject early — before the JSON parse and the
     # executor disk write — so a flood can't pin the loop or grow the file.
     if not _flag_rate_limiter.check(request.remote or ""):
