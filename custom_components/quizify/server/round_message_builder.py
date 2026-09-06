@@ -542,7 +542,16 @@ class RoundMessageBuilder:
             }
 
         all_answers = []
+        # #853: who each row actually belongs to. The rows stay per player —
+        # the phone reveal reads its own out of them — but the television's
+        # distribution has to divide by entrants, the way the counter above it
+        # has since #835. A team is one vote (#365) however many phones carry
+        # its row. Keyed on the team id rather than its name, for #728's
+        # reason: nothing stops two teams from sharing a name.
+        entrant_of: dict[str, str] = {}
         for player in game_state.get_players():
+            _team = team_of(player.name) if team_of is not None else None
+            entrant_of[player.name] = getattr(_team, "team_id", None) or player.name
             row = _team_row(player.name)
             if row is not None:
                 all_answers.append(row)
@@ -606,6 +615,7 @@ class RoundMessageBuilder:
             question_id=summary.question.id,
             display_order=game_state.shuffle_map,
             next_image_url=next_image_url,
+            entrant_of=entrant_of,
         )
         if store_cached is not None:
             store_cached(cache_key, msg)

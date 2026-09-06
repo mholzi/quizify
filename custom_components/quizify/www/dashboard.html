@@ -2201,6 +2201,27 @@
             if (name !== 'finale' && els.eveningTally) {
                 els.eveningTally.classList.add('hidden');
             }
+            // #850: the third panel on this board with a writer and no
+            // clearer, after #706's answer tally and #807's evening leaders.
+            // `handleRoundSummary` is the only thing that ever fills
+            // `#fun-fact`, and only `question_started` ever took the class
+            // off again — so the last fact of a game survived the finale, the
+            // reset and the whole next lobby with its text still in it, and
+            // every other door into the question view put it back on screen:
+            // a QUESTION_ACTIVE snapshot with no question block, a
+            // WAGER_ACTIVE or HOT_SEAT snapshot with no detour block, and the
+            // ANSWER_REVEAL rebuild all call showView('question') without
+            // touching it. The room then read the previous game's fact — in
+            // the previous game's language, because the `data-i18n` label had
+            // already switched — through the first question of the next game,
+            // when it is looking hardest at the screen. Clearing on every
+            // view change means a new path cannot forget again: the reveal
+            // writes the fact without a view change, and the reconnect path
+            // re-renders it from the snapshot immediately afterwards.
+            if (els.funFact) {
+                els.funFact.classList.remove('visible');
+                if (els.funFactText) els.funFactText.textContent = '';
+            }
         }
 
         // ---- #374: TV lobby join QR + live player roster ----
