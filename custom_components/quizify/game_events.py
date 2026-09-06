@@ -42,6 +42,7 @@ import logging
 from typing import TYPE_CHECKING, Any
 
 from .game.state import GamePhase, QuizifyGameState
+from .house_settings import HouseSettings
 
 if TYPE_CHECKING:
     from homeassistant.core import HomeAssistant
@@ -80,25 +81,25 @@ class QuizifyEventEmitter:
         hass: HomeAssistant | None,
         game_state: QuizifyGameState,
         enabled: bool = True,
+        settings: HouseSettings | None = None,
     ) -> None:
+        """Build the event backbone.
+
+        ``settings`` is the shared :class:`HouseSettings` (#789) — the master
+        toggle for the whole backbone lives there in two layers: the
+        config-entry value (``CONF_HOUSE_EVENTS_ENABLED``, default off, so the
+        integration stays silent on the bus until the host opts in) and the
+        admin panel's tri-state runtime override. ``enabled`` is the standalone
+        form used by the dev server and the unit tests; it seeds a private
+        settings object that behaves identically.
+        """
         self._hass = hass
         self._game = game_state
-        # Master toggle for the whole event backbone (#366). Off => every fire
-        # is a no-op, so the integration stays silent on the bus until the host
-        # opts in via the options flow (CONF_HOUSE_EVENTS_ENABLED, default off).
-        # The constructor default is True because the sole production caller
-        # (__init__) always passes the resolved option explicitly; the product
-        # "off by default" lives at the config layer, not here.
-        self._enabled = enabled
-        # The admin "House Plays Along" panel's runtime master (#494 P4).
-        # ``None`` means the panel never touched it, so the config-entry value
-        # above still wins — which is what keeps a host toggling
-        # CONF_HOUSE_EVENTS_ENABLED in the options UI working after a reload,
-        # while a panel-set master survives an unrelated options change (#411).
-        self._enabled_override: bool | None = None
+        self._settings = settings or HouseSettings(house_enabled=bool(enabled))
         # Track the last phase we observed so phase-driven events fire only on
         # transitions, not on every state_callback flap. Mirrors the lights /
-        # TTS observers. Survives an options reload via export/restore below.
+        # TTS observers. Survives an options reload because the reload no longer
+        # rebuilds this object (#789).
         self._last_phase: GamePhase | None = None
         # One-shot guard so the "time running out" event fires at most once per
         # round. Reset at every question start (see ``notify_question_shown``),
@@ -106,11 +107,19 @@ class QuizifyEventEmitter:
         self._time_running_out_fired: bool = False
 
     @property
+    def _enabled(self) -> bool:
+        """The config-entry master (CONF_HOUSE_EVENTS_ENABLED), read live."""
+        return self._settings.house_enabled
+
+    @property
+    def _enabled_override(self) -> bool | None:
+        """The panel's tri-state master; ``None`` = the panel never set one."""
+        return self._settings.enabled_override
+
+    @property
     def _master_enabled(self) -> bool:
         """The effective master: panel override if set, else the config entry."""
-        if self._enabled_override is None:
-            return self._enabled
-        return self._enabled_override
+        return self._settings.master_enabled
 
     @property
     def is_configured(self) -> bool:
@@ -145,57 +154,17 @@ class QuizifyEventEmitter:
         preset: master on, every light/SFX toggle off → the bus stays live, the
         house stays quiet.
         """
-        self._enabled_override = bool(enabled)
+        # The master is the one panel value shared with the party lights and the
+        # SFX player, so it is written to the shared settings (#789).
+        self._settings.enabled_override = bool(enabled)
 
-    # ------------------------------------------------------------------
-    # Options-reload lifecycle (#411 pattern)
-    # ------------------------------------------------------------------
-
-    def export_runtime_state(self) -> dict[str, Any]:
-        """Snapshot the transient phase-tracking state + master toggle (#411).
-
-        An options reload rebuilds this emitter from scratch, which would reset
-        ``_last_phase`` to ``None``. On its own that is mostly harmless (the
-        game_started/finale detectors are further gated on ``round``), but a
-        reload landing exactly on the first active round could otherwise re-fire
-        ``quizify_game_started``. Snapshotting the last phase across the reload
-        closes that gap, matching how the TTS announcer preserves its runtime
-        config (#411).
-
-        ``enabled_override`` rides along for the same reason (#494 P4): the
-        rebuild reads the master from the config entry, which would silently
-        discard the admin panel's runtime master mid-game. Note it is the
-        OVERRIDE that is snapshotted, not the effective master — a ``None``
-        override means the panel never set one, so the rebuilt emitter correctly
-        picks up the (possibly just changed) CONF_HOUSE_EVENTS_ENABLED value
-        rather than being pinned to the old one.
-        """
-        return {
-            "last_phase": self._last_phase.value
-            if self._last_phase is not None
-            else None,
-            "enabled_override": self._enabled_override,
-        }
-
-    def restore_runtime_state(self, snapshot: dict[str, Any] | None) -> None:
-        """Restore a snapshot from :meth:`export_runtime_state` (#411 pattern).
-
-        Defensive: a falsy/empty snapshot is a no-op, an absent key falls back to
-        the current value, and an unknown phase value is ignored so a stale
-        snapshot can never crash the rebuild. ``enabled_override`` is tri-state
-        (True/False/None) so it is NOT coerced through ``bool()`` — that would
-        turn "the panel never set a master" into a hard False.
-        """
-        if not snapshot:
-            return
-        value = snapshot.get("last_phase")
-        if value:
-            try:
-                self._last_phase = GamePhase(value)
-            except ValueError:
-                _LOGGER.debug("Ignoring unknown phase in snapshot: %s", value)
-        override = snapshot.get("enabled_override", self._enabled_override)
-        self._enabled_override = None if override is None else bool(override)
+    # There is deliberately no export/restore_runtime_state pair any more
+    # (#789). It carried ``_last_phase`` and the panel's master across the
+    # rebuild an options reload used to perform, so that a reload landing on
+    # round 1 could not re-fire ``quizify_game_started`` and could not discard
+    # the panel's master mid-game. Both now hold by construction: the emitter
+    # itself outlives the reload, and only the config-entry defaults it reads
+    # through :class:`HouseSettings` are refreshed.
 
     # ------------------------------------------------------------------
     # Phase-driven milestones (state-callback path)

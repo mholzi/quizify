@@ -36,7 +36,7 @@ from __future__ import annotations
 import contextlib
 import logging
 from pathlib import Path
-from typing import TYPE_CHECKING, Any
+from typing import TYPE_CHECKING
 
 from .game_events import (
     EVENT_ANSWER_REVEALED,
@@ -44,6 +44,7 @@ from .game_events import (
     EVENT_WINNER_DECIDED,
 )
 from .ha_service import fire_and_forget_service
+from .house_settings import CUE_KEYS, HouseSettings
 
 if TYPE_CHECKING:
     from collections.abc import Callable
@@ -63,8 +64,10 @@ WWW_DIR = Path(__file__).parent / "www"
 STATIC_URL_PREFIX = "/quizify/static"
 
 # The four cue keys. Each maps to an optional override URL (from the options
-# flow) and a bundled default at ``www/sfx/<cue>.mp3``.
-_CUE_KEYS = ("correct", "wrong", "streak", "winner")
+# flow) and a bundled default at ``www/sfx/<cue>.mp3``. The list now lives with
+# the config-entry defaults that carry the override URLs (:mod:`house_settings`);
+# this alias keeps the established module-local name.
+_CUE_KEYS = CUE_KEYS
 
 # Best-effort HA base-URL helper. Imported lazily/guarded so the module still
 # imports on the standalone dev server (no ``homeassistant`` package) and so
@@ -82,19 +85,35 @@ class QuizifySoundEffects:
     def __init__(
         self,
         hass: HomeAssistant | None,
-        media_player_entity_id: str | None,
         game_state: QuizifyGameState,
-        cue_urls: dict[str, str | None],
+        media_player_entity_id: str | None = None,
+        cue_urls: dict[str, str | None] | None = None,
         enabled: bool = True,
+        settings: HouseSettings | None = None,
     ) -> None:
+        """Build the room-SFX player.
+
+        ``settings`` is the shared :class:`HouseSettings` (#789): the speaker,
+        the per-cue override URLs and the house master are read through it, so
+        an options reload updates them in place rather than rebuilding this
+        object. ``media_player_entity_id`` / ``cue_urls`` / ``enabled`` are the
+        standalone form used by the dev server and the unit tests; they seed a
+        private settings object that behaves identically.
+        """
         self._hass = hass
-        self._media_player_entity_id = (media_player_entity_id or "").strip() or None
+        # Config-entry values (the shared speaker, the four per-cue override
+        # URLs, the CONF_HOUSE_EVENTS_ENABLED master) are read lazily off this.
+        # Per-cue URLs are normalized there: blank/whitespace => None (no
+        # override); unknown keys are ignored and missing keys default to None.
+        self._settings = settings or HouseSettings(
+            house_enabled=bool(enabled),
+            media_player=(media_player_entity_id or "").strip() or None,
+            cue_urls={
+                cue: ((cue_urls or {}).get(cue) or "").strip() or None
+                for cue in _CUE_KEYS
+            },
+        )
         self._game = game_state
-        # Per-cue override URLs. Normalized: blank/whitespace => None (no
-        # override). Unknown keys are ignored; missing keys default to None.
-        self._cue_urls: dict[str, str | None] = {
-            cue: ((cue_urls.get(cue) or "").strip() or None) for cue in _CUE_KEYS
-        }
         # Resolved bundled-default URLs, computed ONCE at attach_events() time so
         # we never stat the disk on the event hot path (#475). Cue key -> URL for
         # every cue whose default file exists AND for which we could build a base
@@ -103,22 +122,12 @@ class QuizifySoundEffects:
         self._event_unsubs: list[Callable[[], None]] = []
 
         # --- "House Plays Along" runtime config (#494 Phase 4) ---------------
-        # Master switch in two layers:
+        # The master switch lives on the shared settings object in two layers
+        # (the config-entry value plus the admin panel's tri-state override), so
+        # a host toggling CONF_HOUSE_EVENTS_ENABLED in the options UI on a
+        # never-panelled install takes effect immediately, while a panel-set
+        # master survives an unrelated options change (#411).
         #
-        # * ``_enabled`` — the config-entry value (CONF_HOUSE_EVENTS_ENABLED).
-        #   The constructor default is True because the sole production caller
-        #   (__init__) always passes the resolved option explicitly; the product
-        #   "off by default" lives at the config layer, not here — the same
-        #   posture QuizifyEventEmitter takes.
-        # * ``_enabled_override`` — the admin panel's runtime master. ``None``
-        #   means "the panel never touched it", so the config entry still wins.
-        #
-        # Two layers rather than one so BOTH survive an options reload: the
-        # panel's master is preserved across an unrelated options change (#411),
-        # while a host toggling CONF_HOUSE_EVENTS_ENABLED in the options UI on a
-        # never-panelled install still takes effect immediately.
-        self._enabled: bool = bool(enabled)
-        self._enabled_override: bool | None = None
         # Per-cue toggles, all default ON so flipping the master on gives the
         # full soundtrack out of the box (the TTS posture, #281).
         self._cue_enabled: dict[str, bool] = dict.fromkeys(_CUE_KEYS, True)
@@ -150,7 +159,9 @@ class QuizifySoundEffects:
         the first time (no speaker in the options flow, one picked in the panel)
         still gets its cue listeners — and its one-time bundled-default stat.
         """
-        self._enabled_override = bool(enabled)
+        # The master is the one panel value shared with the party lights and the
+        # event emitter, so it is written to the shared settings (#789).
+        self._settings.enabled_override = bool(enabled)
         self._cue_enabled = {
             "correct": bool(sfx_correct),
             "wrong": bool(sfx_wrong),
@@ -161,53 +172,36 @@ class QuizifySoundEffects:
         # Idempotent; a no-op when already attached or still unconfigured.
         self.attach_events()
 
-    def export_runtime_config(self) -> dict[str, Any]:
-        """Snapshot the mutable per-game house-SFX config (#411 pattern).
+    # There is deliberately no export/restore_runtime_config pair any more
+    # (#789): it existed only so the panel's toggles could survive the rebuild
+    # an options reload used to perform. The settings object is now updated in
+    # place, this instance outlives the reload, and the overrides below survive
+    # simply by not being touched.
 
-        An options reload rebuilds this instance from the config entry, which
-        would reset every cue toggle back to its default and drop the admin's
-        speaker override — silently wiping the panel's settings mid-game until
-        the next ``start_game``. ``__init__._update_listener`` snapshots the live
-        config here and restores it onto the fresh instance via
-        :meth:`restore_runtime_config`, exactly as it already does for the TTS
-        announcer (#411).
-        """
-        return {
-            "enabled_override": self._enabled_override,
-            "sfx_correct": self._cue_enabled["correct"],
-            "sfx_wrong": self._cue_enabled["wrong"],
-            "sfx_streak": self._cue_enabled["streak"],
-            "sfx_winner": self._cue_enabled["winner"],
-            "media_player_override": self._media_player_override,
-        }
+    @property
+    def _enabled(self) -> bool:
+        """The config-entry master (CONF_HOUSE_EVENTS_ENABLED), read live."""
+        return self._settings.house_enabled
 
-    def restore_runtime_config(self, snapshot: dict[str, Any] | None) -> None:
-        """Restore a snapshot from :meth:`export_runtime_config` (#411 pattern).
+    @property
+    def _enabled_override(self) -> bool | None:
+        """The panel's tri-state master; ``None`` = the panel never set one."""
+        return self._settings.enabled_override
 
-        Defensive: a falsy/empty snapshot is a no-op, and each field falls back
-        to the current value when absent, so a partial snapshot never clobbers
-        an unrelated default. ``enabled_override`` is tri-state
-        (True/False/None) so it is NOT coerced through ``bool()`` — that would
-        turn "the panel never set a master" into a hard False.
-        """
-        if not snapshot:
-            return
-        override = snapshot.get("enabled_override", self._enabled_override)
-        self._enabled_override = None if override is None else bool(override)
-        self._cue_enabled = {
-            cue: bool(snapshot.get(f"sfx_{cue}", self._cue_enabled[cue]))
-            for cue in _CUE_KEYS
-        }
-        self._media_player_override = (
-            snapshot.get("media_player_override", self._media_player_override) or None
-        )
+    @property
+    def _media_player_entity_id(self) -> str | None:
+        """The config-entry speaker, read live off the settings."""
+        return self._settings.media_player
+
+    @property
+    def _cue_urls(self) -> dict[str, str | None]:
+        """The four config-entry per-cue override URLs, read live."""
+        return self._settings.cue_urls
 
     @property
     def _master_enabled(self) -> bool:
         """The effective master: panel override if set, else the config entry."""
-        if self._enabled_override is None:
-            return self._enabled
-        return self._enabled_override
+        return self._settings.master_enabled
 
     @property
     def _active_media_player(self) -> str | None:
@@ -243,6 +237,18 @@ class QuizifySoundEffects:
             hass.bus.async_listen(EVENT_STREAK_MILESTONE, self._on_streak_milestone),
             hass.bus.async_listen(EVENT_WINNER_DECIDED, self._on_winner_decided),
         ]
+
+    def refresh_from_settings(self) -> None:
+        """Re-sync after the config entry's options changed (#789).
+
+        The old reload path rebuilt this object, which re-stat'd the bundled
+        defaults and re-ran ``attach_events()``. Both are reproduced here so a
+        host who just configured their first speaker gets the cue listeners
+        armed, and both are idempotent.
+        """
+        if self._event_unsubs:
+            self._resolve_default_urls()
+        self.attach_events()
 
     def detach(self) -> None:
         """Drop the bus listeners. Suppresses unsub errors (reload/unload safe)."""

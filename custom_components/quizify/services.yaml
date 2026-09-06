@@ -10,12 +10,79 @@ reset_admin_session:
 start_game:
   name: Start game
   description: >-
-    Start a new Quizify game with the default settings (mixed packs, default
-    difficulty, 10 rounds). Wire it to an Assist sentence ("Hey Nabu, start the
-    quiz"), a Zigbee remote button or a dashboard button so the host can kick
-    off the game without reaching for the admin panel. Only works from the
-    lobby — it will not interrupt a game already in progress.
-  fields: {}
+    Start a new Quizify game. Wire it to an Assist sentence ("Hey Nabu, start
+    the quiz"), a Zigbee remote button or a dashboard button so the host can
+    kick off the game without reaching for the admin panel. With no fields set
+    it repeats the settings of your last game; name a saved preset, or set the
+    individual fields, to start a different one. Only works from the lobby —
+    it will not interrupt a game already in progress.
+  fields:
+    preset:
+      name: Preset
+      description: >-
+        The name of a preset saved in the Quizify setup screen. Its packs,
+        difficulty, rounds, timer and game-mode toggles are applied; the fields
+        below still win over it.
+      required: false
+      example: Friday night
+      selector:
+        text:
+    category:
+      name: Packs
+      description: >-
+        One question pack, a list of them, or "mixed" for all packs.
+      required: false
+      example: geography
+      selector:
+        text:
+          multiple: true
+    difficulty:
+      name: Difficulty
+      description: >-
+        Fixed difficulty for the whole game, or "auto" to let Quizify calibrate
+        it to the group. Leave empty to keep your last setting.
+      required: false
+      selector:
+        select:
+          options:
+            - easy
+            - medium
+            - hard
+            - auto
+            - mixed
+          custom_value: true
+    num_rounds:
+      name: Rounds
+      description: How many questions the game runs for.
+      required: false
+      example: 15
+      selector:
+        number:
+          min: 1
+          max: 50
+          mode: box
+    language:
+      name: Language
+      description: >-
+        Language code for the questions and the player screens, e.g. "de",
+        "en" or "es".
+      required: false
+      example: de
+      selector:
+        text:
+    timer_duration:
+      name: Timer
+      description: >-
+        Seconds each question stays open. Leave empty for the difficulty's
+        default.
+      required: false
+      example: 30
+      selector:
+        number:
+          min: 5
+          max: 300
+          unit_of_measurement: seconds
+          mode: box
 
 next_round:
   name: Next question

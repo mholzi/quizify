@@ -30,6 +30,7 @@ from custom_components.quizify.game.state import (  # noqa: E402
     GamePhase,
     QuizifyGameState,
 )
+from custom_components.quizify.house_settings import HouseSettings  # noqa: E402
 from custom_components.quizify.tts import QuizifyTTSAnnouncer  # noqa: E402
 
 _WWW = _REPO_ROOT / "custom_components" / "quizify" / "www"
@@ -316,15 +317,15 @@ class TestMilestoneIsLocalizedAndToggleable:
         assert len(hass.calls) == 1
 
     def test_the_toggle_survives_an_options_reload(self, game) -> None:
-        """Same export/restore round-trip the six siblings get (#411)."""
+        """Same reload continuity the six siblings get (#411 / #789)."""
         hass = _FakeHass()
-        t = _announcer(hass, game)
+        settings = HouseSettings(
+            tts_entity="tts.cloud", media_player="media_player.kitchen"
+        )
+        t = QuizifyTTSAnnouncer(hass=hass, game_state=game, settings=settings)
         _configure(t, announce_milestone=False)
-        snapshot = t.export_runtime_config()
-        assert snapshot["announce_milestone"] is False
-        fresh = _announcer(hass, game)
-        fresh.restore_runtime_config(snapshot)
-        assert fresh._announce_milestone is False
+        settings.update_from_options({"tts_entity": "tts.cloud"})
+        assert t._announce_milestone is False
 
 
 # ---------------------------------------------------------------------------

@@ -933,19 +933,29 @@ def _pack_news_store(request: web.Request) -> PackNewsStore:
     return store
 
 
-def _preset_store(request: web.Request) -> PresetStore:
+def get_preset_store(app: web.Application) -> PresetStore:
     """Return the per-app preset store, creating it once.
 
     Cached on the aiohttp application rather than rebuilt per request: the
     store owns an ``asyncio.Lock`` that serialises read-modify-write, and a
     fresh instance per request would lock nothing. Stashing it here (instead
     of on ``AppContext``) keeps the HA and standalone entry points untouched.
+
+    Takes the application rather than a request so the ``quizify.start_game``
+    service can reach the SAME instance (#744) — a preset started by voice and a
+    preset saved in the admin UI have to be the same list, and a second store
+    with its own lock would not serialise against the first.
     """
-    store = request.app.get(_PRESET_STORE_KEY)
+    store = app.get(_PRESET_STORE_KEY)
     if store is None:
-        store = PresetStore(_get_ctx(request).runtime)
-        request.app[_PRESET_STORE_KEY] = store
+        store = PresetStore(app[APP_CTX_KEY].runtime)
+        app[_PRESET_STORE_KEY] = store
     return store
+
+
+def _preset_store(request: web.Request) -> PresetStore:
+    """The request-scoped form of :func:`get_preset_store`."""
+    return get_preset_store(request.app)
 
 
 async def presets_view(request: web.Request) -> web.Response:

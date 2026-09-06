@@ -15,6 +15,7 @@ from typing import TYPE_CHECKING
 if TYPE_CHECKING:
     from ..analytics import QuizifyAnalytics
     from ..game.state import QuizifyGameState
+    from ..house import HouseConsumers
     from ..question_stats import QuestionStatsService
     from ..runtime import Runtime
     from .websocket import QuizifyWebSocketHandler
@@ -88,3 +89,9 @@ class AppContext:
     # back-compatible. Mutable so an options-flow change applies without an HA
     # restart, mirroring ``community_submit_url``.
     community_submit_secret: str | None = None
+    # The five "House Plays Along" consumers plus the config-entry settings they
+    # share (#789). ``None`` on the standalone dev server, which has no config
+    # entry and no Home Assistant to drive. They used to be reachable only via
+    # ``hass.data[DOMAIN]``, which this class exists to replace; the unload path
+    # detaches them from here.
+    house: HouseConsumers | None = None

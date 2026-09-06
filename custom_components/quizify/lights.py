@@ -29,7 +29,7 @@ from __future__ import annotations
 
 import asyncio
 import contextlib
-from typing import TYPE_CHECKING, Any
+from typing import TYPE_CHECKING
 
 from .game.state import GamePhase, QuizifyGameState
 from .game_events import (
@@ -40,6 +40,7 @@ from .game_events import (
     EVENT_WINNER_DECIDED,
 )
 from .ha_service import fire_and_forget_service
+from .house_settings import HouseSettings, clean_entity_ids
 
 if TYPE_CHECKING:
     from collections.abc import Callable
@@ -167,16 +168,10 @@ _ACCENT_WINNER: list[tuple[object, float]] = [
 # sweep (above) is the finale's celebration instead.
 
 
-def _clean_entity_ids(entity_ids: list[str] | None) -> list[str]:
-    """Strip whitespace, drop empties, dedupe while keeping order."""
-    seen: set[str] = set()
-    cleaned: list[str] = []
-    for raw in entity_ids or []:
-        entity = (raw or "").strip()
-        if entity and entity not in seen:
-            seen.add(entity)
-            cleaned.append(entity)
-    return cleaned
+# Kept as a module-local alias: the cleaning rule now lives with the config-entry
+# defaults it normalises (:mod:`house_settings`), but this name is referenced from
+# the domain-allowlist notes in the WS layer and the #724 tests.
+_clean_entity_ids = clean_entity_ids
 
 
 class QuizifyPartyLights:
@@ -185,17 +180,30 @@ class QuizifyPartyLights:
     def __init__(
         self,
         hass: HomeAssistant | None,
-        entity_ids: list[str],
         game_state: QuizifyGameState,
+        entity_ids: list[str] | None = None,
         finale_scene: str | None = None,
         enabled: bool = True,
+        settings: HouseSettings | None = None,
     ) -> None:
+        """Build the light choreography.
+
+        ``settings`` is the shared :class:`HouseSettings` the integration builds
+        once per config entry (#789); the lights read the configured entities,
+        finale scene and house master through it, so an options reload updates
+        them in place instead of rebuilding this object. The ``entity_ids`` /
+        ``finale_scene`` / ``enabled`` arguments are the standalone form used by
+        the dev server and the unit tests — they seed a private settings object
+        that behaves identically. Passing both ignores the loose arguments.
+        """
         self._hass = hass
-        self._entity_ids = _clean_entity_ids(entity_ids)
-        # Optional finale scene (#280). Activated alongside the winner sweep so
-        # the host can drive a whole-room "victory" look (their own scene) on top
-        # of the party lights. Cleaned: empty/whitespace → None (no-op).
-        self._finale_scene = (finale_scene or "").strip() or None
+        # Config-entry values (entities, the optional #280 finale scene, the
+        # CONF_HOUSE_EVENTS_ENABLED master) are read lazily off this object.
+        self._settings = settings or HouseSettings(
+            house_enabled=bool(enabled),
+            light_entities=clean_entity_ids(entity_ids),
+            finale_scene=(finale_scene or "").strip() or None,
+        )
         self._game = game_state
         self._last_phase: GamePhase | None = None
         # Accent choreography (#494). Unsub handles for the four bus listeners
@@ -205,22 +213,13 @@ class QuizifyPartyLights:
         self._pulse_task: asyncio.Task | None = None
 
         # --- "House Plays Along" runtime config (#494 Phase 4) ---------------
-        # Master switch for the EVENT-DRIVEN ACCENTS only, in two layers:
+        # The master switch for the EVENT-DRIVEN ACCENTS lives on the shared
+        # settings object in two layers (the config-entry value plus the admin
+        # panel's tri-state override) so a host toggling
+        # CONF_HOUSE_EVENTS_ENABLED in the options UI takes effect immediately
+        # on a never-panelled install, while a panel-set master survives an
+        # unrelated options change (#411). See :attr:`_master_enabled`.
         #
-        # * ``_enabled`` — the config-entry value (CONF_HOUSE_EVENTS_ENABLED).
-        #   The constructor default is True because the sole production caller
-        #   (__init__) always passes the resolved option explicitly; the product
-        #   "off by default" lives at the config layer, not here — exactly the
-        #   posture QuizifyEventEmitter takes.
-        # * ``_enabled_override`` — the admin panel's runtime master. ``None``
-        #   means "the panel never touched it", so the config entry still wins.
-        #
-        # Two layers rather than one so BOTH survive an options reload: the
-        # panel's master is preserved across an unrelated options change (#411),
-        # while a host toggling CONF_HOUSE_EVENTS_ENABLED in the options UI on a
-        # never-panelled install still takes effect immediately.
-        self._enabled: bool = bool(enabled)
-        self._enabled_override: bool | None = None
         # Per-accent toggles, all default ON so flipping the master on gives the
         # full choreography out of the box (the TTS posture, #281).
         self._light_question: bool = True
@@ -269,7 +268,9 @@ class QuizifyPartyLights:
         options flow, lights picked in the panel) still gets its accent
         listeners.
         """
-        self._enabled_override = bool(enabled)
+        # The master is the one panel value shared with the SFX player and the
+        # event emitter, so it is written to the shared settings (#789).
+        self._settings.enabled_override = bool(enabled)
         self._light_question = bool(light_question)
         self._light_countdown = bool(light_countdown)
         self._light_reveal = bool(light_reveal)
@@ -281,82 +282,40 @@ class QuizifyPartyLights:
         # Idempotent; a no-op when already attached or still unconfigured.
         self.attach_events()
 
-    def export_runtime_config(self) -> dict[str, Any]:
-        """Snapshot the mutable per-game house-lights config (#411 pattern).
-
-        An options reload rebuilds this instance from the config entry, which
-        would reset every toggle back to its default and drop the admin's entity
-        overrides — silently wiping the panel's settings mid-game until the next
-        ``start_game``. ``__init__._update_listener`` snapshots the live config
-        here and restores it onto the fresh instance via
-        :meth:`restore_runtime_config`, exactly as it already does for the TTS
-        announcer (#411).
-
-        Note it snapshots ``_enabled_override`` — the PANEL's master — not the
-        effective one. A ``None`` override means the panel never touched the
-        master, so the rebuilt instance correctly picks up the (possibly just
-        changed) CONF_HOUSE_EVENTS_ENABLED value from the config entry instead of
-        being pinned to the old one.
-
-        ``_last_phase`` is deliberately NOT snapshotted: letting it reset to
-        ``None`` makes the next state change re-apply the ambient recipe, which
-        re-syncs the bulbs after a reload. Carrying it over would suppress that.
-        """
-        return {
-            "enabled_override": self._enabled_override,
-            "light_question": self._light_question,
-            "light_countdown": self._light_countdown,
-            "light_reveal": self._light_reveal,
-            "light_streak": self._light_streak,
-            "light_winner": self._light_winner,
-            "winner_scene": self._winner_scene,
-            "entity_ids_override": self._entity_ids_override,
-            "finale_scene_override": self._finale_scene_override,
-        }
-
-    def restore_runtime_config(self, snapshot: dict[str, Any] | None) -> None:
-        """Restore a snapshot from :meth:`export_runtime_config` (#411 pattern).
-
-        Defensive: a falsy/empty snapshot is a no-op, and each field falls back
-        to the current value when absent, so a partial snapshot never clobbers
-        an unrelated default. ``enabled_override`` is tri-state (True/False/None)
-        so it is NOT coerced through ``bool()`` — that would turn "the panel never
-        set a master" into a hard False and pin the master off.
-        """
-        if not snapshot:
-            return
-        override = snapshot.get("enabled_override", self._enabled_override)
-        self._enabled_override = None if override is None else bool(override)
-        self._light_question = bool(
-            snapshot.get("light_question", self._light_question)
-        )
-        self._light_countdown = bool(
-            snapshot.get("light_countdown", self._light_countdown)
-        )
-        self._light_reveal = bool(snapshot.get("light_reveal", self._light_reveal))
-        self._light_streak = bool(snapshot.get("light_streak", self._light_streak))
-        self._light_winner = bool(snapshot.get("light_winner", self._light_winner))
-        self._winner_scene = bool(snapshot.get("winner_scene", self._winner_scene))
-        self._entity_ids_override = (
-            _clean_entity_ids(
-                snapshot.get("entity_ids_override", self._entity_ids_override)
-            )
-            or None
-        )
-        self._finale_scene_override = (
-            snapshot.get("finale_scene_override", self._finale_scene_override) or None
-        )
-
     # ------------------------------------------------------------------
     # Entity resolution — override wins, else the config-entry value
     # ------------------------------------------------------------------
+    #
+    # There is deliberately no export/restore_runtime_config pair any more
+    # (#789). It existed only because an options reload tore this object down
+    # and built a new one from the fresh config entry; the settings object is
+    # now updated in place, this instance outlives the reload, and every panel
+    # override below survives simply by not being touched.
+
+    @property
+    def _enabled(self) -> bool:
+        """The config-entry master (CONF_HOUSE_EVENTS_ENABLED), read live."""
+        return self._settings.house_enabled
+
+    @property
+    def _enabled_override(self) -> bool | None:
+        """The panel's tri-state master; ``None`` = the panel never set one."""
+        return self._settings.enabled_override
+
+    @property
+    def _entity_ids(self) -> list[str]:
+        """The config-entry light entities, read live off the settings."""
+        return self._settings.light_entities
+
+    @property
+    def _finale_scene(self) -> str | None:
+        """The config-entry finale scene (#280), read live off the settings."""
+        return self._settings.finale_scene
 
     @property
     def _master_enabled(self) -> bool:
         """The effective accent master: panel override if set, else the entry."""
-        if self._enabled_override is None:
-            return self._enabled
-        return self._enabled_override
+        return self._settings.master_enabled
 
     @property
     def _active_entity_ids(self) -> list[str]:
@@ -377,6 +336,19 @@ class QuizifyPartyLights:
 
     def attach(self) -> None:
         self._game.register_state_callback(self._on_state_changed)
+
+    def refresh_from_settings(self) -> None:
+        """Re-sync after the config entry's options changed (#789).
+
+        The old reload path rebuilt this object, which had two side effects
+        worth keeping now that it does not: a fresh instance started with
+        ``_last_phase = None``, so the next state change re-applied the ambient
+        recipe and re-synced the bulbs; and it ran ``attach_events()``, which is
+        what arms the accent listeners for a host who just configured their
+        first light entity. Both are reproduced here, and both are idempotent.
+        """
+        self._last_phase = None
+        self.attach_events()
 
     def attach_events(self) -> None:
         """Subscribe to the ``quizify_*`` bus events for accent choreography.

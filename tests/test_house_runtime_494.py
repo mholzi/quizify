@@ -51,6 +51,7 @@ from custom_components.quizify.game_events import (  # noqa: E402
     EVENT_WINNER_DECIDED,
     QuizifyEventEmitter,
 )
+from custom_components.quizify.house_settings import HouseSettings  # noqa: E402
 from custom_components.quizify.lights import QuizifyPartyLights  # noqa: E402
 from custom_components.quizify.sound_effects import (  # noqa: E402
     QuizifySoundEffects,
@@ -712,13 +713,33 @@ def test_emitter_has_no_per_event_toggles():
 
 
 # ---------------------------------------------------------------------------
-# Snapshot round-trip (#411 pattern) — the unit half
+# Options-reload continuity — the unit half (#411 / #494 P4, rebuilt for #789)
 # ---------------------------------------------------------------------------
+#
+# These used to drive an export/restore_runtime_config pair on each consumer:
+# an options reload rebuilt every house consumer from the config entry, so the
+# panel's toggles and entity overrides had to be snapshotted onto the fresh
+# instance or they were silently wiped mid-game. There is no rebuild any more —
+# the consumers read their config-entry defaults through a shared HouseSettings
+# that the listener refreshes in place — so the same guarantees are asserted
+# against the real mechanism: change the options, and the LIVE consumer must
+# see the new defaults while keeping every panel override.
 
 
-def test_lights_snapshot_roundtrip_preserves_panel_config():
+def _reload(settings, **options):
+    """Do what ``__init__._update_listener`` does: refresh the shared defaults."""
+    settings.update_from_options(options)
+
+
+def test_reload_keeps_the_panel_config_on_the_live_lights():
     hass = _FakeHass()
-    pl = _lights(hass, entities=("light.entry",), finale_scene="scene.entry")
+    settings = HouseSettings.from_options(
+        {
+            "party_light_entities": ["light.entry"],
+            "finale_scene": "scene.entry",
+        }
+    )
+    pl = QuizifyPartyLights(hass=hass, game_state=_FakeGame(), settings=settings)
     _configure_lights(
         pl,
         enabled=True,
@@ -728,30 +749,31 @@ def test_lights_snapshot_roundtrip_preserves_panel_config():
         light_entities=["light.panel"],
         winner_scene_entity="scene.panel",
     )
-    snapshot = pl.export_runtime_config()
 
-    # An options reload rebuilds from the config entry (master back to False).
-    fresh = QuizifyPartyLights(
-        hass=hass,
-        entity_ids=["light.entry"],
-        game_state=_FakeGame(),
+    # An unrelated options change — house events are still off at the entry.
+    _reload(
+        settings,
+        party_light_entities=["light.entry"],
         finale_scene="scene.entry",
-        enabled=False,
+        lobby_music_url="http://a.test/x.mp3",
     )
-    fresh.restore_runtime_config(snapshot)
 
-    assert fresh._master_enabled is True
-    assert fresh._light_question is False
-    assert fresh._light_streak is False
-    assert fresh._light_countdown is True  # untouched toggles keep their value
-    assert fresh._winner_scene is False
-    assert fresh._active_entity_ids == ["light.panel"]
-    assert fresh._active_finale_scene == "scene.panel"
+    assert pl._master_enabled is True
+    assert pl._light_question is False
+    assert pl._light_streak is False
+    assert pl._light_countdown is True  # untouched toggles keep their value
+    assert pl._winner_scene is False
+    assert pl._active_entity_ids == ["light.panel"]
+    assert pl._active_finale_scene == "scene.panel"
 
 
-def test_sfx_snapshot_roundtrip_preserves_panel_config():
+def test_reload_keeps_the_panel_config_on_the_live_sfx():
     hass = _FakeHass()
-    sfx = _sfx(hass, media_player="media_player.entry")
+    settings = HouseSettings.from_options(
+        {"media_player_entity": "media_player.entry"}
+    )
+    sfx = QuizifySoundEffects(hass=hass, game_state=_FakeGame(), settings=settings)
+    sfx.attach_events()
     _configure_sfx(
         sfx,
         enabled=True,
@@ -759,141 +781,122 @@ def test_sfx_snapshot_roundtrip_preserves_panel_config():
         sfx_winner=False,
         media_player="media_player.panel",
     )
-    snapshot = sfx.export_runtime_config()
 
-    fresh = QuizifySoundEffects(
-        hass=hass,
-        media_player_entity_id="media_player.entry",
-        game_state=_FakeGame(),
-        cue_urls={},
-        enabled=False,
-    )
-    fresh.restore_runtime_config(snapshot)
+    _reload(settings, media_player_entity="media_player.entry")
 
-    assert fresh._master_enabled is True
-    assert fresh._cue_enabled == {
+    assert sfx._master_enabled is True
+    assert sfx._cue_enabled == {
         "correct": False,
         "wrong": True,
         "streak": True,
         "winner": False,
     }
-    assert fresh._active_media_player == "media_player.panel"
+    assert sfx._active_media_player == "media_player.panel"
 
 
-def test_emitter_snapshot_roundtrip_preserves_master_and_phase():
+def test_reload_keeps_the_emitter_master_and_its_phase_dedupe():
     hass = _FakeHass()
     game = _FakeGame()
-    emitter = QuizifyEventEmitter(hass=hass, game_state=game, enabled=False)
+    settings = HouseSettings(house_enabled=False)
+    emitter = QuizifyEventEmitter(hass=hass, game_state=game, settings=settings)
     emitter.configure(enabled=True)
     game.round = 1
     game.phase = GamePhase.QUESTION_ACTIVE
     emitter._on_state_changed()  # sets _last_phase, fires game_started
     assert [t for t, _ in hass.bus.fired] == [EVENT_GAME_STARTED]
 
-    snapshot = emitter.export_runtime_state()
-    fresh = QuizifyEventEmitter(hass=hass, game_state=game, enabled=False)
-    fresh.restore_runtime_state(snapshot)
+    _reload(settings)
 
-    # The panel's master survived the rebuild…
-    assert fresh._master_enabled is True
+    # The panel's master survived…
+    assert emitter._master_enabled is True
     # …and so did the phase dedupe (no duplicate game_started).
     hass.bus.fired.clear()
-    fresh._on_state_changed()
+    emitter._on_state_changed()
     assert hass.bus.fired == []
 
 
-@pytest.mark.parametrize("snapshot", [None, {}])
-def test_restore_is_defensive_against_empty_snapshots(snapshot):
-    """A falsy snapshot must never clobber the live config."""
+def test_reload_refreshes_the_config_entry_defaults_underneath():
+    """The other half: the NEW options genuinely land on the live consumers."""
     hass = _FakeHass()
-    pl = _lights(hass)
-    _configure_lights(pl, enabled=True, light_reveal=False)
-    pl.restore_runtime_config(snapshot)
-    assert pl._master_enabled is True
-    assert pl._light_reveal is False
+    settings = HouseSettings.from_options(
+        {"party_light_entities": ["light.old"], "media_player_entity": "mp.old"}
+    )
+    pl = QuizifyPartyLights(hass=hass, game_state=_FakeGame(), settings=settings)
+    sfx = QuizifySoundEffects(hass=hass, game_state=_FakeGame(), settings=settings)
+    assert pl._active_entity_ids == ["light.old"]
+    assert sfx._active_media_player == "mp.old"
 
-    sfx = _sfx(hass)
-    _configure_sfx(sfx, enabled=True, sfx_wrong=False)
-    sfx.restore_runtime_config(snapshot)
-    assert sfx._master_enabled is True
-    assert sfx._cue_enabled["wrong"] is False
+    _reload(
+        settings,
+        party_light_entities=["light.new"],
+        media_player_entity="mp.new",
+        finale_scene="scene.new",
+        sfx_correct_url="http://a.test/correct.mp3",
+    )
 
-
-def test_partial_snapshot_only_touches_the_keys_it_carries():
-    hass = _FakeHass()
-    pl = _lights(hass)
-    _configure_lights(pl, enabled=True)
-
-    pl.restore_runtime_config({"light_streak": False})
-
-    assert pl._master_enabled is True  # untouched
-    assert pl._light_streak is False  # applied
-    assert pl._light_reveal is True  # untouched
+    assert pl._active_entity_ids == ["light.new"]
+    assert pl._active_finale_scene == "scene.new"
+    assert sfx._active_media_player == "mp.new"
+    assert sfx._cue_urls["correct"] == "http://a.test/correct.mp3"
 
 
-def test_untouched_master_snapshots_as_none_so_the_config_entry_still_wins():
+def test_untouched_master_stays_none_so_the_config_entry_still_wins():
     """The tri-state master is the subtle bit (#494 P4 + #411).
 
-    ``export`` snapshots the panel's OVERRIDE, not the effective master. When the
-    panel never set one it stays ``None``, so a host who flips
-    CONF_HOUSE_EVENTS_ENABLED in the options UI still sees it take effect after
-    the reload. Coercing that ``None`` through ``bool()`` would pin the master
-    off forever.
+    An unset panel override means the config-entry switch is still in charge, so
+    a host who flips CONF_HOUSE_EVENTS_ENABLED in the options UI sees it take
+    effect immediately. Coercing that ``None`` to ``False`` anywhere on the path
+    would pin the master off forever.
     """
     hass = _FakeHass()
+    settings = HouseSettings.from_options({"party_light_entities": ["light.x"]})
+    pl = QuizifyPartyLights(hass=hass, game_state=_FakeGame(), settings=settings)
+    ev = QuizifyEventEmitter(hass=hass, game_state=_FakeGame(), settings=settings)
+    sfx = QuizifySoundEffects(hass=hass, game_state=_FakeGame(), settings=settings)
     # Never configure()d — the panel was never opened.
-    pl = QuizifyPartyLights(
-        hass=hass, entity_ids=["light.x"], game_state=_FakeGame(), enabled=False
-    )
-    snapshot = pl.export_runtime_config()
-    assert snapshot["enabled_override"] is None
+    assert pl._enabled_override is None
+    assert pl._master_enabled is False
 
-    # The options UI just turned house events ON → the rebuild passes enabled=True.
-    fresh = QuizifyPartyLights(
-        hass=hass, entity_ids=["light.x"], game_state=_FakeGame(), enabled=True
-    )
-    fresh.restore_runtime_config(snapshot)
-    assert fresh._enabled_override is None
-    assert fresh._master_enabled is True  # the config-entry change landed
+    _reload(settings, party_light_entities=["light.x"], house_events_enabled=True)
 
-    # Same for the emitter and the SFX.
-    ev = QuizifyEventEmitter(hass=hass, game_state=_FakeGame(), enabled=False)
-    assert ev.export_runtime_state()["enabled_override"] is None
-    fresh_ev = QuizifyEventEmitter(hass=hass, game_state=_FakeGame(), enabled=True)
-    fresh_ev.restore_runtime_state(ev.export_runtime_state())
-    assert fresh_ev._master_enabled is True
-
-    sfx = QuizifySoundEffects(
-        hass=hass,
-        media_player_entity_id="media_player.x",
-        game_state=_FakeGame(),
-        cue_urls={},
-        enabled=False,
-    )
-    assert sfx.export_runtime_config()["enabled_override"] is None
-    fresh_sfx = QuizifySoundEffects(
-        hass=hass,
-        media_player_entity_id="media_player.x",
-        game_state=_FakeGame(),
-        cue_urls={},
-        enabled=True,
-    )
-    fresh_sfx.restore_runtime_config(sfx.export_runtime_config())
-    assert fresh_sfx._master_enabled is True
+    assert pl._enabled_override is None
+    assert pl._master_enabled is True
+    assert ev._master_enabled is True
+    assert sfx._master_enabled is True
 
 
 def test_panel_master_off_survives_a_config_entry_master_on():
     """The mirror case: an explicit panel OFF must not be undone by a reload."""
     hass = _FakeHass()
-    pl = QuizifyPartyLights(
-        hass=hass, entity_ids=["light.x"], game_state=_FakeGame(), enabled=True
+    settings = HouseSettings.from_options(
+        {"party_light_entities": ["light.x"], "house_events_enabled": True}
     )
+    pl = QuizifyPartyLights(hass=hass, game_state=_FakeGame(), settings=settings)
     _configure_lights(pl, enabled=False)  # host switched the house off mid-game
-    snapshot = pl.export_runtime_config()
-    assert snapshot["enabled_override"] is False
+    assert pl._enabled_override is False
 
-    fresh = QuizifyPartyLights(
-        hass=hass, entity_ids=["light.x"], game_state=_FakeGame(), enabled=True
+    _reload(settings, party_light_entities=["light.x"], house_events_enabled=True)
+
+    assert pl._master_enabled is False
+
+
+def test_the_house_master_is_one_switch_across_the_three_consumers():
+    """The panel presents one master over three subsystems (#789).
+
+    It used to be three private copies kept in sync by three separate
+    ``configure()`` calls in the same frame; it is now one field on the shared
+    settings, so a partial fan-out can no longer leave them disagreeing.
+    """
+    hass = _FakeHass()
+    settings = HouseSettings.from_options({"party_light_entities": ["light.x"]})
+    pl = QuizifyPartyLights(hass=hass, game_state=_FakeGame(), settings=settings)
+    ev = QuizifyEventEmitter(hass=hass, game_state=_FakeGame(), settings=settings)
+    sfx = QuizifySoundEffects(hass=hass, game_state=_FakeGame(), settings=settings)
+
+    ev.configure(enabled=True)
+
+    assert (pl._master_enabled, ev._master_enabled, sfx._master_enabled) == (
+        True,
+        True,
+        True,
     )
-    fresh.restore_runtime_config(snapshot)
-    assert fresh._master_enabled is False

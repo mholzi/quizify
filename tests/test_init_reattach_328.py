@@ -109,12 +109,19 @@ async def _setup(hass: HomeAssistant) -> MockConfigEntry:
     return entry
 
 
-async def test_options_update_reattaches_optional_integrations(
+async def test_options_update_reaches_the_live_optional_integrations(
     http_hass: HomeAssistant,
 ) -> None:
-    """Updating the entry options fires ``_update_listener``, which detaches the
-    old optional-integration helpers and re-attaches fresh ones wired to the new
-    options — without an HA restart."""
+    """Updating the entry options fires ``_update_listener``, and the new
+    entities are live on the optional-integration helpers — without an HA
+    restart.
+
+    The helpers used to be REPLACED here: torn down, rebuilt from the fresh
+    options, re-stashed and re-wired. Since #789 they are long-lived and read
+    their config-entry defaults through the shared ``HouseSettings`` the
+    listener refreshes, so the assertion that matters is that the same objects
+    now see the new options — a rebuild would be the bug, not the mechanism.
+    """
     hass = http_hass
     entry = await _setup(hass)
     data = hass.data[DOMAIN]
@@ -137,20 +144,25 @@ async def test_options_update_reattaches_optional_integrations(
     await hass.async_block_till_done()
 
     data = hass.data[DOMAIN]
-    # The helpers were replaced with brand-new instances (re-attach, not reuse).
-    assert data["party_lights"] is not old_pl
-    assert data["tts_announcer"] is not old_tts
-    assert data["lobby_music"] is not old_lm
+    # Same instances — nothing was rebuilt, so nothing can be left orphaned
+    # subscribed to the bus or pointed at by a stale reference.
+    assert data["party_lights"] is old_pl
+    assert data["tts_announcer"] is old_tts
+    assert data["lobby_music"] is old_lm
 
-    # The new party-lights helper reflects the freshly-configured entity ids…
+    # The party-lights helper reflects the freshly-configured entity ids…
     assert data["party_lights"]._entity_ids == new_lights
     assert data["party_lights"].is_configured is True
-    # …and the new TTS announcer is now fully configured too.
+    # …and the TTS announcer is now fully configured too.
     assert data["tts_announcer"].is_configured is True
 
-    # The ws handler is re-pointed at the new TTS announcer (so milestone
-    # announcements use the live instance, not the stale one).
+    # The ws handler still points at the live announcer.
     assert hass.data[DOMAIN]["ws_handler"]._tts_announcer is data["tts_announcer"]
+    # The AppContext is where the consumers actually live (#789); hass.data
+    # only mirrors it, and the two can no longer drift.
+    house = hass.data[DOMAIN]["ctx"].house
+    assert house.party_lights is data["party_lights"]
+    assert house.tts_announcer is data["tts_announcer"]
 
 
 async def test_options_update_propagates_url_and_community_fields(
@@ -211,7 +223,7 @@ async def test_options_update_clears_fields_when_emptied(
     data = hass.data[DOMAIN]
     assert data["game"].lobby_music_url is None
     assert data["ctx"].community_submit_url is None
-    # An unconfigured party-lights helper is re-attached (no entity ids given).
+    # The party-lights helper reads the cleared option and reports unconfigured.
     assert data["party_lights"].is_configured is False
 
 
@@ -224,7 +236,8 @@ async def test_options_reload_preserves_live_narration_config(
     switch on and stores per-game entity overrides. Before the fix, the reload
     rebuilt the announcer from the config entry, resetting ``_enabled`` back to
     ``False`` — so narration went silent until the next game. The listener now
-    snapshots + restores the live runtime config onto the fresh instance.
+    refreshes only the config-entry defaults the announcer reads (#789), so
+    there is nothing left that could reset the live narration config.
     """
     hass = http_hass
     entry = await _setup(hass)
@@ -250,7 +263,7 @@ async def test_options_reload_preserves_live_narration_config(
     await hass.async_block_till_done()
 
     new_tts = hass.data[DOMAIN]["tts_announcer"]
-    assert new_tts is not old_tts
+    assert new_tts is old_tts
     # Master switch and per-event toggles survived the reload…
     assert new_tts._enabled is True
     assert new_tts._announce_reveal is False
