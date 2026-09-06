@@ -77,6 +77,13 @@ def _frames(ws: MagicMock, frame_type: str) -> list[dict]:
     return out
 
 
+async def _settle(handler) -> None:
+    """Wait for the departure announcement #848 moved onto its own task."""
+    task = handler._host_presence_task
+    if task is not None:
+        await task
+
+
 @pytest.fixture
 def game(tmp_path: Path) -> QuizifyGameState:
     return QuizifyGameState(runtime=_FakeRuntime(tmp_path), entry_id="test")
@@ -189,8 +196,8 @@ async def test_the_arrival_is_broadcast(handler, game) -> None:
     await handler._announce_host_presence()
 
     assert _frames(guest_ws, "host_presence") == [
-        {"type": "host_presence", "connected": False},
-        {"type": "host_presence", "connected": True},
+        {"type": "host_presence", "host_connected": False},
+        {"type": "host_presence", "host_connected": True},
     ]
 
 
@@ -198,7 +205,14 @@ async def test_the_arrival_is_broadcast(handler, game) -> None:
 async def test_the_departure_is_broadcast(handler, game) -> None:
     """The half nothing else reports. Driven through the real disconnect path
     rather than the announcer, because that is the path an admin-only host's
-    closing tab actually takes."""
+    closing tab actually takes.
+
+    #848: the disconnect path schedules the announcement instead of awaiting
+    it — the request task it runs in is already cancelled — so the settle step
+    below is part of the path now. It is not a substitute for the end-to-end
+    check: see ``tests/test_host_presence_departure_848.py``, which reads the
+    frame off a real guest socket.
+    """
     admin_ws = _ws()
     handler._conn.add_connection(admin_ws, is_admin=True, is_dashboard=False)
     guest_ws = _ws()
@@ -211,10 +225,11 @@ async def test_the_departure_is_broadcast(handler, game) -> None:
     was_admin = handler._conn.is_admin_connection(admin_ws)
     handler._conn.remove_connection(admin_ws)
     await handler._handle_disconnect(admin_ws, was_admin=was_admin)
+    await _settle(handler)
 
     assert _frames(guest_ws, "host_presence") == [
-        {"type": "host_presence", "connected": True},
-        {"type": "host_presence", "connected": False},
+        {"type": "host_presence", "host_connected": True},
+        {"type": "host_presence", "host_connected": False},
     ]
 
 
@@ -232,9 +247,10 @@ async def test_a_second_admin_tab_leaving_is_not_a_departure(handler, game) -> N
 
     handler._conn.remove_connection(second)
     await handler._handle_disconnect(second, was_admin=True)
+    await _settle(handler)
 
     assert _frames(guest_ws, "host_presence") == [
-        {"type": "host_presence", "connected": True}
+        {"type": "host_presence", "host_connected": True}
     ]
 
 
@@ -251,7 +267,7 @@ async def test_only_changes_go_on_the_wire(handler, game) -> None:
         await handler._announce_host_presence()
 
     assert _frames(guest_ws, "host_presence") == [
-        {"type": "host_presence", "connected": True}
+        {"type": "host_presence", "host_connected": True}
     ]
 
 
@@ -273,9 +289,10 @@ async def test_the_host_playing_keeps_the_flag_up_when_their_tab_closes(
 
     handler._conn.remove_connection(admin_ws)
     await handler._handle_disconnect(admin_ws, was_admin=True)
+    await _settle(handler)
 
     assert _frames(guest_ws, "host_presence") == [
-        {"type": "host_presence", "connected": True}
+        {"type": "host_presence", "host_connected": True}
     ]
 
 
@@ -325,7 +342,19 @@ def test_the_reset_rule_reads_the_same_helper() -> None:
 
 def test_the_announcer_is_not_left_unused(handler) -> None:
     """Guards against the hooks being removed while the helper stays: the
-    announcer is only worth having if something calls it."""
+    announcer is only worth having if something calls it.
+
+    Counts both spellings since #848. Four call sites await it; the two in
+    ``_handle_disconnect`` schedule it instead, because that code runs in a
+    request task aiohttp has already cancelled and an awaited broadcast there
+    sends nothing at all.
+
+    This count is a floor, not evidence. It passed for the whole of
+    v1.16.0-RC2, in which not one departure ever reached a phone.
+    """
     source = _WEBSOCKET_PY.read_text("utf-8")
 
-    assert source.count("await self._announce_host_presence()") >= 5
+    awaited = source.count("await self._announce_host_presence()")
+    scheduled = source.count("self._announce_host_presence_soon()")
+    assert awaited >= 4
+    assert scheduled >= 2  # the two hooks in _handle_disconnect

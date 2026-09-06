@@ -128,7 +128,7 @@ SERVER_FRAMES: dict[str, FrameSpec] = {
     ),
     "game_reset": _spec(note="Broadcast when the host resets the game."),
     "host_presence": _spec(
-        "connected",
+        "host_connected",
         note=(
             "Whether anybody is hosting the room right now (#842) — a live "
             "``?role=admin`` socket or a connected player holding the crown, "
@@ -138,7 +138,10 @@ SERVER_FRAMES: dict[str, FrameSpec] = {
             "player row to appear in a roster, and closing the tab produces no "
             "frame at all. The phone's host-gone escape hatch read that "
             "silence as a death and armed while the host was hosting (#834). "
-            "The same value rides every snapshot as ``host_connected``."
+            "Carried under the same key as in every snapshot, "
+            "``host_connected`` — #848: it was ``connected`` here and "
+            "``host_connected`` there, and the phone's single reader looks "
+            "only at the latter, so the frame it was sent was dropped."
         ),
     ),
     # --- teams (#365) -----------------------------------------------------

@@ -414,10 +414,16 @@ class QuizifyWebSocketHandler:
     # so a round boundary is not a reason to drop a pending flush. Only the
     # full ``cleanup_game_tasks()`` (integration unload / dev-server shutdown)
     # stops them.
+    #
+    # The host-presence announcement (#848) belongs here for the same reason:
+    # whether anybody is hosting the room is a property of the connections,
+    # not of the round, and a round boundary is the last moment to drop the
+    # frame that arms the guests' escape hatch.
     _CONNECTION_SCOPED_TASKS: tuple[tuple[str, str], ...] = (
         ("_reaction_flush_task", "_cancel_reaction_flush"),
         ("_roster_flush_task", "_cancel_roster_flush"),
         ("_progress_flush_task", "_cancel_progress_flush"),
+        ("_host_presence_task", "_cancel_host_presence"),
     )
 
     def __init__(
@@ -446,6 +452,11 @@ class QuizifyWebSocketHandler:
         # so the announcer broadcasts transitions rather than every socket
         # event. None until the first announcement.
         self._host_presence_sent: bool | None = None
+        # The departure announcement (#848). It cannot be awaited where it is
+        # raised — see ``_announce_host_presence_soon`` — so it runs as its own
+        # task and is held here for the same reason every other fire-and-forget
+        # task in this file is: so it is not garbage-collected mid-flight.
+        self._host_presence_task: asyncio.Task | None = None
         # Drives the fast lightning-round loop (issue #42). Distinct from
         # the normal per-question tick task so the two modes can't fight.
         self._lightning_task: asyncio.Task | None = None
@@ -3821,7 +3832,11 @@ class QuizifyWebSocketHandler:
             # this is the only thing that ever tells the phones. The announcer
             # re-reads ``_host_connected``, so a host who is also a connected
             # player keeps the flag true.
-            await self._announce_host_presence()
+            #
+            # #848: scheduled, not awaited. This runs in a request task aiohttp
+            # has already cancelled, so awaiting the broadcast here sends
+            # nothing at all — see ``_announce_host_presence_soon``.
+            self._announce_host_presence_soon()
 
         player = game_state.get_player_by_ws(ws)
         if not player:
@@ -3832,8 +3847,12 @@ class QuizifyWebSocketHandler:
 
         # #842: in the #208 flow the crown lives on a player row, so this is
         # the host leaving even though no admin socket was involved.
+        # #848: scheduled for the same reason as the branch above, and with a
+        # second benefit — everything below this line (the dropout
+        # re-evaluation, the deferred pause, the roster broadcast, the removal
+        # timer) used to sit behind an ``await`` in a cancelled task.
         if player.is_admin:
-            await self._announce_host_presence()
+            self._announce_host_presence_soon()
 
         # #412: if the last unanswered player just dropped mid-question and
         # everyone still in the room has already submitted, nothing else would
@@ -4054,10 +4073,72 @@ class QuizifyWebSocketHandler:
         connected = self._host_connected(game_state)
         if connected == self._host_presence_sent:
             return
+        previous = self._host_presence_sent
         self._host_presence_sent = connected
-        await self._conn.broadcast(
-            {"type": "host_presence", "connected": connected}
+        try:
+            await self._conn.broadcast(
+                # ``host_connected``, not ``connected`` (#848). One fact needs
+                # one name: the snapshot has always carried it under this key,
+                # and ``_rememberHostFlag`` in player-core.js — the only reader
+                # of either — reads that key and nothing else. The frame #840
+                # shipped said ``connected``, so on the two occasions the
+                # departure DID leave the server the phone read
+                # ``msg.host_connected``, found undefined, and kept the answer
+                # it already had. A live-fixed broadcast alone would still not
+                # have armed a single hatch.
+                {"type": "host_presence", "host_connected": connected}
+            )
+        except BaseException:
+            # The flag is a record of what actually went on the wire, so a
+            # send that never happened must not be remembered as one. #848
+            # was silent on all three of its reproductions partly because of
+            # this: the broadcast died in a cancelled task with the flag
+            # already flipped, and every later announcement deduped against a
+            # value no phone had ever been told.
+            self._host_presence_sent = previous
+            raise
+
+    def _announce_host_presence_soon(self) -> None:
+        """Announce host presence from a task the closing socket cannot kill.
+
+        ``_handle_disconnect`` runs inside the ``finally`` of ``handle()``, and
+        by the time it does, aiohttp has already cancelled that request's task:
+        the next ``await`` that yields to the loop raises ``CancelledError``.
+        The announcement is exactly such an await — ``broadcast`` fans out with
+        ``asyncio.gather``, which needs one loop iteration before its children
+        run — so the six awaited call sites #840 added did reach this one, did
+        flip ``_host_presence_sent``, and then died before a single byte left
+        the server.
+
+        That is #848 exactly as the live test measured it: the guest phone
+        recorded ``host_presence {connected: true}`` when the host's tab
+        opened, the HA log carried ``Admin disconnected, keeping game alive for
+        120s`` when it closed, and no frame was ever sent for the close. A call
+        site that runs is not a call site that reaches a phone.
+
+        So the departure gets its own task, the same shape
+        ``_schedule_admin_pause`` two screens down and
+        ``ConnectionManager.schedule_admin_timeout`` already use in this very
+        path, and for this very reason. Scheduling is synchronous, so nothing
+        here can be cancelled out from under it; the coroutine re-reads
+        ``_host_connected`` when it runs, so a host who came back in the
+        meantime is never announced gone.
+        """
+        self._host_presence_task = asyncio.ensure_future(
+            self._announce_host_presence()
         )
+        self._host_presence_task.add_done_callback(self._log_task_exception)
+
+    def _cancel_host_presence(self) -> None:
+        """Drop a pending host-presence announcement (integration teardown).
+
+        Connection-scoped, not round-scoped: whether anybody is hosting the
+        room has nothing to do with which round it is on. Only
+        ``cleanup_game_tasks()`` reaches this.
+        """
+        if self._host_presence_task is not None:
+            self._host_presence_task.cancel()
+            self._host_presence_task = None
 
     async def _dispatch_analytics_followups(self) -> None:
         """Everything true only once the game is recorded (#624, #612, #613).
