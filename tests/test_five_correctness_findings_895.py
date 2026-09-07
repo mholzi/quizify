@@ -454,11 +454,15 @@ async def _host_walks_out(
 ) -> MagicMock:
     """A host playing along, whose phone/tab leaves the game mid-question."""
     host_ws = _ws()
-    game.add_player("Host", host_ws)
+    # #882 made the second argument a connection id, not the socket. The room
+    # has to be seated through the same manager the handler reads from, or
+    # ``_handle_disconnect`` mints a second, unrelated id for the same socket
+    # and finds no player behind it.
+    game.add_player("Host", handler._conn.connection_id(host_ws))
     host = game.get_player("Host")
     assert host is not None
     host.is_admin = True
-    game.add_player("Cleo", _ws())
+    game.add_player("Cleo", handler._conn.connection_id(_ws()))
     game.start_game(language="en", num_rounds=3, difficulty="easy")
     assert game.start_next_question() is not None
     assert game.phase == GamePhase.QUESTION_ACTIVE
