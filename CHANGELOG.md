@@ -3,6 +3,32 @@
 All notable changes to Quizify are documented here. This project follows
 [Semantic Versioning](https://semver.org/).
 
+## [1.16.0-RC4] — 2026-09-07
+
+The third candidate was played too. It left one way for a room to get stuck and
+two things it never showed anybody.
+
+### 🚪 The last locked door
+
+The guests' way out appeared on the lightning recap and after the Hot Seat, but
+not on the ordinary reveal — which is where a room without a host waits most. A
+phone that reloaded onto that screen was fine; a phone that simply lived through
+the round was not, because only one of the two ways in ever chose the stage.
+Both routes now go through one table, and a test insists that every screen the
+reload can reach is a screen the round can reach too.
+
+### 🪑 The chair's outcome reaches the phones
+
+Whoever bought the seat, what it paid, and what it did to your own points: the
+phones were told none of it. The result frame carried all three and was thrown
+away on the assumption that a reveal would follow. It does not, so the Hot Seat
+panel now says it — including whether a spectator's bet came in.
+
+### 🥇 And two awards stop sharing a name
+
+The podium's "Top Score" is the winner's total. The award beside it is the best
+single round anyone played, and it was called the same thing.
+
 ## [1.16.0-RC3] — 2026-09-06
 
 The second candidate was played too. It found three ways an evening could end
