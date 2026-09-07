@@ -4589,6 +4589,15 @@ footer {
     color: var(--color-text-secondary);
 }
 
+/* #890: Lightning, the Hot Seat and the final wager all need questions with an
+   answer grid. With nothing but estimate packs selected the row greys out and
+   stops taking taps, and the note under it says why — same .is-disabled
+   treatment the TTS children get when their master switch is off. */
+.setup-lightning-toggle.is-disabled {
+    opacity: 0.4;
+    pointer-events: none;
+}
+
 /* TTS narration — Variant B (#281): master switch as the header, a hairline
    divider, then the per-event toggles nested + dimmed under it. The master row
    reads as the heading (slightly heavier label); the children sit indented and

@@ -577,6 +577,13 @@ class QuestionBank:
             "name": category_name,
             "language": pack_language,
             "question_count": len(questions),
+            # How many of those questions have an answer grid (#890). Lightning,
+            # the Hot Seat auction and the final wager all need one and skip
+            # estimate questions by construction, so a pack of nothing but
+            # estimates cannot feed any of the three. Counted here, at load
+            # time, so the setup screen can grey the toggles out from the
+            # ``/api/quizify/packs`` metadata without parsing a pack itself.
+            "mc_count": sum(1 for q in questions if not q.is_estimate),
             # Store the pack's theme at load time (#309) so the featured-pack
             # view can map it to a spotlight icon without re-reading + re-parsing
             # the pack JSON per request — and, crucially, so it resolves for
@@ -915,6 +922,9 @@ class QuestionBank:
                 "name": category_name,
                 "language": pack_language,
                 "question_count": len(questions),
+                # #890, same count as the shipped packs above: a community pack
+                # of pure estimates greys the same three toggles.
+                "mc_count": sum(1 for q in questions if not q.is_estimate),
                 "community": True,
                 # Theme stored at load time (#309) — community packs live in a
                 # separate folder under a ``community-`` slug, so the old

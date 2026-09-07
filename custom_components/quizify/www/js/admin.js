@@ -745,6 +745,10 @@
         // Keep the ready-screen topics line in sync with every category
         // change (chips, spotlight click, language switch).
         updateHeroSummary();
+        // #890: every one of those paths can turn the selection into an
+        // estimate-only one (or back), so the gate is re-evaluated here rather
+        // than wired onto each handler separately.
+        applyEstimateOnlyModeGate();
         if (!els.categorySummary) return;
         var countEl = document.getElementById('question-count-summary');
         if (selectedCategory === 'mixed') {
@@ -851,6 +855,77 @@
             names.push(nameEl ? nameEl.textContent.trim() : val);
         });
         return names;
+    }
+
+    // ---- #890: the three modes that need a multiple-choice pool ----
+    // Lightning (game/lightning.py), the Hot Seat auction (game/hot_seat.py)
+    // and the final wager (game/state.py `_needs_wager_window`) all skip
+    // estimate questions by construction. Pick "Schätzfragen" on its own —
+    // fifteen estimates out of fifteen — and all three quietly do nothing while
+    // their toggles still read ON, so the host has no way to learn the evening
+    // cannot have them. The setup screen says so instead: the rows grey out and
+    // each carries one line of explanation.
+    var _MC_ONLY_MODES = [
+        { toggle: 'lightning-enabled-toggle', row: 'lightning-toggle-row', note: 'lightning-mc-note' },
+        { toggle: 'hot-seat-enabled-toggle',  row: 'hot-seat-toggle-row',  note: 'hot-seat-mc-note' },
+        { toggle: 'wager-enabled-toggle',     row: 'wager-toggle-row',     note: 'wager-mc-note' }
+    ];
+
+    // The pack cards the current selection will actually draw from: the named
+    // packs, or — for "Mixed" — every pack of the active language, which is the
+    // set the language filter leaves visible.
+    function _selectedPackChips() {
+        if (!els.categoryChips) return [];
+        var values = null;
+        if (selectedCategory !== 'mixed') {
+            values = (selectedCategory === 'multi')
+                ? (selectedCategories || [])
+                : [selectedCategory];
+        }
+        var out = [];
+        els.categoryChips.querySelectorAll('.chip[data-lang]').forEach(function (chip) {
+            if (values === null) {
+                if (chip.dataset.lang === selectedLanguage) out.push(chip);
+            } else if (values.indexOf(chip.dataset.value) !== -1) {
+                out.push(chip);
+            }
+        });
+        return out;
+    }
+
+    // Whether the selection carries any question with an answer grid.
+    //
+    // `data-mc-count` is served per pack card from the bank metadata
+    // (views.py `_render_category_chips`). A *missing* attribute means the
+    // server did not report one, which is not the same as "zero": an unknown
+    // count must never grey out a working toggle, so both that and an
+    // unresolvable selection answer true.
+    function _selectionHasMultipleChoice() {
+        var chips = _selectedPackChips();
+        if (!chips.length) return true;
+        var total = 0;
+        for (var i = 0; i < chips.length; i++) {
+            var raw = chips[i].getAttribute('data-mc-count');
+            if (raw === null) return true;
+            total += parseInt(raw, 10) || 0;
+        }
+        return total > 0;
+    }
+
+    // Grey the three rows (and unhide their one-line note) when the selection
+    // has no multiple-choice pool; restore them the moment one is added again.
+    // Purely presentational: the checkboxes keep the host's own choice, so the
+    // settings they had before picking an estimate-only pack come back with it.
+    function applyEstimateOnlyModeGate() {
+        var ok = _selectionHasMultipleChoice();
+        _MC_ONLY_MODES.forEach(function (mode) {
+            var input = document.getElementById(mode.toggle);
+            if (input) input.disabled = !ok;
+            var row = document.getElementById(mode.row);
+            if (row) row.classList.toggle('is-disabled', !ok);
+            var note = document.getElementById(mode.note);
+            if (note) note.classList.toggle('hidden', ok);
+        });
     }
 
     // `lightning` mirrors data-lightning on the cards in admin.html (1/0) and
@@ -1318,6 +1393,8 @@
     // visible-pack-count for the default language.
     updatePackUIScaling(typeof selectedLanguage === 'string' ? selectedLanguage : 'de');
     buildHeroPackChips();
+    // #890: first paint — the restored selection may already be estimate-only.
+    applyEstimateOnlyModeGate();
     setupChips(els.difficultyChips, function (v) {
         selectedDifficulty = v;
         // Carry the pick to the game right away so the lobby the guests are

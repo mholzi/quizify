@@ -675,6 +675,15 @@ def _render_category_chips(pack_versions: dict[str, dict], default_lang: str) ->
             f'data-theme="{_html.escape(theme, quote=True)}" '
             f'data-icon="{icon}" data-count="{int(count)}"'
         )
+        # #890: how many of the pack's questions have an answer grid. Lightning,
+        # the Hot Seat and the final wager all skip estimate questions, so a
+        # selection whose cards add up to zero here cannot feed any of them and
+        # admin.js greys the three toggles out. Omitted rather than defaulted
+        # when the bank did not report it — "no attribute" reads as *unknown*
+        # on the client, and unknown must never grey a working toggle.
+        mc_count = meta.get("mc_count")
+        if isinstance(mc_count, int) and not isinstance(mc_count, bool):
+            attrs += f' data-mc-count="{int(mc_count)}"'
         cards.append(
             f'<button type="button" class="chip" {attrs}>'
             f'<span class="pack-card-icon">{icon}</span>'
