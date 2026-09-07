@@ -525,6 +525,18 @@ def serialize_state_snapshot(game_state: QuizifyGameState) -> dict[str, Any]:
                 for r in s.results
             ],
         }
+        # #895d: the bars. The live ``round_summary`` broadcast has carried
+        # ``answer_distribution`` since #151 and the snapshot never did, so a
+        # television that reconnected during a reveal — or was cast to the
+        # room after the question closed — showed the correct tile highlighted
+        # and every bar at 0 %, which reads as "nobody picked anything"
+        # rather than "this board does not know". Same canonical space and
+        # same entrant-per-vote rule as the live payload (#853), because it is
+        # computed by the same function.
+        if not s.estimate:
+            snapshot["round_summary"]["answer_distribution"] = (
+                _snapshot_answer_distribution(game_state, q)
+            )
         # Estimate reveal data (#275) so a reconnect during the reveal
         # rebuilds the number line instead of an empty answer grid.
         if s.estimate is not None:
@@ -1010,6 +1022,54 @@ def _dedupe_by_entrant(
             seen.add(key)
         rows.append(entry)
     return rows
+
+
+def _snapshot_answer_distribution(
+    game_state: QuizifyGameState, question: Any
+) -> list[dict[str, Any]]:
+    """The reveal's vote bars, rebuilt from game state (#895d).
+
+    ``RoundMessageBuilder.build_round_summary`` computes this from the
+    ``all_answers`` table it assembles for the live broadcast. That table is
+    per player and carries a good deal more (points breakdowns, each player's
+    own correct-button index); the bars need one field of it — who voted for
+    which tile — so this reads that straight off the registry instead of
+    rebuilding a table to throw most of it away.
+
+    Team mode goes through ``entrant_of`` exactly as the live path does: a
+    team is one vote however many phones carry its row (#853).
+
+    Everything is resolved through ``getattr`` because ``serialize_state_snapshot``
+    runs against lightweight game doubles in a good part of the suite; a double
+    that has no team registry simply gets one vote per player, and one that has
+    no players gets an empty distribution rather than an exception.
+    """
+    registry = getattr(game_state, "team_registry", None)
+    team_of = getattr(registry, "get_by_member", None)
+
+    rows: list[dict[str, Any]] = []
+    entrant_of: dict[str, str] = {}
+    for player in game_state.get_players():
+        team = team_of(player.name) if team_of is not None else None
+        entrant_of[player.name] = getattr(team, "team_id", None) or player.name
+        if team is not None:
+            index = team.current_answer
+        else:
+            index = player.current_answer if player.submitted else None
+        rows.append(
+            {
+                "player_name": player.name,
+                "answer_index": index,
+                "no_answer": index is None,
+            }
+        )
+
+    return _compute_answer_distribution(
+        rows,
+        len(question.answers),
+        game_state.shuffle_map,
+        entrant_of,
+    )
 
 
 def _compute_answer_distribution(

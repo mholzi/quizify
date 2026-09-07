@@ -113,6 +113,39 @@
         // #285: no host "end now" control during the auto round.
 
         _answeredIndex = -1;
+
+        // #895b: a snapshot rebuild, not a fresh question. The server tells
+        // this phone whether its entrant has already answered the question it
+        // is being handed back — a reload otherwise came back to three live
+        // buttons, and the second tap is dropped without a reply
+        // (``record_answer`` refuses it, the handler stays silent), so the
+        // screen offered an answer the room would never receive.
+        if (msg.you_answered) {
+            lockAnswered(
+                (typeof msg.you_answer_index === 'number') ? msg.you_answer_index : -1
+            );
+        }
+    }
+
+    /**
+     * Grey the three buttons and mark the one that stands (#895b).
+     *
+     * The same end state ``submitAnswer`` leaves behind, so a phone that
+     * reloaded mid-question and one that never did read identically.
+     * ``index`` is this phone's own button order; -1 means "answered, but the
+     * button is unresolvable" (a shuffle the server could not map), which
+     * still has to lock — the answer is in either way.
+     */
+    function lockAnswered(index) {
+        _answeredIndex = index;
+        var btns = document.querySelectorAll('[data-lightning-answer]');
+        for (var i = 0; i < btns.length; i++) {
+            btns[i].disabled = true;
+            var idx = parseInt(btns[i].getAttribute('data-lightning-answer'), 10);
+            btns[i].classList.toggle('selected', idx === index);
+        }
+        var row = document.getElementById('lightning-answered');
+        if (row) row.classList.remove('hidden');
     }
 
     function handleLightningTick(msg) {

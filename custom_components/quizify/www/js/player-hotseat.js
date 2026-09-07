@@ -730,13 +730,28 @@
         }
     }
 
+    /**
+     * The bet this phone already placed, after a reload (#895e).
+     *
+     * ``_state.betPlaced`` alone stops the send, so nothing could be bet
+     * twice — but the slider and both buttons stayed live, so the screen
+     * offered a second bet and swallowed it. Same end state as the tap path
+     * in ``wireBet``: slider and buttons disabled, the side named in the
+     * room's language rather than as the wire's 'will' / 'wont'.
+     */
     function lockBetUi(bet) {
         _state.betPlaced = true;
+        var slider = el('hotseat-bet-slider');
+        if (slider) slider.disabled = true;
+        ['hotseat-bet-will', 'hotseat-bet-wont'].forEach(function (x) {
+            var b = el(x);
+            if (b) b.disabled = true;
+        });
         var hint = el('hotseat-hint');
         if (hint) {
             hint.textContent = t('hotSeat.betPlaced', {
                 pct: bet.pct,
-                side: bet.side
+                side: t(bet.side === 'will' ? 'hotSeat.betWill' : 'hotSeat.betWont')
             });
         }
     }
