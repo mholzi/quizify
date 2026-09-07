@@ -26,7 +26,7 @@ from typing import TYPE_CHECKING
 
 from .game.state import GamePhase, QuizifyGameState
 from .ha_service import fire_and_forget_service
-from .house_settings import HouseSettings
+from .house_settings import HouseSettings, clean_str
 
 if TYPE_CHECKING:
     from homeassistant.core import HomeAssistant
@@ -51,7 +51,7 @@ class QuizifyLobbyMusic:
         """
         self._hass = hass
         self._settings = settings or HouseSettings(
-            media_player=(media_player_entity_id or "").strip() or None
+            media_player=clean_str(media_player_entity_id)
         )
         self._game = game_state
         self._last_phase: GamePhase | None = None

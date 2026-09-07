@@ -44,7 +44,7 @@ from .game_events import (
     EVENT_WINNER_DECIDED,
 )
 from .ha_service import fire_and_forget_service
-from .house_settings import CUE_KEYS, HouseSettings
+from .house_settings import CUE_KEYS, HouseSettings, clean_str
 
 if TYPE_CHECKING:
     from collections.abc import Callable
@@ -107,9 +107,9 @@ class QuizifySoundEffects:
         # override); unknown keys are ignored and missing keys default to None.
         self._settings = settings or HouseSettings(
             house_enabled=bool(enabled),
-            media_player=(media_player_entity_id or "").strip() or None,
+            media_player=clean_str(media_player_entity_id),
             cue_urls={
-                cue: ((cue_urls or {}).get(cue) or "").strip() or None
+                cue: clean_str((cue_urls or {}).get(cue))
                 for cue in _CUE_KEYS
             },
         )
@@ -168,7 +168,7 @@ class QuizifySoundEffects:
             "streak": bool(sfx_streak),
             "winner": bool(sfx_winner),
         }
-        self._media_player_override = (media_player or "").strip() or None
+        self._media_player_override = clean_str(media_player)
         # Idempotent; a no-op when already attached or still unconfigured.
         self.attach_events()
 
@@ -177,16 +177,6 @@ class QuizifySoundEffects:
     # an options reload used to perform. The settings object is now updated in
     # place, this instance outlives the reload, and the overrides below survive
     # simply by not being touched.
-
-    @property
-    def _enabled(self) -> bool:
-        """The config-entry master (CONF_HOUSE_EVENTS_ENABLED), read live."""
-        return self._settings.house_enabled
-
-    @property
-    def _enabled_override(self) -> bool | None:
-        """The panel's tri-state master; ``None`` = the panel never set one."""
-        return self._settings.enabled_override
 
     @property
     def _media_player_entity_id(self) -> str | None:
@@ -199,18 +189,13 @@ class QuizifySoundEffects:
         return self._settings.cue_urls
 
     @property
-    def _master_enabled(self) -> bool:
-        """The effective master: panel override if set, else the config entry."""
-        return self._settings.master_enabled
-
-    @property
     def _active_media_player(self) -> str | None:
         """Panel override if set, else the config-entry speaker."""
         return self._media_player_override or self._media_player_entity_id
 
     @property
     def is_configured(self) -> bool:
-        # Deliberately NOT gated on ``_enabled``: the master silences the cues at
+        # Deliberately NOT gated on the master: it silences the cues at
         # play time (see ``_play_cue``) rather than tearing down the listeners,
         # so the panel can flip it back on mid-game without a re-attach.
         return self._hass is not None and bool(self._active_media_player)
@@ -341,7 +326,7 @@ class QuizifySoundEffects:
         """
         if not self.is_configured:
             return
-        if not (self._master_enabled and self._cue_enabled.get(cue, True)):
+        if not (self._settings.master_enabled and self._cue_enabled.get(cue, True)):
             return
         url = self._cue_urls.get(cue) or self._default_urls.get(cue)
         if not url:

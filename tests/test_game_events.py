@@ -434,21 +434,25 @@ def test_options_reload_keeps_the_panel_master():
     t = QuizifyEventEmitter(
         hass=_FakeHass(), game_state=_FakeGame(), settings=settings
     )
-    assert t._master_enabled is False
+    assert settings.master_enabled is False
+    assert t.is_configured is False
 
     t.configure(enabled=True)  # the panel turns the house on mid-game
     settings.update_from_options({})  # an unrelated options change
-    assert t._master_enabled is True
-    assert t._enabled_override is True
+    assert settings.enabled_override is True
+    assert settings.master_enabled is True
+    assert t.is_configured is True
 
     # A never-panelled emitter follows the options switch immediately.
     fresh_settings = HouseSettings(house_enabled=False)
     fresh = QuizifyEventEmitter(
         hass=_FakeHass(), game_state=_FakeGame(), settings=fresh_settings
     )
-    assert fresh._enabled_override is None
+    assert fresh_settings.enabled_override is None
+    assert fresh.is_configured is False
     fresh_settings.update_from_options({"house_events_enabled": True})
-    assert fresh._master_enabled is True
+    assert fresh_settings.master_enabled is True
+    assert fresh.is_configured is True
 
 
 @pytest.mark.parametrize(
