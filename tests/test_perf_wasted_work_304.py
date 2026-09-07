@@ -162,17 +162,17 @@ class TestReactionCoalescing:
         # Wait past the flush window.
         await asyncio.sleep(h._REACTION_FLUSH_WINDOW + 0.05)
 
-        reactions = [m for m in broadcasts if m.get("type") == "reaction"]
-        assert len(reactions) == 1
-        assert reactions[0] == {
-            "type": "reaction",
-            "emoji": "🎉",
-            "player_name": "Alice",
+        # One ``reactions`` frame for the window (#896), not one per pair.
+        frames = [m for m in broadcasts if m.get("type") == "reactions"]
+        assert len(frames) == 1
+        assert frames[0] == {
+            "type": "reactions",
+            "reactions": [{"emoji": "🎉", "player_name": "Alice"}],
         }
 
     @pytest.mark.asyncio
     async def test_distinct_reactions_all_flushed(self, tmp_path: Path) -> None:
-        """Distinct (player, emoji) pairs each get their own broadcast."""
+        """Distinct (player, emoji) pairs all ride ONE window frame (#896)."""
         gs = QuizifyGameState(runtime=_Runtime(tmp_path), entry_id="t")
         gs.add_player("Alice")
         gs.add_player("Bob")
@@ -191,9 +191,9 @@ class TestReactionCoalescing:
 
         await asyncio.sleep(h._REACTION_FLUSH_WINDOW + 0.05)
 
-        reactions = [m for m in broadcasts if m.get("type") == "reaction"]
-        assert len(reactions) == 2
-        keys = {(m["player_name"], m["emoji"]) for m in reactions}
+        frames = [m for m in broadcasts if m.get("type") == "reactions"]
+        assert len(frames) == 1
+        keys = {(r["player_name"], r["emoji"]) for r in frames[0]["reactions"]}
         assert keys == {("Alice", "🎉"), ("Bob", "👏")}
 
     @pytest.mark.asyncio

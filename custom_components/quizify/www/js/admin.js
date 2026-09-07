@@ -1812,7 +1812,14 @@
             case 'powerup_applied':
                 handlePowerUpApplied(msg);
                 break;
+            case 'reactions':
+                // #896: the whole flush window in one frame.
+                (msg.reactions || []).forEach(function (r) {
+                    showAdminReaction(r.emoji);
+                });
+                break;
             case 'reaction':
+                // Kept for one release — see player-core.js.
                 showAdminReaction(msg.emoji);
                 break;
             case 'reaction_bonus':

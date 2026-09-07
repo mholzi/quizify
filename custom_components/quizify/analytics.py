@@ -91,6 +91,28 @@ class AnalyticsData(TypedDict):
     all_time_players: dict[str, PlayerAllTimeRecord]
 
 
+def _duel_record(
+    games: list[GameRecord], left: str, right: str
+) -> tuple[int, int, int]:
+    """``(met, left_wins, right_wins)`` for one pair, in one pass (#896).
+
+    A meeting is a recorded game both names appear in, and the winner of that
+    meeting is whoever scored higher in it — not the game's overall winner. A
+    draw counts as a meeting and goes to nobody.
+    """
+    met = left_wins = right_wins = 0
+    for game in games:
+        scores = game.get("player_scores") or {}
+        if left not in scores or right not in scores:
+            continue
+        met += 1
+        if scores[left] > scores[right]:
+            left_wins += 1
+        elif scores[right] > scores[left]:
+            right_wins += 1
+    return met, left_wins, right_wins
+
+
 class QuizifyAnalytics:
     """Analytics storage with async file I/O and atomic writes."""
 
@@ -408,37 +430,101 @@ class QuizifyAnalytics:
 
         Returns ``None`` unless a pair has met at least twice: a single shared
         game makes a "1–0" that reads like a record and is a coincidence.
+
+        #896 — why this is shaped the way it is. The line is recomputed on the
+        event loop at every lobby roster flush, i.e. once per 150 ms window
+        while a room fills up. The original was pair-major: for each of the
+        up-to-190 pairs, walk all 1000 detailed records and compare two scores.
+        That is O(pairs x games) comparisons — 3.3 ms at eight players and
+        21 ms at the twenty-player cap on an M-series Mac, several times that
+        on an HA Green.
+
+        The observation that removes the quadratic term: the *scores* are only
+        ever needed for the one pair that ends up on screen, and which pair
+        that is depends on ``met`` alone. ``met`` is the size of a set
+        intersection, so this builds one presence bitmask per present player —
+        bit *g* set when they played game *g* — and picks the pair by
+        ``(mask_left & mask_right).bit_count()``, which CPython evaluates a
+        machine word at a time. Only the winning pair's history is walked for
+        scores, and that walk is the same one the old code did 190 times.
+
+        Selection order and tie-breaking are deliberately unchanged: pairs are
+        considered in the caller's roster order and displace the incumbent only
+        on a strictly higher ``met``, so two equally-met pairs cannot make the
+        TV flicker between them on a rejoin.
         """
         names = [n for n in dict.fromkeys(present) if n]
         if len(names) < 2:
             return None
 
-        best: HeadToHead | None = None
-        for i, left in enumerate(names):
-            for right in names[i + 1 :]:
-                left_wins = right_wins = met = 0
-                for game in self._data.get("games", []):
-                    scores = game.get("player_scores") or {}
-                    if left not in scores or right not in scores:
-                        continue
-                    met += 1
-                    if scores[left] > scores[right]:
-                        left_wins += 1
-                    elif scores[right] > scores[left]:
-                        right_wins += 1
-                    # A draw counts as a meeting and goes to nobody.
-                if met < 2:
-                    continue
-                # Most-met pair wins; ties fall to the alphabetically first
-                # pair so the TV does not flicker between equals on rejoin.
-                if best is None or met > best["games"]:
-                    best = {
-                        "left": left,
-                        "right": right,
-                        "left_wins": left_wins,
-                        "right_wins": right_wins,
-                        "games": met,
-                    }
+        games = self._data.get("games", [])
+
+        if len(names) == 2:
+            # One candidate pair: the bitmasks below would only be a detour
+            # around the very scan that answers the question.
+            left, right = names
+        else:
+            left, right = self._most_met_pair(games, names)
+            if not left:
+                return None
+
+        met, left_wins, right_wins = _duel_record(games, left, right)
+        if met < 2:
+            return None
+        return {
+            "left": left,
+            "right": right,
+            "left_wins": left_wins,
+            "right_wins": right_wins,
+            "games": met,
+        }
+
+    @staticmethod
+    def _most_met_pair(
+        games: list[GameRecord], names: list[str]
+    ) -> tuple[str, str]:
+        """The two names that share the most recorded games (#896).
+
+        Presence only — no scores are read here, which is the whole point: the
+        pair can be chosen from set intersections, and only the winner's scores
+        have to be looked at afterwards.
+
+        Returns ``("", "")`` when no pair has met at least twice.
+        """
+        position = {name: index for index, name in enumerate(names)}
+
+        # One bitmask per present player over the games they appear in. The bit
+        # index counts only games holding at least two of the present players,
+        # so a long history of games this lobby never played keeps the integers
+        # short.
+        masks = [0] * len(names)
+        bit_index = 0
+        for game in games:
+            scores = game.get("player_scores") or {}
+            # Walk whichever side is shorter: a small lobby against a history
+            # of full games should not pay a lookup per recorded player.
+            if len(names) < len(scores):
+                here = [i for i, name in enumerate(names) if name in scores]
+            else:
+                here = [i for n in scores if (i := position.get(n)) is not None]
+            if len(here) < 2:
+                continue
+            bit = 1 << bit_index
+            for index in here:
+                masks[index] |= bit
+            bit_index += 1
+
+        # Most-met pair wins; ties fall to the first pair in roster order, and
+        # ``> best_met`` rather than ``>=`` is what keeps it that way.
+        best_met = 1  # a pair has to have met at least twice to be shown
+        best: tuple[str, str] = ("", "")
+        for i, mask in enumerate(masks):
+            if not mask:
+                continue
+            for j in range(i + 1, len(names)):
+                met = (mask & masks[j]).bit_count()
+                if met > best_met:
+                    best_met, best = met, (names[i], names[j])
         return best
 
     # More than this between two games and they belong to different evenings

@@ -164,6 +164,9 @@ fill.setAttribute('class', 'timer-bar-fill');
 QZ.el('admin-timer-bar').appendChild(fill);
 
 QZ.load({i18njs});
+// The detour's texts moved into the shared renderer (#881); without it
+// handleHotSeatBidCount reads hotSeatBidCountText off `undefined`.
+QZ.load({rendershared});
 
 // The page around the snapshot handler. Everything the detour touches is
 // real; the arms of the phase switch that belong to the ordinary round are
@@ -334,6 +337,7 @@ def _run() -> dict:
         stub=json.dumps(str(_STUB)),
         i18n=json.dumps(str(_I18N)),
         i18njs=json.dumps(str(_JS / "i18n.js")),
+        rendershared=json.dumps(str(_JS / "render-shared.js")),
         classes=json.dumps(_element_classes()),
         admin=preamble + "\n\n".join(p for p in parts if p),
     )

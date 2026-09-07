@@ -200,6 +200,11 @@ class LightningBroadcaster(_Broadcaster):
         if standing is None or standing.answer_index is None:
             return
         members = lr.members_of(setter)
+        # #896: one gather, for the same reason as ``RoundBroadcaster``'s
+        # ``send_team_answer`` — a stalled member must not spend its 2 s send
+        # timeout in front of its teammates, least of all inside a Lightning
+        # round.
+        sends = []
         for name in members:
             member = game_state.get_player(name)
             if member is None or not member.connected:
@@ -209,14 +214,16 @@ class LightningBroadcaster(_Broadcaster):
                 shown_index = order.index(standing.answer_index)
             except ValueError:
                 continue
-            await self._conn.send_to_player(member, {
+            sends.append(self._conn.send_to_player(member, {
                 "type": "lightning_team_answer",
                 "index": lr.index,
                 "answer_index": shown_index,
                 "set_by": setter,
                 "members": list(members),
                 "lock_seconds": LIGHTNING_ANSWER_LOCK_SECONDS,
-            })
+            }))
+        if sends:
+            await asyncio.gather(*sends)
 
 
 # ---------------------------------------------------------------------------
@@ -529,6 +536,12 @@ class RoundBroadcaster(_Broadcaster):
         team = game_state.team_registry.get(ack.team_id)
         if team is None:
             return
+        # #896: built as one fan-out and delivered in parallel, like every
+        # other per-player fan-out (#258/#307). ``send_to_player`` wraps the
+        # write in a 2 s timeout, so awaiting members one at a time let a
+        # single half-dead phone hold the frame for its whole team — and with
+        # it the handler's ``answer_accepted`` reply.
+        sends = []
         for name in team.members:
             member = game_state.get_player(name)
             if member is None or not member.connected:
@@ -541,7 +554,7 @@ class RoundBroadcaster(_Broadcaster):
                 # the question start and this tap). Their client re-reads the
                 # answer from the next projected snapshot.
                 continue
-            await self._conn.send_to_player(member, {
+            sends.append(self._conn.send_to_player(member, {
                 "type": "team_answer",
                 "team_id": ack.team_id,
                 "answer_index": shown_index,
@@ -551,7 +564,9 @@ class RoundBroadcaster(_Broadcaster):
                 # which is what stops the tap war rather than slowing one side.
                 "lock_seconds": ack.lock_seconds,
                 "members": list(team.members),
-            })
+            }))
+        if sends:
+            await asyncio.gather(*sends)
 
 
 # ---------------------------------------------------------------------------
