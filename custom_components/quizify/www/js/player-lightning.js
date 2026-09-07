@@ -251,6 +251,17 @@
         var playerMsg = document.getElementById('lightning-recap-player-msg');
         if (adminCtl) adminCtl.classList.toggle('hidden', !state.isAdmin);
         if (playerMsg) playerMsg.classList.toggle('hidden', !!state.isAdmin);
+
+        // #877: re-arm Continue on every recap, not only the first one.
+        // The tap disables the button so it cannot double-fire, and nothing
+        // ever undid that — but a rematch keeps the phone on this same page
+        // (play_again broadcasts a game_state, nobody navigates) and the
+        // server clears _lightning_fired, so game two has a lightning round
+        // of its own. Its recap used to arrive with game one's dead button,
+        // and since the host is a player by default, the one person who has
+        // to move the game on was the one sitting in front of it.
+        var continueBtn = document.getElementById('lightning-recap-continue-btn');
+        if (continueBtn) continueBtn.disabled = false;
     }
 
     /**

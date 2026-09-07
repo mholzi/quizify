@@ -252,6 +252,53 @@ class RoundMessageBuilder:
             }
         return substate
 
+    def _project_team_answer(
+        self,
+        game_state: QuizifyGameState,
+        *,
+        player: PlayerSession,
+        shuffle: list[int],
+    ) -> dict[str, Any] | None:
+        """The standing team answer, in this player's answer order (#875).
+
+        The live ``team_answer`` frame is a one-shot: it goes out when a member
+        taps, and nothing re-sends it. Every path that hands a phone a fresh
+        snapshot therefore used to erase the dots, the "set by Anna" chip and
+        the change lock — and pause/resume fans a snapshot out to *every* live
+        phone at once, so one pause wiped the standing answer from the whole
+        team. A teammate then saw an unanswered question and overwrote it.
+
+        Same wire shape as the live frame minus the ``type``, so the client can
+        feed it straight to the handler that paints the live one. The index is
+        mapped through THIS player's shuffle for the same reason the broadcast
+        maps it per member: everybody sees the answers in a different order
+        (#253), so one canonical number puts the dots on the wrong row.
+
+        Returns ``None`` outside team mode, for a player in no team, and for a
+        team that has not answered yet — the phone then has nothing to repaint,
+        which is what ``resetRound`` already leaves it with.
+        """
+        team = game_state.team_registry.get_by_member(player.name)
+        if team is None or team.current_answer is None:
+            return None
+        try:
+            shown_index = shuffle.index(team.current_answer)
+        except ValueError:
+            # A shuffle that does not contain the answer is not a shuffle of
+            # this question. Sending an index anyway would paint a dot on an
+            # arbitrary row, which is worse than painting none.
+            return None
+        return {
+            "team_id": team.team_id,
+            "answer_index": shown_index,
+            "set_by": team.answer_by,
+            "members": list(team.members),
+            # What is LEFT of the lock, not the full two seconds: the tap that
+            # started it may have been a pause and a resume ago, and a phone
+            # that comes back must not be braked again from zero.
+            "lock_seconds": round(team.lock_remaining(), 1),
+        }
+
     def project_snapshot_for_player(
         self,
         game_state: QuizifyGameState,
@@ -273,12 +320,17 @@ class RoundMessageBuilder:
         * QUESTION_ACTIVE: project ``question.answers`` through the player's
           shuffle (created on demand for a late joiner, as round-start does),
           and use the player's own QuestionTimer for ``time_remaining`` so a
-          pause/freeze/boost is reflected on the reconnect clock.
+          pause/freeze/boost is reflected on the reconnect clock. In team mode
+          it also carries the standing ``team_answer`` (#875) — see
+          ``_project_team_answer``.
         * LIGHTNING: project ``lightning.question.answers`` through the
           player's lightning shuffle (also created on demand).
         * ANSWER_REVEAL: replace the nested ``round_summary`` with the same
           FLAT shape the live ``round_summary`` broadcast uses (incl.
           ``all_answers``), which the reveal view reads as flat fields.
+        * WAGER_ACTIVE: add the recipient's own bank and their own standing
+          bet to the ``wager`` block (#876), neither of which the
+          player-agnostic block may carry.
 
         The caller (``_handle_join`` / ``_handle_reconnect``) knows the
         recipient identity; admin/dashboard recipients keep the canonical
@@ -307,6 +359,11 @@ class RoundMessageBuilder:
                         max(0.0, timer.get_remaining()), 1
                     )
                 out["question"] = projected
+                team_answer = self._project_team_answer(
+                    game_state, player=player, shuffle=shuffle
+                )
+                if team_answer is not None:
+                    out["team_answer"] = team_answer
 
         if phase == GamePhase.LIGHTNING.value and out.get("lightning"):
             lr = game_state.lightning
@@ -345,6 +402,33 @@ class RoundMessageBuilder:
                         you_index = None
                 lightning["you_answer_index"] = you_index
                 out["lightning"] = lightning
+
+        if phase == GamePhase.WAGER_ACTIVE.value and out.get("wager"):
+            # #876: the canonical block says what the room is betting ON —
+            # category, difficulty, the seconds the window has left. It cannot
+            # say what THIS phone already staked, and it must not: the admin
+            # and the TV see the tally, never an amount (#656). So the two
+            # per-player numbers are added here, in the recipient's frame.
+            #
+            # ``own_bank`` because the client used to read the bank off the
+            # snapshot's leaderboard by NAME, and in team mode those rows are
+            # TEAMS (#365/#804) — a member found no row of their own, took 0,
+            # and was offered "50% of nothing" on the one round that pays
+            # double. Resolved through ``get_ranked_participant_for``, the
+            # same row the live ``wager_window`` prices the slider against and
+            # the same one the settlement pays.
+            #
+            # ``you_wagered`` because a bet already placed has to survive a
+            # reload: without it ``renderWagerWindow`` rebuilds a live 25%
+            # slider over a stake the server is already holding, and the
+            # "Wager: 50%" badge is gone once the question starts.
+            participant = game_state.get_ranked_participant_for(player.name)
+            wager = dict(out["wager"])
+            wager["own_bank"] = participant.score if participant is not None else 0
+            wager["you_wagered"] = (
+                participant.wager if participant is not None else None
+            )
+            out["wager"] = wager
 
         if out.get("hot_seat"):
             # #664: the canonical block is built for the admin and the TV. A

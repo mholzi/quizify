@@ -1,7 +1,7 @@
 {
   "name": "Weltmeisterschaft",
   "language": "de",
-  "version": "1.3",
+  "version": "1.4",
   "theme": "worldcup",
   "season": {
     "start": "06-01",
@@ -2108,7 +2108,7 @@
       "difficulty": "medium",
       "fun_fact": "Das Estadio Centenario stand zum Turnierbeginn noch nicht fertig — Regen hatte den Bau verzögert, und die ersten Spiele mussten in kleinere Stadien der Stadt ausweichen.",
       "category": "Weltmeisterschaft",
-      "image_url": "/quizify/static/img/packs/worldcup/centenario-1930.webp",
+      "image_url": "/quizify/static/img/packs/worldcup/estadio-centenario.webp",
       "reveal_style": "progressive"
     },
     {
@@ -2134,7 +2134,7 @@
     },
     {
       "id": "world_cup_de_163",
-      "question": "Welches Land richtete das Turnier aus, für das hier geworben wird?",
+      "question": "Welches Land richtete die WM 1950 aus?",
       "answers": [
         {
           "text": "Argentinien",
@@ -2151,36 +2151,32 @@
       ],
       "difficulty": "easy",
       "fun_fact": "Die WM 1950 kam ohne Endspiel aus: Statt eines K.-o.-Finales entschied eine Finalrunde von vier Mannschaften. Dass das letzte Spiel trotzdem zum Endspiel wurde, war Zufall des Spielplans.",
-      "category": "Weltmeisterschaft",
-      "image_url": "/quizify/static/img/packs/worldcup/world-cup-poster-1950.webp",
-      "reveal_style": "progressive"
+      "category": "Weltmeisterschaft"
     },
     {
       "id": "world_cup_de_164",
-      "question": "Welches Ereignis von 1950 zeigt dieses Foto?",
+      "question": "Wer schoss das Tor, mit dem Uruguay 1950 im Maracanã die WM gewann?",
       "answers": [
         {
-          "text": "Ein Eigentor im Eröffnungsspiel",
+          "text": "Juan Alberto Schiaffino",
           "correct": false
         },
         {
-          "text": "Ein Elfmeter im Halbfinale",
-          "correct": false
-        },
-        {
-          "text": "Das entscheidende Tor im letzten WM-Spiel",
+          "text": "Alcides Ghiggia",
           "correct": true
+        },
+        {
+          "text": "Obdulio Varela",
+          "correct": false
         }
       ],
       "difficulty": "hard",
       "fun_fact": "Alcides Ghiggia traf vor rund 200.000 Zuschauern in Rio. Er sagte später, nur drei Menschen hätten das Maracanã je zum Schweigen gebracht: Frank Sinatra, der Papst und er.",
-      "category": "Weltmeisterschaft",
-      "image_url": "/quizify/static/img/packs/worldcup/maracana-1950.webp",
-      "reveal_style": "progressive"
+      "category": "Weltmeisterschaft"
     },
     {
       "id": "world_cup_de_165",
-      "question": "Diese Mannschaft gewann 1930 den ersten WM-Titel. Für welches Land spielte sie?",
+      "question": "Welches Land gewann 1930 den ersten WM-Titel?",
       "answers": [
         {
           "text": "Argentinien",
@@ -2197,9 +2193,7 @@
       ],
       "difficulty": "medium",
       "fun_fact": "Uruguay war Gastgeber und amtierender Olympiasieger. Weil die Anreise per Schiff mehrere Wochen dauerte, meldeten nur vier europäische Mannschaften — Frankreich, Belgien, Jugoslawien und Rumänien.",
-      "category": "Weltmeisterschaft",
-      "image_url": "/quizify/static/img/packs/worldcup/uruguay-1930.webp",
-      "reveal_style": "progressive"
+      "category": "Weltmeisterschaft"
     },
     {
       "id": "world_cup_de_166",

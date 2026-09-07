@@ -684,17 +684,11 @@
                 // window. The snapshot carries category and the room's
                 // remaining seconds — never the question text, so a phone that
                 // drops mid-window cannot come back knowing what it is
-                // betting on. The bank comes from the leaderboard, which the
-                // snapshot already carries.
+                // betting on. #876: the bank and this phone's own standing bet
+                // ride along too, so the window comes back as the player left
+                // it rather than as a fresh slider over a bank of zero.
                 if (msg.wager) {
-                    handleWagerWindow({
-                        round_num: msg.round,
-                        total_rounds: msg.total_rounds,
-                        category: msg.wager.category,
-                        difficulty: msg.wager.difficulty,
-                        window_duration: msg.wager.window_remaining,
-                        player_score: _myScore(msg)
-                    });
+                    handleWagerWindow(wagerWindowFromSnapshot(msg));
                 } else {
                     pu.showView('game-view');
                 }
@@ -703,7 +697,23 @@
             case 'QUESTION_ACTIVE':
             case 'PLAYING':
                 if (msg.question) {
+                    // #875: read before handleQuestionStarted, which replaces
+                    // currentQuestion and resets the submission state. On a
+                    // snapshot for the round we are already in, this phone is
+                    // the only place the answer it picked still exists — the
+                    // server tells us THAT we answered, never WHICH one.
+                    var priorRound = currentQuestion && currentQuestion.round_num;
+                    var priorIndex = game.getLastSubmittedIndex();
+
                     handleQuestionStarted(questionStartedFromSnapshot(msg));
+
+                    // #875: the standing team answer is a one-shot frame, so
+                    // handleQuestionStarted's resetRound above would leave the
+                    // whole team looking at an unanswered question after any
+                    // pause/resume. Repaint it from the snapshot instead.
+                    if (team && msg.team_answer) {
+                        team.handleTeamAnswer(msg.team_answer);
+                    }
 
                     // #870: the roster row, which only ever arrived on a live
                     // `answer_progress` frame. A phone that reloads mid-
@@ -723,7 +733,16 @@
                             return p && p.name === state.playerName;
                         });
                         if (me && me.submitted) {
-                            game.lockSubmitted();
+                            // #875 (solo half): hand the index back so the
+                            // lock re-marks the answer instead of only greying
+                            // the row out — a resumed phone that shows three
+                            // dead buttons and no pick reads as a bug. Only
+                            // for the round it was picked in; a snapshot from
+                            // a later round knows nothing about this pick.
+                            var sameRound = (priorRound !== null &&
+                                priorRound !== undefined &&
+                                priorRound === msg.round);
+                            game.lockSubmitted(sameRound ? priorIndex : -1);
                         }
                     }
                 } else {
@@ -988,6 +1007,40 @@
         live.total_rounds = msg.total_rounds;
         live.player_score = _myScore(msg);
         return live;
+    }
+
+    /**
+     * A snapshot's ``wager`` block, in the shape ``wager_window`` has (#876).
+     *
+     * The betting window is the one screen a reload used to land on wrong in
+     * two ways at once, and both are numbers the block now carries:
+     *
+     * * ``own_bank`` — the bank the slider prices the bet against. This used
+     *   to be ``_myScore(msg)``, a lookup of the player's NAME in the
+     *   snapshot's leaderboard; in team mode those rows are teams, so a member
+     *   matched nothing, read 0, and was shown "50% of 0" on the round that
+     *   pays double. Kept as the fallback for a server too old to send the
+     *   field, where a solo game gets the same answer either way.
+     * * ``you_wagered`` — the bet this phone has already placed, or null.
+     *   Without it the window comes back as a live 25% slider over a stake
+     *   the server is already holding: a second submit overwrites the first
+     *   silently, and the "Wager: 50%" badge never appears once the question
+     *   starts, because the phone believes it never bet.
+     *
+     * The window's own countdown is the room's remaining seconds, never a
+     * fresh one — a reconnect must not buy extra thinking time (#656).
+     */
+    function wagerWindowFromSnapshot(msg) {
+        var w = msg.wager || {};
+        return {
+            round_num: msg.round,
+            total_rounds: msg.total_rounds,
+            category: w.category,
+            difficulty: w.difficulty,
+            window_duration: w.window_remaining,
+            player_score: (w.own_bank != null) ? w.own_bank : _myScore(msg),
+            you_wagered: (w.you_wagered != null) ? w.you_wagered : null
+        };
     }
 
     /**
