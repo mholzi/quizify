@@ -30,6 +30,7 @@ from custom_components.quizify.server.connection import ConnectionManager  # noq
 from custom_components.quizify.server.websocket import (  # noqa: E402
     QuizifyWebSocketHandler,
 )
+from tests.ws_helpers import bind  # noqa: E402
 
 
 class _FakeRuntime:
@@ -80,8 +81,7 @@ async def test_joker_disables_wrong_answer_in_player_order(
     """For several distinct player shuffles, the disabled button index must
     point to a WRONG answer in that player's order — never the correct one
     (#254)."""
-    ws = _fake_ws()
-    state.add_player("Alice", ws)
+    state.add_player("Alice")
     state.start_game(language="de", num_rounds=3, difficulty="easy")
     state.start_next_question()
 
@@ -99,6 +99,7 @@ async def test_joker_disables_wrong_answer_in_player_order(
     state.set_player_shuffle("Alice", list(player_shuffle))
 
     h = _handler(state)
+    ws = bind(h._conn, state, "Alice", _fake_ws())
     _give(state, "Alice", PowerUpType.JOKER)
 
     await h._handle_use_powerup(ws, {}, state)

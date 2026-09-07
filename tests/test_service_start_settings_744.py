@@ -21,7 +21,7 @@ from __future__ import annotations
 
 import sys
 from pathlib import Path
-from unittest.mock import AsyncMock, MagicMock, patch
+from unittest.mock import AsyncMock, patch
 
 import pytest
 import voluptuous as vol
@@ -55,14 +55,6 @@ class _Runtime:
         import asyncio  # noqa: PLC0415
 
         return asyncio.ensure_future(coro)
-
-
-def _fake_ws() -> MagicMock:
-    ws = MagicMock()
-    ws.closed = False
-    ws.send_json = AsyncMock()
-    ws.close = AsyncMock()
-    return ws
 
 
 def _make_handler(game: QuizifyGameState, tmp_path: Path) -> QuizifyWebSocketHandler:

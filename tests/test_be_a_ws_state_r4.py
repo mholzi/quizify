@@ -118,8 +118,10 @@ class TestJoinReclaimStaleSlot:
         rename to "Alice 2" and spawn a score-0 ghost."""
         alice_ws = _ws()
         bob_ws = _ws()
-        game.add_player("Alice", alice_ws)
-        game.add_player("Bob", bob_ws)
+        handler._conn.add_connection(alice_ws, is_admin=False, is_dashboard=False)
+        handler._conn.add_connection(bob_ws, is_admin=False, is_dashboard=False)
+        game.add_player("Alice", handler._conn.connection_id(alice_ws))
+        game.add_player("Bob", handler._conn.connection_id(bob_ws))
         game.start_game(num_rounds=3, language="de")
         game.start_next_question()
 
@@ -134,7 +136,9 @@ class TestJoinReclaimStaleSlot:
         # fired yet → stale connected flag with a closed ws.
         alice_ws.closed = True
         assert alice.connected is True
-        assert not alice.is_active  # the case the fix keys on
+        # The flag still lies; only the server layer can tell, and it does so
+        # by asking the connection manager (#882).
+        assert handler._conn.is_connection_dead(alice.connection_id)
 
         # Alice rejoins with a fresh ws under the same name.
         fresh_ws = _ws()
@@ -147,7 +151,7 @@ class TestJoinReclaimStaleSlot:
         reclaimed = game.get_player("Alice")
         assert reclaimed is not None
         assert reclaimed.score == earned
-        assert reclaimed.ws is fresh_ws
+        assert handler._conn.socket_for(reclaimed.connection_id) is fresh_ws
         assert reclaimed.is_active
 
     @pytest.mark.asyncio
@@ -157,7 +161,8 @@ class TestJoinReclaimStaleSlot:
         """A genuinely LIVE duplicate (old ws still open) must still get the
         "Name 2" suffix — the fix must not collapse two real players."""
         first_ws = _ws()
-        game.add_player("Charlie", first_ws)
+        handler._conn.add_connection(first_ws, is_admin=False, is_dashboard=False)
+        game.add_player("Charlie", handler._conn.connection_id(first_ws))
         assert game.get_player("Charlie").is_active
 
         second_ws = _ws()
@@ -177,9 +182,8 @@ class TestStealRoundScoreAccumulates:
     def test_steal_before_submit_not_wiped_by_submit(
         self, game: QuizifyGameState
     ) -> None:
-        thief_ws, victim_ws = _ws(), _ws()
-        game.add_player("Thief", thief_ws)
-        game.add_player("Victim", victim_ws)
+        game.add_player("Thief")
+        game.add_player("Victim")
         game.start_game(num_rounds=3, language="de")
         game.start_next_question()
 
@@ -212,8 +216,7 @@ class TestStealRoundScoreAccumulates:
     ) -> None:
         """Sanity: with no pre-submit delta, ``+= points`` from a zeroed
         round_score is identical to the old behaviour."""
-        a_ws = _ws()
-        game.add_player("Solo", a_ws)
+        game.add_player("Solo")
         game.start_game(num_rounds=3, language="de")
         game.start_next_question()
 
@@ -236,9 +239,8 @@ class TestStealThenTimeoutRecordsHistory:
         recorded in ``round_scores`` — the timeout branch used to append a
         literal 0 while the AnswerResult reported ``points_earned=round_score``,
         under-counting the Top-Score / history aggregation."""
-        thief_ws, victim_ws = _ws(), _ws()
-        game.add_player("Thief", thief_ws)
-        game.add_player("Victim", victim_ws)
+        game.add_player("Thief")
+        game.add_player("Victim")
         game.start_game(num_rounds=3, language="de")
         game.start_next_question()
 
@@ -271,7 +273,7 @@ class TestStealThenTimeoutRecordsHistory:
     def test_genuine_timeout_records_zero(self, game: QuizifyGameState) -> None:
         """Sanity: a plain timeout with no pre-submit delta still records 0,
         since reset_round zeroed round_score."""
-        game.add_player("Idle", _ws())
+        game.add_player("Idle")
         game.start_game(num_rounds=3, language="de")
         game.start_next_question()
 
@@ -292,9 +294,9 @@ class TestRosterCoalescing:
     async def test_burst_of_joins_collapses_to_one_broadcast(
         self, handler: QuizifyWebSocketHandler, game: QuizifyGameState
     ) -> None:
-        game.add_player("A", _ws())
-        game.add_player("B", _ws())
-        game.add_player("C", _ws())
+        game.add_player("A")
+        game.add_player("B")
+        game.add_player("C")
 
         # Three roster changes inside one window.
         handler._mark_roster_dirty("player_joined")
@@ -315,8 +317,8 @@ class TestRosterCoalescing:
     ) -> None:
         """A join then a leave in one window collapse to a single frame typed
         by the LAST event, but the players list is always the live roster."""
-        game.add_player("A", _ws())
-        game.add_player("B", _ws())
+        game.add_player("A")
+        game.add_player("B")
         handler._mark_roster_dirty("player_joined")
         handler._mark_roster_dirty("player_left")
 
@@ -338,7 +340,7 @@ class TestRosterCoalescing:
         done-callback as every other fire-and-forget task here. If broadcast
         raises inside the flush (after _roster_dirty was cleared), the crash is
         surfaced in the log instead of only appearing at GC time."""
-        game.add_player("A", _ws())
+        game.add_player("A")
         handler._conn.broadcast = AsyncMock(side_effect=RuntimeError("boom"))
 
         handler._mark_roster_dirty("player_joined")
@@ -459,7 +461,7 @@ class TestLightningRecapCache:
         """serialize_state_snapshot at LIGHTNING_RECAP reuses the cached recap dict
         rather than rebuilding it each call."""
         state = QuizifyGameState(runtime=_FakeRuntime(tmp_path), entry_id="test")
-        state.add_player("A", _ws())
+        state.add_player("A")
         state.start_game(num_rounds=3, language="de", lightning_enabled=True)
         # Drive a standalone lightning round to its recap.
         lr = LightningRound(state._question_bank, ["A"], language="de", num_questions=3)

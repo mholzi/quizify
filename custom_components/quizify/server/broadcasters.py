@@ -126,7 +126,7 @@ class LightningBroadcaster(_Broadcaster):
         for player in game_state.get_players():
             if not player.connected:
                 continue
-            lightning_sends.append(self._conn.send(player.ws, {
+            lightning_sends.append(self._conn.send_to_player(player, {
                 "type": "lightning_question",
                 "question_text": q.question,
                 "answers": lr.shuffled_answers_for(player.name),
@@ -207,14 +207,14 @@ class LightningBroadcaster(_Broadcaster):
         sends = []
         for name in members:
             member = game_state.get_player(name)
-            if member is None or member.ws is None or not member.connected:
+            if member is None or not member.connected:
                 continue
             order = lr.ensure_shuffle(name)
             try:
                 shown_index = order.index(standing.answer_index)
             except ValueError:
                 continue
-            sends.append(self._conn.send(member.ws, {
+            sends.append(self._conn.send_to_player(member, {
                 "type": "lightning_team_answer",
                 "index": lr.index,
                 "answer_index": shown_index,
@@ -272,9 +272,9 @@ class HotSeatBroadcaster(_Broadcaster):
         # the mode off for, and a slider priced against it costs nothing.
         sends = []
         for player in game_state.get_players():
-            if not player.connected or player.ws is None:
+            if not player.connected:
                 continue
-            sends.append(self._conn.send(player.ws, {
+            sends.append(self._conn.send_to_player(player, {
                 "type": "hot_seat_auction_you",
                 "score": hs.scores.get(hs.entrant_for(player.name), 0),
                 "seconds": hs.auction_seconds,
@@ -379,16 +379,16 @@ class HotSeatBroadcaster(_Broadcaster):
         }
         sends = []
         for player in game_state.get_players():
-            if not player.connected or player.ws is None:
+            if not player.connected:
                 continue
             if player.name == hs.seat_holder:
-                sends.append(self._conn.send(player.ws, {
+                sends.append(self._conn.send_to_player(player, {
                     **payload,
                     "answers": hs.shuffled_answers(),
                     "you_are_seated": True,
                 }))
             else:
-                sends.append(self._conn.send(player.ws, {
+                sends.append(self._conn.send_to_player(player, {
                     **payload,
                     "answers": [],
                     "you_are_seated": False,
@@ -480,7 +480,7 @@ class RoundBroadcaster(_Broadcaster):
                 player = by_name.get(name)
                 if player is None:
                     continue
-                sends.append(self._conn.send(player.ws, {
+                sends.append(self._conn.send_to_player(player, {
                     "type": "timer_tick",
                     "remaining": round(remaining, 1),
                 }))
@@ -537,14 +537,14 @@ class RoundBroadcaster(_Broadcaster):
         if team is None:
             return
         # #896: built as one fan-out and delivered in parallel, like every
-        # other per-player fan-out (#258/#307). ``send`` wraps the write in a
-        # 2 s timeout, so awaiting members one at a time let a single half-dead
-        # phone hold the frame for its whole team — and with it the handler's
-        # ``answer_accepted`` reply.
+        # other per-player fan-out (#258/#307). ``send_to_player`` wraps the
+        # write in a 2 s timeout, so awaiting members one at a time let a
+        # single half-dead phone hold the frame for its whole team — and with
+        # it the handler's ``answer_accepted`` reply.
         sends = []
         for name in team.members:
             member = game_state.get_player(name)
-            if member is None or member.ws is None or not member.connected:
+            if member is None or not member.connected:
                 continue
             shuffle = game_state.get_player_shuffle(name)
             try:
@@ -554,7 +554,7 @@ class RoundBroadcaster(_Broadcaster):
                 # the question start and this tap). Their client re-reads the
                 # answer from the next projected snapshot.
                 continue
-            sends.append(self._conn.send(member.ws, {
+            sends.append(self._conn.send_to_player(member, {
                 "type": "team_answer",
                 "team_id": ack.team_id,
                 "answer_index": shown_index,
@@ -605,8 +605,8 @@ class WagerBroadcaster(_Broadcaster):
         """
         players = game_state.get_players()
         sends = [
-            self._conn.send(
-                player.ws,
+            self._conn.send_to_player(
+                player,
                 self._messages.build_wager_window(
                     game_state,
                     question=question,

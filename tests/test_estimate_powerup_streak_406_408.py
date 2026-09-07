@@ -15,7 +15,6 @@ from __future__ import annotations
 
 import sys
 from pathlib import Path
-from unittest.mock import MagicMock
 
 import pytest
 
@@ -41,12 +40,6 @@ class _FakeRuntime:
         self.data_dir = tmp_path
 
 
-def _fake_ws() -> MagicMock:
-    ws = MagicMock()
-    ws.closed = False
-    return ws
-
-
 def _make_estimate_question() -> Question:
     return Question(
         id="e-flow",
@@ -65,9 +58,9 @@ def _make_estimate_question() -> Question:
 def est_state(tmp_path: Path) -> QuizifyGameState:
     """A game state forced into an active estimate round with 3 players."""
     state = QuizifyGameState(runtime=_FakeRuntime(tmp_path), entry_id="test")
-    state.add_player("Anna", _fake_ws())
-    state.add_player("Tom", _fake_ws())
-    state.add_player("Marina", _fake_ws())
+    state.add_player("Anna")
+    state.add_player("Tom")
+    state.add_player("Marina")
     state.start_game(language="de", num_rounds=3, timer_duration=30)
     state.start_next_question()
     # Force the active question to a known estimate question.
@@ -126,7 +119,7 @@ class TestEstimatePowerupGate:
             state = QuizifyGameState(
                 runtime=_FakeRuntime(tmp_path), entry_id="test"
             )
-            state.add_player("Solo", _fake_ws())
+            state.add_player("Solo")
             state.start_game(language="de", num_rounds=3)
             # Force the next-served question to an estimate question so the
             # grant path sees is_estimate.

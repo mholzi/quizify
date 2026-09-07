@@ -250,7 +250,7 @@ class TestLifecycleLinesAreLocalized:
         _configure(t)
         t._last_phase = GamePhase.ANSWER_REVEAL
         game.phase = GamePhase.FINALE
-        game.add_player("Lucía", MagicMock())
+        game.add_player("Lucía")
         game.get_player("Lucía").score = 420
         t._on_state_changed()
         await asyncio.sleep(0)

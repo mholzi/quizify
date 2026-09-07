@@ -19,18 +19,11 @@ removable, so it is fixed — the team answers as one, so it scores as one.
 from __future__ import annotations
 
 from pathlib import Path
-from unittest.mock import MagicMock
 
 import pytest
 
 from custom_components.quizify.game.powerups import PowerUpType
 from custom_components.quizify.game.state import GamePhase, QuizifyGameState
-
-
-def _ws() -> MagicMock:
-    ws = MagicMock()
-    ws.closed = False
-    return ws
 
 
 class _Runtime:
@@ -55,7 +48,7 @@ def team_game(tmp_path: Path) -> QuizifyGameState:
     """A started game with one two-person team and one solo player."""
     st = _new_game(tmp_path)
     for name in ("Anna", "Jan", "Mira"):
-        st.add_player(name, _ws())
+        st.add_player(name)
     st.create_team("Sofa", "Anna")
     st.join_team(st.get_team_of("Anna")["team_id"], "Jan")
     st.start_game(
@@ -69,7 +62,7 @@ def team_game(tmp_path: Path) -> QuizifyGameState:
 def solo_game(tmp_path: Path) -> QuizifyGameState:
     st = _new_game(tmp_path)
     for name in ("Anna", "Jan"):
-        st.add_player(name, _ws())
+        st.add_player(name)
     st.start_game(
         category="picture-round-en", difficulty="easy", num_rounds=3, language="en"
     )
@@ -166,7 +159,7 @@ class TestDoublePointsBelongsToTheTeam:
         for activate in (False, True):
             st = _new_game(tmp_path)
             for name in ("Anna", "Jan"):
-                st.add_player(name, _ws())
+                st.add_player(name)
             st.create_team("Sofa", "Anna")
             st.join_team(st.get_team_of("Anna")["team_id"], "Jan")
             st.start_game(
@@ -195,7 +188,7 @@ class TestDoublePointsBelongsToTheTeam:
         """The multiplier is the team's, not the room's."""
         st = _new_game(tmp_path)
         for name in ("Anna", "Jan", "Mira", "Tom"):
-            st.add_player(name, _ws())
+            st.add_player(name)
         st.create_team("Sofa", "Anna")
         st.join_team(st.get_team_of("Anna")["team_id"], "Jan")
         st.create_team("Küche", "Mira")

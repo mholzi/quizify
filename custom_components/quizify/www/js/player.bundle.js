@@ -3582,6 +3582,39 @@
         // #285: no host "end now" control during the auto round.
 
         _answeredIndex = -1;
+
+        // #895b: a snapshot rebuild, not a fresh question. The server tells
+        // this phone whether its entrant has already answered the question it
+        // is being handed back — a reload otherwise came back to three live
+        // buttons, and the second tap is dropped without a reply
+        // (``record_answer`` refuses it, the handler stays silent), so the
+        // screen offered an answer the room would never receive.
+        if (msg.you_answered) {
+            lockAnswered(
+                (typeof msg.you_answer_index === 'number') ? msg.you_answer_index : -1
+            );
+        }
+    }
+
+    /**
+     * Grey the three buttons and mark the one that stands (#895b).
+     *
+     * The same end state ``submitAnswer`` leaves behind, so a phone that
+     * reloaded mid-question and one that never did read identically.
+     * ``index`` is this phone's own button order; -1 means "answered, but the
+     * button is unresolvable" (a shuffle the server could not map), which
+     * still has to lock — the answer is in either way.
+     */
+    function lockAnswered(index) {
+        _answeredIndex = index;
+        var btns = document.querySelectorAll('[data-lightning-answer]');
+        for (var i = 0; i < btns.length; i++) {
+            btns[i].disabled = true;
+            var idx = parseInt(btns[i].getAttribute('data-lightning-answer'), 10);
+            btns[i].classList.toggle('selected', idx === index);
+        }
+        var row = document.getElementById('lightning-answered');
+        if (row) row.classList.remove('hidden');
     }
 
     function handleLightningTick(msg) {
@@ -4556,13 +4589,28 @@
         }
     }
 
+    /**
+     * The bet this phone already placed, after a reload (#895e).
+     *
+     * ``_state.betPlaced`` alone stops the send, so nothing could be bet
+     * twice — but the slider and both buttons stayed live, so the screen
+     * offered a second bet and swallowed it. Same end state as the tap path
+     * in ``wireBet``: slider and buttons disabled, the side named in the
+     * room's language rather than as the wire's 'will' / 'wont'.
+     */
     function lockBetUi(bet) {
         _state.betPlaced = true;
+        var slider = el('hotseat-bet-slider');
+        if (slider) slider.disabled = true;
+        ['hotseat-bet-will', 'hotseat-bet-wont'].forEach(function (x) {
+            var b = el(x);
+            if (b) b.disabled = true;
+        });
         var hint = el('hotseat-hint');
         if (hint) {
             hint.textContent = t('hotSeat.betPlaced', {
                 pct: bet.pct,
-                side: bet.side
+                side: t(bet.side === 'will' ? 'hotSeat.betWill' : 'hotSeat.betWont')
             });
         }
     }
@@ -6913,6 +6961,16 @@
                         team.handleTeamAnswer(msg.team_answer);
                     }
 
+                    // #870: the roster row, which only ever arrived on a live
+                    // `answer_progress` frame. A phone that reloads mid-
+                    // question misses those for good — the next one is not
+                    // sent until somebody else answers, and if everyone
+                    // already has, none is — so it played the rest of the
+                    // question with no way to tell whether the room was
+                    // waiting for it. The snapshot has carried name, colour,
+                    // connected and submitted for every player all along.
+                    game.renderSubmissionTracker(msg.players || []);
+
                     // #14: if we're reconnecting mid-round and server thinks
                     // we've already submitted, lock the UI accordingly so we
                     // don't get ERR_ALREADY_SUBMITTED toasts on re-tap.
@@ -6972,7 +7030,14 @@
                         num_questions: msg.lightning.num_questions,
                         seconds: msg.lightning.time_remaining,
                         category: lq ? lq.category : '',
-                        image_url: lq ? lq.image_url : ''
+                        image_url: lq ? lq.image_url : '',
+                        // #895b: a reload during a lightning question used to
+                        // come back with three live buttons for a question
+                        // this phone had already answered. The server refuses
+                        // the second tap without a word, so the screen said
+                        // "you may answer" and the room said otherwise.
+                        you_answered: !!msg.lightning.you_answered,
+                        you_answer_index: msg.lightning.you_answer_index
                     });
                 } else {
                     pu.showView('lightning-view');
@@ -7018,6 +7083,17 @@
                 break;
 
             case 'PAUSED':
+                // #895a: the phone's own clock is a local setInterval seeded
+                // at question start; the pause happens on the server and no
+                // frame ever stopped it here. So behind the pause screen the
+                // countdown kept running: the soft ticks kept playing, the
+                // 10s/5s VoiceOver announcements kept firing, and the timer a
+                // resumed round shows was rebuilt from a clock that had gone
+                // on counting down a round nobody was allowed to answer.
+                // ``startCountdown`` is called again with the server's
+                // remaining seconds when the round resumes, so stopping it is
+                // all this needs to do.
+                game.stopCountdown();
                 pu.showView('paused-view');
                 updatePausedView(msg);
                 // Admin's control bar stays visible during pause so they
@@ -7285,11 +7361,19 @@
         // line that lowered it again lives in updateGameView, which nothing
         // has called since #619. Play again keeps the phones on this page, so
         // round 1 of game 2 — and every round after it — wore the pill until
-        // somebody reloaded. Taken down here for any round that is not the
-        // last; raising it stays with the wager window, as before.
-        if (!isFinalRound(msg)) {
-            var lastRoundBanner = document.getElementById('last-round-banner');
-            if (lastRoundBanner) lastRoundBanner.classList.add('hidden');
+        // somebody reloaded.
+        //
+        // #870: a toggle, not a one-way hide. Raising it used to belong to the
+        // wager window alone — a frame a reconnecting phone never receives —
+        // so a guest who reloaded on the final round came back to a screen
+        // that no longer said it was the final round, next to neighbours whose
+        // phones still did. The snapshot carries round and total_rounds, which
+        // is what isFinalRound reads, so the restore path can now raise it for
+        // itself; a game played without the wager gets the pill too, which is
+        // the same fact stated by the same element.
+        var lastRoundBanner = document.getElementById('last-round-banner');
+        if (lastRoundBanner) {
+            lastRoundBanner.classList.toggle('hidden', !isFinalRound(msg));
         }
 
         // Timer

@@ -34,6 +34,7 @@ from custom_components.quizify.server import serializers  # noqa: E402
 from custom_components.quizify.server.websocket import (  # noqa: E402
     QuizifyWebSocketHandler,
 )
+from tests.ws_helpers import bind  # noqa: E402
 
 
 
@@ -74,8 +75,8 @@ class TestFireBroadcastSkipsSnapshot:
             captured.append(payload)
 
         gs.set_broadcast_callback(_broadcast)
-        gs.add_player("Alice", _fake_ws())
-        gs.add_player("Bob", _fake_ws())
+        gs.add_player("Alice")
+        gs.add_player("Bob")
         gs.start_game(language="de", num_rounds=2)
         gs.start_next_question()
 
@@ -139,13 +140,13 @@ class TestReactionCoalescing:
         """20 identical reactions from one player inside a window produce a
         single broadcast, not 20."""
         gs = QuizifyGameState(runtime=_Runtime(tmp_path), entry_id="t")
-        ws = _fake_ws()
-        gs.add_player("Alice", ws)
-        gs.add_player("Bob", _fake_ws())
+        gs.add_player("Alice")
+        gs.add_player("Bob")
         gs.start_game(language="de", num_rounds=2)
         gs.start_next_question()
 
         h = _handler(tmp_path, gs)
+        ws = bind(h._conn, gs, "Alice", _fake_ws())
         broadcasts: list[dict] = []
 
         async def _capture(msg: dict) -> None:
@@ -173,13 +174,14 @@ class TestReactionCoalescing:
     async def test_distinct_reactions_all_flushed(self, tmp_path: Path) -> None:
         """Distinct (player, emoji) pairs all ride ONE window frame (#896)."""
         gs = QuizifyGameState(runtime=_Runtime(tmp_path), entry_id="t")
-        a, b = _fake_ws(), _fake_ws()
-        gs.add_player("Alice", a)
-        gs.add_player("Bob", b)
+        gs.add_player("Alice")
+        gs.add_player("Bob")
         gs.start_game(language="de", num_rounds=2)
         gs.start_next_question()
 
         h = _handler(tmp_path, gs)
+        a = bind(h._conn, gs, "Alice", _fake_ws())
+        b = bind(h._conn, gs, "Bob", _fake_ws())
         broadcasts: list[dict] = []
         h._conn.broadcast = lambda m: broadcasts.append(m) or asyncio.sleep(0)  # type: ignore[assignment,return-value]
 
@@ -199,12 +201,12 @@ class TestReactionCoalescing:
         """``cleanup_game_tasks`` cancels a pending flush and clears the
         buffer."""
         gs = QuizifyGameState(runtime=_Runtime(tmp_path), entry_id="t")
-        ws = _fake_ws()
-        gs.add_player("Alice", ws)
+        gs.add_player("Alice")
         gs.start_game(language="de", num_rounds=2)
         gs.start_next_question()
 
         h = _handler(tmp_path, gs)
+        ws = bind(h._conn, gs, "Alice", _fake_ws())
         h._conn.broadcast = lambda m: asyncio.sleep(0)  # type: ignore[assignment]
 
         await h._handle_reaction(ws, {"emoji": "🎉"}, gs)
@@ -223,9 +225,8 @@ class TestReactionCoalescing:
         path — a reaction during ANSWER_REVEAL still tips +1 to a correct
         answerer."""
         gs = QuizifyGameState(runtime=_Runtime(tmp_path), entry_id="t")
-        a, b = _fake_ws(), _fake_ws()
-        gs.add_player("Alice", a)
-        gs.add_player("Bob", b)
+        gs.add_player("Alice")
+        gs.add_player("Bob")
         gs.start_game(language="de", num_rounds=2)
         gs.start_next_question()
 
@@ -237,14 +238,15 @@ class TestReactionCoalescing:
         assert gs.phase == GamePhase.ANSWER_REVEAL
 
         h = _handler(tmp_path, gs)
+        a = bind(h._conn, gs, "Alice", _fake_ws())
         sent: list[dict] = []
         h._conn.broadcast = lambda m: sent.append(m) or asyncio.sleep(0)  # type: ignore[assignment,return-value]
 
-        bob_before = gs.get_player_by_ws(b).score
+        bob_before = gs.get_player("Bob").score
         await h._handle_reaction(a, {"emoji": "🎉"}, gs)
 
         # The point award still fires synchronously inside _handle_reaction.
-        assert gs.get_player_by_ws(b).score == bob_before + 1
+        assert gs.get_player("Bob").score == bob_before + 1
         # The reaction_bonus BROADCAST is now coalesced into the ~150ms flush
         # window (#416) rather than emitted inline — drain the flush task.
         if h._reaction_flush_task is not None:

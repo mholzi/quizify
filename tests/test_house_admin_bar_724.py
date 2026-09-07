@@ -99,7 +99,7 @@ def _player_admin_ws(h: QuizifyWebSocketHandler, game: QuizifyGameState) -> Magi
     """
     ws = _ws()
     h._conn.add_connection(ws, is_admin=False, is_dashboard=False)
-    game.add_player("Guest", ws)
+    game.add_player("Guest", h._conn.connection_id(ws))
     game.get_player("Guest").is_admin = True
     return ws
 

@@ -16,6 +16,7 @@ from ..const import ERROR_FALLBACK_TEXT
 from .token_store import TokenStore
 
 if TYPE_CHECKING:
+    from ..game.player import PlayerSession
     from ..game.state import QuizifyGameState
     from ..runtime import Runtime
 
@@ -71,6 +72,11 @@ class ConnectionManager:
         self.connections: set[web.WebSocketResponse] = set()
         self._admin_connections: set[web.WebSocketResponse] = set()
         self._dashboard_connections: set[web.WebSocketResponse] = set()
+        # The one id ↔ socket map in the process (#882). The game layer keys
+        # players by the opaque id and never sees the socket, so nothing in
+        # ``game/`` imports aiohttp any more.
+        self._id_by_ws: dict[int, str] = {}
+        self._ws_by_id: dict[str, web.WebSocketResponse] = {}
         # Token → (player_name, issued_at_monotonic). Tokens older than
         # _PLAYER_TOKEN_TTL are treated as expired.
         self._session_tokens: dict[str, tuple[str, float]] = {}
@@ -92,10 +98,64 @@ class ConnectionManager:
     # Connection lifecycle
     # ------------------------------------------------------------------
 
+    # ------------------------------------------------------------------
+    # Opaque connection ids (#882)
+    # ------------------------------------------------------------------
+
+    def connection_id(self, ws: web.WebSocketResponse) -> str:
+        """Return the opaque id for *ws*, minting one on first sight.
+
+        Keyed on ``id(ws)`` rather than the socket itself because aiohttp's
+        ``WebSocketResponse`` inherits ``StreamResponse.__eq__``/``__hash__``
+        only by identity anyway, and this keeps the map cheap. The entry is
+        dropped by :meth:`forget_connection`, so an address can only be
+        recycled after we have stopped tracking it.
+        """
+        cid = self._id_by_ws.get(id(ws))
+        if cid is None:
+            cid = uuid.uuid4().hex
+            self._id_by_ws[id(ws)] = cid
+            self._ws_by_id[cid] = ws
+        return cid
+
+    def socket_for(
+        self, connection_id: str | None
+    ) -> web.WebSocketResponse | None:
+        """Return the socket behind *connection_id*, or None if it is gone."""
+        if not connection_id:
+            return None
+        return self._ws_by_id.get(connection_id)
+
+    def is_connection_open(self, connection_id: str | None) -> bool:
+        """True only if *connection_id* still has a live, unclosed socket."""
+        ws = self.socket_for(connection_id)
+        return ws is not None and not ws.closed
+
+    def is_connection_dead(self, connection_id: str | None) -> bool:
+        """True if *connection_id* maps to a socket we know to be closed.
+
+        Deliberately NOT the negation of :meth:`is_connection_open`: an id we
+        no longer track (or none at all) is *unknown*, not proven dead, and
+        the ghost-reaping in the WS handler must not act on a guess.
+        """
+        ws = self.socket_for(connection_id)
+        return ws is not None and ws.closed
+
+    def forget_connection(self, ws: web.WebSocketResponse) -> None:
+        """Drop the id ↔ socket entry for *ws*.
+
+        Called once the socket is finished with, so neither map grows with
+        the number of connections ever made (the #310 lesson).
+        """
+        cid = self._id_by_ws.pop(id(ws), None)
+        if cid is not None:
+            self._ws_by_id.pop(cid, None)
+
     def add_connection(
         self, ws: web.WebSocketResponse, is_admin: bool, is_dashboard: bool
     ) -> None:
         """Register a new WebSocket connection."""
+        self.connection_id(ws)
         self.connections.add(ws)
         if is_admin:
             self._admin_connections.add(ws)
@@ -439,8 +499,9 @@ class ConnectionManager:
         admin_as_player_ws: set[web.WebSocketResponse] = set()
         if gs:
             for p in gs.get_players():
-                if p.is_admin and p.ws is not None:
-                    admin_as_player_ws.add(p.ws)
+                player_ws = self.socket_for(p.connection_id)
+                if p.is_admin and player_ws is not None:
+                    admin_as_player_ws.add(player_ws)
         payload = json.dumps(message)  # serialize once, send_str per client (#258)
         # Dashboards only get their own payload when the caller supplied one;
         # otherwise both groups keep sharing the single message as before.
@@ -479,6 +540,19 @@ class ConnectionManager:
             _LOGGER.warning("Timed out sending to WebSocket (slow/dead client)")
         except Exception as err:  # noqa: BLE001
             _LOGGER.warning("Failed to send to WebSocket: %s", err)
+
+    async def send_to_player(self, player: PlayerSession, message: dict) -> None:
+        """Send *message* to whatever socket *player* is bound to.
+
+        The one place the game layer's opaque ``connection_id`` is turned back
+        into a transport (#882). A player with no live socket — never bound,
+        already forgotten, kicked — is silently skipped, which is what every
+        call site used to spell out as ``if player.ws is None: continue``.
+        """
+        ws = self.socket_for(player.connection_id)
+        if ws is None:
+            return
+        await self.send(ws, message)
 
     # Backwards-compatible alias for the former private name. Some tests still
     # patch ``_safe_send``; keep it pointing at the public method.

@@ -98,7 +98,7 @@ def h(game: QuizifyGameState, tmp_path: Path) -> QuizifyWebSocketHandler:
 def _seat(h: QuizifyWebSocketHandler, game: QuizifyGameState, name: str) -> MagicMock:
     ws = _ws()
     h._conn.add_connection(ws, is_admin=False, is_dashboard=False)
-    game.add_player(name, ws)
+    game.add_player(name, h._conn.connection_id(ws))
     return ws
 
 

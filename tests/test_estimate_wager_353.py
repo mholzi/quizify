@@ -19,7 +19,6 @@ from __future__ import annotations
 
 import sys
 from pathlib import Path
-from unittest.mock import MagicMock
 
 import pytest
 
@@ -44,12 +43,6 @@ from custom_components.quizify.server.serializers import (  # noqa: E402
 class _FakeRuntime:
     def __init__(self, tmp_path: Path) -> None:
         self.data_dir = tmp_path
-
-
-def _fake_ws() -> MagicMock:
-    ws = MagicMock()
-    ws.closed = False
-    return ws
 
 
 def _estimate_question() -> Question:
@@ -78,7 +71,10 @@ def _mc_question() -> Question:
     )
 
 
-class _Conn:
+from tests.ws_helpers import FakeConnection, ws_of  # noqa: E402
+
+
+class _Conn(FakeConnection):
     """Stub connection capturing sends + errors from the wager handler."""
 
     def __init__(self) -> None:
@@ -104,8 +100,8 @@ def _final_round_state(
 ) -> QuizifyGameState:
     """A game forced onto its (single) final round with ``question`` active."""
     state = QuizifyGameState(runtime=_FakeRuntime(tmp_path), entry_id="test")
-    state.add_player("Anna", _fake_ws())
-    state.add_player("Tom", _fake_ws())
+    state.add_player("Anna")
+    state.add_player("Tom")
     state.start_game(language="de", num_rounds=1, timer_duration=30)
     state.start_next_question()
     state._current_question = question
@@ -156,7 +152,7 @@ class TestWagerHandler:
         assert state.round == state.total_rounds
 
         handler, conn = _make_handler()
-        ws = state.get_player("Anna").ws
+        ws = ws_of(handler._conn, state, "Anna")
         await handler._handle_submit_wager(ws, {"wager": 50}, state)
 
         # Rejected with an error, never ACKed.
@@ -177,7 +173,8 @@ class TestWagerHandler:
         anna = state.get_player("Anna")
 
         # Anna tries to wager, then everyone guesses.
-        await handler._handle_submit_wager(anna.ws, {"wager": 100}, state)
+        anna_ws = ws_of(handler._conn, state, "Anna")
+        await handler._handle_submit_wager(anna_ws, {"wager": 100}, state)
         assert anna.wager in (None, 0)
 
         state.submit_guess("Anna", 210)   # 4 off → closest
@@ -202,7 +199,8 @@ class TestWagerHandler:
 
         handler, conn = _make_handler()
         anna = state.get_player("Anna")
-        await handler._handle_submit_wager(anna.ws, {"wager": 40}, state)
+        anna_ws = ws_of(handler._conn, state, "Anna")
+        await handler._handle_submit_wager(anna_ws, {"wager": 40}, state)
 
         assert conn.errors == []
         accepted = [m for m in conn.sent if m.get("type") == "wager_accepted"]

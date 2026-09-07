@@ -20,7 +20,6 @@ from __future__ import annotations
 
 import sys
 from pathlib import Path
-from unittest.mock import MagicMock
 
 import pytest
 
@@ -46,12 +45,6 @@ class _FakeRuntime:
         self.data_dir = tmp_path
 
 
-def _fake_ws() -> MagicMock:
-    ws = MagicMock()
-    ws.closed = False
-    return ws
-
-
 @pytest.fixture
 def state(tmp_path: Path) -> QuizifyGameState:
     runtime = _FakeRuntime(tmp_path)
@@ -71,7 +64,7 @@ def _start_round(state: QuizifyGameState):
     by luck. ``geographie`` is a multiple-choice pack — the mixed pool now
     includes #275 estimate questions, which carry no answers to shuffle.
     """
-    state.add_player("Alice", _fake_ws())
+    state.add_player("Alice")
     state.start_game(
         category="geographie", language="de", num_rounds=3, difficulty="easy"
     )

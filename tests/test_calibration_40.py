@@ -214,8 +214,6 @@ class TestBankDifficultyTargeting:
 # GameState integration: auto mode end-to-end vs. fixed difficulty
 # ----------------------------------------------------------------------
 
-from unittest.mock import MagicMock  # noqa: E402
-
 from custom_components.quizify.game.state import (  # noqa: E402
     GamePhase,
     QuizifyGameState,
@@ -225,12 +223,6 @@ from custom_components.quizify.game.state import (  # noqa: E402
 class _FakeRuntime:
     def __init__(self, tmp_path: Path) -> None:
         self.data_dir = tmp_path
-
-
-def _fake_ws() -> MagicMock:
-    ws = MagicMock()
-    ws.closed = False
-    return ws
 
 
 def _inject_bank(state: QuizifyGameState) -> None:
@@ -264,7 +256,7 @@ class TestAutoModeIntegration:
     def test_fixed_difficulty_creates_no_calibrator(self, tmp_path: Path) -> None:
         state = QuizifyGameState(runtime=_FakeRuntime(tmp_path), entry_id="t")
         _inject_bank(state)
-        state.add_player("Alice", _fake_ws())
+        state.add_player("Alice")
         state.start_game(language="de", num_rounds=5, difficulty="medium")
         assert state._calibrator is None
         # Fixed mode keeps serving the pinned difficulty.
@@ -276,7 +268,7 @@ class TestAutoModeIntegration:
     ) -> None:
         state = QuizifyGameState(runtime=_FakeRuntime(tmp_path), entry_id="t")
         _inject_bank(state)
-        state.add_player("Alice", _fake_ws())
+        state.add_player("Alice")
         state.start_game(language="de", num_rounds=8, difficulty="auto")
         assert state._calibrator is not None
         assert state._calibrator.current_target == Difficulty.MEDIUM
@@ -289,7 +281,7 @@ class TestAutoModeIntegration:
     ) -> None:
         state = QuizifyGameState(runtime=_FakeRuntime(tmp_path), entry_id="t")
         _inject_bank(state)
-        state.add_player("Alice", _fake_ws())
+        state.add_player("Alice")
         state.start_game(language="de", num_rounds=8, difficulty="auto")
 
         served = []
@@ -309,7 +301,7 @@ class TestAutoModeIntegration:
     def test_auto_mode_eases_on_struggling_group(self, tmp_path: Path) -> None:
         state = QuizifyGameState(runtime=_FakeRuntime(tmp_path), entry_id="t")
         _inject_bank(state)
-        state.add_player("Alice", _fake_ws())
+        state.add_player("Alice")
         state.start_game(language="de", num_rounds=8, difficulty="auto")
 
         served = []
@@ -328,7 +320,7 @@ class TestAutoModeIntegration:
     def test_reset_to_lobby_clears_calibrator(self, tmp_path: Path) -> None:
         state = QuizifyGameState(runtime=_FakeRuntime(tmp_path), entry_id="t")
         _inject_bank(state)
-        state.add_player("Alice", _fake_ws())
+        state.add_player("Alice")
         state.start_game(language="de", num_rounds=5, difficulty="auto")
         assert state._calibrator is not None
         state.reset_to_lobby()

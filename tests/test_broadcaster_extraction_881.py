@@ -105,21 +105,21 @@ class _Room:
 
     def __init__(self, tmp_path: Path, players: list[str]) -> None:
         self.game = QuizifyGameState(runtime=_Runtime(tmp_path), entry_id="t")
+        self.conn = ConnectionManager(_Runtime(tmp_path), lambda: self.game)
         self.socks: dict[str, _Sock] = {}
+        # Register the socket with the manager BEFORE seating the player: since
+        # #882 the game layer holds an opaque connection id, and the manager is
+        # the only thing that can turn it back into this socket.
         for name in players:
             sock = _Sock(name)
             self.socks[name] = sock
-            self.game.add_player(name, sock)
+            self.conn.add_connection(sock, is_admin=False, is_dashboard=False)
+            self.game.add_player(name, self.conn.connection_id(sock))
         self.admin = _Sock("admin")
         self.dashboard = _Sock("dashboard")
         self.socks["admin"] = self.admin
         self.socks["dashboard"] = self.dashboard
 
-        self.conn = ConnectionManager(_Runtime(tmp_path), lambda: self.game)
-        for name in players:
-            self.conn.add_connection(
-                self.socks[name], is_admin=False, is_dashboard=False
-            )
         self.conn.add_connection(self.admin, is_admin=True, is_dashboard=False)
         self.conn.add_connection(self.dashboard, is_admin=False, is_dashboard=True)
 

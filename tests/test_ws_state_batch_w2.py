@@ -48,6 +48,7 @@ from custom_components.quizify.server.serializers import serialize_finale  # noq
 from custom_components.quizify.server.websocket import (  # noqa: E402
     QuizifyWebSocketHandler,
 )
+from tests.ws_helpers import ws_of  # noqa: E402
 
 
 class _Runtime:
@@ -78,7 +79,7 @@ def _handler(tmp_path: Path, game: QuizifyGameState) -> QuizifyWebSocketHandler:
 def _started_game(tmp_path: Path, names: list[str]) -> QuizifyGameState:
     gs = QuizifyGameState(runtime=_Runtime(tmp_path), entry_id="t")
     for n in names:
-        gs.add_player(n, _fake_ws())
+        gs.add_player(n)
     gs.start_game(language="de", num_rounds=3, lightning_enabled=False)
     gs.start_next_question()
     return gs
@@ -191,7 +192,7 @@ class TestLastPlayerDropoutEval412:
         h = _handler(tmp_path, gs)
         h._conn.broadcast = AsyncMock()  # type: ignore[method-assign]
 
-        alice_ws = gs.get_player("Alice").ws
+        alice_ws = ws_of(h._conn, gs, "Alice")
         await h._handle_disconnect(alice_ws, was_admin=False)
 
         # Alice (the last unanswered) is gone → registry now reports all
@@ -210,7 +211,7 @@ class TestLastPlayerDropoutEval412:
         h = _handler(tmp_path, gs)
         h._conn.broadcast = AsyncMock()  # type: ignore[method-assign]
 
-        alice_ws = gs.get_player("Alice").ws
+        alice_ws = ws_of(h._conn, gs, "Alice")
         await h._handle_disconnect(alice_ws, was_admin=False)
 
         assert gs.phase == GamePhase.QUESTION_ACTIVE
@@ -234,6 +235,8 @@ class TestTickCoalescing413:
         assert gs.phase == GamePhase.QUESTION_ACTIVE
 
         h = _handler(tmp_path, gs)
+        # The per-player tick needs a socket to land on (#882).
+        ws_of(h._conn, gs, "Alice")
         player_sends: list[dict] = []
         admin_broadcasts: list[dict] = []
 
@@ -360,8 +363,8 @@ class TestReactionBonusCoalescing416:
         h._conn.broadcast = lambda m: sent.append(m) or asyncio.sleep(0)  # type: ignore[assignment,return-value]
 
         bob_before = gs.get_player("Bob").score
-        await h._handle_reaction(gs.get_player("Alice").ws, {"emoji": "🎉"}, gs)
-        await h._handle_reaction(gs.get_player("Carol").ws, {"emoji": "👏"}, gs)
+        await h._handle_reaction(ws_of(h._conn, gs, "Alice"), {"emoji": "🎉"}, gs)
+        await h._handle_reaction(ws_of(h._conn, gs, "Carol"), {"emoji": "👏"}, gs)
 
         # Points settle synchronously: Bob tipped +1 by each of two reactors.
         assert gs.get_player("Bob").score == bob_before + 2
@@ -411,7 +414,7 @@ class TestReactionBonusInvalidatesSummaryMemo449:
         h._conn.broadcast = lambda m: sent.append(m) or asyncio.sleep(0)  # type: ignore[assignment,return-value]
 
         # Alice reacts → Bob gets +1 while the memo still holds the old board.
-        await h._handle_reaction(gs.get_player("Alice").ws, {"emoji": "🎉"}, gs)
+        await h._handle_reaction(ws_of(h._conn, gs, "Alice"), {"emoji": "🎉"}, gs)
         assert gs.get_player("Bob").score == bob_before + 1
 
         # A join/reconnect/get_state during THIS reveal rebuilds the summary.

@@ -228,11 +228,21 @@ def _handler(tmp_path: Path, game: QuizifyGameState) -> QuizifyWebSocketHandler:
     )
 
 
-def _team_game(tmp_path: Path) -> QuizifyGameState:
-    """Anna, Ben and Cem on one sofa, mid-question."""
+def _team_room(
+    tmp_path: Path,
+) -> tuple[QuizifyGameState, QuizifyWebSocketHandler]:
+    """Anna, Ben and Cem on one sofa, mid-question, and who addresses them.
+
+    #882 keys a player by an opaque connection id rather than by the socket, so
+    the socket has to be registered with the handler's ``ConnectionManager``
+    before the player exists — ``add_player`` takes the id that registration
+    mints. Hence one helper for both: the handler is what holds the map from
+    that id back to the socket the fan-out actually writes to.
+    """
     gs = QuizifyGameState(runtime=_Runtime(tmp_path), entry_id="t")
+    handler = _handler(tmp_path, gs)
     for name in ("Anna", "Ben", "Cem"):
-        gs.add_player(name, _ws())
+        gs.add_player(name, handler._conn.connection_id(_ws()))
     gs.create_team("Sofa", "Anna")
     team_id = gs.get_team_of("Anna")["team_id"]
     gs.join_team(team_id, "Ben")
@@ -249,7 +259,7 @@ def _team_game(tmp_path: Path) -> QuizifyGameState:
     # Every member holds a shuffle containing the tapped index, so nothing is
     # skipped by the ValueError guard and the fan-out really is three sends.
     gs.player_shuffles = {name: [0, 1, 2, 3] for name in ("Anna", "Ben", "Cem")}
-    return gs
+    return gs, handler
 
 
 class _BlockingSend:
@@ -290,10 +300,9 @@ async def _wait_for_sends(send: _BlockingSend, count: int, timeout: float = 1.0)
 @pytest.mark.asyncio
 async def test_a_stalled_member_does_not_hold_up_its_team(tmp_path: Path) -> None:
     """#896b: the three sends are in flight together, not queued behind one."""
-    gs = _team_game(tmp_path)
-    handler = _handler(tmp_path, gs)
+    gs, handler = _team_room(tmp_path)
     team = gs.get_team_of("Anna")
-    stalled = gs.get_player("Anna").ws
+    stalled = handler._conn.socket_for(gs.get_player("Anna").connection_id)
 
     send = _BlockingSend(stalled)
     handler._conn.send = send  # type: ignore[assignment]
@@ -320,9 +329,8 @@ async def test_a_stalled_member_does_not_hold_up_a_lightning_team(
     tmp_path: Path,
 ) -> None:
     """#896b again, for the Lightning round's own copy of the fan-out."""
-    gs = _team_game(tmp_path)
-    handler = _handler(tmp_path, gs)
-    stalled = gs.get_player("Anna").ws
+    gs, handler = _team_room(tmp_path)
+    stalled = handler._conn.socket_for(gs.get_player("Anna").connection_id)
 
     standing = MagicMock()
     standing.answer_index = 0
@@ -359,8 +367,7 @@ async def test_a_flush_window_produces_exactly_one_reactions_frame(
     tmp_path: Path,
 ) -> None:
     """#896c: six distinct reactions leave as one frame, not six."""
-    gs = _team_game(tmp_path)
-    handler = _handler(tmp_path, gs)
+    _gs, handler = _team_room(tmp_path)
     handler._REACTION_FLUSH_WINDOW = 0.02
 
     frames: list[dict] = []
@@ -397,8 +404,7 @@ async def test_an_empty_window_broadcasts_nothing(tmp_path: Path) -> None:
     The batched frame is built from a list, and a list is easy to send empty.
     Every client would then animate nothing, once per window, forever.
     """
-    gs = _team_game(tmp_path)
-    handler = _handler(tmp_path, gs)
+    _gs, handler = _team_room(tmp_path)
     handler._REACTION_FLUSH_WINDOW = 0.02
 
     frames: list[dict] = []

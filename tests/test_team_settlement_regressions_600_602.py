@@ -39,7 +39,7 @@ def _game(tmp_path: Path, category: str, members: tuple[str, ...] = ("Anna", "Ja
           solo: tuple[str, ...] = ("Mira",)) -> QuizifyGameState:
     st = QuizifyGameState(runtime=_Runtime(tmp_path), entry_id="test")
     for name in (*members, *solo):
-        st.add_player(name, _ws())
+        st.add_player(name)
     st.create_team("Sofa", members[0])
     for name in members[1:]:
         st.join_team(st.get_team_of(members[0])["team_id"], name)

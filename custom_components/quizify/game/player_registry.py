@@ -19,8 +19,6 @@ from ..const import (
 if TYPE_CHECKING:
     from collections.abc import Callable
 
-    from aiohttp import web
-
 from .phase_controller import MID_QUESTION_PHASES
 from .player import PLAYER_COLORS, PlayerSession
 
@@ -64,20 +62,49 @@ class PlayerRegistry:
         """Initialize empty registry."""
         self.players: dict[str, PlayerSession] = {}
         self._sessions: dict[str, str] = {}  # session_id → player_name
+        # connection_id → player_name. The registry is keyed by an opaque
+        # connection handle (#882); the handle → socket map lives in the
+        # server layer, so nothing here can dereference a transport.
+        self._connections: dict[str, str] = {}
 
     def reset(self) -> None:
         """Clear all players and sessions."""
         self.players.clear()
         self._sessions.clear()
+        self._connections.clear()
+
+    def bind_connection(
+        self, player: PlayerSession, connection_id: str | None
+    ) -> None:
+        """Attach *player* to *connection_id*, dropping any previous binding.
+
+        The single place the connection index is written, so the
+        ``connection_id → name`` map cannot drift from
+        ``PlayerSession.connection_id``. Does NOT touch ``connected``: opening
+        and closing the transport is the server layer's call.
+        """
+        if player.connection_id is not None:
+            self._connections.pop(player.connection_id, None)
+        player.connection_id = connection_id
+        if connection_id is not None:
+            self._connections[connection_id] = player.name
 
     def add_player(
         self,
         name: str,
-        ws: web.WebSocketResponse,
+        connection_id: str | None,
         phase_value: str,
         average_score_fn: Callable[[], int],
+        *,
+        reclaim_by_name: bool = False,
     ) -> tuple[bool, str | None]:
         """Add a player to the game.
+
+        ``reclaim_by_name`` is the server layer's report that the slot this
+        name matches was just found with a dead transport — the "stale
+        connected flag" case (#448/#646). It used to be decided here by
+        reading ``ws.closed``; the registry has no transport to read since
+        #882, so the caller that does own the socket says so instead.
 
         Returns:
             (success, error_code) - error_code is None on success
@@ -112,30 +139,30 @@ class PlayerRegistry:
         # UX win of "refresh the page, type the same name" is meaningful.
         for existing_name, existing_player in self.players.items():
             if existing_name.lower() == name.lower():
-                if not existing_player.connected:
-                    if phase_value != "LOBBY":
-                        return False, ERR_NAME_TAKEN
-                    existing_player.ws = ws
-                    existing_player.connected = True
+                if existing_player.connected:
+                    return False, ERR_NAME_TAKEN
+                # A slot the server layer just found with a dead transport is
+                # the user's own ghost — the browser reloaded and the new
+                # socket beat ``_handle_disconnect`` here. Let them back in
+                # whatever the phase, or they sit staring at "Name taken"
+                # while their own session lingers (Beatify #646).
+                if reclaim_by_name:
                     _LOGGER.info(
-                        "Player reconnected by name (lobby): %s", existing_name
-                    )
-                    return True, None
-                # Stale connected flag — the browser reloaded but
-                # _handle_disconnect hasn't fired yet, so the slot still looks
-                # taken. If the old WS is genuinely dead, allow takeover so
-                # the user isn't stuck staring at "Name taken" while their own
-                # ghost session lingers (Beatify #646).
-                if existing_player.ws is None or existing_player.ws.closed:
-                    _LOGGER.info(
-                        "Player %s: stale connected flag, old WS closed — "
-                        "allowing rejoin",
+                        "Player %s: stale connected flag, old connection dead "
+                        "— allowing rejoin",
                         existing_name,
                     )
-                    existing_player.ws = ws
+                    self.bind_connection(existing_player, connection_id)
                     existing_player.connected = True
                     return True, None
-                return False, ERR_NAME_TAKEN
+                if phase_value != "LOBBY":
+                    return False, ERR_NAME_TAKEN
+                self.bind_connection(existing_player, connection_id)
+                existing_player.connected = True
+                _LOGGER.info(
+                    "Player reconnected by name (lobby): %s", existing_name
+                )
+                return True, None
 
         # Check player limit
         if len(self.players) >= MAX_PLAYERS:
@@ -174,7 +201,6 @@ class PlayerRegistry:
         # Add new player
         player = PlayerSession(
             name=name,
-            ws=ws,
             score=initial_score,
             streak=0,
             joined_late=joined_late,
@@ -182,6 +208,7 @@ class PlayerRegistry:
         )
         self.players[name] = player
         self._sessions[player.session_id] = name
+        self.bind_connection(player, connection_id)
 
         _LOGGER.info(
             "Player joined: %s (total: %d, phase: %s, mid-question: %s)",
@@ -208,18 +235,22 @@ class PlayerRegistry:
         name = self._sessions.get(session_id)
         return self.players.get(name) if name else None
 
-    def get_player_by_ws(self, ws: web.WebSocketResponse) -> PlayerSession | None:
-        """Get player by WebSocket connection."""
-        for player in self.players.values():
-            if player.ws == ws:
-                return player
-        return None
+    def get_player_by_connection(
+        self, connection_id: str | None
+    ) -> PlayerSession | None:
+        """Get the player currently bound to *connection_id*."""
+        if not connection_id:
+            return None
+        name = self._connections.get(connection_id)
+        return self.players.get(name) if name else None
 
     def remove_player(self, name: str) -> None:
         """Remove player from game."""
         if name in self.players:
             player = self.players[name]
             self._sessions.pop(player.session_id, None)
+            if player.connection_id is not None:
+                self._connections.pop(player.connection_id, None)
             del self.players[name]
             _LOGGER.info("Player removed: %s", name)
 
@@ -241,10 +272,10 @@ class PlayerRegistry:
     def all_submitted(self) -> bool:
         """Check if all genuinely-active players have submitted their answer.
 
-        Uses ``is_active`` (connected + WS open) rather than the raw
-        ``connected`` flag so a stale ghost (closed WebSocket whose
-        _handle_disconnect hasn't fired yet) can't block early reveal for
-        the whole room.
+        Uses ``is_active`` — since #882 simply the ``connected`` flag, which
+        the server layer keeps honest by reaping sockets that died without a
+        disconnect (see ``PlayerSession.is_active``), so a stale ghost can't
+        block early reveal for the whole room.
 
         Late-joiners (who entered the game mid-question) are excluded:
         otherwise a new player arriving after most answers are in would

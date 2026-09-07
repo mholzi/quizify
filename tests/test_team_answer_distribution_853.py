@@ -27,7 +27,6 @@ from __future__ import annotations
 
 import re
 from pathlib import Path
-from unittest.mock import MagicMock
 
 from custom_components.quizify.game.state import QuizifyGameState
 from custom_components.quizify.server.round_message_builder import RoundMessageBuilder
@@ -45,12 +44,6 @@ BUILDER = (
 class _Runtime:
     def __init__(self, tmp_path: Path) -> None:
         self.data_dir = tmp_path
-
-
-def _ws() -> MagicMock:
-    ws = MagicMock()
-    ws.closed = False
-    return ws
 
 
 def _open_round(st: QuizifyGameState):  # noqa: ANN202
@@ -73,7 +66,7 @@ def _live_test_room(tmp_path: Path) -> QuizifyGameState:
     """The room from the screenshot: a team of two and one solo guest."""
     st = QuizifyGameState(runtime=_Runtime(tmp_path), entry_id="test")
     for name in ("Anna", "Cleo", "Dan"):
-        st.add_player(name, _ws())
+        st.add_player(name)
     st.create_team("Sofa", "Anna")
     st.join_team(st.get_team_of("Anna")["team_id"], "Cleo")
     st.start_game(num_rounds=8, language="en")
@@ -168,7 +161,7 @@ def test_the_rows_themselves_stay_per_player(tmp_path: Path) -> None:
 def test_an_ordinary_game_is_untouched(tmp_path: Path) -> None:
     st = QuizifyGameState(runtime=_Runtime(tmp_path), entry_id="test")
     for name in ("Anna", "Ben", "Cleo"):
-        st.add_player(name, _ws())
+        st.add_player(name)
     st.start_game(num_rounds=8, language="en")
     _open_round(st)
     st.submit_answer("Anna", 0)
@@ -201,7 +194,7 @@ def test_teams_are_keyed_by_id_not_by_name(tmp_path: Path) -> None:
     """#728's reason: nothing stops two teams from sharing a name."""
     st = QuizifyGameState(runtime=_Runtime(tmp_path), entry_id="test")
     for name in ("Anna", "Ben"):
-        st.add_player(name, _ws())
+        st.add_player(name)
     st.create_team("Sofa", "Anna")
     st.create_team("Sofa", "Ben")
     st.start_game(num_rounds=8, language="en")

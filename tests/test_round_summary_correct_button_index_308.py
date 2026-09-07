@@ -130,7 +130,7 @@ class TestCorrectButtonIndex308:
         """
         # Alice's shuffle: button_pos -> original_index
         # pos0->1(decoy "Paris"), pos1->3, pos2->0(real "Paris"), pos3->2
-        alice = PlayerSession(name="Alice", ws=None, score=10)
+        alice = PlayerSession(name="Alice", score=10)
         alice.submitted = True
         alice.current_answer = 2  # answered orig idx 2 ("Berlin") — WRONG
         alice.round_score = 0
@@ -145,7 +145,7 @@ class TestCorrectButtonIndex308:
     def test_non_answerer_gets_correct_button_index(self):
         """A player who didn't answer still gets a correct_button_index in
         their own shuffle (the case the client cannot resolve at all)."""
-        bob = PlayerSession(name="Bob", ws=None)
+        bob = PlayerSession(name="Bob")
         bob.submitted = False
         # Bob's shuffle: pos0->0(real "Paris"), pos1->2, pos2->1(decoy), pos3->3
         answers = _build([bob], {"Bob": [0, 2, 1, 3]})
@@ -157,13 +157,13 @@ class TestCorrectButtonIndex308:
         """Two players with different shuffles get different button indices
         for the same correct answer — proving it's per-player, not canonical.
         """
-        alice = PlayerSession(name="Alice", ws=None)
+        alice = PlayerSession(name="Alice")
         alice.submitted = True
         alice.current_answer = 2  # WRONG
         alice.round_score = 0
         alice.round_score_breakdown = {}
         alice.streak = 0
-        bob = PlayerSession(name="Bob", ws=None)
+        bob = PlayerSession(name="Bob")
         bob.submitted = False
 
         answers = _build(
@@ -185,7 +185,7 @@ class TestCorrectButtonIndex308:
         """A correct answerer's correct_button_index equals the button they
         tapped (self-consistency with the #319 fallback)."""
         # Carol's shuffle: pos0->2, pos1->0(real "Paris"), pos2->1, pos3->3
-        carol = PlayerSession(name="Carol", ws=None)
+        carol = PlayerSession(name="Carol")
         carol.submitted = True
         carol.current_answer = 0  # answered orig 0 ("Paris") — CORRECT
         carol.round_score = 50
@@ -201,7 +201,7 @@ class TestCorrectButtonIndex308:
         """No per-player shuffle stored → falls back to canonical via
         get_player_shuffle; field still resolves against that order rather
         than crashing. (Here canonical [3,2,1,0] puts orig 0 at pos 3.)"""
-        dave = PlayerSession(name="Dave", ws=None)
+        dave = PlayerSession(name="Dave")
         dave.submitted = False
         answers = _build([dave], {})  # no shuffle for Dave
         # get_player_shuffle falls back to canonical [3,2,1,0] → orig0 at pos3

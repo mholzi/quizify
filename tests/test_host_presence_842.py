@@ -283,7 +283,7 @@ async def test_the_host_playing_keeps_the_flag_up_when_their_tab_closes(
     guest_ws = _ws()
     handler._conn.add_connection(guest_ws, is_admin=False, is_dashboard=False)
     game.add_player("Guest", guest_ws)
-    game.add_player("Host", _ws())
+    game.add_player("Host")
     game.get_player("Host").is_admin = True
     await handler._announce_host_presence()
 

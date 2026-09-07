@@ -84,13 +84,16 @@ def handler(game: QuizifyGameState) -> QuizifyWebSocketHandler:
 
 
 async def _put_in_question_active(
-    game: QuizifyGameState, admin_ws: MagicMock, bob_ws: MagicMock
+    h: QuizifyWebSocketHandler,
+    game: QuizifyGameState,
+    admin_ws: MagicMock,
+    bob_ws: MagicMock,
 ) -> None:
-    """Add admin (with is_admin) + Bob, start a question."""
-    game.add_player("Admin", admin_ws)
+    """Add admin (with is_admin) + Bob on their sockets, start a question."""
+    game.add_player("Admin", h._conn.connection_id(admin_ws))
     admin = game.get_player("Admin")
     admin.is_admin = True
-    game.add_player("Bob", bob_ws)
+    game.add_player("Bob", h._conn.connection_id(bob_ws))
     game.start_game(language="de", num_rounds=3, difficulty="easy")
     q = game.start_next_question()
     assert q is not None
@@ -110,7 +113,7 @@ class TestAdminRedirectPause:
         QUESTION_ACTIVE the moment the WS closes."""
         admin_ws = _ws()
         bob_ws = _ws()
-        await _put_in_question_active(game, admin_ws, bob_ws)
+        await _put_in_question_active(handler, game, admin_ws, bob_ws)
         admin = game.get_player("Admin")
         admin_ws.closed = True
 
@@ -131,7 +134,7 @@ class TestAdminRedirectPause:
         never fire."""
         admin_ws = _ws()
         bob_ws = _ws()
-        await _put_in_question_active(game, admin_ws, bob_ws)
+        await _put_in_question_active(handler, game, admin_ws, bob_ws)
         admin = game.get_player("Admin")
         admin_ws.closed = True
 
@@ -142,7 +145,7 @@ class TestAdminRedirectPause:
         # player's connected flag and cancelling the pause (what
         # _handle_reconnect / _handle_join do via _cancel_admin_pause).
         admin.connected = True
-        admin.ws = _ws()
+        game.bind_player_connection(admin, handler._conn.connection_id(_ws()))
         handler._cancel_admin_pause()
 
         # Wait past the grace period. Pause must NOT have fired.
@@ -165,7 +168,7 @@ class TestAdminRedirectPause:
         just delayed by the grace period instead of instantly."""
         admin_ws = _ws()
         bob_ws = _ws()
-        await _put_in_question_active(game, admin_ws, bob_ws)
+        await _put_in_question_active(handler, game, admin_ws, bob_ws)
         admin_ws.closed = True
 
         await handler._handle_disconnect(admin_ws)
@@ -193,7 +196,7 @@ class TestAdminRedirectPause:
         admin-pause path. Only admins pause the game."""
         admin_ws = _ws()
         bob_ws = _ws()
-        await _put_in_question_active(game, admin_ws, bob_ws)
+        await _put_in_question_active(handler, game, admin_ws, bob_ws)
         bob_ws.closed = True
 
         await handler._handle_disconnect(bob_ws)
@@ -211,9 +214,9 @@ class TestAdminRedirectPause:
         schedule a pause."""
         admin_ws = _ws()
         bob_ws = _ws()
-        game.add_player("Admin", admin_ws)
+        game.add_player("Admin", handler._conn.connection_id(admin_ws))
         game.get_player("Admin").is_admin = True
-        game.add_player("Bob", bob_ws)
+        game.add_player("Bob", handler._conn.connection_id(bob_ws))
         # Still in LOBBY, no start_game called.
         assert game.phase == GamePhase.LOBBY
         admin_ws.closed = True
@@ -232,7 +235,7 @@ class TestAdminRedirectPause:
         stack overlapping pause tasks."""
         admin_ws = _ws()
         bob_ws = _ws()
-        await _put_in_question_active(game, admin_ws, bob_ws)
+        await _put_in_question_active(handler, game, admin_ws, bob_ws)
         admin = game.get_player("Admin")
 
         # First disconnect
