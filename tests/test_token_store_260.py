@@ -13,6 +13,8 @@ import asyncio
 import sys
 from pathlib import Path
 
+import pytest
+
 _REPO_ROOT = Path(__file__).resolve().parent.parent
 sys.path.insert(0, str(_REPO_ROOT))
 
@@ -61,12 +63,19 @@ def test_save_overwrites_previous_value(tmp_path: Path) -> None:
     assert asyncio.run(_go()) == {"token": "second"}
 
 
-def test_load_corrupt_file_returns_none(tmp_path: Path) -> None:
-    """Invalid JSON on disk degrades to None rather than raising (so a
-    corrupt token file forces a clean re-bootstrap instead of crashing setup)."""
+def test_load_corrupt_file_raises(tmp_path: Path) -> None:
+    """Invalid JSON on disk RAISES rather than degrading to None (#873).
+
+    It used to degrade, and the degradation was the bug: ``None`` is the same
+    answer a fresh install gives, so a corrupt credential file reopened the
+    admin-bootstrap window. The caller
+    (``ConnectionManager.async_load_admin_token``) now catches this and keeps
+    the bootstrap shut instead.
+    """
     (tmp_path / "admin_token.json").write_text("{not valid json")
     store = _store(tmp_path)
-    assert asyncio.run(store.load()) is None
+    with pytest.raises(ValueError):
+        asyncio.run(store.load())
 
 
 def test_remove_deletes_file(tmp_path: Path) -> None:
