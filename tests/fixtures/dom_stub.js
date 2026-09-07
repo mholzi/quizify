@@ -197,11 +197,19 @@ const documentStub = {
     getElementById: function (id) {
         return Object.prototype.hasOwnProperty.call(registry, id) ? registry[id] : null;
     },
-    querySelector: function () { return null; },
+    // Document-wide lookup over every element the stub has made, using the
+    // same compound matcher the element-scoped one uses. `[data-x]` and
+    // `[data-x="0"]` are both real selectors in the player modules — the
+    // lightning buttons are found by the first and re-enabled one at a time
+    // by the second — so a stub that answered only the first left every
+    // button disabled and the test measuring nothing (#895).
+    querySelector: function (selector) {
+        return documentStub.querySelectorAll(selector)[0] || null;
+    },
     querySelectorAll: function (selector) {
-        const m = /^\[([a-zA-Z0-9:-]+)\]$/.exec(selector);
-        if (!m) return [];
-        return all.filter(function (node) { return node.hasAttribute(m[1]); });
+        return all.filter(function (node) {
+            return matchesSelector(node, selector);
+        });
     },
     createElement: function (tagName) { return makeElement(null, String(tagName).toUpperCase()); },
     addEventListener: function () {}

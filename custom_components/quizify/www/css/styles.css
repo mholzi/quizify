@@ -8270,6 +8270,116 @@ body:not(.is-admin) .pl-result { padding-bottom: 16px; }
 .lr-admin-chip--correct { background: var(--color-success-light); color: var(--color-success); }
 .lr-admin-chip--wrong   { background: rgba(214, 106, 106, 0.18); color: var(--color-error); }
 .lr-admin-chip--miss    { background: var(--color-bg-card-alt); color: var(--color-text-light); }
+
+/* ==========================================
+   Phone: three answers above the fold (#871)
+   ==========================================
+
+   Measured on real hardware during the v1.16.0-RC5 live test, iPhone 14
+   portrait — 390x844 CSS px, DPR 2 — with six players in the room:
+
+       ordinary question        #answer-buttons  top 506  bottom 714   fits
+       picture question         #answer-buttons  top 722  bottom 958   does not
+       final round (banner)     #answer-buttons  top 555  bottom 867   does not
+
+   Nothing here is a bug in one block. ``.game-container`` is a flex column,
+   so every child above ``#answers-container`` pushes the grid down by its own
+   height PLUS the 16 px column gap, and the two failing screens are simply
+   the two that have the most children: a 200 px picture banner on one, the
+   FINAL ROUND pill on the other, and on both a six-player chip row that wraps
+   to a second line (64 px rather than 30 px — the reading #870 measured as
+   the difference between a reloaded phone and its neighbour).
+
+   So the fix is charged across the stack rather than taken out of one block,
+   and only on phones — a tablet or a television has the height to spare and
+   keeps the roomier layout:
+
+       header row        8 -> 4 padding                 -8
+       question card    24 -> 8 padding (vertical)     -32
+       card container   16 -> 8 margin                  -8
+       timer row         8 -> 4 padding                 -8
+       chip row      two lines -> one, scrolling        -34
+       answer section   16 -> 8 margin                   -8
+                                                       ----
+                                                        -98  on every screen
+       column gap        16 -> 8   x4 gaps             -32   (x5, -40, when
+                                                              the pill is up)
+       picture banner   200 -> 110                     -90   picture rounds
+
+   which leaves, at 390x844 with six players and the grid heights the live
+   test measured (208 px without a picture, 236 px with one):
+
+       ordinary question        top 376  bottom 584    260 px spare
+       picture question         top 502  bottom 738    106 px spare
+       final round              top 417  bottom 625    219 px spare
+       picture + final round    top 543  bottom 779     65 px spare
+
+   The slack is deliberate rather than incidental: a wrapped answer costs
+   roughly 14 px per line, and the smallest of these margins is still a whole
+   60 px answer button, so a long answer set does not put the grid straight
+   back through the fold.
+
+   The last line is the one that decides the numbers. A picture question that
+   is also the final round is the tallest screen the game can build; it is not
+   one of the two that were measured, and at 1002 px it would have been the
+   worst of the three.
+*/
+@media (max-width: 480px) {
+    .game-container {
+        gap: var(--space-sm);
+    }
+
+    .game-header-compact {
+        padding: var(--space-xs) 0;
+    }
+
+    /* #183 calls this a banner preview with a tap-to-zoom button, and that is
+       exactly what it stays — the picture is still letterboxed by
+       ``object-fit: contain`` and the 44 px zoom target is unchanged. 200 px
+       claimed a quarter of the fold on the one screen that could least
+       afford it. */
+    .question-media {
+        height: 110px;
+    }
+
+    /* The same padding .card-section uses everywhere else on the page, so the
+       question card stops being the one card on a phone with 24 px of air
+       above and below its text. */
+    .question-card {
+        padding: var(--space-sm) var(--space-md);
+    }
+
+    .question-card-container {
+        margin-bottom: var(--space-sm);
+    }
+
+    .timer-container {
+        padding: var(--space-xs) 0;
+    }
+
+    /* One line that scrolls, instead of two that stack. The same treatment
+       the end screen's highlights row got in #778 and the theme tabs have:
+       chips do not shrink, the row scrolls, and a fade at the right edge says
+       there is more of it. Centring is dropped on purpose — a centred flex
+       row that overflows puts its first item out of reach of the scroller. */
+    .submitted-players {
+        flex-wrap: nowrap;
+        justify-content: flex-start;
+        overflow-x: auto;
+        -webkit-overflow-scrolling: touch;
+        scrollbar-width: none;
+        -webkit-mask-image: linear-gradient(to right, #000 calc(100% - 24px), transparent 100%);
+                mask-image: linear-gradient(to right, #000 calc(100% - 24px), transparent 100%);
+    }
+
+    .submitted-players::-webkit-scrollbar {
+        display: none;
+    }
+
+    .answer-section {
+        margin-top: var(--space-sm);
+    }
+}
 /* ==========================================
    Accessibility mode (#372)
    ==========================================

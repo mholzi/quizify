@@ -983,6 +983,17 @@ class QuizifyWebSocketHandler:
             self._conn.cancel_admin_disconnect()
             _LOGGER.info("Admin reconnected, cancelled disconnect timeout")
 
+        # #895c: and the deferred host-disconnect pause, for the same reason.
+        # ``_schedule_admin_pause`` is armed whenever the host's PLAYER socket
+        # closes during a live question, and the two paths that cancelled it
+        # again — ``_handle_join`` and the session reconnect — both look for a
+        # returning *player*. A host who leaves the game to open
+        # /quizify/admin comes back on an ADMIN socket instead, so nothing
+        # cancelled the timer: four seconds later every phone in the room was
+        # shown the "host disconnected" pause overlay while the host was
+        # sitting on the admin page, watching the same game.
+        self._cancel_admin_pause()
+
         admin_token = self._conn.get_or_create_admin_token()
 
         state = self._snapshot(game_state)

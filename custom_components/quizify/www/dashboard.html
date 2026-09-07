@@ -2836,9 +2836,16 @@
                     // #275: estimate reveal on reconnect — render the number
                     // line from the snapshot's estimate block.
                     if (msg.round_summary && msg.round_summary.question_type === 'estimate' && msg.round_summary.estimate) {
-                        els.questionText.textContent = msg.round_summary.question_text || '';
+                        // #895d: the number line was rebuilt and the frame
+                        // around it was not — the board kept the previous
+                        // round's counter and category, and the fun fact of
+                        // the round being revealed never appeared at all.
+                        // These are the same three writes the multiple-choice
+                        // branch has always made.
+                        renderRevealChrome(msg.round_summary, msg.round, msg.total_rounds);
                         if (els.answersGrid) els.answersGrid.innerHTML = '';
                         renderDashboardEstimateReveal(msg.round_summary.estimate);
+                        showRevealFunFact(msg.round_summary.fun_fact);
                     } else if (msg.round_summary && msg.round_summary.answers) {
                         renderRevealFromSnapshot(msg.round_summary, msg.round, msg.total_rounds);
                     }
@@ -2902,13 +2909,28 @@
         // the same markup as handleQuestionStarted, then applies the correct
         // highlight via the canonical original-order index. Reuses the live
         // reveal classes (.correct / .wrong / .revealed) so the look matches.
-        function renderRevealFromSnapshot(rs, round, totalRounds) {
+        //
+        // #895d split the frame (counter, category, question text) and the fun
+        // fact out of it, because the estimate branch of the same case needs
+        // both and had neither: it rendered the number line inside the
+        // previous round's furniture and never showed the fun fact at all.
+        function renderRevealChrome(rs, round, totalRounds) {
             els.funFact.classList.remove('visible');
             els.roundIndicator.textContent = t('dashboard.questionCounter',
                 'Question ' + round + ' / ' + totalRounds)
                 .replace('{current}', round).replace('{total}', totalRounds);
             els.questionCategory.textContent = rs.category || '';
             els.questionText.textContent = rs.question_text || '';
+        }
+
+        function showRevealFunFact(fact) {
+            if (!fact) return;
+            els.funFactText.textContent = fact;
+            setTimeout(function() { els.funFact.classList.add('visible'); }, 300);
+        }
+
+        function renderRevealFromSnapshot(rs, round, totalRounds) {
+            renderRevealChrome(rs, round, totalRounds);
             renderQuestionImage(rs.image_url);
             // The reveal is over — freeze the bar full (no countdown on reveal).
             els.timerFill.style.width = '0%';
@@ -2924,19 +2946,34 @@
                 ? rs.correct_answer_index
                 : (typeof rs.correct_answer_index_original === 'number')
                     ? rs.correct_answer_index_original : -1;
+            // #895d: the vote bars, which this path drew as bare tiles with no
+            // distribution markup in them at all — so a television rebuilt
+            // from a snapshot showed the correct answer and nothing about what
+            // the room had picked. Same markup the live question grid embeds
+            // up front (#151), same canonical index space, filled from the
+            // snapshot's own `answer_distribution`.
+            var distByIdx = {};
+            (rs.answer_distribution || []).forEach(function(d) {
+                if (d && typeof d.index === 'number') distByIdx[d.index] = d;
+            });
             els.answersGrid.innerHTML = answers.map(function(answer, i) {
                 var text = (answer && typeof answer === 'object') ? answer.text : answer;
                 var cls = 'dashboard-answer revealed ' + (i === correctIdx ? 'correct' : 'wrong');
+                var entry = distByIdx[i];
+                var pct = (entry && typeof entry.percent === 'number') ? entry.percent : 0;
                 return '<div class="' + cls + '" data-index="' + i + '">' +
                     '<span class="answer-label">' + (labels[i] || '') + '</span>' +
                     '<span class="answer-text">' + escapeHtml(text) + '</span>' +
+                    '<div class="dashboard-answer-distribution" aria-hidden="true">' +
+                        '<div class="dashboard-answer-bar">' +
+                            '<div class="dashboard-answer-bar-fill" style="width: ' + pct + '%"></div>' +
+                        '</div>' +
+                        '<span class="dashboard-answer-percent">' + pct + '%</span>' +
+                    '</div>' +
                     '</div>';
             }).join('');
 
-            if (rs.fun_fact) {
-                els.funFactText.textContent = rs.fun_fact;
-                setTimeout(function() { els.funFact.classList.add('visible'); }, 300);
-            }
+            showRevealFunFact(rs.fun_fact);
         }
 
         // ---- Lightning (#296) — mirrors admin.js handlers for the TV. ----

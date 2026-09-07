@@ -317,6 +317,33 @@ class RoundMessageBuilder:
                 lq = dict(lightning["question"])
                 lq["answers"] = [q.answers[i].text for i in shuffle]
                 lightning["question"] = lq
+                # #895b: whether THIS phone has already answered the question
+                # it is being handed back, and which of its own buttons it
+                # tapped. Without it a reloaded player got three live buttons
+                # for a question they had already answered; the second tap is
+                # refused in silence by ``record_answer``'s one-answer rule
+                # (websocket.py, "rejected … — stay silent") while the phone
+                # had already flipped itself to "Answered". The projection is
+                # the only place that can say it: the canonical block is built
+                # for the television, which has no "you".
+                #
+                # Team mode is deliberately excluded: there the answer
+                # belongs to the team and any member may still change it
+                # until the clock stops (#552), so a returning member must
+                # NOT come back to locked buttons. The live flow tells them
+                # what stands through ``lightning_team_answer``.
+                is_solo = lr.entrant_for(player.name) == player.name
+                standing = lr.standing_answer(player.name) if is_solo else None
+                lightning["you_answered"] = standing is not None
+                you_index = None
+                if standing is not None and standing.answer_index is not None:
+                    # Their own button order, not the canonical one — the same
+                    # frame the answers above ride in.
+                    try:
+                        you_index = shuffle.index(standing.answer_index)
+                    except ValueError:
+                        you_index = None
+                lightning["you_answer_index"] = you_index
                 out["lightning"] = lightning
 
         if out.get("hot_seat"):
