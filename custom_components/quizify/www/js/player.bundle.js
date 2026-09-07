@@ -5309,6 +5309,13 @@
 
         panel.classList.remove('hidden', 'wager-panel--collapsed');
         _paintWagerPanel(data.player_score || 0);
+
+        // #876: this phone has already bet — a reload, not a fresh window.
+        // Painting stops at a live 25% slider, which invites a second submit
+        // that silently overwrites the first, and leaves `submitted` false so
+        // `_showWagerBadge` hides the badge the phone that stayed connected
+        // keeps. Same shape as the Hot Seat's `lockBidUi` on a reconnect.
+        if (data.you_wagered != null) _lockWagerUi(data.you_wagered);
     }
 
     /**
@@ -5333,6 +5340,40 @@
         panel.classList.add('wager-panel--collapsed');
         var titleEl = document.getElementById('wager-panel-title');
         if (titleEl) titleEl.textContent = t('wager.locked', { pct: _wagerState.pct });
+    }
+
+    /**
+     * Collapse the betting panel onto a placed bet (#876).
+     *
+     * The one place the "you have bet, and this is what it was" state is
+     * built, so the phone that tapped Submit and the phone that reloaded onto
+     * its own standing bet end up identical — the drift #858 is about, on the
+     * one screen where the two halves disagreeing costs points.
+     */
+    function _lockWagerUi(pct) {
+        _wagerState.submitted = true;
+        _wagerState.pct = pct;
+
+        var t = (window.QuizifyI18n && window.QuizifyI18n.t) || function (k) { return k; };
+        var panel = document.getElementById('wager-panel');
+        var slider = document.getElementById('wager-slider');
+        var submitBtn = document.getElementById('wager-submit-btn');
+        var titleEl = document.getElementById('wager-panel-title');
+        var hintEl = document.getElementById('wager-panel-hint');
+        var timeoutNoteEl = document.getElementById('wager-panel-timeout-note');
+
+        if (slider) {
+            slider.value = String(pct);
+            slider.disabled = true;
+        }
+        if (submitBtn) submitBtn.disabled = true;
+        // Collapse into a "wager: 25%" badge. The player now waits for the
+        // rest of the room — the question arrives on its own once the window
+        // closes, so there is nothing else to do here.
+        if (panel) panel.classList.add('wager-panel--collapsed');
+        if (titleEl) titleEl.textContent = t('wager.locked', { pct: pct });
+        if (hintEl) hintEl.textContent = t('wager.waitingForOthers');
+        if (timeoutNoteEl) timeoutNoteEl.textContent = '';
     }
 
     function _paintWagerPanel(currentScore) {
@@ -5377,20 +5418,10 @@
             submitBtn.onclick = function () {
                 if (_wagerState.submitted) return;
                 var pct = parseInt(slider.value, 10);
-                _wagerState.submitted = true;
-                _wagerState.pct = pct;
-                submitBtn.disabled = true;
-                if (slider) slider.disabled = true;
+                _lockWagerUi(pct);
                 // Send via the player-core send() function.
                 var send = window.QuizifyPlayer && window.QuizifyPlayer.send;
                 if (send) send('submit_wager', { wager: pct });
-                // Collapse into a "wager: 25%" badge. The player now waits for
-                // the rest of the room — the question arrives on its own once
-                // the window closes, so there is nothing else to do here.
-                panel.classList.add('wager-panel--collapsed');
-                if (titleEl) titleEl.textContent = t('wager.locked', { pct: pct });
-                if (hintEl) hintEl.textContent = t('wager.waitingForOthers');
-                if (timeoutNoteEl) timeoutNoteEl.textContent = '';
             };
         }
     }
@@ -6814,17 +6845,11 @@
                 // window. The snapshot carries category and the room's
                 // remaining seconds — never the question text, so a phone that
                 // drops mid-window cannot come back knowing what it is
-                // betting on. The bank comes from the leaderboard, which the
-                // snapshot already carries.
+                // betting on. #876: the bank and this phone's own standing bet
+                // ride along too, so the window comes back as the player left
+                // it rather than as a fresh slider over a bank of zero.
                 if (msg.wager) {
-                    handleWagerWindow({
-                        round_num: msg.round,
-                        total_rounds: msg.total_rounds,
-                        category: msg.wager.category,
-                        difficulty: msg.wager.difficulty,
-                        window_duration: msg.wager.window_remaining,
-                        player_score: _myScore(msg)
-                    });
+                    handleWagerWindow(wagerWindowFromSnapshot(msg));
                 } else {
                     pu.showView('game-view');
                 }
@@ -7090,6 +7115,40 @@
         live.total_rounds = msg.total_rounds;
         live.player_score = _myScore(msg);
         return live;
+    }
+
+    /**
+     * A snapshot's ``wager`` block, in the shape ``wager_window`` has (#876).
+     *
+     * The betting window is the one screen a reload used to land on wrong in
+     * two ways at once, and both are numbers the block now carries:
+     *
+     * * ``own_bank`` — the bank the slider prices the bet against. This used
+     *   to be ``_myScore(msg)``, a lookup of the player's NAME in the
+     *   snapshot's leaderboard; in team mode those rows are teams, so a member
+     *   matched nothing, read 0, and was shown "50% of 0" on the round that
+     *   pays double. Kept as the fallback for a server too old to send the
+     *   field, where a solo game gets the same answer either way.
+     * * ``you_wagered`` — the bet this phone has already placed, or null.
+     *   Without it the window comes back as a live 25% slider over a stake
+     *   the server is already holding: a second submit overwrites the first
+     *   silently, and the "Wager: 50%" badge never appears once the question
+     *   starts, because the phone believes it never bet.
+     *
+     * The window's own countdown is the room's remaining seconds, never a
+     * fresh one — a reconnect must not buy extra thinking time (#656).
+     */
+    function wagerWindowFromSnapshot(msg) {
+        var w = msg.wager || {};
+        return {
+            round_num: msg.round,
+            total_rounds: msg.total_rounds,
+            category: w.category,
+            difficulty: w.difficulty,
+            window_duration: w.window_remaining,
+            player_score: (w.own_bank != null) ? w.own_bank : _myScore(msg),
+            you_wagered: (w.you_wagered != null) ? w.you_wagered : null
+        };
     }
 
     /**

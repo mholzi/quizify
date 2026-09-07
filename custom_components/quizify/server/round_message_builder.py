@@ -279,6 +279,9 @@ class RoundMessageBuilder:
         * ANSWER_REVEAL: replace the nested ``round_summary`` with the same
           FLAT shape the live ``round_summary`` broadcast uses (incl.
           ``all_answers``), which the reveal view reads as flat fields.
+        * WAGER_ACTIVE: add the recipient's own bank and their own standing
+          bet to the ``wager`` block (#876), neither of which the
+          player-agnostic block may carry.
 
         The caller (``_handle_join`` / ``_handle_reconnect``) knows the
         recipient identity; admin/dashboard recipients keep the canonical
@@ -318,6 +321,33 @@ class RoundMessageBuilder:
                 lq["answers"] = [q.answers[i].text for i in shuffle]
                 lightning["question"] = lq
                 out["lightning"] = lightning
+
+        if phase == GamePhase.WAGER_ACTIVE.value and out.get("wager"):
+            # #876: the canonical block says what the room is betting ON —
+            # category, difficulty, the seconds the window has left. It cannot
+            # say what THIS phone already staked, and it must not: the admin
+            # and the TV see the tally, never an amount (#656). So the two
+            # per-player numbers are added here, in the recipient's frame.
+            #
+            # ``own_bank`` because the client used to read the bank off the
+            # snapshot's leaderboard by NAME, and in team mode those rows are
+            # TEAMS (#365/#804) — a member found no row of their own, took 0,
+            # and was offered "50% of nothing" on the one round that pays
+            # double. Resolved through ``get_ranked_participant_for``, the
+            # same row the live ``wager_window`` prices the slider against and
+            # the same one the settlement pays.
+            #
+            # ``you_wagered`` because a bet already placed has to survive a
+            # reload: without it ``renderWagerWindow`` rebuilds a live 25%
+            # slider over a stake the server is already holding, and the
+            # "Wager: 50%" badge is gone once the question starts.
+            participant = game_state.get_ranked_participant_for(player.name)
+            wager = dict(out["wager"])
+            wager["own_bank"] = participant.score if participant is not None else 0
+            wager["you_wagered"] = (
+                participant.wager if participant is not None else None
+            )
+            out["wager"] = wager
 
         if out.get("hot_seat"):
             # #664: the canonical block is built for the admin and the TV. A

@@ -684,17 +684,11 @@
                 // window. The snapshot carries category and the room's
                 // remaining seconds — never the question text, so a phone that
                 // drops mid-window cannot come back knowing what it is
-                // betting on. The bank comes from the leaderboard, which the
-                // snapshot already carries.
+                // betting on. #876: the bank and this phone's own standing bet
+                // ride along too, so the window comes back as the player left
+                // it rather than as a fresh slider over a bank of zero.
                 if (msg.wager) {
-                    handleWagerWindow({
-                        round_num: msg.round,
-                        total_rounds: msg.total_rounds,
-                        category: msg.wager.category,
-                        difficulty: msg.wager.difficulty,
-                        window_duration: msg.wager.window_remaining,
-                        player_score: _myScore(msg)
-                    });
+                    handleWagerWindow(wagerWindowFromSnapshot(msg));
                 } else {
                     pu.showView('game-view');
                 }
@@ -960,6 +954,40 @@
         live.total_rounds = msg.total_rounds;
         live.player_score = _myScore(msg);
         return live;
+    }
+
+    /**
+     * A snapshot's ``wager`` block, in the shape ``wager_window`` has (#876).
+     *
+     * The betting window is the one screen a reload used to land on wrong in
+     * two ways at once, and both are numbers the block now carries:
+     *
+     * * ``own_bank`` — the bank the slider prices the bet against. This used
+     *   to be ``_myScore(msg)``, a lookup of the player's NAME in the
+     *   snapshot's leaderboard; in team mode those rows are teams, so a member
+     *   matched nothing, read 0, and was shown "50% of 0" on the round that
+     *   pays double. Kept as the fallback for a server too old to send the
+     *   field, where a solo game gets the same answer either way.
+     * * ``you_wagered`` — the bet this phone has already placed, or null.
+     *   Without it the window comes back as a live 25% slider over a stake
+     *   the server is already holding: a second submit overwrites the first
+     *   silently, and the "Wager: 50%" badge never appears once the question
+     *   starts, because the phone believes it never bet.
+     *
+     * The window's own countdown is the room's remaining seconds, never a
+     * fresh one — a reconnect must not buy extra thinking time (#656).
+     */
+    function wagerWindowFromSnapshot(msg) {
+        var w = msg.wager || {};
+        return {
+            round_num: msg.round,
+            total_rounds: msg.total_rounds,
+            category: w.category,
+            difficulty: w.difficulty,
+            window_duration: w.window_remaining,
+            player_score: (w.own_bank != null) ? w.own_bank : _myScore(msg),
+            you_wagered: (w.you_wagered != null) ? w.you_wagered : null
+        };
     }
 
     /**
