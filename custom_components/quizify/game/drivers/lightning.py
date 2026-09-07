@@ -19,10 +19,14 @@ from __future__ import annotations
 import asyncio
 import logging
 import math
-from typing import Any
+from typing import TYPE_CHECKING
 
 from ..state import GamePhase
 from .protocols import LightningBroadcaster
+
+if TYPE_CHECKING:
+    from ..lightning import LightningRound
+    from ..state import QuizifyGameState
 
 _LOGGER = logging.getLogger(__name__)
 
@@ -48,7 +52,7 @@ class LightningDriver:
         self._splash_hold = splash_hold
 
     async def run(
-        self, game_state: Any, *, auto_dismiss_splash: bool = False
+        self, game_state: QuizifyGameState, *, auto_dismiss_splash: bool = False
     ) -> None:
         """Run the whole mode to its recap.
 
@@ -67,7 +71,7 @@ class LightningDriver:
             _LOGGER.exception("Lightning loop crashed")
 
     async def _run(
-        self, game_state: Any, *, auto_dismiss_splash: bool
+        self, game_state: QuizifyGameState, *, auto_dismiss_splash: bool
     ) -> None:
         if auto_dismiss_splash:
             # Hold the intro splash on its own, then advance out of it.
@@ -102,7 +106,9 @@ class LightningDriver:
                 await self._out.send_lightning_recap(game_state)
                 return
 
-    async def _wait_out_question(self, game_state: Any, lr: Any) -> bool:
+    async def _wait_out_question(
+        self, game_state: QuizifyGameState, lr: LightningRound
+    ) -> bool:
         """Wait for the fixed window or for everyone to answer.
 
         Returns False when the phase left LIGHTNING mid-wait, i.e. the caller
