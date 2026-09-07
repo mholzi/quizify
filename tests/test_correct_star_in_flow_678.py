@@ -15,17 +15,13 @@ being stranded on a third line.
 from __future__ import annotations
 
 import re
-from pathlib import Path
 
-REPO = Path(__file__).resolve().parent.parent
-DASHBOARD = REPO / "custom_components" / "quizify" / "www" / "dashboard.html"
+from tests.conftest import dashboard_css
 
 
 def _css() -> str:
-    html = DASHBOARD.read_text(encoding="utf-8")
-    blocks = re.findall(r"<style[^>]*>(.*?)</style>", html, re.DOTALL)
-    assert blocks, "dashboard.html is expected to carry its CSS inline"
-    return re.sub(r"/\*.*?\*/", "", "\n".join(blocks), flags=re.DOTALL)
+    # #829/#880: the television's code and styles are their own files now.
+    return re.sub(r"/\*.*?\*/", "", dashboard_css(), flags=re.DOTALL)
 
 
 def _rule(css: str, selector: str) -> str:

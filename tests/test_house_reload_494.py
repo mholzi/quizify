@@ -59,6 +59,16 @@ from custom_components.quizify.const import (  # noqa: E402
 pytestmark = pytest.mark.usefixtures("enable_custom_integrations")
 
 
+def _settings(hass):
+    """The one :class:`HouseSettings` all five house consumers read (#789).
+
+    Reached the way the integration itself reaches it — off the public
+    ``AppContext.house`` — so these assertions read the shared object rather
+    than a private accessor on whichever consumer happens to be handy.
+    """
+    return hass.data[DOMAIN]["ctx"].house.settings
+
+
 @pytest.fixture(autouse=True)
 def _stub_frontend_panel():
     """Patch the frontend panel helpers (the component can't set up under test)."""
@@ -199,8 +209,9 @@ async def test_reload_preserves_house_panel_config(http_hass: HomeAssistant) -> 
     assert new_sfx is old_sfx
     assert new_ev is old_ev
 
-    # Their panel config is intact.
-    assert new_pl._master_enabled is True
+    # Their panel config is intact — the master lives on the object all three
+    # of them read (#789), so there is one value to check, not three copies.
+    assert _settings(hass).master_enabled is True
     assert new_pl._light_question is False
     assert new_pl._light_streak is False
     assert new_pl._light_countdown is True  # untouched toggle keeps its default
@@ -208,7 +219,6 @@ async def test_reload_preserves_house_panel_config(http_hass: HomeAssistant) -> 
     assert new_pl._active_entity_ids == ["light.from_panel"]
     assert new_pl._active_finale_scene == "scene.from_panel"
 
-    assert new_sfx._master_enabled is True
     assert new_sfx._cue_enabled == {
         "correct": False,
         "wrong": True,
@@ -218,7 +228,6 @@ async def test_reload_preserves_house_panel_config(http_hass: HomeAssistant) -> 
     assert new_sfx._active_media_player == "media_player.from_panel"
 
     # The emitter's master survived too — the bus keeps firing for automations.
-    assert new_ev._master_enabled is True
     assert new_ev.is_configured is True
 
     # The WS handler still points at the live consumers. It used to have to be
@@ -270,7 +279,7 @@ async def test_reload_preserves_the_events_only_preset(
     assert data["event_emitter"].is_configured is True
     # … while every one of Quizify's own house effects stays off.
     pl = data["party_lights"]
-    assert pl._master_enabled is True
+    assert _settings(hass).master_enabled is True
     assert not any(
         (
             pl._light_question,
@@ -302,10 +311,8 @@ async def test_reload_preserves_a_panel_master_switched_off(
     await hass.async_block_till_done()
 
     data = hass.data[DOMAIN]
-    assert data["event_emitter"]._master_enabled is False
+    assert _settings(hass).master_enabled is False
     assert data["event_emitter"].is_configured is False
-    assert data["party_lights"]._master_enabled is False
-    assert data["sound_effects"]._master_enabled is False
 
 
 async def test_options_master_toggle_still_lands_when_panel_never_used(
@@ -323,8 +330,7 @@ async def test_options_master_toggle_still_lands_when_panel_never_used(
     entry = await _setup(hass, **{CONF_PARTY_LIGHT_ENTITIES: ["light.x"]})
     data = hass.data[DOMAIN]
     assert data["event_emitter"].is_configured is False
-    assert data["party_lights"]._master_enabled is False
-    assert data["sound_effects"]._master_enabled is False
+    assert _settings(hass).master_enabled is False
 
     # Options UI: turn house events ON. No panel/configure() ever happened.
     hass.config_entries.async_update_entry(
@@ -334,12 +340,9 @@ async def test_options_master_toggle_still_lands_when_panel_never_used(
 
     data = hass.data[DOMAIN]
     assert data["event_emitter"].is_configured is True
-    assert data["party_lights"]._master_enabled is True
-    assert data["sound_effects"]._master_enabled is True
+    assert _settings(hass).master_enabled is True
     # …and the override genuinely stayed unset (not coerced to a hard False).
-    assert data["party_lights"]._enabled_override is None
-    assert data["event_emitter"]._enabled_override is None
-    assert data["sound_effects"]._enabled_override is None
+    assert _settings(hass).enabled_override is None
 
 
 async def test_reload_rewires_entity_overrides_over_new_config_entities(

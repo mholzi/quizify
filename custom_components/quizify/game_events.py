@@ -10,8 +10,9 @@ The emitter mirrors :class:`~custom_components.quizify.lights.QuizifyPartyLights
 it subscribes to ``QuizifyGameState`` state callbacks for the phase-driven
 milestones (game start / finale / winner) and is called from the WebSocket
 dispatch points for the richer per-event milestones (question shown, reveal,
-streak, game ended) where the full round data is already assembled — exactly
-like the ``_notify_tts_*`` hooks next to which these fire.
+streak, game ended) where the full round data is already assembled — the
+handler's house beats (``question_shown``, ``reveal``, …) fan out to the
+narrator and to this emitter from one place each.
 
 Everything no-ops cleanly when there is no Home Assistant instance (the
 standalone dev server has no event bus), matching
@@ -71,9 +72,9 @@ class QuizifyEventEmitter:
     """Fires ``hass.bus`` events at game milestones (#366).
 
     Constructed per config entry; attaches a state callback for the phase-driven
-    milestones and exposes ``notify_*`` forwarders the WS handler calls at the
-    same points as the ``_notify_tts_*`` hooks. A no-op everywhere when there is
-    no HA instance (standalone dev server).
+    milestones and exposes ``notify_*`` forwarders the WS handler's house
+    beats call alongside the narrator. A no-op everywhere when there is no HA
+    instance (standalone dev server).
     """
 
     def __init__(
@@ -107,27 +108,12 @@ class QuizifyEventEmitter:
         self._time_running_out_fired: bool = False
 
     @property
-    def _enabled(self) -> bool:
-        """The config-entry master (CONF_HOUSE_EVENTS_ENABLED), read live."""
-        return self._settings.house_enabled
-
-    @property
-    def _enabled_override(self) -> bool | None:
-        """The panel's tri-state master; ``None`` = the panel never set one."""
-        return self._settings.enabled_override
-
-    @property
-    def _master_enabled(self) -> bool:
-        """The effective master: panel override if set, else the config entry."""
-        return self._settings.master_enabled
-
-    @property
     def is_configured(self) -> bool:
         # Configured == the master toggle is on AND we have a bus to fire on.
         # Unlike lights/TTS there is no per-entry entity to gate on, but the
         # host must still opt in via CONF_HOUSE_EVENTS_ENABLED (default off) —
         # or via the admin panel's runtime master (#494 P4).
-        return self._master_enabled and self._hass is not None
+        return self._settings.master_enabled and self._hass is not None
 
     def attach(self) -> None:
         """Subscribe to game-state phase transitions. Idempotent."""
@@ -216,7 +202,7 @@ class QuizifyEventEmitter:
 
     # ------------------------------------------------------------------
     # Per-event milestones (WS-dispatch path) — thin forwarders the WS
-    # handler calls next to its _notify_tts_* hooks.
+    # handler's house beats call alongside the narrator's announce_* hooks.
     # ------------------------------------------------------------------
 
     def notify_question_shown(
@@ -348,7 +334,7 @@ class QuizifyEventEmitter:
         # forwarders): the master toggle is enforced here, so an off emitter
         # fires nothing regardless of which milestone triggered it. Reads the
         # EFFECTIVE master so the admin panel's runtime override lands (#494 P4).
-        if not self._master_enabled:
+        if not self._settings.master_enabled:
             return
         hass = self._hass
         if hass is None:

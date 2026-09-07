@@ -23,7 +23,7 @@ from typing import TYPE_CHECKING, Any
 from .game import tts_phrases
 from .game.state import GamePhase, QuizifyGameState
 from .ha_service import fire_and_forget_service
-from .house_settings import HouseSettings
+from .house_settings import HouseSettings, clean_str
 
 if TYPE_CHECKING:
     from homeassistant.core import HomeAssistant
@@ -164,8 +164,8 @@ class QuizifyTTSAnnouncer:
         self._announce_join = bool(announce_join)
         self._announce_countdown = bool(announce_countdown)
         self._announce_milestone = bool(announce_milestone)
-        self._tts_entity_override = (tts_entity or "").strip() or None
-        self._media_player_override = (media_player or "").strip() or None
+        self._tts_entity_override = clean_str(tts_entity)
+        self._media_player_override = clean_str(media_player)
         self._previous_leader = None
 
     # There is deliberately no export/restore_runtime_config pair any more

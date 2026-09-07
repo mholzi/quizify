@@ -1,7 +1,7 @@
 """Guard the #376 TV-legibility fix for the dashboard reveal/standings text.
 
-The dashboard is a self-contained ``www/dashboard.html`` with an inline
-``<style>`` block (it does NOT load styles.css). Several reveal/standings
+The dashboard reads its own stylesheet, ``www/css/tv.css`` (#880) — never the
+phone's ``styles.css``. Several reveal/standings
 elements used to be pinned at small, non-scaling sizes (~1rem / 13-14px /
 0.85rem) while the question already scaled with ``clamp(..., vw, ...)`` — so
 they were unreadable from a couch 2-3m away. This test locks in that those
@@ -12,10 +12,9 @@ silently regress them back to a bare small px/rem.
 from __future__ import annotations
 
 import re
-from pathlib import Path
 
-REPO = Path(__file__).resolve().parent.parent
-DASHBOARD = REPO / "custom_components" / "quizify" / "www" / "dashboard.html"
+# #829/#880: the television's code and styles are their own files now.
+from tests.conftest import dashboard_css
 
 
 def _rule(css: str, selector: str) -> str:
@@ -35,11 +34,18 @@ def _rule(css: str, selector: str) -> str:
     with the paragraph above it attached.
     """
     css = re.sub(r"/\*.*?\*/", "", css, flags=re.DOTALL)
+    found = None
     for match in re.finditer(r"(?:^|[{};])\s*([^{};]*?)\s*\{", css, re.MULTILINE):
         if match.group(1).strip() == selector.rstrip(" {").strip():
             start = css.index("{", match.end() - 1)
-            return css[start + 1 : css.index("}", start)]
-    raise AssertionError(f"no rule found for {selector}")
+            # The *last* exact match, because that is the one the cascade
+            # resolves to: since #880 the TV's sheet appends 10-tv.css after
+            # the shared modules, and several of these selectors also carry a
+            # non-TV base rule earlier in the file.
+            found = css[start + 1 : css.index("}", start)]
+    if found is None:
+        raise AssertionError(f"no rule found for {selector}")
+    return found
 
 
 # Selectors that must scale for TV couch legibility (#376).
@@ -54,9 +60,9 @@ SCALED_SELECTORS = (
 
 
 def test_reveal_standings_text_scales_with_clamp() -> None:
-    html = DASHBOARD.read_text("utf-8")
+    css = dashboard_css()
     for selector in SCALED_SELECTORS:
-        block = _rule(html, selector)
+        block = _rule(css, selector)
         assert "font-size:" in block, f"{selector} lost its font-size (#376)"
         assert "clamp(" in block and "vw" in block, (
             f"{selector} must use a clamp()/vw fluid font-size for TV legibility (#376), "
@@ -68,10 +74,10 @@ def test_reveal_standings_font_floors_are_legible() -> None:
     """The clamp() lower bound must be a >=15px pixel floor (readable on TV)."""
     import re
 
-    html = DASHBOARD.read_text("utf-8")
+    css = dashboard_css()
     floor_re = re.compile(r"font-size:\s*clamp\(\s*([0-9.]+)px")
     for selector in SCALED_SELECTORS:
-        block = _rule(html, selector)
+        block = _rule(css, selector)
         m = floor_re.search(block)
         assert m is not None, f"{selector} clamp() floor must be an explicit px value (#376)"
         assert float(m.group(1)) >= 15.0, (

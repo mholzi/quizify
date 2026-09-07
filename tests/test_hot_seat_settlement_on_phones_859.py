@@ -126,7 +126,13 @@ def test_the_settlement_uses_strings_that_already_exist() -> None:
     """Every line is one of the strings the television already prints, or one
     the phone already prints elsewhere. A settlement is a bad moment to
     discover an untranslated key on two of three languages."""
-    source = _without_comments(_HOTSEAT.read_text("utf-8"))
+    # #787: the three result keys are picked in render-shared.js now, because
+    # all three screens have to tell the room the same story; the rest of the
+    # settlement's strings are still the phone's own.
+    source = _without_comments(
+        _HOTSEAT.read_text("utf-8")
+        + (_HOTSEAT.parent / "render-shared.js").read_text("utf-8")
+    )
     settlement_keys = {
         "hotSeat.resultRight",
         "hotSeat.resultWrong",

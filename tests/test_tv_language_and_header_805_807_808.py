@@ -42,27 +42,32 @@ from pathlib import Path
 
 import pytest
 
-_REPO_ROOT = Path(__file__).resolve().parent.parent
-_DASHBOARD = (
-    _REPO_ROOT / "custom_components" / "quizify" / "www" / "dashboard.html"
-)
+from tests.conftest import dashboard_css, dashboard_script
 
-SOURCE = _DASHBOARD.read_text(encoding="utf-8")
+_REPO_ROOT = Path(__file__).resolve().parent.parent
+
+# #829/#880: the television's code and styles are their own files now.
+SOURCE = dashboard_script()
+STYLES = dashboard_css()
 
 
 def _fn_body(name: str) -> str:
-    """The body of a top-level (8-space indented) function in dashboard.html."""
+    """The body of a top-level (4-space indented) function in dashboard.js."""
     marker = f"function {name}("
     assert marker in SOURCE, f"{name}() is gone"
     tail = SOURCE.split(marker, 1)[1]
-    return tail.split("\n        }", 1)[0]
+    return tail.split("\n    }", 1)[0]
 
 
 def _rule_body(selector: str) -> str:
-    """The top-level style rule for ``selector`` — not a media-query override."""
+    """The top-level style rule for ``selector`` — not a media-query override.
+
+    Top level is column zero in ``css/tv.css``; a media-query override is
+    indented inside its block.
+    """
     match = re.search(
-        r"^        " + re.escape(selector) + r" \{(.*?)^        \}",
-        SOURCE,
+        r"^" + re.escape(selector) + r" \{(.*?)^\}",
+        STYLES,
         re.S | re.M,
     )
     assert match, f"{selector} has no top-level rule"

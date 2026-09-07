@@ -255,12 +255,13 @@
     font-size: 2.25rem;
 }
 
-/* Legacy .podium-avatar slot (rendered by admin.js renderPodium).
-   We keep the markup hook but hide it — the number on the plank
-   is the medal now ("numbers speak"). */
-.podium-avatar {
-    display: none;
-}
+/* `.podium-avatar` used to be hidden here, with a comment saying the slot was
+   admin.js's. It had not been for a long time: admin.js stopped rendering the
+   element, the television started, and this rule — written for the phone's
+   sheet, which the television also loaded — quietly hid the TV's medal. The
+   TV's own rule set font-size only, so `display: none` won. It is the fifth
+   instance of the bleed #880 is about, and the one that was live. Removed:
+   nothing renders a `.podium-avatar` that should be hidden. */
 
 /* ==========================================
    Podium Reborn — player phone only (Variant B, approved 2026-06-09)

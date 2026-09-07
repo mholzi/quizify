@@ -98,6 +98,7 @@ async def async_setup_entry(hass: HomeAssistant, entry: ConfigEntry) -> bool:
     )
     from .game.state import QuizifyGameState  # noqa: PLC0415
     from .house import build_house_consumers  # noqa: PLC0415
+    from .house_settings import clean_str  # noqa: PLC0415
     from .question_stats import QuestionStatsService  # noqa: PLC0415
     from .runtime import HARuntime  # noqa: PLC0415
     from .server import STATIC_URL_PREFIX, WS_PATH, WWW_DIR  # noqa: PLC0415
@@ -311,9 +312,7 @@ async def async_setup_entry(hass: HomeAssistant, entry: ConfigEntry) -> bool:
     options = entry.options
     # Lobby music plays server-side on the configured media_player while the
     # game waits in the lobby. Empty/unset → the playback service stays inert.
-    game_state.lobby_music_url = (
-        (options.get(CONF_LOBBY_MUSIC_URL) or "").strip() or None
-    )
+    game_state.lobby_music_url = clean_str(options.get(CONF_LOBBY_MUSIC_URL))
     # Freshness engine (#436): thread the "avoid recent repeats" toggle onto the
     # question bank so build_pool can hard-exclude recently shown questions
     # (guarded) instead of merely oldest-first ordering. Default preserves the
@@ -355,21 +354,17 @@ async def async_setup_entry(hass: HomeAssistant, entry: ConfigEntry) -> bool:
         _hass: HomeAssistant, updated_entry: ConfigEntry
     ) -> None:
         opts = updated_entry.options  # always a MappingProxyType, never None
-        game_state.lobby_music_url = (
-            (opts.get(CONF_LOBBY_MUSIC_URL) or "").strip() or None
-        )
+        game_state.lobby_music_url = clean_str(opts.get(CONF_LOBBY_MUSIC_URL))
         # Freshness engine (#436) — re-apply the toggle live so flipping it in
         # the options UI takes effect on the next game without an HA restart.
         game_state.question_bank.set_avoid_recent_repeats(
             bool(opts.get(CONF_AVOID_RECENT_REPEATS, DEFAULT_AVOID_RECENT_REPEATS))
         )
         # Toggle the community-pack submit feature live (#180) — no HA restart.
-        ctx.community_submit_url = (
-            opts.get(CONF_COMMUNITY_SUBMIT_URL) or ""
-        ).strip() or None
-        ctx.community_submit_secret = (
-            opts.get(CONF_COMMUNITY_SUBMIT_SECRET) or ""
-        ).strip() or None
+        ctx.community_submit_url = clean_str(opts.get(CONF_COMMUNITY_SUBMIT_URL))
+        ctx.community_submit_secret = clean_str(
+            opts.get(CONF_COMMUNITY_SUBMIT_SECRET)
+        )
         # The whole house-consumer reload path (#789). This used to be 100
         # lines: export each consumer's runtime config, detach it, rebuild it
         # from the fresh options with a duplicate of every constructor call

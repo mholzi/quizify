@@ -76,7 +76,10 @@ _WWW = _CC / "www"
 _JS = _WWW / "js"
 _I18N = _WWW / "i18n"
 _CORE = _JS / "player-core.js"
-_DASH = _WWW / "dashboard.html"
+# #911/#829: the television's script left dashboard.html for a file of its
+# own. Same code, four spaces shallower now that it is not inside an
+# inline <script> — which is what the slice markers below track.
+_DASH = _JS / "dashboard.js"
 _STUB = Path(__file__).resolve().parent / "fixtures" / "dom_stub.js"
 
 _NEEDS_NODE = pytest.mark.skipif(
@@ -612,18 +615,18 @@ def test_the_distribution_counts_one_vote_per_team() -> None:
     )
 
 
-#: The snapshot reveal renderers, lifted whole out of the television page.
+#: The snapshot reveal renderers, lifted whole out of the television's script.
 _TV_SLICE = (
-    "        // #296: rebuild the reveal question view from the snapshot.",
-    "        // ---- Lightning (#296)",
+    "    // #296: rebuild the reveal question view from the snapshot.",
+    "    // ---- Lightning (#296)",
 )
 
 #: …and the ``ANSWER_REVEAL`` case that chooses between them, wrapped so it
 #: can be called. Sliced rather than paraphrased: the estimate branch's bug
 #: was in the case body, not in a function.
 _TV_CASE = (
-    "                case 'ANSWER_REVEAL':",
-    "                case 'HOT_SEAT_AUCTION':",
+    "            case 'ANSWER_REVEAL':",
+    "            case 'HOT_SEAT_AUCTION':",
 )
 
 _TV = """

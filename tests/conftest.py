@@ -283,3 +283,51 @@ def without_comments(source: str) -> str:
 # this file as the module ``tests.conftest``, and the ``sys.path`` insert above
 # puts the repo root in front, so that spelling resolves under both the current
 # pytest and the older one on the HA-floor leg.
+
+
+# ---------------------------------------------------------------------------
+# The television, now that it is three files (#829, #880)
+#
+# `dashboard.html` used to carry the whole surface: 1,926 lines of <style>,
+# 1,771 lines of <script> and the markup between them. #829 moved the script to
+# `www/js/dashboard.js` so it passes through the same drift guard as every other
+# shipped script, and #880 moved the styles to `www/css/src/10-tv.css`, built
+# into the television's own sheet.
+#
+# Forty-odd test modules read that page as text. Use the helper that matches
+# what the assertion is actually about — behaviour, appearance or markup — so
+# the next reader can tell which of the three a failure is in.
+# ---------------------------------------------------------------------------
+
+_WWW_DIR = Path(__file__).resolve().parent.parent / "custom_components" / "quizify" / "www"
+
+
+def dashboard_script() -> str:
+    """The television's client code: ``www/js/dashboard.js`` (#829)."""
+    return (_WWW_DIR / "js" / "dashboard.js").read_text("utf-8")
+
+
+def dashboard_css() -> str:
+    """The television's stylesheet as the browser receives it (#880).
+
+    The built ``css/tv.css``, not the module — a rule that reaches the TV can
+    come from the shared modules as well as from ``10-tv.css``, and an
+    assertion about how the television looks should see the same cascade the
+    television does.
+    """
+    return (_WWW_DIR / "css" / "tv.css").read_text("utf-8")
+
+
+def dashboard_markup() -> str:
+    """``www/dashboard.html`` — markup only since #829/#880."""
+    return (_WWW_DIR / "dashboard.html").read_text("utf-8")
+
+
+def dashboard_page() -> str:
+    """Markup, script and stylesheet as one text.
+
+    For the assertions that genuinely span the split — a rule together with the
+    element it styles. Prefer the three narrower helpers whenever the assertion
+    is about only one of them.
+    """
+    return "\n".join((dashboard_markup(), dashboard_script(), dashboard_css()))

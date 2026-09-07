@@ -162,6 +162,11 @@ _SCRIPT = """
 require({stub});
 QZ.serveI18n({i18n});
 QZ.load({i18njs});
+// #787: the Hot Seat sentences the host reads are the shared renderers' now —
+// admin.js calls into QuizifyRenderShared for the bid count, the award and the
+// settlement, exactly as admin.html loads it ahead of admin.js.
+QZ.load({utilsjs});
+QZ.load({rendershared});
 
 var CLASSES = {classes};
 Object.keys(CLASSES).forEach(function (id) {{
@@ -313,6 +318,8 @@ def _run() -> dict:
         stub=json.dumps(str(_STUB)),
         i18n=json.dumps(str(_I18N)),
         i18njs=json.dumps(str(_JS / "i18n.js")),
+        utilsjs=json.dumps(str(_JS / "utils.js")),
+        rendershared=json.dumps(str(_JS / "render-shared.js")),
         classes=json.dumps(_element_classes()),
         admin="\n\n".join(parts),
     )

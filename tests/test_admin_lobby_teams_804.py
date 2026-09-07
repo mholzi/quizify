@@ -30,6 +30,10 @@ _REPO = Path(__file__).resolve().parent.parent
 _WWW = _REPO / "custom_components" / "quizify" / "www"
 
 ADMIN_JS = (_WWW / "js" / "admin.js").read_text(encoding="utf-8")
+# #787: the grouping loop the host page and the television both wrote by hand is
+# one renderer now — admin.js still owns the card, the class names and the
+# palette index, but the "who is in which team, and who is in none" part is here.
+RENDER_SHARED = (_WWW / "js" / "render-shared.js").read_text(encoding="utf-8")
 ADMIN_HTML = (_WWW / "admin.html").read_text(encoding="utf-8")
 STYLES = (_WWW / "css" / "styles.css").read_text(encoding="utf-8")
 
@@ -64,12 +68,15 @@ def test_admin_js_adopts_the_teams_carried_by_the_roster_frame() -> None:
 def test_admin_js_groups_the_lobby_by_team() -> None:
     """The grouping the television has used since #365, on the host screen."""
     assert "lobby-e-team" in ADMIN_JS
-    assert "team.members" in ADMIN_JS
+    assert "teamGroupedRosterHtml(" in ADMIN_JS, (
+        "the host page no longer groups the lobby at all"
+    )
+    assert "team.members" in RENDER_SHARED
 
 
 def test_a_player_in_no_team_keeps_their_own_row() -> None:
     """A player in no team is a team of one, not a leftover group (#365)."""
-    assert "inTeam[" in ADMIN_JS
+    assert "inTeam[" in RENDER_SHARED
 
 
 def test_the_team_group_is_styled() -> None:

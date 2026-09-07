@@ -35,10 +35,11 @@
     width: 100%;
 }
 
-.player-count {
-    font-size: 0.85rem;
-    color: var(--color-text-neon-muted);
-}
+/* `.player-count` lived here and matched nothing. It read as referenced
+   only because a comment in the television's inline <style> used the words
+   "a player-count problem", and that block was inside an .html file the
+   dead-CSS scan (#797) counts as a reference. #880 moved the block to a
+   .css file, which is what made the rule visible for what it is. */
 
 @keyframes playerCardJoin {
     from { opacity: 0; transform: scale(0.9); }
@@ -362,32 +363,4 @@
     font-size: 0.8125rem;
     color: var(--color-text-muted);
     text-align: center;
-}
-
-/* The TV lobby, grouped by team (#365). The third view of formation: the
-   room can see who is playing with whom without anyone shouting across the
-   sofa. Solo players keep their own chip — a player in no team is a team of
-   one, not a leftover. */
-.dashboard-team-group {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    gap: 6px;
-    padding: 10px 14px;
-    border: 1px solid var(--dash-border-neon, #E5DFCF);
-    border-radius: 16px;
-}
-
-.dashboard-team-name {
-    font-size: 0.85em;
-    letter-spacing: 0.08em;
-    text-transform: uppercase;
-    opacity: 0.75;
-}
-
-.dashboard-team-members {
-    display: flex;
-    flex-wrap: wrap;
-    justify-content: center;
-    gap: 8px;
 }

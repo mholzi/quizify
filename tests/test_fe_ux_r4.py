@@ -15,6 +15,8 @@ from __future__ import annotations
 import json
 from pathlib import Path
 
+from tests.conftest import dashboard_css, dashboard_script
+
 REPO = Path(__file__).resolve().parent.parent
 WWW = REPO / "custom_components" / "quizify" / "www"
 
@@ -23,7 +25,9 @@ PLAYER_CSS = (WWW / "css" / "src" / "07-player.css").read_text("utf-8")
 BUNDLE = (WWW / "js" / "player.bundle.js").read_text("utf-8")
 ADMIN_HTML = (WWW / "admin.html").read_text("utf-8")
 PLAYER_HTML = (WWW / "player.html").read_text("utf-8")
-DASH_HTML = (WWW / "dashboard.html").read_text("utf-8")
+# #829/#880: the television's code and styles are their own files now.
+DASH_CSS = dashboard_css()
+DASH_JS = dashboard_script()
 ADMIN_JS = (WWW / "js" / "admin.js").read_text("utf-8")
 LIGHTNING_JS = (WWW / "js" / "player-lightning.js").read_text("utf-8")
 I18N = {
@@ -52,8 +56,8 @@ def test_459_finale_card_is_flex_column() -> None:
     search = 0
     block = ""
     while True:
-        idx = DASH_HTML.index(".finale-leaderboard-card {", search)
-        blk = DASH_HTML[idx: DASH_HTML.index("}", idx)]
+        idx = DASH_CSS.index(".finale-leaderboard-card {", search)
+        blk = DASH_CSS[idx: DASH_CSS.index("}", idx)]
         if "width: 100%" in blk:
             block = blk
             break
@@ -65,8 +69,8 @@ def test_459_finale_card_is_flex_column() -> None:
 
 # -- #460 timer reset at round_summary -------------------------------------
 def test_460_round_summary_resets_timer() -> None:
-    idx = DASH_HTML.index("function handleRoundSummary(")
-    body = DASH_HTML[idx: idx + 800]
+    idx = DASH_JS.index("function handleRoundSummary(")
+    body = DASH_JS[idx: idx + 800]
     assert "timerFill.style.width = '0%'" in body
     assert "timerFill.className = 'dashboard-timer-fill'" in body
 
@@ -133,4 +137,4 @@ def test_467_image_alt_i18n() -> None:
     # Player (bundled), lightning, and dashboard renderers all set the alt.
     assert "game.questionImageAlt" in BUNDLE
     assert "game.questionImageAlt" in LIGHTNING_JS
-    assert "game.questionImageAlt" in DASH_HTML
+    assert "game.questionImageAlt" in DASH_JS
