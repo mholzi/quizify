@@ -905,18 +905,33 @@
      * Lock the UI into the "already submitted" state.
      * Used when reconnecting mid-round (#14 in logical review): server says
      * we've already submitted, so disable all answer buttons and show the
-     * confirmation, even though we don't know which answer index we picked.
+     * confirmation.
+     *
+     * #875: the caller may pass the index this phone picked — the server says
+     * THAT we answered and never WHICH one, so the only copy of that number is
+     * the one the client remembered. Given it, the pick is re-marked; without
+     * it (or with -1, from a snapshot belonging to a later round) the buttons
+     * are only disabled, as before. It matters because a resume snapshot goes
+     * through renderQuestion first and resetSubmissionState right after, so
+     * the mark renderQuestion re-applies is wiped a line later.
      */
-    function lockSubmitted() {
+    function lockSubmitted(selectedIndex) {
         hasSubmitted = true;
         // #750: whatever was in flight is moot — the server has just told us
         // where we stand.
         _guessPending = false;
+        var marked = (typeof selectedIndex === 'number' && selectedIndex >= 0)
+            ? selectedIndex : -1;
+        if (marked >= 0) lastSubmittedIndex = marked;
         var answerButtons = document.getElementById('answer-buttons');
         if (answerButtons) {
             var buttons = answerButtons.querySelectorAll('.answer-btn');
             for (var i = 0; i < buttons.length; i++) {
                 buttons[i].disabled = true;
+                if (marked >= 0 &&
+                    parseInt(buttons[i].dataset.index, 10) === marked) {
+                    buttons[i].classList.add('is-selected');
+                }
             }
         }
         var confirmation = document.getElementById('submitted-confirmation');
@@ -1053,9 +1068,16 @@
         var allSubmitted = submittedCount === totalCount && totalCount > 0;
         tracker.classList.toggle('all-submitted', allSubmitted);
 
+        // #845: the row that is mine, by entrant rather than by name. #835
+        // made these rows teams in team mode, and a player's name never equals
+        // a team name — so the "this one is you" mark went out of every team
+        // game. myEntrant()/entrantKey() are the same pair the leaderboard has
+        // used since #759, which keeps solo games matching on the name exactly
+        // as before.
+        var mine = myEntrant();
         container.innerHTML = playerList.map(function (player) {
             var initials = getInitials(player.name);
-            var isCurrentPlayer = player.name === state.playerName;
+            var isCurrentPlayer = entrantKey(player) === mine;
             var isDisconnected = player.connected === false;
             var classes = [
                 'player-indicator',

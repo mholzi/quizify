@@ -252,6 +252,53 @@ class RoundMessageBuilder:
             }
         return substate
 
+    def _project_team_answer(
+        self,
+        game_state: QuizifyGameState,
+        *,
+        player: PlayerSession,
+        shuffle: list[int],
+    ) -> dict[str, Any] | None:
+        """The standing team answer, in this player's answer order (#875).
+
+        The live ``team_answer`` frame is a one-shot: it goes out when a member
+        taps, and nothing re-sends it. Every path that hands a phone a fresh
+        snapshot therefore used to erase the dots, the "set by Anna" chip and
+        the change lock — and pause/resume fans a snapshot out to *every* live
+        phone at once, so one pause wiped the standing answer from the whole
+        team. A teammate then saw an unanswered question and overwrote it.
+
+        Same wire shape as the live frame minus the ``type``, so the client can
+        feed it straight to the handler that paints the live one. The index is
+        mapped through THIS player's shuffle for the same reason the broadcast
+        maps it per member: everybody sees the answers in a different order
+        (#253), so one canonical number puts the dots on the wrong row.
+
+        Returns ``None`` outside team mode, for a player in no team, and for a
+        team that has not answered yet — the phone then has nothing to repaint,
+        which is what ``resetRound`` already leaves it with.
+        """
+        team = game_state.team_registry.get_by_member(player.name)
+        if team is None or team.current_answer is None:
+            return None
+        try:
+            shown_index = shuffle.index(team.current_answer)
+        except ValueError:
+            # A shuffle that does not contain the answer is not a shuffle of
+            # this question. Sending an index anyway would paint a dot on an
+            # arbitrary row, which is worse than painting none.
+            return None
+        return {
+            "team_id": team.team_id,
+            "answer_index": shown_index,
+            "set_by": team.answer_by,
+            "members": list(team.members),
+            # What is LEFT of the lock, not the full two seconds: the tap that
+            # started it may have been a pause and a resume ago, and a phone
+            # that comes back must not be braked again from zero.
+            "lock_seconds": round(team.lock_remaining(), 1),
+        }
+
     def project_snapshot_for_player(
         self,
         game_state: QuizifyGameState,
@@ -273,7 +320,9 @@ class RoundMessageBuilder:
         * QUESTION_ACTIVE: project ``question.answers`` through the player's
           shuffle (created on demand for a late joiner, as round-start does),
           and use the player's own QuestionTimer for ``time_remaining`` so a
-          pause/freeze/boost is reflected on the reconnect clock.
+          pause/freeze/boost is reflected on the reconnect clock. In team mode
+          it also carries the standing ``team_answer`` (#875) — see
+          ``_project_team_answer``.
         * LIGHTNING: project ``lightning.question.answers`` through the
           player's lightning shuffle (also created on demand).
         * ANSWER_REVEAL: replace the nested ``round_summary`` with the same
@@ -310,6 +359,11 @@ class RoundMessageBuilder:
                         max(0.0, timer.get_remaining()), 1
                     )
                 out["question"] = projected
+                team_answer = self._project_team_answer(
+                    game_state, player=player, shuffle=shuffle
+                )
+                if team_answer is not None:
+                    out["team_answer"] = team_answer
 
         if phase == GamePhase.LIGHTNING.value and out.get("lightning"):
             lr = game_state.lightning
