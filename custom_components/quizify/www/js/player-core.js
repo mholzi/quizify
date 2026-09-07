@@ -582,6 +582,10 @@
         // rather than inside three `case` blocks — the bug this closes was a
         // fourth case that nobody wrote.
         enterStageFor(msg);
+        // #864: and its counterpart. Same reason for living here rather than
+        // in a `case`: the teardown that was forgotten was the one nobody
+        // thought to write.
+        clearStalePanels(msg);
     }
 
     function handleReactionBonus(msg) {
@@ -662,6 +666,8 @@
         _rememberHostFlag(msg);
         _rememberRoster(msg);
         setResetStage(STAGE_RESET_AFFORDANCES[msg.phase] ? msg.phase : null);
+        // #864: and the panels the phase no longer owns.
+        clearStalePanelsForPhase(msg.phase);
 
         switch (msg.phase) {
             case 'LOBBY':
@@ -1318,6 +1324,117 @@
     function enterStageFor(msg) {
         var stage = msg && STAGE_ENTERED_BY[msg.type || msg.event];
         if (stage) setResetStage(stage);
+    }
+
+    // ------------------------------------------------------------------
+    // …and the teardown half (#864)
+    // ------------------------------------------------------------------
+    //
+    // The table above says which frame RAISES a between-round screen. Nothing
+    // said which frame takes one down, and #862 is what that asymmetry costs:
+    // it gave `hot_seat_result` a render where RC3 had a `reset()`, and the
+    // only two functions that hide `#hotseat-panel` — `hotSeat.reset()` and
+    // the next auction's bid stage — are called by the NEXT auction. The Hot
+    // Seat fires once per game (`_hot_seat_fired`), so the next auction never
+    // comes. From the settlement to the podium, every remaining question was
+    // played behind the previous chair's result card.
+    //
+    // It is not a cosmetic leftover, because of WHERE these panels sit: each
+    // one is a direct child of `.game-container` ABOVE `#answers-container`,
+    // so a visible one does not overlap the answer grid, it pushes the grid
+    // down the page. On the 390x844 phone the live test measured, the grid
+    // starts at 545 with none of them up — 91 px of slack — and at 1017 with
+    // the Hot Seat panel up, which is 173 px below the fold. A guest who does
+    // not think to scroll past a card about the last round has no visible way
+    // to answer this one.
+    //
+    // One row per panel:
+    //   raisedBy — the frames that can put it on screen
+    //   phases   — the snapshot phases that OWN it (the reconnect half)
+    //   clear    — the teardown this table runs when the game moves on
+    //   owner    — the module that already owns the teardown, when it is not
+    //              this table's job. Exactly one of `clear` / `owner` is set.
+    //
+    // A panel with neither, and a panel the page grows that has no row here at
+    // all, both fail tests/test_panel_teardown_parity_864.py — which is the
+    // guard tests/test_stage_entry_parity_858.py does not have, and the reason
+    // #864 walked straight past it.
+    var GAME_VIEW_PANELS = {
+        'last-round-banner': {
+            raisedBy: ['wager_window'],
+            phases: ['WAGER_ACTIVE'],
+            clear: null,
+            owner: 'handleQuestionStarted, which lowers it on any round that is not the last (#706)'
+        },
+        'wager-panel': {
+            raisedBy: ['wager_window'],
+            phases: ['WAGER_ACTIVE'],
+            clear: null,
+            owner: 'game.renderQuestion via _showWagerBadge, which hides it or collapses it to a badge (#656)'
+        },
+        'hotseat-panel': {
+            raisedBy: [
+                'hot_seat_auction_you',
+                'hot_seat_question',
+                'hot_seat_result'
+            ],
+            phases: ['HOT_SEAT_AUCTION', 'HOT_SEAT', 'HOT_SEAT_REVEAL'],
+            clear: function () { if (hotSeat) hotSeat.reset(); },
+            owner: null
+        },
+        'hotseat-reset-controls': {
+            raisedBy: ['hot_seat_result'],
+            phases: ['HOT_SEAT_REVEAL'],
+            clear: null,
+            owner: 'setResetStage, which disarms every stage but the one being entered (#803/#858)'
+        },
+        'estimate-container': {
+            raisedBy: ['question_started'],
+            phases: ['QUESTION_ACTIVE', 'PLAYING'],
+            clear: null,
+            owner: 'game.renderQuestion, which swaps the two input sections per round type (#275)'
+        }
+    };
+
+    // The frames that put the phone back on a playable `#game-view` screen —
+    // the moments at which "the game has moved on" is true.
+    //
+    // `round_summary` and `finale` are deliberately absent: they switch to
+    // another view, so nothing here is on screen, and tearing down from there
+    // would only move the bug to whichever frame brings `#game-view` back.
+    var MOVED_PAST_DETOUR = [
+        'question_started',
+        'wager_window',
+        'lightning_splash'
+    ];
+
+    function _clearPanels(keep) {
+        Object.keys(GAME_VIEW_PANELS).forEach(function (id) {
+            var row = GAME_VIEW_PANELS[id];
+            if (!row.clear || keep(row)) return;
+            row.clear();
+        });
+    }
+
+    // Live half: a frame that opens the next screen leaves no detour panel
+    // standing — except the one it is itself raising.
+    function clearStalePanels(msg) {
+        var type = msg && (msg.type || msg.event);
+        if (MOVED_PAST_DETOUR.indexOf(type) === -1) return;
+        _clearPanels(function (row) {
+            return row.raisedBy.indexOf(type) !== -1;
+        });
+    }
+
+    // Snapshot half, and the same parity #858 is about: a phone that
+    // reconnects into a phase no longer owning a panel must find it gone,
+    // exactly as a phone that lived through the frames does. `restoreFromSnapshot`
+    // returns at its first line when the snapshot has no `hot_seat` block, so
+    // without this a reload did not clear the card either.
+    function clearStalePanelsForPhase(phase) {
+        _clearPanels(function (row) {
+            return (row.phases || []).indexOf(phase) !== -1;
+        });
     }
 
     // The roster from the most recent frame that carried one.
