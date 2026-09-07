@@ -1,7 +1,7 @@
 {
   "name": "Deportes",
   "language": "es",
-  "version": "1.3",
+  "version": "1.4",
   "theme": "sport",
   "questions": [
     {
@@ -3156,18 +3156,18 @@
     },
     {
       "id": "dep_es_161",
-      "question": "¿Qué prueba muestra esta foto de los Juegos Olímpicos de 1936?",
+      "question": "¿Qué atleta aparece aquí en los Juegos Olímpicos de Berlín de 1936?",
       "answers": [
         {
-          "text": "El salto de longitud",
+          "text": "Jesse Owens",
           "correct": true
         },
         {
-          "text": "El salto con pértiga",
+          "text": "Paavo Nurmi",
           "correct": false
         },
         {
-          "text": "Los 110 metros vallas",
+          "text": "Jim Thorpe",
           "correct": false
         }
       ],
@@ -3200,7 +3200,7 @@
     },
     {
       "id": "dep_es_163",
-      "question": "¿Qué deporte se juega en esta foto de 1916?",
+      "question": "¿Qué deporte se juega en esta foto de 1915?",
       "answers": [
         {
           "text": "El críquet",
@@ -3223,7 +3223,7 @@
     },
     {
       "id": "dep_es_164",
-      "question": "¿Qué carrera ganó este hombre en 1920?",
+      "question": "¿De qué carrera es esta fotografía de 1903?",
       "answers": [
         {
           "text": "El Tour de Francia",
@@ -3239,9 +3239,9 @@
         }
       ],
       "difficulty": "medium",
-      "fun_fact": "Philippe Thys ganó el Tour tres veces. Entonces los corredores no tenían asistencia: una avería era cosa suya, y un cuadro roto significaba caminar hasta la fragua más cercana.",
+      "fun_fact": "Maurice Garin ganó el primer Tour de Francia en 1903: seis etapas, 2428 kilómetros y casi tres horas de ventaja. No había asistencia: una avería era cosa del corredor, y un cuadro roto significaba caminar hasta la fragua más cercana.",
       "category": "Deportes",
-      "image_url": "/quizify/static/img/packs/sport/tour-de-france-1920.webp",
+      "image_url": "/quizify/static/img/packs/sport/tour-de-france-1903.webp",
       "reveal_style": "progressive"
     },
     {

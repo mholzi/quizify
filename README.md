@@ -733,11 +733,11 @@ its provenance is recorded row by row in that folder's `credits.md`, including t
 template on the source file record. The policy, and the test that enforces it, are in
 [`www/img/packs/LICENSING.md`](custom_components/quizify/www/img/packs/LICENSING.md).
 
-Two things there are worth knowing before you redistribute a fork. The `PD-USGov` and NASA
+One thing there is worth knowing before you redistribute a fork. The `PD-USGov` and NASA
 rows are public domain by 17 U.S.C. §105, which is a statement about United States law and
-has no effect elsewhere; the project accepts that deliberately and says so. And a handful
-of rows, marked ⚠️ in their `credits.md`, rest on a licence that stops at a border and are
-queued for replacement rather than being described as free.
+has no effect elsewhere; the project accepts that deliberately and says so. Every other row
+rests on an expiry or a release that covers the whole world — the eleven that did not were
+replaced or removed in 1.17.0 (#817), and the quarantine is empty.
 
 ---
 

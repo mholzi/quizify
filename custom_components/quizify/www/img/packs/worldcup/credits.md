@@ -5,17 +5,9 @@ template, not the phrase a search result showed. The policy those templates are
 checked against is in [`../LICENSING.md`](../LICENSING.md), and
 `tests/test_pack_image_licences_795.py` enforces it row by row.
 
-⚠️ marks a row whose template is **not** worldwide safe. It is quarantined in
-that test and tracked by
-[#817](https://github.com/mholzi/quizify/issues/817); it has to be replaced or
-removed, not re-worded.
-
 | File | Subject | Creator / holder | Source | Licence | Commons template | Verified by |
 |---|---|---|---|---|---|---|
-| `centenario-1930.webp` ⚠️ | Estadio Centenario during the 1930 World Cup final, Montevideo | Uruguayan national archive | [Wikimedia Commons](https://commons.wikimedia.org/wiki/File:Vista_a%C3%A9rea_del_Estadio_Centenario_durante_la_final_del_primer_Campeonato_Mundial_de_F%C3%BAtbol_change.jpg) | Public domain in Uruguay; the record states no term for anywhere else | `PD-Uruguay` | licence templates read from the file record wikitext |
-| `world-cup-poster-1950.webp` ⚠️ | Spectators beside the poster for the 1950 tournament, Brazil | Arquivo Nacional (Brazil) | [Wikimedia Commons](https://commons.wikimedia.org/wiki/File:Copa_de_1950,_torcedores_observam_o_cartaz_da_copa.jpg) | Released by the Brazilian national archive; the record's tag is `URAA`-qualified | `Arquivo Nacional PD-license` | same |
-| `maracana-1950.webp` ⚠️ | Ghiggia's goal in the deciding match at the Maracanã, 1950 | *El Gráfico* (Argentina) | [Wikimedia Commons](https://commons.wikimedia.org/wiki/File:Gol_ghiggia_vs_brasil.jpg) | Public domain in Argentina; the second tag is the US restoration tag | `PD-AR-Photo`, `PD-1996` | same |
-| `uruguay-1930.webp` ⚠️ | The Uruguay squad, world champions 1930 | Unknown (anonymous, Uruguay) | [Wikimedia Commons](https://commons.wikimedia.org/wiki/File:Uruguay_national_football_team_1930.jpg) | Public domain in Uruguay and the US; nothing on the record covers the EU | `PD-Uruguay-anon`, `PD-US-expired` | same |
+| `estadio-centenario.webp` | The Estadio Centenario, Montevideo, as it stands today | Wikimedia user *Da dinges*, released into the public domain | [Wikimedia Commons](https://commons.wikimedia.org/wiki/File:Estadio_centenario_1.JPG) | Public domain, released by the photographer | `PD-self` | licence templates read from the file record wikitext |
 
 ## `jules-rimet-trophy.webp` left this folder in v1.16.0 (#793)
 
@@ -32,39 +24,43 @@ every HACS install with neither. The file also sat in
 Rather than add a caption to the game to carry an attribution nobody had asked
 for, the picture came out and the question is now a text question.
 
-## Every remaining row is open
+## Three more pictures left this folder in v1.17.0 (#817)
 
-All four surviving pictures rest on a national tag — Uruguay, Brazil,
-Argentina — or on the US restoration tag. Those establish a status in one
-country. Football photography of the first four tournaments is where the free
-material is, and it is almost entirely held by South American state archives,
-so a like-for-like replacement is not a search away. The rows are quarantined
-with the issue that tracks them; nothing here is claimed to be worldwide public
-domain.
+The 1950 poster scan, Ghiggia's goal and the 1930 Uruguay squad all rested on a
+national tag — `{{Arquivo Nacional PD-license|URAA}}`, `{{PD-AR-Photo}}`,
+`{{PD-Uruguay-anon}}` — or, in two of the three, on the US restoration tag
+`{{PD-1996}}` alongside it. Each establishes a status in one country, and this
+repository is copied into installs in every country.
+
+Football photography of the first four tournaments is held almost entirely by
+South American state archives, and their releases carry the same national tags.
+The searches run for #817 turned up no photograph of the 1950 poster, of the
+deciding goal or of the 1930 champions on any record with a worldwide expiry
+tag. So the three pictures came out and their questions are text questions, as
+`steamboat-willie.webp` and `jules-rimet-trophy.webp` were in v1.16.0:
+
+* the poster question now asks which country hosted the 1950 tournament;
+* the Maracanã question now asks who scored the goal that decided it;
+* the squad question now asks which country won the first World Cup.
+
+## The one picture left, and why it is a modern one
+
+`estadio-centenario.webp` replaces the 1930 aerial view of the same ground,
+which the Centro de Fotografía de Montevideo released as `{{PD-Uruguay}}` and
+nothing else. Its question does not need a 1930 photograph — it asks what the
+stadium was built for — so a present-day photograph of the Centenario answers
+it just as well, and one exists that its photographer put into the public
+domain outright (`{{PD-self}}`). That is a stronger basis than any period
+photograph of this tournament has.
 
 ## Edited, and why
 
-* **`maracana-1950.webp`** — the print carried a Spanish caption burned along
-  the bottom naming the final, the date **16/7/50** and the Maracanã. The
-  question asks what the photograph shows, so the caption was the answer.
-  Cropped off.
-* **`world-cup-poster-1950.webp`** — an **"ARQUIVO NACIONAL"** stamp sat in the
-  top right corner of the scan. Cropped off for the same reason the Potato
-  Eaters watermark was rejected in the food set: licence-clear is not
-  ship-clear.
-
-## One question that leans on knowledge, not recognition
-
-The squad photograph could in principle be any team. Its question names what
-the picture is and asks for the fact around it — which suits a World Cup pack,
-where the subject *is* the history. The other three are straight recognition: a
-stadium, a poster, a ball in the net.
+Nothing in this folder is cropped any more. The two crops recorded here before
+— the burned-in Spanish caption on the Maracanã print and the
+**"ARQUIVO NACIONAL"** stamp on the poster scan — went with the pictures.
 
 ## Sizes
 
-1100 px on the long edge (the Maracanã print keeps its native 1024 px), WebP at
-quality 80, 36–213 KB each, 508 KB for the folder. Each was rendered at 340 px —
-the width the card gets on a 390 px phone — and looked at before being kept.
-The poster is the one that had to survive it: at card width the lines *IV
-CAMPEONATO MUNDIAL DE FUTEBOL* and *BRASIL* are still readable, which is what
-its question rests on.
+1100 px on the long edge, WebP at quality 80, 99 KB for the folder's single
+picture. It was rendered at 340 px — the width the card gets on a 390 px
+phone — and looked at before being kept.
