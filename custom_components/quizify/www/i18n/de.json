@@ -137,6 +137,8 @@
     "result": "Ergebnis",
     "questionCounter": "Frage {current} / {total}",
     "correctLabel": "Richtig: {answer}",
+    "answerProgress": "{submitted} von {total} haben geantwortet",
+    "waitingFor": "es fehlen noch {names}",
     "summaryRoundsUnit": "Runden",
     "settingsSummary": "{difficulty} • {rounds} {roundsUnit} • {timer}s",
     "categoriesCountPlural": "{count} Kategorien",
