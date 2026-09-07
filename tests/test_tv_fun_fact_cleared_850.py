@@ -34,19 +34,18 @@ onwards.
 from __future__ import annotations
 
 import re
-from pathlib import Path
 
-_REPO_ROOT = Path(__file__).resolve().parent.parent
-_DASHBOARD = _REPO_ROOT / "custom_components" / "quizify" / "www" / "dashboard.html"
+from tests.conftest import dashboard_script
 
-SOURCE = _DASHBOARD.read_text(encoding="utf-8")
+# #829/#880: the television's code and styles are their own files now.
+SOURCE = dashboard_script()
 
 
 def _fn_body(name: str) -> str:
-    """The body of a top-level (8-space indented) function in dashboard.html."""
+    """The body of a top-level (4-space indented) function in dashboard.js."""
     marker = f"function {name}("
     assert marker in SOURCE, f"{name}() is gone"
-    return SOURCE.split(marker, 1)[1].split("\n        }", 1)[0]
+    return SOURCE.split(marker, 1)[1].split("\n    }", 1)[0]
 
 
 def test_every_view_change_takes_the_fun_fact_down() -> None:
@@ -62,7 +61,7 @@ def test_the_text_is_emptied_and_not_merely_hidden() -> None:
     DOM, still sized into the 549.8px right column and one missed
     ``question_started`` away from being read out to the room."""
     body = _fn_body("showView")
-    block = re.search(r"if \(els\.funFact\) \{(.*?)\n            \}", body, re.S)
+    block = re.search(r"if \(els\.funFact\) \{(.*?)\n        \}", body, re.S)
     assert block, "the fun-fact clear is not a block of showView's own"
     assert "classList.remove('visible')" in block.group(1)
     assert re.search(

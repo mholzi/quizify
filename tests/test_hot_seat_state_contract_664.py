@@ -203,7 +203,9 @@ _WWW = (
 
 @pytest.mark.parametrize(
     "path",
-    ["js/player-core.js", "dashboard.html"],
+    # #829: the television's switch moved out of dashboard.html into its own
+    # script, which is also what put it under the same drift guard as the phone's.
+    ["js/player-core.js", "js/dashboard.js"],
     ids=["player", "television"],
 )
 def test_both_clients_handle_every_hot_seat_phase(path: str) -> None:

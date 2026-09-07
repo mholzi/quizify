@@ -1,6 +1,6 @@
 """#874 — a television that reloads during the Hot Seat settlement.
 
-``renderHotSeatFromSnapshot`` in ``dashboard.html`` branched on two of the
+``renderHotSeatFromSnapshot`` in ``js/dashboard.js`` branched on two of the
 server's three stages. ``auction`` and ``question`` had a case; ``result`` —
 emitted for the whole of ``HOT_SEAT_REVEAL`` (``serializers.py``) — fell
 through to ``handleHotSeatAwarded``, the handler for the moment the chair is
@@ -43,7 +43,9 @@ from custom_components.quizify.server.serializers import (  # noqa: E402
     serialize_state_snapshot,
 )
 
-_DASHBOARD = _REPO / "custom_components" / "quizify" / "www" / "dashboard.html"
+# #829: the television's script is its own file now.
+_JS = _REPO / "custom_components" / "quizify" / "www" / "js"
+_DASHBOARD = _JS / "dashboard.js"
 _STUB = Path(__file__).resolve().parent / "fixtures" / "dom_stub.js"
 
 _NEEDS_NODE = pytest.mark.skipif(
@@ -158,6 +160,10 @@ def _render(snapshot: dict) -> dict:
 'use strict';
 require({json.dumps(str(_STUB))});
 QZ.els({json.dumps(ids)});
+// #787: the detour's three sentences are the shared renderers' now, and the
+// page loads common.bundle.js ahead of its own script for exactly this reason.
+QZ.load({json.dumps(str(_JS / "utils.js"))});
+QZ.load({json.dumps(str(_JS / "render-shared.js"))});
 
 var seen = {{ views: [], leaderboards: [], questions: [] }};
 function showView(name) {{ seen.views.push(name); }}

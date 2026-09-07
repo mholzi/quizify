@@ -44,6 +44,8 @@ import json
 import re
 from pathlib import Path
 
+from tests.conftest import dashboard_markup, dashboard_script
+
 _REPO_ROOT = Path(__file__).resolve().parent.parent
 _WWW = _REPO_ROOT / "custom_components" / "quizify" / "www"
 _I18N = _WWW / "i18n"
@@ -161,7 +163,8 @@ def test_a_missing_key_is_loud_at_runtime_too() -> None:
 
 
 def test_the_reconnect_pill_points_at_the_key_that_exists() -> None:
-    dashboard = (_WWW / "dashboard.html").read_text("utf-8")
+    # #829/#880: the television's code and styles are their own files now.
+    dashboard = dashboard_markup()
     stale = 'data-i18n="dashboard.reconnecting"' in dashboard
     assert not stale, "dashboard.reconnecting has never existed in any bundle"
     assert 'data-i18n="connection.reconnecting"' in dashboard, (
@@ -229,7 +232,8 @@ def _awards_from_highlights() -> dict[str, tuple[str, set[str]]]:
 
 def test_the_television_renders_awards_from_the_i18n_keys() -> None:
     """#733: the fix is that ``renderAwards`` stops printing the fallbacks."""
-    dashboard = (_WWW / "dashboard.html").read_text("utf-8")
+    # #829/#880: the television's code and styles are their own files now.
+    dashboard = dashboard_script()
     start = dashboard.index("function renderAwards(")
     end = dashboard.index("function escapeHtml(", start)
     body = dashboard[start:end]

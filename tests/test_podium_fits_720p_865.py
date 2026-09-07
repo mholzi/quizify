@@ -48,7 +48,7 @@ shows fewer of them. The last step stops at 16px, which is the floor #376 set
 for this screen: a rank nobody can read from a sofa is not a rank that was
 shown.
 
-Text-level guards; dashboard.html keeps its CSS and its JS inline, and the
+Text-level guards over the television's stylesheet and its script; the
 pixel figures above cannot be asserted from pytest. What is asserted is that
 the rules and the arithmetic the measurements came from are still in the file —
 including, as in #836, that no rule here points at nothing.
@@ -59,9 +59,10 @@ from __future__ import annotations
 import re
 from pathlib import Path
 
+from tests.conftest import dashboard_css, dashboard_script
+
 REPO = Path(__file__).resolve().parent.parent
 WWW = REPO / "custom_components" / "quizify" / "www"
-DASHBOARD = WWW / "dashboard.html"
 SHARED_CSS = WWW / "css" / "src" / "02-shared.css"
 
 
@@ -70,23 +71,19 @@ def _strip_comments(text: str) -> str:
 
 
 def _css() -> str:
-    html = DASHBOARD.read_text(encoding="utf-8")
-    blocks = re.findall(r"<style[^>]*>(.*?)</style>", html, re.DOTALL)
-    assert blocks, "dashboard.html is expected to carry its CSS inline"
-    return _strip_comments("\n".join(blocks))
+    # #829/#880: the television's code and styles are their own files now.
+    return _strip_comments(dashboard_css())
 
 
 def _js() -> str:
-    html = DASHBOARD.read_text(encoding="utf-8")
-    blocks = re.findall(r"<script(?![^>]*\bsrc=)[^>]*>(.*?)</script>", html, re.DOTALL)
-    assert blocks, "dashboard.html is expected to carry its JS inline"
-    return "\n".join(blocks)
+    # #829/#880: the television's code and styles are their own files now.
+    return dashboard_script()
 
 
 def _js_function(name: str) -> str:
     source = _strip_comments(_js())
     signature = "function " + name + "("
-    assert signature in source, f"{name}() is gone from dashboard.html"
+    assert signature in source, f"{name}() is gone from dashboard.js"
     start = source.index(signature)
     depth = 0
     seen = False

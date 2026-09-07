@@ -1,7 +1,9 @@
 """Guard the #374 TV-lobby join-QR + live player roster.
 
-The dashboard is a self-contained ``www/dashboard.html`` with an inline
-``<style>`` block and its own inline script (it does NOT bundle player-*.js).
+The dashboard is its own surface: ``www/dashboard.html`` for the markup,
+``www/js/dashboard.js`` for the script (#829) and ``www/css/tv.css`` for the
+styles (#880). It does NOT bundle player-*.js and does not read the phone's
+stylesheet.
 Before #374 its ``#waiting-view`` (LOBBY) rendered only the wordmark + a
 "Waiting for game to start…" line, even though the ``.dashboard-qr-section`` /
 ``.dashboard-player-list`` / ``.dashboard-player-chip`` CSS already existed but
@@ -16,10 +18,8 @@ so a later edit can't silently regress the lobby back to a blank waiting view.
 
 from __future__ import annotations
 
-from pathlib import Path
-
-REPO = Path(__file__).resolve().parent.parent
-DASHBOARD = REPO / "custom_components" / "quizify" / "www" / "dashboard.html"
+# #829/#880: the television's code and styles are their own files now.
+from tests.conftest import dashboard_markup, dashboard_script
 
 
 def _waiting_view_block(html: str) -> str:
@@ -31,7 +31,7 @@ def _waiting_view_block(html: str) -> str:
 
 
 def test_dashboard_loads_qrcode_lib() -> None:
-    html = DASHBOARD.read_text("utf-8")
+    html = dashboard_markup()
     assert "js/vendor/qrcode.min.js" in html, (
         "dashboard.html must load the qrcode.min.js vendor lib for the "
         "TV-lobby join QR (#374)"
@@ -43,7 +43,7 @@ def test_dashboard_loads_qrcode_lib() -> None:
 
 
 def test_waiting_view_uses_dormant_qr_and_roster_css() -> None:
-    html = DASHBOARD.read_text("utf-8")
+    html = dashboard_markup()
     waiting = _waiting_view_block(html)
     assert "dashboard-qr-section" in waiting, (
         "#waiting-view must render the join QR via the existing "
@@ -62,7 +62,7 @@ def test_dashboard_join_url_matches_admin() -> None:
     must derive it identically so the phone that scans the TV lands on the same
     join page the admin QR points at.
     """
-    html = DASHBOARD.read_text("utf-8")
+    html = dashboard_script()
     assert "window.location.origin + '/quizify/player'" in html, (
         "dashboard lobby QR must encode origin + '/quizify/player', the same "
         "join URL admin.js uses (#374)"

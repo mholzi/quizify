@@ -3,14 +3,16 @@
 #377 — Cast-to-TV link dead in the Android HA Companion WebView (which
        swallows target="_blank"). admin.js must detect the Companion and
        navigate window.location to the dashboard instead.
-#381 — dashboard.html (self-contained, no styles.css) ignored the OS
-       prefers-reduced-motion setting on the always-on TV.
+#381 — the television's sheet (its own since #880, never styles.css) ignored
+       the OS prefers-reduced-motion setting on the always-on TV.
 
 These are static-source assertions: the frontend assets are not bundled,
 so we read them as text.
 """
 
 from pathlib import Path
+
+from tests.conftest import dashboard_css
 
 _REPO_ROOT = Path(__file__).resolve().parent.parent
 _WWW = _REPO_ROOT / "custom_components" / "quizify" / "www"
@@ -30,9 +32,10 @@ def test_admin_js_intercepts_cast_link_on_android_companion() -> None:
 
 
 def test_dashboard_html_honors_prefers_reduced_motion() -> None:
-    """#381: dashboard.html's inline <style> must carry a reduced-motion
-    override block, since it does not load styles.css."""
-    dashboard = (_WWW / "dashboard.html").read_text(encoding="utf-8")
+    """#381: the television's own sheet must carry a reduced-motion override
+    block, since it does not load styles.css."""
+    # #829/#880: the television's code and styles are their own files now.
+    dashboard = dashboard_css()
     assert "@media (prefers-reduced-motion: reduce)" in dashboard
     # Standard house-style override values (see css/src/00-tokens.css).
     assert "animation-duration: 0.01ms !important" in dashboard
