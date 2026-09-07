@@ -736,7 +736,9 @@ def serialize_answer_progress(
     The field names are not a free choice — ``renderSubmissionTracker`` was
     written long before anything sent it data and already reads ``name``,
     ``submitted`` and ``connected`` off each entry. The issue proposed a plain
-    list of names; that renderer could not have drawn it.
+    list of names; that renderer could not have drawn it. ``entrant_id`` is the
+    one field added since: the tracker's "you" mark needs an identity, and the
+    name stopped being one the moment the rows became teams (#845).
 
     ``entrants`` is ``game_state.get_ranked_participants()`` — the rows the
     room can see, teams in team mode and players otherwise (#835). Counting
@@ -763,6 +765,12 @@ def serialize_answer_progress(
 
     entries = [
         {
+            # Stable identity of the row, the same shape the leaderboard has
+            # carried since #814 — a team's id, a player's own name. The phone
+            # marks "this one is you" on the tracker, and once #835 made the
+            # rows teams there was no longer anything on them a player's name
+            # could equal, so in team mode nobody's row lit up (#845).
+            "entrant_id": getattr(r, "team_id", None) or r.name,
             "name": r.name,
             "submitted": _entrant_has_answered(r),
             "connected": _connected(r),

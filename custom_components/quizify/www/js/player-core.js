@@ -697,7 +697,23 @@
             case 'QUESTION_ACTIVE':
             case 'PLAYING':
                 if (msg.question) {
+                    // #875: read before handleQuestionStarted, which replaces
+                    // currentQuestion and resets the submission state. On a
+                    // snapshot for the round we are already in, this phone is
+                    // the only place the answer it picked still exists — the
+                    // server tells us THAT we answered, never WHICH one.
+                    var priorRound = currentQuestion && currentQuestion.round_num;
+                    var priorIndex = game.getLastSubmittedIndex();
+
                     handleQuestionStarted(questionStartedFromSnapshot(msg));
+
+                    // #875: the standing team answer is a one-shot frame, so
+                    // handleQuestionStarted's resetRound above would leave the
+                    // whole team looking at an unanswered question after any
+                    // pause/resume. Repaint it from the snapshot instead.
+                    if (team && msg.team_answer) {
+                        team.handleTeamAnswer(msg.team_answer);
+                    }
 
                     // #14: if we're reconnecting mid-round and server thinks
                     // we've already submitted, lock the UI accordingly so we
@@ -707,7 +723,16 @@
                             return p && p.name === state.playerName;
                         });
                         if (me && me.submitted) {
-                            game.lockSubmitted();
+                            // #875 (solo half): hand the index back so the
+                            // lock re-marks the answer instead of only greying
+                            // the row out — a resumed phone that shows three
+                            // dead buttons and no pick reads as a bug. Only
+                            // for the round it was picked in; a snapshot from
+                            // a later round knows nothing about this pick.
+                            var sameRound = (priorRound !== null &&
+                                priorRound !== undefined &&
+                                priorRound === msg.round);
+                            game.lockSubmitted(sameRound ? priorIndex : -1);
                         }
                     }
                 } else {
