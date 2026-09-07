@@ -31,7 +31,6 @@ from __future__ import annotations
 import re
 import sys
 from pathlib import Path
-from unittest.mock import MagicMock
 
 import pytest
 
@@ -52,16 +51,11 @@ from custom_components.quizify.server.round_message_builder import (  # noqa: E4
 from custom_components.quizify.server.serializers import (  # noqa: E402
     serialize_round_summary,
 )
+from tests.conftest import dashboard_script  # noqa: E402
 
 WWW = _REPO_ROOT / "custom_components" / "quizify" / "www"
 
 IMG_NEXT = "/quizify/static/img/packs/picture-round/next.webp"
-
-
-def _fake_ws() -> MagicMock:
-    ws = MagicMock()
-    ws.closed = False
-    return ws
 
 
 class _Runtime:
@@ -80,7 +74,7 @@ class _Runtime:
 @pytest.fixture
 def state(tmp_path: Path) -> QuizifyGameState:
     st = QuizifyGameState(runtime=_Runtime(tmp_path), entry_id="test")
-    st.add_player("A", _fake_ws())
+    st.add_player("A")
     return st
 
 
@@ -284,7 +278,6 @@ class TestBuilderWiring:
 
 PLAYER_GAME = WWW / "js" / "player-game.js"
 PLAYER_CORE = WWW / "js" / "player-core.js"
-DASHBOARD = WWW / "dashboard.html"
 # #787: the phone and the television used to carry a copy of the preload
 # each. There is one implementation now, and each surface delegates to it —
 # so the rules below are checked once, at the place they now live, and each
@@ -305,14 +298,20 @@ class TestClientsPreload:
         assert "preloadNextImage: preloadNextImage" in src
 
     def test_television_warms_the_hint_on_round_summary(self) -> None:
-        src = DASHBOARD.read_text("utf-8")
+        # #829/#880: the television's code and styles are their own files now.
+        src = dashboard_script()
         assert "function preloadNextImage(" in src
         assert "preloadNextImage(msg.next_image_url)" in src
 
-    @pytest.mark.parametrize("path", [PLAYER_GAME, DASHBOARD])
-    def test_each_surface_routes_through_the_shared_preload(self, path: Path) -> None:
+    # #829/#880: the television's code and styles are their own files now.
+    @pytest.mark.parametrize(
+        "source",
+        [PLAYER_GAME.read_text("utf-8"), dashboard_script()],
+        ids=["player-game", "television"],
+    )
+    def test_each_surface_routes_through_the_shared_preload(self, source: str) -> None:
         """One implementation, or the rules below hold on only one screen."""
-        body = _function_body(path.read_text("utf-8"), "preloadNextImage")
+        body = _function_body(source, "preloadNextImage")
         assert "QuizifyRenderShared.preloadNextImage(" in body, (
             "this surface preloads on its own again (#787)"
         )

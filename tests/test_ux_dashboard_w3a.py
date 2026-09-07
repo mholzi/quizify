@@ -1,7 +1,7 @@
 """Guard the W3A batch of TV-dashboard UX fixes (#421,#425,#427,#428,#429).
 
-The dashboard is a self-contained ``www/dashboard.html`` with an inline
-``<style>`` block and an inline script (it is NOT bundled from src). These
+The dashboard is ``www/dashboard.html`` plus the television's own script
+(``js/dashboard.js``, #829) and stylesheet (``css/tv.css``, #880). These
 text-level guards lock in the five fixes so a later edit can't silently
 regress them:
 
@@ -16,16 +16,19 @@ regress them:
 from __future__ import annotations
 
 import re
-from pathlib import Path
 
-from tests.conftest import without_comments
-
-REPO = Path(__file__).resolve().parent.parent
-DASHBOARD = REPO / "custom_components" / "quizify" / "www" / "dashboard.html"
+from tests.conftest import (
+    dashboard_css,
+    dashboard_markup,
+    dashboard_script,
+    without_comments,
+)
 
 
 def _text() -> str:
-    return DASHBOARD.read_text(encoding="utf-8")
+    # #829/#880: the television's code and styles are their own files now.
+    # Everything below this point is about behaviour, so it reads the script.
+    return dashboard_script()
 
 
 def _rule(css: str, selector: str) -> str:
@@ -38,9 +41,9 @@ def _rule(css: str, selector: str) -> str:
 
 # ---- #421: reconnect pill ----
 def test_reconnect_pill_element_present() -> None:
-    html = _text()
-    assert 'id="reconnect-pill"' in html
-    assert ".dashboard-reconnect-pill" in html
+    # The element is markup, the class that styles it is in the sheet (#829/#880).
+    assert 'id="reconnect-pill"' in dashboard_markup()
+    assert ".dashboard-reconnect-pill" in dashboard_css()
 
 
 def _onclose_handler(html: str) -> str:
@@ -153,8 +156,8 @@ def test_lightning_seconds_state_seeded() -> None:
 
 # ---- #427: thicker timer bar ----
 def test_timer_bar_thickened() -> None:
-    html = _text()
-    block = _rule(html, ".dashboard-timer {")
+    # A CSS assertion, so it reads the television's sheet (#880).
+    block = _rule(dashboard_css(), ".dashboard-timer {")
     m = re.search(r"height:\s*(\d+)px", block)
     assert m, "timer bar must declare a px height"
     assert int(m.group(1)) >= 10, "timer bar must be >=10px (was 4px, illegible)"

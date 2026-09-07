@@ -99,7 +99,7 @@ class _FakeGameState:
 class TestBuildPlayerQuestion:
     def test_uses_players_own_shuffle_order(self):
         q = _question()
-        player = PlayerSession(name="Alice", ws=None, score=42)
+        player = PlayerSession(name="Alice", score=42)
         gs = _FakeGameState(
             question=q,
             players=[player],
@@ -121,7 +121,7 @@ class TestBuildPlayerQuestion:
 
     def test_falls_back_to_canonical_shuffle_when_no_player_shuffle(self):
         q = _question()
-        player = PlayerSession(name="Bob", ws=None)
+        player = PlayerSession(name="Bob")
         gs = _FakeGameState(
             question=q, players=[player], shuffle_map=[3, 2, 1, 0]
         )
@@ -151,8 +151,8 @@ class TestBuildAdminQuestion:
 class TestBuildGameStateWithLeaderboard:
     def test_carries_leaderboard_and_round_metadata(self):
         q = _question()
-        p1 = PlayerSession(name="Alice", ws=None, score=100)
-        p2 = PlayerSession(name="Bob", ws=None, score=50)
+        p1 = PlayerSession(name="Alice", score=100)
+        p2 = PlayerSession(name="Bob", score=50)
         gs = _FakeGameState(question=q, players=[p1, p2])
         gs.phase = type("Ph", (), {"value": "question_active"})()
         msg = RoundMessageBuilder().build_game_state_with_leaderboard(
@@ -177,14 +177,14 @@ class TestBuildRoundSummary:
     def test_resolves_indices_and_answer_table(self):
         q = _question()
         # Player answered "Paris" (original index 0 = correct)
-        alice = PlayerSession(name="Alice", ws=None, score=30)
+        alice = PlayerSession(name="Alice", score=30)
         alice.submitted = True
         alice.current_answer = 0
         alice.round_score = 30
         alice.round_score_breakdown = {"speed_bonus": 5, "streak_bonus": 10}
         alice.streak = 3
         # Player did not answer
-        bob = PlayerSession(name="Bob", ws=None)
+        bob = PlayerSession(name="Bob")
         bob.submitted = False
 
         summary = RoundSummary(

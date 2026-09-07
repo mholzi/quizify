@@ -76,7 +76,7 @@ def _add_player(
     """
     ws = MagicMock()
     ws.closed = not connected
-    player = PlayerSession(name=name, ws=ws)
+    player = PlayerSession(name=name)
     player.score = score
     player.streak = streak
     player.connected = connected

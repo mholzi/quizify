@@ -11,19 +11,12 @@ not a hunch.
 from __future__ import annotations
 
 from pathlib import Path
-from unittest.mock import MagicMock
 
 import pytest
 
 from custom_components.quizify.game.state import QuizifyGameState
 from custom_components.quizify.game.team import Team
 from custom_components.quizify.server.serializers import serialize_leaderboard
-
-
-def _ws() -> MagicMock:
-    ws = MagicMock()
-    ws.closed = False
-    return ws
 
 
 class _Runtime:
@@ -43,7 +36,7 @@ class _Runtime:
 def state(tmp_path: Path) -> QuizifyGameState:
     st = QuizifyGameState(runtime=_Runtime(tmp_path), entry_id="test")
     for name in ("Anna", "Jan", "Mira"):
-        st.add_player(name, _ws())
+        st.add_player(name)
     return st
 
 

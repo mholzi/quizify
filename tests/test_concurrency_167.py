@@ -20,7 +20,6 @@ from __future__ import annotations
 
 import sys
 from pathlib import Path
-from unittest.mock import AsyncMock, MagicMock
 
 import pytest
 
@@ -42,13 +41,6 @@ class _FakeRuntime:
         self.data_dir = tmp_path
 
 
-def _ws() -> MagicMock:
-    ws = MagicMock()
-    ws.closed = False
-    ws.send_json = AsyncMock()
-    return ws
-
-
 @pytest.fixture
 def game(tmp_path: Path) -> QuizifyGameState:
     return QuizifyGameState(runtime=_FakeRuntime(tmp_path), entry_id="test")
@@ -56,7 +48,7 @@ def game(tmp_path: Path) -> QuizifyGameState:
 
 def _start_question(game: QuizifyGameState, names: list[str]) -> None:
     for n in names:
-        game.add_player(n, _ws())
+        game.add_player(n)
     game.start_game(language="de", num_rounds=3, difficulty="easy")
     q = game.start_next_question()
     assert q is not None
@@ -292,7 +284,7 @@ class TestReactionBonusReset:
         """`_reaction_bonuses_received` must NOT leak across games — otherwise a
         recipient capped in round N of game 1 is wrongly blocked in round N of
         game 2 (round numbers restart at 1)."""
-        p = PlayerSession(name="Bob", ws=None)
+        p = PlayerSession(name="Bob")
         p._reaction_bonuses_received[1] = 3  # capped in round 1 of game 1
         p.reaction_bonuses_given.add(1)
 
@@ -304,7 +296,7 @@ class TestReactionBonusReset:
     def test_field_default_is_isolated_per_instance(self) -> None:
         """The default_factory must give each player its own dict (no shared
         mutable default)."""
-        a = PlayerSession(name="A", ws=None)
-        b = PlayerSession(name="B", ws=None)
+        a = PlayerSession(name="A")
+        b = PlayerSession(name="B")
         a._reaction_bonuses_received[2] = 1
         assert b._reaction_bonuses_received == {}

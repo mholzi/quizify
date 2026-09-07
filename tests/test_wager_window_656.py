@@ -22,7 +22,6 @@ import asyncio
 import re
 import sys
 from pathlib import Path
-from unittest.mock import MagicMock
 
 import pytest
 
@@ -46,6 +45,7 @@ from custom_components.quizify.server.serializers import (  # noqa: E402
     serialize_state_snapshot,
     serialize_wager_window,
 )
+from tests.ws_helpers import FakeConnection, ws_of  # noqa: E402
 
 _WWW = _REPO_ROOT / "custom_components" / "quizify" / "www"
 
@@ -53,12 +53,6 @@ _WWW = _REPO_ROOT / "custom_components" / "quizify" / "www"
 class _FakeRuntime:
     def __init__(self, tmp_path: Path) -> None:
         self.data_dir = tmp_path
-
-
-def _fake_ws() -> MagicMock:
-    ws = MagicMock()
-    ws.closed = False
-    return ws
 
 
 def _mc_question() -> Question:
@@ -92,12 +86,12 @@ def _estimate_question() -> Question:
 def _game(tmp_path: Path, *, rounds: int, players: tuple[str, ...] = ("Anna", "Tom")):
     state = QuizifyGameState(runtime=_FakeRuntime(tmp_path), entry_id="t")
     for name in players:
-        state.add_player(name, _fake_ws())
+        state.add_player(name)
     state.start_game(language="de", num_rounds=rounds, timer_duration=30)
     return state
 
 
-class _Conn:
+class _Conn(FakeConnection):
     """Stub connection recording what went to phones vs. to host/TV."""
 
     def __init__(self) -> None:
@@ -292,7 +286,8 @@ class TestHandler:
         handler, conn = _handler()
         anna = state.get_player("Anna")
 
-        await handler._handle_submit_wager(anna.ws, {"wager": 40}, state)
+        anna_ws = ws_of(handler._conn, state, "Anna")
+        await handler._handle_submit_wager(anna_ws, {"wager": 40}, state)
 
         assert anna.wager == 40
         assert conn.errors == []
@@ -312,7 +307,8 @@ class TestHandler:
         handler, conn = _handler()
         anna = state.get_player("Anna")
 
-        await handler._handle_submit_wager(anna.ws, {"wager": 100}, state)
+        anna_ws = ws_of(handler._conn, state, "Anna")
+        await handler._handle_submit_wager(anna_ws, {"wager": 100}, state)
 
         assert anna.wager is None
         assert not [m for m in conn.sent if m.get("type") == "wager_accepted"]
@@ -326,11 +322,11 @@ class TestHandler:
         handler, conn = _handler()
 
         await handler._handle_submit_wager(
-            state.get_player("Anna").ws, {"wager": 10}, state
+            ws_of(handler._conn, state, "Anna"), {"wager": 10}, state
         )
         assert state.phase is GamePhase.WAGER_ACTIVE
         await handler._handle_submit_wager(
-            state.get_player("Tom").ws, {"wager": 20}, state
+            ws_of(handler._conn, state, "Tom"), {"wager": 20}, state
         )
 
         # Everyone in → the round starts without waiting out the deadline.
@@ -381,7 +377,7 @@ class TestHandler:
         state.start_next_question()
         handler, _conn = _handler()
 
-        await handler._handle_admin_skip(state.get_player("Anna").ws, state)
+        await handler._handle_admin_skip(ws_of(handler._conn, state, "Anna"), state)
 
         assert state.phase is GamePhase.QUESTION_ACTIVE
 

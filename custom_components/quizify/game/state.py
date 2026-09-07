@@ -57,8 +57,6 @@ from .timer import QuestionTimer
 from .types import TIME_LIMITS, Difficulty
 
 if TYPE_CHECKING:
-    from aiohttp import web
-
     from ..analytics import QuizifyAnalytics
     from ..question_stats import QuestionStatsService
     from ..runtime import Runtime
@@ -519,17 +517,25 @@ class QuizifyGameState:
                 _LOGGER.exception("State callback raised")
 
     def add_player(
-        self, name: str, ws: web.WebSocketResponse
+        self,
+        name: str,
+        connection_id: str | None = None,
+        *,
+        reclaim_by_name: bool = False,
     ) -> tuple[bool, str | None]:
         """Add a player to the game.
+
+        *connection_id* is an opaque transport handle owned by the server
+        layer (#882) — the game model stores it and never dereferences it.
 
         Returns (success, error_code).
         """
         result = self._player_registry.add_player(
             name=name,
-            ws=ws,
+            connection_id=connection_id,
             phase_value=self.phase.value,
             average_score_fn=self._player_registry.get_average_score,
+            reclaim_by_name=reclaim_by_name,
         )
         success, _err = result
         # If the player joined mid-round, give them a timer that tracks the
@@ -566,9 +572,17 @@ class QuizifyGameState:
         """Get player by name."""
         return self._player_registry.get_player(name)
 
-    def get_player_by_ws(self, ws: web.WebSocketResponse) -> PlayerSession | None:
-        """Get player by WebSocket."""
-        return self._player_registry.get_player_by_ws(ws)
+    def get_player_by_connection(
+        self, connection_id: str | None
+    ) -> PlayerSession | None:
+        """Get the player bound to *connection_id* (see #882)."""
+        return self._player_registry.get_player_by_connection(connection_id)
+
+    def bind_player_connection(
+        self, player: PlayerSession, connection_id: str | None
+    ) -> None:
+        """Re-point *player* at *connection_id* (reconnect path)."""
+        self._player_registry.bind_connection(player, connection_id)
 
     def get_players(self) -> list[PlayerSession]:
         """Return list of all player sessions."""

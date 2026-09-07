@@ -28,7 +28,6 @@ from __future__ import annotations
 import asyncio
 import json
 from pathlib import Path
-from unittest.mock import MagicMock
 
 from custom_components.quizify.game.state import GamePhase, QuizifyGameState
 
@@ -77,18 +76,12 @@ class _Runtime:
         return asyncio.ensure_future(coro)
 
 
-def _ws() -> MagicMock:
-    ws = MagicMock()
-    ws.closed = False
-    return ws
-
-
 def test_advancing_past_the_last_round_lands_on_the_finale(tmp_path: Path) -> None:
     """Why relabelling is honest and hiding was not. If this ever stops being
     true the button has to go back into hiding — and this test says so first."""
     game = QuizifyGameState(runtime=_Runtime(tmp_path), entry_id="t")
     for name in ("Anna", "Mira"):
-        game.add_player(name, _ws())
+        game.add_player(name)
     game.start_game(
         category="picture-round-en",
         difficulty="easy",
@@ -110,7 +103,7 @@ def test_advancing_past_the_last_round_lands_on_the_finale(tmp_path: Path) -> No
 
     # And nobody was thrown off the socket on the way there.
     assert len(game.players) == 2
-    assert all(not p.ws.closed for p in game.players.values())
+    assert all(p.connected for p in game.players.values())
 
 
 # --------------------------------------------------------------------------

@@ -25,7 +25,6 @@ from __future__ import annotations
 
 import re
 from pathlib import Path
-from unittest.mock import MagicMock
 
 from custom_components.quizify.game.state import QuizifyGameState
 from custom_components.quizify.server.round_message_builder import RoundMessageBuilder
@@ -33,12 +32,6 @@ from custom_components.quizify.server.serializers import serialize_answer_progre
 
 REPO = Path(__file__).resolve().parent.parent
 WEBSOCKET = REPO / "custom_components" / "quizify" / "server" / "websocket.py"
-
-
-def _ws() -> MagicMock:
-    ws = MagicMock()
-    ws.closed = False
-    return ws
 
 
 class _Runtime:
@@ -50,7 +43,7 @@ def _game(tmp_path: Path) -> QuizifyGameState:
     """The live test's own room: four people, three teams."""
     st = QuizifyGameState(runtime=_Runtime(tmp_path), entry_id="test")
     for name in ("Anna", "Ben", "Cleo", "Dan"):
-        st.add_player(name, _ws())
+        st.add_player(name)
     st.create_team("Sofa", "Anna")
     st.join_team(st.get_team_of("Anna")["team_id"], "Dan")
     st.create_team("Sessel", "Ben")
@@ -122,7 +115,7 @@ def test_a_team_is_present_while_any_member_is(tmp_path: Path) -> None:
 def test_an_ordinary_game_is_untouched(tmp_path: Path) -> None:
     st = QuizifyGameState(runtime=_Runtime(tmp_path), entry_id="test")
     for name in ("Anna", "Ben", "Cleo"):
-        st.add_player(name, _ws())
+        st.add_player(name)
     st.start_game(num_rounds=8, language="en")
 
     st.get_player("Anna").submitted = True
@@ -136,7 +129,7 @@ def test_an_ordinary_game_is_untouched(tmp_path: Path) -> None:
 def test_a_solo_guest_keeps_their_own_row_beside_the_teams(tmp_path: Path) -> None:
     """A player who joined no team is a team of one, not an error state."""
     st = _game(tmp_path)
-    st.add_player("Eva", _ws())
+    st.add_player("Eva")
     names = [e["name"] for e in _progress(st)["players"]]
     assert "Eva" in names and len(names) == 4
 
@@ -191,7 +184,7 @@ def test_the_head_count_stays_a_head_count(tmp_path: Path) -> None:
 def test_an_ordinary_game_sees_no_change(tmp_path: Path) -> None:
     st = QuizifyGameState(runtime=_Runtime(tmp_path), entry_id="test")
     for name in ("Anna", "Ben"):
-        st.add_player(name, _ws())
+        st.add_player(name)
     st.start_game(num_rounds=8, language="en")
     payload = RoundMessageBuilder().build_game_state_with_leaderboard(
         st, players=st.get_players()

@@ -79,8 +79,15 @@ def clean_entity_ids(entity_ids: list[str] | None) -> list[str]:
     return cleaned
 
 
-def _clean_str(value: Any) -> str | None:
-    """Normalize a free-text/entity option to a non-empty string or ``None``."""
+def clean_str(value: Any) -> str | None:
+    """Normalize a free-text/entity option to a non-empty string or ``None``.
+
+    Public because it is the house layer's one normalizer: the options reader
+    below, the five consumers' per-game overrides and the two lobby-music /
+    community-submit options in ``__init__`` all mean the same thing by an
+    empty entity picker — "not set", never the empty string, which would mask
+    the fallback instead of falling through to it.
+    """
     return (str(value).strip() or None) if value else None
 
 
@@ -143,11 +150,11 @@ class HouseSettings:
         self.light_entities = clean_entity_ids(
             list(options.get(CONF_PARTY_LIGHT_ENTITIES) or [])
         )
-        self.finale_scene = _clean_str(options.get(CONF_FINALE_SCENE))
-        self.media_player = _clean_str(options.get(CONF_MEDIA_PLAYER_ENTITY))
-        self.tts_entity = _clean_str(options.get(CONF_TTS_ENTITY))
+        self.finale_scene = clean_str(options.get(CONF_FINALE_SCENE))
+        self.media_player = clean_str(options.get(CONF_MEDIA_PLAYER_ENTITY))
+        self.tts_entity = clean_str(options.get(CONF_TTS_ENTITY))
         self.cue_urls = {
-            cue: _clean_str(options.get(_CUE_OPTION_KEYS[cue])) for cue in CUE_KEYS
+            cue: clean_str(options.get(_CUE_OPTION_KEYS[cue])) for cue in CUE_KEYS
         }
 
     # ------------------------------------------------------------------

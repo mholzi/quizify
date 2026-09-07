@@ -27,8 +27,18 @@ from pathlib import Path
 import pytest
 
 REPO = Path(__file__).resolve().parent.parent
-WEBSOCKET = REPO / "custom_components" / "quizify" / "server" / "websocket.py"
-DASHBOARD = REPO / "custom_components" / "quizify" / "www" / "dashboard.html"
+# The hot-seat frames moved out of websocket.py into one broadcaster per
+# mode (#881). The payload literals — and therefore this test's subject —
+# went with them.
+BROADCASTERS = (
+    REPO / "custom_components" / "quizify" / "server" / "broadcasters.py"
+)
+# #829: the television's script is its own file now. #787 then moved the
+# outcome decision itself into render-shared.js, because the host page and
+# the phone were reading `answered` and the delta by hand too — and the host
+# page had already drifted.
+DASHBOARD = REPO / "custom_components" / "quizify" / "www" / "js" / "dashboard.js"
+RENDER_SHARED = REPO / "custom_components" / "quizify" / "www" / "js" / "render-shared.js"
 I18N = REPO / "custom_components" / "quizify" / "www" / "i18n"
 
 
@@ -56,7 +66,7 @@ def test_every_hot_seat_broadcast_carries_the_round_numbers() -> None:
     whatever the frame had. A television is a single header — if any of the
     three omits them, the detour lies about where the game is.
     """
-    source = WEBSOCKET.read_text(encoding="utf-8")
+    source = BROADCASTERS.read_text(encoding="utf-8")
     for message_type in ("hot_seat_auction", "hot_seat_question", "hot_seat_result"):
         block = _payload_block(source, message_type)
         assert '"round_num"' in block, f"{message_type} has no round_num: {block}"
@@ -64,11 +74,11 @@ def test_every_hot_seat_broadcast_carries_the_round_numbers() -> None:
 
 
 def test_the_television_renders_the_hot_seat_outcome() -> None:
-    html = DASHBOARD.read_text(encoding="utf-8")
-    assert "case 'hot_seat_result':" in html, (
+    source = DASHBOARD.read_text(encoding="utf-8")
+    assert "case 'hot_seat_result':" in source, (
         "the settlement still has no case in the dashboard switch"
     )
-    assert "function handleHotSeatResult(" in html
+    assert "function handleHotSeatResult(" in source
 
 
 def test_the_outcome_distinguishes_a_wrong_answer_from_a_timeout() -> None:
@@ -77,9 +87,9 @@ def test_the_outcome_distinguishes_a_wrong_answer_from_a_timeout() -> None:
     #653 made an unanswered chair cost its stake, which is exactly why the
     board may not report silence as a wrong answer.
     """
-    html = DASHBOARD.read_text(encoding="utf-8")
-    start = html.index("function handleHotSeatResult(")
-    body = html[start : html.index("\n        }", start)]
+    shared = RENDER_SHARED.read_text(encoding="utf-8")
+    start = shared.index("function hotSeatSettlement(")
+    body = shared[start : shared.index("\n    }", start)]
     for key in ("hotSeat.resultRight", "hotSeat.resultWrong", "hotSeat.resultTimeout"):
         assert key in body, f"{key} is not used in the result renderer"
 
@@ -94,11 +104,15 @@ def test_the_outcome_distinguishes_a_wrong_answer_from_a_timeout() -> None:
 
 
 def _outcome_decision_source() -> str:
-    """The three lines of handleHotSeatResult that choose the outcome string."""
-    html = DASHBOARD.read_text(encoding="utf-8")
-    start = html.index("var noAnswer =", html.index("function handleHotSeatResult("))
-    end = html.index(";", html.index("var key =", start)) + 1
-    return html[start:end]
+    """The lines of the settlement renderer that choose the outcome string.
+
+    In render-shared.js since #787, and read from there so this still tests the
+    one copy all three surfaces run — which is the point of moving it.
+    """
+    shared = RENDER_SHARED.read_text(encoding="utf-8")
+    start = shared.index("var noAnswer =", shared.index("function hotSeatSettlement("))
+    end = shared.index(";", shared.index("var key =", start)) + 1
+    return shared[start:end]
 
 
 def test_the_timeout_branch_does_not_test_a_bare_falsy_value() -> None:

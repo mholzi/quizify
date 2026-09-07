@@ -11,7 +11,6 @@ from __future__ import annotations
 
 import sys
 from pathlib import Path
-from unittest.mock import MagicMock
 
 _REPO_ROOT = Path(__file__).resolve().parent.parent
 sys.path.insert(0, str(_REPO_ROOT))
@@ -34,7 +33,7 @@ def _mk_player(name: str, rounds: int = 5) -> PlayerSession:
     test by claiming a player first. Tests that exercise Most Accurate set
     `round_history` explicitly.
     """
-    p = PlayerSession(name=name, ws=MagicMock())
+    p = PlayerSession(name=name)
     p.round_history = ["wrong"] * rounds
     return p
 

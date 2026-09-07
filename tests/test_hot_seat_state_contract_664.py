@@ -22,7 +22,6 @@ the auction closes.
 from __future__ import annotations
 
 from pathlib import Path
-from unittest.mock import MagicMock
 
 import pytest
 
@@ -34,12 +33,6 @@ from custom_components.quizify.server.round_message_builder import (
 from custom_components.quizify.server.serializers import serialize_state_snapshot
 
 
-def _ws() -> MagicMock:
-    ws = MagicMock()
-    ws.closed = False
-    return ws
-
-
 class _Runtime:
     def __init__(self, tmp_path: Path) -> None:
         self.data_dir = tmp_path
@@ -49,7 +42,7 @@ class _Runtime:
 def game(tmp_path: Path) -> QuizifyGameState:
     st = QuizifyGameState(runtime=_Runtime(tmp_path), entry_id="test")
     for name in ("Anna", "Ben", "Mira"):
-        st.add_player(name, _ws())
+        st.add_player(name)
     st.start_game(category="picture-round-en", difficulty="easy",
                   num_rounds=5, language="en")
     for p in st.get_players():
@@ -203,7 +196,9 @@ _WWW = (
 
 @pytest.mark.parametrize(
     "path",
-    ["js/player-core.js", "dashboard.html"],
+    # #829: the television's switch moved out of dashboard.html into its own
+    # script, which is also what put it under the same drift guard as the phone's.
+    ["js/player-core.js", "js/dashboard.js"],
     ids=["player", "television"],
 )
 def test_both_clients_handle_every_hot_seat_phase(path: str) -> None:

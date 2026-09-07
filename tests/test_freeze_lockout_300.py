@@ -14,7 +14,6 @@ from __future__ import annotations
 
 import sys
 from pathlib import Path
-from unittest.mock import MagicMock
 
 import pytest
 
@@ -32,12 +31,6 @@ from custom_components.quizify.game.state import AnswerResult  # noqa: E402
 class _FakeRuntime:
     def __init__(self, tmp_path: Path) -> None:
         self.data_dir = tmp_path
-
-
-def _fake_ws() -> MagicMock:
-    ws = MagicMock()
-    ws.closed = False
-    return ws
 
 
 class _FakeClock:
@@ -67,8 +60,8 @@ def clock(monkeypatch) -> _FakeClock:
 
 
 def _start_active_round(state: QuizifyGameState) -> None:
-    state.add_player("Alice", _fake_ws())
-    state.add_player("Bob", _fake_ws())
+    state.add_player("Alice")
+    state.add_player("Bob")
     state.start_game(language="de", num_rounds=3, timer_duration=30)
     state.start_next_question()
     assert state.phase == GamePhase.QUESTION_ACTIVE

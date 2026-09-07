@@ -27,7 +27,6 @@ from __future__ import annotations
 
 import re
 from pathlib import Path
-from unittest.mock import MagicMock
 
 import pytest
 
@@ -36,14 +35,12 @@ from custom_components.quizify.game.state import QuizifyGameState
 from custom_components.quizify.server.protocol import SERVER_FRAMES
 
 REPO = Path(__file__).resolve().parent.parent
-DASHBOARD = REPO / "custom_components" / "quizify" / "www" / "dashboard.html"
-WEBSOCKET = REPO / "custom_components" / "quizify" / "server" / "websocket.py"
-
-
-def _ws() -> MagicMock:
-    ws = MagicMock()
-    ws.closed = False
-    return ws
+# #829: the television's script is its own file now.
+DASHBOARD = REPO / "custom_components" / "quizify" / "www" / "js" / "dashboard.js"
+# #881: the hot-seat frames live in the mode's broadcaster now.
+BROADCASTERS = (
+    REPO / "custom_components" / "quizify" / "server" / "broadcasters.py"
+)
 
 
 class _Runtime:
@@ -55,7 +52,7 @@ def _game(tmp_path: Path) -> QuizifyGameState:
     """Three teams, the live-test shape: Sofa, Sessel, Teppich."""
     st = QuizifyGameState(runtime=_Runtime(tmp_path), entry_id="test")
     for name in ("Anna", "Dan", "Ben", "Cleo"):
-        st.add_player(name, _ws())
+        st.add_player(name)
     st.create_team("Sofa", "Anna")
     st.join_team(st.get_team_of("Anna")["team_id"], "Dan")
     st.create_team("Sessel", "Ben")
@@ -69,9 +66,9 @@ def _team(st: QuizifyGameState, name: str):  # noqa: ANN202
 
 
 def _handler_source() -> str:
-    html = DASHBOARD.read_text(encoding="utf-8")
-    start = html.index("function handleHotSeatResult(msg)")
-    return html[start : html.index("\n        function ", start + 10)]
+    source = DASHBOARD.read_text(encoding="utf-8")
+    start = source.index("function handleHotSeatResult(msg)")
+    return source[start : source.index("\n    function ", start + 10)]
 
 
 def _payload_block(source: str, message_type: str) -> str:
@@ -99,7 +96,9 @@ def test_the_result_frame_declares_a_leaderboard() -> None:
 
 
 def test_the_result_broadcast_actually_builds_one() -> None:
-    block = _payload_block(WEBSOCKET.read_text(encoding="utf-8"), "hot_seat_result")
+    block = _payload_block(
+        BROADCASTERS.read_text(encoding="utf-8"), "hot_seat_result"
+    )
     assert "serialize_leaderboard" in block, (
         "a name→number map is not something a board can build rows from"
     )

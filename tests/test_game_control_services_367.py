@@ -86,7 +86,7 @@ def _make_handler(
 def _new_active_game(tmp_path: Path) -> QuizifyGameState:
     """A game driven to QUESTION_ACTIVE on round 1 (lightning disabled)."""
     gs = QuizifyGameState(runtime=_Runtime(tmp_path), entry_id="test")
-    gs.add_player("A", _fake_ws())
+    gs.add_player("A")
     gs.start_game(num_rounds=10, lightning_enabled=False)
     gs.start_next_question()
     assert gs.phase == GamePhase.QUESTION_ACTIVE

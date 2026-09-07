@@ -135,7 +135,7 @@ async def test_start_game_cancels_hot_seat_loop(
     handler: QuizifyWebSocketHandler, game: QuizifyGameState
 ) -> None:
     """A start that lands during a detour must not leave the loop running."""
-    game.add_player("Anna", _ws())
+    game.add_player("Anna")
     task = _pending_hot_seat_task(handler)
     await handler._handle_start_game(_ws(), {"num_rounds": 3}, game)
     await _assert_cancelled(handler, task)
@@ -145,7 +145,7 @@ async def test_start_game_cancels_hot_seat_loop(
 async def test_play_again_cancels_hot_seat_loop(
     handler: QuizifyWebSocketHandler, game: QuizifyGameState
 ) -> None:
-    game.add_player("Anna", _ws())
+    game.add_player("Anna")
     game.start_game(num_rounds=3)
     task = _pending_hot_seat_task(handler)
     await handler._handle_play_again(_ws(), game)

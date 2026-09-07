@@ -1,7 +1,7 @@
 """#666 — the reveal must not dim the distribution chart along with the tile.
 
-``dashboard.html`` is a self-contained page with an inline ``<style>`` block,
-so these are text-level guards (same shape as ``test_ux_dashboard_w3a.py``).
+These are text-level guards over the television's stylesheet (same shape as
+``test_ux_dashboard_w3a.py``).
 
 The regression being locked out: ``.dashboard-answer.wrong { opacity: .32 }``.
 CSS opacity multiplies down the subtree, so a rule on the tile took the
@@ -9,7 +9,7 @@ answer-distribution bar and its percentage (#151) with it — the number the roo
 is arguing about, at a third of its contrast, on a screen watched from the
 couch. The dimming has to sit on the *text* children instead.
 
-The selector lookups anchor on ``selector + " {"`` on purpose: the file
+The selector lookups anchor on ``selector + " {"`` on purpose: the sheet
 mentions these class names in comments too, and an ``index(selector)`` would
 happily return a comment.
 """
@@ -17,25 +17,18 @@ happily return a comment.
 from __future__ import annotations
 
 import re
-from pathlib import Path
 
-REPO = Path(__file__).resolve().parent.parent
-DASHBOARD = REPO / "custom_components" / "quizify" / "www" / "dashboard.html"
-
-
-def _text() -> str:
-    return DASHBOARD.read_text(encoding="utf-8")
+from tests.conftest import dashboard_css
 
 
 def _css() -> str:
-    """The inline ``<style>`` blocks with CSS comments removed.
+    """The television's stylesheet with CSS comments removed.
 
-    Both matter. Comments carry commas and braces of their own, so a selector
-    list read straight off the file arrives with half a sentence glued to it.
+    Comments carry commas and braces of their own, so a selector list read
+    straight off the file arrives with half a sentence glued to it.
     """
-    blocks = re.findall(r"<style[^>]*>(.*?)</style>", _text(), re.DOTALL)
-    assert blocks, "dashboard.html is expected to carry its CSS inline"
-    return re.sub(r"/\*.*?\*/", "", "\n".join(blocks), flags=re.DOTALL)
+    # #829/#880: the television's code and styles are their own files now.
+    return re.sub(r"/\*.*?\*/", "", dashboard_css(), flags=re.DOTALL)
 
 
 def _rule(css: str, selector: str) -> str:

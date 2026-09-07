@@ -7,6 +7,7 @@ import contextlib
 import ipaddress
 import logging
 import random
+from functools import cached_property
 from typing import TYPE_CHECKING, Any
 
 from aiohttp import WSMsgType, web
@@ -34,7 +35,6 @@ from custom_components.quizify.game.drivers import (
     WagerWindowDriver,
 )
 from custom_components.quizify.game.highlights import compute_superlatives
-from custom_components.quizify.game.hot_seat import stake_of as hot_seat_stake
 from custom_components.quizify.game.phase_controller import TICK_INTERVAL
 from custom_components.quizify.game.player_registry import sanitize_player_name
 from custom_components.quizify.game.powerups import (
@@ -48,12 +48,15 @@ from custom_components.quizify.game.state import (
     QuizifyGameState,
     TeamAnswerAck,
 )
-from custom_components.quizify.game.team import (
-    ANSWER_CHANGE_LOCK_SECONDS as LIGHTNING_ANSWER_LOCK_SECONDS,
-)
 from custom_components.quizify.game.team import Team
 from custom_components.quizify.game.types import Difficulty
 from custom_components.quizify.server.broadcast_dispatcher import BroadcastDispatcher
+from custom_components.quizify.server.broadcasters import (
+    HotSeatBroadcaster,
+    LightningBroadcaster,
+    RoundBroadcaster,
+    WagerBroadcaster,
+)
 from custom_components.quizify.server.connection import ConnectionManager
 from custom_components.quizify.server.origin import reject_cross_origin
 from custom_components.quizify.server.rate_limit import SlidingWindowLimiter
@@ -74,6 +77,8 @@ if TYPE_CHECKING:
     from collections.abc import Callable
 
     from ..analytics import PlayerStanding
+    from ..game.player import PlayerSession
+    from ..game.questions import Question
     from ..game_events import QuizifyEventEmitter
     from ..lights import QuizifyPartyLights
     from ..runtime import Runtime
@@ -575,6 +580,53 @@ class QuizifyWebSocketHandler:
         self._progress_dirty = False
         self._progress_flush_task: asyncio.Task | None = None
 
+    # ------------------------------------------------------------------
+    # The four fan-out objects the drivers actually talk to (#881)
+    # ------------------------------------------------------------------
+    # #788 gave each driver a narrow ``Broadcaster`` protocol and then handed
+    # it ``self``, so the contract was an annotation and nothing more: a driver
+    # held every method on this class, and a mode could not be exercised
+    # against a small fake. Each protocol now has one small implementation in
+    # ``server/broadcasters.py`` that owns its mode's frames; the handler holds
+    # them rather than being them.
+    #
+    # Built on first use rather than in ``__init__`` so a handler assembled
+    # with ``__new__`` — which several tests do, to exercise one message
+    # handler against a stub connection — gets them from the same wiring the
+    # real one uses instead of a hand-rolled copy.
+    #
+    # ``lambda: self._conn`` rather than ``self._conn``: much of the suite
+    # replaces the connection manager after construction, and a reference
+    # captured once would keep sending into the discarded one.
+
+    @cached_property
+    def _lightning_out(self) -> LightningBroadcaster:
+        """The Lightning Round's fan-out (#42/#201)."""
+        return LightningBroadcaster(lambda: self._conn, self._round_messages)
+
+    @cached_property
+    def _hot_seat_out(self) -> HotSeatBroadcaster:
+        """The Hot Seat's fan-out (#616/#804)."""
+        return HotSeatBroadcaster(
+            lambda: self._conn,
+            self._round_messages,
+            resume_normal_question=self._continue_normal_question,
+        )
+
+    @cached_property
+    def _round_out(self) -> RoundBroadcaster:
+        """The normal round's fan-out (#203/#365/#413)."""
+        return RoundBroadcaster(lambda: self._conn, self._round_messages)
+
+    @cached_property
+    def _wager_out(self) -> WagerBroadcaster:
+        """The betting window's fan-out (#656)."""
+        return WagerBroadcaster(
+            lambda: self._conn,
+            self._round_messages,
+            close=self._close_wager_window,
+        )
+
     # Coalescing window for visual reactions (#304), seconds.
     _REACTION_FLUSH_WINDOW = 0.15
 
@@ -845,6 +897,9 @@ class QuizifyWebSocketHandler:
                 else:
                     self._ip_connections.pop(remote, None)
             await self._handle_disconnect(ws, was_admin=was_admin)
+            # Only now: ``_handle_disconnect`` still needs the id to find the
+            # player sitting on this socket (#882).
+            self._conn.forget_connection(ws)
             _LOGGER.debug(
                 "WebSocket disconnected, total: %d", len(self._conn.connections)
             )
@@ -960,6 +1015,57 @@ class QuizifyWebSocketHandler:
         # call regardless of what the underlying handler needs.
         await handler(self, ws, data, game_state)
 
+    # ------------------------------------------------------------------
+    # Transport ↔ player bridge (#882)
+    # ------------------------------------------------------------------
+
+    def _player_for_ws(
+        self, game_state: QuizifyGameState, ws: web.WebSocketResponse
+    ) -> PlayerSession | None:
+        """Return the player sitting on *ws*, or None.
+
+        The game layer is keyed by an opaque ``connection_id``; translating a
+        socket into one is the server layer's job and this is the only place
+        that does it for lookups.
+        """
+        return game_state.get_player_by_connection(self._conn.connection_id(ws))
+
+    def _reap_closed_connections(
+        self, game_state: QuizifyGameState
+    ) -> set[str]:
+        """Mark players whose socket is known-dead as disconnected.
+
+        Replaces the ``ws.closed`` read that used to sit inside
+        ``PlayerSession.is_active`` and ``PlayerRegistry.add_player`` (#882).
+        The situation is real and unchanged: a phone reloads, its new socket
+        opens and sends ``join`` before aiohttp has run the old socket's
+        ``finally`` — so the old slot still says ``connected = True`` while
+        its transport is already shut. Left alone, that ghost blocks
+        all-submitted early reveal for the whole room and makes the user's own
+        name look taken.
+
+        Only ids the manager still tracks AND reports closed are reaped: an
+        unknown id is unknown, not dead, so a player built without a transport
+        (tests, snapshots) is never touched.
+
+        Returns the names it just took down, which is what tells
+        ``_handle_join`` that a name-collision is the caller's own ghost
+        rather than a live stranger.
+        """
+        reaped: set[str] = set()
+        for player in game_state.get_players():
+            if not player.connected:
+                continue
+            if self._conn.is_connection_dead(player.connection_id):
+                player.connected = False
+                reaped.add(player.name)
+                _LOGGER.info(
+                    "Reaped stale connection for %s (socket closed without a "
+                    "disconnect)",
+                    player.name,
+                )
+        return reaped
+
     async def _handle_get_state(
         self, ws: web.WebSocketResponse, data: dict, game_state: QuizifyGameState
     ) -> None:
@@ -971,7 +1077,7 @@ class QuizifyWebSocketHandler:
         # canonical order here mis-scores ~2/3 of taps after a mid-round
         # reconnect (the client auto-sends get_state on every join). Pure
         # admin/dashboard sockets (no player session) keep canonical order.
-        player = game_state.get_player_by_ws(ws)
+        player = self._player_for_ws(game_state, ws)
         if player is not None:
             state_msg = self._round_messages.project_snapshot_for_player(
                 game_state, snapshot=state_msg, player=player
@@ -991,6 +1097,17 @@ class QuizifyWebSocketHandler:
         if self._conn.has_pending_admin_disconnect():
             self._conn.cancel_admin_disconnect()
             _LOGGER.info("Admin reconnected, cancelled disconnect timeout")
+
+        # #895c: and the deferred host-disconnect pause, for the same reason.
+        # ``_schedule_admin_pause`` is armed whenever the host's PLAYER socket
+        # closes during a live question, and the two paths that cancelled it
+        # again — ``_handle_join`` and the session reconnect — both look for a
+        # returning *player*. A host who leaves the game to open
+        # /quizify/admin comes back on an ADMIN socket instead, so nothing
+        # cancelled the timer: four seconds later every phone in the room was
+        # shown the "host disconnected" pause overlay while the host was
+        # sitting on the admin page, watching the same game.
+        self._cancel_admin_pause()
 
         admin_token = self._conn.get_or_create_admin_token()
 
@@ -1025,6 +1142,13 @@ class QuizifyWebSocketHandler:
         self, ws: web.WebSocketResponse, data: dict, game_state: QuizifyGameState
     ) -> None:
         """Handle player join."""
+        # A reloading phone races its own old socket here (#448/#646): take
+        # down any slot whose transport is already dead before deciding
+        # whether this name is taken. ``reaped`` is what turns a collision
+        # with the caller's own ghost into a reclaim rather than a refusal.
+        reaped = self._reap_closed_connections(game_state)
+        connection_id = self._conn.connection_id(ws)
+
         # Canonicalize ONCE, here, before anything is keyed on the name (#603).
         # The registry sanitizes on store; using the raw name afterwards meant
         # the session token was issued under a name the registry did not have
@@ -1050,7 +1174,7 @@ class QuizifyWebSocketHandler:
         # duplicate join. A re-join under the SAME name is idempotent and
         # handled by the reconnect path in PlayerRegistry.add_player, so it is
         # explicitly allowed here (no-op rejoin / lobby refresh).
-        existing = game_state.get_player_by_ws(ws)
+        existing = self._player_for_ws(game_state, ws)
         if (
             existing is not None
             and existing.connected
@@ -1071,21 +1195,22 @@ class QuizifyWebSocketHandler:
 
         # Auto-append number if name is taken
         #
-        # #448: gate on ``is_active`` (connected AND ws open), not the raw
-        # ``connected`` flag. After a reload the old slot can linger with
-        # ``connected = True`` but a CLOSED WebSocket — the "stale connected
-        # flag, old WS closed" case that PlayerRegistry.add_player treats as a
-        # legitimate rejoin/reclaim. Renaming to "Name 2" here (before
-        # add_player ever sees the original name) made that reclaim branch
-        # unreachable, spawning a duplicate ghost with score 0. Falling through
-        # on a stale slot lets add_player reclaim the original name; genuinely
-        # live duplicates (ws still open) still get the "Name 2" suffix.
+        # #448: gate on ``is_active``, not on the name alone. After a reload
+        # the old slot can linger with ``connected = True`` and a CLOSED
+        # socket — the "stale connected flag" case ``_reap_closed_connections``
+        # has just taken down above (it read ``ws.closed`` here before #882).
+        # Renaming to "Name 2" at this point (before add_player ever sees the
+        # original name) made the reclaim branch unreachable, spawning a
+        # duplicate ghost with score 0. Falling through on a reaped slot lets
+        # add_player reclaim the original name; genuinely live duplicates
+        # (socket still open) still get the "Name 2" suffix.
         #
-        # ``existing.ws is not ws`` (#603): once the name is canonicalized, an
-        # idempotent rejoin from the SAME connection — a lobby refresh, the
-        # admin's redirect from /quizify/admin to /quizify/player — matches an
-        # active slot that IS this connection. Renaming it to "Name 2" would
-        # spawn a score-0 duplicate of the player who is already sitting there.
+        # ``existing.connection_id != connection_id`` (#603): once the name is
+        # canonicalized, an idempotent rejoin from the SAME connection — a
+        # lobby refresh, the admin's redirect from /quizify/admin to
+        # /quizify/player — matches an active slot that IS this connection.
+        # Renaming it to "Name 2" would spawn a score-0 duplicate of the
+        # player who is already sitting there.
         # Before canonicalization this never surfaced, because the raw name
         # differed from the stored one and the duplicate-self-join guard above
         # rejected the rejoin outright instead. Both behaviours were wrong; a
@@ -1095,12 +1220,14 @@ class QuizifyWebSocketHandler:
         while (
             (existing := game_state.get_player(name))
             and existing.is_active
-            and existing.ws is not ws
+            and existing.connection_id != connection_id
         ):
             name = f"{original_name} {counter}"
             counter += 1
 
-        success, error_code = game_state.add_player(name, ws)
+        success, error_code = game_state.add_player(
+            name, connection_id, reclaim_by_name=name in reaped
+        )
 
         if success:
             # Cancel pending removal on reconnect
@@ -1285,7 +1412,7 @@ class QuizifyWebSocketHandler:
             # skipped inside the announcer so the room doesn't hear the host
             # announce themselves. Pre-game lobby joins narrate because the
             # admin pushes the TTS config on connect via ``configure_tts``.
-            self._notify_tts_join(
+            self._player_joined(
                 name, bool(player_obj.is_admin) if player_obj else False
             )
         else:
@@ -1332,8 +1459,10 @@ class QuizifyWebSocketHandler:
             await self._conn.send(ws, {"type": "reconnect_failed"})
             return
 
-        # Restore player connection
-        player.ws = ws
+        # Restore player connection. The id → socket map stays in the
+        # connection manager (#882); the game model only learns the new
+        # opaque handle.
+        game_state.bind_player_connection(player, self._conn.connection_id(ws))
         player.connected = True
         self._conn.cancel_pending_removal(name)
 
@@ -1406,24 +1535,11 @@ class QuizifyWebSocketHandler:
     # Teams (#365)
     # ------------------------------------------------------------------
 
-    async def _broadcast_teams(self, game_state: QuizifyGameState) -> None:
-        """Tell the room who is playing with whom.
-
-        Sent uncoalesced, unlike the roster: opening a team has to appear on
-        the other phones *now*, because the next thing that happens is someone
-        looking for it in the list. It is also what makes a join land on the
-        founder's screen — without it she cannot tell whether it worked.
-        """
-        await self._conn.broadcast({
-            "type": "teams_update",
-            "teams": game_state.team_registry.to_list(),
-        })
-
     async def _handle_create_team(
         self, ws: web.WebSocketResponse, data: dict, game_state: QuizifyGameState
     ) -> None:
         """Open a team and put the requesting player in it (lobby only)."""
-        player = game_state.get_player_by_ws(ws)
+        player = self._player_for_ws(game_state, ws)
         if not player:
             await self._conn.send_error(ws, ERR_NOT_IN_GAME, "Not in game")
             return
@@ -1437,13 +1553,13 @@ class QuizifyWebSocketHandler:
             return
 
         await self._conn.send(ws, {"type": "team_joined", "team": team})
-        await self._broadcast_teams(game_state)
+        await self._round_out.send_teams_update(game_state)
 
     async def _handle_join_team(
         self, ws: web.WebSocketResponse, data: dict, game_state: QuizifyGameState
     ) -> None:
         """Join an existing team (lobby only)."""
-        player = game_state.get_player_by_ws(ws)
+        player = self._player_for_ws(game_state, ws)
         if not player:
             await self._conn.send_error(ws, ERR_NOT_IN_GAME, "Not in game")
             return
@@ -1458,13 +1574,13 @@ class QuizifyWebSocketHandler:
             return
 
         await self._conn.send(ws, {"type": "team_joined", "team": team})
-        await self._broadcast_teams(game_state)
+        await self._round_out.send_teams_update(game_state)
 
     async def _handle_leave_team(
         self, ws: web.WebSocketResponse, data: dict, game_state: QuizifyGameState
     ) -> None:
         """Leave the current team (lobby only). The last one out dissolves it."""
-        player = game_state.get_player_by_ws(ws)
+        player = self._player_for_ws(game_state, ws)
         if not player:
             await self._conn.send_error(ws, ERR_NOT_IN_GAME, "Not in game")
             return
@@ -1476,47 +1592,7 @@ class QuizifyWebSocketHandler:
             return
 
         await self._conn.send(ws, {"type": "team_left"})
-        await self._broadcast_teams(game_state)
-
-    async def _broadcast_team_answer(
-        self,
-        game_state: QuizifyGameState,
-        ack: TeamAnswerAck,
-        *,
-        setter: str,
-    ) -> None:
-        """Show the standing answer on every member's phone (#365).
-
-        The index is remapped per member: every player sees the answers in
-        their own shuffled order (#253), so sending one number to the whole
-        team would put the dots on the wrong row for everyone but the setter.
-        """
-        team = game_state.team_registry.get(ack.team_id)
-        if team is None:
-            return
-        for name in team.members:
-            member = game_state.get_player(name)
-            if member is None or member.ws is None or not member.connected:
-                continue
-            shuffle = game_state.get_player_shuffle(name)
-            try:
-                shown_index = shuffle.index(ack.answer_index)
-            except ValueError:
-                # No shuffle stored for this member yet (they joined between
-                # the question start and this tap). Their client re-reads the
-                # answer from the next projected snapshot.
-                continue
-            await self._conn.send(member.ws, {
-                "type": "team_answer",
-                "team_id": ack.team_id,
-                "answer_index": shown_index,
-                "set_by": setter,
-                # The lock belongs to the team, not to the person who tapped:
-                # every member's buttons go quiet for the same two seconds,
-                # which is what stops the tap war rather than slowing one side.
-                "lock_seconds": ack.lock_seconds,
-                "members": list(team.members),
-            })
+        await self._round_out.send_teams_update(game_state)
 
     # ------------------------------------------------------------------
     # Submit answer
@@ -1526,7 +1602,11 @@ class QuizifyWebSocketHandler:
         self, ws: web.WebSocketResponse, data: dict, game_state: QuizifyGameState
     ) -> None:
         """Handle answer submission from player."""
-        player = game_state.get_player_by_ws(ws)
+        # ``all_submitted()`` decides early reveal off ``connected`` (#882);
+        # reap first so a room-mate whose socket died a moment ago cannot hold
+        # the whole room on the full timer.
+        self._reap_closed_connections(game_state)
+        player = self._player_for_ws(game_state, ws)
         if not player:
             await self._conn.send_error(ws, ERR_NOT_IN_GAME, "Not in game")
             return
@@ -1576,7 +1656,9 @@ class QuizifyWebSocketHandler:
             # anything. Every member — the setter included — gets the standing
             # answer in their own answer order, so the dots appear on the same
             # question for all of them.
-            await self._broadcast_team_answer(game_state, result, setter=player.name)
+            await self._round_out.send_team_answer(
+                game_state, result, setter=player.name
+            )
             self._mark_progress_dirty()
             return
 
@@ -1604,8 +1686,8 @@ class QuizifyWebSocketHandler:
             # reader is worse than no message: it reads like a contract.
             if result.milestone_bonus:
                 # ONE milestone from the dispatch point (#789); the fan-out to
-                # the announcer and the HA bus lives in _notify_milestone.
-                self._notify_milestone(
+                # the announcer and the HA bus lives in _streak_milestone.
+                self._streak_milestone(
                     player.name, result.milestone_streak, result.milestone_bonus
                 )
             # NB: round-summary broadcast is fired exclusively by
@@ -1641,7 +1723,7 @@ class QuizifyWebSocketHandler:
         correct answerer caps at _REACTION_BONUS_CAP_PER_ROUND incoming
         bonuses so a 6-player room can't pile 5 free points on the
         leader every reveal."""
-        reactor = game_state.get_player_by_ws(ws)
+        reactor = self._player_for_ws(game_state, ws)
         if not reactor:
             return  # silent: reactions are best-effort, not a hard error
 
@@ -2023,7 +2105,7 @@ class QuizifyWebSocketHandler:
         everything at no risk. The phase check below is the fix — once the
         question is out, the betting is over.
         """
-        player = game_state.get_player_by_ws(ws)
+        player = self._player_for_ws(game_state, ws)
         if not player:
             await self._conn.send_error(ws, ERR_NOT_IN_GAME, "Not in game")
             return
@@ -2098,7 +2180,7 @@ class QuizifyWebSocketHandler:
         self, ws: web.WebSocketResponse, data: dict, game_state: QuizifyGameState
     ) -> None:
         """Handle power-up usage."""
-        player = game_state.get_player_by_ws(ws)
+        player = self._player_for_ws(game_state, ws)
         if not player:
             await self._conn.send_error(ws, ERR_NOT_IN_GAME, "Not in game")
             return
@@ -2701,7 +2783,14 @@ class QuizifyWebSocketHandler:
         # never reach the host (or any real player) and their UI stays
         # frozen on the now-stale lobby. So: clear state → broadcast the
         # reset to everyone still connected → only THEN close the sockets.
-        stale_wses = [p.ws for p in game_state.get_players() if p.ws is not None]
+        stale_wses = [
+            sock
+            for sock in (
+                self._conn.socket_for(p.connection_id)
+                for p in game_state.get_players()
+            )
+            if sock is not None
+        ]
 
         # Drop every player from the registry (full wipe — not just score reset).
         game_state.clear_all_players()
@@ -2762,7 +2851,7 @@ class QuizifyWebSocketHandler:
         # matters: send before close, or the client never reads it. We don't
         # rely on the closed event reaching us — remove_player flushes state
         # immediately and the WS cleanup path is idempotent.
-        target_ws = target.ws
+        target_ws = self._conn.socket_for(target.connection_id)
         game_state.remove_player(target.name)
         self._conn.clear_player_tokens(target.name)
 
@@ -2825,7 +2914,7 @@ class QuizifyWebSocketHandler:
         state = self._snapshot(game_state)
         state["type"] = "game_state"
         await self._conn.broadcast(state)
-        await self._broadcast_lightning_splash(game_state)
+        await self._lightning_out.send_lightning_splash(game_state)
 
         # Auto-advance: no host tap. The loop itself dismisses the splash after
         # the grace and starts question 1.
@@ -2843,19 +2932,6 @@ class QuizifyWebSocketHandler:
             return
         await self._deliver_question(game_state, question)
 
-    async def _broadcast_lightning_splash(
-        self, game_state: QuizifyGameState
-    ) -> None:
-        """Fan out the intro-splash payload (rules preview) to all clients."""
-        lr = game_state.lightning
-        if lr is None:
-            return
-        await self._conn.broadcast({
-            "type": "lightning_splash",
-            "num_questions": lr.num_questions,
-            "seconds_per_question": lr.seconds_per_question,
-        })
-
     async def _handle_lightning_answer(
         self, ws: web.WebSocketResponse, data: dict, game_state: QuizifyGameState
     ) -> None:
@@ -2865,7 +2941,7 @@ class QuizifyWebSocketHandler:
         lr = game_state.lightning
         if lr is None:
             return
-        player = game_state.get_player_by_ws(ws)
+        player = self._player_for_ws(game_state, ws)
         if not player:
             await self._conn.send_error(ws, ERR_NOT_IN_GAME, "Not in game")
             return
@@ -2901,48 +2977,14 @@ class QuizifyWebSocketHandler:
         # a teammate may still change it. Every member is told what stands, in
         # their own answer order.
         if lr.team_mode and lr.entrant_for(player.name) != player.name:
-            await self._broadcast_lightning_team_answer(game_state, lr, player.name)
+            await self._lightning_out.send_lightning_team_answer(
+                game_state, lr, player.name
+            )
             return
 
-        # Lightweight ack: lock the player's buttons + show right/wrong.
-        await self._conn.send(ws, {
-            "type": "lightning_answer_result",
-            "correct": bool(result),
-            "index": lr.index,
-            "score": lr.score_for(player.name),
-        })
-
-    async def _broadcast_lightning_team_answer(
-        self, game_state: QuizifyGameState, lr: Any, setter: str
-    ) -> None:
-        """Show the team's standing lightning answer on every member's phone.
-
-        Mirrors the normal round's ``team_answer`` (#365): the index is
-        remapped per member, because each phone shuffles the answers for
-        itself — one number sent to the whole team would highlight the wrong
-        row for everybody but the person who tapped.
-        """
-        standing = lr.standing_answer(setter)
-        if standing is None or standing.answer_index is None:
-            return
-        members = lr.members_of(setter)
-        for name in members:
-            member = game_state.get_player(name)
-            if member is None or member.ws is None or not member.connected:
-                continue
-            order = lr.ensure_shuffle(name)
-            try:
-                shown_index = order.index(standing.answer_index)
-            except ValueError:
-                continue
-            await self._conn.send(member.ws, {
-                "type": "lightning_team_answer",
-                "index": lr.index,
-                "answer_index": shown_index,
-                "set_by": setter,
-                "members": list(members),
-                "lock_seconds": LIGHTNING_ANSWER_LOCK_SECONDS,
-            })
+        await self._lightning_out.send_lightning_answer_result(
+            ws, lr, player.name, correct=bool(result)
+        )
 
     def _start_lightning_loop(
         self,
@@ -2960,7 +3002,7 @@ class QuizifyWebSocketHandler:
         """
         self._cancel_lightning_loop()
         driver = LightningDriver(
-            self,
+            self._lightning_out,
             splash_grace=self.LIGHTNING_SPLASH_GRACE,
             splash_hold=self.AUTO_LIGHTNING_SPLASH_HOLD,
         )
@@ -2968,21 +3010,6 @@ class QuizifyWebSocketHandler:
             driver.run(game_state, auto_dismiss_splash=auto_dismiss_splash)
         )
         self._lightning_task.add_done_callback(self._log_task_exception)
-
-    # -- LightningBroadcaster (game/drivers/protocols.py) ---------------
-
-    async def send_lightning_question(
-        self, game_state: QuizifyGameState, lr: Any
-    ) -> None:
-        await self._broadcast_lightning_question(game_state, lr)
-
-    async def send_lightning_tick(
-        self, game_state: QuizifyGameState, lr: Any
-    ) -> None:
-        await self._broadcast_lightning_tick(game_state, lr)
-
-    async def send_lightning_recap(self, game_state: QuizifyGameState) -> None:
-        await self._broadcast_lightning_recap(game_state)
 
     def _cancel_lightning_loop(self) -> None:
         if self._lightning_task is not None:
@@ -3010,7 +3037,7 @@ class QuizifyWebSocketHandler:
         In team mode the bidder is the team (#804): one bid, staked against
         the team's score, and the member who places it takes the chair.
         """
-        player = game_state.get_player_by_ws(ws)
+        player = self._player_for_ws(game_state, ws)
         if not player:
             await self._conn.send_error(ws, ERR_NOT_IN_GAME, "Not in game")
             return
@@ -3032,25 +3059,15 @@ class QuizifyWebSocketHandler:
             await self._conn.send_error(ws, ERR_INVALID_ACTION, "Bid already placed")
             return
 
-        await self._conn.send(ws, {
-            "type": "hot_seat_bid_accepted",
-            "bid": pct,
-            "points": hot_seat_stake(
-                hs.scores.get(hs.entrant_for(player.name), 0), pct
-            ),
-        })
-        # Blind auction: the room learns how many have bid, never how much.
-        await self._conn.broadcast({
-            "type": "hot_seat_bid_count",
-            "count": len(hs.bids),
-            "total": len(hs.scores),
-        })
+        await self._hot_seat_out.send_hot_seat_bid_accepted(
+            ws, hs, player.name, pct=pct
+        )
 
     async def _handle_hot_seat_bet(
         self, ws: web.WebSocketResponse, data: dict, game_state: QuizifyGameState
     ) -> None:
         """Accept a spectator's optional stake on the seat holder (#616)."""
-        player = game_state.get_player_by_ws(ws)
+        player = self._player_for_ws(game_state, ws)
         if not player:
             await self._conn.send_error(ws, ERR_NOT_IN_GAME, "Not in game")
             return
@@ -3083,20 +3100,15 @@ class QuizifyWebSocketHandler:
             await self._conn.send_error(ws, ERR_INVALID_ACTION, "Bet not accepted")
             return
 
-        await self._conn.send(ws, {
-            "type": "hot_seat_bet_accepted",
-            "side": side,
-            "bet": pct,
-            "points": hot_seat_stake(
-                hs.scores.get(hs.entrant_for(player.name), 0), pct
-            ),
-        })
+        await self._hot_seat_out.send_hot_seat_bet_accepted(
+            ws, hs, player.name, side=side, pct=pct
+        )
 
     async def _handle_hot_seat_answer(
         self, ws: web.WebSocketResponse, data: dict, game_state: QuizifyGameState
     ) -> None:
         """Record the seat holder's single answer (#616)."""
-        player = game_state.get_player_by_ws(ws)
+        player = self._player_for_ws(game_state, ws)
         if not player:
             await self._conn.send_error(ws, ERR_NOT_IN_GAME, "Not in game")
             return
@@ -3116,7 +3128,7 @@ class QuizifyWebSocketHandler:
         result = hs.record_answer(player.name, idx)
         if result is None:
             return
-        await self._conn.send(ws, {"type": "hot_seat_answer_accepted"})
+        await self._hot_seat_out.send_hot_seat_answer_accepted(ws)
 
     async def _start_hot_seat(self, game_state: QuizifyGameState) -> bool:
         """Open the auction and drive it to the reveal. False means "skipped".
@@ -3137,32 +3149,7 @@ class QuizifyWebSocketHandler:
         state = self._snapshot(game_state)
         state["type"] = "game_state"
         await self._conn.broadcast(state)
-        await self._conn.broadcast({
-            "type": "hot_seat_auction",
-            "seconds": hs.auction_seconds,
-            "players": len(hs.scores),
-            # #698: the television's round indicator is interpolated from
-            # these two. Without them the auction kept the previous round's
-            # number and the question that follows printed the literal string
-            # "undefined" for the whole answer window.
-            "round_num": game_state.round,
-            "total_rounds": game_state.total_rounds,
-        })
-        # Each player needs their own number: a percentage is only meaningful
-        # next to the points it costs *them*. In team mode that is the team's
-        # score (#804) — ``player.score`` there is the shadow value #669 gated
-        # the mode off for, and a slider priced against it costs nothing.
-        sends = []
-        for player in game_state.get_players():
-            if not player.connected or player.ws is None:
-                continue
-            sends.append(self._conn.send(player.ws, {
-                "type": "hot_seat_auction_you",
-                "score": hs.scores.get(hs.entrant_for(player.name), 0),
-                "seconds": hs.auction_seconds,
-            }))
-        if sends:
-            await asyncio.gather(*sends, return_exceptions=True)
+        await self._hot_seat_out.send_hot_seat_auction(game_state, hs)
 
         self._start_hot_seat_loop(game_state)
         return True
@@ -3176,187 +3163,12 @@ class QuizifyWebSocketHandler:
         """
         self._cancel_hot_seat_loop()
         driver = HotSeatDriver(
-            self, milestones=self, reveal_hold=self.HOT_SEAT_REVEAL_HOLD
+            self._hot_seat_out,
+            milestones=self,
+            reveal_hold=self.HOT_SEAT_REVEAL_HOLD,
         )
         self._hot_seat_task = asyncio.ensure_future(driver.run(game_state))
         self._hot_seat_task.add_done_callback(self._log_task_exception)
-
-    # -- HotSeatBroadcaster (game/drivers/protocols.py) -----------------
-
-    async def send_hot_seat_tick(self, stage: str, remaining: int) -> None:
-        await self._conn.broadcast({
-            "type": "hot_seat_tick",
-            "phase": stage,
-            "remaining": remaining,
-        })
-
-    async def send_hot_seat_no_bids(self) -> None:
-        await self._conn.broadcast({"type": "hot_seat_no_bids"})
-
-    async def send_hot_seat_awarded(
-        self, game_state: QuizifyGameState, hs: Any
-    ) -> None:
-        await self._conn.broadcast({
-            "type": "hot_seat_awarded",
-            # The PERSON taking the chair. Outside team mode that is also the
-            # entrant, so this field keeps its old meaning for every client;
-            # ``entrant`` names who pays (#804).
-            "winner": hs.seat_holder,
-            "entrant": hs.winner_name,
-            "pct": hs.winning_pct,
-            "stake": hs.winning_stake,
-            "bids": hs.reveal(),
-        })
-
-    async def send_hot_seat_question(
-        self, game_state: QuizifyGameState, hs: Any
-    ) -> None:
-        await self._broadcast_hot_seat_question(game_state, hs)
-
-    async def send_hot_seat_result(
-        self, game_state: QuizifyGameState, hs: Any
-    ) -> None:
-        await self._conn.broadcast({
-            "type": "hot_seat_result",
-            "round_num": game_state.round,
-            "total_rounds": game_state.total_rounds,
-            **hs.summary(),
-            # The rows the room can see (#804): teams in team mode, players
-            # otherwise. Keyed by ``player.name`` this reported the shadow
-            # scores the settlement no longer writes to.
-            "scores": {
-                participant.name: participant.score
-                for participant in game_state.get_ranked_participants()
-            },
-            # #833: the standings AFTER the settlement, in the shape every
-            # board already renders. ``scores`` above is a name→number map —
-            # no rank, no entrant id, nothing a leaderboard row is built from —
-            # so the one screen the whole room reads had no way to repaint and
-            # kept showing the player who had just lost everything in first
-            # place. ``finish_hot_seat`` has already applied the deltas by the
-            # time this runs, so these are the real numbers.
-            "leaderboard": serialize_leaderboard(
-                game_state.get_ranked_participants()
-            ),
-        })
-
-    async def resume_normal_question(self, game_state: QuizifyGameState) -> None:
-        await self._continue_normal_question(game_state)
-
-    async def _broadcast_hot_seat_question(
-        self, game_state: QuizifyGameState, hs: Any
-    ) -> None:
-        """Send the question: shuffled to the seat holder, canonical to the room.
-
-        The spectators get the question text and the betting controls but no
-        answer buttons — they are not answering it, they are staking on
-        whoever is.
-        """
-        q = hs.question
-        if q is None:
-            return
-        payload = {
-            "type": "hot_seat_question",
-            "question": q.question,
-            "difficulty": q.difficulty,
-            # #698: see the auction broadcast — the TV interpolates both.
-            "round_num": game_state.round,
-            "total_rounds": game_state.total_rounds,
-            "image_url": getattr(q, "image_url", "") or "",
-            "seconds": hs.answer_seconds,
-            "winner": hs.seat_holder,
-            "entrant": hs.winner_name,
-        }
-        sends = []
-        for player in game_state.get_players():
-            if not player.connected or player.ws is None:
-                continue
-            if player.name == hs.seat_holder:
-                sends.append(self._conn.send(player.ws, {
-                    **payload,
-                    "answers": hs.shuffled_answers(),
-                    "you_are_seated": True,
-                }))
-            else:
-                sends.append(self._conn.send(player.ws, {
-                    **payload,
-                    "answers": [],
-                    "you_are_seated": False,
-                    # A teammate of the seat holder may not bet: they stake the
-                    # purse the chair already staked (#804). Told here so the
-                    # phone shows why instead of a slider nothing accepts.
-                    "you_are_seat_team": hs.is_on_seat_team(player.name),
-                    "score": hs.scores.get(hs.entrant_for(player.name), 0),
-                }))
-        if sends:
-            await asyncio.gather(*sends, return_exceptions=True)
-        # The room watches the same board the seat holder does, so the TV gets
-        # the *shuffled* order rather than the canonical one — which also keeps
-        # #521 shut, where JSON order put the correct tile first in half the
-        # packs. Admins additionally get the correct index; dashboards take no
-        # token (#604) and must not learn it before the reveal.
-        tv_payload = {**payload, "answers": hs.shuffled_answers()}
-        await self._conn.broadcast_to_admins_and_dashboards(
-            {**tv_payload, "correct_index": hs.correct_index},
-            dashboard_message=tv_payload,
-        )
-
-    async def _broadcast_lightning_question(
-        self, game_state: QuizifyGameState, lr: Any
-    ) -> None:
-        """Send the current lightning question per-player (own shuffle) and
-        to admin/dashboard (canonical order)."""
-        q = lr.current_question
-        if q is None:
-            return
-        # Fan out the per-player lightning question in parallel (#258).
-        lightning_sends = []
-        for player in game_state.get_players():
-            if not player.connected:
-                continue
-            lightning_sends.append(self._conn.send(player.ws, {
-                "type": "lightning_question",
-                "question_text": q.question,
-                "answers": lr.shuffled_answers_for(player.name),
-                "index": lr.index,
-                "num_questions": lr.num_questions,
-                "seconds": lr.seconds_per_question,
-                "category": q.category,
-                "image_url": q.image_url,
-            }))
-        if lightning_sends:
-            await asyncio.gather(*lightning_sends)
-        await self._conn.broadcast_to_admins_and_dashboards({
-            "type": "lightning_question",
-            "question_text": q.question,
-            "answers": [a.text for a in q.answers],
-            "index": lr.index,
-            "num_questions": lr.num_questions,
-            "seconds": lr.seconds_per_question,
-            "category": q.category,
-            "image_url": q.image_url,
-        })
-
-    async def _broadcast_lightning_tick(
-        self, game_state: QuizifyGameState, lr: Any
-    ) -> None:
-        remaining = round(lr.time_remaining(), 1)
-        await self._conn.broadcast({
-            "type": "lightning_tick",
-            "remaining": remaining,
-            "index": lr.index,
-        })
-
-    async def _broadcast_lightning_recap(
-        self, game_state: QuizifyGameState
-    ) -> None:
-        lr = game_state.lightning
-        if lr is None:
-            return
-        await self._conn.broadcast({
-            "type": "lightning_recap",
-            "recap": lr.build_recap(),
-        })
 
     async def _broadcast_state_projected(
         self,
@@ -3384,16 +3196,18 @@ class QuizifyWebSocketHandler:
         player_ws: set[Any] = set()
         sends = []
         for player in game_state.get_players():
-            if player.ws is None or not player.connected:
+            if not player.connected:
                 continue
-            player_ws.add(player.ws)
+            player_sock = self._conn.socket_for(player.connection_id)
+            if player_sock is not None:
+                player_ws.add(player_sock)
             msg = self._round_messages.project_snapshot_for_player(
                 game_state, snapshot=base, player=player
             )
             msg["type"] = "game_state"
             if extra:
                 msg.update(extra)
-            sends.append(self._conn.send(player.ws, msg))
+            sends.append(self._conn.send_to_player(player, msg))
 
         # Raw snapshot for pure admin/dashboard sockets — but skip any socket
         # that is also a player (admin-as-player already got its projected
@@ -3467,40 +3281,11 @@ class QuizifyWebSocketHandler:
     ) -> None:
         """Announce the betting window and arm its deadline (#656).
 
-        Sends every phone its own bank, gives the host/TV the lock-in tally,
-        and starts the one task that guarantees the window ends — with or
-        without the players.
+        The frames are the WagerBroadcaster's (#881); what stays here is the
+        one task that guarantees the window ends — with or without the
+        players — because the task belongs to the #746 registry.
         """
-        players = game_state.get_players()
-        sends = [
-            self._conn.send(
-                player.ws,
-                self._round_messages.build_wager_window(
-                    game_state,
-                    question=question,
-                    player=player,
-                    window_duration=WAGER_WINDOW_DURATION,
-                ),
-            )
-            for player in players
-            if player.connected
-        ]
-        if sends:
-            await asyncio.gather(*sends)
-
-        await self._conn.broadcast_to_admins_and_dashboards(
-            self._round_messages.build_wager_progress(
-                game_state, window_duration=WAGER_WINDOW_DURATION
-            )
-        )
-        # Phase broadcast last: the phones already hold the window payload, so
-        # a client driving off the phase alone (reconnect path) lands on a view
-        # it can render rather than an empty one.
-        await self._conn.broadcast(
-            self._round_messages.build_game_state_with_leaderboard(
-                game_state, players=players
-            )
-        )
+        await self._wager_out.send_wager_window(game_state, question)
         self._start_wager_window(game_state)
 
     def _start_wager_window(self, game_state: QuizifyGameState) -> None:
@@ -3513,13 +3298,8 @@ class QuizifyWebSocketHandler:
         :class:`~custom_components.quizify.game.drivers.WagerWindowDriver`.
         """
         self._cancel_wager_window()
-        driver = WagerWindowDriver(self, duration=WAGER_WINDOW_DURATION)
+        driver = WagerWindowDriver(self._wager_out, duration=WAGER_WINDOW_DURATION)
         self._wager_window_task = asyncio.create_task(driver.run(game_state))
-
-    # -- WagerBroadcaster (game/drivers/protocols.py) -------------------
-
-    async def close_wager_window(self, game_state: QuizifyGameState) -> None:
-        await self._close_wager_window(game_state)
 
     def _cancel_wager_window(self) -> None:
         """Cancel the pending betting-window deadline, if any.
@@ -3597,7 +3377,7 @@ class QuizifyWebSocketHandler:
             player_msg = self._round_messages.build_player_question(
                 game_state, question=question, player=player, is_final=is_final
             )
-            question_sends.append(self._conn.send(player.ws, player_msg))
+            question_sends.append(self._conn.send_to_player(player, player_msg))
         if question_sends:
             await asyncio.gather(*question_sends)
 
@@ -3617,8 +3397,8 @@ class QuizifyWebSocketHandler:
 
         # ONE question milestone from the dispatch point (#789): narration
         # (#281, with the canonical shuffled order so spoken letters match the
-        # TV grid) plus the HA bus event (#366) fan out inside _notify_question.
-        self._notify_question(
+        # TV grid) plus the HA bus event (#366) fan out inside question_shown.
+        self.question_shown(
             question, game_state.round, game_state.total_rounds, shuffled_texts
         )
 
@@ -3630,7 +3410,7 @@ class QuizifyWebSocketHandler:
         for player in players:
             powerup = game_state.get_player_powerup(player.name)
             if powerup and player.connected:
-                powerup_sends.append(self._conn.send(player.ws, {
+                powerup_sends.append(self._conn.send_to_player(player, {
                     "type": "powerup_assigned",
                     "powerup_type": powerup.value,
                 }))
@@ -3664,48 +3444,10 @@ class QuizifyWebSocketHandler:
         # driver so the module-level name stays the single knob a test (or a
         # future runtime setting) can turn.
         driver = NormalRoundDriver(
-            self, milestones=self, tick_interval=TICK_INTERVAL
+            self._round_out, milestones=self, tick_interval=TICK_INTERVAL
         )
         self._timer_tick_task = asyncio.ensure_future(driver.run(game_state))
         self._timer_tick_task.add_done_callback(self._log_task_exception)
-
-    # -- RoundBroadcaster (game/drivers/protocols.py) -------------------
-
-    async def send_timer_tick(
-        self,
-        game_state: QuizifyGameState,
-        remaining_by_player: dict[str, float],
-        dashboard_remaining: float | None,
-    ) -> None:
-        """Turn one driver tick into ``timer_tick`` frames.
-
-        The driver has already dropped every recipient whose displayed second
-        did not change (#413) and every disconnected player, so this only has
-        to address what is left. Built as one fan-out and delivered in parallel
-        (#258) so a single stalled client can't delay the room; the dashboard
-        copy is pre-serialized ONCE and goes out over the broadcast string path
-        (admin-as-player is already excluded there).
-        """
-        sends = []
-        if remaining_by_player:
-            by_name = {p.name: p for p in game_state.get_players()}
-            for name, remaining in remaining_by_player.items():
-                player = by_name.get(name)
-                if player is None:
-                    continue
-                sends.append(self._conn.send(player.ws, {
-                    "type": "timer_tick",
-                    "remaining": round(remaining, 1),
-                }))
-        if dashboard_remaining is not None:
-            sends.append(
-                self._conn.broadcast_to_admins_and_dashboards({
-                    "type": "timer_tick",
-                    "remaining": round(dashboard_remaining, 1),
-                })
-            )
-        if sends:
-            await asyncio.gather(*sends)
 
     def _cancel_timer_tick(self) -> None:
         """Cancel the timer tick task — and the betting window with it.
@@ -3766,19 +3508,6 @@ class QuizifyWebSocketHandler:
     # ------------------------------------------------------------------
     # Round summary broadcast
     # ------------------------------------------------------------------
-
-    async def _broadcast_round_summary(self, game_state: QuizifyGameState) -> None:
-        """Broadcast round summary to all clients.
-
-        Payload assembly (correct-index resolution, the per-player answer
-        table, the summary serialization) lives in the RoundMessageBuilder
-        (#189); the handler keeps ownership of the broadcast. ``None`` means
-        there is no round summary yet — same no-op as before.
-        """
-        summary_msg = self._round_messages.build_round_summary(game_state)
-        if summary_msg is None:
-            return
-        await self._conn.broadcast(summary_msg)
 
     # ------------------------------------------------------------------
     # Disconnect handling
@@ -3848,7 +3577,7 @@ class QuizifyWebSocketHandler:
             # nothing at all — see ``_announce_host_presence_soon``.
             self._announce_host_presence_soon()
 
-        player = game_state.get_player_by_ws(ws)
+        player = self._player_for_ws(game_state, ws)
         if not player:
             return
 
@@ -4003,7 +3732,7 @@ class QuizifyWebSocketHandler:
         self, ws: web.WebSocketResponse, is_admin: bool, game_state: QuizifyGameState
     ) -> bool:
         """Return True if the connection is authorized to perform admin actions."""
-        player = game_state.get_player_by_ws(ws)
+        player = self._player_for_ws(game_state, ws)
         return is_admin or bool(player and player.is_admin)
 
     def _is_reset_authorized(
@@ -4204,14 +3933,14 @@ class QuizifyWebSocketHandler:
             return
         sends = []
         for player in game_state.get_players():
-            if player.ws is None or player.ws.closed:
+            if not self._conn.is_connection_open(player.connection_id):
                 continue
             standing = self._all_time_standing(player.name)
             if standing is None:
                 continue
             sends.append(
-                self._conn.send(
-                    player.ws,
+                self._conn.send_to_player(
+                    player,
                     {"type": "all_time_update", "all_time": standing},
                 )
             )
@@ -4508,15 +4237,25 @@ class QuizifyWebSocketHandler:
         await self._broadcast_state_projected(game_state)
 
     # ------------------------------------------------------------------
-    # Milestone fan-out (#789)
+    # The house beats (#789/#788)
     # ------------------------------------------------------------------
     #
-    # Four game moments — question shown, countdown, reveal, streak milestone —
-    # are interesting to BOTH the narrator and the HA event bus. Each dispatch
-    # point used to carry a twin call, one to a ``_notify_tts_*`` hook and one to
-    # its ``_notify_house_*`` sibling, so adding a consumer meant editing every
-    # site. The dispatch points now fire ONE milestone and the fan-out lives
-    # here, in the four methods below.
+    # Six game moments the house reacts to. Each one is ONE method here, and
+    # each method is the whole fan-out: which consumers hear this beat, and
+    # what they are asked to do about it. Nothing sits between a dispatch point
+    # and a consumer any more.
+    #
+    # This used to be three layers deep and three names wide for the same
+    # event: a tick arrived as ``time_running_out``, became ``_notify_
+    # countdown``, and ended in ``_notify_tts_countdown`` plus ``_notify_house_
+    # time_running_out``. Two of the six beats skipped the middle layer, so the
+    # layer read as an accident rather than a contract.
+    #
+    # The three PUBLIC methods below are :class:`~custom_components.quizify.
+    # game.drivers.protocols.MilestoneSink` — the contract a mode driver holds,
+    # which is what lets every mode walk the house path (#708) instead of only
+    # the normal round. The three private ones are the beats no driver reports;
+    # the underscore is the entire difference between them.
     #
     # The narrator is deliberately NOT wired up as a subscriber of
     # ``QuizifyEventEmitter``, which is the shape the lights and the SFX use.
@@ -4525,148 +4264,107 @@ class QuizifyWebSocketHandler:
     # master in the TTS panel — routing speech through the bus would silence the
     # quizmaster on every install that has narration on and house events off.
 
-    def _notify_milestone(self, player_name: str, streak: int, bonus: int) -> None:
-        """Announce a streak milestone and put it on the HA bus (#789)."""
-        self._notify_tts_milestone(player_name, streak)
-        self._notify_house_milestone(player_name, streak, bonus)
+    def _fire(self, consumer: object | None, method: str, *args: object) -> None:
+        """Deliver one beat to one consumer, or do nothing (#886).
 
-    def _notify_question(
-        self,
-        question: Any,
-        round_no: int,
-        total_rounds: int,
-        options: list[str] | None = None,
-    ) -> None:
-        """Announce a question start and put it on the HA bus (#789).
-
-        The announcer gets the shuffled option texts (so spoken letters match
-        the TV grid); the bus event deliberately gets only the round and the
-        question type, never the text or answers, which would leak the question
-        to automations before the players see it.
+        The ten hand-written forwarders this replaces were the same eight lines
+        each: read the consumer, return if it is None, call it inside a
+        ``try``, log the exception. Both guards are load-bearing. ``None`` is
+        the standalone dev server and the HA install with no TTS entity, so it
+        must stay a silent no-op rather than an Optional threaded through every
+        dispatch point; and a broken TTS entity is not a reason to stall a game
+        loop, which is why the exception is logged and swallowed here — the
+        :class:`MilestoneSink` contract says these never raise.
         """
-        self._notify_tts_question(question, round_no, total_rounds, options)
-        self._notify_house_question(question, round_no, total_rounds)
-
-    def _notify_countdown(self, seconds_remaining: float) -> None:
-        """Push the per-tick remaining time to both consumers (#789).
-
-        Called every timer tick. Each side keeps its own once-per-round guard
-        and its own threshold — the spoken warning at 10s, the light pulse at
-        5s — so this stays a plain fan-out.
-        """
-        self._notify_tts_countdown(seconds_remaining)
-        self._notify_house_time_running_out(seconds_remaining)
-
-    def _notify_reveal(self, game_state: QuizifyGameState) -> None:
-        """Announce the reveal and put it on the HA bus (#789)."""
-        self._notify_tts_reveal(game_state)
-        self._notify_house_reveal(game_state)
+        if consumer is None:
+            return
+        try:
+            getattr(consumer, method)(*args)
+        except Exception:  # noqa: BLE001
+            _LOGGER.exception("House beat %s raised", method)
 
     # -- MilestoneSink (game/drivers/protocols.py) ----------------------
-    #
-    # The three beats a mode driver reports. Before #788 the fan-out above was
-    # reachable from the normal-round path only, which is exactly why the house
-    # sat out the detour modes (#708); a driver holding this contract can walk
-    # the same path without knowing who is listening.
 
     def question_shown(
         self,
-        question: Any,
+        question: Question,
         round_no: int,
         total_rounds: int,
         options: list[str] | None = None,
     ) -> None:
-        self._notify_question(question, round_no, total_rounds, options)
+        """A question just went out to the room (#789).
+
+        The announcer gets the shuffled option texts, so the spoken letters
+        match the TV grid; the bus event deliberately gets only the round and
+        the question type, never the text or the answers, which would leak the
+        question to automations before the players see it.
+        """
+        self._fire(
+            self._tts_announcer,
+            "announce_question",
+            question,
+            round_no,
+            total_rounds,
+            options,
+        )
+        self._fire(
+            self._event_emitter,
+            "notify_question_shown",
+            question,
+            round_no,
+            total_rounds,
+        )
 
     def time_running_out(self, seconds_remaining: float) -> None:
-        self._notify_countdown(seconds_remaining)
+        """The answer window is running down (#789).
+
+        Called on every timer tick. Each consumer keeps its own once-per-round
+        guard and its own threshold — the spoken warning at 10s, the light
+        pulse at 5s — so this stays a plain fan-out.
+        """
+        self._fire(self._tts_announcer, "announce_countdown", seconds_remaining)
+        self._fire(
+            self._event_emitter, "notify_time_running_out", seconds_remaining
+        )
 
     def reveal(self, game_state: QuizifyGameState) -> None:
-        self._notify_reveal(game_state)
+        """The answer is out and the round has been scored (#789)."""
+        self._fire(self._tts_announcer, "announce_reveal", game_state)
+        self._fire(self._event_emitter, "notify_answer_revealed", game_state)
 
-    def _notify_tts_milestone(self, player_name: str, streak: int) -> None:
-        """Forward a milestone hit to the TTS announcer if one is wired.
+    # -- Beats no driver reports ----------------------------------------
 
-        Kept as a no-op when ``_tts_announcer`` is None (standalone dev
-        server, HA setup without TTS configured) so the handler doesn't
-        have to thread an Optional everywhere.
+    def _streak_milestone(self, player_name: str, streak: int, bonus: int) -> None:
+        """A player hit a streak milestone (#789).
+
+        Not on the sink because a milestone is scored by the answer path, not
+        by a mode's control loop; a driver has no occasion to report one.
         """
-        announcer = self._tts_announcer
-        if announcer is None:
-            return
-        try:
-            announcer.announce_milestone(player_name, streak)
-        except Exception:  # noqa: BLE001
-            _LOGGER.exception("TTS milestone announcement raised")
+        self._fire(self._tts_announcer, "announce_milestone", player_name, streak)
+        self._fire(
+            self._event_emitter,
+            "notify_streak_milestone",
+            player_name,
+            streak,
+            bonus,
+        )
 
-    def _notify_tts_question(
-        self,
-        question: Any,
-        round_no: int,
-        total_rounds: int,
-        options: list[str] | None = None,
-    ) -> None:
-        """Forward a question-start (+ shuffled options) to the TTS announcer
-        if one is wired (#281).
+    def _player_joined(self, player_name: str, is_admin: bool) -> None:
+        """Somebody walked into the lobby (#281).
 
-        No-op when ``_tts_announcer`` is None (standalone dev server, HA setup
-        without a TTS entity). Guarded so a bad announcement can't break the
-        question fan-out.
+        Narration only: there is no ``quizify_player_joined`` bus event, and
+        the host's own admin-as-player tab is skipped inside the announcer so
+        the room never hears the host announce themselves.
         """
-        announcer = self._tts_announcer
-        if announcer is None:
-            return
-        try:
-            announcer.announce_question(question, round_no, total_rounds, options)
-        except Exception:  # noqa: BLE001
-            _LOGGER.exception("TTS question announcement raised")
+        self._fire(self._tts_announcer, "announce_join", player_name, is_admin)
 
-    def _notify_tts_join(self, player_name: str, is_admin: bool) -> None:
-        """Forward a lobby join to the TTS announcer if one is wired (#281).
+    def _game_ended(self, game_state: QuizifyGameState) -> None:
+        """The finale is on screen (#366).
 
-        No-op when ``_tts_announcer`` is None. Guarded like the milestone hook.
+        Bus only: the announcer says its piece in :meth:`reveal` for the final
+        round, and the finale itself has no spoken line.
         """
-        announcer = self._tts_announcer
-        if announcer is None:
-            return
-        try:
-            announcer.announce_join(player_name, is_admin)
-        except Exception:  # noqa: BLE001
-            _LOGGER.exception("TTS join announcement raised")
-
-    def _notify_tts_countdown(self, seconds_remaining: float) -> None:
-        """Forward the per-tick remaining time to the TTS announcer (#281).
-
-        Called every timer tick; the announcer fires its one-shot "time
-        running out" warning at most once per round. No-op when no announcer
-        is wired. Guarded like the milestone hook.
-        """
-        announcer = self._tts_announcer
-        if announcer is None:
-            return
-        try:
-            announcer.announce_countdown(seconds_remaining)
-        except Exception:  # noqa: BLE001
-            _LOGGER.exception("TTS countdown announcement raised")
-
-    def _notify_tts_reveal(self, game_state: QuizifyGameState) -> None:
-        """Forward the reveal to the TTS announcer if one is wired (#281).
-
-        No-op when ``_tts_announcer`` is None. Guarded like the milestone hook.
-        """
-        announcer = self._tts_announcer
-        if announcer is None:
-            return
-        try:
-            announcer.announce_reveal(game_state)
-        except Exception:  # noqa: BLE001
-            _LOGGER.exception("TTS reveal announcement raised")
-
-    # ------------------------------------------------------------------
-    # HA event-bus forwarders (#366) — thin, no-op-guarded siblings of the
-    # _notify_tts_* hooks. The emitter fires quizify_* bus events so the host
-    # can drive automations off game milestones.
-    # ------------------------------------------------------------------
+        self._fire(self._event_emitter, "notify_game_ended", game_state)
 
     def set_event_emitter(
         self, emitter: QuizifyEventEmitter | None
@@ -4678,79 +4376,6 @@ class QuizifyWebSocketHandler:
         the no-op path.
         """
         self._event_emitter = emitter
-
-    def _notify_house_question(
-        self, question: Any, round_no: int, total_rounds: int
-    ) -> None:
-        """Forward a question-start to the HA event emitter if one is wired.
-
-        No-op when ``_event_emitter`` is None (standalone dev server). Guarded so
-        a bad fire can't break the question fan-out.
-        """
-        emitter = self._event_emitter
-        if emitter is None:
-            return
-        try:
-            emitter.notify_question_shown(question, round_no, total_rounds)
-        except Exception:  # noqa: BLE001
-            _LOGGER.exception("House question event raised")
-
-    def _notify_house_time_running_out(self, seconds_remaining: float) -> None:
-        """Forward the per-tick remaining time to the HA event emitter (#280).
-
-        Called every timer tick alongside :meth:`_notify_tts_countdown`; the
-        emitter fires its one-shot ``quizify_time_running_out`` event at most
-        once per round in the final seconds. No-op when ``_event_emitter`` is
-        None (standalone dev server). Guarded like the question hook.
-        """
-        emitter = self._event_emitter
-        if emitter is None:
-            return
-        try:
-            emitter.notify_time_running_out(seconds_remaining)
-        except Exception:  # noqa: BLE001
-            _LOGGER.exception("House time-running-out event raised")
-
-    def _notify_house_milestone(
-        self, player_name: str, streak: int, bonus: int
-    ) -> None:
-        """Forward a streak milestone to the HA event emitter if one is wired.
-
-        No-op when ``_event_emitter`` is None. Guarded like the question hook.
-        """
-        emitter = self._event_emitter
-        if emitter is None:
-            return
-        try:
-            emitter.notify_streak_milestone(player_name, streak, bonus)
-        except Exception:  # noqa: BLE001
-            _LOGGER.exception("House milestone event raised")
-
-    def _notify_house_reveal(self, game_state: QuizifyGameState) -> None:
-        """Forward the reveal to the HA event emitter if one is wired.
-
-        No-op when ``_event_emitter`` is None. Guarded like the question hook.
-        """
-        emitter = self._event_emitter
-        if emitter is None:
-            return
-        try:
-            emitter.notify_answer_revealed(game_state)
-        except Exception:  # noqa: BLE001
-            _LOGGER.exception("House reveal event raised")
-
-    def _notify_house_game_ended(self, game_state: QuizifyGameState) -> None:
-        """Forward game end to the HA event emitter if one is wired.
-
-        No-op when ``_event_emitter`` is None. Guarded like the question hook.
-        """
-        emitter = self._event_emitter
-        if emitter is None:
-            return
-        try:
-            emitter.notify_game_ended(game_state)
-        except Exception:  # noqa: BLE001
-            _LOGGER.exception("House game-ended event raised")
 
     # ------------------------------------------------------------------
     # Finale broadcast helper
@@ -4814,12 +4439,12 @@ class QuizifyWebSocketHandler:
         """Handler for the ``round_evaluated`` state event."""
         game_state = self._get_game_state()
         if game_state:
-            await self._broadcast_round_summary(game_state)
+            await self._round_out.send_round_summary(game_state)
             # ONE reveal milestone (#789), after the summary broadcast: the
             # combined spoken utterance (#281) and the bus event carrying the
             # correct answer + how many got it (#366) fan out inside
-            # _notify_reveal, both off the same round summary.
-            self._notify_reveal(game_state)
+            # reveal(), both off the same round summary.
+            self.reveal(game_state)
 
     async def _dispatch_game_ended(self) -> None:
         """Handler for the ``game_ended`` state event."""
@@ -4828,7 +4453,7 @@ class QuizifyWebSocketHandler:
             await self._broadcast_finale(game_state)
             # Fire the HA bus event with the final leaderboard (#366), after
             # the finale broadcast so entity state is already settled.
-            self._notify_house_game_ended(game_state)
+            self._game_ended(game_state)
 
     async def _dispatch_full_state(self) -> None:
         """Default handler: broadcast a full game-state snapshot."""

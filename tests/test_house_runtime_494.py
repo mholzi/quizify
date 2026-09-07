@@ -758,7 +758,7 @@ def test_reload_keeps_the_panel_config_on_the_live_lights():
         lobby_music_url="http://a.test/x.mp3",
     )
 
-    assert pl._master_enabled is True
+    assert settings.master_enabled is True
     assert pl._light_question is False
     assert pl._light_streak is False
     assert pl._light_countdown is True  # untouched toggles keep their value
@@ -784,7 +784,7 @@ def test_reload_keeps_the_panel_config_on_the_live_sfx():
 
     _reload(settings, media_player_entity="media_player.entry")
 
-    assert sfx._master_enabled is True
+    assert settings.master_enabled is True
     assert sfx._cue_enabled == {
         "correct": False,
         "wrong": True,
@@ -808,7 +808,8 @@ def test_reload_keeps_the_emitter_master_and_its_phase_dedupe():
     _reload(settings)
 
     # The panel's master survived…
-    assert emitter._master_enabled is True
+    assert settings.master_enabled is True
+    assert emitter.is_configured is True
     # …and so did the phase dedupe (no duplicate game_started).
     hass.bus.fired.clear()
     emitter._on_state_changed()
@@ -840,7 +841,9 @@ def test_reload_refreshes_the_config_entry_defaults_underneath():
     assert sfx._cue_urls["correct"] == "http://a.test/correct.mp3"
 
 
-def test_untouched_master_stays_none_so_the_config_entry_still_wins():
+def test_untouched_master_stays_none_so_the_config_entry_still_wins(
+    light_calls, sfx_calls
+):
     """The tri-state master is the subtle bit (#494 P4 + #411).
 
     An unset panel override means the config-entry switch is still in charge, so
@@ -849,23 +852,45 @@ def test_untouched_master_stays_none_so_the_config_entry_still_wins():
     would pin the master off forever.
     """
     hass = _FakeHass()
-    settings = HouseSettings.from_options({"party_light_entities": ["light.x"]})
+    settings = HouseSettings.from_options(
+        {
+            "party_light_entities": ["light.x"],
+            "media_player_entity": "media_player.tv",
+        }
+    )
     pl = QuizifyPartyLights(hass=hass, game_state=_FakeGame(), settings=settings)
+    pl._last_phase = GamePhase.QUESTION_ACTIVE
+    pl.attach_events()
     ev = QuizifyEventEmitter(hass=hass, game_state=_FakeGame(), settings=settings)
     sfx = QuizifySoundEffects(hass=hass, game_state=_FakeGame(), settings=settings)
+    sfx.attach_events()
     # Never configure()d — the panel was never opened.
-    assert pl._enabled_override is None
-    assert pl._master_enabled is False
+    assert settings.enabled_override is None
+    assert ev.is_configured is False
+    _fire_all_light_events(hass)
+    assert light_calls == []
+    assert _played_cues(sfx_calls) == []
 
-    _reload(settings, party_light_entities=["light.x"], house_events_enabled=True)
+    _reload(
+        settings,
+        party_light_entities=["light.x"],
+        media_player_entity="media_player.tv",
+        house_events_enabled=True,
+    )
 
-    assert pl._enabled_override is None
-    assert pl._master_enabled is True
-    assert ev._master_enabled is True
-    assert sfx._master_enabled is True
+    # The override genuinely stayed unset (not coerced to a hard False) …
+    assert settings.enabled_override is None
+    # … and all three consumers follow the config-entry switch straight away,
+    # without anyone re-configuring or rebuilding them.
+    assert ev.is_configured is True
+    light_calls.clear()
+    sfx_calls.clear()
+    _fire_all_light_events(hass)
+    assert _light_turn_ons(light_calls)
+    assert _played_cues(sfx_calls)
 
 
-def test_panel_master_off_survives_a_config_entry_master_on():
+def test_panel_master_off_survives_a_config_entry_master_on(light_calls):
     """The mirror case: an explicit panel OFF must not be undone by a reload."""
     hass = _FakeHass()
     settings = HouseSettings.from_options(
@@ -873,30 +898,44 @@ def test_panel_master_off_survives_a_config_entry_master_on():
     )
     pl = QuizifyPartyLights(hass=hass, game_state=_FakeGame(), settings=settings)
     _configure_lights(pl, enabled=False)  # host switched the house off mid-game
-    assert pl._enabled_override is False
+    assert settings.enabled_override is False
 
     _reload(settings, party_light_entities=["light.x"], house_events_enabled=True)
 
-    assert pl._master_enabled is False
+    assert settings.master_enabled is False
+    _fire_all_light_events(hass)
+    assert light_calls == []
 
 
-def test_the_house_master_is_one_switch_across_the_three_consumers():
+def test_the_house_master_is_one_switch_across_the_three_consumers(
+    light_calls, sfx_calls
+):
     """The panel presents one master over three subsystems (#789).
 
     It used to be three private copies kept in sync by three separate
     ``configure()`` calls in the same frame; it is now one field on the shared
-    settings, so a partial fan-out can no longer leave them disagreeing.
+    settings, so a partial fan-out can no longer leave them disagreeing. The
+    assertion is deliberately behavioural: flipping the master through ONE
+    consumer has to light the room and play the stings too, so dropping a leg
+    of the fan-out fails here rather than passing on three copies of a bool.
     """
     hass = _FakeHass()
-    settings = HouseSettings.from_options({"party_light_entities": ["light.x"]})
+    settings = HouseSettings.from_options(
+        {
+            "party_light_entities": ["light.x"],
+            "media_player_entity": "media_player.tv",
+        }
+    )
     pl = QuizifyPartyLights(hass=hass, game_state=_FakeGame(), settings=settings)
+    pl._last_phase = GamePhase.QUESTION_ACTIVE
+    pl.attach_events()
     ev = QuizifyEventEmitter(hass=hass, game_state=_FakeGame(), settings=settings)
     sfx = QuizifySoundEffects(hass=hass, game_state=_FakeGame(), settings=settings)
+    sfx.attach_events()
 
-    ev.configure(enabled=True)
+    ev.configure(enabled=True)  # the panel flips the master on ONE consumer
 
-    assert (pl._master_enabled, ev._master_enabled, sfx._master_enabled) == (
-        True,
-        True,
-        True,
-    )
+    assert ev.is_configured is True
+    _fire_all_light_events(hass)
+    assert _light_turn_ons(light_calls)
+    assert _played_cues(sfx_calls)

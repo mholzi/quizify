@@ -101,7 +101,7 @@ def test_it_skips_closed_sockets_and_missing_standings() -> None:
         )
     )
 
-    assert "player.ws is None or player.ws.closed" in body
+    assert "is_connection_open(player.connection_id)" in body
     assert "if standing is None" in body
 
 

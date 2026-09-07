@@ -20,7 +20,6 @@ from __future__ import annotations
 import asyncio
 import sys
 from pathlib import Path
-from unittest.mock import MagicMock
 
 import pytest
 
@@ -35,12 +34,6 @@ from custom_components.quizify.game.player_registry import (  # noqa: E402
     PlayerRegistry,
 )
 from custom_components.quizify.game.state import QuizifyGameState  # noqa: E402
-
-
-def _fake_ws() -> MagicMock:
-    ws = MagicMock()
-    ws.closed = False
-    return ws
 
 
 class _Runtime:
@@ -69,9 +62,9 @@ class TestMidQuestionPhaseSplit:
         flagged — that player genuinely cannot answer in time and must not
         hold up all_submitted()."""
         reg = PlayerRegistry()
-        reg.add_player("Alice", _fake_ws(), "LOBBY", reg.get_average_score)
+        reg.add_player("Alice", None, "LOBBY", reg.get_average_score)
         ok, err = reg.add_player(
-            "Newcomer", _fake_ws(), phase.value, reg.get_average_score
+            "Newcomer", None, phase.value, reg.get_average_score
         )
         assert (ok, err) == (True, None)
         assert reg.players["Newcomer"].joined_late is True
@@ -94,9 +87,9 @@ class TestMidQuestionPhaseSplit:
         full timer from begin_round like everybody else, so they must count
         toward all_submitted() from the very next round on (#727)."""
         reg = PlayerRegistry()
-        reg.add_player("Alice", _fake_ws(), "LOBBY", reg.get_average_score)
+        reg.add_player("Alice", None, "LOBBY", reg.get_average_score)
         ok, err = reg.add_player(
-            "Newcomer", _fake_ws(), phase.value, reg.get_average_score
+            "Newcomer", None, phase.value, reg.get_average_score
         )
         assert (ok, err) == (True, None)
         assert reg.players["Newcomer"].joined_late is False
@@ -110,8 +103,8 @@ class TestMidQuestionPhaseSplit:
     ) -> None:
         """all_submitted() must wait for a player who joined at the reveal."""
         reg = PlayerRegistry()
-        reg.add_player("Alice", _fake_ws(), "LOBBY", reg.get_average_score)
-        reg.add_player("Dana", _fake_ws(), "ANSWER_REVEAL", reg.get_average_score)
+        reg.add_player("Alice", None, "LOBBY", reg.get_average_score)
+        reg.add_player("Dana", None, "ANSWER_REVEAL", reg.get_average_score)
         reg.players["Alice"].submitted = True
         assert reg.all_submitted() is False
         reg.players["Dana"].submitted = True
@@ -132,13 +125,13 @@ class TestAverageScoreSeedingUnchanged:
         """Narrowing ``joined_late`` must not un-seed the newcomer's score:
         somebody joining at the reveal still missed every scored round."""
         reg = PlayerRegistry()
-        ok, _ = reg.add_player("Dana", _fake_ws(), phase_value, lambda: 42)
+        ok, _ = reg.add_player("Dana", None, phase_value, lambda: 42)
         assert ok is True
         assert reg.players["Dana"].score == 42
 
     def test_lobby_join_still_starts_at_zero(self) -> None:
         reg = PlayerRegistry()
-        ok, _ = reg.add_player("Dana", _fake_ws(), "LOBBY", lambda: 42)
+        ok, _ = reg.add_player("Dana", None, "LOBBY", lambda: 42)
         assert ok is True
         assert reg.players["Dana"].score == 0
         assert reg.players["Dana"].joined_late is False
@@ -155,8 +148,8 @@ class TestJoinAtRevealPlaysTheNextRound:
         on A+B alone, and C must not be recorded as a timeout while their own
         clock is still running."""
         gs = QuizifyGameState(runtime=_Runtime(tmp_path), entry_id="t")
-        gs.add_player("Alice", _fake_ws())
-        gs.add_player("Bob", _fake_ws())
+        gs.add_player("Alice")
+        gs.add_player("Bob")
         gs.start_game(language="de", num_rounds=5)
         gs.start_next_question()
 
@@ -165,7 +158,7 @@ class TestJoinAtRevealPlaysTheNextRound:
         assert gs.phase is GamePhase.ANSWER_REVEAL
 
         # Carol joins between the two rounds.
-        gs.add_player("Carol", _fake_ws())
+        gs.add_player("Carol")
         carol = gs.get_player("Carol")
         assert carol is not None
         assert carol.joined_late is False
@@ -192,12 +185,12 @@ class TestJoinAtRevealPlaysTheNextRound:
         """The reason the flag exists is unchanged: a genuine mid-question
         join must still let the round close on the other players."""
         gs = QuizifyGameState(runtime=_Runtime(tmp_path), entry_id="t")
-        gs.add_player("Alice", _fake_ws())
-        gs.add_player("Bob", _fake_ws())
+        gs.add_player("Alice")
+        gs.add_player("Bob")
         gs.start_game(language="de", num_rounds=5)
         gs.start_next_question()
 
-        gs.add_player("Carol", _fake_ws())
+        gs.add_player("Carol")
         carol = gs.get_player("Carol")
         assert carol is not None
         assert carol.joined_late is True

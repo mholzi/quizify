@@ -41,7 +41,6 @@ import shutil
 import subprocess
 import sys
 from pathlib import Path
-from unittest.mock import MagicMock
 
 import pytest
 
@@ -65,7 +64,10 @@ JS = _REPO / "custom_components" / "quizify" / "www" / "js"
 PLAYER_CORE = JS / "player-core.js"
 PLAYER_GAME = JS / "player-game.js"
 PLAYER_HOTSEAT = JS / "player-hotseat.js"
-WEBSOCKET = _REPO / "custom_components" / "quizify" / "server" / "websocket.py"
+# #881: the hot-seat frames live in the mode's broadcaster now.
+BROADCASTERS = (
+    _REPO / "custom_components" / "quizify" / "server" / "broadcasters.py"
+)
 
 needs_node = pytest.mark.skipif(
     shutil.which("node") is None, reason="node not installed"
@@ -80,12 +82,6 @@ needs_node = pytest.mark.skipif(
 class _FakeRuntime:
     def __init__(self, tmp_path: Path) -> None:
         self.data_dir = tmp_path
-
-
-def _ws() -> MagicMock:
-    ws = MagicMock()
-    ws.closed = False
-    return ws
 
 
 def _js_function(path: Path, name: str) -> str:
@@ -280,8 +276,8 @@ HOT_SEAT_SOURCED_ELSEWHERE = {
 
 def _game_in_question_active(tmp_path: Path, category: str) -> QuizifyGameState:
     state = QuizifyGameState(runtime=_FakeRuntime(tmp_path), entry_id="test")
-    state.add_player("Alice", _ws())
-    state.add_player("Bob", _ws())
+    state.add_player("Alice")
+    state.add_player("Bob")
     state.start_game(category=category, language="de", num_rounds=3, difficulty="easy")
     assert state.start_next_question() is not None
     assert state.phase == GamePhase.QUESTION_ACTIVE
@@ -342,7 +338,7 @@ def test_the_question_type_is_in_the_snapshot_for_every_question(
 def _hot_seat_in_question_stage(tmp_path: Path) -> QuizifyGameState:
     state = QuizifyGameState(runtime=_FakeRuntime(tmp_path), entry_id="test")
     for name in ("Anna", "Ben", "Mira"):
-        state.add_player(name, _ws())
+        state.add_player(name)
     state.start_game(
         category="picture-round-en", difficulty="easy", num_rounds=5, language="en"
     )
@@ -360,11 +356,12 @@ def _live_hot_seat_question_keys() -> set[str]:
 
     Read off the source rather than duplicated here, so a field added to the
     broadcast is picked up without anyone updating this test — the same reason
-    #698 reads the payload literal out of websocket.py. The region stops at the
+    #698 reads the payload literal out of broadcasters.py. The region stops at
+    the
     admin/dashboard send: those carry ``correct_index``, which no phone gets and
     no snapshot may ever hold.
     """
-    source = WEBSOCKET.read_text(encoding="utf-8")
+    source = BROADCASTERS.read_text(encoding="utf-8")
     start = source.index('"type": "hot_seat_question"')
     end = source.index("if sends:", start)
     return set(re.findall(r'"([a-z_]+)":', source[start:end]))
@@ -404,7 +401,7 @@ def test_the_auction_snapshot_still_withholds_the_question(tmp_path: Path) -> No
     """
     state = QuizifyGameState(runtime=_FakeRuntime(tmp_path), entry_id="test")
     for name in ("Anna", "Ben", "Mira"):
-        state.add_player(name, _ws())
+        state.add_player(name)
     state.start_game(
         category="picture-round-en", difficulty="easy", num_rounds=5, language="en"
     )

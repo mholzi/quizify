@@ -29,7 +29,6 @@ from __future__ import annotations
 import re
 import sys
 from pathlib import Path
-from unittest.mock import MagicMock
 
 import pytest
 
@@ -92,12 +91,6 @@ class _FakeRuntime:
         self.data_dir = tmp_path
 
 
-def _fake_ws() -> MagicMock:
-    ws = MagicMock()
-    ws.closed = False
-    return ws
-
-
 def test_reconnect_snapshot_carries_lightning_substate(tmp_path: Path) -> None:
     """The reconnect snapshot must hand the (now revealable) client its data.
 
@@ -108,7 +101,7 @@ def test_reconnect_snapshot_carries_lightning_substate(tmp_path: Path) -> None:
     to render.
     """
     state = QuizifyGameState(runtime=_FakeRuntime(tmp_path), entry_id="test")
-    state.add_player("A", _fake_ws())
+    state.add_player("A")
     assert state.start_lightning_round() is True
     assert state.begin_lightning_questions() is True
     assert state.phase == GamePhase.LIGHTNING

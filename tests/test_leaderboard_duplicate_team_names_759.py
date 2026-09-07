@@ -18,7 +18,6 @@ from __future__ import annotations
 import asyncio
 import re
 from pathlib import Path
-from unittest.mock import MagicMock
 
 from custom_components.quizify.game.state import QuizifyGameState
 from custom_components.quizify.server.serializers import serialize_leaderboard
@@ -43,17 +42,11 @@ class _Runtime:
         return asyncio.ensure_future(coro)
 
 
-def _ws() -> MagicMock:
-    ws = MagicMock()
-    ws.closed = False
-    return ws
-
-
 def _two_sofas(tmp_path: Path) -> QuizifyGameState:
     """Two teams called "Sofa", plus one solo player."""
     gs = QuizifyGameState(runtime=_Runtime(tmp_path), entry_id="t")
     for name in ("Anna", "Jan", "Mira"):
-        gs.add_player(name, _ws())
+        gs.add_player(name)
     gs.create_team("Sofa", "Anna")
     gs.create_team("Sofa", "Jan")
     return gs
@@ -95,7 +88,7 @@ def test_a_players_entrant_id_is_their_name(tmp_path: Path) -> None:
     """Names are unique per game, so solo play needs no second identifier."""
     gs = QuizifyGameState(runtime=_Runtime(tmp_path), entry_id="t")
     for name in ("Bob", "Alice"):
-        gs.add_player(name, _ws())
+        gs.add_player(name)
 
     rows = serialize_leaderboard(gs.get_ranked_participants())
     assert {r["entrant_id"] for r in rows} == {"Bob", "Alice"}

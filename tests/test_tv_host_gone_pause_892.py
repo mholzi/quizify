@@ -12,7 +12,7 @@ produced the same card on the big screen — *"The game will resume when the hos
 returns"* — and the room sat waiting for a resume that no longer had a device
 to come from, with the way out sitting unannounced in their own pockets.
 
-The tests run the real ``setPaused`` out of ``dashboard.html`` against the DOM
+The tests run the real ``setPaused`` out of ``js/dashboard.js`` against the DOM
 stub and the shipped ``en.json``, with the page's own ``t()`` shape, so what is
 asserted is the sentence the room reads rather than the branch that picks it.
 The sixty-second clock is a captured ``setTimeout``: the harness shadows it,
@@ -30,7 +30,10 @@ import pytest
 
 _REPO = Path(__file__).resolve().parent.parent
 _WWW = _REPO / "custom_components" / "quizify" / "www"
-_DASHBOARD = _WWW / "dashboard.html"
+# #829: the television's script is its own file now; the markup that carries
+# the three scrim lines is still in the page.
+_DASHBOARD = _WWW / "js" / "dashboard.js"
+_DASHBOARD_HTML = _WWW / "dashboard.html"
 _I18N = _WWW / "i18n"
 _STUB = Path(__file__).resolve().parent / "fixtures" / "dom_stub.js"
 
@@ -42,11 +45,11 @@ LANGUAGES = ("en", "de", "es")
 
 
 def _pause_source() -> str:
-    """The pause block of the dashboard's inline script, verbatim."""
-    html = _DASHBOARD.read_text("utf-8")
-    start = html.index("        var PAUSED_ESCAPE_DELAY_MS")
-    end = html.index("        function setImageLayout(", start)
-    return html[start:end]
+    """The pause block of the television's script, verbatim."""
+    source = _DASHBOARD.read_text("utf-8")
+    start = source.index("    var PAUSED_ESCAPE_DELAY_MS")
+    end = source.index("    function setImageLayout(", start)
+    return source[start:end]
 
 
 _HARNESS = """
@@ -256,12 +259,12 @@ def test_a_deliberate_pause_never_offers_the_reset_line() -> None:
 def test_the_snapshots_reason_reaches_setpaused() -> None:
     """``handleGameState`` is the only caller that has the reason to pass; the
     branch above is unreachable without it."""
-    html = _DASHBOARD.read_text("utf-8")
-    assert "setPaused(msg.phase === 'PAUSED', msg.pause_reason)" in html
+    source = _DASHBOARD.read_text("utf-8")
+    assert "setPaused(msg.phase === 'PAUSED', msg.pause_reason)" in source
 
 
 def test_the_escape_line_ships_hidden() -> None:
-    html = _DASHBOARD.read_text("utf-8")
+    html = _DASHBOARD_HTML.read_text("utf-8")
     line = next(
         line for line in html.splitlines() if 'id="paused-escape"' in line
     )

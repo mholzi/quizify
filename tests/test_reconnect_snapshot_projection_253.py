@@ -20,7 +20,6 @@ from __future__ import annotations
 
 import sys
 from pathlib import Path
-from unittest.mock import MagicMock
 
 import pytest
 
@@ -44,12 +43,6 @@ class _FakeRuntime:
         self.data_dir = tmp_path
 
 
-def _fake_ws() -> MagicMock:
-    ws = MagicMock()
-    ws.closed = False
-    return ws
-
-
 @pytest.fixture
 def state(tmp_path: Path) -> QuizifyGameState:
     runtime = _FakeRuntime(tmp_path)
@@ -69,8 +62,8 @@ def _start_round_with_shuffles(state: QuizifyGameState) -> None:
     (not ``random.shuffle``) so the contract holds deterministically: a random
     shuffle is occasionally identity or coincides with canonical, which made the
     'raw snapshot mis-orders' guard flake ~1-in-6."""
-    state.add_player("Alice", _fake_ws())
-    state.add_player("Bob", _fake_ws())
+    state.add_player("Alice")
+    state.add_player("Bob")
     # Pin a multiple-choice category: the mixed pool now includes #275 estimate
     # packs (no answers / no shuffle), which would make this shuffle-projection
     # contract test non-deterministic.
@@ -308,7 +301,7 @@ def test_lightning_snapshot_answers_match_player_shuffle(
 ) -> None:
     """Same scoring contract for lightning: the projected lightning answers
     must line up with the shuffle ``record_answer`` uses for that player."""
-    state.add_player("Alice", _fake_ws())
+    state.add_player("Alice")
     assert state.start_lightning_round() is True
     assert state.begin_lightning_questions() is True
     assert state.phase == GamePhase.LIGHTNING
@@ -340,7 +333,7 @@ def test_lightning_late_joiner_gets_minted_shuffle(
 ) -> None:
     """A player reconnecting mid-lightning with no shuffle gets one created and
     the projected answers match it."""
-    state.add_player("Alice", _fake_ws())
+    state.add_player("Alice")
     assert state.start_lightning_round() is True
     assert state.begin_lightning_questions() is True
     lr = state.lightning
@@ -348,7 +341,7 @@ def test_lightning_late_joiner_gets_minted_shuffle(
     assert q is not None
 
     # Simulate a brand-new mid-round joiner registered after arming.
-    state.add_player("Zoe", _fake_ws())
+    state.add_player("Zoe")
     lr.add_player("Zoe")
     # Force the "no shuffle yet" state to prove on-demand minting.
     lr._shuffles.pop("Zoe", None)

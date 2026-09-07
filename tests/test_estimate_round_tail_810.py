@@ -26,7 +26,6 @@ from __future__ import annotations
 
 import asyncio
 from pathlib import Path
-from unittest.mock import MagicMock
 
 from custom_components.quizify.game.scoring import (
     ESTIMATE_CALIBRATION_BAND,
@@ -46,17 +45,11 @@ class _Runtime:
         return asyncio.ensure_future(coro)
 
 
-def _ws() -> MagicMock:
-    ws = MagicMock()
-    ws.closed = False
-    return ws
-
-
 def _auto_game(tmp_path: Path, category: str) -> QuizifyGameState:
     """An "auto"-difficulty game, so ``_calibrator`` is live."""
     gs = QuizifyGameState(runtime=_Runtime(tmp_path), entry_id="t")
     for name in ("Anna", "Mira"):
-        gs.add_player(name, _ws())
+        gs.add_player(name)
     gs.start_game(
         category=category,
         difficulty="auto",

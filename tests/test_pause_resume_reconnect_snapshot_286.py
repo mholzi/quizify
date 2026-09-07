@@ -53,6 +53,7 @@ from custom_components.quizify.server.serializers import (  # noqa: E402
 from custom_components.quizify.server.websocket import (  # noqa: E402
     QuizifyWebSocketHandler,
 )
+from tests.ws_helpers import bind, socket_of  # noqa: E402
 
 
 class _FakeRuntime:
@@ -109,8 +110,8 @@ def _start_round(game: QuizifyGameState) -> None:
     """Drive into QUESTION_ACTIVE with canonical + per-player shuffles, the way
     ``_start_next_question`` does. Alice/Bob get FIXED distinct non-identity
     shuffles so the canonical-vs-player contrast holds deterministically."""
-    game.add_player("Alice", _ws())
-    game.add_player("Bob", _ws())
+    game.add_player("Alice")
+    game.add_player("Bob")
     game.start_game(language="de", num_rounds=3, difficulty="easy")
     question = game.start_next_question()
     assert question is not None
@@ -139,8 +140,7 @@ async def test_get_state_reply_projects_for_player(
     h, sends = _handler(game, tmp_path)
     _start_round(game)
     alice = game.get_player("Alice")
-    alice_ws = alice.ws
-    h._conn.add_connection(alice_ws, is_admin=False, is_dashboard=False)
+    alice_ws = bind(h._conn, game, "Alice", _ws())
 
     await h._handle_message(alice_ws, {"type": "get_state"}, is_admin=False)
 
@@ -207,20 +207,20 @@ async def test_manual_resume_broadcasts_projected_and_submit_scores(
     _start_round(game)
     alice = game.get_player("Alice")
     bob = game.get_player("Bob")
-    h._conn.add_connection(alice.ws, is_admin=False, is_dashboard=False)
-    h._conn.add_connection(bob.ws, is_admin=False, is_dashboard=False)
+    alice_ws = bind(h._conn, game, "Alice", _ws())
+    bind(h._conn, game, "Bob", _ws())
 
     assert game.pause() is True
     assert game.phase == GamePhase.PAUSED
 
     # No-op the tick task so the handler doesn't spin up a real timer loop.
     h._start_timer_tick = lambda gs: None  # type: ignore[assignment]
-    await h._handle_resume_game(alice.ws, game)
+    await h._handle_resume_game(alice_ws, game)
     assert game.phase == GamePhase.QUESTION_ACTIVE
 
     question = game.get_current_question()
     for player in (alice, bob):
-        msgs = sends["by_ws"].get(id(player.ws), [])
+        msgs = sends["by_ws"].get(id(socket_of(h._conn, player)), [])
         state_msgs = [m for m in msgs if m.get("type") == "game_state"]
         assert state_msgs, f"{player.name} got no resumed game_state"
         visible = state_msgs[-1]["question"]["answers"]
@@ -250,12 +250,12 @@ async def test_admin_reconnect_auto_resume_broadcasts_to_players(
     so they leave the paused-view — otherwise their timers run out unseen."""
     h, sends = _handler(game, tmp_path)
     _start_round(game)
-    alice = game.get_player("Alice")  # plain player still on paused-view
+    # Alice is the plain player still on the paused view.
     # Make Alice an admin too? No — keep Alice as the stuck player. Host = admin.
-    game.add_player("Host", _ws())
+    game.add_player("Host")
     host = game.get_player("Host")
     host.is_admin = True
-    h._conn.add_connection(alice.ws, is_admin=False, is_dashboard=False)
+    alice_ws = bind(h._conn, game, "Alice", _ws())
 
     # Issue a session token for Host so reconnect resolves it.
     token = h._conn.create_session_token("Host")
@@ -275,7 +275,7 @@ async def test_admin_reconnect_auto_resume_broadcasts_to_players(
     # ...and the stuck player got a resumed game_state (leaves paused-view).
     alice_states = [
         m
-        for m in sends["by_ws"].get(id(alice.ws), [])
+        for m in sends["by_ws"].get(id(alice_ws), [])
         if m.get("type") == "game_state"
         and m.get("phase") == GamePhase.QUESTION_ACTIVE.value
     ]
@@ -315,7 +315,7 @@ def test_resume_shifts_round_start_time_so_late_joiner_timer_is_sane(
     assert pc.round_start_time - before_start >= 19.0
 
     # A late joiner now gets a sane (multi-second) timer, not ~0.5s.
-    game.add_player("Zoe", _ws())
+    game.add_player("Zoe")
     pc.add_late_joiner_timer("Zoe")
     zoe_timer = game.get_player_timer("Zoe")
     assert zoe_timer is not None

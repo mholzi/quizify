@@ -189,7 +189,7 @@ async def test_lightning_question_is_not_scored_after_end_game(
     here lands inside the tick broadcast, which is precisely where the host's
     tap lands on a live server.
     """
-    game.add_player("A", _ws())
+    game.add_player("A")
     assert game.start_lightning_round() is True
     lr = game.lightning
     lr.seconds_per_question = 30.0  # long: only all-answered ends the wait
@@ -207,7 +207,8 @@ async def test_lightning_question_is_not_scored_after_end_game(
             ended.append(True)
             await handler.admin_action_end_game(game)
 
-    handler._broadcast_lightning_tick = _tick_then_end
+    # #881: the driver ticks through the Lightning broadcaster now.
+    handler._lightning_out.send_lightning_tick = _tick_then_end
 
     handler._start_lightning_loop(game)
     for _ in range(20):
@@ -261,7 +262,7 @@ async def test_start_game_cancels_every_round_scoped_task(
 ) -> None:
     """Unconditional since #746 — a fresh start owes the new game a clean slate
     whatever phase it starts from, LOBBY included."""
-    game.add_player("Anna", _ws())
+    game.add_player("Anna")
     handler.START_REDIRECT_GRACE = 0.0
     task = _park(handler, attr)
     await handler._handle_start_game(_ws(), {"num_rounds": 3}, game)
@@ -273,7 +274,7 @@ async def test_start_game_cancels_every_round_scoped_task(
 async def test_play_again_cancels_every_round_scoped_task(
     handler: QuizifyWebSocketHandler, game: QuizifyGameState, attr: str
 ) -> None:
-    game.add_player("Anna", _ws())
+    game.add_player("Anna")
     game.start_game(num_rounds=3)
     handler.START_REDIRECT_GRACE = 0.0
     task = _park(handler, attr)
@@ -292,7 +293,7 @@ async def test_pause_freezes_the_clock_and_nothing_else(
 ) -> None:
     """A pause is not a teardown: the round is still live, so the deferred
     admin-disconnect pause and the detour loops must survive it."""
-    game.add_player("Anna", _ws())
+    game.add_player("Anna")
     game.start_game(num_rounds=3)
     game.start_next_question()
     tick = _park(handler, "_timer_tick_task")
@@ -313,7 +314,7 @@ async def test_advance_out_of_lightning_recap_keeps_the_admin_pause(
 ) -> None:
     """``_advance_round`` settles ONE detour. Cancelling the whole round here
     would swallow a genuine host disconnect that is still counting down."""
-    game.add_player("Anna", _ws())
+    game.add_player("Anna")
     game.start_game(num_rounds=3)
     assert game.start_lightning_round(auto=True) is True
     game.finish_lightning_round()

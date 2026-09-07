@@ -22,25 +22,21 @@ happened here. The column's own 24px rhythm is the rest of it: four children
 means three gaps, and 72px of air is a 1080p proportion on a screen with
 549.8px of budget (#680/#688 measured that budget).
 
-Text-level guards; ``dashboard.html`` keeps its CSS inline. The pixel numbers
-above cannot be asserted from pytest — what is asserted is that the rules point
-at elements this page actually has.
+Text-level guards over the television's stylesheet and markup. The pixel
+numbers above cannot be asserted from pytest — what is asserted is that the
+rules point at elements this page actually has.
 """
 
 from __future__ import annotations
 
 import re
-from pathlib import Path
 
-REPO = Path(__file__).resolve().parent.parent
-DASHBOARD = REPO / "custom_components" / "quizify" / "www" / "dashboard.html"
+from tests.conftest import dashboard_css, dashboard_markup
 
 
 def _css() -> str:
-    html = DASHBOARD.read_text(encoding="utf-8")
-    blocks = re.findall(r"<style[^>]*>(.*?)</style>", html, re.DOTALL)
-    assert blocks, "dashboard.html is expected to carry its CSS inline"
-    return re.sub(r"/\*.*?\*/", "", "\n".join(blocks), flags=re.DOTALL)
+    # #829/#880: the television's code and styles are their own files now.
+    return re.sub(r"/\*.*?\*/", "", dashboard_css(), flags=re.DOTALL)
 
 
 def _short_screen_block() -> str:
@@ -59,9 +55,8 @@ def _short_screen_block() -> str:
 
 
 def _ids_in_markup() -> set[str]:
-    html = DASHBOARD.read_text(encoding="utf-8")
-    body = html[html.index("</style>") :]
-    return set(re.findall(r'\bid="([^"]+)"', body))
+    # #829/#880: dashboard.html is markup only, so no <style> to skip past.
+    return set(re.findall(r'\bid="([^"]+)"', dashboard_markup()))
 
 
 def test_the_lobby_the_television_actually_renders_is_waiting_view() -> None:

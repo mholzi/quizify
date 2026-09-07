@@ -21,6 +21,8 @@ from pathlib import Path
 
 import pytest
 
+from tests.conftest import dashboard_script
+
 _REPO_ROOT = Path(__file__).resolve().parent.parent
 _CC = _REPO_ROOT / "custom_components" / "quizify"
 _WWW = _CC / "www"
@@ -145,8 +147,11 @@ def test_the_strings_ship_in_every_language(code: str) -> None:
 def test_the_tv_renders_it_and_does_not_double_escape() -> None:
     """`parts[]` is escaped per entry; escaping the join again would render
     "Jan &amp;amp; Anna" for a name containing an ampersand."""
-    source = (_WWW / "dashboard.html").read_text("utf-8")
-    body = source.split("function handleEveningTally(", 1)[1].split("\n        }", 1)[0]
+    # #829/#880: the television's code and styles are their own files now —
+    # out of <script> the function sits one indent level less deep, so its
+    # closing brace is "\n    }".
+    source = dashboard_script()
+    body = source.split("function handleEveningTally(", 1)[1].split("\n    }", 1)[0]
     body = re.sub(r"//.*$", "", body, flags=re.M)
 
     assert "escapeHtml(entry.name)" in body

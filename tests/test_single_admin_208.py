@@ -115,7 +115,7 @@ class TestSingleAdminInvariant:
     def test_registry_has_other_admin_helper(
         self, game: QuizifyGameState
     ) -> None:
-        game.add_player("Host", _ws())
+        game.add_player("Host")
         game.get_player("Host").is_admin = True
         # No other admin claim for the same name.
         assert game.has_other_admin("Host") is False

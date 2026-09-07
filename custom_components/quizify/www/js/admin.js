@@ -2285,11 +2285,7 @@
      */
     function handleHotSeatBidCount(msg) {
         if (_redirecting) return;
-        setDetourDetail(_tOr(
-            'hotSeat.bidCount',
-            { count: msg.count || 0, total: msg.total || 0 },
-            (msg.count || 0) + ' / ' + (msg.total || 0)
-        ));
+        setDetourDetail(window.QuizifyRenderShared.hotSeatBidCountText(msg));
     }
 
     /** Nobody bid. Not a failure — a round that does not happen. */
@@ -2317,12 +2313,7 @@
         // their team in team mode. The notice names the person the room is
         // about to watch; the price is charged to the entrant.
         setDetourNotice('HOT_SEAT', msg.winner);
-        var payer = msg.entrant || msg.winner;
-        setDetourDetail(_tOr(
-            'hotSeat.lost',
-            { name: payer, pct: msg.pct, pts: msg.stake },
-            payer + ' — ' + msg.pct + '%'
-        ));
+        setDetourDetail(window.QuizifyRenderShared.hotSeatAward(msg).text);
     }
 
     /**
@@ -2365,23 +2356,13 @@
         adminTimer.stop();
         _setDetourRound(msg);
         setDetourNotice('HOT_SEAT_REVEAL', msg.winner);
-        // `answered` is tri-state on the server: true = right, false = wrong,
-        // null = never answered. A bare falsy check collapses the last two,
-        // and since #653 an unanswered chair costs the same as a wrong one —
-        // so the host would be told the room ran out of time when somebody
-        // had actually guessed.
-        var noAnswer = msg.answered === null || msg.answered === undefined;
-        var payer = msg.entrant || msg.winner;
-        // #804: a team's key in `deltas` is its id, which no screen can
-        // construct — `winner_delta` is the seat entrant's own settlement.
-        var delta = (msg.winner_delta != null) ? msg.winner_delta : 0;
-        var key = noAnswer
-            ? 'hotSeat.resultTimeout'
-            : (msg.answered === true ? 'hotSeat.resultRight' : 'hotSeat.resultWrong');
-        setDetourDetail(_tOr(
-            key, { name: payer, pts: Math.abs(delta) },
-            payer + ' ' + (delta > 0 ? '+' : '') + delta
-        ));
+        // The tri-state read of `answered` and the #804 delta lookup moved to
+        // render-shared.js in #787, and not a moment too soon: this page had
+        // dropped the `deltas[winner]` fallback the television and the phone
+        // both kept, so a frame carrying `deltas` without `winner_delta` told
+        // the host the chair had settled for 0 while the room read the real
+        // number off the television.
+        setDetourDetail(window.QuizifyRenderShared.hotSeatSettlement(msg).text);
         // The stake has just moved the standings the host is looking at. The
         // frame carries them keyed by name, ranked — a leaderboard that still
         // shows the pre-settlement scores next to "the chair is settled" is
@@ -2706,11 +2687,11 @@
         adminTimer.stop();
         showView('finale');
 
-        var podium = msg.podium || [];
-        renderPodium(els.adminPodium, podium);
-
-        var lb = msg.leaderboard || msg.all_players || [];
-        renderLeaderboard(els.adminFinaleLeaderboard, lb);
+        // #787: the same two reads the television does, in one place — the
+        // `all_players` alias is wire-format knowledge, not page logic.
+        var standings = window.QuizifyRenderShared.finaleStandings(msg);
+        renderPodium(els.adminPodium, standings.podium);
+        renderLeaderboard(els.adminFinaleLeaderboard, standings.leaderboard);
     }
 
     function handleGameReset() {
@@ -2769,9 +2750,7 @@
     }
 
     function renderLobbyPlayers(players) {
-        var list = Array.isArray(players)
-            ? players
-            : (players && typeof players === 'object' ? Object.values(players) : []);
+        var list = window.QuizifyRenderShared.rosterList(players);
         _lastLobbyPlayers = list;
         playerCount = list.length;
         if (els.lobbyPlayerCount) els.lobbyPlayerCount.textContent = playerCount;
@@ -2876,40 +2855,17 @@
             if (!isTeamMode()) {
                 els.lobbyPlayerChips.innerHTML = list.map(card).join('');
             } else {
-                // Same grouping the television has used since #365: every team
-                // as a titled block of its members, and anyone who joined no
-                // team keeps their own row underneath. A player in no team is
-                // a team of one, not an error state — so they are not swept
-                // into a leftover group.
-                var inTeam = {};
-                var seq = 0;
-                var groups = _lobbyTeams.map(function (team) {
-                    var members = (team.members || []).map(function (memberName) {
-                        inTeam[memberName] = true;
-                        for (var i = 0; i < list.length; i++) {
-                            var candidate = list[i];
-                            var candidateName = typeof candidate === 'string'
-                                ? candidate
-                                : (candidate && candidate.name);
-                            if (candidateName === memberName) return candidate;
-                        }
-                        return { name: memberName };
-                    });
-                    return '<div class="lobby-e-team">'
-                        + '<div class="lobby-e-team-name">'
-                        + escapeHtml(team.name || '')
-                        + '<span class="lobby-e-team-size">'
-                        + members.length
-                        + '</span></div>'
-                        + members.map(function (m) { return card(m, seq++); }).join('')
-                        + '</div>';
-                }).join('');
-                var solo = list.filter(function (p) {
-                    var n = typeof p === 'string' ? p : (p && p.name);
-                    return !inTeam[n];
-                });
+                // Same grouping the television has used since #365 — which is
+                // what the comment here used to say instead of sharing it.
+                // #787 moved it to render-shared.js; the card, the palette
+                // index and the #312 colour validation stay this page's.
                 els.lobbyPlayerChips.innerHTML =
-                    groups + solo.map(function (p) { return card(p, seq++); }).join('');
+                    window.QuizifyRenderShared.teamGroupedRosterHtml(list, _lobbyTeams, {
+                        entry: card,
+                        groupClass: 'lobby-e-team',
+                        nameClass: 'lobby-e-team-name',
+                        sizeClass: 'lobby-e-team-size'
+                    });
             }
             // Single delegated click handler — re-attaching per render is fine
             // because innerHTML wipes the previous listeners with the nodes.
@@ -3056,38 +3012,16 @@
 
     function renderPodium(container, podium) {
         if (!container) return;
-        var ordered = [];
-        if (podium[1]) ordered.push(Object.assign({}, podium[1], { place: 2 }));
-        if (podium[0]) ordered.push(Object.assign({}, podium[0], { place: 1 }));
-        if (podium[2]) ordered.push(Object.assign({}, podium[2], { place: 3 }));
-
-        var barClass = { 1: 'first', 2: 'second', 3: 'third' };
-        var pointsShort = _t('leaderboard.pointsShort');
-        var champ = podium[0];
+        // Shelf row: 2 — 1 — 3, the plank showing the rank number ("numbers
+        // speak" per DESIGN.md). Shared with the television since #883; the
+        // champion title and the .podium wrapper are what this page adds.
         var championLabel = _t('leaderboard.champion');
         if (championLabel === 'leaderboard.champion') championLabel = 'Champion';
-
-        // Champion title block (only when there's a winner).
-        var titleHtml = '';
-        if (champ) {
-            titleHtml =
-                '<div class="podium-title">' + escapeHtml(championLabel) + '</div>' +
-                '<div class="podium-champion-name">' + escapeHtml(champ.name) + '</div>';
-        }
-
-        // Shelf row: 2 — 1 — 3.
-        // The plank itself shows the rank number ("numbers speak" per DESIGN.md).
-        var planks = ordered
-            .map(function (p) {
-                return '<div class="podium-place">' +
-                    '<div class="podium-name">' + escapeHtml(p.name) + '</div>' +
-                    '<div class="podium-score">' + p.score + ' ' + escapeHtml(pointsShort) + '</div>' +
-                    '<div class="podium-bar ' + (barClass[p.place] || '') + '">' + p.place + '</div>' +
-                    '</div>';
-            })
-            .join('');
-
-        container.innerHTML = titleHtml + '<div class="podium">' + planks + '</div>';
+        container.innerHTML = window.QuizifyRenderShared.podiumHtml(podium, {
+            pointsLabel: _t('leaderboard.pointsShort'),
+            championLabel: championLabel,
+            wrap: true
+        });
     }
 
     function escapeHtml(text) {

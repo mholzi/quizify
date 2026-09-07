@@ -16,7 +16,6 @@ from __future__ import annotations
 
 import sys
 from pathlib import Path
-from unittest.mock import AsyncMock, MagicMock
 
 import pytest
 
@@ -37,22 +36,14 @@ class _FakeRuntime:
         self.data_dir = tmp_path
 
 
-def _ws() -> MagicMock:
-    ws = MagicMock()
-    ws.closed = False
-    ws.send_json = AsyncMock()
-    ws.close = AsyncMock()
-    return ws
-
-
 @pytest.fixture
 def game(tmp_path: Path) -> QuizifyGameState:
     return QuizifyGameState(runtime=_FakeRuntime(tmp_path), entry_id="test")
 
 
 def _paused(game: QuizifyGameState, reason: str) -> None:
-    game.add_player("Alice", _ws())
-    game.add_player("Bob", _ws())
+    game.add_player("Alice")
+    game.add_player("Bob")
     game.start_game(language="de", num_rounds=3, difficulty="easy")
     assert game.start_next_question() is not None
     assert game.pause(reason=reason) is True
@@ -83,7 +74,7 @@ class TestSnapshotCarriesThePauseReason:
         The client only branches on the value, so a leftover
         ``admin_disconnected`` would arm a reset button mid-question.
         """
-        game.add_player("Alice", _ws())
+        game.add_player("Alice")
         game.start_game(language="de", num_rounds=3, difficulty="easy")
         assert game.start_next_question() is not None
         assert "pause_reason" not in serialize_state_snapshot(game)
