@@ -721,6 +721,16 @@ Quick start: Fork → Branch → PR. See [open issues](https://github.com/mholzi
 
 MIT License. See [LICENSE](LICENSE) for details.
 
+A release ships more than Quizify's own code, and every bundled thing keeps its own
+licence. [`THIRD_PARTY.md`](THIRD_PARTY.md) is the index of what those are and where
+each licence text lives.
+
+**Bundled JavaScript.** The join QR code is drawn by
+[qrcodejs](https://github.com/davidshimjs/qrcodejs), vendored at commit `04f46c6a` in
+`custom_components/quizify/www/js/vendor/qrcode.min.js` so that no page reaches a CDN.
+It is MIT, and the upstream copyright and permission notice travel with it in
+[`qrcodejs-LICENSE.txt`](custom_components/quizify/www/js/vendor/qrcodejs-LICENSE.txt).
+
 **Bundled fonts.** Quizify ships DM Sans and JetBrains Mono in
 `custom_components/quizify/www/fonts/`, both under the SIL Open Font License 1.1, with
 the licence texts alongside them. They are served from your own Home Assistant — no page
