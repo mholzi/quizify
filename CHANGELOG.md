@@ -3,6 +3,20 @@
 All notable changes to Quizify are documented here. This project follows
 [Semantic Versioning](https://semver.org/).
 
+## [1.17.0-RC1] — 2026-09-07
+
+**What the Reload Was Throwing Away**
+
+v1.16.0 was played on a real television five times in one afternoon. Almost everything here came out of that, and out of reloading a phone at the wrong moment.
+
+### Leave the room, come back to the same game
+
+Reload during a Hot Seat, a bet, a team answer or the final screen, and the game used to forget where you were. Six fixes rebuild each of those from the snapshot the server was already sending — the host page included, which read one field out of it and drew nothing else. Continue and Play again work in the second game too.
+
+### Tidier than it looks
+
+Every surface now has its own stylesheet and script, so a rule written for a 390 px phone can no longer reach the television. Behind it: players keyed by an opaque connection id, per-driver broadcasters, the origin gate closed against DNS rebinding, CI off the Node 20 shim, and some 840 lines nothing called.
+
 ## [1.16.0] — 2026-09-07
 
 Thirty-four entries, chosen in one sitting and built in one — then played on a real
