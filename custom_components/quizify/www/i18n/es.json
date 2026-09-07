@@ -241,7 +241,7 @@
       "mostAccurate": "El más preciso",
       "buzzkill": "Aguafiestas",
       "knowledgeExpert": "Experto en conocimiento",
-      "topScore": "Mejor puntuación"
+      "bestRound": "Mejor ronda"
     },
     "details": {
       "fastestFinger": "media de {avg}s por respuesta correcta",
@@ -250,7 +250,7 @@
       "mostAccurate": "{correct}/{total} correctas ({pct}%)",
       "buzzkill": "{count}× congelaciones usadas",
       "knowledgeExpert": "{points} pts en preguntas difíciles",
-      "topScore": "{points} pts en la ronda {round}"
+      "bestRound": "{points} pts en la ronda {round}"
     }
   },
   "reveal": {

@@ -3030,7 +3030,7 @@
     var CHIP_TINT = {
         'topScore': 'disc-sun',          // overall winner / highest total
         'highlights.awards.hotStreak': 'disc-coral',
-        'highlights.awards.topScore': 'disc-sage',     // best single round
+        'highlights.awards.bestRound': 'disc-sage',    // best single round (#860)
         'highlights.awards.fastestFinger': 'disc-sky',
         'highlights.awards.comebackKing': 'disc-sage',
         'highlights.awards.mostAccurate': 'disc-sage',
@@ -3042,7 +3042,7 @@
     var CHIP_EMOJI = {
         'topScore': '🏅',
         'highlights.awards.hotStreak': '🔥',
-        'highlights.awards.topScore': '🎯',
+        'highlights.awards.bestRound': '🥇',
         'highlights.awards.fastestFinger': '⚡',
         'highlights.awards.comebackKing': '🚀',
         'highlights.awards.mostAccurate': '🎯',

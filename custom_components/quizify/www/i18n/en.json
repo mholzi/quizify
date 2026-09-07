@@ -241,7 +241,7 @@
       "mostAccurate": "Most Accurate",
       "buzzkill": "Buzzkill",
       "knowledgeExpert": "Knowledge Expert",
-      "topScore": "Top Score"
+      "bestRound": "Best Round"
     },
     "details": {
       "fastestFinger": "avg {avg}s per correct answer",
@@ -250,7 +250,7 @@
       "mostAccurate": "{correct}/{total} correct ({pct}%)",
       "buzzkill": "{count}× freeze used",
       "knowledgeExpert": "{points} pts on hard questions",
-      "topScore": "{points} pts in round {round}"
+      "bestRound": "{points} pts in round {round}"
     }
   },
   "reveal": {
