@@ -266,9 +266,16 @@ def test_the_admin_pushes_the_language_on_connect() -> None:
 
 
 def test_the_admin_pushes_the_language_when_the_chip_changes() -> None:
-    """Otherwise the correction still waits for start_game, which is the bug."""
+    """Otherwise the correction still waits for start_game, which is the bug.
+
+    #889 moved the body out of the chip callback into ``_applyLanguage`` so a
+    saved preset can restore its language through the same code a tap runs;
+    the chip row now hands that function straight to ``setupChips``. Same
+    handler, same contract — the slice just follows it.
+    """
     source = _without_comments((_JS / "admin.js").read_text("utf-8"))
-    callback = source.split("setupChips(els.languageChips", 1)[1][:900]
+    assert "setupChips(els.languageChips, _applyLanguage)" in source
+    callback = source.split("function _applyLanguage(v) {", 1)[1][:900]
 
     assert "selectedLanguage = v" in callback
     assert "_pushLanguage()" in callback

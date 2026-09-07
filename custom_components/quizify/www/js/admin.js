@@ -1045,6 +1045,13 @@
             p.rounds, p.difficulty, p.timer, p.lightning, hotSeat,
             p.powerups, p.wager
         );
+        // #889: the language first, and only then the packs. _applyLanguage
+        // hides the chips of every other language and drops an active chip
+        // that no longer belongs — run it afterwards and it would throw away
+        // the very packs the preset just chose. A preset saved before the
+        // store carried the field has no language: leave the room's current
+        // one alone rather than guessing one for it.
+        if (p.language) _applyLanguage(String(p.language));
         _applyPacks(p.packs || []);
         // markActivePreset repaints the chips too, so no separate call here.
         markActivePreset();
@@ -1128,6 +1135,10 @@
                 powerups: selectedPowerups,
                 wager: selectedWager,
                 category: selectedCategory,
+                // #889: the packs a preset names belong to one language, so
+                // the language is part of the preset, not of the session that
+                // saved it.
+                language: selectedLanguage,
                 packs: selectedCategories || []
             })
         })
@@ -1481,10 +1492,24 @@
         send('set_difficulty', { difficulty: selectedDifficulty });
     }
 
-    setupChips(els.languageChips, function (v) {
+    // #889: everything a language pick has to do, in one callable place.
+    // The chip row used to own this body, which meant the ONLY way to change
+    // the language was a human tap — a saved preset restoring its language had
+    // no way in, and a Spanish preset on a German host activated hidden ES
+    // pack chips while start_game still sent `language: 'de'`, so build_pool
+    // filtered the pool to nothing and the host read "no questions" with the
+    // chosen packs invisible on screen. Called by the chip handler and by
+    // _applyCustomPreset alike; painting the chip row here is what keeps the
+    // programmatic path honest, because no click ran to do it.
+    function _applyLanguage(v) {
         // Session-only switch — not persisted. On the next full-page reload
         // the UI resolves back to the Home Assistant language (#152).
         selectedLanguage = v;
+        if (els.languageChips) {
+            els.languageChips.querySelectorAll('.chip').forEach(function (c) {
+                c.classList.toggle('active', c.dataset.value === v);
+            });
+        }
         // Carry the pick to the game right away so phones already sitting in
         // the lobby re-render, instead of finding out at start_game (#776).
         _pushLanguage();
@@ -1522,7 +1547,9 @@
             updateSettingsSummary();
             updateCategorySummary();
         }
-    });
+    }
+
+    setupChips(els.languageChips, _applyLanguage);
     // Init: sync language-chip active state + category-chip visibility to
     // the restored language (default German). Without this, a reloaded admin
     // page always showed the German chip active even after restoring English.

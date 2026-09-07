@@ -176,6 +176,7 @@
     "powerup": "Power-Up",
     "paused": "Spiel pausiert",
     "pausedHint": "Das Spiel geht weiter, sobald der Host zurück ist",
+    "pausedResetHint": "Jedes Handy im Raum kann das Spiel jetzt zurücksetzen",
     "stoleFromYou": "{name} hat dir {points} Punkte geklaut!",
     "stoleFromOpponent": "Geklaut: +{points} Pkt. von {name}!",
     "frozen": "Du wurdest 5 Sek. eingefroren!",
