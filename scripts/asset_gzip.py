@@ -46,9 +46,11 @@ WWW = REPO / "custom_components" / "quizify" / "www"
 # leaves the tree half-compressed.
 GZIP_TARGETS: tuple[str, ...] = (
     "css/styles.css",
+    "css/tv.css",
     "js/player.bundle.js",
     "js/common.bundle.js",
     "js/admin.js",
+    "js/dashboard.js",
     "js/pack-submit.js",
     "js/i18n.js",
     "js/utils.js",

@@ -40,7 +40,7 @@ from .game_events import (
     EVENT_WINNER_DECIDED,
 )
 from .ha_service import fire_and_forget_service
-from .house_settings import HouseSettings, clean_entity_ids
+from .house_settings import HouseSettings, clean_entity_ids, clean_str
 
 if TYPE_CHECKING:
     from collections.abc import Callable
@@ -202,7 +202,7 @@ class QuizifyPartyLights:
         self._settings = settings or HouseSettings(
             house_enabled=bool(enabled),
             light_entities=clean_entity_ids(entity_ids),
-            finale_scene=(finale_scene or "").strip() or None,
+            finale_scene=clean_str(finale_scene),
         )
         self._game = game_state
         self._last_phase: GamePhase | None = None
@@ -218,7 +218,9 @@ class QuizifyPartyLights:
         # panel's tri-state override) so a host toggling
         # CONF_HOUSE_EVENTS_ENABLED in the options UI takes effect immediately
         # on a never-panelled install, while a panel-set master survives an
-        # unrelated options change (#411). See :attr:`_master_enabled`.
+        # unrelated options change (#411). See
+        # :attr:`HouseSettings.master_enabled
+        # <custom_components.quizify.house_settings.HouseSettings.master_enabled>`.
         #
         # Per-accent toggles, all default ON so flipping the master on gives the
         # full choreography out of the box (the TTS posture, #281).
@@ -278,7 +280,7 @@ class QuizifyPartyLights:
         self._light_winner = bool(light_winner)
         self._winner_scene = bool(winner_scene)
         self._entity_ids_override = _clean_entity_ids(light_entities) or None
-        self._finale_scene_override = (winner_scene_entity or "").strip() or None
+        self._finale_scene_override = clean_str(winner_scene_entity)
         # Idempotent; a no-op when already attached or still unconfigured.
         self.attach_events()
 
@@ -293,16 +295,6 @@ class QuizifyPartyLights:
     # override below survives simply by not being touched.
 
     @property
-    def _enabled(self) -> bool:
-        """The config-entry master (CONF_HOUSE_EVENTS_ENABLED), read live."""
-        return self._settings.house_enabled
-
-    @property
-    def _enabled_override(self) -> bool | None:
-        """The panel's tri-state master; ``None`` = the panel never set one."""
-        return self._settings.enabled_override
-
-    @property
     def _entity_ids(self) -> list[str]:
         """The config-entry light entities, read live off the settings."""
         return self._settings.light_entities
@@ -311,11 +303,6 @@ class QuizifyPartyLights:
     def _finale_scene(self) -> str | None:
         """The config-entry finale scene (#280), read live off the settings."""
         return self._settings.finale_scene
-
-    @property
-    def _master_enabled(self) -> bool:
-        """The effective accent master: panel override if set, else the entry."""
-        return self._settings.master_enabled
 
     @property
     def _active_entity_ids(self) -> list[str]:
@@ -329,7 +316,7 @@ class QuizifyPartyLights:
 
     @property
     def is_configured(self) -> bool:
-        # Deliberately NOT gated on ``_enabled``: the master only silences the
+        # Deliberately NOT gated on the master: it only silences the
         # event-driven accents, while the ambient phase glow (which also checks
         # is_configured) keeps following the game.
         return self._hass is not None and bool(self._active_entity_ids)
@@ -435,7 +422,7 @@ class QuizifyPartyLights:
 
     def _on_question_shown(self, event: Event) -> None:  # noqa: ARG002
         """Brightness bump on the live coral when a question appears."""
-        if not (self._master_enabled and self._light_question):
+        if not (self._settings.master_enabled and self._light_question):
             return
         self._start_pulse(_ACCENT_QUESTION_SHOWN)
 
@@ -445,7 +432,7 @@ class QuizifyPartyLights:
         Brightness-only, so it breathes on whatever colour the live phase is
         showing, then settles back to the baseline (#280).
         """
-        if not (self._master_enabled and self._light_countdown):
+        if not (self._settings.master_enabled and self._light_countdown):
             return
         self._start_pulse(_ACCENT_COUNTDOWN)
 
@@ -455,7 +442,7 @@ class QuizifyPartyLights:
         Guards ``total_players == 0`` (no div-by-zero) → treated as the minority
         case (amber). A strict majority (> half) flips it green.
         """
-        if not (self._master_enabled and self._light_reveal):
+        if not (self._settings.master_enabled and self._light_reveal):
             return
         data = event.data or {}
         correct = data.get("correct_count") or 0
@@ -465,7 +452,7 @@ class QuizifyPartyLights:
 
     def _on_streak_milestone(self, event: Event) -> None:  # noqa: ARG002
         """Double-pulse bright coral to celebrate a hot streak."""
-        if not (self._master_enabled and self._light_streak):
+        if not (self._settings.master_enabled and self._light_streak):
             return
         self._start_pulse(_ACCENT_STREAK)
 
@@ -481,7 +468,7 @@ class QuizifyPartyLights:
         victory scene while switching Quizify's own bulb sweep off, and vice
         versa. Both still sit under the master.
         """
-        if not self._master_enabled:
+        if not self._settings.master_enabled:
             return
         if self._light_winner:
             self._start_pulse(_ACCENT_WINNER)
@@ -495,7 +482,7 @@ class QuizifyPartyLights:
         ``winner_scene`` toggle is off, or when the integration isn't configured
         (no hass / no lights), so a bare install never touches an unset scene.
         """
-        if not (self._master_enabled and self._winner_scene):
+        if not (self._settings.master_enabled and self._winner_scene):
             return
         scene = self._active_finale_scene
         if scene is None or not self.is_configured:

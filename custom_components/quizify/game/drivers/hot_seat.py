@@ -18,10 +18,16 @@ from __future__ import annotations
 import asyncio
 import logging
 import math
-from typing import Any
+from typing import TYPE_CHECKING, Any
 
 from ..state import GamePhase
 from .protocols import HotSeatBroadcaster, MilestoneSink
+
+if TYPE_CHECKING:
+    from collections.abc import Callable
+
+    from ..hot_seat import HotSeatRound
+    from ..state import QuizifyGameState
 
 _LOGGER = logging.getLogger(__name__)
 
@@ -45,7 +51,7 @@ class HotSeatDriver:
         self._milestones = milestones
         self._reveal_hold = reveal_hold
 
-    async def run(self, game_state: Any) -> None:
+    async def run(self, game_state: QuizifyGameState) -> None:
         try:
             await self._run(game_state)
         except asyncio.CancelledError:
@@ -53,7 +59,7 @@ class HotSeatDriver:
         except Exception:  # noqa: BLE001
             _LOGGER.exception("Hot seat loop crashed")
 
-    async def _run(self, game_state: Any) -> None:
+    async def _run(self, game_state: QuizifyGameState) -> None:
         hs = game_state.hot_seat
         if hs is None:
             return
@@ -135,12 +141,12 @@ class HotSeatDriver:
 
     async def _wait_out(
         self,
-        game_state: Any,
-        hs: Any,
+        game_state: QuizifyGameState,
+        hs: HotSeatRound,
         *,
         phase: GamePhase,
         stage: str,
-        done: Any,
+        done: Callable[[], bool],
         countdown: bool = False,
     ) -> None:
         """Poll one of the two windows until it expires or ``done()``.

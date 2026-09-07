@@ -573,14 +573,27 @@ def test_the_wager_tally_counts_entrants(tmp_path: Path) -> None:
     assert msg["waiting_on"] == ["Küche", "Eva"]
 
 
-def test_the_television_reads_the_payer_and_its_own_delta() -> None:
-    """``deltas`` is keyed by entrant — a team id no screen can construct."""
-    dashboard = (
+def test_every_screen_reads_the_payer_and_its_own_delta() -> None:
+    """``deltas`` is keyed by entrant — a team id no screen can construct.
+
+    Read in `render-shared.js` since #787: all three surfaces had this chain
+    written out, and the host page had already dropped the `deltas` fallback, so
+    a frame without `winner_delta` settled the chair for 0 on the host console
+    while the room read the real number off the television.
+    """
+    js = (
         Path(__file__).resolve().parent.parent
-        / "custom_components" / "quizify" / "www" / "dashboard.html"
-    ).read_text(encoding="utf-8")
-    assert "msg.entrant || msg.winner" in dashboard
-    assert "msg.winner_delta" in dashboard
+        / "custom_components" / "quizify" / "www" / "js"
+    )
+    shared = (js / "render-shared.js").read_text(encoding="utf-8")
+    assert "msg.entrant || msg.winner" in shared
+    assert "msg.winner_delta" in shared
+    assert "msg.deltas && msg.deltas[msg.winner]" in shared
+    for surface in ("dashboard.js", "admin.js", "player-hotseat.js"):
+        source = (js / surface).read_text(encoding="utf-8")
+        assert "hotSeatSettlement(" in source, (
+            f"{surface} does not read the settlement through the shared renderer"
+        )
 
 
 def test_the_phone_hides_the_bet_slider_from_the_seat_holders_team() -> None:

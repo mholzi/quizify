@@ -1,0 +1,2001 @@
+/* ==========================================
+   Television (#880)
+   ==========================================
+
+   Everything on this page addresses the TV and only the TV. It used to be an
+   inline <style> block in dashboard.html, 1,926 lines of it, written to
+   out-cascade a stylesheet the television loads but was not the audience for:
+   the phone and the TV share twelve element ids and a dozen generic class
+   names, every width query in the tree is `min-width` (so the un-queried base
+   rule IS the phone rule and it reaches 1280 px), and the only way to win was
+   to re-declare the same names further down the cascade.
+
+   Since #880 the television loads `css/tv.css` instead of the player's sheet,
+   so the rules a phone needs no longer arrive here at all. This file is the
+   surface's own sheet: `scripts/build_css.py` emits it, and every selector in
+   it is scoped by `body.surface-tv` reaching it through the page root, not by
+   sitting late enough in one shared file.
+   ========================================== */
+
+/* ==========================================
+   Dashboard — TV Host (Soft Parlor)
+   The signature surface. Cream paper, coral + sage accents,
+   warm ink. Soft shadows, rounded edges. No confetti.
+   See DESIGN.md.
+   ========================================== */
+
+:root {
+    /* Broadcast Living Room tokens. They were duplicated here so the
+       dashboard would survive styles.css drifting; since #880 the drift
+       cannot reach it — the television reads its own sheet — and they are
+       kept because they are the surface's palette, not a hedge. */
+    --dash-bg-primary: #FAF6EC;              /* cream paper */              /* studio navy */
+    --dash-accent-primary: #E88A7F;          /* warm coral */          /* broadcast gold */
+    --dash-accent-secondary: #7FA897;        /* muted sage */        /* single accent — aliased */
+    --dash-surface-dark: #FFFFFF;            /* lifted paper */            /* lifted card */
+    --dash-surface-2: #F3EEDF;               /* cream tint */               /* modals, hover */
+    --dash-border-neon: #E5DFCF;             /* warm hairline */             /* hairline */
+    --dash-text-neon-muted: #6E6A5C;         /* warm olive-gray */         /* cool blue-gray */
+    /* #705: eight declarations on this page ask for --dash-text-muted,
+       which was never defined — the palette only had the -neon- name.
+       Every one of them was invalidated, so the secondary lines were
+       inheriting full-strength ink instead of the muted olive-gray. */
+    --dash-text-muted: #6E6A5C;              /* warm olive-gray */
+    --dash-text-white: #2A2820;              /* dark ink on cream */              /* warm parchment, NOT white */
+    --dash-success: #7FA897;                 /* sage for correct */                 /* correct = gold */
+    --dash-success-glow: rgba(127, 168, 151, 0.35);
+    --dash-error: #D66A6A;                   /* warm red */
+    --dash-warning: #E8C47F;                 /* sun */
+    --dash-gold: #E8C47F;                    /* sun for podium 1st */
+    --dash-silver: #B8B2A0;                  /* warm silver */
+    --dash-bronze: #C99466;                  /* warm bronze */
+}
+
+* { box-sizing: border-box; margin: 0; padding: 0; }
+
+body.dashboard-body {
+    background: var(--dash-bg-primary);
+    background-image:
+        linear-gradient(var(--dash-bg-primary), var(--dash-bg-primary)),
+        radial-gradient(ellipse at 85% 15%, rgba(232, 138, 127, 0.08) 0%, transparent 55%);
+    background-blend-mode: normal;
+    color: var(--dash-text-white);
+    font-family: 'DM Sans', sans-serif;
+    overflow: hidden;
+    min-height: 100dvh;
+}
+
+/* ---- Main Container ---- */
+.dashboard-container {
+    max-width: 100%;
+    width: 100%;
+    height: 100dvh;
+    padding: clamp(24px, 3vw, 48px) clamp(24px, 3vw, 48px);
+    display: flex;
+    flex-direction: column;
+}
+
+/* ---- Dashboard Views ---- */
+.dashboard-view { display: none; flex-direction: column; flex: 1; min-height: 0; }
+.dashboard-view.active { display: flex; }
+
+/* ---- Wordmark ---- */
+.wordmark {
+    font-family: 'DM Sans', sans-serif;
+    font-size: clamp(24px, 2.4vw, 34px);
+    font-weight: 900;
+    letter-spacing: -0.02em;
+    line-height: 1;
+}
+
+.wordmark-quiz { color: var(--dash-text-white); }
+.wordmark-ify  { color: var(--dash-accent-primary); }
+
+/* ---- Dashboard Header ---- */
+.dashboard-header {
+    display: flex;
+    align-items: flex-start;
+    justify-content: space-between;
+    padding-bottom: 20px;
+    flex-shrink: 0;
+}
+
+.dashboard-round {
+    font-family: 'JetBrains Mono', ui-monospace, monospace;
+    /* #707: 12px was a phone label. It carries "Question 4 / 10" —
+       where the room is in the game — so it scales with the rest of
+       the board (#376). */
+    font-size: clamp(14px, 1.2vw, 20px);
+    color: var(--dash-accent-primary);
+    font-weight: 500;
+    letter-spacing: 0.2em;
+    text-transform: uppercase;
+    padding: 8px 0 6px;
+    border-bottom: 1px solid var(--dash-accent-primary);
+    margin-top: 6px;
+}
+
+/* ---- Timer Bar ---- */
+/* #427: this is the only countdown on the shared TV screen, so the bar
+   is thick enough to read from a couch (was 4px — illegible at 2-3m). */
+.dashboard-timer {
+    position: relative;
+    height: 12px;
+    background: var(--dash-border-neon);
+    border-radius: 6px;
+    flex-shrink: 0;
+    margin-bottom: clamp(20px, 2.4vw, 32px);
+    overflow: hidden;
+}
+
+/* #620: readable from the couch but clearly secondary to the QR —
+   this is the escape hatch, not the main route. */
+.dashboard-join-fallback {
+    margin-top: 14px;
+    text-align: center;
+}
+
+.dashboard-join-or {
+    font-size: clamp(0.8rem, 1.1vw, 1rem);
+    color: var(--dash-text-muted);
+    margin-bottom: 4px;
+}
+
+.dashboard-join-url {
+    /* Sized from the render, not from a guess: at 1.6rem the address
+       was the loudest thing in the block and out-shouted the QR it is
+       meant to back up. This still reads from a couch — it has to,
+       someone is typing it from three metres away — without becoming
+       the primary route. */
+    font-size: clamp(1rem, 1.5vw, 1.35rem);
+    font-weight: 600;
+    color: var(--dash-text-white);
+    word-break: break-all;
+    line-height: 1.25;
+}
+
+.dashboard-join-hint {
+    font-size: clamp(0.8rem, 1.1vw, 1rem);
+    color: var(--dash-text-muted);
+    margin-top: 4px;
+}
+
+.dashboard-h2h {
+    margin-top: 14px;
+    text-align: center;
+    font-size: clamp(1rem, 1.7vw, 1.35rem);
+    color: var(--dash-text-white);
+    font-variant-numeric: tabular-nums;
+}
+
+.dashboard-h2h .h2h-label {
+    display: block;
+    font-size: 0.72em;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    color: var(--dash-text-muted);
+    margin-bottom: 3px;
+}
+
+/* On the end screen the line sits under the leaderboard card in the
+   right column, so it needs its own separation — in the lobby the
+   column gap already provides it. Kept small: the podium is the
+   headline there, this is a footnote to it. */
+.dashboard-h2h--end {
+    margin-top: 10px;
+    padding-top: 10px;
+    border-top: 1px solid var(--dash-border-neon);
+    font-size: clamp(0.9rem, 1.3vw, 1.1rem);
+}
+
+.dashboard-h2h .h2h-scope {
+    font-size: 0.68em;
+    color: var(--dash-text-muted);
+    margin-left: 8px;
+}
+
+.dashboard-evening-tally {
+    font-size: clamp(1rem, 1.7vw, 1.4rem);
+    color: var(--dash-text-white);
+    text-align: center;
+    margin-bottom: 10px;
+    flex-shrink: 0;
+    font-variant-numeric: tabular-nums;
+}
+
+.dashboard-evening-tally .tally-label {
+    color: var(--dash-text-muted);
+    margin-right: 8px;
+}
+
+.dashboard-answer-progress {
+    font-size: clamp(0.9rem, 1.4vw, 1.15rem);
+    color: var(--dash-text-muted);
+    text-align: right;
+    margin-bottom: 6px;
+    flex-shrink: 0;
+    font-variant-numeric: tabular-nums;
+}
+
+.dashboard-answer-progress.is-complete {
+    color: var(--dash-accent-primary);
+}
+
+.dashboard-timer-fill {
+    height: 100%;
+    background: var(--dash-accent-primary);
+    box-shadow: 0 0 12px var(--dash-success-glow);
+    border-radius: 6px;
+    transition: width 0.8s linear;
+    width: 100%;
+}
+
+.dashboard-timer-fill.warning {
+    background: var(--dash-warning);
+}
+
+.dashboard-timer-fill.critical {
+    background: var(--dash-error);
+    box-shadow: 0 0 16px rgba(214, 106, 106, 0.28);
+    animation: pulse-bar 0.5s ease-in-out infinite alternate;
+}
+
+@keyframes pulse-bar {
+    from { opacity: 1; }
+    to   { opacity: 0.5; }
+}
+
+/* #421: connection-lost pill. When ws.onclose fires mid-question the TV
+   would otherwise freeze on a stale frame with no hint that it's dead.
+   This pill (reusing the .dashboard-waiting-text house style) appears
+   top-right while the socket is down and hides again on reconnect. */
+.dashboard-reconnect-pill {
+    position: fixed;
+    top: 16px;
+    right: 16px;
+    z-index: 100;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    padding: 8px 16px;
+    border-radius: 999px;
+    background: rgba(214, 106, 106, 0.15);
+    border: 1px solid var(--dash-error);
+    font-family: 'JetBrains Mono', ui-monospace, monospace;
+    /* #707: the one signal that the board has gone dead — it has to be
+       readable from wherever the room noticed the freeze. */
+    font-size: clamp(15px, 1.2vw, 20px);
+    color: var(--dash-error);
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+}
+.dashboard-reconnect-pill[hidden] { display: none; }
+.dashboard-reconnect-pill::before {
+    content: '';
+    width: 8px;
+    height: 8px;
+    border-radius: 50%;
+    background: var(--dash-error);
+    animation: fade-pulse 1s ease-in-out infinite;
+}
+
+/* ===================
+   LOADING / NO-GAME / WAITING
+   =================== */
+.dashboard-loading,
+.dashboard-no-game,
+.dashboard-waiting {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    gap: 24px;
+}
+
+.dashboard-loading .wordmark,
+.dashboard-no-game .wordmark,
+.dashboard-waiting .wordmark { font-size: clamp(40px, 5vw, 64px); }
+
+.dashboard-loading-text,
+.dashboard-waiting-text {
+    font-family: 'JetBrains Mono', ui-monospace, monospace;
+    /* #667: 14px is a phone size. This is the primary instruction on
+       the lobby screen ("Scan to join the game"), read from a sofa.
+       Same clamp the couch-legibility pass (#376) gave the rest of
+       this screen; the join-URL fallback (#620) was already sized for
+       three metres and the caption above it was not. */
+    font-size: clamp(16px, 1.6vw, 22px);
+    color: var(--dash-text-neon-muted);
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    animation: fade-pulse 2s ease-in-out infinite;
+}
+
+@keyframes fade-pulse {
+    0%, 100% { opacity: 0.4; }
+    50%      { opacity: 1; }
+}
+
+/* Dead since the extraction in #829/#880 could see it: nothing sets this
+   class. It looked alive only because the scan in
+   tests/test_dead_frontend_weight_797.py reads www/*.html and www/*.js, and
+   the selector itself sat inside dashboard.html's inline <style> — the rule
+   was vouching for itself. */
+
+.dashboard-qr-section {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 16px;
+}
+
+.dashboard-qr-section canvas,
+.dashboard-qr-section img {
+    border-radius: 10px;
+    border: 1px solid var(--dash-border-neon);
+    box-shadow: 0 0 40px rgba(0, 0, 0, 0.5);
+}
+
+.dashboard-player-list {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 10px;
+    justify-content: center;
+    max-width: 800px;
+}
+
+/* A television does not scroll, so anything below the fold is simply
+   not in the picture. Measured on a 1280x720 screen with three players
+   in the lobby: the column was ALREADY 732px tall before the duel line
+   existed — the roster chips were clipped by 12px — and the duel adds
+   another ~97px, putting it entirely off-screen. 1366x768 fails the
+   same way; only 1080p had the room.
+
+   So this compacts the lobby on short screens rather than shrinking it
+   everywhere: at 1080p the QR stays the size it was, because it has to
+   scan from a sofa across the room. */
+@media (max-height: 850px) {
+    #lobby-qr.dashboard-qr-section {
+        gap: 8px;
+    }
+
+    /* The vendor library renders a fixed 280px canvas; scaling it here
+       keeps the code sharp (it is drawn at 280 and displayed smaller)
+       while giving the column back 100px. */
+    #lobby-qr .dashboard-qr-section canvas,
+    #lobby-qr canvas,
+    #lobby-qr img {
+        width: 180px;
+        height: 180px;
+    }
+
+    /* #836: these two were written for ``#lobby-view`` — which is the
+       PHONE's lobby (``css/src/07-player.css``). The television's is
+       ``#waiting-view``, so neither rule has ever matched anything on
+       this page and the compaction they were part of never happened
+       here. Measured at 1280x720: the lobby column was 733.1px in a
+       720px viewport with ``body { overflow: hidden }``, cutting the
+       head-to-head line in half. */
+    #waiting-view .dashboard-waiting-text {
+        margin: 0;
+    }
+
+    #waiting-view .dashboard-join-fallback {
+        margin-top: 2px;
+    }
+
+    /* The column's own 24px rhythm is the other half of the overflow:
+       four children means three gaps, and 72px of air is a 1080p
+       proportion on a screen with 549.8px of budget. Halved rather
+       than removed — the QR block has to stay separable from the
+       roster under it from three metres away. */
+    #waiting-view .dashboard-waiting {
+        gap: 12px;
+    }
+
+    .dashboard-h2h {
+        margin-top: 8px;
+    }
+
+    /* #680: at 1280x720 the question view needs 799px of a 549.8px
+       column. The single biggest item is the answer grid, and three
+       columns are why: a ~221px tile cannot hold an answer and its
+       chart side by side, so both wrap and the row grows to 200.8px.
+       Two columns give each tile ~341px, the chart stays on the
+       answer's line, and the grid drops from 383.5px to about 246.
+
+       Two columns also suit four answers better than 3+1 does.
+
+       Played on a real 720p television on 03.09.2026: two columns are
+       a step in the right direction that stops one short. A 343px tile
+       still wraps a long answer onto three lines and puts the chart
+       under it — 241.7px per tile, measured live. One column gives the
+       tile the full 699px, the answer sits on two lines, the chart
+       stays on the second, and the tile drops to 125px. Measured
+       against the heaviest question the library actually ships
+       (108 characters, 325 characters of answers, longest 121):
+       519.5px of 573px available, nothing below the fold.
+
+       The four-answer argument above does not apply to this library:
+       all 4.545 multiple-choice questions carry exactly three
+       answers. */
+    #question-view .dashboard-answers,
+    #lightning-view .dashboard-answers {
+        grid-template-columns: 1fr;
+    }
+
+    /* Margins and padding, not sizes — no legibility is spent here.
+       The tiles carry the reveal's remaining 36.5px: their vertical
+       padding resolves to 23px at this width, and the reveal has two
+       rows of them. */
+    #question-view .dashboard-answer,
+    #lightning-view .dashboard-answer {
+        padding-top: 12px;
+        padding-bottom: 12px;
+    }
+
+    #question-view .dashboard-answers,
+    #lightning-view .dashboard-answers {
+        gap: 12px;
+    }
+
+    #question-view .dashboard-category,
+    #lightning-view .dashboard-category {
+        margin-bottom: 8px;
+    }
+
+    /* Played on a 720p television on 03.09.2026, and the two rules
+       above were not enough. A 150-character question rendered 6.5
+       lines at 53.8px; the body came to 837.3px of 579.9px available
+       and put 20 elements below the fold — the third answer tile
+       entirely off-screen, percentages included. The same view with a
+       102-character question measures 473.6px and fits, which is why
+       #686 passed: it was measured against one question, not against
+       the longest one. The library runs to 173 characters, p99 137.
+
+       The cause is a mismatch of axes: the type is sized by *width*
+       (4.2vw), and width is the one thing a 1280x720 television has
+       enough of. On a short screen it is sized by the budget that is
+       actually scarce. #376's sizes stay untouched at 1080p and above,
+       and the floor here is 28px — below that the room stops reading
+       it, and clipping the answers would be the better trade.
+
+       #691: the lightning view is the same layout under a different id,
+       and scoping these rules to #question-view left it broken while
+       the view beside it was fixed. Played on a 720p television its
+       answer grid ended 938px down a 720px picture — worse than the
+       question view ever was, in the phase where the clock is fifteen
+       seconds. Both views are named on every rule now; the finale is
+       NOT covered here, because it carries neither .dashboard-question
+       nor .dashboard-answers and overflows for a different reason
+       (#692). */
+    #question-view .dashboard-question,
+    #lightning-view .dashboard-question {
+        font-size: clamp(28px, 4.4vh, 44px);
+        /* 24ch of a smaller type hands the saved lines straight back:
+           the column is 699px wide, so let the type use it. */
+        max-width: none;
+        margin-bottom: 16px;
+    }
+
+    /* #680 hid this at short heights, because under the answers it
+       was unreachable anyway (top edge at 726.5px of a 720px
+       viewport) and only pushed the last answer row towards the fold.
+       #685 moved it to the right column, where it costs the answers
+       nothing — so it is shown again here, just tighter. */
+    #question-view .dashboard-funfact {
+        margin-top: 16px;
+    }
+}
+
+.dashboard-player-chip {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    padding: 8px 16px;
+    background: var(--dash-surface-dark);
+    border: 1px solid var(--dash-border-neon);
+    border-radius: 9999px;
+    font-family: 'JetBrains Mono', ui-monospace, monospace;
+    /* #667: this chip carries a guest's name — the thing they look up
+       at the television to check after scanning. At 12px uppercase it
+       was roughly a third of what #376 deemed readable across a room.
+       The uppercase goes with it: capitals cost legibility at
+       distance and buy nothing here. */
+    font-size: clamp(15px, 1.4vw, 20px);
+    color: var(--dash-text-white);
+    font-weight: 500;
+    letter-spacing: 0.08em;
+}
+
+/* Moved here from `04-lobby.css` by #880: these three rules are the only
+   thing the television needed from that module, and they were the reason it
+   could not simply stop loading the phone's sheet. They render nowhere else
+   — the phone and the host page never emit a `.dashboard-team-*` element. */
+/* The TV lobby, grouped by team (#365). The third view of formation: the
+   room can see who is playing with whom without anyone shouting across the
+   sofa. Solo players keep their own chip — a player in no team is a team of
+   one, not a leftover. */
+.dashboard-team-group {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 6px;
+    padding: 10px 14px;
+    border: 1px solid var(--dash-border-neon, #E5DFCF);
+    border-radius: 16px;
+}
+
+.dashboard-team-name {
+    font-size: 0.85em;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    opacity: 0.75;
+}
+
+.dashboard-team-members {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    gap: 8px;
+}
+
+/* ===================
+   TWO-COLUMN LAYOUT (question + leaderboard)
+   =================== */
+.dashboard-columns {
+    display: flex;
+    flex: 1;
+    gap: clamp(24px, 3vw, 40px);
+    min-height: 0;
+}
+
+/* Left: question + answers */
+.dashboard-left {
+    flex: 6;
+    display: flex;
+    flex-direction: column;
+    /* #680: `safe` is the whole point. Plain `center` splits any
+       overflow across both ends, so content too tall for the column
+       climbs *upward* into the fixed header — at 1280x720 the category
+       label sat 93.9px behind the timer bar. `safe` falls back to
+       flex-start the moment it does not fit, so the overflow can only
+       go down, where it is at least still reading order.
+
+       Declared twice on purpose: a browser that does not know the
+       `safe` keyword drops the whole declaration, and the initial
+       value is `flex-start`, not `center` — so without the plain
+       `center` above it, an old renderer would top-align every
+       question instead of falling back to today's behaviour. */
+    justify-content: center;
+    justify-content: safe center;  /* the fallback above is deliberate */
+    min-width: 0;
+}
+
+.dashboard-category {
+    font-family: 'JetBrains Mono', ui-monospace, monospace;
+    /* #808: 12px was a phone size on a television, and through the
+       final round's betting window this element is not an eyebrow at
+       all — `handleWagerProgress` replaces the question with the
+       lock-in tally and the category is the only clue the room's bet
+       is placed on. #707 gave the same step to `.dashboard-round`;
+       #707's list of four did not include this one. */
+    font-size: clamp(14px, 1.2vw, 20px);
+    color: var(--dash-accent-primary);
+    text-transform: uppercase;
+    letter-spacing: 0.2em;
+    font-weight: 500;
+    margin-bottom: 12px;
+    padding-bottom: 6px;
+    border-bottom: 1px solid var(--dash-accent-primary);
+    display: inline-block;
+    align-self: flex-start;
+}
+
+.dashboard-question {
+    font-family: 'DM Sans', sans-serif;
+    font-size: clamp(32px, 4.2vw, 56px);
+    font-weight: 700;
+    line-height: 1.1;
+    letter-spacing: -0.02em;
+    color: var(--dash-text-white);
+    margin-bottom: clamp(24px, 3vw, 40px);
+    max-width: 24ch;
+}
+
+/* Issue #183 (Variant 1 — split / side-by-side):
+   When the question has an image, .dashboard-left becomes a 2-pane
+   grid: the image is a co-equal focal point on the left, the
+   question + answer grid on the right. Nothing scrolls; both
+   portrait and landscape images letterbox via object-fit:contain
+   so there is no layout shift between questions. */
+.dashboard-left.has-image {
+    display: grid;
+    grid-template-columns: 1.15fr 1fr;
+    gap: clamp(24px, 3vw, 44px);
+    align-items: center;
+}
+/* Without an image the body keeps the original single-column flow. */
+.dashboard-question-body {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    min-width: 0;
+}
+
+/* Estimate (#275): question-phase range hint + reveal number line. */
+.dashboard-estimate.hidden { display: none; }
+.dashboard-estimate-hint {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    /* #735: the estimate reveal was not in the #707 pass and kept its
+       phone sizes. This carries the range the room is guessing inside
+       ("Schätzfrage zwischen 10 und 500"), so it takes the step #707
+       gave the podium name — the largest of the four it settled. */
+    font-size: clamp(18px, 1.8vw, 28px);
+    font-weight: 600;
+    color: var(--color-text-muted, #6E6A5C);
+    margin-top: 16px;
+}
+.dashboard-estimate-badge-dot {
+    width: 12px; height: 12px; border-radius: 50%;
+    background: var(--color-gold, #E8C47F);
+}
+.dnl-truth { text-align: center; margin: 8px 0 12px; }
+.dnl-truth-label {
+    /* #735: an eyebrow naming the block below it ("RICHTIGE ANTWORT"),
+       so it takes the same step as the round indicator in #707. */
+    font-size: clamp(14px, 1.2vw, 20px);
+    text-transform: uppercase; letter-spacing: 0.1em;
+    color: var(--color-text-muted, #6E6A5C); font-weight: 600;
+}
+.dnl-truth-value {
+    font-family: var(--font-mono, monospace); font-weight: 700;
+    font-size: 56px; line-height: 1.1; color: var(--color-accent-primary, #E88A7F);
+}
+.dnl-card {
+    background: var(--color-bg-card, #fff);
+    border: 1px solid var(--color-border-light, #E5DFCF);
+    border-radius: 16px; padding: 72px 32px 40px; margin: 12px 0;
+    position: relative;
+}
+.dnl-axis {
+    position: relative; height: 5px;
+    background: var(--color-bg-card-alt, #F3EEDF); border-radius: 9999px;
+}
+.dnl-tick { position: absolute; top: 50%; transform: translate(-50%, -50%); }
+.dnl-dot {
+    width: 18px; height: 18px; border-radius: 50%;
+    border: 2px solid var(--color-bg-card, #fff);
+    box-shadow: 0 1px 4px rgba(42,40,32,0.25);
+}
+.dnl-lbl {
+    position: absolute; left: 50%; transform: translateX(-50%);
+    white-space: nowrap;
+    /* #735: who guessed what is the thing the room leans forward for,
+       and it was 17px on a 1920px screen. It is a name plus a number
+       in a row, exactly what the leaderboard and the lightning recap
+       carry, so it takes their step (#376/#707). */
+    font-size: clamp(16px, 1.6vw, 24px);
+    font-weight: 600;
+    color: var(--color-text-muted, #6E6A5C); font-family: var(--font-mono, monospace);
+}
+.dnl-lbl.is-winner { color: var(--color-accent-secondary, #7FA897); }
+/* #735: in em, so the clearance from the dot grows with the label
+   instead of the type creeping towards the axis as it scales. */
+.dnl-lbl--above { bottom: 1.4em; }
+.dnl-lbl--below { top: 1.4em; }
+.dnl-truth-line {
+    position: absolute; top: -40px; bottom: -18px; width: 3px;
+    background: var(--color-accent-primary, #E88A7F); transform: translateX(-50%);
+}
+.dnl-truth-flag {
+    position: absolute; top: -62px; transform: translateX(-50%);
+    background: var(--color-accent-primary, #E88A7F); color: #fff;
+    font-family: var(--font-mono, monospace); font-weight: 700;
+    /* #735: the true value sitting on the line, next to the guesses it
+       is being compared against — the same step as the guesses. */
+    font-size: clamp(16px, 1.6vw, 24px);
+    padding: 4px 12px; border-radius: 9999px; white-space: nowrap;
+}
+.dnl-scale-ends {
+    display: flex; justify-content: space-between;
+    /* #735: the below-labels hang out of the axis box into this band,
+       and at 16px they already grazed the endpoints. In em the gap
+       grows with the labels instead of being overrun by them. */
+    margin-top: 2.4em;
+    font-family: var(--font-mono, monospace);
+    /* #735: the two numbers that tell the room what the line spans. */
+    font-size: clamp(16px, 1.6vw, 24px);
+    color: var(--color-text-light, #8F8A78);
+}
+
+/* Image pane — hidden unless the question carries a valid image. */
+.dashboard-question-media {
+    display: none;
+    align-items: center;
+    justify-content: center;
+    height: 100%;
+    min-width: 0;
+}
+.dashboard-left.has-image .dashboard-question-media {
+    display: flex;
+}
+.dashboard-question-image {
+    display: block;
+    max-width: 100%;
+    max-height: 62vh;
+    width: auto;
+    height: auto;
+    border-radius: 16px;
+    border: 1px solid var(--dash-border-neon);
+    object-fit: contain;
+}
+/* #434 progressive reveal. The blur amount is a custom property the
+   timer writes on every tick; the transition only has to smooth the
+   step between two ticks, so it is kept just under the tick interval.
+
+   `scale` is not cosmetic: a CSS blur samples beyond the element's
+   box and would otherwise fade the picture's own edges into the page,
+   making the frame look broken rather than obscured. Scaling up and
+   clipping in the parent keeps a clean edge at every blur radius. */
+.dashboard-question-image.progressive-reveal {
+    filter: blur(var(--reveal-blur, 0px));
+    transform: scale(1.06);
+    transition: filter 0.45s linear;
+}
+.dashboard-question-media { overflow: hidden; }
+/* Reduced motion needs no rule of its own here: the global
+   `prefers-reduced-motion` block in 00-tokens.css already collapses
+   every transition-duration, which stills the tick-to-tick easing.
+   What must NOT happen is the blur being switched off with it — that
+   would hand the answer to exactly the players who asked for calmer
+   motion. `filter` is a paint, not an animation, so it survives. */
+
+/* 3-column answer row (questions have exactly 3 answers) */
+.dashboard-answers {
+    display: grid;
+    grid-template-columns: 1fr 1fr 1fr;
+    gap: clamp(12px, 1.4vw, 18px);
+}
+
+.dashboard-answer {
+    display: flex;
+    /* #665: the chart drops to its own line when the answer text needs
+       the first one. Wrapping is also what keeps the tile from forcing
+       its grid track wide: a wrapping flex container's min-content is
+       the widest single item, not the sum of all of them. */
+    flex-wrap: wrap;
+    align-items: center;
+    gap: clamp(14px, 1.6vw, 20px);
+    padding: clamp(16px, 1.8vw, 24px) clamp(18px, 2vw, 28px);
+    background: var(--dash-surface-dark);
+    border: 1px solid var(--dash-border-neon);
+    border-radius: 10px;
+    font-family: 'DM Sans', sans-serif;
+    font-size: clamp(16px, 1.8vw, 22px);
+    font-weight: 500;
+    color: var(--dash-text-white);
+    transition: border-color 120ms ease-out, background 120ms ease-out, box-shadow 320ms ease-out;
+    min-height: 80px;
+}
+
+/* #665: the answer text takes essentially all of the tile's spare
+   width, and the chart takes the rest of its own line. The lopsided
+   grow factor is the whole mechanism, not a stray number: both items
+   can grow, so on a shared line the 100:1 split leaves the chart at
+   its `min-width` floor and gives the text everything else, while on a
+   wrapped line the chart is alone and fills it. Equal grow factors put
+   a 158 px bar next to a two-line answer at 1920x1080; no grow at all
+   leaves a 10 px stub of a bar on the wrapped line at 1280x720. */
+.dashboard-answer .answer-text {
+    flex-grow: 100;
+}
+
+.dashboard-answer .answer-label {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-family: 'JetBrains Mono', ui-monospace, monospace;
+    font-size: clamp(20px, 2.2vw, 28px);
+    font-weight: 500;
+    color: var(--dash-accent-primary);
+    flex-shrink: 0;
+    width: auto;
+    height: auto;
+    background: transparent;
+    line-height: 1;
+}
+
+/* Correct-answer reveal */
+.dashboard-answer.correct {
+    border-color: var(--dash-success);
+    background: rgba(127, 168, 151, 0.10);
+}
+
+/* #678: the star is a flex item, not an absolutely positioned corner.
+   Pinned at `right: 16px` it was painted on top of the distribution
+   percentage — 3px into it at 1920x1080, 10.5px at 1024x640, because
+   the star's offset is fixed while the tile's padding is a clamp. In
+   flow it cannot collide with anything, at any width.
+
+   `order: 1` puts it directly after the answer text and before the
+   chart, so it reads as "Konrad Adenauer ★" and stays on the text's
+   line when the chart wraps to its own (#665). As the last item it
+   would instead be stranded on a third line. */
+.dashboard-answer.correct::after {
+    content: "★";
+    order: 1;
+    color: var(--dash-success);
+    font-size: 16px;
+    line-height: 1;
+    flex-shrink: 0;
+}
+
+/* #666: dim the wrong answer's *text*, not the tile. Opacity
+   multiplies down the subtree, so a rule on `.dashboard-answer.wrong`
+   took the distribution bar and its percentage with it — the one
+   number the room is arguing about, rendered at a third of its
+   contrast from across the room. The muted bar fill already ranks the
+   wrong answers below the correct one; the bar and the percent stay at
+   full opacity here on purpose. */
+.dashboard-answer.wrong .answer-label,
+.dashboard-answer.wrong .answer-text {
+    opacity: 0.45;
+}
+
+/* Answer-distribution chart (issue #151) — absent during the question,
+   fades in + animates the bars at reveal time. TV viewing distance
+   means: thick bars, large percent text, no precision noise.
+
+   #665: `display: none` until `.revealed`, not `opacity: 0`. The bar
+   was sized to claim ~30 % of the answer *row* — true when the answers
+   were one full-width row, wrong since the grid became three columns
+   (`.dashboard-answers`). An invisible 140 px reservation in a ~170 px
+   tile is more than the tile holds: at 1280x720 the grid overflowed its
+   column by 330 px and every answer wrapped to two or three lines
+   beside an empty right half. Hidden means hidden — it must cost no
+   layout while nobody can see it.
+
+   The fade survives the display switch as an animation: a transition
+   cannot run across `display`, `animation` starts when the element
+   appears. `both` holds opacity 0 through the 320 ms delay, so the
+   chart still lands after the correct/wrong colour. */
+.dashboard-answer-distribution {
+    display: none;
+    align-items: center;
+    gap: clamp(10px, 1vw, 14px);
+    min-width: clamp(80px, 30%, 200px);
+    flex-shrink: 0;
+}
+.dashboard-answer.revealed .dashboard-answer-distribution {
+    display: flex;
+    order: 2;  /* #678: after the correct tile's star, never before it */
+    flex: 1 1 auto;
+    animation: dashboard-distribution-in 220ms ease-out 320ms both;
+}
+@keyframes dashboard-distribution-in {
+    from { opacity: 0; }
+    to   { opacity: 1; }
+}
+.dashboard-answer-bar {
+    flex: 1 1 auto;
+    /* The percentage next to it claims up to 72px of a chart whose
+       floor #665 set to 80px, which left the bar 2.6px at 1920x1080 —
+       a sliver, not a bar. The bar is the half of this chart you read
+       from the couch, so it states its own floor and the container's
+       min-content follows it up. */
+    min-width: clamp(56px, 5vw, 90px);
+    height: clamp(10px, 1vw, 14px);
+    background: #E5DFCF;
+    border-radius: 999px;
+    overflow: hidden;
+}
+.dashboard-answer-bar-fill {
+    height: 100%;
+    width: 0%;
+    background: rgba(127, 168, 151, 0.42);  /* sage muted for wrong */
+    border-radius: 999px;
+    transition: width 800ms cubic-bezier(0.22, 0.61, 0.36, 1) 400ms;
+}
+.dashboard-answer.correct .dashboard-answer-bar-fill {
+    background: var(--dash-success);  /* sage green per DESIGN.md */
+}
+.dashboard-answer-percent {
+    font-family: 'JetBrains Mono', ui-monospace, monospace;
+    font-size: clamp(16px, 1.6vw, 22px);
+    font-weight: 600;
+    color: var(--dash-text-white);
+    min-width: clamp(48px, 4.5vw, 72px);
+    text-align: right;
+    font-variant-numeric: tabular-nums;
+}
+
+/* Fun fact on reveal */
+.dashboard-funfact {
+    margin-top: clamp(24px, 3vw, 36px);
+    /* #685: it shares the right column with a scrolling leaderboard.
+       Without this the flex layout would shrink the fact instead of
+       the list, which is the wrong way round — the list already knows
+       how to give. */
+    flex-shrink: 0;
+    padding: 20px 24px;
+    background: var(--dash-surface-dark);
+    border: 1px solid var(--dash-border-neon);
+    border-left: 3px solid var(--dash-accent-primary);
+    border-radius: 10px;
+    font-family: 'DM Sans', sans-serif;
+    /* #376: scale for TV couch legibility (viewed from 2-3m) */
+    font-size: clamp(18px, 1.8vw, 26px);
+    line-height: 1.6;
+    color: var(--dash-text-neon-muted);
+    transform: translateY(16px);
+    opacity: 0;
+    transition: all 0.5s ease-out;
+}
+
+.dashboard-funfact.visible {
+    transform: translateY(0);
+    opacity: 1;
+}
+
+.dashboard-funfact .fun-fact-label {
+    font-family: 'JetBrains Mono', ui-monospace, monospace;
+    /* #891: 11-12px is a phone eyebrow. Floored for the television,
+       the way #707 floored the four main strings and #808 the
+       category — same clamp, so the labels step together. */
+    font-size: clamp(16px, 1.1vw, 20px);
+    font-weight: 500;
+    text-transform: uppercase;
+    letter-spacing: 0.2em;
+    color: var(--dash-accent-primary);
+    margin-bottom: 8px;
+}
+
+.dashboard-funfact .fun-fact-text {
+    color: var(--dash-text-white);
+}
+
+/* Right: leaderboard */
+.dashboard-right {
+    flex: 4;
+    display: flex;
+    flex-direction: column;
+    min-width: 0;
+}
+
+.dashboard-leaderboard-title {
+    font-family: 'JetBrains Mono', ui-monospace, monospace;
+    /* #891: 11-12px is a phone eyebrow. Floored for the television,
+       the way #707 floored the four main strings and #808 the
+       category — same clamp, so the labels step together. */
+    font-size: clamp(16px, 1.1vw, 20px);
+    font-weight: 500;
+    text-transform: uppercase;
+    letter-spacing: 0.2em;
+    color: var(--dash-text-neon-muted);
+    margin-bottom: 16px;
+    padding-bottom: 10px;
+    border-bottom: 1px solid var(--dash-border-neon);
+}
+
+.dashboard-leaderboard {
+    flex: 1;
+    overflow-y: auto;
+    display: flex;
+    flex-direction: column;
+    gap: 4px;
+}
+
+.dashboard-leaderboard .leaderboard-row {
+    display: flex;
+    align-items: center;
+    gap: 14px;
+    padding: 12px 16px;
+    border-radius: 8px;
+    background: var(--dash-surface-dark);
+    border: 1px solid var(--dash-border-neon);
+    font-family: 'DM Sans', sans-serif;
+    /* #376: scale for TV couch legibility */
+    font-size: clamp(16px, 1.6vw, 24px);
+    color: var(--dash-text-white);
+    transition: border-color 120ms ease-out, background 120ms ease-out;
+}
+
+.dashboard-leaderboard .leaderboard-rank {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 32px;
+    height: 32px;
+    font-family: 'JetBrains Mono', ui-monospace, monospace;
+    /* #376: scale rank badge with rows */
+    font-size: clamp(15px, 1.5vw, 22px);
+    font-weight: 700;
+    color: var(--dash-text-neon-muted);
+    flex-shrink: 0;
+    font-variant-numeric: tabular-nums;
+}
+
+/* #429: muted "+N more" overflow hint for the capped in-game panel. */
+.dashboard-leaderboard .leaderboard-row.leaderboard-more {
+    background: transparent;
+    border-color: transparent;
+    justify-content: center;
+    color: var(--dash-text-neon-muted);
+    font-style: italic;
+    padding: 8px 16px;
+}
+.dashboard-leaderboard .leaderboard-row.leaderboard-more .leaderboard-name {
+    flex: 0 0 auto;
+    text-align: center;
+}
+
+.dashboard-leaderboard .leaderboard-rank.rank-1 { color: var(--dash-gold); }
+.dashboard-leaderboard .leaderboard-rank.rank-2 { color: var(--dash-silver); }
+.dashboard-leaderboard .leaderboard-rank.rank-3 { color: var(--dash-bronze); }
+
+.dashboard-leaderboard .leaderboard-name {
+    flex: 1;
+    min-width: 0;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+    font-weight: 500;
+}
+
+.dashboard-leaderboard .leaderboard-score {
+    font-family: 'JetBrains Mono', ui-monospace, monospace;
+    /* #376: scale for TV couch legibility */
+    font-size: clamp(16px, 1.7vw, 26px);
+    font-weight: 700;
+    color: var(--dash-accent-primary);
+    font-variant-numeric: tabular-nums;
+}
+
+.dashboard-leaderboard .leaderboard-streak {
+    font-family: 'JetBrains Mono', ui-monospace, monospace;
+    font-size: 11px;
+    font-weight: 500;
+    color: var(--dash-accent-primary);
+    padding: 2px 8px;
+    background: rgba(232, 138, 127, 0.10);
+    border-radius: 4px;
+    letter-spacing: 0.04em;
+}
+
+/* #741: what a steal actually cost, on the two rows it moved. The
+   strip above says what happened; the rows say what it was worth —
+   the leaderboard is where the change is. */
+.dashboard-leaderboard .leaderboard-delta {
+    font-family: 'JetBrains Mono', ui-monospace, monospace;
+    font-size: clamp(14px, 1.3vw, 20px);
+    font-weight: 700;
+    padding: 2px 8px;
+    border-radius: 4px;
+    font-variant-numeric: tabular-nums;
+}
+.dashboard-leaderboard .leaderboard-delta.is-up {
+    color: var(--dash-success);
+    background: rgba(127, 168, 151, 0.16);
+}
+.dashboard-leaderboard .leaderboard-delta.is-down {
+    color: var(--dash-error);
+    background: rgba(214, 106, 106, 0.14);
+}
+
+/* ===================
+   POWER-UP BANNER STRIP (#741) — the room's only account of a power-up
+   that landed on somebody *else*. Fixed to the top edge, so it takes
+   the round-indicator line for its four seconds and leaves the
+   question text alone. Two at once stack rather than replacing one
+   another: the container is a column and each strip carries its own
+   timer, so the one appended first is also the first to leave.
+
+   It carries a sentence, not a symbol. An icon on a leaderboard row
+   assumes the viewer knows what the icon means, and the room does not.
+   =================== */
+.dashboard-powerup-banners {
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    z-index: 45;
+    display: flex;
+    flex-direction: column;
+    gap: 2px;
+    pointer-events: none;
+}
+
+.dashboard-powerup-banner {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: clamp(12px, 1.4vw, 24px);
+    padding: clamp(12px, 1.4vw, 22px) clamp(24px, 3vw, 48px);
+    /* Soft Parlor is a cream board, so the strip is its inverse: the
+       ink token as the ground, cream type on it. A cream strip on a
+       cream board would need a hairline to exist at all, and a
+       hairline is not something you read from a sofa. */
+    background: var(--dash-text-white);
+    color: var(--dash-bg-primary);
+    font-family: 'DM Sans', sans-serif;
+    /* #376/#707: content the room reads, not an eyebrow label. */
+    font-size: clamp(20px, 2.2vw, 38px);
+    font-weight: 600;
+    line-height: 1.2;
+    text-align: center;
+    box-shadow: 0 6px 24px rgba(42, 40, 32, 0.22);
+    animation: dashboard-powerup-in 260ms cubic-bezier(0.2, 0.8, 0.3, 1) both;
+}
+
+.dashboard-powerup-banner.is-leaving {
+    animation: dashboard-powerup-out 260ms ease-in both;
+}
+
+.dashboard-powerup-icon {
+    font-size: clamp(24px, 2.6vw, 44px);
+    line-height: 1;
+    flex-shrink: 0;
+}
+
+.dashboard-powerup-name {
+    color: var(--dash-gold);
+    font-weight: 700;
+}
+
+.dashboard-powerup-points {
+    font-family: 'JetBrains Mono', ui-monospace, monospace;
+    color: var(--dash-gold);
+    font-weight: 700;
+    font-variant-numeric: tabular-nums;
+}
+
+@keyframes dashboard-powerup-in {
+    from { transform: translateY(-100%); opacity: 0; }
+    to   { transform: translateY(0);     opacity: 1; }
+}
+
+@keyframes dashboard-powerup-out {
+    from { transform: translateY(0);     opacity: 1; }
+    to   { transform: translateY(-100%); opacity: 0; }
+}
+
+/* ===================
+   REVEAL REACTIONS (#741) — the emoji every phone already rains, on
+   the one screen the whole room is looking at. Reveal only: over a
+   live question the movement would compete with reading the answers.
+   =================== */
+.dashboard-reaction-layer {
+    position: fixed;
+    inset: 0;
+    z-index: 30;
+    pointer-events: none;
+    overflow: hidden;
+}
+
+.dashboard-floating-reaction {
+    position: absolute;
+    bottom: 0;
+    font-size: clamp(40px, 4vw, 72px);
+    line-height: 1;
+    animation: dashboard-reaction-rise 3s ease-out forwards;
+    will-change: transform, opacity;
+}
+
+@keyframes dashboard-reaction-rise {
+    0%   { transform: translateY(0)     scale(0.6); opacity: 0; }
+    12%  { transform: translateY(-8vh)  scale(1);   opacity: 1; }
+    100% { transform: translateY(-78vh) scale(1.1); opacity: 0; }
+}
+
+/* ===================
+   PAUSED OVERLAY (#296) — freezes the timer + dims the board.
+   Mirrors the player paused-view intent (game.paused / pausedHint)
+   on a TV-sized scrim so the room sees the game is on hold and the
+   draining timer bar is explained.
+   =================== */
+.dashboard-paused-overlay {
+    position: fixed;
+    inset: 0;
+    z-index: 50;
+    display: none;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    gap: 18px;
+    text-align: center;
+    padding: 24px;
+    background: rgba(250, 246, 236, 0.92);  /* cream scrim */
+    backdrop-filter: blur(3px);
+}
+.dashboard-paused-overlay.active { display: flex; }
+.dashboard-paused-icon {
+    font-size: clamp(48px, 7vw, 88px);
+    line-height: 1;
+    color: var(--dash-accent-primary);
+}
+.dashboard-paused-title {
+    font-family: 'DM Sans', sans-serif;
+    font-size: clamp(28px, 4vw, 56px);
+    font-weight: 700;
+    color: var(--dash-text-white);
+}
+.dashboard-paused-hint {
+    font-family: 'DM Sans', sans-serif;
+    font-size: clamp(16px, 1.8vw, 24px);
+    color: var(--dash-text-neon-muted);
+    max-width: 640px;
+}
+
+/* #892: the way out, once the server's #207 grace window has passed.
+   Hidden until then — offered from the first second it would read as
+   an invitation to give up on a host who is ten seconds from being
+   back. */
+.dashboard-paused-escape {
+    font-family: 'DM Sans', sans-serif;
+    font-size: clamp(16px, 1.8vw, 24px);
+    font-weight: 600;
+    color: var(--dash-accent-primary);
+    max-width: 640px;
+}
+.dashboard-paused-escape[hidden] { display: none; }
+
+/* ===================
+   LIGHTNING (#296) — mirrors the question/recap vocabulary at
+   TV size. Reuses .dashboard-category / .dashboard-question /
+   .dashboard-answers / .dashboard-answer / .dashboard-leaderboard;
+   only the splash + progress + recap grid are bespoke.
+   =================== */
+.dashboard-lightning-kicker {
+    font-family: 'JetBrains Mono', ui-monospace, monospace;
+    /* #808: the splash headline's kicker carried the same fixed 12px
+       as `.dashboard-category`. */
+    font-size: clamp(14px, 1.2vw, 20px);
+    font-weight: 500;
+    text-transform: uppercase;
+    letter-spacing: 0.2em;
+    color: var(--dash-accent-primary);
+    margin-bottom: 8px;
+}
+.dashboard-lightning-progress {
+    font-family: 'JetBrains Mono', ui-monospace, monospace;
+    font-size: clamp(14px, 1.4vw, 20px);
+    font-weight: 700;
+    color: var(--dash-text-neon-muted);
+    font-variant-numeric: tabular-nums;
+    margin-left: auto;
+}
+/* #691: `hidden` is a UA rule, so a class that sets display wins over
+   it and the attribute silently does nothing — the splash stayed on
+   screen over the running question for the whole round. Same guard as
+   .dashboard-reconnect-pill above, which learned this first. */
+.dashboard-lightning-splash[hidden] { display: none; }
+.dashboard-lightning-splash {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    gap: 16px;
+    text-align: center;
+}
+.dashboard-lightning-splash .dashboard-lightning-title {
+    font-family: 'DM Sans', sans-serif;
+    font-size: clamp(32px, 5vw, 64px);
+    font-weight: 700;
+    color: var(--dash-text-white);
+}
+.dashboard-lightning-splash .dashboard-lightning-rules {
+    font-family: 'DM Sans', sans-serif;
+    font-size: clamp(16px, 1.8vw, 24px);
+    color: var(--dash-text-neon-muted);
+}
+.dashboard-lightning-recap-grid {
+    flex: 1;
+    overflow-y: auto;
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+    margin-top: 12px;
+}
+.dashboard-lightning-recap-row {
+    padding: 12px 16px;
+    border-radius: 8px;
+    background: var(--dash-surface-dark);
+    border: 1px solid var(--dash-border-neon);
+    font-family: 'DM Sans', sans-serif;
+    /* #707: the recap is the only moment the room ever sees the
+       lightning answers — the phone says so explicitly ("answers
+       revealed at the end"). Sized like the leaderboard rows it sits
+       among, not like the phone it was copied from. */
+    font-size: clamp(16px, 1.6vw, 24px);
+    color: var(--dash-text-white);
+}
+.dashboard-lightning-recap-row .lr-qnum {
+    font-family: 'JetBrains Mono', ui-monospace, monospace;
+    color: var(--dash-accent-primary);
+    font-weight: 700;
+    margin-right: 6px;
+}
+.dashboard-lightning-recap-row .lr-correct {
+    color: var(--dash-success);
+    font-weight: 600;
+}
+
+/* ===================
+   FINALE / PODIUM — single spotlight, no confetti
+   =================== */
+.dashboard-finale {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    overflow-y: auto;
+    padding-top: 12px;
+    padding-bottom: 16px;
+    gap: 12px;
+    position: relative;
+}
+
+/* Two-column finale (msg 326 option 1). Podium on the left, awards
+   + leaderboard on the right — both columns share the available
+   vertical room instead of stacking, so the awards row and the
+   leaderboard land above the fold on a 720p TV. */
+.dashboard-finale--split {
+    flex-direction: row;
+    align-items: stretch;
+    justify-content: center;
+    gap: clamp(24px, 3vw, 48px);
+    padding: 16px clamp(16px, 3vw, 40px);
+}
+.dashboard-finale-left {
+    /* Podium owns the showcase real estate, so give it more
+       room than the awards/leaderboard column (~58/42 split).
+       min-width: 0 lets the flex item actually shrink. */
+    flex: 1.4 1 0;
+    min-width: 0;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    position: relative;
+    z-index: 1;
+    overflow: hidden;
+}
+.dashboard-finale-right {
+    flex: 1 1 0;
+    min-width: 0;
+    display: flex;
+    flex-direction: column;
+    gap: 16px;
+    position: relative;
+    z-index: 1;
+    max-height: 100%;
+    overflow: hidden;
+}
+/* On split layout the side panel for 4+ players stacks UNDER the
+   podium instead of beside it — the left column is already tight. */
+.dashboard-finale--split .podium-wrap {
+    flex-direction: column;
+    align-items: center;
+    gap: 16px;
+}
+/* Constrain podium width so the bars stay inside the left column. */
+.dashboard-finale--split .podium {
+    min-height: 200px;
+    gap: clamp(12px, 1.4vw, 24px);
+}
+.dashboard-finale--split .podium-bar {
+    width: clamp(72px, 8vw, 110px);
+}
+/* Awards row stacks vertically inside the right column on the
+   split layout — pill cards still read TV-legibly. */
+.dashboard-finale--split .awards-section {
+    flex-direction: column;
+    align-items: stretch;
+    gap: 8px;
+}
+.dashboard-finale--split .awards-grid {
+    flex-direction: column;
+    align-items: stretch;
+}
+.dashboard-finale--split .award-card {
+    min-width: 0;
+    width: 100%;
+}
+/* The leaderboard comes before the awards, decided by Markus on
+   03.09.2026 after a three-player game on a 720p television showed
+   what the old order costs: the card was squeezed to 25.7px, the word
+   "Leaderboard" was cut in half and not one player row was on screen,
+   while both award cards sat above it in full. 1080p failed the same
+   way — this is a player-count problem, not a screen-height one, so
+   the rule is not inside a media query.
+
+   The arithmetic at 1280x720: the right column has 434px and two 16px
+   gaps; the head-to-head line takes 56.9px; a card header is 45.5px
+   and a row 58.6px, so three rows need 221.3px. That leaves ~124px of
+   awards, which is one card — and one award plus a readable ranking
+   beats two awards and no ranking.
+
+   The awards are the block that gives way now. With more players the
+   leaderboard keeps its three rows and scrolls the rest inside its own
+   list, which already carries overflow: auto. */
+.dashboard-finale--split .finale-leaderboard-card {
+    flex: 0 1 auto;
+    /* Header 45.5px, plus the list's own 8px padding, three 58.6px
+       rows and two 4px gaps between them — 245.3px, measured on the
+       television rather than derived from the stylesheet.
+       #865: only the value the card carries before the first fit runs.
+       fitFinaleBoard() replaces it with the height the rows actually
+       need, inline, on every frame that changes the column. */
+    min-height: 246px;
+    overflow: hidden;
+}
+.dashboard-finale--split .awards-section {
+    flex: 1 1 auto;
+    min-height: 0;
+    overflow: hidden;
+}
+
+/* #692: on a 720p television the right column ran 9 elements past the
+   bottom edge — the leaderboard rows and the head-to-head line, which
+   is the whole headline of v1.12.0, were simply not in the picture.
+   Measured: the two award cards came to 337.1px of a 517.8px column,
+   and the leaderboard began at 624px.
+
+   The awards lose their detail line here, and nothing else changes.
+   That line is the footnote ("25 pts in round 6") under a heading that
+   already carries the point ("TOP SCORE · ANNA"), so it is the one
+   thing on this screen that can go without taking a fact with it.
+
+   Capping the awards box instead was measured and rejected: it clips a
+   card halfway, which is the same defect this issue is about, one box
+   further in. Dropping a whole line beats cutting one.
+
+   After: awards 171.9px, every leaderboard row in the picture, nothing
+   below the fold at 1280x720 or 1366x768. 1080p keeps the detail. */
+@media (max-height: 850px) {
+    .dashboard-finale--split .award-detail {
+        display: none;
+    }
+}
+
+/* #775: the awards column clipped at every television resolution, and
+   the cause was never in the vertical arithmetic above — it came from
+   the shared styles.css. That sheet's `.award-card`, written for the
+   phone's end view (css/src/05-finale.css), caps the card at
+   `max-width: 160px`, and dashboard.html has loaded styles.css since
+   the day the file was created. The split layout's own override sets
+   `min-width: 0; width: 100%` but never `max-width`, so what this file
+   calls a horizontal pill was really a 160px oval: every award broke
+   one word per line ("avg 1.5s / per / correct / answer") and 247px of
+   text sat inside a 98px box.
+
+   So the answer to "did #694 miss the awards, or did something grow
+   since": neither. #694/#695 measured the awards at the width the oval
+   forced and budgeted around it. The cap was there the whole time and
+   was never the thing they removed.
+
+   Releasing the cap lets each award use the two lines it was designed
+   for, and the room that frees is what the leaderboard and the title
+   below were being squeezed out of. */
+#finale-view .dashboard-finale--split .awards-grid {
+    /* Column direction plus `flex-wrap: wrap` means a list taller than
+       the box wraps into a SECOND column instead of staying a list.
+       There is only ever one column here. */
+    flex-wrap: nowrap;
+}
+#finale-view .dashboard-finale--split .award-card {
+    max-width: none;
+    width: 100%;
+    min-width: 0;
+    flex-direction: row;
+}
+
+/* #775: the same sheet also spends the column's height on margins this
+   layout never asked for — `.awards-section { margin: var(--space-xl)
+   auto }` is 32px above and 32px below, `.awards-title { margin-bottom:
+   var(--space-lg) }` another 24px, so 88px of the 518px right column at
+   1280x720 went to whitespace between blocks that already space
+   themselves with `gap`. That is most of what was still hanging over
+   the bottom edge after the width cap came off.
+
+   The `text-align: center` those rules carry is a phone decision too: a
+   centred name over a centred detail line looks deliberate in a 160px
+   oval and ragged in a 700px pill, and `.award-card` here already says
+   `text-align: left`. */
+#finale-view .awards-section,
+#finale-view .awards-title,
+#finale-view .award-icon,
+#finale-view .award-name,
+#finale-view .award-winner,
+#finale-view .award-detail {
+    margin: 0;
+}
+#finale-view .award-name,
+#finale-view .award-winner,
+#finale-view .award-detail {
+    text-align: left;
+}
+
+/* #775: which block gives way when the column is short was decided by
+   flex-shrink arithmetic, and flex shrinks proportionally to size — so
+   the leaderboard, being the tallest item, kept the most and the awards
+   box was squeezed to 93px around 183px of cards. Eight players and two
+   awards left both cards cut through the middle.
+
+   Made explicit instead: the awards are exactly as tall as the cards
+   they hold and never give way, the leaderboard card is the only thing
+   that shrinks — and the duel line is pinned to the bottom edge with an
+   auto margin so the column still reads as full. Which award is the
+   *last* one shown is then a question of how many fit, and fitAwards()
+   answers it by counting whole cards rather than by clipping one.
+
+   #865 changed what "the leaderboard shrinks" means. It used to shrink
+   to a three-row floor and scroll the rest inside its own list, which
+   on a television is not scrolling but hiding: a four-player game left
+   the fourth player under the lower edge. The card now asks for the
+   height its rows need (fitFinaleBoard sets it inline), so what gives
+   way is an award card, then the row density, and only then a name —
+   with the count said out loud. */
+.dashboard-finale--split .awards-section {
+    flex: 0 0 auto;
+}
+.dashboard-finale--split .dashboard-h2h--end {
+    margin-top: auto;
+}
+/* #691 again: `hidden` is a UA rule, and .award-card sets display,
+   so the attribute does nothing on its own. fitAwards() relies on it. */
+.award-card[hidden] { display: none; }
+
+/* #865: the compaction steps the finale board may take before it gives
+   up and counts the rest.
+
+   A four-player game on a 720p television put the fourth player below
+   the lower edge of a box a television cannot scroll — the smallest
+   party this mode is for, at the moment the whole evening was building
+   towards. The same shape of defect as #836 (the lobby) and #775 (the
+   awards): a phone's scroll affordance reaching a screen nobody can
+   touch.
+
+   A row's height is set by its rank badge and its vertical padding,
+   not by its font — so the first step trims those two and leaves the
+   type alone, which is what a couch reads. Only the steps after it
+   touch the type, and none goes below the 16px floor #376 set for this
+   screen. fitFinaleBoard() walks them in order and stops at the first
+   one that shows every entrant, so a four-player game never leaves the
+   board it has always had. */
+#finale-view .dashboard-leaderboard.is-compact { gap: 3px; }
+#finale-view .dashboard-leaderboard.is-compact .leaderboard-row {
+    padding: 7px 14px;
+    gap: 10px;
+}
+#finale-view .dashboard-leaderboard.is-compact .leaderboard-rank {
+    width: 27px;
+    height: 27px;
+}
+
+#finale-view .dashboard-leaderboard.is-dense { gap: 2px; }
+#finale-view .dashboard-leaderboard.is-dense .leaderboard-row {
+    padding: 4px 12px;
+    gap: 8px;
+    font-size: clamp(17px, 1.35vw, 20px);
+}
+#finale-view .dashboard-leaderboard.is-dense .leaderboard-rank {
+    width: 23px;
+    height: 23px;
+    font-size: clamp(16px, 1.25vw, 19px);
+}
+#finale-view .dashboard-leaderboard.is-dense .leaderboard-score {
+    font-size: clamp(17px, 1.4vw, 21px);
+}
+
+/* The last step. 16px is where it stops: that is the floor #376 set
+   for every line on this screen when it scaled the board for a couch,
+   and a rank nobody can read from the sofa is not a rank that was
+   shown. Below this the board counts the names it cannot fit instead
+   of shrinking them further. */
+#finale-view .dashboard-leaderboard.is-tight { gap: 2px; }
+#finale-view .dashboard-leaderboard.is-tight .leaderboard-row {
+    padding: 2px 10px;
+    gap: 8px;
+    font-size: clamp(16px, 1.3vw, 19px);
+}
+#finale-view .dashboard-leaderboard.is-tight .leaderboard-rank {
+    width: 21px;
+    height: 21px;
+    font-size: clamp(16px, 1.2vw, 18px);
+}
+#finale-view .dashboard-leaderboard.is-tight .leaderboard-score {
+    font-size: clamp(16px, 1.35vw, 20px);
+}
+
+/* #775: the title overflowed by 9-10px at all three resolutions, for
+   two reasons that compound. css/src/08-responsive.css carries
+   `#finale-view .podium-title { font-size: clamp(2.4rem, 4.8vw, 4.2rem) }`
+   — an id selector, so it has been quietly beating the 48px cap that
+   #694 set below for exactly this budget, and the television has been
+   drawing "Result" at 67px all along. On top of that `line-height: 1`
+   makes the content box shorter than the font's own line box, so the
+   descenders fall outside it. Reclaiming the intended cap (scoped by
+   id, so the responsive sheet no longer wins) and giving the line real
+   height settles both. */
+#finale-view .podium-title {
+    font-size: clamp(28px, 3.6vw, 48px);
+    line-height: 1.3;
+}
+
+.dashboard-finale::before {
+    /* Single spotlight from above — replaces confetti */
+    content: "";
+    position: absolute;
+    top: 0;
+    left: 50%;
+    transform: translateX(-50%);
+    width: 80%;
+    height: 100%;
+    background: radial-gradient(ellipse at 50% 30%, var(--dash-success-glow) 0%, transparent 45%);
+    pointer-events: none;
+    opacity: 0;
+    animation: spotlight-in 0.8s ease-out 0.2s forwards;
+}
+
+@keyframes spotlight-in {
+    to { opacity: 1; }
+}
+
+.podium-section {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    /* 28 → 12 to give the awards row room on 720p TVs. */
+    gap: 12px;
+    position: relative;
+    z-index: 1;
+}
+
+.podium-title {
+    font-family: 'DM Sans', sans-serif;
+    /* clamp top dropped 72 → 48 so 'Result' is still TV-legible
+       but stops dominating the awards-row vertical budget. */
+    font-size: clamp(28px, 3.6vw, 48px);
+    font-weight: 900;
+    color: var(--dash-accent-primary);
+    letter-spacing: -0.02em;
+    line-height: 1;
+    text-shadow: 0 0 40px var(--dash-success-glow);
+}
+
+/* Podium row: labels (medal + name + score) hover at the top in a
+   single horizontal line, bars grow down to a shared baseline so the
+   bottom edge is visually flush. Per Markus 2026-05-29 (msg 320):
+   previously the medal+name+score sat directly above each bar, which
+   meant the label rows were staircased (label-of-1st sat much higher
+   than label-of-3rd). With `justify-content: space-between` + fixed
+   total height per .podium-place, labels align across columns and
+   bars still stand on the same floor. */
+.podium-wrap {
+    display: flex;
+    justify-content: center;
+    align-items: flex-start;
+    gap: clamp(20px, 3vw, 48px);
+    width: 100%;
+}
+.podium {
+    display: flex;
+    align-items: flex-end;
+    justify-content: center;
+    min-height: 280px;
+    gap: clamp(20px, 2.4vw, 40px);
+}
+
+.podium-place {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: space-between;
+    /* 280 → 220 so the awards row stays above the fold on 720p TVs. */
+    height: 220px;
+    gap: 8px;
+}
+.podium-label {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 6px;
+}
+
+/* Side panel for players beyond the top 3 — appears to the right
+   of the podium with a quiet ranked list. Per Markus 2026-05-29
+   (msg 320). Hidden when there are ≤ 3 players. */
+.podium-others {
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+    min-width: 220px;
+    max-width: 280px;
+    margin-top: 16px;
+}
+.podium-others-title {
+    font-family: 'JetBrains Mono', ui-monospace, monospace;
+    /* #891: 11-12px is a phone eyebrow. Floored for the television,
+       the way #707 floored the four main strings and #808 the
+       category — same clamp, so the labels step together. */
+    font-size: clamp(16px, 1.1vw, 20px);
+    font-weight: 600;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    color: var(--dash-text-neon-muted);
+    margin-bottom: 4px;
+}
+.podium-other-row {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 12px;
+    padding: 8px 12px;
+    background: var(--dash-surface-dark);
+    border: 1px solid var(--dash-border-neon);
+    border-radius: 8px;
+    font-family: 'DM Sans', sans-serif;
+    color: var(--dash-text-white);
+}
+.podium-other-rank {
+    font-family: 'JetBrains Mono', ui-monospace, monospace;
+    color: var(--dash-text-neon-muted);
+    /* #891: 11-12px is a phone eyebrow. Floored for the television,
+       the way #707 floored the four main strings and #808 the
+       category — same clamp, so the labels step together. */
+    font-size: clamp(16px, 1.1vw, 20px);
+    min-width: 24px;
+}
+.podium-other-name {
+    flex: 1 1 auto;
+    /* #376: scale for TV couch legibility */
+    font-size: clamp(15px, 1.4vw, 20px);
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+}
+.podium-other-score {
+    font-family: 'JetBrains Mono', ui-monospace, monospace;
+    /* #376: scale for TV couch legibility */
+    font-size: clamp(14px, 1.3vw, 20px);
+    color: var(--dash-accent-primary);
+    font-variant-numeric: tabular-nums;
+}
+
+.podium-avatar {
+    font-size: 2rem;
+    line-height: 1;
+}
+
+.podium-name {
+    font-family: 'DM Sans', sans-serif;
+    /* #707: the winner's name was 17.6px while the leaderboard rows
+       beside it are clamp(16px, 1.6vw, 24px) — the name of the person
+       who won read smaller than the list of everyone else. Scaled with
+       the score under it, and the truncation width scales too: 160px
+       cut ordinary names off at the finale. */
+    font-size: clamp(18px, 1.8vw, 28px);
+    font-weight: 600;
+    color: var(--dash-text-white);
+    max-width: clamp(160px, 16vw, 300px);
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+    text-align: center;
+}
+
+.podium-score {
+    font-family: 'JetBrains Mono', ui-monospace, monospace;
+    /* #376: scale for TV couch legibility */
+    font-size: clamp(16px, 1.8vw, 26px);
+    font-weight: 700;
+    color: var(--dash-accent-primary);
+    font-variant-numeric: tabular-nums;
+    letter-spacing: 0.04em;
+}
+
+.podium-bar {
+    width: 130px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-family: 'DM Sans', sans-serif;
+    font-size: 2rem;
+    font-weight: 900;
+    border-radius: 0;
+    color: var(--dash-text-neon-muted);
+    background: var(--dash-surface-dark);
+    border-top: 3px solid var(--dash-bronze);
+}
+
+/* Bar heights stay proportional but scaled down — fits in the
+   220 px podium-place height with room for the top label. */
+.podium-bar.first {
+    height: 150px;
+    border-top: 3px solid var(--dash-accent-primary);
+    color: var(--dash-accent-primary);
+    box-shadow: 0 -20px 40px var(--dash-success-glow);
+}
+
+.podium-bar.second {
+    height: 122px;
+    border-top: 3px solid var(--dash-silver);
+    color: var(--dash-silver);
+}
+
+.podium-bar.third {
+    height: 102px;
+    border-top: 3px solid var(--dash-bronze);
+    color: var(--dash-bronze);
+}
+
+/* Awards / Superlatives */
+.awards-section {
+    width: 100%;
+    max-width: 900px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 20px;
+    position: relative;
+    z-index: 1;
+}
+
+.awards-section.hidden { display: none; }
+
+.awards-title {
+    font-family: 'JetBrains Mono', ui-monospace, monospace;
+    font-size: 12px;
+    font-weight: 500;
+    color: var(--dash-accent-primary);
+    text-transform: uppercase;
+    letter-spacing: 0.2em;
+    padding-bottom: 8px;
+    border-bottom: 1px solid var(--dash-accent-primary);
+}
+
+.awards-grid {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 12px;
+    justify-content: center;
+}
+
+.award-card {
+    /* Compact horizontal pill — fits the awards row above the
+       fold at 720p TV viewport. Per Markus 2026-05-29 (msg 323):
+       the previous tall vertical card forced the row off-screen.
+       Icon + name + winner now sit on a single line; the longer
+       detail string sits as a quiet second line under the
+       winner so a long fact still has room. */
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    gap: 14px;
+    padding: 12px 18px;
+    background: var(--dash-surface-dark);
+    border: 1px solid var(--dash-border-neon);
+    border-radius: 999px;
+    min-width: 220px;
+    text-align: left;
+    opacity: 0;
+    transform: translateY(20px);
+    animation: award-appear 0.5s ease forwards;
+}
+.award-card .award-text {
+    display: flex;
+    flex-direction: column;
+    gap: 2px;
+}
+
+@keyframes award-appear {
+    to { opacity: 1; transform: translateY(0); }
+}
+
+.award-icon { font-size: 2rem; line-height: 1; flex-shrink: 0; }
+
+.award-name {
+    font-family: 'JetBrains Mono', ui-monospace, monospace;
+    /* #891: 11-12px is a phone eyebrow. Floored for the television,
+       the way #707 floored the four main strings and #808 the
+       category — same clamp, so the labels step together. */
+    font-size: clamp(16px, 1.1vw, 20px);
+    font-weight: 500;
+    text-transform: uppercase;
+    letter-spacing: 0.16em;
+    color: var(--dash-accent-primary);
+}
+
+.award-winner {
+    font-family: 'DM Sans', sans-serif;
+    /* #891: 1.05rem is ~17px — a phone size on the line the room reads
+       straight after the podium. Two steps above the eyebrow above it. */
+    font-size: clamp(20px, 1.6vw, 28px);
+    font-weight: 600;
+    color: var(--dash-text-white);
+}
+
+.award-detail {
+    font-family: 'DM Sans', sans-serif;
+    /* #376: scale for TV couch legibility */
+    font-size: clamp(15px, 1.4vw, 22px);
+    color: var(--dash-text-neon-muted);
+}
+
+/* Finale leaderboard card */
+.finale-leaderboard-card {
+    width: 100%;
+    max-width: 640px;
+    background: var(--dash-surface-dark);
+    border: 1px solid var(--dash-border-neon);
+    border-radius: 10px;
+    overflow: hidden;
+    position: relative;
+    z-index: 1;
+    /* #459: make the card a flex column with min-height:0 so the inner
+       .dashboard-leaderboard (flex:1; overflow-y:auto) actually scrolls
+       with 8+ players instead of clipping under overflow:hidden. */
+    display: flex;
+    flex-direction: column;
+    min-height: 0;
+}
+
+.finale-leaderboard-card .card-header {
+    /* #865: css/src/02-shared.css gives every `.card-header` a 16px
+       `margin-bottom`, written for the phone's cards. dashboard.html
+       has loaded that sheet since the day it was created, so this card
+       has always spent 16px of a 518px television column on a band of
+       nothing between a rule and the first row — the same species of
+       leak #775 found in `.award-card`'s max-width and `.awards-section`'s
+       margins. Reclaiming it is one more player on the final board at
+       1280x720. */
+    margin-bottom: 0;
+    font-family: 'JetBrains Mono', ui-monospace, monospace;
+    font-size: 11px;
+    font-weight: 500;
+    text-transform: uppercase;
+    letter-spacing: 0.2em;
+    color: var(--dash-text-neon-muted);
+    padding: 16px 20px 12px;
+    border-bottom: 1px solid var(--dash-border-neon);
+}
+
+.finale-leaderboard-card .dashboard-leaderboard {
+    padding: 8px;
+}
+
+/* ---- Responsive ---- */
+@media (max-width: 768px) {
+    .dashboard-columns { flex-direction: column; gap: 20px; }
+    .dashboard-question { font-size: 28px; }
+    .dashboard-answers { grid-template-columns: 1fr; }
+    .dashboard-answer { font-size: 16px; padding: 14px 16px; min-height: 56px; }
+    /* Narrow screens: stack the split layout (image above Q&A). */
+    .dashboard-left.has-image {
+        grid-template-columns: 1fr;
+        gap: 16px;
+    }
+    .dashboard-left.has-image .dashboard-question-image { max-height: 32vh; }
+}
+
+/* Honor prefers-reduced-motion: the always-on TV must respect the OS
+   reduced-motion setting. The house-style override from css/src/00-tokens.css
+   is repeated here to tame the continuous animations above (pulse-bar,
+   fade-pulse, spotlight-in, award-appear) (#381) — this block has to sit after
+   them, and 00-tokens is the first module in every sheet. */
+@media (prefers-reduced-motion: reduce) {
+    *,
+    *::before,
+    *::after {
+        animation-duration: 0.01ms !important;
+        animation-iteration-count: 1 !important;
+        transition-duration: 0.01ms !important;
+        scroll-behavior: auto !important;
+    }
+}

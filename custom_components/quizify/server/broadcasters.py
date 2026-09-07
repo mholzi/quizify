@@ -49,6 +49,9 @@ from custom_components.quizify.server.serializers import serialize_leaderboard
 if TYPE_CHECKING:
     from aiohttp import web
 
+    from custom_components.quizify.game.hot_seat import HotSeatRound
+    from custom_components.quizify.game.lightning import LightningRound
+    from custom_components.quizify.game.questions import Question
     from custom_components.quizify.game.state import QuizifyGameState, TeamAnswerAck
     from custom_components.quizify.server.connection import ConnectionManager
     from custom_components.quizify.server.round_message_builder import (
@@ -111,7 +114,7 @@ class LightningBroadcaster(_Broadcaster):
         })
 
     async def send_lightning_question(
-        self, game_state: QuizifyGameState, lr: Any
+        self, game_state: QuizifyGameState, lr: LightningRound
     ) -> None:
         """Send the current lightning question per-player (own shuffle) and
         to admin/dashboard (canonical order)."""
@@ -147,7 +150,7 @@ class LightningBroadcaster(_Broadcaster):
         })
 
     async def send_lightning_tick(
-        self, game_state: QuizifyGameState, lr: Any
+        self, game_state: QuizifyGameState, lr: LightningRound
     ) -> None:
         """Push the shared lightning countdown."""
         remaining = round(lr.time_remaining(), 1)
@@ -168,7 +171,12 @@ class LightningBroadcaster(_Broadcaster):
         })
 
     async def send_lightning_answer_result(
-        self, ws: web.WebSocketResponse, lr: Any, player_name: str, *, correct: bool
+        self,
+        ws: web.WebSocketResponse,
+        lr: LightningRound,
+        player_name: str,
+        *,
+        correct: bool,
     ) -> None:
         """Lightweight ack: lock the player's buttons + show right/wrong."""
         await self._conn.send(ws, {
@@ -179,7 +187,7 @@ class LightningBroadcaster(_Broadcaster):
         })
 
     async def send_lightning_team_answer(
-        self, game_state: QuizifyGameState, lr: Any, setter: str
+        self, game_state: QuizifyGameState, lr: LightningRound, setter: str
     ) -> None:
         """Show the team's standing lightning answer on every member's phone.
 
@@ -237,7 +245,7 @@ class HotSeatBroadcaster(_Broadcaster):
         self._resume_normal_question = resume_normal_question
 
     async def send_hot_seat_auction(
-        self, game_state: QuizifyGameState, hs: Any
+        self, game_state: QuizifyGameState, hs: HotSeatRound
     ) -> None:
         """Open the auction: the room's clock, then each phone's own purse."""
         await self._conn.broadcast({
@@ -268,7 +276,7 @@ class HotSeatBroadcaster(_Broadcaster):
             await asyncio.gather(*sends, return_exceptions=True)
 
     async def send_hot_seat_bid_accepted(
-        self, ws: web.WebSocketResponse, hs: Any, player_name: str, *, pct: int
+        self, ws: web.WebSocketResponse, hs: HotSeatRound, player_name: str, *, pct: int
     ) -> None:
         """Confirm one sealed bid to its bidder, then tell the room the count."""
         await self._conn.send(ws, {
@@ -288,7 +296,7 @@ class HotSeatBroadcaster(_Broadcaster):
     async def send_hot_seat_bet_accepted(
         self,
         ws: web.WebSocketResponse,
-        hs: Any,
+        hs: HotSeatRound,
         player_name: str,
         *,
         side: Any,
@@ -323,7 +331,7 @@ class HotSeatBroadcaster(_Broadcaster):
         await self._conn.broadcast({"type": "hot_seat_no_bids"})
 
     async def send_hot_seat_awarded(
-        self, game_state: QuizifyGameState, hs: Any
+        self, game_state: QuizifyGameState, hs: HotSeatRound
     ) -> None:
         """Break the seal: who paid what, and who is sitting down."""
         await self._conn.broadcast({
@@ -339,7 +347,7 @@ class HotSeatBroadcaster(_Broadcaster):
         })
 
     async def send_hot_seat_question(
-        self, game_state: QuizifyGameState, hs: Any
+        self, game_state: QuizifyGameState, hs: HotSeatRound
     ) -> None:
         """Send the question: shuffled to the seat holder, canonical to the room.
 
@@ -397,7 +405,7 @@ class HotSeatBroadcaster(_Broadcaster):
         )
 
     async def send_hot_seat_result(
-        self, game_state: QuizifyGameState, hs: Any
+        self, game_state: QuizifyGameState, hs: HotSeatRound
     ) -> None:
         """Push the settlement."""
         await self._conn.broadcast({
@@ -572,7 +580,7 @@ class WagerBroadcaster(_Broadcaster):
         self._close = close
 
     async def send_wager_window(
-        self, game_state: QuizifyGameState, question: Any
+        self, game_state: QuizifyGameState, question: Question
     ) -> None:
         """Announce the betting window.
 
