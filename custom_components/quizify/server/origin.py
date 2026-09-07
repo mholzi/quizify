@@ -16,11 +16,24 @@ intended trade-off — but it left one hole the browser does not close for us:
 Both holes are shut by the two helpers here:
 
 ``is_origin_allowed``
-    Compares the browser-supplied ``Origin`` against the host the request came
-    in on plus the URLs Home Assistant knows itself by. A request with **no**
+    Compares the browser-supplied ``Origin`` against the URLs Home Assistant
+    knows itself by, plus the host the request came in on **when that host is
+    itself a name only the local network can hand out**. A request with **no**
     ``Origin`` keeps passing: non-browser clients (the standalone dev server,
     the tests, a script) never send one, and an attacker cannot make a browser
     omit it.
+
+    That last qualifier is #872. The first cut seeded the allow-list from
+    ``request.host`` unconditionally, which a DNS-rebinding page walks straight
+    through: a site on ``evil.example`` with a TTL-0 record re-pointed at the
+    Home Assistant LAN address opens
+    ``ws://evil.example:8123/api/quizify/ws?role=admin`` from the victim's
+    phone, and the handshake then carries ``Host: evil.example:8123`` and
+    ``Origin: http://evil.example:8123`` — equal, so the gate passed. Safari
+    and Firefox have no Private Network Access block, so on the phones this
+    game is played on nothing else was in the way. The same allow-list is now
+    applied to ``Host`` itself, so a rebound name is refused whether or not the
+    browser sends an ``Origin``.
 
 ``check_unauthenticated_post``
     The same gate plus a mandatory ``Content-Type: application/json``, which
@@ -29,6 +42,7 @@ Both holes are shut by the two helpers here:
 
 from __future__ import annotations
 
+import ipaddress
 import logging
 from typing import Any
 from urllib.parse import urlsplit
@@ -45,6 +59,72 @@ JSON_CONTENT_TYPE = "application/json"
 #: them from both ``Origin`` and ``Host``, so a configured URL that spells one
 #: out must still compare equal.
 _DEFAULT_PORTS = {"http": "80", "https": "443"}
+
+#: Name suffixes that the public DNS root cannot delegate, so a page served
+#: from one of them was resolved by the local network (mDNS, the router's own
+#: resolver, a hosts file) rather than by an attacker's authoritative server.
+#: ``.local`` is mDNS (RFC 6762), ``.home.arpa`` is the reserved
+#: home-network zone (RFC 8375), ``.internal`` was set aside by ICANN in 2024
+#: for private use, and ``.lan`` / ``.home`` / ``.intranet`` are the names
+#: consumer routers have handed out for years and that ICANN has refused to
+#: delegate. The list is deliberately short and literal: every entry is a
+#: suffix a home network really uses, and nothing is inferred.
+_PRIVATE_SUFFIXES = (
+    ".local",
+    ".localhost",
+    ".home.arpa",
+    ".internal",
+    ".intranet",
+    ".lan",
+    ".home",
+)
+
+
+def _bare_host(netloc: str) -> str:
+    """Return *netloc* without its port and without IPv6 brackets."""
+    if netloc.startswith("["):
+        # ``[fe80::1]:8123`` — everything up to the closing bracket.
+        return netloc.partition("]")[0][1:]
+    if netloc.count(":") > 1:
+        # An unbracketed IPv6 literal; there is no port to strip.
+        return netloc
+    head, sep, _port = netloc.rpartition(":")
+    return head if sep else netloc
+
+
+def is_private_network_host(netloc: str) -> bool:
+    """Whether *netloc* is a name the public internet cannot own (#872).
+
+    The three shapes a Quizify phone actually uses on the LAN, and nothing
+    else:
+
+    * an **IP literal** — ``192.168.0.69:8123``, ``[fe80::1]:8123``. A browser
+      only sends this as an ``Origin`` when the page was loaded from that
+      address, and an address is not something DNS can re-point.
+    * a **single-label host** — ``localhost:8123``, ``homeassistant:8123``.
+      A name with no dot cannot be registered in the public DNS, so a page
+      served from one came from this network's own resolver.
+    * a **reserved private suffix** — ``homeassistant.local:8123``. See
+      :data:`_PRIVATE_SUFFIXES`.
+
+    A name under a real public TLD (``quiz.example.com``, ``ha.fritz.box``) is
+    deliberately **not** in here: from the server's side it is
+    indistinguishable from the rebinding page, and the way to allow it is to
+    name it in ``internal_url`` / ``external_url``.
+    """
+    host = _bare_host(netloc).rstrip(".")
+    if not host:
+        return False
+    try:
+        ipaddress.ip_address(host)
+    except ValueError:
+        pass
+    else:
+        return True
+    if "." not in host:
+        # ``localhost`` and every other single-label LAN name.
+        return True
+    return host.endswith(_PRIVATE_SUFFIXES)
 
 
 def _normalize(value: str | None) -> str | None:
@@ -100,13 +180,15 @@ def _nabu_casa_host(hass: Any) -> str | None:
         return None
 
 
-def allowed_origin_hosts(request: Any, runtime: Any) -> set[str]:
-    """Every ``host[:port]`` a legitimate Quizify page can be served from."""
-    hosts: set[str] = set()
-    own = _normalize(getattr(request, "host", None))
-    if own:
-        hosts.add(own)
+def configured_origin_hosts(runtime: Any) -> set[str]:
+    """The ``host[:port]`` values Home Assistant is configured to answer to.
 
+    ``internal_url``, ``external_url`` and the Nabu Casa remote UI host — the
+    three places a legitimate Quizify page can be served from under a name the
+    public DNS *does* own. Nothing here is derived from the request, which is
+    the whole point of #872.
+    """
+    hosts: set[str] = set()
     hass = _hass_of(runtime)
     config = getattr(hass, "config", None)
     for attr in ("internal_url", "external_url"):
@@ -122,14 +204,60 @@ def allowed_origin_hosts(request: Any, runtime: Any) -> set[str]:
     return hosts
 
 
-def is_origin_allowed(request: Any, runtime: Any) -> bool:
-    """Whether *request* may be served, judged by its ``Origin`` header.
+def allowed_origin_hosts(request: Any, runtime: Any) -> set[str]:
+    """Every ``host[:port]`` a legitimate Quizify page can be served from.
 
-    ``True`` when no ``Origin`` was sent (non-browser client) or when its host
-    matches one of :func:`allowed_origin_hosts`. ``False`` — the cross-site
-    case — for anything else, ``Origin: null`` (a sandboxed iframe or a
-    ``file://`` page) included.
+    The configured hosts, plus the host this very request arrived on — but the
+    latter **only when it is a private-network name** (#872). That keeps the
+    two properties the gate needs at once:
+
+    * the phone that loaded the page from ``http://192.168.0.69:8123`` is
+      allowed without anyone having configured a URL, and a *second* service on
+      the same box (``http://192.168.0.69:9000``) still is not, because the
+      comparison keeps the port;
+    * a rebound public name never enters the set at all, so ``Host`` matching
+      ``Origin`` proves nothing on its own any more.
     """
+    hosts = configured_origin_hosts(runtime)
+    own = _normalize(getattr(request, "host", None))
+    if own and is_private_network_host(own):
+        hosts.add(own)
+    return hosts
+
+
+def is_host_allowed(request: Any, runtime: Any) -> bool:
+    """Whether the request's own ``Host`` is one Quizify answers to (#872).
+
+    A ``Host`` that is neither a private-network name nor a configured URL is
+    a rebound name: the browser resolved it through the attacker's DNS and it
+    only reaches us because it now points at the LAN address. Refused before
+    the ``Origin`` is even looked at, so the attack is blocked whether or not
+    an ``Origin`` rides along.
+
+    A missing or unparseable ``Host`` is *not* judged — HTTP/1.1 requires the
+    header and aiohttp synthesises it from the socket, so its absence means a
+    test double or an internal call, never a browser.
+    """
+    own = _normalize(getattr(request, "host", None))
+    if own is None:
+        return True
+    if is_private_network_host(own):
+        return True
+    return own in configured_origin_hosts(runtime)
+
+
+def is_origin_allowed(request: Any, runtime: Any) -> bool:
+    """Whether *request* may be served, judged by ``Host`` and ``Origin``.
+
+    ``True`` when the request's own ``Host`` is one we answer to *and* either
+    no ``Origin`` was sent (non-browser client) or its host matches one of
+    :func:`allowed_origin_hosts`. ``False`` — the cross-site case — for
+    anything else, ``Origin: null`` (a sandboxed iframe or a ``file://`` page)
+    included.
+    """
+    if not is_host_allowed(request, runtime):
+        return False
+
     headers = getattr(request, "headers", None) or {}
     origin = headers.get("Origin")
     if origin is None or not origin.strip():
@@ -146,9 +274,12 @@ def reject_cross_origin(request: Any, runtime: Any, what: str) -> bool:
     if is_origin_allowed(request, runtime):
         return False
     _LOGGER.warning(
-        "Refusing cross-origin %s from %s (Origin=%r, allowed=%s)",
+        "Refusing cross-origin %s from %s (Host=%r, Origin=%r, allowed=%s). "
+        "If this is how you legitimately reach Home Assistant, add it to "
+        "internal_url / external_url in the Home Assistant network settings.",
         what,
         getattr(request, "remote", None),
+        getattr(request, "host", None),
         (getattr(request, "headers", None) or {}).get("Origin"),
         sorted(allowed_origin_hosts(request, runtime)),
     )

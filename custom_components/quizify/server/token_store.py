@@ -32,8 +32,23 @@ class TokenStore:
         self._lock = asyncio.Lock()
 
     async def load(self) -> dict | None:
-        """Return the persisted dict, or None if missing/corrupt."""
-        data = await self._file.load(None)
+        """Return the persisted dict, or ``None`` when the file is not there.
+
+        Reads with ``on_corrupt="raise"`` (#873). Every other store in Quizify
+        degrades a broken file to a default, and for saved presets or pack news
+        that is right — but this file is a *credential*, and "no token on disk"
+        is the state that opens the admin-bootstrap window. A permissions
+        error after a restore, a directory where the file should be, or a
+        half-written JSON blob would otherwise read as "nobody has ever claimed
+        admin here" and hand the next ``?role=admin`` handshake from any LAN
+        address the host's seat — the takeover #725 closed, arriving through
+        the storage layer instead of the expiry path.
+
+        So the caller gets the ``OSError`` / ``ValueError`` and has to decide.
+        A **missing** file is still ``None``: that one really is a fresh
+        install.
+        """
+        data = await self._file.load(None, on_corrupt="raise")
         return data if isinstance(data, dict) else None
 
     async def save(self, data: dict) -> None:

@@ -377,6 +377,17 @@
         var newGameBtn = document.getElementById('new-game-btn');
 
         if (playAgainBtn) {
+            // #877: re-arm the button on every finale, not only the first.
+            // The tap disables it and swaps its label for an hourglass so it
+            // cannot double-fire, and nothing ever put either back — but a
+            // rematch keeps the phone on this same page, so the second finale
+            // showed the first game's spent hourglass. A third game could then
+            // only be started through "New game", which throws everyone back
+            // to the admin setup screen. The label is re-read from i18n so it
+            // comes back in the language the room is playing in.
+            playAgainBtn.disabled = false;
+            playAgainBtn.textContent = _tf('admin.playAgainSame', 'Play again');
+
             playAgainBtn.onclick = function () {
                 var ws = state.ws;
                 if (!ws || ws.readyState !== WebSocket.OPEN) {

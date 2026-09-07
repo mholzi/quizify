@@ -1,7 +1,7 @@
 {
   "name": "Copa Mundial",
   "language": "es",
-  "version": "1.1",
+  "version": "1.2",
   "theme": "worldcup",
   "season": {
     "start": "06-01",
@@ -2150,7 +2150,7 @@
       "difficulty": "medium",
       "fun_fact": "El Centenario no estaba terminado cuando empezó el torneo: la lluvia retrasó la obra y los primeros partidos se jugaron en canchas más pequeñas de la ciudad.",
       "category": "Copa Mundial",
-      "image_url": "/quizify/static/img/packs/worldcup/centenario-1930.webp",
+      "image_url": "/quizify/static/img/packs/worldcup/estadio-centenario.webp",
       "reveal_style": "progressive"
     },
     {
@@ -2176,7 +2176,7 @@
     },
     {
       "id": "copa_mundial_es_104",
-      "question": "¿Qué país organizó el torneo que anuncia este cartel?",
+      "question": "¿Qué país organizó el Mundial de 1950?",
       "answers": [
         {
           "text": "Brasil",
@@ -2193,36 +2193,32 @@
       ],
       "difficulty": "easy",
       "fun_fact": "El Mundial de 1950 no tuvo final: lo decidió un cuadrangular, y que el último partido valiera el título fue casualidad del calendario.",
-      "category": "Copa Mundial",
-      "image_url": "/quizify/static/img/packs/worldcup/world-cup-poster-1950.webp",
-      "reveal_style": "progressive"
+      "category": "Copa Mundial"
     },
     {
       "id": "copa_mundial_es_105",
-      "question": "¿Qué momento de 1950 muestra esta fotografía?",
+      "question": "¿Quién marcó el gol con el que Uruguay ganó el Mundial de 1950 en el Maracaná?",
       "answers": [
         {
-          "text": "El gol decisivo del último partido del Mundial",
+          "text": "Alcides Ghiggia",
           "correct": true
         },
         {
-          "text": "Un gol en propia puerta en el partido inaugural",
+          "text": "Juan Alberto Schiaffino",
           "correct": false
         },
         {
-          "text": "Un penalti en la semifinal",
+          "text": "Obdulio Varela",
           "correct": false
         }
       ],
       "difficulty": "hard",
       "fun_fact": "Alcides Ghiggia marcó ante unas 200.000 personas. Años después decía que solo tres personas habían conseguido callar el Maracaná: Frank Sinatra, el Papa y él.",
-      "category": "Copa Mundial",
-      "image_url": "/quizify/static/img/packs/worldcup/maracana-1950.webp",
-      "reveal_style": "progressive"
+      "category": "Copa Mundial"
     },
     {
       "id": "copa_mundial_es_106",
-      "question": "Este equipo ganó el primer Mundial, en 1930. ¿De qué país era?",
+      "question": "¿Qué país ganó el primer Mundial, en 1930?",
       "answers": [
         {
           "text": "Uruguay",
@@ -2239,9 +2235,7 @@
       ],
       "difficulty": "medium",
       "fun_fact": "Era el anfitrión y el campeón olímpico vigente. Como la travesía duraba semanas en barco, solo se inscribieron cuatro selecciones europeas.",
-      "category": "Copa Mundial",
-      "image_url": "/quizify/static/img/packs/worldcup/uruguay-1930.webp",
-      "reveal_style": "progressive"
+      "category": "Copa Mundial"
     },
     {
       "id": "copa_mundial_es_107",

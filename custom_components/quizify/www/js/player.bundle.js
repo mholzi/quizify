@@ -3239,6 +3239,17 @@
         var newGameBtn = document.getElementById('new-game-btn');
 
         if (playAgainBtn) {
+            // #877: re-arm the button on every finale, not only the first.
+            // The tap disables it and swaps its label for an hourglass so it
+            // cannot double-fire, and nothing ever put either back — but a
+            // rematch keeps the phone on this same page, so the second finale
+            // showed the first game's spent hourglass. A third game could then
+            // only be started through "New game", which throws everyone back
+            // to the admin setup screen. The label is re-read from i18n so it
+            // comes back in the language the room is playing in.
+            playAgainBtn.disabled = false;
+            playAgainBtn.textContent = _tf('admin.playAgainSame', 'Play again');
+
             playAgainBtn.onclick = function () {
                 var ws = state.ws;
                 if (!ws || ws.readyState !== WebSocket.OPEN) {
@@ -3676,6 +3687,17 @@
         var playerMsg = document.getElementById('lightning-recap-player-msg');
         if (adminCtl) adminCtl.classList.toggle('hidden', !state.isAdmin);
         if (playerMsg) playerMsg.classList.toggle('hidden', !!state.isAdmin);
+
+        // #877: re-arm Continue on every recap, not only the first one.
+        // The tap disables the button so it cannot double-fire, and nothing
+        // ever undid that — but a rematch keeps the phone on this same page
+        // (play_again broadcasts a game_state, nobody navigates) and the
+        // server clears _lightning_fired, so game two has a lightning round
+        // of its own. Its recap used to arrive with game one's dead button,
+        // and since the host is a player by default, the one person who has
+        // to move the game on was the one sitting in front of it.
+        var continueBtn = document.getElementById('lightning-recap-continue-btn');
+        if (continueBtn) continueBtn.disabled = false;
     }
 
     /**
@@ -5309,6 +5331,13 @@
 
         panel.classList.remove('hidden', 'wager-panel--collapsed');
         _paintWagerPanel(data.player_score || 0);
+
+        // #876: this phone has already bet — a reload, not a fresh window.
+        // Painting stops at a live 25% slider, which invites a second submit
+        // that silently overwrites the first, and leaves `submitted` false so
+        // `_showWagerBadge` hides the badge the phone that stayed connected
+        // keeps. Same shape as the Hot Seat's `lockBidUi` on a reconnect.
+        if (data.you_wagered != null) _lockWagerUi(data.you_wagered);
     }
 
     /**
@@ -5333,6 +5362,40 @@
         panel.classList.add('wager-panel--collapsed');
         var titleEl = document.getElementById('wager-panel-title');
         if (titleEl) titleEl.textContent = t('wager.locked', { pct: _wagerState.pct });
+    }
+
+    /**
+     * Collapse the betting panel onto a placed bet (#876).
+     *
+     * The one place the "you have bet, and this is what it was" state is
+     * built, so the phone that tapped Submit and the phone that reloaded onto
+     * its own standing bet end up identical — the drift #858 is about, on the
+     * one screen where the two halves disagreeing costs points.
+     */
+    function _lockWagerUi(pct) {
+        _wagerState.submitted = true;
+        _wagerState.pct = pct;
+
+        var t = (window.QuizifyI18n && window.QuizifyI18n.t) || function (k) { return k; };
+        var panel = document.getElementById('wager-panel');
+        var slider = document.getElementById('wager-slider');
+        var submitBtn = document.getElementById('wager-submit-btn');
+        var titleEl = document.getElementById('wager-panel-title');
+        var hintEl = document.getElementById('wager-panel-hint');
+        var timeoutNoteEl = document.getElementById('wager-panel-timeout-note');
+
+        if (slider) {
+            slider.value = String(pct);
+            slider.disabled = true;
+        }
+        if (submitBtn) submitBtn.disabled = true;
+        // Collapse into a "wager: 25%" badge. The player now waits for the
+        // rest of the room — the question arrives on its own once the window
+        // closes, so there is nothing else to do here.
+        if (panel) panel.classList.add('wager-panel--collapsed');
+        if (titleEl) titleEl.textContent = t('wager.locked', { pct: pct });
+        if (hintEl) hintEl.textContent = t('wager.waitingForOthers');
+        if (timeoutNoteEl) timeoutNoteEl.textContent = '';
     }
 
     function _paintWagerPanel(currentScore) {
@@ -5377,20 +5440,10 @@
             submitBtn.onclick = function () {
                 if (_wagerState.submitted) return;
                 var pct = parseInt(slider.value, 10);
-                _wagerState.submitted = true;
-                _wagerState.pct = pct;
-                submitBtn.disabled = true;
-                if (slider) slider.disabled = true;
+                _lockWagerUi(pct);
                 // Send via the player-core send() function.
                 var send = window.QuizifyPlayer && window.QuizifyPlayer.send;
                 if (send) send('submit_wager', { wager: pct });
-                // Collapse into a "wager: 25%" badge. The player now waits for
-                // the rest of the room — the question arrives on its own once
-                // the window closes, so there is nothing else to do here.
-                panel.classList.add('wager-panel--collapsed');
-                if (titleEl) titleEl.textContent = t('wager.locked', { pct: pct });
-                if (hintEl) hintEl.textContent = t('wager.waitingForOthers');
-                if (timeoutNoteEl) timeoutNoteEl.textContent = '';
             };
         }
     }
@@ -5458,18 +5511,33 @@
      * Lock the UI into the "already submitted" state.
      * Used when reconnecting mid-round (#14 in logical review): server says
      * we've already submitted, so disable all answer buttons and show the
-     * confirmation, even though we don't know which answer index we picked.
+     * confirmation.
+     *
+     * #875: the caller may pass the index this phone picked — the server says
+     * THAT we answered and never WHICH one, so the only copy of that number is
+     * the one the client remembered. Given it, the pick is re-marked; without
+     * it (or with -1, from a snapshot belonging to a later round) the buttons
+     * are only disabled, as before. It matters because a resume snapshot goes
+     * through renderQuestion first and resetSubmissionState right after, so
+     * the mark renderQuestion re-applies is wiped a line later.
      */
-    function lockSubmitted() {
+    function lockSubmitted(selectedIndex) {
         hasSubmitted = true;
         // #750: whatever was in flight is moot — the server has just told us
         // where we stand.
         _guessPending = false;
+        var marked = (typeof selectedIndex === 'number' && selectedIndex >= 0)
+            ? selectedIndex : -1;
+        if (marked >= 0) lastSubmittedIndex = marked;
         var answerButtons = document.getElementById('answer-buttons');
         if (answerButtons) {
             var buttons = answerButtons.querySelectorAll('.answer-btn');
             for (var i = 0; i < buttons.length; i++) {
                 buttons[i].disabled = true;
+                if (marked >= 0 &&
+                    parseInt(buttons[i].dataset.index, 10) === marked) {
+                    buttons[i].classList.add('is-selected');
+                }
             }
         }
         var confirmation = document.getElementById('submitted-confirmation');
@@ -5606,9 +5674,16 @@
         var allSubmitted = submittedCount === totalCount && totalCount > 0;
         tracker.classList.toggle('all-submitted', allSubmitted);
 
+        // #845: the row that is mine, by entrant rather than by name. #835
+        // made these rows teams in team mode, and a player's name never equals
+        // a team name — so the "this one is you" mark went out of every team
+        // game. myEntrant()/entrantKey() are the same pair the leaderboard has
+        // used since #759, which keeps solo games matching on the name exactly
+        // as before.
+        var mine = myEntrant();
         container.innerHTML = playerList.map(function (player) {
             var initials = getInitials(player.name);
-            var isCurrentPlayer = player.name === state.playerName;
+            var isCurrentPlayer = entrantKey(player) === mine;
             var isDisconnected = player.connected === false;
             var classes = [
                 'player-indicator',
@@ -6814,17 +6889,11 @@
                 // window. The snapshot carries category and the room's
                 // remaining seconds — never the question text, so a phone that
                 // drops mid-window cannot come back knowing what it is
-                // betting on. The bank comes from the leaderboard, which the
-                // snapshot already carries.
+                // betting on. #876: the bank and this phone's own standing bet
+                // ride along too, so the window comes back as the player left
+                // it rather than as a fresh slider over a bank of zero.
                 if (msg.wager) {
-                    handleWagerWindow({
-                        round_num: msg.round,
-                        total_rounds: msg.total_rounds,
-                        category: msg.wager.category,
-                        difficulty: msg.wager.difficulty,
-                        window_duration: msg.wager.window_remaining,
-                        player_score: _myScore(msg)
-                    });
+                    handleWagerWindow(wagerWindowFromSnapshot(msg));
                 } else {
                     pu.showView('game-view');
                 }
@@ -6833,7 +6902,23 @@
             case 'QUESTION_ACTIVE':
             case 'PLAYING':
                 if (msg.question) {
+                    // #875: read before handleQuestionStarted, which replaces
+                    // currentQuestion and resets the submission state. On a
+                    // snapshot for the round we are already in, this phone is
+                    // the only place the answer it picked still exists — the
+                    // server tells us THAT we answered, never WHICH one.
+                    var priorRound = currentQuestion && currentQuestion.round_num;
+                    var priorIndex = game.getLastSubmittedIndex();
+
                     handleQuestionStarted(questionStartedFromSnapshot(msg));
+
+                    // #875: the standing team answer is a one-shot frame, so
+                    // handleQuestionStarted's resetRound above would leave the
+                    // whole team looking at an unanswered question after any
+                    // pause/resume. Repaint it from the snapshot instead.
+                    if (team && msg.team_answer) {
+                        team.handleTeamAnswer(msg.team_answer);
+                    }
 
                     // #14: if we're reconnecting mid-round and server thinks
                     // we've already submitted, lock the UI accordingly so we
@@ -6843,7 +6928,16 @@
                             return p && p.name === state.playerName;
                         });
                         if (me && me.submitted) {
-                            game.lockSubmitted();
+                            // #875 (solo half): hand the index back so the
+                            // lock re-marks the answer instead of only greying
+                            // the row out — a resumed phone that shows three
+                            // dead buttons and no pick reads as a bug. Only
+                            // for the round it was picked in; a snapshot from
+                            // a later round knows nothing about this pick.
+                            var sameRound = (priorRound !== null &&
+                                priorRound !== undefined &&
+                                priorRound === msg.round);
+                            game.lockSubmitted(sameRound ? priorIndex : -1);
                         }
                     }
                 } else {
@@ -7090,6 +7184,40 @@
         live.total_rounds = msg.total_rounds;
         live.player_score = _myScore(msg);
         return live;
+    }
+
+    /**
+     * A snapshot's ``wager`` block, in the shape ``wager_window`` has (#876).
+     *
+     * The betting window is the one screen a reload used to land on wrong in
+     * two ways at once, and both are numbers the block now carries:
+     *
+     * * ``own_bank`` — the bank the slider prices the bet against. This used
+     *   to be ``_myScore(msg)``, a lookup of the player's NAME in the
+     *   snapshot's leaderboard; in team mode those rows are teams, so a member
+     *   matched nothing, read 0, and was shown "50% of 0" on the round that
+     *   pays double. Kept as the fallback for a server too old to send the
+     *   field, where a solo game gets the same answer either way.
+     * * ``you_wagered`` — the bet this phone has already placed, or null.
+     *   Without it the window comes back as a live 25% slider over a stake
+     *   the server is already holding: a second submit overwrites the first
+     *   silently, and the "Wager: 50%" badge never appears once the question
+     *   starts, because the phone believes it never bet.
+     *
+     * The window's own countdown is the room's remaining seconds, never a
+     * fresh one — a reconnect must not buy extra thinking time (#656).
+     */
+    function wagerWindowFromSnapshot(msg) {
+        var w = msg.wager || {};
+        return {
+            round_num: msg.round,
+            total_rounds: msg.total_rounds,
+            category: w.category,
+            difficulty: w.difficulty,
+            window_duration: w.window_remaining,
+            player_score: (w.own_bank != null) ? w.own_bank : _myScore(msg),
+            you_wagered: (w.you_wagered != null) ? w.you_wagered : null
+        };
     }
 
     /**

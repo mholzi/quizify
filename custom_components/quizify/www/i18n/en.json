@@ -176,6 +176,7 @@
     "powerup": "Power-Up",
     "paused": "Game Paused",
     "pausedHint": "The game will resume when the host returns",
+    "pausedResetHint": "Any phone in the room can reset the game now",
     "stoleFromYou": "{name} stole {points} points from you!",
     "stoleFromOpponent": "Stolen: +{points} pts from {name}!",
     "frozen": "You were frozen for 5s!",
@@ -368,6 +369,7 @@
       "q8": "Power-ups?",
       "powerupsHint": "Joker, Steal, Freeze and friends are dealt out",
       "q9": "Bet on the last round?",
+      "needsMultipleChoice": "These modes need multiple-choice questions.",
       "wagerHint": "Stake points on the final question",
       "wagerTeamNote": "With teams: the bet is the team's, staked on the team score."
     },

@@ -66,17 +66,23 @@ PACK_SETS = (
     ImageSet("science", ("wissenschaft-de.json", "science-en.json", "ciencia-es.json"), 150),
     ImageSet("tech", ("technik-de.json", "tech-en.json", "tecnologia-es.json"), 150),
     ImageSet("food", ("essen-de.json", "food-en.json", "comida-es.json"), 150),
-    # Three sets carry four rather than five. A picture whose licence stops at
-    # a border cannot ship (#793, #794, #739), and where no worldwide-public-
-    # domain replacement was found the question stayed and lost its picture —
-    # which is what #739 asked for. The count is per set so that a picture
-    # going missing for any other reason still fails.
+    # Three sets carry fewer than five. A picture whose licence stops at a
+    # border cannot ship (#793, #794, #739, #817), and where no
+    # worldwide-public-domain replacement was found the question stayed and
+    # lost its picture — which is what #739 asked for. The count is per set so
+    # that a picture going missing for any other reason still fails.
+    #
+    # The World Cup set is down to one. Free photography of the first four
+    # tournaments is held almost entirely by South American state archives,
+    # whose releases carry a national tag and nothing wider (#817); three of
+    # its four questions are now text questions, and the fourth shows the
+    # Estadio Centenario as it stands today rather than in 1930.
     ImageSet("sport", ("sport-de.json", "sport-en.json", "deportes-es.json"), 148, 4),
     ImageSet(
         "worldcup",
         ("weltmeisterschaft.json", "world-cup.json", "copa-mundial-es.json"),
         99,
-        4,
+        1,
     ),
     ImageSet("music", ("musik-de.json", "music-en.json", "musica-es.json"), 150),
     ImageSet(

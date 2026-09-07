@@ -6,6 +6,13 @@ on:
   pull_request:
     branches: [main]
 
+# Read-only by default (#888). Nothing here pushes, comments or publishes; the
+# only thing any job needs is the source. Without this block the workflow
+# inherits whatever the repository default is, which is a write-scoped token for
+# jobs that have no use for one.
+permissions:
+  contents: read
+
 jobs:
   pytest:
     # Two points, both ends of the range this project promises to support
@@ -51,9 +58,9 @@ jobs:
             python-version: "3.13"
             requirements: requirements_test_ha_floor.txt
     steps:
-      - uses: actions/checkout@v4
+      - uses: actions/checkout@v7
 
-      - uses: actions/setup-python@v5
+      - uses: actions/setup-python@v7
         with:
           python-version: ${{ matrix.python-version }}
 
@@ -62,9 +69,12 @@ jobs:
       # node by default, but pinning it makes the gate deterministic so the
       # QUIZIFY_REQUIRE_NODE=1 hard-fail below can never be undermined by a
       # runner image that happens to drop node (#328).
-      - uses: actions/setup-node@v4
+      - uses: actions/setup-node@v7
         with:
-          node-version: "20"
+          # 22, not 20: Node 20 went end-of-life on 2026-04-30, and the
+          # `punycode` DEP0040 warnings this leg used to print came from it
+          # (#888). 22 is the current LTS line.
+          node-version: "22"
 
       - name: Install deps
         run: |
@@ -106,14 +116,16 @@ jobs:
     # selected ruleset (E4/E7/E9 + F + I) passes on current main.
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v4
+      - uses: actions/checkout@v7
 
-      - uses: actions/setup-python@v5
+      - uses: actions/setup-python@v7
         with:
           python-version: "3.13"
 
       - name: Install ruff
-        run: pip install "ruff==0.15.17"
+        # Pin lives in requirements_lint.txt so dependabot can propose the bump
+        # (#888) — it cannot read a version out of a shell command.
+        run: pip install -r requirements_lint.txt
 
       - name: Ruff lint
         run: ruff check custom_components/
@@ -128,9 +140,9 @@ jobs:
     # it mypy can't see the framework base classes and flags a false positive.
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v4
+      - uses: actions/checkout@v7
 
-      - uses: actions/setup-python@v5
+      - uses: actions/setup-python@v7
         with:
           # Matches the `pytest` leg: current HA needs 3.14.2.
           python-version: "3.14"
@@ -148,7 +160,9 @@ jobs:
           # up only against HA 2024.12 would have to come from a signature core
           # changed since — which the floor pytest leg catches at runtime, for
           # less wall-clock than a second full mypy install.
-          pip install homeassistant "mypy==2.3.1"
+          # mypy's pin lives in requirements_lint.txt for the same reason as
+          # ruff's (#888).
+          pip install homeassistant -r requirements_lint.txt
 
       - name: mypy type-check
         run: mypy
@@ -170,9 +184,9 @@ jobs:
     # in the header), so a diff here can only mean "not rebuilt".
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v4
+      - uses: actions/checkout@v7
 
-      - uses: actions/setup-python@v5
+      - uses: actions/setup-python@v7
         with:
           python-version: "3.13"
 

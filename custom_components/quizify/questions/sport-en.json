@@ -1,7 +1,7 @@
 {
   "name": "Sport",
   "language": "en",
-  "version": "1.3",
+  "version": "1.4",
   "theme": "sport",
   "questions": [
     {
@@ -1806,11 +1806,11 @@
     },
     {
       "id": "sport_en_161",
-      "question": "Which event does this photograph from the 1936 Olympics show?",
+      "question": "Which athlete is this, at the 1936 Berlin Olympics?",
       "answers": [
-        {"text": "Long jump", "correct": true},
-        {"text": "Pole vault", "correct": false},
-        {"text": "Hurdles", "correct": false}
+        {"text": "Paavo Nurmi", "correct": false},
+        {"text": "Jesse Owens", "correct": true},
+        {"text": "Jim Thorpe", "correct": false}
       ],
       "difficulty": "medium",
       "fun_fact": "Jesse Owens won four gold medals in Berlin. In the long jump it was his German rival Luz Long who advised him before the final attempt — the two left the stadium arm in arm.",
@@ -1832,7 +1832,7 @@
     },
     {
       "id": "sport_en_163",
-      "question": "Which sport is being played in this 1916 photograph?",
+      "question": "Which sport is being played in this 1915 photograph?",
       "answers": [
         {"text": "Cricket", "correct": false},
         {"text": "Golf", "correct": false},
@@ -1846,16 +1846,16 @@
     },
     {
       "id": "sport_en_164",
-      "question": "Which race did this man win in 1920?",
+      "question": "Which race is this 1903 photograph from?",
       "answers": [
         {"text": "The Tour de France", "correct": true},
         {"text": "The Berlin Marathon", "correct": false},
         {"text": "The Le Mans 24 Hours", "correct": false}
       ],
       "difficulty": "medium",
-      "fun_fact": "Philippe Thys won the Tour three times. Riders had no support crews then: a mechanical was yours to fix, and a broken frame meant a walk to the nearest forge.",
+      "fun_fact": "Maurice Garin won the first Tour de France in 1903: six stages, 2,428 kilometres and a winning margin of almost three hours. Riders had no support crews then — a mechanical was yours to fix, and a broken frame meant a walk to the nearest forge.",
       "category": "Sport",
-      "image_url": "/quizify/static/img/packs/sport/tour-de-france-1920.webp",
+      "image_url": "/quizify/static/img/packs/sport/tour-de-france-1903.webp",
       "reveal_style": "progressive"
     },
     {
