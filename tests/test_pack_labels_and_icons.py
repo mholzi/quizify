@@ -27,6 +27,9 @@ QUESTIONS = REPO / "custom_components" / "quizify" / "questions"
 ICONS_JS = REPO / "custom_components" / "quizify" / "www" / "js" / "icons.js"
 VIEWS_PY = REPO / "custom_components" / "quizify" / "server" / "views.py"
 WS_PY = REPO / "custom_components" / "quizify" / "server" / "websocket.py"
+SERIALIZERS_PY = (
+    REPO / "custom_components" / "quizify" / "server" / "serializers.py"
+)
 
 
 def _shipped_themes() -> set[str]:
@@ -87,8 +90,14 @@ def test_share_card_gets_display_names_not_slugs() -> None:
     Asserted on the source because building a finale payload needs a live
     game state; what matters is that the mapping happens at all, and that it
     keeps the slug when a pack is unknown rather than dropping the line.
+
+    The mapping moved out of the finale broadcast and into
+    ``serializers.resolve_pack_labels`` with #878, because the FINALE snapshot
+    a reloading phone restores from has to produce the identical Packs line.
+    Both callers are checked: the resolution itself, and the broadcast still
+    going through it rather than growing a second copy.
     """
-    src = WS_PY.read_text(encoding="utf-8")
+    src = SERIALIZERS_PY.read_text(encoding="utf-8")
     assert "get_pack_versions()" in src, (
         "the finale no longer resolves pack display names — the share card "
         "will print slugs like 'picture-round-en' again."
@@ -96,4 +105,8 @@ def test_share_card_gets_display_names_not_slugs() -> None:
     assert 'or slug for slug in packs' in src, (
         "the slug fallback is gone; an unknown pack would vanish from the "
         "card's Packs line instead of appearing under its slug."
+    )
+    assert "resolve_pack_labels(game_state)" in WS_PY.read_text(encoding="utf-8"), (
+        "the finale broadcast stopped using the shared resolver — the live "
+        "frame and the FINALE snapshot can drift apart again."
     )
