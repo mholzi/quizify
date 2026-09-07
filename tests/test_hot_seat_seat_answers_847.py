@@ -55,8 +55,9 @@ def test_the_server_sends_the_seat_holder_their_answers() -> None:
     """Worth pinning before blaming the phone. The seat holder's frame carries
     the shuffled options and ``you_are_seated``; the spectators' carries an
     empty list. Nothing was missing on the wire."""
-    source = (_CC / "server" / "websocket.py").read_text("utf-8")
-    body = source.split("async def _broadcast_hot_seat_question(", 1)[1].split(
+    # #881: the frame moved to the mode's broadcaster, unchanged.
+    source = (_CC / "server" / "broadcasters.py").read_text("utf-8")
+    body = source.split("async def send_hot_seat_question(", 1)[1].split(
         "\n    async def ", 1
     )[0]
 
