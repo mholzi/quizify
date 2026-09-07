@@ -20,7 +20,6 @@ from __future__ import annotations
 
 import sys
 from pathlib import Path
-from unittest.mock import MagicMock
 
 import pytest
 
@@ -31,12 +30,6 @@ from custom_components.quizify.game.state import (  # noqa: E402
     GamePhase,
     QuizifyGameState,
 )
-
-
-def _fake_ws() -> MagicMock:
-    ws = MagicMock()
-    ws.closed = False
-    return ws
 
 
 class _Runtime:
@@ -55,7 +48,7 @@ class _Runtime:
 @pytest.fixture
 def state(tmp_path: Path) -> QuizifyGameState:
     st = QuizifyGameState(runtime=_Runtime(tmp_path), entry_id="test")
-    st.add_player("A", _fake_ws())
+    st.add_player("A")
     return st
 
 
@@ -256,7 +249,7 @@ class TestDetourAndResume:
     ) -> None:
         # A standalone lightning session (no main game paused behind it) has
         # nothing to resume.
-        state.add_player("A", _fake_ws())
+        state.add_player("A")
         assert state.start_lightning_round() is True  # auto=False, from LOBBY
         state.finish_lightning_round()
         assert state.in_lightning_detour is False

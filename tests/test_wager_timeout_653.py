@@ -13,18 +13,11 @@ player who never wagered at all.
 from __future__ import annotations
 
 from pathlib import Path
-from unittest.mock import MagicMock
 
 import pytest
 
 from custom_components.quizify.game.scoring_engine import wager_loss
 from custom_components.quizify.game.state import QuizifyGameState
-
-
-def _fake_ws() -> MagicMock:
-    ws = MagicMock()
-    ws.closed = False
-    return ws
 
 
 class _Runtime:
@@ -35,8 +28,8 @@ class _Runtime:
 @pytest.fixture
 def state(tmp_path: Path) -> QuizifyGameState:
     gs = QuizifyGameState(runtime=_Runtime(tmp_path), entry_id="test")
-    gs.add_player("Alice", _fake_ws())
-    gs.add_player("Bob", _fake_ws())
+    gs.add_player("Alice")
+    gs.add_player("Bob")
     return gs
 
 

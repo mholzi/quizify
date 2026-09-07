@@ -17,7 +17,6 @@ part lands on something already pinned.
 from __future__ import annotations
 
 from pathlib import Path
-from unittest.mock import MagicMock
 
 import pytest
 
@@ -27,12 +26,6 @@ from custom_components.quizify.game.team import (
     Team,
     TeamRegistry,
 )
-
-
-def _ws() -> MagicMock:
-    ws = MagicMock()
-    ws.closed = False
-    return ws
 
 
 class _Runtime:
@@ -52,7 +45,7 @@ class _Runtime:
 def state(tmp_path: Path) -> QuizifyGameState:
     st = QuizifyGameState(runtime=_Runtime(tmp_path), entry_id="test")
     for name in ("Anna", "Jan", "Mira"):
-        st.add_player(name, _ws())
+        st.add_player(name)
     return st
 
 

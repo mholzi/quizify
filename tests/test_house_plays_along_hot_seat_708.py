@@ -28,7 +28,7 @@ from __future__ import annotations
 import asyncio
 import sys
 from pathlib import Path
-from unittest.mock import AsyncMock, MagicMock
+from unittest.mock import AsyncMock
 
 import pytest
 
@@ -55,14 +55,6 @@ class _FakeRuntime:
     async def run_in_executor(self, func, *args):  # noqa: ANN001, ANN202
         loop = asyncio.get_running_loop()
         return await loop.run_in_executor(None, func, *args)
-
-
-def _ws() -> MagicMock:
-    ws = MagicMock()
-    ws.closed = False
-    ws.send_json = AsyncMock()
-    ws.close = AsyncMock()
-    return ws
 
 
 class _Announcer:
@@ -105,7 +97,7 @@ class _Emitter:
 def game(tmp_path: Path) -> QuizifyGameState:
     st = QuizifyGameState(runtime=_FakeRuntime(tmp_path), entry_id="test")
     for name in ("Anna", "Ben", "Cem", "Dana"):
-        st.add_player(name, _ws())
+        st.add_player(name)
     st.start_game(num_rounds=6, language="en", hot_seat_seed=7, lightning_seed=7)
     return st
 

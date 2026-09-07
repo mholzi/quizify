@@ -18,7 +18,6 @@ from __future__ import annotations
 
 import sys
 from pathlib import Path
-from unittest.mock import MagicMock
 
 import pytest
 
@@ -33,7 +32,7 @@ from custom_components.quizify.server.serializers import (  # noqa: E402
 
 
 def _player(name: str, score: int, history: list[str], powerups: int = 0):
-    p = PlayerSession(name=name, ws=MagicMock())
+    p = PlayerSession(name=name)
     p.score = score
     p.round_history = list(history)
     p.powerups_used = powerups

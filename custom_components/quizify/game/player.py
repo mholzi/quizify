@@ -5,11 +5,6 @@ from __future__ import annotations
 import time
 import uuid
 from dataclasses import dataclass, field
-from typing import TYPE_CHECKING
-
-if TYPE_CHECKING:
-    from aiohttp import web
-
 
 # Palette of distinct, accessible colours for player identification
 PLAYER_COLORS = [
@@ -41,7 +36,12 @@ class PlayerSession:
     """Represents a connected player."""
 
     name: str
-    ws: web.WebSocketResponse
+    # Opaque handle for the transport this player is currently attached to.
+    # The game layer never dereferences it: the id -> socket map lives in
+    # ``server.connection.ConnectionManager`` alone (#882). ``None`` means
+    # "no transport bound", which is the normal state for a player built by
+    # a test or restored from a snapshot.
+    connection_id: str | None = None
     session_id: str = field(default_factory=lambda: str(uuid.uuid4()))
     score: int = 0
     streak: int = 0
@@ -115,14 +115,19 @@ class PlayerSession:
 
     @property
     def is_active(self) -> bool:
-        """True only if the player is genuinely still connected.
+        """True while this player counts as present in the room.
 
-        ``connected`` alone is not enough: a dropped/closed WebSocket whose
-        ``_handle_disconnect`` has not run yet leaves a stale ``connected =
-        True`` ghost. Counting such a ghost as an active participant blocks
-        all-submitted early reveal for the whole room.
+        Since #882 this is simply ``connected``. The flag used to be
+        double-checked against ``ws.closed`` because a dropped socket whose
+        ``_handle_disconnect`` had not run yet left a stale ``connected =
+        True`` ghost — and a ghost counted as an active participant blocks
+        all-submitted early reveal for the whole room. That check needed the
+        transport inside the game model. The server layer now reaps such
+        ghosts (``QuizifyWebSocketHandler._reap_closed_connections``) before
+        the two decisions that ever cared, so the flag is the single source
+        of truth and ``game/`` no longer imports aiohttp.
         """
-        return self.connected and self.ws is not None and not self.ws.closed
+        return self.connected
 
     def submit_answer(self, answer_index: int, timestamp: float) -> None:
         """Record an answer submission."""

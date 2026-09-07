@@ -13,7 +13,6 @@ from __future__ import annotations
 
 import time
 from pathlib import Path
-from unittest.mock import MagicMock
 
 import pytest
 
@@ -24,12 +23,6 @@ from custom_components.quizify.game.state import (
     QuizifyGameState,
     TeamAnswerAck,
 )
-
-
-def _ws() -> MagicMock:
-    ws = MagicMock()
-    ws.closed = False
-    return ws
 
 
 class _Runtime:
@@ -50,7 +43,7 @@ def game(tmp_path: Path) -> QuizifyGameState:
     """A started game with one two-person team and one solo player."""
     st = QuizifyGameState(runtime=_Runtime(tmp_path), entry_id="test")
     for name in ("Anna", "Jan", "Mira"):
-        st.add_player(name, _ws())
+        st.add_player(name)
     st.create_team("Sofa", "Anna")
     st.join_team(st.get_team_of("Anna")["team_id"], "Jan")
     st.start_game(category="picture-round-en", difficulty="easy", num_rounds=3,
@@ -202,7 +195,7 @@ def test_a_solo_player_is_unaffected_by_team_mode(game: QuizifyGameState) -> Non
 def test_teams_are_untouched_when_nobody_formed_one(tmp_path: Path) -> None:
     """No team, no team mode, no behaviour change for an ordinary game."""
     st = QuizifyGameState(runtime=_Runtime(tmp_path), entry_id="test")
-    st.add_player("Solo", _ws())
+    st.add_player("Solo")
     st.start_game(category="picture-round-en", difficulty="easy", num_rounds=2,
                   language="en")
     st.start_next_question()

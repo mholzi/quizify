@@ -36,6 +36,7 @@ from custom_components.quizify.game.state import (  # noqa: E402
     GamePhase,
     QuizifyGameState,
 )
+from tests.ws_helpers import FakeConnection, bind  # noqa: E402
 
 
 def _fake_ws() -> MagicMock:
@@ -69,13 +70,13 @@ class TestLateJoinerFlagCleared:
         block the *next* round's early-reveal until they answer too — instead
         of being silently scored 0 (timeout) every remaining round."""
         gs = QuizifyGameState(runtime=_Runtime(tmp_path), entry_id="t")
-        gs.add_player("Alice", _fake_ws())
-        gs.add_player("Bob", _fake_ws())
+        gs.add_player("Alice")
+        gs.add_player("Bob")
         gs.start_game(language="de", num_rounds=5)
         gs.start_next_question()
 
         # Charlie joins mid-round 1 → flagged late.
-        gs.add_player("Charlie", _fake_ws())
+        gs.add_player("Charlie")
         assert gs.get_player("Charlie").joined_late is True
 
         # Round 1: only the original two answer; the late joiner doesn't block.
@@ -129,7 +130,7 @@ class TestAllDisconnectEvaluates:
 
     def test_state_delegates_wall_clock(self, tmp_path: Path) -> None:
         gs = QuizifyGameState(runtime=_Runtime(tmp_path), entry_id="t")
-        gs.add_player("Alice", _fake_ws())
+        gs.add_player("Alice")
         gs.start_game(language="de", num_rounds=3)
         gs.start_next_question()
         # Force the shared round wall-clock past the duration.
@@ -156,8 +157,8 @@ class TestEndGameIdempotent:
                 record_calls.append(kwargs)
 
         gs._stats_service = _Stats()
-        gs.add_player("Alice", _fake_ws())
-        gs.add_player("Bob", _fake_ws())
+        gs.add_player("Alice")
+        gs.add_player("Bob")
         gs.start_game(language="de", num_rounds=2)
         gs.start_next_question()
 
@@ -187,8 +188,8 @@ class TestEndGameIdempotent:
             events.append(payload.get("event", ""))
 
         gs.set_broadcast_callback(_broadcast)
-        gs.add_player("Alice", _fake_ws())
-        gs.add_player("Bob", _fake_ws())
+        gs.add_player("Alice")
+        gs.add_player("Bob")
         gs.start_game(language="de", num_rounds=2)
         gs.start_next_question()
 
@@ -204,7 +205,7 @@ class TestEndGameIdempotent:
 
 
 def _mk_player(name: str, round_scores: list[int]) -> PlayerSession:
-    p = PlayerSession(name=name, ws=MagicMock())
+    p = PlayerSession(name=name)
     p.round_scores = list(round_scores)
     p.round_history = ["correct"] * len(round_scores)
     return p
@@ -264,11 +265,10 @@ class TestWagerAfterAnswerRejected:
         )
 
         gs = QuizifyGameState(runtime=_Runtime(tmp_path), entry_id="t")
-        ws = _fake_ws()
-        gs.add_player("Alice", ws)
+        gs.add_player("Alice")
         # A second player keeps the round in QUESTION_ACTIVE after Alice
         # answers (so the wager phase-guard doesn't short-circuit first).
-        gs.add_player("Bob", _fake_ws())
+        gs.add_player("Bob")
         # Final round (round == total_rounds) so the wager path is reachable.
         gs.start_game(language="de", num_rounds=1)
         gs.start_next_question()
@@ -283,11 +283,12 @@ class TestWagerAfterAnswerRejected:
         handler = QuizifyWebSocketHandler.__new__(QuizifyWebSocketHandler)
         sent_errors: list[tuple] = []
 
-        class _Conn:
+        class _Conn(FakeConnection):
             async def send_error(self, ws, code, msg):  # noqa: ANN001
                 sent_errors.append((code, msg))
 
         handler._conn = _Conn()
+        ws = bind(handler._conn, gs, "Alice", _fake_ws())
 
         await handler._handle_submit_wager(ws, {"wager": 50}, gs)
 

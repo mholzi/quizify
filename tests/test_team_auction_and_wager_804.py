@@ -32,7 +32,6 @@ alternative:
 from __future__ import annotations
 
 from pathlib import Path
-from unittest.mock import MagicMock
 
 import pytest
 
@@ -40,12 +39,6 @@ from custom_components.quizify.game.hot_seat import HotSeatRound, stake_of
 from custom_components.quizify.game.phase_controller import GamePhase
 from custom_components.quizify.game.state import QuizifyGameState
 from custom_components.quizify.server.serializers import serialize_state_snapshot
-
-
-def _ws() -> MagicMock:
-    ws = MagicMock()
-    ws.closed = False
-    return ws
 
 
 class _Runtime:
@@ -57,7 +50,7 @@ def _game(tmp_path: Path, *, rounds: int = 8) -> QuizifyGameState:
     """Two teams of two plus one guest who joined none — three entrants."""
     st = QuizifyGameState(runtime=_Runtime(tmp_path), entry_id="test")
     for name in ("Anna", "Jan", "Mira", "Tom", "Eva"):
-        st.add_player(name, _ws())
+        st.add_player(name)
     st.create_team("Sofa", "Anna")
     st.join_team(st.get_team_of("Anna")["team_id"], "Jan")
     st.create_team("Küche", "Mira")
@@ -283,7 +276,7 @@ def test_two_teams_called_the_same_thing_stay_two_bidders(tmp_path: Path) -> Non
     """#728's lesson, ported: keyed by name they collapse into one entrant."""
     st = QuizifyGameState(runtime=_Runtime(tmp_path), entry_id="test")
     for name in ("Anna", "Mira", "Eva"):
-        st.add_player(name, _ws())
+        st.add_player(name)
     st.create_team("Sofa", "Anna")
     st.create_team("Sofa", "Mira")
     st.start_game(

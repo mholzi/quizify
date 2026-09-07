@@ -19,7 +19,6 @@ from __future__ import annotations
 
 import sys
 from pathlib import Path
-from unittest.mock import MagicMock
 
 import pytest
 
@@ -43,12 +42,6 @@ class _FakeRuntime:
         self.data_dir = tmp_path
 
 
-def _fake_ws() -> MagicMock:
-    ws = MagicMock()
-    ws.closed = False
-    return ws
-
-
 @pytest.fixture
 def state(tmp_path: Path) -> QuizifyGameState:
     return QuizifyGameState(runtime=_FakeRuntime(tmp_path), entry_id="test")
@@ -63,7 +56,7 @@ def test_game_state_includes_lightning_when_splash_pending(
     state: QuizifyGameState, builder: RoundMessageBuilder
 ) -> None:
     """Splash-pending: payload carries lightning meta, splash_pending=True."""
-    state.add_player("A", _fake_ws())
+    state.add_player("A")
     assert state.start_lightning_round() is True
     assert state.phase == GamePhase.LIGHTNING
     assert state.lightning_splash_pending is True
@@ -88,7 +81,7 @@ def test_game_state_includes_lightning_with_live_question(
     state: QuizifyGameState, builder: RoundMessageBuilder
 ) -> None:
     """Live round: splash_pending=False and a fully-shaped question is sent."""
-    state.add_player("A", _fake_ws())
+    state.add_player("A")
     assert state.start_lightning_round() is True
     # Admin dismisses the intro splash → questions are live.
     assert state.begin_lightning_questions() is True
@@ -118,7 +111,7 @@ def test_lightning_substate_matches_snapshot_shape(
     client the same key set, so the LIGHTNING client path behaves the same on
     a reconnect snapshot and on a live leaderboard refresh.
     """
-    state.add_player("A", _fake_ws())
+    state.add_player("A")
     assert state.start_lightning_round() is True
     assert state.begin_lightning_questions() is True
 
@@ -137,7 +130,7 @@ def test_non_lightning_game_state_has_no_lightning_key(
     state: QuizifyGameState, builder: RoundMessageBuilder
 ) -> None:
     """Outside LIGHTNING the builder must not inject a lightning sub-object."""
-    state.add_player("A", _fake_ws())
+    state.add_player("A")
     payload = builder.build_game_state_with_leaderboard(
         state, players=state.get_players()
     )

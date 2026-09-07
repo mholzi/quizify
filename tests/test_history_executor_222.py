@@ -22,7 +22,6 @@ import asyncio
 import json
 import sys
 from pathlib import Path
-from unittest.mock import MagicMock
 
 import pytest
 
@@ -61,12 +60,6 @@ class _ExecutorRuntime:
         self.executor_calls += 1
         loop = asyncio.get_running_loop()
         return await loop.run_in_executor(None, func, *args)
-
-
-def _fake_ws() -> MagicMock:
-    ws = MagicMock()
-    ws.closed = False
-    return ws
 
 
 @pytest.mark.asyncio
@@ -148,7 +141,7 @@ async def test_end_game_schedules_offloaded_history_flush(tmp_path: Path) -> Non
     runtime = _ExecutorRuntime(tmp_path)
     state = QuizifyGameState(runtime=runtime, entry_id="test")
 
-    state.add_player("Alice", _fake_ws())
+    state.add_player("Alice")
     state.start_game(language="de", num_rounds=3)
     # Mark a question as shown so there is history worth persisting.
     state._question_bank.record_shown("seed-q")
