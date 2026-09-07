@@ -57,10 +57,20 @@ here so it is a decision and not an oversight.
 ## Quarantine
 
 `UNDER_REVIEW` in the test lists the rows that do **not** pass and are still on
-disk, each with the reason. They are marked ⚠️ in their `credits.md` and are
-tracked by [#817](https://github.com/mholzi/quizify/issues/817). The list is allowed to shrink and nothing may be
-added to it without an issue; a file that leaves the quarantine has to leave it
-because it was replaced or removed, not because the row was re-worded.
+disk, each with the reason. They are marked ⚠️ in their `credits.md`. The list
+is allowed to shrink and nothing may be added to it without an issue; a file
+that leaves the quarantine has to leave it because it was replaced or removed,
+not because the row was re-worded.
+
+**It is empty.** The eleven rows
+[#817](https://github.com/mholzi/quizify/issues/817) inherited were decided in
+v1.17.0: one picture moved to a Commons record of the same photograph that
+states the death year, seven were swapped for a different picture that is free
+worldwide, and three came out of the tree so their questions could become text
+questions. What
+each record actually said, what was decided and what the row rests on now is
+pinned in `QUARANTINE_817` in the test — as data the suite checks against the
+tree, not as prose in a merged pull request.
 
 ## Adding an image
 

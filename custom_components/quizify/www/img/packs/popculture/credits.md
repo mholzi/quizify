@@ -5,15 +5,10 @@ template, not the phrase a search result showed. The policy those templates are
 checked against is in [`../LICENSING.md`](../LICENSING.md), and
 `tests/test_pack_image_licences_795.py` enforces it row by row.
 
-⚠️ marks a row whose template is **not** worldwide safe. It is quarantined in
-that test and tracked by
-[#817](https://github.com/mholzi/quizify/issues/817); it has to be replaced or
-removed, not re-worded.
-
 | File | Subject | Creator / holder | Source | Licence | Commons template | Verified by |
 |---|---|---|---|---|---|---|
 | `voyage-dans-la-lune.webp` | The rocket in the moon's eye, *Le Voyage dans la Lune*, 1902 | Georges Méliès (d. 1938) | [Wikimedia Commons](https://commons.wikimedia.org/wiki/File:Le_voyage_dans_la_lune_drawing.jpg) | Public domain, expired worldwide | `PD-old-auto-expired` | licence templates read from the file record wikitext |
-| `charlie-chaplin.webp` ⚠️ | Charlie Chaplin, studio portrait, 1915 | Hartsook Photo, San Francisco / Los Angeles | [Wikimedia Commons](https://commons.wikimedia.org/wiki/File:Charlie_Chaplin.jpg) | Public domain **in the US only** on the record as it stands | `PD-US-expired` | same |
+| `charlie-chaplin.webp` | Charlie Chaplin, studio portrait, c. 1915 | Albert Witzel (d. 1929), Witzel Studios, Los Angeles | [Wikimedia Commons](https://commons.wikimedia.org/wiki/File:Charlie_Chaplin,_by_Witzel_Studios,_LA.jpg) | Public domain, expired worldwide | `PD-old-auto-expired` | same |
 | `nosferatu.webp` | Max Schreck as Count Orlok, *Nosferatu — Eine Symphonie des Grauens*, 1922 | Prana-Film / F. W. Murnau | [Wikimedia Commons](https://commons.wikimedia.org/wiki/File:Max_Schreck_as_Count_Orlok_in_Nosferatu_%E2%80%93_Eine_Symphonie_des_Grauens_(1922).jpg) | Public domain, expired worldwide | `PD-old-auto-expired` | same |
 | `caligari-poster.webp` | Poster for *Das Cabinet des Dr. Caligari*, 1920 | Ledl Bernhard (Rudolf Ledl and Fritz Bernhard, d. 1945) | [Wikimedia Commons](https://commons.wikimedia.org/wiki/File:Das_Kabinett_des_Doktor_Caligari_1920_Poster.jpg) | Public domain, expired worldwide | `PD-old-auto-expired` | same |
 
@@ -37,10 +32,21 @@ the users are in.
   artist, so the poster is protected in the EU until the end of 2055. Replaced
   by the Caligari poster.
 
-`charlie-chaplin.webp` is the row that is still open. `{{PD-US-expired}}` says
-only that the US term has run; the record names no death year, so nothing on it
-shows the picture is free in Germany. It stays quarantined rather than being
-re-credited on a guess.
+## `charlie-chaplin.webp` got a different photograph in v1.17.0 (#817)
+
+The Hartsook portrait rested on `{{PD-US-expired}}` alone: the US term has run,
+and the record names no photographer and no death year, so nothing on it showed
+the picture was free in Germany. The Witzel Studios portrait of the same
+subject from the same year carries `{{PD-old-auto-expired|deathyear=1929}}` —
+Albert Witzel died in 1929, so the term ran out worldwide at the end of 1999.
+
+Every Chaplin portrait on Commons with a worldwide expiry tag is a signed
+publicity print, and the signature reads "Charlie Chaplin" across the sitter's
+jacket. That is the answer to the question, so the sheet was cropped to the
+head and shoulders; the `Witzel LA` studio credit in the lower left went with
+it. The 1922 *Jour de Paye* poster (`PD-Art|PD-old-auto-expired`, Raymond
+Pallier d. 1943) would have been the alternative and is 421 px wide, which is
+below what a card 340 px wide at DPR 2 can carry.
 
 ## The wall, and where the door is
 
