@@ -426,6 +426,30 @@
                         </div>
                         <p class="wager-panel-hint" data-i18n="hotSeat.betOptional">Mitwetten ist freiwillig.</p>
                     </div>
+
+                    <!-- The settlement (#859). The chair is the game's biggest
+                         single points swing and the phones were the only screens
+                         never shown it: handleResult tore the panel down on the
+                         premise that "the reveal screen owns the outcome", and
+                         the settlement produces no reveal — the room stays in
+                         HOT_SEAT_REVEAL until the host taps Next Question, and
+                         `hot_seat_result` is the only frame that ever describes
+                         it. So the panel that narrated the auction, the award
+                         and the question narrates the end of it too, rather
+                         than a fourth full-screen stage: the phone is already
+                         looking at this card, and the #803 hatch below it still
+                         works because it sits outside the panel.
+                         Every line is written by player-hotseat.js from the
+                         frame, so no data-i18n here — the same reason
+                         #hotseat-hint has none. -->
+                    <div id="hotseat-result-stage" class="hidden">
+                        <p id="hotseat-result-answer" class="wager-panel-hint"></p>
+                        <p id="hotseat-result-you" class="wager-bank-line hidden">
+                            <span id="hotseat-result-you-label"></span>
+                            <span id="hotseat-result-you-delta" class="wager-bank"></span>
+                        </p>
+                        <div id="hotseat-result-standings"></div>
+                    </div>
                 </section>
 
                 <!-- #803: non-admin escape hatch on the Hot Seat result. The

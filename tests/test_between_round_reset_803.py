@@ -162,14 +162,21 @@ def test_the_snapshot_path_arms_whichever_stage_it_lands_on() -> None:
 def test_the_live_events_arm_their_own_stage() -> None:
     """Neither `lightning_recap` nor `hot_seat_result` carries a phase or a
     roster, and neither is followed by anything while the room waits — so the
-    handler has to say which stage it just opened."""
+    live half has to say which stage it just opened.
+
+    #803 said it from inside each `case`, and #858 is what that cost: the
+    ordinary reveal is opened by `round_summary`, nobody wrote its case, and
+    every guest on the screen a room waits on most was left with no way out.
+    The live half is a table now (`STAGE_ENTERED_BY`), applied once at the
+    bottom of `handleMessage` — see tests/test_stage_entry_parity_858.py for
+    the invariant it buys.
+    """
     source = _without_comments(_CORE.read_text("utf-8"))
+    table = source.split("var STAGE_ENTERED_BY = {", 1)[1].split("};", 1)[0]
 
-    recap = source.split("case 'lightning_recap':", 1)[1].split("break;", 1)[0]
-    assert "setResetStage('LIGHTNING_RECAP')" in recap
-
-    result = source.split("case 'hot_seat_result':", 1)[1].split("break;", 1)[0]
-    assert "setResetStage('HOT_SEAT_REVEAL')" in result
+    assert "'lightning_recap': 'LIGHTNING_RECAP'" in table
+    assert "'hot_seat_result': 'HOT_SEAT_REVEAL'" in table
+    assert "'round_summary': 'ANSWER_REVEAL'" in table
 
 
 def test_the_roster_frame_re_decides_it() -> None:
