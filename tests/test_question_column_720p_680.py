@@ -13,7 +13,8 @@ Two halves to the fix, and they are not interchangeable:
   overflow to place. Measured after: 536.3px of a 549.8px column at reveal,
   461.6px in the question phase, overlap 0 at both 1280x720 and 1920x1080.
 
-These are text-level guards; `dashboard.html` keeps its CSS inline.
+These are text-level guards over the television's built stylesheet
+(`css/tv.css`, #880).
 """
 
 from __future__ import annotations
@@ -21,15 +22,14 @@ from __future__ import annotations
 import re
 from pathlib import Path
 
+from tests.conftest import dashboard_css, dashboard_markup
+
 REPO = Path(__file__).resolve().parent.parent
-DASHBOARD = REPO / "custom_components" / "quizify" / "www" / "dashboard.html"
 
 
 def _css() -> str:
-    html = DASHBOARD.read_text(encoding="utf-8")
-    blocks = re.findall(r"<style[^>]*>(.*?)</style>", html, re.DOTALL)
-    assert blocks, "dashboard.html is expected to carry its CSS inline"
-    return re.sub(r"/\*.*?\*/", "", "\n".join(blocks), flags=re.DOTALL)
+    # #829/#880: the television's code and styles are their own files now.
+    return re.sub(r"/\*.*?\*/", "", dashboard_css(), flags=re.DOTALL)
 
 
 def _balanced(css: str, header: str) -> str:
@@ -141,7 +141,8 @@ def test_the_fun_fact_does_not_weigh_on_this_column_at_all() -> None:
     Either way the property that matters here is the same: nothing that the
     left column cannot show may take height from the answers.
     """
-    html = DASHBOARD.read_text(encoding="utf-8")
+    # #829/#880: dashboard.html is markup only now.
+    html = dashboard_markup()
     start = html.index("<!-- QUESTION VIEW -->")
     view = html[start : html.index("<!-- FINALE VIEW -->", start)]
     left = view.index('id="dashboard-left"')

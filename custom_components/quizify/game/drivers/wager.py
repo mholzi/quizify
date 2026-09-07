@@ -12,9 +12,12 @@ from __future__ import annotations
 
 import asyncio
 import logging
-from typing import Any
+from typing import TYPE_CHECKING
 
 from .protocols import WagerBroadcaster
+
+if TYPE_CHECKING:
+    from ..state import QuizifyGameState
 
 _LOGGER = logging.getLogger(__name__)
 
@@ -28,7 +31,7 @@ class WagerWindowDriver:
         self._out = broadcaster
         self._duration = duration
 
-    async def run(self, game_state: Any) -> None:
+    async def run(self, game_state: QuizifyGameState) -> None:
         try:
             await asyncio.sleep(self._duration)
         except asyncio.CancelledError:

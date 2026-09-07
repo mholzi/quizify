@@ -23,14 +23,10 @@ type instead of the type creeping towards the axis as it scales.
 from __future__ import annotations
 
 import re
-from pathlib import Path
 
 import pytest
 
-DASHBOARD = (
-    Path(__file__).resolve().parent.parent
-    / "custom_components/quizify/www/dashboard.html"
-)
+from tests.conftest import dashboard_css
 
 # The steps #707 settled, quoted verbatim. Nothing here invents a size.
 ROW_STEP = "clamp(16px, 1.6vw, 24px)"
@@ -48,7 +44,8 @@ ESTIMATE_RULES = {
 
 
 def _rule_body(selector: str) -> str:
-    css = DASHBOARD.read_text(encoding="utf-8")
+    # #829/#880: the television's code and styles are their own files now.
+    css = dashboard_css()
     start = css.index(selector + " {")
     return css[start : css.index("}", start)]
 

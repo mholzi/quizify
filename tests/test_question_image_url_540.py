@@ -39,7 +39,10 @@ UTILS_JS = WWW / "js" / "utils.js"
 # Every place that turns an ``image_url`` from the wire into an ``img.src``.
 # utils.js is excluded — it is the one file allowed to spell out the rule.
 RENDER_SITES = [
-    WWW / "dashboard.html",
+    # #829/#880: the television's code and styles are their own files now —
+    # the list holds paths (``p.name`` is quoted in the failures), so this one
+    # names the file the conftest ``dashboard_script()`` helper reads.
+    WWW / "js" / "dashboard.js",
     WWW / "js" / "player-game.js",
     WWW / "js" / "player-lightning.js",
     WWW / "js" / "player.bundle.js",

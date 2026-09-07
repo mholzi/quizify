@@ -4054,10 +4054,8 @@
         // Only the count, never the amounts — the auction is sealed.
         var count = el('hotseat-bid-count');
         if (!count || !_state.bidding) return;
-        count.textContent = t('hotSeat.bidCount', {
-            count: msg.count || 0,
-            total: msg.total || 0
-        });
+        // #787: the same sentence the television and the host page print.
+        count.textContent = window.QuizifyRenderShared.hotSeatBidCountText(msg);
     }
 
     // ------------------------------------------------------------------
@@ -4078,13 +4076,9 @@
             setTitle('hotSeat.won', { pct: msg.pct, pts: msg.stake });
             if (hint) hint.textContent = t('hotSeat.seatedHint');
         } else {
-            // #804: ``winner`` is the person in the chair, ``entrant`` is who
-            // pays — their team in team mode, the same person again otherwise.
-            // The room is told the payer, because that is the row the points
-            // move on.
-            setTitle('hotSeat.lost', {
-                name: msg.entrant || msg.winner, pct: msg.pct, pts: msg.stake
-            });
+            // #804/#787: the payer, not the person in the chair — read in
+            // render-shared.js so all three screens name the same row.
+            setTitle('hotSeat.lost', window.QuizifyRenderShared.hotSeatAward(msg).vars);
             if (hint) hint.textContent = '';
         }
     }
@@ -4324,25 +4318,12 @@
         stage('hotseat-bet-stage', false);
         stage('hotseat-result-stage', true);
 
-        // ``answered`` is tri-state on the server: true = right, false =
-        // wrong, null = never answered. A bare falsy check collapses the last
-        // two, and since #653 charges the same points for both, "ran out of
-        // time" vs "got it wrong" is the whole distinction this line makes.
-        // Same three keys and the same reading as the television's
-        // handleHotSeatResult, so the room is told one story.
-        var noAnswer = msg.answered === null || msg.answered === undefined;
-        var right = msg.answered === true;
-        // #804: ``winner`` is the person in the chair, ``entrant`` is who pays
-        // — their team in team mode. The points move on the entrant's row, so
-        // that is the name beside the number.
-        var payer = msg.entrant || msg.winner || '';
-        var delta = (msg.winner_delta != null)
-            ? msg.winner_delta
-            : ((msg.deltas && msg.deltas[msg.winner]) || 0);
-        var key = noAnswer
-            ? 'hotSeat.resultTimeout'
-            : (right ? 'hotSeat.resultRight' : 'hotSeat.resultWrong');
-        setTitle(key, { name: payer, pts: Math.abs(delta) });
+        // The tri-state ``answered`` and the #804 delta lookup are shared
+        // since #787 — "ran out of time" against "got it wrong" is the whole
+        // distinction these three keys make, and the room has to be told one
+        // story on all three screens.
+        var settlement = window.QuizifyRenderShared.hotSeatSettlement(msg);
+        setTitle(settlement.key, settlement.vars);
 
         // The answer itself. ``correct_index`` is a CANONICAL index and the
         // seat holder was shown a shuffle, so the spelled-out string (#833) is

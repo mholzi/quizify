@@ -1,3 +1,7 @@
+/* @surface tv — the television's slice of this module. Everything outside a
+   marked region addresses the phone or the host console; build_css.py leaves
+   it out of css/tv.css, and tests/test_surface_stylesheets_880.py proves none
+   of it could have matched an element the television renders. */
 /* ==========================================
    Responsive
    ========================================== */
@@ -87,6 +91,7 @@
         transition-duration: 0.01ms !important;
     }
 }
+/* @endsurface */
 
 /* ==========================================
    Reveal: All Answers Grid
@@ -806,6 +811,10 @@ body.is-admin .pl-result-hero--big .pl-result-big-points { font-size: 84px; }
    is active so non-admin players see content fill the screen. */
 body:not(.is-admin) .pl-result { padding-bottom: 16px; }
 
+/* @surface tv — the television's slice of this module. Everything outside a
+   marked region addresses the phone or the host console; build_css.py leaves
+   it out of css/tv.css, and tests/test_surface_stylesheets_880.py proves none
+   of it could have matched an element the television renders. */
 /* ==========================================
    FINALE / RESULT / PODIUM — extra emphasis
    --------------------------------------------
@@ -864,6 +873,7 @@ body:not(.is-admin) .pl-result { padding-bottom: 16px; }
    with the Variant-D redesign (#338). Its responsive font overrides
    (.your-result-rank / .your-result-score / .stat-value / .stat-label)
    were removed with it. */
+/* @endsurface */
 
 /* ===========================================================================
    Community pack submission (#180) — Variant C "Stepper"

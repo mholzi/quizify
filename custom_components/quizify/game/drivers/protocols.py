@@ -21,11 +21,24 @@ below, and ``server.websocket.QuizifyWebSocketHandler`` implements them.
 
 Both are :class:`typing.Protocol` s, so the handler satisfies them structurally
 — no base class, no import from ``server`` into ``game``.
+
+The game types below are imported under ``TYPE_CHECKING`` only, which is what
+lets the contracts be written in the vocabulary they are actually about without
+importing anything at runtime. There is no cycle to dodge — ``game.state`` does
+not import ``game.drivers`` — but the deferred import keeps the driver layer's
+import cost where it was, and it is the pattern ``serializers`` and
+``round_message_builder`` already use.
 """
 
 from __future__ import annotations
 
-from typing import Any, Protocol
+from typing import TYPE_CHECKING, Protocol
+
+if TYPE_CHECKING:
+    from ..hot_seat import HotSeatRound
+    from ..lightning import LightningRound
+    from ..questions import Question
+    from ..state import QuizifyGameState
 
 __all__ = [
     "HotSeatBroadcaster",
@@ -46,7 +59,7 @@ class MilestoneSink(Protocol):
 
     def question_shown(
         self,
-        question: Any,
+        question: Question,
         round_no: int,
         total_rounds: int,
         options: list[str] | None = None,
@@ -57,20 +70,24 @@ class MilestoneSink(Protocol):
         """The current answer window is running down. Called on every tick;
         each consumer keeps its own once-per-round guard and threshold."""
 
-    def reveal(self, game_state: Any) -> None:
+    def reveal(self, game_state: QuizifyGameState) -> None:
         """The answer is out and the round has been scored."""
 
 
 class LightningBroadcaster(Protocol):
     """The Lightning Round's fan-out points (#42/#201)."""
 
-    async def send_lightning_question(self, game_state: Any, lr: Any) -> None:
+    async def send_lightning_question(
+        self, game_state: QuizifyGameState, lr: LightningRound
+    ) -> None:
         """Push the current lightning question (own shuffle per phone)."""
 
-    async def send_lightning_tick(self, game_state: Any, lr: Any) -> None:
+    async def send_lightning_tick(
+        self, game_state: QuizifyGameState, lr: LightningRound
+    ) -> None:
         """Push the shared lightning countdown."""
 
-    async def send_lightning_recap(self, game_state: Any) -> None:
+    async def send_lightning_recap(self, game_state: QuizifyGameState) -> None:
         """Push the end-of-mode recap."""
 
 
@@ -83,16 +100,22 @@ class HotSeatBroadcaster(Protocol):
     async def send_hot_seat_no_bids(self) -> None:
         """Tell the room nobody wanted the chair."""
 
-    async def send_hot_seat_awarded(self, game_state: Any, hs: Any) -> None:
+    async def send_hot_seat_awarded(
+        self, game_state: QuizifyGameState, hs: HotSeatRound
+    ) -> None:
         """Break the seal: who paid what, and who is sitting down."""
 
-    async def send_hot_seat_question(self, game_state: Any, hs: Any) -> None:
+    async def send_hot_seat_question(
+        self, game_state: QuizifyGameState, hs: HotSeatRound
+    ) -> None:
         """Push the seat holder's question (answers only to the chair)."""
 
-    async def send_hot_seat_result(self, game_state: Any, hs: Any) -> None:
+    async def send_hot_seat_result(
+        self, game_state: QuizifyGameState, hs: HotSeatRound
+    ) -> None:
         """Push the settlement."""
 
-    async def resume_normal_question(self, game_state: Any) -> None:
+    async def resume_normal_question(self, game_state: QuizifyGameState) -> None:
         """Leave the detour and start an ordinary question instead.
 
         The mode's escape hatch, not a broadcast: an auction nobody bid on is
@@ -105,7 +128,7 @@ class RoundBroadcaster(Protocol):
 
     async def send_timer_tick(
         self,
-        game_state: Any,
+        game_state: QuizifyGameState,
         remaining_by_player: dict[str, float],
         dashboard_remaining: float | None,
     ) -> None:
@@ -121,5 +144,5 @@ class RoundBroadcaster(Protocol):
 class WagerBroadcaster(Protocol):
     """The betting window's single fan-out point (#656)."""
 
-    async def close_wager_window(self, game_state: Any) -> None:
+    async def close_wager_window(self, game_state: QuizifyGameState) -> None:
         """The deadline passed: arm the round timers and send the question."""

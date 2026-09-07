@@ -48,7 +48,10 @@ from custom_components.quizify.game.state import QuizifyGameState  # noqa: E402
 from custom_components.quizify.house import (  # noqa: E402
     build_house_consumers,
 )
-from custom_components.quizify.house_settings import HouseSettings  # noqa: E402
+from custom_components.quizify.house_settings import (  # noqa: E402
+    HouseSettings,
+    clean_str,
+)
 
 
 class _FakeRuntime:
@@ -163,7 +166,7 @@ def test_narration_is_not_gated_behind_the_house_master(game) -> None:
     that has narration on and house events off, which is the default shape.
     """
     house = build_house_consumers(None, {}, game)
-    assert house.event_emitter._master_enabled is False
+    assert house.settings.master_enabled is False
 
     house.tts_announcer.configure(
         enabled=True,
@@ -358,11 +361,10 @@ async def test_a_reload_lands_new_options_without_dropping_panel_overrides(
     assert house.tts_announcer._enabled is True
     assert house.tts_announcer._announce_reveal is False
     assert house.tts_announcer._active_tts_entity == "tts.from_panel"
-    assert house.party_lights._master_enabled is True
+    assert house.settings.master_enabled is True
     assert house.party_lights._light_streak is False
     assert house.party_lights._active_entity_ids == ["light.from_panel"]
     assert house.sound_effects._cue_enabled["winner"] is False
-    assert house.event_emitter._master_enabled is True
 
     # …and the announcer's fallback, where the panel set no override, followed
     # the options change instead.
@@ -392,3 +394,31 @@ async def test_a_first_time_speaker_arms_the_sfx_listeners_on_reload(
 
     assert house.sound_effects._event_unsubs
     assert house.party_lights._event_unsubs
+
+
+# ---------------------------------------------------------------------------
+# clean_str — the house layer's one "an empty picker means unset" normalizer
+# ---------------------------------------------------------------------------
+
+
+@pytest.mark.parametrize(
+    ("raw", "expected"),
+    [
+        ("tts.google", "tts.google"),
+        ("  tts.google  ", "tts.google"),  # the options flow keeps the spaces
+        ("", None),
+        ("   ", None),  # whitespace-only is "unset", not a blank entity id
+        (None, None),
+        (0, None),  # falsy non-strings short-circuit before str()
+        (False, None),
+    ],
+)
+def test_clean_str_normalizes_an_empty_picker_to_none(raw, expected) -> None:
+    """Pinned because ten call sites now share it (#884).
+
+    An empty string has to come back as ``None``: every consumer reads ``None``
+    as "fall back to the config-entry value" and a bare ``""`` as an entity id,
+    so collapsing the two is what makes a cleared panel field fall through
+    instead of masking the fallback.
+    """
+    assert clean_str(raw) == expected

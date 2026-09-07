@@ -23,6 +23,8 @@ from pathlib import Path
 
 import pytest
 
+from tests.conftest import dashboard_css
+
 _WWW = (
     Path(__file__).resolve().parent.parent
     / "custom_components" / "quizify" / "www"
@@ -60,7 +62,8 @@ def test_tv_lobby_text_is_sized_for_the_room(selector: str) -> None:
     A clamp is what #376 settled on for this screen. The point is not the
     exact number, it is that these two stopped being phone-sized.
     """
-    src = _read("dashboard.html")
+    # #829/#880: the television's styles are their own file now.
+    src = dashboard_css()
     # Anchor on the rule, not on the first mention: the selector also appears
     # inside a comment further up, and a test that reads a comment is a test
     # that stops testing.
@@ -76,7 +79,8 @@ def test_tv_lobby_text_is_sized_for_the_room(selector: str) -> None:
 
 def test_the_name_chip_is_not_shouted() -> None:
     """Capitals cost legibility at distance and buy nothing on a name."""
-    src = _read("dashboard.html")
+    # #829/#880: the television's styles are their own file now.
+    src = dashboard_css()
     start = src.index(".dashboard-player-chip {")
     block = src[start:src.index("}", start)]
     assert "text-transform: uppercase" not in block

@@ -418,7 +418,8 @@ async def test_an_empty_window_broadcasts_nothing(tmp_path: Path) -> None:
     [
         "custom_components/quizify/www/js/player-core.js",
         "custom_components/quizify/www/js/admin.js",
-        "custom_components/quizify/www/dashboard.html",
+        # #911 moved the television's script out of dashboard.html.
+        "custom_components/quizify/www/js/dashboard.js",
     ],
 )
 def test_the_clients_read_both_reaction_shapes(path: str) -> None:

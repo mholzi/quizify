@@ -1,6 +1,6 @@
 """Every server frame is accounted for on every surface (issue #787).
 
-The television (``dashboard.html``), the host page (``js/admin.js``) and the
+The television (``js/dashboard.js``), the host page (``js/admin.js``) and the
 phone (``js/player-core.js``) each own a ``switch (msg.type)``. Nothing checked
 that the three agreed, so they drifted — and the drift is the mechanism behind
 a family of shipped bugs, not a tidiness complaint:
@@ -53,8 +53,11 @@ _WWW = _REPO / "custom_components" / "quizify" / "www"
 _PROTOCOL = _REPO / "custom_components" / "quizify" / "server" / "protocol.py"
 
 #: The three message routers, by the name this file calls each surface.
+#: The television's used to be inline in ``dashboard.html``; #829 moved it to
+#: ``js/dashboard.js``, which is also what put it under the drift guard the
+#: other two have always had.
 SURFACE_SOURCES = {
-    "tv": _WWW / "dashboard.html",
+    "tv": _WWW / "js" / "dashboard.js",
     "host": _WWW / "js" / "admin.js",
     "phone": _WWW / "js" / "player-core.js",
 }

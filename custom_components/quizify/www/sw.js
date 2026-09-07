@@ -56,8 +56,12 @@ var MAX_CACHE_ITEMS = 60;
 var DEFAULT_LANG = '{{DEFAULT_LANG}}';
 
 // Loaded by admin.html, player.html AND dashboard.html.
+//
+// #880: the stylesheet is NOT core any more. The television reads css/tv.css
+// and the other two read css/styles.css, so each one is listed under the page
+// that loads it — a core entry would push 235 KB of phone CSS onto the TV, the
+// exact download this issue is about.
 var PRECACHE_CORE = [
-    '/quizify/static/css/styles.css?v={{ASSET_VER}}',
     '/quizify/static/js/i18n.js?v={{ASSET_VER}}',
     '/quizify/static/js/utils.js?v={{ASSET_VER}}',
     // #787: the shared socket core + renderers. Core, not per-page —
@@ -84,17 +88,23 @@ var PRECACHE_CORE = [
 // Extras per surface, keyed by the page path under /quizify/.
 var PRECACHE_BY_PAGE = {
     player: [
+        '/quizify/static/css/styles.css?v={{ASSET_VER}}',
         '/quizify/static/js/icons.js?v={{ASSET_VER}}',
         '/quizify/static/js/player.bundle.js?v={{ASSET_VER}}'
     ],
     admin: [
+        '/quizify/static/css/styles.css?v={{ASSET_VER}}',
         '/quizify/static/js/icons.js?v={{ASSET_VER}}',
         '/quizify/static/js/admin.js?v={{ASSET_VER}}',
         '/quizify/static/js/pack-submit.js?v={{ASSET_VER}}'
     ],
-    // The TV loads i18n.js / utils.js / common.bundle.js / qrcode from the core
-    // list and keeps the rest of its code inline in dashboard.html.
-    dashboard: []
+    // #880 gave the television its own sheet and #829 gave it a script file;
+    // between them the TV's own bytes are no longer inline in an HTML page the
+    // service worker cannot cache separately.
+    dashboard: [
+        '/quizify/static/css/tv.css?v={{ASSET_VER}}',
+        '/quizify/static/js/dashboard.js?v={{ASSET_VER}}'
+    ]
 };
 
 /**

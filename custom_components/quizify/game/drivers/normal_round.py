@@ -14,11 +14,14 @@ from __future__ import annotations
 import asyncio
 import logging
 import math
-from typing import Any
+from typing import TYPE_CHECKING, Any
 
 from ..phase_controller import TICK_INTERVAL
 from ..state import GamePhase
 from .protocols import MilestoneSink, RoundBroadcaster
+
+if TYPE_CHECKING:
+    from ..state import QuizifyGameState
 
 _LOGGER = logging.getLogger(__name__)
 
@@ -39,7 +42,7 @@ class NormalRoundDriver:
         self._milestones = milestones
         self._tick_interval = tick_interval
 
-    async def run(self, game_state: Any) -> None:
+    async def run(self, game_state: QuizifyGameState) -> None:
         try:
             await self._run(game_state)
         except asyncio.CancelledError:
@@ -51,7 +54,7 @@ class NormalRoundDriver:
             # presenting as a mysterious hang.
             _LOGGER.exception("Timer tick loop crashed")
 
-    async def _run(self, game_state: Any) -> None:
+    async def _run(self, game_state: QuizifyGameState) -> None:
         # #413: the client renders ``Math.ceil(remaining)`` WHOLE seconds, but
         # the loop ticks every ~0.5s — so half the frames redraw the same
         # number and are pure waste (at the 20-player cap: 20 sockets × the
