@@ -1201,6 +1201,18 @@
             color: var(--dash-text-neon-muted);
             max-width: 640px;
         }
+        /* #892: the way out, once the server's #207 grace window has passed.
+           Hidden until then — offered from the first second it would read as
+           an invitation to give up on a host who is ten seconds from being
+           back. */
+        .dashboard-paused-escape {
+            font-family: 'DM Sans', sans-serif;
+            font-size: clamp(16px, 1.8vw, 24px);
+            font-weight: 600;
+            color: var(--dash-accent-primary);
+            max-width: 640px;
+        }
+        .dashboard-paused-escape[hidden] { display: none; }
 
         /* ===================
            LIGHTNING (#296) — mirrors the question/recap vocabulary at
@@ -2158,8 +2170,14 @@
         <!-- PAUSED OVERLAY (#296) — scrim over whatever view is active. -->
         <div id="paused-overlay" class="dashboard-paused-overlay">
             <div class="dashboard-paused-icon">⏸</div>
-            <div class="dashboard-paused-title" data-i18n="game.paused">Game Paused</div>
-            <div class="dashboard-paused-hint" data-i18n="game.pausedHint">The game will resume when the host returns</div>
+            <!-- #892: both lines are re-keyed by setPaused() — a pause the host
+                 chose and a host whose phone dropped out are not the same news
+                 for the room, and until now the television told it the same
+                 sentence for both. The data-i18n attribute is what moves, not
+                 just the text, so a later language sweep keeps the right one. -->
+            <div id="paused-title" class="dashboard-paused-title" data-i18n="game.paused">Game Paused</div>
+            <div id="paused-hint" class="dashboard-paused-hint" data-i18n="game.pausedHint">The game will resume when the host returns</div>
+            <div id="paused-escape" class="dashboard-paused-escape" data-i18n="game.pausedResetHint" hidden>Any phone in the room can reset the game now</div>
         </div>
     </main>
 
@@ -2232,6 +2250,9 @@
             podium: document.getElementById('podium'),
             finaleLeaderboard: document.getElementById('finale-leaderboard'),
             pausedOverlay: document.getElementById('paused-overlay'),
+            pausedTitle: document.getElementById('paused-title'),
+            pausedHint: document.getElementById('paused-hint'),
+            pausedEscape: document.getElementById('paused-escape'),
             lightningSplash: document.getElementById('lightning-splash'),
             lightningSplashRules: document.getElementById('lightning-splash-rules'),
             lightningQuestionSection: document.getElementById('lightning-question-section'),
@@ -2404,12 +2425,66 @@
             renderLobbyPlayers(players);
         }
 
+        // #892: ~60s — the server's #207 grace window, after which it
+        // authorizes a reset_game from ANY client. The phones arm the same
+        // clock (player-core.js armResetAffordance), so the television and the
+        // sofa reach the way out in the same second.
+        var PAUSED_ESCAPE_DELAY_MS = 60000;
+        var pausedEscapeTimer = null;
+
+        // Both lines of the scrim, re-keyed. The element carries data-i18n, so
+        // the attribute has to move with the text — otherwise the next
+        // language sweep (syncServerLanguage → initPageTranslations) paints the
+        // old key back over it.
+        function setPausedLine(el, key) {
+            if (!el) return;
+            el.setAttribute('data-i18n', key);
+            el.textContent = t(key);
+        }
+
         // #296: the paused scrim sits on top of whatever view is active.
         // Pause also freezes the timer; resume clears the flag so the next
         // timer_tick (or question) animates the bar again.
-        function setPaused(on) {
+        //
+        // #892: `reason` is the snapshot's pause_reason. A host who tapped
+        // pause is coming back; a host whose phone dropped may not be, and the
+        // room was being told the same sentence for both — "The game will
+        // resume when the host returns" — while the phones had already
+        // switched to the disconnect wording and were counting down to a reset
+        // button nobody in the room had been told about.
+        function setPaused(on, reason) {
             isPaused = !!on;
             if (els.pausedOverlay) els.pausedOverlay.classList.toggle('active', isPaused);
+            var hostGone = isPaused && reason === 'admin_disconnected';
+            setPausedLine(els.pausedTitle,
+                hostGone ? 'admin.pausedHostDisconnected' : 'game.paused');
+            setPausedLine(els.pausedHint,
+                hostGone ? 'admin.pausedHostHint' : 'game.pausedHint');
+            if (hostGone) armPausedEscape(); else disarmPausedEscape();
+        }
+
+        // Arming is idempotent: a repeated PAUSED snapshot (they arrive on
+        // every reconnect) must not restart the wait, or a television that
+        // resubscribes every 30s would never reach the sixtieth second.
+        function armPausedEscape() {
+            if (pausedEscapeTimer !== null) return;
+            if (els.pausedEscape && !els.pausedEscape.hidden) return;
+            pausedEscapeTimer = setTimeout(function() {
+                pausedEscapeTimer = null;
+                if (!isPaused) return;   // the host came back mid-wait
+                if (els.pausedEscape) {
+                    els.pausedEscape.hidden = false;
+                    els.pausedEscape.textContent = t('game.pausedResetHint');
+                }
+            }, PAUSED_ESCAPE_DELAY_MS);
+        }
+
+        function disarmPausedEscape() {
+            if (pausedEscapeTimer !== null) {
+                clearTimeout(pausedEscapeTimer);
+                pausedEscapeTimer = null;
+            }
+            if (els.pausedEscape) els.pausedEscape.hidden = true;
         }
 
         // Issue #25 + #183 (Variant 1 split layout): render the optional
@@ -2779,7 +2854,7 @@
 
             // #296: the paused scrim is independent of the underlying view —
             // set it on any PAUSED snapshot, clear it otherwise.
-            setPaused(msg.phase === 'PAUSED');
+            setPaused(msg.phase === 'PAUSED', msg.pause_reason);
 
             switch (msg.phase) {
                 case 'LOBBY':
@@ -3223,6 +3298,20 @@
                     category: hs.question.category,
                     image_url: hs.question.image_url
                 });
+                return;
+            }
+            // #874: the server's third stage. HOT_SEAT_REVEAL lasts until the
+            // host taps Next, so any television that reloads inside that
+            // window used to fall through to the awarded line and print the
+            // auction price ("Anna - 40%") over the settlement everyone was
+            // waiting for -- no correct answer, no outcome, at the biggest
+            // points swing of the game. ``hot_seat.summary`` is the same dict
+            // the live ``hot_seat_result`` frame spreads, so the restored
+            // board renders the identical frame.
+            if (hs.stage === 'result' && hs.summary) {
+                handleHotSeatResult(Object.assign(
+                    { round_num: round, total_rounds: total }, hs.summary
+                ));
                 return;
             }
             handleHotSeatAwarded({

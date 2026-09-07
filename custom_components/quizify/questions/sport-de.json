@@ -1,7 +1,7 @@
 {
   "name": "Sport",
   "language": "de",
-  "version": "1.3",
+  "version": "1.4",
   "theme": "sport",
   "questions": [
     {
@@ -1782,11 +1782,11 @@
     },
     {
       "id": "sport_de_161",
-      "question": "Welche Disziplin zeigt dieses Foto von den Olympischen Spielen 1936?",
+      "question": "Welcher Sportler ist hier bei den Olympischen Spielen 1936 in Berlin zu sehen?",
       "answers": [
-        {"text": "Weitsprung", "correct": true},
-        {"text": "Stabhochsprung", "correct": false},
-        {"text": "Hürdenlauf", "correct": false}
+        {"text": "Paavo Nurmi", "correct": false},
+        {"text": "Jesse Owens", "correct": true},
+        {"text": "Jim Thorpe", "correct": false}
       ],
       "difficulty": "medium",
       "fun_fact": "Jesse Owens gewann in Berlin vier Goldmedaillen. Beim Weitsprung half ihm ausgerechnet sein deutscher Konkurrent Luz Long mit einem Rat vor dem letzten Versuch — die beiden verließen das Stadion Arm in Arm.",
@@ -1808,7 +1808,7 @@
     },
     {
       "id": "sport_de_163",
-      "question": "Welche Sportart wird auf diesem Foto von 1916 gespielt?",
+      "question": "Welche Sportart wird auf diesem Foto von 1915 gespielt?",
       "answers": [
         {"text": "Cricket", "correct": false},
         {"text": "Golf", "correct": false},
@@ -1822,16 +1822,16 @@
     },
     {
       "id": "sport_de_164",
-      "question": "Welches Rennen hat dieser Mann 1920 gewonnen?",
+      "question": "Von welchem Rennen stammt dieses Foto von 1903?",
       "answers": [
         {"text": "Die Tour de France", "correct": true},
-        {"text": "Den Berlin-Marathon", "correct": false},
+        {"text": "Der Berlin-Marathon", "correct": false},
         {"text": "Das 24-Stunden-Rennen von Le Mans", "correct": false}
       ],
       "difficulty": "medium",
-      "fun_fact": "Philippe Thys gewann die Tour dreimal. Damals fuhren die Fahrer ohne Betreuer: Wer eine Panne hatte, musste sie selbst beheben — ein Rahmenbruch bedeutete den Gang zur nächsten Schmiede.",
+      "fun_fact": "Maurice Garin gewann 1903 die erste Tour de France: sechs Etappen, 2428 Kilometer, fast drei Stunden Vorsprung. Damals fuhren die Fahrer ohne Betreuer — wer eine Panne hatte, musste sie selbst beheben, ein Rahmenbruch bedeutete den Gang zur nächsten Schmiede.",
       "category": "Sport",
-      "image_url": "/quizify/static/img/packs/sport/tour-de-france-1920.webp",
+      "image_url": "/quizify/static/img/packs/sport/tour-de-france-1903.webp",
       "reveal_style": "progressive"
     },
     {

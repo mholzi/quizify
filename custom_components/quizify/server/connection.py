@@ -198,11 +198,34 @@ class ConnectionManager:
     async def async_load_admin_token(self) -> None:
         """Load the persisted admin token from disk.
 
-        Idempotent — repeated calls are no-ops after the first load.
+        Idempotent — repeated calls are no-ops after the first *successful*
+        load.
+
+        A file that exists but cannot be read is **not** treated as "no token
+        issued" (#873). ``_admin_token_loaded`` stays false, which makes
+        :meth:`try_bootstrap_admin` refuse: a wrong-ownership restore or a full
+        disk must never be the reason a stranger on the LAN is handed admin.
+        The cost of that choice is that the real host is locked out too, so the
+        error names the way back — ``quizify.reset_admin_session``, an
+        HA-authenticated service call, i.e. a deliberate act by someone who is
+        already logged in.
         """
         if self._admin_token_loaded:
             return
-        data = await self._store.load()
+        try:
+            data = await self._store.load()
+        except (OSError, ValueError) as err:
+            _LOGGER.error(
+                "Admin token store is unreadable (%s: %s). Refusing to treat "
+                "this as a fresh install — the admin bootstrap stays CLOSED, "
+                "so nobody can claim the host's seat while the file is "
+                "broken. Fix the file's permissions, or call the "
+                "quizify.reset_admin_session service to deliberately clear "
+                "the stored token and bootstrap a new admin session.",
+                type(err).__name__,
+                err,
+            )
+            return
         if data and isinstance(data, dict):
             self._admin_session_token = data.get("token")
             if self._admin_session_token:
@@ -259,6 +282,16 @@ class ConnectionManager:
         """
         async with self._bootstrap_lock:
             await self.async_load_admin_token()
+            if not self._admin_token_loaded:
+                # The store could not be read (#873). We do not know whether a
+                # token exists, and "don't know" must never mint a new one.
+                _LOGGER.error(
+                    "Refusing admin bootstrap: the admin token store could "
+                    "not be read, so a stored token may still exist. Call "
+                    "the quizify.reset_admin_session service to clear it "
+                    "deliberately."
+                )
+                return False
             if self._admin_session_token:
                 # Someone (this run or a previous restart) already holds it.
                 return False

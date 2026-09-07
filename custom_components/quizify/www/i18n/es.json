@@ -176,6 +176,7 @@
     "powerup": "Potenciador",
     "paused": "Partida en pausa",
     "pausedHint": "La partida se reanudará cuando vuelva el anfitrión",
+    "pausedResetHint": "Cualquier móvil de la sala puede reiniciar la partida ahora",
     "stoleFromYou": "¡{name} te robó {points} puntos!",
     "stoleFromOpponent": "Robado: ¡+{points} pts a {name}!",
     "frozen": "¡Te congelaron durante 5 s!",
@@ -368,6 +369,7 @@
       "q8": "¿Comodines?",
       "powerupsHint": "Se reparten Comodín, Robar, Congelar y compañía",
       "q9": "¿Apuesta en la última ronda?",
+      "needsMultipleChoice": "Estos modos necesitan preguntas con opciones de respuesta.",
       "wagerHint": "Apostar puntos en la pregunta final",
       "wagerTeamNote": "Con equipos: la apuesta es del equipo y se hace sobre su puntuaci\u00f3n."
     },

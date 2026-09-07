@@ -64,7 +64,10 @@ JS = _REPO / "custom_components" / "quizify" / "www" / "js"
 PLAYER_CORE = JS / "player-core.js"
 PLAYER_GAME = JS / "player-game.js"
 PLAYER_HOTSEAT = JS / "player-hotseat.js"
-WEBSOCKET = _REPO / "custom_components" / "quizify" / "server" / "websocket.py"
+# #881: the hot-seat frames live in the mode's broadcaster now.
+BROADCASTERS = (
+    _REPO / "custom_components" / "quizify" / "server" / "broadcasters.py"
+)
 
 needs_node = pytest.mark.skipif(
     shutil.which("node") is None, reason="node not installed"
@@ -353,11 +356,12 @@ def _live_hot_seat_question_keys() -> set[str]:
 
     Read off the source rather than duplicated here, so a field added to the
     broadcast is picked up without anyone updating this test — the same reason
-    #698 reads the payload literal out of websocket.py. The region stops at the
+    #698 reads the payload literal out of broadcasters.py. The region stops at
+    the
     admin/dashboard send: those carry ``correct_index``, which no phone gets and
     no snapshot may ever hold.
     """
-    source = WEBSOCKET.read_text(encoding="utf-8")
+    source = BROADCASTERS.read_text(encoding="utf-8")
     start = source.index('"type": "hot_seat_question"')
     end = source.index("if sends:", start)
     return set(re.findall(r'"([a-z_]+)":', source[start:end]))

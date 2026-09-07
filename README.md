@@ -391,7 +391,7 @@ Quizify speaks your guests' language.
 
 The UI follows the game language (since v1.1.24) — pick German in the pack-picker and the entire admin / player / dashboard surface switches to German labels, tooltips, error messages, fun-fact labels, and end-game awards. Switch to English or Spanish and the whole thing flips.
 
-616 i18n keys, full parity between all three locales, validated in CI.
+618 i18n keys, full parity between all three locales, validated in CI.
 
 ---
 
@@ -721,6 +721,16 @@ Quick start: Fork → Branch → PR. See [open issues](https://github.com/mholzi
 
 MIT License. See [LICENSE](LICENSE) for details.
 
+A release ships more than Quizify's own code, and every bundled thing keeps its own
+licence. [`THIRD_PARTY.md`](THIRD_PARTY.md) is the index of what those are and where
+each licence text lives.
+
+**Bundled JavaScript.** The join QR code is drawn by
+[qrcodejs](https://github.com/davidshimjs/qrcodejs), vendored at commit `04f46c6a` in
+`custom_components/quizify/www/js/vendor/qrcode.min.js` so that no page reaches a CDN.
+It is MIT, and the upstream copyright and permission notice travel with it in
+[`qrcodejs-LICENSE.txt`](custom_components/quizify/www/js/vendor/qrcodejs-LICENSE.txt).
+
 **Bundled fonts.** Quizify ships DM Sans and JetBrains Mono in
 `custom_components/quizify/www/fonts/`, both under the SIL Open Font License 1.1, with
 the licence texts alongside them. They are served from your own Home Assistant — no page
@@ -733,11 +743,11 @@ its provenance is recorded row by row in that folder's `credits.md`, including t
 template on the source file record. The policy, and the test that enforces it, are in
 [`www/img/packs/LICENSING.md`](custom_components/quizify/www/img/packs/LICENSING.md).
 
-Two things there are worth knowing before you redistribute a fork. The `PD-USGov` and NASA
+One thing there is worth knowing before you redistribute a fork. The `PD-USGov` and NASA
 rows are public domain by 17 U.S.C. §105, which is a statement about United States law and
-has no effect elsewhere; the project accepts that deliberately and says so. And a handful
-of rows, marked ⚠️ in their `credits.md`, rest on a licence that stops at a border and are
-queued for replacement rather than being described as free.
+has no effect elsewhere; the project accepts that deliberately and says so. Every other row
+rests on an expiry or a release that covers the whole world — the eleven that did not were
+replaced or removed in 1.17.0 (#817), and the quarantine is empty.
 
 ---
 

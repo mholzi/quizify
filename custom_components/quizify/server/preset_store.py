@@ -35,7 +35,12 @@ MAX_NAME_LENGTH = 40
 #: belong to devices, not to the shape of an evening, and a preset that
 #: silently repoints a speaker surprises more than it helps.
 _INT_FIELDS = ("rounds", "timer")
-_STR_FIELDS = ("difficulty", "category")
+#: ``language`` joined the list in #889. The packs a preset names belong to
+#: one language — a Spanish preset restored on a German host activated the
+#: hidden ES chips while the session language stayed ``de``, and the pool
+#: came back empty. A preset saved before this is simply missing the key,
+#: and the admin page then leaves the room's current language alone.
+_STR_FIELDS = ("difficulty", "category", "language")
 
 SCHEMA_VERSION = 1
 

@@ -207,7 +207,8 @@ async def test_lightning_question_is_not_scored_after_end_game(
             ended.append(True)
             await handler.admin_action_end_game(game)
 
-    handler._broadcast_lightning_tick = _tick_then_end
+    # #881: the driver ticks through the Lightning broadcaster now.
+    handler._lightning_out.send_lightning_tick = _tick_then_end
 
     handler._start_lightning_loop(game)
     for _ in range(20):

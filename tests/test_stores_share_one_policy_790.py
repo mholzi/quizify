@@ -13,6 +13,11 @@ these cases was handled by *some* of the seven copies and not the others:
     *next* start would choke on,
   * the token store returned whatever JSON it found, array or string included.
 
+The token store is the one deliberate exception to the shared *degradation*
+(#873): it still shares the read/write routine, but asks for
+``on_corrupt="raise"``, because "no token" is a security-relevant answer there
+and must not be produced by a broken file. See :class:`TestTokenStore` below.
+
 Each test below drives the store it names, not the storage module, so it
 fails if that store is ever reverted to its own implementation.
 """
@@ -151,16 +156,37 @@ class TestQuestionHistory:
 
 
 class TestTokenStore:
-    @pytest.mark.parametrize("content", BROKEN)
+    """The one store that deliberately does *not* degrade (#873).
+
+    Everywhere else "unparseable" and "wrong shape" collapse into the same
+    default, and that is right for bookkeeping. The admin token is a
+    credential: ``None`` there means "no host has ever claimed this install",
+    which reopens the bootstrap window, so an unparseable file has to be told
+    apart from an absent one. It raises, and ``async_load_admin_token``
+    refuses the bootstrap instead of minting a token over a file it could not
+    read.
+    """
+
+    @pytest.mark.parametrize("content", ("[]", '"a string"', "null"))
     @pytest.mark.asyncio
-    async def test_a_broken_token_file_reads_as_no_token(
+    async def test_a_non_object_payload_reads_as_no_token(
         self, tmp_path: Path, content: str
     ) -> None:
-        """A non-object payload must re-bootstrap, not be handed to the caller
-        as if it were a token record."""
+        """Valid JSON of the wrong shape is still just "no token record"."""
         (tmp_path / "admin_token.json").write_text(content, encoding="utf-8")
 
         assert await TokenStore(_Runtime(tmp_path)).load() is None
+
+    @pytest.mark.parametrize("content", ("{", ""))
+    @pytest.mark.asyncio
+    async def test_an_unparseable_token_file_raises(
+        self, tmp_path: Path, content: str
+    ) -> None:
+        """A truncated or empty credential file must not read as a fresh install."""
+        (tmp_path / "admin_token.json").write_text(content, encoding="utf-8")
+
+        with pytest.raises(ValueError):
+            await TokenStore(_Runtime(tmp_path)).load()
 
 
 class TestPresetStore:

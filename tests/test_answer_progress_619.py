@@ -91,7 +91,10 @@ def test_the_payload_matches_what_the_renderer_reads(game: QuizifyGameState) -> 
     assert payload["total"] == 2
     assert {e["name"] for e in payload["players"]} == {"Anna", "Ben"}
     for entry in payload["players"]:
-        assert set(entry) == {"name", "submitted", "connected"}
+        # ``entrant_id`` joined the three original keys in #845: the "this one
+        # is you" mark needs an identity, and once #835 made the rows teams the
+        # name stopped being one.
+        assert set(entry) == {"entrant_id", "name", "submitted", "connected"}
 
 
 def test_the_payload_carries_no_scores(game: QuizifyGameState) -> None:
