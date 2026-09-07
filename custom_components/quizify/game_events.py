@@ -107,27 +107,12 @@ class QuizifyEventEmitter:
         self._time_running_out_fired: bool = False
 
     @property
-    def _enabled(self) -> bool:
-        """The config-entry master (CONF_HOUSE_EVENTS_ENABLED), read live."""
-        return self._settings.house_enabled
-
-    @property
-    def _enabled_override(self) -> bool | None:
-        """The panel's tri-state master; ``None`` = the panel never set one."""
-        return self._settings.enabled_override
-
-    @property
-    def _master_enabled(self) -> bool:
-        """The effective master: panel override if set, else the config entry."""
-        return self._settings.master_enabled
-
-    @property
     def is_configured(self) -> bool:
         # Configured == the master toggle is on AND we have a bus to fire on.
         # Unlike lights/TTS there is no per-entry entity to gate on, but the
         # host must still opt in via CONF_HOUSE_EVENTS_ENABLED (default off) —
         # or via the admin panel's runtime master (#494 P4).
-        return self._master_enabled and self._hass is not None
+        return self._settings.master_enabled and self._hass is not None
 
     def attach(self) -> None:
         """Subscribe to game-state phase transitions. Idempotent."""
@@ -348,7 +333,7 @@ class QuizifyEventEmitter:
         # forwarders): the master toggle is enforced here, so an off emitter
         # fires nothing regardless of which milestone triggered it. Reads the
         # EFFECTIVE master so the admin panel's runtime override lands (#494 P4).
-        if not self._master_enabled:
+        if not self._settings.master_enabled:
             return
         hass = self._hass
         if hass is None:
