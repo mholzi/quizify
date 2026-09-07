@@ -1835,9 +1835,19 @@ class QuizifyWebSocketHandler:
     async def _flush_reactions_after_window(self) -> None:
         """Wait one coalescing window, then broadcast the buffered reactions.
 
-        One ``reaction`` message per distinct buffered ``(player, emoji)`` —
-        same wire shape the client already renders, just batched so a burst of
-        spam produces a handful of frames instead of one per inbound message.
+        ONE ``reactions`` frame carrying every distinct ``(player, emoji)``
+        buffered this window (#896). The window used to dedupe the buffer and
+        then emit a separate ``reaction`` broadcast per surviving pair, which
+        with the 15 msg/s limiter is ~107 ``json.dumps`` and ~1,070
+        ``send_str`` per second while eight phones tap through a reveal, where
+        one frame per window is ~7/s. ``reaction_bonus``, computed a few lines
+        below in this same function, has batched since #416 — the two halves
+        of one flush now agree on the wire shape.
+
+        The clients keep their old single-``reaction`` branch for one release
+        (see ``player-core.js``, ``admin.js``, ``dashboard.js``) so a phone
+        holding a cached bundle from before this change is not left staring at
+        a reveal with no reactions on it.
         """
         try:
             await asyncio.sleep(self._REACTION_FLUSH_WINDOW)
@@ -1852,14 +1862,15 @@ class QuizifyWebSocketHandler:
         self._reaction_buffer.clear()
         # Collect every broadcast for this window, then fan them all out in a
         # single gather (#416) instead of awaiting them one at a time.
-        broadcasts = [
-            self._conn.broadcast({
-                "type": "reaction",
-                "emoji": emoji,
-                "player_name": player_name,
-            })
-            for player_name, emoji in buffered
-        ]
+        broadcasts = []
+        if buffered:
+            broadcasts.append(self._conn.broadcast({
+                "type": "reactions",
+                "reactions": [
+                    {"emoji": emoji, "player_name": player_name}
+                    for player_name, emoji in buffered
+                ],
+            }))
 
         # #416: collapse the reveal reaction-bonus events buffered this window
         # into ONE ``reaction_bonus``. The leaderboard is serialized once, now —

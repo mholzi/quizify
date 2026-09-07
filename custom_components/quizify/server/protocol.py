@@ -309,7 +309,13 @@ SERVER_FRAMES: dict[str, FrameSpec] = {
         ),
     ),
     # --- reactions --------------------------------------------------------
-    "reaction": _spec("player_name", "emoji"),
+    #: #896: ONE frame per 150 ms flush window, carrying every distinct
+    #: ``(player, emoji)`` buffered in it. It replaced a per-pair ``reaction``
+    #: frame, which the three surfaces still have a case for — see
+    #: LEGACY_ALIASES in tests/test_frame_surface_coverage_787.py. The
+    #: client→server ``reaction`` in CLIENT_MESSAGE_TYPES below is a different
+    #: message and is unaffected: a phone still sends one tap at a time.
+    "reactions": _spec("reactions"),
     "reaction_bonus": _spec(
         "from_player",
         "from_players",

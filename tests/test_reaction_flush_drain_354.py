@@ -71,6 +71,25 @@ async def _wait_flush_idle(handler: QuizifyWebSocketHandler, timeout: float = 2.
     raise AssertionError("flush never went idle (buffer not drained)")
 
 
+def _pairs(broadcasts: list[dict]) -> set[tuple[str, str]]:
+    """Every ``(player, emoji)`` carried by the window frames (#896).
+
+    The flush emits ONE ``reactions`` frame per window; before #896 it was one
+    ``reaction`` frame per pair. This reads the pairs out of whichever shape a
+    frame carries, so the drain behaviour #354 is about stays asserted on the
+    pairs rather than on the framing.
+    """
+    pairs: set[tuple[str, str]] = set()
+    for msg in broadcasts:
+        if msg.get("type") == "reactions":
+            pairs.update(
+                (r["player_name"], r["emoji"]) for r in msg["reactions"]
+            )
+        elif msg.get("type") == "reaction":
+            pairs.add((msg["player_name"], msg["emoji"]))
+    return pairs
+
+
 class TestReactionFlushDrain:
     @pytest.mark.asyncio
     async def test_reaction_arriving_during_flush_is_broadcast(
@@ -92,7 +111,7 @@ class TestReactionFlushDrain:
         handler._enqueue_reaction("Alice", "👏")
         await _wait_flush_idle(handler)
 
-        pairs = {(m["player_name"], m["emoji"]) for m in broadcasts}
+        pairs = _pairs(broadcasts)
         assert ("Alice", "👏") in pairs
         # The late reaction was NOT stranded — it got broadcast too.
         assert ("Bob", "🎉") in pairs
@@ -116,7 +135,7 @@ class TestReactionFlushDrain:
         handler._enqueue_reaction("Alice", "👏")
         await _wait_flush_idle(handler)
 
-        pairs = {(m["player_name"], m["emoji"]) for m in broadcasts}
+        pairs = _pairs(broadcasts)
         for emoji in ("👏", "🔥", "😂", "🎯"):
             assert ("Bob", emoji) in pairs or ("Alice", emoji) in pairs
         assert not handler._reaction_buffer
