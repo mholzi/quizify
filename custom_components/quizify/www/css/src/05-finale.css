@@ -193,12 +193,12 @@
     margin-bottom: var(--space-sm);
 }
 
-/* The shelf plank — used by both admin TV (.podium-bar)
-   and player mobile (.podium-stand). Solid cream surface,
-   1px hairline border, rounded top, soft shadow. Number
-   centered as the "medal". No gradient. */
-.podium-bar,
-.podium-stand {
+/* The shelf plank. One shape on every surface since #883 unified the two
+   renderers; the second spelling (.podium-stand, plus .podium-1/-2/-3 for
+   its per-place heights) outlived the markup and came out with #894.
+   Solid cream surface, 1px hairline border, rounded top, soft shadow.
+   Number centered as the "medal". No gradient. */
+.podium-bar {
     width: 100%;
     background: var(--color-surface, #FFFFFF);
     border: 1px solid var(--color-border-soft, var(--hairline, #E5DFCF));
@@ -217,17 +217,13 @@
 
 /* 1st place — tallest plank, sun-yellow top edge, warm halo cushion,
    coral number. Per DESIGN.md: 200px tall on TV, 3px sun-yellow top. */
-.podium-bar.first,
-.podium-stand.first,
-.podium-1 .podium-stand {
+.podium-bar.first {
     height: 200px;
     border-top: 3px solid var(--color-gold, #E8C47F);
     color: var(--color-accent-primary, #E88A7F);
     font-size: 3.5rem;
 }
-.podium-bar.first::before,
-.podium-stand.first::before,
-.podium-1 .podium-stand::before {
+.podium-bar.first::before {
     content: "";
     position: absolute;
     inset: -1px -1px auto -1px;
@@ -238,18 +234,14 @@
 }
 
 /* 2nd place — muted warm silver top edge. */
-.podium-bar.second,
-.podium-stand.second,
-.podium-2 .podium-stand {
+.podium-bar.second {
     height: 150px;
     border-top: 3px solid var(--color-silver, #B8B2A0);
     font-size: 2.75rem;
 }
 
 /* 3rd place — warm bronze top edge. */
-.podium-bar.third,
-.podium-stand.third,
-.podium-3 .podium-stand {
+.podium-bar.third {
     height: 100px;
     border-top: 3px solid var(--color-bronze, #C99466);
     font-size: 2.25rem;

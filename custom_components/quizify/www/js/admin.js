@@ -1779,14 +1779,12 @@
                 handleQuestionStarted(msg);
                 break;
             case 'round_summary':
-            case 'round_evaluated':
                 handleRoundSummary(msg);
                 break;
             case 'timer_tick':
                 adminTimer.update(msg.remaining);
                 break;
             case 'finale':
-            case 'game_ended':
                 handleFinale(msg);
                 break;
             case 'game_reset':

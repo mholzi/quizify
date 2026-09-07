@@ -291,44 +291,6 @@
     }
 
     // ============================================
-    // Player Cards Rendering
-    // ============================================
-
-    function renderPlayerCards(containerId, players) {
-        var container = typeof containerId === 'string'
-            ? document.getElementById(containerId)
-            : containerId;
-        if (!container) return;
-
-        var list = Array.isArray(players) ? players : Object.values(players);
-
-        container.innerHTML = list
-            .map(function (p) {
-                var name = typeof p === 'string' ? p : (p.name || p);
-                var isYou = name === state.playerName;
-                var isDisconnected = p.connected === false;
-                var color = (p.color) || '';
-                var classes = 'player-card' +
-                    (isYou ? ' player-card--you' : '') +
-                    (isDisconnected ? ' player-card--disconnected' : '');
-                var colorStyle = color ? ' style="--player-color:' + color + ';border-left:4px solid ' + color + ';"' : '';
-                // `(away)` was hardcoded English too, and `lobby.away` was
-                // already sitting there unused.
-                var awayBadge = isDisconnected
-                    ? '<span class="away-badge">(' + _tt('lobby.away') + ')</span>'
-                    : '';
-                var youBadge = isYou
-                    ? '<span class="you-badge">(' + _tt('lobby.you') + ')</span>'
-                    : '';
-                return '<div class="' + classes + '"' + colorStyle + ' data-player="' + escapeHtml(name) + '">' +
-                    '<span class="player-color-dot" style="background:' + (color || '#888') + '"></span>' +
-                    '<span class="player-name">' + escapeHtml(name) + youBadge + awayBadge + '</span>' +
-                    '</div>';
-            })
-            .join('');
-    }
-
-    // ============================================
     // Collapsibles
     // ============================================
 
@@ -641,11 +603,12 @@
         formatTime: formatTime,
         createWebSocket: createWebSocket,
         updateConnectionIndicator: updateConnectionIndicator,
-        // #750: the kicked screen has to take the reconnect overlay
-        // down itself — nothing else will, since we never reconnect.
+        // #750: the kicked screen has to take the reconnect overlay down
+        // itself — nothing else will, since we never reconnect. #729: a join
+        // refused mid-reconnect needs the same, or the reason lands on a
+        // screen nobody can see.
         hideReconnectingOverlay: hideReconnectingOverlay,
         renderLeaderboard: renderLeaderboard,
-        renderPlayerCards: renderPlayerCards,
         setupCollapsibles: setupCollapsibles,
         paintUiIcons: paintUiIcons,
         feedbackIconHtml: feedbackIconHtml,
@@ -653,10 +616,6 @@
         generateQR: generateQR,
         showToast: showToast,
         clearToast: clearToast,
-        // #729: a join refused mid-reconnect has to pull the guest out from
-        // under the reconnecting overlay, or the reason lands on a screen
-        // nobody can see.
-        hideReconnectingOverlay: hideReconnectingOverlay,
         saveSession: saveSession,
         getSession: getSession,
         clearSession: clearSession,
@@ -924,8 +883,6 @@
     // Player List Rendering
     // ============================================
 
-    var previousPlayers = [];
-
     // Variant B+D layout. Paints the hero (mega avatar + name + "DU BIST DRIN")
     // for this player, and the orbit chips for the OTHER players. The
     // count line reads "+ N weitere" or "Du wartest noch allein…". Pure
@@ -1171,28 +1128,6 @@
         // on legacy markup — if the hero nodes aren't present, the orbit
         // call still writes into #player-list as before.
         _renderHeroAndOrbits(players, data);
-
-        // Detect newly joined players and add animation class
-        var previousNames = previousPlayers.map(function (p) { return p.name; });
-        var listEl = document.getElementById('player-list');
-        if (listEl) {
-            var cards = listEl.querySelectorAll('.player-card');
-            for (var i = 0; i < cards.length; i++) {
-                var name = cards[i].getAttribute('data-player');
-                if (name && previousNames.indexOf(name) === -1) {
-                    cards[i].classList.add('is-new');
-                }
-            }
-            // Remove animation class after transition
-            setTimeout(function () {
-                var newCards = listEl.querySelectorAll('.is-new');
-                for (var j = 0; j < newCards.length; j++) {
-                    newCards[j].classList.remove('is-new');
-                }
-            }, 2000);
-        }
-
-        previousPlayers = players.slice();
 
         // Admin controls
         updateAdminControls(players);
@@ -3026,11 +2961,13 @@
 
         if (newGameBtn) {
             newGameBtn.onclick = function () {
+                // #894: the player session belongs to QuizifyClientCore —
+                // spelling the two keys out here was a second owner waiting
+                // to drift. `quizify_is_admin` went with it: nothing in the
+                // repo has ever set that key.
+                pu.clearSession();
                 try {
-                    sessionStorage.removeItem('quizify_session_token');
-                    sessionStorage.removeItem('quizify_player_name');
                     sessionStorage.removeItem('quizify_admin_name');
-                    sessionStorage.removeItem('quizify_is_admin');
                 } catch (e) { /* ignore */ }
 
                 var ws = state.ws;
@@ -5063,10 +5000,6 @@
         _showEstimateConfirmation(false);
     }
 
-    function isGuessPending() {
-        return _guessPending;
-    }
-
     /**
      * Render the final round's betting window (#656).
      *
@@ -5363,54 +5296,6 @@
         if (estSubmitBtn) estSubmitBtn.disabled = false;
         var estConfirm = document.getElementById('estimate-submitted-confirmation');
         if (estConfirm) estConfirm.classList.add('hidden');
-    }
-
-    // ============================================
-    // Game View Update
-    // ============================================
-
-    /**
-     * Update game view with round data
-     * @param {Object} data - State data from server
-     */
-    function updateGameView(data) {
-        var currentRound = document.getElementById('current-round');
-        var totalRounds = document.getElementById('total-rounds');
-        var lastRoundBanner = document.getElementById('last-round-banner');
-
-        if (currentRound) currentRound.textContent = data.round || 1;
-        if (totalRounds) totalRounds.textContent = data.total_rounds || 10;
-
-        if (lastRoundBanner) {
-            if (data.last_round) {
-                lastRoundBanner.classList.remove('hidden');
-            } else {
-                lastRoundBanner.classList.add('hidden');
-            }
-        }
-
-        renderSubmissionTracker(data.players);
-
-        if (data.leaderboard) {
-            updateLeaderboard(data, 'leaderboard-list');
-        } else if (data.players && data.players.length > 0) {
-            // Fallback for round 1: server doesn't send `leaderboard` until
-            // the round-summary message, so during the very first question
-            // the section sat empty ("--"). Derive a zero-score board from
-            // the player list so users see who they're up against.
-            var fallback = data.players.map(function (p, idx) {
-                return {
-                    name: p.name,
-                    score: p.score || 0,
-                    rank: idx + 1,
-                    color: p.color,
-                    is_current: p.name === state.playerName,
-                    connected: p.connected !== false,
-                    streak: 0,
-                };
-            });
-            updateLeaderboard({ leaderboard: fallback }, 'leaderboard-list');
-        }
     }
 
     // ============================================
@@ -5962,10 +5847,8 @@
         handleAnswerClick: handleAnswerClick,
         confirmGuess: confirmGuess,
         releaseGuess: releaseGuess,
-        isGuessPending: isGuessPending,
         lockSubmitted: lockSubmitted,
         resetSubmissionState: resetSubmissionState,
-        updateGameView: updateGameView,
         renderSubmissionTracker: renderSubmissionTracker,
         updateLeaderboard: updateLeaderboard,
         resetRankMemo: resetRankMemo,
@@ -6396,8 +6279,9 @@
 
             // #619: who the room is still waiting for. renderSubmissionTracker
             // has existed since the tracker markup landed; its only caller was
-            // updateGameView(), which nothing ever invoked, so the row stayed
-            // empty for every game ever played.
+            // a view updater nothing ever invoked, so the row stayed empty for
+            // every game ever played. That updater went with #894; the
+            // `answer_progress` case below is the tracker's only caller now.
             // #624: the season standing, sent once the finished game has
             // actually been written to analytics — which happens after the
             // finale, not with it.
@@ -7113,10 +6997,10 @@
         if (totalRounds) totalRounds.textContent = msg.total_rounds || 10;
 
         // #706: the wager window raises the "Final Round!" pill and the only
-        // line that lowered it again lives in updateGameView, which nothing
-        // has called since #619. Play again keeps the phones on this page, so
-        // round 1 of game 2 — and every round after it — wore the pill until
-        // somebody reloaded.
+        // line that lowered it again lived in a view updater nothing had
+        // called since #619 (deleted in #894). Play again keeps the phones on
+        // this page, so round 1 of game 2 — and every round after it — wore
+        // the pill until somebody reloaded.
         //
         // #870: a toggle, not a one-way hide. Raising it used to belong to the
         // wager window alone — a frame a reconnecting phone never receives —

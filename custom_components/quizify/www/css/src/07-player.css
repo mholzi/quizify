@@ -434,14 +434,6 @@
     font-size: max(0.75rem, 12px);
 }
 
-.away-badge {
-    font-size: 0.7rem;
-    color: var(--color-text-neon-muted);
-    font-weight: 400;
-    margin-left: var(--space-xs);
-    opacity: 0.6;
-}
-
 .new-game-btn {
     background: var(--color-accent-blue);
     color: var(--color-text-white);

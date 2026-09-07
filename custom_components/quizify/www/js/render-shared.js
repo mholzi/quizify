@@ -101,7 +101,8 @@
      * Written twice by hand until now — once on the television with a medal and
      * a `.podium-label` wrapper, once on the host page with a champion title and
      * no avatar — and the two had drifted far enough apart that
-     * `05-finale.css` carried `.podium-bar` **and** `.podium-stand`, plus a
+     * `05-finale.css` carried `.podium-bar` **and** `.podium-stand` (the
+     * second set went with #894), plus a
      * "legacy" avatar rule whose comment pointed at the page that had stopped
      * rendering it. One stylesheet styling two DOM shapes for one feature is
      * how the bleed in #880 got its foothold.

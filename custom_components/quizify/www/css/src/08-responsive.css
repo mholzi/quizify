@@ -28,9 +28,7 @@
    uses after admin-self-join — same DOM as players, just on the TV).
 */
 @media (min-width: 1280px) {
-    .admin-container,
     .admin-content,
-    .app-container,
     .player-container {
         max-width: 1100px;
         padding-left: var(--space-lg);
@@ -52,9 +50,7 @@
 }
 
 @media (min-width: 1920px) {
-    .admin-container,
     .admin-content,
-    .app-container,
     .player-container {
         max-width: 1400px;
         padding-left: var(--space-2xl);
@@ -608,8 +604,7 @@ body:not(.is-admin) .pl-result { padding-bottom: 16px; }
    app. Give the title and the winner's name an extra push beyond the
    wrapper bump so they really anchor the screen. */
 #admin-finale-view .podium-title,
-#finale-view .podium-title,
-.end-title {
+#finale-view .podium-title {
     font-size: clamp(2.4rem, 4.8vw, 4.2rem);
 }
 #admin-finale-view .podium-champion-name,
@@ -619,14 +614,11 @@ body:not(.is-admin) .pl-result { padding-bottom: 16px; }
 /* Per-place podium plank numbers — these read as the "medal" so they
    should feel substantial. */
 #admin-finale-view .podium-bar.first,
-#finale-view .podium-bar.first,
-#finale-view .podium-stand.first { font-size: 4.2rem; }
+#finale-view .podium-bar.first { font-size: 4.2rem; }
 #admin-finale-view .podium-bar.second,
-#finale-view .podium-bar.second,
-#finale-view .podium-stand.second { font-size: 3.3rem; }
+#finale-view .podium-bar.second { font-size: 3.3rem; }
 #admin-finale-view .podium-bar.third,
-#finale-view .podium-bar.third,
-#finale-view .podium-stand.third { font-size: 2.7rem; }
+#finale-view .podium-bar.third { font-size: 2.7rem; }
 /* The player end-view "your-result" rank/score/stat block was retired
    with the Variant-D redesign (#338). Its responsive font overrides
    (.your-result-rank / .your-result-score / .stat-value / .stat-label)

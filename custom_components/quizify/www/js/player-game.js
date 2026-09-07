@@ -673,10 +673,6 @@
         _showEstimateConfirmation(false);
     }
 
-    function isGuessPending() {
-        return _guessPending;
-    }
-
     /**
      * Render the final round's betting window (#656).
      *
@@ -973,54 +969,6 @@
         if (estSubmitBtn) estSubmitBtn.disabled = false;
         var estConfirm = document.getElementById('estimate-submitted-confirmation');
         if (estConfirm) estConfirm.classList.add('hidden');
-    }
-
-    // ============================================
-    // Game View Update
-    // ============================================
-
-    /**
-     * Update game view with round data
-     * @param {Object} data - State data from server
-     */
-    function updateGameView(data) {
-        var currentRound = document.getElementById('current-round');
-        var totalRounds = document.getElementById('total-rounds');
-        var lastRoundBanner = document.getElementById('last-round-banner');
-
-        if (currentRound) currentRound.textContent = data.round || 1;
-        if (totalRounds) totalRounds.textContent = data.total_rounds || 10;
-
-        if (lastRoundBanner) {
-            if (data.last_round) {
-                lastRoundBanner.classList.remove('hidden');
-            } else {
-                lastRoundBanner.classList.add('hidden');
-            }
-        }
-
-        renderSubmissionTracker(data.players);
-
-        if (data.leaderboard) {
-            updateLeaderboard(data, 'leaderboard-list');
-        } else if (data.players && data.players.length > 0) {
-            // Fallback for round 1: server doesn't send `leaderboard` until
-            // the round-summary message, so during the very first question
-            // the section sat empty ("--"). Derive a zero-score board from
-            // the player list so users see who they're up against.
-            var fallback = data.players.map(function (p, idx) {
-                return {
-                    name: p.name,
-                    score: p.score || 0,
-                    rank: idx + 1,
-                    color: p.color,
-                    is_current: p.name === state.playerName,
-                    connected: p.connected !== false,
-                    streak: 0,
-                };
-            });
-            updateLeaderboard({ leaderboard: fallback }, 'leaderboard-list');
-        }
     }
 
     // ============================================
@@ -1572,10 +1520,8 @@
         handleAnswerClick: handleAnswerClick,
         confirmGuess: confirmGuess,
         releaseGuess: releaseGuess,
-        isGuessPending: isGuessPending,
         lockSubmitted: lockSubmitted,
         resetSubmissionState: resetSubmissionState,
-        updateGameView: updateGameView,
         renderSubmissionTracker: renderSubmissionTracker,
         updateLeaderboard: updateLeaderboard,
         resetRankMemo: resetRankMemo,

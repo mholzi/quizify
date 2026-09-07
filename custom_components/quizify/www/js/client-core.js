@@ -130,13 +130,14 @@
         return ws;
     }
 
+    // The two key names and `socketUrl` stay private: saveSession /
+    // getSession / clearSession are the only way in, which is the whole point
+    // of #787 — one owner for the spelling — and `createSocket` is the only
+    // caller a page ever needs.
     window.QuizifyClientCore = {
-        SESSION_TOKEN_KEY: SESSION_TOKEN_KEY,
-        SESSION_NAME_KEY: SESSION_NAME_KEY,
         saveSession: saveSession,
         getSession: getSession,
         clearSession: clearSession,
-        socketUrl: socketUrl,
         backoffDelay: backoffDelay,
         createSocket: createSocket
     };

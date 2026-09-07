@@ -2626,12 +2626,12 @@ button, .btn {
     margin-bottom: var(--space-sm);
 }
 
-/* The shelf plank — used by both admin TV (.podium-bar)
-   and player mobile (.podium-stand). Solid cream surface,
-   1px hairline border, rounded top, soft shadow. Number
-   centered as the "medal". No gradient. */
-.podium-bar,
-.podium-stand {
+/* The shelf plank. One shape on every surface since #883 unified the two
+   renderers; the second spelling (.podium-stand, plus .podium-1/-2/-3 for
+   its per-place heights) outlived the markup and came out with #894.
+   Solid cream surface, 1px hairline border, rounded top, soft shadow.
+   Number centered as the "medal". No gradient. */
+.podium-bar {
     width: 100%;
     background: var(--color-surface, #FFFFFF);
     border: 1px solid var(--color-border-soft, var(--hairline, #E5DFCF));
@@ -2650,17 +2650,13 @@ button, .btn {
 
 /* 1st place — tallest plank, sun-yellow top edge, warm halo cushion,
    coral number. Per DESIGN.md: 200px tall on TV, 3px sun-yellow top. */
-.podium-bar.first,
-.podium-stand.first,
-.podium-1 .podium-stand {
+.podium-bar.first {
     height: 200px;
     border-top: 3px solid var(--color-gold, #E8C47F);
     color: var(--color-accent-primary, #E88A7F);
     font-size: 3.5rem;
 }
-.podium-bar.first::before,
-.podium-stand.first::before,
-.podium-1 .podium-stand::before {
+.podium-bar.first::before {
     content: "";
     position: absolute;
     inset: -1px -1px auto -1px;
@@ -2671,18 +2667,14 @@ button, .btn {
 }
 
 /* 2nd place — muted warm silver top edge. */
-.podium-bar.second,
-.podium-stand.second,
-.podium-2 .podium-stand {
+.podium-bar.second {
     height: 150px;
     border-top: 3px solid var(--color-silver, #B8B2A0);
     font-size: 2.75rem;
 }
 
 /* 3rd place — warm bronze top edge. */
-.podium-bar.third,
-.podium-stand.third,
-.podium-3 .podium-stand {
+.podium-bar.third {
     height: 100px;
     border-top: 3px solid var(--color-bronze, #C99466);
     font-size: 2.25rem;
@@ -3205,9 +3197,7 @@ footer {
    uses after admin-self-join — same DOM as players, just on the TV).
 */
 @media (min-width: 1280px) {
-    .admin-container,
     .admin-content,
-    .app-container,
     .player-container {
         max-width: 1100px;
         padding-left: var(--space-lg);
@@ -3229,9 +3219,7 @@ footer {
 }
 
 @media (min-width: 1920px) {
-    .admin-container,
     .admin-content,
-    .app-container,
     .player-container {
         max-width: 1400px;
         padding-left: var(--space-2xl);
@@ -3303,8 +3291,7 @@ footer {
    app. Give the title and the winner's name an extra push beyond the
    wrapper bump so they really anchor the screen. */
 #admin-finale-view .podium-title,
-#finale-view .podium-title,
-.end-title {
+#finale-view .podium-title {
     font-size: clamp(2.4rem, 4.8vw, 4.2rem);
 }
 #admin-finale-view .podium-champion-name,
@@ -3314,14 +3301,11 @@ footer {
 /* Per-place podium plank numbers — these read as the "medal" so they
    should feel substantial. */
 #admin-finale-view .podium-bar.first,
-#finale-view .podium-bar.first,
-#finale-view .podium-stand.first { font-size: 4.2rem; }
+#finale-view .podium-bar.first { font-size: 4.2rem; }
 #admin-finale-view .podium-bar.second,
-#finale-view .podium-bar.second,
-#finale-view .podium-stand.second { font-size: 3.3rem; }
+#finale-view .podium-bar.second { font-size: 3.3rem; }
 #admin-finale-view .podium-bar.third,
-#finale-view .podium-bar.third,
-#finale-view .podium-stand.third { font-size: 2.7rem; }
+#finale-view .podium-bar.third { font-size: 2.7rem; }
 /* The player end-view "your-result" rank/score/stat block was retired
    with the Variant-D redesign (#338). Its responsive font overrides
    (.your-result-rank / .your-result-score / .stat-value / .stat-label)

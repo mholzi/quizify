@@ -455,18 +455,11 @@
                 handleTimerTick({ remaining: msg.remaining });
                 break;
             case 'round_summary':
-            case 'round_evaluated':
                 handleRoundSummary(msg);
                 // #736: same preload as the phones. The TV is the 21st
                 // client in the burst and the only one showing the picture
                 // full-screen, so it has the most to lose from a late one.
                 preloadNextImage(msg.next_image_url);
-                break;
-            case 'leaderboard_update':
-                // Kept: nothing has ever sent this (#619 found zero
-                // senders), but a live TV cached from an older build may
-                // still be listening, and the handler costs nothing.
-                if (msg.leaderboard) renderLeaderboard(els.leaderboard, msg.leaderboard);
                 break;
             case 'answer_progress':
                 handleAnswerProgress(msg);
@@ -478,7 +471,6 @@
                 handleHeadToHead(msg);
                 break;
             case 'finale':
-            case 'game_ended':
                 handleFinale(msg);
                 break;
             case 'game_reset':

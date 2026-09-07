@@ -409,11 +409,13 @@
 
         if (newGameBtn) {
             newGameBtn.onclick = function () {
+                // #894: the player session belongs to QuizifyClientCore —
+                // spelling the two keys out here was a second owner waiting
+                // to drift. `quizify_is_admin` went with it: nothing in the
+                // repo has ever set that key.
+                pu.clearSession();
                 try {
-                    sessionStorage.removeItem('quizify_session_token');
-                    sessionStorage.removeItem('quizify_player_name');
                     sessionStorage.removeItem('quizify_admin_name');
-                    sessionStorage.removeItem('quizify_is_admin');
                 } catch (e) { /* ignore */ }
 
                 var ws = state.ws;
