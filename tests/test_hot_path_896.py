@@ -8,10 +8,14 @@ a) ``QuizifyAnalytics.get_head_to_head`` recomputed the lobby duel with an
    that ranks differently is worse than a slow one, so the timing check at the
    bottom is deliberately the least of these assertions.
 
-b) ``_broadcast_team_answer`` and ``_broadcast_lightning_team_answer`` awaited
+b) The two team fan-outs — ``RoundBroadcaster.send_team_answer`` and
+   ``LightningBroadcaster.send_lightning_team_answer``, which #881 moved out of
+   the handler into ``server/broadcasters.py`` — awaited
    ``ConnectionManager.send`` once per member. ``send`` wraps the write in a
    2 s timeout, so one half-dead phone held the frame — and the handler's
-   ``answer_accepted`` reply — for its whole team.
+   ``answer_accepted`` reply — for its whole team. They are driven here through
+   the handler's ``_round_out``/``_lightning_out``, which is how the round code
+   reaches them.
 
 c) The reaction flush emitted one broadcast per distinct ``(player, emoji)``
    instead of one batched frame per window, while ``reaction_bonus`` in the
@@ -298,7 +302,7 @@ async def test_a_stalled_member_does_not_hold_up_its_team(tmp_path: Path) -> Non
         team_id=team["team_id"], answer_index=0, set_by="Anna", lock_seconds=2.0
     )
     task = asyncio.ensure_future(
-        handler._broadcast_team_answer(gs, ack, setter="Anna")
+        handler._round_out.send_team_answer(gs, ack, setter="Anna")
     )
     await _wait_for_sends(send, 3)
 
@@ -332,7 +336,7 @@ async def test_a_stalled_member_does_not_hold_up_a_lightning_team(
     handler._conn.send = send  # type: ignore[assignment]
 
     task = asyncio.ensure_future(
-        handler._broadcast_lightning_team_answer(gs, lightning, "Anna")
+        handler._lightning_out.send_lightning_team_answer(gs, lightning, "Anna")
     )
     await _wait_for_sends(send, 3)
 

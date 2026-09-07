@@ -37,7 +37,10 @@ from custom_components.quizify.server.protocol import SERVER_FRAMES
 
 REPO = Path(__file__).resolve().parent.parent
 DASHBOARD = REPO / "custom_components" / "quizify" / "www" / "dashboard.html"
-WEBSOCKET = REPO / "custom_components" / "quizify" / "server" / "websocket.py"
+# #881: the hot-seat frames live in the mode's broadcaster now.
+BROADCASTERS = (
+    REPO / "custom_components" / "quizify" / "server" / "broadcasters.py"
+)
 
 
 def _ws() -> MagicMock:
@@ -99,7 +102,9 @@ def test_the_result_frame_declares_a_leaderboard() -> None:
 
 
 def test_the_result_broadcast_actually_builds_one() -> None:
-    block = _payload_block(WEBSOCKET.read_text(encoding="utf-8"), "hot_seat_result")
+    block = _payload_block(
+        BROADCASTERS.read_text(encoding="utf-8"), "hot_seat_result"
+    )
     assert "serialize_leaderboard" in block, (
         "a name→number map is not something a board can build rows from"
     )

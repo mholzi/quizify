@@ -29,13 +29,17 @@ on:
     - cron: "0 3 * * *"
   workflow_dispatch:
 
+# Both jobs only read the repository (#888).
+permissions:
+  contents: read
+
 jobs:
   validate-hacs:
     name: HACS validation
     runs-on: ubuntu-latest
     steps:
       - name: Checkout code
-        uses: actions/checkout@v4
+        uses: actions/checkout@v7
 
       - name: HACS Action
         uses: hacs/action@main
@@ -47,7 +51,7 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - name: Checkout code
-        uses: actions/checkout@v4
+        uses: actions/checkout@v7
 
       - name: Hassfest
         uses: home-assistant/actions/hassfest@master

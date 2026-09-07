@@ -1,0 +1,65 @@
+# Nothing proposed dependency updates for this repository, which is the whole
+# reason the three `actions/*` steps drifted three majors behind and ended up on
+# GitHub's Node 20 deprecation shim, and why `ruff` sat eleven minor versions
+# behind a release nobody had read (#888).
+#
+# Two ecosystems, weekly, on purpose. Weekly is the interval a one-maintainer
+# project can actually clear; daily turns into a backlog that gets muted, and
+# monthly is slower than the deprecation runways GitHub announces.
+version: 2
+
+updates:
+  # --- GitHub Actions -------------------------------------------------------
+  #
+  # Covers the `uses:` lines in .github/workflows/. Note what it does NOT cover:
+  # `hacs/action@main` and `home-assistant/actions/hassfest@master` in
+  # validate.yml are branch references, not versions, so they track upstream by
+  # themselves and dependabot has nothing to propose for them. That is
+  # deliberate — both validate against upstream rules that move without a commit
+  # here, which is also why validate.yml runs nightly.
+  - package-ecosystem: github-actions
+    directory: "/"
+    schedule:
+      interval: weekly
+    labels:
+      - dependencies
+    # One PR for the whole set rather than three. These actions move together
+    # (the Node runtime bumps that stranded v4/v5 landed across all of them in
+    # the same weeks), and reviewing them together is how you notice that.
+    groups:
+      actions:
+        patterns:
+          - "*"
+
+  # --- Python (test + static-analysis pins) ---------------------------------
+  #
+  # What is actually pinned in this repository, and therefore what dependabot
+  # can propose:
+  #
+  #   requirements_lint.txt          ruff, mypy — both pinned, both wanted here.
+  #                                  This is the entry that would have caught
+  #                                  ruff 0.15.17 → 0.16.6.
+  #   requirements_test.txt          nothing pinned. The HA harness is left open
+  #                                  on purpose (#740) so the modern leg follows
+  #                                  core upstream on its own.
+  #   requirements_test_ha_floor.txt pinned, and must NOT move — see below.
+  - package-ecosystem: pip
+    directory: "/"
+    schedule:
+      interval: weekly
+    labels:
+      - dependencies
+    ignore:
+      # The floor leg is frozen by design. `pytest-homeassistant-custom-component
+      # ==0.13.195` is what pins Home Assistant to 2024.12.5, the minimum
+      # hacs.json and README:447 advertise, and tests/test_ci_ha_matrix_740.py
+      # asserts it stays pinned exactly. A dependabot bump here would move the
+      # advertised floor silently and still pass that test, because the file
+      # would still contain an exact pin — just of a different release.
+      #
+      # The floor moves when hacs.json moves, and only then.
+      #
+      # This name is also the harness in requirements_test.txt, where it is
+      # deliberately unpinned; dependabot proposes nothing for an unpinned
+      # requirement, so ignoring it by name costs that file nothing.
+      - dependency-name: "pytest-homeassistant-custom-component"
