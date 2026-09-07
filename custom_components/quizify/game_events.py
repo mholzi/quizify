@@ -10,8 +10,9 @@ The emitter mirrors :class:`~custom_components.quizify.lights.QuizifyPartyLights
 it subscribes to ``QuizifyGameState`` state callbacks for the phase-driven
 milestones (game start / finale / winner) and is called from the WebSocket
 dispatch points for the richer per-event milestones (question shown, reveal,
-streak, game ended) where the full round data is already assembled — exactly
-like the ``_notify_tts_*`` hooks next to which these fire.
+streak, game ended) where the full round data is already assembled — the
+handler's house beats (``question_shown``, ``reveal``, …) fan out to the
+narrator and to this emitter from one place each.
 
 Everything no-ops cleanly when there is no Home Assistant instance (the
 standalone dev server has no event bus), matching
@@ -71,9 +72,9 @@ class QuizifyEventEmitter:
     """Fires ``hass.bus`` events at game milestones (#366).
 
     Constructed per config entry; attaches a state callback for the phase-driven
-    milestones and exposes ``notify_*`` forwarders the WS handler calls at the
-    same points as the ``_notify_tts_*`` hooks. A no-op everywhere when there is
-    no HA instance (standalone dev server).
+    milestones and exposes ``notify_*`` forwarders the WS handler's house
+    beats call alongside the narrator. A no-op everywhere when there is no HA
+    instance (standalone dev server).
     """
 
     def __init__(
@@ -201,7 +202,7 @@ class QuizifyEventEmitter:
 
     # ------------------------------------------------------------------
     # Per-event milestones (WS-dispatch path) — thin forwarders the WS
-    # handler calls next to its _notify_tts_* hooks.
+    # handler's house beats call alongside the narrator's announce_* hooks.
     # ------------------------------------------------------------------
 
     def notify_question_shown(

@@ -73,6 +73,9 @@ if TYPE_CHECKING:
     from collections.abc import Callable
 
     from ..analytics import PlayerStanding
+    from ..game.hot_seat import HotSeatRound
+    from ..game.lightning import LightningRound
+    from ..game.questions import Question
     from ..game_events import QuizifyEventEmitter
     from ..lights import QuizifyPartyLights
     from ..runtime import Runtime
@@ -1276,7 +1279,7 @@ class QuizifyWebSocketHandler:
             # skipped inside the announcer so the room doesn't hear the host
             # announce themselves. Pre-game lobby joins narrate because the
             # admin pushes the TTS config on connect via ``configure_tts``.
-            self._notify_tts_join(
+            self._player_joined(
                 name, bool(player_obj.is_admin) if player_obj else False
             )
         else:
@@ -1595,8 +1598,8 @@ class QuizifyWebSocketHandler:
             # reader is worse than no message: it reads like a contract.
             if result.milestone_bonus:
                 # ONE milestone from the dispatch point (#789); the fan-out to
-                # the announcer and the HA bus lives in _notify_milestone.
-                self._notify_milestone(
+                # the announcer and the HA bus lives in _streak_milestone.
+                self._streak_milestone(
                     player.name, result.milestone_streak, result.milestone_bonus
                 )
             # NB: round-summary broadcast is fired exclusively by
@@ -2962,12 +2965,12 @@ class QuizifyWebSocketHandler:
     # -- LightningBroadcaster (game/drivers/protocols.py) ---------------
 
     async def send_lightning_question(
-        self, game_state: QuizifyGameState, lr: Any
+        self, game_state: QuizifyGameState, lr: LightningRound
     ) -> None:
         await self._broadcast_lightning_question(game_state, lr)
 
     async def send_lightning_tick(
-        self, game_state: QuizifyGameState, lr: Any
+        self, game_state: QuizifyGameState, lr: LightningRound
     ) -> None:
         await self._broadcast_lightning_tick(game_state, lr)
 
@@ -3184,7 +3187,7 @@ class QuizifyWebSocketHandler:
         await self._conn.broadcast({"type": "hot_seat_no_bids"})
 
     async def send_hot_seat_awarded(
-        self, game_state: QuizifyGameState, hs: Any
+        self, game_state: QuizifyGameState, hs: HotSeatRound
     ) -> None:
         await self._conn.broadcast({
             "type": "hot_seat_awarded",
@@ -3199,12 +3202,12 @@ class QuizifyWebSocketHandler:
         })
 
     async def send_hot_seat_question(
-        self, game_state: QuizifyGameState, hs: Any
+        self, game_state: QuizifyGameState, hs: HotSeatRound
     ) -> None:
         await self._broadcast_hot_seat_question(game_state, hs)
 
     async def send_hot_seat_result(
-        self, game_state: QuizifyGameState, hs: Any
+        self, game_state: QuizifyGameState, hs: HotSeatRound
     ) -> None:
         await self._conn.broadcast({
             "type": "hot_seat_result",
@@ -3607,8 +3610,8 @@ class QuizifyWebSocketHandler:
 
         # ONE question milestone from the dispatch point (#789): narration
         # (#281, with the canonical shuffled order so spoken letters match the
-        # TV grid) plus the HA bus event (#366) fan out inside _notify_question.
-        self._notify_question(
+        # TV grid) plus the HA bus event (#366) fan out inside question_shown.
+        self.question_shown(
             question, game_state.round, game_state.total_rounds, shuffled_texts
         )
 
@@ -4498,15 +4501,25 @@ class QuizifyWebSocketHandler:
         await self._broadcast_state_projected(game_state)
 
     # ------------------------------------------------------------------
-    # Milestone fan-out (#789)
+    # The house beats (#789/#788)
     # ------------------------------------------------------------------
     #
-    # Four game moments — question shown, countdown, reveal, streak milestone —
-    # are interesting to BOTH the narrator and the HA event bus. Each dispatch
-    # point used to carry a twin call, one to a ``_notify_tts_*`` hook and one to
-    # its ``_notify_house_*`` sibling, so adding a consumer meant editing every
-    # site. The dispatch points now fire ONE milestone and the fan-out lives
-    # here, in the four methods below.
+    # Six game moments the house reacts to. Each one is ONE method here, and
+    # each method is the whole fan-out: which consumers hear this beat, and
+    # what they are asked to do about it. Nothing sits between a dispatch point
+    # and a consumer any more.
+    #
+    # This used to be three layers deep and three names wide for the same
+    # event: a tick arrived as ``time_running_out``, became ``_notify_
+    # countdown``, and ended in ``_notify_tts_countdown`` plus ``_notify_house_
+    # time_running_out``. Two of the six beats skipped the middle layer, so the
+    # layer read as an accident rather than a contract.
+    #
+    # The three PUBLIC methods below are :class:`~custom_components.quizify.
+    # game.drivers.protocols.MilestoneSink` — the contract a mode driver holds,
+    # which is what lets every mode walk the house path (#708) instead of only
+    # the normal round. The three private ones are the beats no driver reports;
+    # the underscore is the entire difference between them.
     #
     # The narrator is deliberately NOT wired up as a subscriber of
     # ``QuizifyEventEmitter``, which is the shape the lights and the SFX use.
@@ -4515,148 +4528,107 @@ class QuizifyWebSocketHandler:
     # master in the TTS panel — routing speech through the bus would silence the
     # quizmaster on every install that has narration on and house events off.
 
-    def _notify_milestone(self, player_name: str, streak: int, bonus: int) -> None:
-        """Announce a streak milestone and put it on the HA bus (#789)."""
-        self._notify_tts_milestone(player_name, streak)
-        self._notify_house_milestone(player_name, streak, bonus)
+    def _fire(self, consumer: object | None, method: str, *args: object) -> None:
+        """Deliver one beat to one consumer, or do nothing (#886).
 
-    def _notify_question(
-        self,
-        question: Any,
-        round_no: int,
-        total_rounds: int,
-        options: list[str] | None = None,
-    ) -> None:
-        """Announce a question start and put it on the HA bus (#789).
-
-        The announcer gets the shuffled option texts (so spoken letters match
-        the TV grid); the bus event deliberately gets only the round and the
-        question type, never the text or answers, which would leak the question
-        to automations before the players see it.
+        The ten hand-written forwarders this replaces were the same eight lines
+        each: read the consumer, return if it is None, call it inside a
+        ``try``, log the exception. Both guards are load-bearing. ``None`` is
+        the standalone dev server and the HA install with no TTS entity, so it
+        must stay a silent no-op rather than an Optional threaded through every
+        dispatch point; and a broken TTS entity is not a reason to stall a game
+        loop, which is why the exception is logged and swallowed here — the
+        :class:`MilestoneSink` contract says these never raise.
         """
-        self._notify_tts_question(question, round_no, total_rounds, options)
-        self._notify_house_question(question, round_no, total_rounds)
-
-    def _notify_countdown(self, seconds_remaining: float) -> None:
-        """Push the per-tick remaining time to both consumers (#789).
-
-        Called every timer tick. Each side keeps its own once-per-round guard
-        and its own threshold — the spoken warning at 10s, the light pulse at
-        5s — so this stays a plain fan-out.
-        """
-        self._notify_tts_countdown(seconds_remaining)
-        self._notify_house_time_running_out(seconds_remaining)
-
-    def _notify_reveal(self, game_state: QuizifyGameState) -> None:
-        """Announce the reveal and put it on the HA bus (#789)."""
-        self._notify_tts_reveal(game_state)
-        self._notify_house_reveal(game_state)
+        if consumer is None:
+            return
+        try:
+            getattr(consumer, method)(*args)
+        except Exception:  # noqa: BLE001
+            _LOGGER.exception("House beat %s raised", method)
 
     # -- MilestoneSink (game/drivers/protocols.py) ----------------------
-    #
-    # The three beats a mode driver reports. Before #788 the fan-out above was
-    # reachable from the normal-round path only, which is exactly why the house
-    # sat out the detour modes (#708); a driver holding this contract can walk
-    # the same path without knowing who is listening.
 
     def question_shown(
         self,
-        question: Any,
+        question: Question,
         round_no: int,
         total_rounds: int,
         options: list[str] | None = None,
     ) -> None:
-        self._notify_question(question, round_no, total_rounds, options)
+        """A question just went out to the room (#789).
+
+        The announcer gets the shuffled option texts, so the spoken letters
+        match the TV grid; the bus event deliberately gets only the round and
+        the question type, never the text or the answers, which would leak the
+        question to automations before the players see it.
+        """
+        self._fire(
+            self._tts_announcer,
+            "announce_question",
+            question,
+            round_no,
+            total_rounds,
+            options,
+        )
+        self._fire(
+            self._event_emitter,
+            "notify_question_shown",
+            question,
+            round_no,
+            total_rounds,
+        )
 
     def time_running_out(self, seconds_remaining: float) -> None:
-        self._notify_countdown(seconds_remaining)
+        """The answer window is running down (#789).
+
+        Called on every timer tick. Each consumer keeps its own once-per-round
+        guard and its own threshold — the spoken warning at 10s, the light
+        pulse at 5s — so this stays a plain fan-out.
+        """
+        self._fire(self._tts_announcer, "announce_countdown", seconds_remaining)
+        self._fire(
+            self._event_emitter, "notify_time_running_out", seconds_remaining
+        )
 
     def reveal(self, game_state: QuizifyGameState) -> None:
-        self._notify_reveal(game_state)
+        """The answer is out and the round has been scored (#789)."""
+        self._fire(self._tts_announcer, "announce_reveal", game_state)
+        self._fire(self._event_emitter, "notify_answer_revealed", game_state)
 
-    def _notify_tts_milestone(self, player_name: str, streak: int) -> None:
-        """Forward a milestone hit to the TTS announcer if one is wired.
+    # -- Beats no driver reports ----------------------------------------
 
-        Kept as a no-op when ``_tts_announcer`` is None (standalone dev
-        server, HA setup without TTS configured) so the handler doesn't
-        have to thread an Optional everywhere.
+    def _streak_milestone(self, player_name: str, streak: int, bonus: int) -> None:
+        """A player hit a streak milestone (#789).
+
+        Not on the sink because a milestone is scored by the answer path, not
+        by a mode's control loop; a driver has no occasion to report one.
         """
-        announcer = self._tts_announcer
-        if announcer is None:
-            return
-        try:
-            announcer.announce_milestone(player_name, streak)
-        except Exception:  # noqa: BLE001
-            _LOGGER.exception("TTS milestone announcement raised")
+        self._fire(self._tts_announcer, "announce_milestone", player_name, streak)
+        self._fire(
+            self._event_emitter,
+            "notify_streak_milestone",
+            player_name,
+            streak,
+            bonus,
+        )
 
-    def _notify_tts_question(
-        self,
-        question: Any,
-        round_no: int,
-        total_rounds: int,
-        options: list[str] | None = None,
-    ) -> None:
-        """Forward a question-start (+ shuffled options) to the TTS announcer
-        if one is wired (#281).
+    def _player_joined(self, player_name: str, is_admin: bool) -> None:
+        """Somebody walked into the lobby (#281).
 
-        No-op when ``_tts_announcer`` is None (standalone dev server, HA setup
-        without a TTS entity). Guarded so a bad announcement can't break the
-        question fan-out.
+        Narration only: there is no ``quizify_player_joined`` bus event, and
+        the host's own admin-as-player tab is skipped inside the announcer so
+        the room never hears the host announce themselves.
         """
-        announcer = self._tts_announcer
-        if announcer is None:
-            return
-        try:
-            announcer.announce_question(question, round_no, total_rounds, options)
-        except Exception:  # noqa: BLE001
-            _LOGGER.exception("TTS question announcement raised")
+        self._fire(self._tts_announcer, "announce_join", player_name, is_admin)
 
-    def _notify_tts_join(self, player_name: str, is_admin: bool) -> None:
-        """Forward a lobby join to the TTS announcer if one is wired (#281).
+    def _game_ended(self, game_state: QuizifyGameState) -> None:
+        """The finale is on screen (#366).
 
-        No-op when ``_tts_announcer`` is None. Guarded like the milestone hook.
+        Bus only: the announcer says its piece in :meth:`reveal` for the final
+        round, and the finale itself has no spoken line.
         """
-        announcer = self._tts_announcer
-        if announcer is None:
-            return
-        try:
-            announcer.announce_join(player_name, is_admin)
-        except Exception:  # noqa: BLE001
-            _LOGGER.exception("TTS join announcement raised")
-
-    def _notify_tts_countdown(self, seconds_remaining: float) -> None:
-        """Forward the per-tick remaining time to the TTS announcer (#281).
-
-        Called every timer tick; the announcer fires its one-shot "time
-        running out" warning at most once per round. No-op when no announcer
-        is wired. Guarded like the milestone hook.
-        """
-        announcer = self._tts_announcer
-        if announcer is None:
-            return
-        try:
-            announcer.announce_countdown(seconds_remaining)
-        except Exception:  # noqa: BLE001
-            _LOGGER.exception("TTS countdown announcement raised")
-
-    def _notify_tts_reveal(self, game_state: QuizifyGameState) -> None:
-        """Forward the reveal to the TTS announcer if one is wired (#281).
-
-        No-op when ``_tts_announcer`` is None. Guarded like the milestone hook.
-        """
-        announcer = self._tts_announcer
-        if announcer is None:
-            return
-        try:
-            announcer.announce_reveal(game_state)
-        except Exception:  # noqa: BLE001
-            _LOGGER.exception("TTS reveal announcement raised")
-
-    # ------------------------------------------------------------------
-    # HA event-bus forwarders (#366) — thin, no-op-guarded siblings of the
-    # _notify_tts_* hooks. The emitter fires quizify_* bus events so the host
-    # can drive automations off game milestones.
-    # ------------------------------------------------------------------
+        self._fire(self._event_emitter, "notify_game_ended", game_state)
 
     def set_event_emitter(
         self, emitter: QuizifyEventEmitter | None
@@ -4668,79 +4640,6 @@ class QuizifyWebSocketHandler:
         the no-op path.
         """
         self._event_emitter = emitter
-
-    def _notify_house_question(
-        self, question: Any, round_no: int, total_rounds: int
-    ) -> None:
-        """Forward a question-start to the HA event emitter if one is wired.
-
-        No-op when ``_event_emitter`` is None (standalone dev server). Guarded so
-        a bad fire can't break the question fan-out.
-        """
-        emitter = self._event_emitter
-        if emitter is None:
-            return
-        try:
-            emitter.notify_question_shown(question, round_no, total_rounds)
-        except Exception:  # noqa: BLE001
-            _LOGGER.exception("House question event raised")
-
-    def _notify_house_time_running_out(self, seconds_remaining: float) -> None:
-        """Forward the per-tick remaining time to the HA event emitter (#280).
-
-        Called every timer tick alongside :meth:`_notify_tts_countdown`; the
-        emitter fires its one-shot ``quizify_time_running_out`` event at most
-        once per round in the final seconds. No-op when ``_event_emitter`` is
-        None (standalone dev server). Guarded like the question hook.
-        """
-        emitter = self._event_emitter
-        if emitter is None:
-            return
-        try:
-            emitter.notify_time_running_out(seconds_remaining)
-        except Exception:  # noqa: BLE001
-            _LOGGER.exception("House time-running-out event raised")
-
-    def _notify_house_milestone(
-        self, player_name: str, streak: int, bonus: int
-    ) -> None:
-        """Forward a streak milestone to the HA event emitter if one is wired.
-
-        No-op when ``_event_emitter`` is None. Guarded like the question hook.
-        """
-        emitter = self._event_emitter
-        if emitter is None:
-            return
-        try:
-            emitter.notify_streak_milestone(player_name, streak, bonus)
-        except Exception:  # noqa: BLE001
-            _LOGGER.exception("House milestone event raised")
-
-    def _notify_house_reveal(self, game_state: QuizifyGameState) -> None:
-        """Forward the reveal to the HA event emitter if one is wired.
-
-        No-op when ``_event_emitter`` is None. Guarded like the question hook.
-        """
-        emitter = self._event_emitter
-        if emitter is None:
-            return
-        try:
-            emitter.notify_answer_revealed(game_state)
-        except Exception:  # noqa: BLE001
-            _LOGGER.exception("House reveal event raised")
-
-    def _notify_house_game_ended(self, game_state: QuizifyGameState) -> None:
-        """Forward game end to the HA event emitter if one is wired.
-
-        No-op when ``_event_emitter`` is None. Guarded like the question hook.
-        """
-        emitter = self._event_emitter
-        if emitter is None:
-            return
-        try:
-            emitter.notify_game_ended(game_state)
-        except Exception:  # noqa: BLE001
-            _LOGGER.exception("House game-ended event raised")
 
     # ------------------------------------------------------------------
     # Finale broadcast helper
@@ -4820,8 +4719,8 @@ class QuizifyWebSocketHandler:
             # ONE reveal milestone (#789), after the summary broadcast: the
             # combined spoken utterance (#281) and the bus event carrying the
             # correct answer + how many got it (#366) fan out inside
-            # _notify_reveal, both off the same round summary.
-            self._notify_reveal(game_state)
+            # reveal(), both off the same round summary.
+            self.reveal(game_state)
 
     async def _dispatch_game_ended(self) -> None:
         """Handler for the ``game_ended`` state event."""
@@ -4830,7 +4729,7 @@ class QuizifyWebSocketHandler:
             await self._broadcast_finale(game_state)
             # Fire the HA bus event with the final leaderboard (#366), after
             # the finale broadcast so entity state is already settled.
-            self._notify_house_game_ended(game_state)
+            self._game_ended(game_state)
 
     async def _dispatch_full_state(self) -> None:
         """Default handler: broadcast a full game-state snapshot."""
