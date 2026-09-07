@@ -1,7 +1,7 @@
 # Pinned static-analysis tools for the `lint` and `mypy` CI jobs (#888).
 #
 # These two versions used to be typed inline in .github/workflows/test.yml
-# (`pip install "ruff==0.15.17"`, `pip install homeassistant "mypy==2.3.1"`).
+# (`pip install "ruff==0.16.6"`, `pip install homeassistant "mypy==2.3.1"`).
 # Nothing can watch a version that only exists inside a shell command: neither
 # dependabot's `pip` ecosystem, which reads requirements files, nor its
 # `github-actions` ecosystem, which reads `uses:` lines. That is why ruff sat
@@ -16,5 +16,5 @@
 # Both jobs install this whole file rather than a slice of it; the second tool
 # costs a few seconds of pip and keeps one list instead of two.
 
-ruff==0.15.17
+ruff==0.16.6
 mypy==2.3.1
