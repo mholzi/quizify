@@ -528,22 +528,42 @@ def serialize_state_snapshot(game_state: QuizifyGameState) -> dict[str, Any]:
             snapshot["round_summary"]["estimate"] = s.estimate
 
     if game_state.phase == GamePhase.FINALE:
-        # Use cached values computed once in end_game()
-        podium = game_state.get_finale_podium() or calculate_podium(
-            game_state.get_ranked_participants()
-        )
-        snapshot["podium"] = [
-            {"name": p.name, "score": p.score, "rank": i + 1}
-            for i, p in enumerate(podium)
-        ]
+        # The end screen is built by ``serialize_finale`` — the same function
+        # the live ``finale`` frame goes through (#878). It used to be a second
+        # hand-written list of the fields worth forwarding, and that list was
+        # missing two things the live frame has carried since #369 and #308:
+        #
+        # * ``share`` — the shareable result card. The end screen is the one
+        #   that stays up longest in an evening, so any reload or wifi blip on
+        #   it silently removed the card the guest was about to paste into the
+        #   group chat: ``renderShareCard`` hides the section when ``share``
+        #   is absent, and a snapshot never carried it.
+        # * shared podium ranks — the old list numbered ``rank: i + 1``, so a
+        #   reloaded phone showed two players who actually tied on 1st and 2nd.
+        #
+        # Same shape as #730/#731: forward the frame instead of re-listing it,
+        # so a field added to the finale payload cannot go missing here again.
+        ranked = game_state.get_ranked_participants()
+        # Cached by end_game (#415); recomputed only when a snapshot is asked
+        # for before the cache exists.
+        podium = game_state.get_finale_podium() or calculate_podium(ranked)
         cached_awards = game_state.get_finale_superlatives()
         awards = (
             cached_awards
             if cached_awards is not None
-            else compute_superlatives(game_state.get_ranked_participants())
+            else compute_superlatives(ranked)
         )
-        if awards:
-            snapshot["superlatives"] = [s.to_dict() for s in awards]
+        finale = serialize_finale(
+            podium,
+            ranked,
+            superlatives=[a.to_dict() for a in awards],
+            packs=resolve_pack_labels(game_state),
+        )
+        for key, value in finale.items():
+            # ``type`` names the live frame, not a phase; ``leaderboard`` and
+            # ``all_players`` are the list the snapshot already carries above.
+            if key not in ("type", "leaderboard", "all_players"):
+                snapshot[key] = value
 
     lightning = game_state.lightning
     if game_state.phase == GamePhase.LIGHTNING and lightning is not None:
@@ -797,6 +817,33 @@ def build_share_payload(
             "powerups": p.powerups_used,
         })
     return {"packs": list(packs or []), "players": entries}
+
+
+def resolve_pack_labels(game_state: QuizifyGameState) -> list[str]:
+    """Display names of the packs this game was played with (#369).
+
+    ``categories`` is the multi-select the host picked; ``category`` is the
+    single-pick fallback. Empty when the host played "mixed", and the share
+    card simply omits the line rather than inventing a pack name.
+
+    Slugs are mapped to display names because the card is written to be pasted
+    into a group chat and "picture-round-en" reads like a filename, while the
+    picker calls the same pack "Picture Round". An unknown slug (a pack removed
+    mid-game) falls back to the slug rather than vanishing from the line.
+
+    Lives here rather than in the finale broadcast because both paths to the
+    end screen need it: the live frame and the FINALE snapshot a reloading
+    phone restores from (#878).
+    """
+    packs = list(getattr(game_state, "categories", None) or [])
+    if not packs and getattr(game_state, "category", None):
+        packs = [game_state.category]
+    try:
+        meta = game_state.question_bank.get_pack_versions()
+        packs = [(meta.get(slug) or {}).get("name") or slug for slug in packs]
+    except (AttributeError, TypeError):  # pragma: no cover - defensive
+        pass
+    return packs
 
 
 def serialize_finale(

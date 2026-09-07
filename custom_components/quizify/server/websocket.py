@@ -59,6 +59,7 @@ from custom_components.quizify.server.origin import reject_cross_origin
 from custom_components.quizify.server.rate_limit import SlidingWindowLimiter
 from custom_components.quizify.server.round_message_builder import RoundMessageBuilder
 from custom_components.quizify.server.serializers import (
+    resolve_pack_labels,
     serialize_answer_progress,
     serialize_finale,
     serialize_leaderboard,
@@ -4778,22 +4779,10 @@ class QuizifyWebSocketHandler:
             else compute_superlatives(all_players)
         )
         awards = [s.to_dict() for s in superlatives]
-        # Pack labels for the shareable card (#369). ``categories`` is the
-        # multi-select the host picked; ``category`` is the single-pick
-        # fallback. Empty when the host played "mixed", and the card simply
-        # omits the line rather than inventing a pack name.
-        packs = list(getattr(game_state, "categories", None) or [])
-        if not packs and getattr(game_state, "category", None):
-            packs = [game_state.category]
-        # Slug -> display name. The card is written to be pasted into a group
-        # chat, and "picture-round-en" reads like a filename; the picker calls
-        # the same pack "Picture Round". Unknown slugs (a pack removed
-        # mid-game) fall back to the slug rather than vanishing from the line.
-        try:
-            _meta = game_state.question_bank.get_pack_versions()
-            packs = [(_meta.get(slug) or {}).get("name") or slug for slug in packs]
-        except (AttributeError, TypeError):  # pragma: no cover - defensive
-            pass
+        # Pack labels for the shareable card (#369). The FINALE snapshot needs
+        # the identical list (#878), so the resolution lives next to the
+        # serializers both paths share.
+        packs = resolve_pack_labels(game_state)
         finale_msg = serialize_finale(
             podium, all_players, superlatives=awards, packs=packs
         )
