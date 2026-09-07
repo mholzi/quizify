@@ -1,0 +1,20 @@
+# Pinned static-analysis tools for the `lint` and `mypy` CI jobs (#888).
+#
+# These two versions used to be typed inline in .github/workflows/test.yml
+# (`pip install "ruff==0.15.17"`, `pip install homeassistant "mypy==2.3.1"`).
+# Nothing can watch a version that only exists inside a shell command: neither
+# dependabot's `pip` ecosystem, which reads requirements files, nor its
+# `github-actions` ecosystem, which reads `uses:` lines. That is why ruff sat
+# eleven minor versions behind without anything saying so. In a file, they are
+# proposals dependabot opens on its own.
+#
+# Both stay PINNED on purpose. An unpinned lint gate turns every upstream
+# release into a red build on an unrelated PR — which is the failure mode that
+# gets a gate marked advisory and then ignored. A pinned one turns the same
+# release into a dependabot PR that is looked at on its own.
+#
+# Both jobs install this whole file rather than a slice of it; the second tool
+# costs a few seconds of pip and keeps one list instead of two.
+
+ruff==0.15.17
+mypy==2.3.1
