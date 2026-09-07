@@ -67,6 +67,30 @@
     }
 
     /**
+     * Write the panel's headline (#864).
+     *
+     * ``#hotseat-title`` carries ``data-i18n="hotSeat.auctionTitle"`` in the
+     * markup, because the auction is the state the panel opens in. Every
+     * later state wrote ``textContent`` and left that key sitting on the
+     * element — so the next ``initPageTranslations()`` sweep (a language
+     * switch, a ``game_state`` carrying the room's language) put *"The chair
+     * goes to the highest bid"* back over the award, the bet window and the
+     * settlement, and the card announced an auction while showing its result.
+     *
+     * The key travels with the line instead, params and all — the #776
+     * pattern — so a sweep re-renders whichever sentence is actually on
+     * screen rather than the one the page shipped with.
+     */
+    function setTitle(key, params) {
+        var title = el('hotseat-title');
+        if (!title) return;
+        title.setAttribute('data-i18n', key);
+        if (params) title.setAttribute('data-i18n-params', JSON.stringify(params));
+        else title.removeAttribute('data-i18n-params');
+        title.textContent = t(key, params);
+    }
+
+    /**
      * Whose row is "mine" (#804/#728).
      *
      * The settlement is keyed by ENTRANT, not by player: in team mode the
@@ -93,6 +117,15 @@
         _state.bidding = false;
     }
 
+    /**
+     * Put the whole detour away.
+     *
+     * The one teardown for the panel, and since #864 it is driven from
+     * ``player-core.js`` rather than only from the next auction: the Hot Seat
+     * fires once per game, so "the next auction clears it" meant "nothing
+     * clears it". ``GAME_VIEW_PANELS`` names this function as the panel's
+     * teardown and runs it on the frame that opens the next screen.
+     */
     function reset() {
         _state.bidding = false;
         _state.bidPlaced = false;
@@ -136,14 +169,13 @@
         // #859: a new chair opens over the previous one's settlement.
         stage('hotseat-result-stage', false);
 
-        var title = el('hotseat-title');
         var hint = el('hotseat-hint');
         var bank = el('hotseat-bank');
         var slider = el('hotseat-slider');
         var btn = el('hotseat-bid-btn');
         var count = el('hotseat-bid-count');
 
-        if (title) title.textContent = t('hotSeat.auctionTitle');
+        setTitle('hotSeat.auctionTitle');
         if (hint) hint.textContent = t('hotSeat.auctionHint');
         if (bank) bank.textContent = _state.score;
         if (count) count.textContent = t('hotSeat.sealed');
@@ -212,22 +244,19 @@
         _state.winner = msg.winner;
         _state.seated = (me != null && me === msg.winner);
 
-        var title = el('hotseat-title');
         var hint = el('hotseat-hint');
         var bidStage = el('hotseat-bid-stage');
         if (bidStage) bidStage.classList.add('hidden');
 
         if (_state.seated) {
-            if (title) title.textContent = t('hotSeat.won', {
-                pct: msg.pct, pts: msg.stake
-            });
+            setTitle('hotSeat.won', { pct: msg.pct, pts: msg.stake });
             if (hint) hint.textContent = t('hotSeat.seatedHint');
         } else {
             // #804: ``winner`` is the person in the chair, ``entrant`` is who
             // pays — their team in team mode, the same person again otherwise.
             // The room is told the payer, because that is the row the points
             // move on.
-            if (title) title.textContent = t('hotSeat.lost', {
+            setTitle('hotSeat.lost', {
                 name: msg.entrant || msg.winner, pct: msg.pct, pts: msg.stake
             });
             if (hint) hint.textContent = '';
@@ -301,12 +330,7 @@
         if (msg.you_are_seat_team) {
             var betStage = el('hotseat-bet-stage');
             if (betStage) betStage.classList.add('hidden');
-            var teamTitle = el('hotseat-title');
-            if (teamTitle) {
-                teamTitle.textContent = t('hotSeat.teamSeated', {
-                    name: msg.winner
-                });
-            }
+            setTitle('hotSeat.teamSeated', { name: msg.winner });
             var teamHint = el('hotseat-hint');
             if (teamHint) teamHint.textContent = '';
             return;
@@ -375,10 +399,9 @@
 
     function showBetStage(winner) {
         var betStage = el('hotseat-bet-stage');
-        var title = el('hotseat-title');
         var hint = el('hotseat-hint');
         if (betStage) betStage.classList.remove('hidden');
-        if (title) title.textContent = t('hotSeat.betTitle', { name: winner });
+        setTitle('hotSeat.betTitle', { name: winner });
         if (hint) hint.textContent = '';
 
         var slider = el('hotseat-bet-slider');
@@ -446,7 +469,12 @@
      * "Ben answered it — +80 points".
      *
      * The panel narrates the whole detour already (auction → award →
-     * question), so it narrates the end of it too. The three lines are the
+     * question), so it narrates the end of it too. What it does NOT do is
+     * outlive it: #864 is the other half of this change, where the settlement
+     * that #862 made permanent sat over every remaining question of the game.
+     * The card belongs to the settled chair and to nothing after it, and the
+     * frame that ends it is the one that opens the next screen — see
+     * ``GAME_VIEW_PANELS`` in player-core.js. The three lines are the
      * ones the room actually asks: who took the chair and what it cost or
      * paid, what the answer was, and — the part only a phone can give — what
      * it did to MY points, spectator bet included.
@@ -488,8 +516,7 @@
         var key = noAnswer
             ? 'hotSeat.resultTimeout'
             : (right ? 'hotSeat.resultRight' : 'hotSeat.resultWrong');
-        var title = el('hotseat-title');
-        if (title) title.textContent = t(key, { name: payer, pts: Math.abs(delta) });
+        setTitle(key, { name: payer, pts: Math.abs(delta) });
 
         // The answer itself. ``correct_index`` is a CANONICAL index and the
         // seat holder was shown a shuffle, so the spelled-out string (#833) is

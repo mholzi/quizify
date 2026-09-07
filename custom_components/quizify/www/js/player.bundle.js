@@ -3871,6 +3871,30 @@
     }
 
     /**
+     * Write the panel's headline (#864).
+     *
+     * ``#hotseat-title`` carries ``data-i18n="hotSeat.auctionTitle"`` in the
+     * markup, because the auction is the state the panel opens in. Every
+     * later state wrote ``textContent`` and left that key sitting on the
+     * element — so the next ``initPageTranslations()`` sweep (a language
+     * switch, a ``game_state`` carrying the room's language) put *"The chair
+     * goes to the highest bid"* back over the award, the bet window and the
+     * settlement, and the card announced an auction while showing its result.
+     *
+     * The key travels with the line instead, params and all — the #776
+     * pattern — so a sweep re-renders whichever sentence is actually on
+     * screen rather than the one the page shipped with.
+     */
+    function setTitle(key, params) {
+        var title = el('hotseat-title');
+        if (!title) return;
+        title.setAttribute('data-i18n', key);
+        if (params) title.setAttribute('data-i18n-params', JSON.stringify(params));
+        else title.removeAttribute('data-i18n-params');
+        title.textContent = t(key, params);
+    }
+
+    /**
      * Whose row is "mine" (#804/#728).
      *
      * The settlement is keyed by ENTRANT, not by player: in team mode the
@@ -3897,6 +3921,15 @@
         _state.bidding = false;
     }
 
+    /**
+     * Put the whole detour away.
+     *
+     * The one teardown for the panel, and since #864 it is driven from
+     * ``player-core.js`` rather than only from the next auction: the Hot Seat
+     * fires once per game, so "the next auction clears it" meant "nothing
+     * clears it". ``GAME_VIEW_PANELS`` names this function as the panel's
+     * teardown and runs it on the frame that opens the next screen.
+     */
     function reset() {
         _state.bidding = false;
         _state.bidPlaced = false;
@@ -3940,14 +3973,13 @@
         // #859: a new chair opens over the previous one's settlement.
         stage('hotseat-result-stage', false);
 
-        var title = el('hotseat-title');
         var hint = el('hotseat-hint');
         var bank = el('hotseat-bank');
         var slider = el('hotseat-slider');
         var btn = el('hotseat-bid-btn');
         var count = el('hotseat-bid-count');
 
-        if (title) title.textContent = t('hotSeat.auctionTitle');
+        setTitle('hotSeat.auctionTitle');
         if (hint) hint.textContent = t('hotSeat.auctionHint');
         if (bank) bank.textContent = _state.score;
         if (count) count.textContent = t('hotSeat.sealed');
@@ -4016,22 +4048,19 @@
         _state.winner = msg.winner;
         _state.seated = (me != null && me === msg.winner);
 
-        var title = el('hotseat-title');
         var hint = el('hotseat-hint');
         var bidStage = el('hotseat-bid-stage');
         if (bidStage) bidStage.classList.add('hidden');
 
         if (_state.seated) {
-            if (title) title.textContent = t('hotSeat.won', {
-                pct: msg.pct, pts: msg.stake
-            });
+            setTitle('hotSeat.won', { pct: msg.pct, pts: msg.stake });
             if (hint) hint.textContent = t('hotSeat.seatedHint');
         } else {
             // #804: ``winner`` is the person in the chair, ``entrant`` is who
             // pays — their team in team mode, the same person again otherwise.
             // The room is told the payer, because that is the row the points
             // move on.
-            if (title) title.textContent = t('hotSeat.lost', {
+            setTitle('hotSeat.lost', {
                 name: msg.entrant || msg.winner, pct: msg.pct, pts: msg.stake
             });
             if (hint) hint.textContent = '';
@@ -4105,12 +4134,7 @@
         if (msg.you_are_seat_team) {
             var betStage = el('hotseat-bet-stage');
             if (betStage) betStage.classList.add('hidden');
-            var teamTitle = el('hotseat-title');
-            if (teamTitle) {
-                teamTitle.textContent = t('hotSeat.teamSeated', {
-                    name: msg.winner
-                });
-            }
+            setTitle('hotSeat.teamSeated', { name: msg.winner });
             var teamHint = el('hotseat-hint');
             if (teamHint) teamHint.textContent = '';
             return;
@@ -4179,10 +4203,9 @@
 
     function showBetStage(winner) {
         var betStage = el('hotseat-bet-stage');
-        var title = el('hotseat-title');
         var hint = el('hotseat-hint');
         if (betStage) betStage.classList.remove('hidden');
-        if (title) title.textContent = t('hotSeat.betTitle', { name: winner });
+        setTitle('hotSeat.betTitle', { name: winner });
         if (hint) hint.textContent = '';
 
         var slider = el('hotseat-bet-slider');
@@ -4250,7 +4273,12 @@
      * "Ben answered it — +80 points".
      *
      * The panel narrates the whole detour already (auction → award →
-     * question), so it narrates the end of it too. The three lines are the
+     * question), so it narrates the end of it too. What it does NOT do is
+     * outlive it: #864 is the other half of this change, where the settlement
+     * that #862 made permanent sat over every remaining question of the game.
+     * The card belongs to the settled chair and to nothing after it, and the
+     * frame that ends it is the one that opens the next screen — see
+     * ``GAME_VIEW_PANELS`` in player-core.js. The three lines are the
      * ones the room actually asks: who took the chair and what it cost or
      * paid, what the answer was, and — the part only a phone can give — what
      * it did to MY points, spectator bet included.
@@ -4292,8 +4320,7 @@
         var key = noAnswer
             ? 'hotSeat.resultTimeout'
             : (right ? 'hotSeat.resultRight' : 'hotSeat.resultWrong');
-        var title = el('hotseat-title');
-        if (title) title.textContent = t(key, { name: payer, pts: Math.abs(delta) });
+        setTitle(key, { name: payer, pts: Math.abs(delta) });
 
         // The answer itself. ``correct_index`` is a CANONICAL index and the
         // seat holder was shown a shuffle, so the spelled-out string (#833) is
@@ -6685,6 +6712,10 @@
         // rather than inside three `case` blocks — the bug this closes was a
         // fourth case that nobody wrote.
         enterStageFor(msg);
+        // #864: and its counterpart. Same reason for living here rather than
+        // in a `case`: the teardown that was forgotten was the one nobody
+        // thought to write.
+        clearStalePanels(msg);
     }
 
     function handleReactionBonus(msg) {
@@ -6765,6 +6796,8 @@
         _rememberHostFlag(msg);
         _rememberRoster(msg);
         setResetStage(STAGE_RESET_AFFORDANCES[msg.phase] ? msg.phase : null);
+        // #864: and the panels the phase no longer owns.
+        clearStalePanelsForPhase(msg.phase);
 
         switch (msg.phase) {
             case 'LOBBY':
@@ -7421,6 +7454,117 @@
     function enterStageFor(msg) {
         var stage = msg && STAGE_ENTERED_BY[msg.type || msg.event];
         if (stage) setResetStage(stage);
+    }
+
+    // ------------------------------------------------------------------
+    // …and the teardown half (#864)
+    // ------------------------------------------------------------------
+    //
+    // The table above says which frame RAISES a between-round screen. Nothing
+    // said which frame takes one down, and #862 is what that asymmetry costs:
+    // it gave `hot_seat_result` a render where RC3 had a `reset()`, and the
+    // only two functions that hide `#hotseat-panel` — `hotSeat.reset()` and
+    // the next auction's bid stage — are called by the NEXT auction. The Hot
+    // Seat fires once per game (`_hot_seat_fired`), so the next auction never
+    // comes. From the settlement to the podium, every remaining question was
+    // played behind the previous chair's result card.
+    //
+    // It is not a cosmetic leftover, because of WHERE these panels sit: each
+    // one is a direct child of `.game-container` ABOVE `#answers-container`,
+    // so a visible one does not overlap the answer grid, it pushes the grid
+    // down the page. On the 390x844 phone the live test measured, the grid
+    // starts at 545 with none of them up — 91 px of slack — and at 1017 with
+    // the Hot Seat panel up, which is 173 px below the fold. A guest who does
+    // not think to scroll past a card about the last round has no visible way
+    // to answer this one.
+    //
+    // One row per panel:
+    //   raisedBy — the frames that can put it on screen
+    //   phases   — the snapshot phases that OWN it (the reconnect half)
+    //   clear    — the teardown this table runs when the game moves on
+    //   owner    — the module that already owns the teardown, when it is not
+    //              this table's job. Exactly one of `clear` / `owner` is set.
+    //
+    // A panel with neither, and a panel the page grows that has no row here at
+    // all, both fail tests/test_panel_teardown_parity_864.py — which is the
+    // guard tests/test_stage_entry_parity_858.py does not have, and the reason
+    // #864 walked straight past it.
+    var GAME_VIEW_PANELS = {
+        'last-round-banner': {
+            raisedBy: ['wager_window'],
+            phases: ['WAGER_ACTIVE'],
+            clear: null,
+            owner: 'handleQuestionStarted, which lowers it on any round that is not the last (#706)'
+        },
+        'wager-panel': {
+            raisedBy: ['wager_window'],
+            phases: ['WAGER_ACTIVE'],
+            clear: null,
+            owner: 'game.renderQuestion via _showWagerBadge, which hides it or collapses it to a badge (#656)'
+        },
+        'hotseat-panel': {
+            raisedBy: [
+                'hot_seat_auction_you',
+                'hot_seat_question',
+                'hot_seat_result'
+            ],
+            phases: ['HOT_SEAT_AUCTION', 'HOT_SEAT', 'HOT_SEAT_REVEAL'],
+            clear: function () { if (hotSeat) hotSeat.reset(); },
+            owner: null
+        },
+        'hotseat-reset-controls': {
+            raisedBy: ['hot_seat_result'],
+            phases: ['HOT_SEAT_REVEAL'],
+            clear: null,
+            owner: 'setResetStage, which disarms every stage but the one being entered (#803/#858)'
+        },
+        'estimate-container': {
+            raisedBy: ['question_started'],
+            phases: ['QUESTION_ACTIVE', 'PLAYING'],
+            clear: null,
+            owner: 'game.renderQuestion, which swaps the two input sections per round type (#275)'
+        }
+    };
+
+    // The frames that put the phone back on a playable `#game-view` screen —
+    // the moments at which "the game has moved on" is true.
+    //
+    // `round_summary` and `finale` are deliberately absent: they switch to
+    // another view, so nothing here is on screen, and tearing down from there
+    // would only move the bug to whichever frame brings `#game-view` back.
+    var MOVED_PAST_DETOUR = [
+        'question_started',
+        'wager_window',
+        'lightning_splash'
+    ];
+
+    function _clearPanels(keep) {
+        Object.keys(GAME_VIEW_PANELS).forEach(function (id) {
+            var row = GAME_VIEW_PANELS[id];
+            if (!row.clear || keep(row)) return;
+            row.clear();
+        });
+    }
+
+    // Live half: a frame that opens the next screen leaves no detour panel
+    // standing — except the one it is itself raising.
+    function clearStalePanels(msg) {
+        var type = msg && (msg.type || msg.event);
+        if (MOVED_PAST_DETOUR.indexOf(type) === -1) return;
+        _clearPanels(function (row) {
+            return row.raisedBy.indexOf(type) !== -1;
+        });
+    }
+
+    // Snapshot half, and the same parity #858 is about: a phone that
+    // reconnects into a phase no longer owning a panel must find it gone,
+    // exactly as a phone that lived through the frames does. `restoreFromSnapshot`
+    // returns at its first line when the snapshot has no `hot_seat` block, so
+    // without this a reload did not clear the card either.
+    function clearStalePanelsForPhase(phase) {
+        _clearPanels(function (row) {
+            return (row.phases || []).indexOf(phase) !== -1;
+        });
     }
 
     // The roster from the most recent frame that carried one.
