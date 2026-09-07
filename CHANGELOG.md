@@ -3,6 +3,59 @@
 All notable changes to Quizify are documented here. This project follows
 [Semantic Versioning](https://semver.org/).
 
+## [1.16.0] — 2026-09-07
+
+Thirty-four entries, chosen in one sitting and built in one — then played on a real
+television five times over, which found sixteen more.
+
+### 🔒 The door was open, and the pictures were not ours
+
+A page open in any browser on the network could reach the game's socket and, in the right
+moment, claim the host's seat — lights, speakers and scenes with it. And a photograph of the
+Jules Rimet trophy had been shipping in every install under a licence that requires a credit
+it never carried; three more pictures were free in the United States only, two of them tagged
+on their own source page as protected in Germany. Four questions are text now, two carry
+different pictures, and the check that missed all of it no longer greps for a phrase.
+
+### 📺 The room shows this game, not the last one
+
+The television never followed the game's language, so a German house running an English quiz
+framed English questions in German — and a change of flag now reaches a television already
+running. The phone kept a picture from the round before, the host's leaderboard was a round
+behind at every reveal, the television kept the last game's fun fact, and the lobby showed the
+previous game's difficulty. All four were the same shape, and all four are fixed.
+
+### 🚪 No evening ends because a tab was closed
+
+A host who runs the game from the admin page and closed it could not come back: the one phase
+a host-less room parks in was the one phase with no landing. The guests could not rescue the
+room either — the frame that tells them the host is gone was sent from a task the server had
+already cancelled, under a name nothing on the phone was listening for. The way out now
+appears on every screen a waiting room can be on, and a host who never joins as a player is no
+longer read as a ghost.
+
+### 🪑 The chair and the bet, for everybody
+
+Team mode gets its own Hot Seat auction and final wager instead of having both switched off.
+The seat holder can answer a picture or estimate round — the answer grid used to be filled
+inside a section the round had hidden, and the stake went to a timeout every time. Whoever
+bought the seat, what it paid and what it did to your own points now reaches the phones, and
+the card leaves again when the game moves on. A rematch starts everyone at zero.
+
+### 🏆 Everybody is on the final board
+
+At 720p and 768p the podium showed three players and scrolled the rest, on a screen that
+cannot scroll. Up to eight now fit at every resolution; beyond that the board says how many it
+is not naming. "Top Score" and the best single round no longer share a name.
+
+### 🏗 And underneath
+
+Every game mode owns its own loop instead of writing one into the socket handler, the three
+surfaces share one client and one set of renderers, and new guards fail the build when a frame
+reaches a screen that has no case for it, or when something able to stand between the question
+and the answers cannot say what takes it away again. A phone's first load went from 1.98 MB to
+314 KB.
+
 ## [1.16.0-RC5] — 2026-09-07
 
 The fourth candidate was played too. It kept every promise it made and broke one
