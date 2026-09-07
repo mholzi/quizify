@@ -61,7 +61,7 @@ def _make_game(tmp_path: Path) -> QuizifyGameState:
 
 def _seat_stale_admin(game: QuizifyGameState, name: str = "Host") -> None:
     """Seat an admin player, then mark it disconnected (reload/wifi blip)."""
-    game.add_player(name, _ws())
+    game.add_player(name)
     admin = game.get_player(name)
     admin.is_admin = True
     admin.connected = False
@@ -142,7 +142,7 @@ class TestCrownSeizure358:
         # token or not.
         game = _make_game(tmp_path)
         h, token = await _handler_with_token(game)
-        game.add_player("Host", _ws())
+        game.add_player("Host")
         game.get_player("Host").is_admin = True  # connected admin
 
         await h._handle_join(

@@ -27,7 +27,6 @@ from __future__ import annotations
 
 import re
 from pathlib import Path
-from unittest.mock import MagicMock
 
 import pytest
 
@@ -40,12 +39,6 @@ DASHBOARD = REPO / "custom_components" / "quizify" / "www" / "dashboard.html"
 WEBSOCKET = REPO / "custom_components" / "quizify" / "server" / "websocket.py"
 
 
-def _ws() -> MagicMock:
-    ws = MagicMock()
-    ws.closed = False
-    return ws
-
-
 class _Runtime:
     def __init__(self, tmp_path: Path) -> None:
         self.data_dir = tmp_path
@@ -55,7 +48,7 @@ def _game(tmp_path: Path) -> QuizifyGameState:
     """Three teams, the live-test shape: Sofa, Sessel, Teppich."""
     st = QuizifyGameState(runtime=_Runtime(tmp_path), entry_id="test")
     for name in ("Anna", "Dan", "Ben", "Cleo"):
-        st.add_player(name, _ws())
+        st.add_player(name)
     st.create_team("Sofa", "Anna")
     st.join_team(st.get_team_of("Anna")["team_id"], "Dan")
     st.create_team("Sessel", "Ben")

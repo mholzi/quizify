@@ -9,18 +9,11 @@ round that was interrupted (#285, #544).
 from __future__ import annotations
 
 from pathlib import Path
-from unittest.mock import MagicMock
 
 import pytest
 
 from custom_components.quizify.game.phase_controller import GamePhase
 from custom_components.quizify.game.state import QuizifyGameState
-
-
-def _fake_ws() -> MagicMock:
-    ws = MagicMock()
-    ws.closed = False
-    return ws
 
 
 class _Runtime:
@@ -31,7 +24,7 @@ class _Runtime:
 def _new_game(tmp_path: Path, names: tuple[str, ...]) -> QuizifyGameState:
     gs = QuizifyGameState(runtime=_Runtime(tmp_path), entry_id="test")
     for name in names:
-        gs.add_player(name, _fake_ws())
+        gs.add_player(name)
     return gs
 
 

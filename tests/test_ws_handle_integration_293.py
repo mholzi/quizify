@@ -223,7 +223,7 @@ class TestReconnectHappyPath:
 
         # A player exists and holds a valid session token.
         old_ws = _ws_mock()
-        game.add_player("Dora", old_ws)
+        game.add_player("Dora", handler._conn.connection_id(old_ws))
         token = handler._conn.create_session_token("Dora")
         # Simulate the player having dropped.
         game.get_player("Dora").connected = False
@@ -236,7 +236,7 @@ class TestReconnectHappyPath:
         # Player re-attached to the new ws + marked connected.
         player = game.get_player("Dora")
         assert player.connected is True
-        assert player.ws is new_ws
+        assert handler._conn.socket_for(player.connection_id) is new_ws
 
         # Server replied `reconnected` with a rotated (different) token.
         sent = [

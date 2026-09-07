@@ -12,7 +12,7 @@ import asyncio
 import sys
 import time
 from pathlib import Path
-from unittest.mock import AsyncMock, MagicMock
+from unittest.mock import AsyncMock
 
 import pytest
 
@@ -28,6 +28,7 @@ from custom_components.quizify.game.lightning import (  # noqa: E402
 from custom_components.quizify.game.questions import QuestionBank  # noqa: E402
 from custom_components.quizify.game.state import GamePhase, QuizifyGameState  # noqa: E402
 from custom_components.quizify.server.connection import ConnectionManager  # noqa: E402
+from tests.ws_helpers import ws_of  # noqa: E402
 from custom_components.quizify.server.serializers import (  # noqa: E402
     serialize_state_snapshot,
 )
@@ -46,12 +47,6 @@ class _FakeRuntime:
     async def run_in_executor(self, func, *args):
         loop = asyncio.get_running_loop()
         return await loop.run_in_executor(None, func, *args)
-
-
-def _fake_ws() -> MagicMock:
-    ws = MagicMock()
-    ws.closed = False
-    return ws
 
 
 @pytest.fixture
@@ -224,13 +219,13 @@ class TestLightningFlow:
 
 class TestGameStateLightning:
     def test_start_from_lobby(self, state: QuizifyGameState) -> None:
-        state.add_player("A", _fake_ws())
+        state.add_player("A")
         assert state.start_lightning_round() is True
         assert state.phase == GamePhase.LIGHTNING
         assert state.lightning is not None
 
     def test_start_from_finale(self, state: QuizifyGameState) -> None:
-        state.add_player("A", _fake_ws())
+        state.add_player("A")
         state.start_game(num_rounds=1, language="de")
         state.end_game()
         assert state.phase == GamePhase.FINALE
@@ -238,14 +233,14 @@ class TestGameStateLightning:
         assert state.phase == GamePhase.LIGHTNING
 
     def test_cannot_start_mid_question(self, state: QuizifyGameState) -> None:
-        state.add_player("A", _fake_ws())
+        state.add_player("A")
         state.start_game(num_rounds=3, language="de")
         state.start_next_question()
         assert state.phase == GamePhase.QUESTION_ACTIVE
         assert state.start_lightning_round() is False
 
     def test_finish_transitions_to_recap(self, state: QuizifyGameState) -> None:
-        state.add_player("A", _fake_ws())
+        state.add_player("A")
         state.start_lightning_round()
         state.finish_lightning_round()
         assert state.phase == GamePhase.LIGHTNING_RECAP
@@ -255,7 +250,7 @@ class TestGameStateLightning:
         # start_lightning while the phase is LIGHTNING_RECAP. Previously the
         # guard only allowed LOBBY/FINALE, so the host got an error toast and
         # the button was a dead-end. From RECAP it must start a fresh round.
-        state.add_player("A", _fake_ws())
+        state.add_player("A")
         state.start_lightning_round()
         first_round = state.lightning
         state.finish_lightning_round()
@@ -269,7 +264,7 @@ class TestGameStateLightning:
         assert state.lightning_splash_pending is True
 
     def test_snapshot_exposes_lightning(self, state: QuizifyGameState) -> None:
-        state.add_player("A", _fake_ws())
+        state.add_player("A")
         state.start_lightning_round()
         snap = serialize_state_snapshot(state)
         assert snap["phase"] == "LIGHTNING"
@@ -279,14 +274,14 @@ class TestGameStateLightning:
 
     def test_splash_pending_after_start(self, state: QuizifyGameState) -> None:
         # The intro splash (#201) is up between start and the admin's Start.
-        state.add_player("A", _fake_ws())
+        state.add_player("A")
         state.start_lightning_round()
         assert state.lightning_splash_pending is True
         snap = serialize_state_snapshot(state)
         assert snap["lightning"]["splash_pending"] is True
 
     def test_begin_questions_clears_splash(self, state: QuizifyGameState) -> None:
-        state.add_player("A", _fake_ws())
+        state.add_player("A")
         state.start_lightning_round()
         assert state.begin_lightning_questions() is True
         assert state.lightning_splash_pending is False
@@ -294,7 +289,7 @@ class TestGameStateLightning:
         assert snap["lightning"]["splash_pending"] is False
 
     def test_begin_questions_idempotent(self, state: QuizifyGameState) -> None:
-        state.add_player("A", _fake_ws())
+        state.add_player("A")
         state.start_lightning_round()
         assert state.begin_lightning_questions() is True
         # Second call is a no-op (splash already dismissed).
@@ -307,7 +302,7 @@ class TestGameStateLightning:
         assert state.begin_lightning_questions() is False
 
     def test_snapshot_exposes_recap(self, state: QuizifyGameState) -> None:
-        state.add_player("A", _fake_ws())
+        state.add_player("A")
         state.start_lightning_round()
         state.finish_lightning_round()
         snap = serialize_state_snapshot(state)
@@ -315,7 +310,7 @@ class TestGameStateLightning:
         assert "lightning_recap" in snap
 
     def test_reset_clears_lightning(self, state: QuizifyGameState) -> None:
-        state.add_player("A", _fake_ws())
+        state.add_player("A")
         state.start_lightning_round()
         state.reset_to_lobby()
         assert state.lightning is None
@@ -324,7 +319,7 @@ class TestGameStateLightning:
     def test_powerups_not_assigned_in_lightning(self, state: QuizifyGameState) -> None:
         # Power-ups are assigned in the normal start_next_question path only;
         # lightning never calls it. Assert no power-up is held after start.
-        state.add_player("A", _fake_ws())
+        state.add_player("A")
         state.start_lightning_round()
         assert state.get_player_powerup("A") is None
 
@@ -350,7 +345,7 @@ class TestLightningWsLoop:
         """Drive the actual WS fast loop with a short window so a 2-question
         round runs to the recap without us answering. Verifies: auto-advance
         on timeout, no reveal between, and a final lightning_recap broadcast."""
-        state.add_player("A", _fake_ws())
+        state.add_player("A")
         h = _handler(state)
         assert state.start_lightning_round() is True
         # Make the loop snappy: 2 questions, ~0.15s each.
@@ -381,7 +376,7 @@ class TestLightningWsLoop:
     ) -> None:
         """If the single connected player answers, the question advances
         before its (long) window elapses."""
-        state.add_player("A", _fake_ws())
+        state.add_player("A")
         h = _handler(state)
         state.start_lightning_round()
         lr = state.lightning
@@ -394,7 +389,7 @@ class TestLightningWsLoop:
         # Answer correctly via the handler path.
         idx = _correct_shuffled_index(lr, "A")
         await h._handle_lightning_answer(
-            state.get_player("A").ws, {"answer_index": idx}, state
+            ws_of(h._conn, state, "A"), {"answer_index": idx}, state
         )
         # Tell the handler "A" is the only connected player by patching
         # get_players to return the connected stub (already connected).
@@ -416,11 +411,11 @@ class TestLightningWsLoop:
         and new shuffles — is dropped, so it cannot occupy the player's single
         answer slot on the new question. The real answer to the new question,
         correctly stamped, is then still accepted and scored."""
-        state.add_player("A", _fake_ws())
+        state.add_player("A")
         h = _handler(state)
         assert state.start_lightning_round() is True
         lr = state.lightning
-        ws = state.get_player("A").ws
+        ws = ws_of(h._conn, state, "A")
 
         # Player is on Q0 and holds that index; capture a pick for it.
         stale_index = lr.index  # 0
@@ -454,11 +449,11 @@ class TestLightningWsLoop:
         """#405 backward compat: an index-less tap (older client) is accepted
         while the current window is open, but dropped once it has expired — the
         exact spot where a stale index-less tap would otherwise land wrong."""
-        state.add_player("A", _fake_ws())
+        state.add_player("A")
         h = _handler(state)
         state.start_lightning_round()
         lr = state.lightning
-        ws = state.get_player("A").ws
+        ws = ws_of(h._conn, state, "A")
 
         # Window open → index-less tap is accepted (legacy path preserved).
         await h._handle_lightning_answer(
@@ -486,7 +481,7 @@ class TestLightningAutoEntry:
         """When the game is about to enter the pre-picked target round, the
         normal advance path detours into the auto Lightning Round instead of a
         normal question."""
-        state.add_player("A", _fake_ws())
+        state.add_player("A")
         h = _handler(state)
         state.start_game(num_rounds=10, lightning_seed=42)
         target = state.lightning_target_round
@@ -509,7 +504,7 @@ class TestLightningAutoEntry:
     ) -> None:
         """The host's normal next_question after the mid-game lightning recap
         resumes the paused main game at the originally-scheduled round."""
-        state.add_player("A", _fake_ws())
+        state.add_player("A")
         h = _handler(state)
         state.start_game(num_rounds=10, lightning_seed=42)
         target = state.lightning_target_round
@@ -522,7 +517,7 @@ class TestLightningAutoEntry:
         assert state.phase == GamePhase.LIGHTNING_RECAP
 
         # next_question from the recap → resume + start the target round.
-        await h._handle_next_question(state.get_player("A").ws, state)
+        await h._handle_next_question(ws_of(h._conn, state, "A"), state)
         assert state.phase == GamePhase.QUESTION_ACTIVE
         assert state.round == target  # the originally-scheduled round now ran
         h._cancel_timer_tick()
@@ -588,7 +583,7 @@ class TestLightningSharedQueue350:
         # Full path: an auto-difficulty game whose auto lightning fires must
         # enter the lightning phase with real questions — not fall through the
         # "no questions" fallback that used to end the game.
-        state.add_player("A", _fake_ws())
+        state.add_player("A")
         h = _handler(state)
         state.start_game(num_rounds=10, difficulty="auto", lightning_seed=42)
         assert state.difficulty == "auto"

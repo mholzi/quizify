@@ -73,6 +73,7 @@ if TYPE_CHECKING:
     from collections.abc import Callable
 
     from ..analytics import PlayerStanding
+    from ..game.player import PlayerSession
     from ..game_events import QuizifyEventEmitter
     from ..lights import QuizifyPartyLights
     from ..runtime import Runtime
@@ -836,6 +837,9 @@ class QuizifyWebSocketHandler:
                 else:
                     self._ip_connections.pop(remote, None)
             await self._handle_disconnect(ws, was_admin=was_admin)
+            # Only now: ``_handle_disconnect`` still needs the id to find the
+            # player sitting on this socket (#882).
+            self._conn.forget_connection(ws)
             _LOGGER.debug(
                 "WebSocket disconnected, total: %d", len(self._conn.connections)
             )
@@ -951,6 +955,57 @@ class QuizifyWebSocketHandler:
         # call regardless of what the underlying handler needs.
         await handler(self, ws, data, game_state)
 
+    # ------------------------------------------------------------------
+    # Transport ↔ player bridge (#882)
+    # ------------------------------------------------------------------
+
+    def _player_for_ws(
+        self, game_state: QuizifyGameState, ws: web.WebSocketResponse
+    ) -> PlayerSession | None:
+        """Return the player sitting on *ws*, or None.
+
+        The game layer is keyed by an opaque ``connection_id``; translating a
+        socket into one is the server layer's job and this is the only place
+        that does it for lookups.
+        """
+        return game_state.get_player_by_connection(self._conn.connection_id(ws))
+
+    def _reap_closed_connections(
+        self, game_state: QuizifyGameState
+    ) -> set[str]:
+        """Mark players whose socket is known-dead as disconnected.
+
+        Replaces the ``ws.closed`` read that used to sit inside
+        ``PlayerSession.is_active`` and ``PlayerRegistry.add_player`` (#882).
+        The situation is real and unchanged: a phone reloads, its new socket
+        opens and sends ``join`` before aiohttp has run the old socket's
+        ``finally`` — so the old slot still says ``connected = True`` while
+        its transport is already shut. Left alone, that ghost blocks
+        all-submitted early reveal for the whole room and makes the user's own
+        name look taken.
+
+        Only ids the manager still tracks AND reports closed are reaped: an
+        unknown id is unknown, not dead, so a player built without a transport
+        (tests, snapshots) is never touched.
+
+        Returns the names it just took down, which is what tells
+        ``_handle_join`` that a name-collision is the caller's own ghost
+        rather than a live stranger.
+        """
+        reaped: set[str] = set()
+        for player in game_state.get_players():
+            if not player.connected:
+                continue
+            if self._conn.is_connection_dead(player.connection_id):
+                player.connected = False
+                reaped.add(player.name)
+                _LOGGER.info(
+                    "Reaped stale connection for %s (socket closed without a "
+                    "disconnect)",
+                    player.name,
+                )
+        return reaped
+
     async def _handle_get_state(
         self, ws: web.WebSocketResponse, data: dict, game_state: QuizifyGameState
     ) -> None:
@@ -962,7 +1017,7 @@ class QuizifyWebSocketHandler:
         # canonical order here mis-scores ~2/3 of taps after a mid-round
         # reconnect (the client auto-sends get_state on every join). Pure
         # admin/dashboard sockets (no player session) keep canonical order.
-        player = game_state.get_player_by_ws(ws)
+        player = self._player_for_ws(game_state, ws)
         if player is not None:
             state_msg = self._round_messages.project_snapshot_for_player(
                 game_state, snapshot=state_msg, player=player
@@ -1016,6 +1071,13 @@ class QuizifyWebSocketHandler:
         self, ws: web.WebSocketResponse, data: dict, game_state: QuizifyGameState
     ) -> None:
         """Handle player join."""
+        # A reloading phone races its own old socket here (#448/#646): take
+        # down any slot whose transport is already dead before deciding
+        # whether this name is taken. ``reaped`` is what turns a collision
+        # with the caller's own ghost into a reclaim rather than a refusal.
+        reaped = self._reap_closed_connections(game_state)
+        connection_id = self._conn.connection_id(ws)
+
         # Canonicalize ONCE, here, before anything is keyed on the name (#603).
         # The registry sanitizes on store; using the raw name afterwards meant
         # the session token was issued under a name the registry did not have
@@ -1041,7 +1103,7 @@ class QuizifyWebSocketHandler:
         # duplicate join. A re-join under the SAME name is idempotent and
         # handled by the reconnect path in PlayerRegistry.add_player, so it is
         # explicitly allowed here (no-op rejoin / lobby refresh).
-        existing = game_state.get_player_by_ws(ws)
+        existing = self._player_for_ws(game_state, ws)
         if (
             existing is not None
             and existing.connected
@@ -1062,21 +1124,22 @@ class QuizifyWebSocketHandler:
 
         # Auto-append number if name is taken
         #
-        # #448: gate on ``is_active`` (connected AND ws open), not the raw
-        # ``connected`` flag. After a reload the old slot can linger with
-        # ``connected = True`` but a CLOSED WebSocket — the "stale connected
-        # flag, old WS closed" case that PlayerRegistry.add_player treats as a
-        # legitimate rejoin/reclaim. Renaming to "Name 2" here (before
-        # add_player ever sees the original name) made that reclaim branch
-        # unreachable, spawning a duplicate ghost with score 0. Falling through
-        # on a stale slot lets add_player reclaim the original name; genuinely
-        # live duplicates (ws still open) still get the "Name 2" suffix.
+        # #448: gate on ``is_active``, not on the name alone. After a reload
+        # the old slot can linger with ``connected = True`` and a CLOSED
+        # socket — the "stale connected flag" case ``_reap_closed_connections``
+        # has just taken down above (it read ``ws.closed`` here before #882).
+        # Renaming to "Name 2" at this point (before add_player ever sees the
+        # original name) made the reclaim branch unreachable, spawning a
+        # duplicate ghost with score 0. Falling through on a reaped slot lets
+        # add_player reclaim the original name; genuinely live duplicates
+        # (socket still open) still get the "Name 2" suffix.
         #
-        # ``existing.ws is not ws`` (#603): once the name is canonicalized, an
-        # idempotent rejoin from the SAME connection — a lobby refresh, the
-        # admin's redirect from /quizify/admin to /quizify/player — matches an
-        # active slot that IS this connection. Renaming it to "Name 2" would
-        # spawn a score-0 duplicate of the player who is already sitting there.
+        # ``existing.connection_id != connection_id`` (#603): once the name is
+        # canonicalized, an idempotent rejoin from the SAME connection — a
+        # lobby refresh, the admin's redirect from /quizify/admin to
+        # /quizify/player — matches an active slot that IS this connection.
+        # Renaming it to "Name 2" would spawn a score-0 duplicate of the
+        # player who is already sitting there.
         # Before canonicalization this never surfaced, because the raw name
         # differed from the stored one and the duplicate-self-join guard above
         # rejected the rejoin outright instead. Both behaviours were wrong; a
@@ -1086,12 +1149,14 @@ class QuizifyWebSocketHandler:
         while (
             (existing := game_state.get_player(name))
             and existing.is_active
-            and existing.ws is not ws
+            and existing.connection_id != connection_id
         ):
             name = f"{original_name} {counter}"
             counter += 1
 
-        success, error_code = game_state.add_player(name, ws)
+        success, error_code = game_state.add_player(
+            name, connection_id, reclaim_by_name=name in reaped
+        )
 
         if success:
             # Cancel pending removal on reconnect
@@ -1323,8 +1388,10 @@ class QuizifyWebSocketHandler:
             await self._conn.send(ws, {"type": "reconnect_failed"})
             return
 
-        # Restore player connection
-        player.ws = ws
+        # Restore player connection. The id → socket map stays in the
+        # connection manager (#882); the game model only learns the new
+        # opaque handle.
+        game_state.bind_player_connection(player, self._conn.connection_id(ws))
         player.connected = True
         self._conn.cancel_pending_removal(name)
 
@@ -1414,7 +1481,7 @@ class QuizifyWebSocketHandler:
         self, ws: web.WebSocketResponse, data: dict, game_state: QuizifyGameState
     ) -> None:
         """Open a team and put the requesting player in it (lobby only)."""
-        player = game_state.get_player_by_ws(ws)
+        player = self._player_for_ws(game_state, ws)
         if not player:
             await self._conn.send_error(ws, ERR_NOT_IN_GAME, "Not in game")
             return
@@ -1434,7 +1501,7 @@ class QuizifyWebSocketHandler:
         self, ws: web.WebSocketResponse, data: dict, game_state: QuizifyGameState
     ) -> None:
         """Join an existing team (lobby only)."""
-        player = game_state.get_player_by_ws(ws)
+        player = self._player_for_ws(game_state, ws)
         if not player:
             await self._conn.send_error(ws, ERR_NOT_IN_GAME, "Not in game")
             return
@@ -1455,7 +1522,7 @@ class QuizifyWebSocketHandler:
         self, ws: web.WebSocketResponse, data: dict, game_state: QuizifyGameState
     ) -> None:
         """Leave the current team (lobby only). The last one out dissolves it."""
-        player = game_state.get_player_by_ws(ws)
+        player = self._player_for_ws(game_state, ws)
         if not player:
             await self._conn.send_error(ws, ERR_NOT_IN_GAME, "Not in game")
             return
@@ -1487,7 +1554,7 @@ class QuizifyWebSocketHandler:
             return
         for name in team.members:
             member = game_state.get_player(name)
-            if member is None or member.ws is None or not member.connected:
+            if member is None or not member.connected:
                 continue
             shuffle = game_state.get_player_shuffle(name)
             try:
@@ -1497,7 +1564,7 @@ class QuizifyWebSocketHandler:
                 # the question start and this tap). Their client re-reads the
                 # answer from the next projected snapshot.
                 continue
-            await self._conn.send(member.ws, {
+            await self._conn.send_to_player(member, {
                 "type": "team_answer",
                 "team_id": ack.team_id,
                 "answer_index": shown_index,
@@ -1517,7 +1584,11 @@ class QuizifyWebSocketHandler:
         self, ws: web.WebSocketResponse, data: dict, game_state: QuizifyGameState
     ) -> None:
         """Handle answer submission from player."""
-        player = game_state.get_player_by_ws(ws)
+        # ``all_submitted()`` decides early reveal off ``connected`` (#882);
+        # reap first so a room-mate whose socket died a moment ago cannot hold
+        # the whole room on the full timer.
+        self._reap_closed_connections(game_state)
+        player = self._player_for_ws(game_state, ws)
         if not player:
             await self._conn.send_error(ws, ERR_NOT_IN_GAME, "Not in game")
             return
@@ -1632,7 +1703,7 @@ class QuizifyWebSocketHandler:
         correct answerer caps at _REACTION_BONUS_CAP_PER_ROUND incoming
         bonuses so a 6-player room can't pile 5 free points on the
         leader every reveal."""
-        reactor = game_state.get_player_by_ws(ws)
+        reactor = self._player_for_ws(game_state, ws)
         if not reactor:
             return  # silent: reactions are best-effort, not a hard error
 
@@ -2014,7 +2085,7 @@ class QuizifyWebSocketHandler:
         everything at no risk. The phase check below is the fix — once the
         question is out, the betting is over.
         """
-        player = game_state.get_player_by_ws(ws)
+        player = self._player_for_ws(game_state, ws)
         if not player:
             await self._conn.send_error(ws, ERR_NOT_IN_GAME, "Not in game")
             return
@@ -2089,7 +2160,7 @@ class QuizifyWebSocketHandler:
         self, ws: web.WebSocketResponse, data: dict, game_state: QuizifyGameState
     ) -> None:
         """Handle power-up usage."""
-        player = game_state.get_player_by_ws(ws)
+        player = self._player_for_ws(game_state, ws)
         if not player:
             await self._conn.send_error(ws, ERR_NOT_IN_GAME, "Not in game")
             return
@@ -2691,7 +2762,14 @@ class QuizifyWebSocketHandler:
         # never reach the host (or any real player) and their UI stays
         # frozen on the now-stale lobby. So: clear state → broadcast the
         # reset to everyone still connected → only THEN close the sockets.
-        stale_wses = [p.ws for p in game_state.get_players() if p.ws is not None]
+        stale_wses = [
+            sock
+            for sock in (
+                self._conn.socket_for(p.connection_id)
+                for p in game_state.get_players()
+            )
+            if sock is not None
+        ]
 
         # Drop every player from the registry (full wipe — not just score reset).
         game_state.clear_all_players()
@@ -2752,7 +2830,7 @@ class QuizifyWebSocketHandler:
         # matters: send before close, or the client never reads it. We don't
         # rely on the closed event reaching us — remove_player flushes state
         # immediately and the WS cleanup path is idempotent.
-        target_ws = target.ws
+        target_ws = self._conn.socket_for(target.connection_id)
         game_state.remove_player(target.name)
         self._conn.clear_player_tokens(target.name)
 
@@ -2855,7 +2933,7 @@ class QuizifyWebSocketHandler:
         lr = game_state.lightning
         if lr is None:
             return
-        player = game_state.get_player_by_ws(ws)
+        player = self._player_for_ws(game_state, ws)
         if not player:
             await self._conn.send_error(ws, ERR_NOT_IN_GAME, "Not in game")
             return
@@ -2918,14 +2996,14 @@ class QuizifyWebSocketHandler:
         members = lr.members_of(setter)
         for name in members:
             member = game_state.get_player(name)
-            if member is None or member.ws is None or not member.connected:
+            if member is None or not member.connected:
                 continue
             order = lr.ensure_shuffle(name)
             try:
                 shown_index = order.index(standing.answer_index)
             except ValueError:
                 continue
-            await self._conn.send(member.ws, {
+            await self._conn.send_to_player(member, {
                 "type": "lightning_team_answer",
                 "index": lr.index,
                 "answer_index": shown_index,
@@ -3000,7 +3078,7 @@ class QuizifyWebSocketHandler:
         In team mode the bidder is the team (#804): one bid, staked against
         the team's score, and the member who places it takes the chair.
         """
-        player = game_state.get_player_by_ws(ws)
+        player = self._player_for_ws(game_state, ws)
         if not player:
             await self._conn.send_error(ws, ERR_NOT_IN_GAME, "Not in game")
             return
@@ -3040,7 +3118,7 @@ class QuizifyWebSocketHandler:
         self, ws: web.WebSocketResponse, data: dict, game_state: QuizifyGameState
     ) -> None:
         """Accept a spectator's optional stake on the seat holder (#616)."""
-        player = game_state.get_player_by_ws(ws)
+        player = self._player_for_ws(game_state, ws)
         if not player:
             await self._conn.send_error(ws, ERR_NOT_IN_GAME, "Not in game")
             return
@@ -3086,7 +3164,7 @@ class QuizifyWebSocketHandler:
         self, ws: web.WebSocketResponse, data: dict, game_state: QuizifyGameState
     ) -> None:
         """Record the seat holder's single answer (#616)."""
-        player = game_state.get_player_by_ws(ws)
+        player = self._player_for_ws(game_state, ws)
         if not player:
             await self._conn.send_error(ws, ERR_NOT_IN_GAME, "Not in game")
             return
@@ -3144,9 +3222,9 @@ class QuizifyWebSocketHandler:
         # the mode off for, and a slider priced against it costs nothing.
         sends = []
         for player in game_state.get_players():
-            if not player.connected or player.ws is None:
+            if not player.connected:
                 continue
-            sends.append(self._conn.send(player.ws, {
+            sends.append(self._conn.send_to_player(player, {
                 "type": "hot_seat_auction_you",
                 "score": hs.scores.get(hs.entrant_for(player.name), 0),
                 "seconds": hs.auction_seconds,
@@ -3259,16 +3337,16 @@ class QuizifyWebSocketHandler:
         }
         sends = []
         for player in game_state.get_players():
-            if not player.connected or player.ws is None:
+            if not player.connected:
                 continue
             if player.name == hs.seat_holder:
-                sends.append(self._conn.send(player.ws, {
+                sends.append(self._conn.send_to_player(player, {
                     **payload,
                     "answers": hs.shuffled_answers(),
                     "you_are_seated": True,
                 }))
             else:
-                sends.append(self._conn.send(player.ws, {
+                sends.append(self._conn.send_to_player(player, {
                     **payload,
                     "answers": [],
                     "you_are_seated": False,
@@ -3304,7 +3382,7 @@ class QuizifyWebSocketHandler:
         for player in game_state.get_players():
             if not player.connected:
                 continue
-            lightning_sends.append(self._conn.send(player.ws, {
+            lightning_sends.append(self._conn.send_to_player(player, {
                 "type": "lightning_question",
                 "question_text": q.question,
                 "answers": lr.shuffled_answers_for(player.name),
@@ -3374,16 +3452,18 @@ class QuizifyWebSocketHandler:
         player_ws: set[Any] = set()
         sends = []
         for player in game_state.get_players():
-            if player.ws is None or not player.connected:
+            if not player.connected:
                 continue
-            player_ws.add(player.ws)
+            player_sock = self._conn.socket_for(player.connection_id)
+            if player_sock is not None:
+                player_ws.add(player_sock)
             msg = self._round_messages.project_snapshot_for_player(
                 game_state, snapshot=base, player=player
             )
             msg["type"] = "game_state"
             if extra:
                 msg.update(extra)
-            sends.append(self._conn.send(player.ws, msg))
+            sends.append(self._conn.send_to_player(player, msg))
 
         # Raw snapshot for pure admin/dashboard sockets — but skip any socket
         # that is also a player (admin-as-player already got its projected
@@ -3463,8 +3543,8 @@ class QuizifyWebSocketHandler:
         """
         players = game_state.get_players()
         sends = [
-            self._conn.send(
-                player.ws,
+            self._conn.send_to_player(
+                player,
                 self._round_messages.build_wager_window(
                     game_state,
                     question=question,
@@ -3587,7 +3667,7 @@ class QuizifyWebSocketHandler:
             player_msg = self._round_messages.build_player_question(
                 game_state, question=question, player=player, is_final=is_final
             )
-            question_sends.append(self._conn.send(player.ws, player_msg))
+            question_sends.append(self._conn.send_to_player(player, player_msg))
         if question_sends:
             await asyncio.gather(*question_sends)
 
@@ -3620,7 +3700,7 @@ class QuizifyWebSocketHandler:
         for player in players:
             powerup = game_state.get_player_powerup(player.name)
             if powerup and player.connected:
-                powerup_sends.append(self._conn.send(player.ws, {
+                powerup_sends.append(self._conn.send_to_player(player, {
                     "type": "powerup_assigned",
                     "powerup_type": powerup.value,
                 }))
@@ -3683,7 +3763,7 @@ class QuizifyWebSocketHandler:
                 player = by_name.get(name)
                 if player is None:
                     continue
-                sends.append(self._conn.send(player.ws, {
+                sends.append(self._conn.send_to_player(player, {
                     "type": "timer_tick",
                     "remaining": round(remaining, 1),
                 }))
@@ -3838,7 +3918,7 @@ class QuizifyWebSocketHandler:
             # nothing at all — see ``_announce_host_presence_soon``.
             self._announce_host_presence_soon()
 
-        player = game_state.get_player_by_ws(ws)
+        player = self._player_for_ws(game_state, ws)
         if not player:
             return
 
@@ -3993,7 +4073,7 @@ class QuizifyWebSocketHandler:
         self, ws: web.WebSocketResponse, is_admin: bool, game_state: QuizifyGameState
     ) -> bool:
         """Return True if the connection is authorized to perform admin actions."""
-        player = game_state.get_player_by_ws(ws)
+        player = self._player_for_ws(game_state, ws)
         return is_admin or bool(player and player.is_admin)
 
     def _is_reset_authorized(
@@ -4194,14 +4274,14 @@ class QuizifyWebSocketHandler:
             return
         sends = []
         for player in game_state.get_players():
-            if player.ws is None or player.ws.closed:
+            if not self._conn.is_connection_open(player.connection_id):
                 continue
             standing = self._all_time_standing(player.name)
             if standing is None:
                 continue
             sends.append(
-                self._conn.send(
-                    player.ws,
+                self._conn.send_to_player(
+                    player,
                     {"type": "all_time_update", "all_time": standing},
                 )
             )

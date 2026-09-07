@@ -20,7 +20,6 @@ from __future__ import annotations
 import sys
 from collections import Counter
 from pathlib import Path
-from unittest.mock import MagicMock
 
 import pytest
 
@@ -156,12 +155,6 @@ class _FakeRuntime:
         self.data_dir = tmp_path
 
 
-def _fake_ws() -> MagicMock:
-    ws = MagicMock()
-    ws.closed = False
-    return ws
-
-
 @pytest.fixture
 def state(tmp_path: Path) -> QuizifyGameState:
     runtime = _FakeRuntime(tmp_path)
@@ -176,7 +169,7 @@ class TestRealGameRoundLoop:
     ) -> None:
         names = ["Alice", "Bob", "Charlie"]
         for n in names:
-            state.add_player(n, _fake_ws())
+            state.add_player(n)
         state.start_game(language="de", num_rounds=8)
 
         granted_seen: set[str] = set()
@@ -209,7 +202,7 @@ class TestRealGameRoundLoop:
     ) -> None:
         names = ["Alice", "Bob"]
         for n in names:
-            state.add_player(n, _fake_ws())
+            state.add_player(n)
         state.start_game(language="de", num_rounds=3)
         state.start_next_question()
         # Someone is now granted.

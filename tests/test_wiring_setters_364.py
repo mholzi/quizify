@@ -67,7 +67,7 @@ def test_set_tts_announcer_wires_and_clears(tmp_path: Path) -> None:
 
 def test_add_reaction_bonus_enforces_cap() -> None:
     cap = QuizifyWebSocketHandler._REACTION_BONUS_CAP_PER_ROUND
-    player = PlayerSession(name="Alice", ws=None)
+    player = PlayerSession(name="Alice")
     round_num = 1
 
     # Up to the cap: each grant awards +1 and returns True.
@@ -85,7 +85,7 @@ def test_add_reaction_bonus_enforces_cap() -> None:
 
 def test_add_reaction_bonus_is_per_round() -> None:
     cap = 3
-    player = PlayerSession(name="Bob", ws=None)
+    player = PlayerSession(name="Bob")
 
     # Fill round 1 to the cap.
     for _ in range(cap):
@@ -100,7 +100,7 @@ def test_add_reaction_bonus_is_per_round() -> None:
 
 def test_reset_for_new_game_clears_received_bonuses() -> None:
     cap = 3
-    player = PlayerSession(name="Carol", ws=None)
+    player = PlayerSession(name="Carol")
     player.add_reaction_bonus(1, cap)
     assert player._reaction_bonuses_received == {1: 1}
 

@@ -41,7 +41,6 @@ import shutil
 import subprocess
 import sys
 from pathlib import Path
-from unittest.mock import MagicMock
 
 import pytest
 
@@ -80,12 +79,6 @@ needs_node = pytest.mark.skipif(
 class _FakeRuntime:
     def __init__(self, tmp_path: Path) -> None:
         self.data_dir = tmp_path
-
-
-def _ws() -> MagicMock:
-    ws = MagicMock()
-    ws.closed = False
-    return ws
 
 
 def _js_function(path: Path, name: str) -> str:
@@ -280,8 +273,8 @@ HOT_SEAT_SOURCED_ELSEWHERE = {
 
 def _game_in_question_active(tmp_path: Path, category: str) -> QuizifyGameState:
     state = QuizifyGameState(runtime=_FakeRuntime(tmp_path), entry_id="test")
-    state.add_player("Alice", _ws())
-    state.add_player("Bob", _ws())
+    state.add_player("Alice")
+    state.add_player("Bob")
     state.start_game(category=category, language="de", num_rounds=3, difficulty="easy")
     assert state.start_next_question() is not None
     assert state.phase == GamePhase.QUESTION_ACTIVE
@@ -342,7 +335,7 @@ def test_the_question_type_is_in_the_snapshot_for_every_question(
 def _hot_seat_in_question_stage(tmp_path: Path) -> QuizifyGameState:
     state = QuizifyGameState(runtime=_FakeRuntime(tmp_path), entry_id="test")
     for name in ("Anna", "Ben", "Mira"):
-        state.add_player(name, _ws())
+        state.add_player(name)
     state.start_game(
         category="picture-round-en", difficulty="easy", num_rounds=5, language="en"
     )
@@ -404,7 +397,7 @@ def test_the_auction_snapshot_still_withholds_the_question(tmp_path: Path) -> No
     """
     state = QuizifyGameState(runtime=_FakeRuntime(tmp_path), entry_id="test")
     for name in ("Anna", "Ben", "Mira"):
-        state.add_player(name, _ws())
+        state.add_player(name)
     state.start_game(
         category="picture-round-en", difficulty="easy", num_rounds=5, language="en"
     )

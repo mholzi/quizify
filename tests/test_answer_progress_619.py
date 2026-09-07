@@ -27,7 +27,7 @@ from __future__ import annotations
 import asyncio
 import sys
 from pathlib import Path
-from unittest.mock import AsyncMock, MagicMock
+from unittest.mock import AsyncMock
 
 import pytest
 
@@ -60,13 +60,6 @@ class _FakeRuntime:
         return await loop.run_in_executor(None, func, *args)
 
 
-def _ws(closed: bool = False) -> MagicMock:
-    ws = MagicMock()
-    ws.closed = closed
-    ws.send_json = AsyncMock()
-    return ws
-
-
 @pytest.fixture
 def game(tmp_path: Path) -> QuizifyGameState:
     return QuizifyGameState(runtime=_FakeRuntime(tmp_path), entry_id="test")
@@ -87,8 +80,8 @@ def handler(game: QuizifyGameState) -> QuizifyWebSocketHandler:
 
 def test_the_payload_matches_what_the_renderer_reads(game: QuizifyGameState) -> None:
     """``renderSubmissionTracker`` predates any sender and reads these keys."""
-    game.add_player("Anna", _ws())
-    game.add_player("Ben", _ws())
+    game.add_player("Anna")
+    game.add_player("Ben")
     game.get_player("Anna").submit_answer(1, 0.0)
 
     payload = serialize_answer_progress(game.get_players())
@@ -107,7 +100,7 @@ def test_the_payload_carries_no_scores(game: QuizifyGameState) -> None:
     A live score next to each name would say who just answered correctly — the
     same class of leak as #604, arriving through a different door.
     """
-    game.add_player("Anna", _ws())
+    game.add_player("Anna")
     game.get_player("Anna").submit_answer(1, 0.0)
 
     entry = serialize_answer_progress(game.get_players())["players"][0]
@@ -125,7 +118,7 @@ async def test_a_tap_storm_is_one_broadcast(
 ) -> None:
     """Five simultaneous taps must not be five room-wide frames."""
     for name in ("A", "B", "C", "D", "E"):
-        game.add_player(name, _ws())
+        game.add_player(name)
 
     for _ in range(5):
         handler._mark_progress_dirty()
@@ -149,8 +142,8 @@ async def test_the_frame_reflects_the_room_at_flush_time(
     Otherwise the frame describes the room as it was when the window opened,
     which is exactly the state the room already saw.
     """
-    game.add_player("Anna", _ws())
-    game.add_player("Ben", _ws())
+    game.add_player("Anna")
+    game.add_player("Ben")
 
     handler._mark_progress_dirty()
     game.get_player("Anna").submit_answer(0, 0.0)
@@ -170,7 +163,7 @@ async def test_cleanup_cancels_the_pending_flush(
     handler: QuizifyWebSocketHandler, game: QuizifyGameState
 ) -> None:
     """A teardown with a flush in flight must not fire into a dead game."""
-    game.add_player("Anna", _ws())
+    game.add_player("Anna")
     handler._mark_progress_dirty()
     assert handler._progress_flush_task is not None
 

@@ -138,8 +138,8 @@ class TestKickedScreen:
         other order delivers nothing."""
         admin_ws = _ws()
         target_ws = _ws()
-        game.add_player("Admin", admin_ws)
-        game.add_player("Vic", target_ws)
+        game.add_player("Admin", handler._conn.connection_id(admin_ws))
+        game.add_player("Vic", handler._conn.connection_id(target_ws))
         game.get_player("Admin").is_admin = True
         game.phase = GamePhase.LOBBY
 
@@ -191,7 +191,7 @@ class TestGuessAck:
         player.name = "Ann"
         gs = MagicMock()
         gs.phase = GamePhase.QUESTION_ACTIVE
-        gs.get_player_by_ws.return_value = player
+        gs.get_player_by_connection.return_value = player
         question = MagicMock()
         question.is_estimate = True
         gs.get_current_question.return_value = question
@@ -226,7 +226,7 @@ class TestStreakMilestoneRemoved:
         player.name = "Ann"
         gs = MagicMock()
         gs.phase = GamePhase.QUESTION_ACTIVE
-        gs.get_player_by_ws.return_value = player
+        gs.get_player_by_connection.return_value = player
         question = MagicMock()
         question.is_estimate = False
         gs.get_current_question.return_value = question

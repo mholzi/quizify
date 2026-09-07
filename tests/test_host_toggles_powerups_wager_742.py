@@ -105,7 +105,7 @@ def _mc_question() -> Question:
 
 def _players(game: QuizifyGameState, *names: str) -> None:
     for name in names:
-        game.add_player(name, _ws())
+        game.add_player(name)
 
 
 # ---------------------------------------------------------------------------
@@ -186,7 +186,7 @@ class TestWagerToggle:
         server opens no window for would sit on a control nothing accepts.
         """
         admin = _ws()
-        game.add_player("Markus", admin)
+        game.add_player("Markus", handler._conn.connection_id(admin))
         game.get_player("Markus").is_admin = True
         await handler._handle_start_game(
             admin,
@@ -219,7 +219,7 @@ class TestWagerToggle:
         test above proves the toggle removes exactly that.
         """
         admin = _ws()
-        game.add_player("Markus", admin)
+        game.add_player("Markus", handler._conn.connection_id(admin))
         game.get_player("Markus").is_admin = True
         await handler._handle_start_game(
             admin,
@@ -247,7 +247,7 @@ class TestWireToggles:
         self, handler: QuizifyWebSocketHandler, game: QuizifyGameState
     ) -> None:
         admin = _ws()
-        game.add_player("Markus", admin)
+        game.add_player("Markus", handler._conn.connection_id(admin))
         game.get_player("Markus").is_admin = True
         await handler._handle_start_game(
             admin,
@@ -267,7 +267,7 @@ class TestWireToggles:
     ) -> None:
         """Same ``_coerce_toggle`` as #285/#616 — a "0" string counts as off."""
         admin = _ws()
-        game.add_player("Markus", admin)
+        game.add_player("Markus", handler._conn.connection_id(admin))
         game.get_player("Markus").is_admin = True
         await handler._handle_start_game(
             admin,

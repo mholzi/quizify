@@ -18,7 +18,6 @@ from __future__ import annotations
 
 import asyncio
 from pathlib import Path
-from unittest.mock import MagicMock
 
 from custom_components.quizify.game.state import QuizifyGameState
 
@@ -34,17 +33,11 @@ class _Runtime:
         return asyncio.ensure_future(coro)
 
 
-def _ws() -> MagicMock:
-    ws = MagicMock()
-    ws.closed = False
-    return ws
-
-
 def _team_game(tmp_path: Path, rounds: int = 3) -> QuizifyGameState:
     """Two teams — Sofa (Anna, Jan) and Cara (Mira) — mid-game."""
     st = QuizifyGameState(runtime=_Runtime(tmp_path), entry_id="test")
     for name in ("Anna", "Jan", "Mira"):
-        st.add_player(name, _ws())
+        st.add_player(name)
     st.create_team("Sofa", "Anna")
     st.join_team(st.get_team_of("Anna")["team_id"], "Jan")
     st.create_team("Cara", "Mira")

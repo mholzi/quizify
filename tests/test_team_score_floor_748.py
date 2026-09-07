@@ -24,15 +24,8 @@ can be built on top of it.
 from __future__ import annotations
 
 from pathlib import Path
-from unittest.mock import MagicMock
 
 from custom_components.quizify.game.state import QuizifyGameState
-
-
-def _ws() -> MagicMock:
-    ws = MagicMock()
-    ws.closed = False
-    return ws
 
 
 class _Runtime:
@@ -52,7 +45,7 @@ def _game(tmp_path: Path, category: str, rounds: int = 1) -> QuizifyGameState:
     """A team of two plus one solo player, parked on round 1 of ``rounds``."""
     st = QuizifyGameState(runtime=_Runtime(tmp_path), entry_id="test")
     for name in ("Anna", "Jan", "Mira"):
-        st.add_player(name, _ws())
+        st.add_player(name)
     st.create_team("Sofa", "Anna")
     st.join_team(st.get_team_of("Anna")["team_id"], "Jan")
     st.start_game(

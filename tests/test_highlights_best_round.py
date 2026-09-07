@@ -9,7 +9,6 @@ from __future__ import annotations
 
 import sys
 from pathlib import Path
-from unittest.mock import MagicMock
 
 _REPO_ROOT = Path(__file__).resolve().parent.parent
 sys.path.insert(0, str(_REPO_ROOT))
@@ -31,7 +30,7 @@ def _mk_player(name: str, round_scores: list[int] | None = None) -> PlayerSessio
     early-exits when `max_rounds < MIN_ROUNDS` (3 rounds). The history string
     doesn't matter for Best Round — it's only used by Most Accurate.
     """
-    p = PlayerSession(name=name, ws=MagicMock())
+    p = PlayerSession(name=name)
     if round_scores is not None:
         p.round_scores = list(round_scores)
         # Awards function gates on len(round_history) — pad to match scores so

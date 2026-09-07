@@ -12,7 +12,6 @@ from __future__ import annotations
 import sys
 import time
 from pathlib import Path
-from unittest.mock import MagicMock
 
 import pytest
 
@@ -37,13 +36,6 @@ class _FakeRuntime:
         self.data_dir = tmp_path
 
 
-def _fake_ws() -> MagicMock:
-    """A WebSocket stub. The game only uses it as an opaque handle in tests."""
-    ws = MagicMock()
-    ws.closed = False
-    return ws
-
-
 @pytest.fixture
 def state(tmp_path: Path) -> QuizifyGameState:
     """Fresh game state in LOBBY with a temp data dir."""
@@ -65,14 +57,14 @@ class TestPhaseTransitions:
         # start_game prepares the game but doesn't advance phase —
         # start_next_question does. This separation lets the server
         # apply a grace period (L3 fix) between the two.
-        state.add_player("Alice", _fake_ws())
+        state.add_player("Alice")
         state.start_game(language="de", num_rounds=3)
         assert state.phase == GamePhase.LOBBY
 
     def test_start_next_question_advances_to_question_active(
         self, state: QuizifyGameState
     ) -> None:
-        state.add_player("Alice", _fake_ws())
+        state.add_player("Alice")
         state.start_game(language="de", num_rounds=3)
         q = state.start_next_question()
         assert q is not None
@@ -80,20 +72,20 @@ class TestPhaseTransitions:
         assert state.round == 1
 
     def test_double_start_raises(self, state: QuizifyGameState) -> None:
-        state.add_player("Alice", _fake_ws())
+        state.add_player("Alice")
         state.start_game(language="de", num_rounds=3)
         state.start_next_question()
         with pytest.raises(ValueError):
             state.start_game(language="de", num_rounds=3)
 
     def test_end_game_transitions_to_finale(self, state: QuizifyGameState) -> None:
-        state.add_player("Alice", _fake_ws())
+        state.add_player("Alice")
         state.start_game(language="de", num_rounds=2)
         state.end_game()
         assert state.phase == GamePhase.FINALE
 
     def test_reset_to_lobby_returns_to_lobby(self, state: QuizifyGameState) -> None:
-        state.add_player("Alice", _fake_ws())
+        state.add_player("Alice")
         state.start_game(language="de", num_rounds=2)
         state.start_next_question()
         state.end_game()
@@ -115,11 +107,11 @@ class TestLateJoin:
     """
 
     def test_late_joiner_gets_a_timer(self, state: QuizifyGameState) -> None:
-        state.add_player("Alice", _fake_ws())
+        state.add_player("Alice")
         state.start_game(language="de", num_rounds=3, timer_duration=30)
         state.start_next_question()
         # Bob shows up after round started
-        success, _err = state.add_player("Bob", _fake_ws())
+        success, _err = state.add_player("Bob")
         assert success
         bob_timer = state.get_player_timer("Bob")
         assert bob_timer is not None, "late joiner must get a timer"
@@ -127,20 +119,20 @@ class TestLateJoin:
         assert not bob_timer.is_expired()
 
     def test_late_joiner_can_submit_answer(self, state: QuizifyGameState) -> None:
-        state.add_player("Alice", _fake_ws())
+        state.add_player("Alice")
         state.start_game(language="de", num_rounds=3, timer_duration=30)
         state.start_next_question()
-        state.add_player("Bob", _fake_ws())
+        state.add_player("Bob")
         # Bob picks an answer — should be accepted (not ERR_NOT_IN_GAME or expired)
         result = state.submit_answer("Bob", 0)
         # AnswerResult dataclass or error string — must not be an error
         assert not isinstance(result, str), f"got error: {result!r}"
 
     def test_late_joiner_marked_joined_late(self, state: QuizifyGameState) -> None:
-        state.add_player("Alice", _fake_ws())
+        state.add_player("Alice")
         state.start_game(language="de", num_rounds=3)
         state.start_next_question()
-        state.add_player("Bob", _fake_ws())
+        state.add_player("Bob")
         bob = state.get_player("Bob")
         assert bob is not None
         assert bob.joined_late is True
@@ -151,11 +143,11 @@ class TestLateJoin:
         """all_submitted() must exclude late joiners — they shouldn't
         keep the round open after the original participants are done.
         """
-        state.add_player("Alice", _fake_ws())
-        state.add_player("Bob", _fake_ws())
+        state.add_player("Alice")
+        state.add_player("Bob")
         state.start_game(language="de", num_rounds=3)
         state.start_next_question()
-        state.add_player("Charlie", _fake_ws())  # late
+        state.add_player("Charlie")  # late
         state.submit_answer("Alice", 0)
         # Before the last real participant submits, the round is still open and
         # all_submitted() excludes the late joiner (it does not block on him).
@@ -172,7 +164,7 @@ class TestLateJoin:
 
 class TestScoring:
     def test_correct_answer_increments_score(self, state: QuizifyGameState) -> None:
-        state.add_player("Alice", _fake_ws())
+        state.add_player("Alice")
         state.start_game(language="de", num_rounds=3, difficulty="easy")
         state.start_next_question()
         question = state._current_question
@@ -188,7 +180,7 @@ class TestScoring:
         assert alice.score == result.points_earned
 
     def test_wrong_answer_zero_points(self, state: QuizifyGameState) -> None:
-        state.add_player("Alice", _fake_ws())
+        state.add_player("Alice")
         state.start_game(language="de", num_rounds=3, difficulty="easy")
         state.start_next_question()
         question = state._current_question
@@ -201,7 +193,7 @@ class TestScoring:
         assert result.points_earned == 0
 
     def test_streak_resets_on_wrong(self, state: QuizifyGameState) -> None:
-        state.add_player("Alice", _fake_ws())
+        state.add_player("Alice")
         state.start_game(language="de", num_rounds=3, difficulty="easy")
 
         def correct_idx() -> int:
@@ -226,7 +218,7 @@ class TestScoring:
         assert alice.streak == 0
 
     def test_streak_tracks_max(self, state: QuizifyGameState) -> None:
-        state.add_player("Alice", _fake_ws())
+        state.add_player("Alice")
         state.start_game(language="de", num_rounds=3, difficulty="easy")
 
         for _ in range(3):
@@ -245,7 +237,7 @@ class TestScoring:
         assert alice.max_streak == 3
 
     def test_double_submit_rejected(self, state: QuizifyGameState) -> None:
-        state.add_player("Alice", _fake_ws())
+        state.add_player("Alice")
         state.start_game(language="de", num_rounds=3, difficulty="easy")
         state.start_next_question()
         state.submit_answer("Alice", 0)
@@ -258,7 +250,7 @@ class TestScoring:
 
 class TestEvaluation:
     def test_evaluate_round_transitions_to_reveal(self, state: QuizifyGameState) -> None:
-        state.add_player("Alice", _fake_ws())
+        state.add_player("Alice")
         state.start_game(language="de", num_rounds=3)
         state.start_next_question()
         state.submit_answer("Alice", 0)
@@ -268,7 +260,7 @@ class TestEvaluation:
     def test_evaluate_idempotent(self, state: QuizifyGameState) -> None:
         """A double evaluate_round() must not corrupt scores. There's a
         guard against double-evaluation in evaluate_round() — verify it."""
-        state.add_player("Alice", _fake_ws())
+        state.add_player("Alice")
         state.start_game(language="de", num_rounds=3, difficulty="easy")
         state.start_next_question()
         correct = next(
@@ -283,7 +275,7 @@ class TestEvaluation:
         )
 
     def test_unanswered_round_evaluates_to_zero(self, state: QuizifyGameState) -> None:
-        state.add_player("Alice", _fake_ws())
+        state.add_player("Alice")
         state.start_game(language="de", num_rounds=3)
         state.start_next_question()
         # No submit — just evaluate
@@ -298,14 +290,14 @@ class TestEvaluation:
 
 class TestPlayerRegistry:
     def test_duplicate_name_rejected(self, state: QuizifyGameState) -> None:
-        state.add_player("Alice", _fake_ws())
-        success, err = state.add_player("Alice", _fake_ws())
+        state.add_player("Alice")
+        success, err = state.add_player("Alice")
         assert not success
         assert err is not None
 
     def test_remove_player_clears_timer(self, state: QuizifyGameState) -> None:
-        state.add_player("Alice", _fake_ws())
-        state.add_player("Bob", _fake_ws())
+        state.add_player("Alice")
+        state.add_player("Bob")
         state.start_game(language="de", num_rounds=3)
         state.start_next_question()
         assert state.get_player_timer("Alice") is not None
@@ -315,7 +307,7 @@ class TestPlayerRegistry:
     def test_serialize_state_snapshot_has_required_keys(
         self, state: QuizifyGameState
     ) -> None:
-        state.add_player("Alice", _fake_ws())
+        state.add_player("Alice")
         state.start_game(language="de", num_rounds=3)
         state.start_next_question()
         snapshot = serialize_state_snapshot(state)
@@ -422,8 +414,8 @@ class TestPerPlayerShuffle:
     can't shout the right letter at each other."""
 
     def test_per_player_shuffles_are_isolated(self, state: QuizifyGameState) -> None:
-        state.add_player("Alice", _fake_ws())
-        state.add_player("Bob", _fake_ws())
+        state.add_player("Alice")
+        state.add_player("Bob")
         state.start_game(language="de", num_rounds=2)
         # Simulate what the websocket layer does for per-player shuffles.
         state.set_player_shuffle("Alice", [0, 1, 2])
@@ -434,7 +426,7 @@ class TestPerPlayerShuffle:
     def test_get_player_shuffle_falls_back_to_canonical(
         self, state: QuizifyGameState
     ) -> None:
-        state.add_player("Alice", _fake_ws())
+        state.add_player("Alice")
         state.start_game(language="de", num_rounds=2)
         state.set_round_shuffle([1, 0, 2], ["B", "A", "C"])
         # Unknown player → canonical
@@ -451,7 +443,7 @@ class TestPerPlayerShuffle:
 
 class TestPauseResume:
     def test_pause_during_question(self, state: QuizifyGameState) -> None:
-        state.add_player("Alice", _fake_ws())
+        state.add_player("Alice")
         state.start_game(language="de", num_rounds=3)
         state.start_next_question()
         assert state.pause() is True
@@ -462,7 +454,7 @@ class TestPauseResume:
         assert state.phase == GamePhase.LOBBY
 
     def test_resume_restores_question_active(self, state: QuizifyGameState) -> None:
-        state.add_player("Alice", _fake_ws())
+        state.add_player("Alice")
         state.start_game(language="de", num_rounds=3)
         state.start_next_question()
         state.pause()
@@ -473,7 +465,7 @@ class TestPauseResume:
         assert state.resume() is False
 
     def test_pause_reason_round_trip(self, state: QuizifyGameState) -> None:
-        state.add_player("Alice", _fake_ws())
+        state.add_player("Alice")
         state.start_game(language="de", num_rounds=3)
         state.start_next_question()
         state.pause(reason="admin_disconnected")
@@ -497,7 +489,7 @@ class TestWagerRound:
         player.score = score_target
 
     def test_wager_correct_adds_wager_points(self, state: QuizifyGameState) -> None:
-        state.add_player("Alice", _fake_ws())
+        state.add_player("Alice")
         state.start_game(language="de", num_rounds=2, difficulty="easy")
         # Run round 1 normally to set the round counter
         state.start_next_question()
@@ -519,7 +511,7 @@ class TestWagerRound:
         assert alice.score == 150
 
     def test_wager_wrong_subtracts_wager_points(self, state: QuizifyGameState) -> None:
-        state.add_player("Alice", _fake_ws())
+        state.add_player("Alice")
         state.start_game(language="de", num_rounds=2, difficulty="easy")
         state.start_next_question()
         state.evaluate_round()
@@ -535,7 +527,7 @@ class TestWagerRound:
 
     def test_wager_cannot_drive_score_negative(self, state: QuizifyGameState) -> None:
         """Losing 100% wager when score is 10 should clamp at 0, not -wager."""
-        state.add_player("Alice", _fake_ws())
+        state.add_player("Alice")
         state.start_game(language="de", num_rounds=2, difficulty="easy")
         state.start_next_question()
         state.evaluate_round()
@@ -551,7 +543,7 @@ class TestWagerRound:
 
     def test_wager_only_applies_on_final_round(self, state: QuizifyGameState) -> None:
         """A wager set on a non-final round must not override scoring."""
-        state.add_player("Alice", _fake_ws())
+        state.add_player("Alice")
         state.start_game(language="de", num_rounds=3, difficulty="easy")
         state.start_next_question()
         alice = state.get_player("Alice")
@@ -566,7 +558,7 @@ class TestWagerRound:
 
     def test_wager_cleared_each_round(self, state: QuizifyGameState) -> None:
         """reset_round must wipe the wager so it can't leak across rounds."""
-        state.add_player("Alice", _fake_ws())
+        state.add_player("Alice")
         state.start_game(language="de", num_rounds=3)
         state.start_next_question()
         alice = state.get_player("Alice")
@@ -583,8 +575,8 @@ class TestWagerRound:
         nothing. The Hot Seat auction (#616) could not inherit that rule — a
         stake that buys the right to answer would be free to anyone who simply
         sat the question out — and two settlement rules were worse than one."""
-        state.add_player("Alice", _fake_ws())
-        state.add_player("Bob", _fake_ws())  # so the round doesn't auto-evaluate
+        state.add_player("Alice")
+        state.add_player("Bob")  # so the round doesn't auto-evaluate
         state.start_game(language="de", num_rounds=2, difficulty="easy")
         state.start_next_question()
         state.evaluate_round()
@@ -611,13 +603,13 @@ class TestEndGame:
     def test_end_game_with_no_rounds_still_works(
         self, state: QuizifyGameState
     ) -> None:
-        state.add_player("Alice", _fake_ws())
+        state.add_player("Alice")
         state.start_game(language="de", num_rounds=3)
         state.end_game()
         assert state.phase == GamePhase.FINALE
 
     def test_automatic_end_after_total_rounds(self, state: QuizifyGameState) -> None:
-        state.add_player("Alice", _fake_ws())
+        state.add_player("Alice")
         state.start_game(language="de", num_rounds=2)
         for _ in range(2):
             state.start_next_question()
@@ -649,9 +641,9 @@ class TestPowerUpTargeting:
     def test_freeze_with_explicit_target_freezes_that_player(
         self, state: QuizifyGameState
     ) -> None:
-        state.add_player("Alice", _fake_ws())
-        state.add_player("Bob", _fake_ws())
-        state.add_player("Carol", _fake_ws())
+        state.add_player("Alice")
+        state.add_player("Bob")
+        state.add_player("Carol")
         state.start_game(language="de", num_rounds=3, difficulty="easy")
         state.start_next_question()
         _give(state, "Alice", PowerUpType.FREEZE)
@@ -664,9 +656,9 @@ class TestPowerUpTargeting:
     def test_freeze_with_null_target_picks_random_opponent(
         self, state: QuizifyGameState
     ) -> None:
-        state.add_player("Alice", _fake_ws())
-        state.add_player("Bob", _fake_ws())
-        state.add_player("Carol", _fake_ws())
+        state.add_player("Alice")
+        state.add_player("Bob")
+        state.add_player("Carol")
         state.start_game(language="de", num_rounds=3, difficulty="easy")
         state.start_next_question()
         _give(state, "Alice", PowerUpType.FREEZE)
@@ -679,8 +671,8 @@ class TestPowerUpTargeting:
     def test_steal_with_null_target_picks_random_opponent_and_moves_points(
         self, state: QuizifyGameState
     ) -> None:
-        state.add_player("Alice", _fake_ws())
-        state.add_player("Bob", _fake_ws())
+        state.add_player("Alice")
+        state.add_player("Bob")
         state.start_game(language="de", num_rounds=3, difficulty="easy")
         state.start_next_question()
         # Give Bob some round score so there's something worth stealing.
@@ -703,7 +695,7 @@ class TestPowerUpTargeting:
     ) -> None:
         """Single-player game: nothing to freeze. The server must reject
         instead of consuming the power-up silently."""
-        state.add_player("Alice", _fake_ws())
+        state.add_player("Alice")
         state.start_game(language="de", num_rounds=3, difficulty="easy")
         state.start_next_question()
         _give(state, "Alice", PowerUpType.FREEZE)
@@ -719,8 +711,8 @@ class TestPowerUpTargeting:
         """A malformed/old client that passes own name as target_id must
         not freeze itself — server treats it as 'no valid target' and
         picks an opponent."""
-        state.add_player("Alice", _fake_ws())
-        state.add_player("Bob", _fake_ws())
+        state.add_player("Alice")
+        state.add_player("Bob")
         state.start_game(language="de", num_rounds=3, difficulty="easy")
         state.start_next_question()
         _give(state, "Alice", PowerUpType.FREEZE)
@@ -732,7 +724,7 @@ class TestPowerUpTargeting:
     def test_joker_ignores_target_id(self, state: QuizifyGameState) -> None:
         """Self-targeted power-ups (joker, double_points, time_boost)
         must work regardless of target_id — they don't need one."""
-        state.add_player("Alice", _fake_ws())
+        state.add_player("Alice")
         state.start_game(language="de", num_rounds=3, difficulty="easy")
         state.start_next_question()
         # Pin a known multiple-choice question so joker always has a wrong
@@ -768,8 +760,8 @@ class TestPowerUpTargeting:
         """Joker / DoublePoints / TimeBoost only help BEFORE the source locks
         in — activating them after submit consumes the inventory for nothing.
         Server now rejects and keeps the power-up for a future round."""
-        state.add_player("Alice", _fake_ws())
-        state.add_player("Bob", _fake_ws())
+        state.add_player("Alice")
+        state.add_player("Bob")
         state.start_game(language="de", num_rounds=3, difficulty="easy")
         state.start_next_question()
         _give(state, "Alice", pu_type)
@@ -787,9 +779,9 @@ class TestPowerUpTargeting:
         """When freeze falls back to a random opponent and one of them has
         already submitted, the fallback should pick someone who can still
         be timer-paused."""
-        state.add_player("Alice", _fake_ws())
-        state.add_player("Bob", _fake_ws())
-        state.add_player("Carol", _fake_ws())
+        state.add_player("Alice")
+        state.add_player("Bob")
+        state.add_player("Carol")
         state.start_game(language="de", num_rounds=3, difficulty="easy")
         state.start_next_question()
         # Bob locks in early.
@@ -803,8 +795,8 @@ class TestPowerUpTargeting:
     def test_freeze_rejects_explicit_submitted_target(self, state: QuizifyGameState) -> None:
         """Even with an explicit picker selection, freezing a player who has
         already submitted is a no-op — reject so the inventory survives."""
-        state.add_player("Alice", _fake_ws())
-        state.add_player("Bob", _fake_ws())
+        state.add_player("Alice")
+        state.add_player("Bob")
         state.start_game(language="de", num_rounds=3, difficulty="easy")
         state.start_next_question()
         state.submit_answer("Bob", 0)
@@ -817,8 +809,8 @@ class TestPowerUpTargeting:
     def test_steal_rejects_explicit_unsubmitted_target(self, state: QuizifyGameState) -> None:
         """STEAL on a target that hasn't submitted yet steals 0 points and burns
         the power-up. The server must reject so the inventory survives (#254)."""
-        state.add_player("Alice", _fake_ws())
-        state.add_player("Bob", _fake_ws())
+        state.add_player("Alice")
+        state.add_player("Bob")
         state.start_game(language="de", num_rounds=3, difficulty="easy")
         state.start_next_question()
         # Bob has NOT submitted — his round_score isn't locked in yet.
@@ -835,9 +827,9 @@ class TestPowerUpTargeting:
     ) -> None:
         """Random STEAL fallback must skip players who haven't submitted (they'd
         yield 0 stolen points) and choose a submitted opponent instead (#254)."""
-        state.add_player("Alice", _fake_ws())
-        state.add_player("Bob", _fake_ws())
-        state.add_player("Carol", _fake_ws())
+        state.add_player("Alice")
+        state.add_player("Bob")
+        state.add_player("Carol")
         state.start_game(language="de", num_rounds=3, difficulty="easy")
         state.start_next_question()
         # Only Carol has locked in (and has something worth stealing).
@@ -857,8 +849,8 @@ class TestPowerUpTargeting:
     ) -> None:
         """If no opponent has submitted, STEAL has no valid target. Reject and
         keep the power-up rather than burning it for 0 points (#254)."""
-        state.add_player("Alice", _fake_ws())
-        state.add_player("Bob", _fake_ws())
+        state.add_player("Alice")
+        state.add_player("Bob")
         state.start_game(language="de", num_rounds=3, difficulty="easy")
         state.start_next_question()
         _give(state, "Alice", PowerUpType.STEAL)

@@ -31,18 +31,11 @@ instead of neither. The mechanics themselves live in
 from __future__ import annotations
 
 from pathlib import Path
-from unittest.mock import MagicMock
 
 import pytest
 
 from custom_components.quizify.game.phase_controller import GamePhase
 from custom_components.quizify.game.state import QuizifyGameState
-
-
-def _ws() -> MagicMock:
-    ws = MagicMock()
-    ws.closed = False
-    return ws
 
 
 class _Runtime:
@@ -53,7 +46,7 @@ class _Runtime:
 def _game(tmp_path: Path, *, teams: bool) -> QuizifyGameState:
     st = QuizifyGameState(runtime=_Runtime(tmp_path), entry_id="test")
     for name in ("Anna", "Jan", "Mira"):
-        st.add_player(name, _ws())
+        st.add_player(name)
     if teams:
         st.create_team("Sofa", "Anna")
         st.join_team(st.get_team_of("Anna")["team_id"], "Jan")
@@ -112,7 +105,7 @@ def test_the_host_toggle_still_closes_the_window_in_team_mode(
     """#742 is a host's choice, not a mechanic — it outranks team mode."""
     st = QuizifyGameState(runtime=_Runtime(tmp_path), entry_id="test")
     for name in ("Anna", "Jan", "Mira"):
-        st.add_player(name, _ws())
+        st.add_player(name)
     st.create_team("Sofa", "Anna")
     st.join_team(st.get_team_of("Anna")["team_id"], "Jan")
     st.start_game(category="picture-round-en", difficulty="easy",

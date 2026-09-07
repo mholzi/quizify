@@ -31,7 +31,6 @@ from __future__ import annotations
 import re
 import sys
 from pathlib import Path
-from unittest.mock import MagicMock
 
 import pytest
 
@@ -58,12 +57,6 @@ WWW = _REPO_ROOT / "custom_components" / "quizify" / "www"
 IMG_NEXT = "/quizify/static/img/packs/picture-round/next.webp"
 
 
-def _fake_ws() -> MagicMock:
-    ws = MagicMock()
-    ws.closed = False
-    return ws
-
-
 class _Runtime:
     def __init__(self, tmp_path: Path) -> None:
         self.data_dir = tmp_path
@@ -80,7 +73,7 @@ class _Runtime:
 @pytest.fixture
 def state(tmp_path: Path) -> QuizifyGameState:
     st = QuizifyGameState(runtime=_Runtime(tmp_path), entry_id="test")
-    st.add_player("A", _fake_ws())
+    st.add_player("A")
     return st
 
 

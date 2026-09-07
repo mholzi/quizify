@@ -20,7 +20,6 @@ import asyncio
 import sys
 import time
 from pathlib import Path
-from unittest.mock import MagicMock
 
 _REPO_ROOT = Path(__file__).resolve().parent.parent
 sys.path.insert(0, str(_REPO_ROOT))
@@ -29,12 +28,6 @@ from custom_components.quizify.game.phase_controller import (  # noqa: E402
     PhaseController,
 )
 from custom_components.quizify.game.state import QuizifyGameState  # noqa: E402
-
-
-def _fake_ws() -> MagicMock:
-    ws = MagicMock()
-    ws.closed = False
-    return ws
 
 
 class _Runtime:
@@ -88,7 +81,7 @@ class TestTickLoopBreaksOnStall:
     ) -> None:
         """The #586 state: a connected player, no timer, wall-clock elapsed."""
         gs = QuizifyGameState(runtime=_Runtime(tmp_path), entry_id="t")
-        gs.add_player("Alice", _fake_ws())
+        gs.add_player("Alice")
         gs.start_game(language="de", num_rounds=3)
         gs.start_next_question()
 
@@ -110,7 +103,7 @@ class TestTickLoopBreaksOnStall:
     def test_all_disconnected_still_breaks(self, tmp_path: Path) -> None:
         """The original #255 case keeps working through the same condition."""
         gs = QuizifyGameState(runtime=_Runtime(tmp_path), entry_id="t")
-        gs.add_player("Alice", _fake_ws())
+        gs.add_player("Alice")
         gs.start_game(language="de", num_rounds=3)
         gs.start_next_question()
 
@@ -125,7 +118,7 @@ class TestTickLoopBreaksOnStall:
         cut that round short, which is why it requires *no* live timers.
         """
         gs = QuizifyGameState(runtime=_Runtime(tmp_path), entry_id="t")
-        gs.add_player("Alice", _fake_ws())
+        gs.add_player("Alice")
         gs.start_game(language="de", num_rounds=3)
         gs.start_next_question()
 

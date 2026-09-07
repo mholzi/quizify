@@ -95,10 +95,10 @@ async def test_reset_clears_players_admin_and_phase(
     and the phase is back at the initial LOBBY."""
     admin_ws = _ws()
     handler._conn.add_connection(admin_ws, is_admin=True, is_dashboard=False)
-    game.add_player("Admin", admin_ws)
+    game.add_player("Admin", handler._conn.connection_id(admin_ws))
     game.get_player("Admin").is_admin = True
-    game.add_player("Bob", _ws())
-    game.add_player("Eve", _ws())
+    game.add_player("Bob")
+    game.add_player("Eve")
     game.start_game(language="de", num_rounds=3, difficulty="easy")
     game.start_next_question()
     assert game.phase == GamePhase.QUESTION_ACTIVE
@@ -125,12 +125,12 @@ async def test_reset_signal_reaches_admin_as_player_before_socket_closes(
     is still open — otherwise the admin tab never returns to setup."""
     admin_ws = _ws()
     handler._conn.add_connection(admin_ws, is_admin=True, is_dashboard=False)
-    game.add_player("Admin", admin_ws)
+    game.add_player("Admin", handler._conn.connection_id(admin_ws))
     game.get_player("Admin").is_admin = True
 
     bob_ws = _ws()
     handler._conn.add_connection(bob_ws, is_admin=False, is_dashboard=False)
-    game.add_player("Bob", bob_ws)
+    game.add_player("Bob", handler._conn.connection_id(bob_ws))
 
     assert game.phase == GamePhase.LOBBY
 
@@ -159,15 +159,15 @@ async def test_reset_during_active_game_delivers_to_all_players(
     every connected player so their phones leave the question view."""
     admin_ws = _ws()
     handler._conn.add_connection(admin_ws, is_admin=True, is_dashboard=False)
-    game.add_player("Admin", admin_ws)
+    game.add_player("Admin", handler._conn.connection_id(admin_ws))
     game.get_player("Admin").is_admin = True
 
     p1_ws = _ws()
     p2_ws = _ws()
     handler._conn.add_connection(p1_ws, is_admin=False, is_dashboard=False)
     handler._conn.add_connection(p2_ws, is_admin=False, is_dashboard=False)
-    game.add_player("P1", p1_ws)
-    game.add_player("P2", p2_ws)
+    game.add_player("P1", handler._conn.connection_id(p1_ws))
+    game.add_player("P2", handler._conn.connection_id(p2_ws))
     game.start_game(language="de", num_rounds=3, difficulty="easy")
     game.start_next_question()
     assert game.phase == GamePhase.QUESTION_ACTIVE
@@ -229,9 +229,9 @@ async def test_legit_admin_reset_authorized_and_clears(
     h = _auth_handler(game, tmp_path)
     admin_ws = _ws()
     h._conn.add_connection(admin_ws, is_admin=True, is_dashboard=False)
-    game.add_player("Host", admin_ws)
+    game.add_player("Host", h._conn.connection_id(admin_ws))
     game.get_player("Host").is_admin = True
-    game.add_player("Bob", _ws())
+    game.add_player("Bob")
     game.start_game(language="de", num_rounds=3, difficulty="easy")
     game.start_next_question()
     assert game.phase == GamePhase.QUESTION_ACTIVE
@@ -258,8 +258,9 @@ async def test_orphaned_crown_host_reset_authorized(
     h = _auth_handler(game, tmp_path)
     host_ws = _ws()  # player-role WS, NOT a WS-level admin
     h._conn.add_connection(host_ws, is_admin=False, is_dashboard=False)
-    game.add_player("Host 2", host_ws)  # disambiguated, non-admin slot
-    game.add_player("Bob", _ws())
+    # "Host 2" is the disambiguated, non-admin slot.
+    game.add_player("Host 2", h._conn.connection_id(host_ws))
+    game.add_player("Bob")
     assert game.get_admin() is None  # crown is orphaned
 
     await h._handle_message(host_ws, {"type": "reset_game"}, is_admin=False)
@@ -280,12 +281,12 @@ async def test_non_admin_reset_rejected_while_live_admin_present(
     h = _auth_handler(game, tmp_path)
     admin_ws = _ws()
     h._conn.add_connection(admin_ws, is_admin=True, is_dashboard=False)
-    game.add_player("Host", admin_ws)
+    game.add_player("Host", h._conn.connection_id(admin_ws))
     game.get_player("Host").is_admin = True
 
     rogue_ws = _ws()
     h._conn.add_connection(rogue_ws, is_admin=False, is_dashboard=False)
-    game.add_player("Rogue", rogue_ws)
+    game.add_player("Rogue", h._conn.connection_id(rogue_ws))
 
     await h._handle_message(rogue_ws, {"type": "reset_game"}, is_admin=False)
 
@@ -317,7 +318,7 @@ async def test_host_reclaims_crown_from_stale_slot_on_rejoin(
 
     # Old admin slot (the /quizify/admin tab joined-as-player), now stale:
     old_ws = _ws()
-    game.add_player("Host", old_ws)
+    game.add_player("Host", h._conn.connection_id(old_ws))
     game.get_player("Host").is_admin = True
     game.get_player("Host").connected = False  # admin WS closing on redirect
 
@@ -353,7 +354,7 @@ async def test_live_admin_blocks_second_admin_claim(
     seize the crown while a CONNECTED admin already holds it."""
     h = _auth_handler(game, tmp_path)
     admin_ws = _ws()
-    game.add_player("Host", admin_ws)
+    game.add_player("Host", h._conn.connection_id(admin_ws))
     game.get_player("Host").is_admin = True  # connected admin
 
     rogue_ws = _ws()

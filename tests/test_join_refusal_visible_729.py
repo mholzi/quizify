@@ -307,7 +307,10 @@ async def test_a_finished_game_says_it_is_finished(
     game: QuizifyGameState, tmp_path: Path
 ) -> None:
     handler, sent = _handler(game, tmp_path)
-    game.add_player = lambda name, ws: (False, ERR_GAME_ENDED)  # type: ignore[assignment]
+    game.add_player = lambda name, cid=None, **kw: (  # type: ignore[assignment]
+        False,
+        ERR_GAME_ENDED,
+    )
 
     ws = _ws()
     handler._conn.add_connection(ws, is_admin=False, is_dashboard=False)
@@ -332,7 +335,7 @@ async def test_a_duplicate_self_join_has_its_own_code(
     handler, sent = _handler(game, tmp_path)
     ws = _ws()
     handler._conn.add_connection(ws, is_admin=False, is_dashboard=False)
-    game.add_player("Guest", ws)
+    game.add_player("Guest", handler._conn.connection_id(ws))
 
     await handler._handle_join(ws, {"name": "Someone Else"}, game)
 
