@@ -137,7 +137,6 @@
     "result": "Result",
     "questionCounter": "Question {current} / {total}",
     "correctLabel": "Correct: {answer}",
-    "answerNone": "No answer",
     "summaryRoundsUnit": "Rounds",
     "settingsSummary": "{difficulty} • {rounds} {roundsUnit} • {timer}s",
     "categoriesCountPlural": "{count} Categories",
@@ -258,7 +257,6 @@
     "correctAnswerWas": "Correct answer was:",
     "funFact": "Did you know?",
     "yourAnswer": "Your answer",
-    "result": "Result",
     "correct": "Correct",
     "wrong": "Wrong",
     "baseScore": "Base score",
@@ -271,48 +269,6 @@
     "joinedLate": "You joined after this round started",
     "joinedLateHint": "You'll play from the next question!",
     "ptsUnit": "pts",
-    "ptsBonus": "+{count} pts",
-    "emotion": {
-      "exact": [
-        "CORRECT! 🎯",
-        "NAILED IT! 🎯",
-        "SPOT ON! ✨",
-        "BULLSEYE! 🎯"
-      ],
-      "wrong": [
-        "Wrong! ❌",
-        "Nope! 😬",
-        "Not quite! 😅",
-        "Oops! 💨"
-      ],
-      "missed": [
-        "Too slow! ⏱️",
-        "Time's up! ⏰",
-        "Missed it! 😬"
-      ],
-      "exactSub": [
-        "Perfect answer!",
-        "You knew it!",
-        "Impressive!"
-      ],
-      "fastSub": [
-        "Lightning fast ⚡",
-        "Speed bonus earned!"
-      ],
-      "streakSub": [
-        "{count}-streak! 🔥",
-        "On a roll! 🔥"
-      ],
-      "wrongSub": [
-        "Better luck next time",
-        "Keep going!",
-        "You'll get the next one"
-      ],
-      "missedSub": [
-        "No answer submitted",
-        "You missed this one"
-      ]
-    },
     "finalResults": "Final Results",
     "flagAriaLabel": "Flag this question as incorrect",
     "flagTitle": "Flag question",

@@ -137,7 +137,6 @@
     "result": "Resultado",
     "questionCounter": "Pregunta {current} / {total}",
     "correctLabel": "Correcto: {answer}",
-    "answerNone": "Sin respuesta",
     "summaryRoundsUnit": "Rondas",
     "settingsSummary": "{difficulty} • {rounds} {roundsUnit} • {timer}s",
     "categoriesCountPlural": "{count} categorías",
@@ -258,7 +257,6 @@
     "correctAnswerWas": "La respuesta correcta era:",
     "funFact": "¿Sabías que...?",
     "yourAnswer": "Tu respuesta",
-    "result": "Resultado",
     "correct": "Correcto",
     "wrong": "Incorrecto",
     "baseScore": "Puntuación base",
@@ -271,48 +269,6 @@
     "joinedLate": "Te uniste después de empezar esta ronda",
     "joinedLateHint": "¡Jugarás desde la siguiente pregunta!",
     "ptsUnit": "pts",
-    "ptsBonus": "+{count} pts",
-    "emotion": {
-      "exact": [
-        "¡CORRECTO! 🎯",
-        "¡CLAVADO! 🎯",
-        "¡EXACTO! ✨",
-        "¡EN EL BLANCO! 🎯"
-      ],
-      "wrong": [
-        "¡Incorrecto! ❌",
-        "¡No! 😬",
-        "¡Casi! 😅",
-        "¡Vaya! 💨"
-      ],
-      "missed": [
-        "¡Muy lento! ⏱️",
-        "¡Se acabó el tiempo! ⏰",
-        "¡La fallaste! 😬"
-      ],
-      "exactSub": [
-        "¡Respuesta perfecta!",
-        "¡Lo sabías!",
-        "¡Impresionante!"
-      ],
-      "fastSub": [
-        "Rápido como el rayo ⚡",
-        "¡Bonificación por velocidad!"
-      ],
-      "streakSub": [
-        "¡Racha de {count}! 🔥",
-        "¡Estás imparable! 🔥"
-      ],
-      "wrongSub": [
-        "Más suerte la próxima vez",
-        "¡Sigue así!",
-        "Acertarás la siguiente"
-      ],
-      "missedSub": [
-        "No se envió ninguna respuesta",
-        "Esta se te escapó"
-      ]
-    },
     "finalResults": "Resultados finales",
     "flagAriaLabel": "Marcar esta pregunta como incorrecta",
     "flagTitle": "Marcar pregunta",

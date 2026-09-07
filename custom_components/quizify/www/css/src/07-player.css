@@ -858,19 +858,6 @@
    Player Page: REVEAL VIEW
    ========================================== */
 
-.reveal-emotion-text {
-    font-size: 1.1rem;
-    font-weight: 700;
-    text-align: center;
-    margin-bottom: var(--space-sm);
-}
-
-/* Personal result section */
-
-.result-content {
-    padding: var(--space-sm) var(--space-md) var(--space-md);
-}
-
 /* Reveal admin controls */
 .reveal-admin-controls {
     margin-top: var(--space-md);
@@ -898,13 +885,6 @@
 
 .next-round-btn.is-final:hover:not(:disabled) {
     background: #ff4080;
-}
-
-/* Streak bonus row */
-.streak-bonus-row {
-    background: rgba(245, 158, 11, 0.06);
-    border-radius: var(--radius-sm);
-    padding: 2px var(--space-sm);
 }
 
 /* Score zero state */

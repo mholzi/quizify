@@ -654,20 +654,15 @@
                     <button id="reveal-reset-btn" class="btn btn-primary btn-glow hidden" type="button" data-i18n="admin.resetGame">Reset game</button>
                 </div>
 
-                <!-- Hidden helpers — legacy renderers (analytics, leaderboard,
-                     all-answers) may still try to write into these IDs during
-                     the transition. Keeping them as sr-only nodes prevents
-                     null-pointer crashes without leaking visible noise. -->
+                <!-- Hidden leaderboard mirror. player-core.js fills
+                     #reveal-leaderboard-list on a standings push and
+                     player-game.js writes the summary line; both stay sr-only
+                     because the visible standings live in .pl-result-list.
+                     The other placeholders that used to sit here were dropped
+                     with the legacy reveal renderers (#893). -->
                 <div class="sr-only">
-                    <div id="reveal-question-text"></div>
-                    <div id="correct-answer"></div>
-                    <div id="reveal-emotion" aria-live="polite"></div>
-                    <div id="reveal-difficulty-badge"></div>
-                    <div id="result-content"></div>
-                    <div id="reveal-results-cards"></div>
                     <div id="reveal-leaderboard-list"></div>
                     <span id="reveal-leaderboard-summary"></span>
-                    <div id="round-analytics-content"></div>
                 </div>
             </div>
         </div>
