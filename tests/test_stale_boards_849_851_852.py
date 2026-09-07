@@ -124,6 +124,9 @@ var adminTimer = {{ stop: function () {{}} }};
 var _lastGameLeaderboard = null;
 function _t(key) {{ return key; }}
 function scoreDeltaHtml() {{ return ''; }}
+// #830 put the submission tracker on the host page, and the reveal
+// clears it. Not the subject here — the board is.
+function clearAnswerProgress() {{}}
 
 {render}
 {reveal}
