@@ -227,7 +227,7 @@ class TestComebackKingOddRounds:
     def test_genuine_comeback_still_awarded(self) -> None:
         """A real second-half surge still earns the award (no regression).
 
-        ``TopDog`` carries the single highest round so it claims Top Score
+        ``TopDog`` carries the single highest round so it claims Best Round
         first (awards are exclusive), leaving Comeback King free for the player
         whose per-round average genuinely climbs in the back half."""
         players = [

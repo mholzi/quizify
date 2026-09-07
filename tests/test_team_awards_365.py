@@ -6,7 +6,7 @@ sense one rung up. The reading is not written in a second implementation but
 in what a team records while it plays, because the awards are computed by the
 same function that computes them for players:
 
-* **Top Score** — the team's best single round.
+* **Best Round** — the team's best single round.
 * **Fastest Finger** — the average time of the tap that *stood*, so a team
   that argues to the buzzer is genuinely slower than one that agrees at once.
 * **Comeback King** — the team's own second half against its first.
@@ -44,7 +44,7 @@ def test_awards_name_teams_not_people() -> None:
 
     assert results, "four rounds and two teams is enough for awards"
     assert {s.winner for s in results} <= {"Sofa", "Küche"}
-    assert _award(results, "Top Score") == "Sofa"
+    assert _award(results, "Best Round") == "Sofa"
 
 
 def test_fastest_finger_is_the_tap_that_stood() -> None:
@@ -80,7 +80,7 @@ def test_hot_streak_reads_the_team_streak() -> None:
 
     results = compute_superlatives([hot, cold])
 
-    # Cold takes Top Score with its one big round, which leaves Hot Streak to
+    # Cold takes Best Round with its one big round, which leaves Hot Streak to
     # the team that actually strung answers together.
     assert _award(results, "Hot Streak") == "Hot"
 

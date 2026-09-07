@@ -1,4 +1,9 @@
-"""Tests for the Top Score end-of-game award (issue #150)."""
+"""Tests for the Best Round end-of-game award (issue #150).
+
+The award was called "Top Score" until #860: those are the words the podium
+already uses for the highest *total*, and the television prints the award
+name without its detail line.
+"""
 
 from __future__ import annotations
 
@@ -24,19 +29,19 @@ def _mk_player(name: str, round_scores: list[int] | None = None) -> PlayerSessio
 
     `round_history` mirrors `round_scores` length because the awards function
     early-exits when `max_rounds < MIN_ROUNDS` (3 rounds). The history string
-    doesn't matter for Top Score — it's only used by Most Accurate.
+    doesn't matter for Best Round — it's only used by Most Accurate.
     """
     p = PlayerSession(name=name, ws=MagicMock())
     if round_scores is not None:
         p.round_scores = list(round_scores)
         # Awards function gates on len(round_history) — pad to match scores so
-        # the MIN_ROUNDS=3 check passes without affecting Top Score logic.
+        # the MIN_ROUNDS=3 check passes without affecting Best Round logic.
         p.round_history = ["correct"] * len(round_scores)
     return p
 
 
-def test_top_score_awarded_to_highest_single_round_scorer() -> None:
-    """The player whose best single-round score is highest wins Top Score —
+def test_best_round_awarded_to_highest_single_round_scorer() -> None:
+    """The player whose best single-round score is highest wins Best Round —
     distinct from cumulative champion (podium) and Hot Streak (sequence)."""
     players = [
         _mk_player("Alice", [10, 12, 15, 11, 14]),     # max 15
@@ -44,16 +49,16 @@ def test_top_score_awarded_to_highest_single_round_scorer() -> None:
         _mk_player("Carol", [20, 18, 22, 19, 16]),     # max 22
     ]
     results = compute_superlatives(players)
-    top_score = next(
-        (r for r in results if r.award_key == "highlights.awards.topScore"),
+    best_round = next(
+        (r for r in results if r.award_key == "highlights.awards.bestRound"),
         None,
     )
-    assert top_score is not None, "Top Score award should fire"
-    assert top_score.winner == "Bob"
-    assert top_score.detail_params == {"points": 47, "round": 4}
+    assert best_round is not None, "Best Round award should fire"
+    assert best_round.winner == "Bob"
+    assert best_round.detail_params == {"points": 47, "round": 4}
 
 
-def test_top_score_tie_break_prefers_earliest_round() -> None:
+def test_best_round_tie_break_prefers_earliest_round() -> None:
     """When two players hit the same max single-round score, the player
     who reached it earlier in the game wins the trophy."""
     players = [
@@ -61,16 +66,16 @@ def test_top_score_tie_break_prefers_earliest_round() -> None:
         _mk_player("Bob", [8, 9, 11, 12, 30]),         # max 30 in round 5
     ]
     results = compute_superlatives(players)
-    top_score = next(
-        (r for r in results if r.award_key == "highlights.awards.topScore"),
+    best_round = next(
+        (r for r in results if r.award_key == "highlights.awards.bestRound"),
         None,
     )
-    assert top_score is not None
-    assert top_score.winner == "Alice"  # earlier round wins tie
-    assert top_score.detail_params == {"points": 30, "round": 3}
+    assert best_round is not None
+    assert best_round.winner == "Alice"  # earlier round wins tie
+    assert best_round.detail_params == {"points": 30, "round": 3}
 
 
-def test_top_score_skipped_when_below_floor() -> None:
+def test_best_round_skipped_when_below_floor() -> None:
     """A sleepy game (everyone's best round under 25 pts) gets no trophy —
     don't hand out hollow awards."""
     players = [
@@ -78,32 +83,32 @@ def test_top_score_skipped_when_below_floor() -> None:
         _mk_player("Bob", [6, 9, 11, 8, 10]),      # max 11
     ]
     results = compute_superlatives(players)
-    top_score = next(
-        (r for r in results if r.award_key == "highlights.awards.topScore"),
+    best_round = next(
+        (r for r in results if r.award_key == "highlights.awards.bestRound"),
         None,
     )
-    assert top_score is None
+    assert best_round is None
 
 
-def test_top_score_skipped_with_empty_round_scores() -> None:
+def test_best_round_skipped_with_empty_round_scores() -> None:
     """Players who haven't played a single round can't qualify."""
     players = [
         _mk_player("Alice", []),
         _mk_player("Bob", []),
     ]
     results = compute_superlatives(players)
-    top_score = next(
-        (r for r in results if r.award_key == "highlights.awards.topScore"),
+    best_round = next(
+        (r for r in results if r.award_key == "highlights.awards.bestRound"),
         None,
     )
-    assert top_score is None
+    assert best_round is None
 
 
-def test_top_score_does_not_duplicate_other_awards() -> None:
-    """No player can hold two awards. Since Top Score fires first in the
-    chain, the Top Score winner is removed from the pool before any later
+def test_best_round_does_not_duplicate_other_awards() -> None:
+    """No player can hold two awards. Since Best Round fires first in the
+    chain, the Best Round winner is removed from the pool before any later
     award (Fastest Finger, Comeback King, …) picks its candidate."""
-    # Alice's single-round max (50) is the highest → wins Top Score.
+    # Alice's single-round max (50) is the highest → wins Best Round.
     # She also has the fastest avg answer time, but that award now goes
     # to the next-fastest non-awarded player.
     alice = _mk_player("Alice", [10, 12, 50, 11, 14])
@@ -121,5 +126,5 @@ def test_top_score_does_not_duplicate_other_awards() -> None:
         assert len(awards) == 1, (
             f"{player} should hold at most one award, got {awards}"
         )
-    # Alice wins Top Score.
-    assert "highlights.awards.topScore" in award_by_winner.get("Alice", [])
+    # Alice wins Best Round.
+    assert "highlights.awards.bestRound" in award_by_winner.get("Alice", [])

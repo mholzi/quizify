@@ -87,16 +87,22 @@ def compute_superlatives(players: list[PlayerSession]) -> list[Superlative]:
             detail_params=detail_params,
         ))
 
-    # --- Top Score: highest single-round score (per issue #150) ---
+    # --- Best Round: highest single-round score (per issue #150) ---
     # Distinct from the podium (cumulative total) and Hot Streak (longest
     # correct streak). Awards the player whose best *single round* was the
     # highest in the game. Tie-break: earliest round number wins. Skipped
-    # when all players' best round was below TOP_SCORE_MIN so a sleepy
+    # when all players' best round was below BEST_ROUND_MIN so a sleepy
     # game doesn't get a hollow trophy. Placed first because the README's
     # iconic order ("🥇 Top Score, 🚀 Comeback King, ⚡ Fastest Finger")
     # implies it's the headline highlight — and slotting it later would
-    # often pre-block the most likely Top-Score winner with Comeback King.
-    TOP_SCORE_MIN = 25
+    # often pre-block the most likely winner with Comeback King.
+    #
+    # #860: it used to be called "Top Score", the same words the podium
+    # already uses for the highest *total*. On the television the award
+    # strip prints the name without the detail line, so "TOP SCORE · CLEO"
+    # sat above a leaderboard led by Ben and read as a scoring bug. The
+    # award now says what it measures: one round, the best one played.
+    BEST_ROUND_MIN = 25
     best_round_score: int | None = None
     best_round_player: str | None = None
     best_round_index: int | None = None
@@ -107,7 +113,7 @@ def compute_superlatives(players: list[PlayerSession]) -> list[Superlative]:
         if not scores:
             continue
         player_max = max(scores)
-        if player_max < TOP_SCORE_MIN:
+        if player_max < BEST_ROUND_MIN:
             continue
         player_max_round = scores.index(player_max) + 1  # 1-based for display
         if best_round_score is None or player_max > best_round_score or (
@@ -125,12 +131,12 @@ def compute_superlatives(players: list[PlayerSession]) -> list[Superlative]:
         and best_round_index is not None
     ):
         _try_award(
-            "Top Score",
+            "Best Round",
             "🥇",
             f"{best_round_score} pts in round {best_round_index}",
             best_round_player,
-            award_key="highlights.awards.topScore",
-            detail_key="highlights.details.topScore",
+            award_key="highlights.awards.bestRound",
+            detail_key="highlights.details.bestRound",
             detail_params={"points": best_round_score, "round": best_round_index},
         )
 

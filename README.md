@@ -306,7 +306,7 @@ If a phone loses WiFi, locks, or accidentally closes the browser, the player ses
 
 The last round ends. The podium animates in: 1st in the centre, 2nd on the left, 3rd on the right. The champion's name reads in coral display type. Below the podium, a "Your Result" card shows your rank, total score, and three personal stats: **best streak, rounds played, power-ups used**.
 
-End-of-game awards drop next: **⚡ Fastest Finger, 🚀 Comeback King, 🔥 Hot Streak, 🎯 Most Accurate, 🧊 Buzzkill, 🧠 Knowledge Expert.** Each goes to exactly one player, gated on plausibility (e.g. Comeback King needs ≥4 rounds played). Awards skip themselves on solo games where there's nothing to compare against. _A 'Top Score' award for the highest single-round score is on the roadmap — see [#150](https://github.com/mholzi/quizify/issues/150)._
+End-of-game awards drop next: **🥇 Best Round, ⚡ Fastest Finger, 🚀 Comeback King, 🔥 Hot Streak, 🎯 Most Accurate, 🧊 Buzzkill, 🧠 Knowledge Expert.** Each goes to exactly one player, gated on plausibility (e.g. Comeback King needs ≥4 rounds played). Awards skip themselves on solo games where there's nothing to compare against. Best Round is the single highest-scoring round anyone played ([#150](https://github.com/mholzi/quizify/issues/150)); the podium's own "Top Score" is the highest *total*, and the two carried the same name until [#860](https://github.com/mholzi/quizify/issues/860).
 
 A leaderboard with all players follows so latecomers and bottom-of-the-pack still see their rank.
 

@@ -1,7 +1,7 @@
 """Tests for the non-top-score end-of-game superlatives (#260 coverage gap).
 
-The Top Score award already has dedicated coverage in
-``test_highlights_top_score.py``; this module exercises the remaining
+The Best Round award already has dedicated coverage in
+``test_highlights_best_round.py``; this module exercises the remaining
 superlatives — Fastest Finger, Comeback King, Hot Streak, Most Accurate,
 Buzzkill, Knowledge Expert — plus the ``MIN_PLAYERS_FOR_AWARDS`` / ``MIN_ROUNDS``
 gating that short-circuits the whole computation.
@@ -90,7 +90,7 @@ def test_comeback_king_rewards_second_half_improvement() -> None:
     """Comeback King fires for the biggest per-round-average improvement from
     the first half to the second; a flat scorer must NOT win it (the #255
     average-not-sum fix)."""
-    # Per-round scores stay below TOP_SCORE_MIN (25) so the Top Score award
+    # Per-round scores stay below TOP_SCORE_MIN (25) so the Best Round award
     # (which fires first) can't claim Riser before Comeback King is computed.
     riser = _mk_player("Riser")
     riser.round_scores = [0, 0, 20, 20]  # avg 0 → 20
