@@ -3,6 +3,29 @@
 All notable changes to Quizify are documented here. This project follows
 [Semantic Versioning](https://semver.org/).
 
+## [1.16.0-RC5] — 2026-09-07
+
+The fourth candidate was played too. It kept every promise it made and broke one
+thing while keeping them.
+
+### 🪑 The chair's card outstayed its welcome
+
+Showing the phones what the Hot Seat settlement did to their points — new in the
+last candidate — left the card standing for the rest of the game, because the
+only thing that ever took it down was the next auction, and there is only one
+auction per game. Every later question was then played behind it, with the
+answers pushed off the bottom of the phone. The card now leaves when the game
+moves on, and a new guard insists that anything able to stand between the
+question and the answers must name what takes it away again.
+
+### 📺 Everybody is on the final board
+
+At 720p and 768p the podium showed three players and scrolled the rest — on a
+screen that cannot scroll. Three players, then, whoever else had played. Up to
+eight now fit at every resolution; beyond that the board says how many it is not
+naming. Part of the missing space was sixteen pixels of a phone's stylesheet
+reaching the television again.
+
 ## [1.16.0-RC4] — 2026-09-07
 
 The third candidate was played too. It left one way for a room to get stuck and
