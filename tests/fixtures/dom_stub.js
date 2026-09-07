@@ -95,6 +95,7 @@ function parseSpans(html) {
 
 function makeElement(id, tagName) {
     const attrs = Object.create(null);
+    const listeners = Object.create(null);
     let html = '';
     let ownText = '';
     let children = [];
@@ -129,8 +130,41 @@ function makeElement(id, tagName) {
         hasAttribute: function (name) {
             return Object.prototype.hasOwnProperty.call(attrs, name);
         },
-        addEventListener: function () {},
-        removeEventListener: function () {},
+        addEventListener: function (type, fn) {
+            (listeners[type] || (listeners[type] = [])).push(fn);
+        },
+        removeEventListener: function (type, fn) {
+            const fns = listeners[type];
+            if (!fns) return;
+            const at = fns.indexOf(fn);
+            if (at !== -1) fns.splice(at, 1);
+        },
+        /**
+         * Fire what a real tap fires: the inline ``onclick`` the module may
+         * have assigned, then every listener it registered, each with ``this``
+         * bound to the element. Tests that need to prove a button still works
+         * on the *second* render have to press it on the first one.
+         *
+         * A disabled control swallows the tap, exactly as the browser does —
+         * that silence is what a player experiences when a one-shot button was
+         * never re-armed, so a stub that fired anyway would hide the bug.
+         */
+        dispatch: function (type) {
+            if (el.disabled && (type === 'click' || type.indexOf('mouse') === 0)) return;
+            const event = {
+                type: type,
+                target: el,
+                currentTarget: el,
+                preventDefault: function () {},
+                stopPropagation: function () {}
+            };
+            const inline = el['on' + type];
+            if (typeof inline === 'function') inline.call(el, event);
+            (listeners[type] || []).slice().forEach(function (fn) {
+                fn.call(el, event);
+            });
+        },
+        click: function () { el.dispatch('click'); },
         appendChild: function (child) { children.push(child); all.push(child); return child; },
         // The subtree, depth-first — `children` is reassigned by the innerHTML
         // setter, so it is read through the closure rather than captured.
@@ -218,6 +252,7 @@ const windowStub = {
         removeItem: function (k) { delete this._v[k]; }
     },
     navigator: { language: 'en-US' },
+    scrollTo: function () {},
     addEventListener: function () {},
     setTimeout: setTimeout,
     clearTimeout: clearTimeout

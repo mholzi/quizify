@@ -3239,6 +3239,17 @@
         var newGameBtn = document.getElementById('new-game-btn');
 
         if (playAgainBtn) {
+            // #877: re-arm the button on every finale, not only the first.
+            // The tap disables it and swaps its label for an hourglass so it
+            // cannot double-fire, and nothing ever put either back — but a
+            // rematch keeps the phone on this same page, so the second finale
+            // showed the first game's spent hourglass. A third game could then
+            // only be started through "New game", which throws everyone back
+            // to the admin setup screen. The label is re-read from i18n so it
+            // comes back in the language the room is playing in.
+            playAgainBtn.disabled = false;
+            playAgainBtn.textContent = _tf('admin.playAgainSame', 'Play again');
+
             playAgainBtn.onclick = function () {
                 var ws = state.ws;
                 if (!ws || ws.readyState !== WebSocket.OPEN) {
@@ -3676,6 +3687,17 @@
         var playerMsg = document.getElementById('lightning-recap-player-msg');
         if (adminCtl) adminCtl.classList.toggle('hidden', !state.isAdmin);
         if (playerMsg) playerMsg.classList.toggle('hidden', !!state.isAdmin);
+
+        // #877: re-arm Continue on every recap, not only the first one.
+        // The tap disables the button so it cannot double-fire, and nothing
+        // ever undid that — but a rematch keeps the phone on this same page
+        // (play_again broadcasts a game_state, nobody navigates) and the
+        // server clears _lightning_fired, so game two has a lightning round
+        // of its own. Its recap used to arrive with game one's dead button,
+        // and since the host is a player by default, the one person who has
+        // to move the game on was the one sitting in front of it.
+        var continueBtn = document.getElementById('lightning-recap-continue-btn');
+        if (continueBtn) continueBtn.disabled = false;
     }
 
     /**
