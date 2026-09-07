@@ -468,7 +468,19 @@
             // 'rematch_started', so this branch was unreachable. The rematch
             // flow is driven entirely by the game_state phase transition.)
 
+            case 'reactions':
+                // #896: one frame per 150 ms flush window carrying every
+                // distinct (player, emoji) of that window.
+                (msg.reactions || []).forEach(function (r) {
+                    showFloatingReaction(r.emoji, r.player_name);
+                });
+                break;
+
             case 'reaction':
+                // Kept for one release: a phone still holding the bundle from
+                // before #896 talks to a server that has stopped sending this,
+                // and a phone that has this bundle may still be talking to a
+                // server that has not been restarted yet.
                 showFloatingReaction(msg.emoji, msg.player_name);
                 break;
 

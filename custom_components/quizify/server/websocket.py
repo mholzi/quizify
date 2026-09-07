@@ -1494,6 +1494,12 @@ class QuizifyWebSocketHandler:
         team = game_state.team_registry.get(ack.team_id)
         if team is None:
             return
+        # #896: built as one fan-out and delivered in parallel, like every
+        # other per-player fan-out in this file (#258/#307). ``send`` wraps the
+        # write in a 2 s timeout, so awaiting members one at a time let a
+        # single half-dead phone hold the frame for its whole team — and with
+        # it this handler's ``answer_accepted`` reply.
+        sends = []
         for name in team.members:
             member = game_state.get_player(name)
             if member is None or member.ws is None or not member.connected:
@@ -1506,7 +1512,7 @@ class QuizifyWebSocketHandler:
                 # the question start and this tap). Their client re-reads the
                 # answer from the next projected snapshot.
                 continue
-            await self._conn.send(member.ws, {
+            sends.append(self._conn.send(member.ws, {
                 "type": "team_answer",
                 "team_id": ack.team_id,
                 "answer_index": shown_index,
@@ -1516,7 +1522,9 @@ class QuizifyWebSocketHandler:
                 # which is what stops the tap war rather than slowing one side.
                 "lock_seconds": ack.lock_seconds,
                 "members": list(team.members),
-            })
+            }))
+        if sends:
+            await asyncio.gather(*sends)
 
     # ------------------------------------------------------------------
     # Submit answer
@@ -1753,9 +1761,19 @@ class QuizifyWebSocketHandler:
     async def _flush_reactions_after_window(self) -> None:
         """Wait one coalescing window, then broadcast the buffered reactions.
 
-        One ``reaction`` message per distinct buffered ``(player, emoji)`` —
-        same wire shape the client already renders, just batched so a burst of
-        spam produces a handful of frames instead of one per inbound message.
+        ONE ``reactions`` frame carrying every distinct ``(player, emoji)``
+        buffered this window (#896). The window used to dedupe the buffer and
+        then emit a separate ``reaction`` broadcast per surviving pair, which
+        with the 15 msg/s limiter is ~107 ``json.dumps`` and ~1,070
+        ``send_str`` per second while eight phones tap through a reveal, where
+        one frame per window is ~7/s. ``reaction_bonus``, computed a few lines
+        below in this same function, has batched since #416 — the two halves
+        of one flush now agree on the wire shape.
+
+        The clients keep their old single-``reaction`` branch for one release
+        (see ``player-core.js``, ``admin.js``, ``dashboard.html``) so a phone
+        holding a cached bundle from before this change is not left staring at
+        a reveal with no reactions on it.
         """
         try:
             await asyncio.sleep(self._REACTION_FLUSH_WINDOW)
@@ -1770,14 +1788,15 @@ class QuizifyWebSocketHandler:
         self._reaction_buffer.clear()
         # Collect every broadcast for this window, then fan them all out in a
         # single gather (#416) instead of awaiting them one at a time.
-        broadcasts = [
-            self._conn.broadcast({
-                "type": "reaction",
-                "emoji": emoji,
-                "player_name": player_name,
-            })
-            for player_name, emoji in buffered
-        ]
+        broadcasts = []
+        if buffered:
+            broadcasts.append(self._conn.broadcast({
+                "type": "reactions",
+                "reactions": [
+                    {"emoji": emoji, "player_name": player_name}
+                    for player_name, emoji in buffered
+                ],
+            }))
 
         # #416: collapse the reveal reaction-bonus events buffered this window
         # into ONE ``reaction_bonus``. The leaderboard is serialized once, now —
@@ -2926,6 +2945,10 @@ class QuizifyWebSocketHandler:
         if standing is None or standing.answer_index is None:
             return
         members = lr.members_of(setter)
+        # #896: one gather, for the same reason as ``_broadcast_team_answer``
+        # above — a stalled member must not spend its 2 s send timeout in front
+        # of its teammates, least of all inside a Lightning round.
+        sends = []
         for name in members:
             member = game_state.get_player(name)
             if member is None or member.ws is None or not member.connected:
@@ -2935,14 +2958,16 @@ class QuizifyWebSocketHandler:
                 shown_index = order.index(standing.answer_index)
             except ValueError:
                 continue
-            await self._conn.send(member.ws, {
+            sends.append(self._conn.send(member.ws, {
                 "type": "lightning_team_answer",
                 "index": lr.index,
                 "answer_index": shown_index,
                 "set_by": setter,
                 "members": list(members),
                 "lock_seconds": LIGHTNING_ANSWER_LOCK_SECONDS,
-            })
+            }))
+        if sends:
+            await asyncio.gather(*sends)
 
     def _start_lightning_loop(
         self,

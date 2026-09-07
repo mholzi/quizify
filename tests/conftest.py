@@ -113,6 +113,112 @@ def _mixed_draw_serves_multiple_choice():
         QuestionBank._build_queue = original
 
 
+def harness_config_dir() -> Path | None:
+    """The config directory the HA test harness hands every ``hass`` (#823).
+
+    It lives inside the installed venv package, is shared by every run on the
+    machine, and nothing cleans it. ``None`` when the harness is not installed
+    (the base run without the HA test dependencies).
+    """
+    try:
+        from pytest_homeassistant_custom_component.common import (  # noqa: PLC0415
+            get_test_config_dir,
+        )
+    except ImportError:  # pragma: no cover - base run without the HA harness
+        return None
+    return Path(get_test_config_dir())
+
+
+def harness_config_entries() -> frozenset[str]:
+    """Everything under the harness config dir, as repo-relative strings."""
+    root = harness_config_dir()
+    if root is None or not root.is_dir():
+        return frozenset()
+    return frozenset(str(p.relative_to(root)) for p in root.rglob("*"))
+
+
+@pytest.fixture(scope="session", autouse=True)
+def _nothing_is_left_in_the_installed_harness():
+    """Fail the run if the suite wrote into site-packages (#823).
+
+    The guard the coordinator of the v1.17.0 plan asked for, and the reason
+    this is a session fixture rather than a test: what matters is not the state
+    of that directory — a machine can carry residue from before this fix — but
+    whether THIS run added to it. So it snapshots at session start and compares
+    at session end, and only new entries are a failure.
+
+    It is deliberately blind to which test did it. A run that trips this prints
+    the paths; ``git grep`` on the filename finds the store, and the store's
+    directory comes from ``runtime.data_dir``, which
+    ``_quizify_config_dir_is_temporary`` below redirects.
+
+    One honest caveat: a SECOND suite running against the same virtualenv at
+    the same time — two worktrees of this repo, say — writes into the same
+    directory, and this guard cannot tell whose write it was. That is the
+    scenario the directory being shared makes possible in the first place, so
+    the guard reporting it is not wrong, only occasionally the wrong culprit.
+    """
+    before = harness_config_entries()
+    yield
+    leaked = sorted(harness_config_entries() - before)
+    assert not leaked, (
+        "The suite wrote into the installed test harness at "
+        f"{harness_config_dir()}: {leaked}. That directory is shared by every "
+        "run on this machine and is never cleaned, so the next run starts with "
+        "this residue — see #823. Point the store at the test's own tmp_path."
+    )
+
+
+@pytest.fixture(autouse=True)
+def _quizify_config_dir_is_temporary(tmp_path, monkeypatch):
+    """Send Quizify's on-disk writes to the test's own directory (#823).
+
+    ``HARuntime.data_dir`` is ``hass.config.path("quizify")``, and under the
+    test harness ``hass.config`` points at
+    ``pytest_homeassistant_custom_component/testing_config/`` — a directory
+    INSIDE the installed venv package, which nothing cleans between runs. So
+    every test that set the integration up appended to files there: an
+    analytics.json past 100 KB, a question_history.json past 28 KB, a
+    question_stats.json, and a presets.json that gained one entry per run.
+
+    The presets file is the one with a cap. ``MAX_PRESETS`` is 20, so from the
+    twentieth run onwards ``test_the_service_starts_a_saved_preset_by_name``
+    and ``test_an_unknown_preset_names_the_ones_that_exist`` failed with "at
+    most 20 presets can be saved" — on developer machines only, because CI
+    installs a clean venv every time and never reaches run 20.
+
+    ``Config.path`` is patched rather than ``HARuntime.data_dir`` so that the
+    two stay the same directory. Tests that reach for the config dir directly
+    — the community-pack location (#743) and the question-stats flush (#588)
+    both write a file with ``hass.config.path`` and expect the integration to
+    read it back — keep working, because they are redirected by the same
+    patch. Only the ``quizify`` subtree moves: everything else, custom-component
+    discovery included, still resolves under the harness config dir.
+
+    Nothing is created eagerly. A test that never writes leaves ``tmp_path``
+    empty, which ``test_a_failed_write_leaves_no_stray_tmp`` (#790) asserts.
+    """
+    try:
+        from homeassistant.core_config import Config  # noqa: PLC0415
+    except ImportError:  # pragma: no cover - HA floor keeps it in core
+        try:
+            from homeassistant.core import Config  # type: ignore[attr-defined]
+        except ImportError:  # pragma: no cover - base run without HA
+            yield
+            return
+
+    original_path = Config.path
+    quizify_dir = tmp_path / "quizify"
+
+    def _path(self, *parts: str) -> str:  # noqa: ANN001
+        if parts and parts[0] == "quizify":
+            return str(quizify_dir.joinpath(*parts[1:]))
+        return original_path(self, *parts)
+
+    monkeypatch.setattr(Config, "path", _path)
+    yield
+
+
 @pytest.fixture(autouse=True)
 def _fresh_event_loop(request):
     """Give every *synchronous* test a fresh, open loop.

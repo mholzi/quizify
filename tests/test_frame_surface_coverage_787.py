@@ -368,7 +368,7 @@ COVERAGE: dict[str, Coverage] = {
         },
     ),
     "powerup_applied": _c("broadcast", "tv", "host", "phone"),
-    "reaction": _c("broadcast", "tv", "host", "phone"),
+    "reactions": _c("broadcast", "tv", "host", "phone"),
     "reaction_bonus": _c("broadcast", "tv", "host", "phone"),
     # --- lightning --------------------------------------------------------
     "lightning_splash": _c("broadcast", "tv", "host", "phone"),
@@ -483,6 +483,13 @@ LEGACY_ALIASES: dict[str, str] = {
         "#619 found zero senders and the case was kept deliberately: a live TV "
         "cached from an older build may still be listening, and the handler "
         "costs nothing."
+    ),
+    "reaction": (
+        "#896 replaced the per-pair frame with one batched `reactions` frame "
+        "per flush window. All three surfaces keep the single-frame case for "
+        "one release, so a phone or TV holding a bundle from either side of "
+        "the change still shows the reveal's reactions. Delete the cases — and "
+        "this entry — in the release after 1.17.0."
     ),
 }
 

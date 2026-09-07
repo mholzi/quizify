@@ -359,29 +359,11 @@ from custom_components.quizify.game.state import GamePhase  # noqa: E402
 pytestmark = pytest.mark.usefixtures("enable_custom_integrations")
 
 
-@pytest.fixture(autouse=True)
-def _clean_config_packs_dir():
-    """Keep the shared HA test config directory free of leftover packs.
-
-    ``pytest_homeassistant_custom_component`` hands every ``hass`` fixture the
-    same on-disk config directory, so a pack written by one test would still be
-    there for the next run (and for every other test in the suite). Wipe the
-    drop-in folder around each test.
-    """
-    from pytest_homeassistant_custom_component.common import (  # noqa: PLC0415
-        get_test_config_dir,
-    )
-
-    packs = Path(get_test_config_dir()) / "quizify" / COMMUNITY_PACKS_DIRNAME
-
-    def _wipe() -> None:
-        if packs.is_dir():
-            for leftover in packs.glob("*.json"):
-                leftover.unlink()
-
-    _wipe()
-    yield
-    _wipe()
+# The fixture that used to mop the shared drop-in folder around every test
+# lived here. #823 removed the need for it: the config directory this file
+# writes into is redirected to the test's own tmp_path in conftest.py, so there
+# is nothing left in site-packages to wipe — and if the redirect is ever lost,
+# the session guard there says so instead of a mop hiding it.
 
 
 @pytest.fixture(autouse=True)
