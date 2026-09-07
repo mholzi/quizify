@@ -27,7 +27,12 @@ from pathlib import Path
 import pytest
 
 REPO = Path(__file__).resolve().parent.parent
-WEBSOCKET = REPO / "custom_components" / "quizify" / "server" / "websocket.py"
+# The hot-seat frames moved out of websocket.py into one broadcaster per
+# mode (#881). The payload literals — and therefore this test's subject —
+# went with them.
+BROADCASTERS = (
+    REPO / "custom_components" / "quizify" / "server" / "broadcasters.py"
+)
 # #829: the television's script is its own file now. #787 then moved the
 # outcome decision itself into render-shared.js, because the host page and
 # the phone were reading `answered` and the delta by hand too — and the host
@@ -61,7 +66,7 @@ def test_every_hot_seat_broadcast_carries_the_round_numbers() -> None:
     whatever the frame had. A television is a single header — if any of the
     three omits them, the detour lies about where the game is.
     """
-    source = WEBSOCKET.read_text(encoding="utf-8")
+    source = BROADCASTERS.read_text(encoding="utf-8")
     for message_type in ("hot_seat_auction", "hot_seat_question", "hot_seat_result"):
         block = _payload_block(source, message_type)
         assert '"round_num"' in block, f"{message_type} has no round_num: {block}"
