@@ -201,6 +201,10 @@
         adminDetourNote: document.getElementById('admin-detour-note'),
         adminCorrect: document.getElementById('admin-correct'),
         gameLeaderboard: document.getElementById('game-leaderboard'),
+        // #830: who the room is still waiting for, and the two analytics
+        // lines the server has always sent this page and this page dropped.
+        adminAnswerProgress: document.getElementById('admin-answer-progress'),
+        adminLobbyH2h: document.getElementById('admin-lobby-h2h'),
         // #741: the same power-up strip the television got, on the screen
         // where the host notices why the points jumped.
         powerupBanners: document.getElementById('powerup-banners'),
@@ -211,6 +215,8 @@
         // Finale
         adminPodium: document.getElementById('admin-podium'),
         adminFinaleLeaderboard: document.getElementById('admin-finale-leaderboard'),
+        adminFinaleH2h: document.getElementById('admin-finale-h2h'),
+        adminEveningTally: document.getElementById('admin-evening-tally'),
         newGameBtn: document.getElementById('new-game-btn'),
         lobbyBackBtn: document.getElementById('lobby-back-btn'),
         // Lightning Round (issue #42 mechanics, #285 auto-trigger). The manual
@@ -1838,6 +1844,19 @@
             case 'hot_seat_result':
                 handleHotSeatResult(msg);
                 break;
+            // #830: the last three the host page had no case for. All three
+            // are already addressed to it — the tracker rides a plain
+            // broadcast, the two analytics lines go to admins AND dashboards
+            // and were drawn on the dashboard alone.
+            case 'answer_progress':
+                handleAnswerProgress(msg);
+                break;
+            case 'evening_tally':
+                handleEveningTally(msg);
+                break;
+            case 'head_to_head':
+                handleHeadToHead(msg);
+                break;
             case 'error':
                 // The initial admin_connect attempt before authentication
                 // returns "Admin only" — that's expected handshake noise,
@@ -2007,10 +2026,19 @@
                 // lasts. Show what phase the room is in, and only offer Next
                 // where the server actually accepts it.
                 showView('game');
-                // #732: the seat holder's name so the notice can name who the
-                // room is watching, instead of the second-person hint written
-                // for that player's own phone.
-                setDetourNotice(msg.phase, msg.hot_seat && msg.hot_seat.winner);
+                if (msg.hot_seat) {
+                    // #879: the snapshot carries the whole detour and the host
+                    // page read one field of it. Replay it through the live
+                    // handlers instead, the way the television does.
+                    renderHotSeatFromSnapshot(msg.hot_seat, msg.round, msg.total_rounds);
+                } else {
+                    // The wager window, which has no block of its own — and a
+                    // Hot Seat phase without one, which the server does not
+                    // send. #732: the seat holder's name so the notice can
+                    // name who the room is watching, instead of the
+                    // second-person hint written for that player's own phone.
+                    setDetourNotice(msg.phase, msg.hot_seat && msg.hot_seat.winner);
+                }
                 if (msg.leaderboard) renderLeaderboard(els.gameLeaderboard, msg.leaderboard);
                 break;
             case 'FINALE':
@@ -2365,6 +2393,201 @@
         }
     }
 
+    /**
+     * The whole detour out of one snapshot (#879).
+     *
+     * A host page that opens — or reopens — mid-detour is sent
+     * ``game_state`` and nothing else until the next ``hot_seat_*`` frame,
+     * and that snapshot carries the round, the bid count, the seat question
+     * and the settlement (``server/serializers.py``: the ``hot_seat`` block).
+     * The page read one field of it, ``winner``, and showed the notice.
+     *
+     * The clock is the part that could not repair itself. ``adminTimer.start``
+     * never ran, so ``adminTimerDuration`` stayed 0 — and every later
+     * ``hot_seat_tick`` then hit the ``adminTimerDuration > 0`` guard in
+     * ``update``: the seconds counted down and the bar stayed frozen for the
+     * rest of the detour. A frozen bar under a running number is worse than no
+     * bar, because the host reads the bar.
+     *
+     * So the snapshot goes through the same handlers the live frames do,
+     * which is what the television has done since #664. The window is the
+     * FULL one (``auction_seconds`` / ``answer_seconds``) and the remaining
+     * time is applied on top, so the bar shows the fraction of the window
+     * that is actually left rather than restarting full at the moment
+     * somebody happened to reconnect.
+     */
+    function renderHotSeatFromSnapshot(hs, round, totalRounds) {
+        if (hs.stage === 'auction') {
+            handleHotSeatAuction({
+                round_num: round,
+                total_rounds: totalRounds,
+                seconds: _detourWindow(hs.auction_seconds, hs)
+            });
+            handleHotSeatBidCount({ count: hs.bid_count, total: hs.bidder_count });
+            _resumeDetourClock(hs);
+            return;
+        }
+        if (hs.stage === 'result') {
+            // ``summary`` is the same dict the live ``hot_seat_result`` frame
+            // is built from, minus the round — which the settlement line does
+            // not carry and the host's counter needs.
+            var summary = hs.summary || {
+                winner: hs.winner, entrant: hs.entrant,
+                winner_pct: hs.pct, winner_stake: hs.stake
+            };
+            summary.round_num = round;
+            summary.total_rounds = totalRounds;
+            handleHotSeatResult(summary);
+            return;
+        }
+        // The chair has been won and the seat holder is answering. Both
+        // halves, in the order the live flow sends them: the award writes the
+        // notice and what the chair cost, the question writes over the notice
+        // and starts the clock.
+        handleHotSeatAwarded({
+            winner: hs.winner, entrant: hs.entrant,
+            pct: hs.pct, stake: hs.stake
+        });
+        if (hs.question) {
+            handleHotSeatQuestion({
+                round_num: round,
+                total_rounds: totalRounds,
+                question: hs.question.text,
+                seconds: _detourWindow(hs.answer_seconds, hs)
+            });
+        } else {
+            // The serializer withholds the question until the chair is won,
+            // so this is the shape a stage the server does not send would
+            // have. Keep the award's notice rather than blanking the line —
+            // and start the clock anyway, because the ticks are coming.
+            _setDetourRound({ round_num: round, total_rounds: totalRounds });
+            adminTimer.start(_detourWindow(hs.answer_seconds, hs));
+        }
+        _resumeDetourClock(hs);
+    }
+
+    /** The full window, falling back to what is left of it. */
+    function _detourWindow(full, hs) {
+        return (typeof full === 'number' && full > 0) ? full : hs.time_remaining;
+    }
+
+    /** Put the bar where the round actually is, before the next tick. */
+    function _resumeDetourClock(hs) {
+        if (typeof hs.time_remaining === 'number') {
+            adminTimer.update(hs.time_remaining);
+        }
+    }
+
+    // ---- The frames the host page had no case for (#830) ----------------
+    //
+    // The submission tracker (#619) and the two analytics lines (#612 evening
+    // tally, #613 head to head) are all sent to this page and were all
+    // dropped by it — the host page having been treated as a control panel
+    // rather than as a surface. The television's renderers build HTML; these
+    // build text, because the host holds this page in one hand and because a
+    // name a guest typed cannot be turned into markup if it is never parsed
+    // as markup.
+
+    /**
+     * How many have answered — and who the room is waiting for.
+     *
+     * The count on its own is what the television shows, and it is the wrong
+     * half for the host: they are the one who decides to move on early, and
+     * "4 of 6" does not say whether the two missing are still thinking or
+     * standing in the kitchen.
+     */
+    function handleAnswerProgress(msg) {
+        if (_redirecting || !els.adminAnswerProgress) return;
+        var total = msg.total || 0;
+        if (!total) {
+            clearAnswerProgress();
+            return;
+        }
+        var submitted = msg.submitted || 0;
+        var line = _tOr(
+            'admin.answerProgress',
+            { submitted: submitted, total: total },
+            submitted + ' of ' + total + ' answered'
+        );
+        // A phone that has left the room is not somebody to wait for — the
+        // other two surfaces grey those rows out for the same reason.
+        var waiting = (msg.players || []).filter(function (p) {
+            return !p.submitted && p.connected !== false;
+        }).map(function (p) { return p.name; });
+        if (waiting.length) {
+            // Three names is a glance; a fourth is a list the host reads
+            // instead of reading the room.
+            var shown = waiting.slice(0, 3).join(', ');
+            if (waiting.length > 3) shown += ' +' + (waiting.length - 3);
+            line += ' — ' + _tOr(
+                'admin.waitingFor', { names: shown }, 'waiting for ' + shown
+            );
+        }
+        els.adminAnswerProgress.textContent = line;
+        els.adminAnswerProgress.style.display = '';
+    }
+
+    /** The tracker belongs to one question; it goes with the question. */
+    function clearAnswerProgress() {
+        if (!els.adminAnswerProgress) return;
+        els.adminAnswerProgress.textContent = '';
+        els.adminAnswerProgress.style.display = 'none';
+    }
+
+    /**
+     * The sitting's tally — "Tonight: Anna 2 wins · Ben 1 win" (#612).
+     *
+     * Broadcast to admins and dashboards once the finished game is recorded,
+     * which is why it belongs on the finale view and nowhere else.
+     */
+    function handleEveningTally(msg) {
+        if (!els.adminEveningTally) return;
+        var leaders = (msg && msg.leaders) || [];
+        if (!leaders.length) {
+            els.adminEveningTally.textContent = '';
+            els.adminEveningTally.style.display = 'none';
+            return;
+        }
+        // Three names, the same cut the television makes: a fourth turns the
+        // line into a table nobody reads mid-celebration.
+        var parts = leaders.slice(0, 3).map(function (entry) {
+            var wins = entry.wins === 1
+                ? _tOr('dashboard.tonightWinsOne', null, '1 win')
+                : _tOr('dashboard.tonightWins', { wins: entry.wins },
+                       entry.wins + ' wins');
+            return entry.name + ' ' + wins;
+        });
+        els.adminEveningTally.textContent =
+            _tOr('dashboard.tonightLabel', null, 'Tonight') + ': ' + parts.join(' · ');
+        els.adminEveningTally.style.display = '';
+    }
+
+    /**
+     * The duel between the two regulars in the room (#613).
+     *
+     * ``at`` picks the line: the lobby before the game, the finale after it,
+     * where the record already includes the game just played. "last 90 days"
+     * is stated rather than implied — the detailed history prunes, so calling
+     * this an all-time record would be a claim the data cannot support.
+     */
+    function handleHeadToHead(msg) {
+        var target = (msg && msg.at === 'finale')
+            ? els.adminFinaleH2h
+            : els.adminLobbyH2h;
+        if (!target) return;
+        if (!msg || !msg.left || !msg.right) {
+            target.textContent = '';
+            target.style.display = 'none';
+            return;
+        }
+        target.textContent =
+            _tOr('dashboard.h2hLabel', null, 'Head to head') + ': '
+            + msg.left + ' ' + msg.left_wins
+            + ' – ' + msg.right_wins + ' ' + msg.right
+            + ' (' + _tOr('dashboard.h2hRecent', null, 'last 90 days') + ')';
+        target.style.display = '';
+    }
+
     function handleWagerProgress(msg) {
         if (_redirecting) return;
         currentPhase = 'WAGER_ACTIVE';
@@ -2409,6 +2632,9 @@
         // The normal game is back; whatever the Hot Seat left under the
         // question belongs to a round that is over (#832).
         setDetourDetail('');
+        // Nobody has answered this one yet, and the first frame that says so
+        // arrives with the first tap (#830).
+        clearAnswerProgress();
 
         adminTimer.start(msg.timer_duration);
         if (els.nextQuestionBtn) els.nextQuestionBtn.classList.add('hidden');
@@ -2431,6 +2657,8 @@
         if (_redirecting) return;
         currentPhase = 'ANSWER_REVEAL';
         adminTimer.stop();
+        // The question is over; there is nobody left to wait for (#830).
+        clearAnswerProgress();
 
         if (els.adminCorrect && msg && msg.correct_answer) {
             els.adminCorrect.textContent = _t('admin.correctLabel', {

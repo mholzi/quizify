@@ -833,6 +833,12 @@
                      value is no longer rendered as a section summary. -->
                 <span id="lobby-player-count" class="sr-only">0</span>
 
+                <!-- #830/#613: the duel between the two regulars in the
+                     room. Broadcast to admins AND dashboards since #613, and
+                     drawn on the dashboard only. -->
+                <div id="admin-lobby-h2h"
+                     style="font-size:0.9rem;opacity:0.75;text-align:center;margin-top:0.5rem;display:none;"></div>
+
                 <div class="lobby-e-actions">
                     <button type="button" id="start-gameplay-btn" class="btn btn-primary btn-lg btn-block hidden">
                         <span class="btn-icon qz-icon qz-icon--sage" data-ui-icon="play" aria-hidden="true">▶️</span>
@@ -869,6 +875,13 @@
                 <div class="timer-bar-fill"></div>
             </div>
             <div id="admin-timer-bar-text" class="timer-text mt-md"></div>
+            <!-- #830: the submission tracker the phone and the television have
+                 had since #619. The host is the one who decides to move on
+                 early, and was the only screen not told who the room is still
+                 waiting for. Styled like #admin-detour-note: a quiet second
+                 line, not a heading. -->
+            <div id="admin-answer-progress" role="status" aria-live="polite"
+                 style="font-size:0.9rem;opacity:0.75;margin-top:0.25rem;display:none;"></div>
 
             <!-- Live leaderboard -->
             <section class="card-section mt-md">
@@ -913,6 +926,14 @@
                     <span data-i18n="leaderboard.title">Leaderboard</span>
                 </h2>
                 <div id="admin-finale-leaderboard" class="leaderboard"></div>
+                <!-- #830: both analytics lines the host page dropped. The duel
+                     again (#613), now including the game just played, and the
+                     sitting's tally (#612) — which arrives only once the
+                     finished game is recorded, so it starts hidden. -->
+                <div id="admin-finale-h2h" class="mt-md"
+                     style="font-size:0.9rem;opacity:0.75;display:none;"></div>
+                <div id="admin-evening-tally"
+                     style="font-size:0.9rem;opacity:0.75;margin-top:0.25rem;display:none;"></div>
             </section>
 
             <!-- The Lightning Round is now an automatic mid-game event (#285);

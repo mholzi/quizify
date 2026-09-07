@@ -138,6 +138,8 @@
     "questionCounter": "Pregunta {current} / {total}",
     "correctLabel": "Correcto: {answer}",
     "answerNone": "Sin respuesta",
+    "answerProgress": "{submitted} de {total} han respondido",
+    "waitingFor": "faltan {names}",
     "summaryRoundsUnit": "Rondas",
     "settingsSummary": "{difficulty} • {rounds} {roundsUnit} • {timer}s",
     "categoriesCountPlural": "{count} categorías",

@@ -298,6 +298,9 @@ def _run() -> dict:
         _js_function(source, signature, required=False)
         for signature in (
             "function _tOr(key, params, fallback) {",
+            # #830 put the submission tracker on this page, and both
+            # question_started and round_summary clear it.
+            "function clearAnswerProgress() {",
             "function setDetourDetail(text) {",
             "function _setDetourRound(msg) {",
             "function handleHotSeatAuction(msg) {",

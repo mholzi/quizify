@@ -281,43 +281,20 @@ COVERAGE: dict[str, Coverage] = {
             "host": "an ack that locks one phone's input",
         },
     ),
-    "answer_progress": _c(
-        "broadcast",
-        "tv",
-        "phone",
-        gaps={
-            "host": (
-                "#619 wired the submission tracker to the two screens the room "
-                "looks at and left the host page out. The host is the one who "
-                "decides to move on early, and has no view of who it is "
-                "waiting for."
-            )
-        },
-    ),
+    "answer_progress": _c("broadcast", "tv", "phone", "host"),
     "round_summary": _c("broadcast", "tv", "host", "phone"),
     "finale": _c("broadcast", "tv", "host", "phone"),
     "evening_tally": _c(
         "host_and_tv",
         "tv",
+        "host",
         ignored={"phone": _PHONE_HAS_NO},
-        gaps={
-            "host": (
-                "#612 sends the sitting's tally to admins AND dashboards, and "
-                "only the television renders it. Either the host page grows a "
-                "place for it or the server should stop sending it there."
-            )
-        },
     ),
     "head_to_head": _c(
         "host_and_tv",
         "tv",
+        "host",
         ignored={"phone": _PHONE_HAS_NO},
-        gaps={
-            "host": (
-                "#613, same shape as evening_tally: broadcast to admins and "
-                "dashboards, rendered on one of them."
-            )
-        },
     ),
     "all_time_update": _c(
         "unicast",
@@ -609,27 +586,27 @@ def test_every_legacy_alias_is_still_referenced_somewhere() -> None:
     )
 
 
-def test_the_gap_list_is_what_the_issue_said_it_was() -> None:
-    """A floor under the record, so nobody quietly empties it to go green.
+def test_the_host_page_has_no_recorded_gaps_left() -> None:
+    """#830 is closed, and this is what keeps it closed.
 
     #787 counted the drift before any of this was written, and #830 wrote out
     what was left of it for the host page: seven ``hot_seat_*`` broadcasts plus
-    ``answer_progress``, ``evening_tally`` and ``head_to_head``. The seven are
-    gone — #832 wired the host page to the detour it had only ever seen in a
-    snapshot, and each entry came out with the handler that closed it, which is
-    the only way this list is allowed to shrink.
+    ``answer_progress``, ``evening_tally`` and ``head_to_head``. The seven went
+    with #832, the last three with this change, and each entry came out
+    alongside the handler that closed it — the only way this list is allowed
+    to shrink.
 
-    The other three are named rather than counted, because a count says nothing
-    about which one somebody deleted. When the last of them is wired, this test
-    goes with it rather than being weakened.
+    The assertion is now the empty set rather than a named list, because
+    "which three are left" has stopped being a fact about the code. A new gap
+    for the host page has to be argued for here, in a test that says the host
+    page is meant to have none.
     """
-    gaps = {
-        (frame, surface)
+    host = {
+        frame
         for frame, entry in COVERAGE.items()
-        for surface in entry.gaps
+        if "host" in entry.gaps
     }
-    host = {frame for frame, surface in gaps if surface == "host"}
-    assert host == {"answer_progress", "evening_tally", "head_to_head"}, (
-        "#830 records three frames the host page still drops; this file now "
-        f"records {sorted(host)}"
+    assert host == set(), (
+        "the host page is a surface, not a control panel with a switch "
+        f"attached; these frames reach it and it drops them: {sorted(host)}"
     )
