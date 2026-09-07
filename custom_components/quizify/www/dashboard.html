@@ -3225,6 +3225,20 @@
                 });
                 return;
             }
+            // #874: the server's third stage. HOT_SEAT_REVEAL lasts until the
+            // host taps Next, so any television that reloads inside that
+            // window used to fall through to the awarded line and print the
+            // auction price ("Anna - 40%") over the settlement everyone was
+            // waiting for -- no correct answer, no outcome, at the biggest
+            // points swing of the game. ``hot_seat.summary`` is the same dict
+            // the live ``hot_seat_result`` frame spreads, so the restored
+            // board renders the identical frame.
+            if (hs.stage === 'result' && hs.summary) {
+                handleHotSeatResult(Object.assign(
+                    { round_num: round, total_rounds: total }, hs.summary
+                ));
+                return;
+            }
             handleHotSeatAwarded({
                 // #804: the snapshot carries both, so a television that
                 // reconnects mid-detour names the payer the same way the live
