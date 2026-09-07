@@ -20,6 +20,8 @@ from __future__ import annotations
 import json
 from pathlib import Path
 
+from tests.conftest import dashboard_markup, dashboard_script
+
 _REPO_ROOT = Path(__file__).resolve().parent.parent
 _WWW = _REPO_ROOT / "custom_components" / "quizify" / "www"
 
@@ -36,7 +38,8 @@ def test_both_keys_ship_in_every_language() -> None:
 
 
 def test_the_tv_lobby_shows_the_address_and_the_hint() -> None:
-    source = (_WWW / "dashboard.html").read_text("utf-8")
+    # #829/#880: the television's code and styles are their own files now.
+    source = dashboard_markup()
 
     assert 'id="lobby-join-url"' in source
     assert 'data-i18n="lobby.sameWifiHint"' in source
@@ -50,7 +53,8 @@ def test_the_tv_writes_the_address_outside_the_library_check() -> None:
     whose phone cannot reach a perfectly rendered code. This asserts the write
     happens *before* that branch is entered.
     """
-    source = (_WWW / "dashboard.html").read_text("utf-8")
+    # #829/#880: the television's code and styles are their own files now.
+    source = dashboard_script()
     body = source.split("function renderLobbyQr()", 1)[1].split("function ", 1)[0]
 
     write_at = body.index("lobbyJoinUrlEl")

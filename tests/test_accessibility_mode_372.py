@@ -39,6 +39,8 @@ import json
 import re
 from pathlib import Path
 
+from tests.conftest import dashboard_css
+
 _REPO = Path(__file__).resolve().parent.parent
 _WWW = _REPO / "custom_components" / "quizify" / "www"
 _PLAYER_HTML = _WWW / "player.html"
@@ -81,7 +83,8 @@ def test_answer_buttons_carry_a_glyph_for_both_states() -> None:
 def test_glyphs_match_the_dashboard_vocabulary() -> None:
     """A player glancing at the TV and back should not learn two languages."""
     css = _QUESTION_CSS.read_text("utf-8")
-    dashboard = (_WWW / "dashboard.html").read_text("utf-8")
+    # #829/#880: the television's code and styles are their own files now.
+    dashboard = dashboard_css()
 
     dash_glyph = re.search(
         r"\.dashboard-answer\.correct::after\s*\{[^}]*content:\s*\"([^\"]+)\"", dashboard
@@ -157,7 +160,11 @@ def test_head_script_runs_before_the_stylesheet_takes_effect() -> None:
 
 def test_a11y_css_is_registered_and_last() -> None:
     build = _BUILD_CSS.read_text("utf-8")
-    modules = re.findall(r'"(\d\d-[a-z0-9-]+\.css)"', build)
+    # #880: build_css.py builds a sheet per surface now. The cascade this rule
+    # is about is the phone/console one, CSS_MODULES — tv.css leaves 09-a11y
+    # out entirely (the television has no toggle).
+    cascade = build.split("CSS_MODULES = [", 1)[1].split("]", 1)[0]
+    modules = re.findall(r'"(\d\d-[a-z0-9-]+\.css)"', cascade)
     assert "09-a11y.css" in modules, "09-a11y.css is not in the CSS build"
     assert modules[-1] == "09-a11y.css", (
         "09-a11y.css must stay last — it overrides --font-size-* tokens from "

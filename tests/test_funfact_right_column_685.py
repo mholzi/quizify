@@ -15,20 +15,17 @@ scrolls. The answer grid does not move (bottom stays 674.9px).
 from __future__ import annotations
 
 import re
-from pathlib import Path
 
-REPO = Path(__file__).resolve().parent.parent
-DASHBOARD = REPO / "custom_components" / "quizify" / "www" / "dashboard.html"
+# #829/#880: the television's code and styles are their own files now.
+from tests.conftest import dashboard_css, dashboard_markup
 
 
 def _html() -> str:
-    return DASHBOARD.read_text(encoding="utf-8")
+    return dashboard_markup()
 
 
 def _css() -> str:
-    blocks = re.findall(r"<style[^>]*>(.*?)</style>", _html(), re.DOTALL)
-    assert blocks, "dashboard.html is expected to carry its CSS inline"
-    return re.sub(r"/\*.*?\*/", "", "\n".join(blocks), flags=re.DOTALL)
+    return re.sub(r"/\*.*?\*/", "", dashboard_css(), flags=re.DOTALL)
 
 
 def _rule(css: str, selector: str) -> str:

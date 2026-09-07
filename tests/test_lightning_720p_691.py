@@ -14,23 +14,20 @@ and 1080p unchanged.
 The second test here is a different bug in the same view, found in the same
 screenshot: the intro splash stayed on screen over the running question.
 
-These are text-level guards; ``dashboard.html`` keeps its CSS inline.
+These are text-level guards over the television's built stylesheet
+(``css/tv.css``, #880).
 """
 
 from __future__ import annotations
 
 import re
-from pathlib import Path
 
-REPO = Path(__file__).resolve().parent.parent
-DASHBOARD = REPO / "custom_components" / "quizify" / "www" / "dashboard.html"
+from tests.conftest import dashboard_css, dashboard_markup, dashboard_script
 
 
 def _css() -> str:
-    html = DASHBOARD.read_text(encoding="utf-8")
-    blocks = re.findall(r"<style[^>]*>(.*?)</style>", html, re.DOTALL)
-    assert blocks, "dashboard.html is expected to carry its CSS inline"
-    return re.sub(r"/\*.*?\*/", "", "\n".join(blocks), flags=re.DOTALL)
+    # #829/#880: the television's code and styles are their own files now.
+    return re.sub(r"/\*.*?\*/", "", dashboard_css(), flags=re.DOTALL)
 
 
 def _short_screen_block(css: str) -> str:
@@ -102,22 +99,27 @@ def test_every_element_the_dashboard_hides_by_attribute_survives_its_own_css() -
     class sets `display`, needs a `[hidden]` guard — otherwise the attribute is
     a no-op and the failure is invisible in review.
     """
-    html = DASHBOARD.read_text(encoding="utf-8")
+    # #829/#880: the hiding is in the script, the classes in the markup, the
+    # guard in the stylesheet — the one assertion that spans all three.
+    script = dashboard_script()
+    markup = dashboard_markup()
     css = _css()
 
     hidden_by_js = {
         match.group(1)
-        for match in re.finditer(r"els\.(\w+)\.hidden\s*=\s*true", html)
+        for match in re.finditer(r"els\.(\w+)\.hidden\s*=\s*true", script)
     }
     assert hidden_by_js, "expected the dashboard to hide elements by attribute"
 
     # els.<name> -> the element's id, then the id -> its classes.
-    ids = dict(re.findall(r"(\w+):\s*document\.getElementById\('([\w-]+)'\)", html))
+    ids = dict(
+        re.findall(r"(\w+):\s*document\.getElementById\('([\w-]+)'\)", script)
+    )
     for name in sorted(hidden_by_js):
         element_id = ids.get(name)
         if not element_id:
             continue
-        tag = re.search(rf'id="{element_id}"[^>]*class="([^"]+)"', html)
+        tag = re.search(rf'id="{element_id}"[^>]*class="([^"]+)"', markup)
         if not tag:
             continue
         for klass in tag.group(1).split():

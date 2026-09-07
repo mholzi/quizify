@@ -44,6 +44,7 @@ from custom_components.quizify.server.serializers import (  # noqa: E402
 from custom_components.quizify.server.websocket import (  # noqa: E402
     QuizifyWebSocketHandler,
 )
+from tests.conftest import dashboard_script  # noqa: E402
 
 _WWW = _REPO_ROOT / "custom_components" / "quizify" / "www"
 
@@ -202,7 +203,8 @@ def test_the_routing_reached_the_shipped_bundle() -> None:
 
 def test_the_tv_shows_a_count_and_clears_it_between_rounds() -> None:
     """A stale "5/5" over a fresh question would be worse than no counter."""
-    source = (_WWW / "dashboard.html").read_text("utf-8")
+    # #829/#880: the television's code and styles are their own files now.
+    source = dashboard_script()
 
     assert "function handleAnswerProgress(" in source
     assert "case 'answer_progress':" in source

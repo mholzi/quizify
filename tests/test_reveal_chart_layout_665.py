@@ -1,7 +1,7 @@
 """#665 — the reveal chart must cost no layout while it is invisible.
 
-``dashboard.html`` keeps its CSS inline, so these are text-level guards (same
-shape as ``test_ux_dashboard_w3a.py`` and ``test_reveal_dim_666.py``).
+These are text-level guards over the television's stylesheet (same shape as
+``test_ux_dashboard_w3a.py`` and ``test_reveal_dim_666.py``).
 
 What went wrong: ``.dashboard-answer-distribution`` was ``opacity: 0`` but kept
 its box, and its box had ``min-width: clamp(140px, 22%, 280px)``. That number
@@ -20,22 +20,18 @@ across two lines to 250px on one.
 from __future__ import annotations
 
 import re
-from pathlib import Path
 
-REPO = Path(__file__).resolve().parent.parent
-DASHBOARD = REPO / "custom_components" / "quizify" / "www" / "dashboard.html"
+from tests.conftest import dashboard_css
 
 
 def _css() -> str:
-    """The inline ``<style>`` blocks with CSS comments removed.
+    """The television's stylesheet with CSS comments removed.
 
     The comments carry commas and braces of their own, so a selector list read
     straight off the file arrives with half a sentence glued to it.
     """
-    html = DASHBOARD.read_text(encoding="utf-8")
-    blocks = re.findall(r"<style[^>]*>(.*?)</style>", html, re.DOTALL)
-    assert blocks, "dashboard.html is expected to carry its CSS inline"
-    return re.sub(r"/\*.*?\*/", "", "\n".join(blocks), flags=re.DOTALL)
+    # #829/#880: the television's code and styles are their own files now.
+    return re.sub(r"/\*.*?\*/", "", dashboard_css(), flags=re.DOTALL)
 
 
 def _rules_for(css: str, selector: str) -> list[str]:

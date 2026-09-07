@@ -189,11 +189,17 @@
             .replace(/'/g, '&#39;');
     }
 
-    /** Translate, or fall back to the caller's English when the key is unset. */
-    function _t(key, fallback) {
+    /** Translate, or fall back to the caller's English when the key is unset.
+     *
+     * `vars` is passed through to the bundle. The `value !== key` guard is the
+     * point of the wrapper: `QuizifyI18n.t` hands back the key itself when no
+     * bundle is loaded, so falling back on falsiness would put
+     * "hotSeat.hostSeated" on the screen instead of a sentence (#732).
+     */
+    function _t(key, fallback, vars) {
         var i18n = window.QuizifyI18n;
         if (i18n && typeof i18n.t === 'function') {
-            var value = i18n.t(key);
+            var value = i18n.t(key, vars);
             if (value && value !== key) return value;
         }
         return fallback != null ? fallback : key;
@@ -232,6 +238,75 @@
                     '</div>';
             })
             .join('');
+    }
+
+    // ============================================
+    // Podium
+    // ============================================
+
+    var PODIUM_MEDALS = { 1: '\uD83E\uDD47', 2: '\uD83E\uDD48', 3: '\uD83E\uDD49' };
+    var PODIUM_BAR_CLASS = { 1: 'first', 2: 'second', 3: 'third' };
+
+    /**
+     * The three planks, as HTML (#883).
+     *
+     * Written twice by hand until now — once on the television with a medal and
+     * a `.podium-label` wrapper, once on the host page with a champion title and
+     * no avatar — and the two had drifted far enough apart that
+     * `05-finale.css` carried `.podium-bar` **and** `.podium-stand`, plus a
+     * "legacy" avatar rule whose comment pointed at the page that had stopped
+     * rendering it. One stylesheet styling two DOM shapes for one feature is
+     * how the bleed in #880 got its foothold.
+     *
+     * The order is 2 — 1 — 3 on both surfaces and is not an option: it is what
+     * makes the champion the middle, tallest plank. What the callers do differ
+     * on is passed in —
+     *
+     *   opts.pointsLabel   the translated "pts"; the two pages read it from
+     *                      different i18n keys (`dashboard.pointsShort` vs
+     *                      `leaderboard.pointsShort`).
+     *   opts.medals        the television's medal glyph, inside the extra
+     *                      `.podium-label` wrapper its layout hangs the
+     *                      top-aligned block off.
+     *   opts.championLabel with a winner, prepends the host page's
+     *                      `.podium-title` / `.podium-champion-name` block.
+     *   opts.wrap          wrap the planks in `<div class="podium">`. The TV
+     *                      renders into an element that already carries the
+     *                      class; the host page renders into a section.
+     */
+    function podiumHtml(podium, opts) {
+        opts = opts || {};
+        var pointsLabel = opts.pointsLabel != null ? opts.pointsLabel : '';
+        var ordered = [];
+        if (podium[1]) ordered.push({ name: podium[1].name, score: podium[1].score, place: 2 });
+        if (podium[0]) ordered.push({ name: podium[0].name, score: podium[0].score, place: 1 });
+        if (podium[2]) ordered.push({ name: podium[2].name, score: podium[2].score, place: 3 });
+
+        var planks = ordered
+            .map(function (p) {
+                var label =
+                    (opts.medals
+                        ? '<div class="podium-avatar">' + (PODIUM_MEDALS[p.place] || '') + '</div>'
+                        : '') +
+                    '<div class="podium-name">' + _esc(p.name) + '</div>' +
+                    '<div class="podium-score">' + p.score + ' ' + _esc(pointsLabel) + '</div>';
+                if (opts.medals) {
+                    label = '<div class="podium-label">' + label + '</div>';
+                }
+                return '<div class="podium-place">' + label +
+                    '<div class="podium-bar ' + (PODIUM_BAR_CLASS[p.place] || '') + '">' +
+                        p.place +
+                    '</div>' +
+                    '</div>';
+            })
+            .join('');
+
+        var title = '';
+        if (opts.championLabel && podium[0]) {
+            title = '<div class="podium-title">' + _esc(opts.championLabel) + '</div>' +
+                '<div class="podium-champion-name">' + _esc(podium[0].name) + '</div>';
+        }
+        return title + (opts.wrap ? '<div class="podium">' + planks + '</div>' : planks);
     }
 
     // ============================================
@@ -341,6 +416,196 @@
                     { name: target, points: -points }
                 ]);
             }
+        };
+    }
+
+    // ============================================
+    // The lobby roster (#787)
+    // ============================================
+
+    /**
+     * The roster as an array, however the frame carried it.
+     *
+     * `player_joined` sends a list; some snapshot paths send the players dict
+     * keyed by name. The television and the host page each did this read by
+     * hand and each got it right, which is exactly how long that lasts.
+     */
+    function rosterList(players) {
+        if (Array.isArray(players)) return players;
+        if (players && typeof players === 'object') return Object.values(players);
+        return [];
+    }
+
+    function _rosterName(entry) {
+        if (typeof entry === 'string') return entry;
+        return (entry && entry.name != null) ? entry.name : '';
+    }
+
+    /**
+     * The lobby grouped by team (#365, #804), as HTML.
+     *
+     * Written twice: the television since #365, the host page since #804, and
+     * `admin.js` said so in a comment — "same grouping the television has used
+     * since #365" — which is a duplicate documenting itself rather than being
+     * removed. A player in no team is a team of one, not an error state, so
+     * they keep their own entry below the groups instead of being swept into a
+     * leftover bucket. A member named in `teams` but missing from `players`
+     * still renders: a roster frame and a `teams_update` can arrive either way
+     * round.
+     *
+     * What the two surfaces differ on is passed in —
+     *
+     *   opts.entry(player, index) — the chip or card itself. `index` runs
+     *                     continuously across the groups AND the solo tail,
+     *                     because the host page's colour fallback is
+     *                     palette-indexed and must not restart per team.
+     *   opts.groupClass / opts.nameClass — the two wrappers' class names.
+     *   opts.membersClass — the television's inner wrapper; omit for none.
+     *   opts.sizeClass — the host page's member-count badge; omit for none.
+     *
+     * Returns '' for an empty `teams`, so the caller keeps its own "no teams,
+     * render them flat" branch — the same division of labour
+     * `leaderboardRowsHtml` uses for capping.
+     */
+    function teamGroupedRosterHtml(players, teams, opts) {
+        opts = opts || {};
+        var list = rosterList(players);
+        var groups = teams || [];
+        if (!groups.length) return '';
+
+        var entry = opts.entry;
+        var index = 0;
+        var inTeam = {};
+
+        var html = groups.map(function (team) {
+            var members = (team.members || []).map(function (name) {
+                inTeam[name] = true;
+                for (var i = 0; i < list.length; i++) {
+                    if (_rosterName(list[i]) === name) return list[i];
+                }
+                return { name: name };
+            });
+            var size = opts.sizeClass
+                ? '<span class="' + opts.sizeClass + '">' + members.length + '</span>'
+                : '';
+            var rendered = members.map(function (member) {
+                return entry(member, index++);
+            }).join('');
+            if (opts.membersClass) {
+                rendered = '<div class="' + opts.membersClass + '">' + rendered + '</div>';
+            }
+            return '<div class="' + opts.groupClass + '">' +
+                '<div class="' + opts.nameClass + '">' + _esc(team.name || '') + size + '</div>' +
+                rendered +
+                '</div>';
+        }).join('');
+
+        var solo = list.filter(function (p) { return !inTeam[_rosterName(p)]; });
+        return html + solo.map(function (p) { return entry(p, index++); }).join('');
+    }
+
+    // ============================================
+    // Hot Seat (#664, #698, #804, #832)
+    // ============================================
+
+    /**
+     * "3 / 7" — how many have bid, never how much.
+     *
+     * The auction is sealed, so the count is its whole public half, and it is
+     * also the only thing that moves on any screen while the room bids. All
+     * three surfaces printed the same sentence from the same key with the same
+     * fallback, character for character; only the element it lands in differs.
+     */
+    function hotSeatBidCountText(msg) {
+        msg = msg || {};
+        var count = msg.count || 0;
+        var total = msg.total || 0;
+        return _t('hotSeat.bidCount', count + ' / ' + total,
+                  { count: count, total: total });
+    }
+
+    /**
+     * The chair has been won, as the room is told it.
+     *
+     * #804: `winner` is the person taking the chair, `entrant` is who pays for
+     * it — their team in team mode, the same person again otherwise. Every
+     * screen names the payer, because that is the row the points move on.
+     *
+     * The seat holder's own "you won it" line (`hotSeat.won`) is not here: it
+     * names nobody, and the phone is the one screen that knows it is talking to
+     * the winner.
+     *
+     * Returns the key and vars beside the text because the phone writes them
+     * into `data-i18n` / `data-i18n-params` so a mid-game language switch
+     * re-translates the line rather than leaving the old one.
+     */
+    function hotSeatAward(msg) {
+        msg = msg || {};
+        var payer = msg.entrant || msg.winner || '';
+        var vars = { name: payer, pct: msg.pct, pts: msg.stake };
+        return {
+            key: 'hotSeat.lost',
+            name: payer,
+            vars: vars,
+            text: _t('hotSeat.lost', payer + ' \u2014 ' + msg.pct + '%', vars)
+        };
+    }
+
+    /**
+     * The settlement, read the same way on all three screens.
+     *
+     * `answered` is TRI-STATE on the server: true = right, false = wrong, null
+     * = never answered. A bare falsy check collapses the last two, and since
+     * #653 an unanswered chair costs exactly what a wrong one does — so "ran
+     * out of time" against "got it wrong" is the entire distinction these three
+     * keys exist to make.
+     *
+     * `deltas` is keyed by ENTRANT and a team's key is its id, which no screen
+     * can construct (#804), so `winner_delta` is preferred. The `deltas[winner]`
+     * read stays as the fallback for a frame that predates it — the host page
+     * had quietly dropped it and printed 0 where the television and the phone
+     * printed the real number. That drift is what this function exists to make
+     * impossible.
+     */
+    function hotSeatSettlement(msg) {
+        msg = msg || {};
+        var noAnswer = msg.answered === null || msg.answered === undefined;
+        var right = msg.answered === true;
+        var name = msg.entrant || msg.winner || '';
+        var delta = (msg.winner_delta != null)
+            ? msg.winner_delta
+            : ((msg.deltas && msg.deltas[msg.winner]) || 0);
+        var key = noAnswer
+            ? 'hotSeat.resultTimeout'
+            : (right ? 'hotSeat.resultRight' : 'hotSeat.resultWrong');
+        var vars = { name: name, pts: Math.abs(delta) };
+        return {
+            key: key,
+            noAnswer: noAnswer,
+            right: right,
+            name: name,
+            delta: delta,
+            vars: vars,
+            text: _t(key, name + ' ' + (delta > 0 ? '+' : '') + delta, vars)
+        };
+    }
+
+    // ============================================
+    // The finale frame
+    // ============================================
+
+    /**
+     * The two collections a finale frame carries.
+     *
+     * `all_players` is the older field name and is still on the wire from the
+     * snapshot path, so both boards read the same `||` chain — the kind of
+     * wire-format knowledge that has no business being written twice.
+     */
+    function finaleStandings(msg) {
+        msg = msg || {};
+        return {
+            podium: msg.podium || [],
+            leaderboard: msg.leaderboard || msg.all_players || []
         };
     }
 
@@ -460,7 +725,15 @@
     window.QuizifyRenderShared = {
         SCORE_DELTA_MS: SCORE_DELTA_MS,
         POWERUP_SPECS: POWERUP_SPECS,
+        PODIUM_MEDALS: PODIUM_MEDALS,
         leaderboardRowsHtml: leaderboardRowsHtml,
+        podiumHtml: podiumHtml,
+        rosterList: rosterList,
+        teamGroupedRosterHtml: teamGroupedRosterHtml,
+        hotSeatBidCountText: hotSeatBidCountText,
+        hotSeatAward: hotSeatAward,
+        hotSeatSettlement: hotSeatSettlement,
+        finaleStandings: finaleStandings,
         createScoreDeltas: createScoreDeltas,
         powerUpSentenceHtml: powerUpSentenceHtml,
         createPowerUpApplied: createPowerUpApplied,

@@ -21,14 +21,10 @@ that are read, not everything with a font-size.
 from __future__ import annotations
 
 import re
-from pathlib import Path
 
 import pytest
 
-DASHBOARD = (
-    Path(__file__).resolve().parent.parent
-    / "custom_components/quizify/www/dashboard.html"
-)
+from tests.conftest import dashboard_css
 
 # selector → the smallest acceptable upper end of its clamp, in px
 CONTENT_RULES = {
@@ -40,8 +36,11 @@ CONTENT_RULES = {
 
 
 def _rule_body(selector: str) -> str:
-    css = DASHBOARD.read_text(encoding="utf-8")
-    start = css.index(selector + " {")
+    # #829/#880: the television's code and styles are their own files now.
+    # Last occurrence: the sheet carries the shared modules too, and where a
+    # selector is declared twice the television is styled by the later rule.
+    css = dashboard_css()
+    start = css.rindex(selector + " {")
     return css[start : css.index("}", start)]
 
 

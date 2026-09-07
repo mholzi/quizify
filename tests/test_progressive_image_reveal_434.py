@@ -31,6 +31,7 @@ from custom_components.quizify.game.questions import (
     _parse_question,
     _sanitize_reveal_style,
 )
+from tests.conftest import dashboard_script
 
 REPO = Path(__file__).resolve().parent.parent
 WWW = REPO / "custom_components" / "quizify" / "www"
@@ -145,7 +146,6 @@ def test_question_started_payload_carries_the_style() -> None:
 
 # ---------------------------------------------------------------- clients
 
-DASHBOARD = WWW / "dashboard.html"
 PLAYER_GAME = WWW / "js" / "player-game.js"
 PLAYER_CORE = WWW / "js" / "player-core.js"
 BUNDLE = WWW / "js" / "player.bundle.js"
@@ -153,7 +153,8 @@ CSS = WWW / "css" / "styles.css"
 
 
 def test_dashboard_drives_the_blur_off_the_timer() -> None:
-    src = DASHBOARD.read_text(encoding="utf-8")
+    # #829/#880: the television's code and styles are their own files now.
+    src = dashboard_script()
     assert "setRevealBlur" in src
     # The tick handler is the only clock the board has; if the call is not
     # there the picture stays at its opening blur for the whole round.
@@ -163,7 +164,8 @@ def test_dashboard_drives_the_blur_off_the_timer() -> None:
 
 def test_both_clients_clear_the_blur_at_reveal() -> None:
     """Failure mode 1 — the answer shown beside an unreadable picture."""
-    dash = DASHBOARD.read_text(encoding="utf-8")
+    # #829/#880: the television's code and styles are their own files now.
+    dash = dashboard_script()
     summary = dash.split("function handleRoundSummary")[1][:800]
     assert "clearRevealBlur" in summary
 

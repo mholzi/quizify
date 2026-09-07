@@ -36,7 +36,8 @@ from custom_components.quizify.game.state import QuizifyGameState
 from custom_components.quizify.server.protocol import SERVER_FRAMES
 
 REPO = Path(__file__).resolve().parent.parent
-DASHBOARD = REPO / "custom_components" / "quizify" / "www" / "dashboard.html"
+# #829: the television's script is its own file now.
+DASHBOARD = REPO / "custom_components" / "quizify" / "www" / "js" / "dashboard.js"
 WEBSOCKET = REPO / "custom_components" / "quizify" / "server" / "websocket.py"
 
 
@@ -69,9 +70,9 @@ def _team(st: QuizifyGameState, name: str):  # noqa: ANN202
 
 
 def _handler_source() -> str:
-    html = DASHBOARD.read_text(encoding="utf-8")
-    start = html.index("function handleHotSeatResult(msg)")
-    return html[start : html.index("\n        function ", start + 10)]
+    source = DASHBOARD.read_text(encoding="utf-8")
+    start = source.index("function handleHotSeatResult(msg)")
+    return source[start : source.index("\n    function ", start + 10)]
 
 
 def _payload_block(source: str, message_type: str) -> str:

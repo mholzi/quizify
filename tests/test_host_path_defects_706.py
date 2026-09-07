@@ -26,16 +26,14 @@ from __future__ import annotations
 import re
 from pathlib import Path
 
+from tests.conftest import dashboard_markup, dashboard_script
+
 REPO = Path(__file__).resolve().parent.parent
 WWW = REPO / "custom_components" / "quizify" / "www"
 
 
 def _js(name: str) -> str:
     return (WWW / "js" / name).read_text(encoding="utf-8")
-
-
-def _html(name: str) -> str:
-    return (WWW / name).read_text(encoding="utf-8")
 
 
 def _strip_comments(text: str) -> str:
@@ -122,10 +120,11 @@ def test_the_final_round_banner_comes_down_on_a_normal_round() -> None:
 
 def test_leaving_the_question_view_clears_the_answer_tally() -> None:
     """One funnel, so a future path cannot forget it again."""
+    # #829/#880: the television's code and styles are their own files now —
+    # out of <script> the function sits one indent level less deep, so the
+    # closing brace is the helper's default "\n    }".
     body = _strip_comments(
-        _function_body(
-            _html("dashboard.html"), "function showView(name)", end="\n        }"
-        )
+        _function_body(dashboard_script(), "function showView(name)")
     )
     assert "answerProgress" in body, "showView still leaves the tally on the board"
     assert "!== 'question'" in body, "the question view sets its own tally"
@@ -137,7 +136,8 @@ def test_the_tally_lives_outside_every_view() -> None:
     If it is ever moved inside #question-view this test should be deleted
     along with the guard above.
     """
-    html = _html("dashboard.html")
+    # #829/#880: the television's code and styles are their own files now.
+    html = dashboard_markup()
     tally = html.index('id="answer-progress"')
     header = html.index('class="dashboard-header"')
     first_view = html.index('id="question-view"')

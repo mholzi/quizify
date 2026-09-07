@@ -21,6 +21,8 @@ import json
 import re
 from pathlib import Path
 
+from tests.conftest import dashboard_css, dashboard_markup, dashboard_script
+
 _REPO_ROOT = Path(__file__).resolve().parent.parent
 _CC = _REPO_ROOT / "custom_components" / "quizify"
 _WWW = _CC / "www"
@@ -171,25 +173,25 @@ def test_the_end_screen_duel_waits_for_the_game_to_be_recorded() -> None:
     assert "GamePhase.FINALE" in end
     assert 'at="finale"' in end
 
-    html = (_WWW / "dashboard.html").read_text("utf-8")
-    assert 'id="end-h2h"' in html
+    # #829/#880: the slot is markup, the renderer is the television's script.
+    assert 'id="end-h2h"' in dashboard_markup()
+    script = dashboard_script()
     # One renderer, two targets — picked by `at`, so the two lines cannot
     # disagree about what the score is.
-    render = html.split("function handleHeadToHead(", 1)[1].split("\n        }", 1)[0]
+    render = script.split("function handleHeadToHead(", 1)[1].split("\n    }", 1)[0]
     assert "msg.at === 'finale'" in render
     assert "els.endH2h" in render
     # The previous game's duel must not sit under this game's podium while the
     # new one is still being written.
-    finale = html.split("function handleFinale(", 1)[1].split("\n        }", 1)[0]
+    finale = script.split("function handleFinale(", 1)[1].split("\n    }", 1)[0]
     assert "els.endH2h" in finale
 
 
 def test_the_tv_states_the_ninety_day_scope() -> None:
     """The detailed history prunes, so calling it all-time would be a claim the
     data cannot support."""
-    html = (_WWW / "dashboard.html").read_text("utf-8")
-
-    assert "dashboard.h2hRecent" in html
+    # #829/#880: the label is looked up in the television's script now.
+    assert "dashboard.h2hRecent" in dashboard_script()
     for code in ("de", "en", "es"):
         bundle = json.loads((_WWW / "i18n" / f"{code}.json").read_text("utf-8"))
         dash = bundle["dashboard"]
@@ -198,8 +200,9 @@ def test_the_tv_states_the_ninety_day_scope() -> None:
 
 
 def test_the_names_are_escaped() -> None:
-    html = (_WWW / "dashboard.html").read_text("utf-8")
-    body = html.split("function handleHeadToHead(", 1)[1].split("\n        }", 1)[0]
+    # #829/#880: the television's code is its own file now.
+    script = dashboard_script()
+    body = script.split("function handleHeadToHead(", 1)[1].split("\n    }", 1)[0]
 
     assert "escapeHtml(msg.left)" in body
     assert "escapeHtml(msg.right)" in body
@@ -220,10 +223,11 @@ def test_the_lobby_is_compacted_on_short_screens() -> None:
     every 720p television, and invisible in the worst way: nothing looks
     broken.
     """
-    html = (_WWW / "dashboard.html").read_text("utf-8")
+    # #829/#880: the television's styles are their own file now, dedented.
+    css = dashboard_css()
 
-    assert "@media (max-height: 850px)" in html
-    rule = html.split("@media (max-height: 850px)", 1)[1].split("\n        }\n", 1)[0]
+    assert "@media (max-height: 850px)" in css
+    rule = css.split("@media (max-height: 850px)", 1)[1].split("\n}\n", 1)[0]
     # The QR is the one block big enough to buy back the missing height.
     assert "#lobby-qr" in rule
     assert "180px" in rule
