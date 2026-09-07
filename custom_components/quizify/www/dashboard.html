@@ -1386,7 +1386,10 @@
             flex: 0 1 auto;
             /* Header 45.5px, plus the list's own 8px padding, three 58.6px
                rows and two 4px gaps between them — 245.3px, measured on the
-               television rather than derived from the stylesheet. */
+               television rather than derived from the stylesheet.
+               #865: only the value the card carries before the first fit runs.
+               fitFinaleBoard() replaces it with the height the rows actually
+               need, inline, on every frame that changes the column. */
             min-height: 246px;
             overflow: hidden;
         }
@@ -1485,12 +1488,18 @@
 
            Made explicit instead: the awards are exactly as tall as the cards
            they hold and never give way, the leaderboard card is the only thing
-           that shrinks — down to its three-row floor, scrolling the remaining
-           players inside its own list — and the duel line is pinned to the
-           bottom edge with an auto margin so the column still reads as full.
-           Which award is the *last* one shown is then a question of how many
-           fit, and fitAwards() answers it by counting whole cards rather than
-           by clipping one. */
+           that shrinks — and the duel line is pinned to the bottom edge with an
+           auto margin so the column still reads as full. Which award is the
+           *last* one shown is then a question of how many fit, and fitAwards()
+           answers it by counting whole cards rather than by clipping one.
+
+           #865 changed what "the leaderboard shrinks" means. It used to shrink
+           to a three-row floor and scroll the rest inside its own list, which
+           on a television is not scrolling but hiding: a four-player game left
+           the fourth player under the lower edge. The card now asks for the
+           height its rows need (fitFinaleBoard sets it inline), so what gives
+           way is an award card, then the row density, and only then a name —
+           with the count said out loud. */
         .dashboard-finale--split .awards-section {
             flex: 0 0 auto;
         }
@@ -1500,6 +1509,68 @@
         /* #691 again: `hidden` is a UA rule, and .award-card sets display,
            so the attribute does nothing on its own. fitAwards() relies on it. */
         .award-card[hidden] { display: none; }
+
+        /* #865: the compaction steps the finale board may take before it gives
+           up and counts the rest.
+
+           A four-player game on a 720p television put the fourth player below
+           the lower edge of a box a television cannot scroll — the smallest
+           party this mode is for, at the moment the whole evening was building
+           towards. The same shape of defect as #836 (the lobby) and #775 (the
+           awards): a phone's scroll affordance reaching a screen nobody can
+           touch.
+
+           A row's height is set by its rank badge and its vertical padding,
+           not by its font — so the first step trims those two and leaves the
+           type alone, which is what a couch reads. Only the steps after it
+           touch the type, and none goes below the 16px floor #376 set for this
+           screen. fitFinaleBoard() walks them in order and stops at the first
+           one that shows every entrant, so a four-player game never leaves the
+           board it has always had. */
+        #finale-view .dashboard-leaderboard.is-compact { gap: 3px; }
+        #finale-view .dashboard-leaderboard.is-compact .leaderboard-row {
+            padding: 7px 14px;
+            gap: 10px;
+        }
+        #finale-view .dashboard-leaderboard.is-compact .leaderboard-rank {
+            width: 27px;
+            height: 27px;
+        }
+
+        #finale-view .dashboard-leaderboard.is-dense { gap: 2px; }
+        #finale-view .dashboard-leaderboard.is-dense .leaderboard-row {
+            padding: 4px 12px;
+            gap: 8px;
+            font-size: clamp(17px, 1.35vw, 20px);
+        }
+        #finale-view .dashboard-leaderboard.is-dense .leaderboard-rank {
+            width: 23px;
+            height: 23px;
+            font-size: clamp(16px, 1.25vw, 19px);
+        }
+        #finale-view .dashboard-leaderboard.is-dense .leaderboard-score {
+            font-size: clamp(17px, 1.4vw, 21px);
+        }
+
+        /* The last step. 16px is where it stops: that is the floor #376 set
+           for every line on this screen when it scaled the board for a couch,
+           and a rank nobody can read from the sofa is not a rank that was
+           shown. Below this the board counts the names it cannot fit instead
+           of shrinking them further. */
+        #finale-view .dashboard-leaderboard.is-tight { gap: 2px; }
+        #finale-view .dashboard-leaderboard.is-tight .leaderboard-row {
+            padding: 2px 10px;
+            gap: 8px;
+            font-size: clamp(16px, 1.3vw, 19px);
+        }
+        #finale-view .dashboard-leaderboard.is-tight .leaderboard-rank {
+            width: 21px;
+            height: 21px;
+            font-size: clamp(16px, 1.2vw, 18px);
+        }
+        #finale-view .dashboard-leaderboard.is-tight .leaderboard-score {
+            font-size: clamp(16px, 1.35vw, 20px);
+        }
 
         /* #775: the title overflowed by 9-10px at all three resolutions, for
            two reasons that compound. css/src/08-responsive.css carries
@@ -1824,6 +1895,15 @@
         }
 
         .finale-leaderboard-card .card-header {
+            /* #865: css/src/02-shared.css gives every `.card-header` a 16px
+               `margin-bottom`, written for the phone's cards. dashboard.html
+               has loaded that sheet since the day it was created, so this card
+               has always spent 16px of a 518px television column on a band of
+               nothing between a rule and the first row — the same species of
+               leak #775 found in `.award-card`'s max-width and `.awards-section`'s
+               margins. Reclaiming it is one more player on the final board at
+               1280x720. */
+            margin-bottom: 0;
             font-family: 'JetBrains Mono', ui-monospace, monospace;
             font-size: 11px;
             font-weight: 500;
@@ -2628,6 +2708,9 @@
         // both come from QuizifyRenderShared since #787; the repaint is this
         // board's own panel.
         var lastLeaderboardPlayers = null;
+        // #865: the field the finale is currently showing, so the board can be
+        // re-fitted (denser rows, fewer awards) without a new server frame.
+        var finalePlayers = [];
         var _scoreDeltas = window.QuizifyRenderShared.createScoreDeltas({
             repaint: function () {
                 if (lastLeaderboardPlayers) renderLeaderboard(els.leaderboard, lastLeaderboardPlayers);
@@ -3247,7 +3330,10 @@
             // awards were already sized against — it arrives a beat later, on
             // analytics_recorded. Re-fit rather than let it push a card out of
             // the picture.
-            if (target === els.endH2h) fitAwards();
+            // #865: it is also the slice that turned a four-player board into a
+            // three-and-a-bit one, so the whole board is re-fitted, not only
+            // the awards.
+            if (target === els.endH2h) fitFinaleBoard();
         }
 
         function handleEveningTally(msg) {
@@ -3471,23 +3557,32 @@
             var podium = msg.podium || [];
             renderPodium(podium);
 
-            var lb = msg.leaderboard || msg.all_players || [];
-            renderLeaderboard(els.finaleLeaderboard, lb);
+            // #865: kept so the board can be re-fitted without a new frame
+            // from the server — the duel line arrives a beat later, and a
+            // television can change resolution while the result is up.
+            finalePlayers = msg.leaderboard || msg.all_players || [];
+            renderLeaderboard(els.finaleLeaderboard, finalePlayers);
 
             renderAwards(msg.superlatives || []);
+            fitFinaleBoard();
 
             // Soft Parlor: no confetti. The warm pause IS the effect. See DESIGN.md.
         }
 
         // ---- Renderers ----
-        function renderLeaderboard(container, players) {
+        function renderLeaderboard(container, players, limit) {
             if (!container || !players) return;
             // #741: remembered so an expiring steal chip can repaint the same
             // rows without waiting for the next frame from the server.
             if (container === els.leaderboard) lastLeaderboardPlayers = players;
             // Show top 5 in game view, all in finale
             var capped = container === els.leaderboard;
-            var list = capped ? players.slice(0, 5) : players;
+            // #865: the finale may pass a smaller `limit` when a television is
+            // too short for the whole field even at the densest rows — see
+            // fitFinaleBoard(). Left alone it is still the whole field, which
+            // is the case this screen exists for.
+            var max = capped ? 5 : (limit > 0 ? limit : players.length);
+            var list = players.slice(0, max);
             // The row itself is the same on all three surfaces (#787); the cap
             // and the "+N more" tail below are this panel's layout, not the
             // row's shape, so they stay here.
@@ -3497,7 +3592,7 @@
             // #429: the in-game panel caps at 5 rows — hint the hidden tail so a
             // 6th+ player isn't silently dropped. The panel is overflow-y:auto,
             // so the muted row is reachable if the list scrolls.
-            var hidden = capped ? (players.length - list.length) : 0;
+            var hidden = players.length - list.length;
             if (hidden > 0) {
                 html += '<div class="leaderboard-row leaderboard-more">' +
                     '<span class="leaderboard-name">' +
@@ -3603,30 +3698,143 @@
                     '</div>';
                 grid.appendChild(card);
             });
-
-            fitAwards();
+            // #865: the fit is the caller's, because the awards are no longer
+            // the only block being sized — fitFinaleBoard() decides the split
+            // between them and the leaderboard and calls fitAwards() itself.
         }
 
-        /* #775: the height the finale leaderboard is guaranteed — its header
-           plus three rows (#695) — read off the card that is on screen rather
-           than carried as a constant. Every hand-derived pixel figure in this
-           file went stale the moment a font or a padding moved; this one
-           cannot. */
-        function leaderboardFloorPx() {
+        /* #775: the height the finale leaderboard needs — its header plus the
+           rows now inside it — read off the card that is on screen rather than
+           carried as a constant. Every hand-derived pixel figure in this file
+           went stale the moment a font or a padding moved; this one cannot.
+
+           #865: it used to ask for three rows and call that a floor (#695).
+           Three rows is not a floor on a television, it is a lid: a four-player
+           game — the smallest party this mode is for — left the fourth player
+           below the lower edge of a box a television cannot scroll, so one
+           guest never saw where they finished. It now asks for every row that
+           is in the list, and fitFinaleBoard() is what decides how many that
+           is. */
+        function leaderboardNeedPx() {
             var card = document.querySelector('.finale-leaderboard-card');
             var list = card && card.querySelector('.dashboard-leaderboard');
             if (!card || !list) return 0;
             var header = card.querySelector('.card-header');
             var cs = getComputedStyle(list);
+            // #865: the header's MARGINS, not only its box. A stray
+            // `margin-bottom: 16px` inherited from the phone's stylesheet is
+            // exactly what made this function under-report by one player's
+            // worth of height, and a measurement that can be wrong by a rule
+            // written in another file is not a measurement.
+            var headerPx = 0;
+            if (header) {
+                var hs = getComputedStyle(header);
+                headerPx = header.offsetHeight
+                    + (parseFloat(hs.marginTop) || 0)
+                    + (parseFloat(hs.marginBottom) || 0);
+            }
             var rows = [].slice.call(list.children);
-            var keep = Math.min(3, rows.length);
             var rowsPx = 0;
-            for (var i = 0; i < keep; i++) rowsPx += rows[i].offsetHeight;
-            if (keep > 1) rowsPx += (parseFloat(cs.rowGap) || 0) * (keep - 1);
-            return (header ? header.offsetHeight : 0)
+            for (var i = 0; i < rows.length; i++) rowsPx += rows[i].offsetHeight;
+            if (rows.length > 1) {
+                rowsPx += (parseFloat(cs.rowGap) || 0) * (rows.length - 1);
+            }
+            return headerPx
                 + rowsPx
                 + (parseFloat(cs.paddingTop) || 0) + (parseFloat(cs.paddingBottom) || 0)
                 + (card.offsetHeight - card.clientHeight);  // the card's borders
+        }
+
+        /* #865: the row densities the final board may use, in the order
+           it tries them. The empty first entry is the board as it has always
+           looked; a four-player game never leaves it once the leaderboard is
+           given the height it asks for. */
+        var FINALE_DENSITY = ['', 'is-compact', 'is-dense', 'is-tight'];
+
+        function setFinaleDensity(step) {
+            var list = els.finaleLeaderboard;
+            if (!list) return;
+            FINALE_DENSITY.forEach(function (cls) {
+                if (cls) list.classList.remove(cls);
+            });
+            if (FINALE_DENSITY[step]) list.classList.add(FINALE_DENSITY[step]);
+        }
+
+        /* #865: is every row the board rendered actually in the picture, and
+           does the column still end above the bottom edge of the screen? Asked
+           of the boxes themselves rather than derived, for the reason the whole
+           of #775 was rewritten: a budget computed by hand holds only for the
+           screen it was computed on. */
+        function finaleBoardFits() {
+            var list = els.finaleLeaderboard;
+            var column = document.querySelector('.dashboard-finale-right');
+            if (!list || !column) return true;
+            return list.scrollHeight <= list.clientHeight + 1
+                && column.scrollHeight <= column.clientHeight + 1;
+        }
+
+        /* #865: put every entrant on the final board, or say how many are
+           missing — never cut one through the middle and never leave one below
+           an edge a television cannot scroll past.
+
+           The order of what gives way is the order of what costs least:
+
+           1. The awards give way first. That was already decided in #692 and
+              #775 — every award is also on every player's phone, and the board
+              shows whole cards or none. Asking leaderboardNeedPx() for every
+              row rather than three is what makes fitAwards() spend the column
+              on the ranking instead of on a second award card.
+           2. Then the rows compact, in two steps (see the CSS above). The first
+              takes the padding and the rank badge and leaves the type alone;
+              only the second touches the type.
+           3. Only if the tightest rows still do not fit does the board show
+              fewer of them, with the "+N more" tail the in-game panel has used
+              since #429. Twelve guests on a 720p television is arithmetic no
+              layout can beat; being told that three names are missing is not
+              the same defect as one name silently below the fold.
+
+           Measured at 1280x720, 1366x768 and 1920x1080 with four, six, eight
+           and twelve players: everything up to eight lands in step 1 or 2 at
+           every resolution, and only 720p with nine or more reaches step 3. */
+        var fittingFinaleBoard = false;
+
+        function fitFinaleBoard() {
+            // Re-entrancy guard: fitAwards() hides cards and this function sets
+            // a min-height, and the column is watched by a ResizeObserver.
+            if (fittingFinaleBoard) return;
+            var list = els.finaleLeaderboard;
+            var card = document.querySelector('.finale-leaderboard-card');
+            if (!list || !card || !finalePlayers.length) return;
+            fittingFinaleBoard = true;
+            try {
+                var total = finalePlayers.length;
+                var step;
+
+                var attempt = function (keep) {
+                    renderLeaderboard(list, finalePlayers, keep);
+                    // The card only ever gets its content height (its list is
+                    // `flex: 1`, so its own basis is nothing) — telling it what
+                    // the rows need is what makes the column give the room up.
+                    card.style.minHeight = leaderboardNeedPx() + 'px';
+                    fitAwards();
+                    return finaleBoardFits();
+                };
+
+                // Pass 1: the whole field, compacting until it is all in view.
+                for (step = 0; step < FINALE_DENSITY.length; step++) {
+                    setFinaleDensity(step);
+                    if (attempt(total)) return;
+                }
+
+                // Pass 2: the densest rows the board has, and one fewer name at
+                // a time until what is left fits — the tail says how many.
+                setFinaleDensity(FINALE_DENSITY.length - 1);
+                for (var keep = total - 1; keep >= 1; keep--) {
+                    if (attempt(keep)) return;
+                }
+            } finally {
+                fittingFinaleBoard = false;
+            }
         }
 
         /* #775: the right-hand column of the result screen is exactly as tall
@@ -3664,7 +3872,7 @@
             var secGap = parseFloat(getComputedStyle(section).rowGap) || 0;
             var h2hVisible = els.endH2h && !els.endH2h.classList.contains('hidden');
             var budget = column.clientHeight
-                - leaderboardFloorPx() - colGap
+                - leaderboardNeedPx() - colGap
                 - (h2hVisible ? els.endH2h.offsetHeight + colGap : 0);
 
             // The section grows into slack, so its own height says nothing
@@ -3720,10 +3928,12 @@
         // against, and it changes in cases no resize event accompanies.
         // Hiding a card changes the awards' height, not the column's, so this
         // does not feed itself.
+        // #865: the leaderboard is fitted against the same column, so the
+        // whole board is re-run, not only the awards.
         var fitAwardsTimer = null;
         function scheduleFitAwards() {
             clearTimeout(fitAwardsTimer);
-            fitAwardsTimer = setTimeout(fitAwards, 100);
+            fitAwardsTimer = setTimeout(fitFinaleBoard, 100);
         }
         var finaleColumn = document.querySelector('.dashboard-finale-right');
         if (finaleColumn && typeof ResizeObserver === 'function') {

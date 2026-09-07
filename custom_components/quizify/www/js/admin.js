@@ -359,6 +359,16 @@
         return out;
     }
 
+    // #866: copy a `data-i18n` key from the chip a hero tile was built from
+    // onto the tile itself, so the page-wide language sweep owns the tile's
+    // text from then on. Silent when the source has no key — a pack name is
+    // data, not a bundle string, and must not be handed one.
+    function _carryI18nKey(source, target) {
+        if (!source || !target) return;
+        var key = source.getAttribute('data-i18n');
+        if (key) target.setAttribute('data-i18n', key);
+    }
+
     function buildHeroPackChips() {
         if (!els.heroPackChips || !els.categoryChips) return;
         els.heroPackChips.innerHTML = '';
@@ -388,8 +398,23 @@
             tile.innerHTML = '<span class="hct-icon">' + _categoryIconSvg(theme) + '</span>' +
                 '<span class="hct-name"></span>' +
                 '<span class="hct-count"></span>';
-            tile.querySelector('.hct-name').textContent = name;
-            tile.querySelector('.hct-count').textContent = count;
+            var tileName = tile.querySelector('.hct-name');
+            var tileCount = tile.querySelector('.hct-count');
+            tileName.textContent = name;
+            tileCount.textContent = count;
+            // #866: every other tile on this grid carries a pack's own name,
+            // which arrives already native to the pack's language and is
+            // replaced wholesale when the grid is rebuilt for a new language.
+            // The Mixed tile is the only one whose two lines come from the UI
+            // bundle, and this function runs BEFORE `setLanguage()` resolves —
+            // so the text copied out of the source chip is still the language
+            // the host just left, and the sweep that follows skips a node with
+            // no key on it. Carrying the source chip's `data-i18n` across is
+            // the same answer #776, #809 and #851 gave: the element says which
+            // string it is, and `initPageTranslations` repaints it like every
+            // other label on the page.
+            _carryI18nKey(nameEl, tileName);
+            _carryI18nKey(countEl, tileCount);
             tile.addEventListener('click', function () {
                 // Proxy to the real category chip so all existing selection
                 // logic (mixed/single/multi + summary) runs unchanged.

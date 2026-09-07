@@ -47,6 +47,35 @@ function makeClassList() {
 
 const SPAN_RE = () => /<span([^>]*)>([\s\S]*?)<\/span>/g;
 
+/**
+ * A selector matcher for the subset the tests actually write: a tag name, any
+ * number of `.class` steps and any number of `[attr]` / `[attr="value"]`
+ * steps, in one compound (no descendant combinators). Enough for
+ * `.chip[data-lang]`, `.hero-cat-tile` and `.pack-card-name`; anything richer
+ * should be added here rather than worked around in a test.
+ */
+function matchesSelector(node, selector) {
+    const sel = String(selector).trim();
+    const re = /^([a-zA-Z][\w-]*)?((?:\.[\w-]+|\[[\w:-]+(?:="[^"]*")?\])*)$/;
+    const head = re.exec(sel);
+    if (!head) throw new Error('dom_stub: unsupported selector ' + sel);
+    if (head[1] && node.tagName !== head[1].toUpperCase()) return false;
+    const classes = String(node.className || node.getAttribute('class') || '')
+        .split(/\s+/).filter(Boolean);
+    const stepRe = /\.([\w-]+)|\[([\w:-]+)(?:="([^"]*)")?\]/g;
+    let step;
+    while ((step = stepRe.exec(head[2] || '')) !== null) {
+        if (step[1]) {
+            if (classes.indexOf(step[1]) === -1) return false;
+        } else {
+            const value = node.getAttribute(step[2]);
+            if (value === null) return false;
+            if (step[3] !== undefined && value !== step[3]) return false;
+        }
+    }
+    return true;
+}
+
 // Only <span> children are parsed, because the only markup the player modules
 // build with innerHTML that the i18n sweep has to see is a row of spans.
 function parseSpans(html) {
@@ -73,6 +102,7 @@ function makeElement(id, tagName) {
     const el = {
         id: id || '',
         tagName: tagName || 'DIV',
+        className: '',
         value: '',
         disabled: false,
         hidden: false,
@@ -83,7 +113,15 @@ function makeElement(id, tagName) {
             removeProperty: function () {}
         },
         classList: makeClassList(),
-        setAttribute: function (name, value) { attrs[name] = String(value); },
+        setAttribute: function (name, value) {
+            attrs[name] = String(value);
+            const data = /^data-(.+)$/.exec(name);
+            if (data) {
+                el.dataset[data[1].replace(/-([a-z])/g, function (_m, c) {
+                    return c.toUpperCase();
+                })] = attrs[name];
+            }
+        },
         getAttribute: function (name) {
             return Object.prototype.hasOwnProperty.call(attrs, name) ? attrs[name] : null;
         },
@@ -94,8 +132,21 @@ function makeElement(id, tagName) {
         addEventListener: function () {},
         removeEventListener: function () {},
         appendChild: function (child) { children.push(child); all.push(child); return child; },
-        querySelector: function () { return null; },
-        querySelectorAll: function () { return []; },
+        // The subtree, depth-first — `children` is reassigned by the innerHTML
+        // setter, so it is read through the closure rather than captured.
+        querySelectorAll: function (selector) {
+            const out = [];
+            (function walk(nodes) {
+                nodes.forEach(function (node) {
+                    if (matchesSelector(node, selector)) out.push(node);
+                    if (node.children && node.children.length) walk(node.children);
+                });
+            })(children);
+            return out;
+        },
+        querySelector: function (selector) {
+            return el.querySelectorAll(selector)[0] || null;
+        },
         closest: function () { return null; },
         children: children
     };
