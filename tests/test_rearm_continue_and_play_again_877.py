@@ -186,7 +186,11 @@ playAgain.setAttribute('data-i18n', 'admin.playAgainSame');
 playAgain.textContent = 'Play again';
 
 var sent = [];
-window.WebSocket = {{ OPEN: 1 }};
+// A browser global the module reads bare, as ``WebSocket.OPEN``. Node 21+
+// happens to ship one; node 20 — what CI runs — does not, so declare it here
+// rather than inherit it from whichever node the test runs under.
+globalThis.WebSocket = {{ OPEN: 1 }};
+window.WebSocket = globalThis.WebSocket;
 window.QuizifyPlayerUtils = {{
     state: {{
         isAdmin: true,
