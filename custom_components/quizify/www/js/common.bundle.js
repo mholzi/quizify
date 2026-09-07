@@ -135,13 +135,14 @@
         return ws;
     }
 
+    // The two key names and `socketUrl` stay private: saveSession /
+    // getSession / clearSession are the only way in, which is the whole point
+    // of #787 — one owner for the spelling — and `createSocket` is the only
+    // caller a page ever needs.
     window.QuizifyClientCore = {
-        SESSION_TOKEN_KEY: SESSION_TOKEN_KEY,
-        SESSION_NAME_KEY: SESSION_NAME_KEY,
         saveSession: saveSession,
         getSession: getSession,
         clearSession: clearSession,
-        socketUrl: socketUrl,
         backoffDelay: backoffDelay,
         createSocket: createSocket
     };
@@ -253,7 +254,8 @@
      * Written twice by hand until now — once on the television with a medal and
      * a `.podium-label` wrapper, once on the host page with a champion title and
      * no avatar — and the two had drifted far enough apart that
-     * `05-finale.css` carried `.podium-bar` **and** `.podium-stand`, plus a
+     * `05-finale.css` carried `.podium-bar` **and** `.podium-stand` (the
+     * second set went with #894), plus a
      * "legacy" avatar rule whose comment pointed at the page that had stopped
      * rendering it. One stylesheet styling two DOM shapes for one feature is
      * how the bleed in #880 got its foothold.

@@ -286,44 +286,6 @@
     }
 
     // ============================================
-    // Player Cards Rendering
-    // ============================================
-
-    function renderPlayerCards(containerId, players) {
-        var container = typeof containerId === 'string'
-            ? document.getElementById(containerId)
-            : containerId;
-        if (!container) return;
-
-        var list = Array.isArray(players) ? players : Object.values(players);
-
-        container.innerHTML = list
-            .map(function (p) {
-                var name = typeof p === 'string' ? p : (p.name || p);
-                var isYou = name === state.playerName;
-                var isDisconnected = p.connected === false;
-                var color = (p.color) || '';
-                var classes = 'player-card' +
-                    (isYou ? ' player-card--you' : '') +
-                    (isDisconnected ? ' player-card--disconnected' : '');
-                var colorStyle = color ? ' style="--player-color:' + color + ';border-left:4px solid ' + color + ';"' : '';
-                // `(away)` was hardcoded English too, and `lobby.away` was
-                // already sitting there unused.
-                var awayBadge = isDisconnected
-                    ? '<span class="away-badge">(' + _tt('lobby.away') + ')</span>'
-                    : '';
-                var youBadge = isYou
-                    ? '<span class="you-badge">(' + _tt('lobby.you') + ')</span>'
-                    : '';
-                return '<div class="' + classes + '"' + colorStyle + ' data-player="' + escapeHtml(name) + '">' +
-                    '<span class="player-color-dot" style="background:' + (color || '#888') + '"></span>' +
-                    '<span class="player-name">' + escapeHtml(name) + youBadge + awayBadge + '</span>' +
-                    '</div>';
-            })
-            .join('');
-    }
-
-    // ============================================
     // Collapsibles
     // ============================================
 
@@ -636,11 +598,12 @@
         formatTime: formatTime,
         createWebSocket: createWebSocket,
         updateConnectionIndicator: updateConnectionIndicator,
-        // #750: the kicked screen has to take the reconnect overlay
-        // down itself — nothing else will, since we never reconnect.
+        // #750: the kicked screen has to take the reconnect overlay down
+        // itself — nothing else will, since we never reconnect. #729: a join
+        // refused mid-reconnect needs the same, or the reason lands on a
+        // screen nobody can see.
         hideReconnectingOverlay: hideReconnectingOverlay,
         renderLeaderboard: renderLeaderboard,
-        renderPlayerCards: renderPlayerCards,
         setupCollapsibles: setupCollapsibles,
         paintUiIcons: paintUiIcons,
         feedbackIconHtml: feedbackIconHtml,
@@ -648,10 +611,6 @@
         generateQR: generateQR,
         showToast: showToast,
         clearToast: clearToast,
-        // #729: a join refused mid-reconnect has to pull the guest out from
-        // under the reconnecting overlay, or the reason lands on a screen
-        // nobody can see.
-        hideReconnectingOverlay: hideReconnectingOverlay,
         saveSession: saveSession,
         getSession: getSession,
         clearSession: clearSession,

@@ -13,8 +13,6 @@
     // Player List Rendering
     // ============================================
 
-    var previousPlayers = [];
-
     // Variant B+D layout. Paints the hero (mega avatar + name + "DU BIST DRIN")
     // for this player, and the orbit chips for the OTHER players. The
     // count line reads "+ N weitere" or "Du wartest noch allein…". Pure
@@ -260,28 +258,6 @@
         // on legacy markup — if the hero nodes aren't present, the orbit
         // call still writes into #player-list as before.
         _renderHeroAndOrbits(players, data);
-
-        // Detect newly joined players and add animation class
-        var previousNames = previousPlayers.map(function (p) { return p.name; });
-        var listEl = document.getElementById('player-list');
-        if (listEl) {
-            var cards = listEl.querySelectorAll('.player-card');
-            for (var i = 0; i < cards.length; i++) {
-                var name = cards[i].getAttribute('data-player');
-                if (name && previousNames.indexOf(name) === -1) {
-                    cards[i].classList.add('is-new');
-                }
-            }
-            // Remove animation class after transition
-            setTimeout(function () {
-                var newCards = listEl.querySelectorAll('.is-new');
-                for (var j = 0; j < newCards.length; j++) {
-                    newCards[j].classList.remove('is-new');
-                }
-            }, 2000);
-        }
-
-        previousPlayers = players.slice();
 
         // Admin controls
         updateAdminControls(players);

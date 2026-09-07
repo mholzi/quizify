@@ -407,8 +407,9 @@
 
             // #619: who the room is still waiting for. renderSubmissionTracker
             // has existed since the tracker markup landed; its only caller was
-            // updateGameView(), which nothing ever invoked, so the row stayed
-            // empty for every game ever played.
+            // a view updater nothing ever invoked, so the row stayed empty for
+            // every game ever played. That updater went with #894; the
+            // `answer_progress` case below is the tracker's only caller now.
             // #624: the season standing, sent once the finished game has
             // actually been written to analytics — which happens after the
             // finale, not with it.
@@ -1124,10 +1125,10 @@
         if (totalRounds) totalRounds.textContent = msg.total_rounds || 10;
 
         // #706: the wager window raises the "Final Round!" pill and the only
-        // line that lowered it again lives in updateGameView, which nothing
-        // has called since #619. Play again keeps the phones on this page, so
-        // round 1 of game 2 — and every round after it — wore the pill until
-        // somebody reloaded.
+        // line that lowered it again lived in a view updater nothing had
+        // called since #619 (deleted in #894). Play again keeps the phones on
+        // this page, so round 1 of game 2 — and every round after it — wore
+        // the pill until somebody reloaded.
         //
         // #870: a toggle, not a one-way hide. Raising it used to belong to the
         // wager window alone — a frame a reconnecting phone never receives —

@@ -447,14 +447,21 @@ console.log(JSON.stringify({
 
 
 def test_the_socket_url_follows_the_page_scheme(tmp_path: Path) -> None:
-    """A ws:// socket on an https page is blocked by the browser, silently."""
+    """A ws:// socket on an https page is blocked by the browser, silently.
+
+    Asked through ``createSocket`` rather than the URL builder: #894 took the
+    builder off the module's exports, since no page had ever called it, and a
+    test is not a consumer. What a page can observe is the URL the socket was
+    opened with, so that is what this reads.
+    """
     out = _run(
         """
+global.WebSocket = function (url) { this.url = url; this.close = function () {}; };
 const C = window.QuizifyClientCore;
 global.location = { protocol: 'http:', host: 'ha.local:8123' };
-const plain = C.socketUrl('/api/quizify/ws?role=dashboard');
+const plain = C.createSocket('/api/quizify/ws?role=dashboard', {}).url;
 global.location = { protocol: 'https:', host: 'ha.example.com' };
-const secure = C.socketUrl('/api/quizify/ws?role=admin');
+const secure = C.createSocket('/api/quizify/ws?role=admin', {}).url;
 console.log(JSON.stringify({ plain: plain, secure: secure }));
 """,
         tmp_path,
@@ -595,7 +602,12 @@ console.log(JSON.stringify({ same: same }));
 
 
 def test_the_player_session_is_one_pair_of_keys(tmp_path: Path) -> None:
-    """The host page writes what the phone reads; two spellings would drift."""
+    """The host page writes what the phone reads; two spellings would drift.
+
+    The literal key names are pinned through what ``saveSession`` writes into
+    storage, not through exported constants: #894 removed those, because a
+    second way to reach the spelling is the drift this test exists to stop.
+    """
     out = _run(
         """
 const C = window.QuizifyClientCore;
@@ -610,13 +622,11 @@ const written = JSON.parse(JSON.stringify(store));
 const read = C.getSession();
 C.clearSession();
 console.log(JSON.stringify({
-  written: written, read: read, after: C.getSession(),
-  keys: [C.SESSION_TOKEN_KEY, C.SESSION_NAME_KEY]
+  written: written, read: read, after: C.getSession()
 }));
 """,
         tmp_path,
     )
-    assert out["keys"] == ["quizify_session_token", "quizify_player_name"]
     assert out["written"] == {
         "quizify_session_token": "tok-1",
         "quizify_player_name": "Anna",

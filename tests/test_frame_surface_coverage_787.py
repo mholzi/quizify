@@ -451,19 +451,6 @@ COVERAGE: dict[str, Coverage] = {
 #: Types a surface handles that the server does not send. Each one is a
 #: decision to keep dead weight, so each one carries the reason.
 LEGACY_ALIASES: dict[str, str] = {
-    "round_evaluated": (
-        "an internal state-machine event name (server/broadcast_dispatcher.py), "
-        "never a wire frame. Both boards alias it onto round_summary; harmless, "
-        "and cheap insurance for a client cached from a build that did send it."
-    ),
-    "game_ended": (
-        "the other internal state event, aliased onto finale for the same reason."
-    ),
-    "leaderboard_update": (
-        "#619 found zero senders and the case was kept deliberately: a live TV "
-        "cached from an older build may still be listening, and the handler "
-        "costs nothing."
-    ),
     "reaction": (
         "#896 replaced the per-pair frame with one batched `reactions` frame "
         "per flush window. All three surfaces keep the single-frame case for "
@@ -570,9 +557,12 @@ def test_a_recorded_gap_that_got_fixed_is_removed(surface: str) -> None:
 def test_no_surface_handles_a_frame_nobody_sends(surface: str) -> None:
     """Dead cases are how a switch grows fiction.
 
-    ``leaderboard_update`` is the live example: the television handled it for a
-    long time and the server had never sent it. Keeping one is allowed — it is
-    written down in LEGACY_ALIASES with the reason — inventing a new one is not.
+    ``leaderboard_update`` was the live example: the television handled it for
+    a long time and the server had never sent it. It went with #894, along with
+    ``round_evaluated`` and ``game_ended`` — the two internal state-event names
+    both boards had aliased onto ``round_summary`` and ``finale``. Keeping one
+    is still allowed, but only written down in LEGACY_ALIASES with the reason
+    and a release it comes out in; inventing a new one is not.
     """
     declared = set(declared_server_frames())
     unknown = sorted(handled_types(surface) - declared - set(LEGACY_ALIASES))
